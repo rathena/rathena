@@ -6387,17 +6387,34 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 	if (len < 2)
 		return;
 
-	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
-	std::unique_ptr<unsigned char> buf(new unsigned char[4+lp+len]);
+	struct PACKET_ZC_BROADCAST* p = (struct PACKET_ZC_BROADCAST*)packet_buffer;
 
-	WBUFW(buf.get(),0) = 0x9a;
-	WBUFW(buf.get(),2) = 4 + lp + len;
-	if (type&BC_BLUE)
-		WBUFL(buf.get(),4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
-	else if (type&BC_WOE)
-		WBUFL(buf.get(),4) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
-	memcpy(WBUFP(buf.get(), 4 + lp), mes, len);
-	clif_send(buf.get(), WBUFW(buf.get(),2), bl, target);
+	p->packetType = HEADER_ZC_BROADCAST;
+	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_BROADCAST ) + len );
+
+	if( ( type&BC_BLUE ) != 0 ){
+		const char* color = "blue";
+		int16 length = (int16)strlen( color );
+
+		// If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
+		strcpy( p->message, color );
+		strncpy( &p->message[length], mes, len );
+
+		p->PacketLength += length;
+	}else if( ( type&BC_WOE ) != 0 ){
+		const char* color = "ssss";
+		int16 length = (int16)strlen( color );
+
+		// If there's "ssss", game client will recognize message as 'WoE broadcast'.
+		strcpy( p->message, color );
+		strncpy( &p->message[length], mes, len );
+
+		p->PacketLength += length;
+	}else{
+		strncpy( p->message, mes, len );
+	}
+
+	clif_send( p, p->PacketLength, bl, target );
 }
 
 /*==========================================
@@ -6405,49 +6422,47 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
  * 008d <PacketLength>.W <GID>.L <message>.?B (ZC_NOTIFY_CHAT)
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_target target) {
-	size_t len;
 	nullpo_retv(bl);
+	nullpo_retv(message);
 
-	if(!message)
-		return;
+	int16 len = (int16)( strlen( message ) + 1 );
 
-	len = strlen(message)+1;
-
-	static_assert(CHAT_SIZE_MAX > 8, "CHAT_SIZE_MAX too small for packet");
 	if( len > CHAT_SIZE_MAX ) {
-		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
+		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRId16 ").\n", message, len);
 		len = CHAT_SIZE_MAX;
 	}
-	std::unique_ptr<char> buf(new char[8+len]);
 
-	WBUFW(buf.get(),0)=0x8d;
-	WBUFW(buf.get(),2)=static_cast<uint16>(len+8);
-	WBUFL(buf.get(),4)=bl->id;
-	safestrncpy(WBUFCP(buf.get(),8),message,len);
+	struct PACKET_ZC_NOTIFY_CHAT* p = (struct PACKET_ZC_NOTIFY_CHAT*)packet_buffer;
 
-	clif_send((unsigned char *)buf.get(),WBUFW(buf.get(),2),bl,target);
+	p->PacketType = HEADER_ZC_NOTIFY_CHAT;
+	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_NOTIFY_CHAT ) + len );
+	p->GID = bl->id;
+	safestrncpy( p->Message, message, len );
+
+	clif_send( p, p->PacketLength, bl, target );
 }
 
 
-/// Send broadcast message with font formatting (ZC_BROADCAST2).
-/// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
+/// Send broadcast message with font formatting.
+/// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B (ZC_BROADCAST2)
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
 	nullpo_retv(mes);
 	if (len < 2)
 		return;
 
-	std::unique_ptr<unsigned char> buf(new unsigned char[16+len]);
+	struct PACKET_ZC_BROADCAST2* p = (struct PACKET_ZC_BROADCAST2*)packet_buffer;
 
-	WBUFW(buf.get(),0)  = 0x1c3;
-	WBUFW(buf.get(),2)  = len + 16;
-	WBUFL(buf.get(),4)  = fontColor;
-	WBUFW(buf.get(),8)  = fontType;
-	WBUFW(buf.get(),10) = fontSize;
-	WBUFW(buf.get(),12) = fontAlign;
-	WBUFW(buf.get(),14) = fontY;
-	memcpy(WBUFP(buf.get(),16), mes, len);
-	clif_send(buf.get(), WBUFW(buf.get(),2), bl, target);
+	p->packetType = HEADER_ZC_BROADCAST2;
+	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_BROADCAST2 ) + len );
+	p->fontColor = fontColor;
+	p->fontType = fontType;
+	p->fontSize = fontSize;
+	p->fontAlign = fontAlign;
+	p->fontY = fontY;
+	strncpy( p->message, mes, len );
+
+	clif_send( p, p->PacketLength, bl, target );
 }
 
 /*

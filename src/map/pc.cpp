@@ -3541,6 +3541,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.magic_damage_return += val;
 			break;
+		case SP_REDUCE_DAMAGE_RETURN:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.reduce_damage_return += val;
+			break;
 		case SP_ALL_STATS:	// [Valaris]
 			if(sd->state.lr_flag!=2) {
 				sd->indexed_bonus.param_bonus[SP_STR-SP_STR]+=val;
@@ -7972,7 +7976,7 @@ int pc_resetstate(struct map_session_data* sd)
 			return 0;
 		}
 
-		sd->status.status_point = statp[sd->status.base_level] + ( sd->class_&JOBL_UPPER ? 52 : 0 ); // extra 52+48=100 stat points
+		sd->status.status_point = statp[sd->status.base_level];
 	}
 	else
 	{
@@ -7985,6 +7989,10 @@ int pc_resetstate(struct map_session_data* sd)
 		add += pc_need_status_point(sd, SP_LUK, 1-pc_getstat(sd, SP_LUK));
 
 		sd->status.status_point+=add;
+	}
+
+	if( ( sd->class_&JOBL_UPPER ) != 0 ){
+		sd->status.status_point += battle_config.transcendent_status_points;
 	}
 
 	pc_setstat(sd, SP_STR, 1);
@@ -8881,6 +8889,7 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_SHORT_WEAPON_DAMAGE_RETURN: val = sd->bonus.short_weapon_damage_return; break;
 		case SP_LONG_WEAPON_DAMAGE_RETURN: val = sd->bonus.long_weapon_damage_return; break;
 		case SP_MAGIC_DAMAGE_RETURN: val = sd->bonus.magic_damage_return; break;
+		case SP_REDUCE_DAMAGE_RETURN: val = sd->bonus.reduce_damage_return; break;
 		case SP_PERFECT_HIDE:    val = sd->special_state.perfect_hiding?1:0; break;
 		case SP_UNBREAKABLE:     val = sd->bonus.unbreakable; break;
 		case SP_UNBREAKABLE_WEAPON: val = (sd->bonus.unbreakable_equip&EQP_WEAPON)?1:0; break;
@@ -9398,9 +9407,10 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		if( sd->status.status_point < battle_config.transcendent_status_points ){
 			// The player already used his bonus points, so we have to reset his status points
 			pc_resetstate(sd);
+		}else{
+			sd->status.status_point -= battle_config.transcendent_status_points;
+			clif_updatestatus(sd,SP_STATUSPOINT);
 		}
-		sd->status.status_point -= battle_config.transcendent_status_points;
-		clif_updatestatus(sd,SP_STATUSPOINT);
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
@@ -10339,17 +10349,12 @@ static int pc_checkcombo(struct map_session_data *sd, item_data *data) {
 		struct s_itemchk {
 			int idx;
 			t_itemid nameid, card[MAX_SLOTS];
+
+			s_itemchk() : idx(0), nameid(0), card() {};
 		};
-		std::vector<s_itemchk> combo_idx;
+		std::vector<s_itemchk> combo_idx(nb_itemCombo);
 		size_t j;
 		unsigned int pos = 0;
-
-		combo_idx.reserve(nb_itemCombo);
-
-		// Zero out temporary combo array
-		for (auto &tmp_combo : combo_idx) {
-			tmp_combo = {};
-		}
 
 		for (j = 0; j < nb_itemCombo; j++) {
 			t_itemid id = item_combo->nameid[j];

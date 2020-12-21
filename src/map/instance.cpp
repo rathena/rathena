@@ -467,7 +467,6 @@ static int instance_npcinit(struct block_list *bl, va_list ap)
 	struct npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_instanceinit(nd);
@@ -481,7 +480,6 @@ static int instance_npcdestroy(struct block_list *bl, va_list ap)
 	struct npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_instancedestroy(nd);
@@ -495,7 +493,6 @@ static int instance_addnpc_sub(struct block_list *bl, va_list ap)
 	struct npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_duplicate4instance(nd, va_arg(ap, int));
