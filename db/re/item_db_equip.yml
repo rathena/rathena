@@ -83498,7 +83498,8 @@ Body:
     EquipLevelMin: 48
     Refineable: true
     Script: |
-      bonus bCritical,30; bonus bAspdRate,8;
+      bonus bCritical,30;
+      bonus bAspdRate,8;
       bonus2 bAddEff2,Eff_Curse,10;
   - Id: 21004
     AegisName: Alca_Bringer_
