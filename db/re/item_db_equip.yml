@@ -83454,6 +83454,7 @@ Body:
       }
       if(.@r>=9) {
          bonus bShortWeaponDamageReturn,20;
+         bonus bMagicDamageReturn,20;
          bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",8,300,BF_MAGIC,0;
       }
   - Id: 21002
@@ -83512,6 +83513,8 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
+    Classes:
+      All_Third: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -83797,7 +83800,7 @@ Body:
     Refineable: true
     Script: |
       bonus bAtk,pow(min(getrefine(),15),2);
-      bonus bMatk,pow(min(getrefine(),15),2);
+      bonus bMatk,pow(min(getrefine(),15),2)/2;
   - Id: 21018
     AegisName: Lindy_Hop
     Name: Lindy Hop
