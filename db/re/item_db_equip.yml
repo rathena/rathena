@@ -83443,7 +83443,20 @@ Body:
     EquipLevelMin: 95
     Refineable: true
     Script: |
-      bonus2 bAddRace,RC_Player_Human,80; bonus2 bIgnoreDefRaceRate,RC_Player_Human,30; .@r = getrefine(); if(.@r>=6) { bonus2 bAddRace,RC_Player_Human,40; } if(.@r>=9) { autobonus2 "{ bonus bShortWeaponDamageReturn,20; bonus bMagicDamageReturn,20; }",6000,2000,BF_WEAPON,"{ specialeffect2 EF_REFLECTSHIELD; }"; }
+      bonus2 bAddRace,RC_Player_Human,80;
+      bonus2 bAddRace,RC_Player_Doram,80;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,30;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,30;
+      .@r = getrefine();
+      if(.@r>=6) {
+         bonus2 bAddRace,RC_Player_Human,40;
+         bonus2 bAddRace,RC_Player_Doram,40;
+      }
+      if(.@r>=9) {
+         bonus bShortWeaponDamageReturn,20;
+         bonus bMagicDamageReturn,20;
+         bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",8,300,BF_MAGIC,0;
+      }
   - Id: 21002
     AegisName: Velum_Katzbalger
     Name: Vellum Katzbalger
@@ -83464,6 +83477,7 @@ Body:
     Refineable: true
     Script: |
       bonus3 bHPVanishRaceRate,RC_Player_Human,1000,8;
+      bonus3 bHPVanishRaceRate,RC_Player_Doram,1000,8;
   - Id: 21003
     AegisName: Muramasa_
     Name: Muramasa
@@ -83484,7 +83498,9 @@ Body:
     EquipLevelMin: 48
     Refineable: true
     Script: |
-      bonus bCritical,30; bonus bAspdRate,8; bonus2 bAddEff2,Eff_Curse,10;
+      bonus bCritical,30;
+      bonus bAspdRate,8;
+      bonus2 bAddEff2,Eff_Curse,10;
   - Id: 21004
     AegisName: Alca_Bringer_
     Name: Alca Bringer
@@ -83498,12 +83514,15 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-      Swordman: true
+    Classes:
+      All_Third: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 100
     Refineable: true
+    Script: |
+      bonus bAspd,(getrefine()/2);
   - Id: 21005
     AegisName: Metal_Two_Hand_Sword
     Name: Metal Two Hand Sword
@@ -83532,7 +83551,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@r = getrefine(); bonus bBaseAtk,(.@r*6); bonus bMatk,(.@r*2); .@i = min(BaseLevel/10,12); if(.@i>2) bonus bBaseAtk,((.@i-2)*5);
+      .@r = getrefine();
+      bonus bBaseAtk,(.@r*6);
+      bonus bMatk,(.@r*2);
+      .@i = min(BaseLevel/10,12);
+      if(.@i>2)
+         bonus bBaseAtk,((.@i-2)*5);
   - Id: 21006
     AegisName: TE_Woe_Two_Hand_Sword
     Name: TE Woe Two Hand Sword
@@ -83559,7 +83583,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Bleeding,3000;
+      bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Bleeding,1000;
   - Id: 21007
     AegisName: Heavy_Sword
     Name: Heavy Greatsword
@@ -83775,6 +83801,7 @@ Body:
     Refineable: true
     Script: |
       bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bMatk,pow(min(getrefine(),15),2)/2;
   - Id: 21018
     AegisName: Lindy_Hop
     Name: Lindy Hop
