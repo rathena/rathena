@@ -9,7 +9,6 @@
 //============================================================
 
 dali,91,146,4	script	Geffen Enchanter	4_F_03,{
-	disable_command;
 	disable_items;
 	.@npc$ = "[ ^0000FFGeffen Enchanter^000000 ]";
 	mes .@npc$,
@@ -62,8 +61,8 @@ dali,91,146,4	script	Geffen Enchanter	4_F_03,{
 			}
 
 			delitem .itemId,.cost;
-			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
-			.@opt2rand = rand(getarraysize(.RandOpt2_Armor)-1);
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor));
+			.@opt2rand = rand(getarraysize(.RandOpt2_Armor));
 			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
 			.@Opt2 = .RandOpt2_Armor[.@opt2rand];
 			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
@@ -116,8 +115,8 @@ dali,91,146,4	script	Geffen Enchanter	4_F_03,{
 			}
 
 			delitem .itemId,.cost;
-			.@opt1rand = rand(getarraysize(.RandOpt_Accessory)-1);
-			.@opt2rand = rand(getarraysize(.RandOpt_Accessory)-1);
+			.@opt1rand = rand(getarraysize(.RandOpt_Accessory));
+			.@opt2rand = rand(getarraysize(.RandOpt_Accessory));
 			.@Opt1 = .RandOpt_Accessory[.@opt1rand];
 			.@Opt2 = .RandOpt_Accessory[.@opt2rand];
 			.@Opt1_V = rand(.RandOpt_Accessory_minV[.@opt1rand],.RandOpt_Accessory_maxV[.@opt1rand]);
