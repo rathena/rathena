@@ -1,6 +1,8 @@
 /autom4te.cache/output.0
 /autom4te.cache/requests
 /autom4te.cache/traces.0
+autom4te.cache/
+
 #Global
 .Apple*
 .DS_Store
@@ -42,6 +44,7 @@ Thumbs.db
 /mapcache
 /nbproject
 /yaml2sql
+/web-server
 
 # /3rdparty/libconfig/
 /3rdparty/libconfig/Makefile
@@ -50,6 +53,10 @@ Thumbs.db
 
 # /3rdparty/yaml-cpp/
 /3rdparty/yaml-cpp/Makefile
+
+# /3rdparty/httplib/
+/3rdparty/httplib/Makefile
+/3rdparty/httplib/obj
 
 # /db/
 /db/import
@@ -86,6 +93,10 @@ Thumbs.db
 /src/map/Makefile
 /src/map/obj_sql
 /src/map/pcre.hpp
+
+# /src/web
+/src/web/Makefile
+/src/web/obj
 
 # /src/tool/
 /src/tool/Makefile
