@@ -10304,6 +10304,21 @@ ACMD_FUNC(quest) {
 	return 0;
 }
 
+ACMD_FUNC(battleinfo)
+{
+	if( sd->state.battleinfo )
+	{
+		clif_displaymessage(fd, "- Battle Information Display OFF - Kill/Death -");
+		sd->state.battleinfo = 0;
+	}
+	else
+	{
+		clif_displaymessage(fd, "- Battle Information Display ON - Kill/Death -");
+		sd->state.battleinfo = 1;
+	}
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10592,6 +10607,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(channel,ATCMD_NOSCRIPT),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
+		ACMD_DEF(battleinfo),
 #ifdef VIP_ENABLE
 		ACMD_DEF(vip),
 		ACMD_DEF(showrate),

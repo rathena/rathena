@@ -9,5 +9,3 @@
  **/
 
 //ACMD_DEF(newcommand),
-
-	ACMD_FUNC(battleinfo),
