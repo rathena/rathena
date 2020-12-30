@@ -17,3 +17,18 @@
 //	clif_specialeffect(&sd->bl, EF_HEARTCASTING, AREA);
 //	return 0;
 //}
+
+ACMD_FUNC(battleinfo)
+{
+	if( sd->state.battleinfo )
+	{
+		clif_displaymessage(fd, "- Battle Information Display OFF - Kill/Death -");
+		sd->state.battleinfo = 0;
+	}
+	else
+	{
+		clif_displaymessage(fd, "- Battle Information Display ON - Kill/Death -");
+		sd->state.battleinfo = 1;
+	}
+	return 0;
+}

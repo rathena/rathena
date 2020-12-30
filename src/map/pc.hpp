@@ -312,6 +312,7 @@ struct map_session_data {
 		unsigned int noks : 3; // [Zeph Kill Steal Protection]
 		unsigned int changemap : 1;
 		unsigned int callshop : 1; // flag to indicate that a script used callshop; on a shop
+		unsigned int battleinfo : 1;	// battle info
 		short pmap; // Previous map on Map Change
 		unsigned short autoloot;
 		t_itemid autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
