@@ -31147,6 +31147,7 @@ Body:
     Weight: 1
     Attack: 10
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31160,6 +31161,7 @@ Body:
     Weight: 1
     Attack: 30
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31173,6 +31175,7 @@ Body:
     Weight: 1
     Attack: 45
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31186,6 +31189,7 @@ Body:
     Weight: 1
     Attack: 70
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31199,6 +31203,7 @@ Body:
     Weight: 1
     Attack: 100
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31212,6 +31217,7 @@ Body:
     Weight: 1
     Attack: 30
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31227,6 +31233,7 @@ Body:
     Weight: 1
     Attack: 30
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31242,6 +31249,7 @@ Body:
     Weight: 1
     Attack: 30
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31257,6 +31265,7 @@ Body:
     Weight: 1
     Attack: 30
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31272,6 +31281,7 @@ Body:
     Weight: 1
     Attack: 30
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31766,6 +31776,7 @@ Body:
     Weight: 5
     Attack: 110
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31790,6 +31801,7 @@ Body:
     Weight: 20
     Attack: 50
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31814,6 +31826,7 @@ Body:
     Weight: 20
     Attack: 50
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
@@ -31838,6 +31851,7 @@ Body:
     Weight: 1
     Attack: 50
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Ammo: true
