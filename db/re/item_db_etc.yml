@@ -4845,7 +4845,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bFlee,2;
@@ -5422,7 +5421,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bBaseAtk,15;
@@ -6005,7 +6003,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus3 bAutoSpellWhenHit,"MG_SIGHT",1,200;
@@ -6769,7 +6766,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bCritAtkRate,10;
@@ -6797,7 +6793,6 @@ Body:
     Locations:
       Armor: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus3 bAutoSpellWhenHit,"CR_AUTOGUARD",3+7*(getskilllv("CR_AUTOGUARD") == 10),30;
@@ -7228,7 +7223,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus2 bSPGainRace,RC_DemiHuman,5;
@@ -7998,7 +7992,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus2 bSkillAtk,"WZ_FIREPILLAR",5;
@@ -8709,7 +8702,6 @@ Body:
     Locations:
       Garment: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus2 bSkillAtk,"WZ_FIREPILLAR",40;
@@ -9094,7 +9086,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
   - Id: 4455
     AegisName: Light_Up_Card2
@@ -9105,7 +9096,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
   - Id: 4456
     AegisName: Nidhogg_Shadow_Card
@@ -9463,7 +9453,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
   - Id: 4479
     AegisName: Light_Up_Card4
@@ -9474,7 +9463,6 @@ Body:
     Locations:
       Garment: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
   - Id: 4480
     AegisName: Sealed_Kiel_Card
@@ -9487,7 +9475,6 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bDelayRate,((getrefine()>14)?-20:-15);
@@ -9500,7 +9487,6 @@ Body:
     Locations:
       Armor: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus2 bAddEle,Ele_Fire,((getrefine()>14)?35:25);
@@ -9514,7 +9500,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       .@rate = ((getrefine()>14)?7:5);
@@ -9531,7 +9516,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus2 bSPDrainRate,((getrefine()>14)?70:50),5;
@@ -9546,7 +9530,6 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bNoGemStone;
@@ -9560,7 +9543,6 @@ Body:
     Locations:
       Armor: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       .@rate = ((getrefine()>14)?30:20);
@@ -9577,7 +9559,6 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bVariableCastrate,-15;
@@ -9590,7 +9571,6 @@ Body:
     Locations:
       Both_Accessory: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bBaseAtk,(JobLevel/20);
@@ -9606,7 +9586,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,50;
@@ -9621,7 +9600,6 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bUseSPrate,-15;
@@ -9634,7 +9612,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       skill "AL_INCAGI",((getrefine()>14)?5:1);
@@ -9647,7 +9624,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bHPrecovRate,-100;
@@ -9663,7 +9639,6 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bVit,3;
@@ -9692,7 +9667,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       .@rate = ((getrefine()>14)?15:10);
@@ -9736,7 +9710,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus3 bAutoSpell,"WZ_STORMGUST",1,10;
@@ -9750,7 +9723,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       .@r = getrefine();
@@ -9767,7 +9739,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bIgnoreDefClass,Class_Normal;
@@ -9792,7 +9763,6 @@ Body:
     Locations:
       Armor: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bShortWeaponDamageReturn,((getrefine()>14)?25:15);
@@ -9805,7 +9775,6 @@ Body:
     Locations:
       Armor: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus5 bAutoSpellWhenHit,"HP_ASSUMPTIO",1,((getrefine()>14)?35:25),BF_WEAPON|BF_MAGIC,0;
@@ -9818,7 +9787,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       .@r = getrefine();
@@ -9835,7 +9803,6 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bDex,2;
@@ -9849,7 +9816,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bMaxHPrate,((getrefine()>14)?-35:-50);
@@ -10358,7 +10324,6 @@ Body:
       Head_Mid: true
       Head_Top: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       .@r = getrefine();
@@ -10373,7 +10338,6 @@ Body:
     Locations:
       Shoes: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       .@r = getrefine();
@@ -10492,7 +10456,6 @@ Body:
     Locations:
       Right_Hand: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
   - Id: 4547
     AegisName: Upd_Byorgue_Card
@@ -11620,7 +11583,6 @@ Body:
     Locations:
       Garment: true
     Flags:
-      DropEffect: RED_PILLAR
       BuyingStore: true
     Script: |
       bonus bHPGainValue,50;
@@ -14322,8 +14284,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bStr,1;
       bonus bBaseAtk,3;
@@ -14343,8 +14303,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bStr,2;
       bonus bBaseAtk,6;
@@ -14364,8 +14322,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bStr,4;
       bonus bBaseAtk,12;
@@ -14385,8 +14341,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bInt,1;
       bonus bMatk,3;
@@ -14406,8 +14360,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bInt,2;
       bonus bMatk,6;
@@ -14427,8 +14379,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bInt,4;
       bonus bMatk,12;
@@ -14448,8 +14398,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAgi,1;
       bonus bFlee,2;
@@ -14469,8 +14417,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAgi,2;
       bonus bFlee,4;
@@ -14490,8 +14436,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAgi,4;
       bonus bFlee,8;
@@ -14511,8 +14455,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bVit,1;
       bonus bDef,3;
@@ -14533,8 +14475,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bVit,2;
       bonus bDef,6;
@@ -14555,8 +14495,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bVit,4;
       bonus bDef,12;
@@ -14577,8 +14515,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bDex,1;
       bonus bHit,2;
@@ -14598,8 +14534,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bDex,2;
       bonus bHit,4;
@@ -14619,8 +14553,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bDex,4;
       bonus bHit,8;
@@ -14640,8 +14572,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bLuk,1;
       bonus bCritical,1;
@@ -14661,8 +14591,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bLuk,2;
       bonus bCritical,2;
@@ -14682,8 +14610,6 @@ Body:
       Armor: true
       Garment: true
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bLuk,4;
       bonus bCritical,4;
@@ -34140,8 +34066,6 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
-    Flags:
-      DropEffect: RED_PILLAR
     Trade:
       Override: 100
       NoDrop: true
@@ -36633,8 +36557,6 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;
   - Id: 27081
@@ -37739,8 +37661,6 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bAddMonsterDropItem,12806,30;
       if (getrefine()>=15) {
@@ -37756,8 +37676,6 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bSplashRange,1;
       if (getrefine()>=15) {
@@ -37773,8 +37691,6 @@ Body:
     Weight: 10
     Locations:
       Left_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()>=15) {
          bonus bMagicDamageReturn,30;
@@ -37789,8 +37705,6 @@ Body:
     Weight: 10
     Locations:
       Armor: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()>=15) {
          .@a = 7;
@@ -37811,8 +37725,6 @@ Body:
     Weight: 10
     Locations:
       Armor: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,1,BF_MAGIC,0;
@@ -37829,8 +37741,6 @@ Body:
     Weight: 10
     Locations:
       Armor: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",1,1,BF_WEAPON,1;
@@ -37847,8 +37757,6 @@ Body:
     Weight: 10
     Locations:
       Armor: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus5 bAutoSpellWhenHit,"AM_ACIDTERROR",1,1,BF_WEAPON,1;
@@ -37865,8 +37773,6 @@ Body:
     Weight: 10
     Locations:
       Armor: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus5 bAutoSpellWhenHit,"ST_FULLSTRIP",1,1,BF_WEAPON,1;
@@ -37882,8 +37788,6 @@ Body:
     Weight: 10
     Locations:
       Armor: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus5 bAutoSpellWhenHit,"CR_GRANDCROSS",5,1,BF_WEAPON,0;
@@ -37900,8 +37804,6 @@ Body:
     Weight: 10
     Locations:
       Armor: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          if (getiteminfo(getequipid(EQI_HAND_R),11) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R),11) == W_WHIP) {
@@ -37922,8 +37824,6 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          if (getiteminfo(getequipid(EQI_HAND_R),11) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSWORD) {
@@ -37942,8 +37842,6 @@ Body:
     Weight: 10
     Locations:
       Garment: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus2 bMagicAtkEle,Ele_Ghost,50;
@@ -37962,8 +37860,6 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus bCritAtkRate,20;
@@ -37980,8 +37876,6 @@ Body:
     Weight: 10
     Locations:
       Garment: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bSubEle,Ele_Holy,-100;
       bonus2 bSubEle,Ele_Ghost,-100;
@@ -38008,8 +37902,6 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       if (getrefine()<15) {
          bonus bMatkRate,10;
@@ -38884,8 +38776,6 @@ Body:
     Weight: 10
     Locations:
       Right_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bVariableCastrate,-5;
   - Id: 27332
@@ -38904,8 +38794,6 @@ Body:
     Weight: 10
     Locations:
       Left_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAspdRate,5;
   - Id: 27334
@@ -40368,8 +40256,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bStr,1;
   - Id: 29149
@@ -40379,8 +40265,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bInt,1;
   - Id: 29150
@@ -40390,8 +40274,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAgi,1;
   - Id: 29151
@@ -40401,8 +40283,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bVit,1;
   - Id: 29152
@@ -40412,8 +40292,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bDex,1;
   - Id: 29153
@@ -40423,8 +40301,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bLuk,1;
   - Id: 29154
@@ -43635,8 +43511,6 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bAddRace,RC_Insect,15;
       bonus2 bMagicAddRace,RC_Insect,15;
@@ -43826,8 +43700,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bAddSize,Size_All,5;
       bonus2 bMagicAddSize,Size_All,5;
@@ -43840,8 +43712,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
       bonus2 bMagicAtkEle,Ele_Earth,10;
@@ -43852,8 +43722,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,10;
       bonus2 bMagicAtkEle,Ele_Fire,10;
@@ -43864,8 +43732,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAspdRate,10;
       bonus bCritAtkRate,7;
@@ -43876,8 +43742,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAspdRate,7;
       bonus bCritAtkRate,10;
@@ -43888,8 +43752,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bMaxSPrate,20;
       bonus5 bAutoSpellWhenHit,"CH_SOULCOLLECT",1,1,BF_WEAPON,0;
@@ -43900,8 +43762,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bMagicAtkEle,Ele_Wind,10;
       bonus2 bMagicAtkEle,Ele_Water,10;
@@ -43912,8 +43772,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bAddClass,Class_All,5;
       bonus bLongAtkRate,7;
@@ -43924,8 +43782,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bVariableCastrate,-10;
       bonus2 bSkillAtk,"NJ_KOUENKA",15;
@@ -43939,8 +43795,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAspdRate,7;
       bonus bShortAtkRate,7;
@@ -43951,8 +43805,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus bAspdRate,7;
       bonus bLongAtkRate,7;
@@ -43963,8 +43815,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bMagicAtkEle,Ele_Holy,10;
       bonus bHealPower,20;
@@ -43975,8 +43825,6 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       .@val = 15;
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_BOOK) {
@@ -43995,8 +43843,6 @@ Body:
     Weight: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
       bonus2 bMagicAtkEle,Ele_Earth,10;
@@ -44008,8 +43854,6 @@ Body:
     Weight: 10
     Locations:
       Both_Accessory: true
-    Flags:
-      DropEffect: RED_PILLAR
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,20;
       bonus2 bMagicAtkEle,Ele_Undead,20;
