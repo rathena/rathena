@@ -55106,6 +55106,7 @@ Body:
       Blacksmith: true
       Crusader: true
       Hunter: true
+      KagerouOboro: true
       Knight: true
       Mage: true
       Merchant: true
@@ -55138,6 +55139,7 @@ Body:
       Blacksmith: true
       Crusader: true
       Hunter: true
+      KagerouOboro: true
       Knight: true
       Mage: true
       Merchant: true
@@ -55168,6 +55170,7 @@ Body:
     Attack: 120
     Range: 1
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Right_Hand: true
@@ -55210,6 +55213,7 @@ Body:
       Blacksmith: true
       Crusader: true
       Hunter: true
+      KagerouOboro: true
       Knight: true
       Mage: true
       Merchant: true
@@ -55239,6 +55243,7 @@ Body:
       Blacksmith: true
       Crusader: true
       Hunter: true
+      KagerouOboro: true
       Knight: true
       Mage: true
       Merchant: true
@@ -55262,6 +55267,7 @@ Body:
     Attack: 120
     Range: 1
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Right_Hand: true
@@ -55356,6 +55362,7 @@ Body:
     Range: 1
     Jobs:
       Assassin: true
+      KagerouOboro: true
       Ninja: true
       Rogue: true
       Thief: true
@@ -55376,6 +55383,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
+      KagerouOboro: true
       Ninja: true
       Rogue: true
       Thief: true
@@ -55775,6 +55783,7 @@ Body:
     MagicAttack: 120
     Range: 1
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Classes:
       Normal: true
@@ -56352,6 +56361,7 @@ Body:
     Range: 1
     Slots: 1
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Classes:
       Normal: true
@@ -58803,6 +58813,7 @@ Body:
     Attack: 55
     Range: 1
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Both_Hand: true
@@ -59165,6 +59176,7 @@ Body:
     Range: 1
     Slots: 2
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Both_Hand: true
@@ -59197,6 +59209,7 @@ Body:
     Range: 1
     Slots: 2
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Both_Hand: true
@@ -111960,6 +111973,7 @@ Body:
     Range: 1
     Slots: 2
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Right_Hand: true
@@ -127250,6 +127264,7 @@ Body:
     Range: 1
     Slots: 2
     Jobs:
+      KagerouOboro: true
       Ninja: true
     Locations:
       Right_Hand: true
