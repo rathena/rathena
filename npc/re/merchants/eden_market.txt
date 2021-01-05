@@ -42,8 +42,7 @@ function	script	F_CoolDown	{
 
 -	marketshop	para_key10	FAKE_NPC,7026:100000:10,7027:100000:10 // todo
 
--	marketshop	para_wp00	FAKE_NPC,1181:10000000:1
-
+-	marketshop	para_wp00	FAKE_NPC,1181:10000000:1,1231:10000000:1,13039:10000000:1,1140:10000000:1,1142:10000000:1,1478:10000000:1,1306:10000000:1,1137:10000000:1,16033:10000000:1,1648:10000000:1,2004:10000000:1,18117:10000000:1,1814:10000000:1,1584:10000000:1,2113:10000000:1
 -	marketshop	para_arm10	FAKE_NPC,5007:2000000:1
 
 -	marketshop	para_ptn00	FAKE_NPC,678:80000:999,12016:50000:9999,525:100000:1000,12422:40000:100,12423:50000:100,12425:40000:100,12426:50000:100
@@ -97,7 +96,21 @@ OnClock0000:
 	npcshopupdate "para_hei10",23016,0,1;
 	npcshopupdate "para_key10",7026,10;
 	npcshopupdate "para_key10",7027,10;
-	npcshopupdate "para_wp00",1181,0,1;
+	npcshopupdate "para_wp00",1181,0,1;	// 2h sword - Tae Goo Lyeon
+	npcshopupdate "para_wp00",1231,0,1;	// MATK dagger - Bazerald 
+	npcshopupdate "para_wp00",13039,0,1;	// ATK dagger - Ivory Knife
+	npcshopupdate "para_wp00",1140,0,1;	// 1h sword - Byeollungum
+	npcshopupdate "para_wp00",1142,0,1;	// 1h spear - Hunting Spear
+	npcshopupdate "para_wp00",1478,0,1;	// 2h spear - Ahlspiess - 2h spear is a tough one, need peer review
+	npcshopupdate "para_wp00",1306,0,1;	// War Axe - 1h axes suck lol
+	npcshopupdate "para_wp00",1137,0,1;	// 2h axe - Hurricane's Fury, other optioon would be Veteran Axe 1384
+	npcshopupdate "para_wp00",16033,0,1;	// Mace - Robot's Mechanical Arm
+	npcshopupdate "para_wp00",1648,0,1;	// 1h staff - Staff of Bordeux - tough choices here, trying to not select a skill/class specific one 
+	npcshopupdate "para_wp00",2004,0,1;	// 2h staff - Kronos
+	npcshopupdate "para_wp00",18117,0,1;	// Royal Bow - this item doesn't drop but it's something different. Other options are Rudra, bow of storms (boring)
+	npcshopupdate "para_wp00",1814,0,1;	// Fist - Berserk. Slotted ver is 1816 which I think should go in instead of non slot (1814). Its not even good
+	npcshopupdate "para_wp00",1584,0,1;	// Book - Cold Magic Book - not many good choices here
+	npcshopupdate "para_wp00",2113,0,1;	// Katar - Bloody Roar
 	npcshopupdate "para_arm10",5007,0,1;
 	npcshopupdate "para_ptn00",678,0,999;
 	npcshopupdate "para_ptn00",12016,0,9999;
