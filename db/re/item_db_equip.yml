@@ -67485,7 +67485,7 @@ Body:
     Refineable: true
     View: 963
     Script: |
-      bonus bMagicHPGainValue,100; bonus bMagicSPGainValue,100;
+      bonus bMatk,20; .@r = getrefine(); bonus bMatk,5*.@r; bonus bMagicHPGainValue,100; bonus bSPLossRate,50,5000;
   - Id: 18849
     AegisName: Celines_Ribbon
     Name: Celines Ribbon
@@ -67499,7 +67499,7 @@ Body:
     Refineable: true
     View: 967
     Script: |
-      bonus bDex,3; bonus bMatk,40+getrefine(); bonus bMagicHPGainValue,200; bonus2 bHPLossRate,50,5000;
+      bonus bDex,3; bonus bMatk,40; .@r = getrefine(); bonus bMatk,7*.@r; bonus bMagicHPGainValue,200; bonus2 bHPLossRate,50,5000;
   - Id: 18850
     AegisName: Polar_Bear_Cap
     Name: Polar Bear Cap
@@ -104616,7 +104616,7 @@ Body:
     Name: C Baby Penguin
     Type: Armor
     Locations:
-      Costume_Head_Top: true
+      Costume_Head_Mid: true
     EquipLevelMin: 1
     View: 1705
   - Id: 31438
