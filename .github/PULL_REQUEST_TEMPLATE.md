@@ -3,13 +3,9 @@
 * **Addressed Issue(s)**: 
 
 <!--
-Please specify the rAthena [GitHub issue(s)](https://help.github.com/articles/autolinked-references-and-urls/#issues-and-pull-requests) this pull request amends.
-If no issue exists yet, please [create one](https://github.com/rathena/rathena/issues/new) first and then link your pull request to the amendment!
+Please specify the ChocobotRO [GitHub issue(s)](https://help.github.com/articles/autolinked-references-and-urls/#issues-and-pull-requests) this pull request amends.
+If no issue exists yet, please [create one](https://github.com/Latiosu/chocobotro/issues/new) first and then link your pull request to the amendment!
 -->
-
-* **Server Mode**: 
-
-<!-- Which mode does this pull request apply to: Pre-Renewal, Renewal, or Both? -->
 
 * **Description of Pull Request**: 
 
