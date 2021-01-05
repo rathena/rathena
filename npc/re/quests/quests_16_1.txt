@@ -2423,7 +2423,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 			mes "[Nillem]";
 			mes "As you wish!";
 			close2;
-			warp "prt_lib_q",89,43;
+			warp "prt_lib",89,43;
 			end;
 		}
 		switch( checkquest(7706,PLAYTIME) ) {
