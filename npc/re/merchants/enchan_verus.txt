@@ -1094,6 +1094,7 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 				.@string$ = "Production design (^ff0000 success rate 30%^000000)";
 			mes "[PLUTO_09]";
 			mes "If you give me 5 " + getitemname(6962) + ", I can do the production of design drawings look!";
+			mes "If it fails, 5 " + getitemname(6962) + " will be refunded.";
 			mes "----------";
 			mes "^0000ffLittle dinosaur running around on the screen.^000000";
 			next;
@@ -1129,15 +1130,15 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 				.@fail = true;
 				.@reac_rnd2 = rand(1,13000);
 				if (.@reac_rnd2 < 2)
-					.@en_name = 969;	// Gold
+					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Gold // .@en_name = 969;
 				else if (.@reac_rnd2 < 1002)
-					.@en_name = 999;	// Steel
+					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Steel // .@en_name = 999;
 				else if (.@reac_rnd2 < 3002)
-					.@en_name = 998;	// Iron
+					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Iron // .@en_name = 998;
 				else if (.@reac_rnd2 < 8002)
-					.@en_name = 1002;	// Iron_Ore
+					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Iron_Ore // .@en_name = 1002;
 				else
-					.@en_name = 7054;	// Brigan
+					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Brigan // .@en_name = 7054;
 			}
 			if (countitem(6962) < 5)
 				mes "^0000ffThe picture shows the dinosaur silently looking at the empty bowl, it may be an error message when the material is insufficient!^000000";
@@ -1154,11 +1155,6 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 			next;
 		}
 		end;
-	default:
-		mes "^0000ffA screen showing howling that a dinosaur may not understand the command.^000000";
-		close;
-	}
-	end;
 }
 
 verus04,165,217,4	script	MARS_01#pa0829	4_SCR_MT_ROBOTS,{
