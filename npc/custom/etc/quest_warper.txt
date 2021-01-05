@@ -1515,7 +1515,7 @@ function	script	QWS_Darray	{
 	setarray @DGat$[@Dref], "lhz_dun01", "lhz_dun02", "lhz_dun03", "lhz_dun04";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4";
 	setarray @DXcoords[@Dref], 150, 150, 140, 244;
-	setarray @DYcoords[@Dref], 287, 18, 136, 57;
+	setarray @DYcoords[@Dref], 287, 18, 133, 57;
 	setarray @DDepth[@Dref], 0, 1, 2, 3;
 
 	QWS_Make_Dungeon_Menu 15;
