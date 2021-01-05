@@ -7,24 +7,7 @@ assignees: ''
 
 ---
 
-<!-- NOTE: Anything within these brackets will be hidden on the preview of the Issue. -->
-
-* **rAthena Hash**: 
-
-<!-- Please specify the rAthena [GitHub hash](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) on which you encountered this issue. 
-How to get your GitHub Hash:
-1. cd your/rAthena/directory/
-2. git rev-parse --short HEAD
-3. Copy the resulting hash.
--->
-
-* **Client Date**: 
-
-<!-- Please specify the client date you used. -->
-
-* **Server Mode**: 
-
-<!-- Which mode does your server use: Pre-Renewal or Renewal? -->
+* **ChocobotRO Version**: 
 
 * **Description of Issue**: 
   * Result: <!-- Describe the issue that you experienced in detail. -->
@@ -35,4 +18,4 @@ How to get your GitHub Hash:
 
 * **Modifications that may affect results**: 
   <!-- * Please provide any information that could influence the expected result. -->
-  <!-- * This can be either configurations you changed, database values you changed, or even external source modifications. -->
+  <!-- * This could client modifications you have applied or in-game settings. -->
