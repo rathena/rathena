@@ -67485,7 +67485,7 @@ Body:
     Refineable: true
     View: 963
     Script: |
-      bonus bMatk,20; .@r = getrefine(); bonus bMatk,5*.@r; bonus bMagicHPGainValue,100; bonus bSPLossRate,50,5000;
+      bonus bMatk,20+(5*getrefine()); bonus bMagicHPGainValue,100; bonus bSPLossRate,50,5000;
   - Id: 18849
     AegisName: Celines_Ribbon
     Name: Celines Ribbon
@@ -67499,7 +67499,7 @@ Body:
     Refineable: true
     View: 967
     Script: |
-      bonus bDex,3; bonus bMatk,40; .@r = getrefine(); bonus bMatk,7*.@r; bonus bMagicHPGainValue,200; bonus2 bHPLossRate,50,5000;
+      bonus bDex,3; bonus bMatk,40+(7*getrefine()); bonus bMagicHPGainValue,200; bonus2 bHPLossRate,50,5000;
   - Id: 18850
     AegisName: Polar_Bear_Cap
     Name: Polar Bear Cap
