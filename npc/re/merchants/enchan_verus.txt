@@ -1094,7 +1094,7 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 				.@string$ = "Production design (^ff0000 success rate 30%^000000)";
 			mes "[PLUTO_09]";
 			mes "If you give me 5 " + getitemname(6962) + ", I can do the production of design drawings look!";
-			mes "If it fails, 5 " + getitemname(6962) + " will be refunded.";
+			mes "If it fails, they will be refunded.";
 			mes "----------";
 			mes "^0000ffLittle dinosaur running around on the screen.^000000";
 			next;
@@ -1142,19 +1142,25 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 			}
 			if (countitem(6962) < 5)
 				mes "^0000ffThe picture shows the dinosaur silently looking at the empty bowl, it may be an error message when the material is insufficient!^000000";
-			else {
+		else {
 				specialeffect EF_SPELLBREAKER;
-				delitem 6962,5;// OldTank
-				getitem .@en_name,1;
 				mes "[PLUTO_09]";
-				if (.@fail)
-					mes "What a pity, the design failed.";
-				else
-					mes "Great, the design was made.";
-			}
+				if (.@fail) {
+				mes "What a pity, the design failed.";
+		} else {
+				delitem 6962,5;	// OldTank
+				getitem .@en_name,1;
+				mes "Great, the design was made.";
+	}
+}
 			next;
 		}
 		end;
+	default:
+		mes "^0000ffA screen showing howling that a dinosaur may not understand the command.^000000";
+		close;
+	}
+	end;
 }
 
 verus04,165,217,4	script	MARS_01#pa0829	4_SCR_MT_ROBOTS,{
