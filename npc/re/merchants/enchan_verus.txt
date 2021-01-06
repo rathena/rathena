@@ -1094,6 +1094,7 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 				.@string$ = "Production design (^ff0000 success rate 30%^000000)";
 			mes "[PLUTO_09]";
 			mes "If you give me 5 " + getitemname(6962) + ", I can do the production of design drawings look!";
+			mes "If it fails, they will be refunded.";
 			mes "----------";
 			mes "^0000ffLittle dinosaur running around on the screen.^000000";
 			next;
@@ -1127,29 +1128,19 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 			else if (.@reac_rnd < 3001)	.@en_name = 6968;	// Reactor_P_WIND_
 			else {
 				.@fail = true;
-				.@reac_rnd2 = rand(1,13000);
-				if (.@reac_rnd2 < 2)
-					.@en_name = 969;	// Gold
-				else if (.@reac_rnd2 < 1002)
-					.@en_name = 999;	// Steel
-				else if (.@reac_rnd2 < 3002)
-					.@en_name = 998;	// Iron
-				else if (.@reac_rnd2 < 8002)
-					.@en_name = 1002;	// Iron_Ore
-				else
-					.@en_name = 7054;	// Brigan
 			}
 			if (countitem(6962) < 5)
 				mes "^0000ffThe picture shows the dinosaur silently looking at the empty bowl, it may be an error message when the material is insufficient!^000000";
 			else {
 				specialeffect EF_SPELLBREAKER;
-				delitem 6962,5;// OldTank
-				getitem .@en_name,1;
 				mes "[PLUTO_09]";
-				if (.@fail)
+				if (.@fail) {
 					mes "What a pity, the design failed.";
-				else
+				} else {
+					delitem 6962,5;	// OldTank
+					getitem .@en_name,1;
 					mes "Great, the design was made.";
+				}
 			}
 			next;
 		}
