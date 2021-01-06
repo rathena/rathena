@@ -1128,31 +1128,20 @@ verus04,163,219,4	script	PLUTO_09#pa0829	4_SCR_AT_ROBOTS,{
 			else if (.@reac_rnd < 3001)	.@en_name = 6968;	// Reactor_P_WIND_
 			else {
 				.@fail = true;
-				.@reac_rnd2 = rand(1,13000);
-				if (.@reac_rnd2 < 2)
-					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Gold // .@en_name = 969;
-				else if (.@reac_rnd2 < 1002)
-					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Steel // .@en_name = 999;
-				else if (.@reac_rnd2 < 3002)
-					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Iron // .@en_name = 998;
-				else if (.@reac_rnd2 < 8002)
-					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Iron_Ore // .@en_name = 1002;
-				else
-					.@en_name = 6962,5;	// Current: 5 OldTank. Original: Brigan // .@en_name = 7054;
 			}
 			if (countitem(6962) < 5)
 				mes "^0000ffThe picture shows the dinosaur silently looking at the empty bowl, it may be an error message when the material is insufficient!^000000";
-		else {
+			else {
 				specialeffect EF_SPELLBREAKER;
 				mes "[PLUTO_09]";
 				if (.@fail) {
-				mes "What a pity, the design failed.";
-		} else {
-				delitem 6962,5;	// OldTank
-				getitem .@en_name,1;
-				mes "Great, the design was made.";
-	}
-}
+					mes "What a pity, the design failed.";
+				} else {
+					delitem 6962,5;	// OldTank
+					getitem .@en_name,1;
+					mes "Great, the design was made.";
+				}
+			}
 			next;
 		}
 		end;
