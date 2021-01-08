@@ -2511,7 +2511,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	struct {
 		struct party_data *p;
 		int id,zeny;
-		unsigned int base_exp,job_exp;
+		t_exp base_exp;
+		t_exp job_exp;
 	} pt[DAMAGELOG_SIZE];
 	int i, temp, count, m = md->bl.m;
 	int dmgbltypes = 0;  // bitfield of all bl types, that caused damage to the mob and are elligible for exp distribution
@@ -2623,7 +2624,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
 			int flag=1,zeny=0;
-			unsigned int base_exp, job_exp;
+			t_exp base_exp, job_exp;
 			double per; //Your share of the mob's exp
 
 			if (!tmpsd[i]) continue;
@@ -2672,7 +2673,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				double exp = apply_rate2(md->db->base_exp, per, 1);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map_getmapflag(m, MF_BEXP));
-				base_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+				base_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
 			}
 
 			if (map_getmapflag(m, MF_NOJOBEXP) || !md->db->job_exp
@@ -2685,7 +2686,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				double exp = apply_rate2(md->db->job_exp, per, 1);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map_getmapflag(m, MF_JEXP));
-				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
+				job_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
 			}
 
 			if ((base_exp > 0 || job_exp > 0) && md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
@@ -2706,16 +2707,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 						flag = 0;
 					}
 				} else {	//Add to total
-					if (pt[j].base_exp > UINT_MAX - base_exp)
-						pt[j].base_exp = UINT_MAX;
-					else
-						pt[j].base_exp += base_exp;
-
-					if (pt[j].job_exp > UINT_MAX - job_exp)
-						pt[j].job_exp = UINT_MAX;
-					else
-						pt[j].job_exp += job_exp;
-
+					pt[j].base_exp = util::safe_addition_cap( pt[j].base_exp, base_exp, MAX_EXP );
+					pt[j].job_exp = util::safe_addition_cap( pt[j].job_exp, job_exp, MAX_EXP );
 					pt[j].zeny += zeny;  // zeny share [Valaris]
 					flag = 0;
 				}
@@ -2734,9 +2727,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 						int rate = pc_level_penalty_mod( tmpsd[i], PENALTY_EXP, nullptr, md );
 						if (rate != 100) {
 							if (base_exp)
-								base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
+								base_exp = (t_exp)cap_value(apply_rate(base_exp, rate), 1, MAX_EXP);
 							if (job_exp)
-								job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
+								job_exp = (t_exp)cap_value(apply_rate(job_exp, rate), 1, MAX_EXP);
 						}
 #endif
 						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
@@ -4232,11 +4225,11 @@ static bool mob_parse_dbrow(char** str)
 	status->max_hp = atoi(str[5]);
 	status->max_sp = atoi(str[6]);
 
-	exp = (double)atoi(str[7]) * (double)battle_config.base_exp_rate / 100.;
-	entry.base_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+	exp = (double)strtoull(str[7],nullptr,10) * (double)battle_config.base_exp_rate / 100.;
+	entry.base_exp = (t_exp)cap_value(exp, 0, MAX_EXP);
 
-	exp = (double)atoi(str[8]) * (double)battle_config.job_exp_rate / 100.;
-	entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+	exp = (double)strtoull(str[8],nullptr,10) * (double)battle_config.job_exp_rate / 100.;
+	entry.job_exp = (t_exp)cap_value(exp, 0, MAX_EXP);
 
 	status->rhw.range = atoi(str[9]);
 #ifdef RENEWAL
@@ -4324,7 +4317,7 @@ static bool mob_parse_dbrow(char** str)
 	// MVP EXP Bonus: MEXP
 	// Some new MVP's MEXP multipled by high exp-rate cause overflow. [LuzZza]
 	exp = (double)atoi(str[30]) * (double)battle_config.mvp_exp_rate / 100.;
-	entry.mexp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+	entry.mexp = (t_exp)cap_value(exp, 0, MAX_EXP);
 
 	//Now that we know if it is an mvp or not, apply battle_config modifiers [Skotlex]
 	maxhp = (double)status->max_hp;
