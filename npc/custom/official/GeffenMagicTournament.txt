@@ -2259,9 +2259,11 @@ OnTimer10000:
 	}
 	else {
 		if (mobcount(instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR")) { end; }
-		getunitdata 'BossID,.@bossdata;
-		unittalk 'BossID, "Alphonse, I'll revive you!";
-		areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#GMTHomun")+"::OnHomJR";
+		if (unitexists('BossID)) {
+			getunitdata 'BossID,.@bossdata;
+			unittalk 'BossID, "Alphonse, I'll revive you!";
+			areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#GMTHomun")+"::OnHomJR";
+		}
 	}
 	end;
 
