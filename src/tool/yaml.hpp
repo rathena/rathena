@@ -8,15 +8,16 @@
 #include <functional>
 #include <iostream>
 #include <locale>
+#include <map>
 #include <unordered_map>
 #include <vector>
 
 #ifdef WIN32
-#include <conio.h>
+	#include <conio.h>
 #else
-#include <termios.h>
-#include <unistd.h>
-#include <stdio.h>
+	#include <termios.h>
+	#include <unistd.h>
+	#include <stdio.h>
 #endif
 
 #include <yaml-cpp/yaml.h>
@@ -323,6 +324,39 @@ uint8 skill_split_atoi2(char *str, int64 *val, const char *delim, int min_value,
 }
 
 /**
+ * Split string to int
+ * @param str: String input
+ * @param val1: Temporary storage to first value
+ * @param val2: Temporary storage to second value
+ */
+static void itemdb_re_split_atoi(char* str, int* val1, int* val2) {
+	int i, val[2];
+
+	for (i = 0; i < 2; i++) {
+		if (!str)
+			break;
+		val[i] = atoi(str);
+		str = strchr(str, ':');
+		if (str)
+			*str++ = 0;
+	}
+	if (i == 0) {
+		*val1 = *val2 = 0;
+		return; // no data found
+	}
+	if (i == 1) { // Single Value
+		*val1 = val[0];
+		*val2 = 0;
+		return;
+	}
+
+	// We assume we have 2 values.
+	*val1 = val[0];
+	*val2 = val[1];
+	return;
+}
+
+/**
  * Determine if array contains level specific data
  * @param arr: Array to check
  * @return True if level specific or false for same for all levels
@@ -356,7 +390,7 @@ std::string name2Upper(std::string name) {
 }
 
 // Constant loading functions
-static bool parse_item_constants(const char *path) {
+static bool parse_item_constants_txt(const char *path) {
 	uint32 lines = 0, count = 0;
 	char line[1024];
 
@@ -487,6 +521,67 @@ static bool parse_item_constants(const char *path) {
 	return true;
 }
 
+const std::string ItemDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/item_db.yml";
+}
+
+uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
+	t_itemid nameid;
+
+	if (!this->asUInt32(node, "Id", nameid))
+		return 0;
+
+	if (this->nodeExists(node, "AegisName")) {
+		std::string name;
+
+		if (!this->asString(node, "AegisName", name))
+			return 0;
+
+		aegis_itemnames[nameid] = name;
+	}
+
+	if (this->nodeExists(node, "View")) {
+		uint32 look;
+
+		if (!this->asUInt32(node, "View", look))
+			return 0;
+
+		if (look > 0) {
+			if (this->nodeExists(node, "Locations")) {
+				const YAML::Node& locationNode = node["Locations"];
+
+				static std::vector<std::string> locations = {
+					"Head_Low",
+					"Head_Mid",
+					"Head_Top",
+					"Costume_Head_Low",
+					"Costume_Head_Mid",
+					"Costume_Head_Top"
+				};
+
+				for (std::string& location : locations) {
+					if (this->nodeExists(locationNode, location)) {
+						bool active;
+
+						if (!this->asBool(locationNode, location, active))
+							return 0;
+
+						aegis_itemviewid[look] = nameid;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return 1;
+}
+
+void ItemDatabase::loadingFinished() {
+}
+
+ItemDatabase item_db;
+
 static bool parse_mob_constants(char *split[], int columns, int current) {
 	uint16 mob_id = atoi(split[0]);
 	char *name = trim(split[1]);
@@ -505,27 +600,32 @@ static bool parse_skill_constants_txt(char *split[], int columns, int current) {
 	return true;
 }
 
-static bool parse_skill_constants_yml(std::string path, std::string filename) {
-	YAML::Node rootNode;
-
-	try {
-		rootNode = YAML::LoadFile(path + filename);
-	} catch (YAML::Exception &e) {
-		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
-		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
-		return false;
-	}
-
-	uint64 count = 0;
-
-	for (const YAML::Node &body : rootNode["Body"]) {
-		aegis_skillnames[body["Id"].as<uint16>()] = body["Name"].as<std::string>();
-		count++;
-	}
-
-	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
-
-	return true;
+const std::string SkillDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/skill_db.yml";
 }
+
+uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
+	t_itemid nameid;
+
+	if (!this->asUInt32(node, "Id", nameid))
+		return 0;
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+
+		if (!this->asString(node, "Name", name))
+			return 0;
+
+		aegis_skillnames[nameid] = name;
+	}
+
+	return 1;
+}
+
+void SkillDatabase::clear() {
+	TypesafeCachedYamlDatabase::clear();
+}
+
+SkillDatabase skill_db;
 
 #endif /* YAML_HPP */

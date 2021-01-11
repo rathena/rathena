@@ -26,6 +26,32 @@ static void skill_txt_data(const std::string& modePath, const std::string& fixed
 		sv_readdb(fixedPath.c_str(), "skill_nonearnpc_db.txt", ',', 2, 3, -1, skill_parse_row_nonearnpcrangedb, false);
 }
 
+// Item database data to memory
+static void item_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	item_avail.clear();
+	item_buyingstore.clear();
+	item_flag.clear();
+	item_delay.clear();
+	item_stack.clear();
+	item_nouse.clear();
+	item_trade.clear();
+
+	if (fileExists(fixedPath + "/item_avail.txt"))
+		sv_readdb(fixedPath.c_str(), "item_avail.txt", ',', 2, 2, -1, &itemdb_read_itemavail, false);
+	if (fileExists(modePath + "/item_buyingstore.txt"))
+		sv_readdb(modePath.c_str(), "item_buyingstore.txt", ',', 1, 1, -1, &itemdb_read_buyingstore, false);
+	if (fileExists(modePath + "/item_flag.txt"))
+		sv_readdb(modePath.c_str(), "item_flag.txt", ',', 2, 2, -1, &itemdb_read_flag, false);
+	if (fileExists(modePath + "/item_delay.txt"))
+		sv_readdb(modePath.c_str(), "item_delay.txt", ',', 2, 3, -1, &itemdb_read_itemdelay, false);
+	if (fileExists(modePath + "/item_stack.txt"))
+		sv_readdb(modePath.c_str(), "item_stack.txt", ',', 3, 3, -1, &itemdb_read_stack, false);
+	if (fileExists(fixedPath + "/item_nouse.txt"))
+		sv_readdb(fixedPath.c_str(), "item_nouse.txt", ',', 3, 3, -1, &itemdb_read_nouse, false);
+	if (fileExists(modePath + "/item_trade.txt"))
+		sv_readdb(modePath.c_str(), "item_trade.txt", ',', 3, 3, -1, &itemdb_read_itemtrade, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -37,7 +63,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
-			
+
 			if (fileExists(to)) {
 				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
 					continue;
@@ -79,16 +105,19 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 int do_init( int argc, char** argv ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
-	const std::string path_db_import = path_db + "/" + DBIMPORT;
+	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
 
 	// Loads required conversion constants
-	parse_item_constants( ( path_db_mode + "/item_db.txt" ).c_str() );
-	parse_item_constants( ( path_db_import + "/item_db.txt" ).c_str() );
+	if (fileExists(item_db.getDefaultLocation())) {
+		item_db.load();
+	} else {
+		parse_item_constants_txt( ( path_db_mode + "item_db.txt" ).c_str() );
+		parse_item_constants_txt( ( path_db_import + "item_db.txt" ).c_str() );
+	}
 	sv_readdb( path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
-	if (fileExists(path_db + "/" + "skill_db.yml")) {
-		parse_skill_constants_yml(path_db_mode, "skill_db.yml");
-		parse_skill_constants_yml(path_db_import + "/", "skill_db.yml");
+	if (fileExists(skill_db.getDefaultLocation())) {
+		skill_db.load();
 	} else {
 		sv_readdb(path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
 		sv_readdb(path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
@@ -96,6 +125,7 @@ int do_init( int argc, char** argv ){
 
 	// Load constants
 	#define export_constant_npc(a) export_constant(a)
+	init_random_option_constants();
 	#include "../map/script_constants.hpp"
 
 	std::vector<std::string> root_paths = {
@@ -165,6 +195,50 @@ int do_init( int argc, char** argv ){
 	})) {
 		return 0;
 	}
+
+	item_txt_data(path_db_mode, path_db);
+	if (!process("ITEM_DB", 1, { path_db_mode }, "item_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_db((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	item_txt_data(path_db_import, path_db_import);
+	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_db((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	rand_opt_db.clear();
+	if (!process("RANDOM_OPTION_DB", 1, root_paths, "item_randomopt_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_randomopt((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	rand_opt_group.clear();
+	if (!process("RANDOM_OPTION_GROUP", 1, root_paths, "item_randomopt_group", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5, 2 + 5 * MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, false) && itemdb_randomopt_group_yaml();
+	})) {
+		return 0;
+	}
+
+#ifdef RENEWAL
+	memset( level_penalty, 0, sizeof( level_penalty ) );
+	if (!process("PENALTY_DB", 1, { path_db_mode }, "level_penalty", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4, -1, &pc_readdb_levelpenalty, false) && pc_levelpenalty_yaml();
+	})) {
+		return 0;
+	}
+
+	memset( level_penalty, 0, sizeof( level_penalty ) );
+	if (!process("PENALTY_DB", 1, { path_db_import }, "level_penalty", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4, -1, &pc_readdb_levelpenalty, false) && pc_levelpenalty_yaml();
+	})) {
+		return 0;
+	}
+#endif
 
 	// TODO: add implementations ;-)
 
@@ -2073,6 +2147,774 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 	}
 
 	body << YAML::EndMap;
+
+	return true;
+}
+
+// item_db.yml function
+//---------------------
+static bool itemdb_read_itemavail(char *str[], int columns, int current) {
+	item_avail.insert({ strtoul(str[0], nullptr, 10), strtoul(str[1], nullptr, 10) });
+	return true;
+}
+
+// item_db.yml function
+//---------------------
+static bool itemdb_read_buyingstore(char* fields[], int columns, int current) {
+	item_buyingstore.insert({ strtoul(fields[0], nullptr, 10), true });
+	return true;
+}
+
+// item_db.yml function
+//---------------------
+static bool itemdb_read_flag(char* fields[], int columns, int current) {
+	s_item_flag_csv2yaml item = { 0 };
+	uint16 flag = abs(atoi(fields[1]));
+
+	if (flag & 1)
+		item.dead_branch = true;
+	if (flag & 2)
+		item.group = true;
+	if (flag & 4)
+		item.guid = true;
+	if (flag & 8)
+		item.bindOnEquip = true;
+	if (flag & 16)
+		item.broadcast = true;
+	if (flag & 32)
+		item.delay_consume = true;
+	if (flag & 64)
+		item.dropEffect = DROPEFFECT_CLIENT;
+	else if (flag & 128)
+		item.dropEffect = DROPEFFECT_WHITE_PILLAR;
+	else if (flag & 256)
+		item.dropEffect = DROPEFFECT_BLUE_PILLAR;
+	else if (flag & 512)
+		item.dropEffect = DROPEFFECT_YELLOW_PILLAR;
+	else if (flag & 1024)
+		item.dropEffect = DROPEFFECT_PURPLE_PILLAR;
+	else if (flag & 2048)
+		item.dropEffect = DROPEFFECT_ORANGE_PILLAR;
+
+	item_flag.insert({ strtoul(fields[0], nullptr, 10), item });
+	return true;
+}
+
+// item_db.yml function
+//---------------------
+static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
+	s_item_delay_csv2yaml item = { 0 };
+
+	item.delay = atoi(str[1]);
+
+	if (columns == 3)
+		item.sc = trim(str[2]);
+
+	item_delay.insert({ strtoul(str[0], nullptr, 10), item });
+	return true;
+}
+
+// item_db.yml function
+//---------------------
+static bool itemdb_read_stack(char* fields[], int columns, int current) {
+	s_item_stack_csv2yaml item = { 0 };
+
+	item.amount = atoi(fields[1]);
+
+	int type = strtoul(fields[2], NULL, 10);
+
+	if (type & 1)
+		item.inventory = true;
+	if (type & 2)
+		item.cart = true;
+	if (type & 4)
+		item.storage = true;
+	if (type & 8)
+		item.guild_storage = true;
+
+	item_stack.insert({ strtoul(fields[0], nullptr, 10), item });
+	return true;
+}
+
+// item_db.yml function
+//---------------------
+static bool itemdb_read_nouse(char* fields[], int columns, int current) {
+	s_item_nouse_csv2yaml item = { 0 };
+
+	item.sitting = "true";
+	item.override = atoi(fields[2]);
+
+	item_nouse.insert({ strtoul(fields[0], nullptr, 10), item });
+	return true;
+}
+
+// item_db.yml function
+//---------------------
+static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
+	s_item_trade_csv2yaml item = { 0 };
+	int flag = atoi(str[1]);
+
+	if (flag & 1)
+		item.drop = true;
+	if (flag & 2)
+		item.trade = true;
+	if (flag & 4)
+		item.trade_partner = true;
+	if (flag & 8)
+		item.sell = true;
+	if (flag & 16)
+		item.cart = true;
+	if (flag & 32)
+		item.storage = true;
+	if (flag & 64)
+		item.guild_storage = true;
+	if (flag & 128)
+		item.mail = true;
+	if (flag & 256)
+		item.auction = true;
+
+	item.override = atoi(str[2]);
+
+	item_trade.insert({ strtoul(str[0], nullptr, 10), item });
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_db(const char* file) {
+	FILE* fp = fopen(file, "r");
+
+	if (fp == nullptr) {
+		ShowError("can't read %s\n", file);
+		return false;
+	}
+
+	int lines = 0;
+	size_t entries = 0;
+	char line[1024];
+
+	while (fgets(line, sizeof(line), fp)) {
+		char* str[32], * p;
+		int i;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = strstr(line, "//");
+
+		if (p != nullptr) {
+			*p = '\0';
+		}
+
+		p = line;
+		while (ISSPACE(*p))
+			++p;
+		if (*p == '\0')
+			continue;// empty line
+		for (i = 0; i < 19; ++i) {
+			str[i] = p;
+			p = strchr(p, ',');
+			if (p == NULL)
+				break;// comma not found
+			*p = '\0';
+			++p;
+		}
+
+		if (p == NULL) {
+			ShowError("itemdb_read_db: Insufficient columns in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			continue;
+		}
+
+		// Script
+		if (*p != '{') {
+			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			continue;
+		}
+		str[19] = p + 1;
+		p = strstr(p + 1, "},");
+		if (p == NULL) {
+			ShowError("itemdb_read_db: Invalid format (Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			continue;
+		}
+		*p = '\0';
+		p += 2;
+
+		// OnEquip_Script
+		if (*p != '{') {
+			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			continue;
+		}
+		str[20] = p + 1;
+		p = strstr(p + 1, "},");
+		if (p == NULL) {
+			ShowError("itemdb_read_db: Invalid format (OnEquip_Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			continue;
+		}
+		*p = '\0';
+		p += 2;
+
+		// OnUnequip_Script (last column)
+		if (*p != '{') {
+			ShowError("itemdb_read_db: Invalid format (OnUnequip_Script column) in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+			continue;
+		}
+		str[21] = p;
+		p = &str[21][strlen(str[21]) - 2];
+
+		if (*p != '}') {
+			/* lets count to ensure it's not something silly e.g. a extra space at line ending */
+			int lcurly = 0, rcurly = 0;
+
+			for (size_t v = 0; v < strlen(str[21]); v++) {
+				if (str[21][v] == '{')
+					lcurly++;
+				else if (str[21][v] == '}') {
+					rcurly++;
+					p = &str[21][v];
+				}
+			}
+
+			if (lcurly != rcurly) {
+				ShowError("itemdb_read_db: Mismatching curly braces in line %d (item with id %u), skipping.\n", lines, strtoul(str[0], nullptr, 10));
+				continue;
+			}
+		}
+		str[21] = str[21] + 1;  //skip the first left curly
+		*p = '\0';              //null the last right curly
+
+		t_itemid nameid = strtoul(str[0], nullptr, 10);
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Id" << YAML::Value << nameid;
+		body << YAML::Key << "AegisName" << YAML::Value << str[1];
+		body << YAML::Key << "Name" << YAML::Value << str[2];
+
+		int type = atoi(str[3]), subtype = atoi(str[18]);
+
+		const char* constant = constant_lookup( type, "IT_" );
+
+		if( constant == nullptr ){
+			ShowError( "itemdb_read_db: Unknown item type %d for item %u, skipping.\n", type, nameid );
+			continue;
+		}
+
+		body << YAML::Key << "Type" << YAML::Value << name2Upper( constant + 3 );
+		if( type == IT_WEAPON && subtype ){
+			constant = constant_lookup( subtype, "W_" );
+
+			if( constant == nullptr ){
+				ShowError( "itemdb_read_db: Unknown weapon type %d for item %u, skipping.\n", subtype, nameid );
+				continue;
+			}
+
+			body << YAML::Key << "SubType" << YAML::Value << name2Upper( constant + 2 );
+		}else if( type == IT_AMMO && subtype ){
+			constant = constant_lookup( subtype, "AMMO_" );
+
+			if( constant == nullptr ){
+				ShowError( "itemdb_read_db: Unknown ammo type %d for item %u, skipping.\n", subtype, nameid );
+				continue;
+			}
+
+			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant + 5);
+		}
+
+		if (atoi(str[4]) > 0)
+			body << YAML::Key << "Buy" << YAML::Value << atoi(str[4]);
+		if (atoi(str[5]) > 0) {
+			if (atoi(str[4]) / 2 != atoi(str[5]))
+				body << YAML::Key << "Sell" << YAML::Value << atoi(str[5]);
+		}
+		if (atoi(str[6]) > 0)
+			body << YAML::Key << "Weight" << YAML::Value << atoi(str[6]);
+
+#ifdef RENEWAL
+		int atk = 0, matk = 0;
+
+		itemdb_re_split_atoi(str[7], &atk, &matk);
+		if (atk > 0)
+			body << YAML::Key << "Attack" << YAML::Value << atk;
+		if (matk > 0)
+			body << YAML::Key << "MagicAttack" << YAML::Value << matk;
+#else
+		if (atoi(str[7]) > 0)
+			body << YAML::Key << "Attack" << YAML::Value << atoi(str[7]);
+#endif
+		if (atoi(str[8]) > 0)
+			body << YAML::Key << "Defense" << YAML::Value << atoi(str[8]);
+		if (atoi(str[9]) > 0)
+			body << YAML::Key << "Range" << YAML::Value << atoi(str[9]);
+		if (atoi(str[10]) > 0)
+			body << YAML::Key << "Slots" << YAML::Value << atoi(str[10]);
+
+		bool equippable = type == IT_UNKNOWN ? false : type == IT_ETC ? false : type == IT_CARD ? false : type == IT_PETEGG ? false : type == IT_PETARMOR ? false : type == IT_UNKNOWN2 ? false : true;
+
+		if (equippable) {
+			uint64 temp_mask = strtoull(str[11], NULL, 0);
+
+			if (temp_mask == 0) {
+				//body << YAML::Key << "Jobs";
+				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
+			} else if (temp_mask == 0xFFFFFFFF) { // Commented out because it's the default value
+				//body << YAML::Key << "Jobs";
+				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
+			} else if (temp_mask == 0xFFFFFFFE) {
+				body << YAML::Key << "Jobs";
+				body << YAML::BeginMap;
+				body << YAML::Key << "All" << YAML::Value << "true";
+				body << YAML::Key << "Novice" << YAML::Value << "false";
+				body << YAML::Key << "SuperNovice" << YAML::Value << "false";
+				body << YAML::EndMap;
+			} else {
+				body << YAML::Key << "Jobs";
+				body << YAML::BeginMap;
+				for (const auto &it : um_mapid2jobname) {
+					uint64 job_mask = 1ULL << it.second;
+
+					if ((temp_mask & job_mask) == job_mask)
+						body << YAML::Key << it.first << YAML::Value << "true";
+				}
+				body << YAML::EndMap;
+			}
+
+			int temp_class = atoi(str[12]);
+
+			if (temp_class == ITEMJ_NONE) {
+				body << YAML::Key << "Classes";
+				body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
+			} else if (temp_class == ITEMJ_ALL) { // Commented out because it's the default value
+				//body << YAML::Key << "Classes";
+				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
+			} else {
+				body << YAML::Key << "Classes";
+				body << YAML::BeginMap;
+				if ((ITEMJ_THIRD & temp_class) && (ITEMJ_THIRD_UPPER & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
+					temp_class &= ~ITEMJ_ALL_THIRD;
+					body << YAML::Key << "All_Third" << YAML::Value << "true";
+				}
+				if ((ITEMJ_UPPER & temp_class) && (ITEMJ_THIRD_UPPER & temp_class)) {
+					temp_class &= ~ITEMJ_ALL_UPPER;
+					body << YAML::Key << "All_Upper" << YAML::Value << "true";
+				}
+				if ((ITEMJ_BABY & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
+					temp_class &= ~ITEMJ_ALL_BABY;
+					body << YAML::Key << "All_Baby" << YAML::Value << "true";
+				}
+				for (int32 i = ITEMJ_NONE; i <= ITEMJ_THIRD_BABY; i++) {
+					if (i & temp_class) {
+						const char* class_ = constant_lookup(i, "ITEMJ_");
+
+						if (class_ != nullptr)
+							body << YAML::Key << name2Upper(class_ + 6) << YAML::Value << "true";
+					}
+				}
+				body << YAML::EndMap;
+			}
+
+			switch (atoi(str[13])) {
+				case SEX_FEMALE:
+					body << YAML::Key << "Gender" << YAML::Value << "Female";
+					break;
+				case SEX_MALE:
+					body << YAML::Key << "Gender" << YAML::Value << "Male";
+					break;
+				//case SEX_BOTH: // Commented out because it's the default value
+				//	body << YAML::Key << "Gender" << YAML::Value << "Both";
+				//	break;
+			}
+		}
+		if (atoi(str[14]) > 0) {
+			int temp_loc = atoi(str[14]);
+
+			body << YAML::Key << "Locations";
+			body << YAML::BeginMap;
+			if ((EQP_HAND_R & temp_loc) && (EQP_HAND_L & temp_loc)) {
+				temp_loc &= ~EQP_ARMS;
+				body << YAML::Key << "Both_Hand" << YAML::Value << "true";
+			}
+			if ((EQP_ACC_R & temp_loc) && (EQP_ACC_L & temp_loc)) {
+				temp_loc &= ~EQP_ACC_RL;
+				body << YAML::Key << "Both_Accessory" << YAML::Value << "true";
+			}
+			for (const auto &it : um_equipnames) {
+				if (it.second & temp_loc)
+					body << YAML::Key << it.first << YAML::Value << "true";
+			}
+			body << YAML::EndMap;
+		}
+		if (atoi(str[15]) > 0)
+			body << YAML::Key << "WeaponLevel" << YAML::Value << atoi(str[15]);
+
+		int elv = 0, elvmax = 0;
+
+		itemdb_re_split_atoi(str[16], &elv, &elvmax);
+		if (elv > 0)
+			body << YAML::Key << "EquipLevelMin" << YAML::Value << elv;
+		if (elvmax > 0)
+			body << YAML::Key << "EquipLevelMax" << YAML::Value << elvmax;
+		if (atoi(str[17]) > 0)
+			body << YAML::Key << "Refineable" << YAML::Value << "true";
+		if (strtoul(str[18], nullptr, 10) > 0 && type != IT_WEAPON && type != IT_AMMO)
+			body << YAML::Key << "View" << YAML::Value << strtoul(str[18], nullptr, 10);
+
+		auto it_avail = item_avail.find(nameid);
+
+		if (it_avail != item_avail.end()) {
+			std::string *item_name = util::umap_find(aegis_itemnames, static_cast<t_itemid>(it_avail->second));
+
+			if (item_name == nullptr)
+				ShowError("Item name for item id %u is not known (item_avail).\n", it_avail->second);
+			else
+				body << YAML::Key << "AliasName" << YAML::Value << *item_name;
+		}
+
+		auto it_flag = item_flag.find(nameid);
+		auto it_buying = item_buyingstore.find(nameid);
+
+		if (it_flag != item_flag.end() || it_buying != item_buyingstore.end()) {
+			body << YAML::Key << "Flags";
+			body << YAML::BeginMap;
+			if (it_buying != item_buyingstore.end())
+				body << YAML::Key << "BuyingStore" << YAML::Value << "true";
+			if (it_flag != item_flag.end() && it_flag->second.dead_branch)
+				body << YAML::Key << "DeadBranch" << YAML::Value << it_flag->second.dead_branch;
+			if (it_flag != item_flag.end() && it_flag->second.group)
+				body << YAML::Key << "Container" << YAML::Value << it_flag->second.group;
+			if (it_flag != item_flag.end() && it_flag->second.guid)
+				body << YAML::Key << "UniqueId" << YAML::Value << it_flag->second.guid;
+			if (it_flag != item_flag.end() && it_flag->second.bindOnEquip)
+				body << YAML::Key << "BindOnEquip" << YAML::Value << it_flag->second.bindOnEquip;
+			if (it_flag != item_flag.end() && it_flag->second.broadcast)
+				body << YAML::Key << "DropAnnounce" << YAML::Value << it_flag->second.broadcast;
+			if (it_flag != item_flag.end() && it_flag->second.delay_consume)
+				body << YAML::Key << "NoConsume" << YAML::Value << it_flag->second.delay_consume;
+			if (it_flag != item_flag.end() && it_flag->second.dropEffect)
+				body << YAML::Key << "DropEffect" << YAML::Value << name2Upper(constant_lookup(it_flag->second.dropEffect, "DROPEFFECT_") + 11);
+			body << YAML::EndMap;
+		}
+
+		auto it_delay = item_delay.find(nameid);
+
+		if (it_delay != item_delay.end()) {
+			body << YAML::Key << "Delay";
+			body << YAML::BeginMap;
+			body << YAML::Key << "Duration" << YAML::Value << it_delay->second.delay;
+			if (it_delay->second.sc.size() > 0)
+				body << YAML::Key << "Status" << YAML::Value << name2Upper(it_delay->second.sc.erase(0, 3));
+			body << YAML::EndMap;
+		}
+
+		auto it_stack = item_stack.find(nameid);
+
+		if (it_stack != item_stack.end()) {
+			body << YAML::Key << "Stack";
+			body << YAML::BeginMap;
+			body << YAML::Key << "Amount" << YAML::Value << it_stack->second.amount;
+			if (it_stack->second.inventory)
+				body << YAML::Key << "Inventory" << YAML::Value << it_stack->second.inventory;
+			if (it_stack->second.cart)
+				body << YAML::Key << "Cart" << YAML::Value << it_stack->second.cart;
+			if (it_stack->second.storage)
+				body << YAML::Key << "Storage" << YAML::Value << it_stack->second.storage;
+			if (it_stack->second.guild_storage)
+				body << YAML::Key << "GuildStorage" << YAML::Value << it_stack->second.guild_storage;
+			body << YAML::EndMap;
+		}
+
+		auto it_nouse = item_nouse.find(nameid);
+
+		if (it_nouse != item_nouse.end()) {
+			body << YAML::Key << "NoUse";
+			body << YAML::BeginMap;
+			body << YAML::Key << "Override" << YAML::Value << it_nouse->second.override;
+			body << YAML::Key << "Sitting" << YAML::Value << "true";
+			body << YAML::EndMap;
+		}
+
+		auto it_trade = item_trade.find(nameid);
+
+		if (it_trade != item_trade.end()) {
+			body << YAML::Key << "Trade";
+			body << YAML::BeginMap;
+			body << YAML::Key << "Override" << YAML::Value << it_trade->second.override;
+			if (it_trade->second.drop)
+				body << YAML::Key << "NoDrop" << YAML::Value << it_trade->second.drop;
+			if (it_trade->second.trade)
+				body << YAML::Key << "NoTrade" << YAML::Value << it_trade->second.trade;
+			if (it_trade->second.trade_partner)
+				body << YAML::Key << "TradePartner" << YAML::Value << it_trade->second.trade_partner;
+			if (it_trade->second.sell)
+				body << YAML::Key << "NoSell" << YAML::Value << it_trade->second.sell;
+			if (it_trade->second.cart)
+				body << YAML::Key << "NoCart" << YAML::Value << it_trade->second.cart;
+			if (it_trade->second.storage)
+				body << YAML::Key << "NoStorage" << YAML::Value << it_trade->second.storage;
+			if (it_trade->second.guild_storage)
+				body << YAML::Key << "NoGuildStorage" << YAML::Value << it_trade->second.guild_storage;
+			if (it_trade->second.mail)
+				body << YAML::Key << "NoMail" << YAML::Value << it_trade->second.mail;
+			if (it_trade->second.auction)
+				body << YAML::Key << "NoAuction" << YAML::Value << it_trade->second.auction;
+			body << YAML::EndMap;
+		}
+
+		if (*str[19])
+			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << trim(str[19]);
+		if (*str[20])
+			body << YAML::Key << "EquipScript" << YAML::Value << YAML::Literal << trim(str[20]);
+		if (*str[21])
+			body << YAML::Key << "UnEquipScript" << YAML::Value << YAML::Literal << trim(str[21]);
+
+		body << YAML::EndMap;
+		entries++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file);
+
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_randomopt(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return 0;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	char path[256];
+
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/') // Ignore comments
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = trim(line);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p, ','))
+		{
+			ShowError("itemdb_read_randomopt: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p, ',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_randomopt(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		/* no ending key anywhere (missing \}\) */
+		if (str[1][strlen(str[1]) - 1] != '}') {
+			ShowError("itemdb_read_randomopt(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		} else {
+			str[0] = trim(str[0]);
+
+			int64 id = constant_lookup_int(str[0]);
+
+			if (id == -100) {
+				ShowError("itemdb_read_randomopt: Unknown random option '%s' constant, skipping.\n", str[0]);
+				continue;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Id" << YAML::Value << id;
+			body << YAML::Key << "Option" << YAML::Value << str[0] + 7;
+			body << YAML::Key << "Script" << YAML::Literal << str[1];
+			body << YAML::EndMap;
+
+			rand_opt_db.insert({ count, str[0] + 7 });
+		}
+		count++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
+	if ((columns - 2) % 3 != 0) {
+		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
+		return false;
+	}
+
+	uint16 id = static_cast<uint16>(rand_opt_group.size() + 1);
+	s_random_opt_group_csv *group = util::umap_find(rand_opt_group, id);
+	s_random_opt_group_csv group_entry;
+
+	if (group == nullptr)
+		group_entry.rate.push_back((uint16)strtoul(str[1], nullptr, 10));
+
+	for (int j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3) {
+		int32 randid_tmp = -1;
+
+		for (const auto &opt : rand_opt_db) {
+			if (opt.second.compare(str[k]) == 0) {
+				randid_tmp = opt.first;
+				break;
+			}
+		}
+
+		if (randid_tmp < 0) {
+			ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k + 1);
+			continue;
+		}
+
+		std::vector<std::shared_ptr<s_random_opt_group_entry>> entries = {};
+
+		if (group != nullptr)
+			entries = group->slots[j];
+
+		std::shared_ptr<s_random_opt_group_entry> entry;
+
+		entry->id = static_cast<uint16>(randid_tmp);
+		entry->min_value = (int16)strtoul(str[k + 1], nullptr, 10);
+		entry->max_value = 0;
+		entry->param = (int8)strtoul(str[k + 2], nullptr, 10);
+		entry->chance = 0;
+		entries.push_back(entry);
+		if (group == nullptr)
+			group_entry.slots[j] = entries;
+		else
+			group->slots[j] = entries;
+		j++;
+	}
+
+	if (group == nullptr)
+		rand_opt_group.insert({ id, group_entry });
+
+	return true;
+}
+
+static bool itemdb_randomopt_group_yaml(void) {
+	for (const auto &it : rand_opt_group) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Id" << YAML::Value << it.first;
+		body << YAML::Key << "Group" << YAML::Value << it.second.name;
+		body << YAML::Key << "Slots";
+		body << YAML::BeginSeq;
+
+		for (size_t i = 0; i < it.second.rate.size(); i++) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Slot" << YAML::Value << i + 1;
+
+			body << YAML::Key << "Options";
+			body << YAML::BeginSeq;
+
+			for (size_t j = 0; j < it.second.slots.size(); j++) {
+				std::vector<std::shared_ptr<s_random_opt_group_entry>> options = it.second.slots.at(static_cast<uint16>(j));
+
+				for (const auto &opt_it : options) {
+					body << YAML::BeginMap;
+
+					for (const auto &opt : rand_opt_db) {
+						if (opt.first == opt_it->id) {
+							body << YAML::Key << "Option" << YAML::Value << opt.second;
+							break;
+						}
+					}
+
+					if (opt_it->min_value != 0)
+						body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
+					if (opt_it->param != 0)
+						body << YAML::Key << "Param" << YAML::Value << opt_it->param;
+					body << YAML::Key << "Chance" << YAML::Value << it.second.rate[i];
+					body << YAML::EndMap;
+				}
+			}
+
+			body << YAML::EndSeq;
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
+
+	return true;
+}
+
+static bool pc_readdb_levelpenalty( char* fields[], int columns, int current ){
+	// 1=experience, 2=item drop
+	int type = atoi( fields[0] );
+
+	if( type != 1 && type != 2 ){
+		ShowWarning( "pc_readdb_levelpenalty: Invalid type %d specified.\n", type );
+		return false;
+	}
+
+	int64 val = constant_lookup_int( fields[1] );
+
+	if( val == -100 ){
+		ShowWarning("pc_readdb_levelpenalty: Unknown class constant %s specified.\n", fields[1] );
+		return false;
+	}
+
+	int class_ = atoi( fields[1] );
+
+	if( !CHK_CLASS( class_ ) ){
+		ShowWarning( "pc_readdb_levelpenalty: Invalid class %d specified.\n", class_ );
+		return false;
+	}
+
+	int diff = atoi( fields[2] );
+
+	if( std::abs( diff ) > MAX_LEVEL ){
+		ShowWarning( "pc_readdb_levelpenalty: Level difference %d is too high.\n", diff );
+		return false;
+	}
+
+	diff += MAX_LEVEL - 1;
+
+	level_penalty[type][class_][diff] = atoi(fields[3]);
+
+	return true;
+}
+
+void pc_levelpenalty_yaml_sub( int type, const std::string& name ){
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << name;
+	body << YAML::Key << "LevelDifferences";
+	body << YAML::BeginSeq;
+	for( int i = ARRAYLENGTH( level_penalty[type][CLASS_NORMAL] ); i >= 0; i-- ){
+		if( level_penalty[type][CLASS_NORMAL][i] > 0 && level_penalty[type][CLASS_NORMAL][i] != 100 ){
+			body << YAML::BeginMap;
+			body << YAML::Key << "Difference" << YAML::Value << ( i - MAX_LEVEL + 1 );
+			body << YAML::Key << "Rate" << YAML::Value << level_penalty[type][CLASS_NORMAL][i];
+			body << YAML::EndMap;
+		}
+	}
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+}
+
+bool pc_levelpenalty_yaml(){
+	pc_levelpenalty_yaml_sub( 1, "Exp" );
+	pc_levelpenalty_yaml_sub( 2, "Drop" );
 
 	return true;
 }
