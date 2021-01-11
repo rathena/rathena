@@ -20136,8 +20136,7 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,20;
       bonus2 bMagicAddRace,RC_Player_Doram,20;
       bonus3 bAddEff,Eff_Stun,1000,ATF_MAGIC;
-      bonus bHPRecovRate,5;
-      bonus bSPRecovRate,5;
+      bonus bHealPower,5;
   - Id: 2020
     AegisName: Jormungand
     Name: Jormungand
@@ -66533,8 +66532,7 @@ Body:
       bonus2 bAddRace,RC_Player_Human,40;
       bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Freeze,1000;
-      bonus bHPRecovRate,5;
-      bonus bSPRecovRate,5;
+      bonus bHealPower,5;
   - Id: 16026
     AegisName: RWC_Memory_Mace
     Name: RWC Memory Mace
