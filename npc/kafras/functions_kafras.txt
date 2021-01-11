@@ -315,7 +315,7 @@ function	script	F_KafTele	{
 	else if (@wrpD$[.@j] == "Comodo Pharos Beacon") warp "cmd_fild07", 127, 134;
 	else if (@wrpD$[.@j] == "Geffen") warp "geffen", 120, 39;
 	else if (@wrpD$[.@j] == "Izlude") {
-		if (checkre(RENEWAL) == true)
+		if (checkre(0) == true)
 			warp "izlude", 128, 98;
 		else
 			warp "izlude", 91, 105;
@@ -340,7 +340,7 @@ function	script	F_KafCart	{
 		mes "[Kafra Employee]";
 		mes "I'm sorry, but the";
 		mes "Pushcart rental service";
-		if (checkre(RENEWAL) == true)
+		if (checkre(0) == true)
 			mes "is only available to Merchant classes.";
 		else {
 			mes "is only available to Merchants,";

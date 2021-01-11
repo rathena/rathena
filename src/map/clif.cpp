@@ -1169,7 +1169,14 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 		p.maxHP = -1;
 		p.HP = -1;
 	}
-	p.isBoss = ( bl->type == BL_MOB && ( ( ( TBL_MOB *)bl )->db->mexp > 0 ) ) ? 1 : 0;
+
+	if( bl->type == BL_MOB ){
+		p.isBoss = ( (mob_data*)bl )->get_bosstype();
+	}else if( bl->type == BL_PET ){
+		p.isBoss = ( (pet_data*)bl )->db->get_bosstype();
+	}else{
+		p.isBoss = BOSSTYPE_NONE;
+	}
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
@@ -1304,7 +1311,13 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 		p.HP = -1;
 	}
 
-	p.isBoss = ( bl->type == BL_MOB && ( ( ( TBL_MOB *)bl)->db->mexp > 0 ) ) ? 1 : 0;
+	if( bl->type == BL_MOB ){
+		p.isBoss = ( (mob_data*)bl )->get_bosstype();
+	}else if( bl->type == BL_PET ){
+		p.isBoss = ( (pet_data*)bl )->db->get_bosstype();
+	}else{
+		p.isBoss = BOSSTYPE_NONE;
+	}
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
@@ -1406,7 +1419,13 @@ static void clif_set_unit_walking( struct block_list *bl, struct map_session_dat
 		p.HP = -1;
 	}
 
-	p.isBoss = ( bl->type == BL_MOB && (((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;
+	if( bl->type == BL_MOB ){
+		p.isBoss = ( (mob_data*)bl )->get_bosstype();
+	}else if( bl->type == BL_PET ){
+		p.isBoss = ( (pet_data*)bl )->db->get_bosstype();
+	}else{
+		p.isBoss = BOSSTYPE_NONE;
+	}
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
@@ -6387,17 +6406,34 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 	if (len < 2)
 		return;
 
-	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
-	std::unique_ptr<unsigned char> buf(new unsigned char[4+lp+len]);
+	struct PACKET_ZC_BROADCAST* p = (struct PACKET_ZC_BROADCAST*)packet_buffer;
 
-	WBUFW(buf.get(),0) = 0x9a;
-	WBUFW(buf.get(),2) = 4 + lp + len;
-	if (type&BC_BLUE)
-		WBUFL(buf.get(),4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
-	else if (type&BC_WOE)
-		WBUFL(buf.get(),4) = 0x73737373; //If there's "ssss", game client will recognize message as 'WoE broadcast'.
-	memcpy(WBUFP(buf.get(), 4 + lp), mes, len);
-	clif_send(buf.get(), WBUFW(buf.get(),2), bl, target);
+	p->packetType = HEADER_ZC_BROADCAST;
+	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_BROADCAST ) + len );
+
+	if( ( type&BC_BLUE ) != 0 ){
+		const char* color = "blue";
+		int16 length = (int16)strlen( color );
+
+		// If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
+		strcpy( p->message, color );
+		strncpy( &p->message[length], mes, len );
+
+		p->PacketLength += length;
+	}else if( ( type&BC_WOE ) != 0 ){
+		const char* color = "ssss";
+		int16 length = (int16)strlen( color );
+
+		// If there's "ssss", game client will recognize message as 'WoE broadcast'.
+		strcpy( p->message, color );
+		strncpy( &p->message[length], mes, len );
+
+		p->PacketLength += length;
+	}else{
+		strncpy( p->message, mes, len );
+	}
+
+	clif_send( p, p->PacketLength, bl, target );
 }
 
 /*==========================================
@@ -6405,49 +6441,47 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
  * 008d <PacketLength>.W <GID>.L <message>.?B (ZC_NOTIFY_CHAT)
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_target target) {
-	size_t len;
 	nullpo_retv(bl);
+	nullpo_retv(message);
 
-	if(!message)
-		return;
+	int16 len = (int16)( strlen( message ) + 1 );
 
-	len = strlen(message)+1;
-
-	static_assert(CHAT_SIZE_MAX > 8, "CHAT_SIZE_MAX too small for packet");
 	if( len > CHAT_SIZE_MAX ) {
-		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
+		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRId16 ").\n", message, len);
 		len = CHAT_SIZE_MAX;
 	}
-	std::unique_ptr<char> buf(new char[8+len]);
 
-	WBUFW(buf.get(),0)=0x8d;
-	WBUFW(buf.get(),2)=static_cast<uint16>(len+8);
-	WBUFL(buf.get(),4)=bl->id;
-	safestrncpy(WBUFCP(buf.get(),8),message,len);
+	struct PACKET_ZC_NOTIFY_CHAT* p = (struct PACKET_ZC_NOTIFY_CHAT*)packet_buffer;
 
-	clif_send((unsigned char *)buf.get(),WBUFW(buf.get(),2),bl,target);
+	p->PacketType = HEADER_ZC_NOTIFY_CHAT;
+	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_NOTIFY_CHAT ) + len );
+	p->GID = bl->id;
+	safestrncpy( p->Message, message, len );
+
+	clif_send( p, p->PacketLength, bl, target );
 }
 
 
-/// Send broadcast message with font formatting (ZC_BROADCAST2).
-/// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
+/// Send broadcast message with font formatting.
+/// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B (ZC_BROADCAST2)
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
 	nullpo_retv(mes);
 	if (len < 2)
 		return;
 
-	std::unique_ptr<unsigned char> buf(new unsigned char[16+len]);
+	struct PACKET_ZC_BROADCAST2* p = (struct PACKET_ZC_BROADCAST2*)packet_buffer;
 
-	WBUFW(buf.get(),0)  = 0x1c3;
-	WBUFW(buf.get(),2)  = len + 16;
-	WBUFL(buf.get(),4)  = fontColor;
-	WBUFW(buf.get(),8)  = fontType;
-	WBUFW(buf.get(),10) = fontSize;
-	WBUFW(buf.get(),12) = fontAlign;
-	WBUFW(buf.get(),14) = fontY;
-	memcpy(WBUFP(buf.get(),16), mes, len);
-	clif_send(buf.get(), WBUFW(buf.get(),2), bl, target);
+	p->packetType = HEADER_ZC_BROADCAST2;
+	p->PacketLength = (int16)( sizeof( struct PACKET_ZC_BROADCAST2 ) + len );
+	p->fontColor = fontColor;
+	p->fontType = fontType;
+	p->fontSize = fontSize;
+	p->fontAlign = fontAlign;
+	p->fontY = fontY;
+	strncpy( p->message, mes, len );
+
+	clif_send( p, p->PacketLength, bl, target );
 }
 
 /*
@@ -8381,7 +8415,7 @@ void clif_mvp_item( struct map_session_data *sd, t_itemid nameid ){
 
 /// MVP EXP reward message (ZC_MVP_GETTING_SPECIAL_EXP).
 /// 010b <exp>.L
-void clif_mvp_exp(struct map_session_data *sd, unsigned int exp) {
+void clif_mvp_exp(struct map_session_data *sd, t_exp exp) {
 #if PACKETVER >= 20131223		// Kro remove this packet [Napster]
 	if (battle_config.mvp_exp_reward_message) {
 		char e_msg[CHAT_SIZE_MAX];
@@ -8396,7 +8430,7 @@ void clif_mvp_exp(struct map_session_data *sd, unsigned int exp) {
 	fd = sd->fd;
 	WFIFOHEAD(fd, packet_len(0x10b));
 	WFIFOW(fd,0) = 0x10b;
-	WFIFOL(fd,2) = min(exp, (unsigned int)INT32_MAX);
+	WFIFOL(fd,2) = (uint32)min( exp, MAX_EXP );
 	WFIFOSET(fd, packet_len(0x10b));
 #endif
 }
@@ -12630,7 +12664,7 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	sd->skillitem = sd->skillitemlv = 0;
 
 	if( SKILL_CHK_GUILD(skill_id) ) {
-		if( sd->state.gmaster_flag )
+		if( sd->state.gmaster_flag || skill_id == GD_CHARGESHOUT_BEATING )
 			skill_lv = guild_checkskill(sd->guild, skill_id);
 		else
 			skill_lv = 0;
@@ -14873,10 +14907,10 @@ int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap)
 void clif_friendslist_send(struct map_session_data *sd)
 {
 	int i = 0, n, fd = sd->fd;
-#if PACKETVER >= 20180221
-	const int size = 8;
-#else
+#if PACKETVER < 20180221 || PACKETVER_RE_NUM >= 20200902
 	const int size = 8 + NAME_LENGTH;
+#else
+	const int size = 8;
 #endif
 
 	// Send friends list
@@ -14885,7 +14919,7 @@ void clif_friendslist_send(struct map_session_data *sd)
 	for(i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id; i++) {
 		WFIFOL(fd, 4 + size * i + 0) = sd->status.friends[i].account_id;
 		WFIFOL(fd, 4 + size * i + 4) = sd->status.friends[i].char_id;
-#if PACKETVER < 20180221
+#if PACKETVER < 20180221 || PACKETVER_RE_NUM >= 20200902
 		safestrncpy(WFIFOCP(fd, 4 + size * i + 8), sd->status.friends[i].name, NAME_LENGTH);
 #endif
 	}
@@ -16887,7 +16921,11 @@ void clif_cashshop_result( struct map_session_data *sd, t_itemid item_id, uint16
 	struct PACKET_ZC_SE_PC_BUY_CASHITEM_RESULT packet;
 
 	packet.packetType = 0x849;
-	packet.itemId = client_nameid( item_id );
+	if( item_id != 0 ){
+		packet.itemId = client_nameid( item_id );
+	}else{
+		packet.itemId = 0;
+	}
 	packet.result = result;
 	packet.cashPoints = sd->cashPoints;
 	packet.kafraPoints = sd->kafraPoints;
