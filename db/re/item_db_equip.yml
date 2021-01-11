@@ -9604,6 +9604,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Blind,1000;
   - Id: 1496
     AegisName: Thanos_Long_Spear
@@ -12080,9 +12081,9 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
       bonus2 bMagicAddRace,RC_Player_Human,5;
-       bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bMagicAddRace,RC_Player_Doram,5;
-      bonus3 bAddEff,Eff_Blind,1000,ATF_MAGIC;
+      bonus2 bAddEff,Eff_Blind,1000;
       bonus bHealPower,5;
   - Id: 1592
     AegisName: Thor_Pedigree_Book
@@ -16982,7 +16983,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Freeze,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Freeze,1000;
   - Id: 1835
     AegisName: Spartacus
     Name: Spartacus
@@ -18211,7 +18213,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Poison,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Poison,1000;
   - Id: 1933
     AegisName: Thanos_Violin
     Name: Thanos Violin
@@ -19329,7 +19332,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Blind,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Blind,1000;
   - Id: 1988
     AegisName: Thanos_Whip
     Name: Thanos Whip
@@ -20130,9 +20134,9 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bMagicAddRace,RC_Player_Human,20;
+      bonus2 bMagicAddRace,RC_Player_Doram,20;
       bonus3 bAddEff,Eff_Stun,1000,ATF_MAGIC;
-      bonus bHPRecovRate,5;
-      bonus bSPRecovRate,5;
+      bonus bHealPower,5;
   - Id: 2020
     AegisName: Jormungand
     Name: Jormungand
@@ -22386,6 +22390,7 @@ Body:
       bonus bMaxHP,100;
       bonus bMaxSP,100;
       bonus2 bSubRace,RC_Player_Human,15;
+      bonus2 bSubRace,RC_Player_Doram,15;
   - Id: 2179
     AegisName: TE_Woe_Shield
     Name: TE Woe Shield
@@ -22416,6 +22421,7 @@ Body:
       bonus bMdef,5;
       bonus bMaxHP,200;
       bonus2 bSubRace,RC_Player_Human,20;
+      bonus2 bSubRace,RC_Player_Doram,20;
   - Id: 2180
     AegisName: TE_Woe_Magic_Guard
     Name: TE Woe Magic Guard
@@ -22449,6 +22455,7 @@ Body:
       bonus bMdef,25;
       bonus bMaxSP,200;
       bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
   - Id: 2181
     AegisName: Hervor
     Name: Hervor
@@ -28054,7 +28061,9 @@ Body:
       bonus bMaxHP,150;
       bonus bMaxSP,150;
       bonus2 bAddRace,RC_Player_Human,5;
+      bonus2 bAddRace,RC_Player_Doram,5;
       bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 2497
     AegisName: TE_Woe_Boots
@@ -28085,6 +28094,7 @@ Body:
       bonus bMaxHP,200;
       bonus bMaxSP,100;
       bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 2498
     AegisName: TE_Woe_Magic_Sandal
@@ -28119,6 +28129,7 @@ Body:
       bonus bMaxHP,100;
       bonus bMaxSP,200;
       bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 2499
     AegisName: Temporal_Boots
@@ -55947,7 +55958,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Silence,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Silence,1000;
   - Id: 13085
     AegisName: Volcano_Knife
     Name: Volcano Knife
@@ -56832,7 +56844,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Curse,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Curse,1000;
   - Id: 13118
     AegisName: Tiny_Flame
     Name: Fading Flame
@@ -58064,6 +58077,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Silence,1000;
   - Id: 13185
     AegisName: TE_Woe_Gatling
@@ -58091,6 +58105,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Stun,1000;
   - Id: 13186
     AegisName: TE_Woe_Shotgun
@@ -58118,6 +58133,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Poison,1000;
   - Id: 13187
     AegisName: TE_Woe_Grenade
@@ -58145,6 +58161,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Blind,1000;
   - Id: 13189
     AegisName: COLORSCOPE
@@ -58802,6 +58819,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Bleeding,1000;
       bonus bUnbreakableWeapon;
   - Id: 13321
@@ -60491,7 +60509,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Poison,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Poison,1000;
   - Id: 13440
     AegisName: Ceremonial_Sword
     Name: Ceremonial Sword
@@ -62937,6 +62956,7 @@ Body:
       bonus bMaxHP,250;
       bonus bMaxSP,250;
       bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 15063
     AegisName: TE_Woe_Chain_Mail
@@ -62968,6 +62988,7 @@ Body:
       bonus bMaxHP,450;
       bonus bMaxSP,50;
       bonus2 bSubRace,RC_Player_Human,15;
+      bonus2 bSubRace,RC_Player_Doram,15;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 15064
     AegisName: TE_Woe_Mage_Coat
@@ -63002,6 +63023,7 @@ Body:
       bonus bMaxHP,200;
       bonus bMaxSP,200;
       bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 15066
     AegisName: Engraved_Armor
@@ -66508,9 +66530,9 @@ Body:
     Script: |
       bonus bUnbreakableWeapon;
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Freeze,3000;
-      bonus bHPRecovRate,5;
-      bonus bSPRecovRate,5;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Freeze,1000;
+      bonus bHealPower,5;
   - Id: 16026
     AegisName: RWC_Memory_Mace
     Name: RWC Memory Mace
@@ -72867,7 +72889,9 @@ Body:
       bonus bBaseAtk,5;
       bonus bMatk,5;
       bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
       bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 18733
     AegisName: TE_Woe_Bone_Helm
@@ -72898,6 +72922,7 @@ Body:
     Script: |
       bonus bBaseAtk,10;
       bonus2 bAddRace,RC_Player_Human,20;
+      bonus2 bAddRace,RC_Player_Doram,20;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 18734
     AegisName: TE_Woe_Magic_Eyes
@@ -72932,6 +72957,7 @@ Body:
       bonus bMdef,5;
       bonus bMatk,10;
       bonus2 bMagicAddRace,RC_Player_Human,20;
+      bonus2 bMagicAddRace,RC_Player_Doram,20;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 18736
     AegisName: Censor_Bar_
@@ -89327,7 +89353,9 @@ Body:
     Script: |
       bonus bMdef,5;
       bonus2 bAddRace,RC_Player_Human,5;
+      bonus2 bAddRace,RC_Player_Doram,5;
       bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 20703
     AegisName: TE_Woe_Manteau
@@ -89356,6 +89384,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 20704
     AegisName: TE_Woe_Magic_Manteau
@@ -89387,6 +89416,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 20705
     AegisName: Lumiere_Manteau
