@@ -148,15 +148,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		item->value_buy = buy;
 	} else {
 		if (!exists) {
-			if (this->nodeExists(node, "Sell")) {
-				uint32 sell;
-
-				if (!this->asUInt32(node, "Sell", sell))
-					return 0;
-
-				item->value_buy = sell * 2;
-			} else
-				item->value_buy = 0;
+			item->value_buy = 0;
 		}
 	}
 
@@ -168,7 +160,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 		item->value_sell = sell;
 	} else {
-		item->value_sell = item->value_buy / 2;
+		if (!exists) {
+			item->value_sell = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "Weight")) {
@@ -1017,7 +1011,11 @@ void ItemDatabase::loadingFinished(){
 		}
 
 		// When a particular price is not given, we should base it off the other one
-		// (it is important to make a distinction between 'no price' and 0z)
+		if (item->value_buy == 0 && item->value_sell > 0)
+			item->value_buy = item->value_sell * 2;
+		else if (item->value_buy > 0 && item->value_sell == 0)
+			item->value_sell = item->value_buy / 2;
+
 		if (item->value_buy / 124. < item->value_sell / 75.) {
 			ShowWarning("Buying/Selling [%d/%d] price of %s (%u) allows Zeny making exploit through buying/selling at discounted/overcharged prices! Defaulting Sell to 1 Zeny.\n", item->value_buy, item->value_sell, item->name.c_str(), item->nameid);
 			item->value_sell = 1;
