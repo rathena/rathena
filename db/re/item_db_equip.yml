@@ -98894,9 +98894,9 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bVariableCastrate,MG_COLDBOLT,-20-(5*.@r);
-      bonus2 bVariableCastrate,MG_FIREBOLT,-20-(5*.@r);
-      bonus2 bVariableCastrate,MG_LIGHTNINGBOLT,-20-(5*.@r);
+      bonus2 bVariableCastrate,"MG_COLDBOLT",-20-(5*.@r);
+      bonus2 bVariableCastrate,"MG_FIREBOLT",-20-(5*.@r);
+      bonus2 bVariableCastrate,"MG_LIGHTNINGBOLT",-20-(5*.@r);
   - Id: 24250
     AegisName: S_Swordman_Pendant
     Name: Swordman Shadow Pendant
