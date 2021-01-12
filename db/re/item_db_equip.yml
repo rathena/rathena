@@ -51649,7 +51649,6 @@ Body:
     Locations:
       Head_Low: true
     EquipLevelMin: 30
-    EquipLevelMax: 999
     Script: |
       bonus bLuk,1;
       bonus3 bAutoSpell,"PR_ASPERSIO",1,50;
@@ -64909,7 +64908,6 @@ Body:
     Locations:
       Armor: true
     EquipLevelMin: 100
-    EquipLevelMax: 999
     Refineable: true
     Script: |
       bonus bVariableCastrate,-10;
@@ -77790,7 +77788,6 @@ Body:
     Locations:
       Head_Top: true
     EquipLevelMin: 1
-    EquipLevelMax: 999
     Script: |
       bonus bHPGainValue,500;
       bonus bLongHPGainValue,500;
@@ -77941,7 +77938,6 @@ Body:
     Locations:
       Head_Top: true
     EquipLevelMin: 100
-    EquipLevelMax: 999
     Script: |
       .@bonus = (getrefine() >= 7 ? 12 : 10);
       bonus2 bSubRace,RC_DemiHuman,.@bonus;
@@ -80210,7 +80206,6 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-    EquipLevelMax: 999
     Refineable: true
     Script: |
       .@r = getrefine();
@@ -80928,7 +80923,6 @@ Body:
     Slots: 1
     Locations:
       Head_Mid: true
-    EquipLevelMax: 999
     Script: |
       bonus bAllStats,10;
       /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,30;
@@ -111568,7 +111562,6 @@ Body:
     Locations:
       Both_Accessory: true
     EquipLevelMin: 50
-    EquipLevelMax: 999
     Script: |
       bonus bMatkRate,5;
       bonus bHit,20;
