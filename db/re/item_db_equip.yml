@@ -98585,7 +98585,7 @@ Body:
       if (.@r>=7)
          bonus bMaxSPrate,1;
       if (.@r>=9)
-         bonus bAddClass,Class_All,1;
+         bonus2 bAddClass,Class_All,1;
   - Id: 24227
     AegisName: S_Enhance_Spirit_Weapon
     Name: Enhanced Soul Shadow Weapon
