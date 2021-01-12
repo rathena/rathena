@@ -48852,3 +48852,22 @@ Body:
     EquipLevelMin: 180
     Script: |
       itemheal rand(2730,2750),0;
+  - Id: 2000000
+    AegisName: Naught_Sieger_Bundle_A
+    Name: Naught Sieger Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(13412,1);
+      getitem(13413,1);
