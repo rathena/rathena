@@ -188,7 +188,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		}
 
 		if( achievement->condition ){
-			aFree( achievement->condition );
+			script_free_code( achievement->condition );
 			achievement->condition = nullptr;
 		}
 
@@ -241,14 +241,14 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 
 		// TODO: not camel case
 		if( this->nodeExists( rewardNode, "ItemID" ) ){
-			uint16 itemId;
+			t_itemid itemId;
 
-			if( !this->asUInt16( rewardNode, "ItemID", itemId ) ){
+			if( !this->asUInt32( rewardNode, "ItemID", itemId ) ){
 				return 0;
 			}
 
 			if( !itemdb_exists( itemId ) ){
-				this->invalidWarning( rewardNode["ItemID"], "Unknown item with ID %hu.\n", itemId );
+				this->invalidWarning( rewardNode["ItemID"], "Unknown item with ID %u.\n", itemId );
 				return 0;
 			}
 
@@ -278,7 +278,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			if( achievement->rewards.script ){
-				aFree( achievement->rewards.script );
+				script_free_code( achievement->rewards.script );
 				achievement->rewards.script = nullptr;
 			}
 
@@ -1038,6 +1038,34 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 			pc_setglobalreg( sd, add_str( name.c_str() ), 0 );
 		}
 	}
+}
+
+/**
+ * Map iterator subroutine to update achievement objectives for a party after killing a monster.
+ * @see map_foreachinrange
+ * @param ap: Argument list, expecting:
+ *   int Party ID
+ *   int Mob ID
+ */
+int achievement_update_objective_sub(block_list *bl, va_list ap)
+{
+	map_session_data *sd;
+	int mob_id, party_id;
+
+	nullpo_ret(bl);
+	nullpo_ret(sd = (map_session_data *)bl);
+
+	party_id = va_arg(ap, int);
+	mob_id = va_arg(ap, int);
+
+	if (sd->achievement_data.achievements == nullptr)
+		return 0;
+	if (sd->status.party_id != party_id)
+		return 0;
+
+	achievement_update_objective(sd, AG_BATTLE, 1, mob_id);
+
+	return 1;
 }
 
 /**

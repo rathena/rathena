@@ -675,13 +675,13 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus2 bAddRace,RC_Demihuman,3;
         bonus2 bMagicAddRace,RC_DemiHuman,3;
-        bonus2 bAddRace,RC_Player,3;
-        bonus2 bMagicAddRace,RC_Player,3;
+        bonus2 bAddRace,RC_Player_Human,3;
+        bonus2 bMagicAddRace,RC_Player_Human,3;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bAddRace,RC_Demihuman,2;
         bonus2 bMagicAddRace,RC_DemiHuman,2;
-        bonus2 bAddRace,RC_Player,2;
-        bonus2 bMagicAddRace,RC_Player,2;
+        bonus2 bAddRace,RC_Player_Human,2;
+        bonus2 bMagicAddRace,RC_Player_Human,2;
       }
   - Mob: ALICE
     TameItem: Sway_Apron
@@ -697,11 +697,11 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMdef,2;
         bonus2 bSubRace,RC_DemiHuman,2;
-        bonus2 bSubRace,RC_Player,2;
+        bonus2 bSubRace,RC_Player_Human,2;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMdef,1;
         bonus2 bSubRace,RC_DemiHuman,1;
-        bonus2 bSubRace,RC_Player,1;
+        bonus2 bSubRace,RC_Player_Human,1;
       }
     Evolution:
       - Target: ALIZA
@@ -760,11 +760,11 @@ Body:
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bDef,2;
         bonus2 bSubRace,RC_DemiHuman,2;
-        bonus2 bSubRace,RC_Player,2;
+        bonus2 bSubRace,RC_Player_Human,2;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bDef,1;
         bonus2 bSubRace,RC_DemiHuman,1;
-        bonus2 bSubRace,RC_Player,1;
+        bonus2 bSubRace,RC_Player_Human,1;
       }
   - Mob: ECLIPSE_P
     EggItem: Spring_Rabbit_Egg
@@ -933,10 +933,10 @@ Body:
       
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus2 bAddRace,RC_DemiHuman,5;
-        bonus2 bAddRace,RC_Player,5;
+        bonus2 bAddRace,RC_Player_Human,5;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bAddRace,RC_DemiHuman,3;
-        bonus2 bAddRace,RC_Player,3;
+        bonus2 bAddRace,RC_Player_Human,3;
       }
   - Mob: SUCCUBUS
     TameItem: Boy's_Naivety
@@ -1143,8 +1143,10 @@ Body:
       
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus2 bSubRace,RC_Brute,5;
+        bonus2 bSubRace,RC_Player_Doram,5;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bSubRace,RC_Brute,3;
+        bonus2 bSubRace,RC_Player_Doram,3;
       }
   - Mob: BACSOJIN_
     TameItem: Shiny_Wing_Gown

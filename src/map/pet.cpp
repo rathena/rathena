@@ -373,6 +373,11 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
+		if( pet->pet_bonus_script != nullptr ){
+			script_free_code( pet->pet_bonus_script );
+			pet->pet_bonus_script = nullptr;
+		}
+
 		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
 	}else{
 		if( !exists ){
@@ -385,6 +390,11 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 		if( !this->asString( node, "SupportScript", script ) ){
 			return 0;
+		}
+
+		if( pet->pet_support_script != nullptr ){
+			script_free_code( pet->pet_support_script );
+			pet->pet_support_script = nullptr;
 		}
 
 		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["SupportScript"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
@@ -438,9 +448,9 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 					return 0;
 				}
 
-				uint32 amount;
+				uint16 amount;
 
-				if( !this->asUInt32( requirementNode, "Amount", amount ) ){
+				if( !this->asUInt16( requirementNode, "Amount", amount ) ){
 					return 0;
 				}
 
@@ -593,6 +603,28 @@ int pet_hungry_val(struct pet_data *pd)
 		return 0;
 }
 
+int16 pet_get_card3_intimacy( int intimacy ){
+	if( intimacy < PET_INTIMATE_SHY ){
+		// Awkward
+		return ( 1 << 1 );
+	}else if( intimacy < PET_INTIMATE_NEUTRAL ){
+		// Shy
+		return ( 2 << 1 );
+	}else if( intimacy < PET_INTIMATE_CORDIAL ){
+		// Neutral
+		return ( 3 << 1 );
+	}else if( intimacy < PET_INTIMATE_LOYAL ){
+		// Cordial
+		return ( 4 << 1 );
+	}else if( intimacy <= PET_INTIMATE_MAX ){
+		// Loyal
+		return ( 5 << 1 );
+	}else{
+		// Unknown
+		return 0;
+	}
+}
+
 /**
  * Set the value of the pet's intimacy.
  * @param pd : pet requesting
@@ -606,8 +638,16 @@ void pet_set_intimate(struct pet_data *pd, int value)
 
 	struct map_session_data *sd = pd->master;
 
-	if(pd->pet.intimate <= PET_INTIMATE_NONE)
-		pc_delitem(sd, pet_egg_search(sd, pd->pet.pet_id), 1, 0, 0, LOG_TYPE_OTHER);
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
+		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+	}else{
+		// Remove everything except the rename flag
+		sd->inventory.u.items_inventory[index].card[3] &= 1;
+
+		sd->inventory.u.items_inventory[index].card[3] |= pet_get_card3_intimacy( pd->pet.intimate );
+	}
 
 	if (sd)
 		status_calc_pc(sd,SCO_NONE);
@@ -619,7 +659,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
  * @param item_id : item ID of tamer
  * @return true:success, false:failure
  */
-bool pet_create_egg(struct map_session_data *sd, unsigned short item_id)
+bool pet_create_egg(struct map_session_data *sd, t_itemid item_id)
 {
 	std::shared_ptr<s_pet_db> pet = pet_db_search(item_id, PET_EGG);
 
@@ -1156,7 +1196,7 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 
 	std::shared_ptr<s_pet_db> pet = pet_db_search(sd->inventory.u.items_inventory[egg_index].nameid, PET_EGG);
 	if (!pet) {
-		ShowError("pet does not exist, egg id %d\n", sd->inventory.u.items_inventory[egg_index].nameid);
+		ShowError("pet does not exist, egg id %u\n", sd->inventory.u.items_inventory[egg_index].nameid);
 		return 0;
 	}
 
@@ -1202,7 +1242,8 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
-		sd->itemid = sd->itemindex = -1;
+		sd->itemid = 0;
+		sd->itemindex = -1;
 		return 1;
 	}
 
@@ -1297,6 +1338,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.
+	tmp_item.card[3] |= pet_get_card3_intimacy( pet->intimate ); // Store intimacy status based on initial intimacy
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
@@ -1401,6 +1443,12 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	clif_pet_equip_area(pd);
 	clif_send_petstatus(sd);
 
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( index >= 0 ){
+		sd->inventory.u.items_inventory[index].card[3] |= 1;
+	}
+
 	return 1;
 }
 
@@ -1413,7 +1461,6 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
-	unsigned short nameid;
 
 	nullpo_retr(1, sd);
 
@@ -1428,7 +1475,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 		return 1;
 	}
 
-	nameid = sd->inventory.u.items_inventory[index].nameid;
+	t_itemid nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pet_db_ptr->AcceID == 0 || nameid != pet_db_ptr->AcceID || pd->pet.equip != 0) {
 		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
@@ -1466,13 +1513,12 @@ int pet_equipitem(struct map_session_data *sd,int index)
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	unsigned short nameid;
 	unsigned char flag = 0;
 
 	if(pd->pet.equip == 0)
 		return 1;
 
-	nameid = pd->pet.equip;
+	t_itemid nameid = pd->pet.equip;
 	pd->pet.equip = 0;
 	status_set_viewdata(&pd->bl, pd->pet.class_);
 	clif_pet_equip_area(pd);

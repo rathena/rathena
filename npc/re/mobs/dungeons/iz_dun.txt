@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -11,17 +11,18 @@
 //= 1.2 More accurate spawns [Playtester]
 //= 1.3 Added Izlude Dungeon F6 spawns [Chilly]
 //= 1.4 Official F6 spawns.
+//= 1.5 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================
 // iz_dun00 - Undersea Tunnel
 //==================================================
-iz_dun00,0,0	monster	Plankton	1161,65,5000
-iz_dun00,0,0	monster	Marina	1141,45,5000
-iz_dun00,0,0	monster	Vadon	1066,15,5000
-iz_dun00,0,0	monster	Kukre	1070,15,5000
-iz_dun00,0,0	monster	Hydra	1068,15,5000
-iz_dun00,0,0	monster	Black Mushroom	1084,5,180000,90000
+iz_dun00,0,0	monster	Plankton	1161,88,5000
+iz_dun00,0,0	monster	Marina	1141,61,5000
+iz_dun00,0,0	monster	Vadon	1066,20,5000
+iz_dun00,0,0	monster	Kukre	1070,20,5000
+iz_dun00,0,0	monster	Hydra	1068,20,5000
+iz_dun00,0,0	monster	Black Mushroom	1084,6,180000,90000
 
 //==================================================
 // iz_dun01 - Undersea Tunnel
@@ -86,10 +87,10 @@ iz_dun03,197,144	monster	Hydra	1068,1,2960000,150000
 //==================================================
 // iz_dun04 - Undersea Tunnel
 //==================================================
-iz_dun04,0,0	monster	Merman	1264,52,5000
-iz_dun04,0,0	monster	Strouf	1065,50,5000
-iz_dun04,0,0	monster	Marine Sphere	1142,10,5000
-iz_dun04,0,0	monster	Swordfish	1069,10,5000
+iz_dun04,0,0	monster	Merman	1264,61,5000
+iz_dun04,0,0	monster	Strouf	1065,58,5000
+iz_dun04,0,0	monster	Marine Sphere	1142,11,5000
+iz_dun04,0,0	monster	Swordfish	1069,11,5000
 iz_dun04,0,0	monster	Deviace	1108,3,5000
 iz_dun04,80,246	monster	Hydra	1068,1,294000,150000
 iz_dun04,79,246	monster	Hydra	1068,1,300000,150000

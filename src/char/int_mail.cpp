@@ -106,7 +106,7 @@ int mail_savemessage(struct mail_message* msg)
 	SqlStmt_Free(stmt);
 	
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`", schema_config.mail_attachment_db);
+	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`, `enchantgrade`", schema_config.mail_attachment_db);
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", `card%d`", j);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
@@ -127,9 +127,9 @@ int mail_savemessage(struct mail_message* msg)
 			found = true;
 		}
 
-		StringBuf_Printf(&buf, "('%" PRIu64 "', '%hu', '%d', '%hu', '%d', '%d', '%d', '%" PRIu64 "', '%d'", (uint64)msg->id, i, msg->item[i].amount, msg->item[i].nameid, msg->item[i].refine, msg->item[i].attribute, msg->item[i].identify, msg->item[i].unique_id, msg->item[i].bound);
+		StringBuf_Printf(&buf, "('%" PRIu64 "', '%hu', '%d', '%u', '%d', '%d', '%d', '%" PRIu64 "', '%d', '%d'", (uint64)msg->id, i, msg->item[i].amount, msg->item[i].nameid, msg->item[i].refine, msg->item[i].attribute, msg->item[i].identify, msg->item[i].unique_id, msg->item[i].bound, msg->item[i].enchantgrade);
 		for (j = 0; j < MAX_SLOTS; j++)
-			StringBuf_Printf(&buf, ", '%hu'", msg->item[i].card[j]);
+			StringBuf_Printf(&buf, ", '%u'", msg->item[i].card[j]);
 		for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 			StringBuf_Printf(&buf, ", '%d'", msg->item[i].option[j].id);
 			StringBuf_Printf(&buf, ", '%d'", msg->item[i].option[j].value);
@@ -185,7 +185,7 @@ bool mail_loadmessage(int mail_id, struct mail_message* msg)
 	}
 
 	StringBuf_Init(&buf);
-	StringBuf_AppendStr(&buf, "SELECT `amount`,`nameid`,`refine`,`attribute`,`identify`,`unique_id`,`bound`");
+	StringBuf_AppendStr(&buf, "SELECT `amount`,`nameid`,`refine`,`attribute`,`identify`,`unique_id`,`bound`,`enchantgrade`");
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ",`card%d`", j);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
@@ -209,22 +209,23 @@ bool mail_loadmessage(int mail_id, struct mail_message* msg)
 
 	for( i = 0; i < MAIL_MAX_ITEM && SQL_SUCCESS == Sql_NextRow(sql_handle); i++ ){
 		Sql_GetData(sql_handle,0, &data, NULL); msg->item[i].amount = (short)atoi(data);
-		Sql_GetData(sql_handle,1, &data, NULL); msg->item[i].nameid = atoi(data);
+		Sql_GetData(sql_handle,1, &data, NULL); msg->item[i].nameid = strtoul(data, nullptr, 10);
 		Sql_GetData(sql_handle,2, &data, NULL); msg->item[i].refine = atoi(data);
 		Sql_GetData(sql_handle,3, &data, NULL); msg->item[i].attribute = atoi(data);
 		Sql_GetData(sql_handle,4, &data, NULL); msg->item[i].identify = atoi(data);
 		Sql_GetData(sql_handle,5, &data, NULL); msg->item[i].unique_id = strtoull(data, NULL, 10);
 		Sql_GetData(sql_handle,6, &data, NULL); msg->item[i].bound = atoi(data);
+		Sql_GetData(sql_handle,7, &data, NULL); msg->item[i].enchantgrade = atoi(data);
 		msg->item[i].expire_time = 0;
 
 		for( j = 0; j < MAX_SLOTS; j++ ){
-			Sql_GetData(sql_handle,7 + j, &data, NULL); msg->item[i].card[j] = atoi(data);
+			Sql_GetData(sql_handle,8 + j, &data, NULL); msg->item[i].card[j] = strtoul(data, nullptr, 10);
 		}
 
 		for( j = 0; j < MAX_ITEM_RDM_OPT; j++ ){
-			Sql_GetData(sql_handle, 7 + MAX_SLOTS + j * 3, &data, NULL); msg->item[i].option[j].id = atoi(data);
-			Sql_GetData(sql_handle, 8 + MAX_SLOTS + j * 3, &data, NULL); msg->item[i].option[j].value = atoi(data);
-			Sql_GetData(sql_handle, 9 + MAX_SLOTS + j * 3, &data, NULL); msg->item[i].option[j].param = atoi(data);
+			Sql_GetData(sql_handle, 8 + MAX_SLOTS + j * 3, &data, NULL); msg->item[i].option[j].id = atoi(data);
+			Sql_GetData(sql_handle, 9 + MAX_SLOTS + j * 3, &data, NULL); msg->item[i].option[j].value = atoi(data);
+			Sql_GetData(sql_handle,10 + MAX_SLOTS + j * 3, &data, NULL); msg->item[i].option[j].param = atoi(data);
 		}
 	}
 
@@ -361,7 +362,7 @@ void mapif_Mail_getattach(int fd, uint32 char_id, int mail_id, int type)
 	if( msg.dest_id != char_id )
 		return;
 
-	if( msg.status != MAIL_READ )
+	if( charserv_config.mail_retrieve == 0 && msg.status != MAIL_READ )
 		return;
 
 	if( type & MAIL_ATT_ZENY ){

@@ -187,6 +187,7 @@ struct CharServ_Config {
 	int clan_remove_inactive_days;
 	int mail_return_days;
 	int mail_delete_days;
+	int mail_retrieve;
 
 	int allowed_job_flag;
 };
@@ -306,20 +307,14 @@ void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
-#if PACKETVER >= 20151001
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style, short start_job, short unknown, int sex);
-#elif PACKETVER >= 20120307
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style);
-#else
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style);
-#endif
+int char_make_new_char( struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, short start_job, int sex );
 
 void char_set_session_flag_(int account_id, int val, bool set);
 #define char_set_session_flag(account_id, val)   ( char_set_session_flag_((account_id), (val), true)  )
 #define char_unset_session_flag(account_id, val) ( char_set_session_flag_((account_id), (val), false) )
 
 //For use in packets that depend on an sd being present [Skotlex]
-#define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL || !sd->auth) { RFIFOSKIP(fd,rest); return 0; } }
+#define FIFOSD_CHECK(rest) { if (RFIFOREST(fd) < rest) return 0; if (sd == nullptr || !sd->auth) { RFIFOSKIP(fd, rest); return 0; } }
 
 #define msg_config_read(cfgName) char_msg_config_read(cfgName)
 #define msg_txt(msg_number) char_msg_txt(msg_number)

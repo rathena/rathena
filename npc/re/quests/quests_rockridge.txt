@@ -5888,6 +5888,7 @@ harboro1,156,215,5	script	Innkeeper#rockridge	1_ETC_01,{
 		mes "Enjoy your stay at the Lazy Owl's.";
 		close2;
 		Zeny = Zeny - 5000;
+		percentheal 100,100;
 		warp "harboro1",157,210;
 		end;
 	case 3:
