@@ -2247,20 +2247,23 @@ OnTimer10000:
 	
 	initnpctimer;
 	
-	if ('HomID != 0) {
+	if (unitexists('HomID) && unitexists('BossID)) {
 		getunitdata 'BossID,.@bossdata;
 		getunitdata 'HomID,.@homdata;
 			if (distance(.@bossdata[6],.@bossdata[7],.@homdata[6],.@homdata[7]) > 10) {
 				unittalk 'BossID,"Alphonse, come!";
 				sleep 500;
-				unitwarp 'HomID, instance_mapname("1@ge_st"),.@bossdata[6],.@bossdata[7];
+				if (unitexists('HomID))
+					unitwarp 'HomID, instance_mapname("1@ge_st"),.@bossdata[6],.@bossdata[7];
 			}
 	}
 	else {
 		if (mobcount(instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR")) { end; }
-		getunitdata 'BossID,.@bossdata;
-		unittalk 'BossID, "Alphonse, I'll revive you!";
-		areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#GMTHomun")+"::OnHomJR";
+		if (unitexists('BossID)) {
+			getunitdata 'BossID,.@bossdata;
+			unittalk 'BossID, "Alphonse, I'll revive you!";
+			areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#GMTHomun")+"::OnHomJR";
+		}
 	}
 	end;
 

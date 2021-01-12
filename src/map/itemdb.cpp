@@ -2246,6 +2246,8 @@ static int itemdb_read_sqldb(void) {
 		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
 	}
 
+	item_db.loadingFinished();
+
 	return 0;
 }
 
