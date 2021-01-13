@@ -1623,12 +1623,12 @@ void socket_init(void)
 }
 
 
-inline bool session_isValid(int fd)
+bool session_isValid(int fd)
 {
 	return ( fd > 0 && fd < MAXCONN && session[fd] != nullptr );
 }
 
-inline bool session_isActive(int fd)
+bool session_isActive(int fd)
 {
 	return ( session_isValid(fd) && !session[fd]->flag.eof );
 }
