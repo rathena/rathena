@@ -96070,7 +96070,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMaxHP,20;
+      bonus bMaxHP,20+10*getrefine();
       bonus bMaxSP,10;
       if (getrefine()>=7) {
          bonus bMaxHPrate,1;
@@ -96165,7 +96165,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMatk,10;
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,10+.@r;
       if (getrefine()>=7)
          bonus bHealPower2,5;
   - Id: 24034
@@ -98581,7 +98583,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bAtk2,(5+.@r);
+      bonus bBaseAtk,(5+.@r);
       if (.@r>=7)
          bonus bMaxSPrate,1;
       if (.@r>=9)
@@ -98666,9 +98668,8 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bFlee,5;
       .@r = getrefine();
-      bonus bFlee,.@r/2;
+      bonus bFlee,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
       }
@@ -98684,9 +98685,8 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bCritical,5;
       .@r = getrefine();
-      bonus bCritical,.@r/2;
+      bonus bCritical,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
       }
@@ -98872,6 +98872,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSkillAtk,"MC_Mammonite",20+(5*.@r);
   - Id: 24248
     AegisName: S_Acolyte_Earring
@@ -98894,6 +98895,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bVariableCastrate,"MG_COLDBOLT",-20-(5*.@r);
       bonus2 bVariableCastrate,"MG_FIREBOLT",-20-(5*.@r);
       bonus2 bVariableCastrate,"MG_LIGHTNINGBOLT",-20-(5*.@r);
@@ -98928,6 +98930,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSkillAtk,"AL_HOLYLIGHT",50+(.@r*10);
   - Id: 24253
     AegisName: S_Thief_Pendant
