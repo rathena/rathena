@@ -757,7 +757,7 @@ int chlogif_parse(int fd) {
 }
 
 TIMER_FUNC(chlogif_check_connect_logserver){
-	if (session_isValid(login_fd))
+	if (chlogif_isconnected())
 		return 0;
 
 	ShowInfo("Attempt to connect to login-server...\n");

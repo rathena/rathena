@@ -119,8 +119,8 @@ extern time_t stall_time;
 
 //////////////////////////////////
 // some checking on sockets
-extern bool session_isValid(int fd);
-extern bool session_isActive(int fd);
+extern inline bool session_isValid(int fd);
+extern inline bool session_isActive(int fd);
 //////////////////////////////////
 
 // Function prototype declaration

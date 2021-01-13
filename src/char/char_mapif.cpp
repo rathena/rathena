@@ -29,7 +29,7 @@ int chmapif_sendall(unsigned char *buf, unsigned int len){
 	c = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
 		int fd;
-		if ((fd = map_server[i].fd) > 0) {
+		if (session_isValid(fd = map_server[i].fd)) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -53,7 +53,7 @@ int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
 	c = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
 		int fd;
-		if ((fd = map_server[i].fd) > 0 && fd != sfd) {
+		if (session_isValid(fd = map_server[i].fd) && fd != sfd) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -122,7 +122,7 @@ int chmapif_send_fame_list(int fd){
 	// add total packet length
 	WBUFW(buf, 2) = len;
 
-	if (fd != -1)
+	if (session_isValid(fd))
 		chmapif_send(fd, buf, len);
 	else
 		chmapif_sendall(buf, len);
