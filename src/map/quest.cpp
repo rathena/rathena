@@ -739,7 +739,7 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 					objective_check++;
 				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == mob_element)
 					objective_check++;
-				if (qi->objectives[j]->location == "" || qi->objectives[j]->location == mapindex_id2name(sd->mapindex))
+				if (qi->objectives[j]->mapid < 0 || qi->objectives[j]->mapid== sd->bl.m)
 					objective_check++;
 			}
 
