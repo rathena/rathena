@@ -284,7 +284,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-					target->location = location;
+					target->mapid = map_mapindex2mapid(mapindex);
 				}
 
 				if (this->nodeExists(targetNode, "MapName")) {
