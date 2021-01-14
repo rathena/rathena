@@ -7976,7 +7976,7 @@ int pc_resetstate(struct map_session_data* sd)
 			return 0;
 		}
 
-		sd->status.status_point = statp[sd->status.base_level] + ( sd->class_&JOBL_UPPER ? 52 : 0 ); // extra 52+48=100 stat points
+		sd->status.status_point = statp[sd->status.base_level];
 	}
 	else
 	{
@@ -7989,6 +7989,10 @@ int pc_resetstate(struct map_session_data* sd)
 		add += pc_need_status_point(sd, SP_LUK, 1-pc_getstat(sd, SP_LUK));
 
 		sd->status.status_point+=add;
+	}
+
+	if( ( sd->class_&JOBL_UPPER ) != 0 ){
+		sd->status.status_point += battle_config.transcendent_status_points;
 	}
 
 	pc_setstat(sd, SP_STR, 1);
@@ -9403,9 +9407,10 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		if( sd->status.status_point < battle_config.transcendent_status_points ){
 			// The player already used his bonus points, so we have to reset his status points
 			pc_resetstate(sd);
+		}else{
+			sd->status.status_point -= battle_config.transcendent_status_points;
+			clif_updatestatus(sd,SP_STATUSPOINT);
 		}
-		sd->status.status_point -= battle_config.transcendent_status_points;
-		clif_updatestatus(sd,SP_STATUSPOINT);
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
