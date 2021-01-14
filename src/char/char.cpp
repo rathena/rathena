@@ -1752,7 +1752,7 @@ int char_count_users(void)
 
 	users = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
-		if (map_server[i].fd > 0) {
+		if (session_isValid(map_server[i].fd)) {
 			users += map_server[i].users;
 		}
 	}
@@ -1987,7 +1987,7 @@ void char_auth_ok(int fd, struct char_session_data *sd) {
 			chclif_send_auth_result(fd,8);
 			return;
 		}
-		if (character->fd >= 0 && character->fd != fd)
+		if (session_isValid(character->fd) && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
 			chclif_send_auth_result(fd,8);
 			return;
@@ -2094,7 +2094,7 @@ int char_loadName(uint32 char_id, char* name){
 int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
 	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
-		if (map_server[i].fd > 0
+		if (session_isValid(map_server[i].fd)
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{

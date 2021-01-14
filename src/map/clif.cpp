@@ -378,7 +378,7 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 #endif
 
 static bool clif_session_isValid(struct map_session_data *sd) {
-	return ( sd != NULL && session_isActive(sd->fd) );
+	return ( sd != nullptr && session_isActive(sd->fd) );
 }
 
 /*==========================================
@@ -607,7 +607,8 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 		break;
 
 	case SELF:
-		if( sd && session_isActive( fd=sd->fd ) ){
+		if( clif_session_isValid(sd) ){
+			fd = sd->fd;
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -814,7 +815,7 @@ void clif_authrefuse(int fd, uint8 error_code)
 ///     ? = disconnected -> MsgStringTable[3]
 void clif_authfail_fd(int fd, int type)
 {
-	if (!fd || !session[fd] || session[fd]->func_parse != clif_parse) //clif_authfail should only be invoked on players!
+	if (!session_isValid(fd) || session[fd]->func_parse != clif_parse) //clif_authfail should only be invoked on players!
 		return;
 
 	WFIFOHEAD(fd, packet_len(0x81));
@@ -835,7 +836,7 @@ void clif_charselectok(int id, uint8 ok)
 	struct map_session_data* sd;
 	int fd;
 
-	if ((sd = map_id2sd(id)) == NULL || !sd->fd)
+	if ((sd = map_id2sd(id)) == NULL || !session_isValid(sd->fd))
 		return;
 
 	fd = sd->fd;
@@ -902,7 +903,7 @@ void clif_clearflooritem(struct flooritem_data *fitem, int fd)
 	WBUFW(buf,0) = 0xa1;
 	WBUFL(buf,2) = fitem->bl.id;
 
-	if (fd == 0) {
+	if ( !session_isActive( fd ) ){
 		clif_send(buf, packet_len(0xa1), &fitem->bl, AREA);
 	} else {
 		WFIFOHEAD(fd,packet_len(0xa1));
@@ -2030,7 +2031,7 @@ void clif_quitsave(int fd,struct map_session_data *sd) {
 		sd->canlog_tick == 0 ||
 		DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 		map_quit(sd);
-	else if (sd->fd) {
+	else if (session_isValid(sd->fd)) {
 		//Disassociate session from player (session is deleted after this function was called)
 		//And set a timer to make him quit later.
 		session[sd->fd]->session_data = NULL;
@@ -2043,9 +2044,8 @@ void clif_quitsave(int fd,struct map_session_data *sd) {
 /// 0091 <map name>.16B <x>.W <y>.W
 void clif_changemap(struct map_session_data *sd, short m, int x, int y)
 {
-	int fd;
 	nullpo_retv(sd);
-	fd = sd->fd;
+	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0x91));
 	WFIFOW(fd,0) = 0x91;
@@ -3262,7 +3262,7 @@ static int clif_hpmeter_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(sd);
 	nullpo_ret(tsd);
 
-	if( !tsd->fd || tsd == sd )
+	if( !session_isActive(tsd->fd) || tsd == sd )
 		return 0;
 
 	if( !pc_has_permission(tsd, PC_PERM_VIEW_HPMETER) )
@@ -4239,7 +4239,7 @@ void clif_dispchat(struct chat_data* cd, int fd)
 	WBUFB(buf,16) = type;
 	memcpy(WBUFCP(buf,17), cd->title, strlen(cd->title)); // not zero-terminated
 
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,WBUFW(buf,2));
 		memcpy(WFIFOP(fd,0),buf,WBUFW(buf,2));
 		WFIFOSET(fd,WBUFW(buf,2));
@@ -4291,7 +4291,7 @@ void clif_clearchat(struct chat_data *cd,int fd)
 
 	WBUFW(buf,0) = 0xd8;
 	WBUFL(buf,2) = cd->bl.id;
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,packet_len(0xd8));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0xd8));
 		WFIFOSET(fd,packet_len(0xd8));
@@ -5089,7 +5089,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 	WBUFW(buf,6) = type;
 	mapindex_getmapname_ext(map_mapid2mapname(m),WBUFCP(buf,8));
 
-	if( fd )
+	if( session_isActive(fd) )
 	{
 		WFIFOHEAD(fd,packet_len(0x192));
 		memcpy(WFIFOP(fd,0), buf, packet_len(0x192));
@@ -5291,7 +5291,7 @@ static int clif_getareachar(struct block_list* bl,va_list ap)
 
 	sd=va_arg(ap,struct map_session_data*);
 
-	if (sd == NULL || !sd->fd)
+	if (!clif_session_isValid(sd))
 		return 0;
 
 	switch(bl->type){
@@ -5323,7 +5323,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	sd = BL_CAST(BL_PC, bl);
 	tsd = BL_CAST(BL_PC, tbl);
 
-	if (tsd && tsd->fd) { //tsd has lost sight of the bl object.
+	if (clif_session_isValid(tsd)) { //tsd has lost sight of the bl object.
 		nullpo_ret(bl);
 		switch(bl->type){
 		case BL_PC:
@@ -5356,7 +5356,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			break;
 		}
 	}
-	if (sd && sd->fd) { //sd is watching tbl go out of view.
+	if (clif_session_isValid(sd)) { //sd is watching tbl go out of view.
 		nullpo_ret(tbl);
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
@@ -5381,7 +5381,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 	sd = BL_CAST(BL_PC, bl);
 	tsd = BL_CAST(BL_PC, tbl);
 
-	if (tsd && tsd->fd) { //Tell tsd that bl entered into his view
+	if (clif_session_isValid(tsd)) { //Tell tsd that bl entered into his view
 		switch(bl->type){
 		case BL_ITEM:
 			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
@@ -5394,7 +5394,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 			break;
 		}
 	}
-	if (sd && sd->fd) { //Tell sd that tbl walked into his view
+	if (clif_session_isValid(sd)) { //Tell sd that tbl walked into his view
 		clif_getareachar_unit(sd,tbl);
 	}
 	return 0;
@@ -5411,7 +5411,7 @@ void clif_skillinfoblock(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	fd = sd->fd;
-	if (!fd)
+	if (!session_isActive(fd))
 		return;
 
 	WFIFOHEAD(fd, MAX_SKILL * 37 + 4);
@@ -5458,13 +5458,12 @@ void clif_skillinfoblock(struct map_session_data *sd)
 /// 0111 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B
 void clif_addskill(struct map_session_data *sd, int skill_id)
 {
-	int fd;
-	uint16 idx = 0;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	if (!fd || !(idx = skill_get_index(skill_id)))
+	int fd = sd->fd;
+	uint16 idx = skill_get_index(skill_id);
+
+	if (!session_isActive(fd) || !idx)
 		return;
 
 	if( sd->status.skill[idx].id <= 0 )
@@ -5491,13 +5490,12 @@ void clif_addskill(struct map_session_data *sd, int skill_id)
 void clif_deleteskill(struct map_session_data *sd, int skill_id)
 {
 #if PACKETVER >= 20081217
-	int fd;
-	uint16 idx = 0;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	if (!fd || !(idx = skill_get_index(skill_id)))
+	int fd = sd->fd;
+	uint16 idx = skill_get_index(skill_id);
+
+	if (!session_isActive(fd) || !idx)
 		return;
 
 	WFIFOHEAD(fd,packet_len(0x441));
@@ -5511,11 +5509,14 @@ void clif_deleteskill(struct map_session_data *sd, int skill_id)
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
 /// 010e <skill id>.W <level>.W <sp cost>.W <attack range>.W <upgradable>.B
 void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable) {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
+	int fd = sd->fd;
+	uint16 idx = skill_get_index(skill_id);
+
+	if (!session_isActive(fd) || !idx)
+		return;
+	
 	WFIFOHEAD(fd, packet_len(0x10e));
 	WFIFOW(fd, 0) = 0x10e;
 	WFIFOW(fd, 2) = skill_id;
@@ -5531,9 +5532,12 @@ void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int rang
 /// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B
 void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf)
 {
+	nullpo_retv(sd);
+
 	const int fd = sd->fd;
 	uint16 idx = skill_get_index(skill_id);
-	if (!idx)
+
+	if (!session_isActive(fd) || !idx)
 		return;
 
 	WFIFOHEAD(fd,packet_len(0x7e1));
@@ -6354,10 +6358,7 @@ void clif_displaymessage(const int fd, const char* mes)
 {
 	nullpo_retv(mes);
 
-	//Scrapped, as these are shared by disconnected players =X [Skotlex]
-	if (fd == 0)
-		;
-	else {
+	if( session_isActive( fd ) ){
 		char *message, *line;
 
 		message = aStrdup(mes);
@@ -6739,7 +6740,7 @@ void clif_wis_message(struct map_session_data* sd, const char* nick, const char*
 ///     3 = everyone ignored by target
 void clif_wis_end(int fd, int result)
 {
-	struct map_session_data *sd = (session_isValid(fd) ? (struct map_session_data *)session[fd]->session_data : NULL);
+	struct map_session_data *sd = (session_isActive(fd) ? (struct map_session_data *)session[fd]->session_data : NULL);
 #if PACKETVER < 20131223
 	const int cmd = 0x98;
 #else
@@ -7381,7 +7382,7 @@ void clif_showvendingboard(struct block_list* bl, const char* message, int fd)
 	WBUFL(buf,2) = bl->id;
 	safestrncpy(WBUFCP(buf,6), message, 80);
 
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,packet_len(0x131));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0x131));
 		WFIFOSET(fd,packet_len(0x131));
@@ -7401,7 +7402,7 @@ void clif_closevendingboard(struct block_list* bl, int fd)
 
 	WBUFW(buf,0) = 0x132;
 	WBUFL(buf,2) = bl->id;
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,packet_len(0x132));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0x132));
 		WFIFOSET(fd,packet_len(0x132));
@@ -8695,7 +8696,7 @@ void clif_guild_memberlist(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	if( (fd = sd->fd) == 0 )
+	if( !session_isActive(fd = sd->fd) )
 		return;
 	if( (g = sd->guild) == NULL )
 		return;
@@ -8924,13 +8925,12 @@ void clif_guild_skillinfo(struct map_session_data* sd)
 /// 016f <subject>.60B <notice>.120B
 void clif_guild_notice(struct map_session_data* sd)
 {
-	int fd;
 	struct guild* g;
 
 	nullpo_retv(sd);
 	nullpo_retv(g = sd->guild);
 
-	fd = sd->fd;
+	int fd = sd->fd;
 
 	if ( !session_isActive(fd) )
 		return;
@@ -9140,13 +9140,13 @@ void clif_guild_allianceack(struct map_session_data *sd,int flag)
 ///     1 = Enemy
 void clif_guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	if (fd <= 0)
+	int fd = sd->fd;
+
+	if ( !session_isActive(fd) )
 		return;
+
 	WFIFOHEAD(fd,packet_len(0x184));
 	WFIFOW(fd,0)=0x184;
 	WFIFOL(fd,2)=guild_id;
@@ -9375,17 +9375,13 @@ void clif_GM_kickack(struct map_session_data *sd, int id)
 
 void clif_GM_kick(struct map_session_data *sd, struct map_session_data *tsd)
 {
-	int fd;
-
 	nullpo_retv(tsd);
-
-	fd = tsd->fd;
 
 	if (sd == NULL)
 		tsd->state.keepshop = true;
 
-	if (fd > 0)
-		clif_authfail_fd(fd, 15);
+	if (session_isActive(tsd->fd))
+		clif_authfail_fd(tsd->fd, 15);
 	else
 		map_quit(tsd);
 
@@ -19111,7 +19107,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 	nullpo_ret(sd);
 	fd = sd->fd;
 
-	if( !fd ) 
+	if( !session_isActive(fd) ) 
 		return 0;
 
 	if( sd->menuskill_id == SC_AUTOSHADOWSPELL )
