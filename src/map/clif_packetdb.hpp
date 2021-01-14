@@ -2422,8 +2422,4 @@
 	parseable_packet( HEADER_CZ_SE_CASHSHOP_OPEN2, sizeof( struct PACKET_CZ_SE_CASHSHOP_OPEN2 ), clif_parse_cashshop_open_request, 0 );
 #endif
 
-#if PACKETVER_RE_NUM >= 20200724
-	packet(0x0b73,8);
-#endif
-
 #endif /* CLIF_PACKETDB_HPP */
