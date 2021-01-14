@@ -17164,7 +17164,7 @@ static void clif_quest_len(int def_len, int info_len, int avail_quests, int *lim
 	(*len_out) = ((*limit_out) * info_len) + def_len;
 }
 
-std::string clif_mobtype_name(e_race race, e_size size, e_element element, std::string map_name) {
+std::string clif_mobtype_name(e_race race, e_size size, e_element element, std::string& map_name) {
 	std::string race_name, size_name, ele_name;
 
 	switch(race) {
