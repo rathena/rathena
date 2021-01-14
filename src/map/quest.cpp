@@ -290,8 +290,6 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (this->nodeExists(targetNode, "MapName")) {
 					std::string map_name;
 
-					if (target->location == "")
-						return 0;
 
 					if (!this->asString(targetNode, "MapName", map_name))
 						return 0;
