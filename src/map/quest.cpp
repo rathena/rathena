@@ -277,9 +277,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asString(targetNode, "Location", location))
 						return 0;
 
-					unsigned short mapindex;
-					int16 m = -1;
-					mapindex = mapindex_name2idx(location.c_str(), nullptr);
+					uint16 mapindex = mapindex_name2idx(location.c_str(), nullptr);
+
 					if (mapindex)
 						m = map_mapindex2mapid(mapindex);
 
