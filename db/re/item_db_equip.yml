@@ -22533,6 +22533,7 @@ Body:
       Left_Hand: true
     EquipLevelMin: 50
     Refineable: true
+    View: 3
     Script: |
       .@r = getrefine();
       if (.@r > 4) {
@@ -22698,6 +22699,7 @@ Body:
       Left_Hand: true
     EquipLevelMin: 30
     Refineable: true
+    View: 1
     Script: |
       bonus bInt,2;
       bonus bMatk,(readparam(bInt) >= 120 ? 30 : 5);
@@ -51649,7 +51651,7 @@ Body:
     Locations:
       Head_Low: true
     EquipLevelMin: 30
-
+    View: 1064
     Script: |
       bonus bLuk,1;
       bonus3 bAutoSpell,"PR_ASPERSIO",1,50;
@@ -52173,6 +52175,7 @@ Body:
     Locations:
       Head_Mid: true
     EquipLevelMin: 10
+    View: 1169
     Script: |
       bonus2 bAddRace,RC_Demon,5;
       bonus2 bSubRace,RC_Demon,5;
@@ -52260,6 +52263,7 @@ Body:
     Locations:
       Head_Mid: true
     EquipLevelMin: 10
+    View: 1218
     Script: |
       bonus2 bAddRace,RC_Fish,5;
       bonus2 bSubRace,RC_Fish,5;
@@ -52272,6 +52276,7 @@ Body:
     Locations:
       Head_Mid: true
     EquipLevelMin: 10
+    View: 1227
     Script: |
       bonus2 bAddRace,RC_Dragon,5;
       bonus2 bSubRace,RC_Dragon,5;
@@ -52556,6 +52561,7 @@ Body:
     Locations:
       Head_Top: true
     EquipLevelMin: 1
+    View: 1376
     Script: |
       bonus bMdef,5;
       .@def = 10;
@@ -68450,6 +68456,7 @@ Body:
     WeaponLevel: 4
     EquipLevelMin: 70
     Refineable: true
+    View: 11
     Script: |
       autobonus "{ bonus bAspdRate,7; }",10+(getrefine()*2),7000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
       bonus2 bAddSkillBlow,"AC_CHARGEARROW",3;
@@ -72944,6 +72951,7 @@ Body:
     Locations:
       Head_Mid: true
     EquipLevelMin: 30
+    View: 873
     Script: |
       bonus bMatkRate,3;
   - Id: 18724
@@ -75612,6 +75620,7 @@ Body:
     Locations:
       Head_Top: true
     EquipLevelMin: 1
+    View: 1102
     Script: |
       bonus2 bSubRace,RC_Player_Human,13;
       if (getequipcardid(EQI_ARMOR,0) == 4042) {
@@ -77790,7 +77799,7 @@ Body:
     Locations:
       Head_Top: true
     EquipLevelMin: 1
-
+    View: 1527
     Script: |
       bonus bHPGainValue,500;
       bonus bLongHPGainValue,500;
@@ -77941,7 +77950,7 @@ Body:
     Locations:
       Head_Top: true
     EquipLevelMin: 100
-
+    View: 1552
     Script: |
       .@bonus = (getrefine() >= 7 ? 12 : 10);
       bonus2 bSubRace,RC_DemiHuman,.@bonus;
