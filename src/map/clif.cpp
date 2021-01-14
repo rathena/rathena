@@ -17280,7 +17280,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 				if (mob && qi->objectives[j]->mob_id > 0)
 					safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
 				else
-					safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element, map_name).c_str(), NAME_LENGTH);
+					safestrncpy(WFIFOCP(fd,offset), clif_mobtype_name(race, size, element, qi->objectives[j]->map_name).c_str(), NAME_LENGTH);
 				offset += NAME_LENGTH;
 			}
 		}
