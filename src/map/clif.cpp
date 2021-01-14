@@ -17198,10 +17198,10 @@ static void clif_quest_len(int def_len, int info_len, int avail_quests, int *lim
 	(*len_out) = ((*limit_out) * info_len) + def_len;
 }
 
-std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
-	std::string race_name, size_name, ele_name;
+std::string clif_quest_string( std::shared_ptr<s_quest_objective> objective ){
+	std::string race_name;
 
-	switch(race) {
+	switch( objective->race ){
 		case RC_FORMLESS:	race_name = "Formless"; break;
 		case RC_UNDEAD:		race_name = "Undead"; break;
 		case RC_BRUTE:		race_name = "Brute"; break;
@@ -17212,17 +17212,27 @@ std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
 		case RC_DEMIHUMAN:	race_name = "Demihuman"; break;
 		case RC_ANGEL:		race_name = "Angel"; break;
 		case RC_DRAGON:		race_name = "Dragon"; break;
+		default:
+			ShowWarning( "clif_quest_string: Unsupported race %d - using empty string...\n", objective->race );
+			// Fallthrough
 		case RC_ALL:		race_name = ""; break;
-		default:			race_name = "unknown"; break;
 	}
-	switch(size) {
+
+	std::string size_name;
+
+	switch( objective->size ){
 		case SZ_SMALL:	size_name = "Small"; break;
 		case SZ_MEDIUM:	size_name = "Medium"; break;
 		case SZ_BIG:	size_name = "Large"; break;
+		default:
+			ShowWarning( "clif_quest_string: Unsupported size %d - using empty string...\n", objective->size );
+			// Fallthrough
 		case SZ_ALL:	size_name = ""; break;
-		default:		size_name = "unknown"; break;
 	}
-	switch(element) {
+
+	std::string ele_name;
+
+	switch( objective->element ){
 		case ELE_NEUTRAL:	ele_name = "Neutral Element"; break;
 		case ELE_WATER:		ele_name = "Water Element"; break;
 		case ELE_EARTH:		ele_name = "Earth Element"; break;
@@ -17233,10 +17243,43 @@ std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
 		case ELE_DARK:		ele_name = "Shadow Element"; break;
 		case ELE_GHOST:		ele_name = "Ghost Element"; break;
 		case ELE_UNDEAD:	ele_name = "Undead Element"; break;
+		default:
+			ShowWarning( "clif_quest_string: Unsupported element %d - using empty string...\n", objective->element );
+			// Fallthrough
 		case ELE_ALL:		ele_name = ""; break;
-		default:			ele_name = "unknown"; break;
 	}
-	return (race_name + (race_name.size() && size_name.size() ? ", " + size_name : size_name) + ((race_name.size() || size_name.size()) && ele_name.size() ? ", " + ele_name : ele_name));
+
+	std::string str;
+
+	if( !objective->map_name.empty() ){
+		str += objective->map_name;
+	}
+
+	if( !race_name.empty() ){
+		if( !str.empty() ){
+			str += ", ";
+		}
+
+		str += race_name;
+	}
+
+	if( !size_name.empty() ){
+		if( !str.empty() ){
+			str += ", ";
+		}
+
+		str += size_name;
+	}
+
+	if( !ele_name.empty() ){
+		if( !str.empty() ){
+			str += ", ";
+		}
+
+		str += ele_name;
+	}
+	
+	return str;
 }
 
 /// Sends list of all quest states
@@ -17311,9 +17354,9 @@ void clif_quest_send_list(struct map_session_data *sd)
 				WFIFOW(fd, offset) = qi->objectives[j]->count;
 				offset += 2;
 				if (mob && qi->objectives[j]->mob_id > 0)
-					safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
+					safestrncpy(WFIFOCP(fd,offset), mob->jname, NAME_LENGTH);
 				else
-					safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element).c_str(), NAME_LENGTH);
+					safestrncpy(WFIFOCP(fd,offset), clif_quest_string(qi->objectives[j]).c_str(), NAME_LENGTH);
 				offset += NAME_LENGTH;
 			}
 		}
@@ -17371,7 +17414,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 			if (mob && qi->objectives[j]->mob_id > 0)
 				safestrncpy(WFIFOCP(fd, i*104+28+j*30), mob->jname, NAME_LENGTH);
 			else
-				safestrncpy(WFIFOCP(fd, i*104+28+j*30), clif_mobtype_name(qi->objectives[j]->race, qi->objectives[j]->size, qi->objectives[j]->element).c_str(), NAME_LENGTH);
+				safestrncpy(WFIFOCP(fd, i*104+28+j*30), clif_quest_string(qi->objectives[j]).c_str(), NAME_LENGTH);
 		}
 	}
 
@@ -17429,9 +17472,9 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 		WFIFOW(fd, offset) = qd->count[i];
 		offset += 2;
 		if (mob && qi->objectives[i]->mob_id > 0)
-			safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd,offset), mob->jname, NAME_LENGTH);
 		else
-			safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element).c_str(), NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd,offset), clif_quest_string(qi->objectives[i]).c_str(), NAME_LENGTH);
 		offset += NAME_LENGTH;
 	}
 
