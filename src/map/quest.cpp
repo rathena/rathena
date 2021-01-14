@@ -177,7 +177,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				target->race = RC_ALL;
 				target->size = SZ_ALL;
 				target->element = ELE_ALL;
-				target->location = "";
+				target->mapid = -1;
 				target->map_name = "";
 			}
 
