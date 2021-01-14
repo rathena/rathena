@@ -80219,7 +80219,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-
+    View: 1173
     Refineable: true
     Script: |
       .@r = getrefine();
@@ -80937,7 +80937,7 @@ Body:
     Slots: 1
     Locations:
       Head_Mid: true
-
+    View: 680
     Script: |
       bonus bAllStats,10;
       /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,30;
