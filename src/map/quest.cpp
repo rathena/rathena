@@ -676,24 +676,17 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 
-	struct map_session_data *sd;
+	struct map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	nullpo_ret(sd = (struct map_session_data *)bl);
+	nullpo_ret(sd);
 
 	if( !sd->avail_quests )
 		return 0;
-
-	int party_id = va_arg(ap,int);
-	int mob_id = va_arg(ap, int);
-	int mob_level = va_arg(ap, int);
-	e_race mob_race = static_cast<e_race>(va_arg(ap, int));
-	e_size mob_size = static_cast<e_size>(va_arg(ap, int));
-	e_element mob_element = static_cast<e_element>(va_arg(ap, int));
 	
-	if( sd->status.party_id != party_id )
+	if( sd->status.party_id != va_arg(ap, int))
 		return 0;
 
-	quest_update_objective(sd, mob_id, mob_level, mob_race, mob_size, mob_element);
+	quest_update_objective(sd, va_arg(ap, struct mob_data*));
 
 	return 1;
 }
@@ -707,7 +700,7 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
  * @param mob_size: Monster Size
  * @param mob_element: Monster Element
  */
-void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_level, e_race mob_race, e_size mob_size, e_element mob_element)
+void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 {
 	nullpo_retv(sd);
 
@@ -723,18 +716,18 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 		for (int j = 0; j < qi->objectives.size(); j++) {
 			uint8 objective_check = 0; // Must pass all 6 checks
 
-			if (qi->objectives[j]->mob_id == mob_id)
+			if (qi->objectives[j]->mob_id == md->mob_id)
 				objective_check = 6;
 			else if (qi->objectives[j]->mob_id == 0) {
-				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= mob_level)
+				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= md->level)
 					objective_check++;
-				if (qi->objectives[j]->max_level == 0 || qi->objectives[j]->max_level >= mob_level)
+				if (qi->objectives[j]->max_level == 0 || qi->objectives[j]->max_level >= md->level)
 					objective_check++;
-				if (qi->objectives[j]->race == RC_ALL || qi->objectives[j]->race == mob_race)
+				if (qi->objectives[j]->race == RC_ALL || qi->objectives[j]->race == md->status.race)
 					objective_check++;
-				if (qi->objectives[j]->size == SZ_ALL || qi->objectives[j]->size == mob_size)
+				if (qi->objectives[j]->size == SZ_ALL || qi->objectives[j]->size == md->status.size)
 					objective_check++;
-				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == mob_element)
+				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == md->status.def_ele)
 					objective_check++;
 				if (qi->objectives[j]->mapid < 0 || qi->objectives[j]->mapid== sd->bl.m)
 					objective_check++;
@@ -749,7 +742,7 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 
 		// Process quest-granted extra drop bonuses
 		for (const auto &it : qi->dropitem) {
-			if (it->mob_id != 0 && it->mob_id != mob_id)
+			if (it->mob_id != 0 && it->mob_id != md->mob_id)
 				continue;
 			if (it->rate < 10000 && rnd()%10000 >= it->rate)
 				continue; // TODO: Should this be affected by server rates?

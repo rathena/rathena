@@ -72,7 +72,7 @@ int quest_add(struct map_session_data *sd, int quest_id);
 int quest_delete(struct map_session_data *sd, int quest_id);
 int quest_change(struct map_session_data *sd, int qid1, int qid2);
 int quest_update_objective_sub(struct block_list *bl, va_list ap);
-void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_level, e_race mob_race, e_size mob_size, e_element mob_element);
+void quest_update_objective(struct map_session_data *sd, struct mob_data* md);
 int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state status);
 int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type type);
 
