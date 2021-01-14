@@ -17258,7 +17258,6 @@ void clif_quest_send_list(struct map_session_data *sd)
 				e_race race = qi->objectives[j]->race;
 				e_size size = qi->objectives[j]->size;
 				e_element element = qi->objectives[j]->element;
-				std::string map_name = qi->objectives[j]->map_name;
 
 #if PACKETVER >= 20150513
 				WFIFOL(fd, offset) = sd->quest_log[i].quest_id * 1000 + j;
