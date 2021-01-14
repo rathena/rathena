@@ -163,7 +163,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				if (!this->nodeExists(targetNode, "Mob") && !this->nodeExists(targetNode, "MinLevel") && !this->nodeExists(targetNode, "MaxLevel") &&
-						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element") && !this->nodeExists(targetNode, "MapName")) {
+						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element") &&
+						!this->nodeExists(targetNode, "Location") && !this->nodeExists(targetNode, "MapName")) {
 					this->invalidWarning(targetNode, "Targets is missing required field, skipping.\n");
 					return 0;
 				}
