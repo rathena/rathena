@@ -17396,7 +17396,7 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 		WFIFOW(fd, offset) = qd->count[i];
 		offset += 2;
 		if (mob && qi->objectives[i]->mob_id > 0)
-			safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd,offset), mob->jname, NAME_LENGTH);
 		else
 			safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element, map_name).c_str(), NAME_LENGTH);
 		offset += NAME_LENGTH;
