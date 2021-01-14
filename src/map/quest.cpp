@@ -279,10 +279,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 
 					uint16 mapindex = mapindex_name2idx(location.c_str(), nullptr);
 
-					if (mapindex)
-						m = map_mapindex2mapid(mapindex);
-
-					if (m < 0) {
+					if (mapindex == 0) {
 						this->invalidWarning(targetNode["Location"], "Map \"%s\" not found.\n", location.c_str());
 						return 0;
 					}
