@@ -5252,7 +5252,7 @@ static int clif_getareachar(struct block_list* bl,va_list ap)
 
 	sd=va_arg(ap,struct map_session_data*);
 
-	if (sd == NULL || !session_isActive(sd->fd))
+	if (!clif_session_isValid(sd))
 		return 0;
 
 	switch(bl->type){
@@ -5284,7 +5284,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	sd = BL_CAST(BL_PC, bl);
 	tsd = BL_CAST(BL_PC, tbl);
 
-	if (tsd && session_isActive(tsd->fd)) { //tsd has lost sight of the bl object.
+	if (clif_session_isValid(tsd)) { //tsd has lost sight of the bl object.
 		nullpo_ret(bl);
 		switch(bl->type){
 		case BL_PC:
@@ -5317,7 +5317,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			break;
 		}
 	}
-	if (sd && session_isActive(sd->fd)) { //sd is watching tbl go out of view.
+	if (clif_session_isValid(sd)) { //sd is watching tbl go out of view.
 		nullpo_ret(tbl);
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
@@ -5342,7 +5342,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 	sd = BL_CAST(BL_PC, bl);
 	tsd = BL_CAST(BL_PC, tbl);
 
-	if (tsd && session_isActive(tsd->fd)) { //Tell tsd that bl entered into his view
+	if (clif_session_isValid(tsd)) { //Tell tsd that bl entered into his view
 		switch(bl->type){
 		case BL_ITEM:
 			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
@@ -5355,7 +5355,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 			break;
 		}
 	}
-	if (sd && session_isActive(sd->fd)) { //Tell sd that tbl walked into his view
+	if (clif_session_isValid(sd)) { //Tell sd that tbl walked into his view
 		clif_getareachar_unit(sd,tbl);
 	}
 	return 0;
