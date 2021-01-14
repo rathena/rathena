@@ -900,7 +900,7 @@ void clif_clearflooritem(struct flooritem_data *fitem, int fd)
 	WBUFW(buf,0) = 0xa1;
 	WBUFL(buf,2) = fitem->bl.id;
 
-	if (fd == 0) {
+	if ( !session_isActive( fd ) ){
 		clif_send(buf, packet_len(0xa1), &fitem->bl, AREA);
 	} else {
 		WFIFOHEAD(fd,packet_len(0xa1));
@@ -6319,10 +6319,7 @@ void clif_displaymessage(const int fd, const char* mes)
 {
 	nullpo_retv(mes);
 
-	//Scrapped, as these are shared by disconnected players =X [Skotlex]
-	if (fd == 0)
-		;
-	else {
+	if( session_isActive( fd ) ){
 		char *message, *line;
 
 		message = aStrdup(mes);
