@@ -1594,9 +1594,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
 
-	sd->qi_display = nullptr;
-	sd->qi_count = 0;
-
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != SETPOS_OK) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
@@ -13262,7 +13259,7 @@ void pc_show_questinfo(struct map_session_data *sd) {
 
 	if (mapdata->qi_npc.empty())
 		return;
-	if (mapdata->qi_npc.size() != sd->qi_count)
+	if (mapdata->qi_npc.size() != sd->qi_display.size())
 		return; // init was not called yet
 
 	for (int i = 0; i < mapdata->qi_npc.size(); i++) {
@@ -13279,8 +13276,8 @@ void pc_show_questinfo(struct map_session_data *sd) {
 				// Check if need to be displayed
 				if (!sd->qi_display[i].is_active || qi->icon != sd->qi_display[i].icon || qi->color != sd->qi_display[i].color) {
 					sd->qi_display[i].is_active = true;
-					sd->qi_display[i].icon = static_cast<e_questinfo_types>(qi->icon);
-					sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(qi->color);
+					sd->qi_display[i].icon = qi->icon;
+					sd->qi_display[i].color = qi->color;
 					clif_quest_show_event(sd, &nd->bl, qi->icon, qi->color);
 				}
 				break;
@@ -13290,8 +13287,8 @@ void pc_show_questinfo(struct map_session_data *sd) {
 			// Check if need to be hide
 			if (sd->qi_display[i].is_active) {
 				sd->qi_display[i].is_active = false;
-				sd->qi_display[i].icon = static_cast<e_questinfo_types>(QTYPE_NONE);
-				sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(QMARK_NONE);
+				sd->qi_display[i].icon = QTYPE_NONE;
+				sd->qi_display[i].color = QMARK_NONE;
 #if PACKETVER >= 20120410
 				clif_quest_show_event(sd, &nd->bl, QTYPE_NONE, QMARK_NONE);
 #else
@@ -13311,11 +13308,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 #if PACKETVER >= 20090218
 	nullpo_retv(sd);
 
-	if (sd->qi_display) {
-		aFree(sd->qi_display);
-		sd->qi_display = nullptr;
-	}
-	sd->qi_count = 0;
+	sd->qi_display.clear();
 
 	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
 		return;
@@ -13326,7 +13319,11 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 	if (mapdata->qi_npc.empty())
 		return;
 
-	CREATE(sd->qi_display, struct s_qi_display, (sd->qi_count = mapdata->qi_npc.size()));
+	sd->qi_display.reserve( mapdata->qi_npc.size() );
+
+	for( int i = 0; i < mapdata->qi_npc.size(); i++ ){
+		sd->qi_display.push_back( s_qi_display() );
+	}
 #endif
 }
 

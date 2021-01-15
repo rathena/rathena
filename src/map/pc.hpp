@@ -682,8 +682,7 @@ struct map_session_data {
 	std::vector<int> cloaked_npc;
 
 	/* ShowEvent Data Cache flags from map */
-	struct s_qi_display *qi_display;
-	int qi_count;
+	std::vector<s_qi_display> qi_display;
 
 	// temporary debug [flaviojs]
 	const char* debug_file;
