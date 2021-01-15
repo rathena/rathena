@@ -17235,6 +17235,96 @@ BUILDIN_FUNC(npcshopitem)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==========================================
+ *npcshopchange <npc name>,<itemid array>,<cost array>{,<market shop amount array>};
+ ******************************************/
+BUILDIN_FUNC(npcshopchange)
+{
+	const char* npcname = script_getstr(st, 2);
+	struct npc_data* nd = npc_name2id(npcname);
+	
+	struct script_data* item_dt;
+	struct script_data* cost_dt;
+	struct script_data* amount_dt = NULL;
+	const char* item_name;
+	const char* cost_name;
+	const char* amount_name = NULL;
+	int32 item_id, cost_id, amount_id = 0;
+	int32 item_idx, cost_idx, amount_idx = 0;
+	int i, item_hk, cost_hk, amount_hk = 0;
+	if( !nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP ) ) { // Not found.
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	item_dt = script_getdata(st, 3);
+	cost_dt = script_getdata(st, 4);
+	if(script_hasdata(st,5))
+		amount_dt = script_getdata(st, 5);
+	
+	if( !data_isreference(item_dt) || !data_isreference(cost_dt) || (amount_dt != NULL && !data_isreference(amount_dt))) {
+		ShowError("buildin_npcshopchange: parameter not a variable\n");
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;// not a variable
+	}
+	
+	item_id = reference_getid(item_dt);
+	cost_id = reference_getid(cost_dt);
+	item_idx = reference_getindex(item_dt);
+	cost_idx = reference_getindex(cost_dt);
+	item_name = reference_getname(item_dt);
+	cost_name = reference_getname(cost_dt);
+	
+	if(script_hasdata(st,5)){
+		amount_id = reference_getid(amount_dt);
+		amount_idx = reference_getindex(amount_dt);
+		amount_name = reference_getname(amount_dt);
+	}
+	
+	if(is_string_variable(item_name) || is_string_variable(cost_name) || (amount_dt != NULL && is_string_variable(amount_name))) {
+		ShowError("buildin_npcshopchange: illegal type, need int\n");
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;// string not supported
+	}
+	
+	item_hk = script_array_highest_key(st, NULL, reference_getname(item_dt), reference_getref(item_dt));
+	cost_hk = script_array_highest_key(st, NULL, reference_getname(cost_dt), reference_getref(cost_dt));
+	if(script_hasdata(st,5))
+		amount_hk = script_array_highest_key(st, NULL, reference_getname(amount_dt), reference_getref(amount_dt));
+	
+	if(item_hk != cost_hk || (amount_dt != NULL && item_hk != amount_hk)) {
+		ShowError("buildin_npcshopchange:  Size mismatch: item_hk=%d, cost_hk=%d, amount_hk=%d\n",item_hk,cost_hk,amount_hk);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;// mismatch amount of arrays
+	}
+	
+#if PACKETVER >= 20131223
+	if (nd->subtype == NPCTYPE_MARKETSHOP)
+		npc_market_delfromsql_(nd->exname, 0, true);
+#endif
+
+	// generate new shop item list
+	RECREATE(nd->u.shop.shop_item, struct npc_item_list, item_hk);
+	for (i = 0; i < item_hk; i++) {
+		t_itemid nameid = (t_itemid)get_val2_num( st, reference_uid( item_id, item_idx + i ), reference_getref( item_dt ) );
+		int32 cost = (int32)get_val2_num( st, reference_uid( cost_id, cost_idx + i ), reference_getref( cost_dt ) );
+		nd->u.shop.shop_item[i].nameid = nameid;
+		nd->u.shop.shop_item[i].value = cost;
+#if PACKETVER >= 20131223
+		if (nd->subtype == NPCTYPE_MARKETSHOP) {
+			unsigned short amount = (unsigned short)get_val2_num( st, reference_uid( amount_id, amount_idx + i ), reference_getref( amount_dt ) );
+			nd->u.shop.shop_item[i].qty = amount;
+			nd->u.shop.shop_item[i].flag = 1;
+			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[i]);
+		}
+#endif
+	}
+	nd->u.shop.count = i;
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(npcshopadditem)
 {
 	const char* npcname = script_getstr(st,2);
@@ -25347,6 +25437,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setd,"sv?"),
 	BUILDIN_DEF(callshop,"s?"), // [Skotlex]
 	BUILDIN_DEF(npcshopitem,"sii*"), // [Lance]
+	BUILDIN_DEF(npcshopchange,"srr?"),	// [Haruka Mayumi]
 	BUILDIN_DEF(npcshopadditem,"sii*"),
 	BUILDIN_DEF(npcshopdelitem,"si*"),
 	BUILDIN_DEF(npcshopattach,"s?"),
