@@ -8622,10 +8622,6 @@ prt_cas_q,80,80,4	script	Butler for the Richards	1_M_LIBRARYMASTER,{
 			next;
 		}
 		if (checkquest(.@quest_list[.@i],HUNTING) == 2) {
-			// todo src side
-			mes "This quest isn't enabled for now.";
-			close;
-
 			if (isbegin_quest(5403) == 1)
 				completequest 5403;// The Royal Richard
 			erasequest .@quest_list[.@i];

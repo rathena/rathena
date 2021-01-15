@@ -359,8 +359,8 @@ int party_recv_info(struct party* sp, uint32 char_id)
 		}
 		clif_party_info(p,NULL);
 
-		if( p->instance_id != 0 )
-			instance_reqinfo(sd,p->instance_id);
+		if (p->instance_id > 0)
+			instance_reqinfo(sd, p->instance_id);
 	}
 	
 	// If a player was renamed, make sure to resend the party information
@@ -504,8 +504,8 @@ void party_member_joined(struct map_session_data *sd)
 	if (i < MAX_PARTY) {
 		p->data[i].sd = sd;
 
-		if( p->instance_id )
-			instance_reqinfo(sd,p->instance_id);
+		if (p->instance_id > 0)
+			instance_reqinfo(sd, p->instance_id);
 	} else
 		sd->status.party_id = 0; //He does not belongs to the party really?
 }
@@ -562,8 +562,8 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 	clif_party_xy(sd);
 	clif_name_area(&sd->bl); //Update char name's display [Skotlex]
 
-	if( p->instance_id )
-		instance_reqinfo(sd,p->instance_id);
+	if (p->instance_id > 0)
+		instance_reqinfo(sd, p->instance_id);
 
 	return 0;
 }
@@ -1074,7 +1074,7 @@ int party_send_xy_clear(struct party_data *p)
  * @param zeny Zeny gained from killed mob
  * @author Valaris
  **/
-void party_exp_share(struct party_data* p, struct block_list* src, unsigned int base_exp, unsigned int job_exp, int zeny)
+void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_exp, t_exp job_exp, int zeny)
 {
 	struct map_session_data* sd[MAX_PARTY];
 	unsigned int i, c;
@@ -1104,23 +1104,23 @@ void party_exp_share(struct party_data* p, struct block_list* src, unsigned int 
 		double bonus = 100 + battle_config.party_even_share_bonus*(c-1);
 
 		if (base_exp)
-			base_exp = (unsigned int) cap_value(base_exp * bonus/100, 0, UINT_MAX);
+			base_exp = (t_exp) cap_value(base_exp * bonus/100, 0, MAX_EXP);
 		if (job_exp)
-			job_exp = (unsigned int) cap_value(job_exp * bonus/100, 0, UINT_MAX);
+			job_exp = (t_exp) cap_value(job_exp * bonus/100, 0, MAX_EXP);
 		if (zeny)
 			zeny = (unsigned int) cap_value(zeny * bonus/100, INT_MIN, INT_MAX);
 	}
 
 	for (i = 0; i < c; i++) {
 #ifdef RENEWAL_EXP
-		uint32 base_gained = base_exp, job_gained = job_exp;
+		t_exp base_gained = base_exp, job_gained = job_exp;
 		if (base_exp || job_exp) {
-			int rate = pc_level_penalty_mod(md->level - sd[i]->status.base_level, md->db->status.class_, md->db->status.mode, 1);
+			int rate = pc_level_penalty_mod( sd[i], PENALTY_EXP, nullptr, md );
 			if (rate != 100) {
 				if (base_exp)
-					base_gained = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
+					base_gained = (t_exp)cap_value(apply_rate(base_exp, rate), 1, MAX_EXP);
 				if (job_exp)
-					job_gained = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
+					job_gained = (t_exp)cap_value(apply_rate(job_exp, rate), 1, MAX_EXP);
 			}
 		}
 		pc_gainexp(sd[i], src, base_gained, job_gained, 0);

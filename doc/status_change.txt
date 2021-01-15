@@ -2710,3 +2710,9 @@ SC_LHZ_DUN_N4	(EFST_LHZ_DUN_N4)
 	desc: Increases and reduces damage against MVPs of Biolab 5.
 	val1: +% Damage
 	val2: +% Defense
+	
+SC_DORAM_BUF_01 ()
+	desc: Recovers 10 HP every 10 seconds.
+	
+SC_DORAM_BUF_02 ()
+	desc: Recovers 5 SP every 10 seconds.

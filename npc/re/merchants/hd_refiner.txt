@@ -34,30 +34,30 @@
 	if (!getequipisequiped(.@part)) {
 		mes "[Blacksmith Mighty Hammer]";
 		switch(.@part) {
-		case 1:
+		case EQI_HEAD_TOP:
 			mes "I'm a blacksmith, not a hairstylist.";
 			break;
-		case 2:
+		case EQI_ARMOR:
 			mes "With my hammer, I will make you a star of the sky.";
 			break;
-		case 3:
-		case 4:
+		case EQI_HAND_L:
+		case EQI_HAND_R:
 			mes "Making artificial hands is not my specialty.";
 			break;
-		case 5:
+		case EQI_GARMENT:
 			mes "Bring out the item so I can refine it!";
 			break;
-		case 6:
+		case EQI_SHOES:
 			mes "Where is this foot odor coming from?";
 			break;
-		case 7:
-		case 8:
+		case EQI_ACC_L:
+		case EQI_ACC_R:
 			mes "Where is the accessory?";
 			break;
-		case 9:
+		case EQI_HEAD_MID:
 			mes "What do you want me to refine?";
 			break;
-		case 10:
+		case EQI_HEAD_LOW:
 			mes "Huh? What do you want me to do?";
 			break;
 		}
@@ -171,30 +171,30 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	826
 	if (!getequipisequiped(.@part)) {
 		mes "[Basta]";
 		switch(.@part) {
-		case 1:
+		case EQI_HEAD_TOP:
 			mes "Is your head an equipment?";
 			break;
-		case 2:
+		case EQI_ARMOR:
 			mes "What do you want me to do?";
 			break;
-		case 3:
-		case 4:
+		case EQI_HAND_L:
+		case EQI_HAND_R:
 			mes "Making artificial hands is not my specialty.";
 			break;
-		case 5:
+		case EQI_GARMENT:
 			mes "Do you even know what a robe is?";
 			break;
-		case 6:
+		case EQI_SHOES:
 			mes "If you want to refine your feet, don't come to me, try running a marathon.";
 			break;
-		case 7:
-		case 8:
+		case EQI_ACC_L:
+		case EQI_ACC_R:
 			mes "Where is the accessory?";
 			break;
-		case 9:
+		case EQI_HEAD_MID:
 			mes "Well... I don't see any equipment worth refining.";
 			break;
-		case 10:
+		case EQI_HEAD_LOW:
 			mes "I can't make you smart. Go see a school teacher for that.";
 			break;
 		}

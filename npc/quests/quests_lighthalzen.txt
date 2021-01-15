@@ -2044,11 +2044,12 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		close;
 	}
 	if (friendship > 14) {
+		cutin "lhz_diguts05.bmp",2;
 		mes "^3355FFDigotz has passed";
 		mes "away, but the look on";
 		mes "his face seems very";
 		mes "peaceful and content.^000000";
-		close;
+		close3;
 	}
 	if (friendship == 14) {
 		mes "^3355FFDigotz is seriously";
@@ -2061,6 +2062,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "Oh no, let me";
 		mes "get you some help!";
 		next;
+		cutin "lhz_diguts04.bmp",2;
 		mes "[Digotz]";
 		mes "H-hey... It's the";
 		mes "adventurer... Man,";
@@ -2085,6 +2087,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "to him. We'll hang out and have";
 		mes "fun, just like the good old days.";
 		next;
+		cutin "lhz_diguts05.bmp",2;
 		mes "[Digotz]";
 		mes "I missed my buddies, but now...";
 		mes "Now I can hear them calling me.";
@@ -2114,9 +2117,11 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		set friendship,15;
 		changequest 12005,12006;
 		getitem 1201,1; //Knife
+		cutin "",255;
 		close;
 	}
 	if (friendship == 13) {
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "Wh-whoa, I need to";
 		mes "get ready! That Maku's";
@@ -2124,9 +2129,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "I look too rich and pampered.";
 		mes "Damn! Where did I put all of";
 		mes "my fashionable street clothes?";
-		close;
+		close3;
 	}
-	if ((friendship == 12 && countitem(7351) > 0)) {
+	if (friendship == 12 && countitem(7351) > 0) {
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "Even if Benkaistein";
 		mes "did come back, I don't";
@@ -2135,6 +2141,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "I think I'd even be madder!";
 		next;
 		if (select("Show Benkaistein's Journal.:Don't show Benkaistein's Journal.") == 1) {
+			cutin "",255;
 			mes "[Digotz]";
 			mes "Why am I so ticked off?";
 			mes "^3355FF*Sigh*^000000 You have something";
@@ -2159,6 +2166,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "I think about it. Boy, I hope";
 			mes "we don't do that again.^000000";
 			next;
+			cutin "lhz_diguts02.bmp",2;
 			mes "[Digotz]";
 			mes "Oh yeah, I remember that!";
 			mes "Maku wore the wings most";
@@ -2167,6 +2175,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "air the longest! Yeah, I was";
 			mes "a regular Kid Pegasus~";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Maku, Digotz and me went";
 			mes "outside of town. Of course,";
@@ -2183,6 +2192,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "bad and the monster got away.";
 			mes "Boy, mom was not happy...^000000";
 			next;
+			cutin "lhz_diguts03.bmp",2;
 			mes "[Digotz]";
 			mes "Huh. I don't remember";
 			mes "that so well. But I know that";
@@ -2191,6 +2201,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "then. We must have been totally";
 			mes "nuts to fight a monster, though.";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Digotz's been sick for three";
 			mes "days now. It's just a normal";
@@ -2198,6 +2209,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "it's Digotz's fault he got sick.^FFFFFF ^856363 But he's always asking me to";
 			mes "go visit him and see if he's okay.^000000";
 			next;
+			cutin "lhz_diguts01.bmp",2;
 			mes "[Digotz]";
 			mes "I think I remember being";
 			mes "pretty sick. Maku was worried?";
@@ -2206,6 +2218,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "um, Gonorrhitis. You know.";
 			mes "That might have been it.";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Mom and dad keep telling";
 			mes "me not to hang out with Maku";
@@ -2221,12 +2234,14 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "But Digotz doesn't care.";
 			mes "I know he likes Maku a lot.^000000";
 			next;
+			cutin "lhz_diguts07.bmp",2;
 			mes "[Digotz]";
 			mes "Well, we were a lot";
 			mes "younger and closer back";
 			mes "then, so... ^333333*Ahem!*^000000 Why did";
 			mes "Benkaistein even write that?!";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Today, the three of us";
 			mes "made an oath of brotherhood,";
@@ -2235,6 +2250,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "be friends no matter what.";
 			mes "For always and for always.^000000";
 			next;
+			cutin "lhz_diguts07.bmp",2;
 			mes "[Digotz]";
 			mes "I... I was forced to make";
 			mes "that oath! And people do";
@@ -2243,6 +2259,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "it's not like that oath really";
 			mes "means anything now, does it?";
 			next;
+			cutin "",255;
 			set friendship,13;
 			mes "[Digotz]";
 			mes "That does it. I'm gonna";
@@ -2260,9 +2277,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "more like Maku, though,";
 		mes "don't get me wrong, it's";
 		mes "not like I care about the guy.";
-		close;
+		close3;
 	}
 	if (friendship == 7) {
+		cutin "lhz_diguts03.bmp",2;
 		mes "[Digotz]";
 		mes "Even if Benkaistein came";
 		mes "back from wherever he was";
@@ -2270,9 +2288,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "able to get Maku to apologize";
 		mes "to me. That guy is just way";
 		mes "too stubborn for his own good!";
-		close;
+		close3;
 	}
 	if (friendship == 6) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Oh, it's been a while.";
 		mes "What are you doing back";
@@ -2288,6 +2307,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "and has been threatening to";
 		mes "beat you up pretty badly.";
 		next;
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "That no-good, dirty";
 		mes "lying rotten scoundrel!";
@@ -2296,6 +2316,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "the ghetto and beat Maku";
 		mes "up myself! That stupid guy!";
 		next;
+		cutin "lhz_diguts03.bmp",2;
 		mes "[Digotz]";
 		mes "During times like this,";
 		mes "I really miss ^FF0000Benkaistein^000000.";
@@ -2322,6 +2343,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		set friendship,7;
 		changequest 12002,12003;
 		next;
+		cutin "",255;
 		mes "[Digotz]";
 		mes "I don't know why,";
 		mes "but I'm so angry!";
@@ -2329,7 +2351,8 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "out so much over this?!";
 		close;
 	}
-	if ((friendship == 4 || friendship == 5)) {
+	if (friendship == 4 || friendship == 5) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Still checking out";
 		mes "Uptown Lighthalzen?";
@@ -2345,9 +2368,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "^FF0000Not to mention an apology!";
 		mes "^FF0000But who cares what you think?!";
 		mes "I'm so goddamn happy without you!^000000";
-		close;
+		close3;
 	}
 	if (friendship == 3) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "I know that the";
 		mes "opulence of Uptown";
@@ -2369,7 +2393,9 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "says, unless it's an apology";
 		mes "for being a fully blown jerk.";
 		mes "Ever since we were kids...";
+		cutin "",255;
 		next;
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "Anyway, we used to be close,";
 		mes "but that guy was never a true";
@@ -2386,6 +2412,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "on the worst blind dates a";
 		mes "man can possibly experience!";
 		next;
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Maku doesn't know a damn";
 		mes "about friendship! Even if I did";
@@ -2401,6 +2428,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "and check up on him! I only";
 		mes "have one regret though...";
 		next;
+		cutin "lhz_diguts07.bmp",2;
 		mes "[Digotz]";
 		mes "I only wish I had one";
 		mes "last chance to see Maku...";
@@ -2432,9 +2460,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "^FF0000But who cares what you think?!";
 		mes "I'm so goddamn happy without you!^000000";
 		set friendship,4;
-		close;
+		close3;
 	}
 	if (friendship == 2) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "What are you still";
 		mes "doing hanging around";
@@ -2447,9 +2476,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "Just hearing about";
 		mes "Maku makes me so feel";
 		mes "so upset for some reason!";
-		close;
+		close3;
 	}
 	if (friendship == 1) {
+		cutin "lhz_diguts02.bmp",2;
 		mes "[Digotz]";
 		mes "Oh, an adventurer?";
 		mes "Welcome to Uptown";
@@ -2466,6 +2496,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "your stay in my hometown.";
 		next;
 		select("Do you know someone named Maku?");
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Maku? Maku. Yes, he's my";
 		mes "childhood friend. Or he was,";
@@ -2483,8 +2514,9 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "Just forget everything I said.";
 		set friendship,2;
 		changequest 12000,12001;
-		close;
+		close3;
 	}
+	cutin "lhz_diguts02.bmp",2;
 	mes "[Digotz]";
 	mes "Oh, an adventurer?";
 	mes "Welcome to Uptown";
@@ -2500,7 +2532,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 	mes "glad to see somebody";
 	mes "aside from the stuck up";
 	mes "rich people who live here.";
-	close;
+	close3;
 }
 
 lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
@@ -3021,6 +3053,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		close;
 	}
 	if (friendship == 15) {
+		cutin "lhz_benkaistin01.bmp",2;
 		mes "[Benkaistein]";
 		mes "Were you able to bring";
 		mes "my journal to Digotz and";
@@ -3062,9 +3095,9 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "adventurer. When the three";
 		mes "of us get together, I'll be";
 		mes "sure to let you know~";
-		close;
+		close3;
 	}
-	if ((friendship == 11 && countitem(7351) > 0)) {
+	if (friendship == 11 && countitem(7351) > 0) {
 		mes "[Benkaistein]";
 		mes "Aw nuts, this is";
 		mes "taking much longer";
@@ -3072,6 +3105,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "Now where did I put";
 		mes "that thing? Hmmmm...";
 		next;
+		cutin "lhz_benkaistin02.bmp",2;
 		mes "[Benkaistein]";
 		mes "Oh, is that it?";
 		mes "Did you find my";
@@ -3080,6 +3114,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "This is it! Thank you";
 		mes "for finding this for me!";
 		next;
+		cutin "",255;
 		mes "[Benkaistein]";
 		mes "Would you mind doing";
 		mes "a favor for me? It'd be";
@@ -3097,6 +3132,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		next;
 		set friendship,12;
 		changequest 12004,12005;
+		cutin "lhz_benkaistin04.bmp",2;
 		mes "[Benkaistein]";
 		mes "Anyway, this should at";
 		mes "least help them realize";
@@ -3104,9 +3140,9 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "acting. Thanks in advance,";
 		mes "and please take care of";
 		mes "Maku and Digotz for me.";
-		close;
+		close3;
 	}
-	if ((friendship == 10 || friendship == 11)) {
+	if (friendship == 10 || friendship == 11) {
 		mes "[Benkaistein]";
 		mes "Aw nuts, this is";
 		mes "taking much longer";
@@ -3121,6 +3157,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		close;
 	}
 	if (friendship == 9) {
+		cutin "lhz_benkaistin03.bmp",2;
 		mes "[Passionate Student]";
 		mes "Oh, you startled me!";
 		mes "Still, I'm aware that it's";
@@ -3130,6 +3167,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "I help you, adventurer?";
 		next;
 		select("Tell him about Maku and Digotz.");
+		cutin "lhz_benkaistin02.bmp",2;
 		mes "[Benkaistein]";
 		mes "Oh, how are my friends";
 		mes "doing? Oh, what? They're";
@@ -3154,9 +3192,10 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "so important? Wait! Would you";
 		mes "please wait a second while";
 		mes "I look for something?";
-		close;
+		close3;
 	}
 	if (friendship == 8) {
+		cutin "lhz_benkaistin04.bmp",2;
 		mes "[Passionate Student]";
 		mes "Let's see, now.";
 		mes "Wind Magic, Black Magic,";
@@ -3203,7 +3242,9 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "["+ strcharinfo(0) +"]";
 		mes "HEY YOU...!";
 		mes "BENKAISTEIN~!";
+		cutin "",255;
 		next;
+		cutin "lhz_benkaistin02.bmp",2;
 		mes "[Passionate Student]";
 		mes "Oh, good heavens!";
 		mes "C-can't you keep";
@@ -3212,7 +3253,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "No, wait. Have you been";
 		mes "calling me all this time?";
 		set friendship,9;
-		close;
+		close3;
 	}
 	mes "[Passionate Student]";
 	mes "Let's see, now.";

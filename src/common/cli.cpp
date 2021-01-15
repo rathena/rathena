@@ -10,7 +10,7 @@
 #ifdef WIN32
 	#include <conio.h>
 #else
-	#include <sys/poll.h>
+	#include <poll.h>
 #endif
 
 #include "cbasetypes.hpp"
