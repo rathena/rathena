@@ -9604,6 +9604,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Blind,1000;
   - Id: 1496
     AegisName: Thanos_Long_Spear
@@ -12080,9 +12081,9 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
       bonus2 bMagicAddRace,RC_Player_Human,5;
-       bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bMagicAddRace,RC_Player_Doram,5;
-      bonus3 bAddEff,Eff_Blind,1000,ATF_MAGIC;
+      bonus2 bAddEff,Eff_Blind,1000;
       bonus bHealPower,5;
   - Id: 1592
     AegisName: Thor_Pedigree_Book
@@ -16982,7 +16983,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Freeze,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Freeze,1000;
   - Id: 1835
     AegisName: Spartacus
     Name: Spartacus
@@ -18211,7 +18213,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Poison,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Poison,1000;
   - Id: 1933
     AegisName: Thanos_Violin
     Name: Thanos Violin
@@ -19329,7 +19332,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Blind,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Blind,1000;
   - Id: 1988
     AegisName: Thanos_Whip
     Name: Thanos Whip
@@ -20130,9 +20134,9 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bMagicAddRace,RC_Player_Human,20;
+      bonus2 bMagicAddRace,RC_Player_Doram,20;
       bonus3 bAddEff,Eff_Stun,1000,ATF_MAGIC;
-      bonus bHPRecovRate,5;
-      bonus bSPRecovRate,5;
+      bonus bHealPower,5;
   - Id: 2020
     AegisName: Jormungand
     Name: Jormungand
@@ -22386,6 +22390,7 @@ Body:
       bonus bMaxHP,100;
       bonus bMaxSP,100;
       bonus2 bSubRace,RC_Player_Human,15;
+      bonus2 bSubRace,RC_Player_Doram,15;
   - Id: 2179
     AegisName: TE_Woe_Shield
     Name: TE Woe Shield
@@ -22416,6 +22421,7 @@ Body:
       bonus bMdef,5;
       bonus bMaxHP,200;
       bonus2 bSubRace,RC_Player_Human,20;
+      bonus2 bSubRace,RC_Player_Doram,20;
   - Id: 2180
     AegisName: TE_Woe_Magic_Guard
     Name: TE Woe Magic Guard
@@ -22449,6 +22455,7 @@ Body:
       bonus bMdef,25;
       bonus bMaxSP,200;
       bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
   - Id: 2181
     AegisName: Hervor
     Name: Hervor
@@ -28054,7 +28061,9 @@ Body:
       bonus bMaxHP,150;
       bonus bMaxSP,150;
       bonus2 bAddRace,RC_Player_Human,5;
+      bonus2 bAddRace,RC_Player_Doram,5;
       bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 2497
     AegisName: TE_Woe_Boots
@@ -28085,6 +28094,7 @@ Body:
       bonus bMaxHP,200;
       bonus bMaxSP,100;
       bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 2498
     AegisName: TE_Woe_Magic_Sandal
@@ -28119,6 +28129,7 @@ Body:
       bonus bMaxHP,100;
       bonus bMaxSP,200;
       bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 2499
     AegisName: Temporal_Boots
@@ -55947,7 +55958,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Silence,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Silence,1000;
   - Id: 13085
     AegisName: Volcano_Knife
     Name: Volcano Knife
@@ -56832,7 +56844,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Curse,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Curse,1000;
   - Id: 13118
     AegisName: Tiny_Flame
     Name: Fading Flame
@@ -58064,6 +58077,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Silence,1000;
   - Id: 13185
     AegisName: TE_Woe_Gatling
@@ -58091,6 +58105,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Stun,1000;
   - Id: 13186
     AegisName: TE_Woe_Shotgun
@@ -58118,6 +58133,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Poison,1000;
   - Id: 13187
     AegisName: TE_Woe_Grenade
@@ -58145,6 +58161,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Blind,1000;
   - Id: 13189
     AegisName: COLORSCOPE
@@ -58802,6 +58819,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Bleeding,1000;
       bonus bUnbreakableWeapon;
   - Id: 13321
@@ -60491,7 +60509,8 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Poison,3000;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Poison,1000;
   - Id: 13440
     AegisName: Ceremonial_Sword
     Name: Ceremonial Sword
@@ -62937,6 +62956,7 @@ Body:
       bonus bMaxHP,250;
       bonus bMaxSP,250;
       bonus2 bSubRace,RC_Player_Human,10;
+      bonus2 bSubRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 15063
     AegisName: TE_Woe_Chain_Mail
@@ -62968,6 +62988,7 @@ Body:
       bonus bMaxHP,450;
       bonus bMaxSP,50;
       bonus2 bSubRace,RC_Player_Human,15;
+      bonus2 bSubRace,RC_Player_Doram,15;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 15064
     AegisName: TE_Woe_Mage_Coat
@@ -63002,6 +63023,7 @@ Body:
       bonus bMaxHP,200;
       bonus bMaxSP,200;
       bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 15066
     AegisName: Engraved_Armor
@@ -66508,9 +66530,9 @@ Body:
     Script: |
       bonus bUnbreakableWeapon;
       bonus2 bAddRace,RC_Player_Human,40;
-      bonus2 bAddEff,Eff_Freeze,3000;
-      bonus bHPRecovRate,5;
-      bonus bSPRecovRate,5;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Freeze,1000;
+      bonus bHealPower,5;
   - Id: 16026
     AegisName: RWC_Memory_Mace
     Name: RWC Memory Mace
@@ -72867,7 +72889,9 @@ Body:
       bonus bBaseAtk,5;
       bonus bMatk,5;
       bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
       bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 18733
     AegisName: TE_Woe_Bone_Helm
@@ -72898,6 +72922,7 @@ Body:
     Script: |
       bonus bBaseAtk,10;
       bonus2 bAddRace,RC_Player_Human,20;
+      bonus2 bAddRace,RC_Player_Doram,20;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 18734
     AegisName: TE_Woe_Magic_Eyes
@@ -72932,6 +72957,7 @@ Body:
       bonus bMdef,5;
       bonus bMatk,10;
       bonus2 bMagicAddRace,RC_Player_Human,20;
+      bonus2 bMagicAddRace,RC_Player_Doram,20;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 18736
     AegisName: Censor_Bar_
@@ -89327,7 +89353,9 @@ Body:
     Script: |
       bonus bMdef,5;
       bonus2 bAddRace,RC_Player_Human,5;
+      bonus2 bAddRace,RC_Player_Doram,5;
       bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Doram,5;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 20703
     AegisName: TE_Woe_Manteau
@@ -89356,6 +89384,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 20704
     AegisName: TE_Woe_Magic_Manteau
@@ -89387,6 +89416,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus2 bResEff,Eff_Freeze,25;
   - Id: 20705
     AegisName: Lumiere_Manteau
@@ -96040,11 +96070,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMaxHP,20;
-      bonus bMaxSP,20;
+      bonus bMaxHP,20+10*getrefine();
+      bonus bMaxSP,10;
       if (getrefine()>=7) {
-         bonus bMaxHP,1;
-         bonus bMaxSP,1;
+         bonus bMaxHPrate,1;
+         bonus bMaxSPrate,1;
       }
   - Id: 24026
     AegisName: S_Athena_Shield
@@ -96135,6 +96165,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,10+.@r;
       if (getrefine()>=7)
          bonus bHealPower2,5;
   - Id: 24034
@@ -96848,9 +96881,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,-5;
-      if (getrefine()>=7) {bonus bSPrecovRate,5;
-      }
+      bonus bSPrecovRate,5;
+      if (getrefine()>=7)
+         bonus bSPrecovRate,5;
   - Id: 24079
     AegisName: S_Spiritual_Earring
     Name: Spiritual Shadow Earring
@@ -96861,6 +96894,8 @@ Body:
     Refineable: true
     Script: |
       bonus bMaxSP,50;
+      if (getrefine()>=7)
+         bonus bMaxSPrate,1;
   - Id: 24080
     AegisName: S_Spiritual_Pendent
     Name: Spiritual Shadow Pendant
@@ -97216,7 +97251,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,1;
+      bonus bUseSPrate,-1;
       if (getrefine()>=7)
          bonus bSPrecovRate,5;
   - Id: 24112
@@ -97228,7 +97263,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,1+((getrefine()>=7)?1:0)+((getrefine()>=9)?1:0);
+      bonus bUseSPrate,-1+((getrefine()>=7)?1:0)+((getrefine()>=9)?1:0);
   - Id: 24113
     AegisName: S_Spell_Flow_Shield
     Name: Spellflow Shadow Shield
@@ -97238,7 +97273,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,1;
+      bonus bUseSPrate,-1;
       if (getrefine()>=7)
          bonus bMaxSPrate,1;
   - Id: 24114
@@ -97251,7 +97286,7 @@ Body:
     Refineable: true
     Script: |
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
   - Id: 24115
     AegisName: S_Greed_Shoes
     Name: Grid Shadow Shoes
@@ -98303,7 +98338,6 @@ Body:
     AegisName: S_Expert_Shoes
     Name: Expert Shadow Shoes
     Type: Shadowgear
-    Buy: 20
     Weight: 100
     Locations:
       Shadow_Shoes: true
@@ -98311,7 +98345,7 @@ Body:
     EquipLevelMax: 175
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,1;
+      bonus2 bExpAddRace,RC_All,(getrefine()/4);
   - Id: 24209
     AegisName: S_Expert_Shield
     Name: Expert Shadow Shield
@@ -98327,7 +98361,6 @@ Body:
     AegisName: S_Beginner_Shoes
     Name: Beginner Shadow Shoes
     Type: Shadowgear
-    Buy: 20
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 1
@@ -98372,7 +98405,6 @@ Body:
     AegisName: S_Advanced_Shoes
     Name: Advanced Shadow Shoes
     Type: Shadowgear
-    Buy: 20
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -98551,11 +98583,11 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bAtk2,(5+.@r);
+      bonus bBaseAtk,(5+.@r);
       if (.@r>=7)
-         bonus bMaxHPrate,1;
-      if (.@r>=9)
          bonus bMaxSPrate,1;
+      if (.@r>=9)
+         bonus2 bAddClass,Class_All,1;
   - Id: 24227
     AegisName: S_Enhance_Spirit_Weapon
     Name: Enhanced Soul Shadow Weapon
@@ -98636,11 +98668,8 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bFlee,5;
       .@r = getrefine();
-      if (.@r>=2) {
-         bonus bCritical,2;
-      }
+      bonus bFlee,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
       }
@@ -98656,11 +98685,8 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bCritical,5;
       .@r = getrefine();
-      if (.@r>=2) {
-         bonus bCritical,2;
-      }
+      bonus bCritical,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
       }
@@ -98846,7 +98872,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillUseSPrate,"MC_MAMMONITE",20+(3*.@r);
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"MC_Mammonite",20+(5*.@r);
   - Id: 24248
     AegisName: S_Acolyte_Earring
     Name: Acolyte Shadow Earring
@@ -98868,9 +98895,10 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillUseSPrate,"MG_COLDBOLT",20+(3*.@r);
-      bonus2 bSkillUseSPrate,"MG_FIREBOLT",20+(3*.@r);
-      bonus2 bSkillUseSPrate,"MG_LIGHTNINGBOLT",20+(3*.@r);
+      bonus bMaxHP,.@r*10;
+      bonus2 bVariableCastrate,"MG_COLDBOLT",-20-(5*.@r);
+      bonus2 bVariableCastrate,"MG_FIREBOLT",-20-(5*.@r);
+      bonus2 bVariableCastrate,"MG_LIGHTNINGBOLT",-20-(5*.@r);
   - Id: 24250
     AegisName: S_Swordman_Pendant
     Name: Swordman Shadow Pendant
