@@ -55,6 +55,12 @@ struct s_questinfo {
 	e_questinfo_types icon;
 	e_questinfo_markcolor color;
 	struct script_code* condition;
+
+	~s_questinfo(){
+		if( this->condition != nullptr ){
+			script_free_code( this->condition );
+		}
+	}
 };
 
 struct npc_data {
@@ -118,7 +124,7 @@ struct npc_data {
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
 
-	std::vector<s_questinfo> qi_data;
+	std::vector<std::shared_ptr<s_questinfo>> qi_data;
 
 	struct {
 		t_tick timeout;

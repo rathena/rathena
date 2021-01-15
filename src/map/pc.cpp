@@ -13274,14 +13274,14 @@ void pc_show_questinfo(struct map_session_data *sd) {
 		bool show = false;
 
 		for (auto &qi : nd->qi_data) {
-			if (!qi.condition || achievement_check_condition(qi.condition, sd)) {
+			if (!qi->condition || achievement_check_condition(qi->condition, sd)) {
 				show = true;
 				// Check if need to be displayed
-				if (!sd->qi_display[i].is_active || qi.icon != sd->qi_display[i].icon || qi.color != sd->qi_display[i].color) {
+				if (!sd->qi_display[i].is_active || qi->icon != sd->qi_display[i].icon || qi->color != sd->qi_display[i].color) {
 					sd->qi_display[i].is_active = true;
-					sd->qi_display[i].icon = static_cast<e_questinfo_types>(qi.icon);
-					sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(qi.color);
-					clif_quest_show_event(sd, &nd->bl, qi.icon, qi.color);
+					sd->qi_display[i].icon = static_cast<e_questinfo_types>(qi->icon);
+					sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(qi->color);
+					clif_quest_show_event(sd, &nd->bl, qi->icon, qi->color);
 				}
 				break;
 			}

@@ -2461,6 +2461,8 @@ int npc_unload(struct npc_data* nd, bool single) {
 		}
 	}
 
+	nd->qi_data.clear();
+
 	script_stop_sleeptimers(nd->bl.id);
 	aFree(nd);
 

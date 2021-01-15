@@ -19749,11 +19749,11 @@ BUILDIN_FUNC(questinfo)
 		}
 	}
 
-	struct s_questinfo qi;
+	std::shared_ptr<s_questinfo> qi = std::make_shared<s_questinfo>();
 
-	qi.icon = static_cast<e_questinfo_types>(icon);
-	qi.color = static_cast<e_questinfo_markcolor>(color);
-	qi.condition = script;
+	qi->icon = static_cast<e_questinfo_types>(icon);
+	qi->color = static_cast<e_questinfo_markcolor>(color);
+	qi->condition = script;
 
 	nd->qi_data.push_back(qi);
 
