@@ -47437,7 +47437,6 @@ Body:
       NoAuction: true
     Script: |
       getitem(1649,1);
-      getitem(2198,1);
       getitem(15169,1);
   - Id: 23256
     AegisName: Elixir_Bandages
