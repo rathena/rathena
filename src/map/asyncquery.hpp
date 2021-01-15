@@ -6,6 +6,8 @@
 #include <string>
 #include <functional>
 
+// DBResultData
+// structure that contains data from Sql_Query()
 struct DBResultData {
 private:
 	size_t Index(int Row, int Column);
@@ -47,10 +49,11 @@ enum class dbType {
 
 typedef std::function<void(DBResultData& result)> dbJobFunc;
 
+// Job for doing Sql_Query
 struct dbJob {
 	dbType dType;
 	std::string query;
-	futureJobFunc resultFunc;
+	futureJobFunc resultFunc; // Callback function after finishing Sql_Query()
 };
 
 void addDBJob(dbType dType, std::string query, futureJobFunc resultFunc);

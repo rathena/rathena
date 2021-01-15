@@ -6,6 +6,7 @@
 typedef void* FutureData;
 typedef std::function<void (FutureData)> futureJobFunc;
 
+// Job for passing data between threads
 struct futureJob {
     futureJobFunc callbackFunc;
 	FutureData resultData;

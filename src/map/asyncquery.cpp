@@ -8,6 +8,10 @@
 
 #include <thread>
 
+// [Threads]
+// Main Thread
+// DB Thread
+
 using namespace std;
 
 extern int map_server_port;
@@ -81,14 +85,17 @@ Sql* getHandle(dbType type) {
 	}
 }
 
+// Main Thread Function
 void addDBJob(dbType dType, string query, futureJobFunc resultFunc) {
 	dbJobs.push_back({ dType, query, resultFunc });
 }
 
+// Main Thread Function
 void addDBJob(dbType dType, string query) {
 	dbJobs.push_back({ dType, query, NULL });
 }
 
+// DB Thread Function
 void doQuery(dbJob& job) {
 	Sql* handle = getHandle(job.dType);
 	int sql_result_value;
@@ -114,6 +121,7 @@ void doQuery(dbJob& job) {
 	Sql_FreeResult(handle);
 }
 
+// DB Thread Function
 void db_runtime(void) {
 	while (runflag != CORE_ST_STOP) {
 		this_thread::sleep_for(chrono::milliseconds(50));
@@ -131,6 +139,7 @@ void db_runtime(void) {
 	LogDBHandle = NULL;
 }
 
+// Main Thread Function
 void asyncquery_init(void) {
 	MainDBHandle = Sql_Malloc();
 
@@ -161,9 +170,11 @@ void asyncquery_init(void) {
 		ShowStatus("Connect success! (Log DB Server(async thread) Connection)\n");
 	}
 
+	// Creating DB Thread
 	db_thread = new thread(db_runtime);
 }
 
+// Main Thread Function
 void asyncquery_final(void) {
 	db_thread->join();
 }
