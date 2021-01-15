@@ -88119,8 +88119,8 @@ Body:
     Name: Costume Silent Executor
     Type: Armor
     Locations:
-      Costume_Head_Top: true
       Costume_Head_Mid: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 632
   - Id: 20392
