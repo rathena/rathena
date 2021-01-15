@@ -67751,12 +67751,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon;
       bonus bLuk,3;
       bonus bCritAtkRate,50;
-      if (BaseLevel>99) {
+      if (BaseLevel>99)
          bonus bLongAtkRate,20;
-      }
   - Id: 18108
     AegisName: Brindle_Eel
     Name: Zebra Eel
