@@ -722,13 +722,6 @@ struct iwall_data {
 	bool shootable;
 };
 
-struct s_questinfo {
-	struct npc_data *nd;
-	e_questinfo_types icon;
-	e_questinfo_markcolor color;
-	struct script_code* condition;
-};
-
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	uint16 index; // The map index used by the mapindex* functions.
@@ -766,7 +759,7 @@ struct map_data {
 	struct Channel *channel;
 
 	/* ShowEvent Data Cache */
-	std::vector<s_questinfo> qi_data;
+	std::vector<int> qi_npc;
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
