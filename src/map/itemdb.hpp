@@ -227,6 +227,10 @@ enum e_item_job : uint16
 	ITEMJ_THIRD_BABY  = 0x20,
 	ITEMJ_MAX         = 0xFF,
 
+	ITEMJ_ALL_UPPER = ITEMJ_UPPER | ITEMJ_THIRD_UPPER,
+	ITEMJ_ALL_BABY = ITEMJ_BABY | ITEMJ_THIRD_BABY,
+	ITEMJ_ALL_THIRD = ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY,
+
 #ifdef RENEWAL
 	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY | ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY,
 #else
@@ -755,12 +759,31 @@ enum e_itemshop_restrictions {
 enum e_item_drop_effect : uint16 {
 	DROPEFFECT_NONE = 0,
 	DROPEFFECT_CLIENT,
+#if PACKETVER < 20200304
 	DROPEFFECT_WHITE_PILLAR,
+#endif
 	DROPEFFECT_BLUE_PILLAR,
 	DROPEFFECT_YELLOW_PILLAR,
 	DROPEFFECT_PURPLE_PILLAR,
+#if PACKETVER < 20200304
 	DROPEFFECT_ORANGE_PILLAR,
-	DROPEFFECT_MAX
+#else
+	DROPEFFECT_GREEN_PILLAR,
+#endif
+#if PACKETVER >= 20200304
+	DROPEFFECT_RED_PILLAR,
+#endif
+	DROPEFFECT_MAX,
+#if PACKETVER >= 20200304
+	// White was removed in 2020-03-04
+	DROPEFFECT_WHITE_PILLAR,
+	// Orange was replaced by green in 2020-03-04
+	DROPEFFECT_ORANGE_PILLAR,
+#else
+	// Not supported before 2020-03-04
+	DROPEFFECT_GREEN_PILLAR,
+	DROPEFFECT_RED_PILLAR,
+#endif
 };
 
 /// Enum for items with delayed consumption
@@ -989,6 +1012,7 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
+	void loadingFinished();
 };
 
 extern ItemDatabase item_db;

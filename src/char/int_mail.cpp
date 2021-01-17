@@ -17,8 +17,8 @@
 #include "inter.hpp"
 
 bool mail_loadmessage(int mail_id, struct mail_message* msg);
-void mapif_Mail_return(int fd, uint32 char_id, int mail_id);
-void mapif_Mail_delete(int fd, uint32 char_id, int mail_id, bool deleted);
+void mapif_Mail_return( int fd, uint32 char_id, int mail_id, uint32 account_id_receiver = 0, uint32 account_id_sender = 0 );
+bool mapif_Mail_delete( int fd, uint32 char_id, int mail_id, uint32 account_id = 0 );
 
 int mail_fromsql(uint32 char_id, struct mail_data* md)
 {
@@ -82,6 +82,11 @@ int mail_savemessage(struct mail_message* msg)
 	int i, j;
 	bool found = false;
 
+	if( SQL_ERROR == Sql_QueryStr( sql_handle, "START TRANSACTION" ) ){
+		Sql_ShowDebug( sql_handle );
+		return 0;
+	}
+
 	// build message save query
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`,`type`", schema_config.mail_db);
@@ -99,6 +104,7 @@ int mail_savemessage(struct mail_message* msg)
 	{
 		SqlStmt_ShowDebug(stmt);
 		StringBuf_Destroy(&buf);
+		Sql_QueryStr( sql_handle, "ROLLBACK" );
 		return msg->id = 0;
 	} else
 		msg->id = (int)SqlStmt_LastInsertId(stmt);
@@ -140,9 +146,16 @@ int mail_savemessage(struct mail_message* msg)
 
 	if( found && SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) ){
 		Sql_ShowDebug(sql_handle);
+		msg->id = 0;
+		Sql_QueryStr( sql_handle, "ROLLBACK" );
 	}
 
 	StringBuf_Destroy(&buf);
+
+	if( msg->id && SQL_ERROR == Sql_QueryStr( sql_handle, "COMMIT" ) ){
+		Sql_ShowDebug( sql_handle );
+		return 0;
+	}
 
 	return msg->id;
 }
@@ -236,14 +249,18 @@ bool mail_loadmessage(int mail_id, struct mail_message* msg)
 }
 
 int mail_timer_sub( int limit, enum mail_inbox_type type ){
+	// Start by deleting all expired mails sent by the server
+	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s`WHERE `type` = '%d' AND `send_id` = '0' AND `time` <= UNIX_TIMESTAMP( NOW() - INTERVAL %d DAY )", schema_config.mail_db, type, limit ) ){
+		Sql_ShowDebug( sql_handle );
+		return 0;
+	}
+
 	struct{
 		int mail_id;
 		int char_id;
 		int account_id;
-	}mails[MAIL_MAX_INBOX];
-	int i, map_fd;
-	char* data;
-	struct online_char_data* character;
+		int account_id_sender;
+	}mails[MAIL_ITERATION_SIZE];
 
 	if( limit <= 0 ){
 		return 0;
@@ -251,7 +268,14 @@ int mail_timer_sub( int limit, enum mail_inbox_type type ){
 
 	memset(mails, 0, sizeof(mails));
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`char_id`,`account_id` FROM `%s` `m` INNER JOIN `%s` `c` ON `c`.`char_id`=`m`.`dest_id` WHERE `type` = '%d' AND `time` <= UNIX_TIMESTAMP( NOW() - INTERVAL %d DAY ) ORDER BY `id` LIMIT %d", schema_config.mail_db, schema_config.char_db, type, limit, MAIL_MAX_INBOX + 1) ){
+	if( SQL_ERROR == Sql_Query( sql_handle,
+		"SELECT `m`.`id`, `c`.`char_id`, `c`.`account_id`, `c2`.`account_id` "
+		"FROM `%s` `m` "
+		"INNER JOIN `%s` `c` ON `c`.`char_id`=`m`.`dest_id` "
+		"INNER JOIN `%s` `c2` ON `c2`.`char_id`=`m`.`send_id` "
+		"WHERE `type` = '%d' AND `time` <= UNIX_TIMESTAMP( NOW() - INTERVAL %d DAY ) "
+		"ORDER BY `id` LIMIT %d",
+		schema_config.mail_db, schema_config.char_db, schema_config.char_db, type, limit, MAIL_ITERATION_SIZE + 1 ) ){
 		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
@@ -260,31 +284,26 @@ int mail_timer_sub( int limit, enum mail_inbox_type type ){
 		return 0;
 	}
 
-	for( i = 0; i < MAIL_MAX_INBOX && SQL_SUCCESS == Sql_NextRow(sql_handle); i++ ){
+	for( int i = 0; i < MAIL_ITERATION_SIZE && SQL_SUCCESS == Sql_NextRow( sql_handle ); i++ ){
+		char* data;
+
 		Sql_GetData(sql_handle, 0, &data, NULL); mails[i].mail_id = atoi(data);
 		Sql_GetData(sql_handle, 1, &data, NULL); mails[i].char_id = atoi(data);
 		Sql_GetData(sql_handle, 2, &data, NULL); mails[i].account_id = atoi(data);
+		Sql_GetData( sql_handle, 3, &data, NULL ); mails[i].account_id_sender = atoi( data );
 	}
 
 	Sql_FreeResult(sql_handle);
 
-	for( i = 0; i < MAIL_MAX_INBOX; i++ ){
+	for( int i = 0; i < MAIL_ITERATION_SIZE; i++ ){
 		if( mails[i].mail_id == 0 ){
 			break;
 		}
 
-		// Check for online players
-		if( ( character = (struct online_char_data*)idb_get(char_get_onlinedb(), mails[i].account_id) ) != NULL && character->server >= 0 ){
-			map_fd = map_server[character->server].fd;
-		}else{
-			map_fd = 0;
-		}
-
 		if( type == MAIL_INBOX_NORMAL ){
-			mapif_Mail_return( 0, mails[i].char_id, mails[i].mail_id );
-			mapif_Mail_delete( map_fd, mails[i].char_id, mails[i].mail_id, true );
+			mapif_Mail_return( 0, mails[i].char_id, mails[i].mail_id, mails[i].account_id, mails[i].account_id_sender );
 		}else if( type == MAIL_INBOX_RETURNED ){
-			mapif_Mail_delete( map_fd, mails[i].char_id, mails[i].mail_id, false );
+			mapif_Mail_delete( 0, mails[i].char_id, mails[i].mail_id, mails[i].account_id );
 		}else{
 			// Should not happen
 			continue;
@@ -420,22 +439,36 @@ void mapif_parse_Mail_getattach(int fd)
 /*==========================================
  * Delete Mail
  *------------------------------------------*/
-void mapif_Mail_delete(int fd, uint32 char_id, int mail_id, bool deleted)
-{
+bool mapif_Mail_delete( int fd, uint32 char_id, int mail_id, uint32 account_id ){
 	bool failed = false;
 
-	if( !deleted ){
-		if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id) ||
-			SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id) )
-		{
-			Sql_ShowDebug(sql_handle);
-			failed = true;
+	if( SQL_ERROR == Sql_QueryStr( sql_handle, "START TRANSACTION" ) ||
+		SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id ) ||
+		SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id ) ||
+		SQL_ERROR == Sql_QueryStr( sql_handle, "COMMIT" ) ){
+
+		Sql_ShowDebug( sql_handle );
+		Sql_QueryStr( sql_handle, "ROLLBACK" );
+
+		// We do not want to trigger failure messages, if the map server did not send a request
+		if( fd <= 0 ){
+			return false;
 		}
+
+		failed = true;
 	}
 
-	// Only if the request came from a map-server and was not timer triggered for an offline character
+	// If the char server triggered this, check if we have to notify a map server
 	if( fd <= 0 ){
-		return;
+		struct online_char_data* character;
+
+		// Check for online players
+		if( ( character = (struct online_char_data*)idb_get( char_get_onlinedb(), account_id ) ) != nullptr && character->server >= 0 ){
+			fd = map_server[character->server].fd;
+		}else{
+			// The request was triggered inside the character server or the player is offline now
+			return !failed;
+		}
 	}
 
 	WFIFOHEAD(fd,11);
@@ -444,11 +477,13 @@ void mapif_Mail_delete(int fd, uint32 char_id, int mail_id, bool deleted)
 	WFIFOL(fd,6) = mail_id;
 	WFIFOB(fd,10) = failed;
 	WFIFOSET(fd,11);
+
+	return !failed;
 }
 
 void mapif_parse_Mail_delete(int fd)
 {
-	mapif_Mail_delete(fd, RFIFOL(fd,2), RFIFOL(fd,6), false);
+	mapif_Mail_delete( fd, RFIFOL( fd, 2 ), RFIFOL( fd, 6 ) );
 }
 
 /*==========================================
@@ -473,45 +508,68 @@ void mapif_Mail_new(struct mail_message *msg)
 /*==========================================
  * Return Mail
  *------------------------------------------*/
-void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
-{
+void mapif_Mail_return( int fd, uint32 char_id, int mail_id, uint32 account_id_receiver, uint32 account_id_sender ){
 	struct mail_message msg;
-	int new_mail = 0;
 
-	if( mail_loadmessage(mail_id, &msg) )
-	{
-		if( msg.dest_id != char_id)
+	if( !mail_loadmessage( mail_id, &msg ) ){
+		return;
+	}
+
+	if( msg.dest_id != char_id ){
+		return;
+	}
+
+	if( !mapif_Mail_delete( 0, char_id, mail_id, account_id_receiver ) ){
+		// Stop processing to not duplicate the mail
+		return;
+	}
+
+	// If it was sent by the server we do not want to return the mail
+	if( msg.send_id == 0 ){
+		return;
+	}
+
+	// If we do not want to return mails without any attachments and the request was not sent by a user
+	if( fd <= 0 && !charserv_config.mail_return_empty ){
+		int i;
+
+		ARR_FIND( 0, MAIL_MAX_ITEM, i, msg.item[i].nameid > 0 );
+
+		if( i == MAIL_MAX_ITEM && msg.zeny == 0 ){
 			return;
-		else if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id)
-			|| SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id) )
-			Sql_ShowDebug(sql_handle);
-		// If it was not sent by the server, since we do not want to return mails to the server
-		else if( msg.send_id != 0 )
-		{
-			char temp_[MAIL_TITLE_LENGTH + 3];
-
-			// swap sender and receiver
-			SWAP(msg.send_id, msg.dest_id);
-			safestrncpy(temp_, msg.send_name, NAME_LENGTH);
-			safestrncpy(msg.send_name, msg.dest_name, NAME_LENGTH);
-			safestrncpy(msg.dest_name, temp_, NAME_LENGTH);
-
-			// set reply message title
-			snprintf(temp_, sizeof(temp_), "RE:%s", msg.title);
-			safestrncpy(msg.title, temp_, sizeof(temp_));
-
-			msg.status = MAIL_NEW;
-			msg.type = MAIL_INBOX_RETURNED;
-			msg.timestamp = time(NULL);
-
-			new_mail = mail_savemessage(&msg);
-			mapif_Mail_new(&msg);
 		}
 	}
 
-	// Only if the request came from a map-server and was not timer triggered for an offline character
+	char temp_[MAIL_TITLE_LENGTH + 3];
+
+	// swap sender and receiver
+	SWAP( msg.send_id, msg.dest_id );
+	safestrncpy( temp_, msg.send_name, NAME_LENGTH );
+	safestrncpy( msg.send_name, msg.dest_name, NAME_LENGTH );
+	safestrncpy( msg.dest_name, temp_, NAME_LENGTH );
+
+	// set reply message title
+	snprintf( temp_, sizeof( temp_ ), "RE:%s", msg.title );
+	safestrncpy( msg.title, temp_, sizeof( temp_ ) );
+
+	msg.status = MAIL_NEW;
+	msg.type = MAIL_INBOX_RETURNED;
+	msg.timestamp = time( NULL );
+
+	int new_mail = mail_savemessage( &msg );
+	mapif_Mail_new( &msg );
+
+	// If the char server triggered this, check if we have to notify a map server
 	if( fd <= 0 ){
-		return;
+		struct online_char_data* character;
+
+		// Check for online players
+		if( ( character = (struct online_char_data*)idb_get( char_get_onlinedb(), account_id_sender ) ) != nullptr && character->server >= 0 ){
+			fd = map_server[character->server].fd;
+		}else{
+			// The request was triggered inside the character server or the player is offline now
+			return;
+		}
 	}
 
 	WFIFOHEAD(fd,11);
