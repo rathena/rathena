@@ -17250,39 +17250,25 @@ BUILDIN_FUNC(npcshopchange)
 
 	struct script_data* item_dt = script_getdata(st, 3);
 	struct script_data* cost_dt = script_getdata(st, 4);
-	struct script_data* amount_dt = nullptr;
+	struct script_data* amount_dt = script_hasdata(st,5) ? script_getdata(st, 5) : nullptr;
 	
-	if(script_hasdata(st,5))
-		amount_dt = script_getdata(st, 5);
-	
-	if( !data_isreference(item_dt) || !data_isreference(cost_dt) || (amount_dt != NULL && !data_isreference(amount_dt))) {
+	if( !data_isreference(item_dt) || !data_isreference(cost_dt) || (amount_dt != nullptr && !data_isreference(amount_dt))) {
 		ShowError("buildin_npcshopchange: parameter not a variable\n");
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;// not a variable
 	}
 	
-	const char* item_name = reference_getname(item_dt);
-	const char* cost_name = reference_getname(cost_dt);
-	const char* amount_name = nullptr;
-	int amount_id, amount_idx;
-	if(script_hasdata(st,5)){
-		amount_name = reference_getname(amount_dt);
-		amount_id = reference_getid(amount_dt);
-		amount_idx = reference_getindex(amount_dt);
-	}
+	const char* amount_name = script_hasdata(st,5) ? reference_getname(amount_dt) : nullptr;
 	
-	if(is_string_variable(item_name) || is_string_variable(cost_name) || (script_hasdata(st,5) && is_string_variable(amount_name))) {
+	if(is_string_variable(reference_getname(item_dt)) || is_string_variable(reference_getname(cost_dt)) || (amount_name != nullptr && is_string_variable(amount_name))) {
 		ShowError("buildin_npcshopchange: illegal type, need int\n");
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;// string not supported
 	}
 	
-	unsigned int item_hk = script_array_highest_key(st, NULL, reference_getname(item_dt), reference_getref(item_dt));
-	unsigned int cost_hk = script_array_highest_key(st, NULL, reference_getname(cost_dt), reference_getref(cost_dt));
-	unsigned int amount_hk = 0;
-	
-	if(script_hasdata(st,5))
-		amount_hk = script_array_highest_key(st, NULL, reference_getname(amount_dt), reference_getref(amount_dt));
+	unsigned int item_hk = script_array_highest_key(st, nullptr, reference_getname(item_dt), reference_getref(item_dt));
+	unsigned int cost_hk = script_array_highest_key(st, nullptr, reference_getname(cost_dt), reference_getref(cost_dt));
+	unsigned int amount_hk = script_hasdata(st,5) ? script_array_highest_key(st, nullptr, reference_getname(amount_dt), reference_getref(amount_dt)) : 0;
 	
 	if(item_hk != cost_hk || (script_hasdata(st,5) && item_hk != amount_hk)) {
 		ShowError("buildin_npcshopchange:  Size mismatch: item_hk=%d, cost_hk=%d, amount_hk=%d\n",item_hk,cost_hk,amount_hk);
@@ -17295,22 +17281,17 @@ BUILDIN_FUNC(npcshopchange)
 		npc_market_delfromsql_(nd->exname, 0, true);
 #endif
 
-	int i;
-	int itemref_id = reference_getid(item_dt);
-	int item_idx = reference_getindex(item_dt);
-	int costref_id = reference_getid(cost_dt);
-	int cost_idx = reference_getindex(cost_dt);
-	
 	// generate new shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, item_hk);
+	int i;
 	for (i = 0; i < item_hk; i++) {
-		t_itemid nameid = (t_itemid)get_val2_num( st, reference_uid( itemref_id, item_idx + i ), reference_getref( item_dt ) );
-		int32 cost = (int32)get_val2_num( st, reference_uid( costref_id, cost_idx + i ), reference_getref( cost_dt ) );
+		t_itemid nameid = (t_itemid)get_val2_num( st, reference_uid( reference_getid(item_dt), reference_getindex(item_dt) + i ), reference_getref( item_dt ) );
+		int32 cost = (int32)get_val2_num( st, reference_uid( reference_getid(cost_dt), reference_getindex(cost_dt) + i ), reference_getref( cost_dt ) );
 		nd->u.shop.shop_item[i].nameid = nameid;
 		nd->u.shop.shop_item[i].value = cost;
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
-			unsigned short amount = (unsigned short)get_val2_num( st, reference_uid( amount_id, amount_idx + i ), reference_getref( amount_dt ) );
+			unsigned short amount = (unsigned short)get_val2_num( st, reference_uid( reference_getid(amount_dt), reference_getindex(amount_dt) + i ), reference_getref( amount_dt ) );
 			nd->u.shop.shop_item[i].qty = amount;
 			nd->u.shop.shop_item[i].flag = 1;
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[i]);
