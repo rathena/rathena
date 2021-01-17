@@ -92869,7 +92869,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,.@r/2;
+      bonus bBaseAtk,10*(.@r/2);
       bonus2 bSkillAtk,"RK_SONICWAVE",.@r/3*10;
       if (.@r >= 9)
          bonus5 bAutoSpell,"RK_SONICWAVE",max(2,getskilllv("RK_SONICWAVE")),100,BF_SHORT|BF_WEAPON,1;
@@ -97856,7 +97856,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24167
     AegisName: S_Penetration_Pendent
     Name: Penetration Shadow Pendant
@@ -97866,7 +97868,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24168
     AegisName: S_Tempest_Earring
     Name: Tempest Shadow Earring
