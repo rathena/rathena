@@ -709,6 +709,28 @@ int instance_addmap(int instance_id) {
 }
 
 /**
+ * Fills outname with the name of the instance map name
+ * @param inname: Name of map to use
+ * @param instance_id: Instance id to prepend
+ * @param outname: Pointer to allocated memory that will be filled in. Should be size MAP_NAME_LENGTH
+ */
+void instance_gen_mapname(const char * inname, int instance_id, char * outname) {
+	char iname[MAP_NAME_LENGTH];
+	if (outname == nullptr)
+		return;
+
+	strncpy(iname, inname, MAP_NAME_LENGTH - 1);
+
+	if ((strchr(iname, '@') == nullptr) && strlen(iname) > 8) {
+		memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
+		snprintf(outname, MAP_NAME_LENGTH, "%d#", (instance_id % 1000));
+	} else
+		snprintf(outname, MAP_NAME_LENGTH, "%.3d", (instance_id % 1000));
+
+	strncat(outname, iname, MAP_NAME_LENGTH - strlen(outname) - 1);
+}
+
+/**
  * Returns an instance map ID
  * @param m: Source map ID
  * @param instance_id: Instance to search
@@ -730,15 +752,8 @@ int16 instance_mapid(int16 m, int instance_id)
 
 	for (const auto &it : idata->map) {
 		if (it.src_m == m) {
-			char iname[MAP_NAME_LENGTH], alt_name[MAP_NAME_LENGTH];
-
-			strcpy(iname, name);
-
-			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
-				memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name), "%d#%s", (instance_id % 1000), iname);
-			} else
-				snprintf(alt_name, sizeof(alt_name), "%.3d%s", (instance_id % 1000), iname);
+			char alt_name[MAP_NAME_LENGTH];
+			instance_gen_mapname(name, instance_id, alt_name);
 			return map_mapname2mapid(alt_name);
 		}
 	}
