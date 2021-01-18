@@ -308,6 +308,9 @@ Body:
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Changemap: true
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
     End:
       Closeconfine: true
       Closeconfine2: true
@@ -327,6 +330,9 @@ Body:
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Mapwarp: true
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Encpoison
     Icon: Enchantpoison
@@ -401,6 +407,7 @@ Body:
       SignumCrucis: true
     Flags:
       Opt_Changeoption: true
+      Debuff: true
 
   - Status: Increaseagi
     Icon: Inc_Agi
@@ -443,6 +450,7 @@ Body:
       Acceleration: true
 
   - Status: Slowpoison
+    Icon: Slowpoison
     DurationLookup: PR_SLOWPOISON
     Flags:
       No_Clearance: true
@@ -593,6 +601,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Debuff: true
     Fail:
       Inspiration: true
 
@@ -689,10 +698,15 @@ Body:
       Opt_Changelook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Slowdown
     CalcFlags:
       Speed: true
+    Flags:
+      Debuff: true
 
   - Status: Ankle
     Icon: Anklesnare
@@ -825,6 +839,7 @@ Body:
       Reflectdamage: true
 
   - Status: Splasher
+    Icon: Splasher
     DurationLookup: AS_SPLASHER
 
   - Status: Providence
@@ -860,6 +875,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Rem_Ondead: true
+      No_Clearance: true
 
   - Status: Sighttrasher
 
@@ -942,6 +958,7 @@ Body:
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
+      No_Clearance: true
 
   - Status: Bladestop_Wait
     DurationLookup: MO_BLADESTOP
@@ -951,6 +968,7 @@ Body:
       Rem_On_Changemap: true
 
   - Status: Bladestop
+    Icon: Bladestop
     DurationLookup: MO_BLADESTOP
     States:
       NoMove: true
@@ -1031,6 +1049,7 @@ Body:
     DurationLookup: NPC_DEFENDER
 
   - Status: Armor_Element_Water
+    Icon: Resist_Property_Water
     CalcFlags:
       All: true
     Flags:
@@ -1050,6 +1069,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       Overlap_Fail: true
+      No_Clearance: true
 
   - Status: Protectexp
     Icon: Protectexp
@@ -1233,6 +1253,8 @@ Body:
       No_Rem_Ondead: true
       No_Clearance: true
       No_Save: true
+      No_Banishing_Buster: true
+      No_Dispell: true
     Fail:
       Quagmire: true
       Dontforgetme: true
@@ -1255,6 +1277,9 @@ Body:
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Changemap: true
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Rejectsword
     Icon: Swordreject
@@ -1327,6 +1352,7 @@ Body:
       MDef2: true
     Flags:
       No_Save: true
+      Debuff: true
 
   - Status: Memorize
     Icon: Memorize
@@ -1434,6 +1460,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Save: true
 
   - Status: Run
     Icon: Run
@@ -1534,6 +1561,10 @@ Body:
     DurationLookup: GD_REGENERATION
     CalcFlags:
       Regen: true
+    Flags:
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Doublecast
     Icon: Doublecasting
@@ -1602,6 +1633,7 @@ Body:
     DurationLookup: DC_WINKCHARM
     Flags:
       Rem_On_Damaged: true
+      Debuff: true
 
   - Status: Closeconfine
     Icon: Rg_Cconfine_M
@@ -1737,6 +1769,8 @@ Body:
       Flee2: true
     Flags:
       No_Rem_Ondead: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Assncros
     Icon: Assassincross
@@ -1747,6 +1781,7 @@ Body:
       No_Rem_Ondead: true
       Failed_Mado: true
       No_Clearance: true
+      No_Dispell: true
     Fail:
       Quagmire: true
 
@@ -1756,6 +1791,7 @@ Body:
     Flags:
       No_Rem_Ondead: true
       No_Clearance: true
+      No_Dispell: true
 
   - Status: Appleidun
     Icon: Appleidun
@@ -1765,6 +1801,7 @@ Body:
     Flags:
       No_Rem_Ondead: true
       No_Clearance: true
+      No_Dispell: true
 
   - Status: Modechange
     DurationLookup: NPC_EMOTION
@@ -1779,6 +1816,7 @@ Body:
     Flags:
       No_Rem_Ondead: true
       No_Clearance: true
+      No_Dispell: true
 
   - Status: Dontforgetme
     Icon: Dontforgetme
@@ -1789,6 +1827,7 @@ Body:
     Flags:
       No_Rem_Ondead: true
       No_Clearance: true
+      No_Dispell: true
     Fail:
       Speedup1: true
     End:
@@ -1805,10 +1844,11 @@ Body:
     Icon: Fortunekiss
     DurationLookup: DC_FORTUNEKISS
     CalcFlags:
-      Cri: true
+      All: true
     Flags:
       No_Rem_Ondead: true
       No_Clearance: true
+      No_Dispell: true
 
   - Status: Service4u
     Icon: Serviceforyou
@@ -1818,6 +1858,7 @@ Body:
     Flags:
       No_Rem_Ondead: true
       No_Clearance: true
+      No_Dispell: true
 
   - Status: Stop
     Icon: Stop
@@ -1829,8 +1870,10 @@ Body:
       No_Save: true
       No_Clearance: true
       Rem_On_Changemap: true
+      Debuff: true
 
   - Status: Spurt
+    Icon: Strup
     DurationLookup: TK_RUN
     CalcFlags:
       Str: true
@@ -1840,6 +1883,7 @@ Body:
 
   - Status: Spirit
     Icon: Soullink
+    DurationLookup: SL_HIGH
     CalcFlags:
       All: true
     Opt3:
@@ -1847,6 +1891,7 @@ Body:
     Flags:
       No_Clearance: true
       No_Save: true
+      No_Banishing_Buster: true
 
   - Status: Coma
     DurationLookup: NPC_DARKBLESSING
@@ -2162,6 +2207,9 @@ Body:
       Opt_Changelook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Warm
     Icon: Sg_Sun_Warm
@@ -2169,9 +2217,6 @@ Body:
     Opt3:
       Warm: true
     Flags:
-      No_Dispell: true
-      No_Banishing_Buster: true
-      No_Clearance: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -2276,6 +2321,7 @@ Body:
       No_Banishing_Buster: true
       Rem_On_Mapwarp: true
       No_Rem_Ondead: true
+      No_Clearance: true
 
   - Status: Madnesscancel
     Icon: Gs_Madnesscancel
@@ -2340,6 +2386,8 @@ Body:
     Flags:
       No_Save: true
       No_Clearance: true
+      No_Banishing_Buster: true
+      No_Dispell: true
 
   - Status: Bunsinjyutsu
     Icon: Nj_Bunsinjyutsu
@@ -2387,6 +2435,7 @@ Body:
       All: true
 
   - Status: Sma
+    Icon: Sma_Ready
     DurationLookup: SL_SMA
     Flags:
       No_Clearbuff: true
@@ -2456,6 +2505,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   - Status: Jailed
     Flags:
@@ -2466,6 +2516,7 @@ Body:
       No_Clearance: true
 
   - Status: Enchantarms
+    Icon: Weaponproperty
     DurationLookup: ITEM_ENCHANTARMS
     CalcFlags:
       Atk_Ele: true
@@ -2483,10 +2534,12 @@ Body:
 
   - Status: Criticalwound
     Icon: Criticalwound
+    DurationLookup: NPC_CRITICALWOUND
     Flags:
       Debuff: true
       No_Dispell: true
       No_Banishing_Buster: true
+      No_Clearance: true
 
   - Status: Magicmirror
     DurationLookup: NPC_MAGICMIRROR
@@ -2576,6 +2629,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   #- Status: Hpregen
 
@@ -2641,6 +2695,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   #- Status: Spregen
 
@@ -2661,7 +2716,6 @@ Body:
     Icon: Mer_Atk
     CalcFlags:
       Watk: true
-      Batk: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -2730,6 +2784,7 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       Overlap_Fail: true
+      No_Rem_Ondead: true
 
   - Status: L_Lifepotion
     Icon: L_Lifepotion
@@ -2738,6 +2793,7 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       Overlap_Fail: true
+      No_Rem_Ondead: true
 
   - Status: Jexpboost
     Icon: Cash_Plusonlyjobexp
@@ -2920,6 +2976,7 @@ Body:
       Boss_Resist: true
       Stop_Walking: true
       Overlap_Fail: true
+      Debuff: true
     Fail:
       Inspiration: true
     End:
@@ -2940,6 +2997,8 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
+    CalcFlags:
+      Mdef: true
 
   - Status: Freezing
     Icon: Frostmisty
@@ -2995,6 +3054,7 @@ Body:
     DurationLookup: RK_CRUSHSTRIKE
     Flags:
       No_Clearbuff: true
+      No_Dispell: true
 
   - Status: Refresh
     Icon: Refresh
@@ -3040,6 +3100,7 @@ Body:
 
   - Status: Vitalityactivation
     Icon: Vitalityactivation
+    DurationLookup: RK_VITALITYACTIVATION
     CalcFlags:
       Regen: true
     Flags:
@@ -3088,6 +3149,7 @@ Body:
       Speed: true
     Flags:
       Boss_Resist: true
+      Debuff: true
     End:
       Decreaseagi: true
 
@@ -3115,7 +3177,7 @@ Body:
     Icon: Laudaagnus
     DurationLookup: AB_LAUDAAGNUS
     CalcFlags:
-      Vit: true
+      MaxHp: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -3124,7 +3186,7 @@ Body:
     Icon: Laudaramus
     DurationLookup: AB_LAUDARAMUS
     CalcFlags:
-      Luk: true
+      All: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -3213,6 +3275,7 @@ Body:
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
+      No_Clearance: true
 
   - Status: Stasis
     Icon: Stasis
@@ -3280,12 +3343,14 @@ Body:
       No_Banishing_Buster: true
       No_Save: true
       Overlap_Fail: true
+      No_Clearance: true
 
   - Status: Wugdash
     Icon: Wugdash
     DurationLookup: RA_WUGDASH
     CalcFlags:
       Speed: true
+      Dspd: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -3295,6 +3360,7 @@ Body:
 
   - Status: Bite
     Icon: Wugbite
+    DurationLookup: RA_WUGBITE
     States:
       NoMove: true
     Flags:
@@ -3304,6 +3370,7 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
+      Debuff: true
     MinRate: 5000
 
   - Status: Camouflage
@@ -3394,6 +3461,7 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
+      Debuff: true
     Fail:
       Hovering: true
 
@@ -3416,6 +3484,8 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
+      Rem_On_Madogear: true
+      Rem_On_Changemap: true
 
   - Status: Stealthfield
     Icon: Stealthfield
@@ -3428,6 +3498,8 @@ Body:
       No_Clearance: true
       No_Save: true
       Stop_Attacking: true
+    CalcFlags:
+      Speed: true
 
   - Status: Stealthfield_Master
     Icon: Stealthfield_Master
@@ -3438,6 +3510,8 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
+      Rem_On_Madogear: true
+      Rem_On_Changemap: true
 
   - Status: Overheat
     Icon: Overheat
@@ -3666,8 +3740,7 @@ Body:
   - Status: Pyrexia
     Icon: Pyrexia
     CalcFlags:
-      Hit: true
-      Flee: true
+      All: true
     Flags:
       Rem_On_Refresh: true
       Rem_On_Luxanima: true
@@ -3692,6 +3765,7 @@ Body:
     Icon: Oblivioncurse
     States:
       NoCast: true
+      Nocastcond: true
     CalcFlags:
       Regen: true
     Flags:
@@ -3750,7 +3824,7 @@ Body:
     Icon: Forceofvanguard
     DurationLookup: LG_FORCEOFVANGUARD
     CalcFlags:
-      Def: true
+      MaxHp: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -3820,6 +3894,7 @@ Body:
       Speed: true
     Flags:
       Boss_Resist: true
+      Overlap_Fail: true
 
   - Status: Earthdrive
     Icon: Earthdrive
@@ -3909,9 +3984,12 @@ Body:
       No_Clearance: true
       No_Save: true
       Rem_On_Changemap: true
+      Debuff: true
     Fail:
       Hallucinationwalk: true
       Hovering: true
+    States:
+      Nomove: true
 
   - Status: Propertywalk
     Icon: Propertywalk
@@ -3975,6 +4053,7 @@ Body:
     DurationLookup: MI_RUSH_WINDMILL
     CalcFlags:
       Watk: true
+      Speed: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -4095,6 +4174,8 @@ Body:
       Beyondofwarcry: true
       Unlimitedhummingvoice: true
       Sircleofnature: true
+    CalcFlags:
+      Regen: true
 
   - Status: Gloomyday
     Icon: Gloomyday
@@ -4113,7 +4194,6 @@ Body:
       Melodyofsink: true
       Beyondofwarcry: true
       Unlimitedhummingvoice: true
-      Voiceofsiren: true
 
   - Status: Gloomyday_Sk
     Icon: Gloomyday
@@ -4133,6 +4213,8 @@ Body:
       Beyondofwarcry: true
       Unlimitedhummingvoice: true
       Sircleofnature: true
+    CalcFlags:
+      Regen: true
 
   - Status: Dancewithwug
     Icon: Dance_With_Wug
@@ -4162,8 +4244,7 @@ Body:
       NoUnEquipItem: true
       NoConsumeItem: true
     CalcFlags:
-      Batk: true
-      Def: true
+      Hit: true
       Flee: true
       Regen: true
     Flags:
@@ -4211,6 +4292,7 @@ Body:
     DurationLookup: WM_MELODYOFSINK
     CalcFlags:
       Int: true
+      MaxSp: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -4233,7 +4315,6 @@ Body:
     DurationLookup: WM_BEYOND_OF_WARCRY
     CalcFlags:
       Str: true
-      Cri: true
       MaxHp: true
     Flags:
       No_Dispell: true
@@ -4289,6 +4370,7 @@ Body:
       Boss_Resist: true
       Stop_Walking: true
       Overlap_Fail: true
+      Debuff: true
 
   - Status: Crescentelbow
     Icon: Crescentelbow
@@ -4367,9 +4449,7 @@ Body:
     DurationLookup: SR_GENTLETOUCH_CHANGE
     CalcFlags:
       Watk: true
-      Mdef: true
       Aspd: true
-      MaxHp: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -4529,6 +4609,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   - Status: Cocktail_Warg_Blood
     Icon: Cocktail_Warg_Blood
@@ -4539,6 +4620,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   - Status: Minor_Bbq
     Icon: Minor_Bbq
@@ -4549,6 +4631,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   - Status: Siroma_Ice_Tea
     Icon: Siroma_Ice_Tea
@@ -4559,6 +4642,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   - Status: Drocera_Herb_Steamed
     Icon: Drocera_Herb_Steamed
@@ -4569,6 +4653,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   - Status: Putti_Tails_Noodles
     Icon: Putti_Tails_Noodles
@@ -4579,6 +4664,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      No_Rem_Ondead: true
 
   - Status: Boost500
     Icon: Boost500
@@ -4594,7 +4680,6 @@ Body:
     Icon: Full_Swing_K
     CalcFlags:
       Batk: true
-      Watk: true
     Flags:
       No_Clearbuff: true
       No_Dispell: true
@@ -4645,6 +4730,7 @@ Body:
     Icon: Vitata_500
     CalcFlags:
       Regen: true
+      MaxSp: true
     Flags:
       No_Clearbuff: true
       No_Dispell: true
@@ -4736,6 +4822,8 @@ Body:
     Flags:
       Overlap_Fail: true
       Boss_Resist: true
+      No_Banishing_Buster: true
+      No_Clearance: true
     Fail:
       Inspiration: true
 
@@ -4748,6 +4836,8 @@ Body:
     Flags:
       Overlap_Fail: true
       Boss_Resist: true
+      No_Banishing_Buster: true
+      No_Clearance: true
     Fail:
       Inspiration: true
 
@@ -4759,6 +4849,8 @@ Body:
     Flags:
       Overlap_Fail: true
       Boss_Resist: true
+      No_Banishing_Buster: true
+      No_Clearance: true
     Fail:
       Inspiration: true
 
@@ -4771,6 +4863,8 @@ Body:
     Flags:
       Overlap_Fail: true
       Boss_Resist: true
+      No_Banishing_Buster: true
+      No_Clearance: true
     Fail:
       Inspiration: true
 
@@ -4783,6 +4877,8 @@ Body:
     Flags:
       Overlap_Fail: true
       Boss_Resist: true
+      No_Banishing_Buster: true
+      No_Clearance: true
     Fail:
       Inspiration: true
 
@@ -4790,11 +4886,12 @@ Body:
     Icon: Weakness
     DurationLookup: SC_WEAKNESS
     CalcFlags:
-      Flee2: true
       MaxHp: true
     Flags:
       Overlap_Fail: true
       Boss_Resist: true
+      No_Banishing_Buster: true
+      No_Clearance: true
     Fail:
       Inspiration: true
 
@@ -4883,9 +4980,7 @@ Body:
     Icon: Water_Barrier
     DurationLookup: EL_WATER_BARRIER
     CalcFlags:
-      Mdef: true
       Watk: true
-      Matk: true
       Flee: true
 
   - Status: Wind_Step
@@ -5276,6 +5371,7 @@ Body:
 
   - Status: Fire_Insignia
     Icon: Fire_Insignia
+    DurationLookup: SO_FIRE_INSIGNIA
     CalcFlags:
       Matk: true
       Watk: true
@@ -5391,6 +5487,8 @@ Body:
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
+    CalcFlags:
+      MaxHp: true
 
   - Status: Incmsp
     Flags:
@@ -5398,12 +5496,15 @@ Body:
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
+    CalcFlags:
+      MaxSp: true
 
   - Status: Partyflee
     Icon: Partyflee
     DurationLookup: ALL_PARTYFLEE
     Flags:
       No_Clearance: true
+      No_Banishing_Buster: true
 
   - Status: Meikyousisui
     Icon: Meikyousisui
@@ -5459,6 +5560,7 @@ Body:
       NoConsumeItem: true
 
   - Status: Kyomu
+    Icon: Kyomu
     DurationLookup: KG_KYOMU
 
   - Status: Kagemusya
@@ -5473,6 +5575,7 @@ Body:
       Batk: true
 
   - Status: Gensou
+    Icon: Gensou
     DurationLookup: OB_OBOROGENSOU
 
   - Status: Akaitsuki
@@ -5493,7 +5596,7 @@ Body:
       No_Clearance: true
 
   - Status: Tinder_Breaker
-    Icon: Tinder_Breaker
+    Icon: Tinder_Breaker_Postdelay
     DurationLookup: MH_TINDER_BREAKER
     States:
       NoMove: true
@@ -5505,7 +5608,7 @@ Body:
       Rem_On_Changemap: true
 
   - Status: Tinder_Breaker2
-    Icon: Tinder_Breaker_Postdelay
+    Icon: Tinder_Breaker
     DurationLookup: MH_TINDER_BREAKER
     States:
       NoMove: true
@@ -5530,7 +5633,6 @@ Body:
     DurationLookup: MH_EQC
     CalcFlags:
       Def2: true
-      Batk: true
       MaxHp: true
     Flags:
       No_Save: true
@@ -5656,12 +5758,14 @@ Body:
       No_Clearance: true
 
   - Status: Defset
+    Icon: Set_Num_Def
     CalcFlags:
       Def: true
     Flags:
       Overlap_Fail: true
 
   - Status: Mdefset
+    Icon: Set_Num_Mdef
     CalcFlags:
       Mdef: true
     Flags:
@@ -5688,6 +5792,7 @@ Body:
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
+      No_Clearance: true
 
   - Status: Rebound
     Icon: Rebound
@@ -5697,6 +5802,7 @@ Body:
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
+      No_Clearance: true
 
   - Status: Unlimit
     Icon: Unlimit
@@ -5715,6 +5821,7 @@ Body:
     States:
       NoCast: true
       NoAttack: true
+      Nomove: true
     Flags:
       Stop_Attacking: true
     End:
@@ -5743,6 +5850,9 @@ Body:
       Display_Pc: true
       No_Dispell: true
       No_Banishing_Buster: true
+      No_Clearance: true
+    CalcFlags:
+      Matk: true
 
   - Status: Offertorium
     Icon: Offertorium
@@ -5789,6 +5899,8 @@ Body:
     Icon: Angel_Protect
     Flags:
       No_Clearance: true
+      No_Banishing_Buster: true
+      No_Dispell: true
 
   - Status: Illusiondoping
     Icon: Illusiondoping
@@ -5800,6 +5912,7 @@ Body:
       Display_Pc: true
 
   - Status: Flashcombo
+    Icon: Flashcombo
     DurationLookup: SR_FLASHCOMBO
     CalcFlags:
       Watk: true
@@ -5832,7 +5945,7 @@ Body:
     Icon: Heat_Barrel
     DurationLookup: RL_HEAT_BARREL
     CalcFlags:
-      Flee: true
+      Hit: true
       Aspd: true
     Flags:
       No_Save: true
@@ -5868,7 +5981,7 @@ Body:
     Icon: C_Marker
     DurationLookup: RL_C_MARKER
     CalcFlags:
-      Speed: true
+      Flee: true
     Flags:
       Bleffect: true
       Display_Pc: true
@@ -5993,6 +6106,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Bleffect: true
 
   - Status: Decoration_Of_Music
     Icon: Decoration_Of_Music
@@ -6004,6 +6118,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Bleffect: true
 
   - Status: Quest_Buff1
     Icon: Quest_Buff1
@@ -6087,6 +6202,8 @@ Body:
       No_Save: true
       No_Clearance: true
       Rem_On_Changemap: true
+      No_Banishing_Buster: true
+      No_Dispell: true
 
   - Status: Mtf_Aspd2
     Icon: Mtf_Aspd2
@@ -6414,6 +6531,7 @@ Body:
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Changemap: true
+      Rem_On_Mapwarp: true
 
   - Status: Su_Stoop
     Icon: Su_Stoop
@@ -6428,12 +6546,14 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
+      No_Clearbuff: true
 
   - Status: Catnippowder
     Icon: Catnippowder
     DurationLookup: SU_CN_POWDERING
     CalcFlags:
       Watk: true
+      Matk: true
       Speed: true
       Regen: true
     Flags:
@@ -6698,8 +6818,8 @@ Body:
   - Status: Crossbowclan
     Icon: Crossbowclan
     CalcFlags:
-      Dex: true
       Agi: true
+      Vit: true
       MaxHp: true
       MaxSp: true
     Flags:
@@ -6755,22 +6875,26 @@ Body:
 
   - Status: Maxpain
     Icon: Maxpain
+    DurationLookup: NPC_MAXPAIN
     Flags:
       Bleffect: true
 
   - Status: Armor_Element_Earth
+    Icon: Resist_Property_Ground
     CalcFlags:
       All: true
     Flags:
       No_Dispell: true
 
   - Status: Armor_Element_Fire
+    Icon: Resist_Property_Fire
     CalcFlags:
       All: true
     Flags:
       No_Dispell: true
 
   - Status: Armor_Element_Wind
+    Icon: Resist_Property_Wind
     CalcFlags:
       All: true
     Flags:
@@ -6794,6 +6918,8 @@ Body:
       No_Clearbuff: true
       No_Banishing_Buster: true
       Overlap_Fail: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Doram_Buf_02
     Icon: Doram_Buf_02
@@ -6804,6 +6930,8 @@ Body:
       No_Clearbuff: true
       No_Banishing_Buster: true
       Overlap_Fail: true
+      No_Dispell: true
+      No_Clearance: true
 
   - Status: Hiss
     Icon: Hiss
@@ -6844,6 +6972,7 @@ Body:
 
   - Status: Shrimpblessing
     Icon: Protectionofshrimp
+    DurationLookup: SU_SHRIMPARTY
     CalcFlags:
       Regen: true
     Flags:
@@ -6873,6 +7002,7 @@ Body:
   - Status: Doram_Svsp
 
   - Status: Fallen_Angel
+    DurationLookup: RL_FALLEN_ANGEL
 
   - Status: Cheerup
     Icon: Cheerup
@@ -6958,6 +7088,8 @@ Body:
       No_Clearbuff: true
       No_Clearance: true
       No_Rem_Ondead: true
+      No_Banishing_Buster: true
+      No_Dispell: true
 
   - Status: Lhz_Dun_N2
     Icon: Lhz_Dun_N2
@@ -6965,6 +7097,8 @@ Body:
       No_Clearbuff: true
       No_Clearance: true
       No_Rem_Ondead: true
+      No_Banishing_Buster: true
+      No_Dispell: true
 
   - Status: Lhz_Dun_N3
     Icon: Lhz_Dun_N3
@@ -6972,6 +7106,8 @@ Body:
       No_Clearbuff: true
       No_Clearance: true
       No_Rem_Ondead: true
+      No_Banishing_Buster: true
+      No_Dispell: true
 
   - Status: Lhz_Dun_N4
     Icon: Lhz_Dun_N4
@@ -6979,8 +7115,433 @@ Body:
       No_Clearbuff: true
       No_Clearance: true
       No_Rem_Ondead: true
+      No_Banishing_Buster: true
+      No_Dispell: true
 
   - Status: Ancilla
     Icon: Ancilla
     Flags:
       No_Rem_Ondead: true
+    CalcFlags:
+      Regen: true
+
+  - Status: Earthshaker
+
+  - Status: Weaponblock_On
+    Icon: Weaponblock_On
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+      No_Rem_Ondead: true
+      No_Clearbuff: true
+
+  - Status: Spore_Explosion
+    Icon: Spore_Explosion
+    DurationLookup: GN_SPORE_EXPLOSION
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+
+  - Status: Adaptation
+    Icon: Adaptation
+    DurationLookup: BD_ADAPTATION
+
+  - Status: Basilica_Cell
+    States:
+      NoCast: true
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+      No_Clearbuff: true
+      Rem_On_Changemap: true
+
+  - Status: Entry_Queue_Apply_Delay
+    Icon: Entry_Queue_Apply_Delay
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+      No_Rem_Ondead: true
+      No_Clearbuff: true
+
+  - Status: Entry_Queue_Notify_Admission_Time_Out
+    Icon: Entry_Queue_Notify_Admission_Time_Out
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+      No_Rem_Ondead: true
+      No_Clearbuff: true
+
+  - Status: Lightofmoon
+    Icon: Lightofmoon
+    DurationLookup: SJ_LIGHTOFMOON
+    End:
+      Lunarstance: true
+      Universestance: true
+
+  - Status: Lightofsun
+    Icon: Lightofsun
+    DurationLookup: SJ_LIGHTOFSUN
+    End:
+      Lightofsun: true
+      Universestance: true
+
+  - Status: Lightofstar
+    Icon: Lightofstar
+    DurationLookup: SJ_LIGHTOFSTAR
+    End:
+      Starstance: true
+      Universestance: true
+
+  - Status: Lunarstance
+    Icon: Lunarstance
+    DurationLookup: SJ_LUNARSTANCE
+    CalcFlags:
+      MaxHp: true
+    End:
+      Sunstance: true
+      Starstance: true
+      Universestance: true
+
+  - Status: Universestance
+    Icon: Universestance
+    DurationLookup: SJ_UNIVERSESTANCE
+    CalcFlags:
+      Str: true
+      Agi: true
+      Vit: true
+      Int: true
+      Dex: true
+      Luk: true
+    End:
+      Sunstance: true
+      Lunarstance: true
+      Starstance: true
+
+  - Status: Sunstance
+    Icon: Sunstance
+    DurationLookup: SJ_SUNSTANCE
+    CalcFlags:
+      Batk: true
+      Watk: true
+    End:
+      Lunarstance: true
+      Starstance: true
+      Universestance: true
+
+  - Status: Flashkick
+    Icon: Flashkick
+    DurationLookup: SJ_FLASHKICK
+    Flags:
+      Rem_On_Changemap: true
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+
+  - Status: Newmoon
+    Icon: Newmoon
+    DurationLookup: SJ_NEWMOONKICK
+    States:
+      NoPickItem: true
+    Options:
+      Cloak: true
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+      Stop_Attacking: true
+      Rem_On_Damaged: true
+      Rem_On_Changemap: true
+    Fail:
+      Bite: true
+
+  - Status: Starstance
+    Icon: Starstance
+    DurationLookup: SJ_STARSTANCE
+    CalcFlags:
+      Aspd: true
+    End:
+      Sunstance: true
+      Lunarstance: true
+      Universestance: true
+
+  - Status: Dimension
+    Icon: Dimension
+    DurationLookup: SJ_BOOKOFDIMENSION
+    Flags:
+      No_Clearance: true
+
+  - Status: Dimension1
+
+  - Status: Dimension2
+
+  - Status: Creatingstar
+    Icon: Creatingstar
+    DurationLookup: SJ_BOOKOFCREATINGSTAR
+    CalcFlags:
+      Speed: true
+    Flags:
+      Debuff: true
+    Fail:
+      Speedup1: true
+
+  - Status: Fallingstar
+    Icon: Fallingstar
+    DurationLookup: SJ_FALLINGSTAR
+
+  - Status: Novaexplosing
+    Icon: Novaexplosing
+    DurationLookup: SJ_NOVAEXPLOSING
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+
+  - Status: Gravitycontrol
+    Icon: Gravitycontrol
+    DurationLookup: SJ_GRAVITYCONTROL
+    States:
+      NoMove: true
+      NoCast: true
+
+  - Status: Soulcollect
+    Icon: Soulcollect
+    DurationLookup: SP_SOULCOLLECT
+    MinDuration: 1000
+
+  - Status: Soulreaper
+    Icon: Soulreaper
+    DurationLookup: SP_SOULREAPER
+
+  - Status: Soulunity
+    Icon: Soulunity
+    DurationLookup: SP_SOULUNITY
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+
+  - Status: Soulshadow
+    Icon: Soulshadow
+    DurationLookup: SP_SOULSHADOW
+    CalcFlags:
+      Aspd: true
+      Cri: true
+    Flags:
+      No_Save: true
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+    End:
+      Spirit: true
+      Soulgolem: true
+      Soulfalcon: true
+      Soulfairy: true
+
+  - Status: Soulfairy
+    Icon: Soulfairy
+    DurationLookup: SP_SOULFAIRY
+    CalcFlags:
+      Matk: true
+    Flags:
+      No_Save: true
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+    End:
+      Spirit: true
+      Soulgolem: true
+      Soulshadow: true
+      Soulfalcon: true
+
+  - Status: Soulfalcon
+    Icon: Soulfalcon
+    DurationLookup: SP_SOULFALCON
+    CalcFlags:
+      Watk: true
+      Hit: true
+    Flags:
+      No_Save: true
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+    End:
+      Spirit: true
+      Soulgolem: true
+      Soulshadow: true
+      Soulfairy: true
+
+  - Status: Soulgolem
+    Icon: Soulgolem
+    DurationLookup: SP_SOULGOLEM
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      No_Save: true
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+    End:
+      Spirit: true
+      Soulshadow: true
+      Soulfalcon: true
+      Soulfairy: true
+
+  - Status: Souldivision
+    Icon: Souldivision
+    DurationLookup: SP_SOULDIVISION
+
+  - Status: Soulenergy
+    Icon: Soulenergy
+
+  - Status: Use_Skill_Sp_Spa
+    Icon: Use_Skill_Sp_Spa
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+
+  - Status: Use_Skill_Sp_Sha
+    Icon: Use_Skill_Sp_Sha
+    Flags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+
+  - Status: Sp_Sha
+    Icon: Sp_Sha
+    DurationLookup: SP_SHA
+    CalcFlags:
+      Speed: true
+    Flags:
+      Boss_Resist: true
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+
+  - Status: Soulcurse
+    Icon: Soulcurse
+    DurationLookup: SP_SOULCURSE
+
+  - Status: Hells_Plant
+    Icon: Hells_Plant_Armor
+    DurationLookup: GN_HELLS_PLANT
+    Flags:
+      No_Save: true
+      Rem_On_Changemap: true
+      Display_Pc: true
+      Bleffect: true
+
+  - Status: Increase_Maxhp
+    Icon: Atker_Aspd
+    CalcFlags:
+      Maxhp: true
+      Regen: true
+
+  - Status: Increase_Maxsp
+    Icon: Atker_Movespeed
+    CalcFlags:
+      Maxhp: true
+      Regen: true
+
+  - Status: Ref_T_Potion
+    Icon: Ref_T_Potion
+
+  - Status: Add_Atk_Damage
+    Icon: Add_Atk_Damage
+
+  - Status: Add_Matk_Damage
+    Icon: Add_Matk_Damage
+
+  - Status: Helpangel
+    Icon: Helpangel
+    DurationLookup: NV_HELPANGEL
+
+  - Status: Soundofdestruction
+    Icon: Sound_Of_Destruction
+    DurationLookup: WM_SOUND_OF_DESTRUCTION
+
+  - Status: Luxanima
+    Icon: Luxanima
+    DurationLookup: RK_LUXANIMA
+    CalcFlags:
+      All: true
+    Flags:
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+      No_Clearbuff: true
+
+  - Status: Reuse_Limit_Luxanima
+    Flags:
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+      Overlap_Fail: true
+      No_Rem_Ondead: true
+      No_Clearbuff: true
+
+  - Status: Ensemblefatigue
+    Icon: Ensemblefatigue
+    States:
+      NoCast: true
+    CalcFlags:
+      Speed: true
+      Aspd: true
+
+  - Status: Misty_Frost
+    Icon: Misty_Frost
+    Flags:
+      Display_Pc: true
+
+  - Status: Magic_Poison
+    Icon: Magic_Poison
+    DurationLookup: WL_COMET
+    Flags:
+      Display_Pc: true
+      Bleffect: true
+
+  - Status: Ep16_2_Buff_Ss
+    Icon: Ep16_2_Buff_Ss
+    CalcFlags:
+      Aspd: true
+    Flags:
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+      No_Clearbuff: true
+
+  - Status: Ep16_2_Buff_Sc
+    Icon: Ep16_2_Buff_Sc
+    CalcFlags:
+      Cri: true
+    Flags:
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+      No_Clearbuff: true
+
+  - Status: Ep16_2_Buff_Ac
+    Icon: Ep16_2_Buff_Ac
+    Flags:
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+      No_Clearbuff: true
+
+  - Status: Emergency_Move
+    Icon: Inc_Agi
+    DurationLookup: GD_EMERGENCY_MOVE
+    CalcFlags:
+      Speed: true
+    Flags:
+      No_Save: true
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+      No_Clearbuff: true
