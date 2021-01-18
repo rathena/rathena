@@ -17283,8 +17283,7 @@ BUILDIN_FUNC(npcshopchange)
 
 	// generate new shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, item_hk);
-	int i;
-	for (i = 0; i < item_hk; i++) {
+	for (int i = 0; i < item_hk; i++) {
 		t_itemid nameid = (t_itemid)get_val2_num( st, reference_uid( reference_getid(item_dt), reference_getindex(item_dt) + i ), reference_getref( item_dt ) );
 		int32 cost = (int32)get_val2_num( st, reference_uid( reference_getid(cost_dt), reference_getindex(cost_dt) + i ), reference_getref( cost_dt ) );
 		nd->u.shop.shop_item[i].nameid = nameid;
@@ -17298,7 +17297,7 @@ BUILDIN_FUNC(npcshopchange)
 		}
 #endif
 	}
-	nd->u.shop.count = i;
+	nd->u.shop.count = item_hk;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
