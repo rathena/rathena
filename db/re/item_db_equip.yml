@@ -67751,12 +67751,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon;
       bonus bLuk,3;
       bonus bCritAtkRate,50;
-      if (BaseLevel>99) {
+      if (BaseLevel>99)
          bonus bLongAtkRate,20;
-      }
   - Id: 18108
     AegisName: Brindle_Eel
     Name: Zebra Eel
@@ -67782,12 +67780,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon;
       bonus bAgi,3;
       autobonus "{ bonus bAspd,2; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
-      if (BaseLevel>99) {
+      if (BaseLevel>99)
          bonus bLongAtkRate,20;
-      }
   - Id: 18109
     AegisName: Catapult
     Name: Thief Crossbow
@@ -68193,7 +68189,6 @@ Body:
       bonus2 bAddRace,RC_Player_Human,30;
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10;
       bonus2 bIgnoreDefRaceRate,RC_Player_Human,10;
-      bonus bUnbreakableWeapon;
   - Id: 18125
     AegisName: Arcus_Daemonicus
     Name: Arcus Daemonicus
@@ -68579,9 +68574,8 @@ Body:
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20;
       bonus bBaseAtk,6*(min(BaseLevel,160)/10);
-      if (getrefine()>=7) {
-         bonus bLongAtkRate,getskilllv("BA_MUSICALLESSON");
-      }
+      if (getrefine()>=7)
+         bonus bLongAtkRate,getskilllv("BA_MUSICALLESSON")+getskilllv("DC_DANCINGLESSON");
   - Id: 18164
     AegisName: Royal_Bow_K
     Name: Royal Bow
@@ -92875,18 +92869,12 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      if (.@r >= 2) {
-         bonus bBaseAtk,.@r/2;
-      }
-      if (.@r >= 3) {
-         bonus2 bSkillAtk,"RK_SONICWAVE",.@r/3*10;
-      }
-      if (.@r >= 9) {
-         bonus5 bAutoSpell,"RK_SONICWAVE",2,.@r/3*10,BF_SHORT|BF_WEAPON,1;
-      }
-      if (.@r >= 11) {
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RK_SONICWAVE",.@r/3*10;
+      if (.@r >= 9)
+         bonus5 bAutoSpell,"RK_SONICWAVE",max(2,getskilllv("RK_SONICWAVE")),100,BF_SHORT|BF_WEAPON,1;
+      if (.@r >= 11)
          bonus bUnbreakableWeapon;
-      }
   - Id: 21039
     AegisName: Royal_Knight's_Broadsword
     Name: Royal Knight's Broadsword
@@ -97869,8 +97857,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
-      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24167
     AegisName: S_Penetration_Pendent
     Name: Penetration Shadow Pendant
@@ -97881,8 +97869,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
-      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24168
     AegisName: S_Tempest_Earring
     Name: Tempest Shadow Earring
