@@ -63,13 +63,16 @@ int do_init(int argc, char** argv) {
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
 
 	// Loads required conversion constants
-	parse_item_constants((path_db_mode + "/item_db.txt").c_str());
-	parse_item_constants((path_db_import + "/item_db.txt").c_str());
+	if (fileExists(item_db.getDefaultLocation())) {
+		item_db.load();
+	} else {
+		parse_item_constants_txt((path_db_mode + "item_db.txt").c_str());
+		parse_item_constants_txt((path_db_import + "item_db.txt").c_str());
+	}
 	sv_readdb(path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false);
 	sv_readdb(path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false);
-	if (fileExists(path_db + "/" + "skill_db.yml")) {
-		parse_skill_constants_yml(path_db_mode, "skill_db.yml");
-		parse_skill_constants_yml(path_db_import + "/", "skill_db.yml");
+	if (fileExists(skill_db.getDefaultLocation())) {
+		skill_db.load();
 	} else {
 		sv_readdb(path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
 		sv_readdb(path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
