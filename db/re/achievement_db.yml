@@ -2064,10 +2064,12 @@ Body:
   - Id: 220000
     Group: Chatting_Create
     Name: Community begin
+    Condition: " ARG0 == 1 "
     Score: 10
   - Id: 220001
     Group: Chatting_Dying
     Name: A mouth only moment
+    Condition: " ARG0 == 1 "
     Score: 10
   - Id: 220002
     Group: Chatting_Count
@@ -2087,6 +2089,7 @@ Body:
   - Id: 220005
     Group: Party
     Name: Let's Party~
+    Condition: " ARG0 == 1 "
     Score: 10
   - Id: 220006
     Group: Marry
@@ -2191,6 +2194,7 @@ Body:
   - Id: 220022
     Group: Enchant_Fail
     Name: Human's greed has no ending..
+    Condition: " ARG0 == 1 "
     Score: 10
   - Id: 220023
     Group: Get_Item

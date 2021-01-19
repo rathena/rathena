@@ -986,6 +986,14 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			if (achievement_target_complete(ad, current_count))
 				complete = true;
 			break;
+		case AG_GOAL_ACHIEVE:
+			if (!achievement_check_condition(ad->condition, sd)) // Parameters weren't met
+				return false;
+
+			changed = true;
+			complete = true;
+			break;
+		/*
 		case AG_CHATTING:
 			if (ad->targets.empty())
 				return false;
@@ -1006,6 +1014,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			if (achievement_target_complete(ad, current_count))
 				complete = true;
 			break;
+		*/
 	}
 
 	if( isNew ){
@@ -1167,7 +1176,7 @@ s_achievement_db::s_achievement_db()
 	, targets()
 	, dependent_ids()
 	, condition(nullptr)
-	, mapindex(0)
+	, mapindex(-1)
 	, rewards()
 	, score(0)
 	, has_dependent(0)
