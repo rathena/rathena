@@ -2218,10 +2218,10 @@
 28616:15250:19310:20906:22173:28566,{ bonus bMatk,3*(min(BaseLevel,150)/10); bonus2 bMagicAtkEle,Ele_Holy,5; bonus bVariableCastrate,-10; }
 28740:15250:19310:20906:22173:28566,{ bonus bMatk,3*(min(BaseLevel,150)/10); bonus bAspdRate,5; bonus bAspd,1; }
 2191:2782,{ bonus bUseSPrate,-5; }
-18720:1621,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 20*.@r; if(.@r>=10){ .@matk += 50; bonus bDelayrate,-10; } bonus bMatkRate,.@matk; }
-18720:1622,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 20*.@r; if(.@r>=10){ .@matk += 50; bonus bDelayrate,-10; } bonus bMatkRate,.@matk; }
-18720:1626,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 15*.@r; if(.@r>=10){ .@matk += 50; bonus bVariableCastrate,-10; } bonus bMatkRate,.@matk; }
-18720:1665,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 15*.@r; if(.@r>=10){ .@matk += 50; bonus bVariableCastrate,-10; } bonus bMatkRate,.@matk; }
+18720:1621,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 20*.@r; if(.@r>=10){ .@matk += 50; bonus bDelayrate,-10; } bonus bMatk,.@matk; }
+18720:1622,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 20*.@r; if(.@r>=10){ .@matk += 50; bonus bDelayrate,-10; } bonus bMatk,.@matk; }
+18720:1626,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 15*.@r; if(.@r>=10){ .@matk += 50; bonus bVariableCastrate,-10; } bonus bMatk,.@matk; }
+18720:1665,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 15*.@r; if(.@r>=10){ .@matk += 50; bonus bVariableCastrate,-10; } bonus bMatk,.@matk; }
 18720:28201,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@dmg = 2; if(.@r>=5){ .@dmg += 3; .@def = -5; if(.@r>=7){ .@dmg += 4; .@def -= 5; } bonus2 bSubClass,Class_Normal,.@def;} bonus2 bMagicAddClass,Class_Boss,.@dmg; }
 18720:28202,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@dmg = 2; if(.@r>=5){ .@dmg += 3; .@def = -5; if(.@r>=7){ .@dmg += 4; .@def -= 5; } bonus2 bSubClass,Class_Normal,.@def;} bonus2 bMagicAddClass,Class_Boss,.@dmg; }
 19170:1549,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@aspd = 0; .@bonus1 = 0; .@bonus2 = 0; if (.@r >= 7) { .@aspd += 10; .@bonus1 += 30; .@bonus2 += 50; } if (.@r >= 9) { .@aspd += 10; .@bonus1 += 30; .@bonus2 += 50; } if (.@r >= 10) { bonus2 bSkillCooldown,"NC_PILEBUNKER",-1000; } bonus2 bSkillAtk,NC_BOOSTKNUCKLE,.@bonus1; bonus2 bSkillAtk,NC_VULCANARM,.@bonus2; }
