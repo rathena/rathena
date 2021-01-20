@@ -22536,11 +22536,7 @@ Body:
     View: 3
     Script: |
       .@r = getrefine();
-      if (.@r > 4) {
-      bonus2 bAddClass,Class_All,.@r;
-      } else {
-      bonus2 bAddClass,Class_All,4;
-      }
+      bonus2 bAddClass,Class_All,4+max(0,.@r-4);
       bonus bAspdRate,-5;
   - Id: 2185
     AegisName: Magic_Reflector
@@ -51654,7 +51650,7 @@ Body:
     View: 1064
     Script: |
       bonus bLuk,1;
-      bonus3 bAutoSpell,"PR_ASPERSIO",1,50;
+      bonus3 bAutoSpell,"PR_ASPERSIO",1,20;
   - Id: 5881
     AegisName: Weissbier_Hat
     Name: Weissbier Hat
@@ -64915,7 +64911,6 @@ Body:
     Locations:
       Armor: true
     EquipLevelMin: 100
-
     Refineable: true
     Script: |
       bonus bVariableCastrate,-10;
@@ -68451,6 +68446,7 @@ Body:
       Hunter: true
     Classes:
       All_Upper: true
+      All_Third: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -68458,7 +68454,7 @@ Body:
     Refineable: true
     View: 11
     Script: |
-      autobonus "{ bonus bAspdRate,7; }",10+(getrefine()*2),7000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
+      autobonus "{ bonus bAspdRate,7; }",5+getrefine(),7000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
       bonus2 bAddSkillBlow,"AC_CHARGEARROW",3;
   - Id: 18130
     AegisName: Crimson_Bow
@@ -75623,9 +75619,10 @@ Body:
     View: 1102
     Script: |
       bonus2 bSubRace,RC_Player_Human,13;
+      bonus2 bSubRace,RC_Player_Doram,13;
       if (getequipcardid(EQI_ARMOR,0) == 4042) {
         bonus2 bResEff,Eff_Freeze,10000;
-        bonus3 bAddEffWhenHit,Eff_Freeze,600,ATF_WEAPON|ATF_MAGIC;
+        bonus5 bAutoSpellWhenHit,"NPC_WIDEFREEZE",2,10,BF_WEAPON|BF_MAGIC,0;
       }
       if (getequipid(EQI_SHOES) == 2402 && getequipcardid(EQI_SHOES,0) == 4009) {
         .@r = getequiprefinerycnt(EQI_SHOES);
@@ -80223,7 +80220,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bHit,(.@r >= 8 ? 50 : 20);
+      bonus2 bSubEle,Ele_Dark,(.@r >= 8 ? 25: 10);
       /*.@bonus = 15;
       if (.@r >= 7) {
         .@bonus += 15;
@@ -111577,7 +111574,6 @@ Body:
     Locations:
       Both_Accessory: true
     EquipLevelMin: 50
-
     Script: |
       bonus bMatkRate,5;
       bonus bHit,20;
