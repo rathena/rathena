@@ -2389,7 +2389,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
 
-	if(dstsd && attack_type & (BF_WEAPON | BF_MAGIC | BF_MISC)) {	//Counter effects.
+	if(dstsd && attack_type & BF_WEAPONMASK) {	//Counter effects.
 		for (const auto &it : dstsd->addeff_atked) {
 			rate = it.rate;
 			if (attack_type&BF_LONG)
@@ -2401,7 +2401,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					(it.flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
-			if (!(it.flag & attack_type))
+			if (((it.flag & ATF_WEAPON) && !(attack_type & BF_WEAPON)) || ((it.flag & ATF_MAGIC) && !(attack_type & BF_MAGIC)) || ((it.flag & ATF_MISC) && !(attack_type & BF_MISC)))
 				continue;
 
 			sc_type type = it.sc;
