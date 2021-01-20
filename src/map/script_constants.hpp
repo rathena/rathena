@@ -3753,6 +3753,7 @@
 	export_constant(RC2_HEARTHUNTER);
 	export_constant(RC2_ROCKRIDGE);
 	export_constant(RC2_WERNER_LAB);
+	export_constant(RC2_TEMPLE_DEMON);
 	export_constant(RC2_MAX);
 
 	/* classes */
