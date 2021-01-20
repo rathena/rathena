@@ -2226,10 +2226,10 @@
 18720:28202,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@dmg = 2; if(.@r>=5){ .@dmg += 3; .@def = -5; if(.@r>=7){ .@dmg += 4; .@def -= 5; } bonus2 bSubClass,Class_Normal,.@def;} bonus2 bMagicAddClass,Class_Boss,.@dmg; }
 19170:1549,{ .@r = getequiprefinerycnt(EQI_HAND_R); if (.@r >= 7) { .@aspd += 10; .@bonus1 += 30; .@bonus2 += 50; if (.@r >= 9) { .@aspd += 10; .@bonus1 += 30; .@bonus2 += 50; if (.@r >= 10) { bonus2 bSkillCooldown,"NC_PILEBUNKER",-1000; } } bonus2 bSkillAtk,NC_BOOSTKNUCKLE,.@bonus1; bonus2 bSkillAtk,NC_VULCANARM,.@bonus2; bonus bAspdRate,.@aspd; } }
 19495:2375,{ bonus bStr,8; bonus bDex,4; bonus bMaxHP,1350; bonus bBaseAtk,15*getequiprefinerycnt(EQI_ARMOR); bonus2 bResEff,Eff_Stone,500; bonus2 bResEff,Eff_Stun,500; /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,30; bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,30; bonus2 bSubRace2,RC2_TEMPLE_DEMON,5;*/ }
-19495:2374,{ bonus bMdef,25; bonus bMaxSP,350; bonus bDelayrate,-10; bonus bMatk,15*getequiprefinerycnt(EQI_ARMOR); bonus bHealPower,2*getequiprefinerycnt(EQI_ARMOR); }
-19495:2537,{ bonus bMaxHP,900; bonus bLongAtkDef,10; bonus2 bSubEle,Ele_Fire,3*getequiprefinerycnt(EQI_GARMENT); bonus2 bSubEle,Ele_Water,3*getequiprefinerycnt(EQI_GARMENT); bonus2 bSubEle,Ele_Wind,3*getequiprefinerycnt(EQI_GARMENT); }
-19495:2433,{ bonus bMaxHP,100*BaseLevel; bonus bBaseAtk,20*getequiprefinerycnt(EQI_SHOES); bonus bMatk,20*getequiprefinerycnt(EQI_SHOES); }
-19495:2729,{ bonus bMaxHP,2000; bonus bMaxSP,200; bonus bHealPower,15; }
+19495:2374,{ bonus bMdef,25; bonus bMaxSP,350; bonus bDelayrate,-10; bonus bMatk,15*getequiprefinerycnt(EQI_ARMOR); bonus bHealPower,2*getequiprefinerycnt(EQI_ARMOR); /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bSubRace2,RC2_TEMPLE_DEMON,5;*/ }
+19495:2537,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus bMaxHP,900; bonus bLongAtkDef,10; bonus2 bSubEle,Ele_Fire,3*.@r; bonus2 bSubEle,Ele_Water,3*.@r; bonus2 bSubEle,Ele_Wind,3*.@r; /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bSubRace2,RC2_TEMPLE_DEMON,5;*/ }
+19495:2433,{ bonus bMaxHP,100*BaseLevel; bonus bBaseAtk,20*getequiprefinerycnt(EQI_SHOES); bonus bMatk,20*getequiprefinerycnt(EQI_SHOES); /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bSubRace2,RC2_TEMPLE_DEMON,5;*/ }
+19495:2729,{ bonus bMaxHP,2000; bonus bMaxSP,200; bonus bHealPower,15; /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,20; bonus2 bSubRace2,RC2_TEMPLE_DEMON,5;*/ }
 28560:13460,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"WL_CRIMSONROCK",2*.@r; }
 28560:13460:28913,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bHit,5*.@r; bonus bAspdRate,4*.@r; }
 28560:13461,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"WL_HELLINFERNO",20*.@r; }
