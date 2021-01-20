@@ -64932,19 +64932,6 @@ Body:
         bonus bMdef,.@mdef;
         bonus bFlee2,.@pd;
       }
-      if (getequipcardid(EQI_ARMOR,0) == 4243) {
-        bonus bDef,250;
-        bonus2 bSubEle,Ele_All,5;
-        bonus2 bSubEle,Ele_Dark,-5;
-        skill "AL_TELEPORT",1;
-        bonus3 bAutoSpellWhenHit,"AL_TELEPORT",1,0;
-        if (.@r >= 7) {
-          bonus2 bResEff,Eff_Freeze,10000;
-        }
-        if (.@r >= 9) {
-          bonus bNoKnockback;
-        }
-      }
   - Id: 15250
     AegisName: Beginner's_Suit
     Name: Beginner's Suit
@@ -75620,15 +75607,6 @@ Body:
     Script: |
       bonus2 bSubRace,RC_Player_Human,13;
       bonus2 bSubRace,RC_Player_Doram,13;
-      if (getequipcardid(EQI_ARMOR,0) == 4042) {
-        bonus2 bResEff,Eff_Freeze,10000;
-        bonus5 bAutoSpellWhenHit,"NPC_WIDEFREEZE",2,10,BF_WEAPON|BF_MAGIC,0;
-      }
-      if (getequipid(EQI_SHOES) == 2402 && getequipcardid(EQI_SHOES,0) == 4009) {
-        .@r = getequiprefinerycnt(EQI_SHOES);
-        bonus bMaxHPrate,4+(2*.@r);
-        bonus bMaxSPrate,4+(2*.@r);
-      }
   - Id: 18960
     AegisName: Love_Daddy_2013
     Name: Love Daddy 2013
