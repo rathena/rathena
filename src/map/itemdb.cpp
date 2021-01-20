@@ -26,8 +26,6 @@ using namespace rathena;
 
 static std::map<uint32, std::shared_ptr<s_item_combo>> itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
-static DBMap *itemdb_randomopt; /// Random option DB
-static DBMap *itemdb_randomopt_group; /// Random option group DB
 
 struct s_roulette_db rd;
 
@@ -285,7 +283,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asBool(jobNode, "All", active))
 				return 0;
 
-			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), active);
+			itemdb_jobid2mapid(item->class_base, MAPID_ALL, active);
 		}
 
 		for (const auto &jobit : jobNode) {
@@ -300,13 +298,13 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (!script_get_constant(jobName_constant.c_str(), &constant)) {
 				this->invalidWarning(jobNode[jobName], "Invalid item job %s, defaulting to All.\n", jobName.c_str());
-				itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), true);
+				itemdb_jobid2mapid(item->class_base, MAPID_ALL, true);
 				break;
 			}
 
 			bool active;
 
-			if (!this->asBool(jobNode, jobName.c_str(), active))
+			if (!this->asBool(jobNode, jobName, active))
 				return 0;
 
 			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(constant), active);
@@ -315,7 +313,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists) {
 			item->class_base[0] = item->class_base[1] = item->class_base[2] = 0;
 
-			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), true);
+			itemdb_jobid2mapid(item->class_base, MAPID_ALL, true);
 		}
 	}
 
@@ -352,7 +350,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(classNode, className.c_str(), active))
+			if (!this->asBool(classNode, className, active))
 				return 0;
 
 			if (active)
@@ -403,7 +401,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(locationNode, equipName.c_str(), active))
+			if (!this->asBool(locationNode, equipName, active))
 				return 0;
 
 			if (active) {
@@ -533,14 +531,14 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "Flags")) {
 		const YAML::Node &flagNode = node["Flags"];
 
-		if (this->nodeExists(flagNode, "Buyingstore")) {
+		if (this->nodeExists(flagNode, "BuyingStore")) {
 			bool active;
 
-			if (!this->asBool(flagNode, "Buyingstore", active))
+			if (!this->asBool(flagNode, "BuyingStore", active))
 				return 0;
 
 			if (!itemdb_isstackable2(item.get()) && active) {
-				this->invalidWarning(flagNode["Buyingstore"], "Non-stackable item cannot be enabled for buying store.\n");
+				this->invalidWarning(flagNode["BuyingStore"], "Non-stackable item cannot be enabled for buying store.\n");
 				active = false;
 			}
 
@@ -735,7 +733,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.inventory = active;
 		} else {
 			if (!exists)
-				item->stack.inventory = true;
+				item->stack.inventory = false;
 		}
 
 		if (this->nodeExists(stackNode, "Cart")) {
@@ -747,7 +745,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.cart = active;
 		} else {
 			if (!exists)
-				item->stack.cart = true;
+				item->stack.cart = false;
 		}
 
 		if (this->nodeExists(stackNode, "Storage")) {
@@ -759,7 +757,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.storage = active;
 		} else {
 			if (!exists)
-				item->stack.storage = true;
+				item->stack.storage = false;
 		}
 
 		if (this->nodeExists(stackNode, "GuildStorage")) {
@@ -771,7 +769,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.guild_storage = active;
 		} else {
 			if (!exists)
-				item->stack.guild_storage = true;
+				item->stack.guild_storage = false;
 		}
 	} else {
 		if (!exists) {
@@ -1018,6 +1016,23 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		this->put(nameid, item);
 
 	return 1;
+}
+
+void ItemDatabase::loadingFinished(){
+	if( !this->exists( ITEMID_DUMMY ) ){
+		// Create dummy item
+		std::shared_ptr<item_data> dummy_item = std::make_shared<item_data>();
+
+		dummy_item->nameid = ITEMID_DUMMY;
+		dummy_item->weight = 1;
+		dummy_item->value_sell = 1;
+		dummy_item->type = IT_ETC;
+		dummy_item->name = "UNKNOWN_ITEM";
+		dummy_item->ename = "Unknown Item";
+		dummy_item->view_id = UNKNOWN_ITEM_ID;
+
+		item_db.put( ITEMID_DUMMY, dummy_item );
+	}
 }
 
 /**
@@ -1370,17 +1385,15 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		// Calculate the required bit to set
 		uint64 job = 1ULL << ( jobmask & MAPID_BASEMASK );
 
-		// Basejob
-		temp_mask[0] |= job;
-
 		// 2-1
 		if( ( jobmask & JOBL_2_1 ) != 0 ){
 			temp_mask[1] |= job;
-		}
-
 		// 2-2
-		if( ( jobmask & JOBL_2_2 ) != 0 ){
+		}else if( ( jobmask & JOBL_2_2 ) != 0 ){
 			temp_mask[2] |= job;
+		// Basejob
+		}else{
+			temp_mask[0] |= job;
 		}
 	} else {
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
@@ -1395,23 +1408,6 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		else
 			bclass[i] &= ~temp_mask[i];
 	}
-}
-
-/**
- * Create dummy item_data
- */
-static void itemdb_create_dummy(void) {
-	std::shared_ptr<item_data> dummy_item;
-
-	dummy_item = std::make_shared<item_data>();
-	dummy_item->nameid = ITEMID_DUMMY;
-	dummy_item->weight = 1;
-	dummy_item->value_sell = 1;
-	dummy_item->type = IT_ETC;
-	dummy_item->name = "UNKNOWN_ITEM";
-	dummy_item->ename = "Unknown Item";
-	dummy_item->view_id = UNKNOWN_ITEM_ID;
-	item_db.put(ITEMID_DUMMY, dummy_item);
 }
 
 /*==========================================
@@ -1615,7 +1611,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	// Check if the item can be found by id
 	if( ( entry.nameid = strtoul(str[1], nullptr, 10) ) == 0 || !itemdb_exists( entry.nameid ) ){
 		// Otherwise look it up by name
-		struct item_data *id = itemdb_searchname(str[1]);
+		struct item_data *id = itemdb_search_aegisname(str[1]);
 
 		if( id ){
 			// Found the item with a name lookup
@@ -1948,267 +1944,259 @@ static void itemdb_roulette_free(void) {
  * @param str: Array of parsed SQL data
  * @return True on success or false otherwise
  */
-static bool itemdb_read_sqldb_sub(char **str) {
+static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	YAML::Node node;
-	int index = -1;
+	int32 index = -1;
 
-	node["Id"] = strtoul(str[++index], nullptr, 10);
+	node["Id"] = std::stoul(str[++index], nullptr, 10);
 	node["AegisName"] = str[++index];
 	node["Name"] = str[++index];
 	node["Type"] = str[++index];
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["SubType"] = str[index];
-	if (atoi(str[++index]) != 0)
-		node["Buy"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Sell"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Weight"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Attack"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		node["MagicAttack"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		node["Defense"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Range"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Slots"] = atoi(str[index]);
+	if (!str[++index].empty())
+		node["Buy"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Sell"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Weight"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Attack"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Defense"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Range"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Slots"] = std::stoi(str[index]);
 
 	YAML::Node jobs;
 
-	if (atoi(str[++index]) != 0)
-		jobs["All"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Acolyte"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Alchemist"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Archer"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Assassin"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["BardDancer"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Blacksmith"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Crusader"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Gunslinger"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Hunter"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		jobs["KagerouOboro"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		jobs["Knight"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Mage"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Merchant"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Monk"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Ninja"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Novice"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Priest"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		jobs["Rebellion"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		jobs["Rogue"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Sage"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["SoulLinker"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["StarGladiator"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		jobs["Summoner"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		jobs["SuperNovice"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Swordman"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Taekwon"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Thief"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Wizard"] = atoi(str[index]);
-	node["Jobs"] = jobs;
+	if (!str[++index].empty())
+		jobs["All"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Acolyte"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Alchemist"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Archer"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Assassin"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["BardDancer"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Blacksmith"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Crusader"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Gunslinger"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Hunter"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Knight"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Mage"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Merchant"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Monk"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Ninja"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Novice"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Priest"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Rogue"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Sage"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["SoulLinker"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["StarGladiator"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["SuperNovice"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Swordman"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Taekwon"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Thief"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Wizard"] = std::stoi(str[index]) ? "true" : "false";
 
 	YAML::Node classes;
 
-	if (atoi(str[++index]) != 0)
-		classes["All"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Normal"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Upper"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Baby"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		classes["Third"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Third_Upper"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Third_Baby"] = atoi(str[index]);
-#endif
-	node["Classes"] = classes;
+	if (!str[++index].empty())
+		classes["All"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Normal"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Upper"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Baby"] = std::stoi(str[index]) ? "true" : "false";
 
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		node["Gender"] = str[index];
 
 	YAML::Node locations;
 
-	if (atoi(str[++index]) != 0)
-		locations["All"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Head_Top"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Head_Mid"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Head_Low"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Armor"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Left_Hand"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Right_Hand"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Garment"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shoes"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Right_Accessory"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Left_Accessory"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Head_Top"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Head_Mid"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Head_Low"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Garment"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Ammo"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Armor"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Weapon"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Shield"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Shoes"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Right_Accessory"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Left_Accessory"] = atoi(str[index]);
+	if (!str[++index].empty())
+		locations["Head_Top"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Head_Mid"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Head_Low"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Armor"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Right_Hand"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Left_Hand"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Garment"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shoes"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Right_Accessory"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Left_Accessory"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Head_Top"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Head_Mid"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Head_Low"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Garment"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Ammo"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Armor"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Weapon"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Shield"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Shoes"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Right_Accessory"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Left_Accessory"] = std::stoi(str[index]) ? "true" : "false";
 	node["Locations"] = locations;
 
-	if (atoi(str[++index]) != 0)
-		node["WeaponLevel"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["EquipLevelMin"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["EquipLevelMax"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Refineable"] = true;
-	if (atoi(str[++index]) != 0)
-		node["View"] = atoi(str[index]);
-	if (*str[++index])
+	if (!str[++index].empty())
+		node["WeaponLevel"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["EquipLevelMin"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["EquipLevelMax"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Refineable"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		node["View"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		node["AliasName"] = str[index];
 
 	YAML::Node flags;
 
-	if (atoi(str[++index]) != 0)
-		flags["BuyingStore"] = true;
-	if (atoi(str[++index]) != 0)
-		flags["DeadBranch"] = true;
-	if (atoi(str[++index]) != 0)
-		flags["Container"] = true;
-	if (atoi(str[++index]) != 0)
-		flags["UniqueId"] = true;
-	if (atoi(str[++index]) != 0)
-		flags["BindOnEquip"] = true;
-	if (atoi(str[++index]) != 0)
-		flags["DropAnnounce"] = true;
-	if (atoi(str[++index]) != 0)
-		flags["NoConsume"] = true;
-	if (*str[++index])
+	if (!str[++index].empty())
+		flags["BuyingStore"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		flags["DeadBranch"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		flags["Container"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		flags["UniqueId"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		flags["BindOnEquip"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		flags["DropAnnounce"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		flags["NoConsume"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
 		flags["DropEffect"] = str[index];
 	node["Flags"] = flags;
 
 	YAML::Node delay;
 
-	if (atoi(str[++index]) != 0)
-		delay["Duration"] = atoi(str[index]);
-	if (*str[++index])
+	if (!str[++index].empty())
+		delay["Duration"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		delay["Status"] = str[index];
 	node["Delay"] = delay;
 
 	YAML::Node stack;
 
-	if (atoi(str[++index]) != 0)
-		stack["Amount"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		stack["Inventory"] = true;
-	if (atoi(str[++index]) != 0)
-		stack["Cart"] = true;
-	if (atoi(str[++index]) != 0)
-		stack["Storage"] = true;
-	if (atoi(str[++index]) != 0)
-		stack["GuildStorage"] = true;
+	if (!str[++index].empty())
+		stack["Amount"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		stack["Inventory"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		stack["Cart"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		stack["Storage"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		stack["GuildStorage"] = std::stoi(str[index]) ? "true" : "false";
 	node["Stack"] = stack;
 
 	YAML::Node nouse;
 
-	if (atoi(str[++index]) != 0)
-		nouse["Override"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		nouse["Sitting"] = true;
+	if (!str[++index].empty())
+		nouse["Override"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		nouse["Sitting"] = std::stoi(str[index]) ? "true" : "false";
 	node["NoUse"] = nouse;
 
 	YAML::Node trade;
 
-	if (atoi(str[++index]) != 0)
-		trade["Override"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		trade["NoDrop"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["NoTrade"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["TradePartner"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["NoSell"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["NoCart"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["NoStorage"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["NoGuildStorage"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["NoMail"] = true;
-	if (atoi(str[++index]) != 0)
-		trade["NoAuction"] = true;
+	if (!str[++index].empty())
+		trade["Override"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		trade["NoDrop"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["NoTrade"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["TradePartner"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["NoSell"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["NoCart"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["NoStorage"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["NoGuildStorage"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["NoMail"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		trade["NoAuction"] = std::stoi(str[index]) ? "true" : "false";
 	node["Trade"] = trade;
 
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["Script"] = str[index];
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["EquipScript"] = str[index];
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["UnEquipScript"] = str[index];
+
+#ifdef RENEWAL
+	if (!str[++index].empty())
+		node["MagicAttack"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		classes["Third"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Third_Upper"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Third_Baby"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["KagerouOboro"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Rebellion"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Summoner"] = std::stoi(str[index]) ? "true" : "false";
+#endif
+
+	node["Classes"] = classes;
+	node["Jobs"] = jobs;
 
 	return item_db.parseBodyNode(node) > 0;
 }
@@ -2221,35 +2209,47 @@ static int itemdb_read_sqldb(void) {
 		item_table,
 		item2_table
 	};
-	int fi;
 
-	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
-		uint32 count = 0;
-
+	for( uint8 fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
 		// retrieve all rows from the item database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi]) ) {
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`type`,`subtype`,`price_buy`,`price_sell`,`weight`,`attack`,`defense`,`range`,`slots`,"
+			"`job_all`,`job_acolyte`,`job_alchemist`,`job_archer`,`job_assassin`,`job_barddancer`,`job_blacksmith`,`job_crusader`,`job_gunslinger`,`job_hunter`,`job_knight`,`job_mage`,`job_merchant`,"
+			"`job_monk`,`job_ninja`,`job_novice`,`job_priest`,`job_rogue`,`job_sage`,`job_soullinker`,`job_stargladiator`,`job_supernovice`,`job_swordman`,`job_taekwon`,`job_thief`,`job_wizard`,"
+			"`class_all`,`class_normal`,`class_upper`,`class_baby`,`gender`,"
+			"`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,"
+			"`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,"
+			"`weapon_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
+			"`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,"
+			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
+			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"
+#ifdef RENEWAL
+			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
+#endif
+			" FROM `%s`", item_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
 
-		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {// wrap the result into a TXT-compatible format
-			char dummy[256] = "";
-#ifdef RENEWAL
-			char *str[52];
-			uint16 total_columns = 52;
-#else
-			char *str[51];
-			uint16 total_columns = 51;
-#endif
+		uint32 total_columns = Sql_NumColumns(mmysql_handle);
+		uint64 total_rows = Sql_NumRows(mmysql_handle), rows = 0, count = 0;
 
-			for( uint16 i = 0; i < total_columns; ++i ) {
-				Sql_GetData(mmysql_handle, i, &str[i], nullptr);
-				if( str[i] == nullptr )
-					str[i] = dummy; // get rid of NULL columns
+		// process rows one by one
+		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
+			ShowStatus( "Loading [%" PRIu64 "/%" PRIu64 "] rows from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, item_db_name[fi] );
+
+			std::vector<std::string> data = {};
+
+			for( uint32 i = 0; i < total_columns; ++i ) {
+				char *str;
+
+				Sql_GetData(mmysql_handle, i, &str, nullptr);
+				if (str == nullptr)
+					data.push_back("");
+				else
+					data.push_back(str);
 			}
 
-			if (!itemdb_read_sqldb_sub(str))
+			if (!itemdb_read_sqldb_sub(data))
 				continue;
 			++count;
 		}
@@ -2257,8 +2257,10 @@ static int itemdb_read_sqldb(void) {
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
 	}
+
+	item_db.loadingFinished();
 
 	return 0;
 }
@@ -2285,194 +2287,331 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	return false;
 }
 
-/**
-* Retrieves random option data
-*/
-struct s_random_opt_data* itemdb_randomopt_exists(short id) {
-	return ((struct s_random_opt_data*)uidb_get(itemdb_randomopt, id));
-}
-
-/** Random option
-* <ID>,<{Script}>
-*/
-static bool itemdb_read_randomopt(const char* basedir, bool silent) {
-	uint32 lines = 0, count = 0;
-	char line[1024];
-
-	char path[256];
-	FILE* fp;
-
-	sprintf(path, "%s/%s", basedir, "item_randomopt_db.txt");
-
-	if ((fp = fopen(path, "r")) == NULL) {
-		if (silent == 0) ShowError("itemdb_read_randomopt: File not found \"%s\".\n", path);
-		return false;
-	}
-
-	while (fgets(line, sizeof(line), fp)) {
-		char *str[2], *p;
-
-		lines++;
-
-		if (line[0] == '/' && line[1] == '/') // Ignore comments
-			continue;
-
-		memset(str, 0, sizeof(str));
-
-		p = line;
-
-		p = trim(p);
-
-		if (*p == '\0')
-			continue;// empty line
-
-		if (!strchr(p, ','))
-		{
-			ShowError("itemdb_read_randomopt: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
-		}
-
-		str[0] = p;
-		p = strchr(p, ',');
-		*p = '\0';
-		p++;
-
-		str[1] = p;
-
-		if (str[1][0] != '{') {
-			ShowError("itemdb_read_randomopt(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
-		}
-		/* no ending key anywhere (missing \}\) */
-		if (str[1][strlen(str[1]) - 1] != '}') {
-			ShowError("itemdb_read_randomopt(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
-		}
-		else {
-			int id = -1;
-			struct s_random_opt_data *data;
-			struct script_code *code;
-
-			str[0] = trim(str[0]);
-			if (ISDIGIT(str[0][0])) {
-				id = atoi(str[0]);
-			}
-			else {
-				int64 id_tmp;
-
-				if (!script_get_constant(str[0], &id_tmp)) {
-					ShowError("itemdb_read_randopt: Unknown random option constant \"%s\".\n", str[0]);
-					continue;
-				}
-				id = static_cast<int>(id_tmp);
-			}
-
-			if (id < 0) {
-				ShowError("itemdb_read_randomopt: Invalid Random Option ID '%s' in line %d of \"%s\", skipping.\n", str[0], lines, path);
-				continue;
-			}
-
-			if ((data = itemdb_randomopt_exists(id)) == NULL) {
-				CREATE(data, struct s_random_opt_data, 1);
-				uidb_put(itemdb_randomopt, id, data);
-			}
-			data->id = id;
-			if ((code = parse_script(str[1], path, lines, 0)) == NULL) {
-				ShowWarning("itemdb_read_randomopt: Invalid script on option ID #%d.\n", id);
-				continue;
-			}
-			if (data->script) {
-				script_free_code(data->script);
-				data->script = NULL;
-			}
-			data->script = code;
-		}
-		count++;
-	}
-	fclose(fp);
-
-	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
-
-	return true;
+const std::string RandomOptionDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/item_randomopt_db.yml";
 }
 
 /**
- * Clear Item Random Option Group from memory
- * @author [Cydh]
- **/
-static int itemdb_randomopt_group_free(DBKey key, DBData *data, va_list ap) {
-	struct s_random_opt_group *g = (struct s_random_opt_group *)db_data2ptr(data);
-	if (!g)
+ * Reads and parses an entry from the item_randomopt_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 RandomOptionDatabase::parseBodyNode(const YAML::Node &node) {
+	uint16 id;
+
+	if (!this->asUInt16(node, "Id", id))
 		return 0;
-	if (g->entries)
-		aFree(g->entries);
-	g->entries = NULL;
-	aFree(g);
+
+	std::shared_ptr<s_random_opt_data> randopt = this->find(id);
+	bool exists = randopt != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Option", "Script" }))
+			return 0;
+
+		randopt = std::make_shared<s_random_opt_data>();
+		randopt->id = id;
+	}
+
+	if (this->nodeExists(node, "Option")) {
+		std::string name;
+
+		if (!this->asString(node, "Option", name))
+			return 0;
+
+		if (randopt->name.compare(name) != 0 && random_option_db.option_exists(name)) {
+			this->invalidWarning(node["Option"], "Found duplicate random option name for %s, skipping.\n", name.c_str());
+			return 0;
+		}
+
+		randopt->name = name;
+	}
+
+	if (this->nodeExists(node, "Script")) {
+		std::string script;
+
+		if (!this->asString(node, "Script", script))
+			return 0;
+
+		if (randopt->script) {
+			aFree(randopt->script);
+			randopt->script = nullptr;
+		}
+
+		randopt->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+	}
+
+	if (!exists)
+		this->put(id, randopt);
+
 	return 1;
 }
 
+void RandomOptionDatabase::loadingFinished(){
+	const char* prefix = "RDMOPT_";
+
+	for( const auto& pair : *this ){
+		std::string name = prefix + pair.second->name;
+		int64 constant;
+
+		// Check if it has already been set
+		if( script_get_constant( name.c_str(), &constant ) ){
+			// It is already the same
+			if( constant == pair.first ){
+				continue;
+			}else{
+				// Export it to the script engine -> will issue a warning
+			}
+		}
+
+		script_set_constant( name.c_str(), pair.first, false, false );
+	}
+}
+
+RandomOptionDatabase random_option_db;
+
 /**
- * Get Item Random Option Group from itemdb_randomopt_group MapDB
- * @param id Random Option Group
- * @return Random Option Group data or NULL if not found
- * @author [Cydh]
- **/
-struct s_random_opt_group *itemdb_randomopt_group_exists(int id) {
-	return (struct s_random_opt_group *)uidb_get(itemdb_randomopt_group, id);
+ * Check if the given random option name exists.
+ * @param name: Random option name
+ * @return True on success or false on failure
+ */
+bool RandomOptionDatabase::option_exists(std::string name) {
+	for (const auto &opt : random_option_db) {
+		if (opt.second->name.compare(name) == 0)
+			return true;
+	}
+
+	return false;
 }
 
 /**
- * Read Item Random Option Group from db file
- * @author [Cydh]
- **/
-static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
-	int64 id_tmp;
-	int id = 0;
-	int i;
-	unsigned short rate = (unsigned short)strtoul(str[1], NULL, 10);
-	struct s_random_opt_group *g = NULL;
-
-	if (!script_get_constant(str[0], &id_tmp)) {
-		ShowError("itemdb_read_randomopt_group: Invalid ID for Random Option Group '%s'.\n", str[0]);
-		return false;
-	}
-
-	id = static_cast<int>(id_tmp);
-
-	if ((columns-2)%3 != 0) {
-		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
-		return false;
-	}
-
-	if (!(g = (struct s_random_opt_group *)uidb_get(itemdb_randomopt_group, id))) {
-		CREATE(g, struct s_random_opt_group, 1);
-		g->id = id;
-		g->total = 0;
-		g->entries = NULL;
-		uidb_put(itemdb_randomopt_group, g->id, g);
-	}
-
-	RECREATE(g->entries, struct s_random_opt_group_entry, g->total + rate);
-
-	for (i = g->total; i < (g->total + rate); i++) {
-		int j, k;
-		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
-		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
-			int64 randid_tmp;
-			int randid = 0;
-
-			if (!script_get_constant(str[k], &randid_tmp) || ((randid = static_cast<int>(randid_tmp)) && !itemdb_randomopt_exists(randid))) {
-				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
-				continue;
-			}
-			g->entries[i].option[j].id = randid;
-			g->entries[i].option[j].value = (short)strtoul(str[k+1], NULL, 10);
-			g->entries[i].option[j].param = (char)strtoul(str[k+2], NULL, 10);
-			j++;
+ * Return the constant value of the given random option.
+ * @param name: Random option name
+ * @param id: Random option ID
+ * @return True on success or false on failure
+ */
+bool RandomOptionDatabase::option_get_id(std::string name, uint16 &id) {
+	for (const auto &opt : random_option_db) {
+		if (opt.second->name.compare(name) == 0) {
+			id = opt.first;
+			return true;
 		}
 	}
-	g->total += rate;
+
+	return false;
+}
+
+const std::string RandomOptionGroupDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/item_randomopt_group.yml";
+}
+
+bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry) {
+	uint16 option_id;
+
+	if (this->nodeExists(node, "Option")) {
+		std::string opt_name;
+
+		if (!this->asString(node, "Option", opt_name))
+			return false;
+
+		if (!random_option_db.option_get_id(opt_name, option_id)) {
+			this->invalidWarning(node["Option"], "Invalid Random Option name %s given.\n", opt_name.c_str());
+			return false;
+		}
+	} else {
+		this->invalidWarning(node, "Missing Option node.\n");
+		return false;
+	}
+
+	entry = std::make_shared<s_random_opt_group_entry>();
+	entry->id = option_id;
+
+	if (this->nodeExists(node, "MinValue")) {
+		int16 value;
+
+		if (!this->asInt16(node, "MinValue", value))
+			return false;
+
+		entry->min_value = value;
+	} else {
+		entry->min_value = 0;
+	}
+
+	if (this->nodeExists(node, "MaxValue")) {
+		int16 value;
+
+		if (!this->asInt16(node, "MaxValue", value))
+			return false;
+
+		entry->max_value = value;
+	} else {
+		entry->max_value = 0;
+	}
+
+	if (entry->min_value > entry->max_value) {
+		this->invalidWarning(node["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
+		entry->max_value = entry->min_value + 1;
+	}
+
+	if (this->nodeExists(node, "Param")) {
+		int16 value;
+
+		if (!this->asInt16(node, "Param", value))
+			return false;
+
+		entry->param = static_cast<int8>(value);
+	} else {
+		entry->param = 0;
+	}
+
+	if (this->nodeExists(node, "Chance")) {
+		uint16 chance;
+
+		if (!this->asUInt16Rate(node, "Chance", chance))
+			return false;
+
+		entry->chance = chance;
+	} else {
+		entry->chance = 0;
+	}
+
 	return true;
+}
+
+/**
+ * Reads and parses an entry from the item_randomopt_group.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
+	uint16 id;
+
+	if (!this->asUInt16(node, "Id", id))
+		return 0;
+
+	std::shared_ptr<s_random_opt_group> randopt = this->find(id);
+	bool exists = randopt != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Group" }))
+			return 0;
+
+		randopt = std::make_shared<s_random_opt_group>();
+		randopt->id = id;
+	}
+
+	if (this->nodeExists(node, "Group")) {
+		std::string name;
+
+		if (!this->asString(node, "Group", name))
+			return 0;
+
+		if (randopt->name.compare(name) != 0 && random_option_group.option_exists(name)) {
+			this->invalidWarning(node["Group"], "Found duplicate random option group name for %s, skipping.\n", name.c_str());
+			return 0;
+		}
+
+		randopt->name = name;
+	}
+
+
+	for (const YAML::Node &slotNode : node["Slots"]) {
+		if (randopt->slots.size() >= MAX_ITEM_RDM_OPT) {
+			this->invalidWarning(slotNode, "Reached maximum of %d Random Option group options. Skipping the remaining slots...\n", MAX_ITEM_RDM_OPT);
+			break;
+		}
+
+		uint16 slot;
+
+		if (!this->asUInt16(slotNode, "Slot", slot))
+			return 0;
+
+		if (slot < 1 || slot > MAX_ITEM_RDM_OPT) {
+			this->invalidWarning(slotNode["Slot"], "Invalid Random Opton Slot number %hu given, must be between 1~%d, skipping.\n", slot, MAX_ITEM_RDM_OPT);
+			return 0;
+		}
+
+		std::vector<std::shared_ptr<s_random_opt_group_entry>> entries;
+
+		for (const YAML::Node &optionNode : slotNode["Options"]) {
+			std::shared_ptr<s_random_opt_group_entry> entry;
+
+			if (!this->add_option(optionNode, entry))
+				return 0;
+
+			entries.push_back(entry);
+		}
+
+		randopt->slots[slot - 1] = entries;
+	}
+
+	if (this->nodeExists(node, "MaxRandom")) {
+		uint16 max;
+
+		if (!this->asUInt16(node, "MaxRandom", max))
+			return 0;
+
+		if (max > MAX_ITEM_RDM_OPT) {
+			this->invalidWarning(node["MaxRandom"], "Exceeds the maximum of %d Random Option group options, capping to MAX_ITEM_RDM_OPT.\n", MAX_ITEM_RDM_OPT);
+			max = MAX_ITEM_RDM_OPT;
+		}
+
+		randopt->max_random = max;
+	} else {
+		if (!exists)
+			randopt->max_random = 0;
+	}
+
+	if (this->nodeExists(node, "Random")) {
+		randopt->random_options.clear();
+
+		for (const YAML::Node &randomNode : node["Random"]) {
+			std::shared_ptr<s_random_opt_group_entry> entry;
+
+			if (!this->add_option(randomNode, entry))
+				return 0;
+
+			randopt->random_options.push_back(entry);
+		}
+	}
+
+	if (!exists)
+		this->put(id, randopt);
+
+	return 1;
+}
+
+RandomOptionGroupDatabase random_option_group;
+
+/**
+ * Check if the given random option group name exists.
+ * @param name: Random option name
+ * @return True on success or false on failure
+ */
+bool RandomOptionGroupDatabase::option_exists(std::string name) {
+	for (const auto &opt : random_option_group) {
+		if (opt.second->name.compare(name) == 0)
+			return true;
+	}
+
+	return false;
+}
+
+/**
+ * Return the constant value of the given random option group.
+ * @param name: Random option group name
+ * @param id: Random option group ID
+ * @return True on success or false on failure
+ */
+bool RandomOptionGroupDatabase::option_get_id(std::string name, uint16 &id) {
+	for (const auto &opt : random_option_group) {
+		if (opt.second->name.compare(name) == 0) {
+			id = opt.first;
+			return true;
+		}
+	}
+
+	return false;
 }
 
 /**
@@ -2517,12 +2656,13 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
 #endif
 		itemdb_read_combos(dbsubpath2,i > 0); //TODO change this to sv_read ? id#script ?
-		itemdb_read_randomopt(dbsubpath2, i > 0);
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i > 0);
-		sv_readdb(dbsubpath2, "item_randomopt_group.txt", ',', 5, 2+5*MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, i > 0);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
+
+	random_option_db.load();
+	random_option_group.load();
 }
 
 /*==========================================
@@ -2559,17 +2699,6 @@ static inline int itemdb_group_free2(DBKey key, DBData *data) {
 	return 0;
 }
 
-static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
-	struct s_random_opt_data *opt = (struct s_random_opt_data *)db_data2ptr(data);
-	if (!opt)
-		return 0;
-	if (opt->script)
-		script_free_code(opt->script);
-	opt->script = NULL;
-	aFree(opt);
-	return 1;
-}
-
 bool item_data::isStackable()
 {
 	switch (this->type) {
@@ -2598,8 +2727,8 @@ void itemdb_reload(void) {
 	item_db.clear();
 	itemdb_combo.clear();
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
-	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
-	itemdb_randomopt_group->clear(itemdb_randomopt_group, itemdb_randomopt_group_free);
+	random_option_db.clear();
+	random_option_group.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 
@@ -2632,8 +2761,8 @@ void do_final_itemdb(void) {
 	item_db.clear();
 	itemdb_combo.clear();
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
-	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
-	itemdb_randomopt_group->destroy(itemdb_randomopt_group, itemdb_randomopt_group_free);
+	random_option_db.clear();
+	random_option_group.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }
@@ -2643,9 +2772,6 @@ void do_final_itemdb(void) {
 */
 void do_init_itemdb(void) {
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
-	itemdb_randomopt = uidb_alloc(DB_OPT_BASE);
-	itemdb_randomopt_group = uidb_alloc(DB_OPT_BASE);
-	itemdb_create_dummy();
 	itemdb_read();
 
 	if (battle_config.feature_roulette)

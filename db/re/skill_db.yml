@@ -55,7 +55,7 @@
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: true)
+#   CastCancel                Cancel cast when hit. (Default: false)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -2072,7 +2072,7 @@ Body:
       - Level: 3
         Time: 400
       - Level: 4
-        Time: -1
+        Time: 0
     Requires:
       SpCost: 60
       ItemCost:
@@ -2279,8 +2279,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      Splash: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -2288,7 +2286,27 @@ Body:
     HitCount: 2
     Element: Weapon
     SplashArea: 2
-    Knockback: 1
+    Knockback:
+      - Level: 1
+        Amount: 1
+      - Level: 2
+        Amount: 1
+      - Level: 3
+        Amount: 2
+      - Level: 4
+        Amount: 2
+      - Level: 5
+        Amount: 3
+      - Level: 6
+        Amount: 3
+      - Level: 7
+        Amount: 4
+      - Level: 8
+        Amount: 4
+      - Level: 9
+        Amount: 5
+      - Level: 10
+        Amount: 5
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -11362,13 +11380,13 @@ Body:
       - Level: 6
         Time: 500
       - Level: 7
-        Time: -1
+        Time: 0
       - Level: 8
-        Time: -1
+        Time: 0
       - Level: 9
-        Time: -1
+        Time: 0
       - Level: 10
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -14195,7 +14213,6 @@ Body:
     Element: Weapon
     Knockback: 5
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -14324,7 +14341,6 @@ Body:
       - Level: 10
         Area: 4
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -15791,7 +15807,6 @@ Body:
     SplashArea: 3
     ActiveInstance: 14
     Duration2: 30000
-    FixedCastTime: -1
   - Id: 656
     Name: NPC_THUNDERBREATH
     Description: Thunder Breath
@@ -15821,7 +15836,6 @@ Body:
     SplashArea: 3
     ActiveInstance: 14
     Duration2: 20000
-    FixedCastTime: -1
   - Id: 658
     Name: NPC_DARKNESSBREATH
     Description: Darkness Breath
@@ -15869,7 +15883,6 @@ Body:
         Time: 30000
       - Level: 4
         Time: 120000
-    FixedCastTime: -1
   - Id: 660
     Name: NPC_BLEEDING
     Description: Bleeding
@@ -15883,7 +15896,6 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration2: 120000
-    FixedCastTime: -1
   - Id: 661
     Name: NPC_PULSESTRIKE
     Description: Pulse Strike
@@ -15916,7 +15928,6 @@ Body:
     HitCount: 1
     SplashArea: 14
     Duration2: 20000
-    FixedCastTime: -1
   - Id: 663
     Name: NPC_WIDESILENCE
     Description: Wide Silence
@@ -15942,7 +15953,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 20000
-    FixedCastTime: -1
   - Id: 664
     Name: NPC_WIDEFREEZE
     Description: Wide Freeze
@@ -15968,7 +15978,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 30000
-    FixedCastTime: -1
   - Id: 665
     Name: NPC_WIDEBLEEDING
     Description: Wide Bleeding
@@ -15994,7 +16003,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 120000
-    FixedCastTime: -1
   - Id: 666
     Name: NPC_WIDESTONE
     Description: Wide Petrify
@@ -16020,7 +16028,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 20000
-    FixedCastTime: -1
   - Id: 667
     Name: NPC_WIDECONFUSE
     Description: Wide Confusion
@@ -16046,7 +16053,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 30000
-    FixedCastTime: -1
   - Id: 668
     Name: NPC_WIDESLEEP
     Description: Wide Sleep
@@ -16072,7 +16078,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 30000
-    FixedCastTime: -1
   - Id: 669
     Name: NPC_WIDESIGHT
     Description: Wide Sight
@@ -16090,7 +16095,6 @@ Body:
     Element: Fire
     SplashArea: 5
     Duration1: 10000
-    FixedCastTime: -1
   - Id: 670
     Name: NPC_EVILLAND
     Description: Evil Land
@@ -16131,7 +16135,6 @@ Body:
       - Level: 10
         Time: 12900
     Duration2: 20000
-    FixedCastTime: -1
     Unit:
       Id: Evilland
       Layout: 1
@@ -16192,7 +16195,6 @@ Body:
         Time: 2000
       - Level: 10
         Time: 2000
-    FixedCastTime: -1
   - Id: 672
     Name: NPC_SLOWCAST
     Description: Slow Cast
@@ -16218,7 +16220,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 30000
-    FixedCastTime: -1
   - Id: 673
     Name: NPC_CRITICALWOUND
     Description: Critical Wounds
@@ -16232,7 +16233,6 @@ Body:
     HitCount: 1
     Element: Weapon
     Duration2: 30000
-    FixedCastTime: -1
   - Id: 674
     Name: NPC_EXPULSION
     Description: Expulsion
@@ -16279,7 +16279,6 @@ Body:
         Time: 2000
       - Level: 10
         Time: 2000
-    FixedCastTime: -1
   - Id: 676
     Name: NPC_ANTIMAGIC
     Description: Anti Magic
@@ -16313,7 +16312,6 @@ Body:
         Time: 2000
       - Level: 10
         Time: 2000
-    FixedCastTime: -1
   - Id: 677
     Name: NPC_WIDECURSE
     Description: Wide Curse
@@ -16339,7 +16337,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 20000
-    FixedCastTime: -1
   - Id: 678
     Name: NPC_WIDESTUN
     Description: Wide Stun
@@ -16365,7 +16362,6 @@ Body:
       - Level: 5
         Area: 14
     Duration2: 5000
-    FixedCastTime: -1
   - Id: 679
     Name: NPC_VAMPIRE_GIFT
     Description: Vampire Gift
@@ -16462,7 +16458,6 @@ Body:
     Range: -9
     HitCount: 1
     Duration2: 180000
-    FixedCastTime: -1
   - Id: 684
     Name: NPC_WIDEHELLDIGNITY
     Description: Hell Dignity
@@ -16477,7 +16472,6 @@ Body:
     HitCount: 1
     SplashArea: -1
     Duration2: 180000
-    FixedCastTime: -1
   - Id: 685
     Name: NPC_INVINCIBLE
     Description: Invincible
@@ -16489,7 +16483,6 @@ Body:
       IsNpc: true
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
   - Id: 686
     Name: NPC_INVINCIBLEOFF
     Description: Invincible off
@@ -16501,7 +16494,6 @@ Body:
       IsNpc: true
     HitCount: 1
     Duration1: 60000
-    FixedCastTime: -1
   - Id: 687
     Name: NPC_ALLHEAL
     Description: Full Heal
@@ -16563,7 +16555,6 @@ Body:
         Time: 220000
       - Level: 10
         Time: 240000
-    FixedCastTime: -1
   - Id: 690
     Name: CASH_INCAGI
     Description: Party Increase AGI
@@ -16600,7 +16591,6 @@ Body:
         Time: 220000
       - Level: 10
         Time: 240000
-    FixedCastTime: -1
   - Id: 691
     Name: CASH_ASSUMPTIO
     Description: Party Assumptio
@@ -16627,7 +16617,6 @@ Body:
         Time: 80000
       - Level: 5
         Time: 100000
-    FixedCastTime: -1
   - Id: 692
     Name: ALL_CATCRY
     Description: Cat Cry
@@ -16635,7 +16624,6 @@ Body:
     Flags:
       IsNpc: true
     AfterCastActDelay: 5000
-    FixedCastTime: -1
   - Id: 693
     Name: ALL_PARTYFLEE
     Description: Party Flee
@@ -16652,7 +16640,6 @@ Body:
     SplashArea: -1
     CastCancel: true
     Cooldown: 300000
-    FixedCastTime: -1
   - Id: 694
     Name: ALL_ANGEL_PROTECT
     Description: Angel's Protection
@@ -16660,7 +16647,6 @@ Body:
     Flags:
       IsNpc: true
     Duration1: 30000
-    FixedCastTime: -1
   - Id: 695
     Name: ALL_DREAM_SUMMERNIGHT
     Description: Summer Night Dream
@@ -16668,7 +16654,6 @@ Body:
     Flags:
       IsNpc: true
     AfterCastActDelay: 12000
-    FixedCastTime: -1
   - Id: 697
     Name: ALL_REVERSEORCISH
     Description: Reverse Orcish
@@ -16684,7 +16669,6 @@ Body:
     HitCount: 1
     CastCancel: true
     Duration1: 1200000
-    FixedCastTime: -1
   - Id: 698
     Name: ALL_WEWISH
     Description: Christmas Carol
@@ -16697,7 +16681,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 20000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 706
@@ -16714,7 +16697,6 @@ Body:
     HitCount: 1
     Element: Poison
     Duration1: 3000
-    FixedCastTime: -1
     Unit:
       Id: Venomfog
       Layout: 2
@@ -16763,7 +16745,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 10000
-    FixedCastTime: -1
     Unit:
       Id: Icemine
       Range: 3
@@ -16789,7 +16770,6 @@ Body:
     HitCount: 1
     Knockback: 2
     Duration1: 3000
-    FixedCastTime: -1
     Unit:
       Id: Flamecross
       Layout: -1
@@ -16816,7 +16796,6 @@ Body:
     ActiveInstance: 14
     CastCancel: true
     AfterCastActDelay: 2000
-    FixedCastTime: -1
   - Id: 716
     Name: NPC_MAXPAIN
     Description: Max Pain
@@ -16912,7 +16891,6 @@ Body:
         Time: 27500
       - Level: 5
         Time: 32500
-    FixedCastTime: -1
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2
@@ -16941,7 +16919,6 @@ Body:
         Time: 12000
       - Level: 5
         Time: 13000
-    FixedCastTime: -1
     Unit:
       Id: Reverberation
       Interval: 1000
@@ -17058,7 +17035,6 @@ Body:
     Hit: Single
     Knockback: 2
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost: 15
       State: Shield
@@ -17109,7 +17085,6 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
-    FixedCastTime: -1
     Requires:
       SpCost: 15
       Ammo:
@@ -17129,7 +17104,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 10000
-    FixedCastTime: -1
     Requires:
       SpCost: 25
   - Id: 1006
@@ -17337,7 +17311,6 @@ Body:
     Knockback: 5
     AfterCastActDelay: 2000
     Duration2: 5000
-    FixedCastTime: -1
     Requires:
       HpCost: 10
       SpCost: 20
@@ -17423,7 +17396,6 @@ Body:
     CastCancel: true
     CastTime: 1000
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -17483,7 +17455,6 @@ Body:
         Reproduce: true
     AfterCastActDelay: 1000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -17521,7 +17492,6 @@ Body:
     Duration1: 3000
     Duration2: 2000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -17600,7 +17570,6 @@ Body:
         Time: 100
     AfterCastActDelay: 500
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost: 60
       Weapon:
@@ -17679,7 +17648,6 @@ Body:
         Reproduce: true
     CastTime: 1000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -17802,7 +17770,6 @@ Body:
         Area: 7
     Duration1: 15000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost: 30
       State: Ridingdragon
@@ -17822,7 +17789,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 900000
     Duration2: 60000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 2012
@@ -17911,7 +17877,6 @@ Body:
     HitCount: 1
     CastCancel: true
     Duration1: 900000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 2017
@@ -17930,7 +17895,6 @@ Body:
     Element: Weapon
     SplashArea: 3
     CastTime: 2000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 2018
@@ -17945,7 +17909,6 @@ Body:
     HitCount: 1
     CastCancel: true
     Duration1: 900000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 2019
@@ -17961,7 +17924,6 @@ Body:
     Element: Holy
     CastCancel: true
     Duration1: 900000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 2020
@@ -18026,7 +17988,6 @@ Body:
         Time: 14000
     Duration2: 15000
     Cooldown: 4000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -18070,7 +18031,6 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -18332,7 +18292,6 @@ Body:
         Time: 16000
       - Level: 5
         Time: 18000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -18869,8 +18828,17 @@ Body:
         Reproduce: true
     CastCancel: true
     CastTime: 2000
-    Duration1: 280000
-    FixedCastTime: -1
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 160000
+      - Level: 3
+        Time: 200000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 280000
     Requires:
       SpCost:
         - Level: 1
@@ -18899,8 +18867,17 @@ Body:
         Reproduce: true
     CastCancel: true
     CastTime: 2000
-    Duration1: 280000
-    FixedCastTime: -1
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 160000
+      - Level: 3
+        Time: 200000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 280000
     Requires:
       SpCost:
         - Level: 1
@@ -18929,8 +18906,17 @@ Body:
         Reproduce: true
     CastCancel: true
     CastTime: 2000
-    Duration1: 280000
-    FixedCastTime: -1
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 160000
+      - Level: 3
+        Time: 200000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 280000
     Requires:
       SpCost:
         - Level: 1
@@ -19023,8 +19009,17 @@ Body:
         Reproduce: true
     CastCancel: true
     CastTime: 2000
-    Duration1: 280000
-    FixedCastTime: -1
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 160000
+      - Level: 3
+        Time: 200000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 280000
     Requires:
       SpCost:
         - Level: 1
@@ -19096,7 +19091,6 @@ Body:
         Time: 40000
       - Level: 5
         Time: 50000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -19136,7 +19130,6 @@ Body:
       - Level: 5
         Time: 500
     Cooldown: 700
-    FixedCastTime: -1
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -19166,7 +19159,6 @@ Body:
       Skill:
         Reproduce: true
     AfterCastActDelay: 1500
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 2024
@@ -19183,7 +19175,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 2026
@@ -19223,7 +19214,6 @@ Body:
       - Level: 5
         Time: 300000
     Duration2: 300000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -19251,7 +19241,6 @@ Body:
     AfterCastActDelay: 2000
     Duration1: 180000
     Duration2: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -19299,7 +19288,6 @@ Body:
         Area: 2
     Knockback: 3
     AfterCastActDelay: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -19338,7 +19326,6 @@ Body:
     Element: Weapon
     AfterCastActDelay: 1000
     Duration1: 60000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       Status:
@@ -19354,7 +19341,6 @@ Body:
     HitCount: 1
     Element: Weapon
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -19425,7 +19411,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 2000
-    FixedCastTime: -1
     Requires:
       SpCost: 45
   - Id: 2034
@@ -19444,7 +19429,6 @@ Body:
       Skill:
         Reproduce: true
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 30
   - Id: 2035
@@ -19469,7 +19453,6 @@ Body:
         Time: 50000
     Duration2: 25000
     Cooldown: 300000
-    FixedCastTime: -1
     Requires:
       SpCost: 100
       HpRateCost: 10
@@ -19497,7 +19480,6 @@ Body:
         Area: 3
     AfterCastActDelay: 200
     Duration1: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 5
       Weapon:
@@ -19524,7 +19506,6 @@ Body:
     Element: Weapon
     AfterCastActDelay: 500
     Cooldown: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -19596,7 +19577,6 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 30
       SpRateCost: -10
@@ -19685,7 +19665,6 @@ Body:
       - Level: 10
         Time: 60000
     Cooldown: 2500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -19811,7 +19790,7 @@ Body:
       - Level: 2
         Time: 500
       - Level: 3
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -19990,7 +19969,6 @@ Body:
     CastTime: 1000
     Duration1: 60000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -20018,7 +19996,6 @@ Body:
     CastTime: 1000
     Duration1: 60000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -20091,7 +20068,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 1000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -20122,7 +20098,6 @@ Body:
     CastCancel: true
     CastTime: 4000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -20298,7 +20273,6 @@ Body:
       - Level: 5
         Time: 60000
     Cooldown: 15000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -20430,7 +20404,6 @@ Body:
         Time: 3400
       - Level: 10
         Time: 3200
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -20545,7 +20518,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     Duration1: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 15
   - Id: 2238
@@ -20577,7 +20549,6 @@ Body:
         Time: 26000
       - Level: 5
         Time: 28000
-    FixedCastTime: -1
     Requires:
       SpCost: 35
       ItemCost:
@@ -20614,7 +20585,6 @@ Body:
       Skill:
         Reproduce: true
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -20637,7 +20607,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 5
       ItemCost:
@@ -20653,7 +20622,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost: 2
   - Id: 2242
@@ -20746,7 +20714,6 @@ Body:
         Time: 10000
       - Level: 5
         Time: 12000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -20788,7 +20755,6 @@ Body:
       - Level: 5
         Area: 7
     AfterCastActDelay: 3000
-    FixedCastTime: -1
     Requires:
       SpCost: 12
       State: Wug
@@ -20805,7 +20771,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 10000
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 2248
@@ -20833,7 +20798,6 @@ Body:
     ActiveInstance: 1
     AfterCastActDelay: 2000
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       ItemCost:
@@ -20871,7 +20835,6 @@ Body:
     ActiveInstance: 1
     AfterCastActDelay: 2000
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       ItemCost:
@@ -20909,7 +20872,6 @@ Body:
     ActiveInstance: 1
     AfterCastActDelay: 2000
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       ItemCost:
@@ -20947,7 +20909,6 @@ Body:
     ActiveInstance: 1
     AfterCastActDelay: 2000
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       ItemCost:
@@ -20989,7 +20950,6 @@ Body:
         Reproduce: true
     Duration1: 15000
     Duration2: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       ItemCost:
@@ -21028,7 +20988,6 @@ Body:
         Reproduce: true
     Duration1: 15000
     Duration2: 20000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       ItemCost:
@@ -21069,7 +21028,6 @@ Body:
         Time: 800
       - Level: 5
         Time: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21097,7 +21055,6 @@ Body:
     Element: Weapon
     AfterCastActDelay: 2000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 50
       State: Mado
@@ -21129,7 +21086,6 @@ Body:
         Time: 200
       - Level: 3
         Time: 100
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21224,7 +21180,6 @@ Body:
       - Level: 3
         Time: 21000
     Duration2: 40000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       State: Mado
@@ -21340,7 +21295,6 @@ Body:
         Time: 90000
       - Level: 3
         Time: 120000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21367,7 +21321,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 90000
-    FixedCastTime: -1
     Requires:
       SpCost: 25
       State: Mado
@@ -21389,7 +21342,6 @@ Body:
     HitCount: 1
     Knockback: 7
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost: 5
       State: Mado
@@ -21409,7 +21361,6 @@ Body:
     HitCount: 1
     Knockback: 7
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost: 5
       State: Mado
@@ -21511,7 +21462,6 @@ Body:
     HitCount: 1
     AfterCastActDelay: 500
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       State: Mado
@@ -21539,7 +21489,6 @@ Body:
     AfterCastActDelay: 500
     Duration1: 3000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost: 45
       State: Mado
@@ -21596,7 +21545,6 @@ Body:
         Time: 15000
       - Level: 3
         Time: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21636,7 +21584,6 @@ Body:
         Time: 15000
       - Level: 3
         Time: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21680,7 +21627,6 @@ Body:
         Time: 15000
       - Level: 3
         Time: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21735,7 +21681,6 @@ Body:
       - Level: 5
         Time: 600
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21814,7 +21759,6 @@ Body:
         Time: 3500
       - Level: 5
         Time: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21864,7 +21808,6 @@ Body:
       - Level: 10
         Time: 500
     Duration1: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -21924,7 +21867,6 @@ Body:
         Time: 2500
       - Level: 5
         Time: 2000
-    FixedCastTime: -1
     Requires:
       HpCost:
         - Level: 1
@@ -22086,7 +22028,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastTime: 2000
-    FixedCastTime: -1
     Requires:
       SpCost: 15
       ItemCost:
@@ -22129,7 +22070,6 @@ Body:
       Skill:
         Reproduce: true
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22163,7 +22103,6 @@ Body:
     HitCount: 1
     AfterCastActDelay: 1000
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22286,7 +22225,6 @@ Body:
         Time: 60000
       - Level: 5
         Time: 70000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22336,7 +22274,6 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22389,7 +22326,6 @@ Body:
         Time: 13000
     Duration2: 10000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22430,7 +22366,6 @@ Body:
         Time: 50000
       - Level: 5
         Time: 60000
-    FixedCastTime: -1
     Requires:
       SpCost: 100
   - Id: 2291
@@ -22455,7 +22390,6 @@ Body:
       - Level: 5
         Time: 30000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22489,7 +22423,6 @@ Body:
       - Level: 3
         Time: 20000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22524,7 +22457,6 @@ Body:
       - Level: 3
         Time: 20000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22559,7 +22491,6 @@ Body:
       - Level: 3
         Time: 20000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22594,7 +22525,6 @@ Body:
       - Level: 3
         Time: 20000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22629,7 +22559,6 @@ Body:
       - Level: 3
         Time: 20000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22664,7 +22593,6 @@ Body:
       - Level: 3
         Time: 20000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22702,7 +22630,6 @@ Body:
         Time: 90000
       - Level: 5
         Time: 100000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22744,7 +22671,6 @@ Body:
         Time: 10000
       - Level: 3
         Time: 15000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22788,7 +22714,6 @@ Body:
         Time: 8000
       - Level: 3
         Time: 12000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22842,7 +22767,6 @@ Body:
         Time: 8000
       - Level: 3
         Time: 12000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22893,7 +22817,6 @@ Body:
         Time: 14000
       - Level: 3
         Time: 21000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22936,7 +22859,6 @@ Body:
       - Level: 3
         Time: 30000
     Cooldown: 180000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -22998,7 +22920,6 @@ Body:
     CastTime: 1000
     Duration1: 1500
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23047,7 +22968,6 @@ Body:
     SplashArea: 1
     ActiveInstance: 11
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23110,7 +23030,6 @@ Body:
     HitCount: 1
     SplashArea: 2
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23132,7 +23051,6 @@ Body:
       Skill:
         Reproduce: true
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23168,7 +23086,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23197,7 +23114,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 12000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 50
       Weapon:
@@ -23233,7 +23149,6 @@ Body:
     HitCount: 1
     Element: Weapon
     AfterCastActDelay: 3000
-    FixedCastTime: -1
     Requires:
       SpCost: 150
   - Id: 2315
@@ -23273,7 +23188,6 @@ Body:
       - Level: 3
         Time: 30000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost: 50
       State: Shield
@@ -23303,7 +23217,6 @@ Body:
         Time: 7000
     AfterCastActDelay: 1000
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23331,7 +23244,6 @@ Body:
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23407,7 +23319,6 @@ Body:
         Time: 8000
       - Level: 5
         Time: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23456,7 +23367,6 @@ Body:
         Time: 3000
       - Level: 5
         Time: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23588,7 +23498,6 @@ Body:
         Time: 120000
       - Level: 5
         Time: 140000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23656,7 +23565,6 @@ Body:
         Time: 4000
       - Level: 5
         Time: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23684,7 +23592,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 3000
     Cooldown: 20000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23803,7 +23710,6 @@ Body:
       Skill:
         Reproduce: true
     Duration1: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23845,7 +23751,6 @@ Body:
       Skill:
         Reproduce: true
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23899,7 +23804,6 @@ Body:
         Time: 3000
     Duration2: 5000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -23945,7 +23849,6 @@ Body:
         Time: 2500
       - Level: 10
         Time: 2500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24052,7 +23955,6 @@ Body:
         Time: 2000
     AfterCastActDelay: 1000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24126,7 +24028,6 @@ Body:
         Reproduce: true
     AfterCastActDelay: 1000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost: 100
       Status:
@@ -24155,7 +24056,6 @@ Body:
       - Level: 5
         Time: 7000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 80
       SpiritSphereCost: 2
@@ -24194,7 +24094,6 @@ Body:
       - Level: 5
         Time: 7000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24241,7 +24140,6 @@ Body:
       - Level: 5
         Time: 9000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24310,7 +24208,6 @@ Body:
       Skill:
         Reproduce: true
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24376,7 +24273,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 500
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost: 45
   - Id: 2338
@@ -24412,7 +24308,6 @@ Body:
       - Level: 10
         Time: 165000
     Cooldown: 30000
-    FixedCastTime: -1
     Requires:
       SpCost: 120
   - Id: 2339
@@ -24436,7 +24331,6 @@ Body:
     SplashArea: 2
     AfterCastActDelay: 1000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 2341
@@ -24528,7 +24422,6 @@ Body:
         Time: 900
       - Level: 10
         Time: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 100
       SpiritSphereCost: 2
@@ -24567,7 +24460,6 @@ Body:
         Time: 2500
       - Level: 5
         Time: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24602,7 +24494,6 @@ Body:
         Time: 2500
       - Level: 5
         Time: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24835,7 +24726,6 @@ Body:
       - Level: 5
         Time: 5000
     Cooldown: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24874,7 +24764,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 180000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24905,7 +24794,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 180000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24936,7 +24824,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 180000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -24967,7 +24854,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 180000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -25008,7 +24894,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 180000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -25041,7 +24926,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 60000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -25098,7 +24982,6 @@ Body:
         Time: 5500
     AfterCastActDelay: 500
     Cooldown: 2500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -25209,7 +25092,6 @@ Body:
     HitCount: 1
     SplashArea: 5
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 2418
@@ -25316,7 +25198,6 @@ Body:
         Time: 14000
       - Level: 5
         Time: 16000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -25390,7 +25271,6 @@ Body:
       - Level: 5
         Time: 27000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -25519,7 +25399,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 180000
     Cooldown: 15000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -25549,7 +25428,6 @@ Body:
     CastCancel: true
     AfterCastActDelay: 1000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -26161,7 +26039,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 30000
     Duration2: 12000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -26211,7 +26088,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 30000
     Duration2: 12000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -26416,7 +26292,7 @@ Body:
       - Level: 4
         Time: 200
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -26497,7 +26373,7 @@ Body:
       - Level: 4
         Time: 200
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -26647,7 +26523,7 @@ Body:
       - Level: 4
         Time: 100
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -26686,7 +26562,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 60000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -26816,7 +26691,6 @@ Body:
         Time: 12000
     Duration2: 2000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27049,7 +26923,7 @@ Body:
       - Level: 4
         Time: 200
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -27299,7 +27173,6 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       State: Elementalspirit
@@ -27488,7 +27361,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 5000
     Cooldown: 2000
-    FixedCastTime: -1
     Requires:
       SpCost: 30
       State: Cart
@@ -27539,7 +27411,6 @@ Body:
       - Level: 5
         Time: 3000
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27569,7 +27440,6 @@ Body:
     CastTime: 1500
     AfterCastActDelay: 500
     Duration1: 90000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27613,7 +27483,6 @@ Body:
       - Level: 5
         Time: 18000
     Duration2: 20000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27667,7 +27536,6 @@ Body:
         Time: 26000
       - Level: 5
         Time: 28000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27725,7 +27593,6 @@ Body:
     AfterCastActDelay: 500
     Duration1: 500
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27785,7 +27652,6 @@ Body:
       - Level: 5
         Time: 14000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27852,7 +27718,6 @@ Body:
         Time: 7500
     AfterCastActDelay: 500
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -27919,7 +27784,6 @@ Body:
       Skill:
         Reproduce: true
     Duration1: 100
-    FixedCastTime: -1
     Requires:
       SpCost: 1
     Unit:
@@ -27976,7 +27840,6 @@ Body:
       - Level: 5
         Time: 40000
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28013,7 +27876,6 @@ Body:
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28046,7 +27908,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 4000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
     Unit:
@@ -28064,7 +27925,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
     Unit:
@@ -28140,7 +28000,6 @@ Body:
         Time: 150000
       - Level: 5
         Time: 180000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28208,7 +28067,6 @@ Body:
       - Level: 5
         Time: 30000
     Cooldown: 15000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28237,7 +28095,6 @@ Body:
     Hit: Single
     HitCount: 1
     Cooldown: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 4
       Ammo:
@@ -28420,7 +28277,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 600000
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       ZenyCost: 100
@@ -28561,7 +28417,6 @@ Body:
       - Level: 5
         Time: 14000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28701,7 +28556,6 @@ Body:
         Time: 165000
       - Level: 10
         Time: 180000
-    FixedCastTime: -1
     Requires:
       SpCost: 45
       Weapon:
@@ -28723,7 +28577,6 @@ Body:
     Element: Weapon
     SplashArea: 10
     Duration1: 1500
-    FixedCastTime: -1
     Requires:
       SpCost: 5
       Weapon:
@@ -28752,7 +28605,6 @@ Body:
     ActiveInstance: 3
     Duration1: 30000
     Cooldown: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       Weapon:
@@ -28775,7 +28627,6 @@ Body:
     Element: Weapon
     SplashArea: 3
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28839,7 +28690,6 @@ Body:
         Time: 3500
       - Level: 5
         Time: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28878,7 +28728,6 @@ Body:
         Time: 78000
       - Level: 5
         Time: 90000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -28910,7 +28759,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 2000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
       Weapon:
@@ -28971,7 +28819,6 @@ Body:
         Time: 1200
       - Level: 10
         Time: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -29035,7 +28882,6 @@ Body:
         Time: 3000
     AfterCastActDelay: 1000
     Cooldown: 3500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -29079,7 +28925,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 100
     Cooldown: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 70
       Weapon:
@@ -29119,7 +28964,6 @@ Body:
         Time: 85000
       - Level: 5
         Time: 80000
-    FixedCastTime: -1
     Requires:
       SpCost: 30
       SpiritSphereCost: -1
@@ -29238,7 +29082,6 @@ Body:
         Area: 3
     AfterCastActDelay: 500
     Cooldown: 20000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -30509,7 +30352,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 200000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 3002
@@ -30574,7 +30416,6 @@ Body:
         Time: 3200
       - Level: 10
         Time: 3100
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -30608,7 +30449,6 @@ Body:
     HitCount: 1
     Element: Weapon
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -30659,7 +30499,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 100
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -30707,7 +30546,6 @@ Body:
       - Level: 5
         Area: 5
     AfterCastActDelay: 500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -30764,7 +30602,6 @@ Body:
         Reproduce: true
     CastTime: 1000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost: 50
       ZenyCost:
@@ -30833,7 +30670,6 @@ Body:
     AfterCastActDelay: 500
     Duration1: 100
     Cooldown: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -30905,7 +30741,6 @@ Body:
       - Level: 5
         Time: 4500
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -30948,7 +30783,6 @@ Body:
     CastTime: 3000
     Duration1: 10000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost: 100
   - Id: 3012
@@ -30994,7 +30828,6 @@ Body:
         Time: 21000
       - Level: 5
         Time: 18000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31040,7 +30873,6 @@ Body:
       - Level: 5
         Time: 20000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31086,7 +30918,6 @@ Body:
       - Level: 5
         Time: 16000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31111,7 +30942,6 @@ Body:
     Element: Fire
     CastTime: 2000
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31129,7 +30959,6 @@ Body:
     Element: Water
     CastTime: 2000
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31147,7 +30976,6 @@ Body:
     Element: Wind
     CastTime: 2000
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31165,7 +30993,6 @@ Body:
     Element: Earth
     CastTime: 2000
     Duration1: 300000
-    FixedCastTime: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31194,7 +31021,6 @@ Body:
     CastCancel: true
     AfterCastActDelay: 1000
     Duration1: 10000
-    FixedCastTime: -1
     Requires:
       SpCost: 30
     Unit:
@@ -31238,7 +31064,6 @@ Body:
     AfterCastActDelay: 1000
     Duration1: 30000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31271,7 +31096,6 @@ Body:
       - Level: 5
         Time: 90000
     Cooldown: 60000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31315,7 +31139,6 @@ Body:
         Time: 8000
       - Level: 5
         Time: 9000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31351,7 +31174,6 @@ Body:
       - Level: 5
         Time: 30000
     Cooldown: 20000
-    FixedCastTime: -1
     Requires:
       SpCost: 50
       ItemCost:
@@ -31380,7 +31202,6 @@ Body:
       - Level: 5
         Time: 180000
     Cooldown: 20000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31467,7 +31288,6 @@ Body:
       - Level: 5
         Time: 30000
     Cooldown: 15000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31611,6 +31431,31 @@ Body:
       IgnoreItemBonus: true
     Requires:
       SpCost: 1
+  - Id: 3042
+    Name: ALL_PRONTERA_RECALL
+    Description: Prontera Recall
+    MaxLevel: 2
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Cooldown:
+      - Level: 1
+        Time: 1800000
+      - Level: 2
+        Time: 900000
+    FixedCastTime: 1000
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    CastDelayFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    Requires:
+      SpCost: 1
   - Id: 5001
     Name: GC_DARKCROW
     Description: Dark Claw
@@ -31626,7 +31471,6 @@ Body:
         Reproduce: true
     Duration1: 10000
     Cooldown: 60000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31713,7 +31557,7 @@ Body:
       - Level: 4
         Time: 1000
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -31816,7 +31660,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 900000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 5006
@@ -31853,7 +31696,6 @@ Body:
         Time: 7000
       - Level: 5
         Time: 6000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31898,7 +31740,6 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 2000
     Duration1: 60000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -31957,7 +31798,6 @@ Body:
         Time: 6000
       - Level: 5
         Time: 4000
-    FixedCastTime: -1
     Requires:
       SpCost: 65
       SpiritSphereCost:
@@ -32007,7 +31847,6 @@ Body:
         Time: 4000
       - Level: 5
         Time: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32051,7 +31890,6 @@ Body:
         Time: 1000
     AfterCastActDelay: 500
     Duration1: 90000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32076,7 +31914,6 @@ Body:
     AfterCastActDelay: 500
     Duration1: 60000
     Cooldown: 300000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32112,7 +31949,6 @@ Body:
         Time: 70000
       - Level: 5
         Time: 60000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32157,7 +31993,6 @@ Body:
         Time: 30000
     Duration2: 10000
     Cooldown: 1800000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 5015
@@ -32173,7 +32008,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration2: 20000
-    FixedCastTime: -1
   - Id: 5018
     Name: SU_BASIC_SKILL
     Description: New Basic Skill
@@ -32191,7 +32025,6 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 5020
@@ -32281,7 +32114,6 @@ Body:
         Time: 4000
       - Level: 3
         Time: 6000
-    FixedCastTime: -1
     Requires:
       SpCost: 30
   - Id: 5024
@@ -32316,7 +32148,6 @@ Body:
     CastTime: 2000
     AfterCastActDelay: 1000
     Duration2: 120000
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 5027
@@ -32346,7 +32177,6 @@ Body:
       - Level: 5
         Time: 7000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32517,7 +32347,6 @@ Body:
     Duration1: 9000
     Duration2: 1000
     Cooldown: 10000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32543,7 +32372,6 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32634,7 +32462,6 @@ Body:
     AfterCastActDelay: 1000
     Duration2: 5000
     Cooldown: 6000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32676,7 +32503,6 @@ Body:
         Time: 11000
       - Level: 5
         Time: 14000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -32826,7 +32652,6 @@ Body:
       - Level: 5
         Time: 3500
     Duration2: 20000
-    FixedCastTime: -1
     Requires:
       ItemCost:
         - Item: Catnip_Fruit
@@ -32863,7 +32688,6 @@ Body:
         Area: 3
     CastCancel: true
     Duration2: 5000
-    FixedCastTime: -1
     Requires:
       ItemCost:
         - Item: Carrot
@@ -32910,7 +32734,6 @@ Body:
     Duration1: 15000
     Duration2: 10000
     Cooldown: 100000
-    FixedCastTime: -1
     Requires:
       SpCost: 50
   - Id: 5046
@@ -32937,7 +32760,6 @@ Body:
         Time: 2000
     AfterCastActDelay: 1000
     Cooldown: 22000
-    FixedCastTime: -1
     Requires:
       SpCost: 60
   - Id: 5047
@@ -32968,7 +32790,6 @@ Body:
       - Level: 5
         Time: 5000
     Cooldown: 60000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33017,7 +32838,6 @@ Body:
       - Level: 5
         Time: 10000
     Cooldown: 60000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33121,7 +32941,6 @@ Body:
         Time: 50000
       - Level: 5
         Time: 45000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33181,7 +33000,6 @@ Body:
         Time: 50000
       - Level: 5
         Time: 45000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33493,7 +33311,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33532,7 +33349,6 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33572,7 +33388,6 @@ Body:
         Time: 900000
       - Level: 3
         Time: 1200000
-    FixedCastTime: -1
     Requires:
       SpCost: 100
   - Id: 8005
@@ -33584,7 +33399,6 @@ Body:
       NoDamage: true
     Hit: Single
     Duration2: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 8006
@@ -33607,7 +33421,6 @@ Body:
         Time: 25000
       - Level: 5
         Time: 20000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33648,7 +33461,6 @@ Body:
         Time: 600000
       - Level: 3
         Time: 900000
-    FixedCastTime: -1
     Requires:
       SpCost: 120
   - Id: 8009
@@ -33671,7 +33483,6 @@ Body:
       - Level: 5
         Count: -3
     AfterCastWalkDelay: 2000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33714,7 +33525,6 @@ Body:
         Time: 105000
       - Level: 5
         Time: 120000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33759,7 +33569,6 @@ Body:
         Time: 105000
       - Level: 5
         Time: 120000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33782,7 +33591,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8013
@@ -33815,7 +33623,6 @@ Body:
         Time: 2600
       - Level: 5
         Time: 2800
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -33838,7 +33645,6 @@ Body:
     Hit: Single
     AfterCastActDelay: 3000
     AfterCastWalkDelay: 3000
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 8015
@@ -33864,7 +33670,6 @@ Body:
     Element: Weapon
     SplashArea: 4
     AfterCastWalkDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8018
@@ -34309,7 +34114,6 @@ Body:
         Time: 2500
       - Level: 10
         Time: 3000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34529,7 +34333,6 @@ Body:
     Hit: Single
     HitCount: 1
     Cooldown: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34556,7 +34359,6 @@ Body:
     HitCount: 1
     Duration1: 5000
     Cooldown: 1500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34593,7 +34395,6 @@ Body:
     HitCount: 1
     Duration1: 10000
     Cooldown: 1500
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34702,7 +34503,6 @@ Body:
         Time: 75000
       - Level: 5
         Time: 90000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34736,7 +34536,6 @@ Body:
         Time: 75000
       - Level: 5
         Time: 90000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34884,7 +34683,6 @@ Body:
         Time: 75000
       - Level: 5
         Time: 90000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34919,7 +34717,6 @@ Body:
     Hit: Single
     HitCount: 1
     CastTime: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -34969,7 +34766,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
@@ -36652,7 +36448,6 @@ Body:
     Element: Fire
     Knockback: 2
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 8402
@@ -36665,7 +36460,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 60
   - Id: 8403
@@ -36680,7 +36474,6 @@ Body:
     ActiveInstance: 3
     Knockback: 2
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 80
     Unit:
@@ -36702,7 +36495,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 8405
@@ -36715,7 +36507,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 60
   - Id: 8406
@@ -36728,7 +36519,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 80
     Unit:
@@ -36751,7 +36541,6 @@ Body:
     HitCount: 1
     Knockback: 5
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 8408
@@ -36764,7 +36553,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 60
   - Id: 8409
@@ -36777,7 +36565,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 80
     Unit:
@@ -36799,7 +36586,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 8411
@@ -36812,7 +36598,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 60
   - Id: 8412
@@ -36825,7 +36610,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 80
     Unit:
@@ -36847,7 +36631,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8414
@@ -36860,7 +36643,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8415
@@ -36873,7 +36655,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8416
@@ -36886,7 +36667,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8417
@@ -36899,7 +36679,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8418
@@ -36912,7 +36691,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8419
@@ -36925,7 +36703,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8420
@@ -36938,7 +36715,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8421
@@ -36951,7 +36727,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8422
@@ -36964,7 +36739,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8423
@@ -36977,7 +36751,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8424
@@ -36990,7 +36763,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8425
@@ -37107,7 +36879,6 @@ Body:
     Element: Water
     SplashArea: 1
     Duration1: -1
-    FixedCastTime: -1
     Requires:
       SpCost: 80
   - Id: 8434
@@ -37121,7 +36892,6 @@ Body:
     HitCount: 1
     Element: Wind
     CastTime: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 8435
@@ -37136,7 +36906,6 @@ Body:
     Element: Wind
     SplashArea: 1
     CastTime: 1000
-    FixedCastTime: -1
     Requires:
       SpCost: 60
   - Id: 8436
@@ -37164,7 +36933,6 @@ Body:
     SplashArea: 1
     CastTime: 1000
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 80
   - Id: 8438
@@ -37191,7 +36959,6 @@ Body:
     HitCount: 1
     Element: Earth
     Duration1: 5000
-    FixedCastTime: -1
     Requires:
       SpCost: 40
   - Id: 8440
@@ -37206,7 +36973,6 @@ Body:
     Element: Earth
     SplashArea: 1
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 60
   - Id: 8441
@@ -37221,7 +36987,6 @@ Body:
     Element: Earth
     SplashArea: 1
     Duration1: 15000
-    FixedCastTime: -1
     Requires:
       SpCost: 1
   - Id: 8442
@@ -37281,7 +37046,6 @@ Body:
       IsGuild: true
     SplashArea: 2
     Duration1: 300000
-    FixedCastTime: -1
     Unit:
       Id: Gd_Leadership
       Layout: 2
@@ -37297,7 +37061,6 @@ Body:
       IsGuild: true
     SplashArea: 2
     Duration1: 300000
-    FixedCastTime: -1
     Unit:
       Id: Gd_Glorywounds
       Layout: 2
@@ -37313,7 +37076,6 @@ Body:
       IsGuild: true
     SplashArea: 2
     Duration1: 300000
-    FixedCastTime: -1
     Unit:
       Id: Gd_Soulcold
       Layout: 2
@@ -37329,7 +37091,6 @@ Body:
       IsGuild: true
     SplashArea: 2
     Duration1: 300000
-    FixedCastTime: -1
     Unit:
       Id: Gd_Hawkeyes
       Layout: 2
@@ -37350,13 +37111,10 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 180000
-    Duration2: 300000
-    FixedCastTime: -1
+    Cooldown: 180000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10011
     Name: GD_REGENERATION
     Description: Regeneration
@@ -37370,13 +37128,10 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 60000
-    Duration2: 300000
-    FixedCastTime: -1
+    Cooldown: 180000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10012
     Name: GD_RESTORE
     Description: Restoration
@@ -37389,13 +37144,11 @@ Body:
       IsGuild: true
     SplashArea: 15
     CastCancel: true
-    Duration2: 300000
-    FixedCastTime: 10000
+    Cooldown: 180000
+    FixedCastTime: 1000
     CastTimeFlags:
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10013
     Name: GD_EMERGENCYCALL
     Description: Urgent Call
@@ -37408,14 +37161,12 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10014
     Name: GD_DEVELOPMENT
     Description: Permanent Development
@@ -37434,13 +37185,49 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
-    Requires:
-      SpCost: 1
   - Id: 10016
     Name: GD_GUILD_STORAGE
     Description: Guild Storage Expansion
     MaxLevel: 5
     Flags:
       IsGuild: true
+  - Id: 10017
+    Name: GD_CHARGESHOUT_FLAG
+    Description: Charge Shout Flag
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    Duration1: 300000
+    Cooldown: 60000
+    FixedCastTime: 1000
+  - Id: 10018
+    Name: GD_CHARGESHOUT_BEATING
+    Description: Charge Shout Beating
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    Cooldown: 60000
+    FixedCastTime: 1000
+  - Id: 10019
+    Name: GD_EMERGENCY_MOVE
+    Description: Emergency Move
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsGuild: true
+    SplashArea: 15
+    Duration1: 10000
+    Cooldown: 600000
