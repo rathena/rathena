@@ -67887,12 +67887,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon;
       bonus bLuk,3;
       bonus bCritAtkRate,50;
-      if (BaseLevel>99) {
+      if (BaseLevel>99)
          bonus bLongAtkRate,20;
-      }
   - Id: 18108
     AegisName: Brindle_Eel
     Name: Zebra Eel
@@ -67918,12 +67916,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon;
       bonus bAgi,3;
       autobonus "{ bonus bAspd,2; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
-      if (BaseLevel>99) {
+      if (BaseLevel>99)
          bonus bLongAtkRate,20;
-      }
   - Id: 18109
     AegisName: Catapult
     Name: Thief Crossbow
@@ -68329,7 +68325,6 @@ Body:
       bonus2 bAddRace,RC_Player_Human,30;
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10;
       bonus2 bIgnoreDefRaceRate,RC_Player_Human,10;
-      bonus bUnbreakableWeapon;
   - Id: 18125
     AegisName: Arcus_Daemonicus
     Name: Arcus Daemonicus
@@ -68738,9 +68733,8 @@ Body:
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20;
       bonus bBaseAtk,6*(min(BaseLevel,160)/10);
-      if (getrefine()>=7) {
-         bonus bLongAtkRate,getskilllv("BA_MUSICALLESSON");
-      }
+      if (getrefine()>=7)
+         bonus bLongAtkRate,getskilllv("BA_MUSICALLESSON")+getskilllv("DC_DANCINGLESSON");
   - Id: 18164
     AegisName: Royal_Bow_K
     Name: Royal Bow
@@ -88382,8 +88376,8 @@ Body:
     Name: Costume Silent Executor
     Type: Armor
     Locations:
-      Costume_Head_Top: true
       Costume_Head_Mid: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 632
   - Id: 20392
@@ -93138,18 +93132,12 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      if (.@r >= 2) {
-         bonus bBaseAtk,.@r/2;
-      }
-      if (.@r >= 3) {
-         bonus2 bSkillAtk,"RK_SONICWAVE",.@r/3*10;
-      }
-      if (.@r >= 9) {
-         bonus5 bAutoSpell,"RK_SONICWAVE",2,.@r/3*10,BF_SHORT|BF_WEAPON,1;
-      }
-      if (.@r >= 11) {
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RK_SONICWAVE",.@r/3*10;
+      if (.@r >= 9)
+         bonus5 bAutoSpell,"RK_SONICWAVE",max(2,getskilllv("RK_SONICWAVE")),100,BF_SHORT|BF_WEAPON,1;
+      if (.@r >= 11)
          bonus bUnbreakableWeapon;
-      }
   - Id: 21039
     AegisName: Royal_Knight's_Broadsword
     Name: Royal Knight's Broadsword
@@ -96479,11 +96467,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMaxHP,20;
-      bonus bMaxSP,20;
+      bonus bMaxHP,20+10*getrefine();
+      bonus bMaxSP,10;
       if (getrefine()>=7) {
-         bonus bMaxHP,1;
-         bonus bMaxSP,1;
+         bonus bMaxHPrate,1;
+         bonus bMaxSPrate,1;
       }
   - Id: 24026
     AegisName: S_Athena_Shield
@@ -96574,6 +96562,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,10+.@r;
       if (getrefine()>=7)
          bonus bHealPower2,5;
   - Id: 24034
@@ -97287,9 +97278,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,-5;
-      if (getrefine()>=7) {bonus bSPrecovRate,5;
-      }
+      bonus bSPrecovRate,5;
+      if (getrefine()>=7)
+         bonus bSPrecovRate,5;
   - Id: 24079
     AegisName: S_Spiritual_Earring
     Name: Spiritual Shadow Earring
@@ -97300,6 +97291,8 @@ Body:
     Refineable: true
     Script: |
       bonus bMaxSP,50;
+      if (getrefine()>=7)
+         bonus bMaxSPrate,1;
   - Id: 24080
     AegisName: S_Spiritual_Pendent
     Name: Spiritual Shadow Pendant
@@ -97655,7 +97648,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,1;
+      bonus bUseSPrate,-1;
       if (getrefine()>=7)
          bonus bSPrecovRate,5;
   - Id: 24112
@@ -97667,7 +97660,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,1+((getrefine()>=7)?1:0)+((getrefine()>=9)?1:0);
+      bonus bUseSPrate,-1+((getrefine()>=7)?1:0)+((getrefine()>=9)?1:0);
   - Id: 24113
     AegisName: S_Spell_Flow_Shield
     Name: Spellflow Shadow Shield
@@ -97677,7 +97670,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bUseSPrate,1;
+      bonus bUseSPrate,-1;
       if (getrefine()>=7)
          bonus bMaxSPrate,1;
   - Id: 24114
@@ -97690,7 +97683,7 @@ Body:
     Refineable: true
     Script: |
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",100-(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
   - Id: 24115
     AegisName: S_Greed_Shoes
     Name: Grid Shadow Shoes
@@ -98273,8 +98266,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
-      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24167
     AegisName: S_Penetration_Pendent
     Name: Penetration Shadow Pendant
@@ -98285,8 +98278,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
-      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24168
     AegisName: S_Tempest_Earring
     Name: Tempest Shadow Earring
@@ -98742,7 +98735,6 @@ Body:
     AegisName: S_Expert_Shoes
     Name: Expert Shadow Shoes
     Type: Shadowgear
-    Buy: 20
     Weight: 100
     Locations:
       Shadow_Shoes: true
@@ -98750,7 +98742,7 @@ Body:
     EquipLevelMax: 175
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,1;
+      bonus2 bExpAddRace,RC_All,(getrefine()/4);
   - Id: 24209
     AegisName: S_Expert_Shield
     Name: Expert Shadow Shield
@@ -98766,7 +98758,6 @@ Body:
     AegisName: S_Beginner_Shoes
     Name: Beginner Shadow Shoes
     Type: Shadowgear
-    Buy: 20
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 1
@@ -98811,7 +98802,6 @@ Body:
     AegisName: S_Advanced_Shoes
     Name: Advanced Shadow Shoes
     Type: Shadowgear
-    Buy: 20
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -98990,11 +98980,11 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bAtk2,(5+.@r);
+      bonus bBaseAtk,(5+.@r);
       if (.@r>=7)
-         bonus bMaxHPrate,1;
-      if (.@r>=9)
          bonus bMaxSPrate,1;
+      if (.@r>=9)
+         bonus2 bAddClass,Class_All,1;
   - Id: 24227
     AegisName: S_Enhance_Spirit_Weapon
     Name: Enhanced Soul Shadow Weapon
@@ -99075,11 +99065,8 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bFlee,5;
       .@r = getrefine();
-      if (.@r>=2) {
-         bonus bCritical,2;
-      }
+      bonus bFlee,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
       }
@@ -99095,11 +99082,8 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bCritical,5;
       .@r = getrefine();
-      if (.@r>=2) {
-         bonus bCritical,2;
-      }
+      bonus bCritical,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
       }
@@ -99285,7 +99269,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillUseSPrate,"MC_MAMMONITE",20+(3*.@r);
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"MC_Mammonite",20+(5*.@r);
   - Id: 24248
     AegisName: S_Acolyte_Earring
     Name: Acolyte Shadow Earring
@@ -99307,9 +99292,10 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillUseSPrate,"MG_COLDBOLT",20+(3*.@r);
-      bonus2 bSkillUseSPrate,"MG_FIREBOLT",20+(3*.@r);
-      bonus2 bSkillUseSPrate,"MG_LIGHTNINGBOLT",20+(3*.@r);
+      bonus bMaxHP,.@r*10;
+      bonus2 bVariableCastrate,"MG_COLDBOLT",-20-(5*.@r);
+      bonus2 bVariableCastrate,"MG_FIREBOLT",-20-(5*.@r);
+      bonus2 bVariableCastrate,"MG_LIGHTNINGBOLT",-20-(5*.@r);
   - Id: 24250
     AegisName: S_Swordman_Pendant
     Name: Swordman Shadow Pendant

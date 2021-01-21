@@ -378,7 +378,7 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 #endif
 
 static bool clif_session_isValid(struct map_session_data *sd) {
-	return ( sd != NULL && session_isActive(sd->fd) );
+	return ( sd != nullptr && session_isActive(sd->fd) );
 }
 
 /*==========================================
@@ -607,7 +607,8 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 		break;
 
 	case SELF:
-		if( sd && session_isActive( fd=sd->fd ) ){
+		if( clif_session_isValid(sd) ){
+			fd = sd->fd;
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -814,7 +815,7 @@ void clif_authrefuse(int fd, uint8 error_code)
 ///     ? = disconnected -> MsgStringTable[3]
 void clif_authfail_fd(int fd, int type)
 {
-	if (!fd || !session[fd] || session[fd]->func_parse != clif_parse) //clif_authfail should only be invoked on players!
+	if (!session_isValid(fd) || session[fd]->func_parse != clif_parse) //clif_authfail should only be invoked on players!
 		return;
 
 	WFIFOHEAD(fd, packet_len(0x81));
@@ -835,7 +836,7 @@ void clif_charselectok(int id, uint8 ok)
 	struct map_session_data* sd;
 	int fd;
 
-	if ((sd = map_id2sd(id)) == NULL || !sd->fd)
+	if ((sd = map_id2sd(id)) == NULL || !session_isValid(sd->fd))
 		return;
 
 	fd = sd->fd;
@@ -902,7 +903,7 @@ void clif_clearflooritem(struct flooritem_data *fitem, int fd)
 	WBUFW(buf,0) = 0xa1;
 	WBUFL(buf,2) = fitem->bl.id;
 
-	if (fd == 0) {
+	if ( !session_isActive( fd ) ){
 		clif_send(buf, packet_len(0xa1), &fitem->bl, AREA);
 	} else {
 		WFIFOHEAD(fd,packet_len(0xa1));
@@ -1489,19 +1490,6 @@ void clif_class_change_target(struct block_list *bl,int class_,int type, enum se
 	}
 }
 
-
-/// Notifies the client of an object's spirits.
-/// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
-/// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
-static void clif_spiritball_single(int fd, struct map_session_data *sd)
-{
-	WFIFOHEAD(fd, packet_len(0x1e1));
-	WFIFOW(fd,0)=0x1e1;
-	WFIFOL(fd,2)=sd->bl.id;
-	WFIFOW(fd,6)=sd->spiritball;
-	WFIFOSET(fd, packet_len(0x1e1));
-}
-
 /// Notifies the client of an object's Millenium Shields.
 static void clif_millenniumshield_single(int fd, map_session_data *sd)
 {
@@ -1530,29 +1518,6 @@ static void clif_spiritcharm_single(int fd, struct map_session_data *sd)
 	WFIFOW(fd,8)=sd->spiritcharm;
 	WFIFOSET(fd, packet_len(0x08cf));
 }
-
-
-/// Notifies the client of an object's souls.
-/// Note: Spirit spheres and Soul spheres work on
-/// seprate systems officially, but both send out
-/// the same packet which leads to confusion on how
-/// much soul energy a Soul Reaper acturally has
-/// should the player also have spirit spheres.
-/// They will likely create a new packet for this soon
-/// to seprate the animations for spirit and soul spheres.
-/// For now well use this and replace it later when possible. [Rytech]
-///
-/// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
-/// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
-static void clif_soulball_single(int fd, struct map_session_data *sd)
-{
-	WFIFOHEAD(fd, packet_len(0x1d0));
-	WFIFOW(fd,0)=0x1d0;
-	WFIFOL(fd,2)=sd->bl.id;
-	WFIFOW(fd,6)=sd->soulball;
-	WFIFOSET(fd, packet_len(0x1d0));
-}
-
 
 /*==========================================
  * Run when player changes map / refreshes
@@ -2030,7 +1995,7 @@ void clif_quitsave(int fd,struct map_session_data *sd) {
 		sd->canlog_tick == 0 ||
 		DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 		map_quit(sd);
-	else if (sd->fd) {
+	else if (session_isValid(sd->fd)) {
 		//Disassociate session from player (session is deleted after this function was called)
 		//And set a timer to make him quit later.
 		session[sd->fd]->session_data = NULL;
@@ -2043,9 +2008,8 @@ void clif_quitsave(int fd,struct map_session_data *sd) {
 /// 0091 <map name>.16B <x>.W <y>.W
 void clif_changemap(struct map_session_data *sd, short m, int x, int y)
 {
-	int fd;
 	nullpo_retv(sd);
-	fd = sd->fd;
+	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0x91));
 	WFIFOW(fd,0) = 0x91;
@@ -3262,7 +3226,7 @@ static int clif_hpmeter_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(sd);
 	nullpo_ret(tsd);
 
-	if( !tsd->fd || tsd == sd )
+	if( !session_isActive(tsd->fd) || tsd == sd )
 		return 0;
 
 	if( !pc_has_permission(tsd, PC_PERM_VIEW_HPMETER) )
@@ -4239,7 +4203,7 @@ void clif_dispchat(struct chat_data* cd, int fd)
 	WBUFB(buf,16) = type;
 	memcpy(WBUFCP(buf,17), cd->title, strlen(cd->title)); // not zero-terminated
 
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,WBUFW(buf,2));
 		memcpy(WFIFOP(fd,0),buf,WBUFW(buf,2));
 		WFIFOSET(fd,WBUFW(buf,2));
@@ -4291,7 +4255,7 @@ void clif_clearchat(struct chat_data *cd,int fd)
 
 	WBUFW(buf,0) = 0xd8;
 	WBUFL(buf,2) = cd->bl.id;
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,packet_len(0xd8));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0xd8));
 		WFIFOSET(fd,packet_len(0xd8));
@@ -4705,29 +4669,25 @@ void clif_storageclose(struct map_session_data* sd)
 }
 
 
-/// Notifies clients in an area of an object's souls.
-/// Note: Spirit spheres and Soul spheres work on
-/// seprate systems officially, but both send out
-/// the same packet which leads to confusion on how
-/// much soul energy a Soul Reaper actually has
-/// should the player also have spirit spheres.
-/// They will likely create a new packet for this soon
-/// to seprate the animations for spirit and soul spheres.
-/// For now we'll use this and replace it later when possible. [Rytech]
-/// 
+/// Notifies clients in an area of a player's souls.
 /// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
 /// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
-void clif_soulball(struct map_session_data *sd)
-{
-	unsigned char buf[8];
+/// 0b73 <id>.L <amount>.W
+void clif_soulball( struct map_session_data *sd, struct block_list* target, enum send_target send_target ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct PACKET_ZC_UNCONFIRMED_SPIRITS3 p = {};
 
-	nullpo_retv(sd);
+	p.packetType = HEADER_ZC_UNCONFIRMED_SPIRITS3;
+#else
+	struct PACKET_ZC_SPIRITS p = {};
 
-	WBUFW(buf,0)=0x1d0;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->soulball;
-	clif_send(buf,packet_len(0x1d0),&sd->bl,AREA);
-	return;
+	p.packetType = HEADER_ZC_SPIRITS;
+#endif
+
+	p.GID = sd->bl.id;
+	p.amount = sd->soulball;
+
+	clif_send( &p, sizeof( p ), target == nullptr ? &sd->bl : target, send_target );
 }
 
 
@@ -4749,13 +4709,13 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		clif_buyingstore_entry_single(sd, dstsd);
 
 	if(dstsd->spiritball > 0)
-		clif_spiritball_single(sd->fd, dstsd);
+		clif_spiritball( &dstsd->bl, &sd->bl, SELF );
 	if (dstsd->sc.data[SC_MILLENNIUMSHIELD])
 		clif_millenniumshield_single(sd->fd, dstsd);
 	if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, dstsd);
 	if (dstsd->soulball > 0)
-		clif_soulball_single(sd->fd, dstsd);
+		clif_soulball( dstsd, &sd->bl, SELF );
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
@@ -5089,7 +5049,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 	WBUFW(buf,6) = type;
 	mapindex_getmapname_ext(map_mapid2mapname(m),WBUFCP(buf,8));
 
-	if( fd )
+	if( session_isActive(fd) )
 	{
 		WFIFOHEAD(fd,packet_len(0x192));
 		memcpy(WFIFOP(fd,0), buf, packet_len(0x192));
@@ -5291,7 +5251,7 @@ static int clif_getareachar(struct block_list* bl,va_list ap)
 
 	sd=va_arg(ap,struct map_session_data*);
 
-	if (sd == NULL || !sd->fd)
+	if (!clif_session_isValid(sd))
 		return 0;
 
 	switch(bl->type){
@@ -5323,7 +5283,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	sd = BL_CAST(BL_PC, bl);
 	tsd = BL_CAST(BL_PC, tbl);
 
-	if (tsd && tsd->fd) { //tsd has lost sight of the bl object.
+	if (clif_session_isValid(tsd)) { //tsd has lost sight of the bl object.
 		nullpo_ret(bl);
 		switch(bl->type){
 		case BL_PC:
@@ -5356,7 +5316,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			break;
 		}
 	}
-	if (sd && sd->fd) { //sd is watching tbl go out of view.
+	if (clif_session_isValid(sd)) { //sd is watching tbl go out of view.
 		nullpo_ret(tbl);
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit((struct skill_unit *)tbl,sd->fd);
@@ -5381,7 +5341,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 	sd = BL_CAST(BL_PC, bl);
 	tsd = BL_CAST(BL_PC, tbl);
 
-	if (tsd && tsd->fd) { //Tell tsd that bl entered into his view
+	if (clif_session_isValid(tsd)) { //Tell tsd that bl entered into his view
 		switch(bl->type){
 		case BL_ITEM:
 			clif_getareachar_item(tsd,(struct flooritem_data*)bl);
@@ -5394,7 +5354,7 @@ int clif_insight(struct block_list *bl,va_list ap)
 			break;
 		}
 	}
-	if (sd && sd->fd) { //Tell sd that tbl walked into his view
+	if (clif_session_isValid(sd)) { //Tell sd that tbl walked into his view
 		clif_getareachar_unit(sd,tbl);
 	}
 	return 0;
@@ -5411,7 +5371,7 @@ void clif_skillinfoblock(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	fd = sd->fd;
-	if (!fd)
+	if (!session_isActive(fd))
 		return;
 
 	WFIFOHEAD(fd, MAX_SKILL * 37 + 4);
@@ -5458,13 +5418,12 @@ void clif_skillinfoblock(struct map_session_data *sd)
 /// 0111 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B
 void clif_addskill(struct map_session_data *sd, int skill_id)
 {
-	int fd;
-	uint16 idx = 0;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	if (!fd || !(idx = skill_get_index(skill_id)))
+	int fd = sd->fd;
+	uint16 idx = skill_get_index(skill_id);
+
+	if (!session_isActive(fd) || !idx)
 		return;
 
 	if( sd->status.skill[idx].id <= 0 )
@@ -5491,13 +5450,12 @@ void clif_addskill(struct map_session_data *sd, int skill_id)
 void clif_deleteskill(struct map_session_data *sd, int skill_id)
 {
 #if PACKETVER >= 20081217
-	int fd;
-	uint16 idx = 0;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	if (!fd || !(idx = skill_get_index(skill_id)))
+	int fd = sd->fd;
+	uint16 idx = skill_get_index(skill_id);
+
+	if (!session_isActive(fd) || !idx)
 		return;
 
 	WFIFOHEAD(fd,packet_len(0x441));
@@ -5511,11 +5469,14 @@ void clif_deleteskill(struct map_session_data *sd, int skill_id)
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
 /// 010e <skill id>.W <level>.W <sp cost>.W <attack range>.W <upgradable>.B
 void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable) {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
+	int fd = sd->fd;
+	uint16 idx = skill_get_index(skill_id);
+
+	if (!session_isActive(fd) || !idx)
+		return;
+	
 	WFIFOHEAD(fd, packet_len(0x10e));
 	WFIFOW(fd, 0) = 0x10e;
 	WFIFOW(fd, 2) = skill_id;
@@ -5531,9 +5492,12 @@ void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int rang
 /// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B
 void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf)
 {
+	nullpo_retv(sd);
+
 	const int fd = sd->fd;
 	uint16 idx = skill_get_index(skill_id);
-	if (!idx)
+
+	if (!session_isActive(fd) || !idx)
 		return;
 
 	WFIFOHEAD(fd,packet_len(0x7e1));
@@ -6354,10 +6318,7 @@ void clif_displaymessage(const int fd, const char* mes)
 {
 	nullpo_retv(mes);
 
-	//Scrapped, as these are shared by disconnected players =X [Skotlex]
-	if (fd == 0)
-		;
-	else {
+	if( session_isActive( fd ) ){
 		char *message, *line;
 
 		message = aStrdup(mes);
@@ -6739,7 +6700,7 @@ void clif_wis_message(struct map_session_data* sd, const char* nick, const char*
 ///     3 = everyone ignored by target
 void clif_wis_end(int fd, int result)
 {
-	struct map_session_data *sd = (session_isValid(fd) ? (struct map_session_data *)session[fd]->session_data : NULL);
+	struct map_session_data *sd = (session_isActive(fd) ? (struct map_session_data *)session[fd]->session_data : NULL);
 #if PACKETVER < 20131223
 	const int cmd = 0x98;
 #else
@@ -7381,7 +7342,7 @@ void clif_showvendingboard(struct block_list* bl, const char* message, int fd)
 	WBUFL(buf,2) = bl->id;
 	safestrncpy(WBUFCP(buf,6), message, 80);
 
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,packet_len(0x131));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0x131));
 		WFIFOSET(fd,packet_len(0x131));
@@ -7401,7 +7362,7 @@ void clif_closevendingboard(struct block_list* bl, int fd)
 
 	WBUFW(buf,0) = 0x132;
 	WBUFL(buf,2) = bl->id;
-	if( fd ) {
+	if( session_isActive(fd) ) {
 		WFIFOHEAD(fd,packet_len(0x132));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0x132));
 		WFIFOSET(fd,packet_len(0x132));
@@ -8328,27 +8289,27 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 		clif_send(buf, packet_len(0x1cf), src, AREA);
 }
 
-/*==========================================
- * Server tells clients nearby 'sd' (and himself) to display 'sd->spiritball' number of spiritballs on 'sd'
- * Notifies clients in an area of an object's spirits.
- * 01d0 <id>.L <amount>.W (ZC_SPIRITS)
- * 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
- *------------------------------------------*/
-void clif_spiritball(struct block_list *bl) {
-    unsigned char buf[16];
-    TBL_PC *sd = BL_CAST(BL_PC,bl);
-    TBL_HOM *hd = BL_CAST(BL_HOM,bl);
+/// Notifies the client of an object's spirits.
+/// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
+/// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
+void clif_spiritball( struct block_list *bl, struct block_list* target, enum send_target send_target ){
+	nullpo_retv( bl );
 
-    nullpo_retv(bl);
+	struct PACKET_ZC_SPIRITS p = {};
 
-    WBUFW(buf, 0) = 0x1d0;
-    WBUFL(buf, 2) = bl->id;
-	WBUFW(buf, 6) = 0; //init to 0
-    switch(bl->type){
-        case BL_PC: WBUFW(buf, 6) = sd->spiritball; break;
-        case BL_HOM: WBUFW(buf, 6) = hd->homunculus.spiritball; break;
-    }
-    clif_send(buf, packet_len(0x1d0), bl, AREA);
+	p.packetType = HEADER_ZC_SPIRITS;
+	p.GID = bl->id;
+
+	switch( bl->type ){
+		case BL_PC:
+			p.amount = ( (struct map_session_data*)bl )->spiritball;
+			break;
+		case BL_HOM:
+			p.amount = ( (struct homun_data*)bl )->homunculus.spiritball;
+			break;
+	}
+
+	clif_send( &p, sizeof( p ), target == nullptr ? bl : target, send_target );
 }
 
 
@@ -8695,7 +8656,7 @@ void clif_guild_memberlist(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	if( (fd = sd->fd) == 0 )
+	if( !session_isActive(fd = sd->fd) )
 		return;
 	if( (g = sd->guild) == NULL )
 		return;
@@ -8924,13 +8885,12 @@ void clif_guild_skillinfo(struct map_session_data* sd)
 /// 016f <subject>.60B <notice>.120B
 void clif_guild_notice(struct map_session_data* sd)
 {
-	int fd;
 	struct guild* g;
 
 	nullpo_retv(sd);
 	nullpo_retv(g = sd->guild);
 
-	fd = sd->fd;
+	int fd = sd->fd;
 
 	if ( !session_isActive(fd) )
 		return;
@@ -9140,13 +9100,13 @@ void clif_guild_allianceack(struct map_session_data *sd,int flag)
 ///     1 = Enemy
 void clif_guild_delalliance(struct map_session_data *sd,int guild_id,int flag)
 {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	if (fd <= 0)
+	int fd = sd->fd;
+
+	if ( !session_isActive(fd) )
 		return;
+
 	WFIFOHEAD(fd,packet_len(0x184));
 	WFIFOW(fd,0)=0x184;
 	WFIFOL(fd,2)=guild_id;
@@ -9375,17 +9335,13 @@ void clif_GM_kickack(struct map_session_data *sd, int id)
 
 void clif_GM_kick(struct map_session_data *sd, struct map_session_data *tsd)
 {
-	int fd;
-
 	nullpo_retv(tsd);
-
-	fd = tsd->fd;
 
 	if (sd == NULL)
 		tsd->state.keepshop = true;
 
-	if (fd > 0)
-		clif_authfail_fd(fd, 15);
+	if (session_isActive(tsd->fd))
+		clif_authfail_fd(tsd->fd, 15);
 	else
 		map_quit(tsd);
 
@@ -9681,13 +9637,13 @@ void clif_refresh(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_DEX);
 	clif_updatestatus(sd,SP_LUK);
 	if (sd->spiritball)
-		clif_spiritball_single(sd->fd, sd);
+		clif_spiritball( &sd->bl, &sd->bl, SELF );
 	if (sd->sc.data[SC_MILLENNIUMSHIELD])
 		clif_millenniumshield_single(sd->fd, sd);
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, sd);
 	if (sd->soulball)
-		clif_soulball_single(sd->fd, sd);
+		clif_soulball( sd, &sd->bl, SELF );
 	if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if (sd->vd.body_style)
@@ -17202,10 +17158,10 @@ static void clif_quest_len(int def_len, int info_len, int avail_quests, int *lim
 	(*len_out) = ((*limit_out) * info_len) + def_len;
 }
 
-std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
-	std::string race_name, size_name, ele_name;
+std::string clif_quest_string( std::shared_ptr<s_quest_objective> objective ){
+	std::string race_name;
 
-	switch(race) {
+	switch( objective->race ){
 		case RC_FORMLESS:	race_name = "Formless"; break;
 		case RC_UNDEAD:		race_name = "Undead"; break;
 		case RC_BRUTE:		race_name = "Brute"; break;
@@ -17216,17 +17172,27 @@ std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
 		case RC_DEMIHUMAN:	race_name = "Demihuman"; break;
 		case RC_ANGEL:		race_name = "Angel"; break;
 		case RC_DRAGON:		race_name = "Dragon"; break;
+		default:
+			ShowWarning( "clif_quest_string: Unsupported race %d - using empty string...\n", objective->race );
+			// Fallthrough
 		case RC_ALL:		race_name = ""; break;
-		default:			race_name = "unknown"; break;
 	}
-	switch(size) {
+
+	std::string size_name;
+
+	switch( objective->size ){
 		case SZ_SMALL:	size_name = "Small"; break;
 		case SZ_MEDIUM:	size_name = "Medium"; break;
 		case SZ_BIG:	size_name = "Large"; break;
+		default:
+			ShowWarning( "clif_quest_string: Unsupported size %d - using empty string...\n", objective->size );
+			// Fallthrough
 		case SZ_ALL:	size_name = ""; break;
-		default:		size_name = "unknown"; break;
 	}
-	switch(element) {
+
+	std::string ele_name;
+
+	switch( objective->element ){
 		case ELE_NEUTRAL:	ele_name = "Neutral Element"; break;
 		case ELE_WATER:		ele_name = "Water Element"; break;
 		case ELE_EARTH:		ele_name = "Earth Element"; break;
@@ -17237,10 +17203,43 @@ std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
 		case ELE_DARK:		ele_name = "Shadow Element"; break;
 		case ELE_GHOST:		ele_name = "Ghost Element"; break;
 		case ELE_UNDEAD:	ele_name = "Undead Element"; break;
+		default:
+			ShowWarning( "clif_quest_string: Unsupported element %d - using empty string...\n", objective->element );
+			// Fallthrough
 		case ELE_ALL:		ele_name = ""; break;
-		default:			ele_name = "unknown"; break;
 	}
-	return (race_name + (race_name.size() && size_name.size() ? ", " + size_name : size_name) + ((race_name.size() || size_name.size()) && ele_name.size() ? ", " + ele_name : ele_name));
+
+	std::string str;
+
+	if( !objective->map_name.empty() ){
+		str += objective->map_name;
+	}
+
+	if( !race_name.empty() ){
+		if( !str.empty() ){
+			str += ", ";
+		}
+
+		str += race_name;
+	}
+
+	if( !size_name.empty() ){
+		if( !str.empty() ){
+			str += ", ";
+		}
+
+		str += size_name;
+	}
+
+	if( !ele_name.empty() ){
+		if( !str.empty() ){
+			str += ", ";
+		}
+
+		str += ele_name;
+	}
+	
+	return str;
 }
 
 /// Sends list of all quest states
@@ -17315,9 +17314,9 @@ void clif_quest_send_list(struct map_session_data *sd)
 				WFIFOW(fd, offset) = qi->objectives[j]->count;
 				offset += 2;
 				if (mob && qi->objectives[j]->mob_id > 0)
-					safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
+					safestrncpy(WFIFOCP(fd,offset), mob->jname, NAME_LENGTH);
 				else
-					safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element).c_str(), NAME_LENGTH);
+					safestrncpy(WFIFOCP(fd,offset), clif_quest_string(qi->objectives[j]).c_str(), NAME_LENGTH);
 				offset += NAME_LENGTH;
 			}
 		}
@@ -17375,7 +17374,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 			if (mob && qi->objectives[j]->mob_id > 0)
 				safestrncpy(WFIFOCP(fd, i*104+28+j*30), mob->jname, NAME_LENGTH);
 			else
-				safestrncpy(WFIFOCP(fd, i*104+28+j*30), clif_mobtype_name(qi->objectives[j]->race, qi->objectives[j]->size, qi->objectives[j]->element).c_str(), NAME_LENGTH);
+				safestrncpy(WFIFOCP(fd, i*104+28+j*30), clif_quest_string(qi->objectives[j]).c_str(), NAME_LENGTH);
 		}
 	}
 
@@ -17433,9 +17432,9 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 		WFIFOW(fd, offset) = qd->count[i];
 		offset += 2;
 		if (mob && qi->objectives[i]->mob_id > 0)
-			safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd,offset), mob->jname, NAME_LENGTH);
 		else
-			safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element).c_str(), NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd,offset), clif_quest_string(qi->objectives[i]).c_str(), NAME_LENGTH);
 		offset += NAME_LENGTH;
 	}
 
@@ -19111,7 +19110,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 	nullpo_ret(sd);
 	fd = sd->fd;
 
-	if( !fd ) 
+	if( !session_isActive(fd) ) 
 		return 0;
 
 	if( sd->menuskill_id == SC_AUTOSHADOWSPELL )

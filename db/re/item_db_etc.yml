@@ -10646,6 +10646,21 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMatk,25;
+  - Id: 4558
+    AegisName: Woodie_Card
+    Name: Woodie Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      /* bonus bAllStats,2; only during event period */
+      bonus2 bSubEle,Ele_Earth,20;
+      bonus3 bAutoSpellWhenHit,"PR_KYRIE",max(2,getskilllv("PR_KYRIE")),20;
   - Id: 4559
     AegisName: M_Morocc_Card
     Name: Evil Morocc Card

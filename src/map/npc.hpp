@@ -51,6 +51,18 @@ struct s_npc_buy_list {
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris
 
+struct s_questinfo {
+	e_questinfo_types icon;
+	e_questinfo_markcolor color;
+	struct script_code* condition;
+
+	~s_questinfo(){
+		if( this->condition != nullptr ){
+			script_free_code( this->condition );
+		}
+	}
+};
+
 struct npc_data {
 	struct block_list bl;
 	struct unit_data ud; //Because they need to be able to move....
@@ -111,6 +123,8 @@ struct npc_data {
 
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+
+	std::vector<std::shared_ptr<s_questinfo>> qi_data;
 
 	struct {
 		t_tick timeout;

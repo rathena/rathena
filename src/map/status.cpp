@@ -8611,38 +8611,12 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	if (src == NULL)
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
-	// Status that are blocked by Golden Thief Bug card or Wand of Hermod
+	// Skills (magic type) that are blocked by Golden Thief Bug card or Wand of Hermod
 	if (status_isimmune(bl)) {
-		switch (type) {
-			case SC_DECREASEAGI:
-			case SC_SILENCE:
-			case SC_COMA:
-			case SC_INCREASEAGI:
-			case SC_BLESSING:
-			case SC_SLOWPOISON:
-			case SC_IMPOSITIO:
-			case SC_AETERNA:
-			case SC_SUFFRAGIUM:
-			case SC_BENEDICTIO:
-			case SC_PROVIDENCE:
-			case SC_KYRIE:
-			case SC_ASSUMPTIO:
-			case SC_ANGELUS:
-			case SC_MAGNIFICAT:
-			case SC_GLORIA:
-			case SC_WINDWALK:
-			case SC_MAGICROD:
-			case SC_HALLUCINATION:
-			case SC_STONE:
-			case SC_QUAGMIRE:
-			case SC_SUITON:
-			case SC_SWINGDANCE:
-			case SC_FIRE_INSIGNIA:
-			case SC_WATER_INSIGNIA:
-			case SC_WIND_INSIGNIA:
-			case SC_EARTH_INSIGNIA:
-				return 0;
-		}
+		std::shared_ptr<s_skill_db> skill = skill_db.find(battle_getcurrentskill(src));
+
+		if (skill != nullptr && skill->skill_type == BF_MAGIC)
+			return 0;
 	}
 
 	rate = cap_value(rate, 0, 10000);

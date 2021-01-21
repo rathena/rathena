@@ -1690,9 +1690,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
 
-	sd->qi_display = nullptr;
-	sd->qi_count = 0;
-
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != SETPOS_OK) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
@@ -13320,33 +13317,6 @@ void pc_validate_skill(struct map_session_data *sd) {
 }
 
 /**
- * Toggle to remember if the questinfo is displayed yet or not.
- * @param qi_display Display flag
- * @param show If show is true and qi_display is 0, set qi_display to 1 and show the event bubble.
- *             If show is false and qi_display is 1, set qi_display to 0 and hide the event bubble.
- **/
-static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct s_questinfo *qi, bool show) {
-	if (show) {
-		// Check if need to be displayed
-		if ((*qi_display) != 1) {
-			(*qi_display) = 1;
-			clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
-		}
-	}
-	else {
-		// Check if need to be hide
-		if ((*qi_display) != 0) {
-			(*qi_display) = 0;
-#if PACKETVER >= 20120410
-			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_NONE, QMARK_NONE);
-#else
-			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_QUEST, QMARK_NONE);
-#endif
-		}
-	}
-}
-
-/**
  * Show available NPC Quest / Event Icon Check [Kisuka]
  * @param sd Player
  **/
@@ -13360,28 +13330,45 @@ void pc_show_questinfo(struct map_session_data *sd) {
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 	nullpo_retv(mapdata);
 
-	if (mapdata->qi_data.empty())
+	if (mapdata->qi_npc.empty())
 		return;
-	if (mapdata->qi_data.size() != sd->qi_count)
+	if (mapdata->qi_npc.size() != sd->qi_display.size())
 		return; // init was not called yet
 
-	struct s_questinfo *qi = nullptr;
-	bool show;
+	for (int i = 0; i < mapdata->qi_npc.size(); i++) {
+		struct npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
 
-	for (int i = 0; i < mapdata->qi_data.size(); i++) {
-		qi = &mapdata->qi_data[i];
- 		if (!qi)
- 			continue;
+		if (!nd || nd->qi_data.empty())
+			continue;
 
-		if (!qi->condition)
-			show = true;
-		else {
-			if (achievement_check_condition(qi->condition, sd))
+		bool show = false;
+
+		for (auto &qi : nd->qi_data) {
+			if (!qi->condition || achievement_check_condition(qi->condition, sd)) {
 				show = true;
-			else
-				show = false;
+				// Check if need to be displayed
+				if (!sd->qi_display[i].is_active || qi->icon != sd->qi_display[i].icon || qi->color != sd->qi_display[i].color) {
+					sd->qi_display[i].is_active = true;
+					sd->qi_display[i].icon = qi->icon;
+					sd->qi_display[i].color = qi->color;
+					clif_quest_show_event(sd, &nd->bl, qi->icon, qi->color);
+				}
+				break;
+			}
 		}
-		pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, show);
+		if (show == false) {
+			// Check if need to be hide
+			if (sd->qi_display[i].is_active) {
+				sd->qi_display[i].is_active = false;
+				sd->qi_display[i].icon = QTYPE_NONE;
+				sd->qi_display[i].color = QMARK_NONE;
+#if PACKETVER >= 20120410
+				clif_quest_show_event(sd, &nd->bl, QTYPE_NONE, QMARK_NONE);
+#else
+				clif_quest_show_event(sd, &nd->bl, QTYPE_QUEST, QMARK_NONE);
+#endif
+			}
+		}
 	}
 #endif
 }
@@ -13394,11 +13381,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 #if PACKETVER >= 20090218
 	nullpo_retv(sd);
 
-	if (sd->qi_display) {
-		aFree(sd->qi_display);
-		sd->qi_display = nullptr;
-	}
-	sd->qi_count = 0;
+	sd->qi_display.clear();
 
 	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
 		return;
@@ -13406,10 +13389,14 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 	nullpo_retv(mapdata);
 
-	if (mapdata->qi_data.empty())
+	if (mapdata->qi_npc.empty())
 		return;
 
-	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_data.size()));
+	sd->qi_display.reserve( mapdata->qi_npc.size() );
+
+	for( int i = 0; i < mapdata->qi_npc.size(); i++ ){
+		sd->qi_display.push_back( s_qi_display() );
+	}
 #endif
 }
 
