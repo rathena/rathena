@@ -216,7 +216,9 @@ struct s_mob_drop {
 
 struct s_mob_db {
 	std::string sprite, name, jname;
-	uint32 base_exp, job_exp, mexp;
+	t_exp base_exp;
+	t_exp job_exp;
+	t_exp mexp;
 	uint16 range2, range3;
 	std::vector<e_race2> race2;	// celest
 	uint16 lv;

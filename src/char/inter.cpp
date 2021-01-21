@@ -1064,7 +1064,7 @@ int mapif_account_reg_reply(int fd, uint32 account_id, uint32 char_id, int type)
 //Request to kick char from a certain map server. [Skotlex]
 int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason)
 {
-	if (fd >= 0)
+	if (session_isValid(fd))
 	{
 		WFIFOHEAD(fd,7);
 		WFIFOW(fd,0) = 0x2b1f;

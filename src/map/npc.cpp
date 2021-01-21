@@ -581,6 +581,7 @@ int npc_event_doall_path( const char* event_name, const char* path ){
 
 	ShowStatus( "Event '" CL_WHITE "%s" CL_RESET "' executed with '" CL_WHITE "%d" CL_RESET "' NPCs.\n", event_name, count );
 
+	mapit_free(iter);
 	return count;
 }
 
@@ -2481,6 +2482,8 @@ int npc_unload(struct npc_data* nd, bool single) {
 			nd->sc_display = NULL;
 		}
 	}
+
+	nd->qi_data.clear();
 
 	script_stop_sleeptimers(nd->bl.id);
 	aFree(nd);

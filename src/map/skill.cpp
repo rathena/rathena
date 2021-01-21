@@ -3292,7 +3292,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	struct status_change *sc, *tsc;
 	struct map_session_data *sd, *tsd;
 	int64 damage;
-	int8 rmdamage = 0;//magic reflected
+	bool rmdamage = false;//magic reflected
 	int type;
 	enum e_damage_type dmg_type;
 	bool shadow_flag = false;
@@ -3371,7 +3371,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		if( (dmg.damage || dmg.damage2) && (type = skill_magic_reflect(src, bl, src==dsrc)) )
 		{	//Magic reflection, switch caster/target
 			struct block_list *tbl = bl;
-			rmdamage = 1;
+			rmdamage = true;
 			bl = src;
 			src = tbl;
 			dsrc = tbl;
@@ -3428,6 +3428,12 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 						status_change_end(bl, SC_ENERGYCOAT, INVALID_TIMER);
 					//Reduction: 6% + 6% every 20%
 					dmg.damage -= dmg.damage * (6 * (1+per)) / 100;
+				}
+
+				if (sd && sd->bonus.reduce_damage_return != 0) {
+					dmg.damage -= dmg.damage * sd->bonus.reduce_damage_return / 100;
+					if (dmg.damage < 1)
+						dmg.damage = 1;
 				}
 			}
 #endif
@@ -3819,7 +3825,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	map_freeblock_unlock();
 
-	if ((flag&0x1000000) && rmdamage == 1)
+	if ((flag&0x1000000) && rmdamage)
 		return 0; //Should return 0 when damage was reflected
 
 	return damage;
@@ -5272,7 +5278,19 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
+#ifdef RENEWAL
 	case KN_BOWLINGBASH:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, (skill_area_temp[0]) > 0 ? SD_ANIMATION | skill_area_temp[0] : skill_area_temp[0]);
+			skill_blown(src, bl, skill_get_blewcount(skill_id, skill_lv), -1, BLOWN_NONE);
+		} else {
+			skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		}
+		break;
+#else
+	case KN_BOWLINGBASH:
+#endif
 	case MS_BOWLINGBASH:
 		{
 			int min_x,max_x,min_y,max_y,i,c,dir,tx,ty;
@@ -5344,10 +5362,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 				}
 			}
-#ifndef  RENEWAL
 			// Original hit or chain hit depending on flag
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION:0);
-#endif
 		}
 		break;
 
@@ -18066,7 +18082,6 @@ int skill_graffitiremover(struct block_list *bl, va_list ap)
 	int remove = va_arg(ap, int);
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
 
 	if (bl->type != BL_SKILL || (unit = (struct skill_unit *)bl) == NULL)
 		return 0;
@@ -18100,7 +18115,6 @@ int skill_greed(struct block_list *bl, va_list ap)
 int skill_detonator(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
-	nullpo_ret(ap);
 
 	if (bl->type != BL_SKILL)
 		return 0;
@@ -18188,7 +18202,6 @@ static int skill_bind_trap(struct block_list *bl, va_list ap) {
 	struct block_list *src = NULL;
 
 	nullpo_ret(bl);
-	nullpo_ret(ap);
 
 	src = va_arg(ap,struct block_list *);
 

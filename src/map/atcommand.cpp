@@ -4763,7 +4763,7 @@ ACMD_FUNC(loadnpc)
 
 	npc_read_event_script();
 
-	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was reloaded.\n", message );
+	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was loaded.\n", message );
 	npc_event_doall_path( script_config.init_event_name, message );
 
 	clif_displaymessage(fd, msg_txt(sd,262)); // Script loaded.
@@ -7388,13 +7388,13 @@ ACMD_FUNC(mobinfo)
 		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
-		unsigned int j,base_exp,job_exp;
 		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_ids[k]);
-		if(nullptr == mob) 
+
+		if (nullptr == mob) 
 			continue;
 
-		base_exp = mob->base_exp;
-		job_exp = mob->job_exp;
+		t_exp base_exp = mob->base_exp;
+		t_exp job_exp = mob->job_exp;
 
 		if (pc_isvip(sd)) { // Display EXP rate increase for VIP
 			base_exp += (base_exp * battle_config.vip_base_exp_increase) / 100;
@@ -7414,7 +7414,7 @@ ACMD_FUNC(mobinfo)
 		else
 			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->vd.class_); // Monster: '%s'/'%s'/'%s' (%d)
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%u  Job EXP:%u  HIT:%d  FLEE:%d
+		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%llu  Job EXP:%llu  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1243), //  DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d
 			mob->status.def, mob->status.mdef,mob->status.str, mob->status.agi,
@@ -7429,7 +7429,7 @@ ACMD_FUNC(mobinfo)
 		// drops
 		clif_displaymessage(fd, msg_txt(sd,1245)); //  Drops:
 		strcpy(atcmd_output, " ");
-		j = 0;
+		unsigned int j = 0;
 #ifdef RENEWAL_DROP
 		int penalty = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
 #endif

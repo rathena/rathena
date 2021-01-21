@@ -150,6 +150,9 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAIL_MAX_ITEM 5
 #define MAIL_PAGE_SIZE 7
 #endif
+#ifndef MAIL_ITERATION_SIZE
+	#define MAIL_ITERATION_SIZE 100
+#endif
 
 //Mercenary System
 #define MC_SKILLBASE 8201
