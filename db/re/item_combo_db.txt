@@ -2218,7 +2218,7 @@
 28616:15250:19310:20906:22173:28566,{ bonus bMatk,3*(min(BaseLevel,150)/10); bonus2 bMagicAtkEle,Ele_Holy,5; bonus bVariableCastrate,-10; }
 28740:15250:19310:20906:22173:28566,{ bonus bMatk,3*(min(BaseLevel,150)/10); bonus bAspdRate,5; bonus bAspd,1; }
 2191:2782,{ bonus bUseSPrate,-5; }
-15249:4243,{ bonus bDef,250; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Dark,-5; skill "AL_TELEPORT",1; bonus4 bAutoSpellWhenHit,"AL_TELEPORT",1,-500,0; if (.@r >= 7) { bonus2 bResEff,Eff_Freeze,10000; if (.@r >= 9) { bonus bNoKnockback; } } }
+15249:4243,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus bDef,250; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Dark,-5; skill "AL_TELEPORT",1; bonus4 bAutoSpellWhenHit,"AL_TELEPORT",1,-500,0; if (.@r >= 7) { bonus2 bResEff,Eff_Freeze,10000; if (.@r >= 9) { bonus bNoKnockback; } } }
 18720:1621,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 20*.@r; if(.@r>=10){ .@matk += 50; bonus bDelayrate,-10; } bonus bMatk,.@matk; }
 18720:1622,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 20*.@r; if(.@r>=10){ .@matk += 50; bonus bDelayrate,-10; } bonus bMatk,.@matk; }
 18720:1626,{ .@r = getequiprefinerycnt(EQI_HAND_R); .@matk = 15*.@r; if(.@r>=10){ .@matk += 50; bonus bVariableCastrate,-10; } bonus bMatk,.@matk; }
