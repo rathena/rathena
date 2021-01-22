@@ -2195,7 +2195,6 @@ Body:
     Buy: 100
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -41948,7 +41947,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -44328,7 +44326,6 @@ Body:
     Weight: 20
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -44765,22 +44762,23 @@ Body:
   - Id: 22567
     AegisName: Squad_Prize
     Name: Expedition Award Box
-    Type: Healing
+    Type: Usable
     Buy: 20
     Weight: 100
     Trade:
       Override: 100
       NoMail: true
       NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 22568
     AegisName: Nyd_Summon_Scroll
     Name: Nidhoggur Summon Scroll
-    Type: Healing
+    Type: Usable
     Buy: 20
     Weight: 100
-    Gender: Female
-    Locations:
-      Right_Hand: true
+    Script: |
+      /* TODO */
   - Id: 22569
     AegisName: Gift_New_start
     Name: Gift New start
@@ -46049,7 +46047,6 @@ Body:
     Weight: 100
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46111,7 +46108,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46140,7 +46136,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Script: |
       /*No Info*/
   - Id: 22828
@@ -46241,7 +46236,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true

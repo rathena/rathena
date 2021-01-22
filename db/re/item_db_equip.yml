@@ -28016,7 +28016,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Female
     Locations:
       Shoes: true
     Refineable: true
@@ -49213,7 +49212,6 @@ Body:
     Buy: 800
     Weight: 100
     Defense: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
