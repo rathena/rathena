@@ -457,6 +457,7 @@ Header:
 #    Jobs:
 #      All: true
 #      Novice: false
+#    Gender: Female
 #    Locations:
 #      Armor: true
 #    Refineable: true
