@@ -18325,6 +18325,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+    Gender: Male
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -19444,6 +19445,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+    Gender: Female
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -28014,7 +28016,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Female
     Locations:
       Shoes: true
     Refineable: true
@@ -49211,7 +49212,6 @@ Body:
     Buy: 800
     Weight: 100
     Defense: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -51996,6 +51996,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+    Gender: Female
     Locations:
       Head_Top: true
     EquipLevelMin: 100
@@ -119564,7 +119565,7 @@ Body:
     AegisName: Black_Circle
     Name: Black Circle
     Type: Weapon
-    SubType: Whip
+    SubType: Musical
     Weight: 1200
     Attack: 100
     MagicAttack: 190
