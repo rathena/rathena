@@ -26731,7 +26731,7 @@ Body:
       Splash: true
     Range: 9
     Hit: Single
-    HitCount: 3
+    HitCount: -3
     Element: Wind
     SplashArea:
       - Level: 1
@@ -26758,7 +26758,7 @@ Body:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime: # !TODO: Confirm all times
+    CastTime: # !TODO: Confirm cast and fixed cast
       - Level: 1
         Time: 1800
       - Level: 2
@@ -26801,7 +26801,7 @@ Body:
         Time: 3400
       - Level: 10
         Time: 3600
-    Cooldown: 2000
+    Cooldown: 5000
     FixedCastTime:
       - Level: 1
         Time: 2000
