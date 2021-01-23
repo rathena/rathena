@@ -427,8 +427,6 @@ struct Battle_Config
 	int display_hallucination;	// [Skotlex]
 	int use_statpoint_table;	// [Skotlex]
 
-	int ignore_items_gender; //[Lupus]
-
 	int berserk_cancels_buffs; // [Aru]
 	int debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
