@@ -47356,6 +47356,82 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23250;*/
+  - Id: 23251
+    AegisName: Rose_Bundle_A
+    Name: Rose Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2192,1);
+      getitem(2743,1);
+  - Id: 23252
+    AegisName: Orleans_Bundle_A
+    Name: Orleans's Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2365,1);
+      getitem(2881,1);
+  - Id: 23253
+    AegisName: Black_Shiba_Bundle_A
+    Name: Black Shiba Inu Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2959,1);
+      getitem(18756,1);
+  - Id: 23255
+    AegisName: Kardui_Bundle_A
+    Name: Kardui Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(1649,1);
+      getitem(15169,1);
   - Id: 23256
     AegisName: Elixir_Bandages
     Name: Elixir Bandages
@@ -47363,6 +47439,25 @@ Body:
     Buy: 10
     Script: |
       pet 1041;
+  - Id: 23266
+    AegisName: Etran_Bundle_A
+    Name: Etran Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2371,1);
+      getitem(20797,1);
   - Id: 23277
     AegisName: Mado_Box
     Name: Emergency Magic Gear
@@ -47432,6 +47527,25 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23291;*/
+  - Id: 23294
+    AegisName: Pororoca_Shoes_Bundle_A
+    Name: Pororoca Shoes Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+        Container: true
+    Trade:
+        Override: 100
+        NoDrop: true
+        NoTrade: true
+        NoSell: true
+        NoCart: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+    Script: |
+        getitem(1646,1);
+        getitem(22104,1);
   - Id: 23299
     AegisName: Enchant_Stone_Box12
     Name: Costume Enchant Stone Box 12
