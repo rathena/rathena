@@ -2489,8 +2489,14 @@ struct PACKET_CZ_REQ_ITEMREPAIR {
 #else
 	uint16 itemId;
 #endif
+#if !( PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724 )
 	uint8 refine;
+#endif
 	struct EQUIPSLOTINFO slot;
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	uint8 refine;
+	uint8 enchantgrade;
+#endif
 } __attribute__((packed));
 
 struct PACKET_CZ_REQ_MAKINGITEM {

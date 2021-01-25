@@ -32607,7 +32607,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32622,7 +32621,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32637,7 +32635,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32653,7 +32650,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32669,7 +32665,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32708,7 +32703,6 @@ Body:
     Attack: 30
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
   - Id: 13211
@@ -32721,7 +32715,6 @@ Body:
     Attack: 30
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
   - Id: 13212
@@ -32734,7 +32727,6 @@ Body:
     Attack: 30
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
   - Id: 13213
@@ -32747,7 +32739,6 @@ Body:
     Attack: 30
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
   - Id: 13214
@@ -32760,7 +32751,6 @@ Body:
     Attack: 30
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
   - Id: 13215
@@ -32901,7 +32891,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32916,7 +32905,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32931,7 +32919,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32946,7 +32933,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
@@ -32961,7 +32947,6 @@ Body:
     Attack: 50
     Classes:
       All: false
-    Gender: Female
     Locations:
       Ammo: true
     Script: |
