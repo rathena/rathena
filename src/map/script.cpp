@@ -16855,7 +16855,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	}
 
 	// update npc
-	if( newname )
+	if( newname && nd->bl.m != -1 )
 		npc_setdisplayname(nd, newname);
 
 	if( size != -1 && size != (int)nd->size )
