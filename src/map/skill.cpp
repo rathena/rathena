@@ -3432,8 +3432,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 				if (dmg.damage > 0 && tsd && tsd->bonus.reduce_damage_return != 0) {
 					dmg.damage -= dmg.damage * tsd->bonus.reduce_damage_return / 100;
-					if (dmg.damage < 1)
-						dmg.damage = 1;
+					dmg.damage = i64max(dmg.damage, 1);
 				}
 			}
 #endif
