@@ -3430,8 +3430,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					dmg.damage -= dmg.damage * (6 * (1+per)) / 100;
 				}
 
-				if (sd && sd->bonus.reduce_damage_return != 0) {
-					dmg.damage -= dmg.damage * sd->bonus.reduce_damage_return / 100;
+				if (dmg.damage > 0 && tsd && tsd->bonus.reduce_damage_return != 0) {
+					dmg.damage -= dmg.damage * tsd->bonus.reduce_damage_return / 100;
 					if (dmg.damage < 1)
 						dmg.damage = 1;
 				}
