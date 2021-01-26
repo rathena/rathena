@@ -7374,10 +7374,12 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 		}
 	}
 
-	if (sd && sd->bonus.reduce_damage_return != 0) {
-		rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
-		if (rdamage < 1)
-			rdamage = 1;
+	if (rdamage > 0) {
+		map_session_data* ssd = BL_CAST(BL_PC, src);
+		if (ssd && ssd->bonus.reduce_damage_return != 0) {
+			rdamage -= rdamage * ssd->bonus.reduce_damage_return / 100;
+			rdamage = i64max(rdamage, 1);
+		}
 	}
 
 	if (ssc) {
@@ -9020,6 +9022,7 @@ static const struct _battle_data {
 	{ "homunculus_starving_rate",           &battle_config.homunculus_starving_rate,        10,     0,      100,            },
 	{ "homunculus_starving_delay",          &battle_config.homunculus_starving_delay,       20000,  0,      INT_MAX,        },
 	{ "drop_connection_on_quit",            &battle_config.drop_connection_on_quit,         0,      0,      1,              },
+	{ "mob_spawn_variance",                 &battle_config.mob_spawn_variance,              1,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
 };
