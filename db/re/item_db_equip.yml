@@ -127235,7 +127235,7 @@ Body:
       bonus bMatkRate,5;
       bonus2 bAddClass,Class_All,5;
   - Id: 500000
-    AegisName:  IDTest_weapon
+    AegisName: IDTest_weapon
     Name: IDTest weapon
     Type: Weapon
     SubType: 1hSword
