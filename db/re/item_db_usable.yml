@@ -2212,7 +2212,7 @@ Body:
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box17);*/
+      /*getgroupitem(IG_Enchant_Stone_Box17);*/
   - Id: 9523
     AegisName: Metal_Smelting_Ticket
     Name: Metal Refining Ticket
@@ -46524,7 +46524,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box5);
+      getgroupitem(IG_Enchant_Stone_Box5);
   - Id: 22869
     AegisName: Lucky_Roulette_Tickets
     Name: Lucky Roulette Ticket
@@ -46828,7 +46828,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box6);
+      getgroupitem(IG_Enchant_Stone_Box6);
   - Id: 22953
     AegisName: Enchant_Stone_Box7
     Name: Costume Enchant Stone Box 7
@@ -46837,7 +46837,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box7);
+      getgroupitem(IG_Enchant_Stone_Box7);
   - Id: 22979
     AegisName: C_Battle_Gum_2
     Name: "[Sale] Battle Manual and Bubble Gum"
@@ -46878,7 +46878,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box8);
+      getgroupitem(IG_Enchant_Stone_Box8);
   - Id: 23012
     AegisName: S_Small_Mana_Potion
     Name: "[Sale] Small Mana Potion"
@@ -47060,7 +47060,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box10);
+      getgroupitem(IG_Enchant_Stone_Box10);
   - Id: 23087
     AegisName: Small_Leather_Bag
     Name: Small Leather Bag
@@ -47171,7 +47171,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box11);
+      getgroupitem(IG_Enchant_Stone_Box11);
   - Id: 23175
     AegisName: Uniform_Repair_Kit
     Name: Uniform Repair Kit
@@ -47554,7 +47554,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box12);
+      getgroupitem(IG_Enchant_Stone_Box12);
   - Id: 23307
     AegisName: S_Shining_Def_Scroll
     Name: "[Sale] Shining Defense Scroll"
@@ -47631,7 +47631,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box13);
+      getgroupitem(IG_Enchant_Stone_Box13);
   - Id: 23545
     AegisName: Silver_Statue
     Name: Silver Statue
@@ -47661,7 +47661,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box14);
+      getgroupitem(IG_Enchant_Stone_Box14);
   - Id: 23665
     AegisName: PhysicalMagical_Mix
     Name: PhysicalMagical Mix
@@ -47740,7 +47740,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box15);
+      getgroupitem(IG_Enchant_Stone_Box15);
   - Id: 23706
     AegisName: Charleston_Parts_W
     Name: Charleston Upgrade Parts (Physical)
@@ -47768,7 +47768,7 @@ Body:
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box16);*/
+      /*getgroupitem(IG_Enchant_Stone_Box16);*/
   - Id: 23776
     AegisName: EP17_1_SPC05
     Name: Weapon Modifier (Physical)
@@ -48403,7 +48403,7 @@ Body:
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box18);*/
+      /*getgroupitem(IG_Enchant_Stone_Box18);*/
   - Id: 100023
     AegisName: Ancient_Hero_Bravery
     Name: Ancient Hero Bravery
@@ -48438,7 +48438,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box19);*/
+      /*getgroupitem(IG_Enchant_Stone_Box19);*/
   - Id: 100053
     AegisName: Piercing_Mix
     Name: Piercing Shadow SynthesisBox
@@ -48735,7 +48735,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box20);*/
+      /*getgroupitem(IG_Enchant_Stone_Box20);*/
   - Id: 100231
     AegisName: Ref_T_Potion
     Name: Golden X
@@ -48768,7 +48768,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box21);*/
+      /*getgroupitem(IG_Enchant_Stone_Box21);*/
   - Id: 100402
     AegisName: Thousand_Sun_Cube
     Name: Thousand Sun Modification Cube
