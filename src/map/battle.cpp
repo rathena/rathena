@@ -2101,14 +2101,36 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 	uint16 atkmin = (type == EQI_HAND_L)?status->watk2:status->watk;
 	uint16 atkmax = atkmin;
 	int64 damage = atkmin;
-	uint16 weapon_perfection = 0;
+	bool weapon_perfection = false;
 	struct status_change *sc = status_get_sc(src);
 
-	if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]]) {
-		int variance =   wa->atk * (sd->inventory_data[sd->equip_index[type]]->wlv*5)/100;
+	if (sd && sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]]) {
+		short base_stat;
 
-		atkmin = max(0, (int)(atkmin - variance));
-		atkmax = min(UINT16_MAX, (int)(atkmax + variance));
+		switch (sd->status.weapon) {
+			case W_BOW:
+			case W_MUSICAL:
+			case W_WHIP:
+			case W_REVOLVER:
+			case W_RIFLE:
+			case W_GATLING:
+			case W_SHOTGUN:
+			case W_GRENADE:
+				if (pc_checkskill(sd, SU_SOULATTACK) > 0)
+					base_stat = status->str;
+				else
+					base_stat = status->dex;
+				break;
+			default:
+				base_stat = status->str;
+				break;
+		}
+
+		float variance = 5.0f * wa->atk * wa->wlv / 100.0f;
+		float base_stat_bonus = wa->atk * base_stat / 200.0f;
+
+		atkmin = max(0, (int)(atkmin - variance + base_stat_bonus));
+		atkmax = min(UINT16_MAX, (int)(atkmax + variance + base_stat_bonus));
 
 		if (sc && sc->data[SC_MAXIMIZEPOWER])
 			damage = atkmax;
@@ -2117,7 +2139,7 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 	}
 
 	if (sc && sc->data[SC_WEAPONPERFECTION])
-		weapon_perfection = 1;
+		weapon_perfection = true;
 
 	battle_add_weapon_damage(sd, &damage, type);
 
@@ -5617,17 +5639,24 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				wd.amotion = sstatus->amotion;
 				//Fall through
 			case KN_SPEARSTAB:
+#ifndef RENEWAL
 			case KN_BOWLINGBASH:
-#ifdef RENEWAL
-				if (skill_id == KN_BOWLINGBASH && sd && sd->status.weapon == W_2HSWORD)
-					wd.div_ = cap_value(wd.miscflag, 2, 4);
 #endif
 			case MS_BOWLINGBASH:
 			case MO_BALKYOUNG:
 			case TK_TURNKICK:
 				wd.blewcount = 0;
 				break;
-
+#ifdef RENEWAL
+			case KN_BOWLINGBASH:
+				if (sd && sd->status.weapon == W_2HSWORD) {
+					if (wd.miscflag >= 2 && wd.miscflag <= 3)
+						wd.div_ = 3;
+					else if (wd.miscflag >= 4)
+						wd.div_ = 4;
+				}
+				break;
+#endif
 			case KN_AUTOCOUNTER:
 				wd.flag = (wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
@@ -7240,14 +7269,12 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	if (ssc) {
 		if (ssc->data[SC_HELLS_PLANT])
 			return 0;
-		if (ssc->data[SC_REF_T_POTION])
-			return 1; // Returns 1 damage
 	}
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
-			rdamage = i64max(rdamage,1);
+			rdamage = i64max(rdamage, 1);
 		} else if( status_reflect && sc && sc->count ) {
 			if( sc->data[SC_REFLECTSHIELD] ) {
 				struct status_change_entry *sce_d;
@@ -7268,16 +7295,14 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 					rdamage = 0;
 				else {
 					rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
-					if (rdamage < 1)
-						rdamage = 1;
+					rdamage = i64max(rdamage, 1);
 				}
 			}
 
 			if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src,MD_STATUS_IMMUNE)) {
 				if (distance_bl(src,bl) <= 0 || !map_check_dir(map_calc_dir(bl,src->x,src->y), unit_getdir(bl))) {
-					int64 rd1 = 0;
+					int64 rd1 = min(damage, status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 
-					rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 					*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
 					clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SINGLE);
 					skill_blown(bl, src, skill_get_blewcount(RK_DEATHBOUND, 1), unit_getdir(src), BLOWN_NONE);
@@ -7289,14 +7314,16 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	} else {
 		if (!status_reflect && sd && sd->bonus.long_weapon_damage_return) {
 			rdamage += damage * sd->bonus.long_weapon_damage_return / 100;
-			if (rdamage < 1) rdamage = 1;
+			rdamage = i64max(rdamage, 1);
 		}
 	}
 
-	if (sd && sd->bonus.reduce_damage_return != 0) {
-		rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
-		if (rdamage < 1)
-			rdamage = 1;
+	if (rdamage > 0) {
+		map_session_data* ssd = BL_CAST(BL_PC, src);
+		if (ssd && ssd->bonus.reduce_damage_return != 0) {
+			rdamage -= rdamage * ssd->bonus.reduce_damage_return / 100;
+			rdamage = i64max(rdamage, 1);
+		}
 	}
 
 	if (ssc) {
@@ -7307,6 +7334,9 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 		}
 		if (ssc->data[SC_VENOMBLEED] && ssc->data[SC_VENOMBLEED]->val3 == 0)
 			rdamage -= damage * ssc->data[SC_VENOMBLEED]->val2 / 100;
+
+		if (rdamage > 0 && ssc->data[SC_REF_T_POTION])
+			return 1; // Returns 1 damage
 	}
 
 	if (sc) {
@@ -8686,7 +8716,6 @@ static const struct _battle_data {
 	{ "display_version",                    &battle_config.display_version,                 1,      0,      1,              },
 	{ "display_hallucination",              &battle_config.display_hallucination,           1,      0,      1,              },
 	{ "use_statpoint_table",                &battle_config.use_statpoint_table,             1,      0,      1,              },
-	{ "ignore_items_gender",                &battle_config.ignore_items_gender,             1,      0,      1,              },
 	{ "berserk_cancels_buffs",              &battle_config.berserk_cancels_buffs,           0,      0,      1,              },
 	{ "debuff_on_logout",                   &battle_config.debuff_on_logout,                1|2,    0,      1|2,            },
 	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0xFFF,          },
@@ -8936,6 +8965,7 @@ static const struct _battle_data {
 	{ "homunculus_starving_rate",           &battle_config.homunculus_starving_rate,        10,     0,      100,            },
 	{ "homunculus_starving_delay",          &battle_config.homunculus_starving_delay,       20000,  0,      INT_MAX,        },
 	{ "drop_connection_on_quit",            &battle_config.drop_connection_on_quit,         0,      0,      1,              },
+	{ "mob_spawn_variance",                 &battle_config.mob_spawn_variance,              1,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
 };

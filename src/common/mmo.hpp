@@ -150,6 +150,9 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAIL_MAX_ITEM 5
 #define MAIL_PAGE_SIZE 7
 #endif
+#ifndef MAIL_ITERATION_SIZE
+	#define MAIL_ITERATION_SIZE 100
+#endif
 
 //Mercenary System
 #define MC_SKILLBASE 8201
@@ -435,7 +438,7 @@ struct s_homunculus {	//[orn]
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
 	short skillpts;
 	short level;
-	unsigned int exp;
+	t_exp exp;
 	short rename_flag;
 	short vaporize; //albator
 	int str;

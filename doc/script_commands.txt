@@ -9260,7 +9260,7 @@ Examples:
 
 *questinfo <Icon>{,<Map Mark Color>{,"<condition>"}};
 
-This command should only be used in an OnInit label.
+This command should only be used in OnInit/OnInstanceInit labels.
 Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint".
 When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
 If questinfo is present, it will check if the player fulfill the condition.

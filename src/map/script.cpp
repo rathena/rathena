@@ -11466,7 +11466,6 @@ BUILDIN_FUNC(getunits)
 	int size = 0;
 	int32 idx, id;
 	int16 m = -1, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
-	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 
 	if (!strcmp(command, "getmapunits"))
 	{
@@ -11522,6 +11521,7 @@ BUILDIN_FUNC(getunits)
 		}
 	}
 
+	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
 	{
 		if (m == -1 || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
@@ -12644,6 +12644,7 @@ BUILDIN_FUNC(addrid)
 		case 2:
 			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
+				mapit_free(iter);
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
@@ -12655,6 +12656,7 @@ BUILDIN_FUNC(addrid)
 		case 3:
 			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
+				mapit_free(iter);
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
@@ -12671,15 +12673,18 @@ BUILDIN_FUNC(addrid)
 		case 5:
 			if (script_getstr(st, 4) == NULL) {
 				script_pushint(st, 0);
+				mapit_free(iter);
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (map_mapname2mapid(script_getstr(st, 4)) < 0) {
 				script_pushint(st, 0);
+				mapit_free(iter);
 				return SCRIPT_CMD_FAILURE;
 			}
 			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
 			break;
 		default:
+			mapit_free(iter);
 			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
 				script_pushint(st,0);
 				return SCRIPT_CMD_SUCCESS;
@@ -17227,8 +17232,17 @@ BUILDIN_FUNC(npcshopitem)
 
 	// generate new shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, amount);
+	nd->u.shop.count = 0;
 	for (n = 0, i = 3; n < amount; n++, i+=offs) {
-		nd->u.shop.shop_item[n].nameid = script_getnum(st,i);
+		t_itemid nameid = script_getnum( st, i );
+
+		if( itemdb_exists( nameid ) == nullptr ){
+			ShowError( "builtin_npcshopitem: Item ID %u does not exist.\n", nameid );
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		nd->u.shop.shop_item[n].nameid = nameid;
 		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
@@ -17237,8 +17251,8 @@ BUILDIN_FUNC(npcshopitem)
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[n]);
 		}
 #endif
+		nd->u.shop.count++;
 	}
-	nd->u.shop.count = n;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -17248,7 +17262,6 @@ BUILDIN_FUNC(npcshopadditem)
 {
 	const char* npcname = script_getstr(st,2);
 	struct npc_data* nd = npc_name2id(npcname);
-	int n, i;
 	uint16 offs = 2, amount;
 
 	if (!nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP)) { // Not found.
@@ -17264,9 +17277,15 @@ BUILDIN_FUNC(npcshopadditem)
 
 #if PACKETVER >= 20131223
 	if (nd->subtype == NPCTYPE_MARKETSHOP) {
-		for (n = 0, i = 3; n < amount; n++, i += offs) {
+		for (int n = 0, i = 3; n < amount; n++, i += offs) {
 			t_itemid nameid = script_getnum(st,i);
 			uint16 j;
+
+			if( itemdb_exists( nameid ) == nullptr ){
+				ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
+				script_pushint( st, 0 );
+				return SCRIPT_CMD_FAILURE;
+			}
 
 			// Check existing entries
 			ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == nameid);
@@ -17290,12 +17309,20 @@ BUILDIN_FUNC(npcshopadditem)
 
 	// append new items to existing shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+amount);
-	for (n = nd->u.shop.count, i = 3; n < nd->u.shop.count+amount; n++, i+=offs)
+	for (int n = nd->u.shop.count, i = 3, j = 0; j < amount; n++, i+=offs, j++)
 	{
-		nd->u.shop.shop_item[n].nameid = script_getnum(st,i);
+		t_itemid nameid = script_getnum( st, i );
+
+		if( itemdb_exists( nameid ) == nullptr ){
+			ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		nd->u.shop.shop_item[n].nameid = nameid;
 		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		nd->u.shop.count++;
 	}
-	nd->u.shop.count = n;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -19729,9 +19756,6 @@ BUILDIN_FUNC(questinfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct s_questinfo qi;
-	struct script_code *script = nullptr;
-	int color = QMARK_NONE;
 	int icon = script_getnum(st, 2);
 
 #if PACKETVER >= 20120410
@@ -19768,6 +19792,8 @@ BUILDIN_FUNC(questinfo)
 		icon = icon + 1;
 #endif
 
+	int color = QMARK_NONE;
+
 	if (script_hasdata(st, 3)) {
 		color = script_getnum(st, 3);
 		if (color < QMARK_NONE || color >= QMARK_MAX) {
@@ -19776,6 +19802,8 @@ BUILDIN_FUNC(questinfo)
 			color = QMARK_NONE;
 		}
 	}
+
+	struct script_code *script = nullptr;
 
 	if (script_hasdata(st, 4)) {
 		const char *str = script_getstr(st, 4);
@@ -19794,13 +19822,18 @@ BUILDIN_FUNC(questinfo)
 		}
 	}
 
-	qi.nd = nd;
-	qi.icon = static_cast<e_questinfo_types>(icon);
-	qi.color = static_cast<e_questinfo_markcolor>(color);
-	qi.condition = script;
+	std::shared_ptr<s_questinfo> qi = std::make_shared<s_questinfo>();
+
+	qi->icon = static_cast<e_questinfo_types>(icon);
+	qi->color = static_cast<e_questinfo_markcolor>(color);
+	qi->condition = script;
+
+	nd->qi_data.push_back(qi);
 
 	struct map_data *mapdata = map_getmapdata(nd->bl.m);
-	mapdata->qi_data.push_back(qi);
+
+	if (mapdata && !util::vector_exists(mapdata->qi_npc, nd->bl.id))
+		mapdata->qi_npc.push_back(nd->bl.id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
