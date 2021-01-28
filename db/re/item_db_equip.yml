@@ -101959,13 +101959,9 @@ Body:
       Shadow_Weapon: true
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Demon,5;
-      bonus2 bIgnoreMdefRaceRate,RC_Angel,5;
       .@r = getrefine();
-      if (.@r >= 2) {
-         bonus2 bIgnoreMdefRaceRate,RC_Demon,.@r/2;
-         bonus2 bIgnoreMdefRaceRate,RC_Angel,.@r/2;
-      }
+      bonus2 bIgnoreMdefRaceRate,RC_Demon,5+.@r/2;
+      bonus2 bIgnoreMdefRaceRate,RC_Angel,5+.@r/2;
   - Id: 24428
     AegisName: S_M_Viv_Dr_Weapon
     Name: Magic Vibration Dragon Killer Shadow Weapon
@@ -101974,13 +101970,9 @@ Body:
       Shadow_Weapon: true
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Formless,5;
-      bonus2 bIgnoreMdefRaceRate,RC_Dragon,5;
       .@r = getrefine();
-      if (.@r >= 2) {
-         bonus2 bIgnoreMdefRaceRate,RC_Formless,.@r/2;
-         bonus2 bIgnoreMdefRaceRate,RC_Dragon,.@r/2;
-      }
+      bonus2 bIgnoreMdefRaceRate,RC_Formless,5+.@r/2;
+      bonus2 bIgnoreMdefRaceRate,RC_Dragon,5+.@r/2;
   - Id: 24429
     AegisName: S_M_Sci_Hu_Weapon
     Name: Magic Caesars Hunting Shadow Weapon
@@ -101989,13 +101981,9 @@ Body:
       Shadow_Weapon: true
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Brute,5;
-      bonus2 bIgnoreMdefRaceRate,RC_Plant,5;
       .@r = getrefine();
-      if (.@r >= 2) {
-         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@r/2;
-         bonus2 bIgnoreMdefRaceRate,RC_Plant,.@r/2;
-      }
+      bonus2 bIgnoreMdefRaceRate,RC_Brute,5+.@r/2;
+      bonus2 bIgnoreMdefRaceRate,RC_Plant,5+.@r/2;
   - Id: 24430
     AegisName: S_M_Fis_In_Weapon
     Name: Magic Fishing Insect Shadow Weapon
@@ -102004,13 +101992,9 @@ Body:
       Shadow_Weapon: true
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Fish,5;
-      bonus2 bIgnoreMdefRaceRate,RC_Insect,5;
       .@r = getrefine();
-      if (.@r >= 2) {
-         bonus2 bIgnoreMdefRaceRate,RC_Fish,.@r/2;
-         bonus2 bIgnoreMdefRaceRate,RC_Insect,.@r/2;
-      }
+      bonus2 bIgnoreMdefRaceRate,RC_Fish,5+.@r/2;
+      bonus2 bIgnoreMdefRaceRate,RC_Insect,5+.@r/2;
   - Id: 24431
     AegisName: S_M_Exe_Ho_Weapon
     Name: Magic Executioner Holy Water Shadow Weapon
@@ -102019,13 +102003,9 @@ Body:
       Shadow_Weapon: true
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5;
-      bonus2 bIgnoreMdefRaceRate,RC_Undead,5;
       .@r = getrefine();
-      if (.@r >= 2) {
-         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@r/2;
-         bonus2 bIgnoreMdefRaceRate,RC_Undead,.@r/2;
-      }
+      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5+.@r/2;
+      bonus2 bIgnoreMdefRaceRate,RC_Undead,5+.@r/2;
   - Id: 24432
     AegisName: S_Penetration_Weapon
     Name: Penetration Shadow Weapon
