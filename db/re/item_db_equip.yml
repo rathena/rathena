@@ -102580,7 +102580,7 @@ Body:
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24472
     AegisName: S_Vulcan_Shoes
-    Name: "Vulcan Shadow Shoes\ufeff"
+    Name: Vulcan Shadow Shoes    # !todo check english name
     Type: Shadowgear
     Jobs:
       Blacksmith: true
@@ -102594,7 +102594,7 @@ Body:
       bonus2 bSkillUseSPrate,"NC_VULCANARM",2+(getrefine()/2);
   - Id: 24473
     AegisName: S_Arms_Weapon
-    Name: "Arm Shadow Weapon\ufeff"
+    Name: Arm Shadow Weapon    # !todo check english name
     Type: Shadowgear
     Jobs:
       Blacksmith: true
