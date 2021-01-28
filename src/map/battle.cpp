@@ -3960,6 +3960,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case MO_CHAINCOMBO:
 #ifdef RENEWAL
 			skillratio += 150 + 50 * skill_lv;
+			if (sd && sd->status.weapon == W_KNUCKLE)
+				skillratio *= 2;
 #else
 			skillratio += 50 + 50 * skill_lv;
 #endif
@@ -5638,6 +5640,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case RG_BACKSTAP:
 				if (sd && sd->status.weapon == W_DAGGER)
 					wd.div_ = 2;
+				break;
+			case MO_CHAINCOMBO:
+				if (sd && sd->status.weapon == W_KNUCKLE)
+					wd.div_ = -6;
 				break;
 #endif
 			case MH_SONIC_CRAW:{
