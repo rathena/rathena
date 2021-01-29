@@ -1752,7 +1752,7 @@ int char_count_users(void)
 
 	users = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
-		if (map_server[i].fd > 0) {
+		if (session_isValid(map_server[i].fd)) {
 			users += map_server[i].users;
 		}
 	}
@@ -1987,7 +1987,7 @@ void char_auth_ok(int fd, struct char_session_data *sd) {
 			chclif_send_auth_result(fd,8);
 			return;
 		}
-		if (character->fd >= 0 && character->fd != fd)
+		if (session_isValid(character->fd) && character->fd != fd)
 		{	//There's already a connection from this account that hasn't picked a char yet.
 			chclif_send_auth_result(fd,8);
 			return;
@@ -2094,7 +2094,7 @@ int char_loadName(uint32 char_id, char* name){
 int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
 	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
-		if (map_server[i].fd > 0
+		if (session_isValid(map_server[i].fd)
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{
@@ -3070,6 +3070,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.mail_return_days = atoi(w2);
 		} else if (strcmpi(w1, "mail_delete_days") == 0) {
 			charserv_config.mail_delete_days = atoi(w2);
+		} else if (strcmpi(w1, "mail_return_empty") == 0) {
+			charserv_config.mail_return_empty = config_switch(w2);
 		} else if (strcmpi(w1, "allowed_job_flag") == 0) {
 			charserv_config.allowed_job_flag = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
@@ -3245,11 +3247,11 @@ int do_init(int argc, char **argv)
 
 	// periodically check if mails need to be returned to their sender
 	add_timer_func_list(mail_return_timer, "mail_return_timer");
-	add_timer_interval(gettick() + 1000, mail_return_timer, 0, 0, 5 * 60 * 1000); // every 5 minutes
+	add_timer_interval(gettick() + 1000, mail_return_timer, 0, 0, 1 * 60 * 1000); // every minute
 
 	// periodically check if mails need to be deleted completely
 	add_timer_func_list(mail_delete_timer, "mail_delete_timer");
-	add_timer_interval(gettick() + 1000, mail_delete_timer, 0, 0, 5 * 60 * 1000); // every 5 minutes
+	add_timer_interval(gettick() + 1000, mail_delete_timer, 0, 0, 1 * 60 * 1000); // every minute
 
 	//check db tables
 	if(charserv_config.char_check_db && char_checkdb() == 0){
