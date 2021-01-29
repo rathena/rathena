@@ -504,7 +504,9 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 				if (sc->data[SC_PROPERTYWALK]
 					&& sc->data[SC_PROPERTYWALK]->val3 < skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2)
 					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_ELECTRICWALK,NULL,0) == NULL
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,NPC_ELECTRICWALK,NULL,0) == NULL
 					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_FIREWALK,NULL,0) == NULL
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,NPC_FIREWALK,NULL,0) == NULL
 					&& skill_unitsetting(bl,sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2,x0, y0,0)) {
 						sc->data[SC_PROPERTYWALK]->val3++;
 				}
