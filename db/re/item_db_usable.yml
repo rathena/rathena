@@ -48819,7 +48819,7 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 100408;*/
-  - Id: 100518
+  - Id: 100158
     AegisName: Mado_Box02
     Name: Mado Strengthening Suit
     Type: Usable
