@@ -1594,6 +1594,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 
+	StatusChangeFlagTable[SC_MADOGEAR] |= SCB_SPEED;
+
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
 	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;

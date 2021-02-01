@@ -9687,10 +9687,8 @@ void pc_setoption(struct map_session_data *sd,int type, int subtype)
 	}
 
 	if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
-		status_calc_pc(sd,SCO_NONE);
 		sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, static_cast<int>(subtype), INFINITE_TICK);
 	} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-		status_calc_pc(sd,SCO_NONE);
 		status_change_end(&sd->bl, SC_MADOGEAR, INVALID_TIMER);
 	}
 
