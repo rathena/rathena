@@ -940,6 +940,7 @@ enum sc_type : int16 {
 	SC_EP16_2_BUFF_AC,
 
 	SC_EMERGENCY_MOVE,
+	SC_MADOGEAR,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

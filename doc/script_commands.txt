@@ -3850,11 +3850,17 @@ dragon and 0 if they aren't.
 
 ---------------------------------------
 
-*setmadogear {<flag>{,<char_id>}};
+*setmadogear {<flag>{,<type>{,<char_id>}}};
 *checkmadogear({<char_id>});
 
-If <flag> is 0 this command will remove the mount from the character.
-Otherwise it gives the invoking character a Mado (if they are a Mechanic).
+If <flag> is false this command will remove the mount from the character.
+Otherwise it gives the invoking character a Mado (if they are a Mechanic and have the skill NC_MADOLICENCE).
+
+When using client version PACKETVER_MAIN_NUM >= 20191120 or PACKETVER_RE_NUM >= 20191106
+the <type> flag can be used to specify a specific madogear.
+Types:
+	MADO_ROBOT (default)
+	MADO_SUIT
 
 The accompanying function will return 1 if the invoking character has a
 Mado and 0 if they don't.
