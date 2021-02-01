@@ -9688,27 +9688,9 @@ void pc_setoption(struct map_session_data *sd,int type, int subtype)
 
 	if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
 		status_calc_pc(sd,SCO_NONE);
-		for (const auto &sc : mado_statuses) {
-			uint16 skill_id = status_sc2skill(sc);
-
-			if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-				status_change_end(&sd->bl,sc,INVALID_TIMER);
-		}
-		pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
-
-		pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, static_cast<int>(subtype), INFINITE_TICK);
 	} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 		status_calc_pc(sd,SCO_NONE);
-		status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_HOVERING,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_MAGNETICFIELD,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
-		status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
-		pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		status_change_end(&sd->bl, SC_MADOGEAR, INVALID_TIMER);
 	}
 

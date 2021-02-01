@@ -4453,9 +4453,11 @@ ACMD_FUNC(mount_peco)
 			e_mado_type type = MADO_ROBOT;
 
 			if (message[0]) {
-				switch (atoi(message)) {
-					case 1:
-						type = MADO_SUIT;
+				int tmp = strtol(message, nullptr, 10);
+
+				switch (tmp) {
+					case MADO_ROBOT:
+					case MADO_SUIT:
 						break;
 					default:
 						type = MADO_ROBOT;

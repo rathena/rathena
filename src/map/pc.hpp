@@ -1027,8 +1027,8 @@ short pc_maxaspd(struct map_session_data *sd);
 // Mechanic Magic Gear
 enum e_mado_type : uint16 {
 	MADO_ROBOT = 0x00,
-	// unused  = 0x01,
-	MADO_SUIT  = 0x02,
+	MADO_UNUSED,
+	MADO_SUIT,
 	MADO_MAX
 };
 

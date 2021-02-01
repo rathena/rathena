@@ -10118,7 +10118,7 @@ BUILDIN_FUNC(checkmadogear)
 /// <flag> defaults to true
 /// <type> defaults to MADO_ROBOT
 ///
-/// setmadogear {<flag>{,<char_id>}};
+/// setmadogear {<flag>{,type{,<char_id>}}};
 BUILDIN_FUNC(setmadogear)
 {
 	bool flag = true;
@@ -10133,8 +10133,10 @@ BUILDIN_FUNC(setmadogear)
 	if (script_hasdata(st, 3)) {
 		type = script_getnum(st, 3);
 
-		if (type >= MADO_MAX)
+		if (type == MADO_UNUSED || type >= MADO_MAX) {
+			ShowError("buildin_setmadogear: Invalid mado gear type %hu, defaulting to robot...\n", type);
 			type = MADO_ROBOT;
+		}
 	}
 
 	pc_setmadogear(sd, flag, static_cast<e_mado_type>(type));
