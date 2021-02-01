@@ -1610,6 +1610,7 @@
 	export_constant(SC_EP16_2_BUFF_SC);
 	export_constant(SC_EP16_2_BUFF_AC);
 	export_constant(SC_EMERGENCY_MOVE);
+	export_constant(SC_MADOGEAR);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -8028,6 +8029,10 @@
 	export_constant(PENALTY_DROP);
 	export_constant(PENALTY_MVP_EXP);
 	export_constant(PENALTY_MVP_DROP);
+
+	/* madogears */
+	export_constant(MADO_ROBOT);
+	export_constant(MADO_SUIT);
 
 	#undef export_constant
 	#undef export_constant2
