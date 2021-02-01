@@ -451,7 +451,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			if( itemdb_isspecial(it->card[0]) ) { // something, that is not a carded
 				continue;
 			}
-			slot = itemdb_slot(it->nameid);
+			slot = itemdb_slots(it->nameid);
 
 			for( c = 0; c < slot && it->card[c]; c ++ ) {
 				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx].itemId == it->card[c] );
@@ -465,7 +465,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			}
 		}
 
-		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine) ) { // result set full
+		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine, it->enchantgrade ) ) { // result set full
 			return false;
 		}
 	}

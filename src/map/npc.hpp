@@ -51,6 +51,18 @@ struct s_npc_buy_list {
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris
 
+struct s_questinfo {
+	e_questinfo_types icon;
+	e_questinfo_markcolor color;
+	struct script_code* condition;
+
+	~s_questinfo(){
+		if( this->condition != nullptr ){
+			script_free_code( this->condition );
+		}
+	}
+};
+
 struct npc_data {
 	struct block_list bl;
 	struct unit_data ud; //Because they need to be able to move....
@@ -111,6 +123,8 @@ struct npc_data {
 
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
+
+	std::vector<std::shared_ptr<s_questinfo>> qi_data;
 
 	struct {
 		t_tick timeout;
@@ -1188,6 +1202,33 @@ enum e_job_types
 	JT_4_4JOB_PHANTOMBOOK1,
 	JT_4_4JOB_PHANTOMBOOK2,
 	JT_4_4JOB_PHANTOMBOOK3,
+	JT_4_VENDING_MACHINE2,
+
+	JT_4_STAR_BOX_SCORE = 10403,
+	JT_4_STAR_BOX_POW1,
+	JT_4_STAR_BOX_POW2,
+	JT_4_STAR_BOX_STA1,
+	JT_4_STAR_BOX_STA2,
+	JT_4_STAR_BOX_SPL1,
+	JT_4_STAR_BOX_SPL2,
+	JT_4_STAR_BOX_CON1,
+	JT_4_STAR_BOX_CON2,
+	JT_4_STAR_BOX_WIS1,
+	JT_4_STAR_BOX_WIS2,
+	JT_4_STAR_BOX_CRT1,
+	JT_4_STAR_BOX_CRT2,
+	JT_4_4JOB_MAURA,
+	JT_4_STAR_BOX_N,
+	JT_4_STAR_BOX_H,
+	JT_4_STAR_BOX_HP1,
+	JT_4_STAR_BOX_HP2,
+	JT_4_STAR_BOX_ATK1,
+	JT_4_STAR_BOX_ATK2,
+	JT_4_STAR_BOX_BARRIER1,
+	JT_4_STAR_BOX_BARRIER2,
+	JT_4_STAR_BOX_TRAP1,
+	JT_4_STAR_BOX_TRAP2,
+	JT_4_STAR_BOX_MASTER,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
@@ -1260,7 +1301,7 @@ int npc_get_new_npc_id(void);
 
 int npc_addsrcfile(const char* name, bool loadscript);
 void npc_delsrcfile(const char* name);
-int npc_parsesrcfile(const char* filepath, bool runOnInit);
+int npc_parsesrcfile(const char* filepath);
 void do_clear_npc(void);
 void do_final_npc(void);
 void do_init_npc(void);
@@ -1271,6 +1312,7 @@ int npc_event_do_id(const char* name, int rid);
 int npc_event_doall(const char* name);
 void npc_event_runall( const char* eventname );
 int npc_event_doall_id(const char* name, int rid);
+int npc_event_doall_path(const char* event_name, const char* path);
 
 int npc_timerevent_start(struct npc_data* nd, int rid);
 int npc_timerevent_stop(struct npc_data* nd);
