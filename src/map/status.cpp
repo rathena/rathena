@@ -10037,7 +10037,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
 				status_change_end(bl, sc, INVALID_TIMER);
 		}
-		pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
+		if (sd)
+			pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 		break;
 	}
 
@@ -13588,7 +13589,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			status_change_end(bl, SC_MAGNETICFIELD, INVALID_TIMER);
 			status_change_end(bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
 			status_change_end(bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
-			pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
+			if (sd)
+				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 	}
 

@@ -4458,6 +4458,7 @@ ACMD_FUNC(mount_peco)
 				switch (tmp) {
 					case MADO_ROBOT:
 					case MADO_SUIT:
+						type = static_cast<e_mado_type>(tmp);
 						break;
 					default:
 						type = MADO_ROBOT;
