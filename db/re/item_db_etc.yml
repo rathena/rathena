@@ -5510,7 +5510,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpell,"BA_FROSTJOKER",1+4*(getskilllv("BA_FROSTJOKER")==5),20;
+      bonus3 bAutoSpell,"BA_FROSTJOKER",1+4*(getskilllv("BA_FROSTJOKER") == 5),20;
   - Id: 4210
     AegisName: Wander_Man_Card
     Name: Wanderer Card
@@ -5620,7 +5620,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpell,"AL_HEAL",1+9*(getskilllv("AL_HEAL")==10),20;
+      bonus3 bAutoSpell,"AL_HEAL",1+9*(getskilllv("AL_HEAL") == 10),20;
   - Id: 4218
     AegisName: Succubus_Card
     Name: Succubus Card
@@ -5864,7 +5864,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpellWhenHit,"AC_CONCENTRATION",1+9*(getskilllv("AC_CONCENTRATION")==10),30;
+      bonus3 bAutoSpellWhenHit,"AC_CONCENTRATION",1+9*(getskilllv("AC_CONCENTRATION") == 10),30;
   - Id: 4235
     AegisName: Cookie_XMAS_Card
     Name: Christmas Cookie Card
@@ -6300,7 +6300,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpell,"WZ_JUPITEL",3+7*(getskilllv("WZ_JUPITEL")==10),20;
+      bonus3 bAutoSpell,"WZ_JUPITEL",3+7*(getskilllv("WZ_JUPITEL") == 10),20;
   - Id: 4265
     AegisName: Li_Me_Mang_Ryang_Card
     Name: Jing Guai Card
@@ -6534,7 +6534,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpellWhenHit,"AL_BLESSING",2+8*(getskilllv("AL_BLESSING")==10),30;
+      bonus3 bAutoSpellWhenHit,"AL_BLESSING",2+8*(getskilllv("AL_BLESSING") == 10),30;
   - Id: 4281
     AegisName: Zipper_Bear_Card
     Name: Zipper Bear Card
@@ -6576,7 +6576,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpell,"MO_CALLSPIRITS",5,2+18*(BaseClass==Job_Acolyte);
+      bonus3 bAutoSpell,"MO_CALLSPIRITS",5,2+18*(BaseClass == Job_Acolyte);
   - Id: 4284
     AegisName: Chepet_Card
     Name: Chepet Card
@@ -6800,7 +6800,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpellWhenHit,"CR_AUTOGUARD",3+7*(getskilllv("CR_AUTOGUARD")==10),30;
+      bonus3 bAutoSpellWhenHit,"CR_AUTOGUARD",3+7*(getskilllv("CR_AUTOGUARD") == 10),30;
     UnEquipScript: |
       sc_end SC_AUTOGUARD;
   - Id: 4300
@@ -6815,7 +6815,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddEffWhenHit,Eff_Poison,300+600*(BaseJob==Job_Assassin);
+      bonus2 bAddEffWhenHit,Eff_Poison,300+600*(BaseJob == Job_Assassin);
   - Id: 4301
     AegisName: Killer_Mantis_Card
     Name: Killer Mantis Card
@@ -7009,7 +7009,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus4 bAutoSpellWhenHit,"WZ_QUAGMIRE",1+4*(getskilllv("WZ_QUAGMIRE")==5),50,0;
+      bonus4 bAutoSpellWhenHit,"WZ_QUAGMIRE",1+4*(getskilllv("WZ_QUAGMIRE") == 5),50,0;
   - Id: 4314
     AegisName: Penomena_Card
     Name: Penomena Card
@@ -8281,7 +8281,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50+50*(BaseJob==Job_Dancer);
+      bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50+50*(BaseJob == Job_Dancer);
   - Id: 4401
     AegisName: Alicel_Card
     Name: Alicel Card
@@ -11561,7 +11561,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE")==5?5:1),1,BF_WEAPON,0;
+      bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE") == 5?5:1),1,BF_WEAPON,0;
   - Id: 4633
     AegisName: Enhanced_Archer_Skeleton_Card
     Name: Enhanced Archer Skeleton Card
@@ -14115,7 +14115,7 @@ Body:
     Name: Speed of Light
     Type: Card
     Script: |
-      autobonus "{ bonus bAspdRate,100; bonus bFlee,100; bonus2 bHPLossRate,400,1000; bonus2 bSPLossRate,40,1000;}",10,5000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }";
+      autobonus "{ bonus bAspdRate,100; bonus bFlee,100; bonus2 bHPLossRate,400,1000; bonus2 bSPLossRate,40,1000; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }";
   - Id: 4878
     AegisName: Muscle_Fool
     Name: Muscle Fool
@@ -37602,7 +37602,7 @@ Body:
       bonus bBaseAtk,20;
       if (readparam(bStr) >= 120) {
          bonus bBaseAtk,20;
-         bonus bAspdRate,3;
+      bonus bAspdRate,3;
       }
   - Id: 27184
     AegisName: Knight_Sakray_Card
@@ -41675,13 +41675,13 @@ Body:
          bonus bLuk,50;
       }
       if (.@r>4) {
-        .@r2 = .@r-4;
-        autobonus "{ bonus bLuk,50; }",(8+(.@r2*5)),(4+(.@r2*3))*1000,BF_NORMAL;
-        autobonus "{ bonus bLuk,50; }",(8+(.@r2*5)),(4+(.@r2*3))*1000,BF_MAGIC;
+         .@r2 = .@r-4;
+         autobonus "{ bonus bLuk,50; }",(8+(.@r2*5)),(4+(.@r2*3))*1000,BF_NORMAL;
+         autobonus "{ bonus bLuk,50; }",(8+(.@r2*5)),(4+(.@r2*3))*1000,BF_MAGIC;
       }
       else {
-        autobonus "{ bonus bLuk,50; }",8,4000,BF_NORMAL;
-        autobonus "{ bonus bLuk,50; }",8,4000,BF_MAGIC;
+         autobonus "{ bonus bLuk,50; }",8,4000,BF_NORMAL;
+         autobonus "{ bonus bLuk,50; }",8,4000,BF_MAGIC;
       }
   - Id: 29579
     AegisName: Racing_SG_1

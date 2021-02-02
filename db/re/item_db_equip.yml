@@ -77318,8 +77318,8 @@ Body:
       if (.@r>=12) {
          bonus bMaxHPrate,3;
          bonus bMaxSPrate,3;
-       }
-       autobonus "{ bonus bCritAtkRate,30; bonus bMatkRate,30; }",1,5000,BF_WEAPON|BF_MAGIC,"{ active_transform 1519,5000; }";
+      }
+      autobonus "{ bonus bCritAtkRate,30; bonus bMatkRate,30; }",1,5000,BF_WEAPON|BF_MAGIC,"{ active_transform 1519,5000; }";
   - Id: 19136
     AegisName: Spirit_Of_Chung_E_
     Name: Spirit of Green Maiden
@@ -78940,7 +78940,7 @@ Body:
       .@r = getrefine();
       bonus bMatk,(.@r/2)*20;
       if (.@r>6) {
-        bonus bVariableCastrate,-10;
+         bonus bVariableCastrate,-10;
       }
       if (.@r>8) {
          bonus2 bMagicAtkEle,Ele_Dark,10;
