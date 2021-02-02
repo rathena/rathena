@@ -34430,7 +34430,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* getitem callfunc("F_Rand",Sealed Cards Gloom Under Night, 9 weapons smelting ticket, Armor 9 smelting ticket, medium armor Shadow, Shadow Weapon Medium, costume Wings of the Kirin, costume enchant stone box); */
+      /* getitem callfunc("F_Rand",Sealed Cards Gloom Under Night, 9 weapons smelting ticket, Armor 9 smelting ticket, medium armor Shadow, Shadow Weapon Medium, costume Wings of the Kirin, costume enchant stone box);*/
   - Id: 14699
     AegisName: Garuda_Scroll
     Name: Memorial Garuda Lucky Egg
