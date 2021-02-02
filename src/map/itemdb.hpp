@@ -1005,6 +1005,9 @@ public:
 extern RandomOptionGroupDatabase random_option_group;
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
+private:
+	e_sex defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id );
+
 public:
 	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 1) {
 

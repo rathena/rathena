@@ -1402,6 +1402,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_EP16_2_BUFF_SC] = EFST_EP16_2_BUFF_SC;
 	StatusIconChangeTable[SC_EP16_2_BUFF_AC] = EFST_EP16_2_BUFF_AC;
 
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+	StatusIconChangeTable[SC_MADOGEAR] = EFST_MADOGEAR;
+#else
+	StatusIconChangeTable[SC_MADOGEAR] = EFST_RIDING;
+#endif
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1588,6 +1594,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 
+	StatusChangeFlagTable[SC_MADOGEAR] |= SCB_SPEED;
+
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
 	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;
@@ -1630,6 +1638,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_HELLS_PLANT]     = BL_PC;
 	StatusDisplayType[SC_MISTY_FROST]     = BL_PC;
 	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
+	StatusDisplayType[SC_MADOGEAR]        = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -2800,17 +2809,9 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
  * @param status: Player status
  * @return weapon attack
  */
-unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd)
+unsigned int status_weapon_atk(weapon_atk &wa)
 {
-	float str = sd->base_status.str;
-	int weapon_atk_bonus = 0;
-
-	if ((wa.range > 3 || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP) && !pc_checkskill(sd, SU_SOULATTACK))
-		str = sd->base_status.dex;
-	if (sd->bonus.weapon_atk_rate)
-		weapon_atk_bonus = wa.atk * sd->bonus.weapon_atk_rate / 100;
-	// wa.atk2 = refinement, wa.atk = base equip atk, wa.atk*str/200 = bonus str
-	return wa.atk + wa.atk2 + (int)(wa.atk * (str/200) + weapon_atk_bonus);
+	return wa.atk + wa.atk2;
 }
 #endif
 
@@ -3960,6 +3961,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			if(r)
 				wa->atk2 += refine_info[wlv].bonus[r-1] / 100;
 #ifdef RENEWAL
+			if (sd->bonus.weapon_atk_rate)
+				wa->atk = wa->atk * sd->bonus.weapon_atk_rate / 100;
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
 			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
@@ -4279,8 +4282,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		base_status->batk += 4;
 #else
-	base_status->watk = status_weapon_atk(base_status->rhw, sd);
-	base_status->watk2 = status_weapon_atk(base_status->lhw, sd);
+	base_status->watk = status_weapon_atk(base_status->rhw);
+	base_status->watk2 = status_weapon_atk(base_status->lhw);
 	base_status->eatk = sd->bonus.eatk;
 #endif
 
@@ -8617,38 +8620,12 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	if (src == NULL)
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
-	// Status that are blocked by Golden Thief Bug card or Wand of Hermod
+	// Skills (magic type) that are blocked by Golden Thief Bug card or Wand of Hermod
 	if (status_isimmune(bl)) {
-		switch (type) {
-			case SC_DECREASEAGI:
-			case SC_SILENCE:
-			case SC_COMA:
-			case SC_INCREASEAGI:
-			case SC_BLESSING:
-			case SC_SLOWPOISON:
-			case SC_IMPOSITIO:
-			case SC_AETERNA:
-			case SC_SUFFRAGIUM:
-			case SC_BENEDICTIO:
-			case SC_PROVIDENCE:
-			case SC_KYRIE:
-			case SC_ASSUMPTIO:
-			case SC_ANGELUS:
-			case SC_MAGNIFICAT:
-			case SC_GLORIA:
-			case SC_WINDWALK:
-			case SC_MAGICROD:
-			case SC_HALLUCINATION:
-			case SC_STONE:
-			case SC_QUAGMIRE:
-			case SC_SUITON:
-			case SC_SWINGDANCE:
-			case SC_FIRE_INSIGNIA:
-			case SC_WATER_INSIGNIA:
-			case SC_WIND_INSIGNIA:
-			case SC_EARTH_INSIGNIA:
-				return 0;
-		}
+		std::shared_ptr<s_skill_db> skill = skill_db.find(battle_getcurrentskill(src));
+
+		if (skill != nullptr && skill->skill_type == BF_MAGIC)
+			return 0;
 	}
 
 	rate = cap_value(rate, 0, 10000);
@@ -10052,6 +10029,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_ENDURE:
 		if (sd && sd->special_state.no_walk_delay)
 			return 1;
+		break;
+	case SC_MADOGEAR:
+		for (const auto &sc : mado_statuses) {
+			uint16 skill_id = status_sc2skill(sc);
+
+			if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
+				status_change_end(bl, sc, INVALID_TIMER);
+		}
+		if (sd)
+			pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 		break;
 	}
 
@@ -12252,6 +12239,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_JUMPINGCLAN:
 		case SC_DRESSUP:
 		case SC_MISTY_FROST:
+		case SC_MADOGEAR:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -12897,6 +12885,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 			case SC_REUSE_LIMIT_LUXANIMA:
 			case SC_SOULENERGY:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12933,6 +12922,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_STYLE_CHANGE:
 			case SC_ENTRY_QUEUE_APPLY_DELAY:
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13589,6 +13579,18 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SOULENERGY:
 			if (sd)
 				pc_delsoulball(sd, sd->soulball, false);
+			break;
+		case SC_MADOGEAR:
+			status_change_end(bl, SC_SHAPESHIFT, INVALID_TIMER);
+			status_change_end(bl, SC_HOVERING, INVALID_TIMER);
+			status_change_end(bl, SC_ACCELERATION, INVALID_TIMER);
+			status_change_end(bl, SC_OVERHEAT_LIMITPOINT, INVALID_TIMER);
+			status_change_end(bl, SC_OVERHEAT, INVALID_TIMER);
+			status_change_end(bl, SC_MAGNETICFIELD, INVALID_TIMER);
+			status_change_end(bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
+			status_change_end(bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
+			if (sd)
+				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 	}
 

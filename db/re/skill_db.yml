@@ -2279,8 +2279,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      Splash: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -2288,7 +2286,27 @@ Body:
     HitCount: 2
     Element: Weapon
     SplashArea: 2
-    Knockback: 1
+    Knockback:
+      - Level: 1
+        Amount: 1
+      - Level: 2
+        Amount: 1
+      - Level: 3
+        Amount: 2
+      - Level: 4
+        Amount: 2
+      - Level: 5
+        Amount: 3
+      - Level: 6
+        Amount: 3
+      - Level: 7
+        Amount: 4
+      - Level: 8
+        Amount: 4
+      - Level: 9
+        Amount: 5
+      - Level: 10
+        Amount: 5
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -26713,7 +26731,7 @@ Body:
       Splash: true
     Range: 9
     Hit: Single
-    HitCount: 3
+    HitCount: -3
     Element: Wind
     SplashArea:
       - Level: 1
@@ -26740,7 +26758,7 @@ Body:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime: # !TODO: Confirm all times
+    CastTime: # !TODO: Confirm cast and fixed cast
       - Level: 1
         Time: 1800
       - Level: 2
@@ -26783,7 +26801,7 @@ Body:
         Time: 3400
       - Level: 10
         Time: 3600
-    Cooldown: 2000
+    Cooldown: 5000
     FixedCastTime:
       - Level: 1
         Time: 2000

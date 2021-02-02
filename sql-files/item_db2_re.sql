@@ -180,3 +180,30 @@ REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,
 # Non-kRO Eden Group Mark effect
 #=============================================================
 REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (22508,'Para_Team_Mark_','Eden Group Mark','Delayconsume','unitskilluseid getcharid(3),"AL_TELEPORT",3;');
+
+# Gender restrictions that were removed on official servers
+#=============================================================
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2206,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2208,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2209,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2234,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2235,'Male');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2407,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2415,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (2494,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5143,'Male');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5164,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5165,'Male');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5191,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5192,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5193,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5194,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5195,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5196,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5197,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5221,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5354,'Male');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5355,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5400,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5681,'Female');
+REPLACE INTO `item_db2_re` (`id`,`gender`) VALUES (5735,'Female');
