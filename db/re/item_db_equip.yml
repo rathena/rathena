@@ -102097,7 +102097,7 @@ Body:
          bonus bDef,15;
          bonus bFlee,15;
       }
-      if (.@r >= 9)
+      if (.@r >= 10)
          bonus bSpeedRate,25;
   - Id: 24440
     AegisName: S_Sonic_Armor
@@ -102313,7 +102313,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+2*(getrefine()/2);
+      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+3*(getrefine()/2);
   - Id: 24455
     AegisName: S_Aimed_Weapon
     Name: Aimed Shadow Weapon
@@ -102728,7 +102728,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bAddClass,Class_All,3+(getrefine()/3);
+      bonus2 bAddClass,Class_All,2+(getrefine()/3);
   - Id: 24482
     AegisName: S_Knucklearrow_Armor
     Name: Knuckle Shadow Armor
