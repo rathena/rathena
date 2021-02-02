@@ -232,7 +232,7 @@ UniqueId     - If the item is a unique stack.
 BindOnEquip  - If the item is bound to the character upon equipping.
 DropAnnounce - If the item has a special announcement to self on drop.
 NoConsume    - If the item is consumed on use.
-DropEffect   - If the item has a special effect when on the ground.
+DropEffect   - If the item has a special effect on the ground when dropped by a monster.
 
 ---------------------------------------
 

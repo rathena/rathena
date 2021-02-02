@@ -33,6 +33,8 @@ struct s_quest_objective {
 	e_race race;
 	e_size size;
 	e_element element;
+	int16 mapid;
+	std::string map_name;
 };
 
 struct s_quest_db {
@@ -53,7 +55,7 @@ enum e_quest_check_type : uint8 {
 
 class QuestDatabase : public TypesafeYamlDatabase<uint32, s_quest_db> {
 public:
-	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 1) {
+	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 2) {
 
 	}
 
@@ -70,7 +72,7 @@ int quest_add(struct map_session_data *sd, int quest_id);
 int quest_delete(struct map_session_data *sd, int quest_id);
 int quest_change(struct map_session_data *sd, int qid1, int qid2);
 int quest_update_objective_sub(struct block_list *bl, va_list ap);
-void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_level, e_race mob_race, e_size mob_size, e_element mob_element);
+void quest_update_objective(struct map_session_data *sd, struct mob_data* md);
 int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state status);
 int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type type);
 

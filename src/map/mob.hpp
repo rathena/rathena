@@ -76,6 +76,7 @@ enum MOBID {
 	MOBID_S_HORNET			= 2158,
 	MOBID_S_GIANT_HORNET,
 	MOBID_S_LUCIOLA_VESPA,
+	MOBID_GUILD_SKILL_FLAG	= 20269,
 };
 
 ///Mob skill states.
@@ -175,8 +176,9 @@ struct s_mob_drop {
 
 struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
-	unsigned int base_exp,job_exp;
-	unsigned int mexp;
+	t_exp base_exp;
+	t_exp job_exp;
+	t_exp mexp;
 	short range2,range3;
 	enum e_race2 race2;	// celest
 	unsigned short lv;

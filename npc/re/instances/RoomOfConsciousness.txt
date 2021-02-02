@@ -5,6 +5,9 @@
 //- Require Banquet main quest.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Added a setting to prevent an exploit
+//      (searchs "'exploit_disabled" variable - the variable is
+//      false by default like on official server). [Capuche]
 //============================================================
 
 1@mir,103,40,3	script	Fenrir#1mir	4_F_FENRIR,{
@@ -31,6 +34,13 @@
 
 OnInstanceInit:
 	'map_name$ = instance_mapname("1@mir");
+	'step = 0;
+
+	// On official server the instance can be repeated if the player log out after the death of Bijou (main quest)
+	// true: prevent the exploit
+	// false: like on official - exploitable
+	'exploit_disabled = false;
+
 	disablenpc instance_npcname("Bijou#2mir");
 
 	disablenpc instance_npcname("Fenrir#3mir");
@@ -80,6 +90,8 @@ OnInstanceInit:
 
 1@mir,100,94,7	script	Iris#2mir	4_F_IRIS,{
 	if (is_party_leader() == false)	// it shouldn't happen
+		end;
+	if ('step != 0)
 		end;
 	mes "[Iris]";
 	mes "This...this must be...";
@@ -133,8 +145,11 @@ OnInstanceInit:
 	mes "~Grunts~ When did all the legionnaires get here?";
 	close2;
 	cutin "",255;
-	donpcevent instance_npcname("eq#mir1") + "::OnEvent";
-	disablenpc instance_npcname("Iris#2mir");
+	if ('step == 0) {
+		'step = 1;
+		donpcevent instance_npcname("eq#mir1") + "::OnEvent";
+		disablenpc instance_npcname("Iris#2mir");
+	}
 	end;
 }
 
@@ -189,7 +204,8 @@ OnTimer6200:
 
 OnMobDead2:
 	'skeleton_wave[1]--;
-	if ('skeleton_wave[1] == 0) {
+	if ('skeleton_wave[1] == 0 && 'step == 1) {
+		'step = 2;
 		mapannounce 'map_name$, "Fenrir: Phew! I think we've done here.", bc_map,0xFFFF00,FW_NORMAL,12;
 		enablenpc instance_npcname("Fenrir#3mir");
 		enablenpc instance_npcname("Iris#3mir");
@@ -201,6 +217,8 @@ OnMobDead2:
 
 1@mir,103,85,1	script	Iris#3mir	4_F_IRIS,{
 	if (is_party_leader() == false)	// it shouldn't happen
+		end;
+	if ('step != 2)
 		end;
 	mes "[Bijou]";
 	mes "~Chuckles~ I think you're not that bad for a human.";
@@ -241,7 +259,10 @@ OnMobDead2:
 	mes "I'll stop Bijou from taking Ymir's Heart. You go ahead and take care of that huge monster!";
 	close2;
 	cutin "",255;
-	donpcevent instance_npcname("eq#mir2") + "::OnEvent";
+	if ('step == 2) {
+		'step = 3;
+		donpcevent instance_npcname("eq#mir2") + "::OnEvent";
+	}
 	end;
 }
 
@@ -282,6 +303,9 @@ OnTimer9000:
 	stopnpctimer;
 	end;
 OnMobDead:
+	if ('step != 3)
+		end;
+	'step = 4;
 	stopnpctimer;
 	donpcevent instance_npcname("eq#mir3") + "::OnStop";
 	if ('random_letter$ != "")
@@ -394,6 +418,8 @@ OnStop:
 1@mir,100,90,7	script	Iris#4mir	4_F_IRIS,{
 	if (is_party_leader() == false)	// it shouldn't happen
 		end;
+	if ('step != 4)
+		end;
 	mes "[Iris]";
 	mes "Was that it...? Has it gone now?";
 	mes "So what's left now is...";
@@ -427,7 +453,10 @@ OnStop:
 	mes "And horribly painfully...!!";
 	close2;
 	cutin "",255;
-	donpcevent instance_npcname("eq#mir4") + "::OnEvent";
+	if ('step == 4) {
+		'step = 5;
+		donpcevent instance_npcname("eq#mir4") + "::OnEvent";
+	}
 	end;
 }
 
@@ -451,6 +480,9 @@ OnTimer1000:
 	donpcevent instance_npcname("eq#mir4") + "::OnMobDead";
 	end;
 OnMobDead:
+	if ('step != 5)
+		end;
+	'step = 6;
 	killmonster 'map_name$, instance_npcname("eq#mir4") + "::OnMobDead";
 	stopnpctimer;
 	enablenpc instance_npcname("Fenrir#5mir");
@@ -462,6 +494,8 @@ OnMobDead:
 
 1@mir,103,90,1	script	Fenrir#5mir	4_F_FENRIR,{
 	if (is_party_leader() == false)	// it shouldn't happen
+		end;
+	if ('step != 6)
 		end;
 	mes "[Fenrir]";
 	mes "~Groans~ I can't believe nothing seems to work!";
@@ -655,7 +689,10 @@ OnMobDead:
 	mes "...Be careful. She's about to attack!";
 	close2;
 	cutin "",255;
-	donpcevent instance_npcname("eq#mir5") + "::OnEvent";
+	if ('step == 6) {
+		'step = 7;
+		donpcevent instance_npcname("eq#mir5") + "::OnEvent";
+	}
 	end;
 }
 
@@ -693,6 +730,9 @@ OnTimer7000:
 	stopnpctimer;
 	end;
 OnMobDead:
+	if ('step != 7)
+		end;
+	'step = 8;
 	stopnpctimer;
 	donpcevent instance_npcname("eq#mir3") + "::OnStop";
 	donpcevent instance_npcname("eq#mir6") + "::OnStop";
@@ -703,6 +743,12 @@ OnMobDead:
 	enablenpc instance_npcname("Fenrir#6mir");
 	enablenpc instance_npcname("Iris#6mir");
 	enablenpc instance_npcname("Bijou#6mir");
+
+	if (playerattached() && 'exploit_disabled && banquet_main_quest == 21) {
+		erasequest 7700;// Once More!
+		setquest 7701;// Lost Imir Heart
+		banquet_main_quest = 22;
+	}
 	end;
 }
 
@@ -724,10 +770,13 @@ OnTimer20000:
 	end;
 OnStop:
 	stopnpctimer;
+	end;
 }
 
 1@mir,100,95,5	script	Iris#6mir	4_F_IRIS,{
 	if (is_party_leader() == false)	// it shouldn't happen
+		end;
+	if ('step != 8)
 		end;
 	mes "[Iris]";
 	mes "~Grunts~";
@@ -842,40 +891,40 @@ OnStop:
 	end;
 }
 
-1@mir,100,40,5	script	Iris#1mir	4_F_IRIS,{ end; }
-1@mir,103,94,1	duplicate(Iris#1mir)	Fenrir#2mir	4_F_FENRIR
-1@mir,102,98,3	duplicate(Iris#1mir)	Bijou#2mir	4_F_BIJOU
+1@mir,100,40,5	duplicate(dummy_npc)	Iris#1mir	4_F_IRIS
+1@mir,103,94,1	duplicate(dummy_npc)	Fenrir#2mir	4_F_FENRIR
+1@mir,102,98,3	duplicate(dummy_npc)	Bijou#2mir	4_F_BIJOU
 
-1@mir,100,85,7	duplicate(Iris#1mir)	Fenrir#3mir	4_F_FENRIR
-1@mir,102,88,3	duplicate(Iris#1mir)	Bijou#3mir	4_F_BIJOU
-1@mir,101,95,1	duplicate(Iris#1mir)	Renovated Amdarais#3mir	3448
+1@mir,100,85,7	duplicate(dummy_npc)	Fenrir#3mir	4_F_FENRIR
+1@mir,102,88,3	duplicate(dummy_npc)	Bijou#3mir	4_F_BIJOU
+1@mir,101,95,1	duplicate(dummy_npc)	Renovated Amdarais#3mir	3448
 
 1@mir,94,73,3	duplicate(Fenrir#boss1a)	Fenrir#boss1b	4_F_FENRIR,2,2
 1@mir,112,73,3	duplicate(Fenrir#boss1a)	Fenrir#boss1c	4_F_FENRIR,2,2
 1@mir,103,60,3	duplicate(Fenrir#boss1a)	Fenrir#boss1d	4_F_FENRIR,2,2
 
-1@mir,100,80,5	duplicate(Iris#1mir)	Iris#boss1a	4_F_IRIS
-1@mir,91,73,5	duplicate(Iris#1mir)	Iris#boss1b	4_F_IRIS
-1@mir,109,73,5	duplicate(Iris#1mir)	Iris#boss1c	4_F_IRIS
-1@mir,100,60,5	duplicate(Iris#1mir)	Iris#boss1d	4_F_IRIS
+1@mir,100,80,5	duplicate(dummy_npc)	Iris#boss1a	4_F_IRIS
+1@mir,91,73,5	duplicate(dummy_npc)	Iris#boss1b	4_F_IRIS
+1@mir,109,73,5	duplicate(dummy_npc)	Iris#boss1c	4_F_IRIS
+1@mir,100,60,5	duplicate(dummy_npc)	Iris#boss1d	4_F_IRIS
 
 1@mir,103,76,3	duplicate(Fenrir#boss1a)	Fenrir#boss2a	4_F_FENRIR,2,2
 1@mir,94,70,3	duplicate(Fenrir#boss1a)	Fenrir#boss2b	4_F_FENRIR,2,2
 1@mir,112,70,3	duplicate(Fenrir#boss1a)	Fenrir#boss2c	4_F_FENRIR,2,2
 1@mir,103,63,3	duplicate(Fenrir#boss1a)	Fenrir#boss2d	4_F_FENRIR,2,2
 
-1@mir,100,76,5	duplicate(Iris#1mir)	Iris#boss2a	4_F_IRIS
-1@mir,91,70,5	duplicate(Iris#1mir)	Iris#boss2b	4_F_IRIS
-1@mir,109,70,5	duplicate(Iris#1mir)	Iris#boss2c	4_F_IRIS
-1@mir,100,63,5	duplicate(Iris#1mir)	Iris#boss2d	4_F_IRIS
+1@mir,100,76,5	duplicate(dummy_npc)	Iris#boss2a	4_F_IRIS
+1@mir,91,70,5	duplicate(dummy_npc)	Iris#boss2b	4_F_IRIS
+1@mir,109,70,5	duplicate(dummy_npc)	Iris#boss2c	4_F_IRIS
+1@mir,100,63,5	duplicate(dummy_npc)	Iris#boss2d	4_F_IRIS
 
-1@mir,102,95,3	duplicate(Iris#1mir)	Bijou#4mir	4_F_BIJOU
-1@mir,103,90,1	duplicate(Iris#1mir)	Fenrir#4mir	4_F_FENRIR
+1@mir,102,95,3	duplicate(dummy_npc)	Bijou#4mir	4_F_BIJOU
+1@mir,103,90,1	duplicate(dummy_npc)	Fenrir#4mir	4_F_FENRIR
 
-1@mir,102,95,3	duplicate(Iris#1mir)	Bijou#5mir	4_F_BIJOU
-1@mir,99,95,5	duplicate(Iris#1mir)	Sarah#5mir	4_F_SARAH
-1@mir,100,90,7	duplicate(Iris#1mir)	Iris#5mir	4_F_IRIS
+1@mir,102,95,3	duplicate(dummy_npc)	Bijou#5mir	4_F_BIJOU
+1@mir,99,95,5	duplicate(dummy_npc)	Sarah#5mir	4_F_SARAH
+1@mir,100,90,7	duplicate(dummy_npc)	Iris#5mir	4_F_IRIS
 
-1@mir,102,95,3	duplicate(Iris#1mir)	Bijou#6mir	4_F_BIJOU
-1@mir,104,95,3	duplicate(Iris#1mir)	Sarah#6mir	4_F_SARAH
-1@mir,103,90,1	duplicate(Iris#1mir)	Fenrir#6mir	4_F_FENRIR
+1@mir,102,95,3	duplicate(dummy_npc)	Bijou#6mir	4_F_BIJOU
+1@mir,104,95,3	duplicate(dummy_npc)	Sarah#6mir	4_F_SARAH
+1@mir,103,90,1	duplicate(dummy_npc)	Fenrir#6mir	4_F_FENRIR
