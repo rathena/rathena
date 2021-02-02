@@ -92945,6 +92945,7 @@ Body:
     Script: |
       bonus bBaseAtk,pow(min(getrefine(),15),2);
       bonus bMatk,pow(min(getrefine(),15),2)/2;
+      bonus bMatk,pow(min(getrefine(),15),2)/2;
   - Id: 21018
     AegisName: Lindy_Hop
     Name: Lindy Hop
