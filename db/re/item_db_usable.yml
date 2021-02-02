@@ -47472,7 +47472,8 @@ Body:
     Delay:
       Duration: 180000
     Script: |
-      setmadogear 1;
+      specialeffect2 EF_CLAYMORE;
+      setmadogear true;
   - Id: 23280
     AegisName: N_Fly_Wing_
     Name: Novice Fly Wing
@@ -48818,6 +48819,22 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 100408;*/
+  - Id: 100158
+    AegisName: Mado_Box02
+    Name: Mado Strengthening Suit
+    Type: Usable
+    Buy: 10000
+    Weight: 300
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    EquipLevelMin: 100
+    Delay:
+      Duration: 180000
+    Script: |
+      specialeffect2 EF_CLAYMORE;
+      setmadogear true,MADO_SUIT;
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion

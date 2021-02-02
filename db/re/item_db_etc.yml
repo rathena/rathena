@@ -23966,7 +23966,7 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 7000
-    AegisName: aegis_7000
+    AegisName: Evt_Cos_Coin
     Name: Event Stone Coin    # !todo check english name
     Type: Etc
   - Id: 7001
@@ -36007,85 +36007,85 @@ Body:
     Type: Etc
     Weight: 20
   - Id: 25759
-    AegisName: aegis_25759
+    AegisName: Dragenergy_Green
     Name: Green Dragon Orb
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25760
-    AegisName: aegis_25760
+    AegisName: Dragenergy_Blue
     Name: Blue Dragon Orb
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25761
-    AegisName: aegis_25761
+    AegisName: Dragenergy_Red
     Name: Red Dragon Orb
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25762
-    AegisName: aegis_25762
+    AegisName: Dragenergy_Gold
     Name: Gold Dragon Orb
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25763
-    AegisName: aegis_25763
+    AegisName: Dragenergy_Purple
     Name: Purple Dragon Orb
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25764
-    AegisName: aegis_25764
+    AegisName: Dragenergy_Silver
     Name: Silver Dragon Orb
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25765
-    AegisName: aegis_25765
+    AegisName: Drabone_L
     Name: Large Dragon Bone
     Type: Etc
     Weight: 200
     Flags:
       BuyingStore: true
   - Id: 25766
-    AegisName: aegis_25766
+    AegisName: Drabone_S
     Name: Small Dragon Bone
     Type: Etc
     Weight: 100
     Flags:
       BuyingStore: true
   - Id: 25767
-    AegisName: aegis_25767
+    AegisName: Angel_Dream
     Name: Angel's Dream
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25768
-    AegisName: aegis_25768
+    AegisName: Shard_Blue
     Name: Valkyrie Ingrid's Armor Fragment
     Type: Etc
     Weight: 30
   - Id: 25769
-    AegisName: aegis_25769
+    AegisName: Shard_Gold
     Name: Valkyrie Reginleif's Armor Fragment
     Type: Etc
     Weight: 30
   - Id: 25770
-    AegisName: aegis_25770
+    AegisName: Valkyrie_Armor2
     Name: Valkyrie Reginleif's Armor
     Type: Etc
     Weight: 100
   - Id: 25771
-    AegisName: aegis_25771
+    AegisName: Valkyrie_Armor3
     Name: Valkyrie Ingrid's Armor
     Type: Etc
     Weight: 100
@@ -36150,37 +36150,37 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 25809
-    AegisName: aegis_25809
+    AegisName: Ein_REDIUM
     Name: Redium
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 25810
-    AegisName: aegis_25810
+    AegisName: Ein_RINDIUM
     Name: Rindium
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 25811
-    AegisName: aegis_25811
+    AegisName: Ein_ODIUM
     Name: Odium
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 25812
-    AegisName: aegis_25812
+    AegisName: Ein_PURDIUM
     Name: Purdium
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 25813
-    AegisName: aegis_25813
+    AegisName: Ein_WHIDIUM
     Name: Whidium
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 25814
-    AegisName: aegis_25814
+    AegisName: Ein_DYNITE
     Name: Dynite
     Type: Etc
     Weight: 10
@@ -36196,7 +36196,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25817
-    AegisName: aegis_25817
+    AegisName: Ein_EYEROCK
     Name: Bizarre Stone Carvings
     Type: Etc
     Weight: 50
@@ -36306,28 +36306,28 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 25864
-    AegisName: aegis_25864
+    AegisName: S_Circlet_Of_Time
     Name: Sealed Temporal Circlet
     Type: Etc
     Weight: 100
     Flags:
       BuyingStore: true
   - Id: 25865
-    AegisName: aegis_25865
+    AegisName: Jewel_Of_Time_Ore
     Name: Temperal Gemstone
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25866
-    AegisName: aegis_25866
+    AegisName: Spell_Of_Time
     Name: Temporal Spell
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25867
-    AegisName: aegis_25867
+    AegisName: Fragment_Of_Time
     Name: Temporal Fragment
     Type: Etc
     Flags:
@@ -36368,7 +36368,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 25897
-    AegisName: aegis_25897
+    AegisName: Crown_Of_Witch
     Name: Deep Sea Witch's Crown
     Type: Etc
     Weight: 10
@@ -36389,7 +36389,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25899
-    AegisName: aegis_25899
+    AegisName: E_Abyss1
     Name: Abyssal Essence
     Type: Etc
     Weight: 10
@@ -37669,35 +37669,35 @@ Body:
       bonus2 bMagicAddRace,RC_Brute,15;
       bonus2 bMagicAddRace,RC_Player_Doram,15;
   - Id: 27200
-    AegisName: aegis_27200
+    AegisName: Nihil_Card
     Name: Nihil Card
     Type: Card
     Weight: 10
     Locations:
       Right_Hand: true
   - Id: 27201
-    AegisName: aegis_27201
+    AegisName: Agnes_Card
     Name: Agnes Card
     Type: Card
     Weight: 10
     Locations:
       Right_Hand: true
   - Id: 27202
-    AegisName: aegis_27202
+    AegisName: Jurgen_Card
     Name: Juergen Card
     Type: Card
     Weight: 10
     Locations:
       Right_Hand: true
   - Id: 27203
-    AegisName: aegis_27203
+    AegisName: Spica_Card
     Name: Spica Card
     Type: Card
     Weight: 10
     Locations:
       Right_Hand: true
   - Id: 27209
-    AegisName: aegis_27209
+    AegisName: SLD_Q_Scaraba_Card
     Name: Sealed Queen Scaraba Card
     Type: Card
     Weight: 10
@@ -37714,7 +37714,7 @@ Body:
          bonus2 bAddRace2,RC2_SCARABA,15;
       }
   - Id: 27211
-    AegisName: aegis_27211
+    AegisName: SLD_Baphomet_Card
     Name: Sealed Baphomet Card
     Type: Card
     Weight: 10
@@ -37731,7 +37731,7 @@ Body:
          bonus bHit,-30;
       }
   - Id: 27212
-    AegisName: aegis_27212
+    AegisName: SLD_Maya_Card
     Name: Sealed Maya Card
     Type: Card
     Weight: 10
@@ -37747,7 +37747,7 @@ Body:
          bonus bMagicDamageReturn,15;
       }
   - Id: 27213
-    AegisName: aegis_27213
+    AegisName: SLD_Clown_Card
     Name: Sealed Clown Card
     Type: Card
     Weight: 10
@@ -37769,7 +37769,7 @@ Body:
       }
       bonus bFlee,(readparam(bVit)>=110) ? (.@b*2) : .@b;
   - Id: 27214
-    AegisName: aegis_27214
+    AegisName: SLD_Professor_Card
     Name: Sealed Professor Card
     Type: Card
     Weight: 10
@@ -37787,7 +37787,7 @@ Body:
          bonus bMatkRate,(readparam(bDex)>=110) ? 10 : 5;
       }
   - Id: 27215
-    AegisName: aegis_27215
+    AegisName: SLD_Champion_Card
     Name: Sealed Champion Card
     Type: Card
     Weight: 10
@@ -37805,7 +37805,7 @@ Body:
          bonus2 bAddClass,Class_All,(readparam(bAgi)>=110) ? 10 : 5;
       }
   - Id: 27216
-    AegisName: aegis_27216
+    AegisName: SLD_Creator_Card
     Name: Sealed Creator Card
     Type: Card
     Weight: 10
@@ -37823,7 +37823,7 @@ Body:
          bonus bCritical,(readparam(bStr)>=110) ? 30 : 20;
       }
   - Id: 27217
-    AegisName: aegis_27217
+    AegisName: SLD_Stalker_Card
     Name: Sealed Stalker Card
     Type: Card
     Weight: 10
@@ -37840,7 +37840,7 @@ Body:
          bonus bHit,(readparam(bLuk)>=110) ? 30 : 15;
       }
   - Id: 27218
-    AegisName: aegis_27218
+    AegisName: SLD_Paladin_Card
     Name: Sealed Paladin Card
     Type: Card
     Weight: 10
@@ -37858,7 +37858,7 @@ Body:
          bonus bMaxHPrate,(readparam(bInt)>=110) ? 14 : 7;
       }
   - Id: 27219
-    AegisName: aegis_27219
+    AegisName: SLD_Gypsy_Card
     Name: Sealed Gypsy Card
     Type: Card
     Weight: 10
@@ -37880,7 +37880,7 @@ Body:
          bonus bFlee,(readparam(bVit)>=110) ? 30 : 15;
       }
   - Id: 27220
-    AegisName: aegis_27220
+    AegisName: SLD_Daehyon_Card
     Name: Sealed General Daehyon Card
     Type: Card
     Weight: 10
@@ -37900,7 +37900,7 @@ Body:
          }
       }
   - Id: 27221
-    AegisName: aegis_27221
+    AegisName: SLD_Gioia_Card
     Name: Sealed Gioia Card
     Type: Card
     Weight: 10
@@ -37920,7 +37920,7 @@ Body:
          bonus2 bSubEle,Ele_All,-40;
       }
   - Id: 27222
-    AegisName: aegis_27222
+    AegisName: SLD_Pyuriel_Card
     Name: Sealed Fallen Pyuriel Card
     Type: Card
     Weight: 10
@@ -37938,7 +37938,7 @@ Body:
          bonus2 bSubRace,RC_All,-15;
       }
   - Id: 27224
-    AegisName: aegis_27224
+    AegisName: SLD_Kades_Card
     Name: Sealed Guardian Kades Card
     Type: Card
     Weight: 10
@@ -37966,7 +37966,7 @@ Body:
          bonus2 bSubEle,Ele_Undead,20;
       }
   - Id: 27225
-    AegisName: aegis_27225
+    AegisName: SLD_Timeholder_Card
     Name: Sealed Time Holder Card
     Type: Card
     Weight: 10
@@ -38822,7 +38822,7 @@ Body:
       bonus bMaxSP,50;
       bonus2 bSubRace,RC_Angel,-50;
   - Id: 27329
-    AegisName: aegis_27329
+    AegisName: Schmidt_Card
     Name: Curse Eater King Card
     Type: Card
     Weight: 10
@@ -39240,7 +39240,7 @@ Body:
     Script: |
       bonus bAspd,1;
   - Id: 27381
-    AegisName: aegis_27381
+    AegisName: C_Himel_Card
     Name: Himmelmez's Phantom Card
     Type: Card
     Weight: 10
@@ -39253,7 +39253,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,100;
       bonus2 bSubEle,Ele_All,-30;
   - Id: 27382
-    AegisName: aegis_27382
+    AegisName: C_CorruptionRoot_Card
     Name: Prime Corruption Root Card
     Type: Card
     Weight: 10
@@ -39265,7 +39265,7 @@ Body:
       bonus bMatk,30;
       bonus bBaseAtk,30;
   - Id: 27383
-    AegisName: aegis_27383
+    AegisName: C_Amdarais_Card
     Name: Amdarais's Phantom Card
     Type: Card
     Weight: 10
@@ -39277,7 +39277,7 @@ Body:
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,5;
   - Id: 27384
-    AegisName: aegis_27384
+    AegisName: C_White_Knight_Card
     Name: Mutated White Knight Card
     Type: Card
     Weight: 10
@@ -39290,7 +39290,7 @@ Body:
       bonus2 bMagicAddSize,Size_Medium,20;
       bonus2 bMagicAddSize,Size_Large,20;
   - Id: 27385
-    AegisName: aegis_27385
+    AegisName: C_Khaliz_Knight_Card
     Name: Mutated Khalitzburg Card
     Type: Card
     Weight: 10
@@ -39305,7 +39305,7 @@ Body:
       bonus2 bSubSize,Size_Large,25;
       bonus2 bMagicSubSize,Size_Large,25;
   - Id: 27386
-    AegisName: aegis_27386
+    AegisName: C_Raydric_Card
     Name: Cursed Raydric Card
     Type: Card
     Weight: 10
@@ -39316,7 +39316,7 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Undead,5;
   - Id: 27387
-    AegisName: aegis_27387
+    AegisName: C_Raydric_Archer_Card
     Name: Cursed Raydric Archer Card
     Type: Card
     Weight: 10
@@ -39327,7 +39327,7 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Demon,5;
   - Id: 27388
-    AegisName: aegis_27388
+    AegisName: C_Cursed_Butler
     Name: Cursed Servant Card
     Type: Card
     Weight: 10
@@ -40691,19 +40691,19 @@ Body:
     Script: |
       skill "AL_TELEPORT",1;
   - Id: 29238
-    AegisName: aegis_29238
+    AegisName: Evasion10
     Name: Flee+10
     Type: Card
     Script: |
       bonus bFlee,10;
   - Id: 29239
-    AegisName: aegis_29239
+    AegisName: Hit5
     Name: Hit+5
     Type: Card
     Script: |
       bonus bHit,5;
   - Id: 29241
-    AegisName: aegis_29241
+    AegisName: Critical10
     Name: Cri+10
     Type: Card
     Script: |
@@ -41028,13 +41028,13 @@ Body:
       skill "TF_DOUBLE",3;
       bonus bDoubleRate,15;
   - Id: 29380
-    AegisName: aegis_29380
+    AegisName: ATK5
     Name: ATK +5
     Type: Card
     Script: |
       bonus bBaseAtk,5;
   - Id: 29381
-    AegisName: aegis_29381
+    AegisName: MATK5
     Name: MATK +5
     Type: Card
     Script: |
@@ -41714,27 +41714,27 @@ Body:
     Type: Card
     Buy: 20
   - Id: 29587
-    AegisName: aegis_29587
+    AegisName: Gh_md_agi
     Name: Flash
     Type: Card
   - Id: 29588
-    AegisName: aegis_29588
+    AegisName: Gh_md_str
     Name: Power
     Type: Card
   - Id: 29589
-    AegisName: aegis_29589
+    AegisName: Gh_md_dex
     Name: Celestial
     Type: Card
   - Id: 29590
-    AegisName: aegis_29590
+    AegisName: Gh_md_int
     Name: Divine Power
     Type: Card
   - Id: 29591
-    AegisName: aegis_29591
+    AegisName: Gh_md_vit
     Name: Rigid Body
     Type: Card
   - Id: 29592
-    AegisName: aegis_29592
+    AegisName: Gh_md_luk
     Name: Hundred Lucks
     Type: Card
   - Id: 29594
@@ -42007,7 +42007,7 @@ Body:
       bonus2 bSkillAtk,"SU_PICKYPECK",20;
       bonus2 bSkillAtk,"SU_CN_METEOR",20;
   - Id: 29672
-    AegisName: aegis_29672
+    AegisName: Time_Jewely_Str_1
     Name: Temporal Jewel (STR) Lv 1
     Type: Card
     Script: |
@@ -42016,7 +42016,7 @@ Body:
       bonus bHit,3*(.@r/2);
       bonus2 bAddClass,Class_All,(.@r/5);
   - Id: 29673
-    AegisName: aegis_29673
+    AegisName: Time_Jewely_Str_2
     Name: Temporal Jewel (STR) Lv 2
     Type: Card
     Script: |
@@ -42025,7 +42025,7 @@ Body:
       bonus bHit,5*(.@r/2);
       bonus2 bAddClass,Class_All,2*(.@r/5);
   - Id: 29674
-    AegisName: aegis_29674
+    AegisName: Time_Jewely_Str_3
     Name: Temporal Jewel (STR) Lv 3
     Type: Card
     Script: |
@@ -42034,7 +42034,7 @@ Body:
       bonus bHit,7*(.@r/2);
       bonus2 bAddClass,Class_All,3*(.@r/5);
   - Id: 29675
-    AegisName: aegis_29675
+    AegisName: Time_Jewely_Agi_1
     Name: Temporal Jewel (AGI) Lv 1
     Type: Card
     Script: |
@@ -42043,7 +42043,7 @@ Body:
       bonus bFlee,4*(.@r/2);
       bonus bAspd,(.@r/5);
   - Id: 29676
-    AegisName: aegis_29676
+    AegisName: Time_Jewely_Agi_2
     Name: Temporal Jewel (AGI) Lv 2
     Type: Card
     Script: |
@@ -42052,7 +42052,7 @@ Body:
       bonus bFlee,5*(.@r/2);
       bonus bAspd,(.@r/5);
   - Id: 29677
-    AegisName: aegis_29677
+    AegisName: Time_Jewely_Agi_3
     Name: Temporal Jewel (AGI) Lv 3
     Type: Card
     Script: |
@@ -42061,7 +42061,7 @@ Body:
       bonus bFlee,7*(.@r/2);
       bonus bAspd,(.@r/5);
   - Id: 29678
-    AegisName: aegis_29678
+    AegisName: Time_Jewely_Vit_1
     Name: Temporal Jewel (VIT) Lv 1
     Type: Card
     Script: |
@@ -42070,7 +42070,7 @@ Body:
       bonus bMaxHP,200*(.@r/2);
       bonus bMaxHPrate,(.@r/5);
   - Id: 29679
-    AegisName: aegis_29679
+    AegisName: Time_Jewely_Vit_2
     Name: Temporal Jewel (VIT) Lv 2
     Type: Card
     Script: |
@@ -42079,7 +42079,7 @@ Body:
       bonus bMaxHP,300*(.@r/2);
       bonus bMaxHPrate,2*(.@r/5);
   - Id: 29680
-    AegisName: aegis_29680
+    AegisName: Time_Jewely_Vit_3
     Name: Temporal Jewel (VIT) Lv 3
     Type: Card
     Script: |
@@ -42088,7 +42088,7 @@ Body:
       bonus bMaxHP,500*(.@r/2);
       bonus bMaxHPrate,3*(.@r/5);
   - Id: 29681
-    AegisName: aegis_29681
+    AegisName: Time_Jewely_Int_1
     Name: Temporal Jewel (INT) Lv 1
     Type: Card
     Script: |
@@ -42097,7 +42097,7 @@ Body:
       bonus bMatk,2*(.@r/2);
       bonus bMatkRate,(.@r/5);
   - Id: 29682
-    AegisName: aegis_29682
+    AegisName: Time_Jewely_Int_2
     Name: Temporal Jewel (INT) Lv 2
     Type: Card
     Script: |
@@ -42106,7 +42106,7 @@ Body:
       bonus bMatk,4*(.@r/2);
       bonus bMatkRate,2*(.@r/5);
   - Id: 29683
-    AegisName: aegis_29683
+    AegisName: Time_Jewely_Int_3
     Name: Temporal Jewel (INT) Lv 3
     Type: Card
     Script: |
@@ -42115,7 +42115,7 @@ Body:
       bonus bMatk,7*(.@r/2);
       bonus bMatkRate,3*(.@r/5);
   - Id: 29684
-    AegisName: aegis_29684
+    AegisName: Time_Jewely_Dex_1
     Name: Temporal Jewel (DEX) Lv 1
     Type: Card
     Script: |
@@ -42124,7 +42124,7 @@ Body:
       bonus bHit,2*(.@r/2);
       bonus2 bAddClass,Class_All,(.@r/5);
   - Id: 29685
-    AegisName: aegis_29685
+    AegisName: Time_Jewely_Dex_2
     Name: Temporal Jewel (DEX) Lv 2
     Type: Card
     Script: |
@@ -42133,7 +42133,7 @@ Body:
       bonus bHit,5*(.@r/2);
       bonus2 bAddClass,Class_All,2*(.@r/5);
   - Id: 29686
-    AegisName: aegis_29686
+    AegisName: Time_Jewely_Dex_3
     Name: Temporal Jewel (DEX) Lv 3
     Type: Card
     Script: |
@@ -42142,7 +42142,7 @@ Body:
       bonus bHit,7*(.@r/2);
       bonus2 bAddClass,Class_All,3*(.@r/5);
   - Id: 29687
-    AegisName: aegis_29687
+    AegisName: Time_Jewely_Luk_1
     Name: Temporal Jewel (LUK) Lv 1
     Type: Card
     Script: |
@@ -42151,7 +42151,7 @@ Body:
       bonus bCritical,(.@r/2);
       bonus2 bAddClass,Class_All,(.@r/5);
   - Id: 29688
-    AegisName: aegis_29688
+    AegisName: Time_Jewely_Luk_2
     Name: Temporal Jewel (LUK) Lv 2
     Type: Card
     Script: |
@@ -42160,7 +42160,7 @@ Body:
       bonus bCritical,2*(.@r/2);
       bonus2 bAddClass,Class_All,2*(.@r/5);
   - Id: 29689
-    AegisName: aegis_29689
+    AegisName: Time_Jewely_Luk_3
     Name: Temporal Jewel (LUK) Lv 3
     Type: Card
     Script: |
@@ -42483,7 +42483,7 @@ Body:
     Script: |
       bonus bAgi,1;
   - Id: 300001
-    AegisName: aegis_300001
+    AegisName: Poisonous_Card
     Name: Poisonous Card
     Type: Card
     Weight: 10
@@ -42495,7 +42495,7 @@ Body:
     Script: |
       bonus2 bAddEle,Ele_Poison,25;
   - Id: 300002
-    AegisName: aegis_300002
+    AegisName: Toxious_Card
     Name: Toxious Card
     Type: Card
     Weight: 10
@@ -42508,7 +42508,7 @@ Body:
       bonus bLongAtkDef,5;
       bonus bMaxHPrate,10;
   - Id: 300003
-    AegisName: aegis_300003
+    AegisName: Porcellio_W_Card
     Name: White Porcellio Card
     Type: Card
     Weight: 10
@@ -42520,7 +42520,7 @@ Body:
     Script: |
       bonus bBaseAtk,20;
   - Id: 300004
-    AegisName: aegis_300004
+    AegisName: Neo_Mineral_Card
     Name: Neo Mineral Card
     Type: Card
     Weight: 10
@@ -42532,7 +42532,7 @@ Body:
     Script: |
       bonus bDef,30;
   - Id: 300005
-    AegisName: aegis_300005
+    AegisName: Abyss_Man_Card
     Name: Abyssman Card
     Type: Card
     Weight: 10
@@ -42545,7 +42545,7 @@ Body:
       bonus bMaxHP,10;
       bonus2 bSkillAtk,"SO_EARTHGRAVE",10;
   - Id: 300006
-    AegisName: aegis_300006
+    AegisName: Jeweliant_Card
     Name: Jewelry Ant Card
     Type: Card
     Weight: 10
@@ -42557,7 +42557,7 @@ Body:
     Script: |
       bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",1,100,BF_WEAPON,1;
   - Id: 300007
-    AegisName: aegis_300007
+    AegisName: Jungoliant_Card
     Name: Jeweled Ungoliant Card
     Type: Card
     Weight: 10
@@ -42572,7 +42572,7 @@ Body:
       bonus2 bAddRace,RC_Formless,40;
       bonus2 bAddRace,RC_Plant,40;
   - Id: 300008
-    AegisName: aegis_300008
+    AegisName: Angelgolt_Card
     Name: Angelgolt Card
     Type: Card
     Weight: 10
@@ -42584,7 +42584,7 @@ Body:
     Script: |
       bonus2 bMagicAddRace,RC_Demon,10;
   - Id: 300009
-    AegisName: aegis_300009
+    AegisName: Plasma_Spt_Card
     Name: Spectrum Plasma Card
     Type: Card
     Weight: 10
@@ -42605,7 +42605,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Ghost,10;
       }
   - Id: 300010
-    AegisName: aegis_300010
+    AegisName: Plasma_Arch_Card
     Name: Arch Plasma Card
     Type: Card
     Weight: 10
@@ -42626,7 +42626,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Wind,10;
       }
   - Id: 300011
-    AegisName: aegis_300011
+    AegisName: Holy_Frus_Card
     Name: Holy Frus Card
     Type: Card
     Weight: 10
@@ -42647,7 +42647,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Holy,10;
       }
   - Id: 300012
-    AegisName: aegis_300012
+    AegisName: Holy_Skogul_Card
     Name: Holy Skogul Card
     Type: Card
     Weight: 10
@@ -42666,7 +42666,7 @@ Body:
          bonus bHealPower,2;
       }
   - Id: 300013
-    AegisName: aegis_300013
+    AegisName: Reginleif_Card
     Name: Reginleif Card
     Type: Card
     Weight: 10
@@ -42680,7 +42680,7 @@ Body:
       bonus2 bAddClass,Class_All,30;
       bonus bMaxHPrate,-15;
   - Id: 300014
-    AegisName: aegis_300014
+    AegisName: Ingrid_Card
     Name: Ingrid Card
     Type: Card
     Weight: 10
@@ -42697,7 +42697,7 @@ Body:
     UnEquipScript: |
       heal -10000,0;
   - Id: 300015
-    AegisName: aegis_300015
+    AegisName: Ferus_P_Card
     Name: Purple Ferus Card
     Type: Card
     Weight: 10
@@ -42714,7 +42714,7 @@ Body:
       bonus bMaxSPrate,-5;
       bonus2 bAddClass,Class_All,(getrefine()/4);
   - Id: 300016
-    AegisName: aegis_300016
+    AegisName: Treasure_Mimic_Card
     Name: Treasure Mimic Card
     Type: Card
     Weight: 10
@@ -42727,7 +42727,7 @@ Body:
       bonus bCritical,5;
       bonus bFlee,30;
   - Id: 300017
-    AegisName: aegis_300017
+    AegisName: Acidus_B_Card
     Name: Black Acidus Card
     Type: Card
     Weight: 10
@@ -42739,7 +42739,7 @@ Body:
     Script: |
       bonus2 bAddEle,Ele_Dark,25;
   - Id: 300018
-    AegisName: aegis_300018
+    AegisName: Acidus_S_Card
     Name: Silver Acidus Card
     Type: Card
     Weight: 10
@@ -42751,7 +42751,7 @@ Body:
     Script: |
       bonus2 bAddEle,Ele_Holy,25;
   - Id: 300019
-    AegisName: aegis_300019
+    AegisName: Bone_Ferus_Card
     Name: Bone Ferus Card
     Type: Card
     Weight: 10
@@ -42763,7 +42763,7 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Dragon,5;
   - Id: 300020
-    AegisName: aegis_300020
+    AegisName: Bone_Acidus_Card
     Name: Bone Acidus Card
     Type: Card
     Weight: 10
@@ -42775,7 +42775,7 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Brute,5;
   - Id: 300021
-    AegisName: aegis_300021
+    AegisName: Bone_Detale_Card
     Name: Bone Detardeurus Card
     Type: Card
     Weight: 10
@@ -42790,7 +42790,7 @@ Body:
       bonus2 bAddEle,Ele_Ghost,40;
       bonus2 bAddEle,Ele_Undead,40;
   - Id: 300076
-    AegisName: aegis_300076
+    AegisName: Beta_Guards_Card
     Name: Broken Security Beta Card
     Type: Card
     Weight: 10
@@ -42805,7 +42805,7 @@ Body:
       bonus2 bSkillAtk,"LG_BANISHINGPOINT",10;
       bonus2 bSkillAtk,"LG_CANNONSPEAR",10;
   - Id: 300077
-    AegisName: aegis_300077
+    AegisName: Omega_Cleaner_Card
     Name: Broken Cleaning Robot Omega Card
     Type: Card
     Weight: 10
@@ -42821,7 +42821,7 @@ Body:
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",10;
       bonus2 bSkillAtk,"NC_VULCANARM",10;
   - Id: 300078
-    AegisName: aegis_300078
+    AegisName: Sweetie_Card
     Name: Sweetie Card
     Type: Card
     Weight: 10
@@ -42834,7 +42834,7 @@ Body:
       bonus2 bSkillAtk,"RL_FIREDANCE",60;
       bonus bUseSPrate,25;
   - Id: 300079
-    AegisName: aegis_300079
+    AegisName: Red_Pepper_Card
     Name: Red Pepper Card
     Type: Card
     Weight: 10
@@ -42849,7 +42849,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Holy,30;
       bonus2 bMagicAddEle,Ele_Water,30;
   - Id: 300080
-    AegisName: aegis_300080
+    AegisName: Red_Pepper_H_Card
     Name: Greater Red Pepper Card
     Type: Card
     Weight: 10
@@ -42864,7 +42864,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Holy,50;
       bonus2 bMagicAddEle,Ele_Water,50;
   - Id: 300081
-    AegisName: aegis_300081
+    AegisName: Assistant_Card
     Name: Research Assistant Bot Card
     Type: Card
     Weight: 10
@@ -42879,7 +42879,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"MG_FIREBALL",25;
   - Id: 300082
-    AegisName: aegis_300082
+    AegisName: Assistant_H_Card
     Name: Greater Research Assistant Bot Card
     Type: Card
     Weight: 10
@@ -42894,7 +42894,7 @@ Body:
       }
       bonus bLongAtkRate,2*(getrefine()/2);
   - Id: 300083
-    AegisName: aegis_300083
+    AegisName: Dry_Rafflesia_Card
     Name: Dried Rafflesia Card
     Type: Card
     Weight: 10
@@ -42910,7 +42910,7 @@ Body:
       bonus2 bSkillAtk,"NJ_KUNAI",15;
       bonus2 bSkillAtk,"NJ_HYOUSENSOU",15;
   - Id: 300084
-    AegisName: aegis_300084
+    AegisName: Dry_Rafflesia_H_Card
     Name: Greater Dried Rafflesia Card
     Type: Card
     Weight: 10
@@ -42923,7 +42923,7 @@ Body:
       bonus2 bSubEle,Ele_Holy,30;
       bonus bFlee,5;
   - Id: 300085
-    AegisName: aegis_300085
+    AegisName: Alnoldi_Ex_Card
     Name: Special Alnoldi Card
     Type: Card
     Weight: 10
@@ -42938,7 +42938,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus bBaseAtk,getskilllv("TK_POWER");
   - Id: 300086
-    AegisName: aegis_300086
+    AegisName: Alnoldi_Ex_H_Card
     Name: Greater Special Alnoldi Card
     Type: Card
     Weight: 10
@@ -42957,7 +42957,7 @@ Body:
          bonus bUnbreakableWeapon;
       }
   - Id: 300087
-    AegisName: aegis_300087
+    AegisName: Beta_Basic_Card
     Name: Broken Gardener Beta Card
     Type: Card
     Weight: 10
@@ -42973,7 +42973,7 @@ Body:
       bonus2 bSkillAtk,"SU_SV_STEMSPEAR",10;
       bonus2 bSkillAtk,"SU_SCAROFTAROU",10;
   - Id: 300088
-    AegisName: aegis_300088
+    AegisName: Beta_Basic_H_Card
     Name: Greater_Broken Gardener Beta Card
     Type: Card
     Weight: 10
@@ -42992,7 +42992,7 @@ Body:
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15*.@r;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",15*.@r;
   - Id: 300089
-    AegisName: aegis_300089
+    AegisName: Verporta_Card
     Name: Verporta Card
     Type: Card
     Weight: 10
@@ -43007,7 +43007,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"MS_MAGNUM",25;
   - Id: 300090
-    AegisName: aegis_300090
+    AegisName: Verporte_Card
     Name: Verporte Card
     Type: Card
     Weight: 10
@@ -43023,7 +43023,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Earth,10;
       }
   - Id: 300091
-    AegisName: aegis_300091
+    AegisName: MD_Papila_Card
     Name: Papila Card
     Type: Card
     Weight: 10
@@ -43040,7 +43040,7 @@ Body:
       bonus2 bSkillAtk,"GS_DESPERADO",10;
       bonus2 bSkillAtk,"GS_FULLBUSTER",10;
   - Id: 300092
-    AegisName: aegis_300092
+    AegisName: MD_Papila_H_Card
     Name: Greater Papila Card
     Type: Card
     Weight: 10
@@ -43055,7 +43055,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"MC_CARTREVOLUTION",50;
   - Id: 300093
-    AegisName: aegis_300093
+    AegisName: MD_Papila_Ruba_Card
     Name: Papila Ruba Card
     Type: Card
     Weight: 10
@@ -43070,7 +43070,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"AL_HOLYLIGHT",50;
   - Id: 300094
-    AegisName: aegis_300094
+    AegisName: MD_Papila_Ruba_H_Card
     Name: Greater Papila Ruba Card
     Type: Card
     Weight: 10
@@ -43085,7 +43085,7 @@ Body:
       }
       bonus bCritAtkRate,2*(getrefine()/2);
   - Id: 300095
-    AegisName: aegis_300095
+    AegisName: MD_Papila_Cae_Card
     Name: Papila Cae Card
     Type: Card
     Weight: 10
@@ -43100,7 +43100,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"AC_SHOWER",25;
   - Id: 300096
-    AegisName: aegis_300096
+    AegisName: MD_Papila_Cae_H_Card
     Name: Greater Papila Cae Card
     Type: Card
     Weight: 10
@@ -43122,7 +43122,7 @@ Body:
          bonus bMatk,20;
       }
   - Id: 300097
-    AegisName: aegis_300097
+    AegisName: Aries_Card
     Name: Aries Card
     Type: Card
     Weight: 10
@@ -43137,7 +43137,7 @@ Body:
       bonus bMaxSPrate,10;
       bonus2 bSkillAtk,"TF_POISON",25;
   - Id: 300098
-    AegisName: aegis_300098
+    AegisName: Aries_H_Card
     Name: Greater Aries Card
     Type: Card
     Weight: 10
@@ -43155,7 +43155,7 @@ Body:
          bonus bVariableCastrate,-5;
       }
   - Id: 300099
-    AegisName: aegis_300099
+    AegisName: Silva_Papilia_Card
     Name: Silva Papilia Card
     Type: Card
     Weight: 10
@@ -43168,7 +43168,7 @@ Body:
       bonus2 bSubClass,Class_Normal,20;
       bonus bHealPower2,15;
   - Id: 300100
-    AegisName: aegis_300100
+    AegisName: Gran_Papilia_Card
     Name: Gran Papilia Card
     Type: Card
     Weight: 10
@@ -43181,7 +43181,7 @@ Body:
       bonus2 bSubClass,Class_Boss,25;
       bonus bHealPower2,30;
   - Id: 300101
-    AegisName: aegis_300101
+    AegisName: Broken_Cleaner_Card
     Name: Broken Cleaner Card
     Type: Card
     Weight: 10
@@ -43196,7 +43196,7 @@ Body:
       bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
       bonus2 bSkillAtk,"RK_DRAGONBREATH",10;
   - Id: 300102
-    AegisName: aegis_300102
+    AegisName: Bath_Manager_Card
     Name: Bath Manager Card
     Type: Card
     Weight: 10
@@ -43211,7 +43211,7 @@ Body:
       bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",10;
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
   - Id: 300103
-    AegisName: aegis_300103
+    AegisName: Bath_Mermaid_Card
     Name: Azure Princess Card
     Type: Card
     Weight: 10
@@ -43231,7 +43231,7 @@ Body:
          bonus bDelayrate,-3;
       }
   - Id: 300104
-    AegisName: aegis_300104
+    AegisName: Bookworm_Card
     Name: Bookworm Card
     Type: Card
     Weight: 10
@@ -43247,7 +43247,7 @@ Body:
       bonus2 bSkillAtk,"SO_DIAMONDDUST",10;
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
   - Id: 300105
-    AegisName: aegis_300105
+    AegisName: Roaming_Spellbook_Card
     Name: Roaming Spellbook Card
     Type: Card
     Weight: 10
@@ -43263,7 +43263,7 @@ Body:
       bonus2 bSkillAtk,"WL_CRIMSONROCK",10;
       bonus2 bSkillAtk,"WL_COMET",10;
   - Id: 300106
-    AegisName: aegis_300106
+    AegisName: Red_Pitaya_Card
     Name: Red Pitaya Card
     Type: Card
     Weight: 10
@@ -43284,7 +43284,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Fire,10;
       }
   - Id: 300107
-    AegisName: aegis_300107
+    AegisName: Meow_Card
     Name: Meow Card
     Type: Card
     Weight: 10
@@ -43297,7 +43297,7 @@ Body:
       bonus2 bAddItemHealRate,513,500;
       bonus2 bAddItemHealRate,512,500;
   - Id: 300108
-    AegisName: aegis_300108
+    AegisName: Sewage_Venenum_Card
     Name: Sewage Venenum Card
     Type: Card
     Weight: 10
@@ -43313,7 +43313,7 @@ Body:
       bonus2 bSkillAtk,"SC_FATALMENACE",10;
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",10;
   - Id: 300109
-    AegisName: aegis_300109
+    AegisName: Sewage_Cramp_Card
     Name: Sewage Cramp Card
     Type: Card
     Weight: 10
@@ -43329,7 +43329,7 @@ Body:
       bonus2 bSkillAtk,"GC_COUNTERSLASH",10;
       bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
   - Id: 300110
-    AegisName: aegis_300110
+    AegisName: Sewage_Waterfall_Card
     Name: Sewage Waterfall Card
     Type: Card
     Weight: 10
@@ -43345,7 +43345,7 @@ Body:
       bonus2 bSkillAtk,"KO_BAKURETSU",10;
       bonus2 bSkillAtk,"KO_JYUMONJIKIRI",10;
   - Id: 300111
-    AegisName: aegis_300111
+    AegisName: Bellare3_Card
     Name: Elite Bellare Card
     Type: Card
     Weight: 10
@@ -43362,7 +43362,7 @@ Body:
       bonus2 bSkillAtk,"NJ_HYOUSENSOU",10;
       bonus2 bSkillAtk,"NJ_HUUJIN",10;
   - Id: 300112
-    AegisName: aegis_300112
+    AegisName: Dolor3_Card
     Name: Magic-poisoned Dolor Card
     Type: Card
     Weight: 10
@@ -43378,7 +43378,7 @@ Body:
       bonus2 bSkillAtk,"SP_CURSEEXPLOSION",10;
       bonus2 bSkillAtk,"SP_SWHOO",10;
   - Id: 300113
-    AegisName: aegis_300113
+    AegisName: Unleashed_Magic_Card
     Name: Unleashed Magic Card
     Type: Card
     Weight: 10
@@ -43394,7 +43394,7 @@ Body:
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
       bonus2 bSkillAtk,"WM_REVERBERATION",10;
   - Id: 300114
-    AegisName: aegis_300114
+    AegisName: Plaga3_Card
     Name: Magic-poisoned Plaga Card
     Type: Card
     Weight: 10
@@ -43415,7 +43415,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Neutral,10;
       }
   - Id: 300115
-    AegisName: aegis_300115
+    AegisName: Sanare3_Card
     Name: Magic-poisoned Sanare Card
     Type: Card
     Weight: 10
@@ -43431,7 +43431,7 @@ Body:
       bonus2 bSkillAtk,"AB_ADORAMUS",10;
       bonus2 bSkillAtk,"AB_JUDEX",10;
   - Id: 300116
-    AegisName: aegis_300116
+    AegisName: Powerful_Magic_Card
     Name: Powerful Magic Card
     Type: Card
     Weight: 10
@@ -43447,7 +43447,7 @@ Body:
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10;
       bonus2 bSkillAtk,"SR_TIGERCANNON",10;
   - Id: 300117
-    AegisName: aegis_300117
+    AegisName: Sharp_Magic_Card
     Name: Sharp Magic Card
     Type: Card
     Weight: 10
@@ -43463,7 +43463,7 @@ Body:
       bonus2 bSkillAtk,"RA_ARROWSTORM",10;
       bonus2 bSkillAtk,"RA_CLUSTERBOMB",10;
   - Id: 300118
-    AegisName: aegis_300118
+    AegisName: Boiling_Phen_Card
     Name: Boiling Phen Card
     Type: Card
     Weight: 10
@@ -43479,7 +43479,7 @@ Body:
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",10;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",10;
   - Id: 300119
-    AegisName: aegis_300119
+    AegisName: Boiling_Swordfish_Card
     Name: Boiling Swordfish Card
     Type: Card
     Weight: 10
@@ -43495,7 +43495,7 @@ Body:
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",10;
       bonus2 bSkillAtk,"RL_R_TRIP",10;
   - Id: 300120
-    AegisName: aegis_300120
+    AegisName: Boiling_Piranha_Card
     Name: Boiling Piranha Card
     Type: Card
     Weight: 10
@@ -43507,7 +43507,7 @@ Body:
     Script: |
       bonus bMatkRate,2;
   - Id: 300121
-    AegisName: aegis_300121
+    AegisName: Boiling_Marc_Card
     Name: Boiling Marc Card
     Type: Card
     Weight: 10
@@ -43523,7 +43523,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,(.@r/2);
       bonus2 bMagicAtkEle,Ele_Water,(.@r/2);
   - Id: 300122
-    AegisName: aegis_300122
+    AegisName: Yellow_Pitaya_Card
     Name: Yellow Pitaya Card
     Type: Card
     Weight: 10
@@ -43536,7 +43536,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,15;
       bonus2 bMagicAtkEle,Ele_Holy,3*getrefine();
   - Id: 300123
-    AegisName: aegis_300123
+    AegisName: Purple_Pitaya_Card
     Name: Purple Pitaya Card
     Type: Card
     Weight: 10
@@ -43549,7 +43549,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,15;
       bonus2 bMagicAtkEle,Ele_Neutral,3*getrefine();
   - Id: 300124
-    AegisName: aegis_300124
+    AegisName: Blue_Pitaya_Card
     Name: Blue Pitaya Card
     Type: Card
     Weight: 10
@@ -43570,7 +43570,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Water,10;
       }
   - Id: 300125
-    AegisName: aegis_300125
+    AegisName: Green_Pitaya_Card
     Name: Green Pitaya Card
     Type: Card
     Weight: 10
@@ -43586,14 +43586,14 @@ Body:
       bonus2 bSkillAtk,"SU_CN_METEOR",10;
       bonus2 bSkillAtk,"SU_PICKYPECK",10;
   - Id: 300127
-    AegisName: aegis_300127
+    AegisName: Wolf_Card_E
     Name: Wolf Card
     Type: Card
     Weight: 10
     Locations:
       Right_Hand: true
   - Id: 300128
-    AegisName: aegis_300128
+    AegisName: S_Wolf_Card
     Name: Wolf Lugenburg Card
     Type: Card
     Weight: 10
@@ -43605,21 +43605,21 @@ Body:
       bonus2 bAddRace,RC_Insect,15;
       bonus2 bMagicAddRace,RC_Insect,15;
   - Id: 300129
-    AegisName: aegis_300129
+    AegisName: Poe_Card
     Name: Poe Card
     Type: Card
     Weight: 10
     Locations:
       Right_Hand: true
   - Id: 300130
-    AegisName: aegis_300130
+    AegisName: S_Poe_Card
     Name: Poe Richard Card
     Type: Card
     Weight: 10
     Locations:
       Right_Hand: true
   - Id: 300140
-    AegisName: aegis_300140
+    AegisName: ILL_Sropho_Card
     Name: Deep Sea Sropho Card
     Type: Card
     Weight: 10
@@ -43637,7 +43637,7 @@ Body:
          bonus2 bMagicAtkEle,Ele_Wind,5;
       }
   - Id: 300141
-    AegisName: aegis_300141
+    AegisName: ILL_Obeaune_Card
     Name: Deep Sea Obeaune Card
     Type: Card
     Weight: 10
@@ -43648,7 +43648,7 @@ Body:
     Script: |
       bonus bMatk,30;
   - Id: 300142
-    AegisName: aegis_300142
+    AegisName: ILL_Deviace_Card
     Name: Deep Sea Deviace Card
     Type: Card
     Weight: 10
@@ -43667,7 +43667,7 @@ Body:
          bonus2 bAddRace,RC_Fish,5;
       }
   - Id: 300143
-    AegisName: aegis_300143
+    AegisName: ILL_Marse_Card
     Name: Deep Sea Marse Card
     Type: Card
     Weight: 10
@@ -43679,7 +43679,7 @@ Body:
       bonus2 bSubEle,Ele_Earth,15;
       bonus2 bSubRace,RC_Insect,15;
   - Id: 300144
-    AegisName: aegis_300144
+    AegisName: ILL_Merman_Card
     Name: Deep Sea Merman Card
     Type: Card
     Weight: 10
@@ -43690,7 +43690,7 @@ Body:
     Script: |
       bonus bBaseAtk,4*(readparam(bStr)/15);
   - Id: 300145
-    AegisName: aegis_300145
+    AegisName: ILL_Abysmal_Witch_Card
     Name: Deep Sea Witch Card
     Type: Card
     Weight: 10
@@ -43703,7 +43703,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Dark,100;
       bonus2 bSubEle,Ele_All,-30;
   - Id: 300146
-    AegisName: aegis_300146
+    AegisName: ILL_Sedora_Card
     Name: Deep Sea Sedora Card
     Type: Card
     Weight: 10
@@ -43714,7 +43714,7 @@ Body:
     Script: |
       bonus2 bCriticalAddRace,RC_Fish,30;
   - Id: 300147
-    AegisName: aegis_300147
+    AegisName: ILL_Sword_Fish_Card
     Name: Deep Sea Swordfish Card
     Type: Card
     Weight: 10
@@ -43730,7 +43730,7 @@ Body:
          bonus2 bMagicAddEle,Ele_Water,10;
       }
   - Id: 300148
-    AegisName: aegis_300148
+    AegisName: ILL_Strouf_Card
     Name: Deep Sea Strouf Card
     Type: Card
     Weight: 10
@@ -43746,7 +43746,7 @@ Body:
          bonus2 bAddEle,Ele_Water,5;
       }
   - Id: 300149
-    AegisName: aegis_300149
+    AegisName: ILL_Phen_Card
     Name: Deep Sea Phen Card
     Type: Card
     Weight: 10
@@ -43758,7 +43758,7 @@ Body:
       bonus2 bSubEle,Ele_Neutral,15;
       bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
   - Id: 300150
-    AegisName: aegis_300150
+    AegisName: ILL_King_Dramoh_Card
     Name: Deep Sea King Dramoh Card
     Type: Card
     Weight: 10
@@ -43772,7 +43772,7 @@ Body:
       bonus bMaxHPrate,-5;
       bonus2 bAddClass,Class_All,(getrefine()/3);
   - Id: 300151
-    AegisName: aegis_300151
+    AegisName: ILL_Kraken_Card
     Name: Deep Sea Kraken Card
     Type: Card
     Weight: 10
@@ -43784,7 +43784,7 @@ Body:
       bonus bLongAtkRate,25;
       bonus bPerfectHitRate,5;
   - Id: 300177
-    AegisName: aegis_300177
+    AegisName: MD_Geffen_Archi_Card
     Name: Arena Arhi Card
     Type: Card
     Weight: 10
@@ -43798,7 +43798,7 @@ Body:
       bonus bMaxHP,1000;
       bonus bFlee,35;
   - Id: 300178
-    AegisName: aegis_300178
+    AegisName: MD_Geffen_Dio_Card
     Name: Arena Dio Anemos Card
     Type: Card
     Weight: 10
@@ -43810,7 +43810,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,10;
       bonus2 bMagicAtkEle,Ele_Earth,10;
   - Id: 300179
-    AegisName: aegis_300179
+    AegisName: MD_Geffen_Thief_Card
     Name: Arena Shoplifter Card
     Type: Card
     Weight: 10
@@ -43822,7 +43822,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,10;
       bonus2 bMagicAtkEle,Ele_Fire,10;
   - Id: 300180
-    AegisName: aegis_300180
+    AegisName: MD_Geffen_Gang_Card
     Name: Arena Gangster Card
     Type: Card
     Weight: 10
@@ -43834,7 +43834,7 @@ Body:
       bonus bAspdRate,10;
       bonus bCritAtkRate,7;
   - Id: 300181
-    AegisName: aegis_300181
+    AegisName: MD_Geffen_Thug_Card
     Name: Arena Bully Card
     Type: Card
     Weight: 10
@@ -43846,7 +43846,7 @@ Body:
       bonus bAspdRate,7;
       bonus bCritAtkRate,10;
   - Id: 300182
-    AegisName: aegis_300182
+    AegisName: MD_Geffen_Monk_Card
     Name: Arena Faymont Card
     Type: Card
     Weight: 10
@@ -43858,7 +43858,7 @@ Body:
       bonus bMaxSPrate,20;
       bonus5 bAutoSpellWhenHit,"CH_SOULCOLLECT",1,1,BF_WEAPON,0;
   - Id: 300183
-    AegisName: aegis_300183
+    AegisName: MD_Geffen_Ordre_Card
     Name: Arena Ordre Card
     Type: Card
     Weight: 10
@@ -43870,7 +43870,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Wind,10;
       bonus2 bMagicAtkEle,Ele_Water,10;
   - Id: 300184
-    AegisName: aegis_300184
+    AegisName: MD_Geffen_Blut_Card
     Name: Arena Blut Hase Card
     Type: Card
     Weight: 10
@@ -43882,7 +43882,7 @@ Body:
       bonus2 bAddClass,Class_All,5;
       bonus bLongAtkRate,7;
   - Id: 300185
-    AegisName: aegis_300185
+    AegisName: MD_Geffen_Akuma_Card
     Name: Arena Kuro Akuma Card
     Type: Card
     Weight: 10
@@ -43897,7 +43897,7 @@ Body:
       bonus2 bSkillAtk,"NJ_HUUJIN",15;
       bonus bLongAtkRate,8;
   - Id: 300186
-    AegisName: aegis_300186
+    AegisName: MD_Geffen_Hyper_Card
     Name: Arena Ifodes Card
     Type: Card
     Weight: 10
@@ -43909,7 +43909,7 @@ Body:
       bonus bAspdRate,7;
       bonus bShortAtkRate,7;
   - Id: 300187
-    AegisName: aegis_300187
+    AegisName: MD_Geffen_Odorico_Card
     Name: Arena Odoric Card
     Type: Card
     Weight: 10
@@ -43921,7 +43921,7 @@ Body:
       bonus bAspdRate,7;
       bonus bLongAtkRate,7;
   - Id: 300188
-    AegisName: aegis_300188
+    AegisName: MD_Geffen_Reche_Card
     Name: Arena Licheniyes Card
     Type: Card
     Weight: 10
@@ -43933,7 +43933,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,10;
       bonus bHealPower,20;
   - Id: 300189
-    AegisName: aegis_300189
+    AegisName: MD_Geffen_Jew_Card
     Name: Arena Ju Card
     Type: Card
     Weight: 10
@@ -43953,7 +43953,7 @@ Body:
       bonus2 bSkillAtk,"MG_FIREBOLT",.@val;
       bonus2 bSkillAtk,"MG_COLDBOLT",.@val;
   - Id: 300190
-    AegisName: aegis_300190
+    AegisName: MD_Geffen_Fei_Card
     Name: Arena Fay Kanavian Card
     Type: Card
     Weight: 10
@@ -43966,7 +43966,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,10;
       autobonus "{ bonus bDef,500; }",1,5000,BF_WEAPON,"{ active_transform 1040,5000; /*GOLEM*/ }";
   - Id: 300191
-    AegisName: aegis_300191
+    AegisName: MD_Geffen_Dy_Card
     Name: Arena Dwigh Card
     Type: Card
     Weight: 10
@@ -44051,7 +44051,7 @@ Body:
     Script: |
       bonus2 bSkillAtk,"AB_JUDEX",15;
   - Id: 310076
-    AegisName: aegis_310076
+    AegisName: Cassock_Str
     Name: STR Blessing
     Type: Card
     Script: |
@@ -44060,7 +44060,7 @@ Body:
       bonus bDef,25;
       bonus2 bAddClass,Class_All,10;
   - Id: 310077
-    AegisName: aegis_310077
+    AegisName: Cassock_Agi
     Name: AGI Blessing
     Type: Card
     Script: |
@@ -44069,7 +44069,7 @@ Body:
       bonus bDef,25;
       bonus bLongAtkRate,10;
   - Id: 310078
-    AegisName: aegis_310078
+    AegisName: Cassock_Vit
     Name: VIT Blessing
     Type: Card
     Script: |
@@ -44079,7 +44079,7 @@ Body:
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
   - Id: 310079
-    AegisName: aegis_310079
+    AegisName: Cassock_Dex
     Name: DEX Blessing
     Type: Card
     Script: |
@@ -44089,7 +44089,7 @@ Body:
       bonus bAspdRate,10;
       bonus bVariableCastrate,-10;
   - Id: 310080
-    AegisName: aegis_310080
+    AegisName: Cassock_Int
     Name: INT Blessing
     Type: Card
     Script: |
@@ -44098,7 +44098,7 @@ Body:
       bonus bDef,25;
       bonus bMatkRate,10;
   - Id: 310081
-    AegisName: aegis_310081
+    AegisName: Cassock_Luk
     Name: LUK Blessing
     Type: Card
     Script: |
@@ -45879,73 +45879,73 @@ Body:
       bonus2 bMagicAddRace,RC_Angel,35;
       bonus2 bMagicAddRace,RC_Demon,35;
   - Id: 310257
-    AegisName: aegis_310257
+    AegisName: Runeknight_Robe2
     Name: Rune Knight Stone II (Garment)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"RK_IGNITIONBREAK",15;
   - Id: 310258
-    AegisName: aegis_310258
+    AegisName: Runeknight_Top2
     Name: Lord Knight Stone II (Top)
     Type: Card
     Script: |
       bonus bLongAtkRate,getskilllv("LK_SPIRALPIERCE");
   - Id: 310259
-    AegisName: aegis_310259
+    AegisName: Runeknight_Middle2
     Name: Lord Knight Stone II (Middle)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"MS_BOWLINGBASH",20;
   - Id: 310260
-    AegisName: aegis_310260
+    AegisName: Runeknight_Bottom2
     Name: Lord Knight Stone II (Bottom)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"LK_SPIRALPIERCE",20;
   - Id: 310261
-    AegisName: aegis_310261
+    AegisName: Genetic_Robe2
     Name: Creator Stone II (Garment)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"GN_CRAZYWEED",20;
   - Id: 310262
-    AegisName: aegis_310262
+    AegisName: Genetic_Top2
     Name: Creator Stone II (Top)
     Type: Card
     Script: |
       bonus2 bAddSize,Size_All,getskilllv("AM_CANNIBALIZE");
   - Id: 310263
-    AegisName: aegis_310263
+    AegisName: Genetic_Middle2
     Name: Creator Stone II (Middle)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",25;
   - Id: 310264
-    AegisName: aegis_310264
+    AegisName: Genetic_Bottom2
     Name: Creator Stone II (Bottom)
     Type: Card
     Script: |
       bonus bLongAtkRate,(getskilllv("CR_ACIDDEMONSTRATION")/2);
   - Id: 310265
-    AegisName: aegis_310265
+    AegisName: WandMinst_Robe2
     Name: Wanderer's Stone II (Garment)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"WM_REVERBERATION",15;
   - Id: 310266
-    AegisName: aegis_310266
+    AegisName: WandMinst_Top2
     Name: Trentini Gypsy Stone II (Top)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"CG_ARROWVULCAN",15;
   - Id: 310267
-    AegisName: aegis_310267
+    AegisName: WandMinst_Mid2
     Name: Trentini Gypsy Stone II (Middle)
     Type: Card
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,getskilllv("BA_MUSICALSTRIKE")+getskilllv("DC_THROWARROW");
   - Id: 310268
-    AegisName: aegis_310268
+    AegisName: WandMinst_Bot2
     Name: Trentini Gypsy Stone II (Bottom)
     Type: Card
     Script: |
@@ -46205,7 +46205,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 1000103
-    AegisName: aegis_1000103
+    AegisName: BarMealTicket
     Name: Barmeal Ticket
     Type: Etc
     Flags:
@@ -46224,492 +46224,492 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 1000105
-    AegisName: aegis_1000105
+    AegisName: EP17_2_NO1
     Name: Automatic Modification Module(Defense)
     Type: Etc
     Weight: 10
   - Id: 1000106
-    AegisName: aegis_1000106
+    AegisName: EP17_2_NO2
     Name: Automatic Modification Module(Magic Defense)
     Type: Etc
     Weight: 10
   - Id: 1000107
-    AegisName: aegis_1000107
+    AegisName: EP17_2_NO3
     Name: Automatic Modification Module(VIT)
     Type: Etc
     Weight: 10
   - Id: 1000108
-    AegisName: aegis_1000108
+    AegisName: EP17_2_NO4
     Name: Automatic Modification Module(LUK)
     Type: Etc
     Weight: 10
   - Id: 1000109
-    AegisName: aegis_1000109
+    AegisName: EP17_2_NO5
     Name: Automatic Modification Module(STR)
     Type: Etc
     Weight: 10
   - Id: 1000110
-    AegisName: aegis_1000110
+    AegisName: EP17_2_NO6
     Name: Automatic Modification Module(AGI)
     Type: Etc
     Weight: 10
   - Id: 1000111
-    AegisName: aegis_1000111
+    AegisName: EP17_2_NO7
     Name: Automatic Modification Module(INT)
     Type: Etc
     Weight: 10
   - Id: 1000112
-    AegisName: aegis_1000112
+    AegisName: EP17_2_NO8
     Name: Automatic Modification Module(DEX)
     Type: Etc
     Weight: 10
   - Id: 1000113
-    AegisName: aegis_1000113
+    AegisName: EP17_2_RA1
     Name: Automatic Modification Module(HP Recovery)
     Type: Etc
     Weight: 10
   - Id: 1000114
-    AegisName: aegis_1000114
+    AegisName: EP17_2_RA2
     Name: Automatic Modification Module(SP Recovery)
     Type: Etc
     Weight: 10
   - Id: 1000115
-    AegisName: aegis_1000115
+    AegisName: EP17_2_RA3
     Name: Automatic Modification Module(Spell)
     Type: Etc
     Weight: 10
   - Id: 1000116
-    AegisName: aegis_1000116
+    AegisName: EP17_2_RA4
     Name: Automatic Modification Module(Attack Speed)
     Type: Etc
     Weight: 10
   - Id: 1000117
-    AegisName: aegis_1000117
+    AegisName: EP17_2_RA5
     Name: Automatic Modification Module(Fatal)
     Type: Etc
     Weight: 10
   - Id: 1000118
-    AegisName: aegis_1000118
+    AegisName: EP17_2_RA6
     Name: Automatic Modification Module(Expert Archer)
     Type: Etc
     Weight: 10
   - Id: 1000119
-    AegisName: aegis_1000119
+    AegisName: EP17_2_RA7
     Name: Automatic Modification Module(Vital)
     Type: Etc
     Weight: 10
   - Id: 1000120
-    AegisName: aegis_1000120
+    AegisName: EP17_2_RA8
     Name: Automatic Modification Module(Mental)
     Type: Etc
     Weight: 10
   - Id: 1000121
-    AegisName: aegis_1000121
+    AegisName: EP17_2_RA9
     Name: Automatic Modification Module(Heal)
     Type: Etc
     Weight: 10
   - Id: 1000122
-    AegisName: aegis_1000122
+    AegisName: EP17_2_RA10
     Name: Automatic Modification Module(Attack Power)
     Type: Etc
     Weight: 10
   - Id: 1000123
-    AegisName: aegis_1000123
+    AegisName: EP17_2_RA11
     Name: Automatic Modification Module(Magic Power)
     Type: Etc
     Weight: 10
   - Id: 1000124
-    AegisName: aegis_1000124
+    AegisName: EP17_2_RA12
     Name: Automatic Modification Module(Shooter)
     Type: Etc
     Weight: 10
   - Id: 1000125
-    AegisName: aegis_1000125
+    AegisName: EP17_2_RA13
     Name: Automatic Modification Module(Fast)
     Type: Etc
     Weight: 10
   - Id: 1000126
-    AegisName: aegis_1000126
+    AegisName: EP17_2_RA14
     Name: Automatic Modification Module(Caster)
     Type: Etc
     Weight: 10
   - Id: 1000127
-    AegisName: aegis_1000127
+    AegisName: EP17_2_RA15
     Name: Automatic Modification Module(Critical)
     Type: Etc
     Weight: 10
   - Id: 1000128
-    AegisName: aegis_1000128
+    AegisName: EP17_2_RA16
     Name: Automatic Modification Module(Magical Force)
     Type: Etc
     Weight: 10
   - Id: 1000129
-    AegisName: aegis_1000129
+    AegisName: EP17_2_RA17
     Name: Automatic Modification Module(Attacker Force)
     Type: Etc
     Weight: 10
   - Id: 1000130
-    AegisName: aegis_1000130
+    AegisName: EP17_2_RA18
     Name: Automatic Modification Module(Range Force)
     Type: Etc
     Weight: 10
   - Id: 1000131
-    AegisName: aegis_1000131
+    AegisName: EP17_2_RA19
     Name: Automatic Modification Module(Critical Force)
     Type: Etc
     Weight: 10
   - Id: 1000132
-    AegisName: aegis_1000132
+    AegisName: EP17_2_RA20
     Name: Automatic Modification Module(Recovery Force)
     Type: Etc
     Weight: 10
   - Id: 1000133
-    AegisName: aegis_1000133
+    AegisName: EP17_2_UQ1
     Name: Automatic Modification Module(After Skill Delay)
     Type: Etc
     Weight: 10
   - Id: 1000134
-    AegisName: aegis_1000134
+    AegisName: EP17_2_UQ2
     Name: Automatic Modification Module(Above All)
     Type: Etc
     Weight: 10
   - Id: 1000135
-    AegisName: aegis_1000135
+    AegisName: EP17_2_UQ3
     Name: Automatic Module (Above All)
     Type: Etc
     Weight: 10
   - Id: 1000136
-    AegisName: aegis_1000136
+    AegisName: EP17_2_UQ4
     Name: Automatic Modification Module(Drain Life)
     Type: Etc
     Weight: 10
   - Id: 1000137
-    AegisName: aegis_1000137
+    AegisName: EP17_2_UQ5
     Name: Automatic Modification Module(Drain Soul)
     Type: Etc
     Weight: 10
   - Id: 1000138
-    AegisName: aegis_1000138
+    AegisName: EP17_2_UQ6
     Name: Automatic Modification Module(Magic Healing)
     Type: Etc
     Weight: 10
   - Id: 1000139
-    AegisName: aegis_1000139
+    AegisName: EP17_2_UQ7
     Name: Automatic Modification Module(Magic Soul)
     Type: Etc
     Weight: 10
   - Id: 1000140
-    AegisName: aegis_1000140
+    AegisName: EP17_2_UQ8
     Name: Automatic Modification Module(Power Force)
     Type: Etc
     Weight: 10
   - Id: 1000141
-    AegisName: aegis_1000141
+    AegisName: EP17_2_UQ9
     Name: Automatic Modification Module(Robust)
     Type: Etc
     Weight: 10
   - Id: 1000142
-    AegisName: aegis_1000142
+    AegisName: EP17_2_UQ10
     Name: Automatic Modification Module(Powerful)
     Type: Etc
     Weight: 10
   - Id: 1000143
-    AegisName: aegis_1000143
+    AegisName: EP17_2_UQ11
     Name: Automatic Modification Module(All Force)
     Type: Etc
     Weight: 10
   - Id: 1000144
-    AegisName: aegis_1000144
+    AegisName: EP17_2_LE1
     Name: Automatic Module(Unlimited Vital)
     Type: Etc
     Weight: 10
   - Id: 1000145
-    AegisName: aegis_1000145
+    AegisName: EP17_2_LE2
     Name: Automatic Module(Spell Buster)
     Type: Etc
     Weight: 10
   - Id: 1000146
-    AegisName: aegis_1000146
+    AegisName: EP17_2_LE3
     Name: Automatic Module(Firing Shot)
     Type: Etc
     Weight: 10
   - Id: 1000147
-    AegisName: aegis_1000147
+    AegisName: EP17_2_LE4
     Name: Automatic Module(Over Power)
     Type: Etc
     Weight: 10
   - Id: 1000148
-    AegisName: aegis_1000148
+    AegisName: EP17_2_LE5
     Name: Automatic Module(Fatal Flash)
     Type: Etc
     Weight: 10
   - Id: 1000149
-    AegisName: aegis_1000149
+    AegisName: EP17_2_LE6
     Name: Automatic Module(Lucky Strike)
     Type: Etc
     Weight: 10
   - Id: 1000152
-    AegisName: aegis_1000152
+    AegisName: EP17_2_EP1
     Name: Automatic Module(Dragonic Breath)
     Type: Etc
     Weight: 10
   - Id: 1000153
-    AegisName: aegis_1000153
+    AegisName: EP17_2_EP2
     Name: Automatic Module(Wave Break)
     Type: Etc
     Weight: 10
   - Id: 1000154
-    AegisName: aegis_1000154
+    AegisName: EP17_2_EP3
     Name: Automatic Module(Hundred Spiral)
     Type: Etc
     Weight: 10
   - Id: 1000155
-    AegisName: aegis_1000155
+    AegisName: EP17_2_EP4
     Name: Automatic Module(Drive Press)
     Type: Etc
     Weight: 10
   - Id: 1000156
-    AegisName: aegis_1000156
+    AegisName: EP17_2_EP5
     Name: Automatic Module(Banishing Cannon)
     Type: Etc
     Weight: 10
   - Id: 1000157
-    AegisName: aegis_1000157
+    AegisName: EP17_2_EP6
     Name: Automatic Module(Genesis Pressure)
     Type: Etc
     Weight: 10
   - Id: 1000158
-    AegisName: aegis_1000158
+    AegisName: EP17_2_EP7
     Name: Automatic Module(Boost Cannon)
     Type: Etc
     Weight: 10
   - Id: 1000159
-    AegisName: aegis_1000159
+    AegisName: EP17_2_EP8
     Name: Automatic Module(Cold Flare)
     Type: Etc
     Weight: 10
   - Id: 1000160
-    AegisName: aegis_1000160
+    AegisName: EP17_2_EP9
     Name: Automatic Module(Tornado Swing)
     Type: Etc
     Weight: 10
   - Id: 1000161
-    AegisName: aegis_1000161
+    AegisName: EP17_2_EP10
     Name: Automatic Module(Cannon Tornado)
     Type: Etc
     Weight: 10
   - Id: 1000162
-    AegisName: aegis_1000162
+    AegisName: EP17_2_EP11
     Name: Automatic Module(Crazy Mandragora)
     Type: Etc
     Weight: 10
   - Id: 1000163
-    AegisName: aegis_1000163
+    AegisName: EP17_2_EP12
     Name: Automatic Module(Acid Explosion)
     Type: Etc
     Weight: 10
   - Id: 1000164
-    AegisName: aegis_1000164
+    AegisName: EP17_2_EP13
     Name: Automatic Module(Sonic Impact)
     Type: Etc
     Weight: 10
   - Id: 1000165
-    AegisName: aegis_1000165
+    AegisName: EP17_2_EP14
     Name: Automatic Module(Cutter Slasher)
     Type: Etc
     Weight: 10
   - Id: 1000166
-    AegisName: aegis_1000166
+    AegisName: EP17_2_EP15
     Name: Automatic Module(Berserk Slash)
     Type: Etc
     Weight: 10
   - Id: 1000167
-    AegisName: aegis_1000167
+    AegisName: EP17_2_EP16
     Name: Automatic Module(Fatal Raid)
     Type: Etc
     Weight: 10
   - Id: 1000168
-    AegisName: aegis_1000168
+    AegisName: EP17_2_EP17
     Name: Automatic Module(Shadow Spell)
     Type: Etc
     Weight: 10
   - Id: 1000169
-    AegisName: aegis_1000169
+    AegisName: EP17_2_EP18
     Name: Automatic Module(Angle Shot)
     Type: Etc
     Weight: 10
   - Id: 1000170
-    AegisName: aegis_1000170
+    AegisName: EP17_2_EP19
     Name: Automatic Module(Crimson Strain)
     Type: Etc
     Weight: 10
   - Id: 1000171
-    AegisName: aegis_1000171
+    AegisName: EP17_2_EP20
     Name: Automatic Module(Jack Lightning)
     Type: Etc
     Weight: 10
   - Id: 1000172
-    AegisName: aegis_1000172
+    AegisName: EP17_2_EP21
     Name: Automatic Module(Comet Vortex)
     Type: Etc
     Weight: 10
   - Id: 1000173
-    AegisName: aegis_1000173
+    AegisName: EP17_2_EP22
     Name: Automatic Module(Double Bolt)
     Type: Etc
     Weight: 10
   - Id: 1000174
-    AegisName: aegis_1000174
+    AegisName: EP17_2_EP23
     Name: Automatic Module(Warm Wave)
     Type: Etc
     Weight: 10
   - Id: 1000175
-    AegisName: aegis_1000175
+    AegisName: EP17_2_EP24
     Name: Automatic Module(Diamond Grave)
     Type: Etc
     Weight: 10
   - Id: 1000176
-    AegisName: aegis_1000176
+    AegisName: EP17_2_EP25
     Name: Automatic Module(Magnusmus)
     Type: Etc
     Weight: 10
   - Id: 1000177
-    AegisName: aegis_1000177
+    AegisName: EP17_2_EP26
     Name: Automatic Module(Holy Judex)
     Type: Etc
     Weight: 10
   - Id: 1000178
-    AegisName: aegis_1000178
+    AegisName: EP17_2_EP27
     Name: Automatic Module(Duple Lica)
     Type: Etc
     Weight: 10
   - Id: 1000179
-    AegisName: aegis_1000179
+    AegisName: EP17_2_EP28
     Name: Automatic Module(Tiger Empire)
     Type: Etc
     Weight: 10
   - Id: 1000180
-    AegisName: aegis_1000180
+    AegisName: EP17_2_EP29
     Name: Automatic Module(Rampage Arrow)
     Type: Etc
     Weight: 10
   - Id: 1000181
-    AegisName: aegis_1000181
+    AegisName: EP17_2_EP30
     Name: Automatic Module(Raging Combo)
     Type: Etc
     Weight: 10
   - Id: 1000182
-    AegisName: aegis_1000182
+    AegisName: EP17_2_EP31
     Name: Automatic Module(Cluster)
     Type: Etc
     Weight: 10
   - Id: 1000183
-    AegisName: aegis_1000183
+    AegisName: EP17_2_EP32
     Name: Automatic Module(Breeze Shooting)
     Type: Etc
     Weight: 10
   - Id: 1000184
-    AegisName: aegis_1000184
+    AegisName: EP17_2_EP33
     Name: Automatic Module(Aimed Storm)
     Type: Etc
     Weight: 10
   - Id: 1000185
-    AegisName: aegis_1000185
+    AegisName: EP17_2_EP34
     Name: Automatic Module(Metal Echo)
     Type: Etc
     Weight: 10
   - Id: 1000186
-    AegisName: aegis_1000186
+    AegisName: EP17_2_EP35
     Name: Automatic Module(Reverberation)
     Type: Etc
     Weight: 10
   - Id: 1000187
-    AegisName: aegis_1000187
+    AegisName: EP17_2_EP36
     Name: Automatic Module(Vulcan Severe)
     Type: Etc
     Weight: 10
   - Id: 1000188
-    AegisName: aegis_1000188
+    AegisName: EP17_2_EP37
     Name: Automatic Module(Prominence Burst)
     Type: Etc
     Weight: 10
   - Id: 1000189
-    AegisName: aegis_1000189
+    AegisName: EP17_2_EP38
     Name: Automatic Module(Moon Kick)
     Type: Etc
     Weight: 10
   - Id: 1000190
-    AegisName: aegis_1000190
+    AegisName: EP17_2_EP39
     Name: Automatic Module(Flash Falling)
     Type: Etc
     Weight: 10
   - Id: 1000191
-    AegisName: aegis_1000191
+    AegisName: EP17_2_EP40
     Name: Automatic Module(Eswhoo)
     Type: Etc
     Weight: 10
   - Id: 1000192
-    AegisName: aegis_1000192
+    AegisName: EP17_2_EP41
     Name: Automatic Module(Espa)
     Type: Etc
     Weight: 10
   - Id: 1000193
-    AegisName: aegis_1000193
+    AegisName: EP17_2_EP42
     Name: Automatic Module(Curse Explosion)
     Type: Etc
     Weight: 10
   - Id: 1000194
-    AegisName: aegis_1000194
+    AegisName: EP17_2_EP43
     Name: Automatic Module(Des Hammer Dance)
     Type: Etc
     Weight: 10
   - Id: 1000195
-    AegisName: aegis_1000195
+    AegisName: EP17_2_EP44
     Name: Automatic Module(Fire Howling Tail)
     Type: Etc
     Weight: 10
   - Id: 1000196
-    AegisName: aegis_1000196
+    AegisName: EP17_2_EP45
     Name: Automatic Module(Storm Buster Trip)
     Type: Etc
     Weight: 10
   - Id: 1000197
-    AegisName: aegis_1000197
+    AegisName: EP17_2_EP46
     Name: Automatic Module(Flame Ice Wind)
     Type: Etc
     Weight: 10
   - Id: 1000198
-    AegisName: aegis_1000198
+    AegisName: EP17_2_EP47
     Name: Automatic Module(Cross Slash)
     Type: Etc
     Weight: 10
   - Id: 1000199
-    AegisName: aegis_1000199
+    AegisName: EP17_2_EP48
     Name: Automatic Module(Exploding Flake Wind)
     Type: Etc
     Weight: 10
   - Id: 1000200
-    AegisName: aegis_1000200
+    AegisName: EP17_2_EP49
     Name: Automatic Module(Power of Sea)
     Type: Etc
     Weight: 10
   - Id: 1000201
-    AegisName: aegis_1000201
+    AegisName: EP17_2_EP50
     Name: Automatic Module(Power of Land)
     Type: Etc
     Weight: 10
   - Id: 1000202
-    AegisName: aegis_1000202
+    AegisName: EP17_2_EP51
     Name: Automatic Module(Power of Life)
     Type: Etc
     Weight: 10
   - Id: 1000207
-    AegisName: aegis_1000207
+    AegisName: EP17_2_RA21
     Name: Automatic Modification Module(Mirror Counter)
     Type: Etc
     Weight: 10
   - Id: 1000208
-    AegisName: aegis_1000208
+    AegisName: EP17_2_UQ12
     Name: Automatic Modification Module(Reflection Reject)
     Type: Etc
     Weight: 10

@@ -1025,6 +1025,13 @@ short pc_maxaspd(struct map_session_data *sd);
 #define pc_iswug(sd)       ( (sd)->sc.option&OPTION_WUG )
 #define pc_isridingwug(sd) ( (sd)->sc.option&OPTION_WUGRIDER )
 // Mechanic Magic Gear
+enum e_mado_type : uint16 {
+	MADO_ROBOT = 0x00,
+	MADO_UNUSED,
+	MADO_SUIT,
+	MADO_MAX
+};
+
 #define pc_ismadogear(sd) ( (sd)->sc.option&OPTION_MADOGEAR )
 // Rune Knight Dragon
 #define pc_isridingdragon(sd) ( (sd)->sc.option&OPTION_DRAGON )
@@ -1282,11 +1289,11 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
 int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
 bool pc_jobchange(struct map_session_data *sd, int job, char upper);
-void pc_setoption(struct map_session_data *,int);
+void pc_setoption(struct map_session_data *,int type, int subtype = 0);
 bool pc_setcart(struct map_session_data* sd, int type);
 void pc_setfalcon(struct map_session_data* sd, int flag);
 void pc_setriding(struct map_session_data* sd, int flag);
-void pc_setmadogear(struct map_session_data* sd, int flag);
+void pc_setmadogear(struct map_session_data* sd, bool flag, e_mado_type type = MADO_ROBOT);
 void pc_changelook(struct map_session_data *,int,int);
 void pc_equiplookall(struct map_session_data *sd);
 void pc_set_costume_view(struct map_session_data *sd);
