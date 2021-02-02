@@ -3850,11 +3850,17 @@ dragon and 0 if they aren't.
 
 ---------------------------------------
 
-*setmadogear {<flag>{,<char_id>}};
+*setmadogear {<flag>{,<type>{,<char_id>}}};
 *checkmadogear({<char_id>});
 
-If <flag> is 0 this command will remove the mount from the character.
-Otherwise it gives the invoking character a Mado (if they are a Mechanic).
+If <flag> is false this command will remove the mount from the character.
+Otherwise it gives the invoking character a Mado (if they are a Mechanic and have the skill NC_MADOLICENCE).
+
+When using client version PACKETVER_MAIN_NUM >= 20191120 or PACKETVER_RE_NUM >= 20191106
+the <type> flag can be used to specify a specific madogear.
+Types:
+	MADO_ROBOT (default)
+	MADO_SUIT
 
 The accompanying function will return 1 if the invoking character has a
 Mado and 0 if they don't.
@@ -7552,11 +7558,21 @@ Example:
 
 *debugmes "<message>";
 
-This command will send the message to the server console (map-server window). It
+This command will send a debug message to the server console (map-server window). It
 will not be displayed anywhere else.
 
     // Displays "NAME has clicked me!" in the map-server window.
     debugmes strcharinfo(0) + " has clicked me!";
+
+---------------------------------------
+
+*errormes "<message>";
+
+This command will send an error message to the server console (map-server window). It
+will not be displayed anywhere else.
+
+    // Displays "NAME has clicked me!" in the map-server window.
+    errormes strcharinfo(0) + " has clicked me!";
 
 ---------------------------------------
 
@@ -8327,6 +8343,7 @@ Parameter (indexes) for NPCs are:
 		- *_ADELAY: see doc/mob_db.txt
 		- *_DMOTION: see doc/mob_db.txt
 		- *_BODY2: enable (1) the alternate display, or disable (0)
+		- *_TARGETID: when set to 0 the unit will release the target and stop attacking
 
 		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
 		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
@@ -9249,7 +9266,7 @@ Examples:
 
 *questinfo <Icon>{,<Map Mark Color>{,"<condition>"}};
 
-This command should only be used in an OnInit label.
+This command should only be used in OnInit/OnInstanceInit labels.
 Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint".
 When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
 If questinfo is present, it will check if the player fulfill the condition.

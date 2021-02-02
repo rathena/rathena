@@ -3397,11 +3397,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->num_quests = sd->avail_quests = 0;
 			}
 
-			if (sd->qi_display) {
-				aFree(sd->qi_display);
-				sd->qi_display = NULL;
-			}
-			sd->qi_count = 0;
+			sd->qi_display.clear();
 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 			sd->hatEffects.clear();

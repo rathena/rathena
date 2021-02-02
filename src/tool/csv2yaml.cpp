@@ -87,6 +87,8 @@ std::unordered_map<uint16, s_skill_unit_csv> skill_unit;
 std::unordered_map<uint16, s_skill_copyable> skill_copyable;
 std::unordered_map<uint16, s_skill_db> skill_nearnpc;
 
+static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
+
 struct s_item_flag_csv2yaml {
 	bool buyingstore, dead_branch, group, guid, broadcast, bindOnEquip, delay_consume;
 	e_item_drop_effect dropEffect;
@@ -215,6 +217,8 @@ static bool itemdb_read_db(const char *file);
 static bool itemdb_read_randomopt(const char* file);
 static bool itemdb_read_randomopt_group(char *str[], int columns, int current);
 static bool itemdb_randomopt_group_yaml(void);
+static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
+static bool pc_levelpenalty_yaml();
 
 // Constants for conversion
 std::unordered_map<t_itemid, std::string> aegis_itemnames;
@@ -227,7 +231,6 @@ std::unordered_map<const char*, int64> constants;
 static bool parse_item_constants_txt( const char* path );
 static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants_txt( char* split[], int columns, int current );
-static bool parse_skill_constants_yml(std::string path, std::string filename);
 static void init_random_option_constants();
 
 bool fileExists( const std::string& path );
@@ -428,9 +431,8 @@ int do_init( int argc, char** argv ){
 	}
 	sv_readdb( path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
-	if (fileExists(path_db + "/" + "skill_db.yml")) {
-		parse_skill_constants_yml(path_db_mode, "skill_db.yml");
-		parse_skill_constants_yml(path_db_import + "/", "skill_db.yml");
+	if (fileExists(skill_db.getDefaultLocation())) {
+		skill_db.load();
 	} else {
 		sv_readdb(path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
 		sv_readdb(path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
@@ -497,7 +499,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("QUEST_DB", 1, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("QUEST_DB", 2, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3 + MAX_QUEST_OBJECTIVES * 2 + MAX_QUEST_DROPS * 3, 100, -1, &quest_read_db, false);
 	})) {
 		return 0;
@@ -536,6 +538,22 @@ int do_init( int argc, char** argv ){
 	})) {
 		return 0;
 	}
+
+#ifdef RENEWAL
+	memset( level_penalty, 0, sizeof( level_penalty ) );
+	if (!process("PENALTY_DB", 1, { path_db_mode }, "level_penalty", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4, -1, &pc_readdb_levelpenalty, false) && pc_levelpenalty_yaml();
+	})) {
+		return 0;
+	}
+
+	memset( level_penalty, 0, sizeof( level_penalty ) );
+	if (!process("PENALTY_DB", 1, { path_db_import }, "level_penalty", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4, -1, &pc_readdb_levelpenalty, false) && pc_levelpenalty_yaml();
+	})) {
+		return 0;
+	}
+#endif
 
 	// TODO: add implementations ;-)
 
@@ -786,28 +804,33 @@ static bool parse_skill_constants_txt( char* split[], int columns, int current )
 	return true;
 }
 
-static bool parse_skill_constants_yml(std::string path, std::string filename) {
-	YAML::Node rootNode;
-
-	try {
-		rootNode = YAML::LoadFile(path + filename);
-	} catch (YAML::Exception &e) {
-		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
-		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
-		return false;
-	}
-
-	uint64 count = 0;
-
-	for (const YAML::Node &body : rootNode["Body"]) {
-		aegis_skillnames[body["Id"].as<uint16>()] = body["Name"].as<std::string>();
-		count++;
-	}
-
-	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
-
-	return true;
+const std::string SkillDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/skill_db.yml";
 }
+
+uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
+	t_itemid nameid;
+
+	if (!this->asUInt32(node, "Id", nameid))
+		return 0;
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+
+		if (!this->asString(node, "Name", name))
+			return 0;
+
+		aegis_skillnames[nameid] = name;
+	}
+
+	return 1;
+}
+
+void SkillDatabase::clear() {
+	TypesafeCachedYamlDatabase::clear();
+}
+
+SkillDatabase skill_db;
 
 /**
  * Split the string with ':' as separator and put each value for a skilllv
@@ -3534,6 +3557,67 @@ static bool itemdb_randomopt_group_yaml(void) {
 		body << YAML::EndSeq;
 		body << YAML::EndMap;
 	}
+
+	return true;
+}
+
+static bool pc_readdb_levelpenalty( char* fields[], int columns, int current ){
+	// 1=experience, 2=item drop
+	int type = atoi( fields[0] );
+
+	if( type != 1 && type != 2 ){
+		ShowWarning( "pc_readdb_levelpenalty: Invalid type %d specified.\n", type );
+		return false;
+	}
+
+	int64 val = constant_lookup_int( fields[1] );
+
+	if( val == -100 ){
+		ShowWarning("pc_readdb_levelpenalty: Unknown class constant %s specified.\n", fields[1] );
+		return false;
+	}
+
+	int class_ = atoi( fields[1] );
+
+	if( !CHK_CLASS( class_ ) ){
+		ShowWarning( "pc_readdb_levelpenalty: Invalid class %d specified.\n", class_ );
+		return false;
+	}
+
+	int diff = atoi( fields[2] );
+
+	if( std::abs( diff ) > MAX_LEVEL ){
+		ShowWarning( "pc_readdb_levelpenalty: Level difference %d is too high.\n", diff );
+		return false;
+	}
+
+	diff += MAX_LEVEL - 1;
+
+	level_penalty[type][class_][diff] = atoi(fields[3]);
+
+	return true;
+}
+
+void pc_levelpenalty_yaml_sub( int type, const std::string& name ){
+	body << YAML::BeginMap;
+	body << YAML::Key << "Type" << YAML::Value << name;
+	body << YAML::Key << "LevelDifferences";
+	body << YAML::BeginSeq;
+	for( int i = ARRAYLENGTH( level_penalty[type][CLASS_NORMAL] ); i >= 0; i-- ){
+		if( level_penalty[type][CLASS_NORMAL][i] > 0 && level_penalty[type][CLASS_NORMAL][i] != 100 ){
+			body << YAML::BeginMap;
+			body << YAML::Key << "Difference" << YAML::Value << ( i - MAX_LEVEL + 1 );
+			body << YAML::Key << "Rate" << YAML::Value << level_penalty[type][CLASS_NORMAL][i];
+			body << YAML::EndMap;
+		}
+	}
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+}
+
+bool pc_levelpenalty_yaml(){
+	pc_levelpenalty_yaml_sub( 1, "Exp" );
+	pc_levelpenalty_yaml_sub( 2, "Drop" );
 
 	return true;
 }
