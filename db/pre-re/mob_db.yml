@@ -7694,7 +7694,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 1
+    WalkSpeed: 20
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -29656,7 +29656,7 @@ Body:
     Name: Soccer Ball
     Level: 1
     Hp: 1000
-    Defense: 128
+    Defense: 127
     MagicDefense: 99
     Size: Small
     Race: Formless

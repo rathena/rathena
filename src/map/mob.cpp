@@ -4207,7 +4207,7 @@ template<typename T, size_t S> bool MobDatabase::parseDropNode(std::string nodeN
 
 	for (const YAML::Node &dropit : dropNode) {
 		if (i >= max) {
-			this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", nodeName.c_str(), max);
+			this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", max, nodeName.c_str());
 			continue;
 		}
 
