@@ -2195,7 +2195,6 @@ Body:
     Buy: 100
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -2213,7 +2212,7 @@ Body:
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box17);*/
+      /*getgroupitem(IG_Enchant_Stone_Box17);*/
   - Id: 9523
     AegisName: Metal_Smelting_Ticket
     Name: Metal Refining Ticket
@@ -41948,7 +41947,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -44328,7 +44326,6 @@ Body:
     Weight: 20
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -44765,22 +44762,23 @@ Body:
   - Id: 22567
     AegisName: Squad_Prize
     Name: Expedition Award Box
-    Type: Healing
+    Type: Usable
     Buy: 20
     Weight: 100
     Trade:
       Override: 100
       NoMail: true
       NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 22568
     AegisName: Nyd_Summon_Scroll
     Name: Nidhoggur Summon Scroll
-    Type: Healing
+    Type: Usable
     Buy: 20
     Weight: 100
-    Gender: Female
-    Locations:
-      Right_Hand: true
+    Script: |
+      /* TODO */
   - Id: 22569
     AegisName: Gift_New_start
     Name: Gift New start
@@ -46049,7 +46047,6 @@ Body:
     Weight: 100
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46111,7 +46108,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46140,7 +46136,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Script: |
       /*No Info*/
   - Id: 22828
@@ -46241,7 +46236,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46298,7 +46292,7 @@ Body:
     Script: |
       warp "prontera",159,192;
   - Id: 22848
-    AegisName: Prison_Key
+    AegisName: KeysPrison
     Name: Prison Key
     Type: Usable
     Buy: 10
@@ -46306,10 +46300,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      warp "prt_prison",0,0;
-      /*No coord info*/
+      warp "prt_prison",188,23;
   - Id: 22849
-    AegisName: Prontera_Time_Crystal
+    AegisName: P_Temporal_Crystal
     Name: Prontera Time Crystal
     Type: Usable
     Buy: 10
@@ -46530,7 +46523,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box5);
+      getgroupitem(IG_Enchant_Stone_Box5);
   - Id: 22869
     AegisName: Lucky_Roulette_Tickets
     Name: Lucky Roulette Ticket
@@ -46834,7 +46827,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box6);
+      getgroupitem(IG_Enchant_Stone_Box6);
   - Id: 22953
     AegisName: Enchant_Stone_Box7
     Name: Costume Enchant Stone Box 7
@@ -46843,7 +46836,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box7);
+      getgroupitem(IG_Enchant_Stone_Box7);
   - Id: 22979
     AegisName: C_Battle_Gum_2
     Name: "[Sale] Battle Manual and Bubble Gum"
@@ -46884,7 +46877,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box8);
+      getgroupitem(IG_Enchant_Stone_Box8);
   - Id: 23012
     AegisName: S_Small_Mana_Potion
     Name: "[Sale] Small Mana Potion"
@@ -47066,7 +47059,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box10);
+      getgroupitem(IG_Enchant_Stone_Box10);
   - Id: 23087
     AegisName: Small_Leather_Bag
     Name: Small Leather Bag
@@ -47177,7 +47170,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box11);
+      getgroupitem(IG_Enchant_Stone_Box11);
   - Id: 23175
     AegisName: Uniform_Repair_Kit
     Name: Uniform Repair Kit
@@ -47362,6 +47355,82 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23250;*/
+  - Id: 23251
+    AegisName: Rose_Bundle_A
+    Name: Rose Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2192,1);
+      getitem(2743,1);
+  - Id: 23252
+    AegisName: Orleans_Bundle_A
+    Name: Orleans's Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2365,1);
+      getitem(2881,1);
+  - Id: 23253
+    AegisName: Black_Shiba_Bundle_A
+    Name: Black Shiba Inu Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2959,1);
+      getitem(18756,1);
+  - Id: 23255
+    AegisName: Kardui_Bundle_A
+    Name: Kardui Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(1649,1);
+      getitem(15169,1);
   - Id: 23256
     AegisName: Elixir_Bandages
     Name: Elixir Bandages
@@ -47369,6 +47438,25 @@ Body:
     Buy: 10
     Script: |
       pet 1041;
+  - Id: 23266
+    AegisName: Etran_Bundle_A
+    Name: Etran Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2371,1);
+      getitem(20797,1);
   - Id: 23277
     AegisName: Mado_Box
     Name: Emergency Magic Gear
@@ -47383,7 +47471,8 @@ Body:
     Delay:
       Duration: 180000
     Script: |
-      setmadogear 1;
+      specialeffect2 EF_CLAYMORE;
+      setmadogear true;
   - Id: 23280
     AegisName: N_Fly_Wing_
     Name: Novice Fly Wing
@@ -47438,6 +47527,25 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23291;*/
+  - Id: 23294
+    AegisName: Pororoca_Shoes_Bundle_A
+    Name: Pororoca Shoes Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+        Container: true
+    Trade:
+        Override: 100
+        NoDrop: true
+        NoTrade: true
+        NoSell: true
+        NoCart: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+    Script: |
+        getitem(1646,1);
+        getitem(22104,1);
   - Id: 23299
     AegisName: Enchant_Stone_Box12
     Name: Costume Enchant Stone Box 12
@@ -47446,7 +47554,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box12);
+      getgroupitem(IG_Enchant_Stone_Box12);
   - Id: 23307
     AegisName: S_Shining_Def_Scroll
     Name: "[Sale] Shining Defense Scroll"
@@ -47523,7 +47631,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box13);
+      getgroupitem(IG_Enchant_Stone_Box13);
   - Id: 23545
     AegisName: Silver_Statue
     Name: Silver Statue
@@ -47553,7 +47661,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box14);
+      getgroupitem(IG_Enchant_Stone_Box14);
   - Id: 23665
     AegisName: PhysicalMagical_Mix
     Name: PhysicalMagical Mix
@@ -47632,7 +47740,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box15);
+      getgroupitem(IG_Enchant_Stone_Box15);
   - Id: 23706
     AegisName: Charleston_Parts_W
     Name: Charleston Upgrade Parts (Physical)
@@ -47660,7 +47768,7 @@ Body:
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box16);*/
+      /*getgroupitem(IG_Enchant_Stone_Box16);*/
   - Id: 23776
     AegisName: EP17_1_SPC05
     Name: Weapon Modifier (Physical)
@@ -48295,7 +48403,7 @@ Body:
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box18);*/
+      /*getgroupitem(IG_Enchant_Stone_Box18);*/
   - Id: 100023
     AegisName: Ancient_Hero_Bravery
     Name: Ancient Hero Bravery
@@ -48330,7 +48438,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box19);*/
+      /*getgroupitem(IG_Enchant_Stone_Box19);*/
   - Id: 100053
     AegisName: Piercing_Mix
     Name: Piercing Shadow SynthesisBox
@@ -48627,7 +48735,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box20);*/
+      /*getgroupitem(IG_Enchant_Stone_Box20);*/
   - Id: 100231
     AegisName: Ref_T_Potion
     Name: Golden X
@@ -48660,7 +48768,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box21);*/
+      /*getgroupitem(IG_Enchant_Stone_Box21);*/
   - Id: 100402
     AegisName: Thousand_Sun_Cube
     Name: Thousand Sun Modification Cube
@@ -48710,6 +48818,22 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 100408;*/
+  - Id: 100158
+    AegisName: Mado_Box02
+    Name: Mado Strengthening Suit
+    Type: Usable
+    Buy: 10000
+    Weight: 300
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    EquipLevelMin: 100
+    Delay:
+      Duration: 180000
+    Script: |
+      specialeffect2 EF_CLAYMORE;
+      setmadogear true,MADO_SUIT;
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion

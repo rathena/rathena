@@ -317,7 +317,6 @@ Body:
     AttackDelay: 1001
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       Detector: true
     Drops:
@@ -1837,7 +1836,6 @@ Body:
     AttackDelay: 1001
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Drops:
       - Item: Phracon
         Rate: 250
@@ -1879,7 +1877,6 @@ Body:
     AttackDelay: 701
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       Detector: true
     Drops:
@@ -3158,7 +3155,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -3202,7 +3198,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -3246,7 +3241,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -3290,7 +3284,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -3334,7 +3327,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -3379,7 +3371,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -3422,7 +3413,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -3466,7 +3456,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -4030,7 +4019,6 @@ Body:
     AttackDelay: 1001
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Drops:
       - Item: Phracon
         Rate: 320
@@ -5967,7 +5955,6 @@ Body:
     AttackDelay: 1201
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Drops:
       - Item: Tendon
         Rate: 5000
@@ -7530,7 +7517,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -7649,7 +7635,6 @@ Body:
     AttackDelay: 1960
     AttackMotion: 960
     DamageMotion: 504
-    Ai: 06
     Drops:
       - Item: Sparkling_Dust
         Rate: 10
@@ -7713,7 +7698,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
   - Id: 1188
     AegisName: BON_GUN
     Name: Bongun
@@ -9187,7 +9171,6 @@ Body:
     AttackDelay: 1001
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       Detector: true
     Drops:
@@ -9273,7 +9256,6 @@ Body:
     AttackDelay: 1001
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Drops:
       - Item: Phracon
         Rate: 120
@@ -9400,7 +9382,6 @@ Body:
     AttackDelay: 1001
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Drops:
       - Item: Phracon
         Rate: 135
@@ -11673,7 +11654,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Boss
   - Id: 1289
     AegisName: MAYA_PUPLE
@@ -13316,7 +13296,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13347,7 +13326,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Jewel_Of_Prayer
@@ -13378,7 +13356,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13409,7 +13386,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Iron_Glove
@@ -13440,7 +13416,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13471,7 +13446,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Iron_Maiden
@@ -13502,7 +13476,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13533,7 +13506,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Mystery_Wheel
@@ -13564,7 +13536,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13595,7 +13566,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Silver_Fancy
@@ -13626,7 +13596,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13657,7 +13626,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Anger_Of_Valkurye
@@ -13688,7 +13656,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13719,7 +13686,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Feather_Of_Angel
@@ -13750,7 +13716,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13781,7 +13746,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Foot_Step_Of_Cat
@@ -13812,7 +13776,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13843,7 +13806,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Beard_Of_Women
@@ -13874,7 +13836,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13905,7 +13866,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Root_Of_Stone
@@ -13936,7 +13896,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -13967,7 +13926,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Soul_Of_Fish
@@ -13998,7 +13956,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14029,7 +13986,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Saliva_Of_Bird
@@ -14060,7 +14016,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14091,7 +14046,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Tendon_Of_Bear
@@ -14122,7 +14076,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14153,7 +14106,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Symbol_Of_Sun
@@ -14184,7 +14136,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14215,7 +14166,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Breath_Of_Soul
@@ -14246,7 +14196,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14277,7 +14226,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Of_Snow
@@ -14308,7 +14256,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14339,7 +14286,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Indication_Of_Tempest
@@ -14370,7 +14316,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14401,7 +14346,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Slilince_Wave
@@ -14432,7 +14376,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14463,7 +14406,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Rough_Billows
@@ -14494,7 +14436,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Jewel__
@@ -14525,7 +14466,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Air_Stream
@@ -27195,7 +27135,6 @@ Body:
     AttackDelay: 24
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Drops:
       - Item: Elunium
         Rate: 5
@@ -27497,7 +27436,6 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: 3rd_Floor_Pass
@@ -28100,7 +28038,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -29729,7 +29666,6 @@ Body:
     AttackDelay: 96
     AttackMotion: 96
     DamageMotion: 96
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -29924,7 +29860,6 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -30385,7 +30320,6 @@ Body:
     AttackDelay: 890
     AttackMotion: 960
     DamageMotion: 480
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -30489,7 +30423,6 @@ Body:
     WalkSpeed: 1000
     AttackDelay: 1320
     DamageMotion: 300
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -30531,7 +30464,6 @@ Body:
     AttackDelay: 96
     AttackMotion: 96
     DamageMotion: 96
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -31577,7 +31509,6 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Gold_Coin_US
@@ -31619,7 +31550,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Dragonball_Yellow_
@@ -32817,7 +32747,6 @@ Body:
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Modes:
       IgnoreMagic: true
       IgnoreMelee: true
@@ -33574,7 +33503,6 @@ Body:
     Race: Formless
     Element: Holy
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Gold_Key77
@@ -33590,7 +33518,6 @@ Body:
     Race: Formless
     Element: Holy
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Silver_Key77
@@ -33644,7 +33571,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Boss
   - Id: 1906
     AegisName: BARRICADE_
@@ -33668,7 +33594,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -33696,7 +33621,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Boss
   - Id: 1908
     AegisName: S_EMPEL_2
@@ -33717,7 +33641,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Boss
   - Id: 1909
     AegisName: OBJ_A
@@ -33736,7 +33659,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -33762,7 +33684,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -33788,7 +33709,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -33814,7 +33734,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -33840,7 +33759,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -33866,7 +33784,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -33892,7 +33809,6 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -34551,7 +34467,6 @@ Body:
     AttackDelay: 768
     AttackMotion: 768
     DamageMotion: 576
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -34578,7 +34493,6 @@ Body:
     AttackDelay: 768
     AttackMotion: 768
     DamageMotion: 576
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -34605,7 +34519,6 @@ Body:
     AttackDelay: 768
     AttackMotion: 768
     DamageMotion: 576
-    Ai: 06
     Class: Guardian
     Modes:
       IgnoreMagic: true
@@ -34651,7 +34564,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Goddess_Tear
@@ -34682,7 +34594,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Valkyrie_Token
@@ -34713,7 +34624,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Brynhild_Armor_Piece
@@ -34744,7 +34654,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Hero_Remains
@@ -34775,7 +34684,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Andvari_Ring
@@ -34806,7 +34714,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Dusk_Glow
@@ -34837,7 +34744,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Dawn_Essence
@@ -34868,7 +34774,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Cold_Moonlight
@@ -34899,7 +34804,6 @@ Body:
       Treasure: true
     Element: Neutral
     ElementLevel: 1
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Hazy_Starlight
@@ -35456,7 +35360,6 @@ Body:
     AttackDelay: 1816
     AttackMotion: 816
     DamageMotion: 432
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Blue_Potion
@@ -35490,7 +35393,6 @@ Body:
     AttackDelay: 964
     AttackMotion: 864
     DamageMotion: 288
-    Ai: 06
     Class: Boss
   - Id: 1966
     AegisName: M_DOPPELGANGER
@@ -35518,7 +35420,6 @@ Body:
     AttackDelay: 300
     AttackMotion: 480
     DamageMotion: 288
-    Ai: 06
     Class: Boss
   - Id: 1967
     AegisName: M_YGNIZEM
@@ -35547,7 +35448,6 @@ Body:
     AttackDelay: 300
     AttackMotion: 480
     DamageMotion: 288
-    Ai: 06
     Class: Boss
   - Id: 1968
     AegisName: E_STROUF
@@ -35576,7 +35476,6 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 384
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Fin
@@ -35622,7 +35521,6 @@ Body:
     AttackDelay: 1272
     AttackMotion: 72
     DamageMotion: 480
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Mistic_Frozen
@@ -35667,7 +35565,6 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 288
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Mistic_Frozen
@@ -35712,7 +35609,6 @@ Body:
     AttackDelay: 1632
     AttackMotion: 432
     DamageMotion: 540
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Crystal_Blue
@@ -35756,7 +35652,6 @@ Body:
     AttackDelay: 2280
     AttackMotion: 1080
     DamageMotion: 864
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Single_Cell
@@ -35796,7 +35691,6 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
-    Ai: 06
     Class: Boss
     Drops:
       - Item: Jellopy
@@ -36928,7 +36822,6 @@ Body:
     AttackDelay: 1100
     AttackMotion: 960
     DamageMotion: 780
-    Ai: 06
     Class: Boss
   - Id: 2013
     AegisName: DRACO
@@ -36997,7 +36890,6 @@ Body:
     AttackDelay: 24
     AttackMotion: 1
     DamageMotion: 1
-    Ai: 06
     Drops:
       - Item: Piece_Of_Egg_Shell
         Rate: 5000
@@ -37766,7 +37658,6 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
-    Ai: 06
     Class: Boss
   - Id: 2068
     AegisName: BOITATA
@@ -38174,7 +38065,6 @@ Body:
     AttackDelay: 800
     AttackMotion: 432
     DamageMotion: 600
-    Ai: 06
     Class: Guardian
   - Id: 2082
     AegisName: G_PIRANHA
@@ -38299,4 +38189,3 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
-    Ai: 06

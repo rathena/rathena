@@ -15364,7 +15364,6 @@ Body:
     Type: Armor
     Buy: 23000
     Weight: 100
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -15389,7 +15388,6 @@ Body:
     Buy: 800
     Weight: 100
     Defense: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -15404,7 +15402,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -15813,7 +15810,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Female
     Locations:
       Head_Top: true
     EquipLevelMin: 45
@@ -15832,7 +15828,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Male
     Locations:
       Head_Top: true
     EquipLevelMin: 45
@@ -18743,7 +18738,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Female
     Locations:
       Shoes: true
     Refineable: true
@@ -18859,7 +18853,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Female
     Locations:
       Shoes: true
     EquipLevelMin: 30
@@ -26654,7 +26647,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Male
     Locations:
       Head_Low: true
       Head_Mid: true
@@ -27012,7 +27004,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Female
     Locations:
       Head_Top: true
     EquipLevelMin: 45
@@ -27032,7 +27023,6 @@ Body:
       All: true
       Novice: false
       SuperNovice: false
-    Gender: Male
     Locations:
       Head_Top: true
     EquipLevelMin: 45
@@ -27449,7 +27439,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -27465,7 +27454,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -27480,7 +27468,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -27495,7 +27482,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -27510,7 +27496,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -27525,7 +27510,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -27540,7 +27524,6 @@ Body:
     Weight: 100
     Defense: 1
     Slots: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
@@ -27958,7 +27941,6 @@ Body:
     Buy: 20
     Weight: 100
     Defense: 1
-    Gender: Female
     Locations:
       Head_Mid: true
     EquipLevelMin: 45
@@ -30467,7 +30449,6 @@ Body:
     Type: Armor
     Weight: 100
     Defense: 2
-    Gender: Male
     Locations:
       Head_Top: true
     View: 362
@@ -30479,7 +30460,6 @@ Body:
     Type: Armor
     Weight: 100
     Defense: 2
-    Gender: Female
     Locations:
       Head_Top: true
     View: 363
@@ -31352,7 +31332,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 200
-    Gender: Female
     Locations:
       Head_Low: true
       Head_Mid: true
@@ -34834,7 +34813,6 @@ Body:
     Buy: 800
     Weight: 100
     Defense: 1
-    Gender: Female
     Locations:
       Head_Top: true
     Refineable: true
