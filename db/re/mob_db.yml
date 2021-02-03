@@ -51,7 +51,7 @@
 #     <group>: <value>      Group to toggle.
 #   Element                 Element. (Default: Neutral)
 #   ElementLevel            Level of element. (Default: 1)
-#   WalkSpeed               Walk speed. (Default: 0)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
 #   AttackDelay             Attack speed. (Default: 0)
 #   AttackMotion            Attack animation speed. (Default: 0)
 #   DamageMotion            Damage animation speed. (Default: 0)
@@ -3272,7 +3272,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -3316,7 +3316,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -3360,7 +3360,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -3404,7 +3404,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -3448,7 +3448,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -3493,7 +3493,7 @@ Body:
     Race: Plant
     Element: Holy
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -3536,7 +3536,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -3580,7 +3580,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -7890,7 +7890,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -15182,7 +15182,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 3
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1308
     AttackMotion: 1008
     DamageMotion: 480
@@ -22581,7 +22581,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 3
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1308
     AttackMotion: 1008
     DamageMotion: 480
@@ -28996,7 +28996,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -30208,7 +30208,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 672
     AttackMotion: 648
     DamageMotion: 360
@@ -30254,7 +30254,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 864
     AttackMotion: 576
     DamageMotion: 336
@@ -30565,7 +30565,7 @@ Body:
     Race: Formless
     Element: Water
     ElementLevel: 2
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1344
     Ai: 10
     Drops:
@@ -30659,7 +30659,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 96
     DamageMotion: 96
@@ -31449,7 +31449,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 96
     DamageMotion: 96
@@ -33781,7 +33781,7 @@ Body:
     Race: Plant
     Element: Holy
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -39105,7 +39105,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -39273,7 +39273,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
@@ -39302,7 +39302,7 @@ Body:
     Race: Formless
     Element: Fire
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
@@ -39331,7 +39331,7 @@ Body:
     Race: Formless
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
@@ -39360,7 +39360,7 @@ Body:
     Race: Formless
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
@@ -39389,7 +39389,7 @@ Body:
     Race: Formless
     Element: Wind
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 504
     AttackMotion: 1020
     DamageMotion: 360
@@ -40484,7 +40484,7 @@ Body:
       Scaraba: true
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
     DamageMotion: 480
@@ -40520,7 +40520,7 @@ Body:
       Scaraba: true
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
     DamageMotion: 480
@@ -40556,7 +40556,7 @@ Body:
       Scaraba: true
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
     DamageMotion: 480
@@ -40592,7 +40592,7 @@ Body:
       Scaraba: true
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 96
     AttackMotion: 1
     DamageMotion: 480
@@ -42146,7 +42146,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 192
     AttackMotion: 192
     DamageMotion: 576
@@ -42548,7 +42548,7 @@ Body:
     Race: Plant
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -44281,7 +44281,7 @@ Body:
     Race: Fish
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 384
     AttackMotion: 720
     DamageMotion: 360
@@ -48610,7 +48610,7 @@ Body:
     Race: Demon
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 920
     AttackMotion: 1080
     DamageMotion: 360
@@ -48698,7 +48698,7 @@ Body:
     Race: Dragon
     Element: Water
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 440
     AttackMotion: 672
     DamageMotion: 432
@@ -48725,7 +48725,7 @@ Body:
     Race: Dragon
     Element: Water
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 440
     AttackMotion: 672
     DamageMotion: 432
@@ -48754,7 +48754,7 @@ Body:
     Race: Dragon
     Element: Water
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 440
     AttackMotion: 672
     DamageMotion: 432
@@ -48912,7 +48912,7 @@ Body:
     Race: Demon
     Element: Dark
     ElementLevel: 2
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     Ai: 06
     Class: Guardian
     Modes:
@@ -48952,7 +48952,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -48977,7 +48977,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 3
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1001
     AttackMotion: 1
     DamageMotion: 1
@@ -49028,7 +49028,7 @@ Body:
     Race: Fish
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 384
     AttackMotion: 720
     DamageMotion: 360
@@ -49084,7 +49084,7 @@ Body:
     Race: Plant
     Element: Water
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -49210,7 +49210,7 @@ Body:
       Ogh_Hidden: true
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackMotion: 1000
     Ai: 10
     Modes:
@@ -49402,7 +49402,7 @@ Body:
       Ogh_Hidden: true
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackMotion: 1000
     Ai: 10
     Modes:
@@ -50495,7 +50495,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -50521,7 +50521,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -50547,7 +50547,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -53347,7 +53347,7 @@ Body:
       Ogh_Atk_Def: true
     Element: Earth
     ElementLevel: 3
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 576
     AttackMotion: 672
     DamageMotion: 480
@@ -53926,7 +53926,7 @@ Body:
     Race: Insect
     Element: Poison
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 384
     DamageMotion: 480
     Ai: 10
@@ -54155,7 +54155,7 @@ Body:
     Race: Insect
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackMotion: 100
     Ai: 10
     Modes:
@@ -54188,7 +54188,7 @@ Body:
     Race: Formless
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackMotion: 100
     Ai: 10
     Modes:
@@ -54220,7 +54220,7 @@ Body:
     Race: Formless
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackMotion: 500
     Ai: 10
     Modes:
@@ -61291,7 +61291,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 672
     AttackMotion: 648
     DamageMotion: 360
@@ -65157,7 +65157,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 3
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1308
     AttackMotion: 1008
     DamageMotion: 480
@@ -65199,7 +65199,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 3
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1308
     AttackMotion: 1008
     DamageMotion: 480
@@ -66051,7 +66051,7 @@ Body:
     Race: Plant
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 864
     AttackMotion: 576
     DamageMotion: 336
@@ -70209,7 +70209,7 @@ Body:
     Race: Insect
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackMotion: 1000
     Ai: 06
     Class: Battlefield
@@ -70671,7 +70671,7 @@ Body:
     Race: Insect
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackMotion: 1000
     Ai: 06
     Class: Battlefield
@@ -71280,7 +71280,7 @@ Body:
     Race: Demihuman
     Element: Earth
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 2700
     AttackMotion: 384
     DamageMotion: 288
@@ -71547,7 +71547,7 @@ Body:
     Race: Demon
     Element: Neutral
     ElementLevel: 3
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 2000
     AttackMotion: 824
     DamageMotion: 440
@@ -72280,7 +72280,7 @@ Body:
     Race: Formless
     Element: Ghost
     ElementLevel: 4
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     Ai: 06
     Class: Boss
     Modes:
@@ -72791,7 +72791,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -72816,7 +72816,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -72841,7 +72841,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -73811,7 +73811,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 500
     AttackMotion: 500
     Ai: 10
@@ -76304,7 +76304,7 @@ Body:
     Race: Demon
     Element: Dark
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 3000
     AttackMotion: 600
     DamageMotion: 550
@@ -76827,7 +76827,7 @@ Body:
     Race: Formless
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     Ai: 06
     Modes:
       IgnoreMagic: true
@@ -77540,7 +77540,7 @@ Body:
     Race: Formless
     Element: Fire
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -77567,7 +77567,7 @@ Body:
     Race: Formless
     Element: Earth
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -77594,7 +77594,7 @@ Body:
     Race: Formless
     Element: Water
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     AttackDelay: 1
     AttackMotion: 1
     DamageMotion: 1
@@ -78342,7 +78342,7 @@ Body:
       Rockridge: true
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     Ai: 06
     Modes:
       IgnoreMagic: true
@@ -78366,7 +78366,7 @@ Body:
       Rockridge: true
     Element: Neutral
     ElementLevel: 1
-    WalkSpeed: 2000
+    WalkSpeed: 1000
     Ai: 06
     Modes:
       IgnoreMagic: true

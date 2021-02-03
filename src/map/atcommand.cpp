@@ -6715,11 +6715,14 @@ ACMD_FUNC(mobsearch)
 		return -1;
 	}
 
-	int mob_id = atoi(mob_name);
+	int mob_id = strtol(mob_name, nullptr, 10);
+
 	if (mob_id == 0)
 		 mob_id = mobdb_searchname(mob_name);
-	auto mob = mob_db.find(mob_id);
-	if(nullptr == mob){
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
+	if (mob == nullptr || mobdb_checkid(mob_id) == 0) {
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1219),mob_name); // Invalid mob ID %s!
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
@@ -7390,7 +7393,7 @@ ACMD_FUNC(mobinfo)
 	for (k = 0; k < count; k++) {
 		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_ids[k]);
 
-		if (nullptr == mob) 
+		if (mob == nullptr)
 			continue;
 
 		t_exp base_exp = mob->base_exp;
@@ -7520,11 +7523,12 @@ ACMD_FUNC(showmobs)
 	if(sscanf(message, "%99[^\n]", mob_name) < 0)
 		return -1;
 
-	if((mob_id = atoi(mob_name)) == 0)
+	if((mob_id = strtol(mob_name, nullptr, 10)) == 0)
 		mob_id = mobdb_searchname(mob_name);
 
 	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
-	if(nullptr == mob){
+
+	if (mob == nullptr || mobdb_checkid(mob_id) == 0) {
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1250),mob_name); // Invalid mob id %s!
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
@@ -7535,7 +7539,7 @@ ACMD_FUNC(showmobs)
 		return 0;
 	}
 
-	if(mob_id == atoi(mob_name) && !mob->jname.empty())
+	if(mob_id == strtol(mob_name, nullptr, 10) && !mob->jname.empty())
 		strcpy(mob_name, mob->jname.c_str());    // --ja--
 		//strcpy(mob_name, mob->name.c_str());    // --en--
 
@@ -8030,7 +8034,8 @@ ACMD_FUNC(whereis)
 
 	for (int i = 0; i < count; i++) {
 		uint16 mob_id = mob_ids[i];
-		auto mob = mob_db.find(mob_id);
+		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
 		if(!mob) continue;
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname.c_str()); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);

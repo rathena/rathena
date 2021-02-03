@@ -34,7 +34,7 @@
 #     <group>: <value>      Group to toggle.
 #   Element                 Element. (Default: Neutral)
 #   ElementLevel            Level of element. (Default: 1)
-#   WalkSpeed               Walk speed. (Default: 0)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
 #   AttackDelay             Attack speed. (Default: 0)
 #   AttackMotion            Attack animation speed. (Default: 0)
 #   DamageMotion            Damage animation speed. (Default: 0)

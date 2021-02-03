@@ -4119,10 +4119,12 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		}
 	}
 
-	if (fields[24])
-		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(strtol(fields[24], nullptr, 10) % 20, "ELE_") + 4);
-	if (fields[24])
-		body << YAML::Key << "ElementLevel" << YAML::Value << floor(strtol(fields[24], nullptr, 10) / 20.);
+	if (fields[24]) {
+		int ele = strtol(fields[24], nullptr, 10);
+
+		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+	}
 	if (strtol(fields[26], nullptr, 10) > 0)
 		body << YAML::Key << "WalkSpeed" << YAML::Value << fields[26];
 	if (strtol(fields[27], nullptr, 10) > 0)
@@ -4204,7 +4206,8 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		} else if ((mode & MONSTER_TYPE_06) == MONSTER_TYPE_06)
 			ai = "06";
 
-		body << YAML::Key << "Ai" << YAML::Value << ai;
+		if (ai.compare("06") != 0)
+			body << YAML::Key << "Ai" << YAML::Value << ai;
 		if (class_.compare("Normal") != 0)
 			body << YAML::Key << "Class" << YAML::Value << class_;
 
@@ -4267,7 +4270,16 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		}
 	}
 
-	if (strtoul(fields[31], nullptr, 10) > 0 || strtoul(fields[33], nullptr, 10) > 0 || strtoul(fields[35], nullptr, 10) > 0) {
+	bool has_mvp_drops = false;
+
+	for (uint8 d = 31; d < (31 + MAX_MVP_DROP * 2); d += 2) {
+		if (strtoul(fields[d], nullptr, 10) > 0) {
+			has_mvp_drops = true;
+			break;
+		}
+	}
+
+	if (has_mvp_drops) {
 		body << YAML::Key << "MvpDrops";
 		body << YAML::BeginSeq;
 
@@ -4293,7 +4305,16 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		body << YAML::EndSeq;
 	}
 
-	if (strtoul(fields[37], nullptr, 10) > 0 || strtoul(fields[39], nullptr, 10) > 0 || strtoul(fields[41], nullptr, 10) > 0 || strtoul(fields[43], nullptr, 10) > 0 || strtoul(fields[45], nullptr, 10) > 0 || strtoul(fields[47], nullptr, 10) > 0 || strtoul(fields[49], nullptr, 10) > 0 || strtoul(fields[51], nullptr, 10) > 0 || strtoul(fields[53], nullptr, 10) > 0 || strtoul(fields[55], nullptr, 10) > 0) {
+	bool has_drops = false;
+
+	for (uint8 d = 37; d < (37 + MAX_MOB_DROP * 2); d += 2) {
+		if (strtoul(fields[d], nullptr, 10) > 0) {
+			has_drops = true;
+			break;
+		}
+	}
+
+	if (has_drops) {
 		body << YAML::Key << "Drops";
 		body << YAML::BeginSeq;
 
@@ -4314,7 +4335,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				if (strtol(fields[k + 1], nullptr, 10) > 1)
 					body << YAML::Key << "Rate" << YAML::Value << fields[k + 1];
 
-				if (k == 51 || k == 53 || k == 55) // Slots 8, 9, and 10 are inherently protected
+				if (i > 6) // Slots 8, 9, and 10 are inherently protected
 					body << YAML::Key << "StealProtected" << YAML::Value << "true";
 				body << YAML::EndMap;
 			}

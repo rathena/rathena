@@ -364,7 +364,7 @@ int mobdb_searchname_array(const char *str, uint16 * out, int size)
  *------------------------------------------*/
 int mobdb_checkid(const int id)
 {
-	if (mob_db.find(id) == nullptr)
+	if (!mob_db.exists(id))
 		return 0;
 	if (mob_is_clone(id)) //checkid is used mostly for random ID based code, therefore clone mobs are out of the question.
 		return 0;
@@ -525,7 +525,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		return 0;
 	}
 
-	s_mob_db *mob;
+	std::shared_ptr<s_mob_db> mob;
 	int i = 0, mob_id = 0, rand = 0;
 	struct s_randomsummon_entry *entry = nullptr;
 
@@ -533,7 +533,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		rand = rnd()%msummon->count;
 		entry = &msummon->list[rand];
 		mob_id = entry->mob_id;
-		mob = mob_db.find(mob_id).get();
+		mob = mob_db.find(mob_id);
 	} while ((rand == 0 || // Skip default first
 		mob == nullptr ||
 		mob_is_clone(mob_id) ||
@@ -1068,7 +1068,6 @@ TIMER_FUNC(mob_delayspawn){
 int mob_setdelayspawn(struct mob_data *md)
 {
 	unsigned int spawntime;
-	s_mob_db *db;
 
 	if (!md->spawn) //Doesn't has respawn data!
 		return unit_free(&md->bl,CLR_DEAD);
@@ -1078,7 +1077,8 @@ int mob_setdelayspawn(struct mob_data *md)
 		spawntime+= rnd()%md->spawn->delay2;
 
 	//Apply the spawn delay fix [Skotlex]
-	db = mob_db.find(md->spawn->id).get();
+	std::shared_ptr<s_mob_db> db = mob_db.find(md->spawn->id);
+
 	if (status_has_mode(&db->status,MD_STATUSIMMUNE)) { // Status Immune
 		if (battle_config.boss_spawn_delay != 100) {
 			// Divide by 100 first to prevent overflows
@@ -3545,17 +3545,14 @@ int mob_skill_id2skill_idx(int mob_id,uint16 skill_id)
 	if (mob == nullptr)
 		return -1;
 
-	std::vector<std::shared_ptr<s_mob_skill>> skills = mob->skill;
+	std::vector<std::shared_ptr<s_mob_skill>> &skills = mob->skill;
 
 	if (skills.empty())
 		return -1;
 
-	int i = 0;
-
-	for (const auto &skillit : skills) {
-		if (skillit->skill_id == skill_id)
+	for (int i = 0; i < skills.size(); i++) {
+		if (skills[i]->skill_id == skill_id)
 			return i;
-		i++;
 	}
 
 	return -1;
@@ -3666,7 +3663,6 @@ struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
  *------------------------------------------*/
 int mobskill_use(struct mob_data *md, t_tick tick, int event)
 {
-	std::vector<std::shared_ptr<s_mob_skill>> ms;
 	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
 	struct block_list *bl;
 	struct mob_data *fmd = NULL;
@@ -3675,7 +3671,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 
 	nullpo_ret(md);
 
-	ms = md->db->skill;
+	std::vector<std::shared_ptr<s_mob_skill>> &ms = md->db->skill;
 
 	if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || ms.empty() || status_has_mode(&md->status,MD_NOCAST))
 		return 0;
@@ -3684,11 +3680,11 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 		return 0; //Skill act delay only affects non-event skills.
 
 	//Pick a starting position and loop from that.
-	i = battle_config.mob_ai&0x100?rnd()%md->db->skill.size():0;
-	for (n = 0; n < md->db->skill.size(); i++, n++) {
+	i = battle_config.mob_ai&0x100?rnd()%ms.size():0;
+	for (n = 0; n < ms.size(); i++, n++) {
 		int c2, flag = 0;
 
-		if (i == md->db->skill.size())
+		if (i == ms.size())
 			i = 0;
 
 		if (DIFF_TICK(tick, md->skilldelay[i]) < ms[i]->delay)
@@ -3875,8 +3871,8 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 			}
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
-			for (j = 0; j < md->db->skill.size(); j++)
-				if (md->db->skill[j]->skill_id == ms[i]->skill_id)
+			for (j = 0; j < ms.size(); j++)
+				if (ms[j]->skill_id == ms[i]->skill_id)
 					md->skilldelay[j]=tick;
 		} else
 			md->skilldelay[i]=tick;
@@ -3925,7 +3921,7 @@ int mob_is_clone(int mob_id)
 {
 	if(mob_id < MOB_CLONE_START || mob_id > MOB_CLONE_END)
 		return 0;
-	if (mob_db.find(mob_id) == nullptr)
+	if (!mob_db.exists(mob_id))
 		return 0;
 	return mob_id;
 }
@@ -3962,16 +3958,13 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	if(pc_isdead(sd) && master_id && flag&1)
 		return 0;
 
-	ARR_FIND( MOB_CLONE_START, MOB_CLONE_END, mob_id, mob_db.find(mob_id) == nullptr );
+	ARR_FIND( MOB_CLONE_START, MOB_CLONE_END, mob_id, !mob_db.exists(mob_id) );
 	if(mob_id >= MOB_CLONE_END)
 		return 0;
 
 	std::shared_ptr<s_mob_db> db = mob_db.find(mob_id);
 
 	if (db == nullptr)
-		return 0;
-
-	if (mob_is_clone(mob_id) == 0)
 		return 0;
 
 	status = &db->status;
@@ -4120,7 +4113,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		if (battle_config.mob_skill_delay != 100)
 			ms->delay = ms->delay*battle_config.mob_skill_delay/100;
 
-		db->skill.insert(db->skill.begin() + i, ms);
+		db->skill.push_back(ms);
 		++i;
 	}
 
@@ -4156,7 +4149,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 int mob_clone_delete(struct mob_data *md){
 	uint32 mob_id = md->mob_id;
 
-	if (mob_id >= MOB_CLONE_START && mob_id < MOB_CLONE_END && mob_db.find(mob_id) != nullptr) {
+	if (mob_is_clone(mob_id)) {
 		mob_db.erase(mob_id);
 		//Clear references to the db
 		md->db = NULL;
@@ -4206,6 +4199,80 @@ static void item_dropratio_adjust(t_itemid nameid, int mob_id, int *rate_adjust)
 
 const std::string MobDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/mob_db.yml";
+}
+
+template<typename T, size_t S> bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, bool exists, uint8 max, T(&arr)[S]) {
+	const YAML::Node &dropNode = node[nodeName];
+	uint16 i = 0;
+
+	for (const YAML::Node &dropit : dropNode) {
+		if (i >= max) {
+			this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", nodeName.c_str(), max);
+			continue;
+		}
+
+		std::string item_name;
+
+		if (!this->asString(dropit, "Item", item_name))
+			return false;
+
+		item_data *item = itemdb_search_aegisname(item_name.c_str());
+
+		if (item == nullptr) {
+			this->invalidWarning(dropit["Item"], "Monster drop item %s does not exist, skipping.\n", item_name.c_str());
+			continue;
+		}
+
+		uint16 rate;
+
+		if (this->nodeExists(dropit, "Rate")) {
+			if (!this->asUInt16Rate(dropit, "Rate", rate))
+				return false;
+		} else {
+			if (!exists)
+				rate = 1;
+		}
+
+		bool steal = false;
+
+		if (this->nodeExists(dropit, "StealProtected")) {
+			if (!this->asBool(dropit, "StealProtected", steal))
+				return false;
+		}
+
+		uint16 group = 0;
+
+		if (this->nodeExists(dropit, "RandomOptionGroup")) {
+			std::string group_name;
+
+			if (!this->asString(dropit, "RandomOptionGroup", group_name))
+				return false;
+
+			if (!random_option_group.option_get_id(group_name.c_str(), group))
+				this->invalidWarning(dropit["RandomOptionGroup"], "Unknown random option group %s for monster drop, defaulting to no group.\n", group_name.c_str());
+		}
+
+		uint16 index;
+
+		if (this->nodeExists(dropit, "Index")) {
+			if (!this->asUInt16(dropit, "Index", index))
+				return false;
+
+			if (index > MAX_MVP_DROP - 1) {
+				this->invalidWarning(dropit["Index"], "Invalid monster drop index %hu. Must be between 0~%hu, skipping.\n", index, MAX_MOB_DROP - 1);
+				continue;
+			}
+		} else {
+			index = i++;
+		}
+
+		arr[index].nameid = item->nameid;
+		arr[index].rate = rate;
+		arr[index].steal_protected = steal;
+		arr[index].randomopt_group = group;
+	}
+
+	return true;
 }
 
 /**
@@ -4378,6 +4445,11 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "Defense", def))
 			return 0;
 
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["Defense"], "Invalid monster defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
+
 		mob->status.def = static_cast<defType>(def);
 	} else {
 		if (!exists)
@@ -4389,6 +4461,11 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "MagicDefense", def))
 			return 0;
+
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["MagicDefense"], "Invalid monster magic defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
 
 		mob->status.mdef = static_cast<defType>(def);
 	} else {
@@ -4615,7 +4692,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (!CHK_ELEMENT_LEVEL(level)) {
-			this->invalidWarning(node["ElementLevel"], "Invalid monster element level %d, defaulting to 1.\n", level);
+			this->invalidWarning(node["ElementLevel"], "Invalid monster element level %hu, defaulting to 1.\n", level);
 			level = 1;
 		}
 
@@ -4631,10 +4708,15 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "WalkSpeed", speed))
 			return 0;
 
+		if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+			this->invalidWarning(node["WalkSpeed"], "Invalid monster walk speed %hu, capping...\n", speed);
+			speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+		}
+
 		mob->status.speed = speed;
 	} else {
 		if (!exists)
-			mob->status.speed = 0;
+			mob->status.speed = DEFAULT_WALK_SPEED;
 	}
 
 	if (this->nodeExists(node, "AttackDelay")) {
@@ -4756,129 +4838,13 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "MvpDrops")) {
-		const YAML::Node &mvpNode = node["MvpDrops"];
-		uint16 i = 0;
-
-		for (const YAML::Node &dropit : mvpNode) {
-			if (i >= MAX_MVP_DROP) {
-				this->invalidWarning(dropit, "Maximum of %d MVP drops met, skipping.\n", MAX_MVP_DROP);
-				continue;
-			}
-
-			std::string item_name;
-
-			if (!this->asString(dropit, "Item", item_name))
-				return 0;
-
-			item_data *item = itemdb_search_aegisname(item_name.c_str());
-
-			if (item == nullptr) {
-				this->invalidWarning(dropit["Item"], "MVP drop item %s does not exist, skipping.\n", item_name.c_str());
-				continue;
-			}
-
-			uint16 rate;
-
-			if (this->nodeExists(dropit, "Rate")) {
-				if (!this->asUInt16Rate(dropit, "Rate", rate))
-					return 0;
-			} else {
-				if (!exists)
-					rate = 1;
-			}
-
-			int16 index = -1;
-
-			if (this->nodeExists(dropit, "Index")) {
-				if (!this->asInt16(dropit, "Index", index))
-					return 0;
-
-				if (index < 0 || index > MAX_MVP_DROP - 1) {
-					this->invalidWarning(dropit["Index"], "Invalid MVP drop index %d. Must be between 0~%d, skipping.\n", index, MAX_MVP_DROP - 1);
-					continue;
-				}
-			}
-
-			uint16 j = (index > -1) ? index : i;
-
-			mob->mvpitem[j].nameid = item->nameid;
-			mob->mvpitem[j].rate = rate;
-			mob->mvpitem[j].steal_protected = true;
-			i++;
-		}
+		if (!this->parseDropNode("MvpDrops", node, exists, MAX_MVP_DROP, mob->mvpitem))
+			return 0;
 	}
 
 	if (this->nodeExists(node, "Drops")) {
-		const YAML::Node &dropNode = node["Drops"];
-		uint16 i = 0;
-
-		for (const YAML::Node &dropit : dropNode) {
-			if (i >= MAX_MOB_DROP) {
-				this->invalidWarning(dropit, "Maximum of %d monster drops met, skipping.\n", MAX_MOB_DROP);
-				continue;
-			}
-
-			std::string item_name;
-
-			if (!this->asString(dropit, "Item", item_name))
-				return 0;
-
-			item_data *item = itemdb_search_aegisname(item_name.c_str());
-
-			if (item == nullptr) {
-				this->invalidWarning(dropit["Item"], "Monster drop item %s does not exist, skipping.\n", item_name.c_str());
-				continue;
-			}
-
-			uint16 rate;
-
-			if (this->nodeExists(dropit, "Rate")) {
-				if (!this->asUInt16Rate(dropit, "Rate", rate))
-					return 0;
-			} else {
-				if (!exists)
-					rate = 1;
-			}
-
-			bool steal = false;
-
-			if (this->nodeExists(dropit, "StealProtected")) {
-				if (!this->asBool(dropit, "StealProtected", steal))
-					return 0;
-			}
-
-			uint16 group = 0;
-
-			if (this->nodeExists(dropit, "RandomOptionGroup")) {
-				std::string group_name;
-
-				if (!this->asString(dropit, "RandomOptionGroup", group_name))
-					return 0;
-
-				if (!random_option_group.option_get_id(group_name.c_str(), group))
-					this->invalidWarning(dropit["RandomOptionGroup"], "Unknown random option group %s for monster drop, defaulting to no group.\n", group_name.c_str());
-			}
-
-			int16 index = -1;
-
-			if (this->nodeExists(dropit, "Index")) {
-				if (!this->asInt16(dropit, "Index", index))
-					return 0;
-
-				if (index < 0 || index > MAX_MVP_DROP - 1) {
-					this->invalidWarning(dropit["Index"], "Invalid monster drop index %d. Must be between 0~%d, skipping.\n", index, MAX_MOB_DROP - 1);
-					continue;
-				}
-			}
-
-			uint16 j = (index > -1) ? index : i;
-
-			mob->dropitem[j].nameid = item->nameid;
-			mob->dropitem[j].rate = rate;
-			mob->dropitem[j].steal_protected = steal;
-			mob->dropitem[j].randomopt_group = group;
-			i++;
-		}
+		if (!this->parseDropNode("Drops", node, exists, MAX_MOB_DROP, mob->dropitem))
+			return 0;
 	}
 
 	if (!exists)
@@ -4934,7 +4900,7 @@ void MobDatabase::loadingFinished() {
 		// Now that we know if it is a MVP or not, apply battle_config modifiers [Skotlex]
 		double maxhp = (double)mob->status.max_hp;
 
-		if (mob->status.mode & MD_MVP) { // MVP
+		if (mob->get_bosstype() == BOSSTYPE_MVP) { // MVP
 			if (battle_config.mvp_hp_rate != 100)
 				maxhp = maxhp * (double)battle_config.mvp_hp_rate / 100.;
 		} else { // Normal mob
@@ -6116,10 +6082,11 @@ static void mob_drop_ratio_adjust(void){
  * @param mob Monster DB entry
  * @param skill Monster skill entries
  **/
-static void mob_skill_db_set_single_sub(s_mob_db *mob, struct s_mob_skill_db *skill) {
-
-	nullpo_retv(mob);
+static void mob_skill_db_set_single_sub(std::shared_ptr<s_mob_db> mob, struct s_mob_skill_db *skill) {
 	nullpo_retv(skill);
+
+	if (mob == nullptr)
+		return;
 
 	size_t i = 0;
 
@@ -6143,7 +6110,7 @@ static void mob_skill_db_set_single(struct s_mob_skill_db *skill) {
 		std::shared_ptr<s_mob_db> mob = mob_db.find(skill->mob_id);
 
 		if (mob != nullptr)
-			mob_skill_db_set_single_sub(mob.get(), skill);
+			mob_skill_db_set_single_sub(mob, skill);
 	}
 	// Global skill
 	else {
@@ -6157,20 +6124,10 @@ static void mob_skill_db_set_single(struct s_mob_skill_db *skill) {
 				|| (!(id&2) && !status_has_mode(&pair.second->status,MD_STATUSIMMUNE)) // Normal monsters
 				)
 				continue;
-			mob_skill_db_set_single_sub(pair.second.get(), skill);
+			mob_skill_db_set_single_sub(pair.second, skill);
 		}
 	}
 	
-}
-
-/**
- * Free monster skill data
- **/
-static int mob_skill_db_free(DBKey key, DBData *data, va_list ap) {
-	struct s_mob_skill_db *skill = (struct s_mob_skill_db *)db_data2ptr(data);
-	if (skill)
-		aFree(skill);
-	return 0;
 }
 
 /**

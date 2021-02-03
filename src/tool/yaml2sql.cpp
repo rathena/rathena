@@ -205,7 +205,6 @@ int do_init( int argc, char** argv ){
 	};
 
 	// Load constants
-	#define export_constant_npc(a) export_constant(a)
 	#include "../map/script_constants.hpp"
 
 	for( const std::string& suffix : item_table_suffixes ){

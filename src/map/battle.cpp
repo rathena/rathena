@@ -1541,22 +1541,40 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			std::vector<e_race2> race2 = status_get_race2(src);
 
 			for (const auto &raceit : race2) {
-				if (raceit == RC2_MANUK && (sce = sc->data[SC_MANU_DEF]))
-					damage -= damage * sce->val1 / 100;
-				if (raceit == RC2_SPLENDIDE && (sce = sc->data[SC_SPL_DEF]))
-					damage -= damage * sce->val1 / 100;
-				if (raceit == RC2_OGH_ATK_DEF && sc->data[SC_GLASTHEIM_DEF])
-					return 0;
-				if (raceit == RC2_OGH_HIDDEN && (sce = sc->data[SC_GLASTHEIM_HIDDEN]))
-					damage -= damage * sce->val1 / 100;
-				if (raceit == RC2_BIO5_ACOLYTE_MERCHANT && (sce = sc->data[SC_LHZ_DUN_N1]))
-					damage -= damage * sce->val2 / 100;
-				if (raceit == RC2_BIO5_MAGE_ARCHER && (sce = sc->data[SC_LHZ_DUN_N2]))
-					damage -= damage * sce->val2 / 100;
-				if (raceit == RC2_BIO5_SWORDMAN_THIEF && (sce = sc->data[SC_LHZ_DUN_N3]))
-					damage -= damage * sce->val2 / 100;
-				if (raceit == RC2_BIO5_MVP && (sce = sc->data[SC_LHZ_DUN_N4]))
-					damage -= damage * sce->val2 / 100;
+				switch (raceit) {
+					case RC2_MANUK:
+						if (sce = sc->data[SC_MANU_DEF])
+							damage -= damage * sce->val1 / 100;
+						break;
+					case RC2_SPLENDIDE:
+						if (sce = sc->data[SC_SPL_DEF])
+							damage -= damage * sce->val1 / 100;
+						break;
+					case RC2_OGH_ATK_DEF:
+						if (sc->data[SC_GLASTHEIM_DEF])
+							return 0;
+						break;
+					case RC2_OGH_HIDDEN:
+						if (sce = sc->data[SC_GLASTHEIM_HIDDEN])
+							damage -= damage * sce->val1 / 100;
+						break;
+					case RC2_BIO5_ACOLYTE_MERCHANT:
+						if (sce = sc->data[SC_LHZ_DUN_N1])
+							damage -= damage * sce->val2 / 100;
+						break;
+					case RC2_BIO5_MAGE_ARCHER:
+						if (sce = sc->data[SC_LHZ_DUN_N2])
+							damage -= damage * sce->val2 / 100;
+						break;
+					case RC2_BIO5_SWORDMAN_THIEF:
+						if (sce = sc->data[SC_LHZ_DUN_N3])
+							damage -= damage * sce->val2 / 100;
+						break;
+					case RC2_BIO5_MVP:
+						if (sce = sc->data[SC_LHZ_DUN_N4])
+							damage -= damage * sce->val2 / 100;
+						break;
+				}
 			}
 		}
 
@@ -1665,20 +1683,36 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				std::vector<e_race2> race2 = status_get_race2(bl);
 
 				for (const auto &raceit : race2) {
-					if (raceit == RC2_MANUK && (sce = sc->data[SC_MANU_ATK]))
-						damage += damage * sce->val1 / 100;
-					if (raceit == RC2_SPLENDIDE && (sce = sc->data[SC_SPL_ATK]))
-						damage += damage * sce->val1 / 100;
-					if (raceit == RC2_OGH_ATK_DEF && sc->data[SC_GLASTHEIM_ATK])
-						damage <<= 1;
-					if (raceit == RC2_BIO5_SWORDMAN_THIEF && (sce = sc->data[SC_LHZ_DUN_N1]))
-						damage += damage * sce->val1 / 100;
-					if (raceit == RC2_BIO5_ACOLYTE_MERCHANT && (sce = sc->data[SC_LHZ_DUN_N2]))
-						damage += damage * sce->val1 / 100;
-					if (raceit == RC2_BIO5_MAGE_ARCHER && (sce = sc->data[SC_LHZ_DUN_N3]))
-						damage += damage * sce->val1 / 100;
-					if (raceit == RC2_BIO5_MVP && (sce = sc->data[SC_LHZ_DUN_N4]))
-						damage += damage * sce->val1 / 100;
+					switch (raceit) {
+						case RC2_MANUK:
+							if (sce = sc->data[SC_MANU_ATK])
+								damage += damage * sce->val1 / 100;
+							break;
+						case RC2_SPLENDIDE:
+							if (sce = sc->data[SC_SPL_ATK])
+								damage += damage * sce->val1 / 100;
+							break;
+						case RC2_OGH_ATK_DEF:
+							if (sc->data[SC_GLASTHEIM_ATK])
+								damage <<= 1;
+							break;
+						case RC2_BIO5_SWORDMAN_THIEF:
+							if (sce = sc->data[SC_LHZ_DUN_N1])
+								damage += damage * sce->val1 / 100;
+							break;
+						case RC2_BIO5_ACOLYTE_MERCHANT:
+							if (sce = sc->data[SC_LHZ_DUN_N2])
+								damage += damage * sce->val1 / 100;
+							break;
+						case RC2_BIO5_MAGE_ARCHER:
+							if (sce = sc->data[SC_LHZ_DUN_N3])
+								damage += damage * sce->val1 / 100;
+							break;
+						case RC2_BIO5_MVP:
+							if (sce = sc->data[SC_LHZ_DUN_N4])
+								damage += damage * sce->val1 / 100;
+							break;
+					}
 				}
 			}
 		}

@@ -17529,7 +17529,6 @@ BUILDIN_FUNC(delmonsterdrop)
  *------------------------------------------*/
 BUILDIN_FUNC(getmonsterinfo)
 {
-	std::shared_ptr<s_mob_db> mob;
 	int mob_id;
 
 	mob_id	= script_getnum(st,2);
@@ -17541,7 +17540,9 @@ BUILDIN_FUNC(getmonsterinfo)
 			script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	mob = mob_db.find(mob_id);
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
 	switch ( script_getnum(st,3) ) {
 		case MOB_NAME:		script_pushstrcopy(st,mob->jname.c_str()); break;
 		case MOB_LV:		script_pushint(st,mob->lv); break;

@@ -43,7 +43,7 @@ OnInit:
 	freeloop 1;	
 	.@total = query_sql( "SELECT DISTINCT LEFT( `name_english`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND `name_aegis` IN ( SELECT DISTINCT `drop10_item` FROM `"+ .@mob_db$ +"` WHERE `mode_mvp` = 0 ) ORDER BY alphabets;", .@alphabet$ );
 	for ( .@i = 0; .@i < .@total; .@i++ ) {
-		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id`, `"+ .@item_db$ +"`.`name_aegis` FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND LEFT( `name_english`, 1 ) = '"+ .@alphabet$[.@i] +"' AND `name_aegis` IN ( SELECT DISTINCT `drop10_item` FROM `"+ .@mob_db$ +"` WHERE `mode_mvp` = 0 ) ORDER BY `name_english` LIMIT 128;", .@id, .@item_name$ );
+		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id`, `"+ .@item_db$ +"`.`name_aegis` FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND LEFT( `name_english`, 1 ) = '"+ .@alphabet$[.@i] +"' AND `name_aegis` IN ( SELECT DISTINCT `drop10_item` FROM `"+ .@mob_db$ +"` WHERE `mode_mvp` = 0 ) ORDER BY `name_english` LIMIT 128;", .@id );
 		if (.@nb > 0) {
 			.alphabet$[.@size_alphabet++] = .@alphabet$[.@i];
 			.alphabet_menu$ = .alphabet_menu$ + .@alphabet$[.@i] +" Cards:";

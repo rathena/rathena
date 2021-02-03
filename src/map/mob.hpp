@@ -134,7 +134,7 @@ enum e_mob_bosstype : uint8{
 };
 
 /// Monster Aegis AI types
-enum e_aiAE : uint16 {
+enum e_aegis_monstertype : uint16 {
 	MONSTER_TYPE_01 = 0x81,
 	MONSTER_TYPE_02 = 0x83,
 	MONSTER_TYPE_03 = 0x1089,
@@ -164,8 +164,8 @@ enum e_aiAE : uint16 {
 	MONSTER_TYPE_27 = 0x8084,
 };
 
-/// Monster Aegis class types
-enum e_classAE : int8 {
+/// Aegis monster class types
+enum e_aegis_monsterclass : int8 {
 	CLASS_NONE = -1,
 	CLASS_NORMAL = 0,
 	CLASS_BOSS,
@@ -238,6 +238,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
+	template<typename T, size_t S> bool parseDropNode(std::string nodeName, YAML::Node node, bool exists, uint8 max, T(&arr)[S]);
 	uint64 parseBodyNode(const YAML::Node &node);
 	void loadingFinished();
 };
