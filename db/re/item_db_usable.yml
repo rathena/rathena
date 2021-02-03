@@ -46292,7 +46292,7 @@ Body:
     Script: |
       warp "prontera",159,192;
   - Id: 22848
-    AegisName: Prison_Key
+    AegisName: KeysPrison
     Name: Prison Key
     Type: Usable
     Buy: 10
@@ -46300,10 +46300,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      warp "prt_prison",0,0;
-      /*No coord info*/
+      warp "prt_prison",188,23;
   - Id: 22849
-    AegisName: Prontera_Time_Crystal
+    AegisName: P_Temporal_Crystal
     Name: Prontera Time Crystal
     Type: Usable
     Buy: 10
