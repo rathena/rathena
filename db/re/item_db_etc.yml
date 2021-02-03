@@ -6759,7 +6759,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bGetZenyNum,500,1;
+      bonus2 bGetZenyNum,500,3;
   - Id: 4297
     AegisName: Cruiser_Card
     Name: Cruiser Card
@@ -6948,7 +6948,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDef,1;
-      bonus2 bSubRace,RC_Formless,5;
+      bonus2 bSubEle,Ele_Neutral,5;
   - Id: 4310
     AegisName: Panzer_Goblin_Card
     Name: Panzer Goblin Card
@@ -7799,7 +7799,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bHPDrainRate,100,20;
+      bonus2 bHPDrainRate,50,20;
       bonus bHPrecovRate,-10;
   - Id: 4368
     AegisName: Shecil_Card
@@ -8449,7 +8449,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,2;
-      autobonus "{ bonus bCritical,100; }",5,5000,0,"{ specialeffect2 EF_ENHANCE; }";
+      autobonus "{ bonus bCritical,100; }",5,5000,BF_NORMAL,"{ specialeffect2 EF_ENHANCE; }";
   - Id: 4412
     AegisName: Isilla_Card
     Name: Isilla Card
@@ -8507,7 +8507,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddMonsterDropItem,536,500;
+      bonus2 bAddMonsterDropItem,536,2000;
       bonus2 bAddItemHealRate,536,100;
   - Id: 4416
     AegisName: Siroma_Card
@@ -8681,7 +8681,7 @@ Body:
       if (.@i == W_1HSWORD || .@i == W_2HSWORD) {
          bonus bHit,5;
          bonus bCritical,5;
-         bonus2 bSkillAtk,62,25;
+         bonus2 bSkillAtk,"KN_BOWLINGBASH",25;
       }
   - Id: 4428
     AegisName: Bow_Guardian_Card
@@ -8729,7 +8729,7 @@ Body:
       bonus bBaseAtk,(JobLevel/10);
       bonus bCritical,(JobLevel/10);
       bonus bHit,(JobLevel/10);
-      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",10,1;
+      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",2,10;
   - Id: 4431
     AegisName: Kasa_Card
     Name: Kasa Card
@@ -9150,7 +9150,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,10;
-      autobonus "{ bonus bFlee2,10; }",10,10000,0,"{ specialeffect2 EF_HASTEUP; }";
+      autobonus "{ bonus bFlee2,10; }",10,4000,BF_NORMAL,"{ specialeffect2 EF_HASTEUP; }";
   - Id: 4459
     AegisName: Lata_Card
     Name: Rata Card
@@ -9199,7 +9199,7 @@ Body:
     Script: |
       bonus bDex,1;
       bonus bAgi,1;
-      autobonus "{ bonus bCritical,20; }",15,4000,0,"{ specialeffect2 EF_ENHANCE; }";
+      autobonus "{ bonus bCritical,20; }",15,4000,BF_NORMAL,"{ specialeffect2 EF_ENHANCE; }";
   - Id: 4462
     AegisName: Hardrock_Mommos_Card
     Name: Hardrock Mammoth Card
@@ -9313,6 +9313,7 @@ Body:
       bonus bStr,2;
       if (BaseClass == Job_Merchant) {
          bonus2 bSkillAtk,"MC_CARTREVOLUTION",50;
+         bonus2 bSkillUseSP,"MC_CARTREVOLUTION",-12;
       }
   - Id: 4468
     AegisName: Pinguicula_Dark_Card
@@ -9899,7 +9900,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bAddRace2,RC2_SCARABA,30;
-      bonus2 bAddMonsterDropItem,12806,30;
+      bonus2 bAddMonsterDropItem,12806,50;
   - Id: 4508
     AegisName: Gold_Scaraba_Card
     Name: Gold Scaraba Card
@@ -10092,8 +10093,8 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,3;
-      bonus2 bAddEff,Eff_Confusion,5000;
-      bonus3 bAddEff,Eff_Confusion,5000,ATF_TARGET;
+      bonus3 bAddEffWhenHit,Eff_Confusion,100,ATF_WEAPON|ATF_MAGIC;
+      bonus3 bAddEffWhenHit,Eff_Fear,100,ATF_WEAPON|ATF_MAGIC;
   - Id: 4521
     AegisName: Sedora_Card
     Name: Sedora Card
@@ -10702,7 +10703,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMatkRate,(readparam(bDex)>=110)?14:7;
-      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",5,70,BF_MAGIC,0;
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",5,100,BF_MAGIC,0;
   - Id: 4562
     AegisName: Champion_Card
     Name: Champion Chen Card
@@ -10716,7 +10717,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bAddClass,Class_All,(readparam(bAgi)>=110)?14:7;
-      bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",5,70,BF_WEAPON,1;
+      bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",5,100,BF_WEAPON,1;
   - Id: 4563
     AegisName: Creator_Card
     Name: Creator Flamel Card
@@ -10730,7 +10731,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bCritical,(readparam(bStr)>=110)?40:20;
-      bonus5 bAutoSpellWhenHit,"AM_ACIDTERROR",5,70,BF_WEAPON,1;
+      bonus5 bAutoSpellWhenHit,"AM_ACIDTERROR",5,100,BF_WEAPON,1;
   - Id: 4564
     AegisName: Stalker_Card
     Name: Stalker Gertie Card
@@ -10744,7 +10745,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bHit,(readparam(bLuk)>=110)?40:20;
-      bonus5 bAutoSpellWhenHit,"ST_FULLSTRIP",1,70,BF_WEAPON,1;
+      bonus5 bAutoSpellWhenHit,"ST_FULLSTRIP",1,100,BF_WEAPON,1;
   - Id: 4565
     AegisName: Paladin_Card
     Name: Paladin Randel Card
@@ -10758,7 +10759,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,(readparam(bInt)>=110)?20:10;
-      bonus5 bAutoSpellWhenHit,"CR_GRANDCROSS",10,70,BF_WEAPON,0;
+      bonus5 bAutoSpellWhenHit,"CR_GRANDCROSS",10,100,BF_WEAPON,0;
   - Id: 4566
     AegisName: Gypsy_Card
     Name: Gypsy Trentini Card
@@ -10958,7 +10959,6 @@ Body:
     Script: |
       bonus bCritAtkRate,30;
       bonus2 bSubRace,RC_All,-10;
-      bonus2 bSubRace,RC_Player_Human,10;
   - Id: 4579
     AegisName: Lora_Card
     Name: Warrior Lola Card
@@ -11099,10 +11099,11 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
+      bonus2 bCriticalAddRace,RC_DemiHuman,12;
+      bonus2 bCriticalAddRace,RC_Player_Human,12;
       bonus2 bCriticalAddRace,RC_Brute,12;
       bonus2 bCriticalAddRace,RC_Player_Doram,12;
       bonus2 bCriticalAddRace,RC_Fish,12;
-      bonus2 bCriticalAddRace,RC_DemiHuman,12;
   - Id: 4588
     AegisName: Wakwak_Card
     Name: Wakwak Card
@@ -11142,7 +11143,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bInt,4;
-      bonus5 bAutoSpellWhenHit,"NPC_WIDESLEEP",5,70,BF_MAGIC,0;
+      bonus5 bAutoSpellWhenHit,"NPC_WIDESLEEP",4,20,BF_MAGIC,0;
   - Id: 4591
     AegisName: Bakonawa_Card
     Name: Bakonawa Card
@@ -11156,7 +11157,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,4;
-      bonus5 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",5,70,BF_WEAPON,0;
+      bonus5 bAutoSpellWhenHit,"NPC_WIDEBLEEDING",4,20,BF_WEAPON,0;
   - Id: 4592
     AegisName: Buwaya_Card
     Name: Buwaya Card
@@ -11170,7 +11171,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bVit,4;
-      bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",5,70,BF_MAGIC,0;
+      bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",4,20,BF_MAGIC,0;
   - Id: 4593
     AegisName: Menblatt_Card
     Name: Menblatt Card
@@ -11336,9 +11337,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",1,70,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,70,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",1,70,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_WEAPON,0;
   - Id: 4604
     AegisName: CorruptionRootH_Card
     Name: Realized Corruption Root Card
@@ -11352,9 +11353,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,30;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",2,70,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,70,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",2,70,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_WEAPON,0;
   - Id: 4605
     AegisName: UndeadKnightM_Card
     Name: Agony Of Royal Knight Card
@@ -11535,7 +11536,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpell,"NPC_WIDECURSE",2,20;
+      bonus3 bAutoSpell,"NPC_WIDECURSE",2,30;
   - Id: 4631
     AegisName: Owl_Viscount_Card
     Name: Owl Viscount Card
@@ -11561,7 +11562,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE") == 5?5:1),1,BF_WEAPON,0;
+      bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE") == 5?5:1),20,BF_WEAPON,0;
   - Id: 4633
     AegisName: Enhanced_Archer_Skeleton_Card
     Name: Enhanced Archer Skeleton Card
@@ -11991,6 +11992,8 @@ Body:
     Script: |
       bonus2 bSubSize,Size_Small,5;
       bonus2 bSubSize,Size_Medium,5;
+      bonus2 bMagicSubSize,Size_Small,5;
+      bonus2 bMagicSubSize,Size_Medium,5;
   - Id: 4661
     AegisName: Charge_Basilisk_Card
     Name: Charge Basilisk Card
@@ -12005,6 +12008,9 @@ Body:
       bonus2 bSubSize,Size_Medium,20;
       bonus2 bSubSize,Size_Large,20;
       bonus2 bSubSize,Size_Small,-15;
+      bonus2 bMagicSubSize,Size_Medium,20;
+      bonus2 bMagicSubSize,Size_Large,20;
+      bonus2 bMagicSubSize,Size_Small,-15;
   - Id: 4662
     AegisName: Big_Eggring_Card
     Name: Big Eggring Card
@@ -12159,7 +12165,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
          bonus bMaxHPrate,10;
-         bonus2 bAddClass,Class_All,10;
+         bonus2 bAddRace,RC_All,10;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12199,7 +12205,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
          bonus bFlee2,10;
-         bonus2 bAddClass,Class_All,15;
+         bonus2 bAddRace,RC_All,15;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12219,7 +12225,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
          bonus bMaxHPrate,10;
-         bonus bHealPower,10;
+         bonus bHealPower,15;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12259,7 +12265,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
          bonus bHit,20;
-         bonus2 bAddClass,Class_All,15;
+         bonus2 bAddRace,RC_All,15;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12299,7 +12305,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
          bonus bAspd,2;
-         bonus2 bAddClass,Class_All,15;
+         bonus2 bAddRace,RC_All,15;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12319,7 +12325,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
          bonus bDef,350;
-         bonus2 bAddClass,Class_All,10;
+         bonus2 bAddRace,RC_All,10;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12339,7 +12345,7 @@ Body:
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
          bonus bFlee,20;
-         bonus2 bAddClass,Class_All,15;
+         bonus2 bAddRace,RC_All,15;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12358,8 +12364,8 @@ Body:
       DropEffect: CLIENT
     Script: |
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
-         bonus2 bAddClass,Class_All,5;
          bonus bMatkRate,15;
+         bonus2 bAddRace,RC_All,5;
       }
       if (BaseLevel>174)
          bonus bAllStats,10;
@@ -12617,9 +12623,8 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
+      bonus bBreakArmorRate,5000;
       bonus bMaxSP,-300;
-      bonus bBreakArmorRate,1500;
-      /* Custom rate [Secret] */
   - Id: 4698
     AegisName: Step_Card
     Name: Step Card
@@ -15159,8 +15164,8 @@ Body:
       if (.@r>=7) {
          bonus bStr,5;
       }
-      if (.@r>=10) {
-         bonus2 bAddClass,Class_All,5;
+      if (.@r>9) {
+         bonus2 bAddRace,RC_All,5;
       }
   - Id: 4995
     AegisName: Rune_of_Strength_Lv_2
@@ -15174,7 +15179,7 @@ Body:
       }
       if (.@r>=11) {
          bonus bStr,1;
-         bonus2 bAddClass,Class_All,7;
+         bonus2 bAddRace,RC_All,7;
       }
   - Id: 4996
     AegisName: Rune_of_Strength_Lv_3
@@ -15188,11 +15193,11 @@ Body:
       }
       if (.@r>=12) {
          bonus bStr,1;
-         bonus2 bAddClass,Class_All,8;
+         bonus2 bAddRace,RC_All,8;
       }
       if (.@r>=13) {
          bonus bStr,1;
-         bonus2 bAddClass,Class_All,2;
+         bonus2 bAddRace,RC_All,2;
       }
   - Id: 4997
     AegisName: Rune_of_Agility_Lv_1
@@ -33915,6 +33920,8 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 300
+    Script: |
+      itemskill "NPC_WIDECURSE",2;
   - Id: 22516
     AegisName: Dark_Red_Clot
     Name: Black As Night Piece
@@ -33937,6 +33944,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      mercenary_create 2937,1800000;
   - Id: 22519
     AegisName: Pc_Stop_Cancel
     Name: Stops Buff
@@ -36434,7 +36443,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMaxHPrate,2;
-      autobonus2 "{ bonus2 bHPRegenRate,1000,1000; }",30,5000;
+      autobonus2 "{ bonus2 bHPRegenRate,1000,1000; }",20,5000,BF_NORMAL|BF_MAGIC,"{ specialeffect2 EF_HEAL2; }";
   - Id: 27015
     AegisName: Repair_Robot_Turbo_Card
     Name: Repair Robot Turbo Card
@@ -36476,8 +36485,15 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus2 bSubRace,RC_Formless,10*((getrefine()>=7)*5);
-      /* TODO: Has a chance to gain accessories when a monster is killed. */
+      if (getrefine()<7)
+         bonus2 bSubRace,RC_Formless,10;
+      else {
+         bonus2 bSubRace,RC_Formless,15;
+         bonus2 bAddMonsterDropItem,7317,10;
+         bonus2 bAddMonsterDropItem,998,5;
+         bonus2 bAddMonsterDropItem,7319,3;
+         bonus2 bAddMonsterDropItem,7095,3;
+      }
   - Id: 27018
     AegisName: GC109_Card
     Name: GC109 Card
@@ -36489,7 +36505,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bDelayrate,-(1+(BaseLevel>=90)+(BaseLevel>=120));
+      bonus bAspdRate,-(1+(BaseLevel>=90)+(BaseLevel>=120));
   - Id: 27019
     AegisName: DR815_Card
     Name: DR815 Card
@@ -36514,7 +36530,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bAddClass,Class_All,10;
-      bonus3 bAutoSpell,"NPC_WIDESOULDRAIN",2,50+((getrefine()/3)*10);
+      bonus3 bAutoSpell,"NPC_WIDESOULDRAIN",2,5+((getrefine()/3)*10);
   - Id: 27025
     AegisName: Lich_Lord_Card
     Name: Lich Lord Card
@@ -36700,7 +36716,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMatk,25;
-      autobonus "{ bonus bNoCastCancel; }",5,5000,BF_MAGIC,"{ showscript \"This is the truth!\"; }";
+      autobonus "{ bonus bNoCastCancel; }",5,5000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; showscript \"This is the truth!\"; }";
   - Id: 27088
     AegisName: Fury_Hero_Card
     Name: Fury Hero Card
@@ -37074,7 +37090,6 @@ Body:
          .@val += 5;
       }
       bonus2 bMagicAddRace,RC_Brute,.@val;
-      bonus2 bMagicAddRace,RC_Player_Doram,.@val;
   - Id: 27125
     AegisName: Headless_Mule_Card
     Name: Headless Mule Card
@@ -37102,7 +37117,6 @@ Body:
       bonus2 bAddEle,Ele_Wind,40;
       bonus2 bAddEle,Ele_Earth,40;
       bonus2 bAddRace,RC_Brute,40;
-      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddRace,RC_Insect,40;
   - Id: 27147
     AegisName: Humanoid_Chimera_Card
@@ -37557,8 +37571,8 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bBreakWeaponRate,500;
-      bonus bBreakArmorRate,500;
+      bonus bBreakWeaponRate,1000;
+      bonus bBreakArmorRate,1000;
   - Id: 27181
     AegisName: Airship_Raid_Card
     Name: Airship Raid Card
@@ -37602,7 +37616,7 @@ Body:
       bonus bBaseAtk,20;
       if (readparam(bStr) >= 120) {
          bonus bBaseAtk,20;
-      bonus bAspdRate,3;
+         bonus bAspdRate,-3;
       }
   - Id: 27184
     AegisName: Knight_Sakray_Card
@@ -38104,7 +38118,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bCastrate,3;
+      bonus bVariableCastrate,-3;
       bonus bLongAtkRate,5;
       bonus2 bSkillAtk,"NJ_HUUJIN",5;
       bonus2 bSkillAtk,"NJ_HYOUSENSOU",5;
@@ -38188,7 +38202,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      autobonus "{ bonus bDef,300; }",100,10000,BF_WEAPON|BF_SHORT,"{ active_transform 1040,10000; }";
+      autobonus "{ bonus bDef,300; }",20,10000,BF_WEAPON|BF_SHORT,"{ specialeffect2 EF_POTION_BERSERK; active_transform 1040,10000; }";
   - Id: 27264
     AegisName: Evil_Shadow_Card
     Name: Evil Shadow Card
@@ -38462,8 +38476,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus5 bAutoSpell,"WL_HELLINFERNO",3,1,ATF_SHORT|ATF_WEAPON,1;
-      /* fix me: unknown rate */
+      bonus4 bAutoSpell,"WL_HELLINFERNO",3,20,1;
   - Id: 27306
     AegisName: Bellare_Card
     Name: Bellare Card
@@ -38477,11 +38490,12 @@ Body:
     Script: |
       if (getiteminfo(getequipid(EQI_COMPOUND_ON),11) == W_REVOLVER) {
          .@r = getrefine();
-      bonus bHit,20;
-      bonus bLongAtkRate,(5+.@r);
-      if (.@r >= 10) {
-         bonus2 bSkillAtk,"RL_FIREDANCE",15;
-      } }
+         bonus bHit,20;
+         bonus bLongAtkRate,(5+.@r);
+         if (.@r >= 10) {
+            bonus2 bSkillAtk,"RL_FIREDANCE",15;
+         }
+      }
   - Id: 27307
     AegisName: Greater_Bellare_Card
     Name: Greater Bellare Card
@@ -39619,19 +39633,19 @@ Body:
     Name: EXP+2%
     Type: Card
     Script: |
-      bonus2 bExpAddClass,Class_All,2;
+      bonus2 bExpAddRace,RC_All,2;
   - Id: 29028
     AegisName: Atk1p_Top
     Name: ATK + 1%
     Type: Card
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus2 bAddRace,RC_All,1;
   - Id: 29029
     AegisName: Atk1p_Bottom
     Name: ATK+1%(Lower)
     Type: Card
     Script: |
-      bonus2 bAddClass,Class_All,1;
+      bonus2 bAddRace,RC_All,1;
   - Id: 29030
     AegisName: Matk1p_Top
     Name: MATK+1%
@@ -42346,10 +42360,10 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      .@r = getrefine();
+      .@r = getrefine()/2;
       bonus2 bAddClass,Class_All,1+.@r;
       bonus bMatkRate,1+.@r;
-      bonus bMaxHPrate,-(2+(.@r*2));
+      bonus bMaxHPrate,-2*(1+.@r);
   - Id: 31018
     AegisName: Evil_Dwelling_Box_Card
     Name: Evil Dwelling Box Card
