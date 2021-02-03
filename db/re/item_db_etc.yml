@@ -11735,7 +11735,7 @@ Body:
          if (.@r>8)
             .@b += 15;
       }
-      bonus bAtk,10+.@b;
+      bonus bBaseAtk,10+.@b;
   - Id: 4644
     AegisName: Min_Vocal_Card
     Name: Infinite Vocal Card
@@ -12016,7 +12016,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,25-5*min(readParam(bStr)/10,5);
+      bonus bBaseAtk,25-5*min(readParam(bStr)/10,5);
       bonus bMatk,25-5*min(readParam(bInt)/10,5);
       bonus bAspdRate,10-2*min(readParam(bAgi)/10,5);
       bonus bMaxHP,1000-200*min(readParam(bVit)/10,5);
@@ -12058,7 +12058,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,5;
+      bonus bBaseAtk,5;
   - Id: 4666
     AegisName: Sweet_Roda_Frog_Card
     Name: Sweet Roda Frog Card
@@ -14932,13 +14932,13 @@ Body:
     Name: Cancer
     Type: Card
     Script: |
-      bonus bAtk,3;
+      bonus bBaseAtk,3;
   - Id: 4963
     AegisName: Taurus
     Name: Taurus
     Type: Card
     Script: |
-      bonus bAtk,4;
+      bonus bBaseAtk,4;
       bonus bHit,1;
   - Id: 4964
     AegisName: Capricorn
@@ -37372,7 +37372,7 @@ Body:
             .@atk += 20;
          }
       }
-      bonus bAtk,.@atk;
+      bonus bBaseAtk,.@atk;
       bonus bMatk,.@atk;
   - Id: 27170
     AegisName: Shotgun_Buffalo_Bandit_Card
@@ -37584,7 +37584,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,30;
+      bonus bBaseAtk,30;
       .@r = getrefine();
       bonus2 bSkillAtk,"RL_AM_BLAST",.@r >= 10 ? 60 : 30;
       bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",.@r >= 10 ? 60 : 30;
@@ -37599,9 +37599,9 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,20;
+      bonus bBaseAtk,20;
       if (readparam(bStr) >= 120) {
-         bonus bAtk,20;
+         bonus bBaseAtk,20;
       bonus bAspdRate,3;
       }
   - Id: 27184
@@ -37615,7 +37615,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,20;
+      bonus bBaseAtk,20;
       bonus2 bAddRace,RC_Demon,30;
       bonus2 bAddRace,RC_Undead,30;
   - Id: 27196
@@ -37994,7 +37994,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      bonus bAtk,15;
+      bonus bBaseAtk,15;
       bonus bMatk,15;
       bonus bMaxHP,500;
       bonus bHit,15;
@@ -40236,7 +40236,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bAtk,20;
+      bonus bBaseAtk,20;
       bonus bHit,2;
       bonus bMaxHP,300;
   - Id: 29122
@@ -40245,7 +40245,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bAtk,40;
+      bonus bBaseAtk,40;
       bonus bHit,4;
       bonus bMaxHP,600;
   - Id: 29123
@@ -42206,7 +42206,7 @@ Body:
     Script: |
       bonus2 bHPRegenRate,BaseLevel,10000;
       if (getrefine()>=7) {
-         bonus bAtk,6*(readparam(bStr)/60);
+         bonus bBaseAtk,6*(readparam(bStr)/60);
          bonus bMaxHPrate,readparam(bStr)/60;
       }
   - Id: 31009
@@ -42222,7 +42222,7 @@ Body:
     Script: |
       bonus2 bHPRegenRate,BaseLevel,10000;
       if (getrefine()>=7) {
-         bonus bAtk,6*(readparam(bStr)/20);
+         bonus bBaseAtk,6*(readparam(bStr)/20);
          bonus bMaxHPrate,readparam(bStr)/20;
       }
   - Id: 31010
