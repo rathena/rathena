@@ -24372,6 +24372,8 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      IgnoreLongCard: true
     Range: 7
     Hit: Multi_Hit
     HitCount: -7
