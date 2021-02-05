@@ -10115,20 +10115,31 @@ BUILDIN_FUNC(checkmadogear)
 }
 
 /// Sets if the player is riding MADO Gear.
-/// <flag> defaults to 1
+/// <flag> defaults to true
+/// <type> defaults to MADO_ROBOT
 ///
-/// setmadogear {<flag>{,<char_id>}};
+/// setmadogear {<flag>{,type{,<char_id>}}};
 BUILDIN_FUNC(setmadogear)
 {
-	int flag = 1;
+	bool flag = true;
 	TBL_PC* sd;
+	uint16 type = MADO_ROBOT;
 
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
-		flag = script_getnum(st,2);
-	pc_setmadogear(sd, flag);
+		flag = script_getnum(st,2) != 0;
+	if (script_hasdata(st, 3)) {
+		type = script_getnum(st, 3);
+
+		if (type == MADO_UNUSED || type >= MADO_MAX) {
+			ShowError("buildin_setmadogear: Invalid mado gear type %hu, defaulting to robot...\n", type);
+			type = MADO_ROBOT;
+		}
+	}
+
+	pc_setmadogear(sd, flag, static_cast<e_mado_type>(type));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11466,7 +11477,6 @@ BUILDIN_FUNC(getunits)
 	int size = 0;
 	int32 idx, id;
 	int16 m = -1, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
-	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 
 	if (!strcmp(command, "getmapunits"))
 	{
@@ -11522,6 +11532,7 @@ BUILDIN_FUNC(getunits)
 		}
 	}
 
+	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
 	{
 		if (m == -1 || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
@@ -12644,6 +12655,7 @@ BUILDIN_FUNC(addrid)
 		case 2:
 			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
+				mapit_free(iter);
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
@@ -12655,6 +12667,7 @@ BUILDIN_FUNC(addrid)
 		case 3:
 			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
+				mapit_free(iter);
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
@@ -12671,15 +12684,18 @@ BUILDIN_FUNC(addrid)
 		case 5:
 			if (script_getstr(st, 4) == NULL) {
 				script_pushint(st, 0);
+				mapit_free(iter);
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (map_mapname2mapid(script_getstr(st, 4)) < 0) {
 				script_pushint(st, 0);
+				mapit_free(iter);
 				return SCRIPT_CMD_FAILURE;
 			}
 			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
 			break;
 		default:
+			mapit_free(iter);
 			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
 				script_pushint(st,0);
 				return SCRIPT_CMD_SUCCESS;
@@ -19733,9 +19749,6 @@ BUILDIN_FUNC(questinfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct s_questinfo qi;
-	struct script_code *script = nullptr;
-	int color = QMARK_NONE;
 	int icon = script_getnum(st, 2);
 
 #if PACKETVER >= 20120410
@@ -19772,6 +19785,8 @@ BUILDIN_FUNC(questinfo)
 		icon = icon + 1;
 #endif
 
+	int color = QMARK_NONE;
+
 	if (script_hasdata(st, 3)) {
 		color = script_getnum(st, 3);
 		if (color < QMARK_NONE || color >= QMARK_MAX) {
@@ -19780,6 +19795,8 @@ BUILDIN_FUNC(questinfo)
 			color = QMARK_NONE;
 		}
 	}
+
+	struct script_code *script = nullptr;
 
 	if (script_hasdata(st, 4)) {
 		const char *str = script_getstr(st, 4);
@@ -19798,13 +19815,18 @@ BUILDIN_FUNC(questinfo)
 		}
 	}
 
-	qi.nd = nd;
-	qi.icon = static_cast<e_questinfo_types>(icon);
-	qi.color = static_cast<e_questinfo_markcolor>(color);
-	qi.condition = script;
+	std::shared_ptr<s_questinfo> qi = std::make_shared<s_questinfo>();
+
+	qi->icon = static_cast<e_questinfo_types>(icon);
+	qi->color = static_cast<e_questinfo_markcolor>(color);
+	qi->condition = script;
+
+	nd->qi_data.push_back(qi);
 
 	struct map_data *mapdata = map_getmapdata(nd->bl.m);
-	mapdata->qi_data.push_back(qi);
+
+	if (mapdata && !util::vector_exists(mapdata->qi_npc, nd->bl.id))
+		mapdata->qi_npc.push_back(nd->bl.id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -25121,7 +25143,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkriding,"?"),
 	BUILDIN_DEF(checkwug,"?"),
 	BUILDIN_DEF(checkmadogear,"?"),
-	BUILDIN_DEF(setmadogear,"??"),
+	BUILDIN_DEF(setmadogear,"???"),
 	BUILDIN_DEF2(savepoint,"save","sii???"),
 	BUILDIN_DEF(savepoint,"sii???"),
 	BUILDIN_DEF(gettimetick,"i"),

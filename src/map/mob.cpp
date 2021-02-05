@@ -3078,9 +3078,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 
 			if (sd->status.party_id)
-				map_foreachinallrange(quest_update_objective_sub, &md->bl, AREA_SIZE, BL_PC, sd->status.party_id, md->mob_id, md->level, status->race, status->size, status->def_ele);
+				map_foreachinallrange(quest_update_objective_sub, &md->bl, AREA_SIZE, BL_PC, sd->status.party_id, md);
 			else if (sd->avail_quests)
-				quest_update_objective(sd, md->mob_id, md->level, static_cast<e_race>(status->race), static_cast<e_size>(status->size), static_cast<e_element>(status->def_ele));
+				quest_update_objective(sd, md);
 
 			if (achievement_db.mobexists(md->mob_id)) {
 				if (battle_config.achievement_mob_share > 0 && sd->status.party_id > 0)

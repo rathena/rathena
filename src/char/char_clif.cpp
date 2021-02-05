@@ -752,7 +752,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 		}
 		else
 		{// authentication not found (coming from login server)
-			if (login_fd > 0) { // don't send request if no login-server
+			if (session_isValid(login_fd)) { // don't send request if no login-server
 				WFIFOHEAD(login_fd,23);
 				WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account
 				WFIFOL(login_fd,2) = sd->account_id;
@@ -816,7 +816,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
 
-		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && !map_server[server_id].map.empty() );
+		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, session_isValid(map_server[server_id].fd) && !map_server[server_id].map.empty() );
 		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
 		if (server_id == ARRAYLENGTH(map_server)) {
 			WFIFOHEAD(fd, 24);
@@ -882,7 +882,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		if (i < 0 || !cd->last_point.map) {
 			unsigned short j;
 			//First check that there's actually a map server online.
-			ARR_FIND( 0, ARRAYLENGTH(map_server), j, map_server[j].fd >= 0 && map_server[j].map[0] );
+			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].map.empty() );
 			if (j == ARRAYLENGTH(map_server)) {
 				ShowInfo("Connection Closed. No map servers available.\n");
 				chclif_send_auth_result(fd,1); // 01 = Server closed
