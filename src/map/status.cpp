@@ -2400,10 +2400,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id))
 				return false;
 			break;
-		case SC_MANHOLE:
-			// Skill is disabled against special racial grouped monsters(GvG and Battleground)
-			if (target && ( status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD ) )
-				return false;
 		default:
 			break;
 	}
@@ -9618,15 +9614,25 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_BITESCAR:
 			case SC_SP_SHA:
 			case SC_FRESHSHRIMP:
+			case SC__MANHOLE:
 				return 0;
 		}
 	}
+
 	// Check for mvp resistance // atm only those who OS
 	if(status_has_mode(status,MD_MVP) && !(flag&SCSTART_NOAVOID)) {
-		 switch (type) {
-		 case SC_COMA:
+		switch (type) {
+		case SC_COMA:
 		// continue list...
-		     return 0;
+			return 0;
+		}
+	}
+
+	//Check for GVG and Battleground Race2 Monsters.
+	if (status_get_race2(bl) == RC2_GVG || status_get_race2(bl) == RC2_BATTLEFIELD) {
+		switch (type) {
+		case SC__MANHOLE:
+			return 0;
 		}
 	}
 
