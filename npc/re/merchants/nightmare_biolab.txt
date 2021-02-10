@@ -84,7 +84,7 @@ function	script	F_Cursed_Crystal	{	// 23080
 }
 
 function	script	F_Cursed_Fragment	{	// 23016
-	.@r = rand(1,12) {;
+	.@r = rand(1,12);
 	if (.@r == 1) {
 		showscript "I will never forgive you...!";
 		sc_start SC_ATKPOTION,600000,50;

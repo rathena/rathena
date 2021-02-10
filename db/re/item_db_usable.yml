@@ -44256,6 +44256,40 @@ Body:
       getrandgroupitem(IG_Candy_Holder,1);
       getrandgroupitem(IG_Candy_Holder,1);
       getrandgroupitem(IG_Candy_Holder,1);
+  - Id: 22515
+    AegisName: Twisted_Key_of_Time
+    Name: Twisted Key of Time
+    Type: Usable
+    Buy: 10
+    Weight: 300
+    Script: |
+      itemskill "NPC_WIDECURSE",2;
+  - Id: 22516
+    AegisName: Dark_Red_Clot
+    Name: Black As Night Piece
+    Type: Usable
+    Buy: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_CURSE,4000,0,1500,0;
+  - Id: 22517
+    AegisName: Loki_Summon_Scroll
+    Name: Rocker Summoning Scroll
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      mercenary_create 2937,1800000;
   - Id: 22518
     AegisName: Idn_Wisdom_Egg
     Name: Egg Of Wisdom
