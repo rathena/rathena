@@ -3319,7 +3319,7 @@ Body:
     Buy: 10
     Weight: 10
   - Id: 11600
-    AegisName: Shining_Holy_Water
+    AegisName: ShiningHolyWater
     Name: Shining Holy Water
     Type: Healing
     Buy: 10
@@ -3336,7 +3336,7 @@ Body:
          heal 1000,0;
       }
   - Id: 11601
-    AegisName: Delicious_Anchovy
+    AegisName: Tasty_Anchovy
     Name: Delicious Anchovy
     Type: Healing
     Buy: 20
@@ -3345,7 +3345,7 @@ Body:
       itemheal rand(30,46),0;
       specialeffect2 EF_HEAL3;
   - Id: 11602
-    AegisName: Catnip_Fruit
+    AegisName: Nepeta_Cataria
     Name: Catnip Fruit
     Type: Healing
     Buy: 15
@@ -13396,7 +13396,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 12848
-    AegisName: Falcon_Flute
+    AegisName: Falcon_Pipe
     Name: Falcon Flute
     Type: Delayconsume
     Weight: 10
@@ -44257,7 +44257,7 @@ Body:
       getrandgroupitem(IG_Candy_Holder,1);
       getrandgroupitem(IG_Candy_Holder,1);
   - Id: 22515
-    AegisName: Twisted_Key_of_Time
+    AegisName: Key_Of_Twisted_Time
     Name: Twisted Key of Time
     Type: Usable
     Buy: 10
@@ -44648,7 +44648,7 @@ Body:
     Script: |
       sc_start SC_ASPDPOTION1,1800000,6;
   - Id: 22545
-    AegisName: Speed_Potion
+    AegisName: Speed_Up_Potion_B
     Name: Speed Potion
     Type: Usable
     Buy: 10
@@ -44665,7 +44665,7 @@ Body:
     Script: |
       sc_start SC_SPEEDUP1,5000,50;
   - Id: 22546
-    AegisName: Slow_Potion
+    AegisName: Slow_Down_Potion_B
     Name: Slow Potion
     Type: Usable
     Buy: 10
@@ -44682,7 +44682,7 @@ Body:
     Script: |
       sc_start SC_SLOWDOWN,5000,100;
   - Id: 22547
-    AegisName: Anti-Payne_Moment
+    AegisName: Anodyne_B
     Name: Anti-Payne Moment
     Type: Usable
     Buy: 10
@@ -44697,7 +44697,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22548
-    AegisName: Wed_Cursed
+    AegisName: Water_Of_Darkness_B
     Name: Wed Cursed
     Type: Usable
     Buy: 10
@@ -44712,7 +44712,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22549
-    AegisName: Poison_Bottle_
+    AegisName: Poison_Bottle_B
     Name: Poison Bottle
     Type: Usable
     Buy: 10
@@ -45603,42 +45603,42 @@ Body:
     Script: |
       /*TODO: getitem 12529,1; getitem 12323,200; getitem 12324,50; and 5 boxes that containing quivers + oridecons*/
   - Id: 22702
-    AegisName: STR_Soul_Potion
+    AegisName: Minus_Str
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bStr,-1,22702;
   - Id: 22703
-    AegisName: AGI_Soul_Potion
+    AegisName: Minus_Agi
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bAgi,-1,22703;
   - Id: 22704
-    AegisName: VIT_Soul_Potion
+    AegisName: Minus_Vit
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bVit,-1,22704;
   - Id: 22705
-    AegisName: INT_Soul_Potion
+    AegisName: Minus_Int
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bInt,-1,22705;
   - Id: 22706
-    AegisName: DEX_Soul_Potion
+    AegisName: Minus_Dex
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bDex,-1,22706;
   - Id: 22707
-    AegisName: LUK_Soul_Potion
+    AegisName: Minus_Luk
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
@@ -46699,7 +46699,7 @@ Body:
     Script: |
       /*No Info*/
   - Id: 22876
-    AegisName: Old_Money_Pocket
+    AegisName: Shabby_Purse
     Name: Old Money Pocket
     Type: Usable
     Script: |
@@ -46901,7 +46901,7 @@ Body:
     Script: |
       /*Works like item 6320, can reset up to 3x within 1 hour*/
   - Id: 22899
-    AegisName: Parchment_City
+    AegisName: DowntownMap
     Name: Parchment City
     Type: Usable
     Buy: 20
@@ -46960,7 +46960,7 @@ Body:
     Script: |
       getgroupitem(IG_Enchant_Stone_Box7);
   - Id: 22979
-    AegisName: C_Battle_Gum_2
+    AegisName: Comp_Battle_Bubble
     Name: "[Sale] Battle Manual and Bubble Gum"
     Type: Usable
     Trade:
@@ -46976,7 +46976,7 @@ Body:
       sc_start SC_EXPBOOST,1800000,50;
       sc_start SC_ITEMBOOST,1800000,100;
   - Id: 22984
-    AegisName: Kahluna_Milk
+    AegisName: Dr_Life_Potion_01
     Name: Kahluna Milk
     Type: Healing
     Buy: 6
@@ -46984,7 +46984,7 @@ Body:
     Script: |
       sc_start SC_DORAM_BUF_01, 180000, 0;
   - Id: 22985
-    AegisName: Basil
+    AegisName: Dr_Life_Potion_02
     Name: Basil
     Type: Healing
     Buy: 10
@@ -47018,7 +47018,7 @@ Body:
       bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9;
       /* fix me: unknown flag and specialeffect ;  disabled when LK_BERSERK */
   - Id: 23016
-    AegisName: Cursed_Fragment
+    AegisName: Pieces_Of_Grudge
     Name: Cursed Fragment
     Type: Usable
     Buy: 1
@@ -47041,7 +47041,7 @@ Body:
     Script: |
       getitem 11573,200;
   - Id: 23042
-    AegisName: S_Seed_Of_Yggdrasil
+    AegisName: Seed_Of_Yggdrasil_
     Name: "[NotForSale]Yggdrasil Seed"
     Type: Healing
     Weight: 300
@@ -47318,21 +47318,21 @@ Body:
     Script: |
       callfunc "F_CashStore";
   - Id: 23187
-    AegisName: Sap_Liquid
+    AegisName: Sap_Jelly
     Name: Sap Liquid
     Type: Usable
     Buy: 10
     Script: |
       pet 1180;
   - Id: 23188
-    AegisName: Unprocessed_Parts
+    AegisName: Airship_Part
     Name: Unprocessed Parts
     Type: Usable
     Buy: 10
     Script: |
       pet 1632;
   - Id: 23189
-    AegisName: Small_Needle_Kit
+    AegisName: Little_Dall_Needle
     Name: Small Needle Kit
     Type: Usable
     Buy: 10
@@ -47391,7 +47391,7 @@ Body:
     Script: |
       getgroupitem(IG_Agust_Lucky_Scroll);
   - Id: 23228
-    AegisName: Hazy_Mooncake
+    AegisName: HazyMooncake
     Name: Hazy Mooncake
     Type: Healing
     Buy: 768
@@ -47554,7 +47554,7 @@ Body:
       getitem(1649,1);
       getitem(15169,1);
   - Id: 23256
-    AegisName: Elixir_Bandages
+    AegisName: Elixir_Bandage
     Name: Elixir Bandages
     Type: Usable
     Buy: 10
@@ -47716,7 +47716,7 @@ Body:
     Script: |
       /*synthesisui 23324;*/
   - Id: 23340
-    AegisName: S_Megaphone
+    AegisName: Comp_Megaphone
     Name: "[Sale] Megaphone"
     Type: Usable
     Weight: 10
