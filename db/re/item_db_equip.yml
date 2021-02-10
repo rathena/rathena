@@ -67804,8 +67804,9 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 60
-    Range: 1
+    Range: 5
     Jobs:
+      Archer: true
       BardDancer: true
       Hunter: true
     Locations:
@@ -67813,7 +67814,9 @@ Body:
     WeaponLevel: 1
     EquipLevelMin: 1
     Script: |
-      bonus bUnbreakableWeapon;
+      bonus bMaxHP,100;
+      bonus2 bAddMonsterDropItem,11518,100;
+      /* CONFIRM The Rate*/
   - Id: 18105
     AegisName: Academy_Bow
     Name: Academy Bow
@@ -67824,13 +67827,16 @@ Body:
     Range: 5
     Slots: 1
     Jobs:
+      Archer: true
       BardDancer: true
       Hunter: true
     Locations:
       Both_Hand: true
     WeaponLevel: 1
-    EquipLevelMin: 1
+    EquipLevelMin: 30
     Refineable: true
+    Script: |
+      bonus bHit,20-(4*(BaseLevel/10));
   - Id: 18106
     AegisName: P_Bow3
     Name: Eden Bow III
@@ -68085,6 +68091,8 @@ Body:
     WeaponLevel: 3
     EquipLevelMin: 65
     Refineable: true
+    Script: |
+      bonus2 bAddMonsterDropItem,1753,200;
   - Id: 18116
     AegisName: Metal_Bow
     Name: Metal Bow
@@ -68398,6 +68406,12 @@ Body:
     Attack: 160
     Range: 5
     Slots: 1
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+      Thief: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
