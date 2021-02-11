@@ -4201,7 +4201,7 @@ const std::string MobDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/mob_db.yml";
 }
 
-template<typename T, size_t S> bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, bool exists, uint8 max, T(&arr)[S]) {
+bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops) {
 	const YAML::Node &dropNode = node[nodeName];
 	uint16 i = 0;
 
@@ -4225,13 +4225,8 @@ template<typename T, size_t S> bool MobDatabase::parseDropNode(std::string nodeN
 
 		uint16 rate;
 
-		if (this->nodeExists(dropit, "Rate")) {
-			if (!this->asUInt16Rate(dropit, "Rate", rate))
-				return false;
-		} else {
-			if (!exists)
-				rate = 1;
-		}
+		if (!this->asUInt16Rate(dropit, "Rate", rate))
+			return false;
 
 		bool steal = false;
 
@@ -4258,18 +4253,18 @@ template<typename T, size_t S> bool MobDatabase::parseDropNode(std::string nodeN
 			if (!this->asUInt16(dropit, "Index", index))
 				return false;
 
-			if (index > MAX_MVP_DROP - 1) {
-				this->invalidWarning(dropit["Index"], "Invalid monster drop index %hu. Must be between 0~%hu, skipping.\n", index, MAX_MOB_DROP - 1);
+			if (index > max - 1) {
+				this->invalidWarning(dropit["Index"], "Invalid monster drop index %hu. Must be between 0~%hu, skipping.\n", index, max - 1);
 				continue;
 			}
 		} else {
 			index = i++;
 		}
 
-		arr[index].nameid = item->nameid;
-		arr[index].rate = rate;
-		arr[index].steal_protected = steal;
-		arr[index].randomopt_group = group;
+		drops[index].nameid = item->nameid;
+		drops[index].rate = rate;
+		drops[index].steal_protected = steal;
+		drops[index].randomopt_group = group;
 	}
 
 	return true;
@@ -4838,12 +4833,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "MvpDrops")) {
-		if (!this->parseDropNode("MvpDrops", node, exists, MAX_MVP_DROP, mob->mvpitem))
+		if (!this->parseDropNode("MvpDrops", node, MAX_MVP_DROP, mob->mvpitem))
 			return 0;
 	}
 
 	if (this->nodeExists(node, "Drops")) {
-		if (!this->parseDropNode("Drops", node, exists, MAX_MOB_DROP, mob->dropitem))
+		if (!this->parseDropNode("Drops", node, MAX_MOB_DROP, mob->dropitem))
 			return 0;
 	}
 

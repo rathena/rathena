@@ -138,6 +138,7 @@ Header:
 #      - Item: Elunium
 #        Rate: 5600
 #      - Item: Baphomet_Card
+#        Rate: 1
 #        StealProtected: true
 #  - Id: 1901
 #    AegisName: VALARIS_WORSHIPPER
@@ -187,6 +188,7 @@ Header:
 #      - Item: Boots
 #        Rate: 50
 #      - Item: Baphomet__Card
+#        Rate: 1
 #        StealProtected: true
 #  - Id: 1902
 #    AegisName: MC_CAMERI
@@ -247,6 +249,7 @@ Header:
 #      - Item: Elunium
 #        Rate: 5600
 #      - Item: Baphomet_Card
+#        Rate: 1
 #        StealProtected: true
 #  - Id: 1903
 #    AegisName: POKI
@@ -368,6 +371,7 @@ Header:
 #      - Item: Elunium
 #        Rate: 5600
 #      - Item: Baphomet_Card
+#        Rate: 1
 #        StealProtected: true
 
 # Custom Hollow Poring (overrrides/collides with META_ANDRE)
@@ -504,6 +508,7 @@ Header:
 #      - Item: Goggle_
 #        Rate: 5
 #      - Item: Safety_Helmet
+#        Rate: 1
 #      - Item: Battered_Pot
 #        Rate: 10
 #      - Item: Goggle
@@ -512,6 +517,7 @@ Header:
 #        Rate: 1500
 #        StealProtected: true
 #      - Item: Martin_Card
+#        Rate: 1
 #        StealProtected: true
 #  - Id: 1175
 #    AegisName: TAROU
@@ -553,6 +559,7 @@ Header:
 #      - Item: RicePouch
 #        Rate: 2500
 #      - Item: Tarou_Card
+#        Rate: 1
 #        StealProtected: true
 #  - Id: 1209
 #    AegisName: CRAMP
@@ -600,6 +607,7 @@ Header:
 #        Rate: 1500
 #        StealProtected: true
 #      - Item: Cramp_Card
+#        Rate: 1
 #        StealProtected: true
 
 # iRO St. Patricks Day 2008 Event Monster overrides
@@ -935,6 +943,7 @@ Header:
 #      - Item: Santa_Beard
 #        Rate: 500
 #      - Item: Antonio_Card
+#        Rate: 1
 #        StealProtected: true
 
 # iRO Halloween 2009 Event
@@ -1037,6 +1046,7 @@ Header:
 #      - Item: White_Jewel
 #        Rate: 70
 #      - Item: Zombie_Card
+#        Rate: 1
 #        StealProtected: true
 #  - Id: 3001
 #    AegisName: GHOUL
@@ -1079,7 +1089,9 @@ Header:
 #      - Item: Mementos
 #        Rate: 150
 #      - Item: Ghoul_Leg
+#        Rate: 1
 #      - Item: Ghoul_Card
+#        Rate: 1
 #        StealProtected: true
 #  - Id: 3002
 #    AegisName: ZOMBIE_MASTER
@@ -1122,7 +1134,9 @@ Header:
 #      - Item: White_Jewel
 #        Rate: 100
 #      - Item: Ghoul_Leg
+#        Rate: 1
 #      - Item: Scapulare_
 #        Rate: 2
 #      - Item: Zombie_Master_Card
+#        Rate: 1
 #        StealProtected: true

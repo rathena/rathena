@@ -230,7 +230,6 @@ static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
 static bool pc_levelpenalty_yaml();
 static bool mob_readdb_race2(char *fields[], int columns, int current);
 static bool mob_readdb_drop(char *str[], int columns, int current);
-static bool mob_readdb_drop_yaml(void);
 static bool mob_readdb_sub(char *fields[], int columns, int current);
 
 // Constants for conversion
@@ -301,9 +300,12 @@ static void item_txt_data(const std::string& modePath, const std::string& fixedP
 // Mob database data to memory
 static void mob_txt_data(const std::string &modePath, const std::string &fixedPath) {
 	mob_race2.clear();
+	mob_drop.clear();
 
 	if (fileExists(modePath + "/mob_race2_db.txt"))
 		sv_readdb(modePath.c_str(), "mob_race2_db.txt", ',', 2, 100, -1, mob_readdb_race2, false);
+	if (fileExists(modePath + "/mob_drop.txt"))
+		sv_readdb(modePath.c_str(), "mob_drop.txt", ',', 3, 5, -1, mob_readdb_drop, false);
 }
 
 YAML::Emitter body;
@@ -590,13 +592,6 @@ int do_init( int argc, char** argv ){
 	mob_txt_data(path_db_import, path_db_import);
 	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
-	})) {
-		return 0;
-	}
-
-	mob_drop.clear();
-	if (!process("MOB_DB", 1, root_paths, "mob_drop", [](const std::string &path, const std::string &name_ext) -> bool {
-		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 5, -1, mob_readdb_drop, false) && mob_readdb_drop_yaml();
 	})) {
 		return 0;
 	}
@@ -3981,7 +3976,7 @@ static bool mob_readdb_drop(char *str[], int columns, int current) {
 	if (columns > 3)
 		entry.group_string = trim(str[3]);
 
-	const auto exists = mob_drop.find(mob_id);
+	const auto &exists = mob_drop.find(mob_id);
 
 	if (exists != mob_drop.end())
 		exists->second.push_back(entry);
@@ -3990,46 +3985,6 @@ static bool mob_readdb_drop(char *str[], int columns, int current) {
 
 		drop.push_back(entry);
 		mob_drop.insert({ mob_id, drop });
-	}
-
-	return true;
-}
-
-static bool mob_readdb_drop_yaml(void) {
-	for (const auto &it : mob_drop) {
-		body << YAML::BeginMap;
-		body << YAML::Key << "Id" << YAML::Value << it.first;
-
-		bool header = false;
-
-		for (const auto &drop : it.second) {
-			if (!header) {
-				if (drop.mvp)
-					body << YAML::Key << "MvpDrops";
-				else
-					body << YAML::Key << "Drops";
-				body << YAML::BeginSeq;
-			}
-
-			body << YAML::BeginMap;
-			body << YAML::Key << "Item" << YAML::Value << *(util::umap_find(aegis_itemnames, drop.nameid));
-			body << YAML::Key << "Rate" << YAML::Value << drop.rate;
-
-			std::string constant = drop.group_string;
-
-			constant.erase(0, 8);
-
-			body << YAML::Key << "RandomOptionGroup" << YAML::Value << constant;
-			if (!drop.mvp && drop.steal_protected == 1)
-				body << YAML::Key << "StealProtected" << YAML::Value << "true";
-			body << YAML::EndMap;
-
-			if (!header)
-				header = true;
-		}
-
-		body << YAML::EndSeq;
-		body << YAML::EndMap;
 	}
 
 	return true;
@@ -4062,9 +4017,9 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 	if (strtol(fields[11], nullptr, 10) > 0)
 		body << YAML::Key << "Attack2" << YAML::Value << fields[11];
 	if (strtol(fields[12], nullptr, 10) > 0)
-		body << YAML::Key << "Defense" << YAML::Value << fields[12];
+		body << YAML::Key << "Defense" << YAML::Value << cap_value(std::stoi(fields[12]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[13], nullptr, 10) > 0)
-		body << YAML::Key << "MagicDefense" << YAML::Value << fields[13];
+		body << YAML::Key << "MagicDefense" << YAML::Value << cap_value(std::stoi(fields[13]), DEFTYPE_MIN, DEFTYPE_MAX);
 	if (strtol(fields[14], nullptr, 10) > 1)
 		body << YAML::Key << "Str" << YAML::Value << fields[14];
 	if (strtol(fields[15], nullptr, 10) > 1)
@@ -4126,7 +4081,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
 	}
 	if (strtol(fields[26], nullptr, 10) > 0)
-		body << YAML::Key << "WalkSpeed" << YAML::Value << fields[26];
+		body << YAML::Key << "WalkSpeed" << YAML::Value << cap_value(std::stoi(fields[26]), MIN_WALK_SPEED, MAX_WALK_SPEED);
 	if (strtol(fields[27], nullptr, 10) > 0)
 		body << YAML::Key << "AttackDelay" << YAML::Value << fields[27];
 	if (strtol(fields[28], nullptr, 10) > 0)
@@ -4290,15 +4245,40 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				std::string *item_name = util::umap_find(aegis_itemnames, nameid);
 
 				if (!item_name) {
-					ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(MVP-Drop %d)\n", fields[1], mob_id, fields[31 + i * 2], (i / 2) + 1);
+					ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%u\"(MVP-Drop %d)\n", fields[1], mob_id, nameid, (i / 2) + 1);
 					continue;
 				}
 
 				body << YAML::BeginMap;
 				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				if (strtol(fields[32 + i * 2], nullptr, 10) > 1)
-					body << YAML::Key << "Rate" << YAML::Value << fields[32 + i * 2];
+				body << YAML::Key << "Rate" << YAML::Value << fields[32 + i * 2];
 				body << YAML::EndMap;
+			}
+
+			if (i < MAX_MVP_DROP - 1)
+				continue;
+
+			// Insert at end
+			for (const auto &it : mob_drop) {
+				if (it.first != mob_id)
+					continue;
+
+				for (const auto &drop : it.second) {
+					if (drop.mvp) {
+						std::string *item_name = util::umap_find(aegis_itemnames, drop.nameid);
+
+						if (!item_name) {
+							ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%u\"(MVP-Drop %d)\n", fields[1], mob_id, drop.nameid, (i / 2) + 1);
+							continue;
+						}
+
+						body << YAML::BeginMap;
+						body << YAML::Key << "Item" << YAML::Value << *item_name;
+						body << YAML::Key << "Rate" << YAML::Value << drop.rate;
+						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
+						body << YAML::EndMap;
+					}
+				}
 			}
 		}
 
@@ -4326,18 +4306,44 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				std::string *item_name = util::umap_find(aegis_itemnames, nameid);
 
 				if (!item_name) {
-					ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(Drop %d)\n", fields[1], mob_id, fields[k], (i / 2) + 1);
+					ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"\n", fields[1], mob_id, fields[k]);
 					continue;
 				}
 
 				body << YAML::BeginMap;
 				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				if (strtol(fields[k + 1], nullptr, 10) > 1)
-					body << YAML::Key << "Rate" << YAML::Value << fields[k + 1];
-
+				body << YAML::Key << "Rate" << YAML::Value << fields[k + 1];
 				if (i > 6) // Slots 8, 9, and 10 are inherently protected
 					body << YAML::Key << "StealProtected" << YAML::Value << "true";
 				body << YAML::EndMap;
+			}
+
+			if (i < MAX_MOB_DROP - 2 || i == MAX_MOB_DROP - 1)
+				continue;
+
+			// Insert before card
+			for (const auto &it : mob_drop) {
+				if (it.first != mob_id)
+					continue;
+
+				for (const auto &drop : it.second) {
+					if (!drop.mvp) {
+						std::string *item_name = util::umap_find(aegis_itemnames, drop.nameid);
+
+						if (!item_name) {
+							ShowWarning("Monster \"%s\"(id: %d) is dropping an unknown item \"%u\"\n", fields[1], mob_id, drop.nameid);
+							continue;
+						}
+
+						body << YAML::BeginMap;
+						body << YAML::Key << "Item" << YAML::Value << *item_name;
+						body << YAML::Key << "Rate" << YAML::Value << drop.rate;
+						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
+						if (drop.steal_protected == 1)
+							body << YAML::Key << "StealProtected" << YAML::Value << "true";
+						body << YAML::EndMap;
+					}
+				}
 			}
 		}
 

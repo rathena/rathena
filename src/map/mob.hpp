@@ -238,7 +238,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	template<typename T, size_t S> bool parseDropNode(std::string nodeName, YAML::Node node, bool exists, uint8 max, T(&arr)[S]);
+	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
 	uint64 parseBodyNode(const YAML::Node &node);
 	void loadingFinished();
 };

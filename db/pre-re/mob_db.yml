@@ -61,12 +61,12 @@
 #     <mode>: <value>       Mode to toggle.
 #   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
 #     - Item                Item name.
-#       Rate                Drop rate of item. (Default: 1)
+#       Rate                Drop rate of item.
 #       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
 #       Index               Index used for overwriting item. (Optional)
 #   Drops:                  List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
 #     - Item                Item name.
-#       Rate                Drop rate of item. (Default: 1)
+#       Rate                Drop rate of item.
 #       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
 #       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
 #       Index               Index used for overwriting item. (Optional)
@@ -122,6 +122,7 @@ Body:
       - Item: Lusty_Iron
         Rate: 20
       - Item: Scorpion_Card
+        Rate: 1
         StealProtected: true
   - Id: 1002
     AegisName: PORING
@@ -163,6 +164,7 @@ Body:
       - Item: Unripe_Apple
         Rate: 20
       - Item: Poring_Card
+        Rate: 1
         StealProtected: true
   - Id: 1004
     AegisName: HORNET
@@ -209,6 +211,7 @@ Body:
       - Item: Honey
         Rate: 150
       - Item: Hornet_Card
+        Rate: 1
         StealProtected: true
   - Id: 1005
     AegisName: FARMILIAR
@@ -251,6 +254,7 @@ Body:
       - Item: Center_Potion
         Rate: 50
       - Item: Farmiliar_Card
+        Rate: 1
         StealProtected: true
   - Id: 1007
     AegisName: FABRE
@@ -295,6 +299,7 @@ Body:
       - Item: Club
         Rate: 200
       - Item: Fabre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1008
     AegisName: PUPA
@@ -335,6 +340,7 @@ Body:
       - Item: Iron_Ore
         Rate: 200
       - Item: Pupa_Card
+        Rate: 1
         StealProtected: true
   - Id: 1009
     AegisName: CONDOR
@@ -377,6 +383,7 @@ Body:
       - Item: Orange
         Rate: 600
       - Item: Condor_Card
+        Rate: 1
         StealProtected: true
   - Id: 1010
     AegisName: WILOW
@@ -422,6 +429,7 @@ Body:
       - Item: Tree_Of_Archer_1
         Rate: 1000
       - Item: Wilow_Card
+        Rate: 1
         StealProtected: true
   - Id: 1011
     AegisName: CHONCHON
@@ -468,6 +476,7 @@ Body:
       - Item: Iron_Ore
         Rate: 150
       - Item: Chonchon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1012
     AegisName: RODA_FROG
@@ -508,6 +517,7 @@ Body:
       - Item: Empty_Bottle
         Rate: 2000
       - Item: Roda_Frog_Card
+        Rate: 1
         StealProtected: true
   - Id: 1013
     AegisName: WOLF
@@ -551,6 +561,7 @@ Body:
       - Item: Strawberry
         Rate: 600
       - Item: Wolf_Card
+        Rate: 1
         StealProtected: true
   - Id: 1014
     AegisName: SPORE
@@ -595,6 +606,7 @@ Body:
       - Item: Strawberry
         Rate: 600
       - Item: Spore_Card
+        Rate: 1
         StealProtected: true
   - Id: 1015
     AegisName: ZOMBIE
@@ -633,6 +645,7 @@ Body:
       - Item: White_Jewel
         Rate: 70
       - Item: Zombie_Card
+        Rate: 1
         StealProtected: true
   - Id: 1016
     AegisName: ARCHER_SKELETON
@@ -676,6 +689,7 @@ Body:
       - Item: Bow
         Rate: 150
       - Item: Archer_Skeleton_Card
+        Rate: 1
         StealProtected: true
   - Id: 1018
     AegisName: CREAMY
@@ -722,6 +736,7 @@ Body:
       - Item: Wind_Scroll_1_3
         Rate: 100
       - Item: Creamy_Card
+        Rate: 1
         StealProtected: true
   - Id: 1019
     AegisName: PECOPECO
@@ -763,6 +778,7 @@ Body:
       - Item: Orange
         Rate: 1000
       - Item: Pecopeco_Card
+        Rate: 1
         StealProtected: true
   - Id: 1020
     AegisName: MANDRAGORA
@@ -806,6 +822,7 @@ Body:
       - Item: Whip_Of_Earth
         Rate: 10
       - Item: Mandragora_Card
+        Rate: 1
         StealProtected: true
   - Id: 1023
     AegisName: ORK_WARRIOR
@@ -853,6 +870,7 @@ Body:
       - Item: Axe
         Rate: 100
       - Item: Orc_Warrior_Card
+        Rate: 1
         StealProtected: true
   - Id: 1024
     AegisName: WORM_TAIL
@@ -897,6 +915,7 @@ Body:
       - Item: Green_Lace
         Rate: 100
       - Item: Worm_Tail_Card
+        Rate: 1
         StealProtected: true
   - Id: 1025
     AegisName: SNAKE
@@ -937,9 +956,11 @@ Body:
       - Item: Posionous_Canine
         Rate: 800
       - Item: Shining_Scales
+        Rate: 1
       - Item: Strawberry
         Rate: 600
       - Item: Snake_Card
+        Rate: 1
         StealProtected: true
   - Id: 1026
     AegisName: MUNAK
@@ -977,11 +998,13 @@ Body:
       - Item: Amulet
         Rate: 20
       - Item: Ninja_Suit
+        Rate: 1
       - Item: Adventure_Suit
         Rate: 100
       - Item: Girl's_Diary
         Rate: 5
       - Item: Munak_Card
+        Rate: 1
         StealProtected: true
   - Id: 1028
     AegisName: SOLDIER_SKELETON
@@ -1027,6 +1050,7 @@ Body:
       - Item: Stiletto
         Rate: 50
       - Item: Soldier_Skeleton_Card
+        Rate: 1
         StealProtected: true
   - Id: 1029
     AegisName: ISIS
@@ -1065,6 +1089,7 @@ Body:
       - Item: Circlet_
         Rate: 5
       - Item: Necklace
+        Rate: 1
       - Item: Crystal_Jewel___
         Rate: 150
       - Item: Crystal_Jewel__
@@ -1074,6 +1099,7 @@ Body:
       - Item: Crystal_Jewel_
         Rate: 5
       - Item: Isis_Card
+        Rate: 1
         StealProtected: true
   - Id: 1030
     AegisName: ANACONDAQ
@@ -1117,6 +1143,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 50
       - Item: Anacondaq_Card
+        Rate: 1
         StealProtected: true
   - Id: 1031
     AegisName: POPORING
@@ -1160,6 +1187,7 @@ Body:
       - Item: Apple
         Rate: 250
       - Item: Poporing_Card
+        Rate: 1
         StealProtected: true
   - Id: 1032
     AegisName: VERIT
@@ -1197,11 +1225,13 @@ Body:
       - Item: White_Herb
         Rate: 600
       - Item: Skul_Ring
+        Rate: 1
       - Item: Flower_Ring
         Rate: 200
       - Item: Armlet_Of_Obedience
         Rate: 20
       - Item: Verit_Card
+        Rate: 1
         StealProtected: true
   - Id: 1033
     AegisName: ELDER_WILOW
@@ -1247,6 +1277,7 @@ Body:
       - Item: Branch_Of_Dead_Tree
         Rate: 100
       - Item: Elder_Wilow_Card
+        Rate: 1
         StealProtected: true
   - Id: 1034
     AegisName: THARA_FROG
@@ -1289,6 +1320,7 @@ Body:
       - Item: Sticky_Webfoot
         Rate: 2000
       - Item: Thara_Frog_Card
+        Rate: 1
         StealProtected: true
   - Id: 1035
     AegisName: HUNTER_FLY
@@ -1333,9 +1365,11 @@ Body:
       - Item: Oridecon_Stone
         Rate: 129
       - Item: Mini_Propeller
+        Rate: 1
       - Item: Damascus_
         Rate: 2
       - Item: Hunter_Fly_Card
+        Rate: 1
         StealProtected: true
   - Id: 1036
     AegisName: GHOUL
@@ -1378,7 +1412,9 @@ Body:
       - Item: Mementos
         Rate: 150
       - Item: Ghoul_Leg
+        Rate: 1
       - Item: Ghoul_Card
+        Rate: 1
         StealProtected: true
   - Id: 1037
     AegisName: SIDE_WINDER
@@ -1425,6 +1461,7 @@ Body:
       - Item: White_Herb
         Rate: 1000
       - Item: Side_Winder_Card
+        Rate: 1
         StealProtected: true
   - Id: 1038
     AegisName: OSIRIS
@@ -1481,6 +1518,7 @@ Body:
       - Item: Cakram
         Rate: 100
       - Item: Osiris_Card
+        Rate: 1
         StealProtected: true
   - Id: 1039
     AegisName: BAPHOMET
@@ -1537,6 +1575,7 @@ Body:
       - Item: Oridecon
         Rate: 4171
       - Item: Baphomet_Card
+        Rate: 1
         StealProtected: true
   - Id: 1040
     AegisName: GOLEM
@@ -1581,6 +1620,7 @@ Body:
       - Item: Iron
         Rate: 350
       - Item: Golem_Card
+        Rate: 1
         StealProtected: true
   - Id: 1041
     AegisName: MUMMY
@@ -1617,6 +1657,7 @@ Body:
       - Item: Mementos
         Rate: 550
       - Item: Glove
+        Rate: 1
       - Item: Silver_Ring
         Rate: 10
       - Item: Panacea
@@ -1624,6 +1665,7 @@ Body:
       - Item: Yellow_Herb
         Rate: 850
       - Item: Mummy_Card
+        Rate: 1
         StealProtected: true
   - Id: 1042
     AegisName: STEEL_CHONCHON
@@ -1670,6 +1712,7 @@ Body:
       - Item: Iron_Ore
         Rate: 300
       - Item: Steel_Chonchon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1044
     AegisName: OBEAUNE
@@ -1704,6 +1747,7 @@ Body:
       - Item: Heart_Of_Mermaid
         Rate: 9000
       - Item: Fin_Helm
+        Rate: 1
       - Item: Saint_Robe_
         Rate: 10
       - Item: Skyblue_Jewel
@@ -1713,6 +1757,7 @@ Body:
       - Item: Witherless_Rose
         Rate: 30
       - Item: Obeaune_Card
+        Rate: 1
         StealProtected: true
   - Id: 1045
     AegisName: MARC
@@ -1758,6 +1803,7 @@ Body:
       - Item: White_Herb
         Rate: 700
       - Item: Marc_Card
+        Rate: 1
         StealProtected: true
   - Id: 1046
     AegisName: DOPPELGANGER
@@ -1813,6 +1859,7 @@ Body:
       - Item: Oridecon
         Rate: 2700
       - Item: Doppelganger_Card
+        Rate: 1
         StealProtected: true
   - Id: 1047
     AegisName: PECOPECO_EGG
@@ -1852,6 +1899,7 @@ Body:
       - Item: White_Platter
         Rate: 10
       - Item: Pecopeco_Egg_Card
+        Rate: 1
         StealProtected: true
   - Id: 1048
     AegisName: THIEF_BUG_EGG
@@ -1895,6 +1943,7 @@ Body:
       - Item: Iron_Ore
         Rate: 250
       - Item: Thief_Bug_Egg_Card
+        Rate: 1
         StealProtected: true
   - Id: 1049
     AegisName: PICKY
@@ -1936,6 +1985,7 @@ Body:
       - Item: Yellow_Gemstone
         Rate: 50
       - Item: Picky_Card
+        Rate: 1
         StealProtected: true
   - Id: 1050
     AegisName: PICKY_
@@ -1980,6 +2030,7 @@ Body:
       - Item: Tiny_Egg_Shell
         Rate: 10
       - Item: Picky__Card
+        Rate: 1
         StealProtected: true
   - Id: 1051
     AegisName: THIEF_BUG
@@ -2022,6 +2073,7 @@ Body:
       - Item: Iron_Ore
         Rate: 250
       - Item: Thief_Bug_Card
+        Rate: 1
         StealProtected: true
   - Id: 1052
     AegisName: ROCKER
@@ -2069,6 +2121,7 @@ Body:
       - Item: Hinalle
         Rate: 10
       - Item: Rocker_Card
+        Rate: 1
         StealProtected: true
   - Id: 1053
     AegisName: THIEF_BUG_
@@ -2116,6 +2169,7 @@ Body:
       - Item: Iron_Ore
         Rate: 300
       - Item: Thief_Bug_Female_Card
+        Rate: 1
         StealProtected: true
   - Id: 1054
     AegisName: THIEF_BUG__
@@ -2162,6 +2216,7 @@ Body:
       - Item: Katana
         Rate: 50
       - Item: Thief_Bug_Male_Card
+        Rate: 1
         StealProtected: true
   - Id: 1055
     AegisName: MUKA
@@ -2208,6 +2263,7 @@ Body:
       - Item: Iron_Ore
         Rate: 250
       - Item: Muka_Card
+        Rate: 1
         StealProtected: true
   - Id: 1056
     AegisName: SMOKIE
@@ -2244,6 +2300,7 @@ Body:
       - Item: Sweet_Potato
         Rate: 800
       - Item: Cat_Hairband
+        Rate: 1
       - Item: Raccoondog_Doll
         Rate: 2
       - Item: Zargon
@@ -2251,6 +2308,7 @@ Body:
       - Item: Bluish_Green_Jewel
         Rate: 2
       - Item: Smokie_Card
+        Rate: 1
         StealProtected: true
   - Id: 1057
     AegisName: YOYO
@@ -2294,6 +2352,7 @@ Body:
       - Item: Strawberry
         Rate: 1000
       - Item: Yoyo_Card
+        Rate: 1
         StealProtected: true
   - Id: 1058
     AegisName: METALLER
@@ -2341,6 +2400,7 @@ Body:
       - Item: Guitar_Of_Passion
         Rate: 10
       - Item: Metaller_Card
+        Rate: 1
         StealProtected: true
   - Id: 1059
     AegisName: MISTRESS
@@ -2398,6 +2458,7 @@ Body:
       - Item: Red_Square_Bag
         Rate: 100
       - Item: Mistress_Card
+        Rate: 1
         StealProtected: true
   - Id: 1060
     AegisName: BIGFOOT
@@ -2442,6 +2503,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 43
       - Item: BigFoot_Card
+        Rate: 1
         StealProtected: true
   - Id: 1061
     AegisName: NIGHTMARE
@@ -2484,9 +2546,11 @@ Body:
       - Item: Blue_Potion
         Rate: 100
       - Item: Infiltrator
+        Rate: 1
       - Item: Oridecon
         Rate: 60
       - Item: Nightmare_Card
+        Rate: 1
         StealProtected: true
   - Id: 1062
     AegisName: PORING_
@@ -2528,6 +2592,7 @@ Body:
       - Item: Apple
         Rate: 7
       - Item: Poring__Card
+        Rate: 1
         StealProtected: true
   - Id: 1063
     AegisName: LUNATIC
@@ -2572,6 +2637,7 @@ Body:
       - Item: Rainbow_Carrot
         Rate: 20
       - Item: Lunatic_Card
+        Rate: 1
         StealProtected: true
   - Id: 1064
     AegisName: MEGALODON
@@ -2615,6 +2681,7 @@ Body:
       - Item: Rotten_Fish
         Rate: 20
       - Item: Megalodon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1065
     AegisName: STROUF
@@ -2660,6 +2727,7 @@ Body:
       - Item: Gill
         Rate: 1500
       - Item: Strouf_Card
+        Rate: 1
         StealProtected: true
   - Id: 1066
     AegisName: VADON
@@ -2704,6 +2772,7 @@ Body:
       - Item: Blue_Gemstone
         Rate: 50
       - Item: Vadon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1067
     AegisName: CORNUTUS
@@ -2748,6 +2817,7 @@ Body:
       - Item: Blue_Gemstone
         Rate: 100
       - Item: Cornutus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1068
     AegisName: HYDRA
@@ -2789,6 +2859,7 @@ Body:
       - Item: Meat
         Rate: 700
       - Item: Hydra_Card
+        Rate: 1
         StealProtected: true
   - Id: 1069
     AegisName: SWORD_FISH
@@ -2834,6 +2905,7 @@ Body:
       - Item: Gill
         Rate: 600
       - Item: Sword_Fish_Card
+        Rate: 1
         StealProtected: true
   - Id: 1070
     AegisName: KUKRE
@@ -2878,6 +2950,7 @@ Body:
       - Item: Earthworm_The_Dude
         Rate: 20
       - Item: Kukre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1071
     AegisName: PIRATE_SKEL
@@ -2924,6 +2997,7 @@ Body:
       - Item: Well_Dried_Bone
         Rate: 20
       - Item: Pirate_Skel_Card
+        Rate: 1
         StealProtected: true
   - Id: 1072
     AegisName: KAHO
@@ -2971,6 +3045,7 @@ Body:
       - Item: Alchol
         Rate: 5
       - Item: Kaho_Card
+        Rate: 1
         StealProtected: true
   - Id: 1073
     AegisName: CRAB
@@ -3011,6 +3086,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 37
       - Item: Crab_Card
+        Rate: 1
         StealProtected: true
   - Id: 1074
     AegisName: SHELLFISH
@@ -3052,6 +3128,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 18
       - Item: Shellfish_Card
+        Rate: 1
         StealProtected: true
   - Id: 1076
     AegisName: SKELETON
@@ -3093,6 +3170,7 @@ Body:
       - Item: Skul_Ring
         Rate: 30
       - Item: Skeleton_Card
+        Rate: 1
         StealProtected: true
   - Id: 1077
     AegisName: POISON_SPORE
@@ -3134,6 +3212,7 @@ Body:
       - Item: Zargon
         Rate: 5
       - Item: Poison_Spore_Card
+        Rate: 1
         StealProtected: true
   - Id: 1078
     AegisName: RED_PLANT
@@ -3392,6 +3471,7 @@ Body:
       - Item: Yggdrasilberry
         Rate: 50
       - Item: Emperium
+        Rate: 1
         StealProtected: true
   - Id: 1084
     AegisName: BLACK_MUSHROOM
@@ -3533,6 +3613,7 @@ Body:
       - Item: Oridecon
         Rate: 1500
       - Item: Golden_Bug_Card
+        Rate: 1
         StealProtected: true
   - Id: 1087
     AegisName: ORK_HERO
@@ -3589,6 +3670,7 @@ Body:
       - Item: Giant_Axe
         Rate: 100
       - Item: Orc_Hero_Card
+        Rate: 1
         StealProtected: true
   - Id: 1088
     AegisName: VOCAL
@@ -3637,6 +3719,7 @@ Body:
       - Item: Guitar_Of_Gentle_Breeze
         Rate: 10
       - Item: Vocal_Card
+        Rate: 1
         StealProtected: true
   - Id: 1089
     AegisName: TOAD
@@ -3681,6 +3764,7 @@ Body:
       - Item: Kiss_Of_Angel
         Rate: 1000
       - Item: Toad_Card
+        Rate: 1
         StealProtected: true
   - Id: 1090
     AegisName: MASTERING
@@ -3725,6 +3809,7 @@ Body:
       - Item: Apple_Juice
         Rate: 4000
       - Item: Mastering_Card
+        Rate: 1
         StealProtected: true
   - Id: 1091
     AegisName: DRAGON_FLY
@@ -3770,6 +3855,7 @@ Body:
       - Item: Grape_Juice
         Rate: 3000
       - Item: Dragon_Fly_Card
+        Rate: 1
         StealProtected: true
   - Id: 1092
     AegisName: VAGABOND_WOLF
@@ -3816,6 +3902,7 @@ Body:
       - Item: Monster_Juice
         Rate: 50
       - Item: Vagabond_Wolf_Card
+        Rate: 1
         StealProtected: true
   - Id: 1093
     AegisName: ECLIPSE
@@ -3860,6 +3947,7 @@ Body:
       - Item: Angel's_Protection
         Rate: 1000
       - Item: Eclipse_Card
+        Rate: 1
         StealProtected: true
   - Id: 1094
     AegisName: AMBERNITE
@@ -3906,6 +3994,7 @@ Body:
       - Item: Iron_Ore
         Rate: 150
       - Item: Ambernite_Card
+        Rate: 1
         StealProtected: true
   - Id: 1095
     AegisName: ANDRE
@@ -3952,6 +4041,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 28
       - Item: Andre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1096
     AegisName: ANGELING
@@ -3989,6 +4079,7 @@ Body:
       - Item: Leaf_Of_Yggdrasil
         Rate: 500
       - Item: Spirit_Chain
+        Rate: 1
       - Item: White_Herb
         Rate: 2000
       - Item: Apple
@@ -3996,6 +4087,7 @@ Body:
       - Item: Emperium
         Rate: 40
       - Item: Angeling_Card
+        Rate: 1
         StealProtected: true
   - Id: 1097
     AegisName: ANT_EGG
@@ -4033,6 +4125,7 @@ Body:
       - Item: Iron_Ore
         Rate: 200
       - Item: Andre_Egg_Card
+        Rate: 1
         StealProtected: true
   - Id: 1098
     AegisName: ANUBIS
@@ -4075,9 +4168,11 @@ Body:
       - Item: Sacred_Masque
         Rate: 4365
       - Item: Mitten_Of_Presbyter
+        Rate: 1
       - Item: Blessed_Wand
         Rate: 3
       - Item: Anubis_Card
+        Rate: 1
         StealProtected: true
   - Id: 1099
     AegisName: ARGIOPE
@@ -4122,6 +4217,7 @@ Body:
       - Item: Violet_Jewel
         Rate: 10
       - Item: Argiope_Card
+        Rate: 1
         StealProtected: true
   - Id: 1100
     AegisName: ARGOS
@@ -4168,6 +4264,7 @@ Body:
       - Item: Bark_Shorts
         Rate: 15
       - Item: Argos_Card
+        Rate: 1
         StealProtected: true
   - Id: 1101
     AegisName: BAPHOMET_
@@ -4214,6 +4311,7 @@ Body:
       - Item: Boots
         Rate: 50
       - Item: Baphomet__Card
+        Rate: 1
         StealProtected: true
   - Id: 1102
     AegisName: BATHORY
@@ -4258,6 +4356,7 @@ Body:
       - Item: Old_Broom
         Rate: 20
       - Item: Bathory_Card
+        Rate: 1
         StealProtected: true
   - Id: 1103
     AegisName: CARAMEL
@@ -4302,6 +4401,7 @@ Body:
       - Item: Pike_
         Rate: 20
       - Item: Caramel_Card
+        Rate: 1
         StealProtected: true
   - Id: 1104
     AegisName: COCO
@@ -4346,6 +4446,7 @@ Body:
       - Item: Strawberry
         Rate: 600
       - Item: Coco_Card
+        Rate: 1
         StealProtected: true
   - Id: 1105
     AegisName: DENIRO
@@ -4392,6 +4493,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 34
       - Item: Andre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1106
     AegisName: DESERT_WOLF
@@ -4427,6 +4529,7 @@ Body:
       - Item: Claw_Of_Desert_Wolf
         Rate: 5500
       - Item: Mink_Coat
+        Rate: 1
       - Item: Meat
         Rate: 1200
       - Item: Claw_Of_Wolves
@@ -4436,6 +4539,7 @@ Body:
       - Item: Stiletto_
         Rate: 140
       - Item: Desert_Wolf_Card
+        Rate: 1
         StealProtected: true
   - Id: 1107
     AegisName: DESERT_WOLF_B
@@ -4480,6 +4584,7 @@ Body:
       - Item: Orange
         Rate: 1000
       - Item: Desert_Wolf_Babe_Card
+        Rate: 1
         StealProtected: true
   - Id: 1108
     AegisName: DEVIACE
@@ -4525,6 +4630,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 161
       - Item: Deviace_Card
+        Rate: 1
         StealProtected: true
   - Id: 1109
     AegisName: DEVIRUCHI
@@ -4572,6 +4678,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 154
       - Item: Deviruchi_Card
+        Rate: 1
         StealProtected: true
   - Id: 1110
     AegisName: DOKEBI
@@ -4611,12 +4718,15 @@ Body:
       - Item: Sword_Mace_
         Rate: 2
       - Item: Mighty_Staff
+        Rate: 1
       - Item: Gold
+        Rate: 1
       - Item: Club
         Rate: 300
       - Item: Hammer_Of_Blacksmith
         Rate: 5
       - Item: Dokebi_Card
+        Rate: 1
         StealProtected: true
   - Id: 1111
     AegisName: DRAINLIAR
@@ -4658,6 +4768,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 40
       - Item: Drainliar_Card
+        Rate: 1
         StealProtected: true
   - Id: 1112
     AegisName: DRAKE
@@ -4713,6 +4824,7 @@ Body:
       - Item: Krasnaya
         Rate: 100
       - Item: Drake_Card
+        Rate: 1
         StealProtected: true
   - Id: 1113
     AegisName: DROPS
@@ -4755,6 +4867,7 @@ Body:
       - Item: Orange_Juice
         Rate: 20
       - Item: Drops_Card
+        Rate: 1
         StealProtected: true
   - Id: 1114
     AegisName: DUSTINESS
@@ -4798,6 +4911,7 @@ Body:
       - Item: Red_Herb
         Rate: 1200
       - Item: Dustiness_Card
+        Rate: 1
         StealProtected: true
   - Id: 1115
     AegisName: EDDGA
@@ -4855,6 +4969,7 @@ Body:
       - Item: Krieg
         Rate: 100
       - Item: Eddga_Card
+        Rate: 1
         StealProtected: true
   - Id: 1116
     AegisName: EGGYRA
@@ -4898,6 +5013,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 57
       - Item: Eggyra_Card
+        Rate: 1
         StealProtected: true
   - Id: 1117
     AegisName: EVIL_DRUID
@@ -4931,6 +5047,7 @@ Body:
       - Item: Biretta_
         Rate: 10
       - Item: Bone_Wand
+        Rate: 1
       - Item: Ragamuffin_Cape
         Rate: 2
       - Item: Bible
@@ -4942,6 +5059,7 @@ Body:
       - Item: White_Herb
         Rate: 2000
       - Item: Evil_Druid_Card
+        Rate: 1
         StealProtected: true
   - Id: 1118
     AegisName: FLORA
@@ -4985,7 +5103,9 @@ Body:
       - Item: Stem
         Rate: 2000
       - Item: Witherless_Rose
+        Rate: 1
       - Item: Flora_Card
+        Rate: 1
         StealProtected: true
   - Id: 1119
     AegisName: FRILLDORA
@@ -5031,6 +5151,7 @@ Body:
       - Item: Zargon
         Rate: 120
       - Item: Frilldora_Card
+        Rate: 1
         StealProtected: true
   - Id: 1120
     AegisName: GHOSTRING
@@ -5077,6 +5198,7 @@ Body:
       - Item: Ghost_Scroll_1_5
         Rate: 100
       - Item: Ghostring_Card
+        Rate: 1
         StealProtected: true
   - Id: 1121
     AegisName: GIEARTH
@@ -5117,11 +5239,13 @@ Body:
       - Item: Elder_Pixie's_Beard
         Rate: 5500
       - Item: Elven_Ears
+        Rate: 1
       - Item: Cap_
         Rate: 10
       - Item: Sparkling_Dust
         Rate: 100
       - Item: Giearth_Card
+        Rate: 1
         StealProtected: true
   - Id: 1122
     AegisName: GOBLIN_1
@@ -5169,6 +5293,7 @@ Body:
       - Item: Red_Herb
         Rate: 1800
       - Item: Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1123
     AegisName: GOBLIN_2
@@ -5210,11 +5335,13 @@ Body:
       - Item: Flail_
         Rate: 10
       - Item: Buckler_
+        Rate: 1
       - Item: Red_Herb
         Rate: 1550
       - Item: Goblini_Mask
         Rate: 3
       - Item: Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1124
     AegisName: GOBLIN_3
@@ -5256,11 +5383,13 @@ Body:
       - Item: Goblin_Mask_02
         Rate: 15
       - Item: Buckler_
+        Rate: 1
       - Item: Red_Herb
         Rate: 1550
       - Item: Yellow_Herb
         Rate: 220
       - Item: Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1125
     AegisName: GOBLIN_4
@@ -5304,9 +5433,11 @@ Body:
       - Item: Smasher_
         Rate: 10
       - Item: Buckler_
+        Rate: 1
       - Item: Red_Herb
         Rate: 1500
       - Item: Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1126
     AegisName: GOBLIN_5
@@ -5346,6 +5477,7 @@ Body:
       - Item: Wand_
         Rate: 15
       - Item: Buckler_
+        Rate: 1
       - Item: Goblin_Mask_03
         Rate: 15
       - Item: Red_Herb
@@ -5353,6 +5485,7 @@ Body:
       - Item: Yellow_Herb
         Rate: 220
       - Item: Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1127
     AegisName: HODE
@@ -5393,9 +5526,11 @@ Body:
       - Item: Town_Sword_
         Rate: 10
       - Item: Foolishness_Of_Blind
+        Rate: 1
       - Item: Fatty_Chubby_Earthworm
         Rate: 20
       - Item: Hode_Card
+        Rate: 1
         StealProtected: true
   - Id: 1128
     AegisName: HORN
@@ -5441,6 +5576,7 @@ Body:
       - Item: Solid_Shell
         Rate: 70
       - Item: Horn_Card
+        Rate: 1
         StealProtected: true
   - Id: 1129
     AegisName: HORONG
@@ -5484,6 +5620,7 @@ Body:
       - Item: Alchol
         Rate: 50
       - Item: Horong_Card
+        Rate: 1
         StealProtected: true
   - Id: 1130
     AegisName: JAKK
@@ -5527,6 +5664,7 @@ Body:
       - Item: Pumpkin
         Rate: 1000
       - Item: Jakk_Card
+        Rate: 1
         StealProtected: true
   - Id: 1131
     AegisName: JOKER
@@ -5566,11 +5704,13 @@ Body:
       - Item: Yellow_Herb
         Rate: 1000
       - Item: Katar_Of_Piercing_Wind
+        Rate: 1
       - Item: Oridecon
         Rate: 100
       - Item: Ghost_Scroll_1_5
         Rate: 100
       - Item: Joker_Card
+        Rate: 1
         StealProtected: true
   - Id: 1132
     AegisName: KHALITZBURG
@@ -5607,6 +5747,7 @@ Body:
       - Item: Elunium
         Rate: 191
       - Item: Bone_Helm
+        Rate: 1
       - Item: Mirror_Shield_
         Rate: 2
       - Item: Patriotism_Marks
@@ -5616,6 +5757,7 @@ Body:
       - Item: Saber_
         Rate: 2
       - Item: Khalitzburg_Card
+        Rate: 1
         StealProtected: true
   - Id: 1133
     AegisName: KOBOLD_1
@@ -5661,6 +5803,7 @@ Body:
       - Item: Buckler_
         Rate: 5
       - Item: Kobold_Card
+        Rate: 1
         StealProtected: true
   - Id: 1134
     AegisName: KOBOLD_2
@@ -5706,6 +5849,7 @@ Body:
       - Item: Guard
         Rate: 100
       - Item: Kobold_Card
+        Rate: 1
         StealProtected: true
   - Id: 1135
     AegisName: KOBOLD_3
@@ -5753,6 +5897,7 @@ Body:
       - Item: Yellow_Herb
         Rate: 100
       - Item: Kobold_Card
+        Rate: 1
         StealProtected: true
   - Id: 1138
     AegisName: MAGNOLIA
@@ -5799,6 +5944,7 @@ Body:
       - Item: High_end_Cooking_Kits
         Rate: 5
       - Item: Magnolia_Card
+        Rate: 1
         StealProtected: true
   - Id: 1139
     AegisName: MANTIS
@@ -5845,6 +5991,7 @@ Body:
       - Item: Red_Herb
         Rate: 650
       - Item: Mantis_Card
+        Rate: 1
         StealProtected: true
   - Id: 1140
     AegisName: MARDUK
@@ -5881,6 +6028,7 @@ Body:
       - Item: Staff_
         Rate: 10
       - Item: Mitten_Of_Presbyter
+        Rate: 1
       - Item: Blessed_Wand
         Rate: 3
       - Item: Fire_Scroll_1_5
@@ -5888,6 +6036,7 @@ Body:
       - Item: Book_Of_Devil
         Rate: 20
       - Item: Marduk_Card
+        Rate: 1
         StealProtected: true
   - Id: 1141
     AegisName: MARINA
@@ -5929,6 +6078,7 @@ Body:
       - Item: Deadly_Noxious_Herb
         Rate: 20
       - Item: Marina_Card
+        Rate: 1
         StealProtected: true
   - Id: 1142
     AegisName: MARINE_SPHERE
@@ -5969,6 +6119,7 @@ Body:
       - Item: Transparent_Headgear
         Rate: 10
       - Item: Marine_Sphere_Card
+        Rate: 1
         StealProtected: true
   - Id: 1143
     AegisName: MARIONETTE
@@ -6005,14 +6156,17 @@ Body:
       - Item: Star_Dust
         Rate: 5
       - Item: Brooch
+        Rate: 1
       - Item: Fire_Scroll_3_5
         Rate: 100
       - Item: Chain_
         Rate: 15
       - Item: Chrystal_Pumps
+        Rate: 1
       - Item: Marionette_Doll
         Rate: 3
       - Item: Marionette_Card
+        Rate: 1
         StealProtected: true
   - Id: 1144
     AegisName: MARSE
@@ -6057,6 +6211,7 @@ Body:
       - Item: Grape
         Rate: 300
       - Item: Marse_Card
+        Rate: 1
         StealProtected: true
   - Id: 1145
     AegisName: MARTIN
@@ -6096,11 +6251,13 @@ Body:
       - Item: Goggle_
         Rate: 5
       - Item: Safety_Helmet
+        Rate: 1
       - Item: Battered_Pot
         Rate: 10
       - Item: Goggle
         Rate: 15
       - Item: Martin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1146
     AegisName: MATYR
@@ -6142,6 +6299,7 @@ Body:
       - Item: Grape
         Rate: 200
       - Item: Matyr_Card
+        Rate: 1
         StealProtected: true
   - Id: 1147
     AegisName: MAYA
@@ -6199,6 +6357,7 @@ Body:
       - Item: Dea_Staff
         Rate: 100
       - Item: Maya_Card
+        Rate: 1
         StealProtected: true
   - Id: 1148
     AegisName: MEDUSA
@@ -6246,6 +6405,7 @@ Body:
       - Item: Penetration
         Rate: 3
       - Item: Medusa_Card
+        Rate: 1
         StealProtected: true
   - Id: 1149
     AegisName: MINOROUS
@@ -6292,6 +6452,7 @@ Body:
       - Item: Lemon
         Rate: 300
       - Item: Minorous_Card
+        Rate: 1
         StealProtected: true
   - Id: 1150
     AegisName: MOONLIGHT
@@ -6349,6 +6510,7 @@ Body:
       - Item: Staff_Of_Bordeaux
         Rate: 100
       - Item: Moonlight_Flower_Card
+        Rate: 1
         StealProtected: true
   - Id: 1151
     AegisName: MYST
@@ -6392,6 +6554,7 @@ Body:
       - Item: Grape
         Rate: 35
       - Item: Myst_Card
+        Rate: 1
         StealProtected: true
   - Id: 1152
     AegisName: ORC_SKELETON
@@ -6436,6 +6599,7 @@ Body:
       - Item: Green_Herb
         Rate: 50
       - Item: Orc_Skeleton_Card
+        Rate: 1
         StealProtected: true
   - Id: 1153
     AegisName: ORC_ZOMBIE
@@ -6472,7 +6636,9 @@ Body:
       - Item: Sticky_Mucus
         Rate: 3000
       - Item: Emperium
+        Rate: 1
       - Item: Orc_Zombie_Card
+        Rate: 1
         StealProtected: true
   - Id: 1154
     AegisName: PASANA
@@ -6516,6 +6682,7 @@ Body:
       - Item: Undershirt
         Rate: 100
       - Item: Pasana_Card
+        Rate: 1
         StealProtected: true
   - Id: 1155
     AegisName: PETIT
@@ -6561,6 +6728,7 @@ Body:
       - Item: Aloebera
         Rate: 15
       - Item: Petit_Card
+        Rate: 1
         StealProtected: true
   - Id: 1156
     AegisName: PETIT_
@@ -6606,6 +6774,7 @@ Body:
       - Item: Aloebera
         Rate: 15
       - Item: Petit__Card
+        Rate: 1
         StealProtected: true
   - Id: 1157
     AegisName: PHARAOH
@@ -6662,6 +6831,7 @@ Body:
       - Item: Bazerald
         Rate: 80
       - Item: Pharaoh_Card
+        Rate: 1
         StealProtected: true
   - Id: 1158
     AegisName: PHEN
@@ -6703,6 +6873,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 25
       - Item: Phen_Card
+        Rate: 1
         StealProtected: true
   - Id: 1159
     AegisName: PHREEONI
@@ -6759,6 +6930,7 @@ Body:
       - Item: Weihna
         Rate: 100
       - Item: Phreeoni_Card
+        Rate: 1
         StealProtected: true
   - Id: 1160
     AegisName: PIERE
@@ -6805,6 +6977,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 31
       - Item: Andre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1161
     AegisName: PLANKTON
@@ -6847,6 +7020,7 @@ Body:
       - Item: Center_Potion
         Rate: 50
       - Item: Plankton_Card
+        Rate: 1
         StealProtected: true
   - Id: 1162
     AegisName: RAFFLESIA
@@ -6891,6 +7065,7 @@ Body:
       - Item: White_Herb
         Rate: 30
       - Item: Rafflesia_Card
+        Rate: 1
         StealProtected: true
   - Id: 1163
     AegisName: RAYDRIC
@@ -6925,6 +7100,7 @@ Body:
       - Item: Elunium
         Rate: 106
       - Item: Iron_Cane
+        Rate: 1
       - Item: Chain_Mail_
         Rate: 2
       - Item: Two_Hand_Sword_
@@ -6936,6 +7112,7 @@ Body:
       - Item: Brigan
         Rate: 4850
       - Item: Daydric_Card
+        Rate: 1
         StealProtected: true
   - Id: 1164
     AegisName: REQUIEM
@@ -6968,6 +7145,7 @@ Body:
       - Item: Old_Blue_Box
         Rate: 35
       - Item: Emperium
+        Rate: 1
       - Item: Zargon
         Rate: 2500
       - Item: Horrendous_Mouth
@@ -6977,7 +7155,9 @@ Body:
       - Item: Mantle_
         Rate: 10
       - Item: Cookbook06
+        Rate: 1
       - Item: Requiem_Card
+        Rate: 1
         StealProtected: true
   - Id: 1165
     AegisName: SAND_MAN
@@ -7020,9 +7200,11 @@ Body:
       - Item: Sparkling_Dust
         Rate: 200
       - Item: Katar_Of_Thornbush
+        Rate: 1
       - Item: Hypnotist's_Staff_
         Rate: 5
       - Item: Sand_Man_Card
+        Rate: 1
         StealProtected: true
   - Id: 1166
     AegisName: SAVAGE
@@ -7060,6 +7242,7 @@ Body:
       - Item: Animal_Blood
         Rate: 2
       - Item: Eagle_Eyes
+        Rate: 1
       - Item: Anodyne
         Rate: 10
       - Item: Elunium_Stone
@@ -7067,6 +7250,7 @@ Body:
       - Item: Royal_Jelly
         Rate: 2
       - Item: Savage_Card
+        Rate: 1
         StealProtected: true
   - Id: 1167
     AegisName: SAVAGE_BABE
@@ -7110,6 +7294,7 @@ Body:
       - Item: Sweet_Milk
         Rate: 40
       - Item: Savage_Babe_Card
+        Rate: 1
         StealProtected: true
   - Id: 1169
     AegisName: SKEL_WORKER
@@ -7154,6 +7339,7 @@ Body:
       - Item: Iron_Ore
         Rate: 800
       - Item: Skel_Worker_Card
+        Rate: 1
         StealProtected: true
   - Id: 1170
     AegisName: SOHEE
@@ -7190,6 +7376,7 @@ Body:
       - Item: Skirt_Of_Virgin
         Rate: 50
       - Item: Nurse_Cap
+        Rate: 1
       - Item: Muffler_
         Rate: 5
       - Item: Stiletto_
@@ -7199,6 +7386,7 @@ Body:
       - Item: Inspector_Certificate
         Rate: 350
       - Item: Sohee_Card
+        Rate: 1
         StealProtected: true
   - Id: 1174
     AegisName: STAINER
@@ -7245,6 +7433,7 @@ Body:
       - Item: Iron_Ore
         Rate: 300
       - Item: Stainer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1175
     AegisName: TAROU
@@ -7284,6 +7473,7 @@ Body:
       - Item: Ora_Ora
         Rate: 2
       - Item: Tarou_Card
+        Rate: 1
         StealProtected: true
   - Id: 1176
     AegisName: VITATA
@@ -7331,6 +7521,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 26
       - Item: Vitata_Card
+        Rate: 1
         StealProtected: true
   - Id: 1177
     AegisName: ZENORC
@@ -7372,6 +7563,7 @@ Body:
       - Item: Shining_Stone
         Rate: 20
       - Item: Zenorc_Card
+        Rate: 1
         StealProtected: true
   - Id: 1178
     AegisName: ZEROM
@@ -7415,6 +7607,7 @@ Body:
       - Item: Iron_Ore
         Rate: 300
       - Item: Zerom_Card
+        Rate: 1
         StealProtected: true
   - Id: 1179
     AegisName: WHISPER
@@ -7449,9 +7642,11 @@ Body:
       - Item: Transparent_Cloth
         Rate: 5335
       - Item: Spirit_Chain
+        Rate: 1
       - Item: Silver_Robe_
         Rate: 10
       - Item: Whisper_Card
+        Rate: 1
         StealProtected: true
   - Id: 1180
     AegisName: NINE_TAIL
@@ -7496,6 +7691,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 100
       - Item: Nine_Tail_Card
+        Rate: 1
         StealProtected: true
   - Id: 1182
     AegisName: THIEF_MUSHROOM
@@ -7570,6 +7766,7 @@ Body:
       - Item: Chonchon_Doll
         Rate: 5
       - Item: Chonchon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1184
     AegisName: FABRE_
@@ -7641,6 +7838,7 @@ Body:
       - Item: Transparent_Cloth
         Rate: 100
       - Item: Silver_Robe_
+        Rate: 1
   - Id: 1186
     AegisName: WHISPER_BOSS
     Name: Giant Whisper
@@ -7674,9 +7872,11 @@ Body:
       - Item: Transparent_Cloth
         Rate: 5335
       - Item: Spirit_Chain
+        Rate: 1
       - Item: Silver_Robe_
         Rate: 10
       - Item: Whisper_Boss_Card
+        Rate: 1
         StealProtected: true
   - Id: 1187
     AegisName: SWITCH
@@ -7733,6 +7933,7 @@ Body:
       - Item: Worn_Out_Scroll
         Rate: 60
       - Item: Bongun_Hat
+        Rate: 1
       - Item: Amulet
         Rate: 15
       - Item: Yellow_Herb
@@ -7740,6 +7941,7 @@ Body:
       - Item: Yellow_Herb
         Rate: 1250
       - Item: Bon_Gun_Card
+        Rate: 1
         StealProtected: true
   - Id: 1189
     AegisName: ORC_ARCHER
@@ -7787,6 +7989,7 @@ Body:
       - Item: White_Herb
         Rate: 900
       - Item: Orc_Archer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1190
     AegisName: ORC_LORD
@@ -7842,6 +8045,7 @@ Body:
       - Item: Erde
         Rate: 3100
       - Item: Orc_Load_Card
+        Rate: 1
         StealProtected: true
   - Id: 1191
     AegisName: MIMIC
@@ -7884,9 +8088,11 @@ Body:
       - Item: Emperium
         Rate: 3
       - Item: Rosary_
+        Rate: 1
       - Item: Elunium_Stone
         Rate: 270
       - Item: Mimic_Card
+        Rate: 1
         StealProtected: true
   - Id: 1192
     AegisName: WRAITH
@@ -7932,6 +8138,7 @@ Body:
       - Item: Crystal_Jewel_
         Rate: 5
       - Item: Wraith_Card
+        Rate: 1
         StealProtected: true
   - Id: 1193
     AegisName: ALARM
@@ -7965,6 +8172,7 @@ Body:
       - Item: Needle_Of_Alarm
         Rate: 5335
       - Item: Clip
+        Rate: 1
       - Item: Skull
         Rate: 1500
       - Item: Spectacles
@@ -7976,6 +8184,7 @@ Body:
       - Item: Zargon
         Rate: 1500
       - Item: Alarm_Card
+        Rate: 1
         StealProtected: true
   - Id: 1194
     AegisName: ARCLOUSE
@@ -8024,6 +8233,7 @@ Body:
       - Item: Zargon
         Rate: 2500
       - Item: Arclouse_Card
+        Rate: 1
         StealProtected: true
   - Id: 1195
     AegisName: RIDEWORD
@@ -8070,6 +8280,7 @@ Body:
       - Item: Old_Magic_Book
         Rate: 20
       - Item: Rideword_Card
+        Rate: 1
         StealProtected: true
   - Id: 1196
     AegisName: SKEL_PRISONER
@@ -8105,6 +8316,7 @@ Body:
       - Item: Spoon_Stub
         Rate: 100
       - Item: Formal_Suit
+        Rate: 1
       - Item: Red_Gemstone
         Rate: 600
       - Item: Rotten_Bandage
@@ -8114,6 +8326,7 @@ Body:
       - Item: Mementos
         Rate: 1500
       - Item: Skel_Prisoner_Card
+        Rate: 1
         StealProtected: true
   - Id: 1197
     AegisName: ZOMBIE_PRISONER
@@ -8148,6 +8361,7 @@ Body:
       - Item: Spoon_Stub
         Rate: 105
       - Item: Iron_Cane
+        Rate: 1
       - Item: Red_Gemstone
         Rate: 600
       - Item: Rotten_Bandage
@@ -8157,6 +8371,7 @@ Body:
       - Item: Elunium
         Rate: 112
       - Item: Zombie_Prisoner_Card
+        Rate: 1
         StealProtected: true
   - Id: 1198
     AegisName: DARK_PRIEST
@@ -8202,7 +8417,9 @@ Body:
       - Item: Glittering_Clothes
         Rate: 5
       - Item: Cursed_Dagger
+        Rate: 1
       - Item: Dark_Priest_Card
+        Rate: 1
         StealProtected: true
   - Id: 1199
     AegisName: PUNK
@@ -8247,6 +8464,7 @@ Body:
       - Item: Hood_
         Rate: 15
       - Item: Punk_Card
+        Rate: 1
         StealProtected: true
   - Id: 1200
     AegisName: ZHERLTHSH
@@ -8288,11 +8506,13 @@ Body:
       - Item: Tights_
         Rate: 8
       - Item: Earring_
+        Rate: 1
       - Item: Queen's_Whip
         Rate: 100
       - Item: Masquerade
         Rate: 3
       - Item: Zherlthsh_Card
+        Rate: 1
         StealProtected: true
   - Id: 1201
     AegisName: RYBIO
@@ -8340,6 +8560,7 @@ Body:
       - Item: Izidor
         Rate: 30
       - Item: Rybio_Card
+        Rate: 1
         StealProtected: true
   - Id: 1202
     AegisName: PHENDARK
@@ -8381,6 +8602,7 @@ Body:
       - Item: Electric_Wire
         Rate: 100
       - Item: Phendark_Card
+        Rate: 1
         StealProtected: true
   - Id: 1203
     AegisName: MYSTELTAINN
@@ -8414,6 +8636,7 @@ Body:
     Class: Boss
     Drops:
       - Item: Loki's_Whispers
+        Rate: 1
       - Item: Biotite
         Rate: 1500
       - Item: Slayer_
@@ -8427,6 +8650,7 @@ Body:
       - Item: Oridecon
         Rate: 243
       - Item: Mysteltainn_Card
+        Rate: 1
         StealProtected: true
   - Id: 1204
     AegisName: TIRFING
@@ -8461,6 +8685,7 @@ Body:
     Class: Boss
     Drops:
       - Item: Old_Hilt
+        Rate: 1
       - Item: Silver_Knife_Of_Chaste
         Rate: 50
       - Item: Muscovite
@@ -8474,6 +8699,7 @@ Body:
       - Item: Oridecon
         Rate: 189
       - Item: Tirfing_Card
+        Rate: 1
         StealProtected: true
   - Id: 1205
     AegisName: EXECUTIONER
@@ -8521,6 +8747,7 @@ Body:
       - Item: Oridecon
         Rate: 145
       - Item: Executioner_Card
+        Rate: 1
         StealProtected: true
   - Id: 1206
     AegisName: ANOLIAN
@@ -8562,9 +8789,11 @@ Body:
       - Item: Solid_Shell
         Rate: 5335
       - Item: Brooch_
+        Rate: 1
       - Item: Oridecon
         Rate: 134
       - Item: Anolian_Card
+        Rate: 1
         StealProtected: true
   - Id: 1207
     AegisName: STING
@@ -8601,6 +8830,7 @@ Body:
       - Item: Stone_Arrow
         Rate: 1500
       - Item: Glove_
+        Rate: 1
       - Item: Coal
         Rate: 130
       - Item: Great_Nature
@@ -8610,6 +8840,7 @@ Body:
       - Item: Violet_Jewel
         Rate: 3
       - Item: Sting_Card
+        Rate: 1
         StealProtected: true
   - Id: 1208
     AegisName: WANDER_MAN
@@ -8646,6 +8877,7 @@ Body:
       - Item: Skull
         Rate: 4850
       - Item: Old_Card_Album
+        Rate: 1
       - Item: Hakujin_
         Rate: 5
       - Item: Centimental_Leaf
@@ -8655,7 +8887,9 @@ Body:
       - Item: Oridecon
         Rate: 217
       - Item: Muramasa
+        Rate: 1
       - Item: Wander_Man_Card
+        Rate: 1
         StealProtected: true
   - Id: 1209
     AegisName: CRAMP
@@ -8700,6 +8934,7 @@ Body:
       - Item: Oridecon
         Rate: 95
       - Item: Cramp_Card
+        Rate: 1
         StealProtected: true
   - Id: 1211
     AegisName: BRILIGHT
@@ -8747,6 +8982,7 @@ Body:
       - Item: White_Herb
         Rate: 2600
       - Item: Brilight_Card
+        Rate: 1
         StealProtected: true
   - Id: 1212
     AegisName: IRON_FIST
@@ -8792,6 +9028,7 @@ Body:
       - Item: Iron
         Rate: 300
       - Item: Iron_Fist_Card
+        Rate: 1
         StealProtected: true
   - Id: 1213
     AegisName: HIGH_ORC
@@ -8840,6 +9077,7 @@ Body:
       - Item: Yellow_Herb
         Rate: 900
       - Item: High_Orc_Card
+        Rate: 1
         StealProtected: true
   - Id: 1214
     AegisName: CHOCO
@@ -8886,6 +9124,7 @@ Body:
       - Item: Yggdrasilberry
         Rate: 25
       - Item: Choco_Card
+        Rate: 1
         StealProtected: true
   - Id: 1215
     AegisName: STEM_WORM
@@ -8931,6 +9170,7 @@ Body:
       - Item: Seed_Of_Yggdrasil
         Rate: 45
       - Item: Stem_Worm_Card
+        Rate: 1
         StealProtected: true
   - Id: 1216
     AegisName: PENOMENA
@@ -8972,9 +9212,11 @@ Body:
       - Item: Violet_Jewel
         Rate: 15
       - Item: Katar_Of_Raging_Blaze
+        Rate: 1
       - Item: Red_Gemstone
         Rate: 550
       - Item: Penomena_Card
+        Rate: 1
         StealProtected: true
   - Id: 1219
     AegisName: KNIGHT_OF_ABYSS
@@ -9012,14 +9254,17 @@ Body:
       - Item: Blade_Lost_In_Darkness
         Rate: 5
       - Item: Clothes_Of_The_Lord
+        Rate: 1
       - Item: Battle_Hook
         Rate: 25
       - Item: Broad_Sword_
+        Rate: 1
       - Item: Elunium
         Rate: 369
       - Item: Oridecon
         Rate: 259
       - Item: Knight_Of_Abyss_Card
+        Rate: 1
         StealProtected: true
   - Id: 1220
     AegisName: M_DESERT_WOLF
@@ -9054,6 +9299,7 @@ Body:
       - Item: Claw_Of_Desert_Wolf
         Rate: 5500
       - Item: Mink_Coat
+        Rate: 1
       - Item: Meat
         Rate: 1200
       - Item: Claw_Of_Wolves
@@ -9061,6 +9307,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 53
       - Item: Desert_Wolf_Card
+        Rate: 1
         StealProtected: true
   - Id: 1221
     AegisName: M_SAVAGE
@@ -9104,6 +9351,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 70
       - Item: Savage_Card
+        Rate: 1
         StealProtected: true
   - Id: 1229
     AegisName: META_FABRE
@@ -9148,6 +9396,7 @@ Body:
       - Item: Club
         Rate: 200
       - Item: Fabre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1230
     AegisName: META_PUPA
@@ -9189,6 +9438,7 @@ Body:
       - Item: Iron_Ore
         Rate: 300
       - Item: Pupa_Card
+        Rate: 1
         StealProtected: true
   - Id: 1231
     AegisName: META_CREAMY
@@ -9233,6 +9483,7 @@ Body:
       - Item: Flower
         Rate: 800
       - Item: Creamy_Card
+        Rate: 1
         StealProtected: true
   - Id: 1232
     AegisName: META_PECOPECO_EGG
@@ -9272,6 +9523,7 @@ Body:
       - Item: White_Platter
         Rate: 15
       - Item: Pecopeco_Egg_Card
+        Rate: 1
         StealProtected: true
   - Id: 1234
     AegisName: PROVOKE_YOYO
@@ -9315,6 +9567,7 @@ Body:
       - Item: Orange
         Rate: 1000
       - Item: Yoyo_Card
+        Rate: 1
         StealProtected: true
   - Id: 1235
     AegisName: SMOKING_ORC
@@ -9359,6 +9612,7 @@ Body:
       - Item: Axe
         Rate: 100
       - Item: Orc_Warrior_Card
+        Rate: 1
         StealProtected: true
   - Id: 1236
     AegisName: META_ANT_EGG
@@ -9396,6 +9650,7 @@ Body:
       - Item: Iron_Ore
         Rate: 220
       - Item: Andre_Egg_Card
+        Rate: 1
         StealProtected: true
   - Id: 1237
     AegisName: META_ANDRE
@@ -9442,6 +9697,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 28
       - Item: Andre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1238
     AegisName: META_PIERE
@@ -9488,6 +9744,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 31
       - Item: Andre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1239
     AegisName: META_DENIRO
@@ -9534,6 +9791,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 34
       - Item: Andre_Card
+        Rate: 1
         StealProtected: true
   - Id: 1240
     AegisName: META_PICKY
@@ -9574,6 +9832,7 @@ Body:
       - Item: Yellow_Gemstone
         Rate: 60
       - Item: Picky_Card
+        Rate: 1
         StealProtected: true
   - Id: 1241
     AegisName: META_PICKY_
@@ -9615,6 +9874,7 @@ Body:
       - Item: Yellow_Gemstone
         Rate: 60
       - Item: Picky__Card
+        Rate: 1
         StealProtected: true
   - Id: 1242
     AegisName: MARIN
@@ -9657,7 +9917,9 @@ Body:
       - Item: Candy
         Rate: 350
       - Item: Poring_Hat
+        Rate: 1
       - Item: Marin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1243
     AegisName: SASQUATCH
@@ -9695,6 +9957,7 @@ Body:
       - Item: Feather
         Rate: 1000
       - Item: Panda_Cap
+        Rate: 1
       - Item: Bear's_Foot
         Rate: 5000
       - Item: White_Jewel
@@ -9702,6 +9965,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 90
       - Item: Sasquatch_Card
+        Rate: 1
         StealProtected: true
   - Id: 1244
     AegisName: JAKK_XMAS
@@ -9747,6 +10011,7 @@ Body:
       - Item: Packing_Ribbon
         Rate: 1200
       - Item: Jakk_Card
+        Rate: 1
         StealProtected: true
   - Id: 1245
     AegisName: GOBLINE_XMAS
@@ -9792,6 +10057,7 @@ Body:
       - Item: Santa's_Hat
         Rate: 10
       - Item: Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1246
     AegisName: COOKIE_XMAS
@@ -9836,6 +10102,7 @@ Body:
       - Item: Red_Herb
         Rate: 1700
       - Item: Cookie_XMAS_Card
+        Rate: 1
         StealProtected: true
   - Id: 1247
     AegisName: ANTONIO
@@ -9883,6 +10150,7 @@ Body:
       - Item: Santa's_Hat
         Rate: 250
       - Item: Antonio_Card
+        Rate: 1
         StealProtected: true
   - Id: 1248
     AegisName: CRUISER
@@ -9928,6 +10196,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 87
       - Item: Cruiser_Card
+        Rate: 1
         StealProtected: true
   - Id: 1249
     AegisName: MYSTCASE
@@ -9974,6 +10243,7 @@ Body:
       - Item: Candy
         Rate: 340
       - Item: Mystcase_Card
+        Rate: 1
         StealProtected: true
   - Id: 1250
     AegisName: CHEPET
@@ -10018,6 +10288,7 @@ Body:
       - Item: Ragamuffin_Cape
         Rate: 5
       - Item: Chepet_Card
+        Rate: 1
         StealProtected: true
   - Id: 1251
     AegisName: KNIGHT_OF_WINDSTORM
@@ -10074,7 +10345,9 @@ Body:
       - Item: Elunium
         Rate: 4559
       - Item: Loard_Circlet
+        Rate: 1
       - Item: Knight_Windstorm_Card
+        Rate: 1
         StealProtected: true
   - Id: 1252
     AegisName: GARM
@@ -10131,6 +10404,7 @@ Body:
       - Item: Oridecon
         Rate: 2900
       - Item: Garm_Card
+        Rate: 1
         StealProtected: true
   - Id: 1253
     AegisName: GARGOYLE
@@ -10169,11 +10443,13 @@ Body:
       - Item: Petite_DiablOfs_Wing
         Rate: 500
       - Item: Thimble_Of_Archer
+        Rate: 1
       - Item: Silence_Arrow
         Rate: 2000
       - Item: Elunium_Stone
         Rate: 238
       - Item: Gargoyle_Card
+        Rate: 1
         StealProtected: true
   - Id: 1254
     AegisName: RAGGLER
@@ -10219,6 +10495,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 32
       - Item: Raggler_Card
+        Rate: 1
         StealProtected: true
   - Id: 1255
     AegisName: NERAID
@@ -10264,6 +10541,7 @@ Body:
       - Item: Elunium
         Rate: 37
       - Item: Neraid_Card
+        Rate: 1
         StealProtected: true
   - Id: 1256
     AegisName: PEST
@@ -10306,6 +10584,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 115
       - Item: Pest_Card
+        Rate: 1
         StealProtected: true
   - Id: 1257
     AegisName: INJUSTICE
@@ -10349,6 +10628,7 @@ Body:
       - Item: Jamadhar_
         Rate: 2
       - Item: Injustice_Card
+        Rate: 1
         StealProtected: true
   - Id: 1258
     AegisName: GOBLIN_ARCHER
@@ -10395,6 +10675,7 @@ Body:
       - Item: Grape
         Rate: 300
       - Item: Goblin_Archer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1259
     AegisName: GRYPHON
@@ -10436,11 +10717,13 @@ Body:
       - Item: Guisarme_
         Rate: 1500
       - Item: Pole_Axe
+        Rate: 1
       - Item: Oridecon
         Rate: 185
       - Item: Rough_Wind
         Rate: 150
       - Item: Gryphon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1260
     AegisName: DARK_FRAME
@@ -10484,6 +10767,7 @@ Body:
       - Item: Crystal_Mirror
         Rate: 3
       - Item: Dark_Frame_Card
+        Rate: 1
         StealProtected: true
   - Id: 1261
     AegisName: WILD_ROSE
@@ -10529,6 +10813,7 @@ Body:
       - Item: Big_Sis'_Ribbon
         Rate: 2
       - Item: Wild_Rose_Card
+        Rate: 1
         StealProtected: true
   - Id: 1262
     AegisName: MUTANT_DRAGON
@@ -10577,6 +10862,7 @@ Body:
       - Item: Dragon_Breath
         Rate: 50
       - Item: Mutant_Dragon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1263
     AegisName: WIND_GHOST
@@ -10621,7 +10907,9 @@ Body:
       - Item: Rough_Wind
         Rate: 100
       - Item: Bone_Wand
+        Rate: 1
       - Item: Wind_Ghost_Card
+        Rate: 1
         StealProtected: true
   - Id: 1264
     AegisName: MERMAN
@@ -10668,6 +10956,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 203
       - Item: Merman_Card
+        Rate: 1
         StealProtected: true
   - Id: 1265
     AegisName: COOKIE
@@ -10702,6 +10991,7 @@ Body:
       - Item: Candy_Striper
         Rate: 150
       - Item: Darkgreen_Dyestuffs
+        Rate: 1
       - Item: Great_Chef_Orleans01
         Rate: 50
       - Item: Sandals_
@@ -10711,6 +11001,7 @@ Body:
       - Item: Candy
         Rate: 320
       - Item: Cookie_Card
+        Rate: 1
         StealProtected: true
   - Id: 1266
     AegisName: ASTER
@@ -10752,6 +11043,7 @@ Body:
       - Item: Apple
         Rate: 100
       - Item: Aster_Card
+        Rate: 1
         StealProtected: true
   - Id: 1267
     AegisName: CARAT
@@ -10790,9 +11082,11 @@ Body:
       - Item: Spiky_Heel
         Rate: 5
       - Item: Joker_Jester
+        Rate: 1
       - Item: White_Herb
         Rate: 1450
       - Item: Carat_Card
+        Rate: 1
         StealProtected: true
   - Id: 1268
     AegisName: BLOODY_KNIGHT
@@ -10833,11 +11127,13 @@ Body:
       - Item: Strong_Shield
         Rate: 62
       - Item: Katzbalger
+        Rate: 1
       - Item: Pole_Axe
         Rate: 2
       - Item: Elunium
         Rate: 433
       - Item: Bloody_Knight_Card
+        Rate: 1
         StealProtected: true
   - Id: 1269
     AegisName: CLOCK
@@ -10883,6 +11179,7 @@ Body:
       - Item: Elunium
         Rate: 163
       - Item: Clock_Card
+        Rate: 1
         StealProtected: true
   - Id: 1270
     AegisName: C_TOWER_MANAGER
@@ -10922,11 +11219,13 @@ Body:
       - Item: Leaflet_Of_Hinal
         Rate: 850
       - Item: Memorize_Book
+        Rate: 1
       - Item: Key_Of_Clock_Tower
         Rate: 2000
       - Item: Underground_Key
         Rate: 2000
       - Item: C_Tower_Manager_Card
+        Rate: 1
         StealProtected: true
   - Id: 1271
     AegisName: ALLIGATOR
@@ -10968,6 +11267,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 129
       - Item: Alligator_Card
+        Rate: 1
         StealProtected: true
   - Id: 1272
     AegisName: DARK_LORD
@@ -11024,6 +11324,7 @@ Body:
       - Item: Bone_Helm_
         Rate: 10
       - Item: Dark_Lord_Card
+        Rate: 1
         StealProtected: true
   - Id: 1273
     AegisName: ORC_LADY
@@ -11062,13 +11363,17 @@ Body:
       - Item: Iron
         Rate: 300
       - Item: Earring
+        Rate: 1
       - Item: Wedding_Veil
+        Rate: 1
       - Item: High_end_Cooking_Kits
         Rate: 10
       - Item: Cookbook06
         Rate: 3
       - Item: Wedding_Dress
+        Rate: 1
       - Item: Orc_Lady_Card
+        Rate: 1
         StealProtected: true
   - Id: 1274
     AegisName: MEGALITH
@@ -11104,11 +11409,13 @@ Body:
       - Item: Stone
         Rate: 1000
       - Item: Old_Violet_Box
+        Rate: 1
       - Item: Elunium
         Rate: 61
       - Item: Elunium_Stone
         Rate: 207
       - Item: Megalith_Card
+        Rate: 1
         StealProtected: true
   - Id: 1275
     AegisName: ALICE
@@ -11150,11 +11457,13 @@ Body:
       - Item: Rouge
         Rate: 30
       - Item: Pair_Of_Red_Ribbon
+        Rate: 1
       - Item: Imperial_Cooking_Kits
         Rate: 10
       - Item: Holy_Scroll_1_5
         Rate: 100
       - Item: Alice_Card
+        Rate: 1
         StealProtected: true
   - Id: 1276
     AegisName: RAYDRIC_ARCHER
@@ -11201,6 +11510,7 @@ Body:
       - Item: Elunium
         Rate: 106
       - Item: Raydric_Archer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1277
     AegisName: GREATEST_GENERAL
@@ -11240,11 +11550,13 @@ Body:
       - Item: Inspector_Certificate
         Rate: 300
       - Item: Stop_Post
+        Rate: 1
       - Item: Yellow_Herb
         Rate: 250
       - Item: Earth_Scroll_1_3
         Rate: 100
       - Item: Greatest_General_Card
+        Rate: 1
         StealProtected: true
   - Id: 1278
     AegisName: STALACTIC_GOLEM
@@ -11291,6 +11603,7 @@ Body:
       - Item: Elunium
         Rate: 163
       - Item: Stalactic_Golem_Card
+        Rate: 1
         StealProtected: true
   - Id: 1279
     AegisName: TRI_JOINT
@@ -11336,6 +11649,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 106
       - Item: Tri_Joint_Card
+        Rate: 1
         StealProtected: true
   - Id: 1280
     AegisName: STEAM_GOBLIN
@@ -11383,6 +11697,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 124
       - Item: Steam_Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1281
     AegisName: SAGEWORM
@@ -11425,7 +11740,9 @@ Body:
       - Item: Cold_Scroll_1_5
         Rate: 100
       - Item: Ph.D_Hat
+        Rate: 1
       - Item: Sageworm_Card
+        Rate: 1
         StealProtected: true
   - Id: 1282
     AegisName: KOBOLD_ARCHER
@@ -11474,6 +11791,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 79
       - Item: Kobold_Archer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1283
     AegisName: CHIMERA
@@ -11512,12 +11830,15 @@ Body:
       - Item: Lemon
         Rate: 1000
       - Item: War_Axe
+        Rate: 1
       - Item: Citrine
         Rate: 1500
       - Item: Great_Axe
+        Rate: 1
       - Item: Oridecon
         Rate: 160
       - Item: Chimera_Card
+        Rate: 1
         StealProtected: true
   - Id: 1285
     AegisName: ARCHER_GUARDIAN
@@ -11697,9 +12018,11 @@ Body:
       - Item: Oridecon
         Rate: 150
       - Item: Queen's_Hair_Ornament
+        Rate: 1
       - Item: Cookbook10
         Rate: 2
       - Item: Maya_Puple_Card
+        Rate: 1
         StealProtected: true
   - Id: 1290
     AegisName: SKELETON_GENERAL
@@ -11744,7 +12067,9 @@ Body:
       - Item: Sandstorm
         Rate: 15
       - Item: Ghost_Bandana
+        Rate: 1
       - Item: Skeleton_General_Card
+        Rate: 1
         StealProtected: true
   - Id: 1291
     AegisName: WRAITH_DEAD
@@ -11791,6 +12116,7 @@ Body:
       - Item: Lemon
         Rate: 300
       - Item: Wraith_Dead_Card
+        Rate: 1
         StealProtected: true
   - Id: 1292
     AegisName: MINI_DEMON
@@ -11839,6 +12165,7 @@ Body:
       - Item: Ahlspiess
         Rate: 5
       - Item: Mini_Demon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1293
     AegisName: CREMY_FEAR
@@ -11887,6 +12214,7 @@ Body:
       - Item: Fruit_Of_Mastela
         Rate: 50
       - Item: Cremy_Fear_Card
+        Rate: 1
         StealProtected: true
   - Id: 1294
     AegisName: KILLER_MANTIS
@@ -11931,8 +12259,11 @@ Body:
       - Item: Grape
         Rate: 25
       - Item: Nail_Of_Loki
+        Rate: 1
       - Item: Mirror_Shield_
+        Rate: 1
       - Item: Killer_Mantis_Card
+        Rate: 1
         StealProtected: true
   - Id: 1295
     AegisName: OWL_BARON
@@ -11972,6 +12303,7 @@ Body:
       - Item: Kakkung_
         Rate: 2
       - Item: Staff_Of_Soul
+        Rate: 1
       - Item: Walking_Stick
         Rate: 2
       - Item: Wind_Scroll_1_5
@@ -11979,6 +12311,7 @@ Body:
       - Item: Magician_Hat
         Rate: 5
       - Item: Owl_Baron_Card
+        Rate: 1
         StealProtected: true
   - Id: 1296
     AegisName: KOBOLD_LEADER
@@ -12027,6 +12360,7 @@ Body:
       - Item: Royal_Jelly
         Rate: 100
       - Item: Kobold_Leader_Card
+        Rate: 1
         StealProtected: true
   - Id: 1297
     AegisName: ANCIENT_MUMMY
@@ -12063,6 +12397,7 @@ Body:
       - Item: Mementos
         Rate: 1800
       - Item: Glove_
+        Rate: 1
       - Item: Silver_Ring
         Rate: 150
       - Item: Yellow_Herb
@@ -12072,6 +12407,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 100
       - Item: Ancient_Mummy_Card
+        Rate: 1
         StealProtected: true
   - Id: 1298
     AegisName: ZOMBIE_MASTER
@@ -12114,9 +12450,11 @@ Body:
       - Item: White_Jewel
         Rate: 100
       - Item: Ghoul_Leg
+        Rate: 1
       - Item: Scapulare_
         Rate: 2
       - Item: Zombie_Master_Card
+        Rate: 1
         StealProtected: true
   - Id: 1299
     AegisName: GOBLIN_LEADER
@@ -12165,6 +12503,7 @@ Body:
       - Item: Angry_Mouth
         Rate: 10
       - Item: Goblin_Leader_Card
+        Rate: 1
         StealProtected: true
   - Id: 1300
     AegisName: CATERPILLAR
@@ -12213,6 +12552,7 @@ Body:
       - Item: Yellow_Herb
         Rate: 500
       - Item: Caterpillar_Card
+        Rate: 1
         StealProtected: true
   - Id: 1301
     AegisName: AM_MUT
@@ -12255,10 +12595,13 @@ Body:
       - Item: Gold
         Rate: 5
       - Item: Spirit_Chain
+        Rate: 1
       - Item: Old_Card_Album
+        Rate: 1
       - Item: Glass_Bead
         Rate: 250
       - Item: Am_Mut_Card
+        Rate: 1
         StealProtected: true
   - Id: 1302
     AegisName: DARK_ILLUSION
@@ -12306,6 +12649,7 @@ Body:
       - Item: Broad_Sword_
         Rate: 2
       - Item: Dark_Illusion_Card
+        Rate: 1
         StealProtected: true
   - Id: 1303
     AegisName: GIANT_HONET
@@ -12354,6 +12698,7 @@ Body:
       - Item: Double_Bound
         Rate: 15
       - Item: Giant_Honet_Card
+        Rate: 1
         StealProtected: true
   - Id: 1304
     AegisName: GIANT_SPIDER
@@ -12402,6 +12747,7 @@ Body:
       - Item: Cyfar
         Rate: 800
       - Item: Giant_Spider_Card
+        Rate: 1
         StealProtected: true
   - Id: 1305
     AegisName: ANCIENT_WORM
@@ -12450,6 +12796,7 @@ Body:
       - Item: Brigan
         Rate: 2500
       - Item: Ancient_Worm_Card
+        Rate: 1
         StealProtected: true
   - Id: 1306
     AegisName: LEIB_OLMAI
@@ -12496,6 +12843,7 @@ Body:
       - Item: Cyfar
         Rate: 800
       - Item: Leib_Olmai_Card
+        Rate: 1
         StealProtected: true
   - Id: 1307
     AegisName: CAT_O_NINE_TAIL
@@ -12529,6 +12877,7 @@ Body:
     Class: Boss
     Drops:
       - Item: Puppy_Love
+        Rate: 1
       - Item: Silver_Knife_Of_Chaste
         Rate: 150
       - Item: Punisher
@@ -12540,7 +12889,9 @@ Body:
       - Item: Gold
         Rate: 6
       - Item: Old_Violet_Box
+        Rate: 1
       - Item: Cat_O_Nine_Tail_Card
+        Rate: 1
         StealProtected: true
   - Id: 1308
     AegisName: PANZER_GOBLIN
@@ -12587,6 +12938,7 @@ Body:
       - Item: Flame_Heart
         Rate: 160
       - Item: Panzer_Goblin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1309
     AegisName: GAJOMART
@@ -12633,6 +12985,7 @@ Body:
       - Item: Flame_Heart
         Rate: 180
       - Item: Gajomart_Card
+        Rate: 1
         StealProtected: true
   - Id: 1310
     AegisName: MAJORUROS
@@ -12679,6 +13032,7 @@ Body:
       - Item: Star_Crumb
         Rate: 250
       - Item: Majoruros_Card
+        Rate: 1
         StealProtected: true
   - Id: 1311
     AegisName: GULLINBURSTI
@@ -12717,12 +13071,15 @@ Body:
       - Item: Animal_Blood
         Rate: 6
       - Item: Eagle_Eyes
+        Rate: 1
       - Item: Anodyne
         Rate: 15
       - Item: Belt
+        Rate: 1
       - Item: Zargon
         Rate: 160
       - Item: Gullinbursti_Card
+        Rate: 1
         StealProtected: true
   - Id: 1312
     AegisName: TURTLE_GENERAL
@@ -12778,7 +13135,9 @@ Body:
       - Item: Immaterial_Sword
         Rate: 80
       - Item: Union_Of_Tribe
+        Rate: 1
       - Item: Turtle_General_Card
+        Rate: 1
         StealProtected: true
   - Id: 1313
     AegisName: MOBSTER
@@ -12815,6 +13174,7 @@ Body:
       - Item: Blue_Jewel
         Rate: 4559
       - Item: Ring_
+        Rate: 1
       - Item: Red_Gemstone
         Rate: 600
       - Item: Zargon
@@ -12824,6 +13184,7 @@ Body:
       - Item: Blue_Potion
         Rate: 60
       - Item: Mobster_Card
+        Rate: 1
         StealProtected: true
   - Id: 1314
     AegisName: PERMETER
@@ -12868,7 +13229,9 @@ Body:
       - Item: Fruit_Of_Mastela
         Rate: 25
       - Item: Anodyne
+        Rate: 1
       - Item: Permeter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1315
     AegisName: ASSULTER
@@ -12915,7 +13278,9 @@ Body:
       - Item: Huuma_Bird_Wing
         Rate: 5
       - Item: Old_Blue_Box
+        Rate: 1
       - Item: Assulter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1316
     AegisName: SOLIDER
@@ -12960,7 +13325,9 @@ Body:
       - Item: Honey
         Rate: 850
       - Item: Chain
+        Rate: 1
       - Item: Solider_Card
+        Rate: 1
         StealProtected: true
   - Id: 1317
     AegisName: FUR_SEAL
@@ -13002,11 +13369,13 @@ Body:
       - Item: Cyfar
         Rate: 1200
       - Item: Guisarme_
+        Rate: 1
       - Item: Panacea
         Rate: 200
       - Item: Glass_Bead
         Rate: 120
       - Item: Fur_Seal_Card
+        Rate: 1
         StealProtected: true
   - Id: 1318
     AegisName: HEATER
@@ -13053,6 +13422,7 @@ Body:
       - Item: Burn_Tree
         Rate: 1250
       - Item: Heater_Card
+        Rate: 1
         StealProtected: true
   - Id: 1319
     AegisName: FREEZER
@@ -13099,6 +13469,7 @@ Body:
       - Item: Cold_Scroll_1_5
         Rate: 100
       - Item: Freezer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1320
     AegisName: OWL_DUKE
@@ -13138,12 +13509,15 @@ Body:
       - Item: Wind_Scroll_1_5
         Rate: 100
       - Item: Crystal_Mirror
+        Rate: 1
       - Item: Guisarme
         Rate: 3
       - Item: Morning_Star
         Rate: 2
       - Item: Magician_Hat
+        Rate: 1
       - Item: Owl_Duke_Card
+        Rate: 1
         StealProtected: true
   - Id: 1321
     AegisName: DRAGON_TAIL
@@ -13192,6 +13566,7 @@ Body:
       - Item: Wing_Of_Butterfly
         Rate: 150
       - Item: Dragon_Tail_Card
+        Rate: 1
         StealProtected: true
   - Id: 1322
     AegisName: SPRING_RABBIT
@@ -13238,6 +13613,7 @@ Body:
       - Item: White_Herb
         Rate: 800
       - Item: Spring_Rabbit_Card
+        Rate: 1
         StealProtected: true
   - Id: 1323
     AegisName: SEE_OTTER
@@ -13284,6 +13660,7 @@ Body:
       - Item: Cyfar
         Rate: 1200
       - Item: See_Otter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1324
     AegisName: TREASURE_BOX1
@@ -14557,11 +14934,13 @@ Body:
       - Item: Elunium
         Rate: 5
       - Item: Destroyer_
+        Rate: 1
       - Item: Manteau_
         Rate: 20
       - Item: Steel
         Rate: 2500
       - Item: Apocalips_Card
+        Rate: 1
         StealProtected: true
   - Id: 1366
     AegisName: LAVA_GOLEM
@@ -14599,6 +14978,7 @@ Body:
       - Item: Burning_Heart
         Rate: 3686
       - Item: Plate_Armor_
+        Rate: 1
       - Item: Plate_Armor
         Rate: 2
       - Item: White_Herb
@@ -14606,6 +14986,7 @@ Body:
       - Item: Magma_Fist
         Rate: 20
       - Item: Lava_Golem_Card
+        Rate: 1
         StealProtected: true
   - Id: 1367
     AegisName: BLAZZER
@@ -14645,6 +15026,7 @@ Body:
       - Item: White_Herb
         Rate: 3000
       - Item: Blazzer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1368
     AegisName: GEOGRAPHER
@@ -14686,6 +15068,7 @@ Body:
       - Item: Holy_Scroll_1_5
         Rate: 100
       - Item: Geographer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1369
     AegisName: GRAND_PECO
@@ -14723,9 +15106,11 @@ Body:
       - Item: Wind_Of_Verdure
         Rate: 1000
       - Item: Gold
+        Rate: 1
       - Item: Orange
         Rate: 500
       - Item: Grand_Peco_Card
+        Rate: 1
         StealProtected: true
   - Id: 1370
     AegisName: SUCCUBUS
@@ -14763,13 +15148,17 @@ Body:
       - Item: Chrystal_Pumps
         Rate: 3
       - Item: Boy's_Naivety
+        Rate: 1
       - Item: Diamond_Ring
         Rate: 250
       - Item: Horn_Of_Succubus
+        Rate: 1
       - Item: Staff_Of_Soul
+        Rate: 1
       - Item: Blue_Potion
         Rate: 1000
       - Item: Succubus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1371
     AegisName: FAKE_ANGEL
@@ -14812,6 +15201,7 @@ Body:
       - Item: Carrot_Whip
         Rate: 20
       - Item: Fake_Angel_Card
+        Rate: 1
         StealProtected: true
   - Id: 1372
     AegisName: GOAT
@@ -14857,6 +15247,7 @@ Body:
       - Item: Green_Herb
         Rate: 5500
       - Item: Goat_Card
+        Rate: 1
         StealProtected: true
   - Id: 1373
     AegisName: LORD_OF_DEATH
@@ -14910,9 +15301,11 @@ Body:
       - Item: Shine_Spear_Blade
         Rate: 10
       - Item: War_Axe
+        Rate: 1
       - Item: Iron_Driver
         Rate: 2
       - Item: Lord_Of_Death_Card
+        Rate: 1
         StealProtected: true
   - Id: 1374
     AegisName: INCUBUS
@@ -14950,7 +15343,9 @@ Body:
       - Item: White_Herb
         Rate: 5500
       - Item: Inccubus_Horn
+        Rate: 1
       - Item: Ring_
+        Rate: 1
       - Item: Gold_Ring
         Rate: 500
       - Item: Diamond_Ring
@@ -14958,6 +15353,7 @@ Body:
       - Item: White_Herb
         Rate: 2200
       - Item: Incubus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1375
     AegisName: THE_PAPER
@@ -14999,6 +15395,7 @@ Body:
       - Item: Kamaitachi
         Rate: 5
       - Item: The_Paper_Card
+        Rate: 1
         StealProtected: true
   - Id: 1376
     AegisName: HARPY
@@ -15044,6 +15441,7 @@ Body:
       - Item: Electric_Fist
         Rate: 20
       - Item: Harpy_Card
+        Rate: 1
         StealProtected: true
   - Id: 1377
     AegisName: ELDER
@@ -15083,10 +15481,13 @@ Body:
       - Item: Encyclopedia
         Rate: 10
       - Item: Wizardy_Staff
+        Rate: 1
       - Item: Old_Card_Album
+        Rate: 1
       - Item: Underground_Key
         Rate: 3000
       - Item: Elder_Card
+        Rate: 1
         StealProtected: true
   - Id: 1378
     AegisName: DEMON_PUNGUS
@@ -15128,6 +15529,7 @@ Body:
       - Item: Starsand_Of_Witch
         Rate: 5000
       - Item: Demon_Pungus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1379
     AegisName: NIGHTMARE_TERROR
@@ -15163,6 +15565,7 @@ Body:
       - Item: Burning_Horse_Shoe
         Rate: 4947
       - Item: Rosary_
+        Rate: 1
       - Item: Rosary
         Rate: 30
       - Item: Blue_Potion
@@ -15172,7 +15575,9 @@ Body:
       - Item: Ghost_Scroll_1_5
         Rate: 100
       - Item: Infiltrator
+        Rate: 1
       - Item: Nightmare_Terror_Card
+        Rate: 1
         StealProtected: true
   - Id: 1380
     AegisName: DRILLER
@@ -15210,6 +15615,7 @@ Body:
       - Item: Red_Gemstone
         Rate: 3500
       - Item: Driller_Card
+        Rate: 1
         StealProtected: true
   - Id: 1381
     AegisName: GRIZZLY
@@ -15247,6 +15653,7 @@ Body:
       - Item: Nice_Sweet_Potato
         Rate: 2500
       - Item: Grizzly_Card
+        Rate: 1
         StealProtected: true
   - Id: 1382
     AegisName: DIABOLIC
@@ -15290,6 +15697,7 @@ Body:
       - Item: Unholy_Touch
         Rate: 10
       - Item: Diabolic_Card
+        Rate: 1
         StealProtected: true
   - Id: 1383
     AegisName: EXPLOSION
@@ -15331,6 +15739,7 @@ Body:
       - Item: Fruit_Of_Mastela
         Rate: 400
       - Item: Explosion_Card
+        Rate: 1
         StealProtected: true
   - Id: 1384
     AegisName: DELETER
@@ -15370,6 +15779,7 @@ Body:
       - Item: Dragon_Scale
         Rate: 3589
       - Item: Flying_Deleter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1385
     AegisName: DELETER_
@@ -15409,6 +15819,7 @@ Body:
       - Item: Dragon_Scale
         Rate: 3589
       - Item: Deleter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1386
     AegisName: SLEEPER
@@ -15454,6 +15865,7 @@ Body:
       - Item: Fine_Sand
         Rate: 1200
       - Item: Sleeper_Card
+        Rate: 1
         StealProtected: true
   - Id: 1387
     AegisName: GIG
@@ -15495,6 +15907,7 @@ Body:
       - Item: Flame_Heart
         Rate: 850
       - Item: Gig_Card
+        Rate: 1
         StealProtected: true
   - Id: 1388
     AegisName: ARCHANGELING
@@ -15542,6 +15955,7 @@ Body:
       - Item: Turquoise
         Rate: 1500
       - Item: Archangeling_Card
+        Rate: 1
         StealProtected: true
   - Id: 1389
     AegisName: DRACULA
@@ -15596,6 +16010,7 @@ Body:
       - Item: Book_Of_The_Apocalypse
         Rate: 4
       - Item: Dracula_Card
+        Rate: 1
         StealProtected: true
   - Id: 1390
     AegisName: VIOLY
@@ -15641,6 +16056,7 @@ Body:
       - Item: Violin_
         Rate: 500
       - Item: Violy_Card
+        Rate: 1
         StealProtected: true
   - Id: 1391
     AegisName: GALAPAGO
@@ -15682,9 +16098,11 @@ Body:
       - Item: Anodyne
         Rate: 100
       - Item: Galapago_Cap
+        Rate: 1
       - Item: Orange
         Rate: 1000
       - Item: Galapago_Card
+        Rate: 1
         StealProtected: true
   - Id: 1392
     AegisName: ROTAR_ZAIRO
@@ -15718,16 +16136,19 @@ Body:
       - Item: Large_Jellopy
         Rate: 500
       - Item: Padded_Armor
+        Rate: 1
       - Item: Cyfar
         Rate: 1000
       - Item: Steel
         Rate: 450
       - Item: Oridecon
+        Rate: 1
       - Item: Zargon
         Rate: 2500
       - Item: Garlet
         Rate: 5500
       - Item: Rotar_Zairo_Card
+        Rate: 1
         StealProtected: true
   - Id: 1393
     AegisName: G_MUMMY
@@ -16030,6 +16451,7 @@ Body:
       - Item: Murasame
         Rate: 5
       - Item: Karakasa_Card
+        Rate: 1
         StealProtected: true
   - Id: 1401
     AegisName: SHINOBI
@@ -16072,11 +16494,13 @@ Body:
       - Item: Shinobi's_Sash
         Rate: 100
       - Item: Thief_Clothes_
+        Rate: 1
       - Item: Black_Mask
         Rate: 2000
       - Item: Murasame_
         Rate: 5
       - Item: Shinobi_Card
+        Rate: 1
         StealProtected: true
   - Id: 1402
     AegisName: POISON_TOAD
@@ -16123,6 +16547,7 @@ Body:
       - Item: Cinquedea_
         Rate: 10
       - Item: Poison_Toad_Card
+        Rate: 1
         StealProtected: true
   - Id: 1403
     AegisName: ANTIQUE_FIRELOCK
@@ -16158,6 +16583,7 @@ Body:
       - Item: Iron
         Rate: 5500
       - Item: Apple_Of_Archer
+        Rate: 1
       - Item: Large_Jellopy
         Rate: 1400
       - Item: Yellow_Herb
@@ -16169,6 +16595,7 @@ Body:
       - Item: The_Cyclone_
         Rate: 5
       - Item: Antique_Firelock_Card
+        Rate: 1
         StealProtected: true
   - Id: 1404
     AegisName: MIYABI_NINGYO
@@ -16217,6 +16644,7 @@ Body:
       - Item: Mandolin_
         Rate: 2
       - Item: Miyabi_Ningyo_Card
+        Rate: 1
         StealProtected: true
   - Id: 1405
     AegisName: TENGU
@@ -16265,6 +16693,7 @@ Body:
       - Item: Earth_Scroll_1_5
         Rate: 100
       - Item: Tengu_Card
+        Rate: 1
         StealProtected: true
   - Id: 1406
     AegisName: KAPHA
@@ -16310,6 +16739,7 @@ Body:
       - Item: Jitte_
         Rate: 5
       - Item: Kapha_Card
+        Rate: 1
         StealProtected: true
   - Id: 1408
     AegisName: BLOOD_BUTTERFLY
@@ -16353,7 +16783,9 @@ Body:
       - Item: Waghnakh_
         Rate: 3
       - Item: Lariat
+        Rate: 1
       - Item: Blood_Butterfly_Card
+        Rate: 1
         StealProtected: true
   - Id: 1409
     AegisName: RICE_CAKE_BOY
@@ -16390,6 +16822,7 @@ Body:
       - Item: Oil_Paper
         Rate: 2500
       - Item: Pierrot_Nose
+        Rate: 1
       - Item: Blade_Of_Pinwheel
         Rate: 5000
       - Item: Bun
@@ -16397,6 +16830,7 @@ Body:
       - Item: Festival_Mask
         Rate: 3000
       - Item: Rice_Cake_Boy_Card
+        Rate: 1
         StealProtected: true
   - Id: 1410
     AegisName: LIVE_PEACH_TREE
@@ -16440,6 +16874,7 @@ Body:
       - Item: Old_Blue_Box
         Rate: 5
       - Item: Live_Peach_Tree_Card
+        Rate: 1
         StealProtected: true
   - Id: 1412
     AegisName: EVIL_CLOUD_HERMIT
@@ -16486,6 +16921,7 @@ Body:
       - Item: Wind_Scroll_1_5
         Rate: 100
       - Item: Evil_Cloud_Hermit_Card
+        Rate: 1
         StealProtected: true
   - Id: 1413
     AegisName: WILD_GINSENG
@@ -16529,9 +16965,11 @@ Body:
       - Item: Sweet_Potato
         Rate: 4800
       - Item: Rope_
+        Rate: 1
       - Item: Strawberry
         Rate: 1000
       - Item: Wild_Ginseng_Card
+        Rate: 1
         StealProtected: true
   - Id: 1415
     AegisName: BABY_LEOPARD
@@ -16575,6 +17013,7 @@ Body:
       - Item: Pet_Food
         Rate: 500
       - Item: Baby_Leopard_Card
+        Rate: 1
         StealProtected: true
   - Id: 1416
     AegisName: WICKED_NYMPH
@@ -16617,11 +17056,13 @@ Body:
       - Item: Mandolin_
         Rate: 4
       - Item: Lute_
+        Rate: 1
       - Item: Holy_Scroll_1_5
         Rate: 100
       - Item: Oriental_Lute
         Rate: 10
       - Item: Wicked_Nymph_Card
+        Rate: 1
         StealProtected: true
   - Id: 1417
     AegisName: ZIPPER_BEAR
@@ -16664,6 +17105,7 @@ Body:
       - Item: Apple
         Rate: 90
       - Item: Zipper_Bear_Card
+        Rate: 1
         StealProtected: true
   - Id: 1418
     AegisName: DARK_SNAKE_LORD
@@ -16721,6 +17163,7 @@ Body:
       - Item: Sway_Apron
         Rate: 2000
       - Item: Dark_Snake_Lord_Card
+        Rate: 1
         StealProtected: true
   - Id: 1419
     AegisName: G_FARMILIAR
@@ -18703,6 +19146,7 @@ Body:
       - Item: Azoth
         Rate: 80
       - Item: Incant_Samurai_Card
+        Rate: 1
         StealProtected: true
   - Id: 1493
     AegisName: DRYAD
@@ -18741,11 +19185,13 @@ Body:
       - Item: Rope_
         Rate: 80
       - Item: Chemeti
+        Rate: 1
       - Item: Centimental_Leaf
         Rate: 10
       - Item: Sharp_Leaf
         Rate: 3000
       - Item: Dryad_Card
+        Rate: 1
         StealProtected: true
   - Id: 1494
     AegisName: KIND_OF_BEETLE
@@ -18785,7 +19231,9 @@ Body:
       - Item: Worm_Peelings
         Rate: 500
       - Item: Guard_
+        Rate: 1
       - Item: Kind_Of_Beetle_Card
+        Rate: 1
         StealProtected: true
   - Id: 1495
     AegisName: STONE_SHOOTER
@@ -18829,6 +19277,7 @@ Body:
       - Item: Stone
         Rate: 1000
       - Item: Stone_Shooter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1497
     AegisName: WOODEN_GOLEM
@@ -18876,6 +19325,7 @@ Body:
       - Item: Mushroom_Spore
         Rate: 1000
       - Item: Wooden_Golem_Card
+        Rate: 1
         StealProtected: true
   - Id: 1498
     AegisName: WOOTAN_SHOOTER
@@ -18922,6 +19372,7 @@ Body:
       - Item: Banana_Hat
         Rate: 10
       - Item: Wootan_Shooter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1499
     AegisName: WOOTAN_FIGHTER
@@ -18959,6 +19410,7 @@ Body:
       - Item: Waghnakh
         Rate: 3
       - Item: Finger_
+        Rate: 1
       - Item: Banana
         Rate: 1000
       - Item: Great_Leaf
@@ -18966,6 +19418,7 @@ Body:
       - Item: Banana_Hat
         Rate: 5
       - Item: Wootan_Fighter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1500
     AegisName: PARASITE
@@ -19005,10 +19458,13 @@ Body:
       - Item: Great_Leaf
         Rate: 500
       - Item: Rante_
+        Rate: 1
       - Item: Bladed_Whip
+        Rate: 1
       - Item: Shoot
         Rate: 500
       - Item: Parasite_Card
+        Rate: 1
         StealProtected: true
   - Id: 1502
     AegisName: PORING_V
@@ -19112,6 +19568,7 @@ Body:
       - Item: Branch_Of_Dead_Tree
         Rate: 10
       - Item: Gibbet_Card
+        Rate: 1
         StealProtected: true
   - Id: 1504
     AegisName: DULLAHAN
@@ -19147,10 +19604,13 @@ Body:
       - Item: Dullahan_Armor
         Rate: 4850
       - Item: An_Eye_Of_Dullahan
+        Rate: 1
       - Item: Manteau
         Rate: 13
       - Item: Manteau_
+        Rate: 1
       - Item: Dullahan_Card
+        Rate: 1
         StealProtected: true
   - Id: 1505
     AegisName: LOLI_RURI
@@ -19192,9 +19652,11 @@ Body:
       - Item: Elunium
         Rate: 100
       - Item: Loki's_Whispers
+        Rate: 1
       - Item: Lunatic_Brooch
         Rate: 5
       - Item: Loli_Ruri_Card
+        Rate: 1
         StealProtected: true
   - Id: 1506
     AegisName: DISGUISE
@@ -19243,6 +19705,7 @@ Body:
       - Item: Rider_Insignia
         Rate: 5
       - Item: Disguise_Card
+        Rate: 1
         StealProtected: true
   - Id: 1507
     AegisName: BLOODY_MURDERER
@@ -19286,7 +19749,9 @@ Body:
       - Item: Mama's_Knife
         Rate: 3
       - Item: Ginnungagap
+        Rate: 1
       - Item: Bloody_Murderer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1508
     AegisName: QUVE
@@ -19328,6 +19793,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 10
       - Item: Quve_Card
+        Rate: 1
         StealProtected: true
   - Id: 1509
     AegisName: LUDE
@@ -19371,6 +19837,7 @@ Body:
       - Item: Holy_Scroll_1_3
         Rate: 100
       - Item: Lude_Card
+        Rate: 1
         StealProtected: true
   - Id: 1510
     AegisName: HYLOZOIST
@@ -19417,7 +19884,9 @@ Body:
       - Item: Elunium_Stone
         Rate: 10
       - Item: Angry_Mouth
+        Rate: 1
       - Item: Hylozoist_Card
+        Rate: 1
         StealProtected: true
   - Id: 1511
     AegisName: AMON_RA
@@ -19473,6 +19942,7 @@ Body:
       - Item: Yggdrasilberry
         Rate: 3000
       - Item: Amon_Ra_Card
+        Rate: 1
         StealProtected: true
   - Id: 1512
     AegisName: HYEGUN
@@ -19512,9 +19982,11 @@ Body:
       - Item: Elunium
         Rate: 10
       - Item: Boots_
+        Rate: 1
       - Item: Munak_Doll
         Rate: 300
       - Item: Hyegun_Card
+        Rate: 1
         StealProtected: true
   - Id: 1513
     AegisName: CIVIL_SERVANT
@@ -19558,6 +20030,7 @@ Body:
       - Item: Wind_Scroll_1_5
         Rate: 100
       - Item: Civil_Servant_Card
+        Rate: 1
         StealProtected: true
   - Id: 1514
     AegisName: DANCING_DRAGON
@@ -19601,6 +20074,7 @@ Body:
       - Item: Yarn
         Rate: 3000
       - Item: Dancing_Dragon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1515
     AegisName: GARM_BABY
@@ -19644,6 +20118,7 @@ Body:
       - Item: Cold_Scroll_2_5
         Rate: 100
       - Item: Garm_Baby_Card
+        Rate: 1
         StealProtected: true
   - Id: 1516
     AegisName: INCREASE_SOIL
@@ -19685,6 +20160,7 @@ Body:
       - Item: Gold
         Rate: 2
       - Item: Increase_Soil_Card
+        Rate: 1
         StealProtected: true
   - Id: 1517
     AegisName: LI_ME_MANG_RYANG
@@ -19726,7 +20202,9 @@ Body:
       - Item: Club
         Rate: 10
       - Item: Spike
+        Rate: 1
       - Item: Li_Me_Mang_Ryang_Card
+        Rate: 1
         StealProtected: true
   - Id: 1518
     AegisName: BACSOJIN
@@ -19772,6 +20250,7 @@ Body:
       - Item: Crystal_Mirror
         Rate: 500
       - Item: Tiara
+        Rate: 1
         StealProtected: true
   - Id: 1519
     AegisName: CHUNG_E
@@ -21513,11 +21992,13 @@ Body:
       - Item: Apple
         Rate: 5000
       - Item: Blade_Lost_In_Darkness
+        Rate: 1
       - Item: Black_Dyestuffs
         Rate: 100
       - Item: Ghost_Scroll_1_3
         Rate: 100
       - Item: Deviling_Card
+        Rate: 1
         StealProtected: true
   - Id: 1583
     AegisName: TAO_GUNKA
@@ -21574,6 +22055,7 @@ Body:
       - Item: Gemmed_Sallet_
         Rate: 5
       - Item: Tao_Gunka_Card
+        Rate: 1
         StealProtected: true
   - Id: 1584
     AegisName: TAMRUAN
@@ -21618,6 +22100,7 @@ Body:
       - Item: Chain_Mail_
         Rate: 3
       - Item: Tamruan_Card
+        Rate: 1
         StealProtected: true
   - Id: 1585
     AegisName: MIME_MONKEY
@@ -21707,6 +22190,7 @@ Body:
       - Item: Leaf_Clothes
         Rate: 5335
       - Item: Leaf_Cat_Card
+        Rate: 1
         StealProtected: true
   - Id: 1587
     AegisName: KRABEN
@@ -21744,6 +22228,7 @@ Body:
       - Item: Leaflet_Of_Aloe
         Rate: 1000
       - Item: Guard_
+        Rate: 1
       - Item: Bamboo_Basket
         Rate: 4850
       - Item: Chilli
@@ -21751,6 +22236,7 @@ Body:
       - Item: Old_Blue_Box
         Rate: 10
       - Item: Kraben_Card
+        Rate: 1
         StealProtected: true
   - Id: 1588
     AegisName: ORC_XMAS
@@ -21796,6 +22282,7 @@ Body:
       - Item: Packing_Ribbon
         Rate: 1600
       - Item: Orc_Warrior_Card
+        Rate: 1
         StealProtected: true
   - Id: 1589
     AegisName: G_MANDRAGORA
@@ -22554,6 +23041,7 @@ Body:
       - Item: Jubilee
         Rate: 5000
       - Item: Metaling_Card
+        Rate: 1
         StealProtected: true
   - Id: 1614
     AegisName: MINERAL
@@ -22600,6 +23088,7 @@ Body:
       - Item: Gold
         Rate: 2
       - Item: Mineral_Card
+        Rate: 1
         StealProtected: true
   - Id: 1615
     AegisName: OBSIDIAN
@@ -22644,6 +23133,7 @@ Body:
       - Item: Unholy_Touch
         Rate: 10
       - Item: Obsidian_Card
+        Rate: 1
         StealProtected: true
   - Id: 1616
     AegisName: PITMAN
@@ -22689,6 +23179,7 @@ Body:
       - Item: Headlamp
         Rate: 80
       - Item: Pitman_Card
+        Rate: 1
         StealProtected: true
   - Id: 1617
     AegisName: WASTE_STOVE
@@ -22736,6 +23227,7 @@ Body:
       - Item: Old_Steel_Plate
         Rate: 3800
       - Item: Waste_Stove_Card
+        Rate: 1
         StealProtected: true
   - Id: 1618
     AegisName: UNGOLIANT
@@ -22784,6 +23276,7 @@ Body:
       - Item: Boots_
         Rate: 500
       - Item: Ungoliant_Card
+        Rate: 1
         StealProtected: true
   - Id: 1619
     AegisName: PORCELLIO
@@ -22828,6 +23321,7 @@ Body:
       - Item: Fluorescent_Liquid
         Rate: 30
       - Item: Porcellio_Card
+        Rate: 1
         StealProtected: true
   - Id: 1620
     AegisName: NOXIOUS
@@ -22867,7 +23361,9 @@ Body:
       - Item: Air_Pollutant
         Rate: 3000
       - Item: Old_Blue_Box
+        Rate: 1
       - Item: Noxious_Card
+        Rate: 1
         StealProtected: true
   - Id: 1621
     AegisName: VENOMOUS
@@ -22906,7 +23402,9 @@ Body:
       - Item: Poisonous_Gas
         Rate: 2000
       - Item: Old_Blue_Box
+        Rate: 1
       - Item: Venomous_Card
+        Rate: 1
         StealProtected: true
   - Id: 1622
     AegisName: TEDDY_BEAR
@@ -22953,6 +23451,7 @@ Body:
       - Item: Elunium
         Rate: 100
       - Item: Teddy_Bear_Card
+        Rate: 1
         StealProtected: true
   - Id: 1623
     AegisName: RSX_0806
@@ -23001,6 +23500,7 @@ Body:
       - Item: House_Auger
         Rate: 10
       - Item: House_Auger_
+        Rate: 1
       - Item: Old_Violet_Box
         Rate: 1000
       - Item: Headlamp
@@ -23010,6 +23510,7 @@ Body:
       - Item: Spanner
         Rate: 20
       - Item: Rsx_0806_Card
+        Rate: 1
         StealProtected: true
   - Id: 1624
     AegisName: G_WASTE_STOVE
@@ -23145,6 +23646,7 @@ Body:
       - Item: Spawns
         Rate: 500
       - Item: Anopheles_Card
+        Rate: 1
         StealProtected: true
   - Id: 1628
     AegisName: MOLE
@@ -23185,6 +23687,7 @@ Body:
       - Item: Six_Shooter_
         Rate: 5
       - Item: Mole_Card
+        Rate: 1
         StealProtected: true
   - Id: 1629
     AegisName: HILL_WIND
@@ -23221,6 +23724,7 @@ Body:
       - Item: Monster's_Feed
         Rate: 1000
       - Item: Hill_Wind_Card
+        Rate: 1
         StealProtected: true
   - Id: 1630
     AegisName: BACSOJIN_
@@ -23279,6 +23783,7 @@ Body:
       - Item: Tiara
         Rate: 10
       - Item: Bacsojin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1631
     AegisName: CHUNG_E_
@@ -23324,6 +23829,7 @@ Body:
       - Item: Hair_Protector
         Rate: 50
       - Item: Chung_E_Card
+        Rate: 1
         StealProtected: true
   - Id: 1632
     AegisName: GREMLIN
@@ -23364,10 +23870,13 @@ Body:
       - Item: Violet_Jewel
         Rate: 100
       - Item: Boots_
+        Rate: 1
       - Item: Bloody_Roar
+        Rate: 1
       - Item: Old_Blue_Box
         Rate: 2
       - Item: Gremlin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1633
     AegisName: BEHOLDER
@@ -23410,6 +23919,7 @@ Body:
       - Item: Old_Blue_Box
         Rate: 2
       - Item: Beholder_Card
+        Rate: 1
         StealProtected: true
   - Id: 1634
     AegisName: SEYREN
@@ -23455,8 +23965,11 @@ Body:
       - Item: Helm_
         Rate: 12
       - Item: Plate_Armor_
+        Rate: 1
       - Item: Ruber
+        Rate: 1
       - Item: Seyren_Card
+        Rate: 1
         StealProtected: true
   - Id: 1635
     AegisName: EREMES
@@ -23494,7 +24007,9 @@ Body:
       - Item: Lab_Staff_Record
         Rate: 2000
       - Item: Krishna
+        Rate: 1
       - Item: Pauldron
+        Rate: 1
       - Item: Nail_Of_Loki
         Rate: 3
       - Item: Various_Jur
@@ -23504,6 +24019,7 @@ Body:
       - Item: Thief_Clothes_
         Rate: 2
       - Item: Eremes_Card
+        Rate: 1
         StealProtected: true
   - Id: 1636
     AegisName: HARWORD
@@ -23539,15 +24055,19 @@ Body:
       - Item: Armlet_Of_Prisoner
         Rate: 3000
       - Item: Pauldron
+        Rate: 1
       - Item: Vecer_Axe
+        Rate: 1
       - Item: Two_Handed_Axe_
         Rate: 110
       - Item: Buckler_
         Rate: 10
       - Item: Clothes_Of_The_Lord
+        Rate: 1
       - Item: Old_Blue_Box
         Rate: 50
       - Item: Harword_Card
+        Rate: 1
         StealProtected: true
   - Id: 1637
     AegisName: MAGALETA
@@ -23588,11 +24108,13 @@ Body:
       - Item: Hardback
         Rate: 10
       - Item: Holy_Robe
+        Rate: 1
       - Item: Old_Blue_Box
         Rate: 50
       - Item: Muffler_
         Rate: 10
       - Item: Magaleta_Card
+        Rate: 1
         StealProtected: true
   - Id: 1638
     AegisName: SHECIL
@@ -23637,7 +24159,9 @@ Body:
       - Item: Old_Blue_Box
         Rate: 50
       - Item: Falken_Blitz
+        Rate: 1
       - Item: Shecil_Card
+        Rate: 1
         StealProtected: true
   - Id: 1639
     AegisName: KATRINN
@@ -23674,14 +24198,17 @@ Body:
       - Item: Old_Blue_Box
         Rate: 50
       - Item: La'cryma_Stick
+        Rate: 1
       - Item: Survival_Rod2_
         Rate: 5
       - Item: Guard_
         Rate: 30
       - Item: Pair_Of_Red_Ribbon
+        Rate: 1
       - Item: Shoes_
         Rate: 20
       - Item: Katrinn_Card
+        Rate: 1
         StealProtected: true
   - Id: 1640
     AegisName: G_SEYREN
@@ -23944,6 +24471,7 @@ Body:
       - Item: Skewer
         Rate: 1500
       - Item: B_Seyren_Card
+        Rate: 1
         StealProtected: true
   - Id: 1647
     AegisName: B_EREMES
@@ -24001,6 +24529,7 @@ Body:
       - Item: Ginnungagap
         Rate: 3500
       - Item: B_Eremes_Card
+        Rate: 1
         StealProtected: true
   - Id: 1648
     AegisName: B_HARWORD
@@ -24059,6 +24588,7 @@ Body:
       - Item: Tomahawk
         Rate: 3500
       - Item: B_Harword_Card
+        Rate: 1
         StealProtected: true
   - Id: 1649
     AegisName: B_MAGALETA
@@ -24116,6 +24646,7 @@ Body:
       - Item: Diary_Of_Great_Sage
         Rate: 3500
       - Item: B_Magaleta_Card
+        Rate: 1
         StealProtected: true
   - Id: 1650
     AegisName: B_SHECIL
@@ -24173,6 +24704,7 @@ Body:
       - Item: Dragon_Wing
         Rate: 2500
       - Item: B_Shecil_Card
+        Rate: 1
         StealProtected: true
   - Id: 1651
     AegisName: B_KATRINN
@@ -24230,6 +24762,7 @@ Body:
       - Item: Glittering_Clothes
         Rate: 3500
       - Item: B_Katrinn_Card
+        Rate: 1
         StealProtected: true
   - Id: 1652
     AegisName: YGNIZEM
@@ -24265,6 +24798,7 @@ Body:
       - Item: Lab_Staff_Record
         Rate: 1000
       - Item: Katzbalger
+        Rate: 1
       - Item: Two_Hand_Sword_
         Rate: 20
       - Item: Saber_
@@ -24274,7 +24808,9 @@ Body:
       - Item: Slayer_
         Rate: 80
       - Item: Plate_Armor_
+        Rate: 1
       - Item: Ygnizem_Card
+        Rate: 1
         StealProtected: true
   - Id: 1653
     AegisName: WHIKEBAIN
@@ -24309,6 +24845,7 @@ Body:
       - Item: Armlet_Of_Prisoner
         Rate: 2000
       - Item: Forturn_Sword
+        Rate: 1
       - Item: Adventurere's_Suit_
         Rate: 40
       - Item: Gladius_
@@ -24320,6 +24857,7 @@ Body:
       - Item: Coward_
         Rate: 10
       - Item: Whikebain_Card
+        Rate: 1
         StealProtected: true
   - Id: 1654
     AegisName: ARMAIA
@@ -24355,6 +24893,7 @@ Body:
       - Item: Armlet_Of_Prisoner
         Rate: 1000
       - Item: Muffler_
+        Rate: 1
       - Item: Buster_
         Rate: 50
       - Item: Battle_Axe_
@@ -24366,6 +24905,7 @@ Body:
       - Item: Windhawk
         Rate: 10
       - Item: Armaia_Card
+        Rate: 1
         StealProtected: true
   - Id: 1655
     AegisName: EREND
@@ -24410,7 +24950,9 @@ Body:
       - Item: Scapulare_
         Rate: 10
       - Item: Spike
+        Rate: 1
       - Item: Erend_Card
+        Rate: 1
         StealProtected: true
   - Id: 1656
     AegisName: KAVAC
@@ -24446,6 +24988,7 @@ Body:
       - Item: Lab_Staff_Record
         Rate: 2000
       - Item: Kakkung_
+        Rate: 1
       - Item: Steel_Arrow_Container
         Rate: 100
       - Item: Great_Bow_
@@ -24457,6 +25000,7 @@ Body:
       - Item: Shoes_
         Rate: 2
       - Item: Kavac_Card
+        Rate: 1
         StealProtected: true
   - Id: 1657
     AegisName: RAWREL
@@ -24491,6 +25035,7 @@ Body:
       - Item: Mementos
         Rate: 1000
       - Item: Staff_Of_Wing
+        Rate: 1
       - Item: Guard_
         Rate: 5
       - Item: Staff_
@@ -24500,7 +25045,9 @@ Body:
       - Item: Silver_Robe_
         Rate: 30
       - Item: Clip
+        Rate: 1
       - Item: Rawrel_Card
+        Rate: 1
         StealProtected: true
   - Id: 1658
     AegisName: B_YGNIZEM
@@ -24559,6 +25106,7 @@ Body:
       - Item: Nagan
         Rate: 1000
       - Item: B_Ygnizem_Card
+        Rate: 1
         StealProtected: true
   - Id: 1659
     AegisName: G_WHIKEBAIN
@@ -24897,6 +25445,7 @@ Body:
       - Item: Gate_KeeperDD
         Rate: 5
       - Item: Archdam_Card
+        Rate: 1
         StealProtected: true
   - Id: 1669
     AegisName: DIMIK
@@ -24927,6 +25476,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Dimik_Card
+        Rate: 1
         StealProtected: true
   - Id: 1670
     AegisName: DIMIK_1
@@ -24973,6 +25523,7 @@ Body:
       - Item: Imperial_Cooking_Kits
         Rate: 50
       - Item: Dimik_Card
+        Rate: 1
         StealProtected: true
   - Id: 1671
     AegisName: DIMIK_2
@@ -25019,6 +25570,7 @@ Body:
       - Item: Imperial_Cooking_Kits
         Rate: 50
       - Item: Dimik_Card
+        Rate: 1
         StealProtected: true
   - Id: 1672
     AegisName: DIMIK_3
@@ -25065,6 +25617,7 @@ Body:
       - Item: Imperial_Cooking_Kits
         Rate: 50
       - Item: Dimik_Card
+        Rate: 1
         StealProtected: true
   - Id: 1673
     AegisName: DIMIK_4
@@ -25111,6 +25664,7 @@ Body:
       - Item: Imperial_Cooking_Kits
         Rate: 50
       - Item: Dimik_Card
+        Rate: 1
         StealProtected: true
   - Id: 1674
     AegisName: MONEMUS
@@ -25172,6 +25726,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Venatu_Card
+        Rate: 1
         StealProtected: true
   - Id: 1676
     AegisName: VENATU_1
@@ -25218,6 +25773,7 @@ Body:
       - Item: High_end_Cooking_Kits
         Rate: 100
       - Item: Venatu_Card
+        Rate: 1
         StealProtected: true
   - Id: 1677
     AegisName: VENATU_2
@@ -25264,6 +25820,7 @@ Body:
       - Item: High_end_Cooking_Kits
         Rate: 100
       - Item: Venatu_Card
+        Rate: 1
         StealProtected: true
   - Id: 1678
     AegisName: VENATU_3
@@ -25310,6 +25867,7 @@ Body:
       - Item: High_end_Cooking_Kits
         Rate: 100
       - Item: Venatu_Card
+        Rate: 1
         StealProtected: true
   - Id: 1679
     AegisName: VENATU_4
@@ -25356,6 +25914,7 @@ Body:
       - Item: High_end_Cooking_Kits
         Rate: 100
       - Item: Venatu_Card
+        Rate: 1
         StealProtected: true
   - Id: 1680
     AegisName: HILL_WIND_1
@@ -25396,6 +25955,7 @@ Body:
       - Item: Blue_Herb
         Rate: 10
       - Item: Hill_Wind_Card
+        Rate: 1
         StealProtected: true
   - Id: 1681
     AegisName: GEMINI
@@ -25443,6 +26003,7 @@ Body:
       - Item: Stone_Of_Intelligence_
         Rate: 300
       - Item: Gemini_Card
+        Rate: 1
         StealProtected: true
   - Id: 1682
     AegisName: REMOVAL
@@ -25489,6 +26050,7 @@ Body:
       - Item: Fedora_
         Rate: 6
       - Item: Removal_Card
+        Rate: 1
         StealProtected: true
   - Id: 1683
     AegisName: G_POTON_CANON
@@ -25599,6 +26161,7 @@ Body:
       - Item: Vesper_Core04
         Rate: 100
       - Item: Apocalips_H_Card
+        Rate: 1
         StealProtected: true
   - Id: 1686
     AegisName: ORC_BABY
@@ -25635,6 +26198,7 @@ Body:
       - Item: Pacifier
         Rate: 100
       - Item: Viking_Helm
+        Rate: 1
       - Item: Milk
         Rate: 5000
       - Item: Milk_Bottle
@@ -25642,6 +26206,7 @@ Body:
       - Item: Bib
         Rate: 100
       - Item: Orc_Baby_Card
+        Rate: 1
         StealProtected: true
   - Id: 1687
     AegisName: GREEN_IGUANA
@@ -25685,7 +26250,9 @@ Body:
       - Item: Aloebera
         Rate: 10
       - Item: Green_Herb
+        Rate: 1
       - Item: Green_Iguana_Card
+        Rate: 1
         StealProtected: true
   - Id: 1688
     AegisName: LADY_TANEE
@@ -25742,6 +26309,7 @@ Body:
       - Item: Kakkung_
         Rate: 6000
       - Item: Lady_Tanee_Card
+        Rate: 1
         StealProtected: true
   - Id: 1689
     AegisName: G_BACSOJIN
@@ -25835,12 +26403,19 @@ Body:
     Ai: 04
     Drops:
       - Item: Leaflet_Of_Aloe
+        Rate: 1
       - Item: Leaflet_Of_Aloe
+        Rate: 1
       - Item: Leaflet_Of_Aloe
+        Rate: 1
       - Item: Leaflet_Of_Aloe
+        Rate: 1
       - Item: Leaflet_Of_Aloe
+        Rate: 1
       - Item: Leaflet_Of_Aloe
+        Rate: 1
       - Item: Leaflet_Of_Aloe
+        Rate: 1
   - Id: 1692
     AegisName: BREEZE
     Name: Breeze
@@ -25885,6 +26460,7 @@ Body:
       - Item: Rough_Wind
         Rate: 10
       - Item: Breeze_Card
+        Rate: 1
         StealProtected: true
   - Id: 1693
     AegisName: PLASMA_Y
@@ -25923,7 +26499,9 @@ Body:
       - Item: Yellow_Gemstone
         Rate: 100
       - Item: Gold
+        Rate: 1
       - Item: Plasma_Card
+        Rate: 1
         StealProtected: true
   - Id: 1694
     AegisName: PLASMA_R
@@ -25964,6 +26542,7 @@ Body:
       - Item: Boody_Red
         Rate: 45
       - Item: Plasma_Card
+        Rate: 1
         StealProtected: true
   - Id: 1695
     AegisName: PLASMA_G
@@ -26004,6 +26583,7 @@ Body:
       - Item: Yellow_Live
         Rate: 40
       - Item: Plasma_Card
+        Rate: 1
         StealProtected: true
   - Id: 1696
     AegisName: PLASMA_P
@@ -26044,6 +26624,7 @@ Body:
       - Item: Cardinal_Jewel_
         Rate: 100
       - Item: Plasma_Card
+        Rate: 1
         StealProtected: true
   - Id: 1697
     AegisName: PLASMA_B
@@ -26084,6 +26665,7 @@ Body:
       - Item: Crystal_Blue
         Rate: 35
       - Item: Plasma_Card
+        Rate: 1
         StealProtected: true
   - Id: 1698
     AegisName: DEATHWORD
@@ -26129,7 +26711,9 @@ Body:
       - Item: Cookbook08
         Rate: 2
       - Item: Cookbook09
+        Rate: 1
       - Item: Deathword_Card
+        Rate: 1
         StealProtected: true
   - Id: 1699
     AegisName: ANCIENT_MIMIC
@@ -26164,16 +26748,19 @@ Body:
       - Item: Old_Blue_Box
         Rate: 30
       - Item: Old_Violet_Box
+        Rate: 1
       - Item: Gift_Box
         Rate: 50
       - Item: Shoes_
         Rate: 5
       - Item: Manteau_
+        Rate: 1
       - Item: Fricco_Shoes
         Rate: 10
       - Item: Gold_Ring
         Rate: 100
       - Item: Ancient_Mimic_Card
+        Rate: 1
         StealProtected: true
   - Id: 1700
     AegisName: OBSERVATION
@@ -26210,6 +26797,7 @@ Body:
       - Item: Blue_Feather
         Rate: 500
       - Item: Ring_
+        Rate: 1
       - Item: Cursed_Seal
         Rate: 100
       - Item: Golden_Jewel
@@ -26221,6 +26809,7 @@ Body:
       - Item: Golden_Bracelet
         Rate: 100
       - Item: Observation_Card
+        Rate: 1
         StealProtected: true
   - Id: 1701
     AegisName: SHELTER
@@ -26257,6 +26846,7 @@ Body:
       - Item: Red_Feather
         Rate: 200
       - Item: Cursed_Seal
+        Rate: 1
       - Item: Stone_Of_Intelligence_
         Rate: 50
       - Item: Scarlet_Jewel
@@ -26266,6 +26856,7 @@ Body:
       - Item: Cursed_Seal
         Rate: 50
       - Item: Shelter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1702
     AegisName: RETRIBUTION
@@ -26302,6 +26893,7 @@ Body:
       - Item: Red_Feather
         Rate: 400
       - Item: Ring_
+        Rate: 1
       - Item: Stone_Of_Intelligence_
         Rate: 50
       - Item: Cardinal_Jewel
@@ -26313,6 +26905,7 @@ Body:
       - Item: Cursed_Seal
         Rate: 50
       - Item: Retribution_Card
+        Rate: 1
         StealProtected: true
   - Id: 1703
     AegisName: SOLACE
@@ -26349,6 +26942,7 @@ Body:
       - Item: Blue_Feather
         Rate: 200
       - Item: Ring_
+        Rate: 1
       - Item: Stone_Of_Intelligence_
         Rate: 50
       - Item: Dark_Red_Jewel
@@ -26360,6 +26954,7 @@ Body:
       - Item: Cursed_Seal
         Rate: 50
       - Item: Solace_Card
+        Rate: 1
         StealProtected: true
   - Id: 1704
     AegisName: THA_ODIUM
@@ -26406,6 +27001,7 @@ Body:
       - Item: Goibne's_Shoulder_Arms
         Rate: 1000
       - Item: Tha_Odium_Card
+        Rate: 1
         StealProtected: true
   - Id: 1705
     AegisName: THA_DESPERO
@@ -26452,6 +27048,7 @@ Body:
       - Item: Goibne's_Combat_Boots
         Rate: 1000
       - Item: Tha_Despero_Card
+        Rate: 1
         StealProtected: true
   - Id: 1706
     AegisName: THA_MAERO
@@ -26498,6 +27095,7 @@ Body:
       - Item: Goibne's_Armor
         Rate: 1000
       - Item: Tha_Maero_Card
+        Rate: 1
         StealProtected: true
   - Id: 1707
     AegisName: THA_DOLOR
@@ -26544,6 +27142,7 @@ Body:
       - Item: Goibne's_Helmet
         Rate: 1000
       - Item: Tha_Dolor_Card
+        Rate: 1
         StealProtected: true
   - Id: 1708
     AegisName: THANATOS
@@ -26602,6 +27201,7 @@ Body:
       - Item: Bloody_Iron_Ball
         Rate: 500
       - Item: Thanatos_Card
+        Rate: 1
         StealProtected: true
   - Id: 1709
     AegisName: G_THA_ODIUM
@@ -26799,6 +27399,7 @@ Body:
       - Item: Stone_Buckler
         Rate: 50
       - Item: Acidus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1714
     AegisName: FERUS
@@ -26844,6 +27445,7 @@ Body:
       - Item: Magni_Cap
         Rate: 50
       - Item: Ferus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1715
     AegisName: NOVUS
@@ -26881,6 +27483,7 @@ Body:
       - Item: Dragon_Scale
         Rate: 589
       - Item: Novus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1716
     AegisName: ACIDUS_
@@ -26926,6 +27529,7 @@ Body:
       - Item: Dragonball_Blue
         Rate: 100
       - Item: Acidus__Card
+        Rate: 1
         StealProtected: true
   - Id: 1717
     AegisName: FERUS_
@@ -26969,6 +27573,7 @@ Body:
       - Item: Dragonball_Green
         Rate: 100
       - Item: Ferus__Card
+        Rate: 1
         StealProtected: true
   - Id: 1718
     AegisName: NOVUS_
@@ -27006,6 +27611,7 @@ Body:
       - Item: Dragon_Scale
         Rate: 589
       - Item: Novus__Card
+        Rate: 1
         StealProtected: true
   - Id: 1719
     AegisName: DETALE
@@ -27064,6 +27670,7 @@ Body:
       - Item: Gemmed_Crown
         Rate: 500
       - Item: Detale_Card
+        Rate: 1
         StealProtected: true
   - Id: 1720
     AegisName: HYDRO
@@ -27111,6 +27718,7 @@ Body:
       - Item: Fricca_Circlet
         Rate: 500
       - Item: Hydro_Card
+        Rate: 1
         StealProtected: true
   - Id: 1721
     AegisName: DRAGON_EGG
@@ -27151,6 +27759,7 @@ Body:
       - Item: Golden_Jewel
         Rate: 10
       - Item: Dragon_Egg_Card
+        Rate: 1
         StealProtected: true
   - Id: 1722
     AegisName: EVENT_JAKK
@@ -27527,6 +28136,7 @@ Body:
       - Item: Morrigane's_Belt
         Rate: 1000
       - Item: Kiel_Card
+        Rate: 1
         StealProtected: true
   - Id: 1735
     AegisName: ALICEL
@@ -27575,6 +28185,7 @@ Body:
       - Item: Vali's_Manteau
         Rate: 20
       - Item: Alicel_Card
+        Rate: 1
         StealProtected: true
   - Id: 1736
     AegisName: ALIOT
@@ -27623,6 +28234,7 @@ Body:
       - Item: Curved_Sword
         Rate: 15
       - Item: Aliot_Card
+        Rate: 1
         StealProtected: true
   - Id: 1737
     AegisName: ALIZA
@@ -27665,9 +28277,11 @@ Body:
       - Item: Imperial_Cooking_Kits
         Rate: 50
       - Item: Sway_Apron
+        Rate: 1
       - Item: Orleans_Server
         Rate: 5
       - Item: Aliza_Card
+        Rate: 1
         StealProtected: true
   - Id: 1738
     AegisName: CONSTANT
@@ -28097,6 +28711,7 @@ Body:
       - Item: Bloody_Edge
         Rate: 2500
       - Item: Randgris_Card
+        Rate: 1
         StealProtected: true
   - Id: 1752
     AegisName: SKOGUL
@@ -28144,6 +28759,7 @@ Body:
       - Item: Blood_Tears
         Rate: 5
       - Item: Skogul_Card
+        Rate: 1
         StealProtected: true
   - Id: 1753
     AegisName: FRUS
@@ -28189,6 +28805,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 500
       - Item: Frus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1754
     AegisName: SKEGGIOLD
@@ -28224,6 +28841,7 @@ Body:
       - Item: Rune_Of_Darkness
         Rate: 6000
       - Item: Angelic_Chain
+        Rate: 1
       - Item: Soft_Feather
         Rate: 1000
       - Item: Divine_Cross
@@ -28235,6 +28853,7 @@ Body:
       - Item: Odin's_Blessing
         Rate: 100
       - Item: Skeggiold_Card
+        Rate: 1
         StealProtected: true
   - Id: 1755
     AegisName: SKEGGIOLD_
@@ -28270,6 +28889,7 @@ Body:
       - Item: Rune_Of_Darkness
         Rate: 6000
       - Item: Angelic_Chain
+        Rate: 1
       - Item: Soft_Feather
         Rate: 1000
       - Item: Divine_Cross
@@ -28281,6 +28901,7 @@ Body:
       - Item: Odin's_Blessing
         Rate: 100
       - Item: Skeggiold_Card
+        Rate: 1
         StealProtected: true
   - Id: 1756
     AegisName: G_HYDRO
@@ -28705,6 +29326,7 @@ Body:
       - Item: Hurricane_Fury
         Rate: 100
       - Item: Gloom_Under_Night_Card
+        Rate: 1
         StealProtected: true
   - Id: 1769
     AegisName: AGAV
@@ -28742,11 +29364,13 @@ Body:
       - Item: Bloody_Rune
         Rate: 4000
       - Item: Memorize_Book
+        Rate: 1
       - Item: Holy_Arrow_Quiver
         Rate: 50
       - Item: Bloody_Rune
         Rate: 100
       - Item: Agav_Card
+        Rate: 1
         StealProtected: true
   - Id: 1770
     AegisName: ECHIO
@@ -28793,6 +29417,7 @@ Body:
       - Item: Divine_Cloth
         Rate: 20
       - Item: Echio_Card
+        Rate: 1
         StealProtected: true
   - Id: 1771
     AegisName: VANBERK
@@ -28837,6 +29462,7 @@ Body:
       - Item: Bloody_Rune
         Rate: 100
       - Item: Vanberk_Card
+        Rate: 1
         StealProtected: true
   - Id: 1772
     AegisName: ISILLA
@@ -28870,14 +29496,17 @@ Body:
       - Item: White_Mask
         Rate: 2500
       - Item: High_Fashion_Sandals
+        Rate: 1
       - Item: Bloody_Rune
         Rate: 1000
       - Item: Gold_Ring
         Rate: 10
       - Item: Ring
+        Rate: 1
       - Item: Bloody_Rune
         Rate: 100
       - Item: Isilla_Card
+        Rate: 1
         StealProtected: true
   - Id: 1773
     AegisName: HODREMLIN
@@ -28926,6 +29555,7 @@ Body:
       - Item: Shadow_Walk
         Rate: 10
       - Item: Hodremlin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1774
     AegisName: SEEKER
@@ -28970,6 +29600,7 @@ Body:
       - Item: Berdysz
         Rate: 20
       - Item: Seeker_Card
+        Rate: 1
         StealProtected: true
   - Id: 1775
     AegisName: SNOWIER
@@ -29016,6 +29647,7 @@ Body:
       - Item: Crystal_Blue
         Rate: 100
       - Item: Snowier_Card
+        Rate: 1
         StealProtected: true
   - Id: 1776
     AegisName: SIROMA
@@ -29056,6 +29688,7 @@ Body:
       - Item: Crystal_Blue
         Rate: 20
       - Item: Siroma_Card
+        Rate: 1
         StealProtected: true
   - Id: 1777
     AegisName: ICE_TITAN
@@ -29100,6 +29733,7 @@ Body:
       - Item: Mistic_Frozen
         Rate: 100
       - Item: Ice_Titan_Card
+        Rate: 1
         StealProtected: true
   - Id: 1778
     AegisName: GAZETI
@@ -29139,7 +29773,9 @@ Body:
       - Item: Elunium
         Rate: 20
       - Item: Frozen_Bow
+        Rate: 1
       - Item: Gazeti_Card
+        Rate: 1
         StealProtected: true
   - Id: 1779
     AegisName: KTULLANUX
@@ -29195,6 +29831,7 @@ Body:
       - Item: Yggdrasilberry
         Rate: 5000
       - Item: Ktullanux_Card
+        Rate: 1
         StealProtected: true
   - Id: 1780
     AegisName: MUSCIPULAR
@@ -29238,6 +29875,7 @@ Body:
       - Item: Deadly_Noxious_Herb
         Rate: 3
       - Item: Muscipular_Card
+        Rate: 1
         StealProtected: true
   - Id: 1781
     AegisName: DROSERA
@@ -29281,6 +29919,7 @@ Body:
       - Item: Stem
         Rate: 1000
       - Item: Drosera_Card
+        Rate: 1
         StealProtected: true
   - Id: 1782
     AegisName: ROWEEN
@@ -29320,6 +29959,7 @@ Body:
       - Item: Combo_Battle_Glove
         Rate: 2
       - Item: Roween_Card
+        Rate: 1
         StealProtected: true
   - Id: 1783
     AegisName: GALION
@@ -29361,6 +30001,7 @@ Body:
       - Item: Ulfhedinn
         Rate: 5
       - Item: Galion_Card
+        Rate: 1
         StealProtected: true
   - Id: 1784
     AegisName: STAPO
@@ -29404,6 +30045,7 @@ Body:
       - Item: Seismic_Fist
         Rate: 3
       - Item: Stapo_Card
+        Rate: 1
         StealProtected: true
   - Id: 1785
     AegisName: ATROCE
@@ -29461,6 +30103,7 @@ Body:
       - Item: Altas_Weapon
         Rate: 100
       - Item: Atroce_Card
+        Rate: 1
         StealProtected: true
   - Id: 1786
     AegisName: G_AGAV
@@ -29490,6 +30133,7 @@ Body:
     Ai: 20
     Drops:
       - Item: Suspicious_Hat
+        Rate: 1
   - Id: 1787
     AegisName: G_ECHIO
     Name: Echio
@@ -29519,6 +30163,7 @@ Body:
     Ai: 20
     Drops:
       - Item: Suspicious_Hat
+        Rate: 1
   - Id: 1788
     AegisName: G_ICE_TITAN
     Name: Ice Titan
@@ -29548,6 +30193,7 @@ Body:
     Ai: 20
     Drops:
       - Item: Ice_Heart
+        Rate: 1
   - Id: 1789
     AegisName: ICEICLE
     Name: Iceicle
@@ -29805,6 +30451,7 @@ Body:
       - Item: Bloody_Rune
         Rate: 4000
       - Item: Memorize_Book
+        Rate: 1
       - Item: Holy_Arrow_Quiver
         Rate: 50
       - Item: Bloody_Rune
@@ -29847,6 +30494,7 @@ Body:
       - Item: Bloody_Rune
         Rate: 4000
       - Item: Memorize_Book
+        Rate: 1
       - Item: Holy_Arrow_Quiver
         Rate: 50
       - Item: White_Mask
@@ -30877,11 +31525,13 @@ Body:
       - Item: Claymore
         Rate: 50
       - Item: Zweihander
+        Rate: 1
       - Item: Platinum_Shield
         Rate: 10
       - Item: Muscle_Cutter
         Rate: 50
       - Item: Sword_Guardian_Card
+        Rate: 1
         StealProtected: true
   - Id: 1830
     AegisName: BOW_GUARDIAN
@@ -30926,6 +31576,7 @@ Body:
       - Item: Orleans_Glove
         Rate: 4
       - Item: Bow_Guardian_Card
+        Rate: 1
         StealProtected: true
   - Id: 1831
     AegisName: SALAMANDER
@@ -30965,12 +31616,15 @@ Body:
       - Item: Red_Gemstone
         Rate: 100
       - Item: Lesser_Elemental_Ring
+        Rate: 1
       - Item: Berserk_Guitar
         Rate: 50
       - Item: Ring_
+        Rate: 1
       - Item: Meteo_Plate_Armor
         Rate: 20
       - Item: Salamander_Card
+        Rate: 1
         StealProtected: true
   - Id: 1832
     AegisName: IFRIT
@@ -31028,6 +31682,7 @@ Body:
       - Item: Flame_Sprits_Armor_
         Rate: 100
       - Item: Ifrit_Card
+        Rate: 1
         StealProtected: true
   - Id: 1833
     AegisName: KASA
@@ -31067,6 +31722,7 @@ Body:
       - Item: Flame_Heart
         Rate: 30
       - Item: Lesser_Elemental_Ring
+        Rate: 1
       - Item: Flame_Sprits_Armor
         Rate: 10
       - Item: Burning_Bow
@@ -31074,6 +31730,7 @@ Body:
       - Item: Piercing_Staff
         Rate: 10
       - Item: Kasa_Card
+        Rate: 1
         StealProtected: true
   - Id: 1834
     AegisName: G_SALAMANDER
@@ -31166,6 +31823,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 34
       - Item: Magmaring_Card
+        Rate: 1
         StealProtected: true
   - Id: 1837
     AegisName: IMP
@@ -31213,6 +31871,7 @@ Body:
       - Item: Flaming_Ice
         Rate: 20
       - Item: Imp_Card
+        Rate: 1
         StealProtected: true
   - Id: 1838
     AegisName: KNOCKER
@@ -31253,6 +31912,7 @@ Body:
       - Item: Elder_Pixie's_Beard
         Rate: 5500
       - Item: Elven_Ears
+        Rate: 1
       - Item: Ribbon
         Rate: 10
       - Item: Thorny_Buckler
@@ -31260,6 +31920,7 @@ Body:
       - Item: Earth_Bow
         Rate: 5
       - Item: Knocker_Card
+        Rate: 1
         StealProtected: true
   - Id: 1839
     AegisName: BYORGUE
@@ -31303,9 +31964,11 @@ Body:
       - Item: Old_Blue_Box
         Rate: 40
       - Item: Rider_Insignia_
+        Rate: 1
       - Item: Vroken_Sword
         Rate: 4365
       - Item: Byorgue_Card
+        Rate: 1
         StealProtected: true
   - Id: 1840
     AegisName: GOLDEN_SAVAGE
@@ -31351,6 +32014,7 @@ Body:
       - Item: Emperium
         Rate: 100
       - Item: Golden_Gear_
+        Rate: 1
       - Item: New_Year_Rice_Cake_1
         Rate: 3000
       - Item: New_Year_Rice_Cake_2
@@ -31798,6 +32462,7 @@ Body:
       - Item: Iron_Ore
         Rate: 250
       - Item: Muka_Card
+        Rate: 1
         StealProtected: true
   - Id: 1855
     AegisName: E_POISONSPORE
@@ -31839,6 +32504,7 @@ Body:
       - Item: Zargon
         Rate: 5
       - Item: Poison_Spore_Card
+        Rate: 1
         StealProtected: true
   - Id: 1856
     AegisName: E_MAGNOLIA
@@ -31885,6 +32551,7 @@ Body:
       - Item: High_end_Cooking_Kits
         Rate: 5
       - Item: Magnolia_Card
+        Rate: 1
         StealProtected: true
   - Id: 1857
     AegisName: E_MARIN
@@ -31927,7 +32594,9 @@ Body:
       - Item: Candy
         Rate: 350
       - Item: Poring_Hat
+        Rate: 1
       - Item: Marin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1858
     AegisName: E_PLANKTON
@@ -31970,6 +32639,7 @@ Body:
       - Item: Center_Potion
         Rate: 50
       - Item: Plankton_Card
+        Rate: 1
         StealProtected: true
   - Id: 1859
     AegisName: E_MANDRAGORA
@@ -32013,6 +32683,7 @@ Body:
       - Item: Whip_Of_Earth
         Rate: 10
       - Item: Mandragora_Card
+        Rate: 1
         StealProtected: true
   - Id: 1860
     AegisName: E_COCO
@@ -32057,6 +32728,7 @@ Body:
       - Item: Sweet_Bean
         Rate: 600
       - Item: Coco_Card
+        Rate: 1
         StealProtected: true
   - Id: 1861
     AegisName: E_CHOCO
@@ -32103,6 +32775,7 @@ Body:
       - Item: Yggdrasilberry
         Rate: 25
       - Item: Choco_Card
+        Rate: 1
         StealProtected: true
   - Id: 1862
     AegisName: E_MARTIN
@@ -32142,11 +32815,13 @@ Body:
       - Item: Goggle_
         Rate: 5
       - Item: Safety_Helmet
+        Rate: 1
       - Item: Battered_Pot
         Rate: 10
       - Item: Goggle
         Rate: 15
       - Item: Martin_Card
+        Rate: 1
         StealProtected: true
   - Id: 1863
     AegisName: E_SPRING_RABBIT
@@ -32221,6 +32896,7 @@ Body:
       - Item: Sticky_Mucus
         Rate: 3000
       - Item: Zombie_Slaughter_Card
+        Rate: 1
         StealProtected: true
   - Id: 1865
     AegisName: RAGGED_ZOMBIE
@@ -32264,6 +32940,7 @@ Body:
       - Item: Wasteland_Outlaw
         Rate: 10
       - Item: Ragged_Zombie_Card
+        Rate: 1
         StealProtected: true
   - Id: 1866
     AegisName: HELL_POODLE
@@ -32312,6 +32989,7 @@ Body:
       - Item: Pet_Food
         Rate: 400
       - Item: Hell_Poodle_Card
+        Rate: 1
         StealProtected: true
   - Id: 1867
     AegisName: BANSHEE
@@ -32356,6 +33034,7 @@ Body:
       - Item: Brigan
         Rate: 5335
       - Item: Banshee_Card
+        Rate: 1
         StealProtected: true
   - Id: 1868
     AegisName: G_BANSHEE
@@ -32425,6 +33104,7 @@ Body:
       - Item: Horrendous_Mouth
         Rate: 6000
       - Item: Flame_Skull_Card
+        Rate: 1
         StealProtected: true
   - Id: 1870
     AegisName: NECROMANCER
@@ -32469,6 +33149,7 @@ Body:
       - Item: Rent_Spell_Book
         Rate: 1500
       - Item: Necromancer_Card
+        Rate: 1
         StealProtected: true
   - Id: 1871
     AegisName: FALLINGBISHOP
@@ -32523,6 +33204,7 @@ Body:
       - Item: Blessed_Wand
         Rate: 2000
       - Item: Fallen_Bishop_Card
+        Rate: 1
         StealProtected: true
   - Id: 1872
     AegisName: BEELZEBUB_FLY
@@ -32636,6 +33318,7 @@ Body:
       - Item: Chonchon_Doll
         Rate: 5500
       - Item: Berzebub_Card
+        Rate: 1
         StealProtected: true
   - Id: 1875
     AegisName: TRISTAN_3RD
@@ -32871,6 +33554,7 @@ Body:
       - Item: Stem
         Rate: 2500
       - Item: Centimental_Leaf
+        Rate: 1
       - Item: Leaflet_Of_Aloe
         Rate: 500
       - Item: Blue_Herb
@@ -33058,6 +33742,7 @@ Body:
       - Item: Treasure_Box
         Rate: 5000
       - Item: Loard_Circlet
+        Rate: 1
   - Id: 1886
     AegisName: G_MAVKA
     Name: Mavka
@@ -34333,6 +35018,7 @@ Body:
       - Item: Crescent_Scythe
         Rate: 9000
       - Item: Baphomet_Card
+        Rate: 1
         StealProtected: true
   - Id: 1930
     AegisName: PIAMETTE
@@ -35179,6 +35865,7 @@ Body:
       - Item: Agate
         Rate: 9000
       - Item: Ant_Buyanne_Card
+        Rate: 1
         StealProtected: true
   - Id: 1958
     AegisName: G_ENTWEIHEN_R
@@ -35493,6 +36180,7 @@ Body:
       - Item: Gill
         Rate: 1500
       - Item: Strouf_Card
+        Rate: 1
         StealProtected: true
   - Id: 1969
     AegisName: E_MARC
@@ -35538,6 +36226,7 @@ Body:
       - Item: White_Herb
         Rate: 700
       - Item: Marc_Card
+        Rate: 1
         StealProtected: true
   - Id: 1970
     AegisName: E_OBEAUNE
@@ -35582,6 +36271,7 @@ Body:
       - Item: Witherless_Rose
         Rate: 60
       - Item: Obeaune_Card
+        Rate: 1
         StealProtected: true
   - Id: 1971
     AegisName: E_VADON
@@ -35626,6 +36316,7 @@ Body:
       - Item: Blue_Gemstone
         Rate: 50
       - Item: Vadon_Card
+        Rate: 1
         StealProtected: true
   - Id: 1972
     AegisName: E_MARINA
@@ -35667,6 +36358,7 @@ Body:
       - Item: Deadly_Noxious_Herb
         Rate: 40
       - Item: Marina_Card
+        Rate: 1
         StealProtected: true
   - Id: 1973
     AegisName: E_PORING
@@ -35748,6 +36440,7 @@ Body:
       - Item: Shadow_Guard
         Rate: 20
       - Item: Banshee_Master_Card
+        Rate: 1
         StealProtected: true
   - Id: 1975
     AegisName: BEHOLDER_MASTER
@@ -35928,7 +36621,9 @@ Body:
       - Item: Elunium
         Rate: 5
       - Item: Life_Link
+        Rate: 1
       - Item: Cardo
+        Rate: 1
         StealProtected: true
   - Id: 1979
     AegisName: ZAKUDAM
@@ -36206,6 +36901,7 @@ Body:
       - Item: Sweet_Potato
         Rate: 3000
       - Item: Tatacho_Card
+        Rate: 1
         StealProtected: true
   - Id: 1987
     AegisName: CENTIPEDE
@@ -36256,6 +36952,7 @@ Body:
       - Item: Solid_Shell
         Rate: 2500
       - Item: Centipede_Card
+        Rate: 1
         StealProtected: true
   - Id: 1988
     AegisName: NEPENTHES
@@ -36290,9 +36987,13 @@ Body:
     Ai: 10
     Drops:
       - Item: Mandragora_Cap
+        Rate: 1
       - Item: Stem_Of_Nepenthes
+        Rate: 1
       - Item: Harp_Of_Nepenthes
+        Rate: 1
       - Item: Nepenthes_Bow
+        Rate: 1
       - Item: Strong_Bine
         Rate: 3000
       - Item: Yellow_Live
@@ -36346,6 +37047,7 @@ Body:
       - Item: Brigan
         Rate: 4850
       - Item: Hilsrion_Card
+        Rate: 1
         StealProtected: true
   - Id: 1990
     AegisName: HARDROCK_MOMMOTH
@@ -36475,6 +37177,7 @@ Body:
       - Item: Sprint_Mail
         Rate: 10
       - Item: Angelic_Ring
+        Rate: 1
       - Item: Mystic_Horn
         Rate: 4000
       - Item: Soft_Feather
@@ -36484,7 +37187,9 @@ Body:
       - Item: Snowy_Horn
         Rate: 2
       - Item: Long_Horn
+        Rate: 1
       - Item: Cornus_Card
+        Rate: 1
         StealProtected: true
   - Id: 1993
     AegisName: NAGA
@@ -36581,6 +37286,7 @@ Body:
       - Item: Solid_Shell
         Rate: 3000
       - Item: Luciola_Vespa_Card
+        Rate: 1
         StealProtected: true
   - Id: 1995
     AegisName: PINGUICULA
@@ -36615,6 +37321,7 @@ Body:
     Ai: 13
     Drops:
       - Item: Pinguicula_Corsage
+        Rate: 1
       - Item: Whip_Of_Balance
         Rate: 10
       - Item: Centimental_Leaf
@@ -36732,6 +37439,7 @@ Body:
       - Item: Solid_Shell
         Rate: 2500
       - Item: Centipede_Larva_Card
+        Rate: 1
         StealProtected: true
   - Id: 2008
     AegisName: WOOMAWANG
@@ -36865,6 +37573,7 @@ Body:
       - Item: Honey
         Rate: 500
       - Item: Draco_Card
+        Rate: 1
         StealProtected: true
   - Id: 2014
     AegisName: DRACO_EGG
@@ -36970,6 +37679,7 @@ Body:
       - Item: Tiny_Waterbottle
         Rate: 100
       - Item: Aqua_Elemental_Card
+        Rate: 1
         StealProtected: true
   - Id: 2017
     AegisName: RATA
@@ -37044,6 +37754,7 @@ Body:
       - Item: Piece_Of_Darkness
         Rate: 500
       - Item: Eyes_Stone_Ring
+        Rate: 1
       - Item: Veteran_Sword
         Rate: 10
       - Item: Veteran_Axe
@@ -37255,6 +37966,7 @@ Body:
       - Item: Bradium_Stonehammer
         Rate: 10
       - Item: Dark_Shadow_Card
+        Rate: 1
         StealProtected: true
   - Id: 2024
     AegisName: BRADIUM_GOLEM
@@ -37749,6 +38461,7 @@ Body:
       - Item: Mistic_Frozen
         Rate: 5
       - Item: Mage_Coat
+        Rate: 1
   - Id: 2070
     AegisName: PIRANHA
     Name: Piranha
@@ -37792,6 +38505,7 @@ Body:
       - Item: Fisherman's_Dagger
         Rate: 5
       - Item: Scalpel
+        Rate: 1
   - Id: 2071
     AegisName: HEADLESS_MULE
     Name: Headless Mule
@@ -37835,7 +38549,9 @@ Body:
       - Item: Jamadhar_
         Rate: 2
       - Item: Inverse_Scale
+        Rate: 1
       - Item: Plate_Armor_
+        Rate: 1
   - Id: 2072
     AegisName: JAGUAR
     Name: Jaguar
@@ -37875,6 +38591,7 @@ Body:
       - Item: Oridecon_Stone
         Rate: 40
       - Item: Claw_
+        Rate: 1
   - Id: 2073
     AegisName: TOUCAN
     Name: Toucan
