@@ -127,6 +127,8 @@ bool web_config_read(const char* cfgName, bool normal) {
             safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
         else if (!strcmpi(w1, "guild_emblem_dir"))
             web_config.guild_emblem_dir = w2;
+        else if (!strcmpi(w1, "print_req_res"))
+            web_config.print_req_res = config_switch(w2);
         else if (!strcmpi(w1, "import"))
             web_config_read(w2, normal);
     }
@@ -216,6 +218,7 @@ void web_set_defaults() {
     web_config.web_port = 3000;
     safestrncpy(web_config.webconf_name, "conf/web_athena.conf", sizeof(web_config.webconf_name));
     safestrncpy(web_config.msgconf_name, "conf/msg_conf/web_msg.conf", sizeof(web_config.msgconf_name));
+    web_config.print_req_res = false;
 }
 
 
@@ -350,7 +353,7 @@ void set_server_type(void) {
 // called just before sending repsonse
 void logger(const Request & req, const Response & res) {
     // make this a config
-    if (1) {
+    if (web_config.print_req_res) {
         ShowDebug("Incoming Headers are:\n");
         for (const auto & header : req.headers) {
             ShowDebug("\t%s: %s\n", header.first.c_str(), header.second.c_str());
@@ -367,6 +370,7 @@ void logger(const Request & req, const Response & res) {
         // since the body may be binary, might not print entire body (has null character).
         ShowDebug("Body is:\n%s\n", res.body.c_str());
     }
+    ShowInfo("%s [%s %s] %d\n", req.remote_addr.c_str(), req.method.c_str(), req.path.c_str(), res.status);
 }
 
 
@@ -382,6 +386,9 @@ int do_init(int argc, char** argv) {
     msg_config_read(web_config.msgconf_name);
 
     inter_config_read(INTER_CONF_NAME);
+    if (check_filepath(web_config.guild_emblem_dir.c_str()) != 1) {
+        ShowError("Guild Emblem Directory %s is missing, please create it\n", web_config.guild_emblem_dir.c_str());
+    }
     // end config
 
     web_sql_init();

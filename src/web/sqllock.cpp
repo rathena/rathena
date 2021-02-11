@@ -29,33 +29,33 @@ SQLLock::SQLLock(locktype lt) : ulock(dbmutex, std::defer_lock), lt(lt) {
 }
 
 void SQLLock::lock() {
-    switch(lt) {
-        case LOGIN_SQL_LOCK:
-            ShowDebug("Locking login sql\n");
-            break;
-        case CHAR_SQL_LOCK:
-            ShowDebug("Locking char sql\n");
-            break;
-        case WEB_SQL_LOCK:
-            ShowDebug("Locking web sql\n");
-            break;
-    }
+    // switch(lt) {
+    //     case LOGIN_SQL_LOCK:
+    //         ShowDebug("Locking login sql\n");
+    //         break;
+    //     case CHAR_SQL_LOCK:
+    //         ShowDebug("Locking char sql\n");
+    //         break;
+    //     case WEB_SQL_LOCK:
+    //         ShowDebug("Locking web sql\n");
+    //         break;
+    // }
     ulock.lock();
 }
 
 void SQLLock::unlock() {
     ulock.unlock();
-    switch(lt) {
-        case LOGIN_SQL_LOCK:
-            ShowDebug("Unlocked login sql\n");
-            break;
-        case CHAR_SQL_LOCK:
-            ShowDebug("Unlocked char sql\n");
-            break;
-        case WEB_SQL_LOCK:
-            ShowDebug("Unlocked web sql\n");
-            break;
-    }
+    // switch(lt) {
+    //     case LOGIN_SQL_LOCK:
+    //         ShowDebug("Unlocked login sql\n");
+    //         break;
+    //     case CHAR_SQL_LOCK:
+    //         ShowDebug("Unlocked char sql\n");
+    //         break;
+    //     case WEB_SQL_LOCK:
+    //         ShowDebug("Unlocked web sql\n");
+    //         break;
+    // }
 
 }
 

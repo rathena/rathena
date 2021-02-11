@@ -85,7 +85,6 @@ HANDLER_FUNC(userconfig_save) {
     SqlStmt_Free(stmt);
     sl.unlock();
     res.set_content(data, "application/json");
-    res.set_header("Cache-Control", "no-cache");
 }
 
 HANDLER_FUNC(userconfig_load) {
@@ -96,11 +95,12 @@ HANDLER_FUNC(userconfig_load) {
         return;
     }
 
-    if (!isAuthorized(req)) {
-        ShowError("Not authorized!? why?\n");
+    // TODO: Figure out when client sends AuthToken for this path, then add packetver check
+    // if (!isAuthorized(req)) {
+        // ShowError("Not authorized!\n");
         // message.reply(web::http::status_codes::Forbidden);
         // return;
-    }
+    // }
 
     auto account_id = std::stoi(req.get_file_value("AID").content);
     auto world_name_str = req.get_file_value("WorldName").content;
@@ -127,7 +127,7 @@ HANDLER_FUNC(userconfig_load) {
 
     if (SqlStmt_NumRows(stmt) <= 0) {
         SqlStmt_Free(stmt);
-        ShowDebug("[%d, \"%s\"] Not found in table\n", account_id, world_name);
+        ShowDebug("[%d, \"%s\"] Not found in table, sending new info\n", account_id, world_name);
         sl.unlock();
         res.set_content("{\"Type\": 1}", "application/json");
         return;
@@ -149,7 +149,6 @@ HANDLER_FUNC(userconfig_load) {
     SqlStmt_Free(stmt);
     sl.unlock();
 
-	databuf[sizeof(databuf) - 1] = 0;
+    databuf[sizeof(databuf) - 1] = 0;
     res.set_content(databuf, "application/json");
-    res.set_header("Cache-Control", "no-cache");
 }

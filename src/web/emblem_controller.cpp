@@ -95,7 +95,7 @@ HANDLER_FUNC(emblem_download) {
     emblemFile.seekg(0, std::ios::beg);
     char emblemdata[MAX_EMBLEM_SIZE] = {0};
     emblemFile.read(emblemdata, length);
-    res.set_content(emblemdata, length, "image/bmp");
+    res.set_content(emblemdata, static_cast<size_t>(length), "image/bmp");
 }
 
 
@@ -212,6 +212,5 @@ HANDLER_FUNC(emblem_upload) {
 
     std::ostringstream stream;
     stream << "{\"Type\":1,\"version\":"<< version << "}";
-    res.set_header("Cache-Control", "no-cache");
     res.set_content(stream.str(), "application/json");
 }
