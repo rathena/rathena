@@ -34385,9 +34385,9 @@ Body:
       - Item: Helm_Of_Sun
         Rate: 10000
       - Item: Seed_Of_Yggdrasil
-        Rate: 0
+        Rate: 1
       - Item: Crystal_Jewel__
-        Rate: 0
+        Rate: 1
   - Id: 1877
     AegisName: CRYSTAL_5
     Name: Crystal
@@ -38985,9 +38985,9 @@ Body:
       - Item: Pumpkin_Pie
         Rate: 100
       - Item: Pumpkin
-        Rate: 0
+        Rate: 1
       - Item: Pumpkin
-        Rate: 0
+        Rate: 1
       - Item: Ghoul_Card
         Rate: 1
         StealProtected: true
@@ -39029,9 +39029,9 @@ Body:
       - Item: Pumpkin_Pie
         Rate: 100
       - Item: Pumpkin
-        Rate: 0
+        Rate: 1
       - Item: Pumpkin
-        Rate: 0
+        Rate: 1
       - Item: Zombie_Card
         Rate: 1
         StealProtected: true
@@ -40297,9 +40297,9 @@ Body:
       - Item: Mosquito_Coil
         Rate: 10000
       - Item: Mosquito_Coil
-        Rate: 0
+        Rate: 1
       - Item: Mosquito_Coil
-        Rate: 0
+        Rate: 1
     Drops:
       - Item: Wing_Of_Fly
         Rate: 1000
@@ -41658,9 +41658,9 @@ Body:
       - Item: Cardinal_Jewel
         Rate: 1500
       - Item: Blue_Potion
-        Rate: 0
+        Rate: 1
       - Item: Blue_Potion
-        Rate: 0
+        Rate: 1
     Drops:
       - Item: Plate_Armor_
         Rate: 250

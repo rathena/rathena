@@ -4251,7 +4251,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 
 				body << YAML::BeginMap;
 				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				body << YAML::Key << "Rate" << YAML::Value << fields[32 + i * 2];
+				body << YAML::Key << "Rate" << YAML::Value << cap_value(std::stoi(fields[32 + i * 2]), 1, 10000);
 				body << YAML::EndMap;
 			}
 
@@ -4274,7 +4274,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 
 						body << YAML::BeginMap;
 						body << YAML::Key << "Item" << YAML::Value << *item_name;
-						body << YAML::Key << "Rate" << YAML::Value << drop.rate;
+						body << YAML::Key << "Rate" << YAML::Value << cap_value(drop.rate, 1, 10000);
 						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
 						body << YAML::EndMap;
 					}
@@ -4287,7 +4287,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 
 	bool has_drops = false;
 
-	for (uint8 d = 37; d < (37 + MAX_MOB_DROP * 2); d += 2) {
+	for (uint8 d = 31 + MAX_MVP_DROP * 2; d < ((31 + MAX_MVP_DROP * 2) + MAX_MOB_DROP * 2); d += 2) {
 		if (strtoul(fields[d], nullptr, 10) > 0) {
 			has_drops = true;
 			break;
@@ -4312,7 +4312,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 
 				body << YAML::BeginMap;
 				body << YAML::Key << "Item" << YAML::Value << *item_name;
-				body << YAML::Key << "Rate" << YAML::Value << fields[k + 1];
+				body << YAML::Key << "Rate" << YAML::Value << cap_value(std::stoi(fields[k + 1]), 1, 10000);
 				if (i > 6) // Slots 8, 9, and 10 are inherently protected
 					body << YAML::Key << "StealProtected" << YAML::Value << "true";
 				body << YAML::EndMap;
@@ -4337,7 +4337,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 
 						body << YAML::BeginMap;
 						body << YAML::Key << "Item" << YAML::Value << *item_name;
-						body << YAML::Key << "Rate" << YAML::Value << drop.rate;
+						body << YAML::Key << "Rate" << YAML::Value << cap_value(drop.rate, 1, 10000);
 						body << YAML::Key << "RandomOptionGroup" << YAML::Value << drop.group_string;
 						if (drop.steal_protected == 1)
 							body << YAML::Key << "StealProtected" << YAML::Value << "true";
