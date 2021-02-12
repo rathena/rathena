@@ -4212,17 +4212,17 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
 			if (!this->asUInt16(dropit, "Index", index))
 				return false;
 
-			if (index > max - 1) {
+			if (index >= max) {
 				this->invalidWarning(dropit["Index"], "Invalid monster %s index %hu. Must be between 0~%hu, skipping.\n", nodeName.c_str(), index, max - 1);
 				continue;
 			}
 		} else {
-			if (i >= max) {
+			index = i++;
+
+			if (index >= max) {
 				this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", max, nodeName.c_str());
 				continue;
 			}
-
-			index = i++;
 		}
 
 		std::string item_name;
