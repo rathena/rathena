@@ -156,6 +156,8 @@ Faceworm
 Hearthunter
 Rockridge
 Werner_Lab
+Temple_Demon
+Illusion_Vampire
 
 ---------------------------------------
 
