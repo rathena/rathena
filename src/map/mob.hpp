@@ -232,13 +232,15 @@ struct s_mob_db {
 };
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
+private:
+	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
+
 public:
 	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 1) {
 
 	}
 
 	const std::string getDefaultLocation();
-	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
 	uint64 parseBodyNode(const YAML::Node &node);
 	void loadingFinished();
 };

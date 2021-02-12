@@ -4206,9 +4206,23 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
 	uint16 i = 0;
 
 	for (const YAML::Node &dropit : dropNode) {
-		if (i >= max) {
-			this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", max, nodeName.c_str());
-			continue;
+		uint16 index;
+
+		if (this->nodeExists(dropit, "Index")) {
+			if (!this->asUInt16(dropit, "Index", index))
+				return false;
+
+			if (index > max - 1) {
+				this->invalidWarning(dropit["Index"], "Invalid monster %s index %hu. Must be between 0~%hu, skipping.\n", nodeName.c_str(), index, max - 1);
+				continue;
+			}
+		} else {
+			index = i++;
+
+			if (i >= max) {
+				this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", max, nodeName.c_str());
+				continue;
+			}
 		}
 
 		std::string item_name;
@@ -4219,7 +4233,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
 		item_data *item = itemdb_search_aegisname(item_name.c_str());
 
 		if (item == nullptr) {
-			this->invalidWarning(dropit["Item"], "Monster drop item %s does not exist, skipping.\n", item_name.c_str());
+			this->invalidWarning(dropit["Item"], "Monster %s item %s does not exist, skipping.\n", nodeName.c_str(), item_name.c_str());
 			continue;
 		}
 
@@ -4244,21 +4258,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
 				return false;
 
 			if (!random_option_group.option_get_id(group_name.c_str(), group))
-				this->invalidWarning(dropit["RandomOptionGroup"], "Unknown random option group %s for monster drop, defaulting to no group.\n", group_name.c_str());
-		}
-
-		uint16 index;
-
-		if (this->nodeExists(dropit, "Index")) {
-			if (!this->asUInt16(dropit, "Index", index))
-				return false;
-
-			if (index > max - 1) {
-				this->invalidWarning(dropit["Index"], "Invalid monster drop index %hu. Must be between 0~%hu, skipping.\n", index, max - 1);
-				continue;
-			}
-		} else {
-			index = i++;
+				this->invalidWarning(dropit["RandomOptionGroup"], "Unknown random option group %s for monster %s, defaulting to no group.\n", group_name.c_str(), nodeName.c_str());
 		}
 
 		drops[index].nameid = item->nameid;
