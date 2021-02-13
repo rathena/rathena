@@ -432,6 +432,6 @@ int do_init(int argc, char** argv) {
         return 0;
     }
 
-    ShowStatus("rAthena web server Started\n");
+    ShowStatus("rAthena web server Started, listening on port %d\n", web_config.web_port);
     return 0;
 }
