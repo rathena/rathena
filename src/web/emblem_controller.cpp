@@ -109,10 +109,9 @@ HANDLER_FUNC(emblem_download) {
         res.set_content("Error", "text/plain");
         return;
     }
-    char emblemdata[MAX_EMBLEM_SIZE] = {0};
-
-    emblemFile.read(emblemdata, length);
-    res.set_content(emblemdata, static_cast<size_t>(length), content_type);
+    res.body.resize(static_cast<size_t>(length));
+    emblemFile.read(&res.body[0], static_cast<std::streamsize>(length));
+    res.set_header("Content-Type", content_type);
 }
 
 
