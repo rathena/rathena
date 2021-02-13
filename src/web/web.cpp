@@ -3,9 +3,11 @@
 
 #include "web.hpp"
 
+#include <chrono>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <thread>
 
 #include "../common/cli.hpp"
 #include "../common/core.hpp"
@@ -70,6 +72,8 @@ char char_db_table[32] = "char";
 int parse_console(const char * buf) {
     return 1;
 }
+
+std::thread svr_thr;
 
 /// Msg_conf tayloring
 int web_msg_config_read(char *cfgName){
@@ -304,7 +308,7 @@ void do_final(void) {
 
 	ShowStatus("Terminating...\n");
     svr->stop();
-    //svr_thr.join();
+    svr_thr.join();
     web_sql_close();
 	do_final_msg();
 	ShowStatus("Finished.\n");
@@ -316,7 +320,6 @@ void do_final(void) {
  *  current signal catch : SIGTERM, SIGINT
  */
 void do_shutdown(void) {
-	svr->stop();
 	if( runflag != WEBSERVER_ST_SHUTDOWN ) {
 		runflag = WEBSERVER_ST_SHUTDOWN;
 		ShowStatus("Shutting down...\n");
@@ -331,6 +334,8 @@ void do_shutdown(void) {
  */
 void do_abort(void) {
 	svr->stop();
+    svr_thr.join();
+
 }
 
 /*======================================================
@@ -407,11 +412,26 @@ int do_init(int argc, char** argv) {
     shutdown_callback = do_shutdown;
 
     runflag = WEBSERVER_ST_RUNNING;
-    ShowStatus("rAthena web server Started\n");
     // this blocks, until svr->stop() is called.
-    svr->listen(web_config.web_ip.c_str(), web_config.web_port);
 
+    svr_thr = std::thread([] {
+        svr->listen(web_config.web_ip.c_str(), web_config.web_port);
+    });
+    // svr->listen(web_config.web_ip.c_str(), web_config.web_port);
 
+    for (int i = 0; i < 10; i++) {
+        if (svr->is_running() || runflag != WEBSERVER_ST_RUNNING)
+            break;
+        ShowDebug("Web server not running, sleeping 1 second\n");
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
 
+    if (!svr->is_running()) {
+        ShowError("Web server hasn't started, stopping\n");
+        runflag = CORE_ST_STOP;
+        return 0;
+    }
+
+    ShowStatus("rAthena web server Started\n");
     return 0;
 }
