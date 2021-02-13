@@ -901,7 +901,7 @@ Body:
     EquipLevelMin: 40
     Refineable: true
     Script: |
-      bonus2 bAddEff,Eff_Curse,30;
+      bonus2 bAddEff,Eff_Curse,300;
       bonus2 bComaClass,Class_All,10;
   - Id: 1133
     AegisName: Fire_Brand
