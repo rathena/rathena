@@ -1685,7 +1685,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      guildgetexp rand(600000,1200000);
+      guildgetexp rand(50000,100000);
   - Id: 659
     AegisName: Heart_Of_Her
     Name: Her Heart
@@ -3256,6 +3256,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1507,600000,SC_MTF_MHP,1000;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!! Bloody Murderer Fo-rm!!";
   - Id: 11593
     AegisName: Trance_Candy_B
     Name: Trans Candy Blue
@@ -3265,6 +3267,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1102,600000,SC_MTF_MSP,100;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!!! Bathory Fo-rm!!";
   - Id: 11594
     AegisName: Trance_Candy_Y
     Name: Trans Candy Yellow
@@ -3274,6 +3278,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1130,600000,SC_MTF_PUMPKIN,2000;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!! Jack Fo-rm!!";
   - Id: 11595
     AegisName: Trance_Candy_G
     Name: Trans Candy Green
@@ -3283,6 +3289,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1508,600000,SC_MTF_HITFLEE,10,20;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!! Cube Fo-rm!!";
   - Id: 11596
     AegisName: Blood_In_Skull
     Name: Blood In Skull
@@ -3311,7 +3319,7 @@ Body:
     Buy: 10
     Weight: 10
   - Id: 11600
-    AegisName: Shining_Holy_Water
+    AegisName: ShiningHolyWater
     Name: Shining Holy Water
     Type: Healing
     Buy: 10
@@ -3320,6 +3328,7 @@ Body:
       BuyingStore: true
     Script: |
       if (strcharinfo(3) == "prt_q") {
+         specialeffect2 EF_GUARD;
          bonus_script "{ bonus2 bSubSize,Size_All,10; }",600;
          sc_end SC_SILENCE;
          sc_end SC_POISON;
@@ -3327,21 +3336,23 @@ Body:
          heal 1000,0;
       }
   - Id: 11601
-    AegisName: Delicious_Anchovy
+    AegisName: Tasty_Anchovy
     Name: Delicious Anchovy
     Type: Healing
     Buy: 20
     Weight: 30
     Script: |
       itemheal rand(30,46),0;
+      specialeffect2 EF_HEAL3;
   - Id: 11602
-    AegisName: Catnip_Fruit
+    AegisName: Nepeta_Cataria
     Name: Catnip Fruit
     Type: Healing
     Buy: 15
     Weight: 1
     Script: |
-      itemheal rand(10,40),0;
+      itemheal rand(36,40),0;
+      specialeffect2 EF_HEAL3;
   - Id: 11605
     AegisName: Cookies_Bat
     Name: Cookie Bat
@@ -3418,6 +3429,8 @@ Body:
     NoUse:
       Override: 100
       Sitting: true
+    Script: |
+      unitskilluseid getcharid(3),"AL_BLESSING",7;
   - Id: 11703
     AegisName: Mysterious_Blood
     Name: Mystery Blood
@@ -3725,14 +3738,14 @@ Body:
     Type: Healing
     Weight: 10
     Script: |
-      itemheal rand(70,99),0;
+      getexp2 33333333,0;
   - Id: 12022
     AegisName: Spareribs
     Name: Galbi
     Type: Healing
     Weight: 10
     Script: |
-      itemheal rand(70,99),0;
+      getexp2 0,33333333;
   - Id: 12023
     AegisName: Giftbox_China
     Name: Wrapped Box
@@ -4946,7 +4959,8 @@ Body:
     Buy: 1
     Weight: 10
     Script: |
-      Zeny += rand(1000,10000);
+      .@r = BaseLevel*100;
+      getexp2 .@r,.@r;
   - Id: 12135
     AegisName: Green_Ale
     Name: Green Ale
@@ -6134,7 +6148,7 @@ Body:
       NoAuction: true
     Script: |
       skilleffect "SN_WINDWALK",0;
-      sc_start SC_WINDWALK,250000,5;
+      sc_start SC_WINDWALK,250000,10;
   - Id: 12220
     AegisName: Adrenaline_Scroll
     Name: LV5 Adrenaline Scroll
@@ -6306,7 +6320,7 @@ Body:
     Script: |
       percentheal 0,5;
       skilleffect "AL_BLESSING",0;
-      sc_start SC_BLESSING,240000,10;
+      sc_start SC_BLESSING,240000,5;
   - Id: 12236
     AegisName: Choco_Tart
     Name: Chocolate Tart
@@ -7339,7 +7353,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FLEEFOOD,300000,5;
+      sc_start SC_FLEEFOOD,300000,10;
   - Id: 12311
     AegisName: Large_Spray_Of_Flowers
     Name: Huge Spray Of Flowers
@@ -8425,16 +8439,15 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      .@rnd = rand(1,10);
+      .@rnd = rand(1,9);
       if (.@rnd == 1) itemskill "AL_TELEPORT",1;
       else if (.@rnd == 2) itemskill "AL_TELEPORT",3;
       else if (.@rnd == 3) percentheal 50,0;
       else if (.@rnd == 4) percentheal 0,50;
-      else if (.@rnd == 5) end;
-      else if (.@rnd == 6) getitem 512,1;
-      else if (.@rnd == 7) itemskill "ALL_REVERSEORCISH",1;
-      else if (.@rnd == 8) specialeffect2 EF_MAPPILLAR2;
-      else if (.@rnd == 9) specialeffect2 EF_ANGEL2;
+      else if (.@rnd == 5) getitem 512,1;
+      else if (.@rnd == 6) itemskill "ALL_REVERSEORCISH",1;
+      else if (.@rnd == 7) specialeffect2 EF_MAPPILLAR2;
+      else if (.@rnd == 8) specialeffect2 EF_ANGEL2;
       else specialeffect2 EF_COIN;
   - Id: 12397
     AegisName: Fools_Day_Box2
@@ -8446,16 +8459,15 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      .@rnd = rand(1,10);
+      .@rnd = rand(1,9);
       if (.@rnd == 1) itemskill "TF_DETOXIFY",1;
       else if (.@rnd == 2) itemskill "TF_PICKSTONE",1;
       else if (.@rnd == 3) itemskill "BA_FROSTJOKER",1;
       else if (.@rnd == 4) itemskill "DC_SCREAM",1;
-      else if (.@rnd == 5) end;
-      else if (.@rnd == 6) getitem 909,1;
-      else if (.@rnd == 7) itemskill "AL_RUWACH",1;
-      else if (.@rnd == 8) specialeffect2 EF_BEGINASURA;
-      else if (.@rnd == 9) specialeffect2 EF_MVP;
+      else if (.@rnd == 5) getitem 909,1;
+      else if (.@rnd == 6) itemskill "AL_RUWACH",1;
+      else if (.@rnd == 7) specialeffect2 EF_BEGINASURA;
+      else if (.@rnd == 8) specialeffect2 EF_MVP;
       else specialeffect2 EF_CURSEATTACK;
   - Id: 12398
     AegisName: PCBang_Gift_Box
@@ -8480,7 +8492,7 @@ Body:
     Buy: 20
     Weight: 1000
     Script: |
-      Zeny += 1000000;
+      Zeny += rand(50000,100000);
   - Id: 12400
     AegisName: Water_Of_Blessing_
     Name: Water Of Blessing
@@ -8898,35 +8910,47 @@ Body:
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      callfunc "F_CashPartyCall";
   - Id: 12439
     AegisName: F_Battle_Manual
     Name: F Old Battle Manual
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_EXPBOOST,1800000,50;
   - Id: 12440
     AegisName: F_Insurance
     Name: F Insurance
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_LIFEINSURANCE,1800000,0;
   - Id: 12441
     AegisName: F_Bubble_Gum
     Name: F Old Bubble Gum
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_ITEMBOOST,1800000,100;
   - Id: 12442
     AegisName: F_Kafra_Card
     Name: F Kafra Card
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      callfunc "F_CashStore";
   - Id: 12443
     AegisName: F_Neuralizer
     Name: F Neuralizer
     Type: Usable
     Buy: 2
+    Script: |
+      callfunc "F_CashReset";
   - Id: 12444
     AegisName: F_Dun_Tele_Scroll1
     Name: WoE Telport Scroll
@@ -8942,6 +8966,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_STRFOOD,1800000,10;
+      percentheal 20,10;
   - Id: 12446
     AegisName: F_Agi_Dish10_
     Name: F Agi Dish10
@@ -8950,6 +8975,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_AGIFOOD,1800000,10;
+      percentheal 15,5;
   - Id: 12447
     AegisName: F_Int_Dish10_
     Name: F Int Dish10
@@ -8958,6 +8984,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_INTFOOD,1800000,10;
+      percentheal 10,20;
   - Id: 12448
     AegisName: F_Dex_Dish10_
     Name: F Dex Dish10
@@ -8966,6 +8993,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_DEXFOOD,1800000,10;
+      percentheal 10,10;
   - Id: 12449
     AegisName: F_Luk_Dish10_
     Name: F Luk Dish10
@@ -9007,16 +9035,24 @@ Body:
     Name: F Greed Scroll
     Type: Usable
     Weight: 10
+    Script: |
+      itemskill "BS_GREED",1;
   - Id: 12457
     AegisName: F_Glass_Of_Illusion
     Name: F Glass Of Illusion
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_STEAL;
+      sc_start SC_INCFLEE2,60000,20;
   - Id: 12458
     AegisName: F_Abrasive
     Name: F Abrasive
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_MAGICALATTHIT;
+      sc_start SC_INCCRI,300000,30;
   - Id: 12459
     AegisName: F_Med_Life_Potion
     Name: F Med Life Potion
@@ -9038,6 +9074,9 @@ Body:
     Name: F Regeneration Potion
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_LIGHTSPHERE;
+      sc_start SC_INCHEALRATE,1800000,20;
   - Id: 12462
     AegisName: F_B_Mdef_Potion
     Name: F B Mdef Potion
@@ -9076,36 +9115,48 @@ Body:
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "AL_BLESSING",10;
   - Id: 12467
     AegisName: F_Inc_Agi_10_Scroll
     Name: F Inc Agi 10 Scroll
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "AL_INCAGI",10;
   - Id: 12468
     AegisName: F_Aspersio_5_Scroll
     Name: F Aspersio 5 Scroll
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "PR_ASPERSIO",5;
   - Id: 12470
     AegisName: F_Wind_Walk_10_Scroll
     Name: F Wind Walk 10 Scroll
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "SN_WINDWALK",10;
   - Id: 12471
     AegisName: F_Adrenaline_Scroll
     Name: F Adrenaline Scroll
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "BS_ADRENALINE",5;
   - Id: 12472
     AegisName: F_Convex_Mirror
     Name: F Convex Mirror
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_BOSSMAPINFO,600000,0;
   - Id: 12473
     AegisName: RWC_Parti_Box
     Name: RWC Parti Box
@@ -9351,6 +9402,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    # Script: |
+      # mercenary_create VALK_MERC_H,1800000;
   - Id: 12489
     AegisName: Ticket_Gift_Box2
     Name: Ticket Gift Box2
@@ -9424,18 +9477,24 @@ Body:
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      callfunc "F_CashPartyCall";
   - Id: 12495
     AegisName: E_Battle_Manual
     Name: E Battle Manual
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_EXPBOOST,1800000,50;
   - Id: 12496
     AegisName: E_Insurance
     Name: E Insurance
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_LIFEINSURANCE,1800000,0;
   - Id: 12497
     AegisName: E_Bubble_Gum
     Name: E Bubble Gum
@@ -9653,11 +9712,16 @@ Body:
     Name: E Greed Scroll
     Type: Usable
     Weight: 10
+    Script: |
+      itemskill "BS_GREED",1;
   - Id: 12513
     AegisName: E_Glass_Of_Illusion
     Name: E Glass Of Illusion
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_STEAL;
+      sc_start SC_INCFLEE2,60000,20;
   - Id: 12514
     AegisName: E_Abrasive
     Name: E Abrasive
@@ -9921,6 +9985,8 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+    Script: |
+      percentheal 20,20;
   - Id: 12537
     AegisName: Solo_Gift_Basket
     Name: Solo Gift Basket
@@ -13304,6 +13370,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      warp "iz_ng01",26,57;
   - Id: 12846
     AegisName: Unripe_Apple2
     Name: Little Unripe Apple
@@ -13328,7 +13396,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 12848
-    AegisName: Falcon_Flute
+    AegisName: Falcon_Pipe
     Name: Falcon Flute
     Type: Delayconsume
     Weight: 10
@@ -13344,7 +13412,10 @@ Body:
     Buy: 40
     Weight: 10
     Script: |
-      cooking 30;
+      if (BaseLevel < 20)
+         cooking 30;
+      else
+         cooking 11;
   - Id: 12850
     AegisName: Heaven_Scroll
     Name: Heaven Scroll
@@ -32710,7 +32781,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_EXPBOOST,1800000,100;
+      sc_start SC_EXPBOOST,3600000,100;
   - Id: 14534
     AegisName: Small_Life_Potion
     Name: Small Life Potion
@@ -33962,6 +34033,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_JEXPBOOST,1800000,25;
   - Id: 14607
     AegisName: Luxurious_Dinner_W
     Name: Luxurious Western Food
@@ -44183,6 +44256,40 @@ Body:
       getrandgroupitem(IG_Candy_Holder,1);
       getrandgroupitem(IG_Candy_Holder,1);
       getrandgroupitem(IG_Candy_Holder,1);
+  - Id: 22515
+    AegisName: Key_Of_Twisted_Time
+    Name: Twisted Key of Time
+    Type: Usable
+    Buy: 10
+    Weight: 300
+    Script: |
+      itemskill "NPC_WIDECURSE",2;
+  - Id: 22516
+    AegisName: Dark_Red_Clot
+    Name: Black As Night Piece
+    Type: Usable
+    Buy: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_CURSE,4000,0,1500,0;
+  - Id: 22517
+    AegisName: Loki_Summon_Scroll
+    Name: Rocker Summoning Scroll
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      mercenary_create 2937,1800000;
   - Id: 22518
     AegisName: Idn_Wisdom_Egg
     Name: Egg Of Wisdom
@@ -44416,6 +44523,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    # Script: |
+      # mercenary_create 3024,1800000;
   - Id: 22536
     AegisName: WorkerScroll_B
     Name: Scroll Summoning Workers(Female)
@@ -44431,6 +44540,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    # Script: |
+      # mercenary_create 3025,1800000;
   - Id: 22537
     AegisName: PrizeOfHero
     Name: Prize Of Hero
@@ -44537,7 +44648,7 @@ Body:
     Script: |
       sc_start SC_ASPDPOTION1,1800000,6;
   - Id: 22545
-    AegisName: Speed_Potion
+    AegisName: Speed_Up_Potion_B
     Name: Speed Potion
     Type: Usable
     Buy: 10
@@ -44554,7 +44665,7 @@ Body:
     Script: |
       sc_start SC_SPEEDUP1,5000,50;
   - Id: 22546
-    AegisName: Slow_Potion
+    AegisName: Slow_Down_Potion_B
     Name: Slow Potion
     Type: Usable
     Buy: 10
@@ -44571,7 +44682,7 @@ Body:
     Script: |
       sc_start SC_SLOWDOWN,5000,100;
   - Id: 22547
-    AegisName: Anti-Payne_Moment
+    AegisName: Anodyne_B
     Name: Anti-Payne Moment
     Type: Usable
     Buy: 10
@@ -44586,7 +44697,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22548
-    AegisName: Wed_Cursed
+    AegisName: Water_Of_Darkness_B
     Name: Wed Cursed
     Type: Usable
     Buy: 10
@@ -44601,7 +44712,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22549
-    AegisName: Poison_Bottle_
+    AegisName: Poison_Bottle_B
     Name: Poison Bottle
     Type: Usable
     Buy: 10
@@ -44681,6 +44792,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_BATKFOOD,60000,10;
+      sc_start SC_MATKFOOD,60000,10;
   - Id: 22554
     AegisName: First_Aid_Box
     Name: First Aid Box
@@ -44777,8 +44891,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 100
-    Script: |
-      /* TODO */
+    # Script: |
+      # mercenary_create 3087,1800000;
   - Id: 22569
     AegisName: Gift_New_start
     Name: Gift New start
@@ -44849,13 +44963,15 @@ Body:
     Script: |
       /* TODO */
   - Id: 22612
-    AegisName: Corrupt_Reagents
+    AegisName: Decomposition_Potion
     Name: Corrupt Reagents
     Type: Delayconsume
     Buy: 10
     Weight: 50
     Script: |
-      /* TODO */
+      specialeffect2 EF_VENOMDUST;
+      showscript "Yeah! Zombie night! Yeah!!";
+#      transform 1015,60000,SC_GLASTHEIM_TRANS;  /* todo */
   - Id: 22613
     AegisName: Contaminated_Reagents
     Name: Contaminated Reagents
@@ -45487,42 +45603,42 @@ Body:
     Script: |
       /*TODO: getitem 12529,1; getitem 12323,200; getitem 12324,50; and 5 boxes that containing quivers + oridecons*/
   - Id: 22702
-    AegisName: STR_Soul_Potion
+    AegisName: Minus_Str
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bStr,-1,22702;
   - Id: 22703
-    AegisName: AGI_Soul_Potion
+    AegisName: Minus_Agi
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bAgi,-1,22703;
   - Id: 22704
-    AegisName: VIT_Soul_Potion
+    AegisName: Minus_Vit
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bVit,-1,22704;
   - Id: 22705
-    AegisName: INT_Soul_Potion
+    AegisName: Minus_Int
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bInt,-1,22705;
   - Id: 22706
-    AegisName: DEX_Soul_Potion
+    AegisName: Minus_Dex
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bDex,-1,22706;
   - Id: 22707
-    AegisName: LUK_Soul_Potion
+    AegisName: Minus_Luk
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
@@ -46040,7 +46156,7 @@ Body:
       getitem 678,12;
       /*No Info*/
   - Id: 22808
-    AegisName: Special_Gift_Box
+    AegisName: NoviceBox
     Name: Special Gift Box
     Type: Usable
     Buy: 10
@@ -46056,6 +46172,11 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      getitem 7444,1;
+      getitem 12610,1;
+      getitem 12265,5;
+      getitem 22979,5;
   - Id: 22812
     AegisName: Sealed_Dracula_Scroll
     Name: Sealed Dracula Scroll
@@ -46578,11 +46699,12 @@ Body:
     Script: |
       /*No Info*/
   - Id: 22876
-    AegisName: Old_Money_Pocket
+    AegisName: Shabby_Purse
     Name: Old Money Pocket
     Type: Usable
     Script: |
-      Zeny += rand(500,550);
+      specialeffect2 EF_STEAL;
+      Zeny += rand(100,1000);
   - Id: 22881
     AegisName: Binding_Rope
     Name: Rope Gallows
@@ -46779,7 +46901,7 @@ Body:
     Script: |
       /*Works like item 6320, can reset up to 3x within 1 hour*/
   - Id: 22899
-    AegisName: Parchment_City
+    AegisName: DowntownMap
     Name: Parchment City
     Type: Usable
     Buy: 20
@@ -46838,7 +46960,7 @@ Body:
     Script: |
       getgroupitem(IG_Enchant_Stone_Box7);
   - Id: 22979
-    AegisName: C_Battle_Gum_2
+    AegisName: Comp_Battle_Bubble
     Name: "[Sale] Battle Manual and Bubble Gum"
     Type: Usable
     Trade:
@@ -46854,7 +46976,7 @@ Body:
       sc_start SC_EXPBOOST,1800000,50;
       sc_start SC_ITEMBOOST,1800000,100;
   - Id: 22984
-    AegisName: Kahluna_Milk
+    AegisName: Dr_Life_Potion_01
     Name: Kahluna Milk
     Type: Healing
     Buy: 6
@@ -46862,7 +46984,7 @@ Body:
     Script: |
       sc_start SC_DORAM_BUF_01, 180000, 0;
   - Id: 22985
-    AegisName: Basil
+    AegisName: Dr_Life_Potion_02
     Name: Basil
     Type: Healing
     Buy: 10
@@ -46896,7 +47018,7 @@ Body:
       bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9;
       /* fix me: unknown flag and specialeffect ;  disabled when LK_BERSERK */
   - Id: 23016
-    AegisName: Cursed_Fragment
+    AegisName: Pieces_Of_Grudge
     Name: Cursed Fragment
     Type: Usable
     Buy: 1
@@ -46919,7 +47041,7 @@ Body:
     Script: |
       getitem 11573,200;
   - Id: 23042
-    AegisName: S_Seed_Of_Yggdrasil
+    AegisName: Seed_Of_Yggdrasil_
     Name: "[NotForSale]Yggdrasil Seed"
     Type: Healing
     Weight: 300
@@ -47196,21 +47318,21 @@ Body:
     Script: |
       callfunc "F_CashStore";
   - Id: 23187
-    AegisName: Sap_Liquid
+    AegisName: Sap_Jelly
     Name: Sap Liquid
     Type: Usable
     Buy: 10
     Script: |
       pet 1180;
   - Id: 23188
-    AegisName: Unprocessed_Parts
+    AegisName: Airship_Part
     Name: Unprocessed Parts
     Type: Usable
     Buy: 10
     Script: |
       pet 1632;
   - Id: 23189
-    AegisName: Small_Needle_Kit
+    AegisName: Little_Dall_Needle
     Name: Small Needle Kit
     Type: Usable
     Buy: 10
@@ -47269,7 +47391,7 @@ Body:
     Script: |
       getgroupitem(IG_Agust_Lucky_Scroll);
   - Id: 23228
-    AegisName: Hazy_Mooncake
+    AegisName: HazyMooncake
     Name: Hazy Mooncake
     Type: Healing
     Buy: 768
@@ -47432,7 +47554,7 @@ Body:
       getitem(1649,1);
       getitem(15169,1);
   - Id: 23256
-    AegisName: Elixir_Bandages
+    AegisName: Elixir_Bandage
     Name: Elixir Bandages
     Type: Usable
     Buy: 10
@@ -47594,7 +47716,7 @@ Body:
     Script: |
       /*synthesisui 23324;*/
   - Id: 23340
-    AegisName: S_Megaphone
+    AegisName: Comp_Megaphone
     Name: "[Sale] Megaphone"
     Type: Usable
     Weight: 10
