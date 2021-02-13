@@ -15,7 +15,7 @@
 
 // Max size is 50kb for gif
 #define MAX_EMBLEM_SIZE 50000
-
+#define START_VERSION 1
 
 std::string getUniqueFileName(const int guild_id, const std::string& world_name, const int version) {
     auto stream = std::ostringstream();
@@ -170,7 +170,7 @@ HANDLER_FUNC(emblem_upload) {
         return;
     }
 
-    uint32 version = 1;
+    uint32 version = START_VERSION;
     std::string filename;
     char tmp[256];
 
@@ -194,7 +194,7 @@ HANDLER_FUNC(emblem_upload) {
 
     filename = getUniqueFileName(guild_id, world_name_str, version);
 
-    if (version) {
+    if (version > START_VERSION) {
         // update existing
         if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
             "UPDATE `%s` SET `version` = ?, `file_name` = ?, `file_type` = ? WHERE (`guild_id` = ? AND `world_name` = ?)",
