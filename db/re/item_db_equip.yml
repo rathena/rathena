@@ -19529,7 +19529,7 @@ Body:
     Type: Weapon
     SubType: Whip
     Buy: 20
-    Weight: 76
+    Weight: 40
     Attack: 76
     Range: 2
     Slots: 1
@@ -51343,7 +51343,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 7
     Locations:
       Head_Top: true
     EquipLevelMin: 40
@@ -67804,8 +67803,9 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 60
-    Range: 1
+    Range: 5
     Jobs:
+      Archer: true
       BardDancer: true
       Hunter: true
     Locations:
@@ -67813,7 +67813,9 @@ Body:
     WeaponLevel: 1
     EquipLevelMin: 1
     Script: |
-      bonus bUnbreakableWeapon;
+      bonus bMaxHP,100;
+      bonus2 bAddMonsterDropItem,11518,100;
+      /* CONFIRM The Rate*/
   - Id: 18105
     AegisName: Academy_Bow
     Name: Academy Bow
@@ -67824,13 +67826,16 @@ Body:
     Range: 5
     Slots: 1
     Jobs:
+      Archer: true
       BardDancer: true
       Hunter: true
     Locations:
       Both_Hand: true
     WeaponLevel: 1
-    EquipLevelMin: 1
+    EquipLevelMin: 30
     Refineable: true
+    Script: |
+      bonus bHit,20-(4*(BaseLevel/10));
   - Id: 18106
     AegisName: P_Bow3
     Name: Eden Bow III
@@ -68085,6 +68090,8 @@ Body:
     WeaponLevel: 3
     EquipLevelMin: 65
     Refineable: true
+    Script: |
+      bonus2 bAddMonsterDropItem,1753,200;
   - Id: 18116
     AegisName: Metal_Bow
     Name: Metal Bow
@@ -68398,6 +68405,12 @@ Body:
     Attack: 160
     Range: 5
     Slots: 1
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+      Thief: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -92944,7 +92957,6 @@ Body:
     Refineable: true
     Script: |
       bonus bBaseAtk,pow(min(getrefine(),15),2);
-      bonus bMatk,pow(min(getrefine(),15),2)/2;
       bonus bMatk,pow(min(getrefine(),15),2)/2;
   - Id: 21018
     AegisName: Lindy_Hop
@@ -126457,7 +126469,7 @@ Body:
     AegisName: Imperial_Attack_Ring
     Name: Imperial Attack Ring
     Type: Armor
-    Weight: 50
+    Weight: 0
     Defense: 8
     Slots: 1
     Locations:
@@ -126480,7 +126492,7 @@ Body:
     AegisName: Imperial_Magic_Ring
     Name: Imperial Magic Ring
     Type: Armor
-    Weight: 50
+    Weight: 0
     Defense: 8
     Slots: 1
     Locations:
@@ -126503,7 +126515,7 @@ Body:
     AegisName: Grace_Attack_Ring
     Name: Grace Attack Ring
     Type: Armor
-    Weight: 50
+    Weight: 0
     Defense: 10
     Slots: 1
     Locations:
@@ -126526,7 +126538,7 @@ Body:
     AegisName: Grace_Magic_Ring
     Name: Grace Magic Ring
     Type: Armor
-    Weight: 50
+    Weight: 0
     Defense: 10
     Slots: 1
     Locations:
