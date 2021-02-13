@@ -13,7 +13,8 @@
 #include "http.hpp"
 #include "sqllock.hpp"
 
-#define MAX_EMBLEM_SIZE 2048
+// Max size is 50kb for gif
+#define MAX_EMBLEM_SIZE 50000
 
 
 std::string getUniqueFileName(const int guild_id, const std::string& world_name, const int version) {
@@ -45,7 +46,7 @@ HANDLER_FUNC(emblem_download) {
     auto handle = sl.getHandle();
     SqlStmt * stmt = SqlStmt_Malloc(handle);
     if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
-            "SELECT `version`, `file_name` FROM `%s` WHERE (`guild_id` = ? AND `world_name` = ?)",
+            "SELECT `version`, `file_name`, `file_type` FROM `%s` WHERE (`guild_id` = ? AND `world_name` = ?)",
             guild_emblems_table)
         || SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_INT, &guild_id, sizeof(guild_id))
         || SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (void *)world_name, strlen(world_name))
@@ -62,6 +63,7 @@ HANDLER_FUNC(emblem_download) {
     uint32 version = 0;
     std::string filename;
     char tmp[256];
+    char filetype[256];
 
     if (SqlStmt_NumRows(stmt) <= 0) {
         SqlStmt_Free(stmt);
@@ -74,6 +76,7 @@ HANDLER_FUNC(emblem_download) {
 
     if (SQL_SUCCESS != SqlStmt_BindColumn(stmt, 0, SQLDT_UINT32, &version, sizeof(version), NULL, NULL)
         || SQL_SUCCESS != SqlStmt_BindColumn(stmt, 1, SQLDT_STRING, &tmp, sizeof(tmp), NULL, NULL)
+        || SQL_SUCCESS != SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &filetype, sizeof(filetype), NULL, NULL)
         || SQL_SUCCESS != SqlStmt_NextRow(stmt)
     ) {
         SqlStmt_ShowDebug(stmt);
@@ -87,15 +90,29 @@ HANDLER_FUNC(emblem_download) {
     SqlStmt_Free(stmt);
     sl.unlock();
 
+    const char * content_type;
+
+    if (!strcmp(filetype, "BMP"))
+        content_type = "image/bmp";
+    else if (!strcmp(filetype, "GIF"))
+        content_type = "image/gif";
+
     filename = web_config.guild_emblem_dir + PATHSEP_STR + tmp;
     ShowDebug("Opening file [%s] for reading\n", filename.c_str());
     std::ifstream emblemFile(filename, std::ios_base::binary);
     emblemFile.seekg(0, std::ios::end);
     auto length = emblemFile.tellg();
     emblemFile.seekg(0, std::ios::beg);
+    if (length > MAX_EMBLEM_SIZE) {
+        ShowDebug("Emblem is too big, size [%d] max length is %d\n", length, MAX_EMBLEM_SIZE);
+        res.status = 400;
+        res.set_content("Error", "text/plain");
+        return;
+    }
     char emblemdata[MAX_EMBLEM_SIZE] = {0};
+
     emblemFile.read(emblemdata, length);
-    res.set_content(emblemdata, static_cast<size_t>(length), "image/bmp");
+    res.set_content(emblemdata, static_cast<size_t>(length), content_type);
 }
 
 
@@ -116,9 +133,25 @@ HANDLER_FUNC(emblem_upload) {
     auto world_name_str = req.get_file_value("WorldName").content;
     auto world_name = world_name_str.c_str();
     auto guild_id = std::stoi(req.get_file_value("GDID").content);
-    auto imgtype = req.get_file_value("ImgType").content;
+    auto imgtype_str = req.get_file_value("ImgType").content;
+    auto imgtype = imgtype_str.c_str();
     auto img = req.get_file_value("Img").content;
     
+    if (imgtype_str != "BMP" && imgtype_str != "GIF") {
+        ShowError("Invalid image type found [%s], rejecting!\n", imgtype);
+        res.status = 400;
+        res.set_content("Error", "text/plain");
+        return;
+    }
+
+    auto length = img.length();
+    if (length > MAX_EMBLEM_SIZE) {
+        ShowDebug("Emblem is too big, size [%d] max length is %d\n", length, MAX_EMBLEM_SIZE);
+        res.status = 400;
+        res.set_content("Error", "text/plain");
+        return;
+    }
+
     SQLLock sl(WEB_SQL_LOCK);
     sl.lock();
     auto handle = sl.getHandle();
@@ -138,7 +171,7 @@ HANDLER_FUNC(emblem_upload) {
         return;
     }
 
-    uint32 version = 0;
+    uint32 version = 1;
     std::string filename;
     char tmp[256];
 
@@ -165,12 +198,13 @@ HANDLER_FUNC(emblem_upload) {
     if (version) {
         // update existing
         if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
-            "UPDATE `%s` SET `version` = ?, `file_name` = ? WHERE (`guild_id` = ? AND `world_name` = ?)",
+            "UPDATE `%s` SET `version` = ?, `file_name` = ?, `file_type` = ? WHERE (`guild_id` = ? AND `world_name` = ?)",
             guild_emblems_table)
             || SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_UINT32, &version, sizeof(version))
             || SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (void *)filename.c_str(), strlen(filename.c_str()))
-            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_INT, &guild_id, sizeof(guild_id))
-            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 3, SQLDT_STRING, (void *)world_name, strlen(world_name))
+            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, (void *)imgtype, strlen(imgtype))
+            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 3, SQLDT_INT, &guild_id, sizeof(guild_id))
+            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 4, SQLDT_STRING, (void *)world_name, strlen(world_name))
             || SQL_SUCCESS != SqlStmt_Execute(stmt)
         ) {
             SqlStmt_ShowDebug(stmt);
@@ -184,12 +218,13 @@ HANDLER_FUNC(emblem_upload) {
     } else {
         // insert new
         if (SQL_SUCCESS != SqlStmt_Prepare(stmt,
-            "INSERT INTO `%s` (`version`, `file_name`, `guild_id`, `world_name`) VALUES (?, ?, ?, ?)",
+            "INSERT INTO `%s` (`version`, `file_name`, `file_type`, `guild_id`, `world_name`) VALUES (?, ?, ?, ?, ?)",
             guild_emblems_table)
             || SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_UINT32, &version, sizeof(version))
             || SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (void *)filename.c_str(), strlen(filename.c_str()))
-            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_INT, &guild_id, sizeof(guild_id))
-            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 3, SQLDT_STRING, (void *)world_name, strlen(world_name))
+            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 2, SQLDT_STRING, (void *)imgtype, strlen(imgtype))
+            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 3, SQLDT_INT, &guild_id, sizeof(guild_id))
+            || SQL_SUCCESS != SqlStmt_BindParam(stmt, 4, SQLDT_STRING, (void *)world_name, strlen(world_name))
             || SQL_SUCCESS != SqlStmt_Execute(stmt)
         ) {
             SqlStmt_ShowDebug(stmt);
