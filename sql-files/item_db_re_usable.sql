@@ -42,8 +42,8 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (539,'Piece_Of_Cake','Piece of Cake','Healing',3000,100,true,'itemheal rand(270,330),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (540,'Falcon\'s_Feed','Falcon Food','Healing',2000,50,'itemheal rand(185,225),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (541,'Pecopeco\'s_Feed','PecoPeco Food','Healing',3000,50,'itemheal rand(325,405),0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (542,'Festive_Cookie','Festival Cookie','Healing',10,10,'itemheal 365,0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (543,'Festive_Rainbow_Cake','Festival Rainbow Cake','Healing',10,10,'itemheal 365,0;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (542,'Festive_Cookie','Festival Cookie','Healing',10,10,'itemheal rand(325,405),0;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (543,'Festive_Rainbow_Cake','Festival Rainbow Cake','Healing',10,10,'itemheal rand(325,405),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (544,'Fish_Slice','Raw Fish','Healing',20,30,true,'itemheal rand(25,60),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (545,'Red_Slim_Potion','Condensed Red Potion','Healing',150,20,'itemheal rand(45,65),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (546,'Yellow_Slim_Potion','Condensed Yellow Potion','Healing',600,30,'itemheal rand(175,235),0;');
@@ -52,7 +52,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (549,'Nice_Sweet_Potato','Yam','Healing',180,80,true,'itemheal rand(50,100),0;\nsc_start SC_STUN,3000,0,1500,0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (550,'Popped_Rice','Rice Cake','Healing',10,10,true,'itemheal rand(10,15),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (551,'Shusi','Sushi','Healing',1,50,true,'itemheal rand(50,60),0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (552,'KETUPAT','Ketupat','Healing',1,10,'itemheal rand(70,90),0;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (552,'KETUPAT','Ketupat','Healing',1,10,'itemheal rand(70,90),rand(20,30);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (553,'Bun','Bao','Healing',1,50,true,'itemheal rand(35,70),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (554,'Mojji','Mochi','Healing',100,80,'itemheal rand(105,145),0;\nsc_start SC_STUN,3000,0;\nsc_start SC_BLIND,2000,0,1500,0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (555,'Rice_Cake','Traditional Rice Cake','Healing',100,20,'itemheal rand(105,145),0;');
@@ -64,12 +64,12 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (561,'White_Chocolate','White Chocolate','Healing',5000,80,'itemheal 50,50;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (562,'Pizza','Doublecrust Swiss Fondue','Healing',100,150,'itemheal rand(70,100),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (563,'Pizza_01','Doublecrust Swiss Fondue','Healing',1200,150,'itemheal rand(375,445),0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (564,'Rice_Ball','Rice Ball','Healing',1,30,true,'itemheal rand(175,234),0;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (564,'Rice_Ball','Rice Ball','Healing',1,30,true,'itemheal 200,0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (565,'Vita500_Bottle','Vita500','Healing',580,100,'itemheal rand(142,274),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (566,'Tomyumkung','Tom Yum Goong','Healing',10000,150,true,'itemheal rand(244,350),rand(10,30);\nsc_end SC_POISON;\nsc_end SC_SILENCE;\nsc_end SC_BLIND;\nsc_end SC_CONFUSION;\nsc_end SC_CURSE;\nsc_end SC_Hallucination;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (567,'Prawn','Shrimp','Healing',500,40,true,'itemheal rand(117,192),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (568,'Lemon','Lemon','Healing',60,40,true,'itemheal 0,rand(10,20);');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_buyingstore`,`script`) VALUES (569,'Novice_Potion','Novice Potion','Healing',10,true,'itemheal rand(22,33),0;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_buyingstore`,`script`) VALUES (569,'Novice_Potion','Novice Potion','Healing',10,true,'itemheal rand(44,66),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (570,'Lucky_Candy','Lucky Candy','Healing',10,30,true,'itemheal rand(45,65),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (571,'Lucky_Candy_Cane','Lucky Candy Cane','Healing',20,40,true,'itemheal rand(105,145),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (572,'Lucky_Cookie','Lucky Cookie','Healing',1000,30,true,'itemheal rand(160,200),0;');
