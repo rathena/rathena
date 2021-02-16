@@ -25,6 +25,7 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "map.hpp"
+#include "mob.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "script.hpp"
@@ -155,7 +156,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 					return 0;
 				}
 
-				struct mob_db *mob = mobdb_search_aegisname( mob_name.c_str() );
+				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( mob_name.c_str() );
 
 				if (mob == nullptr) {
 					this->invalidWarning(targetNode["Mob"], "Target Mob %s does not exist, skipping.\n", mob_name.c_str());

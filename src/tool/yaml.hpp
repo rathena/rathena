@@ -582,7 +582,7 @@ void ItemDatabase::loadingFinished() {
 
 ItemDatabase item_db;
 
-static bool parse_mob_constants(char *split[], int columns, int current) {
+static bool parse_mob_constants_txt(char *split[], int columns, int current) {
 	uint16 mob_id = atoi(split[0]);
 	char *name = trim(split[1]);
 
@@ -627,5 +627,31 @@ void SkillDatabase::clear() {
 }
 
 SkillDatabase skill_db;
+
+const std::string MobDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/mob_db.yml";
+}
+
+uint64 MobDatabase::parseBodyNode(const YAML::Node& node) {
+	uint16 mob_id;
+
+	if (!this->asUInt16(node, "Id", mob_id))
+		return 0;
+
+	if (this->nodeExists(node, "AegisName")) {
+		std::string name;
+
+		if (!this->asString(node, "AegisName", name))
+			return 0;
+
+		aegis_mobnames[mob_id] = name;
+	}
+
+	return 1;
+}
+
+void MobDatabase::loadingFinished() {};
+
+MobDatabase mob_db;
 
 #endif /* YAML_HPP */

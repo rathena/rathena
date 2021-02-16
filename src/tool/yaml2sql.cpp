@@ -31,6 +31,24 @@
 #include "../common/winapi.hpp"
 #endif
 
+// Only for constants - do not use functions of it or linking will fail
+#include "../map/achievement.hpp"
+#include "../map/battle.hpp"
+#include "../map/battleground.hpp"
+#include "../map/channel.hpp"
+#include "../map/chat.hpp"
+#include "../map/date.hpp"
+#include "../map/instance.hpp"
+#include "../map/mercenary.hpp"
+#include "../map/mob.hpp"
+#include "../map/npc.hpp"
+#include "../map/pc.hpp"
+#include "../map/pet.hpp"
+#include "../map/quest.hpp"
+#include "../map/script.hpp"
+#include "../map/skill.hpp"
+#include "../map/storage.hpp"
+
 using namespace rathena;
 
 #ifndef WIN32
@@ -47,14 +65,50 @@ int getch( void ){
 }
 #endif
 
+// Constants for conversion
+std::unordered_map<const char *, int64> constants;
+
 // Forward declaration of conversion functions
 static bool item_db_yaml2sql(const std::string &file, const std::string &table);
+static bool mob_db_yaml2sql(const std::string &file, const std::string &table);
 
 bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
 YAML::Node inNode;
 std::ofstream out;
+
+// Implement the function instead of including the original version by linking
+void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
+	constants[name] = value;
+}
+
+const char *constant_lookup(int32 value, const char *prefix) {
+	if (prefix == nullptr)
+		return nullptr;
+
+	for (auto const &pair : constants) {
+		// Same prefix group and same value
+		if (strncasecmp(pair.first, prefix, strlen(prefix)) == 0 && pair.second == value) {
+			return pair.first;
+		}
+	}
+
+	return nullptr;
+}
+
+int64 constant_lookup_int(const char *constant) {
+	if (constant == nullptr)
+		return -100;
+
+	for (auto const &pair : constants) {
+		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
+			return pair.second;
+		}
+	}
+
+	return -100;
+}
 
 void copyFileIfExists( std::ofstream& file,const std::string& name ){
 	std::string path = "doc/yaml/sql/" + name + ".sql";
@@ -136,15 +190,22 @@ int do_init( int argc, char** argv ){
 #ifdef RENEWAL
 	const std::string item_table_name = "item_db_re";
 	const std::string item_import_table_name = "item_db2_re";
+	const std::string mob_table_name = "mob_db_re";
+	const std::string mob_import_table_name = "mob_db2_re";
 #else
 	const std::string item_table_name = "item_db";
 	const std::string item_import_table_name = "item_db2";
+	const std::string mob_table_name = "mob_db";
+	const std::string mob_import_table_name = "mob_db2";
 #endif
 	std::vector<std::string> item_table_suffixes = {
 		"usable",
 		"equip",
 		"etc"
 	};
+
+	// Load constants
+	#include "../map/script_constants.hpp"
 
 	for( const std::string& suffix : item_table_suffixes ){
 		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, item_table_name + "_" + suffix, item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
@@ -156,6 +217,18 @@ int do_init( int argc, char** argv ){
 
 	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", item_import_table_name, item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 		return item_db_yaml2sql(path + name_ext, table);
+	})) {
+		return 0;
+	}
+
+	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+		return mob_db_yaml2sql(path + name_ext, table);
+	})) {
+		return 0;
+	}
+
+	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
 		return 0;
 	}
@@ -635,6 +708,203 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 	}
 
 	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+// Copied and adjusted from mob.cpp
+static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
+	size_t entries = 0;
+
+	for (const YAML::Node &input : inNode["Body"]) {
+		std::string column = "", value = "";
+
+		if (appendEntry(input["Id"], value))
+			column.append("`id`,");
+		if (appendEntry(input["AegisName"], value, true))
+			column.append("`name_aegis`,");
+		if (appendEntry(input["Name"], value, true))
+			column.append("`name_english`,");
+		if (appendEntry(input["Name"], value, true))
+			column.append("`name_japanese`,");
+		if (appendEntry(input["Level"], value))
+			column.append("`level`,");
+		if (appendEntry(input["Hp"], value))
+			column.append("`hp`,");
+		if (appendEntry(input["Sp"], value))
+			column.append("`sp`,");
+		if (appendEntry(input["BaseExp"], value))
+			column.append("`base_exp`,");
+		if (appendEntry(input["JobExp"], value))
+			column.append("`job_exp`,");
+		if (appendEntry(input["MvpExp"], value))
+			column.append("`mvp_exp`,");
+		if (appendEntry(input["Attack"], value))
+			column.append("`attack`,");
+		if (appendEntry(input["Attack2"], value))
+			column.append("`attack2`,");
+		if (appendEntry(input["Defense"], value))
+			column.append("`defense`,");
+		if (appendEntry(input["MagicDefense"], value))
+			column.append("`magic_defense`,");
+		if (appendEntry(input["Str"], value))
+			column.append("`str`,");
+		if (appendEntry(input["Agi"], value))
+			column.append("`agi`,");
+		if (appendEntry(input["Vit"], value))
+			column.append("`vit`,");
+		if (appendEntry(input["Int"], value))
+			column.append("`int`,");
+		if (appendEntry(input["Dex"], value))
+			column.append("`dex`,");
+		if (appendEntry(input["Luk"], value))
+			column.append("`luk`,");
+		if (appendEntry(input["AttackRange"], value))
+			column.append("`attack_range`,");
+		if (appendEntry(input["SkillRange"], value))
+			column.append("`skill_range`,");
+		if (appendEntry(input["ChaseRange"], value))
+			column.append("`chase_range`,");
+		if (appendEntry(input["Size"], value, true))
+			column.append("`size`,");
+		if (appendEntry(input["Race"], value, true))
+			column.append("`race`,");
+
+		const YAML::Node &racegroups = input["RaceGroups"];
+
+		if (racegroups) {
+			for (uint16 i = 1; i < RC2_MAX; i++) {
+				std::string constant = constant_lookup(i, "RC2_");
+
+				constant.erase(0, 4);
+
+				if (appendEntry(racegroups[name2Upper(constant)], value)) {
+					std::transform(constant.begin(), constant.end(), constant.begin(), ::tolower);
+					column.append("`racegroup_" + constant + "`,");
+				}
+			}
+		}
+
+		if (appendEntry(input["Element"], value, true))
+			column.append("`element`,");
+		if (appendEntry(input["ElementLevel"], value))
+			column.append("`element_level`,");
+		if (appendEntry(input["WalkSpeed"], value))
+			column.append("`walk_speed`,");
+		if (appendEntry(input["AttackDelay"], value))
+			column.append("`attack_delay`,");
+		if (appendEntry(input["AttackMotion"], value))
+			column.append("`attack_motion`,");
+		if (appendEntry(input["DamageMotion"], value))
+			column.append("`damage_motion`,");
+		if (appendEntry(input["Ai"], value, true))
+			column.append("`ai`,");
+		if (appendEntry(input["Class"], value, true))
+			column.append("`class`,");
+
+		const YAML::Node &modes = input["Modes"];
+
+		if (modes) {
+			if (appendEntry(modes["CanMove"], value))
+				column.append("`mode_canmove`,");
+			if (appendEntry(modes["Looter"], value))
+				column.append("`mode_looter`,");
+			if (appendEntry(modes["Aggressive"], value))
+				column.append("`mode_aggressive`,");
+			if (appendEntry(modes["Assist"], value))
+				column.append("`mode_assist`,");
+			if (appendEntry(modes["CastSensorIdle"], value))
+				column.append("`mode_castsensoridle`,");
+			if (appendEntry(modes["NoRandomWalk"], value))
+				column.append("`mode_norandomwalk`,");
+			if (appendEntry(modes["NoCast"], value))
+				column.append("`mode_nocast`,");
+			if (appendEntry(modes["CanAttack"], value))
+				column.append("`mode_canattack`,");
+			if (appendEntry(modes["CastSensorChase"], value))
+				column.append("`mode_castsensorchase`,");
+			if (appendEntry(modes["ChangeChase"], value))
+				column.append("`mode_changechase`,");
+			if (appendEntry(modes["Angry"], value))
+				column.append("`mode_angry`,");
+			if (appendEntry(modes["ChangeTargetMelee"], value))
+				column.append("`mode_changetargetmelee`,");
+			if (appendEntry(modes["ChangeTargetChase"], value))
+				column.append("`mode_changetargetchase`,");
+			if (appendEntry(modes["TargetWeak"], value))
+				column.append("`mode_targetweak`,");
+			if (appendEntry(modes["RandomTarget"], value))
+				column.append("`mode_randomtarget`,");
+			if (appendEntry(modes["IgnoreMelee"], value))
+				column.append("`mode_ignoremelee`,");
+			if (appendEntry(modes["IgnoreMagic"], value))
+				column.append("`mode_ignoremagic`,");
+			if (appendEntry(modes["IgnoreRanged"], value))
+				column.append("`mode_ignoreranged`,");
+			if (appendEntry(modes["Mvp"], value))
+				column.append("`mode_mvp`,");
+			if (appendEntry(modes["IgnoreMisc"], value))
+				column.append("`mode_ignoremisc`,");
+			if (appendEntry(modes["KnockBackImmune"], value))
+				column.append("`mode_knockbackimmune`,");
+			if (appendEntry(modes["TeleportBlock"], value))
+				column.append("`mode_teleportblock`,");
+			if (appendEntry(modes["FixedItemDrop"], value))
+				column.append("`mode_fixeditemdrop`,");
+			if (appendEntry(modes["Detector"], value))
+				column.append("`mode_detector`,");
+			if (appendEntry(modes["StatusImmune"], value))
+				column.append("`mode_statusimmune`,");
+			if (appendEntry(modes["SkillImmune"], value))
+				column.append("`mode_skillimmune`,");
+		}
+
+		for (uint16 i = 0; i < MAX_MVP_DROP; i++) {
+			if (!input["MvpDrops"].IsDefined())
+				continue;
+
+			const YAML::Node &mvpdrops = input["MvpDrops"][i];
+
+			if (mvpdrops) {
+				if (appendEntry(mvpdrops["Item"], value, true))
+					column.append("`mvpdrop" + std::to_string(i + 1) + "_item`,");
+				if (appendEntry(mvpdrops["Rate"], value))
+					column.append("`mvpdrop" + std::to_string(i + 1) + "_rate`,");
+				if (appendEntry(mvpdrops["RandomOptionGroup"], value, true))
+					column.append("`mvpdrop" + std::to_string(i + 1) + "_option`,");
+				if (appendEntry(mvpdrops["Index"], value))
+					column.append("`mvpdrop" + std::to_string(i + 1) + "_index`,");
+			}
+		}
+
+		for (uint16 i = 0; i < MAX_MOB_DROP; i++) {
+			if (!input["Drops"].IsDefined())
+				continue;
+
+			const YAML::Node &drops = input["Drops"][i];
+
+			if (drops) {
+				if (appendEntry(drops["Item"], value, true))
+					column.append("`drop" + std::to_string(i + 1) + "_item`,");
+				if (appendEntry(drops["Rate"], value))
+					column.append("`drop" + std::to_string(i + 1) + "_rate`,");
+				if (appendEntry(drops["StealProtected"], value))
+					column.append("`drop" + std::to_string(i + 1) + "_nosteal`,");
+				if (appendEntry(drops["RandomOptionGroup"], value, true))
+					column.append("`drop" + std::to_string(i + 1) + "_option`,");
+				if (appendEntry(drops["Index"], value))
+					column.append("`drop" + std::to_string(i + 1) + "_index`,");
+			}
+		}
+
+		column.pop_back(); // Remove last ','
+		value.pop_back(); // Remove last ','
+
+		out << "REPLACE INTO `" + table + "` (" + column + ") VALUES (" + value + ");\n";
+		entries++;
+	}
+
+	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' mobs in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

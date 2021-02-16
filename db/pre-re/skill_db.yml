@@ -12974,10 +12974,9 @@ Body:
       IgnoreAtkCard: true
     Flags:
       AllowOnMado: true
-    Range: -2
-    Flags:
       IgnoreAutoGuard: true
       IgnoreCicada: true
+    Range: -2
     Hit: Single
     HitCount: 1
     Element: Weapon

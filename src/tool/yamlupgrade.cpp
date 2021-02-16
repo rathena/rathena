@@ -3,6 +3,8 @@
 
 #include "yamlupgrade.hpp"
 
+static bool upgrade_achievement_db(std::string file, const uint32 source_version);
+
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
 	for (const std::string &path : paths) {
@@ -72,8 +74,12 @@ int do_init(int argc, char** argv) {
 		parse_item_constants_txt((path_db_mode + "item_db.txt").c_str());
 		parse_item_constants_txt((path_db_import + "item_db.txt").c_str());
 	}
-	sv_readdb(path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false);
-	sv_readdb(path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false);
+	if (fileExists(mob_db.getDefaultLocation())) {
+		mob_db.load();
+	} else {
+		sv_readdb(path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants_txt, false);
+		sv_readdb(path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants_txt, false);
+	}
 	if (fileExists(skill_db.getDefaultLocation())) {
 		skill_db.load();
 	} else {
