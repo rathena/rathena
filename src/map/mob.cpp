@@ -3962,10 +3962,9 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	if(mob_id >= MOB_CLONE_END)
 		return 0;
 
-	std::shared_ptr<s_mob_db> db = mob_db.find(mob_id);
+	std::shared_ptr<s_mob_db> db = std::make_shared<s_mob_db>();
 
-	if (db == nullptr)
-		return 0;
+	mob_db.put( mob_id, db );
 
 	status = &db->status;
 	db->sprite = sd->status.name;
@@ -4021,7 +4020,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
 			continue;
 
-		std::shared_ptr<s_mob_skill> ms = {};
+		std::shared_ptr<s_mob_skill> ms = std::make_shared<s_mob_skill>();
 
 		ms->skill_id = skill_id;
 		ms->skill_lv = sd->status.skill[sk_idx].lv;
