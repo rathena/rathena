@@ -4044,10 +4044,9 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(strtol(fields[23], nullptr, 10), "RC_") + 3);
 
 	std::string class_ = "Normal";
+	bool header = false;
 
 	for (const auto &race2 : mob_race2) {
-		bool header = false;
-
 		for (const auto &mobit : race2.second) {
 			if (mobit == mob_id) {
 				// These two races are now Class types
