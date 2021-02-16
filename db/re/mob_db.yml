@@ -737,6 +737,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Undead
+    RaceGroups:
+      Clocktower: true
     Element: Undead
     ElementLevel: 1
     WalkSpeed: 300
@@ -1068,6 +1070,8 @@ Body:
     Race: Demihuman
     RaceGroups:
       Orc: true
+    RaceGroups:
+      Clocktower: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -1403,7 +1407,7 @@ Body:
         Rate: 150
       - Item: Oridecon_Stone
         Rate: 50
-      - Item: Crimson_Lance
+      - Item: Scarlet_Lance
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Anacondaq_Card
@@ -4015,6 +4019,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 150
@@ -4695,6 +4701,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Demon
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 1
     WalkSpeed: 100
@@ -4744,6 +4752,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 1
     WalkSpeed: 100
@@ -4764,7 +4774,7 @@ Body:
         Rate: 15
       - Item: Old_Broom
         Rate: 20
-      - Item: Crimson_One-Handed_Staff
+      - Item: Scarlet_Rod
         Rate: 50
         RandomOptionGroup: None
       - Item: Bathory_Card
@@ -4952,7 +4962,7 @@ Body:
         Rate: 1
       - Item: Oridecon_Stone
         Rate: 53
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Desert_Wolf_Card
@@ -5076,6 +5086,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Demon
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 1
     WalkSpeed: 150
@@ -5174,6 +5186,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 250
@@ -5492,7 +5506,7 @@ Body:
         Rate: 4
       - Item: White_Herb
         Rate: 2000
-      - Item: Crimson_Bible
+      - Item: Scarlet_Bible
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Evil_Druid_Card
@@ -6142,6 +6156,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Wind
     ElementLevel: 4
     WalkSpeed: 100
@@ -6355,7 +6371,7 @@ Body:
         Rate: 3
       - Item: Yellow_Herb
         Rate: 100
-      - Item: Crimson_Two-Handed_Axe
+      - Item: Scarlet_Twohand_Axe
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Kobold_Card
@@ -6730,7 +6746,7 @@ Body:
         Rate: 1
       - Item: Marionette_Doll
         Rate: 3
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Marionette_Card
@@ -7260,10 +7276,10 @@ Body:
         Rate: 20
       - Item: Undershirt
         Rate: 100
-      - Item: Crimson_Saber
+      - Item: Scarlet_Saber
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Pasana_Card
@@ -7311,7 +7327,7 @@ Body:
         Rate: 40
       - Item: Aloebera
         Rate: 15
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Petit_Card
@@ -8428,6 +8444,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Demon
+    RaceGroups:
+      Clocktower: true
     Element: Ghost
     ElementLevel: 3
     WalkSpeed: 150
@@ -8785,6 +8803,8 @@ Body:
     Race: Demihuman
     RaceGroups:
       Orc: true
+    RaceGroups:
+      Clocktower: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 300
@@ -8833,6 +8853,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Earth
     ElementLevel: 4
     WalkSpeed: 100
@@ -8887,6 +8909,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 100
@@ -9080,6 +9104,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 150
@@ -9458,6 +9484,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 4
     WalkSpeed: 250
@@ -9501,6 +9529,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 100
@@ -9520,10 +9550,10 @@ Body:
         Rate: 120
       - Item: Oridecon
         Rate: 189
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Saber
+      - Item: Scarlet_Saber
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Tirfing_Card
@@ -9551,6 +9581,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 200
@@ -9572,7 +9604,7 @@ Body:
         Rate: 120
       - Item: Oridecon
         Rate: 145
-      - Item: Crimson_Saber
+      - Item: Scarlet_Saber
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Executioner_Card
@@ -9744,6 +9776,9 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Clocktower: true
+      Rockridge: true
     Element: Poison
     ElementLevel: 2
     WalkSpeed: 100
@@ -9837,6 +9872,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Rockridge: true
     Element: Fire
     ElementLevel: 1
     WalkSpeed: 200
@@ -9934,6 +9971,8 @@ Body:
     Race: Demihuman
     RaceGroups:
       Orc: true
+    RaceGroups:
+      Clocktower: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 150
@@ -10028,6 +10067,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Clocktower: true
     Element: Wind
     ElementLevel: 1
     WalkSpeed: 300
@@ -10048,7 +10089,7 @@ Body:
         Rate: 5
       - Item: Seed_Of_Yggdrasil
         Rate: 45
-      - Item: Crimson_Spear
+      - Item: Scarlet_Spear
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Stem_Worm_Card
@@ -10076,6 +10117,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Fish
+    RaceGroups:
+      Clocktower: true
     Element: Poison
     ElementLevel: 1
     WalkSpeed: 400
@@ -10124,6 +10167,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Dark
     ElementLevel: 4
     WalkSpeed: 300
@@ -10144,7 +10189,7 @@ Body:
         Rate: 369
       - Item: Ebone_Armor
         Rate: 10
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Knight_Of_Abyss_Card
@@ -11885,7 +11930,7 @@ Body:
         Rate: 2
       - Item: Prohibition_Red_Candle
         Rate: 2
-      - Item: Crimson_Katar
+      - Item: Scarlet_Katar
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Injustice_Card
@@ -11982,7 +12027,7 @@ Body:
         Rate: 185
       - Item: Rough_Wind
         Rate: 150
-      - Item: Crimson_Lance
+      - Item: Scarlet_Lance
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Gryphon_Card
@@ -12721,6 +12766,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 200
@@ -12909,6 +12956,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Rockridge: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -13004,6 +13053,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 200
@@ -13396,7 +13447,7 @@ Body:
         Rate: 15
       - Item: Ghost_Bandana
         Rate: 1
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Skeleton_General_Card
@@ -13618,8 +13669,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
-    RaceGroups:
-      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 175
@@ -13641,7 +13690,7 @@ Body:
         Rate: 100
       - Item: Magician_Hat
         Rate: 5
-      - Item: Crimson_Bow
+      - Item: Scarlet_Bow
         Rate: 50
         RandomOptionGroup: None
       - Item: Owl_Baron_Card
@@ -13691,7 +13740,7 @@ Body:
         Rate: 150
       - Item: Royal_Jelly
         Rate: 100
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Kobold_Leader_Card
@@ -13933,7 +13982,7 @@ Body:
         Rate: 1
       - Item: Glass_Bead
         Rate: 250
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Am_Mut_Card
@@ -13982,7 +14031,7 @@ Body:
         Rate: 120
       - Item: White_Herb
         Rate: 1550
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Dark_Illusion_Card
@@ -14032,7 +14081,7 @@ Body:
         Rate: 20
       - Item: Double_Bound
         Rate: 15
-      - Item: Crimson_Two-Handed_Staff
+      - Item: Scarlet_Staff
         Rate: 50
         RandomOptionGroup: None
       - Item: Giant_Honet_Card
@@ -14367,7 +14416,7 @@ Body:
         Rate: 160
       - Item: Star_Crumb
         Rate: 250
-      - Item: Crimson_Two-Handed_Axe
+      - Item: Scarlet_Twohand_Axe
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Majoruros_Card
@@ -14663,7 +14712,7 @@ Body:
         Rate: 1240
       - Item: Honey
         Rate: 850
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Solider_Card
@@ -14852,10 +14901,10 @@ Body:
         Rate: 1
       - Item: Magician_Hat
         Rate: 1
-      - Item: Crimson_Lance
+      - Item: Scarlet_Lance
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Two-Handed_Staff
+      - Item: Scarlet_Staff
         Rate: 50
         RandomOptionGroup: None
       - Item: Owl_Duke_Card
@@ -16821,6 +16870,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 165
@@ -16868,6 +16919,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Demon
+    RaceGroups:
+      Clocktower: true
     Element: Poison
     ElementLevel: 3
     WalkSpeed: 170
@@ -17232,7 +17285,7 @@ Body:
         Rate: 5
       - Item: Fine_Sand
         Rate: 1200
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Sleeper_Card
@@ -17428,7 +17481,7 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Violy_Card
@@ -18016,7 +18069,7 @@ Body:
         Rate: 10
       - Item: Hakujin
         Rate: 5
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Miyabi_Ningyo_Card
@@ -18066,7 +18119,7 @@ Body:
         Rate: 20
       - Item: Earth_Scroll_1_5
         Rate: 100
-      - Item: Crimson_Huuma_Shuriken
+      - Item: Scarlet_Huuma
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Tengu_Card
@@ -18169,7 +18222,7 @@ Body:
         Rate: 5500
       - Item: Lariat
         Rate: 1
-      - Item: Crimson_Knuckles
+      - Item: Scarlet_Knuckle
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Blood_Butterfly_Card
@@ -18366,7 +18419,7 @@ Body:
         Rate: 800
       - Item: Strawberry
         Rate: 1000
-      - Item: Crimson_Whip
+      - Item: Scarlet_Wire
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Wild_Ginseng_Card
@@ -18468,10 +18521,10 @@ Body:
         Rate: 100
       - Item: Oriental_Lute
         Rate: 10
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Whip
+      - Item: Scarlet_Wire
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Wicked_Nymph_Card
@@ -18740,6 +18793,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Werner_Lab: true
     Element: Poison
     ElementLevel: 1
     WalkSpeed: 200
@@ -21750,7 +21805,7 @@ Body:
         Rate: 400
       - Item: Spike
         Rate: 1
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Li_Me_Mang_Ryang_Card
@@ -23702,7 +23757,7 @@ Body:
         Rate: 3
       - Item: Runstone_Mystic
         Rate: 300
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Tamruan_Card
@@ -24658,7 +24713,7 @@ Body:
         Rate: 200
       - Item: Jubilee
         Rate: 5000
-      - Item: Crimson_Revolver
+      - Item: Scarlet_Revolver
         Rate: 50
         RandomOptionGroup: None
       - Item: Metaling_Card
@@ -24942,7 +24997,7 @@ Body:
         Rate: 2
       - Item: Fluorescent_Liquid
         Rate: 30
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Porcellio_Card
@@ -25064,6 +25119,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 200
@@ -25326,7 +25383,7 @@ Body:
         Rate: 5000
       - Item: Super_Novice_Hat_
         Rate: 50
-      - Item: Crimson_Revolver
+      - Item: Scarlet_Revolver
         Rate: 50
         RandomOptionGroup: None
       - Item: Mole_Card
@@ -25467,7 +25524,7 @@ Body:
         Rate: 500
       - Item: Hair_Protector
         Rate: 50
-      - Item: Crimson_Knuckles
+      - Item: Scarlet_Knuckle
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Chung_E_Card
@@ -26533,10 +26590,10 @@ Body:
       - Item: Weak_Energy_Particle
         Rate: 250
         StealProtected: true
-      - Item: Crimson_Saber
+      - Item: Scarlet_Saber
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Ygnizem_Card
@@ -26593,7 +26650,7 @@ Body:
       - Item: Weak_Energy_Particle
         Rate: 250
         StealProtected: true
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Whikebain_Card
@@ -26648,10 +26705,10 @@ Body:
       - Item: Weak_Energy_Particle
         Rate: 250
         StealProtected: true
-      - Item: Crimson_Saber
+      - Item: Scarlet_Saber
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Two-Handed_Axe
+      - Item: Scarlet_Twohand_Axe
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Armaia_Card
@@ -26706,10 +26763,10 @@ Body:
       - Item: Weak_Energy_Particle
         Rate: 250
         StealProtected: true
-      - Item: Crimson_Knuckles
+      - Item: Scarlet_Knuckle
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Erend_Card
@@ -26764,10 +26821,10 @@ Body:
       - Item: Weak_Energy_Particle
         Rate: 250
         StealProtected: true
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: Crimson_Bow
+      - Item: Scarlet_Bow
         Rate: 50
         RandomOptionGroup: None
       - Item: Kavac_Card
@@ -26824,7 +26881,7 @@ Body:
       - Item: Weak_Energy_Particle
         Rate: 250
         StealProtected: true
-      - Item: Crimson_One-Handed_Staff
+      - Item: Scarlet_Rod
         Rate: 50
         RandomOptionGroup: None
       - Item: Rawrel_Card
@@ -26886,7 +26943,7 @@ Body:
         Rate: 1000
       - Item: Nagan
         Rate: 1000
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 500
         RandomOptionGroup: Group_5
       - Item: B_Ygnizem_Card
@@ -27982,6 +28039,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Demihuman
+    RaceGroups:
+      Clocktower: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -28002,7 +28061,7 @@ Body:
         Rate: 200
       - Item: Bib
         Rate: 100
-      - Item: Orc_Baby_Card
+      - Item: Orc_Baby_Card_Card
         Rate: 1
         StealProtected: true
   - Id: 1687
@@ -28708,7 +28767,7 @@ Body:
         Rate: 5
       - Item: Cursed_Seal
         Rate: 50
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Retribution_Card
@@ -28758,7 +28817,7 @@ Body:
         Rate: 50
       - Item: Cursed_Seal
         Rate: 50
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Solace_Card
@@ -30078,7 +30137,7 @@ Body:
         Rate: 10
       - Item: Curved_Sword
         Rate: 15
-      - Item: Crimson_Knuckles
+      - Item: Scarlet_Knuckle
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Aliot_Card
@@ -31878,6 +31937,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Rockridge: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 150
@@ -33428,7 +33489,7 @@ Body:
         Rate: 50
       - Item: Carnium
         Rate: 100
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Sword_Guardian_Card
@@ -33475,7 +33536,7 @@ Body:
         Rate: 4
       - Item: Carnium
         Rate: 100
-      - Item: Crimson_Bow
+      - Item: Scarlet_Bow
         Rate: 50
         RandomOptionGroup: None
       - Item: Bow_Guardian_Card
@@ -39295,7 +39356,7 @@ Body:
         Rate: 3500
       - Item: Shining_Scales
         Rate: 2000
-      - Item: Crimson_Spear
+      - Item: Scarlet_Spear
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Naga_Card
@@ -42121,7 +42182,7 @@ Body:
         Rate: 1
       - Item: Plate_Armor_
         Rate: 1
-      - Item: Crimson_Katar
+      - Item: Scarlet_Katar
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Headless_Mule_Card
@@ -42165,7 +42226,7 @@ Body:
         Rate: 1000
       - Item: Oridecon_Stone
         Rate: 40
-      - Item: Crimson_Knuckles
+      - Item: Scarlet_Knuckle
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Jaguar_Card
@@ -42211,7 +42272,7 @@ Body:
         Rate: 100
       - Item: Flower_Ring
         Rate: 200
-      - Item: Tucan_Card
+      - Item: Toucan_Card
         Rate: 1
         StealProtected: true
   - Id: 2074
@@ -47088,7 +47149,7 @@ Body:
         Rate: 500
       - Item: Twilight_Desert
         Rate: 1
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Siorava_Card
@@ -52299,10 +52360,10 @@ Body:
         Rate: 100
       - Item: Lemon
         Rate: 300
-      - Item: Crimson_Two-Handed_Axe
+      - Item: Scarlet_Twohand_Axe
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: N_Minorous_Card
+      - Item: Grave_Minorous_Card
         Rate: 1
         StealProtected: true
   - Id: 2354
@@ -52350,7 +52411,7 @@ Body:
         Rate: 250
       - Item: Yellow_Herb
         Rate: 1000
-      - Item: N_Mummy_Card
+      - Item: Grave_Mummy_Card
         Rate: 1
         StealProtected: true
   - Id: 2355
@@ -52400,7 +52461,7 @@ Body:
         Rate: 200
       - Item: Armlet_Of_Obedience
         Rate: 20
-      - Item: N_Verit_Card
+      - Item: Grave_Verit_Card
         Rate: 1
         StealProtected: true
   - Id: 2356
@@ -52447,7 +52508,7 @@ Body:
         Rate: 2
       - Item: Elunium_Stone
         Rate: 270
-      - Item: N_Mimic_Card
+      - Item: Grave_Mimic_Card
         Rate: 1
         StealProtected: true
   - Id: 2357
@@ -52526,7 +52587,7 @@ Body:
         Rate: 20
       - Item: Zargon
         Rate: 2500
-      - Item: N_Arclouse_Card
+      - Item: Grave_Arclouse_Card
         Rate: 1
         StealProtected: true
   - Id: 2359
@@ -52606,7 +52667,7 @@ Body:
         Rate: 150
       - Item: Elunium_Stone
         Rate: 100
-      - Item: N_Ancient_Mummy_Card
+      - Item: Grave_A_Mummy_Card
         Rate: 1
         StealProtected: true
   - Id: 2361
@@ -52693,10 +52754,10 @@ Body:
         Rate: 400
       - Item: Yggdrasilberry
         Rate: 3000
-      - Item: Crimson_Bible
+      - Item: Scarlet_Bible
         Rate: 50
         RandomOptionGroup: Group_5
-      - Item: N_Amon_Ra_Card
+      - Item: Grave_Amon_Ra_Card
         Rate: 1
         StealProtected: true
   - Id: 2363
@@ -56120,6 +56181,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 150
@@ -56164,6 +56227,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 100
@@ -56588,7 +56653,7 @@ Body:
       - Item: Broken_Horn
         Rate: 5000
         StealProtected: true
-      - Item: Faceworm_Queen_Card
+      - Item: Faceworm_Q_Card
         Rate: 1
         StealProtected: true
   - Id: 2530
@@ -56631,7 +56696,7 @@ Body:
         Rate: 10
       - Item: ShabbyOldScroll
         Rate: 100
-      - Item: Dark_Faceworm_Card
+      - Item: Faceworm_D_Card
         Rate: 1
         StealProtected: true
   - Id: 2531
@@ -56653,6 +56718,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Faceworm: true
     Element: Poison
     ElementLevel: 1
     WalkSpeed: 1000
@@ -56882,6 +56949,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Insect
+    RaceGroups:
+      Faceworm: true
     Element: Ghost
     ElementLevel: 4
     WalkSpeed: 1000
@@ -56915,6 +56984,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Faceworm: true
     Element: Ghost
     ElementLevel: 4
     WalkSpeed: 1000
@@ -56949,6 +57020,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Formless
+    RaceGroups:
+      Faceworm: true
     Element: Ghost
     ElementLevel: 4
     WalkSpeed: 1000
@@ -57047,7 +57120,7 @@ Body:
       - Item: Sticky_Mucus
         Rate: 1500
         StealProtected: true
-      - Item: Faceworm_Larva_Card
+      - Item: Faceworm_L_Card
         Rate: 1
         StealProtected: true
   - Id: 2542
@@ -57099,7 +57172,7 @@ Body:
       - Item: Fantastic_Cooking_Kits
         Rate: 1
         StealProtected: true
-      - Item: Irene_High_Elder_Card
+      - Item: Irene_Elder_Card
         Rate: 1
         StealProtected: true
   - Id: 2543
@@ -57335,7 +57408,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Arhi_Card
+      - Item: Archi_Card
         Rate: 1
         StealProtected: true
   - Id: 2550
@@ -57407,7 +57480,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Geffen_Shoplifter_Card
+      - Item: Geffen_Thief_Card
         Rate: 1
         StealProtected: true
   - Id: 2552
@@ -57442,7 +57515,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Geffen_Bully_Card
+      - Item: Geffen_Thug_Card
         Rate: 1
         StealProtected: true
   - Id: 2553
@@ -57477,7 +57550,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Geffen_Gang_Member_Card
+      - Item: Geffen_Gang_Card
         Rate: 1
         StealProtected: true
   - Id: 2554
@@ -57512,7 +57585,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Faymont_Card
+      - Item: Pa_Monk_Card
         Rate: 1
         StealProtected: true
   - Id: 2555
@@ -57652,7 +57725,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Ifodes_Card
+      - Item: Hyper_Death_Card
         Rate: 1
         StealProtected: true
   - Id: 2559
@@ -57687,7 +57760,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Licheniyes_Card
+      - Item: Rechenier_Card
         Rate: 1
         StealProtected: true
   - Id: 2560
@@ -57722,7 +57795,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Odoric_Card
+      - Item: Odorico_Card
         Rate: 1
         StealProtected: true
   - Id: 2561
@@ -57757,7 +57830,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Ju_Card
+      - Item: Jew_Card
         Rate: 1
         StealProtected: true
   - Id: 2562
@@ -57793,7 +57866,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Dwigh_Card
+      - Item: Dy_Card
         Rate: 1
         StealProtected: true
   - Id: 2563
@@ -57830,7 +57903,7 @@ Body:
     Modes:
       CanMove: true
     Drops:
-      - Item: Fay_Kanavian_Card
+      - Item: Fei_Kanabian_Card
         Rate: 1
         StealProtected: true
   - Id: 2564
@@ -58758,10 +58831,10 @@ Body:
         Rate: 100
       - Item: Oriental_Lute
         Rate: 10
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 250
         RandomOptionGroup: Group_5
-      - Item: Crimson_Whip
+      - Item: Scarlet_Wire
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Wicked_Nymph_Card
@@ -58941,7 +59014,7 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Violy_Card
@@ -58989,7 +59062,7 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Violy_Card
@@ -59037,7 +59110,7 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Violy_Card
@@ -59767,7 +59840,7 @@ Body:
         Rate: 3
       - Item: Runstone_Mystic
         Rate: 300
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Tamruan_Card
@@ -59862,7 +59935,7 @@ Body:
         Rate: 5
       - Item: Seed_Of_Yggdrasil
         Rate: 45
-      - Item: Crimson_Spear
+      - Item: Scarlet_Spear
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Stem_Worm_Card
@@ -60143,7 +60216,7 @@ Body:
         Rate: 1240
       - Item: Honey
         Rate: 850
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Solider_Card
@@ -60286,7 +60359,7 @@ Body:
         Rate: 50
       - Item: Cursed_Seal
         Rate: 50
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Solace_Card
@@ -60523,7 +60596,7 @@ Body:
         Rate: 5
       - Item: Fine_Sand
         Rate: 1200
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Sleeper_Card
@@ -60571,7 +60644,7 @@ Body:
         Rate: 5
       - Item: Fine_Sand
         Rate: 1200
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Sleeper_Card
@@ -60668,7 +60741,7 @@ Body:
         Rate: 15
       - Item: Ghost_Bandana
         Rate: 1
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Skeleton_General_Card
@@ -60716,7 +60789,7 @@ Body:
         Rate: 15
       - Item: Ghost_Bandana
         Rate: 1
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Skeleton_General_Card
@@ -61869,7 +61942,7 @@ Body:
         Rate: 5
       - Item: Cursed_Seal
         Rate: 50
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Retribution_Card
@@ -61918,7 +61991,7 @@ Body:
         Rate: 5
       - Item: Cursed_Seal
         Rate: 50
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Retribution_Card
@@ -61967,7 +62040,7 @@ Body:
         Rate: 5
       - Item: Cursed_Seal
         Rate: 50
-      - Item: Crimson_Two-Handed_Sword
+      - Item: Scarlet_Twohand_Sword
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Retribution_Card
@@ -62250,7 +62323,7 @@ Body:
         Rate: 30
       - Item: Clip
         Rate: 1
-      - Item: Crimson_One-Handed_Staff
+      - Item: Scarlet_Rod
         Rate: 250
         RandomOptionGroup: None
       - Item: Rawrel_Card
@@ -62615,7 +62688,7 @@ Body:
         Rate: 2
       - Item: Fluorescent_Liquid
         Rate: 30
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Porcellio_Card
@@ -63270,7 +63343,7 @@ Body:
         Rate: 40
       - Item: Aloebera
         Rate: 15
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Petit_Card
@@ -63318,7 +63391,7 @@ Body:
         Rate: 40
       - Item: Aloebera
         Rate: 15
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Petit_Card
@@ -63500,10 +63573,10 @@ Body:
         Rate: 20
       - Item: Undershirt
         Rate: 100
-      - Item: Crimson_Saber
+      - Item: Scarlet_Saber
         Rate: 250
         RandomOptionGroup: Group_5
-      - Item: Crimson_Dagger
+      - Item: Scarlet_Dagger
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Pasana_Card
@@ -63597,10 +63670,10 @@ Body:
         Rate: 1
       - Item: Magician_Hat
         Rate: 1
-      - Item: Crimson_Lance
+      - Item: Scarlet_Lance
         Rate: 250
         RandomOptionGroup: Group_5
-      - Item: Crimson_Two-Handed_Staff
+      - Item: Scarlet_Staff
         Rate: 250
         RandomOptionGroup: None
       - Item: Owl_Duke_Card
@@ -64640,7 +64713,7 @@ Body:
         Rate: 5000
       - Item: Super_Novice_Hat_
         Rate: 50
-      - Item: Crimson_Revolver
+      - Item: Scarlet_Revolver
         Rate: 250
         RandomOptionGroup: None
       - Item: Mole_Card
@@ -64690,7 +64763,7 @@ Body:
         Rate: 10
       - Item: Hakujin
         Rate: 5
-      - Item: Crimson_Violin
+      - Item: Scarlet_Viollin
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Miyabi_Ningyo_Card
@@ -65107,7 +65180,7 @@ Body:
         Rate: 200
       - Item: Jubilee
         Rate: 5000
-      - Item: Crimson_Revolver
+      - Item: Scarlet_Revolver
         Rate: 250
         RandomOptionGroup: None
       - Item: Metaling_Card
@@ -65155,7 +65228,7 @@ Body:
         Rate: 200
       - Item: Jubilee
         Rate: 5000
-      - Item: Crimson_Revolver
+      - Item: Scarlet_Revolver
         Rate: 250
         RandomOptionGroup: None
       - Item: Metaling_Card
@@ -65389,7 +65462,7 @@ Body:
         Rate: 1
       - Item: Marionette_Doll
         Rate: 3
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Marionette_Card
@@ -65675,7 +65748,7 @@ Body:
         Rate: 160
       - Item: Star_Crumb
         Rate: 250
-      - Item: Crimson_Two-Handed_Axe
+      - Item: Scarlet_Twohand_Axe
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Majoruros_Card
@@ -66175,7 +66248,7 @@ Body:
         Rate: 400
       - Item: Spike
         Rate: 1
-      - Item: Crimson_Mace
+      - Item: Scarlet_Mace
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Li_Me_Mang_Ryang_Card
@@ -66830,7 +66903,7 @@ Body:
         Rate: 2
       - Item: Prohibition_Red_Candle
         Rate: 2
-      - Item: Crimson_Katar
+      - Item: Scarlet_Katar
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Injustice_Card
@@ -68164,7 +68237,7 @@ Body:
         Rate: 20
       - Item: Double_Bound
         Rate: 15
-      - Item: Crimson_Two-Handed_Staff
+      - Item: Scarlet_Staff
         Rate: 250
         RandomOptionGroup: None
       - Item: Giant_Honet_Card
@@ -68950,7 +69023,7 @@ Body:
         Rate: 4
       - Item: White_Herb
         Rate: 2000
-      - Item: Crimson_Bible
+      - Item: Scarlet_Bible
         Rate: 50
         RandomOptionGroup: Group_5
       - Item: Evil_Druid_Card
@@ -70414,8 +70487,6 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
-    RaceGroups:
-      Clocktower: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -70463,8 +70534,6 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
-    RaceGroups:
-      Clocktower: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -71038,7 +71107,7 @@ Body:
         Rate: 5500
       - Item: Lariat
         Rate: 1
-      - Item: Crimson_Knuckles
+      - Item: Scarlet_Knuckle
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Blood_Butterfly_Card
@@ -71131,7 +71200,7 @@ Body:
         Rate: 15
       - Item: Old_Broom
         Rate: 20
-      - Item: Crimson_One-Handed_Staff
+      - Item: Scarlet_Rod
         Rate: 250
         RandomOptionGroup: None
       - Item: Bathory_Card
@@ -72007,7 +72076,7 @@ Body:
         Rate: 150
       - Item: Oridecon_Stone
         Rate: 50
-      - Item: Crimson_Lance
+      - Item: Scarlet_Lance
         Rate: 250
         RandomOptionGroup: Group_5
       - Item: Anacondaq_Card
@@ -72273,8 +72342,6 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
-    RaceGroups:
-      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 300
@@ -72518,9 +72585,9 @@ Body:
         Rate: 160
       - Item: Elunium_Stone
         Rate: 100
-      - Item: Twisted_Key_of_Time
+      - Item: Key_Of_Twisted_Time
         Rate: 15
-      - Item: Twisted_Key_of_Time
+      - Item: Key_Of_Twisted_Time
         Rate: 15
       - Item: Big_Ben_Card
         Rate: 1
@@ -72567,7 +72634,7 @@ Body:
         Rate: 100
       - Item: Zargon
         Rate: 750
-      - Item: Twisted_Key_of_Time
+      - Item: Key_Of_Twisted_Time
         Rate: 10
       - Item: Big_Bell_Card
         Rate: 1
@@ -72614,11 +72681,11 @@ Body:
         Rate: 425
       - Item: Memorize_Book
         Rate: 1
-      - Item: Twisted_Key_of_Time
+      - Item: Key_Of_Twisted_Time
         Rate: 1000
-      - Item: Twisted_Key_of_Time
+      - Item: Key_Of_Twisted_Time
         Rate: 1000
-      - Item: Nightmare_Timer_Keeper_Card
+      - Item: Time_Keeper_Card
         Rate: 1
         StealProtected: true
   - Id: 2919
@@ -72710,7 +72777,7 @@ Body:
         Rate: 1
       - Item: Old_Card_Album
         Rate: 2
-      - Item: Twisted_Key_of_Time
+      - Item: Key_Of_Twisted_Time
         Rate: 1500
       - Item: Elder_Branch
         Rate: 500
@@ -72787,8 +72854,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
-    RaceGroups:
-      Clocktower: true
     Element: Neutral
     ElementLevel: 3
     WalkSpeed: 195
@@ -74114,7 +74179,7 @@ Body:
         Rate: 20
       - Item: Elder_Branch
         Rate: 200
-      - Item: Decorated_Evil_Tree_Card
+      - Item: XM_Tree_Card
         Rate: 1
         StealProtected: true
   - Id: 2988
@@ -74202,7 +74267,7 @@ Body:
         Rate: 500
       - Item: Candy_Striper
         Rate: 500
-      - Item: Vicious_Cookie_Card
+      - Item: XM_Cookie_Card
         Rate: 1
         StealProtected: true
   - Id: 2990
@@ -74274,7 +74339,7 @@ Body:
         Rate: 50
       - Item: Unsent_Letter
         Rate: 50
-      - Item: Evil_Dwelling_Box_Card
+      - Item: XM_Mystcase_Card
         Rate: 1
         StealProtected: true
   - Id: 2992
@@ -74325,7 +74390,7 @@ Body:
         Rate: 1000
       - Item: Bloody_Coin
         Rate: 1000
-      - Item: Creepy_Demon_Card
+      - Item: XM_Lude_Card
         Rate: 1
         StealProtected: true
   - Id: 2993
@@ -74372,7 +74437,7 @@ Body:
         Rate: 1000
       - Item: Water_Of_Darkness
         Rate: 500
-      - Item: Malicious_Baby_Ghost_Card
+      - Item: XM_Hylozoist_Card
         Rate: 1
         StealProtected: true
   - Id: 2994
@@ -74419,7 +74484,7 @@ Body:
         Rate: 1000
       - Item: Damp_Darkness
         Rate: 100
-      - Item: Dancing_Marionette_Card
+      - Item: XM_Marionette_Card
         Rate: 1
         StealProtected: true
   - Id: 2995
@@ -74464,7 +74529,7 @@ Body:
         Rate: 1000
       - Item: Runstone_Rare
         Rate: 100
-      - Item: Abandoned_Teddy_Bear_Card
+      - Item: XM_Teddy_Bear_Card
         Rate: 1
         StealProtected: true
   - Id: 2996
@@ -75409,7 +75474,7 @@ Body:
     Drops:
       - Item: Monster_Blood
         Rate: 1500
-      - Item: Fire_Sandman_Card
+      - Item: Fire_Sand_Man_Card
         Rate: 1
         StealProtected: true
   - Id: 3022
@@ -76021,7 +76086,7 @@ Body:
         Rate: 300
       - Item: Great_Nature
         Rate: 25
-      - Item: Singing_Pere_Card
+      - Item: SingingPere_Card
         Rate: 1
         StealProtected: true
   - Id: 3070
@@ -76066,7 +76131,7 @@ Body:
         Rate: 300
       - Item: Mistic_Frozen
         Rate: 25
-      - Item: Playing_Pere_Card
+      - Item: PlayingPere_Card
         Rate: 1
         StealProtected: true
   - Id: 3071
@@ -76111,7 +76176,7 @@ Body:
         Rate: 300
       - Item: Great_Nature
         Rate: 25
-      - Item: Playing_Pere_Card
+      - Item: PlayingPere_Card
         Rate: 1
         StealProtected: true
   - Id: 3072
@@ -76156,7 +76221,7 @@ Body:
         Rate: 300
       - Item: Mistic_Frozen
         Rate: 25
-      - Item: Singing_Pere_Card
+      - Item: SingingPere_Card
         Rate: 1
         StealProtected: true
   - Id: 3073
@@ -76203,7 +76268,7 @@ Body:
         Rate: 200
       - Item: Jitterbug's_Tooth
         Rate: 7000
-      - Item: Awaken_Pere_Card
+      - Item: Grand_Pere_Card
         Rate: 1
         StealProtected: true
   - Id: 3074
@@ -76248,7 +76313,7 @@ Body:
         Rate: 10
       - Item: Brigan
         Rate: 3000
-      - Item: Twisted_Key_of_Time
+      - Item: Key_Of_Twisted_Time
         Rate: 3000
       - Item: One_Eyed_Glass_
         Rate: 20
@@ -76256,7 +76321,7 @@ Body:
         Rate: 5
       - Item: Menswear
         Rate: 3
-      - Item: Time_Holder_Card
+      - Item: Timeholder_Card
         Rate: 1
         StealProtected: true
 #  - Id: 3075
@@ -76933,7 +76998,7 @@ Body:
         Rate: 5000
       - Item: Jitterbug's_Tooth
         Rate: 1000
-      - Item: Jitterbug_Card
+      - Item: JitterbugCard
         Rate: 1
         StealProtected: true
   - Id: 3109
@@ -76977,7 +77042,7 @@ Body:
         Rate: 5000
       - Item: Jitterbug's_Tooth
         Rate: 1000
-      - Item: Jitterbug_Card
+      - Item: JitterbugCard
         Rate: 1
         StealProtected: true
 #  - Id: 3110
@@ -77522,7 +77587,7 @@ Body:
         Rate: 50
       - Item: OldTank
         Rate: 50
-      - Item: Kick_&_Kick_Card
+      - Item: KickAndKick_Card
         Rate: 1
         StealProtected: true
 #  - Id: 3129
@@ -78179,7 +78244,7 @@ Body:
       - Item: Dex_Dish07
         Rate: 3000
         StealProtected: true
-      - Item: Captain_Felock_Card
+      - Item: Felock_Card
         Rate: 1
         StealProtected: true
 #  - Id: 3182
@@ -78863,7 +78928,7 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 500
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 500
       - Item: Thief_Soul
         Rate: 500
@@ -78873,7 +78938,7 @@ Body:
       - Item: C_Circlet_Of_Bone
         Rate: 50
         StealProtected: true
-      - Item: V_B_Eremes_Card
+      - Item: Real_Eremes_Card
         Rate: 1
         StealProtected: true
   - Id: 3209
@@ -78914,7 +78979,7 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 500
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 500
       - Item: Acolyte_Soul
         Rate: 500
@@ -78922,7 +78987,7 @@ Body:
       - Item: C_Mitra
         Rate: 50
         StealProtected: true
-      - Item: V_B_Magaleta_Card
+      - Item: Real_Magaleta_Card
         Rate: 1
         StealProtected: true
   - Id: 3210
@@ -78963,7 +79028,7 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 500
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 500
       - Item: Mage_Soul
         Rate: 500
@@ -78971,7 +79036,7 @@ Body:
       - Item: C_Magic_Stone_Hat
         Rate: 50
         StealProtected: true
-      - Item: V_B_Katrinn_Card
+      - Item: Real_Katrinn_Card
         Rate: 1
         StealProtected: true
   - Id: 3211
@@ -79012,7 +79077,7 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 500
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 500
       - Item: Archer_Soul
         Rate: 500
@@ -79020,7 +79085,7 @@ Body:
       - Item: C_Camouflage_RabbitHood
         Rate: 50
         StealProtected: true
-      - Item: V_B_Shecil_Card
+      - Item: Real_Shecil_Card
         Rate: 1
         StealProtected: true
   - Id: 3212
@@ -79061,7 +79126,7 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 500
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 500
       - Item: Merchant_Soul
         Rate: 500
@@ -79071,7 +79136,7 @@ Body:
       - Item: C_Driver_Band_Y
         Rate: 50
         StealProtected: true
-      - Item: V_B_Harword_Card
+      - Item: Real_Harword_Card
         Rate: 1
         StealProtected: true
   - Id: 3213
@@ -79112,7 +79177,7 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 500
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 500
       - Item: Swordman_Soul
         Rate: 500
@@ -79120,7 +79185,7 @@ Body:
       - Item: C_Rune_Circlet
         Rate: 50
         StealProtected: true
-      - Item: V_B_Seyren_Card
+      - Item: Real_Seyren_Card
         Rate: 1
         StealProtected: true
   - Id: 3214
@@ -79344,7 +79409,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -79358,7 +79423,7 @@ Body:
         Rate: 10000
       - Item: Thief_Soul
         Rate: 10000
-      - Item: V_Eremes_Card
+      - Item: GuillotineCross_Card
         Rate: 1
         StealProtected: true
   - Id: 3221
@@ -79396,7 +79461,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -79410,7 +79475,7 @@ Body:
         Rate: 10000
       - Item: Acolyte_Soul
         Rate: 10000
-      - Item: V_Magaleta_Card
+      - Item: Archbishop_Card
         Rate: 1
         StealProtected: true
   - Id: 3222
@@ -79449,7 +79514,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -79463,7 +79528,7 @@ Body:
         Rate: 10000
       - Item: Archer_Soul
         Rate: 10000
-      - Item: V_Shecil_Card
+      - Item: Ranger_Card
         Rate: 1
         StealProtected: true
   - Id: 3223
@@ -79516,7 +79581,7 @@ Body:
         Rate: 10000
       - Item: Merchant_Soul
         Rate: 10000
-      - Item: V_Howard_Card
+      - Item: Mechanic_Card
         Rate: 1
         StealProtected: true
   - Id: 3224
@@ -79555,7 +79620,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -79569,7 +79634,7 @@ Body:
         Rate: 10000
       - Item: Mage_Soul
         Rate: 10000
-      - Item: V_Katrinn_Card
+      - Item: Warlock_Card
         Rate: 1
         StealProtected: true
   - Id: 3225
@@ -79621,7 +79686,7 @@ Body:
         Rate: 10000
       - Item: Swordman_Soul
         Rate: 10000
-      - Item: V_Seyren_Card
+      - Item: RuneKnight_Card
         Rate: 1
         StealProtected: true
   - Id: 3226
@@ -79662,9 +79727,9 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 600
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 400
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 200
       - Item: Swordman_Soul
         Rate: 500
@@ -79672,7 +79737,7 @@ Body:
         Rate: 50
       - Item: C_Protect_Of_Crown
         Rate: 50
-      - Item: V_B_Randel_Card
+      - Item: Real_Randel_Card
         Rate: 1
         StealProtected: true
   - Id: 3227
@@ -79713,9 +79778,9 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 600
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 400
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 200
       - Item: Merchant_Soul
         Rate: 500
@@ -79723,7 +79788,7 @@ Body:
         Rate: 50
       - Item: Chest_Of_Death
         Rate: 10
-      - Item: V_B_Flamel_Card
+      - Item: Real_Flamel_Card
         Rate: 1
         StealProtected: true
   - Id: 3228
@@ -79764,9 +79829,9 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 600
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 400
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 200
       - Item: Mage_Soul
         Rate: 500
@@ -79774,7 +79839,7 @@ Body:
         Rate: 50
       - Item: Chest_Of_Death
         Rate: 10
-      - Item: V_B_Celia_Card
+      - Item: Real_Ceila_Card
         Rate: 1
         StealProtected: true
   - Id: 3229
@@ -79815,9 +79880,9 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 600
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 400
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 200
       - Item: Acolyte_Soul
         Rate: 500
@@ -79825,7 +79890,7 @@ Body:
         Rate: 50
       - Item: Chest_Of_Death
         Rate: 10
-      - Item: V_B_Chen_Card
+      - Item: Real_Chen_Card
         Rate: 1
         StealProtected: true
   - Id: 3230
@@ -79866,9 +79931,9 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 600
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 400
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 200
       - Item: Thief_Soul
         Rate: 500
@@ -79876,7 +79941,7 @@ Body:
         Rate: 50
       - Item: Chest_Of_Death
         Rate: 10
-      - Item: V_B_Gertie_Card
+      - Item: Real_Gertie_Card
         Rate: 1
         StealProtected: true
   - Id: 3231
@@ -79917,9 +79982,9 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 600
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 400
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 200
       - Item: Archer_Soul
         Rate: 500
@@ -79927,7 +79992,7 @@ Body:
         Rate: 50
       - Item: Chest_Of_Death
         Rate: 10
-      - Item: V_B_Alphoccio_Card
+      - Item: Real_Alphoccio_Card
         Rate: 1
         StealProtected: true
   - Id: 3232
@@ -79968,9 +80033,9 @@ Body:
         Rate: 1000
       - Item: Pieces_Of_Sentiment
         Rate: 600
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 400
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 200
       - Item: Archer_Soul
         Rate: 500
@@ -79978,7 +80043,7 @@ Body:
         Rate: 50
       - Item: Chest_Of_Death
         Rate: 10
-      - Item: V_B_Trentini_Card
+      - Item: Real_Trentini_Card
         Rate: 1
         StealProtected: true
   - Id: 3233
@@ -80247,7 +80312,7 @@ Body:
         Rate: 10000
       - Item: Swordman_Soul
         Rate: 10000
-      - Item: V_Randel_Card
+      - Item: RoyalGuard_Card
         Rate: 1
         StealProtected: true
   - Id: 3241
@@ -80285,7 +80350,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -80299,7 +80364,7 @@ Body:
         Rate: 10000
       - Item: Merchant_Soul
         Rate: 10000
-      - Item: V_Flamel_Card
+      - Item: Genetic_Card
         Rate: 1
         StealProtected: true
   - Id: 3242
@@ -80337,7 +80402,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -80351,7 +80416,7 @@ Body:
         Rate: 10000
       - Item: Mage_Soul
         Rate: 10000
-      - Item: V_Celia_Card
+      - Item: Sorcerer_Card
         Rate: 1
         StealProtected: true
   - Id: 3243
@@ -80389,7 +80454,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -80403,7 +80468,7 @@ Body:
         Rate: 10000
       - Item: Acolyte_Soul
         Rate: 10000
-      - Item: V_Chen_Card
+      - Item: Sura_Card
         Rate: 1
         StealProtected: true
   - Id: 3244
@@ -80441,7 +80506,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -80455,7 +80520,7 @@ Body:
         Rate: 10000
       - Item: Thief_Soul
         Rate: 10000
-      - Item: V_Gertie_Card
+      - Item: ShadowChaser_Card
         Rate: 1
         StealProtected: true
   - Id: 3245
@@ -80493,7 +80558,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -80507,7 +80572,7 @@ Body:
         Rate: 10000
       - Item: Archer_Soul
         Rate: 10000
-      - Item: V_Alphoccio_Card
+      - Item: Minstrel_Card
         Rate: 1
         StealProtected: true
   - Id: 3246
@@ -80545,7 +80610,7 @@ Body:
     Modes:
       Mvp: true
     Drops:
-      - Item: Cursed_Fragment
+      - Item: Pieces_Of_Grudge
         Rate: 3000
       - Item: Manteau_Of_Fallen
         Rate: 150
@@ -80559,7 +80624,7 @@ Body:
         Rate: 10000
       - Item: Archer_Soul
         Rate: 10000
-      - Item: V_Trentini_Card
+      - Item: Wanderer_Card
         Rate: 1
         StealProtected: true
   - Id: 3247
@@ -80605,7 +80670,7 @@ Body:
         Rate: 1000
       - Item: Yggdrasil_Dust
         Rate: 500
-      - Item: Green_Cenere_Card
+      - Item: GreenCenere_Card
         Rate: 1
         StealProtected: true
   - Id: 3248
@@ -80655,7 +80720,7 @@ Body:
         Rate: 50
       - Item: OldTank
         Rate: 50
-      - Item: Repair_Robot_Turbo_Card
+      - Item: RepairRobot_T_Card
         Rate: 1
         StealProtected: true
   - Id: 3249
@@ -80705,7 +80770,7 @@ Body:
         Rate: 50
       - Item: OldTank
         Rate: 50
-      - Item: Exploration_Rover_Turbo_Card
+      - Item: ExplorationRover_T_Card
         Rate: 1
         StealProtected: true
   - Id: 3250
@@ -80754,7 +80819,7 @@ Body:
         Rate: 50
       - Item: OldTank
         Rate: 50
-      - Item: Scrap_Robots_Card
+      - Item: Scr_MT_Robots_Card
         Rate: 1
         StealProtected: true
   - Id: 3251
@@ -81392,7 +81457,7 @@ Body:
       - Item: Dehumidifiers
         Rate: 2000
         StealProtected: true
-      - Item: Frozen_Wolf_Card
+      - Item: Frozenwolf_Card
         Rate: 1
         StealProtected: true
   - Id: 3443
@@ -81428,7 +81493,7 @@ Body:
       - Item: Sandpaper
         Rate: 2000
         StealProtected: true
-      - Item: Taffy_Card
+      - Item: Tappy_Card
         Rate: 1
         StealProtected: true
   - Id: 3444
@@ -81495,7 +81560,7 @@ Body:
     DamageMotion: 576
     Ai: 04
     Drops:
-      - Item: Enhanced_Archer_Skeleton_Card
+      - Item: P_Archer_Skeleton_Card
         Rate: 1
         StealProtected: true
   - Id: 3446
@@ -81527,7 +81592,7 @@ Body:
     DamageMotion: 576
     Ai: 04
     Drops:
-      - Item: Enhanced_Skeleton_Card
+      - Item: P_Skeleton_Card
         Rate: 1
         StealProtected: true
   - Id: 3447
@@ -81559,7 +81624,7 @@ Body:
     DamageMotion: 432
     Ai: 04
     Drops:
-      - Item: Enhanced_Soldier_Skeleton_Card
+      - Item: P_Soldier_Skeleton_Card
         Rate: 1
         StealProtected: true
   - Id: 3448
@@ -81591,7 +81656,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Enhanced_Amdarais_Card
+      - Item: P_Amdarais_Card
         Rate: 1
         StealProtected: true
   - Id: 3449
@@ -81708,7 +81773,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Immortal_Corps_Card
+      - Item: Immotal_Corps_Card
         Rate: 1
         StealProtected: true
   - Id: 3452
@@ -81769,6 +81834,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Hearthunter: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 200
@@ -81885,7 +81952,7 @@ Body:
     DamageMotion: 300
     Ai: 04
     Drops:
-      - Item: Immortal_Corps_Card
+      - Item: Immotal_Corps_Card
         Rate: 1
         StealProtected: true
   - Id: 3488
@@ -81916,7 +81983,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Immortal_Corps_Card
+      - Item: Immotal_Corps_Card
         Rate: 1
         StealProtected: true
   - Id: 3489
@@ -81947,7 +82014,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Immortal_Corps_Card
+      - Item: Immotal_Corps_Card
         Rate: 1
         StealProtected: true
   - Id: 3490
@@ -82135,7 +82202,7 @@ Body:
         Rate: 10000
       - Item: Wing_Of_Fly
         Rate: 444
-      - Item: Wild_Hornet_Card
+      - Item: Wild_Honet_Card
         Rate: 1
         StealProtected: true
   - Id: 3499
@@ -82174,11 +82241,11 @@ Body:
         Rate: 571
       - Item: Wing_Of_Fly
         Rate: 571
-      - Item: Long_Foxtail_Staff
+      - Item: Long_Foxtail
         Rate: 416
-      - Item: Enriched_Foxtail_Staff
+      - Item: Abundantly_Foxtail
         Rate: 416
-      - Item: Sweet_Roda_Frog_Card
+      - Item: Sw_Roda_Frog_Card
         Rate: 1
         StealProtected: true
   - Id: 3500
@@ -82275,13 +82342,13 @@ Body:
     DamageMotion: 288
     Ai: 04
     Drops:
-      - Item: Dragonfly_Sitting_Foxtail_Staff
+      - Item: DragonFry_Foxtail
         Rate: 217
-      - Item: Large_Foxtail_Staff
+      - Item: BigSize_Foxtail
         Rate: 217
-      - Item: Basil
+      - Item: Dr_Life_Potion_02
         Rate: 256
-      - Item: Scout_Basilisk_Card
+      - Item: Basilisk1_Card
         Rate: 1
         StealProtected: true
   - Id: 3503
@@ -82313,7 +82380,7 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: Charge_Basilisk_Card
+      - Item: Basilisk2_Card
         Rate: 1
         StealProtected: true
   - Id: 3504
@@ -82345,7 +82412,7 @@ Body:
     DamageMotion: 504
     Ai: 04
     Drops:
-      - Item: Charge_Basilisk_Card
+      - Item: Basilisk2_Card
         Rate: 1
         StealProtected: true
   - Id: 3505
@@ -82407,7 +82474,7 @@ Body:
     Ai: 21
     Class: Boss
     Drops:
-      - Item: Jungle_Mandragora_Card
+      - Item: Ju_Mandragora_Card
         Rate: 1
         StealProtected: true
   - Id: 3507
@@ -82441,7 +82508,7 @@ Body:
     Modes:
       Detector: true
     Drops:
-      - Item: Fruit_Pom_Spider_Card
+      - Item: Fru_Pom_Spider_Card
         Rate: 1
         StealProtected: true
   - Id: 3508
@@ -82717,6 +82784,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Brute
+    RaceGroups:
+      Werner_Lab: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 150
@@ -82774,6 +82843,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Werner_Lab: true
     Element: Fire
     ElementLevel: 1
     WalkSpeed: 200
@@ -82896,6 +82967,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
+    RaceGroups:
+      Hearthunter: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 400
@@ -82941,6 +83014,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Hearthunter: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 200
@@ -82989,6 +83064,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Hearthunter: true
     Element: Dark
     ElementLevel: 2
     WalkSpeed: 150
@@ -83024,7 +83101,7 @@ Body:
       - Item: Sealed_Magic_Sword
         Rate: 10
         StealProtected: true
-      - Item: Heart_Hunter_Evil_Card
+      - Item: Evil_Card
         Rate: 1
         StealProtected: true
   - Id: 3629
@@ -83106,6 +83183,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Werner_Lab: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 250
@@ -83131,7 +83210,7 @@ Body:
       - Item: Build_Up_Potion_SS
         Rate: 200
         StealProtected: true
-      - Item: Humanoid_Chimera_Card
+      - Item: Human_Kimera_Card
         Rate: 1
         StealProtected: true
   - Id: 3632
@@ -83155,6 +83234,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Werner_Lab: true
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 250
@@ -83180,7 +83261,7 @@ Body:
       - Item: Build_Up_Potion_SS
         Rate: 200
         StealProtected: true
-      - Item: Material_Chimera_Card
+      - Item: Matter_Kimera_Card
         Rate: 1
         StealProtected: true
   - Id: 3633
@@ -83205,6 +83286,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Brute
+    RaceGroups:
+      Werner_Lab: true
     Element: Poison
     ElementLevel: 4
     WalkSpeed: 150
@@ -83237,7 +83320,7 @@ Body:
         Rate: 500
       - Item: Poison_Forged_Spear
         Rate: 10
-      - Item: Toxic_Enchanted_Chimera_Card
+      - Item: Venom_Kimera_Card
         Rate: 1
         StealProtected: true
 #  - Id: 3634
@@ -83572,7 +83655,7 @@ Body:
       - Item: Vigilante_Bow
         Rate: 50
         StealProtected: true
-      - Item: Shotgun_Buffalo_Bandit_Card
+      - Item: Cowraiders1_Card
         Rate: 1
         StealProtected: true
   - Id: 3737
@@ -83616,10 +83699,10 @@ Body:
       - Item: Monokage
         Rate: 50
         StealProtected: true
-      - Item: Huuma_Shuriken_of_Dancing_Petals
+      - Item: Huuma_Hundred_Petal
         Rate: 50
         StealProtected: true
-      - Item: Revolver_Buffalo_Bandit_Card
+      - Item: Cowraiders2_Card
         Rate: 1
         StealProtected: true
   - Id: 3738
@@ -83661,10 +83744,10 @@ Body:
       - Item: Well_Baked_Cookie
         Rate: 200
         StealProtected: true
-      - Item: Elemental_Origin
+      - Item: Origin_Of_Elemental
         Rate: 50
         StealProtected: true
-      - Item: Scimitar_Buffalo_Bandit_Card
+      - Item: Cowraiders3_Card
         Rate: 1
         StealProtected: true
   - Id: 3739
@@ -83791,8 +83874,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
-    RaceGroups:
-      Rockridge: true
     Element: Neutral
     ElementLevel: 2
     WalkSpeed: 250
@@ -83871,8 +83952,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
-    RaceGroups:
-      Rockridge: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 200
@@ -83900,8 +83979,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
-    RaceGroups:
-      Rockridge: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 120
@@ -83929,8 +84006,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
-    RaceGroups:
-      Rockridge: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
@@ -83982,7 +84057,7 @@ Body:
       - Item: Hippie_Rope
         Rate: 50
         StealProtected: true
-      - Item: Elite_Shotgun_Buffalo_Bandit_Card
+      - Item: E_Cowraiders1_Card
         Rate: 1
         StealProtected: true
   - Id: 3748
@@ -84021,13 +84096,13 @@ Body:
         Rate: 3000
       - Item: Brigan
         Rate: 2000
-      - Item: Huuma_Shuriken_of_Dancing_Petals
+      - Item: Huuma_Hundred_Petal
         Rate: 250
         StealProtected: true
       - Item: Monokage
         Rate: 100
         StealProtected: true
-      - Item: Elite_Revolver_Buffalo_Bandit_Card
+      - Item: E_Cowraiders2_Card
         Rate: 1
         StealProtected: true
   - Id: 3749
@@ -84066,17 +84141,17 @@ Body:
         Rate: 3000
       - Item: Brigan
         Rate: 2000
-      - Item: Elemental_Origin
+      - Item: Origin_Of_Elemental
         Rate: 150
       - Item: Steak
         Rate: 30
       - Item: Roasted_Beef
         Rate: 30
         StealProtected: true
-      - Item: Mine_Worker's_Pickaxe
+      - Item: Mine_Worker_Pickax
         Rate: 10
         StealProtected: true
-      - Item: Elite_Scimitar_Buffalo_Bandit_Card
+      - Item: E_Cowraiders3_Card
         Rate: 1
         StealProtected: true
 #  - Id: 3750
@@ -84176,6 +84251,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Insect
+    RaceGroups:
+      Rockridge: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 100
@@ -84195,7 +84272,7 @@ Body:
       - Item: Hippie_Guitar
         Rate: 50
         StealProtected: true
-      - Item: Marsh_Arclouse_Card
+      - Item: Rr_Arclouse_Card
         Rate: 1
         StealProtected: true
   - Id: 3788
@@ -84221,6 +84298,8 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Brute
+    RaceGroups:
+      Rockridge: true
     Element: Poison
     ElementLevel: 2
     WalkSpeed: 100
@@ -84238,7 +84317,7 @@ Body:
       - Item: Hippie_Rope
         Rate: 10
         StealProtected: true
-      - Item: Brown_Rat_Card
+      - Item: Rr_Cramp_Card
         Rate: 1
         StealProtected: true
 #  - Id: 3789
