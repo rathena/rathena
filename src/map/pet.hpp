@@ -148,7 +148,7 @@ struct pet_data {
 	struct view_data vd;
 	struct s_pet pet;
 	struct status_data status;
-	struct mob_db *db;
+	std::shared_ptr<s_mob_db> db;
 	int pet_hungry_timer;
 	int target_id;
 	struct {

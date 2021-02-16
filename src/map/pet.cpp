@@ -46,7 +46,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		return 0;
 	}
 
-	struct mob_db* mob = mobdb_search_aegisname( mob_name.c_str() );
+	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( mob_name.c_str() );
 
 	if( mob == nullptr ){
 		this->invalidWarning( node["Target"], "Mob %s does not exist and cannot be used as a pet.\n", mob_name.c_str() );
@@ -412,7 +412,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 				return 0;
 			}
 
-			struct mob_db* mob = mobdb_search_aegisname( target_name.c_str() );
+			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( target_name.c_str() );
 
 			if( mob == nullptr ){
 				this->invalidWarning( evolutionNode["Target"], "Evolution target %s does not exist.\n", target_name.c_str() );
@@ -553,7 +553,7 @@ static int pet_reload_sub( struct map_session_data *sd, va_list args ){
 	pet_clear_support_bonuses(sd);
 
 	// Relink the pet to the new database entry
-	pd->db = mob_db( pet_db_ptr->class_ );
+	pd->db = mob_db.find( pet_db_ptr->class_ );
 
 	if( battle_config.pet_status_support ){
 		run_script( pet_db_ptr->pet_support_script, 0, sd->bl.id, 0 );
@@ -666,7 +666,7 @@ bool pet_create_egg(struct map_session_data *sd, t_itemid item_id)
 	if (!pet)
 		return false; //No pet egg here.
 
-	struct mob_db* mdb = mob_db(pet->class_);
+	std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
 	if( mdb == nullptr ){
 		return false;
@@ -676,7 +676,7 @@ bool pet_create_egg(struct map_session_data *sd, t_itemid item_id)
 		return false; // Inventory full
 
 	sd->catch_target_class = pet->class_;
-	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
+	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 
 	return true;
 }
@@ -1026,7 +1026,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.id = npc_get_new_npc_id();
 
 	pd->master = sd;
-	pd->db = mob_db(pet->class_);
+	pd->db = mob_db.find(pet->class_);
 	memcpy(&pd->pet, pet, sizeof(struct s_pet));
 	status_set_viewdata(&pd->bl, pet->class_);
 	unit_dataset(&pd->bl);
@@ -1066,7 +1066,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->masterteleport_timer = INVALID_TIMER;
 
 	if( !pet->rename_flag ){
-		safestrncpy( sd->pd->pet.name, pd->db->jname, NAME_LENGTH );
+		safestrncpy( sd->pd->pet.name, pd->db->jname.c_str(), NAME_LENGTH );
 	}
 
 	return true;
@@ -1254,7 +1254,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	// If the target is a valid pet, we have a few exceptions
 	if( pet ){
 		//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
-		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE)){
+		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUSIMMUNE)){
 			sd->catch_target_class = md->mob_id;
 		//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
 		}else if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID){
@@ -1284,9 +1284,9 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		status_kill(&md->bl);
 		clif_pet_roulette(sd,1);
 
-		struct mob_db *mdb = mob_db(pet->class_);
+		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 	} else {
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
@@ -2270,9 +2270,9 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	sd->pd->pet.egg_id = new_data->EggID;
 	pet_set_intimate(sd->pd, new_data->intimate);
 	if( !sd->pd->pet.rename_flag ){
-		struct mob_db* mdb = mob_db( pet_id );
+		std::shared_ptr<s_mob_db> mdb = mob_db.find( pet_id );
 
-		safestrncpy(sd->pd->pet.name, mdb->jname, NAME_LENGTH);
+		safestrncpy(sd->pd->pet.name, mdb->jname.c_str(), NAME_LENGTH);
 	}
 	status_set_viewdata(&sd->pd->bl, pet_id);
 
