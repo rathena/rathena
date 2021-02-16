@@ -100,11 +100,6 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		const YAML::Node& targets = node["Targets"];
 
 		for( const YAML::Node& targetNode : targets ){
-			if( achievement->targets.size() >= MAX_ACHIEVEMENT_OBJECTIVES ){
-				this->invalidWarning( targetNode, "Target list exceeds the maximum of %d, skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
-				break;
-			}
-
 			uint16 targetId;
 
 			if( !this->asUInt16( targetNode, "Id", targetId ) ){
@@ -116,13 +111,18 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				continue;
 			}
 
+			if( achievement->targets.size() >= MAX_ACHIEVEMENT_OBJECTIVES ){
+				this->invalidWarning( targetNode, "Target list exceeds the maximum of %d, skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
+				break;
+			}
+
 			std::shared_ptr<achievement_target> target = rathena::util::map_find( achievement->targets, targetId );
 			bool targetExists = target != nullptr;
 
 			if( !targetExists ){
 				if( !this->nodeExists( targetNode, "Count" ) && !this->nodeExists( targetNode, "Mob" ) ){
 					this->invalidWarning( targetNode, "Target has no data specified, skipping.\n" );
-					continue;
+					return 0;
 				}
 
 				target = std::make_shared<achievement_target>();
@@ -138,7 +138,8 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				target->count = count;
 			}else{
 				if( !targetExists ){
-					target->count = 1;
+					if (target->count == 0)
+						target->count = 1;
 				}
 			}
 
@@ -158,7 +159,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 
 				if (mob == nullptr) {
 					this->invalidWarning(targetNode["Mob"], "Target Mob %s does not exist, skipping.\n", mob_name.c_str());
-					continue;
+					return 0;
 				}
 
 				uint32 mob_id = mob->vd.class_;
@@ -228,27 +229,25 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		const YAML::Node &dependentNode = node["Dependents"];
 
 		for( const auto it : dependentNode ){
-			if (achievement->dependent_ids.size() >= MAX_ACHIEVEMENT_DEPENDENTS) {
-				this->invalidWarning(dependentNode, "Maximum amount (%d) of dependent achievements reached, skipping.\n", MAX_ACHIEVEMENT_DEPENDENTS);
-				break;
-			}
-
 			uint32 dependent_achievement_id = it.first.as<uint32>();
-			auto dependent_achievement = std::find(achievement->dependent_ids.begin(), achievement->dependent_ids.end(), dependent_achievement_id);
-
-			if (dependent_achievement != achievement->dependent_ids.end()) {
-				this->invalidWarning(dependentNode, "Dependent achievement %d is already part of the list, skipping.\n", dependent_achievement_id);
-				continue;
-			}
-
 			bool active;
 
 			if (!this->asBool(dependentNode, std::to_string(dependent_achievement_id), active))
 				return 0;
 
-			if (active)
+			if (active) {
+				if (std::find(achievement->dependent_ids.begin(), achievement->dependent_ids.end(), dependent_achievement_id) != achievement->dependent_ids.end()) {
+					this->invalidWarning(dependentNode, "Dependent achievement %d is already part of the list, skipping.\n", dependent_achievement_id);
+					continue;
+				}
+
+				if (achievement->dependent_ids.size() >= MAX_ACHIEVEMENT_DEPENDENTS) {
+					this->invalidWarning(dependentNode, "Maximum amount (%d) of dependent achievements reached, skipping.\n", MAX_ACHIEVEMENT_DEPENDENTS);
+					break;
+				}
+
 				achievement->dependent_ids.push_back(dependent_achievement_id);
-			else
+			} else
 				util::vector_erase_if_exists(achievement->dependent_ids, dependent_achievement_id);
 		}
 	}
@@ -308,6 +307,11 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			uint32 title;
 
 			if( !this->asUInt32( rewardNode, "TitleId", title ) ){
+				return 0;
+			}
+
+			if (title < TITLE_BASE || title > TITLE_MAX) {
+				this->invalidWarning(rewardNode["TitleId"], "Reward Title ID %u does not exist (%hu~%hu), skipping.\n", title, TITLE_BASE, TITLE_MAX);
 				return 0;
 			}
 
@@ -878,14 +882,10 @@ bool achievement_check_condition( struct script_code* condition, struct map_sess
  * @return True if all target values meet the requirements or false otherwise
  */
 static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count) {
-	if (std::find_if(ad->targets.begin(), ad->targets.end(),
+	return std::find_if(ad->targets.begin(), ad->targets.end(),
 		[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
 		return current_count[target.first] < target.second->count;
-	}
-	) == ad->targets.end())
-		return true;
-
-	return false;
+	}) == ad->targets.end();
 }
 
 /**
@@ -1122,16 +1122,20 @@ void achievement_read_db(void)
 {	
 	achievement_db.load();
 
-	for (auto &achit : achievement_db) {
-		const auto ach = achit.second;
+	for (const auto &achit : achievement_db) {
+		const std::shared_ptr<s_achievement_db> ach = achit.second;
+		bool changed = false;
 
-		for (size_t i = 0; i < ach->dependent_ids.size(); i++) {
-			if (!achievement_db.exists(ach->dependent_ids[i])) {
-				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", ach->dependent_ids[i], ach->achievement_id);
-				ach->dependent_ids.erase(ach->dependent_ids.begin() + i);
-				ach->dependent_ids.shrink_to_fit();
+		for (auto dep = ach->dependent_ids.begin(); dep != ach->dependent_ids.end(); dep++) {
+			if (!achievement_db.exists(*dep)) {
+				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", *dep, ach->achievement_id);
+				ach->dependent_ids.erase(dep--);
+				changed = true;
 			}
 		}
+
+		if (changed)
+			ach->dependent_ids.shrink_to_fit();
 	}
 
 	achievement_level_db.load();

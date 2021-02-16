@@ -74,7 +74,7 @@ YAML::Emitter body;
 
 // Constants for conversion
 std::unordered_map<t_itemid, std::string> aegis_itemnames;
-std::unordered_map<t_itemid, t_itemid> aegis_itemviewid;
+std::unordered_map<uint32, t_itemid> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
 std::unordered_map<const char *, int64> constants;
@@ -503,7 +503,7 @@ static bool parse_item_constants_txt(const char *path) {
 		str[21] = str[21] + 1;  //skip the first left curly
 		*p = '\0';              //null the last right curly
 
-		t_itemid view_id = strtoul(str[18], nullptr, 10);
+		uint32 view_id = strtoul(str[18], nullptr, 10);
 		char *name = trim(str[1]);
 
 		aegis_itemnames[item_id] = std::string(name);

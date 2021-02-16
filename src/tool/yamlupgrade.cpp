@@ -9,11 +9,12 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 		const std::string name_ext = name + ".yml";
 		const std::string from = path + "/" + name_ext;
 		const std::string to = path + "/" + name + "-upgrade.yml";
+		uint32 source_version = getHeaderVersion(inNode);
 
 		inNode.reset();
 		inNode = YAML::LoadFile(from);
 
-		if (fileExists(from) && getHeaderVersion(inNode) < version) {
+		if (fileExists(from) && source_version < version) {
 			if (!askConfirmation("Found the file \"%s\", which requires an upgrade.\nDo you want to convert it now? (Y/N)\n", from.c_str())) {
 				continue;
 			}
@@ -23,6 +24,8 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 					continue;
 				}
 			}
+
+			ShowNotice("Upgrade process has begun.\n");
 
 			std::ofstream out;
 
@@ -39,7 +42,7 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 			if (inNode["Body"].IsDefined()) {
 				prepareBody();
 
-				if (!lambda(path, name_ext)) {
+				if (!lambda(path, name_ext, source_version)) {
 					out.close();
 					return false;
 				}
@@ -88,8 +91,8 @@ int do_init(int argc, char** argv) {
 		path_db_import
 	};
 
-	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext) -> bool {
-		return upgrade_achievement_db(path + name_ext);
+	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext, uint32 source_version) -> bool {
+		return upgrade_achievement_db(path + name_ext, source_version);
 	})) {
 		return 0;
 	}
@@ -101,7 +104,7 @@ void do_final(void) {
 }
 
 // Implementation of the upgrade functions
-static bool upgrade_achievement_db(std::string file) {
+static bool upgrade_achievement_db(std::string file, const uint32 source_version) {
 	size_t entries = 0;
 
 	for (const auto &input : inNode["Body"]) {
@@ -111,8 +114,14 @@ static bool upgrade_achievement_db(std::string file) {
 		std::string constant = input["Group"].as<std::string>();
 
 		constant.erase(0, 3); // Remove "AG_"
-		if (constant.compare("Hear") == 0 || constant.compare("See") == 0)
+		if (constant.compare("Chat") == 0) // Chat -> Chatting
+			constant.insert(4, "ting");
+		else if (constant.compare("Hear") == 0 || constant.compare("See") == 0)
 			constant = "Chatting"; // Aegis treats these as general "Talk to NPC" achievements.
+		else if (constant.compare("Refine") == 0) { // Refine -> Enchant
+			constant.erase(0, 6);
+			constant = "Enchant" + constant;
+		}
 		body << YAML::Key << "Group" << YAML::Value << name2Upper(constant);
 		body << YAML::Key << "Name" << YAML::Value << input["Name"];
 
@@ -123,8 +132,17 @@ static bool upgrade_achievement_db(std::string file) {
 			for (const auto &it : input["Target"]) {
 				body << YAML::BeginMap;
 				body << YAML::Key << "Id" << YAML::Value << it["Id"];
-				if (it["MobID"].IsDefined())
-					body << YAML::Key << "Mob" << YAML::Value << *util::umap_find(aegis_mobnames, it["MobID"].as<uint16>());
+				if (it["MobID"].IsDefined()) {
+					uint16 mob_id = it["MobID"].as<uint16>();
+					std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+
+					if (mob_name == nullptr) {
+						ShowWarning("mob_avail reading: Invalid mob-class %hu, Mob not read.\n", mob_id);
+						return false;
+					}
+
+					body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+				}
 				if (it["Count"].IsDefined() && it["Count"].as<int32>() > 1)
 					body << YAML::Key << "Count" << YAML::Value << it["Count"];
 				body << YAML::EndMap;
@@ -150,11 +168,27 @@ static bool upgrade_achievement_db(std::string file) {
 			body << YAML::EndMap;
 		}
 
+		/**
+		 * Example usage for adding label at specific version.
+		if (source_version < ?) {
+			body << YAML::Key << "CustomLabel" << YAML::Value << "Unique";
+		}
+		*/
+
 		if (input["Reward"].IsDefined()) {
 			body << YAML::Key << "Rewards";
 			body << YAML::BeginMap;
-			if (input["Reward"]["ItemID"].IsDefined())
-				body << YAML::Key << "Item" << YAML::Value << *util::umap_find(aegis_itemnames, input["Reward"]["ItemID"].as<t_itemid>());
+			if (input["Reward"]["ItemID"].IsDefined()) {
+				t_itemid item_id = input["Reward"]["ItemID"].as<t_itemid>();
+				std::string *item_name = util::umap_find(aegis_itemnames, item_id);
+
+				if (item_name == nullptr) {
+					ShowError("Reward item name for item ID %u is not known.\n", item_id);
+					return false;
+				}
+
+				body << YAML::Key << "Item" << YAML::Value << *item_name;
+			}
 			if (input["Reward"]["Amount"].IsDefined() && input["Reward"]["Amount"].as<uint16>() > 1)
 				body << YAML::Key << "Amount" << YAML::Value << input["Reward"]["Amount"];
 			if (input["Reward"]["Script"].IsDefined())
@@ -170,7 +204,7 @@ static bool upgrade_achievement_db(std::string file) {
 		entries++;
 	}
 
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

@@ -6,6 +6,4 @@
 
 #include "yaml.hpp"
 
-static bool upgrade_achievement_db(std::string file);
-
 #endif /* YAMLUPGRADE_HPP */

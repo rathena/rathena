@@ -70,6 +70,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				}
 			}
 
+			ShowNotice("Conversion process has begun.\n");
+
 			std::ofstream out;
 
 			body.~Emitter();
@@ -632,7 +634,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 
 		if (strtoul(str[7], nullptr, 10) != 0) {
-			t_itemid *headtop_item_id = util::umap_find(aegis_itemviewid, (t_itemid)strtoul(str[7], nullptr, 10));
+			t_itemid *headtop_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[7], nullptr, 10));
 
 			if (headtop_item_id == nullptr) {
 				ShowError("Item ID for view ID %u (head top) is not known.\n", strtoul(str[7], nullptr, 10));
@@ -650,7 +652,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 
 		if (strtoul(str[8], nullptr, 10) != 0) {
-			t_itemid *headmid_item_id = util::umap_find(aegis_itemviewid, (t_itemid)strtoul(str[8], nullptr, 10));
+			t_itemid *headmid_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[8], nullptr, 10));
 
 			if (headmid_item_id == nullptr) {
 				ShowError("Item ID for view ID %u (head mid) is not known.\n", strtoul(str[8], nullptr, 10));
@@ -668,17 +670,17 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 
 		if (strtoul(str[9], nullptr, 10) != 0) {
-			t_itemid *headlow_item_id = util::umap_find(aegis_itemviewid, (t_itemid)strtoul(str[9], nullptr, 10));
+			t_itemid *headlow_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[9], nullptr, 10));
 
 			if (headlow_item_id == nullptr) {
-				ShowError("Item ID for view ID %hu (head low) is not known.\n", strtoul(str[9], nullptr, 10));
+				ShowError("Item ID for view ID %u (head low) is not known.\n", strtoul(str[9], nullptr, 10));
 				return false;
 			}
 
 			std::string *headlow_item_name = util::umap_find(aegis_itemnames, *headlow_item_id);
 
 			if (headlow_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (head low) is not known.\n", *headlow_item_id);
+				ShowError("Item name for item ID %u (head low) is not known.\n", *headlow_item_id);
 				return false;
 			}
 
