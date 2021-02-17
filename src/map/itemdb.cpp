@@ -1270,6 +1270,8 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, bool identi
 	else
 		get_amt = data->amount;
 
+	tmp.amount = get_amt;
+
 	// Do loop for non-stackable item
 	for (i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;

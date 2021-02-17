@@ -10337,6 +10337,8 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_CHAT)
 		sd->idletime_hom = last_tick;
 
+	//achievement_update_objective(sd, AG_CHATTING, 1, 1); // !TODO: Confirm how this achievement is triggered
+
 	return true;
 }
 
