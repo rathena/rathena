@@ -5211,29 +5211,27 @@
 	export_constant(USW_ALL);
 
 	/* achievement groups */
-	export_constant2("AG_ADD_FRIEND", AG_ADD_FRIEND);
-	export_constant2("AG_ADVENTURE", AG_ADVENTURE);
-	export_constant2("AG_BABY", AG_BABY);
-	export_constant2("AG_BATTLE", AG_BATTLE);
-	export_constant2("AG_CHATTING", AG_CHAT);
-	export_constant2("AG_CHATTING_COUNT", AG_CHAT_COUNT);
-	export_constant2("AG_CHATTING_CREATE", AG_CHAT_CREATE);
-	export_constant2("AG_CHATTING_DYING", AG_CHAT_DYING);
-	export_constant2("AG_EAT", AG_EAT);
-	export_constant2("AG_GET_ITEM", AG_GET_ITEM);
-	export_constant2("AG_GET_ZENY", AG_GET_ZENY);
-	export_constant2("AG_GOAL_ACHIEVE", AG_GOAL_ACHIEVE);
-	export_constant2("AG_GOAL_LEVEL", AG_GOAL_LEVEL);
-	export_constant2("AG_GOAL_STATUS", AG_GOAL_STATUS);
-	export_constant2("AG_HEAR", AG_HEAR);
-	export_constant2("AG_JOB_CHANGE", AG_JOB_CHANGE);
-	export_constant2("AG_MARRY", AG_MARRY);
-	export_constant2("AG_PARTY", AG_PARTY);
-	export_constant2("AG_ENCHANT_FAIL", AG_REFINE_FAIL);
-	export_constant2("AG_ENCHANT_SUCCESS", AG_REFINE_SUCCESS);
-	export_constant2("AG_SEE", AG_SEE);
-	export_constant2("AG_SPEND_ZENY", AG_SPEND_ZENY);
-	export_constant2("AG_TAMING", AG_TAMING);
+	export_constant(AG_ADD_FRIEND);
+	export_constant(AG_ADVENTURE);
+	export_constant(AG_BABY);
+	export_constant(AG_BATTLE);
+	export_constant(AG_CHATTING);
+	export_constant(AG_CHATTING_COUNT);
+	export_constant(AG_CHATTING_CREATE);
+	export_constant(AG_CHATTING_DYING);
+	export_constant(AG_EAT);
+	export_constant(AG_GET_ITEM);
+	export_constant(AG_GET_ZENY);
+	export_constant(AG_GOAL_ACHIEVE);
+	export_constant(AG_GOAL_LEVEL);
+	export_constant(AG_GOAL_STATUS);
+	export_constant(AG_JOB_CHANGE);
+	export_constant(AG_MARRY);
+	export_constant(AG_PARTY);
+	export_constant(AG_ENCHANT_FAIL);
+	export_constant(AG_ENCHANT_SUCCESS);
+	export_constant(AG_SPEND_ZENY);
+	export_constant(AG_TAMING);
 
 	/* achievement info */
 	export_constant(ACHIEVEINFO_COUNT1);
