@@ -11,12 +11,17 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 		const std::string name_ext = name + ".yml";
 		const std::string from = path + "/" + name_ext;
 		const std::string to = path + "/" + name + "-upgrade.yml";
-		uint32 source_version = getHeaderVersion(inNode);
 
 		inNode.reset();
-		inNode = YAML::LoadFile(from);
 
-		if (fileExists(from) && source_version < version) {
+		if (fileExists(from)) {
+			inNode = YAML::LoadFile(from);
+			uint32 source_version = getHeaderVersion(inNode);
+
+			if (source_version >= version) {
+				continue;
+			}
+
 			if (!askConfirmation("Found the file \"%s\", which requires an upgrade.\nDo you want to convert it now? (Y/N)\n", from.c_str())) {
 				continue;
 			}
