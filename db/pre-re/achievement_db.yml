@@ -1831,7 +1831,7 @@ Body:
     Dependents:
       200001: true
     Rewards:
-    #  Item: Advanced_Jao_King_Hat
+    #  Item: BLACKDEATHKING_GOLDEN
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
       TitleId: 1002
     Score: 70
