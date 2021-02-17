@@ -25,7 +25,7 @@ YAMLUPGRADE_OBJ = obj_all/yamlupgrade.o
 #####################################################################
 .PHONY : all mapcache csv2yaml yaml2sql yamlupgrade clean help
 
-all: mapcache csv2yaml yaml2sql
+all: mapcache csv2yaml yaml2sql yamlupgrade
 
 mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ)
 	@echo "	LD	$@"
