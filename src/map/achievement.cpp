@@ -112,11 +112,6 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				continue;
 			}
 
-			if( achievement->targets.size() >= MAX_ACHIEVEMENT_OBJECTIVES ){
-				this->invalidWarning( targetNode, "Target list exceeds the maximum of %d, skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
-				break;
-			}
-
 			std::shared_ptr<achievement_target> target = rathena::util::map_find( achievement->targets, targetId );
 			bool targetExists = target != nullptr;
 
@@ -136,11 +131,20 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 					return 0;
 				}
 
+				if( count == 0 ){
+					if( targetExists ){
+						achievement->targets.erase( targetId );
+						continue;
+					}else{
+						this->invalidWarning( targetNode["Count"], "Target count has to be > 0, skipping.\n" );
+						return 0;
+					}
+				}
+
 				target->count = count;
 			}else{
 				if( !targetExists ){
-					if (target->count == 0)
-						target->count = 1;
+					target->count = 1;
 				}
 			}
 
