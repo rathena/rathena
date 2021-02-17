@@ -2,6 +2,7 @@
 /autom4te.cache/requests
 /autom4te.cache/traces.0
 #Global
+.vscode
 .Apple*
 .DS_Store
 .clang_complete

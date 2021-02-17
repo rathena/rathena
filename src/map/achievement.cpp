@@ -25,6 +25,7 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "map.hpp"
+#include "mob.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "script.hpp"
@@ -156,7 +157,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 					return 0;
 				}
 
-				if( mob_db( mob_id ) == nullptr ){
+				if( mob_db.find( mob_id ) == nullptr ){
 					this->invalidWarning( targetNode["MobID"], "Unknown monster ID %d, skipping.\n", mob_id );
 					return 0;
 				}
