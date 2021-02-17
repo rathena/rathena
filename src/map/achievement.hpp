@@ -109,6 +109,7 @@ public:
 	void clear();
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode( const YAML::Node& node );
+	void loadingFinished();
 
 	// Additional
 	bool mobexists(uint32 mob_id);

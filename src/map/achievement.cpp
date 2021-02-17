@@ -343,6 +343,25 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	return 1;
 }
 
+void AchievementDatabase::loadingFinished(){
+	for (const auto &achit : achievement_db) {
+		const std::shared_ptr<s_achievement_db> ach = achit.second;
+
+		for (auto dep = ach->dependent_ids.begin(); dep != ach->dependent_ids.end(); dep++) {
+			if (!achievement_db.exists(*dep)) {
+				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", *dep, ach->achievement_id);
+				dep = ach->dependent_ids.erase(dep);
+
+				if (dep == ach->dependent_ids.end()) {
+					break;
+				}
+			}
+		}
+
+		ach->dependent_ids.shrink_to_fit();
+	}
+}
+
 AchievementDatabase achievement_db;
 
 /**
@@ -1117,38 +1136,10 @@ int achievement_update_objective_sub(block_list *bl, va_list ap)
 }
 
 /**
- * Loads achievements from the achievement db.
- */
-void achievement_read_db(void)
-{	
-	achievement_db.load();
-
-	for (const auto &achit : achievement_db) {
-		const std::shared_ptr<s_achievement_db> ach = achit.second;
-		bool changed = false;
-
-		for (auto dep = ach->dependent_ids.begin(); dep != ach->dependent_ids.end(); dep++) {
-			if (!achievement_db.exists(*dep)) {
-				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", *dep, ach->achievement_id);
-				ach->dependent_ids.erase(dep--);
-				changed = true;
-			}
-		}
-
-		if (changed)
-			ach->dependent_ids.shrink_to_fit();
-	}
-
-	achievement_level_db.load();
-}
-
-/**
  * Reloads the achievement database
  */
 void achievement_db_reload(void)
 {
-	if (!battle_config.feature_achievement)
-		return;
 	do_final_achievement();
 	do_init_achievement();
 }
@@ -1160,7 +1151,8 @@ void do_init_achievement(void)
 {
 	if (!battle_config.feature_achievement)
 		return;
-	achievement_read_db();
+	achievement_db.load();
+	achievement_level_db.load();
 }
 
 /**
