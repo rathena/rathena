@@ -23734,7 +23734,7 @@ BUILDIN_FUNC(channel_getopt) {
 
 	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
 		ShowError("buildin_channel_getopt: Channel name '%s' is invalid.\n", chname);
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -23748,14 +23748,14 @@ BUILDIN_FUNC(channel_getopt) {
 		case CHAN_OPT_CAN_CHAT:
 		case CHAN_OPT_CAN_LEAVE:
 		case CHAN_OPT_AUTOJOIN:
-			script_pushint(st, ch->opt);
+			script_pushint(st, (ch->opt & opt) != 0);
 			break;
 		case CHAN_OPT_MSG_DELAY:
 			script_pushint(st, ch->msg_delay);
 			break;
 		default:
 			ShowError("buildin_channel_getopt: Invalid option %d!\n", opt);
-			script_pushint(st, 0);
+			script_pushint(st, false);
 			return SCRIPT_CMD_FAILURE;
 	}
 
