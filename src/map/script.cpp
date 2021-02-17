@@ -10467,9 +10467,9 @@ BUILDIN_FUNC(makepet)
 
 	sd->catch_target_class = mob_id;
 
-	struct mob_db* mdb = mob_db(pet->class_);
+	std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
-	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname );
+	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str() );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10619,7 +10619,6 @@ BUILDIN_FUNC(getmobdrops)
 {
 	int class_ = script_getnum(st,2);
 	int i, j = 0;
-	struct mob_db *mob;
 
 	if( !mobdb_checkid(class_) )
 	{
@@ -10627,7 +10626,7 @@ BUILDIN_FUNC(getmobdrops)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	mob = mob_db(class_);
+	std::shared_ptr<s_mob_db> mob = mob_db.find(class_);
 
 	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
 	{
@@ -13774,14 +13773,16 @@ BUILDIN_FUNC(strmobinfo)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	std::shared_ptr<s_mob_db> mob = mob_db.find(class_);
+
 	switch (num) {
-	case 1: script_pushstrcopy(st,mob_db(class_)->name); break;
-	case 2: script_pushstrcopy(st,mob_db(class_)->jname); break;
-	case 3: script_pushint(st,mob_db(class_)->lv); break;
-	case 4: script_pushint(st,mob_db(class_)->status.max_hp); break;
-	case 5: script_pushint(st,mob_db(class_)->status.max_sp); break;
-	case 6: script_pushint(st,mob_db(class_)->base_exp); break;
-	case 7: script_pushint(st,mob_db(class_)->job_exp); break;
+	case 1: script_pushstrcopy(st,mob->name.c_str()); break;
+	case 2: script_pushstrcopy(st, mob->jname.c_str()); break;
+	case 3: script_pushint(st,mob->lv); break;
+	case 4: script_pushint(st,mob->status.max_hp); break;
+	case 5: script_pushint(st,mob->status.max_sp); break;
+	case 6: script_pushint(st,mob->base_exp); break;
+	case 7: script_pushint(st,mob->job_exp); break;
 	default:
 		script_pushint(st,0);
 		break;
@@ -17443,13 +17444,13 @@ BUILDIN_FUNC(setitemscript)
  *-------------------------------------------------------*/
 BUILDIN_FUNC(addmonsterdrop)
 {
-	struct mob_db *mob;
+	std::shared_ptr<s_mob_db> mob;
 	int rate;
 
 	if(script_isstring(st, 2))
-		mob = mob_db(mobdb_searchname(script_getstr(st,2)));
+		mob = mob_db.find(mobdb_searchname(script_getstr(st,2)));
 	else
-		mob = mob_db(script_getnum(st,2));
+		mob = mob_db.find(script_getnum(st,2));
 
 	t_itemid item_id=script_getnum(st,3);
 	rate=script_getnum(st,4);
@@ -17497,12 +17498,12 @@ BUILDIN_FUNC(addmonsterdrop)
  *-------------------------------------------------------*/
 BUILDIN_FUNC(delmonsterdrop)
 {
-	struct mob_db *mob;
+	std::shared_ptr<s_mob_db> mob;
 
 	if(script_isstring(st, 2))
-		mob = mob_db(mobdb_searchname(script_getstr(st,2)));
+		mob = mob_db.find(mobdb_searchname(script_getstr(st,2)));
 	else
-		mob = mob_db(script_getnum(st,2));
+		mob = mob_db.find(script_getnum(st,2));
 
 	t_itemid item_id=script_getnum(st,3);
 
@@ -17539,7 +17540,6 @@ BUILDIN_FUNC(delmonsterdrop)
  *------------------------------------------*/
 BUILDIN_FUNC(getmonsterinfo)
 {
-	struct mob_db *mob;
 	int mob_id;
 
 	mob_id	= script_getnum(st,2);
@@ -17551,9 +17551,11 @@ BUILDIN_FUNC(getmonsterinfo)
 			script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	mob = mob_db(mob_id);
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
 	switch ( script_getnum(st,3) ) {
-		case MOB_NAME:		script_pushstrcopy(st,mob->jname); break;
+		case MOB_NAME:		script_pushstrcopy(st,mob->jname.c_str()); break;
 		case MOB_LV:		script_pushint(st,mob->lv); break;
 		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
 		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
