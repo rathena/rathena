@@ -1798,7 +1798,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bCritical,30;
+      bonus bCriticalRate,30;
       bonus bAspdRate,8;
   - Id: 1174
     AegisName: Executioner_C
@@ -1855,7 +1855,7 @@ Body:
     EquipLevelMin: 55
     Refineable: true
     Script: |
-      bonus bCritical,10;
+      bonus bCriticalRate,10;
       if (readparam(bStr)>=80)
          bonus bBreakArmorRate,500;
   - Id: 1176
