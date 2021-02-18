@@ -2726,11 +2726,8 @@ int map_addinstancemap(int src_m, int instance_id)
 	struct map_data *dst_map = map_getmapdata(dst_m);
 
 	// Alter the name
-	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
-	instance_gen_mapname(name, instance_id, dst_map->name);
-	
-	dst_map->name[MAP_NAME_LENGTH - 1] = '\0';
+	instance_generate_mapname(src_m, instance_id, dst_map->name);
 
 	dst_map->m = dst_m;
 	dst_map->instance_id = instance_id;

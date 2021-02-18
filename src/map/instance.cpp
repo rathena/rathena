@@ -710,24 +710,21 @@ int instance_addmap(int instance_id) {
 
 /**
  * Fills outname with the name of the instance map name
- * @param inname: Name of map to use
- * @param instance_id: Instance id to prepend
- * @param outname: Pointer to allocated memory that will be filled in. Should be size MAP_NAME_LENGTH
+ * @param map_id: Mapid to use
+ * @param instance_id: Instance id
+ * @param outname: Pointer to allocated memory that will be filled in
  */
-void instance_gen_mapname(const char * inname, int instance_id, char * outname) {
-	char iname[MAP_NAME_LENGTH];
-	if (outname == nullptr)
-		return;
+void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAME_LENGTH]) {
 
-	strncpy(iname, inname, MAP_NAME_LENGTH - 1);
-
-	if ((strchr(iname, '@') == nullptr) && strlen(iname) > 8) {
-		memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
-		snprintf(outname, MAP_NAME_LENGTH, "%d#", (instance_id % 1000));
-	} else
-		snprintf(outname, MAP_NAME_LENGTH, "%.3d", (instance_id % 1000));
-
-	strncat(outname, iname, MAP_NAME_LENGTH - strlen(outname) - 1);
+#if MAX_MAP_PER_SERVER > 9999
+	#error This algorithm is only safe for up to 9999 maps, change at your own risk.
+#endif
+	// Since we can't truncate integers like we can strings, allocate enough of a buffer
+	// to hold two integers, a symbol, and \0, then copy it to outname
+	char name[30];
+	snprintf(name, 30, "%d#%d", map_id, (instance_id % 1000000));
+	memcpy(outname, name, MAP_NAME_LENGTH - 1);
+	outname[MAP_NAME_LENGTH - 1] = 0;
 }
 
 /**
@@ -753,7 +750,7 @@ int16 instance_mapid(int16 m, int instance_id)
 	for (const auto &it : idata->map) {
 		if (it.src_m == m) {
 			char alt_name[MAP_NAME_LENGTH];
-			instance_gen_mapname(name, instance_id, alt_name);
+			instance_generate_mapname(m, instance_id, alt_name);
 			return map_mapname2mapid(alt_name);
 		}
 	}
