@@ -4752,6 +4752,18 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			mob->status.dmotion = 0;
 	}
 	
+	if (this->nodeExists(node, "DamageTaken")) {
+		uint16 damage;
+
+		if (!this->asUInt16Rate(node, "DamageTaken", damage, 100))
+			return 0;
+
+		mob->damagetaken = damage;
+	} else {
+		if (!exists)
+			mob->damagetaken = 100;
+	}
+
 	if (this->nodeExists(node, "Ai")) {
 		std::string ai;
 

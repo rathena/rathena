@@ -1797,6 +1797,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		pc_overheat(tsd, (element == ELE_FIRE ? 3 : 1));
 	}
 
+	if (bl->type == BL_MOB) { // Reduces damage received for naturally spawned Green Aura MVP
+		mob_data *md = BL_CAST(BL_MOB, bl);
+
+		if (md && md->spawn_timer != INVALID_TIMER && md->state.boss && md->db->damagetaken != 100)
+			damage = i64max(damage * (100 - md->db->damagetaken) / 100, 1);
+	}
+
 	return damage;
 }
 
