@@ -17687,7 +17687,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				clif_upgrademessage(sd, 0, item->nameid);
 				clif_inventorylist(sd);
 				clif_refine(sd->fd,0,idx,item->refine);
-				achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, ditem->wlv, item->refine);
+				achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, ditem->wlv, item->refine);
 				if (ep)
 					pc_equipitem(sd,idx,ep);
 				clif_misceffect(&sd->bl,3);
@@ -17713,7 +17713,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 					pc_unequipitem(sd,idx,3);
 				clif_upgrademessage(sd, 1, item->nameid);
 				clif_refine(sd->fd,1,idx,item->refine);
-				achievement_update_objective(sd, AG_REFINE_FAIL, 1, 1);
+				achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, 1);
 				pc_delitem(sd,idx,1,0,2, LOG_TYPE_OTHER);
 				clif_misceffect(&sd->bl,2);
 				clif_emotion(&sd->bl, ET_HUK);
