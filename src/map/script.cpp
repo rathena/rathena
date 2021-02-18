@@ -23725,6 +23725,44 @@ BUILDIN_FUNC(channel_setopt) {
 }
 
 /**
+ * Get channel options
+ * channel_getopt <chname>,<option>;
+ */
+BUILDIN_FUNC(channel_getopt) {
+	Channel *ch;
+	const char *chname = script_getstr(st, 2);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_getopt: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int opt = script_getnum(st, 3);
+
+	switch (opt) {
+		case CHAN_OPT_ANNOUNCE_SELF:
+		case CHAN_OPT_ANNOUNCE_JOIN:
+		case CHAN_OPT_ANNOUNCE_LEAVE:
+		case CHAN_OPT_COLOR_OVERRIDE:
+		case CHAN_OPT_CAN_CHAT:
+		case CHAN_OPT_CAN_LEAVE:
+		case CHAN_OPT_AUTOJOIN:
+			script_pushint(st, (ch->opt & opt) != 0);
+			break;
+		case CHAN_OPT_MSG_DELAY:
+			script_pushint(st, ch->msg_delay);
+			break;
+		default:
+			ShowError("buildin_channel_getopt: Invalid option %d!\n", opt);
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
  * Set channel color
  * channel_setcolor "<chname>",<color>;
  * @author [Cydh]
@@ -25607,6 +25645,7 @@ struct script_function buildin_func[] = {
 	// Channel System
 	BUILDIN_DEF(channel_create,"ss?????"),
 	BUILDIN_DEF(channel_setopt,"sii"),
+	BUILDIN_DEF(channel_getopt,"si"),
 	BUILDIN_DEF(channel_setcolor,"si"),
 	BUILDIN_DEF(channel_setpass,"ss"),
 	BUILDIN_DEF(channel_setgroup,"si*"),
