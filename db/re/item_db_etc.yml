@@ -21011,9 +21011,10 @@ Body:
       NoAuction: true
   - Id: 6672
     AegisName: Shard_of_Gray
-    Name: Shard of Gray
+    Name: Gray Shard
     Type: Etc
-    Buy: 10
+    Sell: 1
+    Weight: 1
     Flags:
       BuyingStore: true
     Trade:
