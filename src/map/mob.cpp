@@ -284,7 +284,7 @@ void mvptomb_destroy(struct mob_data *md) {
 static bool mobdb_searchname_sub(uint16 mob_id, const char * const str, bool full_cmp)
 {
 	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
-	
+
 	if (mob == nullptr)
 		return false;
 	
@@ -3564,7 +3564,7 @@ int mob_skill_id2skill_idx(int mob_id,uint16 skill_id)
 	for (int i = 0; i < skills.size(); i++) {
 		if (skills[i]->skill_id == skill_id)
 			return i;
-}
+	}
 
 	return -1;
 }
@@ -4460,7 +4460,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
 			this->invalidWarning(node["Defense"], "Invalid monster defense %d, capping...\n", def);
 			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
-	}
+		}
 
 		mob->status.def = static_cast<defType>(def);
 	} else {
@@ -4477,7 +4477,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
 			this->invalidWarning(node["MagicDefense"], "Invalid monster magic defense %d, capping...\n", def);
 			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
-	}
+		}
 
 		mob->status.mdef = static_cast<defType>(def);
 	} else {
@@ -4528,10 +4528,10 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		mob->status.int_ = max(1, stat);
-			}else{
+	} else {
 		if (!exists)
 			mob->status.int_ = 1;
-			}
+	}
 
 	if (this->nodeExists(node, "Dex")) {
 		uint16 stat;
@@ -4543,7 +4543,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 	} else {
 		if (!exists)
 			mob->status.dex = 1;
-		}
+	}
 
 	if (this->nodeExists(node, "Luk")) {
 		uint16 stat;
@@ -4692,10 +4692,10 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		mob->status.def_ele = static_cast<e_element>(constant);
-			}else{
+	} else {
 		if (!exists)
 			mob->status.def_ele = ELE_NEUTRAL;
-			}
+	}
 
 	if (this->nodeExists(node, "ElementLevel")) {
 		uint16 level;
@@ -4882,7 +4882,7 @@ void MobDatabase::loadingFinished() {
 			case CLASS_EVENT:
 				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_FIXEDITEMDROP);
 				break;
-}
+		}
 
 		if (battle_config.view_range_rate != 100)
 			mob->range2 = cap_value(mob->range2, 1, mob->range2 * battle_config.view_range_rate / 100);
