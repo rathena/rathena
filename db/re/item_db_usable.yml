@@ -46909,7 +46909,7 @@ Body:
       itemskill "AL_INCAGI",1;
       heal -15,0;
   - Id: 22901
-    AegisName: Question_Old_Blue_Box
+    AegisName: BlueboxOfQuestions
     Name: Mysterious Blue Box
     Type: Usable
     Buy: 20
