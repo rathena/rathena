@@ -502,7 +502,7 @@ S_Spawn:
 	.@x = 48 + getarg(0);
 	monster 'map_def01$,.@x,74, "Invader!", 'mob_id,1;
 	.@gid = $@mobid[0];
-	setunitdata .@gid, UMOB_MODE, ( MD_CANMOVE|MD_NORANDOM_WALK );
+	setunitdata .@gid, UMOB_MODE, ( MD_CANMOVE|MD_NORANDOMWALK );
 	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
 	mob_setidleevent .@gid, 'npc_name$ + "::OnIdle" + getarg(0);
 	end;
@@ -736,7 +736,7 @@ OnTimer8500:
 S_Spawn:
 	monster 'map_def02$,48,67, "Go!", 'mob_id,1;
 	if (getarg(0) == true)
-		setunitdata $@mobid[0], UMOB_MODE, ( MD_CANMOVE|MD_NORANDOM_WALK|MD_AGGRESSIVE|MD_CANATTACK );
+		setunitdata $@mobid[0], UMOB_MODE, ( MD_CANMOVE|MD_NORANDOMWALK|MD_AGGRESSIVE|MD_CANATTACK );
 	.@gid = $@mobid[0];
 	emotion ET_SURPRISE, .@gid;
 	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
