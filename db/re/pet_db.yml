@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -1277,7 +1277,7 @@ Body:
         bonus bHPrecovRate,50;
       }
   - Mob: NINE_TAIL
-    TameItem: Sap_Liquid
+    TameItem: Sap_Jelly
     EggItem: Nine_Tail_Egg
     FoodItem: Suspicious_Bottle
     Fullness: 4
@@ -1296,7 +1296,7 @@ Body:
     Evolution:
       - Target: CAT_O_NINE_TAIL
         ItemRequirements:
-          - Item: Sap_Liquid
+          - Item: Sap_Jelly
             Amount: 3
           - Item: Fox_Tail
             Amount: 999
@@ -1305,7 +1305,7 @@ Body:
           - Item: Nine_Tail_Card
             Amount: 1
   - Mob: GREMLIN
-    TameItem: Unprocessed_Parts
+    TameItem: Airship_Part
     EggItem: Gremlin_Egg
     FoodItem: Cheap_Lubricant
     Fullness: 4
@@ -1324,7 +1324,7 @@ Body:
     Evolution:
       - Target: HODREMLIN
         ItemRequirements:
-          - Item: Unprocessed_Parts
+          - Item: Airship_Part
             Amount: 3
           - Item: Damp_Darkness
             Amount: 50
@@ -1333,7 +1333,7 @@ Body:
           - Item: Hodremlin_Card
             Amount: 1
   - Mob: MUMMY
-    TameItem: Elixir_Bandages
+    TameItem: Elixir_Bandage
     EggItem: Mummy_Egg
     FoodItem: Mementos
     Fullness: 7
@@ -1350,7 +1350,7 @@ Body:
     Evolution:
       - Target: ANCIENT_MUMMY
         ItemRequirements:
-          - Item: Elixir_Bandages
+          - Item: Elixir_Bandage
             Amount: 3
           - Item: Rune_Of_Darkness
             Amount: 200
@@ -1359,7 +1359,7 @@ Body:
           - Item: Ancient_Mummy_Card
             Amount: 1
   - Mob: TEDDY_BEAR
-    TameItem: Small_Needle_Kit
+    TameItem: Little_Dall_Needle
     EggItem: Teddy_Bear_Egg
     FoodItem: Cotton_Tufts
     Fullness: 3
@@ -1376,7 +1376,7 @@ Body:
     Evolution:
       - Target: XM_TEDDY_BEAR
         ItemRequirements:
-          - Item: Small_Needle_Kit
+          - Item: Little_Dall_Needle
             Amount: 3
           - Item: Cursed_Seal
             Amount: 300
@@ -1632,7 +1632,7 @@ Body:
         bonus bHit,4;
       }
   - Mob: AM_MUT
-    EggItem: Am_Mut_Egg
+    EggItem: Ammut_Egg
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -1653,7 +1653,7 @@ Body:
         bonus bMatkRate,1;
       }
   - Mob: CAT_O_NINE_TAIL
-    EggItem: Cat_o_Nine_Tail_Egg
+    EggItem: Cat_O_Nine_Tail_Egg
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -1691,7 +1691,7 @@ Body:
           - Item: Munak_Card
             Amount: 10
   - Mob: GRAND_PECO
-    EggItem: Grand_Peco_Peco_Egg
+    EggItem: Grand_Peco_Egg
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -1767,7 +1767,7 @@ Body:
         bonus bHit,1;
       }
   - Mob: XM_TEDDY_BEAR
-    EggItem: Xm_Teddy_Bear_Egg
+    EggItem: Xm_Teddybear_Egg
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -1815,7 +1815,7 @@ Body:
         bonus bAtk,3;
       }
   - Mob: DR_LUNATIC
-    EggItem: Dr_Lunatic_Egg
+    EggItem: Leaf_Lunatic_Egg
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -1844,7 +1844,7 @@ Body:
         bonus bAtk,2;
       }
   - Mob: LITTLE_ISIS
-    EggItem: Little_Isis_Egg
+    EggItem: Littleisis_Egg
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -1865,7 +1865,7 @@ Body:
         bonus bAtkRate,1;
       }
   - Mob: DIABOLIC2
-    EggItem: Diabolic_2_Egg
+    EggItem: Diabolic_Egg2
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
@@ -1898,7 +1898,7 @@ Body:
         bonus bMatkRate,1;
       }
   - Mob: DELETER_2
-    EggItem: Fire_Deleter_Egg
+    EggItem: Red_Deleter_Egg2
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120

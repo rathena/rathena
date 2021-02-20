@@ -5909,7 +5909,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
 
-	if (md->master_id || status_has_mode(md_status, MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE ||
+	if (md->master_id || status_has_mode(md_status, MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE) ||
 		map_getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
@@ -5931,14 +5931,14 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
-	for( i = 0; i < MAX_STEAL_DROP; i++ )
+	for( i = 0; i < MAX_MOB_DROP; i++ )
 		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].rate
 #ifndef RENEWAL
 		* rate/100.
 #endif
 		)
 			break;
-	if( i == MAX_STEAL_DROP )
+	if( i == MAX_MOB_DROP )
 		return false;
 
 	itemid = md->db->dropitem[i].nameid;
@@ -5968,7 +5968,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname, i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -5992,7 +5992,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	md = (TBL_MOB*)target;
 	target_lv = status_get_lv(target);
 
-	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE)
+	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE))
 		return 0;
 
 	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
@@ -9639,7 +9639,7 @@ void pc_changelook(struct map_session_data *sd,int type,int val) {
 /*==========================================
  * Give an option (type) to player (sd) and display it to client
  *------------------------------------------*/
-void pc_setoption(struct map_session_data *sd,int type)
+void pc_setoption(struct map_session_data *sd,int type, int subtype)
 {
 	int p_type, new_look=0;
 	nullpo_retv(sd);
@@ -9678,45 +9678,18 @@ void pc_setoption(struct map_session_data *sd,int type)
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
 		clif_status_load(&sd->bl,EFST_FALCON,0);
 
-	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER ) {
-		if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
-			clif_status_load(&sd->bl,EFST_WUGRIDER,1);
-			status_calc_pc(sd,SCO_NONE);
-		} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
-			clif_status_load(&sd->bl,EFST_WUGRIDER,0);
-			status_calc_pc(sd,SCO_NONE);
-		}
+	if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
+		clif_status_load(&sd->bl,EFST_WUGRIDER,1);
+		status_calc_pc(sd,SCO_NONE);
+	} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
+		clif_status_load(&sd->bl,EFST_WUGRIDER,0);
+		status_calc_pc(sd,SCO_NONE);
 	}
-	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
-		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
-			status_calc_pc(sd,SCO_NONE);
-			for (const auto &sc : mado_statuses) {
-				uint16 skill_id = status_sc2skill(sc);
 
-				if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-					status_change_end(&sd->bl,sc,INVALID_TIMER);
-			}
-			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
-
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
-			clif_status_load( &sd->bl, EFST_MADOGEAR, 1 );
-#endif
-		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-			status_calc_pc(sd,SCO_NONE);
-			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_HOVERING,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MAGNETICFIELD,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
-			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
-
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
-			clif_status_load( &sd->bl, EFST_MADOGEAR, 0 );
-#endif
-		}
+	if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
+		sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, subtype, INFINITE_TICK);
+	} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
+		status_change_end(&sd->bl, SC_MADOGEAR, INVALID_TIMER);
 	}
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
@@ -9820,16 +9793,22 @@ void pc_setriding(struct map_session_data* sd, int flag)
 	}
 }
 
-/*==========================================
+/**
  * Give player a mado
- *------------------------------------------*/
-void pc_setmadogear(struct map_session_data* sd, int flag)
+ * @param sd: Player
+ * @param flag: Enable or disable mado
+ * @param type: See pc.hpp::e_mado_type (Default is MADO_ROBOT)
+ */
+void pc_setmadogear(struct map_session_data *sd, bool flag, e_mado_type type)
 {
-	if( flag ){
-		if( pc_checkskill(sd,NC_MADOLICENCE) > 0 )
-			pc_setoption(sd, sd->sc.option|OPTION_MADOGEAR);
-	} else if( pc_ismadogear(sd) ){
-			pc_setoption(sd, sd->sc.option&~OPTION_MADOGEAR);
+	if ((sd->class_ & MAPID_THIRDMASK) != MAPID_MECHANIC)
+		return;
+
+	if (flag) {
+		if (pc_checkskill(sd, NC_MADOLICENCE) > 0)
+			pc_setoption(sd, sd->sc.option | OPTION_MADOGEAR, type);
+	} else if (pc_ismadogear(sd)) {
+		pc_setoption(sd, sd->sc.option & ~OPTION_MADOGEAR);
 	}
 }
 
@@ -11825,7 +11804,7 @@ void pc_delspiritcharm(struct map_session_data *sd, int count, int type)
  * @param type: 1 - EXP, 2 - Item Drop
  * @return Penalty rate
  */
-uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, struct mob_db* mob, mob_data* md ){
+uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, std::shared_ptr<s_mob_db> mob, mob_data* md ){
 	// No player was attached, we don't use any modifier (100 = rates are not touched)
 	if( sd == nullptr ){
 		return 100;
@@ -11842,7 +11821,7 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 		return 100;
 	}
 
-	if( ( type == PENALTY_DROP || type == PENALTY_MVP_DROP ) && status_has_mode( &mob->status, MD_FIXED_ITEMDROP )  ){
+	if( ( type == PENALTY_DROP || type == PENALTY_MVP_DROP ) && status_has_mode( &mob->status, MD_FIXEDITEMDROP )  ){
 		return 100;
 	}
 
