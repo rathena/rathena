@@ -2283,7 +2283,7 @@ ACMD_FUNC(killmonster)
 
 	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
-	drop_flag = strcmp(parent_cmd, "killmonster2");
+	drop_flag = strcmpi(parent_cmd, "killmonster2");
 
 	map_foreachinmap(atkillmonster_sub, map_id, BL_MOB, -drop_flag);
 
@@ -2353,7 +2353,7 @@ ACMD_FUNC(refine)
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);
 			clif_misceffect(&sd->bl, 3);
-			achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
+			achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 			count++;
 		}
 	}
@@ -2852,18 +2852,29 @@ ACMD_FUNC(makeegg) {
 		pet = pet_db_search( nameid, PET_EGG );
 	}
 
+	int res(-1);
 	if (pet != nullptr) {
-		sd->catch_target_class = pet->class_;
-
-		struct mob_db* mdb = mob_db(pet->class_);
-
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
-	} else {
-		clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
-		return -1;
+		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
+		if(mdb){
+			sd->catch_target_class = pet->class_;
+			if(intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str())){
+				res = 0;
+			} else {
+				res = -2; //char server down
+			}
+		}
+	} 
+	
+	switch(res){
+		case -1:		
+			clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
+			break;
+		case -2:
+			clif_displaymessage(fd, msg_txt(sd,407)); //charserver link broken
+			break;
 	}
 
-	return 0;
+	return res;
 }
 
 /*==========================================
@@ -4450,11 +4461,27 @@ ACMD_FUNC(mount_peco)
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( !pc_ismadogear(sd) ) {
+			e_mado_type type = MADO_ROBOT;
+
+			if (message[0]) {
+				int tmp = strtol(message, nullptr, 10);
+
+				switch (tmp) {
+					case MADO_ROBOT:
+					case MADO_SUIT:
+						type = static_cast<e_mado_type>(tmp);
+						break;
+					default:
+						type = MADO_ROBOT;
+						break;
+				}
+			}
+
 			clif_displaymessage(sd->fd,msg_txt(sd,1123)); // You have mounted your Mado Gear.
-			pc_setoption(sd, sd->sc.option|OPTION_MADOGEAR);
+			pc_setmadogear(sd, true, type);
 		} else {
 			clif_displaymessage(sd->fd,msg_txt(sd,1124)); // You have released your Mado Gear.
-			pc_setoption(sd, sd->sc.option&~OPTION_MADOGEAR);
+			pc_setmadogear(sd, false);
 		}
 		return 0;
 	}
@@ -4752,7 +4779,7 @@ ACMD_FUNC(loadnpc)
 
 	npc_read_event_script();
 
-	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was reloaded.\n", message );
+	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was loaded.\n", message );
 	npc_event_doall_path( script_config.init_event_name, message );
 
 	clif_displaymessage(fd, msg_txt(sd,262)); // Script loaded.
@@ -6696,32 +6723,35 @@ ACMD_FUNC(sound)
  *------------------------------------------*/
 ACMD_FUNC(mobsearch)
 {
-	char mob_name[100];
-	int mob_id;
-	int number = 0;
-	struct s_mapiterator* it;
-
 	nullpo_retr(-1, sd);
 
+	char mob_name[100]={0};
 	if (!message || !*message || sscanf(message, "%99[^\n]", mob_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1218)); // Please enter a monster name (usage: @mobsearch <monster name>).
 		return -1;
 	}
 
-	if ((mob_id = atoi(mob_name)) == 0)
+	int mob_id = strtol(mob_name, nullptr, 10);
+
+	if (mob_id == 0)
 		 mob_id = mobdb_searchname(mob_name);
-	if( mobdb_checkid(mob_id) == 0){
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
+	if (mob == nullptr || mobdb_checkid(mob_id) == 0) {
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1219),mob_name); // Invalid mob ID %s!
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-	strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
-//	strcpy(mob_name,mob_db(mob_id)->name);	// --en--
+
+	strcpy(mob_name, mob->jname.c_str());	// --ja--
+//	strcpy(mob_name, mob->name.c_str());	// --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
 	clif_displaymessage(fd, atcmd_output);
 
-	it = mapit_geteachmob();
+	s_mapiterator* it = mapit_geteachmob();
+	int number = 0;
 	for(;;)
 	{
 		TBL_MOB* md = (TBL_MOB*)mapit_next(it);
@@ -7346,7 +7376,6 @@ ACMD_FUNC(mobinfo)
 	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
-	struct mob_db *mob;
 	uint16 mob_ids[MAX_SEARCH];
 	int count;
 	int i, k;
@@ -7378,10 +7407,13 @@ ACMD_FUNC(mobinfo)
 		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
-		unsigned int j,base_exp,job_exp;
-		mob = mob_db(mob_ids[k]);
-		base_exp = mob->base_exp;
-		job_exp = mob->job_exp;
+		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_ids[k]);
+
+		if (mob == nullptr)
+			continue;
+
+		t_exp base_exp = mob->base_exp;
+		t_exp job_exp = mob->job_exp;
 
 		if (pc_isvip(sd)) { // Display EXP rate increase for VIP
 			base_exp += (base_exp * battle_config.vip_base_exp_increase) / 100;
@@ -7397,11 +7429,11 @@ ACMD_FUNC(mobinfo)
 #endif
 		// stats
 		if( mob->get_bosstype() == BOSSTYPE_MVP )
-			sprintf(atcmd_output, msg_txt(sd,1240), mob->name, mob->jname, mob->sprite, mob->vd.class_); // MVP Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->vd.class_); // MVP Monster: '%s'/'%s'/'%s' (%d)
 		else
-			sprintf(atcmd_output, msg_txt(sd,1241), mob->name, mob->jname, mob->sprite, mob->vd.class_); // Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->vd.class_); // Monster: '%s'/'%s'/'%s' (%d)
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%u  Job EXP:%u  HIT:%d  FLEE:%d
+		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%llu  Job EXP:%llu  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1243), //  DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d
 			mob->status.def, mob->status.mdef,mob->status.str, mob->status.agi,
@@ -7416,7 +7448,7 @@ ACMD_FUNC(mobinfo)
 		// drops
 		clif_displaymessage(fd, msg_txt(sd,1245)); //  Drops:
 		strcpy(atcmd_output, " ");
-		j = 0;
+		unsigned int j = 0;
 #ifdef RENEWAL_DROP
 		int penalty = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
 #endif
@@ -7507,22 +7539,25 @@ ACMD_FUNC(showmobs)
 	if(sscanf(message, "%99[^\n]", mob_name) < 0)
 		return -1;
 
-	if((mob_id = atoi(mob_name)) == 0)
+	if((mob_id = strtol(mob_name, nullptr, 10)) == 0)
 		mob_id = mobdb_searchname(mob_name);
-	if(mobdb_checkid(mob_id) == 0){
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
+	if (mob == nullptr || mobdb_checkid(mob_id) == 0) {
 		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1250),mob_name); // Invalid mob id %s!
 		clif_displaymessage(fd, atcmd_output);
 		return 0;
 	}
 
-	if(status_has_mode(&mob_db(mob_id)->status,MD_STATUS_IMMUNE) && !pc_has_permission(sd, PC_PERM_SHOW_BOSS)){	// If player group does not have access to boss mobs.
+	if(status_has_mode(&mob->status,MD_STATUSIMMUNE) && !pc_has_permission(sd, PC_PERM_SHOW_BOSS)){	// If player group does not have access to boss mobs.
 		clif_displaymessage(fd, msg_txt(sd,1251)); // Can't show boss mobs!
 		return 0;
 	}
 
-	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname[0])
-		strcpy(mob_name,mob_db(mob_id)->jname);    // --ja--
-		//strcpy(mob_name,mob_db(mob_id)->name);    // --en--
+	if(mob_id == strtol(mob_name, nullptr, 10) && !mob->jname.empty())
+		strcpy(mob_name, mob->jname.c_str());    // --ja--
+		//strcpy(mob_name, mob->name.c_str());    // --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1252), // Mob Search... %s %s
 		mob_name, mapindex_id2name(sd->mapindex));
@@ -7965,14 +8000,16 @@ ACMD_FUNC(whodrops)
 			for (j=0; j < MAX_SEARCH && item_data->mob[j].chance > 0; j++)
 			{
 				int dropchance = item_data->mob[j].chance;
+				std::shared_ptr<s_mob_db> mob = mob_db.find(item_data->mob[j].id);
+				if(!mob) continue;
 
 #ifdef RENEWAL_DROP
 				if( battle_config.atcommand_mobinfo_type )
-					dropchance = dropchance * pc_level_penalty_mod( sd, PENALTY_DROP, mob_db( item_data->mob[j].id ) ) / 100;
+					dropchance = dropchance * pc_level_penalty_mod( sd, PENALTY_DROP, mob ) / 100;
 #endif
 				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
-				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].id, dropchance/100.);
+				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->jname.c_str(), item_data->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -8013,9 +8050,10 @@ ACMD_FUNC(whereis)
 
 	for (int i = 0; i < count; i++) {
 		uint16 mob_id = mob_ids[i];
-		struct mob_db * mob = mob_db(mob_id);
+		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
 
-		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
+		if(!mob) continue;
+		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname.c_str()); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
 		
 		const std::vector<spawn_info> spawns = mob_get_spawns(mob_id);

@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -12974,10 +12974,9 @@ Body:
       IgnoreAtkCard: true
     Flags:
       AllowOnMado: true
-    Range: -2
-    Flags:
       IgnoreAutoGuard: true
       IgnoreCicada: true
+    Range: -2
     Hit: Single
     HitCount: 1
     Element: Weapon

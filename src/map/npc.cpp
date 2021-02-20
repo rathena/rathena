@@ -581,6 +581,7 @@ int npc_event_doall_path( const char* event_name, const char* path ){
 
 	ShowStatus( "Event '" CL_WHITE "%s" CL_RESET "' executed with '" CL_WHITE "%d" CL_RESET "' NPCs.\n", event_name, count );
 
+	mapit_free(iter);
 	return count;
 }
 
@@ -1400,7 +1401,7 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 	strftime(time, sizeof(time), "%H:%M", localtime(&nd->u.tomb.kill_time));
 
 	// TODO: Find exact color?
-	snprintf(buffer, sizeof(buffer), msg_txt(sd,657), nd->u.tomb.md->db->name);
+	snprintf(buffer, sizeof(buffer), msg_txt(sd,657), nd->u.tomb.md->db->name.c_str());
 	clif_scriptmes(sd, nd->bl.id, buffer);
 
 	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,658));
@@ -2481,6 +2482,8 @@ int npc_unload(struct npc_data* nd, bool single) {
 			nd->sc_display = NULL;
 		}
 	}
+
+	nd->qi_data.clear();
 
 	script_stop_sleeptimers(nd->bl.id);
 	aFree(nd);
@@ -3893,9 +3896,10 @@ bool npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 void npc_setdisplayname(struct npc_data* nd, const char* newname)
 {
 	nullpo_retv(nd);
+	struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
 	safestrncpy(nd->name, newname, sizeof(nd->name));
-	if( map_getmapdata(nd->bl.m)->users )
+	if( mapdata && mapdata->users )
 		clif_name_area(&nd->bl);
 }
 
@@ -4145,6 +4149,12 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	{	//Force a random spawn anywhere on the map.
 		mob.x = mob.y = 0;
 		mob.xs = mob.ys = -1;
+	}
+
+	// Check if monsters should have variance applied to their respawn time
+	if( ( ( battle_config.mob_spawn_variance & 1 ) == 0 && mob.state.boss ) || ( ( battle_config.mob_spawn_variance & 2 ) == 0 && !mob.state.boss ) ){
+		// Remove the variance
+		mob.delay2 = 0;
 	}
 
 	if(mob.delay1>0xfffffff || mob.delay2>0xfffffff) {

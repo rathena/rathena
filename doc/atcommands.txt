@@ -29,6 +29,7 @@ The format of this file is as follows:
 	8. Pet Commands
 	9. Homunculus Commands
 	10. Channel Commands
+	11. Clan Commands
 
 ======================
 | 1. System Commands |
@@ -141,6 +142,14 @@ OnAgitStart/OnAgitEnd labels.
 
 Starts or ends War of Emperium [SE] by invoking scripts with the
 OnAgitStart2/OnAgitEnd2 labels.
+
+---------------------------------------
+
+@agitstart3
+@agitend3
+
+Starts or ends War of Emperium [TE] by invoking scripts with the
+OnAgitStart3/OnAgitEnd3 labels.
 
 ---------------------------------------
 
@@ -957,7 +966,14 @@ Summons the specified amount of spirit spheres around you.
 
 ---------------------------------------
 
+@soulball <0-20>
+
+Summons the specified amount of soul spheres around you.
+
+---------------------------------------
+
 @mount {<dragon color 1-5>}
+@mount {<madogear type 0-2>}
 @mount2
 
 Toggles mounting/unmounting a job mount (@mount) or cash mount (@mount2).
@@ -1023,6 +1039,12 @@ Oktoberfest
 
 Typing the command without a costume name will display available costumes. If the
 player is wearing a costume it will be removed.
+
+---------------------------------------
+
+@changedress
+
+Removes all character costumes.
 
 ---------------------------------------
 
@@ -1140,6 +1162,19 @@ Give or remove a cart to a player and also change the cart skin based on ID:
 @clonestat "<char name>"
 
 'Clone' other player's stats.
+
+---------------------------------------
+
+@limitedsale
+
+Opens the limited sale window.
+
+---------------------------------------
+
+@camerainfo {<range> <rotation> <latitude>}
+
+Displays/hides camera information from the client.
+If args are given, sets camera position.
 
 ---------------------------------------
 
@@ -1344,6 +1379,7 @@ This will also send a packet to clients causing them to close.
 @reloadskilldb
 @reloadstatusdb
 @reloadachievementdb
+@reloadattendancedb
 
 Reloads a database or configuration file.
 
@@ -1355,6 +1391,7 @@ Databases:
 -- script: NPC Scripts
 -- skilldb: Skill Database
 -- achievementdb: Achievement Database
+-- attendancedb: Attendance Database
 
 Configuration files:
 -- atcommand: Atcommand Settings
@@ -1365,19 +1402,20 @@ Configuration files:
 -- statusdb: Status Settings
 
 Affected files:
--- atcommand: atcommand_athena.conf, groups.conf
+-- atcommand: atcommands.yml, groups.conf
 -- battleconf: battle_athena.conf, battle_conf.txt
--- instancedb: instance_db.txt
--- itemdb: item_db.yml, item_group_db.txt, item_noequip.txt, item_combo_db.txt, item_randomopt_db.txt, item_randomopt_group.txt
--- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.txt, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.yml, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
+-- instancedb: instance_db.yml
+-- itemdb: item_db.yml, item_group_db.txt, item_noequip.txt, item_combo_db.txt, item_randomopt_db.yml, item_randomopt_group.yml
+-- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.yml, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.yml, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
 -- motd: motd.txt
--- msgconf: atcommand_athena.conf
--- pcdb: statpoint.txt, job_exp.txt, skill_tree.txt, attr_fix.txt, job_db1.txt, job_db2.txt, job_basehpsp_db.txt, job_maxhpsp_db.txt, job_param_db.txt, level_penalty.txt
--- questdb: quest_db.txt
+-- msgconf: atcommands.yml
+-- pcdb: statpoint.txt, job_exp.txt, skill_tree.txt, attr_fix.txt, job_db1.txt, job_db2.txt, job_basehpsp_db.txt, job_param_db.txt, level_penalty.yml
+-- questdb: quest_db.yml
 -- script: /npc/*.txt, /npc/*.conf
 -- skilldb: skill_db.yml, const.txt, skill_nocast_db.txt, skill_changematerial_db.txt, skill_damage_db.txt, abra_db.yml, create_arrow_db.txt, produce_db.txt, spellbook_db.yml, magicmushroom_db.yml
--- statusdb: attr_fix.txt, size_fix.txt, refine_db.txt
--- achievementdb: achievement_db.conf
+-- statusdb: attr_fix.txt, size_fix.yml, refine_db.txt
+-- achievementdb: achievement_db.yml
+-- attendancedb: attendance.yml
 
 Restriction:
 	- Used from 'atcommand' or 'useatcmd'. For @reload & @reloadscript
@@ -1781,5 +1819,17 @@ Binds or unbinds your global chat with the specified channel, which sends all gl
 @checkquest <quest ID>
 
 Changes/checks the status of the specified quest ID.
+
+---------------------------------------
+
+=====================
+| 11. Clan Commands |
+=====================
+
+@clanspy <clan name>
+
+Allows you to spy on any clan's Clan Chat.
+At least one member of that clan must be online.
+NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
 
 ---------------------------------------

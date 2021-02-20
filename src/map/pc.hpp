@@ -267,6 +267,12 @@ struct s_combos {
 	uint32 pos;
 };
 
+struct s_qi_display {
+	bool is_active;
+	e_questinfo_types icon;
+	e_questinfo_markcolor color;
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -519,7 +525,7 @@ struct map_session_data {
 		int get_zeny_rate;
 		int get_zeny_num; //Added Get Zeny Rate [Skotlex]
 		int double_add_rate;
-		int short_weapon_damage_return,long_weapon_damage_return;
+		int short_weapon_damage_return,long_weapon_damage_return,reduce_damage_return;
 		int magic_damage_return; // AppleGirl Was Here
 		int break_weapon_rate,break_armor_rate;
 		int crit_atk_rate;
@@ -678,8 +684,7 @@ struct map_session_data {
 	std::vector<int> cloaked_npc;
 
 	/* ShowEvent Data Cache flags from map */
-	bool *qi_display;
-	int qi_count;
+	std::vector<s_qi_display> qi_display;
 
 	// temporary debug [flaviojs]
 	const char* debug_file;
@@ -1020,6 +1025,13 @@ short pc_maxaspd(struct map_session_data *sd);
 #define pc_iswug(sd)       ( (sd)->sc.option&OPTION_WUG )
 #define pc_isridingwug(sd) ( (sd)->sc.option&OPTION_WUGRIDER )
 // Mechanic Magic Gear
+enum e_mado_type : uint16 {
+	MADO_ROBOT = 0x00,
+	MADO_UNUSED,
+	MADO_SUIT,
+	MADO_MAX
+};
+
 #define pc_ismadogear(sd) ( (sd)->sc.option&OPTION_MADOGEAR )
 // Rune Knight Dragon
 #define pc_isridingdragon(sd) ( (sd)->sc.option&OPTION_DRAGON )
@@ -1277,11 +1289,11 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
 int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
 bool pc_jobchange(struct map_session_data *sd, int job, char upper);
-void pc_setoption(struct map_session_data *,int);
+void pc_setoption(struct map_session_data *,int type, int subtype = 0);
 bool pc_setcart(struct map_session_data* sd, int type);
 void pc_setfalcon(struct map_session_data* sd, int flag);
 void pc_setriding(struct map_session_data* sd, int flag);
-void pc_setmadogear(struct map_session_data* sd, int flag);
+void pc_setmadogear(struct map_session_data* sd, bool flag, e_mado_type type = MADO_ROBOT);
 void pc_changelook(struct map_session_data *,int,int);
 void pc_equiplookall(struct map_session_data *sd);
 void pc_set_costume_view(struct map_session_data *sd);
@@ -1447,7 +1459,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd);
 bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, struct mob_db* mob, mob_data* md = nullptr );
+uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, std::shared_ptr<s_mob_db> mob, mob_data* md = nullptr );
 #endif
 
 bool pc_attendance_enabled();

@@ -1690,9 +1690,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
 
-	sd->qi_display = nullptr;
-	sd->qi_count = 0;
-
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != SETPOS_OK) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
@@ -3540,6 +3537,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_MAGIC_DAMAGE_RETURN: //AppleGirl Was Here
 			if(sd->state.lr_flag != 2)
 				sd->bonus.magic_damage_return += val;
+			break;
+		case SP_REDUCE_DAMAGE_RETURN:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.reduce_damage_return += val;
 			break;
 		case SP_ALL_STATS:	// [Valaris]
 			if(sd->state.lr_flag!=2) {
@@ -5908,7 +5909,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
 
-	if (md->master_id || status_has_mode(md_status, MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE ||
+	if (md->master_id || status_has_mode(md_status, MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE) ||
 		map_getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
@@ -5930,14 +5931,14 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
-	for( i = 0; i < MAX_STEAL_DROP; i++ )
+	for( i = 0; i < MAX_MOB_DROP; i++ )
 		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].rate
 #ifndef RENEWAL
 		* rate/100.
 #endif
 		)
 			break;
-	if( i == MAX_STEAL_DROP )
+	if( i == MAX_MOB_DROP )
 		return false;
 
 	itemid = md->db->dropitem[i].nameid;
@@ -5967,7 +5968,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname, i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname.c_str(), i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -5991,7 +5992,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	md = (TBL_MOB*)target;
 	target_lv = status_get_lv(target);
 
-	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE)
+	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(&md->bl), RC2_TREASURE))
 		return 0;
 
 	rate = sd->battle_status.dex / 2 + 2 * (sd->status.base_level - target_lv) + (10 * pc_checkskill(sd, RG_STEALCOIN)) + sd->battle_status.luk / 2;
@@ -7972,7 +7973,7 @@ int pc_resetstate(struct map_session_data* sd)
 			return 0;
 		}
 
-		sd->status.status_point = statp[sd->status.base_level] + ( sd->class_&JOBL_UPPER ? 52 : 0 ); // extra 52+48=100 stat points
+		sd->status.status_point = statp[sd->status.base_level];
 	}
 	else
 	{
@@ -7985,6 +7986,10 @@ int pc_resetstate(struct map_session_data* sd)
 		add += pc_need_status_point(sd, SP_LUK, 1-pc_getstat(sd, SP_LUK));
 
 		sd->status.status_point+=add;
+	}
+
+	if( ( sd->class_&JOBL_UPPER ) != 0 ){
+		sd->status.status_point += battle_config.transcendent_status_points;
 	}
 
 	pc_setstat(sd, SP_STR, 1);
@@ -8881,6 +8886,7 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_SHORT_WEAPON_DAMAGE_RETURN: val = sd->bonus.short_weapon_damage_return; break;
 		case SP_LONG_WEAPON_DAMAGE_RETURN: val = sd->bonus.long_weapon_damage_return; break;
 		case SP_MAGIC_DAMAGE_RETURN: val = sd->bonus.magic_damage_return; break;
+		case SP_REDUCE_DAMAGE_RETURN: val = sd->bonus.reduce_damage_return; break;
 		case SP_PERFECT_HIDE:    val = sd->special_state.perfect_hiding?1:0; break;
 		case SP_UNBREAKABLE:     val = sd->bonus.unbreakable; break;
 		case SP_UNBREAKABLE_WEAPON: val = (sd->bonus.unbreakable_equip&EQP_WEAPON)?1:0; break;
@@ -9398,9 +9404,10 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		if( sd->status.status_point < battle_config.transcendent_status_points ){
 			// The player already used his bonus points, so we have to reset his status points
 			pc_resetstate(sd);
+		}else{
+			sd->status.status_point -= battle_config.transcendent_status_points;
+			clif_updatestatus(sd,SP_STATUSPOINT);
 		}
-		sd->status.status_point -= battle_config.transcendent_status_points;
-		clif_updatestatus(sd,SP_STATUSPOINT);
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
@@ -9632,7 +9639,7 @@ void pc_changelook(struct map_session_data *sd,int type,int val) {
 /*==========================================
  * Give an option (type) to player (sd) and display it to client
  *------------------------------------------*/
-void pc_setoption(struct map_session_data *sd,int type)
+void pc_setoption(struct map_session_data *sd,int type, int subtype)
 {
 	int p_type, new_look=0;
 	nullpo_retv(sd);
@@ -9671,45 +9678,18 @@ void pc_setoption(struct map_session_data *sd,int type)
 	else if (!(type&OPTION_FALCON) && p_type&OPTION_FALCON) //Falcon OFF
 		clif_status_load(&sd->bl,EFST_FALCON,0);
 
-	if( (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER ) {
-		if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
-			clif_status_load(&sd->bl,EFST_WUGRIDER,1);
-			status_calc_pc(sd,SCO_NONE);
-		} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
-			clif_status_load(&sd->bl,EFST_WUGRIDER,0);
-			status_calc_pc(sd,SCO_NONE);
-		}
+	if( type&OPTION_WUGRIDER && !(p_type&OPTION_WUGRIDER) ) { // Mounting
+		clif_status_load(&sd->bl,EFST_WUGRIDER,1);
+		status_calc_pc(sd,SCO_NONE);
+	} else if( !(type&OPTION_WUGRIDER) && p_type&OPTION_WUGRIDER ) { // Dismount
+		clif_status_load(&sd->bl,EFST_WUGRIDER,0);
+		status_calc_pc(sd,SCO_NONE);
 	}
-	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
-		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
-			status_calc_pc(sd,SCO_NONE);
-			for (const auto &sc : mado_statuses) {
-				uint16 skill_id = status_sc2skill(sc);
 
-				if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-					status_change_end(&sd->bl,sc,INVALID_TIMER);
-			}
-			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
-
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
-			clif_status_load( &sd->bl, EFST_MADOGEAR, 1 );
-#endif
-		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
-			status_calc_pc(sd,SCO_NONE);
-			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_HOVERING,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ACCELERATION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT_LIMITPOINT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERHEAT,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MAGNETICFIELD,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
-			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
-
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
-			clif_status_load( &sd->bl, EFST_MADOGEAR, 0 );
-#endif
-		}
+	if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
+		sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, subtype, INFINITE_TICK);
+	} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
+		status_change_end(&sd->bl, SC_MADOGEAR, INVALID_TIMER);
 	}
 
 	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
@@ -9813,16 +9793,22 @@ void pc_setriding(struct map_session_data* sd, int flag)
 	}
 }
 
-/*==========================================
+/**
  * Give player a mado
- *------------------------------------------*/
-void pc_setmadogear(struct map_session_data* sd, int flag)
+ * @param sd: Player
+ * @param flag: Enable or disable mado
+ * @param type: See pc.hpp::e_mado_type (Default is MADO_ROBOT)
+ */
+void pc_setmadogear(struct map_session_data *sd, bool flag, e_mado_type type)
 {
-	if( flag ){
-		if( pc_checkskill(sd,NC_MADOLICENCE) > 0 )
-			pc_setoption(sd, sd->sc.option|OPTION_MADOGEAR);
-	} else if( pc_ismadogear(sd) ){
-			pc_setoption(sd, sd->sc.option&~OPTION_MADOGEAR);
+	if ((sd->class_ & MAPID_THIRDMASK) != MAPID_MECHANIC)
+		return;
+
+	if (flag) {
+		if (pc_checkskill(sd, NC_MADOLICENCE) > 0)
+			pc_setoption(sd, sd->sc.option | OPTION_MADOGEAR, type);
+	} else if (pc_ismadogear(sd)) {
+		pc_setoption(sd, sd->sc.option & ~OPTION_MADOGEAR);
 	}
 }
 
@@ -10339,17 +10325,12 @@ static int pc_checkcombo(struct map_session_data *sd, item_data *data) {
 		struct s_itemchk {
 			int idx;
 			t_itemid nameid, card[MAX_SLOTS];
+
+			s_itemchk() : idx(0), nameid(0), card() {};
 		};
-		std::vector<s_itemchk> combo_idx;
+		std::vector<s_itemchk> combo_idx(nb_itemCombo);
 		size_t j;
 		unsigned int pos = 0;
-
-		combo_idx.reserve(nb_itemCombo);
-
-		// Zero out temporary combo array
-		for (auto &tmp_combo : combo_idx) {
-			tmp_combo = {};
-		}
 
 		for (j = 0; j < nb_itemCombo; j++) {
 			t_itemid id = item_combo->nameid[j];
@@ -11823,7 +11804,7 @@ void pc_delspiritcharm(struct map_session_data *sd, int count, int type)
  * @param type: 1 - EXP, 2 - Item Drop
  * @return Penalty rate
  */
-uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, struct mob_db* mob, mob_data* md ){
+uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, std::shared_ptr<s_mob_db> mob, mob_data* md ){
 	// No player was attached, we don't use any modifier (100 = rates are not touched)
 	if( sd == nullptr ){
 		return 100;
@@ -11840,7 +11821,7 @@ uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, s
 		return 100;
 	}
 
-	if( ( type == PENALTY_DROP || type == PENALTY_MVP_DROP ) && status_has_mode( &mob->status, MD_FIXED_ITEMDROP )  ){
+	if( ( type == PENALTY_DROP || type == PENALTY_MVP_DROP ) && status_has_mode( &mob->status, MD_FIXEDITEMDROP )  ){
 		return 100;
 	}
 
@@ -13315,33 +13296,6 @@ void pc_validate_skill(struct map_session_data *sd) {
 }
 
 /**
- * Toggle to remember if the questinfo is displayed yet or not.
- * @param qi_display Display flag
- * @param show If show is true and qi_display is 0, set qi_display to 1 and show the event bubble.
- *             If show is false and qi_display is 1, set qi_display to 0 and hide the event bubble.
- **/
-static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct s_questinfo *qi, bool show) {
-	if (show) {
-		// Check if need to be displayed
-		if ((*qi_display) != 1) {
-			(*qi_display) = 1;
-			clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
-		}
-	}
-	else {
-		// Check if need to be hide
-		if ((*qi_display) != 0) {
-			(*qi_display) = 0;
-#if PACKETVER >= 20120410
-			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_NONE, QMARK_NONE);
-#else
-			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_QUEST, QMARK_NONE);
-#endif
-		}
-	}
-}
-
-/**
  * Show available NPC Quest / Event Icon Check [Kisuka]
  * @param sd Player
  **/
@@ -13355,28 +13309,45 @@ void pc_show_questinfo(struct map_session_data *sd) {
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 	nullpo_retv(mapdata);
 
-	if (mapdata->qi_data.empty())
+	if (mapdata->qi_npc.empty())
 		return;
-	if (mapdata->qi_data.size() != sd->qi_count)
+	if (mapdata->qi_npc.size() != sd->qi_display.size())
 		return; // init was not called yet
 
-	struct s_questinfo *qi = nullptr;
-	bool show;
+	for (int i = 0; i < mapdata->qi_npc.size(); i++) {
+		struct npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
 
-	for (int i = 0; i < mapdata->qi_data.size(); i++) {
-		qi = &mapdata->qi_data[i];
- 		if (!qi)
- 			continue;
+		if (!nd || nd->qi_data.empty())
+			continue;
 
-		if (!qi->condition)
-			show = true;
-		else {
-			if (achievement_check_condition(qi->condition, sd))
+		bool show = false;
+
+		for (auto &qi : nd->qi_data) {
+			if (!qi->condition || achievement_check_condition(qi->condition, sd)) {
 				show = true;
-			else
-				show = false;
+				// Check if need to be displayed
+				if (!sd->qi_display[i].is_active || qi->icon != sd->qi_display[i].icon || qi->color != sd->qi_display[i].color) {
+					sd->qi_display[i].is_active = true;
+					sd->qi_display[i].icon = qi->icon;
+					sd->qi_display[i].color = qi->color;
+					clif_quest_show_event(sd, &nd->bl, qi->icon, qi->color);
+				}
+				break;
+			}
 		}
-		pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, show);
+		if (show == false) {
+			// Check if need to be hide
+			if (sd->qi_display[i].is_active) {
+				sd->qi_display[i].is_active = false;
+				sd->qi_display[i].icon = QTYPE_NONE;
+				sd->qi_display[i].color = QMARK_NONE;
+#if PACKETVER >= 20120410
+				clif_quest_show_event(sd, &nd->bl, QTYPE_NONE, QMARK_NONE);
+#else
+				clif_quest_show_event(sd, &nd->bl, QTYPE_QUEST, QMARK_NONE);
+#endif
+			}
+		}
 	}
 #endif
 }
@@ -13389,11 +13360,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 #if PACKETVER >= 20090218
 	nullpo_retv(sd);
 
-	if (sd->qi_display) {
-		aFree(sd->qi_display);
-		sd->qi_display = nullptr;
-	}
-	sd->qi_count = 0;
+	sd->qi_display.clear();
 
 	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
 		return;
@@ -13401,10 +13368,14 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 	nullpo_retv(mapdata);
 
-	if (mapdata->qi_data.empty())
+	if (mapdata->qi_npc.empty())
 		return;
 
-	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_data.size()));
+	sd->qi_display.reserve( mapdata->qi_npc.size() );
+
+	for( int i = 0; i < mapdata->qi_npc.size(); i++ ){
+		sd->qi_display.push_back( s_qi_display() );
+	}
 #endif
 }
 

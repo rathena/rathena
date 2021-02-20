@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
 #     NoConsume             If the item is consumed on use. (Default: false)
-#     DropEffect            If the item has a special effect when on the ground. (Default: None)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
 #   Delay:                  Item use delay. (Default: null)
 #     Duration              Duration of delay in seconds.
 #     Status                Status Change used to track delay. (Default: None)
@@ -457,6 +457,7 @@ Header:
 #    Jobs:
 #      All: true
 #      Novice: false
+#    Gender: Female
 #    Locations:
 #      Armor: true
 #    Refineable: true
@@ -490,3 +491,54 @@ Header:
 #    Type: Delayconsume
 #    Script: |
 #      unitskilluseid getcharid(3),"AL_TELEPORT",3;
+
+# Gender restrictions that were removed on official servers
+#=============================================================
+#  - Id: 2206
+#    Gender: Female
+#  - Id: 2208
+#    Gender: Female
+#  - Id: 2209
+#    Gender: Female
+#  - Id: 2234
+#    Gender: Female
+#  - Id: 2235
+#    Gender: Male
+#  - Id: 2407
+#    Gender: Female
+#  - Id: 2415
+#    Gender: Female
+#  - Id: 2494
+#    Gender: Female
+#  - Id: 5143
+#    Gender: Male
+#  - Id: 5164
+#    Gender: Female
+#  - Id: 5165
+#    Gender: Male
+#  - Id: 5191
+#    Gender: Female
+#  - Id: 5192
+#    Gender: Female
+#  - Id: 5193
+#    Gender: Female
+#  - Id: 5194
+#    Gender: Female
+#  - Id: 5195
+#    Gender: Female
+#  - Id: 5196
+#    Gender: Female
+#  - Id: 5197
+#    Gender: Female
+#  - Id: 5221
+#    Gender: Female
+#  - Id: 5354
+#    Gender: Male
+#  - Id: 5355
+#    Gender: Female
+#  - Id: 5400
+#    Gender: Female
+#  - Id: 5681
+#    Gender: Female
+#  - Id: 5735
+#    Gender: Female
