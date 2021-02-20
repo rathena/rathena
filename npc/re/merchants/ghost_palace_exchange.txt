@@ -64,7 +64,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 			18820, 100;		// Gray Helmet
 		break;
 	case 2:
-		//setarray .@items[0],
+		setarray .@items[0],
 			27184, 10000,		// Knight Sakray Card
 			23676, 50, 			// Gray Charcoal Melee (Melee)
 			23677, 50,			// Gray Charcoal Magic (Magic)
