@@ -129,7 +129,7 @@ namespace rathena {
 		}
 
 		/**
-		 * Get a random value from the given map
+		 * Get a random value from the given unordered map
 		 * @param map: Unordered Map to search through
 		 * @return A random value by reference
 		*/
@@ -139,6 +139,19 @@ namespace rathena {
 			std::advance( it, rnd_value( 0, map.size() - 1 ) );
 
 			return it->second;
+		}
+
+		/**
+		 * Get a random value from the given vector
+		 * @param vec: Vector to search through
+		 * @return A random value by reference
+		*/
+		template <typename K> K &vector_random(std::vector<K> &vec) {
+			auto it = vec.begin();
+
+			std::advance(it, rnd_value(0, vec.size() - 1));
+
+			return *it;
 		}
 
 		/**
@@ -157,7 +170,7 @@ namespace rathena {
 		 * @param value: Value wanted
 		 * @return True on success or false on failure
 		 */
-		template <typename K, typename V> bool vector_exists(std::vector<K> &vec, V value) {
+		template <typename K, typename V> bool vector_exists(const std::vector<K> &vec, V value) {
 			auto it = std::find(vec.begin(), vec.end(), value);
 
 			if (it != vec.end())

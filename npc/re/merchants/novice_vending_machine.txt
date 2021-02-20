@@ -1,0 +1,101 @@
+//===== rAthena Script =======================================
+//= Vending Machine NPCs for Novice.
+//===== Description: ========================================= 
+//= [Walkthrough Conversion]
+//= Exchangers NPCs for Novice.
+//===== Additional Comments: =================================
+//= 1.0 Firt version. [Aleos] [Secret]
+//= 1.1 Additionnal clean-up. [Capuche]
+//============================================================
+
+-	script	novice_vending_machine#main	-1,{
+	.@storage_ticket = 7059;	// Cargo_Free_Ticket
+	.@storage_ticket_name$ = getitemname(.@storage_ticket);
+
+	mes "Vending Machine for Novices.";
+	mes "There are many buttons.";
+	next;
+	switch( select( "Manual", "Trade " + .@storage_ticket_name$, "Trade Novice equipments" ) ) {
+	case 1:
+		mes "[Exchange " + .@storage_ticket_name$ + "]";
+		mes "4 " + .@storage_ticket_name$ + " can be exchanged into 1 Free Ticket for Warp, Airship or the Cart Service, or 1 Free Ticket for Peco Ride, 15 Novice Fly Wing, 5 Novice Butterfly Wing, 30 Novice Potion.";
+		next;
+		mes "[Trade Novice Gears]";
+		mes "Armor, Hood, Sandals, Main Gauche and Guard for Novice from Criatura Academy can be exchanged into 4 " + .@storage_ticket_name$ + ".";
+		next;
+		mes "[Trade Novice Gears]";
+		mes "Novice Eggshell can be exchanged into Criatura Hair Coupon for changing your hairstyle.";
+		close;
+	case 2:
+		setarray .@exchange[0],
+			7060,1,		// Warp_Free_Ticket
+			7311,1,		// Free_Flying_Ship_Ticket
+			7061,1,		// Cart_Free_Ticket
+			7310,1,		// Free_Peco_Ticket
+			12323,15,	// N_Fly_Wing
+			12324,5,	// N_Butterfly_Wing
+			569,30;		// Novice_Potion
+		.@size = getarraysize(.@exchange);
+
+		for ( .@i = 0; .@i < .@size; .@i += 2 ) {
+			if (.@exchange[.@i+1] > 1)
+				.@menu$ += .@exchange[.@i+1] + " ";
+			.@menu$ += getitemname(.@exchange[.@i]) + ":";
+		}
+		.@s = (select(.@menu$) - 1) * 2;
+		if (countitem(.@storage_ticket) < 4) {
+			mes "The number of " + .@storage_ticket_name$ + " is insufficient to proceed with the exchange.";
+			close;
+		}
+		if (.@exchange[.@s+1] > 1)
+			.@amount$ = .@exchange[.@s+1] + " ";
+		mes "Exchanged 4 " + .@storage_ticket_name$ + " to " + .@amount$ + getitemname(.@exchange[.@s]);
+		delitem .@storage_ticket,4;
+		getitem .@exchange[.@s],.@exchange[.@s+1];
+		close;
+	case 3:
+		mes "Exchange all Novice equipments into coupons.";
+		mes "Select continue to proceed.";
+		next;
+		if (select( "Continue", "Cancel." ) == 2) {
+			mes "The trade was interrupted.";
+			close;
+		}
+		mes "Exchanging all equipment into coupons.";
+		setarray .@list[0],2352,2510,2414,1243,2112,5055;
+		.@size = getarraysize(.@list);
+		
+		for ( .@i = 0, .@i < .@size; .@i++ ) {
+			.@count = countitem(.@list[.@i]);	// note: maybe check if equipped items are skipped
+			if (.@count < 1)
+				continue;
+			switch(.@list[.@i]) {
+			case 2352:	// Novice_Plate
+			case 2510:	// Novice_Hood
+			case 2414:	// Novice_Boots
+			case 1243:	// Novice_Knife
+			case 2112:	// Novice_Guard
+				delitem .@list[.@i], .@count;
+				getitem .@storage_ticket,(4*.@count);	// Cargo_Free_Ticket
+				break;
+			case 5055:	// Novice_Egg_Cap
+				delitem .@list[.@i], .@count;
+				getitem 6593,.@count;	// Cryptura_Hair_Coupon
+				break;
+			}
+		}
+		close;
+	}
+}
+izlude_in,69,177,5	duplicate(novice_vending_machine#main)	Vending Machine for Nov#iz	2_VENDING_MACHINE1
+payon_in02,71,75,5	duplicate(novice_vending_machine#main)	Vending Machine for Nov#pay	2_VENDING_MACHINE1
+prt_church,187,27,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#prt	2_VENDING_MACHINE1
+
+// unknown facing
+alberta_in,60,52,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#alb	2_VENDING_MACHINE1
+geffen_in,158,107,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#gef	2_VENDING_MACHINE1
+moc_para01,17,37,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#para	2_VENDING_MACHINE1
+moc_prydb1,38,124,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#pryd	2_VENDING_MACHINE1
+payon_in01,59,20,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#pay2	2_VENDING_MACHINE1
+que_ng,28,73,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#que_ng1	2_VENDING_MACHINE1
+que_ng,168,39,3	duplicate(novice_vending_machine#main)	Vending Machine for Nov#que_ng2	2_VENDING_MACHINE1

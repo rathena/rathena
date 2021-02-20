@@ -74,7 +74,11 @@ typedef uint32 t_itemid;
 #define MAX_GUILDPOSITION 20	///Increased max guild positions to accomodate for all members [Valaris] (removed) [PoW]
 #define MAX_GUILDEXPULSION 32 ///Max Guild expulsion
 #define MAX_GUILDALLIANCE 16 ///Max Guild alliance
-#define MAX_GUILDSKILL	17 ///Max Guild skills
+#ifdef RENEWAL
+#define MAX_GUILDSKILL	20 ///Max Guild skills
+#else
+#define MAX_GUILDSKILL	15 ///Max Guild skills
+#endif
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
@@ -146,6 +150,9 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAIL_MAX_ITEM 5
 #define MAIL_PAGE_SIZE 7
 #endif
+#ifndef MAIL_ITERATION_SIZE
+	#define MAIL_ITERATION_SIZE 100
+#endif
 
 //Mercenary System
 #define MC_SKILLBASE 8201
@@ -189,16 +196,16 @@ enum e_mode {
 	MD_LOOTER				= 0x0000002,
 	MD_AGGRESSIVE			= 0x0000004,
 	MD_ASSIST				= 0x0000008,
-	MD_CASTSENSOR_IDLE		= 0x0000010,
-	MD_NORANDOM_WALK		= 0x0000020,
-	MD_NOCAST_SKILL			= 0x0000040,
+	MD_CASTSENSORIDLE		= 0x0000010,
+	MD_NORANDOMWALK			= 0x0000020,
+	MD_NOCAST				= 0x0000040,
 	MD_CANATTACK			= 0x0000080,
 	//FREE					= 0x0000100,
-	MD_CASTSENSOR_CHASE		= 0x0000200,
+	MD_CASTSENSORCHASE		= 0x0000200,
 	MD_CHANGECHASE			= 0x0000400,
 	MD_ANGRY				= 0x0000800,
-	MD_CHANGETARGET_MELEE	= 0x0001000,
-	MD_CHANGETARGET_CHASE	= 0x0002000,
+	MD_CHANGETARGETMELEE	= 0x0001000,
+	MD_CHANGETARGETCHASE	= 0x0002000,
 	MD_TARGETWEAK			= 0x0004000,
 	MD_RANDOMTARGET			= 0x0008000,
 	MD_IGNOREMELEE			= 0x0010000,
@@ -206,13 +213,13 @@ enum e_mode {
 	MD_IGNORERANGED			= 0x0040000,
 	MD_MVP					= 0x0080000,
 	MD_IGNOREMISC			= 0x0100000,
-	MD_KNOCKBACK_IMMUNE		= 0x0200000,
-	MD_TELEPORT_BLOCK		= 0x0400000,
+	MD_KNOCKBACKIMMUNE		= 0x0200000,
+	MD_TELEPORTBLOCK		= 0x0400000,
 	//FREE					= 0x0800000,
-	MD_FIXED_ITEMDROP		= 0x1000000,
+	MD_FIXEDITEMDROP		= 0x1000000,
 	MD_DETECTOR				= 0x2000000,
-	MD_STATUS_IMMUNE		= 0x4000000,
-	MD_SKILL_IMMUNE			= 0x8000000,
+	MD_STATUSIMMUNE			= 0x4000000,
+	MD_SKILLIMMUNE			= 0x8000000,
 };
 
 #define MD_MASK 0x000FFFF
@@ -263,10 +270,11 @@ struct item {
 	char favorite, bound;
 	uint64 unique_id;
 	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
+	uint8 enchantgrade;
 };
 
 //Equip position constants
-enum equip_pos {
+enum equip_pos : uint32 {
 	EQP_HEAD_LOW         = 0x000001,
 	EQP_HEAD_MID         = 0x000200, // 512
 	EQP_HEAD_TOP         = 0x000100, // 256
@@ -430,7 +438,7 @@ struct s_homunculus {	//[orn]
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
 	short skillpts;
 	short level;
-	unsigned int exp;
+	t_exp exp;
 	short rename_flag;
 	short vaporize; //albator
 	int str;
@@ -689,6 +697,8 @@ struct guild {
 
 	/* Used by char-server to save events for guilds */
 	unsigned short save_flag;
+
+	int32 chargeshout_flag_id;
 };
 
 struct guild_castle {
@@ -767,24 +777,27 @@ enum e_guild_member_info { //Change Member Infos
 };
 
 enum e_guild_skill {
-	GD_SKILLBASE=10000,
-	GD_APPROVAL=10000,
-	GD_KAFRACONTRACT=10001,
-	GD_GUARDRESEARCH=10002,
-	GD_GUARDUP=10003,
-	GD_EXTENSION=10004,
-	GD_GLORYGUILD=10005,
-	GD_LEADERSHIP=10006,
-	GD_GLORYWOUNDS=10007,
-	GD_SOULCOLD=10008,
-	GD_HAWKEYES=10009,
-	GD_BATTLEORDER=10010,
-	GD_REGENERATION=10011,
-	GD_RESTORE=10012,
-	GD_EMERGENCYCALL=10013,
-	GD_DEVELOPMENT=10014,
-	GD_ITEMEMERGENCYCALL=10015,
-	GD_GUILD_STORAGE=10016,
+	GD_SKILLBASE = 10000,
+	GD_APPROVAL = 10000,
+	GD_KAFRACONTRACT,
+	GD_GUARDRESEARCH,
+	GD_GUARDUP,
+	GD_EXTENSION,
+	GD_GLORYGUILD,
+	GD_LEADERSHIP,
+	GD_GLORYWOUNDS,
+	GD_SOULCOLD,
+	GD_HAWKEYES,
+	GD_BATTLEORDER,
+	GD_REGENERATION,
+	GD_RESTORE,
+	GD_EMERGENCYCALL,
+	GD_DEVELOPMENT,
+	GD_ITEMEMERGENCYCALL,
+	GD_GUILD_STORAGE,
+	GD_CHARGESHOUT_FLAG,
+	GD_CHARGESHOUT_BEATING,
+	GD_EMERGENCY_MOVE,
 	GD_MAX,
 };
 
@@ -972,9 +985,10 @@ enum e_job {
 	JOB_MAX,
 };
 
-enum e_sex {
+enum e_sex : uint8 {
 	SEX_FEMALE = 0,
 	SEX_MALE,
+	SEX_BOTH,
 	SEX_SERVER
 };
 

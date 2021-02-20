@@ -121,7 +121,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(targetNode, "Mob", mob_name))
 					return 0;
 
-				struct mob_db *mob = mobdb_search_aegisname(mob_name.c_str());
+				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
 				if (!mob) {
 					this->invalidWarning(targetNode["Mob"], "Mob %s does not exist, skipping.\n", mob_name.c_str());
@@ -163,7 +163,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				if (!this->nodeExists(targetNode, "Mob") && !this->nodeExists(targetNode, "MinLevel") && !this->nodeExists(targetNode, "MaxLevel") &&
-						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element")) {
+						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element") &&
+						!this->nodeExists(targetNode, "Location") && !this->nodeExists(targetNode, "MapName")) {
 					this->invalidWarning(targetNode, "Targets is missing required field, skipping.\n");
 					return 0;
 				}
@@ -176,6 +177,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				target->race = RC_ALL;
 				target->size = SZ_ALL;
 				target->element = ELE_ALL;
+				target->mapid = -1;
+				target->map_name = "";
 			}
 
 			if (!this->nodeExists(targetNode, "Mob")) {
@@ -268,6 +271,31 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					target->element = static_cast<e_element>(constant);
 				}
 
+				if (this->nodeExists(targetNode, "Location")) {
+					std::string location;
+
+					if (!this->asString(targetNode, "Location", location))
+						return 0;
+
+					uint16 mapindex = mapindex_name2idx(location.c_str(), nullptr);
+
+					if (mapindex == 0) {
+						this->invalidWarning(targetNode["Location"], "Map \"%s\" not found.\n", location.c_str());
+						return 0;
+					}
+
+					target->mapid = map_mapindex2mapid(mapindex);
+				}
+
+				if (this->nodeExists(targetNode, "MapName")) {
+					std::string map_name;
+
+					if (!this->asString(targetNode, "MapName", map_name))
+						return 0;
+
+					target->map_name = map_name;
+				}
+
 				// if max_level is set, min_level is 1
 				if (target->min_level == 0 && target->max_level > 0)
 					target->min_level = 1;
@@ -303,7 +331,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(dropNode, "Mob", mob_name))
 					return 0;
 
-				struct mob_db *mob = mobdb_search_aegisname(mob_name.c_str());
+				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
 				if (!mob) {
 					this->invalidWarning(dropNode["Mob"], "Mob %s does not exist, skipping.\n", mob_name.c_str());
@@ -648,24 +676,17 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 
-	struct map_session_data *sd;
+	struct map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	nullpo_ret(sd = (struct map_session_data *)bl);
+	nullpo_ret(sd);
 
 	if( !sd->avail_quests )
 		return 0;
-
-	int party_id = va_arg(ap,int);
-	int mob_id = va_arg(ap, int);
-	int mob_level = va_arg(ap, int);
-	e_race mob_race = static_cast<e_race>(va_arg(ap, int));
-	e_size mob_size = static_cast<e_size>(va_arg(ap, int));
-	e_element mob_element = static_cast<e_element>(va_arg(ap, int));
 	
-	if( sd->status.party_id != party_id )
+	if( sd->status.party_id != va_arg(ap, int))
 		return 0;
 
-	quest_update_objective(sd, mob_id, mob_level, mob_race, mob_size, mob_element);
+	quest_update_objective(sd, va_arg(ap, struct mob_data*));
 
 	return 1;
 }
@@ -679,7 +700,7 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
  * @param mob_size: Monster Size
  * @param mob_element: Monster Element
  */
-void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_level, e_race mob_race, e_size mob_size, e_element mob_element)
+void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 {
 	nullpo_retv(sd);
 
@@ -693,24 +714,26 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 
 		// Process quest objectives
 		for (int j = 0; j < qi->objectives.size(); j++) {
-			uint8 objective_check = 0; // Must pass all 5 checks
+			uint8 objective_check = 0; // Must pass all 6 checks
 
-			if (qi->objectives[j]->mob_id == mob_id)
-				objective_check = 5;
+			if (qi->objectives[j]->mob_id == md->mob_id)
+				objective_check = 6;
 			else if (qi->objectives[j]->mob_id == 0) {
-				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= mob_level)
+				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= md->level)
 					objective_check++;
-				if (qi->objectives[j]->max_level == 0 || qi->objectives[j]->max_level >= mob_level)
+				if (qi->objectives[j]->max_level == 0 || qi->objectives[j]->max_level >= md->level)
 					objective_check++;
-				if (qi->objectives[j]->race == RC_ALL || qi->objectives[j]->race == mob_race)
+				if (qi->objectives[j]->race == RC_ALL || qi->objectives[j]->race == md->status.race)
 					objective_check++;
-				if (qi->objectives[j]->size == SZ_ALL || qi->objectives[j]->size == mob_size)
+				if (qi->objectives[j]->size == SZ_ALL || qi->objectives[j]->size == md->status.size)
 					objective_check++;
-				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == mob_element)
+				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == md->status.def_ele)
+					objective_check++;
+				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn_timer != INVALID_TIMER))
 					objective_check++;
 			}
 
-			if (objective_check == 5 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
+			if (objective_check == 6 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
 				clif_quest_update_objective(sd, &sd->quest_log[i]);
@@ -719,7 +742,7 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 
 		// Process quest-granted extra drop bonuses
 		for (const auto &it : qi->dropitem) {
-			if (it->mob_id != 0 && it->mob_id != mob_id)
+			if (it->mob_id != 0 && it->mob_id != md->mob_id)
 				continue;
 			if (it->rate < 10000 && rnd()%10000 >= it->rate)
 				continue; // TODO: Should this be affected by server rates?

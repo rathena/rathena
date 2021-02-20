@@ -726,23 +726,22 @@ OnInstanceInit:
 2@mir,97,77,7	duplicate(dummy_npc_rituel_disabled)	Skia Nerius#skia02	4_EP16_SKIA
 
 
-2@mir,96,83,0	script	dummy_npc_rituel	-1,{ end; }
-2@mir,101,88,4	duplicate(dummy_npc_rituel)	Kronecker G. Heine#gran1	4_EP16_GRANZ
-2@mir,97,71,7	duplicate(dummy_npc_rituel)	Levuiere Wigner#louvier1	4_EP16_LOUVIERE
-2@mir,100,71,7	duplicate(dummy_npc_rituel)	Jurgen Wigner#jurgen01	4_M_4THPRIN1
-2@mir,97,68,7	duplicate(dummy_npc_rituel)	Isaac Wigner#isaac01	4_EP16_ISAAC
-2@mir,100,68,7	duplicate(dummy_npc_rituel)	Katrin Wigner#kath01	4_EP16_POE
-2@mir,103,80,2	duplicate(dummy_npc_rituel)	Catherine D. Geoborg#ca1	4_EP16_EGEO
-2@mir,106,80,2	duplicate(dummy_npc_rituel)	Ernst Geoborg#ernst01	4_M_2NDPRIN1
-2@mir,103,77,2	duplicate(dummy_npc_rituel)	Po Richard#po01	4_M_6THPRIN1
-2@mir,103,74,2	duplicate(dummy_npc_rituel)	Maximilian Roegenburg#m1	4_EP16_MAX
-2@mir,106,74,2	duplicate(dummy_npc_rituel)	Wolf Roegenburg#wolf01	4_EP16_WOLF
-2@mir,101,94,0	duplicate(dummy_npc_rituel)	Peter Heine#peter01	4_M_3RDPRIN1
-2@mir,100,77,7	duplicate(dummy_npc_rituel)	Spica Nerius#spica01	4_EP16_SPICA
-2@mir,106,71,2	duplicate(dummy_npc_rituel)	Agnes Roegenburg#agnes0_1	4_EP16_AGNES
-2@mir,100,74,7	duplicate(dummy_npc_rituel)	Ian Walther#ian01	1_M_JOBTESTER
-2@mir,97,74,7	duplicate(dummy_npc_rituel)	Isenhonor Walther#eisen	4_M_1STPRIN1
-2@mir,103,71,2	duplicate(dummy_npc_rituel)	Helmut Roegenburg#helmu	4_EP16_HELMUT
+2@mir,101,88,4	duplicate(dummy_npc)	Kronecker G. Heine#gran1	4_EP16_GRANZ
+2@mir,97,71,7	duplicate(dummy_npc)	Levuiere Wigner#louvier1	4_EP16_LOUVIERE
+2@mir,100,71,7	duplicate(dummy_npc)	Jurgen Wigner#jurgen01	4_M_4THPRIN1
+2@mir,97,68,7	duplicate(dummy_npc)	Isaac Wigner#isaac01	4_EP16_ISAAC
+2@mir,100,68,7	duplicate(dummy_npc)	Katrin Wigner#kath01	4_EP16_POE
+2@mir,103,80,2	duplicate(dummy_npc)	Catherine D. Geoborg#ca1	4_EP16_EGEO
+2@mir,106,80,2	duplicate(dummy_npc)	Ernst Geoborg#ernst01	4_M_2NDPRIN1
+2@mir,103,77,2	duplicate(dummy_npc)	Po Richard#po01	4_M_6THPRIN1
+2@mir,103,74,2	duplicate(dummy_npc)	Maximilian Roegenburg#m1	4_EP16_MAX
+2@mir,106,74,2	duplicate(dummy_npc)	Wolf Roegenburg#wolf01	4_EP16_WOLF
+2@mir,101,94,0	duplicate(dummy_npc)	Peter Heine#peter01	4_M_3RDPRIN1
+2@mir,100,77,7	duplicate(dummy_npc)	Spica Nerius#spica01	4_EP16_SPICA
+2@mir,106,71,2	duplicate(dummy_npc)	Agnes Roegenburg#agnes0_1	4_EP16_AGNES
+2@mir,100,74,7	duplicate(dummy_npc)	Ian Walther#ian01	1_M_JOBTESTER
+2@mir,97,74,7	duplicate(dummy_npc)	Isenhonor Walther#eisen	4_M_1STPRIN1
+2@mir,103,71,2	duplicate(dummy_npc)	Helmut Roegenburg#helmu	4_EP16_HELMUT
 
 2@mir,101,10,0	script	to_prt_lib	WARPNPC,1,1,{
 	if (isbegin_quest(7693) == 1) {

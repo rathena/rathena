@@ -95,7 +95,7 @@ struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
  * @param pet_name
  * @return 
  */
-int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
+int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip,short intimate,short hungry,char rename_flag,char incubate,const char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -3489,6 +3489,10 @@ static bool intif_parse_StorageReceived(int fd)
 #endif
 			//Set here because we need the inventory data for weapon sprite parsing.
 			status_set_viewdata(&sd->bl, sd->status.class_);
+			// Set headgear data here, otherwise this is done in loadEndAck
+			if( sd->state.autotrade ){
+				pc_set_costume_view(sd);
+			}
 			pc_load_combo(sd);
 			status_calc_pc(sd, (enum e_status_calc_opt)(SCO_FIRST|SCO_FORCE));
 			status_calc_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS)); // Refresh weight data

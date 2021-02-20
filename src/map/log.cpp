@@ -466,6 +466,10 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		return;
 	}
 
+	if( dst_charname == nullptr ){
+		dst_charname = "";
+	}
+
 	if( log_config.sql_logs ) {
 		SqlStmt* stmt;
 

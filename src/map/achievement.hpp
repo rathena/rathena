@@ -24,23 +24,21 @@ enum e_achievement_group {
 	AG_ADVENTURE,
 	AG_BABY,
 	AG_BATTLE,
-	AG_CHAT,
-	AG_CHAT_COUNT,
-	AG_CHAT_CREATE,
-	AG_CHAT_DYING,
+	AG_CHATTING,
+	AG_CHATTING_COUNT,
+	AG_CHATTING_CREATE,
+	AG_CHATTING_DYING,
 	AG_EAT,
 	AG_GET_ITEM,
 	AG_GET_ZENY,
 	AG_GOAL_ACHIEVE,
 	AG_GOAL_LEVEL,
 	AG_GOAL_STATUS,
-	AG_HEAR,
 	AG_JOB_CHANGE,
 	AG_MARRY,
 	AG_PARTY,
-	AG_REFINE_FAIL,
-	AG_REFINE_SUCCESS,
-	AG_SEE,
+	AG_ENCHANT_FAIL,
+	AG_ENCHANT_SUCCESS,
 	AG_SPEND_ZENY,
 	AG_TAMING,
 	AG_MAX
@@ -63,6 +61,12 @@ enum e_achievement_info {
 	ACHIEVEINFO_LEVEL,
 	ACHIEVEINFO_SCORE,
 	ACHIEVEINFO_MAX,
+};
+
+enum e_title_table : uint16 {
+	TITLE_NONE = 0,
+	TITLE_BASE = 1000,
+	TITLE_MAX = 1046,
 };
 
 struct achievement_target {
@@ -95,17 +99,17 @@ struct s_achievement_db {
 
 class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db>{
 private:
-	// Avoids checking achievements on every mob killed
-	std::vector<uint32> achievement_mobs;
+	std::vector<uint32> achievement_mobs; // Avoids checking achievements on every mob killed
 
 public:
-	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 1 ){
+	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 2 ){
 
 	}
 
 	void clear();
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode( const YAML::Node& node );
+	void loadingFinished();
 
 	// Additional
 	bool mobexists(uint32 mob_id);

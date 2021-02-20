@@ -721,8 +721,8 @@ void clif_skillunit_update(struct block_list* bl);
 
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);
-void clif_spiritball(struct block_list *bl);
-void clif_soulball(struct map_session_data *sd);
+void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr, enum send_target send_target = AREA );
+void clif_soulball( struct map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_combo_delay(struct block_list *bl,t_tick wait);
 void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
@@ -765,7 +765,7 @@ void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv
 
 void clif_mvp_effect(struct map_session_data *sd);
 void clif_mvp_item(struct map_session_data *sd, t_itemid nameid);
-void clif_mvp_exp(struct map_session_data *sd, unsigned int exp);
+void clif_mvp_exp(struct map_session_data *sd, t_exp exp);
 void clif_mvp_noitem(struct map_session_data* sd);
 void clif_changed_dir(struct block_list *bl, enum send_target target);
 
@@ -1108,7 +1108,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
 void clif_merge_item_open(struct map_session_data *sd);
 
-void clif_broadcast_obtain_special_item(const char *char_name, t_itemid nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
+void clif_broadcast_obtain_special_item(const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
