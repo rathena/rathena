@@ -5,6 +5,9 @@
 //- Require Banquet main quest.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Added a setting to prevent an exploit
+//      (searchs "'exploit_disabled" variable - the variable is
+//      false by default like on official server). [Capuche]
 //============================================================
 
 1@mir,103,40,3	script	Fenrir#1mir	4_F_FENRIR,{
@@ -32,6 +35,11 @@
 OnInstanceInit:
 	'map_name$ = instance_mapname("1@mir");
 	'step = 0;
+
+	// On official server the instance can be repeated if the player log out after the death of Bijou (main quest)
+	// true: prevent the exploit
+	// false: like on official - exploitable
+	'exploit_disabled = false;
 
 	disablenpc instance_npcname("Bijou#2mir");
 
@@ -735,6 +743,12 @@ OnMobDead:
 	enablenpc instance_npcname("Fenrir#6mir");
 	enablenpc instance_npcname("Iris#6mir");
 	enablenpc instance_npcname("Bijou#6mir");
+
+	if (playerattached() && 'exploit_disabled && banquet_main_quest == 21) {
+		erasequest 7700;// Once More!
+		setquest 7701;// Lost Imir Heart
+		banquet_main_quest = 22;
+	}
 	end;
 }
 
@@ -756,6 +770,7 @@ OnTimer20000:
 	end;
 OnStop:
 	stopnpctimer;
+	end;
 }
 
 1@mir,100,95,5	script	Iris#6mir	4_F_IRIS,{

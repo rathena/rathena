@@ -973,6 +973,7 @@ Summons the specified amount of soul spheres around you.
 ---------------------------------------
 
 @mount {<dragon color 1-5>}
+@mount {<madogear type 0-2>}
 @mount2
 
 Toggles mounting/unmounting a job mount (@mount) or cash mount (@mount2).
