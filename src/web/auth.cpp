@@ -46,7 +46,7 @@ bool isAuthorized(const Request &request, bool checkGuildLeader) {
     }
 
     if (SqlStmt_NumRows(stmt) <= 0) {
-        ShowDebug("Request with AID %d and token %s unverified\n", account_id, token);
+        ShowWarning("Request with AID %d and token %s unverified\n", account_id, token);
         SqlStmt_Free(stmt);
         loginlock.unlock();
         return false;
