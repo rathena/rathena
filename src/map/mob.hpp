@@ -227,6 +227,7 @@ struct s_mob_db {
 	view_data vd;
 	uint32 option;
 	std::vector<std::shared_ptr<s_mob_skill>> skill;
+	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
 };
@@ -236,7 +237,7 @@ private:
 	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 2, 1) {
 
 	}
 

@@ -200,6 +200,10 @@ DamageMotion: Damage animation motion, same as aMotion but used to display the "
 
 ---------------------------------------
 
+DamageTaken: Rate at which the monster will recieve damage from players.
+
+---------------------------------------
+
 Ai: Aegis Monster Type behavior. Full explanation can be found in 'doc/mob_db_mode_list.txt'.
 
 ---------------------------------------
@@ -212,7 +216,7 @@ Modes: Behaviour that isn't defined by AI or Class of the monster. Full explanat
 
 ---------------------------------------
 
-MvpDrops: List of items of the MVP drop. Maximum of 3 items (MAX_MVP_DROP). None of these items can be stolen  by TF_STEAL.
+MvpDrops: List of items of the MVP drop. Maximum of 3 items (MAX_MVP_DROP). None of these items can be stolen by TF_STEAL.
 	- Item				- Item name.
       Rate				- Drop rate of item, n/10000.
       RandomOptionGroup	- Random Option Group applied to item on drop. (Optional)
