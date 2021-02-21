@@ -1355,7 +1355,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-manager=ARG    memory managers: no, builtin, memwatch, dmalloc,
                           gcollect, bcheck (defaults to builtin)
-  --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.h)
+  --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.hpp)
   --enable-epoll          use epoll(4) on Linux
   --enable-debug[=ARG]    Compiles extra debug code. (disabled by default)
                           (available options: yes, no, gdb)
@@ -1386,7 +1386,10 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-maxconn[=ARG]    optionally set the maximum connections the core can
-                          handle. By default the system header value is used.
+                          handle. By default the system header value will be
+                          used. This will only be the compile time limit, make
+                          sure you set the correct limit with ulimit on your
+                          OS.
   --with-outputlogin[=ARG]
                           Specify the login-serv output name (defaults to
                           login-server)
@@ -3674,6 +3677,7 @@ else
 
 
 fi
+
 
 
 
@@ -7086,7 +7090,6 @@ fi
 
 #
 # web server (optional)
-# requires cpprestsdk, boost
 #
 if test "$enable_web_service" = "no" ; then
 	{ $as_echo "$as_me:${as_lineno-$LINENO}: ignoring web service (optional)" >&5

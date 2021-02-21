@@ -47,7 +47,7 @@ AC_ARG_ENABLE(
 	[packetver],
 	AC_HELP_STRING(
 		[--enable-packetver=ARG],
-		[Sets the PACKETVER define. (see src/common/mmo.h)]
+		[Sets the PACKETVER define. (see src/common/mmo.hpp)]
 	),
 	[enable_packetver="$enableval"],
 	[enable_packetver=""]
@@ -327,7 +327,8 @@ AC_ARG_WITH(
 	[maxconn],
 	AC_HELP_STRING(
 		[--with-maxconn@<:@=ARG@:>@],
-		[optionally set the maximum connections the core can handle. By default the system header value is used.]
+		[optionally set the maximum connections the core can handle. By default the system header value will be used.
+		 This will only be the compile time limit, make sure you set the correct limit with ulimit on your OS.]
 	),
 	[
 		if ! test "$withval" -ge 0 -o "$withval" -lt 0 2>&- ; then
@@ -489,6 +490,7 @@ AC_ARG_WITH(
 		test ! -f "${ZLIB_HOME}/include/zlib.h" && ZLIB_HOME=/usr
 	]
 )
+
 
 
 ###############################################################################
@@ -1338,7 +1340,6 @@ AC_SUBST([PCRE_CFLAGS])
 
 #
 # web server (optional)
-# requires cpprestsdk, boost
 #
 if test "$enable_web_service" = "no" ; then
 	AC_MSG_NOTICE([ignoring web service (optional)])

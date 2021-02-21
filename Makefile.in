@@ -90,6 +90,7 @@ clean:
 	@$(MAKE) -C src/login $@
 	@$(MAKE) -C src/char $@
 	@$(MAKE) -C src/map $@
+	@$(MAKE) -C src/web $@
 	@$(MAKE) -C src/tool $@
 
 help:
