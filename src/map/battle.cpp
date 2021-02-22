@@ -7408,7 +7408,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 				}
 			}
 
-			if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src,MD_STATUS_IMMUNE)) {
+			if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src,MD_STATUSIMMUNE)) {
 				if (distance_bl(src,bl) <= 0 || !map_check_dir(map_calc_dir(bl,src->x,src->y), unit_getdir(bl))) {
 					int64 rd1 = min(damage, status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 
