@@ -100824,7 +100824,6 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-
       bonus bMaxHP,.@r*10;
       bonus bMaxSPrate,3;
       bonus bMdef,.@r*(getskilllv("WA_SWING_DANCE")+getskilllv("WA_SYMPHONY_OF_LOVER")+getskilllv("WA_MOONLIT_SERENADE"))/5;
