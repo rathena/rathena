@@ -21,43 +21,53 @@ function	script	F_Pieces_Of_Sentiment	{	// 22687
 	if (strcharinfo(3) == "lhz_dun_n")// usage forbidden on the same map
 		return;
 	specialeffect2 EF_HIT4;
-	.@r = rand(18);
-	if (.@r == 0)
-		warp "lhz_dun_n",40,212;
-	else if (.@r == 1)
-		warp "lhz_dun_n",87,84;
-	else if (.@r == 2)
+	.@r = rand(1,23);
+	if (.@r == 1)
 		warp "lhz_dun_n",140,89;
-	else if (.@r == 3)
-		warp "lhz_dun_n",162,252;
-	else if (.@r == 4)
-		warp "lhz_dun_n",201,101;
-	else if (.@r == 5)
-		warp "lhz_dun_n",34,70;
-	else if (.@r == 6)
+	else if (.@r == 2)
 		warp "lhz_dun_n",75,138;
+	else if (.@r == 3)
+		warp "lhz_dun_n",198,151;
+	else if (.@r == 4)
+		warp "lhz_dun_n",200,189;
+	else if (.@r == 5)
+		warp "lhz_dun_n",87,84;
+	else if (.@r == 6)
+		warp "lhz_dun_n",201,101;
 	else if (.@r == 7)
-		warp "lhz_dun_n",78,189;
-	else if (.@r == 8)
-		warp "lhz_dun_n",28,140;
-	else if (.@r == 9)
-		warp "lhz_dun_n",240,64;
-	else if (.@r == 10)
-		warp "lhz_dun_n",140,39;
-	else if (.@r == 11)
-		warp "lhz_dun_n",140,191;
-	else if (.@r == 12)
-		warp "lhz_dun_n",124,138;
-	else if (.@r == 13)
-		warp "lhz_dun_n",131,235;
-	else if (.@r == 14)
-		warp "lhz_dun_n",140,114;
-	else if (.@r == 15)
-		warp "lhz_dun_n",99,106;
-	else if (.@r == 16)
-		warp "lhz_dun_n",115,253;
-	else
 		warp "lhz_dun_n",230,138;
+	else if (.@r == 8)
+		warp "lhz_dun_n",239,220;
+	else if (.@r == 9)
+		warp "lhz_dun_n",162,252;
+	else if (.@r == 10)
+		warp "lhz_dun_n",99,106;
+	else if (.@r == 11)
+		warp "lhz_dun_n",40,212;
+	else if (.@r == 12)
+		warp "lhz_dun_n",140,191;
+	else if (.@r == 13)
+		warp "lhz_dun_n",164,77;
+	else if (.@r == 14)
+		warp "lhz_dun_n",124,138;
+	else if (.@r == 15)
+		warp "lhz_dun_n",28,140;
+	else if (.@r == 16)
+		warp "lhz_dun_n",78,189;
+	else if (.@r == 17)
+		warp "lhz_dun_n",137,262;
+	else if (.@r == 18)
+		warp "lhz_dun_n",115,253;
+	else if (.@r == 19)
+		warp "lhz_dun_n",140,39;
+	else if (.@r == 20)
+		warp "lhz_dun_n",240,64;
+	else if (.@r == 21)
+		warp "lhz_dun_n",131,235;
+	else if (.@r == 22)
+		warp "lhz_dun_n",34,70;
+	else
+		warp "lhz_dun_n",176,202;
 	delitem 22687,1;
 	return;
 }
@@ -74,52 +84,56 @@ function	script	F_Cursed_Crystal	{	// 23080
 }
 
 function	script	F_Cursed_Fragment	{	// 23016
-	// custom rates
-	.@r = rand(981);
-	if (.@r < 166) {
-		if (rand(2) == 0)
-			showscript "Please... stay with me...";
-		else
-			showscript "Stay... here with me...";
-		sleep2 200;
+	.@r = rand(1,12);
+	if (.@r == 1) {
+		showscript "I will never forgive you...!";
+		sc_start SC_ATKPOTION,600000,50;
+		sc_start SC_MATKPOTION,600000,50;
+	}
+	else if (.@r == 2) {
+		showscript "Somebody please help me...";
+		sc_start SC_CURSE,10000,0;
+	}
+	else if (.@r == 3) {
+		showscript "Stop it... It hurts...";
+		sc_start SC_BLEEDING,5000,0;
+	}
+	else if (.@r == 4) {
+		showscript "It's so cold in here...";
+		sc_start SC_FREEZE,5000,0;
+	}
+	else if (.@r == 5) {
+		showscript "Please... Stay with me...";
 		warp "Random",0,0;
 	}
-	else if (.@r < 231)	{
-		showscript "It's so cold in here...";
-		sc_start SC_FREEZE,8000,0;
+	else if (.@r == 6) {
+		showscript "Stay... here with me...";
+		warp "Random",0,0;
 	}
-	else if (.@r < 304) {
-		showscript "I'm sorry... I will leave now... thank you...";
-		getitem 6820,1;// Energy_Fragment
+	else if (.@r == 7) {
+		showscript "You shouldn't have come here...";
+		sc_start SC_STUN,5000,0;
 	}
-	else if (.@r < 317)
-		sc_start SC_CONFUSION,3000,0;
-	else if (.@r < 328) {
-		showscript "Somebody please help me...";
-		sc_start SC_CURSE,3000,0;
+	else if (.@r == 8) {
+		showscript "Hello... Is anyone there...?";
+		sc_start SC_BLIND,5000,0;
 	}
-	else if (.@r < 408) {
+	else if (.@r == 9) {
+		showscript "I am so scared....scared....";
+		sc_start SC_CONFUSION,10000,0;
+	}
+	else if (.@r == 10) {
 		showscript "Dear Odin...";
 		sc_start SC_ASSUMPTIO,100000,5;
 		specialeffect2 EF_ASSUMPTIO;
 	}
-	else if (.@r < 496) {
-		showscript "I will never forgive you...!";
-		sc_start SC_ATKPOTION,600000,10;
-		sc_start SC_MATKPOTION,600000,10;
+	else if (.@r == 11) {
+		showscript "Wake up!";
+		percentheal 0,20;
 	}
 	else {
-		.@rand = rand(5);
-		if (.@rand == 0)
-			showscript "Wake up!";
-		else if (.@rand == 1)
-			showscript "Stop it... It hurts...";
-		else if (.@rand == 2)
-			showscript "I'm so scared... scared...";
-		else if (.@rand == 3)
-			showscript "You shouldn't have come here...";
-		else
-			showscript "Hello... Is anyone there... ?";
+		showscript "I am sorry... I will leave now... thank you...";
+		getitem 6820,1;// Energy_Fragment
 	}
 	return;
 }

@@ -3850,11 +3850,17 @@ dragon and 0 if they aren't.
 
 ---------------------------------------
 
-*setmadogear {<flag>{,<char_id>}};
+*setmadogear {<flag>{,<type>{,<char_id>}}};
 *checkmadogear({<char_id>});
 
-If <flag> is 0 this command will remove the mount from the character.
-Otherwise it gives the invoking character a Mado (if they are a Mechanic).
+If <flag> is false this command will remove the mount from the character.
+Otherwise it gives the invoking character a Mado (if they are a Mechanic and have the skill NC_MADOLICENCE).
+
+When using client version PACKETVER_MAIN_NUM >= 20191120 or PACKETVER_RE_NUM >= 20191106
+the <type> flag can be used to specify a specific madogear.
+Types:
+	MADO_ROBOT (default)
+	MADO_SUIT
 
 The accompanying function will return 1 if the invoking character has a
 Mado and 0 if they don't.
@@ -10390,6 +10396,19 @@ Returns 1 on success.
 
 	// Example to set delay
 	channel_setopt("#global",CHAN_OPT_MSG_DELAY,5000);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_getopt "<chname>",<option>;
+
+Get option value for the channel. The <option> values are the same as the
+'channel_create' options. Returns true or false except for CHAN_OPT_MSG_DELAY
+which returns an integer.
+
+	// Example to get the delay
+	.delay = channel_getopt("#global",CHAN_OPT_MSG_DELAY);
 
 Only for public and private channel.
 

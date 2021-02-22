@@ -28,9 +28,6 @@ struct guardian_data;
 #define MAX_MVP_DROP_ADD 2
 #define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
 #define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
-#define MAX_STEAL_DROP 7
-
-#define MAX_RACE2_MOBS 100
 
 //Min time between AI executions
 const t_tick MIN_MOBTHINKTIME = 100;
@@ -136,7 +133,50 @@ enum e_mob_bosstype : uint8{
 	BOSSTYPE_MVP
 };
 
-struct mob_skill {
+/// Monster Aegis AI types
+enum e_aegis_monstertype : uint16 {
+	MONSTER_TYPE_01 = 0x81,
+	MONSTER_TYPE_02 = 0x83,
+	MONSTER_TYPE_03 = 0x1089,
+	MONSTER_TYPE_04 = 0x3885,
+	MONSTER_TYPE_05 = 0x2085,
+	MONSTER_TYPE_06 = 0,
+	MONSTER_TYPE_07 = 0x108B,
+	MONSTER_TYPE_08 = 0x7085,
+	MONSTER_TYPE_09 = 0x3095,
+	MONSTER_TYPE_10 = 0x84,
+	MONSTER_TYPE_11 = 0x84,
+	MONSTER_TYPE_12 = 0x2085,
+	MONSTER_TYPE_13 = 0x308D,
+	//MONSTER_TYPE_14
+	//MONSTER_TYPE_15
+	//MONSTER_TYPE_16
+	MONSTER_TYPE_17 = 0x91,
+	//MONSTER_TYPE_18
+	MONSTER_TYPE_19 = 0x3095,
+	MONSTER_TYPE_20 = 0x3295,
+	MONSTER_TYPE_21 = 0x3695,
+	//MONSTER_TYPE_22
+	//MONSTER_TYPE_23
+	MONSTER_TYPE_24 = 0xA1,
+	MONSTER_TYPE_25 = 0x1,
+	MONSTER_TYPE_26 = 0xB695,
+	MONSTER_TYPE_27 = 0x8084,
+};
+
+/// Aegis monster class types
+enum e_aegis_monsterclass : int8 {
+	CLASS_NONE = -1,
+	CLASS_NORMAL = 0,
+	CLASS_BOSS,
+	CLASS_GUARDIAN,
+	CLASS_BATTLEFIELD = 4,
+	CLASS_EVENT,
+	CLASS_ALL,
+	CLASS_MAX,
+};
+
+struct s_mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
 	short permillage;
@@ -174,23 +214,39 @@ struct s_mob_drop {
 	bool steal_protected;
 };
 
-struct mob_db {
-	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
+struct s_mob_db {
+	std::string sprite, name, jname;
 	t_exp base_exp;
 	t_exp job_exp;
 	t_exp mexp;
-	short range2,range3;
-	enum e_race2 race2;	// celest
-	unsigned short lv;
-	struct s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
-	struct status_data status;
-	struct view_data vd;
-	unsigned int option;
-	int maxskill;
-	struct mob_skill skill[MAX_MOBSKILL];
+	uint16 range2, range3;
+	std::vector<e_race2> race2;	// celest
+	uint16 lv;
+	s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
+	status_data status;
+	view_data vd;
+	uint32 option;
+	std::vector<std::shared_ptr<s_mob_skill>> skill;
+	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
 };
+
+class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
+private:
+	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
+
+public:
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 2, 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+	void loadingFinished();
+};
+
+extern MobDatabase mob_db;
 
 struct mob_data {
 	struct block_list bl;
@@ -199,7 +255,7 @@ struct mob_data {
 	bool vd_changed;
 	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
-	struct mob_db *db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
+	std::shared_ptr<s_mob_db> db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
 	char name[NAME_LENGTH];
 	struct s_specialState {
 		unsigned int size : 2; //Small/Big monsters.
@@ -329,9 +385,8 @@ struct item_drop_list {
 	struct item_drop* item;            // linked list of drops
 };
 
-struct mob_db *mob_db(int mob_id);
 uint16 mobdb_searchname(const char * const str);
-struct mob_db* mobdb_search_aegisname( const char* str );
+std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str );
 int mobdb_searchname_array(const char *str, uint16 * out, int size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);

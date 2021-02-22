@@ -159,6 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="csv2yaml.hpp" />
+    <ClInclude Include="yaml.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="..\common\database.cpp" />
     <ClCompile Include="csv2yaml.cpp" />
   </ItemGroup>

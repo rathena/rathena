@@ -11,6 +11,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="csv2yaml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="yaml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="csv2yaml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
