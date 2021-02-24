@@ -2493,9 +2493,6 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 	}
 #endif
-
-	if (!src)
-		return;
 }
 
 /*==========================================
