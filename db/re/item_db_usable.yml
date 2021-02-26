@@ -348,7 +348,6 @@ Body:
       sc_end SC_BLIND;
       sc_end SC_CONFUSION;
       sc_end SC_CURSE;
-      sc_end SC_Hallucination;
   - Id: 528
     AegisName: Monster's_Feed
     Name: Monster's Feed
@@ -1079,7 +1078,7 @@ Body:
     AegisName: Wing_Of_Fly
     Name: Fly Wing
     Type: Delayconsume
-    Buy: 60
+    Buy: 250
     Weight: 50
     Flags:
       BuyingStore: true
@@ -1089,7 +1088,7 @@ Body:
     AegisName: Wing_Of_Butterfly
     Name: Butterfly Wing
     Type: Delayconsume
-    Buy: 300
+    Buy: 1000
     Weight: 50
     Flags:
       BuyingStore: true
@@ -1181,7 +1180,7 @@ Body:
     AegisName: Leaf_Of_Yggdrasil
     Name: Yggdrasil Leaf
     Type: Delayconsume
-    Buy: 4000
+    Buy: 12000
     Weight: 100
     Flags:
       BuyingStore: true
@@ -1812,7 +1811,6 @@ Body:
     AegisName: Gold_Coin
     Name: Gold Coin
     Type: Usable
-    Buy: 10000
     Trade:
       Override: 100
       NoDrop: true
@@ -1837,7 +1835,6 @@ Body:
     AegisName: Silver_Coin
     Name: Silver Coin
     Type: Usable
-    Buy: 5000
     Trade:
       Override: 100
       NoDrop: true
@@ -47745,6 +47742,22 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23474;*/
+  - Id: 23475
+    AegisName: Infinity_Drink
+    Name: Infinity Drink
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_POTION_BERSERK;
+      bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus bMatkRate,5; bonus bNoCastCancel; }",1800,1,1,EFST_INFINITY_DRINK;
   - Id: 23524
     AegisName: Enchant_Stone_Box13
     Name: Costume Enchant Stone Box 13
