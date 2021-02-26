@@ -47742,6 +47742,22 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23474;*/
+  - Id: 23475
+    AegisName: Infinity_Drink
+    Name: Infinity Drink
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_POTION_BERSERK;
+      bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus bMatkRate,5; bonus bNoCastCancel,0; }",1800,1,1,EFST_INFINITY_DRINK;
   - Id: 23524
     AegisName: Enchant_Stone_Box13
     Name: Costume Enchant Stone Box 13
