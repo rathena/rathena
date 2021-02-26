@@ -47757,7 +47757,7 @@ Body:
       NoAuction: true
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus bMatkRate,5; bonus bNoCastCancel,0; }",1800,1,1,EFST_INFINITY_DRINK;
+      bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus bMatkRate,5; bonus bNoCastCancel; }",1800,1,1,EFST_INFINITY_DRINK;
   - Id: 23524
     AegisName: Enchant_Stone_Box13
     Name: Costume Enchant Stone Box 13
