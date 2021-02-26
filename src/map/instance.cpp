@@ -4,6 +4,7 @@
 #include "instance.hpp"
 
 #include <stdlib.h>
+#include <math.h>
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
@@ -709,6 +710,26 @@ int instance_addmap(int instance_id) {
 }
 
 /**
+ * Fills outname with the name of the instance map name
+ * @param map_id: Mapid to use
+ * @param instance_id: Instance id
+ * @param outname: Pointer to allocated memory that will be filled in
+ */
+void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAME_LENGTH]) {
+
+#if MAX_MAP_PER_SERVER > 9999
+	#error This algorithm is only safe for up to 9999 maps, change at your own risk.
+#endif
+	// Safe up to 9999 maps per map-server
+	static const int prefix_length = 4;
+	// Full map name length - prefix length - seperator character - zero termination
+	static const int suffix_length = MAP_NAME_LENGTH - prefix_length - 1 - 1;
+	static const int prefix_limit = pow(10, prefix_length);
+	static const int suffix_limit = pow(10, suffix_length);
+	safesnprintf(outname, MAP_NAME_LENGTH, "%0*u#%0*u", prefix_length, map_id % prefix_limit, suffix_length, instance_id % suffix_limit);
+}
+
+/**
  * Returns an instance map ID
  * @param m: Source map ID
  * @param instance_id: Instance to search
@@ -730,15 +751,8 @@ int16 instance_mapid(int16 m, int instance_id)
 
 	for (const auto &it : idata->map) {
 		if (it.src_m == m) {
-			char iname[MAP_NAME_LENGTH], alt_name[MAP_NAME_LENGTH];
-
-			strcpy(iname, name);
-
-			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
-				memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name), "%d#%s", (instance_id % 1000), iname);
-			} else
-				snprintf(alt_name, sizeof(alt_name), "%.3d%s", (instance_id % 1000), iname);
+			char alt_name[MAP_NAME_LENGTH];
+			instance_generate_mapname(m, instance_id, alt_name);
 			return map_mapname2mapid(alt_name);
 		}
 	}
