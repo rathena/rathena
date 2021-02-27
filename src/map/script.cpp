@@ -17643,6 +17643,17 @@ BUILDIN_FUNC(checkidlehom)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(checkidlemer)
+{
+	TBL_PC *sd;
+
+	if( script_nick2sd(2,sd) )
+		script_pushint(st, DIFF_TICK(last_tick, sd->idletime_mer));
+	else
+		script_pushint(st, 0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(searchitem)
 {
 	struct script_data* data = script_getdata(st, 2);
@@ -25476,6 +25487,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkchatting,"?"),
 	BUILDIN_DEF(checkidle,"?"),
 	BUILDIN_DEF(checkidlehom,"?"),
+	BUILDIN_DEF(checkidlemer,"?"),
 	BUILDIN_DEF(openmail,"?"),
 	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),

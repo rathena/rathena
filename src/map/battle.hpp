@@ -689,6 +689,9 @@ struct Battle_Config
 	int homunculus_starving_delay;
 	int drop_connection_on_quit;
 	int mob_spawn_variance;
+	int mercenary_autoloot;
+	int mer_idle_no_share;
+	int idletime_mer_option;
 
 #include "../custom/battle_config_struct.inc"
 };

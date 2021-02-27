@@ -3939,6 +3939,14 @@ This will only work if 'hom_idle_no_share' and 'idletime_hom_option' are enabled
 
 ---------------------------------------
 
+*checkidlemer({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle for mercenary item share.
+Name is optional, and defaults to the attached player if omitted.
+This will only work if 'mer_idle_no_share' and 'idletime_mer_option' are enabled (see '/conf/battle/drops.conf').
+
+---------------------------------------
+
 *agitcheck()
 *agitcheck2()
 *agitcheck3()
