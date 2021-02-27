@@ -1071,7 +1071,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Orc: true
-    RaceGroups:
       Clocktower: true
     Element: Earth
     ElementLevel: 1
@@ -8816,7 +8815,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Orc: true
-    RaceGroups:
       Clocktower: true
     Element: Earth
     ElementLevel: 1
@@ -9985,7 +9983,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Orc: true
-    RaceGroups:
       Clocktower: true
     Element: Fire
     ElementLevel: 2
@@ -25990,7 +25987,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Swordman_Thief: true
     Element: Fire
     ElementLevel: 4
@@ -26028,7 +26024,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Swordman_Thief: true
     Element: Poison
     ElementLevel: 4
@@ -26067,7 +26062,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Acolyte_Merchant: true
     Element: Earth
     ElementLevel: 4
@@ -26106,7 +26100,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Acolyte_Merchant: true
     Element: Holy
     ElementLevel: 4
@@ -26145,7 +26138,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Mage_Archer: true
     Element: Wind
     ElementLevel: 4
@@ -26184,7 +26176,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Mage_Archer: true
     Element: Ghost
     ElementLevel: 3
@@ -48238,7 +48229,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Swordman_Thief: true
     Element: Holy
     ElementLevel: 4
@@ -48277,7 +48267,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Acolyte_Merchant: true
     Element: Fire
     ElementLevel: 4
@@ -48316,7 +48305,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Mage_Archer: true
     Element: Ghost
     ElementLevel: 4
@@ -48356,7 +48344,6 @@ Body:
     Race: Demon
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Acolyte_Merchant: true
     Element: Water
     ElementLevel: 4
@@ -48395,7 +48382,6 @@ Body:
     Race: Demon
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Swordman_Thief: true
     Element: Poison
     ElementLevel: 4
@@ -48434,7 +48420,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Mage_Archer: true
     Element: Wind
     ElementLevel: 4
@@ -48473,7 +48458,6 @@ Body:
     Race: Demihuman
     RaceGroups:
       Biolab: true
-    RaceGroups:
       Bio5_Mage_Archer: true
     Element: Wind
     ElementLevel: 4
