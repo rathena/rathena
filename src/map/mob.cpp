@@ -2853,7 +2853,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
-			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : md->db->dropitem[i].rate, homkillonly | merckillonly ? true : false);
+			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : md->db->dropitem[i].rate, homkillonly || merckillonly);
 		}
 
 		// Ore Discovery [Celest]
@@ -2862,7 +2862,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			memset(&mobdrop, 0, sizeof(struct s_mob_drop));
 			mobdrop.nameid = itemdb_searchrandomid(IG_FINDINGORE,1);
 			ditem = mob_setdropitem(&mobdrop, 1, md->mob_id);
-			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10, homkillonly | merckillonly ? true : false);
+			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10, homkillonly || merckillonly);
 		}
 
 		if(sd) {
@@ -2894,7 +2894,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					memset(&mobdrop, 0, sizeof(struct s_mob_drop));
 					mobdrop.nameid = dropid;
 
-					mob_item_drop(md, dlist, mob_setdropitem(&mobdrop,1,md->mob_id), 0, drop_rate, homkillonly | merckillonly ? true : false);
+					mob_item_drop(md, dlist, mob_setdropitem(&mobdrop,1,md->mob_id), 0, drop_rate, homkillonly || merckillonly);
 				}
 			}
 
@@ -2909,7 +2909,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		// process items looted by the mob
 		if (md->lootitems) {
 			for (i = 0; i < md->lootitem_count; i++)
-				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitems[i], md->mob_id), 1, 10000, homkillonly | merckillonly ? true : false);
+				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitems[i], md->mob_id), 1, 10000, homkillonly || merckillonly);
 		}
 		if (dlist->item) //There are drop items.
 			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr_t)dlist);
@@ -2925,7 +2925,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 		dlist->item = NULL;
 		for (i = 0; i < md->lootitem_count; i++)
-			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitems[i], md->mob_id), 1, 10000, homkillonly | merckillonly ? true : false);
+			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitems[i], md->mob_id), 1, 10000, homkillonly || merckillonly);
 		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, 0, (intptr_t)dlist);
 	}
 
