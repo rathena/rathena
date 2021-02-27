@@ -3115,17 +3115,17 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				if (!header) {
 					body << YAML::Key << "RaceGroups";
 					body << YAML::BeginMap;
+					header = true;
 				}
 
 				body << YAML::Key << name2Upper(constant_lookup(race2.first, "RC2_") + 4) << YAML::Value << "true";
 
-				if (!header) {
-					body << YAML::EndMap;
-					header = true;
-				}
 			}
 		}
 	}
+
+	if (header)
+		body << YAML::EndMap;
 
 	if (fields[24]) {
 		int ele = strtol(fields[24], nullptr, 10);
