@@ -9512,6 +9512,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_PYREXIA:
 	case SC_OBLIVIONCURSE:
 	case SC_LEECHESEND:
+		if (val3 == 0) // Don't display icon on self
+			flag |= SCSTART_NOICON;
 		for (int32 i = SC_TOXIN; i <= SC_LEECHESEND; i++) {
 			if (sc->data[i] && sc->data[i]->val3 == 1) // It doesn't stack or even renew on the target
 				return 0;

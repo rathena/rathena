@@ -118,6 +118,7 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 bool instance_reqinfo(struct map_session_data *sd, int instance_id);
 bool instance_addusers(int instance_id);
 bool instance_delusers(int instance_id);
+void instance_generate_mapname(int map_id, int instance_id, char outname[MAP_NAME_LENGTH]);
 int16 instance_mapid(int16 m, int instance_id);
 int instance_addmap(int instance_id);
 

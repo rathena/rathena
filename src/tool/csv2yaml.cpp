@@ -1,195 +1,9 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <fstream>
-#include <functional>
-#include <iostream>
-#include <locale>
-#include <map>
-#include <unordered_map>
-#include <vector>
-
-#ifdef WIN32
-	#include <conio.h>
-#else
-	#include <termios.h>
-	#include <unistd.h>
-	#include <stdio.h>
-#endif
+#include "csv2yaml.hpp"
 
 #include <math.h>
-#include <yaml-cpp/yaml.h>
-
-#include "../common/cbasetypes.hpp"
-#include "../common/core.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/nullpo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/strlib.hpp"
-#include "../common/utilities.hpp"
-#include "../common/utils.hpp"
-#ifdef WIN32
-#include "../common/winapi.hpp"
-#endif
-
-// Only for constants - do not use functions of it or linking will fail
-#include "../map/achievement.hpp"
-#include "../map/battle.hpp"
-#include "../map/battleground.hpp"
-#include "../map/channel.hpp"
-#include "../map/chat.hpp"
-#include "../map/date.hpp"
-#include "../map/instance.hpp"
-#include "../map/mercenary.hpp"
-#include "../map/mob.hpp"
-#include "../map/npc.hpp"
-#include "../map/pc.hpp"
-#include "../map/pet.hpp"
-#include "../map/quest.hpp"
-#include "../map/script.hpp"
-#include "../map/skill.hpp"
-#include "../map/storage.hpp"
-
-using namespace rathena;
-
-#define MAX_MAP_PER_INSTANCE 255
-
-#ifndef WIN32
-int getch( void ){
-    struct termios oldattr, newattr;
-    int ch;
-    tcgetattr( STDIN_FILENO, &oldattr );
-    newattr = oldattr;
-    newattr.c_lflag &= ~( ICANON | ECHO );
-    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
-    ch = getchar();
-    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
-    return ch;
-}
-#endif
-
-// Required constant and structure definitions
-#define MAX_GUILD_SKILL_REQUIRE 5
-#define MAX_SKILL_ITEM_REQUIRE	10
-#define MAX_SKILL_STATUS_REQUIRE 3
-#define MAX_SKILL_EQUIP_REQUIRE 10
-#define MAX_QUEST_DROPS 3
-
-struct s_skill_unit_csv : s_skill_db {
-	std::string target_str;
-	int unit_flag_csv;
-};
-
-std::unordered_map<uint16, s_skill_require> skill_require;
-std::unordered_map<uint16, s_skill_db> skill_cast;
-std::unordered_map<uint16, s_skill_db> skill_castnodex;
-std::unordered_map<uint16, s_skill_unit_csv> skill_unit;
-std::unordered_map<uint16, s_skill_copyable> skill_copyable;
-std::unordered_map<uint16, s_skill_db> skill_nearnpc;
-
-static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
-
-struct s_item_flag_csv2yaml {
-	bool buyingstore, dead_branch, group, guid, broadcast, bindOnEquip, delay_consume;
-	e_item_drop_effect dropEffect;
-};
-
-struct s_item_delay_csv2yaml {
-	uint32 delay;
-	std::string sc;
-};
-
-struct s_item_stack_csv2yaml {
-	uint16 amount;
-	bool inventory, cart, storage, guild_storage;
-};
-
-struct s_item_nouse_csv2yaml {
-	uint16 override;
-	bool sitting;
-};
-
-struct s_item_trade_csv2yaml {
-	uint16 override;
-	bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;
-};
-
-std::unordered_map<t_itemid, t_itemid> item_avail;
-std::unordered_map<t_itemid, bool> item_buyingstore;
-std::unordered_map<t_itemid, s_item_flag_csv2yaml> item_flag;
-std::unordered_map<t_itemid, s_item_delay_csv2yaml> item_delay;
-std::unordered_map<t_itemid, s_item_stack_csv2yaml> item_stack;
-std::unordered_map<t_itemid, s_item_nouse_csv2yaml> item_nouse;
-std::unordered_map<t_itemid, s_item_trade_csv2yaml> item_trade;
-
-struct s_random_opt_group_csv : s_random_opt_group {
-	std::vector<uint16> rate;
-};
-
-std::unordered_map<uint16, std::string> rand_opt_db;
-std::unordered_map<uint16, s_random_opt_group_csv> rand_opt_group;
-
-static std::map<std::string, int> um_mapid2jobname {
-	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
-	{ "SuperNovice", JOB_NOVICE },
-	{ "Swordman", JOB_SWORDMAN },
-	{ "Mage", JOB_MAGE },
-	{ "Archer", JOB_ARCHER },
-	{ "Acolyte", JOB_ACOLYTE },
-	{ "Merchant", JOB_MERCHANT },
-	{ "Thief", JOB_THIEF },
-	{ "Knight", JOB_KNIGHT },
-	{ "Priest", JOB_PRIEST },
-	{ "Wizard", JOB_WIZARD },
-	{ "Blacksmith", JOB_BLACKSMITH },
-	{ "Hunter", JOB_HUNTER },
-	{ "Assassin", JOB_ASSASSIN },
-	{ "Crusader", JOB_CRUSADER },
-	{ "Monk", JOB_MONK },
-	{ "Sage", JOB_SAGE },
-	{ "Rogue", JOB_ROGUE },
-	{ "Alchemist", JOB_ALCHEMIST },
-	{ "BardDancer", JOB_BARD }, // Bard and Dancer share the same value
-	{ "BardDancer", JOB_DANCER },
-	{ "Gunslinger", JOB_GUNSLINGER },
-	{ "Ninja", JOB_NINJA },
-	{ "Taekwon", 21 },
-	{ "StarGladiator", 22 },
-	{ "SoulLinker", 23 },
-//	{ "Gangsi", 26 },
-//	{ "DeathKnight", 27 },
-//	{ "DarkCollector", 28 },
-#ifdef RENEWAL
-	{ "KagerouOboro", 29 }, // Kagerou and Oboro share the same value
-	{ "Rebellion", 30 },
-	{ "Summoner", 31 },
-#endif
-};
-
-static std::unordered_map<std::string, equip_pos> um_equipnames {
-	{ "Head_Low", EQP_HEAD_LOW },
-	{ "Head_Mid", EQP_HEAD_MID },
-	{ "Head_Top", EQP_HEAD_TOP },
-	{ "Right_Hand", EQP_HAND_R },
-	{ "Left_Hand", EQP_HAND_L },
-	{ "Armor", EQP_ARMOR },
-	{ "Shoes", EQP_SHOES },
-	{ "Garment", EQP_GARMENT },
-	{ "Right_Accessory", EQP_ACC_R },
-	{ "Left_Accessory", EQP_ACC_L },
-	{ "Costume_Head_Top", EQP_COSTUME_HEAD_TOP },
-	{ "Costume_Head_Mid", EQP_COSTUME_HEAD_MID },
-	{ "Costume_Head_Low", EQP_COSTUME_HEAD_LOW },
-	{ "Costume_Garment", EQP_COSTUME_GARMENT },
-	{ "Ammo", EQP_AMMO },
-	{ "Shadow_Armor", EQP_SHADOW_ARMOR },
-	{ "Shadow_Weapon", EQP_SHADOW_WEAPON },
-	{ "Shadow_Shield", EQP_SHADOW_SHIELD },
-	{ "Shadow_Shoes", EQP_SHADOW_SHOES },
-	{ "Shadow_Right_Accessory", EQP_SHADOW_ACC_R },
-	{ "Shadow_Left_Accessory", EQP_SHADOW_ACC_L },
-};
 
 struct s_mob_drop_csv : s_mob_drop {
 	std::string group_string;
@@ -199,54 +13,9 @@ struct s_mob_drop_csv : s_mob_drop {
 std::unordered_map<uint16, std::vector<uint32>> mob_race2;
 std::map<uint32, std::vector<s_mob_drop_csv>> mob_drop;
 
-// Forward declaration of conversion functions
-static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
-static bool pet_read_db( const char* file );
-static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current);
-static bool skill_parse_row_abradb(char* split[], int columns, int current);
-static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
-static bool mob_readdb_mobavail(char *str[], int columns, int current);
-static bool skill_parse_row_requiredb(char* split[], int columns, int current);
-static bool skill_parse_row_castdb(char* split[], int columns, int current);
-static bool skill_parse_row_castnodexdb(char* split[], int columns, int current);
-static bool skill_parse_row_unitdb(char* split[], int columns, int current);
-static bool skill_parse_row_copyabledb(char* split[], int columns, int current);
-static bool skill_parse_row_nonearnpcrangedb(char* split[], int columns, int current);
-static bool skill_parse_row_skilldb(char* split[], int columns, int current);
-static bool quest_read_db(char *split[], int columns, int current);
-static bool instance_readdb_sub(char* str[], int columns, int current);
-static bool itemdb_read_itemavail(char *str[], int columns, int current);
-static bool itemdb_read_buyingstore(char* fields[], int columns, int current);
-static bool itemdb_read_flag(char* fields[], int columns, int current);
-static bool itemdb_read_itemdelay(char* str[], int columns, int current);
-static bool itemdb_read_stack(char* fields[], int columns, int current);
-static bool itemdb_read_nouse(char* fields[], int columns, int current);
-static bool itemdb_read_itemtrade(char* fields[], int columns, int current);
-static bool itemdb_read_db(const char *file);
-static bool itemdb_read_randomopt(const char* file);
-static bool itemdb_read_randomopt_group(char *str[], int columns, int current);
-static bool itemdb_randomopt_group_yaml(void);
-static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
-static bool pc_levelpenalty_yaml();
-static bool mob_readdb_race2(char *fields[], int columns, int current);
-static bool mob_readdb_drop(char *str[], int columns, int current);
-static bool mob_readdb_sub(char *fields[], int columns, int current);
-
-// Constants for conversion
-std::unordered_map<t_itemid, std::string> aegis_itemnames;
-std::unordered_map<t_itemid, t_itemid> aegis_itemviewid;
-std::unordered_map<uint16, std::string> aegis_mobnames;
-std::unordered_map<uint16, std::string> aegis_skillnames;
-std::unordered_map<const char*, int64> constants;
-
-// Forward declaration of constant loading functions
-static bool parse_item_constants_txt( const char* path );
-static bool parse_mob_constants_txt( char* split[], int columns, int current );
-static bool parse_skill_constants_txt( char* split[], int columns, int current );
-static void init_random_option_constants();
-
-bool fileExists( const std::string& path );
-bool askConfirmation( const char* fmt, ... );
+static bool mob_readdb_race2(char* fields[], int columns, int current);
+static bool mob_readdb_drop(char* str[], int columns, int current);
+static bool mob_readdb_sub(char* fields[], int columns, int current);
 
 // Skill database data to memory
 static void skill_txt_data(const std::string& modePath, const std::string& fixedPath) {
@@ -308,88 +77,6 @@ static void mob_txt_data(const std::string &modePath, const std::string &fixedPa
 		sv_readdb(modePath.c_str(), "mob_drop.txt", ',', 3, 5, -1, mob_readdb_drop, false);
 }
 
-YAML::Emitter body;
-
-// Implement the function instead of including the original version by linking
-void script_set_constant_( const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated ){
-	constants[name] = value;
-}
-
-const char* constant_lookup( int32 value, const char* prefix ){
-	if (prefix == nullptr)
-		return nullptr;
-
-	for( auto const& pair : constants ){
-		// Same prefix group and same value
-		if( strncasecmp( pair.first, prefix, strlen( prefix ) ) == 0 && pair.second == value ){
-			return pair.first;
-		}
-	}
-
-	return nullptr;
-}
-
-int64 constant_lookup_int(const char* constant) {
-	if (constant == nullptr)
-		return -100;
-
-	for (auto const &pair : constants) {
-		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
-			return pair.second;
-		}
-	}
-
-	return -100;
-}
-
-void copyFileIfExists( std::ofstream& file,const std::string& name, bool newLine ){
-	std::string path = "doc/yaml/db/" + name + ".yml";
-
-	if( fileExists( path ) ){
-		std::ifstream source( path, std::ios::binary );
-
-		std::istreambuf_iterator<char> begin_source( source );
-		std::istreambuf_iterator<char> end_source;
-		std::ostreambuf_iterator<char> begin_dest( file );
-		copy( begin_source, end_source, begin_dest );
-
-		source.close();
-
-		if( newLine ){
-			file << "\n";
-		}
-	}
-}
-
-void prepareHeader(std::ofstream &file, const std::string& type, uint32 version, const std::string& name) {
-	copyFileIfExists( file, "license", false );
-	copyFileIfExists( file, name, true );
-
-	YAML::Emitter header(file);
-
-	header << YAML::BeginMap;
-	header << YAML::Key << "Header";
-	header << YAML::BeginMap;
-	header << YAML::Key << "Type" << YAML::Value << type;
-	header << YAML::Key << "Version" << YAML::Value << version;
-	header << YAML::EndMap;
-	header << YAML::EndMap;
-
-	file << "\n";
-	file << "\n";
-}
-
-void prepareBody(void) {
-	body << YAML::BeginMap;
-	body << YAML::Key << "Body";
-	body << YAML::BeginSeq;
-}
-
-void finalizeBody(void) {
-	body << YAML::EndSeq;
-	body << YAML::EndMap;
-}
-
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -407,6 +94,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 					continue;
 				}
 			}
+
+			ShowNotice("Conversion process has begun.\n");
 
 			std::ofstream out;
 
@@ -583,14 +272,14 @@ int do_init( int argc, char** argv ){
 #endif
 
 	mob_txt_data(path_db_mode, path_db);
-	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 2, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return 0;
 	}
-	
+
 	mob_txt_data(path_db_import, path_db_import);
-	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 2, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return 0;
@@ -602,397 +291,6 @@ int do_init( int argc, char** argv ){
 }
 
 void do_final(void){
-}
-
-bool fileExists( const std::string& path ){
-	std::ifstream in;
-
-	in.open( path );
-
-	if( in.is_open() ){
-		in.close();
-
-		return true;
-	}else{
-		return false;
-	}
-}
-
-bool askConfirmation( const char* fmt, ... ){
-	va_list ap;
-
-	va_start( ap, fmt );
-
-	_vShowMessage( MSG_NONE, fmt, ap );
-
-	va_end( ap );
-
-	char c = getch();
-
-	if( c == 'Y' || c == 'y' ){
-		return true;
-	}else{
-		return false;
-	}
-}
-
-// Constant loading functions
-static bool parse_item_constants_txt( const char* path ){
-	uint32 lines = 0, count = 0;
-	char line[1024];
-
-	FILE* fp;
-
-	fp = fopen(path, "r");
-	if (fp == NULL) {
-		ShowWarning("parse_item_constants_txt: File not found \"%s\", skipping.\n", path);
-		return false;
-	}
-
-	// process rows one by one
-	while (fgets(line, sizeof(line), fp))
-	{
-		char *str[32], *p;
-		int i;
-		lines++;
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		memset(str, 0, sizeof(str));
-
-		p = strstr(line, "//");
-
-		if (p != nullptr) {
-			*p = '\0';
-		}
-
-		p = line;
-		while (ISSPACE(*p))
-			++p;
-		if (*p == '\0')
-			continue;// empty line
-		for (i = 0; i < 19; ++i)
-		{
-			str[i] = p;
-			p = strchr(p, ',');
-			if (p == NULL)
-				break;// comma not found
-			*p = '\0';
-			++p;
-		}
-
-		if (p == NULL)
-		{
-			ShowError("parse_item_constants_txt: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-			continue;
-		}
-
-		// Script
-		if (*p != '{')
-		{
-			ShowError("parse_item_constants_txt: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-			continue;
-		}
-		str[19] = p + 1;
-		p = strstr(p + 1, "},");
-		if (p == NULL)
-		{
-			ShowError("parse_item_constants_txt: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-			continue;
-		}
-		*p = '\0';
-		p += 2;
-
-		// OnEquip_Script
-		if (*p != '{')
-		{
-			ShowError("parse_item_constants_txt: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-			continue;
-		}
-		str[20] = p + 1;
-		p = strstr(p + 1, "},");
-		if (p == NULL)
-		{
-			ShowError("parse_item_constants_txt: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-			continue;
-		}
-		*p = '\0';
-		p += 2;
-
-		// OnUnequip_Script (last column)
-		if (*p != '{')
-		{
-			ShowError("parse_item_constants_txt: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-			continue;
-		}
-		str[21] = p;
-		p = &str[21][strlen(str[21]) - 2];
-
-		if (*p != '}') {
-			/* lets count to ensure it's not something silly e.g. a extra space at line ending */
-			int lcurly = 0, rcurly = 0;
-
-			for (size_t v = 0; v < strlen(str[21]); v++) {
-				if (str[21][v] == '{')
-					lcurly++;
-				else if (str[21][v] == '}') {
-					rcurly++;
-					p = &str[21][v];
-				}
-			}
-
-			if (lcurly != rcurly) {
-				ShowError("parse_item_constants_txt: Mismatching curly braces in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
-				continue;
-			}
-		}
-		str[21] = str[21] + 1;  //skip the first left curly
-		*p = '\0';              //null the last right curly
-
-		uint16 item_id = atoi( str[0] );
-		char* name = trim( str[1] );
-
-		aegis_itemnames[item_id] = std::string(name);
-
-		if (atoi(str[14]) & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[18])) == nullptr)
-			aegis_itemviewid[atoi(str[18])] = item_id;
-
-		count++;
-	}
-
-	fclose(fp);
-
-	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
-
-	return true;
-}
-
-const std::string ItemDatabase::getDefaultLocation(){
-	return std::string( db_path ) + "/item_db.yml";
-}
-
-uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
-	t_itemid nameid;
-
-	if (!this->asUInt32(node, "Id", nameid))
-		return 0;
-
-	if (this->nodeExists(node, "AegisName")) {
-		std::string name;
-
-		if (!this->asString(node, "AegisName", name))
-			return 0;
-
-		aegis_itemnames[nameid] = name;
-	}
-
-	if (this->nodeExists(node, "View")) {
-		uint32 look;
-
-		if (!this->asUInt32(node, "View", look))
-			return 0;
-
-		if( look > 0 ){
-			if (this->nodeExists(node, "Locations")) {
-				const YAML::Node& locationNode = node["Locations"];
-
-				static std::vector<std::string> locations = {
-					"Head_Low",
-					"Head_Mid",
-					"Head_Top",
-					"Costume_Head_Low",
-					"Costume_Head_Mid",
-					"Costume_Head_Top"
-				};
-
-				for( std::string& location : locations ){
-					if (this->nodeExists(locationNode, location)) {
-						bool active;
-
-						if (!this->asBool(locationNode, location, active))
-							return 0;
-
-						aegis_itemviewid[look] = nameid;
-						break;
-					}
-				}
-			}
-		}
-	}
-
-	return 1;
-}
-
-void ItemDatabase::loadingFinished(){
-}
-
-ItemDatabase item_db;
-
-static bool parse_mob_constants_txt( char* split[], int columns, int current ){
-	uint16 mob_id = atoi( split[0] );
-	char* name = trim( split[1] );
-
-	aegis_mobnames[mob_id] = std::string( name );
-
-	return true;
-}
-
-const std::string MobDatabase::getDefaultLocation(){
-	return std::string( db_path ) + "/mob_db.yml";
-}
-
-uint64 MobDatabase::parseBodyNode(const YAML::Node& node) {
-	uint16 mob_id;
-
-	if (!this->asUInt16(node, "Id", mob_id))
-		return 0;
-
-	if (this->nodeExists(node, "AegisName")) {
-		std::string name;
-
-		if (!this->asString(node, "AegisName", name))
-			return 0;
-
-		aegis_mobnames[mob_id] = name;
-	}
-
-	return 1;
-}
-
-void MobDatabase::loadingFinished() {};
-
-MobDatabase mob_db;
-
-static bool parse_skill_constants_txt( char* split[], int columns, int current ){
-	uint16 skill_id = atoi( split[0] );
-	char* name = trim( split[16] );
-
-	aegis_skillnames[skill_id] = std::string( name );
-
-	return true;
-}
-
-const std::string SkillDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/skill_db.yml";
-}
-
-uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
-	t_itemid nameid;
-
-	if (!this->asUInt32(node, "Id", nameid))
-		return 0;
-
-	if (this->nodeExists(node, "Name")) {
-		std::string name;
-
-		if (!this->asString(node, "Name", name))
-			return 0;
-
-		aegis_skillnames[nameid] = name;
-	}
-
-	return 1;
-}
-
-void SkillDatabase::clear() {
-	TypesafeCachedYamlDatabase::clear();
-}
-
-SkillDatabase skill_db;
-
-/**
- * Split the string with ':' as separator and put each value for a skilllv
- * @param str: String to split
- * @param val: Array of MAX_SKILL_LEVEL to put value into
- * @return 0:error, x:number of value assign (should be MAX_SKILL_LEVEL)
- */
-int skill_split_atoi(char *str, int *val) {
-	int i;
-
-	for (i = 0; i < MAX_SKILL_LEVEL; i++) {
-		if (!str)
-			break;
-		val[i] = atoi(str);
-		str = strchr(str, ':');
-		if (str)
-			*str++ = 0;
-	}
-
-	if (i == 0) // No data found.
-		return 0;
-
-	if (i == 1) // Single value, have the whole range have the same value.
-		return 1;
-
-	return i;
-}
-
-/**
- * Split string to int by constant value (const.txt) or atoi()
- * @param *str: String input
- * @param *val: Temporary storage
- * @param *delim: Delimiter (for multiple value support)
- * @param min_value: Minimum value. If the splitted value is less or equal than this, will be skipped
- * @param max: Maximum number that can be allocated
- * @return count: Number of success
- */
-uint8 skill_split_atoi2(char *str, int64 *val, const char *delim, int min_value, uint16 max) {
-	uint8 i = 0;
-	char *p = strtok(str, delim);
-
-	while (p != NULL) {
-		int64 n = min_value;
-
-		trim(p);
-
-		if (ISDIGIT(p[0])) // If using numeric
-			n = atoi(p);
-		else {
-			n = constant_lookup_int(p);
-			p = strtok(NULL, delim);
-		}
-
-		if (n > min_value) {
-			val[i] = n;
-			i++;
-			if (i >= max)
-				break;
-		}
-		p = strtok(NULL, delim);
-	}
-	return i;
-}
-
-/**
- * Split string to int
- * @param str: String input
- * @param val1: Temporary storage to first value
- * @param val2: Temporary storage to second value
- */
-static void itemdb_re_split_atoi(char* str, int* val1, int* val2) {
-	int i, val[2];
-
-	for (i = 0; i < 2; i++) {
-		if (!str)
-			break;
-		val[i] = atoi(str);
-		str = strchr(str, ':');
-		if (str)
-			*str++ = 0;
-	}
-	if (i == 0) {
-		*val1 = *val2 = 0;
-		return; // no data found
-	}
-	if (i == 1) { // Single Value
-		*val1 = val[0];
-		*val2 = 0;
-		return;
-	}
-
-	// We assume we have 2 values.
-	*val1 = val[0];
-	*val2 = val[1];
-	return;
 }
 
 // Implementation of the conversion functions
@@ -1354,7 +652,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		if (atoi(str[11]) != 0)
 			body << YAML::Key << "ClothColor" << YAML::Value << atoi(str[11]);
 
-		if (atoi(str[5]) != 0) {
+		if (strtoul(str[5], nullptr, 10) != 0) {
 			t_itemid weapon_item_id = strtoul( str[5], nullptr, 10 );
 			std::string *weapon_item_name = util::umap_find(aegis_itemnames, weapon_item_id);
 
@@ -1366,7 +664,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			body << YAML::Key << "Weapon" << YAML::Value << *weapon_item_name;
 		}
 
-		if (atoi(str[6]) != 0) {
+		if (strtoul(str[6], nullptr, 10) != 0) {
 			t_itemid shield_item_id = strtoul( str[6], nullptr, 10 );
 			std::string *shield_item_name = util::umap_find(aegis_itemnames, shield_item_id);
 
@@ -1378,54 +676,54 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			body << YAML::Key << "Shield" << YAML::Value << *shield_item_name;
 		}
 
-		if (atoi(str[7]) != 0) {
-			t_itemid *headtop_item_id = util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[7]));
+		if (strtoul(str[7], nullptr, 10) != 0) {
+			t_itemid *headtop_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[7], nullptr, 10));
 
 			if (headtop_item_id == nullptr) {
-				ShowError("Item ID for view ID %hu (head top) is not known.\n", atoi(str[7]));
+				ShowError("Item ID for view ID %u (head top) is not known.\n", strtoul(str[7], nullptr, 10));
 				return false;
 			}
 
-			std::string *headtop_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headtop_item_id);
+			std::string *headtop_item_name = util::umap_find(aegis_itemnames, *headtop_item_id);
 
 			if (headtop_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (head top) is not known.\n", *headtop_item_id);
+				ShowError("Item name for item ID %u (head top) is not known.\n", *headtop_item_id);
 				return false;
 			}
 
 			body << YAML::Key << "HeadTop" << YAML::Value << *headtop_item_name;
 		}
 
-		if (atoi(str[8]) != 0) {
-			t_itemid *headmid_item_id = util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[8]));
+		if (strtoul(str[8], nullptr, 10) != 0) {
+			t_itemid *headmid_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[8], nullptr, 10));
 
 			if (headmid_item_id == nullptr) {
-				ShowError("Item ID for view ID %hu (head mid) is not known.\n", atoi(str[8]));
+				ShowError("Item ID for view ID %u (head mid) is not known.\n", strtoul(str[8], nullptr, 10));
 				return false;
 			}
 
-			std::string *headmid_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headmid_item_id);
+			std::string *headmid_item_name = util::umap_find(aegis_itemnames, *headmid_item_id);
 
 			if (headmid_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (head mid) is not known.\n", *headmid_item_id);
+				ShowError("Item name for item ID %u (head mid) is not known.\n", *headmid_item_id);
 				return false;
 			}
 
 			body << YAML::Key << "HeadMid" << YAML::Value << *headmid_item_name;
 		}
 
-		if (atoi(str[9]) != 0) {
-			t_itemid *headlow_item_id = util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[9]));
+		if (strtoul(str[9], nullptr, 10) != 0) {
+			t_itemid *headlow_item_id = util::umap_find(aegis_itemviewid, (uint32)strtoul(str[9], nullptr, 10));
 
 			if (headlow_item_id == nullptr) {
-				ShowError("Item ID for view ID %hu (head low) is not known.\n", atoi(str[9]));
+				ShowError("Item ID for view ID %u (head low) is not known.\n", strtoul(str[9], nullptr, 10));
 				return false;
 			}
 
-			std::string *headlow_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headlow_item_id);
+			std::string *headlow_item_name = util::umap_find(aegis_itemnames, *headlow_item_id);
 
 			if (headlow_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (head low) is not known.\n", *headlow_item_id);
+				ShowError("Item name for item ID %u (head low) is not known.\n", *headlow_item_id);
 				return false;
 			}
 
@@ -1769,29 +1067,6 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 	skill_nearnpc.insert({ skill_id, entry });
 
 	return true;
-}
-
-static bool isMultiLevel(int arr[]) {
-	int count = 0;
-
-	for (int i = 0; i < MAX_SKILL_LEVEL; i++) {
-		if (arr[i] != 0)
-			count++;
-	}
-
-	return (count == 0 || count == 1 ? false : true);
-}
-
-std::string name2Upper(std::string name) {
-	std::transform(name.begin(), name.end(), name.begin(), ::tolower);
-	name[0] = toupper(name[0]);
-
-	for (size_t i = 0; i < name.size(); i++) {
-		if (name[i - 1] == '_' || (name[i - 2] == '1' && name[i - 1] == 'h') || (name[i - 2] == '2' && name[i - 1] == 'h'))
-			name[i] = toupper(name[i]);
-	}
-
-	return name;
 }
 
 // Copied and adjusted from skill.cpp
@@ -3689,227 +2964,6 @@ bool pc_levelpenalty_yaml(){
 	return true;
 }
 
-// Initialize Random Option constants
-void init_random_option_constants() {
-	#define export_constant2(a, b) script_set_constant_(a, b, a, false, false)
-
-	export_constant2("RDMOPT_VAR_MAXHPAMOUNT", 1);
-	export_constant2("RDMOPT_VAR_MAXSPAMOUNT", 2);
-	export_constant2("RDMOPT_VAR_STRAMOUNT", 3);
-	export_constant2("RDMOPT_VAR_AGIAMOUNT", 4);
-	export_constant2("RDMOPT_VAR_VITAMOUNT", 5);
-	export_constant2("RDMOPT_VAR_INTAMOUNT", 6);
-	export_constant2("RDMOPT_VAR_DEXAMOUNT", 7);
-	export_constant2("RDMOPT_VAR_LUKAMOUNT", 8);
-	export_constant2("RDMOPT_VAR_MAXHPPERCENT", 9);
-	export_constant2("RDMOPT_VAR_MAXSPPERCENT", 10);
-	export_constant2("RDMOPT_VAR_HPACCELERATION", 11);
-	export_constant2("RDMOPT_VAR_SPACCELERATION", 12);
-	export_constant2("RDMOPT_VAR_ATKPERCENT", 13);
-	export_constant2("RDMOPT_VAR_MAGICATKPERCENT", 14);
-	export_constant2("RDMOPT_VAR_PLUSASPD", 15);
-	export_constant2("RDMOPT_VAR_PLUSASPDPERCENT", 16);
-	export_constant2("RDMOPT_VAR_ATTPOWER", 17);
-	export_constant2("RDMOPT_VAR_HITSUCCESSVALUE", 18);
-	export_constant2("RDMOPT_VAR_ATTMPOWER", 19);
-	export_constant2("RDMOPT_VAR_ITEMDEFPOWER", 20);
-	export_constant2("RDMOPT_VAR_MDEFPOWER", 21);
-	export_constant2("RDMOPT_VAR_AVOIDSUCCESSVALUE", 22);
-	export_constant2("RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE", 23);
-	export_constant2("RDMOPT_VAR_CRITICALSUCCESSVALUE", 24);
-	export_constant2("RDMOPT_ATTR_TOLERACE_NOTHING", 25);
-	export_constant2("RDMOPT_ATTR_TOLERACE_WATER", 26);
-	export_constant2("RDMOPT_ATTR_TOLERACE_GROUND", 27);
-	export_constant2("RDMOPT_ATTR_TOLERACE_FIRE", 28);
-	export_constant2("RDMOPT_ATTR_TOLERACE_WIND", 29);
-	export_constant2("RDMOPT_ATTR_TOLERACE_POISON", 30);
-	export_constant2("RDMOPT_ATTR_TOLERACE_SAINT", 31);
-	export_constant2("RDMOPT_ATTR_TOLERACE_DARKNESS", 32);
-	export_constant2("RDMOPT_ATTR_TOLERACE_TELEKINESIS", 33);
-	export_constant2("RDMOPT_ATTR_TOLERACE_UNDEAD", 34);
-	export_constant2("RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING", 35);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_NOTHING_USER", 36);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET", 37);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_WATER_USER", 38);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_WATER_TARGET", 39);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_GROUND_USER", 40);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET", 41);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_FIRE_USER", 42);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET", 43);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_WIND_USER", 44);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_WIND_TARGET", 45);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_POISON_USER", 46);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_POISON_TARGET", 47);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_SAINT_USER", 48);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET", 49);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_DARKNESS_USER", 50);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET", 51);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_USER", 52);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET", 53);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_UNDEAD_USER", 54);
-	export_constant2("RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET", 55);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_NOTHING_USER", 56);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET", 57);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WATER_USER", 58);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET", 59);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_GROUND_USER", 60);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET", 61);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_FIRE_USER", 62);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET", 63);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WIND_USER", 64);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET", 65);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_POISON_USER", 66);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET", 67);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_SAINT_USER", 68);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET", 69);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_DARKNESS_USER", 70);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET", 71);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_USER", 72);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET", 73);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_UNDEAD_USER", 74);
-	export_constant2("RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET", 75);
-	export_constant2("RDMOPT_BODY_ATTR_NOTHING", 76);
-	export_constant2("RDMOPT_BODY_ATTR_WATER", 77);
-	export_constant2("RDMOPT_BODY_ATTR_GROUND", 78);
-	export_constant2("RDMOPT_BODY_ATTR_FIRE", 79);
-	export_constant2("RDMOPT_BODY_ATTR_WIND", 80);
-	export_constant2("RDMOPT_BODY_ATTR_POISON", 81);
-	export_constant2("RDMOPT_BODY_ATTR_SAINT", 82);
-	export_constant2("RDMOPT_BODY_ATTR_DARKNESS", 83);
-	export_constant2("RDMOPT_BODY_ATTR_TELEKINESIS", 84);
-	export_constant2("RDMOPT_BODY_ATTR_UNDEAD", 85);
-	export_constant2("RDMOPT_RACE_TOLERACE_NOTHING", 87);
-	export_constant2("RDMOPT_RACE_TOLERACE_UNDEAD", 88);
-	export_constant2("RDMOPT_RACE_TOLERACE_ANIMAL", 89);
-	export_constant2("RDMOPT_RACE_TOLERACE_PLANT", 90);
-	export_constant2("RDMOPT_RACE_TOLERACE_INSECT", 91);
-	export_constant2("RDMOPT_RACE_TOLERACE_FISHS", 92);
-	export_constant2("RDMOPT_RACE_TOLERACE_DEVIL", 93);
-	export_constant2("RDMOPT_RACE_TOLERACE_HUMAN", 94);
-	export_constant2("RDMOPT_RACE_TOLERACE_ANGEL", 95);
-	export_constant2("RDMOPT_RACE_TOLERACE_DRAGON", 96);
-	export_constant2("RDMOPT_RACE_DAMAGE_NOTHING", 97);
-	export_constant2("RDMOPT_RACE_DAMAGE_UNDEAD", 98);
-	export_constant2("RDMOPT_RACE_DAMAGE_ANIMAL", 99);
-	export_constant2("RDMOPT_RACE_DAMAGE_PLANT", 100);
-	export_constant2("RDMOPT_RACE_DAMAGE_INSECT", 101);
-	export_constant2("RDMOPT_RACE_DAMAGE_FISHS", 102);
-	export_constant2("RDMOPT_RACE_DAMAGE_DEVIL", 103);
-	export_constant2("RDMOPT_RACE_DAMAGE_HUMAN", 104);
-	export_constant2("RDMOPT_RACE_DAMAGE_ANGEL", 105);
-	export_constant2("RDMOPT_RACE_DAMAGE_DRAGON", 106);
-	export_constant2("RDMOPT_RACE_MDAMAGE_NOTHING", 107);
-	export_constant2("RDMOPT_RACE_MDAMAGE_UNDEAD", 108);
-	export_constant2("RDMOPT_RACE_MDAMAGE_ANIMAL", 109);
-	export_constant2("RDMOPT_RACE_MDAMAGE_PLANT", 110);
-	export_constant2("RDMOPT_RACE_MDAMAGE_INSECT", 111);
-	export_constant2("RDMOPT_RACE_MDAMAGE_FISHS", 112);
-	export_constant2("RDMOPT_RACE_MDAMAGE_DEVIL", 113);
-	export_constant2("RDMOPT_RACE_MDAMAGE_HUMAN", 114);
-	export_constant2("RDMOPT_RACE_MDAMAGE_ANGEL", 115);
-	export_constant2("RDMOPT_RACE_MDAMAGE_DRAGON", 116);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_NOTHING", 117);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_UNDEAD", 118);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_ANIMAL", 119);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_PLANT", 120);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_INSECT", 121);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_FISHS", 122);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_DEVIL", 123);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_HUMAN", 124);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_ANGEL", 125);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_DRAGON", 126);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING", 127);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD", 128);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL", 129);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT", 130);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT", 131);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS", 132);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL", 133);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN", 134);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL", 135);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON", 136);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING", 137);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_UNDEAD", 138);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANIMAL", 139);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT", 140);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT", 141);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS", 142);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL", 143);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN", 144);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL", 145);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON", 146);
-	export_constant2("RDMOPT_CLASS_DAMAGE_NORMAL_TARGET", 147);
-	export_constant2("RDMOPT_CLASS_DAMAGE_BOSS_TARGET", 148);
-	export_constant2("RDMOPT_CLASS_DAMAGE_NORMAL_USER", 149);
-	export_constant2("RDMOPT_CLASS_DAMAGE_BOSS_USER", 150);
-	export_constant2("RDMOPT_CLASS_MDAMAGE_NORMAL", 151);
-	export_constant2("RDMOPT_CLASS_MDAMAGE_BOSS", 152);
-	export_constant2("RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL", 153);
-	export_constant2("RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS", 154);
-	export_constant2("RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL", 155);
-	export_constant2("RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS", 156);
-	export_constant2("RDMOPT_DAMAGE_SIZE_SMALL_TARGET", 157);
-	export_constant2("RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET", 158);
-	export_constant2("RDMOPT_DAMAGE_SIZE_LARGE_TARGET", 159);
-	export_constant2("RDMOPT_DAMAGE_SIZE_SMALL_USER", 160);
-	export_constant2("RDMOPT_DAMAGE_SIZE_MIDIUM_USER", 161);
-	export_constant2("RDMOPT_DAMAGE_SIZE_LARGE_USER", 162);
-	export_constant2("RDMOPT_DAMAGE_SIZE_PERFECT", 163);
-	export_constant2("RDMOPT_DAMAGE_CRI_TARGET", 164);
-	export_constant2("RDMOPT_DAMAGE_CRI_USER", 165);
-	export_constant2("RDMOPT_RANGE_ATTACK_DAMAGE_TARGET", 166);
-	export_constant2("RDMOPT_RANGE_ATTACK_DAMAGE_USER", 167);
-	export_constant2("RDMOPT_HEAL_VALUE", 168);
-	export_constant2("RDMOPT_HEAL_MODIFY_PERCENT", 169);
-	export_constant2("RDMOPT_DEC_SPELL_CAST_TIME", 170);
-	export_constant2("RDMOPT_DEC_SPELL_DELAY_TIME", 171);
-	export_constant2("RDMOPT_DEC_SP_CONSUMPTION", 172);
-	export_constant2("RDMOPT_WEAPON_ATTR_NOTHING", 175);
-	export_constant2("RDMOPT_WEAPON_ATTR_WATER", 176);
-	export_constant2("RDMOPT_WEAPON_ATTR_GROUND", 177);
-	export_constant2("RDMOPT_WEAPON_ATTR_FIRE", 178);
-	export_constant2("RDMOPT_WEAPON_ATTR_WIND", 179);
-	export_constant2("RDMOPT_WEAPON_ATTR_POISON", 180);
-	export_constant2("RDMOPT_WEAPON_ATTR_SAINT", 181);
-	export_constant2("RDMOPT_WEAPON_ATTR_DARKNESS", 182);
-	export_constant2("RDMOPT_WEAPON_ATTR_TELEKINESIS", 183);
-	export_constant2("RDMOPT_WEAPON_ATTR_UNDEAD", 184);
-	export_constant2("RDMOPT_WEAPON_INDESTRUCTIBLE", 185);
-	export_constant2("RDMOPT_BODY_INDESTRUCTIBLE", 186);
-	export_constant2("RDMOPT_MDAMAGE_SIZE_SMALL_TARGET", 187);
-	export_constant2("RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET", 188);
-	export_constant2("RDMOPT_MDAMAGE_SIZE_LARGE_TARGET", 189);
-	export_constant2("RDMOPT_MDAMAGE_SIZE_SMALL_USER", 190);
-	export_constant2("RDMOPT_MDAMAGE_SIZE_MIDIUM_USER", 191);
-	export_constant2("RDMOPT_MDAMAGE_SIZE_LARGE_USER", 192);
-	export_constant2("RDMOPT_ATTR_TOLERACE_ALL", 193);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_NOTHING", 194);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_UNDEAD", 195);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_ANIMAL", 196);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_PLANT", 197);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_INSECT", 198);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_FISHS", 199);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_DEVIL", 200);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_HUMAN", 201);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_ANGEL", 202);
-	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_DRAGON", 203);
-	export_constant2("RDMOPT_RACE_TOLERACE_PLAYER_HUMAN", 206);
-	export_constant2("RDMOPT_RACE_TOLERACE_PLAYER_DORAM", 207);
-	export_constant2("RDMOPT_RACE_DAMAGE_PLAYER_HUMAN", 208);
-	export_constant2("RDMOPT_RACE_DAMAGE_PLAYER_DORAM", 209);
-	export_constant2("RDMOPT_RACE_MDAMAGE_PLAYER_HUMAN", 210);
-	export_constant2("RDMOPT_RACE_MDAMAGE_PLAYER_DORAM", 211);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_PLAYER_HUMAN", 212);
-	export_constant2("RDMOPT_RACE_CRI_PERCENT_PLAYER_DORAM", 213);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN", 214);
-	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM", 215);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN", 216);
-	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM", 217);
-	export_constant2("RDMOPT_MELEE_ATTACK_DAMAGE_TARGET", 219);
-	export_constant2("RDMOPT_MELEE_ATTACK_DAMAGE_USER", 220);
-
-	#undef export_constant2
-}
 
 // mob_db.yml function
 //--------------------
@@ -4061,17 +3115,17 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				if (!header) {
 					body << YAML::Key << "RaceGroups";
 					body << YAML::BeginMap;
+					header = true;
 				}
 
 				body << YAML::Key << name2Upper(constant_lookup(race2.first, "RC2_") + 4) << YAML::Value << "true";
 
-				if (!header) {
-					body << YAML::EndMap;
-					header = true;
-				}
 			}
 		}
 	}
+
+	if (header)
+		body << YAML::EndMap;
 
 	if (fields[24]) {
 		int ele = strtol(fields[24], nullptr, 10);

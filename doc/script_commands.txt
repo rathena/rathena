@@ -3939,6 +3939,14 @@ This will only work if 'hom_idle_no_share' and 'idletime_hom_option' are enabled
 
 ---------------------------------------
 
+*checkidlemer({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle for mercenary item share.
+Name is optional, and defaults to the attached player if omitted.
+This will only work if 'mer_idle_no_share' and 'idletime_mer_option' are enabled (see '/conf/battle/drops.conf').
+
+---------------------------------------
+
 *agitcheck()
 *agitcheck2()
 *agitcheck3()
@@ -10390,6 +10398,19 @@ Returns 1 on success.
 
 	// Example to set delay
 	channel_setopt("#global",CHAN_OPT_MSG_DELAY,5000);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_getopt "<chname>",<option>;
+
+Get option value for the channel. The <option> values are the same as the
+'channel_create' options. Returns true or false except for CHAN_OPT_MSG_DELAY
+which returns an integer.
+
+	// Example to get the delay
+	.delay = channel_getopt("#global",CHAN_OPT_MSG_DELAY);
 
 Only for public and private channel.
 
