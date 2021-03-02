@@ -188,6 +188,7 @@ struct CharServ_Config {
 	int mail_return_days;
 	int mail_delete_days;
 	int mail_retrieve;
+	int mail_return_empty;
 
 	int allowed_job_flag;
 };

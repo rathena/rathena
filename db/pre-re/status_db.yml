@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2018 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -179,7 +179,6 @@ Body:
       Opt_Changeoption: true
       Boss_Resist: true
       Stop_Casting: true
-      Failed_Immunity: true
       Overlap_Fail: true
     Fail:
       Refresh: true
@@ -356,7 +355,6 @@ Body:
       No_Save: true
       No_Clearance: true
       Debuff: true
-      Failed_Immunity: true
     Fail:
       Speedup1: true
     End:
@@ -385,7 +383,6 @@ Body:
       Angelus: true
     Flags:
       Opt_Changeoption: true
-      Failed_Immunity: true
 
   - Status: Blessing
     Icon: Blessing
@@ -396,7 +393,6 @@ Body:
       Dex: true
     Flags:
       Boss_Resist: true
-      Failed_Immunity: true
 
   - Status: Signumcrucis
     Icon: Crucis
@@ -417,7 +413,6 @@ Body:
       Speed: true
     Flags:
       Failed_Mado: true
-      Failed_Immunity: true
     Fail:
       Quagmire: true
     End:
@@ -434,7 +429,6 @@ Body:
       Boss_Resist: true
       No_Save: true
       Debuff: true
-      Failed_Immunity: true
     Fail:
       Speedup1: true
     End:
@@ -454,23 +448,18 @@ Body:
     DurationLookup: PR_SLOWPOISON
     Flags:
       No_Clearance: true
-      Failed_Immunity: true
 
   - Status: Impositio
     Icon: Impositio
     DurationLookup: PR_IMPOSITIO
     CalcFlags:
       Watk: true
-    Flags:
-      Failed_Immunity: true
     End:
       Impositio: true
 
   - Status: Suffragium
     Icon: Suffragium
     DurationLookup: PR_SUFFRAGIUM
-    Flags:
-      Failed_Immunity: true
 
   - Status: Aspersio
     Icon: Aspersio
@@ -486,13 +475,10 @@ Body:
     Flags:
       No_Save: true
       No_Clearance: true
-      Failed_Immunity: true
 
   - Status: Kyrie
     Icon: Kyrie
     DurationLookup: PR_KYRIE
-    Flags:
-      Failed_Immunity: true
     End:
       Assumptio: true
 
@@ -504,7 +490,6 @@ Body:
     Flags:
       Failed_Mado: true
       No_Save: true
-      Failed_Immunity: true
     Fail:
       Offertorium: true
 
@@ -513,15 +498,12 @@ Body:
     DurationLookup: PR_GLORIA
     CalcFlags:
       Luk: true
-    Flags:
-      Failed_Immunity: true
 
   - Status: Aeterna
     Icon: Lexaeterna
     DurationLookup: PR_LEXAETERNA
     Flags:
       No_Save: true
-      Failed_Immunity: true
     Fail:
       Freeze: true
 
@@ -864,7 +846,6 @@ Body:
     DurationLookup: SA_MAGICROD
     Flags:
       No_Save: true
-      Failed_Immunity: true
 
   - Status: Spellbreaker
 
@@ -1161,8 +1142,6 @@ Body:
     DurationLookup: HP_ASSUMPTIO
     Opt3:
       Assumptio: true
-    Flags:
-      Failed_Immunity: true
     End:
       Kyrie: true
       Kaite: true
@@ -1230,7 +1209,6 @@ Body:
     Flags:
       Failed_Mado: true
       No_Save: true
-      Failed_Immunity: true
     Fail:
       Quagmire: true
 
@@ -1898,7 +1876,6 @@ Body:
     Flags:
       Boss_Resist: true
       Mvp_Resist: true
-      Failed_Immunity: true
 
   - Status: Intravision
     Icon: Clairvoyance
@@ -2416,7 +2393,6 @@ Body:
       No_Save: true
       No_Rem_Ondead: true
       Debuff: true
-      Failed_Immunity: true
 
   - Status: Nen
     Icon: Nj_Nen
@@ -3399,7 +3375,6 @@ Body:
       Speed: true
     Flags:
       No_Dispell: true
-      Rem_On_Madogear: true
       No_Banishing_Buster: true
       No_Clearance: true
 
@@ -3410,7 +3385,6 @@ Body:
       Speed: true
     Flags:
       No_Dispell: true
-      Rem_On_Madogear: true
       No_Banishing_Buster: true
       No_Clearance: true
 
@@ -3421,7 +3395,6 @@ Body:
       Def_Ele: true
     Flags:
       No_Dispell: true
-      Rem_On_Madogear: true
       No_Banishing_Buster: true
       No_Clearance: true
 
@@ -3457,7 +3430,6 @@ Body:
       Boss_Resist: true
       Stop_Walking: true
       No_Dispell: true
-      Rem_On_Madogear: true
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
@@ -3484,7 +3456,6 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
-      Rem_On_Madogear: true
       Rem_On_Changemap: true
 
   - Status: Stealthfield
@@ -3510,14 +3481,12 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
-      Rem_On_Madogear: true
       Rem_On_Changemap: true
 
   - Status: Overheat
     Icon: Overheat
     Flags:
       No_Dispell: true
-      Rem_On_Madogear: true
       No_Banishing_Buster: true
       No_Clearance: true
 
@@ -3525,7 +3494,6 @@ Body:
     Icon: Overheat_Limitpoint
     Flags:
       No_Dispell: true
-      Rem_On_Madogear: true
       No_Banishing_Buster: true
       No_Clearance: true
 
@@ -3592,7 +3560,6 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-      Failed_Immunity: true
 
   - Status: Hallucinationwalk_Postdelay
     Icon: Hallucinationwalk_Postdelay
@@ -3627,17 +3594,6 @@ Body:
       No_Banishing_Buster: true
       Debuff: true
       Overlap_Fail: true
-    Fail:
-      Refresh: true
-      Inspiration: true
-      Toxin: true
-      Paralyse: true
-      Venombleed: true
-      Magicmushroom: true
-      Deathhurt: true
-      Pyrexia: true
-      Oblivioncurse: true
-      Leechesend: true
 
   - Status: Paralyse
     Icon: Paralyse
@@ -4008,7 +3964,6 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-      Failed_Immunity: true
     End:
       Symphonyoflover: true
       Moonlitserenade: true
@@ -5378,7 +5333,6 @@ Body:
       Atk_Ele: true
       Regen: true
     Flags:
-      Failed_Immunity: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -5393,7 +5347,6 @@ Body:
       Atk_Ele: true
       Regen: true
     Flags:
-      Failed_Immunity: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -5409,7 +5362,6 @@ Body:
       Atk_Ele: true
       Regen: true
     Flags:
-      Failed_Immunity: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -5428,7 +5380,6 @@ Body:
       Atk_Ele: true
       Regen: true
     Flags:
-      Failed_Immunity: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -7536,7 +7487,7 @@ Body:
 
   - Status: Emergency_Move
     Icon: Inc_Agi
-    DurationLookup: GD_EMERGENCY_MOVE
+#    DurationLookup: GD_EMERGENCY_MOVE
     CalcFlags:
       Speed: true
     Flags:

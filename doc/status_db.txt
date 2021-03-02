@@ -183,7 +183,6 @@ Flags: Various status flags for specific status change events.
 	Set_Stand           - Sets player to standing state.
 	Overlap_Fail        - The status will fail to activate if the status is already active.
 	Failed_Mado         - Cannot be applied if Madogear is active.
-	Failed_Immunity     - Cannot be applied if target has immunity by Golden Thief Bug Card's effect or Wand of Hermode.
 
 	No_Clearbuff        - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
 	No_Rem_Ondead       - Cannot be removed when a player dies.
@@ -192,7 +191,6 @@ Flags: Various status flags for specific status change events.
 	No_Banishing_Buster - Cannot be removed by RL_BANISHING_BUSTER.
 	No_Save             - Won't be saved when player logs out.
 
-	Rem_On_Madogear     - Removed when mounting/dismounting Madogear.
 	Rem_On_Damaged      - Removed when receiving damage.
 	Rem_On_Refresh      - Removed by RK_REFRESH.
 	Rem_On_Luxanima     - Removed by RK_LUXANIMA.
