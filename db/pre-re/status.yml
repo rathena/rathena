@@ -34,10 +34,10 @@
 #   Flags                     Special flags which trigger during certain events.  (Default: None)
 #   MinRate                   Minimum rate after status change reduction (10000 = 100%). (Default: 0)
 #   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 1)
-#   Fail                      List of Status Changes that causes the status to fail to activate. (Default: nullptr)
-#   End                       List of Status Changes that will end when the status activates. (Default: nullptr)
+#   Fail                      List of Status Changes that causes the status to fail to activate. (Optional)
+#   End                       List of Status Changes that will end when the status activates. (Optional)
 #   EndReturn                 If the status has an End list and succeeds to remove these status changes, it won't give its effect. (Default: false)
-#   Script                    Special script which triggers on status change activation. (Default: nullptr)
+#   Script                    Special script which triggers on status change activation. (Optional)
 ###########################################################################
 
 Header:
@@ -272,8 +272,6 @@ Body:
     DurationLookup: KN_TWOHANDQUICKEN
     CalcFlags:
       Aspd: true
-      Hit: true
-      Cri: true
     Opt3:
       Quicken: true
     Flags:
@@ -381,7 +379,6 @@ Body:
     DurationLookup: AL_ANGELUS
     CalcFlags:
       Def2: true
-      MaxHp: true
     Opt2:
       Angelus: true
     Flags:
@@ -394,7 +391,6 @@ Body:
       Str: true
       Int: true
       Dex: true
-      Hit: true
     Flags:
       Boss_Resist: true
 
@@ -415,7 +411,6 @@ Body:
     CalcFlags:
       Agi: true
       Speed: true
-      Aspd: true
     Flags:
       Failed_Mado: true
     Fail:
@@ -459,7 +454,6 @@ Body:
     DurationLookup: PR_IMPOSITIO
     CalcFlags:
       Watk: true
-      Matk: true
     End:
       Impositio: true
 
@@ -485,6 +479,8 @@ Body:
   - Status: Kyrie
     Icon: Kyrie
     DurationLookup: PR_KYRIE
+    End:
+      Assumptio: true
 
   - Status: Magnificat
     Icon: Magnificat
@@ -516,7 +512,6 @@ Body:
     DurationLookup: BS_ADRENALINE
     CalcFlags:
       Aspd: true
-      Hit: true
     Flags:
       Require_Weapon: true
     Fail:
@@ -566,7 +561,6 @@ Body:
     DurationLookup: MC_LOUD
     CalcFlags:
       Str: true
-      Batk: true
 
   - Status: Energycoat
     Icon: Energycoat
@@ -974,7 +968,7 @@ Body:
     Icon: Propertyfire
     DurationLookup: SA_FLAMELAUNCHER
     CalcFlags:
-      All: true
+      Atk_Ele: true
     Flags:
       No_Rem_Ondead: true
 
@@ -982,7 +976,7 @@ Body:
     Icon: Propertywater
     DurationLookup: SA_FROSTWEAPON
     CalcFlags:
-      All: true
+      Atk_Ele: true
     Flags:
       No_Rem_Ondead: true
 
@@ -990,7 +984,7 @@ Body:
     Icon: Propertywind
     DurationLookup: SA_LIGHTNINGLOADER
     CalcFlags:
-      All: true
+      Atk_Ele: true
     Flags:
       No_Rem_Ondead: true
 
@@ -998,7 +992,7 @@ Body:
     Icon: Propertyground
     DurationLookup: SA_SEISMICWEAPON
     CalcFlags:
-      All: true
+      Atk_Ele: true
     Flags:
       No_Rem_Ondead: true
 
@@ -1007,7 +1001,6 @@ Body:
     DurationLookup: SA_VOLCANO
     CalcFlags:
       Watk: true
-      Matk: true
     Flags:
       No_Save: true
       No_Clearance: true
@@ -1084,8 +1077,11 @@ Body:
     Icon: Lkconcentration
     DurationLookup: LK_CONCENTRATION
     CalcFlags:
+      Batk: true
+      Watk: true
       Hit: true
       Def: true
+      Def2: true
     Opt3:
       Quicken: true
     Flags:
@@ -1142,27 +1138,24 @@ Body:
       No_Save: true
 
   - Status: Assumptio
-    Icon: Assumptio_Buff
+    Icon: Assumptio
     DurationLookup: HP_ASSUMPTIO
-    CalcFlags:
-      Def: true
     Opt3:
       Assumptio: true
     End:
+      Kyrie: true
       Kaite: true
 
   - Status: Basilica
-    Icon: Basilica_Buff
     DurationLookup: HP_BASILICA
-    CalcFlags:
-      All: true
     States:
+      NoMove: true
+      NoMoveCond: true
       NoAttack: true
-      Nomove: true
-      Nomovecond: true
     Flags:
       No_Save: true
       No_Clearance: true
+      Rem_On_Changemap: true
 
   - Status: Guildaura
     Flags:
@@ -1183,8 +1176,6 @@ Body:
   - Status: Edp
     Icon: Edp
     DurationLookup: ASC_EDP
-    CalcFlags:
-      Watk: true
     Flags:
       No_Rem_Ondead: true
       No_Dispell: true
@@ -1561,18 +1552,19 @@ Body:
       No_Clearance: true
 
   - Status: Gravitation
-#    Icon: Gravitation
-#    DurationLookup: HW_GRAVITATION
-#    States:
-#      NoMove: true
-#      NoMoveCond: true
-#      NoConsumeItem: true
-#      NoConsumeItemCond: true
-#    CalcFlags:
-#      Aspd: true
-#    Flags:
-#      No_Save: true
-#      No_Clearance: true
+    Icon: Gravitation
+    DurationLookup: HW_GRAVITATION
+    States:
+      NoMove: true
+      NoMoveCond: true
+      NoConsumeItem: true
+      NoConsumeItemCond: true
+    CalcFlags:
+      Aspd: true
+    Flags:
+      Boss_Resist: true
+      No_Save: true
+      No_Clearance: true
 
   - Status: Maxoverthrust
     Icon: Overthrustmax
@@ -1585,10 +1577,11 @@ Body:
       Overthrust: true
 
   - Status: Longing
-    Icon: Ensemblefatigue
-    DurationLookup: CG_SPECIALSINGER
-    States:
-      NoMove: true
+    Icon: Longing
+    DurationLookup: CG_LONGINGFREEDOM
+    CalcFlags:
+      Speed: true
+      Aspd: true
 
   - Status: Hermode
     Icon: Hermode
@@ -1687,14 +1680,6 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-    End:
-      Richmankim: true
-      Eternalchaos: true
-      Drumbattle: true
-      Nibelungen: true
-      Rokisweil: true
-      Intoabyss: true
-      Siegfried: true
 
   - Status: Eternalchaos
     Icon: Eternalchaos
@@ -1705,69 +1690,36 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-    End:
-      Richmankim: true
-      Eternalchaos: true
-      Drumbattle: true
-      Nibelungen: true
-      Rokisweil: true
-      Intoabyss: true
-      Siegfried: true
 
   - Status: Drumbattle
     Icon: Drumbattlefield
     DurationLookup: BD_DRUMBATTLEFIELD
     CalcFlags:
+      Watk: true
       Def: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-    End:
-      Richmankim: true
-      Eternalchaos: true
-      Drumbattle: true
-      Nibelungen: true
-      Rokisweil: true
-      Intoabyss: true
-      Siegfried: true
 
   - Status: Nibelungen
     Icon: Ringnibelungen
     DurationLookup: BD_RINGNIBELUNGEN
     CalcFlags:
-      All: true
+      Watk: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-    End:
-      Richmankim: true
-      Eternalchaos: true
-      Drumbattle: true
-      Nibelungen: true
-      Rokisweil: true
-      Intoabyss: true
-      Siegfried: true
 
   - Status: Rokisweil
     Icon: Rokisweil
     DurationLookup: BD_ROKISWEIL
-    States:
-      NoCast: true
     Flags:
       Boss_Resist: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-    End:
-      Richmankim: true
-      Eternalchaos: true
-      Drumbattle: true
-      Nibelungen: true
-      Rokisweil: true
-      Intoabyss: true
-      Siegfried: true
 
   - Status: Intoabyss
     Icon: Intoabyss
@@ -1776,14 +1728,6 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-    End:
-      Richmankim: true
-      Eternalchaos: true
-      Drumbattle: true
-      Nibelungen: true
-      Rokisweil: true
-      Intoabyss: true
-      Siegfried: true
 
   - Status: Siegfried
     Icon: Siegfried
@@ -1794,14 +1738,6 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-    End:
-      Richmankim: true
-      Eternalchaos: true
-      Drumbattle: true
-      Nibelungen: true
-      Rokisweil: true
-      Intoabyss: true
-      Siegfried: true
 
   - Status: Whistle
     Icon: Whistle
@@ -1813,11 +1749,6 @@ Body:
       No_Rem_Ondead: true
       No_Dispell: true
       No_Clearance: true
-    End:
-      Whistle: true
-      Assncros: true
-      Poembragi: true
-      Appleidun: true
 
   - Status: Assncros
     Icon: Assassincross
@@ -1831,11 +1762,6 @@ Body:
       No_Dispell: true
     Fail:
       Quagmire: true
-    End:
-      Whistle: true
-      Assncros: true
-      Poembragi: true
-      Appleidun: true
 
   - Status: Poembragi
     Icon: Poembragi
@@ -1844,11 +1770,6 @@ Body:
       No_Rem_Ondead: true
       No_Clearance: true
       No_Dispell: true
-    End:
-      Whistle: true
-      Assncros: true
-      Poembragi: true
-      Appleidun: true
 
   - Status: Appleidun
     Icon: Appleidun
@@ -1859,11 +1780,6 @@ Body:
       No_Rem_Ondead: true
       No_Clearance: true
       No_Dispell: true
-    End:
-      Whistle: true
-      Assncros: true
-      Poembragi: true
-      Appleidun: true
 
   - Status: Modechange
     DurationLookup: NPC_EMOTION
@@ -1879,11 +1795,6 @@ Body:
       No_Rem_Ondead: true
       No_Clearance: true
       No_Dispell: true
-    End:
-      Dontforgetme: true
-      Humming: true
-      Fortune: true
-      Service4u: true
 
   - Status: Dontforgetme
     Icon: Dontforgetme
@@ -1906,10 +1817,6 @@ Body:
       Onehand: true
       Merc_Quicken: true
       Acceleration: true
-      Dontforgetme: true
-      Humming: true
-      Fortune: true
-      Service4u: true
 
   - Status: Fortune
     Icon: Fortunekiss
@@ -1920,11 +1827,6 @@ Body:
       No_Rem_Ondead: true
       No_Clearance: true
       No_Dispell: true
-    End:
-      Dontforgetme: true
-      Humming: true
-      Fortune: true
-      Service4u: true
 
   - Status: Service4u
     Icon: Serviceforyou
@@ -1935,11 +1837,6 @@ Body:
       No_Rem_Ondead: true
       No_Clearance: true
       No_Dispell: true
-    End:
-      Dontforgetme: true
-      Humming: true
-      Fortune: true
-      Service4u: true
 
   - Status: Stop
     Icon: Stop
@@ -1973,11 +1870,6 @@ Body:
       No_Clearance: true
       No_Save: true
       No_Banishing_Buster: true
-    End:
-      Soulgolem: true
-      Soulshadow: true
-      Soulfalcon: true
-      Soulfairy: true
 
   - Status: Coma
     DurationLookup: NPC_DARKBLESSING
@@ -2414,6 +2306,7 @@ Body:
     States:
       NoMove: true
     CalcFlags:
+      Batk: true
       Aspd: true
     Flags:
       No_Dispell: true
@@ -2455,6 +2348,7 @@ Body:
       Flee: true
       Speed: true
       Aspd: true
+      Batk: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -2567,7 +2461,7 @@ Body:
   - Status: Defence
     DurationLookup: HAMI_DEFENCE
     CalcFlags:
-      Vit: true
+      Def: true
 
   - Status: Incaspdrate
     CalcFlags:
@@ -3104,6 +2998,8 @@ Body:
       Refresh: true
       Inspiration: true
       Warmer: true
+    End:
+      Burning: true
 
   - Status: Enchantblade
     Icon: Enchantblade
@@ -5653,18 +5549,24 @@ Body:
   - Status: Tinder_Breaker
     Icon: Tinder_Breaker_Postdelay
     DurationLookup: MH_TINDER_BREAKER
+    States:
+      NoMove: true
     CalcFlags:
       Flee: true
     Flags:
+      Stop_Walking: true
       No_Save: true
       Rem_On_Changemap: true
 
   - Status: Tinder_Breaker2
     Icon: Tinder_Breaker
     DurationLookup: MH_TINDER_BREAKER
+    States:
+      NoMove: true
     CalcFlags:
       Flee: true
     Flags:
+      Stop_Walking: true
       No_Save: true
       Rem_On_Changemap: true
       Overlap_Fail: true
@@ -6005,10 +5907,6 @@ Body:
       P_Alter: true
       Madnesscancel: true
 
-  - Status: Magicalbullet
-    Icon: Gs_Magical_Bullet
-    DurationLookup: GS_MAGICALBULLET
-
   - Status: P_Alter
     Icon: P_Alter
     DurationLookup: RL_P_ALTER
@@ -6257,15 +6155,6 @@ Body:
       Rem_On_Changemap: true
       No_Banishing_Buster: true
       No_Dispell: true
-
-  - Status: Extremityfist2
-    Icon: Extremityfist
-    DurationLookup: MO_EXTREMITYFIST
-    Flags:
-      No_Rem_Ondead: true
-      No_Dispell: true
-      No_Banishing_Buster: true
-      No_Clearance: true
 
   - Status: Mtf_Aspd2
     Icon: Mtf_Aspd2
@@ -6674,9 +6563,6 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-
-   # deprecated
-   #- Status: Cloud_Kill
 
   - Status: Ljosalfar
     Icon: Ljosalfar
@@ -7463,8 +7349,6 @@ Body:
 
   - Status: Soulenergy
     Icon: Soulenergy
-    Flags:
-      No_Rem_Ondead: true
 
   - Status: Use_Skill_Sp_Spa
     Icon: Use_Skill_Sp_Spa
@@ -7603,7 +7487,7 @@ Body:
 
   - Status: Emergency_Move
     Icon: Inc_Agi
-    DurationLookup: GD_EMERGENCY_MOVE
+#    DurationLookup: GD_EMERGENCY_MOVE
     CalcFlags:
       Speed: true
     Flags:
@@ -7612,25 +7496,3 @@ Body:
       No_Dispell: true
       No_Clearance: true
       No_Clearbuff: true
-
-  - Status: Madogear
-    Icon: Madogear
-    CalcFlags:
-      Speed: true
-    Flags:
-      Display_Pc: true
-      Bleffect: true
-      No_Rem_Ondead: true
-      No_Banishing_Buster: true
-      No_Dispell: true
-      No_Clearance: true
-      No_Clearbuff: true
-    End:
-      Shapeshift: true
-      Hovering: true
-      Acceleration: true
-      Overheat_Limitpoint: true
-      Overheat: true
-      Magneticfield: true
-      Neutralbarrier_Master: true
-      Stealthfield_Master: true

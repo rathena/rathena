@@ -13120,7 +13120,7 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 }
 
 const std::string StatusDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/status_db.yml";
+	return std::string(db_path) + "/status.yml";
 }
 
 /**

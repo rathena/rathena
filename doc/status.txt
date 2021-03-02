@@ -5,7 +5,7 @@
 //===== Last Updated: ========================================
 //= 20200412
 //===== Description: =========================================
-//= Explanation of the status_db.yml file and structure.
+//= Explanation of the status.yml file and structure.
 //============================================================
 
 ---------------------------------------
