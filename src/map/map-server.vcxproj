@@ -361,6 +361,6 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\spellbook_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\spellbook_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\statpoint.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\statpoint.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_db.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status.yml')" />
   </Target>
 </Project>
