@@ -38365,10 +38365,10 @@ Body:
     Script: |
       .@luk = readparam(bLuk);
       .@crit = .@luk/10;
+      bonus bAspdRate,.@crit;
       if (.@luk >= 120) {
          .@crit += 5;
       }
-      bonus bAspdRate,1;
       bonus bCritAtkRate,.@crit;
   - Id: 27296
     AegisName: Ancient_Wootan_Shooter_Card
