@@ -17137,7 +17137,7 @@ Body:
       - Level: 5
         Max: 16
     CastCancel: true
-    Duration1: 12000 # !TODO check
+    Duration1: 12000
     Unit:
       Id: Electricwalk
       Interval: 1000
@@ -17169,7 +17169,7 @@ Body:
       - Level: 5
         Max: 16
     CastCancel: true
-    Duration1: 12000 # !TODO check
+    Duration1: 12000
     Unit:
       Id: Firewalk
       Interval: 1000

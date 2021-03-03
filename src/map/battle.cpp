@@ -4315,7 +4315,16 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case NPC_IGNITIONBREAK:
-			skillratio += -100 + 1000 * skill_lv;	// Unknown after job improvement
+			// 3x3 cell Damage   = 1000  1500  2000  2500  3000 %
+			// 7x7 cell Damage   = 750   1250  1750  2250  2750 %
+			// 11x11 cell Damage = 500   1000  1500  2000  2500 %
+			i = distance_bl(src,target);
+			if (i < 2)
+				skillratio += -100 + 500 * (skill_lv + 1);
+			else if (i < 4)
+				skillratio += -100 + 250 + 500 * skill_lv;
+			else
+				skillratio += -100 + 500 * skill_lv;
 			break;
 		case RK_STORMBLAST:
 			skillratio += -100 + (((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : 0) + status_get_str(src) / 8) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's STR / 8)} x 100] %
