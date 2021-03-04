@@ -41,7 +41,30 @@
 Header:
   Type: MOB_AVAIL_DB
   Version: 1
-
+  - Mob: BG_CAPTAIN
+    Sprite: MD_C_WHITEKNIGHT
+  - Mob: BG_ARCHER_GUARDIAN
+    Sprite: ARCHER_GUARDIAN
+  - Mob: BG_KNIGHT_GUARDIAN
+    Sprite: KNIGHT_GUARDIAN
+  - Mob: BG_SOLDIER_GUARDIAN
+    Sprite: SOLDIER_GUARDIAN
+  - Mob: BG_SOLDIER_GUARDIAN2
+    Sprite: SOLDIER_GUARDIAN
+  - Mob: BomberMan_bug
+    Sprite: Thief_Bug
+  - Mob: BomberMan_Xmas
+    Sprite: E_HAPPY_EGG
+  - Mob: BomberMan_Mushroom
+    Sprite: RED_MUSHROOM
+  - Mob: Guardian_Stone
+    Sprite: S_EMPEL_1
+  - Mob: Guardian_Stone2
+    Sprite: S_EMPEL_2
+  - Mob: Emperium_BG
+    Sprite: EMPELIUM
+  - Mob: BARRICADE_BG
+    Sprite: BARRICADE_
 #Body:
   # Examples
 #  - Mob: PORING

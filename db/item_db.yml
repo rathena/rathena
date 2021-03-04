@@ -86,6 +86,81 @@ Header:
   Type: ITEM_DB
   Version: 1
 
+  - Id: 8965
+    AegisName: Blue_Skull
+    Name: Blue Skull
+    Type: Etc
+    Sell: 0
+  - Id: 8966
+    AegisName: Red_Skull
+    Name: Red Skull
+    Type: Etc
+    Sell: 0
+  - Id: 8967
+    AegisName: Green_Skull
+    Name: Green Skull
+    Type: Etc
+    Sell: 0
+  - Id: 8968
+    AegisName: Bomb
+    Name: Bomb
+    Type: Delayconsume
+    Buy: 0
+    Weight: 0
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+      All_Upper: true
+    Script: |
+      callfunc("bomb_summon");
+  - Id: 8969
+    AegisName: Bomb_Kick
+    Name: Bomb Kick
+    Type: Etc
+  - Id: 8970
+    AegisName: Fire_UP
+    Name: Fire Up
+    Type: Etc
+  - Id: 8971
+    AegisName: Bomb_UP
+    Name: Bomb Up
+    Type: Etc
+  - Id: 8972
+    AegisName: Speed_UP
+    Name: Speed Up
+    Type: Etc
+  - Id: 8973
+    AegisName: SKILL_SHOOT
+    Name: Shoot
+    Type: Delayconsume
+    Buy: 0
+    Weight: 0
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+      All_Upper: true
+    Delay:
+      Duration: 6000
+    Script: |
+      callfunc("Skill_Shoot");
+  - Id: 8974
+    AegisName: SKILL_PUSH
+    Name: Shoot
+    Type: Delayconsume
+    Buy: 0
+    Weight: 0
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+      All_Upper: true
+    Delay:
+      Duration: 6000
+    Script: |
+      callfunc("Skill_Push");
+
 Footer:
   Imports:
   - Path: db/pre-re/item_db.yml

@@ -13204,7 +13204,11 @@ BUILDIN_FUNC(flagemblem)
 {
 	TBL_NPC* nd;
 	int g_id = script_getnum(st,2);
-
+#ifdef BGEXTENDED
+	int flag = 0;
+	if( script_hasdata(st,3) )
+		flag = 1;
+#endif
 	if(g_id < 0)
 		return SCRIPT_CMD_SUCCESS;
 
@@ -13214,6 +13218,13 @@ BUILDIN_FUNC(flagemblem)
 	} else if( nd->subtype != NPCTYPE_SCRIPT ) {
 		ShowError("script:flagemblem: unexpected subtype %d for npc %d '%s'\n", nd->subtype, st->oid, nd->exname);
 	} else {
+#ifdef BGEXTENDED
+		if (flag) {
+			nd->u.scr.bg_id = g_id;
+			clif_guild_emblem_area(&nd->bl);
+			return SCRIPT_CMD_SUCCESS;
+		}
+#endif
 		bool changed = ( nd->u.scr.guild_id != g_id )?true:false;
 		nd->u.scr.guild_id = g_id;
 		clif_guild_emblem_area(&nd->bl);
@@ -20023,10 +20034,14 @@ BUILDIN_FUNC(waitingroom2bg)
 	unsigned char i,c=0;
 	struct s_battleground_team team;
 
+#ifdef BGEXTENDED
+	nd = (struct npc_data *)map_id2sd(st->oid);
+#else
 	if( script_hasdata(st,7) )
 		nd = npc_name2id(script_getstr(st,7));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
+#endif
 
 	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
 	{
@@ -20043,6 +20058,19 @@ BUILDIN_FUNC(waitingroom2bg)
 
 	team.warp_x = script_getnum(st,3);
 	team.warp_y = script_getnum(st,4);
+#ifdef BGEXTENDED
+	team.guild_index = script_getnum(st, 5);
+	if (script_hasdata(st,6)) {
+		team.quit_event = script_getstr(st,6); // Logout Event
+		check_event(st, team.quit_event.c_str());
+	} else
+		team.quit_event = "";
+	if (script_hasdata(st,7)) {
+		team.death_event = script_getstr(st,7); // Die Event
+		check_event(st, team.death_event.c_str());
+	} else
+		team.death_event = "";
+#else
 	if (script_hasdata(st,5)) {
 		team.quit_event = script_getstr(st,5); // Logout Event
 		check_event(st, team.quit_event.c_str());
@@ -20053,6 +20081,7 @@ BUILDIN_FUNC(waitingroom2bg)
 		check_event(st, team.death_event.c_str());
 	} else
 		team.death_event = "";
+#endif
 
 	if( (bg_id = bg_create(mapindex, &team)) == 0 )
 	{ // Creation failed
@@ -20226,6 +20255,15 @@ BUILDIN_FUNC(bg_warp)
 
 	bg_id = script_getnum(st,2);
 	map_name = script_getstr(st,3);
+#ifdef BGEXTENDED
+	if( !strcmp(map_name,"RespawnPoint") )
+		mapindex = 0;
+	else if( (mapindex = mapindex_name2id(map_name)) == 0 )
+		return SCRIPT_CMD_SUCCESS; // Invalid Map
+#else
+	if( (mapindex = mapindex_name2id(map_name)) == 0 )
+		return SCRIPT_CMD_SUCCESS; // Invalid Map
+#endif
 	if( (mapindex = mapindex_name2id(map_name)) == 0 )
 		return SCRIPT_CMD_SUCCESS; // Invalid Map
 	x = script_getnum(st,4);
@@ -20354,6 +20392,17 @@ BUILDIN_FUNC(bg_get_data)
 			mapreg_setreg(add_str("$@arenamemberscount"), i);
 			script_pushint(st, i);
 			break;
+#ifdef BGEXTENDED
+		case 2:
+			script_pushconststr(st, bg->g ? bg->g->name : "null");
+			break;
+		case 3:
+			script_pushconststr(st, bg->g ? bg->g->master : "null");
+			break;
+		case 4:
+			script_pushint(st, bg->color);
+			break;
+#endif
 		default:
 			ShowError("script:bg_get_data: unknown data identifier %d\n", type);
 			break;
@@ -20441,6 +20490,482 @@ BUILDIN_FUNC(bg_info)
 
 	return SCRIPT_CMD_SUCCESS;
 }
+
+#ifdef BGEXTENDED
+int viewpointmap_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd = (struct map_session_data*)bl;
+	if (!sd)
+		return 0;
+	int npc_id, type, x, y, id, color;
+	npc_id = va_arg(ap, int);
+	type = va_arg(ap, int);
+	x = va_arg(ap, int);
+	y = va_arg(ap, int);
+	id = va_arg(ap, int);
+	color = va_arg(ap, int);
+	clif_viewpoint(sd, npc_id, type, x, y, id, color);
+	return 0;
+}
+
+BUILDIN_FUNC(viewpointmap)
+{
+	int type, x, y, id, color, m;
+	const char *map_name;
+
+	map_name = script_getstr(st, 2);
+	if ((m = map_mapname2mapid(map_name)) < 0)
+		return SCRIPT_CMD_FAILURE; // Invalid Map
+
+	type = script_getnum(st, 3);
+	x = script_getnum(st, 4);
+	y = script_getnum(st, 5);
+	id = script_getnum(st, 6);
+	color = script_getnum(st, 7);
+
+	map_foreachinmap(viewpointmap_sub, m, BL_PC, st->oid, type, x, y, id, color);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bgannounce)
+{
+	const char *mes = script_getstr(st, 2);
+	const char *fontColor = script_hasdata(st, 3) ? script_getstr(st, 3) : "0xFFFFFF";
+	int         fontType = script_hasdata(st, 4) ? script_getnum(st, 4) : 0x190; // default fontType (FW_NORMAL)
+	int         fontSize = script_hasdata(st, 5) ? script_getnum(st, 5) : 12;    // default fontSize
+	int         fontAlign = script_hasdata(st, 6) ? script_getnum(st, 6) : 0;     // default fontAlign
+	int         fontY = script_hasdata(st, 7) ? script_getnum(st, 7) : 0;     // default fontY
+
+	clif_broadcast2(NULL, mes, (int)strlen(mes) + 1, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, BG_LISTEN);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_team_updatescore)
+{
+	struct map_session_data* sd;
+	int bg_id = script_getnum(st, 2),
+		score = script_getnum(st, 3);
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_SUCCESS;
+
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bgd != NULL)
+	{
+		bgd->team_score = score;
+		clif_bg_updatescore_team(sd);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_team_guildid)
+{
+	int bg_id = script_getnum(st, 2),
+		guild_id = 0;
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bgd != NULL && bgd->g)
+		guild_id = bgd->g->guild_id;
+	script_pushint(st, guild_id);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_monster_immunity) {
+	struct mob_data *md;
+	struct block_list *mbl;
+	int id = script_getnum(st, 2);
+	bool flag = script_getnum(st, 3) != 0;
+
+	if (id == 0 || (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB)
+		return SCRIPT_CMD_SUCCESS;
+	md = (TBL_MOB *)mbl;
+	md->ud.immune_attack = flag;
+	return SCRIPT_CMD_SUCCESS;
+}
+
+static int bg_cleanmap_sub(struct block_list *bl, va_list ap)
+{
+	nullpo_ret(bl);
+	map_clearflooritem(bl);
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ *------------------------------------------*/
+BUILDIN_FUNC(donpceventall)
+{
+	const char* event = script_getstr(st,2);
+	npc_event_doall(event);
+	return SCRIPT_CMD_SUCCESS;
+}
+BUILDIN_FUNC(bg_team_reveal)
+{
+	int bg_id;
+
+	bg_id = script_getnum(st, 2);
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bgd == NULL)
+		return 0;
+
+	bgd->reveal_pos = true; // Reveal Position Mode
+	return 0;
+}
+
+BUILDIN_FUNC(bg_team_setquest)
+{
+	struct map_session_data *sd;
+	int i, bg_id, quest;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_SUCCESS;
+
+	bg_id = script_getnum(st, 2);
+	quest = script_getnum(st, 3);
+
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bg_id == 0 || bgd == NULL)
+		return 0;
+
+	for (i = 0; i < MAX_BG_MEMBERS; i++)
+	{
+		if ((sd = bgd->members[i].sd) == NULL)
+			continue;
+		clif_quest_add(sd, &sd->quest_log[i]);
+	}
+	return 0;
+}
+
+BUILDIN_FUNC(bg_monster_reveal)
+{
+	struct mob_data *md;
+	struct block_list *mbl;
+	int id = script_getnum(st, 2),
+		flag = script_getnum(st, 3),
+		color = script_getnum(st, 4);
+
+	if (id == 0 || (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB)
+		return 0;
+	md = (TBL_MOB *)mbl;
+	map_foreachinmap(viewpointmap_sub, mbl->m, BL_PC, st->oid, flag, mbl->x, mbl->y, mbl->id, color);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_cleanmap)
+{
+	const char* map_name;
+	int m;
+
+	map_name = script_getstr(st, 3);
+	m = map_mapname2mapid(map_name);
+
+	map_foreachinmap(bg_cleanmap_sub, m, BL_ITEM);
+	return 0;
+}
+BUILDIN_FUNC(bg_getitem)
+{
+	int bg_id, nameid, amount;
+
+	bg_id = script_getnum(st, 2);
+	nameid = script_getnum(st, 3);
+	amount = script_getnum(st, 4);
+
+	bg_team_getitem(bg_id, nameid, amount);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_getkafrapoints)
+{
+	int bg_id, amount;
+
+	bg_id = script_getnum(st, 2);
+	amount = script_getnum(st, 3);
+	bg_team_get_kafrapoints(bg_id, amount);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_reward)
+{
+	int bg_id, nameid, amount, kafrapoints, quest_id, add_value, bg_arena, bg_result;
+	const char *var;
+
+	bg_id = script_getnum(st, 2);
+	nameid = script_getnum(st, 3);
+	amount = script_getnum(st, 4);
+	kafrapoints = script_getnum(st, 5);
+	quest_id = script_getnum(st, 6);
+	var = script_getstr(st, 7);
+	add_value = script_getnum(st, 8);
+	bg_arena = script_getnum(st, 9);
+	bg_result = script_getnum(st, 10);
+
+	bg_team_rewards(bg_id, nameid, amount, kafrapoints, quest_id, var, add_value, bg_arena, bg_result);
+	return 0;
+}
+BUILDIN_FUNC(bg_logincount)
+{
+	TBL_PC *sd;
+	if (!script_rid2sd(sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	int i = 0;
+
+	if (sd)
+		i = bg_countlogin(sd, true);
+	script_pushint(st, i);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Validates data of a guild emblem (compressed bitmap)
+enum e_result_validate_emblem {	// Used as Result for clif_validate_emblem
+	EMBVALIDATE_SUCCESS = 0,
+	EMBVALIDATE_ERR_RAW_FILEFORMAT,	// Invalid File Format (Error in zlib/decompression or malformed BMP header)
+	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of battle_config.emblem_transparency_limit
+};
+static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
+{
+	uint8 buf[1800];  // no well-formed emblem bitmap is larger than 1782 (24 bit) / 1654 (8 bit) bytes
+	unsigned long buf_len = sizeof(buf);
+	int offset = 0;
+	/*
+	if (!((decode_zip(buf, &buf_len, emblem, emblem_len) == 0 && buf_len >= 18)  // sizeof(BITMAPFILEHEADER) + sizeof(biSize) of the following info header struct
+		&& RBUFW(buf, 0) == 0x4d42   // BITMAPFILEHEADER.bfType (signature)
+		&& RBUFL(buf, 2) == buf_len  // BITMAPFILEHEADER.bfSize (file size)
+		&& (offset = RBUFL(buf, 10)) < buf_len  // BITMAPFILEHEADER.bfOffBits (offset to bitmap bits)
+		))
+		return EMBVALIDATE_ERR_RAW_FILEFORMAT;
+	*/
+	if (battle_config.emblem_transparency_limit != 100) {
+		int i, transcount = 1, tmp[3];
+		for (i = offset; i < buf_len - 1; i++) {
+			int j = i % 3;
+			tmp[j] = RBUFL(buf, i);
+			if (j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
+				transcount++;
+		}
+		if (((transcount * 300) / (buf_len - offset)) > battle_config.emblem_transparency_limit) //convert in % to chk
+			return EMBVALIDATE_ERR_TRANSPARENCY;
+	}
+
+	return EMBVALIDATE_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_teamid)
+{
+	TBL_PC *sd;
+
+	if( !script_hasdata(st, 2) )
+		script_rid2sd(sd);
+	else
+		sd = map_id2sd( script_getnum(st, 2) );
+
+	if (sd) {
+		std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
+		if (bgteam)
+			script_pushint(st, bgteam->team_id);
+		else
+			script_pushint(st, -1);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+BUILDIN_FUNC(bg_kill)
+{
+	struct map_session_data* sd = map_id2sd(script_getnum(st, 2));
+	if (!sd) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	} else
+		sd->bg_kills++;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+//use : areaeffect( effect id, x, y);
+BUILDIN_FUNC(areaeffect) {
+	TBL_PC* sd;
+	struct map_session_data* fk = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
+
+	if (!script_rid2sd(sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	fk->bl.id	= npc_get_new_npc_id();
+	fk->bl.x	= script_getnum(st,3);
+	fk->bl.y	= script_getnum(st,4);
+	fk->ud.dir	= 0;
+
+	clif_sendfakenpc( sd, fk->bl.id );
+	clif_specialeffect_single(&fk->bl, script_getnum(st,2), sd->fd);
+	return 0;
+}
+/*==========================================
+ * Get NPC info: getnpcinfo <type>{,<char_id>} [Grenat]
+ * type: NPC_X: X, NPC_Y: Y
+ *------------------------------------------*/
+BUILDIN_FUNC(getnpcinfo)
+{
+	TBL_NPC* nd = map_id2nd(st->oid);
+
+	int type = script_getnum(st,2);
+
+	if (!nd) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch(type){
+		case NPC_X: script_pushint(st,nd->bl.x); break;
+		case NPC_Y: script_pushint(st,nd->bl.y); break;
+		default:
+			script_pushint(st,0);
+			break;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Set poring ball mode [Grenat]
+ * setporingball;
+ *------------------------------------------*/
+BUILDIN_FUNC(setporingball)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	sd->ballx = 1;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get X value of clicked cell [Grenat]
+ * getporingballx();
+ *------------------------------------------*/
+BUILDIN_FUNC(getporingballx)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->ballx);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get Y value of clicked cell [Grenat]
+ * getporingballx();
+ *------------------------------------------*/
+BUILDIN_FUNC(getporingbally)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->bally);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Remove poring ball mode to save ressources [Grenat]
+ * removeporingball;
+ *------------------------------------------*/
+BUILDIN_FUNC(removeporingball)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	sd->ballx = 0;
+	sd->bally = 0;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get direction the unit is looking [Grenat]
+ * getunitdir <unit_id/account_id>;
+ *------------------------------------------*/
+BUILDIN_FUNC(getunitdir)
+{
+	struct block_list* bl = map_id2bl(script_getnum(st,2));
+
+	if (!bl) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, unit_getdir(bl));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get information if a pc is sit or not [Grenat]
+ * ispcsit <account_id>;
+ *------------------------------------------*/
+BUILDIN_FUNC(ispcsit)
+{
+	struct map_session_data* sd;
+
+	if( !script_hasdata(st, 2) )
+		script_rid2sd(sd);
+	else
+		sd = map_id2sd( script_getnum(st, 2) );
+
+	if(sd) {
+		if( pc_issit(sd) )
+			script_pushint(st, 1);
+		else
+			script_pushint(st, 0);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Push (knockback) a specific target in
+ * a specific direction [Grenat]
+ * unitpush <unit_id/account_id>,<dir>,<cells>;
+ *------------------------------------------*/
+BUILDIN_FUNC(unitpush)
+{
+	uint8 dir;
+	int cells, dx, dy;
+	struct block_list* bl = map_id2bl(script_getnum(st,2));
+
+	dir = script_getnum(st,3);
+	cells     = script_getnum(st,4);
+
+	if(dir>7)
+	{
+		ShowWarning("buildin_pushpc: Invalid direction %d specified.\n", dir);
+		script_reportsrc(st);
+
+		dir%= 8;  // trim spin-over
+	}
+
+	if(!cells)
+	{// zero distance
+		return 0;
+	}
+	else if(cells<0)
+	{// pushing backwards
+		dir = (dir+4)%8;  // turn around
+		cells     = -cells;
+	}
+
+	dx = dirx[dir];
+	dy = diry[dir];
+
+	if( bl != NULL )
+		unit_blown(bl, dx, dy, cells, BLOWN_NONE);
+	return 0;
+}
+#endif
 
 /*==========================================
  * Instancing System
@@ -25536,6 +26061,34 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_reserve,"s?"),
 	BUILDIN_DEF(bg_unbook,"s"),
 	BUILDIN_DEF(bg_info,"si"),
+#ifdef BGEXTENDED
+// Extended BattleGround
+	BUILDIN_DEF(bg_logincount, ""),
+	BUILDIN_DEF(bg_monster_immunity, "ii"),
+	BUILDIN_DEF(bg_team_updatescore, "ii"),
+	BUILDIN_DEF(bg_team_guildid, "i"),
+	BUILDIN_DEF(bg_team_reveal,"i"),
+	BUILDIN_DEF(bg_team_setquest,"ii"),
+	BUILDIN_DEF(bg_getitem, "iii"),
+	BUILDIN_DEF(bg_getkafrapoints, "ii"),
+	BUILDIN_DEF(bg_reward, "iiiiisiii"),
+	BUILDIN_DEF(bgannounce, "s?????"),
+	BUILDIN_DEF(viewpointmap, "siiiii"),
+	BUILDIN_DEF(bg_monster_reveal,"iii"),
+	BUILDIN_DEF(donpceventall,"s"),
+	BUILDIN_DEF2(flagemblem, "flagemblembg", "ii"),
+	BUILDIN_DEF(bg_teamid,"?"),
+	BUILDIN_DEF(bg_kill,"i"),
+	BUILDIN_DEF(areaeffect, "iii"),
+	BUILDIN_DEF(getnpcinfo,"i?"),		// [Grenat]
+	BUILDIN_DEF(setporingball,""),		// [Grenat]
+	BUILDIN_DEF(getporingballx,""),		// [Grenat]
+	BUILDIN_DEF(getporingbally,""),		// [Grenat]
+	BUILDIN_DEF(removeporingball,""),	// [Grenat]
+	BUILDIN_DEF(getunitdir,"i"),		// [Grenat]
+	BUILDIN_DEF(ispcsit,"?"),		// [Grenat]
+	BUILDIN_DEF(unitpush,"iii"),		// [Grenat]
+#endif
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),

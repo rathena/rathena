@@ -505,6 +505,10 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			} else
 				sd->areanpc.clear();
 			pc_cell_basilica(sd);
+#ifdef BGEXTENDED
+			if( strcmpi(map_mapid2mapname(bl->m), "bg_bomber") == 0 || strcmpi(map_mapid2mapname(bl->m), "bg_bomber2") == 0 || strcmpi(map_mapid2mapname(bl->m), "bomberman") == 0)
+				clif_soundeffect(sd,bl,"bomberman_walk.wav",1);
+#endif
 			break;
 		case BL_MOB:
 			//Movement was successful, reset walktoxy_fail_count
@@ -769,6 +773,13 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 			unit_check_start_teleport_timer(&sd->hd->bl);
 		if (sd->pd != nullptr)
 			unit_check_start_teleport_timer(&sd->pd->bl);
+#ifdef BGEXTENDED
+		if (sd->ballx) {
+			sd->ballx = x;
+			sd->bally = y;
+			run_script(npc_name2id("TryThrowBall")->u.scr.script,0,sd->bl.id,npc_name2id("TryThrowBall")->bl.id);
+		}
+#endif
 	}
 
 	return unit_walktoxy_sub(bl);
