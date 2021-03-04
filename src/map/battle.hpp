@@ -692,6 +692,20 @@ struct Battle_Config
 	int mercenary_autoloot;
 	int mer_idle_no_share;
 	int idletime_mer_option;
+#ifdef BGEXTENDED
+ 	int bg_idle_announce;
+ 	int bg_idle_autokick;
+ 	int bg_reportafk_leaderonly;
+ 	int bg_queue2team_balanced;
+ 	int bg_reward_rates;
+ 	int bg_queue_onlytowns;
+ 	int bg_order_behavior;
+ 	int bg_eAmod_mode;
+ 	int bg_reserved_char_id;
+ 	int woe_reserved_char_id;
+ 	int bg_can_trade;
+ 	int bg_double_login;
+#endif
 
 #include "../custom/battle_config_struct.inc"
 };

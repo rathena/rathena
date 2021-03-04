@@ -1,0 +1,11 @@
+//Battlegrounds eAmod
+8965,Blue_Skull,Blue Skull,3,,0,0,,,,,,,,,,,,,{},{},{}
+8966,Red_Skull,Red Skull,3,,0,0,,,,,,,,,,,,,{},{},{}
+8967,Green_Skull,Green Skull,3,,0,0,,,,,,,,,,,,,{},{},{}
+8968,Bomb,Bomb,11,,,,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc("bomb_summon");  },{},{}
+8969,Bomb_Kick,Bomb Kick,3,0,,0,,,,,,,,,,,,,{},{},{}
+8970,Fire_UP,Fire Up,3,0,,0,,,,,,,,,,,,,{},{},{}
+8971,Bomb_UP,Bomb Up,3,0,,0,,,,,,,,,,,,,{},{},{}
+8972,Speed_UP,Speed Up,3,0,,0,,,,,,,,,,,,,{},{},{}
+8973,SKILL_SHOOT,Shoot,11,,,,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc("Skill_Shoot");  },{},{}
+8974,SKILL_PUSH,Push,11,,,,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc("Skill_Push");  },{},{}
