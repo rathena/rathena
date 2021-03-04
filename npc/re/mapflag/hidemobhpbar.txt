@@ -1,0 +1,38 @@
+//===== rAthena Script =======================================
+//= Mapflag: hidemobhpbar.
+//===== Description: =========================================
+//= Hide monster's HP bar (added in episode 14.2).
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+// Izlude Academy
+iz_ac01	mapflag	hidemobhpbar
+iz_ac01_a	mapflag	hidemobhpbar
+iz_ac01_b	mapflag	hidemobhpbar
+iz_ac01_c	mapflag	hidemobhpbar
+iz_ac01_d	mapflag	hidemobhpbar
+
+// WoE TE castle
+te_prtcas01	mapflag	hidemobhpbar
+te_prtcas02	mapflag	hidemobhpbar
+te_prtcas03	mapflag	hidemobhpbar
+te_prtcas04	mapflag	hidemobhpbar
+te_prtcas05	mapflag	hidemobhpbar
+te_aldecas1	mapflag	hidemobhpbar
+te_aldecas2	mapflag	hidemobhpbar
+te_aldecas3	mapflag	hidemobhpbar
+te_aldecas4	mapflag	hidemobhpbar
+te_aldecas5	mapflag	hidemobhpbar
+
+// Guild Dungeons =========
+gld2_ald	mapflag	hidemobhpbar
+gld2_gef	mapflag	hidemobhpbar
+gld2_pay	mapflag	hidemobhpbar
+gld2_prt	mapflag	hidemobhpbar
+teg_dun01	mapflag	hidemobhpbar
+teg_dun02	mapflag	hidemobhpbar
+
+// Episode 15 - Phantasmagorica
+verus04	mapflag	hidemobhpbar
+ 

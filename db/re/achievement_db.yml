@@ -1,0 +1,2757 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Achievement Database
+###########################################################################
+#
+# Achievement Settings
+#
+###########################################################################
+# - Id                  Achievement ID.
+#   Group               Achievement group type. (Defaut: None)
+#   Name                Achievement name.
+#   Targets:            List of targets the achievement requires. (Default: null)
+#     - Id              Index value used for import methods.
+#       Mob             Target mob. (Default: 0)
+#       Count           Target count. (Default: 1)
+#   Condition           Conditional statement that must be met for the achievement to be considered complete. (Default: null)
+#   Map                 Map name that is used for the AG_CHATTING type. (Default: -1)
+#   Dependents:         List of achievements that need to be completed before this achievement is considered complete. (Default: null)
+#     - Id: <bool>      Achievement ID pre-requisite.
+#   Rewards:            List of rewards that are given on completion. (Default: null)
+#     Item              Item name.
+#     Amount            Amount of item. (Default: 1)
+#     Script            Bonus Script. (Default: null)
+#     TitleId           Title ID. (Default: 0)
+#   Score               Achievement points that are given on completion. (Default: 0)
+###########################################################################
+
+Header:
+  Type: ACHIEVEMENT_DB
+  Version: 2
+
+Body:
+  - Id: 110000
+    Group: Eat
+    Name: At this time I live to eat
+    Score: 10
+  - Id: 110001
+    Group: Chatting
+    Name: A fan of this polarity
+    Targets:
+      - Id: 0
+        Count: 1
+      - Id: 1
+        Count: 1
+      - Id: 2
+        Count: 1
+      - Id: 3
+        Count: 1
+      - Id: 4
+        Count: 1
+      - Id: 5
+        Count: 1
+      - Id: 6
+        Count: 1
+    Score: 10
+  - Id: 120001
+    Group: Adventure
+    Name: North Prontera Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120002
+    Group: Adventure
+    Name: North Prontera Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120003
+    Group: Adventure
+    Name: North Prontera Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120004
+    Group: Adventure
+    Name: West Prontera Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120005
+    Group: Adventure
+    Name: West Prontera Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120006
+    Group: Adventure
+    Name: East Prontera Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120007
+    Group: Adventure
+    Name: South Prontera Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120008
+    Group: Adventure
+    Name: South Prontera Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120009
+    Group: Adventure
+    Name: South Prontera Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120010
+    Group: Adventure
+    Name: South Prontera Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120011
+    Group: Adventure
+    Name: East Geffen Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120012
+    Group: Adventure
+    Name: Southeast Geffen Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120013
+    Group: Adventure
+    Name: Northwest Geffen Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120014
+    Group: Adventure
+    Name: Northwest Geffen Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120015
+    Group: Adventure
+    Name: Northwest Geffen Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120016
+    Group: Adventure
+    Name: South Geffen Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120017
+    Group: Adventure
+    Name: South Geffen Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120018
+    Group: Adventure
+    Name: Sograt Desert Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120019
+    Group: Adventure
+    Name: Sograt Desert Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120020
+    Group: Adventure
+    Name: Sograt Desert Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120021
+    Group: Adventure
+    Name: Sograt Desert Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120022
+    Group: Adventure
+    Name: Sograt Desert Field Exploration(5)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120023
+    Group: Adventure
+    Name: Sograt Desert Field Exploration(6)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120024
+    Group: Adventure
+    Name: Southwest Payon Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120025
+    Group: Adventure
+    Name: Southwest Payon Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120026
+    Group: Adventure
+    Name: Southwest Payon Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120027
+    Group: Adventure
+    Name: Southwest Payon Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120028
+    Group: Adventure
+    Name: East Payon Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120029
+    Group: Adventure
+    Name: East Payon Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120030
+    Group: Adventure
+    Name: East Payon Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120031
+    Group: Adventure
+    Name: East Payon Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120032
+    Group: Adventure
+    Name: North Mjolnir Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120033
+    Group: Adventure
+    Name: North Mjolnir Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120034
+    Group: Adventure
+    Name: North Mjolnir Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120035
+    Group: Adventure
+    Name: North Mjolnir Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120036
+    Group: Adventure
+    Name: North Mjolnir Field Exploration(5)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120037
+    Group: Adventure
+    Name: South Mjolnir Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120038
+    Group: Adventure
+    Name: South Mjolnir Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120039
+    Group: Adventure
+    Name: South Mjolnir Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120040
+    Group: Adventure
+    Name: South Mjolnir Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120041
+    Group: Adventure
+    Name: South Mjolnir Field Exploration(5)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120042
+    Group: Adventure
+    Name: South Mjolnir Field Exploration(6)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120043
+    Group: Adventure
+    Name: South Aldebaran Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120044
+    Group: Adventure
+    Name: Comodo Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120045
+    Group: Adventure
+    Name: Comodo Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120046
+    Group: Adventure
+    Name: Comodo Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120047
+    Group: Adventure
+    Name: Comodo Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120048
+    Group: Adventure
+    Name: Comodo Field Exploration(5)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120049
+    Group: Adventure
+    Name: Comodo Field Exploration(6)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120050
+    Group: Adventure
+    Name: Comodo Field Exploration(7)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120051
+    Group: Adventure
+    Name: Comodo Field Exploration(8)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120052
+    Group: Adventure
+    Name: Border Checkpoint Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120053
+    Group: Adventure
+    Name: Border Checkpoint Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120054
+    Group: Adventure
+    Name: Kiel Hyre Mansion Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120055
+    Group: Adventure
+    Name: El Mes Plateau Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120056
+    Group: Adventure
+    Name: El Mes Plateau Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120057
+    Group: Adventure
+    Name: El Mes Plateau Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120058
+    Group: Adventure
+    Name: El Mes Gorge Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120059
+    Group: Adventure
+    Name: Kiel Hyre Academy Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120060
+    Group: Adventure
+    Name: Guard Camp Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120061
+    Group: Adventure
+    Name: Juno Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120062
+    Group: Adventure
+    Name: Front of Thanatos Tower Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120063
+    Group: Adventure
+    Name: Hugel Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120064
+    Group: Adventure
+    Name: Hugel Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120065
+    Group: Adventure
+    Name: Hugel Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120066
+    Group: Adventure
+    Name: Abyss Lake Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120067
+    Group: Adventure
+    Name: Einbroch Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120068
+    Group: Adventure
+    Name: Einbroch Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120069
+    Group: Adventure
+    Name: Einbroch Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120070
+    Group: Adventure
+    Name: Einbroch Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120071
+    Group: Adventure
+    Name: Einbroch Field Exploration(5)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120072
+    Group: Adventure
+    Name: Einbroch Field Exploration(6)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120073
+    Group: Adventure
+    Name: Einbroch Field Exploration(7)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120074
+    Group: Adventure
+    Name: Einbroch Field Exploration(8)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120075
+    Group: Adventure
+    Name: Lighthalzen Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120076
+    Group: Adventure
+    Name: Lighthalzen Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120077
+    Group: Adventure
+    Name: Lighthalzen Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120078
+    Group: Adventure
+    Name: Rachel Audhumbla Plains Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120079
+    Group: Adventure
+    Name: Rachel Plains Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120080
+    Group: Adventure
+    Name: Rachel Plains Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120081
+    Group: Adventure
+    Name: Rachel Plains Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120082
+    Group: Adventure
+    Name: Rachel Audhumbla Grassland Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120083
+    Group: Adventure
+    Name: Rachel Audhumbla Grassland Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120084
+    Group: Adventure
+    Name: Portus Luna Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120085
+    Group: Adventure
+    Name: Veins Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120086
+    Group: Adventure
+    Name: Veins Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120087
+    Group: Adventure
+    Name: Veins Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120088
+    Group: Adventure
+    Name: Veins Field Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120089
+    Group: Adventure
+    Name: Veins Field Exploration(5)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120090
+    Group: Adventure
+    Name: Eclage Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120091
+    Group: Adventure
+    Name: North Bitfrost Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120092
+    Group: Adventure
+    Name: South Bitfrost Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120093
+    Group: Adventure
+    Name: Splendide Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120094
+    Group: Adventure
+    Name: Splendide Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120095
+    Group: Adventure
+    Name: Splendide Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120096
+    Group: Adventure
+    Name: Manuk Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120097
+    Group: Adventure
+    Name: Manuk Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120098
+    Group: Adventure
+    Name: Manuk Field Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120099
+    Group: Adventure
+    Name: Outskirts of Kamidal Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120100
+    Group: Adventure
+    Name: Outskirts of Kamidal Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120101
+    Group: Adventure
+    Name: Amatsu Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120102
+    Group: Adventure
+    Name: Kunlun Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120103
+    Group: Adventure
+    Name: Kunlun Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120104
+    Group: Adventure
+    Name: Ayothaya Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120105
+    Group: Adventure
+    Name: Moscovia Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120106
+    Group: Adventure
+    Name: Brasilis Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120107
+    Group: Adventure
+    Name: Dewata Field Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120108
+    Group: Adventure
+    Name: Malaya Field Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120109
+    Group: Adventure
+    Name: Malaya Field Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 10
+  - Id: 120110
+    Group: Adventure
+    Name: Abbey Underground Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120111
+    Group: Adventure
+    Name: Abyss Lake Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120112
+    Group: Adventure
+    Name: Clock Tower Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120113
+    Group: Adventure
+    Name: Amatsu Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120114
+    Group: Adventure
+    Name: Ant Hell Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120115
+    Group: Adventure
+    Name: Ayothaya Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120116
+    Group: Adventure
+    Name: Comodo Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120117
+    Group: Adventure
+    Name: Brasilis Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120118
+    Group: Adventure
+    Name: Clock Tower Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120119
+    Group: Adventure
+    Name: Istana Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120120
+    Group: Adventure
+    Name: Scaraba Hole Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120121
+    Group: Adventure
+    Name: Bitfrost Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120122
+    Group: Adventure
+    Name: Einbroch Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120123
+    Group: Adventure
+    Name: Geffen Underground Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120124
+    Group: Adventure
+    Name: Glastheim Dungeon Exploration(1)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120125
+    Group: Adventure
+    Name: Glastheim Dungeon Exploration(2)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120126
+    Group: Adventure
+    Name: Glastheim Dungeon Exploration(3)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120127
+    Group: Adventure
+    Name: Glastheim Dungeon Exploration(4)
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120128
+    Group: Adventure
+    Name: Kunlun Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120129
+    Group: Adventure
+    Name: Rachel Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120130
+    Group: Adventure
+    Name: Sphinx Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120131
+    Group: Adventure
+    Name: Izlude Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120132
+    Group: Adventure
+    Name: Robot Factory Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120133
+    Group: Adventure
+    Name: Bio Lab Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120134
+    Group: Adventure
+    Name: Kunlun Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120135
+    Group: Adventure
+    Name: Nogg Road Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120136
+    Group: Adventure
+    Name: Coal Mine Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120137
+    Group: Adventure
+    Name: Pyramid Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120138
+    Group: Adventure
+    Name: Orc Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120139
+    Group: Adventure
+    Name: Payon Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120140
+    Group: Adventure
+    Name: Labyrinth Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120141
+    Group: Adventure
+    Name: Undersea Tunnel Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120142
+    Group: Adventure
+    Name: Thanatos Tower Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120143
+    Group: Adventure
+    Name: Thor Volcano Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120144
+    Group: Adventure
+    Name: Sunken Ship Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120145
+    Group: Adventure
+    Name: Turtle Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 120146
+    Group: Adventure
+    Name: Toy Factory Dungeon Exploration
+    Rewards:
+      Item: Shabby_Purse
+    Score: 20
+  - Id: 127001
+    Group: Chatting
+    Name: Prontera Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: prontera
+    Score: 10
+  - Id: 127002
+    Group: Chatting
+    Name: Geffen Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: geffen
+    Score: 10
+  - Id: 127003
+    Group: Chatting
+    Name: Morocc Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: morocc
+    Score: 10
+  - Id: 127004
+    Group: Chatting
+    Name: Payon Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: payon
+    Score: 10
+  - Id: 127005
+    Group: Chatting
+    Name: Juno Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: yuno
+    Score: 10
+  - Id: 127006
+    Group: Chatting
+    Name: Lighthalzen Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: lighthalzen
+    Score: 10
+  - Id: 127007
+    Group: Chatting
+    Name: Einbroch Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: einbroch
+    Score: 10
+  - Id: 127008
+    Group: Chatting
+    Name: Rachel Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: rachel
+    Score: 10
+  - Id: 127009
+    Group: Chatting
+    Name: Veins Contribution
+    Targets:
+      - Id: 0
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Map: veins
+    Score: 10
+  - Id: 128000
+    Group: Battle
+    Name: Uninvited Guest
+    Targets:
+      - Id: 0
+        Mob: XM_CELINE_KIMI
+    Score: 10
+  - Id: 128001
+    Group: Battle
+    Name: Strange Guest
+    Targets:
+      - Id: 0
+        Mob: XM_CELINE_KIMI
+        Count: 10
+    Score: 10
+  - Id: 128002
+    Group: Battle
+    Name: Get along with map...
+    Targets:
+      - Id: 0
+        Mob: XM_CELINE_KIMI
+        Count: 25
+    Score: 20
+  - Id: 128003
+    Group: Battle
+    Name: Welcomed Guest
+    Targets:
+      - Id: 0
+        Mob: XM_CELINE_KIMI
+        Count: 50
+    Score: 30
+  - Id: 128004
+    Group: Battle
+    Name: Kimmy's best friend
+    Targets:
+      - Id: 0
+        Mob: XM_CELINE_KIMI
+        Count: 100
+    Score: 50
+  - Id: 128005
+    Group: Battle
+    Name: Novice Angler
+    Targets:
+      - Id: 0
+        Mob: BAKONAWA_3
+    Score: 10
+  - Id: 128006
+    Group: Battle
+    Name: Juicy Hunter
+    Targets:
+      - Id: 0
+        Mob: BAKONAWA_3
+        Count: 10
+    Score: 20
+  - Id: 128007
+    Group: Battle
+    Name: Rhythm Master
+    Targets:
+      - Id: 0
+        Mob: BAKONAWA_3
+        Count: 50
+    Score: 50
+  - Id: 128008
+    Group: Battle
+    Name: Bold Adventurer
+    Targets:
+      - Id: 0
+        Mob: BAPHOMET_I
+    Score: 10
+  - Id: 128009
+    Group: Battle
+    Name: Baphomet Hatred
+    Targets:
+      - Id: 0
+        Mob: BAPHOMET_I
+        Count: 10
+    Score: 20
+  - Id: 128010
+    Group: Battle
+    Name: Goat's Nemesis
+    Targets:
+      - Id: 0
+        Mob: BAPHOMET_I
+        Count: 50
+    Score: 50
+  - Id: 128011
+    Group: Battle
+    Name: Ordinary Tourist
+    Targets:
+      - Id: 0
+        Mob: GRIM_REAPER_ANKOU
+    Score: 10
+  - Id: 128012
+    Group: Battle
+    Name: Backcountry Expert
+    Targets:
+      - Id: 0
+        Mob: GRIM_REAPER_ANKOU
+        Count: 10
+    Score: 20
+  - Id: 128013
+    Group: Battle
+    Name: Able to eat more like this
+    Targets:
+      - Id: 0
+        Mob: GRIM_REAPER_ANKOU
+        Count: 50
+    Score: 50
+  - Id: 128014
+    Group: Battle
+    Name: Digest hard meat
+    Targets:
+      - Id: 0
+        Mob: BUWAYA
+    Score: 10
+  - Id: 128015
+    Group: Battle
+    Name: Master of Escape
+    Targets:
+      - Id: 0
+        Mob: BUWAYA
+        Count: 10
+    Score: 20
+  - Id: 128016
+    Group: Battle
+    Name: Immortal Hunter
+    Targets:
+      - Id: 0
+        Mob: BUWAYA
+        Count: 50
+    Score: 50
+  - Id: 128017
+    Group: Battle
+    Name: Stood up and overcame despair
+    #Targets:
+    #  - Id: 0
+    #    Mob: MM_MOROCC_ADT
+    Score: 10
+  - Id: 128018
+    Group: Battle
+    Name: Ember of Hope
+    #Targets:
+    #  - Id: 0
+    #    Mob: MM_MOROCC_ADT
+    #    Count: 10
+    Score: 10
+  - Id: 128019
+    Group: Battle
+    Name: Pouring Aurora
+    #Targets:
+    #  - Id: 0
+    #    Mob: MM_MOROCC_ADT
+    #    Count: 25
+    Score: 20
+  - Id: 128020
+    Group: Battle
+    Name: Who is desperate? I am hopeless!
+    #Targets:
+    #  - Id: 0
+    #    Mob: MM_MOROCC_ADT
+    #    Count: 50
+    Score: 30
+  - Id: 128021
+    Group: Battle
+    Name: I know god will save the world
+    #Targets:
+    #  - Id: 0
+    #    Mob: MM_MOROCC_ADT
+    #    Count: 100
+    Score: 50
+  - Id: 128022
+    Group: Battle
+    Name: There was mercy in Morocc army
+    Targets:
+      - Id: 0
+        Mob: EP14_MORS_BOSSB
+    Score: 10
+  - Id: 128023
+    Group: Battle
+    Name: There was fear in Morocc army
+    Targets:
+      - Id: 0
+        Mob: EP14_MORS_BOSSB
+        Count: 10
+    Score: 20
+  - Id: 128024
+    Group: Battle
+    Name: Guard of weak army
+    Targets:
+      - Id: 0
+        Mob: EP14_MORS_BOSSB
+        Count: 50
+    Score: 50
+  - Id: 128025
+    Group: Battle
+    Name: Audience with the queen
+    Targets:
+      - Id: 0
+        Mob: FACEWORM_QUEEN
+    Score: 10
+  - Id: 128026
+    Group: Battle
+    Name: Warm earth
+    Targets:
+      - Id: 0
+        Mob: FACEWORM_QUEEN_G
+    Score: 10
+  - Id: 128027
+    Group: Battle
+    Name: Water is very good exactly
+    Targets:
+      - Id: 0
+        Mob: FACEWORM_QUEEN_B
+    Score: 10
+  - Id: 128028
+    Group: Battle
+    Name: Pleasant breeze
+    Targets:
+      - Id: 0
+        Mob: FACEWORM_QUEEN_Y
+    Score: 10
+  - Id: 128029
+    Group: Battle
+    Name: Visitor of old castle
+    Targets:
+      - Id: 0
+        Mob: MG_AMDARAIS
+    Score: 10
+  - Id: 128030
+    Group: Battle
+    Name: Lord of old castle
+    Targets:
+      - Id: 0
+        Mob: MG_AMDARAIS
+        Count: 10
+    Score: 20
+  - Id: 128031
+    Group: Battle
+    Name: Conqueror of old castle
+    Targets:
+      - Id: 0
+        Mob: MG_AMDARAIS
+        Count: 50
+    Score: 50
+  - Id: 128032
+    Group: Battle
+    Name: Haggard sucker
+    #Targets:
+    #  - Id: 0
+    #    Mob: MG_AMDARAIS_H
+    Score: 10
+  - Id: 128033
+    Group: Battle
+    Name: Hope of the Knight
+    #Targets:
+    #  - Id: 0
+    #    Mob: MG_AMDARAIS_H
+    #    Count: 10
+    Score: 20
+  - Id: 128034
+    Group: Battle
+    Name: Guardian of the Dawn
+    #Targets:
+    #  - Id: 0
+    #    Mob: MG_AMDARAIS_H
+    #    Count: 50
+    Score: 50
+  - Id: 128035
+    Group: Battle
+    Name: Time Traveler
+    Targets:
+      - Id: 0
+        Mob: MM_SARAH
+    Score: 10
+  - Id: 128036
+    Group: Battle
+    Name: Restore ancient relic
+    Targets:
+      - Id: 0
+        Mob: MM_SARAH
+        Count: 10
+    Score: 20
+  - Id: 128037
+    Group: Battle
+    Name: Master of relic transport
+    Targets:
+      - Id: 0
+        Mob: MM_SARAH
+        Count: 50
+    Score: 50
+  - Id: 128038
+    Group: Battle
+    Name: Show Jailbreak to the captain
+    Targets:
+      - Id: 0
+        Mob: E1_FELOCK
+    Score: 10
+  - Id: 128039
+    Group: Battle
+    Name: Show Jailbreak to the weak captain
+    #Targets:
+    #  - Id: 0
+    #    Mob: E2_FELOCK
+    Score: 10
+  - Id: 128040
+    Group: Battle
+    Name: Riot on board
+    Targets:
+      - Id: 0
+        Mob: E1_FELOCK
+    Score: 20
+  - Id: 128041
+    Group: Battle
+    Name: Turmoil on board
+    Targets:
+      - Id: 0
+        Mob: E1_FELOCK
+        Count: 10
+    Score: 20
+  - Id: 128042
+    Group: Battle
+    Name: Rebellion on board
+    Targets:
+      - Id: 0
+        Mob: E1_FELOCK
+        Count: 50
+    Score: 50
+  - Id: 128043
+    Group: Battle
+    Name: Revolt of Riot
+    #Targets:
+    #  - Id: 0
+    #    Mob: E2_FELOCK
+    #    Count: 50
+    Score: 50
+  - Id: 128044
+    Group: Battle
+    Name: Magic tournament champion
+    Targets:
+      - Id: 0
+        Mob: GEFFEN_FENRIR
+    Score: 10
+  - Id: 128045
+    Group: Battle
+    Name: Gladiator of Coliseum
+    Targets:
+      - Id: 0
+        Mob: GEFFEN_FENRIR
+        Count: 10
+    Score: 20
+  - Id: 128046
+    Group: Battle
+    Name: Slayer of Colosseum
+    Targets:
+      - Id: 0
+        Mob: GEFFEN_FENRIR
+        Count: 50
+    Score: 50
+  - Id: 128047
+    Group: Battle
+    Name: Endless Tower challenger
+    Targets:
+      - Id: 0
+        Mob: NAGHT_SIEGER
+    Score: 10
+  - Id: 128048
+    Group: Battle
+    Name: Endless Tower Slayer
+    Targets:
+      - Id: 0
+        Mob: NAGHT_SIEGER
+        Count: 10
+    Score: 20
+  - Id: 128049
+    Group: Battle
+    Name: Lord of the tower
+    Targets:
+      - Id: 0
+        Mob: NAGHT_SIEGER
+        Count: 50
+    Score: 50
+  - Id: 128050
+    Group: Battle
+    Name: Novice Exorcist
+    Targets:
+      - Id: 0
+        Mob: BANGUNGOT_3
+    Score: 10
+  - Id: 128051
+    Group: Battle
+    Name: Experienced Exorcist
+    Targets:
+      - Id: 0
+        Mob: BANGUNGOT_3
+        Count: 10
+    Score: 20
+  - Id: 128052
+    Group: Battle
+    Name: Legendary Exorcist
+    Targets:
+      - Id: 0
+        Mob: BANGUNGOT_3
+        Count: 50
+    Score: 50
+  - Id: 129001
+    Group: Adventure
+    Name: Prontera Explorer
+    Dependents:
+      120001: true
+      120002: true
+      120003: true
+      120004: true
+      120005: true
+      120006: true
+      120007: true
+      120008: true
+      120009: true
+      120010: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129002
+    Group: Adventure
+    Name: Geffen Explorer
+    Dependents:
+      120011: true
+      120012: true
+      120013: true
+      120014: true
+      120015: true
+      120016: true
+      120017: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129003
+    Group: Adventure
+    Name: Sograt Desert Explorer
+    Dependents:
+      120018: true
+      120019: true
+      120020: true
+      120021: true
+      120022: true
+      120023: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129004
+    Group: Adventure
+    Name: Payon Explorer
+    Dependents:
+      120024: true
+      120025: true
+      120026: true
+      120027: true
+      120028: true
+      120029: true
+      120030: true
+      120031: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129005
+    Group: Adventure
+    Name: North Mjolnir Explorer
+    Dependents:
+      120032: true
+      120033: true
+      120034: true
+      120035: true
+      120036: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129006
+    Group: Adventure
+    Name: South Mjolnir Explorer
+    Dependents:
+      120037: true
+      120038: true
+      120039: true
+      120040: true
+      120041: true
+      120042: true
+      120043: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129007
+    Group: Adventure
+    Name: Comodo Explorer
+    Dependents:
+      120044: true
+      120045: true
+      120046: true
+      120047: true
+      120048: true
+      120049: true
+      120050: true
+      120051: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129008
+    Group: Adventure
+    Name: Rune-Midgarts Explorer
+    Dependents:
+      129001: true
+      129002: true
+      129003: true
+      129004: true
+      129005: true
+      129006: true
+      129007: true
+    Rewards:
+      Item: Old_Violet_Box
+    Score: 50
+  - Id: 129009
+    Group: Adventure
+    Name: Juno Explorer
+    Dependents:
+      120052: true
+      120053: true
+      120054: true
+      120055: true
+      120056: true
+      120057: true
+      120058: true
+      120059: true
+      120060: true
+      120061: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129010
+    Group: Adventure
+    Name: Hugel Explorer
+    Dependents:
+      120062: true
+      120063: true
+      120064: true
+      120065: true
+      120066: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129011
+    Group: Adventure
+    Name: Einbroch Explorer
+    Dependents:
+      120067: true
+      120068: true
+      120069: true
+      120070: true
+      120071: true
+      120072: true
+      120073: true
+      120074: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129012
+    Group: Adventure
+    Name: Lighthalzen Explorer
+    Dependents:
+      120075: true
+      120076: true
+      120077: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129013
+    Group: Adventure
+    Name: Schwarzwald Explorer
+    Dependents:
+      129009: true
+      129010: true
+      129011: true
+      129012: true
+    Rewards:
+      Item: Old_Violet_Box
+    Score: 50
+  - Id: 129014
+    Group: Adventure
+    Name: Rachel Explorer
+    Dependents:
+      120078: true
+      120079: true
+      120080: true
+      120081: true
+      120082: true
+      120083: true
+      120084: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129015
+    Group: Adventure
+    Name: Veins Explorer
+    Dependents:
+      120085: true
+      120086: true
+      120087: true
+      120088: true
+      120089: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129016
+    Group: Adventure
+    Name: Arunafeltz Explorer
+    Dependents:
+      129014: true
+      129015: true
+    Rewards:
+      Item: Old_Violet_Box
+    Score: 50
+  - Id: 129017
+    Group: Adventure
+    Name: Laphine Explorer
+    Dependents:
+      120090: true
+      120091: true
+      120092: true
+      120093: true
+      120094: true
+      120095: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129018
+    Group: Adventure
+    Name: Manuk Explorer
+    Dependents:
+      120096: true
+      120097: true
+      120098: true
+      120099: true
+      120100: true
+    Rewards:
+      Item: Gift_Box
+    Score: 20
+  - Id: 129019
+    Group: Adventure
+    Name: Eclage Explorer
+    Dependents:
+      129017: true
+      129018: true
+    Rewards:
+      Item: Old_Violet_Box
+    Score: 50
+  - Id: 129020
+    Group: Adventure
+    Name: Localizing fields explorer
+    Dependents:
+      120101: true
+      120102: true
+      120103: true
+      120104: true
+      120105: true
+      120106: true
+      120107: true
+      120108: true
+      120109: true
+    Rewards:
+      Item: Old_Violet_Box
+    Score: 50
+  - Id: 129021
+    Group: Battle
+    Name: Glastheim Challenge Mode # Complete 100 times?
+    Rewards:
+      TitleId: 1045
+    Score: 10
+  - Id: 130000
+    Group: Chatting
+    Name: Socialite debut
+    Targets:
+      - Id: 0
+        Count: 1
+      - Id: 1
+        Count: 1
+      - Id: 2
+        Count: 1
+      - Id: 3
+        Count: 1
+      - Id: 4
+        Count: 1
+      - Id: 5
+        Count: 1
+      - Id: 6
+        Count: 1
+    Rewards:
+      TitleId: 1034
+    Score: 10
+  - Id: 170000
+    Group: Chatting
+    Name: Song chamber is not an accident
+    Targets:
+      - Id: 0
+        Count: 1
+    Score: 10
+  - Id: 190000
+    Group: Chatting
+    Name: Alliance workers of merchant city
+    Targets:
+      - Id: 0
+        Count: 1
+      - Id: 1
+        Count: 10
+      - Id: 2
+        Count: 30
+      - Id: 3
+        Count: 100
+    Score: 50
+  - Id: 200000
+    Group: Goal_Level
+    Name: Acquire the first aura!
+    Condition: " BaseLevel >= 99 "
+    Rewards:
+      Item: White_Slim_Pot_Box2
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+      TitleId: 1000
+    Score: 50
+  - Id: 200001
+    Group: Goal_Level
+    Name: Acquire the second aura!
+    Condition: " BaseLevel >= 150 "
+    Dependents:
+      200000: true
+    Rewards:
+      Item: Dark_Snake_Lord_Hat
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+      TitleId: 1001
+    Score: 60
+  - Id: 200002
+    Group: Goal_Level
+    Name: Acquire the third aura!
+    Condition: " BaseLevel >= 175 "
+    Dependents:
+      200001: true
+    Rewards:
+      Item: BLACKDEATHKING_GOLDEN
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+      TitleId: 1002
+    Score: 70
+  - Id: 200003
+    Group: Goal_Level
+    Name: Master Job level!
+    Condition: " JobLevel >= 50 "
+    Rewards:
+      Item: Old_Violet_Box
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+      TitleId: 1003
+    Score: 30
+  - Id: 200004
+    Group: Goal_Level
+    Name: Grandmaster Job level!
+    Condition: " JobLevel >= 70 "
+    Dependents:
+      200003: true
+    Rewards:
+      Item: Old_Card_Album_
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+      TitleId: 1004
+    Score: 50
+  - Id: 200005
+    Group: Job_Change
+    Name: Official Adventurer
+    Condition: " Class >= JOB_SWORDMAN && Class <= JOB_THIEF "
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 200006
+    Group: Job_Change
+    Name: First step of job change!
+    Condition: " Class >= JOB_SWORDMAN && Class <= JOB_THIEF "
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 20
+  - Id: 200007
+    Group: Job_Change
+    Name: Veteran Adventurer! (1)
+    Condition: " Class >= JOB_KNIGHT && Class <= JOB_ASSASSIN "
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 25
+  - Id: 200008
+    Group: Job_Change
+    Name: Veteran Adventurer! (2)
+    Condition: " Class >= JOB_CRUSADER && Class <= JOB_DANCER "
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 25
+  - Id: 200009
+    Group: Job_Change
+    Name: Warrior (1)
+    Condition: " Class >= JOB_LORD_KNIGHT && Class <= JOB_ASSASSIN_CROSS "
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 30
+  - Id: 200010
+    Group: Job_Change
+    Name: Warrior (2)
+    Condition: " Class >= JOB_PALADIN && Class <= JOB_GYPSY "
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 30
+  - Id: 200011
+    Group: Job_Change
+    Name: Elite Adventurer! (1)
+    Condition: " Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS "
+    Rewards:
+      Item: Abrasive_Box_10
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 50
+  - Id: 200012
+    Group: Job_Change
+    Name: Transcendentaler! (1)
+    Condition: " Class >= JOB_RUNE_KNIGHT_T && Class <= JOB_GUILLOTINE_CROSS_T "
+    Rewards:
+      Item: Abrasive_Box_10
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 60
+  - Id: 200013
+    Group: Job_Change
+    Name: Elite Adventurer! (2)
+    Condition: " Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER "
+    Rewards:
+      Item: Abrasive_Box_10
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 50
+  - Id: 200014
+    Group: Job_Change
+    Name: Transcendentaler! (2)
+    Condition: " Class >= JOB_ROYAL_GUARD_T && Class <= JOB_SHADOW_CHASER_T "
+    Rewards:
+      Item: Abrasive_Box_10
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 60
+  - Id: 200015
+    Group: Job_Change
+    Name: The way of exceptional character
+    Condition: " Class == JOB_SUPER_NOVICE || Class == JOB_GUNSLINGER || Class == JOB_NINJA || Class == JOB_TAEKWON "
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 200016
+    Group: Job_Change
+    Name: This is My way!
+    Condition: " Class == JOB_STAR_GLADIATOR || Class == JOB_SOUL_LINKER || Class == JOB_KAGEROU || Class == JOB_OBORO || Class == JOB_REBELLION "
+    Rewards:
+      Item: Abrasive_Box_10
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 20
+  - Id: 200017
+    Group: Goal_Status
+    Name: Bearish Power!
+    Condition: " readparam(bStr) >= 90 "
+    Score: 10
+  - Id: 200018
+    Group: Goal_Status
+    Name: Overflowing Magic!
+    Condition: " readparam(bInt) >= 90 "
+    Score: 10
+  - Id: 200019
+    Group: Goal_Status
+    Name: Healthy Body and Mental Health!
+    Condition: " readparam(bVit) >= 90 "
+    Score: 10
+  - Id: 200020
+    Group: Goal_Status
+    Name: Speed of Light
+    Condition: " readparam(bAgi) >= 90 "
+    Score: 10
+  - Id: 200021
+    Group: Goal_Status
+    Name: Hawk Eyes
+    Condition: " readparam(bDex) >= 90 "
+    Score: 10
+  - Id: 200022
+    Group: Goal_Status
+    Name: Maximum Luck
+    Condition: " readparam(bLuk) >= 90 "
+    Score: 10
+  - Id: 200023
+    Group: Goal_Status
+    Name: Dragonlike Power!
+    Condition: " readparam(bStr) >= 125 "
+    Rewards:
+      Script: " sc_start SC_GIANTGROWTH,180000,1; "
+    Score: 20
+  - Id: 200024
+    Group: Goal_Status
+    Name: Magic Insanity
+    Condition: " readparam(bInt) >= 125 "
+    Rewards:
+      Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,EFST_STEAMPACK; "
+    Score: 20
+  - Id: 200025
+    Group: Goal_Status
+    Name: Rock Alloy
+    Condition: " readparam(bVit) >= 125 "
+    Rewards:
+      Script: " specialeffect2 EF_HEAL3; sc_start2 SC_S_LIFEPOTION,600000,-5,5; "
+    Score: 20
+  - Id: 200026
+    Group: Goal_Status
+    Name: Speed of Light
+    Condition: " readparam(bAgi) >= 125 "
+    Rewards:
+      Script: " specialeffect2 EF_STEAL; sc_start SC_INCFLEE2,60000,20; "
+    Score: 20
+  - Id: 200027
+    Group: Goal_Status
+    Name: Falcon's Eyes
+    Condition: " readparam(bDex) >= 125 "
+    Rewards:
+      Script: " specialeffect2 EF_MAGICALATTHIT; sc_start SC_INCCRI,300000,30; "
+    Score: 20
+  - Id: 200028
+    Group: Goal_Status
+    Name: Lucky Fever
+    Condition: " readparam(bLuk) >= 125 "
+    Rewards:
+      Script: " specialeffect2 EF_GLORIA; sc_start SC_GLORIA,15000,0; "
+    Score: 20
+  - Id: 200029
+    Group: Goal_Status
+    Name: Incarnation of Love and Hate
+    Condition: " BaseLevel == 99 && Class == JOB_NOVICE "
+    Rewards:
+      Item: Abrasive_Box_10
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+    Score: 30
+  - Id: 200030
+    Group: Goal_Status
+    Name: I really love it!
+    Condition: " BaseLevel == 99 && (Class >= JOB_SWORDMAN && Class <= JOB_THIEF) "
+    Rewards:
+      Item: Bubble_Gum_Box_10
+      Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
+    Score: 30
+  - Id: 200031
+    Group: Job_Change
+    Name: Reborn in Valhalla!
+    Condition: " Class == JOB_NOVICE_HIGH "
+    Rewards:
+    #  Item: Adventurer_Box_1
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 200032
+    Group: Goal_Level
+    Name: The start of another adventure!
+    Condition: " BaseLevel == 100 "
+    #Rewards:
+    #  Item: Rebeginer_Box_100
+    Score: 10
+  - Id: 200033
+    Group: Goal_Level
+    Name: With a new mind!(1)
+    Condition: " BaseLevel == 170 && (Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS_T) "
+    #Rewards:
+    #  Item: Costume_Ticket
+    Score: 50
+  - Id: 200034
+    Group: Goal_Level
+    Name: With a new mind!(2)
+    Condition: " BaseLevel == 170 && (Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER_T) "
+    #Rewards:
+    #  Item: Costume_Ticket
+    Score: 50
+  - Id: 220000
+    Group: Chatting_Create
+    Name: Community begin
+    Condition: " ARG0 == 1 "
+    Score: 10
+  - Id: 220001
+    Group: Chatting_Dying
+    Name: A mouth only moment
+    Condition: " ARG0 == 1 "
+    Score: 10
+  - Id: 220002
+    Group: Chatting_Count
+    Name: Admiring the chatter
+    Condition: " ARG0 == 20 "
+    Score: 10
+  - Id: 220003
+    Group: Add_Friend
+    Name: My friend's friend~
+    Condition: " ARG0 >= 1 "
+    Score: 10
+  - Id: 220004
+    Group: Add_Friend
+    Name: A competition of popularity
+    Condition: " ARG0 >= 10 "
+    Score: 10
+  - Id: 220005
+    Group: Party
+    Name: Let's Party~
+    Condition: " ARG0 == 1 "
+    Score: 10
+  - Id: 220006
+    Group: Marry
+    Name: Married with who..?
+    Rewards:
+      TitleId: 1022
+    Score: 20
+  - Id: 220007
+    Group: Baby
+    Name: Can you grow?
+    Condition: " ARG0 == 1 "
+    Rewards:
+      TitleId: 1032
+    Score: 20
+  - Id: 220008
+    Group: Baby
+    Name: Being a parent
+    Condition: " ARG0 == 2 "
+    Rewards:
+      TitleId: 1033
+    Score: 20
+  - Id: 220009
+    Group: Spend_Zeny
+    Name: Activating the market economy (1)
+    Targets:
+      - Id: 0
+        Count: 10000
+    Condition: " ARG0 >= 10000 "
+    Score: 10
+  - Id: 220010
+    Group: Spend_Zeny
+    Name: Activating the market economy (2)
+    Targets:
+      - Id: 0
+        Count: 100000
+    Condition: " ARG0 >= 100000 "
+    Score: 15
+  - Id: 220011
+    Group: Spend_Zeny
+    Name: Activating the market economy (3)
+    Targets:
+      - Id: 0
+        Count: 500000
+    Condition: " ARG0 >= 500000 "
+    Score: 20
+  - Id: 220012
+    Group: Spend_Zeny
+    Name: Activating the market economy (4)
+    Targets:
+      - Id: 0
+        Count: 1000000
+    Condition: " ARG0 >= 1000000 "
+    Score: 30
+  - Id: 220013
+    Group: Spend_Zeny
+    Name: Activating the market economy (5)
+    Targets:
+      - Id: 0
+        Count: 5000000
+    Condition: " ARG0 >= 5000000 "
+    Score: 50
+  - Id: 220014
+    Group: Enchant_Success
+    Name: I can't quit from refining! (1)
+    Condition: " ARG0 == 1 && ARG1 >= 7 "
+    Score: 10
+  - Id: 220015
+    Group: Enchant_Success
+    Name: I can't quit from refining! (2)
+    Condition: " ARG0 == 1 && ARG1 >= 12 "
+    Score: 15
+  - Id: 220016
+    Group: Enchant_Success
+    Name: I can't quit from refining! (3)
+    Condition: " ARG0 == 2 && ARG1 >= 7 "
+    Score: 10
+  - Id: 220017
+    Group: Enchant_Success
+    Name: I can't quit from refining! (4)
+    Condition: " ARG0 == 2 && ARG1 >= 12 "
+    Score: 15
+  - Id: 220018
+    Group: Enchant_Success
+    Name: I can't quit from refining! (5)
+    Condition: " ARG0 == 3 && ARG1 >= 7 "
+    Score: 15
+  - Id: 220019
+    Group: Enchant_Success
+    Name: I can't quit from refining! (6)
+    Condition: " ARG0 == 3 && ARG1 >= 12 "
+    Score: 20
+  - Id: 220020
+    Group: Enchant_Success
+    Name: I can't quit from refining! (7)
+    Condition: " ARG0 == 4 && ARG1 >= 7 "
+    Score: 20
+  - Id: 220021
+    Group: Enchant_Success
+    Name: I can't quit from refining! (8)
+    Condition: " ARG0 == 4 && ARG1 >= 12 "
+    Score: 30
+  - Id: 220022
+    Group: Enchant_Fail
+    Name: Human's greed has no ending..
+    Condition: " ARG0 == 1 "
+    Score: 10
+  - Id: 220023
+    Group: Get_Item
+    Name: I found it! (1)
+    Condition: " ARG0 >= 100 "
+    Score: 10
+  - Id: 220024
+    Group: Get_Item
+    Name: I found it! (2)
+    Condition: " ARG0 >= 1000 "
+    Score: 10
+  - Id: 220025
+    Group: Get_Item
+    Name: I found it! (3)
+    Condition: " ARG0 >= 5000 "
+    Score: 15
+  - Id: 220026
+    Group: Get_Item
+    Name: I found it! (4)
+    Condition: " ARG0 >= 10000 "
+    Score: 15
+  - Id: 220027
+    Group: Get_Item
+    Name: I found it! (5)
+    Condition: " ARG0 >= 50000 "
+    Score: 20
+  - Id: 220028
+    Group: Get_Item
+    Name: I found it! (6)
+    Condition: " ARG0 >= 100000 "
+    Score: 20
+  - Id: 220029
+    Group: Get_Item
+    Name: I found it! (7)
+    Condition: " ARG0 >= 150000 "
+    Score: 30
+  - Id: 220030
+    Group: Get_Zeny
+    Name: Rich King (1)
+    Condition: " ARG0 >= 10000 "
+    Score: 10
+  - Id: 220031
+    Group: Get_Zeny
+    Name: Rich King (2)
+    Condition: " ARG0 >= 100000 "
+    Score: 15
+  - Id: 220032
+    Group: Get_Zeny
+    Name: Rich King (3)
+    Condition: " ARG0 >= 1000000 "
+    Score: 20
+  - Id: 220033
+    Group: Get_Zeny
+    Name: Rich King (4)
+    Condition: " ARG0 >= 10000000 "
+    Score: 25
+  - Id: 220034
+    Group: Get_Zeny
+    Name: Rich King (5)
+    Condition: " ARG0 >= 100000000 "
+    Score: 30
+  - Id: 220035
+    Group: Get_Zeny
+    Name: Rich King (6)
+    Condition: " ARG0 >= 1000000000 "
+    Score: 40
+  - Id: 230100
+    Group: Taming
+    Name: Poring is Love
+    Dependents:
+      230101: true
+      230102: true
+      230103: true
+      230104: true
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleId: 1025
+    Score: 50
+  - Id: 230110
+    Group: Taming
+    Name: Entomologist
+    Dependents:
+      230111: true
+      230112: true
+      230113: true
+      230114: true
+      230115: true
+      230116: true
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleId: 1026
+    Score: 50
+  - Id: 230120
+    Group: Taming
+    Name: Animals are also our friend
+    Dependents:
+      230121: true
+      230122: true
+      230123: true
+      230124: true
+      230125: true
+      230126: true
+      230127: true
+      230128: true
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleId: 1027
+    Score: 50
+  - Id: 230140
+    Group: Taming
+    Name: Monster Girls Unite!!
+    Dependents:
+      230141: true
+      230142: true
+      230143: true
+      230144: true
+      230145: true
+      230146: true
+      230147: true
+    Rewards:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleId: 1029
+    Score: 50
+  - Id: 230101
+    Group: Taming
+    Name: Poring - taming
+    Targets:
+      - Id: 0
+        Mob: PORING
+    Score: 10
+  - Id: 230102
+    Group: Taming
+    Name: Drops - taming
+    Targets:
+      - Id: 0
+        Mob: DROPS
+    Score: 10
+  - Id: 230103
+    Group: Taming
+    Name: Poporing - taming
+    Targets:
+      - Id: 0
+        Mob: POPORING
+    Score: 10
+  - Id: 230104
+    Group: Taming
+    Name: Novice Poring - taming
+    Targets:
+      - Id: 0
+        Mob: LITTLE_PORING
+    Score: 10
+  - Id: 230111
+    Group: Taming
+    Name: Chonchon - taming
+    Targets:
+      - Id: 0
+        Mob: CHONCHON
+    Score: 10
+  - Id: 230112
+    Group: Taming
+    Name: Steel Chonchon - taming
+    Targets:
+      - Id: 0
+        Mob: STEEL_CHONCHON
+    Score: 10
+  - Id: 230113
+    Group: Taming
+    Name: Hunter Fly - taming
+    Targets:
+      - Id: 0
+        Mob: HUNTER_FLY
+    Score: 10
+  - Id: 230114
+    Group: Taming
+    Name: Rocker - taming
+    Targets:
+      - Id: 0
+        Mob: ROCKER
+    Score: 10
+  - Id: 230115
+    Group: Taming
+    Name: Spore - taming
+    Targets:
+      - Id: 0
+        Mob: SPORE
+    Score: 10
+  - Id: 230116
+    Group: Taming
+    Name: Poison Spore - taming
+    Targets:
+      - Id: 0
+        Mob: POISON_SPORE
+    Score: 10
+  - Id: 230121
+    Group: Taming
+    Name: Lunatic - taming
+    Targets:
+      - Id: 0
+        Mob: LUNATIC
+    Score: 10
+  - Id: 230122
+    Group: Taming
+    Name: Picky - taming
+    Targets:
+      - Id: 0
+        Mob: PICKY
+    Score: 10
+  - Id: 230123
+    Group: Taming
+    Name: Savage Bebe - taming
+    Targets:
+      - Id: 0
+        Mob: SAVAGE_BABE
+    Score: 10
+  - Id: 230124
+    Group: Taming
+    Name: Baby Desert Wolf - taming
+    Targets:
+      - Id: 0
+        Mob: DESERT_WOLF_B
+    Score: 10
+  - Id: 230125
+    Group: Taming
+    Name: Smokie - taming
+    Targets:
+      - Id: 0
+        Mob: SMOKIE
+    Score: 10
+  - Id: 230126
+    Group: Taming
+    Name: Yoyo - taming
+    Targets:
+      - Id: 0
+        Mob: YOYO
+    Score: 10
+  - Id: 230127
+    Group: Taming
+    Name: Peco Peco - taming
+    Targets:
+      - Id: 0
+        Mob: PECOPECO
+    Score: 10
+  - Id: 230128
+    Group: Taming
+    Name: Petite - taming
+    Targets:
+      - Id: 0
+        Mob: PETIT
+    Score: 10
+  - Id: 230141
+    Group: Taming
+    Name: Munak - taming
+    Targets:
+      - Id: 0
+        Mob: MUNAK
+    Score: 10
+  - Id: 230142
+    Group: Taming
+    Name: Isis - taming
+    Targets:
+      - Id: 0
+        Mob: ISIS
+    Score: 10
+  - Id: 230143
+    Group: Taming
+    Name: Sohee - taming
+    Targets:
+      - Id: 0
+        Mob: SOHEE
+    Score: 10
+  - Id: 230144
+    Group: Taming
+    Name: Zherlthsh - taming
+    Targets:
+      - Id: 0
+        Mob: ZHERLTHSH
+    Score: 10
+  - Id: 230145
+    Group: Taming
+    Name: Alice - taming
+    Targets:
+      - Id: 0
+        Mob: ALICE
+    Score: 10
+  - Id: 230146
+    Group: Taming
+    Name: Succubus - taming
+    Targets:
+      - Id: 0
+        Mob: SUCCUBUS
+    Score: 10
+  - Id: 230147
+    Group: Taming
+    Name: Loli Ruri - taming
+    Targets:
+      - Id: 0
+        Mob: LOLI_RURI
+    Score: 10
+  - Id: 230200
+    Group: Battle
+    Name: Poring seeker
+    Dependents:
+      230201: true
+      230202: true
+      230203: true
+    Score: 10
+  - Id: 230201
+    Group: Battle
+    Name: Exploring Poring's life (1)
+    Targets:
+      - Id: 0
+        Mob: PORING
+        Count: 10
+      - Id: 1
+        Mob: LITTLE_PORING
+        Count: 10
+      - Id: 2
+        Mob: DROPS
+        Count: 10
+      - Id: 3
+        Mob: POPORING
+        Count: 10
+      - Id: 4
+        Mob: MARIN
+        Count: 10
+    Score: 10
+  - Id: 230202
+    Group: Battle
+    Name: Exploring Poring's life (2)
+    Targets:
+      - Id: 0
+        Mob: MASTERING
+      - Id: 1
+        Mob: DEVILING
+      - Id: 2
+        Mob: ANGELING
+      - Id: 3
+        Mob: ARCHANGELING
+      - Id: 4
+        Mob: GHOSTRING
+    Score: 20
+  - Id: 230203
+    Group: Battle
+    Name: Exploring Poring's life (3)
+    Targets:
+      - Id: 0
+        Mob: METALING
+        Count: 5
+      - Id: 1
+        Mob: HEAVY_METALING
+        Count: 5
+      - Id: 2
+        Mob: MAGMARING
+        Count: 5
+    Score: 20
+  - Id: 240000
+    Group: Goal_Level
+    Name: First Login after the introduction of Achievement Tasks
+    Condition: " true "
+    Score: 10
+  - Id: 240001
+    Group: Goal_Achieve
+    Name: Reaching Level 1
+    Condition: " AchievementLevel >= 1 "
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240002
+    Group: Goal_Achieve
+    Name: Reaching Level 2
+    Condition: " AchievementLevel >= 2 "
+    Dependents:
+      240001: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240003
+    Group: Goal_Achieve
+    Name: Reaching Level 3
+    Condition: " AchievementLevel >= 3 "
+    Dependents:
+      240002: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240004
+    Group: Goal_Achieve
+    Name: Reaching Level 4
+    Condition: " AchievementLevel >= 4 "
+    Dependents:
+      240003: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240005
+    Group: Goal_Achieve
+    Name: Reaching Level 5
+    Condition: " AchievementLevel >= 5 "
+    Dependents:
+      240004: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240006
+    Group: Goal_Achieve
+    Name: Reaching Level 6
+    Condition: " AchievementLevel >= 6 "
+    Dependents:
+      240005: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240007
+    Group: Goal_Achieve
+    Name: Reaching Level 7
+    Condition: " AchievementLevel >= 7 "
+    Dependents:
+      240006: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240008
+    Group: Goal_Achieve
+    Name: Reaching Level 8
+    Condition: " AchievementLevel >= 8 "
+    Dependents:
+      240007: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240009
+    Group: Goal_Achieve
+    Name: Reaching Level 9
+    Condition: " AchievementLevel >= 9 "
+    Dependents:
+      240008: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240010
+    Group: Goal_Achieve
+    Name: Reaching Level 10
+    Condition: " AchievementLevel >= 10 "
+    Dependents:
+      240009: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleId: 1023
+    Score: 10
+  - Id: 240011
+    Group: Goal_Achieve
+    Name: Reaching Level 11
+    Condition: " AchievementLevel >= 11 "
+    Dependents:
+      240010: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240012
+    Group: Goal_Achieve
+    Name: Reaching Level 12
+    Condition: " AchievementLevel >= 12 "
+    Dependents:
+      240011: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240013
+    Group: Goal_Achieve
+    Name: Reaching Level 13
+    Condition: " AchievementLevel >= 13 "
+    Dependents:
+      240012: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240014
+    Group: Goal_Achieve
+    Name: Reaching Level 14
+    Condition: " AchievementLevel >= 14 "
+    Dependents:
+      240013: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240015
+    Group: Goal_Achieve
+    Name: Reaching Level 15
+    Condition: " AchievementLevel >= 15 "
+    Dependents:
+      240014: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240016
+    Group: Goal_Achieve
+    Name: Reaching Level 16
+    Condition: " AchievementLevel >= 16 "
+    Dependents:
+      240015: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240017
+    Group: Goal_Achieve
+    Name: Reaching Level 17
+    Condition: " AchievementLevel >= 17 "
+    Dependents:
+      240016: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240018
+    Group: Goal_Achieve
+    Name: Reaching Level 18
+    Condition: " AchievementLevel >= 18 "
+    Dependents:
+      240017: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240019
+    Group: Goal_Achieve
+    Name: Reaching Level 19
+    Condition: " AchievementLevel >= 19 "
+    Dependents:
+      240018: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 10
+  - Id: 240020
+    Group: Goal_Achieve
+    Name: Reaching Level 20
+    Condition: " AchievementLevel >= 20 "
+    Dependents:
+      240019: true
+    Rewards:
+      Item: Gift_Box
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleId: 1024
+    Score: 10

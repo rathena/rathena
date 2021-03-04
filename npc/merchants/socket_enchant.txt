@@ -247,15 +247,19 @@
 }
 
 function	script	Func_Socket	{
+	.@item_id = getarg(0);
+	.@zeny_req = getarg(4);
+	setarray .@item_req[0], getarg(5), getarg(7,0);
+	setarray .@req_amount[0], getarg(6), getarg(8,0);
 
 	disable_items;
 	mes "[Seiyablem]";
-	mes "You want to add a Slot to a " + getitemname(getarg(0)) + "?";
-	mes "Alright, please bring me ^FF0000" + getarg(6) + " " + getitemname(getarg(5)) + (getarg(6) > 1 && getarg(5) != 999 ? "s":"") + "^000000, " + (getarg(7,0) != 0 && getarg(8,0) != 0 ? ("^FF0000" + getarg(8,0) + " " + getitemname(getarg(7,0)) + (getarg(8,0) > 1 && getarg(7,0) != 999 ? "s":"") + "^000000 ") : "") + "and my ^FF0000" + (getarg(4) >= 1000 ? (getarg(4)/1000 + ",000") : getarg(4)) + ",000 zeny^000000 service fee.";
-	mes "Ah, and don't forget to bring that " + getitemname(getarg(0)) + "!";
+	mes "You want to add a Slot to a "+ getitemname(.@item_id) +"?";
+	mes "Alright, please bring me ^FF0000"+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +"^000000, "+ (.@item_req[1] != 0 && .@req_amount[1] != 0 ? ("^FF0000"+ .@req_amount[1] +" "+ getitemname(.@item_req[1]) + (.@req_amount[1] > 1 && .@item_req[1] != 999 ? "s":"") + "^000000 ") : "") + "and my ^FF0000" + (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny^000000 service fee.";
+	mes "Ah, and don't forget to bring that "+ getitemname(.@item_id) +"!";
 	next;
 	mes "[Seiyablem]";
-	if (getiteminfo(getarg(0),5)&2) // EQP_HAND_R = 2, it's a weapon
+	if (getiteminfo(.@item_id,5) & EQP_HAND_R) // weapon
 	{
 		mes "I can try to add a slot now if you have the required items and zeny.";
 		mes "However, you should know that there's a chance that I might fail.";
@@ -277,7 +281,7 @@ function	script	Func_Socket	{
 	switch(select("Attempt Slot Addition:Cancel"))
 	{
 		case 1:
-			if ((Zeny >= getarg(4)*1000) && (countitem(getarg(5)) >= getarg(6)) && (countitem(getarg(7,512)) >= getarg(8,0)) && (countitem(getarg(0)) > 0)) // if there's no getarg(7) and getarg(8) provided, check itemcount against 0 (we still need a valid item ID though)
+			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no getarg(7) and getarg(8) provided, check itemcount against 0 (we still need a valid item ID though)
 			{
 				mes "[Seiyablem]";
 				mes "Alright then, let the work begin!";
@@ -290,11 +294,11 @@ function	script	Func_Socket	{
 					mes "[Seiyablem]";
 					mes "Great, it seems to be successful.";
 					mes "It looks pretty well done. Congratulations!";
-					delitem getarg(0),1;
-					delitem getarg(5),getarg(6);
-					if (getarg(7,0) != 0 && getarg(8,0) != 0)
-						delitem getarg(7),getarg(8);
-					set Zeny, Zeny - getarg(4)*1000;
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
 					getitem getarg(1),1;
 					next;
 					mes "[Seiyablem]";
@@ -309,11 +313,11 @@ function	script	Func_Socket	{
 					mes "However, I am completely innocent.";
 					mes "This is your luck, and it is destined by god, okay?";
 					mes "Don't be so disappointed, and try next time.";
-					delitem getarg(0),1;
-					delitem getarg(5),getarg(6);
-					if (getarg(7,0) != 0 && getarg(8,0) != 0)
-						delitem getarg(7),getarg(8);
-					set Zeny, Zeny - getarg(4)*1000;
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
 					next;
 					mes "[Seiyablem]";
 					mes "I wish you good luck next time!";

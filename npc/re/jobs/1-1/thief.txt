@@ -19,7 +19,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 				mes "[Thief Guide]";
 				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
 				next;
-				if (getskilllv("NV_BASIC") < 9) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Thief Guide]";
 					mes "What, do you want to be a Thief? I'm sorry, but you look like you need more training.";
 					next;
@@ -41,7 +41,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 				close;
 			}else{
 				mes "[Thief Guide]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "Hey, dude.";
 				else
 					mes "Hey, baby~";
@@ -49,7 +49,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 			}
 		}else{
 			mes "[Thief Guide]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Hey, dude.";
 			else
 				mes "Hey, baby.";
@@ -59,7 +59,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 	}
 	if(q_job_thief == 1) {
 		mes "[Thief Guildsman]";
-		mes "Ehh... Seems like a beloved "+(Sex?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
+		mes "Ehh... Seems like a beloved "+(Sex == SEX_MALE?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
 		next;
 		mes "[Thief Guildsman]";
 		mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
@@ -73,7 +73,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 			close;
 		}else{
 			mes "What the heck...?";
-			if(Sex) {
+			if(Sex == SEX_MALE) {
 				mes "Huh... you are a "+jobname(Class)+", blockhead!";
 				next;
 				mes "[Thief Guildsman]";
@@ -87,7 +87,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 			close;
 		}
 	}
-	mes "Ehh... Seems like a beloved "+(Sex?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
+	mes "Ehh... Seems like a beloved "+(Sex == SEX_MALE?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
 	next;
 	if(select("I want to be a Thief.:Nothing.") == 2) {
 		mes "[Thief Guildsman]";
@@ -136,7 +136,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 	mes "Alright, tell me your name. Huh? What?";
 	mes ""+strcharinfo(0)+". So "+strcharinfo(0)+", right...?";
 	next;
-	if (getskilllv("NV_BASIC") < 9) {
+	if (!callfunc("F_CanChangeJob")) {
 		mes "[Thief Guildsman]";
 		mes "I can see your strong will to become a Thief......";
 		mes "But only with your will, you cannot make it in a real fight, can you?";

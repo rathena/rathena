@@ -170,6 +170,16 @@ Disables certain items and skills on a map through a specified zone number. The 
 located in 'db/(pre-)re/item_noequip.txt' and 'db/(pre-)re/skill_nocast_db.txt', both of which
 contain explanations and examples of how this mapflag is used.
 
+Restricted Zones:
+1 - Aldebaran Turbo Track
+2 - Jail
+3 - Izlude Battle Arena
+4 - WoE:SE Maps
+5 - Sealed Shrine
+6 - Instances: Endless Tower, Orc's Memory, Nidhoggr's Instance
+7 - Towns
+8 - WOE:TE Dungeons
+
 ---------------------------------------
 
 *monster_noteleport
@@ -186,6 +196,8 @@ Disables usage of monster-spawning items on a map:
  - Poring Box (ID 12109)
  - Red Pouch (ID 12024)
 
+Items listed above can be modified under db/(pre-)re/item_flag.txt
+
 Note that when 'mob_warp' is enabled in '/conf/battle/monster.conf' and flag 4 is set, this will
 also prevent mobs from being warped onto the map (except slave mobs).
 
@@ -197,7 +209,7 @@ Disables skill WZ_ICEWALL on a map.
 
 ---------------------------------------
 
-*nosumstarmiracle
+*nosunmoonstarmiracle
 
 Disables Star Gladiator's "Solar, Lunar, and Stellar Miracle" from occurring on a map.
 
@@ -212,8 +224,7 @@ Disables mine effects on a map.
 
 *nolockon
 
-Disables locking on a map.
-[More information needed.]
+Disables attacking another player without holding shift or using /ns on a map.
 
 ---------------------------------------
 
@@ -256,11 +267,14 @@ because it does not necessarily require PvP mode to be set.
 *gvg_noparty
 *gvg_castle
 *gvg_dungeon
+*gvg_te
+*gvg_te_castle
 
 Enables Guild vs. Guild mode on a map and applies the corresponding damage adjustments.
 'gvg_noparty' will ignore party alliances.
 'gvg_castle' marks a guild castle. GvG mode will be active only during the War of Emperium.
 'gvg_dungeon' marks a guild dungeon. Players will be warped out after two deaths.
+'gvg_te' and 'gvg_te_castle' marks a WOE:TE area and special restrictions are applied.
 
 ---------------------------------------
 
@@ -283,31 +297,37 @@ Notes:
 
 ---------------------------------------
 
-*skill_damage	{<skill_name>,<caster>,<damage1>,{<damage2>,{<damage3>,{<damage4>}}}}
+*skill_damage	{<skill_name>,<caster>,<SKILLDMG_PC>,{<SKILLDMG_MOB>,{<SKILLDMG_BOSS>,{<SKILLDMG_OTHER>}}}}
 
 Enables skill damage adjustment on a map. All adjustments in 'db/skill_damage_db.txt'
 for 'Map' type 16 will be applied.
 
 This mapflag can also be used to adjust the damage of one skill by a percentage:
  - skill_name:
-	Name of the skill in 'db/(pre-)re/skill_db.txt' (ex. SM_BASH).
+	Name of the skill in 'db/(pre-)re/skill_db.yml' (ex. SM_BASH).
 	To adjust all skill damage, write "all" (without quotes).
  - caster: the groups for which the adjustment takes effect. (bitmask)
-	 1 = Player
-	 2 = Monster
-	 4 = Pet
-	 8 = Homunculus
-	16 = Mercenary
-	32 = Elemental
+	BL_PC = Player
+	BL_MOB = Monster
+	BL_PET = Pet
+	BL_HOM = Homunculus
+	BL_MER = Mercenary
+	BL_ELEM = Elemental
  - damage: percent adjustment rate (between -100 and 100000).
-	1 = against player
-	2 = against normal monster
-	3 = against boss monster
-	4 = against other (homunculus, mercenary, pet, elemental)
+	SKILLDMG_PC = against player
+	SKILLDMG_MOB = against normal monster
+	SKILLDMG_BOSS = against boss monster
+	SKILLDMG_OTHER = against other (homunculus, mercenary, pet, elemental)
 
-Notes:
- - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.h' for this mapflag to take effect.
- - Each map can contain up to 5 adjustments (MAX_MAP_SKILL_MODIFIER in 'src/map/map.h').
+---------------------------------------
+
+*skill_duration	skill_name,percentage
+
+Sets skill (trap-type) time limit to n% of original duration.
+
+// Example:
+// Makes HT_ANKLESNARE's lifetime in the castle 4x longer than other maps.
+prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
 
 ---------------------------------------
 
@@ -354,7 +374,8 @@ Allows usage of item Neuralizer (ID 12213).
 *bexp	<rate>
 *jexp	<rate>
 
-Changes the base and job experience rates on a map.
+Changes the base and job experience rates on a map. Supports negative values to reduce EXP
+rates as well.
 <rate> is given as a percentage (i.e. 100 = 1x EXP). This takes into account the modifiers
 'base_exp_rate' and 'job_exp_rate' in '/conf/battle/exp.conf'.
 
@@ -394,5 +415,22 @@ in '/conf/channels.conf'.
 *notomb
 
 Disables MVP tombs from appearing on a map.
+
+---------------------------------------
+
+*nocostume
+
+Disables costume sprites on a map.
+
+This only disables the sprites and not the effect of the items.
+If a player logs out on a nocostume map the costume sprites will also not be shown in the
+character server.
+
+---------------------------------------
+
+*hidemobhpbar
+
+Hides monster's HP bar on a map.
+Ignores config value of 'monster_hp_bars_info'.
 
 ---------------------------------------

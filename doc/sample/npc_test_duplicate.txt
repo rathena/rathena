@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20070915
+//= 20180831
 //===== Description: ========================================= 
 //= An example of how duplicate NPCs are handled:
 //=  NPC variables are shared between all duplicates.
@@ -12,7 +12,7 @@
 //=  'OnInit' loads the middle Poring last, for some reason.
 //============================================================
 
--	script	Test Script	-1,1,1,{
+prontera,150,175,4	script	Duplicate Test Script	909,{
 	mes "Hi.";
 	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
 	close;
@@ -23,10 +23,9 @@ OnInit:
 
 OnTouch:
 	getmapxy(.map$, .x, .y, 1);
-	emotion e_scissors;
+	emotion ET_SCISSOR;
 	end;
 }
 
-prontera,150,175,4	duplicate(Test Script)	Test1	909
-prontera,155,175,4	duplicate(Test Script)	Test2	909,2,2
-prontera,160,175,4	duplicate(Test Script)	Test3	909,3,3
+prontera,155,175,4	duplicate(Duplicate Test Script)	Duplicate Test2	909,2,2
+prontera,160,175,4	duplicate(Duplicate Test Script)	Duplicate Test3	909,3,3

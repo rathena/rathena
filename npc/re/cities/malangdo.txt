@@ -35,10 +35,10 @@
 			case 2: mes "Why don't you go to ^A2314BMalangdo^000000? That place is better than Geffen, where there are only crowds of simple honest wizards."; break;
 			case 3: mes "The fresh air of Payon is not bad, but why don't you go better place like the heaven of the cats, ^A2314BMalangdo^000000?"; break;
 			case 4: mes .@s$+"The beautiful and quiet place is better than Aldebaran, where it's so noisy with the tick-tock sound of the clock."; break;
-			case 5: mes .@s$+"The beautiful and quiet place is better than Morroc, with its heat and sandstorms."; break;
-			case 6: mes .@s$+"The beautiful place is better than Yuno, which is full of books and headaches."; break;
+			case 5: mes .@s$+"The beautiful and quiet place is better than Morocc, with its heat and sandstorms."; break;
+			case 6: mes .@s$+"The beautiful place is better than Juno, which is full of books and headaches."; break;
 			case 7: mes .@s$+"The complex place is better than Rachel, where it's too horribly quiet."; break;
-			case 8: mes .@s$+"The safe place is better than Lighthanlzen, which is too dangerous."; break;
+			case 8: mes .@s$+"The safe place is better than Lighthalzen, which is too dangerous."; break;
 			case 9: mes .@s$+"The smell of this sea place is better than Mora, which is full of a grassy smell."; break;
 		}
 		next;
@@ -304,7 +304,7 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 				specialeffect2 EF_HEALSP;
 				mes "[Innkeeper]";
 				mes "Now relax.";
-				emotion e_kis;
+				emotion ET_CHUP;
 				next;
 				warp "malangdo",140,121;
 				close;
@@ -320,7 +320,7 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 	case 2:
 		mes "[Innkeeper]";
 		mes "Location saved. We should keep company, haha~";
-		savepoint "malangdo",142,118;
+		savepoint "malangdo",142,118,1,1;
 		close;
 	case 3:
 		mes "[Innkeeper]";
@@ -362,20 +362,20 @@ OnTouch:
 		soundeffect "assassin_of_sunset.wav",0;
 		break;
 	case 4: 
-		emotion e_ho;
-		emotion e_ho,0,"Wandering Minstrel#mal";
+		emotion ET_DELIGHT;
+		emotion ET_DELIGHT, getnpcid(0, "Minstrel#mal");
 		break;
 	}
 	end;
 }
 
 malangdo,216,168,3	script	Cat Trainer#mal1	558,0,8,{
-	emotion e_awsm;
+	emotion ET_COOL;
 	mes "[Cat Trainer]";
 	mes "Ooo~ their soft puffy tails and soft fur~";
 	mes "I can't stand it, this is heaven~~!!";
 	next;
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Cat Trainer]";
 	mes "My hidden card, ^FF0000Silvervine Fruit^000000, can make all cats in Malangdo my slaves~ haha!";
 	next;
@@ -390,24 +390,24 @@ malangdo,216,168,3	script	Cat Trainer#mal1	558,0,8,{
 	mes "Why would I tell you when I can barely get it?";
 	mes "I wouldn't even tell you for all the zeny in the world~!";
 	next;
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Cat Trainer]";
 	mes "All the Malangdo cats are mine~!";
 	mes "Muahahahaha~";
 	mes "With enough ^FF0000Silvervine Fruit^000000 I can be a queen in Malangdo~ ohhhh!!!";
 	close;
 OnTouch:
-	emotion e_flash;
+	emotion ET_SPARK;
 	end;
 }
 
 malangdo,164,203,3	script	Cat Trainer#mal2	853,{
-	emotion e_awsm;
+	emotion ET_COOL;
 	mes "[Cat Trainer]";
 	mes "Ooo~ their soft puffy tails and soft fur~";
 	mes "I can't stand it, this is heaven~~!!";
 	next;
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Cat Trainer]";
 	mes "This is my little secret called";
 	mes "^FF0000Silvervine Fruit^000000. I can use";
@@ -427,7 +427,7 @@ malangdo,164,203,3	script	Cat Trainer#mal2	853,{
 	mes "[Cat Trainer]";
 	mes "Hey, you almost made me tell my secret.";
 	next;
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Cat Trainer]";
 	mes "One day these cats will be mine.";
 	mes "I can be a king in Malangdo~ ohhh~!";

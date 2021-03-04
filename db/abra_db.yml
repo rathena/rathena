@@ -1,0 +1,326 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Abracadabra Database
+###########################################################################
+#
+# Abracadabra Settings
+#
+###########################################################################
+# - Skill             Skill to be casted by Abracadabra.
+#   Probability:      Probability of skill compared to others in database (1 = 0.01%, 10000 = 100%). (Default: 500)
+#     - Level         Skill level.
+#       Probability   Probability at specific skill level (1 = 0.01%, 10000 = 100%). (Default: 0)
+###########################################################################
+
+Header:
+  Type: ABRA_DB
+  Version: 1
+
+Body:
+  - Skill: SM_BASH
+  - Skill: SM_PROVOKE
+  - Skill: SM_MAGNUM
+  - Skill: SM_ENDURE
+  - Skill: MG_SIGHT
+  - Skill: MG_NAPALMBEAT
+  - Skill: MG_SAFETYWALL
+  - Skill: MG_SOULSTRIKE
+  - Skill: MG_COLDBOLT
+  - Skill: MG_FROSTDIVER
+  - Skill: MG_STONECURSE
+  - Skill: MG_FIREBALL
+  - Skill: MG_FIREWALL
+  - Skill: MG_FIREBOLT
+  - Skill: MG_LIGHTNINGBOLT
+  - Skill: MG_THUNDERSTORM
+  - Skill: AL_RUWACH
+  - Skill: AL_PNEUMA
+  - Skill: AL_TELEPORT
+  - Skill: AL_WARP
+  - Skill: AL_HEAL
+  - Skill: AL_INCAGI
+  - Skill: AL_DECAGI
+  - Skill: AL_HOLYWATER
+  - Skill: AL_CRUCIS
+  - Skill: AL_ANGELUS
+  - Skill: AL_BLESSING
+  - Skill: AL_CURE
+  - Skill: MC_IDENTIFY
+  - Skill: MC_VENDING
+  - Skill: MC_MAMMONITE
+  - Skill: AC_CONCENTRATION
+  - Skill: AC_DOUBLE
+  - Skill: AC_SHOWER
+  - Skill: TF_STEAL
+  - Skill: TF_HIDING
+  - Skill: TF_POISON
+  - Skill: TF_DETOXIFY
+  - Skill: ALL_RESURRECTION
+  - Skill: KN_PIERCE
+  - Skill: KN_BRANDISHSPEAR
+  - Skill: KN_SPEARSTAB
+  - Skill: KN_SPEARBOOMERANG
+  - Skill: KN_TWOHANDQUICKEN
+  - Skill: KN_AUTOCOUNTER
+  - Skill: KN_BOWLINGBASH
+  - Skill: PR_IMPOSITIO
+  - Skill: PR_SUFFRAGIUM
+  - Skill: PR_ASPERSIO
+  - Skill: PR_BENEDICTIO
+  - Skill: PR_SANCTUARY
+  - Skill: PR_SLOWPOISON
+  - Skill: PR_STRECOVERY
+  - Skill: PR_KYRIE
+  - Skill: PR_MAGNIFICAT
+  - Skill: PR_GLORIA
+  - Skill: PR_LEXDIVINA
+  - Skill: PR_TURNUNDEAD
+  - Skill: PR_LEXAETERNA
+  - Skill: PR_MAGNUS
+  - Skill: WZ_FIREPILLAR
+  - Skill: WZ_SIGHTRASHER
+  - Skill: WZ_METEOR
+  - Skill: WZ_JUPITEL
+  - Skill: WZ_VERMILION
+  - Skill: WZ_WATERBALL
+  - Skill: WZ_ICEWALL
+  - Skill: WZ_FROSTNOVA
+  - Skill: WZ_STORMGUST
+  - Skill: WZ_EARTHSPIKE
+  - Skill: WZ_HEAVENDRIVE
+  - Skill: WZ_QUAGMIRE
+  - Skill: WZ_ESTIMATION
+  - Skill: BS_HAMMERFALL
+  - Skill: BS_ADRENALINE
+  - Skill: BS_WEAPONPERFECT
+  - Skill: BS_OVERTHRUST
+  - Skill: BS_MAXIMIZE
+  - Skill: HT_SKIDTRAP
+  - Skill: HT_LANDMINE
+  - Skill: HT_ANKLESNARE
+  - Skill: HT_SHOCKWAVE
+  - Skill: HT_SANDMAN
+  - Skill: HT_FLASHER
+  - Skill: HT_FREEZINGTRAP
+  - Skill: HT_BLASTMINE
+  - Skill: HT_CLAYMORETRAP
+  - Skill: HT_REMOVETRAP
+  - Skill: HT_TALKIEBOX
+  - Skill: HT_BLITZBEAT
+  - Skill: HT_DETECTING
+  - Skill: HT_SPRINGTRAP
+  - Skill: AS_CLOAKING
+  - Skill: AS_SONICBLOW
+  - Skill: AS_GRIMTOOTH
+  - Skill: AS_ENCHANTPOISON
+  - Skill: AS_POISONREACT
+  - Skill: AS_VENOMDUST
+  - Skill: AS_SPLASHER
+  - Skill: RG_STEALCOIN
+  - Skill: RG_BACKSTAP
+  - Skill: RG_RAID
+  - Skill: RG_STRIPWEAPON
+  - Skill: RG_STRIPSHIELD
+  - Skill: RG_STRIPARMOR
+  - Skill: RG_STRIPHELM
+  - Skill: RG_INTIMIDATE
+  - Skill: RG_GRAFFITI
+  - Skill: RG_CLEANER
+  - Skill: CR_AUTOGUARD
+  - Skill: CR_SHIELDCHARGE
+  - Skill: CR_SHIELDBOOMERANG
+  - Skill: CR_REFLECTSHIELD
+  - Skill: CR_HOLYCROSS
+  - Skill: CR_GRANDCROSS
+  - Skill: CR_DEVOTION
+  - Skill: CR_PROVIDENCE
+  - Skill: CR_DEFENDER
+  - Skill: CR_SPEARQUICKEN
+  - Skill: MO_CALLSPIRITS
+  - Skill: MO_ABSORBSPIRITS
+  - Skill: MO_BODYRELOCATION
+  - Skill: MO_INVESTIGATE
+  - Skill: MO_FINGEROFFENSIVE
+  - Skill: MO_STEELBODY
+  - Skill: MO_BLADESTOP
+  - Skill: MO_EXPLOSIONSPIRITS
+  - Skill: MO_EXTREMITYFIST
+  - Skill: SA_CASTCANCEL
+  - Skill: SA_MAGICROD
+  - Skill: SA_SPELLBREAKER
+  - Skill: SA_AUTOSPELL
+  - Skill: SA_FLAMELAUNCHER
+  - Skill: SA_FROSTWEAPON
+  - Skill: SA_LIGHTNINGLOADER
+  - Skill: SA_SEISMICWEAPON
+  - Skill: SA_VOLCANO
+  - Skill: SA_DELUGE
+  - Skill: SA_VIOLENTGALE
+  - Skill: SA_LANDPROTECTOR
+  - Skill: SA_DISPELL
+  - Skill: SA_MONOCELL
+    Probability:
+      - Level: 1
+        Probability: 250
+      - Level: 2
+        Probability: 500
+      - Level: 3
+        Probability: 750
+      - Level: 4
+        Probability: 1000
+      - Level: 5
+        Probability: 1250
+      - Level: 6
+        Probability: 1200
+      - Level: 7
+        Probability: 1750
+      - Level: 8
+        Probability: 2000
+      - Level: 9
+        Probability: 2250
+      - Level: 10
+        Probability: 2500
+  - Skill: SA_CLASSCHANGE
+    Probability:
+      - Level: 5
+        Probability: 10
+      - Level: 6
+        Probability: 10
+      - Level: 7
+        Probability: 20
+      - Level: 8
+        Probability: 20
+      - Level: 9
+        Probability: 30
+      - Level: 10
+        Probability: 30
+  - Skill: SA_SUMMONMONSTER
+    Probability:
+      - Level: 1
+        Probability: 100
+      - Level: 2
+        Probability: 200
+      - Level: 3
+        Probability: 300
+      - Level: 4
+        Probability: 400
+      - Level: 5
+        Probability: 500
+      - Level: 6
+        Probability: 600
+      - Level: 7
+        Probability: 700
+      - Level: 8
+        Probability: 800
+      - Level: 9
+        Probability: 900
+      - Level: 10
+        Probability: 1000
+  - Skill: SA_REVERSEORCISH
+    Probability:
+      - Level: 8
+        Probability: 10
+      - Level: 9
+        Probability: 50
+      - Level: 10
+        Probability: 100
+  - Skill: SA_DEATH
+    Probability:
+      - Level: 1
+        Probability: 50
+      - Level: 2
+        Probability: 100
+      - Level: 3
+        Probability: 150
+      - Level: 4
+        Probability: 200
+      - Level: 5
+        Probability: 250
+      - Level: 6
+        Probability: 300
+      - Level: 7
+        Probability: 350
+      - Level: 8
+        Probability: 400
+      - Level: 9
+        Probability: 450
+      - Level: 10
+        Probability: 500
+  - Skill: SA_QUESTION
+    Probability:
+      - Level: 1
+        Probability: 1000
+      - Level: 2
+        Probability: 800
+      - Level: 3
+        Probability: 600
+      - Level: 4
+        Probability: 400
+      - Level: 5
+        Probability: 200
+  - Skill: SA_GRAVITY
+    Probability:
+      - Level: 8
+        Probability: 20
+      - Level: 9
+        Probability: 50
+      - Level: 10
+        Probability: 100
+  - Skill: SA_INSTANTDEATH
+    Probability:
+      - Level: 8
+        Probability: 10
+      - Level: 9
+        Probability: 50
+      - Level: 10
+        Probability: 100
+  - Skill: SA_FULLRECOVERY
+    Probability:
+      - Level: 7
+        Probability: 20
+      - Level: 8
+        Probability: 50
+      - Level: 9
+        Probability: 100
+      - Level: 10
+        Probability: 200
+  - Skill: SA_COMA
+    Probability:
+      - Level: 5
+        Probability: 100
+      - Level: 6
+        Probability: 200
+      - Level: 7
+        Probability: 300
+      - Level: 8
+        Probability: 400
+      - Level: 9
+        Probability: 500
+      - Level: 10
+        Probability: 600
+  - Skill: BA_MUSICALSTRIKE
+  - Skill: BA_FROSTJOKER
+  - Skill: DC_THROWARROW
+  - Skill: DC_SCREAM
+
+Footer:
+  Imports:
+  - Path: db/pre-re/abra_db.yml
+    Mode: Prerenewal
+  - Path: db/import/abra_db.yml

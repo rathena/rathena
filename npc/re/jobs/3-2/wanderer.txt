@@ -30,7 +30,7 @@ xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
 		mes "[Soy]";
 		mes "Don't make fun of me Mimi~";
 		mes "I have dreamed of being at Dancer Kim's stage for a very long time!";
-		emotion e_shy,0,"Aspiring Wanderer, Soy";
+		emotion ET_SHY, getnpcid(0, "Aspiring Wanderer, Soy");
 		next;
 		mes "[Soy]";
 		mes "I might lose my senses if I really see her dancing like a beautiful angel sent from above.";
@@ -45,7 +45,7 @@ xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
 		if (BaseJob != Job_Dancer || BaseLevel < 99) close;
 		next;
 		select("Dancer Kim?:Wanderer?");
-		emotion e_omg,0,"Aspiring Wanderer, Soy";
+		emotion ET_HUK, getnpcid(0, "Aspiring Wanderer, Soy");
 		mes "[Soy]";
 		mes "What? You don't know the famous Wanderer, Dancer Kim?";
 		mes "Oh my, oh my!!!";
@@ -66,7 +66,7 @@ xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
 		mes "If you are a true Dancer, you must be struck with her Dance!";
 		mes "Will I ever meet a Maestro like Guitar Song someday, Mimi?";
 		next;
-		emotion e_heh,0,"Aspiring Wanderer, Soy";
+		emotion ET_SMILE, getnpcid(0, "Aspiring Wanderer, Soy");
 		mes "[Mimi]";
 		mes "Just hang in there, Soy. Ha ha.";
 		next;
@@ -123,7 +123,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		mes "Oh, what should I do?";
 		mes "Why did they do this?";
 		next;
-		emotion e_shy,0,"Aspiring Wanderer, Soy";
+		emotion ET_SHY, getnpcid(0, "Aspiring Wanderer, Soy");
 		mes "[Performance Manager]";
 		mes "Hey, you there!";
 		mes "Please listen to my story.";
@@ -148,7 +148,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				set .@loop,1;
 				break;
 			case 3:
-				emotion e_ag;
+				emotion ET_ANGER;
 				mes "[Performance Manager]";
 				mes "I told you that I'm overwhelmed!";
 				mes "You don't understand me!";
@@ -166,7 +166,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 				mes "People will throw snowballs!";
 				mes "Maybe they will even throw a big snowman, no!";
 				next;
-				emotion e_wah;
+				emotion ET_KEK;
 				mes "[Performance Manager]";
 				mes "People might grab me by the collar!!";
 				mes "Swing swing, dangling dangling!!";
@@ -238,7 +238,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		mes "^3131FF" + .@inputstr$ + "^000000";
 		mes "......";
 		next;
-		emotion e_ag;
+		emotion ET_ANGER;
 		mes "[Performance Manager]";
 		mes "What the hell are you talking about?";
 		mes "Are you teasing me because I'm emotionally unstable?";
@@ -253,7 +253,7 @@ xmas,132,143,5	script	Performance Manager#wnd	713,{
 		case 1:
 			break;
 		case 2:
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Performance Manager]";
 			mes "You're asking me why!?";
 			mes "Ahh, no.....";
@@ -323,13 +323,13 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			mes "- What a weird person, I better stay away. -";
 			close;
 		}
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Cheerless Maestro]";
 		mes "What?!";
 		mes "Are you ignoring my immortal masterpiece <Tambourine King>? You are the first person who's ever slapped me in the face.";
 		next;
 		select("I didn't slap you.");
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Cheerless Maestro]";
 		mes "Oh! Lady, looking at your appearance you must be a dancer, right?";
 		next;
@@ -345,7 +345,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "It has an edgy kind of name So I think that it will be a very popular group.";
 		next;
 		select("Are you Guitar Song?");
-		emotion e_shy;
+		emotion ET_SHY;
 		mes "[Guitar Song]";
 		mes "Huh... I'm a bit disappointed that you finally recognize me now.";
 		mes "Yes, I am the handsome Guitar Song in the famous group <Nollio>.";
@@ -388,7 +388,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 				mes "[Guitar Song]";
 				mes "Wh...what!! What are you doing?!?";
 				mes "You almost damaged my eardrum.";
-				emotion e_an;
+				emotion ET_FRET;
 				next;
 				mes "[" + strcharinfo(0) + "]";
 				mes "Hey, cheer up!!!";
@@ -432,28 +432,28 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 				mes "- You cannot use this skill without learning it. -";
 				close;
 			}
-			emotion e_what,1;
+			emotion ET_QUESTION, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "Ah, ah my Guitar Song~";
 			next;
 			mes "[Guitar Song]";
 			mes "What? I've got goose bumps.";
 			next;
-			emotion e_what,1;
+			emotion ET_QUESTION, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "I've been watching <Nollio> for years.";
 			next;
 			mes "[Guitar Song]";
 			mes "I know that we are that popular! Ha ha ha!";
 			next;
-			emotion e_what,1;
+			emotion ET_QUESTION, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "I've seen other Maestro's performances but there was no one better then Guitar Song.";
 			next;
 			mes "[Guitar Song]";
 			mes "He he he! Yes, I know I am super great!";
 			next;
-			emotion e_no1,1;
+			emotion ET_BEST, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "Oh... When I hear Guitar Song's performance for the first time I has a crush on you immediately.";
 			next;
@@ -468,7 +468,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			mes "So I was looking forward to seeing your performance in Lutie this time.";
 			mes "But after I heard the performance got cancelled, I felt so sad.";
 			next;
-			emotion e_sob,1;
+			emotion ET_CRY, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "Now I can't hear Guitar Song's melody~~";
 			mes "I wanted to dance to your music like a beautiful butterfly.";
@@ -477,22 +477,22 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 			mes "[Guitar Song]";
 			mes "Huh huh! No, that is not...";
 			next;
-			emotion e_sob,1;
+			emotion ET_CRY, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "I am really happy to meet you in person, but I hope to see your performance in the beautiful snowy town, Lutie.. Sob sob...";
 			next;
-			emotion e_sob,1;
+			emotion ET_CRY, playerattached();
 			mes "[" + strcharinfo(0) + "]";
 			mes "Why in the world don't you show us the performance, Guitar Song?";
 			mes "Don't you like me? Sob sob..";
 			next;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Guitar Song]";
 			mes "No, it's not that kind of reason!";
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "Then please tell me, I really love your music... but now I feel so blue...";
-			emotion e_what;
+			emotion ET_QUESTION;
 			next;
 			break;
 		}
@@ -501,7 +501,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "I want to have a performance, too!";
 		mes "But I cannot do it all by myself!";
 		next;
-		emotion e_ag;
+		emotion ET_ANGER;
 		mes "[Guitar Song]";
 		mes "It's all because of Dancer Kim!";
 		mes "One day, she suddenly got mad and told me that she would quit <Nollio>!";
@@ -513,7 +513,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Why did she get mad so suddenly?";
 		next;
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "[Guitar Song]";
 		mes "I don't know! She must be holding a grudge for something.";
 		mes "That's what she's like.";
@@ -527,7 +527,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "I guess she might be back at her hometown.";
 		mes "That's where I met her for the first time.";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Guitar Song]";
 		mes "Although she loses her temper easily, her dance is so wonderful....";
 		mes "I don't know what I am doing wrong.";
@@ -545,7 +545,7 @@ comodo,140,86,5	script	Cheerless Maestro	479,{
 		mes "Back in the day when she was addicted to the monster races, who do you think got her out of it?";
 		close;
 	} else if (job_wan == 8) {
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "- You tell him what happened in Hugel and ask him to go back to Lutie. -";
 		next;
 		mes "[Guitar Song]";
@@ -577,7 +577,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "Sob... sob...";
 		next;
 		select("Why are you crying?");
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Vacant Looking Lady]";
 		mes "I gave up my dream...";
 		mes "*Sob *Sob.";
@@ -587,7 +587,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "I said goodbye to my partner who had been working with me for a long time.";
 		next;
 		select("Why did you say goodbye?");
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Vacant Looking Lady]";
 		mes "it's because... sob... sob!";
 		next;
@@ -614,7 +614,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "[Vacant Looking Lady]";
 		mes "The following morning, I woke up and washed my fave and was looking for something to eat in my room..";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Vacant Looking Lady]";
 		mes "Then Guitar Song suddenly opened the door of my room for some reason and said ^3131FFHey! What the hell are.. you doing here?^000000 and then he threw me out of my room!";
 		next;
@@ -622,14 +622,14 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "We've been together for a long time but how can he do such a thing to me?";
 		mes "At first, I thought he was kidding around with me! But when he kicked me out of my room...";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Vacant Looking Lady]";
 		mes "Why didn't he recognize my face?";
 		mes "Do you think he doesn't want to see my face without makeup?";
 		mes "Boo hoo hoo!";
 		next;
 		select("So you disbanded the team?");
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Vacant Looking Lady]";
 		mes "Are you also ignoring my wounded self-respect as a woman?";
 		next;
@@ -646,7 +646,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "After that day, I went to my hometown, Hugel and I just stayed indoors.";
 		mes "It was then when Shide comforted me with sweet cakes.";
 		next;
-		emotion e_shy;
+		emotion ET_SHY;
 		mes "[Vacant Looking Lady]";
 		mes "Shide's cake is so wonderful!";
 		mes "It is the most famous cake in Hugel with soft sponge cake and fresh fruits and sweet chocolate cream!";
@@ -658,7 +658,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		mes "So I ate it every morning and every night.";
 		next;
 		select("Oh, you wouldn't...");
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Vacant Looking Lady]";
 		mes "The angel of happiness took back my sadness and gave me a lot of belly fat!";
 		mes "Boo hoo hoo hoo!!";
@@ -681,7 +681,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 		set job_wan,5;
 		close;
 	} else if (job_wan == 5) {
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Vacant Looking Lady]";
 		mes "Not long ago, I was like a beautiful dove, but now I am just a fat chicken.";
 		mes "Sob sob...!";
@@ -715,7 +715,7 @@ hu_in01,305,251,5	script	Vacant Looking Lady#wnd	879,{
 			mes "No dreams and no hope...";
 			close;
 		}
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Dancer Kim]";
 		mes "Will you exercise together with me?";
 		mes "Really?";
@@ -798,7 +798,7 @@ hu_fild05,342,130,5	script	Dancer Kim#fild	879,{
 				mes "I want to start dancing again.";
 				next;
 				select("How about dancing in Lutie?");
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				mes "[Dancer Kim]";
 				mes "Ah! Christmas Village! Yes! Yes!";
 				mes "My dream to dance in Lutie will finally come true.";
@@ -915,20 +915,20 @@ xmas,147,135,5	script	Dancer Kim#xmas	485,{
 		}
 		mes "- <Nollio> is performing. -";
 		next;
-		emotion e_ho,0,"Guitar Song#xmas";
-		emotion e_ho;
+		emotion ET_DELIGHT, getnpcid(0, "Guitar Song#xmas");
+		emotion ET_DELIGHT;
 		mes "[Guitar Song]";
 		mes "One! Two! Three!";
 		mes "Blue fish dancing~";
 		mes "Fan! Fan! Fan! I am your fan~";
 		mes "With a strong mind and strong will, I complete fishing~";
 		next;
-		emotion e_ho,0,"Spectator#xmas1";
-		emotion e_ho,0,"Spectator#xmas2";
-		emotion e_ho,0,"Spectator#xmas3";
-		emotion e_ho,0,"Spectator#xmas4";
-		emotion e_ho,0,"Soy#xmas";
-		emotion e_ho,0,"Mimi#xmas";
+		emotion ET_DELIGHT, getnpcid(0, "Spectator#xmas1");
+		emotion ET_DELIGHT, getnpcid(0, "Spectator#xmas2");
+		emotion ET_DELIGHT, getnpcid(0, "Spectator#xmas3");
+		emotion ET_DELIGHT, getnpcid(0, "Spectator#xmas4");
+		emotion ET_DELIGHT, getnpcid(0, "Soy#xmas");
+		emotion ET_DELIGHT, getnpcid(0, "Mimi#xmas");
 		mes "[Spectators]";
 		mes "AAAAhhhhhhhhh - - !!!";
 		mes "So cool! Nollio is the best!!!";
@@ -936,28 +936,28 @@ xmas,147,135,5	script	Dancer Kim#xmas	485,{
 		mes "[Guitar Song]";
 		mes "Hello, ladies and gentlemen!";
 		next;
-		emotion e_lv,0,"Spectator#xmas1";
-		emotion e_lv,0,"Spectator#xmas2";
-		emotion e_lv,0,"Spectator#xmas3";
-		emotion e_lv,0,"Spectator#xmas4";
-		emotion e_lv,0,"Soy#xmas";
-		emotion e_lv,0,"Mimi#xmas";
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas1");
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas2");
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas3");
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas4");
+		emotion ET_THROB, getnpcid(0, "Soy#xmas");
+		emotion ET_THROB, getnpcid(0, "Mimi#xmas");
 		mes "[Spectators]";
 		mes "Hello!!!!!";
 		next;
 		mes "[Guitar Song]";
 		mes "We are the romantic Wanderer team <Nollio> who stroll along the world following love and wind!";
 		next;
-		emotion e_lv,0,"Spectator#xmas1";
-		emotion e_lv,0,"Spectator#xmas2";
-		emotion e_lv,0,"Spectator#xmas3";
-		emotion e_lv,0,"Spectator#xmas4";
-		emotion e_lv,0,"Soy#xmas";
-		emotion e_lv,0,"Mimi#xmas";
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas1");
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas2");
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas3");
+		emotion ET_THROB, getnpcid(0, "Spectator#xmas4");
+		emotion ET_THROB, getnpcid(0, "Soy#xmas");
+		emotion ET_THROB, getnpcid(0, "Mimi#xmas");
 		mes "[Spectators]";
 		mes "Wowwwww~!";
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Dancer Kim]";
 		mes "It's so fascinating that I can dance in a snowy, beautiful village,";
 		mes "I'm so glad that I came here, Lutie.";

@@ -1,0 +1,11 @@
+//===== rAthena Script =======================================
+//= Lutie Town Renewal
+//===== Description: =========================================
+//= Lutie - City NPCs
+//===== Additional Comments: =================================
+//= 1.0 First version. [Lemongrass]
+//============================================================
+
+// Teleport to Lutie
+//============================================================
+aldebaran,168,168,4	duplicate(Mr. Claus)	Mr. Claus#1	718

@@ -16,7 +16,7 @@
 	mes "[Airship Staff]";
 	mes "Welcome! Would you like";
 	mes "to board the Airship that";
-	mes "departs on the flight wich stops";
+	mes "departs on the flight which stops";
 	mes "in Juno and Rachel?";
 	next;
 	if (select("Board the Airship to Juno/Rachel.:Cancel.") == 1) {

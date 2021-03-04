@@ -25,7 +25,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			mes "Whoa...";
 			mes "You've actually been to Valhalla?! Wow, you've come a long way...";
 			next;
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Chief Mahnsoo]";
 				mes "Hmmm...";
 				mes "It seems that you're not ready to become a Merchant again. Go finish learning the Basic Novice Skills first.";
@@ -75,7 +75,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		}else{
 			mes "Want to be a merchant? Hmm...";
 			next;
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Guildsman Mahnsoo]";
 				mes "But if you want to be a merchant, your basic skill level must reach Level 9 or you must spend all of your skill points.";
 				next;

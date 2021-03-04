@@ -19,7 +19,7 @@ yuno,48,101,6	script	Notice	722,{
 	mes " ";
 	mes "Welcome to the Treasure Hunter's Guild House.";
 	mes "Feel free to drop in and look around";
-	mes "and feel free to become a memeber if you wish.";
+	mes "and feel free to become a member if you wish.";
 	mes " ";
 	mes "For membership applications please talk to Keegan";
 	mes "up the stairs and down the hall.";
@@ -58,7 +58,7 @@ yuno_in01,33,162,3	script	Smile Helper	92,{
 yuno_in01,22,162,6	script	Female Assasin	725,{
 	mes "[Sharlet]";
 	if (Event_THQS > 0) goto N_Member;
-	mes "Umm sorry I'm not gona waste my time talking to you if you arn't even a member!";
+	mes "Umm sorry I'm not gonna waste my time talking to you if you aren't even a member!";
 	close;
 N_Member:
 	set @TEMP,rand(1,2);
@@ -75,11 +75,11 @@ N_Chat2:
 	mes ""+strcharinfo(0)+" don't you have something better you could be doing? Like a quest.";
 	close;
 }
-//another usless member
+//another useless member
 yuno_in01,25,162,6	script	Female Wizard	123,{
 	mes "[Sasha]";
 	if (Event_THQS > 0) goto N_Member;
-	mes "Umm sorry I'm not gona waste my time talking to you if you arn't even a member!";
+	mes "Umm sorry I'm not gonna waste my time talking to you if you aren't even a member!";
 	close;
 N_Member:
 	set @TEMP,rand(2);
@@ -87,7 +87,7 @@ N_Member:
 	mes "Ahh welcome fellow Treasure Hunter "+strcharinfo(0)+".";
 	mes "Did you hear about that goat man running around in the trees?";
 	mes " ";
-	mes "Aperently his name is Baphomet and he has been runing around the Forest Maze out side of prontera for quite some time now.";
+	mes "Apparently his name is Baphomet and he has been running around the Forest Maze out side of Prontera for quite some time now.";
 	close;
 N_Chat:
 	mes ""+strcharinfo(0)+" don't you have something better you could be doing? Like a quest.";

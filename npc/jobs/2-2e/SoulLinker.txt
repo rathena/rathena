@@ -36,7 +36,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 	}
 	if (Class == Job_Star_Gladiator) {
 		mes "[Kid]";
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			mes "Aren't you a warrior";
 			mes "of the sun? I'm familiar";
 		}
@@ -91,7 +91,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 				mes "in you! I might look";
 				mes "like a kid, but I'm over";
 				mes "three hundred years old!";
-				emotion e_pif;
+				emotion ET_HNG;
 				next;
 				mes "[Kid]";
 				mes "Now listen...";
@@ -100,7 +100,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 				mes "It's a respectable art, but";
 				mes "I've got a proposition for";
 				mes "you if you want to hear it.";
-				emotion e_heh;
+				emotion ET_SMILE;
 				next;
 				mes "[Kid]";
 				mes "I'm looking at you, and I can";
@@ -229,7 +229,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 					mes "go back and bring";
 					mes "everything that I ask";
 					mes "for this time, okay?";
-					emotion e_pif;
+					emotion ET_HNG;
 					next;
 					mes "[Kid]";
 					mes "I know I just told you";
@@ -334,14 +334,14 @@ OnInit:
 }
 
 job_soul,30,31,0	script	Maia#link2::SLTester	-1,3,3,{
-OnTouch:
+OnTouch_:
 	if (Class == Job_Taekwon) {
 		if (JobLevel < 40) {
 			set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;
 			mes "[Maia]";
 			mes "Hm? How did you come";
 			mes "here? You're not qualified";
-			mes "for this ceremony yet. Come,I will bring you back to Morroc...";
+			mes "for this ceremony yet. Come,I will bring you back to Morocc...";
 			close2;
 			warp "morocc",157,47;
 			end;
@@ -466,7 +466,7 @@ OnTouch:
 		mes "The time for you";
 		mes "to be here has not";
 		mes "arrived. Let's go";
-		mes "back to Morroc...";
+		mes "back to Morocc...";
 		close2;
 		warp "morocc",157,47;
 		end;
@@ -484,7 +484,7 @@ OnTouch:
 		mes "That's strange...";
 		mes "You're not supposed to";
 		mes "be here. Let me guide";
-		mes "you back to Morroc...";
+		mes "you back to Morocc...";
 	}
 	close2;
 	warp "morocc",157,47;

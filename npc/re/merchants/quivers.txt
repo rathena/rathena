@@ -65,21 +65,23 @@ mora,106,117,3	script	Quiver Maker#mora	516,{
 	end;
 
 S_BuyQuiver:
-	if (countitem(getarg(0)) < getarg(1)) {
+	.@item_req = getarg(0);
+	.@req_amount = getarg(1);
+	if (countitem(getarg(0)) < .@req_amount) {
 		mes "[Quiver Maker]";
-		mes "Bring more than "+getarg(1)+" "+getitemname(getarg(0))+" and I'll make you a quiver.";
+		mes "Bring more than "+ .@req_amount +" "+ getitemname(.@item_req) +" and I'll make you a quiver.";
 		close;
 	}
 	mes "[Quiver Maker]";
-	mes "Oh, I see you have "+getitemname(getarg(0))+" in your hand!";
+	mes "Oh, I see you have "+ getitemname(.@item_req) +" in your hand!";
 	mes "Are you interested in using a quiver? It's really convenient!";
-	mes "If you're interested, I can trade "+getarg(1)+" of those arrows for one of these quivers for ^FF3131"+getarg(2)+" zeny^000000.";
+	mes "If you're interested, I can trade "+ .@req_amount +" of those arrows for one of these quivers for ^FF3131"+getarg(2)+" zeny^000000.";
 	next;
 	switch(select("Trade all the arrows you have:Get only one quiver:Don't trade")) {
 	case 1:
-		set .@arrows, countitem(getarg(0));
-		set .@quiver, .@arrows / getarg(1);
-		set .@arrows_used, .@quiver * getarg(1);
+		set .@arrows, countitem(.@item_req);
+		set .@quiver, .@arrows / .@req_amount;
+		set .@arrows_used, .@quiver * .@req_amount;
 		set .@arrow_zeny01, .@quiver * getarg(2);
 		mes "The number of arrows you have : ^3131FF"+.@arrows+"^000000";
 		mes "The number of quivers available : ^3131FF"+.@quiver+"^000000";
@@ -95,7 +97,7 @@ S_BuyQuiver:
 		break;
 	case 2:
 		set .@quiver, 1;
-		set .@arrows_used, getarg(1);
+		set .@arrows_used, .@req_amount;
 		set .@arrow_zeny01, getarg(2);
 		set .@zeny_mes,1;
 		break;
@@ -118,7 +120,7 @@ S_BuyQuiver:
 	mes "^FF0000You can't use quivers when your encumbrance is over 70%.^000000";
 	mes "You'd better keep that in mind, or you might be in trouble later.";
 	set Zeny, Zeny-.@arrow_zeny01;
-	delitem getarg(0),.@arrows_used;
+	delitem .@item_req,.@arrows_used;
 	getitem getarg(3),.@quiver;
 	close;
 }

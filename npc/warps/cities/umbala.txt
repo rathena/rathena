@@ -29,7 +29,7 @@ um_in,166,69,0	warp	um_houseA2-2	1,1,umbala,102,205
 umbala,107,130,0	warp	um_houseB1-1	1,1,um_in,99,66
 um_in,99,63,0	warp	um_houseB1-2	1,1,umbala,108,127
 umbala,220,189,0	script	um_shaman1-1	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (event_umbala == 7) {
 		warp "um_in",32,71;
 	}

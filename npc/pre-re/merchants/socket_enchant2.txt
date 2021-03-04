@@ -1,0 +1,18 @@
+//===== rAthena Script ======================================= 
+//= Episode 12 Socket Enchant NPC
+//===== By: ================================================== 
+//= Gepard
+//===== Current Version: ===================================== 
+//= 1.1a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Adds slots to selected weapons and armor.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
+//= 1.1a Added 'disable_items' command. [Euphy]
+//============================================================ 
+
+moc_ruins,154,86,3	duplicate(SocketEnchant2)	Leablem#moc	86

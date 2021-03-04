@@ -292,7 +292,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 		mes "I'll send you back to your savepoint.";
 		close2;
 		if (WoP_SaveMap$ != "") {
-			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
+			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
 			set WoP_SaveMap_Y,0;
@@ -302,10 +302,10 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 	}
 
 OnPCLogoutEvent:
-	getmapxy .@map$,.@x,.@y,0;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02") {
 		if (WoP_SaveMap$ != "") {
-			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
+			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
 			set WoP_SaveMap_Y,0;
@@ -316,7 +316,7 @@ OnPCLogoutEvent:
 	end;
 
 OnPCDieEvent:
-	getmapxy .@map$,.@x,.@y,0;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02" && wop_team) {
 		if (getsavepoint(0) != "poring_w02" && WoP_SaveMap$ == "") {
 			set WoP_SaveMap$,getsavepoint(0);
@@ -333,7 +333,7 @@ OnPCDieEvent:
 	end;
 
 OnPCKillEvent:
-	getmapxy .@map$,.@x,.@y,0;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02" && wop_team) {
 		getnameditem 7773,rid2name(killedrid);
 	}
@@ -648,7 +648,7 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 			mes "If you don't get there in time, you won't make it to the battle.";
 			close;
 		case 2:
-			if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if (is_party_leader() == true) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the leader. Before going to the battlefield, you should check all your members.";
 				next;
@@ -680,7 +680,7 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 		}
 	}
 	else {
-		if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+		if (is_party_leader() == true) {
 			if ($@wop_team_a == 0) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the party leader of Angeling Team.";
@@ -779,7 +779,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 			mes "If you don't get there in time, you won't make it to the battle.";
 			close;
 		case 2:
-			if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if (is_party_leader() == true) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the leader. Before going to the battlefield, you should check all your members.";
 				next;
@@ -809,7 +809,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 			}
 		}
 	} else {
-		if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+		if (is_party_leader() == true) {
 			if ($@wop_team_d == 0) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the party leader of Deviling Team.";
@@ -1045,7 +1045,7 @@ OnDisable:
 	disablenpc "#wop_warp_a";
 	end;
 
-OnTouch:
+OnTouch_:
 	set wop_team,1;
 	warp "poring_w02",57,82;
 	end;
@@ -1067,7 +1067,7 @@ OnDisable:
 	disablenpc "#wop_warp_d";
 	end;
 
-OnTouch:
+OnTouch_:
 	set wop_team,2;
 	warp "poring_w02",140,82;
 	end;
@@ -1522,7 +1522,7 @@ OnDisable:
 	disablenpc "#aroom_ingate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",99,49;
 	end;
 }
@@ -1542,7 +1542,7 @@ OnDisable:
 	disablenpc "#aroom_outgate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",99,54;
 	end;
 }
@@ -1619,7 +1619,7 @@ OnDisable:
 	disablenpc "#droom_ingate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",98,116;
 	end;
 }
@@ -1639,7 +1639,7 @@ OnDisable:
 	disablenpc "#droom_outgate_wop";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "poring_w02",98,111;
 	end;
 }
@@ -1677,11 +1677,11 @@ OnTouch:
 	next;
 	mes "[Porings]";
 	mes "Let's go! Let's fight! Let's win, win, win!!!";
-	emotion e_go,0,"Angeling Side Poring#wa1";
-	emotion e_go,0,"Angeling Side Poring#wa2";
-	emotion e_go,0,"Angeling Side Poring#wa3";
-	emotion e_go,0,"Angeling Side Poring#wa4";
-	emotion e_go,0,"Angeling Side Poring#wa5";
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa1");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa2");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa3");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa4");
+	emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa5");
 	next;
 	if (wop_team == 1) {
 		mes "[Porings]";
@@ -1695,20 +1695,20 @@ OnTouch:
 		mes "Wait, YOU! Aren't you on the side of the Devilings?!";
 		mes "Get out now! Leave!!";
 		mes "Booooo~ Boo~ Boooo~";
-		emotion e_omg,0,"Angeling Side Poring#wa1";
-		emotion e_an,0,"Angeling Side Poring#wa2";
-		emotion e_omg,0,"Angeling Side Poring#wa3";
-		emotion e_an,0,"Angeling Side Poring#wa4";
-		emotion e_gasp,0,"Angeling Side Poring#wa5";
+		emotion ET_HUK, getnpcid(0, "Angeling Side Poring#wa1");
+		emotion ET_FRET, getnpcid(0, "Angeling Side Poring#wa2");
+		emotion ET_HUK, getnpcid(0, "Angeling Side Poring#wa3");
+		emotion ET_FRET, getnpcid(0, "Angeling Side Poring#wa4");
+		emotion ET_SURPRISE, getnpcid(0, "Angeling Side Poring#wa5");
 	}
 	else {
 		mes "[Porings]";
 		mes "Hey, human. How about fighting for us Porings on Angeling's side??!";
-		emotion e_hlp,0,"Angeling Side Poring#wa1";
-		emotion e_go,0,"Angeling Side Poring#wa2";
-		emotion e_hlp,0,"Angeling Side Poring#wa3";
-		emotion e_go,0,"Angeling Side Poring#wa4";
-		emotion e_go,0,"Angeling Side Poring#wa5";
+		emotion ET_HELP, getnpcid(0, "Angeling Side Poring#wa1");
+		emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa2");
+		emotion ET_HELP, getnpcid(0, "Angeling Side Poring#wa3");
+		emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa4");
+		emotion ET_GO, getnpcid(0, "Angeling Side Poring#wa5");
 	}
 	next;
 	mes "[Porings]";
@@ -1730,11 +1730,11 @@ OnTouch:
 	next;
 	mes "[Marins]";
 	mes "Let's go! Let's fight! Fight for Triumph!!!!";
-	emotion e_go,0,"Deviling Side Marin#wd1";
-	emotion e_go,0,"Deviling Side Marin#wd2";
-	emotion e_go,0,"Deviling Side Marin#wd3";
-	emotion e_go,0,"Deviling Side Marin#wd4";
-	emotion e_go,0,"Deviling Side Marin#wd5";
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd1");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd2");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd3");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd4");
+	emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd5");
 	next;
 	if (wop_team == 2) {
 		mes "[Marins]";
@@ -1747,20 +1747,20 @@ OnTouch:
 		mes "Wait, YOU! Aren't you on the side of the Angelings?!";
 		mes "Get out now! Leave!!";
 		mes "Booooo~ Boo~ Boooo~";
-		emotion e_omg,0,"Deviling Side Marin#wd1";
-		emotion e_an,0,"Deviling Side Marin#wd2";
-		emotion e_omg,0,"Deviling Side Marin#wd3";
-		emotion e_an,0,"Deviling Side Marin#wd4";
-		emotion e_gasp,0,"Deviling Side Marin#wd5";
+		emotion ET_HUK, getnpcid(0, "Deviling Side Marin#wd1");
+		emotion ET_FRET, getnpcid(0, "Deviling Side Marin#wd2");
+		emotion ET_HUK, getnpcid(0, "Deviling Side Marin#wd3");
+		emotion ET_FRET, getnpcid(0, "Deviling Side Marin#wd4");
+		emotion ET_SURPRISE, getnpcid(0, "Deviling Side Marin#wd5");
 	}
 	else {
 		mes "[Marins]";
 		mes "Hey, human. Don't you wanna fight for Deviling, the noble of darkness? What do you say?!";
-		emotion e_hlp,0,"Deviling Side Marin#wd1";
-		emotion e_go,0,"Deviling Side Marin#wd2";
-		emotion e_hlp,0,"Deviling Side Marin#wd3";
-		emotion e_go,0,"Deviling Side Marin#wd4";
-		emotion e_go,0,"Deviling Side Marin#wd5";
+		emotion ET_HELP, getnpcid(0, "Deviling Side Marin#wd1");
+		emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd2");
+		emotion ET_HELP, getnpcid(0, "Deviling Side Marin#wd3");
+		emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd4");
+		emotion ET_GO, getnpcid(0, "Deviling Side Marin#wd5");
 	}
 	next;
 	mes "[Marins]";

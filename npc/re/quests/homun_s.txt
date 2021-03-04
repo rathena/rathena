@@ -43,7 +43,7 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 			}
 			enable_items;
 		} else if (Class == Job_Novice_High || Class == Job_Merchant_High || Class == Job_Alchemist || Class == Job_Creator) {
-			emotion e_what;
+			emotion ET_QUESTION;
 			mes "[Viorel]";
 			mes "I don't know what's going on, but the way I remember it you were supposed to be qualified to research ^FF4800Homunculus^000000.";
 			next;
@@ -164,21 +164,21 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 			next;
 			switch(select("Nope. Good bye.:Please, I'm busy.:That's exactly what I wanted to hear.:Why are you always standing there?")) {
 			case 1:
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Viorel]";
 				mes "Okay.";
 				mes "Good seeing you.";
 				mes "Good bye then~!";
 				close;
 			case 2:
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Viorel]";
 				mes "!!!!";
 				mes "I... I see.";
 				mes "I thought you were here to see me.";
 				close;
 			case 3:
-				emotion e_ic;
+				emotion ET_AHA;
 				mes "[Viorel]";
 				mes "Just as I thought.";
 				mes "Let's have a look at the notes my dear friend Jeyna left.";
@@ -193,7 +193,7 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 				playbgm "08.mp3"; // Theme of Prontera
 				end;
 			case 4:
-				emotion e_swt;
+				emotion ET_SWEAT;
 				mes "[Viorel]";
 				mes "No, I do not stand here every day.";
 				mes "But why do YOU stand there every day?";
@@ -242,7 +242,7 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 		mes "Now, if you'll excuse me~!";
 		close;
 	case 3:
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "[Viorel]";
 		mes "What, is it so strange to see an Alchemist in their own lab?";
 		mes "How so?";
@@ -261,7 +261,7 @@ L_CheckHomunculus:
 		mes " ";
 		mes "(Seems to be thinking about something.)";
 		next;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Viorel]";
 		mes "Ha ha~";
 		mes "I think I've mistaken you for someone else.";
@@ -273,7 +273,7 @@ L_CheckHomunculus:
 
 que_house_s,24,47,3	script	Viorel#homun_s	542,{
 	if (checkquest(4155) > -1) {
-		emotion e_dum;
+		emotion ET_HUM;
 		mes "[Viorel]";
 		mes "Good.";
 		mes "I see that you mean business.";
@@ -292,7 +292,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 		next;
 		switch(select("Like, biological experiments...?!:Well, yeah, naturally.:I don't want to hurt my Homunculus!")) {
 		case 1:
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			mes "[Viorel]";
 			mes "Don't look so surprised.";
 			mes "Ethics in biology are kind of blurry right now, right?";
@@ -306,7 +306,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 			next;
 			break;
 		case 2:
-			emotion e_sigh;
+			emotion ET_OHNO;
 			mes "[Viorel]";
 			mes "Yes.";
 			mes "I'm glad you're not upset.";
@@ -323,7 +323,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 			next;
 			break;
 		case 3:
-			emotion e_swt;
+			emotion ET_SWEAT;
 			mes "[Viorel]";
 			mes "I understand your concern.";
 			mes "But I want to assure you that this Mutation does not harm or hurt your ^FF4800Homunculus^000000.";
@@ -356,14 +356,14 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 		mes "^006400The truth is not in a single form~!^000000";
 		mes "Ha ha.";
 		next;
-		emotion e_flash;
+		emotion ET_SPARK;
 		mes "[Viorel]";
 		mes "I know it's a little abrupt, but...";
 		mes "How about changing your ^FF4800Homunculus^000000 into something incredible with my marvelous achievement, the ^006400Homunculus Mutation System^000000?";
 		next;
 		switch(select("Explore the ^006400Homunculus Mutation System^000000.:Cancel.")) {
 		case 1:
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Viorel]";
 			mes "Good choice.";
 			mes "Success lurks outside the box of conventional thinking, right?";
@@ -378,7 +378,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 			warp "que_house_s",63,41;
 			end;
 		case 2:
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Viorel]";
 			mes "I don't see why you hesitate.";
 			mes "I am not trying to deceive you.";
@@ -390,7 +390,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 				mes "We'll talk in a bit then.";
 				close;
 			case 2:
-				emotion e_otl;
+				emotion ET_OTL;
 				mes "[Viorel]";
 				mes "Shame.";
 				mes "However, I respect your opinion.";
@@ -457,7 +457,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 					end;
 				}
 			}
-			emotion e_no1;
+			emotion ET_BEST;
 			playbgm "19.mp3"; // Under the Ground
 			mes "[Viorel]";
 			mes "Good choice.";
@@ -516,7 +516,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 			hommutate .@Homunculus;
 			break;
 		case 2:
-			emotion e_hmm;
+			emotion ET_SCRATCH;
 			mes "[Viorel]";
 			mes "So, your choice is the Unstable Mutation Process.";
 			mes "You believe in destiny?";
@@ -531,14 +531,14 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 				mes "Give it more time to think.";
 				close;
 			}
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Viorel]";
 			mes "Hmm...";
 			mes "The exploration of knowledge";
 			mes "is full of surprises.";
 			mes ".......";
 			next;
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Viorel]";
 			mes "Ha ha.";
 			mes "Hey, I feel like a Blacksmith!";
@@ -564,7 +564,7 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 		}
 		erasequest 4160;
 		erasequest 4154;
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		playbgm "64.mp3"; // One Fine Day
 		mes "[Viorel]";
 		mes "Okay, Mutation Complete.";
@@ -609,12 +609,12 @@ que_house_s,24,47,3	script	Viorel#homun_s	542,{
 que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 	if (checkquest(4156) > -1) {
 		playbgm "28.mp3"; // You're in Ruins
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Jeyna]";
 		mes "Welcome.";
 		mes "I just got word from ^005DFFViorel^000000 that you were coming.";
 		next;
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Jeyna]";
 		mes "By the way...";
 		mes "Did he convince you to do something...?";
@@ -622,13 +622,13 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 		next;
 		mes "[Jeyna]";
 		mes "He needs them because Alchemists are such awkward people.";
-		emotion e_sigh;
+		emotion ET_OHNO;
 		next;
 		mes "[Jeyna]";
 		mes "Anyways~";
 		mes "^0000FF"+strcharinfo(0)+"^000000 and ^005DFFViorel^000000 seem like two peas in a pod.";
 		next;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Jeyna]";
 		mes "Hahaha~ No offense.";
 		mes "I think it's a good thing.";
@@ -640,11 +640,11 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 		mes "why don't you take a look at that board?";
 		mes "The ^006400Homunculus Mutation System^000000 has ^0000FF5 different types^000000 of new mutations.";
 		next;
-		emotion e_gasp,0,"Magic Board#homun_s";
+		emotion ET_SURPRISE, getnpcid(0, "Magic Board#homun_s");
 		mes "[Jeyna]";
 		mes "Your ^FF4800Homunculus^000000 can mutate into any of the 5 different forms.";
 		next;
-		emotion e_ic;
+		emotion ET_AHA;
 		mes "[Jeyna]";
 		mes "Let's see...";
 		mes "The ^006400Homunculus Mutation System^000000 includes new evolutions of the normal ^0000FFHomunculus^000000.";
@@ -656,7 +656,7 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 		mes "skills such as Caprice will be";
 		mes "^006400retained and usable even after Mutation^000000.";
 		next;
-		emotion e_gasp,0,"Magic Board#homun_s";
+		emotion ET_SURPRISE, getnpcid(0, "Magic Board#homun_s");
 		mes "[Jeyna]";
 		mes "Take a look at the Magic Board behind me and decide for yourself.";
 		close2;
@@ -664,11 +664,11 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 		erasequest 4156;
 		end;
 	} else if (checkquest(4157) > -1) {
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Jeyna]";
 		mes "Take a look at the board behind me, on the right.";
 		close2;
-		emotion e_gasp,0,"Magic Board#homun_s";
+		emotion ET_SURPRISE, getnpcid(0, "Magic Board#homun_s");
 		end;
 	} else if (checkquest(4158) > -1) {
 		playbgm "28.mp3"; // You're in Ruins
@@ -720,7 +720,7 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 				mes "Come back after you've done that.";
 				close;
 			}
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Jeyna]";
 			mes "Good thinking.";
 			mes "It is unacceptable for Alchemists like us to fear challenge.";
@@ -748,12 +748,12 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 			morphembryo;
 			setquest 4159;
 			erasequest 4158;
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			mes "[Jeyna]";
 			mes "Phew~ All done.";
 			mes "Hmm, its state is a little strange.";
 			next;
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Jeyna]";
 			mes "I guess it'll be just fine.";
 			mes "Don't lose that ^0000FFStrange Embryo^000000.";
@@ -769,7 +769,7 @@ que_house_s,80,42,3	script	Jeyna#homun_s	558,{
 			close;
 		case 2:
 			playbgm "28.mp3"; // You're in Ruins
-			emotion e_sigh;
+			emotion ET_OHNO;
 			mes "[Jeyna]";
 			mes "Maybe I shouldn't have asked in the first place.";
 			close;
@@ -857,14 +857,15 @@ que_house_s,83,47,3	script	Magic Board#homun_s	857,{
 }
 
 function	script	F_HomMutateInfo	{
-	mes getarg(0);
+	.@npc_name$ = getarg(0);
+	mes .@npc_name$;
 	mes ":: The ability of the mutated";
 	mes ":: ^0000FFHomunculus^000000 clearly goes";
 	mes ":: beyond the previous state.";
 	mes ":: In addition, its appearance";
 	mes ":: will evolve as well.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^0000FFHomunculus^000000 appearances of the";
 	mes ":: new types can be classified";
 	mes ":: based on different species.";
@@ -872,19 +873,19 @@ function	script	F_HomMutateInfo	{
 	mes ":: generally have a similar";
 	mes ":: appearance.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: The category, appearance and";
 	mes ":: ability of the ^0000FFHomunculus^000000";
 	mes ":: via the Homunculus Mutation";
 	mes ":: System are as follows:";
 	next;
 	cutin "Mer_Eira_Card",3;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: The first of the five";
 	mes ":: is called ^FF4800Eira^000000.";
 	mes ":: Beautiful and graceful.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Eira^000000 uses";
 	mes ":: ^006400Wind Element^000000 Magic Attacks and";
 	mes ":: Support Skills.";
@@ -892,7 +893,7 @@ function	script	F_HomMutateInfo	{
 	mes ":: to revive its";
 	mes ":: fallen master.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Eira^000000 eats";
 	mes ":: ^0000FFSmall Snow Flower^000000.";
 	mes ":: Surprising how it survives on";
@@ -902,19 +903,19 @@ function	script	F_HomMutateInfo	{
 	next;
 	cutin "",255;
 	cutin "Mer_Sera_Card",3;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: The second of the five";
 	mes ":: is known as ^FF4800Sera^000000.";
 	mes ":: It looks just like ^FF0000Mistress^000000 but";
 	mes ":: it doesn't run away.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Sera^000000";
 	mes ":: specializes in ^006400Poison Attacks^000000.";
 	mes ":: Also, it uses distinct";
 	mes ":: Support Skills using poisons.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Sera^000000 eats";
 	mes ":: ^0000FFApple Pudding^000000.";
 	mes ":: It prefers sweet food.";
@@ -923,20 +924,20 @@ function	script	F_HomMutateInfo	{
 	next;
 	cutin "",255;
 	cutin "Mer_Dieter_Card",3;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: The third of the five";
 	mes ":: is ^FF4800Dieter^000000.";
 	mes ":: It looks unusual but it";
 	mes ":: has a good demeanor.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Dieter^000000 uses";
 	mes ":: ^FF0000Fire^000000 based Attacks and";
 	mes ":: Support Skills.";
 	mes ":: It is just as fragile...";
 	mes ":: ah, reliable, as it looks.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Dieter^000000 eats";
 	mes ":: ^0000FFBig Cell^000000.";
 	mes ":: ^0000FFBig Cell^000000 can be bought";
@@ -944,13 +945,13 @@ function	script	F_HomMutateInfo	{
 	next;
 	cutin "",255;
 	cutin "Mer_Bayeri_Card",3;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: The fourth of the five";
 	mes ":: is ^FF4800Bayeri^000000.";
 	mes ":: Bayeri has the form of a";
 	mes ":: unicorn.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: It has a powerful dash skill";
 	mes ":: and uses ^006400Holy Element^000000 magic.";
 	mes ":: Unfortunately,";
@@ -958,7 +959,7 @@ function	script	F_HomMutateInfo	{
 	mes ":: Not all four-legged creatures";
 	mes ":: can be ridden.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Bayeri^000000 eats";
 	mes ":: ^0000FFFresh Plant^000000.";
 	mes ":: No matter how hungry it";
@@ -968,19 +969,19 @@ function	script	F_HomMutateInfo	{
 	next;
 	cutin "",255;
 	cutin "Mer_Eleanor_Card",3;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: The last of the five";
 	mes ":: is ^FF4800Eleanor^000000.";
 	mes ":: It has a feminine appearance";
 	mes ":: and outstanding physical skill.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Eleanor^000000";
 	mes ":: uses ^006400Strike or Grapple Attacks^000000";
 	mes ":: sequentially in battle.";
 	mes ":: Absolutely stunning.";
 	next;
-	mes getarg(0);
+	mes .@npc_name$;
 	mes ":: ^FF4800Eleanor^000000 eats";
 	mes ":: ^0000FFKid's Dumpling^000000.";
 	mes ":: Don't confuse it with a normal";
@@ -1021,7 +1022,7 @@ que_house_s,13,52,3	script	Open Book#01homun_s	111,{
 		next;
 		mes "[Bookcase Notes]";
 		mes "He especially didn't like the fact that I was bound tightly to ^FF4800Homunculus^000000 research.";
-		mes "He didn't say such a thing when we studied together in ^8B4513Rune Midgarts^000000.";
+		mes "He didn't say such a thing when we studied together in ^8B4513Rune-Midgarts^000000.";
 		next;
 		mes "[Bookcase Notes]";
 		mes "One day, I'll show ^005DFFDe Bris^000000 my ^FF4800Homunculus^000000 research data.";
@@ -1314,10 +1315,10 @@ OnInit:
 	initnpctimer;
 	end;
 OnTimer6000:
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	end;
 OnTimer7000:
-	emotion e_gasp,0,"#04homun_s";
+	emotion ET_SURPRISE, getnpcid(0, "#04homun_s");
 	stopnpctimer;
 	initnpctimer;
 	end;
@@ -1334,7 +1335,7 @@ que_house_s,24,46,3	script	Jonathan#homun_s	6002,{
 }
 
 que_house_s,23,46,3	script	#05homun_s	111,{
-	emotion e_no,0,"Jonathan#homun_s";
+	emotion ET_STARE_ABOUT, getnpcid(0, "Jonathan#homun_s");
 	if (gethominfo(1) < 6048 || gethominfo(1) > 6052) { // Not mutated Homunculus-S
 		mes "[Jonathan]";
 		mes "Hwang~ Hwang!";
@@ -1349,7 +1350,7 @@ que_house_s,23,46,3	script	#05homun_s	111,{
 		mes "[Jonathan]";
 		mes "Hwang~?!";
 		next;
-		emotion e_swt2,0,"Jonathan#homun_s";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Jonathan#homun_s");
 		mes "[Jonathan]";
 		mes "*Sniff* ...";
 		next;

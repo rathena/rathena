@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Amatsu Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Amatsu Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.3 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //=     Moved elemental stone trader to 'elemental_trader.txt'
 //= 1.4 Moved Alberta NPC to pre-re/re paths. [Euphy]
@@ -22,7 +22,7 @@
 	mes "Hey, there.";
 	mes "Have you ever heard that there";
 	mes "are totally different countries";
-	mes "than the Rune-Midgard Kingdom?";
+	mes "than the Rune-Midgarts Kingdom?";
 	next;
 	switch(select("About Amatsu...:Go to Amatsu:Cancel")) {
 	case 1:
@@ -45,7 +45,7 @@
 		next;
 		mes "[Walter Moers]";
 		mes "He passed away when he returned";
-		mes "to Rune-Midgard. Fortunately,";
+		mes "to Rune-Midgarts. Fortunately,";
 		mes "the map was given to our king, Tristan III.";
 		next;
 		mes "[Walter Moers]";
@@ -167,7 +167,7 @@ amatsu,230,160,3	script	Well-side Maiden#ama	757,{
 	mes "It really gives me the creeps.";
 	close;
 }
-	
+
 amatsu,179,107,4	script	John#ama	86,{
 	mes "[John]";
 	mes "Yo~";
@@ -181,9 +181,9 @@ amatsu,179,107,4	script	John#ama	86,{
 	mes "business here...";
 	next;
 	mes "[John]";
-	mes "Af first, I thought, 'What";
+	mes "At first, I thought, 'What";
 	mes "a great chance!' when the";
-	mes "trade between the Rune-Midgard";
+	mes "trade between the Rune-Midgarts";
 	mes "Kingdom and Amatsu started.";
 	next;
 	mes "[John]";
@@ -224,7 +224,7 @@ amatsu,179,107,4	script	John#ama	86,{
 	mes "I guess it's over...";
 	close;
 }
-	
+
 amatsu,205,163,3	script	Mimi#ama	759,{
 	mes "[Mimi]";
 	mes "Puhuhu~!";
@@ -242,7 +242,7 @@ amatsu,205,163,3	script	Mimi#ama	759,{
 	mes "A lady can always use a little more makeup.";
 	close;
 }
-	
+
 amatsu,185,115,3	script	Drunken Man#ama	765,{
 	mes "[Kosake]";
 	mes "*Hiccup*...My wife is just like,";
@@ -282,7 +282,7 @@ amatsu,185,115,3	script	Drunken Man#ama	765,{
 	mes "If you buy me a drink, I will think about it...Hehehe...*Hiccup*..";
 	close;
 }
-	
+
 amatsu,217,179,1	script	Grandma#ama	760,{
 	mes "[Hatsue]";
 	mes "I'm worried about my husband.";
@@ -294,7 +294,7 @@ amatsu,217,179,1	script	Grandma#ama	760,{
 	mes "went to the bar and starts drinking again? The man just doesn't have any backbone. *Phew*";
 	close;
 }
-	
+
 amatsu,287,266,3	script	Jyaburo#ama	766,{
 	mes "[Jyaburo]";
 	mes "This place is special to me.";
@@ -366,7 +366,7 @@ amatsu,269,221,1	script	Propose Girl#ama	758,{
 	mes "After the proposal, the reply must";
 	mes "be answered before Sunday evening. This is the most crucial part of it.";
 	next;
-	emotion e_lv2;
+	emotion ET_BIGTHROB;
 	mes "[Hutari Shioko]";
 	mes "If you like someone...";
 	mes "You should try proposing";
@@ -374,7 +374,7 @@ amatsu,269,221,1	script	Propose Girl#ama	758,{
 	mes "happy things will happen, if you do.";
 	close;
 }
-	
+
 amatsu,243,202,3	script	Drama Teacher#ama	760,{
 	set jap_tree,2;
 	mes "[Garakame sensei]";
@@ -383,7 +383,7 @@ amatsu,243,202,3	script	Drama Teacher#ama	760,{
 	mes "Also, this town is the origin of";
 	mes "legendary play, 'White Dryad.' ";
 	next;
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "[Garakame sensei]";
 		mes "If you know a girl who is";
 		mes "talented in acting, please";
@@ -398,7 +398,7 @@ amatsu,243,202,3	script	Drama Teacher#ama	760,{
 		mes "as the 'White Drayd...'";
 		close;
 	}
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Garakame sensei]";
 	mes "Are you interested in acting?";
 	mes "I need someone who sees";
@@ -419,26 +419,26 @@ amatsu,243,202,3	script	Drama Teacher#ama	760,{
 	mes "someday when you are ready.";
 	close;
 }
-	
+
 amatsu,283,203,1	script	Bonubonu#ama1	1323,{
 	end;
 }
 
 amatsu,283,203,1	script	Bonubonu#ama2	111,{
 	set jap_tree,3;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "That tree on the hill is";
 	mes "a very old tree. It is a big";
 	mes "cherry tree with everlasting blossoms.";
 	next;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "There is something about this";
 	mes "tree that makes me forget about";
 	mes "all the troubles in my life when I sit under it.";
 	next;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "Everything about this tree is";
 	mes "simply wonderful...";
@@ -446,14 +446,14 @@ amatsu,283,203,1	script	Bonubonu#ama2	111,{
 	mes "I feel when I look at it...";
 	mes "It just leaves me breathless...";
 	next;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "You should visit the tree and";
 	mes "spend some time there.";
 	mes "It is really a miraculous and gracious tree...";
 	close;
 }
-	
+
 amatsu,274,178,7	script	Veterinarian#ama	735,{
 	set jap_tree,4;
 	mes "[Sakura Seiichi]";
@@ -481,7 +481,7 @@ amatsu,274,178,7	script	Veterinarian#ama	735,{
 		mes "By the way, do you want";
 		mes "make a bet on it...?";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Sakura Seiichi]";
 		mes "If I..........";
 		mes "............";
@@ -495,7 +495,7 @@ amatsu,274,178,7	script	Veterinarian#ama	735,{
 	mes "[Sakura Seiichi]";
 	mes "I can't help it if you think that way. But one day, you too could be buried underneath...";
 	next;
-	emotion e_dots;
+	emotion ET_THINK;
 	mes "[Sakura Seiichi]";
 	mes "Haha... Hahaha.....";
 	mes "...............";
@@ -506,7 +506,7 @@ amatsu,274,178,7	script	Veterinarian#ama	735,{
 	mes "Finally, I couldn't even hear anything. I can't even recall what he was trying to tell me...^000000";
 	close;
 }
-	
+
 amatsu,262,197,1	script	Legendary Tree	111,{
 	if (jap_tree == 1) {
 		mes "^3355FFAs she mentioned, this tree";
@@ -531,7 +531,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		mes "Nymph of cherry tree... What would";
 		mes "be her position in the play?^000000";
 		next;
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "^3355FFI would like to find";
 			mes "a person who is talented";
 			mes "in acting and help her until";
@@ -545,9 +545,9 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 	}
 	else if (jap_tree == 3) {
 		mes "^3355FFUnlike other cherry trees,";
-		mes "this tree has a strong fragnance.";
+		mes "this tree has a strong fragrance.";
 		mes "I just fell into a relaxed";
-		mes "mood. The fragnance eased";
+		mes "mood. The fragrance eased";
 		mes "my burdens and I felt";
 		mes "very comfortable.^000000";
 		next;
@@ -559,7 +559,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		close;
 	}
 	else if (jap_tree == 4) {
-		mes "^3355FFThis strong fragnance";
+		mes "^3355FFThis strong fragrance";
 		mes "is making me dizzy. Not like";
 		mes "other cherry trees, this tree's";
 		mes "shimmering white petals";
@@ -569,7 +569,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		mes "being drained if I stay here";
 		mes "longer. After a glimpse of";
 		mes "the cherry tree, I thought to";
-		mes "mayself, 'I must get out of here quickly.'^000000";
+		mes "myself, 'I must get out of here quickly.'^000000";
 		close;
 	}
 	mes "^3355FFThere was a cherry tree";
@@ -586,9 +586,9 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= Amatsu Town NPCs : Revision 2 (Fox quest fix)
 //= Translated by Makenshi and dj
 //= Revisions and edits by Valaris and Darkchild

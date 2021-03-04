@@ -1,0 +1,197 @@
+##################################################################
+# This maps commits from different aliases to the same account   #
+#                                                                #
+# Always try to map to the GitHub username and try to use the    #
+# @users.noreply.github.com mail addresses where possible.       #
+# The entries are sorted ascending by the username.              #
+#                                                                #
+# If you want to have your mail changed feel free to contact us. #
+#                                                                #
+# If you know any of the missing commiters please also let us    #
+# know.                                                          #
+# You can generate the list of commiters with:                   #
+# git shortlog -sne                                              #
+##################################################################
+
+##################################################################
+#                  SVN Users                                     #
+##################################################################
+ai4rei <ai4rei@users.noreply.github.com> <ai4rei@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Akinari1087 <tagraskemper@hotmail.com> <akinari1087@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Akkarinage <akkarin@rathena.org> <thatakkarin@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+aleos89 <aleos89@users.noreply.github.com> <aleos@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Baalberith6 <matej.pristak@gmail.com> <baalberith@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+brianluau <brianluau@users.noreply.github.com> <brianluau@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+cydh <cydh@users.noreply.github.com> <cydh@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Daegaladh <Daegaladh@users.noreply.github.com> <daegaladh@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Deadly Silence <mail@deadly-silence.de> <deadlysilence@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Epoque1 <22254628+Epoque1@users.noreply.github.com> <epoque11@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+euphyy <euphy.raliel@rathena.org> <euphyy@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+flaviojs <flaviojs2005@gmail.com> <FlavioJS@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+flaviojs <flaviojs2005@gmail.com> <flaviojs2005@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+functor-x <piotr.halaczkiewicz@gmail.com> <gepard1984@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+functor-x <piotr.halaczkiewicz@gmail.com> <Gepard@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+greenboxal <greenboxal@gmail.com> <greenboxal2@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+jguy1987 <jmish1987@gmail.com> <jmanfffreak@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+jTynne <decadenthearts06@gmail.com> <jtynne@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+j-tkay <joseph.tk.ea@gmail.com> <j-tkay@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Kenpachi2k13 <Kenpachi.Developer@gmx.de> <kenpachi2k11@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+kisuka <kisuka@kisuka.com> <Kisuka@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Lemongrass3110 <lemongrass@kstp.at> <lemongrass3110@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+lnkfish <lnkfish@hotmail.com> <Inkfish@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Locien <masterofmuppets89@gmail.com> <MasterOfMuppets@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+lighta <lighta@users.noreply.github.com> <glighta@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Masao87 <masao@gmx.ch> <masao87@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+missxantara <missxantara@gmail.com> <xantara@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+macabu <macabu@users.noreply.github.com> <momacabu@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Paradox924X <paradox924x@gmail.com> <Paradox924X@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Paradox924X <paradox924x@gmail.com> <Paradox924x@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Playtester <Kenji.Ito@gmx.de> <Playtester@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Playtester <Kenji.Ito@gmx.de> <playtester@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+rAthenaAPI <administrator@rathena.org> <eathenabot@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+rAthenaAPI <administrator@rathena.org> <rathenabot@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+SeoRoman <RomanL0927@gmail.com> <script-Z3R0@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+SeoRoman <RomanL0927@gmail.com> <script-z3r0@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+shennetsind <ind@henn.et> <shennetsind@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+theultramage <umage@netvor.sk> <ultramage@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+trojal <trojal@gmail.com> <trojal@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Valaris <2738218+valaris@users.noreply.github.com> <valaris@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Valaris <2738218+valaris@users.noreply.github.com> <Valaris@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+wilkemeyer <fw@f-ws.de> <blacksirius@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+Yommy <yomanda@gmail.com> <Yommy@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+
+##################################################################
+#                  Git Aliases                                   #
+##################################################################
+aleos89 <aleos89@users.noreply.github.com> <aleos89@users.noreply.github.com>
+aleos89 <aleos89@users.noreply.github.com> <jarajabi@msn.com>
+Akkarinage <akkarin@rathena.org> <mike.langford@live.co.uk>
+Baalberith6 <matej.pristak@gmail.com> <matej.pristak@gmail.com>
+brianluau <brianluau@users.noreply.github.com> <brianluau@gmail.com>
+brianluau <brianluau@users.noreply.github.com> <brianluau@users.noreply.github.com>
+Atemo <Atemo@users.noreply.github.com> <capucrath@gmail.com>
+Atemo <Atemo@users.noreply.github.com> <Capuche@users.noreply.github.com>
+cydh <cydh@users.noreply.github.com> <cydh@users.noreply.github.com>
+cydh <cydh@users.noreply.github.com> <cydh@pservero.com>
+cydh <cydh@users.noreply.github.com> <house.bad@gmail.com>
+Daegaladh <Daegaladh@users.noreply.github.com> <daegaladh@shadowgames.es>
+dentongrills <sketchyphoenix@gmail.com> <sketchyphoenix@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+dentongrills <sketchyphoenix@gmail.com> <SketchyPhoenix@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+euphyy <euphy.raliel@rathena.org> <euphy@rathena.org>
+icxbb-xx <arokaice@live.com> <arokaice@live.com>
+Jeybla <jey@bjx-studios.de> <jey@toto-ro.de>
+Jeybla <jey@bjx-studios.de> <jey@bjx-studios.de>
+Jeybla <jey@bjx-studios.de> <jey@toto-ro.de>
+GodLesZ <godlesz@hotmail.de> <GodLesZ@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+lighta <lighta@users.noreply.github.com> <lightaisme@gmail.com>
+lighta <lighta@users.noreply.github.com> <lighta@lighta-fedora20.localdomain>
+lighta <lighta@users.noreply.github.com> <lighta@lighta-VPCW12M1E>
+lighta <lighta@users.noreply.github.com> <lighta>
+lighta <lighta@users.noreply.github.com> <lighta@lighta-VPCW12M1E.(none)>
+lighta <lighta@users.noreply.github.com> <lightaisme>
+Lilith- <amurov.ro@gmail.com> <amurov.ro@gmail.com>
+macabu <macabu@users.noreply.github.com> <macabu.matheus@gmail.com>
+macabu <macabu@users.noreply.github.com> <mkbu95@users.noreply.github.com>
+rAthenaAPI <administrator@rathena.org> <rAthenaAPI>
+secretdataz <secretdataz@users.noreply.github.com> <foreverfk@stephack.com>
+secretdataz <secretdataz@users.noreply.github.com> <nightsheep@outlook.com>
+secretdataz <secretdataz@users.noreply.github.com> <secret@ahri.in.th>
+Stolao <Stolao@users.noreply.github.com> <Taingram11@gmail.com>
+tr0n93 <tr0n.developer@gmail.com> <tr0n93@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+wilkemeyer <fw@f-ws.de> <fw@f-ws.de>
+vstumpf <vincents.995@gmail.com> <vincents.995@gmail.com>
+zackdreaver <zackdreaver@users.noreply.github.com> <zackdreaver@gmail.com>
+
+##################################################################
+#                  Unconfirmed ones                              #
+#                  missing github username                       #
+##################################################################
+calciumkid <harrison@isabarwon.com> <calciumkid@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+skotlex <skotlex@mailforce.net> <skotlex@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+skotlex <skotlex@mailforce.net> <Skotlex@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+
+##################################################################
+#                  TODO                                          #
+#                                                                #
+# If you know the GitHub account and/or mail address of any of   #
+# these please let us know.                                      #
+##################################################################
+
+# L0ne_W0lf <L0ne_W0lf@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Lupus <Lupus@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# celest <celest@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Lance <Lance@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# zephyrus <zephyrus@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# amber <amber@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# toms <toms@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# shadowlady <shadowlady@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# codemaster <codemaster@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# rud0lp20 <rud0lp20@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Vicious <Vicious@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# samuray22 <samuray22@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Kevin <Kevin@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# shadow <shadow@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# mc_cameri <mc_cameri@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# evera <evera@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# SinSloth <SinSloth@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# DracoRPG <DracoRPG@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# littlewolf <littlewolf@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# eaac <eaac@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# ajarn <ajarn@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# wizputer <wizputer@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Nasedo <Nasedo@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# blackhole89 <blackhole89@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# protimus <protimus@54d463be-8e91-2dee-dedb-b68131a5f0ec>							https://github.com/protimus
+# Komurka <Komurka@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Poki#3 <Poki#3@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# cookiecrumbs <cookiecrumbs@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Zido <Zido@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# akrus <akrus@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# markzd <markzd@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# xazax-hun <xazax-hun@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# flaid <flaid@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# lordttseven <lordttseven@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# musashiden <musashiden@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Aria <Aria@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# og2 <og2@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# reddozen <reddozen@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# KarLaeda <KarLaeda@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Zephiris <Zephiris@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# DZeroX <DZeroX@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# ignizh <ignizh@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# kobra_k88 <kobra_k88@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# shinomori <shinomori@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# LuzZza <LuzZza@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# spre123 <spre123@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Chilly0123 <Chilly0123@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# ediejohnny <ediejohnny@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# hipsterfont <hipsterfont@54d463be-8e91-2dee-dedb-b68131a5f0ec>					https://github.com/hipsterfont
+# nsstrunks <nsstrunks@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# shadoweathena <shadoweathena@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# technote24 <technote24@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# mandark022 <mandark022@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Kargha <Kargha@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Mass <Mass@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Sara <Sara@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# nana <nana@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# veider <veider@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Shinigami <Shinigami@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# mercurial123 <mercurial123@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# arcshiru <arcshiru@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# davidsiaw <davidsiaw@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# foruken <foruken@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# sirius <sirius@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Euph <Euph@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Kayla <Kayla@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# rikimaru17 <rikimaru17@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Evera <Evera@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# L0neW0lf.eAthena <L0neW0lf.eAthena@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# cleaverbeaver <cleaverbeaver@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# killercube <killercube@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# salepate <salepate@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# spira <spira@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# CIA-2 <CIA-2@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# Protimus <Protimus@54d463be-8e91-2dee-dedb-b68131a5f0ec>							https://github.com/protimus
+# lmaatl <lmaatl@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# zapbomb <zapbomb@54d463be-8e91-2dee-dedb-b68131a5f0ec>
+# zido <zido@54d463be-8e91-2dee-dedb-b68131a5f0ec>

@@ -139,22 +139,6 @@ nguild_gef	mapflag	noicewall
 nguild_pay	mapflag	noicewall
 nguild_prt	mapflag	noicewall
 
-//Endless Tower ==================
-1@tower	mapflag	noicewall
-2@tower	mapflag	noicewall
-3@tower	mapflag	noicewall
-4@tower	mapflag	noicewall
-5@tower	mapflag	noicewall
-6@tower	mapflag	noicewall
-
-// Orc's Memory ===================
-1@orcs	mapflag	noicewall
-2@orcs	mapflag	noicewall
-
-// Nidhoggr's Instance ===========
-1@nyd	mapflag	noicewall
-2@nyd	mapflag	noicewall
-
 // Poring War ====================
 poring_w01	mapflag	noicewall
 poring_w02	mapflag	noicewall

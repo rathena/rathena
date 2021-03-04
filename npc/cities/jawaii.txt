@@ -180,7 +180,7 @@ jawaii,240,146,5	script	Jawaii Resident#desc1	724,{
 jawaii,168,247,5	script	Jawaii Resident#desc2	724,{
 	mes "[Waja Waja]";
 	mes "Ah, you must be a tourist.";
-	mes "If you're lost, just head West. Accomodations for newlyweds";
+	mes "If you're lost, just head West. Accommodations for newlyweds";
 	mes "are located in the western part of Jawaii. The lodging here is";
 	mes "pretty amazing.";
 	next;
@@ -260,7 +260,7 @@ jawaii,141,200,3	script	Employee#sroom	798,{
 	mes "[Alowa]";
 	mes "^666666*Sniff*^000000";
 	mes "B-but I promise th-that this room is the nicest and cl-cleanest room! P-Please! C-come back!";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -276,7 +276,7 @@ jawaii,108,199,5	script	Employee#antroom	74,{
 	mes "young couples in this room.";
 	next;
 	mes "[Pine Oran]";
-	mes "All the rooms may have the same basic structure, but each of them has their own unqiue interior to suit the tastes of different people.";
+	mes "All the rooms may have the same basic structure, but each of them has their own unique interior to suit the tastes of different people.";
 	next;
 	mes "[Pine Oran]";
 	mes "If you would like to lodge here, it is required to pay a 1,000 zeny fee for each person before entering. Since you're here to make fond memories of your honeymoon,";
@@ -416,7 +416,7 @@ jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
 		mes "[Helper]";
 		if (Zeny > 49999) {
 			set Zeny, Zeny-50000;
-			getitem 681,1; //Memory_Of_Wedding 
+			getitem 681,1;// Memory_Of_Wedding
 			mes "Thank you very much~!";
 			mes "Please remember, you";
 			mes "should use this with your";
@@ -457,10 +457,10 @@ jawaii_in,25,94,0	script	Employee#jaw1	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -487,10 +487,10 @@ jawaii_in,25,96,0	script	Employee#jaw2	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -503,7 +503,7 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 		mes "Oh~";
 		mes "Look at you...";
 		mes "You look perfect";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "for your wife~";
 		else
 			mes "with your husband~";
@@ -517,7 +517,7 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 		mes "Hmm...?";
 		mes "You don't look like";
 		mes "you're married, are you?";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			next;
 			mes "[Employee Buffy]";
 			mes "I'm pretty good";
@@ -531,10 +531,10 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -570,10 +570,10 @@ jawaii_in,25,100,0	script	Employee#jaw4	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -603,10 +603,10 @@ jawaii_in,30,94,4	script	Employee#jaw5	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -626,12 +626,12 @@ jawaii_in,30,96,4	script	Employee#jaw6	724,{
 	}
 	mes "I hope you will have a good time.";
 	close;
-	
+
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -662,10 +662,10 @@ jawaii_in,30,98,4	script	Employee#jaw7	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -686,15 +686,15 @@ jawaii_in,30,100,4	script	Employee#jaw8	724,{
 	close;
 
 OnWelcome:
-	emotion e_kis;
+	emotion ET_CHUP;
 	end;
 OnSolo:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
 jawaii_in,28,96,0	script	jaw_em_order#Jawaii	-1,3,3,{
-OnTouch:
+OnTouch_:
 	if (getpartnerid()) {
 		donpcevent "Employee#jaw8::OnWelcome";
 		donpcevent "Employee#jaw7::OnWelcome";
@@ -716,7 +716,7 @@ OnTouch:
 	donpcevent "Employee#jaw1::OnSolo";
 	end;
 }
-	
+
 jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FF * Wait a minute! *";
@@ -727,7 +727,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 		mes "[Waitress]";
 		mes "Hello,";
 		mes "how can I help you?";
-		emotion e_kis;
+		emotion ET_CHUP;
 		next;
 		switch(select("Give me food.:Bring me drink.:Where's the bar?")) {
 		case 1:
@@ -766,7 +766,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 				mes "[Waitress]";
 				if (Zeny > 999) {
 					set Zeny, Zeny-1000;
-					getitem 503,1; //Yelow_Potion
+					getitem 503,1;// Yellow_Potion
 					mes "There you go~";
 					mes "Enjoy your meal~!";
 					close;
@@ -789,7 +789,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 			close;
 		}
 	}
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Waitress]";
 	mes "Hey, hey...!";
 	mes "I have no idea";
@@ -839,9 +839,8 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 	mes "like to drink?";
 	next;
 	if (Zeny < 99) {
-		set .@r_jaw,rand(1,100);
 		mes "[Bartender]";
-		if (.@r_jaw > 29) {
+		if (rand(1,100) > 29) {
 			mes "Hm, I'm sorry";
 			mes "but you do not";
 			mes "have enough";
@@ -866,7 +865,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 		percentheal -100,0;
 		end;
 	}
-	while (1) {
+	while(1) {
 		switch(select("Follow Bartender's Recommendation.:I want a Gunslinger.:I want a Cobo.:I want a Bomb.:I want a Boogieman.")) {
 		case 1:
 			set .@roof_jaw,.@roof_jaw+3;
@@ -1000,7 +999,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			}
 			break;
 		case 2:
-			callsub S_KillChar,2;
+			callsub S_KillChar,2,.@roof_jaw;
 			mes "When you want to look super cool, this will be the best drink for you. It's a strong drink with a particular scent, so people who drink Gunslingers are usually seen as having impressive of taste.";
 			next;
 			mes "^3355FFYou received a simple glass containing a gray liquid. Although it smells faintly sweet, it looks like industrial strength liquor. It's time to summon your courage and take a sip~";
@@ -1022,7 +1021,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			break;
 
 		case 3:
-			callsub S_KillChar,2;
+			callsub S_KillChar,2,.@roof_jaw;
 			mes "People say that the more you drink a mixed Cobo, the tastier it will be. It grows on you, kind of like the company of an old friend. This is a nice drink to have with anyone at anytime.";
 			next;
 			mes "^3355FFThe Bartender brought a beautifully engraved glass holding a cobalt blue liquid and placed it in front of you. It smells pleasantly sweet and sour.";
@@ -1046,7 +1045,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			break;
 
 		case 4:
-			callsub S_KillChar,2;
+			callsub S_KillChar,2,.@roof_jaw;
 			mes "This is for one who wants to relive wild, youthful days, honor those who have fought for justice and liberty, or just to drink alcohol until they vomit stomach acid.";
 			mes "for one who wants to remember people fighting for liberty...";
 			next;
@@ -1066,7 +1065,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			break;
 
 		case 5:
-			callsub S_KillChar,1;
+			callsub S_KillChar,1,.@roof_jaw;
 			mes "There are not many people who like this drink. But the ones that do like this drink, love it.";
 			next;
 			mes "[Bartender]";
@@ -1074,7 +1073,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			mes "of this.";
 			next;
 			mes "^3355FFYou receive a crooked glass";
-			mes "filled with purple fluid. Although it smells pleasnt, you have a strange feeling of disgust as you draw it closer to your face.";
+			mes "filled with purple fluid. Although it smells pleasant, you have a strange feeling of disgust as you draw it closer to your face.";
 			next;
 			mes "[Bartender]";
 			mes "If you don't want to drink it, tell me now. But it might be good to try it once, just to experience it.";
@@ -1096,6 +1095,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 	end;
 
 S_KillChar:
+	.@roof_jaw = getarg(1);
 	if (.@roof_jaw > 8) {
 		mes "[Bartender]";
 		mes "It's on me.";
@@ -1115,11 +1115,11 @@ S_KillChar:
 	mes "[Bartender]";
 	return;
 }
-	
+
 jawaii_in,43,115,0	script	Customer#jaw_1	97,{
+	mes "[Buchi]";
 	if (!getpartnerid()) {
 		if (Zeny > 99) {
-			mes "[Buchi]";
 			mes "Grrrr...";
 			mes "Damn! I don't";
 			mes "like this place!";
@@ -1133,8 +1133,8 @@ jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 			mes "Grrrr...";
 			mes "Bartender!";
 			mes "Give me one more!";
+			close;
 		}
-		mes "[Buchi]";
 		mes "Hey, why aren't you drinking?";
 		mes "I guess you're all out of dough.";
 		mes "But I know how you feel. Disgusted with all the lovey dovey around this place, aren't you?";
@@ -1155,10 +1155,10 @@ jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 		mes "the one who laughs last!";
 		next;
 		mes "^3355FFYou drank to your fill.^000000";
-		close;
+		close2;
 		percentheal -100,0;
+		end;
 	}
-	mes "[Buchi]";
 	mes "You look happy...";
 	mes "I hope you'll be";
 	mes "able to feel that";
@@ -1176,7 +1176,7 @@ jawaii_in,41,106,3	script	Customer#Cage	98,{
 		mes "After all, everyone knows marriage is a sham for desperate, lonely people!";
 		next;
 		mes "[Cage]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "I don't trust anybody!";
 			mes "You're a fool for chaining";
 			mes "yourself to some gorgeous";
@@ -1243,25 +1243,24 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		next;
 		mes "[Bachewcca]";
 		mes "...!";
-		emotion e_no1,0,"Customer#Bachewcca";
+		emotion ET_BEST, getnpcid(0, "Customer#Bachewcca");
 		next;
 		mes "[SoloHan]";
 		mes "It's doesn't really matter whether you're married";
 		mes "or not, right buddy? Right?!";
 		mes "Come on! Drink with me!!";
 		next;
-		mes "^3355FFSuddenly he treated me as a close friend. It's a little embarassing, but it's not a bad idea to accept";
+		mes "^3355FFSuddenly he treated me as a close friend. It's a little embarrassing, but it's not a bad idea to accept";
 		mes "a free drink...^000000";
 		next;
 		mes "^3355FF* Gulp Gulp Gulp *^000000";
 		percentheal -10,0;
 		next;
-		set .@jaw_roof,1;
 		mes "[SoloHan]";
 		mes "So, what do you say?";
 		mes "Let's go somewhere";
 		mes "with some real liquor.";
-		while (1) {
+		while(1) {
 			next;
 			if (select("...One more drink.:...What kind of place is it?") == 1) {
 				mes "[SoloHan]";
@@ -1306,8 +1305,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 					mes "Man.";
 					mes "So, you spoil parties";
 					mes "like this all the time, eh?";
-					close2;
-					end;
+					close;
 				}
 			}
 			if (.@jaw_roof > 6) {
@@ -1329,8 +1327,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 				mes "Oh...";
 				mes "Man.";
 				mes "No wonder you're single. You can't even recognize a good time when it's right in front of you.";
-				close2;
-				end;
+				close;
 			}
 			set .@jaw_roof,.@jaw_roof+3;
 			mes "[SoloHan]";
@@ -1359,7 +1356,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		mes "...Wha!?";
 		mes "Oh man!";
 		mes "Get outta my face!";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "You smell like,";
 			mes "whupped boyfriend";
 			mes "or something!";
@@ -1390,13 +1387,13 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 	mes "Is this the third time this week I've gotten plastered? Bachewcca, help me count!";
 	close;
 }
-	
+
 prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	mes "[Bachewcca]";
 	mes "..............";
 	mes "^666666*Gulp....gulp...*^000000";
 	mes "Grrrrr!! That hit the spot!";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -1412,12 +1409,12 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	switch(select("Jawaii?:Let's go to Jawaii~!:Cancel.")) {
 	case 1:
 		mes "[Helper]";
-		mes "There is an island far, far away from the Rune-Midgard continent.";
+		mes "There is an island far, far away from the Midgard continent.";
 		mes "It is a very quiet and beautiful island resort that only opens";
 		mes "its doors to couples.";
 		next;
 		mes "[Helper]";
-		mes "This is an exclusive travel offer to the special honeymoon resort for Rune-Midgard's citizens. The price, 100,000 zeny, may be expensive, but you really get what you pay for.";
+		mes "This is an exclusive travel offer to the special honeymoon resort for Midgard's citizens. The price, 100,000 zeny, may be expensive, but you really get what you pay for.";
 		next;
 		mes "[Helper]";
 		mes "I guarantee you that some of";

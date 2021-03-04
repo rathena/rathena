@@ -41,7 +41,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			next;
 			mes "[Caroller]";
 			mes "Merry Christmas!";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Hey, boy! What comes to mind when";
 			} else {
 				mes "Hey, girl! What comes to mind when";
@@ -69,7 +69,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				mes "[Caroller]";
 				mes "If you win over Santa, you can get a gift. Would you go for it?";
 				next;
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Caroller]";
 				mes "Caroller's hot news! Ha!";
 				mes "Isn't that big news?";
@@ -87,7 +87,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				mes "[Caroller]";
 				mes "Furthermore, he has put bad magic on the gifts so that they become monsters!";
 				next;
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Caroller]";
 				mes "Caroller's hot news! Ha!";
 				mes "Isn't it amazing?";
@@ -133,9 +133,9 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 							mes "[Caroller]";
 							mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
 							next;
-							emotion e_heh;
+							emotion ET_SMILE;
 							delitem 6092,6;
-							getnameditem 12354,"+strcharinfo(0)+";
+							getnameditem 12354,strcharinfo(0);
 							mes "[Caroller]";
 							mes "Let's care about others around you on this Christmas season!";
 							close;
@@ -154,7 +154,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 							mes "[Caroller]";
 							mes "If you can get ^0000FFSinging Crystal Pieces^000000, give them to me please?";
 							next;
-							emotion e_heh;
+							emotion ET_SMILE;
 							delitem 6092,6;
 							getitem 12354,1;
 							mes "[Caroller]";
@@ -232,7 +232,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 					mes "Please, for our children's hope!!!?";
 					mes "Please bring me 6 Singing Crystal Pieces from ^0000FFViolent Gift Boxes^000000!";
 					next;
-					emotion e_ok;
+					emotion ET_OK;
 					mes "[Caroller]";
 					mes "They're definitely as harsh as their name.";
 					mes "Go on please!";
@@ -251,10 +251,10 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				mes "Every year, adventurers challenge to attack Antonio the fake Santa, but there's no way to catch up to him due to his hat and costume!";
 				next;
 				mes "[Caroller]";
-				mes "Are there some spcial abilities within them?";
+				mes "Are there some special abilities within them?";
 				mes "There's still the designer in the Christmas village... How about asking her to make that costume?";
 				next;
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Caroller]";
 				mes "Caroller's hot news! Ha!";
 				mes "It's hot, huh?";
@@ -272,7 +272,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				mes "[Caroller]";
 				mes "And he isn't alone anymore... is what I heard...";
 				next;
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Caroller]";
 				mes "Caroller's hot news! Ha!";
 				mes "Hotness, right?";
@@ -295,7 +295,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			mes "For all of the children of this world!!!";
 			mes "Please bring me ^0000FFSinging Crystal Pieces^000000 from ^0000FFViolent Gift Boxes^000000!";
 			next;
-			emotion e_ok;
+			emotion ET_OK;
 			mes "[Caroller]";
 			mes "Be careful!";
 			mes "They're definitely as harsh as their name.";
@@ -337,7 +337,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			mes "^0000FF10 Trunk, 1 Hammer Of Blacksmith, 1 Jubilee, 10 Sticky Mucus, 3carat Diamond^000000!";
 			next;
 			delitem 6092,6;
-			emotion e_ok;
+			emotion ET_OK;
 			set iROxmas08carol,2;
 			mes "[Caroller]";
 			mes "Those are all needed.";
@@ -356,7 +356,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			mes "So, we need more of some materials.";
 			mes "^0000FF10 Trunk, 1 Hammer Of Blacksmith, 1 Jubilee, 10 Sticky Mucus, 3carat Diamond^000000!";
 			next;
-			emotion e_ok;
+			emotion ET_OK;
 			mes "[Caroller]";
 			mes "That's all we need.";
 			mes "Isn't that easy?";
@@ -416,9 +416,9 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			mes "[Caroller]";
 			mes "Don't worry, it tastes good.";
 			next;
-			emotion e_ok;
+			emotion ET_OK;
 			getitem 2784,1;
-			getnameditem 12354,"+strcharinfo(0)+";
+			getnameditem 12354,strcharinfo(0);
 			delitem 1019,10;
 			delitem 1005,1;
 			delitem 7312,1;
@@ -454,7 +454,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 
 	case 2:
 		mes "[Santa Claus]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Ho ho ho! What a good boy!";
 		} else {
 			mes "Ho ho ho! What a good girl!";
@@ -528,7 +528,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		mes "Let's get started!";
 		next;
 		while(.@SantaCardTurn != 5) {
-			emotion e_loud;
+			emotion ET_BLABLA;
 			mes "[Santa Claus]";
 			mes "First let me shuffle up these cards... Ok!!!";
 			next;
@@ -595,16 +595,16 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			set .@SantaCardTurn,.@SantaCardTurn+1;
 			if (.@SantaCardP == .@SantaCardNpc) {
 				set .@SantaCardWins,.@SantaCardWins+1;
-				emotion e_gasp;
-				emotion e_ic,1;
+				emotion ET_SURPRISE;
+				emotion ET_AHA, playerattached();
 				cutin "",255;
 				mes "[Santa Claus]";
 				mes "You're lucky.";
 				mes "Can you guess the right card the next time around?";
 				next;
 			} else {
-				emotion e_gasp;
-				emotion e_omg,1;
+				emotion ET_SURPRISE;
+				emotion ET_HUK, playerattached();
 				cutin "",255;
 				mes "[Santa Claus]";
 				mes "Aww maybe next time...";
@@ -687,7 +687,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		next;
 		mes "[Santa Claus]";
 		mes "........................";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Oh! Poor boy...";
 		} else {
 			mes "Oh! Poor girl...";
@@ -695,7 +695,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		next;
 		mes "[Santa Claus]";
 		mes "........................";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Oh! Poor boy...";
 		} else {
 			mes "Oh! Poor girl...";
@@ -730,7 +730,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	mes "The reason catching up to him is so hard, is that his clothes have been given strong power!";
 	mes "I blessed them with good luck!";
 	next;
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Louise Kim]";
 	mes "Preta Porter!!";
 	mes "Which is quite luxurious but sold at good price ~";
@@ -747,7 +747,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "Ah!";
 		mes "You're silly! You lost your big chance!";
 		next;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Louise Kim]";
 		mes "Come to me later if you want to get the mission.";
 		mes "I, Louise Kim, am generous enough to accept you next time.";
@@ -765,7 +765,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 	mes "Anyway, can you bring me some stuff?";
 	next;
 	if (select("Why not? What do you need?:Sorry, no time.") == 2) {
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Louise Kim]";
 		mes "What?";
 		mes "You will definitely regret it.";
@@ -783,13 +783,13 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 			mes "[Louise Kim]";
 			mes "If you were to bring me all the stuff, I would make you a wonderful costume, for free...";
 			next;
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Louise Kim]";
 			mes "Please see me again if you are interested.";
 			close;
 	} else {
 		select("Here you are.");
-		emotion e_ok;
+		emotion ET_OK;
 		mes "[Louise Kim]";
 		mes "Oh! Good!";
 		mes "Let's not delay.";
@@ -801,7 +801,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "-and many blessings she sings.-";
 		next;
 		specialeffect EF_BLESSING;
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "[Louise Kim]";
 		mes "By artist, Louise Kim!";
 		mes "All over the world will be blessed tonight!";
@@ -815,7 +815,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "-Count your blessings and sing!-";
 		next;
 		specialeffect EF_GLORIA;
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "[Louise Kim]";
 		mes "By artist, Louise Kim!";
 		mes "All over the world will be blessed tonight!";
@@ -827,7 +827,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "-cheer and goodwill!-";
 		next;
 		specialeffect EF_BENEDICTIO;
-		emotion e_lv;
+		emotion ET_THROB;
 		mes "[Louise Kim]";
 		mes "This is miraculous!";
 		mes "I am a genius of the world.";
@@ -839,7 +839,7 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 		mes "My fashion is radiant.";
 		mes "I ain't envious of Designer Pierre.";
 		next;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Louise Kim]";
 		mes "I am supposed to get paid well, however I will just let it be free, since this is Christmas!";
 		next;
@@ -857,197 +857,197 @@ xmas_in,89,92,4	script	Louise Kim#iROxmas08	714,{
 
 // Monsters
 //============================================================
-prt_fild00,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild00,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild00,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild00,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild00,0,0	monster	Christmas Jakk	1244,5
+prt_fild00,0,0	monster	Christmas Goblin	1245,5
+prt_fild00,0,0	monster	Christmas Cookie	1246,5
+prt_fild00,0,0	monster	Antonio	1247,1
 
-prt_fild01,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild01,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild01,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild01,0,0	monster	Christmas Jakk	1244,5
+prt_fild01,0,0	monster	Christmas Goblin	1245,5
+prt_fild01,0,0	monster	Christmas Cookie	1246,5
+prt_fild01,0,0	monster	Antonio	1247,1
 
-prt_fild02,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild02,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild02,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild02,0,0	monster	Christmas Jakk	1244,5
+prt_fild02,0,0	monster	Christmas Goblin	1245,5
+prt_fild02,0,0	monster	Christmas Cookie	1246,5
+prt_fild02,0,0	monster	Antonio	1247,1
 
-prt_fild03,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild03,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild03,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild03,0,0	monster	Christmas Jakk	1244,5
+prt_fild03,0,0	monster	Christmas Goblin	1245,5
+prt_fild03,0,0	monster	Christmas Cookie	1246,5
+prt_fild03,0,0	monster	Antonio	1247,1
 
-prt_fild04,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild04,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild04,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild04,0,0	monster	Christmas Jakk	1244,5
+prt_fild04,0,0	monster	Christmas Goblin	1245,5
+prt_fild04,0,0	monster	Christmas Cookie	1246,5
+prt_fild04,0,0	monster	Antonio	1247,1
 
-prt_fild05,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild05,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild05,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild05,0,0	monster	Christmas Jakk	1244,5
+prt_fild05,0,0	monster	Christmas Goblin	1245,5
+prt_fild05,0,0	monster	Christmas Cookie	1246,5
+prt_fild05,0,0	monster	Antonio	1247,1
 
-prt_fild06,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild06,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild06,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild06,0,0	monster	Christmas Jakk	1244,5
+prt_fild06,0,0	monster	Christmas Goblin	1245,5
+prt_fild06,0,0	monster	Christmas Cookie	1246,5
+prt_fild06,0,0	monster	Antonio	1247,1
 
-prt_fild07,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild07,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild07,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild07,0,0	monster	Christmas Jakk	1244,5
+prt_fild07,0,0	monster	Christmas Goblin	1245,5
+prt_fild07,0,0	monster	Christmas Cookie	1246,5
+prt_fild07,0,0	monster	Antonio	1247,1
 
-prt_fild08,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild08,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild08,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild08,0,0	monster	Christmas Jakk	1244,5
+prt_fild08,0,0	monster	Christmas Goblin	1245,5
+prt_fild08,0,0	monster	Christmas Cookie	1246,5
+prt_fild08,0,0	monster	Antonio	1247,1
 
-prt_fild09,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild09,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild09,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild09,0,0	monster	Christmas Jakk	1244,5
+prt_fild09,0,0	monster	Christmas Goblin	1245,5
+prt_fild09,0,0	monster	Christmas Cookie	1246,5
+prt_fild09,0,0	monster	Antonio	1247,1
 
-prt_fild10,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild10,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild10,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild10,0,0	monster	Christmas Jakk	1244,5
+prt_fild10,0,0	monster	Christmas Goblin	1245,5
+prt_fild10,0,0	monster	Christmas Cookie	1246,5
+prt_fild10,0,0	monster	Antonio	1247,1
 
-prt_fild11,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-prt_fild11,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-prt_fild11,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-prt_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
+prt_fild11,0,0	monster	Christmas Jakk	1244,5
+prt_fild11,0,0	monster	Christmas Goblin	1245,5
+prt_fild11,0,0	monster	Christmas Cookie	1246,5
+prt_fild11,0,0	monster	Antonio	1247,1
 
-pay_fild01,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild01,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild01,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild01,0,0	monster	Christmas Jakk	1244,5
+pay_fild01,0,0	monster	Christmas Goblin	1245,5
+pay_fild01,0,0	monster	Christmas Cookie	1246,5
+pay_fild01,0,0	monster	Antonio	1247,1
 
-pay_fild02,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild02,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild02,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild02,0,0	monster	Christmas Jakk	1244,5
+pay_fild02,0,0	monster	Christmas Goblin	1245,5
+pay_fild02,0,0	monster	Christmas Cookie	1246,5
+pay_fild02,0,0	monster	Antonio	1247,1
 
-pay_fild03,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild03,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild03,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild03,0,0	monster	Christmas Jakk	1244,5
+pay_fild03,0,0	monster	Christmas Goblin	1245,5
+pay_fild03,0,0	monster	Christmas Cookie	1246,5
+pay_fild03,0,0	monster	Antonio	1247,1
 
-pay_fild04,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild04,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild04,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild04,0,0	monster	Christmas Jakk	1244,5
+pay_fild04,0,0	monster	Christmas Goblin	1245,5
+pay_fild04,0,0	monster	Christmas Cookie	1246,5
+pay_fild04,0,0	monster	Antonio	1247,1
 
-pay_fild05,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild05,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild05,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild05,0,0	monster	Christmas Jakk	1244,5
+pay_fild05,0,0	monster	Christmas Goblin	1245,5
+pay_fild05,0,0	monster	Christmas Cookie	1246,5
+pay_fild05,0,0	monster	Antonio	1247,1
 
-pay_fild06,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild06,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild06,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild06,0,0	monster	Christmas Jakk	1244,5
+pay_fild06,0,0	monster	Christmas Goblin	1245,5
+pay_fild06,0,0	monster	Christmas Cookie	1246,5
+pay_fild06,0,0	monster	Antonio	1247,1
 
-pay_fild07,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild07,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild07,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild07,0,0	monster	Christmas Jakk	1244,5
+pay_fild07,0,0	monster	Christmas Goblin	1245,5
+pay_fild07,0,0	monster	Christmas Cookie	1246,5
+pay_fild07,0,0	monster	Antonio	1247,1
 
-pay_fild08,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild08,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild08,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild08,0,0	monster	Christmas Jakk	1244,5
+pay_fild08,0,0	monster	Christmas Goblin	1245,5
+pay_fild08,0,0	monster	Christmas Cookie	1246,5
+pay_fild08,0,0	monster	Antonio	1247,1
 
-pay_fild09,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild09,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild09,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild09,0,0	monster	Christmas Jakk	1244,5
+pay_fild09,0,0	monster	Christmas Goblin	1245,5
+pay_fild09,0,0	monster	Christmas Cookie	1246,5
+pay_fild09,0,0	monster	Antonio	1247,1
 
-pay_fild10,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild10,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild10,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild10,0,0	monster	Christmas Jakk	1244,5
+pay_fild10,0,0	monster	Christmas Goblin	1245,5
+pay_fild10,0,0	monster	Christmas Cookie	1246,5
+pay_fild10,0,0	monster	Antonio	1247,1
 
-pay_fild11,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-pay_fild11,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-pay_fild11,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-pay_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
+pay_fild11,0,0	monster	Christmas Jakk	1244,5
+pay_fild11,0,0	monster	Christmas Goblin	1245,5
+pay_fild11,0,0	monster	Christmas Cookie	1246,5
+pay_fild11,0,0	monster	Antonio	1247,1
 
-gef_fild00,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild00,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild00,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild00,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild00,0,0	monster	Christmas Jakk	1244,5
+gef_fild00,0,0	monster	Christmas Goblin	1245,5
+gef_fild00,0,0	monster	Christmas Cookie	1246,5
+gef_fild00,0,0	monster	Antonio	1247,1
 
-gef_fild01,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild01,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild01,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild01,0,0	monster	Christmas Jakk	1244,5
+gef_fild01,0,0	monster	Christmas Goblin	1245,5
+gef_fild01,0,0	monster	Christmas Cookie	1246,5
+gef_fild01,0,0	monster	Antonio	1247,1
 
-gef_fild02,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild02,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild02,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild02,0,0	monster	Christmas Jakk	1244,5
+gef_fild02,0,0	monster	Christmas Goblin	1245,5
+gef_fild02,0,0	monster	Christmas Cookie	1246,5
+gef_fild02,0,0	monster	Antonio	1247,1
 
-gef_fild03,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild03,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild03,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild03,0,0	monster	Christmas Jakk	1244,5
+gef_fild03,0,0	monster	Christmas Goblin	1245,5
+gef_fild03,0,0	monster	Christmas Cookie	1246,5
+gef_fild03,0,0	monster	Antonio	1247,1
 
-gef_fild04,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild04,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild04,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild04,0,0	monster	Christmas Jakk	1244,5
+gef_fild04,0,0	monster	Christmas Goblin	1245,5
+gef_fild04,0,0	monster	Christmas Cookie	1246,5
+gef_fild04,0,0	monster	Antonio	1247,1
 
-gef_fild05,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild05,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild05,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild05,0,0	monster	Christmas Jakk	1244,5
+gef_fild05,0,0	monster	Christmas Goblin	1245,5
+gef_fild05,0,0	monster	Christmas Cookie	1246,5
+gef_fild05,0,0	monster	Antonio	1247,1
 
-gef_fild06,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild06,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild06,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild06,0,0	monster	Christmas Jakk	1244,5
+gef_fild06,0,0	monster	Christmas Goblin	1245,5
+gef_fild06,0,0	monster	Christmas Cookie	1246,5
+gef_fild06,0,0	monster	Antonio	1247,1
 
-gef_fild07,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild07,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild07,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild07,0,0	monster	Christmas Jakk	1244,5
+gef_fild07,0,0	monster	Christmas Goblin	1245,5
+gef_fild07,0,0	monster	Christmas Cookie	1246,5
+gef_fild07,0,0	monster	Antonio	1247,1
 
-gef_fild08,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild08,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild08,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild08,0,0	monster	Christmas Jakk	1244,5
+gef_fild08,0,0	monster	Christmas Goblin	1245,5
+gef_fild08,0,0	monster	Christmas Cookie	1246,5
+gef_fild08,0,0	monster	Antonio	1247,1
 
-gef_fild09,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild09,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild09,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild09,0,0	monster	Christmas Jakk	1244,5
+gef_fild09,0,0	monster	Christmas Goblin	1245,5
+gef_fild09,0,0	monster	Christmas Cookie	1246,5
+gef_fild09,0,0	monster	Antonio	1247,1
 
-gef_fild10,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild10,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild10,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild10,0,0	monster	Christmas Jakk	1244,5
+gef_fild10,0,0	monster	Christmas Goblin	1245,5
+gef_fild10,0,0	monster	Christmas Cookie	1246,5
+gef_fild10,0,0	monster	Antonio	1247,1
 
-gef_fild11,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild11,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild11,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild11,0,0	monster	Christmas Jakk	1244,5
+gef_fild11,0,0	monster	Christmas Goblin	1245,5
+gef_fild11,0,0	monster	Christmas Cookie	1246,5
+gef_fild11,0,0	monster	Antonio	1247,1
 
-gef_fild12,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild12,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild12,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild12,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild12,0,0	monster	Christmas Jakk	1244,5
+gef_fild12,0,0	monster	Christmas Goblin	1245,5
+gef_fild12,0,0	monster	Christmas Cookie	1246,5
+gef_fild12,0,0	monster	Antonio	1247,1
 
-gef_fild13,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild13,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild13,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild13,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild13,0,0	monster	Christmas Jakk	1244,5
+gef_fild13,0,0	monster	Christmas Goblin	1245,5
+gef_fild13,0,0	monster	Christmas Cookie	1246,5
+gef_fild13,0,0	monster	Antonio	1247,1
 
-gef_fild14,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-gef_fild14,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild14,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-gef_fild14,0,0,0,0	monster	Antonio	1247,1,0,0,0
+gef_fild14,0,0	monster	Christmas Jakk	1244,5
+gef_fild14,0,0	monster	Christmas Goblin	1245,5
+gef_fild14,0,0	monster	Christmas Cookie	1246,5
+gef_fild14,0,0	monster	Antonio	1247,1
 
-xmas_fild01,0,0,0,0	monster	Christmas Jakk	1244,5,0,0,0
-xmas_fild01,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-xmas_fild01,0,0,0,0	monster	Christmas Cookie	1246,5,0,0,0
-xmas_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
+xmas_fild01,0,0	monster	Christmas Jakk	1244,5
+xmas_fild01,0,0	monster	Christmas Goblin	1245,5
+xmas_fild01,0,0	monster	Christmas Cookie	1246,5
+xmas_fild01,0,0	monster	Antonio	1247,1

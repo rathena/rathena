@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus
 //===== Last Updated: ========================================
-//= 20140208
+//= 20180906
 //===== Description: ========================================= 
 //= An example of an NPC with live dialogue.
 //= Note: This relies on Global_Functions.txt to run.
@@ -17,7 +17,7 @@ prontera,167,177,5	script	Luppy	1107,{
 
 	// Say a compliment according to player's gender
 	// 1st string is for FEMALE, 2nd for MALE
-	mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
+	mes callfunc("F_SexMes","What a beautiful lady!","What a handsome man!");
 
 	// Add some random greeting and goodbye into the menu
 	if (select(callfunc("F_Hi"), callfunc("F_Bye")) != 1) {
@@ -31,10 +31,10 @@ prontera,167,177,5	script	Luppy	1107,{
 	// Give a random prize from set list of items
 	if (@gotstuff){
 		// Again, say stuff according to player's gender
-		mes "I like "+callfunc("F_Sex","smiling ladies!","bloody pirates!");
+		mes "I like "+callfunc("F_SexMes","smiling ladies!","bloody pirates!");
 
 		// Show one of 3 emotion from the list (we added ,1 to show emotion over PLAYER's head)
-		emotion callfunc("F_Rand",e_scissors,e_kis,e_pat),1;
+		emotion callfunc("F_Rand",ET_SCISSOR,ET_CHUP,ET_GOODBOY), playerattached();
 		close;
 	}
 
@@ -45,7 +45,7 @@ prontera,167,177,5	script	Luppy	1107,{
 	.@itemIDfromList = callfunc("F_Rand",512,522,608,620);
 
 	// Again, say stuff according to player's gender
-	mes "Hey, "+callfunc("F_Sex","sister!","brother!")+" I have "+getitemname(.@itemIDfromList)+" for you!";
+	mes "Hey, "+callfunc("F_SexMes","sister!","brother!")+" I have "+getitemname(.@itemIDfromList)+" for you!";
 
 	// Get the item from the list
 	getitem .@itemIDfromList,1;

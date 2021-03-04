@@ -1,0 +1,99 @@
+//===== rAthena Script ======================================= 
+//= Prontera Warp Script
+//===== Description: =========================================
+//= Warp Points for Prontera
+//===== Changelogs: ==========================================
+//= 1.0 Prontera castle map changed in ep16.1 [Capuche]
+//============================================================
+
+//= Prontera City ============================================
+prontera,156,358,0	warp	prt_cas_B#prt_cas_A	1,1,prt_cas,216,146
+
+//= Prontera Castle ===========================================
+prt_cas,216,142,0	warp	prt_cas_A#prt_cas_B	1,1,prontera,156,354
+
+prt_cas,82,175,0	warp	prt_cas_C#prt_cas_D	1,1,prt_gld,159,30
+
+// castle left side
+prt_cas_q,154,8,0	warp	prt_cas_F#prt_cas_E	1,1,prt_cas,156,163
+
+prt_cas,164,177,0	warp	prt_cas_G#prt_cas_H	1,1,prt_cas,54,156
+prt_cas,54,152,0	warp	prt_cas_H#prt_cas_G	1,1,prt_cas,164,172
+
+prt_cas,197,148,0	warp	prt_cas_I#prt_cas_J	1,1,prt_cas,31,117
+prt_cas,31,120,0	warp	prt_cas_J#prt_cas_I	1,1,prt_cas,197,152
+
+prt_cas,178,148,0	warp	prt_cas_K#prt_cas_L	1,1,prt_cas,27,43
+prt_cas,27,47,0	warp	prt_cas_L#prt_cas_K	1,1,prt_cas,178,152
+
+// Rooms
+// Belle
+prt_cas_q,130,8,0	warp	prt_cas_M#prt_cas_N	1,1,prt_cas_q,30,28
+prt_cas_q,34,28,0	warp	prt_cas_N#prt_cas_M	1,1,prt_cas_q,134,8
+
+// Heine
+prt_cas_q,34,78,0	warp	prt_cas_O#prt_cas_P	1,1,prt_cas_q,134,32
+
+// Nerius
+// it's locked
+prt_cas_q,34,128,0	warp	prt_cas_Q#prt_cas_R	1,1,prt_cas_q,134,56
+
+// Walther
+prt_cas_q,130,80,0	warp	prt_cas_S#prt_cas_T	1,1,prt_cas_q,30,178
+prt_cas_q,34,178,0	warp	prt_cas_T#prt_cas_S	1,1,prt_cas_q,134,80
+
+// castle right side
+prt_cas_q,132,119,0	warp	prt_cas_V#prt_cas_U	1,1,prt_cas,274,163
+
+prt_cas,268,176,0	warp	prt_cas_W#prt_cas_X	1,1,prt_cas,110,156
+prt_cas,110,152,0	warp	prt_cas_X#prt_cas_W	1,1,prt_cas,268,172
+
+prt_cas,253,148,0	warp	prt_cas_Y#prt_cas_Z	1,1,prt_cas,174,37
+prt_cas,174,40,0	warp	prt_cas_Z#prt_cas_Y	1,1,prt_cas,253,152
+
+prt_cas,235,148,0	warp	prt_cas_1#prt_cas_2	1,1,prt_cas,174,104
+prt_cas,174,108,0	warp	prt_cas_2#prt_cas_1	1,1,prt_cas,235,152
+
+// Rooms
+// Wigner
+prt_cas_q,153,119,0	warp	prt_cas_3#prt_cas_4	1,1,prt_cas_q,78,21
+prt_cas_q,74,21,0	warp	prt_cas_4#prt_cas_3	1,1,prt_cas_q,149,119
+
+// Richards
+prt_cas_q,153,143,0	warp	prt_cas_5#prt_cas_6	1,1,prt_cas_q,78,77
+prt_cas_q,74,77,0	warp	prt_cas_6#prt_cas_5	1,1,prt_cas_q,149,143
+
+// Geoborg
+prt_cas_q,153,167,0	warp	prt_cas_7#prt_cas_8	1,1,prt_cas_q,78,131
+prt_cas_q,74,131,0	warp	prt_cas_8#prt_cas_7	1,1,prt_cas_q,149,167
+
+// Roegenburg
+prt_cas_q,153,191,0	warp	prt_cas_9#prt_cas_10	1,1,prt_cas_q,78,189
+prt_cas_q,74,189,0	warp	prt_cas_10#prt_cas_9	1,1,prt_cas_q,149,191
+
+// Hall
+prt_cas,216,184,0	warp	prt_cas_11#prt_cas_12	1,1,prt_cas,93,212
+prt_cas,93,208,0	warp	prt_cas_12#prt_cas_11	1,1,prt_cas,216,180
+
+// Dinner room
+prt_cas,54,217,0	warp	prt_cas_13#prt_cas_14	1,1,prt_cas,388,137
+prt_cas,392,137,0	warp	prt_cas_14#prt_cas_13	1,1,prt_cas,58,217
+
+// Kitchen
+prt_cas,41,275,0	warp	prt_cas_15#prt_cas_16	1,1,prt_cas,320,182
+prt_cas,320,178,0	warp	prt_cas_16#prt_cas_15	1,1,prt_cas,41,271
+
+// Library
+prt_cas,130,218,0	warp	prt_cas_17#prt_cas_18	1,1,prt_cas,303,48
+prt_cas,300,48,0	warp	prt_cas_18#prt_cas_17	1,1,prt_cas,127,218
+
+// Prison
+prt_pri00,54,139,0	warp	prt_cas_19#prt_cas_20	1,1,prt_cas,182,258
+
+prt_prison,155,290,0	warp2	prt_cas_21#prt_cas_22	2,2,prt_pri00,50,120
+
+prt_cas,174,234,0	warp	prt_cas_23#prt_cas_24	1,1,prt_cas,247,107
+prt_cas,247,111,0	warp	prt_cas_24#prt_cas_23	1,1,prt_cas,174,237
+
+// Prontera invasion
+prt_q,155,358,0	warp	prt_cas_25#prt_cas_26	1,1,prt_lib_q,89,43

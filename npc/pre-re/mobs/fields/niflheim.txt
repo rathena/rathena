@@ -18,41 +18,41 @@
 //==================================================
 // nif_fild01 - Skellington, a Solitary Village in Niflheim
 //==================================================
-nif_fild01,0,0,0,0	monster	Disguise	1506,20,0,0,0
-nif_fild01,0,0,0,0	monster	Disguise	1506,30,300000,120000,0
-nif_fild01,227,253,20,20	monster	Dullahan	1504,7,1800000,1200000,0
-nif_fild01,0,0,0,0	monster	Dullahan	1504,13,0,0,0
-nif_fild01,0,0,0,0	monster	Gibbet	1503,10,0,0,0
-nif_fild01,0,0,0,0	monster	Heirozoist	1510,10,0,0,0
-nif_fild01,0,0,0,0	monster	Quve	1508,30,0,0,0
+nif_fild01,0,0	monster	Disguise	1506,20
+nif_fild01,0,0	monster	Disguise	1506,30,300000,120000
+nif_fild01,227,253,20,20	monster	Dullahan	1504,7,1800000,1200000
+nif_fild01,0,0	monster	Dullahan	1504,13
+nif_fild01,0,0	monster	Gibbet	1503,10
+nif_fild01,0,0	monster	Heirozoist	1510,10
+nif_fild01,0,0	monster	Quve	1508,30
 
 //==================================================
 // nif_fild02 - Valley of Gyoll
 //==================================================
-nif_fild02,366,236,15,15	monster	Lude	1509,10,360000,150000,0
-nif_fild02,356,139,10,10	monster	Bloody Murderer	1507,1,1200000,600000,0
-nif_fild02,144,232,10,10	monster	Bloody Murderer	1507,1,1200000,600000,0
-nif_fild02,118,282,15,15	monster	Bloody Murderer	1507,1,1200000,600000,0
-nif_fild02,62,327,15,15	monster	Bloody Murderer	1507,1,1200000,600000,0
-nif_fild02,0,0,0,0	monster	Bloody Murderer	1507,7,0,0,0
-nif_fild02,114,136,15,15	monster	Loli Ruri	1505,2,1200000,600000,0
-nif_fild02,52,115,10,10	monster	Heirozoist	1510,4,1200000,600000,0
-nif_fild02,84,276,15,15	monster	Gibbet	1503,5,1200000,600000,0
-nif_fild02,352,273,15,15	monster	Gibbet	1503,5,300000,150000,0
-nif_fild02,0,0,0,0	monster	Loli Ruri	1505,19,120000,60000,0
-nif_fild02,352,273,15,15	monster	Dullahan	1504,5,600000,300000,0
-nif_fild02,0,0,0,0	monster	Dullahan	1504,5,0,0,0
-nif_fild02,0,0,0,0	monster	Heirozoist	1510,6,0,0,0
-nif_fild02,0,0,0,0	monster	Gibbet	1503,10,0,0,0
+nif_fild02,366,236,15,15	monster	Lude	1509,10,360000,150000
+nif_fild02,356,139,10,10	monster	Bloody Murderer	1507,1,1200000,600000
+nif_fild02,144,232,10,10	monster	Bloody Murderer	1507,1,1200000,600000
+nif_fild02,118,282,15,15	monster	Bloody Murderer	1507,1,1200000,600000
+nif_fild02,62,327,15,15	monster	Bloody Murderer	1507,1,1200000,600000
+nif_fild02,0,0	monster	Bloody Murderer	1507,7
+nif_fild02,114,136,15,15	monster	Loli Ruri	1505,2,1200000,600000
+nif_fild02,52,115,10,10	monster	Heirozoist	1510,4,1200000,600000
+nif_fild02,84,276,15,15	monster	Gibbet	1503,5,1200000,600000
+nif_fild02,352,273,15,15	monster	Gibbet	1503,5,300000,150000
+nif_fild02,0,0	monster	Loli Ruri	1505,19,120000,60000
+nif_fild02,352,273,15,15	monster	Dullahan	1504,5,600000,300000
+nif_fild02,0,0	monster	Dullahan	1504,5
+nif_fild02,0,0	monster	Heirozoist	1510,6
+nif_fild02,0,0	monster	Gibbet	1503,10
 
 //==================================================
 // niflheim - Niflheim, Realm of the Dead
 //==================================================
-niflheim,0,0,0,0	monster	Dullahan	1504,5,1800000,1200000,0
-niflheim,0,0,0,0	monster	Gibbet	1503,10,1200000,600000,0
-niflheim,0,0,0,0	monster	Heirozoist	1510,10,1200000,600000,0
-niflheim,0,0,0,0	monster	Quve	1508,20,300000,150000,0
-niflheim,0,0,0,0	monster	Lude	1509,20,300000,150000,0
+niflheim,0,0	monster	Dullahan	1504,5,1800000,1200000
+niflheim,0,0	monster	Gibbet	1503,10,1200000,600000
+niflheim,0,0	monster	Heirozoist	1510,10,1200000,600000
+niflheim,0,0	monster	Quve	1508,20,300000,150000
+niflheim,0,0	monster	Lude	1509,20,300000,150000
 
 niflheim,1,1,0	script	NifInvasion	-1,{
 OnInit:

@@ -51,15 +51,15 @@ prontera,146,163,6	script	Novice Castles	729,{
 	          ) {
 		mes "I see... your guild has Emergency Call mastered.";
 		mes "You cannot enter the Novice Castle area.";
-		emotion e_hmm;
-		emotion e_wah,1;
+		emotion ET_SCRATCH;
+		emotion ET_KEK, playerattached();
 	} else {
 		mes "I'm a new usher of Novice Castles.";
 		next;
 		mes "[Cita]";
 		if ((eaclass()&(EAJL_2|EAJL_UPPER)) || BaseLevel>=60) {
 			mes "I'm sorry, you can't enter the sacred Novice Castles place.";
-			emotion e_sry;
+			emotion ET_SORRY;
 		} else if (select("Warp me to Novice Castles","Cancel") == 1) {
 			// remove several unallowed buffs
 			sc_end SC_ASSUMPTIO;

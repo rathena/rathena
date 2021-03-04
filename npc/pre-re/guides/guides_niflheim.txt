@@ -68,7 +68,7 @@ niflheim,107,156,6	script	Roaming Man#nif	798,{
 			mes "special once I realized no";
 			mes "Potion can ease the pain I feel.";
 			mes "...I wish I was in prison.";
-			emotion e_wah;
+			emotion ET_KEK;
 			viewpoint 1,217,196,3,0xCE6300;
 			break;
 		case 3:
@@ -84,7 +84,7 @@ niflheim,107,156,6	script	Roaming Man#nif	798,{
 			mes "the monsters here will just";
 			mes "make them angrier. You may as";
 			mes "well let them eat you.";
-			emotion e_wah;
+			emotion ET_KEK;
 			viewpoint 1,216,171,4,0x55FF33;
 			break;
 		case 4:

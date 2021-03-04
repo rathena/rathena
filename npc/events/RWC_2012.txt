@@ -315,7 +315,7 @@ prontera,147,59,3	script	Goldberg#pron	878,{
 			mes "I'm sorry. But you don't have the RWC Initialization coupon. Can you check your inventory?";
 			close;
 		}
-		if (.@equip_card[3] == 0) {
+		if (callfunc("F_IsCharm",.@equip_card[3]) == false) {
 			mes "[Goldberg]";
 			mes "Hm... this equipment is clean. I cannot initialize it if there's nothing! Check it again.";
 			close;
@@ -327,9 +327,9 @@ prontera,147,59,3	script	Goldberg#pron	878,{
 		delequip .@part;
 	
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
-		for(set .@i,0; .@i<4; set .@i,.@i+1) {
-			if (.@equip_card[.@i] >= 4700) // Armor Enchant System
-				set .@equip_card[.@i],0;
+		for ( .@i = getiteminfo(.@equip_id,10); .@i < MAX_SLOTS; .@i++ ) {
+			if (callfunc("F_IsCharm",.@equip_card[.@i]) == true)
+				.@equip_card[.@i] = 0;// Armor Enchant System
 		}
 		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
 		

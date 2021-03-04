@@ -59,6 +59,7 @@ values.
  B = 1 byte (byte)
  W = 2 bytes (word)
  L = 4 bytes (long, dword)
+ F = 4 bytes (float)
  Q = 8 bytes (quad)
 
  nB = n bytes

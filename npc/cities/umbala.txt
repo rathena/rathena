@@ -43,7 +43,7 @@ comodo,171,137,1	script	Haith#um	92,{
 	next;
 	mes "[La Ed]";
 	mes "Let's do it~ !!";
-	emotion e_gg;
+	emotion ET_KIK;
 	next;
 	mes "[Haith]";
 	mes "................";
@@ -52,8 +52,8 @@ comodo,171,137,1	script	Haith#um	92,{
 	mes "By the way...do you think he";
 	mes "would tell us about such a";
 	mes "great treasure so easily?";
-	emotion e_hmm;
-	emotion e_hmm,0,"La Ed#um";
+	emotion ET_SCRATCH;
+	emotion ET_SCRATCH, getnpcid(0, "La Ed#um");
 	next;
 	select("Hm? What treasure?");
 	mes "[La Ed]";
@@ -63,7 +63,7 @@ comodo,171,137,1	script	Haith#um	92,{
 	mes "Huh...seems like you wanna know";
 	mes "more about the treasure. Well,";
 	mes "this information doesn't come cheap...";
-	emotion e_gg;
+	emotion ET_KIK;
 	next;
 	mes "[La Ed]";
 	mes "Plus, we'll need a little";
@@ -73,8 +73,8 @@ comodo,171,137,1	script	Haith#um	92,{
 	next;
 	mes "[La Ed, Haith]";
 	mes "If you pay us 1,000 zeny, we will tell you!";
-	emotion e_gg;
-	emotion e_gg,0,"La Ed#um";
+	emotion ET_KIK;
+	emotion ET_KIK, getnpcid(0, "La Ed#um");
 	next;
 	if (select("Pay 1,000 zeny:Refuse to pay") == 1) {
 		if (Zeny > 999) {
@@ -108,7 +108,7 @@ comodo,171,137,1	script	Haith#um	92,{
 			mes "whether or not Niels would tell";
 			mes "us the location of where he";
 			mes "found the treasure...";
-			emotion e_hmm;
+			emotion ET_SCRATCH;
 			next;
 			mes "[La Ed]";
 			mes "Because Niels always treat us like";
@@ -133,8 +133,8 @@ comodo,171,137,1	script	Haith#um	92,{
 	}
 	mes "[Haith]";
 	mes "Bah! Whatever~";
-	emotion e_hmm;
-	emotion e_hmm;
+	emotion ET_SCRATCH;
+	emotion ET_SCRATCH, getnpcid(0, "La Ed#um");
 	close;
 }
 
@@ -208,7 +208,7 @@ cmd_in01,164,115,1	script	Niels#um	731,{
 	mes "rather dramatic sound effect";
 	mes "for my declaration!";
 	mes "Eh, oh well...";
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	next;
 	mes "[Niels]";
 	mes "Well, in the spirit of discovery,";
@@ -247,7 +247,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "[???]";
 		mes "Heh! Hi!";
 		mes "My name is Haatan.";
-		emotion e_heh;
+		emotion ET_SMILE;
 		next;
 		mes "[Haatan]";
 		mes "...*Sigh*";
@@ -255,7 +255,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "you right now. My parent's house";
 		mes "was struck by lightning yesterday";
 		mes "and it burned down our roof...";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Haatan]";
 		mes " . . . !";
@@ -265,9 +265,9 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "You look pretty well off...";
 		mes "Can donate some money for";
 		mes "re-constructing my parents' house?";
-		mes "You Rune-Midgardians are all";
-		mes "richier than Utans! I beg you!";
-		emotion e_heh;
+		mes "You Rune-Midgartsians are all";
+		mes "richer than Utans! I beg you!";
+		emotion ET_SMILE;
 		next;
 		if (select("(Nod head):(Shake head)") == 1) {
 			mes "[Haatan]";
@@ -277,9 +277,9 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 			if (Zeny > 1000) {
 				set Zeny, Zeny-1000;
 				if (checkweight(517,1)) {
-					getitem 517,1; //Meat
+					getitem 517,1;// Meat
 				}
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 			}
 			else {
 				next;
@@ -288,18 +288,18 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 				mes "It looks like...";
 				mes "You don't have much";
 				mes "yourself...";
-				emotion e_pif;
+				emotion ET_HNG;
 				close;
 			}
 			next;
 			mes "[Haatan]";
 			mes "Thank you so much!";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 		mes "[Haatan]";
 		mes ".............*Sob*...";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	else {
@@ -310,7 +310,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "[???]";
 		mes "Umbah! Umbaumbah!";
 		mes "Umbahumbah Haatan babah.";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Haatan]";
 		mes "........umbah,";
@@ -318,7 +318,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "Babaum babahum woombah umbah umbabah";
 		mes "Umbah umbah";
 		mes "..Umbah umbabah umbah...";
-		emotion e_heh;
+		emotion ET_SMILE;
 		next;
 		mes "[Haatan]";
 		mes " . . . !";
@@ -328,7 +328,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 		mes "Umbah umbah? Umbah umbahbah";
 		mes "abaum babahum woombah!";
 		mes "Umbahumbah umbabahumbaumhumbah! Umbah!";
-		emotion e_heh;
+		emotion ET_SMILE;
 		next;
 		if (select("(Nod head):(Shake head)") == 1) {
 			mes "[Haatan]";
@@ -338,26 +338,26 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 			if (Zeny > 1000) {
 				set Zeny, Zeny-1000;
 				if (checkweight(517,1)) {
-					getitem 517,1; //Meat
+					getitem 517,1;// Meat
 				}
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 			}
 			else {
 				next;
 				mes "[Haatan]";
 				mes "...umbah? Umbahumbah!! Umbaum!";
-				emotion e_pif;
+				emotion ET_HNG;
 				close;
 			}
 			next;
 			mes "[Haatan]";
 			mes "Umba umba umbaum.";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		mes "[Haatan]";
 		mes "........umbah..";
-		emotion e_heh;
+		emotion ET_SMILE;
 		close;
 	}
 	close;
@@ -370,7 +370,7 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 		mes ".........poop!";
 		mes ".....me like Meat.";
 		mes "....gimme a Meat.";
-		emotion e_rock;
+		emotion ET_ROCK;
 		next;
 		if (select("Give him Meat.:Refuse.") == 1) {
 			if (countitem(517) > 0) {
@@ -378,11 +378,11 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 				mes "Whoa, are you really giving me";
 				mes "Meat? Thanks! I will pay you";
 				mes "back with these.";
-				delitem 517,1; //Meat
-				getitem 909,2; //Jellopy
-				getitem 914,2; //Fluff
-				getitem 705,2; //Clover
-				emotion e_scissors;
+				delitem 517,1;// Meat
+				getitem 909,2;// Jellopy
+				getitem 914,2;// Fluff
+				getitem 705,2;// Clover
+				emotion ET_SCISSOR;
 				close;
 			}
 			mes "[Kotan]";
@@ -391,7 +391,7 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 			mes "I hate people who lie";
 			mes "to me!!";
 			percentheal -20,0;
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		}
 		mes "[Kotan]";
@@ -399,7 +399,7 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 		mes ".....hungwee.";
 		mes ".....I want Meat.";
 		percentheal -1,0;
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	else {
@@ -408,32 +408,32 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 		mes "........umbah.";
 		mes ".......umbabah.";
 		mes "......humbah.";
-		emotion e_rock;
+		emotion ET_ROCK;
 		next;
 		if (select("Umbah:Umbaboo") == 1) {
 			if (countitem(517) > 0) {
 				mes "[???]";
 				mes "Umbaumbaumbabababah.";
 				mes "Umbababahum.";
-				delitem 517,1; //Meat
-				getitem 909,2; //Jellopy
-				getitem 914,2; //Fluff
-				getitem 705,2; //Clover
-				emotion e_scissors;
+				delitem 517,1;// Meat
+				getitem 909,2;// Jellopy
+				getitem 914,2;// Fluff
+				getitem 705,2;// Clover
+				emotion ET_SCISSOR;
 				close;
 			}
 			mes "[???]";
 			mes "Umbahumumhumbubabababah!!";
 			mes "Umbahumbababah umbahumboo!";
 			percentheal -20,0;
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		}
 		mes "[???]";
 		mes "...........";
 		mes "......woong bah.";
 		mes "....umbabababah.";
-		emotion e_sob;
+		emotion ET_CRY;
 		percentheal -1,0;
 		close;
 	}
@@ -441,9 +441,9 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 
 umbala,177,153,3	script	Pasto#um	97,{
 	mes "[Pasto]";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "Oh my god~! Finally,";
-	mes "another Rune-Midgardian!";
+	mes "another Rune-Midgartsian!";
 	mes "I've never seen anyone from";
 	mes "home in this place before!";
 	mes "Nice to meet you, my name is Pasto!";
@@ -486,7 +486,7 @@ umbala,177,153,3	script	Pasto#um	97,{
 	mes "people here that speak my";
 	mes "language...I...I'm...";
 	mes "So very lonely...*Sob*";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -534,7 +534,7 @@ umbala,80,146,4	script	Yuwooki#um	753,{
 	mes "I eventually realized that their";
 	mes "courtship rituals are actually";
 	mes "more advanced than anything the";
-	mes "Rune-Midgard culture has to offer.";
+	mes "Rune-Midgarts culture has to offer.";
 	next;
 	mes "[Yuwooki]";
 	mes "It's really quite fascinating.";
@@ -615,7 +615,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 		next;
 		mes "[Bertan]";
 		mes "What's the matter,";
-		mes "ya big Rune-Midgardian?!?!";
+		mes "ya big Rune-Midgartsian?!?!";
 		mes "I just called you a 'loser!'";
 		mes "I guess you're too stupid";
 		mes "to understand!!";
@@ -640,7 +640,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 		switch(rand(1,6)) {
 		case 1:
 			mes "[Bertan]";
-			mes "What did the Rune-Midgardian";
+			mes "What did the Rune-Midgartsian";
 			mes "say to the Savage?";
 			mes "...";
 			next;
@@ -695,7 +695,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 			close;
 		case 4:
 			mes "[Bertan]";
-			mes "Why are Rune-Midgardians";
+			mes "Why are Rune-Midgartsians";
 			mes "SOOoOOoo...";
 			mes "Um, hmmmmm.";
 			mes "Maybe that joke";
@@ -798,7 +798,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 		next;
 		mes "[????]";
 		mes "Umbaumba Umbaumbah woo~";
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		close;
 	}
 	close;
@@ -807,7 +807,7 @@ umbala,92,159,4	script	Bertan#um	785,{
 umbala,194,104,4	script	Utan Kid#2	787,{
 	if (event_umbala >= 3) {
 		mes "[Boorkatan]";
-		mes "Huh? You're from Rune-Midgard,";
+		mes "Huh? You're from Rune-Midgarts,";
 		mes "aren't you? Have you ever been bungee jumping?";
 		next;
 		if (select("Yeah:No") == 1) {
@@ -879,7 +879,7 @@ umbala,139,205,4	script	Utan Man#5	785,{
 	if (event_umbala >= 3) {
 		mes "[Jooltan]";
 		mes "It's been a long time since I last";
-		mes "saw a Rune-Midgardian~!";
+		mes "saw a Rune-Midgartsian~!";
 		mes "Welcome, stranger.";
 		next;
 		mes "[Jooltan]";
@@ -1001,7 +1001,7 @@ um_in,158,71,3	script	Utan villager#um	787,{
 }
 
 umbala,140,197,1	script	Bungee Jump	-1,0,0,{
-OnTouch:
+OnTouch_:
 	switch(rand(1,3)) {
 	case 1:
 		percentheal -100,0;
@@ -1021,7 +1021,7 @@ OnTouch:
 }
 
 umbala,136,195,0	script	 #jump	-1,1,1,{
-OnTouch:
+OnTouch_:
 	warp "umbala",145,166;
 	end;
 }

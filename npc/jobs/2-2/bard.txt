@@ -82,7 +82,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 			mes "Always full of happy moments~";
 			next;
 			mes "[Lalo]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Forget about your worries~";
 				mes "And enjoy everything~";
 			}
@@ -96,7 +96,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 	else if(BARD_Q == 0) {
 		cutin "job_bard_aiolo01",2;
 		mes "[Lalo]";
-		if (Sex) mes "Hi! Delightful Archer.";
+		if (Sex == SEX_MALE) mes "Hi! Delightful Archer.";
 		else mes "Hello! Beautiful Archer Lady.";
 		mes "How can a wanderer like me help you?";
 		next;
@@ -149,7 +149,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 				mes "[Lalo]";
 				mes "Thanks! if you enjoyed my song, it makes me happy, too.";
 				next;
-				if (Sex == 1 && JobLevel > 39) {
+				if (Sex == SEX_MALE && JobLevel > 39) {
 					mes "[Lalo]";
 					mes "It would be nice if more people went around and sang...";
 					mes "Well, it's quite ok as it is now... hmmhmm.";

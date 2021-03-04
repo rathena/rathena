@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Yuno Warp Script
+//= Juno Warp Script
 //===== By: ==================================================
 //= Nana (1.0)
 //= Sara-chan (1.1)
@@ -8,21 +8,22 @@
 //===== Compatible With: =====================================
 //= rAthena Project; RO Episode 5+
 //===== Description: =========================================
-//= Warp Points for Yuno
+//= Warp Points for Juno
 //===== Additional Comments: =================================
-//= 1.1 - Added Yuno Airport warps
+//= 1.1 - Added Juno Airport warps
 //= 1.2 Moved all airports to Airplane Warps [Lupus]
 //= 1.3 Dr.Evil's yuno_05 warps update [Lupus]
 //= 1.4 optimized [Lupus]
 //= 1.5 Added Missing Juno warps [musashiden]
 //= 1.6 Corrected duplicate warps [Musashiden]
 //= 1.7 Yet another missing warp [Musashiden]
-//= 1.8 Added Yuno Government Buildings warps
-//= 1.9 Updated Yuno Government Buildings warps according
-//= to Schwartzvalt Trilogy quest. [SinSloth]
+//= 1.8 Added Juno Government Buildings warps
+//= 1.9 Updated Juno Government Buildings warps according
+//= to Schwarzwald Trilogy quest. [SinSloth]
+//= 2.0 Correct position of portals [JohnnyPlayy]
 //============================================================
 
-//= Yuno City ================================================
+//= Juno City ================================================
 yuno,158,15,0	warp	yun-yunfild	1,1,yuno_fild04,231,284
 yuno,117,135,0	warp	yun01	1,1,yuno_in01,116,37
 yuno_in01,116,40,0	warp	yun02	1,1,yuno,120,138
@@ -57,10 +58,10 @@ yuno_in03,167,19,0	warp	yun30	1,1,yuno,323,280
 yuno_in03,167,72,0	warp	yun31	1,1,yuno_in03,179,113
 yuno_in03,179,109,0	warp	yun32	1,1,yuno_in03,167,69
 yuno_in03,186,119,0	warp	yun33	1,1,yuno_in03,163,174
-yuno_in03,159,174,0	warp	yun34	1,1,yuno_in03,183,119
+yuno_in03,161,174,0	warp	yun34	1,1,yuno_in03,183,119
 yuno_in03,186,131,0	warp	yun35	1,1,yuno_in03,163,187
-yuno_in03,159,187,0	warp	yun36	1,1,yuno_in03,183,131
-yuno_in03,172,118,0	warp	yun37	1,1,yuno_in03,120,178
+yuno_in03,161,187,0	warp	yun36	1,1,yuno_in03,183,131
+yuno_in03,173,118,0	warp	yun37	1,1,yuno_in03,120,178
 yuno_in03,124,178,0	warp	yun38	1,1,yuno_in03,176,118
 yuno_in03,111,192,0	warp	yun39	1,1,yuno_in03,162,132
 yuno_in03,162,129,0	warp	yun40	1,1,yuno_in03,111,189
@@ -89,7 +90,7 @@ yuno_in05,196,194,0	warp	yun62	1,1,yuno_in02,85,14
 yuno,245,147,0	warp	yun65	1,1,yuno_in01,101,88
 yuno_in01,101,85,0	warp	yun66	1,1,yuno,245,144
 
-// Yuno In05 (Entering Random Warps) -------------------------------------------
+// Juno In05 (Entering Random Warps) -------------------------------------------
 yuno_in05,153,141,0	script	#yun63	45,1,1,{
 	if (rand(2))
 		warp "yuno_in05",192,102;
@@ -97,7 +98,7 @@ yuno_in05,153,141,0	script	#yun63	45,1,1,{
 		warp "yuno_in05",145,82;
 	end;
 }
-// Yuno In05 (Random Warps - Cross Shaped) -------------------------------------
+// Juno In05 (Random Warps - Cross Shaped) -------------------------------------
 yuno_in05,196,102,0	script	#yun64	45,1,1,{
 	switch(rand(3)) {
 		case 0: warp "yuno_in05",169,102; end;
@@ -126,7 +127,7 @@ yuno_in05,181,91,0	script	#yun67	45,1,1,{
 		warp "yuno_in05",176,48;
 	end;
 }
-// Yuno In05 (Random Warps - T-Shaped) -----------------------------------------
+// Juno In05 (Random Warps - T-Shaped) -----------------------------------------
 yuno_in05,148,82,0	script	#yun68	45,1,1,{
 	switch(rand(3)) {
 		case 0: warp "yuno_in05",169,102; end;
@@ -148,7 +149,7 @@ yuno_in05,136,71,0	script	#yun70	45,1,1,{
 		case 2: warp "yuno_in05",176,48;  end;
 	}
 }
-// Yuno In05 (Random Warps - Other) --------------------------------------------
+// Juno In05 (Random Warps - Other) --------------------------------------------
 yuno_in05,16,188,0	script	#yun71	45,1,1,{
 	switch(rand(3)) {
 		case 0: warp "yuno_in05",181,94; end;
@@ -170,7 +171,7 @@ yuno_in05,176,52,0	script	#yun73	45,1,1,{
 		case 2: warp "yuno_in05",136,75; end;
 	}
 }
-// Yuno In05 (Destination - Room) ----------------------------------------------
+// Juno In05 (Destination - Room) ----------------------------------------------
 yuno_in05,40,178,0	script	#yun74	45,1,1,{
 	switch(rand(3)) {
 		case 0: warp "yuno_in05",181,94; end;
@@ -185,11 +186,15 @@ yuno_in05,47,186,0	script	#yun75	45,1,1,{
 		case 2: warp "yuno_in05",136,75; end;
 	}
 }
-// Yuno In05 (Destination - Escaped Random Warps) ------------------------------
+// Juno In05 (Destination - Escaped Random Warps) ------------------------------
 yuno_in05,31,167,0	warp	yun76	1,1,yuno_in05,50,85
 yuno_in05,50,88,0	warp	yun77	1,1,yuno_in02,85,14
 
-// Yuno Government Buildings ---------------------------------------------------
+// Juno In04 (Destination - Room) ----------------------------------------------
+yuno,195,87,0	warp	yun78 	1,1,yuno_in04,189,28
+yuno_in04,192,28,0	warp	yun79	1,1,yuno,198,87
+
+// Juno Government Buildings ---------------------------------------------------
 yuno_pre,52,22,0	warp	yungvn01	1,1,yuno_pre,37,23
 yuno_pre,87,22,0	warp	yungvn02	1,1,yuno_pre,102,22
 yuno_pre,41,23,0	warp	yungvn03	1,1,yuno_pre,56,22

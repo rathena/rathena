@@ -9,7 +9,7 @@
 // 2    - cannot be used in PvP maps (use this instead of 1 for PK-mode servers)
 // 4    - cannot be used in GvG maps
 // 8    - cannot be used in Battleground maps
-// 16   - cannot be cloned (clones will not copy this skill)
+// 16   - cannot be used in WOE:TE castles
 // Restricted zones - configured by 'restricted <number>' mapflag
 // 32   - cannot be used in zone 1 maps
 // 64   - cannot be used in zone 2 maps
@@ -18,6 +18,7 @@
 // 512  - cannot be used in zone 5 maps
 // 1024 - cannot be used in zone 6 maps
 // 2048 - cannot be used in zone 7 maps
+// 4096 - cannot be used in zone 8 maps
 //
 // Example:
 // 8,6  // Endure cannot be used in PvP and GvG maps (2+4)
@@ -53,7 +54,6 @@
 530,4	//NJ_KIRIKAGE
 691,4	//CASH_ASSUMPTIO
 1013,4	//BS_GREED
-2284,4	//SC_FATALMENACE
 2300,4	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
@@ -90,7 +90,6 @@
 440,8	//SG_STAR_BLESS
 530,8	//NJ_KIRIKAGE
 691,8	//CASH_ASSUMPITO
-2284,8	//SC_FATALMENACE
 2300,8	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
@@ -98,12 +97,6 @@
 //----------------------------------------------------------------------------
 488,3	//CG_HERMODE
 3013,3	//KO_KYOUGAKU
-
-//----------------------------------------------------------------------------
-// Clone Forbidden/pointless skills
-//----------------------------------------------------------------------------
-77,16	//PR_TURNUNDEAD
-79,16	//PR_MAGNUS
 
 //----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track
@@ -123,7 +116,6 @@
 387,32	//WS_CARTBOOST
 389,32	//ST_CHASEWALK
 395,32	//CG_MOONLIT
-2284,32	//SC_FATALMENACE
 2300,32	//SC_DIMENSIONDOOR
 2478,32	//GN_CARTBOOST
 
@@ -138,7 +130,6 @@
 //----------------------------------------------------------------------------
 219,128 //RG_INTIMIDATE
 26,128	//AL_TELEPORT
-2284,128	//SC_FATALMENACE
 2300,128	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
@@ -155,7 +146,6 @@
 219,512	//RG_INTIMIDATE
 361,512	//HP_ASSUMPTIO
 691,512	//CASH_ASSUMPTIO
-2284,512	//SC_FATALMENACE
 2294,512	//SC_IGNORANCE
 2300,512	//SC_DIMENSIONDOOR
 
@@ -167,7 +157,6 @@
 219,1024	//RG_INTIMIDATE
 405,1024	//PF_SPIDERWEB
 674,1024	//NPC_EXPULSION
-2284,1024	//SC_FATALMENACE
 2294,1024	//SC_IGNORANCE
 2300,1024	//SC_DIMENSIONDOOR
 

@@ -1,0 +1,1838 @@
+//===== rAthena Script =======================================
+//= Instances Heart Hunter War Base.
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Require Terra Gloria main quest.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Einbroch Field - instance
+ein_fild04,275,342,5	script	Striker Unit Commander#	4_M_REBELLION3,{
+	if (terra_gloria_main < 19) {
+		mes "[Striker Unit Commander]";
+		mes "Hey, who's there?";
+		next;
+		select("I am executing my mission with the Rebellion unit.");
+		mes "[Striker Unit Commander]";
+		mes "This place is dangerous and you must leave quickly. We are near the enemy base.";
+		close;
+	}
+	switch( checkquest(12375,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Striker Unit Commander]";
+		mes "We are arranging the situation inside the base. We cannot let you in yet.";
+		close;
+	case 2:
+		mes "^0000ffSeems like the base has been arranged inside. ^000000";
+		erasequest 12375;// Base maintenance
+		break;
+	}
+	if (isbegin_quest(12374) == 0) {
+		mes "[Striker Unit Commander]";
+		mes "Once we are ready for the operation, you will get in there with me.";
+		next;
+		mes "[Striker Unit Commander]";
+		mes "By the way, did you receive a briefing from the general Julian? Come back after receiving the briefing.";
+		close;
+	}
+	mes "[Striker Unit Commander]";
+	mes "Once we are ready for the operation, you will get in there with me.";
+	next;
+	if (terra_gloria_main == 19)
+		.@md_name$ = "Heart Hunter War Base 1";
+	else
+		.@md_name$ = "Heart Hunter War Base 2";
+	switch( instance_enter(.@md_name$) ) {
+	case IE_NOMEMBER:
+		mes "^0000ffSeems like an adventurer without his/her unit (party) cannot enter.^000000";
+		close;
+	case IE_NOINSTANCE:
+		mes "[Striker Unit Commander]";
+		mes "The field of operation is " + .@md_name$ + " Check whether the operation was applied properly.";
+		next;
+		mes "^ff0000Goint to the outer boundary of Heart Hunter War Base without clearing the Heart Hunter War Base is prohibited. Also, you cannot enter the Heart Hunter War Base that has already been cleared. Please check your operation point^000000";
+		next;
+		mes "^ff0000This is when your progress is different from your party leader of the party member. In this case, find another party member who can go to the same place with you.^000000";
+		next;
+		mes "^ff0000The entry is also impossible if the Memorial Dungeon has not been created as an operation field.^000000";
+		close;
+	case IE_OTHER:
+		mes "An unknown error has occurred.";
+		close;
+	case IE_OK:
+		mapannounce "ein_fild04", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
+		setquest 12375;// Base maintenance
+		// if (terra_gloria_main == 20)
+		// 	warp "1@swat",35,65;
+		// else
+		// 	warp "1@swat",73,118;
+		end;
+	}
+}
+
+ein_fild04,281,337,3	script	Julian#ep16.2	4_M_REBELLION2,{
+	if (terra_gloria_main < 19) {
+		mes "^ff0000If you deal with monsters arbitrarily inside a dungeon, such as Monster taming, it will not be regarded as a normal progress. Please be aware of it.^000000";
+		next;
+		mes "[Julian]";
+		mes "Stop, which unit are you from? According to your answer, we may have to suppress you using an armed force.";
+		next;
+		select("I am executing my mission with the Rebellion unit.");
+		mes "[Julian]";
+		mes "Hmm, you are our troop? Since the scouting is not over yet, don't wander around here carelessly.";
+		close;
+	}
+	mes "^ff0000If you deal with monsters arbitrarily inside a dungeon, such as Monster taming, it will not be regarded as a normal progress. Please be aware of it.^000000";
+	next;
+	if (getcharid(1) < 1) {
+		mes "[Julian]";
+		mes "Are you a deserter wandering around without a position?";
+		next;
+		mes "^ff0000Only the party leader can talk to Julian in detail.^000000";
+		close;
+	}
+	switch( checkquest(12375,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		mes "[Julian]";
+		mes "We are arranging the situation inside the base. You cannot enter yet.";
+		close;
+	case 2:
+		mes "^0000ffSeems like the base has been arranged inside. ^000000";
+		erasequest 12375;// Base maintenance
+		next;
+		break;
+	}
+	switch( isbegin_quest(12374) ) {
+	case 0:
+		mes "[Julian]";
+		mes "Are you the augmentation force in striking Heart Hunter base? I think we met before.";
+		next;
+		select("Just a thought.");
+		mes "[Julian]";
+		mes "Well, it doesn't matter. You should have a rough idea of what's going on here. Just remember that it's not going to be an easy task.";
+		next;
+		if (select( "Explain the situation to me.", "No time, let's proceed now." ) == 2) {
+			mes "[Julian]";
+			mes "Sounds cool. You are like a foreign legion, so stay beside me during the operation.";
+		}
+		else {
+			mes "[Julian]";
+			mes "Hmm, you haven't received a briefing yet? Since we don't have enough time, let me explain briefly.";
+			next;
+			mes "[Julian]";
+			mes "We don't have enough forces to strike the base.";
+			next;
+			mes "[Julian]";
+			mes "For the sake of mobility, we abandoned heavy firearms. Since our top priority mission is to occupy the base without destroying it much, most of explosive weapons have been excluded as well.";
+			next;
+			mes "[Julian]";
+			mes "If necessary, we can reinforce our firearms using the terrain features in the field... But it must be minimized.";
+			next;
+			mes "[Julian]";
+			mes "In any case, most of the operation must be anti-personnel damage and the base facilities have to be maintained whenever possible.";
+			next;
+			mes "[Julian]";
+			mes "Our advance party has secured the boundary surface in the southern base. We will take that route to move to the central part. And each striker unit will move in an individual route.";
+			next;
+			mes "[Julian]";
+			mes "You are like a foreign legion, so stay beside me during the operation. Any more question? Of course, I won't take any, even though you have one.";
+		}
+		next;
+		setquest 12374;// Heart Hunter Base occupation
+		mes "[Julian]";
+		mes "After that, follow the instruction of the chief of your unit. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
+		if (is_party_leader() == true) {
+			next;
+			mes "[Julian]";
+			mes "If you are ready, I will let you know the attack time.";
+			next;
+			if (select( "I'm ready.", "I need some more time." ) == 2) {
+				mes "[Julian]";
+				mes "I see. Since we are in a hurry, complete your preparation quickly and let me know.";
+				close;
+			}
+			break;
+		}
+		close;
+	case 1:
+		if (is_party_leader() == false) {
+			mes "[Julian]";
+			mes "After that, follow the instruction of the chief of your unit. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
+			close;
+		}
+		mes "[Julian]";
+		mes "Have you been to the toilet? I was looking for you.";
+		next;
+		mes "[Julian]";
+		mes "If you are ready, I will let you know the attack time.";
+		next;
+		if (select( "I'm ready.", "I need some more time." ) == 2) {
+			mes "[Julian]";
+			mes "I see. Since we are in a hurry, complete your preparation quickly and let me know.";
+			close;
+		}
+		break;
+	case 2:
+		if (is_party_leader() == false) {
+			mes "[Julian]";
+			mes "After that, follow the instruction of the chief of your unit. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
+			close;
+		}
+		mes "[Julian]";
+		mes "There is a broad vacant land on the outer boundary of the base we have occupied. We built a training ground there, but the facilities are imperfect. I need elite personnel who can examine it.";
+		next;
+		mes "[Julian]";
+		mes "Oh, isn't this the first time I tell you this? I would be glad if you can examine the facilities. What do you think?";
+		next;
+		if (select( "Let me do it.", "Maybe next time..." ) == 2) {
+			mes "[Julian]";
+			mes "I got it. I asked a little too much.";
+			close;
+		}
+		break;
+	}
+	if (terra_gloria_main == 19)
+		instance_create("Heart Hunter War Base 1");
+	else
+		instance_create("Heart Hunter War Base 2");
+	mes "[Julian]";
+	mes "It will open soon. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
+	close;
+}
+
+
+// Hunter Instance 1
+1@swat,36,71,6	duplicate(dummy_npc)	#ext1	4_M_REBELLION
+1@swat,36,68,6	duplicate(dummy_npc)	#ext2	4_F_REBELLION
+1@swat,36,65,6	duplicate(dummy_npc)	#ext3	4_M_REBELLION
+1@swat,36,62,6	duplicate(dummy_npc)	#ext4	4_F_REBELLION
+1@swat,36,59,6	duplicate(dummy_npc)	#ext5	4_M_REBELLION
+1@swat,33,71,6	duplicate(dummy_npc)	#ext6	4_F_REBELLION
+1@swat,33,68,6	duplicate(dummy_npc)	#ext7	4_M_REBELLION
+1@swat,33,65,6	duplicate(dummy_npc)	#ext8	4_F_REBELLION
+1@swat,33,62,6	duplicate(dummy_npc)	#ext9	4_M_REBELLION
+1@swat,33,59,6	duplicate(dummy_npc)	#ext10	4_F_REBELLION
+1@swat,30,71,6	duplicate(dummy_npc)	#ext11	4_M_REBELLION
+1@swat,30,68,6	duplicate(dummy_npc)	#ext12	4_F_REBELLION
+1@swat,30,65,6	duplicate(dummy_npc)	#ext13	4_M_REBELLION
+1@swat,30,62,6	duplicate(dummy_npc)	#ext14	4_F_REBELLION
+1@swat,30,59,6	duplicate(dummy_npc)	#ext15	4_M_REBELLION
+
+
+// Hunter Instance 1 - Step 1 Piles
+1@swat,116,30,6	duplicate(dummy_npc)	#wl1	4_ROPEPILE
+1@swat,116,31,6	duplicate(dummy_npc)	#wl2	4_ROPEPILE
+1@swat,116,32,6	duplicate(dummy_npc)	#wl3	4_ROPEPILE
+1@swat,116,33,6	duplicate(dummy_npc)	#wl4	4_ROPEPILE
+1@swat,116,34,6	duplicate(dummy_npc)	#wl5	4_ROPEPILE
+1@swat,116,35,6	duplicate(dummy_npc)	#wl6	4_ROPEPILE
+1@swat,116,36,6	duplicate(dummy_npc)	#wl7	4_ROPEPILE
+1@swat,116,37,6	duplicate(dummy_npc)	#wl8	4_ROPEPILE
+1@swat,116,38,6	duplicate(dummy_npc)	#wl9	4_ROPEPILE
+1@swat,116,39,6	duplicate(dummy_npc)	#wl10	4_ROPEPILE
+1@swat,116,40,6	duplicate(dummy_npc)	#wl11	4_ROPEPILE
+1@swat,116,41,6	duplicate(dummy_npc)	#wl12	4_ROPEPILE
+1@swat,116,42,6	duplicate(dummy_npc)	#wl13	4_ROPEPILE
+1@swat,116,43,6	duplicate(dummy_npc)	#wl14	4_ROPEPILE
+1@swat,116,44,6	duplicate(dummy_npc)	#wl15	4_ROPEPILE
+1@swat,116,45,6	duplicate(dummy_npc)	#wl16	4_ROPEPILE
+1@swat,116,46,6	duplicate(dummy_npc)	#wl17	4_ROPEPILE
+1@swat,116,47,6	duplicate(dummy_npc)	#wl18	4_ROPEPILE
+1@swat,116,48,6	duplicate(dummy_npc)	#wl19	4_ROPEPILE
+1@swat,116,49,6	duplicate(dummy_npc)	#wl20	4_ROPEPILE
+1@swat,116,50,6	duplicate(dummy_npc)	#wl21	4_ROPEPILE
+1@swat,116,51,6	duplicate(dummy_npc)	#wl22	4_ROPEPILE
+1@swat,116,52,6	duplicate(dummy_npc)	#wl23	4_ROPEPILE
+1@swat,116,53,6	duplicate(dummy_npc)	#wl24	4_ROPEPILE
+1@swat,116,54,6	duplicate(dummy_npc)	#wl25	4_ROPEPILE
+1@swat,116,55,6	duplicate(dummy_npc)	#wl26	4_ROPEPILE
+1@swat,116,56,6	duplicate(dummy_npc)	#wl27	4_ROPEPILE
+1@swat,116,57,6	duplicate(dummy_npc)	#wl28	4_ROPEPILE
+1@swat,116,58,6	duplicate(dummy_npc)	#wl29	4_ROPEPILE
+1@swat,116,59,6	duplicate(dummy_npc)	#wl30	4_ROPEPILE
+1@swat,116,60,6	duplicate(dummy_npc)	#wl31	4_ROPEPILE
+1@swat,116,61,6	duplicate(dummy_npc)	#wl32	4_ROPEPILE
+1@swat,116,62,6	duplicate(dummy_npc)	#wl33	4_ROPEPILE
+1@swat,116,63,6	duplicate(dummy_npc)	#wl34	4_ROPEPILE
+1@swat,116,64,6	duplicate(dummy_npc)	#wl35	4_ROPEPILE
+1@swat,116,65,6	duplicate(dummy_npc)	#wl36	4_ROPEPILE
+
+// Hunter Instance 1 - Step 2 Piles
+1@swat,151,30,6	duplicate(dummy_npc)	#wl37	4_ROPEPILE
+1@swat,151,31,6	duplicate(dummy_npc)	#wl38	4_ROPEPILE
+1@swat,151,32,6	duplicate(dummy_npc)	#wl39	4_ROPEPILE
+1@swat,151,33,6	duplicate(dummy_npc)	#wl40	4_ROPEPILE
+1@swat,151,34,6	duplicate(dummy_npc)	#wl41	4_ROPEPILE
+1@swat,151,35,6	duplicate(dummy_npc)	#wl42	4_ROPEPILE
+1@swat,151,36,6	duplicate(dummy_npc)	#wl43	4_ROPEPILE
+1@swat,151,37,6	duplicate(dummy_npc)	#wl44	4_ROPEPILE
+1@swat,151,38,6	duplicate(dummy_npc)	#wl45	4_ROPEPILE
+1@swat,151,39,6	duplicate(dummy_npc)	#wl46	4_ROPEPILE
+1@swat,151,40,6	duplicate(dummy_npc)	#wl47	4_ROPEPILE
+1@swat,151,41,6	duplicate(dummy_npc)	#wl48	4_ROPEPILE
+1@swat,151,42,6	duplicate(dummy_npc)	#wl49	4_ROPEPILE
+1@swat,151,43,6	duplicate(dummy_npc)	#wl50	4_ROPEPILE
+1@swat,151,44,6	duplicate(dummy_npc)	#wl51	4_ROPEPILE
+1@swat,151,45,6	duplicate(dummy_npc)	#wl52	4_ROPEPILE
+1@swat,151,46,6	duplicate(dummy_npc)	#wl53	4_ROPEPILE
+1@swat,151,47,6	duplicate(dummy_npc)	#wl54	4_ROPEPILE
+1@swat,151,48,6	duplicate(dummy_npc)	#wl55	4_ROPEPILE
+1@swat,151,49,6	duplicate(dummy_npc)	#wl56	4_ROPEPILE
+1@swat,151,50,6	duplicate(dummy_npc)	#wl57	4_ROPEPILE
+1@swat,151,51,6	duplicate(dummy_npc)	#wl58	4_ROPEPILE
+1@swat,151,52,6	duplicate(dummy_npc)	#wl59	4_ROPEPILE
+1@swat,151,53,6	duplicate(dummy_npc)	#wl60	4_ROPEPILE
+1@swat,151,54,6	duplicate(dummy_npc)	#wl61	4_ROPEPILE
+1@swat,151,55,6	duplicate(dummy_npc)	#wl62	4_ROPEPILE
+1@swat,151,56,6	duplicate(dummy_npc)	#wl63	4_ROPEPILE
+1@swat,151,57,6	duplicate(dummy_npc)	#wl64	4_ROPEPILE
+1@swat,151,58,6	duplicate(dummy_npc)	#wl65	4_ROPEPILE
+1@swat,151,59,6	duplicate(dummy_npc)	#wl66	4_ROPEPILE
+
+// Hunter Instance 1 - Step 3 Piles
+1@swat,250,30,6	duplicate(dummy_npc)	#wl67	4_ROPEPILE
+1@swat,250,31,6	duplicate(dummy_npc)	#wl68	4_ROPEPILE
+1@swat,250,32,6	duplicate(dummy_npc)	#wl69	4_ROPEPILE
+1@swat,250,33,6	duplicate(dummy_npc)	#wl70	4_ROPEPILE
+1@swat,250,34,6	duplicate(dummy_npc)	#wl71	4_ROPEPILE
+1@swat,250,35,6	duplicate(dummy_npc)	#wl72	4_ROPEPILE
+1@swat,250,36,6	duplicate(dummy_npc)	#wl73	4_ROPEPILE
+1@swat,250,37,6	duplicate(dummy_npc)	#wl74	4_ROPEPILE
+1@swat,250,38,6	duplicate(dummy_npc)	#wl75	4_ROPEPILE
+1@swat,250,39,6	duplicate(dummy_npc)	#wl76	4_ROPEPILE
+1@swat,250,40,6	duplicate(dummy_npc)	#wl77	4_ROPEPILE
+1@swat,250,41,6	duplicate(dummy_npc)	#wl78	4_ROPEPILE
+1@swat,250,42,6	duplicate(dummy_npc)	#wl79	4_ROPEPILE
+1@swat,250,43,6	duplicate(dummy_npc)	#wl80	4_ROPEPILE
+1@swat,250,44,6	duplicate(dummy_npc)	#wl81	4_ROPEPILE
+
+// Hunter Instance 2 - Step 1 Piles
+1@swat,23,222,6	duplicate(dummy_npc)	#wl82	4_ROPEPILE
+1@swat,24,222,6	duplicate(dummy_npc)	#wl83	4_ROPEPILE
+1@swat,25,222,6	duplicate(dummy_npc)	#wl84	4_ROPEPILE
+1@swat,26,222,6	duplicate(dummy_npc)	#wl85	4_ROPEPILE
+1@swat,27,222,6	duplicate(dummy_npc)	#wl86	4_ROPEPILE
+1@swat,28,222,6	duplicate(dummy_npc)	#wl87	4_ROPEPILE
+1@swat,29,222,6	duplicate(dummy_npc)	#wl88	4_ROPEPILE
+1@swat,30,222,6	duplicate(dummy_npc)	#wl89	4_ROPEPILE
+1@swat,31,222,6	duplicate(dummy_npc)	#wl90	4_ROPEPILE
+1@swat,32,222,6	duplicate(dummy_npc)	#wl91	4_ROPEPILE
+1@swat,33,222,6	duplicate(dummy_npc)	#wl92	4_ROPEPILE
+1@swat,34,222,6	duplicate(dummy_npc)	#wl93	4_ROPEPILE
+1@swat,35,222,6	duplicate(dummy_npc)	#wl94	4_ROPEPILE
+1@swat,36,222,6	duplicate(dummy_npc)	#wl95	4_ROPEPILE
+1@swat,37,222,6	duplicate(dummy_npc)	#wl96	4_ROPEPILE
+1@swat,38,222,6	duplicate(dummy_npc)	#wl97	4_ROPEPILE
+1@swat,39,222,6	duplicate(dummy_npc)	#wl98	4_ROPEPILE
+
+// Hunter Instance 2 - Step 2 Piles
+1@swat,22,272,6	duplicate(dummy_npc)	#wl99	4_ROPEPILE
+1@swat,23,272,6	duplicate(dummy_npc)	#wl100	4_ROPEPILE
+1@swat,24,272,6	duplicate(dummy_npc)	#wl101	4_ROPEPILE
+1@swat,25,272,6	duplicate(dummy_npc)	#wl102	4_ROPEPILE
+1@swat,26,272,6	duplicate(dummy_npc)	#wl103	4_ROPEPILE
+1@swat,27,272,6	duplicate(dummy_npc)	#wl104	4_ROPEPILE
+1@swat,28,272,6	duplicate(dummy_npc)	#wl105	4_ROPEPILE
+1@swat,29,272,6	duplicate(dummy_npc)	#wl106	4_ROPEPILE
+1@swat,30,272,6	duplicate(dummy_npc)	#wl107	4_ROPEPILE
+1@swat,31,272,6	duplicate(dummy_npc)	#wl108	4_ROPEPILE
+1@swat,32,272,6	duplicate(dummy_npc)	#wl109	4_ROPEPILE
+1@swat,33,272,6	duplicate(dummy_npc)	#wl110	4_ROPEPILE
+1@swat,34,272,6	duplicate(dummy_npc)	#wl111	4_ROPEPILE
+1@swat,35,272,6	duplicate(dummy_npc)	#wl112	4_ROPEPILE
+1@swat,36,272,6	duplicate(dummy_npc)	#wl113	4_ROPEPILE
+1@swat,37,272,6	duplicate(dummy_npc)	#wl114	4_ROPEPILE
+1@swat,38,272,6	duplicate(dummy_npc)	#wl115	4_ROPEPILE
+1@swat,39,272,6	duplicate(dummy_npc)	#wl116	4_ROPEPILE
+1@swat,40,272,6	duplicate(dummy_npc)	#wl117	4_ROPEPILE
+1@swat,41,272,6	duplicate(dummy_npc)	#wl118	4_ROPEPILE
+1@swat,42,272,6	duplicate(dummy_npc)	#wl119	4_ROPEPILE
+1@swat,43,272,6	duplicate(dummy_npc)	#wl120	4_ROPEPILE
+1@swat,44,272,6	duplicate(dummy_npc)	#wl121	4_ROPEPILE
+1@swat,45,272,6	duplicate(dummy_npc)	#wl122	4_ROPEPILE
+1@swat,46,272,6	duplicate(dummy_npc)	#wl123	4_ROPEPILE
+1@swat,47,272,6	duplicate(dummy_npc)	#wl124	4_ROPEPILE
+1@swat,48,272,6	duplicate(dummy_npc)	#wl125	4_ROPEPILE
+1@swat,49,272,6	duplicate(dummy_npc)	#wl126	4_ROPEPILE
+1@swat,50,272,6	duplicate(dummy_npc)	#wl127	4_ROPEPILE
+1@swat,51,272,6	duplicate(dummy_npc)	#wl128	4_ROPEPILE
+1@swat,52,272,6	duplicate(dummy_npc)	#wl129	4_ROPEPILE
+
+
+// Hunter Instance 1 - Step 1 Robots
+1@swat,113,66,4	script	#tr115	4_SCR_MT_ROBOTS,4,4,{
+	end;
+OnTouch:
+	specialeffect2 EF_DESPERADO;
+	percentheal -40,0;
+	end;
+}
+1@swat,113,60,4	duplicate(#tr115)	#tr116	4_SCR_MT_ROBOTS,4,4
+1@swat,113,54,4	duplicate(#tr115)	#tr117	4_SCR_MT_ROBOTS,4,4
+1@swat,113,48,4	duplicate(#tr115)	#tr118	4_SCR_MT_ROBOTS,4,4
+1@swat,113,42,4	duplicate(#tr115)	#tr119	4_SCR_MT_ROBOTS,4,4
+1@swat,113,36,4	duplicate(#tr115)	#tr120	4_SCR_MT_ROBOTS,4,4
+1@swat,113,30,4	duplicate(#tr115)	#tr121	4_SCR_MT_ROBOTS,4,4
+
+// Hunter Instance 1 - Step 2 Robots
+1@swat,149,66,4	duplicate(#tr115)	#tr122	4_SCR_MT_ROBOTS,4,4
+1@swat,149,60,4	duplicate(#tr115)	#tr123	4_SCR_MT_ROBOTS,4,4
+1@swat,149,54,4	duplicate(#tr115)	#tr124	4_SCR_MT_ROBOTS,4,4
+1@swat,149,48,4	duplicate(#tr115)	#tr125	4_SCR_MT_ROBOTS,4,4
+1@swat,149,42,4	duplicate(#tr115)	#tr126	4_SCR_MT_ROBOTS,4,4
+1@swat,149,36,4	duplicate(#tr115)	#tr127	4_SCR_MT_ROBOTS,4,4
+1@swat,149,30,4	duplicate(#tr115)	#tr128	4_SCR_MT_ROBOTS,4,4
+
+// Hunter Instance 1 - Step 3 Robots
+1@swat,247,43,4	duplicate(#tr115)	#tr129	4_SCR_MT_ROBOTS,4,4
+1@swat,247,37,4	duplicate(#tr115)	#tr130	4_SCR_MT_ROBOTS,4,4
+1@swat,247,31,4	duplicate(#tr115)	#tr131	4_SCR_MT_ROBOTS,4,4
+
+// Hunter Instance 2 - Step 1 Robots
+1@swat,25,220,4	duplicate(#tr115)	#tr132	4_SCR_MT_ROBOTS,4,4
+1@swat,31,220,4	duplicate(#tr115)	#tr133	4_SCR_MT_ROBOTS,4,4
+1@swat,37,220,4	duplicate(#tr115)	#tr134	4_SCR_MT_ROBOTS,4,4
+
+// Hunter Instance 2 - Step 2 Robots
+1@swat,25,270,4	duplicate(#tr115)	#tr135	4_SCR_MT_ROBOTS,4,4
+1@swat,30,270,4	duplicate(#tr115)	#tr136	4_SCR_MT_ROBOTS,4,4
+1@swat,35,270,4	duplicate(#tr115)	#tr137	4_SCR_MT_ROBOTS,4,4
+1@swat,40,270,4	duplicate(#tr115)	#tr138	4_SCR_MT_ROBOTS,4,4
+1@swat,45,270,4	duplicate(#tr115)	#tr139	4_SCR_MT_ROBOTS,4,4
+1@swat,50,270,4	duplicate(#tr115)	#tr140	4_SCR_MT_ROBOTS,4,4
+
+// Hunter Instance 2 - Step 3 Robots (maze)
+1@swat,26,330,4	duplicate(#tr115)	#tr1	4_SCR_MT_ROBOTS,4,4
+1@swat,26,324,4	duplicate(#tr115)	#tr2	4_SCR_MT_ROBOTS,4,4
+1@swat,26,318,4	duplicate(#tr115)	#tr3	4_SCR_MT_ROBOTS,4,4
+1@swat,26,312,4	duplicate(#tr115)	#tr4	4_SCR_MT_ROBOTS,4,4
+1@swat,26,306,4	duplicate(#tr115)	#tr5	4_SCR_MT_ROBOTS,4,4
+1@swat,26,300,4	duplicate(#tr115)	#tr6	4_SCR_MT_ROBOTS,4,4
+1@swat,32,330,4	duplicate(#tr115)	#tr7	4_SCR_MT_ROBOTS,4,4
+1@swat,32,324,4	duplicate(#tr115)	#tr8	4_SCR_MT_ROBOTS,4,4
+1@swat,32,318,4	duplicate(#tr115)	#tr9	4_SCR_MT_ROBOTS,4,4
+1@swat,32,312,4	duplicate(#tr115)	#tr10	4_SCR_MT_ROBOTS,4,4
+1@swat,32,306,4	duplicate(#tr115)	#tr11	4_SCR_MT_ROBOTS,4,4
+1@swat,32,300,4	duplicate(#tr115)	#tr12	4_SCR_MT_ROBOTS,4,4
+1@swat,38,330,4	duplicate(#tr115)	#tr13	4_SCR_MT_ROBOTS,4,4
+1@swat,38,324,4	duplicate(#tr115)	#tr14	4_SCR_MT_ROBOTS,4,4
+1@swat,38,318,4	duplicate(#tr115)	#tr15	4_SCR_MT_ROBOTS,4,4
+1@swat,38,312,4	duplicate(#tr115)	#tr16	4_SCR_MT_ROBOTS,4,4
+1@swat,38,306,4	duplicate(#tr115)	#tr17	4_SCR_MT_ROBOTS,4,4
+1@swat,38,300,4	duplicate(#tr115)	#tr18	4_SCR_MT_ROBOTS,4,4
+1@swat,44,330,4	duplicate(#tr115)	#tr19	4_SCR_MT_ROBOTS,4,4
+1@swat,44,324,4	duplicate(#tr115)	#tr20	4_SCR_MT_ROBOTS,4,4
+1@swat,44,318,4	duplicate(#tr115)	#tr21	4_SCR_MT_ROBOTS,4,4
+1@swat,44,312,4	duplicate(#tr115)	#tr22	4_SCR_MT_ROBOTS,4,4
+1@swat,44,306,4	duplicate(#tr115)	#tr23	4_SCR_MT_ROBOTS,4,4
+1@swat,44,300,4	duplicate(#tr115)	#tr24	4_SCR_MT_ROBOTS,4,4
+1@swat,50,330,4	duplicate(#tr115)	#tr25	4_SCR_MT_ROBOTS,4,4
+1@swat,50,324,4	duplicate(#tr115)	#tr26	4_SCR_MT_ROBOTS,4,4
+1@swat,50,318,4	duplicate(#tr115)	#tr27	4_SCR_MT_ROBOTS,4,4
+1@swat,50,312,4	duplicate(#tr115)	#tr28	4_SCR_MT_ROBOTS,4,4
+1@swat,50,306,4	duplicate(#tr115)	#tr29	4_SCR_MT_ROBOTS,4,4
+1@swat,50,300,4	duplicate(#tr115)	#tr30	4_SCR_MT_ROBOTS,4,4
+1@swat,56,330,4	duplicate(#tr115)	#tr31	4_SCR_MT_ROBOTS,4,4
+1@swat,56,324,4	duplicate(#tr115)	#tr32	4_SCR_MT_ROBOTS,4,4
+1@swat,56,318,4	duplicate(#tr115)	#tr33	4_SCR_MT_ROBOTS,4,4
+1@swat,56,312,4	duplicate(#tr115)	#tr34	4_SCR_MT_ROBOTS,4,4
+1@swat,56,306,4	duplicate(#tr115)	#tr35	4_SCR_MT_ROBOTS,4,4
+1@swat,56,300,4	duplicate(#tr115)	#tr36	4_SCR_MT_ROBOTS,4,4
+1@swat,62,330,4	duplicate(#tr115)	#tr37	4_SCR_MT_ROBOTS,4,4
+1@swat,62,324,4	duplicate(#tr115)	#tr38	4_SCR_MT_ROBOTS,4,4
+1@swat,62,318,4	duplicate(#tr115)	#tr39	4_SCR_MT_ROBOTS,4,4
+1@swat,62,312,4	duplicate(#tr115)	#tr40	4_SCR_MT_ROBOTS,4,4
+1@swat,62,306,4	duplicate(#tr115)	#tr41	4_SCR_MT_ROBOTS,4,4
+1@swat,62,300,4	duplicate(#tr115)	#tr42	4_SCR_MT_ROBOTS,4,4
+1@swat,68,330,4	duplicate(#tr115)	#tr43	4_SCR_MT_ROBOTS,4,4
+1@swat,68,324,4	duplicate(#tr115)	#tr44	4_SCR_MT_ROBOTS,4,4
+1@swat,68,318,4	duplicate(#tr115)	#tr45	4_SCR_MT_ROBOTS,4,4
+1@swat,68,312,4	duplicate(#tr115)	#tr46	4_SCR_MT_ROBOTS,4,4
+1@swat,68,306,4	duplicate(#tr115)	#tr47	4_SCR_MT_ROBOTS,4,4
+1@swat,68,300,4	duplicate(#tr115)	#tr48	4_SCR_MT_ROBOTS,4,4
+1@swat,74,330,4	duplicate(#tr115)	#tr49	4_SCR_MT_ROBOTS,4,4
+1@swat,74,324,4	duplicate(#tr115)	#tr50	4_SCR_MT_ROBOTS,4,4
+1@swat,74,318,4	duplicate(#tr115)	#tr51	4_SCR_MT_ROBOTS,4,4
+1@swat,74,312,4	duplicate(#tr115)	#tr52	4_SCR_MT_ROBOTS,4,4
+1@swat,74,306,4	duplicate(#tr115)	#tr53	4_SCR_MT_ROBOTS,4,4
+1@swat,74,300,4	duplicate(#tr115)	#tr54	4_SCR_MT_ROBOTS,4,4
+1@swat,80,330,4	duplicate(#tr115)	#tr55	4_SCR_MT_ROBOTS,4,4
+1@swat,80,324,4	duplicate(#tr115)	#tr56	4_SCR_MT_ROBOTS,4,4
+1@swat,80,318,4	duplicate(#tr115)	#tr57	4_SCR_MT_ROBOTS,4,4
+1@swat,80,312,4	duplicate(#tr115)	#tr58	4_SCR_MT_ROBOTS,4,4
+1@swat,80,306,4	duplicate(#tr115)	#tr59	4_SCR_MT_ROBOTS,4,4
+1@swat,80,300,4	duplicate(#tr115)	#tr60	4_SCR_MT_ROBOTS,4,4
+1@swat,86,330,4	duplicate(#tr115)	#tr61	4_SCR_MT_ROBOTS,4,4
+1@swat,86,324,4	duplicate(#tr115)	#tr62	4_SCR_MT_ROBOTS,4,4
+1@swat,86,318,4	duplicate(#tr115)	#tr63	4_SCR_MT_ROBOTS,4,4
+1@swat,86,312,4	duplicate(#tr115)	#tr64	4_SCR_MT_ROBOTS,4,4
+1@swat,86,306,4	duplicate(#tr115)	#tr65	4_SCR_MT_ROBOTS,4,4
+1@swat,86,300,4	duplicate(#tr115)	#tr66	4_SCR_MT_ROBOTS,4,4
+1@swat,92,330,4	duplicate(#tr115)	#tr67	4_SCR_MT_ROBOTS,4,4
+1@swat,92,324,4	duplicate(#tr115)	#tr68	4_SCR_MT_ROBOTS,4,4
+1@swat,92,318,4	duplicate(#tr115)	#tr69	4_SCR_MT_ROBOTS,4,4
+1@swat,92,312,4	duplicate(#tr115)	#tr70	4_SCR_MT_ROBOTS,4,4
+1@swat,92,306,4	duplicate(#tr115)	#tr71	4_SCR_MT_ROBOTS,4,4
+1@swat,92,300,4	duplicate(#tr115)	#tr72	4_SCR_MT_ROBOTS,4,4
+1@swat,98,330,4	duplicate(#tr115)	#tr73	4_SCR_MT_ROBOTS,4,4
+1@swat,98,324,4	duplicate(#tr115)	#tr74	4_SCR_MT_ROBOTS,4,4
+1@swat,98,318,4	duplicate(#tr115)	#tr75	4_SCR_MT_ROBOTS,4,4
+1@swat,98,312,4	duplicate(#tr115)	#tr76	4_SCR_MT_ROBOTS,4,4
+1@swat,98,306,4	duplicate(#tr115)	#tr77	4_SCR_MT_ROBOTS,4,4
+1@swat,98,300,4	duplicate(#tr115)	#tr78	4_SCR_MT_ROBOTS,4,4
+1@swat,104,330,4	duplicate(#tr115)	#tr79	4_SCR_MT_ROBOTS,4,4
+1@swat,104,324,4	duplicate(#tr115)	#tr80	4_SCR_MT_ROBOTS,4,4
+1@swat,104,318,4	duplicate(#tr115)	#tr81	4_SCR_MT_ROBOTS,4,4
+1@swat,104,312,4	duplicate(#tr115)	#tr82	4_SCR_MT_ROBOTS,4,4
+1@swat,104,306,4	duplicate(#tr115)	#tr83	4_SCR_MT_ROBOTS,4,4
+1@swat,104,300,4	duplicate(#tr115)	#tr84	4_SCR_MT_ROBOTS,4,4
+1@swat,110,330,4	duplicate(#tr115)	#tr85	4_SCR_MT_ROBOTS,4,4
+1@swat,110,324,4	duplicate(#tr115)	#tr86	4_SCR_MT_ROBOTS,4,4
+1@swat,110,318,4	duplicate(#tr115)	#tr87	4_SCR_MT_ROBOTS,4,4
+1@swat,110,312,4	duplicate(#tr115)	#tr88	4_SCR_MT_ROBOTS,4,4
+1@swat,110,306,4	duplicate(#tr115)	#tr89	4_SCR_MT_ROBOTS,4,4
+1@swat,110,300,4	duplicate(#tr115)	#tr90	4_SCR_MT_ROBOTS,4,4
+1@swat,116,330,4	duplicate(#tr115)	#tr91	4_SCR_MT_ROBOTS,4,4
+1@swat,116,324,4	duplicate(#tr115)	#tr92	4_SCR_MT_ROBOTS,4,4
+1@swat,116,318,4	duplicate(#tr115)	#tr93	4_SCR_MT_ROBOTS,4,4
+1@swat,116,312,4	duplicate(#tr115)	#tr94	4_SCR_MT_ROBOTS,4,4
+1@swat,116,306,4	duplicate(#tr115)	#tr95	4_SCR_MT_ROBOTS,4,4
+1@swat,116,300,4	duplicate(#tr115)	#tr96	4_SCR_MT_ROBOTS,4,4
+1@swat,122,330,4	duplicate(#tr115)	#tr97	4_SCR_MT_ROBOTS,4,4
+1@swat,122,324,4	duplicate(#tr115)	#tr98	4_SCR_MT_ROBOTS,4,4
+1@swat,122,318,4	duplicate(#tr115)	#tr99	4_SCR_MT_ROBOTS,4,4
+1@swat,122,312,4	duplicate(#tr115)	#tr100	4_SCR_MT_ROBOTS,4,4
+1@swat,122,306,4	duplicate(#tr115)	#tr101	4_SCR_MT_ROBOTS,4,4
+1@swat,122,300,4	duplicate(#tr115)	#tr102	4_SCR_MT_ROBOTS,4,4
+1@swat,92,294,4	duplicate(#tr115)	#tr103	4_SCR_MT_ROBOTS,4,4
+1@swat,98,294,4	duplicate(#tr115)	#tr104	4_SCR_MT_ROBOTS,4,4
+1@swat,104,294,4	duplicate(#tr115)	#tr105	4_SCR_MT_ROBOTS,4,4
+1@swat,110,294,4	duplicate(#tr115)	#tr106	4_SCR_MT_ROBOTS,4,4
+1@swat,117,294,4	duplicate(#tr115)	#tr107	4_SCR_MT_ROBOTS,4,4
+1@swat,123,294,4	duplicate(#tr115)	#tr108	4_SCR_MT_ROBOTS,4,4
+1@swat,92,288,4	duplicate(#tr115)	#tr109	4_SCR_MT_ROBOTS,4,4
+1@swat,98,288,4	duplicate(#tr115)	#tr110	4_SCR_MT_ROBOTS,4,4
+1@swat,104,288,4	duplicate(#tr115)	#tr111	4_SCR_MT_ROBOTS,4,4
+1@swat,110,288,4	duplicate(#tr115)	#tr112	4_SCR_MT_ROBOTS,4,4
+1@swat,116,288,4	duplicate(#tr115)	#tr113	4_SCR_MT_ROBOTS,4,4
+1@swat,122,288,4	duplicate(#tr115)	#tr114	4_SCR_MT_ROBOTS,4,4
+
+// Hunter Instance 2 - Step Final Robots
+1@swat,122,274,4	duplicate(#tr115)	#tr141	4_SCR_MT_ROBOTS,4,4
+1@swat,114,258,4	duplicate(#tr115)	#tr142	4_SCR_MT_ROBOTS,4,4
+1@swat,125,258,4	duplicate(#tr115)	#tr143	4_SCR_MT_ROBOTS,4,4
+1@swat,138,258,4	duplicate(#tr115)	#tr144	4_SCR_MT_ROBOTS,4,4
+1@swat,143,266,4	duplicate(#tr115)	#tr145	4_SCR_MT_ROBOTS,4,4
+1@swat,146,249,4	duplicate(#tr115)	#tr146	4_SCR_MT_ROBOTS,4,4
+1@swat,154,247,4	duplicate(#tr115)	#tr147	4_SCR_MT_ROBOTS,4,4
+1@swat,166,251,4	duplicate(#tr115)	#tr148	4_SCR_MT_ROBOTS,4,4
+1@swat,174,256,4	duplicate(#tr115)	#tr149	4_SCR_MT_ROBOTS,4,4
+1@swat,173,266,4	duplicate(#tr115)	#tr150	4_SCR_MT_ROBOTS,4,4
+1@swat,183,266,4	duplicate(#tr115)	#tr151	4_SCR_MT_ROBOTS,4,4
+1@swat,182,248,4	duplicate(#tr115)	#tr152	4_SCR_MT_ROBOTS,4,4
+
+
+// First entrance (instance 1)
+// Entrance
+1@swat,40,65,6	script	Julian#0_1	4_M_REBELLION2,{
+	mes "[Julian]";
+	mes "We don't have time to joke";
+	close;
+
+OnStart:
+	initnpctimer;
+	end;
+OnTimer2000:
+	npctalk "Julian: According to the estimation, there must be a greeting here. But there is nothing.";
+	end;
+OnTimer4000:
+	npctalk "Julian: From here, we split. Each of us will find the weak spots and annihilate the enemies.";
+	end;
+OnTimer10000:
+	npctalk "Julian: These might be sharpshooters around, so do not gather. Accomplish the operation individually.";
+	end;
+OnTimer14000:
+	npctalk "Julian: Now, move out!";
+	disablenpc instance_npcname("#ext1");
+	disablenpc instance_npcname("#ext2");
+	disablenpc instance_npcname("#ext3");
+	end;
+OnTimer14300:
+	disablenpc instance_npcname("#ext4");
+	disablenpc instance_npcname("#ext5");
+	end;
+OnTimer14600:
+	disablenpc instance_npcname("#ext6");
+	end;
+OnTimer14900:
+	disablenpc instance_npcname("#ext7");
+	end;
+OnTimer15200:
+	disablenpc instance_npcname("#ext8");
+	end;
+OnTimer15500:
+	disablenpc instance_npcname("#ext9");
+	end;
+OnTimer15800:
+	disablenpc instance_npcname("#ext10");
+	end;
+OnTimer16100:
+	disablenpc instance_npcname("#ext11");
+	disablenpc instance_npcname("#ext12");
+	end;
+OnTimer16400:
+	disablenpc instance_npcname("#ext13");
+	end;
+OnTimer16700:
+	disablenpc instance_npcname("#ext14");
+	end;
+OnTimer17000:
+	disablenpc instance_npcname("#ext15");
+	end;
+OnTimer17300:
+	stopnpctimer;
+	disablenpc instance_npcname("Julian#0_1");
+	enablenpc instance_npcname("Julian#1");
+	enablenpc instance_npcname("#start_npc2");
+	donpcevent instance_npcname("#hunter_instance_1_mob_1") + "::OnWave1";
+	end;
+}
+
+1@swat,40,65,0	script	#start_npc	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start_npc");
+	donpcevent instance_npcname("Julian#0_1") + "::OnStart";
+	end;
+}
+
+1@swat,1,1,0	script	#hunter_instance_1_mob_1	HIDDEN_WARP_NPC,{
+	end;
+OnWave1:
+	enablenpc instance_npcname("#hunter_instance_1_mob_1");
+	areamonster 'map_swat$, 55,49,89,77, "Heart Hunter Guard",3627,24, instance_npcname("#hunter_instance_1_mob_1") + "::OnMobDead";		// EP16_2_H_HUNTER_MD
+	end;
+OnWave2:
+	.@label$ = instance_npcname("#hunter_instance_1_mob_1") + "::OnMobDead";
+	for ( .@x = 93; .@x >= 81; .@x -= 4 ) {
+		for ( .@y = 54; .@y >= 39; .@y -= 3 ) {
+			monster 'map_swat$,.@x,.@y, "Heart Hunter Guard",3627,1, .@label$;	// EP16_2_H_HUNTER_MD
+		}
+	}
+	end;
+OnMobDead:
+	end;
+}
+
+// Step 1
+1@swat,105,50,0	script	#start_npc2	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start_npc2");
+	donpcevent instance_npcname("Julian#1") + "::OnStart";
+	end;
+}
+
+1@swat,105,50,6	script	Julian#1	4_M_REBELLION2,{
+	// note: officially they only check the item
+	if (countitem(25154) < 1 || 'event != 1) {
+		mes "[Julian]";
+		mes "We can just sneak in like this. But we'd better secure a path for the cleanup party. How can we do that?";
+		next;
+		select("");
+		close;
+	}
+	mes "[Julian]";
+	mes "Why are they all coming out all of a sudden. Just hand me the gunpowder";
+	next;
+	select("Give him the gunpowder");
+	if ('event == 1) {
+		'event = 2;
+		delitem 25154, countitem(25154);// Antique_Powder
+		donpcevent instance_npcname("Julian#1_1") + "::OnStart";
+	}
+	end;
+
+OnStart:
+	initnpctimer;
+	npctalk "Julian: Wait!";
+	end;
+OnTimer3000:
+	npctalk "Julian: There is a security system being operated in front of this. If you take one step ahead, you will be riddled with bullets.";
+	end;
+OnTimer7000:
+	stopnpctimer;
+	npctalk "Julian: We are in trouble from the beginning.";
+	enablenpc instance_npcname("Pile of gunpowder#1");
+	end;
+}
+
+1@swat,105,50,6	script	Julian#1_1	4_M_REBELLION2,{
+	end;
+OnStart:
+	disablenpc instance_npcname("Julian#1");
+	enablenpc instance_npcname("Julian#1_1");
+	initnpctimer;
+	npctalk "Julian: Well, it's a nice gunpowder.";
+	end;
+OnTimer3000:
+	npctalk "Julian: This is good enough to get rid of the security system and the Heart Hunter guys who rushed a moment ago.";
+	end;
+OnTimer9000:
+	npctalk "Julian: Now, let me blow them away!";
+	end;
+OnTimer12000:
+	killmonster 'map_swat$, instance_npcname("#hunter_instance_1_mob_1") + "::OnMobDead";
+	disablenpc instance_npcname("#tr117");
+	disablenpc instance_npcname("#tr118");
+	disablenpc instance_npcname("#tr119");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl17");
+	cloakonnpc instance_npcname("#wl17");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl18");
+	cloakonnpc instance_npcname("#wl18");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl19");
+	cloakonnpc instance_npcname("#wl19");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl20");
+	cloakonnpc instance_npcname("#wl20");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl21");
+	cloakonnpc instance_npcname("#wl21");
+	setcell 'map_swat$,116,30,116,66,cell_walkable,1;
+	end;
+OnTimer17000:
+	stopnpctimer;
+	mapannounce 'map_swat$, "Julian: Let me go first. I have to deal with the obstacles in front.", bc_map,0xFFFF77;
+	disablenpc instance_npcname("Julian#1_1");
+	enablenpc instance_npcname("Julian#1_2");
+	enablenpc instance_npcname("#start_npc3");
+	end;
+}
+
+1@swat,58,90,0	script	Pile of gunpowder#1	4_ENERGY_YELLOW,{
+	if ('event != 0)
+		end;
+	'event = 1;
+	specialeffect EF_COIN;
+	disablenpc instance_npcname("Pile of gunpowder#1");
+	for ( .@i = 0; .@i < 5; .@i++ )
+		makeitem 25154,1,'map_swat$, rand(56,60), rand(84,86);// Antique_Powder
+	initnpctimer;
+	end;
+OnTimer3000:
+	mapannounce 'map_swat$, "Intruders detected in the restricted area. Heart Hunters, heighten the security!", bc_map,0xFF5555;
+	end;
+OnTimer9000:
+	stopnpctimer;
+	mapannounce 'map_swat$, "I repeat. Intruders detected in the restricted area. Heart Hunters, heighten the security!", bc_map,0xFF5555;
+	donpcevent instance_npcname("#hunter_instance_1_mob_1") + "::OnWave2";
+	end;
+}
+
+// Step 2
+1@swat,140,50,0	script	#start_npc3	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start_npc3");
+	if ('event == 2)
+		donpcevent instance_npcname("#start_npc3") + "::OnStart";
+	else if ('event == 3)
+		donpcevent instance_npcname("Julian#1_2") + "::OnStart";
+	end;
+
+OnStart:
+	initnpctimer;
+	npctalk "Julian: Don't worry about this place. I can handle it with the remaining gunpowder.", instance_npcname("Julian#1_2");
+	end;
+OnTimer5000:
+	npctalk "Julian: You go up and check if there is any remaining force or threat.", instance_npcname("Julian#1_2");
+	end;
+OnTimer10000:
+	stopnpctimer;
+	npctalk "Julian: Don't take your time and move out", instance_npcname("Julian#1_2");
+	enablenpc instance_npcname("Suspicious instrument#1");
+	end;
+}
+
+// 1@swat,140,50,0	duplicate(dummy_npc)	#start_npc3_1	HIDDEN_WARP_NPC,4,4
+
+1@swat,140,50,6	script	Julian#1_2	4_M_REBELLION2,{
+	mes "[Julian]";
+	mes "It takes some time in assembling the explosive. You go up and check if there is any threat.";
+	next;
+	mes "[Julian]";
+	mes "If you find an enemy, don't forget to kill it without reporting me.";
+	close;
+
+OnStart:
+	initnpctimer;
+	npctalk "Julian: Great. We have finished making the explosive.";
+	end;
+OnTimer4000:
+	npctalk "Julian: over your ears to protect your eardrum! I am exploding it now!";
+	end;
+OnTimer7000:
+	disablenpc instance_npcname("#tr124");
+	disablenpc instance_npcname("#tr125");
+	disablenpc instance_npcname("#tr126");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl51");
+	cloakonnpc instance_npcname("#wl51");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl52");
+	cloakonnpc instance_npcname("#wl52");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl53");
+	cloakonnpc instance_npcname("#wl53");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl54");
+	cloakonnpc instance_npcname("#wl54");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl55");
+	cloakonnpc instance_npcname("#wl55");
+	setcell 'map_swat$,151,30,151,60,cell_walkable,1;
+	end;
+OnTimer15000:
+	stopnpctimer;
+	mapannounce 'map_swat$, "Julian: Excellent. Let's go forward.", bc_map,0xFF99;
+	disablenpc instance_npcname("Julian#1_2");
+	enablenpc instance_npcname("Julian#2_ep16_2");
+	enablenpc instance_npcname("#start_npc4");
+	end;
+}
+
+1@swat,150,119,0	script	Suspicious instrument#1	4_ENERGY_YELLOW,{
+	if ('event != 2)
+		end;
+	mes "There is a warning written in red color.";
+	mes "-----------------------";
+	mes "[^ff0000Do not push^000000]";
+	next;
+	if (select( "Stop it.", "Push the button" ) == 1) {
+		mes "I never push a suspicious button.";
+		close;
+	}
+	if ('event == 2) {
+		'event = 3;
+		disablenpc instance_npcname("Suspicious instrument#1");
+		mapannounce 'map_swat$, "Intruders detected in Section 2. Heart Hunters, heighten the security!", bc_map,0xFF5555;
+		initnpctimer;
+	}
+	end;
+OnTimer1000:
+	donpcevent instance_npcname("#hunter_instance_1_mob_2") + "::OnStart";
+	end;
+OnTimer5000:
+	mapannounce 'map_swat$, "I repeat. Intruders detected in the restricted area. Heart Hunters, heighten the security!", bc_map,0xFF5555;
+	stopnpctimer;
+	end;
+}
+
+// 1@swat,165,35,0	duplicate(dummy_npc)	#wp_con_b1_1	CLEAR_NPC
+
+1@swat,1,1,0	script	#hunter_instance_1_mob_2	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#hunter_instance_1_mob_2");
+	.@label$ = instance_npcname("#hunter_instance_1_mob_2") + "::OnMobDead";
+	for ( .@y = 120; .@y >= 99; .@y -= 7 ) {
+		for ( .@x = 140; .@x >= 122; .@x -= 6 ) {
+			monster 'map_swat$,.@x,.@y, "Heart Hunter Guard",3627,1, .@label$;	// EP16_2_H_HUNTER_MD
+		}
+	}
+	end;
+
+OnMobDead:
+	.@label$ = instance_npcname("#hunter_instance_1_mob_2") + "::OnMobDead";
+	if (rand(100) < 5)
+		areamonster 'map_swat$, 122,99,140,120, "Upgraded Heart Hunter",3626,1, .@label$;		// EP16_2_H_HUNTER_V
+	.@count = mobcount( 'map_swat$, .@label$ );
+	mapannounce 'map_swat$, "Remaining " + .@count + " Heart Hunter", bc_map,0xFFFFFF;
+	if (.@count < 1)
+		initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	disablenpc instance_npcname("#hunter_instance_1_mob_2");
+	enablenpc instance_npcname("#start_npc3");
+	end;
+}
+
+
+// Step 3
+1@swat,238,39,0	script	#start_npc4	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start_npc4");
+	initnpctimer;
+	npctalk "Julian: This might be the last security system. But we ran out of gunpowder.", instance_npcname("Julian#2_ep16_2");
+	end;
+OnTimer4000:
+	npctalk "Julian: We must secure a path for the cleanup party. Find gunpowder nearby.", instance_npcname("Julian#2_ep16_2");
+	end;
+OnTimer7000:
+	mapannounce 'map_swat$, "Intruders detected deep in the Section 3. Heart Hunters, protect the base at all cost!", bc_map,0xFF5555;
+	end;
+OnTimer10000:
+	npctalk "Julian: Well, looks like they started the battle against our members who had scattered. We might be in danger soon.", instance_npcname("Julian#2_ep16_2");
+	end;
+OnTimer14000:
+	stopnpctimer;
+	npctalk "Julian: The battle can start while you are finding gunpowder. Prepare for it.", instance_npcname("Julian#2_ep16_2");
+	enablenpc instance_npcname("Pile of gunpowder#2");
+	donpcevent instance_npcname("#hunter_instance_1_mob_3") + "::OnStart";
+	end;
+}
+
+1@swat,163,58,0	script	Pile of gunpowder#2	4_ENERGY_YELLOW,{
+	if ('event != 3)
+		end;
+	'event = 4;
+	specialeffect EF_COIN;
+	disablenpc instance_npcname("Pile of gunpowder#2");
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	for ( .@i = 0; .@i < 5; .@i++ )
+		makeitem 25154,1,'map_swat$, rand(161,165), rand(51,55);// Antique_Powder
+	end;
+}
+
+1@swat,1,1,0	script	#hunter_instance_1_mob_3	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#hunter_instance_1_mob_3");
+	.@label$ = instance_npcname("#hunter_instance_1_mob_3") + "::OnMobDead";
+	for ( .@y = 35; .@y <= 75; .@y += 8 ) {
+		for ( .@x = 188; .@x >= 168; .@x -= 10 ) {
+			monster 'map_swat$,.@x,.@y, "Heart Hunter Guard",3627,1, .@label$;	// EP16_2_H_HUNTER_MD
+		}
+	}
+	end;
+
+OnMobDead:
+	if (mobcount( 'map_swat$, instance_npcname("#hunter_instance_1_mob_3") + "::OnMobDead" ) < 1)
+		disablenpc instance_npcname("#hunter_instance_1_mob_3");
+	end;
+}
+
+1@swat,238,39,5	script	Julian#2_ep16_2	4_M_REBELLION2,{
+	if (countitem(25154) < 1 || 'event != 4) {
+		mes "[Julian]";
+		mes "Is the gunpowder ready?";
+		close;
+	}
+	mes "[Julian]";
+	mes "Is the gunpowder ready?";
+	next;
+	select("Give him the gunpowder");
+	if ('event == 4) {
+		'event = 5;
+		delitem 25154, countitem(25154);// Antique_Powder
+		donpcevent instance_npcname("Julian#2_ep16_2") + "::OnStart";	// officially player can re-trigger the event
+	}
+	end;
+
+OnStart:
+	npctalk "Julian: Great. We have finished making the explosive.";
+	initnpctimer;
+	end;
+OnTimer6000:
+	npctalk "Julian: over your ears to protect your eardrum! I am exploding it now!";
+	end;
+OnTimer9000:
+	disablenpc instance_npcname("#tr129");
+	disablenpc instance_npcname("#tr130");
+	disablenpc instance_npcname("#tr131");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl72");
+	cloakonnpc instance_npcname("#wl72");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl73");
+	cloakonnpc instance_npcname("#wl73");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl74");
+	cloakonnpc instance_npcname("#wl74");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl75");
+	cloakonnpc instance_npcname("#wl75");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl76");
+	cloakonnpc instance_npcname("#wl76");
+	setcell 'map_swat$,250,30,250,46,cell_walkable,1;
+	end;
+OnTimer14000:
+	mapannounce 'map_swat$, "Julian: Great. Shall we go now!", bc_map,0xFF99;
+	disablenpc instance_npcname("Julian#2_ep16_2");
+	enablenpc instance_npcname("#expl1");
+	enablenpc instance_npcname("#expl2");
+	enablenpc instance_npcname("#expl3");
+	enablenpc instance_npcname("#expl4");
+	enablenpc instance_npcname("#start_boss1");
+	enablenpc instance_npcname("Julian#3");
+	stopnpctimer;
+	end;
+}
+
+// Boss
+1@swat,305,58,0	duplicate(dummy_npc)	#expl1	CLEAR_NPC
+1@swat,305,44,0	duplicate(dummy_npc)	#expl2	CLEAR_NPC
+1@swat,320,58,0	duplicate(dummy_npc)	#expl3	CLEAR_NPC
+1@swat,320,44,0	duplicate(dummy_npc)	#expl4	CLEAR_NPC
+
+1@swat,283,32,0	script	#wp_b1_1	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	getmapxy .@map$,.@x,.@y, BL_NPC;
+	warp 'map_swat$, 290, .@y;
+	end;
+}
+1@swat,283,39,0	duplicate(#wp_b1_1)	#wp_b1_2	HIDDEN_WARP_NPC,4,4
+1@swat,283,46,0	duplicate(#wp_b1_1)	#wp_b1_3	HIDDEN_WARP_NPC,4,4
+1@swat,283,53,0	duplicate(#wp_b1_1)	#wp_b1_4	HIDDEN_WARP_NPC,4,4
+1@swat,283,60,0	duplicate(#wp_b1_1)	#wp_b1_5	HIDDEN_WARP_NPC,4,4
+
+1@swat,310,47,0	script	#start_boss1	HIDDEN_WARP_NPC,4,4,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start_boss1");
+	donpcevent instance_npcname("Julian#3") + "::OnStart";
+	end;
+}
+
+1@swat,310,47,6	script	Julian#3	4_M_REBELLION2,{
+	end;
+OnStart:
+	mapannounce 'map_swat$, "Voice communication: We have occupied the communication room of Heart Hunter. The battle seems to have ended. All unit members defend the occupied strongholds and standby.", bc_map,0x77FFFF;
+	initnpctimer;
+	end;
+OnTimer6000:
+	npctalk "Julian: Since we occupied the communication room, it is practically our victory. We don't seem to have taken much damage.";
+	end;
+OnTimer11000:
+	npctalk "Julian: We still have some time until our main unit arrives. Keep the caution and standby.";
+	end;
+OnTimer16000:
+	mapannounce 'map_swat$, "???: Who's there...?", bc_map,0xFF5555;
+	end;
+OnTimer20000:
+	npctalk "Julian: What? Remaining force?";
+	end;
+OnTimer24000:
+	emotion ET_SURPRISE;
+	npctalk "Julian: Something is coming!! Evade!!";
+	end;
+OnTimer28000:
+	specialeffect EF_LORD, AREA, "Julian#3";
+	cloakonnpc instance_npcname("Julian#3");	// cloakonnpc to display EF_LORD properly
+	enablenpc instance_npcname("Ebel#1_1");
+	npctalk "Ebel: Did I miss...", instance_npcname("Ebel#1_1");
+	end;
+OnTimer32000:
+	npctalk "Ebel: ... Who are you?", instance_npcname("Ebel#1_1");
+	end;
+OnTimer36000:
+	mapannounce 'map_swat$, "Julian: Evade foe now! She is not an ordinary human.", bc_map,0xFF99;
+	end;
+OnTimer40000:
+	npctalk "Ebel: Running away?", instance_npcname("Ebel#1_1");
+	end;
+OnTimer45000:
+	npctalk "Ebel: Sorry, no escape.", instance_npcname("Ebel#1_1");
+	end;
+OnTimer50000:
+	disablenpc instance_npcname("Ebel#1_1");
+	enablenpc instance_npcname("#wp_b1_1");
+	enablenpc instance_npcname("#wp_b1_2");
+	enablenpc instance_npcname("#wp_b1_3");
+	enablenpc instance_npcname("#wp_b1_4");
+	enablenpc instance_npcname("#wp_b1_5");
+	donpcevent instance_npcname("#hunter_instance_ebel") + "::OnStart";
+	end;
+OnTimer53000:
+	mapannounce 'map_swat$, "Julian: Damn, escaping will be tough.", bc_map,0xFF99;
+	end;
+OnTimer56000:
+	mapannounce 'map_swat$, "Julian: Hey! I will back you up from a long range. Hang on until then!", bc_map,0xFF99;
+	end;
+OnTimer64000:
+	mapannounce 'map_swat$, "Julian: Hang on for a minute. I am getting ready to suppress her", bc_map,0xFF99;
+	end;
+OnTimer71000:
+	mapannounce 'map_swat$, "Julian: It's almost done! Stick to it!", bc_map,0xFF99;
+	end;
+OnTimer80000:
+	mapannounce 'map_swat$, "Julian: Great! Stay away from her! Let me give a big shop to her!", bc_map,0xFF99;
+	end;
+OnTimer82000:
+	donpcevent instance_npcname("#hunter_instance_ebel") + "::OnStop";
+	specialeffect EF_LORD, AREA, instance_npcname("#expl1");
+	end;
+OnTimer83000:
+	specialeffect EF_LORD, AREA, instance_npcname("#expl2");
+	end;
+OnTimer84000:
+	specialeffect EF_LORD, AREA, instance_npcname("#expl3");
+	end;
+OnTimer85000:
+	specialeffect EF_LORD, AREA, instance_npcname("#expl4");
+	stopnpctimer;
+	donpcevent instance_npcname("Julian#3_1") + "::OnStart";
+	end;
+}
+
+1@swat,1,1,0	script	#hunter_instance_ebel	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#hunter_instance_ebel");
+	monster 'map_swat$,315,47, "Heart Hunter Ebel",3628,1, instance_npcname("#hunter_instance_ebel") + "::OnMobDead";	// EP16_2_H_HUNTER_EV
+	'boss_id = $@mobid[0];
+	initnpctimer;
+	end;
+OnTimer7000:
+	unittalk 'boss_id, "It doesn't hurt me...";
+	end;
+OnTimer14000:
+	unittalk 'boss_id, "You... slow.";
+	end;
+OnTimer21000:
+	unittalk 'boss_id, "Weak...";
+	end;
+OnTimer30000:
+	unittalk 'boss_id, "Weak...";
+	end;
+OnStop:
+	killmonster 'map_swat$, instance_npcname("#hunter_instance_ebel") + "::OnMobDead";
+	// continue
+OnMobDead:
+	'boss_id = 0;
+	stopnpctimer;
+	disablenpc instance_npcname("#hunter_instance_ebel");
+	end;
+}
+
+1@swat,315,47,3	script	Ebel#1_1	4_F_HUNTER_EVIL,{
+	cutin "ep16_evil101.bmp",2;
+	mes "[Ebel]";
+	mes "You... Enemy? Our troop? Which side are you on?";
+	close3;
+}
+
+1@swat,320,47,4	script	Julian#3_1	4_M_REBELLION2,{
+	end;
+OnStart:
+	enablenpc instance_npcname("Julian#3_1");
+	enablenpc instance_npcname("Ebel#1_3");
+	npctalk "Julian: I'm glad you're all safe.";
+	initnpctimer;
+	end;
+OnTimer3000:
+	npctalk "Ebel: What was that thing you used just now?", instance_npcname("Ebel#1_3");
+	end;
+OnTimer6000:
+	npctalk "Julian: It's a paralyzing shot. When it hits someone, it creates a confusion in the nerve system.";
+	end;
+OnTimer10000:
+	npctalk "Ebel: Why didn't you kill me?", instance_npcname("Ebel#1_3");
+	end;
+OnTimer13000:
+	npctalk "Julian: I didn't want to kill our people at the same time. Besides... You are an unknown force to us";
+	end;
+OnTimer18000:
+	npctalk "Julian: We must capture you alive and find out about you.";
+	end;
+OnTimer22000:
+	enablenpc instance_npcname("#ext1_1");
+	enablenpc instance_npcname("#ext1_2");
+	end;
+OnTimer23000:
+	npctalk "All the remaining force has in outer boundary has been cleaned up.", instance_npcname("#ext1_1");
+	end;
+OnTimer25000:
+	npctalk "Five minutes until the main unit arrives.", instance_npcname("#ext1_2");
+	end;
+OnTimer30000:
+	npctalk "Julian: Good. Put her in a jail. She is a research object so handle her with care.";
+	end;
+OnTimer35000:
+	npctalk "Yes!", instance_npcname("#ext1_1");
+	end;
+OnTimer36000:
+	npctalk "I see.", instance_npcname("#ext1_2");
+	end;
+OnTimer40000:
+	stopnpctimer;
+	disablenpc instance_npcname("Ebel#1_3");
+	disablenpc instance_npcname("#ext1_1");
+	disablenpc instance_npcname("#ext1_2");
+	disablenpc instance_npcname("Julian#3_1");
+	enablenpc instance_npcname("Julian#3_2");
+	end;
+}
+
+1@swat,308,49,6	duplicate(dummy_npc)	#ext1_1	4_F_ESTLOVELOY
+1@swat,308,45,6	duplicate(dummy_npc)	#ext1_2	4_F_ESTLOVELOY
+1@swat,310,47,6	duplicate(dummy_npc)	Ebel#1_3	4_F_HUNTER_EVIL
+
+1@swat,320,47,4	script	Julian#3_2	4_M_REBELLION2,{
+	if ('event != 5)
+		end;
+	mes "[Julian]";
+	mes "Hmm. The engineers need to repair the occupied base. It's time for battle force step outside.";
+	if (isbegin_quest(12374) == 1) {
+		getitem 25155,10;// Swz_Honor_Token
+		completequest 12374;// Heart Hunter Base occupation
+		terra_gloria_main = 20;
+	}
+	close2;
+	warp "ein_fild04",279,339;
+	end;
+
+OnInstanceInit:
+	'event = 0;
+
+	'instance_id = instance_id();
+	'map_swat$ = instance_mapname("1@swat");
+
+	if (instance_live_info(ILI_NAME) != "Heart Hunter War Base 1")
+		disablenpc instance_npcname("#start_npc");
+
+	// Step 1
+	disablenpc instance_npcname("Julian#1_1");
+	disablenpc instance_npcname("#start_npc2");
+	disablenpc instance_npcname("Julian#1");
+	disablenpc instance_npcname("Pile of gunpowder#1");
+	disablenpc instance_npcname("#hunter_instance_1_mob_1");
+
+	// Step 2
+	disablenpc instance_npcname("Julian#1_2");
+	disablenpc instance_npcname("#start_npc3");
+	disablenpc instance_npcname("Suspicious instrument#1");
+	disablenpc instance_npcname("#hunter_instance_1_mob_2");
+
+	// Step 3
+	disablenpc instance_npcname("Julian#2_ep16_2");
+	disablenpc instance_npcname("#start_npc4");
+	disablenpc instance_npcname("Pile of gunpowder#2");
+	disablenpc instance_npcname("#hunter_instance_1_mob_3");
+
+	// Boss
+	disablenpc instance_npcname("#expl1");
+	disablenpc instance_npcname("#expl2");
+	disablenpc instance_npcname("#expl3");
+	disablenpc instance_npcname("#expl4");
+	disablenpc instance_npcname("#start_boss1");
+	disablenpc instance_npcname("Julian#3");
+	disablenpc instance_npcname("Julian#3_1");
+	disablenpc instance_npcname("Julian#3_2");
+	disablenpc instance_npcname("Ebel#1_1");
+	disablenpc instance_npcname("#wp_b1_1");
+	disablenpc instance_npcname("#wp_b1_2");
+	disablenpc instance_npcname("#wp_b1_3");
+	disablenpc instance_npcname("#wp_b1_4");
+	disablenpc instance_npcname("#wp_b1_5");
+	disablenpc instance_npcname("#hunter_instance_ebel");
+	disablenpc instance_npcname("Ebel#1_3");
+	disablenpc instance_npcname("#ext1_1");
+	disablenpc instance_npcname("#ext1_2");
+
+	setcell 'map_swat$,116,30,116,66,cell_walkable,0;
+	setcell 'map_swat$,151,30,151,60,cell_walkable,0;
+	setcell 'map_swat$,250,30,250,46,cell_walkable,0;
+	end;
+}
+
+// instance 2
+
+// Warps
+1@swat,169,295,0	warp	#wp_boss	2,2,1@swat,150,263
+1@swat,151,266,0	warp	#wp_out	2,2,ein_fild04,279,339
+
+
+// Entrance
+1@swat,53,122,1	script	Julian#4	4_M_REBELLION2,{
+	if (is_party_leader() == false) {
+		mes "[Julian]";
+		mes "I'm talking to your leader now " + strcharinfo(0) + ".";
+		close;
+	}
+	mes "[Julian]";
+	mes "" + strcharinfo(0) + ", is this your first visit here?";
+	next;
+	.@s = select( "Yes, it is.", "No, I've been here before." );
+	if ('status_instance != 0)
+		end;
+	'status_instance = 1;
+	if (.@s == 1)
+		donpcevent instance_npcname("Julian#4_1") + "::OnStart";
+	else
+		donpcevent instance_npcname("Julian#4") + "::OnStart";
+	end;
+
+OnStart:
+	disablenpc instance_npcname("Julian#4");
+	enablenpc instance_npcname("Julian#4_1");
+	npctalk "Julian: Oh, how many trainings have we had so far?", instance_npcname("Julian#4_1");
+	initnpctimer;
+	end;
+OnTimer3000:
+	npctalk "Julian: As before, please attack without mercy, just like in a real combat.", instance_npcname("Julian#4_1");
+	end;
+OnTimer9000:
+	stopnpctimer;
+	disablenpc instance_npcname("Julian#4_1");
+	donpcevent instance_npcname("#remaining_hunter2_step1") + "::OnStart";
+	end;
+}
+
+1@swat,53,122,1	script	Julian#4_1	4_M_REBELLION2,{
+	end;
+OnStart:
+	disablenpc instance_npcname("Julian#4");
+	enablenpc instance_npcname("Julian#4_1");
+	npctalk "Julian: You might find this place unfamiliar.";
+	initnpctimer;
+	end;
+OnTimer3000:
+	npctalk "Julian: There was a pretty large space behind the zone that we had occupied.";
+	end;
+OnTimer7000:
+	npctalk "Julian: Although we cannot use it to move our troops, it is a perfect location to experience a mock combat.";
+	end;
+OnTimer12000:
+	npctalk "Julian: So we remodeled it as a training ground to have a mock combat similar to the previous combat.";
+	end;
+OnTimer17000:
+	npctalk "Julian: You will play the role of the invaders. Our troops will disguise as Heart Hunters and defend.";
+	end;
+OnTimer22000:
+	npctalk "Julian: It's a sort of defense training. It is to understand how much force we require to defend this area.";
+	end;
+OnTimer27000:
+	npctalk "Julian: Now, please attack without mercy, just like in a real battle.";
+	end;
+OnTimer33000:
+	stopnpctimer;
+	disablenpc instance_npcname("Julian#4_1");
+	donpcevent instance_npcname("#remaining_hunter2_step1") + "::OnStart";
+	end;
+}
+
+// Step 1
+1@swat,1,1,1	script	#remaining_hunter2_step1	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#remaining_hunter2_step1");
+	.@label$ = instance_npcname("#remaining_hunter2_step1") + "::OnMobDead";
+	mapannounce 'map_swat$, "Attack to the base detected. Everyone, start a defense tactic.", bc_map,0xFF5555;
+	for ( .@y = 145; .@y <= 199; .@y += 9 ) {
+		for ( .@x = 28; .@x <= 48; .@x += 10 ) {
+			monster 'map_swat$,.@x,.@y, "Heart Hunter Guard",3627,1, .@label$;	// EP16_2_H_HUNTER_MD
+		}
+	}
+	end;
+OnMobDead:
+	.@label$ = instance_npcname("#remaining_hunter2_step1") + "::OnMobDead";
+	if (rand(100) < 5)
+		areamonster 'map_swat$, 28,145,48,199, "Upgraded Heart Hunter",3626,1, .@label$;		// EP16_2_H_HUNTER_V
+	.@count = mobcount( 'map_swat$, .@label$ );
+	mapannounce 'map_swat$, "Remaining " + .@count + " Heart Hunter", bc_map,0xFFFFFF;
+	if (.@count < 1)
+		initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	mapannounce 'map_swat$, "Julian: Section 1 taken. Those in charge of Section 1's defense must assemble behind the barrack later.", bc_map,0xFF99;
+	disablenpc instance_npcname("#remaining_hunter2_step1");
+	enablenpc instance_npcname("#start2_1_1");
+	end;
+}
+
+1@swat,31,211,0	script	#start2_1_1	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start2_1_1");
+	mapannounce 'map_swat$, "Enemies reached the 1st security system. Security system is disabled.", bc_map,0xFF5555;
+	disablenpc instance_npcname("#tr132");
+	disablenpc instance_npcname("#tr133");
+	disablenpc instance_npcname("#tr134");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl88");
+	cloakonnpc instance_npcname("#wl88");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl89");
+	cloakonnpc instance_npcname("#wl89");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl90");
+	cloakonnpc instance_npcname("#wl90");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl91");
+	cloakonnpc instance_npcname("#wl91");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl92");
+	cloakonnpc instance_npcname("#wl92");
+	enablenpc instance_npcname("#start2_2_1");
+	enablenpc instance_npcname("Julian#5");
+	setcell 'map_swat$,23,222,40,222,cell_walkable,1;
+	end;
+}
+
+// Step 2
+1@swat,31,233,0	script	#start2_2_1	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start2_2_1");
+	donpcevent instance_npcname("Julian#5") + "::OnStart";
+	end;
+}
+
+1@swat,31,233,1	script	Julian#5	4_M_REBELLION2,{
+	mes "[Julian]";
+	mes "You safely passed Section 1. Now help us with the defense training for Section 2.";
+	close;
+OnStart:
+	npctalk "Julian: Was it too easy? In Section 2, we also have a training for the annihilation operation.";
+	initnpctimer;
+	end;
+OnTimer3000:
+	npctalk "Julian: This time, the defensive force and great number of force upgraded during the battle will be input.";
+	end;
+OnTimer7000:
+	npctalk "Julian: Please help us in the remaining training.";
+	end;
+OnTimer11000:
+	stopnpctimer;
+	disablenpc instance_npcname("Julian#5");
+	mapannounce 'map_swat$, "Enemies are approaching the 2nd defensive base. Phase 2 is announced.", bc_map,0xFF5555;
+	donpcevent instance_npcname("#remaining_hunter2_step2") + "::OnStart";
+	end;
+}
+
+1@swat,1,1,1	script	#remaining_hunter2_step2	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#remaining_hunter2_step2");
+	.@label$ = instance_npcname("#remaining_hunter2_step2") + "::OnMobDead";
+	for ( .@y = 250; .@y <= 265; .@y += 5 ) {
+		for ( .@x = 25; .@x <= 60; .@x += 7 ) {
+			monster 'map_swat$,.@x,.@y, "Heart Hunter Guard",3627,1, .@label$;	// EP16_2_H_HUNTER_MD
+		}
+	}
+	end;
+OnMobDead:
+	.@label$ = instance_npcname("#remaining_hunter2_step2") + "::OnMobDead";
+	if (rand(100) < 10)
+		areamonster 'map_swat$, 25,250,60,265, "Upgraded Heart Hunter",3626,1, .@label$;		// EP16_2_H_HUNTER_V
+	.@count = mobcount( 'map_swat$, .@label$ );
+	mapannounce 'map_swat$, "Remaining " + .@count + " Heart Hunter", bc_map,0xFFFFFF;
+	if (.@count < 1)
+		initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	disablenpc instance_npcname("#remaining_hunter2_step2");
+	mapannounce 'map_swat$, "Enemies reached Section 2. Security system disabled.", bc_map,0xFF5555;
+	disablenpc instance_npcname("#tr136");
+	disablenpc instance_npcname("#tr137");
+	disablenpc instance_npcname("#tr138");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl110");
+	cloakonnpc instance_npcname("#wl110");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl111");
+	cloakonnpc instance_npcname("#wl111");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl112");
+	cloakonnpc instance_npcname("#wl112");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl113");
+	cloakonnpc instance_npcname("#wl113");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl114");
+	cloakonnpc instance_npcname("#wl114");
+	setcell 'map_swat$,22,272,52,272,cell_walkable,1;
+
+	enablenpc instance_npcname("#start2_2_2");
+	enablenpc instance_npcname("Julian#6");
+	enablenpc instance_npcname("SWT_8309#1");
+	enablenpc instance_npcname("Pile of gunpowder#4");
+	end;
+}
+
+// Step 3 - Maze
+1@swat,56,283,0	script	#start2_2_2	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start2_2_2");
+	donpcevent instance_npcname("Julian#6") + "::OnStart";
+	end;
+}
+
+1@swat,56,283,1	script	Julian#6	4_M_REBELLION2,{
+	mes "[Julian]";
+	mes "This security system here controls plenty of system devices over there.";
+	next;
+	mes "[Julian]";
+	mes "If you activate the device, they will open a narrow passage you can barely go through.";
+	next;
+	mes "[Julian]";
+	mes "Unless you activate the device, the defensive training does not start. Activate it when you are ready.";
+	close;
+
+OnStart:
+	initnpctimer;
+	npctalk "Julian: You have easily annihilated the upgraded force in Section 2. I'd better change our defensive tactic.";
+	end;
+OnTimer6000:
+	npctalk "Julian: By the way, the defensive device left in front of you will be quite different from those you have faced so far.";
+	end;
+OnTimer10000:
+	npctalk "Julian: I have constructed an automatic defense system by extensively installing the security system of Heart Hunter guys.";
+	end;
+OnTimer16000:
+	npctalk "Julian: The goal is to check how we can block enemies when we use the automatic devices and forces together in our defense tactic.";
+	end;
+OnTimer20000:
+	npctalk "Julian: If you operate the controller in front of me, the 3rd course begins.";
+	end;
+OnTimer24000:
+	stopnpctimer;
+	npctalk "Julian: If you come through the narrow passage and annihilate half of the force, I will judge that the defense has failed.";
+	end;
+}
+
+1@swat,60,286,4	script	SWT_8309#1	4_SCR_MT_ROBOTS,{
+	if ('status_instance != 1)
+		end;
+	mes "You can see an unusually attractive";
+	mes "red button.";
+	mes "---------------------";
+	mes "^ff0000[Do not push]^000000";
+	next;
+	if (select( "Ignore it", "Push it" ) == 1) {
+		mes "You ignored the button and stepped back. Nothing happened.";
+		close;
+	}
+	if ('status_instance != 1)	// note: officially several maze can be made
+		end;
+	'status_instance = 2;
+	mapannounce 'map_swat$, "There is an intruder in the restricted area. All unit members assemble.", bc_map,0xFF99;
+	specialeffect EF_FIREPILLARBOMB;
+	disablenpc instance_npcname("SWT_8309#1");
+	donpcevent instance_npcname("#hunter_instance_2_maze") + "::OnStart";
+	end;
+}
+
+1@swat,1,1,1	script	#hunter_instance_2_maze	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#hunter_instance_2_maze");
+	.@label$ = instance_npcname("#hunter_instance_2_maze") + "::OnMobDead";
+	for ( .@y = 300; .@y <= 330; .@y += 10 ) {
+		for ( .@x = 30; .@x <= 120; .@x += 10 ) {
+			monster 'map_swat$,.@x,.@y, "Heart Hunter Guard",3627,1, .@label$;	// EP16_2_H_HUNTER_MD
+		}
+	}
+	// maze - pregenerated ?
+	.@r = rand(6);
+	if (.@r == 0) setarray .@npc_num[0], 4, 5, 6, 10, 16, 17, 23, 29, 34, 35, 40, 46, 52, 53, 59, 65, 71, 72, 78, 84, 90, 89, 95, 101, 107;
+	else if (.@r == 1) setarray .@npc_num[0], 4, 5, 6, 10, 16, 17, 23, 29, 35, 36, 42, 48, 53, 54, 59, 65, 71, 72, 78, 84, 89, 90, 95, 101, 107, 136, 137, 138;
+	else if (.@r == 2) setarray .@npc_num[0], 3, 4, 5,  6,  9, 15, 16, 22, 28, 34, 35, 41, 47, 53, 54, 60, 66, 71, 72, 77, 83, 88, 89,  94, 100, 106, 138;
+	else if (.@r == 3) setarray .@npc_num[0], 2, 3, 4,  5,  6,  8, 13, 14, 19, 25, 31, 32, 38, 44, 49, 50, 55, 61, 67, 68, 74, 80, 86,  87,  93,  99;
+	else if (.@r == 4) setarray .@npc_num[0], 1, 2, 3,  4,  6,  5,  7, 13, 14, 20, 26, 31, 32, 37, 43, 49, 50, 56, 62, 68, 69, 75, 81,  86,  87,  92, 98, 104;
+	else if (.@r == 5) setarray .@npc_num[0], 1, 2, 3,  4,  5,  6,  7, 13, 14, 20, 26, 31, 32, 37, 43, 49, 50, 56, 62, 67, 68, 73, 79,  85,  86,  92;
+
+	.@size = getarraysize(.@npc_num);
+	for ( .@i = 0; .@i < .@size; .@i++ )
+		disablenpc instance_npcname( "#tr" + .@npc_num[.@i] );
+	end;
+OnMobDead:
+	.@label$ = instance_npcname("#hunter_instance_2_maze") + "::OnMobDead";
+	.@count = mobcount( 'map_swat$, .@label$ );
+	mapannounce 'map_swat$, "Remaining defensive force " + .@count + "%", bc_map,0xFFFFFF;
+	if (.@count <= 20)
+		initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	disablenpc instance_npcname("#hunter_instance_2_maze");
+	mapannounce 'map_swat$, "Enemies disabled the Third security system. Base defense failed.", bc_map,0xFF5555;
+	killmonster 'map_swat$, instance_npcname("#hunter_instance_2_maze") + "::OnMobDead";
+	enablenpc instance_npcname("Julian#7");
+	enablenpc instance_npcname("Ebel#3");
+	enablenpc instance_npcname("Julian#8_0");
+	enablenpc instance_npcname("#start2_boss");
+	enablenpc instance_npcname("#wp_boss");
+	end;
+}
+
+1@swat,82,248,0	script	Pile of gunpowder#4	4_ENERGY_YELLOW,{
+	specialeffect EF_COIN;
+	disablenpc instance_npcname("Pile of gunpowder#4");
+	for ( .@i = 0; .@i < 4; .@i++ )
+		makeitem 25154,1,'map_swat$, rand(78,82), rand(250,251);	// Antique_Powder
+	initnpctimer;
+	end;
+}
+
+1@swat,164,300,6	script	Julian#7	4_M_REBELLION2,{
+	mes "[Julian]";
+	mes "We have something as the last resort, in case we fail to defend the base. It's time to test it now.";
+	next;
+	mes "[Julian]";
+	mes "Enter the door in front of you.";
+	close;
+}
+
+// Boss room
+1@swat,136,258,0	script	#start2_boss	HIDDEN_WARP_NPC,3,3,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#start2_boss");	// note: this npc is only disabled from here
+	npctalk "Julian: Great. Well done, Ebel. No, don't kick the dog... He's not an enemy.", instance_npcname("Julian#8_0");
+	end;
+}
+
+1@swat,129,258,6	script	Ebel#3	4_F_HUNTER_EVIL,{
+	mes "[Ebel]";
+	mes "Are you my companion? Or an enemy? Which side are you on?";
+	cutin "ep16_evil101.bmp",2;
+	close3;
+}
+
+1@swat,136,258,3	script	Julian#8_0	4_M_REBELLION2,{
+	if ('status_instance != 2)
+		end;
+	if (is_party_leader() == false) {
+		mes "[Julian]";
+		mes "Wait for a while " + strcharinfo(0) + " we will proceed once your unit leader comes.";
+		close;
+	}
+	mes "[Julian]";
+	mes "It took me more than a week until I was able to talk to her. Now she speaks well.";
+	next;
+	if (select( "Are you close enough to call her by the first name?", "I know. Let's start right now." ) == 1) {
+		mes "[Julian]";
+		mes "No, don't look at me like that. This girl would never talk to other guys. So I became in charge of her.";
+		next;
+		mes "[Julian]";
+		mes "... It's real.";
+		close2;
+		if (is_party_leader() == true && 'status_instance == 2)
+			donpcevent instance_npcname("Julian#8") + "::OnStart";
+		end;
+	}
+	mes "[Julian]";
+	mes "Hmm. Great. Let's start right away.";
+	if (is_party_leader() == true && 'status_instance == 2)
+		donpcevent instance_npcname("Julian#8_0") + "::OnStart";
+	close;
+OnStart:
+	'status_instance = 3;
+	disablenpc instance_npcname("Julian#8_0");
+	enablenpc instance_npcname("Julian#8");
+	initnpctimer;
+	npctalk "Julian: Ebel~ You confronted this fellow last time. Do you remember?", instance_npcname("Julian#8");
+	end;
+OnTimer4000:
+	npctalk "Ebel: I don't remember. Has he come to destroy this place?", instance_npcname("Ebel#3");
+	stopnpctimer;
+	donpcevent instance_npcname("#hunter_instance_2_talk") + "::OnStart";
+	end;
+}
+
+1@swat,136,258,3	script	Julian#8	4_M_REBELLION2,{
+	end;
+OnStart:
+	'status_instance = 3;
+	disablenpc instance_npcname("Julian#8_0");
+	enablenpc instance_npcname("Julian#8");
+	initnpctimer;
+	npctalk "Julian: This is the girl we captured last time.";
+	end;
+OnTimer3000:
+	npctalk "Julian: We don't know who she is and where she is from. All we know is her name, Ebel...";
+	end;
+OnTimer8000:
+	npctalk "Julian: Without any previous memory or rationality, only the intention to protect the base is left in her.";
+	end;
+OnTimer13000:
+	npctalk "Julian: She is in such a mechanical status that it is difficult to see a human in her. But she doesn't attack anyone, unless judged as an enemy.";
+	end;
+OnTimer18000:
+	npctalk "Julian: You have to help me in finding out her potential ability.";
+	end;
+OnTimer22000:
+	npctalk "Ebel: Julian, is that an enemy?", instance_npcname("Ebel#3");
+	end;
+OnTimer25000:
+	npctalk "Julian: Oh, the person in front of you is your enemy only for a while.";
+	end;
+OnTimer29000:
+	stopnpctimer;
+	npctalk "Ebel: Has he come to destroy this place?", instance_npcname("Ebel#3");
+	donpcevent instance_npcname("#hunter_instance_2_talk") + "::OnStart";
+	end;
+}
+
+1@swat,1,1,1	script	#hunter_instance_2_talk	-1,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer3000:
+	npctalk "Julian: Well... Sort of.", instance_npcname("Julian#8");
+	end;
+OnTimer5000:
+	specialeffect EF_INCAGILITY, AREA, instance_npcname("Ebel#3");
+	npctalk "Ebel: Then...", instance_npcname("Ebel#3");
+	end;
+OnTimer7000:
+	specialeffect EF_SIGNUM, AREA, instance_npcname("Ebel#3");
+	npctalk "Ebel: I will stop him.", instance_npcname("Ebel#3");
+	end;
+OnTimer8000:
+	mapannounce 'map_swat$, "Security system: Phase 2 of the emergency situation is announced. Automatic defensive device is activated.", bc_map,0xFF5555;
+	end;
+OnTimer12000:
+	stopnpctimer;
+	disablenpc instance_npcname("Julian#8");
+	disablenpc instance_npcname("Ebel#3");
+	for ( .@i = 141; .@i <= 152; .@i++ )
+		enablenpc instance_npcname( "#tr" + .@i );
+	donpcevent instance_npcname("#hunter_instance_2_ebel") + "::OnStart";
+	end;
+}
+
+1@swat,1,1,1	script	#hunter_instance_2_ebel	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#hunter_instance_2_ebel");
+	monster 'map_swat$,129,258, "Heart_Hunter Ebel",3628,1, instance_npcname("#hunter_instance_2_ebel") + "::OnMobDead";	// EP16_2_H_HUNTER_EV
+	end;
+OnMobDead:
+	if (mobcount( 'map_swat$, instance_npcname("#hunter_instance_2_ebel") + "::OnMobDead" ) < 1)
+		initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce 'map_swat$, "Security system: Emergency situation is discharged. Terminating the automatic defense device.", bc_map,0xFF5555;
+	end;
+OnTimer4000:
+	enablenpc instance_npcname("Julian#8_1");
+	enablenpc instance_npcname("Ebel#3_1");
+	for ( .@i = 141; .@i <= 152; .@i++ )
+		disablenpc instance_npcname( "#tr" + .@i );
+	end;
+OnTimer7000:
+	stopnpctimer;
+	donpcevent instance_npcname("Julian#8_1") + "::OnStart";
+	end;
+}
+
+1@swat,129,258,6	script	Ebel#3_1	4_F_HUNTER_EVIL,{
+	switch( rand(4) ) {
+	case 0:
+		cutin "ep16_evil103.bmp",2;
+		mes "[Ebel]";
+		mes "Where did you learn the technique you have used a moment ago?";
+		close3;
+	case 1:
+		cutin "ep16_evil102.bmp",2;
+		mes "[Ebel]";
+		mes "...";
+		close3;
+	case 2:
+		cutin "ep16_evil103.bmp",2;
+		mes "[Ebel]";
+		mes "Where did you learn the technique you have used a moment ago?";
+		close3;
+	case 3:
+		cutin "ep16_evil101.bmp",2;
+		mes "[Ebel]";
+		mes "You... You're stronger than me. I have never experienced this before...";
+		close3;
+	}
+}
+
+1@swat,136,258,3	script	Julian#8_1	4_M_REBELLION2,{
+	mes "[Julian]";
+	mes "Hmm. Good job. Let us leave the training ground. The gateway is upstairs. Go up the stairs behind me.";
+	close;
+OnStart:
+	initnpctimer;
+	npctalk "Julian: I am not trying to underestimate your combat ability";
+	end;
+OnTimer5000:
+	npctalk "Julian: But I don't think Ebel is using 100% of her power.";
+	end;
+OnTimer10000:
+	npctalk "Julian We have to check her a little longer...";
+	end;
+OnTimer13000:
+	npctalk "Ebel: Am I... being disposed?", instance_npcname("Ebel#3_1");
+	end;
+OnTimer16000:
+	npctalk "Julian: What are you talking about? Disposing is only for machines.";
+	end;
+OnTimer20000:
+	npctalk "Ebel: Then you are not disposing me?", instance_npcname("Ebel#3_1");
+	end;
+OnTimer23000:
+	npctalk "Julian: Stop nagging. The training is over, get ready for the meal. It's time to eat.";
+	end;
+OnTimer28000:
+	npctalk "Ebel: Meal...", instance_npcname("Ebel#3_1");
+	emotion ET_SURPRISE, getnpcid(0, instance_npcname("Ebel#3_1") );
+	end;
+OnTimer31000:
+	npctalk "Julian: Yes. Go and change into casual clothes.";
+	end;
+OnTimer35000:
+	npctalk "Ebel: Ebel follows Julian's instruction.", instance_npcname("Ebel#3_1");
+	emotion ET_OK;
+	end;
+OnTimer41000:
+	disablenpc instance_npcname("Ebel#3_1");
+	end;
+OnTimer42000:
+	stopnpctimer;
+	npctalk "Julian: Hmm. Good job. Let us leave the training ground. The gateway is upstairs. Go up the stairs behind me.", instance_npcname("Julian#8_1");
+	enablenpc instance_npcname("#wp_out");
+	end;
+
+OnInstanceInit:
+	'status_instance = 0;
+
+	'instance_id = instance_id();
+	'map_swat$ = instance_mapname("1@swat");
+
+	if (instance_live_info(ILI_NAME) != "Heart Hunter War Base 2")
+		disablenpc instance_npcname("Julian#4");
+
+	// warps
+	disablenpc instance_npcname("#wp_boss");
+	disablenpc instance_npcname("#wp_out");
+
+	// Entrance
+	disablenpc instance_npcname("Julian#4_1");
+
+	// Step 1
+	disablenpc instance_npcname("#remaining_hunter2_step1");
+	disablenpc instance_npcname("#start2_1_1");
+
+	// Step 2
+	disablenpc instance_npcname("Julian#5");
+	disablenpc instance_npcname("#start2_2_1");
+	disablenpc instance_npcname("#remaining_hunter2_step2");
+
+	// Step 3 - Maze
+	disablenpc instance_npcname("#start2_2_2");
+	disablenpc instance_npcname("Julian#6");
+	disablenpc instance_npcname("SWT_8309#1");
+	disablenpc instance_npcname("#hunter_instance_2_maze");
+	disablenpc instance_npcname("Pile of gunpowder#4");
+
+	// Step 4 - Boss
+	disablenpc instance_npcname("Julian#7");
+	disablenpc instance_npcname("Ebel#3");
+	disablenpc instance_npcname("Julian#8_0");
+	disablenpc instance_npcname("Julian#8");
+	disablenpc instance_npcname("#start2_boss");
+	disablenpc instance_npcname("#hunter_instance_2_talk");
+	disablenpc instance_npcname("#hunter_instance_2_ebel");
+
+	for ( .@i = 141; .@i <= 152; .@i++ )
+		disablenpc instance_npcname( "#tr" + .@i );
+	disablenpc instance_npcname("Julian#8_1");
+	disablenpc instance_npcname("Ebel#3_1");
+
+	setcell 'map_swat$,23,222,40,222,cell_walkable,0;
+	setcell 'map_swat$,22,272,52,272,cell_walkable,0;
+	end;
+}

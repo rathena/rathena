@@ -55,7 +55,7 @@ prontera,202,297,3	script	Rina#Easter	727,{
 		mes "several problems instead of me.";
 		next;
 		if (select("Let's help ^800080Rina^000000.:Just skip it.") == 2) {
-			emotion e_sigh;
+			emotion ET_OHNO;
 			mes "[Rina]";
 			mes "To help me,";
 			mes "I need a competent adventurer.";
@@ -63,7 +63,7 @@ prontera,202,297,3	script	Rina#Easter	727,{
 			mes "I hope you to introduce them to me later.";
 			close;
 		}
-		emotion e_awsm;
+		emotion ET_COOL;
 		mes "[Rina]";
 		mes "Are you really going to help me?";
 		mes "Thank you.";
@@ -90,7 +90,7 @@ prontera,202,297,3	script	Rina#Easter	727,{
 		mes "^800080Oath-taking ceremony^000000 is done enough now.";
 		mes "Isn't that so simple?";
 		next;
-		emotion e_dum;
+		emotion ET_HUM;
 		mes "[Rina]";
 		mes "Okay, from no on,";
 		mes "you need to go on ^006400a real adventure";
@@ -171,7 +171,7 @@ prontera,202,297,3	script	Rina#Easter	727,{
 			mes "you cannot feel the music.";
 			mes "What should we do now...";
 			close2;
-			emotion e_sob;
+			emotion ET_CRY;
 			end;
 		}
 		mes "[Rina]";
@@ -215,12 +215,12 @@ prontera,202,297,3	script	Rina#Easter	727,{
 		mes "It must be tough";
 		mes "but I hope you good luck.";
 		close2;
-		emotion e_sigh;
+		emotion ET_OHNO;
 		end;
 	} else {
 		set .@quest3, checkquest(9123);
 		if (.@quest3 == 0 || .@quest3 == 1) {
-			emotion e_kis;
+			emotion ET_CHUP;
 			mes "[Rina]";
 			mes "You're back~!";
 			mes "My curse has been released.";
@@ -336,7 +336,7 @@ rachel,36,132,4	script	#Hiddne04Easter	844,{
 prontera,204,297,3	script	Rina's Little Friend	463,{
 	disable_items;
 	if (checkquest(9117) == -1) {
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Rina's Little Friend]";
 		mes ".......";
 		mes " ";
@@ -344,7 +344,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 		close;
 	}
 	if (checkquest(9123) == 2) {
-		emotion e_meh;
+		emotion ET_MERONG;
 		mes "[Rina's Little Friend]";
 		mes "Hi.";
 		mes "I guess you're the trustworthy friend.";
@@ -402,7 +402,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 				else
 					getitem 9023,1; //Deviruchi_Egg
 				close2;
-				emotion e_yawn;
+				emotion ET_SLEEPY;
 				end;
 			} else if (.@nPercentage <= 60) {
 				if (.@nPercentage >= 42 && .@nPercentage <= 45)
@@ -414,7 +414,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 				mes "I need to take some rest.";
 				mes "Good bye~!";
 				close2;
-				emotion e_yawn;
+				emotion ET_SLEEPY;
 				end;
 			} else if (.@nPercentage <= 85) {
 				if (.@nPercentage >= 61 && .@nPercentage <= 75) {
@@ -429,7 +429,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 				mes "I didn't mean to do it,";
 				mes "but I'm sorry...";
 				mes "I hope to see you again, my friend.";
-				emotion e_dum;
+				emotion ET_HUM;
 				close;
 			} else {
 				getitem 12093,2; //Dex_Dish08
@@ -439,7 +439,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 				mes "Looks delicious.";
 				mes "Then, good bye~!";
 				close2;
-				emotion e_rice;
+				emotion ET_HUNGRY;
 				end;
 			}
 		case 2:
@@ -449,7 +449,7 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 			mes "pretending to see me?";
 			mes "It's funny... haha~";
 			close2;
-			emotion e_gg;
+			emotion ET_KIK;
 			end;
 		case 3:
 			playbgm "23.mp3"; // Travel
@@ -504,11 +504,11 @@ prontera,204,297,3	script	Rina's Little Friend	463,{
 			mes "I'll be waiting for you.";
 			close2;
 			playbgm "08.mp3"; // Theme of Prontera
-			emotion e_gg;
+			emotion ET_KIK;
 			end;
 		}
 	}
-	emotion e_meh;
+	emotion ET_MERONG;
 	mes "[Rina's Little Friend]";
 	mes "Ahem!";
 	mes "Why? Are you surprised to see me speaking?";
@@ -549,7 +549,7 @@ prontera,116,82,5	script	Traveler#01Easter	85,{
 	mes "who were standing";
 	mes "near the ^8B4513Cathedral^000000.";
 	next;
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Traveler]";
 	mes "That adventurer seemed pretty.";
 	mes "But...";
@@ -584,7 +584,7 @@ OnInit:
 	initnpctimer;
 	end;
 OnTimer5000:
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	stopnpctimer;
 	initnpctimer;
 	end;
@@ -613,7 +613,7 @@ OnInit:
 	initnpctimer;
 	end;
 OnTimer5000:
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	stopnpctimer;
 	initnpctimer;
 	end;

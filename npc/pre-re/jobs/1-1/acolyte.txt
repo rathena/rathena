@@ -38,7 +38,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "Ah, I sense you have endured";
 				mes "a past life experience. You must have learned many things before entering Valhalla.";
 				next;
-				if (getskilllv("NV_BASIC") < 9) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Father Mareusis]";
 					mes "Unfortunately, I don't think you're ready to become an Acolyte yet. Please finish learning all of the Basic Skills first.";
 					next;
@@ -112,7 +112,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 					break;
 				case 1:
 					set job_acolyte_q,3;
-					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morroc Town, SouthWest of Prontera City^000000.";
+					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morocc Town, SouthWest of Prontera City^000000.";
 					setquest 1002;
 					break;
 				case 2:
@@ -137,7 +137,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 		mes "Oh, you've come back. Let me check and see if you are ready to serve God. Let's see...";
 		next;
 		mes "[Father Mareusis]";
-		if (getskilllv("NV_BASIC") < 9) {
+		if (!callfunc("F_CanChangeJob")) {
 			mes "Good Lord! Haven't you accomplished the Basic Training yet?! It's important that you finish that!";
 			next;
 			mes "[Father Mareusis]";
@@ -160,7 +160,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "Please Visit ^000077Mother Mathilda^000000 and return here to me.";
 				next;
 				mes "[Father Mareusis]";
-				mes "She has been practicing asceticism near ^000077Morroc Town, located SouthWest of Prontera City^000000.";
+				mes "She has been practicing asceticism near ^000077Morocc Town, located SouthWest of Prontera City^000000.";
 				break;
 			case 4:
 				mes "[Father Mareusis]";
@@ -222,7 +222,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "For your trial, please visit ^000077Mother Mathilda^000000 and return here to me.";
 				next;
 				mes "[Father Mareusis]";
-				mes "She has been practicing asceticism near ^000077Morroc, located to the SouthWest of Prontera City^000000.";
+				mes "She has been practicing asceticism near ^000077Morocc, located to the SouthWest of Prontera City^000000.";
 				break;
 			default:
 				mes "For your trial, please visit ^000077Father Yosuke^000000 and return here to me.";
@@ -279,7 +279,7 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 				mes "[Father Rubalkabara]";
 				mes "Farewell.";
 				close2;
-				savepoint "prt_fild03",361,255;
+				savepoint "prt_fild03",361,255,1,1;
 				set job_acolyte_q,6;
 				end;
 			}
@@ -347,7 +347,7 @@ moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 				mes "[Mother Mathilda]";
 				mes "Please return to the Prontera Sanctuary and speak to the Priest in charge.";
 				close2;
-				savepoint "moc_fild07",35,355;
+				savepoint "moc_fild07",35,355,1,1;
 				set job_acolyte_q,7;
 				end;
 			}
@@ -424,7 +424,7 @@ prt_fild00,208,218,6	script	Ascetic#3aco	98,{
 				mes "[Father Yosuke]";
 				mes "Now go back to the Santuary and finish becoming an Acolyte, kid.";
 				close2;
-				savepoint "prt_fild00",206,230;
+				savepoint "prt_fild00",206,230,1,1;
 				set job_acolyte_q,8;
 				end;
 			}

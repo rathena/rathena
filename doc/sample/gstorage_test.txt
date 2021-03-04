@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140208
+//= 20180906
 //===== Description: ========================================= 
 //= Contains commands needed for a guild warehouse NPC.
 //============================================================
@@ -22,14 +22,29 @@ prontera,165,188,4	script	Guild Warehouse	112,{
 		close;
 	}
 
-	.@flag = guildopenstorage;
-	if (.@flag == 1) {
-		mes "[Guild Warehouse]";
-		mes "The guild warehouse is being used right now.";
-		mes "Please wait a while, then come back.";
-	} else if (.@flag == 2) {
-		mes "[Guild Warehouse]";
-		mes "You can't use this service if you're not in a guild!";
+	switch(guildopenstorage()){
+		case GSTORAGE_STORAGE_ALREADY_OPEN:
+			mes "[Guild Warehouse]";
+			mes "you are using your storage.";
+			mes "Please wait a while, then come back.";
+			break;
+		case GSTORAGE_ALREADY_OPEN:
+			mes "[Guild Warehouse]";
+			mes "The guild warehouse is being used right now.";
+			mes "Please wait a while, then come back.";
+			break;
+		case GSTORAGE_NO_GUILD:
+			mes "[Guild Warehouse]";
+			mes "You can't use this service if you're not in a guild!";
+			break;
+		case GSTORAGE_NO_STORAGE:
+			mes "[Guild Warehouse]";
+			mes "The guild does not have a guild storage.";
+			break;
+		case GSTORAGE_NO_PERMISSION:
+			mes "[Guild Warehouse]";
+			mes "You don't have permission to use the guild storage!";
+			break;
 	}
 	cutin "kafra_06",255;
 	close;

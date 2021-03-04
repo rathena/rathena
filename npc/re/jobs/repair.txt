@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
 //= 1.1 Added GM management function. [Euphy]
+//= 2.0 Prontera castle map changed in ep16.1 [Capuche]
 //============================================================ 
 
 // Job Variables
@@ -267,7 +268,7 @@ prt_in,88,108,4	duplicate(Valerie#sign)	Valerie#knt	837
 prt_church,19,36,4	duplicate(Valerie#sign)	Valerie#prst	837
 gef_tower,110,30,4	duplicate(Valerie#sign)	Valerie#wiz	837
 comodo,215,155,4	duplicate(Valerie#sign)	Valerie#danc	837
-prt_castle,45,167,4	duplicate(Valerie#sign)	Valerie#cru	837
+// prt_castle,45,167,4	duplicate(Valerie#sign)	Valerie#cru	837
 prt_monk,59,253,4	duplicate(Valerie#sign)	Valerie#mnk	837
 moc_ruins,90,104,4	duplicate(Valerie#sign)	Valerie#rg	837
 yuno_in02,43,62,4	duplicate(Valerie#sign)	Valerie#sag	837

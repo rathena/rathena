@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Moscovia Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Kisuka
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Moscovia Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Kisuka]
 //= 1.1 Removed villagers (they are part of a quest). [Kisuka]
 //= 1.2 Moved Alberta NPC to pre-re/re paths. [Euphy]
@@ -27,7 +27,7 @@
 		case 1:
 			mes "[Moscovia P.R. Officer]";
 			mes "Moscovia is a beautiful kingdom";
-			mes "on an island located north of Rune";
+			mes "on an island located north of Rune-";
 			mes "Midgarts.";
 			next;
 			mes "[Moscovia P.R. Officer]";
@@ -48,7 +48,7 @@
 			mes "I'll help you to have a nice trip";
 			mes "to Moscovia!";
 			close;
-			
+
 		case 2:
 			mes "[Moscovia P.R. Officer]";
 			mes "Ok then, let us start now.";
@@ -97,7 +97,7 @@ moscovia,166,53,4	script	Moscovia P.R. Officer#2	960,{
 	mes "How was your trip?";
 	mes "Do you have good memories from Moscovia?";
 	mes "A ship is now leaving";
-	mes "for Rune Midgarts.";
+	mes "for Rune-Midgarts.";
 	next;
 	if (select("Return to Alberta:Cancel") == 2) {
 		mes "[Moscovia P.R. Officer]";

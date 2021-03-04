@@ -36,7 +36,7 @@
 	mes "but we have a limited amount,";
 	mes "so you can only purchase 5 at a time!!";
 	next;
-	while(1) {
+	while(true) {
 		input .@input;
 		if(.@input < 1) {
 			mes "[Ice Cream Maker]";
@@ -55,7 +55,9 @@
 			mes "If you might haveto make a lot of trips";
 			mes "to the bathroom tonight.";
 			next;
+			continue;
 		}
+		break;
 	}
 	if(Zeny<.@input*100) {
 		mes "[Ice Cream Maker]";
@@ -79,8 +81,8 @@
 // Alberta
 alberta,120,45,2	duplicate(IceCreamer)	Ice Cream Maker#1	85
 
-// Morroc Field
+// Morocc Field
 moc_fild16,88,304,4	duplicate(IceCreamer)	Ice Cream Maker#2	85
 
-// Morroc
+// Morocc
 //morocc,160,144,4	duplicate(IceCreamer)	Ice Cream Maker#3	85

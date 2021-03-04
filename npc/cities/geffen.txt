@@ -79,7 +79,7 @@ geffen_in,164,109,0	script	Wizard Stanza	64,{
 	}
 	else if (Class == Job_Novice)
 		mes "Although you may not be able to use magic or any other kind of powerful skills for now, this knowledge may be helpful in the future, young Novice...";
-	else 
+	else
 		mes "Although you are not formally trained in the use of magic, you use skills which draw upon otherworldly energies, whether you know it or not...";
 	next;
 	mes "[Stanza]";
@@ -102,7 +102,7 @@ geffen,147,26,0	script	Ralphie	97,{
 	mes "With that, anyone could be as strong as Hercules... Even a weakling like me! Hahahahahah,";
 	mes "I must have it!";
 	next;
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Ralphie]";
 	mes "...Good Heavens!";
 	mes "Since when were";
@@ -131,7 +131,7 @@ geffen,111,48,0	script	Stacey	101,{
 		mes "Is that an Orc Helm you're wearing?! That's so cool! Wow...";
 		next;
 		mes "[Stacey]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "You look so...";
 			mes "Rugged and manly~";
 		}
@@ -152,11 +152,11 @@ geffen,111,48,0	script	Stacey	101,{
 		mes "of Orc Hero!";
 		next;
 		mes "[Stacey]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "It's...";
-			mes "It's like you're surrounded by this incredibly masculine aura! Oooh~! You must be irresistable to all the girls!";
+			mes "It's like you're surrounded by this incredibly masculine aura! Oooh~! You must be irresistible to all the girls!";
 			next;
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Stacey]";
 			mes "And I'm no exception.";
 		}
@@ -183,7 +183,7 @@ geffen,111,48,0	script	Stacey	101,{
 		close;
 	}
 }
-	
+
 geffen_in,34,170,0	script	Theodore	47,{
 	mes "[Theodore]";
 	mes "Hello!";
@@ -219,14 +219,14 @@ geffen_in,34,170,0	script	Theodore	47,{
 geffen,146,148,4	script	Suspicious Guy	99,6,6,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[?]";
 	mes "^333333*Psssst!*";
 	mes "H-Hey you!";
 	mes "You wanna get your hands on some great stuff? Come on over!^000000";
 	next;
 	mes "[Suspicious Guy]";
-	if (Sex)
+	if (Sex == SEX_MALE)
 		mes "Hey there tough guy. You look smart enough to recognize a bargain when it's right in front of your eyes.";
 	else
 		mes "Well, well, well. Aren't you a pretty girl. Today just happens to be your lucky day!";
@@ -261,7 +261,7 @@ OnTouch:
 			input .@input;
 			if (.@input == 0) {
 				mes "[Suspicious Guy]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "Ah duuuuuude~ You're breakin' my heart! I mean, at these prices, I'm practically performing charity!";
 				else
 					mes "W-waaaait! You didn't let me tell you the part about how Red Potions help you lose and gain weight in all the right places! Waaaaait!";
@@ -293,7 +293,7 @@ OnTouch:
 		break;
 	case 2:
 		mes "[Suspicious Guy]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "What would a strong guy like you want a knife for? Those will just break under the force of your incredibly powerful swings!";
 			next;
 			mes "[Suspicious Guy]";
@@ -358,7 +358,7 @@ OnTouch:
 		break;
 	case 3:
 		mes "[Suspicious Guy]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "A Manteau? That's old news! You know what's the latest in protective armors?";
 		else
 			mes "Now why would such a beautiful woman wear something out of style? You know what would make you look even better?";
@@ -460,7 +460,7 @@ geffen_in,22,125,1	script	Crumpler	52,{
 			mes "[Crumpler]";
 			mes "Ooooooooh";
 			mes "crraaaap!";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Crumpler]";
 			mes "Help meeeee!";
@@ -498,7 +498,7 @@ geffen_in,22,125,1	script	Crumpler	52,{
 		mes "[Crumpler]";
 		mes "A...";
 		mes "Sage?";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Crumpler]";
 		mes "I don't know what that is. But I guess it can't be half as bad as a Mage.";
@@ -609,13 +609,13 @@ geffen_in,27,134,5	script	Waitress#elen	91,{
 		next;
 		mes "[Elenore]";
 		mes "Well...";
-		mes "I hear there's this person somewhere in Rune-Midgard...";
+		mes "I hear there's this person somewhere in Rune-Midgarts...";
 		next;
 		mes "[Elenore]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Tell me, have you ever heard of "+strcharinfo(0)+"? He's supposed to be the suavest hero around!";
 		else
-			mes "Have you ever heard of "+strcharinfo(0)+"? People say she's one of the prettiest girls in all of Rune-Midgard!";
+			mes "Have you ever heard of "+strcharinfo(0)+"? People say she's one of the prettiest girls in all of Rune-Midgarts!";
 		break;
 	case 4:
 		switch(rand(1,2)) {
@@ -652,7 +652,7 @@ geffen_in,27,134,5	script	Waitress#elen	91,{
 			mes "^990000Hey you sex crazed bastard!! Stop looking at my daughter like that before I rip out your eyes, and eat them with pasta!^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Huh...?";
 				mes "C-come again?";
 				next;
@@ -743,7 +743,7 @@ geffen_in,70,67,3	script	Waitress#elise	90,{
 		mes "The Rune-Midgarts Kingdom?";
 		next;
 		mes "[Elisa]";
-		mes "I hear that it was originally called the Rune-Midgard Kingdom, after our continent. However, for some reason, the name was changed to 'Rune-Midgarts.'";
+		mes "I hear that it was originally called the Rune-Midgarts Kingdom, after our continent. However, for some reason, the name was changed to 'Rune-Midgarts.'";
 		next;
 		mes "[Elisa]";
 		mes "It was obviously a wise decision, since too many people kept confusing the our continent with our kingdom. Weird, huh?";
@@ -768,7 +768,7 @@ geffen_in,70,67,3	script	Waitress#elise	90,{
 			mes "^990000Stay away from my daughter, or I'll beat your brains out, punk! Elisa's gonna marry a doctor! Or a lawyer!^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Y-y-y-yes, sir!";
 				next;
 				mes "^3355FFThat was scary...!";
@@ -874,19 +874,19 @@ geffen_in,79,76,2	script	Merchant Daven	120,{
 	}
 	close;
 }
-	
+
 geffen_in,114,73,5	script	Hadenheim	709,{
 	mes "[Hans Hadenheim]";
-	mes "Man, the Rune-Midgard continent sure is big! How's it going, youngster?";
+	mes "Man, the Midgard continent sure is big! How's it going, youngster?";
 	next;
 	mes "[Hans Hadenheim]";
-	mes "This Geffen sure is strange. But it was worth it to travel here all the way from the Schubaltzwald Republic.";
+	mes "This Geffen sure is strange. But it was worth it to travel here all the way from the Schwarzwald Republic.";
 	next;
-	if (select("Schubaltzwald Republic?:So, why are you traveling?") == 1) {
+	if (select("Schwarzwald Republic?:So, why are you traveling?") == 1) {
 		mes "[Hans Hadenheim]";
 		mes "You...";
 		mes "Don't know the";
-		mes "Schubaltzwald Republic?";
+		mes "Schwarzwald Republic?";
 		next;
 		mes "[Hans Hadenheim]";
 		mes "You know, ally of the Rune-Midgarts Kingdom. Um... Our capital city is Juno?";
@@ -1039,7 +1039,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 			break;
 		case 3:
 			mes "Um...";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "The girl that you";
 			else
 				mes "The boy that you";
@@ -1057,7 +1057,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 				mes "You didn't let me finish my sentence. What I meant to say was...";
 				next;
 				mes "[Psychic Advisor]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "The girl that you";
 				else
 					mes "The boy that you";
@@ -1076,7 +1076,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 				mes "Sometimes, I get the future and the present mixed up. You know, since I'm always looking into the future...?";
 				next;
 				mes "[Psychic Advisor]";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "What I meant to say was";
 					mes "^3355FFyou and the perfect woman will soon fall in love^000000. Yes, that's what I meant!";
 				}
@@ -1122,14 +1122,14 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 			mes "First off, be accountable for your own money and use a budget that works for you. A good rule of thumb? For every ten zeny you earn, put one zeny aside and either save it or invest it for later.";
 			next;
 			mes "[Psychic Advisor]";
-			mes "And whatever you do, don't work as a psychic advisor in Rune-Midgard. The real cash, apparently, is in discovering new countries. Why didn't I do that?!";
+			mes "And whatever you do, don't work as a psychic advisor in Rune-Midgarts. The real cash, apparently, is in discovering new countries. Why didn't I do that?!";
 			next;
 			break;
 		case 3:
 			mes "So you want to know about money, eh? Let me commune with the spirits of the supernatural realm...";
 			next;
 			mes "[Psychic Advisor]";
-			mes "Ah yes. They are telling me that it's best to be moderate in all things. Certainly, you must make sure that your expeditures don't exceed your budget.";
+			mes "Ah yes. They are telling me that it's best to be moderate in all things. Certainly, you must make sure that your expenditures don't exceed your budget.";
 			next;
 			mes "[Psychic Advisor]";
 			mes "However, you should also avoid gambling with your money. By that, I mean you should save and invest carefully. Don't be tempted into risky get-rich-quick schemes!";
@@ -1337,7 +1337,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 		close;
 	}
 }
-	
+
 geffen_in,109,72,2	script	Monster Scholar	90,{
 	mes "[Estheres]";
 	mes "Hello, I'm the resident expert of Monsterology here in Geffen. Is there anything in particular that you're curious about?";
@@ -1353,13 +1353,13 @@ geffen_in,109,72,2	script	Monster Scholar	90,{
 		mes "[Estheres]";
 		if (BaseLevel > 40)
 			mes "You look strong enough for that kind of challenge. But if you see anyone more reckless cross the Western bridge, you might want to give them a warning.";
-		else 
+		else
 			mes "Um, but if you're planning to go there, you better not go alone. I really recommend that you be well prepared if you're gonna fight those kinds of monsters.";
 		break;
 	case 2:
 		mes "[Estheres]";
 		mes "Recent news?";
-		mes "Well, the Juno Monster Musuem is now open to the public. They have a fascinating exhibit and various monsters are now on display!";
+		mes "Well, the Juno Monster Museum is now open to the public. They have a fascinating exhibit and various monsters are now on display!";
 		next;
 		mes "[Estheres]";
 		mes "I mean, I've read about all sorts of monsters in the Prontera and Juno Libraries, and encountered a few in the wild, but now I get a chance to see some strong monsters in real life!";
@@ -1408,7 +1408,7 @@ geffen_in,109,72,2	script	Monster Scholar	90,{
 
 geffen,203,146,5	script	Citizen	97,{
 	mes "[Citizen]";
-	mes "There was a skillful weaponsmith";
+	mes "There was a skillful weapon smith";
 	mes "in Al De Baran who had 4 sons.";
 	mes "Unfortunately he lost all of his sons";
 	mes "while developing a powerful weapon.";
@@ -1416,7 +1416,7 @@ geffen,203,146,5	script	Citizen	97,{
 	next;
 	mes "[Citizen]";
 	mes "How sad it will be for the father...";
-	mes "Because of the incident, the weaponsmith";
+	mes "Because of the incident, the weapon smith";
 	mes "retired from his work and hid himself somewhere.";
 	mes "After that, no one could ever see";
 	mes "the powerful weapon that he and his sons were developing.";

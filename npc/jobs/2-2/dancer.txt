@@ -133,7 +133,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	if (DANC_Q == 0 && Sex == 0 && BaseJob == Job_Archer) {
+	if (DANC_Q == 0 && Sex == SEX_FEMALE && BaseJob == Job_Archer) {
 		cutin "job_dancer_eir01",2;
 		mes "[Aile]";
 		mes "Welcome~!";
@@ -209,7 +209,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	else if (Sex == 1) {
+	else if (Sex == SEX_MALE) {
 		cutin "job_dancer_eir03",2;
 		mes "[Aile]";
 		mes "Welco--Mmm?";
@@ -703,7 +703,7 @@ job_duncer,95,93,4	script	Bijou#da	101,{
 			mes "4. Which town has";
 			mes "the most Dancers?";
 			next;
-			if (select("Al De Baran:Juno:Morroc:Comodo") == 4)
+			if (select("Al De Baran:Juno:Morocc:Comodo") == 4)
 				set .@da_score,.@da_score+10;
 			mes "[Bijou]";
 			mes "5. Of the following,";
@@ -1236,7 +1236,7 @@ OnTimer89000:
 }
 
 job_duncer,69,110,0	script	dance#return	-1,1,4,{
-OnTouch:
+OnTouch_:
 	mapannounce "job_duncer","Good! Well done! Go back to Bijou!",bc_map;
 	set DANC_Q,9;
 	changequest 7005,7006;
@@ -1256,7 +1256,7 @@ OnEnable:
 }
 
 job_duncer,66,110,0	script	dance#return#2	-1,1,1,{
-OnTouch:
+OnTouch_:
 	set DANC_Q,9;
 	warp "comodo",188,162;
 	end;
@@ -1272,7 +1272,7 @@ OnEnable:
 }
 
 job_duncer,72,110,0	script	dance#return#3	-1,1,1,{
-OnTouch:
+OnTouch_:
 	set DANC_Q,9;
 	warp "comodo",188,162;
 	end;
@@ -1291,7 +1291,7 @@ OnEnable:
 // Dance Move Triggers
 //============================================================ 
 -	script	dancestep::StepTrigger	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Backdancer#1::OnOmg";
 	mapannounce "job_duncer"," " + strcharinfo(0) + ", you lack rhythm... Your timing was too late!",bc_map;
 	set DANC_Q,8;
@@ -1309,7 +1309,7 @@ job_duncer,69,110,0	duplicate(StepTrigger)	dance#cen	-1,1,1
 
 job_duncer,10,10,0	script	dance#poring	-1,{
 OnEnable:
-	monster "job_duncer",69,106,"Poring",1002,1,"dance#poring::OnMyMobDead";
+	areamonster "job_duncer",68,105,70,107,"Poring",1002,1,"dance#poring::OnMyMobDead";
 	end;
 
 OnMyMobDead:
@@ -1328,14 +1328,14 @@ job_duncer,63,110,4	script	Backdancer#1	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	donpcevent "Backdancer#2::OnSmile";
 	donpcevent "Backdancer#3::OnSmile";
 	donpcevent "Backdancer#4::OnSmile";
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	donpcevent "Backdancer#2::OnOmg";
 	donpcevent "Backdancer#3::OnOmg";
 	donpcevent "Backdancer#4::OnOmg";
@@ -1346,11 +1346,11 @@ job_duncer,66,113,4	script	Backdancer#2	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -1358,11 +1358,11 @@ job_duncer,72,113,4	script	Backdancer#3	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -1370,11 +1370,11 @@ job_duncer,75,110,4	script	Backdancer#4	724,{
 	end;
 
 OnSmile:
-	emotion e_no1;
+	emotion ET_BEST;
 	end;
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 

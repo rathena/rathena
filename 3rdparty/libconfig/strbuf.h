@@ -1,3 +1,5 @@
+#pragma once
+
 /* ----------------------------------------------------------------------------
    libconfig - A library for processing structured configuration files
    Copyright (C) 2005-2010  Mark A Lindner
@@ -26,6 +28,10 @@
 #include <string.h>
 #include <sys/types.h>
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 typedef struct
 {
   char *string;
@@ -37,4 +43,8 @@ char *strbuf_release(strbuf_t *buf);
 
 void strbuf_append(strbuf_t *buf, const char *text);
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* __libconfig_strbuf_h */

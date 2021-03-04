@@ -21,7 +21,7 @@ itemmall,19,74,5	script	Stylist#cash	91,{
 	mes "Give me a ^FF0000New Style Coupon^000000,";
 	mes "and I'll change your hair~";
 	next;
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "[Kaniki]";
 		mes "I have two special";
 		mes "hairstyles for men, the";
@@ -81,7 +81,7 @@ itemmall,19,74,5	script	Stylist#cash	91,{
 			mes "Alright, which hairstyle";
 			mes "did you want to have?";
 			next;
-			if (Sex == 1) {
+			if (Sex == SEX_MALE) {
 				if(select("Emergency Heal Perm:Aura Blade Cut") == 1) {
 					delitem 7622,1;	// New_Style_Coupon
 					setlook 1,24;

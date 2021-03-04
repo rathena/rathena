@@ -48,8 +48,8 @@ aldeba_in,83,224,0	warp	ald16-1	2,2,aldeba_in,83,188
 aldeba_in,94,38,0	warp	ald02-1	3,2,aldebaran,197,68
 aldeba_in,97,102,0	warp	ald10-1	2,2,aldeba_in,103,58
 
-aldebaran,225,54	warp	aldeb_sign1-1	1,1,aldeba_in,149,120
-aldeba_in,149,123	warp	aldeb_sign1-2	3,2,aldebaran,223,56
+aldebaran,225,54,0	warp	aldeb_sign1-1	1,1,aldeba_in,149,120
+aldeba_in,149,123,0	warp	aldeb_sign1-2	3,2,aldebaran,223,56
 
 
 //Turbo Track Room

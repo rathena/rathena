@@ -62,7 +62,7 @@ prt_are_in,103,11,3	script	Arena Point Manager	732,{
 			mes "To cancel, enter ''^3355FF0^000000.''";
 			next;
 			input .@input;
-			if (.@input == 0) {
+			if (.@input <= 0) {
 				mes "[Arena Point Manager]";
 				mes "You have";
 				mes "canceled";
@@ -113,8 +113,8 @@ prt_are_in,103,11,3	script	Arena Point Manager	732,{
 					mes "into 5 Arena Points " + .@input + " times.";
 					mes "A total of " + .@want_point1 + " Turbo Track Points were converted into";
 					mes "" + .@want_point +" Arena Points.";
-					set tt_point,tt_point - .@want_point1;
-					set arena_point,arena_point+.@want_point;
+					set tt_point, .@my_turbo_all;
+					set arena_point, .@my_arena_all;
 					next;
 					mes "[Arena Point Manager]";
 					mes "" + strcharinfo(0) + ",";
@@ -155,13 +155,15 @@ S_ExchangePoints:
 		mes "Thank you for your patronage.";
 		close;
 	}
-	if (tt_point >= getarg(1)) {
+	.@track_point = getarg(1);
+	if (tt_point >= .@track_point) {
+		.@arena_point = getarg(2);
 		mes "[Arena Point Manager]";
 		mes "" + strcharinfo(0) + ",";
-		mes "you've converted "+getarg(1)+" Track";
-		mes "Points into "+getarg(2)+" Arena Point.";
-		set tt_point,tt_point-getarg(1);
-		set arena_point,arena_point+getarg(2);
+		mes "you've converted "+ .@track_point +" Track";
+		mes "Points into "+ .@arena_point +" Arena Point.";
+		tt_point = tt_point - .@track_point;
+		arena_point = arena_point + .@arena_point;
 		next;
 		mes "[Arena Point Manager]";
 		mes "" + strcharinfo(0) + ",";

@@ -37,7 +37,7 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 			mes "to Valhalla and been reborn.";
 			mes "Wow, that's so impressive!";
 			next;
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Archer Guildsman]";
 				mes "Err...";
 				mes "You'd better learn all the Basic Skills first before you can become an Archer.";
@@ -125,7 +125,7 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 		mes "[Archer Guildsman]";
 		mes "Are you..." + strcharinfo(0) + "?";
 		next;
-		if (getskilllv("NV_BASIC") < 9) {
+		if (!callfunc("F_CanChangeJob")) {
 			mes "[Archer Guildsman]";
 			mes "Well, you're not at the right job level. Please check the requirements again.";
 			next;

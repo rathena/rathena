@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -12,10 +12,12 @@
 //= 1.0 First Version.
 //= 1.1 Some little optimization here and there. [Masao]
 //= 1.2 Optimized. [Euphy]
+//= 1.3 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.4 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,38,38,3	script	Mission [26 - 40]	857,{
-	if (countitem(6219) < 1) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "You are not a qualified member. You can not use the bulletin board.";
 		close;
 	}
@@ -46,9 +48,9 @@ moc_para01,38,38,3	script	Mission [26 - 40]	857,{
 		mes "- are on the board. -";
 		next;
 		switch(select("Deliver an Insecticide:Deliver Honey:Deliver Blanket(Above Lv.35)")) {
-			case 1: callsub L_Quest,8271,0,"Deliver an Insecticide","Dieshin Man","Morroc Ruins","Get an 'Insecticide' from Dieshin Man and deliver it south east of Payon";
-			case 2: callsub L_Quest,8272,0,"Deliver Honey","Dieshin Man","Morroc Ruins","Get 'Honey' from Dieshin Man and deliver it west of St. Capitolina Abbey";
-			case 3: callsub L_Quest,8273,35,"Deliver Blanket","Dieshin Man","Morroc Ruins","Get Blankets from Dieshin Man and deliver to the field south of Lutie";
+			case 1: callsub L_Quest,8271,0,"Deliver an Insecticide","Dieshin Man","Morocc Ruins","Get an 'Insecticide' from Dieshin Man and deliver it south east of Payon";
+			case 2: callsub L_Quest,8272,0,"Deliver Honey","Dieshin Man","Morocc Ruins","Get 'Honey' from Dieshin Man and deliver it west of St. Capitolina Abbey";
+			case 3: callsub L_Quest,8273,35,"Deliver Blanket","Dieshin Man","Morocc Ruins","Get Blankets from Dieshin Man and deliver to the field south of Lutie";
 		}
 	case 3:
 		mes "[Gathering Mission Board]";
@@ -71,11 +73,12 @@ moc_para01,38,38,3	script	Mission [26 - 40]	857,{
 	end;
 L_Quest:
 	//QuestID,ReqLvl,Quest,Client,Loc,Desc
+	.@string$ = getarg(2);
 	if (BaseLevel < getarg(1,26)) {
-		mes "Your level doesn't meet the requirements. You can't take the '"+getarg(2)+"' mission.";
+		mes "Your level doesn't meet the requirements. You can't take the '"+ .@string$ +"' mission.";
 		close;
 	}
-	mes "["+getarg(2)+" !!]";
+	mes "["+ .@string$ +" !!]";
 	mes "Client : "+getarg(3);
 	mes "Client Location : "+getarg(4);
 	mes "Requested Mission : "+getarg(5);
@@ -83,13 +86,13 @@ L_Quest:
 	mes "Will you accept this mission?";
 	next;
 	if(select("No, I won't accept it.:Yes, I will accept it.") == 1) {
-		mes "You have declined the "+getarg(2)+" mission.";
+		mes "You have declined the "+ .@string$ +" mission.";
 		close;
 	}
 	if (checkquest(getarg(0)) > -1) mes "You are already doing this mission.";
 	else {
 		setquest getarg(0);
-		mes "You have accepted the "+getarg(2)+" mission.";
+		mes "You have accepted the "+ .@string$ +" mission.";
 	}
 	mes "You can get a reward from the client after you finish the mission.";
 	next;
@@ -111,7 +114,7 @@ geffen,103,42,5	script	Sponiac	99,{
 	mes "[Sponiac]";
 	mes "Wow, you must be a beginner, right?";
 	mes "What an innocent face! Ha~ hahaha.";
-	emotion e_gg;
+	emotion ET_KIK;
 	next;
 	mes "[Sponiac]";
 	mes "Why don't you do some hunting outside instead of walking around and wasting your time?";
@@ -128,16 +131,17 @@ geffen,103,42,5	script	Sponiac	99,{
 	next;
 	switch(select("Hunting Poison Spore:Hunting Smokie:Hunting Elder Willow:Hunting Coco:Hunting Thara Frog")) {
 		case 1: callsub L_Quest,8266,"Hunting Poison Spore",1000,0,100,"You can find Poison Spores on the Geffen Dungeon 1F or northeast of Prontera. There are other spots but I'll leave it up to you to find out.";
-		case 2: callsub L_Quest,8267,"Hunting Smokie",1000,0,100,"You can find Smokies northeast and northwest of Geffen. Oh, also the field east of Ayotaya is good spot to find them.";
+		case 2: callsub L_Quest,8267,"Hunting Smokie",1000,0,100,"You can find Smokies northeast and northwest of Geffen. Oh, also the field east of Ayothaya is good spot to find them.";
 		case 3: callsub L_Quest,8268,"Hunting Elder Willow",1000,100,110,"You can find Elder Willows northeast of Geffen, east of payon and southwest of Prontera.";
-		case 4: callsub L_Quest,8269,"Hunting Coco",1000,200,150,"You can find Cocos around the east of Payon, southwest of Prontera and the field east of Ayotaya.";
+		case 4: callsub L_Quest,8269,"Hunting Coco",1000,200,150,"You can find Cocos around the east of Payon, southwest of Prontera and the field east of Ayothaya.";
 		case 5: callsub L_Quest,8270,"Hunting Thara Frog",1500,300,200,"You can find Thara Frogs in the Cave east of Comodo or on Turtle Island.";
 	}
 	end;
 L_Quest:
 	//QuestID,Quest,BExp,JExp,PotionAmt,Desc
-	if (checkquest(getarg(0)) == 1) {
-		if (checkquest(getarg(0),HUNTING) == 2) {
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id) == 1) {
+		if (checkquest(.@quest_id,HUNTING) == 2) {
 			mes "[Sponiac]";
 			mes getarg(1)+"!";
 			mes "Wow, I didn't expect you would do that mission. I was just about to give up. But you did good job. I appreciate it!";
@@ -150,7 +154,7 @@ L_Quest:
 			mes "Here it is. Thank you very much. God bless you!";
 			getitem 569,getarg(4); //Novice_Potion
 			getexp getarg(2),getarg(3);
-			erasequest getarg(0);
+			erasequest .@quest_id;
 			close;
 		}
 		mes "[Sponiac]";
@@ -555,7 +559,7 @@ payon,179,66,3	script	Dashia	931,{
 		mes "You can get those items from 'Piere', 'Andre', 'Deniro', 'Vitata', 'Thief Bug', 'Female Thief Bug' and 'Male Thief Bug'.";
 		next;
 		mes "[Dashia]";
-		mes "'Piere', 'Andre', 'Deniro' and 'Vitata' are in Ant Hell which is located near the Saint Darmain Fortress soutwest of Morroc.";
+		mes "'Piere', 'Andre', 'Deniro' and 'Vitata' are in Ant Hell which is located near the Saint Darmain Fortress soutwest of Morocc.";
 		next;
 		mes "[Dashia]";
 		mes "'Thief Bug', 'Female Thief Bug' and 'Male Thief Bug' are int he Prontere Culvert. To get there, you need to be a volunteer of the Prontera Culvert's punitive force.";
@@ -584,10 +588,10 @@ payon,179,66,3	script	Dashia	931,{
 		mes "You can get Yoyo Tails from 'Yoyo's', Acorn from 'Coco's' and Raccoon Leaf from 'Smokies'.";
 		next;
 		mes "[Dashia]";
-		mes "You can find them easily around fields, but the field east of Ayothya is the best spot for hunting all 3 monsters.";
+		mes "You can find them easily around fields, but the field east of Ayothaya is the best spot for hunting all 3 monsters.";
 		next;
 		mes "[Dashia]";
-		mes "To get to Ayotaya, you better go to 'Aibakthing' in Alberta and pay his fare.";
+		mes "To get to Ayothaya, you better go to 'Aibakthing' in Alberta and pay his fare.";
 		break;
 	case 5:
 		callsub L_Quest,8278;
@@ -663,7 +667,7 @@ L_Reward:
 	next;
 	mes "[Dashia]";
 	mes "Thank you very much. God bless you!";
-	emotion e_heh;
+	emotion ET_SMILE;
 	next;
 	mes "[Dashia]";
 	mes "Ha~! Ha~!";

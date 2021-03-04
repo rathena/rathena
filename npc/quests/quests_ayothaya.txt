@@ -117,9 +117,9 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				next;
 				mes "[Shuda]";
 				mes "In the meantime, I'll think of how I'm gonna pay back Annon for leaving me in misery! So hurry and find Annon! Hoo ho ho ho ho!";
-				emotion e_heh;
+				emotion ET_SMILE;
 				next;
-				emotion e_dots,1;
+				emotion ET_THINK, playerattached();
 				mes "["+strcharinfo(0)+"]";
 				mes "(She's so scary!";
 				mes "Making me do stuff";
@@ -209,7 +209,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 				mes "standing around for my";
 				mes "own amusement or something?!";
 				next;
-				emotion e_gg,1;
+				emotion ET_KIK, playerattached();
 				mes "["+strcharinfo(0)+"]";
 				mes "No no no no...";
 				mes "I meant, I can't";
@@ -263,7 +263,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "[Powerful-Looking Woman]";
 					mes "I see. Hmmm...";
 					mes "You're kind of my type.";
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "No no, that doesn't mean I'm interested in you. Plus I'm";
 						mes "already engaged.";
 					} else
@@ -271,7 +271,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					next;
 					mes "[Powerful-Looking Woman]";
 					mes "Let me introduce myself.";
-					mes "My name is Shuda, I've lived in Ayotaya all my life. Since you don't have anything to do, I have";
+					mes "My name is Shuda, I've lived in Ayothaya all my life. Since you don't have anything to do, I have";
 					mes "a favor to ask of you.";
 					next;
 					mes "[Shuda]";
@@ -313,7 +313,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "^660000enslave^000000 him.";
 					mes "^666666*Grinds teeth*^000000";
 					next;
-					emotion e_gasp,1;
+					emotion ET_SURPRISE, playerattached();
 					mes "[" +strcharinfo(0)+ "]";
 					mes "(...H-Horrifying!)";
 					next;
@@ -323,7 +323,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "[Shuda]";
 					mes "And so, that is my quest for you. It should keep you entertained for a while. So get into the water, and I'll supervise from here.";
 					mes "Oho ho ho ho ho!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					set thai_find,1;
 					close;
 				case 2:
@@ -350,7 +350,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "[Shuda]";
 					mes "And her savior";
 					mes "would be known as";
-					mes "the hero of Ayotaya.";
+					mes "the hero of Ayothaya.";
 					next;
 					mes "[" +strcharinfo(0)+ "]";
 					mes " ...Say what?!";
@@ -411,14 +411,14 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 			next;
 			mes "[Powerful-Looking Woman]";
 			mes "^666666Stupid tourists, running";
-			mes "around all over Ayotalla,";
+			mes "around all over Ayothaya,";
 			mes "pestering and bothering";
 			mes "beautiful girls like me...^000000";
 			close;
 		}
 	}
 
-OnTouch:
+OnTouch_:
 	if (thai_find == 0) {
 		mes "[Powerful-Looking Woman]";
 		mes "^666666*Sigh...*^000000";
@@ -464,7 +464,7 @@ if (!$@annonactive) {
 				mes "...Awwww";
 				mes "Oh... Oh God...!";
 				next;
-				emotion e_gasp,1;
+				emotion ET_SURPRISE, playerattached();
 				mes "[" +strcharinfo(0)+ "]";
 				mes "Huh...?";
 				mes "I heard something";
@@ -483,7 +483,7 @@ if (!$@annonactive) {
 				mes "Wh...who's there?";
 				mes "Shuda?! If that's you,";
 				mes "stay back, or I'll kill myself!";
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				next;
 				switch(select("What are you doing here?:I'm not Shuda!")) {
 				case 1:
@@ -544,10 +544,10 @@ if (!$@annonactive) {
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (thai_find == 12) {
 		if (!rand(0,2)) {
-			emotion e_gasp,1;
+			emotion ET_SURPRISE, playerattached();
 			mes "[" +strcharinfo(0)+ "]";
 			mes "Huh...?";
 			next;
@@ -789,7 +789,7 @@ ayo_dun02,91,264,3	script	Haggard Man	841,{
 				mes "My mission: Bring back an";
 				mes "ultra powerful potion for";
 				mes "this poor guy~";
-				emotion e_no1,1;
+				emotion ET_BEST, playerattached();
 				close;
 			}
 		case 2:
@@ -967,10 +967,10 @@ ayothaya,253,99,3	script	Fisherman	843,{
 }
 
 ayo_dun01,255,62,0	script	AyoFootprint1	139,2,0,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 4) {
 		if (rand(1,3) < 2) {
-			emotion e_gasp,1;
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFYou find footprints heading to the ^5C3317North^3355FF. It looks like somebody was in quite a hurry, just like the villager said!^000000";
 			set thai_find,5;
 			changequest 12032,12033;
@@ -981,10 +981,10 @@ OnTouch:
 }
 
 ayo_dun01,74,142,0	script	AyoFootprint2	139,2,0,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 5) {
 		if (rand(1,3) < 2) {
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "^3355FFYou find another set of footprints. It seems that somebody was running away from something. These prints are heading to the ^5C3317East^3355FF. You'd better follow them to see what";
 			mes "you can find.^000000";
 			set thai_find,6;
@@ -995,10 +995,10 @@ OnTouch:
 }
 
 ayo_dun01,244,256,2	script	AyoFootprint3	139,2,0,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 6) {
 		if (rand(1,3) < 2) {
-			emotion e_no,1;
+			emotion ET_STARE_ABOUT, playerattached();
 			mes "^3355FFThe footprints end around this area. Whoever was running must";
 			mes "have been exhausted and stumbled on something. Perhaps the owner of the footprints is nearby...^000000";
 			set thai_find,7;
@@ -1009,10 +1009,10 @@ OnTouch:
 }
 
 ayo_dun01,17,257,0	script	AyoFootprint4	139,2,0,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 7) {
 		if (rand(1,3) < 2) {
-			emotion e_ic,1;
+			emotion ET_AHA, playerattached();
 			mes "^3355FFAs you follow the footprints,";
 			mes "you arrive at the '^5C3317Entrance of the Shrine^3355FF.' Whoever this person was, he just ran into the second level.^000000";
 			set thai_find,8;
@@ -1023,7 +1023,7 @@ OnTouch:
 }
 
 ayo_dun02,145,120,0	script	AyoFootprint5	139,2,0,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 8) {
 		if (rand(1,3) < 2) {
 			mes "^3355FFYou find the same footprints";
@@ -1040,10 +1040,10 @@ OnTouch:
 }
 
 ayo_dun02,135,168,0	script	AyoFootprint6	139,0,2,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 9) {
 		if (rand(1,3) == 1) {
-			emotion e_gasp,1;
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFThe trail of footprints";
 			mes "continue here, and seem";
 			mes "to look more freshly made.^000000.";
@@ -1091,7 +1091,7 @@ OnTouch:
 					mes "[Rat]";
 					mes "^FF0000Squeak!";
 					mes "^FF0000Squeak Squeak!^000000";
-					emotion e_omg,1;
+					emotion ET_HUK, playerattached();
 					next;
 					mes "["+strcharinfo(0)+"]";
 					mes "^8C1717Wah^000000!";
@@ -1114,10 +1114,10 @@ OnTouch:
 }
 
 ayo_dun02,77,213,0	script	AyoFootprint7	139,1,1,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 10) {
 		if (rand(1,3) < 2) {
-			emotion e_gasp,1;
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFWhere is he...?";
 			mes "He seems to have gone";
 			mes "deep into the dungeon.";
@@ -1131,10 +1131,10 @@ OnTouch:
 }
 
 ayo_dun02,86,254,0	script	AyoFootprint8	139,1,1,{
-OnTouch:
+OnTouch_:
 	if (thai_find == 11) {
 		if (rand(1,3) < 2) {
-			emotion e_gasp,1;
+			emotion ET_SURPRISE, playerattached();
 			mes "^3355FFYou find traces of blood. Whoever was running in this direction may have been wounded. The trail of blood leads to the ^5C3317North^3355FF.^000000";
 			changequest 12032,12033;
 			set thai_find,12;
@@ -1155,9 +1155,9 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		mes "bothers me...";
 		next;
 		mes "[Tham]";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "Oh, aren't you";
-		mes "from Rune-Midgard?";
+		mes "from Midgard?";
 		mes "Hello there~";
 		next;
 		mes "[Tham]";
@@ -1168,11 +1168,11 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		mes "He came from out of nowhere, so he scared the crap out of me. Do you think he could be a criminal?";
 		next;
 		mes "[Tham]";
-		emotion e_ic;
+		emotion ET_AHA;
 		mes "Ah! I think, in his intense fear, he was screaming something about some kind of '^FF0000Shuda^000000,' or whatever. But what could it possibly mean?";
 		next;
 		mes "[Tham]";
-		mes "Oh well, don't worry. All of our villagers aren't like that. Anyway, I hope you enjoy your travels in Ayotaya.";
+		mes "Oh well, don't worry. All of our villagers aren't like that. Anyway, I hope you enjoy your travels in Ayothaya.";
 		set thai_find,4;
 		changequest 12031,12032;
 		close;
@@ -1181,7 +1181,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		if (.@randayo < 5) {
 			mes "[Tham]";
 			mes "Oh hello~";
-			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			mes "I can tell from your clothes that you must be from Midgard.";
 			next;
 			mes "[Tham]";
 			mes "Recently, it seems that";
@@ -1194,7 +1194,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 			mes "Ah...";
 			mes "While you're here,";
 			mes "why don't you taste some";
-			mes "authentic Ayotayan cuisine";
+			mes "authentic Ayothaya cuisine";
 			mes "for yourself?";
 			next;
 			mes "[Tham]";
@@ -1204,7 +1204,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 			mes "restaurants around here.";
 			next;
 			mes "[Tham]";
-			mes "Anyway, I'm sure that you'll like it. I hope that you come visit Ayotaya as often as you can~";
+			mes "Anyway, I'm sure that you'll like it. I hope that you come visit Ayothaya as often as you can~";
 			close;
 		} else if (.@randayo > 4 && .@randayo < 7) {
 			mes "[Tham]";
@@ -1219,10 +1219,10 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		} else {
 			mes "[Tham]";
 			mes "Oh hello~";
-			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			mes "I can tell from your clothes that you must be from Midgard.";
 			next;
 			mes "[Tham]";
-			mes "I hope that you enjoy your stay here, and that you come visit Ayotaya as often as you can~";
+			mes "I hope that you enjoy your stay here, and that you come visit Ayothaya as often as you can~";
 			close;
 		}
 	}
@@ -1513,6 +1513,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "[Boonthom]";
 			mes "The ancient building consists";
 			mes "of 2 levels. Before you enter the 2nd underground level, please return to me so that I can tell you how to enter that place.";
+			close;
 		}
 		mes "[Boonthom]";
 		mes "Did you forget what materials";
@@ -1612,7 +1613,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "^3366992 Holy Water^000000,";
 		mes "^3366991 Yggdrasil Leaf^000000,";
 		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
-		mes "^3366992 "+getitemname(.@items[0])+"^000000.";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
 		set ayodunquest,10;
 		changequest 12037,12038;
 		next;
@@ -1848,7 +1849,7 @@ ayo_fild01,129,197,0	script	Puraim#thai1	842,{
 			mes "have a holy spirit. Still, be careful. You might not want to go to the 2nd underground level of the ruins.";
 			next;
 			mes "[Puraim]";
-			mes "As you Rune-Midgardians";
+			mes "As you Midgardians";
 			mes "say, 'curiousity killed the cat.'";
 			mes "Anyway, go for it!";
 			next;
@@ -1927,7 +1928,7 @@ ayo_dun01,273,26,0	script	 #th_dun1_1_1::AyoTrap1	111,0,4,{
 	mes "^2F2F4Fyou might get killed.^000000";
 	close;
 
-OnTouch:
+OnTouch_:
 	mes "^3355FFYou look down and see a pool";
 	mes "of water in the distance. It looks like a long drop to the bottom.^000000";
 	next;
@@ -1943,7 +1944,7 @@ ayo_dun01,272,27,0	duplicate(AyoTrap1)	 #th_dun1_1_3	111,0,4
 ayo_dun01,272,26,0	duplicate(AyoTrap1)	 #th_dun1_1_4	111
 
 ayo_dun01,26,27,0	script	 #th_dun1_1::AyoTrap2	-1,1,1,{
-OnTouch:
+OnTouch_:
 	percentheal -100,0;
 	end;
 }
@@ -1962,7 +1963,7 @@ ayo_dun01,25,271,0	duplicate(AyoTrap2)	 #th_dun1_12	-1
 
 // Hints
 ayo_dun01,156,148,0	script	 #hint01::AyoHint	-1,0,4,{
-OnTouch:
+OnTouch_:
 	if (rand(1,100) > 60 && ayodunquest < 11) {
 		mes "^3355FFThe Holy Thread in your pocket suddenly began to glow. You feel that something is near you...^000000";
 		close2;
@@ -2109,9 +2110,9 @@ ayothaya,196,265,3	script	Einon#ayo	842,{
 		mes "of this village is?";
 		next;
 		mes "[Einon]";
-		mes "Ayotaya is world famous";
+		mes "Ayothaya is world famous";
 		mes "for its regional cuisine, but";
-		mes "out of all Ayotayan dishes,";
+		mes "out of all Ayothayan dishes,";
 		mes "'^3131FFTom Yum Goong^000000' is the best.";
 		next;
 		mes "[Einon]";
@@ -2138,7 +2139,7 @@ ayothaya,196,265,3	script	Einon#ayo	842,{
 			mes "I recommend that you go";
 			mes "visit ^3131FFMali the Spicy^000000.";
 			next;
-			emotion e_no1;
+			emotion ET_BEST;
 			set tomyumgoong,1;
 			setquest 8123;
 			mes "[Einon]";
@@ -2164,7 +2165,7 @@ ayothaya,196,265,3	script	Einon#ayo	842,{
 		close;
 	}
 	mes "[Einon]";
-	mes "Golden Ayotaya...";
+	mes "Golden Ayothaya...";
 	mes "Although I've grown";
 	mes "up in this village,";
 	mes "I still think my village";
@@ -2270,7 +2271,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				mes "you've brought. Hmm...";
 				mes "These are...";
 				next;
-				emotion e_no1;
+				emotion ET_BEST;
 				mes "[Mali the Spicy]";
 				mes "The freshest Shrimp that";
 				mes "I've been looking for! Well done~";
@@ -2302,7 +2303,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 					mes "I guess.";
 					close;
 				}
-				emotion e_ag;
+				emotion ET_ANGER;
 				mes "[Mali the Spicy]";
 				mes "What a stupid...!";
 				mes "If you quit just because you really hate sour flavors, you must not be that eager to have my Tom Yum Goong!";
@@ -2343,7 +2344,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 			close;
 		} else if (tomyumgoong == 5) {
 			if (countitem(568) > 9) {
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				mes "[Mali the Spicy]";
 				mes "Welcome back!";
 				mes "Wow, you came back";
@@ -2423,7 +2424,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 		if (MaxWeight - Weight > 1499) {
 			if (countitem(7286) > 29) {
 				delitem 7286,30; //Chilli
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				mes "[Mali the Spicy]";
 				mes "Now...";
 				mes "Everything is all set!";
@@ -2458,7 +2459,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				next;
 				mes "[Mali the Spicy]";
 				mes "Wah^00009Cah^0000FFahhhh^0063FFaaaahhh^000000!";
-				emotion e_omg;
+				emotion ET_HUK;
 				specialeffect EF_FLASHER;
 				specialeffect EF_LORD;
 				next;
@@ -2470,7 +2471,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				set tomyumgoong,8;
 				completequest 8126;
 				getitem 566,10; //Tomyumkung
-				emotion e_no1;
+				emotion ET_BEST;
 				mes "[Mali the Spicy]";
 				mes "Here's your";
 				mes "Tom Yum Goong!";
@@ -2496,7 +2497,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				mes "Thank you for all the trouble that you have been though to get these ingredients. It would make me happy if you shared Tom Yum Goong with your friends.";
 				next;
 				mes "[Mali the Spicy]";
-				mes "Share the flavor of Ayotaya, and let them know how beautiful our land is. It was good to see you, take care now~";
+				mes "Share the flavor of Ayothaya, and let them know how beautiful our land is. It was good to see you, take care now~";
 				close;
 			}
 			mes "[Mali the Spicy]";
@@ -2508,7 +2509,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 		mes "You seem to be carrying too many things. Why don't you free up some space in your inventory first, and then come back?";
 		close;
 	}
-	emotion e_wah;
+	emotion ET_KEK;
 	mes "[Mali the Spicy]";
 	mes "Ah...!";
 	mes "So busy, so busy!";
@@ -2561,7 +2562,7 @@ ayothaya,153,86,5	script	Thongpool#ayo	843,{
 						set Zeny, Zeny-11000;
 						set tomyumgoong,3;
 						getitem 567,20; //Prawn
-						emotion e_no1;
+						emotion ET_BEST;
 						mes "[Thongpool]";
 						mes "Good, now you have the";
 						mes "freshest Shrimp in this village! It's time for you to go back and ask Ms. Mali to cook them for you.";
@@ -2641,7 +2642,7 @@ ayothaya,121,240,7	script	Mr. Jun#ayo	842,1,1,{
 		close;
 	}
 	if (tomyumgoong == 5) {
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "[Mr. Jun]";
 		mes "Umm...?";
 		mes "You don't need";
@@ -2650,13 +2651,13 @@ ayothaya,121,240,7	script	Mr. Jun#ayo	842,1,1,{
 		next;
 		switch(select("No.:Give me Lemons, old man!:Can I have some more Lemons, please?")) {
 		case 1:
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			mes "[Mr. Jun]";
 			mes "Then why don't you taste";
 			mes "the Lemons I gave you last time? They're really sour, but also very delicious!";
 			close;
 		case 2:
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Mr. Jun]";
 			mes "What...!?";
 			mes "What's wrong with you, kid?";
@@ -2679,7 +2680,7 @@ ayothaya,121,240,7	script	Mr. Jun#ayo	842,1,1,{
 	mes "...";
 	close;
 
-OnTouch:
+OnTouch_:
 	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
@@ -2693,7 +2694,7 @@ OnTouch:
 		mes "Hello, there?";
 		mes "Did you need";
 		mes "some help...?";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		next;
 		if (select("I need some Lemons.:No, thanks.") == 1) {
 			mes "[Mr. Jun]";
@@ -2740,7 +2741,7 @@ OnTouch:
 					mes "Paper, Scissors!^000000";
 					mes "Perhaps you've heard";
 					mes "of it in your land.";
-					emotion e_scissors;
+					emotion ET_SCISSOR;
 					next;
 					mes "[Mr. Jun]";
 					mes "Nuh-uh, don't look at me like that. I'm an old man, and I want to play this game and re-live my youth";
@@ -2773,8 +2774,8 @@ OnTouch:
 							switch(select("Scissors:Rock:Paper")) {
 							case 1:
 								if (.@jun_mark == 1) {
-									emotion e_scissors;
-									emotion e_scissors,1;
+									emotion ET_SCISSOR;
+									emotion ET_SCISSOR, playerattached();
 									mes "[Mr. Jun]";
 									mes "Hmpf.";
 									mes "It's a draw.";
@@ -2784,8 +2785,8 @@ OnTouch:
 									next;
 								}
 								else if (.@jun_mark == 2) {
-									emotion e_rock;
-									emotion e_scissors,1;
+									emotion ET_ROCK;
+									emotion ET_SCISSOR, playerattached();
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Yes...!";
@@ -2793,8 +2794,8 @@ OnTouch:
 									next;
 								}
 								else {
-									emotion e_paper;
-									emotion e_scissors,1;
+									emotion ET_WRAP;
+									emotion ET_SCISSOR, playerattached();
 									set @pc_score,@pc_score + 1;
 									set @user_score,@user_score + 1;
 									mes "[Mr. Jun]";
@@ -2806,8 +2807,8 @@ OnTouch:
 								break;
 							case 2:
 								if (.@jun_mark == 1) {
-									emotion e_scissors;
-									emotion e_rock,1;
+									emotion ET_SCISSOR;
+									emotion ET_ROCK, playerattached();
 									set @pc_score,@pc_score + 1;
 									set @user_score,@user_score + 1;
 									mes "[Mr. Jun]";
@@ -2816,8 +2817,8 @@ OnTouch:
 									next;
 								}
 								else if (.@jun_mark == 2) {
-									emotion e_rock;
-									emotion e_rock,1;
+									emotion ET_ROCK;
+									emotion ET_ROCK, playerattached();
 									mes "[Mr. Jun]";
 									mes "Hmpf.";
 									mes "It's a draw.";
@@ -2827,8 +2828,8 @@ OnTouch:
 									next;
 								}
 								else {
-									emotion e_paper;
-									emotion e_rock,1;
+									emotion ET_WRAP;
+									emotion ET_ROCK, playerattached();
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Bwahahaha!";
@@ -2838,8 +2839,8 @@ OnTouch:
 								break;
 							case 3:
 								if (.@jun_mark == 1) {
-									emotion e_scissors;
-									emotion e_paper,1;
+									emotion ET_SCISSOR;
+									emotion ET_WRAP, playerattached();
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
 									mes "Heh heh~";
@@ -2847,8 +2848,8 @@ OnTouch:
 									next;
 								}
 								else if (.@jun_mark == 2) {
-									emotion e_rock;
-									emotion e_paper,1;
+									emotion ET_ROCK;
+									emotion ET_WRAP, playerattached();
 									set @user_score,@user_score + 1;
 									set @pc_score,@pc_score + 1;
 									mes "[Mr. Jun]";
@@ -2857,8 +2858,8 @@ OnTouch:
 									next;
 								}
 								else {
-									emotion e_paper;
-									emotion e_paper,1;
+									emotion ET_WRAP;
+									emotion ET_WRAP, playerattached();
 									mes "[Mr. Jun]";
 									mes "Hmpf.";
 									mes "It's a draw.";
@@ -2872,7 +2873,7 @@ OnTouch:
 						}
 					}
 					if (@user_score == 3) {
-						emotion e_pif;
+						emotion ET_HNG;
 						mes "[Mr. Jun]";
 						mes "You... won.";
 						mes "I'm so exhausted.";
@@ -2890,7 +2891,7 @@ OnTouch:
 						set tomyumgoong,5;
 						getitem 568,10; //Lemon
 						next;
-						emotion e_dots;
+						emotion ET_THINK;
 						mes "[Mr. Jun]";
 						mes "Hmm...";
 						mes "Looks like you need a lot of them. Oh well, that's fine with me. I had a good time with you.";
@@ -2900,7 +2901,7 @@ OnTouch:
 						mes "Don't be selfish, and always share what you have with others. That's one of the most important values for human beings.";
 						close;
 					}
-					emotion e_scissors;
+					emotion ET_SCISSOR;
 					mes "[Mr. Jun]";
 					mes "Muhahahaha!";
 					mes "Victory is mine!";
@@ -2950,7 +2951,7 @@ ayothaya,213,94,7	script	Merchant#ayo	841,{
 		mes "it all to you for 2,000 zeny.";
 		next;
 		if (select("Thanks, I'll take it.:It's a rip-off, man!") == 1) {
-			emotion e_thx;
+			emotion ET_THANKS;
 			if (Zeny > 1999) {
 				if (MaxWeight - Weight > 1199) {
 					set Zeny, Zeny-2000;
@@ -2983,7 +2984,7 @@ ayothaya,213,94,7	script	Merchant#ayo	841,{
 			mes "need from me.";
 			close;
 		}
-		emotion e_no;
+		emotion ET_STARE_ABOUT;
 		mes "[Merchant Thongdum]";
 		mes "Don't say that.";
 		mes "My prices are always";
@@ -3046,7 +3047,7 @@ ayothaya,213,94,7	script	Merchant#ayo	841,{
 	mes "it has a very strong flavor. It's also hot and spicy, so you should be careful when you eat one.";
 	next;
 	mes "[Merchant Thongdum]";
-	mes "The people of Ayotaya enjoy sensational food with distinct, spicy flavors. In Ayotayan cuisine, we use things like Chilis, garlic, ginger and cilantro.";
+	mes "The people of Ayothaya enjoy sensational food with distinct, spicy flavors. In Ayothayan cuisine, we use things like Chilis, garlic, ginger and cilantro.";
 	next;
 	mes "[Merchant Thongdum]";
 	mes "I'm selling Chilis,";

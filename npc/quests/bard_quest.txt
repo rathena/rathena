@@ -175,7 +175,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "So, have you met Mr. Kitty?";
-		mes "Ah, in Morroc? He has a chronic disease, but obviously doesn't";
+		mes "Ah, in Morocc? He has a chronic disease, but obviously doesn't";
 		mes "seem to care about it.";
 		mes "So what did he say?";
 		next;
@@ -515,7 +515,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "At Nine, love is reborn.";
 		mes "At Ten, my Love is gone.";
 		mes "At Eleven I find out why.";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "At Twelve I see his new girlfriend?";
 		else
 			mes "At Twelve I see her new boyfriend?";
@@ -849,7 +849,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "At Nine, love is reborn.";
 		mes "At Ten, my Love is gone.";
 		mes "At Eleven I find out why.";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "At Twelve I see her new boyfriend?";
 		else
 			mes "At Twelve I see his new girlfriend?";
@@ -1046,7 +1046,7 @@ S_StorySong:
 				mes "the Pub in Geffen.";
 				next;
 				mes "[Errende]";
-				mes "Judging from his clothes, he must be from Morroc, which is a lot warmer. That's why he's got a Hood, even though it has no drawstrings, for the cooler weather over here.";
+				mes "Judging from his clothes, he must be from Morocc, which is a lot warmer. That's why he's got a Hood, even though it has no drawstrings, for the cooler weather over here.";
 				next;
 				mes "[Errende]";
 				mes "I must warn you, don't let him talk you into buying that Hood of his since he's selling it for an outrageous price. He's definitely not trustworthy.";
@@ -1061,16 +1061,16 @@ S_StorySong:
 				mes "It's tragic that he left his family behind in that way. But perhaps, it is more tragic that his spirit scares away anyone interested in those girls.";
 
 			} else if (.@random == 2) {
-				mes "Okay, let me tell you a story about Morroc, city of the desert. Adventurers worth their salt are expected to have explored the city and its surrounding desert.";
+				mes "Okay, let me tell you a story about Morocc, city of the desert. Adventurers worth their salt are expected to have explored the city and its surrounding desert.";
 				next;
 				mes "[Errende]";
 				mes "The Sphinx and the Pyramids are especially popular areas of exploration for adventurers. Have you been there before? I haven't yet, but perhaps someday I'll go.";
 				next;
 				mes "[Errende]";
-				mes "While I was in Morroc, I found a Merchant that sells Sword Maces to Priests and Priestess. Aside from those, Priests are prohibited from using any kind of weapon with blades.";
+				mes "While I was in Morocc, I found a Merchant that sells Sword Maces to Priests and Priestess. Aside from those, Priests are prohibited from using any kind of weapon with blades.";
 				next;
 				mes "[Errende]";
-				mes "I also saw an energetic little boy who kept begging his father to tame a Munak for him. I heard the father speak a bit, and it seems that one of his friends from Morroc is lost in Alberta.";
+				mes "I also saw an energetic little boy who kept begging his father to tame a Munak for him. I heard the father speak a bit, and it seems that one of his friends from Morocc is lost in Alberta.";
 				next;
 				cutin "bard_eland02",2;
 				mes "[Errende]";
@@ -1117,8 +1117,9 @@ S_StorySong:
 		goto L_End;
 
 	case 2:
+		.@num = getarg(0);
 		mes "[Errende]";
-		if(getarg(0) < 3)
+		if (.@num < 3)
 			mes "You recognize my talent, so you deserve to listen to my songs! Now, what would you like to hear? I can play anything you want, you know.";
 		else
 			mes "At last, I've met someone who recognizes my talent! You deserve to listen to my songs! Now, what would you like to hear? I can play anything you want, you know.";
@@ -1160,7 +1161,7 @@ S_StorySong:
 			mes "Okay, here we go~";
 			next;
 			//for 3 and 4 variants, we need higher chance
-			if(getarg(0) == 3 || getarg(0) == 4)
+			if (.@num == 3 || .@num == 4)
 				set .@random,rand(1,5);
 			else
 				set .@random,rand(1,3);
@@ -1200,7 +1201,7 @@ S_StorySong:
 				mes "and your spirit will be";
 				mes "led to Valhalla.^000000";
 				//Expanded version for 2nd variant
-				if(getarg(0) == 2){
+				if (.@num == 2){
 					next;
 					mes "[Errende]";
 					mes "...";
@@ -1251,9 +1252,9 @@ S_StorySong:
 
 			} else {
 				// For 3 and 4 cases we set more chance earlier on .@random
-				if(getarg(0) == 3 || getarg(0) == 4){
+				if (.@num == 3 || .@num == 4){
 					mes "[Errende]";
-					if (Sex)
+					if (Sex == SEX_MALE)
 						mes "Heroic warrior,";
 					else
 						mes "My fair lady,";
@@ -1486,7 +1487,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Mmm, let me think...";
 				next;
 				mes "[Kino Kitty]";
-				mes "When you go venture Southwest from Morroc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
+				mes "When you go venture Southwest from Morocc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
 				next;
 				mes "[Kino Kitty]";
 				mes "When you go South of Sandarman, you will see Paros Lighthouse. East from the Lighthouse, you will see Kokomo Beach. North of the beach is Papuchica Forest.";
@@ -1591,7 +1592,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				next;
 				mes "^D43D1AI still remember the clear chimes";
 				mes "Of the Prontera Church Bells";
-				mes "The ice cream we shared in Morroc,";
+				mes "The ice cream we shared in Morocc,";
 				mes "Being chased by bats";
 				mes "In Payon dungeon.^000000";
 				next;
@@ -1630,7 +1631,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Mmm, let me think...";
 				next;
 				mes "[Kino Kitty]";
-				mes "When you go venture Southwest from Morroc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
+				mes "When you go venture Southwest from Morocc, you will arrive at Fortress Sandarman. Did you know that the fortress is built on a sand hill, which serves as a natural defense?";
 				next;
 				mes "[Kino Kitty]";
 				mes "When you go South of Sandarman, you will see Paros Lighthouse. East from the Lighthouse, you will see Kokomo Beach. North of the beach is Papuchica Forest.";
@@ -2040,7 +2041,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				}
 
 			} else {
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "[Kino Kitty]";
 					mes "You're such a nice young man. I will remember your name. I would much appreciate it if you would also remember mine.";
 					next;
@@ -2867,7 +2868,7 @@ yuno_in04,20,123,7	script	Representative#bq	95,{
 			mes "Kino Kitty, Kino Kitty... Oh, here we are. He sent us a letter that says, 'I will stay in the desert until I find my real self.'";
 			next;
 			mes "[Marlin Putiur]";
-			mes "He doesn't seem healthy, but I guess he's still traveling. Trying seeking him out in Morroc, and give my regards to him if you get the chance.";
+			mes "He doesn't seem healthy, but I guess he's still traveling. Trying seeking him out in Morocc, and give my regards to him if you get the chance.";
 			close;
 
 		} else if (.@inputstr$ == "Gunther Doubleharmony") {
@@ -2906,8 +2907,8 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 	mes "Err...?";
 	mes "What is it?";
 	next;
-	if (!Sex) {
-		emotion e_heh;
+	if (Sex == SEX_FEMALE) {
+		emotion ET_SMILE;
 		mes "[Energetic Young Man]";
 		mes "Oh...!";
 		mes "A beautiful,";
@@ -2931,7 +2932,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 			next;
 			mes "[Energetic Young Man]";
 			mes "I shall remember your name, my lady. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
-			emotion e_kis;
+			emotion ET_CHUP;
 			close;
 
 		} else {
@@ -2939,7 +2940,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 			next;
 			mes "[Energetic Young Man]";
 			mes "Eh, whatever. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 

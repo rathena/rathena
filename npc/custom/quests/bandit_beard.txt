@@ -30,7 +30,7 @@ umbala,126,129,4	script	Bearded Man#bandit	120,{
 
 	mes "[Bearded Man]";
 	mes "HoHo~ So you want some whiskers.";
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "Well I would give you my beards but there not cheap.";
 	mes "Matter of fact I have only one left...";
 	mes "but I'm not selling it.";
@@ -59,14 +59,14 @@ L_LIST:
 M_NO:
 	mes "[Bearded Man]";
 	mes "Fine, be that way!";
-	emotion e_ag;
+	emotion ET_ANGER;
 	close;
 
 L_DONE:
 	mes "[Bearded Man]";
 	mes "Sorry, I can only make one per person.";
 	mes "We don't want too many beards now. Right?";
-	emotion e_gg;
+	emotion ET_KIK;
 	close;
 
 L_MAKE:
@@ -90,14 +90,14 @@ L_MAKE:
 	set BEARD_QUEST, 5;
 	mes "[Bearded Man]";
 	mes "Have a nice day!";
-	emotion e_gg;
+	emotion ET_KIK;
 	close;
 
 L_NOITEMS:
 	mes "[Bearded Man]";
 	mes "What the hell! I can't make a beard without the items!";
 	mes "Here is the list again:";
-	emotion e_omg;
+	emotion ET_HUK;
 	goto L_LIST;
 }  
 
@@ -112,15 +112,15 @@ izlude_in,123,175,4	script	Master Tailor#bandit	50,{
 	mes "What? A Bearded Man sent you...";
 	mes "Well I'm sorry to say that I am out of ^8080FFThread^000000.";
 	mes "But I have the address to where I get the shipments.";
-	mes "It is in Al de Baran Karfa Inc. warehouse area.";
+	mes "It is in Al de Baran Kafra Inc. warehouse area.";
 	mes "The address is: Al de Baran 59, 221";
 	mes "See you later.";
 	set BEARD_QUEST, 2;
 	close;
 }
-// Karfa Thread Clerk---
-aldeba_in,70,179,5	script	Karfa Clerk#bandit	113,{
-	mes "[Karfa Clerk]";
+// Kafra Thread Clerk---
+aldeba_in,70,179,5	script	Kafra Clerk#bandit	113,{
+	mes "[Kafra Clerk]";
 	if(BEARD_QUEST == 3 ) goto L_REPEAT;
 	if(BEARD_QUEST > 3 ) goto L_DONE;
 
@@ -130,25 +130,25 @@ aldeba_in,70,179,5	script	Karfa Clerk#bandit	113,{
 
 	menu "What's in the boxes?",-,"Nothing.",M_NOPE;
 
-	mes "[Karfa Clerk]";
+	mes "[Kafra Clerk]";
 	mes "They're empty.";
 M_NOPE:
 	close;
 
 L_DELIVERY:
 
-	mes "[Karfa Clerk]";
+	mes "[Kafra Clerk]";
 	mes "Sorry but we have not received any ^8080FFThread^000000.";
 	mes "Our shipments have been put off until its safe.";
 	mes "You see we get our ^8080FFThread^000000 from Alberta and a monsters keeps attacking our merchants.";
 	next;
-	mes "[Karfa Clerk]";
+	mes "[Kafra Clerk]";
 	mes "Now this monsters has not been doing this before.";
 	mes "It may have to do with the warmer months.";
 	mes "Please help us out!";
 	set BEARD_QUEST,3;
 	next;
-	mes "[Karfa Clerk]";
+	mes "[Kafra Clerk]";
 L_REPEAT:
 	mes "Oh by the way, that Thread Merchant is somewhere around Alberta 60 and 100...";
 L_DONE:
@@ -174,7 +174,7 @@ alberta,65,123,6	script	Man#bandit	85,{
 	if($@beardmob > 0) mes "Kill! Kill them already!!!";
 	if($@beardmob > 0) close;
 	mes "Are you here to help me?";
-	emotion e_what;
+	emotion ET_QUESTION;
 	next;
 	menu "Yes",-,"No",M_NO;
 
@@ -184,7 +184,7 @@ alberta,65,123,6	script	Man#bandit	85,{
 	next;
 	mes "[Thread Merchant]";
 	mes "Oh NO! Here they come!!";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	donpcevent "BRDQ_MOBS::OnStart";
 	close;
 
@@ -199,7 +199,7 @@ L_KILLED:
 L_DONE:
 	mes "[Thread Merchant]";
 	mes "Thank you again!";
-	emotion e_thx;
+	emotion ET_THANKS;
 	close;
 
 M_NO:
@@ -213,16 +213,16 @@ alberta,1,1,1	script	BRDQ_MOBS	-1,{
 OnStart:
 	set $@beardMob,10;
 	set $@beardMobD,0;
-	monster "alberta",65,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",66,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",67,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",68,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",66,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",67,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",68,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",66,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",67,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta",68,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",65,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,120,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,121,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,121,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,121,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,122,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,122,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,122,"Thief Bug Male",1054,1,"BRDQ_MOBS::OnDie";
 	end;
 OnDie:
 	set $@beardmob, $@beardmob - 1;

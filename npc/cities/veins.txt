@@ -15,7 +15,7 @@
 //============================================================
 
 // Veins
-//============================================================ 
+//============================================================
 veins,162,34,5	script	Towner#ve1	943,{
 	mes "[Towner]";
 	mes "I love cacti. They're";
@@ -535,7 +535,7 @@ veins,157,123,3	script	Towner#ve15	946,{
 }
 
 // Inside Veins
-//============================================================ 
+//============================================================
 ve_in,119,386,3	script	Prisoner#ve1	946,{
 	mes "[Prisoner]";
 	mes "Unbelievable!";
@@ -707,7 +707,7 @@ ve_in,318,121,3	script	Towner#ve23	943,{
 	mes "[Towner]";
 	mes "Veins is famous for its";
 	mes "wide variety of delicious,";
-	mes "irresistable liquor. Just one";
+	mes "irresistible liquor. Just one";
 	mes "sip's enough to hook you.";
 	next;
 	mes "[Towner]";

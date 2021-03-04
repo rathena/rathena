@@ -7,10 +7,17 @@ message( STATUS "Detecting local MYSQL" )
 find_path( MYSQL_LOCAL_INCLUDE_DIRS "mysql.h"
 	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
 	NO_DEFAULT_PATH )
+if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 find_library( MYSQL_LOCAL_LIBRARIES
 	NAMES libmysql
-	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib"
+	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/Win32"
 	NO_DEFAULT_PATH )
+else()
+find_library( MYSQL_LOCAL_LIBRARIES
+	NAMES libmysql
+	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/lib/x64"
+	NO_DEFAULT_PATH )
+endif()
 mark_as_advanced( MYSQL_LOCAL_LIBRARIES )
 mark_as_advanced( MYSQL_LOCAL_INCLUDE_DIRS )
 

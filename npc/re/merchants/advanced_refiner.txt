@@ -1,21 +1,12 @@
 //===== rAthena Script =======================================
 //= Advanced Refiner
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Refiner that uses Enriched ores to increase upgrade success.
-//= After a conversation with Doddler, it's been established that
-//= the advanced refiner works similar the the "Bubble Gum" item.
-//= The success percentage is not "increased" however, if it fails
-//= You get a second try. This tries twice at the same time,
-//= effectively giving you a re-roll on your attempt.
-//===== Additional Comments: =================================
+//===== Changelog: ===========================================
 //= 1.0 Added Malangdo Refiner "Holink". [Euphy]
+//= 1.1 Removed re-roll behavior. [Secret]
+//= 1.2 Added db-based material ID [Secret]
 //============================================================
 
 // Main NPC :: mal_jerun
@@ -25,43 +16,44 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	mes "[Holink]";
 	mes "I am the meow~ Blacksmith Holink~";
 	mes "Master of refining, Holink~";
-	mes "I am the special cat Holink who learned from Morroc~";
+	mes "I am the special cat Holink who learned from Morocc~";
 	mes "My daughter is so proud of me, Holink~";
 	mes "What should Holink~ refine today?";
 	next;
-	setarray .@position$[1],"Head","Body","Left Hand","Right Hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
-	set .@menu$,"";
-	for(set .@i,1; .@i<=10; set .@i,.@i+1)
-		set .@menu$, .@menu$+((getequipisequiped(.@i))?getequipname(.@i):.@position$[.@i]+"-[Empty]")+":";
-	set .@part, select(.@menu$);
+
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
+	for (set .@i,1; .@i<=10; set .@i,.@i+1)
+		set .@menu$, .@menu$ + ( getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[Empty]" ) +":";
+	set .@part, .@indices[ select(.@menu$) ];
+
 	if (!getequipisequiped(.@part)) {
 		mes "[Holink]";
 		switch(.@part) {
-		case 1:
+		case EQI_HEAD_TOP:
 			mes "My teacher Aragam said meow~";
 			mes "There's no cure for stupidity...";
 			break;
-		case 2:
+		case EQI_ARMOR:
 			mes "There's nothing to see here, meow!!";
 			break;
-		case 3:
+		case EQI_HAND_L:
 			mes "Meow? What do you want me to do with this left hand...?";
 			break;
-		case 4:
+		case EQI_HAND_R:
 			mes "Meow? What do you want me to do with this right hand...?";
 			break;
-		case 5:
+		case EQI_GARMENT:
 			mes "Meow? You don't have anything on.";
 			break;
-		case 6:
+		case EQI_SHOES:
 			mes "Kyang~! Do not mess with my sensitive olfactory, meow~.";
 			break;
-		case 7:
-		case 8:
+		case EQI_ACC_L:
+		case EQI_ACC_R:
 			mes "Meow? Where is the accessory?";
 			break;
-		case 9:
-		case 10:
+		case EQI_HEAD_MID:
+		case EQI_HEAD_LOW:
 			mes "Meow? You talking about the other head parts, meow?~";
 			break;
 		}
@@ -78,36 +70,32 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		close;
 	}
 	mes "[Holink]";
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	.@price = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_MATERIAL_ID);
+
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0: // Armor
-		set .@price,15000;
-		set .@material,7619; //Enriched_Elunium
-		set .@type$,"armor";
+		.@type$ = "armor";
 		mes "You have chosen an armor, meow~";
 		break;
 	case 1: // Level 1 Weapon
-		set .@price,500;
-		set .@material,7620; //Enriched_Oridecon
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "A level 1 weapon...?";
 		break;
 	case 2: // Level 2 Weapon
-		set .@price,2000;
-		set .@material,7620; //Enriched_Oridecon
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "Meow, a level 2 weapon...?";
 		break;
 	case 3: // Level 3 Weapon
-		set .@price,20000;
-		set .@material,7620; //Enriched_Oridecon
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "Meow Meow~~ A level 3 weapon~~";
 		break;
 	case 4: // Level 4 Weapon
-		set .@price,50000;
-		set .@material,7620; //Enriched_Oridecon
-		set .@type$,"weapon";
+		.@type$ = "weapon";
 		mes "Me-Meow!... A level 4 weapon...!";
 		mes "I've only seen it twice while";
 		mes "learning from Aragam... Me-Meow!!";
@@ -119,10 +107,10 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	if(select("Yes!!:No!!") == 2) {
 		mes "[Holink]";
 		mes "Kyack!!";
-		mes "You don't belive in refine master Holink, meow?~";
+		mes "You don't believe in refine master Holink, meow?~";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, true) < 100) {
 		mes "[Holink]";
 		mes "Meow!!";
 		if (.@type$ == "armor")
@@ -159,12 +147,24 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	}
 	delitem .@material,1;
 	set Zeny, Zeny-.@price;
-	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
+		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+		mes "[Holink]";
+		emotion ET_FRET;
+		mes "Wait a second...";
+		mes "Do you think I'm stupid?!";
+		mes "You switched the item while I wasn't looking! Get out of here!";
+		close;
+	}
+
+	if (getequippercentrefinery(.@part, true) > rand(100)) {
 		successrefitem .@part;
 		mes "[Holink]";
 		mes "Me~ Me~ Meow! Fun fun refining~";
 		next;
-		emotion e_kis;
+		emotion ET_CHUP;
 		mes "[Holink]";
 		mes "Perfect!! Perfect, meow!!";
 		mes "I am the disciple of the refining wizard Aragam~";
@@ -177,11 +177,11 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	mes "Meo~ Meow~ Kyaaak!!";
 	next;
 	switch(rand(1,5)) {
-		case 1: emotion e_sob; break;
-		case 2: emotion e_swt2; break;
-		case 3: emotion e_wah; break;
-		case 4: emotion e_hmm; break;
-		case 5: emotion e_lv2; break;
+		case 1: emotion ET_CRY; break;
+		case 2: emotion ET_PROFUSELY_SWEAT; break;
+		case 3: emotion ET_KEK; break;
+		case 4: emotion ET_SCRATCH; break;
+		case 5: emotion ET_BIGTHROB; break;
 	}
 	mes "[Holink]";
 	mes "Meow!! Aaaaakk~~!!!!";

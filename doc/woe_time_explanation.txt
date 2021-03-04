@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Last Updated: ========================================
-//= 20120717
+//= 20161206
 //===== Description: =========================================
 //= Details on the behavior of the default WoE controller.
 //============================================================
@@ -18,14 +18,14 @@ OnClock2350: would run at 23:50, server time.
 gettime(<type>) is a function that checks for certain
 information regarding time. The types are:
 
-	1 - Seconds (of a minute)
-	2 - Minutes (of an hour)
-	3 - Hour (of a day), ranging from 0 to 23
-	4 - Weekday, ranging from 0 (Sunday) to 6 (Saturday)
-	5 - Day of the month
-	6 - Number of the month
-	7 - Year
-	8 - Day of the year
+	DT_SECOND - Seconds (of the current minute)
+	DT_MINUTE - Minutes (of the current hour)
+	DT_HOUR - Hour (of the current day)
+	DT_DAYOFWEEK - Week day (constants for MONDAY to SUNDAY are available)
+	DT_DAYOFMONTH - Day of the current month
+	DT_MONTH - Month (constants for JANUARY to DECEMBER are available)
+	DT_YEAR - Year
+	DT_DAYOFYEAR - Day of the year
 
 This way, we can check for a desired minute, hour, day, month, etc.
 
@@ -33,28 +33,28 @@ This way, we can check for a desired minute, hour, day, month, etc.
 
 Now the structure:
 
-	OnClock2100:	// Start time for Tues(2), Thurs(4)
-	OnClock2300:	// End time for Tues(2), Thurs(4)
-	OnClock1600:	// Start time for Sat(6)
-	OnClock1800:	// End time for Sat(6)
+	OnClock2100:	// Start time for Tuesday and Thursday
+	OnClock2300:	// End time for Tuesday and Thursday
+	OnClock1600:	// Start time for Saturday
+	OnClock1800:	// End time for Saturday
 
 These 4 labels will run one after the other, reaching the next check:
 
-	if((gettime(4)==2) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
-	if((gettime(4)==4) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
-	if((gettime(4)==6) && (gettime(3)>=16 && gettime(3)<18)) goto L_Start;
+	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23)) goto L_Start;
+	if((gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23)) goto L_Start;
+	if((gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<18)) goto L_Start;
 
 This part will check for the times. Since both Start and End times run
 through the same chain of commands, these are important checks to ensure
 it's the right time. Let's take the following example:
 
-	if((gettime(4)==2) && (gettime(3)>=21 && gettime(3)<23))
+	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23))
 
-The first gettime() is checking for a type 4, the day of the week, and it's
-comparing it to the one desired, which is 2 (Tuesday). The function will
-return either 1 (true) or 0 (false).
+The first gettime() is checking for a type DT_DAYOFWEEK, the day of the week, and it's
+comparing it to the one desired, which is TUESDAY. The function will
+return either true or false.
 
-The second gettime is checking type 3, the hour, and it's comparing
+The second gettime is checking type DT_HOUR, the hour, and it's comparing
 it to 21. If the first part is greater than or equal to (>=) the second part,
 the comparison will return 1.
 
@@ -75,9 +75,9 @@ It's saying that if X and G are true, the condition is met, thus proceeding to L
 
 Now, the last part of the script, regarding the end of WoE time:
 
-	if((gettime(4)==2) && (gettime(3)==23)) goto L_End;
-	if((gettime(4)==4) && (gettime(3)==23)) goto L_End;
-	if((gettime(4)==6) && (gettime(3)==18)) goto L_End;
+	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)==23)) goto L_End;
+	if((gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)==23)) goto L_End;
+	if((gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==18)) goto L_End;
 	end;
 
 This is the same as before, but it's checking for the day in the first gettime() and
@@ -97,6 +97,6 @@ An example of how to set the WoE so it starts on Monday, at 4 pm and ends up at 
 
 	OnAgitInit: // This can only be written once: put OnClock above and the checks below.
 
-	if ((gettime(4)==1) && (gettime(3)>=16 && gettime(3)<22)) goto L_Start;
-	if ((gettime(4)==1) && (gettime(3)==22) goto L_End;
+	if ((gettime(DT_DAYOFWEEK)==MONDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<22)) goto L_Start;
+	if ((gettime(DT_DAYOFWEEK)==MONDAY) && (gettime(DT_HOUR)==22) goto L_End;
 	end; // Don't forget this!

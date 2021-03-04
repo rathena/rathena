@@ -33,7 +33,7 @@ ecl_in02,164,56,3	script	Receptionist#Laphine	835,{
 	case 1:
 		mes "[Receptionist}";
 		mes "Clinic has been set as your save point. Be careful though~";
-		savepoint "ecl_in02",162,50;
+		savepoint "ecl_in02",162,50,1,1;
 		close;
 	case 2:
 		mes "[Receptionist}";

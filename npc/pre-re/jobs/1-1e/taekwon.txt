@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Taekwon Job Quest
+//===== Description: =========================================
+//= [Official Conversion]
+//= Taekwon Job Change Quest
+//===== Changelogs: ==========================================
+//= 1.0 Split into renewal [Lemongrass]
+//============================================================
+
+payon,157,141,5	duplicate(PhoenixTKJobChange)	Phoenix#TKJobChange	753

@@ -17,7 +17,7 @@ prontera,156,179,6	script	test_getmonsterinfo	117,{
 	}
 	mes "Monster ID: "+.@value+" '"+getmonsterinfo(.@value,MOB_NAME)+"'";
 	mes "Current Monster info:";
-	for (.@i = 0; .@i < 23; .@i++)
+	for (.@i = MOB_NAME; .@i <= MOB_MVPEXP; .@i++)
 		mes " getmonsterinfo("+.@value+","+.@i+") = "+getmonsterinfo(.@value,.@i);
 	close;
 }

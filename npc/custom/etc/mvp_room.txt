@@ -288,7 +288,7 @@ OnInit:
 		1751,//	Valkyrie Randgris
 		1685,// Vesper
 		1648,// Whitesmith Harword
-		1917,// Wounded Morroc
+		1917,// Wounded Morocc
 		1658;//	Ygnizem
 
 	setarray .bossid[0],

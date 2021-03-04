@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Yuno Guides
+//= Juno Guides
 //===== By: ==================================================
 //= KitsuneStarwind, usul, kobra_k88; L0ne_W0lf
 //===== Current Version: =====================================

@@ -678,7 +678,7 @@ OnEnable:
 }
 
 sword_2-1,223,205,0	script	#Sura_garajjom	139,10,10,{
-OnTouch:
+OnTouch_:
 	warp "sword_1-1",216,168;
 	end;
 OnInit:

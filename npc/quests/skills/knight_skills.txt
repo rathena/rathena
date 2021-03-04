@@ -309,7 +309,6 @@ prt_in,85,99,3	script	Knight#kabuto	734,{
 }
 
 prontera,69,351,0	script	#tour	111,5,5,{
-//OnTouch2:
 OnTouch:
 	if (KNGT_SK > 2)
 		end;

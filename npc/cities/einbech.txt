@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Einbech Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Einbech Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 0.1  Started writing Einbech npc's. [Muad_Dib]
 //= 0.1a Conversion to eA format [MasterOfMuppets]
 //= 0.1b Added missing tabs. [Mass Zero] 0.1c more missing tabs [Lupus]
@@ -258,7 +258,7 @@ einbech,151,168,3	script	Tollaf#ein	855,{
 	mes "live so much better than we";
 	mes "do, especially those snobs in";
 	mes "Einbroch! Einbech must be the";
-	mes "worst town Schwaltzvalt Republic. No, it's the worst in the world!";
+	mes "worst town Schwarzwald Republic. No, it's the worst in the world!";
 	close;
 }
 
@@ -427,11 +427,11 @@ ein_in01,279,92,3	script	Tavern Lady#ein	854,{
 	mes "that women want gentle,";
 	mes "sensitive men with whom";
 	mes "they can share their feelings";
-	mes "and drink chamoille tea over";
+	mes "and drink chamomile tea over";
 	mes "freshly knit doilies?";
 	close;
 }
-	
+
 ein_in01,277,95,7	script	Ryan Danger#air#einbech	855,{
 	mes "[R.D. Kim]";
 	mes "Oooh...";
@@ -483,7 +483,7 @@ ein_in01,277,95,7	script	Ryan Danger#air#einbech	855,{
 	mes "of his freakin' mind!)";
 	close;
 }
-	
+
 ein_in01,281,85,3	script	Drunken Man#einbech	849,{
 	mes "[Drunken Man]";
 	mes "...^333333*Hiccup*^000000...";
@@ -516,7 +516,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 		mes "adorable little girl?";
 		mes "Hello, dearie~";
 		next;
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			select("Excuse me, but I'm actually a guy.");
 			mes "[Shena]";
 			mes "Oh, oh are you now?";
@@ -542,7 +542,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 		mes "about the monsters around";
 		mes "here, young lady?";
 		next;
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			select("I told you, I'm a dude...!");
 			mes "[Shena]";
 			mes "Hmm. ''Dude.'' I think";
@@ -742,7 +742,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 		close;
 	}
 }
-	
+
 einbech,48,107,4	duplicate(EinMonsters)	Luda#ein	850,{
 
 einbech,148,242,5	script	Jung#ein	855,{
@@ -750,7 +750,7 @@ einbech,148,242,5	script	Jung#ein	855,{
 	mes "I'm one of the few";
 	mes "people who's lived";
 	mes "in both Einbech and";
-	mes "Einbrock for a long time.";
+	mes "Einbroch for a long time.";
 	mes "So I guess I'm one of the";
 	mes "best guides of this area.";
 	next;
@@ -954,7 +954,7 @@ einbech,148,246,5	script	Franz#ein	851,{
 			mes "a short lived teddy bear";
 			mes "fad. However, a series of";
 			mes "mysterious accidents and";
-			mes "murders where entire familes";
+			mes "murders where entire families";
 			mes "were killed also occurred.";
 			next;
 			mes "[Franz]";

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 /**
@@ -14,6 +14,6 @@
 //ACMD_FUNC(newcommand)
 //{
 //	clif_displaymessage(fd, "It works!");
-//	clif_specialeffect(&sd->bl, 343, AREA);
+//	clif_specialeffect(&sd->bl, EF_HEARTCASTING, AREA);
 //	return 0;
 //}

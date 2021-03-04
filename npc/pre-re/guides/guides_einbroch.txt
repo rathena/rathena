@@ -167,7 +167,7 @@ einbroch,72,202,4	script	Guide#ein::EinGuide	852,{
 		case 3:
 			mes "[Einbroch Guide]";
 			mes "Through the technology of";
-			mes "the Schwaltzvalt Republic,";
+			mes "the Schwarzwald Republic,";
 			mes "we've upgraded to a digital";
 			mes "information system that allows";
 			mes "us to mark locations on your";
@@ -314,7 +314,7 @@ einbech,67,37,4	script	Guide#4ein::EinGuide2	852,{
 		case 3:
 			mes "[Einbech Guide]";
 			mes "Through the technology of";
-			mes "the Schwaltzvalt Republic,";
+			mes "the Schwarzwald Republic,";
 			mes "we've upgraded to a digital";
 			mes "information system that allows";
 			mes "us to mark locations on your";

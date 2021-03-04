@@ -63,6 +63,6 @@ L_Cancel:
 	mes "[Elven Ears quest]";
 	mes "Aw, what a shame";
 	mes "Giving up already?";
-	mes "Oh well maybe you will participate in tommorow's quest.";
+	mes "Oh well maybe you will participate in tomorrow's quest.";
 	close;
 }

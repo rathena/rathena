@@ -150,7 +150,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			if(ADVJOB == Job_Paladin2) set ADVJOB,Job_Paladin;
 			jobchange Job_Novice_High;
 			resetlvl(1);
-			set MISC_QUEST,MISC_QUEST | 1024; //<-reset Skill Reset Event
+			set MISC_QUEST,MISC_QUEST & ~1024;//<-reset Skill Reset Event
 			skill "NV_FIRSTAID",1,SKILL_PERM;
 			skill "NV_TRICKDEAD",1,SKILL_PERM;
 			completequest 1000;
@@ -373,7 +373,7 @@ valkyrie,44,33,5	script	Teleporter	124,{
 		mes "Honorable one,";
 		mes "which place do you wish to go?";
 		next;
-		switch(select("Prontera:Morroc:Payon:Geffen:Alberta:Izlude:Al De Baran:Comodo:Juno")) {
+		switch(select("Prontera:Morocc:Payon:Geffen:Alberta:Izlude:Al De Baran:Comodo:Juno")) {
 		case 1: callsub S_Warpchar,"prontera",116,72;
 		case 2: callsub S_Warpchar,"morocc",156,46;
 		case 3: callsub S_Warpchar,"payon",69,100;
@@ -391,7 +391,7 @@ S_WarpChar:
 	mes "[Teleporter]";
 	mes "Have a nice trip.";
 	close2;
-	savepoint getarg(0),getarg(1),getarg(2);
+	savepoint getarg(0),getarg(1),getarg(2),1,1;
 	warp getarg(0),getarg(1),getarg(2);
 	end;
 }

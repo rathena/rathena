@@ -747,14 +747,14 @@ OnInit:
 	disablenpc "out3#bingo";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "que_bingo",40,121;
 	end;
 }
 
 que_bingo,49,136,0	script	go3#bingo	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	switch($@hu_bingob) {
 		case 0: warp "que_bingo",49,125; break;
 		case 1: warp "que_bingo",53,121; break;
@@ -860,12 +860,13 @@ function	script	Func_Bingo	{
 }
 
 function	script	Func_BingoResult	{
-	mapannounce "que_bingo","Eukran: The "+callfunc("F_GetNumSuffix",getarg(0))+" number is "+$bingo[getarg(0) - 1]+". Please check your Bingo Plate.",4,0xFFAB54;
-	enablenpc getarg(0)+"a#bingo";
-	enablenpc getarg(0)+"b#bingo";
-	enablenpc getarg(0)+"c#bingo";
-	enablenpc getarg(0)+"d#bingo";
-	enablenpc getarg(0)+"e#bingo";
+	.@num = getarg(0);
+	mapannounce "que_bingo","Eukran: The "+ callfunc("F_GetNumSuffix",.@num) +" number is "+ $bingo[.@num - 1] +". Please check your Bingo Plate.",4,0xFFAB54;
+	enablenpc .@num +"a#bingo";
+	enablenpc .@num +"b#bingo";
+	enablenpc .@num +"c#bingo";
+	enablenpc .@num +"d#bingo";
+	enablenpc .@num +"e#bingo";
 	set $@bingoresult, $@bingoresult + 1;
 	end;
 }

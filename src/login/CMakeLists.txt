@@ -7,24 +7,10 @@ set( LOGIN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 #
 if( BUILD_SERVERS )
 message( STATUS "Creating target login-server" )
-set( LOGIN_HEADERS
-	"${LOGIN_SOURCE_DIR}/account.h"
-	"${LOGIN_SOURCE_DIR}/ipban.h"
-	"${LOGIN_SOURCE_DIR}/login.h"
-	"${LOGIN_SOURCE_DIR}/loginclif.h"
-	"${LOGIN_SOURCE_DIR}/loginchrif.h"
-	"${LOGIN_SOURCE_DIR}/logincnslif.h"
-	"${LOGIN_SOURCE_DIR}/loginlog.h"
-	)
-set( LOGIN_SOURCES
-	"${LOGIN_SOURCE_DIR}/account.c"
-	"${LOGIN_SOURCE_DIR}/ipban.c"
-	"${LOGIN_SOURCE_DIR}/login.c"
-	"${LOGIN_SOURCE_DIR}/loginclif.c"
-	"${LOGIN_SOURCE_DIR}/loginchrif.c"
-	"${LOGIN_SOURCE_DIR}/logincnslif.c"
-	"${LOGIN_SOURCE_DIR}/loginlog.c"
-	)
+file(GLOB LOGIN_HEADERS ${LOGIN_SOURCE_DIR}/*.hpp)
+file(GLOB LOGIN_SOURCES_CXX ${LOGIN_SOURCE_DIR}/*.cpp)
+set(LOGIN_SOURCES ${LOGIN_SOURCES_C} ${LOGIN_SOURCES_CXX})
+#message( STATUS "LOGIN_SOURCES="${LOGIN_SOURCES})
 set( DEPENDENCIES common )
 set( LIBRARIES ${GLOBAL_LIBRARIES} )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} )
@@ -33,6 +19,7 @@ set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${LOGIN_HEADERS} ${LO
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( login FILES ${LOGIN_HEADERS} ${LOGIN_SOURCES} )
 include_directories( ${INCLUDE_DIRS} )
+
 add_executable( login-server ${SOURCE_FILES} )
 add_dependencies( login-server ${DEPENDENCIES} )
 target_link_libraries( login-server ${LIBRARIES} ${DEPENDENCIES} )

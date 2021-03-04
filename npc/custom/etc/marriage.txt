@@ -104,12 +104,12 @@ prt_church,100,123,4	script	Vomars	60,{
 	mes "I am going to wed "+$wed_groom$+" and "+$wed_bride$+", do you have an objection to it?";
 	if (select("Sorry, please go on.","Yes, I actually do.") == 2) {
 		//Abort
-		npctalk "Ladies and gentlemen, "+strcharinfo(0)+" has an objection to the wedding!";
+		npctalk @name$ +" : Ladies and gentlemen, "+strcharinfo(0)+" has an objection to the wedding!";
 		SF_wed_end();
 		mes "Why should they not be wed?";
 		input $@msg$;
-		npctalk strcharinfo(0)+"'s objection is: "+$@msg$;
-		emotion e_sob;
+		npctalk @name$ +" : "+ strcharinfo(0) +"'s objection is: "+$@msg$;
+		emotion ET_CRY;
 		mes "I see...";
 	} else
 		mes "Very well, go sit and enjoy the ceremony.";
@@ -195,15 +195,15 @@ function SF_AcceptGroom {
 		mes "["+@name$+"]";
 		mes "You what!?";
 		mes "err.. *cough* *cough* very well... come back after you've made up your mind.";
-		emotion e_ag;
+		emotion ET_ANGER;
 		close;
 	case 2:
 		mes "["+@name$+"]";
 		mes "!!";
 		mes "Ah... err... ehm... okay. You two seem to have some differences to settle first.";
 		close2;
-		emotion e_omg;
-		npctalk "Ladies and gentlemen, "+$wed_bride$+" has rejected to marry "+$wed_groom$+"!";
+		emotion ET_HUK;
+		npctalk @name$ +" : Ladies and gentlemen, "+$wed_bride$+" has rejected to marry "+$wed_groom$+"!";
 		SF_wed_end();
 		break;
 	case 3:
@@ -212,7 +212,7 @@ function SF_AcceptGroom {
 			SF_RingsAccepted();
 			break;
 		}
-		emotion e_ok;
+		emotion ET_OK;
 		mes "["+@name$+"]";
 		mes "After your groom approves, you will be given your rings, the ceremony will begin and you will be officially married.";
 		close;
@@ -228,15 +228,15 @@ function SF_AcceptBride {
 		mes "["+@name$+"]";
 		mes "You what!?";
 		mes "err.. *cough* *cough* very well... come back after you've made up your mind.";
-		emotion e_ag;
+		emotion ET_ANGER;
 		close;
 	case 2:
 		mes "["+@name$+"]";
 		mes "!!";
 		mes "Ah... err... ehm... okay. You two seem to have some differences to settle first.";
-		emotion e_omg;
+		emotion ET_HUK;
 		close2;
-		npctalk "Ladies and gentlemen, "+$wed_groom$+" has rejected to marry "+$wed_bride$+"!";
+		npctalk @name$ +" : Ladies and gentlemen, "+$wed_groom$+" has rejected to marry "+$wed_bride$+"!";
 		SF_wed_end();
 		break;
 	case 3:
@@ -245,7 +245,7 @@ function SF_AcceptBride {
 			SF_RingsAccepted();
 			break;
 		}
-		emotion e_ok;
+		emotion ET_OK;
 		mes "["+@name$+"]";
 		mes "After your bride approves, you will be given your rings, the ceremony will begin and you will be officially married.";
 		close;
@@ -259,8 +259,8 @@ function SF_RingsAccepted {
 	set $wed_groom_progress,3;
 	announce $wed_groom$+" and "+$wed_bride$+"'s wedding ceremony will be held at the church!",8;
 	close2;
-	emotion e_lv;
-	npctalk "May the groom and bride please step forward and retrieve their rings?";
+	emotion ET_THROB;
+	npctalk @name$ +" : May the groom and bride please step forward and retrieve their rings?";
 }
 
 function SF_RetrieveRingM {
@@ -336,51 +336,51 @@ function SF_StartCeremony {
 }
 
 OnTimer1000:
-	npctalk "Ladies and Gentlemen, We will now join in holy matrimony these two lovers.";
+	npctalk @name$ +" : Ladies and Gentlemen, We will now join in holy matrimony these two lovers.";
 	end;
 	
 OnTimer5000:
-	npctalk "Now more than ever, will both of your lives be entwined together as so will be your souls.";
+	npctalk @name$ +" : Now more than ever, will both of your lives be entwined together as so will be your souls.";
 	end;
 
 OnTimer10000:
-	npctalk "You will both honor and cherish each other through the best and worst of times.";
+	npctalk @name$ +" : You will both honor and cherish each other through the best and worst of times.";
 	end;
 	
 OnTimer15000:
-	npctalk "The safety and well being of your other will now also be your responsibility.";
+	npctalk @name$ +" : The safety and well being of your other will now also be your responsibility.";
 	end;
 	
 OnTimer20000:
-	npctalk "May in sickness or good health, your love burn bright like no force can extinguish it.";
+	npctalk @name$ +" : May in sickness or good health, your love burn bright like no force can extinguish it.";
 	end;
 	
 OnTimer25000:
-	npctalk "Those here stand witness to these vows bestowed upon you, you must act accordingly to them.";
+	npctalk @name$ +" : Those here stand witness to these vows bestowed upon you, you must act accordingly to them.";
 	end;
 	
 OnTimer30000:
-	npctalk "Understanding that, we are nothing more but mortals on this earth, but this is our triumph.";
+	npctalk @name$ +" : Understanding that, we are nothing more but mortals on this earth, but this is our triumph.";
 	end;
 	
 OnTimer35000:
-	npctalk "We here will now join these two mortal entities, and create an immortal love.";
+	npctalk @name$ +" : We here will now join these two mortal entities, and create an immortal love.";
 	end;
 	
 OnTimer40000:
-	npctalk $wed_groom$+", you have accepted to take "+$wed_bride$+" as your lawfully wedded wife,";
+	npctalk @name$ +" : "+ $wed_groom$ +", you have accepted to take "+$wed_bride$+" as your lawfully wedded wife,";
 	end;
 	
 OnTimer45000:
-	npctalk "and you, "+$wed_bride$+", have accepted take "+$wed_groom$+" as your lawfully wedded husband.";
+	npctalk @name$ +" : and you, "+$wed_bride$+", have accepted take "+$wed_groom$+" as your lawfully wedded husband.";
 	end;
 
 OnTimer50000:
-	npctalk "And as such, now, by the powers vested in me...";
+	npctalk @name$ +" : And as such, now, by the powers vested in me...";
 	end;
 
 OnTimer55000:
-	npctalk "I pronounce you Husband and Wife, you may kiss the bride and exchange rings.";
+	npctalk @name$ +" : I pronounce you Husband and Wife, you may kiss the bride and exchange rings.";
 	if ($wedding_effect_id && isloggedin($wedding_effect_id))
 	{
 		attachrid($wedding_effect_id);
@@ -394,22 +394,22 @@ OnTimer55000:
 
 //Subfunction: Checks that the groom/bride is still wearing their stuff.
 function SF_equip_check {
-	if (Sex && getequipid(EQI_ARMOR) != 7170) {
+	if (Sex == SEX_MALE && getequipid(EQI_ARMOR) != 7170) {
 		mes "["+@name$+"]";
 		mes "Child, what did you do with your "+getitemname(7170)+"?";
-		emotion e_dots;
+		emotion ET_THINK;
 		return 0;
 	}
-	if (Sex == 0 && getequipid(EQI_ARMOR) != 2338) {
+	if (Sex == SEX_FEMALE && getequipid(EQI_ARMOR) != 2338) {
 		mes "["+@name$+"]";
 		mes "Child, you are supposed to wear a "+getitemname(2338)+" at all times during the ceremony...";
-		emotion e_dots;
+		emotion ET_THINK;
 		return 0;
 	}
-	if (Sex == 0 && $@wed_veil && getequipid(EQI_HEAD_TOP) != 2206) {
+	if (Sex == SEX_FEMALE && $@wed_veil && getequipid(EQI_HEAD_TOP) != 2206) {
 		mes "["+@name$+"]";
 		mes "Child, you can't take off your "+getitemname(2206)+" yet....";
-		emotion e_dots;
+		emotion ET_THINK;
 		return 0;
 	}
 	return 1;
@@ -489,7 +489,7 @@ function SF_Register {
 		mes "Very well, whom would you like to register as?";
 		next;
 		set @submenu, select("Groom","Bride","Cancel");
-	} else if (Sex) { //Groom
+	} else if (Sex == SEX_MALE) { //Groom
 		mes "["+@name$+"]";
 		mes "Very well, will you register as the Groom?";
 		next;
@@ -513,7 +513,7 @@ function SF_Register {
 		mes "["+@name$+"]";
 		mes "You are now registered as the groom.";
 		mes "Tell your bride to register as soon as possible.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		initnpctimer;
 		close;
 	case 2: //Bride
@@ -522,7 +522,7 @@ function SF_Register {
 		mes "["+@name$+"]";
 		mes "You are now registered as the bride.";
 		mes "Tell your groom to register as soon as possible.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		initnpctimer;
 		close;
 	default: //Cancel
@@ -549,7 +549,7 @@ function SF_WedProgress {
 			mes "Tell your groom to register, what is taking so long? Time is running out.";
 		close;
 	}
-	if (($wed_groom_progress == 0) && (Sex == 1 || $@wed_allow == 1)) {
+	if (($wed_groom_progress == 0) && (Sex == SEX_MALE || $@wed_allow == 1)) {
 		mes "["+@name$+"]";
 		mes $wed_bride$+" is waiting for the groom to register. Are you the one who came to register as groom?";
 		next;
@@ -559,10 +559,10 @@ function SF_WedProgress {
 			set $wed_groom_progress,1;
 			mes "["+@name$+"]";
 			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin."; 
-			emotion e_no1;
+			emotion ET_BEST;
 			close2;
-			npctalk "Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
-			emotion e_no1;
+			npctalk @name$ +" : Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
+			emotion ET_BEST;
 			end;
 		} else {
 			mes "["+@name$+"]";
@@ -571,7 +571,7 @@ function SF_WedProgress {
 		}
 
 	}
-	if (($wed_bride_progress == 0) && (Sex == 0 || $@wed_allow == 1)) {
+	if (($wed_bride_progress == 0) && (Sex == SEX_FEMALE || $@wed_allow == 1)) {
 		mes "["+@name$+"]";
 		mes $wed_groom$+" is waiting for the bride to register. Are you the one who came to register as the bride?";
 		next;
@@ -580,10 +580,10 @@ function SF_WedProgress {
 			stopnpctimer;
 			mes "["+@name$+"]";
 			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin."; 
-			emotion e_no1;
+			emotion ET_BEST;
 			close2;
-			npctalk "Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
-			emotion e_no1;
+			npctalk @name$ +" : Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
+			emotion ET_BEST;
 			end;
 		} else {
 			mes "["+@name$+"]";
@@ -658,8 +658,8 @@ OnTimer60000:
 	else
 		set $@msg$, $wed_groom$;
 
-	npctalk "Registration timed out. Is it that noone wants to marry "+$@msg$+"..?";
-	emotion e_hmm;
+	npctalk @name$ +" : Registration timed out. Is there no one who wants to marry "+$@msg$+"..?";
+	emotion ET_SCRATCH;
 	
 	set $wed_groom$,"";
 	set $wed_groom_sex, 0;
@@ -684,10 +684,10 @@ function SF_TryRegister {
 	if (Upper == 2) {
 		mes "["+@name$+"]";
 		mes "Oh dear, you are too young to be thinking of marriage!";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		close;
 	}
-	if (Sex)
+	if (Sex == SEX_MALE)
 		set @item, 7170;
 	else
 		set @item, 2338;
@@ -697,7 +697,7 @@ function SF_TryRegister {
 		mes "You should be wearing a "+getitemname(@item)+" if you want to get married.";
 		close;
 	}
-	if (Sex == 0 && $@wed_veil && getequipid(EQI_HEAD_TOP) != 2206) {
+	if (Sex == SEX_FEMALE && $@wed_veil && getequipid(EQI_HEAD_TOP) != 2206) {
 		mes "["+@name$+"]";
 		mes "Where is your "+getitemname(2206)+"? It's a necessary complement to your dress.";
 		close;
@@ -748,7 +748,7 @@ function SF_Principles {
 	next;
 	mes "["+@name$+"]";
 	if ($@wed_allow == 1)
-		mes "Altough normally only males can wed females (and viceversa), our local Priest is more open-minded than that and he permits all pairings regardless of gender.";
+		mes "Although normally only males can wed females (and vice versa), our local Priest is more open-minded than that and he permits all pairings regardless of gender.";
 	else
 		mes "Males may only wed with females, and females only with males, the church will not consent any other kind of partnerships.";
 	next;
@@ -898,7 +898,7 @@ function SF_InProgress {
 	if (select("I don't want to divorce....","Yes, we have agreed to this.")!=2) {
 		mes "["+@name$+"]";
 		mes "I hope you can work things out.";
-		emotion e_pat;
+		emotion ET_GOODBOY;
 		goto SF_DivorceEnd;
 		close;
 	}
@@ -910,14 +910,14 @@ function SF_InProgress {
 	if (!(divorce())) {
 		mes "["+@name$+"]";
 		mes "Where has "+$@divorcer$+" gone to? I can't divorce you unless you both are here...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	set Zeny,Zeny-$@wed_divorce_fee;
 	announce $@divorcer$+" has just divorced "+strcharinfo(0)+"...", 8;
 	mes "["+@name$+"]";
 	mes "Your divorce has been filed. You are no longer wed.";
-	emotion e_sob;
+	emotion ET_CRY;
 	goto SF_DivorceEnd;
 	close;
 }
@@ -930,8 +930,8 @@ function SF_DivorceEnd {
 }
 
 OnTimer60000:
-	npctalk "Divorce confirmation time's is up. Where did "+$@divorcer$+"'s spouse go...";
-	emotion e_what;
+	npctalk @name$ +" : Divorce confirmation time's is up. Where did "+$@divorcer$+"'s spouse go...";
+	emotion ET_QUESTION;
 	SF_DivorceEnd();
 	end;
 }

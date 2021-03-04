@@ -68,7 +68,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 				mes "[Captain Herman]";
 				mes "A-ha~";
 				mes "A Swordman, you say?";
-				mes "I'm sorry, "+((Sex)?"lad":"lass")+", but you've";
+				mes "I'm sorry, "+((Sex==SEX_MALE)?"lad":"lass")+", but you've";
 				mes "come to the wrong place!";
 				next;
 				mes "[Captain Herman]";
@@ -102,7 +102,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		if (select("I want to change my job to a Knight.:Just visiting.") == 1) {
 			mes "[Captain Herman]";
 			mes "Ohh...";
-			mes "A young "+((Sex)?"man":"lady")+" who wishes";
+			mes "A young "+((Sex==SEX_MALE)?"man":"lady")+" who wishes";
 			mes "to become a Knight!";
 			mes "Our Prontera Chivalry";
 			mes "will assist you.";
@@ -336,7 +336,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 			mes "gathered items";
 			mes "that are troublesome";
 			mes "to obtain. I approve!";
-			mes "I believe "+((Sex)?"":"s")+"he will continue to be loyal after becoming a Knight.";
+			mes "I believe "+((Sex==SEX_MALE)?"":"s")+"he will continue to be loyal after becoming a Knight.";
 		}
 		next;
 		mes "[Captain Herman]";
@@ -373,7 +373,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "to Amy's opinion.";
 		next;
 		mes "[Lady Amy]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Mmm~ He's so polite!";
 			mes "He'll grow to be a wonderful Knight. And he's got such cute widdle cheeeeks~ Hee hee!";
 		}
@@ -392,7 +392,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "your mind.";
 		next;
 		mes "[Sir Edmond]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "He seems a little rough, but something bright shines within him. With polish and refinement, his true value will shine forth";
 			mes "as the sun.";
 		}
@@ -407,7 +407,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "to hear your thoughts.";
 		next;
 		mes "[Gray]";
-		mes "A young "+((Sex)?"gentleman":"lady")+" coming here with the determination to become a Knight is enough...";
+		mes "A young "+((Sex==SEX_MALE)?"gentleman":"lady")+" coming here with the determination to become a Knight is enough...";
 		next;
 		mes "[Captain Herman]";
 		mes "Everyone";
@@ -444,7 +444,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "[Captain Herman]";
 		mes "Go forth!";
 		mes "The future of";
-		mes "Rune-Midgard";
+		mes "Rune-Midgarts";
 		mes "rests on your";
 		mes "shoulders!";
 		close;
@@ -750,7 +750,7 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			mes "Oh, to become";
 			mes "a Knight? Come to";
 			mes "think of it, aren't";
-			mes "you the "+((Sex)?"guy":"girl")+" that";
+			mes "you the "+((Sex==SEX_MALE)?"guy":"girl")+" that";
 			mes "just applied?";
 			next;
 			mes "[Sir Siracuse]";
@@ -1227,7 +1227,8 @@ job_knt,89,106,4	script	Windsor Benedict#knt	733,{
 	end;
 
 OnInit:
-	disablenpc "Windsor Benedict#knt";
+	//disablenpc  "Windsor Benedict#knt";
+	hideonnpc "Windsor Benedict#knt";
 	waitingroom "Waiting Room",20,"Windsor Benedict#knt::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
@@ -1601,7 +1602,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 				mes "let's begin!";
 				next;
 				mes "[Lady Amy]";
-				mes "You are a Knight and you are looking for a party in Morroc.";
+				mes "You are a Knight and you are looking for a party in Morocc.";
 				mes "How would you go about doing so?";
 				next;
 			}
@@ -1612,7 +1613,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 				close;
 			}
 		}
-		mes "You are a Knight and you are looking for a party in Morroc.";
+		mes "You are a Knight and you are looking for a party in Morocc.";
 		mes "How would you go about doing so?";
 		next;
 		if (select("Shout out that you are looking for a party.:Open a chat room and wait.:Look for people seeking Knights.") != 1)
@@ -1634,7 +1635,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "[Lady Amy]";
 		mes "But some rude players came with a group of monsters and disappeared! What should you do?";
 		next;
-		if (select("Keep the monsters from reaching the party.:Defend while the party retreats.:Run away on your Peco Peco.") == 2)
+		if (select("Keep the monsters from reaching the party.:Defend while the party retreats.:Run away on your Peco Peco.") != 3)
 			set .@knight_t,.@knight_t+10;
 		mes "[Lady Amy]";
 		mes "Luckily, you all lived through the crisis. But as you walk, you find a person, who is not in your party, collapsed on the ground.";
@@ -1662,7 +1663,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "What should you";
 		mes "do to sell your item?";
 		next;
-		if (select("Shout out loud to everyone.:Open a chat room and wait.:Inquire if there is anyone that is interested.") == 3)
+		if (select("Shout out loud to everyone.:Open a chat room and wait.:Inquire if there is anyone that is interested.") != 1)
 			set .@knight_t,.@knight_t+10;
 		mes "[Lady Amy]";
 		mes "While you are waiting,";
@@ -1989,11 +1990,11 @@ OnMyMobDead:
 	end;
 }
 
-job_knt,145,57,1	script	Warp#knt	107,22,22,{
+job_knt,143,57,1	script	Warp#knt	107,22,22,{
 OnInit:
 	disablenpc "Warp#knt";
 	end;
-OnTouch:
+OnTouch_:
 	set KNIGHT_Q,12;
 	changequest 9010,9011;
 	warp "prt_in",80,100;
@@ -2018,7 +2019,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 			switch(select("About ^3355FFClaymore^000000:Buy Claymore:End Conversation")) {
 			case 1:
 				mes "[Sir Gray]";
-				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts's Prontera!! Its value is priceless when considered by a Knight.";
+				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts' Prontera!! Its value is priceless when considered by a Knight.";
 				next;
 				mes "[Sir Gray]";
 				mes "Now, the Prontera Chivalry is making these fabulous Claymores. For Knights, they are only ^3355FF74,000^000000 Zeny.";
@@ -2358,7 +2359,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 				mes "Oh, youth!";
 				mes "Becoming a Knight";
 				mes "for your beloved!";
-				mes "Always protect "+((Sex)?"her":"him")+"...";
+				mes "Always protect "+((Sex==SEX_MALE)?"her":"him")+"...";
 				mes "Even at the sacrifice";
 				mes "of your own life!";
 				next;

@@ -93,7 +93,7 @@ prontera,160,155,4	script	Disguise Event	795,{
 				input .@amount;
 				mes .@n$;
 				if (.@amount<=0 || .@amount>=10000) {
-					mes "That amount is invalid. Using default ammount of 1.";
+					mes "That amount is invalid. Using default amount of 1.";
 					set .@amount,1;
 					next;
 					mes .@n$;
@@ -116,7 +116,7 @@ prontera,160,155,4	script	Disguise Event	795,{
 	mes "At the start of the event, I will";
 	mes "disguise myself as a random";
 	mes "monster. You have to shout";
-	mes "that monter's name out loud.";
+	mes "that monster's name out loud.";
 	next;
 	mes "If you are correct, you will receive";
 	mes "a prize. If not, keep trying!";
@@ -177,7 +177,7 @@ OnTimer30000:
 	if (.Timer) end;
 	set .Change,0;
 	setnpcdisplay "Disguise Event",795;
-	npctalk "You took too long to guess what I was. Please wait 10 seconds while I disguise again.";
+	npctalk "Disguise Event : You took too long to guess what I was. Please wait 10 seconds while I disguise again.";
 	specialeffect EF_DETECT2;
 	set $MonsterName$,"";
 	deletepset 1;
@@ -238,7 +238,7 @@ iCorrect:
 		setnpcdisplay "Disguise Event",795;
 		set .RoundCount,0; set .Change,0; set .EventON,0;
 		setnpctimer 0; stopnpctimer;
-		npctalk "Thank you all for playing. That was the last round of the Disguise Event. Come play again later.";
+		npctalk "Disguise Event : Thank you all for playing. That was the last round of the Disguise Event. Come play again later.";
 		end;
 	}
 	setnpcdisplay "Disguise Event",795;

@@ -33,12 +33,22 @@ new_1-1,66,114,4	script	Bulletin Board#nv	111,{
 	close;
 }
 
+new_2-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv2	111
+new_3-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv3	111
+new_4-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv4	111
+new_5-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv5	111
+
 new_1-1,144,116,2	script	Guard#nv1	105,{
 	mes "[Training Grounds Guard]";
 	mes "Welcome to the Training Grounds.";
 	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
 	close;
 }
+
+new_2-1,144,116,2	duplicate(Guard#nv1)	Guard#nv2-1	105
+new_3-1,144,116,2	duplicate(Guard#nv1)	Guard#nv3-1	105
+new_4-1,144,116,2	duplicate(Guard#nv1)	Guard#nv4-1	105
+new_5-1,144,116,2	duplicate(Guard#nv1)	Guard#nv5-1	105
 
 new_1-1,144,107,2	script	Guard#nv2	105,{
 	mes "[Training Grounds Guard]";
@@ -60,6 +70,12 @@ new_1-1,144,107,2	script	Guard#nv2	105,{
 	}
 	close;
 }
+
+new_2-1,144,107,2	duplicate(Guard#nv2)	Guard#nv2-2	105
+new_3-1,144,107,2	duplicate(Guard#nv2)	Guard#nv3-2	105
+new_4-1,144,107,2	duplicate(Guard#nv2)	Guard#nv4-2	105
+new_5-1,144,107,2	duplicate(Guard#nv2)	Guard#nv5-2	105
+
 
 // Receptionist
 new_1-2,100,29,4	script	Receptionist#nv1	86,{
@@ -118,27 +134,27 @@ new_1-2,100,29,4	script	Receptionist#nv1	86,{
 			set nov_3_merchant,0;
 			switch(rand(6)) {
 			case 0:
-				savepoint "prontera",273,354;
+				savepoint "prontera",273,354,1,1;
 				warp "prontera",273,354;
 				break;
 			case 1:
-				savepoint "morocc",160,94;
+				savepoint "morocc",160,94,1,1;
 				warp "morocc",160,94;
 				break;
 			case 2:
-				savepoint "geffen",120,100;
+				savepoint "geffen",120,100,1,1;
 				warp "geffen",120,100;
 				break;
 			case 3:
-				savepoint "payon",70,100;
+				savepoint "payon",70,100,1,1;
 				warp "payon",70,100;
 				break;
 			case 4:
-				savepoint "alberta",116,57;
+				savepoint "alberta",116,57,1,1;
 				warp "alberta",116,57;
 				break;
 			case 5:
-				savepoint "izlude",94,103;
+				savepoint "izlude",94,103,1,1;
 				warp "izlude",94,103;
 			}
 			end;
@@ -178,6 +194,10 @@ new_1-2,100,29,4	script	Receptionist#nv1	86,{
 		}
 	}
 }	
+new_2-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv2	86
+new_3-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv3	86
+new_4-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv4	86
+new_5-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv5	86
 
 new_1-1,53,114,4	script	Shion#nv1	727,{
 	if (nov_get_item04 > 9 || nov_get_item05 > 9) {
@@ -349,6 +369,12 @@ new_1-1,53,114,4	script	Shion#nv1	727,{
 		}
 	}
 }
+
+new_2-1,53,114,4	duplicate(Shion#nv1)	Shion#nv2	727
+new_3-1,53,114,4	duplicate(Shion#nv1)	Shion#nv3	727
+new_4-1,53,114,4	duplicate(Shion#nv1)	Shion#nv4	727
+new_5-1,53,114,4	duplicate(Shion#nv1)	Shion#nv5	727
+
 
 // Interfaces Tutor
 new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
@@ -539,7 +565,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 	}
@@ -557,7 +583,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 			mes "When you attend the Skill Information class, you'll gain a better understanding of the use of skills.";
 			next;
 			mes "[Kris]";
-			mes "Since the use of skills is integral to survival in Rune-Midgard, I strongly suggest that you attend the class. Come, I shall guide you there.";
+			mes "Since the use of skills is integral to survival in Midgard, I strongly suggest that you attend the class. Come, I shall guide you there.";
 			close2;
 			warp "new_1-2",84,107;
 			end;
@@ -582,7 +608,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 				end;
 			}
 		case 3:
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 	}
@@ -622,7 +648,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
 				end;
 			}
 		case 3:
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 	}
@@ -822,7 +848,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 				warp "new_1-2",28,178;
 				end;
 			case 3:
-				emotion e_omg;
+				emotion ET_HUK;
 				close;
 			}
 		case 2:
@@ -833,7 +859,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_omg;
+			emotion ET_HUK;
 			close;
 		}
 	}
@@ -856,7 +882,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_omg;
+			emotion ET_HUK;
 			close;
 		}
 	}
@@ -879,7 +905,7 @@ new_1-2,83,111,3	script	Skill Tutor#nv	753,{
 			warp "new_1-2",28,178;
 			end;
 		case 3:
-			emotion e_omg;
+			emotion ET_HUK;
 			close;
 		}
 	}
@@ -1262,13 +1288,13 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 	if ( select("Teleport Service","About Kafra services") == 1 ) {
 		if (nov_get_item02 < 10 && nov_get_item03 < 10 && nov_get_item04 < 10) {
 			mes "[Kafra Employee]";
-			mes "I see, you must want to teleport to a town in Rune-Midgard imediately. First, let me briefly inform you about the different towns and cities in Ragnarok.";
+			mes "I see, you must want to teleport to a town in Rune-Midgarts imediately. First, let me briefly inform you about the different towns and cities in Ragnarok.";
 			next;
 			mes "[Kafra Employee]";
 			mes "Prontera is the capital of the Rune-Midgarts kingdom, and its satellite, Izlude, is closeby.";
 			next;
 			mes "[Kafra Employee]";
-			mes "^996633Morroc^000000 is in the desert. It's the town where you can change your job to the Thief and Assassin classes.";
+			mes "^996633Morocc^000000 is in the desert. It's the town where you can change your job to the Thief and Assassin classes.";
 			next;
 			mes "[Kafra Employee]";
 			mes "^006600Payon^000000 is in the mountains, and is famous for its Archer Village, where Novices can change their jobs to Archers.";
@@ -1283,7 +1309,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			mes "Please choose";
 			mes "your destination.";
 			next;
-			switch(select("Prontera:Morroc:Payon:Alberta:Geffen")) {
+			switch(select("Prontera:Morocc:Payon:Alberta:Geffen")) {
 			case 1:
 				set .@dest$,"Prontera";
 				set .@mapn$,"prontera";
@@ -1291,7 +1317,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				set .@warpX,150; set .@warpY,50;
 				break;
 			case 2:
-				set .@dest$,"Morroc";
+				set .@dest$,"Morocc";
 				set .@mapn$,"morocc";
 				set .@saveX,150; set .@saveY,99;
 				set .@warpX,155; set .@warpY,110;
@@ -1341,12 +1367,12 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@mapn$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY,1,1;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
 		else {
-			switch(select("Field Combat Course:Prontera:Morroc:Payon:Alberta:Geffen")) {
+			switch(select("Field Combat Course:Prontera:Morocc:Payon:Alberta:Geffen")) {
 			case 1:
 				mes "[Kafra Employee]";
 				mes "Thank you, let";
@@ -1362,7 +1388,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				set .@warpX,150; set .@warpY,50;
 				break;
 			case 3:
-				set .@dest$,"Morroc";
+				set .@dest$,"Morocc";
 				set .@mapn$,"morocc";
 				set .@saveX,150; set .@saveY,99;
 				set .@warpX,155; set .@warpY,110;
@@ -1404,7 +1430,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@mapn$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY,1,1;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
@@ -1448,7 +1474,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				break;
 			case 2:
 				mes "[Kafra Employee]";
-				mes "The Kafra Corporation is the world's largest company with a long and distinguished history on the Rune-Midgard continent.";
+				mes "The Kafra Corporation is the world's largest company with a long and distinguished history on the Midgard continent.";
 				next;
 				mes "[Kafra Employee]";
 				mes "You can store and retrieve";
@@ -1496,7 +1522,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 				mes "traveling time.";
 				next;
 				mes "[Kafra Employee]";
-				mes "Our Teleport Service is safe and comfortable, and will allow you to fully explore the various lands of the Rune-Midgard continent.";
+				mes "Our Teleport Service is safe and comfortable, and will allow you to fully explore the various lands of the Midgard continent.";
 				next;
 				mes "[Kafra Employee]";
 				mes "We thank our valued customers for their great support and continue to provide them with the best";
@@ -1537,7 +1563,6 @@ new_1-2,161,182,5	script	Instructor#nv	92,{
 	mes "Welcome to my class.";
 	mes "Choose the subject you";
 	mes "wish to learn more about.";
-	mes "";
 	next;
 	while(1) {
 		switch(select("Basic Info Window:Party Window:Item Window:Option Window:Equipment Window:Cancel")) {
@@ -1589,7 +1614,7 @@ new_1-2,161,182,5	script	Instructor#nv	92,{
 			mes "If you carry over 50 % of your maximum weight limit, your HP and SP will not be restored by resting, so be careful.";
 			next;
 			mes "[Edwin]";
-			mes "The numerical value next to the weight limit shows the current amount of Zeny, the currency of Rune-Midgard, that you possess.";
+			mes "The numerical value next to the weight limit shows the current amount of Zeny, the currency of Midgard, that you possess.";
 			next;
 			mes "[Edwin]";
 			mes "On the right side of the";
@@ -1901,7 +1926,7 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 	mes "[Leo Handerson]";
 	mes "I, Leo Handerson,";
 	mes "feel so responsible for your performance and will be teaching you to the best of my ability. Now, please select the subject you wish to learn.";
-	emotion e_kis;
+	emotion ET_CHUP;
 	next;
 	while(1) {
 		switch(select("Passive and Active skills:Basic Skills:Use of Emoticons:Cancel.")) {
@@ -2041,7 +2066,7 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 					mes "An adorable Novice";
 					mes "like you should pick";
 					mes "on this really quickly~";
-					emotion e_kis;
+					emotion ET_CHUP;
 					next;
 					break;
 				case 3:
@@ -2137,7 +2162,7 @@ new_1-2,184,172,1	script	Understandings of Skills	47,{
 			next;
 			mes "[Leo Handerson]";
 			mes "To check out the commands for even more emoticons, type the command ^4d4dff//emotion^000000 into your Chat Window to see the list~";
-			emotion e_lv;
+			emotion ET_THROB;
 			next;
 			break;
 		case 4:
@@ -2462,7 +2487,7 @@ new_1-2,38,182,3	script	Entrance Guard#nv	92,{
 	}
 	else if (nov_2nd_cos > 0 && nov_2nd_cos < 21) {
 		mes "[Muriel]";
-		mes "Field Combat Training is an actual fight class where you can gain basic fighting skills that you can use to defend yourself in Rune-Midgard.";
+		mes "Field Combat Training is an actual fight class where you can gain basic fighting skills that you can use to defend yourself in Midgard.";
 		next;
 		mes "[Muriel]";
 		mes "Please kill as many monsters as you can to increase your base level at least 2 times.";
@@ -2514,7 +2539,7 @@ new_1-2,38,182,3	script	Entrance Guard#nv	92,{
 			getitem 611,2; //Spectacles
 			getitem 569,300; //Novice_Potion
 			close2;
-			savepoint "new_1-2",23,188;
+			savepoint "new_1-2",23,188,1,1;
 			warp "new_1-3",96,21;
 			end;
 		case 2:
@@ -3001,7 +3026,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			mes "Fill in the blank:";
 			mes "You ^3355FF_____^000000";
 			mes "competing with other people...";
-			mes "";
 			next;
 			switch(select("don't mind...:don't like...:don't care about...")) {
 			case 1:
@@ -3325,7 +3349,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Falchion' is a weapon that will be very useful once you become a Swordman.";
+					mes "'Zeny' is the currency of Midgard. 'Falchion' is a weapon that will be very useful once you become a Swordman.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Falchion with this Phracon, please visit a forge in one of the towns.";
@@ -3348,7 +3372,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "izlude",93,104;
+					savepoint "izlude",93,104,1,1;
 					warp "izlude_in",74,167;
 					end;
 				case 2:
@@ -3396,7 +3420,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. That 'Cutter' has been given to you so that you can fight monsters before you become a Mage.";
+					mes "'Zeny' is the currency of Midgard. That 'Cutter' has been given to you so that you can fight monsters before you become a Mage.";
 					next;
 					mes "[Hanson]";
 					mes "Once you become a Mage, you can use the 'Rod' that has been given to you. It will be very useful during your early days as a Mage.";
@@ -3406,7 +3430,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					next;
 					mes "[Hanson]";
 					mes "The town you will arrive is named 'Geffen'.";
-					mes "";
 					mes "The mage academy is located in the Northwest part in town. Please remember this.";
 					next;
 					mes "[Hanson]";
@@ -3421,7 +3444,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "geffen",119,37;
+					savepoint "geffen",119,37,1,1;
 					warp "geffen_in",163,98;
 					end;
 				case 2:
@@ -3469,7 +3492,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Battle Axe' will come in handy once you become a Merchant.";
+					mes "'Zeny' is the currency of Midgard. 'Battle Axe' will come in handy once you become a Merchant.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Battle Axe with this Phracon, please visit a forge in one of the towns.";
@@ -3492,7 +3515,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "alberta",30,232;
+					savepoint "alberta",30,232,1,1;
 					warp "alberta_in",62,44;
 					end;
 				case 2:
@@ -3545,13 +3568,13 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Main Gauche' is a weapon that will be very useful once you become a Thief.";
+					mes "'Zeny' is the currency of Midgard. 'Main Gauche' is a weapon that will be very useful once you become a Thief.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Main Gauche with this Phracon, please visit a forge in one of the towns.";
 					next;
 					mes "[Hanson]";
-					mes "The town you will be sent to is named Morroc. The Thief Guild is in the first underground floor of the pyramid NorthWest of Morroc. Remember this.";
+					mes "The town you will be sent to is named Morocc. The Thief Guild is in the first underground floor of the pyramid NorthWest of Morocc. Remember this.";
 					next;
 					mes "[Hanson]";
 					mes "You will now";
@@ -3560,7 +3583,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "^A62A2A" + strcharinfo(0) + "^000000";
 					mes "and farewell.";
 					close2;
-					savepoint "morocc",150,99;
+					savepoint "morocc",150,99,1,1;
 					warp "moc_ruins",155,44;
 					end;
 				case 2:
@@ -3606,7 +3629,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Composite Bow' is a weapon that will be very useful once you become an Archer.";
+					mes "'Zeny' is the currency of Midgard. 'Composite Bow' is a weapon that will be very useful once you become an Archer.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Composite Bow with this Phracon, please visit a forge in one of the towns.";
@@ -3629,7 +3652,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "payon",70,100;
+					savepoint "payon",70,100,1,1;
 					warp "payon_in02",64,65;
 					end;
 				case 2:
@@ -3678,7 +3701,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 					next;
 					mes "[Hanson]";
-					mes "'Zeny' is the currency of Rune-Midgard. 'Mace' is a weapon that will be very useful once you become an Acolyte.";
+					mes "'Zeny' is the currency of Midgard. 'Mace' is a weapon that will be very useful once you become an Acolyte.";
 					next;
 					mes "[Hanson]";
 					mes "'Phracon' is an ore which can be used to upgrade lvl 1 weapons. To strengthen your Mace with this Phracon, please visit a forge in one of the towns.";
@@ -3701,7 +3724,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "prontera",117,72;
+					savepoint "prontera",117,72,1,1;
 					warp "prt_church",172,19;
 					end;
 				case 2:
@@ -3718,7 +3741,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			mes "immediately.";
 			next;
 			mes "[Hanson]";
-			mes "For more information and knowledge, I hope you will obtain your own experiences in Rune-Midgard.";
+			mes "For more information and knowledge, I hope you will obtain your own experiences in Midgard.";
 			next;
 			mes "[Hanson]";
 			mes "Lastly...";
@@ -3738,27 +3761,27 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			set nov_3_merchant,0;
 			set .@startmap,rand(1,6);
 			if ((.@startmap > 0) && (.@startmap < 2)) {
-				savepoint "prontera",117,72;
+				savepoint "prontera",117,72,1,1;
 				warp "prt_fild08",170,371;
 			}
 			else if ((.@startmap > 1) && (.@startmap < 3)) {
-				savepoint "geffen",119,37;
+				savepoint "geffen",119,37,1,1;
 				warp "gef_fild07",327,188;
 			}
 			else if ((.@startmap > 2) && (.@startmap < 4)) {
-				savepoint "alberta",30,232;
+				savepoint "alberta",30,232,1,1;
 				warp "pay_fild03",388,70;
 			}
 			else if ((.@startmap > 3) && (.@startmap < 5)) {
-				savepoint "morocc",150,99;
+				savepoint "morocc",150,99,1,1;
 				warp "moc_fild07",198,39;
 			}
 			else if ((.@startmap > 4) && (.@startmap < 6)) {
-				savepoint "payon",256,242;
+				savepoint "payon",256,242,1,1;
 				warp "pay_fild01",334,354;
 			}
 			else if ((.@startmap > 5) && (.@startmap < 7)) {
-				savepoint "izlude",93,104;
+				savepoint "izlude",93,104,1,1;
 				warp "prt_fild08",357,212;
 			}
 			end;
@@ -3777,7 +3800,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 		mes "[Hanson]";
 		mes "The only thing";
 		mes "left to do is to lead";
-		mes "you to Rune-Midgard~";
+		mes "you to Midgard~";
 		next;
 		set nov_1st_cos,0;
 		set nov_2nd_cos,0;
@@ -3789,27 +3812,27 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 		set nov_3_merchant,0;
 		set .@startmap,rand(1,6);
 		if ((.@startmap > 0) && (.@startmap < 2)) {
-			savepoint "prontera",117,72;
+			savepoint "prontera",117,72,1,1;
 			warp "prt_fild08",170,371;
 		}
 		else if ((.@startmap > 1) && (.@startmap < 3)) {
-			savepoint "geffen",119,37;
+			savepoint "geffen",119,37,1,1;
 			warp "gef_fild07",327,188;
 		}
 		else if ((.@startmap > 2) && (.@startmap < 4)) {
-			savepoint "alberta",30,232;
+			savepoint "alberta",30,232,1,1;
 			warp "pay_fild03",388,70;
 		}
 		else if ((.@startmap > 3) && (.@startmap < 5)) {
-			savepoint "morocc",150,99;
+			savepoint "morocc",150,99,1,1;
 			warp "moc_fild07",198,39;
 		}
 		else if ((.@startmap > 4) && (.@startmap < 6)) {
-			savepoint "payon",70,100;
+			savepoint "payon",70,100,1,1;
 			warp "pay_fild01",334,354;
 		}
 		else if ((.@startmap > 5) && (.@startmap < 7)) {
-			savepoint "izlude",93,104;
+			savepoint "izlude",93,104,1,1;
 			warp "prt_fild08",357,212;
 		}
 		end;
@@ -3869,7 +3892,7 @@ S_UserJobchoice:
 	else if (@menu == 4) {
 		mes "to become a Thief.";
 		mes "You will be sent to";
-		mes "the town of Morroc.";
+		mes "the town of Morocc.";
 		next;
 		mes "[Hanson]";
 		mes "The Thief guild is in the underground 1st floor of a pyramid which is NorthWest of town. Please remember this.";
@@ -3918,7 +3941,7 @@ S_UserJobchoice:
 	mes "Free tickets for Kafra storage and transportation can be used for Kafra storage and teleport services.";
 	next;
 	mes "[Hanson]";
-	mes "'Zeny' is the currency of Rune-Midgard. The 'Adventurer's Suit' will come in handy once you become a " + .@Jobs$[@menu] + ".";
+	mes "'Zeny' is the currency of Midgard. The 'Adventurer's Suit' will come in handy once you become a " + .@Jobs$[@menu] + ".";
 	next;
 	mes "[Hanson]";
 	mes "You will now";
@@ -3936,27 +3959,27 @@ S_UserJobchoice:
 	set nov_3_acolyte,0;
 	set nov_3_merchant,0;
 	if(@menu == 1) {
-		savepoint "izlude",93,104;
+		savepoint "izlude",93,104,1,1;
 		warp "izlude_in",74,167;
 	}
 	else if (@menu == 2) {
-		savepoint "geffen",119,37;
+		savepoint "geffen",119,37,1,1;
 		warp "geffen_in",163,98;
 	}
 	else if (@menu == 3) {
-		savepoint "alberta",30,232;
+		savepoint "alberta",30,232,1,1;
 		warp "alberta_in",62,44;
 	}
 	else if (@menu == 4) {
-		savepoint "morocc",150,99;
+		savepoint "morocc",150,99,1,1;
 		warp "moc_ruins",155,44;
 	}
 	else if (@menu == 5) {
-		savepoint "payon",70,100;
+		savepoint "payon",70,100,1,1;
 		warp "payon_in02",64,65;
 	}
 	else {
-		savepoint "prontera",117,72;
+		savepoint "prontera",117,72,1,1;
 		warp "prt_church",172,19;
 	}
 	return;
@@ -4064,14 +4087,13 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					break;
 				case 6:
 					mes "[Bruce]";
-					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgard. They possess skills that support their allies, as well as the life saving Heal ability.";
+					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgarts. They possess skills that support their allies, as well as the life saving Heal ability.";
 					next;
 					mes "[Bruce]";
 					mes "The Acolyte's support abilities make them a welcome addition to any party. In difficult situations, the Acolyte's skills will ensure the survival of the party, allowing other members to focus on offense.";
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;
@@ -4222,14 +4244,13 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					break;
 				case 6:
 					mes "[Bruce]";
-					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgard. They possess skills that support their allies, as well as the life saving Heal ability.";
+					mes "In Ragnarok Online, Acolytes act as messengers of God in Rune-Midgarts. They possess skills that support their allies, as well as the life saving Heal ability.";
 					next;
 					mes "[Bruce]";
 					mes "The Acolyte's support abilities make them a welcome addition to any party. In difficult situations, the Acolyte's skills will ensure the survival of the party, allowing other members to focus on offense.";
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;
@@ -4254,31 +4275,31 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 }
 
 // Training Ground Mobs
-new_1-3,0,0,0,0	monster	Poring	1002,10,0,0,0
-new_1-3,0,0,0,0	monster	Drops	1113,10,0,0,0
-new_1-3,0,0,0,0	monster	Lunatic	1063,10,0,0,0
-new_1-3,0,0,0,0	monster	ChonChon	1011,10,0,0,0
-new_2-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_2-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_2-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_2-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_3-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_3-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_3-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_3-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_4-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1053,10,0,0,0
-new_4-3,0,0,0,0	monster	Spore	1014,10,0,0,0
-new_5-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1051,1,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1053,1,0,0,0
-new_5-3,0,0,0,0	monster	Spore	1014,1,0,0,0
-new_1-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_2-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_3-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_4-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_1-3,0,0	monster	Poring	1002,10
+new_1-3,0,0	monster	Drops	1113,10
+new_1-3,0,0	monster	Lunatic	1063,10
+new_1-3,0,0	monster	ChonChon	1011,10
+new_2-3,0,0	monster	Condor	1009,10
+new_2-3,0,0	monster	Picky	1050,10
+new_2-3,0,0	monster	Willow	1010,10
+new_2-3,0,0	monster	Roda Frog	1012,10
+new_3-3,0,0	monster	Condor	1009,10
+new_3-3,0,0	monster	Picky	1050,10
+new_3-3,0,0	monster	Willow	1010,10
+new_3-3,0,0	monster	Roda Frog	1012,10
+new_4-3,0,0	monster	Rocker	1052,10
+new_4-3,0,0	monster	Thief Bug	1051,10
+new_4-3,0,0	monster	Thief Bug	1053,10
+new_4-3,0,0	monster	Spore	1014,10
+new_5-3,0,0	monster	Rocker	1052,10
+new_5-3,0,0	monster	Thief Bug	1051,1
+new_5-3,0,0	monster	Thief Bug	1053,1
+new_5-3,0,0	monster	Spore	1014,1
+new_1-3,0,0	monster	Fabre	1184,5
+new_2-3,0,0	monster	Fabre	1184,5
+new_3-3,0,0	monster	Fabre	1184,5
+new_4-3,0,0	monster	Fabre	1184,5
+new_5-3,0,0	monster	Fabre	1184,5
 
 //============================================================ 
 // Old changelog
