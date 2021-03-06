@@ -70,7 +70,7 @@ char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
 
 int parse_console(const char * buf) {
-    return 1;
+	return 1;
 }
 
 std::thread svr_thr;
@@ -94,51 +94,51 @@ void web_do_final_msg(void){
  * @return True:success, Fals:failure (file not found|readable)
  */
 bool web_config_read(const char* cfgName, bool normal) {
-    char line[1024], w1[32], w2[1024];
-    FILE* fp = fopen(cfgName, "r");
-    if (fp == NULL) {
-        ShowError("Configuration file (%s) not found.\n", cfgName);
-        return false;
-    }
-    while (fgets(line, sizeof(line), fp)) {
-        if (line[0] == '/' && line[1] == '/')
-            continue;
-        
-        if (sscanf(line, "%31[^:]: %1023[^\r\n]", w1, w2) < 2)
-            continue;
-        
-        // Config that loaded only when server started, not by reloading config file
-        if (normal) {
-            if (!strcmpi(w1, "bind_ip")) {
-                web_config.web_ip = w2;
-            } else if (!strcmpi(w1, "web_port"))
-                web_config.web_port = (uint16)atoi(w2);
-        }
+	char line[1024], w1[32], w2[1024];
+	FILE* fp = fopen(cfgName, "r");
+	if (fp == NULL) {
+		ShowError("Configuration file (%s) not found.\n", cfgName);
+		return false;
+	}
+	while (fgets(line, sizeof(line), fp)) {
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+		
+		if (sscanf(line, "%31[^:]: %1023[^\r\n]", w1, w2) < 2)
+			continue;
+		
+		// Config that loaded only when server started, not by reloading config file
+		if (normal) {
+			if (!strcmpi(w1, "bind_ip")) {
+				web_config.web_ip = w2;
+			} else if (!strcmpi(w1, "web_port"))
+				web_config.web_port = (uint16)atoi(w2);
+		}
 
-        if (!strcmpi(w1, "timestamp_format"))
-            safestrncpy(timestamp_format, w2, 20);
-        else if (!strcmpi(w1, "db_path"))
-            safestrncpy(db_path, w2, ARRAYLENGTH(db_path));
-        else if (!strcmpi(w1, "stdout_with_ansisequence"))
-            stdout_with_ansisequence = config_switch(w2);
-        else if (!strcmpi(w1, "console_silent")) {
-            msg_silent = atoi(w2);
-            if (msg_silent) /* only bother if we have actually this enabled */
-                ShowInfo("Console Silent Setting: %d\n", msg_silent);
-        } else if (!strcmpi(w1, "console_msg_log"))
-            console_msg_log = atoi(w2);
-        else if (!strcmpi(w1, "console_log_filepath"))
-            safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
-        else if (!strcmpi(w1, "guild_emblem_dir"))
-            web_config.guild_emblem_dir = w2;
-        else if (!strcmpi(w1, "print_req_res"))
-            web_config.print_req_res = config_switch(w2);
-        else if (!strcmpi(w1, "import"))
-            web_config_read(w2, normal);
-    }
-    fclose(fp);
-    ShowInfo("Finished reading %s.\n", cfgName);
-    return true;
+		if (!strcmpi(w1, "timestamp_format"))
+			safestrncpy(timestamp_format, w2, 20);
+		else if (!strcmpi(w1, "db_path"))
+			safestrncpy(db_path, w2, ARRAYLENGTH(db_path));
+		else if (!strcmpi(w1, "stdout_with_ansisequence"))
+			stdout_with_ansisequence = config_switch(w2);
+		else if (!strcmpi(w1, "console_silent")) {
+			msg_silent = atoi(w2);
+			if (msg_silent) /* only bother if we have actually this enabled */
+				ShowInfo("Console Silent Setting: %d\n", msg_silent);
+		} else if (!strcmpi(w1, "console_msg_log"))
+			console_msg_log = atoi(w2);
+		else if (!strcmpi(w1, "console_log_filepath"))
+			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
+		else if (!strcmpi(w1, "guild_emblem_dir"))
+			web_config.guild_emblem_dir = w2;
+		else if (!strcmpi(w1, "print_req_res"))
+			web_config.print_req_res = config_switch(w2);
+		else if (!strcmpi(w1, "import"))
+			web_config_read(w2, normal);
+	}
+	fclose(fp);
+	ShowInfo("Finished reading %s.\n", cfgName);
+	return true;
 }
 
 /*==========================================
@@ -196,16 +196,16 @@ int inter_config_read(const char* cfgName)
 			safestrncpy(web_server_db,w2,sizeof(web_server_db));
 		else if(!strcmpi(w1,"default_codepage"))
 			safestrncpy(default_codepage,w2,sizeof(default_codepage));
-        else if (!strcmpi(w1, "user_configs"))
-            safestrncpy(user_configs_table, w2, sizeof(user_configs_table));
-        else if (!strcmpi(w1, "guild_emblems"))
-            safestrncpy(guild_emblems_table, w2, sizeof(guild_emblems_table));
-        else if (!strcmpi(w1, "login_server_account_db"))
-            safestrncpy(login_table, w2, sizeof(login_table));
-        else if (!strcmpi(w1, "guild_db"))
-            safestrncpy(guild_db_table, w2, sizeof(guild_db_table));
-        else if (!strcmpi(w1, "char_db"))
-            safestrncpy(char_db_table, w2, sizeof(char_db_table));
+		else if (!strcmpi(w1, "user_configs"))
+			safestrncpy(user_configs_table, w2, sizeof(user_configs_table));
+		else if (!strcmpi(w1, "guild_emblems"))
+			safestrncpy(guild_emblems_table, w2, sizeof(guild_emblems_table));
+		else if (!strcmpi(w1, "login_server_account_db"))
+			safestrncpy(login_table, w2, sizeof(login_table));
+		else if (!strcmpi(w1, "guild_db"))
+			safestrncpy(guild_db_table, w2, sizeof(guild_db_table));
+		else if (!strcmpi(w1, "char_db"))
+			safestrncpy(char_db_table, w2, sizeof(char_db_table));
 		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
 	}
@@ -218,71 +218,71 @@ int inter_config_read(const char* cfgName)
 
 
 void web_set_defaults() {
-    web_config.web_ip = "0.0.0.0";
-    web_config.web_port = 3000;
-    safestrncpy(web_config.webconf_name, "conf/web_athena.conf", sizeof(web_config.webconf_name));
-    safestrncpy(web_config.msgconf_name, "conf/msg_conf/web_msg.conf", sizeof(web_config.msgconf_name));
-    web_config.print_req_res = false;
+	web_config.web_ip = "0.0.0.0";
+	web_config.web_port = 3000;
+	safestrncpy(web_config.webconf_name, "conf/web_athena.conf", sizeof(web_config.webconf_name));
+	safestrncpy(web_config.msgconf_name, "conf/msg_conf/web_msg.conf", sizeof(web_config.msgconf_name));
+	web_config.print_req_res = false;
 }
 
 
 /// Constructor destructor and signal handlers
 
 int web_sql_init(void) {
-    // login db connection
-    login_handle = Sql_Malloc();
-    ShowInfo("Connecting to the Login DB server.....\n");
+	// login db connection
+	login_handle = Sql_Malloc();
+	ShowInfo("Connecting to the Login DB server.....\n");
 
-    if (SQL_ERROR == Sql_Connect(login_handle, login_server_id, login_server_pw, login_server_ip, login_server_port, login_server_db)) {
-        ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-            login_server_id, login_server_pw, login_server_ip, login_server_port, login_server_db);
-        Sql_ShowDebug(login_handle);
-        Sql_Free(login_handle);
-        exit(EXIT_FAILURE);
-    }
-    ShowStatus("Connect success! (Login Server Connection)\n");
+	if (SQL_ERROR == Sql_Connect(login_handle, login_server_id, login_server_pw, login_server_ip, login_server_port, login_server_db)) {
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+			login_server_id, login_server_pw, login_server_ip, login_server_port, login_server_db);
+		Sql_ShowDebug(login_handle);
+		Sql_Free(login_handle);
+		exit(EXIT_FAILURE);
+	}
+	ShowStatus("Connect success! (Login Server Connection)\n");
 
-    if (strlen(default_codepage) > 0) {
-        if (SQL_ERROR == Sql_SetEncoding(login_handle, default_codepage))
-            Sql_ShowDebug(login_handle);
-    }
+	if (strlen(default_codepage) > 0) {
+		if (SQL_ERROR == Sql_SetEncoding(login_handle, default_codepage))
+			Sql_ShowDebug(login_handle);
+	}
 
-    char_handle = Sql_Malloc();
-    ShowInfo("Connecting to the Char DB server.....\n");
+	char_handle = Sql_Malloc();
+	ShowInfo("Connecting to the Char DB server.....\n");
 
-    if (SQL_ERROR == Sql_Connect(char_handle, char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db)) {
-        ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-            char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
-        Sql_ShowDebug(char_handle);
-        Sql_Free(char_handle);
-        exit(EXIT_FAILURE);
-    }
-    ShowStatus("Connect success! (Char Server Connection)\n");
+	if (SQL_ERROR == Sql_Connect(char_handle, char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db)) {
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
+		Sql_ShowDebug(char_handle);
+		Sql_Free(char_handle);
+		exit(EXIT_FAILURE);
+	}
+	ShowStatus("Connect success! (Char Server Connection)\n");
 
-    if (strlen(default_codepage) > 0) {
-        if (SQL_ERROR == Sql_SetEncoding(char_handle, default_codepage))
-            Sql_ShowDebug(char_handle);
-    }
+	if (strlen(default_codepage) > 0) {
+		if (SQL_ERROR == Sql_SetEncoding(char_handle, default_codepage))
+			Sql_ShowDebug(char_handle);
+	}
 
-    web_handle = Sql_Malloc();
-    ShowInfo("Connecting to the Web DB server.....\n");
+	web_handle = Sql_Malloc();
+	ShowInfo("Connecting to the Web DB server.....\n");
 
-    if (SQL_ERROR == Sql_Connect(web_handle, web_server_id, web_server_pw, web_server_ip, web_server_port, web_server_db)) {
-        ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-            web_server_id, web_server_pw, web_server_ip, web_server_port, web_server_db);
-        Sql_ShowDebug(web_handle);
-        Sql_Free(web_handle);
-        exit(EXIT_FAILURE);
-    }
-    ShowStatus("Connect success! (Web Server Connection)\n");
+	if (SQL_ERROR == Sql_Connect(web_handle, web_server_id, web_server_pw, web_server_ip, web_server_port, web_server_db)) {
+		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+			web_server_id, web_server_pw, web_server_ip, web_server_port, web_server_db);
+		Sql_ShowDebug(web_handle);
+		Sql_Free(web_handle);
+		exit(EXIT_FAILURE);
+	}
+	ShowStatus("Connect success! (Web Server Connection)\n");
 
-    if (strlen(default_codepage) > 0) {
-        if (SQL_ERROR == Sql_SetEncoding(web_handle, default_codepage))
-            Sql_ShowDebug(web_handle);
-    }
+	if (strlen(default_codepage) > 0) {
+		if (SQL_ERROR == Sql_SetEncoding(web_handle, default_codepage))
+			Sql_ShowDebug(web_handle);
+	}
 
 
-    return 0;
+	return 0;
 }
 
 int web_sql_close(void)
@@ -290,10 +290,10 @@ int web_sql_close(void)
 	ShowStatus("Close Login DB Connection....\n");
 	Sql_Free(login_handle);
 	login_handle = NULL;
-    ShowStatus("Close Char DB Connection....\n");
+	ShowStatus("Close Char DB Connection....\n");
 	Sql_Free(char_handle);
 	char_handle = NULL;
-    ShowStatus("Close Web DB Connection....\n");
+	ShowStatus("Close Web DB Connection....\n");
 	Sql_Free(web_handle);
 	web_handle = NULL;
 
@@ -307,9 +307,9 @@ int web_sql_close(void)
 void do_final(void) {
 
 	ShowStatus("Terminating...\n");
-    svr->stop();
-    svr_thr.join();
-    web_sql_close();
+	svr->stop();
+	svr_thr.join();
+	web_sql_close();
 	do_final_msg();
 	ShowStatus("Finished.\n");
 }
@@ -334,7 +334,7 @@ void do_shutdown(void) {
  */
 void do_abort(void) {
 	svr->stop();
-    svr_thr.join();
+	svr_thr.join();
 
 }
 
@@ -357,81 +357,81 @@ void set_server_type(void) {
 
 // called just before sending repsonse
 void logger(const Request & req, const Response & res) {
-    // make this a config
-    if (web_config.print_req_res) {
-        ShowDebug("Incoming Headers are:\n");
-        for (const auto & header : req.headers) {
-            ShowDebug("\t%s: %s\n", header.first.c_str(), header.second.c_str());
-        }
-        ShowDebug("Incoming Pages are:\n");
-        for (const auto & file : req.files) {
-            ShowDebug("\t%s: %s\n", file.first.c_str(), file.second.content.c_str());
-        }
-        ShowDebug("Outgoing Headers are:\n");
-        for (const auto & header : res.headers) {
-            ShowDebug("\t%s: %s\n", header.first.c_str(), header.second.c_str());
-        }
-        ShowDebug("Response status is: %d\n", res.status);
-        // since the body may be binary, might not print entire body (has null character).
-        ShowDebug("Body is:\n%s\n", res.body.c_str());
-    }
-    ShowInfo("%s [%s %s] %d\n", req.remote_addr.c_str(), req.method.c_str(), req.path.c_str(), res.status);
+	// make this a config
+	if (web_config.print_req_res) {
+		ShowDebug("Incoming Headers are:\n");
+		for (const auto & header : req.headers) {
+			ShowDebug("\t%s: %s\n", header.first.c_str(), header.second.c_str());
+		}
+		ShowDebug("Incoming Pages are:\n");
+		for (const auto & file : req.files) {
+			ShowDebug("\t%s: %s\n", file.first.c_str(), file.second.content.c_str());
+		}
+		ShowDebug("Outgoing Headers are:\n");
+		for (const auto & header : res.headers) {
+			ShowDebug("\t%s: %s\n", header.first.c_str(), header.second.c_str());
+		}
+		ShowDebug("Response status is: %d\n", res.status);
+		// since the body may be binary, might not print entire body (has null character).
+		ShowDebug("Body is:\n%s\n", res.body.c_str());
+	}
+	ShowInfo("%s [%s %s] %d\n", req.remote_addr.c_str(), req.method.c_str(), req.path.c_str(), res.status);
 }
 
 
 int do_init(int argc, char** argv) {
-    INTER_CONF_NAME="conf/inter_athena.conf";
-    runflag = WEBSERVER_ST_STARTING;
+	INTER_CONF_NAME="conf/inter_athena.conf";
+	runflag = WEBSERVER_ST_STARTING;
 
-    safestrncpy(console_log_filepath, "./log/web-msg_log.log", sizeof(console_log_filepath));
+	safestrncpy(console_log_filepath, "./log/web-msg_log.log", sizeof(console_log_filepath));
 
-    // read web-server configuration
-    web_set_defaults();
-    web_config_read(web_config.webconf_name, true);
-    msg_config_read(web_config.msgconf_name);
+	// read web-server configuration
+	web_set_defaults();
+	web_config_read(web_config.webconf_name, true);
+	msg_config_read(web_config.msgconf_name);
 
-    inter_config_read(INTER_CONF_NAME);
-    if (check_filepath(web_config.guild_emblem_dir.c_str()) != 1) {
-        ShowError("Guild Emblem Directory %s is missing, please create it\n", web_config.guild_emblem_dir.c_str());
-    }
-    // end config
+	inter_config_read(INTER_CONF_NAME);
+	if (check_filepath(web_config.guild_emblem_dir.c_str()) != 1) {
+		ShowError("Guild Emblem Directory %s is missing, please create it\n", web_config.guild_emblem_dir.c_str());
+	}
+	// end config
 
-    web_sql_init();
+	web_sql_init();
 
-    ShowStatus("Starting server...\n");
+	ShowStatus("Starting server...\n");
 
-    svr = std::make_shared<httplib::Server>();
-    // set up routes
-    svr->Post("/emblem/download", emblem_download);
-    svr->Post("/emblem/upload", emblem_upload);
-    svr->Post("/userconfig/load", userconfig_load);
-    svr->Post("/userconfig/save", userconfig_save);
+	svr = std::make_shared<httplib::Server>();
+	// set up routes
+	svr->Post("/emblem/download", emblem_download);
+	svr->Post("/emblem/upload", emblem_upload);
+	svr->Post("/userconfig/load", userconfig_load);
+	svr->Post("/userconfig/save", userconfig_save);
 
-    // set up logger
-    svr->set_logger(logger);
-    shutdown_callback = do_shutdown;
+	// set up logger
+	svr->set_logger(logger);
+	shutdown_callback = do_shutdown;
 
-    runflag = WEBSERVER_ST_RUNNING;
-    // this blocks, until svr->stop() is called.
+	runflag = WEBSERVER_ST_RUNNING;
+	// this blocks, until svr->stop() is called.
 
-    svr_thr = std::thread([] {
-        svr->listen(web_config.web_ip.c_str(), web_config.web_port);
-    });
-    // svr->listen(web_config.web_ip.c_str(), web_config.web_port);
+	svr_thr = std::thread([] {
+		svr->listen(web_config.web_ip.c_str(), web_config.web_port);
+	});
+	// svr->listen(web_config.web_ip.c_str(), web_config.web_port);
 
-    for (int i = 0; i < 10; i++) {
-        if (svr->is_running() || runflag != WEBSERVER_ST_RUNNING)
-            break;
-        ShowDebug("Web server not running, sleeping 1 second\n");
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
+	for (int i = 0; i < 10; i++) {
+		if (svr->is_running() || runflag != WEBSERVER_ST_RUNNING)
+			break;
+		ShowDebug("Web server not running, sleeping 1 second\n");
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
 
-    if (!svr->is_running()) {
-        ShowError("Web server hasn't started, stopping\n");
-        runflag = CORE_ST_STOP;
-        return 0;
-    }
+	if (!svr->is_running()) {
+		ShowError("Web server hasn't started, stopping\n");
+		runflag = CORE_ST_STOP;
+		return 0;
+	}
 
-    ShowStatus("rAthena web server Started, listening on port %d\n", web_config.web_port);
-    return 0;
+	ShowStatus("rAthena web server Started, listening on port %d\n", web_config.web_port);
+	return 0;
 }
