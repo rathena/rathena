@@ -6008,19 +6008,20 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	return 0;
 }
 
-/*==========================================
+/**
  * Set's a player position.
- * @param sd
- * @param mapindex
- * @param x
- * @param y
- * @param clrtype
+ * @param sd: Player's data
+ * @param mapindex: Map index of destination
+ * @param x: X location
+ * @param y: Y location
+ * @param clrtype: Warp type
  * @return	SETPOS_OK			Success
  *			SETPOS_MAPINDEX		Invalid map index
  *			SETPOS_NO_MAPSERVER	Map not in this map-server, and failed to locate alternate map-server.
  *			SETPOS_AUTOTRADE	Player is in autotrade state
- *------------------------------------------*/
-enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype)
+ *			SETPOS_MAX_ATTEMPTS	Maximum number of warp attempts met
+ */
+enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int16 x, int16 y, clr_type clrtype)
 {
 	nullpo_retr(SETPOS_OK,sd);
 
@@ -6159,18 +6160,17 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	}
 
 	if( x == 0 && y == 0 ) { // pick a random walkable cell
-		int c=0;
+		int c = 0;
+
 		do {
 			x = rnd()%(mapdata->xs-2)+1;
 			y = rnd()%(mapdata->ys-2)+1;
-			c++;
-			
-			if(c > (mapdata->xs * mapdata->ys)*3){ //force out
-				ShowError("pc_setpos: couldn't found a valid coordinates for player '%s' (%d:%d) on (%s), preventing warp\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
-				return SETPOS_OK; //preventing warp
-				//break; //allow warp anyway
-			}
-		} while(map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1)));
+		} while((map_getcell(m, x, y, CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1, m, x, y, 1))) && (c++) < MAX_WARP_ATTEMPTS);
+
+		if (c == MAX_WARP_ATTEMPTS) {
+			ShowError("pc_setpos: Couldn't find valid coordinates for player '%s' (%d:%d) on (%s), preventing warp.\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
+			return SETPOS_MAX_ATTEMPTS;
+		}
 	}
 
 	if (sd->state.vending && map_getcell(m,x,y,CELL_CHKNOVENDING)) {
@@ -6237,35 +6237,6 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		sd->count_rewarp = 0;
 	
 	return SETPOS_OK;
-}
-
-/*==========================================
- * Warp player sd to random location on current map.
- * May fail if no walkable cell found (1000 attempts).
- * Return:
- *	0 = Success
- *	1,2,3 = Fail
- *------------------------------------------*/
-char pc_randomwarp(struct map_session_data *sd, clr_type type)
-{
-	int x,y,i=0;
-
-	nullpo_ret(sd);
-
-	struct map_data *mapdata = map_getmapdata(sd->bl.m);
-
-	if (mapdata->flag[MF_NOTELEPORT]) //Teleport forbidden
-		return 3;
-
-	do {
-		x = rnd()%(mapdata->xs-2)+1;
-		y = rnd()%(mapdata->ys-2)+1;
-	} while((map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,sd->bl.m,x,y,1))) && (i++) < 1000);
-
-	if (i < 1000)
-		return pc_setpos(sd,mapdata->index,x,y,type);
-
-	return 3;
 }
 
 /*==========================================

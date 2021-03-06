@@ -171,6 +171,8 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_ACHIEVEMENT_DEPENDENTS 20 /// Maximum different dependents in achievement_db.yml
 #define ACHIEVEMENT_NAME_LENGTH 50 /// Max Achievement Name length
 
+#define MAX_WARP_ATTEMPTS 1000 /// Max amount of attempts to randomly warp a character onto valid coordinates
+
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1

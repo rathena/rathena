@@ -8113,7 +8113,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skill_lv == 1 ) || skill_lv == 3 )
 			{
 				if( skill_lv == 1 )
-					pc_randomwarp(sd,CLR_TELEPORT);
+					pc_setpos(sd, sd->bl.m, 0, 0, CLR_TELEPORT);
 				else
 					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 				break;
@@ -13151,7 +13151,7 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 		//any kind of map change, so we need to restore it automatically
 		//bugreport:8027
 		if(strcmp(mapname,"Random") == 0)
-			pc_randomwarp(sd,CLR_TELEPORT);
+			pc_setpos(sd, sd->bl.m, 0, 0, CLR_TELEPORT);
 		else if (sd->menuskill_val > 1 || skill_id == ALL_ODINS_RECALL) //Need lv2 to be able to warp here.
 			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 
@@ -14772,7 +14772,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 		case UNT_DIMENSIONDOOR:
 			if( tsd && !map_getmapflag(bl->m, MF_NOTELEPORT) )
-				pc_randomwarp(tsd,CLR_TELEPORT);
+				pc_setpos(tsd, tsd->bl.m, 0, 0, CLR_TELEPORT);
 			else if( bl->type == BL_MOB && battle_config.mob_warp&8 )
 				unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 			break;

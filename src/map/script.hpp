@@ -2019,6 +2019,13 @@ enum e_pcblock_action_flag : uint16 {
 	PCBLOCK_ALL      = 0x3FF,
 };
 
+enum e_mapwarp_type : uint8 {
+	MAPWARP_ALL = 0,
+	MAPWARP_GUILD,
+	MAPWARP_PARTY,
+	MAPWARP_CLAN
+};
+
 /**
  * used to generate quick script_array entries
  **/

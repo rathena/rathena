@@ -4139,7 +4139,7 @@ There are also three special 'map names' you can use.
 
 ---------------------------------------
 
-*areawarp "<from map name>",<x1>,<y1>,<x2>,<y2>,"<to map name>",<x3>,<y3>{,<x4>,<y4>};
+*areawarp "<from map name>",<x1>,<y1>,<x2>,<y2>,"<to map name>"{,<x3>,<y3>,<x4>,<y4>};
 
 This command is similar to 'warp', however, it will not refer to the invoking
 character, but instead, all characters within a specified area, defined by the
@@ -4153,8 +4153,9 @@ shape, on the map called "place", will be affected, and warped to "place2" X 150
 Y 150
 
 	areawarp "place",10,10,120,120,"place2",0,0;
+	areawarp "place",10,10,120,120,"place2";
 
-By using ,0,0; as the destination coordinates it will take all the characters in
+By using zeroes as the destination coordinates or leaving them out it will take all the characters in 
 the affected area to a random set of co-ordinates on "place2".
 
 	areawarp "place",10,10,120,120,"place2",150,150,200,200;
@@ -4162,8 +4163,13 @@ the affected area to a random set of co-ordinates on "place2".
 By using the optional x4 and y4 parameters, the destination coordinates will be a
 random place within the defined x3/y3-x4/y4 square.
 
-Like 'warp', areawarp will also explicitly warp characters randomly into the
-current map if you give the 'to map name' as "Random".
+There are also three special 'map names' you can use:
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
+
+It is recommended that you do not supply any target coordinates if you use one of
+these maps because they will be ignored anyway.
 
 See also 'warp'.
 
@@ -4220,9 +4226,14 @@ warpguild "prontera",x,y,Guild_ID;
 *warppartner("<map name>",<x>,<y>);
 
 This function will find the invoking character's marriage partner, if any, and
-warp them to the map and coordinates given. It will return 1 upon success and
-0 if the partner is not online, the character is not married, or if there's no
+warp them to the map and coordinates given. It will return true upon success and
+false if the partner is not online, the character is not married, or if there's no
 invoking character (no RID). 0,0 will, as usual, normally translate to random coordinates.
+
+There are also three special 'map names' you can use.
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
 
 ---------------------------------------
 
@@ -7245,6 +7256,11 @@ The obvious way of using this effectively would be to set up a waiting room for
 two characters to be warped onto a random PVP map for a one-on-one duel, for
 example.
 
+There are also three special 'map names' you can use.
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
+
 ---------------------------------------
 
 *waitingroomkick "<NPC object name>" , "<character name>";
@@ -7369,23 +7385,31 @@ Examples:
 
 ---------------------------------------
 
-*mapwarp "<from map>","<to map>",<x>,<y>{,<type>,<ID>};
+*mapwarp "<from map>","<to map>",{<x>,<y>,<type>,<ID>};
 
-This command will collect all characters located on the From map and warp them
-wholesale to the same point on the To map, or randomly distribute them there if
-the coordinates are zero. "Random" is understood as a special To map name and
-will mean randomly shuffling everyone on the same map.
+This command will collect all characters located on the <from map> and warp them 
+wholesale to the same point on the <to map>, or randomly distribute them there if 
+the coordinates are zero or left out.
 
-Optionally, a type and ID can be specified. Available types are:
+Optionally, a <type> and <ID> can be specified. Available types are:
 
- 0 - Everyone
- 1 - Guild
- 2 - Party
+ MAPWARP_ALL - Everyone
+ MAPWARP_GUILD - Guild
+ MAPWARP_PARTY - Party
+ MAPWARP_CLAN - Clan
 
 Example:
 
 // Will warp all members of guild with ID 63 on map prontera to map alberta.
-	mapwarp "prontera","alberta",150,150,1,63;
+	mapwarp "prontera","alberta",150,150,MAPWARP_GUILD,63;
+
+There are also three special 'map names' you can use for <to map>:
+
+"Random" will warp the player randomly on the current map.
+"Save" and "SavePoint" will warp the player back to their save point.
+
+It is recommended that you do not supply any target coordinates if you use one of
+these maps because they will be ignored anyway.
 
 ---------------------------------------
 \\
