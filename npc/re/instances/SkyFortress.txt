@@ -1,7 +1,7 @@
 //===== rAthena Script =======================================
 //= Sky Fortress Invasion
 //===== Description: =========================================
-//= [Walkthrough Conversion]
+//= [Official Conversion]
 //= Sky Fortress Invasion Instance
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
@@ -78,6 +78,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 			close;
 		}
 		if (isbegin_quest(9418) == 0) {// first entrance
+			.@party_name$ = getpartyname(getcharid(1));
 			mes "[Scientist Doyeon]";
 			mes "I'm a scientist";
 			mes "living in Prontera.";
@@ -113,7 +114,12 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 					mes "The warp will be activated";
 					mes "only for a limited period of time.";
 					mes "Step inside it, quick!";
-					instance_create("Sky Fortress Invasion");
+					if (instance_create("Sky Fortress Invasion") < 0) {
+						mes "Party Name: " + .@party_name$;
+						mes "Party Leader: " + strcharinfo(0);
+						mes "^0000ffSky Fortress Invasion ^000000- Reservation Failed!";
+						close;
+					}
 					close;
 				case 3:
 					mes "[Scientist Doyeon]";
@@ -174,6 +180,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "three days to collect magic.";
 		next;
 		if (is_party_leader() == true) {
+			.@party_name$ = getpartyname(getcharid(1));
 			if (select( "End the dialogue.", "Show the -Dungeon Pass-." ) == 2) {
 				if (rentalcountitem(14505) < 1 && rentalcountitem(14506) < 1) {// Sky Fortress Ticket
 					mes "[Scientist Doyeon]";
@@ -200,7 +207,12 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 				mes "The warp will be activated";
 				mes "only for a limited period of time.";
 				mes "Step inside it, quick!";
-				instance_create("Sky Fortress Invasion");
+				if (instance_create("Sky Fortress Invasion") < 0) {
+					mes "Party Name: " + .@party_name$;
+					mes "Party Leader: " + strcharinfo(0);
+					mes "^0000ffSky Fortress Invasion ^000000- Reservation Failed!";
+					close;
+				}
 				close;
 			}
 		}
@@ -238,6 +250,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "destroy the fortress and";
 		mes "get back our Prontera.";
 		if (is_party_leader() == true) {
+			.@party_name$ = getpartyname(getcharid(1));
 			next;
 			if (select( "No", "Yes" ) == 1) {
 				mes "[Scientist Doyeon]";
@@ -252,7 +265,12 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 			mes "The warp will be activated";
 			mes "only for a limited period of time.";
 			mes "Step inside it, quick!";
-			instance_create("Sky Fortress Invasion");
+			if (instance_create("Sky Fortress Invasion") < 0) {
+				mes "Party Name: " + .@party_name$;
+				mes "Party Leader: " + strcharinfo(0);
+				mes "^0000ffSky Fortress Invasion ^000000- Reservation Failed!";
+				close;
+			}
 		}
 		close;
 	}
@@ -500,6 +518,7 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 		mes "and bring peace to Prontera.";
 		close;
 	}
+	.@party_name$ = getpartyname(getcharid(1));
 	mes "[Scientist Doyeon]";
 	mes "I'm a scientist";
 	mes "living in Prontera.";
@@ -604,7 +623,12 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 		mes "The warp will be activated";
 		mes "only for a limited period of time.";
 		mes "Step inside it, quick!";
-		instance_create("Sky Fortress Invasion");
+		if (instance_create("Sky Fortress Invasion") < 0) {
+			mes "Party Name: " + .@party_name$;
+			mes "Party Leader: " + strcharinfo(0);
+			mes "^0000ffSky Fortress Invasion ^000000- Reservation Failed!";
+			close;
+		}
 		close;
 	case 3:
 		close;
@@ -1106,6 +1130,8 @@ OnTouch:
 	}
 	donpcevent instance_npcname( strnpcinfo(0) ) + "::OnBar";
 	sleep2 3000;
+	if (is_party_leader() == false)
+		end;
 	disablenpc instance_npcname( strnpcinfo(0) );
 	mes "- In that treasure box, -";
 	.@r = rand(100);
@@ -1317,7 +1343,7 @@ OnTouch:
 		monster 'sthb_map$,80,49,"Sky Fortress Key Keeper",3478,1;		// AS_ZOMBIE_SLAUGHTER
 	end;
 }
-	
+
 1@sthb,62,49,0	script	#sthd_event_6	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
@@ -1824,8 +1850,12 @@ OnTimer1000:
 			else if (.@bomb[5] == 7) setarray .@pant[.@s],7;
 		}
 		.@s = getarraysize(.@pant);
-		for ( .@i = 0; .@i < .@s; ++.@i )
+		for ( .@i = 0; .@i < .@s; ++.@i ) {
+			if (.@tmp[.@pant[.@i]])	// prevent to trigger the same event multiple times
+				continue;
+			.@tmp[.@pant[.@i]] = true;
 			donpcevent instance_npcname("#pantheon_damage" + .@pant[.@i]) + "::OnEvent";
+		}
 	}
 	end;
 OnTimer1500:
@@ -1851,7 +1881,6 @@ OnTimer4500:
 		donpcevent instance_npcname("#Stefan for display3") + "::OnStop";
 		donpcevent instance_npcname("Sky Fortress Escape Warp#end_warp") + "::OnEnable";
 		stopnpctimer;
-		end;
 	}
 	end;
 OnTimer6000:
@@ -1899,6 +1928,7 @@ OnTimer8000:
 OnTimer16000:
 OnTimer24000:
 OnTimer32000:
+	// no count check
 	areamonster 'sthd_map$,84,76,124,116,"Cursed Soldier of Bijou",3485,2, instance_npcname("#Last_Boss_Monster") + "::OnMobDead";	// AS_D_CURSED_SOLDIER
 	end;
 OnTimer33000:
