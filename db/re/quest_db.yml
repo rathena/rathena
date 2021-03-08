@@ -5262,6 +5262,16 @@ Body:
   - Id: 9319
     Title: Pursuing Hiding Morocc Continues
     TimeLimit: +23h
+  - Id: 9418
+    Title: Attack Sky Fortress Invading Prontera
+    Targets:
+      - Mob: AS_RAGGED_GOLEM
+        Count: 1
+  - Id: 9419
+    Title: Attack Sky Fortress Invading Prontera
+    TimeLimit: 2d 12h
+  - Id: 9427
+    Title: Clearing the Sky Fortress for the Same Time
   - Id: 9335
     Title: Search for shards of Gigantes
   - Id: 9336
