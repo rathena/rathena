@@ -4086,6 +4086,7 @@ Body:
     Fail:
       Hallucinationwalk: true
       Hovering: true
+      Npc_HallucinationWalk: true
     States:
       Nomove: true
 
@@ -7736,3 +7737,9 @@ Body:
       Magneticfield: true
       Neutralbarrier_Master: true
       Stealthfield_Master: true
+
+  - Status: Npc_HallucinationWalk
+    Icon: Npc_HallucinationWalk
+    DurationLookup: NPC_HALLUCINATIONWALK
+    CalcFlags:
+      Flee: true

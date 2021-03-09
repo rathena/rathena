@@ -5682,6 +5682,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += sc->data[SC_MERC_FLEEUP]->val2;
 	if( sc->data[SC_HALLUCINATIONWALK] )
 		flee += sc->data[SC_HALLUCINATIONWALK]->val2;
+	if( sc->data[SC_NPC_HALLUCINATIONWALK] )
+		flee += sc->data[SC_NPC_HALLUCINATIONWALK]->val2;
 	if(sc->data[SC_MTF_HITFLEE])
 		flee += sc->data[SC_MTF_HITFLEE]->val2;
 	if( sc->data[SC_WATER_BARRIER] )
@@ -9351,6 +9353,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_HALLUCINATIONWALK:
+		case SC_NPC_HALLUCINATIONWALK:
 			val2 = 50 * val1; // Evasion rate of physical attacks. Flee
 			val3 = 10 * val1; // Evasion rate of magical attacks.
 			break;
@@ -10359,6 +10362,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// Start |1|2|4 val_flag setting
 		case SC_POISONINGWEAPON:
 		case SC_CLOAKINGEXCEED:
+		case SC_NPC_HALLUCINATIONWALK:
 		case SC_HALLUCINATIONWALK:
 		case SC__SHADOWFORM:
 		case SC__GROOMY:

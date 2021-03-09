@@ -45608,35 +45608,35 @@ Body:
       callfunc "F_CashReduceStat",bStr,-1,22702;
   - Id: 22703
     AegisName: Minus_Agi
-    Name: STR Reduction Potion
+    Name: AGI Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bAgi,-1,22703;
   - Id: 22704
     AegisName: Minus_Vit
-    Name: STR Reduction Potion
+    Name: VIT Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bVit,-1,22704;
   - Id: 22705
     AegisName: Minus_Int
-    Name: STR Reduction Potion
+    Name: INT Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bInt,-1,22705;
   - Id: 22706
     AegisName: Minus_Dex
-    Name: STR Reduction Potion
+    Name: DEX Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bDex,-1,22706;
   - Id: 22707
     AegisName: Minus_Luk
-    Name: STR Reduction Potion
+    Name: LUK Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
@@ -46906,7 +46906,7 @@ Body:
       itemskill "AL_INCAGI",1;
       heal -15,0;
   - Id: 22901
-    AegisName: Question_Old_Blue_Box
+    AegisName: BlueboxOfQuestions
     Name: Mysterious Blue Box
     Type: Usable
     Buy: 20

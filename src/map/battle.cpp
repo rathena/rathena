@@ -4321,6 +4321,18 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 400 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
+		case NPC_IGNITIONBREAK:
+			// 3x3 cell Damage   = 1000  1500  2000  2500  3000 %
+			// 7x7 cell Damage   = 750   1250  1750  2250  2750 %
+			// 11x11 cell Damage = 500   1000  1500  2000  2500 %
+			i = distance_bl(src,target);
+			if (i < 2)
+				skillratio += -100 + 500 * (skill_lv + 1);
+			else if (i < 4)
+				skillratio += -100 + 250 + 500 * skill_lv;
+			else
+				skillratio += -100 + 500 * skill_lv;
+			break;
 		case RK_STORMBLAST:
 			skillratio += -100 + (((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : 0) + status_get_str(src) / 8) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's STR / 8)} x 100] %
 			RE_LVL_DMOD(100);
@@ -4329,6 +4341,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 50 * skill_lv + 10 * (sd ? pc_checkskill(sd,KN_SPEARMASTERY) : 5);
 			RE_LVL_DMOD(150); // Base level bonus.
 			break;
+		// case NPC_PHANTOMTHRUST:	// ATK = 100% for all level
 		case GC_CROSSIMPACT:
 			skillratio += -100 + 1000 + 150 * skill_lv;
 			RE_LVL_DMOD(100);
@@ -6661,6 +6674,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if( sc && sc->data[SC_BLAST_OPTION] )
 							skillratio += (sd ? sd->status.job_level / 2 : 0);
 						break;
+					case NPC_FIREWALK:
+					case NPC_ELECTRICWALK:
+						skillratio += -100 + 100 * skill_lv;
+						break;
 					case SO_EARTHGRAVE:
 						skillratio += -100 + sstatus->int_ * skill_lv + ((sd) ? pc_checkskill(sd, SA_SEISMICWEAPON) * 200 : 0);
 						RE_LVL_DMOD(100);
@@ -6679,6 +6696,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if( sc && sc->data[SC_CURSED_SOIL_OPTION] )
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
 						break;
+					case NPC_POISON_BUSTER:
+						skillratio += -100 + 1500 * skill_lv;
+						break;
 					case SO_PSYCHIC_WAVE:
 						skillratio += -100 + 70 * skill_lv + 3 * sstatus->int_;
 						RE_LVL_DMOD(100);
@@ -6691,6 +6711,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						if (sc && sc->data[SC_CURSED_SOIL_OPTION])
 							skillratio += (sd ? sd->status.job_level : 0);
+						break;
+					case NPC_CLOUD_KILL:
+						skillratio += -100 + 50 * skill_lv;
 						break;
 					case SO_VARETYR_SPEAR: //MATK [{( Endow Tornado skill level x 50 ) + ( Caster INT x Varetyr Spear Skill level )} x Caster Base Level / 100 ] %
 						skillratio += -100 + status_get_int(src) * skill_lv + ((sd) ? pc_checkskill(sd, SA_LIGHTNINGLOADER) * 50 : 0);
