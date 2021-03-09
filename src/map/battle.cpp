@@ -8269,7 +8269,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						case NC_AXETORNADO:
 						case SR_SKYNETBLOW:
 							// Can only hit traps in PVP/GVG maps
-							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
+							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF])
 								return 0;
 							break;
 					}
@@ -8286,7 +8286,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case NC_AXETORNADO:
 					case SR_SKYNETBLOW:
 						// Can only hit icewall in PVP/GVG maps
-						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
+						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF])
 							return 0;
 						break;
 					case HT_CLAYMORETRAP:
@@ -8483,20 +8483,48 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			else
 				state |= BCT_ENEMY;
 		}
-		if( state&BCT_ENEMY && mapdata->flag[MF_BATTLEGROUND] && sbg_id && sbg_id == tbg_id )
-			state &= ~BCT_ENEMY;
+		// if( state&BCT_ENEMY && mapdata->flag[MF_BATTLEGROUND] && sbg_id && sbg_id == tbg_id )
+		// 	state &= ~BCT_ENEMY;
 
-		if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
-		{ // Prevent novice engagement on pk_mode (feature by Valaris)
-			TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
-			if (
-				(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
-				(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
-				(int)sd->status.base_level < battle_config.pk_min_level ||
-			  	(int)sd2->status.base_level < battle_config.pk_min_level ||
-				(battle_config.pk_level_range && abs((int)sd->status.base_level - (int)sd2->status.base_level) > battle_config.pk_level_range)
-			)
+		// if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
+		// { // Prevent novice engagement on pk_mode (feature by Valaris)
+		// 	TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
+		// 	if (
+		// 		(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+		// 		(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+		// 		(int)sd->status.base_level < battle_config.pk_min_level ||
+		// 	  	(int)sd2->status.base_level < battle_config.pk_min_level ||
+		// 		(battle_config.pk_level_range && abs((int)sd->status.base_level - (int)sd2->status.base_level) > battle_config.pk_level_range)
+		// 	)
+		// 		state &= ~BCT_ENEMY;
+		// }
+		if( state&BCT_ENEMY ) {
+			if( mapdata->flag[MF_BATTLEGROUND] && sbg_id && sbg_id == tbg_id )
 				state &= ~BCT_ENEMY;
+			if( mapdata->flag[MF_FVF] ) // Faction System
+			{
+				if( (faction_get_id(s_bl) && faction_get_id(t_bl) && (
+					map_getcell(t_bl->m,t_bl->x,t_bl->y,CELL_CHKNOFVF) ||
+					map_getcell(s_bl->m,s_bl->x,s_bl->y,CELL_CHKNOFVF) ||
+					(s_bl->type == BL_PC && ((int)((TBL_PC*)s_bl)->status.base_level < battle_config.fvf_min_lvl)) ||
+					(t_bl->type == BL_PC && ((int)((TBL_PC*)t_bl)->status.base_level < battle_config.fvf_min_lvl)) ||
+					faction_check_alliance(s_bl,t_bl))) ||
+					(s_bl->type == BL_PC && t_bl->type == BL_PC && !faction_get_id(s_bl) && !faction_get_id(t_bl))
+				)
+					state &= ~BCT_ENEMY;
+			}
+			if( battle_config.pk_mode && !map_flag_gvg(m) && s_bl->type == BL_PC && t_bl->type == BL_PC )
+			{ // Prevent novice engagement on pk_mode (feature by Valaris)
+				TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
+				if (
+					(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+					(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+					(int)sd->status.base_level < battle_config.pk_min_level ||
+					(int)sd2->status.base_level < battle_config.pk_min_level ||
+					(battle_config.pk_level_range && abs((int)sd->status.base_level - (int)sd2->status.base_level) > battle_config.pk_level_range)
+				)
+					state &= ~BCT_ENEMY;
+			}
 		}
 	}//end map_flag_vs chk rivality
 	else

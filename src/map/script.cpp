@@ -13020,6 +13020,41 @@ BUILDIN_FUNC(gvgoff3)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// Faction System Biali
+BUILDIN_FUNC(fvfon)
+{
+	int16 m;
+	const char *str = script_getstr(st,2);
+
+	m = map_mapname2mapid(str);
+
+	if (m < 0) {
+		ShowWarning("buildin_fvfon: Unknown map '%s'.\n", str);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (!map_getmapflag(m, MF_FVF))
+		map_setmapflag(m, MF_FVF, true);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(gvgoff)
+{
+	int16 m;
+	const char *str = script_getstr(st,2);
+
+	m = map_mapname2mapid(str);
+
+	if (m < 0) {
+		ShowWarning("buildin_fvfoff: Unknown map '%s'.\n", str);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (map_getmapflag(m, MF_FVF))
+		map_setmapflag(m, MF_FVF, false);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Shows an emotion on top of a NPC by default or the given GID
  * emotion <emotion ID>{,<target ID>};
@@ -25812,6 +25847,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pvpoff,"s"),
 	BUILDIN_DEF(gvgon,"s"),
 	BUILDIN_DEF(gvgoff,"s"),
+	BUILDIN_DEF(fvfon,"s"),
+	BUILDIN_DEF(fvfoff,"s"),
 	BUILDIN_DEF(emotion,"i?"),
 	BUILDIN_DEF(maprespawnguildid,"sii"),
 	BUILDIN_DEF(agitstart,""),	// <Agit>

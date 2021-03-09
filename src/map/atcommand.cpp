@@ -1794,6 +1794,41 @@ ACMD_FUNC(gvgon)
 /*==========================================
  *
  *------------------------------------------*/
+ACMD_FUNC(fvfoff)
+{
+	nullpo_retr(-1, sd);
+
+	if (!map_getmapflag(sd->bl.m, MF_FVF)) {
+		clif_displaymessage(fd, msg_txt(sd,162)); // FVF is already Off.
+		return -1;
+	}
+
+	map_setmapflag(sd->bl.m, MF_FVF, false);
+	clif_displaymessage(fd, msg_txt(sd,33)); // FVF: Off.
+
+	return 0;
+}
+
+/*==========================================
+ *
+ *------------------------------------------*/
+ACMD_FUNC(fvfon)
+{
+	nullpo_retr(-1, sd);
+
+	if (map_getmapflag(sd->bl.m, MF_FVF)) {
+		clif_displaymessage(fd, msg_txt(sd,163)); // FVF is already On.
+		return -1;
+	}
+
+	map_setmapflag(sd->bl.m, MF_FVF, true);
+	clif_displaymessage(fd, msg_txt(sd,34)); // FvF: On.
+
+	return 0;
+}
+/*==========================================
+ *
+ *------------------------------------------*/
 ACMD_FUNC(model)
 {
 	int hair_style = 0, hair_color = 0, cloth_color = 0;
@@ -4314,6 +4349,8 @@ ACMD_FUNC(mapinfo) {
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1051)); // Other Flags2:
+	if (map_getmapflag(m_id, MF_FVF))
+		strcat(atcmd_output, " FvF ON |");
 	if (map_getmapflag(m_id, MF_NOCOMMAND))
 		strcat(atcmd_output, " NoCommand |");
 	if (map_getmapflag(m_id, MF_NOBASEEXP))
@@ -6187,7 +6224,7 @@ ACMD_FUNC(changegm)
 		return -1;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_GUILDLOCK) || map_getmapflag(sd->bl.m, MF_GVG_CASTLE) ) {
+	if( map_getmapflag(sd->bl.m, MF_GUILDLOCK) || map_getmapflag(sd->bl.m, MF_GVG_CASTLE) || map_getmapflag(sd->bl.m, MF_FVF) ) {
 		clif_displaymessage(fd, msg_txt(sd,1182)); // You cannot change guild leaders on this map.
 		return -1;
 	}

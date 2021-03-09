@@ -4665,6 +4665,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_BATTLEGROUND] = false;
 					ShowWarning("map_setmapflag: Unable to set Battleground and PvP flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+					ShowWarning("map_setmapflag: Unable to set Faction and PvP flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
+				}
 			}
 			break;
 		case MF_GVG:
@@ -4684,6 +4688,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_BATTLEGROUND] = false;
 					ShowWarning("map_setmapflag: Unable to set Battleground and GvG flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+					ShowWarning("map_setmapflag: Unable to set Faction and GvG flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
+				}
 			}
 			break;
 		case MF_GVG_CASTLE:
@@ -4702,14 +4710,24 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					if (!battle_config.pk_mode)
 						ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
 				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+						ShowWarning("npc_parse_mapflag: Unable to set FVF and GvG%s Castle flags for the same map! Removing FVF flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
+				}
 			}
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_GVG_DUNGEON:
-			if (status && mapdata->flag[MF_PVP]) {
-				mapdata->flag[MF_PVP] = false;
-				if (!battle_config.pk_mode)
-					ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+			if (status) {
+				if (mapdata->flag[MF_PVP]) {
+					mapdata->flag[MF_PVP] = false;
+					if (!battle_config.pk_mode)
+						ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+						ShowWarning("map_setmapflag: Unable to set FVF and GvG Dungeon flags for the same map! Removing FVF flag from %s.\n", mapdata->name);
+				}
 			}
 			mapdata->flag[mapflag] = status;
 			break;
@@ -4798,6 +4816,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				if (mapdata->flag[MF_GVG_CASTLE]) {
 					mapdata->flag[MF_GVG_CASTLE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG Castle and Battleground flags for the same map! Removing GvG Castle flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+					ShowWarning("map_setmapflag: Unable to set Faction and Battleground flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
 				}
 				mapdata->flag[mapflag] = ((args->flag_val <= 0 || args->flag_val > 2) ? 1 : args->flag_val);
 			} else

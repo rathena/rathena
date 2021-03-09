@@ -417,6 +417,7 @@
 	export_constant(MF_PVP_NOGUILD);
 	export_constant(MF_GVG);
 	export_constant(MF_GVG_NOPARTY);
+	export_constant(MF_FVF); //Biali Faction
 	export_constant(MF_NOTRADE);
 	export_constant(MF_NOSKILL);
 	export_constant(MF_NOWARP);
