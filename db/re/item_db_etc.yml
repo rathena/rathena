@@ -23426,7 +23426,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6920
-    AegisName: Rune_Magic_Powder
+    AegisName: RuneMagicPowder
     Name: Rune Magic Powder
     Type: Etc
     Buy: 10
@@ -23440,7 +23440,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6921
-    AegisName: Dehumidifiers
+    AegisName: Desiccant
     Name: Dehumidifiers
     Type: Etc
     Buy: 10
@@ -23456,7 +23456,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6923
-    AegisName: Bright_Fire_Lights
+    AegisName: Bright_Lights
     Name: Bright Fire Lights
     Type: Etc
     Buy: 10
@@ -23471,7 +23471,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6924
-    AegisName: Red_Eye
+    AegisName: Red_Eyes
     Name: Red Eye
     Type: Etc
     Buy: 10
@@ -23479,7 +23479,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6925
-    AegisName: Letter_Of_Prisoner
+    AegisName: Prisoner_Letter
     Name: Letter Of Prisoner
     Type: Etc
     Buy: 10
@@ -23507,7 +23507,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6927
-    AegisName: Stone_That_Contained_Sea
+    AegisName: Filled_With_SeaStones
     Name: Stone That Contained Sea
     Type: Etc
     Buy: 10
@@ -23521,7 +23521,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6928
-    AegisName: Poring_Scourer
+    AegisName: Poring_Loofah
     Name: Poring Scourer
     Type: Etc
     Buy: 10
@@ -23535,7 +23535,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6929
-    AegisName: Letter_With_Stamped_Seal
+    AegisName: Letters_Stamped_Seal
     Name: Letter With Stamped Seal
     Type: Etc
     Buy: 10
@@ -23549,7 +23549,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6930
-    AegisName: Samples_New_Business_Items
+    AegisName: Biz_Items_Sample
     Name: Samples New Business Items
     Type: Etc
     Buy: 10
@@ -23620,8 +23620,8 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6935
-    AegisName: Advanced_Dish
-    Name: Advanced Dish
+    AegisName: Luxurious_Dish
+    Name: High-Class Dish
     Type: Etc
     Buy: 10
     Trade:
@@ -38365,10 +38365,10 @@ Body:
     Script: |
       .@luk = readparam(bLuk);
       .@crit = .@luk/10;
+      bonus bAspdRate,.@crit;
       if (.@luk >= 120) {
          .@crit += 5;
       }
-      bonus bAspdRate,1;
       bonus bCritAtkRate,.@crit;
   - Id: 27296
     AegisName: Ancient_Wootan_Shooter_Card

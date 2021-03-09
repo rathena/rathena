@@ -1611,6 +1611,7 @@
 	export_constant(SC_EP16_2_BUFF_AC);
 	export_constant(SC_EMERGENCY_MOVE);
 	export_constant(SC_MADOGEAR);
+	export_constant(SC_NPC_HALLUCINATIONWALK);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
