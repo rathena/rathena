@@ -81493,7 +81493,7 @@ Body:
     DamageMotion: 432
     Ai: 04
     Drops:
-      - Item: Dehumidifiers
+      - Item: Desiccant
         Rate: 2000
         StealProtected: true
       - Item: Frozenwolf_Card
@@ -81565,7 +81565,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Red_Eye
+      - Item: Red_Eyes
         Rate: 2000
         StealProtected: true
       - Item: Watcher_Card
