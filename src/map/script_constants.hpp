@@ -8131,6 +8131,10 @@
 	export_constant(SCS_NOCONSUMEITEMCOND);
 	export_constant(SCS_NOATTACK);
 	export_constant(SCS_NOATTACKCOND);
+	export_constant(SCS_NOWARP);
+	export_constant(SCS_NOWARPCOND);
+	export_constant(SCS_NODEATHPENALTY);
+	export_constant(SCS_NODEATHPENALTYCOND);
 
 	/* body states */
 	export_constant(OPT1_STONE);
@@ -8203,6 +8207,12 @@
 	export_constant(SCF_DISPLAY_NPC);
 	export_constant(SCF_REQUIRE_WEAPON);
 	export_constant(SCF_REQUIRE_SHIELD);
+	export_constant(SCF_MOBLOSETARGET);
+	export_constant(SCF_REM_ELEMENTALOPTION);
+	export_constant(SCF_SUPERNOVICEANGEL);
+	export_constant(SCF_TAEKWONANGEL);
+	export_constant(SCF_MADOCANCEL);
+	export_constant(SCF_MADOENDCANCEL);
 
 	#undef export_constant
 	#undef export_constant2

@@ -393,6 +393,7 @@ Body:
       Dex: true
     Flags:
       Boss_Resist: true
+      TaekwonAngel: true
 
   - Status: Signumcrucis
     Icon: Crucis
@@ -413,6 +414,7 @@ Body:
       Speed: true
     Flags:
       Failed_Mado: true
+      TaekwonAngel: true
     Fail:
       Quagmire: true
     End:
@@ -454,12 +456,16 @@ Body:
     DurationLookup: PR_IMPOSITIO
     CalcFlags:
       Watk: true
+    Flags:
+      SuperNoviceAngel: true
     End:
       Impositio: true
 
   - Status: Suffragium
     Icon: Suffragium
     DurationLookup: PR_SUFFRAGIUM
+    Flags:
+      SuperNoviceAngel: true
 
   - Status: Aspersio
     Icon: Aspersio
@@ -479,6 +485,8 @@ Body:
   - Status: Kyrie
     Icon: Kyrie
     DurationLookup: PR_KYRIE
+    Flags:
+      SuperNoviceAngel: true
     End:
       Assumptio: true
 
@@ -490,6 +498,7 @@ Body:
     Flags:
       Failed_Mado: true
       No_Save: true
+      SuperNoviceAngel: true
     Fail:
       Offertorium: true
 
@@ -498,6 +507,8 @@ Body:
     DurationLookup: PR_GLORIA
     CalcFlags:
       Luk: true
+    Flags:
+      SuperNoviceAngel: true
 
   - Status: Aeterna
     Icon: Lexaeterna
@@ -513,6 +524,7 @@ Body:
     CalcFlags:
       Aspd: true
     Flags:
+      MadoCancel: true
       Require_Weapon: true
     Fail:
       Quagmire: true
@@ -521,12 +533,16 @@ Body:
   - Status: Weaponperfection
     Icon: Weaponperfect
     DurationLookup: BS_WEAPONPERFECT
+    Flags:
+      MadoCancel: true
 
   - Status: Overthrust
     Icon: Overthrust
     DurationLookup: BS_OVERTHRUST
     Opt3:
       OverThrust: true
+    Flags:
+      MadoCancel: true
     Fail:
       Maxoverthrust: true
 
@@ -535,6 +551,8 @@ Body:
     DurationLookup: BS_MAXIMIZE
     CalcFlags:
       Regen: true
+    Flags:
+      MadoCancel: true
 
   - Status: Trickdead
     Icon: Trickdead
@@ -561,6 +579,8 @@ Body:
     DurationLookup: MC_LOUD
     CalcFlags:
       Str: true
+    Flags:
+      MadoCancel: true
 
   - Status: Energycoat
     Icon: Energycoat
@@ -959,6 +979,7 @@ Body:
     Opt3:
       BladeStop: true
     Flags:
+      MobLoseTarget: true
       No_Clearbuff: true
       No_Save: true
       No_Clearance: true
@@ -1055,6 +1076,8 @@ Body:
   - Status: Protectexp
     Icon: Protectexp
     DurationLookup: WE_BABY
+    States:
+      NoDeathPenalty: true
 
   - Status: Aurablade
     Icon: Aurablade
@@ -1216,6 +1239,7 @@ Body:
     Icon: Meltdown
     DurationLookup: WS_MELTDOWN
     Flags:
+      MadoCancel: true
       No_Rem_Ondead: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -1228,6 +1252,7 @@ Body:
     CalcFlags:
       Speed: true
     Flags:
+      MadoCancel: true
       No_Rem_Ondead: true
       No_Clearance: true
       No_Save: true
@@ -1466,6 +1491,7 @@ Body:
     CalcFlags:
       Aspd: true
     Flags:
+      MadoCancel: true
       No_Save: true
       Require_Weapon: true
     Fail:
@@ -1572,6 +1598,7 @@ Body:
     Opt3:
       OverThrust: true
     Flags:
+      MadoCancel: true
       No_Save: true
     End:
       Overthrust: true
@@ -1858,6 +1885,7 @@ Body:
     Flags:
       No_Save: true
       No_Clearance: true
+      Require_Weapon: true
 
   - Status: Spirit
     Icon: Soullink
@@ -2575,6 +2603,8 @@ Body:
 
   - Status: Lifeinsurance
     Icon: Cash_Deathpenalty
+    States:
+      NoDeathPenalty: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -4362,6 +4392,7 @@ Body:
     Flags:
       Bleffect: true
       Display_Pc: true
+      MobLoseTarget: true
       No_Clearbuff: true
       Stop_Walking: true
       Stop_Attacking: true
@@ -4873,6 +4904,7 @@ Body:
     Flags:
       Bleffect: true
       Display_Pc: true
+      MobLoseTarget: true
       No_Clearbuff: true
       Stop_Walking: true
       No_Dispell: true

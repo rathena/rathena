@@ -397,6 +397,7 @@ Body:
       Hit: true
     Flags:
       Boss_Resist: true
+      TaekwonAngel: true
 
   - Status: Signumcrucis
     Icon: Crucis
@@ -418,6 +419,7 @@ Body:
       Aspd: true
     Flags:
       Failed_Mado: true
+      TaekwonAngel: true
     Fail:
       Quagmire: true
     End:
@@ -460,12 +462,16 @@ Body:
     CalcFlags:
       Watk: true
       Matk: true
+    Flags:
+      SuperNoviceAngel: true
     End:
       Impositio: true
 
   - Status: Suffragium
     Icon: Suffragium
     DurationLookup: PR_SUFFRAGIUM
+    Flags:
+      SuperNoviceAngel: true
 
   - Status: Aspersio
     Icon: Aspersio
@@ -485,6 +491,8 @@ Body:
   - Status: Kyrie
     Icon: Kyrie
     DurationLookup: PR_KYRIE
+    Flags:
+      SuperNoviceAngel: true
 
   - Status: Magnificat
     Icon: Magnificat
@@ -494,6 +502,7 @@ Body:
     Flags:
       Failed_Mado: true
       No_Save: true
+      SuperNoviceAngel: true
     Fail:
       Offertorium: true
 
@@ -502,6 +511,8 @@ Body:
     DurationLookup: PR_GLORIA
     CalcFlags:
       Luk: true
+    Flags:
+      SuperNoviceAngel: true
 
   - Status: Aeterna
     Icon: Lexaeterna
@@ -518,6 +529,7 @@ Body:
       Aspd: true
       Hit: true
     Flags:
+      MadoCancel: true
       Require_Weapon: true
     Fail:
       Quagmire: true
@@ -526,12 +538,16 @@ Body:
   - Status: Weaponperfection
     Icon: Weaponperfect
     DurationLookup: BS_WEAPONPERFECT
+    Flags:
+      MadoCancel: true
 
   - Status: Overthrust
     Icon: Overthrust
     DurationLookup: BS_OVERTHRUST
     Opt3:
       OverThrust: true
+    Flags:
+      MadoCancel: true
     Fail:
       Maxoverthrust: true
 
@@ -540,6 +556,8 @@ Body:
     DurationLookup: BS_MAXIMIZE
     CalcFlags:
       Regen: true
+    Flags:
+      MadoCancel: true
 
   - Status: Trickdead
     Icon: Trickdead
@@ -564,6 +582,8 @@ Body:
   - Status: Loud
     Icon: Shout
     DurationLookup: MC_LOUD
+    Flags:
+      MadoCancel: true
     CalcFlags:
       Str: true
       Batk: true
@@ -965,6 +985,7 @@ Body:
     Opt3:
       BladeStop: true
     Flags:
+      MobLoseTarget: true
       No_Clearbuff: true
       No_Save: true
       No_Clearance: true
@@ -1062,6 +1083,8 @@ Body:
   - Status: Protectexp
     Icon: Protectexp
     DurationLookup: WE_BABY
+    States:
+      NoDeathPenalty: true
 
   - Status: Aurablade
     Icon: Aurablade
@@ -1225,6 +1248,7 @@ Body:
     Icon: Meltdown
     DurationLookup: WS_MELTDOWN
     Flags:
+      MadoCancel: true
       No_Rem_Ondead: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -1237,6 +1261,7 @@ Body:
     CalcFlags:
       Speed: true
     Flags:
+      MadoCancel: true
       No_Rem_Ondead: true
       No_Clearance: true
       No_Save: true
@@ -1475,6 +1500,7 @@ Body:
     CalcFlags:
       Aspd: true
     Flags:
+      MadoCancel: true
       No_Save: true
       Require_Weapon: true
     Fail:
@@ -1580,6 +1606,7 @@ Body:
     Opt3:
       OverThrust: true
     Flags:
+      MadoCancel: true
       No_Save: true
     End:
       Overthrust: true
@@ -1961,6 +1988,7 @@ Body:
     Flags:
       No_Save: true
       No_Clearance: true
+      Require_Weapon: true
 
   - Status: Spirit
     Icon: Soullink
@@ -2681,6 +2709,8 @@ Body:
 
   - Status: Lifeinsurance
     Icon: Cash_Deathpenalty
+    States:
+      NoDeathPenalty: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -3478,6 +3508,7 @@ Body:
     CalcFlags:
       Speed: true
     Flags:
+      MadoEndCancel: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -3488,6 +3519,7 @@ Body:
     CalcFlags:
       Speed: true
     Flags:
+      MadoEndCancel: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -3498,6 +3530,7 @@ Body:
     CalcFlags:
       Def_Ele: true
     Flags:
+      MadoEndCancel: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -3531,6 +3564,7 @@ Body:
     States:
       NoMove: true
     Flags:
+      MadoEndCancel: true
       Boss_Resist: true
       Stop_Walking: true
       No_Dispell: true
@@ -3556,6 +3590,7 @@ Body:
   - Status: Neutralbarrier_Master
     Icon: Neutralbarrier_Master
     Flags:
+      MadoEndCancel: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -3581,6 +3616,7 @@ Body:
     CalcFlags:
       Speed: true
     Flags:
+      MadoEndCancel: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -3590,6 +3626,7 @@ Body:
   - Status: Overheat
     Icon: Overheat
     Flags:
+      MadoEndCancel: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -3597,6 +3634,7 @@ Body:
   - Status: Overheat_Limitpoint
     Icon: Overheat_Limitpoint
     Flags:
+      MadoEndCancel: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -4466,6 +4504,7 @@ Body:
     Flags:
       Bleffect: true
       Display_Pc: true
+      MobLoseTarget: true
       No_Clearbuff: true
       Stop_Walking: true
       Stop_Attacking: true
@@ -4977,6 +5016,7 @@ Body:
     Flags:
       Bleffect: true
       Display_Pc: true
+      MobLoseTarget: true
       No_Clearbuff: true
       Stop_Walking: true
       No_Dispell: true
@@ -5001,39 +5041,55 @@ Body:
 
   - Status: Circle_Of_Fire
     Icon: Circle_Of_Fire
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Circle_Of_Fire_Option
     Icon: Circle_Of_Fire_Option
     DurationLookup: EL_CIRCLE_OF_FIRE
     CalcFlags:
       All: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Fire_Cloak
     Icon: Fire_Cloak
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Fire_Cloak_Option
     Icon: Fire_Cloak_Option
     DurationLookup: EL_FIRE_CLOAK
     CalcFlags:
       All: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Water_Screen
     Icon: Water_Screen
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Water_Screen_Option
     Icon: Water_Screen_Option
     DurationLookup: EL_WATER_SCREEN
     CalcFlags:
       All: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Water_Drop
     Icon: Water_Drop
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Water_Drop_Option
     Icon: Water_Drop_Option
     DurationLookup: EL_WATER_DROP
     CalcFlags:
       All: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Water_Barrier
     Icon: Water_Barrier
@@ -5041,9 +5097,13 @@ Body:
     CalcFlags:
       Watk: true
       Flee: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Wind_Step
     Icon: Wind_Step
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Wind_Step_Option
     Icon: Wind_Step_Option
@@ -5051,24 +5111,34 @@ Body:
     CalcFlags:
       Speed: true
       Flee: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Wind_Curtain
     Icon: Wind_Curtain
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Wind_Curtain_Option
     Icon: Wind_Curtain_Option
     DurationLookup: EL_WIND_CURTAIN
     CalcFlags:
       All: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Zephyr
     Icon: Zephyr
     DurationLookup: EL_ZEPHYR
     CalcFlags:
       Flee: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Solid_Skin
     Icon: Solid_Skin
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Solid_Skin_Option
     Icon: Solid_Skin_Option
@@ -5076,15 +5146,21 @@ Body:
     CalcFlags:
       Def: true
       MaxHp: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Stone_Shield
     Icon: Stone_Shield
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Stone_Shield_Option
     Icon: Stone_Shield_Option
     DurationLookup: EL_STONE_SHIELD
     CalcFlags:
       All: true
+    Flags:
+      Rem_ElementalOption: true
 
   - Status: Power_Of_Gaia
     Icon: Power_Of_Gaia
@@ -5106,6 +5182,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Pyrotechnic_Option
     Icon: Pyrotechnic_Option
@@ -5118,6 +5195,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Heater
     Icon: Heater
@@ -5125,6 +5203,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Heater_Option
     Icon: Heater_Option
@@ -5137,6 +5216,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Tropic
     Icon: Tropic
@@ -5144,6 +5224,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Tropic_Option
     Icon: Tropic_Option
@@ -5156,6 +5237,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Aquaplay
     Icon: Aquaplay
@@ -5163,6 +5245,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Aquaplay_Option
     Icon: Aquaplay_Option
@@ -5175,6 +5258,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Cooler
     Icon: Cooler
@@ -5182,6 +5266,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Cooler_Option
     Icon: Cooler_Option
@@ -5194,6 +5279,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Chilly_Air
     Icon: Chilly_Air
@@ -5201,6 +5287,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Chilly_Air_Option
     Icon: Chilly_Air_Option
@@ -5213,6 +5300,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Gust
     Icon: Gust
@@ -5220,6 +5308,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Gust_Option
     Icon: Gust_Option
@@ -5232,6 +5321,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Blast
     Icon: Blast
@@ -5239,6 +5329,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Blast_Option
     Icon: Blast_Option
@@ -5251,6 +5342,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Wild_Storm
     Icon: Wild_Storm
@@ -5258,6 +5350,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Wild_Storm_Option
     Icon: Wild_Storm_Option
@@ -5270,6 +5363,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Petrology
     Icon: Petrology
@@ -5277,6 +5371,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Petrology_Option
     Icon: Petrology_Option
@@ -5289,6 +5384,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Cursed_Soil
     Icon: Cursed_Soil
@@ -5296,6 +5392,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Cursed_Soil_Option
     Icon: Cursed_Soil_Option
@@ -5308,6 +5405,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Upheaval
     Icon: Upheaval
@@ -5315,6 +5413,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Upheaval_Option
     Icon: Upheaval_Option
@@ -5327,6 +5426,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Tidal_Weapon
     Icon: Tidal_Weapon
@@ -5334,6 +5434,7 @@ Body:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
+      Rem_ElementalOption: true
 
   - Status: Tidal_Weapon_Option
     Icon: Tidal_Weapon_Option
@@ -5346,6 +5447,7 @@ Body:
       No_Clearance: true
       No_Rem_Ondead: true
       No_Save: true
+      Rem_ElementalOption: true
 
   - Status: Rock_Crusher
     Icon: Rock_Crusher

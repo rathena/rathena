@@ -2078,34 +2078,29 @@ int map_quit(struct map_session_data *sd) {
 		for (const auto &it : status_db) {
 			sc_type status = static_cast<sc_type>(it.first);
 
-			if (!sd->sc.data[status])
-				continue;
-			else {
-				std::bitset<SCF_MAX> flag = it.second->flag;
-
-				switch (status) {
-					case SC_ENDURE: //No need to save infinite endure.
-					case SC_REGENERATION:
-						if (sd->sc.data[status] && sd->sc.data[status]->val4) {
-							status_change_end(&sd->bl,status,INVALID_TIMER);
-							continue;
-						}
-						break;
-				}
-				//Status that are not saved
-				if (flag[SCF_NO_SAVE]) {
-					status_change_end(&sd->bl,status,INVALID_TIMER);
-					continue;
-				}
-				//Removes status by config
-				if (battle_config.debuff_on_logout) {
-					if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
-						(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
-					{
+			switch (status) {
+				case SC_ENDURE: //No need to save infinite endure.
+				case SC_REGENERATION:
+					if (sd->sc.data[status] && sd->sc.data[status]->val4) {
 						status_change_end(&sd->bl,status,INVALID_TIMER);
 						continue;
 					}
-				}
+					break;
+			}
+
+			std::bitset<SCF_MAX> &flag = it.second->flag;
+
+			//Status that are not saved
+			if (flag[SCF_NO_SAVE]) {
+				status_change_end(&sd->bl,status,INVALID_TIMER);
+				continue;
+			}
+			//Removes status by config
+			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
+				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
+			{
+				status_change_end(&sd->bl,status,INVALID_TIMER);
+				continue;
 			}
 		}
 	}

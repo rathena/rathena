@@ -6064,14 +6064,11 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		sd->state.pmap = sd->bl.m;
 		if (sc && sc->count) { // Cancel some map related stuff.
-			if (sc->data[SC_JAILED])
-				return SETPOS_MAPINDEX; //You may not get out!
-			for (const auto &it : status_db) {
-				sc_type status = static_cast<sc_type>(it.first);
+			if (sc->cant.warp)
+				return SETPOS_MAPINDEX; // You may not get out!
 
-				if (sd->sc.data[status] && it.second->flag[SCF_REM_ON_MAPWARP])
-					status_change_end(&sd->bl, status, INVALID_TIMER);
-			}
+			status_db.removeByStatusFlag(&sd->bl, { SCF_REM_ON_MAPWARP });
+
 			if (sd->sc.data[SC_KNOWLEDGE]) {
 				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
 				if (sce->timer != INVALID_TIMER)
@@ -6422,24 +6419,21 @@ static void pc_checkallowskill(struct map_session_data *sd)
 		return;
 
 	for (const auto &it : status_db) {
-		sc_type status = static_cast<sc_type>(it.first);
+		sc_type status = it.second->type;
+		std::bitset<SCF_MAX> flag = it.second->flag;
 
-		if (it.second->flag[SCF_REQUIRE_WEAPON]) { // Skills requiring specific weapon types
+		if (flag[SCF_REQUIRE_WEAPON]) { // Skills requiring specific weapon types
 			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
 				continue;
 			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
 
-		if (it.second->flag[SCF_REQUIRE_SHIELD]) { // Skills requiring a shield
+		if (flag[SCF_REQUIRE_SHIELD]) { // Skills requiring a shield
 			if (sd->sc.data[status] && sd->status.shield <= 0)
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
 	}
-
-	if(sd->sc.data[SC_SPURT] && sd->status.weapon)
-		// Spurt requires bare hands (feet, in fact xD)
-		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
 }
 
 /*==========================================
@@ -7172,16 +7166,17 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	status_percent_heal(&sd->bl,100,100);
 
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
-		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
-		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
-		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
-		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
-		sc_start(&sd->bl,&sd->bl,skill_get_sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
+		for (const auto &status : status_db) {
+			if (status.second->flag[SCF_SUPERNOVICEANGEL])
+				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 1, skill_get_time(status.second->skill_id, 1));
+		}
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON ) {
-		sc_start(&sd->bl,&sd->bl,skill_get_sc(AL_INCAGI),100,10,600000);
-		sc_start(&sd->bl,&sd->bl,skill_get_sc(AL_BLESSING),100,10,600000);
+		for (const auto &status : status_db) {
+			if (status.second->flag[SCF_TAEKWONANGEL])
+				sc_start(&sd->bl, &sd->bl, status.second->type, 100, 10, 600000);
+		}
 	}
 	clif_misceffect(&sd->bl,0);
 	npc_script_event(sd, NPCE_BASELVUP); //LORDALFA - LVLUPEVENT
@@ -8551,7 +8546,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
-		&& !sd->sc.data[SC_PROTECTEXP] && !sd->sc.data[SC_LIFEINSURANCE]
+	    && !sd->sc.cant.deathpenalty
 		&& !mapdata->flag[MF_NOEXPPENALTY] && !mapdata_flag_gvg2(mapdata))
 	{
 		t_exp base_penalty = 0;
@@ -9390,14 +9385,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
-		const int class_ = pc_class2idx(sd->status.class_);
-		uint16 skill_id;
-		for(i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[class_][i].skill_id) > 0; i++) {
-			//Remove status specific to your current tree skills.
-			enum sc_type sc = skill_get_sc(skill_id);
-			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-				status_change_end(&sd->bl, sc, INVALID_TIMER);
-		}
+		status_db.changeSkillTree(sd);
 	}
 
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR && (b_class&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
@@ -12995,7 +12983,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 * @param flag: Reason to remove the bonus_script. e_bonus_script_flags or e_bonus_script_types
 * @author [Cydh]
 **/
-void pc_bonus_script_clear(struct map_session_data *sd, enum e_bonus_script_flags flag) {
+void pc_bonus_script_clear(struct map_session_data *sd, uint32 flag) {
 	struct linkdb_node *node = NULL;
 	uint16 count = 0;
 

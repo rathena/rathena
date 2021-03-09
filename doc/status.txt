@@ -47,6 +47,10 @@ States: Specified states given when the SC is active.
 	NoConsumeItemCond  - Condition check for SCS_NOCONSUMEITEM.
 	NoAttack           - Cannot attack.
 	NoAttackCond       - Condition check for SCS_NOATTACK.
+	NoWarp             - Cannot warp.
+	NoWarpCond         - Condition check for SCS_NOWARP.
+	NoDeathPenalty     - Player doesn't lose experience on death.
+	NoDeathPenaltyCond - Condition check for SCS_NODEATHPENALTY.
 
 States that have a suffix of "Cond" means the State has hard coded conditions in status.cpp::status_calc_state
 
@@ -183,6 +187,9 @@ Flags: Various status flags for specific status change events.
 	Set_Stand           - Sets player to standing state.
 	Overlap_Fail        - The status will fail to activate if the status is already active.
 	Failed_Mado         - Cannot be applied if Madogear is active.
+	MadoCancel          - Cancels the status when mounting Madogear.
+	MadoEndCancel       - Cancels the status when unmounting Madogear.
+	MobLoseTarget       - When active on a monster it will lose the target.
 
 	No_Clearbuff        - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
 	No_Rem_Ondead       - Cannot be removed when a player dies.
@@ -196,7 +203,8 @@ Flags: Various status flags for specific status change events.
 	Rem_On_Luxanima     - Removed by RK_LUXANIMA.
 	Rem_On_Mapwarp      - Removed when warping to another map.
 	Rem_On_Changemap    - Removed when changing map-server.
-	Rem_On_Chem_Protect - Removed by AM_CP_ARMOR/AM_CP_HELM/AM_CP_SHIELD/AM_CP_WEAPON.
+	Rem_Chem_Protect    - Removed by AM_CP_ARMOR/AM_CP_HELM/AM_CP_SHIELD/AM_CP_WEAPON.
+	Rem_ElementalOption - Removed by elemental changing modes/quitting/EL_TIDAL_WEAPON/EL_WATER_SCREEN on the master and elemental.
 
 	Stop_Attacking      - Makes the unit stop attacking.
 	Stop_Casting        - Makes the unit stop casting skills.
@@ -211,6 +219,9 @@ Flags: Various status flags for specific status change events.
 
 	Require_Weapon		- Status requires a weapon to be equipped.
 	Require_Shield		- Status requires a shield to be equipped.
+
+	SuperNoviceAngel    - Status that is given from Super Novice Angel.
+	TaekwonAngel        - Status that is given from Taekwon Angel.
 
 ---------------------------------------
 

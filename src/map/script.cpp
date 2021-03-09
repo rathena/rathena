@@ -11692,11 +11692,9 @@ BUILDIN_FUNC(sc_start)
 	else
 		bl = map_id2bl(st->rid);
 
-	uint16 skill_id = status_db.getSkill(type);
-
-	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && skill_id > 0)
+	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX)
 	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(skill_id, val1);
+		tick = skill_get_time(status_db.getSkill(type), val1);
 	}
 
 	if(potion_flag == 1 && potion_target) { //skill.cpp set the flags before running the script, this is a potion-pitched effect.
@@ -11752,7 +11750,7 @@ BUILDIN_FUNC(sc_end)
 		if (!sc)
 			return SCRIPT_CMD_SUCCESS;
 
-		if (status_db.getFlag((sc_type)type)[SCF_NO_CLEARBUFF])
+		if (status_db.hasSCF(sc, SCF_NO_CLEARBUFF))
 			return SCRIPT_CMD_SUCCESS;
 
 		struct status_change_entry *sce = sc ? sc->data[type] : NULL;
@@ -11774,7 +11772,6 @@ BUILDIN_FUNC(sc_end)
 BUILDIN_FUNC(sc_end_class)
 {
 	struct map_session_data *sd;
-	uint16 skill_id;
 	int class_;
 
 	if (!script_charid2sd(2, sd))
@@ -11790,12 +11787,7 @@ BUILDIN_FUNC(sc_end_class)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for (int i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[pc_class2idx(class_)][i].skill_id) > 0; i++) {
-		enum sc_type sc = skill_get_sc(skill_id);
-
-		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-			status_change_end(&sd->bl, sc, INVALID_TIMER);
-	}
+	status_db.changeSkillTree(sd);
 
 	return SCRIPT_CMD_SUCCESS;
 }

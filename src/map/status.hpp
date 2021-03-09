@@ -2376,24 +2376,28 @@ enum manner_flags
 /// Status Change State Flags
 enum e_scs_flag : uint32 {
 	SCS_NONE				= 0x0,
-	SCS_NOMOVECOND			= 0x00001, ///< cond flag for SCS_NOMOVE
-	SCS_NOMOVE				= 0x00002, ///< unit unable to move
-	SCS_NOPICKITEMCOND		= 0x00004, ///< cond flag for SCS_NOPICKITEM
-	SCS_NOPICKITEM			= 0x00008, ///< player unable to pick up items
-	SCS_NODROPITEMCOND		= 0x00010, ///< cond flag for SCS_NODROPITEM
-	SCS_NODROPITEM			= 0x00020, ///< player unable to drop items
-	SCS_NOCASTCOND			= 0x00040, ///< cond flag for SCS_NOCAST
-	SCS_NOCAST				= 0x00080, ///< unit unable to cast skills
-	SCS_NOCHAT				= 0x00100, ///< unit can't talk
-	SCS_NOCHATCOND			= 0x00200, ///< cond flag for SCS_NOCHAT
-	SCS_NOEQUIPITEM			= 0x00400, ///< player can't puts on equip
-	SCS_NOEQUIPITEMCOND		= 0x00800, ///< cond flag for SCS_NOEQUIPITEM
-	SCS_NOUNEQUIPITEM		= 0x01000, ///< player can't puts off equip
-	SCS_NOUNEQUIPITEMCOND	= 0x02000, ///< cond flag for SCS_NOUNEQUIPITEM
-	SCS_NOCONSUMEITEM		= 0x04000, ///< player can't consumes equip
-	SCS_NOCONSUMEITEMCOND	= 0x08000, ///< cond flag for SCS_NOCONSUMEITEM
-	SCS_NOATTACK			= 0x10000, ///< unit can't attack
-	SCS_NOATTACKCOND		= 0x20000, ///< cond flag for SCS_NOATTACK
+	SCS_NOMOVECOND			= 0x000001, ///< cond flag for SCS_NOMOVE
+	SCS_NOMOVE				= 0x000002, ///< unit unable to move
+	SCS_NOPICKITEMCOND		= 0x000004, ///< cond flag for SCS_NOPICKITEM
+	SCS_NOPICKITEM			= 0x000008, ///< player unable to pick up items
+	SCS_NODROPITEMCOND		= 0x000010, ///< cond flag for SCS_NODROPITEM
+	SCS_NODROPITEM			= 0x000020, ///< player unable to drop items
+	SCS_NOCASTCOND			= 0x000040, ///< cond flag for SCS_NOCAST
+	SCS_NOCAST				= 0x000080, ///< unit unable to cast skills
+	SCS_NOCHAT				= 0x000100, ///< unit can't talk
+	SCS_NOCHATCOND			= 0x000200, ///< cond flag for SCS_NOCHAT
+	SCS_NOEQUIPITEM			= 0x000400, ///< player can't puts on equip
+	SCS_NOEQUIPITEMCOND		= 0x000800, ///< cond flag for SCS_NOEQUIPITEM
+	SCS_NOUNEQUIPITEM		= 0x001000, ///< player can't puts off equip
+	SCS_NOUNEQUIPITEMCOND	= 0x002000, ///< cond flag for SCS_NOUNEQUIPITEM
+	SCS_NOCONSUMEITEM		= 0x004000, ///< player can't consumes equip
+	SCS_NOCONSUMEITEMCOND	= 0x008000, ///< cond flag for SCS_NOCONSUMEITEM
+	SCS_NOATTACK			= 0x010000, ///< unit can't attack
+	SCS_NOATTACKCOND		= 0x020000, ///< cond flag for SCS_NOATTACK
+	SCS_NOWARP				= 0x040000, ///< unit can't warp
+	SCS_NOWARPCOND			= 0x080000, ///< cond flag for SCS_NOWARP
+	SCS_NODEATHPENALTY		= 0x100000, ///< player doesn't experience EXP loss
+	SCS_NODEATHPENALTYCOND	= 0x200000, ///< cond flag for SCS_NODEATHPENALTYCOND
 	SCS_MAX
 };
 
@@ -2523,6 +2527,12 @@ enum e_status_change_flag : uint16 {
 	SCF_DISPLAY_NPC,
 	SCF_REQUIRE_WEAPON,
 	SCF_REQUIRE_SHIELD,
+	SCF_MOBLOSETARGET,
+	SCF_REM_ELEMENTALOPTION,
+	SCF_SUPERNOVICEANGEL,
+	SCF_TAEKWONANGEL,
+	SCF_MADOCANCEL,
+	SCF_MADOENDCANCEL,
 	SCF_MAX
 };
 
@@ -2553,9 +2563,9 @@ struct s_status_change_db {
 	}
 };
 
-class StatusDatabase : public TypesafeYamlDatabase<int32, s_status_change_db> {
+class StatusDatabase : public TypesafeCachedYamlDatabase<int32, s_status_change_db> {
 public:
-	StatusDatabase() : TypesafeYamlDatabase("STATUS_DB", 1) {
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
 
 	}
 
@@ -2578,6 +2588,9 @@ public:
 	std::vector<sc_type> getEnd(sc_type type);
 	std::vector<sc_type> getFail(sc_type type);
 	uint16 getSkill(sc_type type);
+	bool hasSCF(status_change *sc, e_status_change_flag flag);
+	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
+	void changeSkillTree(map_session_data *sd);
 };
 
 extern StatusDatabase status_db;
@@ -2721,15 +2734,17 @@ struct status_change {
 	unsigned char count;
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
-		unsigned char move : 1;
-		unsigned char pickup : 1;
-		unsigned char drop : 1;
-		unsigned char cast : 1;
-		unsigned char chat : 1;
-		unsigned char equip : 1;
-		unsigned char unequip : 1;
-		unsigned char consume : 1;
-		unsigned char attack : 1;
+		bool move;
+		bool pickup;
+		bool drop;
+		bool cast;
+		bool chat;
+		bool equip;
+		bool unequip;
+		bool consume;
+		bool attack;
+		bool warp;
+		bool deathpenalty;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
@@ -2741,19 +2756,6 @@ struct status_change {
 #endif
 	unsigned char bs_counter; // Blood Sucker counter
 	struct status_change_entry *data[SC_MAX];
-};
-
-/// Statuses that are cancelled/disabled while on Madogear
-static const std::vector<sc_type> mado_statuses = {
-	SC_LOUD,
-	SC_CARTBOOST,
-	SC_MELTDOWN,
-	SC_ADRENALINE,
-	SC_ADRENALINE2,
-	SC_WEAPONPERFECTION,
-	SC_MAXIMIZEPOWER,
-	SC_OVERTHRUST,
-	SC_MAXOVERTHRUST
 };
 
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag, uint16 skill_id);

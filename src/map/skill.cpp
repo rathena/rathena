@@ -255,6 +255,7 @@ int skill_get_ammo_qty( uint16 skill_id, uint16 skill_lv )         { skill_get_l
 int skill_get_state( uint16 skill_id )                             { skill_get(skill_id, skill_db.find(skill_id)->require.state); }
 int skill_get_status_count( uint16 skill_id )                      { skill_get(skill_id, skill_db.find(skill_id)->require.status.size()); }
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv )       { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.spiritball); }
+sc_type skill_get_sc(int16 skill_id)                               { if (!skill_check(skill_id)) return SC_NONE; return skill_db.find(skill_id)->sc; }
 
 int skill_get_splash( uint16 skill_id , uint16 skill_lv ) {
 	int splash = skill_get_splash_(skill_id, skill_lv);
@@ -18585,10 +18586,9 @@ int skill_delunit(struct skill_unit* unit)
 		case SC_ESCAPE:
 			{
 				struct block_list* target = map_id2bl(group->val2);
-				enum sc_type type = skill_get_sc(group->skill_id);
 
 				if( target )
-					status_change_end(target, type, INVALID_TIMER);
+					status_change_end(target, skill_get_sc(group->skill_id), INVALID_TIMER);
 			}
 			break;
 		case WZ_ICEWALL:
@@ -22437,6 +22437,41 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	}
 
+	if (this->nodeExists(node, "Status")) {
+		std::string status;
+
+		if (!this->asString(node, "Status", status))
+			return 0;
+
+		int64 constant;
+
+		// Special check for Soul Linker Spirit skills
+		// Storing the target job rather than simply SC_SPIRIT simplifies code later on
+		if (status.rfind("EAJ_", 0) == 0) {
+			if (!script_get_constant(status.c_str(), &constant)) {
+				this->invalidWarning(node["Status"], "EAJ %s is invalid.\n", status.c_str());
+				return 0;
+			}
+		} else {
+			std::string status_constant = "SC_" + status;
+
+			if (!script_get_constant(status_constant.c_str(), &constant)) {
+				this->invalidWarning(node["Status"], "Status %s is invalid.\n", status.c_str());
+				return 0;
+			}
+
+			if (constant < SC_NONE || constant > SC_MAX) {
+				this->invalidWarning(node["Status"], "Status %s is unknown. Defaulting to SC_NONE.\n", status.c_str());
+				constant = SC_NONE;
+			}
+		}
+
+		skill->sc = static_cast<sc_type>(constant);
+	} else {
+		if (!exists)
+			skill->sc = SC_NONE;
+	}
+
 	if (!exists) {
 		this->put(skill_id, skill);
 		skilldb_id2idx[skill_id] = skill_num;
@@ -22878,71 +22913,6 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	return true;
 }
 
-/**
- * Returns the SC for skill
- * @param skill_id
- * @return SC_ID or SC_NONE if skill is invalid or doesn't have SC
- **/
-enum sc_type skill_get_sc(int16 skill_id) {
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-
-	if (skill == nullptr) {
-		ShowError("skill_get_sc: Invalid skill '%d'.\n", skill_id);
-		return SC_NONE;
-	}
-	if (skill->sc <= SC_NONE || skill->sc >= SC_MAX) {
-		//ShowError("skill_get_sc: Skill '%d' doesn't have default SC.\n", skill_id);
-		return SC_NONE;
-	}
-	return skill->sc;
-}
-
-/**
- * Reads "skill_sc_assoc_db.txt" for skill_get_sc() in skill_castend_nodamage_id()
- * <Skill>,<SC>
- * @author [Cydh]
- **/
-static bool skill_parse_row_skillscassocdb(char* split[], int columns, int current) {
-	uint16 skill_id = 0;
-	int64 sc = SC_NONE;
-	bool eaj = false;
-
-	trim(split[0]);
-	if (ISDIGIT(split[0][0]))
-		skill_id = atoi(split[0]); // Gets skill by ID
-	else
-		skill_id = skill_name2id(trim(split[0])); // Finds by name
-
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-
-	if (skill == nullptr) {
-		ShowWarning("skill_parse_row_skillscassocdb: Invalid skill '%s'. Skipping..\n", split[0]);
-		return false;
-	}
-
-	// SC checks
-	trim(split[1]);
-	if (split[1][0] == '\0')
-		return false;
-
-	if (ISDIGIT(split[1][0]))
-		sc = atoi(split[1]);
-	else {
-		// For Soul Linker
-		if (strlen(split[1]) > 3 && split[1][0] == 'E' && split[1][1] == 'A' && split[1][2] == 'J')
-			eaj = true;
-		script_get_constant(split[1], &sc);
-	}
-
-	if (!eaj && (sc <= SC_NONE || sc >= SC_MAX)) {
-		ShowWarning("skill_parse_row_skillscassocdb: Invalid SC '%s'. Skipping..\n", split[1]);
-		return false;
-	}
-
-	skill->sc = (enum sc_type)sc; 
-	return true;
-}
-
 /** Reads skill database files */
 static void skill_readdb(void) {
 	int i;
@@ -22974,7 +22944,6 @@ static void skill_readdb(void) {
 		}
 
 		sv_readdb(dbsubpath2, "skill_nocast_db.txt"   , ',',   2,  2, -1, skill_parse_row_nocastdb, i > 0);
-		sv_readdb(dbsubpath2, "skill_sc_assoc_db.txt" , ',',   2,  2, -1, skill_parse_row_skillscassocdb, i > 0);
 
 		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i > 0);
 		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i > 0);

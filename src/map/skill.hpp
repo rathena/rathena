@@ -299,12 +299,12 @@ struct s_skill_db {
 	int32 abra_probability[MAX_SKILL_LEVEL];
 	s_skill_spellbook reading_spellbook;
 	uint16 improvisedsong_rate;
-	sc_type sc; // Default SC for skill
+	sc_type sc;									///< Default SC for skill
 };
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {
 public:
-	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 1) {
+	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 2, 1) {
 
 	}
 

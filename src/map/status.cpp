@@ -388,6 +388,64 @@ uint16 StatusDatabase::getSkill(sc_type type) {
 	return status ? status->skill_id : 0;
 }
 
+/**
+ * Returns if a status change flag is active or not for a SC.
+ * @param sc: Status changes active on target
+ * @param flag: Flag to check for
+ * @return True if flag is set or false otherwise
+ */
+bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
+	for (const auto &status_it : *this) {
+		std::shared_ptr<s_status_change_db> status = status_it.second;
+
+		if (sc->data[status->type] && status->flag[flag])
+			return true;
+	}
+
+	return false;
+}
+
+/**
+ * Removes statuses from skills that aren't part of the new class skill tree.
+ * @param sd: Player data
+ */
+void StatusDatabase::changeSkillTree(map_session_data *sd) {
+	const int class_ = pc_class2idx(sd->status.class_);
+	uint16 skill_id;
+
+	for (uint8 i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[class_][i].skill_id) > 0; i++) {
+		// Remove status specific to current tree skills.
+		sc_type sc = skill_get_sc(skill_id);
+
+		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+			status_change_end(&sd->bl, sc, INVALID_TIMER);
+	}
+}
+
+/**
+ * Removes a status based on the provided flag.
+ * @param bl: Target to remove status from
+ * @param flag: List of flags to check for removing
+ */
+void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag) {
+	if (bl == nullptr || flag.empty())
+		return;
+
+	status_change *sc = status_get_sc(bl);
+
+	for (const auto &status_it : *this) {
+		std::shared_ptr<s_status_change_db> status = status_it.second;
+		sc_type type = status->type;
+
+		if (sc && sc->data[type]) {
+			for (const auto &flag_it : flag) {
+				if (status->flag[flag_it])
+					status_change_end(bl, type, INVALID_TIMER);
+			}
+		}
+	}
+}
+
 /** Creates dummy status */
 static void initDummyData(void) {
 	memset(&dummy_status, 0, sizeof(dummy_status));
@@ -3869,14 +3927,14 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum e_
 
 	/// No sc at all, we can zero without any extra weight over our conciousness
 	if( !sc->count ) {
-		memset(&sc->cant, 0, sizeof (sc->cant));
+		sc->cant = {};
 		return;
 	}
 
 	// Can't move
 	if( flag&SCS_NOMOVE ) {
 		if( !(flag&SCS_NOMOVECOND) )
-			sc->cant.move = ( start ? 1 : 0 );
+			sc->cant.move = start;
 		else if(
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 #ifndef RENEWAL
@@ -3898,31 +3956,39 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum e_
 				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
 				  || (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
  				 )
-				 sc->cant.move = ( start ? 1 : 0 );
+				 sc->cant.move = start;
 	}
 
 	// Can't use skills
 	if( flag&SCS_NOCAST ) {
 		if( !(flag&SCS_NOCASTCOND) )
-			sc->cant.cast += ( start ? 1 : -1 );
+			sc->cant.cast = start;
 		else if (sc->data[SC_OBLIVIONCURSE] && sc->data[SC_OBLIVIONCURSE]->val3 == 1)
-			sc->cant.cast += (start ? 1 : -1);
+			sc->cant.cast = start;
 	}
 
 	// Can't chat
 	if( flag&SCS_NOCHAT ) {
 		if( !(flag&SCS_NOCHATCOND) )
-			sc->cant.chat = ( start ? 1 : 0 );
+			sc->cant.chat = start;
 		else if(sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOCHAT)
-			sc->cant.chat = ( start ? 1 : 0 );
+			sc->cant.chat = start;
 	}
 
 	// Can't attack
 	if( flag&SCS_NOATTACK ) {
 		if( !(flag&SCS_NOATTACKCOND) )
-			sc->cant.attack = ( start ? 1 : 0 );
+			sc->cant.attack = start;
 		/*else if( )
-			sc->cant.attack = ( start ? 1 : 0 );*/
+			sc->cant.attack = start;*/
+	}
+
+	// Can't warp
+	if (flag & SCS_NOWARP) {
+		if (!(flag & SCS_NOWARPCOND))
+			sc->cant.warp = start;
+		/*else if (sc->data[])
+			sc->cant.warp = start;*/
 	}
 
 	// Player-only states
@@ -3930,42 +3996,42 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum e_
 		// Can't pick-up items
 		if( flag&SCS_NOPICKITEM ) {
 			if( !(flag&SCS_NOPICKITEMCOND) )
-				sc->cant.pickup = ( start ? 1 : 0 );
+				sc->cant.pickup = start;
 			else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
-				sc->cant.pickup = ( start ? 1 : 0 );
+				sc->cant.pickup = start;
 		}
 
 		// Can't drop items
 		if( flag&SCS_NODROPITEM ) {
 			if( !(flag&SCS_NODROPITEMCOND) )
-				sc->cant.drop = ( start ? 1 : 0 );
+				sc->cant.drop = start;
 			else if( (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
-				sc->cant.drop = ( start ? 1 : 0 );
+				sc->cant.drop = start;
 		}
 
 		// Can't equip item
 		if( flag&SCS_NOEQUIPITEM ) {
 			if( !(flag&SCS_NOEQUIPITEMCOND) )
-				sc->cant.equip = ( start ? 1 : 0 );
+				sc->cant.equip = start;
 			/*else if(  )
-				sc->cant.equip = ( start ? 1 : 0 );*/
+				sc->cant.equip = start;*/
 		}
 
 		// Can't unequip item
 		if( flag&SCS_NOUNEQUIPITEM) {
 			if( !(flag&SCS_NOUNEQUIPITEMCOND) )
-				sc->cant.unequip = ( start ? 1 : 0 );
+				sc->cant.unequip = start;
 			/*else if(  )
-				sc->cant.unequip = ( start ? 1 : 0 );*/
+				sc->cant.unequip = start;*/
 		}
 
 		// Can't consume item
 		if( flag&SCS_NOCONSUMEITEM) {
 			if( !(flag&SCS_NOCONSUMEITEMCOND) )
-				sc->cant.consume = ( start ? 1 : 0 );
+				sc->cant.consume = start;
 			else if( (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF) ||
 				 (sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOITEM) )
-				sc->cant.consume = ( start ? 1 : 0 );
+				sc->cant.consume = start;
 		}
 	}
 
@@ -7833,19 +7899,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 	}
 
-	// Statuses from Merchant family skills that can be blocked while using Madogear; see pc.cpp::pc_setoption for cancellation
-	if (sc->option & OPTION_MADOGEAR) {
-		for (const auto &madosc : mado_statuses) {
-			if (type != madosc)
-				continue;
-
-			uint16 skill_id = skill_get_sc(type);
-
-			if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-				return 0;
-		}
-	}
-
 	// Adjust tick according to status resistances
 	if( !(flag&(SCSTART_NOAVOID|SCSTART_LOADED)) ) {
 		duration = status_get_sc_def(src, bl, type, rate, duration, flag);
@@ -8128,12 +8181,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 1;
 			break;
 		case SC_MADOGEAR:
-			for (const auto &sc : mado_statuses) {
-				uint16 skill_id = skill_get_sc(sc);
-	
-				if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-					status_change_end(bl, sc, INVALID_TIMER);
-			}
+			status_db.removeByStatusFlag(bl, { SCF_MADOCANCEL });
 			if (sd)
 				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
@@ -8170,7 +8218,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				}
 			}
 		}
-		if (isRemoving && status_db.getEndReturn(type))
+		if (isRemoving && scdb->end_return)
 			return 0;
 	}
 
@@ -11035,6 +11083,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_WARM:
 		case SC__MANHOLE:
 		case SC_BANDING:
+		case SC_LEADERSHIP:
+		case SC_GLORYWOUNDS:
+		case SC_SOULCOLD:
+		case SC_HAWKEYES:
 			if (sce->val4) { // Clear the group.
 				struct skill_unit_group* group = skill_id2group(sce->val4);
 				sce->val4 = 0;
@@ -11291,6 +11343,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				pc_delsoulball(sd, sd->soulball, false);
 			break;
 		case SC_MADOGEAR:
+			status_db.removeByStatusFlag(bl, { SCF_MADOENDCANCEL });
 			if (sd)
 				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
