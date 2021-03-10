@@ -2565,7 +2565,7 @@ struct s_status_change_db {
 	}
 };
 
-class StatusDatabase : public TypesafeCachedYamlDatabase<int32, s_status_change_db> {
+class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
 public:
 	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
 
