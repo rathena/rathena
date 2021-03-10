@@ -400,7 +400,7 @@ struct spawn_data {
 	unsigned short num; //Number of mobs using this structure
 	unsigned short active;//Number of mobs that are already spawned (for mob_remove_damaged: no)
 	unsigned int delay1, delay2; //Spawn delay (fixed base + random variance)
-	unsigned int level;
+	unsigned int level, faction_id;
 	struct {
 		unsigned int size : 2; //Holds if mob has to be tiny/large
 		enum mob_ai ai; //Special ai for summoned monsters.
@@ -447,6 +447,7 @@ enum _sp {
 	SP_CASHPOINTS, SP_KAFRAPOINTS,
 	SP_PCDIECOUNTER, SP_COOKMASTERY,
 	SP_ACHIEVEMENT_LEVEL,
+	SP_FACTION,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -667,6 +668,7 @@ enum cell_t{
 	CELL_NOCHAT,
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
+	CELL_NOFVF,
 
 };
 
@@ -691,6 +693,7 @@ enum cell_chk : uint8 {
 	CELL_CHKNOCHAT,			// Whether the cell denies Player Chat Window
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
+	CELL_CHKNOFVF,			// Whether the cell is FvF - Biali
 
 };
 
@@ -710,7 +713,8 @@ struct mapcell
 		novending : 1,
 		nochat : 1,
 		maelstrom : 1,
-		icewall : 1;
+		icewall : 1,
+		nofvf : 1; //Biali Faction System
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
@@ -752,6 +756,11 @@ struct map_data {
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
+
+	struct {
+		int id;
+		int relic;
+	} faction;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]

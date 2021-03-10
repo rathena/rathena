@@ -4944,6 +4944,7 @@ void do_final(void){
 	do_final_duel();
 	do_final_elemental();
 	do_final_cashshop();
+	do_final_faction(); 
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
 	do_final_buyingstore();

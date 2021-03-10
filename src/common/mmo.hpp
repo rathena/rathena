@@ -544,6 +544,8 @@ struct mmo_charstatus {
 	time_t delete_date;
 	time_t unban_time;
 
+	int faction_id; //Biali Faction System
+
 	// Char server addon system
 	unsigned int character_moves;
 

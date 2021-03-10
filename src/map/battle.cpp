@@ -22,6 +22,7 @@
 #include "chrif.hpp"
 #include "clif.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "log.hpp"
@@ -9169,6 +9170,33 @@ static const struct _battle_data {
  	{ "woe_reserved_char_id",		&battle_config.woe_reserved_char_id,            999997, 0,      INT_MAX,        },
  	{ "bg_can_trade",			&battle_config.bg_can_trade,                    1,      0,      1,              },
  	{ "bg_double_login",			&battle_config.bg_double_login,                 1,      0,      1,              },
+	// Faction System Biali
+	{ "faction_status_bl",					&battle_config.faction_status_bl,  			BL_CHAR, 	BL_NUL, BL_ALL,         },
+	{ "fvf_monster_ai",						&battle_config.fvf_monster_ai,					1,      0,      1				},
+	{ "faction_chat_settings",				&battle_config.faction_chat_settings,		  1|2,      0,      1|2				},
+	{ "fvf_hp_bar",							&battle_config.fvf_hp_bar,						1,      0,      1				},
+	{ "fvf_min_lvl",						&battle_config.fvf_min_lvl,						55,     1,      MAX_LEVEL		},
+	{ "fvf_visual_size",					&battle_config.fvf_visual_size,					1,      0,      2				},
+	{ "fvf_short_attack_damage_rate",		&battle_config.fvf_short_damage_rate,			80,     0,      INT_MAX         },
+	{ "fvf_long_attack_damage_rate",		&battle_config.fvf_long_damage_rate,			80,     0,      INT_MAX         },
+	{ "fvf_weapon_attack_damage_rate",		&battle_config.fvf_weapon_damage_rate,			60,     0,      INT_MAX         },
+	{ "fvf_magic_attack_damage_rate",		&battle_config.fvf_magic_damage_rate,			60,     0,      INT_MAX         },
+	{ "fvf_misc_attack_damage_rate",		&battle_config.fvf_misc_damage_rate,			60,     0,      INT_MAX         },
+	{ "chat_leader",						&battle_config.chat_leader,				0xFF0000,	0x000000,	0xFFFFFF		},
+	{ "fvf_change_ccolor",					&battle_config.fvf_change_ccolor,				1,		0,      2,				},
+	{ "faction_heal_settings",				&battle_config.faction_heal_settings,			1,		0,      2,				},
+	{ "faction_party_settings",				&battle_config.faction_party_settings,			0,		0,      2,				},
+	{ "faction_guild_settings",				&battle_config.faction_guild_settings,			0,		0,      2,				},
+	{ "faction_heal_bl",                    &battle_config.faction_heal_bl,           	BL_PC, 		BL_NUL, BL_ALL,         },
+	{ "faction_size_bl",                    &battle_config.faction_size_bl,           	BL_CHAR, 	BL_NUL, BL_ALL,         },
+	{ "faction_aura_bl",                    &battle_config.faction_aura_bl,    		BL_CHAR|BL_NPC, BL_NUL, BL_ALL,         },
+	{ "faction_aura_settings",				&battle_config.faction_aura_settings,			0,		0,      2,				},
+	{ "faction_trade_settings",				&battle_config.faction_trade_settings,			0,		0,      2,				},
+	{ "faction_ally_info_bl",				&battle_config.faction_ally_info_bl,  		BL_CHAR, 	BL_NUL, BL_ALL,         },
+	{ "faction_npc_settings",				&battle_config.faction_npc_settings,			0,		0,      2,				},
+	{ "fvf_in_all_maps",					&battle_config.fvf_in_all_maps,					0,		0,      1,				},
+	{ "faction_disc_min",					&battle_config.faction_disc_min,			 -100,	 -INT_MAX,  0		        },
+	{ "faction_disc_max",					&battle_config.faction_disc_max,			  100,		0,   	INT_MAX         },
  #endif
 
 #include "../custom/battle_config_init.inc"

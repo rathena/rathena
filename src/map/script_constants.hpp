@@ -548,6 +548,7 @@
 	export_parameter("CharRename",SP_CHARRENAME);
 	export_parameter("Font",SP_CHARFONT);
 	export_parameter("BankVault",SP_BANK_VAULT);
+	export_parameter("Faction",SP_FACTION);
 	export_parameter(ROULETTE_BRONZE_VAR,SP_ROULETTE_BRONZE);
 	export_parameter(ROULETTE_SILVER_VAR,SP_ROULETTE_SILVER);
 	export_parameter(ROULETTE_GOLD_VAR,SP_ROULETTE_GOLD);
@@ -1619,6 +1620,7 @@
 	export_constant(SC_EP16_2_BUFF_AC);
 	export_constant(SC_EMERGENCY_MOVE);
 	export_constant(SC_MADOGEAR);
+	export_constant(SC_FACTION_AURA); //Biali Faction system
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

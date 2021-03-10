@@ -1,0 +1,5 @@
+// Faction ID, Alliance Faction ID{: Alliance Faction ID{:...}}
+// Faction ID 1 have alliance with IDs: 2, 3, 4
+1,2:3:4
+// Faction ID 3 have alliance with ID 4
+3,4

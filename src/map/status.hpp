@@ -942,6 +942,9 @@ enum sc_type : int16 {
 	SC_EMERGENCY_MOVE,
 	SC_MADOGEAR,
 
+	// Faction System Biali
+	SC_FACTION_AURA,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

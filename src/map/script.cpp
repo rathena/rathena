@@ -10703,7 +10703,7 @@ BUILDIN_FUNC(areamonster)
 		m = map_mapname2mapid(mapn);
 
 	for(i = 0; i < amount; i++) { //not optimised
-		int mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, 1, event, size, ai);
+		int mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, amount, event, size, ai, 0);
 
 		if (mobid)
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
@@ -13038,7 +13038,7 @@ BUILDIN_FUNC(fvfon)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(gvgoff)
+BUILDIN_FUNC(fvfoff)
 {
 	int16 m;
 	const char *str = script_getstr(st,2);

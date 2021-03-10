@@ -1,0 +1,30 @@
+// Complete Faction System [Lilith]
+// ID,Faction Name,Faction Player name,Location,X,Y,Race,Element,Element lvl,Size,Clothes Color,Color of mes,{ Aura: #1 #2 #3 },{ Script Bonus },{ Faction Aura Script Bonus }
+// * ID: Faction ID
+// * Faction Name: Faction Name
+// * Faction Player name: Player's name on FvF maps
+// * Location: Faction Location (home)
+// * X: X coordinate for faction location
+// * Y: Y coordinate for faction location
+// * Race: 
+//		0 = Formless, 1 = Undead, 2 = Brute, 3 = Plant, 4 = Insect,
+//		5 = Fish, 6 = Demon, 7 = Demi-Human, 8 = Angel, 9 = Dragon
+// * Element:
+//		0 = Neutral, 1 = Water, 2 = Earth, 3 = Fire, 4 = Wind,
+//		5 = Poison, 6 = Holy, 7 = Dark, 8 = Spirit, 9 = Undead
+// * Element lvl: 1 ~ 4
+// * Size: 1 - small, 0 - normal, 2 - big
+// * Clothes Color: Dye color
+// * Color of messages (0xRRGGBB): Ex. 0xFF0000 - red
+// * { Aura } : see doc/effect_list.txt
+// * { Script Bonus } : Script Bonus for each faction
+// * { Faction Aura Bonus } : Script bonus for faction aura around faction leader like guild master's aura 
+
+// Faction ID: 1
+1,Paradise,Angel,gonryun,0,0,8,6,1,1,0,0x6495ED,{ #240 #418 },{ bonus bInt,3; },{ bonus bInt,30; }
+// Faction ID: 2
+2,Forest,Elf,payon,0,0,7,0,1,0,1,0x7CFC00,{ #678 #679 #680 },{ bonus bDex,3; },{ bonus bDex,30; }
+// Faction ID: 3
+3,Hell,Demon,morocc,0,0,1,9,1,2,2,0xFF3030,{ #239 #485 },{ bonus bStr,3; },{ bonus bStr,30; }
+// Faction ID: 4
+4,Earth,Human,prontera,155,180,7,0,1,0,3,0xEE82EE,{ #200 #201 },{ bonus bLuk,3; },{ bonus bLuk,30; }

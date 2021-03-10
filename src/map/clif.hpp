@@ -229,6 +229,11 @@ enum send_target : uint8_t {
 #endif
 
 	CLAN,				// Clan System
+
+	FACTION_AREA_WOS, // Faction System [Biali]
+	AREA_FVF,
+	FVF_OTHER_AREA_CHAT,
+	FACTION,
 };
 
 enum broadcast_flags : uint8_t {
@@ -1106,6 +1111,8 @@ enum clif_colors {
 extern unsigned long color_table[COLOR_MAX];
 
 void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
+
+void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl); // Biali Faction System
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 

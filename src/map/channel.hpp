@@ -35,6 +35,7 @@ enum Channel_Type {
 	CHAN_TYPE_PRIVATE = 1, ///< User's channel
 	CHAN_TYPE_MAP	  = 2, ///< Local map
 	CHAN_TYPE_ALLY	  = 3, ///< Guild + its alliance
+	CHAN_TYPE_FACTION = 4,	//faction
 };
 
 struct Channel {

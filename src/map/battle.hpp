@@ -519,6 +519,34 @@ struct Battle_Config
 	int bg_misc_damage_rate;
 	int bg_flee_penalty;
 
+	// Faction System Biali
+	int faction_status_bl;
+	int fvf_monster_ai;
+	int faction_chat_settings;
+	int fvf_hp_bar;
+	int fvf_min_lvl;
+	int fvf_visual_size;
+	int fvf_short_damage_rate;
+	int fvf_long_damage_rate;
+	int fvf_weapon_damage_rate;
+	int fvf_magic_damage_rate;
+	int fvf_misc_damage_rate;
+	int chat_leader;
+	int fvf_change_ccolor;
+	int faction_heal_settings;
+	int faction_heal_bl;
+	int faction_party_settings;
+	int faction_guild_settings;
+	int faction_size_bl;
+	int faction_aura_bl;
+	int faction_aura_settings;
+	int faction_trade_settings;
+	int faction_ally_info_bl;
+	int faction_npc_settings;
+	int fvf_in_all_maps;
+	int faction_disc_min;
+	int faction_disc_max;
+
 	// rAthena
 	int max_third_parameter;
 	int max_baby_third_parameter;
