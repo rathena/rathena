@@ -2027,7 +2027,7 @@ static bool pc_grant_allskills(struct map_session_data *sd, bool addlv) {
 	for (const auto &skill : skill_db) {
 		uint16 skill_id = skill.second->nameid;
 
-		if (skill_id == 0 || skill.second->inf2[INF2_ISNPC]|| skill.second->inf2[INF2_ISGUILD])
+		if (skill_id == 0 || skill.second->inf2[INF2_ISNPC] || skill.second->inf2[INF2_ISGUILD] || skill.second->inf2[INF2_ISFACTION])
 			continue;
 		switch (skill_id) {
 			case SM_SELFPROVOKE:

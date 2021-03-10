@@ -4002,7 +4002,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		uint16 sk_idx = 0;
 
 		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
-			skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD }) ||
+			skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD, INF2_ISFACTION }) ||
 			mob_clone_disabled_skills(skill_id)
 		)
 			continue;

@@ -21,10 +21,10 @@
 // * { Faction Aura Bonus } : Script bonus for faction aura around faction leader like guild master's aura 
 
 // Faction ID: 1
-1,Paradise,Angel,gonryun,0,0,8,6,1,1,0,0x6495ED,{ #240 #418 },{ bonus bInt,3; },{ bonus bInt,30; }
+1,Geffen,Angel,geffen,0,0,8,6,1,1,0,0x6495ED,{ #240 #418 },{ bonus bInt,3; },{ bonus bInt,30; }
 // Faction ID: 2
-2,Forest,Elf,payon,0,0,7,0,1,0,1,0x7CFC00,{ #678 #679 #680 },{ bonus bDex,3; },{ bonus bDex,30; }
+2,Payon,Elf,payon,0,0,7,0,1,0,1,0x7CFC00,{ #678 #679 #680 },{ bonus bDex,3; },{ bonus bDex,30; }
 // Faction ID: 3
-3,Hell,Demon,morocc,0,0,1,9,1,2,2,0xFF3030,{ #239 #485 },{ bonus bStr,3; },{ bonus bStr,30; }
+3,Morocc,Demon,morocc,0,0,1,9,1,2,2,0xFF3030,{ #239 #485 },{ bonus bStr,3; },{ bonus bStr,30; }
 // Faction ID: 4
-4,Earth,Human,prontera,155,180,7,0,1,0,3,0xEE82EE,{ #200 #201 },{ bonus bLuk,3; },{ bonus bLuk,30; }
+4,Prontera,Human,prontera,155,180,7,0,1,0,3,0xEE82EE,{ #200 #201 },{ bonus bLuk,3; },{ bonus bLuk,30; }
