@@ -33,6 +33,7 @@
 #include "clif.hpp"
 #include "duel.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -1141,6 +1142,9 @@ ACMD_FUNC(hide)
 			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
 			sd->pvp_timer = INVALID_TIMER;
 		}
+		clif_clearunit_area(&sd->bl, CLR_OUTSIGHT);
+		map_foreachinrange(faction_aura_clear, &sd->bl, AREA_SIZE, BL_PC, &sd->bl);
+		clif_refresh(sd);
 	}
 	clif_changeoption(&sd->bl);
 
@@ -1791,41 +1795,41 @@ ACMD_FUNC(gvgon)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(fvfoff)
-{
-	nullpo_retr(-1, sd);
+// /*==========================================
+//  *
+//  *------------------------------------------*/
+// ACMD_FUNC(fvfoff)
+// {
+// 	nullpo_retr(-1, sd);
 
-	if (!map_getmapflag(sd->bl.m, MF_FVF)) {
-		clif_displaymessage(fd, msg_txt(sd,162)); // FVF is already Off.
-		return -1;
-	}
+// 	if (!map_getmapflag(sd->bl.m, MF_FVF)) {
+// 		clif_displaymessage(fd, msg_txt(sd,162)); // FVF is already Off.
+// 		return -1;
+// 	}
 
-	map_setmapflag(sd->bl.m, MF_FVF, false);
-	clif_displaymessage(fd, msg_txt(sd,33)); // FVF: Off.
+// 	map_setmapflag(sd->bl.m, MF_FVF, false);
+// 	clif_displaymessage(fd, msg_txt(sd,33)); // FVF: Off.
 
-	return 0;
-}
+// 	return 0;
+// }
 
-/*==========================================
- *
- *------------------------------------------*/
-ACMD_FUNC(fvfon)
-{
-	nullpo_retr(-1, sd);
+// /*==========================================
+//  *
+//  *------------------------------------------*/
+// ACMD_FUNC(fvfon)
+// {
+// 	nullpo_retr(-1, sd);
 
-	if (map_getmapflag(sd->bl.m, MF_FVF)) {
-		clif_displaymessage(fd, msg_txt(sd,163)); // FVF is already On.
-		return -1;
-	}
+// 	if (map_getmapflag(sd->bl.m, MF_FVF)) {
+// 		clif_displaymessage(fd, msg_txt(sd,163)); // FVF is already On.
+// 		return -1;
+// 	}
 
-	map_setmapflag(sd->bl.m, MF_FVF, true);
-	clif_displaymessage(fd, msg_txt(sd,34)); // FvF: On.
+// 	map_setmapflag(sd->bl.m, MF_FVF, true);
+// 	clif_displaymessage(fd, msg_txt(sd,34)); // FvF: On.
 
-	return 0;
-}
+// 	return 0;
+// }
 /*==========================================
  *
  *------------------------------------------*/
@@ -4349,8 +4353,13 @@ ACMD_FUNC(mapinfo) {
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1051)); // Other Flags2:
-	if (map_getmapflag(m_id, MF_FVF))
+	if (map_getmapflag(m_id, MF_FVF)) {
 		strcat(atcmd_output, " FvF ON |");
+		if (map[m_id].faction.id)
+			sprintf(atcmd_output, " Faction ID: %d |",map[m_id].faction.id);
+		if (map[m_id].faction.relic)
+			sprintf(atcmd_output, " Relic ID: %d |",map[m_id].faction.relic);
+	}
 	if (map_getmapflag(m_id, MF_NOCOMMAND))
 		strcat(atcmd_output, " NoCommand |");
 	if (map_getmapflag(m_id, MF_NOBASEEXP))
@@ -10585,6 +10594,372 @@ ACMD_FUNC(bgskill)
 }
 #endif
 
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @setfaction #
+ *------------------------------------------*/
+ACMD_FUNC(setfaction)
+{
+	struct faction_data* fdb;
+	int id = 0;
+
+	id = atoi(message);
+	if( !message || !*message ) {
+		clif_displaymessage(fd, msg_txt(sd,1628)); // Usage: @setfaction <Faction ID>.
+		return -1;
+	}
+
+	if( id && (fdb = faction_search(id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if( id && fdb ) {
+		sprintf(atcmd_output, msg_txt(sd,1617), fdb->name); // Now you're in faction: %s
+		clif_displaymessage(sd->fd, atcmd_output);
+	} else
+		clif_displaymessage(fd, msg_txt(sd,1640)); // You're not in a faction now.
+
+	sd->status.faction_id = id;
+	status_calc_pc(sd,SCO_NONE);
+
+	// if(Channel_Config.faction_autojoin ) {
+	// 	channel_pcquit(sd,8);
+	// 	if( fdb )
+	// 		channel_join((struct Channel*)fdb->channel, sd);
+	// }
+
+	if( map_getmapflag(sd->bl.m, MF_FVF) && !pc_isdead(sd) )
+		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @reloadfactiondb
+ * Reloading faction_db.txt
+ *------------------------------------------*/
+ACMD_FUNC(reloadfactiondb)
+{
+	nullpo_retr(-1, sd);
+
+	do_reload_faction();
+	clif_displaymessage(fd, msg_txt(sd,1603)); // Faction system has been reloaded
+
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @fvfon
+ *------------------------------------------*/
+ACMD_FUNC(fvfon)
+{
+	int faction_id = 0, relic_id = 0;
+
+	nullpo_retr(-1, sd);
+
+	if( map_getmapflag(sd->bl.m, MF_FVF) ) {
+		clif_displaymessage(fd, msg_txt(sd,1613)); // FvF is already on
+		return -1;
+	}
+
+	if( message )
+		sscanf(message, "%d %d", &faction_id, &relic_id);
+
+	map[sd->bl.m].faction.id = faction_id;
+	map[sd->bl.m].faction.relic = relic_id;
+
+	map_setmapflag(sd->bl.m, MF_FVF, true);
+	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_AGITZONE);
+	map_foreachinmap(faction_reload_fvf_sub, sd->bl.m, BL_ALL);
+	clif_displaymessage(fd, msg_txt(sd,1612)); // FvF: On
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @fvfoff
+ *------------------------------------------*/
+ACMD_FUNC(fvfoff)
+{
+	nullpo_retr(-1, sd);
+
+	if( !map_getmapflag(sd->bl.m, MF_FVF) ) {
+		clif_displaymessage(fd, msg_txt(sd,1615)); // FvF is already off
+		return -1;
+	}
+
+	map_setmapflag(sd->bl.m, MF_FVF, false);
+	map[sd->bl.m].faction.id = 0;
+	map[sd->bl.m].faction.relic = 0;
+	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
+	map_foreachinmap(faction_reload_fvf_sub, sd->bl.m, BL_ALL);
+	clif_displaymessage(fd, msg_txt(sd,1614)); // FvF: Off
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @home
+ * Teleporting to Faction Location
+ *------------------------------------------*/
+ACMD_FUNC(home)
+{
+	struct faction_data *fdb = NULL;
+	unsigned short mapindex;
+
+	nullpo_retr(-1, sd);
+
+	if(!sd->status.faction_id) {
+		clif_displaymessage(fd, msg_txt(sd,1607)); // You're not in faction.
+		return -1;
+	}
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if(fdb->map[0] == '\0') {
+		clif_displaymessage(fd, msg_txt(sd,1629)); // Your Faction haven't home location.
+		return -1;
+	}
+
+	if(!(mapindex = mapindex_name2id(fdb->map))) {
+		clif_displaymessage(fd, msg_txt(sd,1629)); // Your Faction haven't home location.
+		return -1;
+	}
+
+	if (pc_setpos(sd, mapindex, fdb->x, fdb->y, CLR_TELEPORT) != 0) {
+		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
+		return -1;
+	}
+
+	clif_displaymessage(fd, msg_txt(sd,0)); // Warped.
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @factionleader
+ * Set Character the faction leader
+ *------------------------------------------*/
+ACMD_FUNC(factionleader)
+{
+	struct faction_data *fdb = NULL;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if(!sd->status.faction_id) {
+		clif_displaymessage(fd, msg_txt(sd,1607)); // You're not in faction.
+		return -1;
+	}
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	faction_change_leader(sd->status.faction_id, sd->status.char_id);
+
+	sprintf(atcmd_output, msg_txt(sd,1621), sd->status.faction_id, fdb->name, sd->status.name); // Leader of Faction %d:%s is now '%s'
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @vote (<Player's Name>)
+ * Voting for Faction Leader
+ *------------------------------------------*/
+ACMD_FUNC(vote)
+{
+	struct faction_data *fdb;
+	struct voting_data *vdb;
+	char charname[NAME_LENGTH];
+	TBL_PC * ssd = NULL;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if( !fdb->voting_active ) {
+		clif_displaymessage(fd, msg_txt(sd,1623)); // Voting for your faction leader not started.
+		return -1;
+	}
+
+	if( (vdb = voting_search(sd->status.char_id)) != NULL && vdb->voted ) {
+		clif_displaymessage(fd, msg_txt(sd,1624)); // You already voted.
+		return -1;
+	}
+
+	if( !message || !*message || (
+			sscanf(message, "\"%23[^\"]\"", charname) < 1 &&
+			sscanf(message, "%23s", charname) < 1)
+	) {
+		clif_displaymessage(fd, msg_txt(sd,1625)); // Usage: @vote <Character Name>.
+		return -1;
+	}
+
+	if( (ssd = map_nick2sd(charname,true)) == NULL ) {
+		sprintf(atcmd_output, msg_txt(sd,1389), command); // %s failed. Player not found.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if( sd->status.faction_id != ssd->status.faction_id ) {
+		clif_displaymessage(fd, msg_txt(sd,1626)); // Player is not in your faction.
+		return -1;
+	}
+
+	if( sd == ssd ) {
+		clif_displaymessage(fd, msg_txt(sd,1627)); // You cannot vote for yourself.
+		return -1;
+	}
+
+
+	faction_voting_add(sd, ssd, 1);
+	sprintf(atcmd_output, msg_txt(sd,1630), ssd->status.name); // You voted for '%s' as a faction leader.
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @factionmonster <Faction ID> <...>
+ *------------------------------------------*/
+ACMD_FUNC(factionmonster)
+{
+	char name[NAME_LENGTH], monster[NAME_LENGTH], eventname[EVENT_NAME_LENGTH] = "";
+	int number = 0, count, faction_id, mob_id, i, range;
+	short mx, my;
+	struct faction_data *fdb;
+	struct mob_data *md;
+	nullpo_retr(-1, sd);
+
+	memset(name, '\0', sizeof(name));
+	memset(monster, '\0', sizeof(monster));
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message) {
+			clif_displaymessage(fd, msg_txt(sd,1622)); // Give the faction ID, display name or monster name/id please.
+			return -1;
+	}
+	if (sscanf(message, "%d \"%23[^\"]\" %23s %d", &faction_id, name, monster, &number) > 2 ||
+		sscanf(message, "%d %23s \"%23[^\"]\" %d", &faction_id, monster, name, &number) > 2) {
+		//All data can be left as it is.
+	} else if ((count=sscanf(message, "%d %23s %d %23s", &faction_id, monster, &number, name)) > 2) {
+		//Here, it is possible name was not given and we are using monster for it.
+		if (count < 3) //Blank mob's name.
+			name[0] = '\0';
+	} else if (sscanf(message, "%d %23s %23s %d", &faction_id, name, monster, &number) > 2) {
+		//All data can be left as it is.
+	} else if (sscanf(message, "%d %23s", &faction_id, monster) > 1) {
+		//As before, name may be already filled.
+		name[0] = '\0';
+	} else {
+		clif_displaymessage(fd, msg_txt(sd,1622)); // Give the faction ID, display name or monster name/id please.
+		return -1;
+	}
+
+	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
+		mob_id = mobdb_checkid(atoi(monster));
+
+	if (mob_id == 0) {
+		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
+		return -1;
+	}
+
+	if (mob_id == MOBID_EMPERIUM) {
+		clif_displaymessage(fd, msg_txt(sd,83)); // Monster 'Emperium' cannot be spawned.
+		return -1;
+	}
+
+	if( (fdb = faction_search(faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if (number <= 0)
+		number = 1;
+
+	if( !name[0] )
+		strcpy(name, "--ja--");
+
+	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
+	if (battle_config.atc_spawn_quantity_limit && number > battle_config.atc_spawn_quantity_limit)
+		number = battle_config.atc_spawn_quantity_limit;
+
+	if (battle_config.etc_log)
+		ShowInfo("%s monster='%s' name='%s' id=%d count=%d (%d,%d)\n", command, monster, name, mob_id, number, sd->bl.x, sd->bl.y);
+
+	count = 0;
+	range = (int)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
+	for (i = 0; i < number; i++) {
+		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
+		if( (md = mob_once_spawn_sub(&sd->bl, sd->bl.m, mx, my, name, mob_id, eventname, SZ_SMALL, AI_NONE)) ) {
+			md->faction_id = faction_id;
+			mob_spawn(md);
+			count++;
+		}
+	}
+
+	if (count != 0)
+		if (number == count)
+			clif_displaymessage(fd, msg_txt(sd,39)); // All monster summoned!
+		else {
+			sprintf(atcmd_output, msg_txt(sd,240), count); // %d monster(s) summoned!
+			clif_displaymessage(fd, atcmd_output);
+		}
+	else {
+		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @factionannounce <message>
+ * Send an announce to your faction being the faction leader
+ *------------------------------------------*/
+ACMD_FUNC(factionannounce)
+{
+	struct faction_data *fdb = NULL;
+
+	nullpo_retr(-1, sd);
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(sd->fd, msg_txt(sd,1607)); // You're not in faction.
+		return -1;
+	}
+
+	if( sd->status.char_id != fdb->leader_id ) {
+		clif_displaymessage(fd, msg_txt(sd,1639)); // You're not a Faction Leader.
+		return -1;
+	}
+
+	if( !message || !*message ) {
+		clif_displaymessage(fd, msg_txt(sd,1638)); // Usage: @factionannounce <message>.
+		return -1;
+	}
+
+	sprintf(atcmd_output, msg_txt(sd,1620), sd->status.name, message); // [Faction Leader] %s : %s
+	clif_broadcast2(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, battle_config.chat_leader, 0x190, 12, 0, 0, FACTION);
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10604,6 +10979,17 @@ void atcommand_basecommands(void) {
 #include "../custom/atcommand_def.inc"
 		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
 		ACMD_DEF(where),
+		// Complete Faction System [Lilith]
+		ACMD_DEF(setfaction),
+		ACMD_DEF(reloadfactiondb),
+		ACMD_DEF(fvfon),
+		ACMD_DEF(fvfoff),
+		ACMD_DEF(home),
+		ACMD_DEF(vote),
+		ACMD_DEF(factionmonster),
+		ACMD_DEF(factionleader),
+		ACMD_DEF(factionannounce),
+	// Complete Faction System [Lilith]
 		ACMD_DEF(jumpto),
 		ACMD_DEF(jump),
 		ACMD_DEF(who),
