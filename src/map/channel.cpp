@@ -16,6 +16,7 @@
 
 #include "battle.hpp"
 #include "clif.hpp" //clif_chsys_msg
+#include "faction.hpp"
 #include "guild.hpp"
 #include "map.hpp" //msg_conf
 #include "pc.hpp"
@@ -63,6 +64,9 @@ struct Channel* channel_create(struct Channel *tmp_chan) {
 			break;
 		case CHAN_TYPE_ALLY:
 			channel->gid = tmp_chan->gid;
+			break;
+		case CHAN_TYPE_FACTION:
+			channel->fid = tmp_chan->fid;
 			break;
 		case CHAN_TYPE_PRIVATE:
 			channel->char_id = tmp_chan->char_id;
@@ -169,6 +173,12 @@ int channel_delete(struct Channel *channel, bool force) {
 	case CHAN_TYPE_ALLY: {
 		struct guild *g = guild_search(channel->gid);
 		if(g) g->channel = NULL;
+		aFree(channel);
+		break;
+	}
+	case CHAN_TYPE_FACTION: {
+		struct faction_data *fdb = faction_search(channel->fid);
+		if(fdb) fdb->channel = NULL;
 		aFree(channel);
 		break;
 	}
@@ -383,7 +393,7 @@ int channel_clean(struct Channel *channel, struct map_session_data *sd, int flag
 /**
  * Make a player leave a type of channel
  * @param sd: Player data
- * @param type: Quit type (1 - Quit guild channel, 2 - Quit ally channel, 4 - Quit map channel, 8 - Quit all users in channel)
+ * @param type: Quit type (1 - Quit guild channel, 2 - Quit ally channel, 4 - Quit map channel, 8 - Quit faction channel - 16 - Quit all users in channel)
  * @return
  *  0: Success
  * -1: Invalid player
@@ -418,7 +428,14 @@ int channel_pcquit(struct map_session_data *sd, int type){
 	if(type&4 && channel_config.map_tmpl.name[0] && channel_haspc(mapdata->channel,sd)==1){ //quit map chan
 		channel_clean(mapdata->channel,sd,0);
 	}
-	if(type&8 && sd->channel_count ) { //quit all chan
+
+	if(type&8 && channel_config.faction_tmpl.name[0] && sd->faction){ //quit faction chan
+		struct faction_data *fdb = sd->faction;
+		if(type&1 && channel_haspc(fdb->channel,sd) == 1){
+			channel_clean(fdb->channel,sd,0); //leave guild chan
+		}
+	}
+	if(type&16 && sd->channel_count ) { //quit all chan
 		uint8 count = sd->channel_count;
 		for( i = count-1; i >= 0; i--) { //going backward to avoid shifting
 			channel_clean(sd->channels[i],sd,0);
@@ -519,6 +536,14 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 		if(flag&2 && channel_pc_haschan(sd,mapdata->channel) < 1)
 			channel_gjoin(sd,3);
 		return sd->guild->channel;
+	}
+	else if(sd && (strcmpi(chname + 1,channel_config.faction_tmpl.name) == 0) && sd->faction){
+		// struct faction_data *fdb = faction_search(sd->status.faction_id);
+		// struct Channel *channel = fdb->channel;
+		if(flag&1 && !sd->faction->channel)
+			sd->faction->channel = channel_create_simple(NULL,NULL,CHAN_TYPE_FACTION,sd->status.faction_id);
+		
+		return sd->faction->channel;
 	}
 	else
 		return (struct Channel*) strdb_get(channel_db, chname + 1);
@@ -629,6 +654,13 @@ int channel_display_list(struct map_session_data *sd, const char *options){
 			struct guild *g = sd->guild;
 			if (g && g->channel) {
 				sprintf(output, msg_txt(sd,1409), g->channel->name, db_size(((struct Channel *)g->channel)->users));// - #%s (%d users)
+				clif_displaymessage(sd->fd, output);
+			}
+		}
+		if( channel_config.faction_tmpl.name[0] && sd->status.faction_id ) {
+			struct faction_data *fdb = sd->faction;
+			if( fdb && fdb->channel ) {
+				sprintf(output, msg_txt(sd,1409), fdb->channel->name, db_size(((struct Channel *)fdb->channel)->users));// - #%s (%d users)
 				clif_displaymessage(sd->fd, output);
 			}
 		}
@@ -751,6 +783,7 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 	switch(channel->type){
 	case CHAN_TYPE_ALLY: channel_pcquit(sd,3); break;
 	case CHAN_TYPE_MAP: channel_pcquit(sd,4); break;
+	case CHAN_TYPE_FACTION: channel_pcquit(sd,8); break;
 	default: //private and public atm
 		channel_clean(channel,sd,0);
 	}

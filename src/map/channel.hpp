@@ -49,7 +49,7 @@ struct Channel {
 	unsigned short msg_delay;	  ///< Chat delay in miliseconds
 	unsigned int char_id;		  ///< If CHAN_TYPE_PRIVATE, owner is char_id of channel creator
 	uint16 m;					  ///< If CHAN_TYPE_MAP, owner is map id
-	int gid;					  ///< If CHAN_TYPE_ALLY, owner is first logged guild_id
+	int gid,fid;				  ///< If CHAN_TYPE_ALLY, owner is first logged guild_id if it is CHAN_TYPE_FACTION it is the faction id
 	DBMap *users;				  ///< List of users
 	DBMap *banned;				  ///< List of banned chars -> char_id
 	unsigned short group_count;	  ///< Number of group id
@@ -82,6 +82,7 @@ struct Channel_Config {
 
 	struct Channel map_tmpl;  ///< Map channel default config
 	struct Channel ally_tmpl; ///< Alliance channel default config
+	struct Channel faction_tmpl; ///< Faction channel default config
 
 	bool closing; ///< Server is closing
 };

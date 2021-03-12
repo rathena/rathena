@@ -52,7 +52,7 @@ struct faction_data {
 		uint16 item_id;
 		bool active;
 	} relic[MAX_RELIC];
-	void *channel;
+	struct Channel *channel;
 };
 
 #define faction_check_chat(sd) ( (sd)->status.faction_id>0 && map[(sd)->bl.m].flag.fvf && battle_config.faction_chat_settings )
