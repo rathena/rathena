@@ -10623,11 +10623,11 @@ ACMD_FUNC(setfaction)
 	sd->status.faction_id = id;
 	status_calc_pc(sd,SCO_NONE);
 
-	// if(Channel_Config.faction_autojoin ) {
-	// 	channel_pcquit(sd,8);
-	// 	if( fdb )
-	// 		channel_join((struct Channel*)fdb->channel, sd);
-	// }
+	if(channel_config.faction_tmpl.opt&CHAN_OPT_AUTOJOIN ) {
+		channel_pcquit(sd,8);
+		if( fdb )
+			channel_join((struct Channel*)fdb->channel, sd);
+	}
 
 	if( map_getmapflag(sd->bl.m, MF_FVF) && !pc_isdead(sd) )
 		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
