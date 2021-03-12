@@ -57,8 +57,9 @@ enum e_battle_check_target : uint32 {
 	BCT_GUILDALLY	= 0x080000, ///< Only allies, NOT guildmates
 	BCT_NEUTRAL		= 0x100000, ///< Neutral target
 	BCT_SAMEGUILD	= 0x200000, ///< Guildmates, No Guild Allies
+	BCT_FACTION 	= 0x000001, // < Faction System [Biali]
 
-	BCT_ALL			= 0x3F0000, ///< All targets
+	BCT_ALL			= 0x3F0001, ///< All targets
 
 	BCT_WOS			= 0x400000, ///< Except self (currently used for skipping if src == bl in skill_area_sub)
 	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY,	///< Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)

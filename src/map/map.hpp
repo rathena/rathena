@@ -367,6 +367,7 @@ enum mob_ai {
 	AI_LEGION,
 	AI_FAW,
 	AI_GUILD,
+	AI_FACTION, //Biali Faction System
 #ifdef BGEXTENDED
 	AI_BOMB,
 #endif

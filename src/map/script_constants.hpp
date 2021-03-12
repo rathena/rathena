@@ -3826,6 +3826,7 @@
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
 	export_constant(AI_GUILD);
+	export_constant(AI_FACTION); // Biali Faction System
 #ifdef BGEXTENDED
 	export_constant(AI_BOMB);
 #endif
@@ -7806,6 +7807,7 @@
 	export_constant(INF2_ISCHORUS);
 	export_constant(INF2_IGNOREBGREDUCTION);
 	export_constant(INF2_IGNOREGVGREDUCTION);
+	export_constant(INF2_IGNOREFVFREDUCTION); //Biali Faction System
 	export_constant(INF2_DISABLENEARNPC);
 	export_constant(INF2_TARGETTRAP);
 	export_constant(INF2_IGNORELANDPROTECTOR);

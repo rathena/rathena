@@ -87,6 +87,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_ISCHORUS, // Chorus skill
 	INF2_IGNOREBGREDUCTION, // Skill that ignore bg reduction
 	INF2_IGNOREGVGREDUCTION, // Skill that ignore gvg reduction
+	INF2_IGNOREFVFREDUCTION, // Skill that ignore fvf reduction Biali Faction System
 	INF2_DISABLENEARNPC, // disable to cast skill if near with NPC [Cydh]
 	INF2_TARGETTRAP, // can hit trap-type skill (INF2_ISTRAP) [Cydh]
 	INF2_IGNORELANDPROTECTOR, // Skill that can ignore Land Protector
