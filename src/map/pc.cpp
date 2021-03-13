@@ -38,6 +38,7 @@
 #include "date.hpp" // is_day_of_*()
 #include "duel.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -4828,9 +4829,9 @@ int pc_identifyall(struct map_session_data *sd, bool identify_item)
 /*==========================================
  * Update buying value by skills
  *------------------------------------------*/
-int pc_modifybuyvalue(struct map_session_data *sd,int orig_value)
+int pc_modifybuyvalue(struct map_session_data *sd, struct npc_data *nd ,int orig_value)
 {
-	int skill,val = orig_value,rate1 = 0,rate2 = 0;
+	int skill,val = orig_value,rate1 = 0,rate2 = 0, mod = 0;
 	if((skill=pc_checkskill(sd,MC_DISCOUNT))>0)	// merchant discount
 		rate1 = 5+skill*2-((skill==10)? 1:0);
 	if((skill=pc_checkskill(sd,RG_COMPULSION))>0)	 // rogue discount
@@ -4838,6 +4839,8 @@ int pc_modifybuyvalue(struct map_session_data *sd,int orig_value)
 	if(rate1 < rate2) rate1 = rate2;
 	if(rate1)
 		val = (int)((double)orig_value*(double)(100-rate1)/100.);
+	if( sd->status.faction_id && (mod = nd->u.shop.discount[sd->status.faction_id-1]) )
+		val = (int)((double)orig_value*(double)(100+mod)/100.);
 	if(val < battle_config.min_shop_buy)
 		val = battle_config.min_shop_buy;
 
@@ -8750,6 +8753,9 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
 		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
 	}
+
+	if( sd->status.faction_id && faction_check_leader(sd) ) // Faction System [Biali]
+		faction_factionaura(sd);
 }
 
 bool pc_revive_item(struct map_session_data *sd) {
@@ -8955,7 +8961,8 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 #else
 			val = sd->castrate; break;
 #endif
-		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
+		case SP_FACTION:   		val = sd->status.faction_id; break;
+		case SP_CRIT_DEF_RATE: 	val = sd->bonus.crit_def_rate; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
@@ -9114,7 +9121,10 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		sd->killedgid = val;
 		return true;
 	case SP_FACTION:
-		sd->status.faction_id = val;
+		sd->status.faction_id = cap_value(val, 1, MAX_FACTION);
+		status_calc_pc(sd,0);
+		if( map[sd->bl.m].flag.fvf )
+			pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 		return true;
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;

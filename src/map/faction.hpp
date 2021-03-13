@@ -55,9 +55,9 @@ struct faction_data {
 	struct Channel *channel;
 };
 
-#define faction_check_chat(sd) ( (sd)->status.faction_id>0 && map[(sd)->bl.m].flag.fvf && battle_config.faction_chat_settings )
+#define faction_check_chat(sd) ( (sd)->status.faction_id>0 && map_getmapflag((sd)->bl.m, MF_FVF) && battle_config.faction_chat_settings )
 
-#define faction_check_hp(sd,dstsd) ( (sd)->status.faction_id>0 && map[(dstsd)->bl.m].flag.fvf && battle_config.fvf_hp_bar && \
+#define faction_check_hp(sd,dstsd) ( (sd)->status.faction_id>0 && map_getmapflag((dstsd)->bl.m, MF_FVF) && battle_config.fvf_hp_bar && \
 		(sd)->status.faction_id == (dstsd)->status.faction_id )
 
 #define faction_check_name(src,tbl) ( faction_get_id(src) && faction_get_id(tbl) && \
