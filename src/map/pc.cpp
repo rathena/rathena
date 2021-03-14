@@ -6134,6 +6134,9 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		if (sd->bg_id) // Switching map servers, remove from bg
 			bg_team_leave(sd, false, true);
 
+		if (sd->state.vending) // Stop vending
+			vending_closevending(sd);
+
 		npc_script_event(sd, NPCE_LOGOUT);
 		//remove from map, THEN change x/y coordinates
 		unit_remove_map_pc(sd,clrtype);
