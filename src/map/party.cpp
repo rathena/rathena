@@ -388,6 +388,18 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	if( ( p = party_search(sd->status.party_id) ) == NULL )
 		return 0;
 
+	if( sd->status.faction_id && tsd && tsd->status.faction_id )
+	{
+		if( battle_config.faction_party_settings == 1 && !faction_check_alliance(&sd->bl,&tsd->bl) )
+		{
+			clif_displaymessage(sd->fd, msg_txt(sd,1633));
+			return 0;
+		} else if( !battle_config.faction_party_settings && sd->status.faction_id != tsd->status.faction_id ) {
+			clif_displaymessage(sd->fd, msg_txt(sd,1632));
+			return 0;
+		}
+	}
+
 	// confirm if this player is a party leader
 	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd == sd);
 
