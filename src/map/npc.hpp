@@ -113,7 +113,7 @@ struct npc_data {
 			t_itemid itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
-			int f_discount[MAX_FACTION];
+			int faction_discount[MAX_FACTION];
 		} shop;
 		struct {
 			short xs,ys; // OnTouch area radius

@@ -2904,8 +2904,8 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	char *t_p;
 	int faction_id = 0, faction_id2 = 0, discount = 0;
-	int t_discount[MAX_FACTION];
-	memset(t_discount, 0, sizeof(t_discount));
+	// int t_discount[MAX_FACTION];
+	// memset(t_discount, 0, sizeof(t_discount));
 	if( w1[0] == '-' )
 	{// 'floating' shop?
 		x = y = dir = 0;
@@ -2977,7 +2977,8 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 						}
 
 						cap_value(discount,battle_config.faction_disc_min,battle_config.faction_disc_max);
-						t_discount[faction_id2-1] = discount;
+						nd->u.shop.faction_discount[faction_id2] = discount;
+						//t_discount[faction_id2-1] = discount;
 						p = strchr(p+1,',');
 					}
 				}
@@ -3537,7 +3538,8 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 			nd->u.shop.itemshop_nameid = dnd->u.shop.itemshop_nameid;
 			nd->u.shop.shop_item = dnd->u.shop.shop_item;
 			nd->u.shop.count = dnd->u.shop.count;
-			nd->u.shop.discount =  dnd->u.shop.discount;
+			nd->u.shop.discount = 
+			dnd->u.shop.discount;
 			break;
 
 		case NPCTYPE_WARP:

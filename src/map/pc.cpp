@@ -4839,8 +4839,10 @@ int pc_modifybuyvalue(struct map_session_data *sd, struct npc_data *nd ,int orig
 	if(rate1 < rate2) rate1 = rate2;
 	if(rate1)
 		val = (int)((double)orig_value*(double)(100-rate1)/100.);
-	if( sd->status.faction_id && (mod = nd->u.shop.discount[sd->status.faction_id-1]) )
-		val = (int)((double)orig_value*(double)(100+mod)/100.);
+
+	if( sd->status.faction_id) 
+		val = (int)((double)orig_value*(double)(100+nd->u.shop.faction_discount[sd->status.faction_id])/100.);
+
 	if(val < battle_config.min_shop_buy)
 		val = battle_config.min_shop_buy;
 
@@ -8837,7 +8839,6 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_KILLEDRID:       val = sd->killedrid; break;
 		case SP_KILLEDGID:       val = sd->killedgid; break;
 		case SP_SITTING:         val = pc_issit(sd)?1:0; break;
-		case SP_FACTION:		 val = sd->status.faction_id; break;
 		case SP_CHARMOVE:		 val = sd->status.character_moves; break;
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
 		case SP_CHARFONT:		 val = sd->status.font; break;
@@ -9122,8 +9123,8 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		return true;
 	case SP_FACTION:
 		sd->status.faction_id = cap_value(val, 1, MAX_FACTION);
-		status_calc_pc(sd,0);
-		if( map[sd->bl.m].flag.fvf )
+		status_calc_pc(sd,SCO_NONE);
+		if( map_getmapflag(sd->bl.m, MF_FVF) )
 			pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 		return true;
 	case SP_CHARMOVE:
