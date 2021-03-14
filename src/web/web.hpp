@@ -27,7 +27,6 @@ struct Web_Config {
 
 	char webconf_name[256];						/// name of main config file
 	char msgconf_name[256];							/// name of msg_conf config file
-	std::string guild_emblem_dir = "guild_emblems"; /// name of dir to store guild_emblems
 };
 
 

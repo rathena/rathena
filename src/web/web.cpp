@@ -129,8 +129,6 @@ bool web_config_read(const char* cfgName, bool normal) {
 			console_msg_log = atoi(w2);
 		else if (!strcmpi(w1, "console_log_filepath"))
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
-		else if (!strcmpi(w1, "guild_emblem_dir"))
-			web_config.guild_emblem_dir = w2;
 		else if (!strcmpi(w1, "print_req_res"))
 			web_config.print_req_res = config_switch(w2);
 		else if (!strcmpi(w1, "import"))
@@ -391,9 +389,6 @@ int do_init(int argc, char** argv) {
 	msg_config_read(web_config.msgconf_name);
 
 	inter_config_read(INTER_CONF_NAME);
-	if (check_filepath(web_config.guild_emblem_dir.c_str()) != 1) {
-		ShowError("Guild Emblem Directory %s is missing, please create it\n", web_config.guild_emblem_dir.c_str());
-	}
 	// end config
 
 	web_sql_init();
@@ -412,12 +407,10 @@ int do_init(int argc, char** argv) {
 	shutdown_callback = do_shutdown;
 
 	runflag = WEBSERVER_ST_RUNNING;
-	// this blocks, until svr->stop() is called.
 
 	svr_thr = std::thread([] {
 		svr->listen(web_config.web_ip.c_str(), web_config.web_port);
 	});
-	// svr->listen(web_config.web_ip.c_str(), web_config.web_port);
 
 	for (int i = 0; i < 10; i++) {
 		if (svr->is_running() || runflag != WEBSERVER_ST_RUNNING)
