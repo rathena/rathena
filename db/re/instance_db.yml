@@ -267,15 +267,15 @@ Body:
       Map: 1@mir
       X: 101
       Y: 10
-#  - Id: 33
-#    Name: Sky Fortress Invasion
-#    Enter:
-#      Map: 1@sthb
-#      X: 54
-#      Y: 67
-#    AdditionalMaps:
-#      1@sthc: true
-#      1@sthd: true
+  - Id: 33
+    Name: Sky Fortress Invasion
+    Enter:
+      Map: 1@sthb
+      X: 54
+      Y: 67
+    AdditionalMaps:
+      1@sthc: true
+      1@sthd: true
   - Id: 34
     Name: Heart Hunter War Base 1
     Enter:

@@ -81493,7 +81493,7 @@ Body:
     DamageMotion: 432
     Ai: 04
     Drops:
-      - Item: Dehumidifiers
+      - Item: Desiccant
         Rate: 2000
         StealProtected: true
       - Item: Frozenwolf_Card
@@ -81565,7 +81565,7 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Red_Eye
+      - Item: Red_Eyes
         Rate: 2000
         StealProtected: true
       - Item: Watcher_Card
@@ -81935,32 +81935,559 @@ Body:
 #    AegisName: WATERMELON_49
 #  - Id: 3472
 #    AegisName: WATERMELON_50
-#  - Id: 3473
-#    AegisName: AS_RAGGED_GOLEM
-#  - Id: 3474
-#    AegisName: AS_BLOODY_KNIGHT
-#  - Id: 3475
-#    AegisName: AS_WIND_GHOST
-#  - Id: 3476
-#    AegisName: AS_ZOMBIE
-#  - Id: 3477
-#    AegisName: AS_IMMORTAL_CORPS
-#  - Id: 3478
-#    AegisName: AS_ZOMBIE_SLAUGHTER
-#  - Id: 3479
-#    AegisName: AS_ZOMBIE_MASTER
-#  - Id: 3480
-#    AegisName: AS_CURSED_SOLDIER
-#  - Id: 3481
-#    AegisName: AS_EVIL_SHADOW1
-#  - Id: 3482
-#    AegisName: AS_EVIL_SHADOW2
-#  - Id: 3483
-#    AegisName: AS_EVIL_SHADOW3
-#  - Id: 3484
-#    AegisName: AS_D_RAGGED_GOLEM
-#  - Id: 3485
-#    AegisName: AS_D_CURSED_SOLDIER
+  - Id: 3473
+    AegisName: AS_RAGGED_GOLEM
+    Name: Stefan.J.E.Wolf
+    Level: 160
+    Hp: 20000000
+    BaseExp: 96453
+    JobExp: 109040
+    MvpExp: 5000
+    Attack: 8128
+    Attack2: 640
+    Defense: 146
+    MagicDefense: 30
+    Str: 248
+    Agi: 57
+    Vit: 16
+    Int: 59
+    Dex: 245
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 14
+    ChaseRange: 16
+    Size: Large
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 960
+    AttackMotion: 1632
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Old_Blue_Box
+        Rate: 5000
+      - Item: Old_Violet_Box
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 2000
+    Drops:
+      - Item: Katar_170
+        Rate: 1
+      - Item: Two_Hand_Spear_170
+        Rate: 1
+      - Item: Staff_170
+        Rate: 1
+      - Item: Yggdrasilberry
+        Rate: 1000
+      - Item: Seed_Of_Yggdrasil
+        Rate: 2000
+      - Item: Oridecon
+        Rate: 3500
+        StealProtected: true
+      - Item: Elunium
+        Rate: 3500
+        StealProtected: true
+      - Item: As_Ragged_Golem_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3474
+    AegisName: AS_BLOODY_KNIGHT
+    Name: Immortal Cursed Knight
+    Level: 160
+    Hp: 10000000
+    BaseExp: 47986
+    JobExp: 46416
+    Attack: 4666
+    Attack2: 434
+    Defense: 178
+    MagicDefense: 48
+    Str: 193
+    Agi: 103
+    Vit: 102
+    Int: 83
+    Dex: 240
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 250
+    AttackDelay: 768
+    AttackMotion: 528
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Two_Hand_Spear_170
+        Rate: 1
+      - Item: Old_Card_Album
+        Rate: 500
+      - Item: Yggdrasilberry
+        Rate: 1004
+      - Item: Seed_Of_Yggdrasil
+        Rate: 2005
+      - Item: Oridecon
+        Rate: 3245
+      - Item: Elunium
+        Rate: 3245
+        StealProtected: true
+      - Item: As_Bdy_Knight_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3475
+    AegisName: AS_WIND_GHOST
+    Name: Immortal Wind Ghost
+    Level: 160
+    Hp: 10000000
+    BaseExp: 47986
+    JobExp: 46416
+    Attack: 4666
+    Attack2: 1577
+    Defense: 136
+    MagicDefense: 72
+    Str: 131
+    Agi: 68
+    Vit: 53
+    Int: 116
+    Dex: 259
+    Luk: 42
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 2112
+    AttackMotion: 1152
+    DamageMotion: 672
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Staff_170
+        Rate: 1
+      - Item: Old_Card_Album
+        Rate: 500
+      - Item: Yggdrasilberry
+        Rate: 1004
+      - Item: Seed_Of_Yggdrasil
+        Rate: 2005
+      - Item: Oridecon
+        Rate: 3245
+      - Item: Elunium
+        Rate: 3245
+        StealProtected: true
+      - Item: As_Wind_Ghost_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3476
+    AegisName: AS_ZOMBIE
+    Name: Immortal Zombie Soldier
+    Level: 160
+    Hp: 405694
+    Attack: 2446
+    Attack2: 3669
+    Defense: 188
+    MagicDefense: 28
+    Str: 141
+    Agi: 90
+    Vit: 160
+    Dex: 169
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 09
+  - Id: 3477
+    AegisName: AS_IMMORTAL_CORPS
+    Name: Immortal Fortress Legio
+    Level: 160
+    Hp: 405694
+    BaseExp: 15464
+    JobExp: 12888
+    Attack: 2446
+    Attack2: 1546
+    Defense: 150
+    MagicDefense: 83
+    Str: 165
+    Agi: 90
+    Vit: 95
+    Int: 75
+    Dex: 180
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1500
+    AttackMotion: 600
+    DamageMotion: 500
+    Ai: 09
+    Drops:
+      - Item: Sinister_Dagger
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_4
+      - Item: Sinister_Saber
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_3
+      - Item: Sinister_Twohand_Sword
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
+      - Item: Sinister_Spear
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
+      - Item: Sinister_Lance
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
+  - Id: 3478
+    AegisName: AS_ZOMBIE_SLAUGHTER
+    Name: Sky Fortress Key Keeper
+    Level: 160
+    Hp: 423332
+    BaseExp: 15464
+    JobExp: 12888
+    Attack: 2446
+    Attack2: 292
+    Defense: 129
+    MagicDefense: 58
+    Str: 150
+    Agi: 88
+    Vit: 105
+    Int: 16
+    Dex: 210
+    Luk: 27
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 676
+    AttackMotion: 648
+    DamageMotion: 432
+    Ai: 09
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Air_Stronghold_Key
+        Rate: 10000
+        StealProtected: true
+  - Id: 3479
+    AegisName: AS_ZOMBIE_MASTER
+    Name: Immortal Zombie Assault
+    Level: 160
+    Hp: 405694
+    BaseExp: 15464
+    JobExp: 12888
+    Attack: 2446
+    Attack2: 430
+    Defense: 104
+    MagicDefense: 61
+    Str: 73
+    Agi: 96
+    Vit: 64
+    Int: 65
+    Dex: 138
+    Luk: 64
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 175
+    AttackDelay: 2612
+    AttackMotion: 912
+    DamageMotion: 288
+    Ai: 09
+    Drops:
+      - Item: Sinister_Book
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_4
+      - Item: Sinister_Katar
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
+      - Item: Sinister_Huuma
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_4
+      - Item: Sinister_Twohand_Axe
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_3
+      - Item: Sinister_Mace
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_3
+      - Item: Sinister_Fist
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_5
+  - Id: 3480
+    AegisName: AS_CURSED_SOLDIER
+    Name: Immortal Cursed Zombie
+    Level: 160
+    Hp: 405694
+    BaseExp: 15464
+    JobExp: 12888
+    Attack: 2446
+    Attack2: 1
+    Defense: 123
+    MagicDefense: 50
+    Str: 117
+    Agi: 86
+    Vit: 93
+    Int: 81
+    Dex: 309
+    Luk: 33
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 09
+    Drops:
+      - Item: Sinister_Staff
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_1
+      - Item: Sinister_Rod
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_1
+      - Item: Sinister_Revolver
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_2
+      - Item: Sinister_Wire
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_2
+      - Item: Sinister_Viollin
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_2
+      - Item: Sinister_Bow
+        Rate: 20
+        RandomOptionGroup: AS_WEAPON_2
+  - Id: 3481
+    AegisName: AS_EVIL_SHADOW1
+    Name: Immortal Nightmare Shadow
+    Level: 160
+    Hp: 423330
+    BaseExp: 14059
+    JobExp: 13590
+    Attack: 2446
+    Attack2: 498
+    Defense: 34
+    MagicDefense: 34
+    Str: 102
+    Agi: 61
+    Vit: 102
+    Int: 24
+    Dex: 132
+    Luk: 51
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1500
+    AttackMotion: 600
+    DamageMotion: 500
+    Ai: 09
+    Drops:
+      - Item: Sinister_Book
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_4
+      - Item: Sinister_Katar
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
+      - Item: Sinister_Huuma
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_4
+      - Item: Sinister_Twohand_Axe
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_3
+      - Item: Sinister_Mace
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_3
+      - Item: Sinister_Fist
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
+  - Id: 3482
+    AegisName: AS_EVIL_SHADOW2
+    Name: Immortal Angry Shadow
+    Level: 160
+    Hp: 388054
+    BaseExp: 14059
+    JobExp: 13590
+    Attack: 2202
+    Attack2: 1033
+    Defense: 137
+    MagicDefense: 40
+    Str: 68
+    Agi: 139
+    Vit: 51
+    Int: 39
+    Dex: 234
+    Luk: 17
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 600
+    Ai: 09
+    Drops:
+      - Item: Sinister_Staff
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_1
+      - Item: Sinister_Rod
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_1
+      - Item: Sinister_Revolver
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_2
+      - Item: Sinister_Wire
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_2
+      - Item: Sinister_Viollin
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_2
+      - Item: Sinister_Bow
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_2
+  - Id: 3483
+    AegisName: AS_EVIL_SHADOW3
+    Name: Immortal Death Shadow
+    Level: 160
+    Hp: 423330
+    BaseExp: 14059
+    JobExp: 13590
+    Attack: 2446
+    Attack2: 106
+    Defense: 100
+    MagicDefense: 49
+    Str: 135
+    Agi: 117
+    Vit: 74
+    Int: 37
+    Dex: 142
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1800
+    AttackMotion: 780
+    DamageMotion: 480
+    Ai: 09
+    Drops:
+      - Item: Sinister_Dagger
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_4
+      - Item: Sinister_Saber
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_3
+      - Item: Sinister_Twohand_Sword
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
+      - Item: Sinister_Spear
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
+      - Item: Sinister_Lance
+        Rate: 30
+        RandomOptionGroup: AS_WEAPON_5
+  - Id: 3484
+    AegisName: AS_D_RAGGED_GOLEM
+    Name: Stefan.J.E.Wolf
+    Level: 160
+    Hp: 20000000
+    Attack: 8128
+    Attack2: 640
+    Defense: 146
+    MagicDefense: 30
+    Str: 248
+    Agi: 57
+    Vit: 16
+    Int: 59
+    Dex: 245
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 14
+    ChaseRange: 16
+    Size: Large
+    Race: Undead
+    Element: Undead
+    ElementLevel: 2
+    WalkSpeed: 300
+    AttackDelay: 960
+    AttackMotion: 1632
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 3485
+    AegisName: AS_D_CURSED_SOLDIER
+    Name: Cursed Soldier of Bijou
+    Level: 160
+    Hp: 405694
+    Attack: 2446
+    Attack2: 1
+    Defense: 123
+    MagicDefense: 50
+    Str: 117
+    Agi: 86
+    Vit: 93
+    Int: 81
+    Dex: 309
+    Luk: 33
+    AttackRange: 9
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Undead
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 576
+    DamageMotion: 420
+    Ai: 09
 #  - Id: 3486
 #    AegisName: E_WILD_RABBIT
   - Id: 3487
