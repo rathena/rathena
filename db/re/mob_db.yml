@@ -108,8 +108,8 @@ Body:
     DamageMotion: 576
     Ai: 19
     Modes:
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Boody_Red
@@ -270,8 +270,8 @@ Body:
     Ai: 04
     Modes:
       Angry: true
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
     Drops:
       - Item: Tooth_Of_Bat
         Rate: 5500
@@ -13262,9 +13262,9 @@ Body:
     Ai: 12
     Class: Guardian
     Modes:
+      Angry: true
       CanMove: true
       CastSensorChase: true
-      Angry: true
       ChangeChase: true
       ChangeTargetMelee: true
       Detector: true
@@ -13300,9 +13300,9 @@ Body:
     Ai: 12
     Class: Guardian
     Modes:
+      Angry: true
       CanMove: true
       CastSensorChase: true
-      Angry: true
       ChangeChase: true
       ChangeTargetMelee: true
       Detector: true
@@ -18766,8 +18766,8 @@ Body:
     Ai: 04
     Modes:
       Angry: true
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
   - Id: 1420
     AegisName: G_ARCHER_SKELETON
     Name: Archer Skeleton
@@ -23115,8 +23115,8 @@ Body:
     DamageMotion: 576
     Ai: 19
     Modes:
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
       Detector: true
   - Id: 1560
     AegisName: G_SHINOBI
@@ -36499,11 +36499,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1907
     AegisName: S_EMPEL_1
@@ -36564,11 +36564,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1910
     AegisName: OBJ_B
@@ -36589,11 +36589,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1911
     AegisName: OBJ_NEUTRAL
@@ -36614,11 +36614,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1912
     AegisName: OBJ_FLAG_A
@@ -36639,11 +36639,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1913
     AegisName: OBJ_FLAG_B
@@ -36664,11 +36664,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1914
     AegisName: OBJ_A2
@@ -36689,11 +36689,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1915
     AegisName: OBJ_B2
@@ -36714,11 +36714,11 @@ Body:
     DamageMotion: 384
     Class: Guardian
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 1916
     AegisName: MOROCC
@@ -45496,8 +45496,8 @@ Body:
     Modes:
       Aggressive: true
       Angry: true
-      TargetWeak: true
       Detector: true
+      TargetWeak: true
     Drops:
       - Item: Sticky_Mucus
         Rate: 2750
@@ -51868,11 +51868,11 @@ Body:
     DamageMotion: 360
     Ai: 10
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
   - Id: 2332
     AegisName: BUWAYA_GHOST
     Name: Buwaya
@@ -52051,11 +52051,11 @@ Body:
     AttackMotion: 1000
     Ai: 10
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
   - Id: 2338
     AegisName: MD_MANANANGGAL
     Name: Manananggal
@@ -52244,11 +52244,11 @@ Body:
     AttackMotion: 2000
     Ai: 10
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
   - Id: 2344
     AegisName: MER_WISH_MAIDEN
     Name: Wish Maiden
@@ -53546,11 +53546,11 @@ Body:
     DamageMotion: 420
     Ai: 01
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
     Drops:
       - Item: Stolen_Cookie
         Rate: 3000
@@ -53584,11 +53584,11 @@ Body:
     DamageMotion: 420
     Ai: 01
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
     Drops:
       - Item: Stolen_Cookie
         Rate: 3000
@@ -53941,10 +53941,10 @@ Body:
     WalkSpeed: 200
     Class: Guardian
     Modes:
-      NoRandomWalk: true
-      TeleportBlock: true
       KnockBackImmune: true
       Mvp: true
+      NoRandomWalk: true
+      TeleportBlock: true
   - Id: 2409
     AegisName: DUMMY_50
     Name: Dummy 50
@@ -53961,10 +53961,10 @@ Body:
     WalkSpeed: 200
     Class: Guardian
     Modes:
-      NoRandomWalk: true
-      TeleportBlock: true
       KnockBackImmune: true
       Mvp: true
+      NoRandomWalk: true
+      TeleportBlock: true
   - Id: 2410
     AegisName: DUMMY_100
     Name: Dummy 100
@@ -53981,10 +53981,10 @@ Body:
     WalkSpeed: 200
     Class: Guardian
     Modes:
-      NoRandomWalk: true
-      TeleportBlock: true
       KnockBackImmune: true
       Mvp: true
+      NoRandomWalk: true
+      TeleportBlock: true
   - Id: 2411
     AegisName: DUMMY_150
     Name: Dummy 150
@@ -54001,10 +54001,10 @@ Body:
     WalkSpeed: 200
     Class: Guardian
     Modes:
-      NoRandomWalk: true
-      TeleportBlock: true
       KnockBackImmune: true
       Mvp: true
+      NoRandomWalk: true
+      TeleportBlock: true
 #  - Id: 2412
 #    AegisName: E_VALKIWI
   - Id: 2413
@@ -54021,10 +54021,10 @@ Body:
     WalkSpeed: 200
     Class: Guardian
     Modes:
-      NoRandomWalk: true
-      TeleportBlock: true
       KnockBackImmune: true
       Mvp: true
+      NoRandomWalk: true
+      TeleportBlock: true
   - Id: 2415
     AegisName: L_SEYREN
     Name: Knight Seyren
@@ -57177,11 +57177,11 @@ Body:
     AttackMotion: 100
     Ai: 10
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 2537
     AegisName: HIDDEN_MOB4
@@ -57249,11 +57249,11 @@ Body:
     AttackMotion: 500
     Ai: 10
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
   - Id: 2540
     AegisName: FACEWORM_EGG
@@ -57284,11 +57284,11 @@ Body:
     WalkSpeed: 150
     AttackDelay: 24
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
       KnockBackImmune: true
     Drops:
       - Item: Piece_Of_Egg_Shell
@@ -57528,8 +57528,8 @@ Body:
     DamageMotion: 360
     Ai: 17
     Modes:
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
     Drops:
       - Item: Str_Dish03
         Rate: 600
@@ -61511,8 +61511,8 @@ Body:
     DamageMotion: 576
     Ai: 17
     Modes:
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Boody_Red
@@ -69004,8 +69004,8 @@ Body:
     Ai: 01
     Modes:
       Angry: true
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
     Drops:
       - Item: Tooth_Of_Bat
         Rate: 5500
@@ -73797,11 +73797,11 @@ Body:
     AttackMotion: 1000
     Class: Battlefield
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
 #  - Id: 2944
 #    AegisName: J_HORNET
 #  - Id: 2945
@@ -74271,11 +74271,11 @@ Body:
     AttackMotion: 1000
     Class: Battlefield
     Modes:
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      Detector: true
   - Id: 2961
     AegisName: E_TORTUROUS_REDEEMER
     Name: Torturous Redeemer
@@ -74596,8 +74596,8 @@ Body:
     Ai: 01
     Modes:
       Angry: true
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
     Drops:
       - Item: Pumpkin_Bucket
         Rate: 1600
@@ -78104,12 +78104,12 @@ Body:
     AttackMotion: 2112
     DamageMotion: 768
     Modes:
-      NoRandomWalk: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
       KnockBackImmune: true
+      NoRandomWalk: true
 #  - Id: 3160
 #    AegisName: BOILED_RICE_DUANWU
   - Id: 3161
@@ -78397,8 +78397,8 @@ Body:
     DamageMotion: 360
     Ai: 17
     Modes:
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
     Drops:
       - Item: Airship_Cape
         Rate: 50
@@ -78435,8 +78435,8 @@ Body:
     DamageMotion: 864
     Ai: 17
     Modes:
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
     Drops:
       - Item: Airship_Armor
         Rate: 50
@@ -78545,15 +78545,15 @@ Body:
     Ai: 10
     Class: Battlefield
     Modes:
-      NoRandomWalk: true
+      Detector: true
       IgnoreMagic: true
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-      TeleportBlock: true
-      Detector: true
       KnockBackImmune: true
       Mvp: true
+      NoRandomWalk: true
+      TeleportBlock: true
     Drops:
       - Item: Robe_Of_Sarah
         Rate: 1000
@@ -84591,8 +84591,8 @@ Body:
     Ai: 01
     Modes:
       Angry: true
-      ChangeTargetMelee: true
       ChangeTargetChase: true
+      ChangeTargetMelee: true
     Drops:
       - Item: Clean_Bone
         Rate: 2500
