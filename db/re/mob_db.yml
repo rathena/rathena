@@ -108,8 +108,6 @@ Body:
     DamageMotion: 576
     Ai: 19
     Modes:
-      ChangeTargetChase: true
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Boody_Red
@@ -222,7 +220,6 @@ Body:
     DamageMotion: 216
     Ai: 03
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Wind_Of_Verdure
@@ -268,10 +265,6 @@ Body:
     AttackMotion: 576
     DamageMotion: 384
     Ai: 04
-    Modes:
-      Angry: true
-      ChangeTargetChase: true
-      ChangeTargetMelee: true
     Drops:
       - Item: Tooth_Of_Bat
         Rate: 5500
@@ -427,8 +420,6 @@ Body:
     AttackMotion: 648
     DamageMotion: 480
     Ai: 03
-    Modes:
-      ChangeTargetMelee: true
     Drops:
       - Item: Talon
         Rate: 9000
@@ -2387,7 +2378,6 @@ Body:
     DamageMotion: 768
     Ai: 07
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Worm_Peelings
@@ -4430,7 +4420,6 @@ Body:
     DamageMotion: 384
     Ai: 07
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Worm_Peelings
@@ -4907,7 +4896,6 @@ Body:
     DamageMotion: 576
     Ai: 07
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Worm_Peelings
@@ -5004,8 +4992,6 @@ Body:
     AttackMotion: 900
     DamageMotion: 240
     Ai: 03
-    Modes:
-      ChangeTargetMelee: true
     Drops:
       - Item: Phracon
         Rate: 85
@@ -7584,7 +7570,6 @@ Body:
     DamageMotion: 576
     Ai: 07
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Worm_Peelings
@@ -10973,7 +10958,6 @@ Body:
     DamageMotion: 576
     Ai: 07
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Worm_Peelings
@@ -11021,7 +11005,6 @@ Body:
     DamageMotion: 576
     Ai: 07
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Worm_Peelings
@@ -11069,7 +11052,6 @@ Body:
     DamageMotion: 576
     Ai: 07
     Modes:
-      ChangeTargetMelee: true
       Detector: true
     Drops:
       - Item: Worm_Peelings
@@ -13263,7 +13245,6 @@ Body:
     Class: Guardian
     Modes:
       Angry: true
-      CanMove: true
       CastSensorChase: true
       ChangeChase: true
       ChangeTargetMelee: true
@@ -13301,7 +13282,6 @@ Body:
     Class: Guardian
     Modes:
       Angry: true
-      CanMove: true
       CastSensorChase: true
       ChangeChase: true
       ChangeTargetMelee: true
@@ -18764,10 +18744,6 @@ Body:
     AttackMotion: 576
     DamageMotion: 384
     Ai: 04
-    Modes:
-      Angry: true
-      ChangeTargetChase: true
-      ChangeTargetMelee: true
   - Id: 1420
     AegisName: G_ARCHER_SKELETON
     Name: Archer Skeleton
@@ -23115,8 +23091,6 @@ Body:
     DamageMotion: 576
     Ai: 19
     Modes:
-      ChangeTargetChase: true
-      ChangeTargetMelee: true
       Detector: true
   - Id: 1560
     AegisName: G_SHINOBI
@@ -24209,7 +24183,6 @@ Body:
     Ai: 04
     Class: Guardian
     Modes:
-      Aggressive: true
       KnockBackImmune: true
     Drops:
       - Item: Orange_Potion
@@ -31266,7 +31239,6 @@ Body:
     Ai: 21
     Class: Guardian
     Modes:
-      Aggressive: true
       ChangeChase: true
       KnockBackImmune: true
     MvpDrops:
@@ -31304,7 +31276,6 @@ Body:
     Ai: 21
     Class: Guardian
     Modes:
-      Aggressive: true
       ChangeChase: true
       KnockBackImmune: true
     MvpDrops:
@@ -36382,8 +36353,6 @@ Body:
     AttackMotion: 648
     DamageMotion: 480
     Ai: 03
-    Modes:
-      ChangeTargetMelee: true
     Drops:
       - Item: Immortality_Egg
         Rate: 1000
