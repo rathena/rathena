@@ -35,6 +35,7 @@
 #include "clan.hpp"
 #include "clif.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -419,6 +420,18 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 	type = va_arg(ap,int);
 
 	switch(type) {
+	case AREA_FVF: // Faction System [Biali]
+	case FACTION_AREA_WOS:
+	case FVF_OTHER_AREA_CHAT:
+		if( type != AREA_FVF && bl == src_bl )
+			return 0;
+
+		if( type == FACTION_AREA_WOS && !faction_check_alliance(src_bl,bl) )
+			return 0;
+
+		if( type == FVF_OTHER_AREA_CHAT && faction_check_alliance(src_bl,bl) )
+			return 0;
+	break;
 	case AREA_WOS:
 		if (bl == src_bl)
 			return 0;
@@ -740,6 +753,28 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 			}
 			mapit_free(iter);
 		}
+		break;
+
+	// Faction System [Biali]
+	case FACTION:
+		iter = mapit_getallusers();
+		while( (tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ) {
+			if( sd->status.faction_id != tsd->status.faction_id )
+				continue;
+			
+			// if( packet_db[tsd->packet_ver][RBUFW(buf,0)].len ) {
+			WFIFOHEAD(tsd->fd, len);
+			memcpy(WFIFOP(tsd->fd,0), buf, len);
+			WFIFOSET(tsd->fd,len);
+			// }
+		}
+		mapit_free(iter);
+		break;
+
+	case AREA_FVF:
+	case FACTION_AREA_WOS:
+	case FVF_OTHER_AREA_CHAT:
+			map_foreachinarea(clif_send_sub, bl->m, bl->x-AREA_SIZE, bl->y-AREA_SIZE, bl->x+AREA_SIZE, bl->y+AREA_SIZE,BL_PC, buf, len, bl, type);
 		break;
 
 	default:
@@ -1622,6 +1657,7 @@ static inline bool clif_npc_mayapurple(block_list *bl) {
  **/
 int clif_spawn( struct block_list *bl, bool walking ){
 	struct view_data *vd;
+	struct faction_data *fdb;
 
 	vd = status_get_viewdata(bl);
 	if( !vd || vd->class_ == JT_INVISIBLE )
@@ -1637,8 +1673,10 @@ int clif_spawn( struct block_list *bl, bool walking ){
 		clif_spawn_unit( bl, AREA_WOS );
 	}
 
-	if (vd->cloth_color)
-		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
+	if( battle_config.fvf_change_ccolor && (fdb = faction_search(faction_get_id(bl))) != NULL )
+		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,(map_getmapflag(bl->m,MF_FVF) || battle_config.fvf_change_ccolor == 2) ? fdb->ccolor : vd->cloth_color,AREA_WOS);
+	else if( vd->cloth_color )
+		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR, vd->cloth_color,AREA_WOS);
 	if (vd->body_style)
 		clif_refreshlook(bl,bl->id,LOOK_BODY2,vd->body_style,AREA_WOS);
 
@@ -1698,6 +1736,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
+	faction_spawn(bl);
 	return 0;
 }
 
@@ -1910,13 +1949,16 @@ void clif_walkok(struct map_session_data *sd)
 
 static void clif_move2( struct block_list *bl, struct view_data *vd, struct unit_data *ud ){
 	struct status_change *sc = NULL;
+	struct faction_data *fdb = NULL;
 
 	if ((sc = status_get_sc(bl)) && sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK))
 		clif_ally_only = true;
 
 	clif_set_unit_walking( bl, nullptr, ud, AREA_WOS );
 
-	if(vd->cloth_color)
+	if( battle_config.fvf_change_ccolor && (fdb = faction_search(faction_get_id(bl))) != NULL )
+		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,(map_getmapflag(bl->m, MF_FVF) || battle_config.fvf_change_ccolor == 2) ? fdb->ccolor : vd->cloth_color,AREA_WOS);
+	else if(vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
 	if(vd->body_style)
 		clif_refreshlook(bl,bl->id,LOOK_BODY2,vd->body_style,AREA_WOS);
@@ -2148,7 +2190,7 @@ void clif_buylist( struct map_session_data *sd, struct npc_data *nd ){
 		int val = nd->u.shop.shop_item[i].value;
 
 		p->items[count].price = val;
-		p->items[count].discountPrice = ( discount ) ? pc_modifybuyvalue( sd, val ) : val;
+		p->items[count].discountPrice = ( discount ) ? pc_modifybuyvalue( sd, nd, val ) : val;
 		p->items[count].itemType = itemtype( nd->u.shop.shop_item[i].nameid );
 		p->items[count].itemId = client_nameid( nd->u.shop.shop_item[i].nameid );
 		count++;
@@ -3564,15 +3606,15 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 			}
 			break;
 		case SP_HP:
-			if( map_getmapdata(sd->bl.m)->hpmeter_visible ){
+			if( map_getmapdata(sd->bl.m)->hpmeter_visible )
 				clif_hpmeter(sd);
-			}
-			if( !battle_config.party_hp_mode && sd->status.party_id ){
+			if( !battle_config.party_hp_mode && sd->status.party_id )
 				clif_party_hp(sd);
-			}
-			if( sd->bg_id ){
+			if( sd->bg_id )
 				clif_bg_hp(sd);
-			}
+			if( map_getmapflag(sd->bl.m, MF_FVF) && battle_config.fvf_hp_bar ) // Faction System [Biali]
+				faction_hp(sd);
+			
 			break;
 	}
 }
@@ -3707,6 +3749,9 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 						val = 0;
 					if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
 						val = 0;
+					struct faction_data *fdb;
+					if ( (fdb = faction_search(faction_get_id(bl))) != NULL && battle_config.fvf_change_ccolor == 2 )
+						val = fdb->ccolor;
 				}
 				vd->cloth_color = val;
 				break;
@@ -4757,7 +4802,8 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		clif_soulball( dstsd, &sd->bl, SELF );
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
-		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
+		pc_has_permission(sd, PC_PERM_VIEW_HPMETER) || 
+		(faction_check_hp(sd,dstsd)) // Faction System [Biali]
 	)
 	clif_hpmeter_single(sd->fd, dstsd->bl.id, dstsd->battle_status.hp, dstsd->battle_status.max_hp);
 
@@ -4777,6 +4823,7 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 	struct unit_data *ud;
 	struct view_data *vd;
+	struct faction_data *fdb;
 	bool option = false;
 	unsigned int option_val = 0;
 
@@ -4796,7 +4843,9 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 		clif_set_unit_idle( bl, false, SELF, &sd->bl );
 	}
 
-	if (vd->cloth_color)
+	if( battle_config.fvf_change_ccolor && (fdb = faction_search(faction_get_id(bl))) != NULL )
+		clif_refreshlook(&sd->bl,bl->id,LOOK_CLOTHES_COLOR,(map_getmapflag(bl->m, MF_FVF) || battle_config.fvf_change_ccolor == 2) ? fdb->ccolor : vd->cloth_color,SELF);
+	else if( vd->cloth_color )
 		clif_refreshlook(&sd->bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,SELF);
 	if (vd->body_style)
 		clif_refreshlook(&sd->bl,bl->id,LOOK_BODY2,vd->body_style,SELF);
@@ -4864,6 +4913,7 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
+	faction_getareachar_unit(sd, bl);
 }
 
 //Modifies the type of damage according to status changes [Skotlex]
@@ -9762,7 +9812,10 @@ void clif_refresh(struct map_session_data *sd)
 		clif_spiritcharm_single(sd->fd, sd);
 	if (sd->soulball)
 		clif_soulball( sd, &sd->bl, SELF );
-	if (sd->vd.cloth_color)
+	struct faction_data *fdb;
+	if( battle_config.fvf_change_ccolor && (fdb = faction_search(sd->status.faction_id)) != NULL )
+		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,(map_getmapflag(sd->bl.m, MF_FVF) || battle_config.fvf_change_ccolor == 2) ? fdb->ccolor : sd->vd.cloth_color,SELF);
+	else if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if (sd->vd.body_style)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BODY2,sd->vd.body_style,SELF);
@@ -9786,6 +9839,10 @@ void clif_refresh(struct map_session_data *sd)
 		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
 	else
 		clif_changed_dir(&sd->bl, SELF);
+	
+	if( sd->status.faction_id ) // Faction System [Biali]
+		faction_getareachar_unit(sd, &sd->bl);
+
 	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
 
 	//Issue #2143
@@ -9828,10 +9885,21 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 			packet.gid = bl->id;
 
 			map_session_data *sd = (map_session_data *)bl;
+			struct faction_data *fdb = NULL;
 
 			//Requesting your own "shadow" name. [Skotlex]
 			if( src == bl && target == SELF && sd->disguise ){
 				packet.gid = -bl->id;
+			}
+
+			//BIALI TODO : WHAT DOES THIS DO?
+			if( sd && map_getmapflag(sd->bl.m, MF_FVF) && !faction_check_name(&sd->bl, bl) && (fdb = faction_search(sd->status.faction_id)) != NULL ) {
+				// WBUFW(buf, 0) = cmd = 0x195;
+				// memcpy(WBUFP(buf,6), fdb->pl_name, NAME_LENGTH);
+				// WBUFB(buf,30) = WBUFB(buf,54) = WBUFB(buf,78) = 0;
+				safestrncpy( packet.name, fdb->pl_name, NAME_LENGTH );
+				clif_send( &packet, sizeof(packet), src, target );
+				break;
 			}
 
 			if( sd->fakename[0] ) {
@@ -9890,7 +9958,10 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 			packet.title_id = sd->status.title_id; // Title ID
 #endif
 
-			clif_send(&packet, sizeof(packet), src, target);
+			if( sd->status.faction_id && map_getmapflag(sd->bl.m, MF_FVF) ) // Faction System [Biali]
+				clif_send(&packet, sizeof(packet), &sd->bl, AREA_FVF);
+			else
+				clif_send(&packet, sizeof(packet), src, target);
 		}
 			break;
 		//[blackhole89]
@@ -10686,7 +10757,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #endif
 	pc_set_costume_view(sd);
 
-	if(sd->vd.cloth_color)
+	struct faction_data *fdb = NULL;
+	if( battle_config.fvf_change_ccolor && (fdb = faction_search(sd->status.faction_id)) != NULL )
+		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,(map_getmapflag(sd->bl.m, MF_FVF) || battle_config.fvf_change_ccolor == 2) ? fdb->ccolor : sd->vd.cloth_color,SELF);
+	else if(sd->vd.cloth_color )
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if(sd->vd.body_style)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BODY2,sd->vd.body_style,SELF);
@@ -10747,7 +10821,17 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_party_hp(sd); // Show hp after displacement [LuzZza]
 	}
 
-	if( sd->bg_id ) clif_bg_hp(sd); // BattleGround System
+	if( sd->bg_id )
+		clif_bg_hp(sd); // BattleGround System
+ 
+	if( sd->status.faction_id ) { // Faction System [Biali]
+		if( map_getmapflag(sd->bl.m, MF_FVF) ) {
+			faction_hp(sd);
+			clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
+		}
+		if( faction_check_leader(sd) )
+			faction_factionaura(sd);
+	}
 
 	if(!pc_isinvisible(sd) && mapdata->flag[MF_PVP]) {
 		if(!battle_config.pk_mode) { // remove pvp stuff for pk_mode [Valaris]
@@ -10766,6 +10850,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF); //TODO: Figure out the real packet to send here.
 	else if( mapdata_flag_gvg(mapdata) )
 		clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
+	else if (mapdata->flag[MF_FVF])
+		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	else
 		clif_map_property(&sd->bl, MAPPROPERTY_NOTHING, SELF);
 
@@ -11416,8 +11502,45 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 		return;
 	}
 
-	// send message to others (using the send buffer for temp. storage)
-	clif_GlobalMessage(&sd->bl,output,sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
+	if( !sd->chatID && faction_check_chat(sd) ) {// Faction System [Biali]
+		struct faction_data* fdb = faction_search(sd->status.faction_id);
+		//char *faction;
+		//int faction_len = 0;
+		//uint8 buf[256];
+
+		//name = (char*)aMalloc(strlen(fdb->pl_name)+messagelen+3);
+		strcpy(output, fdb->pl_name);
+		strcat(strcat(output, " : "), message);
+		length = strlen(output) + 1;
+
+		if( battle_config.faction_chat_settings&1 ) {
+			WBUFW(fd,0) = 0x2C1;
+			WBUFW(fd,2) = (uint16)(4+length);
+			WBUFL(fd,4) = sd->bl.id;
+			WBUFL(fd,8) = fdb->chat_color;
+			safestrncpy((char*)WBUFP(fd,12), name, length);
+			if( battle_config.faction_chat_settings&2 ) {
+				clif_send(output, WBUFW(fd,2), &sd->bl, FACTION_AREA_WOS);
+
+				WBUFW(fd,2) = (uint16)(4+length);
+				safestrncpy((char*)WBUFP(fd,12), name, length);
+				clif_send(output, WBUFW(fd,2), &sd->bl, FVF_OTHER_AREA_CHAT);
+			} else
+				clif_send(output, WBUFW(fd,2), &sd->bl, AREA_CHAT_WOC);
+		} else {
+			WBUFW(fd,0) = 0x8d;
+			WBUFW(fd,2) = 8 + length;
+			WBUFL(fd,4) = sd->bl.id;
+			safestrncpy((char*)WBUFP(fd,8), output, length);
+			clif_send(output, WBUFW(fd,2), &sd->bl, FACTION_AREA_WOS);
+
+			WBUFW(fd,2) = 8 + length;
+			safestrncpy((char*)WBUFP(fd,8), output, length);
+			clif_send(output, WBUFW(fd,2), &sd->bl, FVF_OTHER_AREA_CHAT);
+		}
+	} else
+		// send message to others (using the send buffer for temp. storage)
+		clif_GlobalMessage(&sd->bl,output,sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
 	length = strlen(output) + 1;
 

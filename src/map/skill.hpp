@@ -87,6 +87,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_ISCHORUS, // Chorus skill
 	INF2_IGNOREBGREDUCTION, // Skill that ignore bg reduction
 	INF2_IGNOREGVGREDUCTION, // Skill that ignore gvg reduction
+	INF2_IGNOREFVFREDUCTION, // Skill that ignore fvf reduction Biali Faction System
 	INF2_DISABLENEARNPC, // disable to cast skill if near with NPC [Cydh]
 	INF2_TARGETTRAP, // can hit trap-type skill (INF2_ISTRAP) [Cydh]
 	INF2_IGNORELANDPROTECTOR, // Skill that can ignore Land Protector
@@ -110,6 +111,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNOREAUTOGUARD , // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
 	INF2_SHOWSCALE, // Skill shows AoE area while casting
+	INF2_ISFACTION, // Skill related to faction
 	INF2_MAX,
 };
 
@@ -172,6 +174,7 @@ enum e_skill_unit_flag : uint8 {
 	UF_REMOVEDBYFIRERAIN,	// removed by Fire Rain
 	UF_KNOCKBACKGROUP,	// knockback skill unit with its group instead of single unit
 	UF_HIDDENTRAP,	// Hidden trap [Cydh]
+	UF_FACTION_SKILL, // Faction System Biali
 	UF_MAX,
 };
 
@@ -371,7 +374,9 @@ struct skill_unit_group {
 		unsigned ammo_consume : 1; // Need to consume ammo
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
 		unsigned guildaura : 1; // Guild Aura
+		unsigned faction_aura : 1; // Faction System Biali
 	} state;
+	int faction_id; // Faction System Biali
 };
 
 /// Skill unit
@@ -2098,6 +2103,8 @@ enum e_skill {
 	EL_ROCK_CRUSHER,
 	EL_ROCK_CRUSHER_ATK,
 	EL_STONE_RAIN,
+
+	FACTION_AURA = 10020, // Faction System [Biali],
 };
 
 /// The client view ids for land skills.
@@ -2253,7 +2260,8 @@ enum e_skill_unit_id : uint16 {
 	UNT_GD_SOULCOLD = 0xc3,
 	UNT_GD_HAWKEYES = 0xc4,
 
-	UNT_MAX = 0x190
+	UNT_FACTION_AURA = 0x189, // Faction System [Biali]
+	UNT_MAX
 };
 
 /**

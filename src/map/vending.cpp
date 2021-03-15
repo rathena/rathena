@@ -21,6 +21,7 @@
 #include "buyingstore.hpp" // struct s_autotrade_entry, struct s_autotrader
 #include "chrif.hpp"
 #include "clif.hpp"
+#include "faction.hpp"
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "npc.hpp"
@@ -89,6 +90,18 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 		return;
 	if( !vsd->state.vending )
 		return; // not vending
+
+	if( sd->status.faction_id && vsd->status.faction_id )
+	{
+		if( battle_config.faction_trade_settings == 1 && !faction_check_alliance(&sd->bl,&vsd->bl) )
+		{
+			clif_displaymessage(sd->fd, msg_txt(sd,1554));
+			return;
+		} else if( !battle_config.faction_trade_settings && sd->status.faction_id != vsd->status.faction_id ) {
+			clif_displaymessage(sd->fd, msg_txt(sd,1553));
+			return;
+		}
+	}
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) { //check if both GMs are allowed to trade
 		clif_displaymessage(sd->fd, msg_txt(sd,246));

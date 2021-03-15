@@ -608,6 +608,8 @@ struct map_session_data {
 
 	struct clan *clan;
 
+	struct faction_data *faction; // [Ind] speed everything up
+
 	int vended_id;
 	int vender_id;
 	int vend_num;
@@ -1252,7 +1254,7 @@ int pc_identifyall(struct map_session_data *sd, bool identify_item);
 bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv);
 int pc_steal_coin(struct map_session_data *sd,struct block_list *bl);
 
-int pc_modifybuyvalue(struct map_session_data*,int);
+int pc_modifybuyvalue(struct map_session_data*,struct npc_data *nd, int);
 int pc_modifysellvalue(struct map_session_data*,int);
 
 int pc_follow(struct map_session_data*, int); // [MouseJstr]

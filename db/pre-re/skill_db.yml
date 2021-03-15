@@ -33844,3 +33844,16 @@ Body:
       IgnoreKagehumi: true
     CastCancel: true
     Duration2: 300000
+    ## 10020,0,0,4,0,0x3,15,1,0,yes,0,0x8000,0,none,0,	FACTION_AURA,Faction Aura
+  - Id: 10020
+    Name: FACTION_AURA
+    Description: Faction Aura
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: false
+    Flags:
+      IsFaction: true
+    CastCancel: true
+    Duration1: 300000

@@ -367,6 +367,7 @@ enum mob_ai {
 	AI_LEGION,
 	AI_FAW,
 	AI_GUILD,
+	AI_FACTION, //Biali Faction System
 #ifdef BGEXTENDED
 	AI_BOMB,
 #endif
@@ -400,7 +401,7 @@ struct spawn_data {
 	unsigned short num; //Number of mobs using this structure
 	unsigned short active;//Number of mobs that are already spawned (for mob_remove_damaged: no)
 	unsigned int delay1, delay2; //Spawn delay (fixed base + random variance)
-	unsigned int level;
+	unsigned int level, faction_id;
 	struct {
 		unsigned int size : 2; //Holds if mob has to be tiny/large
 		enum mob_ai ai; //Special ai for summoned monsters.
@@ -447,6 +448,7 @@ enum _sp {
 	SP_CASHPOINTS, SP_KAFRAPOINTS,
 	SP_PCDIECOUNTER, SP_COOKMASTERY,
 	SP_ACHIEVEMENT_LEVEL,
+	SP_FACTION,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -592,6 +594,7 @@ enum e_mapflag : int16 {
 	MF_NOCOSTUME,
 	MF_GVG_TE_CASTLE,
 	MF_GVG_TE,
+	MF_FVF, // Biali Faction
 	MF_HIDEMOBHPBAR,
 	MF_NOLOOT,
 	MF_NOEXP,
@@ -644,12 +647,19 @@ struct s_drop_list {
 	enum e_nightmare_drop_type drop_type;
 };
 
+/// Struct of MF_FVF
+struct s_faction {
+	int id;
+	int relic;
+};
+
 /// Union for mapflag values
 union u_mapflag_args {
 	struct point nosave;
 	struct s_drop_list nightmaredrop;
 	struct s_skill_damage skill_damage;
 	struct s_skill_duration skill_duration;
+	struct s_faction faction_info;
 	int flag_val;
 };
 
@@ -666,6 +676,7 @@ enum cell_t{
 	CELL_NOCHAT,
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
+	CELL_NOFVF,
 
 };
 
@@ -690,6 +701,7 @@ enum cell_chk : uint8 {
 	CELL_CHKNOCHAT,			// Whether the cell denies Player Chat Window
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
+	CELL_CHKNOFVF,			// Whether the cell is FvF - Biali
 
 };
 
@@ -709,7 +721,8 @@ struct mapcell
 		novending : 1,
 		nochat : 1,
 		maelstrom : 1,
-		icewall : 1;
+		icewall : 1,
+		nofvf : 1; //Biali Faction System
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
@@ -747,10 +760,16 @@ struct map_data {
 	std::unordered_map<int16, int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
+	std::vector<s_faction> faction_info; // Biali Faction System
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
+
+	struct {
+		int id;
+		int relic;
+	} faction;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -809,7 +828,7 @@ inline bool mapdata_flag_vs(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF])
 		return true;
 
 	return false;
@@ -824,7 +843,7 @@ inline bool mapdata_flag_vs2(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF])
 		return true;
 
 	return false;
@@ -861,6 +880,22 @@ inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
 }
 
 /**
+ * Specifies maps that have special FvF restrictions
+ * Biali
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_fvf(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_FVF])
+		return true;
+
+	return false;
+}
+
+/**
  * No Kill Steal Protection
  * @param mapdata: Map Data
  * @return True on success or false otherwise
@@ -869,7 +904,7 @@ inline bool mapdata_flag_ks(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF])
 		return true;
 
 	return false;

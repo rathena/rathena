@@ -40,7 +40,7 @@ const t_tick MIN_RANDOMWALKTIME = 4000;
 #define MOB_SLAVEDISTANCE 2
 
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
-#define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
+#define DEFAULT_ENEMY_TYPE(md) ((md->special_state.ai || md->faction_id)?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
 
 /**
  * Mob constants
@@ -315,6 +315,8 @@ struct mob_data {
 	 **/
 	int tomb_nid;
 
+	int faction_id; // biali faction system
+
 	e_mob_bosstype get_bosstype();
 };
 
@@ -398,8 +400,8 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y,
 	const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai);
 
-int mob_once_spawn_area(struct map_session_data* sd, int16 m,
-	int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai);
+int mob_once_spawn_area(struct map_session_data* sd, int16 m, 
+	int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai, int faction_id);
 
 bool mob_ksprotected (struct block_list *src, struct block_list *target);
 

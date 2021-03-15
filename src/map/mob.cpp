@@ -734,7 +734,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 /*==========================================
  * Spawn mobs in the specified area.
  *------------------------------------------*/
-int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
+int mob_once_spawn_area(struct map_session_data* sd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai, int faction_id)
 {
 	int i, max, id = 0;
 	int lx = -1, ly = -1;
@@ -4002,7 +4002,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		uint16 sk_idx = 0;
 
 		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
-			skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD }) ||
+			skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD, INF2_ISFACTION }) ||
 			mob_clone_disabled_skills(skill_id)
 		)
 			continue;

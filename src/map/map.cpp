@@ -120,7 +120,7 @@ static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
 #ifndef MAP_MAX_MSG
-	#define MAP_MAX_MSG 1550
+	#define MAP_MAX_MSG 1660
 #endif
 
 struct map_data map[MAX_MAP_PER_SERVER];
@@ -4667,6 +4667,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_BATTLEGROUND] = false;
 					ShowWarning("map_setmapflag: Unable to set Battleground and PvP flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+					ShowWarning("map_setmapflag: Unable to set Faction and PvP flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
+				}
 			}
 			break;
 		case MF_GVG:
@@ -4686,6 +4690,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_BATTLEGROUND] = false;
 					ShowWarning("map_setmapflag: Unable to set Battleground and GvG flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+					ShowWarning("map_setmapflag: Unable to set Faction and GvG flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
+				}
 			}
 			break;
 		case MF_GVG_CASTLE:
@@ -4704,14 +4712,24 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					if (!battle_config.pk_mode)
 						ShowWarning("npc_parse_mapflag: Unable to set PvP and GvG%s Castle flags for the same map! Removing PvP flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
 				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+						ShowWarning("npc_parse_mapflag: Unable to set FVF and GvG%s Castle flags for the same map! Removing FVF flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
+				}
 			}
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_GVG_DUNGEON:
-			if (status && mapdata->flag[MF_PVP]) {
-				mapdata->flag[MF_PVP] = false;
-				if (!battle_config.pk_mode)
-					ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+			if (status) {
+				if (mapdata->flag[MF_PVP]) {
+					mapdata->flag[MF_PVP] = false;
+					if (!battle_config.pk_mode)
+						ShowWarning("map_setmapflag: Unable to set PvP and GvG Dungeon flags for the same map! Removing PvP flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+						ShowWarning("map_setmapflag: Unable to set FVF and GvG Dungeon flags for the same map! Removing FVF flag from %s.\n", mapdata->name);
+				}
 			}
 			mapdata->flag[mapflag] = status;
 			break;
@@ -4801,9 +4819,25 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_GVG_CASTLE] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG Castle and Battleground flags for the same map! Removing GvG Castle flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+					ShowWarning("map_setmapflag: Unable to set Faction and Battleground flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
+				}
 				mapdata->flag[mapflag] = ((args->flag_val <= 0 || args->flag_val > 2) ? 1 : args->flag_val);
 			} else
 				mapdata->flag[mapflag] = false;
+			break;
+		case MF_FVF:
+			if (!status) {
+				mapdata->faction = {};
+				mapdata->faction_info.clear();
+				mapdata->flag[mapflag] = false;
+			} else {
+				nullpo_retr(false, args);
+				mapdata->faction.id = args->faction_info.id;
+				mapdata->faction.relic = args->faction_info.relic;
+			}
+			mapdata->flag[mapflag] = status;
 			break;
 		case MF_NOLOOT:
 			mapdata->flag[MF_NOMOBLOOT] = status;
@@ -4924,6 +4958,7 @@ void do_final(void){
 	do_final_duel();
 	do_final_elemental();
 	do_final_cashshop();
+	do_final_faction(); 
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
 	do_final_buyingstore();

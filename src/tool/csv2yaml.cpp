@@ -1166,6 +1166,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::Key << "DisableNearNpc" << YAML::Value << "true";
 		if (inf2_val & 0x40000)
 			body << YAML::Key << "TargetTrap" << YAML::Value << "true"; // ?
+		if (inf2_val & 0x80000)
+			body << YAML::Key << "IsFaction" << YAML::Value << "true"; // ?
 
 		if (inf3_val & 0x1)
 			body << YAML::Key << "IgnoreLandProtector" << YAML::Value << "true";
