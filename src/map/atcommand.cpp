@@ -4353,13 +4353,8 @@ ACMD_FUNC(mapinfo) {
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1051)); // Other Flags2:
-	if (map_getmapflag(m_id, MF_FVF)) {
-		strcat(atcmd_output, " FvF ON |");
-		if (map[m_id].faction.id)
-			sprintf(atcmd_output, " Faction ID: %d |",map[m_id].faction.id);
-		if (map[m_id].faction.relic)
-			sprintf(atcmd_output, " Relic ID: %d |",map[m_id].faction.relic);
-	}
+	if (map_getmapflag(m_id, MF_FVF))
+		sprintf(atcmd_output, " FvF ON - State:  %d Relic: %d |", map[m_id].faction.id,map[m_id].faction.relic);
 	if (map_getmapflag(m_id, MF_NOCOMMAND))
 		strcat(atcmd_output, " NoCommand |");
 	if (map_getmapflag(m_id, MF_NOBASEEXP))

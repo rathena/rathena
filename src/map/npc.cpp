@@ -4346,7 +4346,6 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			map_setmapflag_sub(m, MF_NOSAVE, state, &args);
 			break;
 		}
-
 		case MF_PVP_NIGHTMAREDROP: {
 			char drop_arg1[16], drop_arg2[16];
 			union u_mapflag_args args = {};
@@ -4373,7 +4372,6 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				map_setmapflag(m, MF_PVP_NIGHTMAREDROP, false);
 			break;
 		}
-
 		case MF_BATTLEGROUND:
 			if (state) {
 				union u_mapflag_args args = {};
@@ -4385,25 +4383,24 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			} else
 				map_setmapflag(m, MF_BATTLEGROUND, false);
 			break;
-
-		case MF_FVF:
-			if( state )	{
-				union u_mapflag_args args = {};
-				int relic = -1;
-				map_setmapflag(m, MF_FVF, true);
-
-				if( sscanf(w4, "%11d,%11d", &state, &relic) == 2 || sscanf(w4, "%11d", &state) == 1 )
-				{
-					map[m].faction.id = state;
-					map[m].faction.relic = relic;
-				}
+		case MF_FVF: {
+			union u_mapflag_args args = {};
+			int relic = -1;
+			if (!state) {
+				args.faction_info.id = 0;
+				args.faction_info.relic = relic;
+				map_setmapflag_sub(m, MF_FVF, false, &args);
 			} else {
-				map_setmapflag(m, MF_FVF, false);
-				map[m].faction.id = 0;
-				map[m].faction.relic = -1;
+				if (sscanf(w4, "%11d,%11d[^\n]", &state, &relic) == 2) {
+					args.faction_info.id = state;
+					args.faction_info.relic = relic;
+					map_setmapflag_sub(m, MF_FVF, true, &args);
+				} else {
+					ShowWarning("npc_parse_mapflag: Invalid State '%d',relic '%d' supplied for mapflag 'fvf' (file '%s', line '%d'), removing.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", args.faction_info.id, args.faction_info.relic, filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
+				}
 			}
 			break;
-
+		}
 		case MF_NOCOMMAND:
 			if (state) {
 				union u_mapflag_args args = {};

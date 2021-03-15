@@ -19,6 +19,7 @@
 #include "atcommand.hpp"	//msg_txt()
 #include "battle.hpp"
 #include "clif.hpp"
+#include "faction.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
 #include "log.hpp"

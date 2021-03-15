@@ -4825,6 +4825,18 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			} else
 				mapdata->flag[mapflag] = false;
 			break;
+		case MF_FVF:
+			if (!status) {
+				mapdata->faction = {};
+				mapdata->faction_info.clear();
+				mapdata->flag[mapflag] = false;
+			} else {
+				nullpo_retr(false, args);
+				mapdata->faction.id = args->faction_info.id;
+				mapdata->faction.relic = args->faction_info.relic;
+			}
+			mapdata->flag[mapflag] = status;
+			break;
 		case MF_NOLOOT:
 			mapdata->flag[MF_NOMOBLOOT] = status;
 			mapdata->flag[MF_NOMVPLOOT] = status;

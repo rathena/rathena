@@ -647,12 +647,19 @@ struct s_drop_list {
 	enum e_nightmare_drop_type drop_type;
 };
 
+/// Struct of MF_FVF
+struct s_faction {
+	int id;
+	int relic;
+};
+
 /// Union for mapflag values
 union u_mapflag_args {
 	struct point nosave;
 	struct s_drop_list nightmaredrop;
 	struct s_skill_damage skill_damage;
 	struct s_skill_duration skill_duration;
+	struct s_faction faction_info;
 	int flag_val;
 };
 
@@ -753,6 +760,7 @@ struct map_data {
 	std::unordered_map<int16, int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
+	std::vector<s_faction> faction_info; // Biali Faction System
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
