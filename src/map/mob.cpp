@@ -6293,9 +6293,9 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 	md->db = mob_db.find(md->mob_id);
 
 	if( md->db == nullptr ){
-		ShowWarning( "mob_reload_sub: Monster %s(ID: %hu) does not exist anymore.\n", md->name, md->mob_id );
+		ShowWarning( "mob_reload_sub: Monster %s (ID: %hu) does not exist anymore.\n", md->name, md->mob_id );
 		if( md->bl.prev != nullptr ){
-			ShowDebug( "mob_reload_sub: The monster was removed from map %s(%hu/%hu).\n", map_mapid2mapname( md->bl.m ), md->bl.x, md->bl.y );
+			ShowDebug( "mob_reload_sub: The monster was removed from map %s (%hu/%hu).\n", map_mapid2mapname( md->bl.m ), md->bl.x, md->bl.y );
 		}
 
 		unit_remove_map( &md->bl, CLR_OUTSIGHT );
