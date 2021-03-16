@@ -21,9 +21,9 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (712,'Flower','Flower','Etc',2,10,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (713,'Empty_Bottle','Empty Bottle','Etc',6,20,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (714,'Emperium','Emperium','Etc',2,1000,true);
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (715,'Yellow_Gemstone','Yellow Gemstone','Etc',600,30,true);
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (716,'Red_Gemstone','Red Gemstone','Etc',600,30,true);
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (717,'Blue_Gemstone','Blue Gemstone','Etc',600,30,true);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (715,'Yellow_Gemstone','Yellow Gemstone','Etc',450,1,true);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (716,'Red_Gemstone','Red Gemstone','Etc',450,1,true);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (717,'Blue_Gemstone','Blue Gemstone','Etc',1500,1,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (718,'Dark_Red_Jewel','Garnet','Etc',6000,100,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (719,'Violet_Jewel','Amethyst','Etc',6000,100,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`) VALUES (720,'Skyblue_Jewel','Aquamarine','Etc',6000,100,true);
