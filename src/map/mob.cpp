@@ -6283,22 +6283,25 @@ void mob_reload_itemmob_data(void) {
  * @return 0
  */
 static int mob_reload_sub( struct mob_data *md, va_list args ){
-	bool slaves_only = va_arg( args, int ) != 0;
-
-	if( slaves_only ){
-		if( md->master_id == 0 ){
-			// Only slaves should be processed now
-			return 0;
-		}
-	}else{
-		if( md->master_id != 0 ){
-			// Slaves will be processed later
-			return 0;
-		}
+	// Slaves have to be killed
+	if( md->master_id != 0 ){
+		unit_remove_map( &md->bl, CLR_OUTSIGHT );
+		return 0;
 	}
 
 	// Relink the mob to the new database entry
 	md->db = mob_db.find(md->mob_id);
+
+	if( md->db == nullptr ){
+		ShowWarning( "mob_reload_sub: Monster %s (ID: %hu) does not exist anymore.\n", md->name, md->mob_id );
+		if( md->bl.prev != nullptr ){
+			ShowDebug( "mob_reload_sub: The monster was removed from map %s (%hu/%hu).\n", map_mapid2mapname( md->bl.m ), md->bl.x, md->bl.y );
+		}
+
+		unit_remove_map( &md->bl, CLR_OUTSIGHT );
+
+		return 0;
+	}
 
 	// Recalculate the monster status based on the new data
 	status_calc_mob(md, SCO_NONE);
@@ -6309,7 +6312,7 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 		md->vd = mob_get_viewdata(md->mob_id);
 
 		// If they are spawned right now
-		if( md->bl.prev != NULL ){
+		if( md->bl.prev != nullptr ){
 			// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
 			clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
 			clif_spawn(&md->bl);
@@ -6345,10 +6348,7 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
 void mob_reload(void) {
 	do_final_mob(true);
 	mob_db_load(true);
-	// First only normal monsters
-	map_foreachmob( mob_reload_sub, 0 );
-	// Then slaves only
-	map_foreachmob( mob_reload_sub, 1 );
+	map_foreachmob(mob_reload_sub);
 	map_foreachnpc(mob_reload_sub_npc);
 }
 
