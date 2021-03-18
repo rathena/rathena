@@ -6974,7 +6974,7 @@ Body:
     Requires:
       SpCost: 10
       ItemCost:
-        - Item: Seed_Of_Life
+        - Item: Germination_Breed
           Amount: 1
   - Id: 244
     Name: AM_REST

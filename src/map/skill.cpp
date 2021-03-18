@@ -16844,6 +16844,14 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 						req.itemid[i] = req.amount[i] = 0;
 					}
 				}
+
+#ifdef RENEWAL
+				// Recalling from Rest state has a different consume item
+				if (skill_id == AM_CALLHOMUN && sd->hd && sd->hd->homunculus.vaporize == HOM_ST_REST) {
+					req.itemid[i] = ITEMID_SEED_OF_LIFE;
+					req.amount[i] = 1;
+				}
+#endif
 			}
 			break;
 	}
