@@ -7964,10 +7964,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			(r_skill = (uint16)sc->data[SC__AUTOSHADOWSPELL]->val1) && (sk_idx = skill_get_index(r_skill)) &&
 			sd->status.skill[sk_idx].id != 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PLAGIARIZED )
 		{
-			int r_lv = sc->data[SC__AUTOSHADOWSPELL]->val2;
-
 			if (r_skill != AL_HOLYLIGHT && r_skill != PR_MAGNUS) {
-				int type;
+				int r_lv = sc->data[SC__AUTOSHADOWSPELL]->val2, type;
+
 				if( (type = skill_get_casttype(r_skill)) == CAST_GROUND ) {
 					int maxcount = 0;
 					std::shared_ptr<s_skill_db> skill = skill_db.find(r_skill);
