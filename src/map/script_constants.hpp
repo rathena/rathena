@@ -1611,6 +1611,7 @@
 	export_constant(SC_EP16_2_BUFF_AC);
 	export_constant(SC_EMERGENCY_MOVE);
 	export_constant(SC_MADOGEAR);
+	export_constant(SC_NPC_HALLUCINATIONWALK);
 	export_constant(SC_OVERBRANDREADY);
 	export_constant(SC_POISON_MIST);
 	export_constant(SC_STONE_WALL);

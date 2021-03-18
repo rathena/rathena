@@ -613,7 +613,7 @@ OnDisable:
 		mes "There is much left for use to find out.";
 		erasequest 7692;
 		setquest 7693;// Surprise Attack
-		banquet_main_quest = 9;
+		ep16_royal = 9;
 		next;
 		mes "[Kronecker]";
 		mes "Whoever left here, clear out with the wounded near you!";
