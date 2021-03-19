@@ -8372,8 +8372,8 @@ Body:
     AegisName: RepairA
     Name: Repair A
     Type: Usable
-    Buy: 220
-    Weight: 100
+    Buy: 275
+    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -8388,8 +8388,8 @@ Body:
     AegisName: RepairB
     Name: Repair B
     Type: Usable
-    Buy: 500
-    Weight: 140
+    Buy: 625
+    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -8404,8 +8404,8 @@ Body:
     AegisName: RepairC
     Name: Repair C
     Type: Usable
-    Buy: 1100
-    Weight: 180
+    Buy: 1375
+    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -11665,7 +11665,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      getitem 1775,200;
+      getitem 1775,500;
   - Id: 12678
     AegisName: Siege_Arrow_Quiver_A
     Name: Siege Arrow Quiver A
@@ -11676,7 +11676,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      getitem 1776,200;
+      getitem 1776,500;
   - Id: 12679
     AegisName: Sg_White_Potion_Box
     Name: Siege White Potion Box
