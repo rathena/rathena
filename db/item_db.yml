@@ -85,7 +85,7 @@
 Header:
   Type: ITEM_DB
   Version: 1
-
+Body:
   - Id: 8965
     AegisName: Blue_Skull
     Name: Blue Skull

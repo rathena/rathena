@@ -4617,7 +4617,7 @@ int npc_parsesrcfile(const char* filepath)
 			break;
 		}
 
-		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
+		if( w1[0] != '-' && strcasecmp(w1,"function") != 0 )
 		{// w1 = <map name>,<x>,<y>,<facing>
 			char mapname[MAP_NAME_LENGTH_EXT];
 			int count2;

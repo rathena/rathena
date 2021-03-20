@@ -284,7 +284,7 @@ void faction_spawn(struct block_list *bl)
 	struct faction_data *fdb;
 	uint8 buf[33];
 
-	if( (fdb = faction_search(faction_get_id(bl))) == NULL )
+	if( (fdb = faction_search(faction_get_id(bl))) == NULL ) 
 		return;
 
 	if( map_getmapflag(bl->m, MF_FVF) ) {
@@ -523,6 +523,7 @@ static int faction_readdb(void)
 		}
 
 		id = atoi(str[0]);
+
 		if( id < 1 || id > MAX_FACTION ) {
 			ShowError("faction_readdb : Incorrect Faction ID: %d, must be between 0 and %d\n", id, MAX_FACTION);
 			continue;
@@ -652,12 +653,15 @@ static int faction_readdb(void)
 		fdb->ccolor = ccolor;
 		fdb->chat_color = chat_color;
 		memcpy(&fdb->aura, &aura, sizeof(fdb->aura));
+
 		fdb->script = parse_script(str[12],path,lines,0);
 		fdb->aura_bonus = parse_script(str[13],path,lines,0);
+
 		for( i = 0; i < MAX_RELIC; i++ ) {
 			sprintf(out, "$faction_relics_%d",id);
 			fdb->relic[i].item_id = mapreg_readreg(reference_uid(add_str(out), i));
 		}
+
 		sprintf(out, "$faction_leader_id_%d",id);
 		fdb->leader_id = mapreg_readreg(add_str(out));
 
