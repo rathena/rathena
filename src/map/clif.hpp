@@ -1167,6 +1167,12 @@ void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 /// Pet evolution
 void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result );
 
+// (^~_~^) LGP Start
+
+void clif_gepard_send_lgp_settings(struct map_session_data * sd);
+
+// (^~_~^) LGP End
+
 void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id );
 
 #endif /* CLIF_HPP */
