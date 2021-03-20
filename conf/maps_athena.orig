@@ -1,55 +1,3 @@
-//------------------------- Ragnamania ---------------------------
-map: myhome1
-map: sala_premmy
-map: dreamland
-map: maze
-map: hell
-//map: rent_m
-map: rent_ma
-map: rent_mb
-map: rent1
-map: renta1
-map: rentb1
-map: rentc1
-map: rentd1
-map: rente1
-map: rentf1
-map: rentg1
-map: rentin1
-map: rentina1
-map: rentinb1
-map: rentinc1
-map: rentind1
-map: rentine1
-map: rentinf1
-map: renting1
-//bg
-map: bat_a03
-map: bat_a04
-map: bat_a05
-map: bat_b03
-map: bat_b04
-map: bat_b05
-map: bat_c04
-map: bat_c05
-map: bat_c06
-map: bat_c07
-map: bat_c08
-map: schg_cas06
-map: schg_cas07
-map: schg_cas08
-map: arug_cas06
-map: arug_cas07
-map: arug_cas08
-map: rush_cas01
-map: rush_cas02
-map: rush_cas03
-map: rush_cas04
-map: region_8
-map: bg_ball
-map: bomberman
-map: bg_bomber
-map: bg_bomber2
 //------------------------- Normal Maps ---------------------------
 map: alb_ship
 map: alb2trea
@@ -1226,7 +1174,7 @@ map: 1@glast
 
 // Biochemical Laboratory Nightmare
 map: lhz_dun_n
-//map: lhz_d_n2
+map: lhz_d_n2
 
 // Copy of Old Glast Heim memorial map
 map: 1@gl_kh
@@ -1245,138 +1193,138 @@ map: verus02
 map: paramk
 
 // Clan memorial
-//map: 1@ffp
+map: 1@ffp
 
 // Infinite memorial
-//map: 1@infi
+map: 1@infi
 
 // EP 16.1 Banquet For Heroes
 map: 1@mir
-// map: 2@mir
-// map: 1@sthb
-// map: 1@sthc
-// map: 1@sthd
+map: 2@mir
+map: 1@sthb
+map: 1@sthc
+map: 1@sthd
 
-// map: prt_cas
-// map: prt_cas_q
-// map: prt_prison
-// map: prt_lib
-// map: prt_lib_q
-// map: prt_q
-// map: prt_pri00
+map: prt_cas
+map: prt_cas_q
+map: prt_prison
+map: prt_lib
+map: prt_lib_q
+map: prt_q
+map: prt_pri00
 
 // New Novice Grounds
-// map: int_land
-// map: int_land01
-// map: int_land02
-// map: int_land03
-// map: int_land04
+map: int_land
+map: int_land01
+map: int_land02
+map: int_land03
+map: int_land04
 
 // Doram
-// map: lasagna
-// map: lasa_fild01
-// map: lasa_fild02
-// map: lasa_dun01
-// map: lasa_dun02
-// map: lasa_dun03
-// map: conch_in
-// map: lasa_in01
-// map: lasa_dun_q
+map: lasagna
+map: lasa_fild01
+map: lasa_fild02
+map: lasa_dun01
+map: lasa_dun02
+map: lasa_dun03
+map: conch_in
+map: lasa_in01
+map: lasa_dun_q
 
 // Pope Memorial Day
-// map: 1@pop1
-// map: 1@pop2
-// map: 1@pop3
+map: 1@pop1
+map: 1@pop2
+map: 1@pop3
 
 // ep16.2
-// map: 1@slw
-// map: 1@swat
-// map: que_swat
-// map: slabw01
-// map: rebel_in
+map: 1@slw
+map: 1@swat
+map: que_swat
+map: slabw01
+map: rebel_in
 
 // Memorial day
-// map: 1@md_gef
-// map: 1@md_pay
+map: 1@md_gef
+map: 1@md_pay
 
 // Localizing Rockridge
-// map: har_in01
-// map: harboro1
-// map: harboro2
-// map: rockmi1
-// map: rockmi2
-// map: rockrdg1
-// map: rockrdg2
+map: har_in01
+map: harboro1
+map: harboro2
+map: rockmi1
+map: rockmi2
+map: rockrdg1
+map: rockrdg2
 
 // Chicken Mode Nightmare Glastheim
-// map: 1@gl_k2
-// map: 2@gl_k2
+map: 1@gl_k2
+map: 2@gl_k2
 
 // Chicken Mode Horror Toy Factory
-// map: 1@xm_d2
+map: 1@xm_d2
 
 // Illusion Payon (Moonlight)
-// map: pay_d03_i
+map: pay_d03_i
 
 // Illusion Geffen (Vampire)
-// map: gef_d01_i
+map: gef_d01_i
 
 // Illusion Ice (Frozen)
-// map: ice_d03_i
+map: ice_d03_i
 
 // Suspicious shipwreck
-// map: 1@tre
+map: 1@tre
 
 // Poring Town
-// map: 1@begi
+map: 1@begi
 
 // Illusion Turtle island (Archery)
-// map: tur_d03_i
-// map: tur_d04_i
+map: tur_d03_i
+map: tur_d04_i
 
 // Volcanic island Korodo
-// map: 1@crd
+map: 1@crd
 
 // ??
 map: ordeal_a00
 map: ordeal_a02
-// map: pprontera
+map: pprontera
 
 // ??
-// map: niflxmas
-// map: sch_lab
-// map: nakhyang
+map: niflxmas
+map: sch_lab
+map: nakhyang
 
 // Noodles Festival July
-// map: lasa_sea
-// map: 1@drdo
+map: lasa_sea
+map: 1@drdo
 
 // X anniversary
-// map: x_lhz
-// map: x_prt
-// map: x_ra
+map: x_lhz
+map: x_prt
+map: x_ra
 
 // November hunting contest
-// map: prt_evt_in
+map: prt_evt_in
 
 // Welcome Corridor
-// map: vis_h01
-// map: vis_h02
-// map: vis_h03
-// map: vis_h04
+map: vis_h01
+map: vis_h02
+map: vis_h03
+map: vis_h04
 
 // Illusion Teddy Bear Nasarian Empire
-// map: ein_d02_i
+map: ein_d02_i
 
 // Illusion Ruande
-// map: com_d02_i
+map: com_d02_i
 
 // Soul Reaper Job Change
-// map: 1@soul
+map: 1@soul
 
 // Star Emperor Job Change
-// map: star_frst
-// map: star_in
+map: star_frst
+map: star_in
 
 // RWC Maps
 map: 2009rwc_01
@@ -1397,6 +1345,138 @@ map: 2012rwc_06
 map: 2012rwc_07
 map: 2012rwc_08
 
+// ep17.1
+map: 1@cor
+map: 1@os_a
+map: 1@os_b
+map: 1@rgsr
+map: gl_cas01_
+map: mag_dun03
+map: pub_cat
+map: rgsr_in
+map: sp_cor
+map: sp_os
+map: sp_rudus
+map: sp_rudus2
+map: sp_rudus3
+map: sp_rudus4
+
+// ep17.2
+map: 1@bamn
+map: 1@bamq
+map: 1@ghg
+map: 1@herbs
+map: 1@lost
+map: ba_2whs01
+map: ba_2whs02
+map: ba_bath
+map: ba_in01
+map: ba_lib
+map: ba_maison
+map: ba_pw01
+map: ba_pw02
+map: ba_pw03
+map: 1@odin
+map: odin_past
+
+// Illusion of Labyrinth
+map: prt_mz03_i
+
+// Illusion of Underwater
+map: iz_d04_i
+map: iz_d05_i
+
+// 4th jobs change
+map: 1@4win
+map: 1@4mag
+map: 1@4mst
+map: 1@4sac
+map: 1@4tro
+map: 1@4inq
+map: 1@4cdn
+map: 1@4igd
+map: 1@4drk
+map: job4_bio
+map: job4_mag
+map: job4_tro
+
+// Gefen Night Arena
+map: 1@ge_sn
+
+// Traces of heroes
+map: 1@mjo1
+map: 1@mjo2
+map: 1@spa2
+
+// Instance Thanatos Tower
+map: 1@thts
+map: 2@thts
+map: 3@thts
+map: 4@thts
+map: 5@thts
+map: 6@thts
+map: 7@thts
+map: 8@thts
+
+// Glastheim Challenge Mode
+map: 1@gl_he
+map: 1@gl_he2
+
+// EDDA
+map: 1@gl_prq
+map: 1@gol1
+map: 1@gol2
+
+// 2018 Halloween
+map: 1@halo
+
+// Constellation Tower
+map: 1@ch_t
+map: 2@ch_t
+map: 3@ch_t
+
+// ?? after 17.1
+map: abyss_04
+map: amicitia1
+map: amicitia2
+map: ba_chess
+map: ba_go
+map: ba_lost
+map: ein_dun03
+map: e_hugel
+map: grademk
+map: nif_dun01
+map: nif_dun02
+map: tra_fild
+map: verus02_a
+map: verus02_b
+
 //------------------------- Clone Maps ---------------------------
 //------------------------- Extra Maps ---------------------------
 
+map: bat_a03
+map: bat_a04
+map: bat_a05
+map: bat_b03
+map: bat_b04
+map: bat_b05
+map: bat_c04
+map: bat_c05
+map: bat_c06
+map: bat_c07
+map: bat_c08
+map: schg_cas06
+map: schg_cas07
+map: schg_cas08
+map: arug_cas06
+map: arug_cas07
+map: arug_cas08
+map: rush_cas01
+map: rush_cas02
+map: rush_cas03
+map: rush_cas04
+map: region_8
+map: bg_ball
+map: bomberman
+map: bg_bomber
+map: bg_bomber2

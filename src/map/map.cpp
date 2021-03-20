@@ -5290,6 +5290,7 @@ int do_init(int argc, char *argv[])
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();
+	do_init_faction(); //Biali Faction system
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
 

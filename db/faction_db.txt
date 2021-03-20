@@ -23,7 +23,7 @@
 // Faction ID: 1
 1,Geffen,Angel,geffen,0,0,8,6,1,1,0,0x6495ED,{ #240 #418 },{ bonus bInt,3; },{ bonus bInt,30; }
 // Faction ID: 2
-2,Payon,Elf,payon,0,0,7,0,1,0,1,0x7CFC00,{ #678 #679 #680 },{ bonus bDex,3; },{ bonus bDex,30; }
+2,Payon,Elf,payon,0,0,0,0,1,0,1,0x7CFC00,{ #678 #679 #680 },{ bonus bDex,3; },{ bonus bDex,30; }
 // Faction ID: 3
 3,Morocc,Demon,morocc,0,0,1,9,1,2,2,0xFF3030,{ #239 #485 },{ bonus bStr,3; },{ bonus bStr,30; }
 // Faction ID: 4

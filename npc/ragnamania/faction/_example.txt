@@ -1,4 +1,4 @@
-rontera,160,180,3	script	Faction Sample	100,{
+prontera,160,180,3	script	Faction Sample	100,{
 mes "[Faction Sample]", "Hello!", "I'm the sample NPC for faction system script commands";
 next;
 mes "[Faction Sample]", "Let's start...", "Input faction ID 1~4 and i'll make you a faction member";
@@ -68,10 +68,11 @@ S_FACTION_INFO:
  * Faction ID = 0, Discount -50% for Faction ID 1, Overcharge 50% for Faction ID 4
  **/
 prontera,152,180,3,0,[1:-50,4:50]	shop	Example_Shop_0	100,7227:100;
+
 /**
  * 'floating' shop
  **/
--,[1:15,4:-5,2:30]	shop	Example_Floating	100,7227:100;
+//-,[1:15,4:-5,2:30]	shop	Example_Floating	100,7227:100;
 
 /**
  * Example script
