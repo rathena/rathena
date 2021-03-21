@@ -79,3 +79,208 @@ Body:
       Y: 36
     AdditionalMaps:
       2@nyd: true
+  - Id: 5
+    Name: MvP Ladder
+    TimeLimit: 10800
+    Enter:
+      Map: 1@mir
+      X: 101
+      Y: 95
+  - Id: 6
+    Name: Battle_Royale
+    TimeLimit: 86400000
+    Enter:
+      Map: verus01
+      X: 0
+      Y: 0
+  - Id: 7
+    Name: Welcome
+    TimeLimit: 86400
+    Enter:
+      Map: new_1-2
+      X: 100
+      Y: 9
+  - Id: 8
+    Name: Eddga [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: pay_fild11
+      X: 280
+      Y: 138
+  - Id: 9
+    Name: Golden Thief Bug [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: prt_sewb4
+      X: 104
+      Y: 88
+  - Id: 10
+    Name: Mistress [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: mjolnir_04
+      X: 160
+      Y: 81
+  - Id: 11
+    Name: Phreeoni [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: moc_fild17
+      X: 220
+      Y: 360
+  - Id: 12
+    Name: Snake Lord [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: gon_dun03
+      X: 68
+      Y: 15
+  - Id: 13
+    Name: Lady Tanee [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: ayo_dun02
+      X: 150
+      Y: 31
+  - Id: 14
+    Name: Orc Hero [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: gef_fild14
+      X: 180
+      Y: 352
+  - Id: 15
+    Name: Orc Lord [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: gef_fild10
+      X: 242
+      Y: 360
+  - Id: 16
+    Name: Turtle General [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: tur_dun04
+      X: 100
+      Y: 184
+  - Id: 17
+    Name: Stormy Knight [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: xmas_dun02
+      X: 37
+      Y: 226
+  - Id: 18
+    Name: Lord of the Dead [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: niflheim
+      X: 328
+      Y: 252
+  - Id: 19
+    Name: Garm [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: xmas_fild01
+      X: 87
+      Y: 63
+  - Id: 20
+    Name: Dark Lord [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: gl_chyard
+      X: 25
+      Y: 148
+  - Id: 21
+    Name: Baphomet [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: prt_maze02
+      X: 97
+      Y: 31
+  - Id: 22
+    Name: Dracula [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: gef_dun01
+      X: 115
+      Y: 227
+  - Id: 23
+    Name: Doppelganger [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: gef_dun02
+      X: 107
+      Y: 127
+  - Id: 24
+    Name: Tao Gunka [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: beach_dun
+      X: 266
+      Y: 68
+  - Id: 25
+    Name: Drake [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: treasure02
+      X: 101
+      Y: 126
+  - Id: 26
+    Name: Moonlight [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: pay_dun04
+      X: 40
+      Y: 118
+  - Id: 27
+    Name: Maya [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: anthell02
+      X: 41
+      Y: 256
+  - Id: 28
+    Name: Osiris [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: moc_pryd04
+      X: 99
+      Y: 12
+  - Id: 29
+    Name: Amon Ra [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: moc_pryd06
+      X: 101
+      Y: 55
+  - Id: 30
+    Name: Incantation Samurai [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: ama_dun03
+      X: 120
+      Y: 36
+  - Id: 31
+    Name: Bacsojin [Normal]
+    TimeLimit: 10800
+    Enter:
+      Map: lou_dun03
+      X: 165
+      Y: 61
+  - Id: 50
+    Name: Home Sweet Home
+    TimeLimit: 86400000
+    Enter:
+      Map: rentb1
+      X: 24
+      Y: 5
+    AditionalMaps:
+      rentinb1 : true
+  - Id: 60
+    Name: Kiman Forest
+    TimeLimit: 3600
+    Enter:
+      Map: ars_dun01
+      X: 125
+      Y: 34
