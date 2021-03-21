@@ -10559,7 +10559,7 @@ Body:
     Type: Weapon
     SubType: Mace
     Buy: 4444
-    Weight: 44
+    Weight: 440
     Attack: 4
     Range: 1
     Slots: 1
@@ -18278,7 +18278,7 @@ Body:
     Type: Weapon
     SubType: Musical
     Buy: 20
-    Weight: 2000
+    Weight: 1000
     Attack: 160
     Range: 1
     Slots: 2
@@ -19532,7 +19532,7 @@ Body:
     Type: Weapon
     SubType: Whip
     Buy: 20
-    Weight: 40
+    Weight: 400
     Attack: 76
     Range: 2
     Slots: 1
@@ -29053,7 +29053,7 @@ Body:
     Name: Leather of Tendrilion
     Type: Armor
     Buy: 20
-    Weight: 300
+    Weight: 500
     Defense: 14
     Slots: 1
     Jobs:
@@ -30947,7 +30947,7 @@ Body:
     Name: Vesper Core 01
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -30976,7 +30976,7 @@ Body:
     Name: Vesper Core 02
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -31005,7 +31005,7 @@ Body:
     Name: Vesper Core 03
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -31034,7 +31034,7 @@ Body:
     Name: Vesper Core 04
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -31136,7 +31136,7 @@ Body:
     AegisName: Women's_Glory
     Name: Woman Glory
     Type: Armor
-    Weight: 500
+    Weight: 1500
     Defense: 1
     Locations:
       Both_Accessory: true
@@ -35658,7 +35658,7 @@ Body:
     Name: Thief Handcuff
     Type: Armor
     Buy: 20
-    Weight: 1400
+    Weight: 2400
     Slots: 1
     Locations:
       Both_Accessory: true
@@ -36992,7 +36992,7 @@ Body:
     Name: Ph.D Hat
     Type: Armor
     Buy: 20
-    Weight: 200
+    Weight: 100
     Defense: 5
     Jobs:
       All: true
@@ -40789,7 +40789,7 @@ Body:
     Name: Robotic Ears
     Type: Armor
     Buy: 20
-    Weight: 10
+    Weight: 100
     Locations:
       Head_Mid: true
     View: 294
@@ -40798,7 +40798,7 @@ Body:
     Name: Round Ears
     Type: Armor
     Buy: 20
-    Weight: 10
+    Weight: 100
     Locations:
       Head_Mid: true
     View: 295
@@ -41522,7 +41522,7 @@ Body:
     Name: Vanilmirth Hat
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 1000
     Locations:
       Head_Top: true
     EquipLevelMin: 30
@@ -43663,7 +43663,7 @@ Body:
     AegisName: Academy_Graduating_Cap
     Name: Academy Completion Hat
     Type: Armor
-    Weight: 200
+    Weight: 500
     Defense: 3
     Locations:
       Head_Top: true
@@ -44416,7 +44416,7 @@ Body:
     Name: RWC 2008 Dragon Helm Gold
     Type: Armor
     Buy: 20
-    Weight: 2500
+    Weight: 1500
     Defense: 14
     Slots: 1
     Locations:
@@ -44442,7 +44442,7 @@ Body:
     Name: RWC 2008 Dragon Helm Silver
     Type: Armor
     Buy: 20
-    Weight: 2500
+    Weight: 1500
     Defense: 10
     Slots: 1
     Locations:
@@ -44468,7 +44468,7 @@ Body:
     Name: RWC 2008 Dragon Helm Copper
     Type: Armor
     Buy: 20
-    Weight: 2500
+    Weight: 1500
     Defense: 5
     Slots: 1
     Locations:
@@ -48286,7 +48286,7 @@ Body:
     Name: Skull Hood
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 700
     Defense: 10
     Slots: 1
     Locations:
@@ -58494,7 +58494,7 @@ Body:
     Type: Weapon
     SubType: Gatling
     Buy: 1600000
-    Weight: 2500
+    Weight: 500
     Attack: 220
     Range: 9
     Slots: 2
@@ -64601,7 +64601,7 @@ Body:
     AegisName: Hippie_Cloth
     Name: Hippie Clothes
     Type: Armor
-    Weight: 50
+    Weight: 500
     Defense: 50
     Jobs:
       BardDancer: true
@@ -71112,7 +71112,7 @@ Body:
     Name: Horn of Ancient
     Type: Armor
     Buy: 40
-    Weight: 200
+    Weight: 400
     Defense: 8
     Slots: 1
     Locations:
@@ -71156,7 +71156,7 @@ Body:
     Name: Mercury Riser
     Type: Armor
     Buy: 40
-    Weight: 200
+    Weight: 400
     Defense: 10
     Slots: 1
     Locations:
@@ -71209,7 +71209,7 @@ Body:
     Name: Cat Ear Beret
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 300
     Defense: 5
     Slots: 1
     Locations:
@@ -75184,7 +75184,7 @@ Body:
     Name: Advanced Jao King Hat
     Type: Armor
     Buy: 10
-    Weight: 1500
+    Weight: 500
     Defense: 4
     Slots: 1
     Locations:
@@ -75872,7 +75872,7 @@ Body:
     Name: Magical Moon Cat
     Type: Armor
     Buy: 20
-    Weight: 50
+    Weight: 100
     Defense: 5
     Slots: 1
     Locations:
@@ -78899,7 +78899,7 @@ Body:
     Name: Illusion Nurse Cap
     Type: Armor
     Buy: 20
-    Weight: 200
+    Weight: 100
     Defense: 4
     Slots: 1
     Jobs:
@@ -96216,7 +96216,7 @@ Body:
     Name: Lava Leather Shoes
     Type: Armor
     Buy: 20
-    Weight: 600
+    Weight: 500
     Defense: 40
     Slots: 1
     Locations:
@@ -109990,7 +109990,7 @@ Body:
     AegisName: ShiningHolyWater_
     Name: Shining Holy Water
     Type: Armor
-    Weight: 100
+    Weight: 150
     Slots: 1
     Locations:
       Both_Accessory: true
@@ -110199,7 +110199,7 @@ Body:
     Name: Charm Grass Necklace
     Type: Armor
     Buy: 20
-    Weight: 10
+    Weight: 100
     Slots: 1
     Jobs:
       Summoner: true
@@ -111610,7 +111610,7 @@ Body:
     AegisName: Badge_Of_Vigilante1
     Name: Sheriff's Left Badge
     Type: Armor
-    Weight: 200
+    Weight: 100
     Slots: 1
     Locations:
       Left_Accessory: true
@@ -111634,7 +111634,7 @@ Body:
     AegisName: Badge_Of_Vigilante2
     Name: Sheriff's Right Badge
     Type: Armor
-    Weight: 200
+    Weight: 100
     Slots: 1
     Locations:
       Right_Accessory: true
