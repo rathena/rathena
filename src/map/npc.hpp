@@ -6,6 +6,7 @@
 
 #include "../common/timer.hpp"
 
+#include "faction.hpp" // Faction System biali
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
@@ -76,6 +77,7 @@ struct npc_data {
 	unsigned int next_walktime;
 	int instance_id;
 
+	int faction_id;
 	unsigned size : 2;
 
 	struct status_data status;
@@ -93,7 +95,11 @@ struct npc_data {
 		struct {
 			struct script_code *script;
 			short xs,ys; // OnTouch area radius
+#ifdef BGEXTENDED
+			int guild_id, bg_id;
+#else
 			int guild_id;
+#endif
 			t_tick timer;
 			int timerid,timeramount,rid;
 			t_tick timertick;
@@ -107,6 +113,7 @@ struct npc_data {
 			t_itemid itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
+			int faction_discount[MAX_FACTION];
 		} shop;
 		struct {
 			short xs,ys; // OnTouch area radius

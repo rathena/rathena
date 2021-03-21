@@ -8,11 +8,15 @@
 
 #include "../common/nullpo.hpp"
 #include "../common/socket.hpp"
+#ifdef BGEXTENDED
+#include "../common/utils.hpp"
+#endif
 
 #include "atcommand.hpp"
 #include "battle.hpp"
 #include "chrif.hpp"
 #include "clif.hpp"
+#include "faction.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "log.hpp"
@@ -68,6 +72,18 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	if (target_sd->trade_partner != 0) {
 		clif_tradestart(sd, 2); // person is in another trade
 		return;
+	}
+
+	if( sd->status.faction_id && target_sd->status.faction_id )
+	{
+		if( battle_config.faction_trade_settings == 1 && !faction_check_alliance(&sd->bl,&target_sd->bl) )
+		{
+			clif_displaymessage(sd->fd, msg_txt(sd,1654));
+			return;
+		} else if( !battle_config.faction_trade_settings && sd->status.faction_id != target_sd->status.faction_id ) {
+			clif_displaymessage(sd->fd, msg_txt(sd,1653));
+			return;
+		}
 	}
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(target_sd)) { // check if both GMs are allowed to trade
@@ -393,7 +409,14 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}
-
+#ifdef BGEXTENDED
+	if( item->card[0]==CARD0_CREATE && (MakeDWord(item->card[2],item->card[3])== (battle_config.bg_reserved_char_id || battle_config.woe_reserved_char_id )&& !battle_config.bg_can_trade) )
+	{	// "Battleground's Items"
+		clif_displaymessage (sd->fd, msg_txt(sd,260));
+		clif_tradeitemok(sd, index+2, 1);
+		return;
+	}
+#endif
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
 		clif_displaymessage(sd->fd, msg_txt(sd,293));
 		clif_tradeitemok(sd, index+2, 1);

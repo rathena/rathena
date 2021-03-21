@@ -22,6 +22,7 @@
 #include "chrif.hpp"
 #include "clif.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "log.hpp"
@@ -1804,6 +1805,66 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = i64max(damage * md->db->damagetaken / 100, 1);
 	}
 
+	return damage;
+}
+
+/*==========================================
+ * Calculates FVF related damage adjustments.
+ *------------------------------------------*/
+
+/**
+ * Determines whether target can be hit
+ * @param src
+ * @param bl
+ * @param skill_id
+ * @param flag
+ * @return Can be hit (true) or can't be hit (false)
+ */
+bool battle_can_hit_fvf_target(struct block_list *src,struct block_list *bl,uint16 skill_id,int flag)
+{
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	struct unit_data *ud = unit_bl2ud(bl);
+
+	if (ud && ud->immune_attack)
+		return false;
+	if (md && md->faction_id) {
+		if (status_bl_has_mode(bl, MD_SKILLIMMUNE) && flag&BF_SKILL) //Skill immunity.
+			return false;
+		if (src->type == BL_PC) {
+			struct map_session_data *sd = map_id2sd(src->id);
+
+			if (sd && faction_get_id(src) == md->faction_id )
+				return false;
+		}
+	}
+	return true;
+} 
+
+int64 battle_calc_fvf_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag)
+{
+	if (!damage) //No reductions to make.
+		return 0;
+
+	if (!battle_can_hit_fvf_target(src,bl,skill_id,flag))
+		return 0;
+
+	if (skill_get_inf2(skill_id, INF2_IGNOREFVFREDUCTION)) //Skills with no fvf damage reduction.
+		return damage;
+
+	if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+		if (flag&BF_WEAPON)
+			damage = damage * battle_config.fvf_weapon_damage_rate / 100;
+		if (flag&BF_MAGIC)
+			damage = damage * battle_config.fvf_magic_damage_rate / 100;
+		if (flag&BF_MISC)
+			damage = damage * battle_config.fvf_misc_damage_rate / 100;
+	} else { //Normal attacks get reductions based on range.
+		if (flag & BF_SHORT)
+			damage = damage * battle_config.fvf_short_damage_rate / 100;
+		if (flag & BF_LONG)
+			damage = damage * battle_config.fvf_long_damage_rate / 100;
+	}
+	damage = i64max(damage,1);
 	return damage;
 }
 
@@ -5560,6 +5621,8 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				wd->damage=battle_calc_gvg_damage(src,target,wd->damage,skill_id,wd->flag);
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage=battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
+			else if( mapdata->flag[MF_FVF] ) // Biali Faction system
+				wd->damage=battle_calc_fvf_damage(src,target,wd->damage,skill_id,wd->flag);
 		}
 		else if(!wd->damage) {
 			wd->damage2 = battle_calc_damage(src,target,wd,wd->damage2,skill_id,skill_lv);
@@ -5567,6 +5630,8 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				wd->damage2 = battle_calc_gvg_damage(src,target,wd->damage2,skill_id,wd->flag);
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage2 = battle_calc_bg_damage(src,target,wd->damage2,skill_id,wd->flag);
+			else if( mapdata->flag[MF_FVF] ) // Biali Faction system
+				wd->damage2 = battle_calc_fvf_damage(src,target,wd->damage2,skill_id,wd->flag);
 		}
 		else {
 			int64 d1 = wd->damage + wd->damage2,d2 = wd->damage2;
@@ -5575,6 +5640,8 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				wd->damage = battle_calc_gvg_damage(src,target,wd->damage,skill_id,wd->flag);
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage = battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
+			else if( mapdata->flag[MF_FVF] ) // Biali Faction system
+				wd->damage = battle_calc_fvf_damage(src,target,wd->damage,skill_id,wd->flag);
 			wd->damage2 = (int64)d2*100/d1 * wd->damage/100;
 			if(wd->damage > 1 && wd->damage2 < 1) wd->damage2 = 1;
 			wd->damage-=wd->damage2;
@@ -6949,6 +7016,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		ad.damage = battle_calc_gvg_damage(src,target,ad.damage,skill_id,ad.flag);
 	else if (mapdata->flag[MF_BATTLEGROUND])
 		ad.damage = battle_calc_bg_damage(src,target,ad.damage,skill_id,ad.flag);
+	else if (mapdata->flag[MF_FVF]) // Biali Faction System
+		ad.damage = battle_calc_fvf_damage(src,target,ad.damage,skill_id,ad.flag);
 
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
@@ -7313,6 +7382,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = battle_calc_gvg_damage(src,target,md.damage,skill_id,md.flag);
 	else if(mapdata->flag[MF_BATTLEGROUND])
 		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
+	else if(mapdata->flag[MF_FVF])
+		md.damage = battle_calc_fvf_damage(src,target,md.damage,skill_id,md.flag);
 
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
@@ -8244,6 +8315,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		}
 	}
 
+	if( flag == BCT_FACTION && faction_get_id(s_bl) == faction_get_id(t_bl) ) // Faction System [Biali]
+		return 1;
+
 	struct map_data *mapdata = map_getmapdata(m);
 
 	switch( target->type ) { // Checks on actual target
@@ -8292,7 +8366,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						case NC_AXETORNADO:
 						case SR_SKYNETBLOW:
 							// Can only hit traps in PVP/GVG maps
-							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
+							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF])
 								return 0;
 							break;
 					}
@@ -8309,7 +8383,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case NC_AXETORNADO:
 					case SR_SKYNETBLOW:
 						// Can only hit icewall in PVP/GVG maps
-						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG])
+						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF])
 							return 0;
 						break;
 					case HT_CLAYMORETRAP:
@@ -8453,6 +8527,13 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			{
 				if( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai )
 					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
+				// Biali faction system
+				if( t_bl != s_bl && map_getmapflag(m, MF_FVF) && !faction_check_alliance(s_bl,t_bl) && md->faction_id && (
+					(battle_config.fvf_monster_ai && !((TBL_MOB*)t_bl)->faction_id) ||
+					(!battle_config.fvf_monster_ai && ((TBL_MOB*)t_bl)->faction_id))) {
+					state |= BCT_ENEMY;
+					strip_enemy = 0;
+				}
 			}
 			break;
 		}
@@ -8506,20 +8587,33 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			else
 				state |= BCT_ENEMY;
 		}
-		if( state&BCT_ENEMY && mapdata->flag[MF_BATTLEGROUND] && sbg_id && sbg_id == tbg_id )
-			state &= ~BCT_ENEMY;
-
-		if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
-		{ // Prevent novice engagement on pk_mode (feature by Valaris)
-			TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
-			if (
-				(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
-				(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
-				(int)sd->status.base_level < battle_config.pk_min_level ||
-			  	(int)sd2->status.base_level < battle_config.pk_min_level ||
-				(battle_config.pk_level_range && abs((int)sd->status.base_level - (int)sd2->status.base_level) > battle_config.pk_level_range)
-			)
+		if( state&BCT_ENEMY ) {
+			if( mapdata->flag[MF_BATTLEGROUND] && sbg_id && sbg_id == tbg_id )
 				state &= ~BCT_ENEMY;
+			if( mapdata->flag[MF_FVF] ) // Faction System
+			{
+				if( (faction_get_id(s_bl) && faction_get_id(t_bl) && (
+					map_getcell(t_bl->m,t_bl->x,t_bl->y,CELL_CHKNOFVF) ||
+					map_getcell(s_bl->m,s_bl->x,s_bl->y,CELL_CHKNOFVF) ||
+					(s_bl->type == BL_PC && ((int)((TBL_PC*)s_bl)->status.base_level < battle_config.fvf_min_lvl)) ||
+					(t_bl->type == BL_PC && ((int)((TBL_PC*)t_bl)->status.base_level < battle_config.fvf_min_lvl)) ||
+					faction_check_alliance(s_bl,t_bl))) ||
+					(s_bl->type == BL_PC && t_bl->type == BL_PC && !faction_get_id(s_bl) && !faction_get_id(t_bl))
+				)
+					state &= ~BCT_ENEMY;
+			}
+			if( battle_config.pk_mode && !map_flag_gvg(m) && s_bl->type == BL_PC && t_bl->type == BL_PC )
+			{ // Prevent novice engagement on pk_mode (feature by Valaris)
+				TBL_PC *sd = (TBL_PC*)s_bl, *sd2 = (TBL_PC*)t_bl;
+				if (
+					(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+					(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+					(int)sd->status.base_level < battle_config.pk_min_level ||
+					(int)sd2->status.base_level < battle_config.pk_min_level ||
+					(battle_config.pk_level_range && abs((int)sd->status.base_level - (int)sd2->status.base_level) > battle_config.pk_level_range)
+				)
+					state &= ~BCT_ENEMY;
+			}
 		}
 	}//end map_flag_vs chk rivality
 	else
@@ -9151,6 +9245,47 @@ static const struct _battle_data {
 	{ "mercenary_autoloot",                 &battle_config.mercenary_autoloot,              0,      0,      1,              },
 	{ "mer_idle_no_share" ,                 &battle_config.mer_idle_no_share,               0,      0,      INT_MAX,        },
 	{ "idletime_mer_option",                &battle_config.idletime_mer_option,             0x1F,   0x1,    0xFFF,          },
+#ifdef BGEXTENDED
+ 	{ "bg_eAmod_mode",                      &battle_config.bg_eAmod_mode,                   1,      0,      1,              },
+ 	{ "bg_idle_announce",                   &battle_config.bg_idle_announce,                0,      0,      INT_MAX,        },
+ 	{ "bg_idle_autokick",                   &battle_config.bg_idle_autokick,                0,      0,      INT_MAX,        },
+ 	{ "bg_reward_rates",                    &battle_config.bg_reward_rates,                 100,    0,      INT_MAX,        },
+ 	{ "bg_reportafk_leaderonly",            &battle_config.bg_reportafk_leaderonly,         1,      0,      1,              },
+ 	{ "bg_queue2team_balanced",             &battle_config.bg_queue2team_balanced,          1,      0,      1,              },
+ 	{ "bg_queue_onlytowns",                 &battle_config.bg_queue_onlytowns,              1,      0,      1,              },
+ 	{ "bg_order_behavior",                  &battle_config.bg_order_behavior,               1,      0,      1,              },
+ 	{ "bg_reserved_char_id",                &battle_config.bg_reserved_char_id,             999996, 0,      INT_MAX,        },
+ 	{ "woe_reserved_char_id",		&battle_config.woe_reserved_char_id,            999997, 0,      INT_MAX,        },
+ 	{ "bg_can_trade",			&battle_config.bg_can_trade,                    1,      0,      1,              },
+ 	{ "bg_double_login",			&battle_config.bg_double_login,                 1,      0,      1,              },
+	// Faction System Biali
+	{ "faction_status_bl",					&battle_config.faction_status_bl,  			BL_CHAR, 	BL_NUL, BL_ALL,         },
+	{ "fvf_monster_ai",						&battle_config.fvf_monster_ai,					1,      0,      1				},
+	{ "faction_chat_settings",				&battle_config.faction_chat_settings,		  1|2,      0,      1|2				},
+	{ "fvf_hp_bar",							&battle_config.fvf_hp_bar,						1,      0,      1				},
+	{ "fvf_min_lvl",						&battle_config.fvf_min_lvl,						55,     1,      MAX_LEVEL		},
+	{ "fvf_visual_size",					&battle_config.fvf_visual_size,					1,      0,      2				},
+	{ "fvf_short_attack_damage_rate",		&battle_config.fvf_short_damage_rate,			80,     0,      INT_MAX         },
+	{ "fvf_long_attack_damage_rate",		&battle_config.fvf_long_damage_rate,			80,     0,      INT_MAX         },
+	{ "fvf_weapon_attack_damage_rate",		&battle_config.fvf_weapon_damage_rate,			60,     0,      INT_MAX         },
+	{ "fvf_magic_attack_damage_rate",		&battle_config.fvf_magic_damage_rate,			60,     0,      INT_MAX         },
+	{ "fvf_misc_attack_damage_rate",		&battle_config.fvf_misc_damage_rate,			60,     0,      INT_MAX         },
+	{ "chat_leader",						&battle_config.chat_leader,				0xFF0000,	0x000000,	0xFFFFFF		},
+	{ "fvf_change_ccolor",					&battle_config.fvf_change_ccolor,				1,		0,      2,				},
+	{ "faction_heal_settings",				&battle_config.faction_heal_settings,			1,		0,      2,				},
+	{ "faction_party_settings",				&battle_config.faction_party_settings,			0,		0,      2,				},
+	{ "faction_guild_settings",				&battle_config.faction_guild_settings,			0,		0,      2,				},
+	{ "faction_heal_bl",                    &battle_config.faction_heal_bl,           	BL_PC, 		BL_NUL, BL_ALL,         },
+	{ "faction_size_bl",                    &battle_config.faction_size_bl,           	BL_CHAR, 	BL_NUL, BL_ALL,         },
+	{ "faction_aura_bl",                    &battle_config.faction_aura_bl,    		BL_CHAR|BL_NPC, BL_NUL, BL_ALL,         },
+	{ "faction_aura_settings",				&battle_config.faction_aura_settings,			0,		0,      2,				},
+	{ "faction_trade_settings",				&battle_config.faction_trade_settings,			0,		0,      2,				},
+	{ "faction_ally_info_bl",				&battle_config.faction_ally_info_bl,  		BL_CHAR, 	BL_NUL, BL_ALL,         },
+	{ "faction_npc_settings",				&battle_config.faction_npc_settings,			0,		0,      2,				},
+	{ "fvf_in_all_maps",					&battle_config.fvf_in_all_maps,					0,		0,      1,				},
+	{ "faction_disc_min",					&battle_config.faction_disc_min,			 -100,	 -INT_MAX,  0		        },
+	{ "faction_disc_max",					&battle_config.faction_disc_max,			  100,		0,   	INT_MAX         },
+ #endif
 
 #include "../custom/battle_config_init.inc"
 };

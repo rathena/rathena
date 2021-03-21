@@ -27,6 +27,9 @@
 // struct script_state* st;
 //
 
+/// Composes the uid of a reference from the id and the index
+#define reference_uid(id,idx) ( (int32)((((uint32)(id)) & 0x00ffffff) | (((uint32)(idx)) << 24)) )
+
 /// Returns the script_data at the target index
 #define script_getdata(st,i) ( &((st)->stack->stack_data[(st)->start + (i)]) )
 /// Returns if the stack contains data at the target index
@@ -370,6 +373,14 @@ enum monsterinfo_types {
 	MOB_MODE,
 	MOB_MVPEXP
 };
+
+#ifdef BGEXTENDED
+enum npcinfo_types {
+	NPC_MAP = 0,
+	NPC_X,
+	NPC_Y,
+};
+#endif
 
 enum petinfo_types {
 	PETINFO_ID = 0,

@@ -33,6 +33,7 @@
 #include "clif.hpp"
 #include "duel.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -1141,6 +1142,9 @@ ACMD_FUNC(hide)
 			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
 			sd->pvp_timer = INVALID_TIMER;
 		}
+		clif_clearunit_area(&sd->bl, CLR_OUTSIGHT);
+		map_foreachinrange(faction_aura_clear, &sd->bl, AREA_SIZE, BL_PC, &sd->bl);
+		clif_refresh(sd);
 	}
 	clif_changeoption(&sd->bl);
 
@@ -1791,6 +1795,41 @@ ACMD_FUNC(gvgon)
 	return 0;
 }
 
+// /*==========================================
+//  *
+//  *------------------------------------------*/
+// ACMD_FUNC(fvfoff)
+// {
+// 	nullpo_retr(-1, sd);
+
+// 	if (!map_getmapflag(sd->bl.m, MF_FVF)) {
+// 		clif_displaymessage(fd, msg_txt(sd,162)); // FVF is already Off.
+// 		return -1;
+// 	}
+
+// 	map_setmapflag(sd->bl.m, MF_FVF, false);
+// 	clif_displaymessage(fd, msg_txt(sd,33)); // FVF: Off.
+
+// 	return 0;
+// }
+
+// /*==========================================
+//  *
+//  *------------------------------------------*/
+// ACMD_FUNC(fvfon)
+// {
+// 	nullpo_retr(-1, sd);
+
+// 	if (map_getmapflag(sd->bl.m, MF_FVF)) {
+// 		clif_displaymessage(fd, msg_txt(sd,163)); // FVF is already On.
+// 		return -1;
+// 	}
+
+// 	map_setmapflag(sd->bl.m, MF_FVF, true);
+// 	clif_displaymessage(fd, msg_txt(sd,34)); // FvF: On.
+
+// 	return 0;
+// }
 /*==========================================
  *
  *------------------------------------------*/
@@ -4314,6 +4353,8 @@ ACMD_FUNC(mapinfo) {
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1051)); // Other Flags2:
+	if (map_getmapflag(m_id, MF_FVF))
+		sprintf(atcmd_output, " FvF ON - State:  %d Relic: %d |", map[m_id].faction.id,map[m_id].faction.relic);
 	if (map_getmapflag(m_id, MF_NOCOMMAND))
 		strcat(atcmd_output, " NoCommand |");
 	if (map_getmapflag(m_id, MF_NOBASEEXP))
@@ -6187,7 +6228,7 @@ ACMD_FUNC(changegm)
 		return -1;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_GUILDLOCK) || map_getmapflag(sd->bl.m, MF_GVG_CASTLE) ) {
+	if( map_getmapflag(sd->bl.m, MF_GUILDLOCK) || map_getmapflag(sd->bl.m, MF_GVG_CASTLE) || map_getmapflag(sd->bl.m, MF_FVF) ) {
 		clif_displaymessage(fd, msg_txt(sd,1182)); // You cannot change guild leaders on this map.
 		return -1;
 	}
@@ -10341,6 +10382,844 @@ ACMD_FUNC(quest) {
 	}
 	return 0;
 }
+#ifdef BGEXTENDED
+/*==========================================
+* Battleground Leader Commands
+*------------------------------------------*/
+ACMD_FUNC(order)
+{
+	nullpo_retr(-1,sd);
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	if( !message || !*message )
+	{
+		clif_displaymessage(fd, "Please, enter a message (usage: @order <message>).");
+		return -1;
+	}
+
+	if( map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
+	{
+		std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
+		if( bgteam->leader_char_id !=  sd->status.char_id) {
+			clif_displaymessage(fd, "This command is reserved for Team Leaders Only.");
+			return -1;
+		}
+		if (battle_config.bg_order_behavior)
+			sprintf(atcmd_output, "%s: %s", sd->status.name, message);
+		else
+			sprintf(atcmd_output, "Team Leader: %s", message);
+		clif_broadcast2(&sd->bl, atcmd_output, (int)strlen(atcmd_output)+1, bgteam->color, 0x190, 20, 0, 0, BG);
+	}
+	else
+	{
+		if( !sd->state.gmaster_flag )
+		{
+			clif_displaymessage(fd, "This command is reserved for Guild Leaders Only.");
+			return -1;
+		}
+		clif_broadcast2(&sd->bl, message, (int)strlen(message)+1, 0xFF0000, 0x190, 20, 0, 0, GUILD);
+	}
+
+	return 0;
+}
+
+ACMD_FUNC(leader)
+{
+	struct map_session_data *pl_sd = NULL;
+	nullpo_retr(-1,sd);
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+		clif_displaymessage(fd,"Please enter a player name (usage: @leader <char name/ID>).");
+		return -1;
+	}
+
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, sd->bg_id);
+	if( bgd->leader_char_id !=  sd->status.char_id)
+		clif_displaymessage(fd, "This command is reserved for Team Leaders Only.");
+	else if( sd->ud.skilltimer != INVALID_TIMER )
+		clif_displaymessage(fd, "Command not allow while casting a skill.");
+	else if( !message || !*message )
+		clif_displaymessage(fd, "Please, enter the new Leader name (usage: @leader <name>).");
+	else if((pl_sd=map_nick2sd(atcmd_player_name,true)) == NULL && (pl_sd=map_charid2sd(atoi(atcmd_player_name))) == NULL)
+		clif_displaymessage(fd, "Character not found.");
+	else if( sd->bg_id != pl_sd->bg_id )
+		clif_displaymessage(fd, "Destination Player is not in your Team.");
+	else if( sd == pl_sd )
+		clif_displaymessage(fd, "You are already the Team Leader.");
+	else
+	{ // Everytest OK!
+		sprintf(atcmd_output, "Team Leader transfered to [%s]", pl_sd->status.name);
+		clif_broadcast2(&sd->bl, atcmd_output, (int)strlen(atcmd_output)+1, bgd->color, 0x190, 20, 0, 0, BG_LISTEN);
+
+		bgd->leader_char_id = pl_sd->status.char_id;
+
+		clif_name_area(&sd->bl);
+		clif_name_area(&pl_sd->bl);
+		return 0;
+	}
+	return -1;
+}
+
+ACMD_FUNC(reportafk)
+{
+	struct map_session_data *pl_sd = NULL;
+	nullpo_retr(-1,sd);
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+		clif_displaymessage(fd,"Please enter a player name (usage: @reportafk <char name/ID>).");
+		return -1;
+	}
+	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
+	if( !sd->bg_id )
+		clif_displaymessage(fd, "This command is reserved for Battleground Only.");
+	else if( bgteam->leader_char_id != sd->status.char_id && battle_config.bg_reportafk_leaderonly )
+		clif_displaymessage(fd, "This command is reserved for Team Leaders Only.");
+	else if( !message || !*message )
+		clif_displaymessage(fd, "Please, enter the character name (usage: @reportafk <name>).");
+	else if((pl_sd=map_nick2sd(atcmd_player_name,true)) == NULL && (pl_sd=map_charid2sd(atoi(atcmd_player_name))) == NULL)
+		clif_displaymessage(fd, "Character not found");
+	else if( sd->bg_id != pl_sd->bg_id )
+		clif_displaymessage(fd, "Destination Player is not in your Team.");
+	else if( sd == pl_sd )
+		clif_displaymessage(fd, "You cannot kick yourself.");
+	else if( pl_sd->state.bg_afk == 0 )
+		clif_displaymessage(fd, "The player is not AFK on this Battleground.");
+	else
+	{ // Everytest OK!
+		if( bgteam == NULL )
+			return -1;
+
+		bg_team_leave(pl_sd,2,true);
+		clif_displaymessage(pl_sd->fd, "You have been kicked from Battleground because of your AFK status.");
+		pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
+
+		sprintf(atcmd_output, "- AFK [%s] Kicked by @reportafk command-", pl_sd->status.name);
+		clif_broadcast2(&sd->bl, atcmd_output, (int)strlen(atcmd_output)+1, bgteam->color, 0x190, 20, 0, 0, BG);
+		return 0;
+	}
+	return -1;
+}
+
+ACMD_FUNC(listenbg)
+{
+	if (sd->state.bg_listen)
+	{
+		sd->state.bg_listen = 0;
+		clif_displaymessage(fd, "You will receive Battleground announcements");
+	}
+	else
+	{
+		sd->state.bg_listen = 1;
+		clif_displaymessage(fd, "You will not receive Battleground announcements.");
+	}
+
+	return 0;
+}
+
+/*==========================================
+* Guild Skill Usage for Guild Masters
+*------------------------------------------*/
+ACMD_FUNC(bgskill)
+{
+	if(!sd->bg_id) return -1;
+	int i, skillnum = 0, skilllv = 0;
+	t_tick tick = gettick();
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, sd->bg_id);
+	const struct { char skillstr[3]; int id; } skills[] = {
+		{ "BO",	10010 },
+		{ "RG",	10011 },
+		{ "RS",	10012 },
+		{ "EC",	10013 },
+	};
+
+	// Check for Skill ID
+	for( i = 0; i < ARRAYLENGTH(skills); i++ )
+	{
+		if( strncmpi(message, skills[i].skillstr, 3) == 0 )
+		{
+			skillnum = skills[i].id;
+			break;
+		}
+	}
+	if( !skillnum )
+	{
+		clif_displaymessage(fd, "Invalid Skill string. Use @bgskill EC/RS/RG/BO");
+		return -1;
+	}
+
+	if( !map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
+	{
+		clif_displaymessage(fd, "This command is only available for Battleground.");
+		return -1;
+	}
+	else
+	{
+		if( bgd->leader_char_id ==  sd->status.char_id )
+		{
+			if(bg_block_skill_status(sd, skillnum))
+				return -1;
+			else
+				skilllv = 1;
+		}
+		else
+		{
+			clif_displaymessage(fd, "This command is reserved for Team Leaders Only.");
+			return -1;
+		}
+	}
+
+	if( pc_cant_act(sd) || pc_issit(sd) || sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER) || sd->state.only_walk || sd->sc.data[SC_BASILICA] )
+		return -1;
+
+	if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 )
+		return -1;
+
+	if( sd->menuskill_id )
+	{
+		if( sd->menuskill_id == SA_TAMINGMONSTER )
+			sd->menuskill_id = sd->menuskill_val = 0; //Cancel pet capture.
+		else if( sd->menuskill_id != SA_AUTOSPELL )
+			return -1; //Can't use skills while a menu is open.
+	}
+
+	sd->skillitem = sd->skillitemlv = 0;
+	if(skillnum) unit_skilluse_id(&sd->bl, sd->bl.id, skillnum, 1);
+	return 0;
+}
+#endif
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @setfaction #
+ *------------------------------------------*/
+ACMD_FUNC(setfaction)
+{
+	struct faction_data* fdb;
+	int id = 0;
+
+	id = atoi(message);
+	if( !message || !*message ) {
+		clif_displaymessage(fd, msg_txt(sd,1628)); // Usage: @setfaction <Faction ID>.
+		return -1;
+	}
+
+	if( id && (fdb = faction_search(id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if( id && fdb ) {
+		sprintf(atcmd_output, msg_txt(sd,1617), fdb->name); // Now you're in faction: %s
+		clif_displaymessage(sd->fd, atcmd_output);
+	} else
+		clif_displaymessage(fd, msg_txt(sd,1640)); // You're not in a faction now.
+
+	sd->status.faction_id = id;
+	status_calc_pc(sd,SCO_NONE);
+
+	if(channel_config.faction_tmpl.opt&CHAN_OPT_AUTOJOIN ) {
+		channel_pcquit(sd,8);
+		if( fdb )
+			channel_join((struct Channel*)fdb->channel, sd);
+	}
+
+	if( map_getmapflag(sd->bl.m, MF_FVF) && !pc_isdead(sd) )
+		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @reloadfactiondb
+ * Reloading faction_db.txt
+ *------------------------------------------*/
+ACMD_FUNC(reloadfactiondb)
+{
+	nullpo_retr(-1, sd);
+
+	do_reload_faction();
+	clif_displaymessage(fd, msg_txt(sd,1603)); // Faction system has been reloaded
+
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @fvfon
+ *------------------------------------------*/
+ACMD_FUNC(fvfon)
+{
+	int faction_id = 0, relic_id = 0;
+
+	nullpo_retr(-1, sd);
+
+	if( map_getmapflag(sd->bl.m, MF_FVF) ) {
+		clif_displaymessage(fd, msg_txt(sd,1613)); // FvF is already on
+		return -1;
+	}
+
+	if( message )
+		sscanf(message, "%d %d", &faction_id, &relic_id);
+
+	map[sd->bl.m].faction.id = faction_id;
+	map[sd->bl.m].faction.relic = relic_id;
+
+	map_setmapflag(sd->bl.m, MF_FVF, true);
+	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_AGITZONE);
+	map_foreachinmap(faction_reload_fvf_sub, sd->bl.m, BL_ALL);
+	clif_displaymessage(fd, msg_txt(sd,1612)); // FvF: On
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @fvfoff
+ *------------------------------------------*/
+ACMD_FUNC(fvfoff)
+{
+	nullpo_retr(-1, sd);
+
+	if( !map_getmapflag(sd->bl.m, MF_FVF) ) {
+		clif_displaymessage(fd, msg_txt(sd,1615)); // FvF is already off
+		return -1;
+	}
+
+	map_setmapflag(sd->bl.m, MF_FVF, false);
+	map[sd->bl.m].faction.id = 0;
+	map[sd->bl.m].faction.relic = 0;
+	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
+	map_foreachinmap(faction_reload_fvf_sub, sd->bl.m, BL_ALL);
+	clif_displaymessage(fd, msg_txt(sd,1614)); // FvF: Off
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @home
+ * Teleporting to Faction Location
+ *------------------------------------------*/
+ACMD_FUNC(home)
+{
+	struct faction_data *fdb = NULL;
+	unsigned short mapindex;
+
+	nullpo_retr(-1, sd);
+
+	if(!sd->status.faction_id) {
+		clif_displaymessage(fd, msg_txt(sd,1607)); // You're not in faction.
+		return -1;
+	}
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if(fdb->map[0] == '\0') {
+		clif_displaymessage(fd, msg_txt(sd,1629)); // Your Faction haven't home location.
+		return -1;
+	}
+
+	if(!(mapindex = mapindex_name2id(fdb->map))) {
+		clif_displaymessage(fd, msg_txt(sd,1629)); // Your Faction haven't home location.
+		return -1;
+	}
+
+	if (pc_setpos(sd, mapindex, fdb->x, fdb->y, CLR_TELEPORT) != 0) {
+		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
+		return -1;
+	}
+
+	clif_displaymessage(fd, msg_txt(sd,0)); // Warped.
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @factionleader
+ * Set Character the faction leader
+ *------------------------------------------*/
+ACMD_FUNC(factionleader)
+{
+	struct faction_data *fdb = NULL;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if(!sd->status.faction_id) {
+		clif_displaymessage(fd, msg_txt(sd,1607)); // You're not in faction.
+		return -1;
+	}
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	faction_change_leader(sd->status.faction_id, sd->status.char_id);
+
+	sprintf(atcmd_output, msg_txt(sd,1621), sd->status.faction_id, fdb->name, sd->status.name); // Leader of Faction %d:%s is now '%s'
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @vote (<Player's Name>)
+ * Voting for Faction Leader
+ *------------------------------------------*/
+ACMD_FUNC(vote)
+{
+	struct faction_data *fdb;
+	struct voting_data *vdb;
+	char charname[NAME_LENGTH];
+	TBL_PC * ssd = NULL;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if( !fdb->voting_active ) {
+		clif_displaymessage(fd, msg_txt(sd,1623)); // Voting for your faction leader not started.
+		return -1;
+	}
+
+	if( (vdb = voting_search(sd->status.char_id)) != NULL && vdb->voted ) {
+		clif_displaymessage(fd, msg_txt(sd,1624)); // You already voted.
+		return -1;
+	}
+
+	if( !message || !*message || (
+			sscanf(message, "\"%23[^\"]\"", charname) < 1 &&
+			sscanf(message, "%23s", charname) < 1)
+	) {
+		clif_displaymessage(fd, msg_txt(sd,1625)); // Usage: @vote <Character Name>.
+		return -1;
+	}
+
+	if( (ssd = map_nick2sd(charname,true)) == NULL ) {
+		sprintf(atcmd_output, msg_txt(sd,1389), command); // %s failed. Player not found.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if( sd->status.faction_id != ssd->status.faction_id ) {
+		clif_displaymessage(fd, msg_txt(sd,1626)); // Player is not in your faction.
+		return -1;
+	}
+
+	if( sd == ssd ) {
+		clif_displaymessage(fd, msg_txt(sd,1627)); // You cannot vote for yourself.
+		return -1;
+	}
+
+
+	faction_voting_add(sd, ssd, 1);
+	sprintf(atcmd_output, msg_txt(sd,1630), ssd->status.name); // You voted for '%s' as a faction leader.
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @factionmonster <Faction ID> <...>
+ *------------------------------------------*/
+ACMD_FUNC(factionmonster)
+{
+	char name[NAME_LENGTH], monster[NAME_LENGTH], eventname[EVENT_NAME_LENGTH] = "";
+	int number = 0, count, faction_id, mob_id, i, range;
+	short mx, my;
+	struct faction_data *fdb;
+	struct mob_data *md;
+	nullpo_retr(-1, sd);
+
+	memset(name, '\0', sizeof(name));
+	memset(monster, '\0', sizeof(monster));
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message) {
+			clif_displaymessage(fd, msg_txt(sd,1622)); // Give the faction ID, display name or monster name/id please.
+			return -1;
+	}
+	if (sscanf(message, "%d \"%23[^\"]\" %23s %d", &faction_id, name, monster, &number) > 2 ||
+		sscanf(message, "%d %23s \"%23[^\"]\" %d", &faction_id, monster, name, &number) > 2) {
+		//All data can be left as it is.
+	} else if ((count=sscanf(message, "%d %23s %d %23s", &faction_id, monster, &number, name)) > 2) {
+		//Here, it is possible name was not given and we are using monster for it.
+		if (count < 3) //Blank mob's name.
+			name[0] = '\0';
+	} else if (sscanf(message, "%d %23s %23s %d", &faction_id, name, monster, &number) > 2) {
+		//All data can be left as it is.
+	} else if (sscanf(message, "%d %23s", &faction_id, monster) > 1) {
+		//As before, name may be already filled.
+		name[0] = '\0';
+	} else {
+		clif_displaymessage(fd, msg_txt(sd,1622)); // Give the faction ID, display name or monster name/id please.
+		return -1;
+	}
+
+	if ((mob_id = mobdb_searchname(monster)) == 0) // check name first (to avoid possible name begining by a number)
+		mob_id = mobdb_checkid(atoi(monster));
+
+	if (mob_id == 0) {
+		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
+		return -1;
+	}
+
+	if (mob_id == MOBID_EMPERIUM) {
+		clif_displaymessage(fd, msg_txt(sd,83)); // Monster 'Emperium' cannot be spawned.
+		return -1;
+	}
+
+	if( (fdb = faction_search(faction_id)) == NULL ) {
+		clif_displaymessage(fd, msg_txt(sd,1616)); // Unknown faction ID
+		return -1;
+	}
+
+	if (number <= 0)
+		number = 1;
+
+	if( !name[0] )
+		strcpy(name, "--ja--");
+
+	// If value of atcommand_spawn_quantity_limit directive is greater than or equal to 1 and quantity of monsters is greater than value of the directive
+	if (battle_config.atc_spawn_quantity_limit && number > battle_config.atc_spawn_quantity_limit)
+		number = battle_config.atc_spawn_quantity_limit;
+
+	if (battle_config.etc_log)
+		ShowInfo("%s monster='%s' name='%s' id=%d count=%d (%d,%d)\n", command, monster, name, mob_id, number, sd->bl.x, sd->bl.y);
+
+	count = 0;
+	range = (int)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
+	for (i = 0; i < number; i++) {
+		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
+		if( (md = mob_once_spawn_sub(&sd->bl, sd->bl.m, mx, my, name, mob_id, eventname, SZ_SMALL, AI_NONE)) ) {
+			md->faction_id = faction_id;
+			mob_spawn(md);
+			count++;
+		}
+	}
+
+	if (count != 0)
+		if (number == count)
+			clif_displaymessage(fd, msg_txt(sd,39)); // All monster summoned!
+		else {
+			sprintf(atcmd_output, msg_txt(sd,240), count); // %d monster(s) summoned!
+			clif_displaymessage(fd, atcmd_output);
+		}
+	else {
+		clif_displaymessage(fd, msg_txt(sd,40)); // Invalid monster ID or name.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Complete Faction System [Lilith]
+ * @factionannounce <message>
+ * Send an announce to your faction being the faction leader
+ *------------------------------------------*/
+ACMD_FUNC(factionannounce)
+{
+	struct faction_data *fdb = NULL;
+
+	nullpo_retr(-1, sd);
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL ) {
+		clif_displaymessage(sd->fd, msg_txt(sd,1607)); // You're not in faction.
+		return -1;
+	}
+
+	if( sd->status.char_id != fdb->leader_id ) {
+		clif_displaymessage(fd, msg_txt(sd,1639)); // You're not a Faction Leader.
+		return -1;
+	}
+
+	if( !message || !*message ) {
+		clif_displaymessage(fd, msg_txt(sd,1638)); // Usage: @factionannounce <message>.
+		return -1;
+	}
+
+	sprintf(atcmd_output, msg_txt(sd,1620), sd->status.name, message); // [Faction Leader] %s : %s
+	clif_broadcast2(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, battle_config.chat_leader, 0x190, 12, 0, 0, FACTION);
+
+	return 0;
+}
+
+// (^~_~^) Gepard Shield Start
+
+ACMD_FUNC(gepard_block_nick)
+{
+	struct map_session_data* violator_sd;
+	time_t time_server;
+	unsigned int duration;
+	unsigned int violator_account_id = 0;
+	unsigned int violator_unique_id = 0;
+	char reason_str[GEPARD_REASON_LENGTH];
+	char unban_time_str[GEPARD_TIME_STR_LENGTH];
+	char duration_type, violator_name[NAME_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_block_nick <duration> <duration_type m/h/d> \"<char name>\" <reason>)";
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!*message || sscanf(message, "%u %c \"%23[^\"]\" %99[^\n]", &duration, &duration_type, violator_name, reason_str) < 4)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	time(&time_server);
+
+	switch (duration_type)
+	{
+		case 'm':
+			time_server += (duration * 60);
+		break;
+
+		case 'h':
+			time_server += (duration * 3600);
+		break;
+
+		case 'd':
+			time_server += (duration * 86400);
+		break;
+
+		default:
+			duration = 0;
+		break;
+	}
+
+	if (duration == 0)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+
+	sprintf(atcmd_output, "Request: block by name - %s", violator_name);
+	clif_displaymessage(fd, atcmd_output);
+
+	violator_sd = map_nick2sd(violator_name, false);
+
+	if (violator_sd != NULL)
+	{
+		violator_account_id = violator_sd->status.account_id;
+		violator_unique_id = session[violator_sd->fd]->gepard_info.unique_id;
+	}
+
+	chrif_gepard_req_block(violator_unique_id, violator_name, violator_account_id, sd->status.name, sd->status.account_id, unban_time_str, reason_str);
+
+	return 0;
+}
+
+// (^~_~^) Gepard Shield End
+
+// (^~_~^) Gepard Shield Start
+
+ACMD_FUNC(gepard_block_account_id)
+{
+	struct map_session_data* violator_sd;
+	time_t time_server;
+	unsigned int duration;
+	unsigned int violator_account_id = 0;
+	unsigned int violator_unique_id = 0;
+	char reason_str[GEPARD_REASON_LENGTH];
+	char duration_type, unban_time_str[GEPARD_TIME_STR_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_block_account_id <duration> <duration_type m/h/d> <account ID> <reason>)";
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!*message || sscanf(message, "%u %c %u %99[^\n]", &duration, &duration_type, &violator_account_id, reason_str) < 4)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	time(&time_server);
+
+	switch (duration_type)
+	{
+		case 'm':
+			time_server += (duration * 60);
+		break;
+
+		case 'h':
+			time_server += (duration * 3600);
+		break;
+
+		case 'd':
+			time_server += (duration * 86400);
+		break;
+
+		default:
+			duration = 0;
+		break;
+	}
+
+	if (duration == 0)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+
+	sprintf(atcmd_output, "Request: block by account ID: %u", violator_account_id);
+	clif_displaymessage(fd, atcmd_output);
+
+	violator_sd = map_id2sd(violator_account_id);
+
+	if (violator_sd != NULL)
+	{
+		violator_account_id = violator_sd->status.account_id;
+		violator_unique_id = session[violator_sd->fd]->gepard_info.unique_id;
+	}
+
+	chrif_gepard_req_block(violator_unique_id, atcmd_player_name, violator_account_id, sd->status.name, sd->status.account_id, unban_time_str, reason_str);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_block_unique_id)
+{
+	time_t time_server;
+	unsigned int duration;
+	unsigned int violator_unique_id = 0;
+	char reason_str[GEPARD_REASON_LENGTH];
+	char duration_type, unban_time_str[GEPARD_TIME_STR_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_block_unique_id <duration> <duration_type m/h/d> <unique ID> <reason>)";
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!*message || sscanf(message, "%u %c %u %99[^\n]", &duration, &duration_type, &violator_unique_id, reason_str) < 4)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	time(&time_server);
+
+	switch (duration_type)
+	{
+		case 'm':
+			time_server += (duration * 60);
+		break;
+
+		case 'h':
+			time_server += (duration * 3600);
+		break;
+
+		case 'd':
+			time_server += (duration * 86400);
+		break;
+
+		default:
+			duration = 0;
+		break;
+	}
+
+	if (duration == 0)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+
+	sprintf(atcmd_output, "Request: block by unqiue ID: %u", violator_unique_id);
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_block(violator_unique_id, NULL, 0, sd->status.name, sd->status.account_id, unban_time_str, reason_str);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_unblock_nick)
+{
+	char violator_name[NAME_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_unblock_nick <char name>)";
+
+	nullpo_retr(-1, sd);
+
+	if (!*message || sscanf(message, "\"%23[^\"]\"[^\n]", violator_name) < 1)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	sprintf(atcmd_output, "Request: unblock by name - %s", violator_name);
+
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_unblock(0, violator_name, 0, sd->status.account_id);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_unblock_account_id)
+{
+	int violator_aid;
+	const char* command_info = "Wrong input (usage: @gepard_unblock_account_id <account ID>)";
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!*message || sscanf(message, "%d", &violator_aid) < 1)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	sprintf(atcmd_output, "Request: unblock by account id - %d", violator_aid);
+
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_unblock(0, NULL, violator_aid, sd->status.account_id);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_unblock_unique_id)
+{
+	unsigned int violator_unique_id;
+	const char* command_info = "Wrong input (usage: @gepard_unblock_unique_id <unique ID>)";
+
+	nullpo_retr(-1, sd);
+
+	if (!*message || sscanf(message, "%u", &violator_unique_id) < 1)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	sprintf(atcmd_output, "Request: unblock by unique id - %u", violator_unique_id);
+
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_unblock(violator_unique_id, NULL, 0, sd->status.account_id);
+
+	return 0;
+}
+
+// (^~_~^) Gepard Shield End
+
 
 #include "../custom/atcommand.inc"
 
@@ -10358,9 +11237,30 @@ void atcommand_basecommands(void) {
 	 * TODO: List all commands that causing crash
 	 **/
 	AtCommandInfo atcommand_base[] = {
+		
+		// (^~_~^) Gepard Shield Start
+		ACMD_DEF(gepard_block_nick),
+		ACMD_DEF(gepard_block_account_id),
+		ACMD_DEF(gepard_block_unique_id),
+		ACMD_DEF(gepard_unblock_nick),
+		ACMD_DEF(gepard_unblock_account_id),
+		ACMD_DEF(gepard_unblock_unique_id),
+		// (^~_~^) Gepard Shield End
+
 #include "../custom/atcommand_def.inc"
 		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
 		ACMD_DEF(where),
+		// Complete Faction System [Lilith]
+		ACMD_DEF(setfaction),
+		ACMD_DEF(reloadfactiondb),
+		ACMD_DEF(fvfon),
+		ACMD_DEF(fvfoff),
+		ACMD_DEF(home),
+		ACMD_DEF(vote),
+		ACMD_DEF(factionmonster),
+		ACMD_DEF(factionleader),
+		ACMD_DEF(factionannounce),
+	// Complete Faction System [Lilith]
 		ACMD_DEF(jumpto),
 		ACMD_DEF(jump),
 		ACMD_DEF(who),
@@ -10650,6 +11550,14 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("erasequest", quest),
 		ACMD_DEF2("completequest", quest),
 		ACMD_DEF2("checkquest", quest),
+#ifdef BGEXTENDED
+		//BG eAmod
+		ACMD_DEF(listenbg),
+		ACMD_DEF(order),
+		ACMD_DEF(leader),
+		ACMD_DEF(reportafk),
+		ACMD_DEF(bgskill),
+#endif
 	};
 	AtCommandInfo* atcommand;
 	int i;

@@ -224,8 +224,16 @@ enum send_target : uint8_t {
 	BG_SAMEMAP_WOS,
 	BG_AREA,
 	BG_AREA_WOS,
+#ifdef BGEXTENDED
+	BG_LISTEN,
+#endif
 
 	CLAN,				// Clan System
+
+	FACTION_AREA_WOS, // Faction System [Biali]
+	AREA_FVF,
+	FVF_OTHER_AREA_CHAT,
+	FACTION,
 };
 
 enum broadcast_flags : uint8_t {
@@ -834,7 +842,18 @@ void clif_bg_updatescore(int16 m);
 void clif_bg_updatescore_single(struct map_session_data *sd);
 void clif_sendbgemblem_area(struct map_session_data *sd);
 void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
-
+#ifdef BGEXTENDED
+// BG eAmod
+void clif_bg_belonginfo (struct map_session_data *sd);
+int clif_visual_guild_id (struct block_list *bl);
+int clif_visual_emblem_id (struct block_list *bl);
+void clif_bg_emblem (struct map_session_data *sd, struct guild *g);
+void clif_bg_memberlist (struct map_session_data *sd);
+void clif_bg_leave_single (struct map_session_data *sd, const char *name, const char *mes);
+void clif_bg_expulsion_single (struct map_session_data *sd, const char *name, const char *mes);
+void clif_bg_updatescore_team (struct map_session_data *sd);
+void clif_sendfakenpc(struct map_session_data *sd, int npcid);
+#endif
 // Battleground Queue
 void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, const char *name, struct map_session_data *sd);
 void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd);
@@ -1093,6 +1112,8 @@ extern unsigned long color_table[COLOR_MAX];
 
 void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
 
+void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl); // Biali Faction System
+
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 
 void clif_ranklist(struct map_session_data *sd, int16 rankingType);
@@ -1145,6 +1166,12 @@ void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 
 /// Pet evolution
 void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result );
+
+// (^~_~^) LGP Start
+
+void clif_gepard_send_lgp_settings(struct map_session_data * sd);
+
+// (^~_~^) LGP End
 
 void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id );
 

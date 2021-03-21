@@ -38,6 +38,7 @@
 #include "date.hpp" // is_day_of_*()
 #include "duel.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -1755,6 +1756,10 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 	// Initialize BG queue
 	sd->bg_queue_id = 0;
+#ifdef BGEXTENDED
+	sd->ballx = 0;
+	sd->bally = 0;
+#endif
 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	sd->hatEffects = {};
@@ -1836,6 +1841,15 @@ void pc_reg_received(struct map_session_data *sd)
 	sd->langtype = static_cast<int>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
+
+	// (^~_~^) LGP Start
+
+	if (is_gepard_active == true)
+	{
+		clif_gepard_send_lgp_settings(sd);
+	}
+
+	// (^~_~^) LGP End
 
 	// Cash shop
 	sd->cashPoints = static_cast<int>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
@@ -2023,7 +2037,7 @@ static bool pc_grant_allskills(struct map_session_data *sd, bool addlv) {
 	for (const auto &skill : skill_db) {
 		uint16 skill_id = skill.second->nameid;
 
-		if (skill_id == 0 || skill.second->inf2[INF2_ISNPC]|| skill.second->inf2[INF2_ISGUILD])
+		if (skill_id == 0 || skill.second->inf2[INF2_ISNPC] || skill.second->inf2[INF2_ISGUILD] || skill.second->inf2[INF2_ISFACTION])
 			continue;
 		switch (skill_id) {
 			case SM_SELFPROVOKE:
@@ -4824,9 +4838,9 @@ int pc_identifyall(struct map_session_data *sd, bool identify_item)
 /*==========================================
  * Update buying value by skills
  *------------------------------------------*/
-int pc_modifybuyvalue(struct map_session_data *sd,int orig_value)
+int pc_modifybuyvalue(struct map_session_data *sd, struct npc_data *nd ,int orig_value)
 {
-	int skill,val = orig_value,rate1 = 0,rate2 = 0;
+	int skill,val = orig_value,rate1 = 0,rate2 = 0, mod = 0;
 	if((skill=pc_checkskill(sd,MC_DISCOUNT))>0)	// merchant discount
 		rate1 = 5+skill*2-((skill==10)? 1:0);
 	if((skill=pc_checkskill(sd,RG_COMPULSION))>0)	 // rogue discount
@@ -4834,6 +4848,10 @@ int pc_modifybuyvalue(struct map_session_data *sd,int orig_value)
 	if(rate1 < rate2) rate1 = rate2;
 	if(rate1)
 		val = (int)((double)orig_value*(double)(100-rate1)/100.);
+
+	if( sd->status.faction_id) 
+		val = (int)((double)orig_value*(double)(100+nd->u.shop.faction_discount[sd->status.faction_id])/100.);
+
 	if(val < battle_config.min_shop_buy)
 		val = battle_config.min_shop_buy;
 
@@ -5101,9 +5119,22 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
  * @return Stored index in inventory, or -1 if not found.
  **/
 short pc_search_inventory(struct map_session_data *sd, t_itemid nameid) {
+#ifdef BGEXTENDED
+	short i,x,y;
+#else
 	short i;
+#endif
 	nullpo_retr(-1, sd);
-
+#ifdef BGEXTENDED
+	if (map_getmapflag(sd->bl.m, MF_BG_CONSUME)) {
+		ARR_FIND( 0, MAX_INVENTORY, x, sd->inventory.u.items_inventory[x].nameid == nameid && ( MakeDWord(sd->inventory.u.items_inventory[x].card[2], sd->inventory.u.items_inventory[x].card[3]) == battle_config.bg_reserved_char_id ) && (sd->inventory.u.items_inventory[x].amount > 0 || nameid == 0) );
+			if( x < MAX_INVENTORY ) return x;
+	}
+	if (map_getmapflag(sd->bl.m, MF_WOE_CONSUME)) {
+		ARR_FIND( 0, MAX_INVENTORY, y, sd->inventory.u.items_inventory[y].nameid == nameid && ( MakeDWord(sd->inventory.u.items_inventory[y].card[2], sd->inventory.u.items_inventory[y].card[3]) == battle_config.woe_reserved_char_id ) && (sd->inventory.u.items_inventory[y].amount > 0 || nameid == 0) );
+			if( y < MAX_INVENTORY ) return y;
+	}
+#endif
 	ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid && (sd->inventory.u.items_inventory[i].amount > 0 || nameid == 0) );
 	return ( i < MAX_INVENTORY ) ? i : -1;
 }
@@ -5622,7 +5653,14 @@ int pc_useitem(struct map_session_data *sd,int n)
 		}
 		return 0;/* regardless, effect is not run */
 	}
-
+#ifdef BGEXTENDED
+	if( sd->inventory.u.items_inventory[n].card[0] == CARD0_CREATE) {
+		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BG_CONSUME))
+			return 0;
+		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.woe_reserved_char_id && !map_getmapflag(sd->bl.m, MF_WOE_CONSUME))
+			return 0;
+	}
+#endif
 	sd->itemid = item.nameid;
 	sd->itemindex = n;
 	if(sd->catch_target_class != PET_CATCH_FAIL) //Abort pet catching.
@@ -8726,6 +8764,9 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
 		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
 	}
+
+	if( sd->status.faction_id && faction_check_leader(sd) ) // Faction System [Biali]
+		faction_factionaura(sd);
 }
 
 bool pc_revive_item(struct map_session_data *sd) {
@@ -8930,7 +8971,8 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 #else
 			val = sd->castrate; break;
 #endif
-		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
+		case SP_FACTION:   		val = sd->status.faction_id; break;
+		case SP_CRIT_DEF_RATE: 	val = sd->bonus.crit_def_rate; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
@@ -9087,6 +9129,12 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		return true;
 	case SP_KILLEDGID:
 		sd->killedgid = val;
+		return true;
+	case SP_FACTION:
+		sd->status.faction_id = cap_value(val, 1, MAX_FACTION);
+		status_calc_pc(sd,SCO_NONE);
+		if( map_getmapflag(sd->bl.m, MF_FVF) )
+			pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 		return true;
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;
@@ -9821,6 +9869,14 @@ bool pc_candrop(struct map_session_data *sd, struct item *item)
 		return false;
 	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
 		return false;
+#ifdef BGEXTENDED
+	if( item->card[0] == CARD0_CREATE) {
+		if (MakeDWord(item->card[2], item->card[3]) == battle_config.bg_reserved_char_id)
+			return false;
+		if (MakeDWord(item->card[2], item->card[3]) == battle_config.woe_reserved_char_id)
+			return false;
+	}
+#endif
 	return (itemdb_isdropable(item, pc_get_group_level(sd)));
 }
 
@@ -13492,6 +13548,29 @@ void pc_set_costume_view(struct map_session_data *sd) {
 	if (robe != sd->status.robe)
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
+
+#ifdef BGEXTENDED
+/***********************************************************
+* Update Idle PC Timer
+***********************************************************/
+int pc_update_last_action(struct map_session_data *sd)
+{
+	int64 tick = gettick();
+
+	sd->idletime = last_tick;
+
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, sd->bg_id);
+	if (sd->bg_id && sd->state.bg_afk && bgd != NULL && bgd->g)
+	{ // Battleground AFK announce
+		char output[128];
+		sprintf(output, "%s : %s is no longer away...", bgd->g->name, sd->status.name);
+		clif_bg_message(bgd.get(), sd->bg_id, bgd->g->name, output, strlen(output) + 1);
+		sd->state.bg_afk = 0;
+	}
+
+	return 1;
+}
+#endif
 
 std::shared_ptr<s_attendance_period> pc_attendance_period(){
 	uint32 date = date_get(DT_YYYYMMDD);

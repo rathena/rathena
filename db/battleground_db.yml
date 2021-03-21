@@ -45,6 +45,8 @@
 #         QuitEvent   NPC event triggered when a player quits.
 #         ActiveEvent NPC event triggered when a player joints an active battleground.
 #         Variable    Name of BG ID variable used in the battleground script.
+#          TeamID:    Team ID. (0 - Blue)
+#          Color:     Palette clothes color ID. (6)
 #       TeamB:        TeamB settings.
 #         RespawnX    X coordinate for warping on death.
 #         RespawnY    Y coordinate for warping on death.
@@ -52,58 +54,28 @@
 #         QuitEvent   NPC event triggered when a player quits.
 #         ActiveEvent NPC event triggered when a player joints an active battleground.
 #         Variable    Name of BG ID variable used in the battleground script.
+#          TeamID:    Team ID. (1 - Red)
+#          Color:     Palette clothes color ID. (22)
+#       TeamC:        TeamB settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
+#         Variable    Name of BG ID variable used in the battleground script.
+#          TeamID:    Team ID. (2 - Green)
+#          Color:     Palette clothes color ID. (10)
 ###########################################################################
-
 Header:
   Type: BATTLEGROUND_DB
   Version: 1
 
 Body:
   - Id: 1
-    Name: Tierra Gorge
-    MinPlayers: 6
-    MinLevel: 80
-    JobRestrictions:
-      Novice: true
-      SuperNovice: true
-      Novice_High: true
-      Baby: true
-      Super_Baby: true
-      Super_Novice_E: true
-      Super_Baby_E: true
-    Locations:
-      - Map: bat_a01
-        StartEvent: start#bat_a01::OnReadyCheck
-        TeamA:
-          RespawnX: 50
-          RespawnY: 374
-          QuitEvent: start#bat_a01::OnGuillaumeQuit
-          ActiveEvent: start#bat_a01::OnGuillaumeActive
-          Variable: $@TierraBG1_id1
-        TeamB:
-          RespawnX: 42
-          RespawnY: 16
-          QuitEvent: start#bat_a01::OnCroixQuit
-          ActiveEvent: start#bat_a01::OnCroixActive
-          Variable: $@TierraBG1_id2
-      - Map: bat_a02
-        StartEvent: start#bat_a02::OnReadyCheck
-        TeamA:
-          RespawnX: 50
-          RespawnY: 374
-          QuitEvent: start#bat_a02::OnGuillaumeQuit
-          ActiveEvent: start#bat_a02::OnGuillaumeActive
-          Variable: $@TierraBG2_id1
-        TeamB:
-          RespawnX: 42
-          RespawnY: 16
-          QuitEvent: start#bat_a02::OnCroixQuit
-          ActiveEvent: start#bat_a02::OnCroixActive
-          Variable: $@TierraBG2_id2
-  - Id: 2
     Name: Flavius
-    MinPlayers: 6
+    MinPlayers: 2
     MinLevel: 80
+    Deserter: 300
     JobRestrictions:
       Novice: true
       SuperNovice: true
@@ -121,52 +93,203 @@ Body:
           QuitEvent: start#bat_b01::OnGuillaumeQuit
           ActiveEvent: start#bat_b01::OnGuillaumeActive
           Variable: $@FlaviusBG1_id1
+          TeamID: 0
         TeamB:
           RespawnX: 390
           RespawnY: 10
           QuitEvent: start#bat_b01::OnCroixQuit
           ActiveEvent: start#bat_b01::OnCroixActive
           Variable: $@FlaviusBG1_id2
+          TeamID: 1
+  - Id: 2
+    Name: () Capture The Flag
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
       - Map: bat_b02
-        StartEvent: start#bat_b02::OnReadyCheck
+        StartEvent: Flavius_CTF::OnReady
         TeamA:
-          RespawnX: 10
-          RespawnY: 290
-          QuitEvent: start#bat_b02::OnGuillaumeQuit
-          ActiveEvent: start#bat_b02::OnGuillaumeActive
-          Variable: $@FlaviusBG2_id1
-        TeamB:
           RespawnX: 390
           RespawnY: 10
-          QuitEvent: start#bat_b02::OnCroixQuit
-          ActiveEvent: start#bat_b02::OnCroixActive
-          Variable: $@FlaviusBG2_id2
-  - Id: 3
-    Name: KVM (Level 80 and up)
-    MinPlayers: 5
-    MinLevel: 80
-    Locations:
-      - Map: bat_c01
-        StartEvent: KvM01_BG::OnStart
-        TeamA:
-          RespawnX: 52
-          RespawnY: 129
-          DeathEvent: KvM01_BG::OnGuillaumeDie
-          QuitEvent: KvM01_BG::OnGuillaumeQuit
-          ActiveEvent: KvM01_BG::OnGuillaumeActive
-          Variable: $@KvM01BG_id1
+          DeathEvent: Flavius_CTF::OnTeam1Die
+          QuitEvent: Flavius_CTF::OnTeam1Quit
+          ActiveEvent: Flavius_CTF::OnTeam1Active
+          Variable: $@BG10_Team1
+          TeamID: 0
         TeamB:
-          RespawnX: 147
-          RespawnY: 55
-          DeathEvent: KvM01_BG::OnCroixDie
-          QuitEvent: KvM01_BG::OnCroixQuit
-          ActiveEvent: KvM01_BG::OnCroixActive
-          Variable: $@KvM01BG_id2
+          RespawnX: 10
+          RespawnY: 290
+          DeathEvent: Flavius_CTF::OnTeam2Die
+          QuitEvent: Flavius_CTF::OnTeam2Quit
+          ActiveEvent: Flavius_CTF::OnTeam2Active
+          Variable: $@BG10_Team2
+          TeamID: 1
+  - Id: 3
+    Name: () Death Match
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bat_b03
+        StartEvent: Flavius_TD::OnReady
+        TeamA:
+          RespawnX: 390
+          RespawnY: 10
+          DeathEvent: Flavius_TD::OnTeam1Die
+          QuitEvent: Flavius_TD::OnTeam1Quit
+          ActiveEvent: Flavius_TD::OnTeam1Active
+          Variable: $@BG14_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 10
+          RespawnY: 290
+          DeathEvent: Flavius_TD::OnTeam2Die
+          QuitEvent: Flavius_TD::OnTeam2Quit
+          ActiveEvent: Flavius_TD::OnTeam2Active
+          Variable: $@BG14_Team2
+          TeamID: 1
   - Id: 4
-    Name: KVM (Level 60~79)
-    MinPlayers: 5
-    MinLevel: 60
-    MaxLevel: 79
+    Name: () Stone Control
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bat_b04
+        StartEvent: Flavius_SC::OnReady
+        TeamA:
+          RespawnX: 390
+          RespawnY: 10
+          DeathEvent: Flavius_SC::OnGuillaumeDie
+          QuitEvent: Flavius_SC::OnGuillaumeQuit
+          ActiveEvent: Flavius_SC::OnGuillaumeActive
+          Variable: $@BG12_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 10
+          RespawnY: 290
+          DeathEvent: Flavius_SC::OnCroixDie
+          QuitEvent: Flavius_SC::OnCroixQuit
+          ActiveEvent: Flavius_SC::OnCroixActive
+          Variable: $@BG12_Team2
+          TeamID: 1
+  - Id: 5
+    Name: Tierra Gorge
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+      SuperNovice: true
+      Novice_High: true
+      Baby: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+    Locations:
+      - Map: bat_a01
+        StartEvent: start#bat_a01::OnReadyCheck
+        TeamA:
+          RespawnX: 50
+          RespawnY: 374
+          QuitEvent: start#bat_a01::OnGuillaumeQuit
+          ActiveEvent: start#bat_a01::OnGuillaumeActive
+          Variable: $@TierraBG1_id1
+          TeamID: 0
+        TeamB:
+          RespawnX: 42
+          RespawnY: 16
+          QuitEvent: start#bat_a01::OnCroixQuit
+          ActiveEvent: start#bat_a01::OnCroixActive
+          Variable: $@TierraBG1_id2
+          TeamID: 1
+  - Id: 6
+    Name: () Bossnia
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bat_a03
+        StartEvent: Tierra_Boss::OnReady
+        TeamA:
+          RespawnX: 50
+          RespawnY: 374
+          QuitEvent: Tierra_Boss::OnGuillaumeQuit
+          ActiveEvent: Tierra_Boss::OnTeam1Active
+          Variable: $@BG16_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 42
+          RespawnY: 16
+          QuitEvent: Tierra_Boss::OnCroixQuit
+          ActiveEvent: Tierra_Boss::OnTeam2Active
+          Variable: $@BG16_Team2
+          TeamID: 1
+  - Id: 7
+    Name: () Domination
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bat_a04
+        StartEvent: Tierra_DOM::OnReady
+        TeamA:
+          RespawnX: 50
+          RespawnY: 374
+          DeathEvent: Tierra_DOM::OnDie
+          QuitEvent: Tierra_DOM::OnTeam1Quit
+          ActiveEvent: Tierra_DOM::OnTeam1Active
+          Variable: $@BG17_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 42
+          RespawnY: 16
+          DeathEvent: Tierra_DOM::OnDie
+          QuitEvent: Tierra_DOM::OnTeam2Quit
+          ActiveEvent: Tierra_DOM::OnTeam2Active
+          Variable: $@BG17_Team2
+          TeamID: 1
+  - Id: 8
+    Name: () Eye of Storm
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bat_a02
+        StartEvent: Tierra_EOS::OnReady
+        TeamA:
+          RespawnX: 50
+          RespawnY: 374
+          DeathEvent: Tierra_EOS::OnTeam1Die
+          QuitEvent: Tierra_EOS::OnTeam1Quit
+          ActiveEvent: Tierra_EOS::OnTeam1Active
+          Variable: $@BG18_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 42
+          RespawnY: 16
+          DeathEvent: Tierra_EOS::OnTeam2Die
+          QuitEvent: Tierra_EOS::OnTeam2Quit
+          ActiveEvent: Tierra_EOS::OnTeam2Active
+          Variable: $@BG18_Team2
+          TeamID: 1
+  - Id: 9
+    Name: Krieger Von Midgard
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 30
     Locations:
       - Map: bat_c02
         StartEvent: KvM02_BG::OnStart
@@ -177,6 +300,7 @@ Body:
           QuitEvent: KvM02_BG::OnGuillaumeQuit
           ActiveEvent: KvM02_BG::OnGuillaumeActive
           Variable: $@KvM02BG_id1
+          TeamID: 0
         TeamB:
           RespawnX: 147
           RespawnY: 55
@@ -184,27 +308,330 @@ Body:
           QuitEvent: KvM02_BG::OnCroixQuit
           ActiveEvent: KvM02_BG::OnCroixActive
           Variable: $@KvM02BG_id2
-  - Id: 5
-    Name: KVM (Level 59 and below
-    MinPlayers: 5
-    MaxLevel: 59
+          TeamID: 1
+  - Id: 10
+    Name: Double Inferno
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
     Locations:
-      - Map: bat_c03
-        StartEvent: KvM03_BG::OnStart
+      - Map: region_8
+        StartEvent: Tierra_TI::OnReady
         TeamA:
-          RespawnX: 52
-          RespawnY: 129
-          DeathEvent: KvM03_BG::OnGuillaumeDie
-          QuitEvent: KvM03_BG::OnGuillaumeQuit
-          ActiveEvent: KvM03_BG::OnGuillaumeActive
-          Variable: $@KvM03BG_id1
+          RespawnX: 16
+          RespawnY: 51
+          QuitEvent: Tierra_TI::OnTeam1Quit
+          ActiveEvent: Tierra_TI::OnTeam1Active
+          DeathEvent: Tierra_TI::OnTeam1Die
+          Variable: $@BG19_Team1
+          TeamID: 0
+          Color: 6
         TeamB:
-          RespawnX: 147
-          RespawnY: 55
-          DeathEvent: KvM03_BG::OnCroixDie
-          QuitEvent: KvM03_BG::OnCroixQuit
-          ActiveEvent: KvM03_BG::OnCroixActive
-          Variable: $@KvM03BG_id2
+          RespawnX: 83
+          RespawnY: 51
+          QuitEvent: Tierra_TI::OnTeam2Quit
+          ActiveEvent: Tierra_TI::OnTeam2Active
+          DeathEvent: Tierra_TI::OnTeam2Die
+          Variable: $@BG19_Team2
+          TeamID: 1
+          Color: 22
+  - Id: 11
+    Name: Conquest
+    MinPlayers: 5
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: schg_cas06
+        StartEvent: Conquest::OnReady
+        TeamA:
+          RespawnX: 264
+          RespawnY: 379
+          QuitEvent: Conquest::OnTeam1Quit
+          ActiveEvent: Conquest::OnTeam1Active
+          Variable: $@BG11_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 295
+          RespawnY: 379
+          QuitEvent: Conquest::OnTeam2Quit
+          ActiveEvent: Conquest::OnTeam2Active
+          Variable: $@BG11_Team2
+          TeamID: 1
+      - Map: schg_cas07
+        StartEvent: Conquest1::OnReady
+        TeamA:
+          RespawnX: 90
+          RespawnY: 311
+          QuitEvent: Conquest1::OnTeam1Quit
+          ActiveEvent: Conquest1::OnTeam1Active
+          Variable: $@BG11b_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 113
+          RespawnY: 311
+          QuitEvent: Conquest1::OnTeam2Quit
+          ActiveEvent: Conquest1::OnTeam2Active
+          Variable: $@BG11b_Team2
+          TeamID: 1
+      - Map: schg_cas08
+        StartEvent: Conquest2::OnReady
+        TeamA:
+          RespawnX: 28
+          RespawnY: 50
+          QuitEvent: Conquest2::OnTeam1Quit
+          ActiveEvent: Conquest2::OnTeam1Active
+          Variable: $@BG11c_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 87
+          RespawnY: 50
+          QuitEvent: Conquest2::OnTeam2Quit
+          ActiveEvent: Conquest2::OnTeam2Active
+          Variable: $@BG11c_Team2
+          TeamID: 1
+      - Map: arug_cas06
+        StartEvent: Conquest3::OnReady
+        TeamA:
+          RespawnX: 30
+          RespawnY: 381
+          QuitEvent: Conquest3::OnTeam1Quit
+          ActiveEvent: Conquest3::OnTeam1Active
+          Variable: $@BG11d_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 126
+          RespawnY: 357
+          QuitEvent: Conquest3::OnTeam2Quit
+          ActiveEvent: Conquest3::OnTeam2Active
+          Variable: $@BG11d_Team2
+          TeamID: 1
+      - Map: arug_cas07
+        StartEvent: Conquest4::OnReady
+        TeamA:
+          RespawnX: 298
+          RespawnY: 339
+          QuitEvent: Conquest4::OnTeam1Quit
+          ActiveEvent: Conquest4::OnTeam1Active
+          Variable: $@BG11e_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 298
+          RespawnY: 308
+          QuitEvent: Conquest4::OnTeam2Quit
+          ActiveEvent: Conquest4::OnTeam2Active
+          Variable: $@BG11e_Team2
+          TeamID: 1
+      - Map: arug_cas08
+        StartEvent: Conquest5::OnReady
+        TeamA:
+          RespawnX: 313
+          RespawnY: 154
+          QuitEvent: Conquest5::OnTeam1Quit
+          ActiveEvent: Conquest5::OnTeam1Active
+          Variable: $@BG11f_Team1
+          TeamID: 1
+        TeamB:
+          RespawnX: 330
+          RespawnY: 154
+          QuitEvent: Conquest5::OnTeam2Quit
+          ActiveEvent: Conquest5::OnTeam2Active
+          Variable: $@BG11f_Team2
+          TeamID: 0
+  - Id: 12
+    Name: Rush
+    MinPlayers: 2
+    MinLevel: 80
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: rush_cas01
+        StartEvent: Rush::OnReady
+        TeamA:
+          RespawnX: 202
+          RespawnY: 230
+          QuitEvent: Rush::OnTeam1Quit
+          ActiveEvent: Rush::OnTeam1Active
+          Variable: $@BG15_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 202
+          RespawnY: 226
+          QuitEvent: Rush::OnTeam2Quit
+          ActiveEvent: Rush::OnTeam2Active
+          Variable: $@BG15_Team2
+          TeamID: 1
+      - Map: rush_cas02
+        StartEvent: Rush1::OnReady
+        TeamA:
+          RespawnX: 146
+          RespawnY: 50
+          QuitEvent: Rush1::OnTeam1Quit
+          ActiveEvent: Rush1::OnTeam1Active
+          Variable: $@BG15b_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 146
+          RespawnY: 46
+          QuitEvent: Rush1::OnTeam2Quit
+          ActiveEvent: Rush1::OnTeam2Active
+          Variable: $@BG1b_Team2
+          TeamID: 1
+      - Map: rush_cas03
+        StartEvent: Rush::OnReady
+        TeamA:
+          RespawnX: 60
+          RespawnY: 13
+          QuitEvent: Rush2::OnTeam1Quit
+          ActiveEvent: Rush2::OnTeam1Active
+          Variable: $@BG15c_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 64
+          RespawnY: 13
+          QuitEvent: Rush2::OnTeam2Quit
+          ActiveEvent: Rush2::OnTeam2Active
+          Variable: $@BG15c_Team2
+          TeamID: 1
+      - Map: rush_cas04
+        StartEvent: Rush::OnReady
+        TeamA:
+          RespawnX: 270
+          RespawnY: 292
+          QuitEvent: Rush3::OnTeam1Quit
+          ActiveEvent: Rush3::OnTeam1Active
+          Variable: $@BG15d_Team1
+          TeamID: 0
+        TeamB:
+          RespawnX: 270
+          RespawnY: 288
+          QuitEvent: Rush3::OnTeam2Quit
+          ActiveEvent: Rush3::OnTeam2Active
+          Variable: $@BG15d_Team2
+          TeamID: 1
+  - Id: 13
+    Name: Poring Ball
+    MinPlayers: 2
+    MinLevel: 20
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bg_ball
+        StartEvent: Poringball_Config::OnReady
+        TeamA:
+          RespawnX: 24
+          RespawnY: 21
+          DeathEvent: Poringball_Config::OnTeamDie1
+          QuitEvent: Poringball_Config::OnPoringBallQuit
+          ActiveEvent: Poringball_Config::OnTeam1Active
+          Variable: $@BG_Team201
+          TeamID: 0
+          Color: 6
+        TeamB:
+          RespawnX: 130
+          RespawnY: 133
+          DeathEvent: Poringball_Config::OnTeamDie2
+          QuitEvent: Poringball_Config::OnPoringBallQuit
+          ActiveEvent: Poringball_Config::OnTeam2Active
+          Variable: $@BG_Team202
+          TeamID: 1
+          Color: 22
+  - Id: 14
+    Name: Bomberman Ice
+    MinPlayers: 1
+    MaxPlayers: 2
+    MinLevel: 20
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bg_bomber
+        StartEvent: 2Bomb#core::OnStart
+        TeamA:
+          RespawnX: 141
+          RespawnY: 164
+          QuitEvent: 2Bomb#core::OnBombermanQuit
+          Variable: $@bomberman21
+          TeamID: 0
+          Color: 6
+        TeamB:
+          RespawnX: 155
+          RespawnY: 150
+          QuitEvent: 2Bomb#core::OnBombermanQuit
+          Variable: $@bomberman22
+          TeamID: 1
+          Color: 22
+      - Map: bomberman
+        StartEvent: 1Bomb#core::OnStart
+        TeamA:
+          RespawnX: 25
+          RespawnY: 42
+          QuitEvent: 1Bomb#core::OnBombermanQuit
+          Variable: $@bomberman11
+          TeamID: 0
+          Color: 6
+        TeamB:
+          RespawnX: 35
+          RespawnY: 32
+          QuitEvent: 1Bomb#core::OnBombermanQuit
+          Variable: $@bomberman12
+          TeamID: 1
+          Color: 22
+  - Id: 15
+    Name: Bomberman Village
+    MinPlayers: 1
+    MaxPlayers: 2
+    MinLevel: 20
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bg_bomber2
+        StartEvent: 3Bomb#core::OnStart
+        TeamA:
+          RespawnX: 94
+          RespawnY: 85
+          QuitEvent: 3Bomb#core::OnBombermanQuit
+          Variable: $@bomberman31
+          TeamID: 0
+          Color: 6
+        TeamB:
+          RespawnX: 106
+          RespawnY: 73
+          QuitEvent: 3Bomb#core::OnBombermanQuit
+          Variable: $@bomberman32
+          TeamID: 1
+          Color: 22
+  - Id: 16
+    Name: Bomberman Cemetery
+    MinPlayers: 1
+    MaxPlayers: 2
+    MinLevel: 20
+    Deserter: 300
+    JobRestrictions:
+      Novice: true
+    Locations:
+      - Map: bomberman
+        StartEvent: 1Bomb#core::OnStart
+        TeamA:
+          RespawnX: 25
+          RespawnY: 42
+          QuitEvent: 1Bomb#core::OnBombermanQuit
+          Variable: $@bomberman11
+          TeamID: 0
+          Color: 6
+        TeamB:
+          RespawnX: 35
+          RespawnY: 32
+          QuitEvent: 1Bomb#core::OnBombermanQuit
+          Variable: $@bomberman12
+          TeamID: 1
+          Color: 22
 
 Footer:
   Imports:

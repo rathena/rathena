@@ -24,6 +24,7 @@
 #include "battleground.hpp"
 #include "clif.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "itemdb.hpp"
@@ -1017,6 +1018,8 @@ void initChangeTables(void)
 	set_sc( OB_ZANGETSU			, SC_ZANGETSU		, EFST_ZANGETSU		, SCB_MATK|SCB_BATK );
 	set_sc_with_vfx( OB_AKAITSUKI		, SC_AKAITSUKI		, EFST_AKAITSUKI		, SCB_NONE );
 	set_sc( OB_OBOROGENSOU			, SC_GENSOU		, EFST_GENSOU		, SCB_NONE );
+
+	set_sc( FACTION_AURA	, SC_FACTION_AURA	, EFST_BLANK	, SCB_ALL );
 
 	set_sc( ALL_FULL_THROTTLE		, SC_FULL_THROTTLE	, EFST_FULL_THROTTLE	, SCB_SPEED|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
 
@@ -3920,6 +3923,14 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	pc_delautobonus(sd, sd->autobonus2, true);
 	pc_delautobonus(sd, sd->autobonus3, true);
 
+	// Faction System [Blali]
+	if( sd->status.faction_id )
+	{
+		faction_calc(&sd->bl);
+		if (!calculating)
+			return 1;
+	}
+
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
@@ -5814,6 +5825,9 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_ca
 
 	if( bl->type == BL_PET )
 		return; // Pets are not affected by statuses
+
+	if( bl->type&BL_CHAR && !(bl->type&BL_PC) )
+		faction_calc(bl); //Faction System Biali
 
 	if (opt&SCO_FIRST && bl->type == BL_MOB)
 		return; // Assume there will be no statuses active
@@ -10191,6 +10205,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
 			case SC_HAWKEYES:
+			case SC_FACTION_AURA:
 				if( sce->val4 && !val4 ) // You cannot override master guild aura
 					return 0;
 				break;
@@ -12163,6 +12178,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SP_SHA:
 			val2 = 50; // Move speed reduction
 			break;
+		// // Faction System [Biali]
+		// case SC_HIDING:
+		// case SC_CLOAKING:
+		// case SC_CHASEWALK:
+		// case SC_CLOAKINGEXCEED:
+		// case SC__INVISIBILITY:
+		// case SC_CAMOUFLAGE:
+		// 	if( faction_get_id(bl) )
+		// 	{
+		// 		clif_clearunit_area(bl,0);
+		// 		map_foreachinrange(faction_aura_clear, bl, AREA_SIZE, BL_PC, bl);
+		// 		if( sd && battle_config.faction_aura_bl&BL_PC &&
+		// 			((battle_config.faction_aura_settings&1 && map_getmapflag(bl->m,MF_FVF) || battle_config.faction_aura_settings&2) )
+		// 			clif_refresh(sd); 
+		// 	}
+		// 	break;
 
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == -1 && StatusIconChangeTable[type] == EFST_BLANK ) {
@@ -12220,6 +12251,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				// If the player still has a clan status, but was removed from his clan
 				if( sd && sd->status.clan_id == 0 ){
 					return 0;
+				}
+				break;
+			// Faction System [Biali] TODO : This may be in the wrong place and refresh may not be the best option there
+			case SC_HIDING:
+			case SC_CLOAKING:
+			case SC_CHASEWALK:
+			case SC_CLOAKINGEXCEED:
+			case SC__INVISIBILITY:
+			case SC_CAMOUFLAGE:
+				if( faction_get_id(bl) )
+				{
+					clif_clearunit_area(bl,CLR_OUTSIGHT);
+					map_foreachinrange(faction_aura_clear, bl, AREA_SIZE, BL_PC, bl);
+					if( sd && battle_config.faction_aura_bl&BL_PC &&
+						((battle_config.faction_aura_settings&1 && map_getmapflag(bl->m,MF_FVF)) || battle_config.faction_aura_settings&2) )
+						clif_refresh(sd); 
 				}
 				break;
 		}
@@ -13841,6 +13888,17 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if(opt_flag&2 && sd && !sd->state.warping && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_area_allnpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
+	// Complete Faction System [Lilith]
+	if( faction_get_id(bl) && (
+		type == SC_HIDING ||
+		type == SC_CLOAKING ||
+		type == SC_CHASEWALK ||
+		type == SC__INVISIBILITY ||
+		type == SC_CAMOUFLAGE ||
+		type == SC_CLOAKINGEXCEED) 
+	)
+		faction_show_aura(bl);
+
 	ers_free(sc_data_ers, sce);
 	return 1;
 }
@@ -14620,6 +14678,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_GLORYWOUNDS:
 	case SC_SOULCOLD:
 	case SC_HAWKEYES:
+	case SC_FACTION_AURA: 
 		// They only end by status_change_end
 		sc_timer_next(600000 + tick);
 		return 0;
@@ -15019,6 +15078,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_CURSEDCIRCLE_TARGET:
 			case SC_PUSH_CART:
 			case SC_ALL_RIDING:
+			case SC_FACTION_AURA:
 			case SC_STYLE_CHANGE:
 			case SC_MONSTER_TRANSFORM:
 			case SC_ACTIVE_MONSTER_TRANSFORM:

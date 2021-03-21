@@ -11,6 +11,9 @@
 
 #include "../custom/defines_pre.hpp"
 
+/// Battleground Extended [Grenat]
+#define BGEXTENDED
+
 /// Max number of items on @autolootid list
 #define AUTOLOOTITEM_SIZE 10
 

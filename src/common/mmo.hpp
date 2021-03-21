@@ -544,6 +544,8 @@ struct mmo_charstatus {
 	time_t delete_date;
 	time_t unban_time;
 
+	int faction_id; //Biali Faction System
+
 	// Char server addon system
 	unsigned int character_moves;
 
@@ -694,6 +696,9 @@ struct guild {
 	struct Channel *channel;
 	int instance_id;
 	time_t last_leader_change;
+#ifdef BGEXTENDED
+	int skill_block_timer[MAX_GUILDSKILL]; // BG eAmod
+#endif
 
 	/* Used by char-server to save events for guilds */
 	unsigned short save_flag;

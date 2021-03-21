@@ -4,9 +4,11 @@
 //-----------------------------------------
 //grf: C:\Program Files\Gravity\RO\rdata.grf
 //grf: C:\Program Files\Gravity\RO\data.grf
+grf: ~/OneDrive/Ragnamania/Enliven/Client/Beta/data.grf
 
 //-----------------------------------------
 // Data Directory
 // Use the base folder, not the data\ path.
 //-----------------------------------------
 //data_dir: C:\Program Files\Gravity\RO\
+data_dir: ~\Downloads\BattlegroundExtended-1\client

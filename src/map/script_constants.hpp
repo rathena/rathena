@@ -417,6 +417,7 @@
 	export_constant(MF_PVP_NOGUILD);
 	export_constant(MF_GVG);
 	export_constant(MF_GVG_NOPARTY);
+	export_constant(MF_FVF); //Biali Faction
 	export_constant(MF_NOTRADE);
 	export_constant(MF_NOSKILL);
 	export_constant(MF_NOWARP);
@@ -478,6 +479,13 @@
 	export_constant(MF_PRIVATEAIRSHIP_SOURCE);
 	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
 	export_constant(MF_SKILL_DURATION);
+#ifdef BGEXTENDED
+	// Battleground eAmod
+	export_constant(MF_NOECALL);
+	export_constant(MF_BG_CONSUME);
+	export_constant(MF_WOE_CONSUME);
+	export_constant(MF_BG_TOPSCORE);
+#endif
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -540,6 +548,7 @@
 	export_parameter("CharRename",SP_CHARRENAME);
 	export_parameter("Font",SP_CHARFONT);
 	export_parameter("BankVault",SP_BANK_VAULT);
+	export_parameter("Faction",SP_FACTION);
 	export_parameter(ROULETTE_BRONZE_VAR,SP_ROULETTE_BRONZE);
 	export_parameter(ROULETTE_SILVER_VAR,SP_ROULETTE_SILVER);
 	export_parameter(ROULETTE_GOLD_VAR,SP_ROULETTE_GOLD);
@@ -1611,7 +1620,9 @@
 	export_constant(SC_EP16_2_BUFF_AC);
 	export_constant(SC_EMERGENCY_MOVE);
 	export_constant(SC_MADOGEAR);
+	export_constant(SC_FACTION_AURA); //Biali Faction system
 	export_constant(SC_NPC_HALLUCINATIONWALK);
+
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3817,6 +3828,10 @@
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
 	export_constant(AI_GUILD);
+	export_constant(AI_FACTION); // Biali Faction System
+#ifdef BGEXTENDED
+	export_constant(AI_BOMB);
+#endif
 
 	/* battle flags */
 	export_constant(BF_NONE);
@@ -4165,6 +4180,13 @@
 	export_constant(PETINFO_BLOCKID);
 	export_constant(PETINFO_EGGID);
 	export_constant(PETINFO_FOODID);
+
+#ifdef BGEXTENDED
+	/* npcinfo types [Grenat]*/
+	export_constant(NPC_MAP);
+	export_constant(NPC_X);
+	export_constant(NPC_Y);
+#endif
 
 	// For backwards compatability - might be removed in the near future
 	export_constant2("PET_ID",PETINFO_ID);
@@ -7787,6 +7809,7 @@
 	export_constant(INF2_ISCHORUS);
 	export_constant(INF2_IGNOREBGREDUCTION);
 	export_constant(INF2_IGNOREGVGREDUCTION);
+	export_constant(INF2_IGNOREFVFREDUCTION); //Biali Faction System
 	export_constant(INF2_DISABLENEARNPC);
 	export_constant(INF2_TARGETTRAP);
 	export_constant(INF2_IGNORELANDPROTECTOR);
@@ -7810,6 +7833,7 @@
 	export_constant(INF2_IGNOREAUTOGUARD);
 	export_constant(INF2_IGNORECICADA);
 	export_constant(INF2_SHOWSCALE);
+	export_constant(INF2_ISFACTION); // biali faction system
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);

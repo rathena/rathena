@@ -42,6 +42,7 @@
 #include "clif.hpp"
 #include "date.hpp" // date type enum, date_get()
 #include "elemental.hpp"
+#include "faction.hpp" // Faction system Biali
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "instance.hpp"
@@ -8520,6 +8521,7 @@ BUILDIN_FUNC(getcharid)
 	case 3: script_pushint(st,sd->status.account_id); break;
 	case 4: script_pushint(st,sd->bg_id); break;
 	case 5: script_pushint(st,sd->status.clan_id); break;
+	case 6: script_pushint(st,sd->status.faction_id); break;
 	default:
 		ShowError("buildin_getcharid: invalid parameter (%d).\n", num);
 		script_pushint(st,0);
@@ -8535,6 +8537,7 @@ BUILDIN_FUNC(getnpcid)
 {
 	int num = script_getnum(st,2);
 	struct npc_data* nd = NULL;
+	struct block_list *bl = NULL;
 
 	if( script_hasdata(st,3) )
 	{// unique npc name
@@ -8549,6 +8552,11 @@ BUILDIN_FUNC(getnpcid)
 	switch (num) {
 		case 0:
 			script_pushint(st,nd ? nd->bl.id : st->oid);
+			break;
+		case 1:
+			if( nd == NULL )
+				bl = map_id2bl(st->oid);
+			script_pushint(st, nd ? nd->faction_id : ((TBL_NPC*)bl)->faction_id);
 			break;
 		default:
 			ShowError("buildin_getnpcid: invalid parameter (%d).\n", num);
@@ -8748,6 +8756,7 @@ BUILDIN_FUNC(getguildmasterid)
  *	1 : party_name or ""
  *	2 : guild_name or ""
  *	3 : map_name
+ *	4 : players faction name
  *	- : ""
  * strcharinfo(<type>{,<char_id>})
  *------------------------------------------*/
@@ -8784,6 +8793,13 @@ BUILDIN_FUNC(strcharinfo)
 			break;
 		case 3:
 			script_pushconststr(st,map_getmapdata(sd->bl.m)->name);
+			break;
+		case 4:
+			struct faction_data* fdb; // Faction System [Biali]
+			if( ( fdb = faction_search(sd->status.faction_id) ) != NULL )
+				script_pushstrcopy(st,fdb->pl_name);
+			else
+				script_pushconststr(st,"");
 			break;
 		default:
 			ShowWarning("buildin_strcharinfo: unknown parameter.\n");
@@ -10703,7 +10719,7 @@ BUILDIN_FUNC(areamonster)
 		m = map_mapname2mapid(mapn);
 
 	for(i = 0; i < amount; i++) { //not optimised
-		int mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, 1, event, size, ai);
+		int mobid = mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, amount, event, size, ai, 0);
 
 		if (mobid)
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
@@ -12879,6 +12895,15 @@ BUILDIN_FUNC(setmapflag)
 			args.nightmaredrop.drop_per = 300;
 			args.nightmaredrop.drop_type = NMDT_EQUIP;
 			break;
+		case MF_FVF: // Faction system Biali
+			if (script_hasdata(st, 4) && script_hasdata(st, 5)) {
+				args.faction_info.id = script_getnum(st, 4);
+				args.faction_info.relic = script_getnum(st, 5);
+			} else {
+				ShowWarning("buildin_setmapflag: Unable to set faction  mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
 		default:
 			FETCH(4, args.flag_val);
 			break;
@@ -13204,7 +13229,11 @@ BUILDIN_FUNC(flagemblem)
 {
 	TBL_NPC* nd;
 	int g_id = script_getnum(st,2);
-
+#ifdef BGEXTENDED
+	int flag = 0;
+	if( script_hasdata(st,3) )
+		flag = 1;
+#endif
 	if(g_id < 0)
 		return SCRIPT_CMD_SUCCESS;
 
@@ -13214,6 +13243,13 @@ BUILDIN_FUNC(flagemblem)
 	} else if( nd->subtype != NPCTYPE_SCRIPT ) {
 		ShowError("script:flagemblem: unexpected subtype %d for npc %d '%s'\n", nd->subtype, st->oid, nd->exname);
 	} else {
+#ifdef BGEXTENDED
+		if (flag) {
+			nd->u.scr.bg_id = g_id;
+			clif_guild_emblem_area(&nd->bl);
+			return SCRIPT_CMD_SUCCESS;
+		}
+#endif
 		bool changed = ( nd->u.scr.guild_id != g_id )?true:false;
 		nd->u.scr.guild_id = g_id;
 		clif_guild_emblem_area(&nd->bl);
@@ -20023,10 +20059,14 @@ BUILDIN_FUNC(waitingroom2bg)
 	unsigned char i,c=0;
 	struct s_battleground_team team;
 
+#ifdef BGEXTENDED
+	nd = (struct npc_data *)map_id2sd(st->oid);
+#else
 	if( script_hasdata(st,7) )
 		nd = npc_name2id(script_getstr(st,7));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
+#endif
 
 	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
 	{
@@ -20043,6 +20083,19 @@ BUILDIN_FUNC(waitingroom2bg)
 
 	team.warp_x = script_getnum(st,3);
 	team.warp_y = script_getnum(st,4);
+#ifdef BGEXTENDED
+	team.guild_index = script_getnum(st, 5);
+	if (script_hasdata(st,6)) {
+		team.quit_event = script_getstr(st,6); // Logout Event
+		check_event(st, team.quit_event.c_str());
+	} else
+		team.quit_event = "";
+	if (script_hasdata(st,7)) {
+		team.death_event = script_getstr(st,7); // Die Event
+		check_event(st, team.death_event.c_str());
+	} else
+		team.death_event = "";
+#else
 	if (script_hasdata(st,5)) {
 		team.quit_event = script_getstr(st,5); // Logout Event
 		check_event(st, team.quit_event.c_str());
@@ -20053,6 +20106,7 @@ BUILDIN_FUNC(waitingroom2bg)
 		check_event(st, team.death_event.c_str());
 	} else
 		team.death_event = "";
+#endif
 
 	if( (bg_id = bg_create(mapindex, &team)) == 0 )
 	{ // Creation failed
@@ -20226,6 +20280,15 @@ BUILDIN_FUNC(bg_warp)
 
 	bg_id = script_getnum(st,2);
 	map_name = script_getstr(st,3);
+#ifdef BGEXTENDED
+	if( !strcmp(map_name,"RespawnPoint") )
+		mapindex = 0;
+	else if( (mapindex = mapindex_name2id(map_name)) == 0 )
+		return SCRIPT_CMD_SUCCESS; // Invalid Map
+#else
+	if( (mapindex = mapindex_name2id(map_name)) == 0 )
+		return SCRIPT_CMD_SUCCESS; // Invalid Map
+#endif
 	if( (mapindex = mapindex_name2id(map_name)) == 0 )
 		return SCRIPT_CMD_SUCCESS; // Invalid Map
 	x = script_getnum(st,4);
@@ -20354,6 +20417,17 @@ BUILDIN_FUNC(bg_get_data)
 			mapreg_setreg(add_str("$@arenamemberscount"), i);
 			script_pushint(st, i);
 			break;
+#ifdef BGEXTENDED
+		case 2:
+			script_pushconststr(st, bg->g ? bg->g->name : "null");
+			break;
+		case 3:
+			script_pushconststr(st, bg->g ? bg->g->master : "null");
+			break;
+		case 4:
+			script_pushint(st, bg->color);
+			break;
+#endif
 		default:
 			ShowError("script:bg_get_data: unknown data identifier %d\n", type);
 			break;
@@ -20441,6 +20515,482 @@ BUILDIN_FUNC(bg_info)
 
 	return SCRIPT_CMD_SUCCESS;
 }
+
+#ifdef BGEXTENDED
+int viewpointmap_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd = (struct map_session_data*)bl;
+	if (!sd)
+		return 0;
+	int npc_id, type, x, y, id, color;
+	npc_id = va_arg(ap, int);
+	type = va_arg(ap, int);
+	x = va_arg(ap, int);
+	y = va_arg(ap, int);
+	id = va_arg(ap, int);
+	color = va_arg(ap, int);
+	clif_viewpoint(sd, npc_id, type, x, y, id, color);
+	return 0;
+}
+
+BUILDIN_FUNC(viewpointmap)
+{
+	int type, x, y, id, color, m;
+	const char *map_name;
+
+	map_name = script_getstr(st, 2);
+	if ((m = map_mapname2mapid(map_name)) < 0)
+		return SCRIPT_CMD_FAILURE; // Invalid Map
+
+	type = script_getnum(st, 3);
+	x = script_getnum(st, 4);
+	y = script_getnum(st, 5);
+	id = script_getnum(st, 6);
+	color = script_getnum(st, 7);
+
+	map_foreachinmap(viewpointmap_sub, m, BL_PC, st->oid, type, x, y, id, color);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bgannounce)
+{
+	const char *mes = script_getstr(st, 2);
+	const char *fontColor = script_hasdata(st, 3) ? script_getstr(st, 3) : "0xFFFFFF";
+	int         fontType = script_hasdata(st, 4) ? script_getnum(st, 4) : 0x190; // default fontType (FW_NORMAL)
+	int         fontSize = script_hasdata(st, 5) ? script_getnum(st, 5) : 12;    // default fontSize
+	int         fontAlign = script_hasdata(st, 6) ? script_getnum(st, 6) : 0;     // default fontAlign
+	int         fontY = script_hasdata(st, 7) ? script_getnum(st, 7) : 0;     // default fontY
+
+	clif_broadcast2(NULL, mes, (int)strlen(mes) + 1, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, BG_LISTEN);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_team_updatescore)
+{
+	struct map_session_data* sd;
+	int bg_id = script_getnum(st, 2),
+		score = script_getnum(st, 3);
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_SUCCESS;
+
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bgd != NULL)
+	{
+		bgd->team_score = score;
+		clif_bg_updatescore_team(sd);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_team_guildid)
+{
+	int bg_id = script_getnum(st, 2),
+		guild_id = 0;
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bgd != NULL && bgd->g)
+		guild_id = bgd->g->guild_id;
+	script_pushint(st, guild_id);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_monster_immunity) {
+	struct mob_data *md;
+	struct block_list *mbl;
+	int id = script_getnum(st, 2);
+	bool flag = script_getnum(st, 3) != 0;
+
+	if (id == 0 || (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB)
+		return SCRIPT_CMD_SUCCESS;
+	md = (TBL_MOB *)mbl;
+	md->ud.immune_attack = flag;
+	return SCRIPT_CMD_SUCCESS;
+}
+
+static int bg_cleanmap_sub(struct block_list *bl, va_list ap)
+{
+	nullpo_ret(bl);
+	map_clearflooritem(bl);
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ *------------------------------------------*/
+BUILDIN_FUNC(donpceventall)
+{
+	const char* event = script_getstr(st,2);
+	npc_event_doall(event);
+	return SCRIPT_CMD_SUCCESS;
+}
+BUILDIN_FUNC(bg_team_reveal)
+{
+	int bg_id;
+
+	bg_id = script_getnum(st, 2);
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bgd == NULL)
+		return 0;
+
+	bgd->reveal_pos = true; // Reveal Position Mode
+	return 0;
+}
+
+BUILDIN_FUNC(bg_team_setquest)
+{
+	struct map_session_data *sd;
+	int i, bg_id, quest;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_SUCCESS;
+
+	bg_id = script_getnum(st, 2);
+	quest = script_getnum(st, 3);
+
+	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, bg_id);
+	if (bg_id == 0 || bgd == NULL)
+		return 0;
+
+	for (i = 0; i < MAX_BG_MEMBERS; i++)
+	{
+		if ((sd = bgd->members[i].sd) == NULL)
+			continue;
+		clif_quest_add(sd, &sd->quest_log[i]);
+	}
+	return 0;
+}
+
+BUILDIN_FUNC(bg_monster_reveal)
+{
+	struct mob_data *md;
+	struct block_list *mbl;
+	int id = script_getnum(st, 2),
+		flag = script_getnum(st, 3),
+		color = script_getnum(st, 4);
+
+	if (id == 0 || (mbl = map_id2bl(id)) == NULL || mbl->type != BL_MOB)
+		return 0;
+	md = (TBL_MOB *)mbl;
+	map_foreachinmap(viewpointmap_sub, mbl->m, BL_PC, st->oid, flag, mbl->x, mbl->y, mbl->id, color);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_cleanmap)
+{
+	const char* map_name;
+	int m;
+
+	map_name = script_getstr(st, 3);
+	m = map_mapname2mapid(map_name);
+
+	map_foreachinmap(bg_cleanmap_sub, m, BL_ITEM);
+	return 0;
+}
+BUILDIN_FUNC(bg_getitem)
+{
+	int bg_id, nameid, amount;
+
+	bg_id = script_getnum(st, 2);
+	nameid = script_getnum(st, 3);
+	amount = script_getnum(st, 4);
+
+	bg_team_getitem(bg_id, nameid, amount);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_getkafrapoints)
+{
+	int bg_id, amount;
+
+	bg_id = script_getnum(st, 2);
+	amount = script_getnum(st, 3);
+	bg_team_get_kafrapoints(bg_id, amount);
+	return 0;
+}
+
+BUILDIN_FUNC(bg_reward)
+{
+	int bg_id, nameid, amount, kafrapoints, quest_id, add_value, bg_arena, bg_result;
+	const char *var;
+
+	bg_id = script_getnum(st, 2);
+	nameid = script_getnum(st, 3);
+	amount = script_getnum(st, 4);
+	kafrapoints = script_getnum(st, 5);
+	quest_id = script_getnum(st, 6);
+	var = script_getstr(st, 7);
+	add_value = script_getnum(st, 8);
+	bg_arena = script_getnum(st, 9);
+	bg_result = script_getnum(st, 10);
+
+	bg_team_rewards(bg_id, nameid, amount, kafrapoints, quest_id, var, add_value, bg_arena, bg_result);
+	return 0;
+}
+BUILDIN_FUNC(bg_logincount)
+{
+	TBL_PC *sd;
+	if (!script_rid2sd(sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	int i = 0;
+
+	if (sd)
+		i = bg_countlogin(sd, true);
+	script_pushint(st, i);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Validates data of a guild emblem (compressed bitmap)
+enum e_result_validate_emblem {	// Used as Result for clif_validate_emblem
+	EMBVALIDATE_SUCCESS = 0,
+	EMBVALIDATE_ERR_RAW_FILEFORMAT,	// Invalid File Format (Error in zlib/decompression or malformed BMP header)
+	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of battle_config.emblem_transparency_limit
+};
+static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
+{
+	uint8 buf[1800];  // no well-formed emblem bitmap is larger than 1782 (24 bit) / 1654 (8 bit) bytes
+	unsigned long buf_len = sizeof(buf);
+	int offset = 0;
+	/*
+	if (!((decode_zip(buf, &buf_len, emblem, emblem_len) == 0 && buf_len >= 18)  // sizeof(BITMAPFILEHEADER) + sizeof(biSize) of the following info header struct
+		&& RBUFW(buf, 0) == 0x4d42   // BITMAPFILEHEADER.bfType (signature)
+		&& RBUFL(buf, 2) == buf_len  // BITMAPFILEHEADER.bfSize (file size)
+		&& (offset = RBUFL(buf, 10)) < buf_len  // BITMAPFILEHEADER.bfOffBits (offset to bitmap bits)
+		))
+		return EMBVALIDATE_ERR_RAW_FILEFORMAT;
+	*/
+	if (battle_config.emblem_transparency_limit != 100) {
+		int i, transcount = 1, tmp[3];
+		for (i = offset; i < buf_len - 1; i++) {
+			int j = i % 3;
+			tmp[j] = RBUFL(buf, i);
+			if (j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
+				transcount++;
+		}
+		if (((transcount * 300) / (buf_len - offset)) > battle_config.emblem_transparency_limit) //convert in % to chk
+			return EMBVALIDATE_ERR_TRANSPARENCY;
+	}
+
+	return EMBVALIDATE_SUCCESS;
+}
+
+BUILDIN_FUNC(bg_teamid)
+{
+	TBL_PC *sd;
+
+	if( !script_hasdata(st, 2) )
+		script_rid2sd(sd);
+	else
+		sd = map_id2sd( script_getnum(st, 2) );
+
+	if (sd) {
+		std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
+		if (bgteam)
+			script_pushint(st, bgteam->team_id);
+		else
+			script_pushint(st, -1);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+BUILDIN_FUNC(bg_kill)
+{
+	struct map_session_data* sd = map_id2sd(script_getnum(st, 2));
+	if (!sd) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	} else
+		sd->bg_kills++;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+//use : areaeffect( effect id, x, y);
+BUILDIN_FUNC(areaeffect) {
+	TBL_PC* sd;
+	struct map_session_data* fk = (struct map_session_data*)aCalloc(1, sizeof(struct map_session_data));
+
+	if (!script_rid2sd(sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	fk->bl.id	= npc_get_new_npc_id();
+	fk->bl.x	= script_getnum(st,3);
+	fk->bl.y	= script_getnum(st,4);
+	fk->ud.dir	= 0;
+
+	clif_sendfakenpc( sd, fk->bl.id );
+	clif_specialeffect_single(&fk->bl, script_getnum(st,2), sd->fd);
+	return 0;
+}
+/*==========================================
+ * Get NPC info: getnpcinfo <type>{,<char_id>} [Grenat]
+ * type: NPC_X: X, NPC_Y: Y
+ *------------------------------------------*/
+BUILDIN_FUNC(getnpcinfo)
+{
+	TBL_NPC* nd = map_id2nd(st->oid);
+
+	int type = script_getnum(st,2);
+
+	if (!nd) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch(type){
+		case NPC_X: script_pushint(st,nd->bl.x); break;
+		case NPC_Y: script_pushint(st,nd->bl.y); break;
+		default:
+			script_pushint(st,0);
+			break;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Set poring ball mode [Grenat]
+ * setporingball;
+ *------------------------------------------*/
+BUILDIN_FUNC(setporingball)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	sd->ballx = 1;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get X value of clicked cell [Grenat]
+ * getporingballx();
+ *------------------------------------------*/
+BUILDIN_FUNC(getporingballx)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->ballx);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get Y value of clicked cell [Grenat]
+ * getporingballx();
+ *------------------------------------------*/
+BUILDIN_FUNC(getporingbally)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, sd->bally);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Remove poring ball mode to save ressources [Grenat]
+ * removeporingball;
+ *------------------------------------------*/
+BUILDIN_FUNC(removeporingball)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	sd->ballx = 0;
+	sd->bally = 0;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get direction the unit is looking [Grenat]
+ * getunitdir <unit_id/account_id>;
+ *------------------------------------------*/
+BUILDIN_FUNC(getunitdir)
+{
+	struct block_list* bl = map_id2bl(script_getnum(st,2));
+
+	if (!bl) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, unit_getdir(bl));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Get information if a pc is sit or not [Grenat]
+ * ispcsit <account_id>;
+ *------------------------------------------*/
+BUILDIN_FUNC(ispcsit)
+{
+	struct map_session_data* sd;
+
+	if( !script_hasdata(st, 2) )
+		script_rid2sd(sd);
+	else
+		sd = map_id2sd( script_getnum(st, 2) );
+
+	if(sd) {
+		if( pc_issit(sd) )
+			script_pushint(st, 1);
+		else
+			script_pushint(st, 0);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+/*==========================================
+ * Push (knockback) a specific target in
+ * a specific direction [Grenat]
+ * unitpush <unit_id/account_id>,<dir>,<cells>;
+ *------------------------------------------*/
+BUILDIN_FUNC(unitpush)
+{
+	uint8 dir;
+	int cells, dx, dy;
+	struct block_list* bl = map_id2bl(script_getnum(st,2));
+
+	dir = script_getnum(st,3);
+	cells     = script_getnum(st,4);
+
+	if(dir>7)
+	{
+		ShowWarning("buildin_pushpc: Invalid direction %d specified.\n", dir);
+		script_reportsrc(st);
+
+		dir%= 8;  // trim spin-over
+	}
+
+	if(!cells)
+	{// zero distance
+		return 0;
+	}
+	else if(cells<0)
+	{// pushing backwards
+		dir = (dir+4)%8;  // turn around
+		cells     = -cells;
+	}
+
+	dx = dirx[dir];
+	dy = diry[dir];
+
+	if( bl != NULL )
+		unit_blown(bl, dx, dy, cells, BLOWN_NONE);
+	return 0;
+}
+#endif
 
 /*==========================================
  * Instancing System
@@ -25022,6 +25572,551 @@ BUILDIN_FUNC(isnpccloaked)
 
 #include "../custom/script.inc"
 
+/**
+ * Complete Faction System [Lilith]
+ * factioninfo(<Faction ID>,<Type>[,<Val>]);
+ **/
+BUILDIN_FUNC(factioninfo) 
+{
+	struct faction_data* fdb = NULL;
+	int faction_id, type, val = 0;
+
+	faction_id = script_getnum(st,2);
+
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("factioninfo: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	type = script_getnum(st,3);
+
+	if( script_hasdata(st,4) )
+		val = script_getnum(st,4);
+
+	if( val < 0 || (type == 11 && val > MAX_FACTION_ALLIANCE) || (type == 12 && val > MAX_AURA_EFF))
+	{
+		ShowWarning("factioninfo: Invalid val: %d \n",val);
+		return 0;
+	}
+
+	switch(type)
+	{
+		default: script_pushstrcopy(st,fdb->name);		break;	// Faction's name
+		case 1: script_pushstrcopy(st,fdb->pl_name);	break;	// Player's name
+		case 2: script_pushstrcopy(st,fdb->map);		break;	// Location
+		case 3: script_pushint(st,fdb->x);				break;	// Location X
+		case 4: script_pushint(st,fdb->y);				break;	// Location Y
+		case 5: script_pushint(st,fdb->race);			break;	// Race
+		case 6: script_pushint(st,fdb->ele);			break;	// Element
+		case 7: script_pushint(st,fdb->ele_lvl);		break;	// Element lvl
+		case 8: script_pushint(st,fdb->size);			break;	// Size
+		case 9: script_pushint(st,fdb->ccolor);			break;	// Clothes Color
+		case 10: script_pushint(st,fdb->voting_active);	break;	// Voting State
+		case 11: script_pushint(st,fdb->alliance[val]);	break;	// Alliance ID
+		case 12: script_pushint(st,fdb->aura[val]);		break;	// Aura ID
+	}
+
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * votinginfo(<Faction ID>);
+ **/
+BUILDIN_FUNC(votinginfo) 
+{
+	struct faction_data* fdb = NULL;
+	int faction_id;
+
+	faction_id = script_getnum(st,2);
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("votinginfo: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	faction_voting_info(faction_id);
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * setfaction(<Faction ID>[,<Char ID>]);
+ **/
+BUILDIN_FUNC(setfaction) 
+{
+	TBL_PC* sd = NULL;
+	struct faction_data* fdb = NULL;
+	int faction_id, char_id;
+
+	if( script_hasdata(st,3) )
+	{
+		char_id = script_getnum(st,3);
+		if( ( sd = map_charid2sd(char_id) ) == NULL )
+		{
+			ShowError("setfaction: No such character (char_id=%d).\n", char_id);
+			script_pushnil(st);
+			return 1;
+		}
+	} else {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_SUCCESS;// no player attached
+	}
+
+	faction_id = script_getnum(st,2);
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("setfaction: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	sd->status.faction_id = faction_id;
+	status_calc_pc(sd,SCO_NONE);
+	if( map_getmapflag(sd->bl.m, MF_FVF) )
+		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+
+	return 0;
+}
+/**
+ * Complete Faction System [Lilith]
+ * setfactionleader(<Faction ID>,<Char ID>);
+ **/
+BUILDIN_FUNC(setfactionleader) 
+{
+	TBL_PC* sd;
+	char out[100];
+	struct faction_data* fdb = NULL;
+	int faction_id, char_id;
+
+	faction_id = script_getnum(st,2);
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("setfactionleader: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	char_id = script_getnum(st,3);
+	if( ( sd = map_charid2sd(char_id) ) == NULL )
+	{
+		ShowError("setfactionleader: No such character (char_id=%d).\n", char_id);
+		script_pushnil(st);
+		return 1;
+	}
+
+	if( sd->status.faction_id != faction_id )
+	{
+		ShowError("setfactionleader: Character %d not in faction %d).\n", char_id, faction_id);
+		return 1;
+	}
+
+	fdb->leader_id = char_id;
+	sprintf(out, "$faction_leader_id_%d",faction_id);
+	mapreg_setreg(add_str(out), char_id);
+	faction_factionaura(sd);
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * relicadd(<Faction ID>,<Item ID>,<Slot>);
+ **/
+BUILDIN_FUNC(relicadd) 
+{
+	struct item_data *item_data = NULL;
+	struct faction_data* fdb = NULL;
+	int faction_id, item, slot;
+	char out[100];
+
+	faction_id = script_getnum(st,2);
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("relicadd: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	item = script_getnum(st,3);
+	if( (item_data = itemdb_exists(item)) == NULL )
+	{
+		ShowWarning("relicadd: Invalid item id %d \n",item);
+		return 0;
+	}
+
+	slot = script_getnum(st,4);
+	if( slot < 0 || slot >= MAX_RELIC )
+	{
+		ShowWarning("relicadd: Invalid relic slot %d \n",slot);
+		return 0;
+	}
+
+	fdb->relic[slot].item_id = item_data->nameid;
+	sprintf(out, "$faction_relics_%d",faction_id);
+	mapreg_setreg(reference_uid(add_str(out), slot), item_data->nameid);
+	map_foreachpc(faction_relic_change_sub, faction_id);
+	script_pushint(st,1);
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * relicgetinfo(<Faction ID>,<Slot>);
+ **/
+BUILDIN_FUNC(relicgetinfo) 
+{
+	struct faction_data* fdb = NULL;
+	int faction_id, slot;
+
+	faction_id = script_getnum(st,2);
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("relicgetinfo: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	slot = script_getnum(st,3);
+	if( slot < 0 || slot >= MAX_RELIC )
+	{
+		ShowWarning("relicgetinfo: Invalid relic slot %d \n",slot);
+		return 0;
+	}
+
+	script_pushint(st,fdb->relic[slot].item_id);
+
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * relicactivate(<Faction ID>,<Slot>,<Val>);
+ **/
+BUILDIN_FUNC(relicactivate) 
+{
+	struct faction_data* fdb = NULL;
+	int faction_id, slot;
+
+	faction_id = script_getnum(st,2);
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("relicactivate: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	slot = script_getnum(st,3);
+	if( slot < 0 || slot >= MAX_RELIC )
+	{
+		ShowWarning("relicactivate: Invalid relic slot %d \n",slot);
+		return 0;
+	}
+
+	fdb->relic[slot].active = script_getnum(st,4);
+	map_foreachpc(faction_relic_change_sub, faction_id);
+	script_pushint(st,1);
+
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * relicdel(<Faction ID>,<Slot>);
+ **/
+BUILDIN_FUNC(relicdel) 
+{
+	struct faction_data* fdb = NULL;
+	int faction_id, slot;
+
+	faction_id = script_getnum(st,2);
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("relicdel: Invalid faction id %d \n",faction_id);
+		return 0;
+	}
+
+	slot = script_getnum(st,3);
+	if( slot < 0 || slot >= MAX_RELIC )
+	{
+		ShowWarning("relicdel: Invalid relic slot %d \n",slot);
+		return 0;
+	}
+
+	fdb->relic[slot].item_id = 0;
+	map_foreachpc(faction_relic_change_sub, faction_id);
+	script_pushint(st,1);
+
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * vote(<Char ID>[,<Amount of Votes>]);
+ **/
+BUILDIN_FUNC(vote) 
+{
+	TBL_PC *sd = NULL, *tsd = NULL;
+	struct faction_data* fdb = NULL;
+	int char_id, votes;
+
+	if (!script_rid2sd(sd))
+			return SCRIPT_CMD_SUCCESS;// no player attached
+
+	if( (fdb = faction_search(sd->status.faction_id)) == NULL )
+	{
+		ShowWarning("vote: Invalid faction id %d\n",sd->status.faction_id);
+		return 0;
+	}
+
+	char_id = script_getnum(st,2);
+	if( (tsd = map_charid2sd(char_id)) == NULL )
+	{
+		ShowError("vote: No such character (char_id=%d).\n", char_id);
+		script_pushnil(st);
+		return 1;
+	}
+
+	if( sd->status.faction_id != tsd->status.faction_id )
+	{
+		ShowError("vote: Different factions (sd=%d, tsd=%d).\n", sd->status.faction_id, tsd->status.faction_id);
+		return 1;
+	}
+
+	if( script_hasdata(st,3) )
+		votes = script_getnum(st,3);
+	else
+		votes = 1;
+
+	faction_voting_add(sd, tsd, votes);
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * addvotes(<Char ID>[,<Amount of Votes>]);
+ **/
+BUILDIN_FUNC(addvotes) 
+{
+	TBL_PC *tsd = NULL;
+	struct faction_data* fdb = NULL;
+	int char_id, votes;
+
+	char_id = script_getnum(st,2);
+	if( (tsd = map_charid2sd(char_id)) == NULL )
+	{
+		ShowError("addvotes: No such character (char_id=%d).\n", char_id);
+		script_pushnil(st);
+		return 1;
+	}
+
+	if( (fdb = faction_search(tsd->status.faction_id)) == NULL )
+	{
+		ShowWarning("addvotes: Invalid faction id %d\n",tsd->status.faction_id);
+		return 0;
+	}
+
+	if( script_hasdata(st,3) )
+		votes = script_getnum(st,3);
+	else
+		votes = 1;
+
+	faction_voting_add(NULL, tsd, votes);
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * votingstart([<Faction ID>]);
+ **/
+BUILDIN_FUNC(votingstart) 
+{
+	struct faction_data* fdb = NULL;
+	int faction_id = 0, i;
+
+	if( script_hasdata(st,2) )
+	{
+		faction_id = script_getnum(st,2);
+		if( (fdb = faction_search(faction_id)) == NULL )
+		{
+			ShowWarning("votingstart: Invalid faction id %d\n",faction_id);
+			return 0;
+		}
+		faction_voting_start(faction_id);
+	} else {
+
+		for( i = 0; i < MAX_FACTION; i++ )
+			if( (fdb = faction_search(i)) != NULL )
+				faction_voting_start(i);
+	}
+	npc_event_doall("OnVotingStart");
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * votingstop([<Faction ID>]);
+ **/
+BUILDIN_FUNC(votingstop) 
+{
+	struct faction_data* fdb = NULL;
+	int faction_id = 0, i;
+
+	if( script_hasdata(st,2) )
+	{
+		faction_id = script_getnum(st,2);
+		if( (fdb = faction_search(faction_id)) == NULL )
+		{
+			ShowWarning("votingstop: Invalid faction id %d\n",faction_id);
+			return 0;
+		}
+		faction_voting_finish(faction_id);
+	} else {
+	
+		for( i = 0; i < MAX_FACTION; i++ )
+			if( (fdb = faction_search(i)) != NULL )
+				faction_voting_finish(i);
+	}
+
+	npc_event_doall("OnVotingEnd");
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * factionmonster(<faction ID>,"<map name>",<x>,<y>,"<name to show>",<mob ID>,<amount>[,"<event label>"]);
+ **/
+BUILDIN_FUNC(factionmonster)
+{
+	int faction_id    = script_getnum(st,2);
+	const char* mapn  = script_getstr(st,3);
+	int x             = script_getnum(st,4);
+	int y             = script_getnum(st,5);
+	const char* str   = script_getstr(st,6);
+	int class_        = script_getnum(st,7);
+	int amount        = script_getnum(st,8);
+	const char* event = "";
+	struct map_session_data* sd = NULL;
+	struct faction_data* fdb = NULL;
+	struct mob_data *md = NULL;
+	int m, i;
+
+	if( script_hasdata(st,9) )
+	{
+		event = script_getstr(st,9);
+		check_event(st, event);
+	}
+
+	if( class_ >= 0 && !mobdb_checkid(class_) )
+	{
+		ShowWarning("factionmonster: Attempted to spawn non-existing monster class %d\n", class_);
+		return 1;
+	}
+
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("factionmonster: Invalid faction id %d\n",faction_id);
+		return 0;
+	}
+
+	sd = map_id2sd(st->rid);
+	m = sd->bl.m;
+
+	for( i = 0; i < amount; i++ )
+	{
+		if( (md = mob_once_spawn_sub(&sd->bl, m, x, y, str, class_, event, SZ_SMALL, AI_NONE)) )
+		{
+			md->faction_id = faction_id;
+			mob_spawn(md);
+		}
+	}
+	script_pushint(st, md->bl.id);
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * Same as factionmonster but randomize location in x0,x1,y0,y1 area
+ **/
+BUILDIN_FUNC(areafactionmonster)
+{
+	int faction_id    	= script_getnum(st,2);
+	const char *mapn	= script_getstr(st,3);
+	int x0				= script_getnum(st,4);
+	int y0				= script_getnum(st,5);
+	int x1				= script_getnum(st,6);
+	int y1				= script_getnum(st,7);
+	const char *str		= script_getstr(st,8);
+	int class_			= script_getnum(st,9);
+	int amount			= script_getnum(st,10);
+	const char *event	= "";
+	struct faction_data* fdb = NULL;
+
+	struct map_session_data* sd;
+	int16 m;
+
+	if (script_hasdata(st,11))
+	{
+		event = script_getstr(st, 11);
+		check_event(st, event);
+	}
+
+	if( (fdb = faction_search(faction_id)) == NULL )
+	{
+		ShowWarning("areafactionmonster: Invalid faction id %d\n",faction_id);
+		return 0;
+	}
+
+	sd = map_id2sd(st->rid);
+	m = sd->bl.m;
+
+	mob_once_spawn_area(sd, m, x0, y0, x1, y1, str, class_, amount, event, SZ_SMALL, AI_NONE, faction_id);
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * fvfon("Map"[,Faction ID[,Relic ID]]);
+ **/
+BUILDIN_FUNC(fvfon)
+{
+	int16 m;
+	const char *str;
+	int faction_id = 0, relic_id = 0;
+
+	str=script_getstr(st,2);
+	if( script_hasdata(st,3) )
+		faction_id = script_getnum(st, 3);
+	if( script_hasdata(st,4) )
+		relic_id = script_getnum(st, 4);
+
+	if( (m = map_mapname2mapid(str)) >= 0 && !map_getmapflag(m, MF_FVF) )
+	{
+		map_setmapflag(m, MF_FVF, true);
+		map[m].faction.id = faction_id;
+		map[m].faction.relic = relic_id;
+		clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+		map_foreachinmap(faction_reload_fvf_sub, m, BL_ALL);
+	}
+	return 0;
+}
+
+/**
+ * Complete Faction System [Lilith]
+ * fvfoff("Map");
+ **/
+BUILDIN_FUNC(fvfoff)
+{
+	int16 m;
+	const char *str;
+
+	str=script_getstr(st,2);
+	if( (m = map_mapname2mapid(str)) >= 0 && map_getmapflag(m, MF_FVF) )
+	{
+		map_setmapflag(m, MF_FVF, false);
+		map[m].faction.id = 0;
+		map[m].faction.relic = -1;
+		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+		map_foreachinmap(faction_reload_fvf_sub, m, BL_ALL);
+	}
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.cpp
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -25068,9 +26163,34 @@ BUILDIN_FUNC(preg_match) {
 #endif
 }
 
+// (^~_~^) Gepard Shield Start
+
+BUILDIN_FUNC(get_unique_id)
+{
+	struct map_session_data* sd;
+
+	if (!script_rid2sd(sd))
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, session[sd->fd]->gepard_info.unique_id);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+// (^~_~^) Gepard Shield End
+
 /// script command definitions
 /// for an explanation on args, see add_buildin_func
 struct script_function buildin_func[] = {
+	// (^~_~^) Gepard Shield Start
+
+	BUILDIN_DEF(get_unique_id,""),
+
+	// (^~_~^) Gepard Shield End
+	
 	// NPC interaction
 	BUILDIN_DEF(mes,"s*"),
 	BUILDIN_DEF(next,""),
@@ -25287,6 +26407,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pvpoff,"s"),
 	BUILDIN_DEF(gvgon,"s"),
 	BUILDIN_DEF(gvgoff,"s"),
+	BUILDIN_DEF(fvfon,"s"),
+	BUILDIN_DEF(fvfoff,"s"),
 	BUILDIN_DEF(emotion,"i?"),
 	BUILDIN_DEF(maprespawnguildid,"sii"),
 	BUILDIN_DEF(agitstart,""),	// <Agit>
@@ -25536,6 +26658,34 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_reserve,"s?"),
 	BUILDIN_DEF(bg_unbook,"s"),
 	BUILDIN_DEF(bg_info,"si"),
+#ifdef BGEXTENDED
+// Extended BattleGround
+	BUILDIN_DEF(bg_logincount, ""),
+	BUILDIN_DEF(bg_monster_immunity, "ii"),
+	BUILDIN_DEF(bg_team_updatescore, "ii"),
+	BUILDIN_DEF(bg_team_guildid, "i"),
+	BUILDIN_DEF(bg_team_reveal,"i"),
+	BUILDIN_DEF(bg_team_setquest,"ii"),
+	BUILDIN_DEF(bg_getitem, "iii"),
+	BUILDIN_DEF(bg_getkafrapoints, "ii"),
+	BUILDIN_DEF(bg_reward, "iiiiisiii"),
+	BUILDIN_DEF(bgannounce, "s?????"),
+	BUILDIN_DEF(viewpointmap, "siiiii"),
+	BUILDIN_DEF(bg_monster_reveal,"iii"),
+	BUILDIN_DEF(donpceventall,"s"),
+	BUILDIN_DEF2(flagemblem, "flagemblembg", "ii"),
+	BUILDIN_DEF(bg_teamid,"?"),
+	BUILDIN_DEF(bg_kill,"i"),
+	BUILDIN_DEF(areaeffect, "iii"),
+	BUILDIN_DEF(getnpcinfo,"i?"),		// [Grenat]
+	BUILDIN_DEF(setporingball,""),		// [Grenat]
+	BUILDIN_DEF(getporingballx,""),		// [Grenat]
+	BUILDIN_DEF(getporingbally,""),		// [Grenat]
+	BUILDIN_DEF(removeporingball,""),	// [Grenat]
+	BUILDIN_DEF(getunitdir,"i"),		// [Grenat]
+	BUILDIN_DEF(ispcsit,"?"),		// [Grenat]
+	BUILDIN_DEF(unitpush,"iii"),		// [Grenat]
+#endif
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),
@@ -25560,6 +26710,28 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(ismounting,"?"),//[Ind]
 	BUILDIN_DEF(setmounting,"?"),//[Ind]
 	BUILDIN_DEF(checkre,"i"),
+
+	/**
+	* Faction System [Biali]
+	**/
+	BUILDIN_DEF(factioninfo, "ii?"),
+	BUILDIN_DEF(setfaction, "i?"),
+	BUILDIN_DEF(setfactionleader, "ii"),
+	BUILDIN_DEF(relicadd, "iii"),
+	BUILDIN_DEF(relicgetinfo, "ii"),
+	BUILDIN_DEF(relicdel, "ii"),
+	BUILDIN_DEF(relicactivate, "iii"),
+	BUILDIN_DEF(votingstart, "?"),
+	BUILDIN_DEF(votingstop, "?"),
+	BUILDIN_DEF(vote, "i?"),
+	BUILDIN_DEF(addvotes, "i?"),
+	BUILDIN_DEF2(votingstop,"votingend","?"),
+	BUILDIN_DEF(votinginfo, "i"),
+	BUILDIN_DEF(factionmonster,"isiisii?"),
+	BUILDIN_DEF(areafactionmonster,"isiiiisii?"),
+	BUILDIN_DEF(fvfon,"s?"),
+	BUILDIN_DEF(fvfoff,"s"),
+
 	/**
 	 * rAthena and beyond!
 	 **/

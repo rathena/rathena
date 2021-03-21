@@ -28,6 +28,7 @@
 #include "clif.hpp"
 #include "date.hpp"
 #include "elemental.hpp"
+#include "faction.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "intif.hpp"
@@ -829,6 +830,11 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 
 	if (skill_blockpc_get(sd, skill_id) != -1){
 		clif_skill_fail(sd,skill_id,USESKILL_FAIL_SKILLINTERVAL,0);
+#ifdef BGEXTENDED
+		// I don't know why 'cooldown msg' doesn't appears in Guild Skills [Easycore]
+		if (skill_id >= 10010 && skill_id <= 10013)
+			clif_displaymessage(sd->fd,"[Guild Skill] Cannot use the skill due to cooldown delay");
+#endif
 		return true;
 	}
 
@@ -919,11 +925,19 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 			break;
 		case GD_EMERGENCYCALL:
 		case GD_ITEMEMERGENCYCALL:
+#ifdef BGEXTENDED
+			if (
+				!map_getmapflag(sd->bl.m, MF_BATTLEGROUND) && (!(battle_config.emergency_call&((is_agit_start())?2:1)) ||
+				!(battle_config.emergency_call&(mapdata_flag_gvg2(mapdata)?8:4)) ||
+				(battle_config.emergency_call&16 && map_getmapflag(sd->bl.m, MF_NOWARPTO) && !(map_getmapflag(sd->bl.m, MF_GVG_CASTLE) || map_getmapflag(sd->bl.m, MF_GVG_TE_CASTLE))))
+			)	{
+#else
 			if (
 				!(battle_config.emergency_call&((is_agit_start())?2:1)) ||
 				!(battle_config.emergency_call&(mapdata_flag_gvg2(mapdata)?8:4)) ||
 				(battle_config.emergency_call&16 && mapdata->flag[MF_NOWARPTO] && !(mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE]))
 			)	{
+#endif
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return true;
 			}
@@ -1470,7 +1484,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 	case CR_GRANDCROSS:
 		//Chance to cause blind status vs demon and undead element, but not against players
-		if(!dstsd && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON))
+		if(!dstsd && (!faction_check_skill_use(src,bl) && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON)))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		attack_type |= BF_WEAPON;
 		break;
@@ -1797,7 +1811,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start(src,bl,SC_STOP,100,skill_lv,skill_get_time(skill_id,skill_lv) + 1000 * (rnd()%3));
 		break;
 	case LG_RAYOFGENESIS:	// 50% chance to cause Blind on Undead and Demon monsters.
-		if ( battle_check_undead(status_get_race(bl), status_get_element(bl)) || status_get_race(bl) == RC_DEMON )
+		//if ( battle_check_undead(status_get_race(bl), status_get_element(bl)) || status_get_race(bl) == RC_DEMON )
+		if ( !faction_check_skill_use(src,bl) && (battle_check_undead(status_get_race(bl), status_get_element(bl)) || status_get_race(bl) == RC_DEMON) )
 			sc_start(src,bl, SC_BLIND, 50, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
 	case LG_EARTHDRIVE:
@@ -5411,7 +5426,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case ALL_RESURRECTION:
 		if (!battle_check_undead(tstatus->race, tstatus->def_ele))
 			break;
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
+		if(battle_check_undead(tstatus->race, tstatus->def_ele) && !faction_check_skill_use(src,bl))
+			skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
 	case AL_HOLYLIGHT:
@@ -5475,7 +5491,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case PR_BENEDICTIO:
 		//Should attack undead and demons. [Skotlex]
-		if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON)
+		if (!faction_check_skill_use(src,bl) && (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON) )
 			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
@@ -6512,7 +6528,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		case PR_ASPERSIO:
 		case AB_HIGHNESSHEAL:
 			//Apparently only player casted skills can be offensive like this.
-			if (sd && battle_check_undead(tstatus->race,tstatus->def_ele)) {
+			if (sd && battle_check_undead(tstatus->race,tstatus->def_ele) && !faction_check_skill_use(src,bl)) {
 				if (battle_check_target(src, bl, BCT_ENEMY) < 1) {
 					//Offensive heal does not works on non-enemies. [Skotlex]
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -7270,7 +7286,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SM_PROVOKE:
 	case SM_SELFPROVOKE:
 	case MER_PROVOKE:
-		if( status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele) ) {
+		if( (status_has_mode(tstatus,MD_STATUSIMMUNE)) || (battle_check_undead(tstatus->race,tstatus->def_ele) && !faction_check_skill_use(src,bl)) ) {
 			map_freeblock_unlock();
 			return 1;
 		}
@@ -7988,7 +8004,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		status_change_end(bl, SC_STASIS, INVALID_TIMER);
 		status_change_end(bl, SC_NETHERWORLD, INVALID_TIMER);
-		if(battle_check_undead(tstatus->race,tstatus->def_ele))
+		if(battle_check_undead(tstatus->race,tstatus->def_ele) && !faction_check_skill_use(src,bl))
 			skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if(dstmd)
@@ -9092,7 +9108,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case PF_MINDBREAKER:
 		{
-			if(status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele)) {
+			if(status_has_mode(tstatus,MD_STATUSIMMUNE) || (battle_check_undead(tstatus->race,tstatus->def_ele) && !faction_check_skill_use(src,bl))) {
 				map_freeblock_unlock();
 				return 1;
 			}
@@ -9368,23 +9384,40 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case GD_RESTORE:
 	case GD_EMERGENCY_MOVE:
 		if(flag&1) {
-			if (status_get_guild_id(src) == status_get_guild_id(bl)) {				
+#ifdef BGEXTENDED
+			if (status_get_guild_id(src) == status_get_guild_id(bl) || (map_getmapflag(src->m, MF_BATTLEGROUND) && bg_team_get_id(src) == bg_team_get_id(bl))) {
+#else
+			if (status_get_guild_id(src) == status_get_guild_id(bl)) {
+#endif
 				if( skill_id == GD_RESTORE )
 					clif_skill_nodamage(src,bl,AL_HEAL,status_percent_heal(bl,90,90),1);
 				else
 					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id, skill_lv));
 			}
+#ifdef BGEXTENDED
+		} else if (status_get_guild_id(src) || (map_getmapflag(src->m, MF_BATTLEGROUND) && bg_team_get_id(src))) {
+#else
 		} else if (status_get_guild_id(src)) {
+#endif
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			map_foreachinallrange(skill_area_sub, src,
 				skill_get_splash(skill_id, skill_lv), BL_PC,
 				src,skill_id,skill_lv,tick, flag|BCT_GUILD|1,
 				skill_castend_nodamage_id);
+#ifdef BGEXTENDED
+			if (sd) {
+				if (sd->bg_id)
+					bg_block_skill_start(sd, skill_id, skill_get_time2(skill_id, skill_lv));
+				else
+					guild_block_skill(sd,skill_get_time2(skill_id,skill_lv));
+			}
+#else
 			if (sd)
 #ifdef RENEWAL
 				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
+#endif
 #endif
 		}
 		break;
@@ -9394,10 +9427,27 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			int8 dx[9] = {-1, 1, 0, 0,-1, 1,-1, 1, 0};
 			int8 dy[9] = { 0, 0, 1,-1, 1,-1,-1, 1, 0};
 			uint8 j = 0, calls = 0, called = 0;
+#ifdef BGEXTENDED
+			struct guild *g = NULL;
+			std::shared_ptr<s_battleground_data> bg = NULL;
+			int max_member;
+#else
 			struct guild *g;
+#endif
+#ifdef BGEXTENDED
+			if (map_getmapflag(src->m, MF_BATTLEGROUND) && bg_team_get_id(src)) {
+				bg = util::umap_find(bg_team_db, sd->bg_id);
+				max_member = MAX_BG_MEMBERS;
+			} else {
+				g = sd?sd->guild:guild_search(status_get_guild_id(src));
+				max_member = g->max_member;
+			}
+			if (!g && !bg)
+#else
 			// i don't know if it actually summons in a circle, but oh well. ;P
 			g = sd?sd->guild:guild_search(status_get_guild_id(src));
 			if (!g)
+#endif
 				break;
 
 			if (skill_id == GD_ITEMEMERGENCYCALL)
@@ -9409,6 +9459,40 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				}
 
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+#ifdef BGEXTENDED
+			if(bg) {
+				for (const auto &member : bg->members) {
+					if (j > 8)
+						j = 0;
+					if ((dstsd = member.sd) != nullptr && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
+						if (map_getmapflag(dstsd->bl.m, MF_NOWARP) && !map_flag_gvg2(dstsd->bl.m) && !bg)
+							continue;
+						if (!pc_job_can_entermap((enum e_job)dstsd->status.class_, src->m, dstsd->group_level))
+							continue;
+						if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
+							dx[j] = dy[j] = 0;
+						if (!pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN))
+							called++;
+					}
+					j++;
+				}
+			} else {
+				for (i = 0; i < max_member && (!calls || (calls && called < calls)); i++, j++) {
+					if (j > 8)
+						j = 0;
+					if ((dstsd = g->member[i].sd) != NULL && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
+						if (map_getmapflag(dstsd->bl.m, MF_NOWARP) && !map_flag_gvg2(dstsd->bl.m))
+							continue;
+						if (!pc_job_can_entermap((enum e_job)dstsd->status.class_, src->m, dstsd->group_level))
+							continue;
+						if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
+							dx[j] = dy[j] = 0;
+						if (!pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN))
+							called++;
+					}
+				}
+			}
+#else
 			for (i = 0; i < g->max_member && (!calls || (calls && called < calls)); i++, j++) {
 				if (j > 8)
 					j = 0;
@@ -9423,11 +9507,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						called++;
 				}
 			}
+#endif
+#ifdef BGEXTENDED
+			if (sd) {
+				if (sd->bg_id)
+					bg_block_skill_start(sd, skill_id, skill_get_time2(skill_id, skill_lv));
+				else
+					guild_block_skill(sd,skill_get_time2(skill_id,skill_lv));
+			}
+#else
 			if (sd)
 #ifdef RENEWAL
 				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
+#endif
 #endif
 		}
 		break;
@@ -9852,7 +9946,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AB_CHEAL:
 		if( !sd || sd->status.party_id == 0 || flag&1 ) {
-			if( sd && tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && !tsc->data[SC_BERSERK] ) {
+			if( sd && tstatus && (!battle_check_undead(tstatus->race, tstatus->def_ele) || faction_check_skill_use(src,bl)) && !tsc->data[SC_BERSERK] ) {
 				int partycount = (sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 0);
 
 				i = skill_calc_heal(src, bl, AL_HEAL, pc_checkskill(sd, AL_HEAL), true);
@@ -9986,6 +10080,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_MIRACLE:		case SC_S_LIFEPOTION:		case SC_L_LIFEPOTION:
 					case SC_INCHEALRATE:		case SC_PUSH_CART:		case SC_PARTYFLEE:
 					case SC_RAISINGDRAGON:		case SC_GT_REVITALIZE:		case SC_GT_ENERGYGAIN:
+					case SC_FACTION_AURA:
 					case SC_GT_CHANGE:		case SC_ANGEL_PROTECT:		case SC_MONSTER_TRANSFORM:
 					case SC_FULL_THROTTLE:		case SC_REBOUND:		case SC_TELEKINESIS_INTENSE:
 					case SC_MOONSTAR:		case SC_SUPER_STAR:		case SC_ALL_RIDING:
@@ -11709,7 +11804,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		case PR_TURNUNDEAD:
 			{
 				struct status_data *tstatus = status_get_status_data(target);
-				if (!battle_check_undead(tstatus->race, tstatus->def_ele))
+				if( !battle_check_undead(tstatus->race, tstatus->def_ele) || faction_check_skill_use(src,target) )
 					return USESKILL_FAIL_MAX;
 			}
 			break;
@@ -13653,6 +13748,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case GD_GLORYWOUNDS:
 	case GD_SOULCOLD:
 	case GD_HAWKEYES:
+	case FACTION_AURA:
 		limit = 1000000;//it doesn't matter
 		break;
 	case LG_BANDING:
@@ -13734,6 +13830,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	group->state.ammo_consume = (sd && sd->state.arrow_atk && skill_id != GS_GROUNDDRIFT); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (((skill->unit_flag[UF_DANCE] || skill->unit_flag[UF_SONG])?1:0)|(skill->unit_flag[UF_ENSEMBLE]?2:0)); //Signals if this is a song/dance/duet
 	group->state.guildaura = ( skill_id >= GD_LEADERSHIP && skill_id <= GD_HAWKEYES )?1:0;
+	group->state.faction_aura = ( skill_id == FACTION_AURA )?1:0; // Faction System [Biali]
 	group->item_id = req_item;
 
 	// If tick is greater than current, do not invoke onplace function just yet. [Skotlex]
@@ -14211,7 +14308,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 			break;
 
 		case UNT_WARMER:
-			if (!sce && bl->type == BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
+			if (!sce && bl->type == BL_PC && ((!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON) || faction_check_skill_use(ss,bl)) )
 				sc_start2(ss, bl, type, 100, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));
 			break;
 
@@ -14236,8 +14333,9 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		case UNT_GD_GLORYWOUNDS:
 		case UNT_GD_SOULCOLD:
 		case UNT_GD_HAWKEYES:
+		case UNT_FACTION_AURA: // Faction System [Biali]
 			if ( !sce && battle_check_target(&unit->bl, bl, sg->target_flag) > 0 )
-				sc_start4(ss, bl,type,100,sg->skill_lv,0,0,0,1000);
+				sc_start4(ss, bl,type,100,sg->skill_lv,(sg->unit_id == UNT_FACTION_AURA)?sg->faction_id:0,0,0,1000);
 			break;
 	}
 	return skill_id;
@@ -14396,7 +14494,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		}
 		break;
 		case UNT_SANCTUARY:
-			if( battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON )
+			if( (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON) && !faction_check_skill_use(ss,bl) )
 			{ //Only damage enemies with offensive Sanctuary. [Skotlex]
 				if( battle_check_target(&unit->bl,bl,BCT_ENEMY) > 0 && skill_attack(BF_MAGIC, ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0) )
 					sg->val1 -= 1; // Reduce the number of targets that can still be hit
@@ -14423,7 +14521,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 		case UNT_EVILLAND:
 			//Will heal demon and undead element monsters, but not players.
-			if ((bl->type == BL_PC) || (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON))
+			if ((bl->type == BL_PC) || (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON && !faction_check_skill_use(ss,bl)))
 			{	//Damage enemies
 				if(battle_check_target(&unit->bl,bl,BCT_ENEMY)>0)
 					skill_attack(BF_MISC, ss, &unit->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
@@ -14444,7 +14542,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			if (!battle_check_undead(tstatus->race,tstatus->def_ele) && tstatus->race!=RC_DEMON)
 				break;
 #endif
-			skill_attack(BF_MAGIC,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			if((battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race==RC_DEMON) && !faction_check_skill_use(ss,bl))
+				skill_attack(BF_MAGIC,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
 		case UNT_FIREPILLAR_WAITING:
@@ -14745,7 +14844,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 		case UNT_EPICLESIS:
 			++sg->val1; // Increment outside of the check to get the exact interval of the skill unit
-			if( bl->type == BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON ) {
+			if( bl->type == BL_PC && ((!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON) || faction_check_skill_use(ss,bl)) ) {
 				if (sg->val1 % 3 == 0) { // Recover players every 3 seconds
 					int hp, sp;
 
@@ -15168,6 +15267,7 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 		case GD_GLORYWOUNDS:
 		case GD_SOULCOLD:
 		case GD_HAWKEYES:
+		case FACTION_AURA:
 			if( !(sce && sce->val4) )
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
@@ -15963,14 +16063,26 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case GD_CHARGESHOUT_FLAG:
 		case GD_CHARGESHOUT_BEATING:
 		case GD_EMERGENCY_MOVE:
+#ifdef BGEXTENDED
+			if (!(map_flag_gvg2(sd->bl.m) || map_getmapflag(sd->bl.m, MF_BATTLEGROUND))) {
+#else
 			if (!map_flag_gvg2(sd->bl.m)) {
+#endif
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
 		case GD_EMERGENCYCALL:
 		case GD_ITEMEMERGENCYCALL:
 			// other checks were already done in skill_isNotOk()
+#ifdef BGEXTENDED
+			if (map_getmapflag(sd->bl.m, MF_BATTLEGROUND)) {
+				std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
+				if( !sd->bg_id || bgteam->leader_char_id != sd->status.char_id)
+					return false; // Not Team Leader on Battleground
+			} else if (!sd->status.guild_id || (sd->state.gmaster_flag == 0 && skill_id != GD_CHARGESHOUT_BEATING))
+#else
 			if (!sd->status.guild_id || (sd->state.gmaster_flag == 0 && skill_id != GD_CHARGESHOUT_BEATING))
+#endif
 				return false;
 			break;
 
@@ -16735,7 +16847,17 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 		if( !require.itemid[i] )
 			continue;
 		index[i] = pc_search_inventory(sd,require.itemid[i]);
+#ifdef BGEXTENDED
+		if( index[i] < 0 || sd->inventory.u.items_inventory[index[i]].amount < require.amount[i] ||
+			sd->inventory.u.items_inventory[index[i]].card[0] == CARD0_CREATE &&
+			((MakeDWord(sd->inventory.u.items_inventory[index[i]].card[2], sd->inventory.u.items_inventory[index[i]].card[3]) ==
+			battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BG_CONSUME)) ||
+			(MakeDWord(sd->inventory.u.items_inventory[index[i]].card[2], sd->inventory.u.items_inventory[index[i]].card[3]) ==
+			battle_config.woe_reserved_char_id && !map_getmapflag(sd->bl.m, MF_WOE_CONSUME)))
+		) {
+#else
 		if( index[i] < 0 || sd->inventory.u.items_inventory[index[i]].amount < require.amount[i] ) {
+#endif
 			if( require.itemid[i] == ITEMID_HOLY_WATER )
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_HOLYWATER,0); //Holy water is required.
 			else if( require.itemid[i] == ITEMID_RED_GEMSTONE )
@@ -18985,6 +19107,7 @@ struct skill_unit_group* skill_initunitgroup(struct block_list* src, int count, 
 	group->interval   = interval;
 	group->tick       = gettick();
 	group->valstr     = NULL;
+	group->faction_id = faction_get_id(src); // Faction System [Biali]
 
 	ud->skillunit[i] = group;
 
@@ -19278,7 +19401,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 	nullpo_ret(group = unit->group);
 
 	// Check for expiration
-	if( !group->state.guildaura && (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
+	if( !( group->state.guildaura || group->state.faction_aura ) && (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
 	{// skill unit expired (inlined from skill_unit_onlimit())
 		switch( group->unit_id ) {
 			case UNT_ICEWALL:
@@ -19769,6 +19892,9 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
 		switch(m_flag[i]) {
 			case 0:
 			//Cell moves independently, safely move it.
+				// (^~_~^) LGP Start
+				clif_skill_delunit(unit1);
+				// (^~_~^) LGP End
 				map_foreachinmovearea(clif_outsight, &unit1->bl, AREA_SIZE, dx, dy, BL_PC, &unit1->bl);
 				map_moveblock(&unit1->bl, unit1->bl.x+dx, unit1->bl.y+dy, tick);
 				break;
@@ -19780,6 +19906,9 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
 					if(m_flag[j] != 2 || !group->unit[j].alive)
 						continue;
 					//Move to where this cell would had moved.
+					// (^~_~^) LGP Start
+					clif_skill_delunit(unit1);
+					// (^~_~^) LGP End
 					unit2 = &group->unit[j];
 					dx2 = unit2->bl.x + dx - unit1->bl.x;
 					dy2 = unit2->bl.y + dy - unit1->bl.y;
