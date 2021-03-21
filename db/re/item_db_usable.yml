@@ -13004,7 +13004,7 @@ Body:
     AegisName: Mother_Love_Box
     Name: Mother Love Box
     Type: Usable
-    EquipLevelMin: 40
+    EquipLevelMin: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -46298,7 +46298,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 50
-    EquipLevelMin: 1
+    EquipLevelMin: 50
     Trade:
       Override: 100
       NoDrop: true
