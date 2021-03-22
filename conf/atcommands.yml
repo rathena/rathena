@@ -857,12 +857,21 @@ Body:
     Help: |
       Params: <char name>
       Blow somebody up, including those surrounding them.
+  - Command: reloadachievementdb
+    Help: |
+      Reload achievement database.
   - Command: reloadatcommand
     Help: |
       Reload atcommand settings.
+  - Command: reloadattendancedb
+    Help: |
+      Reload attendance database.
   - Command: reloadbattleconf
     Help: |
       Reload battle settings.
+  - Command: reloadinstancedb
+    Help: |
+      Reload instance database.
   - Command: reloaditemdb
     Help: |
       Reload item database.

@@ -34,30 +34,30 @@
 	if (!getequipisequiped(.@part)) {
 		mes "[Blacksmith Dister]";
 		switch(.@part) {
-		case 1:
+		case EQI_HEAD_TOP:
 			mes "I'm a blacksmith, not a hairstylist.";
 			break;
-		case 2:
+		case EQI_ARMOR:
 			mes "With my hammer, I will make you a star of the sky.";
 			break;
-		case 3:
-		case 4:
+		case EQI_HAND_L:
+		case EQI_HAND_R:
 			mes "Making artificial hands is not my specialty.";
 			break;
-		case 5:
+		case EQI_GARMENT:
 			mes "Bring out the item so I can refine it!";
 			break;
-		case 6:
+		case EQI_SHOES:
 			mes "Where is this weird smell coming from?";
 			break;
-		case 7:
-		case 8:
+		case EQI_ACC_L:
+		case EQI_ACC_R:
 			mes "Where is the accessory?";
 			break;
-		case 9:
+		case EQI_HEAD_MID:
 			mes "What do you want me to refine?";
 			break;
-		case 10:
+		case EQI_HEAD_LOW:
 			mes "Huh? What do you want me to do?";
 			break;
 		}

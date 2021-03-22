@@ -22,10 +22,11 @@ This list contains all available constants referenced in the 'bonus' commands.
 
 * Race (r)
 	RC_Angel, RC_Brute, RC_DemiHuman, RC_Demon, RC_Dragon, RC_Fish, RC_Formless,
-	RC_Insect, RC_Plant, RC_Player, RC_Undead, RC_All
+	RC_Insect, RC_Plant, RC_Player_Human (RC_Player deprecated), RC_Player_Doram, RC_Undead, RC_All
 
 * Monster Race (mr)
-	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja
+	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja,
+	RC2_BioLab, RC2_SCARABA, RC2_FACEWORM, RC2_THANATOS, RC2_CLOCKTOWER, RC2_ROCKRIDGE
 	See 'db/(pre-)re/mob_race2_db.txt'
 
 * Class (c)
@@ -58,16 +59,17 @@ This list contains all available constants referenced in the 'bonus' commands.
 	ATF_LONG	= Trigger on ranged attacks
 	
 	Skill/attack type criteria: (Default: Physical/weapon)
+	ATF_SKILL	= Trigger on magic/misc skills
 	ATF_WEAPON	= Trigger on weapon skill / physical attacks
 	ATF_MAGIC	= Trigger on magic skills
 	ATF_MISC	= Trigger on misc skills
 
 * Other values:
-	Skill (sk): see 'db/(pre-)re/skill_db.txt' (NOTE: Both skill IDs and names, in quotes, are supported.)
+	Skill (sk): see 'db/(pre-)re/skill_db.yml' (NOTE: Both skill IDs and names, in quotes, are supported.)
 	Monster id (mid): see 'db/(pre-)re/mob_db.txt'
-	Item id (iid): see 'db/(pre-)re/item_db.txt'
+	Item id (iid): see 'db/item_db.yml'
 	Item group (ig): see 'db/(pre-)re/item_group_db.txt' and the constants in 'db/const.txt', prefixed with IG_*
-	Weapon type (w): see 'doc/item_db.txt' -> View -> Weapons
+	Weapon type (w): see 'doc/item_db.txt' -> SubType
 
 
 Bonuses
@@ -166,8 +168,10 @@ bonus2 bSkillUseSPrate,sk,n;		Decreases SP consumption of skill sk by n%
 Atk/Def
 -------
 bonus2 bSkillAtk,sk,n;    		Increases damage of skill sk by n%
-bonus bLongAtkRate,n;     		Increases damage of ranged attacks by n%
+bonus bShortAtkRate,n;			Increases damage of short ranged attacks by n%
+bonus bLongAtkRate,n;     		Increases damage of long ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
+bonus bCritDefRate,n;			Decreases critical damage received by n%
 bonus bCriticalDef,n;     		Decreases the chance of being hit by critical hits by n%
 bonus2 bWeaponAtk,w,n;    		Adds n ATK when weapon of type w is equipped
 bonus2 bWeaponDamageRate,w,n;	Adds n% damage to normal attacks when weapon of type w is equipped
@@ -224,11 +228,13 @@ bonus3 bAddEle,e,x,bf;    		+x% physical damage against element e with trigger c
 bonus2 bMagicAddEle,e,x;  		+x% magical damage against element e
 bonus2 bSubEle,e,x;       		+x% damage reduction against attack element e
 bonus3 bSubEle,e,x,bf;    		+x% damage reduction against attack element e with trigger criteria bf
-bonus2 bSubDefEle,e,x;    		+x% damage reduction from enemy with defense element e
+bonus2 bSubDefEle,e,x;    		+x% physical damage reduction from enemy with defense element e
+bonus2 bMagicSubDefEle,e,x;		+x% magic damage reduction from enemy with defense element e
 
 bonus2 bAddRace,r,x;      		+x% physical damage against race r
 bonus2 bMagicAddRace,r,x; 		+x% magical damage against race r
 bonus2 bSubRace,r,x;      		+x% damage reduction against race r
+bonus3 bSubRace,r,x,bf;    		+x% damage reduction against race r with trigger criteria bf 
 
 bonus2 bAddClass,c,x;     		+x% physical damage against class c
 bonus2 bMagicAddClass,c,x;		+x% magical damage against class c
@@ -237,6 +243,7 @@ bonus2 bSubClass,c,x;     		+x% damage reduction against class c
 bonus2 bAddSize,s,x;      		+x% physical damage against size s
 bonus2 bMagicAddSize,s,x; 		+x% magical damage against size s
 bonus2 bSubSize,s,x;      		+x% damage reduction against size s
+bonus2 bMagicSubSize,s,x;      	+x% magic damage reduction against size s
 bonus bNoSizeFix;       		Ignores the size modifier when calculating damage
 
 bonus2 bAddDamageClass,mid,x;     	+x% physical damage against monster mid
@@ -274,7 +281,6 @@ Ignore Def
 ----------
 bonus bIgnoreDefEle,e;  		Disregard DEF against enemies of element e
 bonus bIgnoreDefRace,r; 		Disregard DEF against enemies of race r
-bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target belongs to race r
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
 bonus2 bIgnoreDefRaceRate,r,n; 	Disregard n% of the target's DEF if the target belongs to race r
@@ -310,6 +316,7 @@ bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for 
                               		  ATF_SHORT  = trigger on melee attacks
                               		  ATF_LONG   = trigger on ranged attacks
                               		 Skill/attack type criteria: (Default: Physical/weapon)
+                             		  ATF_SKILL  = trigger on magic/misc skills
                               		  ATF_WEAPON = trigger on weapon skill / physical attacks
                               		  ATF_MAGIC  = trigger on magic skills
                               		  ATF_MISC   = trigger on misc skills
@@ -399,6 +406,7 @@ Damage return
 bonus bShortWeaponDamageReturn,n;	Reflects n% of received melee damage back to the enemy that caused it
 bonus bLongWeaponDamageReturn,n; 	Reflects n% of received ranged damage back to the enemy that caused it
 bonus bMagicDamageReturn,n;      	Adds a n% chance to reflect targetted magic spells back to the enemy that caused it
+bonus bReduceDamageReturn,n;		Reduces reflected damage (melee/ranged/magic) by n%
 
 Strip/Break equipment
 ---------------------

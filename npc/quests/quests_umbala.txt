@@ -1003,7 +1003,7 @@ um_in,139,48,5	script	Phrenetan	783,{
 		close;
 	}
 	if (um_wind <= 3 && (MISC_QUEST & 32768) == 0) {
-		if (um_wind) set um_wind,1;
+		if (um_wind == 0) set um_wind,1;
 		emotion ET_FRET;
 		mes "[Phrenetan]";
 		mes "Umbaumbah wooga wooga";

@@ -28,9 +28,9 @@ lhz_dun_n,0,0,0	script	lhz_dun_n	-1,{
 	end;
 OnRegularDead:
 	.@mob_id = killedrid;
-	if (getd( ".lhz_dun_n" + .@mob_id ) < 100 && .lhz_dun_n_boss == 0) {
-		setd ".lhz_dun_n" + .@mob_id, getd( ".lhz_dun_n" + .@mob_id ) + 1;
-		if (getd( ".lhz_dun_n" + .@mob_id ) == 100) {
+	if (.lhz_dun_n[.@mob_id] < 110 && .lhz_dun_n_boss == 0) {
+		.lhz_dun_n[.@mob_id]++;
+		if (.lhz_dun_n[.@mob_id] == 110) {
 			.@mini_boss = .@mob_id + 6 + (.@mob_id > 3213);	// mini boss version ID: regular ID +6 for non-transcendent, +7 for others
 			monster "lhz_dun_n",0,0,"--en--",.@mini_boss,1, "lhz_dun_n::OnMiniDead";
 		}
@@ -38,15 +38,15 @@ OnRegularDead:
 	end;
 OnMiniDead:
 	.@mob_id = killedrid;
-	if (getd( ".lhz_dun_n" + .@mob_id ) < 10 && .lhz_dun_n_boss == 0) {
-		setd ".lhz_dun_n" + .@mob_id, getd( ".lhz_dun_n" + .@mob_id ) + 1;
+	if (.lhz_dun_n[.@mob_id] < 4 && .lhz_dun_n_boss == 0) {
+		.lhz_dun_n[.@mob_id]++;
 		.@regular = .@mob_id - 6 - (.@mob_id > 3219);
-		if (getd( ".lhz_dun_n" + .@mob_id ) < 10)
-			setd ".lhz_dun_n" + .@regular, 0;	// note: mini boss version can re-spawn when the count of mini boss dead is reached? (currently they don't)
+		if (.lhz_dun_n[.@mob_id] < 4)
+			.lhz_dun_n[.@regular] = 0;	// note: mini boss version can re-spawn when the count of mini boss dead is reached? (currently they don't)
 		else {
 			setarray .@mini_boss_list[0], 3214,3215,3216,3217,3218,3219,3233,3234,3235,3236,3237,3238,3239;
 			for ( .@i = 0; .@i < 13; ++.@i ) {	
-				if (getd( ".lhz_dun_n" + .@mini_boss_list[.@i] ) < 10)
+				if (.lhz_dun_n[.@mini_boss_list[.@i]] < 4)
 					end;
 			}
 			// MvP monster seems to only spawn at 12 o'clock
@@ -55,8 +55,8 @@ OnMiniDead:
 			.lhz_dun_n_boss = 1;
 			for ( .@i = 0; .@i < 13; ++.@i ) {	
 				.@regular = .@mini_boss_list[.@i] - 6 - (.@mini_boss_list[.@i] > 3219);
-				setd ".lhz_dun_n" + .@regular, 0;
-				setd ".lhz_dun_n" + .@mini_boss_list[.@i], 0;
+				.lhz_dun_n[.@regular] = 0;
+				.lhz_dun_n[.@mini_boss_list[.@i]] = 0;
 			}
 		}
 	}

@@ -38,7 +38,6 @@ ALTER TABLE `guild_storage_log` ENGINE = MyISAM;
 ALTER TABLE `homunculus` ENGINE = MyISAM;
 ALTER TABLE `hotkey` ENGINE = MyISAM;
 ALTER TABLE `interlog` ENGINE = MyISAM;
-ALTER TABLE `interreg` ENGINE = MyISAM;
 ALTER TABLE `inventory` ENGINE = MyISAM;
 ALTER TABLE `ipbanlist` ENGINE = MyISAM;
 #ALTER TABLE `item_cash_db` ENGINE = MyISAM;

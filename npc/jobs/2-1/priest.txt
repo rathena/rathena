@@ -946,7 +946,8 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 			mes "Now...";
 			mes "Go for it!";
 			close2;
-			changequest 8011,8012;
+			if(checkquest(8012) == -1)
+				changequest 8011,8012;
 			warp "job_prist",24,44;
 			donpcevent "Zombie_Generator#prst::OnEnable";
 			donpcevent "Peter S. Alberto::OnDisable";

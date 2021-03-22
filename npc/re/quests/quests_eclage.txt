@@ -4600,28 +4600,28 @@ OnTouch:
 function	script	CheckBurglary	{
 	.@last = getarg(1);
 	for ( .@i = getarg(0); .@i <= .@last; .@i++ ) {
+		if (checkquest(.@i) != -1)
+			continue;
 		switch(.@i) {
-			if (checkquest(.@i) != -1)
-				continue;
 		case 9252:
 			mes "- Let's examine Poppy first -";
-			return;
+			close;
 		case 9253:
 			mes "- Let's examine the messy";
 			mes "bookshelves first -";
-			return;
+			close;
 		case 9254:
 			mes "- Let's examine the damaged";
 			mes "book first -";
-			return;
+			close;
 		case 9255:
 			mes "- Let's examine the";
 			mes "container first -";
-			return;
+			close;
 		case 9256:
 			mes "- Let's examine the";
 			mes "messed up table first -";
-			return;
+			close;
 		}
 	}
 	return;
@@ -5309,7 +5309,7 @@ ecl_in04,77,104,5	script	Mother Rosa#eclage	4_F_MORAFINE1,{
 				break;
 			}
 			next;
-			.@menu2 = select("Do you suspect anyone?:Is there anything else missing?") -1;
+			.@menu2 = select("Do you suspect anyone?:Is there anything else missing?");
 			switch (.@menu2) {
 			case 1:
 				mes "[Mother Rosa]";
@@ -10997,6 +10997,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 					close;
 				}
 			}
+			close;
 		case 3:
 			if (checkquest(13060,PLAYTIME) == 2) {
 				mes "We should go check if the adventurers are okay.";
@@ -11041,6 +11042,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 					close;
 				}
 			}
+			close;
 		}
 	}
 	else if (ep14_2_nines == 2) {

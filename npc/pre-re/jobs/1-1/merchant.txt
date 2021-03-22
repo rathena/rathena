@@ -180,7 +180,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		mes "But we all know that~";
 		close;
 	}
-	else if (job_merchant_q <= 6 && job_merchant_q != 0) {
+	else if (job_merchant_q2 && job_merchant_q > 0 && job_merchant_q < 7) {
 		mes "[Chief Mahnsoo]";
 		if (job_merchant_q2 == 1 || job_merchant_q2 == 2) {
 			mes "First, get the delivery package from the storehouse, and then take it to the former Swordman's Association in Prontera.";
@@ -266,7 +266,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		mes "Take care!";
 		close;
 	}
-	else if (job_merchant_q == 0) {
+	else {
 		mes "[Chief Mahnsoo]";
 		mes "So, what brings you to";
 		mes "the Merchant Association?";
