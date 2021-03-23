@@ -8374,8 +8374,6 @@ Body:
     Type: Usable
     Buy: 275
     Weight: 1
-    Buy: 220
-    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -8392,8 +8390,6 @@ Body:
     Type: Usable
     Buy: 625
     Weight: 1
-    Buy: 500
-    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -8409,8 +8405,6 @@ Body:
     Name: Repair C
     Type: Usable
     Buy: 1375
-    Weight: 1
-    Buy: 1100
     Weight: 1
     Jobs:
       Blacksmith: true

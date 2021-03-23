@@ -2101,8 +2101,6 @@ Body:
     SubType: Arrow
     Buy: 10
     Weight: 1
-    Buy: 3
-    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2122,8 +2120,6 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 8
-    Weight: 1
-    Buy: 3
     Weight: 1
     Attack: 30
     Jobs:
@@ -16712,8 +16708,6 @@ Body:
     Type: Etc
     Buy: 12
     Weight: 1
-    Buy: 10
-    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 6146
@@ -16722,8 +16716,6 @@ Body:
     Type: Etc
     Buy: 375
     Weight: 1
-    Buy: 300
-    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 6147
@@ -16731,8 +16723,6 @@ Body:
     Name: Liquid Condensed Bullet
     Type: Etc
     Buy: 125
-    Weight: 1
-    Buy: 100
     Weight: 1
     Flags:
       BuyingStore: true
@@ -28161,8 +28151,6 @@ Body:
     Type: Etc
     Buy: 112
     Weight: 1
-    Buy: 150
-    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 7522
@@ -28170,8 +28158,6 @@ Body:
     Name: Ice Stone
     Type: Etc
     Buy: 112
-    Weight: 1
-    Buy: 150
     Weight: 1
     Flags:
       BuyingStore: true
@@ -28181,8 +28167,6 @@ Body:
     Type: Etc
     Buy: 112
     Weight: 1
-    Buy: 150
-    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 7524
@@ -28190,8 +28174,6 @@ Body:
     Name: Shadow Orb
     Type: Etc
     Buy: 225
-    Weight: 1
-    Buy: 300
     Weight: 1
     Flags:
       BuyingStore: true
