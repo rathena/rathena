@@ -233,7 +233,7 @@ Body:
     AegisName: Yellow_Gemstone
     Name: Yellow Gemstone
     Type: Etc
-    Buy: 600
+    Buy: 450
     Weight: 1
     Flags:
       BuyingStore: true
@@ -241,7 +241,7 @@ Body:
     AegisName: Red_Gemstone
     Name: Red Gemstone
     Type: Etc
-    Buy: 600
+    Buy: 450
     Weight: 1
     Flags:
       BuyingStore: true
@@ -249,7 +249,7 @@ Body:
     AegisName: Blue_Gemstone
     Name: Blue Gemstone
     Type: Etc
-    Buy: 600
+    Buy: 1500
     Weight: 1
     Flags:
       BuyingStore: true
