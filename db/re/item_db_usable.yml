@@ -2326,7 +2326,7 @@ Body:
     Name: Fanta Orange
     Type: Healing
     Buy: 800
-    Weight: 100
+    Weight: 10
     Script: |
       itemheal rand(50,70),rand(10,12);
   - Id: 11507
@@ -2334,7 +2334,7 @@ Body:
     Name: Fanta Grape
     Type: Healing
     Buy: 800
-    Weight: 100
+    Weight: 10
     Script: |
       itemheal rand(50,70),rand(10,12);
   - Id: 11508
@@ -2722,7 +2722,7 @@ Body:
     AegisName: Woe_Violet_Potion
     Name: Siege Purple Potion
     Type: Healing
-    Weight: 120
+    Weight: 80
     Flags:
       BuyingStore: true
     Script: |
@@ -2750,7 +2750,7 @@ Body:
     Name: Pumpkin Cake
     Type: Healing
     Buy: 10
-    Weight: 80
+    Weight: 40
     Script: |
       percentheal 5,5;
   - Id: 11551
@@ -3337,7 +3337,7 @@ Body:
     Name: Delicious Anchovy
     Type: Healing
     Buy: 20
-    Weight: 30
+    Weight: 20
     Script: |
       itemheal rand(30,46),0;
       specialeffect2 EF_HEAL3;
@@ -3354,7 +3354,7 @@ Body:
     AegisName: Cookies_Bat
     Name: Cookie Bat
     Type: Healing
-    Weight: 50
+    Weight: 30
     Script: |
       itemheal rand(50,100),0;
       /*TODO*/
@@ -3371,7 +3371,7 @@ Body:
     Name: Red Syrup
     Type: Healing
     Buy: 800
-    Weight: 7
+    Weight: 70
     EquipLevelMin: 60
     Delay:
       Duration: 1000
@@ -3382,7 +3382,7 @@ Body:
     Name: Yellow Syrup
     Type: Healing
     Buy: 1200
-    Weight: 10
+    Weight: 100
     EquipLevelMin: 60
     Delay:
       Duration: 1000
@@ -3393,7 +3393,7 @@ Body:
     Name: White Syrup
     Type: Healing
     Buy: 1500
-    Weight: 14
+    Weight: 140
     EquipLevelMin: 60
     Delay:
       Duration: 1000
@@ -3404,7 +3404,7 @@ Body:
     Name: Blue Syrup
     Type: Healing
     Buy: 7000
-    Weight: 10
+    Weight: 100
     EquipLevelMin: 60
     Delay:
       Duration: 10000
@@ -3432,7 +3432,7 @@ Body:
     AegisName: Mysterious_Blood
     Name: Mystery Blood
     Type: Healing
-    Weight: 30
+    Weight: 10
     Script: |
       itemheal 0,rand(25,35);
   - Id: 11704
@@ -5701,7 +5701,7 @@ Body:
     Name: Special Moon Cake
     Type: Usable
     Buy: 2
-    Weight: 500
+    Weight: 300
     Script: |
       sc_start SC_ASPDPOTION0,600000,4;
       sc_start SC_SPEEDUP0,600000,25;
@@ -5710,7 +5710,7 @@ Body:
     Name: Pumpkin Pie
     Type: Healing
     Buy: 20
-    Weight: 10
+    Weight: 30
     Script: |
       percentheal 5,5;
   - Id: 12193
@@ -7552,7 +7552,7 @@ Body:
     Name: Large Firecracker
     Type: Usable
     Buy: 2
-    Weight: 20
+    Weight: 10
   - Id: 12327
     AegisName: Charm_Of_Luck
     Name: Charm Of Luck
@@ -7716,7 +7716,7 @@ Body:
     Name: Special Alloy Trap Box
     Type: Usable
     Buy: 30000
-    Weight: 10
+    Weight: 100
     Flags:
       BuyingStore: true
     Script: |
@@ -8098,7 +8098,7 @@ Body:
     Name: Boy's Pure Heart
     Type: Usable
     Buy: 20
-    Weight: 50
+    Weight: 10
     Flags:
       BuyingStore: true
     NoUse:
@@ -8813,7 +8813,7 @@ Body:
     Name: Concentrated White Potion Z
     Type: Healing
     Buy: 10
-    Weight: 10
+    Weight: 70
     Flags:
       BuyingStore: true
     Script: |
@@ -8885,7 +8885,7 @@ Body:
     Name: Vitata 500
     Type: Healing
     Buy: 10
-    Weight: 10
+    Weight: 50
     Flags:
       BuyingStore: true
     Script: |
@@ -8896,7 +8896,7 @@ Body:
     Name: Concentrated Ceromain Soup
     Type: Usable
     Buy: 10
-    Weight: 10
+    Weight: 50
     Flags:
       BuyingStore: true
     Script: |
@@ -9201,7 +9201,7 @@ Body:
     Name: Cure Free
     Type: Usable
     Buy: 20
-    Weight: 50
+    Weight: 10
     Flags:
       BuyingStore: true
     Script: |
@@ -10267,7 +10267,7 @@ Body:
     AegisName: Cheer_Scarf_Box
     Name: Cheer Scarf Box
     Type: Usable
-    Weight: 10
+    Weight: 100
     Trade:
       Override: 100
       NoDrop: true
@@ -10281,7 +10281,7 @@ Body:
     AegisName: Cheer_Scarf2_Box
     Name: Cheer Scarf2 Box
     Type: Usable
-    Weight: 10
+    Weight: 100
     Trade:
       Override: 100
       NoDrop: true
@@ -11084,7 +11084,7 @@ Body:
     Name: Sow Bug Pocket
     Type: Usable
     Buy: 20
-    Weight: 10
+    Weight: 500
     Trade:
       Override: 100
       NoDrop: true
@@ -11650,7 +11650,7 @@ Body:
     Name: Siege Violet Potion Box
     Type: Usable
     Buy: 20
-    Weight: 500
+    Weight: 200
     Flags:
       BuyingStore: true
     Script: |
@@ -11886,7 +11886,7 @@ Body:
     AegisName: Old_Blue_Box_F
     Name: Old Blue Box
     Type: Usable
-    Weight: 10
+    Weight: 200
   - Id: 12702
     AegisName: Old_Bleu_Box
     Name: Old Navy Box
@@ -13004,7 +13004,7 @@ Body:
     AegisName: Mother_Love_Box
     Name: Mother Love Box
     Type: Usable
-    EquipLevelMin: 40
+    EquipLevelMin: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -21686,7 +21686,7 @@ Body:
     Name: Old Green Box
     Type: Usable
     Buy: 20
-    Weight: 10
+    Weight: 200
     Flags:
       UniqueId: true
   - Id: 13826
@@ -32123,7 +32123,7 @@ Body:
     Name: Blue Pajamas Hat Box
     Type: Cash
     Buy: 20
-    Weight: 10
+    Weight: 100
     Flags:
       UniqueId: true
     Trade:
@@ -32142,7 +32142,7 @@ Body:
     Name: Pink Pajamas Hat Box
     Type: Cash
     Buy: 20
-    Weight: 10
+    Weight: 100
     Flags:
       UniqueId: true
     Trade:
@@ -35704,7 +35704,7 @@ Body:
     Name: HE Battle Manual Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem 12411,10;
   - Id: 16268
@@ -35712,7 +35712,7 @@ Body:
     Name: HE Bubble Gum Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem 12412,10;
   - Id: 16269
@@ -37823,7 +37823,7 @@ Body:
     Name: Thoughtful Hat Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
   - Id: 16589
@@ -37831,7 +37831,7 @@ Body:
     Name: Thoughtful Hat Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
   - Id: 16590
@@ -37839,7 +37839,7 @@ Body:
     Name: Thoughtful Hat Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
   - Id: 16598
@@ -42418,7 +42418,7 @@ Body:
     Name: Event Old Headgear Box
     Type: Usable
     Buy: 20
-    Weight: 50
+    Weight: 10
     Script: |
       /* TODO */
   - Id: 17396
@@ -46242,7 +46242,7 @@ Body:
     Name: Costume Enchantment Stone Box 4
     Type: Usable
     Buy: 10
-    Weight: 100
+    Weight: 10
     EquipLevelMin: 1
     Script: |
       getitem callfunc("F_Rand",6636,6637,6638,6639,6640,6641,6642,6643,6644,6645,6740,6741,6742,6743,6744,6745,6790,6791,6792,6908),1;
@@ -46261,7 +46261,7 @@ Body:
     Name: Sealed Album Scroll
     Type: Usable
     Buy: 10
-    Weight: 100
+    Weight: 10
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -46279,7 +46279,7 @@ Body:
     Name: Sealed Card Album
     Type: Usable
     Buy: 10
-    Weight: 100
+    Weight: 10
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -46298,7 +46298,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 50
-    EquipLevelMin: 1
+    EquipLevelMin: 50
     Trade:
       Override: 100
       NoDrop: true
@@ -46351,7 +46351,7 @@ Body:
     Name: Sealed Dracula Card Album
     Type: Usable
     Buy: 10
-    Weight: 10
+    Weight: 50
     Classes:
       All: false
     Trade:
@@ -47581,7 +47581,7 @@ Body:
     Name: Emergency Magic Gear
     Type: Usable
     Buy: 10000
-    Weight: 3000
+    Weight: 300
     Jobs:
       Blacksmith: true
     Classes:
@@ -47815,7 +47815,7 @@ Body:
     AegisName: HardChamption_Mix
     Name: HardChampion Mix
     Type: Delayconsume
-    Weight: 100
+    Weight: 10
     Script: |
       /*synthesisui 23667;*/
   - Id: 23668
@@ -48139,7 +48139,7 @@ Body:
     AegisName: Bs_Item_M_S_37
     Name: Bandit's Hood SynthesisBox
     Type: Delayconsume
-    Weight: 1
+    Weight: 10
     Script: |
       /*synthesisui 23844;*/
   - Id: 23845
@@ -48503,7 +48503,7 @@ Body:
     AegisName: IDTest_Special
     Name: IDTest Special
     Type: Delayconsume
-    Weight: 1
+    Weight: 10
     Script: |
       /*synthesisui 100000;*/
   - Id: 100003

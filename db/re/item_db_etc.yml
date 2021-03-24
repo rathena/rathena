@@ -1907,7 +1907,7 @@ Body:
     AegisName: Mage_Test_1
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1072
     AegisName: Delivery_Message
     Name: Delivery Message
@@ -1977,41 +1977,41 @@ Body:
     AegisName: Mage_Test_2
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1086
     AegisName: Mage_Test_3
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1087
     AegisName: Mage_Test_4
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1088
     AegisName: Morocc_Potion
     Name: Morocc Solution
     Type: Etc
-    Weight: 10
+    Weight: 30
     Flags:
       BuyingStore: true
   - Id: 1089
     AegisName: Payon_Potion
     Name: Payon Solution
     Type: Etc
-    Weight: 10
+    Weight: 30
     Flags:
       BuyingStore: true
   - Id: 1090
     AegisName: Mage_Test_Etc
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1091
     AegisName: Merchant_Box_Etc
     Name: Delivery Box
     Type: Etc
-    Weight: 10
+    Weight: 1200
   - Id: 1092
     AegisName: Empty_Cylinder
     Name: Empty Test Tube
@@ -10675,7 +10675,7 @@ Body:
     Name: Evil Morocc Card
     Type: Card
     Buy: 20
-    Weight: 100
+    Weight: 10
     Locations:
       Shoes: true
     Flags:
@@ -21767,7 +21767,7 @@ Body:
     Name: Recovery Stone (Low)
     Type: Card
     Buy: 20
-    Weight: 10
+    Weight: 100
   - Id: 6746
     AegisName: Iron_Artifacts
     Name: Steel Artifact
@@ -29006,13 +29006,13 @@ Body:
     Name: Symbol of Fox
     Type: Etc
     Buy: 20
-    Weight: 10
+    Weight: 100
   - Id: 7612
     AegisName: Heart_Of_Fox_Queen
     Name: Heart of Queen Fox
     Type: Etc
     Buy: 2
-    Weight: 10
+    Weight: 100
   - Id: 7613
     AegisName: Small_Rice_Dough
     Name: Small Rice Cake Dough
@@ -32281,7 +32281,7 @@ Body:
     Name: Mix Cook Book
     Type: Etc
     Buy: 10
-    Weight: 10
+    Weight: 50
     Flags:
       BuyingStore: true
   - Id: 11023
@@ -32539,7 +32539,7 @@ Body:
     Name: Lucky Lollipop
     Type: Etc
     Buy: 10
-    Weight: 30
+    Weight: 40
     Trade:
       Override: 100
       NoDrop: true
@@ -35219,22 +35219,22 @@ Body:
     AegisName: Frozen_Stone_Fragment
     Name: Frozen Stone Fragment
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25298
     AegisName: Spirit_Jewel
     Name: Spirit Jewel
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25299
     AegisName: Snowball
     Name: Snowball
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25300
     AegisName: Ktullanux_Eye
     Name: Ktullanux Eye
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25302
     AegisName: DoubleAttack_Stone
     Name: Double Attack Stone (Garment)
@@ -35269,17 +35269,17 @@ Body:
     AegisName: Piece_of_Black_Horn
     Name: Piece of Black Horn
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25312
     AegisName: Fine_Old_Doll
     Name: Fine Old Doll
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25313
     AegisName: Old_Shell
     Name: Old Shell
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25375
     AegisName: Powerful_Soul_Essence
     Name: Powerful Soul Essence
@@ -35523,17 +35523,17 @@ Body:
     AegisName: Token_of_OrcGeneral
     Name: Orc Warlord Token
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25622
     AegisName: White_Snake_Tear
     Name: White Snake's Tear
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25629
     AegisName: Konts_Letter
     Name: Knotted Letter
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25670
     AegisName: M_M_Defense
     Name: Modification Module (Defense)
