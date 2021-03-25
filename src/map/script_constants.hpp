@@ -8096,6 +8096,22 @@
 	export_constant(MADO_ROBOT);
 	export_constant(MADO_SUIT);
 
+	// Global Damage [Cydh]
+	export_constant(MF_ATK_RATE);
+	export_constant(DMGRATE_BL);
+	export_constant(DMGRATE_SHORT);
+	export_constant(DMGRATE_LONG);
+	export_constant(DMGRATE_WEAPON);
+	export_constant(DMGRATE_MAGIC);
+	export_constant(DMGRATE_MISC);
+
+	// Contested Territories Biali
+	export_constant(MF_CONTESTED);
+	export_constant(CONTESTED_OWNER_ID);
+	export_constant(CONTESTED_BASE_BONUS);
+	export_constant(CONTESTED_JOB_BONUS);
+	export_constant(CONTESTED_DROP_BONUS);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

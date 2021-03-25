@@ -1262,7 +1262,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		} else {
 			clif_skill_nodamage(target, target, CR_AUTOGUARD, sce->val1, 1);
 			unit_set_walkdelay(target, gettick(), delay, 1);
-			if (sc->data[SC_SHRINK] && rnd() % 100 < 5 * sce->val1)
+			if( sc->data[SC_SHRINK] && !map_getmapflag(sd->bl.m,MF_ANCIENT) && rnd()%100 < 5 * sce->val1 ) //Biali Ancient WoE
 				skill_blown(target, src, skill_get_blewcount(CR_SHRINK, 1), -1, BLOWN_NONE);
 			d->dmg_lv = ATK_MISS;
 			return false;
@@ -1385,6 +1385,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if( map_getcell(bl->m, bl->x, bl->y, CELL_CHKMAELSTROM) && skill_id && skill_get_type(skill_id) != BF_MISC
 		&& skill_get_casttype(skill_id) == CAST_GROUND )
 		return 0;
+
+	//Biali Battle Royale Celula envenenada, aplica bleeding
+	if( map_getcell(bl->m, bl->x, bl->y, CELL_CHKPOISON) && bl->type == BL_PC)
+		sc_start2(bl,bl,SC_BLEEDING,30,70,src->id,5000);
 
 	if (bl->type == BL_PC) {
 		sd=(struct map_session_data *)bl;
@@ -2418,8 +2422,10 @@ void battle_consume_ammo(struct map_session_data*sd, int skill, int lv)
 		if (!qty) qty = 1;
 	}
 
-	if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
-		pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1,LOG_TYPE_CONSUME);
+	// Biali skillnorequirements
+	if(!(map_getmapflag(sd->bl.m, MF_SKILLNOREQUIREMENTS))) //Biali 
+		if (sd->equip_index[EQI_AMMO] >= 0) //Qty check should have been done in skill_check_condition
+			pc_delitem(sd,sd->equip_index[EQI_AMMO],qty,0,1,LOG_TYPE_CONSUME);
 
 	sd->state.arrow_atk = 0;
 }
@@ -2565,6 +2571,70 @@ static int battle_skill_damage(struct block_list *src, struct block_list *target
 		return 0;
 	skill_id = skill_dummy2skill_id(skill_id);
 	return battle_skill_damage_skill(src, target, skill_id) + battle_skill_damage_map(src, target, skill_id);
+}
+
+static inline int battle_calc_damage_adjustment_sub(struct s_global_damage_rate *rates, bool use_mapflag, int flag) {
+	if (flag&BF_SKILL) {
+		if (flag&BF_WEAPON)
+			return use_mapflag ? rates->rate[DMGRATE_WEAPON] : battle_config.atk_weapon_damage_rate;
+		if (flag&BF_MAGIC)
+			return use_mapflag ? rates->rate[DMGRATE_MAGIC] : battle_config.atk_magic_damage_rate;
+		if (flag&BF_MISC)
+			return use_mapflag ? rates->rate[DMGRATE_MISC] : battle_config.atk_misc_damage_rate;
+	}
+	else {
+		if (flag&BF_SHORT)
+			return use_mapflag ? rates->rate[DMGRATE_SHORT] : battle_config.atk_short_damage_rate;
+		if (flag&BF_LONG)
+			return use_mapflag ? rates->rate[DMGRATE_LONG] : battle_config.atk_long_damage_rate;
+	}
+	return 100;
+}
+
+/** Calculates Global Damage adjustments
+ * @author [Cydh]
+ * @param src block_list that will be checked
+ * @param bl enemy
+ * @param flag damage flag
+ * @param damage
+ **/
+static int64 battle_calc_damage_adjustment(struct block_list *src, int64 damage, int flag) {
+	unsigned int atk_maps = 0;
+	int rate = 100;
+	uint16 attacker = 0;
+	bool map_atk_rate, map_pvp, map_gvg, map_bg;
+	struct map_data *mapd;
+
+	nullpo_ret(src);
+
+	mapd = map_getmapdata(src->m);
+
+	if (!damage || !mapd)
+		return damage;
+
+	map_atk_rate = mapd->flag[MF_ATK_RATE] > 0;
+	attacker = map_atk_rate ? mapd->atk_rate.rate[DMGRATE_BL] : battle_config.atk_damage_attacker;
+
+	// Wrong attacker
+	if (!(attacker&src->type))
+		return damage;
+
+	atk_maps = battle_config.atk_adjustment_map;
+	map_pvp = map_flag_vs(src->m); //this includes mf_fvf too (biali)
+	map_gvg = map_flag_gvg2(src->m);
+	map_bg = mapd->flag[MF_BATTLEGROUND] > 0;
+
+	//Checking mapflag
+	if ((atk_maps & 1 && (!map_pvp && !map_gvg && !map_bg && !map_atk_rate && !!mapd->flag[MF_RESTRICTED])) ||
+		(atk_maps & 2 && map_pvp) ||
+		(atk_maps & 4 && map_gvg) ||
+		(atk_maps & 8 && map_bg) ||
+		(atk_maps & 16 && map_atk_rate) ||
+		(atk_maps & (mapd->zone) && mapd->flag[MF_RESTRICTED]))
+	{
+		rate = battle_calc_damage_adjustment_sub(&mapd->atk_rate, map_atk_rate, flag);
+	}
+	return apply_rate(damage, rate);
 }
 
 /**
@@ -2966,7 +3036,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
 			case AS_SONICBLOW:
-				if(sd && pc_checkskill(sd,AS_SONICACCEL) > 0)
+				if(sd && pc_checkskill(sd,AS_SONICACCEL) > 0 && !map_getmapflag(src->m,MF_ANCIENT)) //Biali Ancient WoE
 					hitrate += hitrate * 50 / 100;
 				break;
 #ifdef RENEWAL
@@ -5431,7 +5501,7 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 
 	switch (skill_id) {
 		case AS_SONICBLOW:
-			if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
+			if(sd && pc_checkskill(sd,AS_SONICACCEL)>0 && !map_getmapflag(src->m,MF_ANCIENT)) // Biali Ancient WoE
 				ATK_ADDRATE(wd->damage, wd->damage2, 10);
 			break;
 
@@ -5617,7 +5687,9 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 
 		if(!wd->damage2) {
 			wd->damage = battle_calc_damage(src,target,wd,wd->damage,skill_id,skill_lv);
-			if( mapdata_flag_gvg2(mapdata) )
+			if (battle_config.atk_adjustment_map)
+				wd->damage = battle_calc_damage_adjustment(src, wd->damage, wd->flag); // Global damage adjustment [Cydh]
+			else if( mapdata_flag_gvg2(mapdata) )
 				wd->damage=battle_calc_gvg_damage(src,target,wd->damage,skill_id,wd->flag);
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage=battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
@@ -5626,7 +5698,9 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 		}
 		else if(!wd->damage) {
 			wd->damage2 = battle_calc_damage(src,target,wd,wd->damage2,skill_id,skill_lv);
-			if( mapdata_flag_gvg2(mapdata) )
+			if (battle_config.atk_adjustment_map)
+				wd->damage2 = battle_calc_damage_adjustment(src, wd->damage2, wd->flag); // Global damage adjustment [Cydh]
+			else if( mapdata_flag_gvg2(mapdata) )
 				wd->damage2 = battle_calc_gvg_damage(src,target,wd->damage2,skill_id,wd->flag);
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage2 = battle_calc_bg_damage(src,target,wd->damage2,skill_id,wd->flag);
@@ -5636,7 +5710,9 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 		else {
 			int64 d1 = wd->damage + wd->damage2,d2 = wd->damage2;
 			wd->damage = battle_calc_damage(src,target,wd,d1,skill_id,skill_lv);
-			if( mapdata_flag_gvg2(mapdata) )
+			if (battle_config.atk_adjustment_map)
+				wd->damage = battle_calc_damage_adjustment(src, wd->damage, wd->flag); // Global damage adjustment [Cydh]
+			else if( mapdata_flag_gvg2(mapdata) )
 				wd->damage = battle_calc_gvg_damage(src,target,wd->damage,skill_id,wd->flag);
 			else if( mapdata->flag[MF_BATTLEGROUND] )
 				wd->damage = battle_calc_bg_damage(src,target,wd->damage,skill_id,wd->flag);
@@ -7019,6 +7095,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	else if (mapdata->flag[MF_FVF]) // Biali Faction System
 		ad.damage = battle_calc_fvf_damage(src,target,ad.damage,skill_id,ad.flag);
 
+	if (battle_config.atk_adjustment_map)
+		ad.damage = battle_calc_damage_adjustment(src, ad.damage, ad.flag); // Global damage adjustment [Cydh]
+
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
 		MATK_ADDRATE(skill_damage);
@@ -7384,6 +7463,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = battle_calc_bg_damage(src,target,md.damage,skill_id,md.flag);
 	else if(mapdata->flag[MF_FVF])
 		md.damage = battle_calc_fvf_damage(src,target,md.damage,skill_id,md.flag);
+
+	if (battle_config.atk_adjustment_map)
+		md.damage = battle_calc_damage_adjustment(src, md.damage, md.flag); // Global damage adjustment [Cydh]
 
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src,target,skill_id)) != 0)
@@ -7773,7 +7855,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (tsc && !tsc->count)
 		tsc = NULL;
 
-	if (sd)
+	if (sd && !(map_getmapflag(sd->bl.m, MF_SKILLNOREQUIREMENTS))) // BIALI no ammo mapflag for battle royale
 	{
 		sd->state.arrow_atk = (sd->status.weapon == W_BOW || (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE));
 		if (sd->state.arrow_atk)
@@ -8503,6 +8585,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			}
 			if( !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_EMPERIUM && mapdata_flag_gvg(mapdata) )
 				return 0; //If you don't belong to a guild, can't target emperium.
+			if( !sd->status.faction_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_CONTEST_STONE && mapdata->flag[MF_FVF] )
+				return 0; //If you are not representing a faction, can't target Contested Stone. Biali
+			if( sd->status.faction_id && sd->status.faction_id == mapdata->contested.info[CONTESTED_OWNER_ID] && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_CONTEST_STONE)
+				return 0; //If your faction holds the contestee u cant hit the contest stone. Biali
 			if( t_bl->type != BL_PC )
 				state |= BCT_ENEMY; //Natural enemy.
 			break;
@@ -9066,6 +9152,14 @@ static const struct _battle_data {
 	{ "client_limit_unit_lv",               &battle_config.client_limit_unit_lv,            0,      0,      BL_ALL,         },
 	{ "land_protector_behavior",            &battle_config.land_protector_behavior,         0,      0,      1,              },
 	{ "npc_emotion_behavior",               &battle_config.npc_emotion_behavior,            0,      0,      1,              },
+// Global Damage adjustment. [Cydh]
+ 	{ "atk_adjustment_map",                 &battle_config.atk_adjustment_map,              4082,   0,      4095,           },
+ 	{ "atk_damage_attacker",                &battle_config.atk_damage_attacker,             BL_PC,  BL_PC,  BL_ALL,         },
+ 	{ "atk_short_attack_damage_rate",       &battle_config.atk_short_damage_rate,           100,    1,      UINT16_MAX,     },
+ 	{ "atk_long_attack_damage_rate",        &battle_config.atk_long_damage_rate,            100,    1,      UINT16_MAX,     },
+ 	{ "atk_weapon_attack_damage_rate",      &battle_config.atk_weapon_damage_rate,          100,    1,      UINT16_MAX,     },
+ 	{ "atk_magic_attack_damage_rate",       &battle_config.atk_magic_damage_rate,           100,    1,      UINT16_MAX,     },
+ 	{ "atk_misc_attack_damage_rate",        &battle_config.atk_misc_damage_rate,            100,    1,      UINT16_MAX,     },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
 	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
@@ -9255,9 +9349,11 @@ static const struct _battle_data {
  	{ "bg_queue_onlytowns",                 &battle_config.bg_queue_onlytowns,              1,      0,      1,              },
  	{ "bg_order_behavior",                  &battle_config.bg_order_behavior,               1,      0,      1,              },
  	{ "bg_reserved_char_id",                &battle_config.bg_reserved_char_id,             999996, 0,      INT_MAX,        },
- 	{ "woe_reserved_char_id",		&battle_config.woe_reserved_char_id,            999997, 0,      INT_MAX,        },
- 	{ "bg_can_trade",			&battle_config.bg_can_trade,                    1,      0,      1,              },
- 	{ "bg_double_login",			&battle_config.bg_double_login,                 1,      0,      1,              },
+ 	{ "woe_reserved_char_id",				&battle_config.woe_reserved_char_id,            999997, 0,      INT_MAX,        },
+	{ "pvp_reserved_char_id",               &battle_config.pvp_reserved_char_id,            999998, 0,      INT_MAX,        },
+ 	{ "bg_can_trade",						&battle_config.bg_can_trade,                    1,      0,      1,              },
+ 	{ "bg_double_login",					&battle_config.bg_double_login,                 1,      0,      1,              },
+#endif
 	// Faction System Biali
 	{ "faction_status_bl",					&battle_config.faction_status_bl,  			BL_CHAR, 	BL_NUL, BL_ALL,         },
 	{ "fvf_monster_ai",						&battle_config.fvf_monster_ai,					1,      0,      1				},
@@ -9285,7 +9381,11 @@ static const struct _battle_data {
 	{ "fvf_in_all_maps",					&battle_config.fvf_in_all_maps,					0,		0,      1,				},
 	{ "faction_disc_min",					&battle_config.faction_disc_min,			 -100,	 -INT_MAX,  0		        },
 	{ "faction_disc_max",					&battle_config.faction_disc_max,			  100,		0,   	INT_MAX         },
- #endif
+	{ "ancient_reserved_char_id",           &battle_config.ancient_reserved_char_id,        999992, 0,      INT_MAX,        },
+	{ "normal_dg_reserved_char_id",         &battle_config.normal_dg_reserved_char_id,      999993, 0,      INT_MAX,        },
+	{ "heroic_dg_reserved_char_id",         &battle_config.heroic_dg_reserved_char_id,      999994, 0,      INT_MAX,        },
+	{ "mythic_dg_reserved_char_id",         &battle_config.mythic_dg_reserved_char_id,      999995, 0,      INT_MAX,        },
+	{ "reserved_costume_id",                &battle_config.reserved_costume_id,             999999, 0,      INT_MAX,        },
 
 #include "../custom/battle_config_init.inc"
 };

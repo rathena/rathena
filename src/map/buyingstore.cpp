@@ -400,7 +400,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 			return;
 		}
 #ifdef BGEXTENDED
-	if (sd->inventory.u.items_inventory[index].card[0] == CARD0_CREATE && ((MakeDWord(sd->inventory.u.items_inventory[index].card[2], sd->inventory.u.items_inventory[index].card[3])) == (battle_config.bg_reserved_char_id || battle_config.woe_reserved_char_id) && !battle_config.bg_can_trade ))
+	if (sd->inventory.u.items_inventory[index].card[0] == CARD0_CREATE && ((MakeDWord(sd->inventory.u.items_inventory[index].card[2], sd->inventory.u.items_inventory[index].card[3])) == (battle_config.bg_reserved_char_id || battle_config.woe_reserved_char_id || battle_config.ancient_reserved_char_id) && !battle_config.bg_can_trade ))
 		{ // Items where creator's ID is important
 			clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId);
 			clif_displaymessage(sd->fd, "Cannot Trade event reserved Items (Battleground, WoE).");

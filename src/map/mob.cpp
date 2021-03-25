@@ -33,6 +33,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp"
+#include "mapreg.hpp" // Biali
 #include "mercenary.hpp"
 #include "npc.hpp"
 #include "party.hpp"
@@ -2516,6 +2517,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	unsigned int mvp_damage;
 	t_tick tick = gettick();
 	bool rebirth, homkillonly, merckillonly;
+	int contested_base_bonus = 100; //Biali Contested Territories
+	int contested_job_bonus = 100; //Biali Contested Territories
+	int contested_drop_bonus = 0; //Biali Contested Territories
 
 	status = &md->status;
 
@@ -2602,6 +2606,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	) { //Experience calculation.
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
 		int pnum = 0;
+
+		// Biali contested territories base xp bonus
+		if (sd && map_getmapflag(m, MF_CONTESTED) && sd->status.faction_id) {
+			struct map_data *mapdata = map_getmapdata(m);
+			if (sd->status.faction_id > 0 && sd->status.faction_id == mapdata->contested.info[CONTESTED_OWNER_ID]) {
+				contested_base_bonus += mapdata->contested.info[CONTESTED_BASE_BONUS]; // base and job ar percentage. drops are different
+				contested_job_bonus += mapdata->contested.info[CONTESTED_JOB_BONUS];
+				contested_drop_bonus = mapdata->contested.info[CONTESTED_DROP_BONUS];
+			}
+		}
 #ifndef RENEWAL
 		if (md->sc.data[SC_RICHMANKIM])
 			bonus += md->sc.data[SC_RICHMANKIM]->val2;
@@ -2672,6 +2686,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				double exp = apply_rate2(md->db->base_exp, per, 1);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map_getmapflag(m, MF_BEXP));
+				exp = apply_rate(exp, contested_base_bonus);
 				base_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
 			}
 
@@ -2685,6 +2700,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				double exp = apply_rate2(md->db->job_exp, per, 1);
 				exp = apply_rate(exp, bonus);
 				exp = apply_rate(exp, map_getmapflag(m, MF_JEXP));
+				exp = apply_rate(exp, contested_job_bonus);
 				job_exp = (t_exp)cap_value(exp, 1, MAX_EXP);
 			}
 
@@ -2816,6 +2832,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
 				// Now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = i32max(drop_rate, cap_value(drop_rate_bonus, 0, 9000));
+
+				// biali contested territories bonus
+				if(contested_drop_bonus) {
+					drop_rate += (int)(0.5 + drop_rate * contested_drop_bonus / 100.);
+					drop_rate = min(drop_rate,9000); //cap it to 90%
+				}
 
 				if (pc_isvip(sd)) { // Increase item drop rate for VIP.
 					drop_rate += (int)(0.5 + drop_rate * battle_config.vip_drop_increase / 100.);

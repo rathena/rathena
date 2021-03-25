@@ -1004,6 +1004,7 @@ enum bound_type {
 	BOUND_GUILD, /// 2 - Guild Bound
 	BOUND_PARTY, /// 3 - Party Bound
 	BOUND_CHAR, /// 4 - Character Bound
+	BOUND_SPECIAL, // 5 - Biali Char bound equips that can go into special storages
 	BOUND_MAX,
 
 	BOUND_ONEQUIP = 1, ///< Show notification when item will be bound on equip

@@ -1347,7 +1347,7 @@ ACMD_FUNC(heal)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, bound = BOUND_NONE;
+	int number = 0, bound = BOUND_NONE, costume = 0;
 	char flag = 0;
 	struct item item_tmp;
 	struct item_data *item_data[10];
@@ -1396,6 +1396,29 @@ ACMD_FUNC(item)
 
 	for(j--; j>=0; j--){ //produce items in list
 		t_itemid item_id = item_data[j]->nameid;
+		// Costume Item Biali
+		if (!strcmpi(command + 1, "costumeitem"))
+		{
+			if (!battle_config.reserved_costume_id)
+			{
+				clif_displaymessage(fd, "Costume convertion is disable. Set a value for reserved_cosutme_id on your battle.conf file.");
+				return -1;
+			}
+			if (!(item_data[j]->equip&EQP_HEAD_LOW) &&
+				!(item_data[j]->equip&EQP_HEAD_MID) &&
+				!(item_data[j]->equip&EQP_HEAD_TOP) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_LOW) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_MID) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_TOP) &&
+				!(item_data[j]->equip&EQP_GARMENT) &&
+				!(item_data[j]->equip&EQP_COSTUME_GARMENT))
+			{
+				clif_displaymessage(fd, "You cannot costume this item. Costume only work for headgears.");
+				return -1;
+			}
+			costume = 1;
+		}
+		// Fim Costume Item Biali
 		//Check if it's stackable.
 		if (!itemdb_isstackable2(item_data[j]))
 			get_count = 1;
@@ -1406,6 +1429,11 @@ ACMD_FUNC(item)
 				memset(&item_tmp, 0, sizeof(item_tmp));
 				item_tmp.nameid = item_id;
 				item_tmp.identify = 1;
+				if (costume == 1) { // Costume item Biali
+					item_tmp.card[0] = CARD0_CREATE;
+					item_tmp.card[2] = GetWord(battle_config.reserved_costume_id, 0);
+					item_tmp.card[3] = GetWord(battle_config.reserved_costume_id, 1);
+				}
 				item_tmp.bound = bound;
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 					clif_additem(sd, 0, 0, flag);
@@ -3656,10 +3684,13 @@ ACMD_FUNC(breakguild)
  */
 ACMD_FUNC(agitstart)
 {
+	int i;
 	nullpo_retr(-1, sd);
 
 	if( guild_agit_start() ){
 		clif_displaymessage(fd, msg_txt(sd,72)); // War of Emperium has been initiated.
+		if( (i = atoi(message)) > 0 ) //Biali WoE Rotation
+			woe_set = i;
 		return 0;
 	}else{
 		clif_displaymessage(fd, msg_txt(sd,73)); // War of Emperium is currently in progress.
@@ -3672,10 +3703,13 @@ ACMD_FUNC(agitstart)
  */
 ACMD_FUNC(agitstart2)
 {
+	int i;
 	nullpo_retr(-1, sd);
 
 	if( guild_agit2_start() ){
 		clif_displaymessage(fd, msg_txt(sd,403)); // "War of Emperium SE has been initiated."
+		if( (i = atoi(message)) > 0 ) //Biali WoE Rotation
+			woe_set = i;
 		return 0;
 	}else{
 		clif_displaymessage(fd, msg_txt(sd,404)); // "War of Emperium SE is currently in progress."
@@ -3688,10 +3722,13 @@ ACMD_FUNC(agitstart2)
  */
 ACMD_FUNC(agitstart3)
 {
+	int i;
 	nullpo_retr(-1, sd);
 
 	if( guild_agit3_start() ){
 		clif_displaymessage(fd, msg_txt(sd,749)); // "War of Emperium TE has been initiated."
+		if( (i = atoi(message)) > 0 ) //Biali WoE Rotation
+			woe_set = i;
 		return 0;
 	}else{
 		clif_displaymessage(fd, msg_txt(sd,750)); // "War of Emperium TE is currently in progress."
@@ -3708,6 +3745,7 @@ ACMD_FUNC(agitend)
 
 	if( guild_agit_end() ){
 		clif_displaymessage(fd, msg_txt(sd,74)); // War of Emperium has been ended.
+		woe_set = 0; //Biali
 		return 0;
 	}else{
 		clif_displaymessage(fd, msg_txt(sd,75)); // War of Emperium is currently not in progress.
@@ -3724,6 +3762,7 @@ ACMD_FUNC(agitend2)
 
 	if( guild_agit2_end() ){
 		clif_displaymessage(fd, msg_txt(sd,405)); // "War of Emperium SE has been ended."
+		woe_set = 0; //Biali
 		return 0;
 	}else{
 		clif_displaymessage(fd, msg_txt(sd,406)); // "War of Emperium SE is currently not in progress."
@@ -3740,6 +3779,7 @@ ACMD_FUNC(agitend3)
 
 	if( guild_agit3_end() ){
 		clif_displaymessage(fd, msg_txt(sd,751));// War of Emperium TE has been ended.
+		woe_set = 0; //Biali
 		return 0;
 	}else{
 		clif_displaymessage(fd, msg_txt(sd,752));// War of Emperium TE is currently not in progress.
@@ -4136,6 +4176,20 @@ ACMD_FUNC(partysharelvl) {
 	return 0;
 }
 
+std::string atcommand_mapinfo_globaldamage_sub(int type) {
+	std::string atker = "";
+	size_t len = 0;
+
+	if (type&BL_PC)   atker.append("PC ");
+	if (type&BL_MOB)  atker.append("Monster ");
+	if (type&BL_PET)  atker.append("Pet ");
+	if (type&BL_HOM)  atker.append("Hom ");
+	if (type&BL_MER)  atker.append("Merc ");
+	if (type&BL_ELEM) atker.append("Elem ");
+
+	return atker;
+}
+
 /*==========================================
  * @mapinfo [0-3] <map name> by MC_Cameri
  * => Shows information about the map [map name]
@@ -4249,6 +4303,19 @@ ACMD_FUNC(mapinfo) {
 		}
 	}
 
+	//Global Damage adjustment. [Cydh]
+	if (map_getmapflag_sub(m_id, MF_ATK_RATE, NULL)) {
+		sprintf(atcmd_output,"Damage Adjustment for: %s", atcommand_mapinfo_globaldamage_sub(mapdata->atk_rate.rate[DMGRATE_BL]).c_str());
+		clif_displaymessage(fd,atcmd_output);
+		sprintf(atcmd_output," > Short: %d%% | Long: %d%% | Weapon: %d%% | Magic: %d%% | Misc: %d%%",
+			mapdata->atk_rate.rate[DMGRATE_SHORT],
+			mapdata->atk_rate.rate[DMGRATE_LONG],
+			mapdata->atk_rate.rate[DMGRATE_WEAPON],
+			mapdata->atk_rate.rate[DMGRATE_MAGIC],
+			mapdata->atk_rate.rate[DMGRATE_MISC]);
+		clif_displaymessage(fd,atcmd_output);
+	}
+
 	strcpy(atcmd_output,msg_txt(sd,1046)); // PvP Flags:
 	if (map_getmapflag(m_id, MF_PVP))
 		strcat(atcmd_output, " Pvp ON |");
@@ -4292,6 +4359,41 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoGo |"); //
 	if (map_getmapflag(m_id, MF_NOMEMO))
 		strcat(atcmd_output, "  NoMemo |");
+
+		strcpy(atcmd_output,"Ragnamania Mapflags"); // Ragnamania
+	if (map_getmapflag(m_id, MF_BLOCKED))
+		strcat(atcmd_output, "  Map Blocked |");
+	if (map_getmapflag(m_id, MF_ANCIENT))
+		strcat(atcmd_output, "  Classic GvG |");
+	if (map_getmapflag(m_id, MF_BG_CONSUME))
+		strcat(atcmd_output, "  BG Items |");
+	if (map_getmapflag(m_id, MF_WOE_CONSUME))
+		strcat(atcmd_output, "  WoE Items |");
+	if (map_getmapflag(m_id, MF_PVP_CONSUME))
+		strcat(atcmd_output, "  PvP Items |");
+	if (map_getmapflag(m_id, MF_SKILLNOREQUIREMENTS))
+		strcat(atcmd_output, "  Skills no Requirements |");	
+	if (map_getmapflag(m_id, MF_BLOCKED))
+		strcat(atcmd_output, "  Blocked |");
+	if (map_getmapflag(m_id, MF_WOE_SET)){
+		char output[64];
+		sprintf(output,"WoE Set %d | ", map_getmapflag(m_id,MF_WOE_SET));
+		strcat(atcmd_output, output);
+	}
+	if (map_getmapflag_sub(m_id, MF_CONTESTED, NULL)) {
+		struct faction_data* fdb = faction_search(mapdata->contested.info[CONTESTED_OWNER_ID]);
+
+		sprintf(atcmd_output,"  This map is currently guarded by %s.", fdb->name);
+		clif_displaymessage(fd,atcmd_output);
+		if(sd->status.faction_id > 0 && sd->status.faction_id == mapdata->contested.info[CONTESTED_OWNER_ID]) {
+			sprintf(atcmd_output," > Base Exp Bonus: %d%% | Job Exp Bonus: %d%% | Drop Rates Bonus: %d%%",
+				mapdata->atk_rate.rate[CONTESTED_BASE_BONUS],
+				mapdata->atk_rate.rate[CONTESTED_JOB_BONUS],
+				mapdata->atk_rate.rate[CONTESTED_DROP_BONUS]);
+			clif_displaymessage(fd,atcmd_output);
+		}
+	}
+
 	clif_displaymessage(fd, atcmd_output);
 
 	sprintf(atcmd_output, msg_txt(sd,1065),  // No Exp Penalty: %s | No Zeny Penalty: %s
@@ -8432,7 +8534,10 @@ ACMD_FUNC(mapflag) {
 												MF_JEXP,
 												MF_BATTLEGROUND,
 												MF_SKILL_DAMAGE,
-												MF_SKILL_DURATION };
+												MF_SKILL_DURATION,
+												MF_ATK_RATE,
+												MF_CONTESTED,
+												};
 
 			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
@@ -11542,6 +11647,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(adopt),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
+		ACMD_DEF2("costumeitem", item),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),

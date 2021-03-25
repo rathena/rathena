@@ -134,6 +134,7 @@ int16 save_settings = CHARSAVE_ALL;
 bool agit_flag = false;
 bool agit2_flag = false;
 bool agit3_flag = false;
+int woe_set = 0; // eAmod WoE Biali
 int night_flag = 0; // 0=day, 1=night [Yor]
 
 struct charid_request {
@@ -1964,6 +1965,36 @@ void map_reqnickdb(struct map_session_data * sd, int charid)
 		return;
 	}
 #endif
+	// Biali Fake Charnames
+	if (battle_config.normal_dg_reserved_char_id && battle_config.normal_dg_reserved_char_id == charid)
+	{
+		clif_solved_charname(sd->fd, charid, "Normal");
+		return;
+	}
+
+	if (battle_config.heroic_dg_reserved_char_id && battle_config.heroic_dg_reserved_char_id == charid)
+	{
+		clif_solved_charname(sd->fd, charid, "Heroic");
+		return;
+	}
+
+	if (battle_config.mythic_dg_reserved_char_id && battle_config.mythic_dg_reserved_char_id == charid)
+	{
+		clif_solved_charname(sd->fd, charid, "Mythic");
+		return;
+	}
+
+	if (battle_config.ancient_reserved_char_id && battle_config.ancient_reserved_char_id == charid)
+	{
+		clif_solved_charname(sd->fd, charid, "Classic"); //Ancient WoE Biali
+		return;
+	}
+
+	if (battle_config.reserved_costume_id && battle_config.reserved_costume_id == charid)
+	{
+		clif_solved_charname(sd->fd, charid, "Costume");
+		return;
+	}
 
 	tsd = map_charid2sd(charid);
 	if( tsd )
@@ -2863,6 +2894,7 @@ int map_delinstancemap(int m)
 	mapdata->damage_adjust = {};
 	mapdata->flag.clear();
 	mapdata->skill_damage.clear();
+	mapdata->faction_info.clear(); // biali faction system
 
 	mapindex_removemap(mapdata->index);
 	map_removemapdb(mapdata);
@@ -3253,6 +3285,8 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 			return (cell.maelstrom);
 		case CELL_CHKICEWALL:
 			return (cell.icewall);
+		case CELL_CHKPOISON: //Biali Battle ROyale
+			return (cell.poison);
 
 		// special checks
 		case CELL_CHKPASS:
@@ -3306,8 +3340,9 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 		case CELL_LANDPROTECTOR: mapdata->cell[j].landprotector = flag; break;
 		case CELL_NOVENDING:     mapdata->cell[j].novending = flag;     break;
 		case CELL_NOCHAT:        mapdata->cell[j].nochat = flag;        break;
-		case CELL_MAELSTROM:	 mapdata->cell[j].maelstrom = flag;	  break;
-		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		  break;
+		case CELL_MAELSTROM:	 mapdata->cell[j].maelstrom = flag;	  	break;
+		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		break;
+		case CELL_POISON:		 mapdata->cell[j].poison = flag;		break; //Biali Battle Royale
 		default:
 			ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);
 			break;
@@ -3669,7 +3704,25 @@ void map_flags_init(void){
 		mapdata->damage_adjust = {};
 		mapdata->skill_damage.clear();
 		mapdata->skill_duration.clear();
+
+		mapdata->faction_info.clear(); // biali faction system
+
 		map_free_questinfo(mapdata);
+
+		mapdata->atk_rate = {}; //Global Damage Adjustment [Cydh]
+		mapdata->atk_rate.rate[DMGRATE_BL] = BL_ALL;
+		mapdata->atk_rate.rate[DMGRATE_WEAPON] = 100;
+		mapdata->atk_rate.rate[DMGRATE_LONG] = 100;
+		mapdata->atk_rate.rate[DMGRATE_WEAPON] = 100;
+		mapdata->atk_rate.rate[DMGRATE_MAGIC] = 100;
+		mapdata->atk_rate.rate[DMGRATE_MISC] = 100;
+
+		// Biali Contested Territories
+		mapdata->contested = {};
+		mapdata->contested.info[CONTESTED_OWNER_ID] = 0;
+		mapdata->contested.info[CONTESTED_BASE_BONUS] = 0;
+		mapdata->contested.info[CONTESTED_JOB_BONUS] = 0;
+		mapdata->contested.info[CONTESTED_DROP_BONUS] = 0;
 
 		if (instance_start && i >= instance_start)
 			continue;
@@ -4594,6 +4647,32 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				default:
 					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 			}
+		case MF_ATK_RATE:
+			nullpo_retr(-1, args);
+
+			switch (args->flag_val) {
+				case DMGRATE_BL:
+				case DMGRATE_SHORT:
+				case DMGRATE_LONG:
+				case DMGRATE_WEAPON:
+				case DMGRATE_MAGIC:
+				case DMGRATE_MISC:
+					return mapdata->atk_rate.rate[args->flag_val];
+				default:
+					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+			}
+		case MF_CONTESTED:
+			nullpo_retr(-1, args);
+
+			switch (args->flag_val) {
+				case CONTESTED_OWNER_ID:
+				case CONTESTED_BASE_BONUS:
+				case CONTESTED_JOB_BONUS:
+				case CONTESTED_DROP_BONUS:
+					return mapdata->contested.info[args->flag_val];
+				default:
+					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+			}
 		default:
 			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 	}
@@ -4836,8 +4915,8 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				nullpo_retr(false, args);
 				mapdata->faction.id = args->faction_info.id;
 				mapdata->faction.relic = args->faction_info.relic;
+				mapdata->flag[mapflag] = status;
 			}
-			mapdata->flag[mapflag] = status;
 			break;
 		case MF_NOLOOT:
 			mapdata->flag[MF_NOMOBLOOT] = status;
@@ -4878,6 +4957,36 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				nullpo_retr(false, args);
 
 				map_skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
+			}
+			mapdata->flag[mapflag] = status;
+			break;
+		case MF_ATK_RATE:
+			if (!status)
+				mapdata->atk_rate = {};
+			else {
+				nullpo_retr(false, args);
+
+				if (!args->atk_rate.rate[DMGRATE_BL]) {
+					ShowError("map_setmapflag: atk_rate without attacker type for map %s.\n", mapdata->name);
+					return false;
+				}
+
+				memcpy(&mapdata->atk_rate, &args->atk_rate, sizeof(struct s_global_damage_rate));
+			}
+			mapdata->flag[mapflag] = status;
+			break;
+		case MF_CONTESTED: // biali faction contested territories
+			if (!status)
+				mapdata->contested = {};
+			else {
+				nullpo_retr(false, args);
+
+				if (!args->contested.info[CONTESTED_OWNER_ID]) {
+					ShowError("map_setmapflag: contested without map owner map %s.\n", mapdata->name);
+					return false;
+				}
+
+				memcpy(&mapdata->contested, &args->contested, sizeof(struct s_contested_bonuses));
 			}
 			mapdata->flag[mapflag] = status;
 			break;

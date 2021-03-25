@@ -12829,8 +12829,19 @@ BUILDIN_FUNC(getmapflag)
 
 	union u_mapflag_args args = {};
 
-	if (mf == MF_SKILL_DAMAGE && !script_hasdata(st, 4))
-		args.flag_val = SKILLDMG_MAX;
+	if (!script_hasdata(st, 4)) {
+		switch (mf) {
+			case MF_SKILL_DAMAGE:
+				args.flag_val = SKILLDMG_MAX;
+				break;
+			case MF_ATK_RATE:
+				args.flag_val = DMGRATE_MAX;
+				break;
+			case MF_CONTESTED:
+				args.flag_val = CONTESTED_MAX;
+				break;
+		}
+	}
 	else
 		FETCH(4, args.flag_val);
 
@@ -12901,6 +12912,25 @@ BUILDIN_FUNC(setmapflag)
 				args.faction_info.relic = script_getnum(st, 5);
 			} else {
 				ShowWarning("buildin_setmapflag: Unable to set faction  mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+		case MF_ATK_RATE:
+			if (script_hasdata(st, 4) && script_hasdata(st, 5))
+				args.atk_rate.rate[script_getnum(st, 5)] = script_getnum(st, 4);
+			else {
+				ShowWarning("buildin_setmapflag: Unable to set atk_rate mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+		case MF_CONTESTED:
+			if (script_hasdata(st, 4) && script_hasdata(st, 5) && script_hasdata(st, 6) && script_hasdata(st, 7)) {
+				args.contested.info[CONTESTED_OWNER_ID] 	=  script_getnum(st, 4);
+				args.contested.info[CONTESTED_BASE_BONUS] 	=  script_getnum(st, 5);
+				args.contested.info[CONTESTED_JOB_BONUS] 	=  script_getnum(st, 6);
+				args.contested.info[CONTESTED_DROP_BONUS] 	=  script_getnum(st, 7);
+			} else {
+				ShowWarning("buildin_setmapflag: Unable to set Contested mapflag as flag data is missing.\n");
 				return SCRIPT_CMD_FAILURE;
 			}
 			break;

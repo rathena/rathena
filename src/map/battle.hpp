@@ -548,6 +548,15 @@ struct Battle_Config
 	int faction_disc_min;
 	int faction_disc_max;
 
+	// Global Damage adjustment. [Cydh]
+	int atk_adjustment_map;
+	int atk_damage_attacker;
+	int atk_short_damage_rate;
+	int atk_long_damage_rate;
+	int atk_weapon_damage_rate;
+	int atk_magic_damage_rate;
+	int atk_misc_damage_rate;
+
 	// rAthena
 	int max_third_parameter;
 	int max_baby_third_parameter;
@@ -735,6 +744,12 @@ struct Battle_Config
  	int bg_can_trade;
  	int bg_double_login;
 #endif
+	int ancient_reserved_char_id; //Biali Ancient WoE
+	int normal_dg_reserved_char_id;
+	int heroic_dg_reserved_char_id;
+	int mythic_dg_reserved_char_id;
+ 	int pvp_reserved_char_id;
+	int reserved_costume_id;
 
 #include "../custom/battle_config_struct.inc"
 };

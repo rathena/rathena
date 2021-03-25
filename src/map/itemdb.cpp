@@ -572,6 +572,19 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				item->flag.group = false;
 		}
 
+		// Biali Ancient WoE
+		if (this->nodeExists(flagNode, "Ancient")) {
+			bool active;
+
+			if (!this->asBool(flagNode, "Ancient", active))
+				return 0;
+
+			item->flag.ancient = active;
+		} else {
+			if (!exists)
+				item->flag.ancient = false;
+		}
+
 		if (this->nodeExists(flagNode, "UniqueId")) {
 			bool active;
 
@@ -1661,6 +1674,54 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	
 	random->data_qty += prob;
 	return true;
+}
+
+/*==========================================
+ * [Zephyrus] Ancient Items Biali
+ *------------------------------------------*/
+static int itemdb_read_ancientdb(void)
+{
+	FILE *fp;
+	char line[1024];
+	int ln=0;
+	int nameid,j;
+	char *str[2],*p;
+	struct item_data *id;
+
+	sprintf(line, "%s/item_db_ancient.txt", db_path);
+	if( (fp = fopen(line,"r")) == NULL )
+	{
+		ShowError("can't read %s\n", line);
+		return -1;
+	}
+
+	while( fgets(line, sizeof(line), fp) )
+	{
+		if( line[0] == '/' && line[1] == '/' )
+			continue;
+
+		memset(str, 0, sizeof(str));
+		for( j = 0, p = line; j < 2 && p; j++ )
+		{
+			str[j] = p;
+			p = strchr(p,',');
+			if( p ) *p++=0;
+		}
+		if( str[0] == NULL )
+			continue;
+
+		nameid = atoi(str[0]);
+		if( nameid <= 0 || !(id = itemdb_exists(nameid)) )
+			continue;
+
+		id->ancient = (bool)atoi(str[1]);
+		ln++;
+	}
+	fclose(fp);
+	if( ln > 0 )
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",ln,"item_db_ancient.txt");
+
+	return 0;
 }
 
 /** Read item forbidden by mapflag (can't equip item)
