@@ -5473,7 +5473,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 45
+    EquipLevelMin: 1
     Refineable: true
   - Id: 1309
     AegisName: Orcish_Axe_
@@ -9061,7 +9061,7 @@ Body:
     Locations:
       Both_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 75
+    EquipLevelMin: 1
     Refineable: true
   - Id: 1476
     AegisName: Crescent_Scythe_
@@ -10559,7 +10559,7 @@ Body:
     Type: Weapon
     SubType: Mace
     Buy: 4444
-    Weight: 44
+    Weight: 440
     Attack: 4
     Range: 1
     Slots: 1
@@ -18278,7 +18278,7 @@ Body:
     Type: Weapon
     SubType: Musical
     Buy: 20
-    Weight: 2000
+    Weight: 1000
     Attack: 160
     Range: 1
     Slots: 2
@@ -19532,7 +19532,7 @@ Body:
     Type: Weapon
     SubType: Whip
     Buy: 20
-    Weight: 40
+    Weight: 400
     Attack: 76
     Range: 2
     Slots: 1
@@ -20161,7 +20161,7 @@ Body:
     Locations:
       Both_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 1
+    EquipLevelMin: 90
     Script: |
       bonus bInt,20;
       bonus3 bAddEff,Eff_Poison,3000,ATF_MAGIC;
@@ -21543,7 +21543,7 @@ Body:
       All_Upper: true
     Locations:
       Left_Hand: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Refineable: true
     View: 2
     Script: |
@@ -22464,7 +22464,7 @@ Body:
     Defense: 100
     Locations:
       Left_Hand: true
-    EquipLevelMin: 1
+    EquipLevelMin: 90
     View: 2
     Script: |
       bonus bMdef,5;
@@ -25543,7 +25543,7 @@ Body:
       All_Upper: true
     Locations:
       Armor: true
-    EquipLevelMin: 55
+    EquipLevelMin: 60
     Refineable: true
     Script: |
       bonus bMaxSP,150;
@@ -25572,7 +25572,7 @@ Body:
       All_Upper: true
     Locations:
       Armor: true
-    EquipLevelMin: 55
+    EquipLevelMin: 60
     Refineable: true
     Script: |
       bonus bStr,2;
@@ -25925,7 +25925,7 @@ Body:
       All_Upper: true
     Locations:
       Armor: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Refineable: true
     Script: |
       bonus bVit,1;
@@ -25977,7 +25977,7 @@ Body:
       All_Upper: true
     Locations:
       Armor: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Refineable: true
     Script: |
       bonus bMdef,2;
@@ -26955,7 +26955,7 @@ Body:
     Weight: 300
     Locations:
       Shoes: true
-    EquipLevelMin: 80
+    EquipLevelMin: 1
     Refineable: true
     Trade:
       Override: 100
@@ -27018,7 +27018,7 @@ Body:
       All_Upper: true
     Locations:
       Shoes: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Refineable: true
     Script: |
       bonus bAgi,1;
@@ -29053,7 +29053,7 @@ Body:
     Name: Leather of Tendrilion
     Type: Armor
     Buy: 20
-    Weight: 300
+    Weight: 500
     Defense: 14
     Slots: 1
     Jobs:
@@ -30867,7 +30867,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 90
+    EquipLevelMin: 1
   - Id: 2654
     AegisName: Shinobi's_Sash
     Name: Shinobi Sash
@@ -30947,7 +30947,7 @@ Body:
     Name: Vesper Core 01
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -30976,7 +30976,7 @@ Body:
     Name: Vesper Core 02
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -31005,7 +31005,7 @@ Body:
     Name: Vesper Core 03
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -31034,7 +31034,7 @@ Body:
     Name: Vesper Core 04
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 100
     Defense: 1
     Jobs:
       Alchemist: true
@@ -31136,11 +31136,11 @@ Body:
     AegisName: Women's_Glory
     Name: Woman Glory
     Type: Armor
-    Weight: 500
+    Weight: 1500
     Defense: 1
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 1
+    EquipLevelMin: 94
     Trade:
       Override: 100
       NoDrop: true
@@ -31514,7 +31514,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
-    EquipLevelMin: 1
+    EquipLevelMin: 100
     View: 56
     Trade:
       Override: 100
@@ -32508,7 +32508,7 @@ Body:
       Rebellion: true
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 70
+    EquipLevelMin: 80
     Trade:
       Override: 100
       NoDrop: true
@@ -32748,7 +32748,7 @@ Body:
       All_Upper: true
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Script: |
       bonus bVariableCastrate,-10;
       bonus bDelayrate,5;
@@ -32776,7 +32776,7 @@ Body:
       All_Upper: true
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Script: |
       bonus bMdef,2;
       bonus bMaxSP,25;
@@ -33370,7 +33370,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 30
+    EquipLevelMin: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -33416,7 +33416,7 @@ Body:
     Defense: 1
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 80
+    EquipLevelMin: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -34543,7 +34543,7 @@ Body:
       All_Third: true
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 99
+    EquipLevelMin: 100
     Trade:
       Override: 100
       NoDrop: true
@@ -35658,7 +35658,7 @@ Body:
     Name: Thief Handcuff
     Type: Armor
     Buy: 20
-    Weight: 1400
+    Weight: 2400
     Slots: 1
     Locations:
       Both_Accessory: true
@@ -36992,7 +36992,7 @@ Body:
     Name: Ph.D Hat
     Type: Armor
     Buy: 20
-    Weight: 200
+    Weight: 100
     Defense: 5
     Jobs:
       All: true
@@ -39015,7 +39015,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
-    EquipLevelMin: 30
+    EquipLevelMin: 10
     Refineable: true
     View: 214
     Trade:
@@ -40789,7 +40789,7 @@ Body:
     Name: Robotic Ears
     Type: Armor
     Buy: 20
-    Weight: 10
+    Weight: 100
     Locations:
       Head_Mid: true
     View: 294
@@ -40798,7 +40798,7 @@ Body:
     Name: Round Ears
     Type: Armor
     Buy: 20
-    Weight: 10
+    Weight: 100
     Locations:
       Head_Mid: true
     View: 295
@@ -40846,7 +40846,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-    EquipLevelMin: 20
+    EquipLevelMin: 1
     Refineable: true
     View: 298
     Trade:
@@ -41466,7 +41466,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     View: 314
     Trade:
       Override: 100
@@ -41522,7 +41522,7 @@ Body:
     Name: Vanilmirth Hat
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 1000
     Locations:
       Head_Top: true
     EquipLevelMin: 30
@@ -42921,7 +42921,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-    EquipLevelMin: 60
+    EquipLevelMin: 150
     Refineable: true
     View: 372
     Script: |
@@ -43663,7 +43663,7 @@ Body:
     AegisName: Academy_Graduating_Cap
     Name: Academy Completion Hat
     Type: Armor
-    Weight: 200
+    Weight: 500
     Defense: 3
     Locations:
       Head_Top: true
@@ -44416,7 +44416,7 @@ Body:
     Name: RWC 2008 Dragon Helm Gold
     Type: Armor
     Buy: 20
-    Weight: 2500
+    Weight: 1500
     Defense: 14
     Slots: 1
     Locations:
@@ -44442,7 +44442,7 @@ Body:
     Name: RWC 2008 Dragon Helm Silver
     Type: Armor
     Buy: 20
-    Weight: 2500
+    Weight: 1500
     Defense: 10
     Slots: 1
     Locations:
@@ -44468,7 +44468,7 @@ Body:
     Name: RWC 2008 Dragon Helm Copper
     Type: Armor
     Buy: 20
-    Weight: 2500
+    Weight: 1500
     Defense: 5
     Slots: 1
     Locations:
@@ -44648,7 +44648,7 @@ Body:
     Defense: 3
     Locations:
       Head_Low: true
-    EquipLevelMin: 90
+    EquipLevelMin: 1
     View: 459
     Trade:
       Override: 100
@@ -44670,7 +44670,7 @@ Body:
     Buy: 20
     Locations:
       Head_Low: true
-    EquipLevelMin: 90
+    EquipLevelMin: 1
     View: 460
     Trade:
       Override: 100
@@ -45830,7 +45830,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Refineable: true
     View: 523
     Trade:
@@ -46328,7 +46328,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
-    EquipLevelMin: 55
+    EquipLevelMin: 1
     Refineable: true
     View: 540
     Trade:
@@ -46623,7 +46623,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-    EquipLevelMin: 30
+    EquipLevelMin: 1
     Refineable: true
     View: 553
     Trade:
@@ -46644,7 +46644,6 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-    EquipLevelMin: 75
     Refineable: true
     View: 554
     Trade:
@@ -46697,7 +46696,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
-    EquipLevelMin: 80
+    EquipLevelMin: 1
     Refineable: true
     View: 479
     Trade:
@@ -46980,7 +46979,7 @@ Body:
     Defense: 2
     Locations:
       Head_Mid: true
-    EquipLevelMin: 80
+    EquipLevelMin: 1
     View: 568
     Trade:
       Override: 100
@@ -47137,7 +47136,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Refineable: true
     View: 573
     Script: |
@@ -47158,7 +47157,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     Refineable: true
     View: 574
     Script: |
@@ -48286,7 +48285,7 @@ Body:
     Name: Skull Hood
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 700
     Defense: 10
     Slots: 1
     Locations:
@@ -50142,7 +50141,7 @@ Body:
     Buy: 100
     Locations:
       Head_Top: true
-    EquipLevelMin: 70
+    EquipLevelMin: 1
     View: 646
     Script: |
       skill "RG_GRAFFITI",1;
@@ -53695,7 +53694,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 50
+    EquipLevelMin: 1
     Refineable: true
   - Id: 13006
     AegisName: Khukri
@@ -57540,7 +57539,7 @@ Body:
     Locations:
       Both_Hand: true
     WeaponLevel: 2
-    EquipLevelMin: 24
+    EquipLevelMin: 55
     Refineable: true
     Script: |
       bonus bSplashRange,1;
@@ -58494,7 +58493,7 @@ Body:
     Type: Weapon
     SubType: Gatling
     Buy: 1600000
-    Weight: 2500
+    Weight: 500
     Attack: 220
     Range: 9
     Slots: 2
@@ -61923,7 +61922,7 @@ Body:
       All_Upper: true
     Locations:
       Armor: true
-    EquipLevelMin: 85
+    EquipLevelMin: 1
     Refineable: true
     Script: |
       bonus bStr,1;
@@ -64601,7 +64600,7 @@ Body:
     AegisName: Hippie_Cloth
     Name: Hippie Clothes
     Type: Armor
-    Weight: 50
+    Weight: 500
     Defense: 50
     Jobs:
       BardDancer: true
@@ -69519,7 +69518,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
-    EquipLevelMin: 30
+    EquipLevelMin: 1
     View: 675
     Trade:
       Override: 100
@@ -71112,7 +71111,7 @@ Body:
     Name: Horn of Ancient
     Type: Armor
     Buy: 40
-    Weight: 200
+    Weight: 400
     Defense: 8
     Slots: 1
     Locations:
@@ -71156,7 +71155,7 @@ Body:
     Name: Mercury Riser
     Type: Armor
     Buy: 40
-    Weight: 200
+    Weight: 400
     Defense: 10
     Slots: 1
     Locations:
@@ -71209,7 +71208,7 @@ Body:
     Name: Cat Ear Beret
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 300
     Defense: 5
     Slots: 1
     Locations:
@@ -74796,7 +74795,7 @@ Body:
     Buy: 20
     Locations:
       Head_Top: true
-    EquipLevelMin: 1
+    EquipLevelMin: 40
     Refineable: true
     View: 397
     Script: |
@@ -74841,7 +74840,7 @@ Body:
     Buy: 20
     Locations:
       Head_Top: true
-    EquipLevelMin: 1
+    EquipLevelMin: 40
     Refineable: true
     View: 865
     Script: |
@@ -75184,7 +75183,7 @@ Body:
     Name: Advanced Jao King Hat
     Type: Armor
     Buy: 10
-    Weight: 1500
+    Weight: 500
     Defense: 4
     Slots: 1
     Locations:
@@ -75872,7 +75871,7 @@ Body:
     Name: Magical Moon Cat
     Type: Armor
     Buy: 20
-    Weight: 50
+    Weight: 100
     Defense: 5
     Slots: 1
     Locations:
@@ -77400,7 +77399,7 @@ Body:
     Slots: 1
     Locations:
       Head_Mid: true
-    EquipLevelMin: 50
+    EquipLevelMin: 30
     View: 422
     Script: |
       bonus bStr,1;
@@ -77516,7 +77515,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
-    EquipLevelMin: 45
+    EquipLevelMin: 1
     Refineable: true
     View: 368
     Script: |
@@ -78899,7 +78898,7 @@ Body:
     Name: Illusion Nurse Cap
     Type: Armor
     Buy: 20
-    Weight: 200
+    Weight: 100
     Defense: 4
     Slots: 1
     Jobs:
@@ -82349,7 +82348,7 @@ Body:
     Weight: 40
     Locations:
       Costume_Head_Top: true
-    EquipLevelMin: 30
+    EquipLevelMin: 1
     View: 909
   - Id: 19601
     AegisName: Drooping_Aliot
@@ -96216,7 +96215,7 @@ Body:
     Name: Lava Leather Shoes
     Type: Armor
     Buy: 20
-    Weight: 600
+    Weight: 500
     Defense: 40
     Slots: 1
     Locations:
@@ -96546,7 +96545,7 @@ Body:
     Type: Shadowgear
     Locations:
       Shadow_Armor: true
-    EquipLevelMin: 30
+    EquipLevelMin: 1
     Refineable: true
     Script: |
       bonus bStr,2;
@@ -102708,7 +102707,7 @@ Body:
     Type: Shadowgear
     Locations:
       Shadow_Weapon: true
-    EquipLevelMin: 99
+    EquipLevelMin: 1
     Refineable: true
     Script: |
       .@r = getrefine();
@@ -109983,18 +109982,18 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 1
+    EquipLevelMin: 40
     Script: |
       skill "AL_INCAGI",3;
   - Id: 28355
     AegisName: ShiningHolyWater_
     Name: Shining Holy Water
     Type: Armor
-    Weight: 100
+    Weight: 150
     Slots: 1
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 1
+    EquipLevelMin: 100
     Script: |
       bonus2 bHPRegenRate,100,10000;
       bonus2 bSPRegenRate,5,10000;
@@ -110013,7 +110012,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
-    EquipLevelMin: 1
+    EquipLevelMin: 40
     Delay:
       Duration: 900000
     Script: |
@@ -110199,7 +110198,7 @@ Body:
     Name: Charm Grass Necklace
     Type: Armor
     Buy: 20
-    Weight: 10
+    Weight: 100
     Slots: 1
     Jobs:
       Summoner: true
@@ -111610,7 +111609,7 @@ Body:
     AegisName: Badge_Of_Vigilante1
     Name: Sheriff's Left Badge
     Type: Armor
-    Weight: 200
+    Weight: 100
     Slots: 1
     Locations:
       Left_Accessory: true
@@ -111634,7 +111633,7 @@ Body:
     AegisName: Badge_Of_Vigilante2
     Name: Sheriff's Right Badge
     Type: Armor
-    Weight: 200
+    Weight: 100
     Slots: 1
     Locations:
       Right_Accessory: true
@@ -113946,7 +113945,7 @@ Body:
     Slots: 1
     Locations:
       Left_Hand: true
-    EquipLevelMin: 100
+    EquipLevelMin: 1
     Refineable: true
     View: 1
     Trade:
@@ -113971,7 +113970,7 @@ Body:
     Slots: 1
     Locations:
       Left_Hand: true
-    EquipLevelMin: 100
+    EquipLevelMin: 1
     Refineable: true
     View: 1
     Trade:

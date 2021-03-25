@@ -1864,7 +1864,7 @@ Body:
     Name: Trap
     Type: Etc
     Buy: 75
-    Weight: 10
+    Weight: 2
     Flags:
       BuyingStore: true
   - Id: 1066
@@ -1907,7 +1907,7 @@ Body:
     AegisName: Mage_Test_1
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1072
     AegisName: Delivery_Message
     Name: Delivery Message
@@ -1977,41 +1977,41 @@ Body:
     AegisName: Mage_Test_2
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1086
     AegisName: Mage_Test_3
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1087
     AegisName: Mage_Test_4
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1088
     AegisName: Morocc_Potion
     Name: Morocc Solution
     Type: Etc
-    Weight: 10
+    Weight: 30
     Flags:
       BuyingStore: true
   - Id: 1089
     AegisName: Payon_Potion
     Name: Payon Solution
     Type: Etc
-    Weight: 10
+    Weight: 30
     Flags:
       BuyingStore: true
   - Id: 1090
     AegisName: Mage_Test_Etc
     Name: Unknown Test Tube
     Type: Etc
-    Weight: 10
+    Weight: 30
   - Id: 1091
     AegisName: Merchant_Box_Etc
     Name: Delivery Box
     Type: Etc
-    Weight: 10
+    Weight: 1200
   - Id: 1092
     AegisName: Empty_Cylinder
     Name: Empty Test Tube
@@ -2099,8 +2099,8 @@ Body:
     Name: Silver Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 3
-    Weight: 2
+    Buy: 10
+    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2119,8 +2119,8 @@ Body:
     Name: Fire Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 3
-    Weight: 2
+    Buy: 8
+    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2140,7 +2140,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 4
-    Weight: 2
+    Weight: 1
     Attack: 40
     Jobs:
       Archer: true
@@ -2158,7 +2158,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
-    Weight: 2
+    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2178,7 +2178,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
-    Weight: 2
+    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2198,7 +2198,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
-    Weight: 2
+    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2238,7 +2238,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
-    Weight: 3
+    Weight: 1
     Attack: 1
     Jobs:
       Archer: true
@@ -2258,7 +2258,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
-    Weight: 3
+    Weight: 1
     Attack: 1
     Jobs:
       Archer: true
@@ -2279,7 +2279,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
-    Weight: 3
+    Weight: 1
     Attack: 1
     Jobs:
       Archer: true
@@ -2299,7 +2299,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
-    Weight: 3
+    Weight: 1
     Attack: 1
     Jobs:
       Archer: true
@@ -2319,7 +2319,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
-    Weight: 2
+    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2339,7 +2339,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
-    Weight: 3
+    Weight: 1
     Attack: 1
     Jobs:
       Archer: true
@@ -2360,7 +2360,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 20
-    Weight: 3
+    Weight: 1
     Attack: 10
     Jobs:
       Archer: true
@@ -2380,7 +2380,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 30
-    Weight: 3
+    Weight: 1
     Attack: 50
     Jobs:
       Archer: true
@@ -2418,7 +2418,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
-    Weight: 2
+    Weight: 1
     Attack: 30
     Jobs:
       Archer: true
@@ -2438,7 +2438,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
-    Weight: 3
+    Weight: 1
     Attack: 1
     Jobs:
       Archer: true
@@ -2458,7 +2458,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 10
-    Weight: 3
+    Weight: 1
     Attack: 1
     Jobs:
       Archer: true
@@ -2477,7 +2477,7 @@ Body:
     Name: Iron Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 2
+    Buy: 4
     Weight: 1
     Attack: 30
     Jobs:
@@ -2509,7 +2509,7 @@ Body:
     Type: Ammo
     SubType: Arrow
     Buy: 3
-    Weight: 2
+    Weight: 1
     Attack: 50
     Jobs:
       Archer: true
@@ -2529,7 +2529,7 @@ Body:
     Name: Elven Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 5
+    Buy: 10
     Weight: 1
     Attack: 45
     Jobs:
@@ -2547,7 +2547,7 @@ Body:
     Name: Hunting Arrow
     Type: Ammo
     SubType: Arrow
-    Buy: 5
+    Buy: 10
     Weight: 1
     Attack: 35
     Jobs:
@@ -10675,7 +10675,7 @@ Body:
     Name: Evil Morocc Card
     Type: Card
     Buy: 20
-    Weight: 100
+    Weight: 10
     Locations:
       Shoes: true
     Flags:
@@ -16706,24 +16706,24 @@ Body:
     AegisName: Vulcan_Bullet
     Name: Vulcan Bullet
     Type: Etc
-    Buy: 10
-    Weight: 2
+    Buy: 12
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 6146
     AegisName: Magic_Gear_Fuel
     Name: Magic Gear Fuel
     Type: Etc
-    Buy: 300
-    Weight: 30
+    Buy: 375
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 6147
     AegisName: Liquid_Condensed_Bullet
     Name: Liquid Condensed Bullet
     Type: Etc
-    Buy: 100
-    Weight: 3
+    Buy: 125
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 6148
@@ -21767,7 +21767,7 @@ Body:
     Name: Recovery Stone (Low)
     Type: Card
     Buy: 20
-    Weight: 10
+    Weight: 100
   - Id: 6746
     AegisName: Iron_Artifacts
     Name: Steel Artifact
@@ -28149,32 +28149,32 @@ Body:
     AegisName: Flame_Stone
     Name: Flame Stone
     Type: Etc
-    Buy: 150
-    Weight: 10
+    Buy: 112
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 7522
     AegisName: Ice_Stone
     Name: Ice Stone
     Type: Etc
-    Buy: 150
-    Weight: 10
+    Buy: 112
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 7523
     AegisName: Wind_Stone
     Name: Wind Stone
     Type: Etc
-    Buy: 150
-    Weight: 10
+    Buy: 112
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 7524
     AegisName: Shadow_Orb
     Name: Shadow Orb
     Type: Etc
-    Buy: 300
-    Weight: 20
+    Buy: 225
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 7525
@@ -29006,13 +29006,13 @@ Body:
     Name: Symbol of Fox
     Type: Etc
     Buy: 20
-    Weight: 10
+    Weight: 100
   - Id: 7612
     AegisName: Heart_Of_Fox_Queen
     Name: Heart of Queen Fox
     Type: Etc
     Buy: 2
-    Weight: 10
+    Weight: 100
   - Id: 7613
     AegisName: Small_Rice_Dough
     Name: Small Rice Cake Dough
@@ -29316,21 +29316,21 @@ Body:
     Name: Full Metal Jacket
     Type: Etc
     Buy: 200
-    Weight: 2
+    Weight: 1
     Attack: 10
   - Id: 7664
     AegisName: Shooting_Mine
     Name: Grenade Launcher
     Type: Etc
     Buy: 450
-    Weight: 3
+    Weight: 1
     Attack: 10
   - Id: 7665
     AegisName: Dragon_Tail_Missile
     Name: Dragon Tail Missile
     Type: Etc
     Buy: 1500
-    Weight: 100
+    Weight: 1
     Attack: 10
   - Id: 7666
     AegisName: TimeTravel_Scroll
@@ -31619,7 +31619,7 @@ Body:
     Name: Special Alloy Trap
     Type: Etc
     Buy: 300
-    Weight: 2
+    Weight: 1
     Flags:
       BuyingStore: true
   - Id: 7941
@@ -32281,7 +32281,7 @@ Body:
     Name: Mix Cook Book
     Type: Etc
     Buy: 10
-    Weight: 10
+    Weight: 50
     Flags:
       BuyingStore: true
   - Id: 11023
@@ -32539,7 +32539,7 @@ Body:
     Name: Lucky Lollipop
     Type: Etc
     Buy: 10
-    Weight: 30
+    Weight: 40
     Trade:
       Override: 100
       NoDrop: true
@@ -32772,7 +32772,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 15
-    Weight: 2
+    Weight: 1
     Attack: 50
     Jobs:
       Gunslinger: true
@@ -32788,7 +32788,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 40
     Jobs:
       Gunslinger: true
@@ -32804,7 +32804,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 40
     Jobs:
       Gunslinger: true
@@ -32820,7 +32820,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 40
     Jobs:
       Gunslinger: true
@@ -32836,7 +32836,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 40
     Jobs:
       Gunslinger: true
@@ -32852,7 +32852,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 40
     Jobs:
       Gunslinger: true
@@ -32868,7 +32868,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 5
-    Weight: 2
+    Weight: 1
     Attack: 15
     Jobs:
       Gunslinger: true
@@ -32884,7 +32884,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 30
     Jobs:
       Gunslinger: true
@@ -32970,7 +32970,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 20
     Jobs:
       Gunslinger: true
@@ -32986,7 +32986,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 20
     Jobs:
       Gunslinger: true
@@ -33002,7 +33002,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 20
     Jobs:
       Gunslinger: true
@@ -33018,7 +33018,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 20
     Jobs:
       Gunslinger: true
@@ -33035,7 +33035,7 @@ Body:
     Type: Ammo
     SubType: Bullet
     Buy: 10
-    Weight: 2
+    Weight: 1
     Attack: 20
     Jobs:
       Gunslinger: true
@@ -33843,7 +33843,7 @@ Body:
     Type: Ammo
     SubType: Cannonball
     Buy: 100
-    Weight: 10
+    Weight: 1
     Attack: 100
     Jobs:
       Alchemist: true
@@ -33859,7 +33859,7 @@ Body:
     Type: Ammo
     SubType: Cannonball
     Buy: 200
-    Weight: 10
+    Weight: 1
     Attack: 120
     Jobs:
       Alchemist: true
@@ -33877,7 +33877,7 @@ Body:
     Type: Ammo
     SubType: Cannonball
     Buy: 200
-    Weight: 10
+    Weight: 1
     Attack: 120
     Jobs:
       Alchemist: true
@@ -33895,7 +33895,7 @@ Body:
     Type: Ammo
     SubType: Cannonball
     Buy: 200
-    Weight: 10
+    Weight: 1
     Attack: 120
     Jobs:
       Alchemist: true
@@ -33913,7 +33913,7 @@ Body:
     Type: Ammo
     SubType: Cannonball
     Buy: 500
-    Weight: 10
+    Weight: 1
     Attack: 250
     Jobs:
       Alchemist: true
@@ -35219,22 +35219,22 @@ Body:
     AegisName: Frozen_Stone_Fragment
     Name: Frozen Stone Fragment
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25298
     AegisName: Spirit_Jewel
     Name: Spirit Jewel
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25299
     AegisName: Snowball
     Name: Snowball
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25300
     AegisName: Ktullanux_Eye
     Name: Ktullanux Eye
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25302
     AegisName: DoubleAttack_Stone
     Name: Double Attack Stone (Garment)
@@ -35269,17 +35269,17 @@ Body:
     AegisName: Piece_of_Black_Horn
     Name: Piece of Black Horn
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25312
     AegisName: Fine_Old_Doll
     Name: Fine Old Doll
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25313
     AegisName: Old_Shell
     Name: Old Shell
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25375
     AegisName: Powerful_Soul_Essence
     Name: Powerful Soul Essence
@@ -35523,17 +35523,17 @@ Body:
     AegisName: Token_of_OrcGeneral
     Name: Orc Warlord Token
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25622
     AegisName: White_Snake_Tear
     Name: White Snake's Tear
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25629
     AegisName: Konts_Letter
     Name: Knotted Letter
     Type: Etc
-    Weight: 1
+    Weight: 10
   - Id: 25670
     AegisName: M_M_Defense
     Name: Modification Module (Defense)
