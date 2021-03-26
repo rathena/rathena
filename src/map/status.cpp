@@ -6685,7 +6685,7 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 	if (sc->data[SC_SOULFAIRY])
 		matk += sc->data[SC_SOULFAIRY]->val2;
 	if (sc->data[SC__AUTOSHADOWSPELL])
-		matk += sc->data[SC__AUTOSHADOWSPELL]->val2 * 5;
+		matk += sc->data[SC__AUTOSHADOWSPELL]->val4 * 5;
 	if (sc->data[SC_INSPIRATION])
 		matk += sc->data[SC_INSPIRATION]->val2;
 
