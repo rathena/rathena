@@ -4642,8 +4642,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			}
 			break;
 		case GN_CARTCANNON:
-			// ATK [(20 * skill_lv) + {( INT / (3 - ( Cart Remodeling Skill Level ) )} + ( Cart Cannon Skill Level x 250 )] %
-			skillratio += -100 + 250 * skill_lv + 20 * skill_lv + sstatus->int_ / (3 - (sd ? pc_checkskill(sd, GN_REMODELING_CART) : 1));
+			skillratio += -100 + (250 + 20 * pc_checkskill(sd, GN_REMODELING_CART)) * skill_lv + 2 * sstatus->int_ / (6 - pc_checkskill(sd, GN_REMODELING_CART));
 			RE_LVL_DMOD(100);
 			break;
 		case GN_SPORE_EXPLOSION:
