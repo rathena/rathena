@@ -8130,7 +8130,7 @@ Body:
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2
-    Type: Usable
+    Type: Delayconsume
     Buy: 10
     Weight: 100
     Flags:
@@ -8144,7 +8144,7 @@ Body:
   - Id: 12377
     AegisName: Mysterious_PET_Bottle2
     Name: Mysterious PET Bottle2
-    Type: Usable
+    Type: Delayconsume
     Buy: 10
     Weight: 100
     Flags:
@@ -9030,7 +9030,7 @@ Body:
   - Id: 12456
     AegisName: F_Greed_Scroll
     Name: F Greed Scroll
-    Type: Usable
+    Type: Delayconsume
     Weight: 10
     Script: |
       itemskill "BS_GREED",1;
@@ -9109,7 +9109,7 @@ Body:
   - Id: 12466
     AegisName: F_Blessing_10_Scroll
     Name: F Blessing 10 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9117,7 +9117,7 @@ Body:
   - Id: 12467
     AegisName: F_Inc_Agi_10_Scroll
     Name: F Inc Agi 10 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9125,7 +9125,7 @@ Body:
   - Id: 12468
     AegisName: F_Aspersio_5_Scroll
     Name: F Aspersio 5 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9133,7 +9133,7 @@ Body:
   - Id: 12470
     AegisName: F_Wind_Walk_10_Scroll
     Name: F Wind Walk 10 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9141,7 +9141,7 @@ Body:
   - Id: 12471
     AegisName: F_Adrenaline_Scroll
     Name: F Adrenaline Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9707,7 +9707,7 @@ Body:
   - Id: 12512
     AegisName: E_Greed_Scroll
     Name: E Greed Scroll
-    Type: Usable
+    Type: Delayconsume
     Weight: 10
     Script: |
       itemskill "BS_GREED",1;
@@ -9798,7 +9798,7 @@ Body:
   - Id: 12522
     AegisName: E_Blessing_10_Scroll
     Name: Blessing Scroll Lv 10
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Trade:
@@ -9815,7 +9815,7 @@ Body:
   - Id: 12523
     AegisName: E_Inc_Agi_10_Scroll
     Name: Increase Agility Scroll Lv 10
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Trade:
@@ -9832,7 +9832,7 @@ Body:
   - Id: 12524
     AegisName: E_Aspersio_5_Scroll
     Name: Aspersio Scroll Lv 5
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9840,7 +9840,7 @@ Body:
   - Id: 12525
     AegisName: E_Assumptio_5_Scroll
     Name: Assumptio Scroll Lv 5
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9848,7 +9848,7 @@ Body:
   - Id: 12526
     AegisName: E_Wind_Walk_10_Scroll
     Name: Wind Walk Scroll Lv 10
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9856,7 +9856,7 @@ Body:
   - Id: 12527
     AegisName: E_Adrenaline_Scroll
     Name: Adrenaline Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -12851,7 +12851,7 @@ Body:
   - Id: 12796
     AegisName: Red_Booster
     Name: Red Booster
-    Type: Usable
+    Type: Delayconsume
     Buy: 20
     Weight: 10
     Trade:
@@ -33893,7 +33893,7 @@ Body:
   - Id: 14599
     AegisName: Greed_Scroll_C
     Name: Greed Scroll
-    Type: Usable
+    Type: Delayconsume
     Weight: 10
     NoUse:
       Override: 100
@@ -44256,7 +44256,7 @@ Body:
   - Id: 22515
     AegisName: Key_Of_Twisted_Time
     Name: Twisted Key of Time
-    Type: Usable
+    Type: Delayconsume
     Buy: 10
     Weight: 300
     Script: |
@@ -46900,7 +46900,7 @@ Body:
   - Id: 22899
     AegisName: DowntownMap
     Name: Parchment City
-    Type: Usable
+    Type: Delayconsume
     Buy: 20
     Script: |
       itemskill "AL_INCAGI",1;
