@@ -4461,7 +4461,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case SC_TRIANGLESHOT:
-			skillratio += -100 + 230 * skill_lv * (sstatus->agi / 2);
+			skillratio += -100 + 230 * skill_lv + 3 * sstatus->agi;
 			RE_LVL_DMOD(100);
 			break;
 		case SC_FEINTBOMB:
