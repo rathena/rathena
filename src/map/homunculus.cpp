@@ -245,6 +245,11 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	}
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
+
+#ifdef RENEWAL
+	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
+#endif
+
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
 
@@ -265,6 +270,10 @@ int hom_delete(struct homun_data *hd, int emote)
 
 	if (emote >= 0)
 		clif_emotion(&sd->bl, emote);
+
+#ifdef RENEWAL
+	status_change_end(&sd->bl, SC_HOMUN_TIME, INVALID_TIMER);
+#endif
 
 	//This makes it be deleted right away.
 	hd->homunculus.intimacy = 0;
@@ -1113,6 +1122,11 @@ bool hom_call(struct map_session_data *sd)
 	} else
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
+
+#ifdef RENEWAL
+	sc_start(&sd->bl, &sd->bl, SC_HOMUN_TIME, 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+#endif
+
 	return true;
 }
 

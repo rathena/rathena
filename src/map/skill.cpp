@@ -9488,24 +9488,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case AM_CALLHOMUN:	//[orn]
-		if (sd) {
-			if (!hom_call(sd))
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-#ifdef RENEWAL
-			else
-				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-#endif
-		}
+		if (sd && !hom_call(sd))
+			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		break;
 
 	case AM_REST:
 		if (sd) {
-			if (hom_vaporize(sd, HOM_ST_REST)) {
+			if (hom_vaporize(sd,HOM_ST_REST))
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-#ifdef RENEWAL
-				status_change_end(src, SC_HOMUN_TIME, INVALID_TIMER);
-#endif
-			} else
+			else
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
@@ -16826,7 +16817,11 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 							break;
 #ifdef RENEWAL
 						case AM_CALLHOMUN:
-							// Recalling from Rest state has a different consume item (stored as level 2)
+							// Player has no homunculus, only requires first item
+							if (i > 0 && sd->hd == nullptr)
+								continue;
+
+							// Recalling from Rest state has a different consume item (stored as second item)
 							if (skill_area_temp[0] || (sd->hd && sd->hd->homunculus.vaporize == HOM_ST_REST)) {
 								req.itemid[0] = skill->require.itemid[1];
 								req.amount[0] = skill->require.amount[1];

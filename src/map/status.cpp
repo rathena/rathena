@@ -13590,7 +13590,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 		case SC_HOMUN_TIME:
-			if (sd && sd->hd)
+			if (sd && hom_is_active(sd->hd))
 				hom_vaporize(sd, HOM_ST_REST);
 			break;
 	}
