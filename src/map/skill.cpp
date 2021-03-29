@@ -16824,10 +16824,20 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 							if (i != skill_lv%11 - 1)
 								continue;
 							break;
+#ifdef RENEWAL
 						case AM_CALLHOMUN:
-							if (sd->status.hom_id) //Don't delete items when hom is already out.
+							// Recalling from Rest state has a different consume item (stored as level 2)
+							if (skill_area_temp[0] || (sd->hd && sd->hd->homunculus.vaporize == HOM_ST_REST)) {
+								req.itemid[0] = skill->require.itemid[1];
+								req.amount[0] = skill->require.amount[1];
+								if (!skill_area_temp[0] && sd->hd && sd->hd->homunculus.vaporize == HOM_ST_REST)
+									skill_area_temp[0] = true; // Temporarily store for after-cast check
+								else
+									skill_area_temp[0] = false;
 								continue;
+							}
 							break;
+#endif
 						case AB_ADORAMUS:
 							if( itemdb_group_item_exists(IG_GEMSTONE, skill->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 2)) )
 								continue;
@@ -16872,14 +16882,6 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 						req.itemid[i] = req.amount[i] = 0;
 					}
 				}
-
-#ifdef RENEWAL
-				// Recalling from Rest state has a different consume item
-				if (skill_id == AM_CALLHOMUN && sd->hd && sd->hd->homunculus.vaporize == HOM_ST_REST) {
-					req.itemid[i] = ITEMID_SEED_OF_LIFE;
-					req.amount[i] = 1;
-				}
-#endif
 			}
 			break;
 	}

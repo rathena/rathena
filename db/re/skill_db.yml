@@ -6976,6 +6976,8 @@ Body:
       ItemCost:
         - Item: Germination_Breed
           Amount: 1
+        - Item: Seed_Of_Life
+          Amount: 1
   - Id: 244
     Name: AM_REST
     Description: Vaporize
