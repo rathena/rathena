@@ -106773,9 +106773,6 @@ Body:
     AegisName: S_FullTemp_Pendant
     Name: Full Tempest Shadow Pendant
     Type: ShadowGear
-    Jobs:
-      All: true
-      Novice: false
     Locations:
       Shadow_Left_Accessory: true
     Refineable: true
@@ -106806,9 +106803,6 @@ Body:
     AegisName: S_Mammoth_Shoes
     Name: Mammoth Shadow Shoes
     Type: ShadowGear
-    Jobs:
-      All: true
-      Novice: false
     Locations:
       Shadow_Shoes: true
     Refineable: true
@@ -106822,9 +106816,6 @@ Body:
     AegisName: S_Mammoth_Pendant
     Name: Mammoth Shadow Pendant
     Type: ShadowGear
-    Jobs:
-      All: true
-      Novice: false
     Locations:
       Shadow_Left_Accessory: true
     Refineable: true
@@ -106838,9 +106829,6 @@ Body:
     AegisName: S_Mammoth_Earring
     Name: Mammoth Shadow Earring
     Type: ShadowGear
-    Jobs:
-      All: true
-      Novice: false
     Locations:
       Shadow_Right_Accessory: true
     Refineable: true
@@ -106868,9 +106856,6 @@ Body:
     AegisName: S_Mammoth_Shield
     Name: Mammoth Shadow Shield
     Type: ShadowGear
-    Jobs:
-      All: true
-      Novice: false
     Locations:
       Shadow_Shield: true
     Refineable: true
@@ -106926,9 +106911,6 @@ Body:
     AegisName: S_TrueGem_Pendant
     Name: True Gemstone Shadow Pendant
     Type: ShadowGear
-    Jobs:
-      All: true
-      Novice: false
     Locations:
       Shadow_Left_Accessory: true
     Refineable: true
@@ -106988,9 +106970,6 @@ Body:
     AegisName: S_M_Mammoth_Pendant
     Name: Maximum Mammoth Shadow Pendant
     Type: ShadowGear
-    Jobs:
-      All: true
-      Novice: false
     Locations:
       Shadow_Left_Accessory: true
     Refineable: true
@@ -107011,15 +106990,14 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      .@val = .@r/2;
       if (BaseLevel<175)
-         bonus2 bExpAddRace,RC_All,20;
-      else {
-         bonus2 bExpAddRace,RC_All,10;
-         bonus2 bExpAddRace,RC_All,(.@r/2);
-      }
-      if (.@r>=10) {
-         bonus2 bExpAddRace,RC_All,5;
-      }
+         .@val += 20;
+      else
+         .@val += 10;
+      if (.@r>=10)
+         .@val += 5;
+      bonus2 bExpAddRace,RC_All,.@val;
   - Id: 24685
     AegisName: S_Absorb_Shield
     Name: Absolve Shadow Shield
@@ -107034,10 +107012,10 @@ Body:
       bonus2 bAddClass,Class_All,(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-3;
-      }
-      if (.@r>=10) {
-         bonus2 bHPDrainRate,20,2;
-         bonus2 bSPDrainRate,10,2;
+         if (.@r>=10) {
+            bonus2 bHPDrainRate,20,2;
+            bonus2 bSPDrainRate,10,2;
+         }
       }
   - Id: 24686
     AegisName: S_Absorb_Weapon
@@ -107053,10 +107031,10 @@ Body:
       bonus2 bAddClass,Class_All,(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-3;
-      }
-      if (.@r>=10) {
-         bonus2 bHPDrainRate,20,2;
-         bonus2 bSPDrainRate,10,2;
+         if (.@r>=10) {
+            bonus2 bHPDrainRate,20,2;
+            bonus2 bSPDrainRate,10,2;
+         }
       }
   - Id: 26001
     AegisName: Toughen_Metal_Lance
