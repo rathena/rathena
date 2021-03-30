@@ -34009,7 +34009,8 @@ Body:
       Target: SameGuild
       Flag:
         NoMob: true
-    Status: GloryWounds  - Id: 10008
+    Status: GloryWounds
+  - Id: 10008
     Name: GD_SOULCOLD
     Description: Cold Heart
     MaxLevel: 1
