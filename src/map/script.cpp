@@ -13985,17 +13985,27 @@ BUILDIN_FUNC(getitemslots)
 		14 view id
 		15 eLvmax
 		16 matk (renewal)
+		17 item ID
+		18 aegis item name
  *------------------------------------------*/
 BUILDIN_FUNC(getiteminfo)
 {
-	t_itemid item_id = script_getnum(st,2);
-	item_data *i_data = itemdb_exists(item_id);
+	item_data *i_data;
+	int type = script_getnum(st, 3);
+
+	if (script_isstring(st, 2))
+		i_data = itemdb_searchname(script_getstr(st, 2));
+	else
+		i_data = itemdb_exists(script_getnum(st, 2));
 
 	if (i_data == nullptr) {
-		script_pushint(st, -1);
+		if (type != 18)
+			script_pushint(st, -1);
+		else
+			script_pushstrcopy(st, "");
 		return SCRIPT_CMD_SUCCESS;
 	}
-	switch( script_getnum(st, 3) ) {
+	switch( type ) {
 		case 0: script_pushint(st, i_data->value_buy); break;
 		case 1: script_pushint(st, i_data->value_sell); break;
 		case 2: script_pushint(st, i_data->type); break;
@@ -14026,6 +14036,8 @@ BUILDIN_FUNC(getiteminfo)
 #endif
 			break;
 		}
+		case 17: script_pushint(st, i_data->nameid); break;
+		case 18: script_pushstrcopy(st, i_data->name.c_str()); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -25402,7 +25414,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setnpcdisplay,"sv??"),
 	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
 	BUILDIN_DEF(strcmp,"ss"),
-	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
+	BUILDIN_DEF(getiteminfo,"vi"), //[Lupus] returns Items Buy / sell Price, etc info
 	BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
 	BUILDIN_DEF(getequipcardid,"ii"), //[Lupus] returns CARD ID or other info from CARD slot N of equipped item
 	// [zBuffer] List of mathematics commands --->
