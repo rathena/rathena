@@ -2248,3 +2248,10 @@
 28560:13461:28913,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bHit,5*.@r; bonus bAspdRate,4*.@r; }
 28560:13462,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"AB_JUDEX",10*.@r; }
 28560:13462:28913,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bHit,5*.@r; bonus bAspdRate,4*.@r; }
+24665:24668,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bMatkRate,2; if (.@sum>=18) { bonus2 bIgnoreMdefRaceRate,RC_All,100; bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-100; bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-100; } }
+24667:24666,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bMatkRate,2; if (.@sum>=18) { bonus2 bIgnoreMdefRaceRate,RC_All,100; bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-100; bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-100; } }
+24672:24669:24670:24671:24673:24674,{ bonus2 bAddClass,Class_All,1; if (getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)>=45) { bonus bNoKnockback; } }
+24675:24676,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bMatkRate,2; if (.@sum>=18) { bonus bUseSPrate,40; bonus bNoGemStone; if (.@sum>=20) { bonus2 bMagicAddSize,Size_All,12; } } }
+24677:24678,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bMatkRate,2; if (.@sum>=18) { bonus bUseSPrate,40; bonus bNoGemStone; if (.@sum>=20) { bonus2 bMagicAddSize,Size_All,12; } } }
+24679:24680,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
+24681:24682,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
