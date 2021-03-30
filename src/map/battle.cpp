@@ -3755,6 +3755,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			if( tsc && tsc->data[SC_JYUMONJIKIRI] )
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
+#ifdef RENEWAL
 		case AS_POISONREACT:
 			skill_lv = pc_checkskill(sd, TF_DOUBLE);
 			if (skill_lv > 0) {
@@ -3763,6 +3764,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				}
 			}
 		break;
+#endif
 	}
 }
 
