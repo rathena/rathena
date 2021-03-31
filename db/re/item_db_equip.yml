@@ -106710,16 +106710,331 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bIgnoreDefRaceRate,RC_All,5;
-      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5;
-      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-5;
-      bonus2 bIgnoreDefRaceRate,RC_All,(.@r/2);
-      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-1*(.@r/2);
-      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-1*(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-5-(.@r/2);
       if (.@r>=10) {
          bonus2 bAddRace,RC_All,3;
          bonus2 bAddRace,RC_Player_Human,-3;
          bonus2 bAddRace,RC_Player_Doram,-3;
+      }
+  - Id: 24665
+    AegisName: S_FullTemp_Earring
+    Name: Full Tempest Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreMdefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-5-(.@r/2);
+      if (.@r>=10) {
+         bonus2 bMagicAddRace,RC_All,3;
+         bonus2 bMagicAddRace,RC_Player_Human,-3;
+         bonus2 bMagicAddRace,RC_Player_Doram,-3;
+      }
+  - Id: 24666
+    AegisName: S_FullTemp_Shoes
+    Name: Full Tempest Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreMdefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-5-(.@r/2);
+      if (.@r>=10) {
+         bonus2 bMagicAddRace,RC_All,3;
+         bonus2 bMagicAddRace,RC_Player_Human,-3;
+         bonus2 bMagicAddRace,RC_Player_Doram,-3;
+      }
+  - Id: 24667
+    AegisName: S_FullTemp_Armor
+    Name: Full Tempest Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreMdefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-5-(.@r/2);
+      if (.@r>=10) {
+         bonus2 bMagicAddRace,RC_All,3;
+         bonus2 bMagicAddRace,RC_Player_Human,-3;
+         bonus2 bMagicAddRace,RC_Player_Doram,-3;
+      }
+  - Id: 24668
+    AegisName: S_FullTemp_Pendant
+    Name: Full Tempest Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreMdefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-5-(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-5-(.@r/2);
+      if (.@r>=10) {
+         bonus2 bMagicAddRace,RC_All,3;
+         bonus2 bMagicAddRace,RC_Player_Human,-3;
+         bonus2 bMagicAddRace,RC_Player_Doram,-3;
+      }
+  - Id: 24669
+    AegisName: S_Mammoth_Armor
+    Name: Mammoth Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bCritAtkRate,5;
+      }
+  - Id: 24670
+    AegisName: S_Mammoth_Shoes
+    Name: Mammoth Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bFlee,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+      }
+  - Id: 24671
+    AegisName: S_Mammoth_Pendant
+    Name: Mammoth Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,10+(.@r/2);
+      if (.@r>=9) {
+         bonus2 bAddClass,Class_All,3;
+      }
+  - Id: 24672
+    AegisName: S_Mammoth_Earring
+    Name: Mammoth Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,1+(.@r/2);
+      if (.@r>=9) {
+         bonus bLongAtkRate,3;
+         bonus bShortAtkRate,3;
+      }
+  - Id: 24673
+    AegisName: S_Mammoth_Weapon
+    Name: Mammoth Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHit,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bPerfectHitRate,5;
+      }
+  - Id: 24674
+    AegisName: S_Mammoth_Shield
+    Name: Mammoth Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bDef,5+(.@r/2);
+      if (.@r>=9) {
+         bonus bDelayrate,-3;
+      }
+  - Id: 24675
+    AegisName: S_TrueGem_Armor
+    Name: True Gemstone Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=10) {
+         bonus bVariableCastrate,-3;
+      }
+  - Id: 24676
+    AegisName: S_TrueGem_Shoes
+    Name: True Gemstone Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=10) {
+         bonus bVariableCastrate,-3;
+      }
+  - Id: 24677
+    AegisName: S_TrueGem_Earring
+    Name: True Gemstone Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=10) {
+         bonus bVariableCastrate,-3;
+      }
+  - Id: 24678
+    AegisName: S_TrueGem_Pendant
+    Name: True Gemstone Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=10) {
+         bonus bVariableCastrate,-3;
+      }
+  - Id: 24679
+    AegisName: S_M_Mammoth_Armor
+    Name: Maximum Mammoth Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bLongAtkRate,(.@r/2);
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=10) {
+         bonus bMaxHPrate,3;
+      }
+  - Id: 24680
+    AegisName: S_M_Mammoth_Shoes
+    Name: Maximum Mammoth Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bLongAtkRate,(.@r/2);
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=10) {
+         bonus bMaxHPrate,3;
+      }
+  - Id: 24681
+    AegisName: S_M_Mammoth_Earring
+    Name: Maximum Mammoth Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bLongAtkRate,(.@r/2);
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=10) {
+         bonus bMaxHPrate,3;
+      }
+  - Id: 24682
+    AegisName: S_M_Mammoth_Pendant
+    Name: Maximum Mammoth Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bLongAtkRate,(.@r/2);
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=10) {
+         bonus bMaxHPrate,3;
+      }
+  - Id: 24683
+    AegisName: S_EXP_Shield
+    Name: Experience Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@val = .@r/2;
+      if (BaseLevel<175)
+         .@val += 20;
+      else
+         .@val += 10;
+      if (.@r>=10)
+         .@val += 5;
+      bonus2 bExpAddRace,RC_All,.@val;
+  - Id: 24685
+    AegisName: S_Absorb_Shield
+    Name: Absolve Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bAddClass,Class_All,(.@r/3);
+      if (.@r>=7) {
+         bonus bVariableCastrate,-3;
+         if (.@r>=10) {
+            bonus2 bHPDrainRate,20,2;
+            bonus2 bSPDrainRate,10,2;
+         }
+      }
+  - Id: 24686
+    AegisName: S_Absorb_Weapon
+    Name: Absolve Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bAddClass,Class_All,(.@r/3);
+      if (.@r>=7) {
+         bonus bVariableCastrate,-3;
+         if (.@r>=10) {
+            bonus2 bHPDrainRate,20,2;
+            bonus2 bSPDrainRate,10,2;
+         }
       }
   - Id: 26001
     AegisName: Toughen_Metal_Lance
