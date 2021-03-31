@@ -1084,11 +1084,7 @@ struct clan{
 #if PACKETVER >= 20191106
 	#define MAX_CARTS 13		// used for another new cart design
 #elif PACKETVER >= 20150826
-	#if PACKETVER >= 20191106
-		#define MAX_CARTS 13		// used for new cart design
-	#else
-		#define MAX_CARTS 12		// used for 3 new cart design
-	#endif
+	#define MAX_CARTS 12		// used for 3 new cart design
 #else
 	#define MAX_CARTS 9
 #endif
