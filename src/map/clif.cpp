@@ -12388,6 +12388,9 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 
 	if( 
 #ifdef NEW_CARTS
+#if PACKETVER >= 20191106
+		(type == 13 && sd->status.base_level > 100) ||
+#endif
 		(type == 9 && sd->status.base_level > 130) ||
 		(type == 8 && sd->status.base_level > 120) ||
 		(type == 7 && sd->status.base_level > 110) ||

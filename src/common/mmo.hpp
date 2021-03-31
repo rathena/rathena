@@ -1082,7 +1082,11 @@ struct clan{
 	#warning "Cart won't be able to be saved for relog"
 	#endif
 #if PACKETVER >= 20150826
-	#define MAX_CARTS 12		// used for 3 new cart design
+	#if PACKETVER >= 20191106
+		#define MAX_CARTS 13		// used for new cart design
+	#else
+		#define MAX_CARTS 12		// used for 3 new cart design
+	#endif
 #else
 	#define MAX_CARTS 9
 #endif
