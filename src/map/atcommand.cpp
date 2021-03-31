@@ -6028,8 +6028,8 @@ void getring (struct map_session_data* sd)
 	item_tmp.nameid = item_id;
 	item_tmp.identify = 1;
 	item_tmp.card[0] = CARD0_FORGE;
-	item_tmp.card[2] = sd->status.partner_id;
-	item_tmp.card[3] = sd->status.partner_id >> 16;
+	item_tmp.card[2] = GetWord(sd->status.partner_id,0);
+	item_tmp.card[3] = GetWord(sd->status.partner_id,1);
 
 	if((flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
 		clif_additem(sd,0,0,flag);
