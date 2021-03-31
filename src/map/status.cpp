@@ -1412,6 +1412,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_MADOGEAR] = EFST_RIDING;
 #endif
 
+	StatusIconChangeTable[SC_MOVEHASTE_INFINITY] = EFST_MOVHASTE_INFINITY;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1599,6 +1601,8 @@ void initChangeTables(void)
 #endif
 
 	StatusChangeFlagTable[SC_MADOGEAR] |= SCB_SPEED;
+
+	StatusChangeFlagTable[SC_MOVEHASTE_INFINITY] |= SCB_SPEED;
 
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
@@ -7447,6 +7451,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = max(val, 25); // !TODO: Confirm bonus movement speed
 		if (sc->data[SC_EMERGENCY_MOVE])
 			val = max(val, sc->data[SC_EMERGENCY_MOVE]->val2);
+		if (sc->data[SC_MOVEHASTE_INFINITY])
+			val = max(val, sc->data[SC_MOVEHASTE_INFINITY]->val1);
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sc->data[SC_SPEEDUP0] ) // Temporary item-based speedup
@@ -10224,6 +10230,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SPRITEMABLE:
 		case SC_CLAN_INFO:
 		case SC_DAILYSENDMAILCNT:
+		case SC_MOVEHASTE_INFINITY:
 			tick = INFINITE_TICK;
 			break;
 
@@ -12899,6 +12906,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_REUSE_LIMIT_LUXANIMA:
 			case SC_SOULENERGY:
 			case SC_MADOGEAR:
+			case SC_MOVEHASTE_INFINITY:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12936,6 +12944,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_ENTRY_QUEUE_APPLY_DELAY:
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 			case SC_MADOGEAR:
+			case SC_MOVEHASTE_INFINITY:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -15074,6 +15083,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_EP16_2_BUFF_SS:
 			case SC_EP16_2_BUFF_SC:
 			case SC_EP16_2_BUFF_AC:
+			case SC_MOVEHASTE_INFINITY:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:
