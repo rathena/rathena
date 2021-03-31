@@ -4400,9 +4400,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 4132
     AegisName: Mistress_Card
     Name: Mistress Card
@@ -11020,9 +11020,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      autobonus "{ bonus bAgi,44; sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25; heal 0,-40; }",500,3000,0,"{ specialeffect2 EF_POTION_BERSERK; showscript \"I got the signal!!!!\"; }";
+      autobonus "{ bonus bAgi,44; sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25; heal 0,-40; }",500,3000,0,"{ specialeffect2 EF_POTION_BERSERK; showscript \"I got the signal!!!!\"; }";
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 4582
     AegisName: Bungisngis_Card
     Name: Bungisngis Card

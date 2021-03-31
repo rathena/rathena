@@ -5693,9 +5693,9 @@ Body:
       bonus bStr,10;
       bonus2 bAddRace,RC_Demon,3;
       skill "AL_HEAL",3;
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 1316
     AegisName: Adventure_Axe
     Name: Adventure Axe
@@ -6289,9 +6289,9 @@ Body:
     Refineable: true
     Script: |
       bonus bStr,10;
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 1364
     AegisName: Great_Axe
     Name: Great Axe
@@ -6366,9 +6366,9 @@ Body:
       bonus bAtkEle,Ele_Holy;
       skill "AL_HEAL",3;
       bonus2 bAddRace,RC_Demon,3;
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 1367
     AegisName: Slaughter
     Name: Slaughter
@@ -26375,10 +26375,10 @@ Body:
       bonus bMaxHPrate,20;
       bonus bMaxSPrate,20;
       bonus bSPrecovRate,25;
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       bonus bInt,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 2411
     AegisName: Grave
     Name: Greaves
@@ -27462,9 +27462,9 @@ Body:
       bonus bMaxHPrate,20;
       bonus bMaxSPrate,20;
       bonus bSPrecovRate,15;
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 2463
     AegisName: Feral_Boots
     Name: Feral Boots
@@ -28005,10 +28005,10 @@ Body:
       .@r = getrefine();
       bonus bMdef,.@r;
       if (.@r>=14) {
-         sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+         sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       }
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 2492
     AegisName: Bayani_Bangungot_Boots
     Name: Bayani Bangungot Boots of Nightmare
@@ -28025,10 +28025,10 @@ Body:
       .@r = getrefine();
       bonus bMdef,.@r;
       if (.@r>=12) {
-         sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+         sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       }
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 2493
     AegisName: Goibne's_Combat_Boots_
     Name: Goibne's Greaves
@@ -41232,11 +41232,11 @@ Body:
     Refineable: true
     View: 305
     Script: |
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5274
     AegisName: Shiny_Wig
@@ -41251,11 +41251,11 @@ Body:
     Refineable: true
     View: 306
     Script: |
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5275
     AegisName: Marvelous_Wig
@@ -41270,11 +41270,11 @@ Body:
     Refineable: true
     View: 307
     Script: |
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5276
     AegisName: Fantastic_Wig
@@ -41289,11 +41289,11 @@ Body:
     Refineable: true
     View: 308
     Script: |
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       bonus bDef,4;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
       sc_end SC_HIDING;
   - Id: 5277
     AegisName: Yellow_Bandana
@@ -47661,11 +47661,11 @@ Body:
       Head_Top: true
     View: 314
     Script: |
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       bonus bAspdRate,10;
       bonus bVariableCastrate,-25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 5629
     AegisName: F_Vacation_Hat
     Name: F Vacation Hat
@@ -47934,10 +47934,10 @@ Body:
     View: 308
     Script: |
       bonus bDef,4;
-      sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+      sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       skill "TF_HIDING",1;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 5646
     AegisName: F_Whisper_Mask
     Name: F Whisper Mask
@@ -71823,9 +71823,9 @@ Body:
       bonus bStr,2;
       bonus bVit,1;
       if (getrefine() > 7)
-         sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+         sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 18638
     AegisName: Citron_Hat
     Name: Citron Hat
@@ -79058,9 +79058,9 @@ Body:
       Head_Low: true
     EquipLevelMin: 30
     Script: |
-      autobonus "{ sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25; }",50,5000,BF_NORMAL,"{ showscript \"Smokie-formation!\"; active_transform 1056,5000; /*SMOKIE*/ }";
+      autobonus "{ sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25; }",50,5000,BF_NORMAL,"{ showscript \"Smokie-formation!\"; active_transform 1056,5000; /*SMOKIE*/ }";
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 19239
     AegisName: PoringTownCarrot
     Name: Poring Village Carrot
@@ -79072,9 +79072,9 @@ Body:
       Head_Low: true
     EquipLevelMin: 30
     Script: |
-      autobonus "{ sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25; }",50,5000,BF_NORMAL,"{ showscript \"Lunatic-formation!\"; active_transform 1063,5000; /*LUNATIC*/ }";
+      autobonus "{ sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25; }",50,5000,BF_NORMAL,"{ showscript \"Lunatic-formation!\"; active_transform 1063,5000; /*LUNATIC*/ }";
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 19240
     AegisName: Toy_Syringe_K
     Name: Toy Syringe
@@ -84766,9 +84766,9 @@ Body:
     View: 691
     Script: |
       if (gettime(DT_MONTH) == OCTOBER)
-        sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+        sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 19918
     AegisName: C_Lude_Mask
     Name: Costume Lude Mask
@@ -85153,10 +85153,10 @@ Body:
     Script: |
       if (gettime(DT_MONTH) == DECEMBER) {
         bonus bAspdRate,10;
-        sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+        sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       }
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 19977
     AegisName: C_Golden_Exclamation
     Name: Costume Golden Exclamation Mark
@@ -92530,7 +92530,7 @@ Body:
          bonus bLongHPGainValue,5;
       }
       if (.@r>=8)
-         sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+         sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       if (.@r>=9) {
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,10;
@@ -92541,7 +92541,7 @@ Body:
       if (.@r>=10)
          skill "AS_CLOAKING",3;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 20953
     AegisName: H_AD_Hood
     Name: High Adventurer Hood
@@ -95749,11 +95749,11 @@ Body:
       }
       if (.@r >=9) {
         .@bonus += 5;
-        sc_start SC_MOVEHAST_INFINITY,INFINITE_TICK,25;
+        sc_start SC_MOVEHASTE_INFINITY,INFINITE_TICK,25;
       }
       bonus bMaxSPrate,.@bonus;
     UnEquipScript: |
-      sc_end SC_MOVEHAST_INFINITY;
+      sc_end SC_MOVEHASTE_INFINITY;
   - Id: 22133
     AegisName: Shoes_IL
     Name: Illusion Shoes
