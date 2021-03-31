@@ -12360,7 +12360,7 @@ void clif_parse_SelectCart(int fd,struct map_session_data *sd) {
 	type = (int)RFIFOB(fd,6);
 
 	// Check type
-	if( type < 10 || type > MAX_CARTS ) 
+	if( type < 10 || type > 12 ) 
 		return;
 
 	pc_setcart(sd, type);
