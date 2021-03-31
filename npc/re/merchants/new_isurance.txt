@@ -1,0 +1,97 @@
+//===== rAthena Script =======================================
+//= Insurance changer
+//===== By: ==================================================
+//= Balfear
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
+	mes "[Heart Merchant]";
+	mes "Hello! An adventurer with a heart out of the boat, sailing across the continent and enjoying a dangerous thrill!";
+	next;
+	mes "[Heart Merchant]";
+	mes "Would you like to change your <ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> with something better? For example... <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> what about?";
+	next;
+	switch(select("What is it?: Please exchange!: I'm not interested")) {
+	case 1:
+		mes "[Heart Merchant]";
+		mes "<ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> was an object that prevented your living from losing experience on death once every 30 minutes.";
+		next;
+		mes "[Heart Merchant]";
+		mes "But many people missed the part about time? So I saw it and prepared <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM>.";
+		next;
+		mes "[Heart Merchant]";
+		mes "This <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> will reduce your experience at the time of death for a single death of ^000000, even if you hold it for 1^EE0000 hours. It's an object that won't be accepted, but of course the heart of the contract disappears after death.";
+		next;
+		select("Why do you change it?");
+		mes "[Heart Merchant]";
+		mes "I wonder if that? I'm a trader. It's a fate to buy and sell things when I'm dead. I'm going to lose money and I'll miss this opportunity. I'm making money. Is that a good deal?";
+		next;
+		mes "[Heart Merchant]";
+		mes "Are you curious about this? Exchange rates. <ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> 1 ea. I'll change it to one.";
+		next;
+		mes "[Heart Merchant]";
+		mes "How about? Isn't it a loss condition? Do you need to worry about time? Adventurers who enjoy dizzy adventures are a must-have. Cancer ~";
+		close;
+	case 2:	
+		mes "[Heart Merchant]";
+		mes "Yeah, yeah. I thought about it. It's better to exchange what you have for a better one. Isn't it?";
+		next;
+		mes "[Heart Merchant]";
+		mes "You can change to 1 heart of the contract with 5 existing cards.";
+		next;
+		mes "[Heart Merchant]";
+		mes "But life insurance policy is excluded from the exchange.";
+		next;
+		mes "[Heart Merchant]";
+		mes "Would you like to exchange it now?";
+		next;
+		switch(select("Please exchange!: Don't exchange.")) {
+			case 1:
+				mes "[Heart Merchant]";
+				mes "How many do you want to exchange? You can exchange up to 10 at a time.";
+				next;
+				input .@amount;
+				if (.@amount == 0) {
+					mes "[Heart Merchant]";
+					mes "Well, aren't you interested? It's a really good thing, but it's really good.";
+					close;
+				} else if (.@amount > 10) {
+					mes "[Heart Merchant]";
+					mes "You can change up to 10 ea. at a time. Check the quantity again.";
+					close;
+				} else {
+					if (countitem(12209) < (.@amount*5)) {
+						mes "[Heart Merchant]";
+						mes "Well, well ... You don't have enough life insurance policy? <ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> 1 ea. check the quantity.";
+						close;
+					}
+					mes "[Heart Merchant]";
+					mes "Now, I exchanged your life insurance policy for the heart of the contract! That was a good deal, right? Come back next time!";
+					delitem 12209,.@amount*5;
+					getitem 6413,.@amount;
+					close;
+				}
+			case 2:
+				mes "[Heart Merchant]";
+				mes "This is a very good condition! Adventurer, it's a must if you want to venture in this dangerous place like you!";
+				next;
+				mes "[Heart Merchant]";
+				mes "If you are interested later, be sure to come to exchange. Okay?";
+				close;
+		}
+	case 3:
+		mes "[Heart Merchant]";
+		mes "This is a very good condition! Adventurer, it's a must if you want to venture in this dangerous place like you!";
+		next;
+		mes "[Heart Merchant]";
+		mes "If you are interested later, be sure to come to exchange. Okay?";
+		close;
+	}
+OnTouch:
+	npctalk "You have a good one. Would you like to change your life insurance policy with a new one?", "", bc_self;
+	end;
+}

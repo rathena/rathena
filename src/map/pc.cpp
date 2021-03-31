@@ -8617,8 +8617,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		else
 			job_penalty = 0;
 
-		if (base_penalty || job_penalty)
-			pc_lostexp(sd, base_penalty, job_penalty);
+		if (base_penalty || job_penalty) {
+			short item_position = pc_search_inventory(sd, ITEMID_NEW_INSURANCE);
+			if (item_position < 0)
+				pc_lostexp(sd, base_penalty, job_penalty);
+			else
+				pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
+		}
 
 		if( zeny_penalty > 0 && !mapdata->flag[MF_NOZENYPENALTY]) {
 			zeny_penalty = (uint32)( sd->status.zeny * ( zeny_penalty / 10000. ) );
