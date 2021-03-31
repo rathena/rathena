@@ -276,10 +276,6 @@ int hom_delete(struct homun_data *hd, int emote)
 	if (emote >= 0)
 		clif_emotion(&sd->bl, emote);
 
-#ifdef RENEWAL
-	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
-#endif
-
 	//This makes it be deleted right away.
 	hd->homunculus.intimacy = 0;
 	// Send homunculus_dead to client

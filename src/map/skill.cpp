@@ -9490,6 +9490,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AM_CALLHOMUN:	//[orn]
 		if (sd && !hom_call(sd))
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+#ifdef RENEWAL
+		else if (sd && hom_is_active(sd->hd))
+			skill_area_temp[0] = 1; // Already passed pre-cast checks
+#endif
 		break;
 
 	case AM_REST:
@@ -15820,8 +15824,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
-			if (sd->hd != nullptr)
-				skill_area_temp[0] = true; // Already passed pre-cast checks
 			break;
 		case AM_REST: //Can't vapo homun if you don't have an active homunc or it's hp is < 80%
 			if (!hom_is_active(sd->hd) || sd->hd->battle_status.hp < (sd->hd->battle_status.max_hp*80/100)) {
@@ -16817,14 +16819,18 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 #ifdef RENEWAL
 						case AM_CALLHOMUN:
 							// Player has no homunculus, only requires first item
-							if (i > 0 && sd->hd == nullptr)
+							if (i > 0 && sd->hd == nullptr) {
+								i = MAX_SKILL_ITEM_REQUIRE;
 								continue;
+							}
 
 							// Recalling from Rest state has a different consume item (stored as second item)
-							if (skill_area_temp[0] || (sd->hd != nullptr && sd->hd->homunculus.vaporize == HOM_ST_REST)) {
+							if (skill_area_temp[0] == 1 || (sd->hd != nullptr && sd->hd->homunculus.vaporize == HOM_ST_REST)) {
 								req.itemid[0] = skill->require.itemid[1];
 								req.amount[0] = skill->require.amount[1];
-								skill_area_temp[0] = false;
+								if (skill_area_temp[0] == 1 && hom_is_active(sd->hd))
+									skill_area_temp[0] = 0;
+								i = MAX_SKILL_ITEM_REQUIRE;
 								continue;
 							}
 							break;

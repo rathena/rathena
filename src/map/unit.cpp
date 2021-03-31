@@ -3519,6 +3519,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 				if( sd )
 					sd->status.hom_id = 0;
+
+#ifdef RENEWAL
+				status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+#endif
 			}
 
 			if( sd )

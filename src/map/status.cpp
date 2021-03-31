@@ -2121,12 +2121,6 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		return (int)(hp+sp);
 	}
 
-#ifdef RENEWAL
-	// Homunculus has been killed, remove the active status from the master
-	if (target->type == BL_HOM)
-		status_change_end(battle_get_master(target), SC_HOMUN_TIME, INVALID_TIMER);
-#endif
-
 	status_change_clear(target,0);
 
 	if(flag&4) // Delete from memory. (also invokes map removal code)
