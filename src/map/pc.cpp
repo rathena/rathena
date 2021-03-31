@@ -8621,8 +8621,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			short insurance_idx = pc_search_inventory(sd, ITEMID_NEW_INSURANCE);
 			if (insurance_idx < 0 || pc_delitem(sd, insurance_idx, 1, 0, 1, LOG_TYPE_CONSUME) != 0)
 				pc_lostexp(sd, base_penalty, job_penalty);
-			else
-				pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
 		}
 
 		if( zeny_penalty > 0 && !mapdata->flag[MF_NOZENYPENALTY]) {
