@@ -29,7 +29,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 		mes "Are you curious about that? I'm a merchant. It's my fate to buy and sell things if I'm dead or alive. There are many ways to make money, but am I going to miss this opportunity? I make money and the living get a little freedom from the pain of death. Isn't that a good deal?";
 		next;
 		mes "[Heart Merchant]";
-		mes "Are you curious about this? Exchange rates. <ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> 1 ea. I'll change it to one.";
+		mes "Are you curious by now? The exchange rate. <ITEM>["+.@old_item_name$+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM> 1 ea. I'll trade for one.";
 		next;
 		mes "[Heart Merchant]";
 		mes "How about? Isn't it a loss condition? Do you need to worry about time? Adventurers who enjoy dizzy adventures are a must-have. Cancer ~";
