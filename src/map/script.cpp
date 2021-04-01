@@ -13999,36 +13999,36 @@ BUILDIN_FUNC(getiteminfo)
 		i_data = itemdb_exists(script_getnum(st, 2));
 
 	if (i_data == nullptr) {
-		if (type != 18)
+		if (type != II_AEGISNAME)
 			script_pushint(st, -1);
 		else
 			script_pushstrcopy(st, "");
 		return SCRIPT_CMD_SUCCESS;
 	}
 	switch( type ) {
-		case 0: script_pushint(st, i_data->value_buy); break;
-		case 1: script_pushint(st, i_data->value_sell); break;
-		case 2: script_pushint(st, i_data->type); break;
-		case 3: script_pushint(st, i_data->maxchance); break;
-		case 4: script_pushint(st, i_data->sex); break;
-		case 5: script_pushint(st, i_data->equip); break;
-		case 6: script_pushint(st, i_data->weight); break;
-		case 7: script_pushint(st, i_data->atk); break;
-		case 8: script_pushint(st, i_data->def); break;
-		case 9: script_pushint(st, i_data->range); break;
-		case 10: script_pushint(st, i_data->slots); break;
-		case 11:
+		case II_BUY: script_pushint(st, i_data->value_buy); break;
+		case II_SELL: script_pushint(st, i_data->value_sell); break;
+		case II_TYPE: script_pushint(st, i_data->type); break;
+		case II_MAXCHANCE: script_pushint(st, i_data->maxchance); break;
+		case II_GENDER: script_pushint(st, i_data->sex); break;
+		case II_LOCATIONS: script_pushint(st, i_data->equip); break;
+		case II_WEIGHT: script_pushint(st, i_data->weight); break;
+		case II_ATTACK: script_pushint(st, i_data->atk); break;
+		case II_DEFENSE: script_pushint(st, i_data->def); break;
+		case II_RANGE: script_pushint(st, i_data->range); break;
+		case II_SLOT: script_pushint(st, i_data->slots); break;
+		case II_VIEW:
 			if (i_data->type == IT_WEAPON || i_data->type == IT_AMMO) {	// keep old compatibility
 				script_pushint(st, i_data->subtype);
 			} else {
 				script_pushint(st, i_data->look);
 			}
 			break;
-		case 12: script_pushint(st, i_data->elv); break;
-		case 13: script_pushint(st, i_data->wlv); break;
-		case 14: script_pushint(st, i_data->view_id); break;
-		case 15: script_pushint(st, i_data->elvmax); break;
-		case 16: {
+		case II_EQUIPLEVELMIN: script_pushint(st, i_data->elv); break;
+		case II_WEAPONLEVEL: script_pushint(st, i_data->wlv); break;
+		case II_ALIASNAME: script_pushint(st, i_data->view_id); break;
+		case II_EQUIPLEVELMAX: script_pushint(st, i_data->elvmax); break;
+		case II_MAGICATTACK: {
 #ifdef RENEWAL
 			script_pushint(st, i_data->matk);
 #else
@@ -14036,8 +14036,8 @@ BUILDIN_FUNC(getiteminfo)
 #endif
 			break;
 		}
-		case 17: script_pushint(st, i_data->nameid); break;
-		case 18: script_pushstrcopy(st, i_data->name.c_str()); break;
+		case II_ID: script_pushint(st, i_data->nameid); break;
+		case II_AEGISNAME: script_pushstrcopy(st, i_data->name.c_str()); break;
 		default:
 			script_pushint(st, -1);
 			break;

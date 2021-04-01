@@ -3004,28 +3004,28 @@ and return the info set by TYPE argument.
 It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
-	0  - Buy Price
-	1  - Sell Price
-	2  - Type
-	3  - maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		 if = 0, then monsters don't drop it at all (rare or a quest item)
-		 if = 10000, then this item is sold in NPC shops only
-	4  - Gender
-	5  - Loc
-	6  - Weight
-	7  - ATK
-	8  - DEF
-	9  - Range
-	10 - Slot
-	11 - View
-	12 - eLV
-	13 - wLV
-	14 - SpriteID from 'db/item_avail.txt'
-	15 - eLVMax
-	16 - matk if RENEWAL is defined
-	17 - item ID
-	18 - aegis item name
-
+	II_BUY             (0)   -  Buy Price
+	II_SELL            (1)   -  Sell Price
+	II_TYPE            (2)   -  Type
+	II_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                        if = 0, then monsters don't drop it at all (rare or a quest item)
+		                        if = 10000, then this item is sold in NPC shops only
+	II_GENDER          (4)   -  Gender
+	II_LOCATIONS       (5)   -  Location(s)
+	II_WEIGHT          (6)   -  Weight
+	II_ATTACK          (7)   -  ATK
+	II_DEFENSE         (8)   -  DEF
+	II_RANGE           (9)   -  Range
+	II_SLOT           (10)   -  Slot
+	II_VIEW           (11)   -  View
+	II_EQUIPLEVELMIN  (12)   -  equipment LV
+	II_WEAPONLEVEL    (13)   -  weapon LV
+	II_ALIASNAME      (14)   -  AliasName
+	II_EQUIPLEVELMAX  (15)   -  equipment LV Max
+	II_MAGICATTACK    (16)   -  matk if RENEWAL is defined
+	II_ID             (17)   -  item ID
+	II_AEGISNAME      (18)   -  aegis item name
+	
 See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------

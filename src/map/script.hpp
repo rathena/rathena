@@ -2019,6 +2019,29 @@ enum e_pcblock_action_flag : uint16 {
 	PCBLOCK_ALL      = 0x3FF,
 };
 
+/* getiteminfo script command*/
+enum e_iteminfo : uint8 {
+	II_BUY = 0,
+	II_SELL,
+	II_TYPE,
+	II_MAXCHANCE,
+	II_GENDER,
+	II_LOCATIONS,
+	II_WEIGHT,
+	II_ATTACK,
+	II_DEFENSE,
+	II_RANGE,
+	II_SLOT,
+	II_VIEW,
+	II_EQUIPLEVELMIN,
+	II_WEAPONLEVEL,
+	II_ALIASNAME,
+	II_EQUIPLEVELMAX,
+	II_MAGICATTACK,
+	II_ID,
+	II_AEGISNAME	// 18
+};
+
 /**
  * used to generate quick script_array entries
  **/
