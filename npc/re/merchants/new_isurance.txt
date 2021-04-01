@@ -8,7 +8,7 @@
 
 prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 	mes "[Heart Merchant]";
-	mes "Hello! An adventurer with a heart out of the boat, sailing across the continent and enjoying a dangerous thrill!";
+	mes "Hello! I see you are an adventurer who puts his heart in traveling from a boat, sailing across the continent and enjoying the dangerous thrill!";
 	next;
 	mes "[Heart Merchant]";
 	mes "Would you like to change your <ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> with something better? For example... <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> what about?";
