@@ -36384,9 +36384,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1907
     AegisName: S_EMPEL_1
     Name: Guardian Stone
@@ -36444,9 +36449,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1910
     AegisName: OBJ_B
     Name: Food Depot
@@ -36464,9 +36474,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1911
     AegisName: OBJ_NEUTRAL
     Name: Neutrality Flag
@@ -36484,9 +36499,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1912
     AegisName: OBJ_FLAG_A
     Name: Lion Flag
@@ -36504,9 +36524,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1913
     AegisName: OBJ_FLAG_B
     Name: Eagle Flag
@@ -36524,9 +36549,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1914
     AegisName: OBJ_A2
     Name: Blue Crystal
@@ -36544,9 +36574,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1915
     AegisName: OBJ_B2
     Name: Pink Crystal
@@ -36564,9 +36599,14 @@ Body:
     AttackDelay: 1288
     AttackMotion: 288
     DamageMotion: 384
-    Class: Battlefield
+    Class: Guardian
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 1916
     AegisName: MOROCC
     Name: Satan Morocc
