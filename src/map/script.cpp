@@ -14026,32 +14026,15 @@ BUILDIN_FUNC(getiteminfo)
 /*==========================================
  * Set some values of an item [Lupus]
  * Price, Weight, etc...
-	setiteminfo(itemID,n,Value), where n
-		0 value_buy;
-		1 value_sell;
-		2 type;
-		3 maxchance = Max drop chance of this item e.g. 1 = 0.01% , etc..
-				if = 0, then monsters don't drop it at all (rare or a quest item)
-				if = -1, then this item is sold in NPC shops only
-		4 sex;
-		5 equip;
-		6 weight;
-		7 atk;
-		8 def;
-		9 range;
-		10 slot;
-		11 look;
-		12 elv;
-		13 wlv;
-		14 view id
-		15 eLvmax
-		16 matk (renewal)
-  * Returns Value or -1 if the wrong field's been set
  *------------------------------------------*/
 BUILDIN_FUNC(setiteminfo)
 {
-	t_itemid item_id = script_getnum(st,2);
-	item_data *i_data = itemdb_exists(item_id);
+	item_data *i_data;
+
+	if (script_isstring(st, 2))
+		i_data = itemdb_search_aegisname(script_getstr(st, 2));
+	else
+		i_data = itemdb_exists(script_getnum(st, 2));
 
 	if (i_data == nullptr) {
 		script_pushint(st, -1);
@@ -14060,29 +14043,29 @@ BUILDIN_FUNC(setiteminfo)
 	int value = script_getnum(st,4);
 
 	switch( script_getnum(st, 3) ) {
-		case 0: i_data->value_buy = static_cast<uint32>(value); break;
-		case 1: i_data->value_sell = static_cast<uint32>(value); break;
-		case 2: i_data->type = static_cast<item_types>(value); break;
-		case 3: i_data->maxchance = static_cast<int>(value); break;
-		case 4: i_data->sex = static_cast<uint8>(value); break;
-		case 5: i_data->equip = static_cast<uint32>(value); break;
-		case 6: i_data->weight = static_cast<uint32>(value); break;
-		case 7: i_data->atk = static_cast<uint32>(value); break;
-		case 8: i_data->def = static_cast<uint32>(value); break;
-		case 9: i_data->range = static_cast<uint16>(value); break;
-		case 10: i_data->slots = static_cast<uint16>(value); break;
-		case 11:
+		case II_BUY: i_data->value_buy = static_cast<uint32>(value); break;
+		case II_SELL: i_data->value_sell = static_cast<uint32>(value); break;
+		case II_TYPE: i_data->type = static_cast<item_types>(value); break;
+		case II_MAXCHANCE: i_data->maxchance = static_cast<int>(value); break;
+		case II_GENDER: i_data->sex = static_cast<uint8>(value); break;
+		case II_LOCATIONS: i_data->equip = static_cast<uint32>(value); break;
+		case II_WEIGHT: i_data->weight = static_cast<uint32>(value); break;
+		case II_ATTACK: i_data->atk = static_cast<uint32>(value); break;
+		case II_DEFENSE: i_data->def = static_cast<uint32>(value); break;
+		case II_RANGE: i_data->range = static_cast<uint16>(value); break;
+		case II_SLOT: i_data->slots = static_cast<uint16>(value); break;
+		case II_VIEW:
 			if (i_data->type == IT_WEAPON || i_data->type == IT_AMMO) {	// keep old compatibility
 				i_data->subtype = static_cast<uint8>(value);
 			} else {
 				i_data->look = static_cast<uint32>(value);
 			}
 			break;
-		case 12: i_data->elv = static_cast<uint16>(value); break;
-		case 13: i_data->wlv = static_cast<uint16>(value); break;
-		case 14: i_data->view_id = static_cast<t_itemid>(value); break;
-		case 15: i_data->elvmax = static_cast<uint16>(value); break;
-		case 16: {
+		case II_EQUIPLEVELMIN: i_data->elv = static_cast<uint16>(value); break;
+		case II_WEAPONLEVEL: i_data->wlv = static_cast<uint16>(value); break;
+		case II_ALIASNAME: i_data->view_id = static_cast<t_itemid>(value); break;
+		case II_EQUIPLEVELMAX: i_data->elvmax = static_cast<uint16>(value); break;
+		case II_MAGICATTACK: {
 #ifdef RENEWAL
 			i_data->matk = static_cast<uint32>(value);
 #else
