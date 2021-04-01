@@ -55,7 +55,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 				input .@amount;
 				if (.@amount == 0) {
 					mes "[Heart Merchant]";
-					mes "Well, aren't you interested? It's a really good thing, but it's really good.";
+					mes "Well? Are you not interested? It's a really nice thing to have and really good for you. But if you don't want the person to live, I can't force you.";
 					close;
 				} else if (.@amount > 10) {
 					mes "[Heart Merchant]";
