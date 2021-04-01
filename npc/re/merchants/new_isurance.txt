@@ -26,7 +26,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 		next;
 		select("Why change it?");
 		mes "[Heart Merchant]";
-		mes "I wonder if that? I'm a trader. It's a fate to buy and sell things when I'm dead. I'm going to lose money and I'll miss this opportunity. I'm making money. Is that a good deal?";
+		mes "Are you curious about that? I'm a merchant. It's my fate to buy and sell things if I'm dead or alive. There are many ways to make money, but am I going to miss this opportunity? I make money and the living get a little freedom from the pain of death. Isn't that a good deal?";
 		next;
 		mes "[Heart Merchant]";
 		mes "Are you curious about this? Exchange rates. <ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> 1 ea. I'll change it to one.";
