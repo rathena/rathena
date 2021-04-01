@@ -22,7 +22,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 		mes "But many people missed the part about time? So I looked into it and prepared <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM>.";
 		next;
 		mes "[Heart Merchant]";
-		mes "This <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM> will reduce your experience at the time of death for a single death of ^000000, even if you hold it for 1^EE0000 hours. It's an object that won't be accepted, but of course the heart of the contract disappears after death.";
+		mes "The <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM> ^EE0000will remove your experience loss at death for a single death^000000, even if you hold it for 1 hour. It's something useful. Of course, after death, the "+.@new_item_name$+" is consumed.";
 		next;
 		select("Why do you change it?");
 		mes "[Heart Merchant]";
