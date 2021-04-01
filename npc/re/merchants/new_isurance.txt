@@ -32,7 +32,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 		mes "Are you curious by now? The exchange rate. <ITEM>["+.@old_item_name$+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM> 1 ea. I'll trade for one.";
 		next;
 		mes "[Heart Merchant]";
-		mes "How about? Isn't it a loss condition? Do you need to worry about time? Adventurers who enjoy dizzy adventures are a must-have. Cancer ~";
+		mes "What do you think? Isn't it a fair trade? Do you want to always worry about time? It's a must-have for adventurers who enjoy breathtaking adventures.";
 		close;
 	case 2:	
 		mes "[Heart Merchant]";
