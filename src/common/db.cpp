@@ -2708,6 +2708,22 @@ DBData db_ptr2data(void *data)
 }
 
 /**
+ * Manual cast from 'int' to the struct DBData.
+ * @param data Data to be casted
+ * @return The data as a DBData struct
+ * @public
+ */
+DBData db_i642data(int64 data)
+{
+	DBData ret;
+
+	DB_COUNTSTAT(db_i2data);
+	ret.type = DB_DATA_I64;
+	ret.u.i64 = data;
+	return ret;
+}
+
+/**
  * Gets int type data from struct DBData.
  * If data is not int type, returns 0.
  * @param data Data
@@ -2750,6 +2766,21 @@ void* db_data2ptr(DBData *data)
 	if (data && DB_DATA_PTR == data->type)
 		return data->u.ptr;
 	return NULL;
+}
+
+/**
+ * Gets int64 type data from struct DBData.
+ * If data is not int64 type, returns 0.
+ * @param data Data
+ * @return Integer(64-bit signed) value of the data.
+ * @public
+ */
+int64 db_data2i64(DBData *data)
+{
+	DB_COUNTSTAT(db_data2i64);
+	if (data && DB_DATA_I64 == data->type)
+		return data->u.i64;
+	return 0;
 }
 
 /**

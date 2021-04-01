@@ -50,7 +50,7 @@
 //= 2.3b corrected Glast warp coords [Lupus] 2.3c Bailand -> Bayalan
 //= 2.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.5 Converted from Aegis file. (11.3) [L0ne_W0lf]
-//= 2.6 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
+//= 2.6 Moved Morocc NPCs to Morocc Ruins. [L0ne_W0lf]
 //= 2.7 Fixed a typo, a - to a +. Not sure how that happened. [L0ne_w0lf]
 //= 2.8 Corrected another typo this time in a variable.
 //= 2.9 Added GM management function. [Euphy]
@@ -755,7 +755,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 		mes "details, please visit our";
 		mes "headquarters in the city of";
 		mes "Lighthalzen located in the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Thank you for your time.";
 		break;
 	case 2:

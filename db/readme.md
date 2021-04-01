@@ -18,30 +18,36 @@ We want to add our own custom achievement that can be given to a player via an N
 
 #### /db/import/achievement_db.yml
 
-
-    Achievements:
-      - ID: 280000
-        Group: "AG_GOAL_ACHIEVE"
-        Name: "Emperio"
-        Reward:
-          TitleID: 1035
-        Score: 50
-      - ID: 280001
-        Group: "AG_GOAL_ACHIEVE"
-        Name: "Staff"
-        Reward:
-          TitleID: 1036
-        Score: 50
+    - Id: 280000
+      Group: None
+      Name: Emperio
+      Reward:
+        TitleId: 1035
+      Score: 50
+    - Id: 280001
+      Group: None
+      Name: Staff
+      Reward:
+        TitleId: 1036
+      Score: 50
 
 
 ### Instances
 ---
 We want to add our own customized Housing Instance.
 
-#### /db/import/instance_db.txt
+#### /db/import/instance_db.yml
 
-    // ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,Map3,...,Map255
-    35,Home,3600,900,1@home,24,6,2@home,3@home
+	- Id: 35
+	    Name: Home
+        IdleTimeOut: 900
+        Enter:
+          Map: 1@home
+          X: 24
+          Y: 6
+        AdditionalMaps:
+          - Map: 2@home
+          - Map: 3@home
 
 
 ### Mob Alias

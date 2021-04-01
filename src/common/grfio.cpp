@@ -455,6 +455,40 @@ void* grfio_reads(const char* fname, int* size)
 	return buf2;
 }
 
+int32 grfio_read_rsw_water_level( const char* fname ){
+	unsigned char* rsw = (unsigned char *)grfio_read( fname );
+
+	if( rsw == nullptr ){
+		// Error already reported in grfio_read
+		return RSW_NO_WATER;
+	}
+
+	if( strncmp( (char*)rsw, "GRSW", strlen( "GRSW" ) ) ){
+		ShowError( "grfio_read_rsw_water_level: Invalid RSW signature in file %s\n", fname );
+		aFree( rsw );
+		return RSW_NO_WATER;
+	}
+
+	uint16 version = ( rsw[4] << 8 ) | rsw[5];
+
+	if( version < 0x104 || version > 0x202 ){
+		ShowError( "grfio_read_rsw_water_level: Unsupported RSW version 0x%04x in file %s\n", version, fname );
+		aFree( rsw );
+		return RSW_NO_WATER;
+	}
+
+	int32 level;
+
+	if( version >= 0x202 ){
+		level = (int32)*(float*)( rsw + 167 );
+	}else{
+		level = (int32)*(float*)( rsw + 166 );
+	}
+
+	aFree( rsw );
+
+	return level;
+}
 
 /// Decodes encrypted filename from a version 01xx grf index.
 static char* decode_filename(unsigned char* buf, int len)

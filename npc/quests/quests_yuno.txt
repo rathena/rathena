@@ -878,7 +878,7 @@ yuno,261,99,4	script	Sage Yklah#juno	735,{
 				mes "Return once you have obtained those items, and we will speak of the doomed sword again.";
 				next;
 				mes "[Yklah]";
-				mes "For your information, you can obtain the claw of desert wolf from the Morroc desert, and the tooth of bat can be found in most caves around the world.";
+				mes "For your information, you can obtain the claw of desert wolf from the Morocc desert, and the tooth of bat can be found in most caves around the world.";
 				next;
 				mes "[Yklah]";
 				mes "Lastly, the piece of egg shell can be found from solid egg monsters in the Payon cave.";
@@ -898,7 +898,7 @@ yuno,261,99,4	script	Sage Yklah#juno	735,{
 			mes "Return once you have obtained those items, and we will speak of the doomed sword again.";
 			next;
 			mes "[Yklah]";
-			mes "For your information, you can obtain the claw of desert wolf from the Morroc desert, and the tooth of bat can be found in most caves around the world.";
+			mes "For your information, you can obtain the claw of desert wolf from the Morocc desert, and the tooth of bat can be found in most caves around the world.";
 			next;
 			mes "[Yklah]";
 			mes "Lastly, the piece of egg shell can be found from solid egg monsters in the Payon cave.";
@@ -1057,7 +1057,7 @@ yuno,213,298,4	script	Sage Esklah#juno	735,{
 			mes "Heh, you don't look like much. But even though you're ordinary looking, you possess the legendary item!";
 			next;
 			mes "[Esklah]";
-			mes "Only a few people in Rune-Midgard's history have been chosen to use the ^3355FFStamp of Muriniel.^000000";
+			mes "Only a few people in Midgard's history have been chosen to use the ^3355FFStamp of Muriniel.^000000";
 			next;
 			mes "[Esklah]";
 			mes "However, it's my job to test whether or not you are truly qualified to possess it.";

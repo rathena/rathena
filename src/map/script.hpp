@@ -50,6 +50,7 @@
 #define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
+#define script_getnum64(st,val) conv_num64(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
 #define script_getref(st,val) ( script_getdata(st,val)->ref )
 // Returns name of currently running function
@@ -159,7 +160,6 @@ struct Script_Config {
 	const char *loadmap_event_name;
 	const char *baselvup_event_name;
 	const char *joblvup_event_name;
-	const char *stat_calc_event_name;
 
 	// NPC related
 	const char* ontouch_event_name;
@@ -476,6 +476,9 @@ enum unitdata_mobtypes {
 	UMOB_ADELAY,
 	UMOB_DMOTION,
 	UMOB_TARGETID,
+	UMOB_ROBE,
+	UMOB_BODY2,
+	UMOB_GROUP_ID,
 };
 
 enum unitdata_homuntypes {
@@ -519,6 +522,7 @@ enum unitdata_homuntypes {
 	UHOM_ADELAY,
 	UHOM_DMOTION,
 	UHOM_TARGETID,
+	UHOM_GROUP_ID,
 };
 
 enum unitdata_pettypes {
@@ -559,6 +563,7 @@ enum unitdata_pettypes {
 	UPET_AMOTION,
 	UPET_ADELAY,
 	UPET_DMOTION,
+	UPET_GROUP_ID,
 };
 
 enum unitdata_merctypes {
@@ -599,6 +604,7 @@ enum unitdata_merctypes {
 	UMER_ADELAY,
 	UMER_DMOTION,
 	UMER_TARGETID,
+	UMER_GROUP_ID,
 };
 
 enum unitdata_elemtypes {
@@ -641,11 +647,11 @@ enum unitdata_elemtypes {
 	UELE_ADELAY,
 	UELE_DMOTION,
 	UELE_TARGETID,
+	UELE_GROUP_ID,
 };
 
 enum unitdata_npctypes {
-	UNPC_DISPLAY = 0,
-	UNPC_LEVEL,
+	UNPC_LEVEL = 0,
 	UNPC_HP,
 	UNPC_MAXHP,
 	UNPC_MAPID,
@@ -677,6 +683,20 @@ enum unitdata_npctypes {
 	UNPC_AMOTION,
 	UNPC_ADELAY,
 	UNPC_DMOTION,
+	UNPC_SEX,
+	UNPC_CLASS,
+	UNPC_HAIRSTYLE,
+	UNPC_HAIRCOLOR,
+	UNPC_HEADBOTTOM,
+	UNPC_HEADMIDDLE,
+	UNPC_HEADTOP,
+	UNPC_CLOTHCOLOR,
+	UNPC_SHIELD,
+	UNPC_WEAPON,
+	UNPC_ROBE,
+	UNPC_BODY2,
+	UNPC_DEADSIT,
+	UNPC_GROUP_ID,
 };
 
 enum navigation_service {
@@ -1822,7 +1842,7 @@ enum e_special_effects {
 	EF_MAX
 };
 
-enum e_hat_effects {
+enum e_hat_effects : int16{
 	HAT_EF_MIN = 0,
 	HAT_EF_BLOSSOM_FLUTTERING,
 	HAT_EF_MERMAID_LONGING,
@@ -1952,6 +1972,26 @@ enum e_hat_effects {
 	HAT_EF_2019RTC2ST_TW,
 	HAT_EF_2019RTC3ST_TW,
 	HAT_EF_CONS_OF_WIND,
+	HAT_EF_MAPLE_FALLS,
+	HAT_EF_BJ_HEADSETB,
+	HAT_EF_VIP_HAIR,
+	HAT_EF_C_MAGIC_HEIR_TW,
+	HAT_EF_C_SUDDEN_WEALTH_TW,
+	HAT_EF_C_ROMANCE_ROSE_TW,
+	HAT_EF_C_DISAPEAR_TIME_TW,
+	HAT_EF_2020RTC_01,
+	HAT_EF_2020RTC_02,
+	HAT_EF_2020RTC_03,
+	HAT_EF_C_2020RTC_IMP_TW,
+	HAT_EF_SUBJECT_AURA_BLACK,
+	HAT_EF_2020RTC_EFFECT_01,
+	HAT_EF_2020RTC_EFFECT_02,
+	HAT_EF_2020RTC_EFFECT_03,
+	HAT_EF_99LV_STAR_E_MBLUE,
+	HAT_EF_160LV_STAR_E_MBLUE,
+	HAT_EF_99LV_SOUL_R_GRAY,
+	HAT_EF_160LV_SOUL_R_GRAY,
+	HAT_EF_GEARWHEEL,
 	HAT_EF_MAX
 };
 
@@ -1997,9 +2037,12 @@ bool is_number(const char *p);
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
-int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
-int set_var(struct map_session_data *sd, char *name, void *val);
-int conv_num(struct script_state *st,struct script_data *data);
+bool set_reg_num(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
+bool set_reg_str(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db* ref);
+bool set_var_str(struct map_session_data *sd, const char* name, const char* val);
+bool clear_reg( struct script_state* st, struct map_session_data* sd, int64 num, const char* name, struct reg_db *ref );
+int64 conv_num64(struct script_state *st, struct script_data *data);
+int conv_num(struct script_state *st, struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
 TIMER_FUNC(run_script_timer);
@@ -2020,14 +2063,14 @@ struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
 const char* script_get_constant_str(const char* prefix, int64 value);
-bool script_get_parameter(const char* name, int* value);
-bool script_get_constant(const char* name, int* value);
-void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated);
+bool script_get_parameter(const char* name, int64* value);
+bool script_get_constant(const char* name, int64* value);
+void script_set_constant_(const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated);
 #define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, NULL, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
-void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
-void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
+void script_cleararray_pc(struct map_session_data* sd, const char* varname);
+void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
 
 int script_config_read(const char *cfgName);
 void do_init_script(void);
@@ -2036,8 +2079,8 @@ int add_str(const char* p);
 const char* get_str(int id);
 void script_reload(void);
 
-// @commands (script based)
-void setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref);
+void setd_sub_num( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, int64 value, struct reg_db* ref );
+void setd_sub_str( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, const char* value, struct reg_db* ref );
 
 /**
  * Array Handling

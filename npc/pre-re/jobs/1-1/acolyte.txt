@@ -112,7 +112,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 					break;
 				case 1:
 					set job_acolyte_q,3;
-					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morroc Town, SouthWest of Prontera City^000000.";
+					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morocc Town, SouthWest of Prontera City^000000.";
 					setquest 1002;
 					break;
 				case 2:
@@ -160,7 +160,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "Please Visit ^000077Mother Mathilda^000000 and return here to me.";
 				next;
 				mes "[Father Mareusis]";
-				mes "She has been practicing asceticism near ^000077Morroc Town, located SouthWest of Prontera City^000000.";
+				mes "She has been practicing asceticism near ^000077Morocc Town, located SouthWest of Prontera City^000000.";
 				break;
 			case 4:
 				mes "[Father Mareusis]";
@@ -222,7 +222,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "For your trial, please visit ^000077Mother Mathilda^000000 and return here to me.";
 				next;
 				mes "[Father Mareusis]";
-				mes "She has been practicing asceticism near ^000077Morroc, located to the SouthWest of Prontera City^000000.";
+				mes "She has been practicing asceticism near ^000077Morocc, located to the SouthWest of Prontera City^000000.";
 				break;
 			default:
 				mes "For your trial, please visit ^000077Father Yosuke^000000 and return here to me.";

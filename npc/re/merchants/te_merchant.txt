@@ -120,7 +120,7 @@ S_Rent:
 	mes "Select the desired item.";
 	next;
 	for ( .@i = 1; .@i < getargcount(); .@i += 2 ) {
-		if (countitem(getarg(.@i)) > isequippedcnt(getarg(.@i)))// don't count item equipped
+		if (rentalcountitem(getarg(.@i)) > isequippedcnt(getarg(.@i)))// don't count item equipped
 			.@menu$ = .@menu$ + "^4d4dff"+ getarg(.@i+1) +" - Checked out^000000:";
 		else
 			.@menu$ = .@menu$ + getarg(.@i+1) + ":";
@@ -130,7 +130,7 @@ S_Rent:
 	if (.@s <= .@total_item) {
 		.@index = .@s *2 +1;
 		mes "[Rental Items Manager]";
-		if (countitem(getarg(.@index)) > isequippedcnt(getarg(.@index)))
+		if (rentalcountitem(getarg(.@index)) > isequippedcnt(getarg(.@index)))
 			mes "You already have "+ getarg(.@index+1) +".";
 		else {
 			mes "Here is "+ getarg(.@index+1) +".";

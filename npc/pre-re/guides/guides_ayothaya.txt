@@ -8,14 +8,14 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Guides for the City of Ayotaya
+//= Guides for the City of Ayothaya
 //===== Additional Comments: =================================
 //= 1.0 First version [L0ne_W0lf]
 //============================================================
 
 ayothaya,203,169,3	script	Noi#ayo	839,{
 	mes "[Noi]";
-	mes "Welcome to Ayotaya.";
+	mes "Welcome to Ayothaya.";
 	mes "Our beautiful village is built";
 	mes "above the water, surrounded";
 	mes "by a dense forest.";
@@ -38,7 +38,7 @@ ayothaya,203,169,3	script	Noi#ayo	839,{
 			mes "[Noi]";
 			mes "At our Weapon Shop,";
 			mes "you will find great weapons";
-			mes "favored by brave Ayotayan seafarers.";
+			mes "favored by brave Ayothayan seafarers.";
 			next;
 			mes "[Noi]";
 			mes "Our Weapon Shop";
@@ -47,7 +47,7 @@ ayothaya,203,169,3	script	Noi#ayo	839,{
 			close;
 		case 2:
 			mes "[Noi]";
-			mes "We Ayotayans always make sure we have everything we need before we go traveling. It never hurts to be prepared, doesn't it?";
+			mes "We Ayothayans always make sure we have everything we need before we go traveling. It never hurts to be prepared, doesn't it?";
 			next;
 			mes "[Noi]";
 			mes "Our Tool Shop";

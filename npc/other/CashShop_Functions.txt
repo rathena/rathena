@@ -77,7 +77,7 @@ function	script	F_CashReset	{
 function	script	F_CashDungeon	{
 	switch(getarg(0)) {
 	case 1:
-		switch(select("Nogg Road:Mjolnir Dead Pit:"+((checkre(0))?"":"Umbala Dungeon")+":Einbroch Mine Dungeon:Payon Dungeon:Toy Dungeon:Glast Heim Underprison:Louyang Dungeon:Hermit's Checkers:Izlude Dungeon:Turtle Island Dungeon:Clock Tower B3f:Clock Tower 3f:Glast Heim Culvert 2f:Sphinx Dungeon 4f:Inside Pyramid 4f:Prontera Culvert 3f:Amatsu Dungeon 1f (Tatami Maze):Somatology Laboratory 1st floor:Ayothya Ancient Shrine 2nd floor")) {
+		switch(select("Nogg Road:Mjolnir Dead Pit:"+((checkre(0))?"":"Umbala Dungeon")+":Einbroch Mine Dungeon:Payon Dungeon:Toy Dungeon:Glast Heim Underprison:Luoyang Dungeon:Hermit's Checkers:Izlude Dungeon:Turtle Island Dungeon:Clock Tower B3f:Clock Tower 3f:Glast Heim Culvert 2f:Sphinx Dungeon 4f:Inside Pyramid 4f:Prontera Culvert 3f:Amatsu Dungeon 1f (Tatami Maze):Somatology Laboratory 1st floor:Ayothya Ancient Shrine 2nd floor")) {
 		case 1: warp "mag_dun01",125,71; end;	// Nogg Road
 		case 2: warp "mjo_dun02",80,297; end;	// Mjolnir Dead Pit
 		case 3: warp "um_dun02",125,122; end;	// Umbala Dungeon (Pre-Renewal only)
@@ -85,7 +85,7 @@ function	script	F_CashDungeon	{
 		case 5: warp "pay_dun03",155,150; end;	// Payon Caves
 		case 6: warp "xmas_dun01",133,130; end;	// Toy Factory
 		case 7: warp "gl_prison",140,15; end;	// Glast Heim Prison
-		case 8: warp "lou_dun03",165,38; end;	// Louyang Dungeon
+		case 8: warp "lou_dun03",165,38; end;	// Luoyang Dungeon
 		case 9: warp "gon_dun02",251,263; end;	// Kunlun Dungeon
 		case 10: warp "iz_dun02",350,335; end;	// Izlude Undersea Tunnel
 		case 11: warp "tur_dun02",165,30; end;	// Turtle Island
@@ -97,7 +97,7 @@ function	script	F_CashDungeon	{
 		case 17: warp "prt_sewb3",20,175; end;	// Prontera Culverts 3F
 		case 18: warp "ama_dun01",222,144; end;	// Amatsu Dungeon 1F
 		case 19: warp "lhz_dun01",19,153; end;	// Somatology Laboratory 1F
-		case 20: warp "ayo_dun02",70,240; end;	// Ayotaya Dungeon 2F
+		case 20: warp "ayo_dun02",70,240; end;	// Ayothaya Dungeon 2F
 		}
 	case 2: // Menu names are not official.
 		switch(select("Thor Volcano 2f:Ice Dungeon Entrance:Nameless Island Entrance:Niflheim:Labyrinth Forest 2f:Ruins of Juperos Entrance:Ant Hell 2f:Kiel Hyre's Academy Entrance:Thanatos Tower Entrance:Abyss Lake Entrance:Rachel Sanctuary Entrance:Odin Temple 2f")) {
@@ -133,8 +133,8 @@ function	script	F_CashDungeon	{
 // - Arg(0) = type of scroll.
 function	script	F_CashCity	{
 	switch(getarg(0)) {
-	case 1: // Yellow - Rune-Midgart
-		switch(select("Prontera:Izlude:Geffen:Payon:Morroc:Alberta:Al de Baran")) {
+	case 1: // Yellow - Rune-Midgarts
+		switch(select("Prontera:Izlude:Geffen:Payon:Morocc:Alberta:Al de Baran")) {
 			case 1: warp "prontera",122,87; end;
 			case 2: if (checkre(0)) warp "izlude",130,90; else warp "izlude",91,105; end;
 			case 3: warp "geffen",128,48; end;
@@ -143,7 +143,7 @@ function	script	F_CashCity	{
 			case 6: warp "alberta",117,50; end;
 			case 7: warp "aldebaran",140,110; end;
 		}
-	case 2: // Green - Schwartzvalt
+	case 2: // Green - Schwarzwald
 		switch(select("Juno:Lighthalzen:Einbroch:Einbech:Hugel")) {
 			case 1: warp "yuno",160,170; end;
 			case 2: warp "lighthalzen",190,310; end;
@@ -157,14 +157,14 @@ function	script	F_CashCity	{
 			case 2: warp "veins",215,105; end;
 		}
 	case 4: // Blue - Islands
-		switch(select("Amatsu:Kunlun:Ayotaya:Louyang")) {
+		switch(select("Amatsu:Kunlun:Ayothaya:Luoyang")) {
 			case 1: warp "amatsu",110,140; end;
 			case 2: warp "gonryun",160,115; end;
 			case 3: warp "ayothaya",220,170; end;
 			case 4: warp "louyang",217,95; end;
 		}
 	case 5: // Blue - Islands (Renewal)
-		switch(select("Amatsu:Kunlun:Ayotaya:Louyang:Moscovia:Dewata:Brasilis")) {
+		switch(select("Amatsu:Kunlun:Ayothaya:Luoyang:Moscovia:Dewata:Brasilis")) {
 			case 1: warp "amatsu",110,140; end;
 			case 2: warp "gonryun",160,115; end;
 			case 3: warp "ayothaya",220,170; end;
@@ -192,7 +192,7 @@ function	script	F_CashTele	{
 		case 5: warp "SavePoint",0,0; end;
 		}
 	case 2:
-		switch(select("Payon:Alberta:Morroc:Comodo:Savepoint")) {
+		switch(select("Payon:Alberta:Morocc:Comodo:Savepoint")) {
 		case 1: warp "payon",158,55; end;
 		case 2: warp "alberta",115,57; end;
 		case 3: warp "morocc",158,48; end;
@@ -200,7 +200,7 @@ function	script	F_CashTele	{
 		case 5: warp "SavePoint",0,0; end;
 		}
 	case 3:
-		switch(select("Louyang:Amatsu:Kunlun Field:Ayothaya:Savepoint")) {
+		switch(select("Luoyang:Amatsu:Kunlun Field:Ayothaya:Savepoint")) {
 		case 1: warp "louyang",214,101; end;
 		case 2: warp "amatsu",112,145; end;
 		case 3: warp "gonryun",160,118; end;

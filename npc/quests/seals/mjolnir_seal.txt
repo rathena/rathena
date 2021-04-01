@@ -33,7 +33,7 @@ prontera,124,297,3	script	Tialfi	706,{
 		cutin "god_tialpi01",2;
 		mes "[Tialfi]";
 		mes "Hmmm...";
-		mes "I can feel a strange force growing stronger and stronger, somewhere in Rune-Midgard.";
+		mes "I can feel a strange force growing stronger and stronger, somewhere in Midgard.";
 		next;
 		mes "[Tialfi]";
 		mes "Can you feel it?";
@@ -383,7 +383,7 @@ prt_fild01,196,47,3	script	Roskva	703,{
 		mes "can be found to the East.";
 		next;
 		mes "[Roskva]";
-		mes "Travel in a clock wise direction around Rune-Midgard and seek out the other Dwarves in order. Your final destination will be to the North.";
+		mes "Travel in a clock wise direction around Midgard and seek out the other Dwarves in order. Your final destination will be to the North.";
 		next;
 		mes "[Roskva]";
 		mes "If you happen to speak to them in the wrong order, please go talk to my brother Tialfi again.";
@@ -402,7 +402,7 @@ prt_fild01,196,47,3	script	Roskva	703,{
 		mes "can be found to the North.";
 		next;
 		mes "[Roskva]";
-		mes "Travel in a counter clock wise direction around Rune-Midgard and seek out the other Dwarves in order. Your final destination will be to the East.";
+		mes "Travel in a counter clock wise direction around Midgard and seek out the other Dwarves in order. Your final destination will be to the East.";
 		next;
 		mes "[Roskva]";
 		mes "If you happen to speak to them in the wrong order, please go talk to my brother Tialfi again.";

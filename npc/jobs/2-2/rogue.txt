@@ -19,7 +19,7 @@
 //= 2.5 Added dummy "OnMyMobDead" labels. (bugreport:1100) [L0ne_W0lf]
 //= 2.6 Fixed a few bugs in the Rogue Guildsman. [L0ne_W0lf]
 //= 2.7 Fixed a bug on Markie question 5, bugreport:1600 [Brainstorm]
-//= 2.8 Moved "Thug" to Morroc Ruins. [L0ne_W0lf]
+//= 2.8 Moved "Thug" to Morocc Ruins. [L0ne_W0lf]
 //= 2.9 Added Quest Log commands. [Kisuka]
 //============================================================ 
 
@@ -354,13 +354,13 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				mes "[Markie]";
 				mes "3. Choose the location where Thieves can change their jobs to Rogues.";
 				next;
-				if (select("Comodo:Kokomo Beach:Paros Lighthouse:Morroc") == 3)
+				if (select("Comodo:Kokomo Beach:Paros Lighthouse:Morocc") == 3)
 					set .@assassin_t,.@assassin_t+10;
 
 				mes "[Markie]";
 				mes "4. In which town can Novices change their jobs to Thieves?";
 				next;
-				if (select("Comodo:Lutie:Alberta:Morroc") == 4)
+				if (select("Comodo:Lutie:Alberta:Morocc") == 4)
 					set .@assassin_t,.@assassin_t+10;
 
 				mes "[Markie]";
@@ -391,7 +391,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				mes "[Markie]";
 				mes "8. You want to dye your hair blue. What town do you go to, and in which direction, with 12 o' clock being North.";
 				next;
-				if (select("Morroc, 7 o'clock:Prontera, 7 o'clock:Morroc, 5 o'clock:Prontera, 1 o'clock") == 2)
+				if (select("Morocc, 7 o'clock:Prontera, 7 o'clock:Morocc, 5 o'clock:Prontera, 1 o'clock") == 2)
 					set .@assassin_t,.@assassin_t+10;
 
 				mes "[Markie]";
@@ -869,7 +869,7 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 			mes "Alright... Now that I've calmed down, I can inform you of your next destination. *Whew*";
 			next;
 			mes "[Mr. Smith]";
-			mes "Go and find Hermanthorn Junior, who is living near the ^0000FFthe checkpoint of Paros Lighthouse^000000, which is at the border between Morroc and Comodo.";
+			mes "Go and find Hermanthorn Junior, who is living near the ^0000FFthe checkpoint of Paros Lighthouse^000000, which is at the border between Morocc and Comodo.";
 			next;
 			mes "[Mr. Smith]";
 			mes "Ah...almost forgot, keep in mind not to mention anything about upgrading items. This is very important.";
@@ -915,7 +915,7 @@ in_rogue,376,23,1	script	Mr. Smith#rg	57,{
 			mes "forgot where to go?";
 			next;
 			mes "[Mr. Smith]";
-			mes "Go to the field South of Sandarman Fortress, which is on the way to Morroc from here, to meet Hollgrehenn Junior.";
+			mes "Go to the field South of Sandarman Fortress, which is on the way to Morocc from here, to meet Hollgrehenn Junior.";
 			next;
 			mes "[Mr. Smith]";
 			mes "The password is ^0000FFMy father never hoarded upgrade items^000000.";

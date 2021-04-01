@@ -167,6 +167,7 @@ typedef enum DBDataType {
 	DB_DATA_INT,
 	DB_DATA_UINT,
 	DB_DATA_PTR,
+	DB_DATA_I64
 } DBDataType;
 
 /**
@@ -176,6 +177,7 @@ typedef enum DBDataType {
  * @param u.i Data of int type
  * @param u.ui Data of unsigned int type
  * @param u.ptr Data of void* type
+ * @param u.i64 Data of int64 type
  * @public
  */
 typedef struct DBData {
@@ -184,6 +186,7 @@ typedef struct DBData {
 		int i;
 		unsigned int ui;
 		void *ptr;
+		int64 i64;
 	} u;
 } DBData;
 
@@ -638,6 +641,14 @@ struct DBMap {
 #define i64db_uiget(db,k)  ( db_data2ui((db)->get((db),db_i642key(k))) )
 #define ui64db_uiget(db,k) ( db_data2ui((db)->get((db),db_ui642key(k))) )
 
+// Get int64-type data from DBMaps of various key types
+#define db_i64get(db,k)     ( db_data2i64((db)->get((db),(k))) )
+#define idb_i64get(db,k)    ( db_data2i64((db)->get((db),db_i2key(k))) )
+#define uidb_i64get(db,k)   ( db_data2i64((db)->get((db),db_ui2key(k))) )
+#define strdb_i64get(db,k)  ( db_data2i64((db)->get((db),db_str2key(k))) )
+#define i64db_i64get(db,k)  ( db_data2i64((db)->get((db),db_i642key(k))) )
+#define ui64db_i64get(db,k) ( db_data2i64((db)->get((db),db_ui642key(k))) )
+
 // Put pointer-type data into DBMaps of various key types
 #define db_put(db,k,d)     ( (db)->put((db),(k),db_ptr2data(d),NULL) )
 #define idb_put(db,k,d)    ( (db)->put((db),db_i2key(k),db_ptr2data(d),NULL) )
@@ -661,6 +672,14 @@ struct DBMap {
 #define strdb_uiput(db,k,d)  ( (db)->put((db),db_str2key(k),db_ui2data(d),NULL) )
 #define i64db_uiput(db,k,d)  ( (db)->put((db),db_i642key(k),db_ui2data(d),NULL) )
 #define ui64db_uiput(db,k,d) ( (db)->put((db),db_ui642key(k),db_ui2data(d),NULL) )
+
+// Put int64 data into DBMaps of various key types
+#define db_i64put(db,k,d)     ( (db)->put((db),(k),db_i642data(d),NULL) )
+#define idb_i64put(db,k,d)    ( (db)->put((db),db_i2key(k),db_i642data(d),NULL) )
+#define uidb_i64put(db,k,d)   ( (db)->put((db),db_ui2key(k),db_i642data(d),NULL) )
+#define strdb_i64put(db,k,d)  ( (db)->put((db),db_str2key(k),db_i642data(d),NULL) )
+#define i64db_i64put(db,k,d)  ( (db)->put((db),db_i642key(k),db_i642data(d),NULL) )
+#define ui64db_i64put(db,k,d) ( (db)->put((db),db_ui642key(k),db_i642data(d),NULL) )
 
 // Remove entry from DBMaps of various key types
 #define db_remove(db,k)     ( (db)->remove((db),(k),NULL) )
@@ -873,6 +892,14 @@ DBData db_ui2data(unsigned int data);
 DBData db_ptr2data(void *data);
 
 /**
+ * Manual cast from 'int64' to the struct DBData.
+ * @param data Data to be casted
+ * @return The data as a DBData struct
+ * @public
+ */
+DBData db_i642data(int64 data);
+
+/**
  * Gets int type data from struct DBData.
  * If data is not int type, returns 0.
  * @param data Data
@@ -898,6 +925,15 @@ unsigned int db_data2ui(DBData *data);
  * @public
  */
 void* db_data2ptr(DBData *data);
+
+/**
+ * Gets int64 type data from struct DBData.
+ * If data is not int64 type, returns 0.
+ * @param data Data
+ * @return Integer(64-bit signed) value of the data.
+ * @public
+ */
+int64 db_data2i64(DBData *data);
 
 /**
  * Initialize the database system.

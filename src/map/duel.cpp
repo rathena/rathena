@@ -63,7 +63,7 @@ void duel_savetime(struct map_session_data* sd)
  */
 bool duel_checktime(struct map_session_data* sd)
 {
-	int diff;
+	int64 diff;
 	time_t timer;
 	struct tm *t;
 

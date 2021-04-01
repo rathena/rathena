@@ -66,10 +66,10 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				close;
 			}
 			mes "[Roberto]";
-			mes "An archer in Morroc!?";
+			mes "An archer in Morocc!?";
 			mes "Nice to see you! Meeting a fellow";
 			mes "archer in a place like this! *sniffsniff*!";
-			mes "I came alone to Morroc..";
+			mes "I came alone to Morocc..";
 			mes "but I was a newcomer, and the pressure... waaah~";
 			mes "I was very lonely~";
 			next;

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Louyang Dungeon Warp Script
+//= Luoyang Dungeon Warp Script
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
@@ -8,7 +8,7 @@
 //= rAthena Project; RO Episode 6.0+
 //===== Description: =========================================
 //= [Official Conversion]
-//= Warp Points for Louyang
+//= Warp Points for Luoyang
 //===== Additional Comments: =================================
 //= 1.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //============================================================

@@ -16,6 +16,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "pc.hpp"
+#include "pet.hpp"
 
 void mail_clear(struct map_session_data *sd)
 {
@@ -289,7 +290,22 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 
 	for( i = 0; i < MAIL_MAX_ITEM; i++ ){
 		if( item->nameid > 0 && item->amount > 0 ){
-			pc_additem(sd, &item[i], item[i].amount, LOG_TYPE_MAIL);
+			// If no card or special card id is set
+			if( item[i].card[0] == 0 ){
+				// Check if it is a pet egg
+				std::shared_ptr<s_pet_db> pet = pet_db_search( item[i].nameid, PET_EGG );
+
+				// If it is a pet egg and the card data does not contain a pet id (see if clause above)
+				if( pet != nullptr ){
+					// Create a new pet
+					pet_create_egg( sd, item[i].nameid );
+					item_received = true;
+					continue;
+				}
+			}
+
+			// Add the item normally
+			pc_additem( sd, &item[i], item[i].amount, LOG_TYPE_MAIL );
 			item_received = true;
 		}	
 	}

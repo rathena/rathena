@@ -1424,7 +1424,7 @@ OnTimer1000:
 	case 6:
 		.@num = rand(2,6);
 		for ( .@i = 0; .@i < .@num; .@i++ )
-			makeitem 2976,1, 'xm_d_map$, rand(208,212), rand(134,138);// Red_Lantern
+			makeitem 7642,1, 'xm_d_map$, rand(208,212), rand(134,138);// Bloody_Coin
 		if (rand(1,1000) > 400)
 			makeitem 603,1, 'xm_d_map$,209,136;// Old_Blue_Box
 		if (rand(1,1000) > 800)

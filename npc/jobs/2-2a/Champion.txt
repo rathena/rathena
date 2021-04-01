@@ -44,7 +44,7 @@ valkyrie,53,42,3	script	Champion#Valkyrie	52,{
 		mes "Time for great heroes";
 		mes "to stand up against the";
 		mes "forces of evil which plague";
-		mes "the world of Rune-Midgard!";
+		mes "the world of Midgard!";
 		next;
 		mes "[Champion]";
 		mes "Would you like";

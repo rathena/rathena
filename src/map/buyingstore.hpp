@@ -15,9 +15,9 @@ struct map_session_data;
 
 struct s_buyingstore_item
 {
-	unsigned int price; ///< Value
+	int price; ///< Value
 	unsigned short amount; ///< Amount of items in Buyingstore
-	unsigned short nameid; ///< Item ID
+	t_itemid nameid; ///< Item ID
 	unsigned int price_vat; ///< Value after tax
 };
 
@@ -34,7 +34,7 @@ struct s_autotrade_entry {
 	uint16 amount; ///< Amount
 	uint32 price; ///< Price
 	uint16 index; ///< Item index in cart
-	uint32 item_id; ///< Item ID (for buyingstore)
+	t_itemid item_id; ///< Item ID (for buyingstore)
 };
 
 /// Struct of autotrader
@@ -57,11 +57,11 @@ struct s_autotrader {
 };
 
 int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots);
-int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const uint8* itemlist, unsigned int count, struct s_autotrader *at);
+int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned char result, const char* storename, const struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub* itemlist, unsigned int count, struct s_autotrader *at);
 void buyingstore_close(struct map_session_data* sd);
 void buyingstore_open(struct map_session_data* sd, uint32 account_id);
-void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned int buyer_id, const uint8* itemlist, unsigned int count);
-bool buyingstore_search(struct map_session_data* sd, unsigned short nameid);
+void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned int buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, unsigned int count);
+bool buyingstore_search(struct map_session_data* sd, t_itemid nameid);
 bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_store_search* s);
 DBMap *buyingstore_getdb(void);
 void do_final_buyingstore(void);

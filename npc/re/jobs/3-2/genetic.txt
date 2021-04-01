@@ -30,13 +30,13 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 				mes "Our Alchemist Union brings up many junior alchemists with various promotions and investigations.";
 				next;
 				mes "[Alchemist Union Member]";
-				mes "They have spread to all corners of Rune-Midgart and were active in many fields like sciences or special item production methods.";
+				mes "They have spread to all corners of Midgard and were active in many fields like sciences or special item production methods.";
 				next;
 				mes "[Alchemist Union Member]";
 				mes "We call the members of our new union ^3131FF'Geneticists'^000000.";
 				next;
 				mes "[Alchemist Union Member]";
-				mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgart.";
+				mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Midgard.";
 				next;
 				mes "[Alchemist Union Member]";
 				mes "It looks like you are an expert in this field, how about meeting other geneticists?";
@@ -82,13 +82,13 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 	mes "Our Alchemist Union brings up many junior alchemists with various promotions and investigations.";
 	next;
 	mes "[Alchemist Union Member]";
-	mes "They have spread to all corners of Rune-Midgart and were active in many fields like sciences or special item production methods.";
+	mes "They have spread to all corners of Midgard and were active in many fields like sciences or special item production methods.";
 	next;
 	mes "[Alchemist Union Member]";
 	mes "We call the members of our new union ^3131FF'Geneticists'^000000.";
 	next;
 	mes "[Alchemist Union Member]";
-	mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Rune-Midgard.";
+	mes "Geneticists are the ones who have reached their peak potential in the world of Alchemy. They are the ones who currently spearhead alchemy throughout all of Midgard.";
 	close;
 }
 
@@ -121,21 +121,21 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 		next;
 		select("Why do you talk like that?");
 		mes "[Devries]";
-		mes "'Cause I'm from Rune-Midgart!";
-		mes "Have you ever been to Rune-Midgart? Everyone in Rune-Midgart speaks like this.";
+		mes "'Cause I'm from Rune-Midgarts!";
+		mes "Have you ever been to Rune-Midgarts? Everyone in Rune-Midgarts speaks like this.";
 		next;
-		switch(select("Impossible?!:I'm also from Rune-Midgart.")) {
+		switch(select("Impossible?!:I'm also from Rune-Midgarts.")) {
 		case 1:
 			mes "[Devries]";
 			mes "Impossible?";
-			mes "Do you come from a Rune-Midgart village?";
+			mes "Do you come from a Rune-Midgarts village?";
 			mes "My village is very big, everyone there speaks like this.";
 			break;
 		case 2:
 			emotion ET_THROB;
 			mes "[Devries]";
 			mes "Really! That's why I felt some kind of familiar atmosphere around you.";
-			mes "Meeting a hometown person in Schwaltzvalt, it's my pleasure to meet you!";
+			mes "Meeting a hometown person in Schwarzwald, it's my pleasure to meet you!";
 			break;
 		}
 		next;
@@ -601,7 +601,7 @@ job3_gen01,83,72,3	script	Delivery Box#generic	111,{
 			}
 		case 2:
 			mes "[From: Rune-Midgarts Kingdom, Prontera, Charles Orleans]";
-			mes "[Recipient: Schwaltzvalt Republic, Lighthalzen, Devries]";
+			mes "[Recipient: Schwarzwald Republic, Lighthalzen, Devries]";
 			close;
 		case 3:
 			mes "You do nothing.";

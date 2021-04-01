@@ -705,10 +705,10 @@ malangdo,162,146,5	script	Wandering Merchant#mal	495,{
 malangdo,173,145,4	script	Stinky Merchant	496,{
 	callfunc "F_mal_coin",0,"[Stinky Merchant]",2;
 	setarray .@items[1],2873,16015;
-	setarray .@names$[1],"Cat Hand Glove","Cat Club";
+	setarray .@names$[1],"Cat Paw Glove","Cat Club";
 	while(1) {
 		.@i = select(
-			"[Cat Hand Glove] 32 E-Coins/200 Cans",
+			"[Cat Paw Glove] 32 E-Coins/200 Cans",
 			"[Cat Club] 32 E-Coins/200 Cans",
 			"End purchasing."
 		);

@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Guild dungeon event, Schwaltzvalt.
+//= Guild dungeon event, Schwarzwald.
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
-//= Guild dungeon event, Schwaltzvalt. Retrieve Morestone's
+//= Guild dungeon event, Schwarzwald. Retrieve Morestone's
 //= pickaxe from Kublin.
 //===== Additional Comments: =================================
 //= 1.0 First version

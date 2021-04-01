@@ -118,7 +118,7 @@ moc_para01,25,35,4	script	Instructor Boya#para01	4_M_KNIGHT_GOLD,{
 		mes "I will explain again please concentrate.";
 		next;
 		mes "[Boya]";
-		mes "An oasis souteast of Morroc.";
+		mes "An oasis souteast of Morocc.";
 		mes "There is a big dog in the center.";
 		mes "The detailed story is written in the log, see?";
 	}
@@ -228,7 +228,7 @@ moc_para01,25,35,4	script	Instructor Boya#para01	4_M_KNIGHT_GOLD,{
 		completequest 7141;
 	}
 	else if (para_suv01 < 21) {
-		mes "The training area is southwest of Morroc.";
+		mes "The training area is southwest of Morocc.";
 		mes "Enter the Saint Darmain Fortress to reach it directly.";
 		next;
 		mes "[Boya]";
@@ -402,7 +402,7 @@ S_Quest1:
 		mes "It's the most proper mission for your level.";
 		next;
 		mes "[Boya]";
-		mes "^4d4dffThere is a desert town called Morroc.";
+		mes "^4d4dffThere is a desert town called Morocc.";
 		mes "From there go south and then east. There is small oasis in the center of that field.^000000";
 		next;
 		mes "[Boya]";
@@ -498,7 +498,7 @@ S_Quest2:
 		mes "It's the most proper mission for your level.";
 		next;
 		mes "[Boya]";
-		mes "Travel just southwest of Morroc City.";
+		mes "Travel just southwest of Morocc City.";
 		mes "There you will find a hole in the ground to a cave called Anthell.";
 		next;
 		mes "[Boya]";
@@ -1240,8 +1240,8 @@ anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
 		case 3:
 			mes "[Cloud]";
 			mes "Where you are?";
-			mes "You are in Anth Hell southwest of Morroc.";
-			mes "Morroc is the closest city, northeast of here.";
+			mes "You are in Anth Hell southwest of Morocc.";
+			mes "Morocc is the closest city, northeast of here.";
 			close;
 		}
 	}
@@ -1994,7 +1994,7 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 		next;
 		mes "[Michael]";
 		mes "To prepare for emergencies, we hav enough equipment and supplies for an entire army.";
-		mes "Frankly... we don't have a use for it now but in case soemthing happens like in Morroc.";
+		mes "Frankly... we don't have a use for it now but in case soemthing happens like in Morocc.";
 		next;
 		mes "[Michael]";
 		mes "Just take a look around and don't touch anything.";
@@ -2608,7 +2608,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 					mes "Ah, this place should be good!";
 					mes "Do you know where Glast Heim is?";
 					mes "If it wasn't for that terrible accident, Glast Heim would still be";
-					mes "the capital of Rune Midgard, not Prontera.";
+					mes "the capital of Rune-Midgarts, not Prontera.";
 					next;
 					mes "[Instructor Ur]";
 					mes "Anyways, that ancient castle is now full of undead monsters .";
@@ -2785,7 +2785,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 	else if (para_2nd01 < 20)
 		callsub S_Direction,"Ice Dungeon";
 	else if (para_2nd01 < 29) {
-		mes "You have to travel very far to get to the ^4d4dffRune Midgard Expedition Camp^000000!";
+		mes "You have to travel very far to get to the ^4d4dffMidgard Expedition Camp^000000!";
 		mes "If you want to stay there then earn your keep by doing missions. Got it?";
 	}
 	close;
@@ -2849,7 +2849,7 @@ S_Quest89100:
 		next;
 		mes "[Instructor Ur]";
 		mes "Then, should I send you somewhere farther this time?";
-		mes "There is a cat hand agent here.";
+		mes "There is a Cat Paw Agent here.";
 		mes "Do you see him over there?";
 		next;
 		mes "[Instructor Ur]";

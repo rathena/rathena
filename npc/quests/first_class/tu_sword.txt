@@ -1137,7 +1137,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			mes "Alright! It looks like Bankley is the murderer! Although we can't trust this 100%, this evidence is pretty conclusive.";
 			next;
 			mes "[Dequ'ee]";
-			mes "Hurry over to Morroc and monitor Bankley in case he does anything desperate. If something happens, report to me right away!";
+			mes "Hurry over to Morocc and monitor Bankley in case he does anything desperate. If something happens, report to me right away!";
 			set tu_swordman, 19;
 			changequest 8224,8225;
 			if (checkre(3))
@@ -1956,7 +1956,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "[Dequ'ee]";
 		mes "Didn't I ask you";
 		mes "to interrogate the";
-		mes "suspects over in Morroc?";
+		mes "suspects over in Morocc?";
 		mes "We need to finish this";
 		mes "investigation as soon";
 		mes "as possible!";
@@ -1976,7 +1976,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "As for the victim, well, that's classified information. You understand, don't you?";
 		next;
 		mes "[Dequ'ee]";
-		mes "Now, I want you to go to Morroc and interrogate four suspects. Their names are ^5D478BMuetro^000000, ^5D478BGeil^000000, ^5D478BHans^000000";
+		mes "Now, I want you to go to Morocc and interrogate four suspects. Their names are ^5D478BMuetro^000000, ^5D478BGeil^000000, ^5D478BHans^000000";
 		mes "and ^5D478BBankley^000000. It shouldn't be too difficult.";
 		next;
 		mes "[Dequ'ee]";
@@ -1991,7 +1991,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		next;
 		mes "[Dequ'ee]";
 		mes "Oh wait...";
-		mes "Morroc is a little far. Alright, I'll drop you off somewhere";
+		mes "Morocc is a little far. Alright, I'll drop you off somewhere";
 		mes "near that city.";
 		next;
 		set tu_swordman, 14;

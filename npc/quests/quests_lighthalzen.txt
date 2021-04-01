@@ -199,7 +199,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 		mes "[Fishbone]";
 		mes "Anyway, good luck in";
 		mes "whatever it is you're doing";
-		mes "here in Lighthazlen. Oh, and";
+		mes "here in Lighthalzen. Oh, and";
 		mes "be real careful! Something";
 		mes "shadier than me is going";
 		mes "on in this big city~";
@@ -2044,11 +2044,12 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		close;
 	}
 	if (friendship > 14) {
+		cutin "lhz_diguts05.bmp",2;
 		mes "^3355FFDigotz has passed";
 		mes "away, but the look on";
 		mes "his face seems very";
 		mes "peaceful and content.^000000";
-		close;
+		close3;
 	}
 	if (friendship == 14) {
 		mes "^3355FFDigotz is seriously";
@@ -2061,6 +2062,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "Oh no, let me";
 		mes "get you some help!";
 		next;
+		cutin "lhz_diguts04.bmp",2;
 		mes "[Digotz]";
 		mes "H-hey... It's the";
 		mes "adventurer... Man,";
@@ -2085,6 +2087,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "to him. We'll hang out and have";
 		mes "fun, just like the good old days.";
 		next;
+		cutin "lhz_diguts05.bmp",2;
 		mes "[Digotz]";
 		mes "I missed my buddies, but now...";
 		mes "Now I can hear them calling me.";
@@ -2114,9 +2117,11 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		set friendship,15;
 		changequest 12005,12006;
 		getitem 1201,1; //Knife
+		cutin "",255;
 		close;
 	}
 	if (friendship == 13) {
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "Wh-whoa, I need to";
 		mes "get ready! That Maku's";
@@ -2124,9 +2129,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "I look too rich and pampered.";
 		mes "Damn! Where did I put all of";
 		mes "my fashionable street clothes?";
-		close;
+		close3;
 	}
-	if ((friendship == 12 && countitem(7351) > 0)) {
+	if (friendship == 12 && countitem(7351) > 0) {
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "Even if Benkaistein";
 		mes "did come back, I don't";
@@ -2135,6 +2141,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "I think I'd even be madder!";
 		next;
 		if (select("Show Benkaistein's Journal.:Don't show Benkaistein's Journal.") == 1) {
+			cutin "",255;
 			mes "[Digotz]";
 			mes "Why am I so ticked off?";
 			mes "^3355FF*Sigh*^000000 You have something";
@@ -2159,6 +2166,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "I think about it. Boy, I hope";
 			mes "we don't do that again.^000000";
 			next;
+			cutin "lhz_diguts02.bmp",2;
 			mes "[Digotz]";
 			mes "Oh yeah, I remember that!";
 			mes "Maku wore the wings most";
@@ -2167,6 +2175,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "air the longest! Yeah, I was";
 			mes "a regular Kid Pegasus~";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Maku, Digotz and me went";
 			mes "outside of town. Of course,";
@@ -2183,6 +2192,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "bad and the monster got away.";
 			mes "Boy, mom was not happy...^000000";
 			next;
+			cutin "lhz_diguts03.bmp",2;
 			mes "[Digotz]";
 			mes "Huh. I don't remember";
 			mes "that so well. But I know that";
@@ -2191,6 +2201,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "then. We must have been totally";
 			mes "nuts to fight a monster, though.";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Digotz's been sick for three";
 			mes "days now. It's just a normal";
@@ -2198,6 +2209,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "it's Digotz's fault he got sick.^FFFFFF ^856363 But he's always asking me to";
 			mes "go visit him and see if he's okay.^000000";
 			next;
+			cutin "lhz_diguts01.bmp",2;
 			mes "[Digotz]";
 			mes "I think I remember being";
 			mes "pretty sick. Maku was worried?";
@@ -2206,6 +2218,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "um, Gonorrhitis. You know.";
 			mes "That might have been it.";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Mom and dad keep telling";
 			mes "me not to hang out with Maku";
@@ -2221,12 +2234,14 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "But Digotz doesn't care.";
 			mes "I know he likes Maku a lot.^000000";
 			next;
+			cutin "lhz_diguts07.bmp",2;
 			mes "[Digotz]";
 			mes "Well, we were a lot";
 			mes "younger and closer back";
 			mes "then, so... ^333333*Ahem!*^000000 Why did";
 			mes "Benkaistein even write that?!";
 			next;
+			cutin "",255;
 			mes "[Benkaistein's Journal]";
 			mes "^856363Today, the three of us";
 			mes "made an oath of brotherhood,";
@@ -2235,6 +2250,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "be friends no matter what.";
 			mes "For always and for always.^000000";
 			next;
+			cutin "lhz_diguts07.bmp",2;
 			mes "[Digotz]";
 			mes "I... I was forced to make";
 			mes "that oath! And people do";
@@ -2243,6 +2259,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 			mes "it's not like that oath really";
 			mes "means anything now, does it?";
 			next;
+			cutin "",255;
 			set friendship,13;
 			mes "[Digotz]";
 			mes "That does it. I'm gonna";
@@ -2260,9 +2277,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "more like Maku, though,";
 		mes "don't get me wrong, it's";
 		mes "not like I care about the guy.";
-		close;
+		close3;
 	}
 	if (friendship == 7) {
+		cutin "lhz_diguts03.bmp",2;
 		mes "[Digotz]";
 		mes "Even if Benkaistein came";
 		mes "back from wherever he was";
@@ -2270,9 +2288,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "able to get Maku to apologize";
 		mes "to me. That guy is just way";
 		mes "too stubborn for his own good!";
-		close;
+		close3;
 	}
 	if (friendship == 6) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Oh, it's been a while.";
 		mes "What are you doing back";
@@ -2288,6 +2307,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "and has been threatening to";
 		mes "beat you up pretty badly.";
 		next;
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "That no-good, dirty";
 		mes "lying rotten scoundrel!";
@@ -2296,6 +2316,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "the ghetto and beat Maku";
 		mes "up myself! That stupid guy!";
 		next;
+		cutin "lhz_diguts03.bmp",2;
 		mes "[Digotz]";
 		mes "During times like this,";
 		mes "I really miss ^FF0000Benkaistein^000000.";
@@ -2322,6 +2343,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		set friendship,7;
 		changequest 12002,12003;
 		next;
+		cutin "",255;
 		mes "[Digotz]";
 		mes "I don't know why,";
 		mes "but I'm so angry!";
@@ -2329,7 +2351,8 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "out so much over this?!";
 		close;
 	}
-	if ((friendship == 4 || friendship == 5)) {
+	if (friendship == 4 || friendship == 5) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Still checking out";
 		mes "Uptown Lighthalzen?";
@@ -2345,9 +2368,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "^FF0000Not to mention an apology!";
 		mes "^FF0000But who cares what you think?!";
 		mes "I'm so goddamn happy without you!^000000";
-		close;
+		close3;
 	}
 	if (friendship == 3) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "I know that the";
 		mes "opulence of Uptown";
@@ -2369,7 +2393,9 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "says, unless it's an apology";
 		mes "for being a fully blown jerk.";
 		mes "Ever since we were kids...";
+		cutin "",255;
 		next;
+		cutin "lhz_diguts08.bmp",2;
 		mes "[Digotz]";
 		mes "Anyway, we used to be close,";
 		mes "but that guy was never a true";
@@ -2386,6 +2412,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "on the worst blind dates a";
 		mes "man can possibly experience!";
 		next;
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Maku doesn't know a damn";
 		mes "about friendship! Even if I did";
@@ -2401,6 +2428,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "and check up on him! I only";
 		mes "have one regret though...";
 		next;
+		cutin "lhz_diguts07.bmp",2;
 		mes "[Digotz]";
 		mes "I only wish I had one";
 		mes "last chance to see Maku...";
@@ -2432,9 +2460,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "^FF0000But who cares what you think?!";
 		mes "I'm so goddamn happy without you!^000000";
 		set friendship,4;
-		close;
+		close3;
 	}
 	if (friendship == 2) {
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "What are you still";
 		mes "doing hanging around";
@@ -2447,9 +2476,10 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "Just hearing about";
 		mes "Maku makes me so feel";
 		mes "so upset for some reason!";
-		close;
+		close3;
 	}
 	if (friendship == 1) {
+		cutin "lhz_diguts02.bmp",2;
 		mes "[Digotz]";
 		mes "Oh, an adventurer?";
 		mes "Welcome to Uptown";
@@ -2466,6 +2496,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "your stay in my hometown.";
 		next;
 		select("Do you know someone named Maku?");
+		cutin "lhz_diguts01.bmp",2;
 		mes "[Digotz]";
 		mes "Maku? Maku. Yes, he's my";
 		mes "childhood friend. Or he was,";
@@ -2483,8 +2514,9 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 		mes "Just forget everything I said.";
 		set friendship,2;
 		changequest 12000,12001;
-		close;
+		close3;
 	}
+	cutin "lhz_diguts02.bmp",2;
 	mes "[Digotz]";
 	mes "Oh, an adventurer?";
 	mes "Welcome to Uptown";
@@ -2500,7 +2532,7 @@ lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 	mes "glad to see somebody";
 	mes "aside from the stuck up";
 	mes "rich people who live here.";
-	close;
+	close3;
 }
 
 lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
@@ -3021,6 +3053,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		close;
 	}
 	if (friendship == 15) {
+		cutin "lhz_benkaistin01.bmp",2;
 		mes "[Benkaistein]";
 		mes "Were you able to bring";
 		mes "my journal to Digotz and";
@@ -3062,9 +3095,9 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "adventurer. When the three";
 		mes "of us get together, I'll be";
 		mes "sure to let you know~";
-		close;
+		close3;
 	}
-	if ((friendship == 11 && countitem(7351) > 0)) {
+	if (friendship == 11 && countitem(7351) > 0) {
 		mes "[Benkaistein]";
 		mes "Aw nuts, this is";
 		mes "taking much longer";
@@ -3072,6 +3105,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "Now where did I put";
 		mes "that thing? Hmmmm...";
 		next;
+		cutin "lhz_benkaistin02.bmp",2;
 		mes "[Benkaistein]";
 		mes "Oh, is that it?";
 		mes "Did you find my";
@@ -3080,6 +3114,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "This is it! Thank you";
 		mes "for finding this for me!";
 		next;
+		cutin "",255;
 		mes "[Benkaistein]";
 		mes "Would you mind doing";
 		mes "a favor for me? It'd be";
@@ -3097,6 +3132,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		next;
 		set friendship,12;
 		changequest 12004,12005;
+		cutin "lhz_benkaistin04.bmp",2;
 		mes "[Benkaistein]";
 		mes "Anyway, this should at";
 		mes "least help them realize";
@@ -3104,9 +3140,9 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "acting. Thanks in advance,";
 		mes "and please take care of";
 		mes "Maku and Digotz for me.";
-		close;
+		close3;
 	}
-	if ((friendship == 10 || friendship == 11)) {
+	if (friendship == 10 || friendship == 11) {
 		mes "[Benkaistein]";
 		mes "Aw nuts, this is";
 		mes "taking much longer";
@@ -3121,6 +3157,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		close;
 	}
 	if (friendship == 9) {
+		cutin "lhz_benkaistin03.bmp",2;
 		mes "[Passionate Student]";
 		mes "Oh, you startled me!";
 		mes "Still, I'm aware that it's";
@@ -3130,6 +3167,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "I help you, adventurer?";
 		next;
 		select("Tell him about Maku and Digotz.");
+		cutin "lhz_benkaistin02.bmp",2;
 		mes "[Benkaistein]";
 		mes "Oh, how are my friends";
 		mes "doing? Oh, what? They're";
@@ -3154,9 +3192,10 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "so important? Wait! Would you";
 		mes "please wait a second while";
 		mes "I look for something?";
-		close;
+		close3;
 	}
 	if (friendship == 8) {
+		cutin "lhz_benkaistin04.bmp",2;
 		mes "[Passionate Student]";
 		mes "Let's see, now.";
 		mes "Wind Magic, Black Magic,";
@@ -3203,7 +3242,9 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "["+ strcharinfo(0) +"]";
 		mes "HEY YOU...!";
 		mes "BENKAISTEIN~!";
+		cutin "",255;
 		next;
+		cutin "lhz_benkaistin02.bmp",2;
 		mes "[Passionate Student]";
 		mes "Oh, good heavens!";
 		mes "C-can't you keep";
@@ -3212,7 +3253,7 @@ yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 		mes "No, wait. Have you been";
 		mes "calling me all this time?";
 		set friendship,9;
-		close;
+		close3;
 	}
 	mes "[Passionate Student]";
 	mes "Let's see, now.";
@@ -5314,7 +5355,7 @@ lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 			mes "Rekenber was established";
 			mes "400 years ago, around the";
 			mes "same time as the foundation";
-			mes "of the Schwaltzvalt Republic.";
+			mes "of the Schwarzwald Republic.";
 			next;
 			mes "[Representative]";
 			mes "We began as the ''Zent Zerter";
@@ -5450,7 +5491,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	HIDDEN_NPC,{
 	mes "^3131FF#The Vision^000000";
 	mes "In the pursuit of knowledge,";
 	mes "Rekenber will search the";
-	mes "Rune-Midgart continent for";
+	mes "Rune-Midgarts continent for";
 	mes "ancient relics. We hope to make";
 	mes "significant scientific progress by learning the secrets of the past.";
 	next;
@@ -5459,7 +5500,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	HIDDEN_NPC,{
 	mes "improve current technologies";
 	mes "to provide more convenient";
 	mes "and affordable services in";
-	mes "the Schwaltzvalt Republic.";
+	mes "the Schwarzwald Republic.";
 	next;
 	mes "^3131FF#The Commitment^000000";
 	mes "Although magic and the";
@@ -5724,7 +5765,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "biggest contributer of the";
 			mes "Regenschirm Laboratory.";
 			mes "Their work will benefit the";
-			mes "entire Rune-Midgard continent, hence our highly involved support.";
+			mes "entire Midgard continent, hence our highly involved support.";
 			next;
 			mes "[Sueii Slierre]";
 			mes "A representative at the";
@@ -6228,7 +6269,7 @@ lhz_in01,269,114,3	script	A File#li-1	HIDDEN_NPC,{
 	close;
 }
 
-// President Quest, a.k.a. Schwartzvalt Triology Quest
+// President Quest, a.k.a. Schwarzwald Triology Quest
 //============================================================
 lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 
@@ -7115,7 +7156,7 @@ yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 		mes "Rekenber Corporation is";
 		mes "our sworn enemy. Did you";
 		mes "know that it basically controls";
-		mes "the Schwaltzvalt Republic?";
+		mes "the Schwarzwald Republic?";
 		next;
 		mes "[Gushaar]";
 		mes "They're so powerful, they";
@@ -7136,12 +7177,12 @@ yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 		mes "The ultimate goal of our";
 		mes "group, ''Secret Wing,'' is to";
 		mes "establish true independence";
-		mes "in the Schwaltzvalt Republic";
+		mes "in the Schwarzwald Republic";
 		mes "by destroying Rekenber Corporation.";
 		next;
 		mes "[Gushaar]";
 		mes "Fortunately, the new president";
-		mes "of the Schwaltzvalt Republic,";
+		mes "of the Schwarzwald Republic,";
 		mes "Mr. Weierstrass, is sympathetic";
 		mes "to our cause. He is working with us to bring about a revolution and";
 		mes "overthrow Rekenber Corporation.";
@@ -7257,7 +7298,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 				mes "I'm the personal";
 				mes "secretary to the";
 				mes "president of the";
-				mes "Schwartzvalt Republic,";
+				mes "Schwarzwald Republic,";
 				mes "if that's what you mean.";
 				close;
 		}
@@ -7677,7 +7718,7 @@ L_Mission:
 				mes "exist to create money, but";
 				mes "the Rekenber Corporation";
 				mes "is much more nefarious.";
-				mes "They actually want to dominate the entire Rune-Midgard continent.";
+				mes "They actually want to dominate the entire Midgard continent.";
 				next;
 				mes "[Karl]";
 				mes "In fact, the chairman of";
@@ -7701,7 +7742,7 @@ L_Mission:
 				mes "''Secret Wing's'' only";
 				mes "goal is to destroy the";
 				mes "Rekenber Corporation in";
-				mes "order to break the Schwaltzvalt Republic free from its oppression.";
+				mes "order to break the Schwarzwald Republic free from its oppression.";
 				next;
 				mes "[Karl]";
 				mes "Of course, we realize";
@@ -8128,9 +8169,9 @@ L_Mission:
 		mes "I hope you continue";
 		mes "to keep up the good";
 		mes "work, not only for the";
-		mes "sake of the Schwaltzvalt";
+		mes "sake of the Schwarzwald";
 		mes "Republic, but for peace";
-		mes "on all of Rune-Midgard.";
+		mes "on all of Midgard.";
 		close2;
 		cutin "",255;
 		end;
@@ -8486,7 +8527,7 @@ L_Mission:
 		next;
 		mes "[Karl]";
 		mes "I have had my men to gather some information and learned that Regenschrim had stopped operating now.";
-		mes "You have done well for the Schwaltzvalt Republic.";
+		mes "You have done well for the Schwarzwald Republic.";
 		close2;
 		cutin "",255;
 		end;
@@ -9176,7 +9217,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "Good, you're back.";
 		mes "Listen, all members of";
 		mes "Secret Wing need to leave";
-		mes "the Schwaltzvalt Republic";
+		mes "the Schwarzwald Republic";
 		mes "immediately! We've been";
 		mes "severely compromised...";
 		next;
@@ -9225,7 +9266,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "Still, aside from a few";
 		mes "agents, almost all of Secret";
 		mes "Wing must pull out of the";
-		mes "Schwaltzvalt Republic for";
+		mes "Schwarzwald Republic for";
 		mes "now so that we can live to";
 		mes "fight another day.";
 		next;
@@ -9930,7 +9971,7 @@ lhz_in01,184,52,0	script	Area 1-7	HIDDEN_NPC,{
 		mes "[Classified Info]";
 		mes "^8C1717Karl Weierstrass has";
 		mes "been a long distinguished";
-		mes "politician in the Schwaltzvalt";
+		mes "politician in the Schwarzwald";
 		mes "Republic and was elected as";
 		mes "its president in the year 984.^000000";
 		next;
@@ -10015,7 +10056,7 @@ lhz_in01,184,46,0	script	Area 3-2	HIDDEN_NPC,{
 		mes "3rd Security Team has alrady";
 		mes "placed secret agents in key";
 		mes "strategic locations within";
-		mes "the Schwaltzvalt Republic.^000000";
+		mes "the Schwarzwald Republic.^000000";
 		next;
 		mes "^3355FFThis file is very intriguing,";
 		mes "but it doesn't really cover";
@@ -11273,7 +11314,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "So you spoke to";
 		mes "Mr. Ahman already?";
 		mes "Good, good. Now we can";
-		mes "go back to the Schwaltzvalt";
+		mes "go back to the Schwarzwald";
 		mes "Republic for our next job.";
 		next;
 		mes "[Lyozien]";
@@ -11637,7 +11678,7 @@ OnStop:
 		mes "Oh, it's you again.";
 		mes "Shouldn't you be getting";
 		mes "on the Airship and heading";
-		mes "back to the Schwaltzvalt";
+		mes "back to the Schwarzwald";
 		mes "Republic? There are more";
 		mes "deliveries in queue, you know.";
 		close;
@@ -11990,11 +12031,11 @@ airplane_01,10,10,3	script	#LyozienSwitch	HIDDEN_NPC,{
 //= 2.9 Fixed Friendship Quest levelup exploit (u could get EXP twice) [Lupus]
 //= 3.0 Added Cursed Spirit Quest. [SinSloth]
 //=     Moved a book non-related to Lighthalzen quests.
-//= 3.1 Added Schwartzvalt Trilogy Quest. [SinSloth]
+//= 3.1 Added Schwarzwald Trilogy Quest. [SinSloth]
 //= 3.2 Updated some NPCs regarding Hugel Rebellion Quest. [SinSloth]
 //= 3.2 Removed the NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
 //=     reference to it in the Aegis script.
-//= 3.3 Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
+//= 3.3 Fixed a wrong negative value checking in Schwarzwald Trilogy quest. [SinSloth]
 //= 3.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 3.5 Touch-ups to the Friendship quest. Added EXP reward. [L0ne_W0lf]
 //=     Added cutins for "Maku" npc, and changed "set HP" to percentheal.

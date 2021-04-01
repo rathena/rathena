@@ -1022,7 +1022,7 @@ que_house_s,13,52,3	script	Open Book#01homun_s	111,{
 		next;
 		mes "[Bookcase Notes]";
 		mes "He especially didn't like the fact that I was bound tightly to ^FF4800Homunculus^000000 research.";
-		mes "He didn't say such a thing when we studied together in ^8B4513Rune Midgarts^000000.";
+		mes "He didn't say such a thing when we studied together in ^8B4513Rune-Midgarts^000000.";
 		next;
 		mes "[Bookcase Notes]";
 		mes "One day, I'll show ^005DFFDe Bris^000000 my ^FF4800Homunculus^000000 research data.";

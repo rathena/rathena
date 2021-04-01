@@ -8945,7 +8945,7 @@ OnDisable:
 
 ma_fild01,211,200,6	script	Tourist#pin02	775,{
 	mes "[Tourist]";
-	mes "I heard of the 'Pintados Festival' and came all the way from Gonryun.";
+	mes "I heard of the 'Pintados Festival' and came all the way from Kunlun.";
 	next;
 	mes "[Tourist]";
 	mes "Just in case you might think otherwise, this is a mask on my face and not a tattoo.";
@@ -9017,7 +9017,7 @@ ma_fild01,162,235,6	script	Tourist#pin05	815,{
 	mes "They say the Pintados Festival will only be held for one week.";
 	next;
 	mes "[Tourist]";
-	mes "I came from Louyang without knowing about the festival. Must be my lucky day.";
+	mes "I came from Luoyang without knowing about the festival. Must be my lucky day.";
 	close;
 OnInit:
 	if (!$malaya_pintados_00)

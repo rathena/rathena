@@ -18,7 +18,7 @@
 //============================================================
 job3_rune01,88,62,5	script	Dragon Breeder	105,{
 	mes "[Dragon Breeder]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "Welcome. Would you like to rent a Dragon?";
 		next;
 		switch(select("Yes:No")) {
@@ -56,7 +56,7 @@ job3_rune01,88,62,5	script	Dragon Breeder	105,{
 //============================================================
 prontera,130,213,5	script	Riding Creature Master	105,{
 	mes "[Riding Creature Master]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "Welcome. Would you like to rent a Dragon?";
 		next;
 		switch(select("Yes:No")) {
@@ -85,7 +85,7 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 			close;
 		}
 	}
-	if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Guard) {
+	if (Class == Job_Royal_Guard || Class == Job_Royal_Guard_T || Class == Job_Baby_Royal_Guard) {
 		mes "Welcome. Would you like to rent a Gryphon?";
 		next;
 		switch(select("Yes:No")) {

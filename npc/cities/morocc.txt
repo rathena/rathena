@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Town
+//= Morocc Town
 //===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: =====================================
@@ -8,7 +8,7 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Morroc Town NPCs
+//= Morocc Town NPCs
 //===== Additional Comments: =================================
 //= Fully working
 //= Fixed Lapidary sprite, Implemented ANTHELL trigger
@@ -27,99 +27,99 @@
 //= 2.2 Removed duplicate bartender NPC. (bugreport:4555) [L0ne_W0lf]
 //============================================================
 
-// Morroc
+// Morocc
 //============================================================
-morocc,150,120,5	script	Soldier - Morroc#01::MocSoldier	707,3,3,{
-	mes "[Morroc Soldier]";
+morocc,150,120,5	script	Soldier - Morocc#01::MocSoldier	707,3,3,{
+	mes "[Morocc Soldier]";
 	mes "Hey, you! Stop there.";
 	next;
-	mes "[Morroc Soldier]";
+	mes "[Morocc Soldier]";
 	mes "This is a restricted area. You can't come any further!";
 	close;
 
 OnTouch_:
-	mes "[Morroc Soldier]";
+	mes "[Morocc Soldier]";
 	mes "Hey, you! Stop there.";
 	next;
-	mes "[Morroc Soldier]";
+	mes "[Morocc Soldier]";
 	mes "This is a restricted area. You can't come any further!";
 	close;
 }
 
-morocc,202,244,0	script	Volunteer - Morroc#01	745,{
-	mes "[Morroc Volunteer]";
-	mes "After that terrible incident wiped out the entire Morroc, Rune-Midgard Kingdom has gathered us volunteers to help restorations.";
+morocc,202,244,0	script	Volunteer - Morocc#01	745,{
+	mes "[Morocc Volunteer]";
+	mes "After that terrible incident wiped out the entire Morocc, Rune-Midgarts Kingdom has gathered us volunteers to help restorations.";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "As important as it seems, everyone's being careful but there are always some that really don't realize the situation, don't you think?";
 	close;
 }
 
-morocc,88,133,3	script	Volunteer - Morroc#02	748,{
-	mes "[Morroc Volunteer]";
+morocc,88,133,3	script	Volunteer - Morocc#02	748,{
+	mes "[Morocc Volunteer]";
 	mes "We're... We're flooded with work...";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "This work's like never-ending, no matter how hard we try!!!";
-	mes "People of Rune-Midgard!! Please lend us a helping hand!!";
+	mes "People of Rune-Midgarts!! Please lend us a helping hand!!";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "Haw.... Whew... Ugh...";
 	close;
 }
 
-morocc,202,110,0	script	Volunteer - Morroc#03	730,{
-	mes "[Morroc Volunteer]";
+morocc,202,110,0	script	Volunteer - Morocc#03	730,{
+	mes "[Morocc Volunteer]";
 	mes "We're still unable to estimate the overall damage.";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "Adventurers' Union and Prontera Kingdom are putting their efforts on restorations as well as restraints of the original cause of the disaster.";
 	next;
-	mes "[Morroc Volunteer]";
-	mes "Unless we settle the original cause, the damage will even spread out of Morroc. The only thing left is to get worse.";
+	mes "[Morocc Volunteer]";
+	mes "Unless we settle the original cause, the damage will even spread out of Morocc. The only thing left is to get worse.";
 	close;
 }
 
-morocc,268,287,3	script	Volunteer - Morroc#04	727,{
-	mes "[Morroc Volunteer]";
+morocc,268,287,3	script	Volunteer - Morocc#04	727,{
+	mes "[Morocc Volunteer]";
 	mes "As bad as it seems, we can't even ask for more support.";
-	mes "This sure must be the worst thing ever happened in Rune-Midgard's history.";
+	mes "This sure must be the worst thing ever happened in Rune-Midgarts' history.";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "I wish I knew how bad the damage is, but we can't even estimate it. It's like shovelling sand against the tide..";
 	close;
 }
 
-morocc,37,287,0	script	Volunteer - Morroc#05	79,{
-	mes "[Morroc Volunteer]";
+morocc,37,287,0	script	Volunteer - Morocc#05	79,{
+	mes "[Morocc Volunteer]";
 	mes "The town's all shattered, but the real problem is the towners.";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "It's a real pity to see those victims of the destroyed town, but the witnesses of the disaster are so much shocked. They're simply not normal now.";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "People are scared to death, but those are fortunate at least.. cause.. many others got mentally ill and stuff..";
 	close;
 }
 
-morocc,223,102,0	script	Volunteer - Morroc#06::MocVolunteer	741,{
-	mes "[Morroc Volunteer]";
+morocc,223,102,0	script	Volunteer - Morocc#06::MocVolunteer	741,{
+	mes "[Morocc Volunteer]";
 	mes "Ugh.. It's kinda spooky, here.. Even this dry wind of the desert seems to have a dark nature.";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "Ooh!! Something... I can feel something! The dark and gloomy air flowing around this town is actually giving me a musical motiff!";
 	next;
-	mes "[Morroc Volunteer]";
-	mes "Right, I think you should hear it! The title is.. 'The Rhapsody of Morroc Satan's Rebirth'!!";
+	mes "[Morocc Volunteer]";
+	mes "Right, I think you should hear it! The title is.. 'The Rhapsody of Morocc Satan's Rebirth'!!";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "When finally wake up, it's just the same darkness";
 	mes "Failed to be reborn at the same place,";
 	mes "Gotta try harder and harder, never ever give up,";
 	mes "But even after hundreds and thousands of trying,";
-	mes "The great Satan of Morroc can't revive~";
+	mes "The great Satan of Morocc can't revive~";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "My stupid button men are useless,";
 	mes "Against those adventurers,";
 	mes "This time I must revive,";
@@ -128,27 +128,27 @@ morocc,223,102,0	script	Volunteer - Morroc#06::MocVolunteer	741,{
 	next;
 	mes "[Ringing Voice]";
 	mes "Be quiet! Can't you see what's going on?!";
-	specialeffect EF_HIT2,AREA,"Volunteer - Morroc#06";
+	specialeffect EF_HIT2,AREA,"Volunteer - Morocc#06";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "Heyyy, you're being too harsh, Senyorita. Your fist may be as fragile as you are, but it sure can hurt somebody.";
 	next;
 	mes "[Ringing Voice]";
 	mes "Anyways, isn't that a crib? I think I heard something like that before..";
 	next;
-	mes "[Morroc Volunteer]";
+	mes "[Morocc Volunteer]";
 	mes "No, No way!? It,, sure is not!";
 	close;
 }
 
-morocc,226,102,4	duplicate(MocVolunteer)	Volunteer - Morroc#07	726
+morocc,226,102,4	duplicate(MocVolunteer)	Volunteer - Morocc#07	726
 
 moc_ruins,123,154,0	script	Young Man#moc01	99,{
 	mes "[Young Man]";
 	mes "The town's completely destroyed, but that giant triangular structure hasn't been harmed at all. Maybe it's protected by some kinda special power.";
 	next;
 	mes "[Young Man]";
-	mes "You know...Those giant, triangular buildings at the NorthWest corner of Morroc known are known to us as Pyramids...";
+	mes "You know...Those giant, triangular buildings at the NorthWest corner of Morocc known are known to us as Pyramids...";
 	next;
 	mes "[Young Man]";
 	mes "Those things have been around here for thousands and thousands of years. No one knows when and why they were built, or who built them.";
@@ -163,7 +163,7 @@ moc_ruins,123,154,0	script	Young Man#moc01	99,{
 
 moc_ruins,128,153,0	script	Grampa#moc	61,{
 	mes "[Old Scholar]";
-	mes "I've devoted my life to researching the mysterious pyramids near Morroc. I haven't been able to concretely confirm anything yet, but...";
+	mes "I've devoted my life to researching the mysterious pyramids near Morocc. I haven't been able to concretely confirm anything yet, but...";
 	next;
 	mes "[Old Scholar]";
 	mes "I'm sure that the largest pyramid contains the tomb of the ancient king, Osiris! I'm willing to stake my life on it!";
@@ -179,13 +179,13 @@ moc_ruins,132,144,0	script	Wolf Young Man#moc	85,{
 	mes "Those things are so mean and vicious..";
 	next;
 	mes "[Young Man]";
-	mes "But the thing is that.. I even kinda feel those merciless cold-blooded monsters are nothing to be afraid of, compared to what has happened in Morroc. Morroc is already a hell.";
+	mes "But the thing is that.. I even kinda feel those merciless cold-blooded monsters are nothing to be afraid of, compared to what has happened in Morocc. Morocc is already a hell.";
 	close;
 }
 
 moc_ruins,115,144,3	script	Muka Young Man#moc	83,{
 	mes "[Young Man]";
-	mes "I work in the trading business, so I always have to cross the hot, dry Morroc Desert on business.";
+	mes "I work in the trading business, so I always have to cross the hot, dry Morocc Desert on business.";
 	next;
 	mes "[Young Man]";
 	mes "But I can't do that anymore.";
@@ -226,7 +226,7 @@ morocc,54,251,0	script	Young Man#moc02	89,{
 	mes "Heh heh~ Let me tell you a story. You know I just got out of that Tavern, there, huh?";
 	next;
 	mes "[Drunken Young Man]";
-	mes "I heard the Satan Morroc has revived. It just got out of cracking the time and the space blar... hic~";
+	mes "I heard the Satan Morocc has revived. It just got out of cracking the time and the space blar... hic~";
 	next;
 	mes "[Drunken Young Man]";
 	mes "Ah... I kinda wanna see that Satan with my own eyes, but! I really shouldn't. I shouldn't even dream of seeing that Satan in person.";
@@ -248,7 +248,7 @@ moc_ruins,94,117,0	script	Pale Looking Young Man	48,{
 	mes "Not even a whistle of dry wind, and the air so heavy and stuffy, I could hardly breathe.";
 	next;
 	mes "[Pale-looking Young Man]";
-	mes "But then, Bang! It was right that time that I saw the enormous amount of smoke rising up at the Castle of Morroc with an earsplitting sound.";
+	mes "But then, Bang! It was right that time that I saw the enormous amount of smoke rising up at the Castle of Morocc with an earsplitting sound.";
 	next;
 	mes "[Pale-looking Young Man]";
 	mes "All happened so fast. The Oasis of the Castle was all dried up and the town was destroyed. And... and that voice... I heard a voice.";
@@ -296,7 +296,7 @@ moc_ruins,118,82,1	script	Little Boy#moc	706,{
 
 moc_ruins,121,116,4	script	Picky Lady#moc	66,{
 	mes "[Syvia]";
-	mes "The fields of Rune-Midgard are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!";
+	mes "The fields of Rune-Midgarts are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!";
 	mes "You know, like how Spore sticks out its tongue after you kill it..";
 	next;
 	mes "[Syvia]";
@@ -391,7 +391,7 @@ moc_ruins,155,107,4	script	Ant Man#moc	47,{
 		mes "Sharp teeth and strong jaws of the ants would be something that you should be careful of, but the shovelling skills of that old grandpa is very strong that you should watch out.";
 		next;
 		mes "[Akira]";
-		mes "...Well, what am I talking about? What is left to be afraid when the Satan of Morroc is revived? Huh..huhhuh...";
+		mes "...Well, what am I talking about? What is left to be afraid when the Satan of Morocc is revived? Huh..huhhuh...";
 		close;
 	}
 }
@@ -401,7 +401,7 @@ moc_ruins,143,43,4	script	Assassin Boy#moc	118,{
 	mes "Unbeatable in man-to-man fights, Assassins always overcome their enemies! Erm, always overcome their enemies without a trace.";
 	next;
 	mes "[Slayer Kid]";
-	mes "But what did they do when this destruction happened in Morroc!!!";
+	mes "But what did they do when this destruction happened in Morocc!!!";
 	next;
 	switch(select("?????:Where I can find the Assassin clan?:End Conversation")) {
 	case 1:
@@ -434,7 +434,7 @@ moc_ruins,143,43,4	script	Assassin Boy#moc	118,{
 		mes "And I hear the coolest Assassin of them all is the Assassin Cross! But, that's even a bigger mystery~ You won't be able to see them unless you're a great thief!";
 		next;
 		mes "[Slayer Kid]";
-		mes "But then... What the hell were they doing when Morroc was destroyed?!!!";
+		mes "But then... What the hell were they doing when Morocc was destroyed?!!!";
 		close;
 	case 3:
 		mes "[Slayer Kid]";
@@ -444,14 +444,14 @@ moc_ruins,143,43,4	script	Assassin Boy#moc	118,{
 		mes "They're also very sneaky! I hear that they're able to cloak so that no one can see them!";
 		next;
 		mes "[Slayer Kid]";
-		mes "But then... What the hell were they doing when Morroc was destroyed?!!!";
+		mes "But then... What the hell were they doing when Morocc was destroyed?!!!";
 		close;
 	}
 }
 
 moc_ruins,173,141,4	script	Dimitri#moc	49,{
 	mes "[Dimitri]";
-	mes "The desert of Morroc has the highest average temperature in Midgard. You might as well think twice before you sit on the sand in the middle of the desert, cause your ass will be toasted.";
+	mes "The desert of Morocc has the highest average temperature in Midgard. You might as well think twice before you sit on the sand in the middle of the desert, cause your ass will be toasted.";
 	next;
 	switch(select("About the desert sands:About the remedy for Fatigue:End Conversation")) {
 	case 1:
@@ -460,13 +460,13 @@ moc_ruins,173,141,4	script	Dimitri#moc	49,{
 		mes "It seems like it should be all burnt, but it's not!";
 		next;
 		mes "[Dimitri]";
-		mes "You can sit down and take a rest whenever you need to and your ass won't burn. I guess the Morroc sand doesn't conduct heat as much as it should.";
+		mes "You can sit down and take a rest whenever you need to and your ass won't burn. I guess the Morocc sand doesn't conduct heat as much as it should.";
 		next;
 		mes "[Dimitri]";
 		mes "That's why everyone could recover the HP and SP in the middle of desert.";
 		next;
 		mes "[Dimitri]";
-		mes "Now I come to think of it, maybe the reason why Morroc has exceptionally high average temperature is because that Satan is sealed within.";
+		mes "Now I come to think of it, maybe the reason why Morocc has exceptionally high average temperature is because that Satan is sealed within.";
 		close;
 	case 2:
 		mes "[Dimitri]";
@@ -514,7 +514,7 @@ moc_ruins,174,120,4	script	Fly Man#moc	54,{
 		mes "And when you kill it, there's even a chance that you might earn a ^880000Clip^000000 item!";
 		next;
 		mes "[Armani]";
-		mes "Anyways, don't you think the Satan Morroc is so cruel?";
+		mes "Anyways, don't you think the Satan Morocc is so cruel?";
 		mes "They may not be the same kind, but still isn't it cruel to take that monster's soul with a single blow?";
 		next;
 		mes "[Armani]";
@@ -523,13 +523,13 @@ moc_ruins,174,120,4	script	Fly Man#moc	54,{
 	}
 }
 
-moc_ruins,173,70,4	script	Uncle Morroc#moc	48,{
+moc_ruins,173,70,4	script	Uncle Morocc#moc	48,{
 	mes "[Phlanette]";
-	mes "Morroc is located in an extremely dry region, surrounded by desert.";
-	mes "No place in the world is as hot as Morroc.";
+	mes "Morocc is located in an extremely dry region, surrounded by desert.";
+	mes "No place in the world is as hot as Morocc.";
 	next;
 	mes "[Phlanette]";
-	mes "I have a hunch that this hot and dry climate in Morroc is because of that Satan sealed deeper underground for so long.";
+	mes "I have a hunch that this hot and dry climate in Morocc is because of that Satan sealed deeper underground for so long.";
 	next;
 	switch(select("Tell me about the desert.:Quit Conversation")) {
 	case 1:
@@ -541,17 +541,17 @@ moc_ruins,173,70,4	script	Uncle Morroc#moc	48,{
 		mes "Nonetheless, there are a few hardy plants that can survive and grow in the desert.";
 		next;
 		mes "[Phlanette]";
-		mes "Unfortunately some of those plants growing around Morroc have been mutated into monsters.";
+		mes "Unfortunately some of those plants growing around Morocc have been mutated into monsters.";
 		mes "One of those is Muka, the mutated cactus..";
 		next;
 		mes "[Phlanette]";
-		mes "However, now that the Satan has revived, no one's sure of what changes would be made in the life cycles of Morroc.";
+		mes "However, now that the Satan has revived, no one's sure of what changes would be made in the life cycles of Morocc.";
 		close;
 	case 2:
 		mes "[Phlanette]";
 		mes "Here and there!";
 		mes "Sand everywhere...";
-		mes "Oh, I curse you, the desert of Morroc!!";
+		mes "Oh, I curse you, the desert of Morocc!!";
 		mes "Damn you!";
 		next;
 		mes "[Phlanette]";
@@ -593,7 +593,7 @@ moc_fild16,199,212,4	script	 Uncle Assassin#moc	55,{
 		mes "[Hashisid]";
 		mes "Our true directive is to assassinate evil creatures,";
 		mes "and to use our stealth to gather intelligence";
-		mes "for the good of all Rune-Midgard.";
+		mes "for the good of all Rune-Midgarts.";
 		close;
 	case 2:
 		mes "[Hashisid]";
@@ -641,7 +641,7 @@ moc_fild16,211,254,4	script	Assassin#07rhea_30	118,{
 		mes "and allows Assassins";
 		mes "to quickly slash their enemies.";
 		mes "Anyone can buy a basic set of Katars";
-		mes "in Morroc somewhere.";
+		mes "in Morocc somewhere.";
 		mes "Of course, only Assassins can use them.";
 		next;
 		mes "[La Conte]";

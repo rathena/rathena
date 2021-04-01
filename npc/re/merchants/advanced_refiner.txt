@@ -16,7 +16,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	mes "[Holink]";
 	mes "I am the meow~ Blacksmith Holink~";
 	mes "Master of refining, Holink~";
-	mes "I am the special cat Holink who learned from Morroc~";
+	mes "I am the special cat Holink who learned from Morocc~";
 	mes "My daughter is so proud of me, Holink~";
 	mes "What should Holink~ refine today?";
 	next;
@@ -29,31 +29,31 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	if (!getequipisequiped(.@part)) {
 		mes "[Holink]";
 		switch(.@part) {
-		case 1:
+		case EQI_HEAD_TOP:
 			mes "My teacher Aragam said meow~";
 			mes "There's no cure for stupidity...";
 			break;
-		case 2:
+		case EQI_ARMOR:
 			mes "There's nothing to see here, meow!!";
 			break;
-		case 3:
+		case EQI_HAND_L:
 			mes "Meow? What do you want me to do with this left hand...?";
 			break;
-		case 4:
+		case EQI_HAND_R:
 			mes "Meow? What do you want me to do with this right hand...?";
 			break;
-		case 5:
+		case EQI_GARMENT:
 			mes "Meow? You don't have anything on.";
 			break;
-		case 6:
+		case EQI_SHOES:
 			mes "Kyang~! Do not mess with my sensitive olfactory, meow~.";
 			break;
-		case 7:
-		case 8:
+		case EQI_ACC_L:
+		case EQI_ACC_R:
 			mes "Meow? Where is the accessory?";
 			break;
-		case 9:
-		case 10:
+		case EQI_HEAD_MID:
+		case EQI_HEAD_LOW:
 			mes "Meow? You talking about the other head parts, meow?~";
 			break;
 		}

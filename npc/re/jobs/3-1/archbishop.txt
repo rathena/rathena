@@ -29,7 +29,7 @@
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
 	if (BaseJob != Job_Priest) {
-		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
+		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Arch_Bishop) {
 			mes "[Praying Minister]";
 			mes "Ah! An Archbishop.";
 			mes "You have reached the state of light.";
@@ -276,14 +276,14 @@ umbala,139,227,3	script	Priest#arch	60,{
 		next;
 		mes "[Priest Dayan]";
 		mes "That big tree is called The ^3131FFYggdrasil^000000.";
-		mes "That tree was created from Ymir's body after Odin created the world as you know it, Rune-Midgard.";
+		mes "That tree was created from Ymir's body after Odin created the world as you know it, Midgard.";
 		next;
 		mes "[Priest Dayan]";
 		mes "A fountain pours out from the end of Yggdrasil's roots that spread to every world.";
 		next;
 		mes "[Priest Dayan]";
 		mes "The roots head to Niflheim where you can find the Hvergelmir spring.";
-		mes "In Rune-Midgard there is Mimir's spring.";
+		mes "In Midgard there is Mimir's spring.";
 		mes "And in Asgard, the world of the Gods, there is the Word spring.";
 		next;
 		mes "[Priest Dayan]";
@@ -396,7 +396,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		mes "Now, there is a place you should go to.";
 		next;
 		mes "[Priest Dayan]";
-		mes "That place is Hugel in Schwaltzvalt.";
+		mes "That place is Hugel in Schwarzwald.";
 		mes "There is a Nun praying there named Vinue,";
 		mes "she is a true minister who prays for the suffering people in the world.";
 		mes "But the last time I saw her she seemed sad.";
@@ -788,7 +788,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 	if (Class != Job_Priest && Class != Job_High_Priest && Class != Job_Baby_Priest) {
 		warp "odin_tem02",282,263;
 		end;
-	} else if (Class != Job_Arch_Bishop && Class != Job_Arch_Bishop_T && Class != Job_Baby_Bishop) {
+	} else if (Class != Job_Arch_Bishop && Class != Job_Arch_Bishop_T && Class != Job_Baby_Arch_Bishop) {
 		if (job_arch < 5) {
 			warp "odin_tem02",282,263;
 			end;
