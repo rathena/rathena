@@ -42,7 +42,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 		mes "^0000cdFor 5 "+.@old_item_name$+", you can exchange^000000 to 1 "+.@new_item_name$+".";
 		next;
 		mes "[Heart Merchant]";
-		mes "But life insurance policy is excluded from the exchange.";
+		mes "However, ^EE0000[not for sale] Life Insurance policy is not eligible for exchange^000000, so it is useless to bring it and ask for it to be replaced.";
 		next;
 		mes "[Heart Merchant]";
 		mes "Would you like to exchange it now?";
