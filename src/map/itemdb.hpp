@@ -852,7 +852,6 @@ struct item_data
 	t_itemid nameid;
 	std::string name, ename;
 
-	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
 	uint32 value_buy;
 	uint32 value_sell;
 	item_types type;
