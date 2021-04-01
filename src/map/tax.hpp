@@ -27,7 +27,7 @@ struct s_tax {
 	std::vector<s_tax_entry> each;
 	std::vector<s_tax_entry> total;
 
-	uint16 taxPercentage(const std::vector <struct s_tax_entry> entry, double price);
+	uint16 taxPercentage(const std::vector <s_tax_entry> entry, double price);
 	void vendingVAT(map_session_data * sd);
 	void buyingstoreVAT(map_session_data * sd);
 	void inTotalInfo(map_session_data *sd);

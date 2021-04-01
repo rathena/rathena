@@ -32,16 +32,19 @@ const std::string TaxDatabase::getDefaultLocation() {
 * @return count of successfully parsed rows
 */
 uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
-	int type = 0;
 	std::string type_str;
 
 	if (!this->nodeExists(node, "Type")) {
 		return 0;
 	}
 
-	this->asString(node, "Type", type_str);
+	if (!this->asString(node, "Type", type_str))
+		return 0;
+
+	int64 type;
+
 	if (!script_get_constant(type_str.c_str(), &type)) {
-		this->invalidWarning(node, "Invalid type '%s'.\n", type_str.c_str());
+		this->invalidWarning(node["Type"], "Invalid tax type '%s'.\n", type_str.c_str());
 		return 0;
 	}
 
@@ -56,24 +59,25 @@ uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
 		taxdata->total.clear();
 
 		for (const auto &taxNode : node["InTotal"]) {
-			if (this->nodeExists(taxNode, "MinimalValue") && this->nodeExists(taxNode, "Tax")) {
-				struct s_tax_entry entry = { 0 };
+			if (this->nodesExist(taxNode, { "MinimalValue", "Tax" }))
+				continue;
 
-				if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
-					this->invalidWarning(taxNode, "Invalid value specified for \"MinimalValue\", defaulting to 0.");
-					entry.minimal = 0;
-				}
+			s_tax_entry entry = {};
 
-				if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
-					this->invalidWarning(taxNode, "Invalid value specified for \"Tax\", defaulting to 0.");
-					entry.tax = 0;
-				}
-
-				taxdata->total.push_back(entry);
-
-				std::sort(taxdata->total.begin(), taxdata->total.end(),
-					[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
+			if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
+				this->invalidWarning(taxNode["MinimalValue"], "Invalid value, defaulting to 0.");
+				entry.minimal = 0;
 			}
+
+			if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
+				this->invalidWarning(taxNode["Tax"], "Invalid value, defaulting to 0.");
+				entry.tax = 0;
+			}
+
+			taxdata->total.push_back(entry);
+
+			std::sort(taxdata->total.begin(), taxdata->total.end(),
+				[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
 		}
 	}
 
@@ -81,24 +85,25 @@ uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
 		taxdata->each.clear();
 
 		for (const auto &taxNode : node["EachEntry"]) {
-			if (this->nodeExists(taxNode, "MinimalValue") && this->nodeExists(taxNode, "Tax")) {
-				struct s_tax_entry entry = { 0 };
+			if (this->nodesExist(taxNode, { "MinimalValue", "Tax" }))
+				continue;
 
-				if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
-					this->invalidWarning(taxNode, "Invalid value specified for \"MinimalValue\", defaulting to 0.");
-					entry.minimal = 0;
-				}
+			s_tax_entry entry = { 0 };
 
-				if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
-					this->invalidWarning(taxNode, "Invalid value specified for \"Tax\", defaulting to 0.");
-					entry.tax = 0;
-				}
-
-				taxdata->each.push_back(entry);
-
-				std::sort(taxdata->each.begin(), taxdata->each.end(),
-					[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
+			if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
+				this->invalidWarning(taxNode["MinimalValue"], "Invalid value, defaulting to 0.");
+				entry.minimal = 0;
 			}
+
+			if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
+				this->invalidWarning(taxNode["Tax"], "Invalid value, defaulting to 0.");
+				entry.tax = 0;
+			}
+
+			taxdata->each.push_back(entry);
+
+			std::sort(taxdata->each.begin(), taxdata->each.end(),
+				[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
 		}
 	}
 
@@ -143,7 +148,7 @@ void TaxDatabase::setBuyingstoreTax(map_session_data *sd)
  * @param price: Value of item.
  * @return Tax rate
  */
-uint16 s_tax::taxPercentage(const std::vector <struct s_tax_entry> entry, double price) {
+uint16 s_tax::taxPercentage(const std::vector <s_tax_entry> entry, double price) {
 	const auto &tax = std::find_if(entry.begin(), entry.end(),
 		[&price](const s_tax_entry &e) { return price >= e.minimal; });
 	return tax != entry.end() ? tax->tax : 0;
@@ -154,15 +159,13 @@ uint16 s_tax::taxPercentage(const std::vector <struct s_tax_entry> entry, double
  * @param sd: Player data
  */
 void s_tax::vendingVAT(map_session_data *sd) {
-	char msg[CHAT_SIZE_MAX];
-
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
 	for (int i = 0; i < sd->vend_num; i++) {
-		if (!sd->vending[i].amount)
+		if (sd->vending[i].amount == 0)
 			continue;
 
 		uint16 tax = this->taxPercentage(this->each, sd->vending[i].value);
@@ -170,8 +173,9 @@ void s_tax::vendingVAT(map_session_data *sd) {
 		sd->vending[i].value_vat = tax ? (unsigned int)(sd->vending[i].value - sd->vending[i].value / 10000. * tax) : sd->vending[i].value;
 
 		if (battle_config.display_tax_info) {
-			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 777), itemdb_jname(sd->cart.u.items_cart[sd->vending[i].index].nameid), sd->vending[i].value, '-', tax / 100., sd->vending[i].value_vat); // %s : %u %c %.2f%% => %u
+			char msg[CHAT_SIZE_MAX];
+
+			sprintf(msg, msg_txt(sd, 777), itemdb_ename(sd->cart.u.items_cart[sd->vending[i].index].nameid), sd->vending[i].value, '-', tax / 100., sd->vending[i].value_vat); // %s : %u %c %.2f%% => %u
 			clif_displaymessage(sd->fd, msg);
 		}
 	}
@@ -182,15 +186,13 @@ void s_tax::vendingVAT(map_session_data *sd) {
  * @param sd: Player data
  */
 void s_tax::buyingstoreVAT(map_session_data *sd) {
-	char msg[CHAT_SIZE_MAX];
-
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
-	for (int i = 0; i < sd->buyingstore.slots; i++) {
-		if (!sd->buyingstore.items[i].nameid)
+	for (uint8 i = 0; i < sd->buyingstore.slots; i++) {
+		if (sd->buyingstore.items[i].nameid == 0)
 			continue;
 
 		uint16 tax = this->taxPercentage(this->each, sd->buyingstore.items[i].price);
@@ -198,8 +200,9 @@ void s_tax::buyingstoreVAT(map_session_data *sd) {
 		sd->buyingstore.items[i].price_vat = tax ? (unsigned int)(sd->buyingstore.items[i].price + sd->buyingstore.items[i].price / 10000. * tax) : sd->buyingstore.items[i].price;
 
 		if (battle_config.display_tax_info) {
-			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 777), itemdb_jname(sd->buyingstore.items[i].nameid), sd->buyingstore.items[i].price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
+			char msg[CHAT_SIZE_MAX];
+
+			sprintf(msg, msg_txt(sd, 777), itemdb_ename(sd->buyingstore.items[i].nameid), sd->buyingstore.items[i].price, '+', tax / 100., sd->buyingstore.items[i].price_vat); // %s : %u %c %.2f%% => %u
 			clif_displaymessage(sd->fd, msg);
 		}
 	}
@@ -211,15 +214,14 @@ void s_tax::buyingstoreVAT(map_session_data *sd) {
 */
 void s_tax::inTotalInfo(map_session_data *sd)
 {
-	char msg[CHAT_SIZE_MAX];
-
 	if (!battle_config.display_tax_info || this->total.empty())
 		return;
 
 	clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]
 
 	for (const auto &tax : this->total) {
-		memset(msg, '\0', CHAT_SIZE_MAX);
+		char msg[CHAT_SIZE_MAX];
+
 		sprintf(msg, msg_txt(sd, 779), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
 		clif_displaymessage(sd->fd, msg);
 	}
@@ -229,9 +231,8 @@ void s_tax::inTotalInfo(map_session_data *sd)
  * Reload value after taxes for players with a Vending/Buyingstore shop.
  */
 void tax_reload_vat(void) {
-	struct map_session_data *sd = NULL;
-	struct s_mapiterator *iter = mapit_getallusers();
-
+	map_session_data *sd;
+	s_mapiterator *iter = mapit_getallusers();
 	std::shared_ptr<s_tax> vending_tax = tax_db.find(TAX_SELLING);
 	std::shared_ptr<s_tax> buyingstore_tax = tax_db.find(TAX_BUYING);
 
@@ -239,8 +240,7 @@ void tax_reload_vat(void) {
 		if (sd->state.vending && vending_tax != nullptr) {
 			vending_tax->vendingVAT(sd);
 			vending_tax->inTotalInfo(sd);
-		}
-		else if (sd->state.buyingstore && buyingstore_tax != nullptr) {
+		} else if (sd->state.buyingstore && buyingstore_tax != nullptr) {
 			buyingstore_tax->buyingstoreVAT(sd);
 			buyingstore_tax->inTotalInfo(sd);
 		}

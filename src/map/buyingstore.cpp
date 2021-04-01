@@ -327,7 +327,7 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
  * @param count: Item list count.
  * @return Taxed price
  */
-static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const uint8* itemlist, int count) {
+static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, int count) {
 	std::shared_ptr<s_tax> tax = tax_db.find(TAX_BUYING);
 
 	double total = 0;
@@ -493,8 +493,8 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 		int listidx;
 
 		ARR_FIND( 0, pl_sd->buyingstore.slots, listidx, pl_sd->buyingstore.items[listidx].nameid == item->itemId );
-		zeny = ((double)amount * (double)pl_sd->buyingstore.items[listidx].price);
-		zeny_paid = ((double)amount * (double)pl_sd->buyingstore.items[listidx].price_vat);
+		zeny = ((double)item->amount * (double)pl_sd->buyingstore.items[listidx].price);
+		zeny_paid = ((double)item->amount * (double)pl_sd->buyingstore.items[listidx].price_vat);
 		zeny_paid = zeny_paid + (zeny_paid / 10000. * tax_total);
 
 		int index = item->index - 2; // TODO: clif::server_index
@@ -516,7 +516,8 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 
 		if (battle_config.display_tax_info) {
 			char msg[CHAT_SIZE_MAX];
-			sprintf(msg, msg_txt(sd, 780), itemdb_jname(nameid), (double)zeny, (double)zeny_paid); // %s : %.0f => %.0f
+
+			sprintf(msg, msg_txt(sd, 780), itemdb_ename(item->itemId), (double)zeny, (double)zeny_paid); // %s : %.0f => %.0f
 			clif_displaymessage(pl_sd->fd, msg);
 		}
 

@@ -265,7 +265,8 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 
 		if (battle_config.display_tax_info) {
 			char msg[CHAT_SIZE_MAX];
-			sprintf(msg, msg_txt(sd, 780), itemdb_jname(vsd->cart.u.items_cart[idx].nameid), (double)vsd->vending[vend_list[i]].value * amount, z_gained); // %s : %.0f => %.0f
+
+			sprintf(msg, msg_txt(sd, 780), itemdb_ename(vsd->cart.u.items_cart[idx].nameid), (double)vsd->vending[vend_list[i]].value * amount, z_gained); // %s : %.0f => %.0f
 			clif_displaymessage(vsd->fd, msg);
 		}
 
