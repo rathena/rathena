@@ -16,7 +16,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 	switch(select("What is it?:Please exchange!:I'm not interested")) {
 	case 1:
 		mes "[Heart Merchant]";
-		mes "<ITEM>["+getitemname(12209)+"]<INFO>12209</INFO></ITEM> was an object that prevented your living from losing experience on death once every 30 minutes.";
+		mes "<ITEM>["+.@old_item_name$+"]<INFO>12209</INFO></ITEM> is an item that prevents you from losing life experience on death for 30 minutes after use.";
 		next;
 		mes "[Heart Merchant]";
 		mes "But many people missed the part about time? So I saw it and prepared <ITEM>["+getitemname(6413)+"]<INFO>6413</INFO></ITEM>.";
