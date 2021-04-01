@@ -7,6 +7,9 @@
 //============================================================
 
 prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
+	.@old_item_name$ = getitemname(12209);
+	.@new_item_name$ = getitemname(6413);
+
 	mes "[Heart Merchant]";
 	mes "Hello! I see you are an adventurer who puts his heart in traveling from a boat, sailing across the continent and enjoying the dangerous thrill!";
 	next;
