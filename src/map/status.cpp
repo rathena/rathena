@@ -9565,6 +9565,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_GROOMING:
 	case SC_CHATTERING:
+	case SC_MOVEHASTE_INFINITY:
 		if (sc->data[type])
 			return 0;
 
