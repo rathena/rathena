@@ -3340,6 +3340,19 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	dmg = battle_calc_attack(attack_type,src,bl,skill_id,skill_lv,flag&0xFFF);
 
+	if (dmg.flag & BF_MAGIC) {
+		if (dmg.damage || dmg.damage2) {
+			if (tsc) {
+				if (tsc->data[SC_MAXPAIN])
+					tsc->data[SC_MAXPAIN]->val3 = (int)dmg.damage;
+				tsc->data[SC_MAXPAIN]->val2 = 0;
+				if (!tsc->data[SC_KYOMU]) {//SC_KYOMU invalidates reflecting ability
+					skill_castend_damage_id(bl, bl, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, flag);
+				}
+			}
+		}
+	}
+	
 	//If the damage source is a unit, the damage is not delayed
 	if (src != dsrc && skill_id != GS_GROUNDDRIFT)
 		dmg.amotion = 0;
