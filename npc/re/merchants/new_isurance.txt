@@ -59,7 +59,7 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 					close;
 				} else if (.@amount > 10) {
 					mes "[Heart Merchant]";
-					mes "You can change up to 10 ea. at a time. Check the quantity again.";
+					mes "^0000cdYou can exchange up to 10 ea.^000000 at a time. Check the quantity again.";
 					close;
 				} else {
 					if (countitem(12209) < (.@amount*5)) {
