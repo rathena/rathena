@@ -467,10 +467,10 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 		if( type != AREA_FVF && bl == src_bl )
 			return 0;
 
-		if( type == FACTION_AREA_WOS && !faction_check_alliance(src_bl,bl) )
+		if( type == FACTION_AREA_WOS && src_bl != bl )
 			return 0;
 
-		if( type == FVF_OTHER_AREA_CHAT && faction_check_alliance(src_bl,bl) )
+		if( type == FVF_OTHER_AREA_CHAT && src_bl == bl )
 			return 0;
 	break;
 	case AREA_WOS:
@@ -10921,8 +10921,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			faction_hp(sd);
 			clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
 		}
-		if( faction_check_leader(sd) )
-			faction_factionaura(sd);
 	}
 
 	if(!pc_isinvisible(sd) && mapdata->flag[MF_PVP]) {

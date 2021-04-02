@@ -93,11 +93,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 
 	if( sd->status.faction_id && vsd->status.faction_id )
 	{
-		if( battle_config.faction_trade_settings == 1 && !faction_check_alliance(&sd->bl,&vsd->bl) )
-		{
-			clif_displaymessage(sd->fd, msg_txt(sd,1554));
-			return;
-		} else if( !battle_config.faction_trade_settings && sd->status.faction_id != vsd->status.faction_id ) {
+		if( !battle_config.faction_trade_settings && sd->status.faction_id != vsd->status.faction_id ) {
 			clif_displaymessage(sd->fd, msg_txt(sd,1553));
 			return;
 		}

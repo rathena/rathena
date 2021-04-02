@@ -7309,6 +7309,36 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	return 1;
 }
 
+
+/** Calculates Reputation on exp gain
+* @param sd Player
+* @param base_exp Base EXP before peronal bonuses
+*/
+static void pc_calcrep(struct map_session_data *sd, t_exp base_exp)
+{
+	int faction_id, exp, i;
+
+	if((faction_id = sd->status.faction_id) <= 0)
+		return;
+
+	exp = (int)(base_exp / sd->status.base_level);
+
+	for (i=1; i <= MAX_FACTION; i++) {
+		if(faction_id == i)
+			sd->status.reputation[i] = cap_value(sd->status.reputation[i] + exp, 1, INT_MAX);
+		else
+			sd->status.reputation[i] = cap_value(sd->status.reputation[i] - (int)(exp * 0.05), 1, INT_MAX);
+
+		ShowInfo("Player %d reputation with faction[%d] is now  %d. \n", sd->status.char_id, i, sd->status.reputation[i]);
+	}
+
+	// sd->status.reputation[faction_id] = cap_value(sd->status.reputation[faction_id] + exp, 1, INT_MAX);
+	
+
+	return;
+}
+
+
 /** Alters experiences calculation based on self bonuses that do not get even shared to the party.
 * @param sd Player
 * @param base_exp Base EXP before peronal bonuses
@@ -7421,6 +7451,9 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 
 	if (!(exp_flag&2))
 		pc_calcexp(sd, &base_exp, &job_exp, src);
+
+	// Biali Reputation System
+	pc_calcrep(sd, base_exp);
 
 	nextb = pc_nextbaseexp(sd);
 	nextj = pc_nextjobexp(sd);
@@ -8765,8 +8798,6 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
 	}
 
-	if( sd->status.faction_id && faction_check_leader(sd) ) // Faction System [Biali]
-		faction_factionaura(sd);
 }
 
 bool pc_revive_item(struct map_session_data *sd) {

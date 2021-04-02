@@ -1,0 +1,5 @@
+// Class Change Summonable Monsters Database
+// List of monsters generated through Abracadabra's SA_CLASSCHANGE ability.
+//
+// Structure of Database:
+// MobRandomGroupID,MobID,DummyName,Rate

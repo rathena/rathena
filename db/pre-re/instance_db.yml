@@ -65,7 +65,7 @@ Body:
   - Id: 3
     Name: Orc's Memory
     Enter:
-      Map: 1@orcs 
+      Map: 1@orcs
       X: 179
       Y: 15
     AdditionalMaps:
@@ -89,6 +89,7 @@ Body:
   - Id: 6
     Name: Battle_Royale
     TimeLimit: 86400000
+    IdleTimeOut: 86400000
     Enter:
       Map: verus01
       X: 0
@@ -96,6 +97,7 @@ Body:
   - Id: 7
     Name: Welcome
     TimeLimit: 86400
+    IdleTimeOut: 86400
     Enter:
       Map: new_1-2
       X: 100
@@ -275,12 +277,27 @@ Body:
       Map: rentb1
       X: 24
       Y: 5
-    AditionalMaps:
-      rentinb1 : true
+    AdditionalMaps:
+      rentinb1: true
+  - Id: 58
+    Name: Hell
+    TimeLimit: 1800
+    IdleTimeOut: 80
+    Enter:
+      Map: hell
+      X: 72
+      Y: 160
   - Id: 60
-    Name: Kiman Forest
-    TimeLimit: 3600
+    Name: Crypt of Gomorrah
     Enter:
       Map: ars_dun01
       X: 125
       Y: 34
+    AdditionalMaps:
+      ars_dun02: true
+  - Id: 61
+    Name: Lighthouse of Traiana
+    Enter:
+      Map: ars_phare
+      X: 72
+      Y: 140

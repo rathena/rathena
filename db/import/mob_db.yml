@@ -1,0 +1,8000 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Database
+###########################################################################
+#
+# Monster Settings
+#
+###########################################################################
+# - Id                      Monster ID.
+#   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   JapaneseName            Name in Japanese. (Default: 'Name' value)
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   BaseExp                 Base experience gained. (Default: 0)
+#   JobExp                  Job experience gained. (Default: 0)
+#   MvpExp                  MVP experience gained. (Default: 0)
+#   Attack                  Minimum attack in pre-renewal and base attack in renewal. (Default: 0)
+#   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
+#   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/lerfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   RaceGroups:             List of secondary groups the monster may be part of. (Optional)
+#     <group>: <value>      Group to toggle.
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
+#   AttackDelay             Attack speed. (Default: 0)
+#   AttackMotion            Attack animation speed. (Default: 0)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   Ai                      Aegis monster type AI behavior. (Default: 06)
+#   Class                   Aegis monster class. (Default: Normal)
+#   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
+#     <mode>: <value>       Mode to toggle.
+#   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item.
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+#   Drops:                  List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item.
+#       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+###########################################################################
+
+Header:
+  Type: MOB_DB
+  Version: 2
+
+Body:
+  - Id: 20400
+    AegisName: S_EMPEL_1
+    Name: Guardian Stone
+    Level: 90
+    Hp: 120000
+    Attack: 1
+    Attack2: 2
+    Defense: 40
+    MagicDefense: 50
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+  - Id: 20401
+    AegisName: S_EMPEL_2
+    Name: Guardian Stone
+    Level: 90
+    Hp: 1200000
+    Attack: 1
+    Attack2: 2
+    Defense: 40
+    MagicDefense: 50
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+  - Id: 3750
+    AegisName: FLECHA
+    Name: Flecha
+    Level: 99
+    Hp: 78690
+    BaseExp: 200000
+    Attack: 1890
+    Attack2: 2390
+    Defense: 59
+    MagicDefense: 10
+    Str: 90
+    Agi: 99
+    Vit: 99
+    Int: 35
+    Dex: 250
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 180
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Dragon_Slayer
+        Rate: 2
+      - Item: Oridecon
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 3751
+    AegisName: RAGNAMAN
+    Name: RAGNAMAN
+    Level: 99
+    Hp: 88402
+    BaseExp: 200000
+    Attack: 2100
+    Attack2: 2530
+    Defense: 63
+    MagicDefense: 12
+    Str: 90
+    Agi: 99
+    Vit: 72
+    Int: 20
+    Dex: 250
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 170
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Assasin_Dagger
+        Rate: 2
+      - Item: Oridecon
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 3752
+    AegisName: LILIKA_FELINA
+    Name: LILIKA FELINA
+    JapaneseName: LILIKA_FELINA
+    Level: 90
+    Hp: 61282
+    BaseExp: 200000
+    Attack: 1300
+    Attack2: 2053
+    Defense: 35
+    MagicDefense: 60
+    Str: 20
+    Agi: 99
+    Vit: 97
+    Int: 145
+    Dex: 250
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Assasin_Dagger
+        Rate: 2
+      - Item: Oridecon
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+      - Item: House_Auger
+        Rate: 1
+        StealProtected: true
+  - Id: 3753
+    AegisName: BIGBOT
+    Name: BIGBOT
+    Level: 83
+    Hp: 78690
+    BaseExp: 200000
+    Attack: 1890
+    Attack2: 2390
+    Defense: 59
+    MagicDefense: 10
+    Str: 90
+    Agi: 99
+    Vit: 99
+    Int: 35
+    Dex: 250
+    Luk: 66
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 180
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Executioner_
+        Rate: 2
+      - Item: Elunium
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+      - Item: Combat_Knife
+        Rate: 1
+        StealProtected: true
+  - Id: 3754
+    AegisName: DIEGUITO
+    Name: DIEGUITO
+    Level: 90
+    Hp: 61282
+    BaseExp: 200000
+    Attack: 1300
+    Attack2: 2053
+    Defense: 35
+    MagicDefense: 60
+    Str: 12
+    Agi: 99
+    Vit: 97
+    Int: 145
+    Dex: 250
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 250
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Infiltrator
+        Rate: 2
+      - Item: Elunium
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 3755
+    AegisName: JIN_FAST
+    Name: JIN_FAST
+    Level: 82
+    Hp: 58900
+    BaseExp: 200000
+    Attack: 1226
+    Attack2: 1854
+    Defense: 25
+    MagicDefense: 15
+    Str: 18
+    Agi: 145
+    Vit: 27
+    Int: 80
+    Dex: 250
+    Luk: 80
+    AttackRange: 14
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Dragon_Slayer
+        Rate: 2
+      - Item: Elunium
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 3756
+    AegisName: CHUNKA
+    Name: CHUNKA
+    Level: 92
+    Hp: 47280
+    BaseExp: 200000
+    Attack: 4300
+    Attack2: 6000
+    Defense: 30
+    MagicDefense: 74
+    Str: 30
+    Agi: 99
+    Vit: 35
+    Int: 180
+    Dex: 250
+    Luk: 39
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Infiltrator
+        Rate: 2
+      - Item: Elunium
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 3757
+    AegisName: RYUKUN
+    Name: RYUKUN
+    Level: 83
+    Hp: 78690
+    BaseExp: 200000
+    Attack: 1890
+    Attack2: 2390
+    Defense: 59
+    MagicDefense: 55
+    Str: 90
+    Agi: 99
+    Vit: 30
+    Int: 99
+    Dex: 250
+    Luk: 66
+    AttackRange: 5
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 220
+    AttackDelay: 800
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Oridecon
+        Rate: 1000
+      - Item: Mail_Breaker
+        Rate: 2
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 25150
+    AegisName: Ichthyousaur
+    Name: Ichthyousaur
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 3758
+    AegisName: KENNY
+    Name: KENNY
+    Level: 90
+    Hp: 61282
+    BaseExp: 200000
+    Attack: 1300
+    Attack2: 2053
+    Defense: 35
+    MagicDefense: 60
+    Str: 60
+    Agi: 99
+    Vit: 97
+    Int: 145
+    Dex: 250
+    Luk: 40
+    AttackRange: 5
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 220
+    AttackDelay: 1152
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Sword_Breaker
+        Rate: 2
+      - Item: Elunium
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 20403
+    AegisName: EMPELIUM_
+    Name: Spirit Stone
+    JapaneseName: Spirit_Stone
+    Level: 90
+    Hp: 100000
+    Attack: 1
+    Attack2: 2
+    Defense: 40
+    MagicDefense: 50
+    Agi: 17
+    Vit: 80
+    Int: 50
+    Dex: 26
+    Luk: 20
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Class: Boss
+  - Id: 2200
+    AegisName: TREASURE_BOX_E
+    Name: Treasure Chest
+    JapaneseName: Treasure_Chest
+    Level: 99
+    Dex: 999
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Class: Boss
+    Drops:
+      - Item: Feather_Of_Angel
+        Rate: 4
+      - Item: Symbol_Of_Sun
+        Rate: 4
+      - Item: Root_Of_Stone
+        Rate: 4
+      - Item: Saliva_Of_Bird
+        Rate: 4
+      - Item: Anger_Of_Valkurye
+        Rate: 4
+      - Item: Rough_Billows
+        Rate: 4
+      - Item: Yggdrasilberry_Box_
+        Rate: 100
+      - Item: War_Badge_box
+        Rate: 1000
+        StealProtected: true
+      - Item: Old_Card_Album
+        Rate: 1000
+        StealProtected: true
+  - Id: 2201
+    AegisName: TREASURE_BOX_F
+    Name: Treasure Chest
+    JapaneseName: Treasure_Chest
+    Level: 99
+    Dex: 999
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Class: Boss
+    Drops:
+      - Item: Iron_Maiden
+        Rate: 4
+      - Item: Mystery_Wheel
+        Rate: 4
+      - Item: Breath_Of_Soul
+        Rate: 4
+      - Item: Foot_Step_Of_Cat
+        Rate: 4
+      - Item: Beard_Of_Women
+        Rate: 4
+      - Item: Indication_Of_Tempest
+        Rate: 4
+      - Item: Crystal_Of_Snow
+        Rate: 4
+      - Item: War_Badge_box
+        Rate: 1000
+        StealProtected: true
+      - Item: Old_Card_Album
+        Rate: 1000
+        StealProtected: true
+  - Id: 2202
+    AegisName: TREASURE_BOX_G
+    Name: Treasure Chest
+    JapaneseName: Treasure_Chest
+    Level: 99
+    Dex: 999
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Class: Boss
+    Drops:
+      - Item: Iron_Maiden
+        Rate: 4
+      - Item: Air_Stream
+        Rate: 4
+      - Item: Slilince_Wave
+        Rate: 4
+      - Item: Jewel_Of_Prayer
+        Rate: 4
+      - Item: Silver_Fancy
+        Rate: 4
+      - Item: Tendon_Of_Bear
+        Rate: 4
+      - Item: Soul_Of_Fish
+        Rate: 4
+      - Item: War_Badge_box
+        Rate: 1000
+        StealProtected: true
+      - Item: Old_Card_Album
+        Rate: 1000
+        StealProtected: true
+  - Id: 2203
+    AegisName: TREASURE_BOX_H
+    Name: Treasure Chest
+    JapaneseName: Treasure_Chest
+    Level: 99
+    Dex: 999
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Class: Boss
+    Drops:
+      - Item: Yggdrasilberry_Box_
+        Rate: 100
+      - Item: Elite_Siege_Supply_Box
+        Rate: 100
+      - Item: Poison_Bottle_30_Box
+        Rate: 160
+      - Item: Acidbomb_10_Box
+        Rate: 160
+      - Item: Convex_Mirror
+        Rate: 40
+      - Item: Bloody_Dead_Branch
+        Rate: 40
+      - Item: Granpa_Beard_F
+        Rate: 12
+      - Item: War_Badge_box
+        Rate: 1000
+        StealProtected: true
+      - Item: Old_Card_Album
+        Rate: 1000
+        StealProtected: true
+  - Id: 3759
+    AegisName: MORTIS
+    Name: MORTIS
+    Level: 98
+    Hp: 85199
+    BaseExp: 200000
+    Attack: 2020
+    Attack2: 2320
+    Defense: 23
+    MagicDefense: 12
+    Str: 186
+    Agi: 138
+    Vit: 31
+    Int: 19
+    Dex: 250
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demon
+    Element: Poison
+    ElementLevel: 4
+    WalkSpeed: 180
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Poison_Bottle
+        Rate: 45
+      - Item: Acid_Bottle
+        Rate: 45
+      - Item: Fire_Bottle
+        Rate: 45
+      - Item: Coating_Bottle
+        Rate: 20
+      - Item: Siege_Blue_Potion
+        Rate: 200
+      - Item: Siege_White_Potion
+        Rate: 350
+      - Item: Executioner_
+        Rate: 2
+      - Item: Oridecon
+        Rate: 1000
+        StealProtected: true
+      - Item: Token_Of_Siegfried
+        Rate: 2
+        StealProtected: true
+  - Id: 3760
+    AegisName: PHANTOM
+    Name: PHANTOM
+    Level: 98
+    Hp: 135000
+    BaseExp: 200000
+    Attack: 497
+    Attack2: 1697
+    Defense: 10
+    MagicDefense: 74
+    Agi: 5
+    Vit: 77
+    Int: 99
+    Dex: 250
+    Luk: 39
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 180
+    AttackDelay: 76
+    AttackMotion: 384
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+  - Id: 2322
+    AegisName: BAKONAWA_3
+    Name: Bakonawa
+    Level: 156
+    Hp: 100000000
+    BaseExp: 2510111
+    JobExp: 2345151
+    Attack: 9600
+    Attack2: 5000
+    Defense: 127
+    Str: 251
+    Agi: 134
+    Vit: 30
+    Int: 194
+    Dex: 237
+    Luk: 66
+    AttackRange: 10
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Dragon
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 1000
+    AttackDelay: 440
+    AttackMotion: 672
+    DamageMotion: 432
+    Ai: 10
+    Class: Boss
+  - Id: 2007
+    AegisName: EMPELIUM_C
+    Name: Emperium
+    Level: 90
+    Hp: 68430
+    Attack: 60
+    Attack2: 71
+    Defense: 40
+    MagicDefense: 50
+    Agi: 17
+    Vit: 80
+    Int: 50
+    Dex: 26
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Class: Boss
+  - Id: 2005
+    AegisName: T_PLASMA_B
+    Name: Plasma
+    Level: 44
+    Hp: 8200
+    Attack: 300
+    Attack2: 700
+    MagicDefense: 30
+    Agi: 30
+    Vit: 5
+    Int: 73
+    Dex: 90
+    Luk: 30
+    AttackRange: 3
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 608
+    AttackMotion: 1440
+    DamageMotion: 576
+    Modes:
+      NoRandomWalk: true
+  - Id: 2006
+    AegisName: T_PLASMA_P
+    Name: Plasma
+    Level: 49
+    Hp: 5900
+    Attack: 300
+    Attack2: 700
+    MagicDefense: 30
+    Agi: 30
+    Vit: 5
+    Int: 54
+    Dex: 90
+    Luk: 30
+    AttackRange: 3
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 608
+    AttackMotion: 1440
+    DamageMotion: 576
+    Modes:
+      NoRandomWalk: true
+  - Id: 25001
+    AegisName: G_RANDGRIS
+    Name: Fallen Angel
+    Level: 99
+    Hp: 333333
+    Attack: 5560
+    Attack2: 9980
+    Defense: 25
+    MagicDefense: 42
+    Str: 100
+    Agi: 120
+    Vit: 80
+    Int: 120
+    Dex: 220
+    Luk: 210
+    AttackRange: 3
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+  - Id: 25002
+    AegisName: KASA
+    Name: Infernal Vulture
+    Level: 85
+    Hp: 66666
+    Attack: 3030
+    Attack2: 3500
+    Defense: 23
+    MagicDefense: 70
+    Str: 45
+    Agi: 110
+    Vit: 31
+    Int: 200
+    Dex: 140
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Formless
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 800
+    AttackMotion: 600
+    DamageMotion: 288
+    Ai: 21
+    Class: Boss
+  - Id: 25003
+    AegisName: IMP
+    Name: Infernal Imp
+    Level: 76
+    Hp: 66666
+    Attack: 1059
+    Attack2: 1509
+    Defense: 27
+    MagicDefense: 50
+    Str: 37
+    Agi: 76
+    Vit: 30
+    Int: 150
+    Dex: 99
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Demon
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 824
+    AttackMotion: 432
+    DamageMotion: 360
+    Ai: 20
+    Modes:
+      Detector: true
+  - Id: 25004
+    AegisName: ENTWEIHEN
+    Name: Guardian
+    Level: 90
+    Hp: 66666
+    Attack: 32000
+    Attack2: 40000
+    Defense: 44
+    MagicDefense: 66
+    Agi: 70
+    Vit: 40
+    Int: 250
+    Dex: 220
+    Luk: 30
+    AttackRange: 12
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 4
+    AttackDelay: 140
+    AttackMotion: 540
+    DamageMotion: 576
+    Ai: 10
+    Class: Boss
+  - Id: 25000
+    AegisName: LOTF
+    Name: Lord of the Fallen
+    Level: 156
+    Hp: 666666
+    BaseExp: 66666
+    Attack: 9600
+    Attack2: 5000
+    Defense: 127
+    Str: 251
+    Agi: 134
+    Vit: 30
+    Int: 194
+    Dex: 237
+    Luk: 66
+    AttackRange: 10
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Dragon
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 1000
+    AttackDelay: 440
+    AttackMotion: 672
+    DamageMotion: 432
+    Ai: 10
+    Class: Boss
+  - Id: 25005
+    AegisName: TREASURE_BOX28
+    Name: Loot Chest
+    Level: 255
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Class: Boss
+  - Id: 25006
+    AegisName: 4_M_DIEMAN
+    Name: Dead Body
+    Level: 1
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Class: Boss
+  - Id: 25116
+    AegisName: Chibcha
+    Name: Chibcha
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 19
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25162
+    AegisName: Leggy_Tadpole
+    Name: Leggy_Tadpole
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 3038
+    AegisName: HOLLOW_PORING
+    Name: Hollow Poring
+    Level: 1
+    Hp: 50
+    BaseExp: 2
+    JobExp: 1
+    Attack: 7
+    Attack2: 10
+    MagicDefense: 5
+    Dex: 6
+    Luk: 30
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+  - Id: 3700
+    AegisName: Mani
+    Name: Mani
+    Level: 180
+    Hp: 1000000
+    Sp: 5000
+    Attack: 16000
+    Attack2: 5000
+    Defense: 90
+    MagicDefense: 90
+    Str: 150
+    Agi: 150
+    Vit: 150
+    Int: 150
+    Dex: 150
+    Luk: 150
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 220
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3701
+    AegisName: Wolf Demon
+    Name: Wolf Demon
+    Level: 80
+    Hp: 95000
+    Sp: 50
+    Attack: 5200
+    Attack2: 2000
+    Defense: 15
+    MagicDefense: 20
+    Str: 80
+    Agi: 53
+    Vit: 20
+    Int: 55
+    Dex: 65
+    Luk: 20
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Brute
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 90
+    AttackDelay: 280
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3702
+    AegisName: Mercenary Merchant
+    Name: Mercenary Merchant
+    Level: 35
+    Hp: 5200
+    Sp: 50
+    Attack: 1800
+    Attack2: 600
+    Defense: 40
+    MagicDefense: 12
+    Str: 60
+    Agi: 30
+    Vit: 20
+    Int: 10
+    Dex: 50
+    Luk: 90
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 570
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3703
+    AegisName: Master Mercenary
+    Name: Master Mercenary
+    Level: 70
+    Hp: 16020
+    Sp: 50
+    Attack: 4200
+    Attack2: 1200
+    Defense: 30
+    MagicDefense: 40
+    Str: 99
+    Agi: 20
+    Vit: 20
+    Int: 15
+    Dex: 16
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 480
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3704
+    AegisName: Monmouth
+    Name: Monmouth
+    Level: 102
+    Hp: 920000
+    Sp: 5000
+    Attack: 22000
+    Attack2: 7000
+    Defense: 80
+    MagicDefense: 25
+    Str: 200
+    Agi: 20
+    Vit: 99
+    Int: 10
+    Dex: 75
+    Luk: 10
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Dragon
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 720
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3705
+    AegisName: Member of the Family
+    Name: Member of the Family
+    Level: 35
+    Hp: 4800
+    Sp: 250
+    Attack: 1200
+    Attack2: 200
+    Defense: 30
+    MagicDefense: 20
+    Str: 65
+    Agi: 30
+    Vit: 20
+    Int: 12
+    Dex: 56
+    Luk: 80
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 120
+    AttackDelay: 560
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3706
+    AegisName: Franky
+    Name: Franky
+    Level: 80
+    Hp: 130520
+    Sp: 500
+    Attack: 13000
+    Attack2: 5000
+    Defense: 80
+    MagicDefense: 20
+    Str: 75
+    Agi: 35
+    Vit: 20
+    Int: 50
+    Dex: 99
+    Luk: 120
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 480
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3707
+    AegisName: Franky's Brother
+    Name: Franky's Brother
+    Level: 90
+    Hp: 80000
+    Sp: 400
+    Attack: 6200
+    Attack2: 1000
+    Defense: 50
+    MagicDefense: 20
+    Str: 80
+    Agi: 50
+    Vit: 50
+    Int: 10
+    Dex: 80
+    Luk: 120
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 570
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3708
+    AegisName: Franky's Mother
+    Name: Franky's Mother
+    Level: 98
+    Hp: 120000
+    Sp: 400
+    Attack: 7500
+    Attack2: 3200
+    Defense: 20
+    MagicDefense: 35
+    Str: 85
+    Agi: 20
+    Vit: 20
+    Int: 20
+    Dex: 53
+    Luk: 99
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 620
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3709
+    AegisName: Franky's Cousin
+    Name: Franky's Cousin
+    Level: 99
+    Hp: 75000
+    Sp: 3000
+    Attack: 5600
+    Attack2: 2300
+    Defense: 80
+    Str: 75
+    Agi: 30
+    Vit: 50
+    Int: 50
+    Dex: 20
+    Luk: 10
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 460
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3710
+    AegisName: Franky's Uncle
+    Name: Franky's Uncle
+    Level: 90
+    Hp: 130000
+    Sp: 50
+    Attack: 8000
+    Attack2: 5000
+    Defense: 30
+    MagicDefense: 45
+    Str: 99
+    Agi: 50
+    Vit: 99
+    Int: 55
+    Dex: 30
+    Luk: 20
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 120
+    AttackDelay: 390
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+  - Id: 3762
+    AegisName: BOAT
+    Name: BOAT
+    Level: 90
+    Hp: 100000
+    Attack: 60
+    Attack2: 71
+    Defense: 40
+    MagicDefense: 50
+    Agi: 17
+    Vit: 80
+    Int: 50
+    Dex: 26
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Modes:
+      NoRandomWalk: true
+  - Id: 3763
+    AegisName: ARCHER_GUARDIAN2
+    Name: Archer Guardian
+    Level: 110
+    Hp: 120000
+    BaseExp: 1
+    JobExp: 1
+    Attack: 1120
+    Attack2: 1600
+    Defense: 35
+    MagicDefense: 60
+    Str: 95
+    Agi: 80
+    Vit: 80
+    Int: 90
+    Dex: 165
+    Luk: 55
+    AttackRange: 12
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 265
+    AttackDelay: 1200
+    AttackMotion: 1200
+    DamageMotion: 384
+    Ai: 05
+    Modes:
+      NoRandomWalk: true
+  - Id: 3764
+    AegisName: KNIGHT_GUARDIAN2
+    Name: Knight Guardian
+    Level: 160
+    Hp: 130000
+    BaseExp: 1
+    JobExp: 1
+    Attack: 1280
+    Attack2: 1560
+    Defense: 55
+    MagicDefense: 30
+    Str: 110
+    Agi: 40
+    Vit: 140
+    Int: 65
+    Dex: 125
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 275
+    AttackDelay: 1200
+    AttackMotion: 1200
+    DamageMotion: 384
+    Ai: 05
+    Modes:
+      NoRandomWalk: true
+  - Id: 3765
+    AegisName: SOLDIER_GUARDIAN2
+    Name: Soldier Guardian
+    Level: 100
+    Hp: 115000
+    BaseExp: 1
+    JobExp: 1
+    Attack: 873
+    Attack2: 1036
+    Defense: 35
+    Str: 85
+    Agi: 56
+    Vit: 100
+    Int: 45
+    Dex: 103
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 265
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 05
+    Modes:
+      NoRandomWalk: true
+  - Id: 3768
+    AegisName: TREASURE_BOX52
+    Name: Treasure Chest
+    Level: 99
+    Dex: 255
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Modes:
+      NoRandomWalk: true
+    Drops:
+      - Item: Yggdrasilberry
+        Rate: 80
+      - Item: Seed_Of_Yggdrasil
+        Rate: 500
+      - Item: Old_Card_Album
+        Rate: 10000
+      - Item: Gold
+        Rate: 4850
+      - Item: Valkyrja's_Shield
+        Rate: 7275
+      - Item: Valkyrie_Armor
+        Rate: 1500
+      - Item: Valkyrie_Shoes
+        Rate: 75
+      - Item: Valkyrie_Manteau
+        Rate: 8
+        StealProtected: true
+  - Id: 3767
+    AegisName: TREASURE_BOX51
+    Name: Treasure Chest
+    Level: 99
+    Dex: 255
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Modes:
+      NoRandomWalk: true
+    Drops:
+      - Item: Yggdrasilberry
+        Rate: 80
+      - Item: Seed_Of_Yggdrasil
+        Rate: 500
+      - Item: Old_Card_Album
+        Rate: 10000
+      - Item: Treasure_Box
+        Rate: 4850
+      - Item: Stone_Buckler
+        Rate: 7275
+      - Item: Odin's_Blessing
+        Rate: 1500
+      - Item: Vidar's_Boots
+        Rate: 75
+      - Item: Falcon_Robe
+        Rate: 8
+        StealProtected: true
+  - Id: 3766
+    AegisName: TREASURE_BOX50
+    Name: Treasure Chest
+    Level: 99
+    Dex: 255
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    Modes:
+      NoRandomWalk: true
+    Drops:
+      - Item: Yggdrasilberry
+        Rate: 80
+      - Item: Seed_Of_Yggdrasil
+        Rate: 500
+      - Item: Old_Card_Album
+        Rate: 10000
+      - Item: Crystal_Jewel__
+        Rate: 4850
+      - Item: Buckler_
+        Rate: 7275
+      - Item: Chain_Mail_
+        Rate: 1500
+      - Item: Shoes_
+        Rate: 75
+      - Item: Muffler_
+        Rate: 8
+        StealProtected: true
+  - Id: 1900
+    AegisName: Carleton
+    Name: Carleton
+    Level: 25
+    Hp: 600
+    Attack: 100
+    Attack2: 150
+    Defense: 5
+    MagicDefense: 1
+    Str: 10
+    Agi: 20
+    Dex: 22
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 570
+    AttackMotion: 2040
+    DamageMotion: 336
+    Ai: 10
+    Modes:
+      CanMove: true
+      Assist: true
+      CastSensorChase: true
+  - Id: 25181
+    AegisName: Mud_Bigfoot
+    Name: Mud_Bigfoot
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 22
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25180
+    AegisName: Moss_Moth
+    Name: Moss_Moth
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25179
+    AegisName: Monkeya
+    Name: Monkeya
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25178
+    AegisName: Mingo
+    Name: Mingo
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 20
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25177
+    AegisName: Merrow
+    Name: Merrow
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 29
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25176
+    AegisName: Merman_Ale
+    Name: Merman_Ale
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25175
+    AegisName: Merman_Aku
+    Name: Merman_Aku
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25174
+    AegisName: Mermaid_Little
+    Name: Mermaid_Little
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25173
+    AegisName: Master_Mong
+    Name: Master_Mong
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25172
+    AegisName: Master_Foe
+    Name: Master_Foe
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25171
+    AegisName: Maro_Toy
+    Name: Maro_Toy
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25170
+    AegisName: Marie_Toy
+    Name: Marie_Toy
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25169
+    AegisName: Mandragora_
+    Name: Mandragora_
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 22
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25168
+    AegisName: Maiden_Ghost
+    Name: Maiden_Ghost
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25167
+    AegisName: Madame_Chiffon
+    Name: Madame_Chiffon
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25166
+    AegisName: Lotus_Wormhole
+    Name: Lotus_Wormhole
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25165
+    AegisName: Little_Cora
+    Name: Little_Cora
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25164
+    AegisName: Lima
+    Name: Lima
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25163
+    AegisName: Leviathan
+    Name: Leviathan
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 22
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25161
+    AegisName: Leaf_Bird
+    Name: Leaf_Bird
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25160
+    AegisName: Leader_Toy
+    Name: Leader_Toy
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 23
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25159
+    AegisName: Larva
+    Name: Larva
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25158
+    AegisName: Koom
+    Name: Koom
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 21
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25157
+    AegisName: Kokebi
+    Name: Kokebi
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 21
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25156
+    AegisName: Keeper
+    Name: Keeper
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25155
+    AegisName: Kaboom
+    Name: Kaboom
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 28
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25154
+    AegisName: Joker_
+    Name: Joker_
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25153
+    AegisName: Jellyfish
+    Name: Jellyfish
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 25
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25152
+    AegisName: Ironclad_Turtle
+    Name: Ironclad_Turtle
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 17
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25151
+    AegisName: Inky_Muck
+    Name: Inky_Muck
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 25
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25149
+    AegisName: Halli
+    Name: Halli
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 20
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25148
+    AegisName: Guiana
+    Name: Guiana
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25147
+    AegisName: Goma
+    Name: Goma
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25146
+    AegisName: Golden_Mole
+    Name: Golden_Mole
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 21
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25145
+    AegisName: Ghost_Book
+    Name: Ghost_Book
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25144
+    AegisName: Gentle_Sting
+    Name: Gentle_Sting
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 19
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25143
+    AegisName: Frozen_Corpse
+    Name: Frozen_Corpse
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 29
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25142
+    AegisName: Fossil_Soldier
+    Name: Fossil_Soldier
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25141
+    AegisName: Forest_Wasp
+    Name: Forest_Wasp
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 23
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25140
+    AegisName: Forest_Tickler
+    Name: Forest_Tickler
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25139
+    AegisName: Forest_Mantis
+    Name: Forest_Mantis
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25138
+    AegisName: Flat_Salamander
+    Name: Flat_Salamander
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25137
+    AegisName: fire_poring
+    Name: fire_poring
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25136
+    AegisName: Fire_Moth
+    Name: Fire_Moth
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 20
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25135
+    AegisName: Fanta_Slime
+    Name: Fanta_Slime
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25134
+    AegisName: Fanta_Fish
+    Name: Fanta_Fish
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 30
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25133
+    AegisName: Fan_Lizard
+    Name: Fan_Lizard
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 27
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25132
+    AegisName: Fabilsag
+    Name: Fabilsag
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25131
+    AegisName: Electric_Snail
+    Name: Electric_Snail
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25130
+    AegisName: Egg_Specter
+    Name: Egg_Specter
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25129
+    AegisName: Dark_Hollow
+    Name: Dark_Hollow
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 20
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25128
+    AegisName: Dancer_Michel
+    Name: Dancer_Michel
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25127
+    AegisName: Dancer_Isabelle
+    Name: Dancer_Isabelle
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 27
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25126
+    AegisName: Curse_Straw
+    Name: Curse_Straw
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25125
+    AegisName: Cucool
+    Name: Cucool
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25124
+    AegisName: Crow
+    Name: Crow
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25123
+    AegisName: Cora_Pyupyu
+    Name: Cora_Pyupyu
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25122
+    AegisName: Cone_Stone
+    Name: Cone_Stone
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 30
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25121
+    AegisName: Cobra_Flower
+    Name: Cobra_Flower
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 19
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25120
+    AegisName: Clione
+    Name: Clione
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25119
+    AegisName: Chipmunk
+    Name: Chipmunk
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 30
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25118
+    AegisName: Chimu
+    Name: Chimu
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25117
+    AegisName: Chickensaurus
+    Name: Chickensaurus
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 14
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25115
+    AegisName: Chameleon_Frog
+    Name: Chameleon_Frog
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25114
+    AegisName: Captain_Skull
+    Name: Captain_Skull
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 23
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25113
+    AegisName: Captain_Norman
+    Name: Captain_Norman
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 30
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25112
+    AegisName: Captain_Charman
+    Name: Captain_Charman
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25111
+    AegisName: Captain_Arman
+    Name: Captain_Arman
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 14
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25110
+    AegisName: Cannon_Shell
+    Name: Cannon_Shell
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 30
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25109
+    AegisName: Bustshell
+    Name: Bustshell
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25108
+    AegisName: Bug_Bear
+    Name: Bug_Bear
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 21
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25107
+    AegisName: Bron_G
+    Name: Bron_G
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 25
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25106
+    AegisName: Bell
+    Name: Bell
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25105
+    AegisName: Beast_Vincento
+    Name: Beast_Vincento
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 19
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25104
+    AegisName: Bad_Fury
+    Name: Bad_Fury
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 27
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25103
+    AegisName: Armor_Squirt
+    Name: Armor_Squirt
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 2131
+    AegisName: LOST_DRAGON
+    Name: Lost Dragon
+    Level: 65
+    Hp: 608920
+    BaseExp: 12000
+    JobExp: 12000
+    MvpExp: 15000
+    Attack: 800
+    Attack2: 950
+    Defense: 60
+    MagicDefense: 51
+    Str: 140
+    Agi: 81
+    Vit: 69
+    Int: 122
+    Dex: 98
+    Luk: 61
+    AttackRange: 3
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 840
+    AttackMotion: 648
+    DamageMotion: 576
+    Ai: 21
+  - Id: 2132
+    AegisName: POM_SPIDER
+    Name: Pom Spider
+    Level: 5
+    Hp: 169
+    BaseExp: 10
+    JobExp: 11
+    Attack: 10
+    Attack2: 6
+    Agi: 4
+    Vit: 8
+    Int: 10
+    Dex: 17
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 1056
+    DamageMotion: 576
+    Ai: 03
+  - Id: 2133
+    AegisName: ANGRA_MANTIS
+    Name: Angra Mantis
+    Level: 3
+    Hp: 90
+    BaseExp: 6
+    JobExp: 5
+    Attack: 8
+    Attack2: 12
+    Agi: 4
+    Vit: 8
+    Int: 5
+    Dex: 12
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 120
+    AttackDelay: 1200
+    AttackMotion: 480
+    DamageMotion: 480
+    Ai: 03
+  - Id: 2134
+    AegisName: PARUS
+    Name: Parus
+    Level: 2
+    Hp: 63
+    BaseExp: 3
+    JobExp: 5
+    Attack: 8
+    Attack2: 11
+    Agi: 2
+    Vit: 4
+    Dex: 7
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 180
+    AttackDelay: 1500
+    AttackMotion: 792
+    DamageMotion: 432
+    Ai: 03
+  - Id: 2135
+    AegisName: CREEPER
+    Name: Creeper
+    Level: 2
+    Hp: 300
+    BaseExp: 6
+    JobExp: 8
+    Attack: 7
+    Attack2: 2
+    MagicDefense: 20
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1500
+    AttackMotion: 192
+    DamageMotion: 576
+    Ai: 03
+  - Id: 2136
+    AegisName: LITTLE_FATUM
+    Name: Little Fatum
+    Level: 3
+    Hp: 92
+    BaseExp: 6
+    JobExp: 5
+    Attack: 9
+    Attack2: 14
+    Agi: 13
+    Vit: 5
+    Dex: 13
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 1600
+    AttackMotion: 300
+    DamageMotion: 432
+    Ai: 03
+  - Id: 2137
+    AegisName: MIMING
+    Name: Miming
+    Level: 2
+    Hp: 60
+    BaseExp: 5
+    JobExp: 2
+    Attack: 8
+    Attack2: 6
+    MagicDefense: 10
+    Vit: 8
+    Int: 30
+    Dex: 9
+    Luk: 4
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 1600
+    AttackMotion: 1140
+    DamageMotion: 800
+    Ai: 03
+  - Id: 2138
+    AegisName: NYDHOG_MEMORY1_1
+    Name: Nydhoggur Memory
+    JapaneseName: Nydhogg's Memory
+    Level: 4
+    Hp: 67
+    BaseExp: 5
+    JobExp: 4
+    Attack: 10
+    Attack2: 13
+    Defense: 10
+    Agi: 10
+    Vit: 4
+    Int: 5
+    Dex: 12
+    Luk: 2
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1248
+    AttackMotion: 576
+    DamageMotion: 1248
+    Ai: 25
+    Modes:
+      NoCast: true
+      NoRandomWalk: true
+  - Id: 2139
+    AegisName: NYDHOG_MEMORY1_2
+    Name: Nydhoggur Memory
+    JapaneseName: Nydhogg's Memory
+    Level: 5
+    Hp: 133
+    BaseExp: 6
+    JobExp: 5
+    Attack: 11
+    Attack2: 14
+    MagicDefense: 5
+    Agi: 5
+    Vit: 5
+    Int: 5
+    Dex: 10
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1248
+    AttackMotion: 576
+    DamageMotion: 1248
+    Ai: 25
+    Modes:
+      NoCast: true
+      NoRandomWalk: true
+  - Id: 2140
+    AegisName: NYDHOG_MEMORY2_1
+    Name: Nydhoggur Memory
+    JapaneseName: Nydhogg's Memory
+    Level: 12
+    Hp: 405
+    BaseExp: 45
+    JobExp: 32
+    Attack: 26
+    Attack2: 35
+    MagicDefense: 25
+    Agi: 12
+    Vit: 24
+    Dex: 36
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1248
+    AttackMotion: 576
+    DamageMotion: 1248
+    Ai: 25
+    Modes:
+      NoCast: true
+      NoRandomWalk: true
+  - Id: 2141
+    AegisName: NYDHOG_MEMORY2_2
+    Name: Nydhoggur Memory
+    JapaneseName: Nydhogg's Memory
+    Level: 24
+    Hp: 1400
+    BaseExp: 408
+    JobExp: 160
+    Attack: 104
+    Attack2: 126
+    Defense: 10
+    MagicDefense: 5
+    Agi: 24
+    Vit: 48
+    Int: 25
+    Dex: 34
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1248
+    AttackMotion: 576
+    DamageMotion: 1248
+    Ai: 25
+    Modes:
+      NoCast: true
+      NoRandomWalk: true
+  - Id: 2142
+    AegisName: NYDHOG_MEMORY3_1
+    Name: Nydhoggur Memory
+    JapaneseName: Nydhogg's Memory
+    Level: 14
+    Hp: 426
+    BaseExp: 59
+    JobExp: 40
+    Attack: 42
+    Attack2: 51
+    Defense: 5
+    Agi: 14
+    Vit: 28
+    Int: 5
+    Dex: 46
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1248
+    AttackMotion: 576
+    DamageMotion: 1248
+    Ai: 25
+    Modes:
+      NoCast: true
+      NoRandomWalk: true
+  - Id: 2143
+    AegisName: NYDHOG_MEMORY3_2
+    Name: Nydhoggur Memory
+    JapaneseName: Nydhogg's Memory
+    Level: 14
+    Hp: 344
+    BaseExp: 81
+    JobExp: 44
+    Attack: 60
+    Attack2: 72
+    MagicDefense: 10
+    Agi: 14
+    Vit: 14
+    Dex: 19
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1248
+    AttackMotion: 576
+    DamageMotion: 1248
+    Ai: 25
+    Modes:
+      NoCast: true
+      NoRandomWalk: true
+  - Id: 2144
+    AegisName: G_ANTLER_SCARABA
+    Name: Antler Scaraba
+    Level: 3
+    Hp: 420
+    BaseExp: 4
+    JobExp: 4
+    Attack: 13
+    Attack2: 15
+    Defense: 20
+    MagicDefense: 20
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 504
+    AttackMotion: 624
+    DamageMotion: 360
+    Ai: 04
+    Modes:
+      {}
+  - Id: 2145
+    AegisName: G_RAKE_SCARABA
+    Name: Rake Scaraba
+    Level: 4
+    Hp: 48
+    BaseExp: 8
+    JobExp: 4
+    Attack: 13
+    Attack2: 17
+    Defense: 20
+    Agi: 6
+    Vit: 4
+    Dex: 14
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 588
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 04
+    Modes:
+      {}
+  - Id: 2146
+    AegisName: G_S_NYDHOG
+    Name: Shade of Dragon
+    JapaneseName: G_S_NYDHOG
+    Level: 3
+    Hp: 80
+    BaseExp: 4
+    JobExp: 3
+    Attack: 9
+    Attack2: 12
+    Agi: 3
+    Vit: 3
+    Int: 5
+    Dex: 10
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Dragon
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 1596
+    AttackMotion: 1620
+    DamageMotion: 864
+    Ai: 21
+    Modes:
+      NoRandomWalk: true
+  - Id: 2147
+    AegisName: E_WHITE_PLANT
+    Name: White Plant
+    Level: 4
+    Hp: 83
+    BaseExp: 5
+    JobExp: 4
+    Attack: 8
+    Attack2: 11
+    Defense: 20
+    Agi: 3
+    Vit: 3
+    Int: 10
+    Dex: 11
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2148
+    AegisName: E_BLUE_PLANT
+    Name: Blue Plant
+    Level: 6
+    Hp: 126
+    BaseExp: 17
+    JobExp: 5
+    Attack: 18
+    Attack2: 24
+    Defense: 5
+    Agi: 6
+    Vit: 6
+    Dex: 11
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2149
+    AegisName: E_SAVAGE_BABE
+    Name: Savage Babe
+    Level: 9
+    Hp: 198
+    BaseExp: 20
+    JobExp: 16
+    Attack: 24
+    Attack2: 29
+    Defense: 5
+    MagicDefense: 10
+    Agi: 9
+    Vit: 18
+    Int: 10
+    Dex: 14
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2150
+    AegisName: WATERMELON
+    Name: Ripe Watermelon
+    JapaneseName: Watermelon
+    Level: 10
+    Hp: 170
+    BaseExp: 35
+    JobExp: 18
+    Attack: 33
+    Attack2: 40
+    Defense: 5
+    MagicDefense: 5
+    Agi: 15
+    Vit: 10
+    Int: 5
+    Dex: 23
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Modes:
+      NoCast: true
+  - Id: 2210
+    AegisName: XMAS_LUNATIC
+    Name: Christmas Snow Rabbit
+    JapaneseName: Xmas Lunatic
+    Level: 1
+    Hp: 60
+    BaseExp: 27
+    JobExp: 20
+    Attack: 8
+    Attack2: 9
+    Defense: 2
+    MagicDefense: 5
+    Str: 6
+    Dex: 6
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+  - Id: 2313
+    AegisName: TIKBALANG
+    Name: Tikbalang
+    Level: 115
+    Hp: 22131
+    BaseExp: 1756
+    JobExp: 1351
+    Attack: 781
+    Attack2: 896
+    Defense: 84
+    MagicDefense: 34
+    Str: 71
+    Agi: 52
+    Vit: 84
+    Int: 44
+    Dex: 64
+    Luk: 46
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Brute
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 1064
+    AttackMotion: 936
+    DamageMotion: 360
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Oridecon
+        Rate: 10
+  - Id: 2398
+    AegisName: LITTLE_PORING
+    Name: Little Poring
+    Level: 1
+    Hp: 40
+    BaseExp: 18
+    JobExp: 10
+    Attack: 8
+    Attack2: 9
+    Defense: 2
+    MagicDefense: 5
+    Str: 6
+    Dex: 6
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 9000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 1000
+      - Item: Apple
+        Rate: 5000
+      - Item: Red_Herb
+        Rate: 1000
+      - Item: Apple
+        Rate: 500
+      - Item: Red_Herb
+        Rate: 1000
+  - Id: 2363
+    AegisName: MENBLATT
+    Name: Menblatt
+    Level: 143
+    Hp: 82200
+    BaseExp: 4150
+    JobExp: 3421
+    Attack: 816
+    Attack2: 1017
+    Defense: 79
+    MagicDefense: 50
+    Str: 70
+    Agi: 68
+    Vit: 40
+    Int: 55
+    Dex: 108
+    Luk: 30
+    AttackRange: 3
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Insect
+    Element: Wind
+    ElementLevel: 2
+    WalkSpeed: 145
+    AttackDelay: 472
+    AttackMotion: 1056
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Apple
+        Rate: 4000
+      - Item: Great_Wing
+        Rate: 2000
+      - Item: Sharp_Feeler
+        Rate: 4608
+  - Id: 2364
+    AegisName: PETAL
+    Name: Petal
+    Level: 141
+    Hp: 81031
+    BaseExp: 4058
+    JobExp: 3361
+    Attack: 671
+    Attack2: 844
+    Defense: 73
+    MagicDefense: 33
+    Str: 70
+    Agi: 82
+    Vit: 55
+    Int: 45
+    Dex: 108
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Medium
+    Race: Brute
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1500
+    AttackMotion: 768
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Apple
+        Rate: 4000
+      - Item: Unripe_Acorn
+        Rate: 2000
+      - Item: Acorn
+        Rate: 2000
+      - Item: Piece_Of_Darkness
+        Rate: 500
+  - Id: 2365
+    AegisName: CENERE
+    Name: Cenere
+    Level: 146
+    Hp: 130131
+    BaseExp: 7117
+    JobExp: 5712
+    Attack: 1802
+    Attack2: 2833
+    Defense: 87
+    MagicDefense: 81
+    Str: 67
+    Agi: 39
+    Vit: 30
+    Int: 35
+    Dex: 95
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Plant
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1500
+    AttackMotion: 720
+    DamageMotion: 360
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Apple
+        Rate: 4000
+      - Item: Poisonous_Gas
+        Rate: 1000
+      - Item: Mould_Powder
+        Rate: 3000
+      - Item: Air_Pollutant
+        Rate: 2000
+  - Id: 2366
+    AegisName: ANTIQUE_BOOK
+    Name: Antique Book
+    Level: 148
+    Hp: 134615
+    BaseExp: 7225
+    JobExp: 5870
+    Attack: 1861
+    Attack2: 3074
+    Defense: 74
+    MagicDefense: 42
+    Str: 67
+    Agi: 53
+    Vit: 32
+    Int: 44
+    Dex: 125
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 864
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Apple
+        Rate: 4000
+      - Item: Bookclip_In_Memory
+        Rate: 2000
+      - Item: Worn_Out_Page
+        Rate: 2000
+  - Id: 2367
+    AegisName: LICHTERN_B
+    Name: Lichtern
+    JapaneseName: Blue Lichtern
+    Level: 149
+    Hp: 131211
+    BaseExp: 7187
+    JobExp: 5701
+    Attack: 1513
+    Attack2: 2923
+    Defense: 76
+    MagicDefense: 41
+    Str: 124
+    Agi: 74
+    Vit: 60
+    Int: 55
+    Dex: 92
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 480
+    AttackMotion: 1728
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Star_Crumb
+        Rate: 2000
+      - Item: Sparkling_Dust
+        Rate: 2000
+      - Item: Mistic_Frozen
+        Rate: 40
+      - Item: Apple
+        Rate: 10
+  - Id: 2368
+    AegisName: LICHTERN_Y
+    Name: Lichtern
+    JapaneseName: Yellow Lichtern
+    Level: 147
+    Hp: 131513
+    BaseExp: 7071
+    JobExp: 5810
+    Attack: 1416
+    Attack2: 2977
+    Defense: 84
+    MagicDefense: 51
+    Str: 141
+    Agi: 94
+    Vit: 75
+    Int: 91
+    Dex: 144
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackMotion: 3456
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Star_Crumb
+        Rate: 2000
+      - Item: Sparkling_Dust
+        Rate: 2000
+      - Item: Great_Nature
+        Rate: 40
+      - Item: Apple
+        Rate: 10
+  - Id: 2369
+    AegisName: LICHTERN_R
+    Name: Lichtern
+    JapaneseName: Red Lichtern
+    Level: 149
+    Hp: 135718
+    BaseExp: 7201
+    JobExp: 6013
+    Attack: 1647
+    Attack2: 3096
+    Defense: 111
+    MagicDefense: 53
+    Str: 147
+    Agi: 77
+    Vit: 66
+    Int: 65
+    Dex: 133
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackMotion: 4032
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Star_Crumb
+        Rate: 2000
+      - Item: Sparkling_Dust
+        Rate: 2000
+      - Item: Flame_Heart
+        Rate: 40
+      - Item: Apple
+        Rate: 10
+  - Id: 2370
+    AegisName: LICHTERN_G
+    Name: Lichtern
+    JapaneseName: Green Lichtern
+    Level: 151
+    Hp: 133451
+    BaseExp: 7214
+    JobExp: 5710
+    Attack: 1547
+    Attack2: 3141
+    Defense: 120
+    MagicDefense: 57
+    Str: 121
+    Agi: 60
+    Vit: 58
+    Int: 62
+    Dex: 102
+    Luk: 50
+    AttackRange: 1
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Small
+    Race: Formless
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackMotion: 2304
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Star_Crumb
+        Rate: 2000
+      - Item: Sparkling_Dust
+        Rate: 2000
+      - Item: Rough_Wind
+        Rate: 40
+      - Item: Apple
+        Rate: 10
+  - Id: 2371
+    AegisName: FAITHFUL_MANAGER
+    Name: Faithful Manager
+    Level: 155
+    Hp: 151548
+    BaseExp: 8676
+    JobExp: 6501
+    Attack: 2091
+    Attack2: 3698
+    Defense: 127
+    MagicDefense: 127
+    Str: 80
+    Agi: 28
+    Vit: 40
+    Int: 25
+    Dex: 88
+    Luk: 45
+    AttackRange: 3
+    SkillRange: 15
+    ChaseRange: 15
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 480
+    AttackMotion: 1536
+    DamageMotion: 480
+    Ai: 21
+    Modes:
+      {}
+    Drops:
+      - Item: Apple
+        Rate: 4000
+      - Item: Tiny_Waterbottle
+        Rate: 2000
+      - Item: Alchol
+        Rate: 50
+      - Item: Detrimindexta
+        Rate: 50
+  - Id: 25102
+    AegisName: Arachne
+    Name: Arachne
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 17
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25101
+    AegisName: Aposis
+    Name: Aposis
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 22
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25100
+    AegisName: Addax
+    Name: Addax
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25182
+    AegisName: Mummy_
+    Name: Mummy_
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25183
+    AegisName: Mushumushu
+    Name: Mushumushu
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25184
+    AegisName: Myconid
+    Name: Myconid
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 21
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25185
+    AegisName: Naranjo
+    Name: Naranjo
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 22
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25186
+    AegisName: Nephthys
+    Name: Nephthys
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25187
+    AegisName: Nora_Big
+    Name: Nora_Big
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 22
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25188
+    AegisName: Nora_Joe
+    Name: Nora_Joe
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25189
+    AegisName: Nora_Mummy
+    Name: Nora_Mummy
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25190
+    AegisName: Octopus
+    Name: Octopus
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25191
+    AegisName: Officer_Kille
+    Name: Officer_Kille
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 23
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25192
+    AegisName: Okto
+    Name: Okto
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 28
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25193
+    AegisName: Penguin
+    Name: Penguin
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25194
+    AegisName: Pineapple
+    Name: Pineapple
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 19
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25195
+    AegisName: Pirate_Boxer
+    Name: Pirate_Boxer
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 29
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25196
+    AegisName: Pirate_Ghost
+    Name: Pirate_Ghost
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25197
+    AegisName: Plug_Bat
+    Name: Plug_Bat
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25198
+    AegisName: Pochi
+    Name: Pochi
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 21
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25199
+    AegisName: Popeyed_Anemone
+    Name: Popeyed_Anemone
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 25
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25200
+    AegisName: Predator
+    Name: Predator
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25201
+    AegisName: Purple_Worm
+    Name: Purple_Worm
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25202
+    AegisName: Queen_Mummy
+    Name: Queen_Mummy
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25203
+    AegisName: Quiem
+    Name: Quiem
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25204
+    AegisName: Real_Golden_Mole
+    Name: Real_Golden_Mole
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 14
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25205
+    AegisName: Requi
+    Name: Requi
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25206
+    AegisName: Roaster
+    Name: Roaster
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 23
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25207
+    AegisName: Sand_Demon
+    Name: Sand_Demon
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25208
+    AegisName: Savage_Mimic
+    Name: Savage_Mimic
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25209
+    AegisName: Sea_Dragon
+    Name: Sea_Dragon
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 27
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25210
+    AegisName: Sea_Elephant
+    Name: Sea_Elephant
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25211
+    AegisName: Sea_Hyena
+    Name: Sea_Hyena
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 30
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25212
+    AegisName: Sea_Scorpion
+    Name: Sea_Scorpion
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25213
+    AegisName: Sea_Spirit
+    Name: Sea_Spirit
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 29
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25214
+    AegisName: Sea_Tiger
+    Name: Sea_Tiger
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25215
+    AegisName: Seth
+    Name: Seth
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 11
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25216
+    AegisName: Shell_Trap
+    Name: Shell_Trap
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25217
+    AegisName: Simbatta
+    Name: Simbatta
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 12
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25218
+    AegisName: Siremaid
+    Name: Siremaid
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25219
+    AegisName: Slithis
+    Name: Slithis
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 20
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25220
+    AegisName: Snowkid
+    Name: Snowkid
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25221
+    AegisName: Snowman
+    Name: Snowman
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 25
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25222
+    AegisName: Soul_Taker
+    Name: Soul_Taker
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 27
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25223
+    AegisName: Sphinx
+    Name: Sphinx
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25224
+    AegisName: Spicy_Dragon
+    Name: Spicy_Dragon
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 20
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25225
+    AegisName: Sppo
+    Name: Sppo
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 22
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25226
+    AegisName: Standing_Salamander
+    Name: Standing_Salamander
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 19
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25227
+    AegisName: Stone_Soldier
+    Name: Stone_Soldier
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 18
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25228
+    AegisName: Sulaphat
+    Name: Sulaphat
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25229
+    AegisName: Super_Golden_Mole
+    Name: Super_Golden_Mole
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25230
+    AegisName: Swamp_Shark
+    Name: Swamp_Shark
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25231
+    AegisName: Thiefmon
+    Name: Thiefmon
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25232
+    AegisName: Tink
+    Name: Tink
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 15
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25233
+    AegisName: Tobeth
+    Name: Tobeth
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 29
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25234
+    AegisName: Tooth_Flower
+    Name: Tooth_Flower
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 25
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25235
+    AegisName: Torobbie
+    Name: Torobbie
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 29
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25236
+    AegisName: Torpedo_Fish
+    Name: Torpedo_Fish
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 17
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 10
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25237
+    AegisName: Tottochi
+    Name: Tottochi
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25238
+    AegisName: Tritch
+    Name: Tritch
+    Level: 10
+    Hp: 6666
+    Sp: 2000
+    Attack: 400
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 10
+    Int: 10
+    Dex: 150
+    AttackRange: 1
+    SkillRange: 11
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 220
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+  - Id: 25239
+    AegisName: Turvy
+    Name: Turvy
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 11
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25240
+    AegisName: Tutankhamen
+    Name: Tutankhamen
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 24
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 8
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25241
+    AegisName: Ugly_Corpse
+    Name: Ugly_Corpse
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 28
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25242
+    AegisName: Uraeus
+    Name: Uraeus
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 16
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 9
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25243
+    AegisName: Water_Weed_Witch
+    Name: Water_Weed_Witch
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 29
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 8
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25244
+    AegisName: Werepot
+    Name: Werepot
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 26
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 9
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 25245
+    AegisName: Wing_Salamander
+    Name: Wing_Salamander
+    Level: 10
+    Hp: 9999
+    Sp: 2000
+    BaseExp: 9999
+    JobExp: 9999
+    Attack: 1000
+    Attack2: 500
+    Defense: 15
+    MagicDefense: 15
+    Str: 65
+    Agi: 20
+    Vit: 13
+    Int: 10
+    Dex: 250
+    AttackRange: 1
+    SkillRange: 12
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 300
+    AttackMotion: 286
+    DamageMotion: 340
+    Ai: 21
+    Class: Boss
+    Drops:
+      - Item: Star_Crumb
+        Rate: 1
+  - Id: 2100
+    AegisName: BG_ARCHER_GUARDIAN
+    Name: Archer Guardian
+    Level: 74
+    Hp: 128634
+    BaseExp: 1
+    JobExp: 1
+    Attack: 1120
+    Attack2: 1600
+    Defense: 35
+    MagicDefense: 60
+    Str: 95
+    Agi: 80
+    Vit: 80
+    Int: 90
+    Dex: 165
+    Luk: 55
+    AttackRange: 12
+    SkillRange: 14
+    ChaseRange: 16
+    Size: Large
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 265
+    AttackDelay: 1200
+    AttackMotion: 1200
+    DamageMotion: 384
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+      ChangeChase: true
+      ChangeTargetMelee: true
+      Mvp: true
+  - Id: 2101
+    AegisName: BG_KNIGHT_GUARDIAN
+    Name: Knight Guardian
+    Level: 86
+    Hp: 130214
+    BaseExp: 1
+    JobExp: 1
+    Attack: 1280
+    Attack2: 1560
+    Defense: 55
+    MagicDefense: 30
+    Str: 110
+    Agi: 40
+    Vit: 140
+    Int: 65
+    Dex: 125
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 14
+    ChaseRange: 16
+    Size: Large
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 275
+    AttackDelay: 1200
+    AttackMotion: 1200
+    DamageMotion: 384
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      CastSensorChase: true
+      Angry: true
+      ChangeChase: true
+      ChangeTargetMelee: true
+      Mvp: true
+  - Id: 2102
+    AegisName: BG_SOLDIER_GUARDIAN
+    Name: Soldier Guardian
+    Level: 56
+    Hp: 115670
+    BaseExp: 1
+    JobExp: 1
+    Attack: 873
+    Attack2: 1036
+    Defense: 35
+    Str: 85
+    Agi: 56
+    Vit: 100
+    Int: 45
+    Dex: 103
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 265
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 05
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 2103
+    AegisName: BG_SOLDIER_GUARDIAN2
+    Name: Soldier Guardian
+    Level: 56
+    Hp: 115670
+    BaseExp: 1
+    JobExp: 1
+    Attack: 873
+    Attack2: 1036
+    Defense: 35
+    Str: 85
+    Agi: 56
+    Vit: 100
+    Int: 45
+    Dex: 103
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 265
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 05
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 2104
+    AegisName: BG_CAPTAIN
+    Name: Captain
+    Level: 56
+    Hp: 215670
+    BaseExp: 1
+    JobExp: 1
+    Attack: 873
+    Attack2: 1036
+    Defense: 35
+    Str: 85
+    Agi: 56
+    Vit: 100
+    Int: 45
+    Dex: 103
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 265
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 05
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 2105
+    AegisName: BARRICADE_BG
+    Name: Barricade
+    Level: 98
+    Hp: 60
+    Defense: 127
+    MagicDefense: 99
+    Agi: 17
+    Int: 80
+    Dex: 126
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Class: Boss
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+  - Id: 20400
+    AegisName: Guardian_Stone
+    Name: Guardian Stone
+    Level: 90
+    Hp: 50
+    Attack: 1
+    Attack2: 2
+    Defense: 40
+    MagicDefense: 50
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Modes:
+      IgnoreMelee: true
+      IgnoreMisc: true
+      Mvp: true
+  - Id: 20401
+    AegisName: Guardian_Stone2
+    Name: Guardian Stone
+    Level: 90
+    Hp: 50
+    Attack: 1
+    Attack2: 2
+    Defense: 40
+    MagicDefense: 50
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Modes:
+      IgnoreMelee: true
+      IgnoreMisc: true
+      Mvp: true
+  - Id: 20402
+    AegisName: Emperium_BG
+    Name: Emperium
+    Level: 90
+    Hp: 68430
+    Attack: 60
+    Attack2: 71
+    Defense: 40
+    MagicDefense: 50
+    Agi: 17
+    Vit: 80
+    Int: 50
+    Dex: 26
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Class: Boss
+    Modes:
+      Mvp: true
+  - Id: 20403
+    AegisName: BomberMan_Mushroom
+    Name: BomberMan Mushroom
+    Level: 1
+    Hp: 2000
+    Attack: 1
+    Attack2: 1
+    Defense: 100
+    MagicDefense: 99
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 7
+    ChaseRange: 12
+    Size: Small
+    Race: Plant
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Modes:
+      NoCast: true
+      Assist: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+  - Id: 20404
+    AegisName: BomberMan_Xmas
+    Name: BomberMan Xmas
+    Level: 1
+    Hp: 2000
+    Attack: 1
+    Attack2: 1
+    Defense: 100
+    MagicDefense: 99
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 7
+    ChaseRange: 12
+    Size: Small
+    Race: Plant
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Modes:
+      NoCast: true
+      Assist: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+  - Id: 3293
+    AegisName: BomberMan_Mushroom2
+    Name: BomberMan Mushroom
+    Level: 1
+    Hp: 2000
+    Attack: 1
+    Attack2: 1
+    Defense: 100
+    MagicDefense: 99
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 7
+    ChaseRange: 12
+    Size: Small
+    Race: Plant
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Modes:
+      NoCast: true
+      Assist: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+  - Id: 20405
+    AegisName: BomberMan_bug
+    Name: BomberMan bug
+    Level: 1
+    Hp: 2000
+    Attack: 1
+    Attack2: 1
+    Defense: 100
+    MagicDefense: 99
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 7
+    ChaseRange: 12
+    Size: Small
+    Race: Plant
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 1000
+    AttackDelay: 1
+    AttackMotion: 1
+    DamageMotion: 1
+    Modes:
+      NoCast: true
+      Assist: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
+  - Id: 20574
+    AegisName: MD_C_WHITEKNIGHT
+    Name: White Knight
+    Level: 1
+    Hp: 60
+    BaseExp: 27
+    JobExp: 20
+    Attack: 8
+    Attack2: 1
+    Defense: 2
+    MagicDefense: 5
+    Str: 6
+    Dex: 6
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1872
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 7000
+      - Item: Knife_
+        Rate: 100
+      - Item: Sticky_Mucus
+        Rate: 400
+      - Item: Apple
+        Rate: 1000
+      - Item: Empty_Bottle
+        Rate: 1500
+      - Item: Apple
+        Rate: 150
+      - Item: Unripe_Apple
+        Rate: 20
+      - Item: Poring_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3805
+    AegisName: E_HAPPY_EGG
+    Name: Happy Egg
+    Level: 2
+    Hp: 45
+    BaseExp: 27
+    JobExp: 20
+    Attack: 12
+    Attack2: 13
+    Defense: 16
+    Str: 8
+    Dex: 6
+    Luk: 2
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 400
+    AttackDelay: 1372
+    AttackMotion: 672
+    DamageMotion: 480
+    Ai: 02
+    Drops:
+      - Item: Jellopy
+        Rate: 7500
+      - Item: Rod_
+        Rate: 80
+      - Item: Sticky_Mucus
+        Rate: 500
+      - Item: Apple
+        Rate: 1100
+      - Item: Empty_Bottle
+        Rate: 1700
+      - Item: Apple
+        Rate: 800
+      - Item: Orange_Juice
+        Rate: 20

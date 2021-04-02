@@ -417,7 +417,6 @@
 	export_constant(MF_PVP_NOGUILD);
 	export_constant(MF_GVG);
 	export_constant(MF_GVG_NOPARTY);
-	export_constant(MF_FVF); //Biali Faction
 	export_constant(MF_NOTRADE);
 	export_constant(MF_NOSKILL);
 	export_constant(MF_NOWARP);
@@ -1620,7 +1619,6 @@
 	export_constant(SC_EP16_2_BUFF_AC);
 	export_constant(SC_EMERGENCY_MOVE);
 	export_constant(SC_MADOGEAR);
-	export_constant(SC_FACTION_AURA); //Biali Faction system
 	export_constant(SC_NPC_HALLUCINATIONWALK);
 
 #ifdef RENEWAL
@@ -5224,6 +5222,19 @@
 	export_constant(IG_ENCHANT_STONE_BOX13);
 	export_constant(IG_ENCHANT_STONE_BOX14);
 	export_constant(IG_ENCHANT_STONE_BOX15);
+	//Ragnamania Special Groups
+	export_constant(IG_BATTLEROYALE_GUNS);
+	export_constant(IG_BATTLEROYALE_AMMO);
+	export_constant(IG_RAGNAMANIA_TIER1);
+	export_constant(IG_RAGNAMANIA_TIER2);
+	export_constant(IG_RAGNAMANIA_TIER3);
+	export_constant(IG_RAGNAMANIA_TIER4);
+	export_constant(IG_RAGNAMANIA_TIER5);
+	export_constant(IG_RAGNAMANIA_COSTUME);
+	export_constant(IG_RAGNAMANIA_FOOD1);
+	export_constant(IG_RAGNAMANIA_FOOD2);
+	export_constant(IG_RAGNAMANIA_FOOD3);
+	export_constant(IG_RAGNAMANIA_ROMANTIC);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -8104,6 +8115,9 @@
 	export_constant(DMGRATE_WEAPON);
 	export_constant(DMGRATE_MAGIC);
 	export_constant(DMGRATE_MISC);
+
+	// Faction System Biali
+	export_constant(MF_FVF);
 
 	// Contested Territories Biali
 	export_constant(MF_CONTESTED);

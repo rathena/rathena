@@ -654,10 +654,16 @@ struct s_drop_list {
 	enum e_nightmare_drop_type drop_type;
 };
 
-/// Struct of MF_FVF
-struct s_faction {
-	int id;
-	int relic;
+/// Enum of faction data Biali
+enum e_faction_data_type : uint8 {
+	FACTION_ID,
+	FACTION_RELIC,
+	FACTION_MAX,
+};
+
+// Faction system biali
+struct s_faction_data {
+	int info[FACTION_MAX];
 };
 
 /// Enum of global damage types [Cydh]
@@ -698,7 +704,7 @@ union u_mapflag_args {
 	struct s_skill_duration skill_duration;
 	struct s_global_damage_rate atk_rate;
 	struct s_contested_bonuses contested; //Contested Territories Biali
-	struct s_faction faction_info;
+	struct s_faction_data faction_data; //biali faction system : keeps faction related bonuses on each map
 	int flag_val;
 };
 
@@ -801,18 +807,13 @@ struct map_data {
 	std::unordered_map<int16, int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
-	std::vector<s_faction> faction_info; // Biali Faction System
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
 	struct s_global_damage_rate atk_rate; // Global Damage [Cydh]
 	struct s_contested_bonuses contested;
-
-	struct {
-		int id;
-		int relic;
-	} faction;
+	struct s_faction_data faction_data; // Biali Faction System
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]

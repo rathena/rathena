@@ -2608,9 +2608,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		int pnum = 0;
 
 		// Biali contested territories base xp bonus
-		if (sd && map_getmapflag(m, MF_CONTESTED) && sd->status.faction_id) {
+		if (sd && map_getmapflag(m, MF_CONTESTED) && sd->status.guild_id) {
 			struct map_data *mapdata = map_getmapdata(m);
-			if (sd->status.faction_id > 0 && sd->status.faction_id == mapdata->contested.info[CONTESTED_OWNER_ID]) {
+			if (sd->status.guild_id == mapdata->contested.info[CONTESTED_OWNER_ID]) {
 				contested_base_bonus += mapdata->contested.info[CONTESTED_BASE_BONUS]; // base and job ar percentage. drops are different
 				contested_job_bonus += mapdata->contested.info[CONTESTED_JOB_BONUS];
 				contested_drop_bonus = mapdata->contested.info[CONTESTED_DROP_BONUS];

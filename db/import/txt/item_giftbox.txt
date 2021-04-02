@@ -1,0 +1,629 @@
+// Gift Box Obtainable Items Database
+//
+// Structure of Database:
+// GroupID,ItemID,Rate
+
+// GiftBox
+IG_GiftBox,501,1	// Red Potion
+IG_GiftBox,502,1	// Orange Potion
+IG_GiftBox,503,1	// Yellow Potion
+IG_GiftBox,504,1	// White Potion
+IG_GiftBox,505,1	// Blue Potion
+IG_GiftBox,506,1	// Green Potion
+IG_GiftBox,526,1	// Royal Jelly
+IG_GiftBox,529,1	// Candy
+IG_GiftBox,530,1	// Candy Cane
+IG_GiftBox,537,1	// Pet Food
+IG_GiftBox,538,1	// Well-baked Cookie
+IG_GiftBox,539,1	// Piece of Cake
+IG_GiftBox,617,1	// Old Purple Box
+IG_GiftBox,644,19	// Gift Box
+IG_GiftBox,706,1	// Four Leaf Clover
+IG_GiftBox,718,1	// Garnet
+IG_GiftBox,719,1	// Amethyst
+IG_GiftBox,720,1	// Aquamarine
+IG_GiftBox,721,1	// Emerald
+IG_GiftBox,722,1	// Pearl
+IG_GiftBox,723,1	// Ruby
+IG_GiftBox,724,1	// Cursed Ruby
+IG_GiftBox,725,1	// Sardonyx
+IG_GiftBox,726,1	// Sapphire
+IG_GiftBox,727,1	// Opal
+IG_GiftBox,728,1	// Topaz
+IG_GiftBox,729,1	// Zircon
+IG_GiftBox,730,1	// 1carat Diamond
+IG_GiftBox,731,1	// 2carat Diamond
+IG_GiftBox,732,1	// 3carat Diamond
+IG_GiftBox,733,1	// Cracked Diamond
+IG_GiftBox,734,1	// Red Frame
+IG_GiftBox,735,1	// Chung Jah
+IG_GiftBox,736,1	// China
+IG_GiftBox,737,1	// Black Ladle
+IG_GiftBox,738,1	// Pencil Case
+IG_GiftBox,739,1	// Rouge
+IG_GiftBox,740,1	// Puppet
+IG_GiftBox,741,1	// Poring Doll
+IG_GiftBox,742,1	// Chonchon Doll
+IG_GiftBox,743,1	// Spore Doll
+IG_GiftBox,744,1	// Bouquet
+IG_GiftBox,745,1	// Wedding Bouquet
+IG_GiftBox,746,1	// Glass Bead
+IG_GiftBox,747,1	// Crystal Mirror
+IG_GiftBox,748,1	// Witherless Rose
+IG_GiftBox,749,1	// Frozen Rose
+IG_GiftBox,750,1	// Baphomet Doll
+IG_GiftBox,751,1	// Osiris Doll
+IG_GiftBox,752,1	// Grasshopper Doll
+IG_GiftBox,753,1	// Yoyo Doll
+IG_GiftBox,754,1	// Raccoon Doll
+IG_GiftBox,969,1	// Gold
+IG_GiftBox,975,1	// Scarlet Dyestuff
+IG_GiftBox,976,1	// Lemon Dyestuff
+IG_GiftBox,978,1	// Cobaltblue Dyestuff
+IG_GiftBox,979,1	// Darkgreen Dyestuff
+IG_GiftBox,980,1	// Orange Dyestuff
+IG_GiftBox,981,1	// Violet Dyestuff
+IG_GiftBox,982,1	// White Dyestuff
+IG_GiftBox,983,1	// Black Dyestuff
+IG_GiftBox,994,1	// Flame Heart
+IG_GiftBox,995,1	// Mystic Frozen
+IG_GiftBox,996,1	// Rough Wind
+IG_GiftBox,997,1	// Great Nature
+IG_GiftBox,999,1	// Steel
+IG_GiftBox,1000,1	// Star Crumb
+IG_GiftBox,1558,1	// Girl's Diary
+IG_GiftBox,4005,1	// Santa Poring Card
+IG_GiftBox,7034,1	// Red Stocking
+// GiftBox_1
+IG_GiftBox_1,501,1	// Red Potion
+IG_GiftBox_1,502,1	// Orange Potion
+IG_GiftBox_1,503,1	// Yellow Potion
+IG_GiftBox_1,504,1	// White Potion
+IG_GiftBox_1,505,1	// Blue Potion
+IG_GiftBox_1,506,1	// Green Potion
+IG_GiftBox_1,526,1	// Royal Jelly
+IG_GiftBox_1,529,1	// Candy
+IG_GiftBox_1,530,1	// Candy Cane
+IG_GiftBox_1,537,1	// Pet Food
+IG_GiftBox_1,538,1	// Well-baked Cookie
+IG_GiftBox_1,539,1	// Piece of Cake
+IG_GiftBox_1,617,1	// Old Purple Box
+IG_GiftBox_1,644,19	// Gift Box
+IG_GiftBox_1,706,1	// Four Leaf Clover
+IG_GiftBox_1,718,1	// Garnet
+IG_GiftBox_1,719,1	// Amethyst
+IG_GiftBox_1,720,1	// Aquamarine
+IG_GiftBox_1,721,1	// Emerald
+IG_GiftBox_1,722,1	// Pearl
+IG_GiftBox_1,723,1	// Ruby
+IG_GiftBox_1,724,1	// Cursed Ruby
+IG_GiftBox_1,725,1	// Sardonyx
+IG_GiftBox_1,726,1	// Sapphire
+IG_GiftBox_1,727,1	// Opal
+IG_GiftBox_1,728,1	// Topaz
+IG_GiftBox_1,729,1	// Zircon
+IG_GiftBox_1,730,1	// 1carat Diamond
+IG_GiftBox_1,731,1	// 2carat Diamond
+IG_GiftBox_1,732,1	// 3carat Diamond
+IG_GiftBox_1,733,1	// Cracked Diamond
+IG_GiftBox_1,734,1	// Red Frame
+IG_GiftBox_1,735,1	// Chung Jah
+IG_GiftBox_1,736,1	// China
+IG_GiftBox_1,737,1	// Black Ladle
+IG_GiftBox_1,738,1	// Pencil Case
+IG_GiftBox_1,739,1	// Rouge
+IG_GiftBox_1,740,1	// Puppet
+IG_GiftBox_1,741,1	// Poring Doll
+IG_GiftBox_1,742,1	// Chonchon Doll
+IG_GiftBox_1,743,1	// Spore Doll
+IG_GiftBox_1,744,1	// Bouquet
+IG_GiftBox_1,745,1	// Wedding Bouquet
+IG_GiftBox_1,746,1	// Glass Bead
+IG_GiftBox_1,747,1	// Crystal Mirror
+IG_GiftBox_1,748,1	// Witherless Rose
+IG_GiftBox_1,749,1	// Frozen Rose
+IG_GiftBox_1,750,1	// Baphomet Doll
+IG_GiftBox_1,751,1	// Osiris Doll
+IG_GiftBox_1,752,1	// Grasshopper Doll
+IG_GiftBox_1,753,1	// Yoyo Doll
+IG_GiftBox_1,754,1	// Raccoon Doll
+IG_GiftBox_1,969,1	// Gold
+IG_GiftBox_1,975,1	// Scarlet Dyestuff
+IG_GiftBox_1,976,1	// Lemon Dyestuff
+IG_GiftBox_1,978,1	// Cobaltblue Dyestuff
+IG_GiftBox_1,979,1	// Darkgreen Dyestuff
+IG_GiftBox_1,980,1	// Orange Dyestuff
+IG_GiftBox_1,981,1	// Violet Dyestuff
+IG_GiftBox_1,982,1	// White Dyestuff
+IG_GiftBox_1,983,1	// Black Dyestuff
+IG_GiftBox_1,994,1	// Flame Heart
+IG_GiftBox_1,995,1	// Mystic Frozen
+IG_GiftBox_1,996,1	// Rough Wind
+IG_GiftBox_1,997,1	// Great Nature
+IG_GiftBox_1,999,1	// Steel
+IG_GiftBox_1,1000,1	// Star Crumb
+IG_GiftBox_1,1558,1	// Girl's Diary
+IG_GiftBox_1,4005,1	// Santa Poring Card
+IG_GiftBox_1,7034,1	// Red Stocking
+// GiftBox_2
+IG_GiftBox_2,501,1	// Red Potion
+IG_GiftBox_2,502,1	// Orange Potion
+IG_GiftBox_2,503,1	// Yellow Potion
+IG_GiftBox_2,504,1	// White Potion
+IG_GiftBox_2,505,1	// Blue Potion
+IG_GiftBox_2,506,1	// Green Potion
+IG_GiftBox_2,526,1	// Royal Jelly
+IG_GiftBox_2,529,1	// Candy
+IG_GiftBox_2,530,1	// Candy Cane
+IG_GiftBox_2,537,1	// Pet Food
+IG_GiftBox_2,538,1	// Well-baked Cookie
+IG_GiftBox_2,539,1	// Piece of Cake
+IG_GiftBox_2,617,1	// Old Purple Box
+IG_GiftBox_2,644,19	// Gift Box
+IG_GiftBox_2,706,1	// Four Leaf Clover
+IG_GiftBox_2,718,1	// Garnet
+IG_GiftBox_2,719,1	// Amethyst
+IG_GiftBox_2,720,1	// Aquamarine
+IG_GiftBox_2,721,1	// Emerald
+IG_GiftBox_2,722,1	// Pearl
+IG_GiftBox_2,723,1	// Ruby
+IG_GiftBox_2,724,1	// Cursed Ruby
+IG_GiftBox_2,725,1	// Sardonyx
+IG_GiftBox_2,726,1	// Sapphire
+IG_GiftBox_2,727,1	// Opal
+IG_GiftBox_2,728,1	// Topaz
+IG_GiftBox_2,729,1	// Zircon
+IG_GiftBox_2,730,1	// 1carat Diamond
+IG_GiftBox_2,731,1	// 2carat Diamond
+IG_GiftBox_2,732,1	// 3carat Diamond
+IG_GiftBox_2,733,1	// Cracked Diamond
+IG_GiftBox_2,734,1	// Red Frame
+IG_GiftBox_2,735,1	// Chung Jah
+IG_GiftBox_2,736,1	// China
+IG_GiftBox_2,737,1	// Black Ladle
+IG_GiftBox_2,738,1	// Pencil Case
+IG_GiftBox_2,739,1	// Rouge
+IG_GiftBox_2,740,1	// Puppet
+IG_GiftBox_2,741,1	// Poring Doll
+IG_GiftBox_2,742,1	// Chonchon Doll
+IG_GiftBox_2,743,1	// Spore Doll
+IG_GiftBox_2,744,1	// Bouquet
+IG_GiftBox_2,745,1	// Wedding Bouquet
+IG_GiftBox_2,746,1	// Glass Bead
+IG_GiftBox_2,747,1	// Crystal Mirror
+IG_GiftBox_2,748,1	// Witherless Rose
+IG_GiftBox_2,749,1	// Frozen Rose
+IG_GiftBox_2,750,1	// Baphomet Doll
+IG_GiftBox_2,751,1	// Osiris Doll
+IG_GiftBox_2,752,1	// Grasshopper Doll
+IG_GiftBox_2,753,1	// Yoyo Doll
+IG_GiftBox_2,754,1	// Raccoon Doll
+IG_GiftBox_2,969,1	// Gold
+IG_GiftBox_2,975,1	// Scarlet Dyestuff
+IG_GiftBox_2,976,1	// Lemon Dyestuff
+IG_GiftBox_2,978,1	// Cobaltblue Dyestuff
+IG_GiftBox_2,979,1	// Darkgreen Dyestuff
+IG_GiftBox_2,980,1	// Orange Dyestuff
+IG_GiftBox_2,981,1	// Violet Dyestuff
+IG_GiftBox_2,982,1	// White Dyestuff
+IG_GiftBox_2,983,1	// Black Dyestuff
+IG_GiftBox_2,994,1	// Flame Heart
+IG_GiftBox_2,995,1	// Mystic Frozen
+IG_GiftBox_2,996,1	// Rough Wind
+IG_GiftBox_2,997,1	// Great Nature
+IG_GiftBox_2,999,1	// Steel
+IG_GiftBox_2,1000,1	// Star Crumb
+IG_GiftBox_2,1558,1	// Girl's Diary
+IG_GiftBox_2,4005,1	// Santa Poring Card
+IG_GiftBox_2,7034,1	// Red Stocking
+// Gift_Box3
+IG_GiftBox_3,501,1	// Red Potion
+IG_GiftBox_3,502,1	// Orange Potion
+IG_GiftBox_3,503,1	// Yellow Potion
+IG_GiftBox_3,504,1	// White Potion
+IG_GiftBox_3,505,1	// Blue Potion
+IG_GiftBox_3,506,1	// Green Potion
+IG_GiftBox_3,526,1	// Royal Jelly
+IG_GiftBox_3,529,1	// Candy
+IG_GiftBox_3,530,1	// Candy Cane
+IG_GiftBox_3,537,1	// Pet Food
+IG_GiftBox_3,538,1	// Well-baked Cookie
+IG_GiftBox_3,539,1	// Piece of Cake
+IG_GiftBox_3,617,1	// Old Purple Box
+IG_GiftBox_3,644,19	// Gift Box
+IG_GiftBox_3,706,1	// Four Leaf Clover
+IG_GiftBox_3,718,1	// Garnet
+IG_GiftBox_3,719,1	// Amethyst
+IG_GiftBox_3,720,1	// Aquamarine
+IG_GiftBox_3,721,1	// Emerald
+IG_GiftBox_3,722,1	// Pearl
+IG_GiftBox_3,723,1	// Ruby
+IG_GiftBox_3,724,1	// Cursed Ruby
+IG_GiftBox_3,725,1	// Sardonyx
+IG_GiftBox_3,726,1	// Sapphire
+IG_GiftBox_3,727,1	// Opal
+IG_GiftBox_3,728,1	// Topaz
+IG_GiftBox_3,729,1	// Zircon
+IG_GiftBox_3,730,1	// 1carat Diamond
+IG_GiftBox_3,731,1	// 2carat Diamond
+IG_GiftBox_3,732,1	// 3carat Diamond
+IG_GiftBox_3,733,1	// Cracked Diamond
+IG_GiftBox_3,734,1	// Red Frame
+IG_GiftBox_3,735,1	// Chung Jah
+IG_GiftBox_3,736,1	// China
+IG_GiftBox_3,737,1	// Black Ladle
+IG_GiftBox_3,738,1	// Pencil Case
+IG_GiftBox_3,739,1	// Rouge
+IG_GiftBox_3,740,1	// Puppet
+IG_GiftBox_3,741,1	// Poring Doll
+IG_GiftBox_3,742,1	// Chonchon Doll
+IG_GiftBox_3,743,1	// Spore Doll
+IG_GiftBox_3,744,1	// Bouquet
+IG_GiftBox_3,745,1	// Wedding Bouquet
+IG_GiftBox_3,746,1	// Glass Bead
+IG_GiftBox_3,747,1	// Crystal Mirror
+IG_GiftBox_3,748,1	// Witherless Rose
+IG_GiftBox_3,749,1	// Frozen Rose
+IG_GiftBox_3,750,1	// Baphomet Doll
+IG_GiftBox_3,751,1	// Osiris Doll
+IG_GiftBox_3,752,1	// Grasshopper Doll
+IG_GiftBox_3,753,1	// Yoyo Doll
+IG_GiftBox_3,754,1	// Raccoon Doll
+IG_GiftBox_3,969,1	// Gold
+IG_GiftBox_3,975,1	// Scarlet Dyestuff
+IG_GiftBox_3,976,1	// Lemon Dyestuff
+IG_GiftBox_3,978,1	// Cobaltblue Dyestuff
+IG_GiftBox_3,979,1	// Darkgreen Dyestuff
+IG_GiftBox_3,980,1	// Orange Dyestuff
+IG_GiftBox_3,981,1	// Violet Dyestuff
+IG_GiftBox_3,982,1	// White Dyestuff
+IG_GiftBox_3,983,1	// Black Dyestuff
+IG_GiftBox_3,994,1	// Flame Heart
+IG_GiftBox_3,995,1	// Mystic Frozen
+IG_GiftBox_3,996,1	// Rough Wind
+IG_GiftBox_3,997,1	// Great Nature
+IG_GiftBox_3,999,1	// Steel
+IG_GiftBox_3,1000,1	// Star Crumb
+IG_GiftBox_3,1558,1	// Girl's Diary
+IG_GiftBox_3,4005,1	// Santa Poring Card
+IG_GiftBox_3,7034,1	// Red Stocking
+// GiftBox_4
+IG_GiftBox_4,501,1	// Red Potion
+IG_GiftBox_4,502,1	// Orange Potion
+IG_GiftBox_4,503,1	// Yellow Potion
+IG_GiftBox_4,504,1	// White Potion
+IG_GiftBox_4,505,1	// Blue Potion
+IG_GiftBox_4,506,1	// Green Potion
+IG_GiftBox_4,526,1	// Royal Jelly
+IG_GiftBox_4,529,1	// Candy
+IG_GiftBox_4,530,1	// Candy Cane
+IG_GiftBox_4,537,1	// Pet Food
+IG_GiftBox_4,538,1	// Well-baked Cookie
+IG_GiftBox_4,539,1	// Piece of Cake
+IG_GiftBox_4,617,1	// Old Purple Box
+IG_GiftBox_4,644,19	// Gift Box
+IG_GiftBox_4,706,1	// Four Leaf Clover
+IG_GiftBox_4,718,1	// Garnet
+IG_GiftBox_4,719,1	// Amethyst
+IG_GiftBox_4,720,1	// Aquamarine
+IG_GiftBox_4,721,1	// Emerald
+IG_GiftBox_4,722,1	// Pearl
+IG_GiftBox_4,723,1	// Ruby
+IG_GiftBox_4,724,1	// Cursed Ruby
+IG_GiftBox_4,725,1	// Sardonyx
+IG_GiftBox_4,726,1	// Sapphire
+IG_GiftBox_4,727,1	// Opal
+IG_GiftBox_4,728,1	// Topaz
+IG_GiftBox_4,729,1	// Zircon
+IG_GiftBox_4,730,1	// 1carat Diamond
+IG_GiftBox_4,731,1	// 2carat Diamond
+IG_GiftBox_4,732,1	// 3carat Diamond
+IG_GiftBox_4,733,1	// Cracked Diamond
+IG_GiftBox_4,734,1	// Red Frame
+IG_GiftBox_4,735,1	// Chung Jah
+IG_GiftBox_4,736,1	// China
+IG_GiftBox_4,737,1	// Black Ladle
+IG_GiftBox_4,738,1	// Pencil Case
+IG_GiftBox_4,739,1	// Rouge
+IG_GiftBox_4,740,1	// Puppet
+IG_GiftBox_4,741,1	// Poring Doll
+IG_GiftBox_4,742,1	// Chonchon Doll
+IG_GiftBox_4,743,1	// Spore Doll
+IG_GiftBox_4,744,1	// Bouquet
+IG_GiftBox_4,745,1	// Wedding Bouquet
+IG_GiftBox_4,746,1	// Glass Bead
+IG_GiftBox_4,747,1	// Crystal Mirror
+IG_GiftBox_4,748,1	// Witherless Rose
+IG_GiftBox_4,749,1	// Frozen Rose
+IG_GiftBox_4,750,1	// Baphomet Doll
+IG_GiftBox_4,751,1	// Osiris Doll
+IG_GiftBox_4,752,1	// Grasshopper Doll
+IG_GiftBox_4,753,1	// Yoyo Doll
+IG_GiftBox_4,754,1	// Raccoon Doll
+IG_GiftBox_4,969,1	// Gold
+IG_GiftBox_4,975,1	// Scarlet Dyestuff
+IG_GiftBox_4,976,1	// Lemon Dyestuff
+IG_GiftBox_4,978,1	// Cobaltblue Dyestuff
+IG_GiftBox_4,979,1	// Darkgreen Dyestuff
+IG_GiftBox_4,980,1	// Orange Dyestuff
+IG_GiftBox_4,981,1	// Violet Dyestuff
+IG_GiftBox_4,982,1	// White Dyestuff
+IG_GiftBox_4,983,1	// Black Dyestuff
+IG_GiftBox_4,994,1	// Flame Heart
+IG_GiftBox_4,995,1	// Mystic Frozen
+IG_GiftBox_4,996,1	// Rough Wind
+IG_GiftBox_4,997,1	// Great Nature
+IG_GiftBox_4,999,1	// Steel
+IG_GiftBox_4,1000,1	// Star Crumb
+IG_GiftBox_4,1558,1	// Girl's Diary
+IG_GiftBox_4,4005,1	// Santa Poring Card
+IG_GiftBox_4,7034,1	// Red Stocking
+// GiftBox_China
+IG_GiftBoxChina,501,1	// Red Potion
+IG_GiftBoxChina,502,1	// Orange Potion
+IG_GiftBoxChina,503,1	// Yellow Potion
+IG_GiftBoxChina,504,1	// White Potion
+IG_GiftBoxChina,505,1	// Blue Potion
+IG_GiftBoxChina,506,1	// Green Potion
+IG_GiftBoxChina,518,1	// Honey
+IG_GiftBoxChina,520,1	// Hinalle Leaflet
+IG_GiftBoxChina,521,2	// Aloe Leaflet
+IG_GiftBoxChina,525,1	// Panacea
+IG_GiftBoxChina,526,1	// Royal Jelly
+IG_GiftBoxChina,529,1	// Candy
+IG_GiftBoxChina,530,1	// Candy Cane
+IG_GiftBoxChina,603,40	// Old Blue Box
+IG_GiftBoxChina,604,9	// Dead Branch
+IG_GiftBoxChina,605,1	// Anodyne
+IG_GiftBoxChina,606,1	// Aloevera
+IG_GiftBoxChina,607,1	// Yggdrasil Berry
+IG_GiftBoxChina,608,1	// Yggdrasil Seed
+IG_GiftBoxChina,610,1	// Yggdrasil Leaf
+IG_GiftBoxChina,612,5	// Mini Furnace
+IG_GiftBoxChina,613,1	// Iron Hammer
+IG_GiftBoxChina,614,1	// Golden Hammer
+IG_GiftBoxChina,615,1	// Oridecon Hammer
+IG_GiftBoxChina,701,1	// Ora Ora
+IG_GiftBoxChina,702,1	// Animal Gore
+IG_GiftBoxChina,703,1	// Hinalle
+IG_GiftBoxChina,704,1	// Aloe
+IG_GiftBoxChina,706,1	// Four Leaf Clover
+IG_GiftBoxChina,707,1	// Singing Plant
+IG_GiftBoxChina,708,1	// Ment
+IG_GiftBoxChina,710,1	// Illusion Flower
+IG_GiftBoxChina,715,1	// Yellow Gemstone
+IG_GiftBoxChina,716,1	// Red Gemstone
+IG_GiftBoxChina,717,1	// Blue Gemstone
+IG_GiftBoxChina,718,1	// Garnet
+IG_GiftBoxChina,719,1	// Amethyst
+IG_GiftBoxChina,720,1	// Aquamarine
+IG_GiftBoxChina,721,1	// Emerald
+IG_GiftBoxChina,722,1	// Pearl
+IG_GiftBoxChina,723,1	// Ruby
+IG_GiftBoxChina,724,1	// Cursed Ruby
+IG_GiftBoxChina,725,1	// Sardonyx
+IG_GiftBoxChina,726,1	// Sapphire
+IG_GiftBoxChina,727,1	// Opal
+IG_GiftBoxChina,728,1	// Topaz
+IG_GiftBoxChina,729,1	// Zircon
+IG_GiftBoxChina,730,1	// 1carat Diamond
+IG_GiftBoxChina,731,1	// 2carat Diamond
+IG_GiftBoxChina,732,1	// 3carat Diamond
+IG_GiftBoxChina,733,1	// Cracked Diamond
+IG_GiftBoxChina,734,1	// Red Frame
+IG_GiftBoxChina,735,1	// Chung Jah
+IG_GiftBoxChina,736,1	// China
+IG_GiftBoxChina,737,1	// Black Ladle
+IG_GiftBoxChina,738,1	// Pencil Case
+IG_GiftBoxChina,740,1	// Puppet
+IG_GiftBoxChina,741,1	// Poring Doll
+IG_GiftBoxChina,742,1	// Chonchon Doll
+IG_GiftBoxChina,743,1	// Spore Doll
+IG_GiftBoxChina,745,1	// Wedding Bouquet
+IG_GiftBoxChina,747,1	// Crystal Mirror
+IG_GiftBoxChina,748,1	// Witherless Rose
+IG_GiftBoxChina,749,1	// Frozen Rose
+IG_GiftBoxChina,752,1	// Grasshopper Doll
+IG_GiftBoxChina,753,1	// Yoyo Doll
+IG_GiftBoxChina,754,1	// Raccoon Doll
+IG_GiftBoxChina,909,1	// Jellopy
+IG_GiftBoxChina,910,1	// Garlet
+IG_GiftBoxChina,911,1	// Scell
+IG_GiftBoxChina,912,1	// Zargon
+IG_GiftBoxChina,931,1	// Orcish Voucher
+IG_GiftBoxChina,934,1	// Memento
+IG_GiftBoxChina,968,1	// Heroic Emblem
+IG_GiftBoxChina,969,1	// Gold
+IG_GiftBoxChina,971,1	// Detrimindexta
+IG_GiftBoxChina,972,1	// Karvodailnirol
+IG_GiftBoxChina,973,1	// Counteragent
+IG_GiftBoxChina,974,1	// Mixture
+IG_GiftBoxChina,975,1	// Scarlet Dyestuff
+IG_GiftBoxChina,976,1	// Lemon Dyestuff
+IG_GiftBoxChina,978,1	// Cobaltblue Dyestuff
+IG_GiftBoxChina,979,1	// Darkgreen Dyestuff
+IG_GiftBoxChina,980,1	// Orange Dyestuff
+IG_GiftBoxChina,981,1	// Violet Dyestuff
+IG_GiftBoxChina,982,1	// White Dyestuff
+IG_GiftBoxChina,983,1	// Black Dyestuff
+IG_GiftBoxChina,986,1	// Anvil
+IG_GiftBoxChina,987,1	// Oridecon Anvil
+IG_GiftBoxChina,988,1	// Golden Anvil
+IG_GiftBoxChina,989,1	// Emperium Anvil
+IG_GiftBoxChina,990,1	// Red Blood
+IG_GiftBoxChina,991,1	// Crystal Blue
+IG_GiftBoxChina,992,1	// Wind of Verdure
+IG_GiftBoxChina,993,1	// Green Live
+IG_GiftBoxChina,994,1	// Flame Heart
+IG_GiftBoxChina,995,1	// Mystic Frozen
+IG_GiftBoxChina,996,1	// Rough Wind
+IG_GiftBoxChina,997,1	// Great Nature
+IG_GiftBoxChina,998,1	// Iron
+IG_GiftBoxChina,999,1	// Steel
+IG_GiftBoxChina,1000,1	// Star Crumb
+IG_GiftBoxChina,1001,1	// Star Dust
+IG_GiftBoxChina,1002,1	// Iron Ore
+IG_GiftBoxChina,1003,1	// Coal
+IG_GiftBoxChina,1004,1	// Chivalry Emblem
+IG_GiftBoxChina,1005,1	// Hammer of Blacksmith
+IG_GiftBoxChina,1006,1	// Old Magicbook
+IG_GiftBoxChina,1007,1	// Necklace of Wisdom
+IG_GiftBoxChina,1008,1	// Necklace of Oblivion
+IG_GiftBoxChina,1009,1	// Hand of God
+IG_GiftBoxChina,1010,1	// Phracon
+IG_GiftBoxChina,1011,1	// Emveretarcon
+IG_GiftBoxChina,1065,1	// Trap
+IG_GiftBoxChina,1102,1	// Sword
+IG_GiftBoxChina,1105,1	// Falchion
+IG_GiftBoxChina,1108,1	// Blade
+IG_GiftBoxChina,1111,1	// Rapier
+IG_GiftBoxChina,1114,1	// Scimitar
+IG_GiftBoxChina,1117,1	// Katana
+IG_GiftBoxChina,1120,1	// Tsurugi
+IG_GiftBoxChina,1125,1	// Ring Pommel Saber
+IG_GiftBoxChina,1127,1	// Saber
+IG_GiftBoxChina,1128,1	// Haedonggum
+IG_GiftBoxChina,1129,1	// Flamberge
+IG_GiftBoxChina,1152,1	// Slayer
+IG_GiftBoxChina,1155,1	// Bastard Sword
+IG_GiftBoxChina,1158,1	// Two-Handed Sword
+IG_GiftBoxChina,1162,1	// Broad Sword
+IG_GiftBoxChina,1163,1	// Claymore
+IG_GiftBoxChina,1202,1	// Knife
+IG_GiftBoxChina,1205,1	// Cutter
+IG_GiftBoxChina,1208,1	// Main Gauche
+IG_GiftBoxChina,1211,1	// Dirk
+IG_GiftBoxChina,1214,1	// Dagger
+IG_GiftBoxChina,1217,1	// Stiletto
+IG_GiftBoxChina,1220,1	// Gladius
+IG_GiftBoxChina,1226,1	// Damascus
+IG_GiftBoxChina,1251,1	// Jur
+IG_GiftBoxChina,1253,1	// Katar
+IG_GiftBoxChina,1255,1	// Jamadhar
+IG_GiftBoxChina,1302,1	// Axe
+IG_GiftBoxChina,1352,1	// Battle Axe
+IG_GiftBoxChina,1355,1	// Hammer
+IG_GiftBoxChina,1358,1	// Buster
+IG_GiftBoxChina,1361,1	// Two-Handed Axe
+IG_GiftBoxChina,1402,1	// Javelin
+IG_GiftBoxChina,1405,1	// Spear
+IG_GiftBoxChina,1408,1	// Pike
+IG_GiftBoxChina,1410,1	// Lance
+IG_GiftBoxChina,1452,1	// Guisarme
+IG_GiftBoxChina,1455,1	// Glaive
+IG_GiftBoxChina,1458,1	// Partizan
+IG_GiftBoxChina,1461,1	// Trident
+IG_GiftBoxChina,1464,1	// Halberd
+IG_GiftBoxChina,1502,1	// Club
+IG_GiftBoxChina,1505,1	// Mace
+IG_GiftBoxChina,1508,1	// Smasher
+IG_GiftBoxChina,1511,1	// Flail
+IG_GiftBoxChina,1514,1	// Morning Star
+IG_GiftBoxChina,1517,1	// Sword Mace
+IG_GiftBoxChina,1520,1	// Chain
+IG_GiftBoxChina,1550,1	// Book
+IG_GiftBoxChina,1551,1	// Bible
+IG_GiftBoxChina,1602,1	// Rod
+IG_GiftBoxChina,1605,1	// Wand
+IG_GiftBoxChina,1608,1	// Staff
+IG_GiftBoxChina,1611,1	// Arc Wand
+IG_GiftBoxChina,1613,1	// Mighty Staff
+IG_GiftBoxChina,1702,1	// Bow
+IG_GiftBoxChina,1705,1	// Composite Bow
+IG_GiftBoxChina,1711,1	// Crossbow
+IG_GiftBoxChina,1713,1	// Arbalest
+IG_GiftBoxChina,1714,1	// Gakkung Bow
+IG_GiftBoxChina,1718,1	// Hunter Bow
+IG_GiftBoxChina,1719,1	// Roguemaster's Bow
+IG_GiftBoxChina,2102,1	// Guard
+IG_GiftBoxChina,2104,1	// Buckler
+IG_GiftBoxChina,2106,1	// Shield
+IG_GiftBoxChina,2108,1	// Mirror Shield
+IG_GiftBoxChina,2207,1	// Fancy Flower
+IG_GiftBoxChina,2209,1	// Ribbon
+IG_GiftBoxChina,2213,1	// Kitty Band
+IG_GiftBoxChina,2215,1	// Flower Band
+IG_GiftBoxChina,2217,1	// Biretta
+IG_GiftBoxChina,2221,1	// Hat
+IG_GiftBoxChina,2223,1	// Turban
+IG_GiftBoxChina,2225,1	// Goggles
+IG_GiftBoxChina,2227,1	// Cap
+IG_GiftBoxChina,2229,1	// Helm
+IG_GiftBoxChina,2231,1	// Gemmed Sallet
+IG_GiftBoxChina,2233,1	// Circlet
+IG_GiftBoxChina,2236,1	// Santa Hat
+IG_GiftBoxChina,2244,1	// Big Ribbon
+IG_GiftBoxChina,2249,1	// Coronet
+IG_GiftBoxChina,2250,1	// Cute Ribbon
+IG_GiftBoxChina,2257,1	// Unicorn Horn
+IG_GiftBoxChina,2258,1	// Spiky Band
+IG_GiftBoxChina,2262,1	// Clown Nose
+IG_GiftBoxChina,2263,1	// Zorro Masque
+IG_GiftBoxChina,2265,1	// Gangster Mask
+IG_GiftBoxChina,2269,1	// Romantic Flower
+IG_GiftBoxChina,2270,1	// Romantic Leaf
+IG_GiftBoxChina,2271,1	// Jack be Dandy
+IG_GiftBoxChina,2272,1	// Stop Post
+IG_GiftBoxChina,2273,1	// Doctor Band
+IG_GiftBoxChina,2275,1	// Red Bandana
+IG_GiftBoxChina,2276,1	// Angled Glasses
+IG_GiftBoxChina,2279,1	// Bomb Wick
+IG_GiftBoxChina,2284,1	// Antlers
+IG_GiftBoxChina,2287,1	// Pirate Bandana
+IG_GiftBoxChina,2289,1	// Poo Poo Hat
+IG_GiftBoxChina,2290,1	// Funeral Hat
+IG_GiftBoxChina,2291,1	// Masquerade
+IG_GiftBoxChina,2293,1	// Pretend Murdered
+IG_GiftBoxChina,2294,1	// Stellar
+IG_GiftBoxChina,2295,1	// Blinker
+IG_GiftBoxChina,2296,1	// Binoculars
+IG_GiftBoxChina,2298,1	// Green Feeler
+IG_GiftBoxChina,2299,1	// Orc Helm
+IG_GiftBoxChina,2302,1	// Cotton Shirt
+IG_GiftBoxChina,2304,1	// Jacket
+IG_GiftBoxChina,2306,1	// Adventurer's Suit
+IG_GiftBoxChina,2308,1	// Mantle
+IG_GiftBoxChina,2310,1	// Coat
+IG_GiftBoxChina,2311,1	// Mink Coat
+IG_GiftBoxChina,2313,1	// Padded Armor
+IG_GiftBoxChina,2315,1	// Chain Mail
+IG_GiftBoxChina,2317,1	// Full Plate
+IG_GiftBoxChina,2322,1	// Silk Robe
+IG_GiftBoxChina,2324,1	// Scapulare
+IG_GiftBoxChina,2326,1	// Saint's Robe
+IG_GiftBoxChina,2329,1	// Wooden Mail
+IG_GiftBoxChina,2331,1	// Tights
+IG_GiftBoxChina,2333,1	// Silver Robe
+IG_GiftBoxChina,2336,1	// Thief Clothes
+IG_GiftBoxChina,2337,1	// Ninja Suit
+IG_GiftBoxChina,2339,1	// Pantie
+IG_GiftBoxChina,2402,1	// Sandals
+IG_GiftBoxChina,2404,1	// Shoes
+IG_GiftBoxChina,2407,1	// Crystal Pumps
+IG_GiftBoxChina,2408,1	// Shackles
+IG_GiftBoxChina,2409,1	// High Heels
+IG_GiftBoxChina,2502,1	// Hood
+IG_GiftBoxChina,2504,1	// Muffler
+IG_GiftBoxChina,2506,1	// Manteau
+IG_GiftBoxChina,2507,1	// Ancient Cape
+IG_GiftBoxChina,2508,1	// Ragamuffin Manteau
+IG_GiftBoxChina,2601,1	// Ring
+IG_GiftBoxChina,2602,1	// Earring
+IG_GiftBoxChina,2603,1	// Necklace
+IG_GiftBoxChina,2604,1	// Glove
+IG_GiftBoxChina,2605,1	// Brooch
+IG_GiftBoxChina,2607,1	// Clip
+IG_GiftBoxChina,2608,1	// Rosary
+IG_GiftBoxChina,2609,1	// Skull Ring
+IG_GiftBoxChina,2610,1	// Gold Ring
+IG_GiftBoxChina,2611,1	// Silver Ring
+IG_GiftBoxChina,2612,1	// Flower Ring
+IG_GiftBoxChina,2613,1	// Diamond Ring
+IG_GiftBoxChina,5009,1	// Safety Helmet
+IG_GiftBoxChina,5010,1	// Indian Fillet
+IG_GiftBoxChina,5014,1	// Fin Helm
+IG_GiftBoxChina,5015,2	// Egg Shell
+// Old Gift Box
+IG_OldGiftBox,5270,45	// Happy Wig
+IG_OldGiftBox,5271,15	// Phoenix Crown
+IG_OldGiftBox,5272,40	// Smiling Mask

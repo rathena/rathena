@@ -750,6 +750,13 @@ struct Battle_Config
 	int mythic_dg_reserved_char_id;
  	int pvp_reserved_char_id;
 	int reserved_costume_id;
+	// biali reputation system
+	int reputation_hated;
+	int reputation_unfriendly;
+	int reputation_neutral;
+	int reputation_friendly;
+	int reputation_honored;
+	
 
 #include "../custom/battle_config_struct.inc"
 };

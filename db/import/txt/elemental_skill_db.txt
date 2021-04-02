@@ -1,0 +1,7 @@
+// Elemental Summons Skill Database
+//
+// Structure of Database:
+// ElementalID,SkillID,SkillLevel,ReqMode
+//
+// Spirit Modes:
+//	1 = Passive, 2 = Defensive, 4 = Aggressive

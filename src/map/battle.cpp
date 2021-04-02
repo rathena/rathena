@@ -8585,10 +8585,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			}
 			if( !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_EMPERIUM && mapdata_flag_gvg(mapdata) )
 				return 0; //If you don't belong to a guild, can't target emperium.
-			if( !sd->status.faction_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_CONTEST_STONE && mapdata->flag[MF_FVF] )
-				return 0; //If you are not representing a faction, can't target Contested Stone. Biali
-			if( sd->status.faction_id && sd->status.faction_id == mapdata->contested.info[CONTESTED_OWNER_ID] && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_CONTEST_STONE)
-				return 0; //If your faction holds the contestee u cant hit the contest stone. Biali
+			if( !sd->status.guild_id && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_CONTEST_STONE && mapdata->flag[MF_CONTESTED] )
+				return 0; //If you are not representing a guild, can't target Contested Stone. Biali
+			if( sd->status.guild_id && sd->status.guild_id == mapdata->contested.info[CONTESTED_OWNER_ID] && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_CONTEST_STONE)
+				return 0; //If your guild holds the contested map u cant hit the contest stone. Biali
 			if( t_bl->type != BL_PC )
 				state |= BCT_ENEMY; //Natural enemy.
 			break;
@@ -8614,7 +8614,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				if( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai )
 					state |= BCT_ENEMY; //Natural enemy for AI mobs are normal mobs.
 				// Biali faction system
-				if( t_bl != s_bl && map_getmapflag(m, MF_FVF) && !faction_check_alliance(s_bl,t_bl) && md->faction_id && (
+				if( t_bl != s_bl && map_getmapflag(m, MF_FVF) && md->faction_id && (
 					(battle_config.fvf_monster_ai && !((TBL_MOB*)t_bl)->faction_id) ||
 					(!battle_config.fvf_monster_ai && ((TBL_MOB*)t_bl)->faction_id))) {
 					state |= BCT_ENEMY;
@@ -8682,8 +8682,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					map_getcell(t_bl->m,t_bl->x,t_bl->y,CELL_CHKNOFVF) ||
 					map_getcell(s_bl->m,s_bl->x,s_bl->y,CELL_CHKNOFVF) ||
 					(s_bl->type == BL_PC && ((int)((TBL_PC*)s_bl)->status.base_level < battle_config.fvf_min_lvl)) ||
-					(t_bl->type == BL_PC && ((int)((TBL_PC*)t_bl)->status.base_level < battle_config.fvf_min_lvl)) ||
-					faction_check_alliance(s_bl,t_bl))) ||
+					(t_bl->type == BL_PC && ((int)((TBL_PC*)t_bl)->status.base_level < battle_config.fvf_min_lvl)))) ||
 					(s_bl->type == BL_PC && t_bl->type == BL_PC && !faction_get_id(s_bl) && !faction_get_id(t_bl))
 				)
 					state &= ~BCT_ENEMY;
@@ -9368,16 +9367,16 @@ static const struct _battle_data {
 	{ "fvf_misc_attack_damage_rate",		&battle_config.fvf_misc_damage_rate,			60,     0,      INT_MAX         },
 	{ "chat_leader",						&battle_config.chat_leader,				0xFF0000,	0x000000,	0xFFFFFF		},
 	{ "fvf_change_ccolor",					&battle_config.fvf_change_ccolor,				1,		0,      2,				},
-	{ "faction_heal_settings",				&battle_config.faction_heal_settings,			1,		0,      2,				},
-	{ "faction_party_settings",				&battle_config.faction_party_settings,			0,		0,      2,				},
-	{ "faction_guild_settings",				&battle_config.faction_guild_settings,			0,		0,      2,				},
+	{ "faction_heal_settings",				&battle_config.faction_heal_settings,			1,		0,      1,				},
+	{ "faction_party_settings",				&battle_config.faction_party_settings,			0,		0,      1,				},
+	{ "faction_guild_settings",				&battle_config.faction_guild_settings,			0,		0,      1,				},
 	{ "faction_heal_bl",                    &battle_config.faction_heal_bl,           	BL_PC, 		BL_NUL, BL_ALL,         },
 	{ "faction_size_bl",                    &battle_config.faction_size_bl,           	BL_CHAR, 	BL_NUL, BL_ALL,         },
 	{ "faction_aura_bl",                    &battle_config.faction_aura_bl,    		BL_CHAR|BL_NPC, BL_NUL, BL_ALL,         },
 	{ "faction_aura_settings",				&battle_config.faction_aura_settings,			0,		0,      2,				},
-	{ "faction_trade_settings",				&battle_config.faction_trade_settings,			0,		0,      2,				},
+	{ "faction_trade_settings",				&battle_config.faction_trade_settings,			0,		0,      1,				},
 	{ "faction_ally_info_bl",				&battle_config.faction_ally_info_bl,  		BL_CHAR, 	BL_NUL, BL_ALL,         },
-	{ "faction_npc_settings",				&battle_config.faction_npc_settings,			0,		0,      2,				},
+	{ "faction_npc_settings",				&battle_config.faction_npc_settings,			0,		0,      1,				},
 	{ "fvf_in_all_maps",					&battle_config.fvf_in_all_maps,					0,		0,      1,				},
 	{ "faction_disc_min",					&battle_config.faction_disc_min,			 -100,	 -INT_MAX,  0		        },
 	{ "faction_disc_max",					&battle_config.faction_disc_max,			  100,		0,   	INT_MAX         },
@@ -9386,6 +9385,12 @@ static const struct _battle_data {
 	{ "heroic_dg_reserved_char_id",         &battle_config.heroic_dg_reserved_char_id,      999994, 0,      INT_MAX,        },
 	{ "mythic_dg_reserved_char_id",         &battle_config.mythic_dg_reserved_char_id,      999995, 0,      INT_MAX,        },
 	{ "reserved_costume_id",                &battle_config.reserved_costume_id,             999999, 0,      INT_MAX,        },
+//	Reputation System Biali
+	{ "reputation_hated",                 	&battle_config.reputation_neutral,            30000000, 0,     99999999,        },
+	{ "reputation_unfriendly",              &battle_config.reputation_neutral,            45000000, 0,     99999999,        },
+	{ "reputation_neutral",                 &battle_config.reputation_neutral,            50000000, 0,     99999999,        },
+	{ "reputation_friendly",                &battle_config.reputation_neutral,            60000000, 0,     99999999,        },
+	{ "reputation_honored",                 &battle_config.reputation_neutral,            80000000, 0,     99999999,        },
 
 #include "../custom/battle_config_init.inc"
 };

@@ -2894,7 +2894,6 @@ int map_delinstancemap(int m)
 	mapdata->damage_adjust = {};
 	mapdata->flag.clear();
 	mapdata->skill_damage.clear();
-	mapdata->faction_info.clear(); // biali faction system
 
 	mapindex_removemap(mapdata->index);
 	map_removemapdb(mapdata);
@@ -3705,8 +3704,6 @@ void map_flags_init(void){
 		mapdata->skill_damage.clear();
 		mapdata->skill_duration.clear();
 
-		mapdata->faction_info.clear(); // biali faction system
-
 		map_free_questinfo(mapdata);
 
 		mapdata->atk_rate = {}; //Global Damage Adjustment [Cydh]
@@ -3719,10 +3716,10 @@ void map_flags_init(void){
 
 		// Biali Contested Territories
 		mapdata->contested = {};
-		mapdata->contested.info[CONTESTED_OWNER_ID] = 0;
-		mapdata->contested.info[CONTESTED_BASE_BONUS] = 0;
-		mapdata->contested.info[CONTESTED_JOB_BONUS] = 0;
-		mapdata->contested.info[CONTESTED_DROP_BONUS] = 0;
+		mapdata->contested.info[CONTESTED_OWNER_ID] = NULL;
+		mapdata->contested.info[CONTESTED_BASE_BONUS] = NULL;
+		mapdata->contested.info[CONTESTED_JOB_BONUS] = NULL;
+		mapdata->contested.info[CONTESTED_DROP_BONUS] = NULL;
 
 		if (instance_start && i >= instance_start)
 			continue;
@@ -4906,18 +4903,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			} else
 				mapdata->flag[mapflag] = false;
 			break;
-		case MF_FVF:
-			if (!status) {
-				mapdata->faction = {};
-				mapdata->faction_info.clear();
-				mapdata->flag[mapflag] = false;
-			} else {
-				nullpo_retr(false, args);
-				mapdata->faction.id = args->faction_info.id;
-				mapdata->faction.relic = args->faction_info.relic;
-				mapdata->flag[mapflag] = status;
-			}
-			break;
 		case MF_NOLOOT:
 			mapdata->flag[MF_NOMOBLOOT] = status;
 			mapdata->flag[MF_NOMVPLOOT] = status;
@@ -4975,20 +4960,22 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			}
 			mapdata->flag[mapflag] = status;
 			break;
-		case MF_CONTESTED: // biali faction contested territories
-			if (!status)
+		case MF_CONTESTED: // biali contested territories
+			if (!status) 
+			{
 				mapdata->contested = {};
-			else {
+				mapdata->flag[mapflag] = false;
+			}
+			else 
+			{
 				nullpo_retr(false, args);
-
 				if (!args->contested.info[CONTESTED_OWNER_ID]) {
 					ShowError("map_setmapflag: contested without map owner map %s.\n", mapdata->name);
 					return false;
 				}
-
 				memcpy(&mapdata->contested, &args->contested, sizeof(struct s_contested_bonuses));
+				mapdata->flag[mapflag] = status;
 			}
-			mapdata->flag[mapflag] = status;
 			break;
 		default:
 			mapdata->flag[mapflag] = status;
