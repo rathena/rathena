@@ -8685,7 +8685,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      .@i = getiteminfo(getequipid(EQI_HAND_R), II_VIEW);
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
       if (.@i == W_1HSWORD || .@i == W_2HSWORD) {
          bonus bHit,5;
          bonus bCritical,5;
@@ -8703,7 +8703,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOW) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          bonus bHit,5;
          bonus bCritical,5;
          bonus2 bSkillAtk,"AC_SHOWER",50;
@@ -8904,7 +8904,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      .@i = getiteminfo(getequipid(EQI_HAND_R), II_VIEW);
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
       if (.@i == W_STAFF || .@i == W_2HSTAFF) {
          bonus bInt,1;
          bonus2 bIgnoreMdefClassRate,Class_Normal,2;
@@ -9275,7 +9275,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,10;
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSWORD) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSWORD) {
          .@r = getrefine();
          if (.@r>=10) {
             bonus bAspd,1;
@@ -9297,7 +9297,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bLongAtkRate,3;
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOW) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          .@r = getrefine();
          if (.@r>=10) {
             bonus bAspd,1;
@@ -10564,7 +10564,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOW) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",50;
          bonus bCriticalLong,25+10*(getequiprefinerycnt(EQI_HAND_R)/4);
          bonus bHit,5;
@@ -10898,7 +10898,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      .@i = getiteminfo(getequipid(EQI_HAND_R), II_VIEW);
+      .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
       if (.@i == W_1HSWORD || .@i == W_2HSWORD) {
          bonus bBaseAtk,100;
       }
@@ -10915,7 +10915,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,10;
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_DAGGER) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_DAGGER) {
          .@r = getrefine();
          if (.@r>=10) {
             bonus bAspd,1;
@@ -10979,7 +10979,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_MACE) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE) {
          bonus bBaseAtk,20;
          bonus bCritical,10;
       }
@@ -11408,7 +11408,7 @@ Body:
     Script: |
       bonus bBaseAtk,5;
       bonus bMatk,5;
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOOK) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOOK) {
          .@r = getrefine();
          if (.@r>=10) {
             bonus bBaseAtk,20;
@@ -36675,7 +36675,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW) == W_BOW) {
+      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_BOW) {
          bonus3 bAutoSpell,"AC_DOUBLE",5,30;
          if (getrefine() >= 10) {
             bonus2 bWeaponDamageRate,W_BOW,20;
@@ -36938,7 +36938,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW);
+      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
       if (.@type == W_WHIP || .@type == W_MUSICAL || .@type == W_BOOK || .@type == W_2HSWORD || .@type == W_2HSPEAR) {
          .@r = getrefine();
          bonus bCritical,5;
@@ -37130,7 +37130,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW);
+      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
       .@r = getrefine();
       if (.@type == 17 || .@type == 18 || .@type == 21) {
          bonus bLongAtkRate,5+.@r+(.@r >= 10 ? 5 : 0);
@@ -37357,7 +37357,7 @@ Body:
     Script: |
       .@atk = 5;
       .@r = getrefine();
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_SPEAR && .@r >= 10) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_SPEAR && .@r >= 10) {
          .@atk += 20;
          if (.@r >= 14) {
             .@atk += 20;
@@ -37403,7 +37403,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@bonus = 5;
-      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW);
+      .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
       if (.@type == W_DAGGER) {
          .@r = getrefine();
          if (.@r>=10) {
@@ -37755,7 +37755,7 @@ Body:
          .@a = 5;
          .@b = 10;
       }
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_WHIP) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_WHIP) {
          skill "BA_POEMBRAGI2",.@a;
       }
       bonus bFlee,(readparam(bVit)>=110) ? (.@b*2) : .@b;
@@ -37859,13 +37859,13 @@ Body:
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
-         if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_WHIP) {
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_WHIP) {
             skill "DC_FORTUNEKISS2",5;
          }
          bonus bFlee,(readparam(bVit)>=110) ? 20 : 10;
       }
       else {
-         if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_WHIP) {
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_WHIP) {
             skill "DC_FORTUNEKISS2",7;
          }
          bonus bFlee,(readparam(bVit)>=110) ? 30 : 15;
@@ -37881,12 +37881,12 @@ Body:
       DropEffect: CLIENT
     Script: |
       if (getrefine()<15) {
-         if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSWORD) {
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSWORD) {
             bonus bBaseAtk,50;
          }
       }
       else {
-         if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSWORD) {
+         if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSWORD) {
             bonus bBaseAtk,75;
          }
       }
@@ -38151,7 +38151,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      .@rate = 10 + (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOOK ? 20 : 0) + (getrefine() >= 14 ? 20 : 0);
+      .@rate = 10 + (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOOK ? 20 : 0) + (getrefine() >= 14 ? 20 : 0);
       bonus2 bSkillAtk,"MG_FIREBOLT",.@rate;
       bonus2 bSkillAtk,"MG_COLDBOLT",.@rate;
       bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",.@rate;
@@ -38465,7 +38465,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW) == W_REVOLVER) {
+      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_REVOLVER) {
          .@r = getrefine();
          bonus bHit,20;
          bonus bLongAtkRate,(5+.@r);
@@ -38484,7 +38484,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW) == W_GATLING) {
+      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_GATLING) {
          .@r = getrefine();
          bonus bHit,20;
          bonus bLongAtkRate,(5+.@r);
@@ -38561,7 +38561,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW) == W_KNUCKLE) {
+      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_KNUCKLE) {
          .@r = getrefine();
          bonus bHit,20;
          bonus bBaseAtk,15;
@@ -38593,7 +38593,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_COMPOUND_ON), II_VIEW) == W_KATAR) {
+      if (getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW) == W_KATAR) {
          .@r = getrefine();
          bonus bCritical,7;
          bonus bBaseAtk,15;
@@ -42586,7 +42586,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSTAFF) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSTAFF) {
          bonus2 bMagicAtkEle,Ele_Ghost,10;
       }
       if (.@r>=10) {
@@ -42607,7 +42607,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSTAFF) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSTAFF) {
          bonus2 bMagicAtkEle,Ele_Wind,10;
       }
       if (.@r>=10) {
@@ -42628,7 +42628,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSTAFF) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSTAFF) {
          bonus2 bMagicAtkEle,Ele_Holy,10;
       }
       if (.@r>=10) {
@@ -42880,7 +42880,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_1HSPEAR || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSPEAR) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HSPEAR || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSPEAR) {
          bonus bLongAtkRate,10;
       }
       bonus bLongAtkRate,2*(getrefine()/2);
@@ -42940,7 +42940,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSWORD) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSWORD) {
          bonus bShortAtkRate,10;
       }
       bonus bShortAtkRate,.@r;
@@ -42975,7 +42975,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOOK) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOOK) {
          bonus2 bAddClass,Class_All,5;
          bonus bHit,20;
       }
@@ -43071,7 +43071,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSWORD) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSWORD) {
          bonus bCritAtkRate,20;
       }
       bonus bCritAtkRate,2*(getrefine()/2);
@@ -43102,7 +43102,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getrefine();
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_WHIP) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MUSICAL || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_WHIP) {
          bonus bMatk,20;
       }
       if (.@r>=10) {
@@ -43265,7 +43265,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSTAFF) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSTAFF) {
          bonus2 bMagicAtkEle,Ele_Fire,10;
       }
       if (.@r>=10) {
@@ -43396,7 +43396,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSTAFF) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSTAFF) {
          bonus2 bMagicAtkEle,Ele_Neutral,10;
       }
       if (.@r>=10) {
@@ -43551,7 +43551,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_2HSTAFF) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSTAFF) {
          bonus2 bMagicAtkEle,Ele_Water,10;
       }
       if (.@r>=10) {
@@ -43934,7 +43934,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@val = 15;
-      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOOK) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOOK) {
          .@val += 20;
       }
       if (getrefine()>=14) {

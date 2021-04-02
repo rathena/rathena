@@ -13977,36 +13977,36 @@ BUILDIN_FUNC(getiteminfo)
 		i_data = itemdb_exists(script_getnum(st, 2));
 
 	if (i_data == nullptr) {
-		if (type != II_AEGISNAME)
+		if (type != ITEMINFO_AEGISNAME)
 			script_pushint(st, -1);
 		else
 			script_pushstrcopy(st, "");
 		return SCRIPT_CMD_SUCCESS;
 	}
 	switch( type ) {
-		case II_BUY: script_pushint(st, i_data->value_buy); break;
-		case II_SELL: script_pushint(st, i_data->value_sell); break;
-		case II_TYPE: script_pushint(st, i_data->type); break;
-		case II_MAXCHANCE: script_pushint(st, i_data->maxchance); break;
-		case II_GENDER: script_pushint(st, i_data->sex); break;
-		case II_LOCATIONS: script_pushint(st, i_data->equip); break;
-		case II_WEIGHT: script_pushint(st, i_data->weight); break;
-		case II_ATTACK: script_pushint(st, i_data->atk); break;
-		case II_DEFENSE: script_pushint(st, i_data->def); break;
-		case II_RANGE: script_pushint(st, i_data->range); break;
-		case II_SLOT: script_pushint(st, i_data->slots); break;
-		case II_VIEW:
+		case ITEMINFO_BUY: script_pushint(st, i_data->value_buy); break;
+		case ITEMINFO_SELL: script_pushint(st, i_data->value_sell); break;
+		case ITEMINFO_TYPE: script_pushint(st, i_data->type); break;
+		case ITEMINFO_MAXCHANCE: script_pushint(st, i_data->maxchance); break;
+		case ITEMINFO_GENDER: script_pushint(st, i_data->sex); break;
+		case ITEMINFO_LOCATIONS: script_pushint(st, i_data->equip); break;
+		case ITEMINFO_WEIGHT: script_pushint(st, i_data->weight); break;
+		case ITEMINFO_ATTACK: script_pushint(st, i_data->atk); break;
+		case ITEMINFO_DEFENSE: script_pushint(st, i_data->def); break;
+		case ITEMINFO_RANGE: script_pushint(st, i_data->range); break;
+		case ITEMINFO_SLOT: script_pushint(st, i_data->slots); break;
+		case ITEMINFO_VIEW:
 			if (i_data->type == IT_WEAPON || i_data->type == IT_AMMO) {	// keep old compatibility
 				script_pushint(st, i_data->subtype);
 			} else {
 				script_pushint(st, i_data->look);
 			}
 			break;
-		case II_EQUIPLEVELMIN: script_pushint(st, i_data->elv); break;
-		case II_WEAPONLEVEL: script_pushint(st, i_data->wlv); break;
-		case II_ALIASNAME: script_pushint(st, i_data->view_id); break;
-		case II_EQUIPLEVELMAX: script_pushint(st, i_data->elvmax); break;
-		case II_MAGICATTACK: {
+		case ITEMINFO_EQUIPLEVELMIN: script_pushint(st, i_data->elv); break;
+		case ITEMINFO_WEAPONLEVEL: script_pushint(st, i_data->wlv); break;
+		case ITEMINFO_ALIASNAME: script_pushint(st, i_data->view_id); break;
+		case ITEMINFO_EQUIPLEVELMAX: script_pushint(st, i_data->elvmax); break;
+		case ITEMINFO_MAGICATTACK: {
 #ifdef RENEWAL
 			script_pushint(st, i_data->matk);
 #else
@@ -14014,8 +14014,8 @@ BUILDIN_FUNC(getiteminfo)
 #endif
 			break;
 		}
-		case II_ID: script_pushint(st, i_data->nameid); break;
-		case II_AEGISNAME: script_pushstrcopy(st, i_data->name.c_str()); break;
+		case ITEMINFO_ID: script_pushint(st, i_data->nameid); break;
+		case ITEMINFO_AEGISNAME: script_pushstrcopy(st, i_data->name.c_str()); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -14043,29 +14043,29 @@ BUILDIN_FUNC(setiteminfo)
 	int value = script_getnum(st,4);
 
 	switch( script_getnum(st, 3) ) {
-		case II_BUY: i_data->value_buy = static_cast<uint32>(value); break;
-		case II_SELL: i_data->value_sell = static_cast<uint32>(value); break;
-		case II_TYPE: i_data->type = static_cast<item_types>(value); break;
-		case II_MAXCHANCE: i_data->maxchance = static_cast<int>(value); break;
-		case II_GENDER: i_data->sex = static_cast<uint8>(value); break;
-		case II_LOCATIONS: i_data->equip = static_cast<uint32>(value); break;
-		case II_WEIGHT: i_data->weight = static_cast<uint32>(value); break;
-		case II_ATTACK: i_data->atk = static_cast<uint32>(value); break;
-		case II_DEFENSE: i_data->def = static_cast<uint32>(value); break;
-		case II_RANGE: i_data->range = static_cast<uint16>(value); break;
-		case II_SLOT: i_data->slots = static_cast<uint16>(value); break;
-		case II_VIEW:
+		case ITEMINFO_BUY: i_data->value_buy = static_cast<uint32>(value); break;
+		case ITEMINFO_SELL: i_data->value_sell = static_cast<uint32>(value); break;
+		case ITEMINFO_TYPE: i_data->type = static_cast<item_types>(value); break;
+		case ITEMINFO_MAXCHANCE: i_data->maxchance = static_cast<int>(value); break;
+		case ITEMINFO_GENDER: i_data->sex = static_cast<uint8>(value); break;
+		case ITEMINFO_LOCATIONS: i_data->equip = static_cast<uint32>(value); break;
+		case ITEMINFO_WEIGHT: i_data->weight = static_cast<uint32>(value); break;
+		case ITEMINFO_ATTACK: i_data->atk = static_cast<uint32>(value); break;
+		case ITEMINFO_DEFENSE: i_data->def = static_cast<uint32>(value); break;
+		case ITEMINFO_RANGE: i_data->range = static_cast<uint16>(value); break;
+		case ITEMINFO_SLOT: i_data->slots = static_cast<uint16>(value); break;
+		case ITEMINFO_VIEW:
 			if (i_data->type == IT_WEAPON || i_data->type == IT_AMMO) {	// keep old compatibility
 				i_data->subtype = static_cast<uint8>(value);
 			} else {
 				i_data->look = static_cast<uint32>(value);
 			}
 			break;
-		case II_EQUIPLEVELMIN: i_data->elv = static_cast<uint16>(value); break;
-		case II_WEAPONLEVEL: i_data->wlv = static_cast<uint16>(value); break;
-		case II_ALIASNAME: i_data->view_id = static_cast<t_itemid>(value); break;
-		case II_EQUIPLEVELMAX: i_data->elvmax = static_cast<uint16>(value); break;
-		case II_MAGICATTACK: {
+		case ITEMINFO_EQUIPLEVELMIN: i_data->elv = static_cast<uint16>(value); break;
+		case ITEMINFO_WEAPONLEVEL: i_data->wlv = static_cast<uint16>(value); break;
+		case ITEMINFO_ALIASNAME: i_data->view_id = static_cast<t_itemid>(value); break;
+		case ITEMINFO_EQUIPLEVELMAX: i_data->elvmax = static_cast<uint16>(value); break;
+		case ITEMINFO_MAGICATTACK: {
 #ifdef RENEWAL
 			i_data->matk = static_cast<uint32>(value);
 #else
