@@ -7,6 +7,8 @@
 //============================================================
 
 prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
+	.@old_item = 12209;
+	.@new_item = 6413;
 	.@old_item_name$ = getitemname(12209);
 	.@new_item_name$ = getitemname(6413);
 
@@ -14,25 +16,25 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 	mes "Hello! I see you are an adventurer who puts his heart in traveling from a boat, sailing across the continent and enjoying the dangerous thrill!";
 	next;
 	mes "[Heart Merchant]";
-	mes "Have you ever thought about replacing your <ITEM>["+.@old_item_name$+"]<INFO>12209</INFO></ITEM> with a better one? For example... <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM>. What do you think?";
+	mes "Have you ever thought about replacing your <ITEM>["+.@old_item_name$+"]<INFO>" + .@old_item + "</INFO></ITEM> with a better one? For example... <ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM>. What do you think?";
 	next;
 	switch(select("What is it?:Please exchange!:I'm not interested")) {
 	case 1:
 		mes "[Heart Merchant]";
-		mes "<ITEM>["+.@old_item_name$+"]<INFO>12209</INFO></ITEM> is an item that prevents you from losing life experience on death for 30 minutes after use.";
+		mes "<ITEM>["+.@old_item_name$+"]<INFO>" + .@old_item + "</INFO></ITEM> is an item that prevents you from losing life experience on death for 30 minutes after use.";
 		next;
 		mes "[Heart Merchant]";
-		mes "But many people missed the part about time? So I looked into it and prepared <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM>.";
+		mes "But many people missed the part about time? So I looked into it and prepared <ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM>.";
 		next;
 		mes "[Heart Merchant]";
-		mes "The <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM> ^EE0000will remove your experience loss at death for a single death^000000, even if you hold it for 1 hour. It's something useful. Of course, after death, the "+.@new_item_name$+" is consumed.";
+		mes "The <ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM> ^EE0000will remove your experience loss at death for a single death^000000, even if you hold it for 1 hour. It's something useful. Of course, after death, the "+.@new_item_name$+" is consumed.";
 		next;
 		select("Why change it?");
 		mes "[Heart Merchant]";
 		mes "Are you curious about that? I'm a merchant. It's my fate to buy and sell things if I'm dead or alive. There are many ways to make money, but am I going to miss this opportunity? I make money and the living get a little freedom from the pain of death. Isn't that a good deal?";
 		next;
 		mes "[Heart Merchant]";
-		mes "Are you curious by now? The exchange rate. <ITEM>["+.@old_item_name$+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM> 1 ea. I'll trade for one.";
+		mes "Are you curious by now? The exchange rate. <ITEM>["+.@old_item_name$+"]<INFO>" + .@old_item + "</INFO></ITEM> 5 ea. <ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM> 1 ea. I'll trade for one.";
 		next;
 		mes "[Heart Merchant]";
 		mes "What do you think? Isn't it a fair trade? Do you want to always worry about time? It's a must-have for adventurers who enjoy breathtaking adventures.";
@@ -50,49 +52,42 @@ prt_in,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 		mes "[Heart Merchant]";
 		mes "Would you like to exchange it now?";
 		next;
-		switch(select("Please exchange!:Don't exchange.")) {
-			case 1:
-				mes "[Heart Merchant]";
-				mes "How many do you want to exchange? ^0000cdIt is possible to exchange up to 10 "+.@new_item_name$+" at a time^000000.";
-				next;
-				input .@amount;
-				if (.@amount == 0) {
-					mes "[Heart Merchant]";
-					mes "Well? Are you not interested? It's a really nice thing to have and really good for you. But if you don't want the person to live, I can't force you.";
-					close;
-				} else if (.@amount > 10) {
-					mes "[Heart Merchant]";
-					mes "^0000cdYou can exchange up to 10 ea.^000000 at a time. Check the quantity again.";
-					close;
-				} else {
-					if (countitem(12209) < (.@amount*5)) {
-						mes "[Heart Merchant]";
-						mes "Um, hey... you don't have enough life insurance policies? <ITEM>["+.@old_item_name$+"]<INFO>12209</INFO></ITEM> 5 ea. <ITEM>["+.@new_item_name$+"]<INFO>6413</INFO></ITEM> 1 ea. Please check the quantity.";
-						close;
-					}
-					mes "[Heart Merchant]";
-					mes "Now, with this, I exchanged the ^0000cd.@old_item_name$^000000 that you had for the ^EE0000.@new_item_name$^000000!! That was a good deal, right? Next time you have a "+.@old_item_name$+", come back again!";
-					delitem 12209,.@amount*5;
-					getitem 6413,.@amount;
-					close;
-				}
-			case 2:
-				mes "[Heart Merchant]";
-				mes "This is a very good exchange! Adventurer, it's a must-have to enjoy adventures in this dangerous place!";
-				next;
-				mes "[Heart Merchant]";
-				mes "If you are interested later, be sure to come to exchange. Okay?";
-				close;
-		}
-	case 3:
+		if (select("Please exchange!:Don't exchange.") == 2)
+			break;
 		mes "[Heart Merchant]";
-		mes "This is a very good exchange! Adventurer, it's a must-have to enjoy adventures in this dangerous place!";
+		mes "How many do you want to exchange? ^0000cdIt is possible to exchange up to 10 "+.@new_item_name$+" at a time^000000.";
 		next;
+		input .@amount;
+		if (.@amount == 0) {
+			mes "[Heart Merchant]";
+			mes "Well? Are you not interested? It's a really nice thing to have and really good for you. But if you don't want the person to live, I can't force you.";
+			close;
+		}
+		if (.@amount > 10) {
+			mes "[Heart Merchant]";
+			mes "^0000cdYou can exchange up to 10 ea.^000000 at a time. Check the quantity again.";
+			close;
+		}
+		if (countitem(.@old_item) < (.@amount*5)) {
+			mes "[Heart Merchant]";
+			mes "Um, hey... you don't have enough life insurance policies? <ITEM>["+.@old_item_name$+"]<INFO>" + .@old_item + "</INFO></ITEM> 5 ea. <ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM> 1 ea. Please check the quantity.";
+			close;
+		}
 		mes "[Heart Merchant]";
-		mes "If you are interested later, be sure to come to exchange. Okay?";
+		mes "Now, with this, I exchanged the ^0000cd" + .@old_item_name$ + "^000000 that you had for the ^EE0000" + .@new_item_name$ + "^000000!! That was a good deal, right? Next time you have a "+.@old_item_name$+", come back again!";
+		delitem .@old_item,.@amount*5;
+		getitem .@new_item,.@amount;
 		close;
+	case 3:
+		break;
 	}
+	mes "[Heart Merchant]";
+	mes "This is a very good exchange! Adventurer, it's a must-have to enjoy adventures in this dangerous place!";
+	next;
+	mes "[Heart Merchant]";
+	mes "If you are interested later, be sure to come to exchange. Okay?";
+	close;
 OnTouch:
-	npctalk "You have something good. Would you like to replace your "+.@old_item_name$+" with a new one?", "", bc_self;
+	npctalk "You have something good. Would you like to replace your " + getitemname(12209) + " with a new one?", "", bc_self;
 	end;
 }
