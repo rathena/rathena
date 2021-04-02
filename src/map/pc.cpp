@@ -6252,7 +6252,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
  *	0 = Success
  *	1,2,3 = Fail
  *------------------------------------------*/
-char pc_randomwarp(struct map_session_data *sd, clr_type type)
+char pc_randomwarp(struct map_session_data *sd, clr_type type, bool ignore_mapflag)
 {
 	int x,y,i=0;
 
@@ -6260,7 +6260,7 @@ char pc_randomwarp(struct map_session_data *sd, clr_type type)
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if (mapdata->flag[MF_NOTELEPORT]) //Teleport forbidden
+	if (mapdata->flag[MF_NOTELEPORT] && !ignore_mapflag) //Teleport forbidden
 		return 3;
 
 	do {

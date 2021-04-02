@@ -1179,7 +1179,7 @@ enum e_setpos{
 
 enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
 void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y);
-char pc_randomwarp(struct map_session_data *sd,clr_type type);
+char pc_randomwarp(struct map_session_data *sd,clr_type type,bool ignore_mapflag = false);
 bool pc_memo(struct map_session_data* sd, int pos);
 
 char pc_checkadditem(struct map_session_data *sd, t_itemid nameid, int amount);
