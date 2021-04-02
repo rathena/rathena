@@ -1078,6 +1078,9 @@ bool hom_call(struct map_session_data *sd)
 {
 	struct homun_data *hd;
 
+	if( map_getmapflag(sd->bl.m,MF_ANCIENT) ) //Biali Ancient Woe
+		return 0; // Cannot call homunculus on Ancient WoE
+
 	if (!sd->status.hom_id) //Create a new homun.
 		return hom_create_request(sd, HM_CLASS_BASE + rnd_value(0, 7)) ;
 
@@ -1229,6 +1232,9 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 
 	if (!sd->status.hom_id)
 		return 0; // no homunculus
+
+	if( map_getmapflag(sd->bl.m,MF_ANCIENT) )// Biali Ancient Woe
+		return 0; // Cannot revive homunculus on Ancient WoE
 
 	if (!sd->hd) //Load homun data;
 		return intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);

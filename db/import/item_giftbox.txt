@@ -1,0 +1,4 @@
+// Gift Box Obtainable Items Database
+//
+// Structure of Database:
+// GroupID,ItemID,Rate

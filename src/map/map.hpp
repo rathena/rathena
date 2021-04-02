@@ -46,7 +46,7 @@ void map_msg_reload(void);
 #define LOOTITEM_SIZE 10
 #define MAX_MOBSKILL 50		//Max 128, see mob skill_idx type if need this higher
 #define MAX_MOB_LIST_PER_MAP 128
-#define MAX_EVENTQUEUE 2
+#define MAX_EVENTQUEUE 12 // Biali it was originally 2
 #define MAX_EVENTTIMER 32
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
@@ -594,7 +594,6 @@ enum e_mapflag : int16 {
 	MF_NOCOSTUME,
 	MF_GVG_TE_CASTLE,
 	MF_GVG_TE,
-	MF_FVF, // Biali Faction
 	MF_HIDEMOBHPBAR,
 	MF_NOLOOT,
 	MF_NOEXP,
@@ -607,6 +606,14 @@ enum e_mapflag : int16 {
 	MF_WOE_CONSUME, // allows using WoE consumables
 	MF_BG_TOPSCORE,
 #endif
+	MF_PVP_CONSUME, // allows using PvP consumables
+	MF_FVF, // Biali Faction
+	MF_ATK_RATE, // Biali Global Dmg Adjustment
+	MF_CONTESTED, // Biali Contested Territories
+	MF_WOE_SET, // Biali eAmod WoE
+	MF_BLOCKED, // Biali eAmod WoE
+	MF_SKILLNOREQUIREMENTS, //Biali
+	MF_ANCIENT, //Biali
 	MF_MAX
 };
 
@@ -647,10 +654,46 @@ struct s_drop_list {
 	enum e_nightmare_drop_type drop_type;
 };
 
-/// Struct of MF_FVF
-struct s_faction {
-	int id;
-	int relic;
+/// Enum of faction data Biali
+enum e_faction_data_type : uint8 {
+	FACTION_ID,
+	FACTION_RELIC,
+	FACTION_MAX,
+};
+
+// Faction system biali
+struct s_faction_data {
+	int info[FACTION_MAX];
+};
+
+/// Enum of global damage types [Cydh]
+enum e_global_damage_rate_type : uint8 {
+	DMGRATE_BL,
+	DMGRATE_SHORT,
+	DMGRATE_LONG,
+	DMGRATE_WEAPON,
+	DMGRATE_MAGIC,
+	DMGRATE_MISC,
+	DMGRATE_MAX,
+};
+
+// Map-based damage rate [Cydh]
+struct s_global_damage_rate {
+	int rate[DMGRATE_MAX];
+};
+
+/// Enum of contested territories bonus types biali
+enum e_contested_info_type : uint8 {
+	CONTESTED_OWNER_ID,
+	CONTESTED_BASE_BONUS,
+	CONTESTED_JOB_BONUS,
+	CONTESTED_DROP_BONUS,
+	CONTESTED_MAX,
+};
+
+// Contested Territories Biali
+struct s_contested_bonuses {
+	int info[CONTESTED_MAX];
 };
 
 /// Union for mapflag values
@@ -659,7 +702,9 @@ union u_mapflag_args {
 	struct s_drop_list nightmaredrop;
 	struct s_skill_damage skill_damage;
 	struct s_skill_duration skill_duration;
-	struct s_faction faction_info;
+	struct s_global_damage_rate atk_rate;
+	struct s_contested_bonuses contested; //Contested Territories Biali
+	struct s_faction_data faction_data; //biali faction system : keeps faction related bonuses on each map
 	int flag_val;
 };
 
@@ -677,6 +722,7 @@ enum cell_t{
 	CELL_MAELSTROM,
 	CELL_ICEWALL,
 	CELL_NOFVF,
+	CELL_POISON, //Biali
 
 };
 
@@ -702,7 +748,7 @@ enum cell_chk : uint8 {
 	CELL_CHKMAELSTROM,		// Whether the cell has Maelstrom
 	CELL_CHKICEWALL,		// Whether the cell has Ice Wall
 	CELL_CHKNOFVF,			// Whether the cell is FvF - Biali
-
+	CELL_CHKPOISON,			// Whether the cell has Poison Biali
 };
 
 struct mapcell
@@ -722,7 +768,8 @@ struct mapcell
 		nochat : 1,
 		maelstrom : 1,
 		icewall : 1,
-		nofvf : 1; //Biali Faction System
+		nofvf : 1,  //Biali Faction System
+		poison : 1; //Biali Battle ROyale
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
@@ -760,16 +807,13 @@ struct map_data {
 	std::unordered_map<int16, int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
-	std::vector<s_faction> faction_info; // Biali Faction System
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
-
-	struct {
-		int id;
-		int relic;
-	} faction;
+	struct s_global_damage_rate atk_rate; // Global Damage [Cydh]
+	struct s_contested_bonuses contested;
+	struct s_faction_data faction_data; // Biali Faction System
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -778,6 +822,9 @@ struct map_data {
 	// Instance Variables
 	int instance_id;
 	int instance_src_map;
+
+	// Biali Battle ROyale
+	int skillnorequirements_type;
 
 	/* rAthena Local Chat */
 	struct Channel *channel;
@@ -812,6 +859,7 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
+extern int woe_set; // biali eAmod WoE
 
 // Agit Flags
 extern bool agit_flag;
@@ -1182,6 +1230,11 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 #define CHK_RACE(race) ((race) > RC_NONE_ && (race) < RC_MAX) /// Check valid Race
 #define CHK_RACE2(race2) ((race2) >= RC2_NONE && (race2) < RC2_MAX) /// Check valid Race2
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
+
+// WoE Map Types
+#define map_blocked_woe(m) ((agit_flag || agit2_flag || agit3_flag) && woe_set && map_getmapflag(m,MF_GVG) && map_getmapflag(m,MF_GVG_CASTLE) && woe_set != map_getmapflag(m,MF_WOE_SET))
+#define map_allowed_woe(m) ((agit_flag || agit2_flag || agit3_flag) && map_getmapflag(m,MF_GVG) && map_getmapflag(m,MF_GVG_CASTLE) && (!woe_set || woe_set == map_getmapflag(m,MF_WOE_SET)))
+
 
 //Other languages supported
 extern const char*MSG_CONF_NAME_RUS;

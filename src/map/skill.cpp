@@ -10080,7 +10080,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_MIRACLE:		case SC_S_LIFEPOTION:		case SC_L_LIFEPOTION:
 					case SC_INCHEALRATE:		case SC_PUSH_CART:		case SC_PARTYFLEE:
 					case SC_RAISINGDRAGON:		case SC_GT_REVITALIZE:		case SC_GT_ENERGYGAIN:
-					case SC_FACTION_AURA:
 					case SC_GT_CHANGE:		case SC_ANGEL_PROTECT:		case SC_MONSTER_TRANSFORM:
 					case SC_FULL_THROTTLE:		case SC_REBOUND:		case SC_TELEKINESIS_INTENSE:
 					case SC_MOONSTAR:		case SC_SUPER_STAR:		case SC_ALL_RIDING:

@@ -12829,8 +12829,19 @@ BUILDIN_FUNC(getmapflag)
 
 	union u_mapflag_args args = {};
 
-	if (mf == MF_SKILL_DAMAGE && !script_hasdata(st, 4))
-		args.flag_val = SKILLDMG_MAX;
+	if (!script_hasdata(st, 4)) {
+		switch (mf) {
+			case MF_SKILL_DAMAGE:
+				args.flag_val = SKILLDMG_MAX;
+				break;
+			case MF_ATK_RATE:
+				args.flag_val = DMGRATE_MAX;
+				break;
+			case MF_CONTESTED:
+				args.flag_val = CONTESTED_MAX;
+				break;
+		}
+	}
 	else
 		FETCH(4, args.flag_val);
 
@@ -12895,12 +12906,22 @@ BUILDIN_FUNC(setmapflag)
 			args.nightmaredrop.drop_per = 300;
 			args.nightmaredrop.drop_type = NMDT_EQUIP;
 			break;
-		case MF_FVF: // Faction system Biali
-			if (script_hasdata(st, 4) && script_hasdata(st, 5)) {
-				args.faction_info.id = script_getnum(st, 4);
-				args.faction_info.relic = script_getnum(st, 5);
+		case MF_ATK_RATE:
+			if (script_hasdata(st, 4) && script_hasdata(st, 5))
+				args.atk_rate.rate[script_getnum(st, 5)] = script_getnum(st, 4);
+			else {
+				ShowWarning("buildin_setmapflag: Unable to set atk_rate mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+		case MF_CONTESTED:
+			if (script_hasdata(st, 4) && script_hasdata(st, 5) && script_hasdata(st, 6) && script_hasdata(st, 7)) {
+				args.contested.info[CONTESTED_OWNER_ID] 	=  script_getnum(st, 4);
+				args.contested.info[CONTESTED_BASE_BONUS] 	=  script_getnum(st, 5);
+				args.contested.info[CONTESTED_JOB_BONUS] 	=  script_getnum(st, 6);
+				args.contested.info[CONTESTED_DROP_BONUS] 	=  script_getnum(st, 7);
 			} else {
-				ShowWarning("buildin_setmapflag: Unable to set faction  mapflag as flag data is missing.\n");
+				ShowWarning("buildin_setmapflag: Unable to set Contested mapflag as flag data is missing.\n");
 				return SCRIPT_CMD_FAILURE;
 			}
 			break;
@@ -25594,7 +25615,7 @@ BUILDIN_FUNC(factioninfo)
 	if( script_hasdata(st,4) )
 		val = script_getnum(st,4);
 
-	if( val < 0 || (type == 11 && val > MAX_FACTION_ALLIANCE) || (type == 12 && val > MAX_AURA_EFF))
+	if( val < 0 || (type == 12 && val > MAX_AURA_EFF))
 	{
 		ShowWarning("factioninfo: Invalid val: %d \n",val);
 		return 0;
@@ -25612,31 +25633,9 @@ BUILDIN_FUNC(factioninfo)
 		case 7: script_pushint(st,fdb->ele_lvl);		break;	// Element lvl
 		case 8: script_pushint(st,fdb->size);			break;	// Size
 		case 9: script_pushint(st,fdb->ccolor);			break;	// Clothes Color
-		case 10: script_pushint(st,fdb->voting_active);	break;	// Voting State
-		case 11: script_pushint(st,fdb->alliance[val]);	break;	// Alliance ID
 		case 12: script_pushint(st,fdb->aura[val]);		break;	// Aura ID
 	}
 
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * votinginfo(<Faction ID>);
- **/
-BUILDIN_FUNC(votinginfo) 
-{
-	struct faction_data* fdb = NULL;
-	int faction_id;
-
-	faction_id = script_getnum(st,2);
-	if( (fdb = faction_search(faction_id)) == NULL )
-	{
-		ShowWarning("votinginfo: Invalid faction id %d \n",faction_id);
-		return 0;
-	}
-
-	faction_voting_info(faction_id);
 	return 0;
 }
 
@@ -25676,304 +25675,6 @@ BUILDIN_FUNC(setfaction)
 	if( map_getmapflag(sd->bl.m, MF_FVF) )
 		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 
-	return 0;
-}
-/**
- * Complete Faction System [Lilith]
- * setfactionleader(<Faction ID>,<Char ID>);
- **/
-BUILDIN_FUNC(setfactionleader) 
-{
-	TBL_PC* sd;
-	char out[100];
-	struct faction_data* fdb = NULL;
-	int faction_id, char_id;
-
-	faction_id = script_getnum(st,2);
-	if( (fdb = faction_search(faction_id)) == NULL )
-	{
-		ShowWarning("setfactionleader: Invalid faction id %d \n",faction_id);
-		return 0;
-	}
-
-	char_id = script_getnum(st,3);
-	if( ( sd = map_charid2sd(char_id) ) == NULL )
-	{
-		ShowError("setfactionleader: No such character (char_id=%d).\n", char_id);
-		script_pushnil(st);
-		return 1;
-	}
-
-	if( sd->status.faction_id != faction_id )
-	{
-		ShowError("setfactionleader: Character %d not in faction %d).\n", char_id, faction_id);
-		return 1;
-	}
-
-	fdb->leader_id = char_id;
-	sprintf(out, "$faction_leader_id_%d",faction_id);
-	mapreg_setreg(add_str(out), char_id);
-	faction_factionaura(sd);
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * relicadd(<Faction ID>,<Item ID>,<Slot>);
- **/
-BUILDIN_FUNC(relicadd) 
-{
-	struct item_data *item_data = NULL;
-	struct faction_data* fdb = NULL;
-	int faction_id, item, slot;
-	char out[100];
-
-	faction_id = script_getnum(st,2);
-	if( (fdb = faction_search(faction_id)) == NULL )
-	{
-		ShowWarning("relicadd: Invalid faction id %d \n",faction_id);
-		return 0;
-	}
-
-	item = script_getnum(st,3);
-	if( (item_data = itemdb_exists(item)) == NULL )
-	{
-		ShowWarning("relicadd: Invalid item id %d \n",item);
-		return 0;
-	}
-
-	slot = script_getnum(st,4);
-	if( slot < 0 || slot >= MAX_RELIC )
-	{
-		ShowWarning("relicadd: Invalid relic slot %d \n",slot);
-		return 0;
-	}
-
-	fdb->relic[slot].item_id = item_data->nameid;
-	sprintf(out, "$faction_relics_%d",faction_id);
-	mapreg_setreg(reference_uid(add_str(out), slot), item_data->nameid);
-	map_foreachpc(faction_relic_change_sub, faction_id);
-	script_pushint(st,1);
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * relicgetinfo(<Faction ID>,<Slot>);
- **/
-BUILDIN_FUNC(relicgetinfo) 
-{
-	struct faction_data* fdb = NULL;
-	int faction_id, slot;
-
-	faction_id = script_getnum(st,2);
-	if( (fdb = faction_search(faction_id)) == NULL )
-	{
-		ShowWarning("relicgetinfo: Invalid faction id %d \n",faction_id);
-		return 0;
-	}
-
-	slot = script_getnum(st,3);
-	if( slot < 0 || slot >= MAX_RELIC )
-	{
-		ShowWarning("relicgetinfo: Invalid relic slot %d \n",slot);
-		return 0;
-	}
-
-	script_pushint(st,fdb->relic[slot].item_id);
-
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * relicactivate(<Faction ID>,<Slot>,<Val>);
- **/
-BUILDIN_FUNC(relicactivate) 
-{
-	struct faction_data* fdb = NULL;
-	int faction_id, slot;
-
-	faction_id = script_getnum(st,2);
-	if( (fdb = faction_search(faction_id)) == NULL )
-	{
-		ShowWarning("relicactivate: Invalid faction id %d \n",faction_id);
-		return 0;
-	}
-
-	slot = script_getnum(st,3);
-	if( slot < 0 || slot >= MAX_RELIC )
-	{
-		ShowWarning("relicactivate: Invalid relic slot %d \n",slot);
-		return 0;
-	}
-
-	fdb->relic[slot].active = script_getnum(st,4);
-	map_foreachpc(faction_relic_change_sub, faction_id);
-	script_pushint(st,1);
-
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * relicdel(<Faction ID>,<Slot>);
- **/
-BUILDIN_FUNC(relicdel) 
-{
-	struct faction_data* fdb = NULL;
-	int faction_id, slot;
-
-	faction_id = script_getnum(st,2);
-	if( (fdb = faction_search(faction_id)) == NULL )
-	{
-		ShowWarning("relicdel: Invalid faction id %d \n",faction_id);
-		return 0;
-	}
-
-	slot = script_getnum(st,3);
-	if( slot < 0 || slot >= MAX_RELIC )
-	{
-		ShowWarning("relicdel: Invalid relic slot %d \n",slot);
-		return 0;
-	}
-
-	fdb->relic[slot].item_id = 0;
-	map_foreachpc(faction_relic_change_sub, faction_id);
-	script_pushint(st,1);
-
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * vote(<Char ID>[,<Amount of Votes>]);
- **/
-BUILDIN_FUNC(vote) 
-{
-	TBL_PC *sd = NULL, *tsd = NULL;
-	struct faction_data* fdb = NULL;
-	int char_id, votes;
-
-	if (!script_rid2sd(sd))
-			return SCRIPT_CMD_SUCCESS;// no player attached
-
-	if( (fdb = faction_search(sd->status.faction_id)) == NULL )
-	{
-		ShowWarning("vote: Invalid faction id %d\n",sd->status.faction_id);
-		return 0;
-	}
-
-	char_id = script_getnum(st,2);
-	if( (tsd = map_charid2sd(char_id)) == NULL )
-	{
-		ShowError("vote: No such character (char_id=%d).\n", char_id);
-		script_pushnil(st);
-		return 1;
-	}
-
-	if( sd->status.faction_id != tsd->status.faction_id )
-	{
-		ShowError("vote: Different factions (sd=%d, tsd=%d).\n", sd->status.faction_id, tsd->status.faction_id);
-		return 1;
-	}
-
-	if( script_hasdata(st,3) )
-		votes = script_getnum(st,3);
-	else
-		votes = 1;
-
-	faction_voting_add(sd, tsd, votes);
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * addvotes(<Char ID>[,<Amount of Votes>]);
- **/
-BUILDIN_FUNC(addvotes) 
-{
-	TBL_PC *tsd = NULL;
-	struct faction_data* fdb = NULL;
-	int char_id, votes;
-
-	char_id = script_getnum(st,2);
-	if( (tsd = map_charid2sd(char_id)) == NULL )
-	{
-		ShowError("addvotes: No such character (char_id=%d).\n", char_id);
-		script_pushnil(st);
-		return 1;
-	}
-
-	if( (fdb = faction_search(tsd->status.faction_id)) == NULL )
-	{
-		ShowWarning("addvotes: Invalid faction id %d\n",tsd->status.faction_id);
-		return 0;
-	}
-
-	if( script_hasdata(st,3) )
-		votes = script_getnum(st,3);
-	else
-		votes = 1;
-
-	faction_voting_add(NULL, tsd, votes);
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * votingstart([<Faction ID>]);
- **/
-BUILDIN_FUNC(votingstart) 
-{
-	struct faction_data* fdb = NULL;
-	int faction_id = 0, i;
-
-	if( script_hasdata(st,2) )
-	{
-		faction_id = script_getnum(st,2);
-		if( (fdb = faction_search(faction_id)) == NULL )
-		{
-			ShowWarning("votingstart: Invalid faction id %d\n",faction_id);
-			return 0;
-		}
-		faction_voting_start(faction_id);
-	} else {
-
-		for( i = 0; i < MAX_FACTION; i++ )
-			if( (fdb = faction_search(i)) != NULL )
-				faction_voting_start(i);
-	}
-	npc_event_doall("OnVotingStart");
-	return 0;
-}
-
-/**
- * Complete Faction System [Lilith]
- * votingstop([<Faction ID>]);
- **/
-BUILDIN_FUNC(votingstop) 
-{
-	struct faction_data* fdb = NULL;
-	int faction_id = 0, i;
-
-	if( script_hasdata(st,2) )
-	{
-		faction_id = script_getnum(st,2);
-		if( (fdb = faction_search(faction_id)) == NULL )
-		{
-			ShowWarning("votingstop: Invalid faction id %d\n",faction_id);
-			return 0;
-		}
-		faction_voting_finish(faction_id);
-	} else {
-	
-		for( i = 0; i < MAX_FACTION; i++ )
-			if( (fdb = faction_search(i)) != NULL )
-				faction_voting_finish(i);
-	}
-
-	npc_event_doall("OnVotingEnd");
 	return 0;
 }
 
@@ -26070,26 +25771,19 @@ BUILDIN_FUNC(areafactionmonster)
 }
 
 /**
- * Complete Faction System [Lilith]
- * fvfon("Map"[,Faction ID[,Relic ID]]);
+ * Complete Faction System [Biali]
  **/
 BUILDIN_FUNC(fvfon)
 {
 	int16 m;
 	const char *str;
-	int faction_id = 0, relic_id = 0;
+	int faction_id = 0;
 
 	str=script_getstr(st,2);
-	if( script_hasdata(st,3) )
-		faction_id = script_getnum(st, 3);
-	if( script_hasdata(st,4) )
-		relic_id = script_getnum(st, 4);
 
 	if( (m = map_mapname2mapid(str)) >= 0 && !map_getmapflag(m, MF_FVF) )
 	{
 		map_setmapflag(m, MF_FVF, true);
-		map[m].faction.id = faction_id;
-		map[m].faction.relic = relic_id;
 		clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
 		map_foreachinmap(faction_reload_fvf_sub, m, BL_ALL);
 	}
@@ -26097,7 +25791,7 @@ BUILDIN_FUNC(fvfon)
 }
 
 /**
- * Complete Faction System [Lilith]
+ * Complete Faction System [Biali]
  * fvfoff("Map");
  **/
 BUILDIN_FUNC(fvfoff)
@@ -26109,11 +25803,94 @@ BUILDIN_FUNC(fvfoff)
 	if( (m = map_mapname2mapid(str)) >= 0 && map_getmapflag(m, MF_FVF) )
 	{
 		map_setmapflag(m, MF_FVF, false);
-		map[m].faction.id = 0;
-		map[m].faction.relic = -1;
 		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 		map_foreachinmap(faction_reload_fvf_sub, m, BL_ALL);
 	}
+	return 0;
+}
+
+/**
+ * Contested System [Biali]
+ * contestedon <mapname>,<guild_id>,<base_bonus>,<job_bonus>,<drop_bonus>
+ **/
+BUILDIN_FUNC(contestedon)
+{
+	int16 m_id;
+	const char *str;
+
+	str=script_getstr(st,2);
+	int guild_id = script_getnum(st,3);
+	int base = script_getnum(st,4);
+	int job = script_getnum(st,5);
+	int drop = script_getnum(st,6);
+
+	m_id = map_mapname2mapid(str);
+
+	union u_mapflag_args args = {};
+
+	if( m_id >= 0 && !map_getmapflag(m_id, MF_CONTESTED)) 
+	{ 
+		struct guild* gdb = NULL;
+		if ( (gdb = guild_search(guild_id)) != NULL ) 
+		{
+			args.contested.info[CONTESTED_OWNER_ID] = guild_id;
+			args.contested.info[CONTESTED_BASE_BONUS] = base;
+			args.contested.info[CONTESTED_JOB_BONUS] = job;
+			args.contested.info[CONTESTED_DROP_BONUS] = drop;
+			map_setmapflag_sub(m_id, MF_CONTESTED, true, &args);
+		}
+	}
+	return 0;
+}
+
+/**
+ * Contested System [Biali]
+ * contestedadjbonus <mapname>,<base_bonus>,<job_bonus>,<drop_bonus>
+ **/
+BUILDIN_FUNC(contestedadjbonus)
+{
+	int16 m_id;
+	const char *str;
+
+	str=script_getstr(st,2);
+	int base = script_getnum(st,3);
+	int job = script_getnum(st,4);
+	int drop = script_getnum(st,5);
+
+	if( (m_id = map_mapname2mapid(str)) == NULL )
+	{
+		ShowWarning("contestedadjbonus: map not found %s\n",str);
+		return 0;
+	}
+
+	struct map_data *mapdata = map_getmapdata(m_id);
+
+	if(mapdata->contested.info[CONTESTED_OWNER_ID] == NULL || !map_getmapflag(m_id,MF_CONTESTED)) 
+	{
+		ShowWarning("contestedadjbonus: map %s has no owner ot is not contested. Aborting.\n",str);
+		return 0;
+	}
+
+	mapdata->contested.info[CONTESTED_BASE_BONUS] = base;
+	mapdata->contested.info[CONTESTED_JOB_BONUS] = job;
+	mapdata->contested.info[CONTESTED_DROP_BONUS] = drop;
+
+	return 0;
+}
+
+/**
+ * Contested System [Biali]
+ * contestedoff <mapname>;
+ **/
+BUILDIN_FUNC(contestedoff)
+{
+	int16 m_id;
+	const char *str;
+
+	str=script_getstr(st,2);
+	if( (m_id = map_mapname2mapid(str)) >= 0 && map_getmapflag(m_id, MF_CONTESTED) )
+		map_setmapflag_sub(m_id, MF_CONTESTED, false, NULL);
+
 	return 0;
 }
 
@@ -26716,21 +26493,17 @@ struct script_function buildin_func[] = {
 	**/
 	BUILDIN_DEF(factioninfo, "ii?"),
 	BUILDIN_DEF(setfaction, "i?"),
-	BUILDIN_DEF(setfactionleader, "ii"),
-	BUILDIN_DEF(relicadd, "iii"),
-	BUILDIN_DEF(relicgetinfo, "ii"),
-	BUILDIN_DEF(relicdel, "ii"),
-	BUILDIN_DEF(relicactivate, "iii"),
-	BUILDIN_DEF(votingstart, "?"),
-	BUILDIN_DEF(votingstop, "?"),
-	BUILDIN_DEF(vote, "i?"),
-	BUILDIN_DEF(addvotes, "i?"),
-	BUILDIN_DEF2(votingstop,"votingend","?"),
-	BUILDIN_DEF(votinginfo, "i"),
 	BUILDIN_DEF(factionmonster,"isiisii?"),
 	BUILDIN_DEF(areafactionmonster,"isiiiisii?"),
 	BUILDIN_DEF(fvfon,"s?"),
 	BUILDIN_DEF(fvfoff,"s"),
+
+	/**
+	* Contested System [Biali]
+	**/
+	BUILDIN_DEF(contestedon,"s"),
+	BUILDIN_DEF(contestedoff,"s"),
+	BUILDIN_DEF(contestedadjbonus,"siii"),
 
 	/**
 	 * rAthena and beyond!

@@ -1438,16 +1438,11 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 		return 1;
 
 	if( sd->status.faction_id && nd->faction_id ) {
-		if( battle_config.faction_npc_settings == 1 && !faction_check_alliance(&sd->bl,&nd->bl) )
-		{
-			clif_displaymessage(sd->fd, msg_txt(sd,1637));
-			return 1;
-		} else if( !battle_config.faction_npc_settings && sd->status.faction_id != nd->faction_id ) {
+		if( !battle_config.faction_npc_settings && sd->status.faction_id != nd->faction_id ) {
 			clif_displaymessage(sd->fd, msg_txt(sd,1636));
 			return 1;
 		}
 	}
-
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
 		clif_msg(sd, WORK_IN_PROGRESS);
@@ -4383,24 +4378,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			} else
 				map_setmapflag(m, MF_BATTLEGROUND, false);
 			break;
-		case MF_FVF: {
-			union u_mapflag_args args = {};
-			int relic = -1;
-			if (!state) {
-				args.faction_info.id = 0;
-				args.faction_info.relic = relic;
-				map_setmapflag_sub(m, MF_FVF, false, &args);
-			} else {
-				if (sscanf(w4, "%11d,%11d[^\n]", &state, &relic) == 2) {
-					args.faction_info.id = state;
-					args.faction_info.relic = relic;
-					map_setmapflag_sub(m, MF_FVF, true, &args);
-				} else {
-					ShowWarning("npc_parse_mapflag: Invalid State '%d',relic '%d' supplied for mapflag 'fvf' (file '%s', line '%d'), removing.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", args.faction_info.id, args.faction_info.relic, filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
-				}
-			}
-			break;
-		}
+
 		case MF_NOCOMMAND:
 			if (state) {
 				union u_mapflag_args args = {};
@@ -4499,6 +4477,48 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_duration.per = cap_value(args.skill_duration.per, 0, UINT16_MAX);
 						map_setmapflag_sub(m, MF_SKILL_DURATION, true, &args);
 					}
+				}
+			}
+			break;
+		}
+
+		case MF_ATK_RATE: {
+			union u_mapflag_args args = {};
+
+			if (!state)
+				map_setmapflag_sub(m, MF_ATK_RATE, false, &args);
+			else {
+				if (sscanf(w4, "%d,%d,%d,%d,%d,%d",
+					&args.atk_rate.rate[DMGRATE_BL], &args.atk_rate.rate[DMGRATE_SHORT], &args.atk_rate.rate[DMGRATE_LONG],
+					&args.atk_rate.rate[DMGRATE_WEAPON], &args.atk_rate.rate[DMGRATE_MAGIC], &args.atk_rate.rate[DMGRATE_MISC]
+				) == 6)
+				{
+					map_setmapflag_sub(m, MF_ATK_RATE, true, &args);
+				}
+				else {
+					ShowInfo("npc_parse_mapflag: atk_rate: Not sufficient values (file '%s', line '%d'). Skipping..\n", filepath, strline(buffer, start - buffer));
+				}
+			}
+			break;
+		}
+
+		case MF_CONTESTED: { // Biali Contested Territories
+			union u_mapflag_args args = {};
+
+			if (!state)
+				map_setmapflag_sub(m, MF_CONTESTED, false, &args);
+			else {
+				if (sscanf(w4, "%d,%d,%d,%d",
+					&args.contested.info[CONTESTED_OWNER_ID], 
+					&args.contested.info[CONTESTED_BASE_BONUS], 
+					&args.contested.info[CONTESTED_JOB_BONUS],
+					&args.contested.info[CONTESTED_DROP_BONUS]
+				) == 4)
+				{
+					map_setmapflag_sub(m, MF_CONTESTED, true, &args);
+				}
+				else {
+					ShowInfo("npc_parse_mapflag: contested: Not sufficient values (file '%s', line '%d'). Skipping..\n", filepath, strline(buffer, start - buffer));
 				}
 			}
 			break;

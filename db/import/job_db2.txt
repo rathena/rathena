@@ -1,0 +1,14 @@
+// Job-specific Stat Bonuses Database
+//
+// Structure of Database:
+// JobID,JobLv1,JobLv2,JobLv3,...
+//
+// Legend for 'JobLvN' fields:
+//  0 = No stat bonus at this job level
+//  1 = STR increased by 1 at this job level
+//  2 = AGI increased by 1 at this job level
+//  3 = VIT increased by 1 at this job level
+//  4 = INT increased by 1 at this job level
+//  5 = DEX increased by 1 at this job level
+//  6 = LUK increased by 1 at this job level
+

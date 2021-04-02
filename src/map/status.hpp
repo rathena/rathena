@@ -942,8 +942,6 @@ enum sc_type : int16 {
 	SC_EMERGENCY_MOVE,
 	SC_MADOGEAR,
 
-	// Faction System Biali
-	SC_FACTION_AURA,
 	SC_NPC_HALLUCINATIONWALK,
 
 #ifdef RENEWAL

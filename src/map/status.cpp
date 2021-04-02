@@ -1019,8 +1019,6 @@ void initChangeTables(void)
 	set_sc_with_vfx( OB_AKAITSUKI		, SC_AKAITSUKI		, EFST_AKAITSUKI		, SCB_NONE );
 	set_sc( OB_OBOROGENSOU			, SC_GENSOU		, EFST_GENSOU		, SCB_NONE );
 
-	set_sc( FACTION_AURA	, SC_FACTION_AURA	, EFST_BLANK	, SCB_ALL );
-
 	set_sc( ALL_FULL_THROTTLE		, SC_FULL_THROTTLE	, EFST_FULL_THROTTLE	, SCB_SPEED|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
 
 	/* Rebellion */
@@ -10205,10 +10203,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
 			case SC_HAWKEYES:
-			case SC_FACTION_AURA:
-				if( sce->val4 && !val4 ) // You cannot override master guild aura
-					return 0;
-				break;
 			case SC_JOINTBEAT:
 				if (sc && sc->data[type]->val2 & BREAK_NECK)
 					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
@@ -14678,10 +14672,6 @@ TIMER_FUNC(status_change_timer){
 	case SC_GLORYWOUNDS:
 	case SC_SOULCOLD:
 	case SC_HAWKEYES:
-	case SC_FACTION_AURA: 
-		// They only end by status_change_end
-		sc_timer_next(600000 + tick);
-		return 0;
 	case SC_MEIKYOUSISUI:
 		if( --(sce->val4) >= 0 ) {
 			status_heal(bl, status->max_hp * sce->val2 / 100, status->max_sp * sce->val3 / 100, 0);
@@ -15078,7 +15068,6 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_CURSEDCIRCLE_TARGET:
 			case SC_PUSH_CART:
 			case SC_ALL_RIDING:
-			case SC_FACTION_AURA:
 			case SC_STYLE_CHANGE:
 			case SC_MONSTER_TRANSFORM:
 			case SC_ACTIVE_MONSTER_TRANSFORM:

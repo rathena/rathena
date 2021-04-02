@@ -7035,7 +7035,7 @@ Body:
         Count: 150
   - Id: 60200
     Title: Endless Tower Effect
-    TimeLimit: +7d
+    TimeLimit: +1d
   - Id: 60201
     Title: Endless Tower Time Limit
     TimeLimit: +4h
@@ -7108,3 +7108,158 @@ Body:
   - Id: 62238
     Title: Midgardian Mercenary timer
     TimeLimit: +1h
+  - Id: 64181
+    Title: "Geferus: Wraith Dead Handling"
+    Targets:
+      - Mob: WRAITH_DEAD
+        Count: 150
+  - Id: 64182
+    Title: "Geferus: Mini Deamon Handling"
+    Targets:
+      - Mob: MINI_DEMON
+        Count: 150
+  - Id: 64183
+    Title: "Geferus: Zombie Master Handling"
+    Targets:
+      - Mob: ZOMBIE_MASTER
+        Count: 150
+  - Id: 64184
+    Title: "Geferus: Ghoul Handling"
+    Targets:
+      - Mob: GHOUL
+        Count: 300
+  - Id: 64185
+    Title: "Geferus: Deviruchi Handling"
+    Targets:
+      - Mob: DEVIRUCHI
+        Count: 300
+  - Id: 64281
+    Title: Wraith Dead Time Limit
+    TimeLimit: +2h
+  - Id: 64282
+    Title: Mini Deamon Time Limit
+    TimeLimit: +2h
+  - Id: 64283
+    Title: Zombie Master Time Limit
+    TimeLimit: +2h
+  - Id: 64284
+    Title: Ghoul Time Limit
+    TimeLimit: +2h
+  - Id: 64285
+    Title: Deviruchi Time Limit
+    TimeLimit: +2h
+  - Id: 64500
+    Title: "Training Center: Talk to Sophie"
+  - Id: 64501
+    Title: "Training Center: Talk to the Battle Master"
+  - Id: 64502
+    Title: "Training Center: Talk to Sweetie"
+  - Id: 64503
+    Title: "Training Center: Talk to the Agent Kafra"
+  - Id: 64505
+    Title: "Training Center: Talk to the Premmy Central"
+  - Id: 8500
+    Title: Tierra Gorge Battle
+    TimeLimit: +10mn
+  - Id: 8501
+    Title: Tierra Eye of Storm Battle
+    TimeLimit: +10mn
+  - Id: 8502
+    Title: Tierra Bossnia Battle
+    TimeLimit: +10mn
+  - Id: 8503
+    Title: Flavius Battle
+    TimeLimit: +10mn
+  - Id: 8504
+    Title: Flavius Capture the Flag Battle
+    TimeLimit: +10mn
+  - Id: 8505
+    Title: Flavius Team DeathMatch Battle
+    TimeLimit: +10mn
+  - Id: 8506
+    Title: Battleground Deserter
+    TimeLimit: +1mn
+  - Id: 8507
+    Title: Flavius Stone Capture
+    TimeLimit: +10mn
+  - Id: 8508
+    Title: Tierra Triple Infierno
+    TimeLimit: +10mn
+  - Id: 8509
+    Title: Castle Conquest
+    TimeLimit: +30mn
+  - Id: 8510
+    Title: Castle Rush
+    TimeLimit: +30mn
+  - Id: 69500
+    Title: Eddga
+    TimeLimit: +12h
+  - Id: 69501
+    Title: Gtb
+    TimeLimit: +12h
+  - Id: 69502
+    Title: Mistress
+    TimeLimit: +12h
+  - Id: 69503
+    Title: Phreeoni
+    TimeLimit: +12h
+  - Id: 69504
+    Title: Snake Lord
+    TimeLimit: +12h
+  - Id: 69505
+    Title: Lady Tanee
+    TimeLimit: +12h
+  - Id: 69506
+    Title: Orc Hero
+    TimeLimit: +12h
+  - Id: 69507
+    Title: Orc Lord
+    TimeLimit: +12h
+  - Id: 69508
+    Title: Turtle General
+    TimeLimit: +12h
+  - Id: 69509
+    Title: Stormy Knight
+    TimeLimit: +12h
+  - Id: 69510
+    Title: Lord of the Dead
+    TimeLimit: +12h
+  - Id: 69511
+    Title: Garm
+    TimeLimit: +12h
+  - Id: 69512
+    Title: Dark Lord
+    TimeLimit: +12h
+  - Id: 69513
+    Title: Baphomet
+    TimeLimit: +12h
+  - Id: 69514
+    Title: Dracula
+    TimeLimit: +12h
+  - Id: 69515
+    Title: Doppelganger
+    TimeLimit: +12h
+  - Id: 69516
+    Title: Tao Gunka
+    TimeLimit: +12h
+  - Id: 69517
+    Title: Drake
+    TimeLimit: +12h
+  - Id: 69518
+    Title: Moonlight
+    TimeLimit: +12h
+  - Id: 69519
+    Title: Maya
+    TimeLimit: +12h
+  - Id: 69520
+    Title: Osiris
+    TimeLimit: +12h
+  - Id: 69521
+    Title: Amon Ra
+    TimeLimit: +12h
+  - Id: 69522
+    Title: Incantation Samurai
+    TimeLimit: +12h
+  - Id: 69523
+    Title: Bacsojin
+    TimeLimit: +12h

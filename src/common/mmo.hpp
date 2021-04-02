@@ -171,6 +171,11 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_ACHIEVEMENT_DEPENDENTS 20 /// Maximum different dependents in achievement_db.yml
 #define ACHIEVEMENT_NAME_LENGTH 50 /// Max Achievement Name length
 
+// Max factions
+#define MAX_FACTION 6
+// Max effects for faction aura
+#define MAX_AURA_EFF 3
+
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1
@@ -312,6 +317,15 @@ struct startitem {
 	t_itemid nameid;
 	unsigned short amount;
 	uint32 pos;
+};
+
+// biali reputtion system
+// this is used by char.c to save/retrieve data from SQL
+struct s_reputation {
+	int account_id;
+	int char_id;
+	short faction_id;
+	int value;
 };
 
 enum e_skill_flag
@@ -545,6 +559,7 @@ struct mmo_charstatus {
 	time_t unban_time;
 
 	int faction_id; //Biali Faction System
+	int reputation[MAX_FACTION]; // array position equals faction id
 
 	// Char server addon system
 	unsigned int character_moves;
@@ -1004,6 +1019,7 @@ enum bound_type {
 	BOUND_GUILD, /// 2 - Guild Bound
 	BOUND_PARTY, /// 3 - Party Bound
 	BOUND_CHAR, /// 4 - Character Bound
+	BOUND_SPECIAL, // 5 - Biali Char bound equips that can go into special storages
 	BOUND_MAX,
 
 	BOUND_ONEQUIP = 1, ///< Show notification when item will be bound on equip

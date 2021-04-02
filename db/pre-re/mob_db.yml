@@ -41225,3 +41225,31 @@ Body:
     AttackDelay: 1872
     AttackMotion: 672
     DamageMotion: 480
+  - Id: 20403
+    AegisName: EMPELIUM_C
+    Name: Emperium
+    Level: 90
+    Hp: 68430
+    Attack: 60
+    Attack2: 71
+    Defense: 40
+    MagicDefense: 50
+    Agi: 17
+    Vit: 80
+    Int: 50
+    Dex: 26
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    RaceGroups:
+      Gvg: true
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Class: Boss

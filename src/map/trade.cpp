@@ -76,11 +76,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 
 	if( sd->status.faction_id && target_sd->status.faction_id )
 	{
-		if( battle_config.faction_trade_settings == 1 && !faction_check_alliance(&sd->bl,&target_sd->bl) )
-		{
-			clif_displaymessage(sd->fd, msg_txt(sd,1654));
-			return;
-		} else if( !battle_config.faction_trade_settings && sd->status.faction_id != target_sd->status.faction_id ) {
+		if( !battle_config.faction_trade_settings && sd->status.faction_id != target_sd->status.faction_id ) {
 			clif_displaymessage(sd->fd, msg_txt(sd,1653));
 			return;
 		}

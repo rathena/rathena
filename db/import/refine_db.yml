@@ -1,0 +1,235 @@
+# This file is a part of rAthena++.
+#   Copyright(C) 2017 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Pre-Renewal Refine Database
+###########################################################################
+Armor:
+  StatsPerLevel: 66
+  RandomBonusStartLevel: 0
+  RandomBonusValue: 0
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 2000
+      Material: 985
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7619
+  Rates:
+    - Level: 5
+      NormalChance: 60
+      EnrichedChance: 90
+      EventNormalChance: 60
+      EventEnrichedChance: 95
+    - Level: 6
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 7
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 8
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 50
+    - Level: 9
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 50
+    - Level: 10
+      NormalChance: 9
+      EnrichedChance: 20
+      EventNormalChance: 9
+      EventEnrichedChance: 35
+WeaponLv1:
+  StatsPerLevel: 200
+  RandomBonusStartLevel: 8
+  RandomBonusValue: 300
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 50
+      Material: 1010
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+  Rates:
+    - Level: 8
+      NormalChance: 60
+      EnrichedChance: 90
+      EventNormalChance: 60
+      EventEnrichedChance: 95
+    - Level: 9
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 85
+    - Level: 10
+      NormalChance: 19
+      EnrichedChance: 30
+      EventNormalChance: 19
+      EventEnrichedChance: 55
+WeaponLv2:
+  StatsPerLevel: 300
+  RandomBonusStartLevel: 7
+  RandomBonusValue: 500
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 200
+      Material: 1011
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+  Rates:
+    - Level: 7
+      NormalChance: 60
+      EnrichedChance: 90
+      EventNormalChance: 60
+      EventEnrichedChance: 95
+    - Level: 8
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 85
+    - Level: 9
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 60
+    - Level: 10
+      NormalChance: 19
+      EnrichedChance: 30
+      EventNormalChance: 19
+      EventEnrichedChance: 45
+WeaponLv3:
+  StatsPerLevel: 500
+  RandomBonusStartLevel: 6
+  RandomBonusValue: 800
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 5000
+      Material: 984
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+  Rates:
+    - Level: 6
+      NormalChance: 60
+      EnrichedChance: 90
+      EventNormalChance: 60
+      EventEnrichedChance: 95
+    - Level: 7
+      NormalChance: 50
+      EnrichedChance: 80
+      EventNormalChance: 50
+      EventEnrichedChance: 90
+    - Level: 8
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 70
+    - Level: 9
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 60
+    - Level: 10
+      NormalChance: 19
+      EnrichedChance: 30
+      EventNormalChance: 19
+      EventEnrichedChance: 45
+WeaponLv4:
+  StatsPerLevel: 700
+  RandomBonusStartLevel: 5
+  RandomBonusValue: 1300
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 20000
+      Material: 984
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+  Rates:
+    - Level: 5
+      NormalChance: 60
+      EnrichedChance: 90
+      EventNormalChance: 60
+      EventEnrichedChance: 95
+    - Level: 6
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 7
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 8
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 60
+    - Level: 9
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 50
+    - Level: 10
+      NormalChance: 9
+      EnrichedChance: 20
+      EventNormalChance: 9
+      EventEnrichedChance: 35
+Shadow:
+  StatsPerLevel: 0
+  RandomBonusStartLevel: 0
+  RandomBonusValue: 0
+  Rates:
+    - Level: 5
+      NormalChance: 60
+      EnrichedChance: 90
+      EventNormalChance: 60
+      EventEnrichedChance: 95
+    - Level: 6
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 7
+      NormalChance: 40
+      EnrichedChance: 70
+      EventNormalChance: 40
+      EventEnrichedChance: 80
+    - Level: 8
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 50
+    - Level: 9
+      NormalChance: 20
+      EnrichedChance: 40
+      EventNormalChance: 20
+      EventEnrichedChance: 50
+    - Level: 10
+      NormalChance: 9
+      EnrichedChance: 20
+      EventNormalChance: 9
+      EventEnrichedChance: 35

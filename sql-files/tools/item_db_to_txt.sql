@@ -17,7 +17,7 @@ SELECT
 		ELSE CONCAT("{ ", `unequip_script`, " }")
 	END
 FROM `item_db`
-INTO OUTFILE 'C:/item_db.txt'
+INTO OUTFILE './item_db.txt'
 FIELDS OPTIONALLY ENCLOSED BY ''
 TERMINATED BY ','
 ESCAPED BY ''

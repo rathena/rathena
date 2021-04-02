@@ -733,6 +733,20 @@ enum e_random_item_group {
 	IG_PRIZEOFHERO,
 	IG_PRIVATE_AIRSHIP,
 	IG_TOKEN_OF_SIEGFRIED,
+	IG_BATTLEROYALE_GUNS,
+	//Biali Ragnamania
+	IG_BATTLEROYALE_AMMO,
+	IG_RAGNAMANIA_COSTUME,
+	IG_RAGNAMANIA_TIER1,
+	IG_RAGNAMANIA_TIER2,
+	IG_RAGNAMANIA_TIER3,
+	IG_RAGNAMANIA_TIER4,
+	IG_RAGNAMANIA_TIER5,
+	IG_RAGNAMANIA_FOOD1,
+	IG_RAGNAMANIA_FOOD2,
+	IG_RAGNAMANIA_FOOD3,
+	IG_RAGNAMANIA_ROMANTIC,
+	//Biali Ragnamania fim
 	IG_ENCHANT_STONE_BOX5,
 	IG_ENCHANT_STONE_BOX6,
 	IG_ENCHANT_STONE_BOX7,
@@ -873,6 +887,7 @@ struct item_data
 #ifdef RENEWAL
 	uint32 matk;
 #endif
+	bool ancient; //Biali Ancient WoE
 
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
@@ -900,6 +915,7 @@ struct item_data
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 		bool broadcast; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
+		bool ancient; // Biali Ancient WoE
 		e_item_drop_effect dropEffect; ///< Drop Effect Mode
 	} flag;
 	struct {// item stacking limitation
