@@ -4109,8 +4109,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case SN_SHARPSHOOTING:
 		case MA_SHARPSHOOTING:
 			if (src->type == BL_MOB) { // TODO: Did these formulas change in the renewal balancing?
-				if (battle_config.skill_eightpath_algorithm == 1)
-					skillratio += 40 * skill_lv;
+				if (wd->miscflag & 1) // Splash damage bonus
+					skillratio += -100 + 140 * skill_lv;
 				else
 					skillratio += 100 + 50 * skill_lv;
 			} else {

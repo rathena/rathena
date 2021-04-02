@@ -4941,11 +4941,17 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_ICEBREATH:
 	case NPC_THUNDERBREATH:
 		skill_area_temp[1] = bl->id;
+		if (skill_id == SN_SHARPSHOOTING && src->type == BL_MOB)
+			flag |= 1; // Flag for specific mob damage formula
+
 		if (battle_config.skill_eightpath_algorithm) {
 			//Use official AoE algorithm
 			if (!(map_foreachindir(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
 			   skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
 			   skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY))) {
+			   	if (skill_id == SN_SHARPSHOOTING && src->type == BL_MOB)
+			   		flag &= ~1; // Only targets in the splash area are affected
+
 				//These skills hit at least the target if the AoE doesn't hit
 				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 			}
