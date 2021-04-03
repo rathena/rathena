@@ -563,7 +563,7 @@ function	script	refinemain	{
 	.@npc_name$ = getarg(0);
 	.@features = getarg(1);
 
-	if( getbattleflag( "feature.refineui" ) == 3 ){
+	if( getbattleflag( "feature.refineui" ) ){
 		mes "["+ .@npc_name$ +"]";
 		mes "I've spent a long time refining powerful weapons.";
 		mes "You are in the presence of 장춰탕넨 [Zhang Zhuangtan]"; // TODO: find a valid translation

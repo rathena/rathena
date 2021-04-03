@@ -400,7 +400,7 @@ lhz_in02,280,17,3	duplicate(Basta)	Basta#lighthalzen	4_M_DWARF
 -	script	RefineUI_Init	-1,{
 	end;
 OnInit:
-	if (getbattleflag("feature.refineui") == 3) {
+	if (getbattleflag("feature.refineui")) {
 		unloadnpc "Basta";
 		unloadnpc "MightyHammer";
 	}
