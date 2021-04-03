@@ -712,6 +712,10 @@ void initChangeTables(void)
 	set_sc( NPC_COMET			, SC_BURNING		, EFST_BURNT		, SCB_MDEF );
 	set_sc_with_vfx( NPC_MAXPAIN	,	 SC_MAXPAIN	, EFST_MAXPAIN	, SCB_NONE );
 	add_sc( NPC_JACKFROST        , SC_FREEZE		  );
+	add_sc( NPC_ELECTRICWALK	, SC_PROPERTYWALK		);
+	add_sc( NPC_FIREWALK		, SC_PROPERTYWALK		);
+	add_sc( NPC_CLOUD_KILL   	, SC_POISON		);
+	set_sc( NPC_HALLUCINATIONWALK	, SC_NPC_HALLUCINATIONWALK	, EFST_NPC_HALLUCINATIONWALK	, SCB_FLEE );
 
 	set_sc( CASH_BLESSING		, SC_BLESSING		, EFST_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI		, SC_INCREASEAGI	, EFST_INC_AGI, SCB_AGI|SCB_SPEED );
@@ -801,6 +805,10 @@ void initChangeTables(void)
 
 	set_sc( GD_BATTLEORDER		, SC_BATTLEORDERS	, EFST_GDSKILL_BATTLEORDER	, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( GD_REGENERATION		, SC_REGENERATION	, EFST_GDSKILL_REGENERATION	, SCB_REGEN );
+
+#ifdef RENEWAL
+	set_sc( GD_EMERGENCY_MOVE	, SC_EMERGENCY_MOVE	, EFST_INC_AGI	, SCB_SPEED );
+#endif
 
 	/* Rune Knight */
 	set_sc( RK_ENCHANTBLADE		, SC_ENCHANTBLADE	, EFST_ENCHANTBLADE		, SCB_NONE );
@@ -1398,6 +1406,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_EP16_2_BUFF_SC] = EFST_EP16_2_BUFF_SC;
 	StatusIconChangeTable[SC_EP16_2_BUFF_AC] = EFST_EP16_2_BUFF_AC;
 
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+	StatusIconChangeTable[SC_MADOGEAR] = EFST_MADOGEAR;
+#else
+	StatusIconChangeTable[SC_MADOGEAR] = EFST_RIDING;
+#endif
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1584,6 +1598,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 
+	StatusChangeFlagTable[SC_MADOGEAR] |= SCB_SPEED;
+
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
 	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;
@@ -1626,6 +1642,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_HELLS_PLANT]     = BL_PC;
 	StatusDisplayType[SC_MISTY_FROST]     = BL_PC;
 	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
+	StatusDisplayType[SC_MADOGEAR]        = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -2383,13 +2400,13 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		case ALL_ODINS_POWER:
 			// Should fail when used on top of Land Protector [Skotlex]
 			if (src && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
-				&& !status_has_mode(status,MD_STATUS_IMMUNE)
+				&& !status_has_mode(status,MD_STATUSIMMUNE)
 				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id))
 				return false;
 			break;
 		case SC_MANHOLE:
 			// Skill is disabled against special racial grouped monsters(GvG and Battleground)
-			if (target && ( status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD ) )
+			if (target && ( util::vector_exists(status_get_race2(target), RC2_GVG) || util::vector_exists(status_get_race2(target), RC2_BATTLEFIELD) ) )
 				return false;
 		default:
 			break;
@@ -2402,7 +2419,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (sc->data[SC_ALL_RIDING])
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
-		if (flag == 1 && !status_has_mode(status,MD_STATUS_IMMUNE) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
+		if (flag == 1 && !status_has_mode(status,MD_STATUSIMMUNE) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
 			(sc->data[SC_ASH] && rnd()%2) || // Volcanic Ash has a 50% chance of causing skills to fail.
 			(sc->data[SC_KYOMU] && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
 		)) {
@@ -2796,17 +2813,9 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
  * @param status: Player status
  * @return weapon attack
  */
-unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd)
+unsigned int status_weapon_atk(weapon_atk &wa)
 {
-	float str = sd->base_status.str;
-	int weapon_atk_bonus = 0;
-
-	if ((wa.range > 3 || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP) && !pc_checkskill(sd, SU_SOULATTACK))
-		str = sd->base_status.dex;
-	if (sd->bonus.weapon_atk_rate)
-		weapon_atk_bonus = wa.atk * sd->bonus.weapon_atk_rate / 100;
-	// wa.atk2 = refinement, wa.atk = base equip atk, wa.atk*str/200 = bonus str
-	return wa.atk + wa.atk2 + (int)(wa.atk * (str/200) + weapon_atk_bonus);
+	return wa.atk + wa.atk2;
 }
 #endif
 
@@ -3843,7 +3852,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	// !FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
 	// Give them all modes except these (useful for clones)
-	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUS_IMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
+	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUSIMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
 
 	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : (((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_size : SZ_MEDIUM);
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
@@ -3956,6 +3965,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			if(r)
 				wa->atk2 += refine_info[wlv].bonus[r-1] / 100;
 #ifdef RENEWAL
+			if (sd->bonus.weapon_atk_rate)
+				wa->atk = wa->atk * sd->bonus.weapon_atk_rate / 100;
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
 			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
@@ -4275,8 +4286,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		base_status->batk += 4;
 #else
-	base_status->watk = status_weapon_atk(base_status->rhw, sd);
-	base_status->watk2 = status_weapon_atk(base_status->lhw, sd);
+	base_status->watk = status_weapon_atk(base_status->rhw);
+	base_status->watk2 = status_weapon_atk(base_status->lhw);
 	base_status->eatk = sd->bonus.eatk;
 #endif
 
@@ -5522,10 +5533,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	if(flag&SCB_MODE) {
 		status->mode = status_calc_mode(bl, sc, b_status->mode);
 
-		// Only switch between Normal and Boss classes as the others are determined by the race value
-		if (status->class_ == CLASS_NORMAL && status_has_mode(status, MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
+		if (status->class_ != CLASS_BATTLEFIELD && status_has_mode(status, MD_STATUSIMMUNE|MD_SKILLIMMUNE))
+			status->class_ = CLASS_BATTLEFIELD;
+		else if (status->class_ != CLASS_BOSS && status_has_mode(status, MD_STATUSIMMUNE|MD_KNOCKBACKIMMUNE|MD_DETECTOR))
 			status->class_ = CLASS_BOSS;
-		else if (status->class_ == CLASS_BOSS && !status_has_mode(status, MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
+		else if (status->class_ != CLASS_GUARDIAN && status_has_mode(status, MD_STATUSIMMUNE))
+			status->class_ = CLASS_GUARDIAN;
+		else if (status->class_ != CLASS_NORMAL)
 			status->class_ = CLASS_NORMAL;
 
 		// Since mode changed, reset their state.
@@ -6906,6 +6920,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += sc->data[SC_MERC_FLEEUP]->val2;
 	if( sc->data[SC_HALLUCINATIONWALK] )
 		flee += sc->data[SC_HALLUCINATIONWALK]->val2;
+	if( sc->data[SC_NPC_HALLUCINATIONWALK] )
+		flee += sc->data[SC_NPC_HALLUCINATIONWALK]->val2;
 	if(sc->data[SC_MTF_HITFLEE])
 		flee += sc->data[SC_MTF_HITFLEE]->val2;
 	if( sc->data[SC_WATER_BARRIER] )
@@ -7429,6 +7445,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = max(val, sc->data[SC_DORAM_WALKSPEED]->val1);
 		if (sc->data[SC_RUSHWINDMILL])
 			val = max(val, 25); // !TODO: Confirm bonus movement speed
+		if (sc->data[SC_EMERGENCY_MOVE])
+			val = max(val, sc->data[SC_EMERGENCY_MOVE]->val2);
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sc->data[SC_SPEEDUP0] ) // Temporary item-based speedup
@@ -7490,6 +7508,9 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 		}
 
 		if (sc->data[SC_ASSNCROS] && bonus < sc->data[SC_ASSNCROS]->val2) {
+#ifdef RENEWAL
+			bonus += sc->data[SC_ASSNCROS]->val2;
+#else
 			if (bl->type != BL_PC)
 				bonus += sc->data[SC_ASSNCROS]->val2;
 			else {
@@ -7506,6 +7527,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 						break;
 				}
 			}
+#endif
 		}
 
 		if (bonus < 20 && sc->data[SC_MADNESSCANCEL])
@@ -7991,7 +8013,7 @@ void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd)
 				sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
 			break;
 		case 4: // Overwrite with slave mode
-			sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOM_WALK|MD_CANATTACK, 0, 0, 0);
+			sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOMWALK|MD_CANATTACK, 0, 0, 0);
 			break;
 		default: //Copy master
 			if (status_has_mode(&mmd->status,MD_AGGRESSIVE))
@@ -8299,15 +8321,15 @@ int status_get_emblem_id(struct block_list *bl)
  * @param bl: Object whose race2 to get [MOB|PET]
  * @return race2
  */
-enum e_race2 status_get_race2(struct block_list *bl)
+std::vector<e_race2> status_get_race2(struct block_list *bl)
 {
-	nullpo_retr(RC2_NONE,bl);
+	nullpo_retr(std::vector<e_race2>(),bl);
 
 	if (bl->type == BL_MOB)
 		return ((struct mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
 		return ((struct pet_data *)bl)->db->race2;
-	return RC2_NONE;
+	return std::vector<e_race2>();
 }
 
 /**
@@ -8611,38 +8633,12 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	if (src == NULL)
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
-	// Status that are blocked by Golden Thief Bug card or Wand of Hermod
+	// Skills (magic type) that are blocked by Golden Thief Bug card or Wand of Hermod
 	if (status_isimmune(bl)) {
-		switch (type) {
-			case SC_DECREASEAGI:
-			case SC_SILENCE:
-			case SC_COMA:
-			case SC_INCREASEAGI:
-			case SC_BLESSING:
-			case SC_SLOWPOISON:
-			case SC_IMPOSITIO:
-			case SC_AETERNA:
-			case SC_SUFFRAGIUM:
-			case SC_BENEDICTIO:
-			case SC_PROVIDENCE:
-			case SC_KYRIE:
-			case SC_ASSUMPTIO:
-			case SC_ANGELUS:
-			case SC_MAGNIFICAT:
-			case SC_GLORIA:
-			case SC_WINDWALK:
-			case SC_MAGICROD:
-			case SC_HALLUCINATION:
-			case SC_STONE:
-			case SC_QUAGMIRE:
-			case SC_SUITON:
-			case SC_SWINGDANCE:
-			case SC_FIRE_INSIGNIA:
-			case SC_WATER_INSIGNIA:
-			case SC_WIND_INSIGNIA:
-			case SC_EARTH_INSIGNIA:
-				return 0;
-		}
+		std::shared_ptr<s_skill_db> skill = skill_db.find(battle_getcurrentskill(src));
+
+		if (skill != nullptr && skill->skill_type == BF_MAGIC)
+			return 0;
 	}
 
 	rate = cap_value(rate, 0, 10000);
@@ -8740,7 +8736,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->mdef*100;
 			break;
 		case SC_ANKLE:
-			if(status_has_mode(status,MD_STATUS_IMMUNE)) // Lasts 5 times less on bosses
+			if(status_has_mode(status,MD_STATUSIMMUNE)) // Lasts 5 times less on bosses
 				tick /= 5;
 			sc_def = status->agi*50;
 			break;
@@ -9123,7 +9119,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Uncomment to prevent status adding hp to gvg mob (like bloodylust=hp*3 etc...
 //	if (bl->type == BL_MOB)
-//		if (status_get_race2(bl) == RC2_GVG && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
+//		if (util::vector_exists(status_get_race2(bl), RC2_GVG) && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
 
 	if( sc->data[SC_REFRESH] ) {
 		if( type >= SC_COMMON_MIN && type <= SC_COMMON_MAX) // Confirmed.
@@ -9230,7 +9226,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		)
 			return 0;
 	case SC_VACUUM_EXTREME:
-		if (sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HOVERING] || sc->data[SC_VACUUM_EXTREME] ||
+		if (sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_NPC_HALLUCINATIONWALK] || sc->data[SC_HOVERING] || sc->data[SC_VACUUM_EXTREME] ||
 			(sc->data[SC_VACUUM_EXTREME_POSTDELAY] && sc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == val2))) // Ignore post delay from other vacuum (this will make stack effect enabled)
 			return 0;
 		break;
@@ -9526,6 +9522,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_PYREXIA:
 	case SC_OBLIVIONCURSE:
 	case SC_LEECHESEND:
+		if (val3 == 0) // Don't display icon on self
+			flag |= SCSTART_NOICON;
 		for (int32 i = SC_TOXIN; i <= SC_LEECHESEND; i++) {
 			if (sc->data[i] && sc->data[i]->val3 == 1) // It doesn't stack or even renew on the target
 				return 0;
@@ -9580,7 +9578,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Check for resistances
-	if(status_has_mode(status,MD_STATUS_IMMUNE) && !(flag&SCSTART_NOAVOID)) {
+	if(status_has_mode(status,MD_STATUSIMMUNE) && !(flag&SCSTART_NOAVOID)) {
 		if (type>=SC_COMMON_MIN && type <= SC_COMMON_MAX)
 			return 0;
 		switch (type) {
@@ -10046,6 +10044,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_ENDURE:
 		if (sd && sd->special_state.no_walk_delay)
 			return 1;
+		break;
+	case SC_MADOGEAR:
+		for (const auto &sc : mado_statuses) {
+			uint16 skill_id = status_sc2skill(sc);
+
+			if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
+				status_change_end(bl, sc, INVALID_TIMER);
+		}
+		if (sd)
+			pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 		break;
 	}
 
@@ -11086,7 +11094,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3= 20*val1; // Int increase
 			break;
 		case SC_SWOO:
-			if(status_has_mode(status,MD_STATUS_IMMUNE))
+			if(status_has_mode(status,MD_STATUSIMMUNE))
 				tick /= 5; // !TODO: Reduce skill's duration. But for how long?
 			break;
 		case SC_ARMOR:
@@ -11266,6 +11274,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_HALLUCINATIONWALK:
+		case SC_NPC_HALLUCINATIONWALK:
 			val2 = 50 * val1; // Evasion rate of physical attacks. Flee
 			val3 = 10 * val1; // Evasion rate of magical attacks.
 			break;
@@ -11799,7 +11808,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 0; // hit % reduc
 			val3 = 0; // def % reduc
 			val4 = 0; // atk flee & reduc
-			if (!status_bl_has_mode(bl,MD_STATUS_IMMUNE)) {
+			if (!status_bl_has_mode(bl,MD_STATUSIMMUNE)) {
 				val2 = 50;
 				if (status_get_race(bl) == RC_PLANT) // plant type
 					val3 = 50;
@@ -12071,6 +12080,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000;
 			val4 = tick / tick_time;
 			break;
+		case SC_EMERGENCY_MOVE:
+			val2 = 25; // Movement speed increase
+			break;
 
 		case SC_SUNSTANCE:
 			val2 = 2 + val1; // ATK Increase
@@ -12083,6 +12095,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_STARSTANCE:
 			val2 = 4 + 2 * val1; // ASPD Increase
 			tick = INFINITE_TICK;
+			break;
+		case SC_DIMENSION1:
+		case SC_DIMENSION2:
+			if (sd)
+				pc_addspiritball(sd, skill_get_time2(SJ_BOOKOFDIMENSION, 1), 2);
 			break;
 		case SC_UNIVERSESTANCE:
 			val2 = 2 + val1; // All Stats Increase
@@ -12238,6 +12255,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_JUMPINGCLAN:
 		case SC_DRESSUP:
 		case SC_MISTY_FROST:
+		case SC_MADOGEAR:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -12265,6 +12283,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// Start |1|2|4 val_flag setting
 		case SC_POISONINGWEAPON:
 		case SC_CLOAKINGEXCEED:
+		case SC_NPC_HALLUCINATIONWALK:
 		case SC_HALLUCINATIONWALK:
 		case SC__SHADOWFORM:
 		case SC__GROOMY:
@@ -12883,6 +12902,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 			case SC_REUSE_LIMIT_LUXANIMA:
 			case SC_SOULENERGY:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12919,6 +12939,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_STYLE_CHANGE:
 			case SC_ENTRY_QUEUE_APPLY_DELAY:
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13567,9 +13588,26 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_JUMPINGCLAN:
 			status_change_end(bl,SC_CLAN_INFO,INVALID_TIMER);
 			break;
+		case SC_DIMENSION1:
+		case SC_DIMENSION2:
+			if (sd)
+				pc_delspiritball(sd, 1, 0);
+			break;
 		case SC_SOULENERGY:
 			if (sd)
 				pc_delsoulball(sd, sd->soulball, false);
+			break;
+		case SC_MADOGEAR:
+			status_change_end(bl, SC_SHAPESHIFT, INVALID_TIMER);
+			status_change_end(bl, SC_HOVERING, INVALID_TIMER);
+			status_change_end(bl, SC_ACCELERATION, INVALID_TIMER);
+			status_change_end(bl, SC_OVERHEAT_LIMITPOINT, INVALID_TIMER);
+			status_change_end(bl, SC_OVERHEAT, INVALID_TIMER);
+			status_change_end(bl, SC_MAGNETICFIELD, INVALID_TIMER);
+			status_change_end(bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
+			status_change_end(bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
+			if (sd)
+				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 	}
 
@@ -14938,6 +14976,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
 			case SC_HAWKEYES:
+			case SC_EMERGENCY_MOVE:
 			case SC_SAFETYWALL:
 			case SC_PNEUMA:
 			case SC_NOCHAT:
@@ -15169,7 +15208,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 	tick = gettick();
 
 	// Status Immunity resistance
-	if (status_bl_has_mode(src,MD_STATUS_IMMUNE) || status_bl_has_mode(bl,MD_STATUS_IMMUNE))
+	if (status_bl_has_mode(src,MD_STATUSIMMUNE) || status_bl_has_mode(bl,MD_STATUSIMMUNE))
 		return 0;
 
 	for( i = SC_COMMON_MIN; i < SC_MAX; i++ ) {

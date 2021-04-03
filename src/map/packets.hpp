@@ -178,18 +178,55 @@ struct PACKET_ZC_CHANGE_GUILD {
 #endif
 } __attribute__((packed));
 
+struct PACKET_ZC_BROADCAST{
+	int16 packetType;
+	int16 PacketLength;
+	char message[];
+} __attribute__((packed));
+
+struct PACKET_ZC_BROADCAST2{
+	int16 packetType;
+	int16 PacketLength;
+	uint32 fontColor;
+	int16 fontType;
+	int16 fontSize;
+	int16 fontAlign;
+	int16 fontY;
+	char message[];
+} __attribute__((packed));
+
+struct PACKET_ZC_SPIRITS{
+	int16 packetType;
+	uint32 GID;
+	uint16 amount;
+} __attribute__((packed));
+
+struct PACKET_ZC_UNCONFIRMED_SPIRITS3{
+	int16 packetType;
+	uint32 GID;
+	uint16 amount;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
 #endif
 
+DEFINE_PACKET_HEADER(ZC_NOTIFY_CHAT, 0x8d)
+DEFINE_PACKET_HEADER(ZC_BROADCAST, 0x9a)
 DEFINE_PACKET_HEADER(ZC_ITEM_ENTRY, 0x9d)
 DEFINE_PACKET_HEADER(ZC_MVP_GETTING_ITEM, 0x10a)
 DEFINE_PACKET_HEADER(ZC_ACK_TOUSESKILL, 0x110)
 DEFINE_PACKET_HEADER(CZ_REQMAKINGITEM, 0x18e)
 DEFINE_PACKET_HEADER(ZC_ACK_REQMAKINGITEM, 0x18f)
 DEFINE_PACKET_HEADER(CZ_REQ_MAKINGARROW, 0x1ae)
-DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0x1fd)
+DEFINE_PACKET_HEADER(ZC_BROADCAST2, 0x1c3)
+DEFINE_PACKET_HEADER(ZC_SPIRITS, 0x1d0)
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0xb66)
+#else
+	DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0x1fd)
+#endif
 #if PACKETVER >= 20190724
 	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x0b47)
 #else
@@ -222,6 +259,7 @@ DEFINE_PACKET_HEADER(ZC_ACK_GUILDSTORAGE_LOG, 0x9da)
 DEFINE_PACKET_HEADER(CZ_NPC_MARKET_PURCHASE, 0x9d6)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
 DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46)
+DEFINE_PACKET_HEADER(ZC_UNCONFIRMED_SPIRITS3, 0xb73)
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );

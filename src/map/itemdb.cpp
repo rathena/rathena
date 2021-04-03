@@ -30,7 +30,6 @@ static DBMap *itemdb_group; /// Item Group DB
 struct s_roulette_db rd;
 
 static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active);
-static char itemdb_gendercheck(struct item_data *id);
 
 const std::string ItemDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_db.yml";
@@ -379,11 +378,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		item->sex = static_cast<e_sex>(constant);
-		item->sex = itemdb_gendercheck(item.get());
+		item->sex = this->defaultGender( node, item );
 	} else {
 		if (!exists) {
 			item->sex = SEX_BOTH;
-			item->sex = itemdb_gendercheck(item.get());
+			item->sex = this->defaultGender( node, item );
 		}
 	}
 
@@ -1019,6 +1018,55 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
+void ItemDatabase::loadingFinished(){
+	if( !this->exists( ITEMID_DUMMY ) ){
+		// Create dummy item
+		std::shared_ptr<item_data> dummy_item = std::make_shared<item_data>();
+
+		dummy_item->nameid = ITEMID_DUMMY;
+		dummy_item->weight = 1;
+		dummy_item->value_sell = 1;
+		dummy_item->type = IT_ETC;
+		dummy_item->name = "UNKNOWN_ITEM";
+		dummy_item->ename = "Unknown Item";
+		dummy_item->view_id = UNKNOWN_ITEM_ID;
+
+		item_db.put( ITEMID_DUMMY, dummy_item );
+	}
+}
+
+/**
+ * Applies gender restrictions according to settings.
+ * @param node: YAML node containing the entry.
+ * @param node: the already parsed item data.
+ * @return gender that should be used.
+ */
+e_sex ItemDatabase::defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id ){
+	if (id->nameid == WEDDING_RING_M) //Grom Ring
+		return SEX_MALE;
+	if (id->nameid == WEDDING_RING_F) //Bride Ring
+		return SEX_FEMALE;
+	if( id->type == IT_WEAPON ){
+		if( id->subtype == W_MUSICAL ){
+			if( id->sex != SEX_MALE ){
+				this->invalidWarning( node, "Musical instruments are always male-only, defaulting to SEX_MALE.\n" );
+			}
+
+			return SEX_MALE;
+		}
+
+		if( id->subtype == W_WHIP ){
+			if( id->sex != SEX_FEMALE ){
+				this->invalidWarning( node, "Whips are always female-only, defaulting to SEX_FEMALE.\n" );
+			}
+
+			return SEX_FEMALE;
+		}
+	}
+
+	return static_cast<e_sex>( id->sex );
+}
+
 ItemDatabase item_db;
 
 /**
@@ -1222,6 +1270,8 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, bool identi
 	else
 		get_amt = data->amount;
 
+	tmp.amount = get_amt;
+
 	// Do loop for non-stackable item
 	for (i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;
@@ -1337,17 +1387,15 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		// Calculate the required bit to set
 		uint64 job = 1ULL << ( jobmask & MAPID_BASEMASK );
 
-		// Basejob
-		temp_mask[0] |= job;
-
 		// 2-1
 		if( ( jobmask & JOBL_2_1 ) != 0 ){
 			temp_mask[1] |= job;
-		}
-
 		// 2-2
-		if( ( jobmask & JOBL_2_2 ) != 0 ){
+		}else if( ( jobmask & JOBL_2_2 ) != 0 ){
 			temp_mask[2] |= job;
+		// Basejob
+		}else{
+			temp_mask[0] |= job;
 		}
 	} else {
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
@@ -1362,23 +1410,6 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		else
 			bclass[i] &= ~temp_mask[i];
 	}
-}
-
-/**
- * Create dummy item_data
- */
-static void itemdb_create_dummy(void) {
-	std::shared_ptr<item_data> dummy_item;
-
-	dummy_item = std::make_shared<item_data>();
-	dummy_item->nameid = ITEMID_DUMMY;
-	dummy_item->weight = 1;
-	dummy_item->value_sell = 1;
-	dummy_item->type = IT_ETC;
-	dummy_item->name = "UNKNOWN_ITEM";
-	dummy_item->ename = "Unknown Item";
-	dummy_item->view_id = UNKNOWN_ITEM_ID;
-	item_db.put(ITEMID_DUMMY, dummy_item);
 }
 
 /*==========================================
@@ -1910,23 +1941,6 @@ static void itemdb_roulette_free(void) {
 	}
 }
 
-/*======================================
- * Applies gender restrictions according to settings. [Skotlex]
- *======================================*/
-static char itemdb_gendercheck(struct item_data *id)
-{
-	if (id->nameid == WEDDING_RING_M) //Grom Ring
-		return SEX_MALE;
-	if (id->nameid == WEDDING_RING_F) //Bride Ring
-		return SEX_FEMALE;
-	if (id->look == W_MUSICAL && id->type == IT_WEAPON) //Musical instruments are always male-only
-		return SEX_MALE;
-	if (id->look == W_WHIP && id->type == IT_WEAPON) //Whips are always female-only
-		return SEX_FEMALE;
-
-	return (battle_config.ignore_items_gender) ? SEX_BOTH : id->sex;
-}
-
 /**
  * Convert SQL data to YAML Node
  * @param str: Array of parsed SQL data
@@ -2247,6 +2261,8 @@ static int itemdb_read_sqldb(void) {
 
 		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
 	}
+
+	item_db.loadingFinished();
 
 	return 0;
 }
@@ -2758,7 +2774,6 @@ void do_final_itemdb(void) {
 */
 void do_init_itemdb(void) {
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
-	itemdb_create_dummy();
 	itemdb_read();
 
 	if (battle_config.feature_roulette)

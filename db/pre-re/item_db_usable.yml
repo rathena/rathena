@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -53,7 +53,7 @@
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
 #     NoConsume             If the item is consumed on use. (Default: false)
-#     DropEffect            If the item has a special effect when on the ground. (Default: None)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
 #   Delay:                  Item use delay. (Default: null)
 #     Duration              Duration of delay in seconds.
 #     Status                Status Change used to track delay. (Default: None)
@@ -136,7 +136,10 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion;
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
   - Id: 507
     AegisName: Red_Herb
     Name: Red Herb
@@ -316,7 +319,12 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 526
     AegisName: Royal_Jelly
     Name: Royal Jelly
@@ -326,7 +334,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(325,405),rand(40,60);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 528
     AegisName: Monster's_Feed
     Name: Monster's Feed
@@ -416,7 +430,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(105,145),0; sc_start SC_Freeze,10000,0,2500,0;
+      itemheal rand(105,145),0;
+      sc_start SC_Freeze,10000,0,2500,0;
   - Id: 537
     AegisName: Pet_Food
     Name: Pet Food
@@ -516,7 +531,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(50,100),0; sc_start SC_Stun,3000,0,1500,0;
+      itemheal rand(50,100),0;
+      sc_start SC_Stun,3000,0,1500,0;
   - Id: 550
     AegisName: Popped_Rice
     Name: Rice Cake
@@ -562,7 +578,9 @@ Body:
     Buy: 400
     Weight: 80
     Script: |
-      itemheal rand(105,145),0; sc_start SC_Stun,3000,0; sc_start SC_Blind,2000,0,1500,0;
+      itemheal rand(105,145),0;
+      sc_start SC_Stun,3000,0;
+      sc_start SC_Blind,2000,0,1500,0;
   - Id: 555
     AegisName: Rice_Cake
     Name: Traditional Rice Cake
@@ -662,7 +680,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(244,350),rand(10,30); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(244,350),rand(10,30);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 567
     AegisName: Prawn
     Name: Shrimp
@@ -729,7 +753,13 @@ Body:
     Buy: 7000
     Weight: 150
     Script: |
-      itemheal rand(330,410),rand(45,65); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(330,410),rand(45,65);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 574
     AegisName: Egg
     Name: Egg
@@ -825,7 +855,13 @@ Body:
     Buy: 7000
     Weight: 150
     Script: |
-      itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(325,405),rand(40,60);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 584
     AegisName: Fish_Ball_Soup
     Name: Fish Cake Soup
@@ -843,7 +879,8 @@ Body:
     Buy: 2
     Weight: 40
     Script: |
-      itemheal rand(15,20),0; itemskill "PR_MAGNIFICAT",3;
+      itemheal rand(15,20),0;
+      itemskill "PR_MAGNIFICAT",3;
   - Id: 586
     AegisName: Mother's_Cake
     Name: Mother's Cake
@@ -894,7 +931,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(325,405),rand(40,60);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 592
     AegisName: Jam_Pancake
     Name: Jam Pancake
@@ -903,7 +946,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(325,405),rand(40,60);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 593
     AegisName: Honey_Pancake
     Name: Honey Pancake
@@ -912,7 +961,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(325,405),rand(40,60);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 594
     AegisName: Sour_Cream_Pancake
     Name: Sour-Cream Pancake
@@ -921,7 +976,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(325,405),rand(40,60);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 595
     AegisName: Mushroom_Pancake
     Name: Mushroom Pancake
@@ -930,7 +991,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination;
+      itemheal rand(325,405),rand(40,60);
+      sc_end SC_Poison;
+      sc_end SC_Silence;
+      sc_end SC_Blind;
+      sc_end SC_Confusion;
+      sc_end SC_Curse;
+      sc_end SC_Hallucination;
   - Id: 596
     AegisName: Cute_Strawberry_Choco
     Name: Cute Strawberry-Choco
@@ -1696,7 +1763,12 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if(Class==Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,-100;
+      if (Class == Job_Assassin_Cross) {
+         sc_start SC_DPoison,60000,0;
+         sc_start SC_ASPDPOTION3,60000,0;
+      }
+      else
+         percentheal -100,-100;
   - Id: 679
     AegisName: Gold_Pill
     Name: Pilule
@@ -1706,7 +1778,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DPoison,10000,0,1000,0; sc_start SC_Poison,50000,0;
+      sc_start SC_DPoison,10000,0,1000,0;
+      sc_start SC_Poison,50000,0;
   - Id: 680
     AegisName: Magical_Carnation
     Name: Magic Carnation
@@ -1723,7 +1796,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if(getpartnerid()) sc_start SC_WEDDING,600000,0;
+      if (getpartnerid())
+         sc_start SC_WEDDING,600000,0;
   - Id: 682
     AegisName: Realgar_Wine
     Name: Distilled Fighting Spirit
@@ -1751,7 +1825,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKPOTION,60000,10;
+      sc_start SC_ATKPOTION,60000,10;
+      sc_start SC_MATKPOTION,60000,10;
   - Id: 685
     AegisName: RAMADAN
     Name: Ramadan
@@ -2683,7 +2758,8 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 9,0; sc_start SC_Curse,30000,0,3000,0;
+      percentheal 9,0;
+      sc_start SC_Curse,30000,0,3000,0;
   - Id: 12028
     AegisName: Box_Of_Thunder
     Name: Box of Thunder
@@ -2774,7 +2850,8 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 0,9; sc_start SC_Silence,30000,0,3000,0;
+      percentheal 0,9;
+      sc_start SC_Silence,30000,0,3000,0;
   - Id: 12035
     AegisName: Lotto_Box01
     Name: Lotto Box 01
@@ -2831,7 +2908,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,1; percentheal 5,0;
+      sc_start SC_STRFOOD,1200000,1;
+      percentheal 5,0;
   - Id: 12042
     AegisName: Str_Dish02
     Name: Seasoned Sticky Webfoot
@@ -2841,7 +2919,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,2; percentheal 5,0;
+      sc_start SC_STRFOOD,1200000,2;
+      percentheal 5,0;
   - Id: 12043
     AegisName: Str_Dish03
     Name: Bomber Steak
@@ -2851,7 +2930,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,3; percentheal 5,0;
+      sc_start SC_STRFOOD,1200000,3;
+      percentheal 5,0;
   - Id: 12044
     AegisName: Str_Dish04
     Name: Herb Marinade Beef
@@ -2861,7 +2941,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,4; percentheal 5,0;
+      sc_start SC_STRFOOD,1200000,4;
+      percentheal 5,0;
   - Id: 12045
     AegisName: Str_Dish05
     Name: Lutie Lady's Pancake
@@ -2871,7 +2952,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,5; percentheal 10,0;
+      sc_start SC_STRFOOD,1200000,5;
+      percentheal 10,0;
   - Id: 12046
     AegisName: Int_Dish01
     Name: Grape Juice Herbal Tea
@@ -2881,7 +2963,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,1; percentheal 0,5;
+      sc_start SC_INTFOOD,1200000,1;
+      percentheal 0,5;
   - Id: 12047
     AegisName: Int_Dish02
     Name: Autumn Red Tea
@@ -2891,7 +2974,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,2; percentheal 0,5;
+      sc_start SC_INTFOOD,1200000,2;
+      percentheal 0,5;
   - Id: 12048
     AegisName: Int_Dish03
     Name: Honey Herbal Tea
@@ -2901,7 +2985,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,3; percentheal 0,5;
+      sc_start SC_INTFOOD,1200000,3;
+      percentheal 0,5;
   - Id: 12049
     AegisName: Int_Dish04
     Name: Morocc Fruit Wine
@@ -2911,7 +2996,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,4; percentheal 0,5;
+      sc_start SC_INTFOOD,1200000,4;
+      percentheal 0,5;
   - Id: 12050
     AegisName: Int_Dish05
     Name: Mastela Fruit Wine
@@ -2921,7 +3007,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,5; percentheal 0,10;
+      sc_start SC_INTFOOD,1200000,5;
+      percentheal 0,10;
   - Id: 12051
     AegisName: Vit_Dish01
     Name: Steamed Crab Nippers
@@ -2931,7 +3018,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,1; percentheal 5,0;
+      sc_start SC_VITFOOD,1200000,1;
+      percentheal 5,0;
   - Id: 12052
     AegisName: Vit_Dish02
     Name: Assorted Seafood
@@ -2941,7 +3029,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,2; percentheal 5,0;
+      sc_start SC_VITFOOD,1200000,2;
+      percentheal 5,0;
   - Id: 12053
     AegisName: Vit_Dish03
     Name: Clam Soup
@@ -2951,7 +3040,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,3; percentheal 5,0;
+      sc_start SC_VITFOOD,1200000,3;
+      percentheal 5,0;
   - Id: 12054
     AegisName: Vit_Dish04
     Name: Seasoned Jellyfish
@@ -2961,7 +3051,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,4; percentheal 5,0;
+      sc_start SC_VITFOOD,1200000,4;
+      percentheal 5,0;
   - Id: 12055
     AegisName: Vit_Dish05
     Name: Spicy Fried Bao
@@ -2971,7 +3062,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,5; percentheal 10,0;
+      sc_start SC_VITFOOD,1200000,5;
+      percentheal 10,0;
   - Id: 12056
     AegisName: Agi_Dish01
     Name: Frog Egg Squid Ink Soup
@@ -2981,7 +3073,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,1; percentheal 3,1;
+      sc_start SC_AGIFOOD,1200000,1;
+      percentheal 3,1;
   - Id: 12057
     AegisName: Agi_Dish02
     Name: Smooth Noodle
@@ -2991,7 +3084,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,2; percentheal 3,1;
+      sc_start SC_AGIFOOD,1200000,2;
+      percentheal 3,1;
   - Id: 12058
     AegisName: Agi_Dish03
     Name: Tentacle Cheese Gratin
@@ -3001,7 +3095,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,3; percentheal 3,1;
+      sc_start SC_AGIFOOD,1200000,3;
+      percentheal 3,1;
   - Id: 12059
     AegisName: Agi_Dish04
     Name: Lutie Cold Noodle
@@ -3011,7 +3106,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,4; percentheal 3,1;
+      sc_start SC_AGIFOOD,1200000,4;
+      percentheal 3,1;
   - Id: 12060
     AegisName: Agi_Dish05
     Name: Steamed Bat Wing in Pumpkin
@@ -3021,7 +3117,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,5; percentheal 6,2;
+      sc_start SC_AGIFOOD,1200000,5;
+      percentheal 6,2;
   - Id: 12061
     AegisName: Dex_Dish01
     Name: Honey Grape Juice
@@ -3031,7 +3128,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,1; percentheal 2,2;
+      sc_start SC_DEXFOOD,1200000,1;
+      percentheal 2,2;
   - Id: 12062
     AegisName: Dex_Dish02
     Name: Chocolate Mousse Cake
@@ -3041,7 +3139,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,2; percentheal 2,2;
+      sc_start SC_DEXFOOD,1200000,2;
+      percentheal 2,2;
   - Id: 12063
     AegisName: Dex_Dish03
     Name: Fruit Mix
@@ -3051,7 +3150,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,3; percentheal 2,2;
+      sc_start SC_DEXFOOD,1200000,3;
+      percentheal 2,2;
   - Id: 12064
     AegisName: Dex_Dish04
     Name: Cream Sandwich
@@ -3061,7 +3161,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,4; percentheal 2,2;
+      sc_start SC_DEXFOOD,1200000,4;
+      percentheal 2,2;
   - Id: 12065
     AegisName: Dex_Dish05
     Name: Green Salad
@@ -3071,7 +3172,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,5; percentheal 5,5;
+      sc_start SC_DEXFOOD,1200000,5;
+      percentheal 5,5;
   - Id: 12066
     AegisName: Luk_Dish01
     Name: Fried Monkey Tails
@@ -3081,7 +3183,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,1; percentheal 3,2;
+      sc_start SC_LUKFOOD,1200000,1;
+      percentheal 3,2;
   - Id: 12067
     AegisName: Luk_Dish02
     Name: Mixed Juice
@@ -3091,7 +3194,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,2; percentheal 3,2;
+      sc_start SC_LUKFOOD,1200000,2;
+      percentheal 3,2;
   - Id: 12068
     AegisName: Luk_Dish03
     Name: Fried Sweet Potato
@@ -3101,7 +3205,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,3; percentheal 4,2;
+      sc_start SC_LUKFOOD,1200000,3;
+      percentheal 4,2;
   - Id: 12069
     AegisName: Luk_Dish04
     Name: Steamed Ancient Lips
@@ -3111,7 +3216,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,4; percentheal 4,2;
+      sc_start SC_LUKFOOD,1200000,4;
+      percentheal 4,2;
   - Id: 12070
     AegisName: Luk_Dish05
     Name: Fried Scorpion Tails
@@ -3121,7 +3227,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,5; percentheal 5,2;
+      sc_start SC_LUKFOOD,1200000,5;
+      percentheal 5,2;
   - Id: 12071
     AegisName: Str_Dish06
     Name: Shiny Marinade Beef
@@ -3131,7 +3238,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,6; percentheal 10,2;
+      sc_start SC_STRFOOD,1200000,6;
+      percentheal 10,2;
   - Id: 12072
     AegisName: Str_Dish07
     Name: Whole Roast
@@ -3141,7 +3249,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,7; percentheal 10,4;
+      sc_start SC_STRFOOD,1200000,7;
+      percentheal 10,4;
   - Id: 12073
     AegisName: Str_Dish08
     Name: Bearfoot Special
@@ -3151,7 +3260,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,8; percentheal 15,6;
+      sc_start SC_STRFOOD,1200000,8;
+      percentheal 15,6;
   - Id: 12074
     AegisName: Str_Dish09
     Name: Tendon Satay
@@ -3161,7 +3271,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,9; percentheal 15,8;
+      sc_start SC_STRFOOD,1200000,9;
+      percentheal 15,8;
   - Id: 12075
     AegisName: Str_Dish10
     Name: Steamed Tongue
@@ -3171,7 +3282,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_STRFOOD,1200000,10; percentheal 20,20;
+      sc_start SC_STRFOOD,1200000,10;
+      percentheal 20,20;
   - Id: 12076
     AegisName: Int_Dish06
     Name: Red Mushroom Wine
@@ -3181,7 +3293,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,6; percentheal 2,10;
+      sc_start SC_INTFOOD,1200000,6;
+      percentheal 2,10;
   - Id: 12077
     AegisName: Int_Dish07
     Name: Special Royal Jelly Herbal Tea
@@ -3191,7 +3304,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,7; percentheal 4,10;
+      sc_start SC_INTFOOD,1200000,7;
+      percentheal 4,10;
   - Id: 12078
     AegisName: Int_Dish08
     Name: Royal Family Tea
@@ -3201,7 +3315,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,8; percentheal 6,10;
+      sc_start SC_INTFOOD,1200000,8;
+      percentheal 6,10;
   - Id: 12079
     AegisName: Int_Dish09
     Name: Tristan XII
@@ -3211,7 +3326,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,9; percentheal 8,15;
+      sc_start SC_INTFOOD,1200000,9;
+      percentheal 8,15;
   - Id: 12080
     AegisName: Int_Dish10
     Name: Dragon Breath Cocktail
@@ -3221,7 +3337,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_INTFOOD,1200000,10; percentheal 10,20;
+      sc_start SC_INTFOOD,1200000,10;
+      percentheal 10,20;
   - Id: 12081
     AegisName: Vit_Dish06
     Name: Awfully Bitter Bracer
@@ -3231,7 +3348,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,6; percentheal 13,0;
+      sc_start SC_VITFOOD,1200000,6;
+      percentheal 13,0;
   - Id: 12082
     AegisName: Vit_Dish07
     Name: Sumptuous Feast
@@ -3241,7 +3359,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,7; percentheal 16,0;
+      sc_start SC_VITFOOD,1200000,7;
+      percentheal 16,0;
   - Id: 12083
     AegisName: Vit_Dish08
     Name: Giant Burito
@@ -3251,7 +3370,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,8; percentheal 19,0;
+      sc_start SC_VITFOOD,1200000,8;
+      percentheal 19,0;
   - Id: 12084
     AegisName: Vit_Dish09
     Name: Ascending Dragon Soup
@@ -3261,7 +3381,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,9; percentheal 22,0;
+      sc_start SC_VITFOOD,1200000,9;
+      percentheal 22,0;
   - Id: 12085
     AegisName: Vit_Dish10
     Name: Immortal Stew
@@ -3271,7 +3392,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITFOOD,1200000,10; percentheal 25,0;
+      sc_start SC_VITFOOD,1200000,10;
+      percentheal 25,0;
   - Id: 12086
     AegisName: Agi_Dish06
     Name: Chile Shrimp Gratin
@@ -3281,7 +3403,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,6; percentheal 7,2;
+      sc_start SC_AGIFOOD,1200000,6;
+      percentheal 7,2;
   - Id: 12087
     AegisName: Agi_Dish07
     Name: Steamed Alligator with Vegetable
@@ -3291,7 +3414,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,7; percentheal 8,2;
+      sc_start SC_AGIFOOD,1200000,7;
+      percentheal 8,2;
   - Id: 12088
     AegisName: Agi_Dish08
     Name: Incredibly Spicy Curry
@@ -3301,7 +3425,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,8; percentheal 9,2;
+      sc_start SC_AGIFOOD,1200000,8;
+      percentheal 9,2;
   - Id: 12089
     AegisName: Agi_Dish09
     Name: Special Meat Stew
@@ -3311,7 +3436,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,9; percentheal 10,2;
+      sc_start SC_AGIFOOD,1200000,9;
+      percentheal 10,2;
   - Id: 12090
     AegisName: Agi_Dish10
     Name: Steamed Desert Scorpions
@@ -3321,7 +3447,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_AGIFOOD,1200000,10; percentheal 15,5;
+      sc_start SC_AGIFOOD,1200000,10;
+      percentheal 15,5;
   - Id: 12091
     AegisName: Dex_Dish06
     Name: Peach Cake
@@ -3331,7 +3458,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,6; percentheal 5,6;
+      sc_start SC_DEXFOOD,1200000,6;
+      percentheal 5,6;
   - Id: 12092
     AegisName: Dex_Dish07
     Name: Soul Haunted Bread
@@ -3341,7 +3469,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,7; percentheal 5,7;
+      sc_start SC_DEXFOOD,1200000,7;
+      percentheal 5,7;
   - Id: 12093
     AegisName: Dex_Dish08
     Name: Special Toast
@@ -3351,7 +3480,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,8; percentheal 5,8;
+      sc_start SC_DEXFOOD,1200000,8;
+      percentheal 5,8;
   - Id: 12094
     AegisName: Dex_Dish09
     Name: Heavenly Fruit Juice
@@ -3361,7 +3491,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,9; percentheal 5,9;
+      sc_start SC_DEXFOOD,1200000,9;
+      percentheal 5,9;
   - Id: 12095
     AegisName: Dex_Dish10
     Name: Hwergelmir's Tonic
@@ -3371,7 +3502,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_DEXFOOD,1200000,10; percentheal 10,10;
+      sc_start SC_DEXFOOD,1200000,10;
+      percentheal 10,10;
   - Id: 12096
     AegisName: Luk_Dish06
     Name: Lucky Soup
@@ -3381,7 +3513,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,6; percentheal 6,3;
+      sc_start SC_LUKFOOD,1200000,6;
+      percentheal 6,3;
   - Id: 12097
     AegisName: Luk_Dish07
     Name: Assorted Shish Kebob
@@ -3391,7 +3524,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,7; percentheal 7,3;
+      sc_start SC_LUKFOOD,1200000,7;
+      percentheal 7,3;
   - Id: 12098
     AegisName: Luk_Dish08
     Name: Strawberry Flavored Rice Ball
@@ -3401,7 +3535,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,8; percentheal 9,3;
+      sc_start SC_LUKFOOD,1200000,8;
+      percentheal 9,3;
   - Id: 12099
     AegisName: Luk_Dish09
     Name: Blood Flavored Soda
@@ -3411,7 +3546,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,9; percentheal 10,4;
+      sc_start SC_LUKFOOD,1200000,9;
+      percentheal 10,4;
   - Id: 12100
     AegisName: Luk_Dish10
     Name: Cooked Nine Tail's Tails
@@ -3421,7 +3557,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_LUKFOOD,1200000,10; percentheal 14,8;
+      sc_start SC_LUKFOOD,1200000,10;
+      percentheal 14,8;
   - Id: 12101
     AegisName: Citron
     Name: Citron
@@ -3470,7 +3607,9 @@ Body:
       BuyingStore: true
       Container: true
     Script: |
-      getrandgroupitem(IG_Taming),1; getrandgroupitem(IG_Taming),1; getrandgroupitem(IG_Taming),1;
+      getrandgroupitem(IG_Taming),1;
+      getrandgroupitem(IG_Taming),1;
+      getrandgroupitem(IG_Taming),1;
   - Id: 12106
     AegisName: Accessory_Box
     Name: Jewelry Box
@@ -3503,7 +3642,11 @@ Body:
       BuyingStore: true
       Container: true
     Script: |
-      getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1; getrandgroupitem(IG_Scroll),1;
+      getrandgroupitem(IG_Scroll),1;
+      getrandgroupitem(IG_Scroll),1;
+      getrandgroupitem(IG_Scroll),1;
+      getrandgroupitem(IG_Scroll),1;
+      getrandgroupitem(IG_Scroll),1;
   - Id: 12109
     AegisName: Poring_Box
     Name: Poring Box
@@ -3525,7 +3668,11 @@ Body:
       BuyingStore: true
       Container: true
     Script: |
-      getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1; getrandgroupitem(IG_FirstAid),1;
+      getrandgroupitem(IG_FirstAid),1;
+      getrandgroupitem(IG_FirstAid),1;
+      getrandgroupitem(IG_FirstAid),1;
+      getrandgroupitem(IG_FirstAid),1;
+      getrandgroupitem(IG_FirstAid),1;
   - Id: 12111
     AegisName: Food_Package
     Name: Bundle of Food
@@ -3536,7 +3683,9 @@ Body:
       BuyingStore: true
       Container: true
     Script: |
-      getrandgroupitem(IG_FoodBag),1; getrandgroupitem(IG_FoodBag),1; getrandgroupitem(IG_FoodBag),1;
+      getrandgroupitem(IG_FoodBag),1;
+      getrandgroupitem(IG_FoodBag),1;
+      getrandgroupitem(IG_FoodBag),1;
   - Id: 12112
     AegisName: Tropical_Sograt
     Name: Tropical Sograt
@@ -3666,7 +3815,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_BATKFOOD,60000,10; sc_start SC_MATKFOOD,60000,10;
+      sc_start SC_BATKFOOD,60000,10;
+      sc_start SC_MATKFOOD,60000,10;
   - Id: 12125
     AegisName: Outdoor_Cooking_Kits
     Name: Outdoor Cooking Kit
@@ -3727,7 +3877,9 @@ Body:
       BuyingStore: true
       Container: true
     Script: |
-      getrandgroupitem(IG_CookieBag),1; getrandgroupitem(IG_CookieBag),1; getrandgroupitem(IG_CookieBag),1;
+      getrandgroupitem(IG_CookieBag),1;
+      getrandgroupitem(IG_CookieBag),1;
+      getrandgroupitem(IG_CookieBag),1;
   - Id: 12131
     AegisName: Lucky_Potion
     Name: Lucky Potion
@@ -3749,7 +3901,10 @@ Body:
     Type: Healing
     Weight: 80
     Script: |
-      if(gettime(DT_DAYOFMONTH)!=MDiceCone) { set MDiceCone,gettime(DT_DAYOFMONTH); percentheal 50,50; }
+      if (gettime(DT_DAYOFMONTH) != MDiceCone) {
+         set MDiceCone,gettime(DT_DAYOFMONTH);
+         percentheal 50,50;
+      }
   - Id: 12134
     AegisName: Red_Envelope
     Name: Red Envelope
@@ -3765,7 +3920,8 @@ Body:
     Buy: 20
     Weight: 30
     Script: |
-      percentheal 50,50; sc_start SC_Confusion,10000,0,1000,0;
+      percentheal 50,50;
+      sc_start SC_Confusion,10000,0,1000,0;
   - Id: 12136
     AegisName: Women's_Bundle
     Name: Women's Bundle
@@ -4514,7 +4670,9 @@ Body:
       BuyingStore: true
       Container: true
     Script: |
-      getrandgroupitem(IG_HometownGift),1; getrandgroupitem(IG_HometownGift),1; getrandgroupitem(IG_HometownGift),1;
+      getrandgroupitem(IG_HometownGift),1;
+      getrandgroupitem(IG_HometownGift),1;
+      getrandgroupitem(IG_HometownGift),1;
   - Id: 12195
     AegisName: Plain_Rice_Cake
     Name: Plain Rice Cake
@@ -4599,7 +4757,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FOOD_STR_CASH,1800000,10; percentheal 15,5;
+      sc_start SC_FOOD_STR_CASH,1800000,10;
+      percentheal 15,5;
   - Id: 12203
     AegisName: Agi_Dish10_
     Name: Steamed Scorpion
@@ -4616,7 +4775,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FOOD_AGI_CASH,1800000,10; percentheal 15,5;
+      sc_start SC_FOOD_AGI_CASH,1800000,10;
+      percentheal 15,5;
   - Id: 12204
     AegisName: Int_Dish10_
     Name: Dragon Breath Cocktail
@@ -4633,7 +4793,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FOOD_INT_CASH,1800000,10; percentheal 15,5;
+      sc_start SC_FOOD_INT_CASH,1800000,10;
+      percentheal 15,5;
   - Id: 12205
     AegisName: Dex_Dish10_
     Name: Hwergelmir's Tonic
@@ -4650,7 +4811,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FOOD_DEX_CASH,1800000,10; percentheal 15,5;
+      sc_start SC_FOOD_DEX_CASH,1800000,10;
+      percentheal 15,5;
   - Id: 12206
     AegisName: Luk_Dish10_
     Name: Cooked Nine Tail's Tails
@@ -4667,7 +4829,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FOOD_LUK_CASH,1800000,10; percentheal 15,5;
+      sc_start SC_FOOD_LUK_CASH,1800000,10;
+      percentheal 15,5;
   - Id: 12207
     AegisName: Vit_Dish10_
     Name: Stew Of Immortality
@@ -4684,7 +4847,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FOOD_VIT_CASH,1800000,10; percentheal 15,5;
+      sc_start SC_FOOD_VIT_CASH,1800000,10;
+      percentheal 15,5;
   - Id: 12208
     AegisName: Battle_Manual
     Name: Battle Manual
@@ -4828,7 +4992,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,240000,10;
+      skilleffect "AL_BLESSING",0;
+      sc_start SC_BLESSING,240000,10;
   - Id: 12216
     AegisName: Inc_Agi_10_Scroll
     Name: LV10 Agil Scroll
@@ -4848,7 +5013,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if(Hp>15) { skilleffect "AL_INCAGI",0; sc_start SC_INCREASEAGI,240000,10; heal -15,0; }
+      if (Hp>15) {
+         skilleffect "AL_INCAGI",0;
+         sc_start SC_INCREASEAGI,240000,10;
+         heal -15,0;
+      }
   - Id: 12217
     AegisName: Aspersio_5_Scroll
     Name: LV5 Aspersio Scroll
@@ -4868,7 +5037,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if(countitem(523)>0) { skilleffect "PR_ASPERSIO",0; sc_start SC_ASPERSIO,180000,5; delitem 523,1; }
+      if (countitem(523)>0) {
+         skilleffect "PR_ASPERSIO",0;
+         sc_start SC_ASPERSIO,180000,5;
+         delitem 523,1;
+      }
   - Id: 12218
     AegisName: Assumptio_5_Scroll
     Name: LV5 Assumptio Scroll
@@ -4888,7 +5061,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ASSUMPTIO,100000,5; skilleffect "HP_ASSUMPTIO",0;
+      sc_start SC_ASSUMPTIO,100000,5;
+      skilleffect "HP_ASSUMPTIO",0;
   - Id: 12219
     AegisName: Wind_Walk_10_Scroll
     Name: LV10 Wind Walker Scroll
@@ -4908,7 +5082,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      skilleffect "SN_WINDWALK",0; sc_start SC_WINDWALK,250000,5;
+      skilleffect "SN_WINDWALK",0;
+      sc_start SC_WINDWALK,250000,5;
   - Id: 12220
     AegisName: Adrenaline_Scroll
     Name: LV5 Adrenaline Scroll
@@ -4928,7 +5103,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      set .@type,getiteminfo(getequipid(EQI_HAND_R),11); if (.@type==W_1HAXE||.@type==W_2HAXE||.@type==W_MACE) { skilleffect "BS_ADRENALINE",0; sc_start SC_ADRENALINE,150000,5; }
+      set .@type,getiteminfo(getequipid(EQI_HAND_R),11);
+      if (.@type == W_1HAXE || .@type == W_2HAXE || .@type == W_MACE) {
+         skilleffect "BS_ADRENALINE",0;
+         sc_start SC_ADRENALINE,150000,5;
+      }
   - Id: 12221
     AegisName: Megaphone_
     Name: Megaphone
@@ -4945,7 +5124,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      input @megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000;
+      input @megaphone$;
+      announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000;
   - Id: 12225
     AegisName: Sweet_Candy_Striper
     Name: Sweet Candy Cane
@@ -4964,7 +5144,12 @@ Body:
     Buy: 20
     Weight: 50
     Script: |
-      sc_start SC_SPEEDUP0,5400000,25; percentheal 100,100; sc_start SC_STRFOOD,5400000,10; sc_start SC_DEXFOOD,5400000,5; sc_start SC_ATKPOTION,5400000,22; sc_start SC_MATKFOOD,5400000,15;
+      sc_start SC_SPEEDUP0,5400000,25;
+      percentheal 100,100;
+      sc_start SC_STRFOOD,5400000,10;
+      sc_start SC_DEXFOOD,5400000,5;
+      sc_start SC_ATKPOTION,5400000,22;
+      sc_start SC_MATKFOOD,5400000,15;
   - Id: 12227
     AegisName: Examination2
     Name: Examination 2
@@ -4972,7 +5157,12 @@ Body:
     Buy: 20
     Weight: 50
     Script: |
-      sc_start SC_SPEEDUP0,5400000,25; percentheal 100,100; sc_start SC_INTFOOD,5400000,8; sc_start SC_VITFOOD,5400000,7; sc_start SC_LUKFOOD,5400000,7; sc_start SC_ATKPOTION,5400000,10;
+      sc_start SC_SPEEDUP0,5400000,25;
+      percentheal 100,100;
+      sc_start SC_INTFOOD,5400000,8;
+      sc_start SC_VITFOOD,5400000,7;
+      sc_start SC_LUKFOOD,5400000,7;
+      sc_start SC_ATKPOTION,5400000,10;
   - Id: 12228
     AegisName: Examination3
     Name: Examination 3
@@ -4980,7 +5170,11 @@ Body:
     Buy: 20
     Weight: 50
     Script: |
-      sc_start SC_SPEEDUP0,5400000,25; percentheal 100,100; sc_start SC_AGIFOOD,5400000,15; sc_start SC_ATKPOTION,5400000,52; sc_start SC_MATKFOOD,5400000,10;
+      sc_start SC_SPEEDUP0,5400000,25;
+      percentheal 100,100;
+      sc_start SC_AGIFOOD,5400000,15;
+      sc_start SC_ATKPOTION,5400000,52;
+      sc_start SC_MATKFOOD,5400000,10;
   - Id: 12229
     AegisName: Examination4
     Name: Examination 4
@@ -4988,7 +5182,12 @@ Body:
     Buy: 20
     Weight: 50
     Script: |
-      sc_start SC_SPEEDUP0,5400000,25; percentheal 100,100; sc_start SC_STRFOOD,5400000,3; sc_start SC_AGIFOOD,5400000,5; sc_start SC_VITFOOD,5400000,10; sc_start SC_MATKFOOD,5400000,52;
+      sc_start SC_SPEEDUP0,5400000,25;
+      percentheal 100,100;
+      sc_start SC_STRFOOD,5400000,3;
+      sc_start SC_AGIFOOD,5400000,5;
+      sc_start SC_VITFOOD,5400000,10;
+      sc_start SC_MATKFOOD,5400000,52;
   - Id: 12230
     AegisName: Examination5
     Name: Examination 5
@@ -4996,7 +5195,12 @@ Body:
     Buy: 20
     Weight: 50
     Script: |
-      sc_start SC_SPEEDUP0,5400000,25; percentheal 100,100; sc_start SC_INTFOOD,5400000,3; sc_start SC_DEXFOOD,5400000,12; sc_start SC_ATKPOTION,5400000,20; sc_start SC_MATKFOOD,5400000,20;
+      sc_start SC_SPEEDUP0,5400000,25;
+      percentheal 100,100;
+      sc_start SC_INTFOOD,5400000,3;
+      sc_start SC_DEXFOOD,5400000,12;
+      sc_start SC_ATKPOTION,5400000,20;
+      sc_start SC_MATKFOOD,5400000,20;
   - Id: 12231
     AegisName: Examination6
     Name: Examination 6
@@ -5004,7 +5208,16 @@ Body:
     Buy: 20
     Weight: 50
     Script: |
-      percentheal 100,100; sc_start SC_SPEEDUP0,5400000,25; sc_start SC_STRFOOD,5400000,6; sc_start SC_DEXFOOD,5400000,6; sc_start SC_AGIFOOD,5400000,6; sc_start SC_INTFOOD,5400000,6; sc_start SC_VITFOOD,5400000,6; sc_start SC_LUKFOOD,5400000,6; sc_start SC_ATKPOTION,5400000,24; sc_start SC_MATKFOOD,5400000,24;
+      percentheal 100,100;
+      sc_start SC_SPEEDUP0,5400000,25;
+      sc_start SC_STRFOOD,5400000,6;
+      sc_start SC_DEXFOOD,5400000,6;
+      sc_start SC_AGIFOOD,5400000,6;
+      sc_start SC_INTFOOD,5400000,6;
+      sc_start SC_VITFOOD,5400000,6;
+      sc_start SC_LUKFOOD,5400000,6;
+      sc_start SC_ATKPOTION,5400000,24;
+      sc_start SC_MATKFOOD,5400000,24;
   - Id: 12232
     AegisName: Gingerbread
     Name: Ginger Bread
@@ -5012,7 +5225,8 @@ Body:
     Buy: 20
     Weight: 150
     Script: |
-      sc_start SC_ASPDPOTION1,900000,0; sc_start SC_SPEEDUP0,900000,25;
+      sc_start SC_ASPDPOTION1,900000,0;
+      sc_start SC_SPEEDUP0,900000,25;
   - Id: 12233
     AegisName: Kvass
     Name: Kvass
@@ -5039,7 +5253,9 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 0,5; skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,240000,10;
+      percentheal 0,5;
+      skilleffect "AL_BLESSING",0;
+      sc_start SC_BLESSING,240000,10;
   - Id: 12236
     AegisName: Choco_Tart
     Name: Chocolate Tart
@@ -5050,7 +5266,8 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 5,0; itemskill "AL_ANGELUS",5;
+      percentheal 5,0;
+      itemskill "AL_ANGELUS",5;
   - Id: 12237
     AegisName: Choco_Lump
     Name: Junky Chocolate
@@ -5060,7 +5277,9 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 0,5; sc_start SC_Poison,18000,0; sc_start SC_Bleeding,18000,0;
+      percentheal 0,5;
+      sc_start SC_Poison,18000,0;
+      sc_start SC_Bleeding,18000,0;
   - Id: 12238
     AegisName: New_Year_Rice_Cake_1
     Name: New Year Rice Cake
@@ -5068,7 +5287,8 @@ Body:
     Buy: 20
     Weight: 100
     Script: |
-      sc_start SC_DPoison,10000,0,1000,0; sc_start SC_Poison,50000,0;
+      sc_start SC_DPoison,10000,0,1000,0;
+      sc_start SC_Poison,50000,0;
   - Id: 12239
     AegisName: New_Year_Rice_Cake_2
     Name: New Year Rice Cake
@@ -5076,7 +5296,8 @@ Body:
     Buy: 20
     Weight: 100
     Script: |
-      sc_start SC_DPoison,10000,0,1000,0; sc_start SC_Poison,50000,0;
+      sc_start SC_DPoison,10000,0,1000,0;
+      sc_start SC_Poison,50000,0;
   - Id: 12240
     AegisName: Old_Yellow_Box
     Name: Old Yellow Box
@@ -5177,42 +5398,48 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_STRFOOD,3600000,10; percentheal 20,20;
+      sc_start SC_STRFOOD,3600000,10;
+      percentheal 20,20;
   - Id: 12251
     AegisName: Agi_Dish10_M
     Name: Steamed Desert Scorpions
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_AGIFOOD,3600000,10; percentheal 15,5;
+      sc_start SC_AGIFOOD,3600000,10;
+      percentheal 15,5;
   - Id: 12252
     AegisName: Int_Dish10_M
     Name: Dragon Breath Cocktail
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_INTFOOD,3600000,10; percentheal 10,20;
+      sc_start SC_INTFOOD,3600000,10;
+      percentheal 10,20;
   - Id: 12253
     AegisName: Dex_Dish10_M
     Name: Hwergelmir's Tonic
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_DEXFOOD,3600000,10; percentheal 10,10;
+      sc_start SC_DEXFOOD,3600000,10;
+      percentheal 10,10;
   - Id: 12254
     AegisName: Luk_Dish10_M
     Name: Cooked Nine Tail
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_LUKFOOD,3600000,10; percentheal 14,8;
+      sc_start SC_LUKFOOD,3600000,10;
+      percentheal 14,8;
   - Id: 12255
     AegisName: Vit_Dish10_M
     Name: Immortal Stew
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_VITFOOD,3600000,10; percentheal 25,0;
+      sc_start SC_VITFOOD,3600000,10;
+      percentheal 25,0;
   - Id: 12256
     AegisName: PRO_Gift_Box
     Name: PRO Gift Box
@@ -5242,7 +5469,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if(strcharinfo(3)=="job3_rang02") { monster "this",-1,-1,"--ja--",1904,1,""; }
+      if (strcharinfo(3) == "job3_rang02") {
+         monster "this",-1,-1,"--ja--",1904,1,"";
+      }
   - Id: 12259
     AegisName: Miracle_Medicine
     Name: Miracle Tonic
@@ -5405,7 +5634,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKFOOD,60000,10;
+      sc_start SC_ATKPOTION,60000,10;
+      sc_start SC_MATKFOOD,60000,10;
   - Id: 12269
     AegisName: Tasty_Colonel
     Name: Tasty Pink Ration
@@ -5507,7 +5737,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start2 SC_INCREASE_MAXHP,3600000,5,10; percentheal 10,0;
+      sc_start2 SC_INCREASE_MAXHP,3600000,5,10;
+      percentheal 10,0;
   - Id: 12275
     AegisName: Gold_Pill_2
     Name: Taecheongdan
@@ -5524,7 +5755,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start2 SC_INCREASE_MAXSP,3600000,5,10; percentheal 0,10;
+      sc_start2 SC_INCREASE_MAXSP,3600000,5,10;
+      percentheal 0,10;
   - Id: 12276
     AegisName: Mimic_Scroll
     Name: Mimic Scroll
@@ -5577,7 +5809,8 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      specialeffect2 EF_BENEDICTIO; sc_start SC_BENEDICTIO,300000,1;
+      specialeffect2 EF_BENEDICTIO;
+      sc_start SC_BENEDICTIO,300000,1;
   - Id: 12281
     AegisName: Tresure_Box_WoE
     Name: Event Treasure Box
@@ -5594,28 +5827,41 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_INCALLSTATUS,5400000,3; sc_start SC_ATKPOTION,5400000,15; sc_start SC_MATKPOTION,5400000,15;
+      sc_start SC_INCALLSTATUS,5400000,3;
+      sc_start SC_ATKPOTION,5400000,15;
+      sc_start SC_MATKPOTION,5400000,15;
   - Id: 12283
     AegisName: Internet_Cafe2
     Name: Internet Cafe2
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_INCSTR,5400000,8; sc_start SC_INCDEX,5400000,4; sc_start SC_INCAGI,5400000,6; sc_start SC_ATKPOTION,5400000,32; sc_start SC_INCFLEE,5400000,5;
+      sc_start SC_INCSTR,5400000,8;
+      sc_start SC_INCDEX,5400000,4;
+      sc_start SC_INCAGI,5400000,6;
+      sc_start SC_ATKPOTION,5400000,32;
+      sc_start SC_INCFLEE,5400000,5;
   - Id: 12284
     AegisName: Internet_Cafe3
     Name: Internet Cafe3
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_INCINT,5400000,8; sc_start SC_INCVIT,5400000,4; sc_start SC_INCDEX,5400000,6; sc_start SC_MATKPOTION,5400000,40;
+      sc_start SC_INCINT,5400000,8;
+      sc_start SC_INCVIT,5400000,4;
+      sc_start SC_INCDEX,5400000,6;
+      sc_start SC_MATKPOTION,5400000,40;
   - Id: 12285
     AegisName: Internet_Cafe4
     Name: Internet Cafe4
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_INCDEX,5400000,8; sc_start SC_INCLUK,5400000,4; sc_start SC_INCAGI,5400000,6; sc_start SC_ATKPOTION,5400000,24; sc_start SC_MATKPOTION,5400000,24;
+      sc_start SC_INCDEX,5400000,8;
+      sc_start SC_INCLUK,5400000,4;
+      sc_start SC_INCAGI,5400000,6;
+      sc_start SC_ATKPOTION,5400000,24;
+      sc_start SC_MATKPOTION,5400000,24;
   - Id: 12286
     AegisName: Masquerade_Ball_Box2
     Name: Masquerade Ball Box2
@@ -5691,7 +5937,9 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 5,0; skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,120000,5;
+      percentheal 5,0;
+      skilleffect "AL_BLESSING",0;
+      sc_start SC_BLESSING,120000,5;
   - Id: 12291
     AegisName: Mysterious_PET_Bottle
     Name: Mysterious PET Bottle
@@ -5704,7 +5952,9 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 5,0; skilleffect "AL_INCAGI",0; sc_start SC_INCREASEAGI,120000,5;
+      percentheal 5,0;
+      skilleffect "AL_INCAGI",0;
+      sc_start SC_INCREASEAGI,120000,5;
   - Id: 12292
     AegisName: Unripe_Fruit
     Name: Unripe Fruit
@@ -6088,14 +6338,16 @@ Body:
     Type: Usable
     Weight: 300
     Script: |
-      sc_start SC_ATKPOTION,600000,5; sc_start SC_MATKPOTION,600000,5;
+      sc_start SC_ATKPOTION,600000,5;
+      sc_start SC_MATKPOTION,600000,5;
   - Id: 12320
     AegisName: Pineapple_Juice
     Name: Schwarzwald Pine Jubilee
     Type: Usable
     Weight: 300
     Script: |
-      sc_start SC_HITFOOD,600000,10; sc_start SC_FLEEFOOD,600000,20;
+      sc_start SC_HITFOOD,600000,10;
+      sc_start SC_FLEEFOOD,600000,20;
   - Id: 12321
     AegisName: Spicy_Sandwich
     Name: Arunafeltz Desert Sandwich
@@ -6299,7 +6551,9 @@ Body:
     Buy: 100
     Weight: 100
     Script: |
-      sc_start SC_INCSTR,180000,2; sc_start SC_INCINT,180000,2; sc_start SC_INCAGI,180000,2;
+      sc_start SC_INCSTR,180000,2;
+      sc_start SC_INCINT,180000,2;
+      sc_start SC_INCAGI,180000,2;
   - Id: 12339
     AegisName: Cherish_Box_Ori
     Name: Treasure Edition Box
@@ -6355,7 +6609,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_POTION_BERSERK; sc_start SC_MANU_ATK,600000,10;
+      specialeffect2 EF_POTION_BERSERK;
+      sc_start SC_MANU_ATK,600000,10;
   - Id: 12343
     AegisName: Manuk's_Courage
     Name: Manuk's Courage
@@ -6373,7 +6628,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_GUARD; sc_start SC_MANU_DEF,600000,10;
+      specialeffect2 EF_GUARD;
+      sc_start SC_MANU_DEF,600000,10;
   - Id: 12344
     AegisName: Pinguicula's_fruit_Jam
     Name: Pinguicula's Fruit Jam
@@ -6391,7 +6647,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_POTION_BERSERK; sc_start SC_SPL_ATK,600000,10;
+      specialeffect2 EF_POTION_BERSERK;
+      sc_start SC_SPL_ATK,600000,10;
   - Id: 12345
     AegisName: Luciola's_Honey_Jam
     Name: Luciola's Honey Jam
@@ -6409,7 +6666,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_GUARD; sc_start SC_SPL_DEF,600000,10;
+      specialeffect2 EF_GUARD;
+      sc_start SC_SPL_DEF,600000,10;
   - Id: 12346
     AegisName: Unripe_Acorn
     Name: Unripe Acorn
@@ -6455,7 +6713,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_POTION_BERSERK; sc_start SC_MANU_MATK,600000,10;
+      specialeffect2 EF_POTION_BERSERK;
+      sc_start SC_MANU_MATK,600000,10;
   - Id: 12349
     AegisName: Cornus'_Tears
     Name: Cornus' Tears
@@ -6473,7 +6732,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_POTION_BERSERK; sc_start SC_SPL_MATK,600000,10;
+      specialeffect2 EF_POTION_BERSERK;
+      sc_start SC_SPL_MATK,600000,10;
   - Id: 12350
     AegisName: Angeling_Potion
     Name: Angeling Potion
@@ -6493,7 +6753,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,120000,5; itemskill "AL_ANGELUS",5;
+      skilleffect "AL_BLESSING",0;
+      sc_start SC_BLESSING,120000,5;
+      itemskill "AL_ANGELUS",5;
   - Id: 12351
     AegisName: Shout_Megaphone
     Name: Scream Megaphone
@@ -6537,7 +6799,11 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      specialeffect2 EF_ANGELUS; sc_start SC_INCMHPRATE,600000,3; sc_start SC_INCMSPRATE,600000,3; sc_start SC_INCHITRATE,600000,3; sc_start SC_INCCRI,600000,7;
+      specialeffect2 EF_ANGELUS;
+      sc_start SC_INCMHPRATE,600000,3;
+      sc_start SC_INCMSPRATE,600000,3;
+      sc_start SC_INCHITRATE,600000,3;
+      sc_start SC_INCCRI,600000,7;
   - Id: 12355
     AegisName: Xmas_Gift
     Name: Xmas Gift
@@ -6820,7 +7086,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_STEAL; bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",1200,0,0,EFST_ACARAJE;
+      specialeffect2 EF_STEAL;
+      bonus_script "{ bonus bHit,5; bonus bAspdRate,10; }",1200,0,0,EFST_ACARAJE;
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2
@@ -6833,7 +7100,8 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 3,0; itemskill "PR_GLORIA",2;
+      percentheal 3,0;
+      itemskill "PR_GLORIA",2;
   - Id: 12377
     AegisName: Mysterious_PET_Bottle2
     Name: Mysterious PET Bottle2
@@ -6846,7 +7114,8 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      percentheal 0,3; itemskill "PR_MAGNIFICAT",1;
+      percentheal 0,3;
+      itemskill "PR_MAGNIFICAT",1;
   - Id: 12378
     AegisName: 2009_Rice_Cake_Soup
     Name: Rice Cake Soup
@@ -6878,7 +7147,9 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      if(strcharinfo(3)=="job3_arch02") { mercenary_create 2037,1800000; }
+      if (strcharinfo(3) == "job3_arch02") {
+         mercenary_create 2037,1800000;
+      }
   - Id: 12382
     AegisName: ValkyrieB_Scroll
     Name: Ancient Languages Scroll
@@ -6886,7 +7157,9 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      if(strcharinfo(3)=="job3_arch02") { mercenary_create 2038,1800000; }
+      if (strcharinfo(3) == "job3_arch02") {
+         mercenary_create 2038,1800000;
+      }
   - Id: 12383
     AegisName: Vulcan_Bullet_Magazine
     Name: Vulcan Bullet Magazine
@@ -6912,7 +7185,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* if(strcharinfo(3)=="job3_war02") { itemskill "WL_FROSTMISTY",5; } */
+      /* if (strcharinfo(3) == "job3_war02") { itemskill "WL_FROSTMISTY",5; } */
   - Id: 12385
     AegisName: Rainbow_Ruby_Fire
     Name: Rainbow Ruby
@@ -6928,7 +7201,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* if(strcharinfo(3)=="job3_war02") { itemskill "WL_CRIMSONROCK",5; } */
+      /* if (strcharinfo(3) == "job3_war02") { itemskill "WL_CRIMSONROCK",5; } */
   - Id: 12386
     AegisName: Rainbow_Ruby_Wind
     Name: Rainbow Ruby
@@ -6944,7 +7217,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* if(strcharinfo(3)=="job3_war02") { itemskill "WL_CHAINLIGHTNING",5; } */
+      /* if (strcharinfo(3) == "job3_war02") { itemskill "WL_CHAINLIGHTNING",5; } */
   - Id: 12387
     AegisName: Rainbow_Ruby_Earth
     Name: Rainbow Ruby
@@ -6960,7 +7233,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* if(strcharinfo(3)=="job3_war02") { itemskill "WL_EARTHSTRAIN",5; } */
+      /* if (strcharinfo(3) == "job3_war02") { itemskill "WL_EARTHSTRAIN",5; } */
   - Id: 12388
     AegisName: Runstone_Crush
     Name: Rhydo Runestone For Apprentice
@@ -6980,7 +7253,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* if(strcharinfo(3)=="job3_rune02") { itemskill "RK_CRUSHSTRIKE",1; } */
+      /* if (strcharinfo(3) == "job3_rune02") { itemskill "RK_CRUSHSTRIKE",1; } */
   - Id: 12389
     AegisName: Runstone_Storm
     Name: Pertz Runestone For Apprentice
@@ -7000,7 +7273,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* if(strcharinfo(3)=="job3_rune02") { itemskill "RK_STORMBLAST",1; } */
+      /* if (strcharinfo(3) == "job3_rune02") { itemskill "RK_STORMBLAST",1; } */
   - Id: 12390
     AegisName: Runstone_Millennium
     Name: Verkana Runestone For Apprentice
@@ -7020,7 +7293,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /* if(strcharinfo(3)=="job3_rune02") { itemskill "RK_MILLENNIUMSHIELD",1; } */
+      /* if (strcharinfo(3) == "job3_rune02") { itemskill "RK_MILLENNIUMSHIELD",1; } */
   - Id: 12391
     AegisName: Lucky_Egg_C
     Name: Lucky Egg
@@ -7048,7 +7321,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if ( checkmadogear() ) { itemheal rand(200,300),0; }
+      if (checkmadogear() ) {
+         itemheal rand(200,300),0;
+      }
   - Id: 12393
     AegisName: RepairB
     Name: Repair B
@@ -7062,7 +7337,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if ( checkmadogear() ) { itemheal rand(300,400),0; }
+      if (checkmadogear() ) {
+         itemheal rand(300,400),0;
+      }
   - Id: 12394
     AegisName: RepairC
     Name: Repair C
@@ -7076,7 +7353,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if ( checkmadogear() ) { itemheal rand(400,500),0; }
+      if (checkmadogear() ) {
+         itemheal rand(400,500),0;
+      }
   - Id: 12395
     AegisName: Tantanmen
     Name: Tantan Noodle
@@ -7102,7 +7381,17 @@ Body:
       NoSell: true
       NoGuildStorage: true
     Script: |
-      .@rnd = rand(1,10); if(.@rnd==1) itemskill "AL_TELEPORT",1; else if(.@rnd==2) itemskill "AL_TELEPORT",3; else if(.@rnd==3) percentheal 50,0; else if(.@rnd==4) percentheal 0,50; else if(.@rnd==5) end; else if(.@rnd==6) getitem 512,1; else if(.@rnd==7) itemskill "ALL_REVERSEORCISH",1; else if(.@rnd==8) specialeffect2 EF_MAPPILLAR2; else if(.@rnd==9) specialeffect2 EF_ANGEL2; else specialeffect2 EF_COIN;
+      .@rnd = rand(1,10);
+      if (.@rnd == 1) itemskill "AL_TELEPORT",1;
+      else if (.@rnd == 2) itemskill "AL_TELEPORT",3;
+      else if (.@rnd == 3) percentheal 50,0;
+      else if (.@rnd == 4) percentheal 0,50;
+      else if (.@rnd == 5) end;
+      else if (.@rnd == 6) getitem 512,1;
+      else if (.@rnd == 7) itemskill "ALL_REVERSEORCISH",1;
+      else if (.@rnd == 8) specialeffect2 EF_MAPPILLAR2;
+      else if (.@rnd == 9) specialeffect2 EF_ANGEL2;
+      else specialeffect2 EF_COIN;
   - Id: 12397
     AegisName: Fools_Day_Box2
     Name: Gift Box?
@@ -7118,7 +7407,17 @@ Body:
       NoSell: true
       NoGuildStorage: true
     Script: |
-      .@rnd = rand(1,10); if(.@rnd==1) itemskill "TF_DETOXIFY",1; else if(.@rnd==2) itemskill "TF_PICKSTONE",1; else if(.@rnd==3) itemskill "BA_FROSTJOKER",1; else if(.@rnd==4) itemskill "DC_SCREAM",1; else if(.@rnd==5) end; else if(.@rnd==6) getitem 909,1; else if(.@rnd==7) itemskill "AL_RUWACH",1; else if(.@rnd==8) specialeffect2 EF_BEGINASURA; else if(.@rnd==9) specialeffect2 EF_MVP; else specialeffect2 EF_CURSEATTACK;
+      .@rnd = rand(1,10);
+      if (.@rnd == 1) itemskill "TF_DETOXIFY",1;
+      else if (.@rnd == 2) itemskill "TF_PICKSTONE",1;
+      else if (.@rnd == 3) itemskill "BA_FROSTJOKER",1;
+      else if (.@rnd == 4) itemskill "DC_SCREAM",1;
+      else if (.@rnd == 5) end;
+      else if (.@rnd == 6) getitem 909,1;
+      else if (.@rnd == 7) itemskill "AL_RUWACH",1;
+      else if (.@rnd == 8) specialeffect2 EF_BEGINASURA;
+      else if (.@rnd == 9) specialeffect2 EF_MVP;
+      else specialeffect2 EF_CURSEATTACK;
   - Id: 12398
     AegisName: PCBang_Gift_Box
     Name: PCBang Gift Box
@@ -7207,7 +7506,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      percentheal 30,30; skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,140000,5;
+      percentheal 30,30;
+      skilleffect "AL_BLESSING",0;
+      sc_start SC_BLESSING,140000,5;
   - Id: 12406
     AegisName: Psychic_ArmorS
     Name: Psychic ArmorS
@@ -7282,7 +7583,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_ASPDPOTION0,1800000,0; sc_start SC_INCREASEAGI,140000,5; skilleffect "AL_INCAGI",0;
+      sc_start SC_ASPDPOTION0,1800000,0;
+      sc_start SC_INCREASEAGI,140000,5;
+      skilleffect "AL_INCAGI",0;
   - Id: 12415
     AegisName: Siege_Teleport_Scroll2
     Name: Siege Teleport Scroll Silver
@@ -7357,7 +7660,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,1; percentheal 1,0;
+      sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,1;
+      percentheal 1,0;
   - Id: 12423
     AegisName: HP_Increase_PotionM
     Name: HP Increase Potion (Medium)
@@ -7374,7 +7678,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,2; percentheal 2,0;
+      sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,2;
+      percentheal 2,0;
   - Id: 12424
     AegisName: HP_Increase_PotionL
     Name: HP Increase Potion (Large)
@@ -7391,7 +7696,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,3; percentheal 5,0;
+      sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,3;
+      percentheal 5,0;
   - Id: 12425
     AegisName: SP_Increase_PotionS
     Name: SP Increase Potion (Small)
@@ -7408,7 +7714,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start2 SC_ENERGY_DRINK_RESERCH,500000,1,1; percentheal 0,2;
+      sc_start2 SC_ENERGY_DRINK_RESERCH,500000,1,1;
+      percentheal 0,2;
   - Id: 12426
     AegisName: SP_Increase_PotionM
     Name: SP Increase Potion (Medium)
@@ -7425,7 +7732,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start2 SC_ENERGY_DRINK_RESERCH,500000,1,2; percentheal 0,4;
+      sc_start2 SC_ENERGY_DRINK_RESERCH,500000,1,2;
+      percentheal 0,4;
   - Id: 12427
     AegisName: SP_Increase_PotionL
     Name: SP Increase Potion (Large)
@@ -7442,7 +7750,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start2 SC_ENERGY_DRINK_RESERCH,500000,1,3; percentheal 0,8;
+      sc_start2 SC_ENERGY_DRINK_RESERCH,500000,1,3;
+      percentheal 0,8;
   - Id: 12428
     AegisName: Enrich_White_PotionZ
     Name: Concentrated White Potion Z
@@ -7452,7 +7761,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_EXTRACT_WHITE_POTION_Z,500000,20; heal 1000,0;
+      sc_start SC_EXTRACT_WHITE_POTION_Z,500000,20;
+      heal 1000,0;
   - Id: 12429
     AegisName: Savage_BBQ
     Name: Savage Full Roast
@@ -7523,7 +7833,8 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_VITATA_500,500000,0; itemheal 0,200;
+      sc_start SC_VITATA_500,500000,0;
+      itemheal 0,200;
   - Id: 12437
     AegisName: Enrich_Celermine_Juice
     Name: Concentrated Ceromain Soup
@@ -7759,7 +8070,13 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_end SC_SILENCE; sc_end SC_BLEEDING; sc_end SC_POISON; sc_end SC_CURSE; sc_end SC_ORCISH; sc_end SC_CHANGEUNDEAD; itemheal 500,0;
+      sc_end SC_SILENCE;
+      sc_end SC_BLEEDING;
+      sc_end SC_POISON;
+      sc_end SC_CURSE;
+      sc_end SC_ORCISH;
+      sc_end SC_CHANGEUNDEAD;
+      itemheal 500,0;
   - Id: 12476
     AegisName: PCBang_Coupon_Box3
     Name: PCBang Coupon Box3
@@ -8627,7 +8944,8 @@ Body:
     Flags:
       Container: true
     Script: |
-      getrandgroupitem(IG_BleuBox),1; getrandgroupitem(IG_BleuBox),1;
+      getrandgroupitem(IG_BleuBox),1;
+      getrandgroupitem(IG_BleuBox),1;
   - Id: 12703
     AegisName: Holy_Egg_2
     Name: Holy Egg
@@ -8874,7 +9192,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_REFRESH",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_REFRESH",1;
   - Id: 12726
     AegisName: Runstone_Rhydo
     Name: Raido Rune
@@ -8899,7 +9218,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_CRUSHSTRIKE",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_CRUSHSTRIKE",1;
   - Id: 12727
     AegisName: Runstone_Verkana
     Name: Berkana Rune
@@ -8924,7 +9244,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_MILLENNIUMSHIELD",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_MILLENNIUMSHIELD",1;
   - Id: 12728
     AegisName: Runstone_Isia
     Name: Isa Rune
@@ -8949,7 +9270,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_VITALITYACTIVATION",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_VITALITYACTIVATION",1;
   - Id: 12729
     AegisName: Runstone_Asir
     Name: Othila Rune
@@ -8971,7 +9293,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_FIGHTINGSPIRIT",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_FIGHTINGSPIRIT",1;
   - Id: 12730
     AegisName: Runstone_Urj
     Name: Uruz Rune
@@ -8996,7 +9319,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_ABUNDANCE",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_ABUNDANCE",1;
   - Id: 12731
     AegisName: Runstone_Turisus
     Name: Thurisaz Rune
@@ -9018,7 +9342,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_GIANTGROWTH",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_GIANTGROWTH",1;
   - Id: 12732
     AegisName: Runstone_Pertz
     Name: Wyrd Rune
@@ -9040,7 +9365,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STORMBLAST",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_STORMBLAST",1;
   - Id: 12733
     AegisName: Runstone_Hagalas
     Name: Hagalaz Rune
@@ -9065,7 +9391,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STONEHARDSKIN",1;
+      if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT)
+         unitskilluseid getcharid(3),"RK_STONEHARDSKIN",1;
   - Id: 12734
     AegisName: Runstone_Quality
     Name: Luxurious Rune
@@ -9278,7 +9605,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_POK_JAP; /* itemskill "MO_CALLSPIRITS",3; itemskill "MO_FINGEROFFENSIVE",5; */
+      specialeffect2 EF_POK_JAP;
+      /* itemskill "MO_CALLSPIRITS",3; itemskill "MO_FINGEROFFENSIVE",5; */
   - Id: 12756
     AegisName: New_Gift_Envelope
     Name: Chinese New Year Envelope
@@ -9459,7 +9787,10 @@ Body:
     Type: Delayconsume
     Weight: 10
     Script: |
-      if(getskilllv("HT_FALCON")) { if(!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon (!checkfalcon()); }
+      if (getskilllv("HT_FALCON")) {
+         if (!checkoption(Option_Wug) && !checkoption(Option_Wugrider))
+            setfalcon (!checkfalcon());
+      }
   - Id: 12900
     AegisName: Battle_Manual_Box
     Name: Battle Manual Box
@@ -11181,7 +11512,8 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 14517,10; getitem 7139,10;
+      getitem 14517,10;
+      getitem 7139,10;
   - Id: 13544
     AegisName: CP_Shield_Scroll_Box
     Name: Chemical Protection Shield Scroll Box
@@ -11189,7 +11521,8 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 14518,10; getitem 7139,10;
+      getitem 14518,10;
+      getitem 7139,10;
   - Id: 13545
     AegisName: CP_Armor_Scroll_Box
     Name: Chemical Protection Armor Scroll Box
@@ -11197,7 +11530,8 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 14519,10; getitem 7139,10;
+      getitem 14519,10;
+      getitem 7139,10;
   - Id: 13546
     AegisName: CP_Weapon_Scroll_Box
     Name: Chemical Protection Weapon Scroll Box
@@ -11205,7 +11539,8 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 14520,10; getitem 7139,10;
+      getitem 14520,10;
+      getitem 7139,10;
   - Id: 13547
     AegisName: Repair_Scroll_Box
     Name: Repair Weapon Scroll Box
@@ -11218,7 +11553,11 @@ Body:
       NoSell: true
       NoGuildStorage: true
     Script: |
-      getitem 14587,5; getitem 1002,5; getitem 998,5; getitem 756,5; getitem 999,5;
+      getitem 14587,5;
+      getitem 1002,5;
+      getitem 998,5;
+      getitem 756,5;
+      getitem 999,5;
   - Id: 13548
     AegisName: Big_Bun_Box
     Name: Big Bun Box
@@ -11881,7 +12220,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12250,2; getitem 12251,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12250,2;
+      getitem 12251,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 13635
     AegisName: Vigorgra_Package2
     Name: 1 Hour Package Vol. 2
@@ -11889,7 +12234,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12250,2; getitem 12255,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12250,2;
+      getitem 12255,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 13636
     AegisName: Vigorgra_Package3
     Name: 1 Hour Package Vol. 3
@@ -11897,7 +12248,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12252,2; getitem 12253,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12252,2;
+      getitem 12253,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 13637
     AegisName: Vigorgra_Package4
     Name: 1 Hour Package Vol. 4
@@ -11905,7 +12262,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12252,2; getitem 12255,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12252,2;
+      getitem 12255,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 13638
     AegisName: Vigorgra_Package5
     Name: 1 Hour Package Vol. 5
@@ -11913,7 +12276,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12252,2; getitem 12250,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12252,2;
+      getitem 12250,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 13639
     AegisName: Vigorgra_Package6
     Name: 1 Hour Package Vol. 6
@@ -11921,7 +12290,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12250,2; getitem 12251,2; getitem 12208,2; getitem 12215,15; getitem 12217,20; getitem 12211,1; getitem 7621,1;
+      getitem 12250,2;
+      getitem 12251,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12217,20;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 13640
     AegisName: Vigorgra_Package7
     Name: 2 Hour Package Vol. 1
@@ -11929,7 +12304,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12250,4; getitem 12251,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12250,4;
+      getitem 12251,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 13641
     AegisName: Vigorgra_Package8
     Name: 2 Hour Package Vol. 2
@@ -11937,7 +12318,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12250,4; getitem 12255,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12250,4;
+      getitem 12255,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 13642
     AegisName: Vigorgra_Package9
     Name: 2 Hour Package Vol. 3
@@ -11945,7 +12332,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12252,4; getitem 12253,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12252,4;
+      getitem 12253,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 13643
     AegisName: Vigorgra_Package10
     Name: 2 Hour Package Vol. 4
@@ -11953,7 +12346,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12252,4; getitem 12255,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12252,4;
+      getitem 12255,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 13644
     AegisName: Vigorgra_Package11
     Name: 2 Hour Package Vol. 5
@@ -11961,7 +12360,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12252,4; getitem 12250,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12252,4;
+      getitem 12250,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 13645
     AegisName: Vigorgra_Package12
     Name: 2 Hour Package Vol. 6
@@ -11969,7 +12374,13 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12250,4; getitem 12251,4; getitem 12208,4; getitem 12215,30; getitem 12217,40; getitem 12211,2; getitem 7621,2;
+      getitem 12250,4;
+      getitem 12251,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12217,40;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 13646
     AegisName: Infiltrator_Box1
     Name: Refined Infiltrator Box
@@ -13461,7 +13872,12 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 14551,1; getitem 14554,1; getitem 14557,1; getitem 14560,1; getitem 14563,1; getitem 14566,1;
+      getitem 14551,1;
+      getitem 14554,1;
+      getitem 14557,1;
+      getitem 14560,1;
+      getitem 14563,1;
+      getitem 14566,1;
   - Id: 13812
     AegisName: Food_Box_Lv2
     Name: Food Box Vol 2
@@ -13469,7 +13885,12 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 14552,1; getitem 14555,1; getitem 14558,1; getitem 14561,1; getitem 14564,1; getitem 14567,1;
+      getitem 14552,1;
+      getitem 14555,1;
+      getitem 14558,1;
+      getitem 14561,1;
+      getitem 14564,1;
+      getitem 14567,1;
   - Id: 13813
     AegisName: Food_Box_Lv3
     Name: Food Box Vol 3
@@ -13477,7 +13898,12 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 14553,1; getitem 14556,1; getitem 14559,1; getitem 14562,1; getitem 14565,1; getitem 14568,1;
+      getitem 14553,1;
+      getitem 14556,1;
+      getitem 14559,1;
+      getitem 14562,1;
+      getitem 14565,1;
+      getitem 14568,1;
   - Id: 13814
     AegisName: Indonesia_Box
     Name: Healing Box
@@ -13627,7 +14053,9 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 682,1; getitem 12123,1; getitem 12122,1;
+      getitem 682,1;
+      getitem 12123,1;
+      getitem 12122,1;
   - Id: 13827
     AegisName: Power_Box2
     Name: Power Box 2
@@ -13635,7 +14063,9 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 683,1; getitem 12123,1; getitem 12122,1;
+      getitem 683,1;
+      getitem 12123,1;
+      getitem 12122,1;
   - Id: 13828
     AegisName: Resist_Box1
     Name: Resist Box 1
@@ -13643,7 +14073,8 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12118,1; getitem 12119,1;
+      getitem 12118,1;
+      getitem 12119,1;
   - Id: 13829
     AegisName: Resist_Box2
     Name: Resist Box 2
@@ -13651,7 +14082,8 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12120,1; getitem 12121,1;
+      getitem 12120,1;
+      getitem 12121,1;
   - Id: 13830
     AegisName: Stat_Boost1
     Name: Stat Boost 1
@@ -13659,7 +14091,9 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      sc_start SC_INCSTR,60000,5; sc_start SC_INCAGI,60000,5; sc_start SC_INCVIT,60000,5;
+      sc_start SC_INCSTR,60000,5;
+      sc_start SC_INCAGI,60000,5;
+      sc_start SC_INCVIT,60000,5;
   - Id: 13831
     AegisName: Stat_Boost2
     Name: Stat Boost 2
@@ -13667,7 +14101,9 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      sc_start SC_INCINT,60000,5; sc_start SC_INCLUK,60000,5; sc_start SC_INCDEX,60000,5;
+      sc_start SC_INCINT,60000,5;
+      sc_start SC_INCLUK,60000,5;
+      sc_start SC_INCDEX,60000,5;
   - Id: 13832
     AegisName: Stat_Boost3
     Name: Stat Boost 3
@@ -13675,7 +14111,9 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      sc_start SC_INCAGI,60000,5; sc_start SC_INCVIT,60000,5; sc_start SC_INCDEX,60000,5;
+      sc_start SC_INCAGI,60000,5;
+      sc_start SC_INCVIT,60000,5;
+      sc_start SC_INCDEX,60000,5;
   - Id: 13833
     AegisName: Stat_Boost4
     Name: Stat Boost 4
@@ -13683,7 +14121,9 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      sc_start SC_INCINT,60000,5; sc_start SC_INCVIT,60000,5; sc_start SC_INCDEX,60000,5;
+      sc_start SC_INCINT,60000,5;
+      sc_start SC_INCVIT,60000,5;
+      sc_start SC_INCDEX,60000,5;
   - Id: 13834
     AegisName: Dun_Tele_Scroll2_Box5
     Name: Dungeon Teleport Scroll II 5 Box
@@ -13925,7 +14365,9 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 12208,2; getitem 12215,15; getitem 12216,15;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
   - Id: 13863
     AegisName: Repair_Scroll_Box10
     Name: Repair Weapon Scroll 10 Box
@@ -13942,7 +14384,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14521,10; getitem 1002,10; getitem 998,10; getitem 756,10; getitem 999,10;
+      getitem 14521,10;
+      getitem 1002,10;
+      getitem 998,10;
+      getitem 756,10;
+      getitem 999,10;
   - Id: 13866
     AegisName: Flying_Angel_Box
     Name: Flying Angel Box
@@ -14044,7 +14490,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4327,1; getitem 4309,1; getitem 4325,1; getitem 4208,1; getitem 4258,1; getitem 4191,1;
+      getitem 4327,1;
+      getitem 4309,1;
+      getitem 4325,1;
+      getitem 4208,1;
+      getitem 4258,1;
+      getitem 4191,1;
   - Id: 13872
     AegisName: Acolyte_Card_Box
     Name: Acolyte Card Box
@@ -14061,7 +14512,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4185,1; getitem 4312,1; getitem 4217,1; getitem 4280,1; getitem 4293,1;
+      getitem 4185,1;
+      getitem 4312,1;
+      getitem 4217,1;
+      getitem 4280,1;
+      getitem 4293,1;
   - Id: 13873
     AegisName: Archer_Card_Box
     Name: Archer Card Box
@@ -14078,7 +14533,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4297,1; getitem 4234,1; getitem 4199,1; getitem 4178,1; getitem 4252,1;
+      getitem 4297,1;
+      getitem 4234,1;
+      getitem 4199,1;
+      getitem 4178,1;
+      getitem 4252,1;
   - Id: 13874
     AegisName: Swordman_Card_Box
     Name: Swordman Card Box
@@ -14095,7 +14554,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4319,1; getitem 4331,1; getitem 4220,1; getitem 4311,1; getitem 4246,1;
+      getitem 4319,1;
+      getitem 4331,1;
+      getitem 4220,1;
+      getitem 4311,1;
+      getitem 4246,1;
   - Id: 13875
     AegisName: Thief_Card_Box
     Name: Thief Card Box
@@ -14112,7 +14575,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4230,1; getitem 4210,1; getitem 4257,1; getitem 4172,1; getitem 4272,1;
+      getitem 4230,1;
+      getitem 4210,1;
+      getitem 4257,1;
+      getitem 4172,1;
+      getitem 4272,1;
   - Id: 13876
     AegisName: Merchant_Card_Box
     Name: Merchant Card Box
@@ -14129,7 +14596,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4206,1; getitem 4281,1; getitem 4186,1; getitem 4233,1; getitem 4321,1;
+      getitem 4206,1;
+      getitem 4281,1;
+      getitem 4186,1;
+      getitem 4233,1;
+      getitem 4321,1;
   - Id: 13877
     AegisName: Clock_Tower_Card_Box
     Name: Clock Tower Card Box
@@ -14146,7 +14617,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4244,1; getitem 4299,1; getitem 4313,1; getitem 4229,1;
+      getitem 4244,1;
+      getitem 4299,1;
+      getitem 4313,1;
+      getitem 4229,1;
   - Id: 13878
     AegisName: Geffenia_Card_Box
     Name: Geffenia Card Box
@@ -14163,7 +14637,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4218,1; getitem 4269,1;
+      getitem 4218,1;
+      getitem 4269,1;
   - Id: 13879
     AegisName: Owl_Card_Box
     Name: Owl Card Box
@@ -14180,7 +14655,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4237,1; getitem 4238,1;
+      getitem 4237,1;
+      getitem 4238,1;
   - Id: 13880
     AegisName: Ghost_Card_Box
     Name: Ghost Card Box
@@ -14197,7 +14673,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4193,1; getitem 4294,1;
+      getitem 4193,1;
+      getitem 4294,1;
   - Id: 13881
     AegisName: Nightmare_Card_Box
     Name: Nightmare Card Box
@@ -14214,7 +14691,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4127,1; getitem 4166,1;
+      getitem 4127,1;
+      getitem 4166,1;
   - Id: 13882
     AegisName: Curse_Card_Box
     Name: Curse Card Box
@@ -14451,7 +14929,20 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7229,2; getitem 569,300; getitem 504,20; getitem 505,20; getitem 7060,30; getitem 2403,1; getitem 5039,1; getitem 2503,1; getitem 2307,1; getitem 616,1; getitem 603,1; getitem 617,1; getitem 610,5; getitem 604,5;
+      getitem 7229,2;
+      getitem 569,300;
+      getitem 504,20;
+      getitem 505,20;
+      getitem 7060,30;
+      getitem 2403,1;
+      getitem 5039,1;
+      getitem 2503,1;
+      getitem 2307,1;
+      getitem 616,1;
+      getitem 603,1;
+      getitem 617,1;
+      getitem 610,5;
+      getitem 604,5;
   - Id: 13896
     AegisName: Mimic_Summon_Box5
     Name: Mimic Summoning 5 Box
@@ -14597,7 +15088,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12208,10; getitem 12209,10; getitem 12210,10;
+      getitem 12208,10;
+      getitem 12209,10;
+      getitem 12210,10;
   - Id: 13906
     AegisName: Kitty_Set_Box
     Name: XM Kitty Set Box
@@ -14614,7 +15107,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 5230,1; getitem 5231,1; getitem 5232,1; getitem 5233,1; getitem 5234,1;
+      getitem 5230,1;
+      getitem 5231,1;
+      getitem 5232,1;
+      getitem 5233,1;
+      getitem 5234,1;
   - Id: 13907
     AegisName: Soft_Core_Set_Box
     Name: XM Softcore Set Box
@@ -14631,7 +15128,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12208,5; getitem 12209,5; getitem 12210,5;
+      getitem 12208,5;
+      getitem 12209,5;
+      getitem 12210,5;
   - Id: 13908
     AegisName: Deviruchi_Set_Box
     Name: XM Deviruchi Set Box
@@ -14648,7 +15147,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 5227,1; getitem 5228,1; getitem 5229,1;
+      getitem 5227,1;
+      getitem 5228,1;
+      getitem 5229,1;
   - Id: 13909
     AegisName: MVP_Hunt_Box
     Name: MVP Hunting Box
@@ -14665,7 +15166,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7621,1; getitem 12210,1; getitem 12221,1; getitem 12214,3;
+      getitem 7621,1;
+      getitem 12210,1;
+      getitem 12221,1;
+      getitem 12214,3;
   - Id: 13910
     AegisName: Brewing_Box
     Name: XM Brewing Set Box
@@ -14682,7 +15186,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12204,10; getitem 12205,10; getitem 12206,10;
+      getitem 12204,10;
+      getitem 12205,10;
+      getitem 12206,10;
   - Id: 13911
     AegisName: Xmas_Pet_Scroll
     Name: Christmas Pet Scroll
@@ -14804,7 +15310,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4371,1; getitem 4311,1; getitem 4319,1; getitem 4331,1;
+      getitem 4371,1;
+      getitem 4311,1;
+      getitem 4319,1;
+      getitem 4331,1;
   - Id: 13927
     AegisName: Alchemist_Card_Box
     Name: Alchemist Card Box
@@ -14821,7 +15330,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4281,1; getitem 4233,1; getitem 4343,1; getitem 4186,1; getitem 4036,1;
+      getitem 4281,1;
+      getitem 4233,1;
+      getitem 4343,1;
+      getitem 4186,1;
+      getitem 4036,1;
   - Id: 13928
     AegisName: Rogue_Card_Box
     Name: Rogue Card Box
@@ -14838,7 +15351,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4039,1; getitem 4210,1; getitem 4257,1; getitem 4230,1; getitem 4348,1;
+      getitem 4039,1;
+      getitem 4210,1;
+      getitem 4257,1;
+      getitem 4230,1;
+      getitem 4348,1;
   - Id: 13929
     AegisName: Bard_Dancer_Card_Box
     Name: Bard Dancer Card Box
@@ -14855,7 +15372,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4297,1; getitem 4234,1; getitem 4178,1; getitem 4381,1; getitem 4252,1;
+      getitem 4297,1;
+      getitem 4234,1;
+      getitem 4178,1;
+      getitem 4381,1;
+      getitem 4252,1;
   - Id: 13930
     AegisName: Sage_Card_Box
     Name: Sage card box
@@ -14872,7 +15393,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4382,1; getitem 4258,1; getitem 4325,1; getitem 4208,1; getitem 4327,1;
+      getitem 4382,1;
+      getitem 4258,1;
+      getitem 4325,1;
+      getitem 4208,1;
+      getitem 4327,1;
   - Id: 13931
     AegisName: Monk_Card_Box
     Name: Monk Card Box
@@ -14889,7 +15414,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 4312,1; getitem 4332,1; getitem 4185,1; getitem 4293,1;
+      getitem 4312,1;
+      getitem 4332,1;
+      getitem 4185,1;
+      getitem 4293,1;
   - Id: 13932
     AegisName: Sylph_Box
     Name: Sylph Box
@@ -15108,7 +15636,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2317,1; getitem 2106,1; getitem 2406,1; getitem 2506,1; getitem 4003,1; getitem 4133,1; getitem 2607,2; getitem 2229,1; getitem 2266,1;
+      getitem 2317,1;
+      getitem 2106,1;
+      getitem 2406,1;
+      getitem 2506,1;
+      getitem 4003,1;
+      getitem 4133,1;
+      getitem 2607,2;
+      getitem 2229,1;
+      getitem 2266,1;
   - Id: 13946
     AegisName: Br_MagePackage
     Name: Brazil Magician Package
@@ -15125,7 +15661,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2322,1; getitem 2102,1; getitem 2104,1; getitem 2504,1; getitem 4003,1; getitem 4077,1; getitem 2607,2; getitem 5027,1;
+      getitem 2322,1;
+      getitem 2102,1;
+      getitem 2104,1;
+      getitem 2504,1;
+      getitem 4003,1;
+      getitem 4077,1;
+      getitem 2607,2;
+      getitem 5027,1;
   - Id: 13947
     AegisName: Br_AcolPackage
     Name: Brazil Acolyte Package
@@ -15142,7 +15685,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2326,1; getitem 2104,1; getitem 2404,1; getitem 2504,1; getitem 4003,1; getitem 4100,1; getitem 2607,2; getitem 2217,1;
+      getitem 2326,1;
+      getitem 2104,1;
+      getitem 2404,1;
+      getitem 2504,1;
+      getitem 4003,1;
+      getitem 4100,1;
+      getitem 2607,2;
+      getitem 2217,1;
   - Id: 13948
     AegisName: Br_ArcherPackage
     Name: Brazil Archer package
@@ -15159,7 +15709,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2331,1; getitem 1716,1; getitem 2406,1; getitem 2504,1; getitem 4064,1; getitem 4102,1; getitem 2607,2; getitem 2285,1;
+      getitem 2331,1;
+      getitem 1716,1;
+      getitem 2406,1;
+      getitem 2504,1;
+      getitem 4064,1;
+      getitem 4102,1;
+      getitem 2607,2;
+      getitem 2285,1;
   - Id: 13949
     AegisName: Br_MerPackage
     Name: Brazil Merchant Package
@@ -15176,7 +15733,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2315,1; getitem 2104,1; getitem 2406,1; getitem 2506,1; getitem 4003,1; getitem 4133,1; getitem 2607,2; getitem 5021,1;
+      getitem 2315,1;
+      getitem 2104,1;
+      getitem 2406,1;
+      getitem 2506,1;
+      getitem 4003,1;
+      getitem 4133,1;
+      getitem 2607,2;
+      getitem 5021,1;
   - Id: 13950
     AegisName: Br_ThiefPackage
     Name: Brazil Thief Package
@@ -15193,7 +15757,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 2336,1; getitem 2104,1; getitem 2406,1; getitem 2506,1; getitem 4097,1; getitem 4102,1; getitem 2607,2; getitem 2274,1;
+      getitem 2336,1;
+      getitem 2104,1;
+      getitem 2406,1;
+      getitem 2506,1;
+      getitem 4097,1;
+      getitem 4102,1;
+      getitem 2607,2;
+      getitem 2274,1;
   - Id: 13951
     AegisName: Wasteland_Outlaw_Box
     Name: Western Outlaw Box
@@ -15820,7 +16391,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 7135,10; getitem 7136,10;
+      getitem 7135,10;
+      getitem 7136,10;
   - Id: 13990
     AegisName: Job_Manual50_Box
     Name: JOB Battle Manual Box
@@ -16024,7 +16596,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 11503,25; getitem 11504,10;
+      getitem 11503,25;
+      getitem 11504,10;
   - Id: 14002
     AegisName: Adv_Siege_Supply_Box
     Name: Veteran Siege Supply Box
@@ -16041,7 +16614,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 11503,50; getitem 11504,20;
+      getitem 11503,50;
+      getitem 11504,20;
   - Id: 14003
     AegisName: Elite_Siege_Supply_Box
     Name: Elite Siege Supply Box
@@ -16058,7 +16632,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 11503,100; getitem 11504,50;
+      getitem 11503,100;
+      getitem 11504,50;
   - Id: 14004
     AegisName: Poison_Bottle_10_Box
     Name: Poison Bottle 10 Box
@@ -16619,7 +17194,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14521,5; getitem 1002,5; getitem 998,5; getitem 756,5; getitem 999,5;
+      getitem 14521,5;
+      getitem 1002,5;
+      getitem 998,5;
+      getitem 756,5;
+      getitem 999,5;
   - Id: 14038
     AegisName: F_Repair_Scroll_Box10
     Name: Repair Weapon Scroll 10 Box
@@ -16636,7 +17215,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14521,10; getitem 1002,10; getitem 998,10; getitem 756,10; getitem 999,10;
+      getitem 14521,10;
+      getitem 1002,10;
+      getitem 998,10;
+      getitem 756,10;
+      getitem 999,10;
   - Id: 14041
     AegisName: F_WOB_Rune_Box5
     Name: Yellow Butterfly Wing 5 Box
@@ -18404,7 +18987,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,2; getitem 12251,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12250,2;
+      getitem 12251,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 14145
     AegisName: F_Vigorgra_Package2
     Name: Vigorgra Box2
@@ -18421,7 +19010,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,2; getitem 12255,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12250,2;
+      getitem 12255,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 14146
     AegisName: F_Vigorgra_Package3
     Name: Vigorgra Box3
@@ -18438,7 +19033,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,2; getitem 12253,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12252,2;
+      getitem 12253,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 14147
     AegisName: F_Vigorgra_Package4
     Name: Vigorgra Box4
@@ -18455,7 +19056,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,2; getitem 12255,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12252,2;
+      getitem 12255,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 14148
     AegisName: F_Vigorgra_Package5
     Name: Vigorgra Box5
@@ -18472,7 +19079,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,2; getitem 12250,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1;
+      getitem 12252,2;
+      getitem 12250,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12216,15;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 14149
     AegisName: F_Vigorgra_Package6
     Name: Vigorgra Box6
@@ -18489,7 +19102,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,2; getitem 12251,2; getitem 12208,2; getitem 12215,15; getitem 12217,20; getitem 12211,1; getitem 7621,1;
+      getitem 12250,2;
+      getitem 12251,2;
+      getitem 12208,2;
+      getitem 12215,15;
+      getitem 12217,20;
+      getitem 12211,1;
+      getitem 7621,1;
   - Id: 14150
     AegisName: F_Vigorgra_Package7
     Name: Vigorgra Box7
@@ -18506,7 +19125,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,4; getitem 12251,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12250,4;
+      getitem 12251,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 14151
     AegisName: F_Vigorgra_Package8
     Name: Vigorgra Box8
@@ -18523,7 +19148,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,4; getitem 12255,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12250,4;
+      getitem 12255,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 14152
     AegisName: F_Vigorgra_Package9
     Name: Start your Journey Pack
@@ -18540,7 +19171,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,4; getitem 12253,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12252,4;
+      getitem 12253,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 14153
     AegisName: F_Vigorgra_Package10
     Name: Siege Mode Pack
@@ -18557,7 +19194,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,4; getitem 12255,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12252,4;
+      getitem 12255,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 14154
     AegisName: F_Vigorgra_Package11
     Name: 1 Hour Survival Pack
@@ -18574,7 +19217,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12252,4; getitem 12250,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2;
+      getitem 12252,4;
+      getitem 12250,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12216,30;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 14155
     AegisName: F_Vigorgra_Package12
     Name: Weekend Hunting Pack
@@ -18591,7 +19240,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12250,4; getitem 12251,4; getitem 12208,4; getitem 12215,30; getitem 12217,40; getitem 12211,2; getitem 7621,2;
+      getitem 12250,4;
+      getitem 12251,4;
+      getitem 12208,4;
+      getitem 12215,30;
+      getitem 12217,40;
+      getitem 12211,2;
+      getitem 7621,2;
   - Id: 14156
     AegisName: F_Battle_Manual_Box
     Name: Battle Manual Box
@@ -18863,7 +19518,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12217,10; getitem 523,10;
+      getitem 12217,10;
+      getitem 523,10;
   - Id: 14172
     AegisName: F_Assumptio_5_Scroll_Box
     Name: Assumptio 5 Scroll Box
@@ -19339,7 +19995,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12217,30; getitem 523,30;
+      getitem 12217,30;
+      getitem 523,30;
   - Id: 14200
     AegisName: F_Aspersio_5_Box50
     Name: Aspersio Scroll 50 Box
@@ -19356,7 +20013,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 12217,50; getitem 523,50;
+      getitem 12217,50;
+      getitem 523,50;
   - Id: 14201
     AegisName: F_Agi_Dish_Box30
     Name: Steamed Scorpion 30 Box
@@ -20318,7 +20976,10 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 1019,30; getitem 999,10; getitem 1011,10; getitem 984,5;
+      getitem 1019,30;
+      getitem 999,10;
+      getitem 1011,10;
+      getitem 984,5;
   - Id: 14288
     AegisName: Guardian_Stone_Repair_Kit
     Name: Guardian Stone Repair Kit
@@ -20326,7 +20987,12 @@ Body:
     Buy: 20
     Weight: 10
     Script: |
-      getitem 984,1; getitem 985,1; getitem 7049,30; getitem 717,5; getitem 716,5; getitem 715,5;
+      getitem 984,1;
+      getitem 985,1;
+      getitem 7049,30;
+      getitem 717,5;
+      getitem 716,5;
+      getitem 715,5;
   - Id: 14289
     AegisName: Cloth_Dye_Coupon_Box
     Name: New Clothing Dye Coupon Box
@@ -21112,7 +21778,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_HEAL3; sc_start4 SC_S_LIFEPOTION,600000,-5,5,0,0;
+      specialeffect2 EF_HEAL3;
+      sc_start4 SC_S_LIFEPOTION,600000,-5,5,0,0;
   - Id: 14535
     AegisName: Med_Life_Potion
     Name: Medium Life Potion
@@ -21128,7 +21795,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_HEAL3; sc_start4 SC_L_LIFEPOTION,600000,-7,4,0,0;
+      specialeffect2 EF_HEAL3;
+      sc_start4 SC_L_LIFEPOTION,600000,-7,4,0,0;
   - Id: 14536
     AegisName: Abrasive
     Name: Abrasive
@@ -21144,7 +21812,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_MAGICALATTHIT; sc_start SC_INCCRI,300000,30;
+      specialeffect2 EF_MAGICALATTHIT;
+      sc_start SC_INCCRI,300000,30;
   - Id: 14537
     AegisName: Regeneration_Potion
     Name: Regeneration Potion
@@ -21160,7 +21829,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_LIGHTSPHERE; sc_start SC_INCHEALRATE,1800000,20;
+      specialeffect2 EF_LIGHTSPHERE;
+      sc_start SC_INCHEALRATE,1800000,20;
   - Id: 14538
     AegisName: Glass_Of_Illusion
     Name: Glass of Illusion
@@ -21179,7 +21849,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_STEAL; sc_start SC_INCFLEE2,60000,20;
+      specialeffect2 EF_STEAL;
+      sc_start SC_INCFLEE2,60000,20;
   - Id: 14539
     AegisName: Shadow_Armor_S
     Name: Shadow Armor Scroll
@@ -21195,7 +21866,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_CLOAKING; sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Dark,1,0;
+      specialeffect2 EF_CLOAKING;
+      sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Dark,1,0;
   - Id: 14540
     AegisName: Holy_Armor_S
     Name: Holy Armor Scroll
@@ -21211,7 +21883,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_BENEDICTIO; sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Holy,1,0;
+      specialeffect2 EF_BENEDICTIO;
+      sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Holy,1,0;
   - Id: 14541
     AegisName: S_Def_Potion
     Name: Small Defense Potion
@@ -21227,7 +21900,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_GUARD; sc_start SC_DEF_RATE,60000,3;
+      specialeffect2 EF_GUARD;
+      sc_start SC_DEF_RATE,60000,3;
   - Id: 14542
     AegisName: B_Def_Potion
     Name: Big Defense Potion
@@ -21243,7 +21917,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_GUARD; sc_start SC_DEF_RATE,180000,3;
+      specialeffect2 EF_GUARD;
+      sc_start SC_DEF_RATE,180000,3;
   - Id: 14543
     AegisName: S_Mdef_Potion
     Name: Small Magic Defense Potion
@@ -21259,7 +21934,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_SPELLBREAKER; sc_start SC_MDEF_RATE,60000,3;
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start SC_MDEF_RATE,60000,3;
   - Id: 14544
     AegisName: B_Mdef_Potion
     Name: Big Magic Defense Potion
@@ -21275,7 +21951,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_SPELLBREAKER; sc_start SC_MDEF_RATE,180000,3;
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start SC_MDEF_RATE,180000,3;
   - Id: 14545
     AegisName: Battle_Manual_X3
     Name: Field Manual 300%
@@ -21320,7 +21997,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_STRFOOD,1200000,1; percentheal 5,0;
+      sc_start SC_STRFOOD,1200000,1;
+      percentheal 5,0;
   - Id: 14552
     AegisName: Str_Dish02_
     Name: Seasoned Sticky Webfoot
@@ -21328,7 +22006,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_STRFOOD,1200000,2; percentheal 5,0;
+      sc_start SC_STRFOOD,1200000,2;
+      percentheal 5,0;
   - Id: 14553
     AegisName: Str_Dish03_
     Name: Bomber Steak
@@ -21336,7 +22015,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_STRFOOD,1200000,3; percentheal 5,0;
+      sc_start SC_STRFOOD,1200000,3;
+      percentheal 5,0;
   - Id: 14554
     AegisName: Int_Dish01_
     Name: Grape Juice Herbal Tea
@@ -21344,7 +22024,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_INTFOOD,1200000,1; percentheal 0,5;
+      sc_start SC_INTFOOD,1200000,1;
+      percentheal 0,5;
   - Id: 14555
     AegisName: Int_Dish02_
     Name: Autumn Red Tea
@@ -21352,7 +22033,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_INTFOOD,1200000,2; percentheal 0,5;
+      sc_start SC_INTFOOD,1200000,2;
+      percentheal 0,5;
   - Id: 14556
     AegisName: Int_Dish03_
     Name: Honey Herbal Tea
@@ -21360,7 +22042,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_INTFOOD,1200000,3; percentheal 0,5;
+      sc_start SC_INTFOOD,1200000,3;
+      percentheal 0,5;
   - Id: 14557
     AegisName: Vit_Dish01_
     Name: Steamed Crab Nippers
@@ -21368,7 +22051,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_VITFOOD,1200000,1; percentheal 5,0;
+      sc_start SC_VITFOOD,1200000,1;
+      percentheal 5,0;
   - Id: 14558
     AegisName: Vit_Dish02_
     Name: Assorted Seafood
@@ -21376,7 +22060,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_VITFOOD,1200000,2; percentheal 5,0;
+      sc_start SC_VITFOOD,1200000,2;
+      percentheal 5,0;
   - Id: 14559
     AegisName: Vit_Dish03_
     Name: Clam Soup
@@ -21384,7 +22069,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_VITFOOD,1200000,3; percentheal 5,0;
+      sc_start SC_VITFOOD,1200000,3;
+      percentheal 5,0;
   - Id: 14560
     AegisName: Agi_Dish01_
     Name: Frog Egg Squid Ink Soup
@@ -21392,7 +22078,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_AGIFOOD,1200000,1; percentheal 3,1;
+      sc_start SC_AGIFOOD,1200000,1;
+      percentheal 3,1;
   - Id: 14561
     AegisName: Agi_Dish02_
     Name: Smooth Noodle
@@ -21400,7 +22087,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_AGIFOOD,1200000,2; percentheal 3,1;
+      sc_start SC_AGIFOOD,1200000,2;
+      percentheal 3,1;
   - Id: 14562
     AegisName: Agi_Dish03_
     Name: Tentacle Cheese Gratin
@@ -21408,7 +22096,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_AGIFOOD,1200000,3; percentheal 3,1;
+      sc_start SC_AGIFOOD,1200000,3;
+      percentheal 3,1;
   - Id: 14563
     AegisName: Dex_Dish01_
     Name: Honey Grape Juice
@@ -21416,7 +22105,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_DEXFOOD,1200000,1; percentheal 2,2;
+      sc_start SC_DEXFOOD,1200000,1;
+      percentheal 2,2;
   - Id: 14564
     AegisName: Dex_Dish02_
     Name: Chocolate Mousse Cake
@@ -21424,7 +22114,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_DEXFOOD,1200000,2; percentheal 2,2;
+      sc_start SC_DEXFOOD,1200000,2;
+      percentheal 2,2;
   - Id: 14565
     AegisName: Dex_Dish03_
     Name: Fruit Mix
@@ -21432,7 +22123,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_DEXFOOD,1200000,3; percentheal 2,2;
+      sc_start SC_DEXFOOD,1200000,3;
+      percentheal 2,2;
   - Id: 14566
     AegisName: Luk_Dish01_
     Name: Fried Monkey Tails
@@ -21440,7 +22132,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_LUKFOOD,1200000,1; percentheal 3,2;
+      sc_start SC_LUKFOOD,1200000,1;
+      percentheal 3,2;
   - Id: 14567
     AegisName: Luk_Dish02_
     Name: Mixed Juice
@@ -21448,7 +22141,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_LUKFOOD,1200000,2; percentheal 3,2;
+      sc_start SC_LUKFOOD,1200000,2;
+      percentheal 3,2;
   - Id: 14568
     AegisName: Luk_Dish03_
     Name: Fried Sweet Potato
@@ -21456,7 +22150,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_LUKFOOD,1200000,3; percentheal 4,2;
+      sc_start SC_LUKFOOD,1200000,3;
+      percentheal 4,2;
   - Id: 14569
     AegisName: Knife_Goblin_Ring
     Name: Knife Goblin Ring
@@ -21560,7 +22255,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_STRFOOD,1200000,5; percentheal 10,0;
+      sc_start SC_STRFOOD,1200000,5;
+      percentheal 10,0;
   - Id: 14576
     AegisName: Int_Dish05_
     Name: Mastela Fruit Wine
@@ -21568,7 +22264,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_INTFOOD,1200000,5; percentheal 0,10;
+      sc_start SC_INTFOOD,1200000,5;
+      percentheal 0,10;
   - Id: 14577
     AegisName: Vit_Dish05_
     Name: Spicy Fried Bao
@@ -21576,7 +22273,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_VITFOOD,1200000,5; percentheal 10,0;
+      sc_start SC_VITFOOD,1200000,5;
+      percentheal 10,0;
   - Id: 14578
     AegisName: Agi_Dish05_
     Name: Steamed Bat Wing in Pumpkin
@@ -21584,7 +22282,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_AGIFOOD,1200000,5; percentheal 6,2;
+      sc_start SC_AGIFOOD,1200000,5;
+      percentheal 6,2;
   - Id: 14579
     AegisName: Dex_Dish05_
     Name: Green Salad
@@ -21592,7 +22291,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_DEXFOOD,1200000,5; percentheal 5,5;
+      sc_start SC_DEXFOOD,1200000,5;
+      percentheal 5,5;
   - Id: 14580
     AegisName: Luk_Dish05_
     Name: Fried Scorpion Tails
@@ -21600,7 +22300,8 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_LUKFOOD,1200000,5; percentheal 5,2;
+      sc_start SC_LUKFOOD,1200000,5;
+      percentheal 5,2;
   - Id: 14581
     AegisName: Dun_Tele_Scroll2
     Name: Dungeon Teleport Scroll II
@@ -21800,7 +22501,12 @@ Body:
     Flags:
       Container: true
     Script: |
-      getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1; getrandgroupitem(IG_Pierre_Treasurebox),1;
+      getrandgroupitem(IG_Pierre_Treasurebox),1;
+      getrandgroupitem(IG_Pierre_Treasurebox),1;
+      getrandgroupitem(IG_Pierre_Treasurebox),1;
+      getrandgroupitem(IG_Pierre_Treasurebox),1;
+      getrandgroupitem(IG_Pierre_Treasurebox),1;
+      getrandgroupitem(IG_Pierre_Treasurebox),1;
   - Id: 14597
     AegisName: PhreeoniS
     Name: Phreeoni Scroll
@@ -21871,7 +22577,10 @@ Body:
       NoSell: true
       NoGuildStorage: true
     Script: |
-      sc_start SC_FLEEFOOD,300000,30; sc_start SC_HITFOOD,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20;
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
   - Id: 14602
     AegisName: TaogunkaS
     Name: Tao Gunka Scroll

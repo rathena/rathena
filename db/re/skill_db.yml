@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: true)
+#   CastCancel                Cancel cast when hit. (Default: false)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -2279,8 +2279,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      Splash: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -2288,7 +2286,27 @@ Body:
     HitCount: 2
     Element: Weapon
     SplashArea: 2
-    Knockback: 1
+    Knockback:
+      - Level: 1
+        Amount: 1
+      - Level: 2
+        Amount: 1
+      - Level: 3
+        Amount: 2
+      - Level: 4
+        Amount: 2
+      - Level: 5
+        Amount: 3
+      - Level: 6
+        Amount: 3
+      - Level: 7
+        Amount: 4
+      - Level: 8
+        Amount: 4
+      - Level: 9
+        Amount: 5
+      - Level: 10
+        Amount: 5
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -16985,6 +17003,180 @@ Body:
       - Level: 10
         Area: 5
     CastCancel: true
+  - Id: 739
+    Name: NPC_CLOUD_KILL
+    Description: Cloud Kill
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 8000
+      - Level: 2
+        Time: 10000
+      - Level: 3
+        Time: 12000
+      - Level: 4
+        Time: 14000
+      - Level: 5
+        Time: 16000
+    Unit:
+      Id: Cloud_Kill
+      Range:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 3
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 3
+      Interval: 500
+      Target: Enemy
+      Flag:
+        PathCheck: true
+        RemovedByFireRain: true
+  - Id: 740
+    Name: NPC_IGNITIONBREAK
+    Description: Ignition Break
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea: 5
+  - Id: 741
+    Name: NPC_PHANTOMTHRUST
+    Description: Phantom Thrust
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 7
+      - Level: 2
+        Size: 9
+      - Level: 3
+        Size: 11
+      - Level: 4
+        Size: 13
+      - Level: 5
+        Size: 15
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    CastCancel: true
+  - Id: 742
+    Name: NPC_POISON_BUSTER
+    Description: Poison Buster
+    MaxLevel: 2
+    Type: Magic
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    CastCancel: true
+    SplashArea: 1
+  - Id: 743
+    Name: NPC_HALLUCINATIONWALK
+    Description: Hallucination Walk
+    MaxLevel: 5
+    TargetType: Self
+    Flags:
+      IsNpc: true
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: 20000
+  - Id: 744
+    Name: NPC_ELECTRICWALK
+    Description: Electric Walk
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IgnoreHovering: true
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    ActiveInstance:
+      - Level: 1
+        Max: 8
+      - Level: 2
+        Max: 10
+      - Level: 3
+        Max: 12
+      - Level: 4
+        Max: 14
+      - Level: 5
+        Max: 16
+    CastCancel: true
+    Duration1: 12000
+    Unit:
+      Id: Electricwalk
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
+  - Id: 745
+    Name: NPC_FIREWALK
+    Description: Fire Walk
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IgnoreHovering: true
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    ActiveInstance:
+      - Level: 1
+        Max: 8
+      - Level: 2
+        Max: 10
+      - Level: 3
+        Max: 12
+      - Level: 4
+        Max: 14
+      - Level: 5
+        Max: 16
+    CastCancel: true
+    Duration1: 12000
+    Unit:
+      Id: Firewalk
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
@@ -24354,6 +24546,8 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      IgnoreLongCard: true
     Range: 7
     Hit: Multi_Hit
     HitCount: -7
@@ -26713,7 +26907,7 @@ Body:
       Splash: true
     Range: 9
     Hit: Single
-    HitCount: 3
+    HitCount: -3
     Element: Wind
     SplashArea:
       - Level: 1
@@ -26740,7 +26934,7 @@ Body:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime: # !TODO: Confirm all times
+    CastTime: # !TODO: Confirm cast and fixed cast
       - Level: 1
         Time: 1800
       - Level: 2
@@ -26783,7 +26977,7 @@ Body:
         Time: 3400
       - Level: 10
         Time: 3600
-    Cooldown: 2000
+    Cooldown: 5000
     FixedCastTime:
       - Level: 1
         Time: 2000
@@ -32172,7 +32366,7 @@ Body:
         - Level: 5
           Amount: 24
       ItemCost:
-        - Item: Catnip_Fruit
+        - Item: Nepeta_Cataria
           Amount: 1
     Unit:
       Id: Catnippowder
@@ -32636,7 +32830,7 @@ Body:
     Duration2: 20000
     Requires:
       ItemCost:
-        - Item: Catnip_Fruit
+        - Item: Nepeta_Cataria
           Amount: 1
     Unit:
       Id: Dummyskill
@@ -37093,12 +37287,10 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 180000
-    Duration2: 300000
+    Cooldown: 180000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10011
     Name: GD_REGENERATION
     Description: Regeneration
@@ -37112,12 +37304,10 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 60000
-    Duration2: 300000
+    Cooldown: 180000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10012
     Name: GD_RESTORE
     Description: Restoration
@@ -37130,13 +37320,11 @@ Body:
       IsGuild: true
     SplashArea: 15
     CastCancel: true
-    Duration2: 300000
-    FixedCastTime: 10000
+    Cooldown: 180000
+    FixedCastTime: 1000
     CastTimeFlags:
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10013
     Name: GD_EMERGENCYCALL
     Description: Urgent Call
@@ -37149,14 +37337,12 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10014
     Name: GD_DEVELOPMENT
     Description: Permanent Development
@@ -37175,13 +37361,49 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
-    Requires:
-      SpCost: 1
   - Id: 10016
     Name: GD_GUILD_STORAGE
     Description: Guild Storage Expansion
     MaxLevel: 5
     Flags:
       IsGuild: true
+  - Id: 10017
+    Name: GD_CHARGESHOUT_FLAG
+    Description: Charge Shout Flag
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    Duration1: 300000
+    Cooldown: 60000
+    FixedCastTime: 1000
+  - Id: 10018
+    Name: GD_CHARGESHOUT_BEATING
+    Description: Charge Shout Beating
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    Cooldown: 60000
+    FixedCastTime: 1000
+  - Id: 10019
+    Name: GD_EMERGENCY_MOVE
+    Description: Emergency Move
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsGuild: true
+    SplashArea: 15
+    Duration1: 10000
+    Cooldown: 600000

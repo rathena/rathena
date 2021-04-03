@@ -4309,6 +4309,11 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 	struct map_session_data* sd;
 
 	if(st->rid && (sd = map_id2sd(st->rid))!=NULL) {
+		if( sd->state.using_fake_npc ){
+			clif_clearunit_single( sd->npc_id, CLR_OUTSIGHT, sd->fd );
+			sd->state.using_fake_npc = 0;
+		}
+
 		sd->st = st->bk_st;
 		sd->npc_id = st->bk_npcid;
 		sd->state.disable_atcommand_on_npc = 0;
@@ -5578,7 +5583,7 @@ BUILDIN_FUNC(warp)
 	y = script_getnum(st,4);
 
 	if(strcmp(str,"Random")==0)
-		ret = pc_randomwarp(sd,CLR_TELEPORT);
+		ret = pc_randomwarp(sd,CLR_TELEPORT,true);
 	else if(strcmp(str,"SavePoint")==0 || strcmp(str,"Save")==0)
 		ret = pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 	else
@@ -5606,7 +5611,7 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 	y3 = va_arg(ap,int);
 
 	if(index == 0)
-		pc_randomwarp((TBL_PC *)bl,CLR_TELEPORT);
+		pc_randomwarp((TBL_PC *)bl,CLR_TELEPORT,true);
 	else if(x3 && y3) {
 		int max, tx, ty, j = 0;
 		int16 m;
@@ -7829,8 +7834,8 @@ BUILDIN_FUNC(getnameditem)
 	item_tmp.amount=1;
 	item_tmp.identify=1;
 	item_tmp.card[0]=CARD0_CREATE; //we don't use 255! because for example SIGNED WEAPON shouldn't get TOP10 BS Fame bonus [Lupus]
-	item_tmp.card[2]=tsd->status.char_id;
-	item_tmp.card[3]=tsd->status.char_id >> 16;
+	item_tmp.card[2]=GetWord(tsd->status.char_id,0);
+	item_tmp.card[3]=GetWord(tsd->status.char_id,1);
 	if(pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;	//Failed to add item, we will not drop if they don't fit
@@ -9252,7 +9257,7 @@ BUILDIN_FUNC(successrefitem) {
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,3);
-		achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
+		achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 		if (sd->inventory.u.items_inventory[i].refine == battle_config.blacksmith_fame_refine_threshold &&
 			sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
 			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]))
@@ -9302,7 +9307,7 @@ BUILDIN_FUNC(failedrefitem) {
 		clif_refine(sd->fd,1,i,sd->inventory.u.items_inventory[i].refine); //notify client of failure
 		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		clif_misceffect(&sd->bl,2); 	// display failure effect
-		achievement_update_objective(sd, AG_REFINE_FAIL, 1, 1);
+		achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, 1);
 		script_pushint(st, 1);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -9351,7 +9356,7 @@ BUILDIN_FUNC(downrefitem) {
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,2);
-		achievement_update_objective(sd, AG_REFINE_FAIL, 1, sd->inventory.u.items_inventory[i].refine);
+		achievement_update_objective(sd, AG_ENCHANT_FAIL, 1, sd->inventory.u.items_inventory[i].refine);
 		script_pushint(st, sd->inventory.u.items_inventory[i].refine);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -10110,20 +10115,31 @@ BUILDIN_FUNC(checkmadogear)
 }
 
 /// Sets if the player is riding MADO Gear.
-/// <flag> defaults to 1
+/// <flag> defaults to true
+/// <type> defaults to MADO_ROBOT
 ///
-/// setmadogear {<flag>{,<char_id>}};
+/// setmadogear {<flag>{,type{,<char_id>}}};
 BUILDIN_FUNC(setmadogear)
 {
-	int flag = 1;
+	bool flag = true;
 	TBL_PC* sd;
+	uint16 type = MADO_ROBOT;
 
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
-		flag = script_getnum(st,2);
-	pc_setmadogear(sd, flag);
+		flag = script_getnum(st,2) != 0;
+	if (script_hasdata(st, 3)) {
+		type = script_getnum(st, 3);
+
+		if (type == MADO_UNUSED || type >= MADO_MAX) {
+			ShowError("buildin_setmadogear: Invalid mado gear type %hu, defaulting to robot...\n", type);
+			type = MADO_ROBOT;
+		}
+	}
+
+	pc_setmadogear(sd, flag, static_cast<e_mado_type>(type));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10451,9 +10467,9 @@ BUILDIN_FUNC(makepet)
 
 	sd->catch_target_class = mob_id;
 
-	struct mob_db* mdb = mob_db(pet->class_);
+	std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
-	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname );
+	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str() );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10603,7 +10619,6 @@ BUILDIN_FUNC(getmobdrops)
 {
 	int class_ = script_getnum(st,2);
 	int i, j = 0;
-	struct mob_db *mob;
 
 	if( !mobdb_checkid(class_) )
 	{
@@ -10611,7 +10626,7 @@ BUILDIN_FUNC(getmobdrops)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	mob = mob_db(class_);
+	std::shared_ptr<s_mob_db> mob = mob_db.find(class_);
 
 	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
 	{
@@ -11461,7 +11476,6 @@ BUILDIN_FUNC(getunits)
 	int size = 0;
 	int32 idx, id;
 	int16 m = -1, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
-	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 
 	if (!strcmp(command, "getmapunits"))
 	{
@@ -11517,6 +11531,7 @@ BUILDIN_FUNC(getunits)
 		}
 	}
 
+	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
 	{
 		if (m == -1 || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
@@ -11893,6 +11908,13 @@ BUILDIN_FUNC(debugmes)
 	const char *str;
 	str=script_getstr(st,2);
 	ShowDebug("script debug : %d %d : %s\n",st->rid,st->oid,str);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC( errormes ){
+	ShowError( "%s\n", script_getstr( st, 2 ) );
+	script_reportsrc( st );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12541,7 +12563,7 @@ BUILDIN_FUNC(warpwaitingpc)
 		mapreg_setreg(reference_uid(add_str("$@warpwaitingpc"), i), sd->bl.id);
 
 		if( strcmp(map_name,"Random") == 0 )
-			pc_randomwarp(sd,CLR_TELEPORT);
+			pc_randomwarp(sd,CLR_TELEPORT,true);
 		else if( strcmp(map_name,"SavePoint") == 0 )
 			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 		else
@@ -12632,6 +12654,7 @@ BUILDIN_FUNC(addrid)
 		case 2:
 			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
+				mapit_free(iter);
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
@@ -12643,6 +12666,7 @@ BUILDIN_FUNC(addrid)
 		case 3:
 			if(script_getnum(st,4) == 0) {
 				script_pushint(st,0);
+				mapit_free(iter);
 				return SCRIPT_CMD_SUCCESS;
 			}
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
@@ -12659,15 +12683,18 @@ BUILDIN_FUNC(addrid)
 		case 5:
 			if (script_getstr(st, 4) == NULL) {
 				script_pushint(st, 0);
+				mapit_free(iter);
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (map_mapname2mapid(script_getstr(st, 4)) < 0) {
 				script_pushint(st, 0);
+				mapit_free(iter);
 				return SCRIPT_CMD_FAILURE;
 			}
 			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
 			break;
 		default:
+			mapit_free(iter);
 			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
 				script_pushint(st,0);
 				return SCRIPT_CMD_SUCCESS;
@@ -13746,14 +13773,16 @@ BUILDIN_FUNC(strmobinfo)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	std::shared_ptr<s_mob_db> mob = mob_db.find(class_);
+
 	switch (num) {
-	case 1: script_pushstrcopy(st,mob_db(class_)->name); break;
-	case 2: script_pushstrcopy(st,mob_db(class_)->jname); break;
-	case 3: script_pushint(st,mob_db(class_)->lv); break;
-	case 4: script_pushint(st,mob_db(class_)->status.max_hp); break;
-	case 5: script_pushint(st,mob_db(class_)->status.max_sp); break;
-	case 6: script_pushint(st,mob_db(class_)->base_exp); break;
-	case 7: script_pushint(st,mob_db(class_)->job_exp); break;
+	case 1: script_pushstrcopy(st,mob->name.c_str()); break;
+	case 2: script_pushstrcopy(st, mob->jname.c_str()); break;
+	case 3: script_pushint(st,mob->lv); break;
+	case 4: script_pushint(st,mob->status.max_hp); break;
+	case 5: script_pushint(st,mob->status.max_sp); break;
+	case 6: script_pushint(st,mob->base_exp); break;
+	case 7: script_pushint(st,mob->job_exp); break;
 	default:
 		script_pushint(st,0);
 		break;
@@ -17197,8 +17226,17 @@ BUILDIN_FUNC(npcshopitem)
 
 	// generate new shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, amount);
+	nd->u.shop.count = 0;
 	for (n = 0, i = 3; n < amount; n++, i+=offs) {
-		nd->u.shop.shop_item[n].nameid = script_getnum(st,i);
+		t_itemid nameid = script_getnum( st, i );
+
+		if( itemdb_exists( nameid ) == nullptr ){
+			ShowError( "builtin_npcshopitem: Item ID %u does not exist.\n", nameid );
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		nd->u.shop.shop_item[n].nameid = nameid;
 		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
@@ -17207,8 +17245,8 @@ BUILDIN_FUNC(npcshopitem)
 			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[n]);
 		}
 #endif
+		nd->u.shop.count++;
 	}
-	nd->u.shop.count = n;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -17218,7 +17256,6 @@ BUILDIN_FUNC(npcshopadditem)
 {
 	const char* npcname = script_getstr(st,2);
 	struct npc_data* nd = npc_name2id(npcname);
-	int n, i;
 	uint16 offs = 2, amount;
 
 	if (!nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP)) { // Not found.
@@ -17234,9 +17271,15 @@ BUILDIN_FUNC(npcshopadditem)
 
 #if PACKETVER >= 20131223
 	if (nd->subtype == NPCTYPE_MARKETSHOP) {
-		for (n = 0, i = 3; n < amount; n++, i += offs) {
+		for (int n = 0, i = 3; n < amount; n++, i += offs) {
 			t_itemid nameid = script_getnum(st,i);
 			uint16 j;
+
+			if( itemdb_exists( nameid ) == nullptr ){
+				ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
+				script_pushint( st, 0 );
+				return SCRIPT_CMD_FAILURE;
+			}
 
 			// Check existing entries
 			ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == nameid);
@@ -17260,12 +17303,20 @@ BUILDIN_FUNC(npcshopadditem)
 
 	// append new items to existing shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+amount);
-	for (n = nd->u.shop.count, i = 3; n < nd->u.shop.count+amount; n++, i+=offs)
+	for (int n = nd->u.shop.count, i = 3, j = 0; j < amount; n++, i+=offs, j++)
 	{
-		nd->u.shop.shop_item[n].nameid = script_getnum(st,i);
+		t_itemid nameid = script_getnum( st, i );
+
+		if( itemdb_exists( nameid ) == nullptr ){
+			ShowError( "builtin_npcshopadditem: Item ID %u does not exist.\n", nameid );
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		nd->u.shop.shop_item[n].nameid = nameid;
 		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		nd->u.shop.count++;
 	}
-	nd->u.shop.count = n;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -17393,13 +17444,13 @@ BUILDIN_FUNC(setitemscript)
  *-------------------------------------------------------*/
 BUILDIN_FUNC(addmonsterdrop)
 {
-	struct mob_db *mob;
+	std::shared_ptr<s_mob_db> mob;
 	int rate;
 
 	if(script_isstring(st, 2))
-		mob = mob_db(mobdb_searchname(script_getstr(st,2)));
+		mob = mob_db.find(mobdb_searchname(script_getstr(st,2)));
 	else
-		mob = mob_db(script_getnum(st,2));
+		mob = mob_db.find(script_getnum(st,2));
 
 	t_itemid item_id=script_getnum(st,3);
 	rate=script_getnum(st,4);
@@ -17447,12 +17498,12 @@ BUILDIN_FUNC(addmonsterdrop)
  *-------------------------------------------------------*/
 BUILDIN_FUNC(delmonsterdrop)
 {
-	struct mob_db *mob;
+	std::shared_ptr<s_mob_db> mob;
 
 	if(script_isstring(st, 2))
-		mob = mob_db(mobdb_searchname(script_getstr(st,2)));
+		mob = mob_db.find(mobdb_searchname(script_getstr(st,2)));
 	else
-		mob = mob_db(script_getnum(st,2));
+		mob = mob_db.find(script_getnum(st,2));
 
 	t_itemid item_id=script_getnum(st,3);
 
@@ -17489,7 +17540,6 @@ BUILDIN_FUNC(delmonsterdrop)
  *------------------------------------------*/
 BUILDIN_FUNC(getmonsterinfo)
 {
-	struct mob_db *mob;
 	int mob_id;
 
 	mob_id	= script_getnum(st,2);
@@ -17501,9 +17551,11 @@ BUILDIN_FUNC(getmonsterinfo)
 			script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	mob = mob_db(mob_id);
+
+	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
 	switch ( script_getnum(st,3) ) {
-		case MOB_NAME:		script_pushstrcopy(st,mob->jname); break;
+		case MOB_NAME:		script_pushstrcopy(st,mob->jname.c_str()); break;
 		case MOB_LV:		script_pushint(st,mob->lv); break;
 		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
 		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
@@ -17586,6 +17638,17 @@ BUILDIN_FUNC(checkidlehom)
 
 	if( script_nick2sd(2,sd) )
 		script_pushint(st, DIFF_TICK(last_tick, sd->idletime_hom));
+	else
+		script_pushint(st, 0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(checkidlemer)
+{
+	TBL_PC *sd;
+
+	if( script_nick2sd(2,sd) )
+		script_pushint(st, DIFF_TICK(last_tick, sd->idletime_mer));
 	else
 		script_pushint(st, 0);
 	return SCRIPT_CMD_SUCCESS;
@@ -18314,6 +18377,10 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_ADELAY: md->base_status->adelay = (short)value; calc_status = true; break;
 			case UMOB_DMOTION: md->base_status->dmotion = (short)value; calc_status = true; break;
 			case UMOB_TARGETID: {
+				if (value==0) {
+					mob_unlocktarget(md,gettick());
+					break;
+				}
 				struct block_list* target = map_id2bl(value);
 				if (!target) {
 					ShowWarning("buildin_setunitdata: Error in finding target for BL_MOB!\n");
@@ -18379,6 +18446,10 @@ BUILDIN_FUNC(setunitdata)
 			case UHOM_ADELAY: hd->base_status.adelay = (short)value; calc_status = true; break;
 			case UHOM_DMOTION: hd->base_status.dmotion = (short)value; calc_status = true; break;
 			case UHOM_TARGETID: {
+				if (value==0) {
+					unit_stop_attack(&hd->bl);
+					break;
+				}
 				struct block_list* target = map_id2bl(value);
 				if (!target) {
 					ShowWarning("buildin_setunitdata: Error in finding target for BL_HOM!\n");
@@ -18489,6 +18560,10 @@ BUILDIN_FUNC(setunitdata)
 			case UMER_ADELAY: mc->base_status.adelay = (short)value; calc_status = true; break;
 			case UMER_DMOTION: mc->base_status.dmotion = (short)value; calc_status = true; break;
 			case UMER_TARGETID: {
+				if (value==0) {
+					unit_stop_attack(&mc->bl);
+					break;
+				}
 				struct block_list* target = map_id2bl(value);
 				if (!target) {
 					ShowWarning("buildin_setunitdata: Error in finding target for BL_MER!\n");
@@ -18551,6 +18626,10 @@ BUILDIN_FUNC(setunitdata)
 			case UELE_ADELAY: ed->base_status.adelay = (short)value; calc_status = true; break;
 			case UELE_DMOTION: ed->base_status.dmotion = (short)value; calc_status = true; break;
 			case UELE_TARGETID: {
+				if (value==0) {
+					unit_stop_attack(&ed->bl);
+					break;
+				}
 				struct block_list* target = map_id2bl(value);
 				if (!target) {
 					ShowWarning("buildin_setunitdata: Error in finding target for BL_ELEM!\n");
@@ -19683,9 +19762,6 @@ BUILDIN_FUNC(questinfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct s_questinfo qi;
-	struct script_code *script = nullptr;
-	int color = QMARK_NONE;
 	int icon = script_getnum(st, 2);
 
 #if PACKETVER >= 20120410
@@ -19722,6 +19798,8 @@ BUILDIN_FUNC(questinfo)
 		icon = icon + 1;
 #endif
 
+	int color = QMARK_NONE;
+
 	if (script_hasdata(st, 3)) {
 		color = script_getnum(st, 3);
 		if (color < QMARK_NONE || color >= QMARK_MAX) {
@@ -19730,6 +19808,8 @@ BUILDIN_FUNC(questinfo)
 			color = QMARK_NONE;
 		}
 	}
+
+	struct script_code *script = nullptr;
 
 	if (script_hasdata(st, 4)) {
 		const char *str = script_getstr(st, 4);
@@ -19748,13 +19828,18 @@ BUILDIN_FUNC(questinfo)
 		}
 	}
 
-	qi.nd = nd;
-	qi.icon = static_cast<e_questinfo_types>(icon);
-	qi.color = static_cast<e_questinfo_markcolor>(color);
-	qi.condition = script;
+	std::shared_ptr<s_questinfo> qi = std::make_shared<s_questinfo>();
+
+	qi->icon = static_cast<e_questinfo_types>(icon);
+	qi->color = static_cast<e_questinfo_markcolor>(color);
+	qi->condition = script;
+
+	nd->qi_data.push_back(qi);
 
 	struct map_data *mapdata = map_getmapdata(nd->bl.m);
-	mapdata->qi_data.push_back(qi);
+
+	if (mapdata && !util::vector_exists(mapdata->qi_npc, nd->bl.id))
+		mapdata->qi_npc.push_back(nd->bl.id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23179,6 +23264,9 @@ BUILDIN_FUNC(minmax){
 					value = func( value, get_val2_num( st, reference_uid( id, start ), reference_getref( data ) ) );
 				}
 			}
+			else {
+				value = func( value, 0 );
+			}
 		}else{
 			ShowError( "buildin_%s: not a supported data type!\n", functionname );
 			script_reportdata( data );
@@ -23644,6 +23732,44 @@ BUILDIN_FUNC(channel_setopt) {
 	}
 
 	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Get channel options
+ * channel_getopt <chname>,<option>;
+ */
+BUILDIN_FUNC(channel_getopt) {
+	Channel *ch;
+	const char *chname = script_getstr(st, 2);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_getopt: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int opt = script_getnum(st, 3);
+
+	switch (opt) {
+		case CHAN_OPT_ANNOUNCE_SELF:
+		case CHAN_OPT_ANNOUNCE_JOIN:
+		case CHAN_OPT_ANNOUNCE_LEAVE:
+		case CHAN_OPT_COLOR_OVERRIDE:
+		case CHAN_OPT_CAN_CHAT:
+		case CHAN_OPT_CAN_LEAVE:
+		case CHAN_OPT_AUTOJOIN:
+			script_pushint(st, (ch->opt & opt) != 0);
+			break;
+		case CHAN_OPT_MSG_DELAY:
+			script_pushint(st, ch->msg_delay);
+			break;
+		default:
+			ShowError("buildin_channel_getopt: Invalid option %d!\n", opt);
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25092,7 +25218,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkriding,"?"),
 	BUILDIN_DEF(checkwug,"?"),
 	BUILDIN_DEF(checkmadogear,"?"),
-	BUILDIN_DEF(setmadogear,"??"),
+	BUILDIN_DEF(setmadogear,"???"),
 	BUILDIN_DEF2(savepoint,"save","sii???"),
 	BUILDIN_DEF(savepoint,"sii???"),
 	BUILDIN_DEF(gettimetick,"i"),
@@ -25148,6 +25274,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
+	BUILDIN_DEF(errormes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
 	BUILDIN_DEF(catchpet,"i"),
@@ -25384,6 +25511,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkchatting,"?"),
 	BUILDIN_DEF(checkidle,"?"),
 	BUILDIN_DEF(checkidlehom,"?"),
+	BUILDIN_DEF(checkidlemer,"?"),
 	BUILDIN_DEF(openmail,"?"),
 	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),
@@ -25553,6 +25681,7 @@ struct script_function buildin_func[] = {
 	// Channel System
 	BUILDIN_DEF(channel_create,"ss?????"),
 	BUILDIN_DEF(channel_setopt,"sii"),
+	BUILDIN_DEF(channel_getopt,"si"),
 	BUILDIN_DEF(channel_setcolor,"si"),
 	BUILDIN_DEF(channel_setpass,"ss"),
 	BUILDIN_DEF(channel_setgroup,"si*"),
