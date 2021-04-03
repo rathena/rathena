@@ -7201,6 +7201,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				}
 			} else {
 				md.damage = 0;
+			}
 			break;
 		case SU_SV_ROOTTWIST_ATK:
 			md.damage = 100;
