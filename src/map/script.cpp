@@ -25740,7 +25740,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementexists,"i?"),
 	BUILDIN_DEF(achievementupdate,"iii?"),
 
-	// Refine related
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
 	BUILDIN_DEF(refineui,"?"),
 
