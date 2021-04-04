@@ -6165,7 +6165,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@type = getiteminfo(getequipid(EQI_HAND_R),11);
+      .@type = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
       if (.@type == W_1HAXE || .@type == W_2HAXE || .@type == W_MACE) {
          skilleffect "BS_ADRENALINE",0;
          sc_start SC_ADRENALINE,150000,5;
