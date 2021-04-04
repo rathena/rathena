@@ -16,5 +16,9 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Custom Refine Database
+# Refine Database
 ###########################################################################
+
+Header:
+  Type: REFINE_DB
+  Version: 1

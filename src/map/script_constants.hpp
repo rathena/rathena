@@ -5254,18 +5254,13 @@
 
 	/* refine cost types */
 	export_constant(REFINE_COST_NORMAL);
-	export_constant(REFINE_COST_OVER10);
 	export_constant(REFINE_COST_HD);
 	export_constant(REFINE_COST_ENRICHED);
-	export_constant(REFINE_COST_OVER10_HD);
-	export_constant(REFINE_COST_HOLINK);
-	export_constant(REFINE_COST_WAGJAK);
 	export_constant(REFINE_COST_MAX);
 
 	/* refine information types */
 	export_constant(REFINE_MATERIAL_ID);
 	export_constant(REFINE_ZENY_COST);
-	export_constant(REFINE_BREAKABLE);
 
 	/* NPC view ids */
 	// Special macro to strip the prefix 'JT_'
@@ -8072,6 +8067,12 @@
 	/* madogears */
 	export_constant(MADO_ROBOT);
 	export_constant(MADO_SUIT);
+
+	/* refine types */
+	export_constant(REFINE_TYPE_ARMOR);
+	export_constant(REFINE_TYPE_WEAPON);
+	export_constant(REFINE_TYPE_SHADOW_ARMOR);
+	export_constant(REFINE_TYPE_SHADOW_WEAPON);
 
 	#undef export_constant
 	#undef export_constant2

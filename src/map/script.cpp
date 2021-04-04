@@ -9200,11 +9200,22 @@ BUILDIN_FUNC(getequippercentrefinery)
 
 	if (equip_index_check(num))
 		i = pc_checkequip(sd,equip_bitmask[num]);
-	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].refine < MAX_REFINE) {
-		enum refine_type type = REFINE_TYPE_SHADOW;
-		if (sd->inventory_data[i]->type != IT_SHADOWGEAR)
-			type = (enum refine_type)sd->inventory_data[i]->wlv;
-		script_pushint(st, status_get_refine_chance(type, (int)sd->inventory.u.items_inventory[i].refine, enriched));
+	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid) {
+		std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *sd->inventory_data[i], sd->inventory.u.items_inventory[i] );
+
+		if( info == nullptr ){
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, (uint16)( enriched ? REFINE_COST_ENRICHED : REFINE_COST_NORMAL ) );
+
+		if( cost == nullptr ){
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		script_pushint( st, cost->chance );
 	}
 	else
 		script_pushint(st,0);
@@ -24391,15 +24402,36 @@ BUILDIN_FUNC(getequiprefinecost) {
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	int weapon_lv = sd->inventory_data[i]->wlv;
-	if (sd->inventory_data[i]->type == IT_SHADOWGEAR) {
-		if (sd->inventory_data[i]->equip == EQP_SHADOW_WEAPON)
-			weapon_lv = REFINE_TYPE_WEAPON4;
-		else
-			weapon_lv = REFINE_TYPE_SHADOW;
+	if( sd->inventory_data[i] == nullptr ){
+		script_pushint( st, -1 );
+		return SCRIPT_CMD_SUCCESS;
 	}
 
-	script_pushint(st, status_get_refine_cost(weapon_lv, type, (enum refine_info_type)info));
+	std::shared_ptr<s_refine_level_info> level_info = refine_db.findLevelInfo( *sd->inventory_data[i], sd->inventory.u.items_inventory[i] );
+
+	if( level_info == nullptr ){
+		script_pushint( st, -1 );
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	std::shared_ptr<s_refine_cost> cost = util::umap_find( level_info->costs, (uint16)type );
+
+	if( cost == nullptr ){
+		script_pushint( st, -1 );
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch( info ){
+		case REFINE_MATERIAL_ID:
+			script_pushint( st, cost->nameid );
+			break;
+		case REFINE_ZENY_COST:
+			script_pushint( st, cost->zeny );
+			break;
+		default:
+			script_pushint( st, -1 );
+			return SCRIPT_CMD_FAILURE;
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -25708,7 +25740,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementexists,"i?"),
 	BUILDIN_DEF(achievementupdate,"iii?"),
 
-	// Refine UI
+	// Refine related
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
 	BUILDIN_DEF(refineui,"?"),
 

@@ -21696,89 +21696,6 @@ void clif_parse_refineui_close( int fd, struct map_session_data* sd ){
 #endif
 }
 
-#define REFINEUI_MAT_CNT 4
-
-/**
- * Structure to store all required data about refine requirements
- */
-struct refine_materials {
-	struct refine_cost cost;
-	uint8 chance;
-};
-
-/**
- * Fills the given index with the requested data for that item and
- * returns true on success or false on failure.
- */
-static inline bool clif_refineui_materials_sub( struct item *item, struct item_data *id, struct refine_materials materials[REFINEUI_MAT_CNT], int index, enum refine_cost_type type ){
-	if( index < 0 || index > REFINEUI_MAT_CNT ){
-		return false;
-	}
-
-	// Get the material that is required to refine this item
-	materials[index].cost.nameid = status_get_refine_cost( id->wlv, type, REFINE_MATERIAL_ID );
-	// Get the amount of zeny that is required to refine the item with this material
-	materials[index].cost.zeny = status_get_refine_cost( id->wlv, type, REFINE_ZENY_COST );
-	// Get the breaking chance of the item with this material
-	materials[index].cost.breakable = status_get_refine_cost( id->wlv, type, REFINE_BREAKABLE );
-	// Get the chance for refining the item with this material
-	materials[index].chance = status_get_refine_chance( (enum refine_type)id->wlv, item->refine, type == REFINE_COST_ENRICHED );
-
-	// Either of the values was not set
-	if( materials[index].cost.nameid == 0 || materials[index].cost.zeny == 0 || materials[index].chance == 0 ){
-		// Reset all entries properly
-		materials[index].cost.nameid = materials[index].cost.zeny = materials[index].chance = 0;
-		materials[index].cost.breakable = true;
-		return false;
-	}else{
-		// Everything was set properly
-		return true;
-	}
-}
-
-/**
- * Calculates all possible materials for the given item.
- * Returns the count of materials that were filled in the materials array.
- */
-static inline uint8 clif_refineui_materials( struct item *item, struct item_data *id, struct refine_materials materials[REFINEUI_MAT_CNT] ){
-	// Initialize the counter
-	uint8 count = 0;
-
-	// Zero the memory
-	memset( materials, 0, sizeof(struct refine_materials)*REFINEUI_MAT_CNT );
-
-	// Is the item +10 or above
-	if( item->refine >= 10 ){
-		// Normal refine requirements for +10 and above
-		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_OVER10 ) ){
-			count++;
-		}
-
-		// HD refine requirements for +10 and above
-		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_OVER10_HD ) ){
-			count++;
-		}
-	}else{
-		// Normal refine requirements
-		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_NORMAL ) ){
-			count++;
-		}
-		
-		// HD refine requirements
-		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_HD ) ){
-			count++;
-		}
-	}
-
-	// Enriched refine requirements
-	if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_ENRICHED ) ){
-		count++;
-	}
-
-	// Return the amount of found materials
-	return count;
-}
-
 /**
  * Adds the selected item into the refine UI and sends the possible materials
  * to the client.
@@ -21786,31 +21703,17 @@ static inline uint8 clif_refineui_materials( struct item *item, struct item_data
  */
 void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 	int fd = sd->fd;
-	struct item *item;
-	struct item_data *id;
-	struct refine_materials materials[REFINEUI_MAT_CNT];
-	uint8 material_count;
 
 	// Get the item db reference
-	id = sd->inventory_data[index];
+	struct item_data* id = sd->inventory_data[index];
 
 	// No item data was found
 	if( id == NULL ){
 		return;
 	}
 
-	// Check if the item can be refined
-	if( id->flag.no_refine ){
-		return;
-	}
-
-	// Only weapons and armors can be refined in the refine UI
-	if( id->type != IT_WEAPON && id->type != IT_ARMOR ){
-		return;
-	}
-
 	// Check the inventory
-	item = &sd->inventory.u.items_inventory[index];
+	struct item* item = &sd->inventory.u.items_inventory[index];
 
 	// No item was found at the given index
 	if( item == NULL ){
@@ -21827,20 +21730,19 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 		return;
 	}
 
-	// Check the current refine level
-	if( item->refine < 0 || item->refine >= MAX_REFINE ){
+	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
+
+	// No refine possible
+	if( info == nullptr ){
 		return;
 	}
-
-	// Calculate the possible materials
-	material_count = clif_refineui_materials( item, id, materials );
 
 	// No possibilities were found
-	if( material_count == 0 ){
+	if( info->costs.empty() ){
 		return;
 	}
 
-	uint16 length = sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + material_count * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB );
+	uint16 length = (uint16)( sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + REFINE_COST_MAX * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB ) );
 
 	// Preallocate the size
 	WFIFOHEAD( fd, length );
@@ -21848,15 +21750,23 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 	struct PACKET_ZC_REFINE_ADD_ITEM* p = (struct PACKET_ZC_REFINE_ADD_ITEM*)WFIFOP( fd, 0 );
 
 	p->packetType = HEADER_ZC_REFINE_ADD_ITEM;
-	p->packtLength = length;
 	p->itemIndex = client_index( index );
-	p->blacksmithBlessing = 0; //TODO: required amount of "Blacksmith Blessing"(id: 6635)
+	p->blacksmithBlessing = (uint8)info->blessing_amount;
 
-	for( uint8 i = 0; i < material_count; i++ ){
-		p->req[i].itemId = client_nameid( materials[i].cost.nameid );
-		p->req[i].chance = materials[i].chance;
-		p->req[i].zeny = materials[i].cost.zeny;
+	uint16 count = 0;
+
+	for( uint16 i = REFINE_COST_NORMAL; i < REFINE_COST_MAX; i++ ){
+		std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, i );
+
+		if( cost != nullptr ){
+			p->req[count].itemId = client_nameid( cost->nameid );
+			p->req[count].chance = (uint8)cost->chance;
+			p->req[count].zeny = cost->zeny;
+			count++;
+		}
 	}
+
+	p->packtLength = (uint16)( sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + count * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB ) );
 
 	WFIFOSET( fd, p->packtLength );
 }
@@ -21893,13 +21803,8 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	struct PACKET_CZ_REFINE_ITEM_REQUEST* p = (struct PACKET_CZ_REFINE_ITEM_REQUEST*)RFIFOP( fd, 0 );
 
 	uint16 index = server_index( p->index );
-	uint16 material = p->itemId;
-	bool use_blacksmith_blessing = p->blacksmithBlessing != 0; // TODO: add logic
-	struct refine_materials materials[REFINEUI_MAT_CNT];
-	uint8 i, material_count;
+	t_itemid material = p->itemId;
 	uint16 j;
-	struct item *item;
-	struct item_data *id;
 
 	// Check if the refine UI is open
 	if( !sd->state.refineui_open ){
@@ -21912,25 +21817,15 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	}
 
 	// Get the item db reference
-	id = sd->inventory_data[index];
+	struct item_data* id = sd->inventory_data[index];
 
 	// No item data was found
 	if( id == NULL ){
 		return;
 	}
 
-	// Check if the item can be refined
-	if( id->flag.no_refine ){
-		return;
-	}
-
-	// Only weapons and armors can be refined in the refine UI
-	if( id->type != IT_WEAPON && id->type != IT_ARMOR ){
-		return;
-	}
-
 	// Check the inventory
-	item = &sd->inventory.u.items_inventory[index];
+	struct item* item = &sd->inventory.u.items_inventory[index];
 
 	// No item was found at the given index
 	if( item == NULL ){
@@ -21947,8 +21842,15 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	// Check the current refine level
-	if( item->refine < 0 || item->refine >= MAX_REFINE ){
+	std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *id, *item );
+
+	// No refine possible
+	if( info == nullptr ){
+		return;
+	}
+
+	// No possibilities were found
+	if( info->costs.empty() ){
 		return;
 	}
 
@@ -21957,24 +21859,45 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	// Calculate the possible materials
-	material_count = clif_refineui_materials( item, id, materials );
+	int16 blacksmith_index = -1;
+	uint16 blacksmith_amount = 0;
 
-	// No possibilities were found
-	if( material_count == 0 ){
-		return;
+	// Check if the player has enough blacksmith blessings
+	if( p->blacksmithBlessing != 0 ){
+		blacksmith_amount = info->blessing_amount;
+
+		// Player tried to use blacksmith blessing on a refine level, where it is not available
+		if( blacksmith_amount == 0 ){
+			return;
+		}
+
+		// Check if the player has blacksmith blessings
+		if( ( blacksmith_index = pc_search_inventory( sd, ITEMID_BLACKSMITH_BLESSING ) ) < 0 ){
+			return;
+		}
+
+		// Check if the player has enough blacksmith blessings
+		if( sd->inventory.u.items_inventory[blacksmith_index].amount < blacksmith_amount ){
+			return;
+		}
 	}
 
-	// Find the selected material
-	ARR_FIND( 0, REFINEUI_MAT_CNT, i, materials[i].cost.nameid == material );
+	std::shared_ptr<s_refine_cost> cost = nullptr;
+
+	for( const auto& pair : info->costs ){
+		if( pair.second->nameid == material ){
+			cost = pair.second;
+			break;
+		}
+	}
 
 	// The material was not in the list of possible materials
-	if( i >= REFINEUI_MAT_CNT || i < 0 ){
+	if( cost == nullptr ){
 		return;
 	}
 
 	// Try to pay for the refine
-	if( pc_payzeny( sd, materials[i].cost.zeny, LOG_TYPE_CONSUME, NULL ) ){
+	if( pc_payzeny( sd, cost->zeny, LOG_TYPE_CONSUME, NULL ) ){
 		clif_npc_buy_result( sd, 1 ); // "You do not have enough zeny."
 		return;
 	}
@@ -21984,30 +21907,41 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	// Delete the required blacksmith blessings
+	if( blacksmith_amount > 0 && pc_delitem( sd, blacksmith_index, blacksmith_amount, 0, 0, LOG_TYPE_CONSUME ) ){
+		return;
+	}
+
 	// Try to refine the item
-	if( materials[i].chance >= rnd() % 100 ){
+	if( cost->chance >= ( rnd() % 100 ) ){
 		// Success
 		item->refine = cap_value( item->refine + 1, 0, MAX_REFINE );
 		clif_misceffect( &sd->bl, 3 );
 		clif_refine( fd, 0, index, item->refine );
-		achievement_update_objective( sd, AG_REFINE_SUCCESS, 2, id->wlv, item->refine );
+		achievement_update_objective( sd, AG_ENCHANT_SUCCESS, 2, id->wlv, item->refine );
 		clif_refineui_info( sd, index );
 	}else{
 		// Failure
 
+		// Blacksmith blessings were used to prevent breaking and downgrading
+		if( blacksmith_amount > 0 ){
+			clif_refine( fd, 3, index, item->refine );
 		// Delete the item if it is breakable
-		if( materials[i].cost.breakable ){
+		}else if( cost->breaking_rate > 0 && ( rnd() % 100 ) < cost->breaking_rate ){
 			clif_refine( fd, 1, index, item->refine );
 			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME );
-		}else{
-			// Otherwise downgrade it
-			item->refine = cap_value( item->refine - 1, 0, MAX_REFINE );
+		// Downgrade the item if necessary
+		}else if( cost->downgrade_amount > 0 ){
+			item->refine = cap_value( item->refine - cost->downgrade_amount, 0, MAX_REFINE );
 			clif_refine( fd, 2, index, item->refine );
 			clif_refineui_info(sd, index);
+		// Only show failure, but dont do anything
+		}else{
+			clif_refine( fd, 3, index, item->refine );
 		}
-		
+
 		clif_misceffect( &sd->bl, 2 );
-		achievement_update_objective( sd, AG_REFINE_FAIL, 1, 1 );
+		achievement_update_objective( sd, AG_ENCHANT_FAIL, 1, 1 );
 	}
 #endif
 }
