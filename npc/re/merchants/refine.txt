@@ -101,8 +101,8 @@ function	script	refinenew	{
 	}
 	.@refineitemid = getequipid(.@part); // save id of the item
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_ZENY_COST);
-	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_MATERIAL_ID);
+	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 	.@safe = 10;
 
 	if (getequipweaponlv(.@part) >= 1 && getequipweaponlv(.@part) <= 4) {
