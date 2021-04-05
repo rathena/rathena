@@ -41439,7 +41439,7 @@ Body:
     Name: Modification Orb(Defense)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>8) {
          bonus bDef,45;
       }
@@ -41454,7 +41454,7 @@ Body:
     Name: Modification Orb(Magic Defense)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>8) {
          bonus bMdef,8;
       }
@@ -41475,7 +41475,7 @@ Body:
     Name: Modification Orb(Spirit)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       bonus bMaxSPrate,5;
       if (.@r>8) {
          bonus bMaxSP,250;
@@ -41488,7 +41488,7 @@ Body:
     Name: Modification Orb(Stamina)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       bonus bMaxHPrate,5;
       if (.@r>8) {
          bonus bMaxHP,1250;
@@ -41507,7 +41507,7 @@ Body:
     Name: Modification Orb(Heal)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>8) {
          bonus bHealPower,15;
       }
@@ -41522,7 +41522,7 @@ Body:
     Name: Modification Orb(Attack Power)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       bonus2 bAddClass,Class_All,5;
       if (.@r>8) {
          bonus bBaseAtk,50;
@@ -41535,7 +41535,7 @@ Body:
     Name: Modification Orb(Magic Power)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       bonus bMatkRate,5;
       if (.@r>8) {
          bonus bMatk,25;
@@ -41548,7 +41548,7 @@ Body:
     Name: Modification Orb(Sharpshooter)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>8) {
          bonus bLongAtkRate,7;
       }
@@ -41563,7 +41563,7 @@ Body:
     Name: Modification Orb(Swift)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       bonus bAspd,1;
       if (.@r>8) {
          bonus bAspdRate,6;
@@ -41576,7 +41576,7 @@ Body:
     Name: Modification Orb(Caster)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>8) {
          bonus bVariableCastrate,-11;
       }
@@ -41591,7 +41591,7 @@ Body:
     Name: Modification Orb(Critical)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       bonus bCritical,10;
       if (.@r>8) {
          bonus bCritAtkRate,10;
@@ -41604,7 +41604,7 @@ Body:
     Name: Modification Orb(After Skill Delay)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>8) {
          bonus bDelayRate,-15;
       }
@@ -41619,7 +41619,7 @@ Body:
     Name: Modification Orb(Fixed Casting Time)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>8) {
          bonus bFixedCast,-700;
       }
@@ -41634,7 +41634,7 @@ Body:
     Name: Modification Orb(Above All)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       .@val = 5;
       if (.@r>6) {
          bonus2 bSubSize,Size_Small,5;
@@ -41709,7 +41709,7 @@ Body:
     Name: Modification Orb(Lucky Strike)
     Type: Card
     Script: |
-      .@r = getequiprefinerycnt(EQI_COMPOUND_ON);
+      .@r = getrefine();
       if (.@r>9) {
          bonus bLuk,50;
       }
