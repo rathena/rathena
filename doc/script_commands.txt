@@ -2705,10 +2705,11 @@ See 'getequipid' for a full list of valid equipment slots.
 ---------------------------------------
 
 *getitemname(<item id>)
+*getitemname(<aegis item name>)
 
 Given the database ID number of an item, this function will return the text
-stored in the 'japanese name' field (which, in rAthena, stores an English name
-the players would normally see on screen.)
+stored in the 'Name' field in item_db_*.yml for text version
+or 'name_english' field for SQL version.
 
 ---------------------------------------
 
@@ -2995,32 +2996,36 @@ Example:
 ---------------------------------------
 
 *getiteminfo(<item ID>,<type>)
+*getiteminfo(<item name>,<type>)
+*getiteminfo(<aegis item name>,<type>)
 
 This function will look up the item with the specified ID number in the database
 and return the info set by TYPE argument.
-It will return -1 if there is no such item.
+It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
-	0  - Buy Price
-	1  - Sell Price
-	2  - Type
-	3  - maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		 if = 0, then monsters don't drop it at all (rare or a quest item)
-		 if = 10000, then this item is sold in NPC shops only
-	4  - Gender
-	5  - Loc
-	6  - Weight
-	7  - ATK
-	8  - DEF
-	9  - Range
-	10 - Slot
-	11 - View
-	12 - eLV
-	13 - wLV
-	14 - SpriteID from 'db/item_avail.txt'
-	15 - eLVMax
-	16 - matk if RENEWAL is defined
-
+	ITEMINFO_BUY             (0)   -  Buy Price
+	ITEMINFO_SELL            (1)   -  Sell Price
+	ITEMINFO_TYPE            (2)   -  Type
+	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                        if = 0, then monsters don't drop it at all (rare or a quest item)
+		                        if = 10000, then this item is sold in NPC shops only
+	ITEMINFO_GENDER          (4)   -  Gender
+	ITEMINFO_LOCATIONS       (5)   -  Location(s)
+	ITEMINFO_WEIGHT          (6)   -  Weight
+	ITEMINFO_ATTACK          (7)   -  ATK
+	ITEMINFO_DEFENSE         (8)   -  DEF
+	ITEMINFO_RANGE           (9)   -  Range
+	ITEMINFO_SLOT           (10)   -  Slot
+	ITEMINFO_VIEW           (11)   -  View
+	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
+	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
+	ITEMINFO_ALIASNAME      (14)   -  AliasName
+	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
+	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
+	ITEMINFO_ID             (17)   -  item ID
+	ITEMINFO_AEGISNAME      (18)   -  aegis item name
+	
 See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------
@@ -5175,19 +5180,34 @@ The default setting, 'item_enabled_npc', is defined in 'conf/battle/items.conf'.
 *itemskill "<skill name>",<skill level>{,<keep requirement>};
 
 This command is meant for item scripts to replicate single-use skills in usable
-items. It will not work properly if there is a visible dialog window or menu.
+items. It will not work properly if there is a visible dialog window or menu or if the item is not type 'Delayconsume'.
 If the skill is self or auto-targeting, it will be used immediately; otherwise a
 target cursor is shown.
 
 If <keep requirement> parameter is set to true, the skill's requirements will be checked.
 By default, the requirements for item skills are not checked, and therefore the default value is false.
 
-// When Anodyne is used, it will cast Endure (8), Level 1, as if the actual
-// skill has been used from skill tree.
-605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1; },{}
+// When Anodyne is used, it will cast Endure (8), Level 1, as if the actual skill has been used from skill tree.
+  - Id: 605
+    AegisName: Anodyne
+    Name: Anodyne
+    Type: Delayconsume
+    Buy: 2000
+    Weight: 100
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemskill "SM_ENDURE",1;
 
 // When Sienna_Execrate_Scroll_1_5 is used, it will cast Sienna Execrate Level 5 and consume 2 Red_Gemstones.
-23194,Sienna_Execrate_Scroll_1_5,Level 5 Sienna Execrate,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_SIENNAEXECRATE",5,true; },{},{}
+  - Id: 23194
+    AegisName: Sienna_Execrate_Scroll_1_5
+    Name: Level 5 Sienna Execrate
+    Type: Delayconsume
+    Buy: 10
+    Weight: 10
+    Script: |
+      itemskill "WL_SIENNAEXECRATE",5,true;
 
 ---------------------------------------
 
@@ -6020,8 +6040,16 @@ Types:
 Status_icon: See "Status Icon" section in 'src/map/script_constants.hpp'. Default is SI_BLANK (-1).
 
 Example:
-	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
-	512,Apple,Apple,0,15,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bStr,5; }",60; },{},{}
+  - Id: 512
+    AegisName: Apple
+    Name: Apple
+    Type: Healing
+    Buy: 15
+    Weight: 20
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bStr,5; }",60;
 
 ---------------------------------------
 
@@ -8597,22 +8625,34 @@ Example:
 ---------------------------------------
 
 *setiteminfo(<item id>,<type>,<value>)
+*setiteminfo(<aegis item name>,<type>,<value>)
 
 This function will set some value of an item.
 Returns the new value on success, or -1 on fail (item_id not found or invalid type).
 
 Valid types are:
-	0 - Buy Price; 1 - Sell Price; 2 - Item Type;
-	3 - maxchance (Max drop chance of this item e.g. 1 = 0.01% , etc..
-		if = 0, then monsters don't drop it at all (rare or a quest item)
-		if = 10000, then this item is sold in NPC shops only
-	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
-	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
-	15 - eLVMax
-	16 - matk if RENEWAL is defined
+	ITEMINFO_BUY             (0)   -  Buy Price
+	ITEMINFO_SELL            (1)   -  Sell Price
+	ITEMINFO_TYPE            (2)   -  Type
+	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                        if = 0, then monsters don't drop it at all (rare or a quest item)
+		                        if = 10000, then this item is sold in NPC shops only
+	ITEMINFO_GENDER          (4)   -  Gender
+	ITEMINFO_LOCATIONS       (5)   -  Location(s)
+	ITEMINFO_WEIGHT          (6)   -  Weight
+	ITEMINFO_ATTACK          (7)   -  ATK
+	ITEMINFO_DEFENSE         (8)   -  DEF
+	ITEMINFO_RANGE           (9)   -  Range
+	ITEMINFO_SLOT           (10)   -  Slot
+	ITEMINFO_VIEW           (11)   -  View
+	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
+	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
+	ITEMINFO_ALIASNAME      (14)   -  AliasName
+	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
+	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
 
 Example:
-	setiteminfo 7049,6,9990; // Stone now weighs 999.0
+	setiteminfo 7049,ITEMINFO_WEIGHT,9990; // Stone now weighs 999.0
 
 ---------------------------------------
 

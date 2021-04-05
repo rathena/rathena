@@ -260,7 +260,7 @@ function	script	F_Load2Skills	{
 // -- callfunc "F_GetArmorType",<item ID>
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetWeaponType	{
-	switch(getiteminfo(getarg(0),11)) {
+	switch(getiteminfo(getarg(0), ITEMINFO_VIEW)) {
 		case 1: return "Dagger"; break;
 		case 2: return "One-handed Sword"; break;
 		case 3: return "Two-handed Sword"; break;
@@ -288,7 +288,7 @@ function	script	F_GetWeaponType	{
 	end;
 }
 function	script	F_GetArmorType	{
-	switch(getiteminfo(getarg(0),5)) {
+	switch(getiteminfo(getarg(0), ITEMINFO_LOCATIONS)) {
 		case EQP_HEAD_LOW:
 			return "Lower Headgear";
 		case EQP_HAND_R:

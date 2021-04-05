@@ -456,12 +456,12 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 
 	while(1) {
 		for ( .@i = 0; .@i < 18; ++.@i ) {
-			if (getiteminfo(.@box_list[.@i], 2) == -1)	// temporary check
+			if (getiteminfo(.@box_list[.@i], ITEMINFO_TYPE) == -1)	// temporary check
 				continue;
 			.@size = getarraysize( getd(".@item_list_" + .@i) );
 			for ( .@h = 0; .@h < .@size; ++.@h ) {
 				.@id = getd( ".@item_list_" + .@i + "[" + .@h + "]" );
-				if (getiteminfo(.@id, 2) == -1)	// temporary check
+				if (getiteminfo(.@id, ITEMINFO_TYPE) == -1)	// temporary check
 					continue;
 				if (countitem(.@id) < 1)
 					continue;
@@ -1133,7 +1133,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		close;
 	}
 
-	.@location = getiteminfo(.@equip_id, 5);
+	.@location = getiteminfo(.@equip_id, ITEMINFO_LOCATIONS);
 	.@equip_refine = getequiprefinerycnt(.@part);
 	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
 

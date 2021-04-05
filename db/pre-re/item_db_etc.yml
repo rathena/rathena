@@ -8198,7 +8198,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R),11) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSWORD) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_1HSWORD || getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_2HSWORD) {
          bonus bHit,5;
          bonus bCritical,5;
          bonus2 bSkillAtk,62,25;
@@ -8214,7 +8214,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R),11) == W_BOW) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          bonus bHit,5;
          bonus bCritical,5;
          bonus2 bSkillAtk,47,50;
@@ -8403,7 +8403,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R),11) == W_STAFF) {
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_STAFF) {
          bonus bInt,1;
          bonus2 bIgnoreMdefClassRate,Class_Normal,2;
          bonus2 bIgnoreMdefClassRate,Class_Boss,2;

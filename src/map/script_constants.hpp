@@ -8072,6 +8072,27 @@
 	export_constant(MADO_ROBOT);
 	export_constant(MADO_SUIT);
 
+	/* getiteminfo/setiteminfo script commands */
+	export_constant(ITEMINFO_BUY);
+	export_constant(ITEMINFO_SELL);
+	export_constant(ITEMINFO_TYPE);
+	export_constant(ITEMINFO_MAXCHANCE);
+	export_constant(ITEMINFO_GENDER);
+	export_constant(ITEMINFO_LOCATIONS);
+	export_constant(ITEMINFO_WEIGHT);
+	export_constant(ITEMINFO_ATTACK);
+	export_constant(ITEMINFO_DEFENSE);
+	export_constant(ITEMINFO_RANGE);
+	export_constant(ITEMINFO_SLOT);
+	export_constant(ITEMINFO_VIEW);
+	export_constant(ITEMINFO_EQUIPLEVELMIN);
+	export_constant(ITEMINFO_WEAPONLEVEL);
+	export_constant(ITEMINFO_ALIASNAME);
+	export_constant(ITEMINFO_EQUIPLEVELMAX);
+	export_constant(ITEMINFO_MAGICATTACK);
+	export_constant(ITEMINFO_ID);
+	export_constant(ITEMINFO_AEGISNAME);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
