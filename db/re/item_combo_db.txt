@@ -2255,3 +2255,23 @@
 24677:24678,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bMatkRate,2; if (.@sum>=18) { bonus bUseSPrate,40; bonus bNoGemStone; if (.@sum>=20) { bonus2 bMagicAddSize,Size_All,12; } } }
 24679:24680,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
 24681:24682,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
+27394:27196:27199,{ bonus2 bMagicAddRace,RC_Brute,7; bonus2 bMagicAddSize,Size_Small,7; }
+27394:300128:300130,{ bonus2 bMagicAddSize,Size_Medium,7; bonus bDelayrate,-5; }
+27396:27197:27198,{ bonus2 bAddSize,Size_Small,7; }
+27396:300128:300130,{ bonus2 bAddSize,Size_Medium,7; bonus bDelayrate,-3; }
+300220:300223,{ bonus bShortAtkRate,8; }
+300230:300232,{ bonus2 bAddRace,RC_Insect,20; }
+300233:300232,{ bonus2 bMagicAddRace,RC_Insect,20; }
+300240:4176,{ bonus2 bAddSize,Size_Large,30; }
+300241:4214,{ bonus2 bAddSize,Size_Medium,30; }
+300242:300243,{ if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice) { autobonus "{ bonus bNoSizeFix; }",1,7000,BF_WEAPON; } }
+300266:4352,{ if (BaseClass == Job_Swordman) { .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bLongAtkRate,10+2*(.@sum/4); bonus bShortAtkRate,10+2*(.@sum/4); bonus bMaxHPrate,2*(.@sum/4); } }
+300267:300268,{ if (BaseJob == Job_Sage) { bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",30; bonus2 bSkillAtk,"MG_FIREBOLT",30; } }
+300269:4392,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Ghost,15*(readparam(bInt)/40); } }
+300270:4392,{ if (BaseLevel>=200) { bonus bLongAtkRate,15*(readparam(bDex)/40); } }
+300271:4393,{ if (BaseLevel>=200) { bonus bShortAtkRate,15*(readparam(bStr)/40); } }
+300272:4394,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Holy,15*(readparam(bInt)/40); } }
+300273:4394,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Neutral,15*(readparam(bInt)/40); } }
+300276:4398,{ bonus2 bMagicAddRace,RC_Angel,20; }
+300278:300016,{ if (BaseLevel>=200) { bonus bCritAtkRate,15; } }
+300279:4388,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Ghost,30; } }
