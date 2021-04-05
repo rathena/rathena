@@ -2255,63 +2255,23 @@
 24677:24678,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bMatkRate,2; if (.@sum>=18) { bonus bUseSPrate,40; bonus bNoGemStone; if (.@sum>=20) { bonus2 bMagicAddSize,Size_All,12; } } }
 24679:24680,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
 24681:24682,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
-// Kathryn Wigner Card + Nihil M. Heine Card + Spica Nerius Card
 27394:27196:27199,{ bonus2 bMagicAddRace,RC_Brute,7; bonus2 bMagicAddSize,Size_Small,7; }
-
-// Kathryn Wigner Card + Wolf Lugenburg Card + Poe Richard Card
 27394:300128:300130,{ bonus2 bMagicAddSize,Size_Medium,7; bonus bDelayrate,-5; }
-
-// Isaac Wigner Card + Agnes Lugenburg Card + Juergen Wigner Card
 27396:27197:27198,{ bonus2 bAddSize,Size_Small,7; }
-
-// Isaac Wigner Card + Wolf Lugenburg Card + Poe Richard Card
 27396:300128:300130,{ bonus2 bAddSize,Size_Medium,7; bonus bDelayrate,-3; }
-
-// Grey Wolf Card + Phantom Wolf Card
 300220:300223,{ bonus bShortAtkRate,8; }
-
-// Diligent Andre Card + Diligent Andre Larva Card
 300230:300232,{ bonus2 bAddRace,RC_Insect,20; }
-
-// Diligent Deniro Card + Diligent Andre Larva Card
 300233:300232,{ bonus2 bMagicAddRace,RC_Insect,20; }
-
-// Gan Ceann Card + Dullahan Card
 300240:4176,{ bonus2 bAddSize,Size_Large,30; }
-
-// Brutal Murderer Card + Bloody Murderer Card
 300241:4214,{ bonus2 bAddSize,Size_Medium,30; }
-
-// Ghost Cube Card + Lude Gal Card
 300242:300243,{ if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice) { autobonus "{ bonus bNoSizeFix; }",1,7000,BF_WEAPON; } }
-
-// Unknown Swordsman Card + Boss Egnigem Card
 300266:4352,{ if (BaseClass == Job_Swordman) { .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bLongAtkRate,10+2*(.@sum/4); bonus bShortAtkRate,10+2*(.@sum/4); bonus bMaxHPrate,2*(.@sum/4); } }
-
-// Crow Baron Card + Crow Duke Card
 300267:300268,{ if (BaseJob == Job_Sage) { bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",30; bonus2 bSkillAtk,"MG_FIREBOLT",30; } }
-
-// Eldest Card + Dame of Sentinel Card
 300269:4392,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Ghost,15*(readparam(bInt)/40); } }
-
-// Empathizer Card + Dame of Sentinel Card
 300270:4392,{ if (BaseLevel>=200) { bonus bLongAtkRate,15*(readparam(bDex)/40); } }
-
-// Happiness Giver Card + Mistress of Shelter Card
 300271:4393,{ if (BaseLevel>=200) { bonus bShortAtkRate,15*(readparam(bStr)/40); } }
-
-// Pray Giver Card + Lady Solace Card
 300272:4394,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Holy,15*(readparam(bInt)/40); } }
-
-// Smile Giver Card + Lady Solace Card
 300273:4394,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Neutral,15*(readparam(bInt)/40); } }
-
-// Regret of Thanatos Card + Dolor of Thanatos Card
 300276:4398,{ bonus2 bMagicAddRace,RC_Angel,20; }
-
-// Void Mimic Card + Treasure Mimic Card
 300278:300016,{ if (BaseLevel>=200) { bonus bCritAtkRate,15; } }
-
-// Book of Death Card + Death Word Card
 300279:4388,{ if (BaseLevel>=200) { bonus2 bMagicAtkEle,Ele_Ghost,30; } }
-
