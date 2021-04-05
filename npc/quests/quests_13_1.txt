@@ -10103,9 +10103,10 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				}
 				if (.@playtime == -1) {
 					changequest 3090,3091;
-				} else
+				} else {
 					erasequest 3091;
-				setquest 3091;
+					setquest 3091;
+				}
 				mes "[Expedition Scout]";
 				mes "Well then, keep up the good work!";
 				close;

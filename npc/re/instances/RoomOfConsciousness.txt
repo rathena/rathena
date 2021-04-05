@@ -744,10 +744,10 @@ OnMobDead:
 	enablenpc instance_npcname("Iris#6mir");
 	enablenpc instance_npcname("Bijou#6mir");
 
-	if (playerattached() && 'exploit_disabled && banquet_main_quest == 21) {
+	if (playerattached() && 'exploit_disabled && ep16_royal == 19) {
 		erasequest 7700;// Once More!
 		setquest 7701;// Lost Imir Heart
-		banquet_main_quest = 22;
+		ep16_royal = 20;
 	}
 	end;
 }
@@ -882,10 +882,10 @@ OnStop:
 	mes "[Fenrir]";
 	mes "We'd better get out of here, too! This place is too dangerous!";
 	close2;
-	if (banquet_main_quest == 21) {
+	if (ep16_royal == 19) {
 		erasequest 7700;// Once More!
 		setquest 7701;// Lost Imir Heart
-		banquet_main_quest = 22;
+		ep16_royal = 20;
 	}
 	warp "prt_lib_q",88,83;
 	end;

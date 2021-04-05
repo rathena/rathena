@@ -10,7 +10,7 @@
 prt_cas_q,29,28,0	script	#ep162_evt_npc_con	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	if (banquet_main_quest < 18)	// pre-req : access to room of consciousness (first time)
+	if (ep16_royal < 17)	// pre-req : access to room of consciousness (first time)
 		end;
 	if (terra_gloria_main == 0) {
 		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
@@ -35,7 +35,7 @@ prt_cas_q,23,33,2	duplicate(dummy_cloaked_npc)	Crux#ep162_03	4_EP16_CRUX
 prt_cas_q,23,32,3	duplicate(dummy_cloaked_npc)	Kronecker G. Heine#ep162	4_EP16_GRANZ
 
 prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
-	if (banquet_main_quest < 18)	// pre-req : access to room of consciousness (first time)
+	if (ep16_royal < 17)	// pre-req : access to room of consciousness (first time)
 		end;
 	if (terra_gloria_main == 0) {
 		cutin "ep16_nihi_miseria_heine02.bmp",2;
@@ -340,7 +340,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 }
 
 prt_cas_q,23,36,3	script	Spica Nerius#ep162_01	4_EP16_SPICA,{
-	if (banquet_main_quest < 18)
+	if (ep16_royal < 17)
 		end;
 	if (terra_gloria_main == 1) {
 		cutin "ep16_spica_nerius01.bmp",1;

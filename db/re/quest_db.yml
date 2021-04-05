@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -2359,7 +2359,7 @@ Body:
     Title: Lowly Standards
     Drops:
       - Mob: WATCHER
-        Item: Red_Eye
+        Item: Red_Eyes
         Rate: 2000
   - Id: 5429
     Title: "[Stand by]Lowly Standards"
@@ -2368,7 +2368,7 @@ Body:
     Title: "[Repeat]Lowly Standards"
     Drops:
       - Mob: WATCHER
-        Item: Red_Eye
+        Item: Red_Eyes
         Rate: 2000
   - Id: 5431
     Title: Clean Life
@@ -2392,7 +2392,7 @@ Body:
     Title: Refreshing Prison Life
     Drops:
       - Mob: FROZENWOLF
-        Item: Dehumidifiers
+        Item: Desiccant
         Rate: 2000
   - Id: 5440
     Title: "[Stand by]Refreshing Prison Life"
@@ -2401,7 +2401,7 @@ Body:
     Title: "[Repeat]Refreshing Prison Life"
     Drops:
       - Mob: FROZENWOLF
-        Item: Dehumidifiers
+        Item: Desiccant
         Rate: 2000
   - Id: 5442
     Title: Suppressing Darkness
@@ -5262,6 +5262,16 @@ Body:
   - Id: 9319
     Title: Pursuing Hiding Morocc Continues
     TimeLimit: +23h
+  - Id: 9418
+    Title: Attack Sky Fortress Invading Prontera
+    Targets:
+      - Mob: AS_RAGGED_GOLEM
+        Count: 1
+  - Id: 9419
+    Title: Attack Sky Fortress Invading Prontera
+    TimeLimit: 2d 12h
+  - Id: 9427
+    Title: Clearing the Sky Fortress for the Same Time
   - Id: 9335
     Title: Search for shards of Gigantes
   - Id: 9336
@@ -6390,7 +6400,7 @@ Body:
     Title: Why Should I Prepare for the Banquets?
     Drops:
       - Mob: GLASS_PLATE
-        Item: Advanced_Dish
+        Item: Luxurious_Dish
         Rate: 3000
   - Id: 11420
     Title: Why Should I Prepare for the Banquets?
@@ -6410,7 +6420,7 @@ Body:
     Title: "Banquet: Washing 15 Dishes"
     Drops:
       - Mob: GLASS_PLATE
-        Item: Advanced_Dish
+        Item: Luxurious_Dish
         Rate: 3000
   - Id: 11427
     Title: Complete Today's Dish Collecting
@@ -8209,7 +8219,7 @@ Body:
     Title: Please Find the Token of Memory
     Drops:
       - Mob: MEDUSA
-        Item: Stone_That_Contained_Sea
+        Item: Filled_With_SeaStones
         Rate: 3000
   - Id: 14488
     Title: Please Deliver My Love
@@ -8219,7 +8229,7 @@ Body:
     Title: My Love Once More
     Drops:
       - Mob: MEDUSA
-        Item: Stone_That_Contained_Sea
+        Item: Filled_With_SeaStones
         Rate: 3000
   - Id: 14491
     Title: I Have to Turn It Down Again
@@ -8230,7 +8240,7 @@ Body:
     Title: Today I Feel
     Drops:
       - Mob: MEDUSA
-        Item: Stone_That_Contained_Sea
+        Item: Filled_With_SeaStones
         Rate: 3000
   - Id: 14494
     Title: I Have to Turn It Down Again
