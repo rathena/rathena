@@ -90317,7 +90317,7 @@ Body:
     Defense: 30
     Slots: 1
     Locations:
-      Costume_Garment: true
+      Garment: true
     EquipLevelMin: 80
     Script: |
       bonus bStr,2;
