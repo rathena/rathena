@@ -4900,7 +4900,7 @@ Example to get Crimson Weapon with Ghost property:
 	// with Neutral Resistance +10% and 5% damage reduction from Demi-Human or Player
 	// when Valkyrie Randgris killed
 	OnNPCKillEvent:
-		if (killedrid == 1751 && rand(0,1000) > 950) { // Valkyrie Randgris
+		if (killedrid == 1751 && rand(0,10000) > 9950) { // Valkyrie Randgris
 			getmapxy(.@map$,.@x,.@y,BL_PC);
 			setarray .@OptID[0],RDMOPT_ATTR_TOLERACE_NOTHING,RDMOPT_RACE_TOLERACE_HUMAN;
 			setarray .@OptVal[0],10,5;
