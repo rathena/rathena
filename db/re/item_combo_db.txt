@@ -1073,7 +1073,6 @@
 20135:20136,{ bonus bAllStats,12; }
 2053:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddClass,Class_All,15; bonus2 bMagicAddClass,Class_All,15; }
 2053:27301,{ bonus2 bAddClass,Class_All,10; bonus bAspdRate,10; }
-2060:15388:15389,{ .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT); bonus bMatk,30; autobonus "{ bonus2 bMagicAtkEle,Ele_Earth,10; bonus2 bMagicAtkEle,Ele_Wind,10; }",10,10000,BF_MAGIC; if (.@sum>=30) { bonus2 bMagicAddEle,Ele_Undead,20; bonus2 bMagicAddEle,Ele_Holy,20; } }
 20701:2165,{ .@a = getequiprefinerycnt(EQI_GARMENT); .@b = getequiprefinerycnt(EQI_HAND_L); bonus2 bAddEle,Ele_Earth,.@b; bonus2 bSubRace,RC_Fish,.@a; }
 20714:28320,{ .@val = min(12,getequiprefinerycnt(EQI_GARMENT)); bonus2 bAddRace,RC_DemiHuman,.@val; bonus2 bAddRace,RC_Player_Human,.@val; }
 20717:22000,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
@@ -1231,7 +1230,6 @@
 22170:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatkRate,10; if (.@r>=7) { bonus2 bMagicAtkEle,Ele_Earth,10; bonus2 bMagicAtkEle,Ele_Wind,10; } if (.@r>=9) { bonus2 bMagicAtkEle,Ele_Earth,10; bonus2 bMagicAtkEle,Ele_Wind,10; } }
 22171:1847,{ autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000; }
 22171:13345,{ autobonus "{ bonus bStr,20; bonus bLongAtkRate,10; }",20,7000,BF_WEAPON; /* unknown rate */ }
-22171:13485,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,10; }",30,7000; }
 22171:21038,{ autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000; }
 22171:26118,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000; }
 22171:26154,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000; }
@@ -1441,7 +1439,6 @@
 24465:24464:24466,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bDelayrate,-.@r; }
 24465:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24467:24468:24469,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bSkillAtk,"NC_AXEBOOMERANG",.@r; }
-24465:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24471:24470:24472,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bSkillAtk,"NC_VULCANARM",.@r; }
 24471:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24473:24474:24475,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); if (.@r>=2) bonus2 bSkillAtk,"NC_ARMSCANNON",.@r/2; }
@@ -1587,7 +1584,7 @@
 29658:29657,{ bonus2 bSPDrainRate,10,1; }
 29662:29659,{ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; }
 29662:29660,{ bonus2 bSkillAtk,"KO_BAKURETSU",25; }
-29662:29660,{ bonus2 bSPDrainRate,10,1; }
+29662:29661,{ bonus2 bSPDrainRate,10,1; }
 29663:29659,{ bonus2 bSkillAtk,"NJ_BAKUENRYU",30; bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",30; bonus2 bSkillAtk,"NJ_KAMAITACHI",30; }
 29663:29660,{ bonus2 bSkillAtk,"NJ_HYOUSENSOU",20; bonus2 bSkillAtk,"NJ_HUUJIN",20; }
 29663:29661,{ bonus bVariableCastrate,-15; }
@@ -1628,7 +1625,6 @@
 29176:32234,{ bonus2 bAddRace,RC_Brute,15; bonus2 bAddRace,RC_Plant,15; bonus2 bMagicAddRace,RC_Brute,15; bonus2 bMagicAddRace,RC_Plant,15; bonus2 bAddEle,Ele_Wind,15; bonus2 bAddEle,Ele_Earth,15; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,15; }
 22171:18164,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,20; }",30,7000,BF_WEAPON; }
 22171:18170,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,15; }",30,7000,BF_WEAPON; }
-22171:2048,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000,BF_MAGIC; }
 22171:610003,{ autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000,BF_WEAPON; }
 22171:700003,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,20; }",30,7000,BF_WEAPON; }
 22171:510006,{ autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000,BF_WEAPON; }
