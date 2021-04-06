@@ -16,22 +16,26 @@
 //=     The safe/multiple refine feature is now functional. [Euphy]
 //= 1.3 Updated to match the latest official script. [Euphy]
 //= 1.4 Added correct safe refines. [Haruna]
+//= 1.5 Added Refine UI [Atemo, Lemongrass]
 //============================================================
 
 // +11 and above Refiners
 //============================================================
-prt_in,90,72,5	script	Vestri#prt	826,{
-	callfunc "refinenew","Vestri",0;
-	end;
+prt_in,90,72,5	script	Vestri#prt	4_M_DWARF,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Vestri]";
+		mes "I'm the most skillful blacksmith!";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinenew","Vestri",0;
+		end;
+	}
 }
-morocc_in,64,41,5	script	Vestri#moc	826,{
-	callfunc "refinenew","Vestri",0;
-	end;
-}
-payon_in01,18,132,3	script	Vestri#pay	826,{
-	callfunc "refinenew","Vestri",0;
-	end;
-}
+
+morocc_in,64,41,5	duplicate(Vestri#prt)	Vestri#moc	4_M_DWARF
+payon_in01,18,132,3	duplicate(Vestri#prt)	Vestri#pay	4_M_DWARF
 
 //============================================================
 // +11 and above Refiner Function
