@@ -5,7 +5,7 @@
 # Job Settings
 #
 ###########################################################################
-# - Job                      Job identifier.
+# - Job                      Job ID.
 #   MaxWeight                Base maximum weight. (Default: 20000)
 #   HPFactor                 Base HP factor. (Default: 20000)
 #   HPMultiplicator          Base HP rate numerator. (Default: 500)
