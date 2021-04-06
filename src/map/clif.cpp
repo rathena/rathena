@@ -21676,11 +21676,13 @@ TIMER_FUNC( clif_ping_timer ){
  */
 void clif_refineui_open( struct map_session_data* sd ){
 #if PACKETVER >= 20161012
-	int fd = sd->fd;
+	nullpo_retv( sd );
 
-	WFIFOHEAD(fd,packet_len(0x0AA0));
-	WFIFOW(fd,0) = 0x0AA0;
-	WFIFOSET(fd,packet_len(0x0AA0));
+	struct PACKET_ZC_REFINE_OPEN_WINDOW p;
+
+	p.packetType = HEADER_ZC_REFINE_OPEN_WINDOW;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 
 	sd->state.refineui_open = true;
 #endif
@@ -21777,7 +21779,9 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
  */
 void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20161012
-	uint16 index = server_index( RFIFOW( fd, 2 ) );
+	struct PACKET_CZ_REFINE_ADD_ITEM* p = (struct PACKET_CZ_REFINE_ADD_ITEM*)RFIFOP( fd, 0 );
+
+	uint16 index = server_index( p->index );
 
 	// Check if the refine UI is open
 	if( !sd->state.refineui_open ){
@@ -21945,8 +21949,6 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	}
 #endif
 }
-
-#undef REFINEUI_MAT_CNT
 
 /*==========================================
  * Main client packet processing function
