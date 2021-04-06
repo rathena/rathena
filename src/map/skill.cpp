@@ -19613,6 +19613,11 @@ short skill_can_produce_mix(struct map_session_data *sd, t_itemid nameid, int tr
 		}
 	}
 
+	if (nameid == ITEMID_HOMUNCULUS_SUPPLEMENT) { // Temporary check since the produce_db specifically wants the Pharmacy skill to use
+		if (pc_checkskill(sd, AM_BIOETHICS) == 0)
+			return 0;
+	}
+
 	if (i >= MAX_SKILL_PRODUCE_DB)
 		return 0;
 

@@ -380,7 +380,7 @@
 //-- Embryo <-- AM_PHARMACY & Potion Creation Guide & 1 Seed of Life, 1 Morning Dew of Yggdrasil, 1 Glass Tube
 140,7142,22,228,1,7144,0,7140,1,7141,1,7143,1
 //-- Homunculus Supplement <-- AM_BIOETHICS & Potion Creation Guide & 1 Seed of Life, 1 Yellow Herb, 1 Empty Bottle
-141,100371,22,238,1,7144,0,7140,1,508,1,713,1
+141,100371,22,228,1,7144,0,7140,1,508,1,713,1
 //----------------------------------------------
 
 //==============================================
@@ -691,6 +691,6 @@
 // Carrot Juice (534) <-- 1 Carrot, 1 Milk
 279,534,30,0,0,11058,0,515,1,519,1
 // Grape Juice (533) <-- 1 Grape, 1 Milk
-281,533,30,0,0,11058,0,514,1,519,1
+280,533,30,0,0,11058,0,514,1,519,1
 // Unripe Apple (619) <-- 10 Sticky Mucus, 20 Green Herbs, 10 Apples
-282,619,30,0,0,11058,0,938,10,511,20,512,10
+281,619,30,0,0,11058,0,938,10,511,20,512,10
