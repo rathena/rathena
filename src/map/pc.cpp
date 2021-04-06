@@ -12272,10 +12272,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "BonusStats")) {
-		if (!exists)
-			job->job_bonus.resize(job->max_job_level);
+		const YAML::Node &bonusNode = node["BonusStats"];
+		job->job_bonus.resize(MAX_LEVEL);
 
-		for (const YAML::Node &levelNode : node["Level"]) {
+		for (const YAML::Node &levelNode : bonusNode) {
 			uint16 level;
 
 			if (!this->asUInt16(levelNode, "Level", level))
@@ -12292,9 +12292,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Str", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_STR);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_STR);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_STR);
 			}
 
@@ -12304,9 +12304,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Agi", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_AGI);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_AGI);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_AGI);
 			}
 
@@ -12316,9 +12316,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Vit", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_VIT);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_VIT);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_VIT);
 			}
 
@@ -12328,9 +12328,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Int", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_INT);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_INT);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_INT);
 			}
 
@@ -12340,9 +12340,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Dex", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_DEX);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_DEX);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_DEX);
 			}
 
@@ -12352,9 +12352,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Luk", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_LUK);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_LUK);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_LUK);
 			}
 
@@ -12364,9 +12364,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Pow", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_POW);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_POW);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_POW);
 			}
 
@@ -12376,9 +12376,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Sta", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_STA);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_STA);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_STA);
 			}
 
@@ -12388,9 +12388,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Wis", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_WIS);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_WIS);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_WIS);
 			}
 
@@ -12400,9 +12400,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Spl", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_SPL);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_SPL);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_SPL);
 			}
 
@@ -12412,9 +12412,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Con", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_CON);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_CON);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_CON);
 			}
 
@@ -12424,9 +12424,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(levelNode, "Crt", active))
 					return 0;
 
-				job->job_bonus[level - 1].push_back(PARAM_CRT);
-			} else {
-				if (!exists)
+				if (active)
+					job->job_bonus[level - 1].push_back(PARAM_CRT);
+				else
 					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_CRT);
 			}
 		}
@@ -12566,6 +12566,7 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				job->max_job_level = level;
+				job->job_bonus.resize(level);
 			} else
 				job->max_job_level = MAX_LEVEL;
 

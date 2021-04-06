@@ -4212,25 +4212,25 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 // ----- STATS CALCULATION -----
 
 	// Job bonuses
-	std::vector<std::vector<uint8>> job_bonus = job_db.get_jobBonus(pc_mapid2jobid(sd->status.class_, sd->status.sex));
+	std::vector<std::vector<uint8>> job_bonus = job_db.get_jobBonus(pc_mapid2jobid(sd->class_, sd->status.sex));
 
 	if (!job_bonus.empty()) {
 		for (i = 0; i < sd->status.job_level && i < MAX_LEVEL; i++) {
 			for (const auto &stat : job_bonus[i]) {
 				switch (stat) {
-				case PARAM_STR: base_status->str++; break;
-				case PARAM_AGI: base_status->agi++; break;
-				case PARAM_VIT: base_status->vit++; break;
-				case PARAM_INT: base_status->int_++; break;
-				case PARAM_DEX: base_status->dex++; break;
-				case PARAM_LUK: base_status->luk++; break;
+					case PARAM_STR: base_status->str++; break;
+					case PARAM_AGI: base_status->agi++; break;
+					case PARAM_VIT: base_status->vit++; break;
+					case PARAM_INT: base_status->int_++; break;
+					case PARAM_DEX: base_status->dex++; break;
+					case PARAM_LUK: base_status->luk++; break;
 #ifdef RENEWAL
-				case PARAM_POW: base_status->pow++; break;
-				case PARAM_STA: base_status->sta++; break;
-				case PARAM_WIS: base_status->wis++; break;
-				case PARAM_SPL: base_status->spl++; break;
-				case PARAM_CON: base_status->con++; break;
-				case PARAM_CRT: base_status->crt++; break;
+					case PARAM_POW: base_status->pow++; break;
+					case PARAM_STA: base_status->sta++; break;
+					case PARAM_WIS: base_status->wis++; break;
+					case PARAM_SPL: base_status->spl++; break;
+					case PARAM_CON: base_status->con++; break;
+					case PARAM_CRT: base_status->crt++; break;
 #endif
 				}
 			}
