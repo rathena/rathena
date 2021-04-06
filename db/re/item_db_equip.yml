@@ -70655,7 +70655,7 @@ Body:
       }
       if (BaseClass == Job_Archer) {
          bonus bDex,3;
-         if (getiteminfo(getequipid(EQI_HAND_R),11) == W_BOW)
+         if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOW)
             bonus bLongAtkRate,10;
       }
   - Id: 18571
@@ -72834,7 +72834,7 @@ Body:
       bonus bInt,3;
       bonus bDex,2;
       bonus bLuk,1;
-      if (getiteminfo(getequipid(EQI_HAND_R),11) == W_BOOK)
+      if (getiteminfo(getequipid(EQI_HAND_R), II_VIEW) == W_BOOK)
          bonus bVariableCastrate,-3;
   - Id: 18702
     AegisName: Shaving_Cream
@@ -90317,7 +90317,7 @@ Body:
     Defense: 30
     Slots: 1
     Locations:
-      Costume_Garment: true
+      Garment: true
     EquipLevelMin: 80
     Script: |
       bonus bStr,2;
