@@ -21804,7 +21804,7 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 
 	uint16 index = server_index( p->index );
 	t_itemid material = p->itemId;
-	uint16 j;
+	int16 j;
 
 	// Check if the refine UI is open
 	if( !sd->state.refineui_open ){
