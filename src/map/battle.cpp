@@ -5825,8 +5825,8 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		if (tsc->data[SC_MAXPAIN]) {
 			rdamage = wd->damage + wd->damage2;
 			tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
-			if(tsc && (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && wd->flag&BF_SHORT))) {//SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
-				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag&1)?wd->flag-1:wd->flag));
+			if (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && wd->flag&BF_SHORT)) { //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
+				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
 			}
 		}
 
