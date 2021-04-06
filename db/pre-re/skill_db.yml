@@ -32863,7 +32863,7 @@ Body:
     Hit: Single
     CastCancel: true
     AfterCastActDelay: 3000
-    Duration1:
+    Duration2:
       - Level: 1
         Time: 30000
       - Level: 2
