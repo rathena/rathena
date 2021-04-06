@@ -13965,60 +13965,48 @@ BUILDIN_FUNC(getitemslots)
 /*==========================================
  * Returns some values of an item [Lupus]
  * Price, Weight, etc...
-	getiteminfo(itemID,n), where n
-		0 value_buy;
-		1 value_sell;
-		2 type;
-		3 maxchance = Max drop chance of this item e.g. 1 = 0.01% , etc..
-				if = 0, then monsters don't drop it at all (rare or a quest item)
-				if = -1, then this item is sold in NPC shops only
-		4 sex;
-		5 equip;
-		6 weight;
-		7 atk;
-		8 def;
-		9 range;
-		10 slot;
-		11 look;
-		12 elv;
-		13 wlv;
-		14 view id
-		15 eLvmax
-		16 matk (renewal)
  *------------------------------------------*/
 BUILDIN_FUNC(getiteminfo)
 {
-	t_itemid item_id = script_getnum(st,2);
-	item_data *i_data = itemdb_exists(item_id);
+	item_data *i_data;
+	int type = script_getnum(st, 3);
+
+	if (script_isstring(st, 2))
+		i_data = itemdb_searchname(script_getstr(st, 2));
+	else
+		i_data = itemdb_exists(script_getnum(st, 2));
 
 	if (i_data == nullptr) {
-		script_pushint(st, -1);
+		if (type != ITEMINFO_AEGISNAME)
+			script_pushint(st, -1);
+		else
+			script_pushstrcopy(st, "");
 		return SCRIPT_CMD_SUCCESS;
 	}
-	switch( script_getnum(st, 3) ) {
-		case 0: script_pushint(st, i_data->value_buy); break;
-		case 1: script_pushint(st, i_data->value_sell); break;
-		case 2: script_pushint(st, i_data->type); break;
-		case 3: script_pushint(st, i_data->maxchance); break;
-		case 4: script_pushint(st, i_data->sex); break;
-		case 5: script_pushint(st, i_data->equip); break;
-		case 6: script_pushint(st, i_data->weight); break;
-		case 7: script_pushint(st, i_data->atk); break;
-		case 8: script_pushint(st, i_data->def); break;
-		case 9: script_pushint(st, i_data->range); break;
-		case 10: script_pushint(st, i_data->slots); break;
-		case 11:
+	switch( type ) {
+		case ITEMINFO_BUY: script_pushint(st, i_data->value_buy); break;
+		case ITEMINFO_SELL: script_pushint(st, i_data->value_sell); break;
+		case ITEMINFO_TYPE: script_pushint(st, i_data->type); break;
+		case ITEMINFO_MAXCHANCE: script_pushint(st, i_data->maxchance); break;
+		case ITEMINFO_GENDER: script_pushint(st, i_data->sex); break;
+		case ITEMINFO_LOCATIONS: script_pushint(st, i_data->equip); break;
+		case ITEMINFO_WEIGHT: script_pushint(st, i_data->weight); break;
+		case ITEMINFO_ATTACK: script_pushint(st, i_data->atk); break;
+		case ITEMINFO_DEFENSE: script_pushint(st, i_data->def); break;
+		case ITEMINFO_RANGE: script_pushint(st, i_data->range); break;
+		case ITEMINFO_SLOT: script_pushint(st, i_data->slots); break;
+		case ITEMINFO_VIEW:
 			if (i_data->type == IT_WEAPON || i_data->type == IT_AMMO) {	// keep old compatibility
 				script_pushint(st, i_data->subtype);
 			} else {
 				script_pushint(st, i_data->look);
 			}
 			break;
-		case 12: script_pushint(st, i_data->elv); break;
-		case 13: script_pushint(st, i_data->wlv); break;
-		case 14: script_pushint(st, i_data->view_id); break;
-		case 15: script_pushint(st, i_data->elvmax); break;
-		case 16: {
+		case ITEMINFO_EQUIPLEVELMIN: script_pushint(st, i_data->elv); break;
+		case ITEMINFO_WEAPONLEVEL: script_pushint(st, i_data->wlv); break;
+		case ITEMINFO_ALIASNAME: script_pushint(st, i_data->view_id); break;
+		case ITEMINFO_EQUIPLEVELMAX: script_pushint(st, i_data->elvmax); break;
+		case ITEMINFO_MAGICATTACK: {
 #ifdef RENEWAL
 			script_pushint(st, i_data->matk);
 #else
@@ -14026,6 +14014,8 @@ BUILDIN_FUNC(getiteminfo)
 #endif
 			break;
 		}
+		case ITEMINFO_ID: script_pushint(st, i_data->nameid); break;
+		case ITEMINFO_AEGISNAME: script_pushstrcopy(st, i_data->name.c_str()); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -14036,32 +14026,15 @@ BUILDIN_FUNC(getiteminfo)
 /*==========================================
  * Set some values of an item [Lupus]
  * Price, Weight, etc...
-	setiteminfo(itemID,n,Value), where n
-		0 value_buy;
-		1 value_sell;
-		2 type;
-		3 maxchance = Max drop chance of this item e.g. 1 = 0.01% , etc..
-				if = 0, then monsters don't drop it at all (rare or a quest item)
-				if = -1, then this item is sold in NPC shops only
-		4 sex;
-		5 equip;
-		6 weight;
-		7 atk;
-		8 def;
-		9 range;
-		10 slot;
-		11 look;
-		12 elv;
-		13 wlv;
-		14 view id
-		15 eLvmax
-		16 matk (renewal)
-  * Returns Value or -1 if the wrong field's been set
  *------------------------------------------*/
 BUILDIN_FUNC(setiteminfo)
 {
-	t_itemid item_id = script_getnum(st,2);
-	item_data *i_data = itemdb_exists(item_id);
+	item_data *i_data;
+
+	if (script_isstring(st, 2))
+		i_data = itemdb_search_aegisname(script_getstr(st, 2));
+	else
+		i_data = itemdb_exists(script_getnum(st, 2));
 
 	if (i_data == nullptr) {
 		script_pushint(st, -1);
@@ -14070,29 +14043,29 @@ BUILDIN_FUNC(setiteminfo)
 	int value = script_getnum(st,4);
 
 	switch( script_getnum(st, 3) ) {
-		case 0: i_data->value_buy = static_cast<uint32>(value); break;
-		case 1: i_data->value_sell = static_cast<uint32>(value); break;
-		case 2: i_data->type = static_cast<item_types>(value); break;
-		case 3: i_data->maxchance = static_cast<int>(value); break;
-		case 4: i_data->sex = static_cast<uint8>(value); break;
-		case 5: i_data->equip = static_cast<uint32>(value); break;
-		case 6: i_data->weight = static_cast<uint32>(value); break;
-		case 7: i_data->atk = static_cast<uint32>(value); break;
-		case 8: i_data->def = static_cast<uint32>(value); break;
-		case 9: i_data->range = static_cast<uint16>(value); break;
-		case 10: i_data->slots = static_cast<uint16>(value); break;
-		case 11:
+		case ITEMINFO_BUY: i_data->value_buy = static_cast<uint32>(value); break;
+		case ITEMINFO_SELL: i_data->value_sell = static_cast<uint32>(value); break;
+		case ITEMINFO_TYPE: i_data->type = static_cast<item_types>(value); break;
+		case ITEMINFO_MAXCHANCE: i_data->maxchance = static_cast<int>(value); break;
+		case ITEMINFO_GENDER: i_data->sex = static_cast<uint8>(value); break;
+		case ITEMINFO_LOCATIONS: i_data->equip = static_cast<uint32>(value); break;
+		case ITEMINFO_WEIGHT: i_data->weight = static_cast<uint32>(value); break;
+		case ITEMINFO_ATTACK: i_data->atk = static_cast<uint32>(value); break;
+		case ITEMINFO_DEFENSE: i_data->def = static_cast<uint32>(value); break;
+		case ITEMINFO_RANGE: i_data->range = static_cast<uint16>(value); break;
+		case ITEMINFO_SLOT: i_data->slots = static_cast<uint16>(value); break;
+		case ITEMINFO_VIEW:
 			if (i_data->type == IT_WEAPON || i_data->type == IT_AMMO) {	// keep old compatibility
 				i_data->subtype = static_cast<uint8>(value);
 			} else {
 				i_data->look = static_cast<uint32>(value);
 			}
 			break;
-		case 12: i_data->elv = static_cast<uint16>(value); break;
-		case 13: i_data->wlv = static_cast<uint16>(value); break;
-		case 14: i_data->view_id = static_cast<t_itemid>(value); break;
-		case 15: i_data->elvmax = static_cast<uint16>(value); break;
-		case 16: {
+		case ITEMINFO_EQUIPLEVELMIN: i_data->elv = static_cast<uint16>(value); break;
+		case ITEMINFO_WEAPONLEVEL: i_data->wlv = static_cast<uint16>(value); break;
+		case ITEMINFO_ALIASNAME: i_data->view_id = static_cast<t_itemid>(value); break;
+		case ITEMINFO_EQUIPLEVELMAX: i_data->elvmax = static_cast<uint16>(value); break;
+		case ITEMINFO_MAGICATTACK: {
 #ifdef RENEWAL
 			i_data->matk = static_cast<uint32>(value);
 #else
@@ -25402,8 +25375,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setnpcdisplay,"sv??"),
 	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
 	BUILDIN_DEF(strcmp,"ss"),
-	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
-	BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
+	BUILDIN_DEF(getiteminfo,"vi"), //[Lupus] returns Items Buy / sell Price, etc info
+	BUILDIN_DEF(setiteminfo,"vii"), //[Lupus] set Items Buy / sell Price, etc info
 	BUILDIN_DEF(getequipcardid,"ii"), //[Lupus] returns CARD ID or other info from CARD slot N of equipped item
 	// [zBuffer] List of mathematics commands --->
 	BUILDIN_DEF(sqrt,"i"),
