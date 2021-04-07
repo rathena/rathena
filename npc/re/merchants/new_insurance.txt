@@ -11,7 +11,12 @@ prontera,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 	.@new_item = 6413;
 	.@old_item_name$ = getitemname(.@old_item);
 	.@new_item_name$ = getitemname(.@new_item);
-	
+
+	if (!checkweight(1201,1) || (MaxWeight - Weight) < 500) {
+		mes "You can't proceed with the conversation because you have a large quantity of items.";
+		mes "Please organize your items and try again.";
+		close;
+	}
 	mes "[Heart Merchant]";
 	mes "Hello! I see you are an adventurer who gives your heart to traveling, uses a boat to sail across the continent, and enjoys the thrill of danger!";
 	next;
