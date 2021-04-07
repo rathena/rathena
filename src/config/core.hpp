@@ -82,7 +82,7 @@
 // Compilation might work on these compilers, but they might not fully follow newer C++ rules and
 // cause unexpected behavior.
 // Do NOT create any issues or ask for help with these compilers.
-//#define DEPRECATED_COMPILER_SUPPORT
+#define DEPRECATED_COMPILER_SUPPORT
 
 /**
  * No settings past this point

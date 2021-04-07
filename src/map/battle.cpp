@@ -1842,7 +1842,7 @@ bool battle_can_hit_fvf_target(struct block_list *src,struct block_list *bl,uint
 		}
 	}
 	return true;
-} 
+}
 
 int64 battle_calc_fvf_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag)
 {
