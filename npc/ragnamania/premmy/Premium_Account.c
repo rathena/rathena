@@ -3,7 +3,7 @@ prontera,159,286,5	script	Lilian#PremmyCentral	4_F_KAFRA1,{
 		if(#FREE_PREMMY > 0){
 			erasequest 64505;
 			mes "^FF7F00[ Lilian ]^000000";
-			mes "Oh, I am sorry... I can see you've already gotten your free ^f5b041Premium^000000, maybe with a different char?";
+			mes "Oh, I am sorry... I can see you've already gotten your free Premmy, maybe with a different char?";
 			next;
 			mes "^FF7F00[ Lilian ]^000000";
 			mes "I am afraid there is nothing I can do for you in regards to that...";
@@ -14,14 +14,14 @@ prontera,159,286,5	script	Lilian#PremmyCentral	4_F_KAFRA1,{
 		mes "How are you doing? It is so good to see you!";
 		next;
 		mes "^FF7F00[ Lilian ]^000000";
-		mes "You are here for your 5 days free ^f5b041Premium^000000, right?";
+		mes "You are here for your 5 days free Premmy, right?";
 		mes "Let me sort that out for you...";
 		next;
 		completequest 64505;
 		vip_time $@Periodo;
 		#FREE_PREMMY = gettimetick(2);
-		dispbottom "^00AAAA[Premmy Central]^000000 : 5 days of ^f5b041Premium^000000 Activated.";
-		logmes "[Premmy Central] : Free ^f5b041Premium^000000 Activated.";
+		dispbottom "^00AAAA[Premmy Central]^000000 : 5 days of Premmy Activated.";
+		logmes "[Premmy Central] : Free Premmy Activated.";
 		mes "^FF7F00[ Lilian ]^000000";	
 		mes "All done! Thank you!";
 		next;
@@ -57,15 +57,15 @@ function	script	F_Premmy	{
 	mes (gettime(3)>= 6&&gettime(3)<= 12?"Good Morning":(gettime(3)>=13&&gettime(3)<=18?"Good Afternoon":"Good Evening"))+", ^008aff"+strcharinfo(0)+"^000000 !";
 	mes "Welcome to Premmy Central.";
 	if (vip_status(1)) {
-		mes "^008affYour ^f5b041Premium^000000 access will expire on " + callfunc("Time2Str",vip_status(2)) + ".^000000";
+		mes "^008affYour Premmy access will expire on " + callfunc("Time2Str",vip_status(2)) + ".^000000";
 		mes " ";		
 	}
 	mes "How can I help?";
 	next;
-	switch (select(((vip_status(1))?""+.bcor$+"I want to extend my time as ^f5b041Premium^000000.":""+.bcor$+"I wish to become a ^f5b041Premium^000000 player."),""+.rcor$+"I am good, thank you.")){
+	switch (select(((vip_status(1))?""+.bcor$+"I want to extend my time ^008affPremmy^000000.":""+.bcor$+"I wish to become a ^008affPremmy^000000 player."),""+.rcor$+"I am good, thank you.")){
 		case 1:
 			mes .npc$;
-			mes "How many days of ^f5b041Premium^000000 access do you want to acquire?";
+			mes "How many days of ^008affPremmy^000000 access do you want to acquire?";
 			next;
 			.@i = select(
 				.bcor$+""+.vip_day[0] + " Days."
@@ -74,13 +74,13 @@ function	script	F_Premmy	{
 				
 			mes .npc$;
 			mes "You chose the plan of:";
-			mes "^4527A0Premmy:^000000 "+.vip_day[.@i]+" ^f5b041Premium^000000 days.";
+			mes "^4527A0Premmy:^000000 "+.vip_day[.@i]+" Premmy days.";
 			mes "^4527A0Cost:^000000 "+F_InsertComma(.vip_cashpoint[.@i])+" Manias, or";
 			mes "^4527A0Cost:^000000 "+.vip_hunting[.@i]+"x " + getitemname(675)+"s.";
 			sleep2 1000;
 			mes "What do you want to do?";
 			next;
-			switch(select(.bcor$+"Pay with Manias:"+.bcor$+"Pay with "+getitemname(675)+":"+.rcor$+"Cancel")){
+			switch(select(.bcor$+"Purchase with Manias:"+.bcor$+"Purchase with Hunting Coins:"+.rcor$+"Cancel")){
 				case 1:
 					if ( #CASHPOINTS < .vip_cashpoint[.@i] ) {
 					mes .npc$;
@@ -91,7 +91,7 @@ function	script	F_Premmy	{
 					#CASHPOINTS -= .vip_cashpoint[.@i];
 					vip_time (.vip_day[.@i] * 1440);
 					mes .npc$;
-					mes "Congratulations you just got "+.vip_day[.@i]+" days as ^f5b041Premium^000000.";
+					mes "Congratulations you just got "+.vip_day[.@i]+" days as Premmy.";
 					logmes "[Premmy Central] Comprou/Extendeu Premmy com Manias";
 					if(.vip_day[.@i] >= 30) {
 						#FREE_BOOSTER = gettimetick(2);
@@ -110,7 +110,7 @@ function	script	F_Premmy	{
 						delitem 675, .vip_hunting[.@i];
 						vip_time (.vip_day[.@i] * 1440);
 						mes .npc$;
-						mes "Congratulations you just got "+.vip_day[.@i]+" days as ^f5b041Premium^000000.";
+						mes "Congratulations you just got "+.vip_day[.@i]+" days as Premmy.";
 						logmes "[Premmy Central] Comprou/Extendeu Premmy com Hunting Coins";
 						if(.vip_day[.@i] >= 30) {
 							#FREE_BOOSTER = gettimetick(2);

@@ -1,5 +1,5 @@
 
-prontera,148,195,4	script	Job Master	123,{
+sala_premmy,112,184,4	script	Job Master	10006,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
@@ -9,8 +9,7 @@ function	Require_Level	{
 		.@jlvl = getarg(1) - JobLevel;
 		mes "Level requirement:";
 		mes ((getarg(0)>1)? 
-			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
-			getarg(1)+"^000000 (^00bb00Job^000000)";
+			"Base : ^bb0000"+getarg(0)+"^000000 / ":"")+"Job : ^00bb00"+ getarg(1)+"^000000";
 		mes "You need " +
 			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 more base levels " + 
 				((.@jlvl > 0) ? "and " : "") : "") +
@@ -116,10 +115,6 @@ function	Job_Options	{
 	.@rebirth_possible = Can_Rebirth();
 	.@first_eac = .@eac&EAJ_BASEMASK;
 	.@second_eac = .@eac&EAJ_UPPERMASK;
-	// Note: These are already set in pc.c
-	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
-	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
-	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
 		
 	// From here on the jobmaster checks the current class
 	// and fills the the array `.@job_opt` with possible
@@ -441,14 +436,14 @@ OnInit:
 	.ThirdClass = false;			// Enable third classes?
 	.RebirthClass = true;			// Enable rebirth classes?
 	.SecondExpanded = false;		// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
-	.BabyNovice = false;	// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
+	.BabyNovice = false;			// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
 	.BabyClass = false;				// Enable Baby classes?
 	.BabyThird = false;				// Enable Baby third classes?
 	.BabyExpanded = false;			// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
 	.BabySummoner = false;			// Enable Baby Summoner?
 	.LastJob = true;				// Enforce linear class changes?
 	.SkillPointCheck = true;		// Force player to use up all skill points?
-	.Platinum = false;				// Get platinum skills automatically?
+	.Platinum = true;				// Get platinum skills automatically?
 	.GetJobEquip = true;			// Get job equipment (mostly weapons) on job change?
 
 	// Level Requirements

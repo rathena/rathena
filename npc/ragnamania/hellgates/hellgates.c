@@ -8,8 +8,9 @@
 	OnInit:
 		$@HG_PARTY_SIZE = 3;
 		$@HG_CONCURRENT_HGS = 0; 		// Number of open hell gates before they start being available for a second party
+		$@HG_MIN_LEVEL = 60; // Minimum base level to enter
 		
-		deletearray $@hg_instance_ids[0],127; 	// 127 is the maximum number of concurrent hell gates 
+		deletearray $@hg_instance_ids[0],getarraysize($@hg_instance_ids); 	// 127 is the maximum number of concurrent hell gates 
 		callfunc "hg_setmapflag","hell";
 		end;
 
@@ -19,14 +20,17 @@
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
 			warp @hg_map$,@hg_x,@hg_y;
+			sleep 500;
 			callfunc "hg_instance_destroy",.@hg_id;
 		}
 		end;
 
 	OnPcLogoutEvent:
-		if(getmapflag(strcharinfo(3),mf_hellgate,1)) {
+		if(getmapflag(strcharinfo(3),mf_hellgate)) {
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
+			sleep 500;
+			debugmes "chegou";
 			callfunc "hg_instance_destroy",.@hg_id;
 		}
 		end;
@@ -46,7 +50,7 @@
 // getd("$@"+strnpcinfo(4)+"Guardian") = 0 : The Guardian is Down and Warp is also down. Waiting respawn of the Guardian
 -	script	#hg_guardian	-1,{
 	if(getd("$@"+strnpcinfo(4)+"Guardian") == 1 ) {
-		if(getd("$@"+strnpcinfo(4)+"Party") == getcharid(1) && @hg_id > 0 && BaseLevel > 99) {
+		if(getd("$@"+strnpcinfo(4)+"Party") == getcharid(1) && @hg_id > 0 && BaseLevel >= @HG_MIN_LEVEL) {
 			progressbar "0xff0000",5;
 			set getvariableofinstance('hg_party_count,@hg_id), getvariableofinstance('hg_party_count,@hg_id) + 1;
 			if(getvariableofinstance('hg_party_count,@hg_id) <= $@HG_PARTY_SIZE) { //'
@@ -80,17 +84,16 @@
 	OnMinute55:
 		getmapxy(.@m$,.@x,.@y,BL_NPC);
 		if(getd("$@"+.@m$+"Guardian") < 2) {
-			monster .@m$,.@x,.@y,"Guardian",25004,1,strnpcinfo(0)+"::OnGuardianDead";
+			monster .@m$,.@x,.@y,"Guardian",25238,1,strnpcinfo(0)+"::OnGuardianDead",0,AI_NONE,DIR_SOUTH,0;
 			set getd("$@"+.@m$+"Guardian"), 2;
 		}
 		end;
 	
 	OnGuardianDead:
 		if(getattachedrid() == 0) {
-			monster .@m$,.@x,.@y,"Guardian",25004,1,strnpcinfo(0)+"::OnGuardianDead";
+			monster .@m$,.@x,.@y,"Guardian",25238,1,strnpcinfo(0)+"::OnGuardianDead",0,AI_NONE,DIR_SOUTH,0;
 			end;
 		}
-
 		initnpctimer;
 		if(getcharid(1) == 0) {
 			party_create(md5(getcharid(0)),getcharid(0),0,0);
@@ -106,8 +109,10 @@
 			set .@hg_id, callfunc("hg_create_instance");
 			setarray $@hg_instance_ids[getarraysize($@hg_instance_ids)],.@hg_id;
 			callfunc "hg_update_party_members",.@hg_id,1;
+			debugmes "Created instance for hell gates : Instance " + .@hg_id;
 		} else {
 			.@hg_id = $@hg_instance_ids[0];
+			debugmes "Attempting to enter hell gates instance " + .@hg_id;
 			deletearray $@hg_instance_ids[0],1;
 			callfunc "hg_update_party_members",.@hg_id,0;
 		}
@@ -209,7 +214,7 @@ OnInstanceInit:
 			instance_announce @hg_id,"The Lord of the Fallen will spawn at the altar in one minute",bc_map,0xFFFFFF,FW_BOLD,32,1;
 			.@hg_id = @hg_id;
 			sleep 60000;
-			monster instance_mapname("hell",.@hg_id),145,159,"Lord of the Fallen",25000,1,"hg_controller::OnDemonDead";
+			monster instance_mapname("hell",.@hg_id),144,159,"Lord of the Fallen",25000,1,"hg_controller::OnDemonDead";
 		}
 		end;
 
@@ -218,8 +223,18 @@ OnInstanceInit:
 		enablenpc instance_npcname("Tartarean Chest",.@hg_id);
 		enablenpc instance_npcname("#hg_warp_back",.@hg_id);
 		set getvariableofinstance('hg_winner_party, @hg_id), getcharid(1);//'
-		.@n$ = instance_npcname(strnpcinfo(0),.@hg_id);
-		specialeffect 901,AREA,.@n$;
+		donpcevent instance_npcname("Tartarean Chest",.@hg_id) + "::OnEnableNPC";
+		// .@n$ = instance_npcname(strnpcinfo(0),.@hg_id);
+		// specialeffect 901,AREA,.@n$;
+		end;
+
+	OnInstanceDestroy:
+		.@index = inarray($@hg_instance_ids,instance_id());
+		if(.@index > -1) {
+			debugmes "hg_update_queue : cleaning instance " + $@hg_instance_ids[.@index];
+			deletearray $@hg_instance_ids[.@index],1;
+			debugmes "hg_update_queue : new arraysize : " + getarraysize($@hg_instance_ids);
+		}
 		end;
 
 
@@ -230,19 +245,20 @@ OnInstanceInit:
 		.@n$	= getarg(3);
 		.@arg$	= getarg(4,"");
 
-		monster(instance_mapname("hell"),.@x,.@y,.@n$,.@id,1,.@arg$);
-		pcblockmove $@mobid[0],1;
+		monster(instance_mapname("hell"),.@x,.@y,.@n$,.@id,1,.@arg$,0,AI_NONE,DIR_SOUTH,0);
+		// pcblockmove $@mobid[0],1;
 		return;
 	}
 }
+
 
 hell,145,159,1	script	Tartarean Chest	25005,{
 	if(getcharid(1) != getvariableofinstance('hg_winner_party, @hg_id)) //'
 		end;
 
+	progressbar "0xFFFFFF",3;
+
 	if(!getvariableofinstance(getd("'hg_" + getcharid(0)),@hg_id)) {
-		progressbar "0xFFFFFF",3;
-		set getvariableofinstance(getd("'hg_" + getcharid(0)),@hg_id), 1;
 		getitem 30023,rand(1,6); //Bag of Manias
 		getitem 30027,rand(1,3); //Ragnamania Lootbox
 		getitem 675,rand(5,20); //Hunting Coins
@@ -274,6 +290,7 @@ hell,145,159,1	script	Tartarean Chest	25005,{
 				getitem .@item,1;
 				break;
 		}
+		set getvariableofinstance(getd("'hg_" + getcharid(0)),@hg_id), 1;
 		end;
 	} else {
 		mes strcharinfo(0);
@@ -285,6 +302,10 @@ hell,145,159,1	script	Tartarean Chest	25005,{
 		disablenpc instance_npcname(strnpcinfo(0));
 		end;
 
+	OnEnableNPC:
+		specialeffect 901,AREA,.@n$;
+		end;
+
 }
 
 
@@ -293,6 +314,7 @@ hell,147,164,1	script	#hg_warp_back	10007,{
 	.@hg_id = @hg_id;
 	callfunc "hg_clear_vars";
 	warp @hg_map$,@hg_x,@hg_y;
+	sleep 500;
 	callfunc "hg_instance_destroy",.@hg_id;
 	end;
 
@@ -311,6 +333,7 @@ hell,147,164,1	script	#hg_warp_back	10007,{
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
 			warp @hg_map$,@hg_x,@hg_y;
+			sleep 500;
 			callfunc "hg_instance_destroy",.@hg_id;
 		}
 		end;
@@ -333,7 +356,7 @@ function	script	hg_create_instance	{
 		dispbottom "Dungeon creation failed",0x0000CC;
 		end;
 	}
-	setarray $@hg_instance_ids[getarraysize($@hg_instance_ids)],.@hg_id;
+	// setarray $@hg_instance_ids[getarraysize($@hg_instance_ids)],.@hg_id;
 	
 	return .@hg_id;
 }
@@ -371,7 +394,7 @@ function	script	hg_setmapflag	{
 	if(.@m$ == "") return;
 
 	// Common mapflags (applies to both, arena and hell gates entrance maps)
-	setarray .hg_mapflags[0],mf_noteleport,mf_nowarp,mf_nobranch,mf_nosave,mf_nochat,mf_novending,mf_noicewall,mf_nosunmoonstarmiracle,mf_loadevent,mf_fullloot;
+	setarray .hg_mapflags[0],mf_noteleport,mf_nowarp,mf_nobranch,mf_nosave,mf_nochat,mf_novending,mf_noicewall,mf_nosunmoonstarmiracle,mf_loadevent,mf_pk,mf_fullloot;
 	for(.@i=0;.@i<getarraysize(.hg_mapflags);.@i++) {
 		setmapflag .@m$,.hg_mapflags[.@i];
 	}
@@ -391,7 +414,11 @@ function	script	hg_setmapflag	{
 		setmapflag .@m$, mf_notrade;
 		setmapflag .@m$, mf_nodrop;
 		setmapflag .@m$, mf_nopenalty;
-		setmapflag .@m$, mf_fog;
+		// setmapflag .@m$, mf_fog;
+
+
+
+		
 		// setmapflag .@m$, mf_player_dmg;
 		// setmapflag .@m$, mf_pc_dmg_weapon,50;
 		// setmapflag .@m$, mf_pc_dmg_magic,50;
