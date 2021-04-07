@@ -94,7 +94,7 @@ prontera,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 	mes "This is a great deal! Adventurer, it's a must-have item for people like you who ventures in dangerous places!";
 	next;
 	mes "[Heart Merchant]";
-	mes "If you become interested in it, Be sure to come back for the exchange. Okay?";
+	mes "If you become interested in it, be sure to come back for the exchange. Okay?";
 	close;
 	
 OnTouch:
