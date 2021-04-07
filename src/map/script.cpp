@@ -10567,7 +10567,7 @@ BUILDIN_FUNC(guildchangegm)
 
 /*==========================================
  * Spawn a monster:
- * *monster "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+ * *monster "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>,<dir>};
  *------------------------------------------*/
 BUILDIN_FUNC(monster)
 {
@@ -10580,6 +10580,8 @@ BUILDIN_FUNC(monster)
 	const char* event	= "";
 	unsigned int size	= SZ_SMALL;
 	enum mob_ai ai		= AI_NONE;
+	uint8 dir 			= 0; // Biali mob facing direction
+	int roam			= script_getnum(st,12);
 
 	struct map_session_data* sd;
 	int16 m;
@@ -10605,6 +10607,12 @@ BUILDIN_FUNC(monster)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
+	// Biali Mob facing direction
+	if (script_hasdata(st, 11))
+		dir = script_getnum(st, 11) % DIR_MAX;
+
+	if (!script_hasdata(st, 12))
+		roam = 1;
 
 	if (class_ >= 0 && !mobdb_checkid(class_)) {
 		ShowWarning("buildin_monster: Attempted to spawn non-existing monster class %d\n", class_);
@@ -10619,7 +10627,7 @@ BUILDIN_FUNC(monster)
 		m = map_mapname2mapid(mapn);
 
 	for(i = 0; i < amount; i++) { //not optimised
-		int mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai);
+		int mobid = mob_once_spawn(sd, m, x, y, str, class_, 1, event, size, ai, dir, roam); // biali mob facing direction
 
 		if (mobid)
 			mapreg_setreg(reference_uid(add_str("$@mobid"), i), mobid);
@@ -11569,6 +11577,39 @@ BUILDIN_FUNC(getunits)
 	script_pushint(st, size);
 	return SCRIPT_CMD_SUCCESS;
 }
+
+
+//Biali Clear Units (mobs) from a Map
+//clearunits("map name")
+//it does not remove mobs randomily spawned! only script mobs
+BUILDIN_FUNC(clearunits)
+{
+	struct block_list *bl = NULL;
+	struct map_session_data *sd = NULL;
+	char *command = (char *)script_getfuncname(st);
+	const char *str;
+	int16 m = -1;
+	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(BL_MOB));
+
+	str = script_getstr(st, 2);
+	if ((m = map_mapname2mapid(str)) < 0) {
+		script_pushint(st, -1);
+		st->state = END;
+		ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) ) {
+		if(bl->type == BL_MOB && m == bl->m)
+			if(!((TBL_MOB*)bl)->spawn )
+				unit_free(bl,CLR_OUTSIGHT);
+	}
+
+	mapit_free(iter);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 
 /*==========================================
  *------------------------------------------*/
@@ -26104,7 +26145,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(itemskill,"vi?"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(cooking,"i"),
-	BUILDIN_DEF(monster,"siisii???"),
+	BUILDIN_DEF(monster,"siisii?????"),
 	BUILDIN_DEF(getmobdrops,"i"),
 	BUILDIN_DEF(areamonster,"siiiisii???"),
 	BUILDIN_DEF(killmonster,"ss?"),
@@ -26134,6 +26175,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getunits, "i?"),
 	BUILDIN_DEF2(getunits, "getmapunits", "is?"),
 	BUILDIN_DEF2(getunits, "getareaunits", "isiiii?"),
+	BUILDIN_DEF(clearunits, "s"), //biali blackzone
 	BUILDIN_DEF(getareadropitem,"siiiiv"),
 	BUILDIN_DEF(enablenpc,"s"),
 	BUILDIN_DEF(disablenpc,"s"),

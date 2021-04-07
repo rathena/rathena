@@ -5357,6 +5357,7 @@ int do_init(int argc, char *argv[])
 	
 	map_do_init_msg();
 	do_init_path();
+	do_init_faction(); //Biali Faction system
 	do_init_atcommand();
 	do_init_battle();
 	do_init_instance();
@@ -5386,7 +5387,6 @@ int do_init(int argc, char *argv[])
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();
-	do_init_faction(); //Biali Faction system
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
 

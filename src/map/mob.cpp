@@ -683,7 +683,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int
 /*==========================================
  * Spawn a single mob on the specified coordinates.
  *------------------------------------------*/
-int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai)
+int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const char* mobname, int mob_id, int amount, const char* event, unsigned int size, enum mob_ai ai, uint8 dir /*= 0*/,int roam) //Biali spawn monster facing direction
 {
 	struct mob_data* md = nullptr;
 	int count, lv;
@@ -721,7 +721,19 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 			}
 		}	// end addition [Valaris]
 
+		// Biali Black Zone : Dungeon mobs must store their spawn location
+		//if(map_getmapflag(m,MF_BZ_DUNGEON)) {
+		md->roam = roam;
+		if(roam < 1){
+			md->spawnx = x;
+			md->spawny = y;
+		}
+		
 		mob_spawn(md);
+
+		// Biali spawn mob facing direction
+		if (dir != 0)
+			unit_setdir(&md->bl, dir);
 
 		if (mob_id < 0 && battle_config.dead_branch_active)
 			//Behold Aegis's masterful decisions yet again...
