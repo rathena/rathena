@@ -35,7 +35,7 @@ prontera,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
 		mes "But a lot of people are sad about the time limit, right? So I looked into it and prepared the <ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM>.";
 		next;
 		mes "[Heart Merchant]";
-		mes "<ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM> is an item that will prevent the lost of experience on death once by just bringing it ^EE0000regardless of the duration^000000. Of course, after death, the "+.@new_item_name$+" is consumed.";
+		mes "<ITEM>["+.@new_item_name$+"]<INFO>" + .@new_item + "</INFO></ITEM> is an item that will prevent the loss of experience on death once by just having it ^EE0000regardless of the duration^000000. Of course, after death, the "+.@new_item_name$+" is consumed.";
 		next;
 		select("Why are you exchanging it?");
 		mes "[Heart Merchant]";
