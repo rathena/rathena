@@ -15137,6 +15137,9 @@ BUILDIN_FUNC(sethomintimacy)
 
 	int32 value = script_getnum(st, 2);
 
+	if (value == 0) // Nothing to change
+		return SCRIPT_CMD_SUCCESS;
+
 	if (value > 0)
 		hom_increase_intimacy(hd, (uint32)value);
 	else
