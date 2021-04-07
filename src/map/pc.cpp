@@ -3157,8 +3157,8 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_SPL:
 		case SP_CON:
 		case SP_CRT:
-			if(sd->state.lr_flag != 2)
-				sd->indexed_bonus.param_bonus[type-SP_POW]+=val;
+			if (sd->state.lr_flag != 2)
+				sd->indexed_bonus.param_bonus[type - SP_POW + PARAM_POW] += val;
 			break;
 		case SP_ATK1:
 			if(!sd->state.lr_flag) {
