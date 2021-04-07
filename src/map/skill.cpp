@@ -1464,7 +1464,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_GRANDDARKNESS:
-		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		attack_type |= BF_WEAPON;
 		break;
 
@@ -4255,6 +4255,7 @@ static TIMER_FUNC(skill_timerskill){
 					// Fall through
 				case PR_STRECOVERY:
 				case BS_HAMMERFALL:
+				case MER_LEXDIVINA:
 					sc_start(src, target, status_skill2sc(skl->skill_id), skl->type, skl->skill_lv, skill_get_time2(skl->skill_id, skl->skill_lv));
 					break;
 				case WZ_WATERBALL:
@@ -5682,7 +5683,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case GC_CROSSIMPACT:
-		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 1, 1)) {
+		if (skill_check_unit_movepos(0, src, bl->x, bl->y, 1, 1)) {
 			skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_IGNORE_NO_KNOCKBACK); // Target position is actually one cell next to the target
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		} else {
@@ -12004,12 +12005,10 @@ TIMER_FUNC(skill_castend_id){
 				sd->canequip_tick = tick + skill_get_time(ud->skill_id, ud->skill_lv);
 				break;
 			case KN_BRANDISHSPEAR:
-			case KN_BOWLINGBASH:
-			case CR_GRANDCROSS:
-			case NPC_GRANDDARKNESS: {
+			case CR_GRANDCROSS: {
 				sc_type type;
 
-				if (ud->skill_id == KN_BRANDISHSPEAR || ud->skill_id == KN_BOWLINGBASH)
+				if (ud->skill_id == KN_BRANDISHSPEAR)
 					type = SC_STRIPWEAPON;
 				else
 					type = SC_STRIPSHIELD;

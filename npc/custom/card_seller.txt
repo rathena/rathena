@@ -40,10 +40,22 @@ OnInit:
 		.@mob_db$  = "mob_db";
 		.@item_db$ = "item_db";
 	}
-	freeloop 1;	
-	.@total = query_sql( "SELECT DISTINCT LEFT( `name_english`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND `name_aegis` IN ( SELECT DISTINCT `drop10_item` FROM `"+ .@mob_db$ +"` WHERE `mode_mvp` = 0 ) ORDER BY alphabets;", .@alphabet$ );
+	freeloop 1;
+	
+	.@string$ = "( `name_aegis` IN ( SELECT DISTINCT `drop1_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop2_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop3_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop4_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop5_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop6_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop7_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop8_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop9_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) " +
+		"OR `name_aegis` IN ( SELECT DISTINCT `drop10_item` FROM `" + .@mob_db$ + "` WHERE COALESCE(`mode_mvp`,0) = 0 ) )";
+
+	.@total = query_sql( "SELECT DISTINCT LEFT( `name_english`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND " + .@string$ + " ORDER BY alphabets;", .@alphabet$ );
 	for ( .@i = 0; .@i < .@total; .@i++ ) {
-		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id` FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND LEFT( `name_english`, 1 ) = '"+ .@alphabet$[.@i] +"' AND `name_aegis` IN ( SELECT DISTINCT `drop10_item` FROM `"+ .@mob_db$ +"` WHERE `mode_mvp` = 0 ) ORDER BY `name_english` LIMIT 128;", .@id );
+		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id` FROM `"+ .@item_db$ +"` WHERE `type` = 'Card' AND LEFT( `name_english`, 1 ) = '"+ .@alphabet$[.@i] +"' AND " + .@string$ + " ORDER BY `name_english` LIMIT 128;", .@id );
 		if (.@nb > 0) {
 			.alphabet$[.@size_alphabet++] = .@alphabet$[.@i];
 			.alphabet_menu$ = .alphabet_menu$ + .@alphabet$[.@i] +" Cards:";
