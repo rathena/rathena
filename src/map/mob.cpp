@@ -2808,6 +2808,30 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				drop_rate = 1;
 			}
 
+			//biali Black zone
+			if(map_getmapflag(m,MF_FULLLOOT))
+			{
+				struct map_data *mapdata = map_getmapdata(m);
+				switch(mapdata->fullloot.info[FULLLOOT_MAP_TIER]) {
+					case 5:
+						drop_rate = drop_rate*1.3;
+						break;
+					case 6:
+						drop_rate = drop_rate*1.5;
+						break;
+					case 7:
+						drop_rate = drop_rate*1.6;
+						break;
+					case 8:
+						drop_rate = drop_rate*1.75;
+						break;
+					default:
+						break;
+				}
+
+			}
+
+
 			// change drops depending on monsters size [Valaris]
 			if (battle_config.mob_size_influence) {
 				if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)

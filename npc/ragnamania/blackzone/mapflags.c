@@ -4,8 +4,7 @@ ars_fild01	mapflag	nobranch
 ars_fild01	mapflag	fullloot
 // ars_fild01	mapflag	nolockon
 //ars_fild01	mapflag	mob_dmg	100
-ars_fild01	mapflag	map_tier	50
-ars_fild01	mapflag	drop_rates	5
+ars_fild01	mapflag	fullloot	5
 ars_fild01	mapflag	bexp	120	120
 ars_fild01	mapflag	jexp	120	120
 ars_fild01	mapflag	loadevent
