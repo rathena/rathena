@@ -4224,12 +4224,14 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 					case PARAM_INT: base_status->int_++; break;
 					case PARAM_DEX: base_status->dex++; break;
 					case PARAM_LUK: base_status->luk++; break;
+#ifdef RENEWAL
 					case PARAM_POW: base_status->pow++; break;
 					case PARAM_STA: base_status->sta++; break;
 					case PARAM_WIS: base_status->wis++; break;
 					case PARAM_SPL: base_status->spl++; break;
 					case PARAM_CON: base_status->con++; break;
 					case PARAM_CRT: base_status->crt++; break;
+#endif
 				}
 			}
 		}
