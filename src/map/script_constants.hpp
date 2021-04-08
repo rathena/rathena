@@ -8119,6 +8119,9 @@
 	// Faction System Biali
 	export_constant(MF_FVF);
 
+	// Fullloot Biali
+	export_constant(MF_FULLLOOT);
+
 	// Contested Territories Biali
 	export_constant(MF_CONTESTED);
 	export_constant(CONTESTED_OWNER_ID);

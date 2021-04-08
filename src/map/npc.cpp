@@ -4106,6 +4106,17 @@ void npc_parse_mob2(struct spawn_data* mob)
 		struct mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
 		md->spawn->active++;
+
+		//biali random monster level in Blackzone
+		if(map_getmapflag(md->bl.m,MF_FULLLOOT) && md->db->lv > 1 ) {
+			struct map_data *m = map_getmapdata(md->bl.m);
+			//Biali TODO : convert this 5 into a battle_config so ppl can define different ranges for monster levels
+			int rand = rnd()%5;
+			md->level = (rnd()%2)? m->fullloot.info[FULLLOOT_MAP_TIER] + rand : m->fullloot.info[FULLLOOT_MAP_TIER] - rand;
+		}
+
+		md->roam = 1;
+
 		mob_spawn(md);
 	}
 }
@@ -4497,6 +4508,23 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				}
 				else {
 					ShowInfo("npc_parse_mapflag: atk_rate: Not sufficient values (file '%s', line '%d'). Skipping..\n", filepath, strline(buffer, start - buffer));
+				}
+			}
+			break;
+		}
+
+		case MF_FULLLOOT: {
+			union u_mapflag_args args = {};
+
+			if (!state)
+				map_setmapflag_sub(m, MF_FULLLOOT, false, &args);
+			else {
+				if (sscanf(w4, "%d", &args.fullloot.info[FULLLOOT_MAP_TIER]) == 1)
+				{
+					map_setmapflag_sub(m, MF_FULLLOOT, true, &args);
+				}
+				else {
+					ShowInfo("npc_parse_mapflag: fullloot: Not sufficient values (file '%s', line '%d'). Skipping..\n", filepath, strline(buffer, start - buffer));
 				}
 			}
 			break;

@@ -4658,6 +4658,15 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				default:
 					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 			}
+		case MF_FULLLOOT:
+			nullpo_retr(-1, args);
+
+			switch (args->flag_val) {
+				case FULLLOOT_MAP_TIER:
+					return mapdata->fullloot.info[args->flag_val];
+				default:
+					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+			}
 		case MF_CONTESTED:
 			nullpo_retr(-1, args);
 
@@ -4957,6 +4966,21 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				}
 
 				memcpy(&mapdata->atk_rate, &args->atk_rate, sizeof(struct s_global_damage_rate));
+			}
+			mapdata->flag[mapflag] = status;
+			break;
+		case MF_FULLLOOT:
+			if (!status)
+				mapdata->atk_rate = {};
+			else {
+				nullpo_retr(false, args);
+
+				if (!args->fullloot.info[FULLLOOT_MAP_TIER]) {
+					ShowError("map_setmapflag: fullloot without map tier for map %s.\n", mapdata->name);
+					return false;
+				}
+
+				memcpy(&mapdata->fullloot, &args->fullloot, sizeof(struct s_fullloot));
 			}
 			mapdata->flag[mapflag] = status;
 			break;

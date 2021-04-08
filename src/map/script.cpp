@@ -12881,6 +12881,9 @@ BUILDIN_FUNC(getmapflag)
 			case MF_CONTESTED:
 				args.flag_val = CONTESTED_MAX;
 				break;
+			case MF_FULLLOOT:
+				args.flag_val = FULLLOOT_MAX;
+				break;
 		}
 	}
 	else
@@ -12952,6 +12955,14 @@ BUILDIN_FUNC(setmapflag)
 				args.atk_rate.rate[script_getnum(st, 5)] = script_getnum(st, 4);
 			else {
 				ShowWarning("buildin_setmapflag: Unable to set atk_rate mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
+		case MF_FULLLOOT:
+			if (script_hasdata(st, 4))
+				args.fullloot.info[FULLLOOT_MAP_TIER] = script_getnum(st, 4);
+			else {
+				ShowWarning("buildin_setmapflag: Unable to set fullloot mapflag as map tier is missing.\n");
 				return SCRIPT_CMD_FAILURE;
 			}
 			break;

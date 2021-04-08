@@ -609,6 +609,7 @@ enum e_mapflag : int16 {
 	MF_PVP_CONSUME, // allows using PvP consumables
 	MF_FVF, // Biali Faction
 	MF_ATK_RATE, // Biali Global Dmg Adjustment
+	MF_FULLLOOT, // Biali Fullloot
 	MF_CONTESTED, // Biali Contested Territories
 	MF_WOE_SET, // Biali eAmod WoE
 	MF_BLOCKED, // Biali eAmod WoE
@@ -682,6 +683,17 @@ struct s_global_damage_rate {
 	int rate[DMGRATE_MAX];
 };
 
+/// Enum of fullloot [biali]
+enum e_fullloot_type : uint8 {
+	FULLLOOT_MAP_TIER,
+	FULLLOOT_MAX,
+};
+
+// fullloot maps Biali
+struct s_fullloot {
+	int info[FULLLOOT_MAX];
+};
+
 /// Enum of contested territories bonus types biali
 enum e_contested_info_type : uint8 {
 	CONTESTED_OWNER_ID,
@@ -703,6 +715,7 @@ union u_mapflag_args {
 	struct s_skill_damage skill_damage;
 	struct s_skill_duration skill_duration;
 	struct s_global_damage_rate atk_rate;
+	struct s_fullloot fullloot; //fullloot biali
 	struct s_contested_bonuses contested; //Contested Territories Biali
 	struct s_faction_data faction_data; //biali faction system : keeps faction related bonuses on each map
 	int flag_val;
@@ -812,6 +825,7 @@ struct map_data {
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
 	struct s_global_damage_rate atk_rate; // Global Damage [Cydh]
+	struct s_fullloot fullloot; // fullloot biali
 	struct s_contested_bonuses contested;
 	struct s_faction_data faction_data; // Biali Faction System
 

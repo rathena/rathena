@@ -4394,6 +4394,11 @@ ACMD_FUNC(mapinfo) {
 			clif_displaymessage(fd,atcmd_output);
 		}
 	}
+	if (map_getmapflag_sub(m_id, MF_FULLLOOT, NULL)) {
+		sprintf(atcmd_output," Full-loot PvP Map Tier %d%% |",
+			mapdata->fullloot.info[FULLLOOT_MAP_TIER]);
+		clif_displaymessage(fd,atcmd_output);
+	}
 
 	clif_displaymessage(fd, atcmd_output);
 
