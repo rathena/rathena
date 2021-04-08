@@ -14709,12 +14709,17 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_VACUUM_EXTREME:
-		if (sce->val4) {
-			if (unit_movepos(bl, sce->val3>>16, sce->val3&0xFFFF, 0, false)) {
-				clif_slide(bl, sce->val3>>16, sce->val3&0xFFFF);
-				clif_fixpos(bl);
+		if (sce->val4 >= 0) {
+			// Only slide targets to center if they are standing still
+			if (unit_bl2ud(bl)->walktimer == INVALID_TIMER) {
+				uint16 x = sce->val3 >> 16, y = sce->val3 & 0xFFFF;
+
+				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(status_sc2skill(type), sce->val1) && unit_movepos(bl, x, y, 0, false)) {
+					clif_slide(bl, x, y);
+					clif_fixpos(bl);
+				}
 			}
-			sc_timer_next(tick+sce->val4);
+			sc_timer_next(tick + sce->val4);
 			sce->val4 = 0;
 		}
 		break;
