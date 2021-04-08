@@ -322,8 +322,6 @@ struct Battle_Config
 	int dead_branch_active;
 	int vending_max_value;
 	int vending_over_max;
-	int vending_tax;
-	int vending_tax_min;
 	int show_steal_in_same_party;
 	int party_share_type;
 	int party_hp_mode;
@@ -692,6 +690,7 @@ struct Battle_Config
 	int mercenary_autoloot;
 	int mer_idle_no_share;
 	int idletime_mer_option;
+	int display_tax_info;
 
 #include "../custom/battle_config_struct.inc"
 };

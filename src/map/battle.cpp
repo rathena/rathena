@@ -8944,8 +8944,6 @@ static const struct _battle_data {
 	{ "hom_rename",                         &battle_config.hom_rename,                      0,      0,      1,              },
 	{ "homunculus_show_growth",             &battle_config.homunculus_show_growth,          0,      0,      1,              },
 	{ "homunculus_friendly_rate",           &battle_config.homunculus_friendly_rate,        100,    0,      INT_MAX,        },
-	{ "vending_tax",                        &battle_config.vending_tax,                     0,      0,      10000,          },
-	{ "vending_tax_min",                    &battle_config.vending_tax_min,                 0,      0,      MAX_ZENY,       },
 	{ "day_duration",                       &battle_config.day_duration,                    0,      0,      INT_MAX,        },
 	{ "night_duration",                     &battle_config.night_duration,                  0,      0,      INT_MAX,        },
 	{ "mob_remove_delay",                   &battle_config.mob_remove_delay,                60000,  1000,   INT_MAX,        },
@@ -9161,6 +9159,7 @@ static const struct _battle_data {
 	{ "mercenary_autoloot",                 &battle_config.mercenary_autoloot,              0,      0,      1,              },
 	{ "mer_idle_no_share" ,                 &battle_config.mer_idle_no_share,               0,      0,      INT_MAX,        },
 	{ "idletime_mer_option",                &battle_config.idletime_mer_option,             0x1F,   0x1,    0xFFF,          },
+	{ "display_tax_info",                   &battle_config.display_tax_info,                0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
