@@ -22,3 +22,350 @@
 Header:
   Type: REFINE_DB
   Version: 1
+
+###########################################################################
+# Event Refine Rates
+###########################################################################
+#Body:
+#  - Group: Armor
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 95
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 50
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 50
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 35
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 16
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 16
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 15
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 15
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 14
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 14
+#          - Level: 19
+#            Chances:
+#              - Type: Normal
+#                Rate: 10
+#          - Level: 20
+#            Chances:
+#              - Type: Normal
+#                Rate: 10
+#  - Group: Weapon
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 95
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 85
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 55
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 40
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 40
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 35
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 35
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 30
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 30
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#      - Level: 2
+#        RefineLevels:
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 95
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 85
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 60
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 45
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 40
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 40
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 35
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 35
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 30
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 30
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#      - Level: 3
+#        RefineLevels:
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 95
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 90
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 70
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 60
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 45
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 40
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 40
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 35
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 35
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 30
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 30
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#      - Level: 4
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 95
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 60
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 50
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 35
+#          - Level: 11
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#          - Level: 12
+#            Chances:
+#              - Type: Normal
+#                Rate: 20
+#          - Level: 13
+#            Chances:
+#              - Type: Normal
+#                Rate: 16
+#          - Level: 14
+#            Chances:
+#              - Type: Normal
+#                Rate: 16
+#          - Level: 15
+#            Chances:
+#              - Type: Normal
+#                Rate: 15
+#          - Level: 16
+#            Chances:
+#              - Type: Normal
+#                Rate: 15
+#          - Level: 17
+#            Chances:
+#              - Type: Normal
+#                Rate: 14
+#          - Level: 18
+#            Chances:
+#              - Type: Normal
+#                Rate: 14
+#          - Level: 19
+#            Chances:
+#              - Type: Normal
+#                Rate: 10
+#          - Level: 20
+#            Chances:
+#              - Type: Normal
+#                Rate: 10
+#  - Group: Shadow_Armor
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 95
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 50
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 50
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 35
+#  - Group: Shadow_Weapon
+#    Levels:
+#      - Level: 1
+#        RefineLevels:
+#          - Level: 5
+#            Chances:
+#              - Type: Enriched
+#                Rate: 95
+#          - Level: 6
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 7
+#            Chances:
+#              - Type: Enriched
+#                Rate: 80
+#          - Level: 8
+#            Chances:
+#              - Type: Enriched
+#                Rate: 50
+#          - Level: 9
+#            Chances:
+#              - Type: Enriched
+#                Rate: 50
+#          - Level: 10
+#            Chances:
+#              - Type: Enriched
+#                Rate: 35

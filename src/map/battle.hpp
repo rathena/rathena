@@ -646,7 +646,6 @@ struct Battle_Config
 	int guild_alliance_onlygm;
 	int feature_achievement;
 	int allow_bound_sell;
-	int event_refine_chance;
 	int autoloot_adjust;
 	int feature_petevolution;
 	int feature_pet_autofeed;
