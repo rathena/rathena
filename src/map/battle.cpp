@@ -3632,8 +3632,8 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				}
 #endif
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
-					i = party_foreachsamemap(party_sub_count, sd, 0) - 1; // Bonus Attack multiplier based on party members count doesn't include own player [Tydus1] [Inkfish]
-					if( i > 0 ) { 
+					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Tydus1][Inkfish] 
+						i--;
 						ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
 						RE_ALLATK_ADDRATE(wd, 2*skill*i);
 					}
