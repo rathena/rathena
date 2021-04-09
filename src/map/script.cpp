@@ -9215,7 +9215,7 @@ BUILDIN_FUNC(getequippercentrefinery)
 			return SCRIPT_CMD_SUCCESS;
 		}
 
-		script_pushint( st, cost->chance );
+		script_pushint( st, cost->chance / 100 );
 	}
 	else
 		script_pushint(st,0);

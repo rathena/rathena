@@ -17715,7 +17715,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				return;
 			}
 
-			per = cost->chance;
+			per = ( cost->chance / 100 );
 			if( sd->class_&JOBL_THIRD )
 				per += 10;
 			else

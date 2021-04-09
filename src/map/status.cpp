@@ -255,7 +255,7 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 							if( this->nodeExists( chanceNode, "Rate" ) ){
 								uint16 rate;
 
-								if( !this->asUInt16( chanceNode, "Rate", rate ) ){
+								if( !this->asUInt16Rate( chanceNode, "Rate", rate ) ){
 									return 0;
 								}
 
@@ -309,7 +309,7 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 							if( this->nodeExists( chanceNode, "BreakingRate" ) ){
 								uint16 breaking_rate;
 
-								if( !this->asUInt16Rate( chanceNode, "BreakingRate", breaking_rate, 100 ) ){
+								if( !this->asUInt16Rate( chanceNode, "BreakingRate", breaking_rate ) ){
 									return 0;
 								}
 
