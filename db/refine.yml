@@ -16,6 +16,28 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
+# Refine Database
+###########################################################################
+#
+# Refine Settings
+#
+###########################################################################
+# - Group                               Refine item type.
+#   Levels:                             Refinement settings per item level. (Default: null)
+#     - Level                           Item level.
+#       RefineLevels:                   Refinement settings per refine level. (Default: null)
+#         - Level                       Refine level.
+#           Bonus                       Refinement bonus. (Default: 0)
+#           RandomBonus                 Extra refinement bonus of 0~RandomBonus stacked on Bonus. (Default: 0)
+#           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
+#           Chances:                    Success chance based on cost type. (Default: null)
+#             - Type                    Refinement cost type based on ore used.
+#               Rate                    Chance of success out of 0~100. (Default: 0)
+#               Price                   Amount of zeny required to refine. (Default: 0)
+#               Material                Ore item required to refine. (Default: 0)
+#               BreakingRate            Chance of item breaking out of 0~100. (Default: 0)
+#               DowngradeAmount         Number of refine levels reduced on failure. (Default: 0)
+###########################################################################
 
 Header:
   Type: REFINE_DB
