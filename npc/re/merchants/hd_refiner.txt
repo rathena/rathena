@@ -109,15 +109,15 @@
 			setarray .@menu$[1], "Yes", "Not yet";
 		else {
 			mes "[Blacksmith Mighty Hammer]";
-			mes "Ah! is it the ^0000ffBlacksmith Blessing^000000?";
-			mes "With the Blacksmith Blessing, the equipment won't vanish if the refine is failed!";
+			mes "Ah! Is it the ^0000ffBlacksmith Blessing^000000?";
+			mes "With the Blacksmith Blessing, the equipment won't vanish if the refine fails!";
 			next;
 			mes "[Blacksmith Mighty Hammer]";
 			.@weapon_lvl = getequipweaponlv(.@part);
 			if (.@weapon_lvl < 1 || .@weapon_lvl > 4)
-				mes "For +" + getequiprefinerycnt(.@part) + " equipment, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment to be vanished. Do you want use it to refine?";
+				mes "For +" + getequiprefinerycnt(.@part) + " equipment, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment from vanishing. Do you want use it to refine?";
 			else
-				mes "For +" + getequiprefinerycnt(.@part) + " weapon, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment to be vanished. Do you want use it to refine?";
+				mes "For +" + getequiprefinerycnt(.@part) + " weapon, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment from vanishing. Do you want use it to refine?";
 			next;
 			setarray .@menu$[0], "Use it to refine", "Refine directly without it", "Don't refine yet";
 		}
@@ -305,10 +305,10 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 		}
 		else {
 			mes "[Basta]";
-			mes "Woh~ is it the ^316AC5Blacksmith Blessing^000000? It is difficult to get it~ But, you has get it!";
+			mes "Woah~ Is it the ^316AC5Blacksmith Blessing^000000? It is difficult to get~ But, you have it!";
 			next;
 			mes "[Basta]";
-			mes "For +" + .@refine_count + " " + .@type$ + " need ^316AC5" + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment is vanished. Do you want to refine with Blacksmith Blessing?";
+			mes "For +" + .@refine_count + " " + .@type$ + " need ^316AC5" + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment from vanishing. Do you want to refine with Blacksmith Blessing?";
 			next;
 			setarray .@menu$[0], "Refine with Blacksmith Blessing", "Refine without Blacksmith Blessing", "Don't refine yet";
 		}
@@ -365,7 +365,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 		mes "Aaaaaaaaaaak!!!";
 		next;
 		mes "[Basta]";
-		mes "Refining is failed!";
+		mes "Refining has failed!";
 		mes "The best blacksmith in the world like me...";
 		mes "doesn't guarantee 100% success~";
 	}
@@ -378,7 +378,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 		next;
 		mes "[Basta]";
 		mes "Damn it!";
-		mes "Refining failed and refine level has decreased!";
+		mes "Refining has failed and refine level has decreased!";
 		mes "Even the best blacksmith in the world doesn't guarantee 100% success!";
 	}
 	mes "Too bad.";

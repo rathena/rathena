@@ -526,7 +526,7 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 prt_in,63,60,0	script	Hollgrehenn	4_M_03,{
 	if( getbattleflag( "feature.refineui" ) ){
 		mes "[Hollgrehenn]";
-		mes "I'm a blacksmith who can refine the weapon and equipment.";
+		mes "I'm a blacksmith who can refine weapons and equipment.";
 		mes "Do you have any items that you'd like to refine?";
 		close2;
 		refineui();

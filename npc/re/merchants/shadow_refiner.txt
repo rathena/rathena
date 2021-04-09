@@ -12,8 +12,8 @@
 -	script	::ShadowBlacksmith	-1,{
 	if( getbattleflag( "feature.refineui" ) ){
 		mes "[Shadow Blacksmith]";
-		mes "Now Basta is in charge of refinement for shadow item as well.";
-		mes "If you'd like to refine shadow item, please visit him.";
+		mes "Now Basta is in charge of refinement for shadow items.";
+		mes "If you'd like to refine a shadow item, please visit him.";
 		close;
 	}
 
