@@ -1100,6 +1100,30 @@ int chrif_deadopt(uint32 father_id, uint32 mother_id, uint32 child_id) {
 	return 0;
 }
 
+// biali damage log
+/*==========================================
+ * Ranking Reset
+ *------------------------------------------*/
+int chrif_ranking_reset(int type)
+{
+	chrif_check(-1);
+
+	WFIFOHEAD(char_fd,4);
+	WFIFOW(char_fd,0) = 0x2b30;
+	WFIFOW(char_fd,2) = type;
+	WFIFOSET(char_fd,4);
+
+	return 0;
+}
+
+int chrif_ranking_reset_ack(int type)
+{
+	pc_ranking_reset(type, false);
+	return 0;
+}
+
+// fim biali damage log
+
 /*==========================================
  * Disconnection of a player (account has been banned of has a status, from login/char-server) by [Yor]
  *------------------------------------------*/
@@ -1205,7 +1229,7 @@ int chrif_disconnectplayer(int fd) {
 /*==========================================
  * Request/Receive top 10 Fame character list
  *------------------------------------------*/
-int chrif_updatefamelist(struct map_session_data* sd) {
+int chrif_updatefamelist(struct map_session_data* sd, short flag) {
 	char type;
 
 	chrif_check(-1);
@@ -1513,6 +1537,21 @@ int chrif_char_online(struct map_session_data *sd) {
 	WFIFOL(char_fd,2) = sd->status.char_id;
 	WFIFOL(char_fd,6) = sd->status.account_id;
 	WFIFOSET(char_fd,10);
+
+	return 0;
+}
+
+/*=========================================
+ * Request to create a Backup file of a char_id
+ *-----------------------------------------*/
+int chrif_char2dumpfile(int char_id)
+{
+	chrif_check(-1);
+
+	WFIFOHEAD(char_fd,6);
+	WFIFOW(char_fd,0) = 0x2b35;
+	WFIFOL(char_fd,2) = char_id;
+	WFIFOSET(char_fd,6);
 
 	return 0;
 }

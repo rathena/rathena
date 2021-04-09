@@ -1269,6 +1269,9 @@ enum npce_event : uint8 {
 	NPCE_DIE,
 	NPCE_KILLPC,
 	NPCE_KILLNPC,
+	NPCE_STATCALC,
+	NPCE_ITEMUSED,
+	NPCE_BASEEXPGAIN, //Biali Adventurer Quest
 	NPCE_MAX
 };
 struct view_data* npc_get_viewdata(int class_);

@@ -80,6 +80,13 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 void log_atcommand(struct map_session_data* sd, const char* message);
 void log_feeding(struct map_session_data *sd, e_log_feeding_type type, t_itemid nameid);
 
+//biali damage log
+void log_bg_kill(struct map_session_data* ssd, struct map_session_data* tsd, uint16 skill_id, int assists);
+void log_woe_kill(struct map_session_data* ssd, struct map_session_data* tsd, uint16 skill_id);
+void log_pk_kill(struct map_session_data* ssd, struct map_session_data* tsd, uint16 skill_id, int assists);
+void log_pvp_kill(struct map_session_data* ssd, struct map_session_data* tsd, uint16 skill_id, int assists);
+
+
 /// old, but useful logs
 void log_branch(struct map_session_data* sd);
 void log_mvpdrop(struct map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp);

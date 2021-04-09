@@ -9541,6 +9541,11 @@ void clif_marriage_proposal(int fd, struct map_session_data *sd, struct map_sess
 }
 */
 
+// biali damage log
+void clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len)
+{
+	clif_disp_message(&sd->bl, mes, len, SELF);
+}
 
 /*==========================================
  * Displays a message using the guild-chat colors to the specified targets. [Skotlex]
@@ -15880,6 +15885,7 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 }
 
 
+
 /// Notification about the result of retrieving a mail attachment
 /// 0245 <result>.B (ZC_MAIL_REQ_GET_ITEM)
 /// result:
@@ -20032,6 +20038,53 @@ void clif_parse_Alchemist( int fd, struct map_session_data *sd ){
 void clif_parse_Taekwon( int fd, struct map_session_data *sd ){
 	clif_ranklist(sd,RANK_TAEKWON);
 }
+
+//biali damage log
+/// /pk list (ZC_KILLER_RANK).
+/// 0238 { <name>.24B }*10 { <point>.L }*10
+void clif_ranking_pk(struct map_session_data* sd)
+{
+	int i, fd = sd->fd;
+	const char* name;
+
+	WFIFOHEAD(fd,packet_len(0x238));
+	WFIFOW(fd,0) = 0x238;
+	for(i = 0;i < 10 && i < MAX_FAME_LIST; i++) {
+		if (pvprank_fame_list[i].id > 0) {
+			if (strcmp(pvprank_fame_list[i].name, "-") == 0 &&
+				(name = map_charid2nick(pvprank_fame_list[i].id)) != NULL)
+			{
+				memcpy(WFIFOP(fd, i * 24 + 2), name, NAME_LENGTH);
+			} else
+				memcpy(WFIFOP(fd, i * 24 + 2), pvprank_fame_list[i].name, NAME_LENGTH);
+		} else
+			memcpy(WFIFOP(fd,i*24+2), "None", NAME_LENGTH);
+		WFIFOL(fd,i * 4 + 242) = pvprank_fame_list[i].fame;
+	}
+	for(;i < 10; i++) { //In case the MAX is less than 10.
+		memcpy(WFIFOP(fd, i * 24 + 2), "Unavailable", NAME_LENGTH);
+		WFIFOL(fd, i * 4 + 242) = 0;
+	}
+	WFIFOSET(fd, packet_len(0x238));
+}
+
+void clif_rank_info(struct map_session_data *sd, int points, int total, int flag)
+{
+	char message[100];
+	if( points <= 0 )
+		return;
+
+	if( !flag )
+	{
+		sprintf(message, "[Your Player Killer Rank +%d = %d points]", points, total);
+		clif_specialeffect(&sd->bl,9,AREA);
+	}
+	else
+		sprintf(message, "[Your Battleground Rank +%d = %d points]", points, total);
+
+	clif_displaymessage(sd->fd, message);
+}
+//biali fim damage log
 
 /// Request for the killer ranklist.
 /// /pk command sends this packet to the server.

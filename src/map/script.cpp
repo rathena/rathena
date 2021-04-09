@@ -267,6 +267,9 @@ struct Script_Config script_config = {
 	"OnPCLoadMapEvent", //loadmap_event_name
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
+	"OnPCBaseExpGain", //baseexpgain_event_name - Biali Adventurer Quest
+	"OnPCStatCalcEvent", //stat_calc_event_name
+	"OnItemUsed",
 	// NPC related
 	"OnTouch_",	//ontouch_event_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_event_name (run whenever a char walks into the OnTouch area)
@@ -25946,6 +25949,191 @@ BUILDIN_FUNC(contestedoff)
 	return 0;
 }
 
+
+// Biali
+/*==========================================
+ * Hunting Missions [Zephyrus]
+ *------------------------------------------*/
+BUILDIN_FUNC(mission_sethunting)
+{
+	TBL_PC* sd;
+
+	if( !script_rid2sd(sd) )
+		return SCRIPT_CMD_SUCCESS;
+
+//	struct map_session_data *sd = script_rid2sd(st);
+	int index, i;
+	char varname[32];
+
+	if( sd == NULL )
+		return 0;
+
+	index = script_getnum(st,2);
+	if( index < 1 || index > 5 )
+		return 0; // Invalid Index
+
+	i = index - 1;
+
+	sprintf(varname, "Mission_ID%d", index);
+	sd->hunting[i].mob_id = script_getnum(st,3);
+	pc_setglobalreg(sd, add_str(varname), sd->hunting[i].mob_id);
+
+	sprintf(varname, "Mission_Count%d", index);
+	sd->hunting[i].count = script_getnum(st,4);
+	pc_setglobalreg(sd, add_str(varname), sd->hunting[i].count);
+
+	return 0;
+}
+
+BUILDIN_FUNC(mission_settime)
+{
+//	struct map_session_data *sd = script_rid2sd(st);
+
+	TBL_PC* sd;
+
+	if( sd == NULL )
+		return 0;
+
+	sd->hunting_time = script_getnum(st,2);
+	pc_setglobalreg(sd, add_str("Mission_Tick"), sd->hunting_time);
+
+	return 0;
+}
+
+// Biali
+BUILDIN_FUNC(getpartyshare) {
+	int party_id;
+	struct party_data* p;
+	party_id = script_getnum(st,2);
+	if( ( p = party_search(party_id) ) != NULL )
+		script_pushint(st,p->party.exp);
+	else
+		script_pushint(st,0);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+* Costume Items
+*------------------------------------------*/
+BUILDIN_FUNC(costume)
+{
+	int i = -1, num, ep;
+	TBL_PC *sd;
+
+	num = script_getnum(st, 2); // Equip Slot
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_FAILURE;
+
+	if (equip_index_check(num))
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	if (i < 0)
+		return SCRIPT_CMD_FAILURE;
+
+	ep = sd->inventory.u.items_inventory[i].equip;
+	if (!(ep&EQP_HEAD_LOW) && !(ep&EQP_HEAD_MID) && !(ep&EQP_HEAD_TOP) && !(ep&EQP_GARMENT)) {
+		ShowError("buildin_costume: Attempted to convert non-cosmetic item to costume.");
+		return SCRIPT_CMD_FAILURE;
+	}
+	log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
+	pc_unequipitem(sd, i, 2);
+	clif_delitem(sd, i, 1, 3);
+	// --------------------------------------------------------------------
+	sd->inventory.u.items_inventory[i].refine = 0;
+	sd->inventory.u.items_inventory[i].attribute = 0;
+	sd->inventory.u.items_inventory[i].card[0] = CARD0_CREATE;
+	sd->inventory.u.items_inventory[i].card[1] = 0;
+	sd->inventory.u.items_inventory[i].card[2] = GetWord(battle_config.reserved_costume_id, 0);
+	sd->inventory.u.items_inventory[i].card[3] = GetWord(battle_config.reserved_costume_id, 1);
+
+	if (ep&EQP_HEAD_TOP) { ep &= ~EQP_HEAD_TOP; ep |= EQP_COSTUME_HEAD_TOP; }
+	if (ep&EQP_HEAD_LOW) { ep &= ~EQP_HEAD_LOW; ep |= EQP_COSTUME_HEAD_LOW; }
+	if (ep&EQP_HEAD_MID) { ep &= ~EQP_HEAD_MID; ep |= EQP_COSTUME_HEAD_MID; }
+	if (ep&EQP_GARMENT) { ep &= EQP_GARMENT; ep |= EQP_COSTUME_GARMENT; }
+	// --------------------------------------------------------------------
+	log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->inventory.u.items_inventory[i]);
+
+	clif_additem(sd, i, 1, 0);
+	pc_equipitem(sd, i, ep);
+	clif_misceffect(&sd->bl, 3);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*===============================
+ * getcostumeitem <item id>;
+ * getcostumeitem <"item name">;
+ *===============================*/
+BUILDIN_FUNC(getcostumeitem)
+{
+	unsigned short nameid;
+	struct item item_tmp;
+	TBL_PC *sd;
+	struct script_data *data;
+
+	if (!script_rid2sd(sd))
+	{	// No player attached.
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	data = script_getdata(st, 2);
+	get_val(st, data);
+	if (data_isstring(data)) {
+		int ep;
+		const char *name = conv_str(st, data);
+		struct item_data *item_data = itemdb_searchname(name);
+		if (item_data == NULL)
+		{	//Failed
+			script_pushint(st, 0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+		ep = item_data->equip;
+		if (!(ep&EQP_HEAD_LOW) && !(ep&EQP_HEAD_MID) && !(ep&EQP_HEAD_TOP) && !(ep&EQP_GARMENT)){
+			ShowError("buildin_getcostumeitem: Attempted to convert non-cosmetic item to costume.");
+			return SCRIPT_CMD_FAILURE;
+		}
+		nameid = item_data->nameid;
+	}
+	else
+		nameid = conv_num(st, data);
+
+	if (!itemdb_exists(nameid))
+	{	// Item does not exist.
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	memset(&item_tmp, 0, sizeof(item_tmp));
+	item_tmp.nameid = nameid;
+	item_tmp.amount = 1;
+	item_tmp.identify = 1;
+	item_tmp.card[0] = CARD0_CREATE;
+	item_tmp.card[2] = GetWord(battle_config.reserved_costume_id, 0);
+	item_tmp.card[3] = GetWord(battle_config.reserved_costume_id, 1);
+	if (pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;	//Failed to add item, we will not drop if they don't fit
+	}
+
+	script_pushint(st, 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+//biali damage log
+/*==========================================
+ * Ranking Reset
+ *------------------------------------------*/
+BUILDIN_FUNC(rankreset)
+{
+	int type = script_getnum(st,2);
+	if( type >= 0 && type <= 2 )
+		pc_ranking_reset(type,true);
+
+	return 0;
+}
+
 // declarations that were supposed to be exported from npc_chat.cpp
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -26557,6 +26745,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(contestedon,"s"),
 	BUILDIN_DEF(contestedoff,"s"),
 	BUILDIN_DEF(contestedadjbonus,"siii"),
+
+	// Other Ragnamania custom commands
+	BUILDIN_DEF(mission_sethunting,"iii"),
+	BUILDIN_DEF(mission_settime,"i"),
+	BUILDIN_DEF(getpartyshare,"i"),
+	BUILDIN_DEF(costume, "i"),
+	BUILDIN_DEF(getcostumeitem, "v"),
+	BUILDIN_DEF(rankreset,"i"),
 
 	/**
 	 * rAthena and beyond!

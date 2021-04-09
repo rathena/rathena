@@ -722,7 +722,6 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 		}	// end addition [Valaris]
 
 		// Biali Black Zone : Dungeon mobs must store their spawn location
-		//if(map_getmapflag(m,MF_BZ_DUNGEON)) {
 		md->roam = roam;
 		if(roam < 1){
 			md->spawnx = x;
@@ -2529,8 +2528,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	unsigned int mvp_damage;
 	t_tick tick = gettick();
 	bool rebirth, homkillonly, merckillonly;
-	int contested_base_bonus = 100; //Biali Contested Territories
-	int contested_job_bonus = 100; //Biali Contested Territories
+	int contested_base_bonus = 0; //Biali Contested Territories
+	int contested_job_bonus = 0; //Biali Contested Territories
 	int contested_drop_bonus = 0; //Biali Contested Territories
 
 	status = &md->status;
@@ -2865,15 +2864,21 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if (sd->sc.data[SC_ITEMBOOST])
 					drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
 
+				// biali contested territories bonus
+				if(contested_drop_bonus)
+					drop_rate_bonus += contested_drop_bonus;
+
+				//biali : infamy gives players a boost in drop rates (max 10%)
+				if(sd->status.infamy && map_getmapflag(sd->bl.m,MF_FULLLOOT)) {
+					int infamy = (sd->status.infamy * 10) / MAX_INFAMY;
+					drop_rate_bonus += cap_value(infamy, 1, 1000);
+					// ShowWarning("infamy %d gave Bonus : %d \n",sd->status.infamy, (sd->status.infamy * 100)/MAX_INFAMY);
+				}
+
 				drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
 				// Now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = i32max(drop_rate, cap_value(drop_rate_bonus, 0, 9000));
 
-				// biali contested territories bonus
-				if(contested_drop_bonus) {
-					drop_rate += (int)(0.5 + drop_rate * contested_drop_bonus / 100.);
-					drop_rate = min(drop_rate,9000); //cap it to 90%
-				}
 
 				if (pc_isvip(sd)) { // Increase item drop rate for VIP.
 					drop_rate += (int)(0.5 + drop_rate * battle_config.vip_drop_increase / 100.);

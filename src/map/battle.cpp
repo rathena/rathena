@@ -9391,6 +9391,17 @@ static const struct _battle_data {
 	{ "reputation_neutral",                 &battle_config.reputation_neutral,            50000000, 0,     99999999,        },
 	{ "reputation_friendly",                &battle_config.reputation_neutral,            60000000, 0,     99999999,        },
 	{ "reputation_honored",                 &battle_config.reputation_neutral,            80000000, 0,     99999999,        },
+//	Infamy System
+	{ "infamy_given",					 	&battle_config.infamy_given,        	          7,    0,      100,            },
+	{ "infamy_taken",						&battle_config.infamy_taken,          	         10,    0,      100,            },
+	{ "infamy_from_mobs",					&battle_config.infamy_from_mobs,          	     10,    0,      INT_MAX,        },
+// Ragnamania battle log and others
+	{ "player_invincible_time_reset",       &battle_config.pc_invincible_time_reset,     120000, 	0,      INT_MAX,        },
+	{ "player_knocked_time",  		        &battle_config.pc_knocked_time, 	          20000,  	0,      INT_MAX,        },
+	{ "char_pk_log",  		                &battle_config.pk_log,                            0,    0,      1,              },
+	{ "char_bg_log",  		                &battle_config.bg_log,                            0,    0,      1,              },
+	{ "char_pvp_log",  		                &battle_config.pvp_log,              		      0,    0,      1,              },
+	{ "char_woe_log",  		                &battle_config.woe_log,               		      0,    0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

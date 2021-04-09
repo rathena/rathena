@@ -2892,24 +2892,19 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	int m, is_discount = 0;
 	uint16 dir;
 	short x, y;
-	t_itemid nameid = 0;
+	unsigned short nameid = 0;
 	struct npc_data *nd;
-	struct faction_data *fdb = NULL;
 	enum npc_subtype type;
 
-	char *t_p;
-	int faction_id = 0, faction_id2 = 0, discount = 0;
-	// int t_discount[MAX_FACTION];
-	// memset(t_discount, 0, sizeof(t_discount));
-	if( w1[0] == '-' )
+	if( strcmp(w1,"-") == 0 )
 	{// 'floating' shop?
 		x = y = dir = 0;
 		m = -1;
 	}
 	else
-	{// w1=<map name>,<x>,<y>,<facing>[,<Faction ID>]
+	{// w1=<map name>,<x>,<y>,<facing>
 		char mapname[MAP_NAME_LENGTH_EXT];
-		if((sscanf(w1, "%15[^,],%6hd,%6hd,%4hd,%4hd", mapname, &x, &y, &dir, &faction_id) != 5 && sscanf(w1, "%15[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4)
+		if( sscanf(w1, "%15[^,],%6hd,%6hd,%4hd", mapname, &x, &y, &dir) != 4
 		||	strchr(w4, ',') == NULL )
 		{
 			ShowError("npc_parse_shop: Invalid shop definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
@@ -2941,45 +2936,14 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	switch(type) {
 		case NPCTYPE_ITEMSHOP: {
-			if (sscanf(p,",%u:%11d,",&nameid,&is_discount) < 1) {
+			if (sscanf(p,",%5hu:%11d,",&nameid,&is_discount) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
 			if (itemdb_exists(nameid) == NULL) {
-				ShowWarning("npc_parse_shop: Invalid item ID cost in file '%s', line '%d' (id '%u').\n", filepath, strline(buffer,start-buffer), nameid);
+				ShowWarning("npc_parse_shop: Invalid item ID cost in file '%s', line '%d' (id '%hu').\n", filepath, strline(buffer,start-buffer), nameid);
 				return strchr(start,'\n'); // skip and continue
 			}
-
-			if( (p = strchr(w1,',[')) != NULL ) // [<Faction ID>:<Discount>]
-			{
-				int i;
-				if( (t_p = strchr(w1,']')) != NULL )
-				{
-					p++;
-					for( i = 0; i < MAX_FACTION && p; i++ )
-					{
-						if( sscanf(p, "%d:%d", &faction_id2, &discount) != 2 && sscanf(p, ",%d:%d", &faction_id2, &discount) != 2 )
-						{
-							ShowError("npc_parse_shop: Invalid discount definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n", filepath, strline(buffer,start-buffer), w1);
-							break;
-						}
-
-						if( (fdb = faction_search(faction_id2)) == NULL)
-						{
-							ShowWarning("npc_parse_shop: Invalid faction ID in file '%s', line '%d' (id '%d').\n", filepath, strline(buffer,start-buffer), faction_id2);
-							p = strchr(p+1,',');
-							continue;
-						}
-
-						cap_value(discount,battle_config.faction_disc_min,battle_config.faction_disc_max);
-						nd->u.shop.faction_discount[faction_id2] = discount;
-						//t_discount[faction_id2-1] = discount;
-						p = strchr(p+1,',');
-					}
-				}
-				else ShowWarning("npc_parse_shop: Invalid format: ']' column not found in file '%s', line '%d' .\n", filepath, strline(buffer,start-buffer));
-			}
-			
 			p = strchr(p+1,',');
 			break;
 		}
@@ -3012,28 +2976,14 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 #endif
 		default:
-			if( sscanf( p, ",%32[^,:]:%11d,", point_str, &is_discount ) == 2 ){
-				is_discount = 1;
-			}else{
-				if( !strcasecmp( point_str, "yes" ) ){
-					is_discount = 1;
-				}else if( !strcasecmp( point_str, "no" ) ){
-					is_discount = 0;
-				}else{
-					ShowError( "npc_parse_shop: unknown discount setting %s\n", point_str );
-					return strchr( start, '\n' ); // skip and continue
-				}
-
-				p = strchr( p + 1, ',' );
-			}
+			is_discount = 1;
 			break;
 	}
 	
 	nd = npc_create_npc(m, x, y);
 	nd->u.shop.count = 0;
 	while ( p ) {
-		t_itemid nameid2;
-		unsigned short qty = 0;
+		unsigned short nameid2, qty = 0;
 		int value;
 		struct item_data* id;
 		bool skip = false;
@@ -3043,14 +2993,14 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		switch(type) {
 			case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
-				if (sscanf(p, ",%u:%11d:%6hu", &nameid2, &value, &qty) != 3) {
+				if (sscanf(p, ",%6hu:%11d:%6hu", &nameid2, &value, &qty) != 3) {
 					ShowError("npc_parse_shop: (MARKETSHOP) Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
 					skip = true;
 				}
 #endif
 				break;
 			default:
-				if (sscanf(p, ",%u:%11d", &nameid2, &value) != 2) {
+				if (sscanf(p, ",%6hu:%11d", &nameid2, &value) != 2) {
 					ShowError("npc_parse_shop: Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
 					skip = true;
 				}
@@ -3061,7 +3011,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 
 		if( (id = itemdb_exists(nameid2)) == NULL ) {
-			ShowWarning("npc_parse_shop: Invalid sell item in file '%s', line '%d' (id '%u').\n", filepath, strline(buffer,start-buffer), nameid2);
+			ShowWarning("npc_parse_shop: Invalid sell item in file '%s', line '%d' (id '%hu').\n", filepath, strline(buffer,start-buffer), nameid2);
 			p = strchr(p+1,',');
 			continue;
 		}
@@ -3106,7 +3056,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		nd->u.shop.shop_item[nd->u.shop.count].value = value;
 #if PACKETVER >= 20131223
 		nd->u.shop.shop_item[nd->u.shop.count].flag = 0;
-		if (type == NPCTYPE_MARKETSHOP )
+		if (type == NPCTYPE_MARKETSHOP)
 			nd->u.shop.shop_item[nd->u.shop.count].qty = qty;
 #endif
 		nd->u.shop.count++;
@@ -3118,27 +3068,16 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// continue
 	}
 
-	if( faction_id && (fdb = faction_search(faction_id)) == NULL)
-	{
-		ShowWarning("npc_parse_shop: Invalid faction ID '%d' in file '%s', line '%d'.\n Defaulting to 0.\n", faction_id, filepath, strline(buffer,start-buffer));
-		faction_id = 0;
+	if (type != NPCTYPE_SHOP) {
+		if (type == NPCTYPE_ITEMSHOP) nd->u.shop.itemshop_nameid = nameid; // Item shop currency
+		else if (type == NPCTYPE_POINTSHOP) safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
+		nd->u.shop.discount = is_discount > 0;
 	}
-
-	if( type == NPCTYPE_ITEMSHOP ){
-		// Item shop currency
-		nd->u.shop.itemshop_nameid = nameid;
-	}else if( type == NPCTYPE_POINTSHOP ){
-		// Point shop currency
-		safestrncpy( nd->u.shop.pointshop_str, point_str, strlen( point_str ) + 1 );
-	}
-
-	nd->u.shop.discount = is_discount > 0;
 
 	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->class_ = m == -1 ? JT_FAKENPC : npc_parseview(w4, start, buffer, filepath);
 	nd->speed = 200;
 
-	nd->faction_id = faction_id;
 	++npc_shop;
 	nd->bl.type = BL_NPC;
 	nd->subtype = type;
@@ -4519,13 +4458,11 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			if (!state)
 				map_setmapflag_sub(m, MF_FULLLOOT, false, &args);
 			else {
-				if (sscanf(w4, "%d", &args.fullloot.info[FULLLOOT_MAP_TIER]) == 1)
-				{
-					map_setmapflag_sub(m, MF_FULLLOOT, true, &args);
+				if (sscanf(w4, "%11d", &args.flag_val) < 1) {
+					args.flag_val = 5;
+					ShowInfo("npc_parse_mapflag: fullloot: Not sufficient values (file '%s', line '%d'). Defaulting it to 5.\n", filepath, strline(buffer, start - buffer));
 				}
-				else {
-					ShowInfo("npc_parse_mapflag: fullloot: Not sufficient values (file '%s', line '%d'). Skipping..\n", filepath, strline(buffer, start - buffer));
-				}
+				map_setmapflag_sub(m, MF_FULLLOOT, true, &args);
 			}
 			break;
 		}
@@ -4790,6 +4727,12 @@ const char *npc_get_script_event_name(int npce_index)
 		return script_config.kill_pc_event_name;
 	case NPCE_KILLNPC:
 		return script_config.kill_mob_event_name;
+	case NPCE_STATCALC:
+		return script_config.stat_calc_event_name;
+	case NPCE_ITEMUSED:
+		return script_config.item_used_event_name;
+	case NPCE_BASEEXPGAIN: // Biali Adventurer Quest
+		return script_config.baseexpgain_event_name;
 	default:
 		ShowError("npc_get_script_event_name: npce_index is outside the array limits: %d (max: %d).\n", npce_index, NPCE_MAX);
 		return NULL;

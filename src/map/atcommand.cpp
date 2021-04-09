@@ -9411,6 +9411,25 @@ ACMD_FUNC(font)
 	return 0;
 }
 
+//biali
+/*==========================================
+ * Char Data Backup Generation.
+ *------------------------------------------*/
+ACMD_FUNC(char2dump)
+{
+	int char_id;
+
+	nullpo_retr(-1,sd);
+
+	if( (char_id = atoi(message)) <= 0 )
+		return -1;
+
+	chrif_char2dumpfile(char_id);
+	clif_displaymessage(fd, "Requesting char server to do a backup of Char data");
+
+	return 0;
+}
+
 /*==========================================
  * type: 1 = commands (@), 2 = charcommands (#)
  *------------------------------------------*/
@@ -10935,6 +10954,75 @@ ACMD_FUNC(factionmonster)
 
 	return 0;
 }
+
+
+
+// Biali Damage Log
+
+ACMD_FUNC(bgranked)
+{
+	int i;
+
+	clif_displaymessage(fd, "============= RANKED BATTLEGROUND FAME LIST =============");
+	for( i = 0; i < MAX_FAME_LIST && bgrank_fame_list[i].id; i++ )
+	{
+		sprintf(atcmd_output,"%d - %s - %d points",i+1,bgrank_fame_list[i].name,bgrank_fame_list[i].fame);
+		clif_displaymessage(fd, atcmd_output);
+	}
+	clif_displaymessage(fd, "============= RANKED BATTLEGROUND FAME LIST =============");
+	return 0;
+}
+
+ACMD_FUNC(bgregular)
+{
+	int i;
+
+	clif_displaymessage(fd, "============= REGULAR BATTLEGROUND FAME LIST =============");
+	for( i = 0; i < MAX_FAME_LIST && bg_fame_list[i].id; i++ )
+	{
+		sprintf(atcmd_output,"%d - %s - %d points",i+1,bg_fame_list[i].name,bg_fame_list[i].fame);
+		clif_displaymessage(fd, atcmd_output);
+	}
+	clif_displaymessage(fd, "============= REGULAR BATTLEGROUND FAME LIST =============");
+	return 0;
+}
+
+ACMD_FUNC(battleinfo)
+{
+	if( sd->state.battleinfo )
+	{
+		clif_displaymessage(fd, "- Battle Information Display OFF - Kill/Death -");
+		sd->state.battleinfo = 0;
+	}
+	else
+	{
+		clif_displaymessage(fd, "- Battle Information Display ON - Kill/Death -");
+		sd->state.battleinfo = 1;
+	}
+	return 0;
+}
+
+/*==========================================
+ * Ranking Reset
+ *------------------------------------------*/
+ACMD_FUNC(rankreset)
+{
+	int type;
+	nullpo_retr(-1, sd);
+
+	if( (type = atoi(message)) < 1 || type > 3 )
+	{
+		clif_displaymessage(fd, "Enter reset rank type. Usage: @rankreset <n>");
+		clif_displaymessage(fd, "n = 1 WoE | 2 BG | 3 PVP");
+		return -1;
+	}
+
+	pc_ranking_reset(type - 1, true);
+	clif_displaymessage(fd, "Reseting Ranking...");
+	return 0;
+}
+// fim biali damage log
+
 
 // (^~_~^) Gepard Shield Start
 

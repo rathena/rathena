@@ -46,6 +46,7 @@
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "log.hpp"
 #include "map.hpp"
+#include "mapreg.hpp" //biali damage log
 #include "mercenary.hpp"
 #include "mob.hpp"
 #include "npc.hpp"
@@ -83,6 +84,11 @@ int pc_expiration_tid = INVALID_TIMER;
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
+
+//biali damage log
+struct fame_list pvprank_fame_list[MAX_FAME_LIST];
+struct fame_list bgrank_fame_list[MAX_FAME_LIST];
+struct fame_list bg_fame_list[MAX_FAME_LIST];
 
 struct s_job_info job_info[CLASS_COUNT];
 
@@ -497,6 +503,46 @@ void pc_delete_bg_queue_timer(map_session_data *sd) {
 	}
 }
 
+//biali Blackzone invincibility cooldown
+static TIMER_FUNC(pc_invincible_timer_reset){
+	struct map_session_data *sd;
+
+	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+		return 1;
+
+	if(sd->invincible_timer_reset != tid){
+		ShowError("invincible_timer_reset %d != %d\n",sd->invincible_timer_reset,tid);
+		return 0;
+	}
+	sd->invincible_timer_reset = INVALID_TIMER;
+	skill_unit_move(&sd->bl,tick,1);
+
+	return 0;
+}
+
+//biali Blackzone knocked down timer
+static TIMER_FUNC(pc_knocked_timer){
+	struct map_session_data *sd;
+
+	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+		return 1;
+
+	if(sd->state.knocked != tid){
+		ShowError("knocked_timer %d != %d\n",sd->state.knocked,tid);
+		return 0;
+	}
+	sd->state.knocked = INVALID_TIMER;
+	if(pc_issit(sd)) {
+		pc_setstand(sd,true);
+		clif_standing(&sd->bl);
+		pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
+		sc_start(&sd->bl,&sd->bl,SC_IMUNITY,100,1,battle_config.pc_invincible_time);
+	}
+	skill_unit_move(&sd->bl,tick,1);
+
+	return 0;
+}
+
 static TIMER_FUNC(pc_invincible_timer){
 	struct map_session_data *sd;
 
@@ -714,10 +760,43 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 * @param sd Player
 * @param count Fame point
 */
-void pc_addfame(struct map_session_data *sd,int count)
+void pc_addfame(struct map_session_data *sd,int count,short flag)
 {
 	enum e_rank ranktype;
 	nullpo_retv(sd);
+
+	//biali damage log
+	switch( flag )
+	{
+	case 1: // Pk Rank
+		if(sd->status.pk.score + count > MAX_FAME)
+			sd->status.pk.score = MAX_FAME;
+		else
+			sd->status.pk.score += count;
+
+		clif_rank_info(sd,count,sd->status.pk.score,0);
+		chrif_updatefamelist(sd,1);
+		return;
+	case 2: // Bg Ranked Matchs
+		if(sd->status.bgstats.rank_points + count > MAX_FAME)
+			sd->status.bgstats.rank_points = MAX_FAME;
+		else
+			sd->status.bgstats.rank_points += count;
+
+		clif_rank_info(sd,count,sd->status.bgstats.rank_points,1);
+		chrif_updatefamelist(sd,2);
+		return;
+	case 3: // Bg Normal Matchs
+		if(sd->status.bgstats.points + count > MAX_FAME)
+			sd->status.bgstats.points = MAX_FAME;
+		else
+			sd->status.bgstats.points += count;
+
+		clif_rank_info(sd,count,sd->status.bgstats.points,1);
+		chrif_updatefamelist(sd,3);
+		return;
+	} //fim biali damage log
+
 	sd->status.fame += count;
 	if(sd->status.fame > MAX_FAME)
 		sd->status.fame = MAX_FAME;
@@ -733,6 +812,105 @@ void pc_addfame(struct map_session_data *sd,int count)
 
 	clif_update_rankingpoint(sd,ranktype,count);
 	chrif_updatefamelist(sd);
+}
+
+
+//biali pvp arena ranking points
+void pc_pvprank_addfame(struct map_session_data *sd, bool single)
+{
+	struct map_session_data *p_sd;
+	int player_pos, fame_pos, i;
+	char output[256];
+	bool updatereg = false;
+	nullpo_retv(sd);
+
+	ARR_FIND(0, MAX_FAME_LIST, player_pos, pvprank_fame_list[player_pos].id == sd->status.char_id); // Search if the player is on the List
+	ARR_FIND(0, MAX_FAME_LIST, fame_pos, pvprank_fame_list[fame_pos].fame <= sd->status.pvp.score); // Search if the player should be in the List
+
+	if( fame_pos == MAX_FAME_LIST )
+		; // Nothing to do, not enough points to rank this time...
+
+	// ===========================================
+	// From here, player have fame_pos           =
+	// ===========================================
+	else if( player_pos == fame_pos )
+	{ // Same Potion
+		if( pvprank_fame_list[fame_pos].fame < sd->status.pvp.score )
+		{ // Need to update own score
+			pvprank_fame_list[fame_pos].fame = sd->status.pvp.score;
+			updatereg = single;
+		}
+	}
+	else if( player_pos == MAX_FAME_LIST )
+	{ // New Player Entering Ranking
+		for( i = MAX_FAME_LIST - 1; i > fame_pos; i-- )
+			memcpy(&pvprank_fame_list[i], &pvprank_fame_list[i - 1], sizeof(struct fame_list));
+
+		pvprank_fame_list[fame_pos].id = sd->status.char_id;
+		pvprank_fame_list[fame_pos].fame = sd->status.pvp.score;
+		safestrncpy(pvprank_fame_list[fame_pos].name, sd->status.name, NAME_LENGTH);
+
+		if( single )
+		{
+			updatereg = true;
+			sprintf(output, "Entering Top %d PvP Arena Fighters at position %d", MAX_FAME_LIST, fame_pos + 1);
+			clif_disp_onlyself(sd, output, strlen(output));
+
+			for( i = fame_pos + 1; i < MAX_FAME_LIST; i++ )
+			{
+				if( pvprank_fame_list[i].id == 0 || (p_sd = map_charid2sd(pvprank_fame_list[i].id)) == NULL )
+					continue;
+
+				sprintf(output, "Going Down to position %d in Top %d PvP Arena Fighters", i + 1, MAX_FAME_LIST);
+				clif_disp_onlyself(p_sd, output, strlen(output));
+			}
+		}
+	}
+
+	// ===========================================
+	// From here, player have player_pos         =
+	// ===========================================
+	else if( fame_pos > player_pos )
+		; // Player need to increase own score to rank...
+	else if( fame_pos < player_pos )
+	{ // Already on the List and going UP
+		for( i = player_pos; i > fame_pos; i-- )
+			memcpy(&pvprank_fame_list[i], &pvprank_fame_list[i - 1], sizeof(struct fame_list));
+
+		pvprank_fame_list[fame_pos].id = sd->status.char_id;
+		pvprank_fame_list[fame_pos].fame = sd->status.pvp.score;
+		safestrncpy(pvprank_fame_list[fame_pos].name, sd->status.name, NAME_LENGTH);
+
+		if( single )
+		{
+			updatereg = true;
+			sprintf(output, "-- Going UP to position %d in Top %d PvP Arena Fighters --", fame_pos + 1, MAX_FAME_LIST);
+			clif_disp_onlyself(sd, output, strlen(output));
+
+			for( i = fame_pos + 1; i < player_pos + 1; i++ )
+			{
+				if( pvprank_fame_list[i].id == 0 || (p_sd = map_charid2sd(pvprank_fame_list[i].id)) == NULL )
+					continue;
+
+				sprintf(output, "-- Going Down to position %d in Top %d PvP Arena Fighters --", i + 1, MAX_FAME_LIST);
+				clif_disp_onlyself(p_sd, output, strlen(output));
+			}
+		}
+	}
+
+	if( updatereg )
+	{
+		i = 0;
+		while( i < MAX_FAME_LIST && pvprank_fame_list[i].id )
+		{
+			mapreg_setregstr(reference_uid(add_str("$pvprank_name$"),i), pvprank_fame_list[i].name);
+			mapreg_setreg(reference_uid(add_str("$pvprank_id"),i), pvprank_fame_list[i].id);
+			mapreg_setreg(reference_uid(add_str("$pvprank_fame"),i), pvprank_fame_list[i].fame);
+			i++;
+		}
+
+		mapreg_setreg(add_str("$pvprank_count"),i);
+	}
 }
 
 /**
@@ -887,6 +1065,581 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 	} else
 		sd->rental_timer = add_timer(gettick() + i64min(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 }
+
+// Biali - Damage Log
+void pc_record_mobkills(struct map_session_data *sd, struct mob_data *md)
+{
+	struct guild *g;
+	struct guild_castle *gc;
+	struct battleground_data *bg;
+	int type = 0;
+
+	if( !sd ) return;
+	if( map_getmapflag(sd->bl.m,MF_BATTLEGROUND) && sd->bg_id )
+	{
+		int i;
+		std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, sd->bg_id);
+
+		if (bg == NULL) 
+			return;
+
+		ARR_FIND(0,MAX_BG_MEMBERS,i,bg->members[i].sd == sd);
+		if( i >= MAX_BG_MEMBERS )
+			return;
+		type = bg->members[i].ranked ? 2 : 3;
+	}
+
+	if( map_allowed_woe(sd->bl.m) )
+	{
+		switch( md->mob_id )
+		{
+		case MOBID_EMPERIUM:
+			add2limit(sd->status.wstats.emperium_kill, 1, USHRT_MAX);
+			if( (g = guild_search(sd->status.guild_id)) && (gc = guild_mapindex2gc(map[sd->bl.m].index)) )
+			{
+				add2limit(g->castle[gc->castle_id].emperium, 1, USHRT_MAX);
+				g->castle[gc->castle_id].changed = true;
+			}
+			break;
+		case 1905:
+			add2limit(sd->status.wstats.barricade_kill, 1, USHRT_MAX);
+			break;
+		case MOBID_GUARDIAN_STONE1:
+		case MOBID_GUARDIAN_STONE2:
+			add2limit(sd->status.wstats.gstone_kill, 1, USHRT_MAX);
+			break;
+		case 1285:
+		case 1286:
+		case 1287:
+		case 1899:
+		case 1900:
+			add2limit(sd->status.wstats.guardian_kill, 1, USHRT_MAX);
+			break;
+		}
+	}
+	else if( map_getmapflag(sd->bl.m,MF_BATTLEGROUND) )
+	{
+		switch( md->mob_id )
+		{
+		case 2000:
+		case 2001:
+		case 2002:
+		case 2003:
+		case 2004:
+			add2limit(sd->status.bgstats.boss_killed, 1, USHRT_MAX);
+			// achievement_validate_bg(sd,ATB_BOSS_KILLS,1);
+			pc_addfame(sd,25,type);
+			break;
+		case 2005:
+		case 2006:
+			add2limit(sd->status.bgstats.gstone_kill, 1, USHRT_MAX);
+			// achievement_validate_bg(sd,ATB_CON_GSTONE,1);
+			pc_addfame(sd,10,type);
+			break;
+		case 2007:
+			if( map_getmapflag(sd->bl.m,MF_BATTLEGROUND) == 2 )
+			{
+				add2limit(sd->status.bgstats.ru_captures, 1, USHRT_MAX);
+				// achievement_validate_bg(sd,ATB_RU_CAPTURE,1);
+			}
+			else
+			{
+				add2limit(sd->status.bgstats.emperium_kill, 1, USHRT_MAX);
+				// achievement_validate_bg(sd,ATB_CON_EMPERIUM,1);
+			}
+			pc_addfame(sd,30,type);
+			break;
+		case 1911:
+			if( !strcmpi(map[sd->bl.m].name,"bat_a03") )
+			{
+				add2limit(sd->status.bgstats.boss_flags, 1, USHRT_MAX);
+				// achievement_validate_bg(sd,ATB_BOSS_FLAGS,1);
+				pc_addfame(sd,5,type);
+			}
+			break;
+		case 1906:
+			if( strcmpi(map[sd->bl.m].name,"bat_a01") )
+			{
+				add2limit(sd->status.bgstats.barricade_kill, 1, USHRT_MAX);
+				// achievement_validate_bg(sd,ATB_CON_BARRICADE,1);
+				pc_addfame(sd,1,type);
+			}
+			break;
+		}
+	}
+
+	//Biali check this out : to add records from kills in Black zone
+
+	if( map_getmapflag(sd->bl.m,MF_GVG_CASTLE) && ((md->mob_id >= 1324 && md->mob_id <= 1363) || (md->mob_id >= 1938 && md->mob_id <= 1946)) && (g = guild_search(sd->status.guild_id)) && (gc = guild_mapindex2gc(map[sd->bl.m].index)) )
+	{
+		add2limit(g->castle[gc->castle_id].treasure, 1, USHRT_MAX); // Treasure opened on Castle
+		g->castle[gc->castle_id].changed = true;
+		if( !(agit_flag || agit2_flag) )
+		{
+			intif_guild_save_score(g->guild_id, gc->castle_id, &g->castle[gc->castle_id]);
+			g->castle[gc->castle_id].changed = false;
+		}
+	}
+}
+
+void pc_record_maxdamage(struct block_list *src, struct block_list *dst, int damage)
+{
+	struct block_list *s_bl;
+	struct map_session_data *sd;
+
+	if( !src || !dst || src == dst || dst->type != BL_PC || damage <= 0 )
+		return;
+
+	if( (s_bl = battle_get_master(src)) == NULL )
+		s_bl = src;
+
+	if( s_bl->type != BL_PC )
+		return;
+
+	if( (sd = BL_CAST(BL_PC, s_bl)) != NULL )
+	{
+		if( map_getmapflag(src->m,MF_BATTLEGROUND) && sd->bg_id && sd->status.bgstats.top_damage < damage )
+			sd->status.bgstats.top_damage = damage;
+		else if( map_allowed_woe(src->m) && sd->status.wstats.top_damage < damage )
+			sd->status.wstats.top_damage = damage;
+	}
+}
+
+void pc_record_damage(struct block_list *src, struct block_list *dst, int damage)
+{
+	struct block_list *s_bl;
+	struct map_session_data *sd;
+
+	if( !src || !dst || src == dst || damage <= 0 )
+		return;
+
+	if( (s_bl = battle_get_master(src)) == NULL )
+		s_bl = src;
+
+	if( s_bl->type != BL_PC )
+		return;
+
+	sd = BL_CAST(BL_PC, s_bl);
+
+	switch( dst->type )
+	{
+		case BL_PC:
+			if( map_getmapflag(src->m,MF_BATTLEGROUND) && sd->bg_id )
+			{
+				add2limit(sd->status.bgstats.damage_done, damage, UINT_MAX);
+				add2limit(((TBL_PC*)dst)->status.bgstats.damage_received, damage, UINT_MAX);
+			}
+			else if( map_allowed_woe(src->m) )
+			{
+				add2limit(sd->status.wstats.damage_done, damage, UINT_MAX);
+				add2limit(((TBL_PC*)dst)->status.wstats.damage_received, damage, UINT_MAX);
+			}
+			break;
+		case BL_MOB:
+		{
+			struct mob_data *md = BL_CAST(BL_MOB, dst);
+			if( map_getmapflag(src->m,MF_BATTLEGROUND) && sd->bg_id && md->mob_id >= 2100 && md->mob_id <= 2104 )
+				add2limit(sd->status.bgstats.boss_damage, damage, UINT_MAX);
+			else if( map_allowed_woe(src->m) && md->guardian_data )
+			{
+				switch( md->mob_id )
+				{
+					case MOBID_EMPERIUM:
+						add2limit(sd->status.wstats.emperium_damage, damage, UINT_MAX);
+						break;
+					case 1905:
+						add2limit(sd->status.wstats.barricade_damage, damage, UINT_MAX);
+						break;
+					case MOBID_GUARDIAN_STONE1:
+					case MOBID_GUARDIAN_STONE2:
+						add2limit(sd->status.wstats.gstone_damage, damage, UINT_MAX);
+						break;
+					default:
+						add2limit(sd->status.wstats.guardian_damage, damage, UINT_MAX);
+						break;
+				}
+			}
+			break;
+		}
+	}
+}
+
+void pc_calc_ranking(struct map_session_data *tsd, struct map_session_data *ssd, uint16 skill_id)
+{
+	int m, i, Elo, assists;
+	char output[256];
+
+	if( !tsd || !ssd || tsd == ssd )
+		return;
+
+	m = ssd->bl.m;
+
+	if( map_allowed_woe(m) )
+	{
+		/*==========================================
+		 * Guild Ranking - War of Emperium
+		 *------------------------------------------*/
+		struct guild *tg, *sg;
+		struct guild_castle *gc = guild_mapindex2gc(map[m].index);
+
+		if( gc == NULL || gc->guild_id <= 0 )
+			return;
+
+		if( (tg = guild_search(tsd->status.guild_id)) == NULL || (sg = guild_search(ssd->status.guild_id)) == NULL )
+			return;
+
+		i = gc->castle_id;
+		Elo = (int)(10. / (1 + pow(10., (int)(sg->castle[i].offensive_score - tg->castle[i].offensive_score) / 2000.)));
+		add2limit(sg->castle[i].offensive_score, Elo, 4000);
+		sub2limit(tg->castle[i].offensive_score, Elo, 0);
+
+		// Single Player Ranking WoE
+		Elo = (int)(50. / (1 + pow(10., (int)(ssd->status.wstats.score - tsd->status.wstats.score) / 2000.)));
+		add2limit(ssd->status.wstats.score, Elo, 4000);
+		sub2limit(tsd->status.wstats.score, Elo, 0);
+		add2limit(ssd->status.wstats.kill_count, 1, USHRT_MAX);
+		add2limit(tsd->status.wstats.death_count, 1, USHRT_MAX);
+
+		if(battle_config.woe_log) 
+			log_woe_kill(ssd,tsd,skill_id);
+
+		if( tsd->status.guild_id == gc->guild_id )
+		{ // Offensive Ranking - Killing Castle Owners
+			add2limit(sg->castle[i].off.kill_count, 1, UINT_MAX);
+			add2limit(tg->castle[i].def.death_count, 1, UINT_MAX);
+		}
+		else if( guild_isallied(gc->guild_id, tsd->status.guild_id) )
+		{ // Offensive Ranking - Killing Castle Allied
+			add2limit(sg->castle[i].off.kill_count, 1, UINT_MAX);
+			add2limit(tg->castle[i].ali.death_count, 1, UINT_MAX);
+		}
+		else if( ssd->status.guild_id == gc->guild_id )
+		{ // Defensive Ranking - Killing Castle Invaders
+			add2limit(sg->castle[i].def.kill_count, 1, UINT_MAX);
+			add2limit(tg->castle[i].off.death_count, 1, UINT_MAX);
+		}
+		else if( guild_isallied(gc->guild_id, ssd->status.guild_id) )
+		{ // Defensive Ranking - Allied killing Invaders
+			add2limit(sg->castle[i].ali.kill_count, 1, UINT_MAX);
+			add2limit(tg->castle[i].off.death_count, 1, UINT_MAX);
+		}
+		else
+		{ // Killing other guilds invaders
+			add2limit(sg->castle[i].ext.kill_count, 1, UINT_MAX);
+			add2limit(tg->castle[i].ext.death_count, 1, UINT_MAX);
+		}
+
+		tg->castle[i].changed = true;
+		sg->castle[i].changed = true;
+	}
+	else if(map_getmapflag(m,MF_PVP))
+	{
+		/*==========================================
+		 * PVP Ranking
+		 *------------------------------------------*/
+		struct party_data *p;
+		struct map_session_data *s_pl[MAX_PARTY], *t_pl[MAX_PARTY], *p_sd;
+		struct fame_list b_fame_list[MAX_FAME_LIST];
+		int j;
+
+		unsigned int s_rate = 0, t_rate = 0;
+		int sc = 1, tc = 1, s_Elo, t_Elo, diff_lv, cash = 0;
+
+		// Source
+		if( ssd->status.party_id && (p = party_search(ssd->status.party_id)) != NULL )
+		{
+			for( i = sc = 0; i < MAX_PARTY; i++ )
+			{
+				if( (s_pl[sc] = p->data[i].sd) == NULL || s_pl[sc]->bl.m != m )
+					continue;
+				if( pc_isdead(s_pl[sc]) && s_pl[sc] != ssd )
+					continue;
+				if( !check_distance_bl(&ssd->bl,&s_pl[sc]->bl,30) )
+					continue; // Party member not on Area
+				
+				s_rate += s_pl[sc]->status.pvp.score;
+				sc++;
+			}
+			if( sc < 1 ) return;
+		}
+		else
+		{
+			s_pl[0] = ssd;
+			s_rate = s_pl[0]->status.pvp.score;
+		}
+
+		s_rate /= sc; // Average Source Rate
+
+		if(battle_config.pvp_log) 
+			log_pvp_kill(ssd,tsd,skill_id,sc-1); //Biali
+
+		// Target
+		if( tsd->status.party_id && (p = party_search(tsd->status.party_id)) != NULL )
+		{
+			for( i = tc = 0; i < MAX_PARTY; i++ )
+			{
+				if( (t_pl[tc] = p->data[i].sd) == NULL || t_pl[tc]->bl.m != m )
+					continue;
+				if( pc_isdead(t_pl[tc]) && t_pl[tc] != tsd )
+					continue;
+				if( !check_distance_bl(&tsd->bl,&t_pl[sc]->bl,30) )
+					continue; // Party member not on Area
+				t_rate += t_pl[tc]->status.pvp.score;
+				tc++;
+			}
+			if( tc < 1 ) return;
+		}
+		else
+		{
+			t_pl[0] = tsd;
+			t_rate = t_pl[0]->status.pvp.score;
+		}
+
+		memcpy(&b_fame_list, pvprank_fame_list, sizeof(struct fame_list));
+		t_rate /= sc; // Average Target Rate
+		Elo = (int)(50. / (1 + pow(10., (int)(s_rate - t_rate) / 2000.)));
+		s_Elo = Elo / sc;
+
+		for( i = 0; i < sc; i++ )
+		{
+			add2limit(s_pl[i]->status.pvp.score, s_Elo, 4000);
+
+			sprintf(output, "[%s] killed [%s] - You've received %d Arena Points.", ssd->status.name, tsd->status.name, s_Elo);
+			clif_disp_onlyself(s_pl[i], output, strlen(output));
+
+			pc_pvprank_addfame(s_pl[i], false);
+
+		}
+
+		for( i = 0; i < MAX_FAME_LIST; i++ )
+		{ // Announces Fame List
+			if( b_fame_list[i].id != 0 && (p_sd = map_charid2sd(b_fame_list[i].id)) != NULL )
+			{
+				ARR_FIND(0, MAX_FAME_LIST, j, pvprank_fame_list[j].id == b_fame_list[i].id); // Search Previous Position
+				if( j != i )
+				{
+					if( j == MAX_FAME_LIST )
+						sprintf(output, "-- You have been removed from the list of the Top %d PvP Arena Fighters --", MAX_FAME_LIST);
+					else if( j < i )
+						sprintf(output, "-- Going UP to Position %d in the list of the Top %d PvP Arena Fighters --", j + 1, MAX_FAME_LIST);
+					else
+						sprintf(output, "-- Going Down to Position %d in the list of the Top %d PvP Arena Fighters --", j + 1, MAX_FAME_LIST);
+
+					clif_disp_onlyself(p_sd, output, strlen(output));
+				}
+			}
+
+			if( pvprank_fame_list[i].id != 0 && (p_sd = map_charid2sd(pvprank_fame_list[i].id)) != NULL )
+			{
+				ARR_FIND(0, MAX_FAME_LIST, j, pvprank_fame_list[i].id == b_fame_list[j].id);
+				if( j == MAX_FAME_LIST )
+				{
+					sprintf(output, "-- Entering Top %d PVP Event Fame List at position %d --", MAX_FAME_LIST, i + 1);
+					clif_disp_onlyself(p_sd, output, strlen(output));
+				}
+			}
+		}
+
+		if( memcmp(&pvprank_fame_list, &b_fame_list, sizeof(pvprank_fame_list)) )
+		{
+			i = 0;
+			while( i < MAX_FAME_LIST && pvprank_fame_list[i].id )
+			{
+				mapreg_setregstr(add_str("$pvprank_name$")+(i<<24), pvprank_fame_list[i].name);
+				mapreg_setreg(add_str("$pvprank_id")+(i<<24), pvprank_fame_list[i].id);
+				mapreg_setreg(add_str("$pvprank_fame")+(i<<24), pvprank_fame_list[i].fame);
+				i++;
+			}
+
+			mapreg_setreg(add_str("$pvprank_count"),i);
+		}
+
+		t_Elo = Elo / tc;
+		for( i = 0; i < tc; i++ )
+			sub2limit(t_pl[i]->status.pvp.score, t_Elo, 0);
+
+		add2limit(ssd->status.pvp.kill_count, 1, USHRT_MAX);
+		add2limit(tsd->status.pvp.death_count, 1, USHRT_MAX);
+	}
+	else if( map_getmapflag(m,MF_FULLLOOT) )
+	{
+		/*==========================================
+		 * Blackzone PK Ranking
+		 *------------------------------------------*/
+		struct party_data *p;
+		struct map_session_data *s_pl[MAX_PARTY], *t_pl[MAX_PARTY], *p_sd;
+		unsigned int s_rate = 0, t_rate = 0;
+		int sc = 1, tc = 1, s_Elo, t_Elo, diff_lv, j;
+
+		// Source
+		if( ssd->status.party_id && (p = party_search(ssd->status.party_id)) != NULL )
+		{
+			for( i = sc = 0; i < MAX_PARTY; i++ )
+			{
+				if( (s_pl[sc] = p->data[i].sd) == NULL || s_pl[sc]->bl.m != m )
+					continue;
+				if( pc_isdead(s_pl[sc]) && s_pl[sc] != ssd )
+					continue;
+				
+				s_rate += s_pl[sc]->status.pk.score;
+				sc++;
+			}
+			if( sc < 1 ) return;
+		}
+		else
+		{
+			s_pl[0] = ssd;
+			s_rate = s_pl[0]->status.pk.score;
+		}
+	
+		s_rate /= sc; // Average Source Rate
+
+		// Target
+		if( tsd->status.party_id && (p = party_search(tsd->status.party_id)) != NULL )
+		{
+			for( i = tc = 0; i < MAX_PARTY; i++ )
+			{
+				if( (t_pl[tc] = p->data[i].sd) == NULL || t_pl[tc]->bl.m != m )
+					continue;
+				if( pc_isdead(t_pl[tc]) && t_pl[tc] != tsd )
+					continue;
+				t_rate += t_pl[tc]->status.pk.score;
+				tc++;
+			}
+			if( tc < 1 ) return;
+		}
+		else
+		{
+			t_pl[0] = tsd;
+			t_rate = t_pl[0]->status.pk.score;
+		}
+
+		t_rate /= sc; // Average Target Rate
+		Elo = (int)(50. / (1 + pow(10., (int)(s_rate - t_rate) / 2000.)));
+		s_Elo = Elo / sc;
+
+		for( i = 0; i < sc; i++ )
+			add2limit(s_pl[i]->status.pk.score, s_Elo, 4000);
+
+		t_Elo = Elo / tc;
+		for( i = 0; i < tc; i++ )
+			sub2limit(t_pl[i]->status.pk.score, t_Elo, 0);
+
+		t_rate /= sc; // Average Target Rate
+		Elo = (int)(50. / (1 + pow(10., (int)(s_rate - t_rate) / 1000.)));
+		s_Elo = Elo / sc;
+
+		for( i = 0; i < sc; i++ )
+			pc_addfame(s_pl[i], s_Elo, 1);
+
+		if(battle_config.pk_log) 
+			log_pk_kill(ssd,tsd,skill_id,sc-1); //Biali
+
+		add2limit(ssd->status.pk.kill_count, 1, USHRT_MAX);
+		add2limit(tsd->status.pk.death_count, 1, USHRT_MAX);
+	}
+	else if( ssd->bg_id && map_getmapflag(m,MF_BATTLEGROUND) && tsd->bg_id )
+	{
+		/*==========================================
+		 * BattleGround Ranking
+		 *------------------------------------------*/
+		//struct battleground_data *s_bg, *t_bg;
+		struct map_session_data *s_pl[MAX_BG_MEMBERS], *t_pl[MAX_BG_MEMBERS];
+		unsigned int s_rate = 0, t_rate = 0;
+		int sc, tc, s_Elo, t_Elo;
+
+		std::shared_ptr<s_battleground_data> s_bg = util::umap_find(bg_team_db, ssd->bg_id);
+		std::shared_ptr<s_battleground_data> t_bg = util::umap_find(bg_team_db, tsd->bg_id);
+		if (s_bg == NULL || t_bg == NULL) 
+			return;
+
+		// Source
+		for( i = sc = 0; i < MAX_BG_MEMBERS; i++ )
+		{
+			if( (s_pl[sc] = s_bg->members[i].sd) == NULL || s_pl[sc]->bl.m != m )
+				continue;
+			s_rate += s_pl[sc]->status.bgstats.score;
+			sc++;
+		}
+		if( sc < 1 ) return;
+		else s_rate /= sc; // Avergate Source Rate
+		
+
+		// Target
+		for( i = tc = 0; i < MAX_BG_MEMBERS; i++ )
+		{
+			if( (t_pl[tc] = t_bg->members[i].sd) == NULL || t_pl[tc]->bl.m != m )
+				continue;
+			t_rate += t_pl[tc]->status.bgstats.score;
+			tc++;
+		}
+		if( tc < 1 ) return;
+		else t_rate /= tc; // Avergate Target Rate
+
+		Elo = (int)(50. / (1 + pow(10., (int)(s_rate - t_rate) / 2000.)));
+		s_Elo = Elo / sc;
+		for( i = 0; i < sc; i++ )
+			add2limit(s_pl[i]->status.bgstats.score, s_Elo, 4000);
+
+		t_Elo = Elo / tc;
+		for( i = 0; i < tc; i++ )
+			sub2limit(t_pl[i]->status.bgstats.score, t_Elo, 0);
+
+		if(battle_config.bg_log) 
+			log_bg_kill(ssd,tsd,skill_id,sc-1); //biali
+
+
+		add2limit(ssd->status.bgstats.kill_count, 1, USHRT_MAX);
+		add2limit(tsd->status.bgstats.death_count, 1, USHRT_MAX);
+		ssd->bg_kills++; // This BG Kills
+	}
+
+	if( ssd->state.battleinfo )
+	{
+		sprintf(output,"( You killed %s [%s] using <%s> )", job_name(tsd->status.class_), tsd->status.name, ( skill_id ? skill_get_desc(skill_id) : "Melee/Reflect/Effect" ));
+		clif_disp_onlyself(ssd,output,strlen(output));
+	}
+	if( tsd->state.battleinfo )
+	{
+		sprintf(output,"( %s [%s] killed you using <%s> )", job_name(ssd->status.class_), ssd->status.name, ( skill_id ? skill_get_desc(skill_id) : "Melee/Reflect/Effect" ));
+		clif_disp_onlyself(tsd,output,strlen(output));
+	}
+}
+
+/*==========================================
+	Ranking Reset
+ *------------------------------------------*/
+void pc_ranking_reset(int type, bool char_server)
+{
+	struct map_session_data *sd;
+	struct s_mapiterator* iter;
+
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	{
+		switch( type )
+		{
+		case 0: // WoE Ranking Reset
+			memset(&sd->status.wstats, 0, sizeof(struct s_woestats));
+			memset(&sd->status.skillcount, 0, sizeof(struct s_skillcount));
+			sd->status.wstats.score = 2000;
+			break;
+		case 1: // Battleground Stats
+			memset(&sd->status.bgstats, 0, sizeof(struct s_battleground_stats));
+			memset(&sd->status.bg_skillcount, 0, sizeof(struct s_skillcount));
+			sd->status.bgstats.score = 2000;
+			break;
+		case 2: // PVP Event Ranking
+			memset(&sd->status.pvp, 0, sizeof(struct s_killrank));
+			sd->status.pvp.score = 2000;
+			break;
+		}
+	}
+	mapit_free(iter);
+
+	if( char_server ) chrif_ranking_reset(type);
+}
+//fim biali damage log
 
 /**
  * Check if the player can sell the current item
@@ -5262,9 +6015,11 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
  *------------------------------------------*/
 char pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type)
 {
+	int item_id = 0;
+
 	nullpo_retr(1, sd);
 
-	if(n < 0 || sd->inventory.u.items_inventory[n].nameid == 0 || amount <= 0 || sd->inventory.u.items_inventory[n].amount<amount || sd->inventory_data[n] == NULL)
+	if(n < 0 || (item_id = sd->inventory.u.items_inventory[n].nameid) || amount <= 0 || sd->inventory.u.items_inventory[n].amount<amount || sd->inventory_data[n] == NULL)
 		return 1;
 
 	log_pick_pc(sd, log_type, -amount, &sd->inventory.u.items_inventory[n]);
@@ -5283,6 +6038,11 @@ char pc_delitem(struct map_session_data *sd,int n,int amount,int type, short rea
 		clif_updatestatus(sd,SP_WEIGHT);
 
 	pc_show_questinfo(sd);
+
+	if(log_type == LOG_TYPE_CONSUME) {
+		pc_setparam(sd, SP_ITEMUSEDID, item_id);
+		npc_script_event(sd, NPCE_ITEMUSED);
+	}
 
 	return 0;
 }
@@ -7486,6 +8246,50 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 		}
 	}
 
+	// Biali : get infamy from killing mobs
+	// infamy is a % of the base exp given by the mob
+	// in non full-loot maps infamy is a 10th of that
+	if(src->type == BL_MOB) {
+		int inf = 0;
+		if(map_getmapflag(src->m,MF_FULLLOOT))
+			inf=(base_exp * battle_config.infamy_from_mobs)/100;
+		else
+			inf=(base_exp * (battle_config.infamy_from_mobs * .10))/100;
+		
+		add2limit(sd->status.infamy,inf,MAX_INFAMY);
+	}
+
+	// Biali Adventurer Quest
+	npc_script_event(sd, NPCE_BASEEXPGAIN);
+
+	if (flag&4){
+		if( sd->status.base_exp >= MAX_LEVEL_BASE_EXP )
+			base_exp = 0;
+		else if( sd->status.base_exp + base_exp >= MAX_LEVEL_BASE_EXP )
+			base_exp = MAX_LEVEL_BASE_EXP - sd->status.base_exp;
+	}
+	if (flag&8){
+		if( sd->status.job_exp >= MAX_LEVEL_JOB_EXP )
+			job_exp = 0;
+		else if( sd->status.job_exp + job_exp >= MAX_LEVEL_JOB_EXP )
+			job_exp = MAX_LEVEL_JOB_EXP - sd->status.job_exp;
+	}
+
+	if (!(exp_flag&2) && battle_config.max_exp_gain_rate && (base_exp || job_exp)) {
+		//Note that this value should never be greater than the original
+		//therefore no overflow checks are needed. [Skotlex]
+		if (nextb > 0) {
+			float nextbp = (float) base_exp / (float) nextb;
+			if (nextbp > battle_config.max_exp_gain_rate/1000.)
+				base_exp = (unsigned int)(battle_config.max_exp_gain_rate/1000.*nextb);
+		}
+		if (nextj > 0) {
+			float nextjp = (float) job_exp / (float) nextj;
+			if (nextjp > battle_config.max_exp_gain_rate/1000.)
+				job_exp = (unsigned int)(battle_config.max_exp_gain_rate/1000.*nextj);
+		}
+	}
+
 	// Give EXP for Base Level
 	if (base_exp) {
 		sd->status.base_exp = util::safe_addition_cap(sd->status.base_exp, base_exp, MAX_EXP);
@@ -8436,7 +9240,7 @@ void pc_close_npc(struct map_session_data *sd,int flag)
  *------------------------------------------*/
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
-	int i=0,k=0;
+	int i=0,k=0,infamy=0;;
 	t_tick tick = gettick();
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
@@ -8541,6 +9345,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	pc_setparam(sd, SP_PCDIECOUNTER, sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
+	//Biali infamy
+	//kill will get x% off from their infamy
+	if(map_getmapflag(sd->bl.m, MF_FULLLOOT)) {
+		infamy = sd->status.infamy;
+		if(infamy)
+			sub2limit(sd->status.infamy, (infamy * battle_config.infamy_taken)/100,0);
+	}
+
 	//Reset menu skills/item skills
 	if ((sd->skillitem) != 0)
 		sd->skillitem = sd->skillitemlv = 0;
@@ -8592,6 +9404,16 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		struct map_session_data *ssd = (struct map_session_data *)src;
 		pc_setparam(ssd, SP_KILLEDRID, sd->bl.id);
 		npc_script_event(ssd, NPCE_KILLPC);
+
+		//Biali infamy : set infamy for the killer
+		if(infamy) {
+			int inf = (infamy * battle_config.infamy_given)/100;
+			char output[256];
+			add2limit(ssd->status.infamy, inf, MAX_INFAMY);
+
+			sprintf(output, "You have gained %d Infamy from %s ",inf,sd->status.name);
+			clif_displaymessage(ssd->fd, output);
+		}
 
 		if (battle_config.pk_mode&2) {
 			ssd->status.manner -= 5;
@@ -8893,6 +9715,17 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_ACHIEVEMENT_LEVEL: val = sd->achievement_data.level; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
+		case SP_INFAMY:          val = sd->status.infamy; break; //Biali
+		case SP_PK_KILL:		 val = sd->status.pk.kill_count; break; //Biali
+		case SP_PK_DEATH:		 val = sd->status.pk.death_count; break; //Biali
+		case SP_PK_SCORE:		 val = sd->status.pk.score; break; //Biali
+		case SP_PVP_KILL:		 val = sd->status.pvp.kill_count; break; //Biali
+		case SP_PVP_DEATH:		 val = sd->status.pvp.death_count; break; //Biali
+		case SP_PVP_SCORE:		 val = sd->status.pvp.score; break; //Biali
+		case SP_BG_WIN:		 	 val = sd->status.bgstats.win; break; //Biali
+		case SP_BG_LOST:		 val = sd->status.bgstats.lost; break; //Biali
+		case SP_BG_TIE:		 	 val = sd->status.bgstats.tie; break; //Biali
+		case SP_WOE_SCORE:		 val = sd->status.wstats.score; break; //Biali
 		case SP_BASE_ATK:
 #ifdef RENEWAL
 			val = sd->bonus.eatk;
@@ -9221,6 +10054,9 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		if (!sd->state.connect_new && sd->die_counter == 1 && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
 			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
 		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
+		return true;
+	case SP_INFAMY: //Biali
+		sd->status.infamy = cap_value(val, 0, MAX_INFAMY);
 		return true;
 	case SP_COOKMASTERY:
 		if (val < 0)
@@ -13737,6 +14573,8 @@ void do_init_pc(void) {
 	attendance_db.load();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
+	add_timer_func_list(pc_invincible_timer_reset, "pc_invincible_timer_reset"); //biali blackzone
+	add_timer_func_list(pc_knocked_timer, "pc_knocked_timer"); //biali blackzone
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");
 	add_timer_func_list(pc_inventory_rental_end, "pc_inventory_rental_end");
 	add_timer_func_list(pc_calc_pvprank_timer, "pc_calc_pvprank_timer");

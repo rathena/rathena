@@ -19,6 +19,7 @@ struct s_battleground_member_data {
 	struct map_session_data *sd;
 	unsigned afk : 1;
 	struct point entry_point; ///< Battleground queue entry point
+	bool ranked; // Biali
 #ifdef BGEXTENDED
 	int color;	// Clothes Color [Grenat]
 #endif
@@ -45,6 +46,7 @@ struct s_battleground_data {
 	struct guild *g;
 	// Score Board
 	int team_score;
+	int ranked;
 #endif
 };
 

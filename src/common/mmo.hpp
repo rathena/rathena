@@ -64,6 +64,9 @@ typedef uint32 t_itemid;
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
 #define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+//Update this max as necessary. 55 is the value needed for Super Baby currently
+//Raised to 105 since Expanded Super Baby needs it.
+#define MAX_SKILL_TREE 105 // moved here for skill usage data biali damage log
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -175,6 +178,10 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_FACTION 6
 // Max effects for faction aura
 #define MAX_AURA_EFF 3
+// Castle Ranking biali damage log
+#define RANK_CASTLES 34 
+// Infamy system
+#define MAX_INFAMY 100000 ///Max infamy Biali
 
 enum item_types {
 	IT_HEALING = 0,
@@ -506,6 +513,130 @@ struct hotkey {
 };
 #endif
 
+// biali damage log
+struct s_killrank {
+	unsigned short
+		kill_count,
+		death_count;
+	int score;
+};
+
+struct s_battleground_stats {
+	unsigned int
+		top_damage,
+		damage_done,
+		damage_received,
+		boss_damage;
+	unsigned short
+		// Triple Inferno
+		skulls,
+		ti_wins, ti_lost, ti_tie,
+		// Tierra EoS
+		eos_flags,
+		eos_bases,
+		eos_wins, eos_lost, eos_tie,
+		// Tierra Bossnia
+		boss_killed,
+		boss_flags,
+		boss_wins, boss_lost, boss_tie,
+		// Tierra Domination
+		dom_bases,
+		dom_off_kills,
+		dom_def_kills,
+		dom_wins, dom_lost, dom_tie,
+		// Flavius TD
+		td_kills,
+		td_deaths,
+		td_wins, td_lost, td_tie,
+		// Flavius SC
+		sc_stole,
+		sc_captured,
+		sc_droped,
+		sc_wins, sc_lost, sc_tie,
+		// Flavius CTF
+		ctf_taken,
+		ctf_captured,
+		ctf_droped,
+		ctf_wins, ctf_lost, ctf_tie,
+		// Conquest
+		emperium_kill,
+		barricade_kill,
+		gstone_kill,
+		cq_wins, cq_lost,
+		// Rush
+		ru_captures,
+		ru_wins, ru_lost;
+
+	unsigned int // Ammo
+		sp_heal_potions,
+		hp_heal_potions,
+		yellow_gemstones,
+		red_gemstones,
+		blue_gemstones,
+		poison_bottles,
+		acid_demostration,
+		acid_demostration_fail,
+		support_skills_used,
+		healing_done,
+		wrong_support_skills_used,
+		wrong_healing_done,
+		sp_used,
+		zeny_used,
+		spiritb_used,
+		ammo_used;
+	unsigned short
+		kill_count,
+		death_count,
+		win, lost, tie,
+		leader_win, leader_lost, leader_tie,
+		deserter, rank_games;
+
+	int score, points, rank_points;
+};
+
+struct s_woestats {
+	int score;
+	unsigned short
+		kill_count,
+		death_count;
+	unsigned int
+		top_damage,
+		damage_done,
+		damage_received;
+	unsigned int
+		emperium_damage,
+		guardian_damage,
+		barricade_damage,
+		gstone_damage;
+	unsigned short
+		emperium_kill,
+		guardian_kill,
+		barricade_kill,
+		gstone_kill;
+	unsigned int // Ammo
+		sp_heal_potions,
+		hp_heal_potions,
+		yellow_gemstones,
+		red_gemstones,
+		blue_gemstones,
+		poison_bottles,
+		acid_demostration,
+		acid_demostration_fail,
+		support_skills_used,
+		healing_done,
+		wrong_support_skills_used,
+		wrong_healing_done,
+		sp_used,
+		zeny_used,
+		spiritb_used,
+		ammo_used;
+};
+
+struct s_skillcount {
+	unsigned short id,count;
+};
+// biali fim damage log
+
 struct mmo_charstatus {
 	uint32 char_id;
 	uint32 account_id;
@@ -545,6 +676,15 @@ struct mmo_charstatus {
 	uint32 mapip;
 	uint16 mapport;
 
+	//biali damage log
+	// Ranking Data
+	struct s_killrank pvp, pk;
+	struct s_battleground_stats bgstats;
+	struct s_skillcount bg_skillcount[MAX_SKILL_TREE]; // BG Limited
+	struct s_woestats wstats;
+	struct s_skillcount skillcount[MAX_SKILL_TREE]; // WoE Limited
+	//biali fim damage log
+
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
 	struct s_skill skill[MAX_SKILL];
 
@@ -573,6 +713,7 @@ struct mmo_charstatus {
 	unsigned char hotkey_rowshift;
 	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
+	int infamy; //Biali
 };
 
 typedef enum mail_status {
@@ -693,6 +834,36 @@ struct guild_skill {
 };
 
 struct Channel;
+
+//biali damage log
+struct guild_rank_data {
+	unsigned short
+		capture, // Number of times you have captured this castle
+		emperium, // Number of times you have break an emperium on this castle
+		treasure, // Number of opened treasures
+		top_eco, // Max economy reach on this castle
+		top_def, // Max defense reach on this castle
+		invest_eco, // Total of Economy points
+		invest_def, // Total of Defense points
+		offensive_score,
+		defensive_score;
+	unsigned int
+		posesion_time,
+		zeny_eco,
+		zeny_def;
+	unsigned short
+		skill_battleorder,
+		skill_regeneration,
+		skill_restore,
+		skill_emergencycall;
+	struct {
+		unsigned int
+			kill_count,
+			death_count;
+	} off, def, ext, ali;
+	bool changed;
+};//fim biali
+
 struct guild {
 	int guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
@@ -711,6 +882,8 @@ struct guild {
 	struct Channel *channel;
 	int instance_id;
 	time_t last_leader_change;
+	//biali damage log
+	struct guild_rank_data castle[RANK_CASTLES];
 #ifdef BGEXTENDED
 	int skill_block_timer[MAX_GUILDSKILL]; // BG eAmod
 #endif
@@ -735,6 +908,7 @@ struct guild_castle {
 	int payTime;
 	int createTime;
 	int visibleC;
+	time_t capture_tick; // [WoE Ranking] biali damage log
 	struct {
 		unsigned visible : 1;
 		int id; // object id

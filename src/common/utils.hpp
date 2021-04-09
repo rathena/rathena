@@ -29,6 +29,25 @@ bool exists(const char* filename);
 unsigned int get_percentage(const unsigned int A, const unsigned int B);
 uint32 get_percentage_exp(const uint64 a, const uint64 b);
 
+//biali damage log
+#define add2limit(a, b, max) \
+	do { \
+		if( (max - a) < b ) { \
+			a = max; \
+		} else { \
+			a += b; \
+		} \
+	} while(0)
+
+#define sub2limit(a, b, min) \
+	do { \
+		if( (b + min) > a ) { \
+			a = min; \
+		} else { \
+			a -= b; \
+		} \
+	} while(0)
+    
 //////////////////////////////////////////////////////////////////////////
 // byte word dword access [Shinomori]
 //////////////////////////////////////////////////////////////////////////

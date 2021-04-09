@@ -59,9 +59,6 @@ enum sc_type : int16;
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 #define ACHIEVEMENTLEVEL "AchievementLevel"
 
-//Update this max as necessary. 55 is the value needed for Super Baby currently
-//Raised to 105 since Expanded Super Baby needs it.
-#define MAX_SKILL_TREE 105
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
@@ -315,6 +312,7 @@ struct map_session_data {
 		unsigned int buyingstore : 1;
 		unsigned int lesseffect : 1;
 		unsigned int vending : 1;
+		unsigned int battleinfo : 1; //biali damage log
 		unsigned int noks : 3; // [Zeph Kill Steal Protection]
 		unsigned int changemap : 1;
 		unsigned int callshop : 1; // flag to indicate that a script used callshop; on a shop
@@ -341,6 +339,7 @@ struct map_session_data {
 		bool cashshop_open;
 		bool sale_open;
 		unsigned int block_action : 10;
+		bool knocked; // Biali Black zone
 #ifdef BGEXTENDED
 		// BG eAmod
 		unsigned bg_afk : 1;
@@ -423,6 +422,7 @@ struct map_session_data {
 	int menuskill_id, menuskill_val, menuskill_val2;
 
 	int invincible_timer;
+	int invincible_timer_reset = 120000; // Biali blackzone 2 mins to reset invincibility when changing maps
 	t_tick canlog_tick;
 	t_tick canuseitem_tick;	// [Skotlex]
 	t_tick canusecashfood_tick;
@@ -654,6 +654,13 @@ struct map_session_data {
 
 	int cashPoints, kafraPoints;
 	int rental_timer;
+
+	// Hunting Missions [Zephyrus]
+	int hunting_time;
+	struct {
+		int mob_id;
+		short count;
+	} hunting[5];
 
 	// Auction System [Zephyrus]
 	struct s_auction{
@@ -1398,13 +1405,17 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type);
 int pc_addsoulball(map_session_data *sd, int max);
 int pc_delsoulball(map_session_data *sd, int count, bool type);
 
-void pc_addfame(struct map_session_data *sd,int count);
+void pc_addfame(struct map_session_data *sd,int count, short flag = 0);
 unsigned char pc_famerank(uint32 char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
 extern struct fame_list smith_fame_list[MAX_FAME_LIST];
 extern struct fame_list chemist_fame_list[MAX_FAME_LIST];
 extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
+//biali damage log
+extern struct fame_list pvprank_fame_list[MAX_FAME_LIST];
+extern struct fame_list bgrank_fame_list[MAX_FAME_LIST];
+extern struct fame_list bg_fame_list[MAX_FAME_LIST];
 
 void pc_readdb(void);
 void do_init_pc(void);
@@ -1420,6 +1431,12 @@ TIMER_FUNC(map_night_timer); // by [yor]
 void pc_inventory_rentals(struct map_session_data *sd);
 void pc_inventory_rental_clear(struct map_session_data *sd);
 void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds);
+
+// WoE Ranking Stats - Biali damage log
+void pc_record_damage(struct block_list *src, struct block_list *dst, int damage);
+void pc_record_maxdamage(struct block_list *src, struct block_list *dst, int damage);
+void pc_record_mobkills(struct map_session_data *sd, struct mob_data *md);
+void pc_ranking_reset(int type, bool char_server);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);

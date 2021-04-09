@@ -947,6 +947,11 @@ enum sc_type : int16 {
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
+
+	SC_IMUNITY, //Biali blackzone
+	SC_IMUNITY_CD, //Biali blackzone
+	SC_KNOCKED, //Biali blackzone
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
@@ -2255,6 +2260,7 @@ extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
 extern short current_equip_opt_index;
+extern bool running_npc_stat_calc_event;
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)

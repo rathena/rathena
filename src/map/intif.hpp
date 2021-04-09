@@ -66,6 +66,7 @@ int intif_guild_emblem(int guild_id, int len, const char *data);
 int intif_guild_emblem_version(int guild_id, int version);
 int intif_guild_castle_dataload(int num, int *castle_ids);
 int intif_guild_castle_datasave(int castle_id, int index, int value);
+int intif_guild_save_score(int guild_id, int castle, struct guild_rank_data *grd); //biali damage log
 #ifdef BOUND_ITEMS
 void intif_itembound_guild_retrieve(uint32 char_id, uint32 account_id, int guild_id);
 #endif

@@ -63,6 +63,7 @@ static struct status_data dummy_status;
 short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 unsigned int current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
+bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
@@ -3915,6 +3916,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	);
 
 	memset(&sd->bonus, 0, sizeof(sd->bonus));
+
+	running_npc_stat_calc_event = true;
+	npc_script_event(sd, NPCE_STATCALC);
+	running_npc_stat_calc_event = false;
 
 	// Autobonus
 	pc_delautobonus(sd, sd->autobonus, true);

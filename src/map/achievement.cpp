@@ -821,7 +821,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	for( sd->achievement_data.level = 0; /* Break condition's inside the loop */; sd->achievement_data.level++ ){
 		std::shared_ptr<s_achievement_level> level = achievement_level_db.find( sd->achievement_data.level );
 
-		if( sd->achievement_data.total_score > level->points ){
+		if( level != nullptr && sd->achievement_data.total_score > level->points ){
 			std::shared_ptr<s_achievement_level> next_level = achievement_level_db.find( sd->achievement_data.level + 1 );
 
 			// Check if there is another level
@@ -842,7 +842,11 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 
 		if( sd->achievement_data.level == 0 ){
 			left_score = sd->achievement_data.total_score;
-			right_score = level->points;
+			if( level == nullptr ){
+				right_score = 0;
+			}else{
+				right_score = level->points;
+			}
 			break;
 		}else{
 			std::shared_ptr<s_achievement_level> previous_level = achievement_level_db.find( sd->achievement_data.level - 1 );

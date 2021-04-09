@@ -556,6 +556,19 @@
 	export_parameter(PCDIECOUNTER_VAR, SP_PCDIECOUNTER);
 	export_parameter(COOKMASTERY_VAR, SP_COOKMASTERY);
 	export_parameter(ACHIEVEMENTLEVEL, SP_ACHIEVEMENT_LEVEL);
+//	Biali Exports	
+	export_parameter("Infamy", SP_INFAMY);
+// 	not sure these below are really necessary biali TODO
+	export_parameter("PK_Kill", SP_PK_KILL);
+	export_parameter("PK_Death", SP_PK_DEATH);
+	export_parameter("PK_Score", SP_PK_SCORE);
+	export_parameter("PVP_Kill", SP_PVP_KILL);
+	export_parameter("PVP_Death", SP_PVP_DEATH);
+	export_parameter("PVP_Score", SP_PVP_SCORE);
+	export_parameter("BG_Win", SP_BG_WIN);
+	export_parameter("BG_Lost", SP_BG_LOST);
+	export_parameter("BG_Tie", SP_BG_TIE);
+	export_parameter("WOE_Score", SP_WOE_SCORE);
 
 	export_constant2("bMaxHP",SP_MAXHP);
 	export_constant2("bMaxSP",SP_MAXSP);

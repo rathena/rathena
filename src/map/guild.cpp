@@ -13,6 +13,7 @@
 #include "../common/mapindex.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp" //biali damage log
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
 #include "../common/utilities.hpp"
@@ -2096,6 +2097,7 @@ void guild_castle_map_init(void) {
  */
 int guild_castledatasave(int castle_id, int index, int value) {
 	struct guild_castle *gc = guild_castle_search(castle_id);
+	struct guild *g = gc->guild_id ? guild_search(gc->guild_id) : NULL; //biali damage log
 
 	if (gc == NULL) {
 		ShowWarning("guild_castledatasave: guild castle '%d' not found\n", castle_id);
@@ -2106,6 +2108,20 @@ int guild_castledatasave(int castle_id, int index, int value) {
 	case CD_GUILD_ID: // The castle's owner has changed? Update or remove Guardians too. [Skotlex]
 	{
 		int i;
+		//biali log damage
+		int m = map_mapindex2mapid(gc->mapindex);
+		if( map_allowed_woe(m) && gc->guild_id && (g = guild_search(gc->guild_id)) != NULL )
+		{ // Current WoE
+			int i = gc->castle_id,
+				addtime = DIFF_TICK(last_tick, gc->capture_tick),
+				score = (addtime / 300) * (1 + (gc->economy / 25));
+
+			g->castle[i].posesion_time += addtime;
+			g->castle[i].defensive_score += score;
+			g->castle[i].changed = true;
+		}
+		gc->capture_tick = last_tick;
+		//biali fim
 		gc->guild_id = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
 			struct mob_data *gd;
@@ -2115,10 +2131,38 @@ int guild_castledatasave(int castle_id, int index, int value) {
 		break;
 	}
 	case CD_CURRENT_ECONOMY:
+		//biali damage log
+		if( g && gc->economy < value )
+		{
+			int eco = value - gc->economy;
+			add2limit(g->castle[gc->castle_id].invest_eco, eco, USHRT_MAX);
+			if( g->castle[gc->castle_id].top_eco < value )
+				g->castle[gc->castle_id].top_eco = value;
+			g->castle[gc->castle_id].changed = true;
+			if( !agit_flag )
+			{
+				intif_guild_save_score(g->guild_id, gc->castle_id, &g->castle[gc->castle_id]);
+				g->castle[gc->castle_id].changed = false;
+			}
+		}//biali fim
 		gc->economy = value; break;
 	case CD_CURRENT_DEFENSE: // defense invest change -> recalculate guardian hp
 	{
 		int i;
+		//biali damage log
+		if( g && gc->defense < value )
+		{
+			int def = value - gc->defense;
+			add2limit(g->castle[gc->castle_id].invest_def, def, USHRT_MAX);
+			if( g->castle[gc->castle_id].top_def < value )
+				g->castle[gc->castle_id].top_def = value;
+			g->castle[gc->castle_id].changed = true;
+			if( !agit_flag )
+			{
+				intif_guild_save_score(g->guild_id, gc->castle_id, &g->castle[gc->castle_id]);
+				g->castle[gc->castle_id].changed = false;
+			}
+		}// biali fim
 		gc->defense = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
 			struct mob_data *gd;
