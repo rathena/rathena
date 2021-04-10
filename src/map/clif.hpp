@@ -1077,6 +1077,9 @@ void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum
 void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_open(struct map_session_data* sd);
 
+// Refine UI
+void clif_refineui_open( struct map_session_data* sd );
+
 /**
  * Color Table
  **/
