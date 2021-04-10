@@ -1409,6 +1409,12 @@ void pc_addfame(struct map_session_data *sd,int count, short flag = 0);
 unsigned char pc_famerank(uint32 char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);
 
+//biali blackzone
+void pc_setinvincibletimerreset(struct map_session_data* sd, int val);
+void pc_delinvincibletimerreset(struct map_session_data* sd);
+void pc_setknockedtimer(struct map_session_data* sd, int val);
+void pc_delknockedtimer(struct map_session_data* sd);
+
 extern struct fame_list smith_fame_list[MAX_FAME_LIST];
 extern struct fame_list chemist_fame_list[MAX_FAME_LIST];
 extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];

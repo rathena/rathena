@@ -8133,7 +8133,7 @@
 	export_constant(MF_FVF);
 
 	// Fullloot Biali
-	export_constant(MF_FULLLOOT);
+	export_constant(MF_RPK);
 
 	// Contested Territories Biali
 	export_constant(MF_CONTESTED);

@@ -503,6 +503,22 @@ void pc_delete_bg_queue_timer(map_session_data *sd) {
 	}
 }
 
+static TIMER_FUNC(pc_invincible_timer){
+	struct map_session_data *sd;
+
+	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+		return 1;
+
+	if(sd->invincible_timer != tid){
+		ShowError("invincible_timer %d != %d\n",sd->invincible_timer,tid);
+		return 0;
+	}
+	sd->invincible_timer = INVALID_TIMER;
+	skill_unit_move(&sd->bl,tick,1);
+
+	return 0;
+}
+
 //biali Blackzone invincibility cooldown
 static TIMER_FUNC(pc_invincible_timer_reset){
 	struct map_session_data *sd;
@@ -543,28 +559,13 @@ static TIMER_FUNC(pc_knocked_timer){
 	return 0;
 }
 
-static TIMER_FUNC(pc_invincible_timer){
-	struct map_session_data *sd;
-
-	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
-		return 1;
-
-	if(sd->invincible_timer != tid){
-		ShowError("invincible_timer %d != %d\n",sd->invincible_timer,tid);
-		return 0;
-	}
-	sd->invincible_timer = INVALID_TIMER;
-	skill_unit_move(&sd->bl,tick,1);
-
-	return 0;
-}
-
 void pc_setinvincibletimer(struct map_session_data* sd, int val) {
 	nullpo_retv(sd);
 
 	if( sd->invincible_timer != INVALID_TIMER )
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
 	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->bl.id,0);
+	sc_start(&sd->bl,&sd->bl,SC_IMUNITY,100,1,battle_config.pc_invincible_time); //biali
 }
 
 void pc_delinvincibletimer(struct map_session_data* sd)
@@ -575,6 +576,53 @@ void pc_delinvincibletimer(struct map_session_data* sd)
 	{
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
 		sd->invincible_timer = INVALID_TIMER;
+		status_change_end(&sd->bl, SC_IMUNITY, INVALID_TIMER); //biali
+		skill_unit_move(&sd->bl,gettick(),1);
+	}
+}
+
+//Biali Blackzone
+void pc_setinvincibletimerreset(struct map_session_data* sd, int val) {
+	nullpo_retv(sd);
+
+	if( sd->invincible_timer_reset != INVALID_TIMER )
+		delete_timer(sd->invincible_timer_reset,pc_invincible_timer_reset);
+	sd->invincible_timer_reset = add_timer(gettick()+val,pc_invincible_timer_reset,sd->bl.id,0);
+	sc_start(&sd->bl,&sd->bl,SC_IMUNITY_CD,100,1,battle_config.pc_invincible_time_reset);
+}
+
+//Biali Blackzone
+void pc_delinvincibletimerreset(struct map_session_data* sd)
+{
+	nullpo_retv(sd);
+
+	if( sd->invincible_timer_reset != INVALID_TIMER )
+	{
+		delete_timer(sd->invincible_timer_reset,pc_invincible_timer_reset);
+		sd->invincible_timer_reset = INVALID_TIMER;
+		status_change_end(&sd->bl, SC_IMUNITY_CD, INVALID_TIMER);
+		skill_unit_move(&sd->bl,gettick(),1);
+	}
+}
+
+//Biali Blackzone
+void pc_setknockedtimer(struct map_session_data* sd, int val) {
+	nullpo_retv(sd);
+
+	if( sd->state.knocked != INVALID_TIMER )
+		delete_timer(sd->state.knocked,pc_knocked_timer);
+	sd->state.knocked = add_timer(gettick()+val,pc_knocked_timer,sd->bl.id,0);
+}
+
+//Biali Blackzone
+void pc_delknockedtimer(struct map_session_data* sd)
+{
+	nullpo_retv(sd);
+
+	if( sd->state.knocked != INVALID_TIMER )
+	{
+		delete_timer(sd->state.knocked,pc_knocked_timer);
+		sd->state.knocked = INVALID_TIMER;
 		skill_unit_move(&sd->bl,gettick(),1);
 	}
 }
@@ -1461,7 +1509,7 @@ void pc_calc_ranking(struct map_session_data *tsd, struct map_session_data *ssd,
 		add2limit(ssd->status.pvp.kill_count, 1, USHRT_MAX);
 		add2limit(tsd->status.pvp.death_count, 1, USHRT_MAX);
 	}
-	else if( map_getmapflag(m,MF_FULLLOOT) )
+	else if( map_getmapflag(m,MF_RPK) )
 	{
 		/*==========================================
 		 * Blackzone PK Ranking
@@ -8251,7 +8299,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 	// in non full-loot maps infamy is a 10th of that
 	if(src->type == BL_MOB) {
 		int inf = 0;
-		if(map_getmapflag(src->m,MF_FULLLOOT))
+		if(map_getmapflag(src->m,MF_RPK))
 			inf=(base_exp * battle_config.infamy_from_mobs)/100;
 		else
 			inf=(base_exp * (battle_config.infamy_from_mobs * .10))/100;
@@ -9347,7 +9395,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	//Biali infamy
 	//kill will get x% off from their infamy
-	if(map_getmapflag(sd->bl.m, MF_FULLLOOT)) {
+	if(map_getmapflag(sd->bl.m, MF_RPK)) {
 		infamy = sd->status.infamy;
 		if(infamy)
 			sub2limit(sd->status.infamy, (infamy * battle_config.infamy_taken)/100,0);
@@ -11457,6 +11505,12 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		}else{
 			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
 		}
+		return false;
+	}
+	//biali hellgates. one shouldnt be allowed to change equips in hg
+	union u_mapflag_args args = {};
+	if(map_getmapflag_sub( sd->bl.m, static_cast<e_mapflag>(MF_RPK), &args ) && args.rpk.info[RPK_ISHG]) {
+		clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
 		return false;
 	}
 

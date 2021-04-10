@@ -4047,11 +4047,11 @@ void npc_parse_mob2(struct spawn_data* mob)
 		md->spawn->active++;
 
 		//biali random monster level in Blackzone
-		if(map_getmapflag(md->bl.m,MF_FULLLOOT) && md->db->lv > 1 ) {
+		if(map_getmapflag(md->bl.m,MF_RPK) && md->db->lv > 1 ) {
 			struct map_data *m = map_getmapdata(md->bl.m);
 			//Biali TODO : convert this 5 into a battle_config so ppl can define different ranges for monster levels
 			int rand = rnd()%5;
-			md->level = (rnd()%2)? m->fullloot.info[FULLLOOT_MAP_TIER] + rand : m->fullloot.info[FULLLOOT_MAP_TIER] - rand;
+			md->level = (rnd()%2)? m->rpk.info[RPK_MAP_TIER] + rand : m->rpk.info[RPK_MAP_TIER] - rand;
 		}
 
 		md->roam = 1;
@@ -4452,17 +4452,25 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			break;
 		}
 
-		case MF_FULLLOOT: {
+		case MF_RPK: { // Biali
 			union u_mapflag_args args = {};
 
 			if (!state)
-				map_setmapflag_sub(m, MF_FULLLOOT, false, &args);
+				map_setmapflag_sub(m, MF_RPK, false, &args);
 			else {
-				if (sscanf(w4, "%11d", &args.flag_val) < 1) {
-					args.flag_val = 5;
-					ShowInfo("npc_parse_mapflag: fullloot: Not sufficient values (file '%s', line '%d'). Defaulting it to 5.\n", filepath, strline(buffer, start - buffer));
+				if (sscanf(w4, "%11d,%11d,%11d,%11d",
+					&args.rpk.info[RPK_MAP_TIER], 
+					&args.rpk.info[RPK_FULLLOOT], 
+					&args.rpk.info[RPK_ISDG],
+					&args.rpk.info[RPK_ISHG]
+				) < 4) {
+					args.rpk.info[RPK_MAP_TIER] = 5;
+					args.rpk.info[RPK_FULLLOOT] = true;
+					args.rpk.info[RPK_ISDG] = false;
+					args.rpk.info[RPK_ISHG] = false;
+					ShowInfo("npc_parse_mapflag: rpk: Not sufficient values (file '%s', line '%d'). Defaulting it to Map tier5, fullloot, not dungeon, not hellgates.\n", filepath, strline(buffer, start - buffer));
 				}
-				map_setmapflag_sub(m, MF_FULLLOOT, true, &args);
+				map_setmapflag_sub(m, MF_RPK, true, &args);
 			}
 			break;
 		}

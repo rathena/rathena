@@ -4394,9 +4394,15 @@ ACMD_FUNC(mapinfo) {
 			clif_displaymessage(fd,atcmd_output);
 		}
 	}
-	if (map_getmapflag_sub(m_id, MF_FULLLOOT, NULL)) {
-		sprintf(atcmd_output," Full-loot PvP Map Tier %d%% |",
-			mapdata->fullloot.info[FULLLOOT_MAP_TIER]);
+	if (map_getmapflag_sub(m_id, MF_RPK, NULL)) {
+		char tr[9],dg[11],fl[16];
+		sprintf(atcmd_output, " PK Map %s %s %s",
+			((mapdata->rpk.info[RPK_MAP_TIER]) ? sprintf(tr," Tier %d%% ", mapdata->rpk.info[RPK_MAP_TIER]) : sprintf(tr,"")),
+			((mapdata->rpk.info[RPK_ISDG]) ? sprintf(dg," (dungeon) ") : sprintf(dg,"")),
+			((mapdata->rpk.info[RPK_ISHG]) ? sprintf(dg," (hellgate) ") : sprintf(dg,"")),
+			((mapdata->rpk.info[RPK_FULLLOOT]) ? sprintf(fl," Full-loot: ON ") : sprintf(fl," Full-loot: OFF "))
+		);
+
 		clif_displaymessage(fd,atcmd_output);
 	}
 

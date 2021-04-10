@@ -2516,9 +2516,9 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 
 	map_data *mapdata = map_getmapdata(src->m);
 
-	if ((damage->map&1 && (!mapdata->flag[MF_PVP] && !mapdata_flag_gvg2(mapdata) && !mapdata->flag[MF_BATTLEGROUND] && !mapdata->flag[MF_SKILL_DAMAGE] && !mapdata->flag[MF_RESTRICTED])) ||
+	if ((damage->map&1 && (!mapdata->flag[MF_RPK] && !mapdata->flag[MF_PVP] && !mapdata_flag_gvg2(mapdata) && !mapdata->flag[MF_BATTLEGROUND] && !mapdata->flag[MF_SKILL_DAMAGE] && !mapdata->flag[MF_RESTRICTED])) ||
 		(damage->map&2 && mapdata->flag[MF_PVP]) ||
-		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
+		(damage->map&4 && (mapdata_flag_gvg2(mapdata) || mapdata->flag[MF_RPK])) ||
 		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
 		(damage->map&mapdata->zone && mapdata->flag[MF_RESTRICTED]))
@@ -3564,9 +3564,16 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
 	switch (skill_id) {	//Calc base damage according to skill
-		case PA_SACRIFICE:
-			wd->damage = sstatus->max_hp* 9/100;
-			wd->damage2 = 0;
+		case PA_SACRIFICE: // biali hellgates
+			union u_mapflag_args args = {};
+			if(src->type == BL_PC && map_getmapflag_sub(src->m, static_cast<e_mapflag>(MF_RPK), &args ) && args.rpk.info[RPK_ISHG]) {
+			 	wd->damage = sstatus->max_hp* 3/100;
+			 	wd->damage2 = 0;
+			 } else {
+				wd->damage = sstatus->max_hp* 9/100;
+				wd->damage2 = 0;
+			}
+
 #ifdef RENEWAL
 			wd->weaponAtk = wd->damage;
 			wd->weaponAtk2 = wd->damage2;
@@ -8448,7 +8455,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						case NC_AXETORNADO:
 						case SR_SKYNETBLOW:
 							// Can only hit traps in PVP/GVG maps
-							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF])
+							if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF] && !mapdata->flag[MF_RPK])
 								return 0;
 							break;
 					}
@@ -8465,7 +8472,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					case NC_AXETORNADO:
 					case SR_SKYNETBLOW:
 						// Can only hit icewall in PVP/GVG maps
-						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF])
+						if (!mapdata->flag[MF_PVP] && !mapdata->flag[MF_GVG] && !mapdata->flag[MF_FVF] && !mapdata->flag[MF_RPK])
 							return 0;
 						break;
 					case HT_CLAYMORETRAP:
@@ -8589,8 +8596,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 				return 0; //If you are not representing a guild, can't target Contested Stone. Biali
 			if( sd->status.guild_id && sd->status.guild_id == mapdata->contested.info[CONTESTED_OWNER_ID] && t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->mob_id == MOBID_CONTEST_STONE)
 				return 0; //If your guild holds the contested map u cant hit the contest stone. Biali
-			if( t_bl->type != BL_PC )
+			if( t_bl->type != BL_PC || (t_bl->type == BL_PC && map_getmapflag(t_bl->m,MF_RPK))) // Biali rpk mode
 				state |= BCT_ENEMY; //Natural enemy.
+			// if( t_bl->type != BL_PC )
+			// 	state |= BCT_ENEMY; //Natural enemy.
 			break;
 		}
 		case BL_MOB:

@@ -4658,12 +4658,15 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				default:
 					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 			}
-		case MF_FULLLOOT:
+		case MF_RPK:
 			nullpo_retr(-1, args);
 
 			switch (args->flag_val) {
-				case FULLLOOT_MAP_TIER:
-					return mapdata->fullloot.info[args->flag_val];
+				case RPK_MAP_TIER:
+				case RPK_FULLLOOT:
+				case RPK_ISDG:
+				case RPK_ISHG:
+					return mapdata->rpk.info[args->flag_val];
 				default:
 					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 			}
@@ -4756,6 +4759,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_FVF] = false;
 					ShowWarning("map_setmapflag: Unable to set Faction and PvP flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_RPK]) {
+					mapdata->flag[MF_RPK] = false;
+					ShowWarning("map_setmapflag: Unable to set PK and PvP flags for the same map! Removing PK flag from %s.\n", mapdata->name);
+				}
 			}
 			break;
 		case MF_GVG:
@@ -4779,6 +4786,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_FVF] = false;
 					ShowWarning("map_setmapflag: Unable to set Faction and GvG flags for the same map! Removing Faction flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_RPK]) {
+					mapdata->flag[MF_RPK] = false;
+					ShowWarning("map_setmapflag: Unable to set PK and GvG flags for the same map! Removing PK flag from %s.\n", mapdata->name);
+				}
 			}
 			break;
 		case MF_GVG_CASTLE:
@@ -4801,6 +4812,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_FVF] = false;
 						ShowWarning("npc_parse_mapflag: Unable to set FVF and GvG%s Castle flags for the same map! Removing FVF flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
 				}
+				if (mapdata->flag[MF_RPK]) {
+					mapdata->flag[MF_RPK] = false;
+					ShowWarning("map_setmapflag: Unable to set PK and GvG%s Castle flags for the same map! Removing PK flag from %s.\n", (mapflag == MF_GVG_CASTLE ? NULL : " TE"), mapdata->name);
+				}
 			}
 			mapdata->flag[mapflag] = status;
 			break;
@@ -4815,8 +4830,51 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_FVF] = false;
 						ShowWarning("map_setmapflag: Unable to set FVF and GvG Dungeon flags for the same map! Removing FVF flag from %s.\n", mapdata->name);
 				}
+				if (mapdata->flag[MF_RPK]) {
+					mapdata->flag[MF_RPK] = false;
+					ShowWarning("map_setmapflag: Unable to set PK and GvG Dungeon flags for the same map! Removing PK flag from %s.\n", mapdata->name);
+				}
 			}
 			mapdata->flag[mapflag] = status;
+			break;
+		case MF_RPK: //Biali pk
+			mapdata->flag[mapflag] = status;
+			if (!status) {
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
+			} else {
+				if (!battle_config.pk_mode)
+					clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+
+				if (mapdata->flag[MF_GVG]) {
+					mapdata->flag[MF_GVG] = false;
+					ShowWarning("map_setmapflag: Unable to set GvG and PK flags for the same map! Removing GvG flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_GVG_TE]) {
+					mapdata->flag[MF_GVG_TE] = false;
+					ShowWarning("map_setmapflag: Unable to set GvG TE and PK flags for the same map! Removing GvG TE flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_GVG_DUNGEON]) {
+					mapdata->flag[MF_GVG_DUNGEON] = false;
+					ShowWarning("map_setmapflag: Unable to set GvG Dungeon and PK flags for the same map! Removing GvG Dungeon flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_GVG_CASTLE]) {
+					mapdata->flag[MF_GVG_CASTLE] = false;
+					ShowWarning("map_setmapflag: Unable to set GvG Castle and PK flags for the same map! Removing GvG Castle flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_GVG_TE_CASTLE]) {
+					mapdata->flag[MF_GVG_TE_CASTLE] = false;
+					ShowWarning("map_setmapflag: Unable to set GvG TE Castle and PK flags for the same map! Removing GvG TE Castle flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_BATTLEGROUND]) {
+					mapdata->flag[MF_BATTLEGROUND] = false;
+					ShowWarning("map_setmapflag: Unable to set Battleground and PK flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
+				}
+				if (mapdata->flag[MF_FVF]) {
+					mapdata->flag[MF_FVF] = false;
+					ShowWarning("map_setmapflag: Unable to set FvF and PK flags for the same map! Removing FvF flag from %s.\n", mapdata->name);
+				}
+			}
 			break;
 		case MF_NOBASEEXP:
 		case MF_NOJOBEXP:
@@ -4966,21 +5024,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				}
 
 				memcpy(&mapdata->atk_rate, &args->atk_rate, sizeof(struct s_global_damage_rate));
-			}
-			mapdata->flag[mapflag] = status;
-			break;
-		case MF_FULLLOOT:
-			if (!status)
-				mapdata->atk_rate = {};
-			else {
-				nullpo_retr(false, args);
-
-				if (!args->fullloot.info[FULLLOOT_MAP_TIER]) {
-					ShowError("map_setmapflag: fullloot without map tier for map %s.\n", mapdata->name);
-					return false;
-				}
-
-				memcpy(&mapdata->fullloot, &args->fullloot, sizeof(struct s_fullloot));
 			}
 			mapdata->flag[mapflag] = status;
 			break;

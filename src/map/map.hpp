@@ -621,7 +621,7 @@ enum e_mapflag : int16 {
 	MF_PVP_CONSUME, // allows using PvP consumables
 	MF_FVF, // Biali Faction
 	MF_ATK_RATE, // Biali Global Dmg Adjustment
-	MF_FULLLOOT, // Biali Fullloot
+	MF_RPK, // Biali Fullloot
 	MF_CONTESTED, // Biali Contested Territories
 	MF_WOE_SET, // Biali eAmod WoE
 	MF_BLOCKED, // Biali eAmod WoE
@@ -695,15 +695,18 @@ struct s_global_damage_rate {
 	int rate[DMGRATE_MAX];
 };
 
-/// Enum of fullloot [biali]
-enum e_fullloot_type : uint8 {
-	FULLLOOT_MAP_TIER,
-	FULLLOOT_MAX,
+/// Enum of rpk [biali]
+enum e_rpk_type : uint8 {
+	RPK_MAP_TIER,
+	RPK_FULLLOOT,
+	RPK_ISDG,
+	RPK_ISHG,
+	RPK_MAX,
 };
 
-// fullloot maps Biali
-struct s_fullloot {
-	int info[FULLLOOT_MAX];
+// rpk maps Biali
+struct s_rpk {
+	int info[RPK_MAX];
 };
 
 /// Enum of contested territories bonus types biali
@@ -727,7 +730,7 @@ union u_mapflag_args {
 	struct s_skill_damage skill_damage;
 	struct s_skill_duration skill_duration;
 	struct s_global_damage_rate atk_rate;
-	struct s_fullloot fullloot; //fullloot biali
+	struct s_rpk rpk; //rpk biali
 	struct s_contested_bonuses contested; //Contested Territories Biali
 	struct s_faction_data faction_data; //biali faction system : keeps faction related bonuses on each map
 	int flag_val;
@@ -837,7 +840,7 @@ struct map_data {
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int> skill_duration;
 	struct s_global_damage_rate atk_rate; // Global Damage [Cydh]
-	struct s_fullloot fullloot; // fullloot biali
+	struct s_rpk rpk; // rpk biali
 	struct s_contested_bonuses contested;
 	struct s_faction_data faction_data; // Biali Faction System
 
@@ -902,7 +905,7 @@ inline bool mapdata_flag_vs(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF])
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF] || mapdata->flag[MF_RPK])
 		return true;
 
 	return false;
@@ -917,7 +920,7 @@ inline bool mapdata_flag_vs2(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF])
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF] || mapdata->flag[MF_RPK])
 		return true;
 
 	return false;
@@ -978,7 +981,7 @@ inline bool mapdata_flag_ks(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF])
+	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND] || mapdata->flag[MF_FVF] || mapdata->flag[MF_RPK])
 		return true;
 
 	return false;

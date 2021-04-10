@@ -2808,10 +2808,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 
 			//biali Black zone
-			if(map_getmapflag(m,MF_FULLLOOT))
+			if(map_getmapflag(m,MF_RPK))
 			{
 				struct map_data *mapdata = map_getmapdata(m);
-				switch(mapdata->fullloot.info[FULLLOOT_MAP_TIER]) {
+				switch(mapdata->rpk.info[RPK_MAP_TIER]) {
 					case 5:
 						drop_rate = drop_rate*1.3;
 						break;
@@ -2869,7 +2869,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					drop_rate_bonus += contested_drop_bonus;
 
 				//biali : infamy gives players a boost in drop rates (max 10%)
-				if(sd->status.infamy && map_getmapflag(sd->bl.m,MF_FULLLOOT)) {
+				if(sd->status.infamy && map_getmapflag(sd->bl.m,MF_RPK)) {
 					int infamy = (sd->status.infamy * 10) / MAX_INFAMY;
 					drop_rate_bonus += cap_value(infamy, 1, 1000);
 					// ShowWarning("infamy %d gave Bonus : %d \n",sd->status.infamy, (sd->status.infamy * 100)/MAX_INFAMY);

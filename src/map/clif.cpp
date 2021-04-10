@@ -2114,7 +2114,10 @@ void clif_quitsave(int fd,struct map_session_data *sd) {
 		//And set a timer to make him quit later.
 		session[sd->fd]->session_data = NULL;
 		sd->fd = 0;
-		add_timer(gettick() + 10000, clif_delayquit, sd->bl.id, 0);
+		if(map_getmapflag(sd->bl.m,MF_RPK))
+			add_timer(gettick() + 60000, clif_delayquit, sd->bl.id, 0);
+		else
+			add_timer(gettick() + 10000, clif_delayquit, sd->bl.id, 0);
 	}
 }
 
@@ -5062,7 +5065,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	WBUFL(buf,10) = client_tick(tick);
 	WBUFL(buf,14) = sdelay;
 	WBUFL(buf,18) = ddelay;
-	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
+	if (battle_config.hide_woe_damage && (map_flag_gvg(src->m) && !map_getmapflag(src->m,MF_RPK))) {
 #if PACKETVER < 20071113
 		WBUFW(buf,22) = damage ? div : 0;
 		WBUFW(buf,27+offset) = damage2 ? div : 0;
@@ -5907,7 +5910,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,
 	WBUFL(buf,12)=client_tick(tick);
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
-	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
+	if (battle_config.hide_woe_damage && (map_flag_gvg(src->m) && !map_getmapflag(src->m,MF_RPK))) {
 		WBUFL(buf,24)=damage?div:0;
 	} else {
 		WBUFL(buf,24)=damage;
@@ -6713,7 +6716,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 #if PACKETVER >= 20121010
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
-	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0 || (bl->type == BL_PC && ((TBL_PC *)bl)->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+	WBUFL(buf,4) = ((mapdata->flag[MF_FVF] || mapdata->flag[MF_RPK] || mapdata->flag[MF_PVP]?1:0 || (bl->type == BL_PC && ((TBL_PC *)bl)->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->flag[MF_NOMINEEFFECT] || !mapdata_flag_gvg2(mapdata)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
@@ -10893,8 +10896,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(battle_config.pc_invincible_time > 0) {
 		if(mapdata_flag_gvg(mapdata))
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
-		else
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
+		else {
+			//biali blackzone
+			if(!mapdata->flag[MF_RPK] || (mapdata->flag[MF_RPK] && sd->invincible_timer_reset == INVALID_TIMER)) {
+				pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
+				if(mapdata->flag[MF_RPK])
+					pc_setinvincibletimerreset(sd,battle_config.pc_invincible_time_reset);
+			}
+		}
 	}
 
 	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
@@ -10946,6 +10955,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	else if( mapdata_flag_gvg(mapdata) )
 		clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
 	else if (mapdata->flag[MF_FVF])
+		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	else if (mapdata->flag[MF_RPK])
 		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	else
 		clif_map_property(&sd->bl, MAPPROPERTY_NOTHING, SELF);
@@ -11487,7 +11498,9 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 		skill_check_cloaking(&sd->bl, sd->sc.data[SC_CLOAKING]);
 	status_change_end(&sd->bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
 
-	pc_delinvincibletimer(sd);
+	//Biali blackzone - In Black Zone, players can walk without agroing mobs during invincibility time
+	if(!map_getmapflag(sd->bl.m,MF_RPK))
+		pc_delinvincibletimer(sd);
 
 	//Set last idle time... [Skotlex]
 	if (battle_config.idletime_option&IDLE_WALK)
