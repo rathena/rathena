@@ -2381,6 +2381,9 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case GC_CROSSIMPACT:
 			// Cast range is 7 cells and player jumps to target but skill is considered melee
 			return BF_SHORT;
+
+		case NPC_MAXPAIN_ATK:
+			return BF_MISC;
 	}
 
 	//Skill Range Criteria
