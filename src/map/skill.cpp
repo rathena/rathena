@@ -9589,7 +9589,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case HAMI_BLOODLUST:
 	case HFLI_FLEET:
 	case HFLI_SPEED:
+#ifndef RENEWAL
 	case HLIF_CHANGE:
+#endif
 	case MH_ANGRIFFS_MODUS:
 	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
@@ -9597,6 +9599,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (hd)
 			skill_blockhomun_start(hd, skill_id, skill_get_time2(skill_id,skill_lv));
 		break;
+
+#ifdef RENEWAL
+	case HLIF_CHANGE:
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,
+			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		if (hd)
+			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id,skill_lv));
+		break;
+#endif
 
 	case NPC_DRAGONFEAR:
 		if (flag&1) {

@@ -33556,7 +33556,7 @@ Body:
         Time: 180000
       - Level: 3
         Time: 300000
-    Duration2:
+    Cooldown:
       - Level: 1
         Time: 600000
       - Level: 2
