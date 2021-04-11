@@ -16860,9 +16860,9 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 		if( index[i] < 0 || sd->inventory.u.items_inventory[index[i]].amount < require.amount[i] ||
 			sd->inventory.u.items_inventory[index[i]].card[0] == CARD0_CREATE &&
 			((MakeDWord(sd->inventory.u.items_inventory[index[i]].card[2], sd->inventory.u.items_inventory[index[i]].card[3]) ==
-			battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BG_CONSUME)) ||
+			battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BATTLEGROUND)) ||
 			(MakeDWord(sd->inventory.u.items_inventory[index[i]].card[2], sd->inventory.u.items_inventory[index[i]].card[3]) ==
-			battle_config.woe_reserved_char_id && !map_getmapflag(sd->bl.m, MF_WOE_CONSUME)))
+			battle_config.woe_reserved_char_id && !mapdata_flag_gvg(map_getmapdata(sd->bl.m))))
 		) {
 #else
 		if( index[i] < 0 || sd->inventory.u.items_inventory[index[i]].amount < require.amount[i] ) {

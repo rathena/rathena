@@ -763,7 +763,7 @@ rush_cas01	mapflag	nowarpto
 rush_cas01	mapflag	noreturn
 rush_cas01	mapflag	nobranch
 rush_cas01	mapflag	nopenalty
-rush_cas01	mapflag	bg_consume
+// rush_cas01	mapflag	bg_consume
 
 rush_cas02	mapflag	battleground	2
 rush_cas02	mapflag	nomemo
@@ -774,7 +774,7 @@ rush_cas02	mapflag	nowarpto
 rush_cas02	mapflag	noreturn
 rush_cas02	mapflag	nobranch
 rush_cas02	mapflag	nopenalty
-rush_cas02	mapflag	bg_consume
+// rush_cas02	mapflag	bg_consume
 
 rush_cas03	mapflag	battleground	2
 rush_cas03	mapflag	nomemo
@@ -785,7 +785,7 @@ rush_cas03	mapflag	nowarpto
 rush_cas03	mapflag	noreturn
 rush_cas03	mapflag	nobranch
 rush_cas03	mapflag	nopenalty
-rush_cas03	mapflag	bg_consume
+// rush_cas03	mapflag	bg_consume
 
 rush_cas04	mapflag	battleground	2
 rush_cas04	mapflag	nomemo
@@ -796,4 +796,4 @@ rush_cas04	mapflag	nowarpto
 rush_cas04	mapflag	noreturn
 rush_cas04	mapflag	nobranch
 rush_cas04	mapflag	nopenalty
-rush_cas04	mapflag	bg_consume
+// rush_cas04	mapflag	bg_consume

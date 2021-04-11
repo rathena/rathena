@@ -2754,7 +2754,7 @@ schg_cas06	mapflag	nowarpto
 schg_cas06	mapflag	noreturn
 schg_cas06	mapflag	nobranch
 schg_cas06	mapflag	nopenalty
-schg_cas06	mapflag	bg_consume
+// schg_cas06	mapflag	bg_consume
 
 schg_cas07	mapflag	battleground
 schg_cas07	mapflag	nomemo
@@ -2765,7 +2765,7 @@ schg_cas07	mapflag	nowarpto
 schg_cas07	mapflag	noreturn
 schg_cas07	mapflag	nobranch
 schg_cas07	mapflag	nopenalty
-schg_cas07	mapflag	bg_consume
+// schg_cas07	mapflag	bg_consume
 
 schg_cas08	mapflag	battleground
 schg_cas08	mapflag	nomemo
@@ -2776,7 +2776,7 @@ schg_cas08	mapflag	nowarpto
 schg_cas08	mapflag	noreturn
 schg_cas08	mapflag	nobranch
 schg_cas08	mapflag	nopenalty
-schg_cas08	mapflag	bg_consume
+// schg_cas08	mapflag	bg_consume
 
 arug_cas06	mapflag	battleground
 arug_cas06	mapflag	nomemo
@@ -2787,7 +2787,7 @@ arug_cas06	mapflag	nowarpto
 arug_cas06	mapflag	noreturn
 arug_cas06	mapflag	nobranch
 arug_cas06	mapflag	nopenalty
-arug_cas06	mapflag	bg_consume
+// arug_cas06	mapflag	bg_consume
 
 arug_cas07	mapflag	battleground
 arug_cas07	mapflag	nomemo
@@ -2798,7 +2798,7 @@ arug_cas07	mapflag	nowarpto
 arug_cas07	mapflag	noreturn
 arug_cas07	mapflag	nobranch
 arug_cas07	mapflag	nopenalty
-arug_cas07	mapflag	bg_consume
+// arug_cas07	mapflag	bg_consume
 
 arug_cas08	mapflag	battleground
 arug_cas08	mapflag	nomemo
@@ -2809,4 +2809,4 @@ arug_cas08	mapflag	nowarpto
 arug_cas08	mapflag	noreturn
 arug_cas08	mapflag	nobranch
 arug_cas08	mapflag	nopenalty
-arug_cas08	mapflag	bg_consume
+// arug_cas08	mapflag	bg_consume

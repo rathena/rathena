@@ -26,7 +26,7 @@ bat_b02	mapflag	noreturn
 bat_b02	mapflag	nobranch
 bat_b02	mapflag	nopenalty
 bat_b02	mapflag	noecall
-bat_b02	mapflag	bg_consume
+// bat_b02	mapflag	bg_consume
 
 // ===========================================================
 // Flags

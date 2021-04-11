@@ -94,7 +94,7 @@ OnPCKillEvent:	//-- Adding Stats
 	if(RepeatKill < .RepeatCount) {
 		.@qt = 1;
 		if(.HappyHour) .@qt += 2;
-		if(getmapflag(strcharinfo(3),MF_FULLLOOT)) .@qt += 5;
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_FULLLOOT)) .@qt += 5;
 		getitem 7829,.@qt;
 	} else {
 		atcommand "@request [ Arenas Announcer ]: "+strcharinfo(0)+" is showing signs of abusing the PvP Ranking. Please Investigate";
@@ -202,15 +202,15 @@ OnInit:		//-- Config
 		if(.MapMode[.@i]&1){
 			setmapflag .MapName$[.@i], MF_GUILDLOCK;
 			setmapflag .MapName$[.@i], MF_GVG;
-			setmapflag .MapName$[.@i], MF_WOE_CONSUME;
+			// setmapflag .MapName$[.@i], MF_WOE_CONSUME;
 		} else if(.MapMode[.@i]&256) {
 			setmapflag .MapName$[.@i], MF_PVP;
-			setmapflag .MapName$[.@i], MF_PVP_CONSUME;
-			setmapflag .MapName$[.@i], MF_FULLLOOT;
+			// setmapflag .MapName$[.@i], MF_PVP_CONSUME;
+			setmapflag .MapName$[.@i], MF_RPK,RPK_FULLLOOT,1;
 		} else { 	
 			setmapflag .MapName$[.@i], MF_PVP_NOGUILD;
 			setmapflag .MapName$[.@i], MF_PVP;
-			setmapflag .MapName$[.@i], MF_PVP_CONSUME;
+			// setmapflag .MapName$[.@i], MF_PVP_CONSUME;
 		}
 		if(.MapMode[.@i]&128)
 			setmapflag .MapName$[.@i], MF_ANCIENT;

@@ -5927,15 +5927,19 @@ short pc_search_inventory(struct map_session_data *sd, t_itemid nameid) {
 #endif
 	nullpo_retr(-1, sd);
 #ifdef BGEXTENDED
-	if (map_getmapflag(sd->bl.m, MF_BG_CONSUME)) {
+	if (map_getmapflag(sd->bl.m, MF_BATTLEGROUND)) {
 		ARR_FIND( 0, MAX_INVENTORY, x, sd->inventory.u.items_inventory[x].nameid == nameid && ( MakeDWord(sd->inventory.u.items_inventory[x].card[2], sd->inventory.u.items_inventory[x].card[3]) == battle_config.bg_reserved_char_id ) && (sd->inventory.u.items_inventory[x].amount > 0 || nameid == 0) );
 			if( x < MAX_INVENTORY ) return x;
 	}
-	if (map_getmapflag(sd->bl.m, MF_WOE_CONSUME)) {
+	if (mapdata_flag_gvg(map_getmapdata(sd->bl.m))) {
 		ARR_FIND( 0, MAX_INVENTORY, y, sd->inventory.u.items_inventory[y].nameid == nameid && ( MakeDWord(sd->inventory.u.items_inventory[y].card[2], sd->inventory.u.items_inventory[y].card[3]) == battle_config.woe_reserved_char_id ) && (sd->inventory.u.items_inventory[y].amount > 0 || nameid == 0) );
 			if( y < MAX_INVENTORY ) return y;
 	}
 #endif
+	if (map_getmapflag(sd->bl.m, MF_PVP)) { //Biali
+		ARR_FIND( 0, MAX_INVENTORY, y, sd->inventory.u.items_inventory[y].nameid == nameid && ( MakeDWord(sd->inventory.u.items_inventory[y].card[2], sd->inventory.u.items_inventory[y].card[3]) == battle_config.pvp_reserved_char_id ) && (sd->inventory.u.items_inventory[y].amount > 0 || nameid == 0) );
+			if( y < MAX_INVENTORY ) return y;
+	}
 	ARR_FIND( 0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].nameid == nameid && (sd->inventory.u.items_inventory[i].amount > 0 || nameid == 0) );
 	return ( i < MAX_INVENTORY ) ? i : -1;
 }
@@ -6463,9 +6467,9 @@ int pc_useitem(struct map_session_data *sd,int n)
 	}
 #ifdef BGEXTENDED
 	if( sd->inventory.u.items_inventory[n].card[0] == CARD0_CREATE) {
-		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BG_CONSUME))
+		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BATTLEGROUND))
 			return 0;
-		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.woe_reserved_char_id && !map_getmapflag(sd->bl.m, MF_WOE_CONSUME))
+		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.woe_reserved_char_id && !mapdata_flag_gvg(map_getmapdata(sd->bl.m)))
 			return 0;
 	}
 #endif
@@ -9876,6 +9880,7 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_FIXCASTRATE:     val = sd->bonus.fixcastrate; break;
 		case SP_ADD_FIXEDCAST:   val = sd->bonus.add_fixcast; break;
 		case SP_ADD_VARIABLECAST:  val = sd->bonus.add_varcast; break;
+		case SP_FACTION:	   		val = sd->status.faction_id; 	break;
 		case SP_CASTRATE:
 		case SP_VARCASTRATE:
 #ifdef RENEWAL_CAST
@@ -9883,7 +9888,6 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 #else
 			val = sd->castrate; break;
 #endif
-		case SP_FACTION:   		val = sd->status.faction_id; break;
 		case SP_CRIT_DEF_RATE: 	val = sd->bonus.crit_def_rate; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
@@ -10043,10 +10047,11 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		sd->killedgid = val;
 		return true;
 	case SP_FACTION:
-		sd->status.faction_id = cap_value(val, 1, MAX_FACTION);
-		status_calc_pc(sd,SCO_NONE);
-		if( map_getmapflag(sd->bl.m, MF_FVF) )
-			pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+		sd->status.faction_id = val;
+		ShowWarning("pc_setparam : BIALI : faction_id",val);
+		// status_calc_pc(sd,SCO_NONE);
+		// if( map_getmapflag(sd->bl.m, MF_FVF) )
+		// 	pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 		return true;
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;
@@ -11508,11 +11513,11 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		return false;
 	}
 	//biali hellgates. one shouldnt be allowed to change equips in hg
-	union u_mapflag_args args = {};
-	if(map_getmapflag_sub( sd->bl.m, static_cast<e_mapflag>(MF_RPK), &args ) && args.rpk.info[RPK_ISHG]) {
-		clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
-		return false;
-	}
+	// union u_mapflag_args args = {};
+	// if(map_getmapflag_sub( sd->bl.m, static_cast<e_mapflag>(MF_RPK), &args ) && args.rpk.info[RPK_ISHG]) {
+	// 	clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
+	// 	return false;
+	// }
 
 	if (!(id = sd->inventory_data[n]))
 		return false;

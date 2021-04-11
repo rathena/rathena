@@ -4365,12 +4365,6 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, "  Map Blocked |");
 	if (map_getmapflag(m_id, MF_ANCIENT))
 		strcat(atcmd_output, "  Classic GvG |");
-	if (map_getmapflag(m_id, MF_BG_CONSUME))
-		strcat(atcmd_output, "  BG Items |");
-	if (map_getmapflag(m_id, MF_WOE_CONSUME))
-		strcat(atcmd_output, "  WoE Items |");
-	if (map_getmapflag(m_id, MF_PVP_CONSUME))
-		strcat(atcmd_output, "  PvP Items |");
 	if (map_getmapflag(m_id, MF_SKILLNOREQUIREMENTS))
 		strcat(atcmd_output, "  Skills no Requirements |");	
 	if (map_getmapflag(m_id, MF_BLOCKED))
@@ -4382,16 +4376,18 @@ ACMD_FUNC(mapinfo) {
 	}
 	if (map_getmapflag(m_id, MF_FVF))
 		strcat(atcmd_output, "  FvF |");
-	if (map_getmapflag_sub(m_id, MF_CONTESTED, NULL)) {
+	if (map_getmapflag(m_id, MF_CONTESTED)) {
 		struct guild* g = guild_search(mapdata->contested.info[CONTESTED_OWNER_ID]);
-		sprintf(atcmd_output,"  This map is currently guarded by guild %s.", g->name);
-		clif_displaymessage(fd,atcmd_output);
-		if(sd->status.guild_id > 0 && sd->status.guild_id == mapdata->contested.info[CONTESTED_OWNER_ID]) {
-			sprintf(atcmd_output," > Base Exp Bonus: %d%% | Job Exp Bonus: %d%% | Drop Rates Bonus: %d%%",
-				mapdata->contested.info[CONTESTED_BASE_BONUS],
-				mapdata->contested.info[CONTESTED_JOB_BONUS],
-				mapdata->contested.info[CONTESTED_DROP_BONUS]);
+		if(g) {
+			sprintf(atcmd_output,"  This map is currently guarded by guild %s.", g->name);
 			clif_displaymessage(fd,atcmd_output);
+			if(sd->status.guild_id > 0 && sd->status.guild_id == mapdata->contested.info[CONTESTED_OWNER_ID]) {
+				sprintf(atcmd_output," > Base Exp Bonus: %d%% | Job Exp Bonus: %d%% | Drop Rates Bonus: %d%%",
+					mapdata->contested.info[CONTESTED_BASE_BONUS],
+					mapdata->contested.info[CONTESTED_JOB_BONUS],
+					mapdata->contested.info[CONTESTED_DROP_BONUS]);
+				clif_displaymessage(fd,atcmd_output);
+			}
 		}
 	}
 	if (map_getmapflag_sub(m_id, MF_RPK, NULL)) {

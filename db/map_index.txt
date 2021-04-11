@@ -1077,10 +1077,10 @@ region_8
 maze
 
 rent_m
-rent_ma
+//rent_ma
 rent_mb
 rent1
-renta1
+//renta1
 rentb1
 rentc1
 rentd1
@@ -1088,7 +1088,7 @@ rente1
 rentf1
 rentg1
 rentin1
-rentina1
+//rentina1
 rentinb1
 rentinc1
 rentind1
@@ -1098,10 +1098,12 @@ renting1
 
 hell
 
-bg_ball
+//bg_ball
+soccer3
 bomberman
 bg_bomber
 bg_bomber2
+ovi
 
 ars_fild01
 ars_fild02

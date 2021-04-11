@@ -182,7 +182,7 @@ region_8	mapflag	nowarpto
 region_8	mapflag	noreturn
 region_8	mapflag	nobranch
 region_8	mapflag	nopenalty
-region_8	mapflag	bg_consume
+// region_8	mapflag	bg_consume
 
 // ===========================================================
 // Flags

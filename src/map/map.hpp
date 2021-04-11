@@ -46,7 +46,7 @@ void map_msg_reload(void);
 #define LOOTITEM_SIZE 10
 #define MAX_MOBSKILL 50		//Max 128, see mob skill_idx type if need this higher
 #define MAX_MOB_LIST_PER_MAP 128
-#define MAX_EVENTQUEUE 12 // Biali it was originally 2
+#define MAX_EVENTQUEUE 100 // Biali it was originally 2
 #define MAX_EVENTTIMER 32
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
@@ -614,11 +614,8 @@ enum e_mapflag : int16 {
 	MF_SKILL_DURATION,
 #ifdef BGEXTENDED
 	MF_NOECALL, // [BattleGround System]
-	MF_BG_CONSUME, // allows using BG consumables
-	MF_WOE_CONSUME, // allows using WoE consumables
 	MF_BG_TOPSCORE,
 #endif
-	MF_PVP_CONSUME, // allows using PvP consumables
 	MF_FVF, // Biali Faction
 	MF_ATK_RATE, // Biali Global Dmg Adjustment
 	MF_RPK, // Biali Fullloot

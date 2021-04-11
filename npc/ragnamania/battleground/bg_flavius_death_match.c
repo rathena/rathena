@@ -243,4 +243,4 @@ bat_b03	mapflag	nowarpto
 bat_b03	mapflag	noreturn
 bat_b03	mapflag	nobranch
 bat_b03	mapflag	nopenalty
-bat_b03	mapflag	bg_consume
+// bat_b03	mapflag	bg_consume

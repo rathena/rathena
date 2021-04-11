@@ -481,8 +481,6 @@
 #ifdef BGEXTENDED
 	// Battleground eAmod
 	export_constant(MF_NOECALL);
-	export_constant(MF_BG_CONSUME);
-	export_constant(MF_WOE_CONSUME);
 	export_constant(MF_BG_TOPSCORE);
 #endif
 

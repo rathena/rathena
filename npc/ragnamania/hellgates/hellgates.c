@@ -15,7 +15,7 @@
 		end;
 
 	OnPCDieEvent:
-		if(getmapflag(strcharinfo(3),mf_hellgate)){
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)){
 			callfunc "F_Fullloot";
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
@@ -26,7 +26,7 @@
 		end;
 
 	OnPcLogoutEvent:
-		if(getmapflag(strcharinfo(3),mf_hellgate)) {
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)) {
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
 			sleep 500;
@@ -36,7 +36,7 @@
 		end;
 
 	OnPCStatCalcEvent:
-		if(getmapflag(strcharinfo(3),mf_hellgate,1)) {
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)) {
 			if(MaxHp > 100000)
 				Hp = MaxHp = 100000;
 		}
@@ -394,14 +394,15 @@ function	script	hg_setmapflag	{
 	if(.@m$ == "") return;
 
 	// Common mapflags (applies to both, arena and hell gates entrance maps)
-	setarray .hg_mapflags[0],mf_noteleport,mf_nowarp,mf_nobranch,mf_nosave,mf_nochat,mf_novending,mf_noicewall,mf_nosunmoonstarmiracle,mf_loadevent,mf_pk,mf_fullloot;
+	setarray .hg_mapflags[0],mf_noteleport,mf_nowarp,mf_nobranch,mf_nosave,mf_nochat,mf_novending,mf_noicewall,mf_nosunmoonstarmiracle,mf_loadevent;
 	for(.@i=0;.@i<getarraysize(.hg_mapflags);.@i++) {
 		setmapflag .@m$,.hg_mapflags[.@i];
 	}
+	setmapflag .@m$, MF_RPK,5,1,0,0;
 
 	if(.@m$ == "hell") {
 		// Hell mapflags applies only to the arena
-		setmapflag .@m$, mf_hellgate;
+		setmapflag .@m$, MF_RPK,1,1,0,1;
 		setmapflag .@m$, mf_noloot;
 		setmapflag .@m$, mf_partylock;
 		setmapflag .@m$, mf_guildlock;
@@ -410,7 +411,7 @@ function	script	hg_setmapflag	{
 		setmapflag .@m$, mf_nomemo;
 		setmapflag .@m$, mf_monster_noteleport,1;
 		setmapflag .@m$, $@HG_PARTY_SIZE;
-		setmapflag .@m$, mf_nerf_asura,80;
+		// setmapflag .@m$, mf_nerf_asura,80;
 		setmapflag .@m$, mf_notrade;
 		setmapflag .@m$, mf_nodrop;
 		setmapflag .@m$, mf_nopenalty;

@@ -3565,18 +3565,19 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 
 	switch (skill_id) {	//Calc base damage according to skill
 		case PA_SACRIFICE: // biali hellgates
-			union u_mapflag_args args = {};
-			if(src->type == BL_PC && map_getmapflag_sub(src->m, static_cast<e_mapflag>(MF_RPK), &args ) && args.rpk.info[RPK_ISHG]) {
-			 	wd->damage = sstatus->max_hp* 3/100;
-			 	wd->damage2 = 0;
-			 } else {
-				wd->damage = sstatus->max_hp* 9/100;
-				wd->damage2 = 0;
-			}
+			// union u_mapflag_args args = {};
+			// if(src->type == BL_PC && map_getmapflag_sub(src->m, static_cast<e_mapflag>(MF_RPK), &args ) && args.rpk.info[RPK_ISHG]) {
+			//  	wd->damage = sstatus->max_hp* 3/100;
+			//  	wd->damage2 = 0;
+			//  } else {
+			wd->damage = sstatus->max_hp* 9/100;
+			wd->damage2 = 0;
+			// }
 
 #ifdef RENEWAL
-			wd->weaponAtk = wd->damage;
-			wd->weaponAtk2 = wd->damage2;
+		union u_mapflag_args args = {};
+		wd->weaponAtk = wd->damage;
+		wd->weaponAtk2 = wd->damage2;
 #endif
 			break;
 #ifdef RENEWAL

@@ -521,7 +521,7 @@ Body:
     JobRestrictions:
       Novice: true
     Locations:
-      - Map: bg_ball
+      - Map: soccer3
         StartEvent: Poringball_Config::OnReady
         TeamA:
           RespawnX: 24

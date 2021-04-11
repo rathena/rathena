@@ -275,7 +275,7 @@ int faction_get_id(struct block_list *bl)
 	return 0;
 }
 
-// ID,Faction Name,Faction Player name,Location,X,Y,Race,Element,Element lvl,Size,Clothes Color,Color of mes,{ Aura: #1 #2 #3 },{ Script Bonus },{ Faction Aura Script Bonus }
+// ID,Faction Name,Faction Player name,Location,X,Y,Race,Element,Element lvl,Size,Clothes Color,Color of mes,{ Aura: #1 #2 #3 },{ Script Bonus }
 static int faction_readdb(void)
 {
 	struct faction_data *fdb;

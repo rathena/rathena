@@ -3,36 +3,36 @@
 in_sphinx4	mapflag	nobranch
 
 // Guild Castles Consume 
-aldeg_cas01	mapflag	woe_consume
-aldeg_cas02	mapflag	woe_consume
-aldeg_cas03	mapflag	woe_consume
-aldeg_cas04	mapflag	woe_consume
-aldeg_cas05	mapflag	woe_consume
-gefg_cas01	mapflag	woe_consume
-gefg_cas02	mapflag	woe_consume
-gefg_cas03	mapflag	woe_consume
-gefg_cas04	mapflag	woe_consume
-gefg_cas05	mapflag	woe_consume
-payg_cas01	mapflag	woe_consume
-payg_cas02	mapflag	woe_consume
-payg_cas03	mapflag	woe_consume
-payg_cas04	mapflag	woe_consume
-payg_cas05	mapflag	woe_consume
-prtg_cas01	mapflag	woe_consume
-prtg_cas02	mapflag	woe_consume
-prtg_cas03	mapflag	woe_consume
-prtg_cas04	mapflag	woe_consume
-prtg_cas05	mapflag	woe_consume
-schg_cas01	mapflag	woe_consume
-schg_cas02	mapflag	woe_consume
-schg_cas03	mapflag	woe_consume
-schg_cas04	mapflag	woe_consume
-schg_cas05	mapflag	woe_consume
-arug_cas01	mapflag	woe_consume
-arug_cas02	mapflag	woe_consume
-arug_cas03	mapflag	woe_consume
-arug_cas04	mapflag	woe_consume
-arug_cas05	mapflag	woe_consume
+// aldeg_cas01	mapflag	woe_consume
+// aldeg_cas02	mapflag	woe_consume
+// aldeg_cas03	mapflag	woe_consume
+// aldeg_cas04	mapflag	woe_consume
+// aldeg_cas05	mapflag	woe_consume
+// gefg_cas01	mapflag	woe_consume
+// gefg_cas02	mapflag	woe_consume
+// gefg_cas03	mapflag	woe_consume
+// gefg_cas04	mapflag	woe_consume
+// gefg_cas05	mapflag	woe_consume
+// payg_cas01	mapflag	woe_consume
+// payg_cas02	mapflag	woe_consume
+// payg_cas03	mapflag	woe_consume
+// payg_cas04	mapflag	woe_consume
+// payg_cas05	mapflag	woe_consume
+// prtg_cas01	mapflag	woe_consume
+// prtg_cas02	mapflag	woe_consume
+// prtg_cas03	mapflag	woe_consume
+// prtg_cas04	mapflag	woe_consume
+// prtg_cas05	mapflag	woe_consume
+// schg_cas01	mapflag	woe_consume
+// schg_cas02	mapflag	woe_consume
+// schg_cas03	mapflag	woe_consume
+// schg_cas04	mapflag	woe_consume
+// schg_cas05	mapflag	woe_consume
+// arug_cas01	mapflag	woe_consume
+// arug_cas02	mapflag	woe_consume
+// arug_cas03	mapflag	woe_consume
+// arug_cas04	mapflag	woe_consume
+// arug_cas05	mapflag	woe_consume
 
 // Contestados - Mapas com emperium
 prt_fild05	mapflag	nomemo

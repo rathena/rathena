@@ -4644,46 +4644,46 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 				default:
 					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 			}
-		case MF_ATK_RATE:
-			nullpo_retr(-1, args);
+		// case MF_ATK_RATE:
+		// 	nullpo_retr(-1, args);
 
-			switch (args->flag_val) {
-				case DMGRATE_BL:
-				case DMGRATE_SHORT:
-				case DMGRATE_LONG:
-				case DMGRATE_WEAPON:
-				case DMGRATE_MAGIC:
-				case DMGRATE_MISC:
-					return mapdata->atk_rate.rate[args->flag_val];
-				default:
-					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
-			}
-		case MF_RPK:
-			nullpo_retr(-1, args);
+		// 	switch (args->flag_val) {
+		// 		case DMGRATE_BL:
+		// 		case DMGRATE_SHORT:
+		// 		case DMGRATE_LONG:
+		// 		case DMGRATE_WEAPON:
+		// 		case DMGRATE_MAGIC:
+		// 		case DMGRATE_MISC:
+		// 			return mapdata->atk_rate.rate[args->flag_val];
+		// 		default:
+		// 			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+		// 	}
+		// case MF_RPK:
+		// 	nullpo_retr(-1, args);
 
-			switch (args->flag_val) {
-				case RPK_MAP_TIER:
-				case RPK_FULLLOOT:
-				case RPK_ISDG:
-				case RPK_ISHG:
-					return mapdata->rpk.info[args->flag_val];
-				default:
-					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
-			}
-		case MF_CONTESTED:
-			nullpo_retr(-1, args);
+		// 	switch (args->flag_val) {
+		// 		case RPK_MAP_TIER:
+		// 		case RPK_FULLLOOT:
+		// 		case RPK_ISDG:
+		// 		case RPK_ISHG:
+		// 			return mapdata->rpk.info[args->flag_val];
+		// 		default:
+		// 			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+		// 	}
+		// case MF_CONTESTED:
+		// 	nullpo_retr(-1, args);
 
-			switch (args->flag_val) {
-				case CONTESTED_OWNER_ID:
-				case CONTESTED_BASE_BONUS:
-				case CONTESTED_JOB_BONUS:
-				case CONTESTED_DROP_BONUS:
-					return mapdata->contested.info[args->flag_val];
-				default:
-					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
-			}
-		default:
-			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+		// 	switch (args->flag_val) {
+		// 		case CONTESTED_OWNER_ID:
+		// 		case CONTESTED_BASE_BONUS:
+		// 		case CONTESTED_JOB_BONUS:
+		// 		case CONTESTED_DROP_BONUS:
+		// 			return mapdata->contested.info[args->flag_val];
+		// 		default:
+		// 			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+		// 	}
+		// default:
+		// 	return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 	}
 }
 
@@ -4838,13 +4838,13 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_RPK: //Biali pk
-			mapdata->flag[mapflag] = status;
+			mapdata->flag[mapflag] = status; // Must come first to properly set map property
 			if (!status) {
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
 			} else {
-				if (!battle_config.pk_mode)
-					clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+				clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+				map_foreachinmap(map_mapflag_pvp_start_sub, m, BL_PC);
 
 				if (mapdata->flag[MF_GVG]) {
 					mapdata->flag[MF_GVG] = false;
@@ -4874,6 +4874,12 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_FVF] = false;
 					ShowWarning("map_setmapflag: Unable to set FvF and PK flags for the same map! Removing FvF flag from %s.\n", mapdata->name);
 				}
+
+				for (int i = RPK_MAP_TIER; i < RPK_MAX; i++) {
+					mapdata->rpk.info[i] = args->rpk.info[i];
+					// ShowWarning("map_setmapflag_sub : RPK map %s recebeu %d para o mpflag %d\n",mapdata->name,args->rpk.info[i],i);
+				}
+
 			}
 			break;
 		case MF_NOBASEEXP:

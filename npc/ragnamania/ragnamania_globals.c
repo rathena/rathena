@@ -21,9 +21,8 @@ function	script	F_isVSmap	{
 	getmapflag(.@m$,MF_GVG) || 
 	getmapflag(.@m$,MF_GVG_CASTLE)|| 
 	getmapflag(.@m$,MF_GVG_DUNGEON)  || 
-	getmapflag(.@m$,MF_BATTLEGROUND))
-	// ||
-	// getmapflag(.@m$,MF_PK))
+	getmapflag(.@m$,MF_BATTLEGROUND)) ||
+	getmapflag(.@m$,MF_RPK)
 		return 1;
 	else
 		return 0;

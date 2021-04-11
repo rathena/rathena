@@ -10931,10 +10931,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_bg_hp(sd); // BattleGround System
  
 	if( sd->status.faction_id ) { // Faction System [Biali]
-		if( map_getmapflag(sd->bl.m, MF_FVF) ) {
+		// if( map_getmapflag(sd->bl.m, MF_FVF) ) {
 			faction_hp(sd);
+			//Biali test
+			faction_spawn(&sd->bl);
 			clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
-		}
+		// }
 	}
 
 	if(!pc_isinvisible(sd) && mapdata->flag[MF_PVP]) {

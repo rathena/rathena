@@ -663,7 +663,7 @@ bat_a02	mapflag	noreturn
 bat_a02	mapflag	nobranch
 bat_a02	mapflag	nopenalty
 bat_a02	mapflag	noecall
-bat_a02	mapflag	bg_consume
+//bat_a02	mapflag	bg_consume
 
 // Eye of the Storm Effects
 // *********************************************************************

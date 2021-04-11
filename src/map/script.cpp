@@ -12962,11 +12962,11 @@ BUILDIN_FUNC(setmapflag)
 			}
 			break;
 		case MF_RPK:
-			if (script_hasdata(st, 4))
+			if (script_hasdata(st, 4) && script_hasdata(st, 5) && script_hasdata(st, 6) && script_hasdata(st, 7)) {
 				args.rpk.info[RPK_MAP_TIER] = script_getnum(st, 4);
-			else {
-				ShowWarning("buildin_setmapflag: Unable to set rpk mapflag as map tier is missing.\n");
-				return SCRIPT_CMD_FAILURE;
+				args.rpk.info[RPK_FULLLOOT] = script_getnum(st, 5);
+				args.rpk.info[RPK_ISDG] = script_getnum(st, 6);
+				args.rpk.info[RPK_ISHG] = script_getnum(st, 7);
 			}
 			break;
 		case MF_CONTESTED:
@@ -12979,7 +12979,7 @@ BUILDIN_FUNC(setmapflag)
 				ShowWarning("buildin_setmapflag: Unable to set Contested mapflag as flag data is missing.\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			break;
+		break;
 		default:
 			FETCH(4, args.flag_val);
 			break;
@@ -25912,7 +25912,7 @@ BUILDIN_FUNC(contestedadjbonus)
 	int job = script_getnum(st,4);
 	int drop = script_getnum(st,5);
 
-	if( (m_id = map_mapname2mapid(str)) == NULL )
+	if( (m_id = map_mapname2mapid(str)) == -1 )
 	{
 		ShowWarning("contestedadjbonus: map not found %s\n",str);
 		return 0;
@@ -25920,9 +25920,9 @@ BUILDIN_FUNC(contestedadjbonus)
 
 	struct map_data *mapdata = map_getmapdata(m_id);
 
-	if(mapdata->contested.info[CONTESTED_OWNER_ID] == NULL || !map_getmapflag(m_id,MF_CONTESTED)) 
+	if(mapdata->contested.info[CONTESTED_OWNER_ID] == 0 || !map_getmapflag(m_id,MF_CONTESTED)) 
 	{
-		ShowWarning("contestedadjbonus: map %s has no owner ot is not contested. Aborting.\n",str);
+		ShowWarning("contestedadjbonus: map %s has no owner or is not contested. Aborting.\n",str);
 		return 0;
 	}
 
@@ -26419,7 +26419,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(isloggedin,"i?"),
 	BUILDIN_DEF(setmapflagnosave,"ssii"),
 	BUILDIN_DEF(getmapflag,"si?"),
-	BUILDIN_DEF(setmapflag,"si??"),
+	BUILDIN_DEF(setmapflag,"si????"),
 	BUILDIN_DEF(removemapflag,"si?"),
 	BUILDIN_DEF(pvpon,"s"),
 	BUILDIN_DEF(pvpoff,"s"),

@@ -45,14 +45,14 @@ OnCollectLootBag:
     end;
 
 	OnPCLoadMapEvent:
-		if(getmapflag(strcharinfo(3),mf_fullloot) && !getmapflag(strcharinfo(3),mf_hellgate) && !getmapflag(strcharinfo(3),mf_map_tier)) {
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_FULLLOOT) && !getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)) {
 			announce "/!\\ F u l l - L o o t   P v P   A r e a /!\\",bc_self,0xFF0000,FW_BOLD,32,0;
 			dispbottom "You will lose everything in your inventory may you die to another player",0xFFFFFF;
 		}
 		end;
 
 	OnPcDieEvent:
-		if(getmapflag(strcharinfo(3),mf_fullloot)){
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_FULLLOOT)){
 			if(killerrid > 100000000) end;
 			full_loot();
 			sleep2 200;
@@ -62,11 +62,11 @@ OnCollectLootBag:
 		end;
 
 	function	full_loot	{
-		if(!getmapflag(strcharinfo(3),mf_fullloot)) 
+		if(!getmapflag(strcharinfo(3),MF_RPK,RPK_FULLLOOT)) 
 			return;
 
 		// Killer gets 1% of kill's total zeny (except in hell gates)
-		if(!getmapflag(strcharinfo(3),mf_hellgate) && killerrid) {
+		if(!getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG) && killerrid) {
 			.@z = Zeny/100;
 			set Zeny, Zeny + .@z,getcharid(0,rid2name(killerrid));
 			set Zeny, Zeny - .@z;

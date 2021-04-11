@@ -66,14 +66,14 @@ OnInit:
 	.skill_push_sit_time = 1;					// Skill Push sit down duration in seconds (Default: 1)
 
 	//= [Olrox Poring Ball Map]
-	setarray .ball_center,78,79;					// Center
-	setarray .map_corner,41,116,49,108;				// Corners
-	setarray .map_surface,33,48,78,108,79,48,123,109;		// Map Surface
-	setarray .map_goal,72,85;					// Goal lenght
-	setarray .ball_corner1,36,107;					// Corner 1
-	setarray .ball_corner2,122,108;					// Corner 2
-	setarray .respawn,24,21,130,133;
-/*
+	// setarray .ball_center,78,79;					// Center
+	// setarray .map_corner,41,116,49,108;				// Corners
+	// setarray .map_surface,33,48,78,108,79,48,123,109;		// Map Surface
+	// setarray .map_goal,72,85;					// Goal lenght
+	// setarray .ball_corner1,36,107;					// Corner 1
+	// setarray .ball_corner2,122,108;					// Corner 2
+	// setarray .respawn,24,21,130,133;
+
 	//= [Grenat Poring Ball Map]
 	// db/battleground.yml Spawn Blue: 83,70. Spawn Red: 114,70	// Coordination of both team to modified
 	setarray .ball_center,99,70;					// Center
@@ -91,25 +91,25 @@ OnInit:
 	MoveNPC "Red Goal#poring3",175,77;				// Blue Goal 1
 	MoveNPC "Red Goal#poring4",175,62;				// Blue Goal 1
 	setarray .respawn,83,70,114,70;
-*/
+
 	end;
 
 OnTeam1Active:
-	warp "bg_ball",.respawn[0],.respawn[1];
+	warp "soccer3",.respawn[0],.respawn[1];
 	end;
 OnTeam2Active:
-	warp "bg_ball",.respawn[2],.respawn[3];
+	warp "soccer3",.respawn[2],.respawn[3];
 	end;
 
 OnTeamDie1:
 OnTeamDie2:
 	if($@poringball != 3)||(!.penalty) end;
 	if(getcharid(4) == $@BG_Team201) {
-		mapannounce "bg_ball", "Penalty for Red team ! Blue team kick at the red team's corner",bc_blue;
+		mapannounce "soccer3", "Penalty for Red team ! Blue team kick at the red team's corner",bc_blue;
 		$@poringballnext_teamid = $@BG_Team201;
 		donpcevent "Poring Ball::OnPenaltyBlue";
 	} else {
-		mapannounce "bg_ball", "Penalty for Blue team ! Red team kick at the blue team's corner",bc_blue;
+		mapannounce "soccer3", "Penalty for Blue team ! Red team kick at the blue team's corner",bc_blue;
 		$@poringballnext_teamid = $@BG_Team202;
 		donpcevent "Poring Ball::OnPenaltyRed";
 	}
@@ -124,31 +124,31 @@ OnPoringBallQuit:
 	
 OnReady:
 	$@BG20 = 1;
-	bg_warp $@BG_Team201,"bg_ball",.respawn[0],.respawn[1];
-	bg_warp $@BG_Team202,"bg_ball",.respawn[2],.respawn[3];
+	bg_warp $@BG_Team201,"soccer3",.respawn[0],.respawn[1];
+	bg_warp $@BG_Team202,"soccer3",.respawn[2],.respawn[3];
 	$@poringball = 2;
 	$@poringballnext_teamid = 0;
 	$@score_poring_red = 0;
 	$@score_poring_blue = 0;
-	bg_updatescore "bg_ball",$@score_poring_blue,$@score_poring_red;
+	bg_updatescore "soccer3",$@score_poring_blue,$@score_poring_red;
 	MoveNPC "Poring Ball",.ball_center[0],.ball_center[1];
-	viewpointmap "bg_ball",1, .ball_center[0], .ball_center[1], 1, 0xffffff;
+	viewpointmap "soccer3",1, .ball_center[0], .ball_center[1], 1, 0xffffff;
 	initnpctimer;
 	end;
 
 OnTimer1000:
-	mapannounce "bg_ball","[Poring Ball]: Start of the match in 10 seconds.",0;	
+	mapannounce "soccer3","[Poring Ball]: Start of the match in 10 seconds.",0;	
 	end;
 OnTimer4500:
-	mapannounce "bg_ball", "[Poring Ball]: Start of the match in 5 seconds.",0;	
+	mapannounce "soccer3", "[Poring Ball]: Start of the match in 5 seconds.",0;	
 	end;
 OnTimer10000:
-	mapannounce "bg_ball","[Poring Ball]: Match has just begun !",0;
-	mapannounce "bg_ball","[Received] : Push and Shoot item skills",0;
-	bg_warp $@BG_Team201,"bg_ball",35,108;
-	bg_warp $@BG_Team202,"bg_ball",122,49;
+	mapannounce "soccer3","[Poring Ball]: Match has just begun !",0;
+	mapannounce "soccer3","[Received] : Push and Shoot item skills",0;
+	bg_warp $@BG_Team201,"soccer3",35,108;
+	bg_warp $@BG_Team202,"soccer3",122,49;
 	$@poringball = 3;
-	getmapunits(BL_PC,"bg_ball",.@array);
+	getmapunits(BL_PC,"soccer3",.@array);
 	for(.@i = 0; .@i < getarraysize(.@array); .@i++) {
 		if(!countitem("SKILL_SHOOT",.@array[.@i])) getitem "SKILL_SHOOT",1,.@array[.@i];
 		if(!countitem("SKILL_PUSH",.@array[.@i])) getitem "SKILL_PUSH",1,.@array[.@i];
@@ -157,27 +157,27 @@ OnTimer10000:
 	}
 	end;
 OnTimer190000:
-	mapannounce "bg_ball", "[Poring Ball]: Half-time !",bc_map;	
+	mapannounce "soccer3", "[Poring Ball]: Half-time !",bc_map;	
 	end;
 OnTimer370000:
-	mapannounce "bg_ball", "[Poring Ball]: End of the match !",bc_map;	
+	mapannounce "soccer3", "[Poring Ball]: End of the match !",bc_map;	
 	$@poringball = 4;	
 	$@BG_Status = 2;
-	bg_reserve "bg_ball", true;
+	bg_reserve "soccer3", true;
 	end;
 OnTimer376000:
 	MoveNPC "Poring Ball",.ball_center[0],.ball_center[1];
 	stopnpctimer;
 	if ($@score_poring_blue<$@score_poring_red) {
-		mapannounce "bg_ball", "Congrats red team !!",bc_map;
+		mapannounce "soccer3", "Congrats red team !!",bc_map;
 		callfunc "BG_get_Rewards",$@BG_Team201,7829,1;
 		callfunc "BG_get_Rewards",$@BG_Team202,7829,5;
 	} else if ($@score_poring_blue>$@score_poring_red) {
-		mapannounce "bg_ball", "Congrats blue team !!",bc_map;	
+		mapannounce "soccer3", "Congrats blue team !!",bc_map;	
 		callfunc "BG_get_Rewards",$@BG_Team201,7829,5;
 		callfunc "BG_get_Rewards",$@BG_Team202,7829,1;
 	} else {
-		mapannounce "bg_ball", "Draw !!",bc_map;	
+		mapannounce "soccer3", "Draw !!",bc_map;	
 		callfunc "BG_get_Rewards",$@BG_Team201,7829,1;
 		callfunc "BG_get_Rewards",$@BG_Team202,7829,1;
 	}
@@ -185,19 +185,19 @@ OnTimer376000:
 	sleep 7000;
 	set $@poringball,0;	
 	set $@poringballnext_teamid, 0;
-	cleanmap "bg_ball";
-	getmapunits(BL_PC,"bg_ball",.@array);
+	cleanmap "soccer3";
+	getmapunits(BL_PC,"soccer3",.@array);
 	for(.@i = 0; .@i < getarraysize(.@array); .@i++) {
 		if(countitem("SKILL_SHOOT",.@array[.@i])) delitem "SKILL_SHOOT",1,.@array[.@i];
 		if(countitem("SKILL_PUSH",.@array[.@i])) delitem "SKILL_PUSH",1,.@array[.@i];
 		if(!.pvp) setpcblock PCBLOCK_ATTACK,0,.@array[.@i];
 		//sc_start SC_TIMERDOWN,361000,360,10000,SCSTART_NOAVOID,.@array[.@i];
 	}
-	mapwarp "bg_ball","bat_room",154,150;
+	mapwarp "soccer3","bat_room",154,150;
 	if($@BG_Team201) { bg_destroy $@BG_Team201; $@BG_Team201 = 0; }
 	if($@BG_Team202) { bg_destroy $@BG_Team202; $@BG_Team202 = 0; }
 	$@BG20 = 0;
-	bg_unbook "bg_ball";
+	bg_unbook "soccer3";
 	end;
 }
 
@@ -205,13 +205,13 @@ OnTimer376000:
 // Map Flags
 // ===========================================================
 
-bg_ball	mapflag	nomemo
-bg_ball	mapflag	noteleport
-bg_ball	mapflag	nowarp
-bg_ball	mapflag	nosave	SavePoint
-bg_ball	mapflag	battleground	2
-bg_ball	mapflag	nopenalty
-bg_ball	mapflag	noskill
+soccer3	mapflag	nomemo
+soccer3	mapflag	noteleport
+soccer3	mapflag	nowarp
+soccer3	mapflag	nosave	SavePoint
+soccer3	mapflag	battleground	2
+soccer3	mapflag	nopenalty
+soccer3	mapflag	noskill
 
 // ===========================================================
 // Functions
@@ -250,7 +250,7 @@ function	script	CheckPositionPB	{
 function	script	CheckPoringClose	{
 	getmapxy .@map$,.@x,.@y;
 	getmapxy .@map2$,.@x2,.@y2,BL_NPC,"Poring Ball";
-	if (distance(.@x,.@y,.@x2,.@y2)>2)||(.@map$ != "bg_ball") return 0;
+	if (distance(.@x,.@y,.@x2,.@y2)>2)||(.@map$ != "soccer3") return 0;
 	return 1;
 }
 
@@ -269,7 +269,7 @@ function	script	Skill_Push	{
 	getmapxy .@map$,.@x,.@y;
 	.@bgteam = bg_teamid();
 	.@launcher = getcharid(3);
-	if(.@map$ != "bg_ball") end;
+	if(.@map$ != "soccer3") end;
 	showscript "Push !!";
 	specialeffect2 457;
 	detachrid;
@@ -295,7 +295,7 @@ function	script	Skill_Push	{
 // ===========================================================
 // Throw Ball on a clicked cell scripts.
 // ===========================================================
-bg_ball,0,0,0	script	TryThrowBall	-1,{
+soccer3,0,0,0	script	TryThrowBall	-1,{
 	if(callfunc("CheckPoringClose")) {
 		if(!callfunc("CheckConditionsPB")) end;
 		specialeffect 1,AREA,"Poring Ball";
@@ -311,7 +311,7 @@ bg_ball,0,0,0	script	TryThrowBall	-1,{
 // ===========================================================
 // Ball scripts.
 // ===========================================================
-bg_ball,78,79,4	script	Poring Ball	1002,{
+soccer3,78,79,4	script	Poring Ball	1002,{
 	getmapxy .@map$,.@x,.@y;
 OnStart:
 	if(!callfunc("CheckConditionsPB")) end;
@@ -390,7 +390,7 @@ OnStart:
 OnMove:
 	// Beginning of the movement
 	for(.@i = 0; .@i < .distance; .@i++) {
-		viewpointmap "bg_ball",1, getnpcinfo(NPC_X), getnpcinfo(NPC_Y), 1, 0xffffff;
+		viewpointmap "soccer3",1, getnpcinfo(NPC_X), getnpcinfo(NPC_Y), 1, 0xffffff;
 		if (.destination){
 			for(.@i2 = 0; .@i2 < 1; .@i2++) {
 				switch(.destination){
@@ -421,7 +421,7 @@ OnMove:
 				.@movingY = callfunc("CheckPositionPB",.@goingtoY,getnpcinfo(NPC_Y));
 
 				npcspeed .@speed;
-				viewpointmap "bg_ball",1, getnpcinfo(NPC_X), getnpcinfo(NPC_Y), 1, 0xffffff;
+				viewpointmap "soccer3",1, getnpcinfo(NPC_X), getnpcinfo(NPC_Y), 1, 0xffffff;
 				npcwalkto getnpcinfo(NPC_X)+.@movingX,getnpcinfo(NPC_Y)+.@movingY;
 
 				if (getnpcinfo(NPC_X)==.@goingtoX) && (getnpcinfo(NPC_Y)==.@goingtoY) {
@@ -437,14 +437,14 @@ OnMove:
 		}
 
 		// Check if a player can stop the ball by being sit on its way
-		getareaunits(BL_PC,"bg_ball",getnpcinfo(NPC_X)-1,getnpcinfo(NPC_Y)-1,getnpcinfo(NPC_X)+1,getnpcinfo(NPC_Y)+1,.@array);
+		getareaunits(BL_PC,"soccer3",getnpcinfo(NPC_X)-1,getnpcinfo(NPC_Y)-1,getnpcinfo(NPC_X)+1,getnpcinfo(NPC_Y)+1,.@array);
 		for(.@i3 = 0; .@i3 < getarraysize(.@array); .@i3++)
 			if(ispcsit(.@array[.@i3]))&&(getvariableofnpc(.blockage,"Poringball_Config"))
 				if(rand(0,100) >= 50+readparam(bVit,convertpcinfo(.@array,CPC_NAME))/3)
 					unitstopwalk getnpcid(0),USW_FIXPOS;
 		.@ballx = getnpcinfo(NPC_X)+.@movingX;
 		.@bally = getnpcinfo(NPC_Y)+.@movingY;
-		if(getvariableofnpc(.sound_poring,"Poringball_Config")) soundeffectall "poring_move.wav",0,"bg_ball";
+		if(getvariableofnpc(.sound_poring,"Poringball_Config")) soundeffectall "poring_move.wav",0,"soccer3";
 		if(.@moving) {
 			npcspeed .@speed;
 			npcwalkto .@ballx,.@bally;
@@ -459,9 +459,9 @@ OnGoalCheck:
 				misceffect 8;
 				npctalk "Goal !! I'm going back to the middle :>";
 				setd("$@score_poring_"+.@teamclose$+""),getd("$@score_poring_"+.@teamclose$+"")+1;
-				bg_updatescore "bg_ball",$@score_poring_blue,$@score_poring_red;
+				bg_updatescore "soccer3",$@score_poring_blue,$@score_poring_red;
 				if(.@teamclose$=="red") $@poringballnext_teamid = $@BG_Team201; else $@poringballnext_teamid = $@BG_Team202;
-				mapannounce "bg_ball", ""+.PlayerName$+" scored a goal for the "+.@teamclose$+" team. First kick for the other team.",bc_blue;
+				mapannounce "soccer3", ""+.PlayerName$+" scored a goal for the "+.@teamclose$+" team. First kick for the other team.",bc_blue;
 				goto OnBackToCenter;
 			}
 			.distance += 3;
@@ -520,7 +520,7 @@ OnShoot:
 OnStartTimer:
 	.busy = 1;
 	sleep 2000;
-	if($@poringballnext_teamid) mapannounce "bg_ball", "Ball is for "+($@poringballnext_teamid==$@BG_Team201?"blue":"red")+" team for 5 seconds.",bc_blue;
+	if($@poringballnext_teamid) mapannounce "soccer3", "Ball is for "+($@poringballnext_teamid==$@BG_Team201?"blue":"red")+" team for 5 seconds.",bc_blue;
 	sleep 5000;
 	set $@poringballnext_teamid, 0;
 	.busy = 0;
@@ -543,15 +543,15 @@ OnArrived:
 // ===========================================================
 // Goals
 // ===========================================================
-bg_ball,41,85,6	script	Blue Goal#poring1	1_FLAG_LION,{ end; }
-bg_ball,41,73,6	duplicate(Blue Goal#poring1)	Blue Goal#poring2	1_FLAG_LION
-bg_ball,116,85,2	duplicate(Blue Goal#poring1)	Red Goal#poring3	1_FLAG_EAGLE
-bg_ball,116,72,2	duplicate(Blue Goal#poring1)	Red Goal#poring4	1_FLAG_EAGLE
+soccer3,41,85,6	script	Blue Goal#poring1	1_FLAG_LION,{ end; }
+soccer3,41,73,6	duplicate(Blue Goal#poring1)	Blue Goal#poring2	1_FLAG_LION
+soccer3,116,85,2	duplicate(Blue Goal#poring1)	Red Goal#poring3	1_FLAG_EAGLE
+soccer3,116,72,2	duplicate(Blue Goal#poring1)	Red Goal#poring4	1_FLAG_EAGLE
 
 // ===========================================================
 // Respawn
 // ===========================================================
-bg_ball,133,137,3	script	Return#ball1	4_ENERGY_RED,{
+soccer3,133,137,3	script	Return#ball1	4_ENERGY_RED,{
 	if($@poringball == 3) {
 		attachnpctimer;
 		initnpctimer;
@@ -577,21 +577,21 @@ OnTimer5000:
 OnTimer6000:
 	stopnpctimer;
 	if(getcharid(4) == $@BG_Team202) {
-		if(rand(0,1)) warp "bg_ball",121,107;
-		else warp "bg_ball",121,50;	
+		if(rand(0,1)) warp "soccer3",121,107;
+		else warp "soccer3",121,50;	
 	} else {
-		if(rand(0,1)) warp "bg_ball",36,50;
-		else warp "bg_ball",36,107;
+		if(rand(0,1)) warp "soccer3",36,50;
+		else warp "soccer3",36,107;
 	}
 	sleep2 200;
 	specialeffect2 6;
 	end;
 }
 
-bg_ball,21,26,3	duplicate(Return#ball1)	Return#ball2	4_ENERGY_BLUE
+soccer3,21,26,3	duplicate(Return#ball1)	Return#ball2	4_ENERGY_BLUE
 
 // ===========================================================
 // Healer
 // ===========================================================
-bg_ball,127,138,3	duplicate(BGHeal)	Healer#ball1	95
-bg_ball,25,28,3	duplicate(BGHeal)	Healer#ball2	95
+soccer3,127,138,3	duplicate(BGHeal)	Healer#ball1	95
+soccer3,25,28,3	duplicate(BGHeal)	Healer#ball2	95

@@ -10,8 +10,8 @@ OnPcLoginEvent:
 
 function	script	isVs	{
 	.@m$ = getarg(0);
-	for(.@i=0;.@i<getarraysize($@MF_VS$);.@i++)
-		if(getmapflag(.@m$,$@MF_VS$[.@i]))
+	for(.@i=0;.@i<getarraysize($@MF_VS);.@i++)
+		if(getmapflag(.@m$,$@MF_VS[.@i]))
 			return 1;
 	return 0;
 }

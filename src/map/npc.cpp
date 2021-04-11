@@ -4469,9 +4469,10 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					args.rpk.info[RPK_ISDG] = false;
 					args.rpk.info[RPK_ISHG] = false;
 					ShowInfo("npc_parse_mapflag: rpk: Not sufficient values (file '%s', line '%d'). Defaulting it to Map tier5, fullloot, not dungeon, not hellgates.\n", filepath, strline(buffer, start - buffer));
-				}
+				} 
 				map_setmapflag_sub(m, MF_RPK, true, &args);
 			}
+			// ShowWarning("npc_parse_mapflag : mf_rpk recebeu %d,%d,%d,%d.\n",args.rpk.info[RPK_MAP_TIER],args.rpk.info[RPK_FULLLOOT],args.rpk.info[RPK_ISDG],args.rpk.info[RPK_ISHG]);
 			break;
 		}
 

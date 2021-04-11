@@ -579,13 +579,6 @@ function	script	EpochToMs	{
 	return .@timeInMiliseconds;
 }
 
-function	script	abs	{
-	//.@i = atoi(getarg(0));
-	.@i = getarg(0);
-	return ( (.@i < 0) ? -.@i : .@i );
-}
-
-
 //
 // Gera Hunting Mission
 //

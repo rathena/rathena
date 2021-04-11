@@ -616,4 +616,4 @@ bat_a04	mapflag	noreturn
 bat_a04	mapflag	nobranch
 bat_a04	mapflag	nopenalty
 bat_a04	mapflag	noecall
-bat_a04	mapflag	bg_consume
+//bat_a04	mapflag	bg_consume

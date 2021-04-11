@@ -1,12 +1,11 @@
 ars_fild01	mapflag	noteleport
 ars_fild01	mapflag	nomemo
 ars_fild01	mapflag	nobranch
-ars_fild01	mapflag	fullloot	5
 // ars_fild01	mapflag	nolockon
 //ars_fild01	mapflag	mob_dmg	100
-ars_fild01	mapflag	fullloot	5
-ars_fild01	mapflag	bexp	120	120
-ars_fild01	mapflag	jexp	120	120
+ars_fild01	mapflag	rpk	5,1,0,0 //tier, fullloot, isdg=no, ishg=no
+ars_fild01	mapflag	bexp	120,120
+ars_fild01	mapflag	jexp	120,120
 ars_fild01	mapflag	loadevent
 
 
