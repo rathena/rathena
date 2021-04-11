@@ -662,6 +662,8 @@ struct map_session_data {
 		int zeny;
 		struct mail_data inbox;
 		bool changed; // if true, should sync with charserver on next mailbox request
+		uint32 pending_weight;
+		uint32 pending_zeny;
 	} mail;
 
 	//Quest log system
