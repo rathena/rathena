@@ -31,36 +31,72 @@ struct status_change;
 #endif
 
 /// Refine type
-enum refine_type {
-	REFINE_TYPE_ARMOR	= 0,
-	REFINE_TYPE_WEAPON1	= 1,
-	REFINE_TYPE_WEAPON2	= 2,
-	REFINE_TYPE_WEAPON3	= 3,
-	REFINE_TYPE_WEAPON4	= 4,
-	REFINE_TYPE_SHADOW	= 5,
-	REFINE_TYPE_MAX		= 6
+enum e_refine_type : uint16{
+	REFINE_TYPE_ARMOR = 0,
+	REFINE_TYPE_WEAPON,
+	REFINE_TYPE_SHADOW_ARMOR,
+	REFINE_TYPE_SHADOW_WEAPON,
+	REFINE_TYPE_MAX
 };
 
 /// Refine cost type
-enum refine_cost_type {
+enum e_refine_cost_type : uint16{
 	REFINE_COST_NORMAL = 0,
-	REFINE_COST_OVER10,
 	REFINE_COST_HD,
 	REFINE_COST_ENRICHED,
-	REFINE_COST_OVER10_HD,
-	REFINE_COST_HOLINK,
-	REFINE_COST_WAGJAK,
 	REFINE_COST_MAX
 };
 
-struct refine_cost {
-	t_itemid nameid;
-	int zeny;
+/// Refine script parameters
+enum e_refine_parameter{
+	REFINE_MATERIAL_ID = 0,
+	REFINE_ZENY_COST
 };
 
-/// Get refine chance
-int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
-int status_get_refine_cost(int weapon_lv, int type, bool what);
+struct s_refine_cost{
+	uint16 index;
+	t_itemid nameid;
+	uint16 chance;
+	uint32 zeny;
+	uint16 breaking_rate;
+	uint16 downgrade_amount;
+};
+
+struct s_refine_level_info{
+	uint16 level;
+	uint32 bonus;
+	uint32 randombonus_max;
+	uint16 blessing_amount;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
+};
+
+struct s_refine_levels_info{
+	uint16 level;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_level_info>> levels;
+};
+
+struct s_refine_info{
+	uint16 groupId;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_levels_info>> levels;
+};
+
+class RefineDatabase : public TypesafeYamlDatabase<uint16, s_refine_info>{
+private:
+	bool calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level );
+
+public:
+	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+
+	// Additional
+	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
+};
+
+extern RefineDatabase refine_db;
 
 /// Weapon attack modification for size
 struct s_sizefix_db {
