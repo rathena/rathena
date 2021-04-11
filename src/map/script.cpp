@@ -9200,11 +9200,22 @@ BUILDIN_FUNC(getequippercentrefinery)
 
 	if (equip_index_check(num))
 		i = pc_checkequip(sd,equip_bitmask[num]);
-	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].refine < MAX_REFINE) {
-		enum refine_type type = REFINE_TYPE_SHADOW;
-		if (sd->inventory_data[i]->type != IT_SHADOWGEAR)
-			type = (enum refine_type)sd->inventory_data[i]->wlv;
-		script_pushint(st, status_get_refine_chance(type, (int)sd->inventory.u.items_inventory[i].refine, enriched));
+	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid) {
+		std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *sd->inventory_data[i], sd->inventory.u.items_inventory[i] );
+
+		if( info == nullptr ){
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, (uint16)( enriched ? REFINE_COST_ENRICHED : REFINE_COST_NORMAL ) );
+
+		if( cost == nullptr ){
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		script_pushint( st, cost->chance / 100 );
 	}
 	else
 		script_pushint(st,0);
@@ -24364,15 +24375,36 @@ BUILDIN_FUNC(getequiprefinecost) {
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	int weapon_lv = sd->inventory_data[i]->wlv;
-	if (sd->inventory_data[i]->type == IT_SHADOWGEAR) {
-		if (sd->inventory_data[i]->equip == EQP_SHADOW_WEAPON)
-			weapon_lv = REFINE_TYPE_WEAPON4;
-		else
-			weapon_lv = REFINE_TYPE_SHADOW;
+	if( sd->inventory_data[i] == nullptr ){
+		script_pushint( st, -1 );
+		return SCRIPT_CMD_SUCCESS;
 	}
 
-	script_pushint(st, status_get_refine_cost(weapon_lv, type, info != 0));
+	std::shared_ptr<s_refine_level_info> level_info = refine_db.findLevelInfo( *sd->inventory_data[i], sd->inventory.u.items_inventory[i] );
+
+	if( level_info == nullptr ){
+		script_pushint( st, -1 );
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	std::shared_ptr<s_refine_cost> cost = util::umap_find( level_info->costs, (uint16)type );
+
+	if( cost == nullptr ){
+		script_pushint( st, -1 );
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch( info ){
+		case REFINE_MATERIAL_ID:
+			script_pushint( st, cost->nameid );
+			break;
+		case REFINE_ZENY_COST:
+			script_pushint( st, cost->zeny );
+			break;
+		default:
+			script_pushint( st, -1 );
+			return SCRIPT_CMD_FAILURE;
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -24991,6 +25023,30 @@ BUILDIN_FUNC(isnpccloaked)
 
 	script_pushint(st, npc_is_cloaked(nd, sd));
 	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(refineui){
+#if PACKETVER < 20161012
+	ShowError( "buildin_refineui: This command requires packet version 2016-10-12 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !script_charid2sd(2,sd) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !battle_config.feature_refineui ){
+		ShowError( "buildin_refineui: This command is disabled via configuration.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !sd->state.refineui_open ){
+		clif_refineui_open(sd);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
 }
 
 #include "../custom/script.inc"
@@ -25657,8 +25713,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementexists,"i?"),
 	BUILDIN_DEF(achievementupdate,"iii?"),
 
-
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
+	BUILDIN_DEF(refineui,"?"),
+
 	BUILDIN_DEF2(round, "round", "ii"),
 	BUILDIN_DEF2(round, "ceil", "ii"),
 	BUILDIN_DEF2(round, "floor", "ii"),

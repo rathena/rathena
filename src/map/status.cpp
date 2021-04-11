@@ -48,14 +48,6 @@ enum e_regen {
 	RGN_SSP  = 0x08,
 };
 
-// Bonus values and upgrade chances for refining equipment
-static struct {
-	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
-	int bonus[MAX_REFINE]; /// Cumulative fixed bonus damage
-	int randombonus_max[MAX_REFINE]; /// Cumulative maximum random bonus damage
-	struct refine_cost cost[REFINE_COST_MAX];
-} refine_info[REFINE_TYPE_MAX];
-
 static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
@@ -114,6 +106,324 @@ static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
+
+const std::string RefineDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/refine.yml";
+}
+
+uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
+	std::string group_name;
+
+	if( !this->asString( node, "Group", group_name ) ){
+		return 0;
+	}
+
+	std::string group_name_constant = "REFINE_TYPE_" + group_name;
+	int64 constant;
+
+	if( !script_get_constant( group_name_constant.c_str(), &constant ) ){
+		this->invalidWarning(node["Group"], "Unknown refine group %s, skipping.\n", group_name.c_str() );
+		return 0;
+	}
+
+	uint16 group_id = static_cast<uint16>( constant );
+
+	std::shared_ptr<s_refine_info> info = this->find( group_id );
+	bool exists = info != nullptr;
+
+	if( !exists ){
+		info = std::make_shared<s_refine_info>();
+	}
+
+	if( this->nodeExists( node, "Levels" ) ){
+		for( const YAML::Node& levelNode : node["Levels"] ){
+			uint16 level;
+
+			if( !this->asUInt16( levelNode, "Level", level ) ){
+				return 0;
+			}
+
+			std::shared_ptr<s_refine_levels_info> levels_info = util::umap_find( info->levels, level );
+			bool levels_exists = levels_info != nullptr;
+
+			if( !levels_exists ){
+				levels_info = std::make_shared<s_refine_levels_info>();
+				levels_info->level = level;
+			}
+
+			if( this->nodeExists( levelNode, "RefineLevels" ) ){
+				for( const YAML::Node& refineLevelNode : levelNode["RefineLevels"] ){
+					uint16 refine_level;
+
+					if( !this->asUInt16( refineLevelNode, "Level", refine_level ) ){
+						return 0;
+					}
+
+					if( refine_level == 0 || refine_level > MAX_REFINE ){
+						this->invalidWarning( refineLevelNode["Level"], "Refine level %hu is invalid, skipping.\n", refine_level );
+						return 0;
+					}
+
+					// Database is 1 based, code is 0 based
+					refine_level -= 1;
+
+					std::shared_ptr<s_refine_level_info> level_info = util::umap_find( levels_info->levels, refine_level );
+					bool level_exists = level_info != nullptr;
+
+					if( !level_exists ){
+						level_info = std::make_shared<s_refine_level_info>();
+						level_info->level = refine_level;
+					}
+
+					if( this->nodeExists( refineLevelNode, "Bonus" ) ){
+						uint32 bonus;
+
+						if( !this->asUInt32( refineLevelNode, "Bonus", bonus ) ){
+							return 0;
+						}
+
+						level_info->bonus = bonus;
+					}else{
+						if( !level_exists ){
+							level_info->bonus = 0;
+						}
+					}
+
+					if( this->nodeExists( refineLevelNode, "RandomBonus" ) ){
+						uint32 bonus;
+
+						if( !this->asUInt32( refineLevelNode, "RandomBonus", bonus ) ){
+							return 0;
+						}
+
+						level_info->randombonus_max = bonus;
+					}else{
+						if( !level_exists ){
+							level_info->randombonus_max = 0;
+						}
+					}
+
+					if( this->nodeExists( refineLevelNode, "BlacksmithBlessingAmount" ) ){
+						uint16 amount;
+
+						if( !this->asUInt16( refineLevelNode, "BlacksmithBlessingAmount", amount ) ){
+							return 0;
+						}
+
+						if( amount > MAX_AMOUNT ){
+							this->invalidWarning( refineLevelNode["BlacksmithBlessingAmount"], "Blacksmith Blessing amount %hu too high, capping to MAX_AMOUNT.\n", amount );
+							amount = MAX_AMOUNT;
+						}
+
+						level_info->blessing_amount = amount;
+					}else{
+						if( !level_exists ){
+							level_info->blessing_amount = 0;
+						}
+					}
+
+					if( this->nodeExists( refineLevelNode, "Chances" ) ){
+						for( const YAML::Node& chanceNode : refineLevelNode["Chances"] ){
+							std::string cost_name;
+
+							if( !this->asString( chanceNode, "Type", cost_name ) ){
+								return 0;
+							}
+
+							std::string cost_name_constant = "REFINE_COST_" + cost_name;
+
+							if( !script_get_constant( cost_name_constant.c_str(), &constant ) ){
+								this->invalidWarning( chanceNode["Type"], "Unknown refine cost type %s, skipping.\n", cost_name.c_str() );
+								return 0;
+							}
+
+							if( constant >= REFINE_COST_MAX ){
+								this->invalidWarning( chanceNode["Type"], "Refine cost type %s is unsupported, skipping.\n", cost_name.c_str() );
+								return 0;
+							}
+
+							uint16 index = (uint16)constant;
+
+							std::shared_ptr<s_refine_cost> cost = util::umap_find( level_info->costs, index );
+							bool cost_exists = cost != nullptr;
+
+							if( !cost_exists ){
+								cost = std::make_shared<s_refine_cost>();
+								cost->index = index;
+							}
+
+							if( this->nodeExists( chanceNode, "Rate" ) ){
+								uint16 rate;
+
+								if( !this->asUInt16Rate( chanceNode, "Rate", rate ) ){
+									return 0;
+								}
+
+								cost->chance = rate;
+							}else{
+								if( !cost_exists ){
+									cost->chance = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "Price" ) ){
+								uint32 price;
+
+								if( !this->asUInt32( chanceNode, "Price", price ) ){
+									return 0;
+								}
+
+								if( price > MAX_ZENY ){
+									this->invalidWarning( chanceNode["Price"], "Price is above MAX_ZENY, capping...\n" );
+									price = MAX_ZENY;
+								}
+
+								cost->zeny = price;
+							}else{
+								if( !cost_exists ){
+									cost->zeny = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "Material" ) ){
+								std::string item_name;
+
+								if( !this->asString( chanceNode, "Material", item_name ) ){
+									return 0;
+								}
+
+								struct item_data* id = itemdb_search_aegisname( item_name.c_str() );
+
+								if( id == nullptr ){
+									this->invalidWarning( chanceNode["Material"], "Unknown refine material %s, skipping.\n", item_name.c_str() );
+									return 0;
+								}
+
+								cost->nameid = id->nameid;
+							}else{
+								if( !cost_exists ){
+									cost->nameid = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "BreakingRate" ) ){
+								uint16 breaking_rate;
+
+								if( !this->asUInt16Rate( chanceNode, "BreakingRate", breaking_rate ) ){
+									return 0;
+								}
+
+								cost->breaking_rate = breaking_rate;
+							}else{
+								if( !cost_exists ){
+									cost->breaking_rate = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "DowngradeAmount" ) ){
+								uint16 downgrade_amount;
+
+								if( !this->asUInt16( chanceNode, "DowngradeAmount", downgrade_amount ) ){
+									return 0;
+								}
+
+								if( downgrade_amount > MAX_REFINE ){
+									this->invalidWarning( chanceNode["DowngradeAmount"], "Downgrade amount %hu is invalid, skipping.\n", downgrade_amount );
+									return 0;
+								}
+
+								cost->downgrade_amount = downgrade_amount;
+							}else{
+								if( !cost_exists ){
+									cost->downgrade_amount = 0;
+								}
+							}
+
+							if( !cost_exists ){
+								level_info->costs[index] = cost;
+							}
+						}
+					}
+
+					if( !level_exists ){
+						levels_info->levels[refine_level] = level_info;
+					}
+				}
+			}
+
+			if( !levels_exists ){
+				info->levels[level] = levels_info;
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( group_id, info );
+	}
+
+	return 1;
+}
+
+std::shared_ptr<s_refine_level_info> RefineDatabase::findLevelInfo( const struct item_data& data, struct item& item ){
+	// Check if the item can be refined
+	if( data.flag.no_refine ){
+		return nullptr;
+	}
+
+	// Check the current refine level
+	if( item.refine >= MAX_REFINE ){
+		return nullptr;
+	}
+
+	e_refine_type type;
+	uint16 level;
+
+	if( !this->calculate_refine_info( data, type, level ) ){
+		return nullptr;
+	}
+
+	std::shared_ptr<s_refine_info> info = this->find( type );
+
+	if( info == nullptr ){
+		return nullptr;
+	}
+
+	std::shared_ptr<s_refine_levels_info> levels_info = util::umap_find( info->levels, level );
+
+	if( levels_info == nullptr ){
+		return nullptr;
+	}
+
+	return util::umap_find( levels_info->levels, (uint16)item.refine );
+}
+
+bool RefineDatabase::calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level ){
+	if( data.type == IT_WEAPON ){
+		refine_type = REFINE_TYPE_WEAPON;
+		level = data.wlv;
+
+		return true;
+	}else if( data.type == IT_ARMOR ){
+		refine_type = REFINE_TYPE_ARMOR;
+		// TODO: implement when armor level is supported
+		level = 1;
+
+		return true;
+	}else if( data.type == IT_SHADOWGEAR ){
+		if( data.equip == EQP_SHADOW_WEAPON ){
+			refine_type = REFINE_TYPE_SHADOW_WEAPON;
+		}else{
+			refine_type = REFINE_TYPE_SHADOW_ARMOR;
+		}
+		level = 1;
+
+		return true;
+	}else{
+		return false;
+	}
+}
+
+RefineDatabase refine_db;
 
 const std::string SizeFixDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/size_fix.yml";
@@ -3951,9 +4261,15 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			int r = sd->inventory.u.items_inventory[index].refine, wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
+			std::shared_ptr<s_refine_level_info> info = nullptr;
 
-			if(wlv >= REFINE_TYPE_MAX)
-				wlv = REFINE_TYPE_MAX - 1;
+			if(wlv >= MAX_WEAPON_LEVEL)
+				wlv = MAX_WEAPON_LEVEL;
+
+			if( r ){
+				info = refine_db.findLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
+			}
+
 			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
 				wa = &base_status->lhw;
@@ -3962,18 +4278,24 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 				wa = &base_status->rhw;
 			}
 			wa->atk += sd->inventory_data[index]->atk;
-			if(r)
-				wa->atk2 += refine_info[wlv].bonus[r-1] / 100;
+			if( info != nullptr ){
+				wa->atk2 += info->bonus / 100;
+			}
 #ifdef RENEWAL
 			if (sd->bonus.weapon_atk_rate)
 				wa->atk = wa->atk * sd->bonus.weapon_atk_rate / 100;
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
-			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
-				wa->matk += refine_info[wlv].bonus[r-1] / 100;
+			// Renewal magic attack refine bonus
+			if( info != nullptr && sd->weapontype1 != W_BOW ){
+				wa->matk += info->bonus / 100;
+			}
 #endif
-			if(r) // Overrefine bonus.
-				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
+			// Overrefine bonus.
+			if( info != nullptr ){
+				wd->overrefine = info->randombonus_max / 100;
+			}
+
 			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if (wd == &sd->left_weapon) {
@@ -3998,10 +4320,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 					wa->ele = (sd->inventory.u.items_inventory[index].card[1]&0x0f);
 			}
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
-			int r;
+			int r = sd->inventory.u.items_inventory[index].refine;
 
-			if ( (r = sd->inventory.u.items_inventory[index].refine) )
-				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
+			if( r ){
+				std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
+
+				if( info != nullptr ){
+					refinedef += info->bonus;
+				}
+			}
+
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = 3;
@@ -15500,24 +15828,6 @@ static TIMER_FUNC(status_natural_heal_timer){
 }
 
 /**
- * Get the chance to upgrade a piece of equipment
- * @param wlv: The weapon type of the item to refine (see see enum refine_type)
- * @param refine: The target's refine level
- * @return The chance to refine the item, in percent (0~100)
- */
-int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
-{
-	if ( refine < 0 || refine >= MAX_REFINE)
-		return 0;
-	
-	int type = enriched ? 1 : 0;
-	if (battle_config.event_refine_chance)
-		type |= 2;
-
-	return refine_info[wlv].chance[type][refine];
-}
-
-/**
  * Check if status is disabled on a map
  * @param type: Status Change data
  * @param mapIsVS: If the map is a map_flag_vs type
@@ -15602,123 +15912,6 @@ static bool status_readdb_status_disabled(char **str, int columns, int current)
 }
 
 /**
- * Reads and parses an entry from the refine_db
- * @param node: The YAML node containing the entry
- * @param refine_info_index: The sequential index of the current entry
- * @param file_name: File name for displaying only
- * @return True on success or false on failure
- */
-static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_info_index, const std::string &file_name) {
-	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
-		return false;
-
-	int bonus_per_level = node["StatsPerLevel"].as<int>();
-	int random_bonus_start_level = node["RandomBonusStartLevel"].as<int>();
-	int random_bonus = node["RandomBonusValue"].as<int>();
-
-	if (file_name.find("import") != std::string::npos) { // Import file, reset refine bonus before calculation
-		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
-			refine_info[refine_info_index].bonus[refine_level] = 0;
-	}
-
-	const YAML::Node &costs = node["Costs"];
-
-	for (const auto costit : costs) {
-		int64 idx_tmp = 0;
-		const YAML::Node &type = costit;
-		int idx = 0, price;
-		t_itemid material;
-		const std::string keys[] = { "Type", "Price", "Material" };
-
-		for (int i = 0; i < ARRAYLENGTH(keys); i++) {
-			if (!type[keys[i]].IsDefined())
-				ShowWarning("status_yaml_readdb_refine_sub: Invalid refine cost with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", keys[i].c_str(), file_name.c_str());
-		}
-
-		std::string refine_cost_const = type["Type"].as<std::string>();
-		if (ISDIGIT(refine_cost_const[0]))
-			idx = atoi(refine_cost_const.c_str());
-		else {
-			script_get_constant(refine_cost_const.c_str(), &idx_tmp);
-			idx = static_cast<int>(idx_tmp);
-		}
-		price = type["Price"].as<int>();
-		// TODO: item id verification
-		material = type["Material"].as<t_itemid>();
-
-		refine_info[refine_info_index].cost[idx].nameid = material;
-		refine_info[refine_info_index].cost[idx].zeny = price;
-	}
-
-	const YAML::Node &rates = node["Rates"];
-
-	for (const auto rateit : rates) {
-		const YAML::Node &level = rateit;
-		int refine_level = level["Level"].as<int>() - 1;
-
-		if (refine_level >= MAX_REFINE)
-			continue;
-
-		if (level["NormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = level["NormalChance"].as<int>();
-		if (level["EnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = level["EnrichedChance"].as<int>();
-		if (level["EventNormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = level["EventNormalChance"].as<int>();
-		if (level["EventEnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = level["EventEnrichedChance"].as<int>();
-		if (level["Bonus"].IsDefined())
-			refine_info[refine_info_index].bonus[refine_level] = level["Bonus"].as<int>();
-
-		if (refine_level >= random_bonus_start_level - 1)
-			refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
-	}
-	for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
-		refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
-
-	return true;
-}
-
-/**
- * Loads refine values from the refine_db
- * @param directory: Location of refine_db file
- * @param file: File name
- */
-static void status_yaml_readdb_refine(const std::string &directory, const std::string &file) {
-	int count = 0;
-	const std::string labels[] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
-	const std::string current_file = directory + "/" + file;
-	YAML::Node config;
-
-	try {
-		config = YAML::LoadFile(current_file);
-	}
-	catch (...) {
-		ShowError("Failed to read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
-		return;
-	}
-
-	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
-		const YAML::Node &node = config[labels[i]];
-
-		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, i, current_file))
-			count++;
-	}
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
-}
-
-/**
- * Returns refine cost (zeny or item) for a weapon level.
- * @param weapon_lv Weapon level
- * @param type Refine type (can be retrieved from refine_cost_type enum)
- * @param what true = returns zeny, false = returns item id
- * @return Refine cost for a weapon level
- */
-int status_get_refine_cost(int weapon_lv, int type, bool what) {
-	return what ? refine_info[weapon_lv].cost[type].zeny : refine_info[weapon_lv].cost[type].nameid;
-}
-
-/**
  * Read attribute fix database for attack calculations
  * Function stores information in the attr_fix_table
  * @return True
@@ -15790,21 +15983,10 @@ int status_readdb(void)
 		"/" DBIMPORT,
 		//add other path here
 	};
-	// Initialize databases to default
 
+	// Initialize databases to default
 	memset(SCDisabled, 0, sizeof(SCDisabled));
-	// refine_db.yml
-	for(i=0;i<ARRAYLENGTH(refine_info);i++)
-	{
-		memset(refine_info[i].cost, 0, sizeof(struct refine_cost));
-		for(j = 0; j < REFINE_CHANCE_TYPE_MAX; j++)
-			for(k=0;k<MAX_REFINE; k++)
-			{
-				refine_info[i].chance[j][k] = 100;
-				refine_info[i].bonus[k] = 0;
-				refine_info[i].randombonus_max[k] = 0;
-			}
-	}
+
 	// attr_fix.txt
 	for(i=0;i<MAX_ELE_LEVEL;i++)
 		for(j=0;j<ELE_ALL;j++)
@@ -15831,12 +16013,12 @@ int status_readdb(void)
 		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i > 0);
 
-		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
 
 	size_fix_db.load();
+	refine_db.load();
 
 	return 0;
 }
