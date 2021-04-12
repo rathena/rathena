@@ -84,52 +84,6 @@ function	script	F_Cursed_Crystal	{	// 23080
 }
 
 function	script	F_Cursed_Fragment	{	// 23016
-	// custom rates
-	.@r = rand(981);
-	if (.@r < 166) {
-		if (rand(2) == 0)
-			showscript "��س�...����Ѻ���...";
-		else
-			showscript "����...�ç���Ѻ���...";
-		sleep2 200;
-		warp "Random",0,0;
-	}
-	else if (.@r < 231)	{
-		showscript "�ç����ѹ˹�Ǩѧ...";
-		sc_start SC_FREEZE,8000,0;
-	}
-	else if (.@r < 304) {
-		showscript "��Ң���...��Ҩ������...�ͺ�س...";
-		getitem 6820,1;// Energy_Fragment
-	}
-	else if (.@r < 317)
-		sc_start SC_CONFUSION,3000,0;
-	else if (.@r < 328) {
-		showscript "�á�����¢�ҷ�...";
-		sc_start SC_CURSE,3000,0;
-	}
-	else if (.@r < 408) {
-		showscript "�� Odin...";
-		sc_start SC_ASSUMPTIO,100000,5;
-		specialeffect2 EF_ASSUMPTIO;
-	}
-	else if (.@r < 496) {
-		showscript "��Ҩ����������...!";
-		sc_start SC_ATKPOTION,600000,10;
-		sc_start SC_MATKPOTION,600000,10;
-	}
-	else {
-		.@rand = rand(5);
-		if (.@rand == 0)
-			showscript "������!";
-		else if (.@rand == 1)
-			showscript "��ش��...�ѹ��...";
-		else if (.@rand == 2)
-			showscript "��ҡ���...��������...";
-		else if (.@rand == 3)
-			showscript "���������ҷ����...";
-		else
-			showscript "��Ѵ��...�������...?";
 	.@r = rand(1,12);
 	if (.@r == 1) {
 		showscript "I will never forgive you...!";
@@ -191,82 +145,82 @@ lighthalzen,321,218,4	script	Ohno Tohiro#1	4_M_RASWORD,{
 	mes "[Ohno Tohiro]";
 	.@r = rand(1,10);
 	if (.@r < 6)
-		mes "��Ҷ١������Ǻ��� research charts...";
+		mes "I was asked to collect some kind of research charts...";
 	else if (.@r < 7) {
-		mes "- �ѹ���Թ�úҧ���ٴ - - ���������÷ҧ�� -";
+		mes "- I hear somebody talking - - remote communication -";
 		next;
 		mes "[Ohno Tohiro]";
-		mes "�� ... �ء���ҧ���Թ����ҧ�Һ���";
-		mes "ʶҹТͧ����Ǻ�����§ҹ���º��������";
-		mes "��Ѻ��ҹ";
+		mes "Yes... everything is proceeding smoothly.";
+		mes "The status of the report collection is okay.";
+		mes "Yes, sir.";
 		next;
 		mes "[Ohno Tohiro]";
-		mes "�ѹ����§ҹ�����ŷ������Ǣ�ͧ�Ѻ��ͧ��Ժѵԡ�����ӴѺ�����Ӥѭ�٧�ش�ѹ��";
-		mes "��Ѻ��ҹ ... ���з�";
+		mes "I'll immediately report the information related to the laboratory as a top priority.";
+		mes "Yes, sir...  I'll do so.";
 		next;
 		mes "[Ohno Tohiro]";
-		mes "�����Һ�ҧ����������ա��";
+		mes "Oh somebody has come! I'll call you again later.";
 	}
 	else {
 		mes "[Ohno Tohiro]";
-		mes "����ͧ�ѹ˹ѡ";
-		mes "�������ö���ѹ��ǹҹ�ͧ��� .. ";
-		mes "���Ф����� .. ";
+		mes "My shoulders are heavy.";
+		mes "Our long-cherished wish..";
+		mes "One by one, slowly..";
 	}
 	next;
 	mes "[Ohno Tohiro]";
-	mes "���...? �������������������������ҧ...";
-	mes "���...���...";
-	mes "�պҧ���ҧ�����ҵ�ͧ��èҡ������ ?";
+	mes "Uh...? I didn't realize someone is here already...";
+	mes "hmm... hmm...";
+	mes "Is there something you want from me?";
 	while(true) {
 		next;
-		switch( select( "�����ʹ���.", "�������ǡѺ tomb of honor.", "��Ѻ价��� tomb of honor.", "�͡������Թ����." ) ) {
+		switch( select( "End the conversation.", "Ask him about the tomb of honor.", "Return to the tomb of honor.", "Say that Zeny is not enough." ) ) {
 		case 1:
 			mes "[Ohno Tohiro]";
-			mes "�չѡ�����¨ӹǹ�ҡ�����ѧ�ͧ������¡���, ¡������!";
-			mes "����������¹�, ����Ѻ���Ң��!";
+			mes "There are many adventurers looking for this crevice, except for you!";
+			mes "If you change your mind, come back to me again!";
 			close;
 		case 2:
 			mes "[Ohno Tohiro]";
-			mes "��������Թ����ǡѺ����¡��������ʶҹ�����, �١��� ?";
-			mes "�ѡ��������ǹ�ҡ������͹����ѹ���!";
+			mes "You also heard about the crevice that leads to that place, right?";
+			mes "There are many adventurers like you these days!";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "������������¡�����á�������� ? �ѹ�й�����ʶҹ��������͹�����ӹǹ�ҡ.";
+			mes "I entered this crevice for the first time and guess what? It led to a place where there are so many monsters swarming around.";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "���¡�ѹ���Ѻ�ѡ�����¤�˹�� ��������ѡ. ��ѧ�ҡ���, �ҡ��ʴ�����ʹ����ҧ�ҡ�����ͧ���!";
-			mes "�Ҿ���ӡѺ����ͧ�����ǡѺ biomedical research, ����͹������ͧ���ͧ�ҧ���ҧ.";
+			mes "I gave a heads up to one adventurer I know. Then, he showed a high interest in it!";
+			mes "He kept muttering to himself about biomedical research, labs something like that.";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "�Ң���ͧ������ʴ�����Ҵ����价���������ҧ��. ����ѧ�ŷ���������������ͧ����ǡѺ����¡���Т������ͧ���������������ͧ���. ���Ң�¢����Ź������Թ 100,000 Zeny.";
+			mes "He kept asking me to show him how to get there. I felt reluctant to let him know about this crevice because I didn't want others to know about it. But I traded this info for 100,000 Zeny.";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "���ҹ�ѡ, �ҡ�Ѻ�Ҿ�����Ѻ��ҧ��·�������. �ѹ���繻ү������������ʹ��Ѻ����...��ҡ����ҡ...";
-			mes "���ҧ�á���, ����ͧ���������ҧ. ��繤����á, �ѹ�ٷç��ѧ�ҡ��鹷�����ҡ���.";
+			mes "Not much later, he came back with his body thoroughly injured. It was a miracle that he came back alive... It was horrible...";
+			mes "However, he was holding several items. At first glance, they looked so powerful that even I felt scared.";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "����ҵ����, �ѡ�����¨ӹǹ�ҡ������ʶҹ�����ѹ���¼�ҹ����¡�����ѧ�ҡ���Թ�������. �������¾��Ѻ�ǡ���ա���. ��������繵���, ʶҹ�����١���¡��� tomb of honor.";
-			mes "������, ��Ҩ����Ѻ�Թ�ͺ�س�ҧ��ǹ�ҡ�ǡ��.";
+			mes "After that, many adventurers entered this dangerous place through this crevice after hearing the rumor. I hardly found any adventurers coming out of this crevice again. Since then, this place has been called the tomb of honor.";
+			mes "I earned some money thanks to them, though.";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "��ҵ�ͧ��÷�Һ���˵ط�����Ѻ�Թ ?";
-			mes "�����ʶҹ������繤��á, �ѧ��鹤�������Ңͧ�֧���繢ͧ���! ����ջѭ����� ?";
+			mes "You want to know why I earned money?";
+			mes "I found this place for the first time, so its ownership belongs to me as well! You got a problem with that?";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "��� ���...���ҧ�á���, ����Թ��� 100,000 Zeny. ����, ��Ҩ��Դ��еٷ��й��������ᵡ����Ѻ�ѡ���������ҧ���...";
+			mes "Hmm hmm... Anyway, give me 100,000 Zeny. Then, I'll open the door which leads to the crevice for adventurers like you...";
 			continue;
 		case 3:
 			if (Zeny < 100000) {
 				mes "[Ohno Tohiro]";
-				mes "������Թ����!";
-				mes "��š�������բͧ�����͡��!";
+				mes "You don't have enough money!";
+				mes "There is nothing free in this world!";
 				continue;
 			}
 			mes "[Ohno Tohiro]";
-			mes "�˹����...˹��...�ͧ...���";
-			mes "������Ѻ�Թ�Ҥú����, ��Ҩ��Դ�������ǹ��.";
-			mes "�����ѧ�����Ҩ��ʹ��Ѻ��!...";
+			mes "Let me see... one... two... three";
+			mes "Alright. Now that I received the Zeny, I'll open the crevice.";
+			mes "I hope you can come back alive!...";
 			next;
 			if (Zeny >= 100000) {
 				Zeny -= 100000;
@@ -275,35 +229,35 @@ lighthalzen,321,218,4	script	Ohno Tohiro#1	4_M_RASWORD,{
 			end;
 		case 4:
 			mes "[Ohno Tohiro]";
-			mes "���� ? ���������Թ, ����ҵ�ͧ��è����� ?";
-			mes "���...���...��ͧ�բͧ���š, ����� research chart ��ҧ��� ?";
+			mes "What? You don't have enough Zeny, but you want to enter?";
+			mes "Hmm... Then... by any chance, you have a research chart?";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "����, �ٴ���. ����Ǥ��ǹ�����Թ. ������������������ ?";
+			mes "Hush, speak quietly. People around here may hear us. Do you have it or not?";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "�����Ҷ����Ң�����价�����. ��� 10 research charts ������ҡ��. ����, ��Ҩ������价�� tomb of honor �ͧ. ��ҤԴ���� ?";
+			mes "Don't ask me why I need it. Just bring me 10 research charts. Then, I'll send you to the tomb of honor for nothing. What you do think?";
 			next;
-			if (select( "��Ѻ价�����١�͹˹��.", "��� 10 research charts." ) == 1) {
+			if (select( "Go back to the previous menu.", "Hand over 10 research charts." ) == 1) {
 				mes "[Ohno Tohiro]";
-				mes "��������ҡ�Ӹ�áԨ�Ѻ��� ?";
+				mes "You got any other business with me?";
 				continue;
 			}
 			if (countitem(7347) < 10) {
 				mes "[Ohno Tohiro]";
-				mes "������͹ 10 research charts �����ú.";
-				mes "�ҧ������Ҩ�����Ժ�͡�ҡ��ѧ.";
+				mes "It seems 10 research charts are missing now.";
+				mes "Maybe you didn't pick them up from the warehouse.";
 				next;
 				mes "[Ohno Tohiro]";
-				mes "�����÷����ҵ�ͧ��èҡ������ ?";
+				mes "Is there something else you want from me?";
 				continue;
 			}
 			mes "[Ohno Tohiro]";
-			mes "���...��, �������...����ҵ�ͧ���...�� ��...";
+			mes "Oh... yes, this is it... This is what I need... hoo hoo...";
 			next;
 			mes "[Ohno Tohiro]";
-			mes "��Ҩ������价������¡����ѭ��.";
-			mes "�����ҡ�������ʹ. ���Ǿ��ѹ����!";
+			mes "I'll send you to the crevice as promised.";
+			mes "I want you alive. See you again!";
 			next;
 			delitem 7347,10;// Lab_Staff_Record
 			warp "lhz_dun_n",100,202;
@@ -315,50 +269,50 @@ lighthalzen,321,218,4	script	Ohno Tohiro#1	4_M_RASWORD,{
 lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 	disable_items;
 	mes "[Lunar]";
-	mes "��ҡ��ѧ�ͧ������ ? ��ҡ��ѧ�ͧ��ʶҹ�����դ�����Թ�蹾�ҹ价������� ?";
+	mes "What are you looking for? Are you looking for the place where all the dead men roam?";
 	next;
 	mes "[Lunar]";
-	mes "��Ҿ����价����������ҵ�ͧ���. ��ҵ�ͧ�� ^0000cd20 Sentimental Fragment ��� 150K Zeny^000000.";
+	mes "I can take you there if you want. You will need ^0000cd20 Sentimental Fragment and 150K Zeny^000000.";
 	next;
 	mes "[Lunar]";
-	mes "��������ͧ��ʶҹ�����ʹ��»��Ȩҡ�ǡ�����. ��ҵ�ͧ���´��� ^0000cd30 Sentimental Fragment ��� 2M Zeny^000000.";
+	mes "Or you can just see sentiment safely without the interruption of the dead. That will cost you ^0000cd30 Sentimental Fragment and 2M Zeny^000000.";
 	next;
 	mes "[Lunar]";
-	mes "��ҵ�ͧ���价���˹ ?";
+	mes "Where do you want to go?";
 	next;
-	switch( select( "�������仴��¤����.", "ʶҹ����ʧ�.", "ʶҹ������蹤������?", "�������." ) ) {
+	switch( select( "Where all the dead men roam.", "Only thoughts can be met.", "What kind of place is it?", "I don't mind." ) ) {
 	case 1:
 		mes "[Lunar]";
-		mes "���������ҵ�ͧ��� ?";
+		mes "You have everything right?";
 		next;
 		if (countitem(22687) < 20 || Zeny < 150000) {
 			mes "[Lunar]";
-			mes "����.";
+			mes "Let me see.";
 			next;
 			mes "[Lunar]";
-			mes "�ѹ����. ��ҵ�ͧ�� ^0000cd20 Sentimental Fragment ��� 150K Zeny^000000. ��Ҿ����仿��������.";
+			mes "It's not enough. You need ^0000cd20 Sentimental Fragment and 150K Zeny^000000. I can't take you there for free.";
 			close;
 		}
 		mes "[Lunar]";
-		mes "���������ҵ�ͧ��� ?";
+		mes "You have everything right?";
 		next;
 		mes "[Lunar]";
-		mes "�����. ����դú. ��Ҩо�����.";
+		mes "Good. You have everything. I'll take you there.";
 		next;
 		mes "[Lunar]";
-		mes "��...��Ҿ����������Թ...��ҵ�ͧ���ŵ���ͧ.";
+		mes "But... I'm taking you there for money... you should be careful.";
 		next;
 		mes "[Lunar]";
-		mes "�ѧ���..����������������, ��Ҩ���� ^0000cdStrange Machine ��������͹ crystal^000000.";
+		mes "So.. if you go inside, you'll see a ^0000cdStrange Machine that looks like a crystal^000000.";
 		next;
 		mes "[Lunar]";
-		mes "�������ͧ���п�鹿� HP �ͧ��Ҷ��������ѹ. �ѹ�ª��ª��Ե������. �������������ѹ仵������ç��������ҧ��...";
+		mes "This machine will recover your HP if you use it. It helped me survive. I have no idea why it's in that kind of place though...";
 		next;
 		mes "[Lunar]";
-		mes "��һԴ����ͧ���������������ѹ, ���Ҩ����������繡óվ����.";
+		mes "I turned off the machine so no one can use it, but I'll let you use it as my special treat.";
 		next;
 		mes "[Lunar]";
-		mes "���ŵ���ͧ���������ͧ����ͨ��繴���!!";
+		mes "Please be careful and use the machine if you need to!!";
 		delitem 22687,20;// Sentimental Fragment
 		Zeny = Zeny - 150000;
 		if (isbegin_quest(14683) > 0)
@@ -369,24 +323,24 @@ lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 		end;
 	case 2:
 		mes "[Lunar]";
-		mes "����բͧ����Թ�ú��� ??";
+		mes "You've got all the items and money??";
 		next;
 		if (countitem(22687) < 30 || Zeny < 2000000) {
 			mes "[Lunar]";
-			mes "����.";
+			mes "Let me see.";
 			next;
 			mes "[Lunar]";
-			mes "�ѹ����. ^0000cd30 Sentimental Fragment ��� 2M Zeny^000000 ����ͧ��. ��Ҿ����仿��������.";
+			mes "It's not enough. ^0000cd30 Sentimental Fragment and 2M Zeny^000000 are needed. I can't take you for free.";
 			close;
 		}
 		mes "[Lunar]";
-		mes "��. ����դú. ��Ҩо�����.";
+		mes "Good. You have everything. I'll take you there.";
 		next;
 		mes "[Lunar]";
-		mes "�ҧ�͡��ʹ�ҹ�͡�ͧ��ᾧ.";
+		mes "The exit is outside of the wall.";
 		next;
 		mes "[Lunar]";
-		mes "^EE0000������, ��Ҩ���͹������. ������ѹ૿�����, �ѧ������������͡�ҡ�������絵Ѵ, ��Ҩ��������ش save point.";
+		mes "^EE0000Well, I also have a warning. Your location can't be saved in there, so if you log off or get disconnected, you'll be moved to your save point.";
 		close2;
 		delitem 22687,30;
 		Zeny = Zeny - 2000000;
@@ -394,38 +348,38 @@ lighthalzen,320,204,3	script	A kid with black finger	4_F_04,{
 		end;
 	case 3:
 		mes "[Lunar]";
-		mes "��Ңش�Թ�����Ңͧ�Թ��Т�ҡ羺�ҧ���ҧ���ա��Ңͧ�Թ.";
+		mes "I dug in the ground to find something to eat and I found something even better.";
 		next;
 		mes "[Lunar]";
-		mes "�����������ö�����ʹ������. �ѹ���仴��¤����.";
+		mes "The living can't survive there. Only the dead roam around.";
 		next;
 		mes "[Lunar]";
-		mes "�բ���������..�ҧ��价��������������Ѻ���ա���...";
+		mes "There's a rumor.. that people who went there never came back...";
 		next;
 		mes "[Lunar]";
-		mes "�������֡������..�ѹ�С�����ʶҹ����ʹ��������Ѻ�ѡ�����·���仼�����.";
+		mes "I was so scared but.. it became clear that it's a popular place for adventurers to visit.";
 		next;
 		mes "[Lunar]";
-		mes "ʶҹ�������Ҷ֧ ^0000cd������Ѻ������������š �^000000.";
+		mes "The place I arrived at was ^0000cdnear Strange Sentiment^000000.";
 		next;
 		mes "[Lunar]";
-		mes "�������ź����Ҥ���·��������Ц�Ң��.";
+		mes "I ran away since so many dead men tried to kill me.";
 		next;
 		mes "[Lunar]";
-		mes "�����Ǣ�ҡ��ŧ������ŧ㹷�����š�����Ҵ.";
+		mes "But then I got lost and fell down to a weird place.";
 		next;
 		mes "[Lunar]";
-		mes "�ѹ�繷������¡Ѻ��������� ^0000cd���ѹ����������֡^000000. ��ҡ���, �ѧ��鹢�Ҩ֧�͡价ѹ��.";
+		mes "The place was the same as where the dead men roam ^0000cdbut there are only sentiments^000000. I was so scared, so I got out right away.";
 		next;
 		mes "[Lunar]";
-		mes "��Ҩо����件���������Թ��Тͧ��.";
+		mes "I will take you there if you give me the money and items.";
 		next;
 		mes "[Lunar]";
-		mes "�ѹ��������¶����Ҩ���ͧ.";
+		mes "You might go easier without his help.";
 		close;
 	case 4:
 		mes "[Lunar]";
-		mes "��������������ʹ. �ǡ�����������è���������.";
+		mes "Please visit me any time. We have nothing to lose anyway.";
 		close;
 	}
 }
@@ -445,8 +399,8 @@ OnTimer6000:
 
 // Dungeon exit
 lhz_dun_n,96,203,3	script	Dungeon gateway#1	4_CRACK,{
-	if (select( "����͡�ҡ�ѹ���¹.", "�͡�ҡ�ѹ���¹." ) == 1) {
-		mes "- ����ѧ����觷��е�ͧ�ӷ���� -";
+	if (select( "Don't exit the dungeon.", "Exit the dungeon." ) == 1) {
+		mes "- You still have business to deal with here -";
 		close;
 	}
 	warp "lighthalzen",310,228;
@@ -466,7 +420,7 @@ OnTimer6000:
 lighthalzen,319,213,4	script	Veteran Adventurer#JCv2	4_M_MELODY,2,2,{
 	disable_items;
 	mes "[Veteran Adventurer]";
-	mes "���! ��ҵ�ͧ����š�Ե�������ɤ���������� ?";
+	mes "Oh! You want to exchange mind or grudge pieces?";
 	next;
 	setarray .@items[0],
 		6469,200,	// Will of Warrior
@@ -474,65 +428,65 @@ lighthalzen,319,213,4	script	Veteran Adventurer#JCv2	4_M_MELODY,2,2,{
 		6471,300;	// Ghost Chill
 	.@color$[0] = countitem(6820) < 200 ? "^777777" : "^000000";
 	.@color$[1] = countitem(6820) < 300 ? "^777777" : "^000000";
-	.@s = select( "�ѧ����ͧ���", .@color$[0] + "1 Will of Warrior (200 Energy pieces)", .@color$[0] + "1 Blood Thirst (200 energy pieces)", .@color$[1] + "1 Ghost Chill (300 energy pieces)^000000" ) - 2;
+	.@s = select( "Listen to the story.", .@color$[0] + "1 Will of Warrior (200 Energy pieces)", .@color$[0] + "1 Blood Thirst (200 energy pieces)", .@color$[1] + "1 Ghost Chill (300 energy pieces)^000000" ) - 2;
 	if (.@s == -1) {
 		emotion ET_QUESTION;
 		mes "[Veteran Adventurer]";
-		mes "��Ҵ�����͹����������ҧ, ��� ? ������, �ҹ�ͧ��ҡ�������ҡ�����ѹ���...";
+		mes "You look like you have free time, don't you? Well, my business is slow these days too...";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "�ѹ˹��, ��������˹����Ҥ������Ң�ҷ����Ҥ�...";
+		mes "One day, the guild master entered in my guild all of a sudden...";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "'^1F294D��Ҩз����ء�����Ҥ������� Cloak of the Fallen Soldier!!^000000'.";
+		mes "'^1F294DI'll make all members in all guilds wear the Cloak of the Fallen Soldier!!^000000'.";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "�ѧ���������, �ػ�ó����ͧ�����ʴبӹǹ�ҡ, �ѧ�����Ҫԡ�ء���֧����շҧ���͡��蹹͡�ҡ��ͧ�Դ����㹴ѹ���¹��ж١�ѧ�Ѻ���ӧҹ.";
+		mes "As you know, this equipment requires a large amount of material, so all guild members had no choice but to be stuck in the dungeon and forced to work.";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "�������շҧ���������⪤�ͧ��Ҩ��͡Ѻ����. ��ҷӧҹ�ش����ͧ���¤������������ǡ��͡Ѻ�����ǹ������ҡ�ӹǹ�ҡ.";
+		mes "You never know what luck you eventually may have. I flung myself into this digging work with determination and found so many rare pieces.";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "���������˹����Ҥ� �觢����š����¹��觢ͧ��ҧ�Ѻ������.";
+		mes "Ms. Sub-guild master sent me to exchange things with others as a pile kept forming.";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "��͹���, �ӹǹ������š�١�Ѵ�Թ������˹����Ҥ�";
-		mes "'^1F294D��Ҩ��������Ѻ�ҡ��ӡ��Ҩӹǹ���!!^000000'...";
+		mes "Of course, the amount of exchange was decided by the guild master emphasizing";
+		mes "'^1F294DI'll never accept it if it's below this amount!!^000000'...";
 		next;
 		emotion ET_HNG;
 		mes "[Veteran Adventurer]";
-		mes "���������˹����Ҥ� ���ͧ�����¹�Թ�������˹����Ҥ�. �ǡ��Ҿ��������ҧ˹ѡ������ش���͹���.";
+		mes "Ms. Sub-guild master tried to throw dirt into the guild master's eyes. We really had a hard time stopping her.";
 		next;
 		mes "[Veteran Adventurer]";
-		mes "�������Ҿǡ�������ö���������ҧ�Ǵ�����ҡ��Ѻ�ӹǹ������ŧ. (��Ыԡ)...�ѹ�����Դ�����.";
+		mes "I guess we can take care of it quickly if he adjusts it to a low amount. (sigh)... That's what happened.";
 		close;
 	}
 	.@s *= 2;
 	mes "[Veteran Adventurer]";
-	mes "^3300661 " + getitemname(.@items[.@s]) + "^000000 �š����¹�Ѻ ^CC3333" + .@items[.@s+1] + " Energy Pieces^000000.";
+	mes "^3300661 " + getitemname(.@items[.@s]) + "^000000 is exchanged with ^CC3333" + .@items[.@s+1] + " Energy Pieces^000000.";
 	next;
-	if (select( "�š.", "����š." ) == 2) {
+	if (select( "Exchange.", "Do not exchange." ) == 2) {
 		emotion ET_OTL;
 		mes "[Veteran Adventurer]";
-		mes "���� ?...��ҤԴ�������������š����¹������.";
+		mes "What?... I thought you were going to exchange it.";
 		close;
 	}
 	while(true) {
 		if (countitem(6820) < .@items[.@s+1]) {
 			emotion ET_SORRY;
 			mes "[Veteran Adventurer]";
-			mes "���ɴ���. �������շҧ���͡�������˹����Ҥ������. ��ҵ�ͧ�� " + .@items[.@s+1] + " , ����һ���ʸ, ��Ҫ���������ԧ�.";
+			mes "Sorry. I don't have a choice because the guild master ordered it. You need " + .@items[.@s+1] + " items, if he says no, I'm not at liberty to exchange it.";
 			close;
 		}
 		delitem 6820, .@items[.@s+1];// Energy Pieces
 		getitem .@items[.@s],1;
 		mes "[Veteran Adventurer]";
-		mes "��ҵ�ͧ����š����¹����������?";
+		mes "Would you like to continue to exchange it?";
 		next;
-		if (select( "������.", "��ش�š����¹." ) == 2) {
+		if (select( "Continue with the exchange.", "Stop the exchange." ) == 2) {
 			emotion ET_THANKS;
 			mes "[Veteran Adventurer]";
-			mes "�ͺ�س...�������Ң�Ҩ����١ŧ�������˹����Ҥ�����, �ͺ�����ҡ.";
+			mes "Thank you... I guess I won't be punished by the guild master, thanks to you.";
 			close;
 		}
 	}
@@ -541,14 +495,14 @@ lighthalzen,319,213,4	script	Veteran Adventurer#JCv2	4_M_MELODY,2,2,{
 OnTouch:
 	.@r = rand(4);
 	if (.@r == 0)
-		npctalk "��Ҩ��š 1 Will of Warrior �Ѻ 200 energy pieces.", "", bc_self;
+		npctalk "I would like to exchange 1 Will of Warrior for 200 energy pieces.", "", bc_self;
 	else if (.@r == 1)
-		npctalk "��Ҩ��š 1 Ghost Chill �Ѻ 300 energy pieces.", "", bc_self;
+		npctalk "I would like to exchange 1 Ghost Chill with 300 energy pieces.", "", bc_self;
 	else if (.@r == 2)
-		npctalk "��Ҩ��š 1 Blood Thirst �Ѻ 200 energy pieces.", "", bc_self;
+		npctalk "I would like to exchange 1 Blood Thirst with 200 energy pieces.", "", bc_self;
 	else {
 		emotion ET_OHNO;
-		npctalk "���!...�����ѹ�֧����ɪ����ǹ�ҡ�ѡ ?", "", bc_self;
+		npctalk "Oh!... Why is it so difficult to find pieces?", "", bc_self;
 	}
 	end;
 }
@@ -556,7 +510,7 @@ OnTouch:
 lighthalzen,312,296,4	script	Bully#JCv2	4_M_LGTPOOR,{
 	disable_items;
 	mes "[Bully]";
-	mes "���, �����. ��Ҿͨ��� Energy pieces �������� ? ��Ҩ��š�ѹ�Ѻ��觷�����ö����ҵ�ͧ���.";
+	mes "Hey, buddy. Do you have some remaining Energy pieces? I'll exchange them with something appropriate if you want.";
 	next;
 	.@s = select(
 		"Listen to the story.",
@@ -574,11 +528,11 @@ lighthalzen,312,296,4	script	Bully#JCv2	4_M_LGTPOOR,{
 		mes ". . . . . . .";
 		next;
 		mes "[Bully]";
-		mes "�����...����͹��ҧ�Ҵ���֧.";
-		mes "�»����Ҩ�����¢�����价ӧҹ�ͧ��.";
+		mes "Hmm... this is quite unexpected.";
+		mes "Normally he ignores me and goes on to do his work.";
 		next;
 		mes "[Bully]";
-		mes "���ɴ���, ������������èоٴ. ������ҷӧҹ��������ѹ���Թ������ҡ���.";
+		mes "I'm sorry, but I've got nothing to say. I'm just doing this because I can earn lots of money.";
 		close;
 	}
 	setarray .@exchange[0],
@@ -591,31 +545,31 @@ lighthalzen,312,296,4	script	Bully#JCv2	4_M_LGTPOOR,{
 		23016, 6820,666;	// Energy Fragment -> Cursed Fragment
 	.@index = .@s * 3;
 	mes "[Bully]";
-	mes "��ҵ�ͧ��÷����š ^330066" + .@exchange[.@index+2] + " " + getitemname(.@exchange[.@index+1]) + "^000000 �Ѻ ^CC33331 " + getitemname(.@exchange[.@index]) + "^000000 ����� ?";
+	mes "Are you sure you want to exchange ^330066" + .@exchange[.@index+2] + " " + getitemname(.@exchange[.@index+1]) + "^000000 with ^CC33331 " + getitemname(.@exchange[.@index]) + "^000000?";
 	next;
-	if (select( "�š.", "����š." ) == 2) {
+	if (select( "Exchange.", "Do not exchange." ) == 2) {
 		emotion ET_HNG;
 		mes "[Bully]";
-		mes "������...���������ͺ, �����ҡѧ��.";
+		mes "Well... if you don't like it, never mind.";
 		close;
 	}
 	while(true) {
 		if (countitem(.@exchange[.@index+1]) < .@exchange[.@index+2]) {
 			emotion ET_SCRATCH;
 			mes "[Bully]";
-			mes "���...���...����š�����.";
-			mes "��Һ͡������������ҵ�ͧ�š�ѹ���� " + .@exchange[.@index+2] + " (item)s.";
+			mes "No... No... you shouldn't do this.";
+			mes "You told me you would exchange it with " + .@exchange[.@index+2] + " (item)s.";
 			close;
 		}
 		delitem .@exchange[.@index+1], .@exchange[.@index+2];
 		getitem .@exchange[.@index], 1;
 		emotion ET_SEXY;
 		mes "[Bully]";
-		mes "��� �ͺ�س. ��ҵ�ͧ����š����¹������ ?";
+		mes "Oh thank you. Is there something else you want to exchange?";
 		next;
-		if (select( "�š���.", "��ش�š����¹." ) == 2) {
+		if (select( "Continue with the exchange.", "Stop the exchange." ) == 2) {
 			mes "[Bully]";
-			mes "�����㴷������� energy piece �����, ������Ң��.";
+			mes "When you have some energy piece left, come to me again.";
 			close;
 		}
 	}
@@ -627,14 +581,14 @@ lhz_dun_n,145,265,4	script	Silent Mind#JCv2	4_CENERE,{
 	mes "[Silent Mind]";
 	mes ". . . . . .!";
 	mes "...";
-	mes "^FF0000*�������ö�Ѻ Death's Chest ��������������ԭ�ҳ�������͹�ѹ�� 3 �ѹ.*^000000";
+	mes "^FF0000*You can obtain the Death's Chest when you give 3 of the same types of souls to the mind.*^000000";
 	next;
 	setarray .@item[0],6814,6815,6816,6817,6818,6819;
 	for ( .@i = 0; .@i < 6; ++.@i ) {
 		if (countitem(.@item[.@i]) < 3)
-			.@menu$ += "^777777���� " + getitemname(.@item[.@i]) + ".^000000:";
+			.@menu$ += "^777777Not enough " + getitemname(.@item[.@i]) + ".^000000:";
 		else
-			.@menu$ += "���ͺ 3 " + getitemname(.@item[.@i]) + ".:";
+			.@menu$ += "Hand over 3 " + getitemname(.@item[.@i]) + ".:";
 	}
 	.@s = select(.@menu$) - 1;
 	while(true) {
@@ -642,7 +596,7 @@ lhz_dun_n,145,265,4	script	Silent Mind#JCv2	4_CENERE,{
 			emotion ET_HNG;
 			mes "[Silent Mind]";
 			mes "!. . . . . .";
-			mes "^FF0000*��ҵ�ͧ���ԭ�ҳ�������͹�ѹ�� 3 �ѹ�����š�Ѻ Death's Chest.*^000000";
+			mes "^FF0000*You need 3 of the same types of souls to trade with the Death's Chest.*^000000";
 			close;
 		}
 		delitem .@item[.@s],3;
@@ -651,9 +605,9 @@ lhz_dun_n,145,265,4	script	Silent Mind#JCv2	4_CENERE,{
 		mes "[Silent Mind]";
 		mes ". . . . . .";
 		mes "...";
-		mes "^FF0000*������Ѻ Death's Chest ����. ��ҵ�ͧ����š����������?*^000000";
+		mes "^FF0000*You've obtained the Death's Chest. Would you like to continue the trade?*^000000";
 		next;
-		if (select( "�š���.", "��ش�š." ) == 2) {
+		if (select( "Continue with the exchange.", "Stop the exchange." ) == 2) {
 			mes "[Silent Mind]";
 			mes ". . . . . .";
 			close;
@@ -663,23 +617,23 @@ lhz_dun_n,145,265,4	script	Silent Mind#JCv2	4_CENERE,{
 
 lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 	disable_items;
-	npctalk "���...�����...����֡��...", "", bc_self;
+	npctalk "Kkk... I can... sense...", "", bc_self;
 	mes "[Wandering Mind]";
-	mes "���...�����...����֡��...�֧������...�ѹ�ҡ���...�ͧ��餹...";
+	mes "Kkk... I can... sense...the grudges...of countless...subjects...";
 	next;
-	npctalk "���...���...�� ?...", "", bc_self;
+	npctalk "Who... am... I?...", "", bc_self;
 	mes "[Wandering Mind]";
-	mes "�����...����˹ ?...����˹�ѹ ?...��ҡ��...���...���...�� ?...�������...�������...";
+	mes "Where is... here?... here?... Aaargh... Who... am... I?... I cannot... remember...";
 	next;
 	mes "[Wandering Mind]";
-	mes "��ҵ�ͧ���...��ѧ...��������...�...�������...�ѹ�Ъ���...���...������...��駤��...���...";
+	mes "I need... grudge's... grudge's... strong... power... It will help... both me... and you... all... Kkk...";
 	next;
-	switch( select( "�Ϳ Old Helmet", "ź�Ϳ Old Helmet", "��������´�Ϳ Old Helmet" ) ) {
+	switch( select( "Old Helmet enchant", "Old Helmet reset", "Old Helmet enchant description" ) ) {
 	case 1:
-		npctalk "���ͺ...������...��������...", "", bc_self;
+		npctalk "Hand over... grudge... grudge...", "", bc_self;
 		mes "[Wandering Mind]";
-		mes "����...����...���ͺ...������...������...����������...��Ҩ��Ϳ...��ѧ�������...ŧ���ǡ���...";
-		mes "^FF0000*�����ҹ� Cursed Fragment ��, �������ö�Ϳ��ǡ��.*^000000";
+		mes "Krrr... hehe... hand over... grudge's... grudge's... strong power... I'll enchant... a special power... into the helmet...";
+		mes "^FF0000*If you bring Cursed Fragment, you can enchant it into the Old Helmet.*^000000";
 		next;
 		.@equip_id = getequipid(EQI_HEAD_TOP);
 		switch(.@equip_id) {
@@ -699,10 +653,10 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 18984:// Old_Camo_RabbitHood
 				break;
 			default:
-				npctalk "������ѹ...������ѹ...", "", bc_self;
+				npctalk "Destroy it... Destroy it...", "", bc_self;
 				mes "[Wandering Mind]";
-				mes "�ѹ��...�������ʹ�...���ǡ...�ѹ��������ҹ...�������Ѻ��ѧ�����...��ҵ�ͧ���...������ѹ...? ���...";
-				mes "^FF0000*㹡���Ϳ Old Helmet ���� Cursed Fragment ��ҹ��.*^000000";
+				mes "This is... interesting... In that helmet... there is no fragrance... filled with a special power... Do you want... destruction...? kkk...";
+				mes "^FF0000*Enchantment using Cursed Fragment is only possible in the Old Helmet.*^000000";
 				close;
 		}
 		mes "[Wandering Mind]";
@@ -713,19 +667,19 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 	
 		if (.@card[3] == 0) {
 			.@slot = 3;
-			mes "�ǡ���...�������...Ẻʺ��� ?...�ͧ...⪤�ͧ���...��..����...";
-			mes "^FF0000*㹡���Ϳ��ͧ��� 4. �������Ϳ��˹��� 6 �൵��.*^000000";
+			mes "How about... we begin... lightly?... Test... your luck... Kr..hehe...";
+			mes "^FF0000*Attempts enchantment to 4th slot. One of 6 statuses is randomly enchanted.*^000000";
 		}
 		else if (.@card[2] == 0) {
 			.@slot = 2;
-			mes "��...����...��...����͹���...��...�Ϳ...�����á����� ?...";
-			mes "^FF0000*㹡���Ϳ��ͧ��� 3. �������Ϳ��˹��� 6 �൵��.*^000000";
+			mes "Kr... hehe... Do... you like... your... first... enchantment?...";
+			mes "^FF0000*Attempts enchantment to 3rd slot. One of 6 statuses is randomly enchanted.*^000000";
 		}
 		else if (.@card[1] == 0) {
 			.@slot = 1;
-			mes "��...����...����Դ��...˹�ҧ...�������Ѻ...��ѧ���������ҡ���...��è�...�Ѵ�Թ�...�͹���...";
-			mes "^FF0000*㹡���Ϳ��ͧ��� 2.";
-			mes "����Ҩ���Ϳ Mettle, Magic Essence, Acute, Master Archer, Adamantine, Affection, �ѹ����ö����͹��鹢����.*^000000";
+			mes "Kr... hehe... Whether there will be... a door... to acquire... a much stronger power... will be... decided... now...";
+			mes "^FF0000*Attempts enchantment to 2nd slot.";
+			mes "Once you succeed in Mettle, Magic Essence, Acute, Master Archer, Adamantine, Affection enchantments, it can be reinforced.*^000000";
 		}
 		else {
 			// enchant leveling
@@ -736,7 +690,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29091:	// ArchLine1Lv
 			case 29101:	// Steel1Lv
 			case 29111:	// Mercy1Lv
-				mes "��...��...��...����ѹ...�ǧ��...�����ҡ...����������稵�ʹ!...���Ч��...��ҤԴ���...��ҨС�Ѻ���Ң��...������Ѻ�����鹷���ѹ�ҡ���...";
+				mes "Kr... he... he... You are... lucky... I wish... you all the success!... Only then... will you come and visit me... with more grudges... I suppose...";
 				.@requirement = 20;
 				.@enchant_level = 1;
 				.@enchant_rate = 80;
@@ -747,7 +701,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29092:	// ArchLine2Lv
 			case 29102:	// Steel2Lv
 			case 29112:	// Mercy2Lv
-				mes "����͹���...�����...3 ?...�����������...��Ҩ�...���Ѻ...��ѧ���������ҡ���...��������������...��Ҩ��٭���¾�ѧ...���������Ѻ��...�͡�...";
+				mes "3rd... level... reinforcement?... If you succeed... you will... gain... much stronger powers... but if you fail... you'll lose the powers... that you've gathered... so far...";
 				.@requirement = 40;
 				.@enchant_level = 2;
 				.@enchant_rate = 70;
@@ -758,7 +712,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29093:	// ArchLine3Lv
 			case 29103:	// Steel3Lv
 			case 29113:	// Mercy3Lv
-				mes "����͹���...�����...4 ?...�����������...��Ҩ�...���Ѻ...��ѧ���������ҡ���...��������������...��Ҩ��٭���¾�ѧ...���������Ѻ��...�͡�...";
+				mes "4th... level... reinforcement?... If you succeed... you will... gain... much stronger powers... but if you fail... you'll lose the powers... that you've gathered... so far...";
 				.@requirement = 50;
 				.@enchant_level = 3;
 				.@enchant_rate = 50;
@@ -769,7 +723,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29094:	// ArchLine4Lv
 			case 29104:	// Steel4Lv
 			case 29114:	// Mercy4Lv
-				mes "����͹���...�����...5 ?...��Ҿ����...���ФǺ���...��ѧ�ѹ...����˭�...�����ѧ ?...��������������...�������ҡ���...��...�������Ѻ...";
+				mes "5th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 70;
 				.@enchant_level = 4;
 				.@enchant_rate = 20;
@@ -780,7 +734,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29095:	// ArchLine5Lv
 			case 29105:	// Steel5Lv
 			case 29115:	// Mercy5Lv
-				mes "����͹���...�����...6 ?...��Ҿ����...���ФǺ���...��ѧ�ѹ...����˭�...�����ѧ ?...��������������...�������ҡ���...��...�������Ѻ...";
+				mes "6th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 100;
 				.@enchant_level = 5;
 				.@enchant_rate = 20;	// unknown rates
@@ -792,7 +746,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29106:	// Steel6Lv
 			case 29116:	// Mercy6Lv
 				// custom text
-				mes "����͹���...�����...7 ?...��Ҿ����...���ФǺ���...��ѧ�ѹ...����˭�...�����ѧ ?...��������������...�������ҡ���...��...�������Ѻ...";
+				mes "7th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 150;
 				.@enchant_level = 6;
 				.@enchant_rate = 20;	// unknown rates
@@ -804,7 +758,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29107:	// Steel7Lv
 			case 29117:	// Mercy7Lv
 				// custom text
-				mes "����͹���...�����...8 ?...��Ҿ����...���ФǺ���...��ѧ�ѹ...����˭�...�����ѧ ?...��������������...�������ҡ���...��...�������Ѻ...";
+				mes "8th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 250;
 				.@enchant_level = 7;
 				.@enchant_rate = 20;	// unknown rates
@@ -816,7 +770,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29108:	// Steel8Lv
 			case 29118:	// Mercy8Lv
 				// custom text
-				mes "����͹���...�����...9 ?...��Ҿ����...���ФǺ���...��ѧ�ѹ...����˭�...�����ѧ ?...��������������...�������ҡ���...��...�������Ѻ...";
+				mes "9th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 500;
 				.@enchant_level = 8;
 				.@enchant_rate = 20;	// unknown rates
@@ -828,7 +782,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29109:	// Steel9Lv
 			case 29119:	// Mercy9Lv
 				// custom text
-				mes "����͹���...�����...10 ?...��Ҿ����...���ФǺ���...��ѧ�ѹ...����˭�...�����ѧ ?...��������������...�������ҡ���...��...�������Ѻ...";
+				mes "10th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 1000;
 				.@enchant_level = 9;
 				.@enchant_rate = 20;	// unknown rates
@@ -841,40 +795,40 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 29120:	// Mercy10Lv
 				// custom text
 			default:
-				mes "��� ����...�ѹ��������...�������ѧ...�дѺ���...˹�ҧ���Ǥ��...ź�Ϳ...";
+				mes "Krr hehe... It's impossible... to reinforce... this power... The only way left is... to reset...";
 				mes "^FF0000*Mettle, Magic Spirit, Vigor, Bull's Eye, Adamantine, Benevolence";
-				mes "�������ö����͹������Ϳ��������ػ�ó����Ϳ����.*^000000";
+				mes "You can reinforce the enchantment level only when the equipment is enchanted.*^000000";
 				close;
 			}
 			.@slot = 999;
 		}
 		next;
 		mes "[Wandering Mind]";
-		mes "���ҧ�á���...��͹����ѹ���Դ���...��ҵ�ͧ��Ǩ�ͺ...��������...Cursed Fragments ����������...";
+		mes "However...before that happens... I need to check... whether or not you have... sufficient Cursed Fragments... ";
 		next;
 		mes "[Wandering Mind]";
-		mes "Cursed...Fragments..." + .@requirement + " �ѹ...���...�ӹǹ���...��ҵ�ͧ���...㹡���Ϳ...�ѹ ?...��...��...";
-		mes "^FF0000*㹡���Ϳ, " + .@requirement + " Cursed Fragment(s) ��� ����ͧ��.*^000000";
+		mes "Cursed... Fragments..." + .@requirement + " are... needed... I wonder... whether... you can afford... them?... kk... kk...";
+		mes "^FF0000*In enchantment, " + .@requirement + " Cursed Fragment(s) is(are) required.*^000000";
 		next;
-		if (select( "���¤�Һ�ԡ��.", "������." ) == 2) {
+		if (select( "Pay fee.", "Do not pay fee." ) == 2) {
 			mes "[Wandering Mind]";
-			mes "�...��...������͹...������...�ѧ�������...�����Ѻ��ѧ�ѹ����˭�...�͹���...";
+			mes "K...kk... It seems... you're not... ready to accept... such a huge power... yet...";
 			close;
 		}
 		if (countitem(23016) < .@requirement) {// Cursed Fragment
 			mes "[Wandering Mind]";
-			mes "�...��...���...���...����� ?...���...������...㹾�ѧ...�����...��Ѻ������������� ?...";
-			mes "^FF0000*㹡���Ϳ, Cursed Fragment(s) 10 �ѹ ��� ����ͧ��.";
-			mes "��Ǩ�٨ӹǹ�ͧ Cursed Fragments �ͧ����ա����.*^000000";
+			mes "K...kk... are you... kidding... me?... How come... you... crave for... the power... with such a trivial grudge?...";
+			mes "^FF0000*In enchantment, Cursed Fragment(s) 10 item(s) is(are) required.";
+			mes "Check the amount of Cursed Fragments you possess.*^000000";
 			close;
 		}
 		mes "[Wandering Mind]";
-		mes "���..����...�ѹ��...��ѧ㹡������...��ҤԴ���...��ѧ���...�ѧ�����...����...";
-		mes "^FF0000*�дѺ��õպǡ, ����, �ͧ�ػ�ó���������. ���ҧ�á���, ������Ϳ�ҨŴŧ��, �������Ѻ�ѹ������������������.*^000000";
+		mes "Krr.. hehe... It's... the power of the grudge... I think... this power... is strong... enough to...";
+		mes "^FF0000*Equipment smelting level, card, equipment loss doesn't occur. However, the enchantment level may be downgraded, depending on the success or failure.*^000000";
 		next;
-		if (select( "���Թ����Ϳ.", "����Ϳ����." ) == 2) {
+		if (select( "Perform the enchantment.", "Do not perform the enchantment." ) == 2) {
 			mes "[Wandering Mind]";
-			mes "�...��...������͹...������...�ѧ�������...�����Ѻ��ѧ�ѹ����˭�...�͹���...";
+			mes "K...kk... It seems... you're not... ready to accept... such a huge power... yet...";
 			close;
 		}
 		progressbar "000000",1;
@@ -952,20 +906,20 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			.@card[1] += .@level_dt;
 			if (.@card[1] < 29061 || .@card[1] > 29120) {
 				mes "[Wandering Mind]";
-				mes "�ҧ��觷����������Դ���.";
+				mes "Something bad happened.";
 				close;
 			}
 			if (.@enchant_level < 1 || .@enchant_level > 10) {
 				// item not deleted
 				specialeffect2 EF_SUI_EXPLOSION;
 				mes "[Wandering Mind]";
-				mes "�..��ҡ��...!! ��ѧ㹡������...��������...������Ҥ���...���ҧ�á���...⪤�շ���ѹ��������Դ���о�ѧ...���....��͹��.";
+				mes "K..aargh...!! The power of the grudge... was driven... into a frenzy... However... fortunately it didn't explode because the power... was.... weak.";
 				close;
 			}
 			break;
 		default:
 			mes "[Wandering Mind]";
-			mes "�ҧ��觷����������Դ���.";
+			mes "Something bad happened.";
 			close;
 		}
 		delequip EQI_HEAD_TOP;
@@ -973,14 +927,14 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 		if (.@level_dt == -1) {// can only happens during enchant leveling
 			specialeffect2 EF_SUI_EXPLOSION;
 			mes "[Wandering Mind]";
-			mes "�..��ҡ��...!! ��ѧ㹡������...��������...������Ҥ���...��ѧ...�������...�ѹ...��Ŵŧ...�˹���дѺ...";
-			mes "^FF0000*���ͧ�ҡ�Ϳ�������, ������Ϳ�ж١Ŵ�˹���дѺ.*^000000";
+			mes "K..aargh...!! The power of the grudge... was driven... to a frenzy... The power... which used to be... stable... also fell... one level down...";
+			mes "^FF0000*Due to enchantment failure, it has been downgraded one level down.*^000000";
 			close;
 		}
 		specialeffect2 EF_FIREHIT;
 		mes "[Wandering Mind]";
-		mes "�ѹ...�����. �������֡����Ҿ�ѧ㹡������������觢������.";
-		mes "^FF0000*�Թ�մ���. ����Ϳ�����仴��´�.*^000000";
+		mes "It... is a success. I can sense that the power of the grudge has become stronger.";
+		mes "^FF0000*Congratulation. You've succeeded in enchantment.*^000000";
 		close;
 	case 2:
 		.@equip_id = getequipid(EQI_HEAD_TOP);
@@ -1001,44 +955,44 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 			case 18984:// Old_Camo_RabbitHood
 				break;
 			default:
-				npctalk "������ѹ...������ѹ...", "", bc_self;
+				npctalk "Destroy it... Destroy it...", "", bc_self;
 				mes "[Wandering Mind]";
-				mes "�ѹ��...�������ʹ�...���ǡ...�ѹ��������ҹ...�������Ѻ��ѧ�����...��ҵ�ͧ���...������ѹ...? ���...";
-				mes "^FF0000*㹡���Ϳ Old Helmet ���� Cursed Fragment ��ҹ��.*^000000";
+				mes "This is... interesting... In that helmet... there is no fragrance... filled with a special power... Do you want... destruction...? kkk...";
+				mes "^FF0000*Enchantment using Cursed Fragments is only possible in the Old Helmet.*^000000";
 				close;
 		}
 		setarray .@card[0], getequipcardid(EQI_HEAD_TOP,0), getequipcardid(EQI_HEAD_TOP,1), getequipcardid(EQI_HEAD_TOP,2), getequipcardid(EQI_HEAD_TOP,3);
 		.@refine = getequiprefinerycnt(EQI_HEAD_TOP);
 
 		if (.@card[3] < 1) {// one enchant required
-			npctalk "���...�����ҡ...", "", bc_self;
+			npctalk "You are... very calm...", "", bc_self;
 			mes "[Wandering Mind]";
-			mes "���...��Ҵٹ���ҡ...����͹�����...���Ѻ��ѧ...�����...������...�ҡ�͹...";
-			mes "^FF0000*��ǡ���������Ϳ, �����ź�Ϳ�����.*^000000";
+			mes "kkk... You look pretty calm... There is no power... contained... in the thing... I gave... to you...";
+			mes "^FF0000*This helmet is not enchanted, so it cannot be reset.*^000000";
 			close;
 		}
-		npctalk "���...����...��ҨСԹ...�ѹ...�ѹ���...", "", bc_self;
+		npctalk "Krr... hehe... I will eat... well... today...", "", bc_self;
 		mes "[Wandering Mind]";
-		mes "���...�������͹...���ͺ㹾�ѧ��� ?...�� 10 mind powers �������...����, ��Ҩз�����ѧ...�ѹ����...";
-		mes "^FF0000*��ҵ�ͧ�� 10 Sentimental Fragments 㹡��ź�Ϳ.";
-		mes "��ǡ����ź�Ϳ, ����š�õպǡ��С��촨��������, �ҡ���ź�Ϳ.*^000000";
+		mes "Kkk... You don't... like this power?... Bring me 10 mind powers... Then, I'll make this power... disappear...";
+		mes "^FF0000*You need 10 Sentimental Fragments to reset it.";
+		mes "All enchantments applied to the helmet, except for the smelting level of equipment and 1 slot card, will be reset.*^000000";
 		next;
-		if (select( "���ʹ�.", "���¤�Һ�ԡ��." ) == 1) {
-			npctalk "��ʹ�...", "", bc_self;
+		if (select( "Ignore him.", "Pay fee." ) == 1) {
+			npctalk "Forever...", "", bc_self;
 			mes "[Wandering Mind]";
-			mes "��Ҩ�...��...���...�����ҵ�ͧ��â��...��Ҩ������...��ʹ�...���...";
+			mes "I'll... wait for... you... If you need me to... I'll wait for you... forever... kkk...";
 			close;
 		}
 		if (countitem(22687) < 10) {// Sentimental Fragment
-			mes "��..�...������...����...";
-			mes "10 mind powers...�� ����Ҩ...�ջѭ����...";
-			mes "^FF0000*��ҵ�ͧ�� 10 Sentimental Fragments 㹡��ź�Ϳ.";
-			mes "��Ǩ�٨ӹǹ�ͧ Sentimental Fragments �ͧ����ա����.*^000000";
+			mes "Kk..k... If you... don't bring...";
+			mes "10 mind powers... I will be... in trouble...";
+			mes "^FF0000*You need 10 Sentimental Fragments to reset it.";
+			mes "Check the amount of Sentimental Fragments that you possess.*^000000";
 			close;
 		}
-		npctalk "�...��...", "", bc_self;
+		npctalk "K... kk...", "", bc_self;
 		mes "[Wandering Mind]";
-		mes "���º����!...���...ź...�Ϳ�͡�ҡ...old helmet �������...��ҤԴ���...�ǡ����ѧ����ö...�觢����...";
+		mes "Fine!... I'll... reset... the enchantment... of the old helmet... I think... we may be able to absorb... a strong mind...";
 		next;
 		progressbar "000000",2;
 		specialeffect2 EF_FIREHIT;
@@ -1050,7 +1004,7 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 		delequip EQI_HEAD_TOP;
 		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
 		mes "[Wandering Mind]";
-		mes "�..��...��ѧ...㹡������...��١...�ٴ�Ѻ...�͡�����...�..��ҡ��...";
+		mes "K..kk... The power... of a strong grudge... has been... absorbed... Things I've lost... K.. aargh...";
 		close;
 	case 3:
 		for ( .@i = 18971; .@i <= 18984; ++.@i ) {
@@ -1062,23 +1016,23 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 				.@string$[2] = getitemname(.@i);
 		}
 		mes "[Wandering Mind]";
-		mes "��ҵ�ͧ���...��ѧ��� ?...��� ���, ���...��ͧ��...old Helmet..";
-		mes "^FF0000*�������ö�Ϳ�ѹŧ� " + .@string$[0];
+		mes "Do you want... power?... If so, you... need to have... the old Helmet..";
+		mes "^FF0000*You can enchant it into the " + .@string$[0];
 		mes "" + .@string$[1];
 		mes "" + .@string$[2] + ".*^000000";
 		next;
 		mes "[Wandering Mind]";
-		mes "������...�Ӿ�ѧ...㹡������...�� ��Ҩ�...�ͺ��ѧ...������...";
-		mes "^FF0000*��ҵ�ͧ�� Cursed Fragments 㹡���Ϳ.*^000000";
+		mes "If you... bring grudge's... power... I'll... give you... great power...";
+		mes "^FF0000*You need Cursed Fragments in order to enchant it.*^000000";
 		next;
 		mes "[Wandering Mind]";
-		mes "���...��͹���...������Ѻ��ѧ...���ա���...��ҵ�ͧ��...�ӹǹ��ѧ...㹡������...����ҡ...";
-		mes "^FF0000*㹡���Ϳ��ͧ��� 4, 3, 2 ���. ��ҵ�ͧ�� 10 Cursed Fragments �������ҷӡ���Ϳ���Ъ�ͧ�繤����á.*^000000";
+		mes "Kkk... Of course... in order to obtain... great power... you may need... a countless amount of... grudge's... power...";
+		mes "^FF0000*Enchantment is proceeded in the order of 4, 3, 2 slots. You need 10 Cursed Fragments when you enchant each slot for the first time.*^000000";
 		next;
 		mes "[Wandering Mind]";
-		mes "��������...�͡��...����Ҩ��...����ö�Ѿ�ô...�дѺ�Ϳ��...";
-		mes "^FF0000*���������͹�дѺ������Ϳ, 50, 70, 100, 150, 250, 500, 1000 Cursed Fragments ��ͨӹǹ, ���������͹������Ϳ";
-		mes "�����ҡ 20 Cursed Fragments 㹤��駷�� 2, ��� 40 Cursed Fragments 㹤��駷�� 3.*^000000";
+		mes "If you have... the opportunity... you might be... able to upgrade... the enchantment level... ";
+		mes "^FF0000*When reinforcing the enchant level, 50, 70, 100, 150, 250, 500, 1000 Cursed Fragments are consumed, depending on the enchant level";
+		mes "increase after 20 Cursed Fragments in the 2nd step, and 40 Cursed Fragments in the 3rd step.*^000000";
 		close;
 	}
 }
@@ -1087,65 +1041,65 @@ lhz_dun_n,143,269,4	script	Victimized Soul's Mind#1	4_M_DEATH2,{
 	disable_items;
 	.@r = rand(5);
 	if (.@r == 0)
-		npctalk "���...��ͤ�...����ѹ����...���...������͹�����...", "", bc_self;
+		npctalk "You... are the ones... who turned... me... into a monster...", "", bc_self;
 	else if (.@r == 1)
-		npctalk "���¢�Ҵ���...��Ҩ�...�ӷء���ҧ...������������...", "", bc_self;
+		npctalk "Please save me... I'll... do whatever... you order...", "", bc_self;
 	else if (.@r == 2)
-		npctalk "���������١���...������ѡ�ͧ���...�͢�ҡ�͹...��ҡ��ѧ...��Ѻ��ҹ...", "", bc_self;
+		npctalk "My beloved... wife and daughter... are waiting for... me... at home...", "", bc_self;
 	else if (.@r == 3)
-		npctalk "��ѧ�ҡ���...�ء���..�ѹ...��ҡ���", "", bc_self;
+		npctalk "After such... a terrible thing.. you... did", "", bc_self;
 	else
-		npctalk "��...���...ᢹ...���...", "", bc_self;
+		npctalk "My...leg...my...arm...", "", bc_self;
 	mes "[Victimized Soul's Mind]";
-	mes "�Ե...�ԭ�ҳ...�ѹ�ҡ���...";
-	mes "ʹյ...�Ѩ�غѹ...��С������...";
-	mes "��Ҥ����...";
-	mes "�������ö...�Ǻ���...�����...���ء����ҹ�ҡ�������������� ?...";
+	mes "Countless... subjects'... minds...";
+	mes "Past...present...and revenge...";
+	mes "Who are you...";
+	mes "Can...you console... us who... are tormented in sadness?...";
 	next;
 	if (.@r == 0)
-		npctalk "�����ѧ�ҡ����ҵ��...��������㹤����ѹ�ͧ��ҡѹ...", "", bc_self;
+		npctalk "Even after I die... or in my dream...", "", bc_self;
 	else if (.@r == 1)
-		npctalk "���ô...���¢�Ҵ���...����ѹ�͡�...�մ���...�ѹ������ҡ���...", "", bc_self;
+		npctalk "Please... save me... Please put away... that knife... It scares me...", "", bc_self;
 	else if (.@r == 2)
-		npctalk "��...�ô...�Ң���͡�...��Ҩ�����Թ���...��������ҵ�ͧ���...", "", bc_self;
+		npctalk "Please... just... let me go... I'll give you money... as much as you want...", "", bc_self;
 	else if (.@r == 3)
-		npctalk "�������...��ҨС���...���...�ͧ������ ?...", "", bc_self;
+		npctalk "Aren't... you afraid of... God's... wrath?...", "", bc_self;
 	else
-		npctalk "��ҡ...��...���...", "", bc_self;
+		npctalk "Aargh... Ah... Urgh...", "", bc_self;
 	mes "[Victimized Soul's Mind]";
-	mes "������...����ö...���ѹ��...����Ҩ��...�����...���...���¡�����...";
+	mes "If you... can... do it... maybe... I can... give... you guys help...";
 	next;
 	if (.@r == 0)
-		npctalk "��Ҩ���������...�繪���...", "", bc_self;
+		npctalk "I'll munch you... into pieces...", "", bc_self;
 	else if (.@r == 1)
-		npctalk "���ô...��ҡ�...", "", bc_self;
+		npctalk "Please... Aaargh...", "", bc_self;
 	else if (.@r == 2)
-		npctalk "���ô...", "", bc_self;
+		npctalk "Please...", "", bc_self;
 	else if (.@r == 3)
-		npctalk "������...�Ф�����ͧ...���...������...�ӹ֡�Դ...㹺һ...�����ҷ����...", "", bc_self;
+		npctalk "God... will protect... you... if you... repent... your sin... just now...", "", bc_self;
 	else
-		npctalk "...��ҡ���...", "", bc_self;
+		npctalk "...shrieking...", "", bc_self;
 	mes "[Victimized Soul's Mind]";
-	mes "���ظ����ҹ��...�����仴���...�Ե�ԭ�ҳ...��觤��������...��Ф�����...";
-	mes "������...���ѹ...��...��Ҩ�����¹...�ѹ...�� energy...pieces...";
+	mes "Weapon which appears... to be filled with... strong minds... our sadness... and resentment...";
+	mes "If you... bring... one... I'll restore... it... to energy... pieces...";
 	while(true) {
 		next;
 		if (checkweight(2677,5) == 0) {
 			mes "[Victimized Soul's Mind]";
-			mes "��������ͧ�س .. ";
-			mes "������� ... ";
+			mes "Your backpack..";
+			mes "is filled...";
 			close;
 		}
-		if (select( "���ͺ���ظ.", "�����ʹ���." ) == 2) {
+		if (select( "Hand over the weapon.", "End the conversation." ) == 2) {
 			mes "[Victimized Soul's Mind]";
-			mes "...��Ҩ�...��Ѻ...���Ң��...�ա...";
+			mes "...You... will... find me... again...";
 			close;
 		}
 		mes "[Victimized Soul's Mind]";
-		mes "���͡��Դ...���ظ...������...��ͧ���...����¹ ?...";
+		mes "What kind... of mind... is contained... in this... weapon?...";
 		next;
 		while(true) {
-			switch( select( "��Ѻ价�����١�͹˹��", "Katar", "Bow", "Axe, Mace, Book", "Wand", "Sword, Dagger", "Spear, Two-handed sword", "Musical instrument, Whip, Knuckle" ) ) {
+			switch( select( "Go back to previous menu.", "Katar", "Bow", "Axe, Mace, Book", "Wand", "Sword, Dagger", "Spear, Two-handed sword", "Musical instrument, Whip, Knuckle" ) ) {
 			case 1:
 				break;
 			case 2:
@@ -1218,24 +1172,24 @@ lhz_dun_n,143,269,4	script	Victimized Soul's Mind#1	4_M_DEATH2,{
 
 S_Exchange:
 	.@size = getargcount();
-	.@menu$ = "��Ѻ价�����١�͹˹��:";
+	.@menu$ = "Go back to previous menu.:";
 	for ( .@i = 0; .@i < .@size; .@i++ ) {
 		if (countitem(getarg(.@i)) < 1)
-			.@menu$ += "^999999����� " + getitemname(getarg(.@i)) + ".^000000:";
+			.@menu$ += "^999999Not enough " + getitemname(getarg(.@i)) + ".^000000:";
 		else
-			.@menu$ += "����� " + getitemname(getarg(.@i)) + ".:";
+			.@menu$ += "You have " + getitemname(getarg(.@i)) + ".:";
 	}
 	.@s = select(.@menu$) - 2;
 	if (.@s == -1)
 		return;
 	mes "[Victimized Soul's Mind]";
-	mes "���...�����͡...���ظ...��觴�����͹��...���仴���...�Ե�ԭ�ҳ...��Ҩ�...����������¹�ѹ...�� Energy Fragments...���...��繴������ ?";
+	mes "You...have chosen... the weapon... which appears to be... filled with... strong minds... I'm... trying to restore it... into Energy Fragments... Do you... agree with it?";
 	next;
-	if (select( "�����繴���.", "����� Energy Fragments." ) == 2) {
+	if (select( "Disagree with it.", "Acquire Energy Fragments." ) == 2) {
 		if (countitem(getarg(.@s)) < 1) {
 			mes "[Victimized Soul's Mind]";
-			mes "������...��...^006400" + getitemname(getarg(.@s)) + "^000000...";
-			mes "�����...�������áѺ���...�ա��� ?...";
+			mes "You don't... have... ^006400" + getitemname(getarg(.@s)) + "^000000...";
+			mes "Do you have... any other business... with me?...";
 			next;
 			return;
 		}
@@ -1258,13 +1212,13 @@ S_Exchange:
 			.@amount = 3;
 		getitem 6820, .@amount;// Energy Fragment
 		mes "[Victimized Soul's Mind]";
-		mes "��������ҧ...Energy...Fragment...�ҡ ^006400" + getitemname(getarg(.@s)) + "^000000...";
+		mes "I have made... Energy... Fragment... by restoring ^006400" + getitemname(getarg(.@s)) + "^000000...";
 		next;
-		mes "- ������Ѻ��������������ҧ˹ѡ - - �¤��蹾�ѧ�ҹ - - ���������ҧ��¢ͧ���. -";
+		mes "- I got critical damage - - by mind's powerful wavelength - - which seeped into my body. -";
 		next;
 	}
 	mes "[Victimized Soul's Mind]";
-	mes "�����...�������áѺ���...�ա��� ?...";
+	mes "Do you have... any other business... with me?...";
 	next;
 	return;
 
@@ -1277,45 +1231,45 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 	disable_items;
 	.@r = rand(5);
 	if (.@r == 0)
-		npctalk "���...�ѹ��...", "", bc_self;
+		npctalk "Mom...It hurts...", "", bc_self;
 	else if (.@r == 1)
-		npctalk "�ǡ��ҷء��...�ŧ�á��...", "", bc_self;
+		npctalk "Go to hell...all of you...", "", bc_self;
 	else if (.@r == 2)
-		npctalk "����������. ����...�֧�繢�� ?...", "", bc_self;
+		npctalk "I don't get it. Why...me?...", "", bc_self;
 	else if (.@r == 3)
-		npctalk "���...������...��������Ѻ...", "", bc_self;
+		npctalk "Ughhh...I don't... deserve this...", "", bc_self;
 	else
-		npctalk "�ǡ��ҷء��...��ͻ��Ҩ...", "", bc_self;
+		npctalk "You guys are all...demons...", "", bc_self;
 	mes "[Sorrowful Soul's Mind]";
-	mes "�Ե...�ԭ�ҳ...�ѹ�ҡ���...";
-	mes "ʹյ...�Ѩ�غѹ...��С������...";
+	mes "Countless... subjects'... minds...";
+	mes "Past...present...and revenge...";
 	next;
 	if (.@r == 0)
-		npctalk "���㨢ͧ���...�纻Ǵ�Թ�...", "", bc_self;
+		npctalk "My heart... is too painful...", "", bc_self;
 	else if (.@r == 1)
-		npctalk "���...��...������...", "", bc_self;
+		npctalk "I... will... send you there...", "", bc_self;
 	else if (.@r == 2)
-		npctalk "���...��������������...������������������.", "", bc_self;
+		npctalk "I... don't have much time left... to stay here.", "", bc_self;
 	else if (.@r == 3)
-		npctalk "��ҤԴ���...��Ҩ��ժ��Ե�ʹ...��ѧ�ҡ�����ҷ����稷ء���ҧ�� ?...", "", bc_self;
+		npctalk "You thought... you would stay alive... after everything you've done?...", "", bc_self;
 	else
-		npctalk "�������������ͧ...���...�����������Ѻ�ѹ...", "", bc_self;
+		npctalk "I'm innocent... I... don't deserve this...", "", bc_self;
 	mes "[Sorrowful Soul's Mind]";
-	mes "��Ҥ���� ?...";
-	mes "�������ö...������ҨԵ�ԭ�ҳ...���ء����ҹ...�ҡ���������������� ?...";
+	mes "Who are you?...";
+	mes "Can...you take back our souls again... tormented... in sadness?...";
 	next;
 	if (.@r == 0)
-		npctalk "�����ҡ...��Ѻ...��ҹ...", "", bc_self;
+		npctalk "I want to... go... home...", "", bc_self;
 	else if (.@r == 1)
-		npctalk "��Ҩ�...�һ�����...������...��Ҩе�������...", "", bc_self;
+		npctalk "I'll... curse you... even after... I die...", "", bc_self;
 	else if (.@r == 2)
-		npctalk "��������...����...", "", bc_self;
+		npctalk "I have...nothing...", "", bc_self;
 	else if (.@r == 3)
-		npctalk "��ҡ��ѧ�Դ...�������� ?...", "", bc_self;
+		npctalk "What are you... thinking?...", "", bc_self;
 	else
-		npctalk "���...�������...�����...��ͺ���� ?...", "", bc_self;
+		npctalk "You... don't even... have... a family?...", "", bc_self;
 	mes "[Sorrowful Soul's Mind]";
-	mes "������...����ö...���ѹ��...�������ö...���...���...����...����...�����ҵ�ͧ���...";
+	mes "If you... can... do it... maybe... I can... give... you guys... what... you need...";
 	next;
 	setarray .@item_name$[0],
 		getitemname(18971),	// Old_Rune_Circlet
@@ -1336,38 +1290,38 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 	while(true) {
 		if (checkweight(2677,5) == 0) {
 			mes "[Sorrowful Soul's Mind]";
-			mes "��������ͧ�س .. ";
-			mes "������� ... ";
+			mes "Your backpack..";
+			mes "is filled...";
 			close;
 		}
-		if (select( "���ͺ soul.", "�����ʹ���." ) == 2) {
+		if (select( "Hand over the soul.", "End the conversation." ) == 2) {
 			mes "[Sorrowful Soul's Mind]";
-			mes "...��Ҩ���...���...��Ѻ��...�Ң���ա����...";
+			mes "...I wish... you... can come back... to me again...";
 			close;
 		}
 		mes "[Sorrowful Soul's Mind]";
-		mes "���������ͺ...����� soul ��...��Ҩ����ҧ�ͧ�ҧ���ҧ...������仴���...��ѧ�����..�������Ҵ��¡ѹ...";
-		mes "���...��ͧ���...���� ?...";
+		mes "If you hand over... our soul...I'll make something... filled with... special powers.. using a combination...";
+		mes "What... do you... want?...";
 		while(true) {
 			next;
-			switch( select( "��Ѻ价�����١�͹˹��", .@item_name$[0], .@item_name$[1], .@item_name$[2], .@item_name$[3], .@item_name$[4], .@item_name$[5], .@item_name$[6], .@item_name$[7], .@item_name$[8], .@item_name$[9], .@item_name$[10], .@item_name$[11], .@item_name$[12], .@item_name$[13], .@item_name$[14] + "[1]" ) ) {
+			switch( select( "Go back to the previous menu.", .@item_name$[0], .@item_name$[1], .@item_name$[2], .@item_name$[3], .@item_name$[4], .@item_name$[5], .@item_name$[6], .@item_name$[7], .@item_name$[8], .@item_name$[9], .@item_name$[10], .@item_name$[11], .@item_name$[12], .@item_name$[13], .@item_name$[14] + "[1]" ) ) {
 			case 1:
 				break;
 			case 2:
 				mes "- " + .@item_name$[0] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1, MDEF+ 5^000000";
-				mes "^006400���� ATK + 4 ��� 1 ����ŵպǡ^000000";
-				mes "^006400���� ASPD + 1 ��� 5 ����ŵպǡ^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Ignition Break ��� 20%^000000";
-				mes "^006400��� 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Hundred Spear ��� 15%^000000";
-				mes "^006400��� 2 ����ŵպǡ^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Rune Knight^000000";
+				mes "^006400ATK + 4 per 1 refinement level increase^000000";
+				mes "^006400ASPD + 1 per 5 refinement level increase^000000";
+				mes "^006400Increases MHP, MSP by 1% 2 each refinement level increase^000000";
+				mes "^006400Increases Ignition Break damage by 20%^000000";
+				mes "^006400per 2 refinement level increase^000000";
+				mes "^006400Increases Hundred Spear damage by 15%^000000";
+				mes "^006400per 2 refinement level increase^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Rune Knight^000000";
 				callsub S_Make,
 					18971,	// Old_Rune_Circlet
 					19961,	// C_Rune_Circlet
@@ -1375,16 +1329,16 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 3:
 				mes "- " + .@item_name$[1] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1, MDEF+ 5^000000";
-				mes "^006400���� MATK + 2, ATK + 4, Heal Amount + 2% ��� 1 ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Judex ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Magnus Exorcismus ��� 10% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Archbishop^000000";
+				mes "^006400MATK + 2, ATK + 4, Heal Amount + 2% per 1 refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Judex damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Increases Magnus Exorcismus damage by 10% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Archbishop^000000";
 				callsub S_Make,
 					18972,	// Old_Mitra
 					19962,	// C_Mitra
@@ -1392,17 +1346,17 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 4:
 				mes "- " + .@item_name$[2] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� ATK + 4 ��� 1 ����ŵպǡ^000000";
-				mes "^006400���� ASPD + 1 ��� 5 ����ŵպǡ^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Power Swing ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Axe Tornado ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Mechanic^000000";
+				mes "^006400ATK + 4 per 1 refinement level increase^000000";
+				mes "^006400ASPD + 1 per 5 refinement level increase^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Power Swing damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Increases Axe Tornado damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Mechanic^000000";
 				callsub S_Make,
 					18973,	// Old_Driver_Band_R
 					19963,	// C_Driver_Band_R
@@ -1410,17 +1364,17 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 5:
 				mes "- " + .@item_name$[3] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� ATK + 4 ��� 1 ����ŵպǡ^000000";
-				mes "^006400���� ASPD + 1 ��� 5 ����ŵպǡ^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Arm Cannon ��� 5% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400Ŵ ��Ŵ�ǹ� Suicidal Destruction ŧ 10 �Թҷ� ��� 4 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Mechanic^000000";
+				mes "^006400ATK + 4 per 1 refinement level increase^000000";
+				mes "^006400ASPD + 1 per 5 refinement level increase^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Arm Cannon damage by 5% per 2 refinement level increase.^000000";
+				mes "^006400Reduces Suicidal Destruction cooldown by 10 seconds per 4 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Mechanic^000000";
 				callsub S_Make,
 					18974,	// Old_Driver_Band_Y
 					19964,	// C_Driver_Band_Y
@@ -1428,18 +1382,18 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 6:
 				mes "- " + .@item_name$[4] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� ATK + 4, MATK + 4 �ء ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Triangle Shot ��� 25% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400Ŵ ��Ŵ�ǹ� Masquerade-unlock key, Enervation ŧ 1 �Թҷ� ���������ŵպǡ�֧ 6.^000000";
-				mes "^006400Ŵ ��Ŵ�ǹ� Masquerade-Laziness, Weakness ŧ 1 �Թҷ� ���������ŵպǡ�֧ 8.^000000";
-				mes "^006400Ŵ ��Ŵ�ǹ� Masquerade-Ignorance, Gloomy ŧ 1 �Թҷ� ���������ŵպǡ�֧ 10.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Shadow_Chaser^000000";
+				mes "^006400ATK + 4, MATK + 4 per each refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Triangle Shot damage by 25% per 2 refinement level increase.^000000";
+				mes "^006400Reduces Masquerade-unlock key, Enervation cooldown by 1 second when your character's refinement level reaches 6.^000000";
+				mes "^006400Reduces Masquerade-Laziness, Weakness cooldown by 1 second when your character's refinement level reaches 8.^000000";
+				mes "^006400Reduces Masquerade-Ignorance, Gloomy cooldown by 1 second when your character's refinement level reaches 10.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Shadow_Chaser^000000";
 				callsub S_Make,
 					18975,	// Old_Shadow_Handicraft
 					19965,	// C_Shadow_Handicraft
@@ -1447,16 +1401,16 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 7:
 				mes "- " + .@item_name$[5] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� �����ç ranged physical ��� 1% �ء ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Arrow Vulcan ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Severe Rainstorm ��� 5% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Minstrel^000000";
+				mes "^006400Increases ranged physical damage by 1% per each refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Arrow Vulcan damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Increases Severe Rainstorm damage by 5% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Minstrel^000000";
 				callsub S_Make,
 					18976,	// Old_Minstrel_Song_Hat
 					19966,	// C_Minstrel_Song_Hat
@@ -1464,16 +1418,16 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 8:
 				mes "- " + .@item_name$[6] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� ATK + 4 ��� 1 ����ŵպǡ^000000";
-				mes "^006400���� ranged physical ��� 1% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Cart Cannon ��� 15% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Generic^000000";
+				mes "^006400ATK + 4 per 1 refinement level increase^000000";
+				mes "^006400Increases ranged physical damage by 1% per 2 refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Cart Cannon damage by 15% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Generic^000000";
 				callsub S_Make,
 					18977,	// Old_Midas_Whisper
 					19967,	// C_Midas_Whisper
@@ -1481,18 +1435,18 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 9:
 				mes "- " + .@item_name$[7] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1 MDEF+ 5^000000";
-				mes "^006400���� SP regen ��� 20%.^000000";
-				mes "^006400���� MATK + 1% �ء ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Soul Expansion ��� 5% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400Ŵ ��Ŵ�ǹ� Crimson Rock ŧ 1 �Թҷ�.^000000";
-				mes "^006400Ŵ ��Ŵ�ǹ� Crimson Rock ŧ 0.1 �ء ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Warlock^000000";
+				mes "^006400Increases SP regen by 20%.^000000";
+				mes "^006400MATK + 1% per each refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Soul Expansion damage by 5% per 2 refinement level increase.^000000";
+				mes "^006400Reduces Crimson Rock cooldown by 1 second.^000000";
+				mes "^006400Reduces Crimson Rock cooldown by 0.1 depending on refinement level.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Warlock^000000";
 				callsub S_Make,
 					18978,	// Old_Magic_Stone_Hat
 					19968,	// C_Magic_Stone_Hat
@@ -1500,16 +1454,16 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 10:
 				mes "- " + .@item_name$[8] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� ATK + 4, CRI + 2 �ء ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Rampage Blaster ��� 15% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Lightning Shot ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Sura^000000";
+				mes "^006400ATK + 4, CRI + 2 per each refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Rampage Blaster damage by 15% per 2 refinement level increase.^000000";
+				mes "^006400Increases Lightning Shot damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Sura^000000";
 				callsub S_Make,
 					18979,	// Old_Blazing_Soul
 					19969,	// C_Blazing_Soul
@@ -1517,16 +1471,16 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 11:
 				mes "- " + .@item_name$[9] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1 MDEF+ 5.^000000";
-				mes "^006400���� MATK + 1%, ATK + 4 �ء ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Poison Burst ��� 15% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Varetyr Spear ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Sorcerer^000000";
+				mes "^006400MATK + 1%, ATK + 4 per each refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Poison Burst damage by 15% per 2 refinement level increase.^000000";
+				mes "^006400Increases Varetyr Spear damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Sorcerer^000000";
 				callsub S_Make,
 					18980,	// Old_Wind_Whisper
 					19970,	// C_Wind_Whisper
@@ -1534,16 +1488,16 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 12:
 				mes "- " + .@item_name$[10] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� ranged physical ��� 1% �ء ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Arrow Vulcan ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Severe Rainstorm ��� 5% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Wanderer^000000";
+				mes "^006400Increases ranged physical damage by 1% per each refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Arrow Vulcan damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Increases Severe Rainstorm damage by 5% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Wanderer^000000";
 				callsub S_Make,
 					18981,	// Old_Dying_Swan
 					19971,	// C_Dying_Swan
@@ -1551,17 +1505,17 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 13:
 				mes "- " + .@item_name$[11] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� ranged physical ��� 1% �ء ����ŵպǡ.^000000";
-				mes "^006400Complete evasion +1 ��� 3 ����ŵպǡ.^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Cluster Bomb ��� 15% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Warg Strike ��� 10% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Ranger^000000";
+				mes "^006400Increases ranged physical damage by 1% per each refinement level increase.^000000";
+				mes "^006400Complete evasion +1 per 3 refinement level increase.^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Cluster Bomb damage by 15% per 2 refinement level increase.^000000";
+				mes "^006400Increases Warg Strike damage by 10% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Ranger^000000";
 				callsub S_Make,
 					18984,	// Old_Camo_RabbitHood
 					19974,	// C_Camouflage_RabbitHood
@@ -1569,16 +1523,16 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 14:
 				mes "- " + .@item_name$[12] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1^000000";
-				mes "^006400���� �����ç critical ��� 1% ��� attack speed �ء ����ŵպǡ (Ŵ attack delay 1%)^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Cross Impact ��� 10% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Cross Reaper Slash ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Guillotine_Cross^000000";
+				mes "^006400Increases critical damage by 1% and attack speed per each refinement level increase (Reduces attack delay 1%)^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Cross Impact damage by 10% per 2 refinement level increase.^000000";
+				mes "^006400Increases Cross Reaper Slash damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Guillotine_Cross^000000";
 				callsub S_Make,
 					18982,	// Old_Circlet_Of_Bone
 					19973,	// C_Circlet_Of_Bone
@@ -1586,17 +1540,17 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 15:
 				mes "- " + .@item_name$[13] + " -";
-				mes "^006400���������������ö�š����¹�Ѻ�ͤ��ҷ������.^000000";
+				mes "^006400This item cannot be traded with other accounts.^000000";
 				mes "^006400All State + 1 MDEF+ 5.^000000";
-				mes "^006400���� ATK + 4 ��� 1 ����ŵպǡ^000000";
-				mes "^006400���� ASPD + 1 ��� 5 ����ŵպǡ^000000";
-				mes "^006400���� MHP, MSP ��� 1% �ء 2 ����ŵպǡ^000000";
-				mes "^006400���� �����ç Cannon Spear ��� 20% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400���� �����ç Over Brand ��� 5% ��� 2 ����ŵպǡ.^000000";
-				mes "^006400������: ��ǡ ��ͧ�ѹ: 10^000000";
-				mes "^006400���˹�: ��ǹ�� ���˹ѡ: 10^000000";
-				mes "^006400��ͧ��ҧ: 1^000000";
-				mes "^006400��ͧ��������: 170 �Ҫվ: Royal Guard^000000";
+				mes "^006400ATK + 4 per 1 refinement level increase^000000";
+				mes "^006400ASPD + 1 per 5 refinement level increase^000000";
+				mes "^006400Increases MHP, MSP by 1% per 2 refinement level increase^000000";
+				mes "^006400Increases Cannon Spear damage by 20% per 2 refinement level increase.^000000";
+				mes "^006400Increases Over Brand damage by 5% per 2 refinement level increase.^000000";
+				mes "^006400Type: Helmet Defense: 10^000000";
+				mes "^006400Location: Top Weight: 10^000000";
+				mes "^006400SLOT: 1^000000";
+				mes "^006400Required Level: 170 Job: Royal Guard^000000";
 				callsub S_Make,
 					18983,	// Old_Protect_Of_Crown
 					19972,	// C_Protect_Of_Crown
@@ -1604,30 +1558,30 @@ lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
 				continue;
 			case 16:
 				mes "- " + .@item_name$[14] + "[1] -";
-				mes "^006400��Ҥ���㹵ӹҹ������դ�������^000000 ^006400㹡�õ��������ҧ�����ҭ��ж١��ҵ���ʹ��ú.";
-				mes "���� MHP, MSP ��� 1% ��� 2 ����ŵպǡ";
-				mes "ATK + 10 ����͵���Ф��դ�� STR ��ԧ �֧ 90.";
-				mes "(���� ATK + 2 �ء ����ŵպǡ)";
-				mes "MATK + 20 ����͵���Ф��դ�� INT ��ԧ �֧ 90.";
-				mes "(���� MATK + 3 �ء ����ŵպǡ)";
-				mes "����͵���Ф��դ�� VIT ��ԧ �֧ 90";
-				mes "3% ��Ҥ�����ҹ�ҹ��͡�����ջ���";
-				mes "(���� 3% ���������ŵպǡ�֧ 8,";
-				mes "���� 4% ���������ŵպǡ�֧ 10)";
-				mes "����͵���Ф��դ�� AGI ��ԧ �֧ 90";
-				mes "���� attack speed (3% attack delay reduction)";
-				mes "(Attack delay Ŵŧ 1% ��� 2 ����ŵպǡ)";
-				mes "(���� ASPD + 1 ���������ŵպǡ�֧ 10.)";
-				mes "����͵���Ф��դ�� DEX ��ԧ �֧ 90";
-				mes "���� ranged attack power ��� 3%";
-				mes "(���� 1% ��� 2 ����ŵպǡ)";
-				mes "����͵���Ф��դ�� LUK ��ԧ �֧ 90";
-				mes "���� �����ç critical ��� 5%.";
-				mes "(���� 1% �ء ����ŵպǡ)";
-				mes "������: ��Ҥ��� ��ͧ�ѹ: 30";
-				mes "���˹ѡ: 60";
-				mes "��ͧ��ҧ: 1";
-				mes "��ͧ��������: 170 �Ҫվ: ������^000000";
+				mes "^006400Legendary clock known to have been worn by those^000000 ^006400who fought bravely and were killed in the battle.";
+				mes "Increases MHP, MSP by 1% per 2 refinement level increase";
+				mes "ATK + 10 when your character's pure STR reaches 90.";
+				mes "(Additional ATK + 2 per each refinement level increase)";
+				mes "MATK + 20 when your character's pure INT reaches 90.";
+				mes "(Additional MATK + 3 per each refinement level increase)";
+				mes "when your character's pure VIT reaches 90";
+				mes "3% resistance against normal attack";
+				mes "(Additional 3% when refinement level reaches 8,";
+				mes "Additional 4% when refinement level reaches 10)";
+				mes "when your character's pure AGI reaches 90";
+				mes "Increased attack speed (3% attack delay reduction)";
+				mes "(Attack delay additionally decreased by 1% per 2 refinement level increase)";
+				mes "(Additional ASPD + 1 when your character's refinement level reaches 10.)";
+				mes "When your character's pure DEX reaches 90";
+				mes "Increases ranged attack power by 3%";
+				mes "(Additional 1% per 2 refinement level increase)";
+				mes "When your character's LUK reaches 90";
+				mes "Increases critical damage by 5%.";
+				mes "(Additional 1% per each refinement level increase)";
+				mes "Type: Robe Defense: 30";
+				mes "Weight: 60";
+				mes "SLOT: 1";
+				mes "Required Level: 170 Job: All^000000";
 				callsub S_Make,
 					20749,	// Manteau_Of_Fallen_
 					20748,	// Manteau_Of_Fallen
@@ -1653,18 +1607,18 @@ S_Make:
 	}
 	next;
 	mes "[Sorrowful Soul's Mind]";
-	mes "���ͷ��з�...^006400" + getitemname(.@reward_id) + "^000000...";
-	mes "��...����� " + .@string$[0] + ", " + .@string$[1] + "...���ǹ���¹...����㹷������仴���...��ѧ�ҹ�״��...";
+	mes "In order to make... ^006400" + getitemname(.@reward_id) + "^000000...";
+	mes "Bring their... wandering " + .@string$[0] + ", " + .@string$[1] + "... the vessel to hold the soul and... the dark energy... filling up this place...";
 	next;
 	mes "[Sorrowful Soul's Mind]";
-	mes "��ҵ�ͧ��� 1 " + getitemname(.@equipment_req) + ", " + .@material[0] + " " + getitemname(.@item_misc_req) + "..." + .@material[1] + " " + getitemname(6820) + "..";
-	mes "��������� " + getitemname(6820) + " ��� " + .@string$[0] + "�� 5 ���...���...������������...";
-	mes "���...�з�...Ẻ�˹ ?";
+	mes "I need 1 " + getitemname(.@equipment_req) + ", " + .@material[0] + " " + getitemname(.@item_misc_req) + "... " + .@material[1] + " " + getitemname(6820) + "..";
+	mes "If 5 times of " + getitemname(6820) + " and " + .@string$[0] + "s are collected... you... will never fail...";
+	mes "How... would... you do it?";
 	next;
-	switch( select( "��Ѻ价�����١�͹˹��", "�� " + .@material[1] + " energies, " + .@material[0] + " " + .@string$[0], "�� " + (.@material[1] * 5) + " energies, " + (.@material[0] * 5) + " " + .@string$[0] + "s" ) ) {
+	switch( select( "Go back to the previous menu.", "Use " + .@material[1] + " energies, " + .@material[0] + " " + .@string$[0], "Use " + (.@material[1] * 5) + " energies, " + (.@material[0] * 5) + " " + .@string$[0] + "s" ) ) {
 	case 1:
 		mes "[Sorrowful Soul's Mind]";
-		mes "�����ѧ���...�������ö...��...������ �...���蹡ѹ...";
+		mes "I hoped that... you could... see... other things... as well...";
 		return;
 	case 2:
 		.@rate = 1;
@@ -1675,7 +1629,7 @@ S_Make:
 	}
 	if (countitem(.@equipment_req) < 1 || countitem(.@item_misc_req) < (.@material[0] * .@rate) || countitem(6820) < (.@material[1] * .@rate)) {
 		mes "[Sorrowful Soul's Mind]";
-		mes "������...��...�ѵ�شԺ��...���з�...^006400" + getitemname(.@reward_id) + "^000000...";
+		mes "You don't... have... enough material... to make... ^006400" + getitemname(.@reward_id) + "^000000...";
 		return;
 	}
 	progressbar "000000",5;
@@ -1692,20 +1646,20 @@ S_Make:
 		specialeffect EF_DARKCASTING2;
 		specialeffect EF_RG_COIN7;
 		mes "[Sorrowful Soul's Mind]";
-		mes "����...^006400" + getitemname(.@reward_id) + "^000000...";
+		mes "Here is... ^006400" + getitemname(.@reward_id) + "^000000...";
 		getitem .@reward_id,1;
 	}
 	else {
 		specialeffect EF_POISONSMOKE;
 		specialeffect EF_GUMGANG4;
 		mes "[Sorrowful Soul's Mind]";
-		mes "^006400" + getitemname(.@reward_id) + "^000000... �������...";
+		mes "^006400" + getitemname(.@reward_id) + "^000000... failed...";
 	}
 	next;
-	mes "- ������Ѻ��������������ҧ˹ѡ - - �¤��蹾�ѧ�ҹ - - ���������ҧ��¢ͧ���. -";
+	mes "- I got critical damage - - by the mind's powerful wavelength - - which seeped into my body. -";
 	next;
 	mes "[Sorrowful Soul's Mind]";
-	mes "������...�����...�ͨЪ���...�������� ?...";
+	mes "Is there... anything... I can... help you with?...";
 	return;
 }
 
@@ -1718,9 +1672,9 @@ lhz_d_n2,44,53,6	duplicate(Sorrowful Soul's Mind#1)	Sorrowful Soul's Mind#1C	4_M
 // Safe map - Exit
 lhz_d_n2,34,45,3	script	#lhzdw	1_SHADOW_NPC,{
 	mes "[Bastets]";
-	mes "�������ö��繷ҧ�͡��.";
+	mes "You can see the exit.";
 	next;
-	if (select( "��Ѻ价�� Lighthalzen.", "�ѧ����Ѻ." ) == 1)
+	if (select( "Go back to Lighthalzen.", "Don't go back." ) == 1)
 		warp "lighthalzen",310,228;
 	end;
 }
@@ -1729,16 +1683,16 @@ lhz_d_n2,34,45,3	script	#lhzdw	1_SHADOW_NPC,{
 lhz_dun_n,167,259,2	script	A Questionable Device#l	4_SYSTEM_BOX,3,3,{
 	if (isbegin_quest(14683) == 1) {
 		mes "[System Message]";
-		mes "��ⵤ�� �ء�Թ �Դ��ҹ. ����������ö�Թ����ͧ RT-223 ��.";
+		mes "Emergency Protocol activated. The user will be able to run RT-223.";
 		next;
-		if (select( "����Թ����ͧ.", "�Թ����ͧ." ) == 2) {
+		if (select( "Do not run.", "Run." ) == 2) {
 			mes "[System Message]";
-			mes "�ء����û�ԺѵԵ�����ء�Թ.";
+			mes "All personnel should act in accordance with the emergency rules.";
 			close;
 		}
 		specialeffect EF_MAPPILLAR;
 		mes "[System Message]";
-		mes "�����蹡��ѧ�Թ����ͧ RT-223. �����ᵹ���¨��Դ��ҹ��ѧ�ҡ��鹵͹���.";
+		mes "Running RT-223 to the user. Standby mode will be activated after this process.";
 		specialeffect2 EF_BABY;
 		percentheal 100,100;
 		completequest 14683;// Mysterious Device
@@ -1747,7 +1701,7 @@ lhz_dun_n,167,259,2	script	A Questionable Device#l	4_SYSTEM_BOX,3,3,{
 	end;
 
 OnTouch:
-	npctalk "�ء����û�ԺѵԵ�����ء�Թ.", "", bc_self;
+	npctalk "All personnel should act in accordance with the emergency rules.", "", bc_self;
 	end;
 
 OnInit:
@@ -1768,252 +1722,252 @@ OnTimer1000:
 	if (.@npc_name$ == "#Alphoccio_Basil_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A23"; 
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�繤����Դ��Ҵ�ͧ�ѹ���Դ��ҹ����������Թ�ҧ..."; break;
-			case 1:  .@msg$ = "��...�����..��ѧ����..."; break;
-			case 2:  .@msg$ = "�ǡ�ҷ����������������?..������ͧ��Ẻ���.."; break;
-			case 3:  .@msg$ = "�ѹ���Թ���§�ŧ������§�ŧ..���������..."; break;
-			default:  .@msg$ = "�ѹ�������˹..�շҧ�͡�������.."; break;
+			case 0:	 .@msg$ = "It was my mistake to think that this will be just traveling..."; break;
+			case 1:	 .@msg$ = "Hah... And so what?.. I listen to my wife..."; break;
+			case 2:	 .@msg$ = "What's wrong with them all here?.. Why such eyes?.."; break;
+			case 3:	 .@msg$ = "I can hear the sounds of music and songs.. Hah hah..."; break;
+			default: .@msg$ = "Where am I?.. Is there any exit?.."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Alphoccio_Basil_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A24";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�ѹ�Դ�����Ҩз��ŧ����Թ�ҧ�ͺ�š���ʹ�..."; break;
-			case 1:  .@msg$ = "����Ӥѭ�����Ҩ��������˹㹢�з��س�������ѹ..."; break;
-			case 2:  .@msg$ = "Trentini...�س�������˹..."; break;
-			case 3:  .@msg$ = "���§�ͧ�ŧ���ѧ�ҧ����..."; break;
-			default:  .@msg$ = "���ǵ͹���...��������������ѹ��ҧ.."; break;
+			case 0:	 .@msg$ = "I thought we could make songs and travel around the world forever..."; break;
+			case 1:	 .@msg$ = "It doesn't matter where are we while you're near me..."; break;
+			case 2:	 .@msg$ = "Trentini... Where are you..."; break;
+			case 3: .@msg$ = "The sound of the song is fading away..."; break;
+			default: .@msg$ = "And now... What is left for me?.."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Catherine Cheiron_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A5";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�ѹ������Ѻ����š�ҡ..."; break;
-			case 1:  .@msg$ = "Sob sob...Somebody...Please.."; break;
-			case 2:  .@msg$ = "˹�Ǩѧ...�����...��⡴ѧ��������.."; break;
-			case 3:  .@msg$ = "���§�ͧ�ѹ...������͡��..."; break;
-			default:  .@msg$ = "���͹...�ѹ����..."; break;
+			case 0:	 .@msg$ = "It's a very strange trick..."; break;
+			case 1:	 .@msg$ = "Sob sob... Somebody... Please.."; break;
+			case 2:	 .@msg$ = "It's cold... This place... Is it a warehouse?.."; break;
+			case 3:	 .@msg$ = "My voice... won't come out..."; break;
+			default: .@msg$ = "Friends... I'm scared..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Katrinn Chiron_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A6";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "����ù...�������˹..."; break;
-			case 1:  .@msg$ = "�����纻Ǵ...�����״...�ѹ����..."; break;
-			case 2:  .@msg$ = "�Ƿ��������ҡ�ҡ����Ѻ�ѹ�������¹���͹����ѹ������ª��..."; break;
-			case 3:  .@msg$ = "�ǡ��������������..."; break;
-			default:  .@msg$ = "���͹...�״�Թ�..."; break;
+			case 0:	 .@msg$ = "Seyren... Where are you..."; break;
+			case 1:	 .@msg$ = "Pain... Darkness... I'm scared..."; break;
+			case 2:  .@msg$ = "The magic that was so hard for me to learn is now just... useless..."; break;
+			case 3:  .@msg$ = "Those who are not humans..."; break;
+			default: .@msg$ = "Friends... Too dark..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Celia_Alde_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A17";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "��...��������...���������..."; break;
-			case 1:  .@msg$ = "�ѹ��������ҩѹ����ö�͡�������..."; break;
-			case 2:  .@msg$ = "�Ե�ԭ�ҳ�����ʧ��÷����...�Ҩ��..."; break;
-			case 3:  .@msg$ = "����ѹ�������...�ѹ���Դ������ѧ�..?"; break;
-			default:  .@msg$ = "���...����ѹ�Թ��������ö㹡����������ͧ�ѹ...��������..."; break;
+			case 0:  .@msg$ = "Crap... This is crazy... All of this..."; break;
+			case 1:  .@msg$ = "I'm not sure I could tell who..."; break;
+			case 2:	 .@msg$ = "So poor spirit here... May it be..."; break;
+			case 3:  .@msg$ = "This is ridiculous... How this could even happen..?"; break;
+			default: .@msg$ = "Darn it... This is beyond my analytical abilities... Impossible..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Celia_Alde_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A18";
 		switch (rand(4)) {
-			case 0:  .@msg$ = "�����������...�������..."; break;
-			case 1:  .@msg$ = "My...survival...and escape...analyzis results..."; break;
-			case 2:  .@msg$ = "Where...what...No, no...Never..."; break;
-			default:  .@msg$ = "�ѹ��ҡ�͡仨ҡ�����������Ƿ���ش..."; break;
+			case 0:  .@msg$ = "Nobody around... What is..."; break;
+			case 1:  .@msg$ = "My... survival... and escape... analyzis results..."; break;
+			case 2:	 .@msg$ = "Where... what... No, no... Never..."; break;
+			default: .@msg$ = "I wanna get out of here as soon as possible..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Chen_Liu_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A19";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "��Ǣͧ�ѹ����֡�š �..."; break;
-			case 1:  .@msg$ = "ʶҹ����������͹�Ѻ��ͧ��Թ���١�����ҧ..."; break;
-			case 2:  .@msg$ = "���ŷ��˹��͡...������..."; break;
-			case 3:  .@msg$ = "�ѹ���ѧ�����µ��..."; break;
-			default:  .@msg$ = "�ѹ�繾��...���᷹��觡��ŧ�ɨҡ���ä�..."; break;
+			case 0:  .@msg$ = "My head feels somewhat weird..."; break;
+			case 1:  .@msg$ = "This place seems like an abandoned cellar..."; break;
+			case 2:	 .@msg$ = "There's a wound in my chest... What's goin..."; break;
+			case 3:	 .@msg$ = "I'm about to lose myself..."; break;
+			default: .@msg$ = "I'm a Monk... Agent of divine punishment..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Chen_Liu_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A20";
 		switch (rand(4)) {
-			case 0:  .@msg$ = "�˹�Ңͧ�ѵ��...��蹤���˹�Ңͧ���͹�����ҹ..."; break;
-			case 1:  .@msg$ = "St Capitolina Abbey...�ѧ�էҹ����ͧ��..."; break;
-			case 2:  .@msg$ = "�Ţͧ�ѹ�١���...�ǡ�ҷ��������ѹ���ҧ.."; break;
-			default:  .@msg$ = "��ѧ�ѡ����Է���...��ѧ�..."; break;
+			case 0:  .@msg$ = "Enemies' faces... That's collegues' faces..."; break;
+			case 1:  .@msg$ = "St Capitolina Abbey... There's still a work to be done..."; break;
+			case 2:	 .@msg$ = "My wound is sewed up... What the hell they have done to me?.."; break;
+			default: .@msg$ = "Holy power... Power of the mind..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Eremes_Guille_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A7";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�����价������Ҫ��Ե�ʹ..."; break;
-			case 1:  .@msg$ = "�ѹạ�ʹ���µԹ�ѹ��ͧ�ʹ!.."; break;
-			case 2:  .@msg$ = "���������...����áԨ..."; break;
-			case 3:  .@msg$ = "�ҧ�͡���������...������..."; break;
-			default:  .@msg$ = "���������...�١�ҧἹ���ҧ�ԶվԶѹ��͹..."; break;
+			case 0:  .@msg$ = "Concentrate on survival..."; break;
+			case 1:  .@msg$ = "I bear the Guillotine crest, I must survive!.."; break;
+			case 2:	 .@msg$ = "Don't give up... Remember the mission..."; break;
+			case 3:	 .@msg$ = "Exit is not near at all... I can't see it..."; break;
+			default: .@msg$ = "All of this... It was planned meticulously for sure..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Eremes_Guille_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A8";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "Katrinn �������...�ѹ��ͧ����ͧ..."; break;
-			case 1:  .@msg$ = "�ѹ��ͧ����áԨ��������...����觢ͧ�ѹ..."; break;
-			case 2:  .@msg$ = "Assasin Guild �ͩѹ..."; break;
-			case 3:  .@msg$ = "�ѹ�����ҡ�����������ҩѹ��������ҧ�蹹��..."; break;
-			default:  .@msg$ = "�ǧ�Ңͧ�ѹ���...�ѹ�����ҹ..."; break;
+			case 0:  .@msg$ = "Is Katrinn all right... I must protect..."; break;
+			case 1:  .@msg$ = "I must complete my mission... My orders..."; break;
+			case 2:	 .@msg$ = "Assasin Guild waits for me..."; break;
+			case 3: .@msg$ = "I cannot believe I fell into a trap like this..."; break;
+			default: .@msg$ = "My eyes are blurred... I won't last long..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Flamel_Emule_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A15";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�ѹ���������֡���˹�ҧ�ҡ�͹..."; break;
-			case 1:  .@msg$ = "Celia...�ѹ����..."; break;
-			case 2:  .@msg$ = "��ҧ��¢ͧ�ѹ���仴���������繨ҡ��ü�ҵѴ..."; break;
-			case 3:  .@msg$ = "������û�ҡ����...�������...�����..."; break;
-			default:  .@msg$ = "�ѹ����..."; break;
+			case 0:	 .@msg$ = "I've never felt so helpless before..."; break;
+			case 1:	 .@msg$ = "Celia... I'm scared..."; break;
+			case 2:	 .@msg$ = "My body is full of surgical scars..."; break;
+			case 3:	 .@msg$ = "Nobody showed up... Nobody... Here..."; break;
+			default: .@msg$ = "I can bear it..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Flamel_Emule_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A16";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "��ͺ���Ǣͧ�ѹ...�ѡ�ѹ����ʵ��...�е�ͧ�Ѻ���..."; break;
-			case 1:  .@msg$ = "�ѹ����֡����͹...ʵԢͧ�ѹ...������ǩѹ�ա����..."; break;
-			case 2:  .@msg$ = "ʵԢͧ�ѹ...���ѧ���͹�ҧ..."; break;
-			case 3:  .@msg$ = "�͹�����ѧ���������..."; break;
-			default:  .@msg$ = "��ҧ��¢ͧ�ѹ...����...����շҧ..."; break;
+			case 0:  .@msg$ = "My family... Geneticists... gonna be so embarassed..."; break;
+			case 1:  .@msg$ = "I feel like... my consciousness... is no longer me..."; break;
+			case 2:	 .@msg$ = "My consciousness... is fading..."; break;
+			case 3:	 .@msg$ = "Now with the last remaining strength..."; break;
+			default: .@msg$ = "My body... what... No way..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Gertie_Wie_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A21";
 		switch (rand(4)) {
-			case 0:  .@msg$ = "��Ҷ١��..."; break;
-			case 1:  .@msg$ = "�س���ѧ����������..."; break;
-			case 2:  .@msg$ = "�ѹ���ҧ�Թ�...�ͧ�����繷ҧ�͡���..."; break;
-			default:  .@msg$ = "��...⪤����..."; break;
+			case 0:	 .@msg$ = "We have been used..."; break;
+			case 1:	 .@msg$ = "What are you up to..."; break;
+			case 2:	 .@msg$ = "It's too wide... Can't see any exit..."; break;
+			default: .@msg$ = "Hah... Grand misfortune..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Gertie_Wie_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A22";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�ѹ��è����Ѻ�Թ�ҡ���ҹ���ҩѹ�������ѹ���Դ���..."; break;
-			case 1:  .@msg$ = "����ѹ�ʺ...�����Ҩ��Դ���â�鹡Ѻ���...�ѹ��..."; break;
-			case 2:  .@msg$ = "���آͧ�ѹ�������...�� �...���Ժ��繹ѡú..."; break;
-			case 3:  .@msg$ = "�ѹ�д����ҧ���Ѵ���ѧ...�ѹ��èШ�..."; break;
-			default:  .@msg$ = "�������������ѹ���Դ��������Ҩ�����觹��..."; break;
+			case 0:	 .@msg$ = "I should have received more money if I knew this would happen..."; break;
+			case 1:	 .@msg$ = "My cheeks are burning... Whatever happened to us... It's right..."; break;
+			case 2:	 .@msg$ = "My ages are gone... Young ones... Shall grow up into warriors..."; break;
+			case 3:	 .@msg$ = "I'll watch carefully... I should remember..."; break;
+			default: .@msg$ = "If we knew this would happen and we'd get this..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Harword_AltEisen_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A9";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�͹�����ҧ��¢ͧ�ѹ����͹�������...�ѹ�繤������ʧ��ͧ�ѹ��ԧ�.."; break;
-			case 1:  .@msg$ = "������������˹?..�ѹ�����͡�������..."; break;
-			case 2:  .@msg$ = "�ѹ�������˹...�ѹ��������§��ҧ�س..."; break;
-			case 3:  .@msg$ = "�ѹ��ͧ�ͧ��૫�Ź�ͧ��Ǣͧ�ѹ...�����Ҩ��Դ���â��..."; break;
-			default:  .@msg$ = "�ѹ����...�Ե㨢ͧ�ѹ�Ѻŧ..."; break;
+			case 0:  .@msg$ = "What moves my body now... Is it really my will..?"; break;
+			case 1:  .@msg$ = "Where is this plase?.. I was told nothing..."; break;
+			case 2:  .@msg$ = "I won't go anywhere... I'll be by your side..."; break;
+			case 3:  .@msg$ = "I must look for my sister Cecil... no matter what..."; break;
+			default: .@msg$ = "Dangerous... My mind shuts down..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Harword Alt-Eisen_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A10";
 		switch (rand(3)) {
-			case 0:  .@msg$ = "�ѹ�ͧ������͹Ҥ��ͧ����ͧ�ա����..."; break;
-			case 1:  .@msg$ = "�Ңͧ�ѹ...��Դ..."; break;
-			default:  .@msg$ = "����ѹ...��鴴������..."; break;
+			case 0:	 .@msg$ = "I cannot see my future anymore..."; break;
+			case 1: .@msg$ = "My eyes... just keep... closing..."; break;
+			default: .@msg$ = "Damn it... Cheer up... Don't loose the will..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Magaleta_Sorin_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A3";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "Dear Odin...����� Seyren ��..."; break;
-			case 1:  .@msg$ = "�������������ѹ����..."; break;
-			case 2:  .@msg$ = "��������������ʧ��ͧ�ѹ...��������ѹ..."; break;
-			case 3:  .@msg$ = "��ѧ�ѡ����Է����ѡ�����ʹ�������..."; break;
-			default:  .@msg$ = "Dear Odin...May we...May he..."; break;
+			case 0:  .@msg$ = "Dear Odin... Let Seyren be all..."; break;
+			case 1:  .@msg$ = "All of this terrifies me..."; break;
+			case 2:	 .@msg$ = "That's not my will... This is not me..."; break;
+			case 3:	 .@msg$ = "Holy power can't heal the black blood..."; break;
+			default: .@msg$ = "Dear Odin... May we... May he..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Magaleta_Sorin_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A4";
 		switch (rand(4)) {
-			case 0:  .@msg$ = "�֧�ʹԹ����ѡ������͡��ѧ�ͧ������..."; break;
-			case 1:  .@msg$ = "��ҧ��¢ͧ�ѹ�٭���¤��������..."; break;
-			case 2:  .@msg$ = "��ѧ�ѡ����Է�����͹��ŧ������ �..."; break;
-			default:  .@msg$ = "My Seyren...�س�������˹..."; break;
+			case 0:  .@msg$ = "Dear Odin, be my strength remaining..."; break;
+			case 1:  .@msg$ = "My body keeps loosing its strength..."; break;
+			case 2:	 .@msg$ = "Holy powers keep weakening..."; break;
+			default: .@msg$ = "My Seyren... Where are you..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Randel_Lawrence_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A13";
 		switch (rand(4)) {
-			case 0:  .@msg$ = "�ѹ�١���ҷ����㹰ҹм��ѭ�ҡ��..."; break;
-			case 1:  .@msg$ = "�͹����ѹ��������...��ԧ�..."; break;
-			case 2:  .@msg$ = "�ѹ���ʴ���ѧ�ͧ���ҴԹ..."; break;
-			default:  .@msg$ = "�١���ͧ͢�ѹ�������˹..."; break;
+			case 0:  .@msg$ = "I was dispatched here as the commander..."; break;
+			case 1:  .@msg$ = "Now it's impossible... Really..."; break;
+			case 2:	 .@msg$ = "I'll show you paladins strength..."; break;
+			default: .@msg$ = "Where is my crew..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Randel_Lawrence_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A14";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "���١����...��Ҿǡ�س�ʹ...�س��ͧ�͡�ҡ��觹��...����ͤ����..."; break;
-			case 1:  .@msg$ = "��ѧ�ͧ�ѹ��������..."; break;
-			case 2:  .@msg$ = "��蹤������..���ѧ����¹..."; break;
-			case 3:  .@msg$ = "�ѹ�繼���ʹ���Ե���ش���·��������.."; break;
-			default:  .@msg$ = "�ѹ��ǧ�����������ѹ�״���˹�ҩѹ..."; break;
+			case 0:  .@msg$ = "Dispatched crew... If any of you survive... You must make out of this... This is an order..."; break;
+			case 1:  .@msg$ = "My powers are gone now..."; break;
+			case 2:	 .@msg$ = "What is that?.. I'm changing..."; break;
+			case 3:	 .@msg$ = "Am I the last survivor here?.."; break;
+			default: .@msg$ = "Have I fallen? It darkens before my eyes..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Seyren_Windsor_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A1";
 		switch (rand(4)) {
-			case 0:  .@msg$ = "�ѹ��ͧ�����͹...�ѹ��ͧ..."; break;
-			case 1:  .@msg$ = "��Թ�����˹..���͹�ѹʺ�´����.."; break;
-			case 2:  .@msg$ = "�ռ������������Ӣͧ���...������û�ʹ��·��к͡�Ѻ..."; break;
-			default:  .@msg$ = "��ͧ͢�ѹ������Ѻ������ͧ���..."; break;
+			case 0:  .@msg$ = "I have to find my fellows... I must..."; break;
+			case 1:  .@msg$ = "Where's Sorin?.. Are my friends all right?.."; break;
+			case 2:	 .@msg$ = "There is a traitor amongst our leaders... Nobody is safe to tell to..."; break;
+			default: .@msg$ = "My father should be informed of this..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Seyren_Windsor_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A2";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�ѹ����֡�Դ..."; break;
-			case 1:  .@msg$ = "�ѹ����Թ������ص�������õ��ȩѹ�����������ͧ͢�ѹ���ŷԹ..."; break;
-			case 2:  .@msg$ = "��ͧ˹ըҡ�ǡ��...��觹�������..."; break;
-			case 3:  .@msg$ = "����������ö����ʶҹ����蹹��..."; break;
-			default:  .@msg$ = "����ѡ...Margaretha..."; break;
+			case 0:  .@msg$ = "My guilt tightens..."; break;
+			case 1:  .@msg$ = "I am Windsor, son of honor, I shall not defile my name..."; break;
+			case 2:	 .@msg$ = "Gotta flee from them... This should never..."; break;
+			case 3:	 .@msg$ = "We cannot die in such a place..."; break;
+			default: .@msg$ = "My love... Margaretha..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Shecil_Damon_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A11";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "���� �...�������..."; break;
-			case 1:  .@msg$ = "⶧�ҧ�Թ��������ҧ�͡����..."; break;
-			case 2:  .@msg$ = "�ѹ����...�ͩѹ��Թ..."; break;
-			case 3:  .@msg$ = "�ѹ����...�ҡ...����..."; break;
-			default:  .@msg$ = "�ѹ�ѧ�ո������١������..."; break;
+			case 0:  .@msg$ = "Keep calm... It's okay..."; break;
+			case 1:  .@msg$ = "This hallway is not the exit too..."; break;
+			case 2:	 .@msg$ = "I'll come... Wait for me, Sorin..."; break;
+			case 3:  .@msg$ = "I'm scared... Very... scared..."; break;
+			default: .@msg$ = "I still have my bow and arrows..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Shecil_Damon_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A12";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�ѹ���Ẻ������������..."; break;
-			case 1:  .@msg$ = "��Թ...��˹..."; break;
-			case 2:  .@msg$ = "���͹...��蹤����觷��ѹ�Դ�֧..."; break;
-			case 3:  .@msg$ = "㹪�ͧ��鹤������..���Դ��鹷���˹..?"; break;
-			default:  .@msg$ = "�ѹ����...�ѹ�ѧ��診..."; break;
+			case 0:	 .@msg$ = "I cannot die like this here..."; break;
+			case 1:	 .@msg$ = "Sorin... Where did you go..."; break;
+			case 2:	 .@msg$ = "Friends... That's what I miss..."; break;
+			case 3:	 .@msg$ = "What's in that space?.. Where will come up..?"; break;
+			default: .@msg$ = "I can do this... It's not an end..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Trentini_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A25";
 		switch (rand(5)) {
-			case 0:  .@msg$ = "�ѹ����֡��������������˹..."; break;
-			case 1:  .@msg$ = "�ѹ�з��ѧ䧴�?..�Ǵ���������Թ..."; break;
-			case 2:  .@msg$ = "�ѹ�繤����Դ�ͧ�ѹ�ͧ...�ѹ����ԡ�Ѻ Alphoccio 㹷���ش..."; break;
-			case 3:  .@msg$ = "�ѹ�������ѹ��͡�á����...��蹤�ͼ��Ѿ��..."; break;
-			default:  .@msg$ = "�ѹ�Դ�֧�س...�ҡ..."; break;
+			case 0:  .@msg$ = "I can feel where he is..."; break;
+			case 1:  .@msg$ = "What do I do now?.. My head aches too much..."; break;
+			case 2:	 .@msg$ = "It's my fault... I shoul break up with Alphoccio in the end..."; break;
+			case 3:	 .@msg$ = "It's an end, it's an oppression... That's the result..."; break;
+			default: .@msg$ = "I miss you... Very much..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Trentini_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A26";
 		switch (rand(4)) {
-			case 0:  .@msg$ = "�����������¤�..���͹��...���..."; break;
-			case 1:  .@msg$ = "��͡��ҹ������ͧ..."; break;
-			case 2:  .@msg$ = "�ѹ�ͺ�ء���§�ͧ�ǡ���ҡ..."; break;
-			default: .@msg$ = "��ҧ��¢ͧ�ѹ������Ѻ���..."; break;
+			case 0:  .@msg$ = "Is anybody there?.. Friends, please... Ah..."; break;
+			case 1:  .@msg$ = "That Taro reading was terrifying..."; break;
+			case 2:	 .@msg$ = "I liked all their voices so much..."; break;
+			default: .@msg$ = "My body won't move at all..."; break;
 		}
 	}
 	npctalk .@msg$, .@talker_name$;
@@ -2087,14 +2041,14 @@ OnTouch:
 		break;
 	case 0:
 	case 1:
-		npctalk "...�Ѩ�غѹ...��ͧ���...����..���..��ǹ�..";
+		npctalk "... Current... Required... Cool.. Down..Time..";
 		end;
 	case 2:
 		erasequest .@quest_id;
 		break;
 	}
 	specialeffect EF_MAPPILLAR;
-	npctalk "��ⵤ�� �ء�Թ...�Դ��..���..RT..017...��Ŵ�ǹ�...1 �������......";
+	npctalk "Emergency Protocol... Activated.. to.. RT..017... Cooldown... 1 hour......";
 	specialeffect2 EF_BABY;
 	setquest .@quest_id;// Mysterious Device
 	switch( .@quest_id ) {
