@@ -608,7 +608,12 @@ struct map_session_data {
 
 	struct clan *clan;
 
-	struct faction_data *faction; // [Ind] speed everything up
+	struct faction {
+		char name[NAME_LENGTH];
+		char pl_name[NAME_LENGTH];
+		int emblem_len, emblem_id;
+		char emblem_data[2048];
+	} faction;
 
 	int vended_id;
 	int vender_id;

@@ -1748,6 +1748,18 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_spiritcharm(sd);
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
+			//biali faction system
+			if(sd->status.faction_id) {
+				struct faction_data *f = faction_search(sd->status.faction_id);
+				memcpy(sd->faction.name,fdb->name,sizeof(fdb->name));
+				memcpy(sd->faction.pl_name,fdb->pl_name,sizeof(fdb->pl_name));
+				memcpy(sd->faction.emblem_data,fdb->emblem_data,sizeof(fdb->emblem_data));
+				sd->faction.emblem_id = fdb->emblem_id;
+				sd->faction.emblem_len = fdb->emblem_len;
+				ShowWarning("clif_spawn : Biali : Loaded fdb data into sd->faction\n");
+			}
+
+
 			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_hat_effects(sd,bl,AREA);
 		}
@@ -9917,6 +9929,10 @@ void clif_refresh(struct map_session_data *sd)
 	}
 	if( sd->ed )
 		clif_elemental_info(sd);
+	
+	if( sd->status.faction_id ) // Faction System [Biali]
+		faction_getareachar_unit(sd, &sd->bl);
+
 	map_foreachinallrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
 	if( sd->chatID )
@@ -9929,9 +9945,6 @@ void clif_refresh(struct map_session_data *sd)
 		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
 	else
 		clif_changed_dir(&sd->bl, SELF);
-	
-	if( sd->status.faction_id ) // Faction System [Biali]
-		faction_getareachar_unit(sd, &sd->bl);
 
 	clif_efst_status_change_sub(&sd->bl,&sd->bl,SELF);
 
@@ -10929,13 +10942,17 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->bg_id )
 		clif_bg_hp(sd); // BattleGround System
+
+	ShowWarning("clif_parse_loadEndAck : Biali : Chegou aqui com faction id : %d \n",sd->status.faction_id);
  
 	if( sd->status.faction_id ) { // Faction System [Biali]
 		// if( map_getmapflag(sd->bl.m, MF_FVF) ) {
-			faction_hp(sd);
-			//Biali test
+			//Biali TODO test
 			faction_spawn(&sd->bl);
-			clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
+		faction_getareachar_unit(sd, &sd->bl);
+			//clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
+			// ----
+			faction_hp(sd);
 		// }
 	}
 

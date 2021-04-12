@@ -8291,7 +8291,14 @@ int status_get_emblem_id(struct block_list *bl)
 	nullpo_ret(bl);
 	switch (bl->type) {
 		case BL_PC:
-			return ((TBL_PC*)bl)->guild_emblem_id;
+			{
+				struct map_session_data* sd = BL_CAST(BL_PC,bl);
+				if(sd->status.faction_id){
+					return sd->faction.emblem_id;
+				} else
+					return sd->guild_emblem_id;
+			}
+			break;
 		case BL_PET:
 			if (((TBL_PET*)bl)->master)
 				return ((TBL_PET*)bl)->master->guild_emblem_id;

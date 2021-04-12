@@ -116,7 +116,7 @@ void faction_spawn(struct block_list *bl)
 	if( (fdb = faction_search(faction_get_id(bl))) == NULL ) 
 		return;
 
-	if( map_getmapflag(bl->m, MF_FVF) ) {
+	// if( map_getmapflag(bl->m, MF_FVF) ) {
 		if( battle_config.faction_ally_info_bl ) {
 			if( battle_config.faction_ally_info_bl&bl->type ) {
 				WBUFW(buf, 0) = 0x2dd;
@@ -132,14 +132,15 @@ void faction_spawn(struct block_list *bl)
 			WBUFW(buf,10) = fdb->emblem_id;
 			clif_send(buf, 12, bl, AREA_WOS);
 		}
-	}
+	// }
 
-	if( battle_config.faction_size_bl&bl->type && ((battle_config.fvf_visual_size&1 && map_getmapflag(bl->m, MF_FVF)) || battle_config.fvf_visual_size&2) ) {
-		if( fdb->size == SZ_BIG )
-			clif_specialeffect(bl,423,AREA);
-		else if( fdb->size == SZ_MEDIUM )
-			clif_specialeffect(bl,421,AREA);
-	}
+	//Biali we dont need this so far... lets just comment this out
+	// if( battle_config.faction_size_bl&bl->type && ((battle_config.fvf_visual_size&1 && map_getmapflag(bl->m, MF_FVF)) || battle_config.fvf_visual_size&2) ) {
+	// 	if( fdb->size == SZ_BIG )
+	// 		clif_specialeffect(bl,423,AREA);
+	// 	else if( fdb->size == SZ_MEDIUM )
+	// 		clif_specialeffect(bl,421,AREA);
+	// }
 
 	faction_show_aura(bl);
 }
@@ -176,27 +177,25 @@ void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl
 		return;
 
 	fd = sd->fd;
-	if( map_getmapflag(bl->m, MF_FVF) ) {
-		if( battle_config.faction_ally_info_bl ) {
-			if( battle_config.faction_ally_info_bl&bl->type && sd->faction->id != faction_get_id((bl))) {
-				WFIFOHEAD(fd,32);
-				WFIFOW(fd,0) = 0x2dd;
-				WFIFOL(fd,2) = bl->id;
-				safestrncpy((char*)WFIFOP(fd,6), status_get_name(bl), NAME_LENGTH);
-				WFIFOW(fd,30) = faction_get_id(bl);
-				WFIFOSET(fd,packet_len(0x2dd));
-			}
+	// if( map_getmapflag(bl->m, MF_FVF) ) { //biali todo working here
+		if( battle_config.faction_ally_info_bl && battle_config.faction_ally_info_bl&bl->type && sd->status.faction_id != faction_get_id(bl)) {
+			WFIFOHEAD(fd,32);
+			WFIFOW(fd,0) = 0x2dd;
+			WFIFOL(fd,2) = bl->id;
+			safestrncpy((char*)WFIFOP(fd,6), status_get_name(bl), NAME_LENGTH);
+			WFIFOW(fd,30) = faction_get_id(bl);
+			WFIFOSET(fd,packet_len(0x2dd));
 		} else {
-				WFIFOHEAD(fd,fdb->emblem_len+12);
-				WFIFOW(fd,2)=fdb->emblem_len+12;
-				WFIFOL(fd,8)=fdb->emblem_id;
-				memcpy(WFIFOP(fd,12),fdb->emblem_data,fdb->emblem_len);
-
-				WFIFOW(fd,0)=0x152;
-				WFIFOL(fd,4)=fdb->id;
-				WFIFOSET(fd,WFIFOW(fd,2));
+			//send data to the world around
+			WFIFOHEAD(fd,fdb->emblem_len+12);
+			WFIFOW(fd,0)=0x152;
+			WFIFOW(fd,2)=fdb->emblem_len+12;
+			WFIFOL(fd,4)=fdb->id;
+			WFIFOL(fd,8)=fdb->emblem_id;
+			memcpy(WFIFOP(fd,12),fdb->emblem_data,fdb->emblem_len);
+			WFIFOSET(fd,WFIFOW(fd,2));
 		}
-	}
+	// }
 
 	if( battle_config.faction_size_bl&bl->type && ((battle_config.fvf_visual_size&1 && map_getmapflag(bl->m, MF_FVF)) || battle_config.fvf_visual_size&2) ) {
 		if( fdb->size == SZ_BIG )
@@ -241,36 +240,38 @@ struct faction_data *faction_search(int id)
 
 int faction_get_id(struct block_list *bl)
 {
-	if( bl )
-	switch( bl->type ) {
-		case BL_PC:			// Player
-			return ((TBL_PC*)bl)->status.faction_id;
-		case BL_PET:		// Pet
-			if( ((TBL_PET*)bl)->master )
-				return ((TBL_PET*)bl)->master->status.faction_id;
-		case BL_MOB:		// Monster
-		{
-			struct map_session_data *msd;
-			struct mob_data *md = (TBL_MOB*)bl;
-			if( md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL )
-				return msd->status.faction_id;
-			return md->faction_id;
+	if( bl ) {
+		switch( bl->type ) {
+			case BL_PC:			// Player
+				return ((TBL_PC*)bl)->status.faction_id;
+			case BL_PET:		// Pet
+				if( ((TBL_PET*)bl)->master )
+					return ((TBL_PET*)bl)->master->status.faction_id;
+			case BL_MOB:		// Monster
+			{
+				struct map_session_data *msd;
+				struct mob_data *md = (TBL_MOB*)bl;
+				if( md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL )
+					return msd->status.faction_id;
+				return md->faction_id;
+			}
+			// case BL_NPC:		// NPC
+			// 	return ((TBL_NPC*)bl)->faction_id; //BIALI TODO: why are npcs crashing the server?
+			case BL_HOM:		// Homunculus
+				if( ((TBL_HOM*)bl)->master )
+					return ((TBL_HOM*)bl)->master->status.faction_id;
+			case BL_MER:		// Mercenary
+				if( ((TBL_MER*)bl)->master )
+					return ((TBL_MER*)bl)->master->status.faction_id;
+			case BL_ELEM:		// Elemental
+				if( ((TBL_ELEM*)bl)->master )
+					return ((TBL_ELEM*)bl)->master->status.faction_id;
+			case BL_SKILL:		// Skill
+				return ((TBL_SKILL*)bl)->group->faction_id;
+			default:
+				return 0;
+				break;
 		}
-		case BL_NPC:		// NPC
-			return ((TBL_NPC*)bl)->faction_id;
-		case BL_HOM:		// Homunculus
-			if( ((TBL_HOM*)bl)->master )
-				return ((TBL_HOM*)bl)->master->status.faction_id;
-		case BL_MER:		// Mercenary
-			if( ((TBL_MER*)bl)->master )
-				return ((TBL_MER*)bl)->master->status.faction_id;
-		case BL_ELEM:		// Elemental
-			if( ((TBL_ELEM*)bl)->master )
-				return ((TBL_ELEM*)bl)->master->status.faction_id;
-		case BL_SKILL:		// Skill
-			return ((TBL_SKILL*)bl)->group->faction_id;
-		default:
-			break;
 	}
 	return 0;
 }
@@ -444,17 +445,22 @@ static int faction_readdb(void)
 		fdb->script = parse_script(str[12],path,lines,0);
 
 		fdb->emblem_id = 1;
-		sprintf(path, "db/faction_emblem/faction_id_%d.ebm", id);
+		//fdb->emblem_id = id; //biali
+		//sprintf(path, "db/faction_emblem/faction_id_%d.ebm", id);
+		sprintf(path, "%s/emblems/faction_%d.ebm", db_path, i);
 		if( (fp2 = fopen(path, "rb")) != NULL ) {
 			fseek(fp2, 0, SEEK_END);
 			fdb->emblem_len = ftell(fp2);
 			fseek(fp2, 0, SEEK_SET);
-			fread(&fdb->emblem_data, sizeof(fdb->emblem_data), 1, fp2);
+			//fread(&fdb->emblem_data, sizeof(fdb->emblem_data), 1, fp2);
+			fread(&fdb->emblem_data, 1, fdb->emblem_len, fp2);
 			fclose(fp2);
 		} else memset(fdb->emblem_data, 0, sizeof(fdb->emblem_data));
 
 		fdb->l_emblem_id = 2;
-		sprintf(path, "db/faction_emblem/faction_id_%d_leader.ebm", id);
+		//fdb->l_emblem_id = id; //biali
+		//sprintf(path, "db/faction_emblem/faction_id_%d_leader.ebm", id);
+		sprintf(path, "%s/emblems/faction_%d.ebm", db_path, i);
 		if( (fp2 = fopen(path, "rb")) != NULL ) {
 			fseek(fp2, 0, SEEK_END);
 			fdb->l_emblem_len = ftell(fp2);

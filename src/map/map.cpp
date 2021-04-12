@@ -2895,6 +2895,9 @@ int map_delinstancemap(int m)
 	mapdata->flag.clear();
 	mapdata->skill_damage.clear();
 
+	// mapdata->rpk.info = {};
+	// mapdata->contested.info = {};
+
 	mapindex_removemap(mapdata->index);
 	map_removemapdb(mapdata);
 

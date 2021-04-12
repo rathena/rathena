@@ -8136,7 +8136,7 @@ static void pc_calcrep(struct map_session_data *sd, t_exp base_exp)
 	exp = (int)(base_exp / sd->status.base_level);
 
 	for (i=1; i <= MAX_FACTION; i++) {
-		if(faction_id == i)
+		if(faction_search(i) && faction_id == i)
 			sd->status.reputation[i] = cap_value(sd->status.reputation[i] + exp, 1, INT_MAX);
 		else
 			sd->status.reputation[i] = cap_value(sd->status.reputation[i] - (int)(exp * 0.05), 1, INT_MAX);
