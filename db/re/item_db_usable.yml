@@ -5988,7 +5988,7 @@ Body:
   - Id: 12212
     AegisName: Giant_Fly_Wing
     Name: Giant Fly Wing
-    Type: Usable
+    Type: DelayConsume
     Buy: 2
     Weight: 10
     Trade:
@@ -8904,7 +8904,7 @@ Body:
   - Id: 12438
     AegisName: F_Giant_Fly_Wing
     Name: F Giant Fly Wing
-    Type: Usable
+    Type: DelayConsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9471,7 +9471,7 @@ Body:
   - Id: 12494
     AegisName: E_Giant_Fly_Wing
     Name: E Giant Fly Wing
-    Type: Usable
+    Type: DelayConsume
     Buy: 2
     Weight: 10
     Script: |

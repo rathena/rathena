@@ -52,6 +52,7 @@ function	script	F_CashStore	{
 // - No arguments.
 function	script	F_CashPartyCall	{
 	itemskill "AL_TELEPORT",1;
+	sleep2 1;	// a slight delay seems necessary after itemskill
 	if (is_party_leader() == true)
 		warpparty "Leader", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
 	return;
