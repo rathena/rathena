@@ -21710,6 +21710,7 @@ void clif_parse_refineui_close( int fd, struct map_session_data* sd ){
  * 0aa2 <length>.W <index>.W <catalyst count>.B { <material>.W <chance>.B <price>.L }*
  */
 void clif_refineui_info( struct map_session_data* sd, uint16 index ){
+#if PACKETVER >= 20161012
 	int fd = sd->fd;
 
 	// Get the item db reference
@@ -21777,6 +21778,7 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 	p->packtLength = (uint16)( sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + count * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB ) );
 
 	WFIFOSET( fd, p->packtLength );
+#endif
 }
 
 /**
