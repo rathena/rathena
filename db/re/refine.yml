@@ -32,10 +32,10 @@
 #           BlacksmithBlessingAmount    Amount of Blacksmith Blessing required. (Default: 0)
 #           Chances:                    Success chance based on cost type. (Default: null)
 #             - Type                    Refinement cost type based on ore used.
-#               Rate                    Chance of success out of 0~100. (Default: 0)
+#               Rate                    Chance of success out of 0~10000. (Default: 0)
 #               Price                   Amount of zeny required to refine. (Default: 0)
 #               Material                Ore item required to refine. (Default: 0)
-#               BreakingRate            Chance of item breaking out of 0~100. (Default: 0)
+#               BreakingRate            Chance of item breaking out of 0~10000. (Default: 0)
 #               DowngradeAmount         Number of refine levels reduced on failure. (Default: 0)
 ###########################################################################
 

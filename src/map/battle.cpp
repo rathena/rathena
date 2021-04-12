@@ -3633,6 +3633,8 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 #endif
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
 					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
+						// Reduce count by one (self) [Tydus1]
+						i -= 1; 
 						ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
 						RE_ALLATK_ADDRATE(wd, 2*skill*i);
 					}
@@ -4117,6 +4119,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 		case SN_SHARPSHOOTING:
+			if (src->type == BL_MOB) { // TODO: Did these formulas change in the renewal balancing?
+				if (wd->miscflag & 1) // Splash damage bonus
+					skillratio += -100 + 140 * skill_lv;
+				else
+					skillratio += 100 + 50 * skill_lv;
+				break;
+			}
+			// Fall through
 		case MA_SHARPSHOOTING:
 #ifdef RENEWAL
 			skillratio += 50 + 200 * skill_lv;
