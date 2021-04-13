@@ -10545,6 +10545,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadinstancedb", reload),
 		ACMD_DEF2("reloadachievementdb",reload),
 		ACMD_DEF2("reloadattendancedb",reload),
+		ACMD_DEF2("reloadsynthesisdb", reload),
+		ACMD_DEF2("reloadupgradedb", reload),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
