@@ -41,6 +41,8 @@ struct party_booking_ad_info;
 struct sale_item_data;
 struct mail_message;
 struct achievement;
+struct s_item_synthesis_list;
+struct s_item_upgrade_list;
 struct guild_log_entry;
 enum e_guild_storage_log : uint16;
 enum e_bg_queue_apply_ack : uint16;
@@ -69,6 +71,10 @@ enum e_packet_ack : uint8_t{
 	ZC_MERGE_ITEM_OPEN,
 	ZC_ACK_MERGE_ITEM,
 	ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,
+	ZC_LAPINE_SYNTHESIS_OPEN,
+	ZC_LAPINE_SYNTHESIS_RESULT,
+	ZC_LAPINE_UPGRADE_OPEN,
+	ZC_LAPINE_UPGRADE_RESULT,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -185,6 +191,18 @@ enum e_bossmap_info {
 	BOSS_INFO_ALIVE_WITHMSG,
 	BOSS_INFO_DEAD,
 };
+
+enum e_item_synthesis_result : uint8 {
+	SYNTHESIS_SUCCESS = 0,
+	SYNTHESIS_INSUFFICIENT_AMOUNT = 5,
+	SYNTHESIS_INVALID_ITEM = 7,
+};
+
+enum e_item_upgrade_result : uint8 {
+	LAPINE_UPRAGDE_SUCCESS = 0,
+	LAPINE_UPRAGDE_FAILURE = 1,
+};
+
 
 #define packet_len(cmd) packet_db[cmd].len
 extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
@@ -1150,5 +1168,8 @@ void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result );
 
 void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id );
+
+bool clif_synthesisui_open(struct map_session_data *sd, t_itemid itemid);
+bool clif_lapine_upgrade_open(struct map_session_data *sd, t_itemid itemid);
 
 #endif /* CLIF_HPP */

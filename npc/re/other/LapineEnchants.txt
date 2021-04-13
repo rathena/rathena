@@ -1,0 +1,2097 @@
+//===== rAthena Script =======================================
+//= Lapine Upgrade Functions
+//===== Description: =========================================
+// Functions to get random options for 'Lapine Upgrade'
+// feature. Function name prefixed with F_Lapine_ and followed
+// by item/identifier as unique name.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Cydh]
+//============================================================
+/**
+ * Possible random options from Ancient Hero Bravery
+ */
+ function	script	F_Lapine_Ancient_Hero_Bravery	{
+	// Option: 1
+	.@r = rand(10000);
+	if (.@r < 500) { // ATK +5 ~ 30
+		.@option = RDMOPT_VAR_ATTPOWER;
+		.@value = rand(5,30);
+	} else if (.@r < 625) { // ASPD +1
+		.@option = RDMOPT_VAR_PLUSASPD;
+		.@value = 1;
+	} else if (.@r < 875) { // ASPD +3~10%
+		.@option = RDMOPT_VAR_PLUSASPDPERCENT;
+		.@value = rand(3,10);
+	} else if (.@r < 1000) { // Ranged Physical Damage +3-10%
+		.@option = RDMOPT_RANGE_ATTACK_DAMAGE_TARGET;
+		.@value = rand(3,10);
+	} else if (.@r < 1900) { // To Neutral Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 2800) { // To Water Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_WATER_TARGET;
+		.@value = rand(5,30);
+	} else if (.@r < 3700) { // To Earth Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET;
+		.@value = rand(5,30);
+	} else if (.@r < 4600) { // To Fire Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET;
+		.@value = rand(5,30);
+	} else if (.@r < 5500) { // To Wind Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_WIND_TARGET;
+		.@value = rand(5,30);
+	} else if (.@r < 6400) { // To Poison Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_POISON_TARGET;
+		.@value = rand(5,30);
+	} else if (.@r < 7300) { // To Holy Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET;
+		.@value = rand(5,30);
+	} else if (.@r < 8200) { // To Shadow Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET;
+		.@value = rand(5,30);
+	} else if (.@r < 9100) { // To Ghost Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET;
+		.@value = rand(5,30);
+	} else { // To Undead Element Damage +3~20%
+		.@option = RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET;
+		.@value = rand(5,30);
+	}
+
+	set getarg(0), .@option;
+	set getarg(1), .@value;
+
+	// Option:2
+	.@r = rand(10000);
+	if (.@r < 100) { // ATK +1~5%
+		.@option = RDMOPT_VAR_ATKPERCENT;
+		.@value = rand(1,5);
+	} else if (.@r < 700) { // Critical Damage +3~10%
+		.@option = RDMOPT_DAMAGE_CRI_TARGET;
+		.@value = rand(3,10);
+	} else if (.@r < 1600) { // To Formless Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_NOTHING;
+		.@value = rand(3,20);
+	} else if (.@r < 2500) { // To Undead Race damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_UNDEAD;
+		.@value = rand(3,20);
+	} else if (.@r < 3400) { // To Beast Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_ANIMAL;
+		.@value = rand(3,20);
+	} else if (.@r < 4300) { // To Plant Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_PLANT;
+		.@value = rand(5,30);
+	} else if (.@r < 5200) { // To Insect Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_INSECT;
+		.@value = rand(5,30);
+	} else if (.@r < 6100) { // To Fish Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_FISHS;
+		.@value = rand(5,30);
+	} else if (.@r < 7000) { // To Demon Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_DEVIL;
+		.@value = rand(5,30);
+	} else if (.@r < 7900) { // To Demi-Human Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_HUMAN;
+		.@value = rand(5,30);
+	} else if (.@r < 8800) { // To Angel Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_ANGEL;
+		.@value = rand(5,30);
+	} else if (.@r < 9700) { // To Dragon Race Damage +3~20%
+		.@option = RDMOPT_RACE_DAMAGE_DRAGON;
+		.@value = rand(5,30);
+	} else if (.@r < 9800) { // Increase damage to normal class 1~10%
+		.@option = RDMOPT_CLASS_DAMAGE_NORMAL_TARGET;
+		.@value = rand(1,10);
+	} else if (.@r < 9900) { // Increase damage to boss class 1~10%
+		.@option = RDMOPT_CLASS_DAMAGE_BOSS_TARGET;
+		.@value = rand(1,10);
+	} else { // Indestructible
+		.@option = RDMOPT_WEAPON_INDESTRUCTIBLE;
+		.@value = 1;
+	}
+
+	set getarg(2), .@option;
+	set getarg(3), .@value;
+
+	return;
+}
+
+/**
+ * Possible random options from Ancient Hero Wisdom
+ */
+function	script	F_Lapine_Ancient_Hero_Wisdom	{
+	// Option: 1
+	.@r = rand(10000);
+	if (.@r < 694) { // Heal 3-20%
+		.@option = RDMOPT_HEAL_VALUE;
+		.@value = rand(3,20);
+	} else if (.@r < 991) { // Reduce variable cast time 3~10%
+		.@option = RDMOPT_DEC_SPELL_CAST_TIME;
+		.@value = rand(3,10);
+	} else if (.@r < 1090) { // Reduce delay after skill 1-5%
+		.@option = RDMOPT_DEC_SPELL_DELAY_TIME;
+		.@value = rand(1,5);
+	} else if (.@r < 1981) { // Increase magic damage against neutral element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 2872) { // Increase magic damage against water element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 3763) { // Increase magic damage against earth element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 4654) { // Increase magic damage against fire element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 5545) { // Increase magic damage against wind element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 6436) { // Increase magic damage against poison element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 7327) { // Increase magic damage against holy element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 8218) { // Increase magic damage against shadow element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET;
+		.@value = rand(3,20);
+	} else if (.@r < 9109) { // Increase magic damage against ghost element 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET;
+		.@value = rand(3,20);
+	} else { // Increase magic damage against neutral undead 3~20%
+		.@option = RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET;
+		.@value = rand(3,20);
+	}
+
+	set getarg(0), .@option;
+	set getarg(1), .@value;
+
+	// Option: 2
+	.@r = rand(10000);
+	if (.@r < 500) { // Reduce variable cast time 3~10%
+		.@option = RDMOPT_DEC_SPELL_CAST_TIME;
+		.@value = rand(3,10);
+	} else if (.@r < 700) { // MATK 1~5%
+		.@option = RDMOPT_VAR_MAGICATKPERCENT;
+		.@value = rand(1,5);
+	} else if (.@r < 1600) { // Increase magic damage to formless race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_NOTHING;
+		.@value = rand(3,20);
+	} else if (.@r < 2500) { // Increase magic damage to undead race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_UNDEAD;
+		.@value = rand(3,20);
+	} else if (.@r < 3400) { // Increase magic damage to beast race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_ANIMAL;
+		.@value = rand(3,20);
+	} else if (.@r < 4300) { // Increase magic damage to plant race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_PLANT;
+		.@value = rand(3,20);
+	} else if (.@r < 5200) { // Increase magic damage to insect race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_INSECT;
+		.@value = rand(3,20);
+	} else if (.@r < 6100) { // Increase magic damage to fish race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_FISHS;
+		.@value = rand(3,20);
+	} else if (.@r < 7000) { // Increase magic damage to demon race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_DEVIL;
+		.@value = rand(3,20);
+	} else if (.@r < 7900) { // Increase magic damage to demi-human race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_HUMAN;
+		.@value = rand(3,20);
+	} else if (.@r < 8800) { // Increase magic damage to angel race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_ANGEL;
+		.@value = rand(3,20);
+	} else if (.@r < 9700) { // Increase magic damage to dragon race 3~20%
+		.@option = RDMOPT_RACE_MDAMAGE_DRAGON;
+		.@value = rand(3,20);
+	} else if (.@r < 9850) { // Increase damage to normal class 1~10%
+		.@option = RDMOPT_CLASS_MDAMAGE_NORMAL;
+		.@value = rand(1,10);
+	} else { // Increase damage to boss class 1~10%
+		.@option = RDMOPT_CLASS_MDAMAGE_BOSS;
+		.@value = rand(1,10);
+	}
+
+	set getarg(2), .@option;
+	set getarg(3), .@value;
+
+	return;
+}
+
+function	script	F_Lapine_ILL_Piece_A	{
+	.@r = rand(320); //! TODO: Official Rates info
+		 if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(100,1500); if (rand(100) < 80) return; }
+	else if (.@r < 200) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); if (rand(100) < 80) return; }
+	else if (.@r < 210) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,10); }
+	else if (.@r < 220) { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(5,30); }
+	else if (.@r < 230) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 240) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 250) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 260) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 270) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 280) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 290) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 300) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 310) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 320) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,10); }
+	.@r = rand(170); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,10); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,10); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,10); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(1,10); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(1,10); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(1,10); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(1,10); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(1,10); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(1,10); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(1,10); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(3), rand(1,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(1,0); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_DAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(1,5); }
+	return;
+}
+
+function	script	F_Lapine_ILL_Piece_B	{
+	.@r = rand(320); //! TODO: Official Rates info
+		 if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(100,1500); if (rand(100) < 80) return; }
+	else if (.@r < 200) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(3,5); if (rand(100) < 80) return; }
+	else if (.@r < 210) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,10); }
+	else if (.@r < 220) { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(5,30); }
+	else if (.@r < 230) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 240) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 250) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 260) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 270) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 280) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 290) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 300) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 310) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,10); }
+	else if (.@r < 320) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,10); }
+	.@r = rand(150); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,10); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,10); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,10); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(1,10); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(1,10); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(1,10); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(1,10); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(1,10); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(1,10); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(1,10); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(3), rand(1,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(1,0); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_MDAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999573
+function	script	F_Lapine_Gemstone_Of_Time	{
+	// Option:1
+	.@r = rand(170);
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(3,20); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(3,20); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(500,1000); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_VAR_MAXSPAMOUNT; set getarg(1), rand(50,500); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(1,5); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,30); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(1,5); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(1,5); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 150) { set getarg(0), RDMOPT_HEAL_VALUE; set getarg(1), rand(3,20); }
+	else if (.@r < 160) { set getarg(0), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 170) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(3,20); }
+	if (rand(2) == 1) return;
+	// Option: 2
+	.@r = rand(280);
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_ATTPOWER; set getarg(3), rand(3,20); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_VAR_ATTMPOWER; set getarg(3), rand(3,20); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_VAR_MAGICATKPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_VAR_MAXHPAMOUNT; set getarg(3), rand(500,1000); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_VAR_MAXHPPERCENT; set getarg(3), rand(1,5); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_VAR_MAXSPAMOUNT; set getarg(3), rand(50,500); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_VAR_MAXSPPERCENT; set getarg(3), rand(1,5); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(3), rand(1,5); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,30); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(3), rand(1,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(1,5); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(1,5); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(3,20); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(3), rand(3,20); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_BODY_INDESTRUCTIBLE; set getarg(3), 1; }
+	else if (.@r < 190) { set getarg(2), RDMOPT_BODY_ATTR_WATER; set getarg(3), rand(3,20); }
+	else if (.@r < 200) { set getarg(2), RDMOPT_BODY_ATTR_GROUND; set getarg(3), rand(3,20); }
+	else if (.@r < 210) { set getarg(2), RDMOPT_BODY_ATTR_FIRE; set getarg(3), rand(3,20); }
+	else if (.@r < 220) { set getarg(2), RDMOPT_BODY_ATTR_WIND; set getarg(3), rand(3,20); }
+	else if (.@r < 230) { set getarg(2), RDMOPT_BODY_ATTR_POISON; set getarg(3), rand(3,20); }
+	else if (.@r < 240) { set getarg(2), RDMOPT_BODY_ATTR_SAINT; set getarg(3), rand(3,20); }
+	else if (.@r < 250) { set getarg(2), RDMOPT_BODY_ATTR_DARKNESS; set getarg(3), rand(3,20); }
+	else if (.@r < 260) { set getarg(2), RDMOPT_BODY_ATTR_TELEKINESIS; set getarg(3), rand(3,20); }
+	else if (.@r < 270) { set getarg(2), RDMOPT_BODY_ATTR_UNDEAD; set getarg(3), rand(3,20); }
+	else if (.@r < 280) { set getarg(2), RDMOPT_BODY_ATTR_NOTHING; set getarg(3), rand(3,20); }
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999574
+function	script	F_Lapine_Time_Unseal_Key	{
+	// Option:1
+	.@r = rand(170);
+	if (.@r < 10)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(5,40); return; }
+	if (.@r < 20)  { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,6); return; }
+	if (.@r < 30)  { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(5,40); return; }
+	if (.@r < 40)  { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,6); return; }
+	if (.@r < 50)  { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(500,2000); return; }
+	if (.@r < 60)  { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(3,10); return; }
+	if (.@r < 70)  { set getarg(0), RDMOPT_VAR_MAXSPAMOUNT; set getarg(1), rand(50,1000); return; }
+	if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(3,10); return; }
+	if (.@r < 90)  { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(3,10); return; }
+	if (.@r < 100) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(10,50); return; }
+	if (.@r < 110) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(3,10); return; }
+	if (.@r < 120) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(3,10); return; }
+	if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,10); return; }
+	if (.@r < 140) { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(3,10); return; }
+	if (.@r < 150) { set getarg(0), RDMOPT_HEAL_VALUE; set getarg(1), rand(3,10); return; }
+	if (.@r < 160) { set getarg(0), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(1), rand(3,10); return; }
+	if (.@r < 170) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(3,15); return; }
+	return;
+}
+
+function	script	F_Lapine_Magma_Essence	{
+	// Option:1
+	.@r = rand(40); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(150,350); }
+	else if (.@r < 20) { set getarg(0), RDMOPT_VAR_MAXSPAMOUNT; set getarg(1), rand(25,50); }
+	else if (.@r < 30) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 40) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
+
+	// Option:2
+	.@r = rand(260); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(2), RDMOPT_VAR_HPACCELERATION; set getarg(3), rand(15,50); }
+	else if (.@r < 20) { set getarg(2), RDMOPT_VAR_SPACCELERATION; set getarg(3), rand(15,50); }
+	else if (.@r < 30) { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,15); }
+	else if (.@r < 40) { set getarg(2), RDMOPT_VAR_ITEMDEFPOWER; set getarg(3), rand(10,30); }
+	else if (.@r < 50) { set getarg(2), RDMOPT_VAR_MDEFPOWER; set getarg(3), rand(1,3); }
+	else if (.@r < 60) { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(3,7); }
+	else if (.@r < 70) { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,10); }
+	else if (.@r < 80) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_NOTHING_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 90) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WATER_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_GROUND_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_FIRE_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WIND_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_POISON_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_SAINT_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_DARKNESS_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_UNDEAD_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_NOTHING_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 190) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_WATER_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 200) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_GROUND_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 210) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_FIRE_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 220) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_WIND_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 230) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_POISON_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 240) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_SAINT_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 250) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_USER; set getarg(3), rand(5,10); }
+	else if (.@r < 260) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_USER; set getarg(3), rand(5,10); }
+
+	// Option:3
+	.@r = rand(80); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(4), RDMOPT_VAR_MAXHPAMOUNT; set getarg(5), rand(150,300); }
+	else if (.@r < 20) { set getarg(4), RDMOPT_VAR_MAXSPAMOUNT; set getarg(5), rand(25,50); }
+	else if (.@r < 30) { set getarg(4), RDMOPT_RACE_TOLERACE_NOTHING; set getarg(5), rand(3,7); }
+	else if (.@r < 40) { set getarg(4), RDMOPT_RACE_TOLERACE_UNDEAD; set getarg(5), rand(3,7); }
+	else if (.@r < 50) { set getarg(4), RDMOPT_RACE_TOLERACE_ANIMAL; set getarg(5), rand(3,7); }
+	else if (.@r < 60) { set getarg(4), RDMOPT_RACE_TOLERACE_PLANT; set getarg(5), rand(3,7); }
+	else if (.@r < 70) { set getarg(4), RDMOPT_RACE_TOLERACE_INSECT; set getarg(5), rand(3,7); }
+	else if (.@r < 80) { set getarg(4), RDMOPT_RACE_TOLERACE_FISHS; set getarg(5), rand(3,7); }
+	else if (.@r < 90) { set getarg(4), RDMOPT_RACE_TOLERACE_DEVIL; set getarg(5), rand(3,7); }
+	else if (.@r < 100) { set getarg(4), RDMOPT_RACE_TOLERACE_HUMAN; set getarg(5), rand(3,7); }
+	else if (.@r < 110) { set getarg(4), RDMOPT_RACE_TOLERACE_ANGEL; set getarg(5), rand(3,7); }
+	else if (.@r < 120) { set getarg(4), RDMOPT_RACE_TOLERACE_DRAGON; set getarg(5), rand(3,7); }
+
+	// Option:4
+	.@r = rand(70); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(6), RDMOPT_BODY_INDESTRUCTIBLE; }
+	else if (.@r < 20) { set getarg(6), RDMOPT_WEAPON_ATTR_WATER; }
+	else if (.@r < 30) { set getarg(6), RDMOPT_WEAPON_ATTR_GROUND; }
+	else if (.@r < 40) { set getarg(6), RDMOPT_WEAPON_ATTR_FIRE; }
+	else if (.@r < 50) { set getarg(6), RDMOPT_WEAPON_ATTR_WIND; }
+	else if (.@r < 60) { set getarg(6), RDMOPT_WEAPON_ATTR_SAINT; }
+	else if (.@r < 70) { set getarg(6), RDMOPT_WEAPON_ATTR_DARKNESS; }
+	return;
+}
+
+// Normal Modification Part (Physical)
+function	script	F_Lapine_EP17_1_SPC05	{
+	.@r = rand(140); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(5,20); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(3,10); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(3,10); }
+	.@r = rand(180); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,15); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_DAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(3,10); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(3,10); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(3,10); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(3,10); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(3,10); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(3,10); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(3,10); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(3,10); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(3,10); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(3,10); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(3,10); }
+	return;
+}
+
+// Advanced Modification Part (Physical)
+function	script	F_Lapine_EP17_1_SPC06	{
+	.@r = rand(140); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(15,40); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,10); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(3,15); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(3,15); }
+	.@r = rand(190); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,30); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_DAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(3,15); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(3,15); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(3,15); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(3,15); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(3,15); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(3,15); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(3,15); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(3,15); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(3,15); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(3,15); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(3,15); }
+	else if (.@r < 190) { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(1,5); }
+	return;
+}
+
+// Premium Modification Part (Physical)
+function	script	F_Lapine_EP17_1_SPC07	{
+	.@r = rand(140); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(20,60); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(3,15); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(3,20); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(3,20); }
+	.@r = rand(200); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), rand(1,2); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,45); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_DAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(3,20); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(3,20); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(3,20); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(3,20); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(3,20); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(3,20); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(3,20); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(3,20); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(3,20); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(3,20); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(3,20); }
+	else if (.@r < 190) { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(1,10); }
+	else if (.@r < 200) { set getarg(2), RDMOPT_WEAPON_INDESTRUCTIBLE; set getarg(3), 1; }
+	return;
+}
+
+// Normal Modification Part (Magic)
+function	script	F_Lapine_EP17_1_SPC08	{
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(3,15); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MATTPOWER; set getarg(1), rand(5,20); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,10); }
+	.@r = rand(160); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,15); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(3,10); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(3,10); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(3,10); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(3,10); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(3,10); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(3,10); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(3,10); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(3,10); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(3,10); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(3,10); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(3,10); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(3,10); }
+	return;
+}
+
+// Advanced Modification Part (Magic)
+function	script	F_Lapine_EP17_1_SPC09	{
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(3,20); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MATTPOWER; set getarg(1), rand(15,40); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,10); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,10); }
+	.@r = rand(190); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,30); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(3,15); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(3,15); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(3,15); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(3,15); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(3,15); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(3,15); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(3,15); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(3,15); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(3,15); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(3,15); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(3,15); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(3,15); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(1,5); }
+	return;
+}
+
+// Premium Modification Part (Magic)
+function	script	F_Lapine_EP17_1_SPC10	{
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(5,25); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MATTPOWER; set getarg(1), rand(20,60); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(3,15); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,10); }
+	.@r = rand(180); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), rand(1,2); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,45); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(3,20); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(3,20); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(3,20); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(3,20); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(3,20); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(3,20); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(3,20); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(3,20); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(3,20); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(3,20); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(3,20); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(3,20); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(1,10); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_WEAPON_INDESTRUCTIBLE; set getarg(3), 1; }
+	return;
+}
+
+function	script	F_Lapine_Charleston_Parts_W	{
+	.@r = rand(2600); //! TODO: Official Rates info
+	if (.@r < 100) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 200) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_WATER_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 300) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 400) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 500) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_WIND_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 600) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_POISON_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 700) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 800) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 900) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1000) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1100) {
+		.@option = RDMOPT_DAMAGE_CRI_TARGET;
+		.@value = rand(5,20);
+	} else if (.@r < 1200) {
+		.@option = RDMOPT_VAR_PLUSASPDPERCENT;
+		.@value = rand(5,15);
+	} else if (.@r < 1300) {
+		.@option = RDMOPT_VAR_HITSUCCESSVALUE;
+		.@value = rand(1,15);
+	} else if (.@r < 1400) {
+		.@option = RDMOPT_VAR_CRITICALSUCCESSVALUE;
+		.@value = rand(1,15);
+	} else if (.@r < 1500) {
+		.@option = RDMOPT_VAR_ATKPERCENT;
+		.@value = rand(3,7);
+	} else if (.@r < 1600) {
+		.@option = RDMOPT_VAR_PLUSASPD;
+		.@value = 1;
+	} else if (.@r < 1700) {
+		.@option = RDMOPT_DAMAGE_SIZE_SMALL_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1800) {
+		.@option = RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1900) {
+		.@option = RDMOPT_DAMAGE_SIZE_LARGE_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 2000) {
+		.@option = RDMOPT_WEAPON_ATTR_WATER;
+		.@value = 1;
+	} else if (.@r < 2100) {
+		.@option = RDMOPT_WEAPON_ATTR_GROUND;
+		.@value = 1;
+	} else if (.@r < 2200) {
+		.@option = RDMOPT_WEAPON_ATTR_FIRE;
+		.@value = 1;
+	} else if (.@r < 2300) {
+		.@option = RDMOPT_WEAPON_ATTR_WIND;
+		.@value = 1;
+	} else if (.@r < 2400) {
+		.@option = RDMOPT_WEAPON_ATTR_SAINT;
+		.@value = 1;
+	} else if (.@r < 2500) {
+		.@option = RDMOPT_WEAPON_ATTR_DARKNESS;
+		.@value = 1;
+	} else {
+		.@option = RDMOPT_DAMAGE_SIZE_PERFECT;
+		.@value = 1;
+	}
+
+	set getarg(0), .@option;
+	set getarg(1), .@value;
+
+	return;
+}
+
+function	script	F_Lapine_Charleston_Parts_R	{
+	.@r = rand(2500); //! TODO: Official Rates info
+	if (.@r < 100) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 200) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_WATER_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 300) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 400) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 500) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_WIND_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 600) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_POISON_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 700) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 800) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 900) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1000) {
+		.@option = RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1100) {
+		.@option = RDMOPT_VAR_PLUSASPDPERCENT;
+		.@value = rand(5,15);
+	} else if (.@r < 1200) {
+		.@option = RDMOPT_VAR_HITSUCCESSVALUE;
+		.@value = rand(1,15);
+	} else if (.@r < 1300) {
+		.@option = RDMOPT_VAR_ATTPOWER;
+		.@value = rand(5,20);
+	} else if (.@r < 1400) {
+		.@option = RDMOPT_RANGE_ATTACK_DAMAGE_TARGET;
+		.@value = rand(3,7);
+	} else if (.@r < 1500) {
+		.@option = RDMOPT_VAR_PLUSASPD;
+		.@value = 1;
+	} else if (.@r < 1600) {
+		.@option = RDMOPT_DAMAGE_SIZE_SMALL_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1700) {
+		.@option = RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1800) {
+		.@option = RDMOPT_DAMAGE_SIZE_LARGE_TARGET;
+		.@value = rand(1,20);
+	} else if (.@r < 1900) {
+		.@option = RDMOPT_WEAPON_ATTR_WATER;
+		.@value = 1;
+	} else if (.@r < 2000) {
+		.@option = RDMOPT_WEAPON_ATTR_GROUND;
+		.@value = 1;
+	} else if (.@r < 2100) {
+		.@option = RDMOPT_WEAPON_ATTR_FIRE;
+		.@value = 1;
+	} else if (.@r < 2200) {
+		.@option = RDMOPT_WEAPON_ATTR_WIND;
+		.@value = 1;
+	} else if (.@r < 2300) {
+		.@option = RDMOPT_WEAPON_ATTR_SAINT;
+		.@value = 1;
+	} else if (.@r < 2400) {
+		.@option = RDMOPT_WEAPON_ATTR_DARKNESS;
+		.@value = 1;
+	} else {
+		.@option = RDMOPT_DAMAGE_SIZE_PERFECT;
+		.@value = 1;
+	}
+
+	set getarg(0), .@option;
+	set getarg(1), .@value;
+
+	return;
+}
+
+function	script	F_Lapine_Gray_Charcoal_Range	{
+	.@r = rand(150); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_DAMAGE_SIZE_PERFECT; set getarg(1), 1; }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_PLUSASPD; set getarg(1), 1; }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(5,10); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(1), rand(5,10); }
+	else if (.@r < 150) { set getarg(0), RDMOPT_WEAPON_INDESTRUCTIBLE; set getarg(1), 1; }
+
+	.@r = rand(140); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,20); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,20); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,20); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(1,20); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(1,20); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(1,20); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(1,20); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(1,20); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(1,20); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(1,20); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_CLASS_DAMAGE_NORMAL_TARGET; set getarg(3), rand(5,10); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_CLASS_DAMAGE_BOSS_TARGET; set getarg(3), rand(5,10); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,20); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(3,7); }
+
+	return;
+}
+
+function	script	F_Lapine_Gray_Charcoal_Magic	{
+	.@r = rand(140); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(5,10); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(1), rand(5,20); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(5,10); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,5); }
+
+	.@r = rand(140); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,20); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,20); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,20); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(1,20); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(1,20); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(1,20); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(1,20); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(1,20); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(1,20); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(1,20); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_CLASS_MDAMAGE_NORMAL_TARGET; set getarg(3), rand(5,10); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_CLASS_MDAMAGE_BOSS_TARGET; set getarg(3), rand(5,10); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_VAR_MAGICATKPERCENT; set getarg(3), rand(3,7); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,10); }
+
+	return;
+}
+
+function	script	F_Lapine_Gray_Charcoal_Melee	{
+	.@r = rand(190); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,20); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_DAMAGE_SIZE_PERFECT; set getarg(1), 1; }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_PLUSASPD; set getarg(1), 1; }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(5,10); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_DAMAGE_ATTR_WATER; set getarg(1), 1; }
+	else if (.@r < 150) { set getarg(0), RDMOPT_DAMAGE_ATTR_GROUND; set getarg(1), 1; }
+	else if (.@r < 160) { set getarg(0), RDMOPT_DAMAGE_ATTR_FIRE; set getarg(1), 1; }
+	else if (.@r < 170) { set getarg(0), RDMOPT_DAMAGE_ATTR_WIND; set getarg(1), 1; }
+	else if (.@r < 180) { set getarg(0), RDMOPT_DAMAGE_ATTR_SAINT; set getarg(1), 1; }
+	else if (.@r < 190) { set getarg(0), RDMOPT_DAMAGE_ATTR_DARKNESS; set getarg(1), 1; }
+
+	.@r = rand(150); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,20); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,20); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,20); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(1,20); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(1,20); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(1,20); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(1,20); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(1,20); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(1,20); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(1,20); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_CLASS_DAMAGE_NORMAL_TARGET; set getarg(3), rand(1,10); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_CLASS_DAMAGE_BOSS_TARGET; set getarg(3), rand(1,10); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(3,5); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,20); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_WEAPON_INDESTRUCTIBLE; set getarg(3), 1; }
+
+	return;
+}
+
+/*
+* Geffen Magic Scroll Accessory
+*/
+function	script	F_Lapine_Geffen_Magic_Scroll2	{
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,5); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(5,7); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(5,8); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_USER; set getarg(1), rand(3,5); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_USER; set getarg(1), rand(3,5); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_USER; set getarg(1), rand(3,5); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_USER; set getarg(1), rand(3,5); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
+	else if (.@r < 90)  { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(3,5); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); }
+
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(3,5); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,7); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,8); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_FIRE_USER; set getarg(3), rand(3,5); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WATER_USER; set getarg(3), rand(3,5); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WIND_USER; set getarg(3), rand(3,5); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_GROUND_USER; set getarg(3), rand(3,5); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_ATTR_TOLERACE_ALL; set getarg(3), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
+	else if (.@r < 90)  { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(3,5); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_VAR_MAXHPPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_VAR_MAXSPPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_VAR_MAGICATKPERCENT; set getarg(3), rand(1,3); }
+
+	return;
+}
+
+/*
+* Geffen Magic Scroll Armor
+*/
+function	script	F_Lapine_Geffen_Magic_Scroll	{
+	.@r = rand(80); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,4); }
+	else if (.@r < 20) { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,4); }
+	else if (.@r < 30) { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,4); }
+	else if (.@r < 40) { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,4); }
+	else if (.@r < 50) { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,4); }
+	else if (.@r < 60) { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,4); }
+	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(3,5); }
+	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(3,5); }
+
+	.@r = rand(150); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_MAXHPAMOUNT; set getarg(3), rand(50,100); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_MAXSPAMOUNT; set getarg(3), rand(50,100); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(3), rand(15,30); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(15,30); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_VAR_ITEMDEFPOWER; set getarg(3), rand(20,60); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_VAR_MDEFPOWER; set getarg(3), rand(5,10); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(5,10); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(3), rand(5,10); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,10); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_BODY_INDESTRUCTIBLE; set getarg(3), 1; }
+	else if (.@r < 110) { set getarg(2), RDMOPT_BODY_ATTR_WATER; set getarg(3), 1; }
+	else if (.@r < 120) { set getarg(2), RDMOPT_BODY_ATTR_WIND; set getarg(3), 1; }
+	else if (.@r < 130) { set getarg(2), RDMOPT_BODY_ATTR_DARKNESS; set getarg(3), 1; }
+	else if (.@r < 140) { set getarg(2), RDMOPT_BODY_ATTR_FIRE; set getarg(3), 1; }
+	else if (.@r < 150) { set getarg(2), RDMOPT_BODY_ATTR_GROUND; set getarg(3), 1; }
+
+	return;
+}
+
+/**
+ * Possible random options from Cursed Blood
+ */
+function	script	F_Lapine_Cursed_Blood	{
+	// Option: 1
+	.@r = rand(10000);
+	if (.@r < 832) {
+		.@option = RDMOPT_VAR_MDEFPOWER;
+		.@value = rand(3,10);
+	} else if (.@r < 1664) {
+		.@option = RDMOPT_VAR_MAXSPAMOUNT;
+		.@value = rand(20,200);
+	} else if (.@r < 2496) {
+		.@option = RDMOPT_VAR_MAXHPAMOUNT;
+		.@value = rand(100,1000);
+	} else if (.@r < 3328) {
+		.@option = RDMOPT_VAR_ITEMDEFPOWER;
+		.@value = rand(30,100);
+	} else if (.@r < 3495) {
+		.@option = RDMOPT_RACE_TOLERACE_NOTHING;
+		.@value = rand(2,7);
+	} else if (.@r < 3662) {
+		.@option = RDMOPT_RACE_TOLERACE_UNDEAD;
+		.@value = rand(2,7);
+	} else if (.@r < 3829) {
+		.@option = RDMOPT_RACE_TOLERACE_ANIMAL;
+		.@value = rand(2,7);
+	} else if (.@r < 3996) {
+		.@option = RDMOPT_RACE_TOLERACE_PLANT;
+		.@value = rand(2,7);
+	} else if (.@r < 4163) {
+		.@option = RDMOPT_RACE_TOLERACE_INSECT;
+		.@value = rand(2,7);
+	} else if (.@r < 4330) {
+		.@option = RDMOPT_RACE_TOLERACE_FISHS;
+		.@value = rand(2,7);
+	} else if (.@r < 4497) {
+		.@option = RDMOPT_RACE_TOLERACE_DEVIL;
+		.@value = rand(2,7);
+	} else if (.@r < 4664) {
+		.@option = RDMOPT_RACE_TOLERACE_HUMAN;
+		.@value = rand(2,7);
+	} else if (.@r < 4831) {
+		.@option = RDMOPT_RACE_TOLERACE_ANGEL;
+		.@value = rand(2,7);
+	} else if (.@r < 4998) {
+		.@option = RDMOPT_RACE_TOLERACE_DRAGON;
+		.@value = rand(2,7);
+	} else if (.@r < 5165) {
+		.@option = RDMOPT_RACE_DAMAGE_NOTHING;
+		.@value = rand(1,5);
+	} else if (.@r < 5332) {
+		.@option = RDMOPT_RACE_DAMAGE_UNDEAD;
+		.@value = rand(1,5);
+	} else if (.@r < 5499) {
+		.@option = RDMOPT_RACE_DAMAGE_ANIMAL;
+		.@value = rand(1,5);
+	} else if (.@r < 5666) {
+		.@option = RDMOPT_RACE_DAMAGE_PLANT;
+		.@value = rand(1,5);
+	} else if (.@r < 5833) {
+		.@option = RDMOPT_RACE_DAMAGE_INSECT;
+		.@value = rand(1,5);
+	} else if (.@r < 6000) {
+		.@option = RDMOPT_RACE_DAMAGE_FISHS;
+		.@value = rand(1,5);
+	} else if (.@r < 6167) {
+		.@option = RDMOPT_RACE_DAMAGE_DEVIL;
+		.@value = rand(1,5);
+	} else if (.@r < 6334) {
+		.@option = RDMOPT_RACE_DAMAGE_HUMAN;
+		.@value = rand(1,5);
+	} else if (.@r < 6501) {
+		.@option = RDMOPT_RACE_DAMAGE_ANGEL;
+		.@value = rand(1,5);
+	} else if (.@r < 6668) {
+		.@option = RDMOPT_RACE_DAMAGE_DRAGON;
+		.@value = rand(1,5);
+	} else if (.@r < 6835) {
+		.@option = RDMOPT_RACE_MDAMAGE_NOTHING;
+		.@value = rand(1,5);
+	} else if (.@r < 7002) {
+		.@option = RDMOPT_RACE_MDAMAGE_UNDEAD;
+		.@value = rand(1,5);
+	} else if (.@r < 7169) {
+		.@option = RDMOPT_RACE_MDAMAGE_ANIMAL;
+		.@value = rand(1,5);
+	} else if (.@r < 7336) {
+		.@option = RDMOPT_RACE_MDAMAGE_PLANT;
+		.@value = rand(1,5);
+	} else if (.@r < 7503) {
+		.@option = RDMOPT_RACE_MDAMAGE_INSECT;
+		.@value = rand(1,5);
+	} else if (.@r < 7670) {
+		.@option = RDMOPT_RACE_MDAMAGE_FISHS;
+		.@value = rand(1,5);
+	} else if (.@r < 7837) {
+		.@option = RDMOPT_RACE_MDAMAGE_DEVIL;
+		.@value = rand(1,5);
+	} else if (.@r < 8004) {
+		.@option = RDMOPT_RACE_MDAMAGE_HUMAN;
+		.@value = rand(1,5);
+	} else if (.@r < 8170) {
+		.@option = RDMOPT_RACE_MDAMAGE_ANGEL;
+		.@value = rand(1,5);
+	} else if (.@r < 8336) {
+		.@option = RDMOPT_RACE_MDAMAGE_DRAGON;
+		.@value = rand(1,5);
+	} else if (.@r < 9168) {
+		.@option = RDMOPT_HEAL_VALUE;
+		.@value = rand(5,10);
+	} else {
+		.@option = RDMOPT_DEC_SPELL_CAST_TIME;
+		.@value = rand(1,5);
+	}
+
+	set getarg(0), .@option;
+	set getarg(1), .@value;
+
+	// Option: 2
+	.@r = rand(10000);
+	if (.@r < 832) {
+		.@option = RDMOPT_VAR_PLUSASPDPERCENT;
+		.@value = rand(1,5);
+	} else if (.@r < 1664) {
+		.@option = RDMOPT_VAR_MDEFPOWER;
+		.@value = rand(3,10);
+	} else if (.@r < 2496) {
+		.@option = RDMOPT_VAR_MAXSPAMOUNT;
+		.@value = rand(20,200);
+	} else if (.@r < 3328) {
+		.@option = RDMOPT_VAR_MAXHPAMOUNT;
+		.@value = rand(100,1000);
+	} else if (.@r < 4160) {
+		.@option = RDMOPT_VAR_ITEMDEFPOWER;
+		.@value = rand(30,100);
+	} else if (.@r < 4327) {
+		.@option = RDMOPT_RACE_TOLERACE_NOTHING;
+		.@value = rand(2,7);
+	} else if (.@r < 4494) {
+		.@option = RDMOPT_RACE_TOLERACE_UNDEAD;
+		.@value = rand(2,7);
+	} else if (.@r < 4661) {
+		.@option = RDMOPT_RACE_TOLERACE_ANIMAL;
+		.@value = rand(2,7);
+	} else if (.@r < 4828) {
+		.@option = RDMOPT_RACE_TOLERACE_PLANT;
+		.@value = rand(2,7);
+	} else if (.@r < 4995) {
+		.@option = RDMOPT_RACE_TOLERACE_INSECT;
+		.@value = rand(2,7);
+	} else if (.@r < 5162) {
+		.@option = RDMOPT_RACE_TOLERACE_FISHS;
+		.@value = rand(2,7);
+	} else if (.@r < 5329) {
+		.@option = RDMOPT_RACE_TOLERACE_DEVIL;
+		.@value = rand(2,7);
+	} else if (.@r < 5496) {
+		.@option = RDMOPT_RACE_TOLERACE_HUMAN;
+		.@value = rand(2,7);
+	} else if (.@r < 5663) {
+		.@option = RDMOPT_RACE_TOLERACE_ANGEL;
+		.@value = rand(2,7);
+	} else if (.@r < 5830) {
+		.@option = RDMOPT_RACE_TOLERACE_DRAGON;
+		.@value = rand(2,7);
+	} else if (.@r < 5997) {
+		.@option = RDMOPT_RACE_MDAMAGE_NOTHING;
+		.@value = rand(1,5);
+	} else if (.@r < 6164) {
+		.@option = RDMOPT_RACE_MDAMAGE_UNDEAD;
+		.@value = rand(1,5);
+	} else if (.@r < 6331) {
+		.@option = RDMOPT_RACE_MDAMAGE_ANIMAL;
+		.@value = rand(1,5);
+	} else if (.@r < 6498) {
+		.@option = RDMOPT_RACE_MDAMAGE_PLANT;
+		.@value = rand(1,5);
+	} else if (.@r < 6665) {
+		.@option = RDMOPT_RACE_MDAMAGE_INSECT;
+		.@value = rand(1,5);
+	} else if (.@r < 6832) {
+		.@option = RDMOPT_RACE_MDAMAGE_FISHS;
+		.@value = rand(1,5);
+	} else if (.@r < 6999) {
+		.@option = RDMOPT_RACE_MDAMAGE_DEVIL;
+		.@value = rand(1,5);
+	} else if (.@r < 7166) {
+		.@option = RDMOPT_RACE_MDAMAGE_HUMAN;
+		.@value = rand(1,5);
+	} else if (.@r < 7333) {
+		.@option = RDMOPT_RACE_MDAMAGE_ANGEL;
+		.@value = rand(1,5);
+	} else if (.@r < 7500) {
+		.@option = RDMOPT_RACE_MDAMAGE_DRAGON;
+		.@value = rand(1,5);
+	} else if (.@r < 7667) {
+		.@option = RDMOPT_RACE_DAMAGE_NOTHING;
+		.@value = rand(1,5);
+	} else if (.@r < 7834) {
+		.@option = RDMOPT_RACE_DAMAGE_UNDEAD;
+		.@value = rand(1,5);
+	} else if (.@r < 8001) {
+		.@option = RDMOPT_RACE_DAMAGE_ANIMAL;
+		.@value = rand(1,5);
+	} else if (.@r < 8168) {
+		.@option = RDMOPT_RACE_DAMAGE_PLANT;
+		.@value = rand(1,5);
+	} else if (.@r < 8335) {
+		.@option = RDMOPT_RACE_DAMAGE_INSECT;
+		.@value = rand(1,5);
+	} else if (.@r < 8502) {
+		.@option = RDMOPT_RACE_DAMAGE_FISHS;
+		.@value = rand(1,5);
+	} else if (.@r < 8669) {
+		.@option = RDMOPT_RACE_DAMAGE_DEVIL;
+		.@value = rand(1,5);
+	} else if (.@r < 8836) {
+		.@option = RDMOPT_RACE_DAMAGE_HUMAN;
+		.@value = rand(1,5);
+	} else if (.@r < 9002) {
+		.@option = RDMOPT_RACE_DAMAGE_ANGEL;
+		.@value = rand(1,5);
+	} else if (.@r < 9168) {
+		.@option = RDMOPT_RACE_DAMAGE_DRAGON;
+		.@value = rand(1,5);
+	} else {
+		.@option = RDMOPT_HEAL_VALUE;
+		.@value = rand(5,10);
+	}
+
+	set getarg(2), .@option;
+	set getarg(3), .@value;
+
+	return;
+}
+
+/**
+ * Possible random options from Gold_Statue
+ */
+function	script	F_Lapine_Gold_Statue	{
+	// Option: 1
+	.@r = rand(10000);
+		 if (.@r < 832)  { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(3,10); }
+	else if (.@r < 1664) { set getarg(0), RDMOPT_VAR_MAXSPAMOUNT; set getarg(1), rand(20,200); }
+	else if (.@r < 2496) { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(100,1000); }
+	else if (.@r < 3328) { set getarg(0), RDMOPT_VAR_ITEMDEFPOWER; set getarg(1), rand(30,100); }
+	else if (.@r < 3495) { set getarg(0), RDMOPT_RACE_TOLERACE_NOTHING; set getarg(1), rand(2,7); }
+	else if (.@r < 3662) { set getarg(0), RDMOPT_RACE_TOLERACE_UNDEAD; set getarg(1), rand(2,7); }
+	else if (.@r < 3829) { set getarg(0), RDMOPT_RACE_TOLERACE_ANIMAL; set getarg(1), rand(2,7); }
+	else if (.@r < 3996) { set getarg(0), RDMOPT_RACE_TOLERACE_PLANT; set getarg(1), rand(2,7); }
+	else if (.@r < 4163) { set getarg(0), RDMOPT_RACE_TOLERACE_INSECT; set getarg(1), rand(2,7); }
+	else if (.@r < 4330) { set getarg(0), RDMOPT_RACE_TOLERACE_FISHS; set getarg(1), rand(2,7); }
+	else if (.@r < 4497) { set getarg(0), RDMOPT_RACE_TOLERACE_DEVIL; set getarg(1), rand(2,7); }
+	else if (.@r < 4664) { set getarg(0), RDMOPT_RACE_TOLERACE_HUMAN; set getarg(1), rand(2,7); }
+	else if (.@r < 4831) { set getarg(0), RDMOPT_RACE_TOLERACE_ANGEL; set getarg(1), rand(2,7); }
+	else if (.@r < 4998) { set getarg(0), RDMOPT_RACE_TOLERACE_DRAGON; set getarg(1), rand(2,7); }
+	else if (.@r < 5165) { set getarg(0), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(1), rand(1,5); }
+	else if (.@r < 5332) { set getarg(0), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(1), rand(1,5); }
+	else if (.@r < 5499) { set getarg(0), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(1), rand(1,5); }
+	else if (.@r < 5666) { set getarg(0), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(1), rand(1,5); }
+	else if (.@r < 5833) { set getarg(0), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(1), rand(1,5); }
+	else if (.@r < 6000) { set getarg(0), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(1), rand(1,5); }
+	else if (.@r < 6167) { set getarg(0), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(1), rand(1,5); }
+	else if (.@r < 6334) { set getarg(0), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(1), rand(1,5); }
+	else if (.@r < 6501) { set getarg(0), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(1), rand(1,5); }
+	else if (.@r < 6668) { set getarg(0), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(1), rand(1,5); }
+	else if (.@r < 6835) { set getarg(0), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(1), rand(1,5); }
+	else if (.@r < 7002) { set getarg(0), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(1), rand(1,5); }
+	else if (.@r < 7169) { set getarg(0), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(1), rand(1,5); }
+	else if (.@r < 7336) { set getarg(0), RDMOPT_RACE_DAMAGE_PLANT; set getarg(1), rand(1,5); }
+	else if (.@r < 7503) { set getarg(0), RDMOPT_RACE_DAMAGE_INSECT; set getarg(1), rand(1,5); }
+	else if (.@r < 7670) { set getarg(0), RDMOPT_RACE_DAMAGE_FISHS; set getarg(1), rand(1,5); }
+	else if (.@r < 7837) { set getarg(0), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(1), rand(1,5); }
+	else if (.@r < 8004) { set getarg(0), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(1), rand(1,5); }
+	else if (.@r < 8170) { set getarg(0), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(1), rand(1,5); }
+	else if (.@r < 8336) { set getarg(0), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(1), rand(1,5); }
+	else if (.@r < 9168) { set getarg(0), RDMOPT_HEAL_VALUE; set getarg(1), rand(5,10); }
+	else if (.@r < 10000) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(1,5); }
+
+	// Option: 2
+	.@r = rand(10000);
+		  if (.@r < 832) { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(1,5); }
+	else if (.@r < 1664) { set getarg(2), RDMOPT_VAR_MDEFPOWER; set getarg(3), rand(3,10); }
+	else if (.@r < 2496) { set getarg(2), RDMOPT_VAR_MAXSPAMOUNT; set getarg(3), rand(20,200); }
+	else if (.@r < 3328) { set getarg(2), RDMOPT_VAR_MAXHPAMOUNT; set getarg(3), rand(100,1000); }
+	else if (.@r < 4160) { set getarg(2), RDMOPT_VAR_ITEMDEFPOWER; set getarg(3), rand(30,100); }
+	else if (.@r < 4327) { set getarg(2), RDMOPT_RACE_TOLERACE_NOTHING; set getarg(3), rand(2,7); }
+	else if (.@r < 4494) { set getarg(2), RDMOPT_RACE_TOLERACE_UNDEAD; set getarg(3), rand(2,7); }
+	else if (.@r < 4661) { set getarg(2), RDMOPT_RACE_TOLERACE_ANIMAL; set getarg(3), rand(2,7); }
+	else if (.@r < 4828) { set getarg(2), RDMOPT_RACE_TOLERACE_PLANT; set getarg(3), rand(2,7); }
+	else if (.@r < 4995) { set getarg(2), RDMOPT_RACE_TOLERACE_INSECT; set getarg(3), rand(2,7); }
+	else if (.@r < 5162) { set getarg(2), RDMOPT_RACE_TOLERACE_FISHS; set getarg(3), rand(2,7); }
+	else if (.@r < 5329) { set getarg(2), RDMOPT_RACE_TOLERACE_DEVIL; set getarg(3), rand(2,7); }
+	else if (.@r < 5496) { set getarg(2), RDMOPT_RACE_TOLERACE_HUMAN; set getarg(3), rand(2,7); }
+	else if (.@r < 5663) { set getarg(2), RDMOPT_RACE_TOLERACE_ANGEL; set getarg(3), rand(2,7); }
+	else if (.@r < 5830) { set getarg(2), RDMOPT_RACE_TOLERACE_DRAGON; set getarg(3), rand(2,7); }
+	else if (.@r < 5997) { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,5); }
+	else if (.@r < 6164) { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,5); }
+	else if (.@r < 6331) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,5); }
+	else if (.@r < 6498) { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(1,5); }
+	else if (.@r < 6665) { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(1,5); }
+	else if (.@r < 6832) { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(1,5); }
+	else if (.@r < 6999) { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(1,5); }
+	else if (.@r < 7166) { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(1,5); }
+	else if (.@r < 7333) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(1,5); }
+	else if (.@r < 7500) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(1,5); }
+	else if (.@r < 7667) { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,5); }
+	else if (.@r < 7834) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,5); }
+	else if (.@r < 8001) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,5); }
+	else if (.@r < 8168) { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(1,5); }
+	else if (.@r < 8335) { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(1,5); }
+	else if (.@r < 8502) { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(1,5); }
+	else if (.@r < 8669) { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(1,5); }
+	else if (.@r < 8836) { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(1,5); }
+	else if (.@r < 9002) { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(1,5); }
+	else if (.@r < 9168) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(1,5); }
+	else if (.@r < 10000) { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(5,10); }
+
+	// Option: 3
+	.@r = rand(10000);
+		 if (.@r < 229)  { set getarg(4), RDMOPT_VAR_PLUSASPD; set getarg(5), 1; }
+	else if (.@r < 458)  { set getarg(4), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(5), rand(5,10); }
+	else if (.@r < 687)  { set getarg(4), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(5), rand(5,10); }
+	else if (.@r < 916)  { set getarg(4), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(5), rand(5,10); }
+	else if (.@r < 1145) { set getarg(4), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(5), rand(5,10); }
+	else if (.@r < 1374) { set getarg(4), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(5), rand(5,10); }
+	else if (.@r < 1603) { set getarg(4), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(5), rand(5,10); }
+	else if (.@r < 1832) { set getarg(4), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(5), rand(5,10); }
+	else if (.@r < 2061) { set getarg(4), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(5), rand(5,10); }
+	else if (.@r < 2290) { set getarg(4), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(5), rand(5,10); }
+	else if (.@r < 2519) { set getarg(4), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(5), rand(5,10); }
+	else if (.@r < 2748) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING; set getarg(5), rand(30,60); }
+	else if (.@r < 2977) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_UNDEAD; set getarg(5), rand(30,60); }
+	else if (.@r < 3206) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANIMAL; set getarg(5), rand(30,60); }
+	else if (.@r < 3434) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT; set getarg(5), rand(30,60); }
+	else if (.@r < 3662) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT; set getarg(5), rand(30,60); }
+	else if (.@r < 3890) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS; set getarg(5), rand(30,60); }
+	else if (.@r < 4118) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL; set getarg(5), rand(30,60); }
+	else if (.@r < 4346) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN; set getarg(5), rand(30,60); }
+	else if (.@r < 4574) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL; set getarg(5), rand(30,60); }
+	else if (.@r < 4802) { set getarg(4), RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON; set getarg(5), rand(30,60); }
+	else if (.@r < 5030) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING; set getarg(5), rand(30,60); }
+	else if (.@r < 5258) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD; set getarg(5), rand(30,60); }
+	else if (.@r < 5486) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL; set getarg(5), rand(30,60); }
+	else if (.@r < 5714) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT; set getarg(5), rand(30,60); }
+	else if (.@r < 5942) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT; set getarg(5), rand(30,60); }
+	else if (.@r < 6170) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS; set getarg(5), rand(30,60); }
+	else if (.@r < 6398) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL; set getarg(5), rand(30,60); }
+	else if (.@r < 6626) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN; set getarg(5), rand(30,60); }
+	else if (.@r < 6854) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL; set getarg(5), rand(30,60); }
+	else if (.@r < 7082) { set getarg(4), RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON; set getarg(5), rand(30,60); }
+	else if (.@r < 7310) { set getarg(4), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(5), rand(5,10); }
+	else if (.@r < 7538) { set getarg(4), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(5), rand(5,10); }
+	else if (.@r < 7766) { set getarg(4), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(5), rand(5,10); }
+	else if (.@r < 7994) { set getarg(4), RDMOPT_RACE_DAMAGE_PLANT; set getarg(5), rand(5,10); }
+	else if (.@r < 8222) { set getarg(4), RDMOPT_RACE_DAMAGE_INSECT; set getarg(5), rand(5,10); }
+	else if (.@r < 8450) { set getarg(4), RDMOPT_RACE_DAMAGE_FISHS; set getarg(5), rand(5,10); }
+	else if (.@r < 8678) { set getarg(4), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(5), rand(5,10); }
+	else if (.@r < 8906) { set getarg(4), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(5), rand(5,10); }
+	else if (.@r < 9134) { set getarg(4), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(5), rand(5,10); }
+	else if (.@r < 9362) { set getarg(4), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(5), rand(5,10); }
+	else if (.@r < 9590) { set getarg(4), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(5), rand(1,5); }
+	else if (.@r < 9636) { set getarg(4), RDMOPT_DAMAGE_SIZE_PERFECT; set getarg(5), 1; }
+	else if (.@r < 9727) { set getarg(4), RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL; set getarg(5), rand(30,60); }
+	else if (.@r < 9818) { set getarg(4), RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS; set getarg(5), rand(30,60); }
+	else if (.@r < 9909) { set getarg(4), RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL; set getarg(5), rand(30,60); }
+	else if (.@r < 10000) { set getarg(4), RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS; set getarg(5), rand(30,60); }
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3954806
+function	script	F_Lapine_Shadow_Refine_Hammer	{
+	.@r = rand(10000);
+		 if (.@r < 440)  { set getarg(0), 1; return; }
+	else if (.@r < 1319) { set getarg(0), 2; return; }
+	else if (.@r < 3022) { set getarg(0), 3; return; }
+	else if (.@r < 6538) { set getarg(0), 4; return; }
+	else if (.@r < 8296) { set getarg(0), 5; return; }
+	else if (.@r < 9175) { set getarg(0), 6; return; }
+	else if (.@r < 9615) { set getarg(0), 7; return; }
+	else if (.@r < 9835) { set getarg(0), 8; return; }
+	else if (.@r < 9945) { set getarg(0), 9; return; }
+	else                 { set getarg(0), 10; return; }
+	return;
+}
+
+function	script	F_Lapine_Shadow_9_Refine_Hammer	{
+	set getarg(0), 9;
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3964879
+function	script	F_Lapine_Magic_Cat_Hand	{
+	.@r = rand(160);
+	if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,7); }
+	if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,7); }
+	if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,7); }
+	if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,7); }
+	if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,7); }
+	if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,7); }
+	if (.@r < 70)  { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
+	if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
+	if (.@r < 90)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(1,20); }
+	if (.@r < 100) { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(1,20); }
+	if (.@r < 110) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(5,20); }
+	if (.@r < 120) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(5,10); }
+	if (.@r < 130) { set getarg(0), RDMOPT_VAR_ITEMDEFPOWER; set getarg(1), rand(30,60); }
+	if (.@r < 140) { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(10,20); }
+	if (.@r < 150) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,20); }
+	if (.@r < 160) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(5,10); }
+
+	.@r = rand(80);
+	if (.@r < 10) { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(5,15); }
+	if (.@r < 20) { set getarg(2), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(3), rand(5,15); }
+	if (.@r < 30) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,7); }
+	if (.@r < 40) { set getarg(2), RDMOPT_VAR_MAGICATKPERCENT; set getarg(3), rand(1,7); }
+	if (.@r < 50) { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(1,7); }
+	if (.@r < 60) { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,10); }
+	if (.@r < 70) { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,10); }
+	if (.@r < 80) { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999577
+function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_W	{
+	.@r = rand(70);
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,3); }
+
+	.@r = rand(220);
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(3), rand(1,15); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(1,20); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,7); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,7); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,7); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(1,7); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(1,7); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(1,7); }
+	else if (.@r < 190) { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(1,7); }
+	else if (.@r < 200) { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(1,7); }
+	else if (.@r < 210) { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(1,7); }
+	else if (.@r < 220) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(1,7); }
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999578
+function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_R	{
+	.@r = rand(70);
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,3); }
+
+	.@r = rand(220);
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(3), rand(1,15); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(1,20); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,7); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,7); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,7); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(1,7); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(1,7); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(1,7); }
+	else if (.@r < 190) { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(1,7); }
+	else if (.@r < 200) { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(1,7); }
+	else if (.@r < 210) { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(1,7); }
+	else if (.@r < 220) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(1,7); }
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999579
+function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_M	{
+	.@r = rand(70);
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,3); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,3); }
+
+	.@r = rand(220);
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_MDEFPOWER; set getarg(3), rand(1,15); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(1,20); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,7); }
+	else if (.@r < 140) { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,7); }
+	else if (.@r < 150) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,7); }
+	else if (.@r < 160) { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(1,7); }
+	else if (.@r < 170) { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(1,7); }
+	else if (.@r < 180) { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(1,7); }
+	else if (.@r < 190) { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(1,7); }
+	else if (.@r < 200) { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(1,7); }
+	else if (.@r < 210) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(1,7); }
+	else if (.@r < 220) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(1,7); }
+
+	return;
+}
+
+function	script	F_Lapine_Grown_Gunslinger	{
+	.@r = rand(160); //! TODO: Official Rates info
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,7); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,7); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,7); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,7); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,7); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,7); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(5,20); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(5,20); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(5,20); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(5,10); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_ITEMDEFPOWER; set getarg(1), rand(30,60); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(10,20); }
+	else if (.@r < 150) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,20); }
+	else if (.@r < 160) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(5,10); }
+
+	.@r = rand(80); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(5,15); }
+	else if (.@r < 20) { set getarg(2), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(3), rand(1,7); }
+	else if (.@r < 30) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,7); }
+	else if (.@r < 40) { set getarg(2), RDMOPT_VAR_MAGICATKPERCENT; set getarg(3), rand(1,7); }
+	else if (.@r < 50) { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(1,7); }
+	else if (.@r < 60) { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,10); }
+	else if (.@r < 70) { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,10); }
+	else if (.@r < 80) { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3964871
+function	script	F_Lapine_Uniform_Repair_Kits	{
+	// Option:1
+	.@r = rand(90);
+		 if (.@r < 10)  { set getarg(0), RDMOPT_BODY_ATTR_WATER; set getarg(1), rand(1,3); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_BODY_ATTR_GROUND; set getarg(1), rand(1,3); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_BODY_ATTR_FIRE; set getarg(1), rand(1,3); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_BODY_ATTR_WIND; set getarg(1), rand(1,3); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_BODY_ATTR_SAINT; set getarg(1), rand(1,3); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_BODY_ATTR_DARKNESS; set getarg(1), rand(1,3); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_VAR_ITEMDEFPOWER; set getarg(1), rand(20,60); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(5,15); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_BODY_INDESTRUCTIBLE; set getarg(1), 1; }
+
+	.@r = rand(220);
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_STRAMOUNT; set getarg(3), rand(1,4); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AGIAMOUNT; set getarg(3), rand(1,4); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_VAR_VITAMOUNT; set getarg(3), rand(1,4); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_VAR_INTAMOUNT; set getarg(3), rand(1,4); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_VAR_DEXAMOUNT; set getarg(3), rand(1,4); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,4); }
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3964872
+function	script	F_Lapine_Magical_Booster_Enchant	{
+	// Option:1
+	.@r = rand(160);
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), 1; }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), 1; }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), 1; }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), 1; }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), 1; }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), 1; }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,2); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,2); }
+	else if (.@r < 90)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(3,5); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(3,5); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(5,10); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(2,3); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_ITEMDEFPOWER; set getarg(1), rand(10,20); }
+	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(3,5); }
+	else if (.@r < 150) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,20); }
+	else if (.@r < 160) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,2); }
+	// Option:2
+	.@r = rand(140);
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_STRAMOUNT; set getarg(3), 1; }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AGIAMOUNT; set getarg(3), 1; }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_VAR_VITAMOUNT; set getarg(3), 1; }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_VAR_INTAMOUNT; set getarg(3), 1; }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_VAR_DEXAMOUNT; set getarg(3), 1; }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), 1; }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(3,10); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(3), rand(2,7); }
+	else if (.@r < 90)  { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_VAR_MAGICATKPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(3,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(3), rand(1,4); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
+	else if (.@r < 140) { set getarg(2), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(3), rand(2,3); }
+	return;
+}
+
+function	script	F_Lapine_Boost_Up_1	{
+	set getarg(0), 9;
+	return;
+}
+
+function	script	F_Lapine_Boost_Up_2	{
+	set getarg(0), 10;
+	return;
+}
+
+function	script	F_Lapine_Metal_Rifine_Ticket	{
+	set getarg(0), 7;
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999572
+function	script	F_Lapine_Fan_Modification_Kits	{
+	.@r = rand(130);
+		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,5); }
+	else if (.@r < 20)  { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(5,8); }
+	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(5,8); }
+	else if (.@r < 40)  { set getarg(0), RDMOPT_ATTR_TOLERACE_WATER; set getarg(1), rand(3,5); }
+	else if (.@r < 50)  { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(3,5); }
+	else if (.@r < 60)  { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(3,5); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(3,5); }
+	else if (.@r < 80)  { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
+	else if (.@r < 90)  { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(3,5); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,1); }
+	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); }
+	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); }
+	.@r = rand(130);
+		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(3,5); }
+	else if (.@r < 20)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,8); }
+	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,8); }
+	else if (.@r < 40)  { set getarg(2), RDMOPT_ATTR_TOLERACE_WATER; set getarg(3), rand(3,5); }
+	else if (.@r < 50)  { set getarg(2), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(3), rand(3,5); }
+	else if (.@r < 60)  { set getarg(2), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(3), rand(3,5); }
+	else if (.@r < 70)  { set getarg(2), RDMOPT_ATTR_TOLERACE_WIND; set getarg(3), rand(3,5); }
+	else if (.@r < 80)  { set getarg(2), RDMOPT_ATTR_TOLERACE_ALL; set getarg(3), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
+	else if (.@r < 90)  { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(3,5); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_VAR_MAXHPPERCENT; set getarg(3), rand(1,1); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_VAR_MAXSPPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,3); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_VAR_MAGICATKPERCENT; set getarg(3), rand(1,3); }
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955672
+function	script	F_Lapine_Class_Shadow_Pendant_Options	{
+	// Refine
+	.@r = rand(10000);
+		 if (.@r < 5005) { set getarg(0), 1; }
+	else if (.@r < 7507) { set getarg(0), 2; }
+	else if (.@r < 8758) { set getarg(0), 3; }
+	else if (.@r < 9384) { set getarg(0), 4; }
+	else if (.@r < 9697) { set getarg(0), 5; }
+	else if (.@r < 9853) { set getarg(0), 6; }
+	else if (.@r < 9931) { set getarg(0), 7; }
+	else if (.@r < 9970) { set getarg(0), 8; }
+	else if (.@r < 9990) { set getarg(0), 9; }
+	else                 { set getarg(0), 10; }
+
+	// Option: 1
+	if (rand(2) == 0) {
+		set getarg(1), RDMOPT_VAR_DEXAMOUNT; set getarg(2), rand(1,10);
+	} else {
+		set getarg(1), RDMOPT_VAR_LUKAMOUNT; set getarg(2), rand(1,10);
+	}
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955674
+function	script	F_Lapine_Class_Shadow_Earring_Options	{
+	// Refine
+	.@r = rand(10000);
+		 if (.@r < 5005) { set getarg(0), 1; }
+	else if (.@r < 7507) { set getarg(0), 2; }
+	else if (.@r < 8758) { set getarg(0), 3; }
+	else if (.@r < 9384) { set getarg(0), 4; }
+	else if (.@r < 9697) { set getarg(0), 5; }
+	else if (.@r < 9853) { set getarg(0), 6; }
+	else if (.@r < 9931) { set getarg(0), 7; }
+	else if (.@r < 9970) { set getarg(0), 8; }
+	else if (.@r < 9990) { set getarg(0), 9; }
+	else                 { set getarg(0), 10; }
+
+	// Option: 1
+	if (rand(2) == 0) {
+		set getarg(1), RDMOPT_VAR_DEXAMOUNT; set getarg(2), rand(1,10);
+	} else {
+		set getarg(1), RDMOPT_VAR_STRAMOUNT; set getarg(2), rand(1,10);
+	}
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955671
+function	script	F_Lapine_Class_Shadow_Shield_Options	{
+	// Refine
+	.@r = rand(10000);
+		 if (.@r < 5005) { set getarg(0), 1; }
+	else if (.@r < 7507) { set getarg(0), 2; }
+	else if (.@r < 8758) { set getarg(0), 3; }
+	else if (.@r < 9384) { set getarg(0), 4; }
+	else if (.@r < 9697) { set getarg(0), 5; }
+	else if (.@r < 9853) { set getarg(0), 6; }
+	else if (.@r < 9931) { set getarg(0), 7; }
+	else if (.@r < 9970) { set getarg(0), 8; }
+	else if (.@r < 9990) { set getarg(0), 9; }
+	else                 { set getarg(0), 10; }
+
+	// Option: 1
+	if (rand(2) == 0) {
+		set getarg(1), RDMOPT_VAR_AGIAMOUNT; set getarg(2), rand(1,10);
+	} else {
+		set getarg(1), RDMOPT_VAR_LUKAMOUNT; set getarg(2), rand(1,10);
+	}
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955669
+function	script	F_Lapine_Class_Shadow_Shoes_Options	{
+	// Refine
+	.@r = rand(10000);
+		 if (.@r < 5005) { set getarg(0), 1; }
+	else if (.@r < 7507) { set getarg(0), 2; }
+	else if (.@r < 8758) { set getarg(0), 3; }
+	else if (.@r < 9384) { set getarg(0), 4; }
+	else if (.@r < 9697) { set getarg(0), 5; }
+	else if (.@r < 9853) { set getarg(0), 6; }
+	else if (.@r < 9931) { set getarg(0), 7; }
+	else if (.@r < 9970) { set getarg(0), 8; }
+	else if (.@r < 9990) { set getarg(0), 9; }
+	else                 { set getarg(0), 10; }
+
+	// Option: 1
+	if (rand(2) == 0) {
+		set getarg(1), RDMOPT_VAR_AGIAMOUNT; set getarg(2), rand(1,10);
+	} else {
+		set getarg(1), RDMOPT_VAR_VITAMOUNT; set getarg(2), rand(1,10);
+	}
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955664
+function	script	F_Lapine_Class_Shadow_Armor_Options	{
+	// Refine
+	.@r = rand(10000);
+		 if (.@r < 5005) { set getarg(0), 1; }
+	else if (.@r < 7507) { set getarg(0), 2; }
+	else if (.@r < 8758) { set getarg(0), 3; }
+	else if (.@r < 9384) { set getarg(0), 4; }
+	else if (.@r < 9697) { set getarg(0), 5; }
+	else if (.@r < 9853) { set getarg(0), 6; }
+	else if (.@r < 9931) { set getarg(0), 7; }
+	else if (.@r < 9970) { set getarg(0), 8; }
+	else if (.@r < 9990) { set getarg(0), 9; }
+	else                 { set getarg(0), 10; }
+
+	// Option: 1
+	if (rand(2) == 0) {
+		set getarg(1), RDMOPT_VAR_INTAMOUNT; set getarg(2), rand(1,10);
+	} else {
+		set getarg(1), RDMOPT_VAR_VITAMOUNT; set getarg(2), rand(1,10);
+	}
+
+	return;
+}
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955662
+function	script	F_Lapine_Class_Shadow_Weapon_Options	{
+	// Refine
+	.@r = rand(10000);
+		 if (.@r < 5005) { set getarg(0), 1; }
+	else if (.@r < 7507) { set getarg(0), 2; }
+	else if (.@r < 8758) { set getarg(0), 3; }
+	else if (.@r < 9384) { set getarg(0), 4; }
+	else if (.@r < 9697) { set getarg(0), 5; }
+	else if (.@r < 9853) { set getarg(0), 6; }
+	else if (.@r < 9931) { set getarg(0), 7; }
+	else if (.@r < 9970) { set getarg(0), 8; }
+	else if (.@r < 9990) { set getarg(0), 9; }
+	else                 { set getarg(0), 10; }
+
+	// Option: 1
+	if (rand(2) == 0) {
+		set getarg(1), RDMOPT_VAR_STRAMOUNT; set getarg(2), rand(1,10);
+	} else {
+		set getarg(1), RDMOPT_VAR_INTAMOUNT; set getarg(2), rand(1,10);
+	}
+
+	return;
+}
+
+function	script	F_Lapine_Noblesse_Refine_Ticket	{
+	set getarg(0), 9;
+	return;
+}
+
+function	script	F_Lapine_Imperial_Refine_Ticket	{
+	set getarg(0), 9;
+	return;
+}
+
+function	script	F_Lapine_Grace_Refine_Ticket	{
+	set getarg(0), 9;
+	return;
+}
+
+function	script	F_Lapine_Imperial_Convert1	{
+	.@r = rand(100); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 20) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 30) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 40) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 50) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 60) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 70) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 80) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 90) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,5); return; }
+	return;
+}
+
+function	script	F_Lapine_Imperial_Convert2	{
+	.@r = rand(100); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 20) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 30) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 40) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 50) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 60) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 70) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 80) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 90) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,5); return; }
+	return;
+}
+
+function	script	F_Lapine_Imperial_Convert3	{
+	.@r = rand(80); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(1,5); return; }
+	else if (.@r < 20) { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(1,5); return; }
+	else if (.@r < 30) { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(1,5); return; }
+	else if (.@r < 40) { set getarg(0), RDMOPT_ATTR_TOLERACE_WATER; set getarg(1), rand(1,5); return; }
+	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); return; } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
+	else if (.@r < 60) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,5); return; }
+	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); return; }
+	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); return; }
+	return;
+}
+
+function	script	F_Lapine_Imperial_Convert4	{
+	.@r = rand(100); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 20) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 30) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 40) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 50) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 60) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 70) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 80) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 90) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,5); return; }
+	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,5); return; }
+	return;
+}
+
+function	script	F_Lapine_Grace_Convert1	{
+	.@r = rand(100); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 20) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 30) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 40) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 50) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 60) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 70) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 80) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 90) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,5); }
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,5); }
+	else if (.@r < 20) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,5); }
+	else if (.@r < 30) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,5); }
+	else if (.@r < 40) { set getarg(2), RDMOPT_RACE_DAMAGE_PLANT; set getarg(3), rand(1,5); }
+	else if (.@r < 50) { set getarg(2), RDMOPT_RACE_DAMAGE_INSECT; set getarg(3), rand(1,5); }
+	else if (.@r < 60) { set getarg(2), RDMOPT_RACE_DAMAGE_FISHS; set getarg(3), rand(1,5); }
+	else if (.@r < 70) { set getarg(2), RDMOPT_RACE_DAMAGE_DEVIL; set getarg(3), rand(1,5); }
+	else if (.@r < 80) { set getarg(2), RDMOPT_RACE_DAMAGE_HUMAN; set getarg(3), rand(1,5); }
+	else if (.@r < 90) { set getarg(2), RDMOPT_RACE_DAMAGE_ANGEL; set getarg(3), rand(1,5); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(3), rand(1,5); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_DAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
+	return;
+}
+
+function	script	F_Lapine_Grace_Convert2	{
+	.@r = rand(100); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 20) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 30) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 40) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 50) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 60) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 70) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 80) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 90) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,5); }
+	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,5); }
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,5); }
+	else if (.@r < 20) { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,5); }
+	else if (.@r < 30) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,5); }
+	else if (.@r < 40) { set getarg(2), RDMOPT_RACE_MDAMAGE_PLANT; set getarg(3), rand(1,5); }
+	else if (.@r < 50) { set getarg(2), RDMOPT_RACE_MDAMAGE_INSECT; set getarg(3), rand(1,5); }
+	else if (.@r < 60) { set getarg(2), RDMOPT_RACE_MDAMAGE_FISHS; set getarg(3), rand(1,5); }
+	else if (.@r < 70) { set getarg(2), RDMOPT_RACE_MDAMAGE_DEVIL; set getarg(3), rand(1,5); }
+	else if (.@r < 80) { set getarg(2), RDMOPT_RACE_MDAMAGE_HUMAN; set getarg(3), rand(1,5); }
+	else if (.@r < 90) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANGEL; set getarg(3), rand(1,5); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_MDAMAGE_DRAGON; set getarg(3), rand(1,5); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_MDAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
+	return;
+}
+
+function	script	F_Lapine_Grace_Convert3	{
+	.@r = rand(80); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_ATTR_TOLERACE_WATER; set getarg(1), rand(1,5); }
+	else if (.@r < 20) { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(1,5); }
+	else if (.@r < 30) { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(1,5); }
+	else if (.@r < 40) { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(1,5); }
+	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
+	else if (.@r < 60) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,5); }
+	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 20) { set getarg(2), RDMOPT_DAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 30) { set getarg(2), RDMOPT_DAMAGE_SIZE_MIDIUM_USER; set getarg(3), rand(1,5); }
+	else if (.@r < 40) { set getarg(2), RDMOPT_RACE_TOLERACE_NOTHING; set getarg(3), rand(1,5); }
+	else if (.@r < 50) { set getarg(2), RDMOPT_RACE_TOLERACE_UNDEAD; set getarg(3), rand(1,5); }
+	else if (.@r < 60) { set getarg(2), RDMOPT_RACE_TOLERACE_ANIMAL; set getarg(3), rand(1,5); }
+	else if (.@r < 70) { set getarg(2), RDMOPT_RACE_TOLERACE_PLANT; set getarg(3), rand(1,5); }
+	else if (.@r < 80) { set getarg(2), RDMOPT_RACE_TOLERACE_INSECT; set getarg(3), rand(1,5); }
+	else if (.@r < 90) { set getarg(2), RDMOPT_RACE_TOLERACE_FISHS; set getarg(3), rand(1,5); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_TOLERACE_DEVIL; set getarg(3), rand(1,5); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_TOLERACE_HUMAN; set getarg(3), rand(1,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_TOLERACE_ANGEL; set getarg(3), rand(1,5); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_TOLERACE_DRAGON; set getarg(3), rand(1,5); }
+	return;
+}
+
+function	script	F_Lapine_Grace_Convert4	{
+	.@r = rand(80); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(0), RDMOPT_ATTR_TOLERACE_WATER; set getarg(1), rand(1,5); }
+	else if (.@r < 20) { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(1,5); }
+	else if (.@r < 30) { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(1,5); }
+	else if (.@r < 40) { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(1,5); }
+	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
+	else if (.@r < 60) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,5); }
+	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
+	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
+	.@r = rand(130); //! TODO: Official Rates info
+		 if (.@r < 10) { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 20) { set getarg(2), RDMOPT_MDAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
+	else if (.@r < 30) { set getarg(2), RDMOPT_MDAMAGE_SIZE_MIDIUM_USER; set getarg(3), rand(1,5); }
+	else if (.@r < 40) { set getarg(2), RDMOPT_RACE_TOLERACE_NOTHING; set getarg(3), rand(1,5); }
+	else if (.@r < 50) { set getarg(2), RDMOPT_RACE_TOLERACE_UNDEAD; set getarg(3), rand(1,5); }
+	else if (.@r < 60) { set getarg(2), RDMOPT_RACE_TOLERACE_ANIMAL; set getarg(3), rand(1,5); }
+	else if (.@r < 70) { set getarg(2), RDMOPT_RACE_TOLERACE_PLANT; set getarg(3), rand(1,5); }
+	else if (.@r < 80) { set getarg(2), RDMOPT_RACE_TOLERACE_INSECT; set getarg(3), rand(1,5); }
+	else if (.@r < 90) { set getarg(2), RDMOPT_RACE_TOLERACE_FISHS; set getarg(3), rand(1,5); }
+	else if (.@r < 100) { set getarg(2), RDMOPT_RACE_TOLERACE_DEVIL; set getarg(3), rand(1,5); }
+	else if (.@r < 110) { set getarg(2), RDMOPT_RACE_TOLERACE_HUMAN; set getarg(3), rand(1,5); }
+	else if (.@r < 120) { set getarg(2), RDMOPT_RACE_TOLERACE_ANGEL; set getarg(3), rand(1,5); }
+	else if (.@r < 130) { set getarg(2), RDMOPT_RACE_TOLERACE_DRAGON; set getarg(3), rand(1,5); }
+	return;
+}
+
+function	script	F_Lapine_Shadow_Random_Mix	{
+	// Option:1
+	.@r = rand(200); //! TODO: Official Rates info
+	if (.@r < 10)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(1,15); return; }
+	if (.@r < 20)  { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(1,15); return; }
+	if (.@r < 30)  { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); return; }
+	if (.@r < 40)  { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); return; }
+	if (.@r < 50)  { set getarg(0), RDMOPT_VAR_PLUSASPD; set getarg(1), 1; return; }
+	if (.@r < 60)  { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(100,500); return; }
+	if (.@r < 70)  { set getarg(0), RDMOPT_VAR_MAXSPAMOUNT; set getarg(1), rand(20,100); return; }
+	if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,2); return; }
+	if (.@r < 90)  { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,2); return; }
+	if (.@r < 100) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(5,15); return; }
+	if (.@r < 110) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,15); return; }
+	if (.@r < 120) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(1,5); return; }
+	if (.@r < 130) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(1,3); return; }
+	if (.@r < 140) { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(1,5); return; }
+	if (.@r < 150) { set getarg(0), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(1), rand(1,5); return; }
+	if (.@r < 160) { set getarg(0), RDMOPT_HEAL_VALUE; set getarg(1), rand(3,5); return; }
+	if (.@r < 170) { set getarg(0), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(1), rand(3,5); return; }
+	if (.@r < 180) { set getarg(0), RDMOPT_VAR_ITEMDEFPOWER; set getarg(1), rand(10,25); return; }
+	if (.@r < 190) { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(1,3); return; }
+	if (.@r < 200) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(1,5); return; }
+	return;
+}
+
+//! TODO
+function	script	F_Lapine_Ein_Ddbox	{
+	return;
+}
+
+//! TODO
+function	script	F_Lapine_Ein_Ddbox2	{
+	return;
+}
+
+//! TODO
+function	script	F_Lapine_Abyss_Ddbox	{
+	return;
+}
+
+//! TODO
+function	script	F_Lapine_Abyss_Ddbox2	{
+	return;
+}
+
+//! TODO
+function	script	F_Lapine_Abyss_Ddbox3	{
+	return;
+}
+
+//! TODO
+function	script	F_Lapine_Abyss_Ddbox4	{
+	return;
+}
