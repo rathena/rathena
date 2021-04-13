@@ -38,6 +38,8 @@
 #include "instance.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
+#include "item_synthesis.hpp"
+#include "item_upgrade.hpp"
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
@@ -1022,7 +1024,7 @@ ACMD_FUNC(storage)
 {
 	nullpo_retr(-1, sd);
 
-	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag)
+	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag || sd->state.lapine_ui)
 		return -1;
 
 	if (storage_storageopen(sd) == 1)
@@ -1044,7 +1046,7 @@ ACMD_FUNC(guildstorage)
 {
 	nullpo_retr(-1, sd);
 
-	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading)
+	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.lapine_ui)
 		return -1;
 
 	switch (storage_guild_storageopen(sd)) {
@@ -4068,6 +4070,12 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "attendancedb") || strncmp(message, "attendancedb", 4) == 0) {
 		attendance_db.reload();
 		clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
+	} else if (strstr(command, "synthesisdb") || strncmp(message, "synthesisdb", 6) == 0) {
+		item_synthesis_db_reload();
+		clif_displaymessage(fd, msg_txt(sd, 796)); // Item Synthesis database has been reloaded.
+	} else if (strstr(command, "upgradedb") || strncmp(message, "upgradedb", 6) == 0) {
+		item_upgrade_db_reload();
+		clif_displaymessage(fd, msg_txt(sd, 797)); // Item Upgrade database has been reloaded.
 	}
 
 	return 0;
@@ -7252,6 +7260,10 @@ ACMD_FUNC(mute)
 ACMD_FUNC(refresh)
 {
 	nullpo_retr(-1, sd);
+	if (sd->state.lapine_ui) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 543));
+		return -1;
+	}
 	clif_refresh(sd);
 	return 0;
 }
@@ -10354,12 +10366,12 @@ ACMD_FUNC(refineui)
 	clif_displaymessage(fd, msg_txt(sd, 773)); // This command requires packet version 2016-10-12 or newer.
 	return -1;
 #else
-	if( !battle_config.feature_refineui ){
+	if (!battle_config.feature_refineui) {
 		clif_displaymessage(fd, msg_txt(sd, 774)); // This command is disabled via configuration.
 		return -1;
 	}
 
-	if( sd->state.refineui_open ){
+	if (sd->state.refineui_open) {
 		clif_displaymessage(fd, msg_txt(sd, 775)); // You have already opened the refine UI.
 		return -1;
 	}
@@ -10367,6 +10379,46 @@ ACMD_FUNC(refineui)
 	clif_refineui_open(sd);
 	return 0;
 #endif
+}
+
+ACMD_FUNC(synthesisui) {
+	nullpo_retr(-1, sd);
+
+#ifdef FEATURE_LAPINE_UI
+	t_itemid itemid;
+
+	if (sscanf(message, "%u", &itemid) < 1) {
+		clif_displaymessage(fd, "Please input itemid of synthesis id.");
+		return -1;
+	}
+	if (!item_synthesis_open(sd, itemid))
+		return -1;
+	sd->state.lapine_ui |= 4;
+	sd->itemid = itemid;
+#else
+	clif_displaymessage(fd, "Client is not supported.");
+#endif
+	return 0;
+}
+
+ACMD_FUNC(upgradeui) {
+	nullpo_retr(-1, sd);
+
+#ifdef FEATURE_LAPINE_UI
+	t_itemid itemid;
+
+	if (sscanf(message, "%u", &itemid) < 1) {
+		clif_displaymessage(fd, "Please input itemid of upgrade id.");
+		return -1;
+	}
+	if (!item_upgrade_open(sd, itemid))
+		return -1;
+	sd->state.lapine_ui |= 4;
+	sd->itemid = itemid;
+#else
+	clif_displaymessage(fd, "Client is not supported.");
+#endif
+	return 0;
 }
 
 #include "../custom/atcommand.inc"
@@ -10493,6 +10545,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadinstancedb", reload),
 		ACMD_DEF2("reloadachievementdb",reload),
 		ACMD_DEF2("reloadattendancedb",reload),
+		ACMD_DEF2("reloadsynthesisdb", reload),
+		ACMD_DEF2("reloadupgradedb", reload),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
@@ -10678,6 +10732,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("completequest", quest),
 		ACMD_DEF2("checkquest", quest),
 		ACMD_DEF(refineui),
+		ACMD_DEFR(synthesisui, ATCMD_NOCONSOLE | ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(upgradeui, ATCMD_NOCONSOLE | ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

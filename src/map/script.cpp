@@ -47,6 +47,8 @@
 #include "instance.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp"
+#include "item_synthesis.hpp"
+#include "item_upgrade.hpp"
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
@@ -24938,6 +24940,36 @@ BUILDIN_FUNC(getvariableofinstance)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/** Open Item Synthesis UI
+* synthesisui(<id>);
+*/
+BUILDIN_FUNC(synthesisui) {
+#ifdef FEATURE_LAPINE_UI
+	TBL_PC *sd;
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	script_pushint(st, item_synthesis_open(sd, script_getnum(st, 2)));
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/** Open Item Upgrade UI
+* upgradeui(<id>);
+*/
+BUILDIN_FUNC(upgradeui) {
+#ifdef FEATURE_LAPINE_UI
+	TBL_PC *sd;
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	script_pushint(st, item_upgrade_open(sd, script_getnum(st, 2)));
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*
   convertpcinfo(<char_id>,<type>)
   convertpcinfo(<account_id>,<type>)
@@ -25729,6 +25761,8 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getvariableofinstance,"ri"),
+	BUILDIN_DEF(synthesisui, "i"),
+	BUILDIN_DEF(upgradeui, "i"),
 	BUILDIN_DEF(convertpcinfo,"vi"),
 	BUILDIN_DEF(cloakoffnpc, "s?"),
 	BUILDIN_DEF(cloakonnpc, "s?"),
