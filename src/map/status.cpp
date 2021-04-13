@@ -364,15 +364,15 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 	return 1;
 }
 
-std::shared_ptr<s_refine_level_info> RefineDatabase::findLevelInfo( const struct item_data& data, struct item& item ){
+std::shared_ptr<s_refine_level_info> RefineDatabase::findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine ){
 	// Check if the item can be refined
 	if( data.flag.no_refine ){
 		return nullptr;
 	}
 
-	// Check the current refine level
-	if( item.refine >= MAX_REFINE ){
-		return nullptr;
+	// Cap the refine level
+	if( refine > MAX_REFINE ){
+		refine = MAX_REFINE;
 	}
 
 	e_refine_type type;
@@ -394,7 +394,24 @@ std::shared_ptr<s_refine_level_info> RefineDatabase::findLevelInfo( const struct
 		return nullptr;
 	}
 
-	return util::umap_find( levels_info->levels, (uint16)item.refine );
+	return util::umap_find( levels_info->levels, refine );
+}
+
+std::shared_ptr<s_refine_level_info> RefineDatabase::findLevelInfo( const struct item_data& data, struct item& item ){
+	// Check the current refine level
+	if( item.refine >= MAX_REFINE ){
+		return nullptr;
+	}
+
+	return this->findLevelInfoSub( data, item, item.refine );
+}
+
+std::shared_ptr<s_refine_level_info> RefineDatabase::findCurrentLevelInfo( const struct item_data& data, struct item& item ){
+	if( item.refine > 0 ){
+		return this->findLevelInfoSub( data, item, item.refine - 1 );
+	}else{
+		return nullptr;
+	}
 }
 
 bool RefineDatabase::calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level ){
@@ -4257,18 +4274,15 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if (sd->inventory.u.items_inventory[index].refine > MAX_REFINE)
 			sd->inventory.u.items_inventory[index].refine = MAX_REFINE;
 
+		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
+
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
-			int r = sd->inventory.u.items_inventory[index].refine, wlv = sd->inventory_data[index]->wlv;
+			int wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
-			std::shared_ptr<s_refine_level_info> info = nullptr;
 
 			if(wlv >= MAX_WEAPON_LEVEL)
 				wlv = MAX_WEAPON_LEVEL;
-
-			if( r ){
-				info = refine_db.findLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
-			}
 
 			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
@@ -4320,14 +4334,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 					wa->ele = (sd->inventory.u.items_inventory[index].card[1]&0x0f);
 			}
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
-			int r = sd->inventory.u.items_inventory[index].refine;
-
-			if( r ){
-				std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
-
-				if( info != nullptr ){
-					refinedef += info->bonus;
-				}
+			if( info != nullptr ){
+				refinedef += info->bonus;
 			}
 
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
