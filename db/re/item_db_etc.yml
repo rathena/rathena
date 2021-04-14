@@ -12670,7 +12670,6 @@ Body:
     Name: STR+2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,2;
   - Id: 4702
@@ -12678,7 +12677,6 @@ Body:
     Name: STR+3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,3;
   - Id: 4703
@@ -12686,7 +12684,6 @@ Body:
     Name: STR+4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,4;
   - Id: 4704
@@ -12694,7 +12691,6 @@ Body:
     Name: STR+5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,5;
   - Id: 4705
@@ -12702,7 +12698,6 @@ Body:
     Name: STR+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,6;
   - Id: 4706
@@ -12710,7 +12705,6 @@ Body:
     Name: STR+7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,7;
   - Id: 4707
@@ -12718,7 +12712,6 @@ Body:
     Name: STR+8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,8;
   - Id: 4708
@@ -12726,7 +12719,6 @@ Body:
     Name: STR+9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,9;
   - Id: 4709
@@ -12734,7 +12726,6 @@ Body:
     Name: STR+10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bStr,10;
   - Id: 4710
@@ -12742,7 +12733,6 @@ Body:
     Name: INT+1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,1;
   - Id: 4711
@@ -12750,7 +12740,6 @@ Body:
     Name: INT+2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,2;
   - Id: 4712
@@ -12758,7 +12747,6 @@ Body:
     Name: INT+3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,3;
   - Id: 4713
@@ -12766,7 +12754,6 @@ Body:
     Name: INT+4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,4;
   - Id: 4714
@@ -12774,7 +12761,6 @@ Body:
     Name: INT+5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,5;
   - Id: 4715
@@ -12782,7 +12768,6 @@ Body:
     Name: INT+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,6;
   - Id: 4716
@@ -12790,7 +12775,6 @@ Body:
     Name: INT+7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,7;
   - Id: 4717
@@ -12798,7 +12782,6 @@ Body:
     Name: INT+8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,8;
   - Id: 4718
@@ -12806,7 +12789,6 @@ Body:
     Name: INT+9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,9;
   - Id: 4719
@@ -12814,7 +12796,6 @@ Body:
     Name: INT+10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bInt,10;
   - Id: 4720
@@ -12822,7 +12803,6 @@ Body:
     Name: DEX+1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,1;
   - Id: 4721
@@ -12830,7 +12810,6 @@ Body:
     Name: DEX+2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,2;
   - Id: 4722
@@ -12838,7 +12817,6 @@ Body:
     Name: DEX+3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,3;
   - Id: 4723
@@ -12846,7 +12824,6 @@ Body:
     Name: DEX+4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,4;
   - Id: 4724
@@ -12854,7 +12831,6 @@ Body:
     Name: DEX+5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,5;
   - Id: 4725
@@ -12862,7 +12838,6 @@ Body:
     Name: DEX+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,6;
   - Id: 4726
@@ -12870,7 +12845,6 @@ Body:
     Name: DEX+7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,7;
   - Id: 4727
@@ -12878,7 +12852,6 @@ Body:
     Name: DEX+8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,8;
   - Id: 4728
@@ -12886,7 +12859,6 @@ Body:
     Name: DEX+9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,9;
   - Id: 4729
@@ -12894,7 +12866,6 @@ Body:
     Name: DEX+10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDex,10;
   - Id: 4730
@@ -12902,7 +12873,6 @@ Body:
     Name: AGI+1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,1;
   - Id: 4731
@@ -12910,7 +12880,6 @@ Body:
     Name: AGI+2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,2;
   - Id: 4732
@@ -12918,7 +12887,6 @@ Body:
     Name: AGI+3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,3;
   - Id: 4733
@@ -12926,7 +12894,6 @@ Body:
     Name: AGI+4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,4;
   - Id: 4734
@@ -12934,7 +12901,6 @@ Body:
     Name: AGI+5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,5;
   - Id: 4735
@@ -12942,7 +12908,6 @@ Body:
     Name: AGI+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,6;
   - Id: 4736
@@ -12950,7 +12915,6 @@ Body:
     Name: AGI+7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,7;
   - Id: 4737
@@ -12958,7 +12922,6 @@ Body:
     Name: AGI+8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,8;
   - Id: 4738
@@ -12966,7 +12929,6 @@ Body:
     Name: AGI+9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,9;
   - Id: 4739
@@ -12974,7 +12936,6 @@ Body:
     Name: AGI+10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAgi,10;
   - Id: 4740
@@ -12982,7 +12943,6 @@ Body:
     Name: VIT+1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,1;
   - Id: 4741
@@ -12990,7 +12950,6 @@ Body:
     Name: VIT+2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,2;
   - Id: 4742
@@ -12998,7 +12957,6 @@ Body:
     Name: VIT+3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,3;
   - Id: 4743
@@ -13006,7 +12964,6 @@ Body:
     Name: VIT+4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,4;
   - Id: 4744
@@ -13014,7 +12971,6 @@ Body:
     Name: VIT+5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,5;
   - Id: 4745
@@ -13022,7 +12978,6 @@ Body:
     Name: VIT+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,6;
   - Id: 4746
@@ -13030,7 +12985,6 @@ Body:
     Name: VIT+7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,7;
   - Id: 4747
@@ -13038,7 +12992,6 @@ Body:
     Name: VIT+8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,8;
   - Id: 4748
@@ -13046,7 +12999,6 @@ Body:
     Name: VIT+9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,9;
   - Id: 4749
@@ -13054,7 +13006,6 @@ Body:
     Name: VIT+10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bVit,10;
   - Id: 4750
@@ -13062,7 +13013,6 @@ Body:
     Name: LUK+1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,1;
   - Id: 4751
@@ -13070,7 +13020,6 @@ Body:
     Name: LUK+2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,2;
   - Id: 4752
@@ -13078,7 +13027,6 @@ Body:
     Name: LUK+3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,3;
   - Id: 4753
@@ -13086,7 +13034,6 @@ Body:
     Name: LUK+4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,4;
   - Id: 4754
@@ -13094,7 +13041,6 @@ Body:
     Name: LUK+5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,5;
   - Id: 4755
@@ -13102,7 +13048,6 @@ Body:
     Name: LUK+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,6;
   - Id: 4756
@@ -13110,7 +13055,6 @@ Body:
     Name: LUK+7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,7;
   - Id: 4757
@@ -13118,7 +13062,6 @@ Body:
     Name: LUK+8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,8;
   - Id: 4758
@@ -13126,7 +13069,6 @@ Body:
     Name: LUK+9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,9;
   - Id: 4759
@@ -13134,7 +13076,6 @@ Body:
     Name: LUK+10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLuk,10;
   - Id: 4760
@@ -13142,7 +13083,6 @@ Body:
     Name: MATK+1%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatkRate,1;
       bonus bFixedCastrate,-1;
@@ -13151,7 +13091,6 @@ Body:
     Name: MATK+2%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatkRate,2;
       bonus bFixedCastrate,-1;
@@ -13160,7 +13099,6 @@ Body:
     Name: FLEE+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bFlee,6;
   - Id: 4763
@@ -13168,7 +13106,6 @@ Body:
     Name: FLEE+12
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bFlee,12;
   - Id: 4764
@@ -13176,7 +13113,6 @@ Body:
     Name: CRI+5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bCritical,5;
   - Id: 4765
@@ -13184,7 +13120,6 @@ Body:
     Name: CRI+7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bCritical,7;
   - Id: 4766
@@ -13192,7 +13127,6 @@ Body:
     Name: ATK+2%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bAddClass,Class_All,2;
   - Id: 4767
@@ -13200,7 +13134,6 @@ Body:
     Name: ATK+3%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bAddClass,Class_All,3;
   - Id: 4768
@@ -13316,7 +13249,6 @@ Body:
     Name: MDEF+2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMdef,2;
   - Id: 4787
@@ -13324,7 +13256,6 @@ Body:
     Name: MDEF+4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMdef,4;
   - Id: 4788
@@ -13332,7 +13263,6 @@ Body:
     Name: MDEF+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMdef,6;
   - Id: 4789
@@ -13340,7 +13270,6 @@ Body:
     Name: MDEF+8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMdef,8;
   - Id: 4790
@@ -13348,7 +13277,6 @@ Body:
     Name: MDEF+10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMdef,10;
   - Id: 4791
@@ -13356,7 +13284,6 @@ Body:
     Name: DEF+3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDef,3;
   - Id: 4792
@@ -13364,7 +13291,6 @@ Body:
     Name: DEF+6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDef,6;
   - Id: 4793
@@ -13372,7 +13298,6 @@ Body:
     Name: DEF+9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDef,9;
   - Id: 4794
@@ -13380,7 +13305,6 @@ Body:
     Name: DEF+12
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bDef,12;
   - Id: 4795
@@ -13388,7 +13312,6 @@ Body:
     Name: HP+100
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHP,100;
   - Id: 4796
@@ -13396,7 +13319,6 @@ Body:
     Name: HP+200
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHP,200;
   - Id: 4797
@@ -13404,7 +13326,6 @@ Body:
     Name: HP+300
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHP,300;
   - Id: 4798
@@ -13412,7 +13333,6 @@ Body:
     Name: HP+400
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHP,400;
   - Id: 4799
@@ -13420,7 +13340,6 @@ Body:
     Name: HP+500
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHP,500;
   - Id: 4800
@@ -13428,7 +13347,6 @@ Body:
     Name: SP+50
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxSP,50;
   - Id: 4801
@@ -13436,7 +13354,6 @@ Body:
     Name: SP+100
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxSP,100;
   - Id: 4802
@@ -13444,7 +13361,6 @@ Body:
     Name: SP+150
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxSP,150;
   - Id: 4803
@@ -13452,7 +13368,6 @@ Body:
     Name: Cure1Lv.
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bSkillCooldown,"AB_HIGHNESSHEAL",-3000;
   - Id: 4804
@@ -13460,7 +13375,6 @@ Body:
     Name: Catholic1Lv.
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bSkillUseSP,"AB_CHEAL",30;
   - Id: 4805
@@ -13468,7 +13382,6 @@ Body:
     Name: Archbishop1Lv
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bHealPower,3;
   - Id: 4806
@@ -13476,7 +13389,6 @@ Body:
     Name: MATK+3%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatkRate,3;
       bonus bFixedCastrate,-1;
@@ -13485,7 +13397,6 @@ Body:
     Name: Atk Speed1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAspd,1;
   - Id: 4808
@@ -13493,7 +13404,6 @@ Body:
     Name: Fighting Spirit4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,15;
       bonus bHit,5;
@@ -13502,7 +13412,6 @@ Body:
     Name: Fighting Spirit3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,12;
       bonus bHit,4;
@@ -13511,7 +13420,6 @@ Body:
     Name: Fighting Spirit2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,9;
       bonus bHit,3;
@@ -13520,7 +13428,6 @@ Body:
     Name: Fighting Spirit1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,6;
       bonus bHit,2;
@@ -13529,7 +13436,6 @@ Body:
     Name: Spell4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,15;
       bonus bVariableCastrate,-10;
@@ -13538,7 +13444,6 @@ Body:
     Name: Spell3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,12;
       bonus bVariableCastrate,-8;
@@ -13547,7 +13452,6 @@ Body:
     Name: Spell2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,9;
       bonus bVariableCastrate,-6;
@@ -13556,7 +13460,6 @@ Body:
     Name: Spell1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,6;
       bonus bVariableCastrate,-4;
@@ -13565,7 +13468,6 @@ Body:
     Name: Sharp3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bCritical,12;
       bonus bHit,4;
@@ -13574,7 +13476,6 @@ Body:
     Name: Sharp2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bCritical,9;
       bonus bHit,3;
@@ -13583,7 +13484,6 @@ Body:
     Name: Sharp1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bCritical,6;
       bonus bHit,2;
@@ -13592,7 +13492,6 @@ Body:
     Name: Atk1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bAddClass,Class_All,1;
   - Id: 4820
@@ -13600,7 +13499,6 @@ Body:
     Name: Fighting Spirit5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,18;
       bonus bHit,5;
@@ -13609,7 +13507,6 @@ Body:
     Name: Fighting Spirit6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,21;
       bonus bHit,5;
@@ -13618,7 +13515,6 @@ Body:
     Name: Fighting Spirit7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,24;
       bonus bHit,5;
@@ -13627,7 +13523,6 @@ Body:
     Name: Fighting Spirit8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,27;
       bonus bHit,5;
@@ -13636,7 +13531,6 @@ Body:
     Name: Fighting Spirit9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,30;
       bonus bHit,5;
@@ -13645,7 +13539,6 @@ Body:
     Name: Fighting Spirit10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bBaseAtk,50;
       bonus bHit,15;
@@ -13654,7 +13547,6 @@ Body:
     Name: Spell5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,18;
       bonus bVariableCastrate,-10;
@@ -13663,7 +13555,6 @@ Body:
     Name: Spell6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,21;
       bonus bVariableCastrate,-10;
@@ -13672,7 +13563,6 @@ Body:
     Name: Spell7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,24;
       bonus bVariableCastrate,-10;
@@ -13681,7 +13571,6 @@ Body:
     Name: Spell8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,27;
       bonus bVariableCastrate,-10;
@@ -13690,7 +13579,6 @@ Body:
     Name: Spell9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,30;
       bonus bVariableCastrate,-10;
@@ -13699,7 +13587,6 @@ Body:
     Name: Spell10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMatk,50;
       bonus bVariableCastrate,-20;
@@ -13708,7 +13595,6 @@ Body:
     Name: Expert Archer1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,2;
   - Id: 4833
@@ -13716,7 +13602,6 @@ Body:
     Name: Expert Archer2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,4;
   - Id: 4834
@@ -13724,7 +13609,6 @@ Body:
     Name: Expert Archer3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,6;
   - Id: 4835
@@ -13732,7 +13616,6 @@ Body:
     Name: Expert Archer4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,8;
   - Id: 4836
@@ -13740,7 +13623,6 @@ Body:
     Name: Expert Archer5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,10;
   - Id: 4837
@@ -13748,7 +13630,6 @@ Body:
     Name: Expert Archer6
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,12;
   - Id: 4838
@@ -13756,7 +13637,6 @@ Body:
     Name: Expert Archer7
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,14;
   - Id: 4839
@@ -13764,7 +13644,6 @@ Body:
     Name: Expert Archer8
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,16;
   - Id: 4840
@@ -13772,7 +13651,6 @@ Body:
     Name: Expert Archer9
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,18;
   - Id: 4841
@@ -13780,7 +13658,6 @@ Body:
     Name: Expert Archer10
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bLongAtkRate,20;
       bonus bAspd,1;
@@ -13789,7 +13666,6 @@ Body:
     Name: Atk Speed2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bAspd,2;
   - Id: 4843
@@ -13797,7 +13673,6 @@ Body:
     Name: Sharp4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bCritical,14;
       bonus bHit,5;
@@ -13806,7 +13681,6 @@ Body:
     Name: Sharp5
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bCritical,15;
       bonus bHit,6;
@@ -13837,7 +13711,6 @@ Body:
     Name: Immune Level 1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bSubEle,Ele_Neutral,5;
   - Id: 4849
@@ -13845,7 +13718,6 @@ Body:
     Name: Cranial Level 1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bSubRace,RC_DemiHuman,5;
       bonus2 bSubRace,RC_Player_Human,5;
@@ -13854,7 +13726,6 @@ Body:
     Name: Heal Amount2
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bHealPower,6;
       bonus bUseSPrate,5;
@@ -13863,7 +13734,6 @@ Body:
     Name: Heal Amount3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bHealPower,12;
       bonus bUseSPrate,10;
@@ -13872,7 +13742,6 @@ Body:
     Name: Heal Amount4
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bHealPower,20;
       bonus bUseSPrate,15;
@@ -13881,121 +13750,114 @@ Body:
     Name: Special Str
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
-      bonus bStr,1;
       .@r = getrefine();
-      if (.@r>7) {
+      bonus bStr,1;
+      if (.@r>=8) {
          bonus bStr,3;
-      }
-      if (.@r>8) {
-         bonus2 bAddClass,Class_All,1;
-      }
-      if (.@r>11) {
-         bonus bAspd,1;
-         bonus bFixedCastrate,-7;
+         if (.@r>=9) {
+            bonus2 bAddClass,Class_All,1;
+            if (.@r>=12) {
+               bonus bFixedCastrate,-7;
+               bonus bAspd,1;
+            }
+         }
       }
   - Id: 4854
     AegisName: S_Agi
     Name: Special Agi
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
-      bonus bAgi,1;
       .@r = getrefine();
-      if (.@r>7) {
+      bonus bAgi,1;
+      if (.@r>=8) {
          bonus bAgi,3;
-      }
-      if (.@r>8) {
-         bonus2 bAddClass,Class_All,1;
-      }
-      if (.@r>11) {
-         bonus bAspd,1;
-         bonus bFixedCastrate,-7;
+         if (.@r>=9) {
+            bonus2 bAddClass,Class_All,1;
+            if (.@r>=12) {
+               bonus bFixedCastrate,-7;
+               bonus bAspd,1;
+            }
+         }
       }
   - Id: 4855
     AegisName: S_Vital
     Name: Special Vit
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
-      bonus bVit,1;
       .@r = getrefine();
-      if (.@r>7) {
+      bonus bVit,1;
+      if (.@r>=8) {
          bonus bVit,3;
-      }
-      if (.@r>8) {
-         bonus bMaxSPrate,1;
-      }
-      if (.@r>11) {
-         bonus bAspd,1;
-         bonus bFixedCastrate,-7;
+         if (.@r>=9) {
+            bonus bMaxSP,1;
+            if (.@r>=12) {
+               bonus bFixedCastrate,-7;
+               bonus bAspd,1;
+            }
+         }
       }
   - Id: 4856
     AegisName: S_Int
     Name: Special Int
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
-      bonus bInt,1;
       .@r = getrefine();
-      if (.@r>7) {
+      bonus bInt,1;
+      if (.@r>=8) {
          bonus bInt,3;
-      }
-      if (.@r>8) {
-         bonus bMatkRate,1;
-      }
-      if (.@r>11) {
-         bonus bAspd,1;
-         bonus bFixedCastrate,-7;
+         if (.@r>=9) {
+            bonus bMatkRate,1;
+            if (.@r>=12) {
+               bonus bFixedCastrate,-7;
+               bonus bAspd,1;
+            }
+         }
       }
   - Id: 4857
     AegisName: S_Dex
     Name: Special Dex
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
-      bonus bDex,1;
       .@r = getrefine();
-      if (.@r>7) {
+      bonus bDex,1;
+      if (.@r>=8) {
          bonus bDex,3;
-      }
-      if (.@r>8) {
-         bonus bMatkRate,1;
-      }
-      if (.@r>11) {
-         bonus bAspd,1;
-         bonus bFixedCastrate,-7;
+         if (.@r>=9) {
+            bonus bMatkRate,1;
+            if (.@r>=12) {
+               bonus bFixedCastrate,-7;
+               bonus bAspd,1;
+            }
+         }
       }
   - Id: 4858
     AegisName: S_Luck
     Name: Special Luk
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
-      bonus bLuk,1;
       .@r = getrefine();
-      if (.@r>7) {
+      bonus bLuk,1;
+      if (.@r>=8) {
          bonus bLuk,3;
-      }
-      if (.@r>8) {
-         bonus bMaxHPrate,1;
-      }
-      if (.@r>11) {
-         bonus bAspd,1;
-         bonus bFixedCastrate,-7;
+         if (.@r>=9) {
+            bonus bMaxHPrate,1;
+            if (.@r>=12) {
+               bonus bFixedCastrate,-7;
+               bonus bAspd,1;
+            }
+         }
       }
   - Id: 4859
     AegisName: Evasion1
     Name: Evasion1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bFlee,1;
   - Id: 4860
@@ -14003,7 +13865,6 @@ Body:
     Name: Evasion3
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bFlee,3;
   - Id: 4861
@@ -14011,7 +13872,6 @@ Body:
     Name: MHP+1%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHPrate,1;
   - Id: 4862
@@ -14019,7 +13879,6 @@ Body:
     Name: MHP+2%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHPrate,2;
   - Id: 4863
@@ -14059,7 +13918,6 @@ Body:
     Name: MHP+3%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHPrate,3;
   - Id: 4868
@@ -14067,7 +13925,6 @@ Body:
     Name: MHP+4%
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxHPrate,4;
   - Id: 4869
@@ -14082,7 +13939,6 @@ Body:
     Name: SP+25
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxSP,25;
   - Id: 4871
@@ -14090,7 +13946,6 @@ Body:
     Name: SP+75
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus bMaxSP,75;
   - Id: 4872
@@ -14117,30 +13972,40 @@ Body:
     Type: Card
     Script: |
       autobonus2 "{ bonus bStr,200; bonus2 bHPLossRate,500,1000; }",20,5000,BF_WEAPON,"{ active_transform 1060,5000; specialeffect2 EF_POTION_BERSERK; showscript \"Bigfoot Power !\"; }";
+    UnEquipScript: |
+      heal 0,-300;
   - Id: 4876
     AegisName: Runaway_Magic
     Name: Runaway Magic
     Type: Card
     Script: |
       autobonus "{ bonus bInt,200; bonus2 bSPLossRate,200,1000; }",15,10000,BF_MAGIC,"{ specialeffect2 EF_LAMADAN; }";
+    UnEquipScript: |
+      heal 0,-2000;
   - Id: 4877
     AegisName: Speed_Of_Light
     Name: Speed of Light
     Type: Card
     Script: |
-      autobonus "{ bonus bAspdRate,100; bonus bFlee,100; bonus2 bHPLossRate,400,1000; bonus2 bSPLossRate,40,1000; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }";
+      autobonus "{ bonus bAspdRate,100; bonus bFlee,100; bonus2 bSPLossRate,50,1000; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }";
+    UnEquipScript: |
+      heal 0,-300;
   - Id: 4878
     AegisName: Muscle_Fool
     Name: Muscle Fool
     Type: Card
     Script: |
-      autobonus2 "{ bonus bDef,1000; bonus2 bAddRace,RC_All,-50; bonus bMatkRate,-50; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_MAGNUMBREAK; }";
+      autobonus2 "{ bonus bDef,1000; bonus2 bSPLossRate,50,1000; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_MAGNUMBREAK; }";
+    UnEquipScript: |
+      heal 0,-300;
   - Id: 4879
     AegisName: Hawkeye
     Name: Hawkeye
     Type: Card
     Script: |
       autobonus "{ bonus bDex,200; bonus2 bSPLossRate,50,1000; }",30,5000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }";
+    UnEquipScript: |
+      heal 0,-300;
   - Id: 4880
     AegisName: Lucky_Day
     Name: Lucky Day
@@ -14148,6 +14013,8 @@ Body:
     Script: |
       autobonus "{ bonus bLuk,200; bonus2 bAddMonsterDropItem,7444,10; }",15,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_MVP; showscript \"LUCKY MAX !!\"; }";
       autobonus2 "{ bonus bLuk,200; bonus2 bAddMonsterDropItem,7444,1; }",1,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_MVP; showscript \"LUCKY MAX !!\"; }";
+    UnEquipScript: |
+      heal 0,-300;
   - Id: 4881
     AegisName: Attack_Delay_4
     Name: Attack Delay 4
@@ -14714,8 +14581,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bHPrecovRate,2;
-      bonus bSPrecovRate,2;
+      bonus bHealPower2,2;
   - Id: 4931
     AegisName: HEALHP1
     Name: Heal 10
@@ -14730,6 +14596,8 @@ Body:
     Buy: 10
     Script: |
       bonus bSPGainValue,1;
+      bonus bLongSPGainValue,1;
+      bonus bMagicSPGainValue,1;
   - Id: 4933
     AegisName: Tolerance_Not1
     Name: Neutral Resistance Lv1
@@ -14756,7 +14624,6 @@ Body:
     Name: Attack big1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bAddSize,Size_Large,1;
   - Id: 4937
@@ -14764,7 +14631,6 @@ Body:
     Name: Attack mid1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bAddSize,Size_Medium,1;
   - Id: 4938
@@ -14772,7 +14638,6 @@ Body:
     Name: Attack small1
     Type: Card
     Buy: 20
-    Weight: 10
     Script: |
       bonus2 bAddSize,Size_Small,1;
   - Id: 4939
@@ -15184,10 +15049,10 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bStr,6;
-      }
-      if (.@r>=11) {
-         bonus bStr,1;
-         bonus2 bAddRace,RC_All,7;
+         if (.@r>=11) {
+            bonus2 bAddRace,RC_All,7;
+            bonus bStr,1;
+         }
       }
   - Id: 4996
     AegisName: Neev_STR_3
@@ -15198,14 +15063,14 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bStr,7;
-      }
-      if (.@r>=12) {
-         bonus bStr,1;
-         bonus2 bAddRace,RC_All,8;
-      }
-      if (.@r>=13) {
-         bonus bStr,1;
-         bonus2 bAddRace,RC_All,2;
+         if (.@r>=12) {
+            bonus2 bAddRace,RC_All,8;
+            bonus bStr,1;
+            if (.@r>=13) {
+               bonus2 bAddRace,RC_All,2;
+               bonus bStr,1;
+            }
+         }
       }
   - Id: 4997
     AegisName: Neev_AGI_1
@@ -15216,9 +15081,9 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bAgi,5;
-      }
-      if (.@r>=10) {
-         bonus bFlee2,5;
+         if (.@r>=10) {
+            bonus bFlee2,5;
+         }
       }
   - Id: 4998
     AegisName: Neev_AGI_2
@@ -15229,10 +15094,10 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bAgi,6;
-      }
-      if (.@r>=11) {
-         bonus bAgi,1;
-         bonus bFlee2,7;
+         if (.@r>=11) {
+            bonus bFlee2,7;
+            bonus bAgi,1;
+         }
       }
   - Id: 4999
     AegisName: Neev_AGI_3
@@ -39385,9 +39250,9 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bInt,5;
-      }
-      if (.@r>=10) {
-         bonus bMatkRate,5;
+         if (.@r>=10) {
+            bonus bMatkRate,5;
+         }
       }
   - Id: 29001
     AegisName: Neev_INT_2
@@ -39398,10 +39263,10 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bInt,6;
-      }
-      if (.@r>=11) {
-         bonus bInt,1;
-         bonus bMatkRate,7;
+         if (.@r>=11) {
+            bonus bMatkRate,7;
+            bonus bInt,1;
+         }
       }
   - Id: 29002
     AegisName: Neev_INT_3
@@ -39412,14 +39277,14 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bInt,7;
-      }
-      if (.@r>=12) {
-         bonus bInt,1;
-         bonus bMatkRate,8;
-      }
-      if (.@r>=13) {
-         bonus bInt,1;
-         bonus bMatkRate,2;
+         if (.@r>=12) {
+            bonus bMatkRate,8;
+            bonus bInt,1;
+            if (.@r>=13) {
+               bonus bMatkRate,2;
+               bonus bInt,1;
+            }
+         }
       }
   - Id: 29003
     AegisName: Neev_DEX_1
@@ -39430,9 +39295,9 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bDex,5;
-      }
-      if (.@r>=10) {
-         bonus bLongAtkRate,5;
+         if (.@r>=10) {
+            bonus bLongAtkRate,5;
+         }
       }
   - Id: 29004
     AegisName: Neev_DEX_2
@@ -39443,10 +39308,10 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bDex,6;
-      }
-      if (.@r>=11) {
-         bonus bDex,1;
-         bonus bLongAtkRate,7;
+         if (.@r>=11) {
+            bonus bLongAtkRate,7;
+            bonus bDex,1;
+         }
       }
   - Id: 29005
     AegisName: Neev_DEX_3
@@ -39457,14 +39322,14 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bDex,7;
-      }
-      if (.@r>=12) {
-         bonus bDex,1;
-         bonus bLongAtkRate,8;
-      }
-      if (.@r>=13) {
-         bonus bDex,1;
-         bonus bLongAtkRate,2;
+         if (.@r>=12) {
+            bonus bLongAtkRate,8;
+            bonus bDex,1;
+            if (.@r>=13) {
+               bonus bLongAtkRate,2;
+               bonus bDex,1;
+            }
+         }
       }
   - Id: 29006
     AegisName: Neev_LUK_1
@@ -39475,9 +39340,9 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bLuk,5;
-      }
-      if (.@r>=10) {
-         bonus bCritAtkRate,5;
+         if (.@r>=10) {
+            bonus bCritAtkRate,5;
+         }
       }
   - Id: 29007
     AegisName: Neev_LUK_2
@@ -39488,10 +39353,10 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bLuk,6;
-      }
-      if (.@r>=11) {
-         bonus bLuk,1;
-         bonus bCritAtkRate,7;
+         if (.@r>=11) {
+            bonus bCritAtkRate,7;
+            bonus bLuk,1;
+         }
       }
   - Id: 29008
     AegisName: Neev_LUK_3
@@ -39502,14 +39367,14 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bLuk,7;
-      }
-      if (.@r>=12) {
-         bonus bLuk,1;
-         bonus bCritAtkRate,8;
-      }
-      if (.@r>=13) {
-         bonus bLuk,1;
-         bonus bCritAtkRate,6;
+         if (.@r>=12) {
+            bonus bCritAtkRate,8;
+            bonus bLuk,1;
+            if (.@r>=13) {
+               bonus bCritAtkRate,6;
+               bonus bLuk,1;
+            }
+         }
       }
   - Id: 29009
     AegisName: Neev_VIT_1
@@ -39520,9 +39385,9 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bVit,5;
-      }
-      if (.@r>=10) {
-         bonus bMaxHPrate,5;
+         if (.@r>=10) {
+            bonus bMaxHPrate,5;
+         }
       }
   - Id: 29010
     AegisName: Neev_VIT_2
@@ -39533,10 +39398,10 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bVit,6;
-      }
-      if (.@r>=11) {
-         bonus bVit,1;
-         bonus bMaxHPrate,7;
+         if (.@r>=11) {
+            bonus bMaxHPrate,7;
+            bonus bVit,1;
+         }
       }
   - Id: 29011
     AegisName: Neev_VIT_3
@@ -39547,14 +39412,14 @@ Body:
       .@r = getrefine();
       if (.@r>=7) {
          bonus bVit,7;
-      }
-      if (.@r>=12) {
-         bonus bVit,1;
-         bonus bMaxHPrate,8;
-      }
-      if (.@r>=13) {
-         bonus bVit,1;
-         bonus bMaxHPrate,2;
+         if (.@r>=12) {
+            bonus bMaxHPrate,8;
+            bonus bVit,1;
+            if (.@r>=13) {
+               bonus bMaxHPrate,2;
+               bonus bVit,1;
+            }
+         }
       }
   - Id: 29013
     AegisName: HPdrain3
@@ -39735,7 +39600,7 @@ Body:
     Type: Card
     Script: |
       bonus bMaxHP,100;
-      if (BaseLevel >= 120) {
+      if (BaseLevel>=120) {
          bonus bMaxHPrate,2;
       }
   - Id: 29050
@@ -39744,7 +39609,7 @@ Body:
     Type: Card
     Script: |
       bonus bMaxSP,50;
-      if (BaseLevel >= 120) {
+      if (BaseLevel>=120) {
          bonus bMaxSPrate,2;
       }
   - Id: 29051
@@ -39795,167 +39660,167 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,3;
-      bonus bHit,3;
+      bonus2 bAddClass,Class_All,4;
+      bonus bHit,10;
   - Id: 29062
     AegisName: Mettle2
     Name: Mettle Lv. 2
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,6;
-      bonus bHit,6;
+      bonus2 bAddClass,Class_All,8;
+      bonus bHit,20;
   - Id: 29063
     AegisName: Mettle3
     Name: Mettle Lv. 3
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,9;
-      bonus bHit,9;
+      bonus2 bAddClass,Class_All,12;
+      bonus bHit,30;
   - Id: 29064
     AegisName: Mettle4
     Name: Mettle Lv. 4
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,12;
-      bonus bHit,12;
+      bonus2 bAddClass,Class_All,16;
+      bonus bHit,40;
   - Id: 29065
     AegisName: Mettle5
     Name: Mettle Lv. 5
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,15;
-      bonus bHit,15;
+      bonus2 bAddClass,Class_All,20;
+      bonus bHit,50;
   - Id: 29066
     AegisName: Mettle6
     Name: Mettle Lv. 6
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,18;
-      bonus bHit,18;
+      bonus2 bAddClass,Class_All,24;
+      bonus bHit,60;
   - Id: 29067
     AegisName: Mettle7
     Name: Mettle Lv. 7
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,21;
-      bonus bHit,21;
+      bonus2 bAddClass,Class_All,28;
+      bonus bHit,70;
   - Id: 29068
     AegisName: Mettle8
     Name: Mettle Lv. 8
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,24;
-      bonus bHit,24;
+      bonus2 bAddClass,Class_All,32;
+      bonus bHit,80;
   - Id: 29069
     AegisName: Mettle9
     Name: Mettle Lv. 9
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,27;
-      bonus bHit,27;
+      bonus2 bAddClass,Class_All,36;
+      bonus bHit,90;
   - Id: 29070
     AegisName: Mettle10
     Name: Mettle Lv. 10
     Type: Card
     Buy: 10
     Script: |
-      bonus2 bAddClass,Class_All,33;
-      bonus bHit,30;
+      bonus2 bAddClass,Class_All,44;
+      bonus bHit,100;
   - Id: 29071
     AegisName: MagicEessence1
     Name: Magic Essence Lv. 1
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,3;
       bonus bFixedCast,-100;
+      bonus bMatkRate,4;
   - Id: 29072
     AegisName: MagicEessence2
     Name: Magic Essence Lv. 2
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,6;
       bonus bFixedCast,-200;
+      bonus bMatkRate,8;
   - Id: 29073
     AegisName: MagicEessence3
     Name: Magic Essence Lv. 3
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,9;
       bonus bFixedCast,-300;
+      bonus bMatkRate,12;
   - Id: 29074
     AegisName: MagicEessence4
     Name: Magic Essence Lv. 4
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,12;
       bonus bFixedCast,-400;
+      bonus bMatkRate,16;
   - Id: 29075
     AegisName: MagicEessence5
     Name: Magic Essence Lv. 5
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,15;
       bonus bFixedCast,-500;
+      bonus bMatkRate,20;
   - Id: 29076
     AegisName: MagicEessence6
     Name: Magic Essence Lv. 6
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,18;
       bonus bFixedCast,-600;
+      bonus bMatkRate,24;
   - Id: 29077
     AegisName: MagicEessence7
     Name: Magic Essence Lv. 7
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,21;
       bonus bFixedCast,-700;
+      bonus bMatkRate,28;
   - Id: 29078
     AegisName: MagicEessence8
     Name: Magic Essence Lv. 8
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,24;
       bonus bFixedCast,-800;
+      bonus bMatkRate,32;
   - Id: 29079
     AegisName: MagicEessence9
     Name: Magic Essence Lv. 9
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,27;
       bonus bFixedCast,-900;
+      bonus bMatkRate,36;
   - Id: 29080
     AegisName: MagicEessence10
     Name: Magic Essence Lv. 10
     Type: Card
     Buy: 10
     Script: |
-      bonus bMatkRate,33;
       bonus bFixedCast,-1000;
+      bonus bMatkRate,44;
   - Id: 29081
     AegisName: Acute1
     Name: Acute Lv. 1
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,10;
+      bonus bCritAtkRate,20;
       bonus bCritical,3;
   - Id: 29082
     AegisName: Acute2
@@ -39963,7 +39828,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,20;
+      bonus bCritAtkRate,35;
       bonus bCritical,6;
   - Id: 29083
     AegisName: Acute3
@@ -39971,7 +39836,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,30;
+      bonus bCritAtkRate,50;
       bonus bCritical,9;
   - Id: 29084
     AegisName: Acute4
@@ -39979,7 +39844,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,40;
+      bonus bCritAtkRate,65;
       bonus bCritical,12;
   - Id: 29085
     AegisName: Acute5
@@ -39987,7 +39852,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,50;
+      bonus bCritAtkRate,80;
       bonus bCritical,15;
   - Id: 29086
     AegisName: Acute6
@@ -39995,7 +39860,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,60;
+      bonus bCritAtkRate,95;
       bonus bCritical,18;
   - Id: 29087
     AegisName: Acute7
@@ -40003,7 +39868,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,70;
+      bonus bCritAtkRate,110;
       bonus bCritical,21;
   - Id: 29088
     AegisName: Acute8
@@ -40011,7 +39876,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,80;
+      bonus bCritAtkRate,125;
       bonus bCritical,24;
   - Id: 29089
     AegisName: Acute9
@@ -40019,7 +39884,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,90;
+      bonus bCritAtkRate,140;
       bonus bCritical,27;
   - Id: 29090
     AegisName: Acute10
@@ -40027,7 +39892,7 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bCritAtkRate,110;
+      bonus bCritAtkRate,170;
       bonus bCritical,30;
   - Id: 29091
     AegisName: MasterArcher1
@@ -40116,7 +39981,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,5;
-      bonus bDef,15;
+      bonus bMdef,20;
+      bonus bDef,140;
   - Id: 29102
     AegisName: Adamatine2
     Name: Adamantine Lv. 2
@@ -40124,7 +39990,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,10;
-      bonus bDef,30;
+      bonus bMdef,40;
+      bonus bDef,180;
   - Id: 29103
     AegisName: Adamatine3
     Name: Adamantine Lv. 3
@@ -40132,7 +39999,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,15;
-      bonus bDef,45;
+      bonus bMdef,60;
+      bonus bDef,220;
   - Id: 29104
     AegisName: Adamatine4
     Name: Adamantine Lv. 4
@@ -40140,7 +40008,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,20;
-      bonus bDef,60;
+      bonus bMdef,80;
+      bonus bDef,260;
   - Id: 29105
     AegisName: Adamatine5
     Name: Adamantine Lv. 5
@@ -40148,7 +40017,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,25;
-      bonus bDef,75;
+      bonus bMdef,100;
+      bonus bDef,300;
   - Id: 29106
     AegisName: Adamatine6
     Name: Adamantine Lv. 6
@@ -40156,7 +40026,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,30;
-      bonus bDef,90;
+      bonus bMdef,120;
+      bonus bDef,340;
   - Id: 29107
     AegisName: Adamatine7
     Name: Adamantine Lv. 7
@@ -40164,7 +40035,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,35;
-      bonus bDef,105;
+      bonus bMdef,140;
+      bonus bDef,380;
   - Id: 29108
     AegisName: Adamatine8
     Name: Adamantine Lv. 8
@@ -40172,7 +40044,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,40;
-      bonus bDef,120;
+      bonus bMdef,160;
+      bonus bDef,420;
   - Id: 29109
     AegisName: Adamatine9
     Name: Adamantine Lv. 9
@@ -40180,7 +40053,8 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,45;
-      bonus bDef,135;
+      bonus bMdef,180;
+      bonus bDef,460;
   - Id: 29110
     AegisName: Adamatine10
     Name: Adamantine Lv. 10
@@ -40188,87 +40062,88 @@ Body:
     Buy: 10
     Script: |
       bonus bMaxHPrate,55;
-      bonus bDef,150;
+      bonus bMdef,200;
+      bonus bDef,500;
   - Id: 29111
     AegisName: Affection1
     Name: Affection Lv. 1
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,3;
       bonus bHealPower,5;
-      bonus bMdef,3;
   - Id: 29112
     AegisName: Affection2
     Name: Affection Lv. 2
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,6;
       bonus bHealPower,10;
-      bonus bMdef,6;
   - Id: 29113
     AegisName: Affection3
     Name: Affection Lv. 3
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,9;
       bonus bHealPower,15;
-      bonus bMdef,9;
   - Id: 29114
     AegisName: Affection4
     Name: Affection Lv. 4
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,12;
       bonus bHealPower,20;
-      bonus bMdef,12;
   - Id: 29115
     AegisName: Affection5
     Name: Affection Lv. 5
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,15;
       bonus bHealPower,25;
-      bonus bMdef,15;
   - Id: 29116
     AegisName: Affection6
     Name: Affection Lv. 6
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,18;
       bonus bHealPower,30;
-      bonus bMdef,18;
   - Id: 29117
     AegisName: Affection7
     Name: Affection Lv. 7
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,21;
       bonus bHealPower,35;
-      bonus bMdef,21;
   - Id: 29118
     AegisName: Affection8
     Name: Affection Lv. 8
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,24;
       bonus bHealPower,40;
-      bonus bMdef,24;
   - Id: 29119
     AegisName: Affection9
     Name: Affection Lv. 9
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,27;
       bonus bHealPower,45;
-      bonus bMdef,27;
   - Id: 29120
     AegisName: Affection10
     Name: Affection Lv. 10
     Type: Card
     Buy: 10
     Script: |
+      bonus bMaxSPrate,30;
       bonus bHealPower,55;
-      bonus bMdef,30;
   - Id: 29121
     AegisName: Goddess_of_Justice_A
     Name: Goddess of Justice A
@@ -40371,8 +40246,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus bStr,1;
   - Id: 29149
@@ -40382,8 +40255,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus bInt,1;
   - Id: 29150
@@ -40393,8 +40264,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus bAgi,1;
   - Id: 29151
@@ -40404,8 +40273,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus bVit,1;
   - Id: 29152
@@ -40415,8 +40282,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus bDex,1;
   - Id: 29153
@@ -40426,8 +40291,6 @@ Body:
     Buy: 10
     Locations:
       Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus bLuk,1;
   - Id: 29154
@@ -41083,13 +40946,13 @@ Body:
     Name: Champion Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("MO_IRONHAND")*2;
+      bonus bBaseAtk,2*getskilllv("MO_IRONHAND");
   - Id: 29424
     AegisName: SuraStone_Middle_
     Name: Champion Stone (Middle)
     Type: Card
     Script: |
-      bonus bHit,getskilllv("MO_DODGE")*2;
+      bonus bHit,2*getskilllv("MO_DODGE");
   - Id: 29425
     AegisName: SuraStone_Bottom_
     Name: Champion Stone (Bottom)
@@ -41113,7 +40976,7 @@ Body:
     Name: Sniper Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("HT_STEELCROW")*2;
+      bonus bBaseAtk,2*getskilllv("HT_STEELCROW");
   - Id: 29429
     AegisName: RangerStone_Middle_
     Name: Sniper Stone (Middle)
@@ -41216,7 +41079,7 @@ Body:
     Name: Lord Knight Stone (Top)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("KN_SPEARMASTERY")*2;
+      bonus bBaseAtk,2*getskilllv("KN_SPEARMASTERY");
   - Id: 29461
     AegisName: RuneknightStone_Middle_
     Name: Lord Knight Stone (Middle)
@@ -41235,19 +41098,18 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"RK_DRAGONBREATH",10;
-      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
   - Id: 29464
     AegisName: GeneticStone_Top_
     Name: Creator Stone (Top)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("AM_LEARNINGPOTION")*2;
+      bonus bBaseAtk,2*getskilllv("AM_LEARNINGPOTION");
   - Id: 29465
     AegisName: GeneticStone_Middle_
     Name: Creator Stone (Middle)
     Type: Card
     Script: |
-      bonus bHealPower,getskilllv("AM_POTIONPITCHER")*2;
+      bonus bHealPower,2*getskilllv("AM_POTIONPITCHER");
   - Id: 29466
     AegisName: GeneticStone_Bottom_
     Name: Creator Stone (Bottom)
@@ -41265,7 +41127,7 @@ Body:
     Name: High Wizard Stone (Top)
     Type: Card
     Script: |
-      bonus bMatkRate,getskilllv("HW_MAGICPOWER")*2;
+      bonus bMatk,2*getskilllv("HW_MAGICPOWER");
   - Id: 29469
     AegisName: WarlockStone_Middle_
     Name: High Wizard Stone (Middle)
@@ -41289,13 +41151,13 @@ Body:
     Name: Stalker Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("RG_PLAGIARISM")*2;
+      bonus bBaseAtk,2*getskilllv("RG_PLAGIARISM");
   - Id: 29478
     AegisName: ShadowchaseStone_Middle_
     Name: Stalker Stone (Middle)
     Type: Card
     Script: |
-      bonus bHit,getskilllv("AC_VULTURE")*2;
+      bonus bHit,2*getskilllv("AC_VULTURE");
   - Id: 29479
     AegisName: ShadowchaseStone_Bottom_
     Name: Stalker Stone (Bottom)
@@ -41313,13 +41175,13 @@ Body:
     Name: Whitesmith Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("BS_WEAPONRESEARCH")*2;
+      bonus bBaseAtk,2*getskilllv("BS_WEAPONRESEARCH");
   - Id: 29482
     AegisName: MechanicStone_Middle_
     Name: Whitesmith Stone (Middle)
     Type: Card
     Script: |
-      bonus bHit,getskilllv("BS_SKINTEMPER")*3;
+      bonus bHit,3*getskilllv("BS_SKINTEMPER");
   - Id: 29483
     AegisName: MechanicStone_Bottom_
     Name: Whitesmith Stone (Bottom)
@@ -41373,7 +41235,7 @@ Body:
     Name: High Priest Stone (Middle)
     Type: Card
     Script: |
-      bonus bCritAtkRate,getskilllv("PR_MACEMASTERY")*2;
+      bonus bCritAtkRate,2*getskilllv("PR_MACEMASTERY");
   - Id: 29515
     AegisName: HighpriestStone_Bottom_
     Name: High Priest Stone (Bottom)
@@ -41391,13 +41253,13 @@ Body:
     Name: Paladin Stone (Upper)
     Type: Card
     Script: |
-      bonus bMaxHPrate,getskilllv("CR_TRUST")/2;
+      bonus bMaxHPrate,(getskilllv("CR_TRUST")/2);
   - Id: 29518
     AegisName: PaladinStone_Middle_
     Name: Paladin Stone (Middle)
     Type: Card
     Script: |
-      bonus bLongAtkRate,getskilllv("KN_SPEARMASTERY")/2;
+      bonus bLongAtkRate,(getskilllv("KN_SPEARMASTERY")/2);
   - Id: 29519
     AegisName: PaladinStone_Bottom_
     Name: Paladin Stone (Bottom)
@@ -41415,13 +41277,13 @@ Body:
     Name: Assassin Cross Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("AS_KATAR")*2;
+      bonus bBaseAtk,2*getskilllv("AS_KATAR");
   - Id: 29522
     AegisName: AssacrossStone_Middle_
     Name: Assassin Cross Stone (Middle)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("AS_LEFT")*2;
+      bonus bHit,2*getskilllv("AS_LEFT");
   - Id: 29523
     AegisName: AssacrossStone_Bottom_
     Name: Assassin Cross Stone (Bottom)
@@ -41440,14 +41302,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      if (.@r>8) {
-         bonus bDef,45;
-      }
-      else if (.@r>6) {
-         bonus bDef,35;
-      }
-      else {
-         bonus bDef,25;
+      bonus bDef,25;
+      if (.@r>=7) {
+         bonus bDef,10;
+         if (.@r>=9) {
+            bonus bDef,10;
+         }
       }
   - Id: 29528
     AegisName: Improve_Orb_Mdef
@@ -41455,14 +41315,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      if (.@r>8) {
-         bonus bMdef,8;
-      }
-      else if (.@r>6) {
-         bonus bMdef,5;
-      }
-      else {
-         bonus bMdef,2;
+      bonus bMdef,2;
+      if (.@r>=7) {
+         bonus bMdef,3;
+         if (.@r>=9) {
+            bonus bMdef,3;
+         }
       }
   - Id: 29529
     AegisName: Improve_Orb_HealHP
@@ -41477,11 +41335,11 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMaxSPrate,5;
-      if (.@r>8) {
-         bonus bMaxSP,250;
-      }
-      else if (.@r>6) {
+      if (.@r>=7) {
          bonus bMaxSP,100;
+         if (.@r>=9) {
+            bonus bMaxSP,150;
+         }
       }
   - Id: 29531
     AegisName: Improve_Orb_Health
@@ -41490,11 +41348,11 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMaxHPrate,5;
-      if (.@r>8) {
-         bonus bMaxHP,1250;
-      }
-      else if (.@r>6) {
+      if (.@r>=7) {
          bonus bMaxHP,500;
+         if (.@r>=9) {
+            bonus bMaxHP,750;
+         }
       }
   - Id: 29532
     AegisName: Improve_Orb_HealSP
@@ -41508,14 +41366,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      if (.@r>8) {
-         bonus bHealPower,15;
-      }
-      else if (.@r>6) {
-         bonus bHealPower,10;
-      }
-      else {
+      bonus bHealPower,5;
+      if (.@r>=7) {
          bonus bHealPower,5;
+         if (.@r>=9) {
+            bonus bHealPower,5;
+         }
       }
   - Id: 29534
     AegisName: Improve_Orb_Atk
@@ -41524,11 +41380,11 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,5;
-      if (.@r>8) {
-         bonus bBaseAtk,50;
-      }
-      else if (.@r>6) {
+      if (.@r>=7) {
          bonus bBaseAtk,25;
+         if (.@r>=9) {
+            bonus bBaseAtk,25;
+         }
       }
   - Id: 29535
     AegisName: Improve_Orb_Matk
@@ -41549,14 +41405,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      if (.@r>8) {
-         bonus bLongAtkRate,7;
-      }
-      else if (.@r>6) {
-         bonus bLongAtkRate,5;
-      }
-      else {
-         bonus bLongAtkRate,3;
+      bonus bLongAtkRate,3;
+      if (.@r>=7) {
+         bonus bLongAtkRate,2;
+         if (.@r>=9) {
+            bonus bLongAtkRate,2;
+         }
       }
   - Id: 29537
     AegisName: Improve_Orb_Speed
@@ -41565,11 +41419,11 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bAspd,1;
-      if (.@r>8) {
-         bonus bAspdRate,6;
-      }
-      else if (.@r>6) {
+      if (.@r>=7) {
          bonus bAspdRate,3;
+         if (.@r>=9) {
+            bonus bAspdRate,3;
+         }
       }
   - Id: 29538
     AegisName: Improve_Orb_Cast
@@ -41577,14 +41431,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      if (.@r>8) {
-         bonus bVariableCastrate,-11;
-      }
-      else if (.@r>6) {
-         bonus bVariableCastrate,-8;
-      }
-      else {
-         bonus bVariableCastrate,-5;
+      bonus bVariableCastrate,-5;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-3;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-3;
+         }
       }
   - Id: 29539
     AegisName: Improve_Orb_Cri
@@ -41593,11 +41445,11 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bCritical,10;
-      if (.@r>8) {
-         bonus bCritAtkRate,10;
-      }
-      else if (.@r>6) {
+      if (.@r>=7) {
          bonus bCritAtkRate,5;
+         if (.@r>=9) {
+            bonus bCritAtkRate,5;
+         }
       }
   - Id: 29540
     AegisName: Improve_Orb_Delay
@@ -41605,14 +41457,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      if (.@r>8) {
-         bonus bDelayRate,-15;
-      }
-      else if (.@r>6) {
-         bonus bDelayRate,-10;
-      }
-      else {
-         bonus bDelayRate,-5;
+      bonus bDelayrate,-5;
+      if (.@r>=7) {
+         bonus bDelayrate,-5;
+         if (.@r>=9) {
+            bonus bDelayrate,-5;
+         }
       }
   - Id: 29541
     AegisName: Improve_Orb_Fix
@@ -41620,14 +41470,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      if (.@r>8) {
-         bonus bFixedCast,-700;
-      }
-      else if (.@r>6) {
-         bonus bFixedCast,-500;
-      }
-      else {
-         bonus bFixedCast,-300;
+      bonus bFixedCast,-300;
+      if (.@r>=7) {
+         bonus bFixedCast,-200;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+         }
       }
   - Id: 29542
     AegisName: Improve_Orb_Above
@@ -41635,20 +41483,16 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
-      .@val = 5;
-      if (.@r>6) {
-         bonus2 bSubSize,Size_Small,5;
-         bonus2 bSubSize,Size_Medium,5;
-         bonus2 bSubSize,Size_Large,5;
-         bonus2 bMagicSubSize,Size_Small,-5;
-         bonus2 bMagicSubSize,Size_Medium,-5;
-         bonus2 bMagicSubSize,Size_Large,-5;
-         if (.@r>8) {
-            .@val += 5;
+      bonus2 bSubEle,Ele_All,5;
+      if (.@r>=7) {
+         bonus2 bSubSize,Size_All,5;
+         bonus2 bMagicSubSize,Size_All,5;
+         if (.@r>=9) {
+            bonus2 bSubRace,RC_All,5;
+            bonus2 bSubRace,RC_Player_Human,-5;
+            bonus2 bSubRace,RC_Player_Doram,-5;
          }
       }
-      bonus2 bSubDefEle,Ele_All,.@val;
-      bonus3 bSubEle,Ele_All,.@val,BF_MAGIC;
   - Id: 29543
     AegisName: Improve_Orb_Life
     Name: Modification Orb(Life Drain)
@@ -41846,7 +41690,7 @@ Body:
     Name: Sura Stone II (Bottom)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("AL_DP")*2;
+      bonus bBaseAtk,2*getskilllv("AL_DP");
   - Id: 29612
     AegisName: SuraStone_Middle2_
     Name: Sura Stone II (Middle)
@@ -41870,7 +41714,7 @@ Body:
     Name: Sorcerer Stone II (Bottom)
     Type: Card
     Script: |
-      bonus bMatk,getskilllv("SA_AUTOSPELL")*2;
+      bonus bMatk,2*getskilllv("SA_AUTOSPELL");
   - Id: 29616
     AegisName: SorcererStone_Middle2_
     Name: Sorcerer Stone II (Middle)
@@ -41909,13 +41753,13 @@ Body:
     Name: Shadow Chaser Stone II (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("RG_SNATCHER")*2;
+      bonus bBaseAtk,2*getskilllv("RG_SNATCHER");
   - Id: 29651
     AegisName: SoulLinkerStone_Top_
     Name: Soul Linker Stone (Upper)
     Type: Card
     Script: |
-      bonus bMatk,getskilllv("TK_SPTIME")*2;
+      bonus bMatk,2*getskilllv("TK_SPTIME");
   - Id: 29652
     AegisName: SoulLinkerStone_Middle_
     Name: Soul Linker Stone (Middle)
@@ -41927,7 +41771,7 @@ Body:
     Name: Soul Linker Stone (Bottom)
     Type: Card
     Script: |
-      bonus bVariableCastrate,-getskilllv("SL_KAAHI")*2;
+      bonus bVariableCastrate,-2*getskilllv("SL_KAAHI");
   - Id: 29654
     AegisName: SoulReaperStone_Robe_
     Name: Soul Reaper Stone (Garment)
@@ -41939,7 +41783,7 @@ Body:
     Name: Star Gladiator Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("TK_HPTIME")*2;
+      bonus bBaseAtk,2*getskilllv("TK_HPTIME");
   - Id: 29656
     AegisName: StarGladiatorStone_Middle_
     Name: Star Gladiator Stone (Middle)
@@ -41965,8 +41809,8 @@ Body:
     Name: Ninja Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("NJ_NINPOU")*2;
-      bonus bMatk,getskilllv("NJ_NINPOU")*2;
+      bonus bMatk,2*getskilllv("NJ_NINPOU");
+      bonus bBaseAtk,2*getskilllv("NJ_NINPOU");
   - Id: 29660
     AegisName: NinjaStone_Middle_
     Name: Ninja Stone (Middle)
@@ -41998,7 +41842,7 @@ Body:
     Name: Gunslinger Stone (Upper)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("GS_SNAKEEYE")*2;
+      bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
   - Id: 29665
     AegisName: GunslingerStone_Middle_
     Name: Gunslinger Stone (Middle)
@@ -42010,7 +41854,7 @@ Body:
     Name: Gunslinger Stone (Bottom)
     Type: Card
     Script: |
-      bonus bLongAtkRate,getskilllv("GS_CHAINACTION")/2;
+      bonus bLongAtkRate,(getskilllv("GS_CHAINACTION")/2);
   - Id: 29667
     AegisName: GunslingerStone_Robe_
     Name: Gunslinger Stone (Garment)
@@ -45070,13 +44914,13 @@ Body:
     Name: Sniper Stone II (Middle)
     Type: Card
     Script: |
-      bonus bLongAtkRate,getskilllv("HT_BEASTBANE")*2;
+      bonus bLongAtkRate,(getskilllv("HT_BEASTBANE")/2);
   - Id: 310002
     AegisName: Ranger_Bottom2
     Name: Sniper Stone II (Bottom)
     Type: Card
     Script: |
-      bonus bBaseAtk,getskilllv("SN_SIGHT")*2;
+      bonus bBaseAtk,2*getskilllv("SN_SIGHT");
   - Id: 310003
     AegisName: Ranger_Robe2
     Name: Ranger Stone II (Garment)
@@ -45088,7 +44932,7 @@ Body:
     Name: Whitesmith Stone II (Top)
     Type: Card
     Script: |
-      bonus2 bSkillCooldown,"NC_AXEBOOMERANG",getskilllv("BS_OVERTHRUST")*-100;
+      bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-(100*getskilllv("WS_OVERTHRUSTMAX"));
   - Id: 310005
     AegisName: Mechanic_Middle2
     Name: Whitesmith Stone II (Middle)
@@ -45124,7 +44968,7 @@ Body:
     Name: High Priest Stone II (Bottom)
     Type: Card
     Script: |
-      bonus bVariableCastrate,getskilllv("PR_KYRIE")/2*-1;
+      bonus bVariableCastrate,-(getskilllv("PR_KYRIE")/2);
   - Id: 310011
     AegisName: Archbishop_Robe2
     Name: Archbishop Stone II (Garment)
@@ -45196,9 +45040,9 @@ Body:
       bonus bDef,150;
       if (.@r>=9) {
          bonus bDef,75;
-      }
-      if (.@r>=11) {
-         bonus bDef,75;
+         if (.@r>=11) {
+            bonus bDef,75;
+         }
       }
   - Id: 310083
     AegisName: aegis_310083
@@ -45209,9 +45053,9 @@ Body:
       bonus bMdef,15;
       if (.@r>=9) {
          bonus bMdef,7;
-      }
-      if (.@r>=11) {
-         bonus bMdef,7;
+         if (.@r>=11) {
+            bonus bMdef,7;
+         }
       }
   - Id: 310084
     AegisName: aegis_310084
@@ -45305,9 +45149,9 @@ Body:
       bonus bMaxHP,1500;
       if (.@r>=9) {
          bonus bMaxHPrate,2;
-      }
-      if (.@r>=11) {
-         bonus bMaxHPrate,3;
+         if (.@r>=11) {
+            bonus bMaxHPrate,3;
+         }
       }
   - Id: 310097
     AegisName: aegis_310097
@@ -45319,9 +45163,9 @@ Body:
       bonus bMaxSP,300;
       if (.@r>=9) {
          bonus bMaxSPrate,2;
-      }
-      if (.@r>=11) {
-         bonus bMaxSPrate,3;
+         if (.@r>=11) {
+            bonus bMaxSPrate,3;
+         }
       }
   - Id: 310098
     AegisName: aegis_310098
@@ -45332,9 +45176,9 @@ Body:
       bonus bHealPower,5;
       if (.@r>=9) {
          bonus bHealPower,5;
-      }
-      if (.@r>=11) {
-         bonus bHealPower,7;
+         if (.@r>=11) {
+            bonus bHealPower,7;
+         }
       }
   - Id: 310099
     AegisName: aegis_310099
@@ -45346,9 +45190,9 @@ Body:
       bonus bBaseAtk,75;
       if (.@r>=9) {
          bonus bShortAtkRate,2;
-      }
-      if (.@r>=11) {
-         bonus bShortAtkRate,3;
+         if (.@r>=11) {
+            bonus bShortAtkRate,3;
+         }
       }
   - Id: 310100
     AegisName: aegis_310100
@@ -45360,9 +45204,9 @@ Body:
       bonus bMatk,75;
       if (.@r>=9) {
          bonus bMatkRate,2;
-      }
-      if (.@r>=11) {
-         bonus bMatkRate,3;
+         if (.@r>=11) {
+            bonus bMatkRate,3;
+         }
       }
   - Id: 310101
     AegisName: aegis_310101
@@ -45373,9 +45217,9 @@ Body:
       bonus bLongAtkRate,3;
       if (.@r>=9) {
          bonus bLongAtkRate,3;
-      }
-      if (.@r>=11) {
-         bonus bLongAtkRate,3;
+         if (.@r>=11) {
+            bonus bLongAtkRate,3;
+         }
       }
   - Id: 310102
     AegisName: aegis_310102
@@ -45386,9 +45230,9 @@ Body:
       bonus bAspd,1;
       if (.@r>=9) {
          bonus bAspdRate,5;
-      }
-      if (.@r>=11) {
-         bonus bAspdRate,5;
+         if (.@r>=11) {
+            bonus bAspdRate,5;
+         }
       }
   - Id: 310103
     AegisName: aegis_310103
@@ -45399,9 +45243,9 @@ Body:
       bonus bVariableCastrate,-5;
       if (.@r>=9) {
          bonus bVariableCastrate,-5;
-      }
-      if (.@r>=11) {
-         bonus bVariableCastrate,-5;
+         if (.@r>=11) {
+            bonus bVariableCastrate,-5;
+         }
       }
   - Id: 310104
     AegisName: aegis_310104
@@ -45412,9 +45256,9 @@ Body:
       bonus bCritical,10;
       if (.@r>=9) {
          bonus bCritAtkRate,5;
-      }
-      if (.@r>=11) {
-         bonus bCritAtkRate,7;
+         if (.@r>=11) {
+            bonus bCritAtkRate,7;
+         }
       }
   - Id: 310105
     AegisName: aegis_310105
@@ -45427,9 +45271,9 @@ Body:
       bonus bMatk,20;
       if (.@r>=9) {
          bonus2 bMagicAtkEle,Ele_All,1;
-      }
-      if (.@r>=11) {
-         bonus2 bMagicAtkEle,Ele_All,2;
+         if (.@r>=11) {
+            bonus2 bMagicAtkEle,Ele_All,2;
+         }
       }
   - Id: 310106
     AegisName: aegis_310106
@@ -45442,9 +45286,9 @@ Body:
       bonus bBaseAtk,20;
       if (.@r>=9) {
          bonus2 bAddSize,Size_All,1;
-      }
-      if (.@r>=11) {
-         bonus2 bAddSize,Size_All,1;
+         if (.@r>=11) {
+            bonus2 bAddSize,Size_All,1;
+         }
       }
   - Id: 310107
     AegisName: aegis_310107
@@ -45457,9 +45301,9 @@ Body:
       bonus bBaseAtk,20;
       if (.@r>=9) {
          bonus2 bAddSize,Size_All,1;
-      }
-      if (.@r>=11) {
-         bonus2 bAddSize,Size_All,1;
+         if (.@r>=11) {
+            bonus2 bAddSize,Size_All,1;
+         }
       }
   - Id: 310108
     AegisName: aegis_310108
@@ -45472,9 +45316,9 @@ Body:
       bonus bCritical,5;
       if (.@r>=9) {
          bonus2 bAddSize,Size_All,1;
-      }
-      if (.@r>=11) {
-         bonus2 bAddSize,Size_All,1;
+         if (.@r>=11) {
+            bonus2 bAddSize,Size_All,1;
+         }
       }
   - Id: 310109
     AegisName: aegis_310109
@@ -45487,9 +45331,9 @@ Body:
       bonus bMatk,20;
       if (.@r>=9) {
          bonus bHealPower,5;
-      }
-      if (.@r>=11) {
-         bonus bHealPower,5;
+         if (.@r>=11) {
+            bonus bHealPower,5;
+         }
       }
   - Id: 310110
     AegisName: aegis_310110
@@ -45500,9 +45344,9 @@ Body:
       bonus bDelayrate,-4;
       if (.@r>=9) {
          bonus bDelayrate,-6;
-      }
-      if (.@r>=11) {
-         bonus bDelayrate,-6;
+         if (.@r>=11) {
+            bonus bDelayrate,-6;
+         }
       }
   - Id: 310111
     AegisName: aegis_310111
@@ -45513,9 +45357,9 @@ Body:
       bonus bFixedCast,-100;
       if (.@r>=9) {
          bonus bFixedCast,-200;
-      }
-      if (.@r>=11) {
-         bonus bFixedCast,-500;
+         if (.@r>=11) {
+            bonus bFixedCast,-500;
+         }
       }
   - Id: 310112
     AegisName: aegis_310112
@@ -45528,11 +45372,11 @@ Body:
       if (.@r>=9) {
          bonus2 bSubSize,Size_All,7;
          bonus2 bMagicSubSize,Size_All,7;
-      }
-      if (.@r>=11) {
-         bonus2 bSubRace,RC_All,7;
-         bonus2 bSubRace,RC_Player_Human,-7;
-         bonus2 bSubRace,RC_Player_Doram,-7;
+         if (.@r>=11) {
+            bonus2 bSubRace,RC_All,7;
+            bonus2 bSubRace,RC_Player_Human,-7;
+            bonus2 bSubRace,RC_Player_Doram,-7;
+         }
       }
   - Id: 310113
     AegisName: aegis_310113
@@ -45569,10 +45413,10 @@ Body:
       if (.@r>=9) {
          bonus bMatkRate,3;
          bonus2 bAddClass,Class_All,3;
-      }
-      if (.@r>=11) {
-         bonus bMatkRate,4;
-         bonus2 bAddClass,Class_All,4;
+         if (.@r>=11) {
+            bonus bMatkRate,4;
+            bonus2 bAddClass,Class_All,4;
+         }
       }
   - Id: 310118
     AegisName: aegis_310118
@@ -45587,10 +45431,10 @@ Body:
       if (.@r>=9) {
          bonus bMaxHPrate,2;
          bonus bMaxSPrate,2;
-      }
-      if (.@r>=11) {
-         bonus bMaxHPrate,3;
-         bonus bMaxSPrate,3;
+         if (.@r>=11) {
+            bonus bMaxHPrate,3;
+            bonus bMaxSPrate,3;
+         }
       }
   - Id: 310119
     AegisName: aegis_310119
@@ -45605,11 +45449,11 @@ Body:
          bonus2 bMagicAtkEle,Ele_All,2;
          bonus bLongAtkRate,2;
          bonus bShortAtkRate,2;
-      }
-      if (.@r>=11) {
-         bonus2 bMagicAtkEle,Ele_All,3;
-         bonus bLongAtkRate,3;
-         bonus bShortAtkRate,3;
+         if (.@r>=11) {
+            bonus2 bMagicAtkEle,Ele_All,3;
+            bonus bLongAtkRate,3;
+            bonus bShortAtkRate,3;
+         }
       }
   - Id: 310120
     AegisName: aegis_310120
@@ -45666,10 +45510,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"RK_DRAGONBREATH",3;
          bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"RK_DRAGONBREATH",7;
-         bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"RK_DRAGONBREATH",7;
+            bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",7;
+         }
       }
   - Id: 310128
     AegisName: aegis_310128
@@ -45698,10 +45542,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"LK_SPIRALPIERCE",3;
          bonus2 bSkillAtk,"RK_HUNDREDSPEAR",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-250;
-         bonus2 bSkillAtk,"LK_SPIRALPIERCE",7;
+         if (.@r>=11) {
+            bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-250;
+            bonus2 bSkillAtk,"LK_SPIRALPIERCE",7;
+         }
       }
   - Id: 310130
     AegisName: aegis_310130
@@ -45714,10 +45558,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"LG_EARTHDRIVE",3;
          bonus2 bSkillAtk,"LG_SHIELDPRESS",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"LG_EARTHDRIVE",7;
-         bonus2 bSkillAtk,"LG_SHIELDPRESS",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"LG_EARTHDRIVE",7;
+            bonus2 bSkillAtk,"LG_SHIELDPRESS",7;
+         }
       }
   - Id: 310131
     AegisName: aegis_310131
@@ -45730,10 +45574,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"LG_BANISHINGPOINT",3;
          bonus2 bSkillAtk,"LG_CANNONSPEAR",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"LG_BANISHINGPOINT",7;
-         bonus2 bSkillAtk,"LG_CANNONSPEAR",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"LG_BANISHINGPOINT",7;
+            bonus2 bSkillAtk,"LG_CANNONSPEAR",7;
+         }
       }
   - Id: 310132
     AegisName: aegis_310132
@@ -45746,10 +45590,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",3;
          bonus2 bSkillAtk,"PA_PRESSURE",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"LG_RAYOFGENESIS",7;
-         bonus2 bSkillAtk,"PA_PRESSURE",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"LG_RAYOFGENESIS",7;
+            bonus2 bSkillAtk,"PA_PRESSURE",7;
+         }
       }
   - Id: 310133
     AegisName: aegis_310133
@@ -45762,10 +45606,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",3;
          bonus2 bSkillAtk,"NC_ARMSCANNON",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",7;
-         bonus2 bSkillAtk,"NC_ARMSCANNON",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",7;
+            bonus2 bSkillAtk,"NC_ARMSCANNON",7;
+         }
       }
   - Id: 310134
     AegisName: aegis_310134
@@ -45778,10 +45622,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"NC_FLAMELAUNCHER",3;
          bonus2 bSkillAtk,"NC_COLDSLOWER",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"NC_FLAMELAUNCHER",7;
-         bonus2 bSkillAtk,"NC_COLDSLOWER",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"NC_FLAMELAUNCHER",7;
+            bonus2 bSkillAtk,"NC_COLDSLOWER",7;
+         }
       }
   - Id: 310135
     AegisName: aegis_310135
@@ -45794,10 +45638,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"NC_AXETORNADO",3;
          bonus2 bSkillAtk,"NC_POWERSWING",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"NC_AXETORNADO",7;
-         bonus2 bSkillAtk,"NC_POWERSWING",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"NC_AXETORNADO",7;
+            bonus2 bSkillAtk,"NC_POWERSWING",7;
+         }
       }
   - Id: 310136
     AegisName: aegis_310136
@@ -45810,10 +45654,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"GN_CART_TORNADO",3;
          bonus2 bSkillAtk,"GN_CARTCANNON",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"GN_CART_TORNADO",7;
-         bonus2 bSkillAtk,"GN_CARTCANNON",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"GN_CART_TORNADO",7;
+            bonus2 bSkillAtk,"GN_CARTCANNON",7;
+         }
       }
   - Id: 310137
     AegisName: aegis_310137
@@ -45826,10 +45670,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillCooldown,"GN_MANDRAGORA",-300;
          bonus2 bSkillAtk,"GN_CRAZYWEED",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillCooldown,"GN_MANDRAGORA",-400;
-         bonus2 bSkillAtk,"GN_CRAZYWEED",7;
+         if (.@r>=11) {
+            bonus2 bSkillCooldown,"GN_MANDRAGORA",-400;
+            bonus2 bSkillAtk,"GN_CRAZYWEED",7;
+         }
       }
   - Id: 310138
     AegisName: aegis_310138
@@ -45842,10 +45686,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",3;
          bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",7;
-         bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",7;
+            bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",7;
+         }
       }
   - Id: 310139
     AegisName: aegis_310139
@@ -45858,10 +45702,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"GC_CROSSIMPACT",3;
          bonus2 bSkillAtk,"AS_SONICBLOW",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"GC_CROSSIMPACT",7;
-         bonus2 bSkillAtk,"AS_SONICBLOW",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"GC_CROSSIMPACT",7;
+            bonus2 bSkillAtk,"AS_SONICBLOW",7;
+         }
       }
   - Id: 310140
     AegisName: aegis_310140
@@ -45874,10 +45718,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",3;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",7;
-         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",7;
+            bonus2 bSkillAtk,"GC_ROLLINGCUTTER",7;
+         }
       }
   - Id: 310141
     AegisName: aegis_310141
@@ -45890,10 +45734,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"GC_COUNTERSLASH",3;
          bonus2 bSkillAtk,"ASC_BREAKER",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"GC_COUNTERSLASH",7;
-         bonus2 bSkillAtk,"ASC_BREAKER",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"GC_COUNTERSLASH",7;
+            bonus2 bSkillAtk,"ASC_BREAKER",7;
+         }
       }
   - Id: 310142
     AegisName: aegis_310142
@@ -45906,10 +45750,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SC_FATALMENACE",3;
          bonus2 bSkillAtk,"RG_RAID",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SC_FATALMENACE",7;
-         bonus2 bSkillAtk,"RG_RAID",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SC_FATALMENACE",7;
+            bonus2 bSkillAtk,"RG_RAID",7;
+         }
       }
   - Id: 310143
     AegisName: aegis_310143
@@ -45920,9 +45764,9 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,15;
       if (.@r>=9) {
          bonus2 bMagicAtkEle,Ele_All,3;
-      }
-      if (.@r>=11) {
-         bonus2 bMagicAtkEle,Ele_All,7;
+         if (.@r>=11) {
+            bonus2 bMagicAtkEle,Ele_All,7;
+         }
       }
   - Id: 310144
     AegisName: aegis_310144
@@ -45934,10 +45778,10 @@ Body:
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",3;
-      }
-      if (.@r>=11) {
-         bonus bLongAtkRate,5;
-         bonus2 bSkillAtk,"SC_TRIANGLESHOT",7;
+         if (.@r>=11) {
+            bonus bLongAtkRate,5;
+            bonus2 bSkillAtk,"SC_TRIANGLESHOT",7;
+         }
       }
   - Id: 310145
     AegisName: aegis_310145
@@ -45950,10 +45794,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"WL_EARTHSTRAIN",3;
          bonus2 bSkillAtk,"WL_CRIMSONROCK",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"WL_EARTHSTRAIN",7;
-         bonus2 bSkillAtk,"WL_CRIMSONROCK",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"WL_EARTHSTRAIN",7;
+            bonus2 bSkillAtk,"WL_CRIMSONROCK",7;
+         }
       }
   - Id: 310146
     AegisName: aegis_310146
@@ -45966,10 +45810,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"WL_CHAINLIGHTNING",3;
          bonus2 bSkillAtk,"WL_JACKFROST",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"WL_CHAINLIGHTNING",7;
-         bonus2 bSkillAtk,"WL_JACKFROST",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"WL_CHAINLIGHTNING",7;
+            bonus2 bSkillAtk,"WL_JACKFROST",7;
+         }
       }
   - Id: 310147
     AegisName: aegis_310147
@@ -45982,10 +45826,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"WL_TETRAVORTEX",3;
          bonus2 bSkillAtk,"WL_COMET",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"WL_TETRAVORTEX",7;
-         bonus2 bSkillAtk,"WL_COMET",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"WL_TETRAVORTEX",7;
+            bonus2 bSkillAtk,"WL_COMET",7;
+         }
       }
   - Id: 310148
     AegisName: aegis_310148
@@ -46000,11 +45844,11 @@ Body:
          bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",3;
          bonus2 bSkillAtk,"MG_FIREBOLT",3;
          bonus2 bSkillAtk,"MG_COLDBOLT",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",7;
-         bonus2 bSkillAtk,"MG_FIREBOLT",7;
-         bonus2 bSkillAtk,"MG_COLDBOLT",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",7;
+            bonus2 bSkillAtk,"MG_FIREBOLT",7;
+            bonus2 bSkillAtk,"MG_COLDBOLT",7;
+         }
       }
   - Id: 310149
     AegisName: aegis_310149
@@ -46017,10 +45861,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillCooldown,"SO_WARMER",-2000;
          bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillCooldown,"SO_WARMER",-4000;
-         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",7;
+         if (.@r>=11) {
+            bonus2 bSkillCooldown,"SO_WARMER",-4000;
+            bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",7;
+         }
       }
   - Id: 310150
     AegisName: aegis_310150
@@ -46033,10 +45877,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SO_DIAMONDDUST",3;
          bonus2 bSkillAtk,"SO_EARTHGRAVE",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SO_DIAMONDDUST",7;
-         bonus2 bSkillAtk,"SO_EARTHGRAVE",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SO_DIAMONDDUST",7;
+            bonus2 bSkillAtk,"SO_EARTHGRAVE",7;
+         }
       }
   - Id: 310151
     AegisName: aegis_310151
@@ -46049,10 +45893,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"PR_MAGNUS",3;
          bonus2 bSkillAtk,"AB_ADORAMUS",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"PR_MAGNUS",7;
-         bonus2 bSkillAtk,"AB_ADORAMUS",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"PR_MAGNUS",7;
+            bonus2 bSkillAtk,"AB_ADORAMUS",7;
+         }
       }
   - Id: 310152
     AegisName: aegis_310152
@@ -46065,10 +45909,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"AL_HOLYLIGHT",3;
          bonus2 bSkillAtk,"AB_JUDEX",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"AL_HOLYLIGHT",7;
-         bonus2 bSkillAtk,"AB_JUDEX",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"AL_HOLYLIGHT",7;
+            bonus2 bSkillAtk,"AB_JUDEX",7;
+         }
       }
   - Id: 310153
     AegisName: aegis_310153
@@ -46081,10 +45925,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillCooldown,"HP_BASILICA",-3000;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillCooldown,"HP_BASILICA",-5000;
-         bonus2 bSkillAtk,"AB_DUPLELIGHT",7;
+         if (.@r>=11) {
+            bonus2 bSkillCooldown,"HP_BASILICA",-5000;
+            bonus2 bSkillAtk,"AB_DUPLELIGHT",7;
+         }
       }
   - Id: 310154
     AegisName: aegis_310154
@@ -46097,10 +45941,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SR_FALLENEMPIRE",3;
          bonus2 bSkillAtk,"SR_TIGERCANNON",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SR_FALLENEMPIRE",7;
-         bonus2 bSkillAtk,"SR_TIGERCANNON",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SR_FALLENEMPIRE",7;
+            bonus2 bSkillAtk,"SR_TIGERCANNON",7;
+         }
       }
   - Id: 310155
     AegisName: aegis_310155
@@ -46113,10 +45957,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SR_KNUCKLEARROW",3;
          bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SR_KNUCKLEARROW",7;
-         bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SR_KNUCKLEARROW",7;
+            bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",7;
+         }
       }
   - Id: 310156
     AegisName: aegis_310156
@@ -46129,10 +45973,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"MO_COMBOFINISH",3;
          bonus2 bSkillAtk,"CH_CHAINCRUSH",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"MO_COMBOFINISH",7;
-         bonus2 bSkillAtk,"CH_CHAINCRUSH",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"MO_COMBOFINISH",7;
+            bonus2 bSkillAtk,"CH_CHAINCRUSH",7;
+         }
       }
   - Id: 310157
     AegisName: aegis_310157
@@ -46143,9 +45987,9 @@ Body:
       bonus2 bSkillAtk,"RA_CLUSTERBOMB",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"RA_CLUSTERBOMB",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"RA_CLUSTERBOMB",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"RA_CLUSTERBOMB",7;
+         }
       }
   - Id: 310158
     AegisName: aegis_310158
@@ -46157,10 +46001,10 @@ Body:
       bonus2 bSkillAtk,"SN_SHARPSHOOTING",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"SN_SHARPSHOOTING",3;
-      }
-      if (.@r>=11) {
-         bonus bCritAtkRate,5;
-         bonus2 bSkillAtk,"SN_SHARPSHOOTING",7;
+         if (.@r>=11) {
+            bonus bCritAtkRate,5;
+            bonus2 bSkillAtk,"SN_SHARPSHOOTING",7;
+         }
       }
   - Id: 310159
     AegisName: aegis_310159
@@ -46173,10 +46017,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",3;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"RA_ARROWSTORM",7;
-         bonus2 bSkillAtk,"RA_AIMEDBOLT",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"RA_ARROWSTORM",7;
+            bonus2 bSkillAtk,"RA_AIMEDBOLT",7;
+         }
       }
   - Id: 310160
     AegisName: aegis_310160
@@ -46189,10 +46033,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"WM_GREAT_ECHO",3;
          bonus2 bSkillAtk,"WM_METALICSOUND",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"WM_GREAT_ECHO",7;
-         bonus2 bSkillAtk,"WM_METALICSOUND",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"WM_GREAT_ECHO",7;
+            bonus2 bSkillAtk,"WM_METALICSOUND",7;
+         }
       }
   - Id: 310161
     AegisName: aegis_310161
@@ -46203,9 +46047,9 @@ Body:
       bonus2 bSkillAtk,"WM_REVERBERATION",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"WM_REVERBERATION",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"WM_REVERBERATION",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"WM_REVERBERATION",7;
+         }
       }
   - Id: 310162
     AegisName: aegis_310162
@@ -46218,10 +46062,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",3;
          bonus2 bSkillAtk,"CG_ARROWVULCAN",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",7;
-         bonus2 bSkillAtk,"CG_ARROWVULCAN",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",7;
+            bonus2 bSkillAtk,"CG_ARROWVULCAN",7;
+         }
       }
   - Id: 310163
     AegisName: aegis_310163
@@ -46234,10 +46078,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SJ_SOLARBURST",3;
          bonus2 bSkillAtk,"SJ_PROMINENCEKICK",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SJ_SOLARBURST",7;
-         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SJ_SOLARBURST",7;
+            bonus2 bSkillAtk,"SJ_PROMINENCEKICK",7;
+         }
       }
   - Id: 310164
     AegisName: aegis_310164
@@ -46250,11 +46094,11 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",3;
          bonus2 bSkillAtk,"SJ_NEWMOONKICK",3;
-      }
-      if (.@r>=11) {
-         bonus bCritAtkRate,5;
-         bonus2 bSkillAtk,"SJ_FULLMOONKICK",7;
-         bonus2 bSkillAtk,"SJ_NEWMOONKICK",7;
+         if (.@r>=11) {
+            bonus bCritAtkRate,5;
+            bonus2 bSkillAtk,"SJ_FULLMOONKICK",7;
+            bonus2 bSkillAtk,"SJ_NEWMOONKICK",7;
+         }
       }
   - Id: 310165
     AegisName: aegis_310165
@@ -46267,10 +46111,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",3;
          bonus2 bSkillAtk,"SJ_FLASHKICK",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",7;
-         bonus2 bSkillAtk,"SJ_FLASHKICK",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",7;
+            bonus2 bSkillAtk,"SJ_FLASHKICK",7;
+         }
       }
   - Id: 310166
     AegisName: aegis_310166
@@ -46283,10 +46127,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SL_SMA",3;
          bonus2 bSkillAtk,"SP_SWHOO",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SL_SMA",7;
-         bonus2 bSkillAtk,"SP_SWHOO",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SL_SMA",7;
+            bonus2 bSkillAtk,"SP_SWHOO",7;
+         }
       }
   - Id: 310167
     AegisName: aegis_310167
@@ -46294,11 +46138,12 @@ Body:
     Type: Card
     Script: |
       .@r = getrefine();
+      bonus2 bSkillAtk,"SP_SPA",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"SP_SPA",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SP_SPA",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SP_SPA",7;
+         }
       }
   - Id: 310168
     AegisName: aegis_310168
@@ -46309,9 +46154,9 @@ Body:
       bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"SP_CURSEEXPLOSION",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SP_CURSEEXPLOSION",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SP_CURSEEXPLOSION",7;
+         }
       }
   - Id: 310169
     AegisName: aegis_310169
@@ -46326,11 +46171,11 @@ Body:
          bonus2 bSkillAtk,"GS_DESPERADO",3;
          bonus2 bSkillAtk,"RL_FIREDANCE",3;
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"GS_DESPERADO",7;
-         bonus2 bSkillAtk,"RL_FIREDANCE",7;
-         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"GS_DESPERADO",7;
+            bonus2 bSkillAtk,"RL_FIREDANCE",7;
+            bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7;
+         }
       }
   - Id: 310170
     AegisName: aegis_310170
@@ -46345,11 +46190,11 @@ Body:
          bonus2 bSkillAtk,"RL_FIRE_RAIN",3;
          bonus2 bSkillAtk,"RL_D_TAIL",3;
          bonus2 bSkillAtk,"RL_H_MINE",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"RL_FIRE_RAIN",7;
-         bonus2 bSkillAtk,"RL_D_TAIL",7;
-         bonus2 bSkillAtk,"RL_H_MINE",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"RL_FIRE_RAIN",7;
+            bonus2 bSkillAtk,"RL_D_TAIL",7;
+            bonus2 bSkillAtk,"RL_H_MINE",7;
+         }
       }
   - Id: 310171
     AegisName: aegis_310171
@@ -46364,11 +46209,11 @@ Body:
          bonus2 bSkillAtk,"RL_BANISHING_BUSTER",3;
          bonus2 bSkillAtk,"RL_R_TRIP",3;
          bonus2 bSkillAtk,"RL_S_STORM",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"RL_BANISHING_BUSTER",7;
-         bonus2 bSkillAtk,"RL_R_TRIP",7;
-         bonus2 bSkillAtk,"RL_S_STORM",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"RL_BANISHING_BUSTER",7;
+            bonus2 bSkillAtk,"RL_R_TRIP",7;
+            bonus2 bSkillAtk,"RL_S_STORM",7;
+         }
       }
   - Id: 310172
     AegisName: aegis_310172
@@ -46383,11 +46228,11 @@ Body:
          bonus2 bSkillAtk,"NJ_KOUENKA",3;
          bonus2 bSkillAtk,"NJ_HYOUSENSOU",3;
          bonus2 bSkillAtk,"NJ_HUUJIN",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"NJ_KOUENKA",7;
-         bonus2 bSkillAtk,"NJ_HYOUSENSOU",7;
-         bonus2 bSkillAtk,"NJ_HUUJIN",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"NJ_KOUENKA",7;
+            bonus2 bSkillAtk,"NJ_HYOUSENSOU",7;
+            bonus2 bSkillAtk,"NJ_HUUJIN",7;
+         }
       }
   - Id: 310173
     AegisName: aegis_310173
@@ -46398,9 +46243,9 @@ Body:
       bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15;
       if (.@r>=9) {
          bonus2 bSkillAtk,"KO_JYUMONJIKIRI",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"KO_JYUMONJIKIRI",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"KO_JYUMONJIKIRI",7;
+         }
       }
   - Id: 310174
     AegisName: aegis_310174
@@ -46415,11 +46260,11 @@ Body:
          bonus2 bSkillAtk,"NJ_BAKUENRYU",3;
          bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",3;
          bonus2 bSkillAtk,"NJ_KAMAITACHI",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"NJ_BAKUENRYU",7;
-         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",7;
-         bonus2 bSkillAtk,"NJ_KAMAITACHI",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"NJ_BAKUENRYU",7;
+            bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",7;
+            bonus2 bSkillAtk,"NJ_KAMAITACHI",7;
+         }
       }
   - Id: 310175
     AegisName: aegis_310175
@@ -46432,10 +46277,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillCooldown,"SU_SHRIMPARTY",-1000;
          bonus2 bSkillCooldown,"SU_TUNAPARTY",-1000;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillCooldown,"SU_SHRIMPARTY",-1500;
-         bonus2 bSkillCooldown,"SU_TUNAPARTY",-1500;
+         if (.@r>=11) {
+            bonus2 bSkillCooldown,"SU_SHRIMPARTY",-1500;
+            bonus2 bSkillCooldown,"SU_TUNAPARTY",-1500;
+         }
       }
   - Id: 310176
     AegisName: aegis_310176
@@ -46448,10 +46293,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SU_SV_STEMSPEAR",3;
          bonus2 bSkillAtk,"SU_CN_METEOR",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",7;
-         bonus2 bSkillAtk,"SU_CN_METEOR",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SU_SV_STEMSPEAR",7;
+            bonus2 bSkillAtk,"SU_CN_METEOR",7;
+         }
       }
   - Id: 310177
     AegisName: aegis_310177
@@ -46464,10 +46309,10 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",3;
          bonus2 bSkillAtk,"SU_PICKYPECK",3;
-      }
-      if (.@r>=11) {
-         bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",7;
-         bonus2 bSkillAtk,"SU_PICKYPECK",7;
+         if (.@r>=11) {
+            bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",7;
+            bonus2 bSkillAtk,"SU_PICKYPECK",7;
+         }
       }
   - Id: 310178
     AegisName: aegis_310178
@@ -46510,13 +46355,13 @@ Body:
     Name: High Wizard Stone II (Middle)
     Type: Card
     Script: |
-      bonus2 bMagicAtkEle,Ele_Neutral,getskilllv("HW_GRAVITATION")*2;
+      bonus2 bMagicAtkEle,Ele_Neutral,2*getskilllv("HW_GRAVITATION");
   - Id: 310183
     AegisName: Warlock_Bottom2
     Name: High Wizard Stone II (Lower)
     Type: Card
     Script: |
-      bonus bMatk,getskilllv("HW_SOULDRAIN")*2;
+      bonus bMatk,2*getskilllv("HW_SOULDRAIN");
   - Id: 310184
     AegisName: RoyalGuard_Robe2
     Name: Royal Guard Stone II (Garment)
@@ -46540,7 +46385,7 @@ Body:
     Name: Paladin Stone II (Upper)
     Type: Card
     Script: |
-      bonus bVariableCastrate,getskilllv("CR_TRUST")*-1;
+      bonus bVariableCastrate,-getskilllv("CR_TRUST");
   - Id: 310188
     AegisName: GuillotineCross_Robe2
     Name: Guillotine Cross Stone II (Garment)
@@ -46556,7 +46401,7 @@ Body:
     Name: Assassin Cross Stone II (Lower)
     Type: Card
     Script: |
-      bonus2 bAddSize,Size_All,getskilllv("ASC_KATAR")*2;
+      bonus2 bAddSize,Size_All,2*getskilllv("ASC_KATAR");
   - Id: 310190
     AegisName: GuillotineCross_Middle2
     Name: Assassin Cross Stone II (Middle)
@@ -46568,7 +46413,7 @@ Body:
     Name: Assassin Cross Stone II (Upper)
     Type: Card
     Script: |
-      bonus bDelayrate,getskilllv("ASC_BREAKER")*-1;
+      bonus bDelayrate,-getskilllv("ASC_BREAKER");
   - Id: 310197
     AegisName: aegis_310197
     Name: Anger Lv1
@@ -46976,7 +46821,7 @@ Body:
     Name: Lord Knight Stone II (Middle)
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"MS_BOWLINGBASH",20;
+      bonus2 bSkillAtk,"KN_BOWLINGBASH",20;
   - Id: 310260
     AegisName: Runeknight_Bottom2
     Name: Lord Knight Stone II (Bottom)
@@ -49670,13 +49515,13 @@ Body:
     Name: Wolf Orb (Magic Healing)
     Type: Card
     Script: |
-      autobonus "{ bonus2 bHPRegenRate,500,700; }",40,19000,BF_MAGIC;
+      autobonus "{ bonus2 bHPRegenRate,700,500; }",40,19000,BF_MAGIC;
   - Id: 310646
     AegisName: Wolf_Orb_M_Soul
     Name: Wolf Orb (Magic Soul)
     Type: Card
     Script: |
-      autobonus "{ bonus2 bSPRegenRate,500,100; }",20,19000,BF_MAGIC;
+      autobonus "{ bonus2 bSPRegenRate,100,500; }",20,19000,BF_MAGIC;
   - Id: 310647
     AegisName: Wolf_Orb_A_Force
     Name: Wolf Orb (All Force)
