@@ -513,7 +513,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 #endif
 
 	// Biali Reputation System
-	if( memcmp(p->reputation, cp->reputation, sizeof(p->reputation)) )
+	if( memcmp(p->rep, cp->rep, sizeof(p->rep)) )
 	{
 		StringBuf_Clear(&buf);
 		StringBuf_Printf(&buf, "REPLACE INTO `reputation` (`account_id`, `char_id`, `faction_id`, `value`) VALUES ");
@@ -522,7 +522,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 
 			if( count )
 				StringBuf_AppendStr(&buf, ",");
-			StringBuf_Printf(&buf, "('%d', '%d', '%d', '%d')", p->account_id, p->char_id, i, p->reputation[i]);
+			StringBuf_Printf(&buf, "('%d', '%d', '%d', '%d')", p->account_id, p->char_id, i, p->rep[i].value);
 			++count;
 
 		}
@@ -1053,7 +1053,8 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	StringBuf msg_buf;
 	char sex[2];
 
-	struct s_reputation tmp_rep; // biali reputation system
+	// struct s_reputation tmp_rep; // biali reputation system
+	struct reputation tmp_rep;
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 
@@ -1264,20 +1265,20 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 
 	//read reputation from SQL
 	//`reputation` (`account_id`, `char_id`, `faction_id`, `value`
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `account_id`,`char_id`,`faction_id`,`value` FROM `reputation` WHERE `char_id`=? ORDER by `faction_id`")
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `value` FROM `reputation` WHERE `char_id`=? ORDER by `faction_id` ASC")
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  	&tmp_rep.account_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,  	&tmp_rep.char_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,  	&tmp_rep.faction_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_INT,  	&tmp_rep.value, 0, NULL, NULL) )
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  	&tmp_rep.value, 0, NULL, NULL) )
 		SqlStmt_ShowDebug(stmt);
 
-	p->reputation[0] = -1; // there will never be a faction_id == 0 so we nullify the first position of the array
+	
+	p->rep[0].value = 0; // there will never be a faction_id == 0 so we nullify the first position of the array
+	strncpy(p->rep[0].desc, "", sizeof(p->rep[0].desc)); // there will never be a faction_id == 0 so we nullify the first position of the array
 
 	for( i = 1; i <= MAX_FACTION && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
-		memcpy(&p->reputation[i], &tmp_rep.value, sizeof(tmp_rep.value));
+		memcpy(&p->rep[i].value, &tmp_rep.value, sizeof(tmp_rep.value));
+		memcpy(&p->rep[i].desc, "", 12);
 	}
 	StringBuf_AppendStr(&msg_buf, " reputation");
 

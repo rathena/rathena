@@ -326,15 +326,6 @@ struct startitem {
 	uint32 pos;
 };
 
-// biali reputtion system
-// this is used by char.c to save/retrieve data from SQL
-struct s_reputation {
-	int account_id;
-	int char_id;
-	short faction_id;
-	int value;
-};
-
 enum e_skill_flag
 {
 	SKILL_FLAG_PERMANENT,
@@ -637,6 +628,12 @@ struct s_skillcount {
 };
 // biali fim damage log
 
+//Biali reputation
+struct reputation {
+	char desc[12];
+	int value;
+};
+
 struct mmo_charstatus {
 	uint32 char_id;
 	uint32 account_id;
@@ -699,7 +696,7 @@ struct mmo_charstatus {
 	time_t unban_time;
 
 	int faction_id; //Biali Faction System
-	int reputation[MAX_FACTION]; // array position equals faction id
+	reputation rep[MAX_FACTION]; // array position equals faction id
 
 	// Char server addon system
 	unsigned int character_moves;

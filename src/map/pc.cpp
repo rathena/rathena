@@ -8122,7 +8122,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 }
 
 
-/** Calculates Reputation on exp gain
+/** Calculates Reputation on exp gain [biali]
 * @param sd Player
 * @param base_exp Base EXP before peronal bonuses
 */
@@ -8136,17 +8136,20 @@ static void pc_calcrep(struct map_session_data *sd, t_exp base_exp)
 	exp = (int)(base_exp / sd->status.base_level);
 
 	for (i=1; i <= MAX_FACTION; i++) {
-		if(faction_search(i) && faction_id == i)
-			sd->status.reputation[i] = cap_value(sd->status.reputation[i] + exp, 1, INT_MAX);
-		else
-			sd->status.reputation[i] = cap_value(sd->status.reputation[i] - (int)(exp * 0.05), 1, INT_MAX);
-
-		ShowInfo("Player %d reputation with faction[%d] is now  %d. \n", sd->status.char_id, i, sd->status.reputation[i]);
+		if(faction_search(i) && faction_id == i) {
+			int value = sd->status.rep[i].value = cap_value(sd->status.rep[i].value + exp, 1, INT_MAX);
+			
+			if(value <= battle_config.reputation_hated) strncpy(sd->status.rep[i].desc,"HATED",12);
+			else if(value <= battle_config.reputation_unfriendly) strncpy(sd->status.rep[i].desc,"UNFRIENDLY",12);
+			else if(value > battle_config.reputation_unfriendly && value < battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"NEUTRAL",12);
+			else if(value >= battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"FRIENDLY",12);
+			else strncpy(sd->status.rep[i].desc,"HONORED",12);
+			ShowInfo("Player %d reputation with faction[%d] is now  %d. \n", sd->status.char_id, i, sd->status.rep[i].value);
+		} else {
+			sd->status.rep[i].value = cap_value(sd->status.rep[i].value - (int)(exp * 0.05), 1, INT_MAX);
+			ShowInfo("Player %d reputation with faction[%d] is now  %d. \n", sd->status.char_id, i, sd->status.rep[i].value);
+		}
 	}
-
-	// sd->status.reputation[faction_id] = cap_value(sd->status.reputation[faction_id] + exp, 1, INT_MAX);
-	
-
 	return;
 }
 

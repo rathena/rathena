@@ -98,6 +98,15 @@ void faction_hp(struct map_session_data *sd)
 	WBUFL(buf,2) = sd->status.account_id;
 	memcpy(WBUFP(buf,6), sd->status.name, NAME_LENGTH);
 
+	// Update name with reputation info
+	int value = sd->status.rep[sd->status.faction_id].value;
+	int i = sd->status.faction_id;
+	if(value <= battle_config.reputation_hated) strncpy(sd->status.rep[i].desc,"HATED",12);
+	else if(value <= battle_config.reputation_unfriendly) strncpy(sd->status.rep[i].desc,"UNFRIENDLY",12);
+	else if(value > battle_config.reputation_unfriendly && value < battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"NEUTRAL",12);
+	else if(value >= battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"FRIENDLY",12);
+	else strncpy(sd->status.rep[i].desc,"HONORED",12);
+
 	if( sd->battle_status.max_hp > INT16_MAX ) {
 		WBUFW(buf,30) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
 		WBUFW(buf,32) = 100;

@@ -8504,6 +8504,7 @@ BUILDIN_FUNC(readparam)
  *	3 : account_id
  *	4 : bg_id
  *	5 : clan_id
+ *	6 : faction_id
  *------------------------------------------*/
 BUILDIN_FUNC(getcharid)
 {

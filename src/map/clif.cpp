@@ -785,8 +785,8 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 				break;
 
 			iter = mapit_getallusers();
-			while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ){
-				if( tsd->clanspy == clan->id && session_isActive( fd = tsd->fd ) ){
+			while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ) {
+				if( tsd->clanspy == clan->id && session_isActive( fd = tsd->fd ) ) {
 					WFIFOHEAD(fd, len);
 					memcpy(WFIFOP(fd, 0), buf, len);
 					WFIFOSET(fd, len);
@@ -9995,16 +9995,6 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				packet.gid = -bl->id;
 			}
 
-			//BIALI TODO : WHAT DOES THIS DO?
-			if( sd && map_getmapflag(sd->bl.m, MF_FVF) && !faction_check_name(&sd->bl, bl) && (fdb = faction_search(sd->status.faction_id)) != NULL ) {
-				// WBUFW(buf, 0) = cmd = 0x195;
-				// memcpy(WBUFP(buf,6), fdb->pl_name, NAME_LENGTH);
-				// WBUFB(buf,30) = WBUFB(buf,54) = WBUFB(buf,78) = 0;
-				safestrncpy( packet.name, fdb->pl_name, NAME_LENGTH );
-				clif_send( &packet, sizeof(packet), src, target );
-				break;
-			}
-
 			if( sd->fakename[0] ) {
 				safestrncpy( packet.name, sd->fakename, NAME_LENGTH );
 				clif_send( &packet, sizeof(packet), src, target );
@@ -10031,6 +10021,14 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				//safestrncpy( packet.party_name, bgteam->g->name, NAME_LENGTH );
 				safestrncpy( packet.guild_name, bgteam->g->name,NAME_LENGTH);
 				safestrncpy( packet.position_name, bgteam->g->position[ps].name, NAME_LENGTH);
+			} else if( !faction_check_name(&sd->bl, bl) && (fdb = faction_search(sd->status.faction_id)) != NULL ) {
+				//BIALI TODO : WHAT DOES THIS DO?
+				ShowWarning("clif_name : Biali : Entrou com faction_id %d \n",fdb->id);
+				safestrncpy( packet.name, fdb->pl_name, NAME_LENGTH );
+				safestrncpy( packet.guild_name, fdb->name, NAME_LENGTH );
+				safestrncpy( packet.position_name, sd->status.rep[fdb->id].desc, NAME_LENGTH );
+				clif_send( &packet, sizeof(packet), src, target );
+				break;
 			} else if( sd->guild ){
 				int position;
 
@@ -10061,7 +10059,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 			packet.title_id = sd->status.title_id; // Title ID
 #endif
 
-			if( sd->status.faction_id && map_getmapflag(sd->bl.m, MF_FVF) ) // Faction System [Biali]
+			if( sd->status.faction_id ) // Faction System [Biali]
 				clif_send(&packet, sizeof(packet), &sd->bl, AREA_FVF);
 			else
 				clif_send(&packet, sizeof(packet), src, target);
@@ -10948,11 +10946,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if( sd->status.faction_id ) { // Faction System [Biali]
 		// if( map_getmapflag(sd->bl.m, MF_FVF) ) {
 			//Biali TODO test
-			faction_spawn(&sd->bl);
-		faction_getareachar_unit(sd, &sd->bl);
+		//faction_getareachar_unit(sd, &sd->bl);
 			//clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
 			// ----
-			faction_hp(sd);
+			//faction_hp(sd);
+			//faction_spawn(&sd->bl);
+			clif_name(&sd->bl,&sd->bl,SELF);
 		// }
 	}
 
