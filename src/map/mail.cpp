@@ -289,7 +289,7 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 	bool item_received = false;
 
 	for( i = 0; i < MAIL_MAX_ITEM; i++ ){
-		if( item->nameid > 0 && item->amount > 0 ){
+		if( item[i].nameid > 0 && item[i].amount > 0 ){
 			struct item_data* id = itemdb_search( item->nameid );
 
 			// Item does not exist (anymore?)
@@ -307,6 +307,7 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 			if( pet != nullptr && item[i].card[0] == 0 ){
 				// Create a new pet
 				if( pet_create_egg( sd, item[i].nameid ) ){
+					sd->mail.pending_slots--;
 					item_received = true;
 				}else{
 					// Do not send receive packet so that the mail is still displayed with item attachment
@@ -315,9 +316,12 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 					break;
 				}
 			}else{
+				int slots = id->inventorySlotNeeded( item[i].amount );
+
 				// Add the item normally
 				if( pc_additem( sd, &item[i], item[i].amount, LOG_TYPE_MAIL ) == ADDITEM_SUCCESS ){
 					item_received = true;
+					sd->mail.pending_slots -= slots;
 				}else{
 					// Do not send receive packet so that the mail is still displayed with item attachment
 					item_received = false;
@@ -327,7 +331,7 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 			}
 
 			// Make sure no requests are possible anymore
-			item->amount = 0;
+			item[i].amount = 0;
 		}	
 	}
 
