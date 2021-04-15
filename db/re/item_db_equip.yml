@@ -75956,16 +75956,16 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      .@r = getrefine();
       bonus bAllStats,1;
       bonus bMdef,5;
-      .@r = getrefine();
       bonus bMatk,2*.@r;
       bonus bBaseAtk,4*.@r;
-      bonus bHealPower,.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"AB_JUDEX",20*.@r/2;
-      bonus2 bSkillAtk,"PR_MAGNUS",10*.@r/2;
+      bonus bHealPower,2*.@r;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"AB_JUDEX",20*(.@r/2);
+      bonus2 bSkillAtk,"PR_MAGNUS",10*(.@r/2);
   - Id: 18973
     AegisName: Old_Driver_Band_R
     Name: Old Driver Band
@@ -75993,14 +75993,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
+      bonus bAllStats,1;
       bonus bBaseAtk,4*.@r;
-      bonus bAspd,.@r/5;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"NC_POWERSWING",20*.@r/2;
-      bonus2 bSkillAtk,"NC_AXETORNADO",20*.@r/2;
+      bonus bAspd,(.@r/5);
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"NC_POWERSWING",20*(.@r/2);
+      bonus2 bSkillAtk,"NC_AXETORNADO",20*(.@r/2);
   - Id: 18974
     AegisName: Old_Driver_Band_Y
     Name: Old Driver Band(Yellow)
@@ -76028,13 +76028,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
+      bonus bAllStats,1;
       bonus bBaseAtk,4*.@r;
-      bonus bAspd,.@r/5;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"NC_ARMSCANNON",5*(.@r/2);
+      bonus bAspd,(.@r/5);
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"NC_ARMSCANNON",15*(.@r/2);
       bonus2 bSkillCooldown,"NC_SELFDESTRUCTION",-10000*(.@r/4);
   - Id: 18975
     AegisName: Old_Shadow_Handicraft
@@ -76063,24 +76063,24 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
-      bonus bBaseAtk,4*.@r;
+      bonus bAllStats,1;
       bonus bMatk,4*.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"SC_TRIANGLESHOT",25*.@r/2;
+      bonus bBaseAtk,4*.@r;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",25*(.@r/2);
       if (.@r>=6) {
          bonus2 bSkillCooldown,"SC_ENERVATION",-1000;
          bonus2 bSkillCooldown,"SC_UNLUCKY",-1000;
-      }
-      if (.@r>=8) {
-         bonus2 bSkillCooldown,"SC_LAZINESS",-1000;
-         bonus2 bSkillCooldown,"SC_WEAKNESS",-1000;
-      }
-      if (.@r>=10) {
-         bonus2 bSkillCooldown,"SC_IGNORANCE",-1000;
-         bonus2 bSkillCooldown,"SC_GROOMY",-1000;
+         if (.@r>=8) {
+            bonus2 bSkillCooldown,"SC_LAZINESS",-1000;
+            bonus2 bSkillCooldown,"SC_WEAKNESS",-1000;
+            if (.@r>=10) {
+               bonus2 bSkillCooldown,"SC_IGNORANCE",-1000;
+               bonus2 bSkillCooldown,"SC_GROOMY",-1000;
+            }
+         }
       }
   - Id: 18976
     AegisName: Old_Minstrel_Song_Hat
@@ -76110,13 +76110,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
+      bonus bAllStats,1;
       bonus bLongAtkRate,.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"CG_ARROWVULCAN",20*.@r/2;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5*.@r/2;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",20*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15*(.@r/2);
   - Id: 18977
     AegisName: Old_Midas_Whisper
     Name: Old Midas Whisper
@@ -76144,13 +76144,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
+      bonus bAllStats,1;
       bonus bBaseAtk,4*.@r;
-      bonus bLongAtkRate,.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"GN_CARTCANNON",15*.@r/2;
+      bonus bLongAtkRate,(.@r/2);
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"GN_CARTCANNON",15*(.@r/2);
   - Id: 18978
     AegisName: Old_Magic_Stone_Hat
     Name: Old Magic Stone Hat
@@ -76178,13 +76178,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
+      bonus bSPrecovRate,20;
+      bonus bAllStats,1;
       bonus bMdef,5;
       bonus bMatkRate,.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"WL_SOULEXPANSION",5*.@r/2;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",15*(.@r/2);
       bonus2 bSkillCooldown,"WL_CRIMSONROCK",-1000-(.@r*100);
   - Id: 18979
     AegisName: Old_Blazing_Soul
@@ -76213,14 +76214,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
-      bonus bBaseAtk,4*.@r;
+      bonus bAllStats,1;
       bonus bCritical,2*.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15*.@r/2;
-      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",20*.@r/2;
+      bonus bBaseAtk,4*.@r;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15*(.@r/2);
+      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",20*(.@r/2);
   - Id: 18980
     AegisName: Old_Wind_Whisper
     Name: Old Wind Whisper
@@ -76248,13 +76249,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
-      bonus bAtk2,4*.@r;
-      bonus bMatkRate,.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
+      bonus bAllStats,1;
       bonus bMdef,5;
+      bonus bMatkRate,.@r;
+      bonus bBaseAtk,4*.@r;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
       bonus2 bSkillAtk,"SO_POISON_BUSTER",15*(.@r/2);
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",20*(.@r/2);
   - Id: 18981
@@ -76285,13 +76286,13 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
+      bonus bAllStats,1;
       bonus bLongAtkRate,.@r;
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
-      bonus2 bSkillAtk,"CG_ARROWVULCAN",20*.@r/2;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5*.@r/2;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",20*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15*(.@r/2);
   - Id: 18982
     AegisName: Old_Circlet_Of_Bone
     Name: Old Circlet Of Bones
@@ -76319,14 +76320,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
+      bonus bAllStats,1;
       bonus bCritAtkRate,.@r;
-      bonus bAspdRate,1;
-      bonus2 bSkillAtk,"GC_CROSSIMPACT",10*.@r/2;
-      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",20*.@r/2;
+      bonus bAspdRate,.@r;
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",15*(.@r/2);
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",20*(.@r/2);
   - Id: 18983
     AegisName: Old_Protect_Of_Crown
     Name: Old Protect Of Crown
@@ -76354,15 +76355,15 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
+      bonus bAllStats,1;
       bonus bMdef,5;
       bonus bBaseAtk,4*.@r;
-      bonus bAspd,.@r/5;
-      bonus2 bSkillAtk,"LG_CANNONSPEAR",20*.@r/2;
-      bonus2 bSkillAtk,"LG_OVERBRAND",5*.@r/2;
+      bonus bAspd,(.@r/5);
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",20*(.@r/2);
+      bonus2 bSkillAtk,"LG_OVERBRAND",15*(.@r/2);
   - Id: 18984
     AegisName: Old_Camo_RabbitHood
     Name: Old Camouflage Rabbit Hood
@@ -76390,14 +76391,14 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAllStats,1;
       .@r = getrefine();
-      bonus bMaxHPrate,.@r/2;
-      bonus bMaxSPrate,.@r/2;
+      bonus bAllStats,1;
       bonus bLongAtkRate,.@r;
-      bonus bFlee2,.@r/3;
-      bonus2 bSkillAtk,"RA_CLUSTERBOMB",15*.@r/2;
-      bonus2 bSkillAtk,"RA_WUGSTRIKE",10*.@r/2;
+      bonus bFlee2,(.@r/3);
+      bonus bMaxHPrate,(.@r/2);
+      bonus bMaxSPrate,(.@r/2);
+      bonus2 bSkillAtk,"RA_CLUSTERBOMB",15*(.@r/2);
+      bonus2 bSkillAtk,"RA_WUGSTRIKE",10*(.@r/2);
   - Id: 18985
     AegisName: Falconer_Flute
     Name: Falconer Flute
