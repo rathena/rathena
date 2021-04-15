@@ -15045,7 +15045,7 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_VACUUM_EXTREME:
-		if (sce->val4 >= 0) {
+		if (sce->val4 > 0) {
 			// Only slide targets to center if they are standing still
 			if (unit_bl2ud(bl)->walktimer == INVALID_TIMER) {
 				uint16 x = sce->val3 >> 16, y = sce->val3 & 0xFFFF;

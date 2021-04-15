@@ -571,6 +571,19 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+  - Id: 766
+    AegisName: Silky_Fur_Bundle
+    Name: A bundle of shiny hair.
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 901
     AegisName: Danggie
     Name: Daenggie
@@ -20559,6 +20572,32 @@ Body:
     AegisName: 3rd_Test_Pass
     Name: 3rd Test Pass
     Type: Etc
+  - Id: 6584
+    AegisName: Guarantee_Weapon_12Up
+    Name: +12 Weapon Certificate
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6585
+    AegisName: Guarantee_Armor_12Up
+    Name: +12 Armor Certificate
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6592
     AegisName: Small_Wooden_Chest
     Name: Small Wooden Chest
@@ -23685,6 +23724,19 @@ Body:
     Name: Lamb Horns
     Type: Etc
     Buy: 10
+  - Id: 6959
+    AegisName: aegis_6959
+    Name: Costume Change Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6960
     AegisName: Air_Stronghold_Key
     Name: Sky Fortress Key
@@ -23837,6 +23889,71 @@ Body:
     Name: ASPD Reactor Blueprint
     Type: Etc
     Weight: 10
+  - Id: 6993
+    AegisName: Guarantee_Weapon_10Up
+    Name: +10 Weapon Certificate
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6994
+    AegisName: Guarantee_Armor_10Up
+    Name: +10 Armor Certificate
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6995
+    AegisName: WarmStone
+    Name: Warm Stone
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6996
+    AegisName: Rabbit_Doll
+    Name: Rabbit Doll
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 6997
+    AegisName: Antique_Arrow
+    Name: Old Arrow
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6999
     AegisName: HPdrainStone_Top
     Name: HP Absorption Stone (Upper)
@@ -29261,6 +29378,12 @@ Body:
     AegisName: Oneclick_Armor_9UP
     Name: One Click Armor 9UP
     Type: Etc
+  - Id: 7685
+    AegisName: Sour_Melon
+    Name: Sweet and Sour Melon
+    Type: Etc
+    Buy: 20
+    Weight: 10
   - Id: 7690
     AegisName: Special_Exchange_Coupons
     Name: Special Exchange Coupons
@@ -30248,6 +30371,19 @@ Body:
       NoTrade: true
       NoSell: true
       NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 7804
+    AegisName: Octopig_Tentacle
+    Name: Octopig's Leg
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -34058,6 +34194,52 @@ Body:
     Name: MATK Stone(Lower)
     Type: Etc
     Weight: 100
+  - Id: 25038
+    AegisName: Breaked_Trap
+    Name: Broken Trap
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25039
+    AegisName: Captured_Trap
+    Name: Capture Trap
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25041
+    AegisName: Pump_Of_Spirit
+    Name: Soul Plunger
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25042
+    AegisName: Service_30_Egg_Shell
+    Name: Piece of Mysterious Egg
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25043
     AegisName: Thorny_Vine_Flute
     Name: Thorny Vine Flute
@@ -34132,6 +34314,20 @@ Body:
     AegisName: Basilac_Clam
     Name: Basilac Clam
     Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25051
+    AegisName: Union_Token
+    Name: Union Insignia
+    Type: Etc
+    Buy: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -34231,6 +34427,382 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 100
+  - Id: 25073
+    AegisName: Worn_Out_Papyrus
+    Name: Old Papyrus
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25074
+    AegisName: Antique_Coin
+    Name: Old Coin
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25075
+    AegisName: Sword_Of_Admiral
+    Name: Admiral's Sword
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25076
+    AegisName: QouSeraSera
+    Name: Coursera
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25077
+    AegisName: KnightsSupply
+    Name: Knight Supply
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25078
+    AegisName: Liqueur_Of_Lotus
+    Name: Ha Soju
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25079
+    AegisName: FaintBreathing
+    Name: Last Breath
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25080
+    AegisName: FoxBeads
+    Name: Fox Bead
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25083
+    AegisName: MRabbit_SHair
+    Name: Silky Hair of Rabbit
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25084
+    AegisName: Captured_MRabbit
+    Name: Captured Rabbit
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25085
+    AegisName: MRabbit_Hair
+    Name: Rabbit's Hair
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25086
+    AegisName: Gift_Wrapping_Ribbon
+    Name: Ribbon for Gift wrapping
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25087
+    AegisName: Old_Doll
+    Name: Old Doll
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25088
+    AegisName: Dream_Piece
+    Name: Fragment of Dreams
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25089
+    AegisName: Gift_Wrapping_Wing
+    Name: Ornament Wings Gift
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25098
+    AegisName: Jobmap_1st
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25099
+    AegisName: Jobmap_su
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25100
+    AegisName: Jobmap_sword
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25101
+    AegisName: Jobmap_magic
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25102
+    AegisName: Jobmap_Merch
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25103
+    AegisName: Jobmap_acol
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25104
+    AegisName: Jobmap_thief
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25105
+    AegisName: Jobmap_archer
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25106
+    AegisName: Jobmap_taekwon
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25107
+    AegisName: Jobmap_rune
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25108
+    AegisName: Jobmap_royal
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25109
+    AegisName: Jobmap_war
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25110
+    AegisName: Jobmap_socer
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25111
+    AegisName: Jobmap_mecha
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25112
+    AegisName: Jobmap_gene
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25113
+    AegisName: Jobmap_bishop
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25114
+    AegisName: Jobmap_sura
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25115
+    AegisName: Jobmap_cross
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25116
+    AegisName: Jobmap_chaser
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25117
+    AegisName: Jobmap_ranger
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25118
+    AegisName: Jobmap_mins
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25119
+    AegisName: Jobmap_wander
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25120
+    AegisName: Jobmap_ninja
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25121
+    AegisName: Jobmap_gun
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25122
+    AegisName: Jobmap_super2
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
+  - Id: 25123
+    AegisName: Jobmap_karma2
+    Name: Realm Map
+    Type: Etc
+    Trade:
+      Override: 100
+      NoCart: true
   - Id: 25127
     AegisName: Silent_Energy_Particle
     Name: Silent Energy Particle
@@ -34277,6 +34849,11 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25135
+    AegisName: Comp_Auger_Of_Spirit
+    Name: "[NotForSale] Spiritual Auger"
+    Type: Etc
+    Weight: 10
   - Id: 25136
     AegisName: ElectricEffect_Middle
     Name: Electric Effect (Middle)
@@ -34298,6 +34875,12 @@ Body:
   - Id: 25139
     AegisName: Identify_Stone
     Name: Identify Stone (Bottom)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25140
+    AegisName: Resurrection_Stone
+    Name: Resurrection Stone(Lower)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -34596,6 +35179,19 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25169
+    AegisName: Sticky_Slime
+    Name: Sticky Mucus
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25170
     AegisName: MinorCastingStone_Robe
     Name: Minor Casting Stone (Garment)
@@ -34747,6 +35343,45 @@ Body:
     Type: Etc
     Buy: 1200
     Weight: 1200
+  - Id: 25188
+    AegisName: Handkerchief_of_Girl
+    Name: Girl's Handkerchief
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25200
+    AegisName: Cloud_Fluff
+    Name: Fluffy Cloud
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25201
+    AegisName: Arcane_Toenail
+    Name: Miracle Claw
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25205
     AegisName: ShrinkEffect_Bottom
     Name: Shrink Effect (Bottom)
@@ -34783,6 +35418,71 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25218
+    AegisName: Tree_Branches
+    Name: Tree Branch
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25219
+    AegisName: WindowPaper
+    Name: Window Paper
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25220
+    AegisName: Moonlight_KiteString
+    Name: Moonlight Kite String
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25221
+    AegisName: MoonScent_Tree_Branches
+    Name: MoonScent Tree Branch
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25222
+    AegisName: MoonPattern_WindowPaper
+    Name: Moon Patterned Window Paper
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25223
     AegisName: Para_Team_Coin
     Name: Eden Group Coin
@@ -34849,6 +35549,18 @@ Body:
     Type: Etc
     Buy: 1000
     Weight: 10
+  - Id: 25235
+    AegisName: StoneForWork
+    Name: Crafted Stone
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25238
     AegisName: New_Normal_Lubricant
     Name: New Normal Lubricant
@@ -34872,6 +35584,24 @@ Body:
       NoTrade: true
       NoSell: true
       NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25240
+    AegisName: Independence_Permit
+    Name: Independence Certificate
+    Type: Etc
+    Weight: 10
+  - Id: 25245
+    AegisName: Little_Skel_Bone
+    Name: Small pile of bones
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -34927,6 +35657,48 @@ Body:
     AegisName: Rock_Ridge_Coin
     Name: Rock Ridge Coin
     Type: Etc
+  - Id: 25251
+    AegisName: Fermented_Grapes
+    Name: Fermented Grape Juice
+    Type: Etc
+  - Id: 25252
+    AegisName: Sprig_Of_Holly
+    Name: Sprig of Holly
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25253
+    AegisName: Sugar_Box
+    Name: A box containing sugar
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25254
+    AegisName: Firewood
+    Name: Firewood
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25256
     AegisName: Hazy_Dream_Fragment
     Name: Hazy Dream Fragment
@@ -35004,6 +35776,45 @@ Body:
     Name: Suspicious Pentacle
     Type: Etc
     Weight: 10
+  - Id: 25268
+    AegisName: Sticky_Blood
+    Name: Sticky Blood
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25269
+    AegisName: Mushroom_Sap
+    Name: Mushroom Sap
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25270
+    AegisName: Swaying_Mane
+    Name: Wavy Mane
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25271
     AegisName: Illusion_Stone
     Name: Illusion Stone
@@ -35016,6 +35827,25 @@ Body:
     Name: Illusion Gemstone
     Type: Etc
     Weight: 10
+  - Id: 25273
+    AegisName: Mysterious_Medal
+    Name: Mysterious Medal
+    Type: Etc
+    Buy: 2
+    Flags:
+      BuyingStore: true
+  - Id: 25274
+    AegisName: Racing_Thx_Ticket
+    Name: Racing Audit Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25276
     AegisName: Clean_Bone
     Name: Clean Bone
@@ -35076,10 +35906,75 @@ Body:
     Type: Etc
     Buy: 210
     Weight: 10
+  - Id: 25286
+    AegisName: Octo_Octo_Fluid
+    Name: Octopus
+    Type: Etc
+  - Id: 25287
+    AegisName: Mysterious_Feather
+    Name: Mystical Feather
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25290
     AegisName: Sweets_Festival_Coin
     Name: Sweets Festival Coin
     Type: Etc
+  - Id: 25291
+    AegisName: Fac_Choco
+    Name: Product Chocolate
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25292
+    AegisName: Stolen_Cacao
+    Name: Stolen Cocoa Beans
+    Type: Etc
+  - Id: 25294
+    AegisName: Clover_Ticket
+    Name: Clover Ticket
+    Type: Etc
+  - Id: 25295
+    AegisName: Happiness_Clover
+    Name: Happy Three Leaf Clover
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25296
+    AegisName: Fatal_Thing
+    Name: Something Fatal
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25297
     AegisName: Frozen_Stone_Fragment
     Name: Frozen Stone Fragment
@@ -35130,6 +36025,33 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25307
+    AegisName: Private_M_Ticket
+    Name: Late Lang Monster Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25309
+    AegisName: Dry_Branch
+    Name: Dry Twig
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25311
     AegisName: Piece_of_Black_Horn
     Name: Piece of Black Horn
@@ -35145,15 +36067,291 @@ Body:
     Name: Old Shell
     Type: Etc
     Weight: 10
+  - Id: 25314
+    AegisName: ShipsLog
+    Name: Logbooks
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25315
+    AegisName: Piece_Of_Shell
+    Name: Shell Fragment
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25316
+    AegisName: Shabby_Metal_Chip
+    Name: Old Metal Pieces
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25318
+    AegisName: Dalcom_Skin
+    Name: Sweetie Skin
+    Type: Etc
+    Buy: 20
+    Weight: 10
+  - Id: 25319
+    AegisName: Ice_Box
+    Name: Ice Box
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25320
+    AegisName: Suspicious_Melon
+    Name: Suspicious Melon
+    Type: Etc
+    Buy: 20
+    Weight: 10
+  - Id: 25340
+    AegisName: Golden_Corn
+    Name: Golden Corn
+    Type: Etc
+    Weight: 10
+  - Id: 25341
+    AegisName: Red_Hot_Marble
+    Name: Eagle Eagle Bead
+    Type: Etc
+  - Id: 25342
+    AegisName: Healthful_Herb
+    Name: A healthy herb
+    Type: Etc
+    Weight: 10
+  - Id: 25344
+    AegisName: Flat_Round_Stone
+    Name: Flat and Round Stones
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25358
+    AegisName: Retrieve_Datacard
+    Name: Data Retrieval Card
+    Type: Etc
+    Weight: 200
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25359
+    AegisName: Slightly_Old_Bax
+    Name: Slightly Aged Antique Box
+    Type: Etc
+    Weight: 200
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25360
+    AegisName: Receipt
+    Name: Receipt
+    Type: Etc
+    Weight: 200
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25365
+    AegisName: Thin_Noodle
+    Name: Elongated noodles
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25366
+    AegisName: Noodle_Festa_Coupon
+    Name: Noodle Festival Coin
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25367
+    AegisName: Promotion_Fan
+    Name: Promotional fan
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25375
     AegisName: Powerful_Soul_Essence
     Name: Powerful Soul Essence
+    Type: Etc
+  - Id: 25376
+    AegisName: Pet_Coin
+    Name: Cupet Coin
     Type: Etc
   - Id: 25377
     AegisName: Luxurious_Pet_Food
     Name: Luxurious Pet Food
     Type: Etc
     Weight: 10
+  - Id: 25390
+    AegisName: Captured_Savage
+    Name: Captured Savage
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25391
+    AegisName: Goodly_Bough
+    Name: High-quality branches
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25392
+    AegisName: Free_Pass_Ticket
+    Name: Ticket to anywhere
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25393
+    AegisName: Delicious_Corn
+    Name: Tasty Corn
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25394
+    AegisName: Fruit_Lunch
+    Name: Fruit lunch box
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25395
+    AegisName: Small_Embers
+    Name: Small Ember
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25401
+    AegisName: Black_Fur
+    Name: Black Fur
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25408
+    AegisName: Memory_Of_Gyol
+    Name: Memories of Gyoll
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25409
     AegisName: SuraStone_Top
     Name: Champion Stone (Upper)
@@ -35226,6 +36424,84 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25421
+    AegisName: Pumpkin_Decor
+    Name: Pumpkin Decoration
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25422
+    AegisName: White_Thin_Stem
+    Name: Dry White Stem
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25425
+    AegisName: SnowFlower_Of_Spell
+    Name: Magical Snow Flower
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25426
+    AegisName: Warm_Cotton
+    Name: Warm Cotton
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25427
+    AegisName: Rebeginer_W_Coupon
+    Name: Beginner's Equipment Exchange Voucher
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25428
+    AegisName: Rebeginer_W_7Up
+    Name: Beginner's Safe to 7 Weapon Certificate
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25445
     AegisName: RuneknightStone_Top
     Name: Lord Knight Stone (Upper)
@@ -35312,6 +36588,19 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25479
+    AegisName: Dogly_Bottle
+    Name: Dogly Bottle
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25490
     AegisName: ShadowchaserStone_Top
     Name: Stalker Stone (Upper)
@@ -35384,19 +36673,300 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25502
+    AegisName: EVT_JAN01KR
+    Name: Rice Cake
+    Type: Etc
+    Weight: 50
+  - Id: 25503
+    AegisName: Flower_V
+    Name: Flower Left by Phantom
+    Type: Etc
+    Weight: 10
+  - Id: 25504
+    AegisName: Visionary_Ticket
+    Name: Phantom's Seal
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25508
     AegisName: Token_of_OrcGeneral
     Name: Orc Warlord Token
     Type: Etc
     Weight: 10
+  - Id: 25511
+    AegisName: Evt_March04_KR
+    Name: Solid chocolate
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25512
+    AegisName: Evt_March05_KR
+    Name: Almond
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25615
+    AegisName: NasariansSoulstone
+    Name: Nasarin's Soul Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25616
+    AegisName: Green_Bearopy
+    Name: Green Bear Rope
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25617
+    AegisName: Chonchon_Doll_HQ
+    Name: Fine Chonchon Doll
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25618
+    AegisName: Gothic_China_Doll
+    Name: Gothic Porcelain Doll
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25619
+    AegisName: Clay_Doll
+    Name: Clay Doll
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 25622
     AegisName: White_Snake_Tear
     Name: White Snake's Tear
     Type: Etc
     Weight: 10
+  - Id: 25627
+    AegisName: Gold_Card
+    Name: Gold Card
+    Type: Etc
+    Buy: 20
+    Weight: 10
   - Id: 25629
     AegisName: Konts_Letter
     Name: Knotted Letter
+    Type: Etc
+    Weight: 10
+  - Id: 25633
+    AegisName: Token_Of_Wootan
+    Name: Wootan's Token
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25634
+    AegisName: Wootan_D_S_Piece
+    Name: Wootan Defender's Shield Piece
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25635
+    AegisName: Wootan_F_Fur
+    Name: Wootan Warrior's Fur
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25636
+    AegisName: Shooting_Stone
+    Name: Shooting Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25637
+    AegisName: Hair_Leaf
+    Name: Leaf-like Hair
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25638
+    AegisName: Token_Of_Bigstone
+    Name: Megalithic Token
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25639
+    AegisName: Fragment_Of_Rock
+    Name: Fragment of Rock
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25640
+    AegisName: Pot_Stone
+    Name: Potted Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25641
+    AegisName: Hard_Mud
+    Name: Hard Mud
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25642
+    AegisName: Weak_Worm
+    Name: Vulnerable Worm
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25643
+    AegisName: Autographed_Book
+    Name: Signed Book
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25655
+    AegisName: Evt_May01_KR
+    Name: Sweet Coin
+    Type: Etc
+    Weight: 1
+  - Id: 25656
+    AegisName: Evt_June01_KR
+    Name: Stamped Notebook
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25657
+    AegisName: Evt_July01_KR
+    Name: Though Noodles
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25658
+    AegisName: Evt_July02_KR
+    Name: Noodle Sap
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25659
+    AegisName: Evt_May02_KR
+    Name: Organic Flour
+    Type: Etc
+    Weight: 200
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25664
+    AegisName: Evt_July03_KR
+    Name: Ribbon Noodles
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25665
+    AegisName: Dienes_Envelope
+    Name: Dien's Precious Envelope
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25666
+    AegisName: Id_Card
+    Name: Identification Bracelet
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25668
+    AegisName: EP17_1_EVT01
+    Name: Damaged Weapon
+    Type: Etc
+    Weight: 10
+  - Id: 25669
+    AegisName: EP17_1_EVT02
+    Name: Mysterious Component
     Type: Etc
     Weight: 10
   - Id: 25670
@@ -35847,16 +37417,84 @@ Body:
     Name: Assassin Cross Stone (Garment)
     Type: Etc
     Weight: 100
+  - Id: 25723
+    AegisName: EP17_1_EVT39
+    Name: Cor Core
+    Type: Etc
+    Buy: 15000
+    Weight: 10
+  - Id: 25728
+    AegisName: Shadowdecon_Ore
+    Name: Rough Shadowdecon
+    Type: Etc
+    Weight: 10
   - Id: 25729
     AegisName: Shadowdecon
     Name: Shadowdecon
     Type: Etc
     Weight: 20
+  - Id: 25730
+    AegisName: Zelunium_Ore
+    Name: Rough Zelunium
+    Type: Etc
+    Weight: 10
   - Id: 25731
     AegisName: Zelunium
     Name: Zelunium
     Type: Etc
     Weight: 20
+  - Id: 25733
+    AegisName: EP17_1_Open_Event
+    Name: Episode Quest Clear Coupon
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25734
+    AegisName: Sealed_Weapon_Ticket
+    Name: Sealed Weapon Exchange Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25735
+    AegisName: Unsealing_Token
+    Name: Ancient Hero's Seal-Year
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25736
+    AegisName: J_Shop_Coupon2
+    Name: Jeremy's Beauty Coupon II
+    Type: Etc
+    Weight: 10
+  - Id: 25739
+    AegisName: GH_Cursed_Crystal
+    Name: Curse Eroded Crystal
+    Type: Etc
+  - Id: 25740
+    AegisName: GH_Cursed_Gemstone
+    Name: Curse Eroded Gemstone
+    Type: Etc
   - Id: 25759
     AegisName: Dragenergy_Green
     Name: Green Dragon Orb
@@ -35940,6 +37578,148 @@ Body:
     Name: Valkyrie Ingrid's Armor
     Type: Etc
     Weight: 100
+  - Id: 25772
+    AegisName: Delicious_Juice
+    Name: Delicious Juice
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25773
+    AegisName: Snake_Deadly_Poison
+    Name: Snake's Venom
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25774
+    AegisName: Mantis_Flower
+    Name: Mantis Flower
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25775
+    AegisName: Soft_Scarf
+    Name: Fluffy Cloth Piece
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25776
+    AegisName: Purple_Solid_Shell
+    Name: Very Solid Purple Shell
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25777
+    AegisName: Suspicious_Sap
+    Name: Mysterious Sap
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25778
+    AegisName: Brilliant_Jelly
+    Name: Autumn Light Jelly Piece
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25779
+    AegisName: Short_Rope
+    Name: Short Binding Rope
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25780
+    AegisName: Essence_Of_Demon
+    Name: Demonic Essece
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25781
+    AegisName: Little_Lovely_Candle
+    Name: Pretty Little Candle
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25782
+    AegisName: Medicinal_Stuff
+    Name: Medicinal Bag
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25783
+    AegisName: Cold_Holy_Water
+    Name: Cold Holy Water
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25784
+    AegisName: Small_Flashlight
+    Name: Small Flashlight
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25786
+    AegisName: Bio_Reseearch_Docu
+    Name: Somatology Research Document
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 25787
+    AegisName: Bio_Test_Fragment
+    Name: Somatology Experimental Fragment
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 25791
+    AegisName: Inventory_Ex_Evt
+    Name: "[Event] Inventory Expansion Voucher"
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25792
+    AegisName: Inventory_Ex_Dis
+    Name: "[Limited] Inventory Expansion Voucher"
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25793
+    AegisName: Inventory_Ex
+    Name: Inventory Expansion Coupon
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25797
     AegisName: SuraStone_Robe2
     Name: Sura Stone II (Garment)
@@ -36051,6 +37831,45 @@ Body:
     Name: Bizarre Stone Carvings
     Type: Etc
     Weight: 50
+  - Id: 25820
+    AegisName: Metal_W_Ticket
+    Name: Metal Weapon Exchange Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25840
+    AegisName: PayPromotion_Coupon
+    Name: January Costume Exchange Coupon
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25841
+    AegisName: Smooth_Noodle
+    Name: Smooth Noodles
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25842
     AegisName: SoulReaperStone_Robe
     Name: Soul Reaper Stone (Garment)
@@ -36156,6 +37975,12 @@ Body:
     Name: Doram Stone (Garment)
     Type: Etc
     Weight: 100
+  - Id: 25863
+    AegisName: 2019_SStarR_Ticket
+    Name: 2019 Superstar R Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25864
     AegisName: S_Circlet_Of_Time
     Name: Sealed Temporal Circlet
@@ -36183,6 +38008,10 @@ Body:
     Type: Etc
     Flags:
       BuyingStore: true
+  - Id: 25876
+    AegisName: Harvest_Lottery_Ticket
+    Name: Lottery ticket for harvest
+    Type: Etc
   - Id: 25892
     AegisName: aegis_25892
     Name: Deep Sea Shell
@@ -49530,6 +51359,104 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
+  - Id: 1000000
+    AegisName: IDTest_event
+    Name: IDTest event
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000001
+    AegisName: Job_Pass_Ticket1
+    Name: 1st Job Change Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000002
+    AegisName: Job_Pass_Ticket2
+    Name: 2nd Job Change Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000003
+    AegisName: Job_Pass_Ticket3
+    Name: Transcendence Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000004
+    AegisName: Job_Pass_Ticket4
+    Name: Top Job Tickets
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000005
+    AegisName: Boost_W_Ticket
+    Name: Boosting Weapon Voucher
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000006
+    AegisName: Boost_A_Ticket
+    Name: Booster Armor Voucher
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000007
+    AegisName: Kr_B_Event01
+    Name: Parfait for Children
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1000008
     AegisName: RangerStone_II_Top
     Name: Sniper Stone II (Top)
@@ -50368,4 +52295,1004 @@ Body:
   - Id: 1000235
     AegisName: aegis_1000235
     Name: Great Hunter's Mark    # !todo check english name
+    Type: Etc
+  - Id: 1000243
+    AegisName: Sin_Shard_A
+    Name: Fragment of Anger
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000244
+    AegisName: Sin_Shard_B
+    Name: Fragment of Fear
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000245
+    AegisName: Sin_Shard_C
+    Name: Fragment of Resentment
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000253
+    AegisName: Booster_W_Ticket
+    Name: Booster Weapon Voucher
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000254
+    AegisName: Booster_Coin
+    Name: Booster Coin
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000255
+    AegisName: Sin_Shard_D
+    Name: Fragment of Regret
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000256
+    AegisName: Sin_Shard_E
+    Name: Fragment of Sorrow
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000257
+    AegisName: Sin_Fragment
+    Name: Piece of Sin
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000258
+    AegisName: Fate_Shard_A
+    Name: Fragment of Empathy
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000259
+    AegisName: Fate_Shard_B
+    Name: Fragment of Happiness
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000260
+    AegisName: Fate_Shard_C
+    Name: Fragment of Rest
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000261
+    AegisName: Fate_Shard_D
+    Name: Fragment of Comfort
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000262
+    AegisName: Fate_Shard_E
+    Name: Fragment of Blessing
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000263
+    AegisName: Fate_Fragment
+    Name: Fragment of Good Will
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000268
+    AegisName: J4_Gas_Mask
+    Name: Gas Mask
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000269
+    AegisName: J4_Sealing_Box
+    Name: Sealing Box
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000270
+    AegisName: J4_Mandra_Incubator
+    Name: Mandragora Incubator
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000271
+    AegisName: J4_Impression_Piece
+    Name: Piece of Impression
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000272
+    AegisName: J4_Inspiration_Piece
+    Name: Piece of Inspiration
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000274
+    AegisName: Cachua_Coupon
+    Name: "[Kachua] Mileage Coupon"
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000275
+    AegisName: Beaker
+    Name: Beaker
+    Type: Etc
+    Weight: 1
+  - Id: 1000276
+    AegisName: Flame_Acid_Bottle
+    Name: Flame Acid Bottle
+    Type: Etc
+    Weight: 1
+  - Id: 1000277
+    AegisName: Earth_Acid_Bottle
+    Name: Earth Acid Bottle
+    Type: Etc
+    Weight: 1
+  - Id: 1000278
+    AegisName: Gale_Acid_Bottle
+    Name: Gale Acid Bottle
+    Type: Etc
+    Weight: 1
+  - Id: 1000279
+    AegisName: Icicle_Acid_Bottle
+    Name: Icicle Acid Bottle
+    Type: Etc
+    Weight: 1
+  - Id: 1000280
+    AegisName: High_Coating_Bottle
+    Name: Advanced Coating Potion
+    Type: Etc
+    Weight: 1
+  - Id: 1000281
+    AegisName: High_Plant_Bottle
+    Name: Greater Plant Bottle
+    Type: Etc
+    Weight: 1
+  - Id: 1000282
+    AegisName: EpisodClear16
+    Name: Episode 16 Clear Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000283
+    AegisName: EpisodClear16_
+    Name: (Event) Episode 16 Clear Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000287
+    AegisName: EpisodClear17
+    Name: Episode 17 Clear Ticket
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000289
+    AegisName: Device_Capsule
+    Name: Machine Capsule
+    Type: Etc
+    Weight: 5
+  - Id: 1000290
+    AegisName: Auto_Battle_Capsule
+    Name: ABR Capsule
+    Type: Etc
+    Weight: 10
+  - Id: 1000291
+    AegisName: Wind_Stone_4th
+    Name: Lightning Stone
+    Type: Etc
+    Weight: 1
+  - Id: 1000292
+    AegisName: Earth_Stone_4th
+    Name: Earth Stone
+    Type: Etc
+    Weight: 1
+  - Id: 1000293
+    AegisName: Flame_Stone_4th
+    Name: Fire Stone
+    Type: Etc
+    Weight: 1
+  - Id: 1000294
+    AegisName: Poison_Stone_4th
+    Name: Poison Stone
+    Type: Etc
+    Weight: 1
+  - Id: 1000295
+    AegisName: Ice_Stone_4th
+    Name: Ice Stone
+    Type: Etc
+    Weight: 1
+  - Id: 1000296
+    AegisName: RuneknightStone_Robe2
+    Name: Rune Knight Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000297
+    AegisName: RuneknightStone_Top2
+    Name: Lord Knight Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000298
+    AegisName: RuneknightStone_Middle2
+    Name: Lord Knight Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000299
+    AegisName: RuneknightStone_Bottom2
+    Name: Lord Knight Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000300
+    AegisName: GeneticStone_Robe2
+    Name: Genetic Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000301
+    AegisName: GeneticStone_Top2
+    Name: Creator Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000302
+    AegisName: GeneticStone_Middle2
+    Name: Creator Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000303
+    AegisName: GeneticStone_Bottom2
+    Name: Creator Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000304
+    AegisName: WanderMinsStone_Robe2
+    Name: Wanderer Minstrel Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000305
+    AegisName: WanderMinsStone_Top2
+    Name: Clown Gypsy Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000306
+    AegisName: WanderMinsStone_Middle2
+    Name: Clown Gypsy Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000307
+    AegisName: WanderMinsStone_Bottom2
+    Name: Clown Gypsy Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000311
+    AegisName: Hawk_Flute
+    Name: Hawk Flute
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000316
+    AegisName: MD_Geffen_Coin
+    Name: Geffen Arena Coin
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000317
+    AegisName: MD_Geffen_Cert
+    Name: Geffen Arena Certificate
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000320
+    AegisName: Kafra_Coin_Kr
+    Name: Kafra Coin
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000321
+    AegisName: Amber
+    Name: Amber
+    Type: Etc
+    Weight: 100
+  - Id: 1000322
+    AegisName: Etel_Dust
+    Name: Etel Dust
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+  - Id: 1000323
+    AegisName: Etel_Stone
+    Name: Etel Stone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000325
+    AegisName: Etel_Skyblue_Jewel
+    Name: Etel Aquamarine
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000326
+    AegisName: Etel_Topaz
+    Name: Etel Topaz
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000327
+    AegisName: Etel_Violet_Jewel
+    Name: Etel Amethyst
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000328
+    AegisName: Etel_Amber
+    Name: Etel Amber
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000331
+    AegisName: Ethernium
+    Name: Etherium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000332
+    AegisName: Etherdeocon
+    Name: Etherdeocon
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000333
+    AegisName: Enriched_Ethernium
+    Name: Enriched Etherium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000334
+    AegisName: Enriched_Etherdeocon
+    Name: Enriched Etherdeocon
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000335
+    AegisName: HD_Ethernium
+    Name: HD Etherium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000336
+    AegisName: HD_Etherdeocon
+    Name: HD Etherdeocon
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000337
+    AegisName: Blessed_Etel_Dust
+    Name: Blessed Etel Dust
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000346
+    AegisName: aegis_1000346
+    Name: Guide for 4th Job Change
+    Type: Etc
+  - Id: 1000352
+    AegisName: aegis_1000352
+    Name: Machine Creation Guide
+    Type: Etc
+    Weight: 10
+  - Id: 1000363
+    AegisName: MD_Airboat_Tokken
+    Name: Ymir Fragment
+    Type: Etc
+    Weight: 1
+  - Id: 1000364
+    AegisName: MD_Airboat_Ore
+    Name: Ymir Ore
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000366
+    AegisName: MD_Geffen_Win
+    Name: Geffen Arena Championship
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000367
+    AegisName: Mine_As
+    Name: Minneas
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000368
+    AegisName: Etel_Bradium
+    Name: Etel Bradium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000369
+    AegisName: HD_Etel_Bradium
+    Name: HE Etel Bradium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000370
+    AegisName: Etel_Carnium
+    Name: Etel Carnium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000371
+    AegisName: HD_Etel_Carnium
+    Name: HE Etel Carnium
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000372
+    AegisName: Meteorite_Dust
+    Name: Meteorite Powder
+    Type: Etc
+    Weight: 1
+  - Id: 1000373
+    AegisName: Meteorite_Fragment
+    Name: Meteorite Fragment
+    Type: Etc
+    Weight: 10
+  - Id: 1000374
+    AegisName: Brilliant_Soda
+    Name: Ultra-Low Carbonated Soda
+    Type: Etc
+    Weight: 100
+  - Id: 1000375
+    AegisName: Range_Stone_Top
+    Name: Ranged Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000376
+    AegisName: Range_Stone_Bottom
+    Name: Ranged Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000377
+    AegisName: Melee_Stone_Top
+    Name: Melee Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000378
+    AegisName: Melee_Stone_Middle
+    Name: Melee Stone (Mid)
+    Type: Etc
+    Weight: 100
+  - Id: 1000379
+    AegisName: Melee_Stone_Bottom
+    Name: Melee Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000396
+    AegisName: Naght_Sieger_Soul
+    Name: Naght Sieger Soul
+    Type: Etc
+  - Id: 1000397
+    AegisName: Betelgeuse_Soul
+    Name: Beteleuse Soul
+    Type: Etc
+  - Id: 1000398
+    AegisName: Pow_Meteorite_Dust
+    Name: Power Meteorite Powder
+    Type: Etc
+    Weight: 1
+  - Id: 1000399
+    AegisName: Sta_Meteorite_Dust
+    Name: Stamina Meteorite Powder
+    Type: Etc
+    Weight: 1
+  - Id: 1000400
+    AegisName: Con_Meteorite_Dust
+    Name: Agile Meteorite Powder
+    Type: Etc
+    Weight: 1
+  - Id: 1000401
+    AegisName: Crt_Meteorite_Dust
+    Name: Lucky Meteorite Powder
+    Type: Etc
+    Weight: 1
+  - Id: 1000402
+    AegisName: Spl_Meteorite_Dust
+    Name: Meteorite Powder of Spell
+    Type: Etc
+    Weight: 1
+  - Id: 1000403
+    AegisName: Wis_Meteorite_Dust
+    Name: Meteorite Powder of Wisdom
+    Type: Etc
+    Weight: 1
+  - Id: 1000405
+    AegisName: Ep18_Amethyst_Fragment
+    Name: Amethyst Fragment
+    Type: Etc
+  - Id: 1000406
+    AegisName: Ep18_Very_Ddan_Crystal
+    Name: Very Unusual Crystal
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000407
+    AegisName: Ep18_Half_Flower
+    Name: Half Flower
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000408
+    AegisName: Ep18_Recording_Note
+    Name: Recording Note
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000409
+    AegisName: Ep18_Docu_File
+    Name: Document Files
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000410
+    AegisName: Ep18_Water_Filter
+    Name: Water Filter
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000411
+    AegisName: Ep18_Purified_Bucket
+    Name: Purified Water
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000412
+    AegisName: Ep18_Trapped01
+    Name: Trapped Bird
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000413
+    AegisName: Ep18_Trapped02
+    Name: Trapped Lizard
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000414
+    AegisName: Ep18_Trapped03
+    Name: Trapped Pear
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000419
+    AegisName: Weapon_Ore_1
+    Name: Weapon Enhancement Ore(Lower)
+    Type: Etc
+  - Id: 1000420
+    AegisName: Weapon_Ore_2
+    Name: Weapon Enhancement Ore(Intermediate)
+    Type: Etc
+  - Id: 1000421
+    AegisName: Weapon_Ore_3
+    Name: Weapon Enhancement Ore(High)
+    Type: Etc
+  - Id: 1000422
+    AegisName: Weapon_Ore_4
+    Name: Weapon Enhancement Ore(Superior)
+    Type: Etc
+  - Id: 1000423
+    AegisName: Armor_Ore_1
+    Name: Armor Enhancement Ore(Lower)
+    Type: Etc
+  - Id: 1000424
+    AegisName: Armor_Ore_2
+    Name: Armor Enhancement Ore(Intermediate)
+    Type: Etc
+  - Id: 1000425
+    AegisName: Armor_Ore_4
+    Name: Armor Enhancement Ore(Superior)
+    Type: Etc
+  - Id: 1000426
+    AegisName: Acc_Ore_1
+    Name: Accessory Enhancement Ore(Lower)
+    Type: Etc
+  - Id: 1000427
+    AegisName: Acc_Ore_2
+    Name: Accessory Enhancement Ore(Intermediate)
+    Type: Etc
+  - Id: 1000428
+    AegisName: Acc_Ore_3
+    Name: Accessory Enhancement Ore(High)
+    Type: Etc
+  - Id: 1000429
+    AegisName: Acc_Ore_4
+    Name: Accessory Enhancement Ore(Superior)
+    Type: Etc
+  - Id: 1000430
+    AegisName: Weapon_Stone_1
+    Name: Weapon Upgrade Stone(Lower)
+    Type: Etc
+  - Id: 1000431
+    AegisName: Weapon_Stone_2
+    Name: Weapon Upgrade Stone(Intermediate)
+    Type: Etc
+  - Id: 1000432
+    AegisName: Weapon_Stone_3
+    Name: Weapon Upgrade Stone(High)
+    Type: Etc
+  - Id: 1000433
+    AegisName: Weapon_Stone_4
+    Name: Weapon Upgrade Stone(Superior)
+    Type: Etc
+  - Id: 1000434
+    AegisName: Armor_Stone_1
+    Name: Armor Upgrade Stone(Lower)
+    Type: Etc
+  - Id: 1000435
+    AegisName: Armor_Stone_2
+    Name: Armor Upgrade Stone(Intermediate)
+    Type: Etc
+  - Id: 1000436
+    AegisName: Armor_Stone_3
+    Name: Armor Upgrade Stone(High)
+    Type: Etc
+  - Id: 1000437
+    AegisName: Armor_Stone_4
+    Name: Armor Upgrade Stone(Superior)
+    Type: Etc
+  - Id: 1000438
+    AegisName: Acc_Stone_1
+    Name: Accessory Upgrade Stone(Lower)
+    Type: Etc
+  - Id: 1000439
+    AegisName: Acc_Stone_2
+    Name: Accessory Upgrade Stone(Intermediate)
+    Type: Etc
+  - Id: 1000440
+    AegisName: Acc_Stone_3
+    Name: Accessory Upgrade Stone(High)
+    Type: Etc
+  - Id: 1000441
+    AegisName: Acc_Stone_4
+    Name: Accessory Upgrade Stone(Superior)
+    Type: Etc
+  - Id: 1000442
+    AegisName: Pow_Meteorite_Fragment
+    Name: Power Meteorite Fragment
+    Type: Etc
+    Weight: 1
+  - Id: 1000443
+    AegisName: Sta_Meteorite_Fragment
+    Name: Stamina Meteorite Fragment
+    Type: Etc
+    Weight: 1
+  - Id: 1000444
+    AegisName: Con_Meteorite_Fragment
+    Name: Agile Meteorite Fragment
+    Type: Etc
+    Weight: 1
+  - Id: 1000445
+    AegisName: Crt_Meteorite_Fragment
+    Name: Lucky Meteorite Fragment
+    Type: Etc
+    Weight: 1
+  - Id: 1000446
+    AegisName: Spl_Meteorite_Fragment
+    Name: Meteorite Fragment of Spell
+    Type: Etc
+    Weight: 1
+  - Id: 1000447
+    AegisName: Wis_Meteorite_Fragment
+    Name: Meteorite Fragment of Wisdom
+    Type: Etc
+    Weight: 1
+  - Id: 1000471
+    AegisName: aegis_1000471
+    Name: Villa Basement Key
+    Type: Etc
+    Weight: 10
+  - Id: 1000475
+    AegisName: Conse_F_T_Sword
+    Name: Fides Two-Handed Sword Blueprint
+    Type: Etc
+  - Id: 1000476
+    AegisName: Conse_F_Lance
+    Name: Fides Lance Blueprint
+    Type: Etc
+  - Id: 1000477
+    AegisName: Conse_F_G_Sword
+    Name: Fides Guardian Sword Blueprint
+    Type: Etc
+  - Id: 1000478
+    AegisName: Conse_F_G_Spear
+    Name: Fides Guardian Spear Blueprint
+    Type: Etc
+  - Id: 1000479
+    AegisName: Conse_F_Axe
+    Name: Fides Axe Blueprint
+    Type: Etc
+  - Id: 1000480
+    AegisName: Conse_F_Mace
+    Name: Fides Mace Blueprint
+    Type: Etc
+  - Id: 1000481
+    AegisName: Conse_F_Lapier
+    Name: Fides Rapier Blueprint
+    Type: Etc
+  - Id: 1000482
+    AegisName: Conse_F_Hall
+    Name: Fides Hall Blueprint
+    Type: Etc
+  - Id: 1000483
+    AegisName: Conse_F_Cakram
+    Name: Fides Chakram Blueprint
+    Type: Etc
+  - Id: 1000484
+    AegisName: Conse_F_Katar
+    Name: Fides Katar Blueprint
+    Type: Etc
+  - Id: 1000485
+    AegisName: Conse_F_Dagger
+    Name: Fides Dagger Blueprint
+    Type: Etc
+  - Id: 1000486
+    AegisName: Conse_F_C_Bow
+    Name: Fides Crossbow Blueprint
+    Type: Etc
+  - Id: 1000487
+    AegisName: Conse_F_T_Staff
+    Name: Fides Two-Handed Staff Blueprint
+    Type: Etc
+  - Id: 1000488
+    AegisName: Conse_F_Rod
+    Name: Fides Rod Blueprint
+    Type: Etc
+  - Id: 1000489
+    AegisName: Conse_F_M_Book
+    Name: Fides Magic Book Blueprint
+    Type: Etc
+  - Id: 1000490
+    AegisName: Conse_F_P_Book
+    Name: Fides Poison Book Blueprint
+    Type: Etc
+  - Id: 1000491
+    AegisName: Conse_F_Bible
+    Name: Fides Bible Blueprint
+    Type: Etc
+  - Id: 1000492
+    AegisName: Conse_F_Wand
+    Name: Fides Wand Blueprint
+    Type: Etc
+  - Id: 1000493
+    AegisName: Conse_F_Knuckle
+    Name: Fides Knuckle Blueprint
+    Type: Etc
+  - Id: 1000494
+    AegisName: Conse_F_Claw
+    Name: Fides Claw Blueprint
+    Type: Etc
+  - Id: 1000495
+    AegisName: Conse_F_Ballista
+    Name: Fides Ballista Blueprint
+    Type: Etc
+  - Id: 1000496
+    AegisName: Conse_F_A_Bow
+    Name: Fides Aiming Bow Blueprint
+    Type: Etc
+  - Id: 1000497
+    AegisName: Conse_F_Violin
+    Name: Fides Violin Blueprint
+    Type: Etc
+  - Id: 1000498
+    AegisName: Conse_F_C_Rope
+    Name: Fides Chain Rope Blueprint
+    Type: Etc
+  - Id: 1000499
+    AegisName: Conse_F_Harp
+    Name: Fides Harp Blueprint
+    Type: Etc
+  - Id: 1000500
+    AegisName: Conse_F_Ribbon
+    Name: Fides Ribbon Blueprint
+    Type: Etc
+  - Id: 1000501
+    AegisName: Purificatory_Holy_O
+    Name: Holy Oil of Purification
+    Type: Etc
+  - Id: 1000502
+    AegisName: Purificatory_Holy_W
+    Name: Holy Water of Purification
+    Type: Etc
+  - Id: 1000503
+    AegisName: Sanctuary_Sudarium
+    Name: Sabbatical Handkerchief
     Type: Etc
