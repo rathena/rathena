@@ -49,7 +49,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( mob_name.c_str() );
 
 	if( mob == nullptr ){
-		this->invalidWarning( node["Target"], "Mob %s does not exist and cannot be used as a pet.\n", mob_name.c_str() );
+		this->invalidWarning( node["Mob"], "Mob %s does not exist and cannot be used as a pet.\n", mob_name.c_str() );
 		return 0;
 	}
 
