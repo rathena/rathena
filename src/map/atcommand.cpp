@@ -9940,32 +9940,30 @@ ACMD_FUNC(ele_resist) {
 		const char* format;
 		int value;
 	} output_table[] = {
-		{ "    [ %d ] de Resistência ao Elemento Neutro", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Água", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Terra", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Fogo", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Vento", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Veneno", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Sagrado", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Sombrio", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Fantasma", 0 },
-		{ "    [ %d ] de Resistência ao Elemento Maldito", 0 },
-//		{ "    [ %d ] Resistência à todos os Elementos", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Neutro", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Água", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Terra", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Fogo", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Vento", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Veneno", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Sagrado", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Sombrio", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Fantasma", 0 },
+		{ "    [ %d % ] de Resistência ao Elemento Maldito", 0 },
 		{ NULL, 0 }
 	};
 	memset(output, '\0', sizeof(output));
 	clif_displaymessage(sd->fd, "======== Resistência Elemental em % ========");
-	output_table[0].value = (sd->indexed_bonus.subele[ELE_NEUTRAL] + sd->indexed_bonus.subele_script[ELE_NEUTRAL] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[1].value = (sd->indexed_bonus.subele[ELE_WATER] + sd->indexed_bonus.subele_script[ELE_WATER] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[2].value = (sd->indexed_bonus.subele[ELE_EARTH] + sd->indexed_bonus.subele_script[ELE_EARTH] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[3].value = (sd->indexed_bonus.subele[ELE_FIRE] + sd->indexed_bonus.subele_script[ELE_FIRE] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[4].value = (sd->indexed_bonus.subele[ELE_WIND] + sd->indexed_bonus.subele_script[ELE_WIND]) + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL];
-	output_table[5].value = (sd->indexed_bonus.subele[ELE_POISON] + sd->indexed_bonus.subele_script[ELE_POISON] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[6].value = (sd->indexed_bonus.subele[ELE_HOLY] + sd->indexed_bonus.subele_script[ELE_HOLY] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[7].value = (sd->indexed_bonus.subele[ELE_DARK] + sd->indexed_bonus.subele_script[ELE_DARK] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[8].value = (sd->indexed_bonus.subele[ELE_GHOST] + sd->indexed_bonus.subele_script[ELE_GHOST] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-	output_table[9].value = (sd->indexed_bonus.subele[ELE_UNDEAD] + sd->indexed_bonus.subele_script[ELE_UNDEAD] + sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
-//	output_table[10].value = (sd->subele[ELE_ALL] + sd->subele_script[ELE_ALL]);
+	output_table[0].value = (sd->indexed_bonus.subele[ELE_NEUTRAL]);
+	output_table[1].value = (sd->indexed_bonus.subele[ELE_WATER]);
+	output_table[2].value = (sd->indexed_bonus.subele[ELE_EARTH]);
+	output_table[3].value = (sd->indexed_bonus.subele[ELE_FIRE]);
+	output_table[4].value = (sd->indexed_bonus.subele[ELE_WIND]);
+	output_table[5].value = (sd->indexed_bonus.subele[ELE_POISON]);
+	output_table[6].value = (sd->indexed_bonus.subele[ELE_HOLY]);
+	output_table[7].value = (sd->indexed_bonus.subele[ELE_DARK]);
+	output_table[8].value = (sd->indexed_bonus.subele[ELE_GHOST]);
+	output_table[9].value = (sd->indexed_bonus.subele[ELE_UNDEAD]);
 
 	for (i = 0; output_table[i].format != NULL; i++) {
 		sprintf(output, output_table[i].format, output_table[i].value);
@@ -9986,36 +9984,34 @@ ACMD_FUNC(race_resist) {
 		const char* format;
 		int value;
 	} output_table[] = {
-		{ "    [ %d ] de Resistência à Raça Anjo", 0 },
-		{ "    [ %d ] de Resistência à Raça Bruto", 0 },
-		{ "    [ %d ] de Resistência à Raça Demi-Humano", 0 },
-		{ "    [ %d ] de Resistência à Raça Demônio", 0 },
-		{ "    [ %d ] de Resistência à Raça Dragão", 0 },
-		{ "    [ %d ] de Resistência à Raça Peixe", 0 },
-		{ "    [ %d ] de Resistência à Raça Amorfo", 0 },
-		{ "    [ %d ] de Resistência à Raça Inseto", 0 },
-		{ "    [ %d ] de Resistência à Raça Planta", 0 },
-		{ "    [ %d ] de Resistência à Raça Humanóide", 0 },
-		{ "    [ %d ] de Resistência à Raça Morto-Vivo", 0 },
-		{ "    [ %d ] de Resistência à Raça Doram", 0 },
-//		{ "    [ %d ] de Resistência à todas as Raças ", 0 },
+		{ "    [ %d % ] de Resistência à Raça Anjo", 0 },
+		{ "    [ %d % ] de Resistência à Raça Bruto", 0 },
+		{ "    [ %d % ] de Resistência à Raça Demi-Humano", 0 },
+		{ "    [ %d % ] de Resistência à Raça Demônio", 0 },
+		{ "    [ %d % ] de Resistência à Raça Dragão", 0 },
+		{ "    [ %d % ] de Resistência à Raça Peixe", 0 },
+		{ "    [ %d % ] de Resistência à Raça Amorfo", 0 },
+		{ "    [ %d % ] de Resistência à Raça Inseto", 0 },
+		{ "    [ %d % ] de Resistência à Raça Planta", 0 },
+		{ "    [ %d % ] de Resistência à Raça Humanóide", 0 },
+		{ "    [ %d % ] de Resistência à Raça Morto-Vivo", 0 },
+		{ "    [ %d % ] de Resistência à Raça Doram", 0 },
 		{ NULL, 0 }
 	};
 	memset(output, '\0', sizeof(output));
 	clif_displaymessage(sd->fd, "======== Resistência à Raça em % ========");
-	output_table[0].value = (sd->indexed_bonus.subrace[RC_ANGEL] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[1].value = (sd->indexed_bonus.subrace[RC_BRUTE] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[2].value = (sd->indexed_bonus.subrace[RC_DEMIHUMAN] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[3].value = (sd->indexed_bonus.subrace[RC_DEMON] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[4].value = (sd->indexed_bonus.subrace[RC_DRAGON] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[5].value = (sd->indexed_bonus.subrace[RC_FISH] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[6].value = (sd->indexed_bonus.subrace[RC_FORMLESS] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[7].value = (sd->indexed_bonus.subrace[RC_INSECT] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[8].value = (sd->indexed_bonus.subrace[RC_PLANT] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[9].value = (sd->indexed_bonus.subrace[RC_PLAYER_HUMAN] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[10].value = (sd->indexed_bonus.subrace[RC_UNDEAD] + sd->indexed_bonus.subrace[RC_ALL]);
-	output_table[11].value = (sd->indexed_bonus.subrace[RC_PLAYER_DORAM] + sd->indexed_bonus.subrace[RC_ALL]);
-//	output_table[12].value = (sd->indexed_bonus.subrace[RC_ALL] + sd->indexed_bonus.subrace[RC_ALL]);
+	output_table[0].value = (sd->indexed_bonus.subrace[RC_ANGEL]);
+	output_table[1].value = (sd->indexed_bonus.subrace[RC_BRUTE]);
+	output_table[2].value = (sd->indexed_bonus.subrace[RC_DEMIHUMAN]);
+	output_table[3].value = (sd->indexed_bonus.subrace[RC_DEMON]);
+	output_table[4].value = (sd->indexed_bonus.subrace[RC_DRAGON]);
+	output_table[5].value = (sd->indexed_bonus.subrace[RC_FISH]);
+	output_table[6].value = (sd->indexed_bonus.subrace[RC_FORMLESS]);
+	output_table[7].value = (sd->indexed_bonus.subrace[RC_INSECT]);
+	output_table[8].value = (sd->indexed_bonus.subrace[RC_PLANT]);
+	output_table[9].value = (sd->indexed_bonus.subrace[RC_PLAYER_HUMAN]);
+	output_table[10].value = (sd->indexed_bonus.subrace[RC_UNDEAD]);
+	output_table[11].value = (sd->indexed_bonus.subrace[RC_PLAYER_DORAM]);
 
 	for (i = 0; output_table[i].format != NULL; i++) {
 		sprintf(output, output_table[i].format, output_table[i].value);
