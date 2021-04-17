@@ -9940,30 +9940,32 @@ ACMD_FUNC(ele_resist) {
 		const char* format;
 		int value;
 	} output_table[] = {
-		{ "    [ %d % ] de Resistência ao Elemento Neutro", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Água", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Terra", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Fogo", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Vento", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Veneno", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Sagrado", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Sombrio", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Fantasma", 0 },
-		{ "    [ %d % ] de Resistência ao Elemento Maldito", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Neutro", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Água", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Terra", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Fogo", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Vento", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Veneno", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Sagrado", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Sombrio", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Fantasma", 0 },
+		{ "    [ %d%% ] de Resistência ao Elemento Maldito", 0 },
+		{ "    [ %d%% ] de Resistência à todos os Elementos", 0 },
 		{ NULL, 0 }
 	};
 	memset(output, '\0', sizeof(output));
-	clif_displaymessage(sd->fd, "======== Resistência Elemental em % ========");
-	output_table[0].value = (sd->indexed_bonus.subele[ELE_NEUTRAL]);
-	output_table[1].value = (sd->indexed_bonus.subele[ELE_WATER]);
-	output_table[2].value = (sd->indexed_bonus.subele[ELE_EARTH]);
-	output_table[3].value = (sd->indexed_bonus.subele[ELE_FIRE]);
-	output_table[4].value = (sd->indexed_bonus.subele[ELE_WIND]);
-	output_table[5].value = (sd->indexed_bonus.subele[ELE_POISON]);
-	output_table[6].value = (sd->indexed_bonus.subele[ELE_HOLY]);
-	output_table[7].value = (sd->indexed_bonus.subele[ELE_DARK]);
-	output_table[8].value = (sd->indexed_bonus.subele[ELE_GHOST]);
-	output_table[9].value = (sd->indexed_bonus.subele[ELE_UNDEAD]);
+	clif_displaymessage(sd->fd, "======== Resistência com base no Elemento ========");
+	output_table[0].value = (sd->indexed_bonus.subele[ELE_NEUTRAL] + sd->indexed_bonus.subele_script[ELE_NEUTRAL]);
+	output_table[1].value = (sd->indexed_bonus.subele[ELE_WATER] + sd->indexed_bonus.subele_script[ELE_WATER]);
+	output_table[2].value = (sd->indexed_bonus.subele[ELE_EARTH] + sd->indexed_bonus.subele_script[ELE_EARTH]);
+	output_table[3].value = (sd->indexed_bonus.subele[ELE_FIRE] + sd->indexed_bonus.subele_script[ELE_FIRE]);
+	output_table[4].value = (sd->indexed_bonus.subele[ELE_WIND] + sd->indexed_bonus.subele_script[ELE_WIND]);
+	output_table[5].value = (sd->indexed_bonus.subele[ELE_POISON] + sd->indexed_bonus.subele_script[ELE_POISON]);
+	output_table[6].value = (sd->indexed_bonus.subele[ELE_HOLY] + sd->indexed_bonus.subele_script[ELE_HOLY]);
+	output_table[7].value = (sd->indexed_bonus.subele[ELE_DARK] + sd->indexed_bonus.subele_script[ELE_DARK]);
+	output_table[8].value = (sd->indexed_bonus.subele[ELE_GHOST] + sd->indexed_bonus.subele_script[ELE_GHOST]);
+	output_table[9].value = (sd->indexed_bonus.subele[ELE_UNDEAD] + sd->indexed_bonus.subele_script[ELE_UNDEAD]);
+	output_table[9].value = (sd->indexed_bonus.subele[ELE_ALL] + sd->indexed_bonus.subele_script[ELE_ALL]);
 
 	for (i = 0; output_table[i].format != NULL; i++) {
 		sprintf(output, output_table[i].format, output_table[i].value);
@@ -9984,22 +9986,23 @@ ACMD_FUNC(race_resist) {
 		const char* format;
 		int value;
 	} output_table[] = {
-		{ "    [ %d % ] de Resistência à Raça Anjo", 0 },
-		{ "    [ %d % ] de Resistência à Raça Bruto", 0 },
-		{ "    [ %d % ] de Resistência à Raça Demi-Humano", 0 },
-		{ "    [ %d % ] de Resistência à Raça Demônio", 0 },
-		{ "    [ %d % ] de Resistência à Raça Dragão", 0 },
-		{ "    [ %d % ] de Resistência à Raça Peixe", 0 },
-		{ "    [ %d % ] de Resistência à Raça Amorfo", 0 },
-		{ "    [ %d % ] de Resistência à Raça Inseto", 0 },
-		{ "    [ %d % ] de Resistência à Raça Planta", 0 },
-		{ "    [ %d % ] de Resistência à Raça Humanóide", 0 },
-		{ "    [ %d % ] de Resistência à Raça Morto-Vivo", 0 },
-		{ "    [ %d % ] de Resistência à Raça Doram", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Anjo", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Bruto", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Demi-Humano", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Demônio", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Dragão", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Peixe", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Amorfo", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Inseto", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Planta", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Humanóide", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Morto-Vivo", 0 },
+		{ "    [ %d%% ] de Resistência à Raça Doram", 0 },
+		{ "    [ %d%% ] de Resistência à Todas as Raças", 0 },
 		{ NULL, 0 }
 	};
 	memset(output, '\0', sizeof(output));
-	clif_displaymessage(sd->fd, "======== Resistência à Raça em % ========");
+	clif_displaymessage(sd->fd, "======== Resistência com base na Raça ========");
 	output_table[0].value = (sd->indexed_bonus.subrace[RC_ANGEL]);
 	output_table[1].value = (sd->indexed_bonus.subrace[RC_BRUTE]);
 	output_table[2].value = (sd->indexed_bonus.subrace[RC_DEMIHUMAN]);
@@ -10012,6 +10015,68 @@ ACMD_FUNC(race_resist) {
 	output_table[9].value = (sd->indexed_bonus.subrace[RC_PLAYER_HUMAN]);
 	output_table[10].value = (sd->indexed_bonus.subrace[RC_UNDEAD]);
 	output_table[11].value = (sd->indexed_bonus.subrace[RC_PLAYER_DORAM]);
+	output_table[12].value = (sd->indexed_bonus.subrace[RC_ALL]);
+
+	for (i = 0; output_table[i].format != NULL; i++) {
+		sprintf(output, output_table[i].format, output_table[i].value);
+		clif_displaymessage(fd, output);
+	}
+	return 0;
+}
+
+/*=========================================
+ * Verifica os valores de resistência ao tamanho do oponente
+ * Adaptação livre do comando resist feito pela [ Keitenai ] e dos ajustes feitos por [ DietmarRuiz ]
+ * [ Gabriel dos Prazeres - Bad ]
+ *-----------------------------------------*/
+ACMD_FUNC(size_resist) {
+	char output[CHAT_SIZE_MAX];
+	int i;
+	struct {
+		const char* format;
+		int value;
+	} output_table[] = {
+		{ "    [ %d%% ] de Resistência à oponente Pequeno", 0 },
+		{ "    [ %d%% ] de Resistência à oponente Médio", 0 },
+		{ "    [ %d%% ] de Resistência à oponente Grande", 0 },
+		{ "    [ %d%% ] de Resistência à todos os Tamanhos", 0 },
+		{ NULL, 0 }
+	};
+	memset(output, '\0', sizeof(output));
+	clif_displaymessage(sd->fd, "======== Resistência com base no Tamanho ========");
+	output_table[0].value = (sd->indexed_bonus.subsize[SZ_SMALL]);
+	output_table[1].value = (sd->indexed_bonus.subsize[SZ_MEDIUM]);
+	output_table[2].value = (sd->indexed_bonus.subsize[SZ_BIG]);
+	output_table[3].value = (sd->indexed_bonus.subsize[SZ_ALL]);
+
+	for (i = 0; output_table[i].format != NULL; i++) {
+		sprintf(output, output_table[i].format, output_table[i].value);
+		clif_displaymessage(fd, output);
+	}
+	return 0;
+}
+
+ACMD_FUNC(atk_resist) {
+	char output[CHAT_SIZE_MAX];
+	int i;
+	struct {
+		const char* format;
+		int value;
+	} output_table[] = {
+		{ "    [ %d%% ] de Resistência à Ataque Físico", 0 },
+		{ "    [ %d%% ] de Resistência à Ataque Mágico", 0 },
+		{ "    [ %d%% ] de Resistência à Ataque de Longa Distância", 0 },
+		{ "    [ %d%% ] de Resistência à Ataque de Curta Distância", 0 },
+		{ "    [ %d%% ] de Resistência à Ataque Variado (Armadilha, Falcão, etc..)", 0 },
+		{ NULL, 0 }
+	};
+	memset(output, '\0', sizeof(output));
+	clif_displaymessage(sd->fd, "======== Resistência com base na forma de Ataque ========");
+	output_table[0].value = (sd->special_state.no_weapon_damage);
+	output_table[1].value = (sd->bonus.magic_def_rate);
+	output_table[2].value = (sd->bonus.long_attack_def_rate);
+	output_table[3].value = (sd->bonus.near_attack_def_rate);
+	output_table[4].value = (sd->bonus.misc_def_rate);
 
 	for (i = 0; output_table[i].format != NULL; i++) {
 		sprintf(output, output_table[i].format, output_table[i].value);
@@ -10755,6 +10820,8 @@ void atcommand_basecommands(void) {
 #endif
 		ACMD_DEF(ele_resist),
 		ACMD_DEF(race_resist),
+		ACMD_DEF(size_resist),
+		ACMD_DEF(atk_resist),
 		ACMD_DEF(fullstrip),
 		ACMD_DEF(costume),
 		ACMD_DEF(cloneequip),
