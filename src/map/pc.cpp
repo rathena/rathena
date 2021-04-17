@@ -7376,6 +7376,65 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 	if(sd->bl.prev == NULL || pc_isdead(sd))
 		return;
 
+	/**
+	 * Sistema para bloquear experiência de Base e Classe a partir dos leveis 100/70.
+	 * [Gabriel dos Prazeres]
+	**/
+
+	if (sd->status.base_level == 100)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 100.
+
+	if (sd->status.base_level == 101)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 101.
+
+	if (sd->status.base_level == 102)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 102.
+
+	if (sd->status.base_level == 103)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 103.
+
+	if (sd->status.base_level == 104)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 104.
+
+	if (sd->status.base_level == 105)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 105.
+
+	if (sd->status.base_level == 106)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 106.
+
+	if (sd->status.base_level == 107)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 107.
+
+	if (sd->status.base_level == 108)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 108.
+
+	if (sd->status.base_level == 109)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 109.
+
+	if (sd->status.base_level == 110)
+		base_exp = 0; // Bloqueia a Experiência de Base no level 110.
+
+	if (sd->status.job_level == 70)
+		job_exp = 0; // Bloqueia a Experiência de Classe no level 70.
+
+	if (sd->status.job_level == 71)
+		job_exp = 0; // Bloqueia a Experiência de Classe no level 71.
+
+	if (sd->status.job_level == 72)
+		job_exp = 0; // Bloqueia a Experiência de Classe no level 72.
+
+	if (sd->status.job_level == 73)
+		job_exp = 0; // Bloqueia a Experiência de Classe no level 73.
+
+	if (sd->status.job_level == 74)
+		job_exp = 0; // Bloqueia a Experiência de Classe no level 74.
+
+	if (sd->status.job_level == 75)
+		job_exp = 0; // Bloqueia a Experiência de Classe no level 75.
+
+	/**
+	**/
+
 	if (!(exp_flag&2)) {
 
 		if (!battle_config.pvp_exp && map_getmapflag(sd->bl.m, MF_PVP))  // [MouseJstr]

@@ -6764,10 +6764,10 @@ ACMD_FUNC(mobsearch)
 			continue;
 
 		++number;
-		if( md->spawn_timer == INVALID_TIMER )
-			snprintf(atcmd_output, sizeof(atcmd_output), "%2d[%3d:%3d] %s", number, md->bl.x, md->bl.y, md->name);
-		else
-			snprintf(atcmd_output, sizeof(atcmd_output), "%2d[%s] %s", number, "dead", md->name);
+		if(md->spawn_timer == INVALID_TIMER) {
+			snprintf(atcmd_output, sizeof(atcmd_output), "%2d %s %s", number, md->name, "Vivo(a)");
+		}else
+			snprintf(atcmd_output, sizeof(atcmd_output), "%2d %s %s", number, md->name, "Morto(a)");
 		clif_displaymessage(fd, atcmd_output);
 	}
 	mapit_free(it);
