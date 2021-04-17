@@ -9954,16 +9954,16 @@ ACMD_FUNC(ele_resist) {
 	};
 	memset(output, '\0', sizeof(output));
 	clif_displaymessage(sd->fd, "======== Resistência Elemental em % ========");
-	output_table[0].value = (sd->indexed_bonus.subele[ELE_NEUTRAL]);
-	output_table[1].value = (sd->indexed_bonus.subele[ELE_WATER]);
-	output_table[2].value = (sd->indexed_bonus.subele[ELE_EARTH]);
-	output_table[3].value = (sd->indexed_bonus.subele[ELE_FIRE]);
-	output_table[4].value = (sd->indexed_bonus.subele[ELE_WIND]);
-	output_table[5].value = (sd->indexed_bonus.subele[ELE_POISON]);
-	output_table[6].value = (sd->indexed_bonus.subele[ELE_HOLY]);
-	output_table[7].value = (sd->indexed_bonus.subele[ELE_DARK]);
-	output_table[8].value = (sd->indexed_bonus.subele[ELE_GHOST]);
-	output_table[9].value = (sd->indexed_bonus.subele[ELE_UNDEAD]);
+	output_table[0].value = (sd->indexed_bonus.subele[ELE_NEUTRAL] + sd->indexed_bonus.subele_script[ELE_NEUTRAL]);
+	output_table[1].value = (sd->indexed_bonus.subele[ELE_WATER] + sd->indexed_bonus.subele_script[ELE_WATER]);
+	output_table[2].value = (sd->indexed_bonus.subele[ELE_EARTH] + sd->indexed_bonus.subele_script[ELE_EARTH]);
+	output_table[3].value = (sd->indexed_bonus.subele[ELE_FIRE] + sd->indexed_bonus.subele_script[ELE_FIRE]);
+	output_table[4].value = (sd->indexed_bonus.subele[ELE_WIND] + sd->indexed_bonus.subele_script[ELE_WIND]);
+	output_table[5].value = (sd->indexed_bonus.subele[ELE_POISON] + sd->indexed_bonus.subele_script[ELE_POISON]);
+	output_table[6].value = (sd->indexed_bonus.subele[ELE_HOLY] + sd->indexed_bonus.subele_script[ELE_HOLY]);
+	output_table[7].value = (sd->indexed_bonus.subele[ELE_DARK] + sd->indexed_bonus.subele_script[ELE_DARK]);
+	output_table[8].value = (sd->indexed_bonus.subele[ELE_GHOST] + sd->indexed_bonus.subele_script[ELE_GHOST]);
+	output_table[9].value = (sd->indexed_bonus.subele[ELE_UNDEAD] + sd->indexed_bonus.subele_script[ELE_UNDEAD]);
 
 	for (i = 0; output_table[i].format != NULL; i++) {
 		sprintf(output, output_table[i].format, output_table[i].value);
