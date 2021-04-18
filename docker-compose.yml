@@ -1,0 +1,26 @@
+version: '3.3'
+services:
+  rathena:
+    build: .
+    ports:
+      - "5121:5121"
+      - "6121:6121"
+      - "6900:6900"
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'ragnarok'
+      MYSQL_USER: 'ragnarok'
+      MYSQL_PASSWORD: 'ragnarok'
+      MYSQL_ROOT_PASSWORD: 'ragnarok'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
