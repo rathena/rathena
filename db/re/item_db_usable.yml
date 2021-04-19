@@ -2204,12 +2204,12 @@ Body:
     Script: |
       /*set pcroom,(gettimetick(2)+7200);*/
   - Id: 9510
-    AegisName: Costume_Enchant_Stone_Box17
+    AegisName: Enchant_Stone_Box17
     Name: Costume Enchant Stone Box17
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Enchant_Stone_Box17);*/
+      getgroupitem(IG_Enchant_Stone_Box17);
   - Id: 9523
     AegisName: Metal_Smelting_Ticket
     Name: Metal Refining Ticket
@@ -34476,7 +34476,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 14695
-    AegisName: Costume_Enchant_Stone_Box_3
+    AegisName: Enchant_Stone_Box_3
     Name: Costume Enchant Stone Box III
     Type: Cash
     Weight: 10
@@ -47898,12 +47898,12 @@ Body:
     Script: |
       /*upgradeui 23720;*/
   - Id: 23770
-    AegisName: Costume_Enchant_Stone_Box16
+    AegisName: Enchant_Stone_Box16
     Name: Costume Enchant Stone Box16
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Enchant_Stone_Box16);*/
+      getgroupitem(IG_Enchant_Stone_Box16);
   - Id: 23776
     AegisName: EP17_1_SPC05
     Name: Weapon Modifier (Physical)
@@ -48533,12 +48533,12 @@ Body:
     Script: |
       /*synthesisui 100011;*/
   - Id: 100019
-    AegisName: Costume_Enchant_Stone_Box18
+    AegisName: Enchant_Stone_Box18
     Name: Costume Enchant Stone Box18
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Enchant_Stone_Box18);*/
+      getgroupitem(IG_Enchant_Stone_Box18);
   - Id: 100023
     AegisName: Ancient_Hero_Bravery
     Name: Ancient Hero Bravery
@@ -48573,7 +48573,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Enchant_Stone_Box19);*/
+      getgroupitem(IG_Enchant_Stone_Box19);
   - Id: 100053
     AegisName: Piercing_Mix
     Name: Piercing Shadow SynthesisBox
@@ -48870,7 +48870,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Enchant_Stone_Box20);*/
+      getgroupitem(IG_Enchant_Stone_Box20);
   - Id: 100231
     AegisName: Ref_T_Potion
     Name: Golden X
@@ -48903,7 +48903,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Enchant_Stone_Box21);*/
+      getgroupitem(IG_Enchant_Stone_Box21);
   - Id: 100402
     AegisName: Thousand_Sun_Cube
     Name: Thousand Sun Modification Cube
