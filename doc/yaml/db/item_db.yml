@@ -36,7 +36,7 @@
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
 #     NoConsume             If the item is consumed on use. (Default: false)
-#     DropEffect            If the item has a special effect when on the ground. (Default: None)
+#     DropEffect            If the item has a special effect on the ground when dropped by a monster. (Default: None)
 #   Delay:                  Item use delay. (Default: null)
 #     Duration              Duration of delay in seconds.
 #     Status                Status Change used to track delay. (Default: None)

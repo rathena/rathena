@@ -739,8 +739,8 @@ void clif_skillunit_update(struct block_list* bl);
 
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);
-void clif_spiritball(struct block_list *bl);
-void clif_soulball(struct map_session_data *sd);
+void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr, enum send_target send_target = AREA );
+void clif_soulball( struct map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_combo_delay(struct block_list *bl,t_tick wait);
 void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
@@ -1094,6 +1094,9 @@ void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, en
 void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_open(struct map_session_data* sd);
+
+// Refine UI
+void clif_refineui_open( struct map_session_data* sd );
 
 /**
  * Color Table

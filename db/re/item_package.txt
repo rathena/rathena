@@ -4676,249 +4676,940 @@ IG_Santa_Gift,12350,500,5,1,0,0,0	// 5x Angeling_Potion
 IG_Santa_Gift,12710,500,5,1,0,0,0	// 5x Guyak_Pudding
 IG_Santa_Gift,12259,500,2,1,0,0,0	// 2x Miracle_Medicine
 
-IG_Bs_Sha_M_S_1,24038,1,1,1,0,0,0 // 바이탈 슈즈 쉐도우
-IG_Bs_Sha_M_S_1,24044,1,1,1,0,0,0 // 바이탈 쉴드 쉐도우
-IG_Bs_Sha_M_S_1,24041,1,1,1,0,0,0 // 파워 펜던트 쉐도우
-IG_Bs_Sha_M_S_1,24035,1,1,1,0,0,0 // 파워 이어링 쉐도우
-IG_Bs_Sha_M_S_1,24036,1,1,1,0,0,0 // 인트 펜던트 쉐도우
-IG_Bs_Sha_M_S_1,24042,1,1,1,0,0,0 // 인트 이어링 쉐도우
-IG_Bs_Sha_M_S_1,24043,1,1,1,0,0,0 // 덱스터러스 웨폰 쉐도우
-IG_Bs_Sha_M_S_1,24037,1,1,1,0,0,0 // 덱스터러스 아머 쉐도우
-IG_Bs_Sha_M_S_1,24045,1,1,1,0,0,0 // 어틀레틱 슈즈 쉐도우
-IG_Bs_Sha_M_S_1,24039,1,1,1,0,0,0 // 어틀레틱 쉴드 쉐도우
-IG_Bs_Sha_M_S_1,24034,1,1,1,0,0,0 // 럭키 웨폰 쉐도우
-IG_Bs_Sha_M_S_1,24040,1,1,1,0,0,0 // 럭키 아머 쉐도우
+// Enchant_Stone_Box5
+IG_Enchant_Stone_Box5,6908,168	// ASPDStone_Robe
+IG_Enchant_Stone_Box5,6642,252	// ATKStone_Middle
+IG_Enchant_Stone_Box5,6643,252	// MATKStone_Middle
+IG_Enchant_Stone_Box5,6943,252	// ATKStone_Top
+IG_Enchant_Stone_Box5,6944,252	// MATKStone_Top
+IG_Enchant_Stone_Box5,6636,336	// STRStone_Top
+IG_Enchant_Stone_Box5,6637,336	// INTStone_Top
+IG_Enchant_Stone_Box5,6638,336	// AGIStone_Top
+IG_Enchant_Stone_Box5,6639,336	// DEXStone_Top
+IG_Enchant_Stone_Box5,6640,336	// VITStone_Top
+IG_Enchant_Stone_Box5,6641,336	// LUKStone_Top
+IG_Enchant_Stone_Box5,6743,336	// HPStone_Middle
+IG_Enchant_Stone_Box5,6744,336	// SPStone_Middle
+IG_Enchant_Stone_Box5,6945,336	// STRStone_Middle
+IG_Enchant_Stone_Box5,6946,336	// INTStone_Middle
+IG_Enchant_Stone_Box5,6947,336	// AGIStone_Middle
+IG_Enchant_Stone_Box5,6948,336	// DEXStone_Middle
+IG_Enchant_Stone_Box5,6949,336	// VITStone_Middle
+IG_Enchant_Stone_Box5,6950,336	// LUKStone_Middle
+IG_Enchant_Stone_Box5,6951,336	// HPStone_Bottom
+IG_Enchant_Stone_Box5,6644,420	// HITStone_Bottom
+IG_Enchant_Stone_Box5,6645,420	// FLEEStone_Bottom
+IG_Enchant_Stone_Box5,6740,420	// HealStone_Top
+IG_Enchant_Stone_Box5,6741,420	// HealStone2_Top
+IG_Enchant_Stone_Box5,6742,420	// HealStone_Middle
+IG_Enchant_Stone_Box5,6745,420	// HealStone_Bottom
+IG_Enchant_Stone_Box5,6790,420	// BigStone_Top
+IG_Enchant_Stone_Box5,6791,420	// MediumStone_Top
+IG_Enchant_Stone_Box5,6792,420	// SmallStone_Top
 
-IG_Bs_Sha_M_S_17,24365,1,1,1,0,0,0 // 엘레강트 펜던트 쉐도우
-IG_Bs_Sha_M_S_17,24364,1,1,1,0,0,0 // 엘레강트 이어링 쉐도우
-IG_Bs_Sha_M_S_17,24363,1,1,1,0,0,0 // 엘레강트 웨폰 쉐도우
+// Enchant_Stone_Box6
+IG_Enchant_Stone_Box6,6963,83	// HPdrainStone_Robe
+IG_Enchant_Stone_Box6,6964,83	// SPdrainStone_Robe
+IG_Enchant_Stone_Box6,6908,165	// ASPDStone_Robe
+IG_Enchant_Stone_Box6,6642,248	// ATKStone_Middle
+IG_Enchant_Stone_Box6,6643,248	// MATKStone_Middle
+IG_Enchant_Stone_Box6,6943,248	// ATKStone_Top
+IG_Enchant_Stone_Box6,6944,248	// MATKStone_Top
+IG_Enchant_Stone_Box6,6636,331	// STRStone_Top
+IG_Enchant_Stone_Box6,6637,331	// INTStone_Top
+IG_Enchant_Stone_Box6,6638,331	// AGIStone_Top
+IG_Enchant_Stone_Box6,6639,331	// DEXStone_Top
+IG_Enchant_Stone_Box6,6640,331	// VITStone_Top
+IG_Enchant_Stone_Box6,6641,331	// LUKStone_Top
+IG_Enchant_Stone_Box6,6743,331	// HPStone_Middle
+IG_Enchant_Stone_Box6,6744,331	// SPStone_Middle
+IG_Enchant_Stone_Box6,6945,331	// STRStone_Middle
+IG_Enchant_Stone_Box6,6946,331	// INTStone_Middle
+IG_Enchant_Stone_Box6,6947,331	// AGIStone_Middle
+IG_Enchant_Stone_Box6,6948,331	// DEXStone_Middle
+IG_Enchant_Stone_Box6,6949,331	// VITStone_Middle
+IG_Enchant_Stone_Box6,6950,331	// LUKStone_Middle
+IG_Enchant_Stone_Box6,6951,331	// HPStone_Bottom
+IG_Enchant_Stone_Box6,6644,413	// HITStone_Bottom
+IG_Enchant_Stone_Box6,6645,413	// FLEEStone_Bottom
+IG_Enchant_Stone_Box6,6740,413	// HealStone_Top
+IG_Enchant_Stone_Box6,6741,413	// HealStone2_Top
+IG_Enchant_Stone_Box6,6742,413	// HealStone_Middle
+IG_Enchant_Stone_Box6,6745,413	// HealStone_Bottom
+IG_Enchant_Stone_Box6,6790,413	// BigStone_Top
+IG_Enchant_Stone_Box6,6791,413	// MediumStone_Top
+IG_Enchant_Stone_Box6,6792,413	// SmallStone_Top
 
-IG_Bs_Sha_M_S_18,24362,1,1,1,0,0,0 // 텐션 펜던트 쉐도우
-IG_Bs_Sha_M_S_18,24361,1,1,1,0,0,0 // 텐션 이어링 쉐도우
-IG_Bs_Sha_M_S_18,24360,1,1,1,0,0,0 // 텐션 웨폰 쉐도우
+// Enchant_Stone_Box7
+IG_Enchant_Stone_Box7,6964,85	// SPdrainStone_Robe
+IG_Enchant_Stone_Box7,6963,169	// HPdrainStone_Robe
+IG_Enchant_Stone_Box7,6999,169	// HPdrainStone_Top
+IG_Enchant_Stone_Box7,25000,169	// SPdrainStone_Top
+IG_Enchant_Stone_Box7,6642,254	// ATKStone_Middle
+IG_Enchant_Stone_Box7,6643,254	// MATKStone_Middle
+IG_Enchant_Stone_Box7,6943,254	// ATKStone_Top
+IG_Enchant_Stone_Box7,6944,254	// MATKStone_Top
+IG_Enchant_Stone_Box7,25016,254	// ATKStone_Bottom
+IG_Enchant_Stone_Box7,25017,254	// MATKStone_Bottom
+IG_Enchant_Stone_Box7,25002,339	// ChangeLUK_Middle
+IG_Enchant_Stone_Box7,25003,339	// ChangeSTR_Middle
+IG_Enchant_Stone_Box7,25004,339	// ChangeAGI_Middle
+IG_Enchant_Stone_Box7,25005,339	// ChangeINT_Middle
+IG_Enchant_Stone_Box7,25006,339	// ChangeVIT_Middle
+IG_Enchant_Stone_Box7,25007,339	// ChangeDEX_Middle
+IG_Enchant_Stone_Box7,25008,339	// ChangeVIT_Bottom
+IG_Enchant_Stone_Box7,25009,339	// ChangeAGI_Bottom
+IG_Enchant_Stone_Box7,25010,339	// ChangeDEX_Bottom
+IG_Enchant_Stone_Box7,25011,339	// ChangeLUK_Bottom
+IG_Enchant_Stone_Box7,25012,339	// ChangeSTR_Bottom
+IG_Enchant_Stone_Box7,25013,339	// ChangeINT_Bottom
+IG_Enchant_Stone_Box7,6740,424	// HealStone_Top
+IG_Enchant_Stone_Box7,6741,424	// HealStone2_Top
+IG_Enchant_Stone_Box7,6743,424	// HPStone_Middle
+IG_Enchant_Stone_Box7,6744,424	// SPStone_Middle
+IG_Enchant_Stone_Box7,6745,424	// HealStone_Bottom
+IG_Enchant_Stone_Box7,6951,424	// HPStone_Bottom
+IG_Enchant_Stone_Box7,25001,424	// DEFStone_Middle
+IG_Enchant_Stone_Box7,25014,424	// MDEFStone_Bottom
+IG_Enchant_Stone_Box7,25015,424	// EXPStone_Bottom
 
-IG_Bs_Sha_M_S_19,24369,1,1,1,0,0,0 // 리스토어 펜던트 쉐도우
-IG_Bs_Sha_M_S_19,24368,1,1,1,0,0,0 // 리스토어 이어링 쉐도우
+// Enchant_Stone_Box8
+IG_Enchant_Stone_Box8,25067,37	// CastingStone_Robe
+IG_Enchant_Stone_Box8,6964,74	// SPdrainStone_Robe
+IG_Enchant_Stone_Box8,25000,74	// SPdrainStone_Top
+IG_Enchant_Stone_Box8,6963,149	// HPdrainStone_Robe
+IG_Enchant_Stone_Box8,6999,149	// HPdrainStone_Top
+IG_Enchant_Stone_Box8,25062,149	// Greed_Stone
+IG_Enchant_Stone_Box8,25068,149	// ASPDStone_Top
+IG_Enchant_Stone_Box8,25072,149	// Kyrie_Stone
+IG_Enchant_Stone_Box8,6642,223	// ATKStone_Middle
+IG_Enchant_Stone_Box8,6643,223	// MATKStone_Middle
+IG_Enchant_Stone_Box8,6943,223	// ATKStone_Top
+IG_Enchant_Stone_Box8,6944,223	// MATKStone_Top
+IG_Enchant_Stone_Box8,25016,223	// ATKStone_Bottom
+IG_Enchant_Stone_Box8,25017,223	// MATKStone_Bottom
+IG_Enchant_Stone_Box8,25058,223	// TwinkleEffect_Top
+IG_Enchant_Stone_Box8,25059,223	// GhostEffect_Middle
+IG_Enchant_Stone_Box8,25060,223	// Critical_Stone
+IG_Enchant_Stone_Box8,25061,223	// Range_Stone
+IG_Enchant_Stone_Box8,25069,223	// ReloadStone_Top
+IG_Enchant_Stone_Box8,25070,223	// ReloadStone_Middle
+IG_Enchant_Stone_Box8,25071,223	// ReloadStone_Bottom
+IG_Enchant_Stone_Box8,25002,297	// ChangeLUK_Middle
+IG_Enchant_Stone_Box8,25003,297	// ChangeSTR_Middle
+IG_Enchant_Stone_Box8,25004,297	// ChangeAGI_Middle
+IG_Enchant_Stone_Box8,25005,297	// ChangeINT_Middle
+IG_Enchant_Stone_Box8,25006,297	// ChangeVIT_Middle
+IG_Enchant_Stone_Box8,25007,297	// ChangeDEX_Middle
+IG_Enchant_Stone_Box8,25008,297	// ChangeVIT_Bottom
+IG_Enchant_Stone_Box8,25009,297	// ChangeAGI_Bottom
+IG_Enchant_Stone_Box8,25010,297	// ChangeDEX_Bottom
+IG_Enchant_Stone_Box8,25011,297	// ChangeLUK_Bottom
+IG_Enchant_Stone_Box8,25012,297	// ChangeSTR_Bottom
+IG_Enchant_Stone_Box8,25013,297	// ChangeINT_Bottom
+IG_Enchant_Stone_Box8,25001,372	// DEFStone_Middle
+IG_Enchant_Stone_Box8,25014,372	// MDEFStone_Bottom
+IG_Enchant_Stone_Box8,25015,372	// EXPStone_Bottom
+IG_Enchant_Stone_Box8,25063,372	// MaxHP2_Stone
+IG_Enchant_Stone_Box8,25064,372	// MaxSP2_Stone
+IG_Enchant_Stone_Box8,25065,372	// Detoxify_Stone
+IG_Enchant_Stone_Box8,6745,372	// HealStone_Bottom
 
-IG_Bs_Sha_M_S_20,24366,1,1,1,0,0,0 // 힐링 쉴드 쉐도우
-IG_Bs_Sha_M_S_20,24367,1,1,1,0,0,0 // 힐링 슈즈 쉐도우
-IG_Bs_Sha_M_S_20,24033,1,1,1,0,0,0 // 힐링 웨폰 쉐도우
+// Enchant_Stone_Box9
+IG_Enchant_Stone_Box9,6964,79	// SPdrainStone_Robe
+IG_Enchant_Stone_Box9,25000,79	// SPdrainStone_Top
+IG_Enchant_Stone_Box9,6963,159	// HPdrainStone_Robe
+IG_Enchant_Stone_Box9,6999,159	// HPdrainStone_Top
+IG_Enchant_Stone_Box9,25062,159	// Greed_Stone
+IG_Enchant_Stone_Box9,25068,159	// ASPDStone_Top
+IG_Enchant_Stone_Box9,25072,159	// Kyrie_Stone
+IG_Enchant_Stone_Box9,25138,159	// ShrinkEffect_Middle
+IG_Enchant_Stone_Box9,6642,238	// ATKStone_Middle
+IG_Enchant_Stone_Box9,6643,238	// MATKStone_Middle
+IG_Enchant_Stone_Box9,6943,238	// ATKStone_Top
+IG_Enchant_Stone_Box9,6944,238	// MATKStone_Top
+IG_Enchant_Stone_Box9,25016,238	// ATKStone_Bottom
+IG_Enchant_Stone_Box9,25017,238	// MATKStone_Bottom
+IG_Enchant_Stone_Box9,25060,238	// Critical_Stone
+IG_Enchant_Stone_Box9,25061,238	// Range_Stone
+IG_Enchant_Stone_Box9,25069,238	// ReloadStone_Top
+IG_Enchant_Stone_Box9,25070,238	// ReloadStone_Middle
+IG_Enchant_Stone_Box9,25071,238	// ReloadStone_Bottom
+IG_Enchant_Stone_Box9,25136,238	// ElectricEffect_Middle
+IG_Enchant_Stone_Box9,25137,238	// GreenFloor_Bottom
+IG_Enchant_Stone_Box9,25002,317	// ChangeLUK_Middle
+IG_Enchant_Stone_Box9,25003,317	// ChangeSTR_Middle
+IG_Enchant_Stone_Box9,25004,317	// ChangeAGI_Middle
+IG_Enchant_Stone_Box9,25005,317	// ChangeINT_Middle
+IG_Enchant_Stone_Box9,25006,317	// ChangeVIT_Middle
+IG_Enchant_Stone_Box9,25007,317	// ChangeDEX_Middle
+IG_Enchant_Stone_Box9,25008,317	// ChangeVIT_Bottom
+IG_Enchant_Stone_Box9,25009,317	// ChangeAGI_Bottom
+IG_Enchant_Stone_Box9,25010,317	// ChangeDEX_Bottom
+IG_Enchant_Stone_Box9,25011,317	// ChangeLUK_Bottom
+IG_Enchant_Stone_Box9,25012,317	// ChangeSTR_Bottom
+IG_Enchant_Stone_Box9,25013,317	// ChangeINT_Bottom
+IG_Enchant_Stone_Box9,25015,397	// EXPStone_Bottom
+IG_Enchant_Stone_Box9,25063,397	// MaxHP2_Stone
+IG_Enchant_Stone_Box9,25064,397	// MaxSP2_Stone
+IG_Enchant_Stone_Box9,25139,397	// Identify_Stone
+IG_Enchant_Stone_Box9,25141,397	// EXPStone_Middle
 
-IG_Bs_Item_M_S_12,20844,1,1,1,0,0,0 // 사탕 주머니 가방(마법)
-IG_Bs_Item_M_S_12,20843,1,1,1,0,0,0 // 사탕 주머니 가방(원거리)
-IG_Bs_Item_M_S_12,20842,1,1,1,0,0,0 // 사탕 주머니 가방(물리)
+// Enchant_Stone_Box10
+IG_Enchant_Stone_Box10,6964,78	// SPdrainStone_Robe
+IG_Enchant_Stone_Box10,25000,78	// SPdrainStone_Top
+IG_Enchant_Stone_Box10,6999,156	// HPdrainStone_Top
+IG_Enchant_Stone_Box10,25062,156	// Greed_Stone
+IG_Enchant_Stone_Box10,25068,156	// ASPDStone_Top
+IG_Enchant_Stone_Box10,25072,156	// Kyrie_Stone
+IG_Enchant_Stone_Box10,25170,156	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box10,25175,156	// LexAeternaStone_Middle
+IG_Enchant_Stone_Box10,25176,156	// BlueAuraEffect_Middle
+IG_Enchant_Stone_Box10,6642,234	// ATKStone_Middle
+IG_Enchant_Stone_Box10,6643,234	// MATKStone_Middle
+IG_Enchant_Stone_Box10,6943,234	// ATKStone_Top
+IG_Enchant_Stone_Box10,6944,234	// MATKStone_Top
+IG_Enchant_Stone_Box10,25016,234	// ATKStone_Bottom
+IG_Enchant_Stone_Box10,25017,234	// MATKStone_Bottom
+IG_Enchant_Stone_Box10,25060,234	// Critical_Stone
+IG_Enchant_Stone_Box10,25061,234	// Range_Stone
+IG_Enchant_Stone_Box10,25172,234	// CastingStone_Top
+IG_Enchant_Stone_Box10,25173,234	// CastingStone_Middle
+IG_Enchant_Stone_Box10,25174,234	// CastingStone_Bottom
+IG_Enchant_Stone_Box10,25176,234	// BlueAuraEffect_Middle
+IG_Enchant_Stone_Box10,25178,234	// PinkGlowEffect_Middle
+IG_Enchant_Stone_Box10,25002,312	// ChangeLUK_Middle
+IG_Enchant_Stone_Box10,25003,312	// ChangeSTR_Middle
+IG_Enchant_Stone_Box10,25004,312	// ChangeAGI_Middle
+IG_Enchant_Stone_Box10,25005,312	// ChangeINT_Middle
+IG_Enchant_Stone_Box10,25006,312	// ChangeVIT_Middle
+IG_Enchant_Stone_Box10,25007,312	// ChangeDEX_Middle
+IG_Enchant_Stone_Box10,25008,312	// ChangeVIT_Bottom
+IG_Enchant_Stone_Box10,25009,312	// ChangeAGI_Bottom
+IG_Enchant_Stone_Box10,25010,312	// ChangeDEX_Bottom
+IG_Enchant_Stone_Box10,25011,312	// ChangeLUK_Bottom
+IG_Enchant_Stone_Box10,25012,312	// ChangeSTR_Bottom
+IG_Enchant_Stone_Box10,25013,312	// ChangeINT_Bottom
+IG_Enchant_Stone_Box10,25015,391	// EXPStone_Bottom
+IG_Enchant_Stone_Box10,25063,391	// MaxHP2_Stone
+IG_Enchant_Stone_Box10,25064,391	// MaxSP2_Stone
+IG_Enchant_Stone_Box10,25141,391	// EXPStone_Middle
+IG_Enchant_Stone_Box10,25171,391	// EXPStone_Top
 
-IG_Bs_Item_M_S_15,19267,1,1,1,0,0,0 // 서바이벌 오브
-IG_Bs_Item_M_S_15,19266,1,1,1,0,0,0 // 서바이벌 서클릿
+// Enchant_Stone_Box11
+IG_Enchant_Stone_Box11,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box11,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box11,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box11,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box11,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box11,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box11,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box11,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box11,25224,16	// WhiteBodyEffect_Middle
+IG_Enchant_Stone_Box11,6642,24	// ATKStone_Middle
+IG_Enchant_Stone_Box11,6643,24	// MATKStone_Middle
+IG_Enchant_Stone_Box11,6943,24	// ATKStone_Top
+IG_Enchant_Stone_Box11,6944,24	// MATKStone_Top
+IG_Enchant_Stone_Box11,25016,24	// ATKStone_Bottom
+IG_Enchant_Stone_Box11,25017,24	// MATKStone_Bottom
+IG_Enchant_Stone_Box11,25060,24	// Critical_Stone
+IG_Enchant_Stone_Box11,25061,24	// Range_Stone
+IG_Enchant_Stone_Box11,25225,24	// ExplodingEffect_Middle
+IG_Enchant_Stone_Box11,25226,24	// WaterFieldEffect_Bottom
+IG_Enchant_Stone_Box11,25227,24	// Heal_Stone
+IG_Enchant_Stone_Box11,25228,24	// Teleport_Stone
+IG_Enchant_Stone_Box11,25229,24	// Steal_Stone
+IG_Enchant_Stone_Box11,25002,32	// ChangeLUK_Middle
+IG_Enchant_Stone_Box11,25003,32	// ChangeSTR_Middle
+IG_Enchant_Stone_Box11,25004,32	// ChangeAGI_Middle
+IG_Enchant_Stone_Box11,25005,32	// ChangeINT_Middle
+IG_Enchant_Stone_Box11,25006,32	// ChangeVIT_Middle
+IG_Enchant_Stone_Box11,25007,32	// ChangeDEX_Middle
+IG_Enchant_Stone_Box11,25008,32	// ChangeVIT_Bottom
+IG_Enchant_Stone_Box11,25009,32	// ChangeAGI_Bottom
+IG_Enchant_Stone_Box11,25010,32	// ChangeDEX_Bottom
+IG_Enchant_Stone_Box11,25011,32	// ChangeLUK_Bottom
+IG_Enchant_Stone_Box11,25012,32	// ChangeSTR_Bottom
+IG_Enchant_Stone_Box11,25013,32	// ChangeINT_Bottom
+IG_Enchant_Stone_Box11,25015,38	// EXPStone_Bottom
+IG_Enchant_Stone_Box11,25063,38	// MaxHP2_Stone
+IG_Enchant_Stone_Box11,25064,38	// MaxSP2_Stone
+IG_Enchant_Stone_Box11,25141,38	// EXPStone_Middle
+IG_Enchant_Stone_Box11,25171,38	// EXPStone_Top
 
-IG_Bs_Sha_M_S_5,24112,1,1,1,0,0,0 // 스펠플로우 아머 쉐도우
-IG_Bs_Sha_M_S_5,24111,1,1,1,0,0,0 // 스펠플로우 슈즈 쉐도우
-IG_Bs_Sha_M_S_5,24113,1,1,1,0,0,0 // 스펠플로우 쉴드 쉐도우
-IG_Bs_Sha_M_S_5,24110,1,1,1,0,0,0 // 캐스터 웨폰 쉐도우
-IG_Bs_Sha_M_S_5,24048,1,1,1,0,0,0 // 캐스터 펜던트 쉐도우
-IG_Bs_Sha_M_S_5,24109,1,1,1,0,0,0 // 캐스터 이어링 쉐도우
-IG_Bs_Sha_M_S_5,24242,1,1,1,0,0,0 // 캐스터 아머 쉐도우
-IG_Bs_Sha_M_S_5,24240,1,1,1,0,0,0 // 캐스터 슈즈 쉐도우
-IG_Bs_Sha_M_S_5,24241,1,1,1,0,0,0 // 캐스터 쉴드 쉐도우
+// Enchant_Stone_Box12
+IG_Enchant_Stone_Box12,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box12,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box12,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box12,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box12,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box12,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box12,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box12,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box12,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box12,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box12,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box12,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box12,6642,24	// ATKStone_Middle
+IG_Enchant_Stone_Box12,6643,24	// MATKStone_Middle
+IG_Enchant_Stone_Box12,6943,24	// ATKStone_Top
+IG_Enchant_Stone_Box12,6944,24	// MATKStone_Top
+IG_Enchant_Stone_Box12,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box12,25016,24	// ATKStone_Bottom
+IG_Enchant_Stone_Box12,25017,24	// MATKStone_Bottom
+IG_Enchant_Stone_Box12,25061,24	// Range_Stone
+IG_Enchant_Stone_Box12,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box12,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box12,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box12,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box12,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box12,25002,38	// ChangeLUK_Middle
+IG_Enchant_Stone_Box12,25003,38	// ChangeSTR_Middle
+IG_Enchant_Stone_Box12,25004,38	// ChangeAGI_Middle
+IG_Enchant_Stone_Box12,25005,38	// ChangeINT_Middle
+IG_Enchant_Stone_Box12,25006,38	// ChangeVIT_Middle
+IG_Enchant_Stone_Box12,25007,38	// ChangeDEX_Middle
+IG_Enchant_Stone_Box12,25008,38	// ChangeVIT_Bottom
+IG_Enchant_Stone_Box12,25009,38	// ChangeAGI_Bottom
+IG_Enchant_Stone_Box12,25010,38	// ChangeDEX_Bottom
+IG_Enchant_Stone_Box12,25011,38	// ChangeLUK_Bottom
+IG_Enchant_Stone_Box12,25012,38	// ChangeSTR_Bottom
+IG_Enchant_Stone_Box12,25013,38	// ChangeINT_Bottom
+IG_Enchant_Stone_Box12,25060,38	// Critical_Stone
+IG_Enchant_Stone_Box12,25304,38	// Critical_Stone_Top
+IG_Enchant_Stone_Box12,25305,38	// Critical_Stone_Bottom
 
-IG_Bs_Sha_M_S_6,24072,1,1,1,0,0,0 // 빅 아머 쉐도우
-IG_Bs_Sha_M_S_6,24073,1,1,1,0,0,0 // 미디움 아머 쉐도우
-IG_Bs_Sha_M_S_6,24074,1,1,1,0,0,0 // 스몰 아머 쉐도우
-IG_Bs_Sha_M_S_6,24075,1,1,1,0,0,0 // 빅 웨폰 쉐도우
-IG_Bs_Sha_M_S_6,24076,1,1,1,0,0,0 // 미디움 웨폰 쉐도우
-IG_Bs_Sha_M_S_6,24077,1,1,1,0,0,0 // 스몰 웨폰 쉐도우
-IG_Bs_Sha_M_S_6,24235,1,1,1,0,0,0 // 타이탄 펜던트 쉐도우
-IG_Bs_Sha_M_S_6,24234,1,1,1,0,0,0 // 타이탄 이어링 쉐도우
-IG_Bs_Sha_M_S_6,24237,1,1,1,0,0,0 // 보운드 펜던트 쉐도우
-IG_Bs_Sha_M_S_6,24236,1,1,1,0,0,0 // 보운드 이어링 쉐도우
-IG_Bs_Sha_M_S_6,24239,1,1,1,0,0,0 // 기간틱 펜던트 쉐도우
-IG_Bs_Sha_M_S_6,24238,1,1,1,0,0,0 // 기간틱 이어링 쉐도우
+// Enchant_Stone_Box13
+IG_Enchant_Stone_Box13,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box13,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box13,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box13,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box13,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box13,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box13,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box13,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box13,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box13,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box13,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box13,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box13,25412,16	// SuraStone_Robe
+IG_Enchant_Stone_Box13,25416,16	// RangerStone_Robe
+IG_Enchant_Stone_Box13,25420,16	// SorcererStone_Robe
+IG_Enchant_Stone_Box13,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box13,25061,24	// Range_Stone
+IG_Enchant_Stone_Box13,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box13,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box13,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box13,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box13,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box13,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box13,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box13,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box13,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box13,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box13,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box13,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box13,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box13,25305,37	// Critical_Stone_Bottom
+IG_Enchant_Stone_Box13,25409,37	// SuraStone_Top
+IG_Enchant_Stone_Box13,25410,37	// SuraStone_Middle
+IG_Enchant_Stone_Box13,25411,37	// SuraStone_Lower
+IG_Enchant_Stone_Box13,25413,37	// RangerStone_Top
+IG_Enchant_Stone_Box13,25414,37	// RangerStone_Middle
+IG_Enchant_Stone_Box13,25415,37	// RangerStone_Lower
+IG_Enchant_Stone_Box13,25417,37	// SorcererStone_Top
+IG_Enchant_Stone_Box13,25418,37	// SorcererStone_Middle
+IG_Enchant_Stone_Box13,25419,37	// SorcererStone_Lower
 
-IG_Bs_Sha_M_S_7,24056,1,1,1,0,0,0 // 호머즈 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24055,1,1,1,0,0,0 // 가간츄어 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24053,1,1,1,0,0,0 // 세이프가드 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24054,1,1,1,0,0,0 // 브루털 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24052,1,1,1,0,0,0 // 크레이니얼 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24057,1,1,1,0,0,0 // 드라군 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24058,1,1,1,0,0,0 // 사타닉 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24059,1,1,1,0,0,0 // 프레임가드 쉴드쉐도우
-IG_Bs_Sha_M_S_7,24060,1,1,1,0,0,0 // 레퀴엠 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24061,1,1,1,0,0,0 // 카디 쉴드 쉐도우
-IG_Bs_Sha_M_S_7,24071,1,1,1,0,0,0 // 드라군 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24064,1,1,1,0,0,0 // 케미컬 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24068,1,1,1,0,0,0 // 세라핌 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24069,1,1,1,0,0,0 // 비홀더 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24070,1,1,1,0,0,0 // 디바인 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24062,1,1,1,0,0,0 // 블러디 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24063,1,1,1,0,0,0 // 리버레이션 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24065,1,1,1,0,0,0 // 클래머러스 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24066,1,1,1,0,0,0 // 인섹티사이드 슈즈 쉐도우
-IG_Bs_Sha_M_S_7,24067,1,1,1,0,0,0 // 피셔 슈즈 쉐도우
+// Enchant_Stone_Box14
+IG_Enchant_Stone_Box14,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box14,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box14,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box14,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box14,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box14,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box14,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box14,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box14,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box14,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box14,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box14,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box14,25448,16	// RuneknightStone_Robe
+IG_Enchant_Stone_Box14,25449,16	// GeneticStone_Robe
+IG_Enchant_Stone_Box14,25456,16	// WarlockStone_Robe
+IG_Enchant_Stone_Box14,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box14,25061,24	// Range_Stone
+IG_Enchant_Stone_Box14,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box14,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box14,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box14,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box14,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box14,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box14,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box14,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box14,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box14,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box14,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box14,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box14,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box14,25305,37	// Critical_Stone_Bottom
+IG_Enchant_Stone_Box14,25445,37	// RuneknightStone_Top
+IG_Enchant_Stone_Box14,25446,37	// RuneknightStone_Middle
+IG_Enchant_Stone_Box14,25447,37	// RuneknightStone_Lower
+IG_Enchant_Stone_Box14,25450,37	// GeneticStone_Top
+IG_Enchant_Stone_Box14,25451,37	// GeneticStone_Middle
+IG_Enchant_Stone_Box14,25452,37	// GeneticStone_Lower
+IG_Enchant_Stone_Box14,25453,37	// WarlockStone_Top
+IG_Enchant_Stone_Box14,25454,37	// WarlockStone_Middle
+IG_Enchant_Stone_Box14,25455,37	// WarlockStone_Lower
 
-IG_Bs_Sha_M_S_8,24090,1,1,1,0,0,0 // 스테빌리티 쉴드 쉐도우
-IG_Bs_Sha_M_S_8,24091,1,1,1,0,0,0 // 플라스터러즈 아머 쉐도우
-IG_Bs_Sha_M_S_8,24092,1,1,1,0,0,0 // 플라스터러즈 슈즈 쉐도우
-IG_Bs_Sha_M_S_8,24093,1,1,1,0,0,0 // 인솜니악 아머 쉐도우
-IG_Bs_Sha_M_S_8,24094,1,1,1,0,0,0 // 인솜니악 슈즈 쉐도우
-IG_Bs_Sha_M_S_8,24095,1,1,1,0,0,0 // 피어리스 아머 쉐도우
-IG_Bs_Sha_M_S_8,24096,1,1,1,0,0,0 // 피어리스 슈즈 쉐도우
-IG_Bs_Sha_M_S_8,24097,1,1,1,0,0,0 // 애듀레이트 아머 쉐도우
-IG_Bs_Sha_M_S_8,24098,1,1,1,0,0,0 // 애듀레이트 슈즈 쉐도우
-IG_Bs_Sha_M_S_8,24099,1,1,1,0,0,0 // 언프리징 웨폰 쉐도우
-IG_Bs_Sha_M_S_8,24100,1,1,1,0,0,0 // 언프리징 이어링 쉐도우
-IG_Bs_Sha_M_S_8,24101,1,1,1,0,0,0 // 언프리징 펜던트 쉐도우
-IG_Bs_Sha_M_S_8,24104,1,1,1,0,0,0 // 뉴트럴 웨폰 쉐도우
-IG_Bs_Sha_M_S_8,24105,1,1,1,0,0,0 // 뉴트럴 이어링 쉐도우
-IG_Bs_Sha_M_S_8,24106,1,1,1,0,0,0 // 뉴트럴 펜던트 쉐도우
-IG_Bs_Sha_M_S_8,24107,1,1,1,0,0,0 // 언커즈 이어링 쉐도우
-IG_Bs_Sha_M_S_8,24108,1,1,1,0,0,0 // 언커즈 펜던트 쉐도우
-IG_Bs_Sha_M_S_8,24102,1,1,1,0,0,0 // 바이탈리티 이어링 쉐도우
-IG_Bs_Sha_M_S_8,24103,1,1,1,0,0,0 // 바이탈리티 펜던트 쉐도우
+// Enchant_Stone_Box15
+IG_Enchant_Stone_Box15,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box15,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box15,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box15,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box15,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box15,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box15,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box15,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box15,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box15,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box15,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box15,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box15,25493,16	// ShadowchaserStone_Robe
+IG_Enchant_Stone_Box15,25497,16	// MechanicStone_Robe
+IG_Enchant_Stone_Box15,25501,16	// WanderMinstrelStone_Robe
+IG_Enchant_Stone_Box15,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box15,25061,24	// Range_Stone
+IG_Enchant_Stone_Box15,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box15,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box15,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box15,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box15,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box15,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box15,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box15,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box15,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box15,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box15,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box15,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box15,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box15,25305,37	// Critical_Stone_Bottom
+IG_Enchant_Stone_Box15,25490,37	// ShadowchaserStone_Top
+IG_Enchant_Stone_Box15,25491,37	// ShadowchaserStone_Middle
+IG_Enchant_Stone_Box15,25492,37	// ShadowchaserStone_Lower
+IG_Enchant_Stone_Box15,25494,37	// MechanicStone_Top
+IG_Enchant_Stone_Box15,25495,37	// MechanicStone_Middle
+IG_Enchant_Stone_Box15,25496,37	// MechanicStone_Lower
+IG_Enchant_Stone_Box15,25498,37	// WanderMinstrelStone_Top
+IG_Enchant_Stone_Box15,25499,37	// WanderMinstrelStone_Middle
+IG_Enchant_Stone_Box15,25500,37	// WanderMinstrelStone_Lower
 
-IG_Bs_Sha_M_S_13,24031,1,1,1,0,0,0 // 킹버드 웨폰 쉐도우
-IG_Bs_Sha_M_S_13,24032,1,1,1,0,0,0 // 크리히트 웨폰 쉐도우
-IG_Bs_Sha_M_S_13,24033,1,1,1,0,0,0 // 힐링 웨폰 쉐도우
-IG_Bs_Sha_M_S_13,24029,1,1,1,0,0,0 // 에이션트 아머 쉐도우
-IG_Bs_Sha_M_S_13,24030,1,1,1,0,0,0 // 크리티컬 아머 쉐도우
-IG_Bs_Sha_M_S_13,24027,1,1,1,0,0,0 // 이뮨드 아머 쉐도우
-IG_Bs_Sha_M_S_13,24028,1,1,1,0,0,0 // 하드 아머 쉐도우
-IG_Bs_Sha_M_S_13,24049,1,1,1,0,0,0 // 하드 이어링 쉐도우
-IG_Bs_Sha_M_S_13,24026,1,1,1,0,0,0 // 아테나쉴드 쉐도우
-IG_Bs_Sha_M_S_13,24080,1,1,1,0,0,0 // 스피리츄얼 펜던트 쉐도우
-IG_Bs_Sha_M_S_13,24079,1,1,1,0,0,0 // 스피리츄얼 이어링 쉐도우
-IG_Bs_Sha_M_S_13,24078,1,1,1,0,0,0 // 스피리츄얼 웨폰 쉐도우
-IG_Bs_Sha_M_S_13,24051,1,1,1,0,0,0 // 아테나 이어링 쉐도우
-IG_Bs_Sha_M_S_13,24046,1,1,1,0,0,0 // 레지스트 스펠파워 펜던트 쉐도우
-IG_Bs_Sha_M_S_13,24155,1,1,1,0,0,0 // 임모털 펜던트 쉐도우
-IG_Bs_Sha_M_S_13,24383,1,1,1,0,0,0 // 임모털 웨폰 쉐도우
-IG_Bs_Sha_M_S_13,24152,1,1,1,0,0,0 // 솔리드 웨폰 쉐도우
-IG_Bs_Sha_M_S_13,24153,1,1,1,0,0,0 // 솔리드 이어링 쉐도우
-IG_Bs_Sha_M_S_13,24047,1,1,1,0,0,0 // 래피드 펜던트 쉐도우
-IG_Bs_Sha_M_S_13,24050,1,1,1,0,0,0 // 와이즈 이어링 쉐도우
-IG_Bs_Sha_M_S_13,24024,1,1,1,0,0,0 // 브리즈 아머 쉐도우
-IG_Bs_Sha_M_S_13,24025,1,1,1,0,0,0 // 챔피언 슈즈 쉐도우
-IG_Bs_Sha_M_S_13,24081,1,1,1,0,0,0 // 매리셔스 아머 쉐도우
-IG_Bs_Sha_M_S_13,24082,1,1,1,0,0,0 // 매리셔스 슈즈 쉐도우
-IG_Bs_Sha_M_S_13,24083,1,1,1,0,0,0 // 매리셔스 쉴드 쉐도우
+// Enchant_Stone_Box16
+IG_Enchant_Stone_Box16,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box16,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box16,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box16,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box16,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box16,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box16,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box16,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box16,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box16,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box16,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box16,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box16,25709,16	// ArchbishopStone_Robe
+IG_Enchant_Stone_Box16,25713,16	// RoyalguardStone_Robe
+IG_Enchant_Stone_Box16,25717,16	// GuillcrossStone_Robe
+IG_Enchant_Stone_Box16,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box16,310330,24	// 
+IG_Enchant_Stone_Box16,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box16,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box16,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box16,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box16,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box16,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box16,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box16,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box16,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box16,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box16,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box16,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box16,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box16,25305,37	// Critical_Stone_Bottom
+IG_Enchant_Stone_Box16,25706,37	// HighpriestStone_Top
+IG_Enchant_Stone_Box16,25707,37	// HighpriestStone_Middle
+IG_Enchant_Stone_Box16,25708,37	// HighpriestStone_Bottom
+IG_Enchant_Stone_Box16,25710,37	// PaladinStone_Top
+IG_Enchant_Stone_Box16,25711,37	// PaladinStone_Middle
+IG_Enchant_Stone_Box16,25712,37	// PaladinStone_Bottom
+IG_Enchant_Stone_Box16,25714,37	// AssacrossStone_Top
+IG_Enchant_Stone_Box16,25715,37	// AssacrossStone_Middle
+IG_Enchant_Stone_Box16,25716,37	// AssacrossStone_Bottom
 
-IG_Bs_Sha_M_S_15,24018,1,1,1,0,0,0 // 피지컬 이어링 쉐도우
-IG_Bs_Sha_M_S_15,24019,1,1,1,0,0,0 // 피지컬 웨폰 쉐도우
-IG_Bs_Sha_M_S_15,24020,1,1,1,0,0,0 // 피지컬 펜던트 쉐도우
+// Enchant_Stone_Box17
+IG_Enchant_Stone_Box17,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box17,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box17,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box17,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box17,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box17,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box17,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box17,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box17,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box17,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box17,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box17,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box17,25797,16	// SuraStone_Robe2
+IG_Enchant_Stone_Box17,25801,16	// SorcererStone_Robe2
+IG_Enchant_Stone_Box17,25805,16	// ShadowchaserStone_Robe2
+IG_Enchant_Stone_Box17,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box17,310330,24	// 
+IG_Enchant_Stone_Box17,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box17,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box17,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box17,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box17,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box17,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box17,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box17,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box17,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box17,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box17,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box17,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box17,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box17,25305,37	// Critical_Stone_Bottom
+IG_Enchant_Stone_Box17,25798,37	// SuraStone_Bottom2
+IG_Enchant_Stone_Box17,25799,37	// SuraStone_Middle2
+IG_Enchant_Stone_Box17,25800,37	// SuraStone_Top2
+IG_Enchant_Stone_Box17,25802,37	// SorcererStone_Bottom2
+IG_Enchant_Stone_Box17,25803,37	// SorcererStone_Middle2
+IG_Enchant_Stone_Box17,25804,37	// SorcererStone_Top2
+IG_Enchant_Stone_Box17,25806,37	// ShadowchasStone_Bottom2
+IG_Enchant_Stone_Box17,25807,37	// ShadowchasStone_Middle2
+IG_Enchant_Stone_Box17,25808,37	// ShadowchaserStone_Top2
 
-IG_Bs_Sha_M_S_16,24021,1,1,1,0,0,0 // 매지컬 이어링 쉐도우
-IG_Bs_Sha_M_S_16,24022,1,1,1,0,0,0 // 매지컬 웨폰 쉐도우
-IG_Bs_Sha_M_S_16,24023,1,1,1,0,0,0 // 매지컬 펜던트 쉐도우
+// Enchant_Stone_Box18
+IG_Enchant_Stone_Box18,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box18,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box18,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box18,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box18,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box18,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box18,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box18,25842,16	// SoulReaperStone_Robe
+IG_Enchant_Stone_Box18,25849,16	// StarEmperorStone_Garment
+IG_Enchant_Stone_Box18,25853,16	// KagerouStone_Robe
+IG_Enchant_Stone_Box18,25854,16	// OboroStone_Robe
+IG_Enchant_Stone_Box18,25858,16	// GunslingerStone_Robe
+IG_Enchant_Stone_Box18,25862,16	// DoramStone_Robe
+IG_Enchant_Stone_Box18,25136,17	// ElectricEffect_Middle
+IG_Enchant_Stone_Box18,25226,17	// WaterFieldEffect_Bottom
+IG_Enchant_Stone_Box18,25015,20	// EXPStone_Bottom
+IG_Enchant_Stone_Box18,310330,20	// 
+IG_Enchant_Stone_Box18,25069,20	// ReloadStone_Top
+IG_Enchant_Stone_Box18,25070,20	// ReloadStone_Middle
+IG_Enchant_Stone_Box18,25071,20	// ReloadStone_Bottom
+IG_Enchant_Stone_Box18,25137,20	// GreenFloor_Bottom
+IG_Enchant_Stone_Box18,25141,20	// EXPStone_Middle
+IG_Enchant_Stone_Box18,25171,20	// EXPStone_Top
+IG_Enchant_Stone_Box18,25172,20	// CastingStone_Top
+IG_Enchant_Stone_Box18,25173,20	// CastingStone_Middle
+IG_Enchant_Stone_Box18,25174,20	// CastingStone_Bottom
+IG_Enchant_Stone_Box18,25176,20	// BlueAuraEffect_Middle
+IG_Enchant_Stone_Box18,25178,20	// PinkGlowEffect_Middle
+IG_Enchant_Stone_Box18,25225,20	// ExplodingEffect_Middle
+IG_Enchant_Stone_Box18,25843,26	// SoulLinkerStone_Top
+IG_Enchant_Stone_Box18,25844,26	// SoulLinkerStone_Middle
+IG_Enchant_Stone_Box18,25845,26	// SoulLinkerStone_Bottom
+IG_Enchant_Stone_Box18,25846,26	// StarGladiatorStone_Top
+IG_Enchant_Stone_Box18,25847,26	// StarGladiatorStone_Middle
+IG_Enchant_Stone_Box18,25848,26	// StarGladiatorStone_Bottom
+IG_Enchant_Stone_Box18,25850,26	// NinjaStone_Top
+IG_Enchant_Stone_Box18,25851,26	// NinjaStone_Middle
+IG_Enchant_Stone_Box18,25852,26	// NinjaStone_Bottom
+IG_Enchant_Stone_Box18,25855,26	// GunslingerStone_Top
+IG_Enchant_Stone_Box18,25856,26	// GunslingerStone_Middle
+IG_Enchant_Stone_Box18,25857,26	// GunslingerStone_Bottom
+IG_Enchant_Stone_Box18,25859,26	// DoramStone_Top
+IG_Enchant_Stone_Box18,25860,26	// DoramStone_Middle
+IG_Enchant_Stone_Box18,25861,26	// DoramStone_Bottom
+IG_Enchant_Stone_Box18,6642,27	// ATKStone_Middle
+IG_Enchant_Stone_Box18,6643,27	// MATKStone_Middle
+IG_Enchant_Stone_Box18,6943,27	// ATKStone_Top
+IG_Enchant_Stone_Box18,6944,27	// MATKStone_Top
+IG_Enchant_Stone_Box18,25016,27	// ATKStone_Bottom
+IG_Enchant_Stone_Box18,25017,27	// MATKStone_Bottom
 
-IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // 비기너 슈즈 쉐도우
-IG_Bs_Sha_M_S_23,24211,1,1,1,0,0,0 // 비기너 쉴드 쉐도우
-IG_Bs_Sha_M_S_23,24212,1,1,1,0,0,0 // 루키 슈즈 쉐도우
-IG_Bs_Sha_M_S_23,24213,1,1,1,0,0,0 // 루키 쉴드 쉐도우
-IG_Bs_Sha_M_S_23,24214,1,1,1,0,0,0 // 어드벤스드 슈즈 쉐도우
-IG_Bs_Sha_M_S_23,24215,1,1,1,0,0,0 // 어드벤스드 쉴드 쉐도우
-IG_Bs_Sha_M_S_23,24209,1,1,1,0,0,0 // 익스퍼트 쉴드 쉐도우
-IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // 익스퍼트 슈즈 쉐도우
+// Enchant_Stone_Box19
+IG_Enchant_Stone_Box19,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box19,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box19,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box19,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box19,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box19,25205,8	// ShrinkEffect_Bottom
+IG_Enchant_Stone_Box19,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box19,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box19,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box19,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box19,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box19,25170,16	// MinorCastingStone_Robe
+IG_Enchant_Stone_Box19,1000011,16	// RangerStone_II_Garment
+IG_Enchant_Stone_Box19,1000015,16	// MechanicStone_II_Garment
+IG_Enchant_Stone_Box19,1000019,16	// ArchbishopStone_II_Garment
+IG_Enchant_Stone_Box19,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box19,310330,24	// 
+IG_Enchant_Stone_Box19,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box19,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box19,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box19,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box19,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box19,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box19,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box19,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box19,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box19,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box19,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box19,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box19,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box19,25305,37	// Critical_Stone_Bottom
+IG_Enchant_Stone_Box19,1000008,37	// RangerStone_II_Top
+IG_Enchant_Stone_Box19,1000009,37	// RangerStone_II_Middle
+IG_Enchant_Stone_Box19,1000010,37	// RangerStone_II_Bottom
+IG_Enchant_Stone_Box19,1000012,37	// MechanicStone_II_Top
+IG_Enchant_Stone_Box19,1000013,37	// MechanicStone_II_Middle
+IG_Enchant_Stone_Box19,1000014,37	// MechanicStone_II_Bottom
+IG_Enchant_Stone_Box19,1000016,37	// HighpriestStone_II_Top
+IG_Enchant_Stone_Box19,1000017,37	// HighpriestStone_II_Middle
+IG_Enchant_Stone_Box19,1000018,37	// HighpriestStone_II_Bottom
 
-IG_Bs_Item_M_S_5,28901,1,1,1,0,0,0 // 저주받은 매드바니
-IG_Bs_Item_M_S_5,28902,1,1,1,0,0,0 // 매드바니
+// Enchant_Stone_Box20
+IG_Enchant_Stone_Box20,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box20,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box20,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box20,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box20,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box20,25062,8	// Greed_Stone
+IG_Enchant_Stone_Box20,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box20,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box20,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box20,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box20,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box20,25226,16	// WaterFieldEffect_Bottom
+IG_Enchant_Stone_Box20,1000213,16	// WarlockStone_Robe2
+IG_Enchant_Stone_Box20,1000217,16	// RoyalGuardStone_Robe2
+IG_Enchant_Stone_Box20,1000221,16	// GuillotineCrossStone_Robe2
+IG_Enchant_Stone_Box20,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box20,310330,24	// 
+IG_Enchant_Stone_Box20,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box20,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box20,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box20,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box20,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box20,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box20,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box20,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box20,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box20,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box20,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box20,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box20,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box20,25305,37	// Critical_Stone_Bottom
+IG_Enchant_Stone_Box20,1000214,37	// WarlockStone_Top2
+IG_Enchant_Stone_Box20,1000215,37	// WarlockStone_Middle2
+IG_Enchant_Stone_Box20,1000216,37	// WarlockStone_Bottom2
+IG_Enchant_Stone_Box20,1000218,37	// RoyalGuardStone_Top2
+IG_Enchant_Stone_Box20,1000219,37	// RoyalGuardStone_Middle2
+IG_Enchant_Stone_Box20,1000220,37	// RoyalGuardStone_Bottom2
+IG_Enchant_Stone_Box20,1000222,37	// GuillotineCrossStone_Top2
+IG_Enchant_Stone_Box20,1000223,37	// GuillotineCrossStone_Middle2
+IG_Enchant_Stone_Box20,1000224,37	// GuillotineCrossStone_Bottom2
 
-IG_Bs_Sha_M_S_9,24084,1,1,1,0,0,0 // 젬스톤 아머 쉐도우
-IG_Bs_Sha_M_S_9,24086,1,1,1,0,0,0 // 젬스톤 쉴드 쉐도우
-IG_Bs_Sha_M_S_9,24087,1,1,1,0,0,0 // 젬스톤 웨폰 쉐도우
-IG_Bs_Sha_M_S_9,24085,1,1,1,0,0,0 // 젬스톤 슈즈 쉐도우
-IG_Bs_Sha_M_S_9,24088,1,1,1,0,0,0 // 젬스톤 이어링 쉐도우
-IG_Bs_Sha_M_S_9,24089,1,1,1,0,0,0 // 젬스톤 펜던트 쉐도우
+// Enchant_Stone_Box21
+IG_Enchant_Stone_Box21,25302,2	// DoubleAttack_Stone
+IG_Enchant_Stone_Box21,25303,2	// Critical_Stone_Robe
+IG_Enchant_Stone_Box21,25067,2	// CastingStone_Robe
+IG_Enchant_Stone_Box21,6964,8	// SPdrainStone_Robe
+IG_Enchant_Stone_Box21,25000,8	// SPdrainStone_Top
+IG_Enchant_Stone_Box21,25306,8	// CastStone_Robe
+IG_Enchant_Stone_Box21,25062,8	// Greed_Stone
+IG_Enchant_Stone_Box21,6963,16	// HPdrainStone_Robe
+IG_Enchant_Stone_Box21,6999,16	// HPdrainStone_Top
+IG_Enchant_Stone_Box21,25068,16	// ASPDStone_Top
+IG_Enchant_Stone_Box21,6908,16	// ASPDStone_Robe
+IG_Enchant_Stone_Box21,25226,16	// WaterFieldEffect_Bottom
+IG_Enchant_Stone_Box21,1000296,16	// RuneknightStone_Robe2
+IG_Enchant_Stone_Box21,1000300,16	// GeneticStone_Robe2
+IG_Enchant_Stone_Box21,1000304,16	// WanderMinsStone_Robe2
+IG_Enchant_Stone_Box21,310330,24	// 
+IG_Enchant_Stone_Box21,25171,24	// EXPStone_Top
+IG_Enchant_Stone_Box21,25141,24	// EXPStone_Middle
+IG_Enchant_Stone_Box21,25015,24	// EXPStone_Bottom
+IG_Enchant_Stone_Box21,25172,24	// CastingStone_Top
+IG_Enchant_Stone_Box21,25173,24	// CastingStone_Middle
+IG_Enchant_Stone_Box21,25174,24	// CastingStone_Bottom
+IG_Enchant_Stone_Box21,1000297,37	// RuneknightStone_Top2
+IG_Enchant_Stone_Box21,1000298,37	// RuneknightStone_Middle2
+IG_Enchant_Stone_Box21,1000299,37	// RuneknightStone_Bottom2
+IG_Enchant_Stone_Box21,1000301,37	// GeneticStone_Top2
+IG_Enchant_Stone_Box21,1000302,37	// GeneticStone_Middle2
+IG_Enchant_Stone_Box21,1000303,37	// GeneticStone_Bottom2
+IG_Enchant_Stone_Box21,1000305,37	// WanderMinsStone_Top2
+IG_Enchant_Stone_Box21,1000306,37	// WanderMinsStone_Middle2
+IG_Enchant_Stone_Box21,1000307,37	// WanderMinsStone_Bottom2
+IG_Enchant_Stone_Box21,6943,37	// ATKStone_Top
+IG_Enchant_Stone_Box21,6642,37	// ATKStone_Middle
+IG_Enchant_Stone_Box21,25016,37	// ATKStone_Bottom
+IG_Enchant_Stone_Box21,6944,37	// MATKStone_Top
+IG_Enchant_Stone_Box21,6643,37	// MATKStone_Middle
+IG_Enchant_Stone_Box21,25017,37	// MATKStone_Bottom
+IG_Enchant_Stone_Box21,25304,37	// Critical_Stone_Top
+IG_Enchant_Stone_Box21,25060,37	// Critical_Stone
+IG_Enchant_Stone_Box21,25305,37	// Critical_Stone_Bottom
 
-IG_Bs_Sha_M_S_10,24180,1,1,1,0,0,0 // 베어러즈 아머 쉐도우
-IG_Bs_Sha_M_S_10,24182,1,1,1,0,0,0 // 베어러즈 쉴드 쉐도우
-IG_Bs_Sha_M_S_10,24183,1,1,1,0,0,0 // 베어러즈 웨폰 쉐도우
-IG_Bs_Sha_M_S_10,24181,1,1,1,0,0,0 // 베어러즈 슈즈 쉐도우
-IG_Bs_Sha_M_S_10,24184,1,1,1,0,0,0 // 베어러즈 이어링 쉐도우
-IG_Bs_Sha_M_S_10,24185,1,1,1,0,0,0 // 베어러즈 펜던트 쉐도우
+IG_Bs_Sha_M_S_1,24038,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_1,24044,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_1,24041,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_1,24035,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_1,24036,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_1,24042,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_1,24043,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_1,24037,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_1,24045,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_1,24039,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_1,24034,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_1,24040,1,1,1,0,0,0 // ?? ?? ???
 
-IG_Bs_Sha_M_S_11,24197,1,1,1,0,0,0 // 헤이스티 아머 쉐도우
-IG_Bs_Sha_M_S_11,24196,1,1,1,0,0,0 // 헤이스티 슈즈 쉐도우
+IG_Bs_Sha_M_S_17,24365,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_17,24364,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_17,24363,1,1,1,0,0,0 // ???? ?? ???
 
-IG_Bs_Sha_M_S_21,24030,1,1,1,0,0,0 // 크리티컬 아머 쉐도우
-IG_Bs_Sha_M_S_21,24333,1,1,1,0,0,0 // 크리티컬 슈즈 쉐도우
-IG_Bs_Sha_M_S_21,24332,1,1,1,0,0,0 // 크리티컬 쉴드 쉐도우
+IG_Bs_Sha_M_S_18,24362,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_18,24361,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_18,24360,1,1,1,0,0,0 // ?? ?? ???
 
-IG_Bs_Sha_M_S_20,24371,1,1,1,0,0,0 // 모탈 블로우 이어링 쉐도우
-IG_Bs_Sha_M_S_20,24372,1,1,1,0,0,0 // 모탈 블로우 펜던트 쉐도우
-IG_Bs_Sha_M_S_20,24370,1,1,1,0,0,0 // 모탈 블로우 웨폰 쉐도우
+IG_Bs_Sha_M_S_19,24369,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_19,24368,1,1,1,0,0,0 // ???? ??? ???
 
-IG_Bs_Sha_M_S_3,24373,1,1,1,0,0,0 // 페니트레이션 슈즈 쉐도우
-IG_Bs_Sha_M_S_3,24374,1,1,1,0,0,0 // 페니트레이션 쉴드 쉐도우
-IG_Bs_Sha_M_S_3,24375,1,1,1,0,0,0 // 액서큐서너 홀리워터 아머 쉐도우
-IG_Bs_Sha_M_S_3,24376,1,1,1,0,0,0 // 엑소시스트 커럽트 아머 쉐도우
-IG_Bs_Sha_M_S_3,24377,1,1,1,0,0,0 // 바이브레이션 드래곤킬러 아머 쉐도우
-IG_Bs_Sha_M_S_3,24378,1,1,1,0,0,0 // 시저스 헌팅 아머 쉐도우
-IG_Bs_Sha_M_S_3,24379,1,1,1,0,0,0 // 피싱 인섹트 넷 아머 쉐도우
-IG_Bs_Sha_M_S_3,24166,1,1,1,0,0,0 // 페니트레이션 이어링 쉐도우
-IG_Bs_Sha_M_S_3,24167,1,1,1,0,0,0 // 페니트레이션 펜던트 쉐도우
-IG_Bs_Sha_M_S_3,24156,1,1,1,0,0,0 // 액서큐서너 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24157,1,1,1,0,0,0 // 엑소시스트 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24158,1,1,1,0,0,0 // 헌팅 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24159,1,1,1,0,0,0 // 인섹트 넷 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24160,1,1,1,0,0,0 // 피싱 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24161,1,1,1,0,0,0 // 드래곤 킬러 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24162,1,1,1,0,0,0 // 커럽트 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24163,1,1,1,0,0,0 // 바이브레이션 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24164,1,1,1,0,0,0 // 홀리 워터 웨폰 쉐도우
-IG_Bs_Sha_M_S_3,24165,1,1,1,0,0,0 // 시저스 웨폰 쉐도우
+IG_Bs_Sha_M_S_20,24366,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_20,24367,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_20,24033,1,1,1,0,0,0 // ?? ?? ???
 
-IG_Bs_Sha_M_S_4,24346,1,1,1,0,0,0 // 템페스트 슈즈 쉐도우
-IG_Bs_Sha_M_S_4,24345,1,1,1,0,0,0 // 템페스트 쉴드 쉐도우
-IG_Bs_Sha_M_S_4,24347,1,1,1,0,0,0 // 매직 액서큐서너 홀리워터 아머 쉐도우
-IG_Bs_Sha_M_S_4,24348,1,1,1,0,0,0 // 매직 엑소시스트 커럽트 아머 쉐도우
-IG_Bs_Sha_M_S_4,24349,1,1,1,0,0,0 // 매직 바이브레이션 드래곤킬러 아머 쉐도우
-IG_Bs_Sha_M_S_4,24350,1,1,1,0,0,0 // 매직 시저스 헌팅 아머 쉐도우
-IG_Bs_Sha_M_S_4,24351,1,1,1,0,0,0 // 매직 피싱 인섹트 넷 아머 쉐도우
-IG_Bs_Sha_M_S_4,24168,1,1,1,0,0,0 // 템페스트 이어링 쉐도우
-IG_Bs_Sha_M_S_4,24169,1,1,1,0,0,0 // 템페스트 펜던트 쉐도우
-IG_Bs_Sha_M_S_4,24170,1,1,1,0,0,0 // 매직 액서큐서너 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24171,1,1,1,0,0,0 // 매직 엑소시스트 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24172,1,1,1,0,0,0 // 매직 헌팅 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24173,1,1,1,0,0,0 // 매직 인섹트 넷 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24174,1,1,1,0,0,0 // 매직 피싱 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24175,1,1,1,0,0,0 // 매직 드래곤 킬러 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24176,1,1,1,0,0,0 // 매직 커럽트 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24177,1,1,1,0,0,0 // 매직 바이브레이션 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24178,1,1,1,0,0,0 // 매직 홀리 워터 웨폰 쉐도우
-IG_Bs_Sha_M_S_4,24179,1,1,1,0,0,0 // 매직 시저스 웨폰 쉐도우
+IG_Bs_Item_M_S_12,20844,1,1,1,0,0,0 // ?? ??? ??(??)
+IG_Bs_Item_M_S_12,20843,1,1,1,0,0,0 // ?? ??? ??(???)
+IG_Bs_Item_M_S_12,20842,1,1,1,0,0,0 // ?? ??? ??(??)
 
-IG_Bs_Sha_M_S_12,24344,1,1,1,0,0,0 // 블리츠 아머 쉐도우
-IG_Bs_Sha_M_S_12,24343,1,1,1,0,0,0 // 블리츠 웨폰 쉐도우
-IG_Bs_Sha_M_S_12,24232,1,1,1,0,0,0 // 블리츠 쉴드 쉐도우
-IG_Bs_Sha_M_S_12,24231,1,1,1,0,0,0 // 블리츠 슈즈 쉐도우
-IG_Bs_Sha_M_S_12,24218,1,1,1,0,0,0 // 블리츠 펜던트 쉐도우
-IG_Bs_Sha_M_S_12,24217,1,1,1,0,0,0 // 블리츠 이어링 쉐도우
+IG_Bs_Item_M_S_15,19267,1,1,1,0,0,0 // ???? ??
+IG_Bs_Item_M_S_15,19266,1,1,1,0,0,0 // ???? ???
 
-IG_Bs_Sha_M_S_14,24245,1,1,1,0,0,0 // 리로드 아머 쉐도우
-IG_Bs_Sha_M_S_14,24243,1,1,1,0,0,0 // 리로드 슈즈 쉐도우
-IG_Bs_Sha_M_S_14,24244,1,1,1,0,0,0 // 리로드 쉴드 쉐도우
+IG_Bs_Sha_M_S_5,24112,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_5,24111,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_5,24113,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_5,24110,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_5,24048,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_5,24109,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_5,24242,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_5,24240,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_5,24241,1,1,1,0,0,0 // ??? ?? ???
 
-IG_Bs_Sha_M_S_24,24224,1,1,1,0,0,0 // 포스 웨폰 쉐도우
-IG_Bs_Sha_M_S_24,24225,1,1,1,0,0,0 // 포스 이어링 쉐도우
-IG_Bs_Sha_M_S_24,24226,1,1,1,0,0,0 // 포스 펜던트 쉐도우
-IG_Bs_Sha_M_S_24,24223,1,1,1,0,0,0 // 인핸스 포스 웨폰 쉐도우
-IG_Bs_Sha_M_S_24,24228,1,1,1,0,0,0 // 스피릿 웨폰
-IG_Bs_Sha_M_S_24,24229,1,1,1,0,0,0 // 스피릿 이어링 쉐도우
-IG_Bs_Sha_M_S_24,24230,1,1,1,0,0,0 // 스피릿 펜던트 쉐도우
-IG_Bs_Sha_M_S_24,24227,1,1,1,0,0,0 // 인핸스 스피릿 웨폰 쉐도우
+IG_Bs_Sha_M_S_6,24072,1,1,1,0,0,0 // ? ?? ???
+IG_Bs_Sha_M_S_6,24073,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_6,24074,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_6,24075,1,1,1,0,0,0 // ? ?? ???
+IG_Bs_Sha_M_S_6,24076,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_6,24077,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_6,24235,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_6,24234,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_6,24237,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_6,24236,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_6,24239,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_6,24238,1,1,1,0,0,0 // ??? ??? ???
 
-IG_Bs_Sha_M_S_25,24151,1,1,1,0,0,0 // 인피니티 펜던트 쉐도우
-IG_Bs_Sha_M_S_25,24150,1,1,1,0,0,0 // 인피니티 이어링 쉐도우
+IG_Bs_Sha_M_S_7,24056,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24055,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_7,24053,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_7,24054,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24052,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_7,24057,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24058,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24059,1,1,1,0,0,0 // ????? ?????
+IG_Bs_Sha_M_S_7,24060,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24061,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_7,24071,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24064,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24068,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24069,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24070,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24062,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_7,24063,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_7,24065,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_7,24066,1,1,1,0,0,0 // ?????? ?? ???
+IG_Bs_Sha_M_S_7,24067,1,1,1,0,0,0 // ?? ?? ???
 
-IG_PhysicalMagical_Mix,24395,1,1,1,0,0,0 // 피지컬 아머 쉐도우
-IG_PhysicalMagical_Mix,24393,1,1,1,0,0,0 // 피지컬 슈즈 쉐도우
-IG_PhysicalMagical_Mix,24394,1,1,1,0,0,0 // 피지컬 쉴드 쉐도우
-IG_PhysicalMagical_Mix,24398,1,1,1,0,0,0 // 매지컬 아머 쉐도우
-IG_PhysicalMagical_Mix,24396,1,1,1,0,0,0 // 매지컬 슈즈 쉐도우
-IG_PhysicalMagical_Mix,24397,1,1,1,0,0,0 // 매지컬 쉴드 쉐도우
+IG_Bs_Sha_M_S_8,24090,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_8,24091,1,1,1,0,0,0 // ?????? ?? ???
+IG_Bs_Sha_M_S_8,24092,1,1,1,0,0,0 // ?????? ?? ???
+IG_Bs_Sha_M_S_8,24093,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_8,24094,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_8,24095,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_8,24096,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_8,24097,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_8,24098,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_8,24099,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_8,24100,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_8,24101,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_8,24104,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_8,24105,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_8,24106,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_8,24107,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_8,24108,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_8,24102,1,1,1,0,0,0 // ????? ??? ???
+IG_Bs_Sha_M_S_8,24103,1,1,1,0,0,0 // ????? ??? ???
 
-IG_Silver_Statue,28942,900,1,1,0,0,0 // 저주받은 기사의 방패
-IG_Silver_Statue,28945,99,1,1,0,0,0 // 피빛의 기사의 방패
-IG_Silver_Statue,28946,1,1,1,0,0,0 // 정화된 기사의 방패
+IG_Bs_Sha_M_S_13,24031,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_13,24032,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_13,24033,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_13,24029,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_13,24030,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_13,24027,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_13,24028,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_13,24049,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_13,24026,1,1,1,0,0,0 // ????? ???
+IG_Bs_Sha_M_S_13,24080,1,1,1,0,0,0 // ????? ??? ???
+IG_Bs_Sha_M_S_13,24079,1,1,1,0,0,0 // ????? ??? ???
+IG_Bs_Sha_M_S_13,24078,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_13,24051,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_13,24046,1,1,1,0,0,0 // ???? ???? ??? ???
+IG_Bs_Sha_M_S_13,24155,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_13,24383,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_13,24152,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_13,24153,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_13,24047,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_13,24050,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_13,24024,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_13,24025,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_13,24081,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_13,24082,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_13,24083,1,1,1,0,0,0 // ???? ?? ???
+
+IG_Bs_Sha_M_S_15,24018,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_15,24019,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_15,24020,1,1,1,0,0,0 // ??? ??? ???
+
+IG_Bs_Sha_M_S_16,24021,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_16,24022,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_16,24023,1,1,1,0,0,0 // ??? ??? ???
+
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_23,24211,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_23,24212,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_23,24213,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_23,24214,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_23,24215,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_23,24209,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // ???? ?? ???
+
+IG_Bs_Item_M_S_5,28901,1,1,1,0,0,0 // ???? ????
+IG_Bs_Item_M_S_5,28902,1,1,1,0,0,0 // ????
+
+IG_Bs_Sha_M_S_9,24084,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_9,24086,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_9,24087,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_9,24085,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_9,24088,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_9,24089,1,1,1,0,0,0 // ??? ??? ???
+
+IG_Bs_Sha_M_S_10,24180,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_10,24182,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_10,24183,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_10,24181,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_10,24184,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_10,24185,1,1,1,0,0,0 // ???? ??? ???
+
+IG_Bs_Sha_M_S_11,24197,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_11,24196,1,1,1,0,0,0 // ???? ?? ???
+
+IG_Bs_Sha_M_S_21,24030,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_21,24333,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_21,24332,1,1,1,0,0,0 // ???? ?? ???
+
+IG_Bs_Sha_M_S_20,24371,1,1,1,0,0,0 // ?? ??? ??? ???
+IG_Bs_Sha_M_S_20,24372,1,1,1,0,0,0 // ?? ??? ??? ???
+IG_Bs_Sha_M_S_20,24370,1,1,1,0,0,0 // ?? ??? ?? ???
+
+IG_Bs_Sha_M_S_3,24373,1,1,1,0,0,0 // ?????? ?? ???
+IG_Bs_Sha_M_S_3,24374,1,1,1,0,0,0 // ?????? ?? ???
+IG_Bs_Sha_M_S_3,24375,1,1,1,0,0,0 // ????? ???? ?? ???
+IG_Bs_Sha_M_S_3,24376,1,1,1,0,0,0 // ????? ??? ?? ???
+IG_Bs_Sha_M_S_3,24377,1,1,1,0,0,0 // ?????? ????? ?? ???
+IG_Bs_Sha_M_S_3,24378,1,1,1,0,0,0 // ??? ?? ?? ???
+IG_Bs_Sha_M_S_3,24379,1,1,1,0,0,0 // ?? ??? ? ?? ???
+IG_Bs_Sha_M_S_3,24166,1,1,1,0,0,0 // ?????? ??? ???
+IG_Bs_Sha_M_S_3,24167,1,1,1,0,0,0 // ?????? ??? ???
+IG_Bs_Sha_M_S_3,24156,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_3,24157,1,1,1,0,0,0 // ????? ?? ???
+IG_Bs_Sha_M_S_3,24158,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_3,24159,1,1,1,0,0,0 // ??? ? ?? ???
+IG_Bs_Sha_M_S_3,24160,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_3,24161,1,1,1,0,0,0 // ??? ?? ?? ???
+IG_Bs_Sha_M_S_3,24162,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_3,24163,1,1,1,0,0,0 // ?????? ?? ???
+IG_Bs_Sha_M_S_3,24164,1,1,1,0,0,0 // ?? ?? ?? ???
+IG_Bs_Sha_M_S_3,24165,1,1,1,0,0,0 // ??? ?? ???
+
+IG_Bs_Sha_M_S_4,24346,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_4,24345,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_4,24347,1,1,1,0,0,0 // ?? ????? ???? ?? ???
+IG_Bs_Sha_M_S_4,24348,1,1,1,0,0,0 // ?? ????? ??? ?? ???
+IG_Bs_Sha_M_S_4,24349,1,1,1,0,0,0 // ?? ?????? ????? ?? ???
+IG_Bs_Sha_M_S_4,24350,1,1,1,0,0,0 // ?? ??? ?? ?? ???
+IG_Bs_Sha_M_S_4,24351,1,1,1,0,0,0 // ?? ?? ??? ? ?? ???
+IG_Bs_Sha_M_S_4,24168,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_4,24169,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_4,24170,1,1,1,0,0,0 // ?? ????? ?? ???
+IG_Bs_Sha_M_S_4,24171,1,1,1,0,0,0 // ?? ????? ?? ???
+IG_Bs_Sha_M_S_4,24172,1,1,1,0,0,0 // ?? ?? ?? ???
+IG_Bs_Sha_M_S_4,24173,1,1,1,0,0,0 // ?? ??? ? ?? ???
+IG_Bs_Sha_M_S_4,24174,1,1,1,0,0,0 // ?? ?? ?? ???
+IG_Bs_Sha_M_S_4,24175,1,1,1,0,0,0 // ?? ??? ?? ?? ???
+IG_Bs_Sha_M_S_4,24176,1,1,1,0,0,0 // ?? ??? ?? ???
+IG_Bs_Sha_M_S_4,24177,1,1,1,0,0,0 // ?? ?????? ?? ???
+IG_Bs_Sha_M_S_4,24178,1,1,1,0,0,0 // ?? ?? ?? ?? ???
+IG_Bs_Sha_M_S_4,24179,1,1,1,0,0,0 // ?? ??? ?? ???
+
+IG_Bs_Sha_M_S_12,24344,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_12,24343,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_12,24232,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_12,24231,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_12,24218,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_12,24217,1,1,1,0,0,0 // ??? ??? ???
+
+IG_Bs_Sha_M_S_14,24245,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_14,24243,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_14,24244,1,1,1,0,0,0 // ??? ?? ???
+
+IG_Bs_Sha_M_S_24,24224,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_24,24225,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_24,24226,1,1,1,0,0,0 // ?? ??? ???
+IG_Bs_Sha_M_S_24,24223,1,1,1,0,0,0 // ??? ?? ?? ???
+IG_Bs_Sha_M_S_24,24228,1,1,1,0,0,0 // ??? ??
+IG_Bs_Sha_M_S_24,24229,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_24,24230,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_24,24227,1,1,1,0,0,0 // ??? ??? ?? ???
+
+IG_Bs_Sha_M_S_25,24151,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_25,24150,1,1,1,0,0,0 // ???? ??? ???
+
+IG_PhysicalMagical_Mix,24395,1,1,1,0,0,0 // ??? ?? ???
+IG_PhysicalMagical_Mix,24393,1,1,1,0,0,0 // ??? ?? ???
+IG_PhysicalMagical_Mix,24394,1,1,1,0,0,0 // ??? ?? ???
+IG_PhysicalMagical_Mix,24398,1,1,1,0,0,0 // ??? ?? ???
+IG_PhysicalMagical_Mix,24396,1,1,1,0,0,0 // ??? ?? ???
+IG_PhysicalMagical_Mix,24397,1,1,1,0,0,0 // ??? ?? ???
+
+IG_Silver_Statue,28942,900,1,1,0,0,0 // ???? ??? ??
+IG_Silver_Statue,28945,99,1,1,0,0,0 // ??? ??? ??
+IG_Silver_Statue,28946,1,1,1,0,0,0 // ??? ??? ??
 
 IG_Stability_Shadow_Box,24352,1,1,1,0,0,0 // S_Plasterer's_Armor_II
 IG_Stability_Shadow_Box,24353,1,1,1,0,0,0 // S_Insomniac_Shoes_II
@@ -4929,17 +5620,17 @@ IG_Stability_Shadow_Box,24357,1,1,1,0,0,0 // S_Vitality_Earring_II
 IG_Stability_Shadow_Box,24358,1,1,1,0,0,0 // S_Neutral_Weapon_II
 IG_Stability_Shadow_Box,24359,1,1,1,0,0,0 // S_Uncursed_Pendant_II
 
-IG_Race_Shadow_Box,24341,1,1,1,0,0,0 // 올 레이스 슈즈 쉐도우
-IG_Race_Shadow_Box,24342,1,1,1,0,0,0 // 올 레이스 쉴드 쉐도우
+IG_Race_Shadow_Box,24341,1,1,1,0,0,0 // ? ??? ?? ???
+IG_Race_Shadow_Box,24342,1,1,1,0,0,0 // ? ??? ?? ???
 
-IG_Bearers_S_Conversion_Box,24337,1,1,1,0,0,0 // 베어러즈 아머 쉐도우 II
-IG_Bearers_S_Conversion_Box,24338,1,1,1,0,0,0 // 베어러즈 슈즈 쉐도우 II
+IG_Bearers_S_Conversion_Box,24337,1,1,1,0,0,0 // ???? ?? ??? II
+IG_Bearers_S_Conversion_Box,24338,1,1,1,0,0,0 // ???? ?? ??? II
 
-IG_Gemstone_S_Conversion_Box,24335,1,1,1,0,0,0 // 젬스톤 웨폰 쉐도우 II
-IG_Gemstone_S_Conversion_Box,24336,1,1,1,0,0,0 // 젬스톤 쉴드 쉐도우 II
+IG_Gemstone_S_Conversion_Box,24335,1,1,1,0,0,0 // ??? ?? ??? II
+IG_Gemstone_S_Conversion_Box,24336,1,1,1,0,0,0 // ??? ?? ??? II
 
-IG_Status_S_Conversion_Box,24339,1,1,1,0,0,0 // 올마이티 이어링 쉐도우
-IG_Status_S_Conversion_Box,24340,1,1,1,0,0,0 // 올마이티 펜던트 쉐도우
+IG_Status_S_Conversion_Box,24339,1,1,1,0,0,0 // ???? ??? ???
+IG_Status_S_Conversion_Box,24340,1,1,1,0,0,0 // ???? ??? ???
 
 //! TODO: http://ro.gnjoy.com/news/probability/View.asp?seq=3954787
 IG_Shadow_Exchange_Box,24018,1,1,1,0,0,0
@@ -5384,41 +6075,41 @@ IG_Shadow_Exchange_Box,24474,1,1,1,0,0,0
 IG_Shadow_Exchange_Box,24475,1,1,1,0,0,0
 
 //!TODO http://ro.gnjoy.com/news/probability/View.asp?&seq=3954790
-IG_Costume_Enchant_Stone_Box,22826,1,1,1,0,0,0 // 의상 인챈트 스톤 상자4
-IG_Costume_Enchant_Stone_Box,22868,1,1,1,0,0,0 // 의상 인챈트 스톤 상자5
-IG_Costume_Enchant_Stone_Box,22905,1,1,1,0,0,0 // 의상 인챈트 스톤 상자6
-IG_Costume_Enchant_Stone_Box,22953,1,1,1,0,0,0 // 의상 인챈트 스톤 상자7
-IG_Costume_Enchant_Stone_Box,23001,1,1,1,0,0,0 // 의상 인챈트 스톤 상자8
-IG_Costume_Enchant_Stone_Box,23058,1,1,1,0,0,0 // 의상 인챈트 스톤 상자9
-IG_Costume_Enchant_Stone_Box,23086,1,1,1,0,0,0 // 의상 인챈트 스톤 상자10
-IG_Costume_Enchant_Stone_Box,23174,1,1,1,0,0,0 // 의상 인챈트 스톤 상자11
-IG_Costume_Enchant_Stone_Box,23299,1,1,1,0,0,0 // 의상 인챈트 스톤 상자12
-IG_Costume_Enchant_Stone_Box,23524,1,1,1,0,0,0 // 의상 인챈트 스톤 상자13
-IG_Costume_Enchant_Stone_Box,23629,1,1,1,0,0,0 // 의상 인챈트 스톤 상자14
-IG_Costume_Enchant_Stone_Box,23682,1,1,1,0,0,0 // 의상 인챈트 스톤 상자15
-IG_Costume_Enchant_Stone_Box,23770,1,1,1,0,0,0 // 의상 인챈트 스톤 상자16
-IG_Costume_Enchant_Stone_Box,9510,1,1,1,0,0,0 // 의상 인챈트 스톤 상자17
-//IG_Costume_Enchant_Stone_Box,100019,1,1,1,0,0,0 // 의상 인챈트 스톤 상자18
-//IG_Costume_Enchant_Stone_Box,100052,1,1,1,0,0,0 // 의상 인챈트 스톤 상자19
+IG_Costume_Enchant_Stone_Box,22826,1,1,1,0,0,0 // ?? ??? ?? ??4
+IG_Costume_Enchant_Stone_Box,22868,1,1,1,0,0,0 // ?? ??? ?? ??5
+IG_Costume_Enchant_Stone_Box,22905,1,1,1,0,0,0 // ?? ??? ?? ??6
+IG_Costume_Enchant_Stone_Box,22953,1,1,1,0,0,0 // ?? ??? ?? ??7
+IG_Costume_Enchant_Stone_Box,23001,1,1,1,0,0,0 // ?? ??? ?? ??8
+IG_Costume_Enchant_Stone_Box,23058,1,1,1,0,0,0 // ?? ??? ?? ??9
+IG_Costume_Enchant_Stone_Box,23086,1,1,1,0,0,0 // ?? ??? ?? ??10
+IG_Costume_Enchant_Stone_Box,23174,1,1,1,0,0,0 // ?? ??? ?? ??11
+IG_Costume_Enchant_Stone_Box,23299,1,1,1,0,0,0 // ?? ??? ?? ??12
+IG_Costume_Enchant_Stone_Box,23524,1,1,1,0,0,0 // ?? ??? ?? ??13
+IG_Costume_Enchant_Stone_Box,23629,1,1,1,0,0,0 // ?? ??? ?? ??14
+IG_Costume_Enchant_Stone_Box,23682,1,1,1,0,0,0 // ?? ??? ?? ??15
+IG_Costume_Enchant_Stone_Box,23770,1,1,1,0,0,0 // ?? ??? ?? ??16
+IG_Costume_Enchant_Stone_Box,9510,1,1,1,0,0,0 // ?? ??? ?? ??17
+//IG_Costume_Enchant_Stone_Box,100019,1,1,1,0,0,0 // ?? ??? ?? ??18
+//IG_Costume_Enchant_Stone_Box,100052,1,1,1,0,0,0 // ?? ??? ?? ??19
 
-IG_Piercing_Shadow_Box,24434,1,1,1,0,0,0 // 액서큐서너 홀리워터 웨폰 쉐도우
-IG_Piercing_Shadow_Box,24437,1,1,1,0,0,0 // 바이브레이션 드래곤킬러 웨폰 쉐도우
-IG_Piercing_Shadow_Box,24436,1,1,1,0,0,0 // 시저스 헌팅 웨폰 쉐도우
-IG_Piercing_Shadow_Box,24435,1,1,1,0,0,0 // 피싱 인섹트 웨폰 쉐도우
-IG_Piercing_Shadow_Box,24438,1,1,1,0,0,0 // 엑소시스트 커럽트 웨폰 쉐도우
+IG_Piercing_Shadow_Box,24434,1,1,1,0,0,0 // ????? ???? ?? ???
+IG_Piercing_Shadow_Box,24437,1,1,1,0,0,0 // ?????? ????? ?? ???
+IG_Piercing_Shadow_Box,24436,1,1,1,0,0,0 // ??? ?? ?? ???
+IG_Piercing_Shadow_Box,24435,1,1,1,0,0,0 // ?? ??? ?? ???
+IG_Piercing_Shadow_Box,24438,1,1,1,0,0,0 // ????? ??? ?? ???
 
-IG_EnchantStone_Recipe_4m,23524,1,1,1,0,0,0 // 의상 인챈트 스톤 상자13
-IG_EnchantStone_Recipe_4m,23629,1,1,1,0,0,0 // 의상 인챈트 스톤 상자14
-IG_EnchantStone_Recipe_4m,23682,1,1,1,0,0,0 // 의상 인챈트 스톤 상자15
-IG_EnchantStone_Recipe_4m,23770,1,1,1,0,0,0 // 의상 인챈트 스톤 상자16
-IG_EnchantStone_Recipe_4m,9510,1,1,1,0,0,0 // 의상 인챈트 스톤 상자17
-//IG_EnchantStone_Recipe_4m,100019,1,1,1,0,0,0 // 의상 인챈트 스톤 상자18
-//IG_EnchantStone_Recipe_4m,100052,1,1,1,0,0,0 // 의상 인챈트 스톤 상자19
+IG_EnchantStone_Recipe_4m,23524,1,1,1,0,0,0 // ?? ??? ?? ??13
+IG_EnchantStone_Recipe_4m,23629,1,1,1,0,0,0 // ?? ??? ?? ??14
+IG_EnchantStone_Recipe_4m,23682,1,1,1,0,0,0 // ?? ??? ?? ??15
+IG_EnchantStone_Recipe_4m,23770,1,1,1,0,0,0 // ?? ??? ?? ??16
+IG_EnchantStone_Recipe_4m,9510,1,1,1,0,0,0 // ?? ??? ?? ??17
+//IG_EnchantStone_Recipe_4m,100019,1,1,1,0,0,0 // ?? ??? ?? ??18
+//IG_EnchantStone_Recipe_4m,100052,1,1,1,0,0,0 // ?? ??? ?? ??19
 
-IG_EnchantStone_Recipe_9m,23524,1,1,1,0,0,0 // 의상 인챈트 스톤 상자13
-IG_EnchantStone_Recipe_9m,23629,1,1,1,0,0,0 // 의상 인챈트 스톤 상자14
-IG_EnchantStone_Recipe_9m,23682,1,1,1,0,0,0 // 의상 인챈트 스톤 상자15
-IG_EnchantStone_Recipe_9m,23770,1,1,1,0,0,0 // 의상 인챈트 스톤 상자16
+IG_EnchantStone_Recipe_9m,23524,1,1,1,0,0,0 // ?? ??? ?? ??13
+IG_EnchantStone_Recipe_9m,23629,1,1,1,0,0,0 // ?? ??? ?? ??14
+IG_EnchantStone_Recipe_9m,23682,1,1,1,0,0,0 // ?? ??? ?? ??15
+IG_EnchantStone_Recipe_9m,23770,1,1,1,0,0,0 // ?? ??? ?? ??16
 
 // http://ro.gnjoy.com/news/probability/View.asp?seq=3955672
 IG_Class_Shadow_Pendant,24250,1,1,1,0,0,0
@@ -5737,576 +6428,11 @@ IG_Costume_Exchange_Box,31614,1,1,1,0,0,0
 
 // TODO: IG_Collectibles_Exchange_Box
 
-IG_Costume_Enchant_Stone_Box6,6963,83,1,1  // HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box6,6964,83,1,1  // SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box6,6908,165,1,1 // ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box6,6943,248,1,1 // 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6944,248,1,1 // 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6642,248,1,1 // 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6643,248,1,1 // 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6636,331,1,1 // 힘의스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6637,331,1,1 // 지능스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6638,331,1,1 // 민첩스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6639,331,1,1 // 재주스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6640,331,1,1 // 건강스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6641,331,1,1 // 운의스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6945,331,1,1 // 힘의스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6946,331,1,1 // 지능스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6947,331,1,1 // 민첩스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6948,331,1,1 // 재주스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6949,331,1,1 // 건강스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6950,331,1,1 // 운의스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6743,331,1,1 // HP스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6744,331,1,1 // SP스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6951,331,1,1 // HP스톤(하단)
-IG_Costume_Enchant_Stone_Box6,6790,413,1,1 // 대형스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6791,413,1,1 // 중형스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6792,413,1,1 // 소형스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6740,413,1,1 // 회복스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6741,413,1,1 // 회복스킬스톤(상단)
-IG_Costume_Enchant_Stone_Box6,6742,413,1,1 // 회복스톤(중단)
-IG_Costume_Enchant_Stone_Box6,6745,413,1,1 // 회복스톤(하단)
-IG_Costume_Enchant_Stone_Box6,6644,413,1,1 // 명중스톤(하단)
-IG_Costume_Enchant_Stone_Box6,6645,413,1,1 // 회피스톤(하단)
+IG_PERFECTSIZE_MIX,24425,1 // ??? ??? ?? ???
+IG_PERFECTSIZE_MIX,24426,1 // ??? ??? ?? ???
 
-IG_Costume_Enchant_Stone_Box7,6963,169,1,1  // HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box7,6964,85,1,1   // SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box7,6999,169,1,1  // HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box7,25000,169,1,1 // SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box7,6943,254,1,1  // 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box7,6642,254,1,1  // 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25016,254,1,1 // 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box7,6944,254,1,1  // 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box7,6643,254,1,1  // 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25017,254,1,1 // 마공스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25012,339,1,1 // STR변환스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25003,339,1,1 // STR변환스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25013,339,1,1 // INT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25005,339,1,1 // INT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25010,339,1,1 // DEX변환스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25007,339,1,1 // DEX변환스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25008,339,1,1 // VIT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25006,339,1,1 // VIT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25009,339,1,1 // AGI변환스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25004,339,1,1 // AGI변환스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25011,339,1,1 // LUK변환스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25002,339,1,1 // LUK변환스톤(중단)
-IG_Costume_Enchant_Stone_Box7,6743,424,1,1  // HP스톤(중단)
-IG_Costume_Enchant_Stone_Box7,6744,424,1,1  // SP스톤(중단)
-IG_Costume_Enchant_Stone_Box7,6951,424,1,1  // HP스톤(하단)
-IG_Costume_Enchant_Stone_Box7,6740,424,1,1  // 회복스톤(상단)
-IG_Costume_Enchant_Stone_Box7,6741,424,1,1  // 회복스킬스톤(상단)
-IG_Costume_Enchant_Stone_Box7,6745,424,1,1  // 회복스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25001,424,1,1 // 방어스톤(중단)
-IG_Costume_Enchant_Stone_Box7,25014,424,1,1 // 마방스톤(하단)
-IG_Costume_Enchant_Stone_Box7,25015,424,1,1 // 경험치 스톤(하단)
-
-IG_Costume_Enchant_Stone_Box8,25067,37,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box8,6964,74,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box8,25000,74,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box8,25072,149,1,1	// 기리에스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25068,149,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box8,25062,149,1,1	// 탐욕스톤(하단)
-IG_Costume_Enchant_Stone_Box8,6963,149,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box8,6999,149,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box8,6943,223,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box8,6642,223,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25016,223,1,1	// 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box8,6944,223,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box8,6643,223,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25017,223,1,1	// 마공스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25069,223,1,1	// 리로드스톤(상단)
-IG_Costume_Enchant_Stone_Box8,25070,223,1,1	// 리로드스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25071,223,1,1	// 리로드스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25060,223,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25061,223,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25058,223,1,1	// 트윙클_이펙트(상단)
-IG_Costume_Enchant_Stone_Box8,25059,223,1,1	// 고스트_이펙트(중단)
-IG_Costume_Enchant_Stone_Box8,25012,297,1,1	// STR변환스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25003,297,1,1	// STR변환스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25013,297,1,1	// INT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25005,297,1,1	// INT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25010,297,1,1	// DEX변환스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25007,297,1,1	// DEX변환스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25008,297,1,1	// VIT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25006,297,1,1	// VIT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25009,297,1,1	// AGI변환스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25004,297,1,1	// AGI변환스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25011,297,1,1	// LUK변환스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25002,297,1,1	// LUK변환스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25063,372,1,1	// 체력스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25064,372,1,1	// 마력스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25065,372,1,1	// 해독스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25066,372,1,1	// 리커버리스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25001,372,1,1	// 방어스톤(중단)
-IG_Costume_Enchant_Stone_Box8,25014,372,1,1	// 마방스톤(하단)
-IG_Costume_Enchant_Stone_Box8,25015,372,1,1	// 경험치 스톤(하단)
-
-IG_Costume_Enchant_Stone_Box9,6964,73,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box9,25000,73,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box9,25072,147,1,1	// 기리에스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25068,147,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box9,25062,147,1,1	// 탐욕스톤(하단)
-IG_Costume_Enchant_Stone_Box9,6963,147,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box9,6999,147,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box9,25138,147,1,1	// 쉬링크 이펙트(중단)
-IG_Costume_Enchant_Stone_Box9,6943,221,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box9,6642,221,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25016,221,1,1	// 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box9,6944,221,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box9,6643,221,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25017,221,1,1	// 마공스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25069,221,1,1	// 리로드스톤(상단)
-IG_Costume_Enchant_Stone_Box9,25070,221,1,1	// 리로드스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25071,221,1,1	// 리로드스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25060,221,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25061,221,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25136,221,1,1	// 일렉트릭 이펙트(중단)
-IG_Costume_Enchant_Stone_Box9,25137,221,1,1	// 그린 플로어 이펙트(하단)
-IG_Costume_Enchant_Stone_Box9,25012,295,1,1	// STR변환스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25003,295,1,1	// STR변환스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25013,295,1,1	// INT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25005,295,1,1	// INT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25010,295,1,1	// DEX변환스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25007,295,1,1	// DEX변환스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25008,295,1,1	// VIT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25006,295,1,1	// VIT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25009,295,1,1	// AGI변환스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25004,295,1,1	// AGI변환스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25011,295,1,1	// LUK변환스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25002,295,1,1	// LUK변환스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25063,370,1,1	// 체력스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25064,370,1,1	// 마력스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25139,370,1,1	// 아이템감정스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25141,370,1,1	// 경험치스톤(중단)
-IG_Costume_Enchant_Stone_Box9,25015,370,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25014,346,1,1	// 마방스톤(하단)
-IG_Costume_Enchant_Stone_Box9,25141,346,1,1	// 경험치 스톤(하단)
-
-IG_Costume_Enchant_Stone_Box10,6964,75,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box10,25000,75,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box10,25072,150,1,1	// 기리에스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25068,150,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box10,25062,150,1,1	// 탐욕스톤(하단)
-IG_Costume_Enchant_Stone_Box10,6999,150,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box10,25177,150,1,1	// 쉐도우 이펙트(중단)
-IG_Costume_Enchant_Stone_Box10,25170,150,1,1	// 마이너캐스팅스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box10,25175,150,1,1	// 렉스에테르나스톤 (중단)
-IG_Costume_Enchant_Stone_Box10,6943,225,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box10,6642,225,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25016,225,1,1	// 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box10,6944,225,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box10,6643,225,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25017,225,1,1	// 마공스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25060,225,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25061,225,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25178,225,1,1	// 핑크글로우 이펙트(중단)
-IG_Costume_Enchant_Stone_Box10,29160,225,1,1	// 블루오오라 이펙트(중단)
-IG_Costume_Enchant_Stone_Box10,25172,225,1,1	// 변동캐스팅스톤 (상단)
-IG_Costume_Enchant_Stone_Box10,25173,225,1,1	// 변동캐스팅스톤 (중단)
-IG_Costume_Enchant_Stone_Box10,25174,225,1,1	// 변동캐스팅스톤 (하단)
-IG_Costume_Enchant_Stone_Box10,25012,301,1,1	// STR변환스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25003,301,1,1	// STR변환스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25013,301,1,1	// INT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25005,301,1,1	// INT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25010,301,1,1	// DEX변환스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25007,301,1,1	// DEX변환스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25008,301,1,1	// VIT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25006,301,1,1	// VIT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25009,301,1,1	// AGI변환스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25004,301,1,1	// AGI변환스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25011,301,1,1	// LUK변환스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25002,300,1,1	// LUK변환스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25063,376,1,1	// 체력스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25064,376,1,1	// 마력스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25171,376,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box10,25141,376,1,1	// 경험치스톤(중단)
-IG_Costume_Enchant_Stone_Box10,25015,376,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box10,25015,358,1,1	// 경험치 스톤(하단)
-
-IG_Costume_Enchant_Stone_Box11,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box11,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box11,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box11,6963,160,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box11,6999,160,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box11,25068,160,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box11,6908,160,1,1	// ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box11,25170,160,1,1	// 마이너캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box11,25224,160,1,1	// 화이트바디이펙트(중단)
-IG_Costume_Enchant_Stone_Box11,6943,240,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box11,6642,240,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25016,240,1,1	// 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box11,6944,240,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box11,6643,240,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25017,240,1,1	// 마공스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25060,240,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25061,240,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25225,240,1,1	// 진홍의파동이펙트(중단)
-IG_Costume_Enchant_Stone_Box11,25226,240,1,1	// 워터필드이펙트(하단)
-IG_Costume_Enchant_Stone_Box11,25227,240,1,1	// 힐스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25228,240,1,1	// 텔레포트스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25229,240,1,1	// 스틸스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25012,320,1,1	// STR변환스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25003,320,1,1	// STR변환스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25013,320,1,1	// INT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25005,320,1,1	// INT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25010,320,1,1	// DEX변환스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25007,320,1,1	// DEX변환스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25008,320,1,1	// VIT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25006,320,1,1	// VIT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25009,320,1,1	// AGI변환스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25004,320,1,1	// AGI변환스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25011,320,1,1	// LUK변환스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25002,320,1,1	// LUK변환스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25063,380,1,1	// 체력스톤2(하단)
-IG_Costume_Enchant_Stone_Box11,25064,380,1,1	// 마력스톤2(하단)
-IG_Costume_Enchant_Stone_Box11,25141,380,1,1	// 경험치스톤(중단)
-IG_Costume_Enchant_Stone_Box11,25015,380,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box11,25171,380,1,1	// 경험치스톤(상단)
-
-IG_Costume_Enchant_Stone_Box12,25302,20,1,1	// 더블어택스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,25303,20,1,1	// 크리티컬스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box12,25306,80,1,1	// 변동캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,25205,80,1,1	// 쉬링크이펙트(하단)
-IG_Costume_Enchant_Stone_Box12,6963,160,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,6999,160,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box12,25068,160,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box12,6908,160,1,1	// ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,25170,160,1,1	// 마이너캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box12,6943,240,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box12,6642,240,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25016,240,1,1	// 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box12,6944,240,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box12,6643,240,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25017,240,1,1	// 마공스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25061,240,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25141,240,1,1	// 경험치스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25015,240,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25171,240,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box12,25174,240,1,1	// 변동캐스팅스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25173,240,1,1	// 변동캐스팅스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25172,240,1,1	// 변동캐스팅스톤(상단)
-IG_Costume_Enchant_Stone_Box12,25012,380,1,1	// STR변환스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25003,380,1,1	// STR변환스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25013,380,1,1	// INT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25005,380,1,1	// INT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25010,380,1,1	// DEX변환스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25007,380,1,1	// DEX변환스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25008,380,1,1	// VIT변환스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25006,380,1,1	// VIT변환스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25009,380,1,1	// AGI변환스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25004,380,1,1	// AGI변환스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25011,380,1,1	// LUK변환스톤(하단)
-IG_Costume_Enchant_Stone_Box12,25002,380,1,1	// LUK변환스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25060,380,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box12,25304,380,1,1	// 크리티컬스톤(상단)
-IG_Costume_Enchant_Stone_Box12,25305,380,1,1	// 크리티컬스톤(하단)
-
-IG_Costume_Enchant_Stone_Box13,25302,20,1,1	// 더블어택스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,25303,20,1,1	// 크리티컬스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25306,80,1,1	// 변동캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,25205,80,1,1	// 쉬링크이펙트(하단)
-IG_Costume_Enchant_Stone_Box13,6963,160,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,6999,160,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25068,160,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box13,6908,160,1,1	// ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,25170,160,1,1	// 마이너캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,29426,160,1,1	// 수라스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,29431,160,1,1	// 레인저스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,29435,160,1,1	// 소서러스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box13,25061,240,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25171,240,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25141,240,1,1	// 경험치스톤(중단
-IG_Costume_Enchant_Stone_Box13,25015,240,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box13,25172,240,1,1	// 변동캐스팅스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25173,240,1,1	// 변동캐스팅스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25174,240,1,1	// 변동캐스팅스톤(하단)
-IG_Costume_Enchant_Stone_Box13,6943,370,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box13,6642,370,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25016,370,1,1	// 공격스톤(하단
-IG_Costume_Enchant_Stone_Box13,6944,370,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box13,6643,370,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25017,370,1,1	// 마공스톤(하단
-IG_Costume_Enchant_Stone_Box13,25409,370,1,1	// 챔피언스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25410,370,1,1	// 챔피언스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25411,370,1,1	// 챔피언스톤(하단)
-IG_Costume_Enchant_Stone_Box13,25413,370,1,1	// 스나이퍼스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25414,370,1,1	// 스나이퍼스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25415,370,1,1	// 스나이퍼스톤(하단)
-IG_Costume_Enchant_Stone_Box13,25417,370,1,1	// 프로페서스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25418,370,1,1	// 프로페서스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25419,370,1,1	// 프로페서스톤(하단)
-IG_Costume_Enchant_Stone_Box13,25304,370,1,1	// 크리티컬스톤(상단)
-IG_Costume_Enchant_Stone_Box13,25060,370,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box13,25305,370,1,1	// 크리티컬스톤(하단)
-
-IG_Costume_Enchant_Stone_Box14,25302,20,1,1	// 더블어택스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,25303,20,1,1	// 크리티컬스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box14,25306,80,1,1	// 변동캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,25205,80,1,1	// 쉬링크이펙트(하단)
-IG_Costume_Enchant_Stone_Box14,6963,160,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,6999,160,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box14,25068,160,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box14,6908,160,1,1	// ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,25170,160,1,1	// 마이너캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,29463,160,1,1	// 룬나이트스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,29467,160,1,1	// 제네릭스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,29471,160,1,1	// 워록스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box14,25061,240,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box14,25171,240,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box14,25141,240,1,1	// 경험치스톤(중단
-IG_Costume_Enchant_Stone_Box14,25015,240,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box14,25172,240,1,1	// 변동캐스팅스톤(상단)
-IG_Costume_Enchant_Stone_Box14,25173,240,1,1	// 변동캐스팅스톤(중단)
-IG_Costume_Enchant_Stone_Box14,25174,240,1,1	// 변동캐스팅스톤(하단)
-IG_Costume_Enchant_Stone_Box14,6943,370,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box14,6642,370,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box14,25016,370,1,1	// 공격스톤(하단
-IG_Costume_Enchant_Stone_Box14,6944,370,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box14,6643,370,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box14,25017,370,1,1	// 마공스톤(하단
-IG_Costume_Enchant_Stone_Box14,25445,370,1,1	// 로드나이트스톤(상단)
-IG_Costume_Enchant_Stone_Box14,25446,370,1,1	// 로드나이트스톤(중단)
-IG_Costume_Enchant_Stone_Box14,25447,370,1,1	// 로드나이트스톤(하단)
-IG_Costume_Enchant_Stone_Box14,29464,370,1,1	// 크리에이터스톤(상단)
-IG_Costume_Enchant_Stone_Box14,29465,370,1,1	// 크리에이터스톤(중단)
-IG_Costume_Enchant_Stone_Box14,29466,370,1,1	// 크리에이터스톤(하단)
-IG_Costume_Enchant_Stone_Box14,25453,370,1,1	// 워록스톤(상단)
-IG_Costume_Enchant_Stone_Box14,25454,370,1,1	// 워록스톤(중단)
-IG_Costume_Enchant_Stone_Box14,25455,370,1,1	// 워록스톤(하단)
-IG_Costume_Enchant_Stone_Box14,25304,370,1,1	// 크리티컬스톤(상단)
-IG_Costume_Enchant_Stone_Box14,25060,370,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box14,25305,370,1,1	// 크리티컬스톤(하단)
-
-IG_Costume_Enchant_Stone_Box15,25302,20,1,1	// 더블어택스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,25303,20,1,1	// 크리티컬스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25306,80,1,1	// 변동캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,25205,80,1,1	// 쉬링크이펙트(하단)
-IG_Costume_Enchant_Stone_Box15,6963,160,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,6999,160,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25068,160,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box15,6908,160,1,1	// ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,25170,160,1,1	// 마이너캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,29480,160,1,1	// 쉐도우체이서스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,29484,160,1,1	// 미케닉스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,29488,160,1,1	// 원더민스스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box15,25061,240,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25171,240,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25141,240,1,1	// 경험치스톤(중단
-IG_Costume_Enchant_Stone_Box15,25015,240,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box15,25172,240,1,1	// 변동캐스팅스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25173,240,1,1	// 변동캐스팅스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25174,240,1,1	// 변동캐스팅스톤(하단)
-IG_Costume_Enchant_Stone_Box15,6943,370,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box15,6642,370,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25016,370,1,1	// 공격스톤(하단
-IG_Costume_Enchant_Stone_Box15,6944,370,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box15,6643,370,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25017,370,1,1	// 마공스톤(하단
-IG_Costume_Enchant_Stone_Box15,25490,370,1,1	// 스토커스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25491,370,1,1	// 스토커스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25492,370,1,1	// 스토커스톤(하단)
-IG_Costume_Enchant_Stone_Box15,25494,370,1,1	// 화이트스미스스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25495,370,1,1	// 화이트스미스스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25496,370,1,1	// 화이트스미스스톤(하단)
-IG_Costume_Enchant_Stone_Box15,25498,370,1,1	// 크라운집시스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25499,370,1,1	// 크라운집시스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25500,370,1,1	// 크라운집시스톤(하단)
-IG_Costume_Enchant_Stone_Box15,25304,370,1,1	// 크리티컬스톤(상단)
-IG_Costume_Enchant_Stone_Box15,25060,370,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box15,25305,370,1,1	// 크리티컬스톤(하단)
-
-IG_Costume_Enchant_Stone_Box16,25302,20,1,1	// 더블어택스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,25303,20,1,1	// 크리티컬스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25306,80,1,1	// 변동캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,25205,80,1,1	// 쉬링크이펙트(하단)
-IG_Costume_Enchant_Stone_Box16,6963,160,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,6999,160,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25068,160,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box16,6908,160,1,1	// ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,25170,160,1,1	// 마이너캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,29516,160,1,1	// 아크비숍스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,29520,160,1,1	// 로얄가드스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,29524,160,1,1	// 길로틴크로스스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box16,25061,240,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25171,240,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25141,240,1,1	// 경험치스톤(중단
-IG_Costume_Enchant_Stone_Box16,25015,240,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box16,25172,240,1,1	// 변동캐스팅스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25173,240,1,1	// 변동캐스팅스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25174,240,1,1	// 변동캐스팅스톤(하단)
-IG_Costume_Enchant_Stone_Box16,6943,370,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box16,6642,370,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25016,370,1,1	// 공격스톤(하단
-IG_Costume_Enchant_Stone_Box16,6944,370,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box16,6643,370,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25017,370,1,1	// 마공스톤(하단
-IG_Costume_Enchant_Stone_Box16,25706,370,1,1	// 하이프리스트스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25707,370,1,1	// 하이프리스트스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25708,370,1,1	// 하이프리스트스톤(하단)
-IG_Costume_Enchant_Stone_Box16,25710,370,1,1	// 팔라딘스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25711,370,1,1	// 팔라딘스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25712,370,1,1	// 팔라딘스톤(하단)
-IG_Costume_Enchant_Stone_Box16,25714,370,1,1	// 어쌔신크로스스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25715,370,1,1	// 어쌔신크로스스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25716,370,1,1	// 어쌔신크로스스톤(하단)
-IG_Costume_Enchant_Stone_Box16,25304,370,1,1	// 크리티컬스톤(상단)
-IG_Costume_Enchant_Stone_Box16,25060,370,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box16,25305,370,1,1	// 크리티컬스톤(하단)
-
-IG_Costume_Enchant_Stone_Box17,25302,20,1,1    // 더블어택스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,25303,20,1,1    // 크리티컬스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,25306,20,1,1    // 캐스팅스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,6964,80,1,1     // SP흡수스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,25000,80,1,1    // SP흡수스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,25306,80,1,1    // 변동캐스팅스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,25205,80,1,1    // 쉬링크이펙트 (하단)
-IG_Costume_Enchant_Stone_Box17,6963,160,1,1    // HP흡수스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,6999,160,1,1    // HP흡수스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,25068,160,1,1   // ASPD스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,6908,160,1,1    // ASPD스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,25170,160,1,1   // 마이너캐스팅스톤 (걸칠것)
-IG_Costume_Enchant_Stone_Box17,29427,160,1,1   // 수라스톤II (걸칠것)
-IG_Costume_Enchant_Stone_Box17,29614,160,1,1   // 소서러스톤II (걸칠것)
-IG_Costume_Enchant_Stone_Box17,29618,160,1,1   // 쉐도우체이서스톤II (걸칠것)
-IG_Costume_Enchant_Stone_Box17,25061,240,1,1   // 레인지스톤 (중단)
-IG_Costume_Enchant_Stone_Box17,25171,240,1,1   // 경험치스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,25141,240,1,1   // 경험치스톤 (중단
-IG_Costume_Enchant_Stone_Box17,25015,240,1,1   // 경험치스톤 (하단)
-IG_Costume_Enchant_Stone_Box17,25172,240,1,1   // 변동캐스팅스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,25173,240,1,1   // 변동캐스팅스톤 (중단)
-IG_Costume_Enchant_Stone_Box17,25174,240,1,1   // 변동캐스팅스톤 (하단)
-IG_Costume_Enchant_Stone_Box17,6943,370,1,1    // 공격스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,6642,370,1,1    // 공격스톤 (중단)
-IG_Costume_Enchant_Stone_Box17,25016,370,1,1   // 공격스톤 (하단
-IG_Costume_Enchant_Stone_Box17,6944,370,1,1    // 마공스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,6643,370,1,1    // 마공스톤 (중단)
-IG_Costume_Enchant_Stone_Box17,25017,370,1,1   // 마공스톤 (하단
-IG_Costume_Enchant_Stone_Box17,25800,370,1,1   // 수라스톤II (상단)
-IG_Costume_Enchant_Stone_Box17,25798,370,1,1   // 수라스톤II (중단)
-IG_Costume_Enchant_Stone_Box17,25799,370,1,1   // 수라스톤II (하단)
-IG_Costume_Enchant_Stone_Box17,25804,370,1,1   // 소서러스톤II (상단)
-IG_Costume_Enchant_Stone_Box17,25802,370,1,1   // 소서러스톤II (중단)
-IG_Costume_Enchant_Stone_Box17,25803,370,1,1   // 소서러스톤II (하단)
-IG_Costume_Enchant_Stone_Box17,25808,370,1,1   // 쉐도우체이서스톤II (상단)
-IG_Costume_Enchant_Stone_Box17,25806,370,1,1   // 쉐도우체이서스톤II (중단)
-IG_Costume_Enchant_Stone_Box17,25807,370,1,1   // 쉐도우체이서스톤II (하단)
-IG_Costume_Enchant_Stone_Box17,25304,370,1,1   // 크리티컬스톤 (상단)
-IG_Costume_Enchant_Stone_Box17,25305,370,1,1   // 크리티컬스톤 (중단)
-IG_Costume_Enchant_Stone_Box17,25060,370,1,1   // 크리티컬스톤 (하단)
-
-IG_Costume_Enchant_Stone_Box18,25302,20,1,1	// 더블어택스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,25303,20,1,1	// 크리티컬스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box18,25306,80,1,1	// 변동캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,25205,80,1,1	// 쉬링크이펙트(하단)
-IG_Costume_Enchant_Stone_Box18,25226,170,1,1	// 워터필드이펙트(하단)
-IG_Costume_Enchant_Stone_Box18,25206,170,1,1	// 일렉트릭이펙트(중단)
-IG_Costume_Enchant_Stone_Box18,29654,160,1,1	// 소울리퍼스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,29658,160,1,1	// 성제스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,29662,160,1,1	// 카게로우스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,29663,160,1,1	// 오보로스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,29667,160,1,1	// 리벨리온스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,29671,160,1,1	// 도람스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box18,25061,200,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box18,25178,200,1,1	// 핑크글로우이펙트(중단)
-IG_Costume_Enchant_Stone_Box18,25176,200,1,1	// 블루오오라이펙트(중단)
-IG_Costume_Enchant_Stone_Box18,25137,200,1,1	// 그린플로어이펙트(하단)
-IG_Costume_Enchant_Stone_Box18,25225,200,1,1	// 진홍의파동이펙트(중단)
-IG_Costume_Enchant_Stone_Box18,25171,200,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box18,25141,200,1,1	// 경험치스톤(중단
-IG_Costume_Enchant_Stone_Box18,25015,200,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box18,25172,200,1,1	// 변동캐스팅스톤(상단)
-IG_Costume_Enchant_Stone_Box18,25173,200,1,1	// 변동캐스팅스톤(중단)
-IG_Costume_Enchant_Stone_Box18,25174,200,1,1	// 변동캐스팅스톤(하단)
-IG_Costume_Enchant_Stone_Box18,25069,200,1,1	// 리로드스톤(상단)
-IG_Costume_Enchant_Stone_Box18,25070,200,1,1	// 리로드스톤(중단)
-IG_Costume_Enchant_Stone_Box18,25071,200,1,1	// 리로드스톤(하단)
-IG_Costume_Enchant_Stone_Box18,29651,260,1,1	// 소울링커스톤(상단)
-IG_Costume_Enchant_Stone_Box18,29652,260,1,1	// 소울링커스톤(중단)
-IG_Costume_Enchant_Stone_Box18,29653,260,1,1	// 소울링커스톤(하단)
-IG_Costume_Enchant_Stone_Box18,29655,260,1,1	// 권성스톤(상단)
-IG_Costume_Enchant_Stone_Box18,29656,260,1,1	// 권성스톤(중단)
-IG_Costume_Enchant_Stone_Box18,29657,260,1,1	// 권성스톤(하단)
-IG_Costume_Enchant_Stone_Box18,29659,260,1,1	// 닌자스톤(상단)
-IG_Costume_Enchant_Stone_Box18,29660,260,1,1	// 닌자스톤(중단)
-IG_Costume_Enchant_Stone_Box18,29661,260,1,1	// 닌자스톤(하단)
-IG_Costume_Enchant_Stone_Box18,29664,260,1,1	// 건슬링거스톤(상단)
-IG_Costume_Enchant_Stone_Box18,29665,260,1,1	// 건슬링거스톤(중단)
-IG_Costume_Enchant_Stone_Box18,29666,260,1,1	// 건슬링거스톤(하단)
-IG_Costume_Enchant_Stone_Box18,29668,260,1,1	// 도람스톤(상단)
-IG_Costume_Enchant_Stone_Box18,29669,260,1,1	// 도람스톤(중단)
-IG_Costume_Enchant_Stone_Box18,29670,260,1,1	// 도람스톤(하단)
-IG_Costume_Enchant_Stone_Box18,6943,270,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box18,6642,270,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box18,25016,270,1,1	// 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box18,6944,270,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box18,6643,270,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box18,25017,270,1,1	// 마공스톤(하단)
-
-IG_Costume_Enchant_Stone_Box19,25302,20,1,1	// 더블어택스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box19,25303,20,1,1	// 크리티컬스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box19,25067,20,1,1	// 캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box19,6964,80,1,1	// SP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box19,25000,80,1,1	// SP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box19,25306,80,1,1	// 변동캐스팅스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box19,25205,80,1,1	// 쉬링크이펙트(하단)
-IG_Costume_Enchant_Stone_Box19,6963,160,1,1	// HP흡수스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box19,6999,160,1,1	// HP흡수스톤(상단)
-IG_Costume_Enchant_Stone_Box19,25068,160,1,1	// ASPD스톤(상단)
-IG_Costume_Enchant_Stone_Box19,6908,160,1,1	// ASPD스톤(걸칠것)
-IG_Costume_Enchant_Stone_Box19,25170,160,1,1	// 마이너캐스팅스톤(걸칠것)
-//IG_Costume_Enchant_Stone_Box19,310003,160,1,1	// 레인저스톤Ⅱ(걸칠것)
-//IG_Costume_Enchant_Stone_Box19,1000011,160,1,1	// 미케닉스톤Ⅱ(걸칠것)
-//IG_Costume_Enchant_Stone_Box19,1000019,160,1,1	// 아크비숍스톤Ⅱ(걸칠것)
-IG_Costume_Enchant_Stone_Box19,25061,240,1,1	// 레인지스톤(중단)
-IG_Costume_Enchant_Stone_Box19,25171,240,1,1	// 경험치스톤(상단)
-IG_Costume_Enchant_Stone_Box19,25141,240,1,1	// 경험치스톤(중단
-IG_Costume_Enchant_Stone_Box19,25015,240,1,1	// 경험치스톤(하단)
-IG_Costume_Enchant_Stone_Box19,25172,240,1,1	// 변동캐스팅스톤(상단)
-IG_Costume_Enchant_Stone_Box19,25173,240,1,1	// 변동캐스팅스톤(중단)
-IG_Costume_Enchant_Stone_Box19,25174,240,1,1	// 변동캐스팅스톤(하단)
-//IG_Costume_Enchant_Stone_Box19,310000,370,1,1	// 스나이퍼스톤Ⅱ(상단)
-//IG_Costume_Enchant_Stone_Box19,310001,370,1,1	// 스나이퍼스톤Ⅱ(중단)
-//IG_Costume_Enchant_Stone_Box19,310002,370,1,1	// 스나이퍼스톤Ⅱ(하단)
-//IG_Costume_Enchant_Stone_Box19,310004,370,1,1	// 화이트스미스스톤Ⅱ(상단)
-//IG_Costume_Enchant_Stone_Box19,310005,370,1,1	// 화이트스미스스톤Ⅱ(중단)
-//IG_Costume_Enchant_Stone_Box19,310006,370,1,1	// 화이트스미스스톤Ⅱ(하단)
-//IG_Costume_Enchant_Stone_Box19,310008,370,1,1	// 하이프리스트스톤Ⅱ(상단)
-//IG_Costume_Enchant_Stone_Box19,310009,370,1,1	// 하이프리스트스톤Ⅱ(중단)
-//IG_Costume_Enchant_Stone_Box19,310010,370,1,1	// 하이프리스트스톤Ⅱ(하단)
-IG_Costume_Enchant_Stone_Box19,6943,370,1,1	// 공격스톤(상단)
-IG_Costume_Enchant_Stone_Box19,6642,370,1,1	// 공격스톤(중단)
-IG_Costume_Enchant_Stone_Box19,25016,370,1,1	// 공격스톤(하단)
-IG_Costume_Enchant_Stone_Box19,6944,370,1,1	// 마공스톤(상단)
-IG_Costume_Enchant_Stone_Box19,6643,370,1,1	// 마공스톤(중단)
-IG_Costume_Enchant_Stone_Box19,25017,370,1,1	// 마공스톤(하단)
-IG_Costume_Enchant_Stone_Box19,25304,370,1,1	// 크리티컬스톤(상단)
-IG_Costume_Enchant_Stone_Box19,25060,370,1,1	// 크리티컬스톤(중단)
-IG_Costume_Enchant_Stone_Box19,25305,370,1,1	// 크리티컬스톤(하단)
-
-IG_PERFECTSIZE_MIX,24425,1 // 퍼펙트 사이즈 웨폰 쉐도우
-IG_PERFECTSIZE_MIX,24426,1 // 퍼펙트 사이즈 아머 쉐도우
-
-IG_MAGICPIERCING_MIX,24427,1 // 매직 엑소시스트 커럽트 웨폰 쉐도우
-IG_MAGICPIERCING_MIX,24428,1 // 매직 바이브레이션 드래곤킬러 웨폰 쉐도우
-IG_MAGICPIERCING_MIX,24429,1 // 매직 시저스 헌팅 웨폰 쉐도우
-IG_MAGICPIERCING_MIX,24430,1 // 매직 피싱 인섹트 웨폰 쉐도우
-IG_MAGICPIERCING_MIX,24431,1 // 매직 액서큐서너 홀리워터 웨폰 쉐도우
+IG_MAGICPIERCING_MIX,24427,1 // ?? ????? ??? ?? ???
+IG_MAGICPIERCING_MIX,24428,1 // ?? ?????? ????? ?? ???
+IG_MAGICPIERCING_MIX,24429,1 // ?? ??? ?? ?? ???
+IG_MAGICPIERCING_MIX,24430,1 // ?? ?? ??? ?? ???
+IG_MAGICPIERCING_MIX,24431,1 // ?? ????? ???? ?? ???

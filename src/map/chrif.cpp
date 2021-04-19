@@ -276,7 +276,7 @@ void chrif_setport(uint16 port) {
 
 // says whether the char-server is connected or not
 int chrif_isconnected(void) {
-	return (char_fd > 0 && session[char_fd] != NULL && chrif_state == 2);
+	return (session_isValid(char_fd) && chrif_state == 2);
 }
 
 /**
