@@ -5367,249 +5367,249 @@ IG_Enchant_Stone_Box21,25304,37	// Critical_Stone_Top
 IG_Enchant_Stone_Box21,25060,37	// Critical_Stone
 IG_Enchant_Stone_Box21,25305,37	// Critical_Stone_Bottom
 
-IG_Bs_Sha_M_S_1,24038,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_1,24044,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_1,24041,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_1,24035,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_1,24036,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_1,24042,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_1,24043,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_1,24037,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_1,24045,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_1,24039,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_1,24034,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_1,24040,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_1,24038,1,1,1,0,0,0 // S_Vital_Shoes
+IG_Bs_Sha_M_S_1,24044,1,1,1,0,0,0 // S_Vital_Shield
+IG_Bs_Sha_M_S_1,24041,1,1,1,0,0,0 // S_Power_Pendant
+IG_Bs_Sha_M_S_1,24035,1,1,1,0,0,0 // S_Power_Earring
+IG_Bs_Sha_M_S_1,24036,1,1,1,0,0,0 // S_Int_Pendant
+IG_Bs_Sha_M_S_1,24042,1,1,1,0,0,0 // S_Int_Earring
+IG_Bs_Sha_M_S_1,24043,1,1,1,0,0,0 // S_Dexterous_Weapon
+IG_Bs_Sha_M_S_1,24037,1,1,1,0,0,0 // S_Dexterous_Armor
+IG_Bs_Sha_M_S_1,24045,1,1,1,0,0,0 // S_Athletic_Shoes
+IG_Bs_Sha_M_S_1,24039,1,1,1,0,0,0 // S_Athletic_Shield
+IG_Bs_Sha_M_S_1,24034,1,1,1,0,0,0 // S_Lucky_Weapon
+IG_Bs_Sha_M_S_1,24040,1,1,1,0,0,0 // S_Lucky_Armor
 
-IG_Bs_Sha_M_S_17,24365,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_17,24364,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_17,24363,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_17,24365,1,1,1,0,0,0 // S_Elegant_Pendent
+IG_Bs_Sha_M_S_17,24364,1,1,1,0,0,0 // S_Elegant_Earring
+IG_Bs_Sha_M_S_17,24363,1,1,1,0,0,0 // S_Elegant_Weapon
 
-IG_Bs_Sha_M_S_18,24362,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_18,24361,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_18,24360,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_18,24362,1,1,1,0,0,0 // S_Tension_Pendent
+IG_Bs_Sha_M_S_18,24361,1,1,1,0,0,0 // S_Tension_Earring
+IG_Bs_Sha_M_S_18,24360,1,1,1,0,0,0 // S_Tension_Weapon
 
-IG_Bs_Sha_M_S_19,24369,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_19,24368,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_19,24369,1,1,1,0,0,0 // S_Restore_Pendant
+IG_Bs_Sha_M_S_19,24368,1,1,1,0,0,0 // S_Restore_Earring
 
-IG_Bs_Sha_M_S_20,24366,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_20,24367,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_20,24033,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_20,24366,1,1,1,0,0,0 // S_Healing_Shield
+IG_Bs_Sha_M_S_20,24367,1,1,1,0,0,0 // S_Healing_Shoes
+IG_Bs_Sha_M_S_20,24033,1,1,1,0,0,0 // S_Healing_Weapon
 
-IG_Bs_Item_M_S_12,20844,1,1,1,0,0,0 // ?? ??? ??(??)
-IG_Bs_Item_M_S_12,20843,1,1,1,0,0,0 // ?? ??? ??(???)
-IG_Bs_Item_M_S_12,20842,1,1,1,0,0,0 // ?? ??? ??(??)
+IG_Bs_Item_M_S_12,20844,1,1,1,0,0,0 // Bag_Of_Antonio_
+IG_Bs_Item_M_S_12,20843,1,1,1,0,0,0 // Bag_Of_Antonio_S
+IG_Bs_Item_M_S_12,20842,1,1,1,0,0,0 // Bag_Of_Antonio_P
 
-IG_Bs_Item_M_S_15,19267,1,1,1,0,0,0 // ???? ??
-IG_Bs_Item_M_S_15,19266,1,1,1,0,0,0 // ???? ???
+IG_Bs_Item_M_S_15,19267,1,1,1,0,0,0 // SurviveOrb_K
+IG_Bs_Item_M_S_15,19266,1,1,1,0,0,0 // Survive_Circlet_
 
-IG_Bs_Sha_M_S_5,24112,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_5,24111,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_5,24113,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_5,24110,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_5,24048,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_5,24109,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_5,24242,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_5,24240,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_5,24241,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_5,24112,1,1,1,0,0,0 // S_Spell_Flow_Armor
+IG_Bs_Sha_M_S_5,24111,1,1,1,0,0,0 // S_Spell_Flow_Shoes
+IG_Bs_Sha_M_S_5,24113,1,1,1,0,0,0 // S_Spell_Flow_Shield
+IG_Bs_Sha_M_S_5,24110,1,1,1,0,0,0 // S_Caster_Weapon
+IG_Bs_Sha_M_S_5,24048,1,1,1,0,0,0 // S_Caster_Pendant
+IG_Bs_Sha_M_S_5,24109,1,1,1,0,0,0 // S_Caster_earring
+IG_Bs_Sha_M_S_5,24242,1,1,1,0,0,0 // S_Caster_Armor
+IG_Bs_Sha_M_S_5,24240,1,1,1,0,0,0 // S_Caster_Shoes
+IG_Bs_Sha_M_S_5,24241,1,1,1,0,0,0 // S_Caster_Shield
 
-IG_Bs_Sha_M_S_6,24072,1,1,1,0,0,0 // ? ?? ???
-IG_Bs_Sha_M_S_6,24073,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_6,24074,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_6,24075,1,1,1,0,0,0 // ? ?? ???
-IG_Bs_Sha_M_S_6,24076,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_6,24077,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_6,24235,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_6,24234,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_6,24237,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_6,24236,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_6,24239,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_6,24238,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_6,24072,1,1,1,0,0,0 // S_Big_Armor
+IG_Bs_Sha_M_S_6,24073,1,1,1,0,0,0 // S_Medium_Armor
+IG_Bs_Sha_M_S_6,24074,1,1,1,0,0,0 // S_Small_Armor
+IG_Bs_Sha_M_S_6,24075,1,1,1,0,0,0 // S_Big_Weapon
+IG_Bs_Sha_M_S_6,24076,1,1,1,0,0,0 // S_Medium_Weapon
+IG_Bs_Sha_M_S_6,24077,1,1,1,0,0,0 // S_Small_Weapon
+IG_Bs_Sha_M_S_6,24235,1,1,1,0,0,0 // S_Titan_Pendant
+IG_Bs_Sha_M_S_6,24234,1,1,1,0,0,0 // S_Titan_Earring
+IG_Bs_Sha_M_S_6,24237,1,1,1,0,0,0 // S_Boned_Pendant
+IG_Bs_Sha_M_S_6,24236,1,1,1,0,0,0 // S_Boned_Earring
+IG_Bs_Sha_M_S_6,24239,1,1,1,0,0,0 // S_Gigantic_Pendant
+IG_Bs_Sha_M_S_6,24238,1,1,1,0,0,0 // S_Gigantic_Earring
 
-IG_Bs_Sha_M_S_7,24056,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24055,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_7,24053,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_7,24054,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24052,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_7,24057,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24058,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24059,1,1,1,0,0,0 // ????? ?????
-IG_Bs_Sha_M_S_7,24060,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24061,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_7,24071,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24064,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24068,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24069,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24070,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24062,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_7,24063,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_7,24065,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_7,24066,1,1,1,0,0,0 // ?????? ?? ???
-IG_Bs_Sha_M_S_7,24067,1,1,1,0,0,0 // ?? ?? ???
+IG_Bs_Sha_M_S_7,24056,1,1,1,0,0,0 // S_Homers_Shield
+IG_Bs_Sha_M_S_7,24055,1,1,1,0,0,0 // S_Gargantua_Shield
+IG_Bs_Sha_M_S_7,24053,1,1,1,0,0,0 // S_Safeguard_Shield
+IG_Bs_Sha_M_S_7,24054,1,1,1,0,0,0 // S_Brutal_Shield
+IG_Bs_Sha_M_S_7,24052,1,1,1,0,0,0 // S_Cranial_Shield
+IG_Bs_Sha_M_S_7,24057,1,1,1,0,0,0 // S_Dragoon_Shield
+IG_Bs_Sha_M_S_7,24058,1,1,1,0,0,0 // S_Satanic_Shield
+IG_Bs_Sha_M_S_7,24059,1,1,1,0,0,0 // S_Flameguard_Shield
+IG_Bs_Sha_M_S_7,24060,1,1,1,0,0,0 // S_Requiem_Shield
+IG_Bs_Sha_M_S_7,24061,1,1,1,0,0,0 // S_Cadi_Shield
+IG_Bs_Sha_M_S_7,24071,1,1,1,0,0,0 // S_Dragoon_Shoes
+IG_Bs_Sha_M_S_7,24064,1,1,1,0,0,0 // S_Chemical_Shoes
+IG_Bs_Sha_M_S_7,24068,1,1,1,0,0,0 // S_Seraphim_Shoes
+IG_Bs_Sha_M_S_7,24069,1,1,1,0,0,0 // S_Beholder_Shoes
+IG_Bs_Sha_M_S_7,24070,1,1,1,0,0,0 // S_Divine_Shoes
+IG_Bs_Sha_M_S_7,24062,1,1,1,0,0,0 // S_Bloody_Shoes
+IG_Bs_Sha_M_S_7,24063,1,1,1,0,0,0 // S_Liberation_Shoes
+IG_Bs_Sha_M_S_7,24065,1,1,1,0,0,0 // S_Clamorous_Shoes
+IG_Bs_Sha_M_S_7,24066,1,1,1,0,0,0 // S_Insecticide_Shoes
+IG_Bs_Sha_M_S_7,24067,1,1,1,0,0,0 // S_Fisher_Shoes
 
-IG_Bs_Sha_M_S_8,24090,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_8,24091,1,1,1,0,0,0 // ?????? ?? ???
-IG_Bs_Sha_M_S_8,24092,1,1,1,0,0,0 // ?????? ?? ???
-IG_Bs_Sha_M_S_8,24093,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_8,24094,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_8,24095,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_8,24096,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_8,24097,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_8,24098,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_8,24099,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_8,24100,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_8,24101,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_8,24104,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_8,24105,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_8,24106,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_8,24107,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_8,24108,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_8,24102,1,1,1,0,0,0 // ????? ??? ???
-IG_Bs_Sha_M_S_8,24103,1,1,1,0,0,0 // ????? ??? ???
+IG_Bs_Sha_M_S_8,24090,1,1,1,0,0,0 // S_Stability_Shield
+IG_Bs_Sha_M_S_8,24091,1,1,1,0,0,0 // S_Plasterer's_Armor
+IG_Bs_Sha_M_S_8,24092,1,1,1,0,0,0 // S_Plasterer's_Shoes
+IG_Bs_Sha_M_S_8,24093,1,1,1,0,0,0 // S_Insomniac_Armor
+IG_Bs_Sha_M_S_8,24094,1,1,1,0,0,0 // S_Insomniac_Shoes
+IG_Bs_Sha_M_S_8,24095,1,1,1,0,0,0 // S_Peerless_Armor
+IG_Bs_Sha_M_S_8,24096,1,1,1,0,0,0 // S_Peerless_Shoes
+IG_Bs_Sha_M_S_8,24097,1,1,1,0,0,0 // S_Adurate_Armor
+IG_Bs_Sha_M_S_8,24098,1,1,1,0,0,0 // S_Adurate_Shoes
+IG_Bs_Sha_M_S_8,24099,1,1,1,0,0,0 // Unfreez_Weapon_S
+IG_Bs_Sha_M_S_8,24100,1,1,1,0,0,0 // Unfreeze_Earing_S
+IG_Bs_Sha_M_S_8,24101,1,1,1,0,0,0 // Unfreeze_Pendent_S
+IG_Bs_Sha_M_S_8,24104,1,1,1,0,0,0 // S_Neutral_Weapon
+IG_Bs_Sha_M_S_8,24105,1,1,1,0,0,0 // S_Neutral_Earring
+IG_Bs_Sha_M_S_8,24106,1,1,1,0,0,0 // S_Neutral_Pendent
+IG_Bs_Sha_M_S_8,24107,1,1,1,0,0,0 // S_Curse_Lift_Earring
+IG_Bs_Sha_M_S_8,24108,1,1,1,0,0,0 // S_Curse_Lift_Pendent
+IG_Bs_Sha_M_S_8,24102,1,1,1,0,0,0 // Vitality_Earing_S
+IG_Bs_Sha_M_S_8,24103,1,1,1,0,0,0 // Vitality_Pendant_S
 
-IG_Bs_Sha_M_S_13,24031,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_13,24032,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_13,24033,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_13,24029,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_13,24030,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_13,24027,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_13,24028,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_13,24049,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_13,24026,1,1,1,0,0,0 // ????? ???
-IG_Bs_Sha_M_S_13,24080,1,1,1,0,0,0 // ????? ??? ???
-IG_Bs_Sha_M_S_13,24079,1,1,1,0,0,0 // ????? ??? ???
-IG_Bs_Sha_M_S_13,24078,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_13,24051,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_13,24046,1,1,1,0,0,0 // ???? ???? ??? ???
-IG_Bs_Sha_M_S_13,24155,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_13,24383,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_13,24152,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_13,24153,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_13,24047,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_13,24050,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_13,24024,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_13,24025,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_13,24081,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_13,24082,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_13,24083,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_13,24031,1,1,1,0,0,0 // S_Kingbird_Weapon
+IG_Bs_Sha_M_S_13,24032,1,1,1,0,0,0 // S_Cri_Hit_Weapon
+IG_Bs_Sha_M_S_13,24033,1,1,1,0,0,0 // S_Healing_Weapon
+IG_Bs_Sha_M_S_13,24029,1,1,1,0,0,0 // S_Ancient_Armor
+IG_Bs_Sha_M_S_13,24030,1,1,1,0,0,0 // S_Critical_Armor
+IG_Bs_Sha_M_S_13,24027,1,1,1,0,0,0 // S_Immune_Armor
+IG_Bs_Sha_M_S_13,24028,1,1,1,0,0,0 // S_Hard_Armor
+IG_Bs_Sha_M_S_13,24049,1,1,1,0,0,0 // S_Hard_Earring
+IG_Bs_Sha_M_S_13,24026,1,1,1,0,0,0 // S_Athena_Shield
+IG_Bs_Sha_M_S_13,24080,1,1,1,0,0,0 // S_Spiritual_Pendent
+IG_Bs_Sha_M_S_13,24079,1,1,1,0,0,0 // S_Spiritual_Earring
+IG_Bs_Sha_M_S_13,24078,1,1,1,0,0,0 // S_Spiritual_Weapon
+IG_Bs_Sha_M_S_13,24051,1,1,1,0,0,0 // S_Athena_Earring
+IG_Bs_Sha_M_S_13,24046,1,1,1,0,0,0 // S_Resist_Spell_Pendant
+IG_Bs_Sha_M_S_13,24155,1,1,1,0,0,0 // S_Immortal_Pendant
+IG_Bs_Sha_M_S_13,24383,1,1,1,0,0,0 // Enchanting_Weapone_S
+IG_Bs_Sha_M_S_13,24152,1,1,1,0,0,0 // S_Solid_Weapon
+IG_Bs_Sha_M_S_13,24153,1,1,1,0,0,0 // S_Solid_Earring
+IG_Bs_Sha_M_S_13,24047,1,1,1,0,0,0 // S_Rapid_Pendant
+IG_Bs_Sha_M_S_13,24050,1,1,1,0,0,0 // S_Wise_Earring
+IG_Bs_Sha_M_S_13,24024,1,1,1,0,0,0 // S_Breezy_Armor
+IG_Bs_Sha_M_S_13,24025,1,1,1,0,0,0 // S_Champion_Shoes
+IG_Bs_Sha_M_S_13,24081,1,1,1,0,0,0 // S_Malicious_Armor
+IG_Bs_Sha_M_S_13,24082,1,1,1,0,0,0 // S_Malicious_Shoes
+IG_Bs_Sha_M_S_13,24083,1,1,1,0,0,0 // S_Malicious_Shield
 
-IG_Bs_Sha_M_S_15,24018,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_15,24019,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_15,24020,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_15,24018,1,1,1,0,0,0 // S_Physical_Earring
+IG_Bs_Sha_M_S_15,24019,1,1,1,0,0,0 // S_Physical_Weapon
+IG_Bs_Sha_M_S_15,24020,1,1,1,0,0,0 // S_Physical_Pendant
 
-IG_Bs_Sha_M_S_16,24021,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_16,24022,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_16,24023,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_16,24021,1,1,1,0,0,0 // S_Magical_Earring
+IG_Bs_Sha_M_S_16,24022,1,1,1,0,0,0 // S_Magical_Weapon
+IG_Bs_Sha_M_S_16,24023,1,1,1,0,0,0 // S_Magical_Pendant
 
-IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_23,24211,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_23,24212,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_23,24213,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_23,24214,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_23,24215,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_23,24209,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // S_Beginner_Shoes
+IG_Bs_Sha_M_S_23,24211,1,1,1,0,0,0 // S_Beginner_Shield
+IG_Bs_Sha_M_S_23,24212,1,1,1,0,0,0 // S_Rookie_Shoes
+IG_Bs_Sha_M_S_23,24213,1,1,1,0,0,0 // S_Rookie_Shield
+IG_Bs_Sha_M_S_23,24214,1,1,1,0,0,0 // S_Advanced_Shoes
+IG_Bs_Sha_M_S_23,24215,1,1,1,0,0,0 // S_Advanced_Shield
+IG_Bs_Sha_M_S_23,24209,1,1,1,0,0,0 // S_Expert_Shield
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // S_Expert_Shoes
 
-IG_Bs_Item_M_S_5,28901,1,1,1,0,0,0 // ???? ????
-IG_Bs_Item_M_S_5,28902,1,1,1,0,0,0 // ????
+IG_Bs_Item_M_S_5,28901,1,1,1,0,0,0 // Mad_Bunny_K
+IG_Bs_Item_M_S_5,28902,1,1,1,0,0,0 // Mad_Bunny_K_
 
-IG_Bs_Sha_M_S_9,24084,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_9,24086,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_9,24087,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_9,24085,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_9,24088,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_9,24089,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_9,24084,1,1,1,0,0,0 // S_Gemstone_Armor
+IG_Bs_Sha_M_S_9,24086,1,1,1,0,0,0 // S_Gemstone_Shield
+IG_Bs_Sha_M_S_9,24087,1,1,1,0,0,0 // S_Gemstone_Weapon
+IG_Bs_Sha_M_S_9,24085,1,1,1,0,0,0 // S_Gemstone_Shoes
+IG_Bs_Sha_M_S_9,24088,1,1,1,0,0,0 // S_Gemstone_Earring
+IG_Bs_Sha_M_S_9,24089,1,1,1,0,0,0 // S_Gemstone_Pendent
 
-IG_Bs_Sha_M_S_10,24180,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_10,24182,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_10,24183,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_10,24181,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_10,24184,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_10,24185,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_10,24180,1,1,1,0,0,0 // S_Bearers_Armor
+IG_Bs_Sha_M_S_10,24182,1,1,1,0,0,0 // S_Bearers_Shield
+IG_Bs_Sha_M_S_10,24183,1,1,1,0,0,0 // S_Bearers_Weapon
+IG_Bs_Sha_M_S_10,24181,1,1,1,0,0,0 // S_Bearers_Shoes
+IG_Bs_Sha_M_S_10,24184,1,1,1,0,0,0 // S_Bearers_Earring
+IG_Bs_Sha_M_S_10,24185,1,1,1,0,0,0 // S_Bearers_Pendent
 
-IG_Bs_Sha_M_S_11,24197,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_11,24196,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_11,24197,1,1,1,0,0,0 // S_Hasty_Armor
+IG_Bs_Sha_M_S_11,24196,1,1,1,0,0,0 // S_Hasty_Shoes
 
-IG_Bs_Sha_M_S_21,24030,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_21,24333,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_21,24332,1,1,1,0,0,0 // ???? ?? ???
+IG_Bs_Sha_M_S_21,24030,1,1,1,0,0,0 // S_Critical_Armor
+IG_Bs_Sha_M_S_21,24333,1,1,1,0,0,0 // S_Critical_Shoes
+IG_Bs_Sha_M_S_21,24332,1,1,1,0,0,0 // S_Critical_Shield
 
-IG_Bs_Sha_M_S_20,24371,1,1,1,0,0,0 // ?? ??? ??? ???
-IG_Bs_Sha_M_S_20,24372,1,1,1,0,0,0 // ?? ??? ??? ???
-IG_Bs_Sha_M_S_20,24370,1,1,1,0,0,0 // ?? ??? ?? ???
+IG_Bs_Sha_M_S_20,24371,1,1,1,0,0,0 // S_Mortal_Blow_Earring
+IG_Bs_Sha_M_S_20,24372,1,1,1,0,0,0 // S_Mortal_Blow_Pendant
+IG_Bs_Sha_M_S_20,24370,1,1,1,0,0,0 // S_Mortal_Blow_Weapon
 
-IG_Bs_Sha_M_S_3,24373,1,1,1,0,0,0 // ?????? ?? ???
-IG_Bs_Sha_M_S_3,24374,1,1,1,0,0,0 // ?????? ?? ???
-IG_Bs_Sha_M_S_3,24375,1,1,1,0,0,0 // ????? ???? ?? ???
-IG_Bs_Sha_M_S_3,24376,1,1,1,0,0,0 // ????? ??? ?? ???
-IG_Bs_Sha_M_S_3,24377,1,1,1,0,0,0 // ?????? ????? ?? ???
-IG_Bs_Sha_M_S_3,24378,1,1,1,0,0,0 // ??? ?? ?? ???
-IG_Bs_Sha_M_S_3,24379,1,1,1,0,0,0 // ?? ??? ? ?? ???
-IG_Bs_Sha_M_S_3,24166,1,1,1,0,0,0 // ?????? ??? ???
-IG_Bs_Sha_M_S_3,24167,1,1,1,0,0,0 // ?????? ??? ???
-IG_Bs_Sha_M_S_3,24156,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_3,24157,1,1,1,0,0,0 // ????? ?? ???
-IG_Bs_Sha_M_S_3,24158,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_3,24159,1,1,1,0,0,0 // ??? ? ?? ???
-IG_Bs_Sha_M_S_3,24160,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_3,24161,1,1,1,0,0,0 // ??? ?? ?? ???
-IG_Bs_Sha_M_S_3,24162,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_3,24163,1,1,1,0,0,0 // ?????? ?? ???
-IG_Bs_Sha_M_S_3,24164,1,1,1,0,0,0 // ?? ?? ?? ???
-IG_Bs_Sha_M_S_3,24165,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_3,24373,1,1,1,0,0,0 // S_Penetration_Shoes
+IG_Bs_Sha_M_S_3,24374,1,1,1,0,0,0 // S_Penetration_Shield
+IG_Bs_Sha_M_S_3,24375,1,1,1,0,0,0 // S_Executioner_Holy_Water_Armor
+IG_Bs_Sha_M_S_3,24376,1,1,1,0,0,0 // S_Exorcist_Corrupted_Armor
+IG_Bs_Sha_M_S_3,24377,1,1,1,0,0,0 // S_Vibration_Dragon_Killer_Armor
+IG_Bs_Sha_M_S_3,24378,1,1,1,0,0,0 // S_Scissor_Hunting_Armor
+IG_Bs_Sha_M_S_3,24379,1,1,1,0,0,0 // S_Fishing_Insect_Net_Armor
+IG_Bs_Sha_M_S_3,24166,1,1,1,0,0,0 // S_Penetration_Earring
+IG_Bs_Sha_M_S_3,24167,1,1,1,0,0,0 // S_Penetration_Pendent
+IG_Bs_Sha_M_S_3,24156,1,1,1,0,0,0 // S_Executioner_Weapon
+IG_Bs_Sha_M_S_3,24157,1,1,1,0,0,0 // S_Exorcist_Weapon
+IG_Bs_Sha_M_S_3,24158,1,1,1,0,0,0 // S_Hunting_Weapon
+IG_Bs_Sha_M_S_3,24159,1,1,1,0,0,0 // S_Insect_Net_Weapon
+IG_Bs_Sha_M_S_3,24160,1,1,1,0,0,0 // S_Fishing_Weapon
+IG_Bs_Sha_M_S_3,24161,1,1,1,0,0,0 // S_Dragon_Killer_Weapon
+IG_Bs_Sha_M_S_3,24162,1,1,1,0,0,0 // S_Corrupt_Weapon
+IG_Bs_Sha_M_S_3,24163,1,1,1,0,0,0 // S_Vibration_Weapon
+IG_Bs_Sha_M_S_3,24164,1,1,1,0,0,0 // S_Holy_Water_Weapon
+IG_Bs_Sha_M_S_3,24165,1,1,1,0,0,0 // S_Scissors_Weapon
 
-IG_Bs_Sha_M_S_4,24346,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_4,24345,1,1,1,0,0,0 // ???? ?? ???
-IG_Bs_Sha_M_S_4,24347,1,1,1,0,0,0 // ?? ????? ???? ?? ???
-IG_Bs_Sha_M_S_4,24348,1,1,1,0,0,0 // ?? ????? ??? ?? ???
-IG_Bs_Sha_M_S_4,24349,1,1,1,0,0,0 // ?? ?????? ????? ?? ???
-IG_Bs_Sha_M_S_4,24350,1,1,1,0,0,0 // ?? ??? ?? ?? ???
-IG_Bs_Sha_M_S_4,24351,1,1,1,0,0,0 // ?? ?? ??? ? ?? ???
-IG_Bs_Sha_M_S_4,24168,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_4,24169,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_4,24170,1,1,1,0,0,0 // ?? ????? ?? ???
-IG_Bs_Sha_M_S_4,24171,1,1,1,0,0,0 // ?? ????? ?? ???
-IG_Bs_Sha_M_S_4,24172,1,1,1,0,0,0 // ?? ?? ?? ???
-IG_Bs_Sha_M_S_4,24173,1,1,1,0,0,0 // ?? ??? ? ?? ???
-IG_Bs_Sha_M_S_4,24174,1,1,1,0,0,0 // ?? ?? ?? ???
-IG_Bs_Sha_M_S_4,24175,1,1,1,0,0,0 // ?? ??? ?? ?? ???
-IG_Bs_Sha_M_S_4,24176,1,1,1,0,0,0 // ?? ??? ?? ???
-IG_Bs_Sha_M_S_4,24177,1,1,1,0,0,0 // ?? ?????? ?? ???
-IG_Bs_Sha_M_S_4,24178,1,1,1,0,0,0 // ?? ?? ?? ?? ???
-IG_Bs_Sha_M_S_4,24179,1,1,1,0,0,0 // ?? ??? ?? ???
+IG_Bs_Sha_M_S_4,24346,1,1,1,0,0,0 // S_Tempest_Shoes
+IG_Bs_Sha_M_S_4,24345,1,1,1,0,0,0 // S_Tempest_Shield
+IG_Bs_Sha_M_S_4,24347,1,1,1,0,0,0 // S_Magic_Executioner_Holy_Water_Armor
+IG_Bs_Sha_M_S_4,24348,1,1,1,0,0,0 // S_Magic_Exorcist_Corrupted_Armor
+IG_Bs_Sha_M_S_4,24349,1,1,1,0,0,0 // S_Magic_Vibration_Dragon_Killer_Armor
+IG_Bs_Sha_M_S_4,24350,1,1,1,0,0,0 // S_Magic_Scissor_Hunting_Armor
+IG_Bs_Sha_M_S_4,24351,1,1,1,0,0,0 // S_Magic_Fishing_Insect_Net_Armor
+IG_Bs_Sha_M_S_4,24168,1,1,1,0,0,0 // S_Tempest_Earring
+IG_Bs_Sha_M_S_4,24169,1,1,1,0,0,0 // S_Tempest_Pendent
+IG_Bs_Sha_M_S_4,24170,1,1,1,0,0,0 // S_M_Executioner_Weapon
+IG_Bs_Sha_M_S_4,24171,1,1,1,0,0,0 // S_M_Exorcist_Weapon
+IG_Bs_Sha_M_S_4,24172,1,1,1,0,0,0 // S_M_Hunting_Weapon
+IG_Bs_Sha_M_S_4,24173,1,1,1,0,0,0 // S_M_Insect_Net_Weapon
+IG_Bs_Sha_M_S_4,24174,1,1,1,0,0,0 // S_M_Fishing_Weapon
+IG_Bs_Sha_M_S_4,24175,1,1,1,0,0,0 // S_M_Dragon_K_Weapon
+IG_Bs_Sha_M_S_4,24176,1,1,1,0,0,0 // S_M_Corrupt_Weapon
+IG_Bs_Sha_M_S_4,24177,1,1,1,0,0,0 // S_M_Vibration_Weapon
+IG_Bs_Sha_M_S_4,24178,1,1,1,0,0,0 // S_M_Holy_Water_Weapon
+IG_Bs_Sha_M_S_4,24179,1,1,1,0,0,0 // S_M_Scissors_Weapon
 
-IG_Bs_Sha_M_S_12,24344,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_12,24343,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_12,24232,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_12,24231,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_12,24218,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_12,24217,1,1,1,0,0,0 // ??? ??? ???
+IG_Bs_Sha_M_S_12,24344,1,1,1,0,0,0 // S_Blitz_Armor
+IG_Bs_Sha_M_S_12,24343,1,1,1,0,0,0 // S_Blitz_Weapon
+IG_Bs_Sha_M_S_12,24232,1,1,1,0,0,0 // S_Blitz_Shield
+IG_Bs_Sha_M_S_12,24231,1,1,1,0,0,0 // S_Blitz_Shoes
+IG_Bs_Sha_M_S_12,24218,1,1,1,0,0,0 // S_Blitz_Pendent
+IG_Bs_Sha_M_S_12,24217,1,1,1,0,0,0 // S_Blitz_Earring
 
-IG_Bs_Sha_M_S_14,24245,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_14,24243,1,1,1,0,0,0 // ??? ?? ???
-IG_Bs_Sha_M_S_14,24244,1,1,1,0,0,0 // ??? ?? ???
+IG_Bs_Sha_M_S_14,24245,1,1,1,0,0,0 // S_Reload_Armor
+IG_Bs_Sha_M_S_14,24243,1,1,1,0,0,0 // S_Reload_Shoes
+IG_Bs_Sha_M_S_14,24244,1,1,1,0,0,0 // S_Reload_Shield
 
-IG_Bs_Sha_M_S_24,24224,1,1,1,0,0,0 // ?? ?? ???
-IG_Bs_Sha_M_S_24,24225,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_24,24226,1,1,1,0,0,0 // ?? ??? ???
-IG_Bs_Sha_M_S_24,24223,1,1,1,0,0,0 // ??? ?? ?? ???
-IG_Bs_Sha_M_S_24,24228,1,1,1,0,0,0 // ??? ??
-IG_Bs_Sha_M_S_24,24229,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_24,24230,1,1,1,0,0,0 // ??? ??? ???
-IG_Bs_Sha_M_S_24,24227,1,1,1,0,0,0 // ??? ??? ?? ???
+IG_Bs_Sha_M_S_24,24224,1,1,1,0,0,0 // S_Force_Weapon
+IG_Bs_Sha_M_S_24,24225,1,1,1,0,0,0 // S_Force_Earring
+IG_Bs_Sha_M_S_24,24226,1,1,1,0,0,0 // S_Force_Pendant
+IG_Bs_Sha_M_S_24,24223,1,1,1,0,0,0 // S_Enhance_Force_Weapon
+IG_Bs_Sha_M_S_24,24228,1,1,1,0,0,0 // S_Spirit_Weapon
+IG_Bs_Sha_M_S_24,24229,1,1,1,0,0,0 // S_Spirit_Earring
+IG_Bs_Sha_M_S_24,24230,1,1,1,0,0,0 // S_Spirit_Pendant
+IG_Bs_Sha_M_S_24,24227,1,1,1,0,0,0 // S_Enhance_Spirit_Weapon
 
-IG_Bs_Sha_M_S_25,24151,1,1,1,0,0,0 // ???? ??? ???
-IG_Bs_Sha_M_S_25,24150,1,1,1,0,0,0 // ???? ??? ???
+IG_Bs_Sha_M_S_25,24151,1,1,1,0,0,0 // S_Infinity_Pendant
+IG_Bs_Sha_M_S_25,24150,1,1,1,0,0,0 // S_Infinity_Earring
 
-IG_PhysicalMagical_Mix,24395,1,1,1,0,0,0 // ??? ?? ???
-IG_PhysicalMagical_Mix,24393,1,1,1,0,0,0 // ??? ?? ???
-IG_PhysicalMagical_Mix,24394,1,1,1,0,0,0 // ??? ?? ???
-IG_PhysicalMagical_Mix,24398,1,1,1,0,0,0 // ??? ?? ???
-IG_PhysicalMagical_Mix,24396,1,1,1,0,0,0 // ??? ?? ???
-IG_PhysicalMagical_Mix,24397,1,1,1,0,0,0 // ??? ?? ???
+IG_PhysicalMagical_Mix,24395,1,1,1,0,0,0 // S_Physical_Armor
+IG_PhysicalMagical_Mix,24393,1,1,1,0,0,0 // S_Physical_Shoes
+IG_PhysicalMagical_Mix,24394,1,1,1,0,0,0 // S_Physical_Shield
+IG_PhysicalMagical_Mix,24398,1,1,1,0,0,0 // S_Magical_Armor
+IG_PhysicalMagical_Mix,24396,1,1,1,0,0,0 // S_Magical_Shoes
+IG_PhysicalMagical_Mix,24397,1,1,1,0,0,0 // S_Magical_Shield
 
-IG_Silver_Statue,28942,900,1,1,0,0,0 // ???? ??? ??
-IG_Silver_Statue,28945,99,1,1,0,0,0 // ??? ??? ??
-IG_Silver_Statue,28946,1,1,1,0,0,0 // ??? ??? ??
+IG_Silver_Statue,28942,900,1,1,0,0,0 // Bloody_Knight_Shield
+IG_Silver_Statue,28945,99,1,1,0,0,0 // Bloody_Knight_Shield_
+IG_Silver_Statue,28946,1,1,1,0,0,0 // Bloody_Knight_Shield__
 
 IG_Stability_Shadow_Box,24352,1,1,1,0,0,0 // S_Plasterer's_Armor_II
 IG_Stability_Shadow_Box,24353,1,1,1,0,0,0 // S_Insomniac_Shoes_II
@@ -5620,17 +5620,17 @@ IG_Stability_Shadow_Box,24357,1,1,1,0,0,0 // S_Vitality_Earring_II
 IG_Stability_Shadow_Box,24358,1,1,1,0,0,0 // S_Neutral_Weapon_II
 IG_Stability_Shadow_Box,24359,1,1,1,0,0,0 // S_Uncursed_Pendant_II
 
-IG_Race_Shadow_Box,24341,1,1,1,0,0,0 // ? ??? ?? ???
-IG_Race_Shadow_Box,24342,1,1,1,0,0,0 // ? ??? ?? ???
+IG_Race_Shadow_Box,24341,1,1,1,0,0,0 // S_All_Race_Shoes
+IG_Race_Shadow_Box,24342,1,1,1,0,0,0 // S_All_Race_Shield
 
-IG_Bearers_S_Conversion_Box,24337,1,1,1,0,0,0 // ???? ?? ??? II
-IG_Bearers_S_Conversion_Box,24338,1,1,1,0,0,0 // ???? ?? ??? II
+IG_Bearers_S_Conversion_Box,24337,1,1,1,0,0,0 // S_Bearer's_Armor_II
+IG_Bearers_S_Conversion_Box,24338,1,1,1,0,0,0 // S_Bearer's_Shoes_II
 
-IG_Gemstone_S_Conversion_Box,24335,1,1,1,0,0,0 // ??? ?? ??? II
-IG_Gemstone_S_Conversion_Box,24336,1,1,1,0,0,0 // ??? ?? ??? II
+IG_Gemstone_S_Conversion_Box,24335,1,1,1,0,0,0 // S_Gemstone_Weapon_II
+IG_Gemstone_S_Conversion_Box,24336,1,1,1,0,0,0 // S_Gemstone_Shield_II
 
-IG_Status_S_Conversion_Box,24339,1,1,1,0,0,0 // ???? ??? ???
-IG_Status_S_Conversion_Box,24340,1,1,1,0,0,0 // ???? ??? ???
+IG_Status_S_Conversion_Box,24339,1,1,1,0,0,0 // S_Almighty_Earring
+IG_Status_S_Conversion_Box,24340,1,1,1,0,0,0 // S_Almighty_Pendant
 
 //! TODO: http://ro.gnjoy.com/news/probability/View.asp?seq=3954787
 IG_Shadow_Exchange_Box,24018,1,1,1,0,0,0
@@ -6075,41 +6075,41 @@ IG_Shadow_Exchange_Box,24474,1,1,1,0,0,0
 IG_Shadow_Exchange_Box,24475,1,1,1,0,0,0
 
 //!TODO http://ro.gnjoy.com/news/probability/View.asp?&seq=3954790
-IG_Costume_Enchant_Stone_Box,22826,1,1,1,0,0,0 // ?? ??? ?? ??4
-IG_Costume_Enchant_Stone_Box,22868,1,1,1,0,0,0 // ?? ??? ?? ??5
-IG_Costume_Enchant_Stone_Box,22905,1,1,1,0,0,0 // ?? ??? ?? ??6
-IG_Costume_Enchant_Stone_Box,22953,1,1,1,0,0,0 // ?? ??? ?? ??7
-IG_Costume_Enchant_Stone_Box,23001,1,1,1,0,0,0 // ?? ??? ?? ??8
-IG_Costume_Enchant_Stone_Box,23058,1,1,1,0,0,0 // ?? ??? ?? ??9
-IG_Costume_Enchant_Stone_Box,23086,1,1,1,0,0,0 // ?? ??? ?? ??10
-IG_Costume_Enchant_Stone_Box,23174,1,1,1,0,0,0 // ?? ??? ?? ??11
-IG_Costume_Enchant_Stone_Box,23299,1,1,1,0,0,0 // ?? ??? ?? ??12
-IG_Costume_Enchant_Stone_Box,23524,1,1,1,0,0,0 // ?? ??? ?? ??13
-IG_Costume_Enchant_Stone_Box,23629,1,1,1,0,0,0 // ?? ??? ?? ??14
-IG_Costume_Enchant_Stone_Box,23682,1,1,1,0,0,0 // ?? ??? ?? ??15
-IG_Costume_Enchant_Stone_Box,23770,1,1,1,0,0,0 // ?? ??? ?? ??16
-IG_Costume_Enchant_Stone_Box,9510,1,1,1,0,0,0 // ?? ??? ?? ??17
-//IG_Costume_Enchant_Stone_Box,100019,1,1,1,0,0,0 // ?? ??? ?? ??18
-//IG_Costume_Enchant_Stone_Box,100052,1,1,1,0,0,0 // ?? ??? ?? ??19
+IG_Costume_Enchant_Stone_Box,22826,1,1,1,0,0,0 // Enchant_Stone_Box4
+IG_Costume_Enchant_Stone_Box,22868,1,1,1,0,0,0 // Enchant_Stone_Box5
+IG_Costume_Enchant_Stone_Box,22905,1,1,1,0,0,0 // Enchant_Stone_Box6
+IG_Costume_Enchant_Stone_Box,22953,1,1,1,0,0,0 // Enchant_Stone_Box7
+IG_Costume_Enchant_Stone_Box,23001,1,1,1,0,0,0 // Enchant_Stone_Box8
+IG_Costume_Enchant_Stone_Box,23058,1,1,1,0,0,0 // Enchant_Stone_Box9
+IG_Costume_Enchant_Stone_Box,23086,1,1,1,0,0,0 // Enchant_Stone_Box10
+IG_Costume_Enchant_Stone_Box,23174,1,1,1,0,0,0 // Enchant_Stone_Box11
+IG_Costume_Enchant_Stone_Box,23299,1,1,1,0,0,0 // Enchant_Stone_Box12
+IG_Costume_Enchant_Stone_Box,23524,1,1,1,0,0,0 // Enchant_Stone_Box13
+IG_Costume_Enchant_Stone_Box,23629,1,1,1,0,0,0 // Enchant_Stone_Box14
+IG_Costume_Enchant_Stone_Box,23682,1,1,1,0,0,0 // Enchant_Stone_Box15
+IG_Costume_Enchant_Stone_Box,23770,1,1,1,0,0,0 // Enchant_Stone_Box16
+IG_Costume_Enchant_Stone_Box,9510,1,1,1,0,0,0 // Enchant_Stone_Box17
+IG_Costume_Enchant_Stone_Box,100019,1,1,1,0,0,0 // Enchant_Stone_Box18
+IG_Costume_Enchant_Stone_Box,100052,1,1,1,0,0,0 // Enchant_Stone_Box19
 
-IG_Piercing_Shadow_Box,24434,1,1,1,0,0,0 // ????? ???? ?? ???
-IG_Piercing_Shadow_Box,24437,1,1,1,0,0,0 // ?????? ????? ?? ???
-IG_Piercing_Shadow_Box,24436,1,1,1,0,0,0 // ??? ?? ?? ???
-IG_Piercing_Shadow_Box,24435,1,1,1,0,0,0 // ?? ??? ?? ???
-IG_Piercing_Shadow_Box,24438,1,1,1,0,0,0 // ????? ??? ?? ???
+IG_Piercing_Shadow_Box,24434,1,1,1,0,0,0 // S_Exe_Ho_Weapon
+IG_Piercing_Shadow_Box,24437,1,1,1,0,0,0 // S_Viv_Dr_Weapon
+IG_Piercing_Shadow_Box,24436,1,1,1,0,0,0 // S_Sci_Hu_Weapon
+IG_Piercing_Shadow_Box,24435,1,1,1,0,0,0 // S_Fis_In_Weapon
+IG_Piercing_Shadow_Box,24438,1,1,1,0,0,0 // S_Exo_Co_Weapon
 
-IG_EnchantStone_Recipe_4m,23524,1,1,1,0,0,0 // ?? ??? ?? ??13
-IG_EnchantStone_Recipe_4m,23629,1,1,1,0,0,0 // ?? ??? ?? ??14
-IG_EnchantStone_Recipe_4m,23682,1,1,1,0,0,0 // ?? ??? ?? ??15
-IG_EnchantStone_Recipe_4m,23770,1,1,1,0,0,0 // ?? ??? ?? ??16
-IG_EnchantStone_Recipe_4m,9510,1,1,1,0,0,0 // ?? ??? ?? ??17
-//IG_EnchantStone_Recipe_4m,100019,1,1,1,0,0,0 // ?? ??? ?? ??18
-//IG_EnchantStone_Recipe_4m,100052,1,1,1,0,0,0 // ?? ??? ?? ??19
+IG_EnchantStone_Recipe_4m,23524,1,1,1,0,0,0 // Enchant_Stone_Box13
+IG_EnchantStone_Recipe_4m,23629,1,1,1,0,0,0 // Enchant_Stone_Box14
+IG_EnchantStone_Recipe_4m,23682,1,1,1,0,0,0 // Enchant_Stone_Box15
+IG_EnchantStone_Recipe_4m,23770,1,1,1,0,0,0 // Enchant_Stone_Box16
+IG_EnchantStone_Recipe_4m,9510,1,1,1,0,0,0 // Enchant_Stone_Box17
+IG_EnchantStone_Recipe_4m,100019,1,1,1,0,0,0 // Enchant_Stone_Box18
+IG_EnchantStone_Recipe_4m,100052,1,1,1,0,0,0 // Enchant_Stone_Box19
 
-IG_EnchantStone_Recipe_9m,23524,1,1,1,0,0,0 // ?? ??? ?? ??13
-IG_EnchantStone_Recipe_9m,23629,1,1,1,0,0,0 // ?? ??? ?? ??14
-IG_EnchantStone_Recipe_9m,23682,1,1,1,0,0,0 // ?? ??? ?? ??15
-IG_EnchantStone_Recipe_9m,23770,1,1,1,0,0,0 // ?? ??? ?? ??16
+IG_EnchantStone_Recipe_9m,23524,1,1,1,0,0,0 // Enchant_Stone_Box13
+IG_EnchantStone_Recipe_9m,23629,1,1,1,0,0,0 // Enchant_Stone_Box14
+IG_EnchantStone_Recipe_9m,23682,1,1,1,0,0,0 // Enchant_Stone_Box15
+IG_EnchantStone_Recipe_9m,23770,1,1,1,0,0,0 // Enchant_Stone_Box16
 
 // http://ro.gnjoy.com/news/probability/View.asp?seq=3955672
 IG_Class_Shadow_Pendant,24250,1,1,1,0,0,0
@@ -6284,7 +6284,7 @@ IG_Costume_Exchange_Box,20504,1,1,1,0,0,0
 IG_Costume_Exchange_Box,19816,1,1,1,0,0,0
 IG_Costume_Exchange_Box,20396,1,1,1,0,0,0
 IG_Costume_Exchange_Box,20325,1,1,1,0,0,0
-IG_Costume_Exchange_Box,5979 ,1,1,1,0,0,0
+IG_Costume_Exchange_Box,5979,1,1,1,0,0,0
 IG_Costume_Exchange_Box,20398,1,1,1,0,0,0
 IG_Costume_Exchange_Box,20399,1,1,1,0,0,0
 IG_Costume_Exchange_Box,20172,1,1,1,0,0,0
@@ -6312,7 +6312,7 @@ IG_Costume_Exchange_Box,20318,1,1,1,0,0,0
 IG_Costume_Exchange_Box,20509,1,1,1,0,0,0
 IG_Costume_Exchange_Box,31029,1,1,1,0,0,0
 IG_Costume_Exchange_Box,20499,1,1,1,0,0,0
-IG_Costume_Exchange_Box,5909 ,1,1,1,0,0,0
+IG_Costume_Exchange_Box,5909,1,1,1,0,0,0
 IG_Costume_Exchange_Box,31057,1,1,1,0,0,0
 IG_Costume_Exchange_Box,31062,1,1,1,0,0,0
 IG_Costume_Exchange_Box,31125,1,1,1,0,0,0
@@ -6428,11 +6428,11 @@ IG_Costume_Exchange_Box,31614,1,1,1,0,0,0
 
 // TODO: IG_Collectibles_Exchange_Box
 
-IG_PERFECTSIZE_MIX,24425,1 // ??? ??? ?? ???
-IG_PERFECTSIZE_MIX,24426,1 // ??? ??? ?? ???
+IG_PERFECTSIZE_MIX,24425,1 // S_Perfect_Size_Weapon
+IG_PERFECTSIZE_MIX,24426,1 // S_Perfect_Size_Armor
 
-IG_MAGICPIERCING_MIX,24427,1 // ?? ????? ??? ?? ???
-IG_MAGICPIERCING_MIX,24428,1 // ?? ?????? ????? ?? ???
-IG_MAGICPIERCING_MIX,24429,1 // ?? ??? ?? ?? ???
-IG_MAGICPIERCING_MIX,24430,1 // ?? ?? ??? ?? ???
-IG_MAGICPIERCING_MIX,24431,1 // ?? ????? ???? ?? ???
+IG_MAGICPIERCING_MIX,24427,1 // S_M_Exo_Co_Weapon
+IG_MAGICPIERCING_MIX,24428,1 // S_M_Viv_Dr_Weapon
+IG_MAGICPIERCING_MIX,24429,1 // S_M_Sci_Hu_Weapon
+IG_MAGICPIERCING_MIX,24430,1 // S_M_Fis_In_Weapon
+IG_MAGICPIERCING_MIX,24431,1 // S_M_Exe_Ho_Weapon
