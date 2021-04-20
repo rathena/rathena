@@ -2211,7 +2211,7 @@ Body:
     Script: |
       getgroupitem(IG_Enchant_Stone_Box17);
   - Id: 9523
-    AegisName: Metal_Smelting_Ticket
+    AegisName: Metal_Rifine_Ticket
     Name: Metal Refining Ticket
     Type: Delayconsume
     Weight: 1
@@ -48676,7 +48676,7 @@ Body:
     Script: |
       itemskill "WL_READING_SB_READING",10;
   - Id: 100128
-    AegisName: Noblesses_Refine_Ticket
+    AegisName: Noblesse_Rifine_Ticket
     Name: Noblesses Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48693,7 +48693,7 @@ Body:
     Script: |
       upgradeui 100128;
   - Id: 100129
-    AegisName: Imperial_Refine_Ticket
+    AegisName: Imperial_Rifine_Ticket
     Name: Imperial Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48710,7 +48710,7 @@ Body:
     Script: |
       upgradeui 100129;
   - Id: 100130
-    AegisName: Grace_Refine_Ticket
+    AegisName: Grace_Rifine_Ticket
     Name: Grace Refine Ticket
     Type: Delayconsume
     Buy: 20
@@ -48727,7 +48727,7 @@ Body:
     Script: |
       upgradeui 100130;
   - Id: 100131
-    AegisName: Imperial_P_Mo_Garment
+    AegisName: Imperial_Convert1
     Name: Imperial Physical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48744,7 +48744,7 @@ Body:
     Script: |
       upgradeui 100131;
   - Id: 100132
-    AegisName: Imperial_M_Mo_Garment
+    AegisName: Imperial_Convert2
     Name: Imperial Magical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48761,7 +48761,7 @@ Body:
     Script: |
       upgradeui 100132;
   - Id: 100133
-    AegisName: Grace_P_Mo_Garment
+    AegisName: Grace_Convert1
     Name: Grace Physical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48778,7 +48778,7 @@ Body:
     Script: |
       upgradeui 100133;
   - Id: 100134
-    AegisName: Grace_M_Mo_Garment
+    AegisName: Grace_Convert2
     Name: Grace Magical Modification Permit (Garment)
     Type: Delayconsume
     Buy: 20
@@ -48795,7 +48795,7 @@ Body:
     Script: |
       upgradeui 100134;
   - Id: 100135
-    AegisName: Imperial_P_Mo_Armor
+    AegisName: Imperial_Convert3
     Name: Imperial Physical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48812,7 +48812,7 @@ Body:
     Script: |
       upgradeui 100135;
   - Id: 100136
-    AegisName: Imperial_M_Mo_Armor
+    AegisName: Imperial_Convert4
     Name: Imperial Magical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48829,7 +48829,7 @@ Body:
     Script: |
       upgradeui 100136;
   - Id: 100137
-    AegisName: Grace_P_Mo_Armor
+    AegisName: Grace_Convert3
     Name: Grace Physical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48846,7 +48846,7 @@ Body:
     Script: |
       upgradeui 100137;
   - Id: 100138
-    AegisName: Grace_M_Mo_Armor
+    AegisName: Grace_Convert4
     Name: Grace Magical Modification Permit (Armor)
     Type: Delayconsume
     Buy: 20
@@ -48905,14 +48905,14 @@ Body:
     Script: |
       getgroupitem(IG_Enchant_Stone_Box21);
   - Id: 100402
-    AegisName: Thousand_Sun_Cube
+    AegisName: OneSkyOneSun_Cube
     Name: Thousand Sun Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
       synthesisui 100402;
   - Id: 100403
-    AegisName: Spirit_Pendulum_Cube
+    AegisName: SoulWeight_Cube
     Name: Spirit Pendulum Modification Cube
     Type: Delayconsume
     Weight: 10
@@ -48933,21 +48933,21 @@ Body:
     Script: |
       synthesisui 100405;
   - Id: 100406
-    AegisName: Golden_Lord_Launcher_Cube
+    AegisName: Golden_L_Launcher_Cube
     Name: Golden Lord Launcher Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
       synthesisui 100406;
   - Id: 100407
-    AegisName: The_Black_Cube
+    AegisName: The_Black_Gatling_Cube
     Name: The Black Modification Cube
     Type: Delayconsume
     Weight: 10
     Script: |
       synthesisui 100407;
   - Id: 100408
-    AegisName: Demon_Slayer_Shot_Cube
+    AegisName: Demon_S_Shot_Cube
     Name: Demon Slayer Shot Modification Cube
     Type: Delayconsume
     Weight: 10

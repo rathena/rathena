@@ -69,6 +69,7 @@ Body:
     SourceItem:
       - Item: S_Executioner_Weapon
       - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
       - Item: S_Insect_Net_Weapon
       - Item: S_Fishing_Weapon
       - Item: S_Dragon_Killer_Weapon
@@ -76,7 +77,6 @@ Body:
       - Item: S_Vibration_Weapon
       - Item: S_Holy_Water_Weapon
       - Item: S_Scissors_Weapon
-      - Item: S_Penetration_Earring
     Reward: getgroupitem(IG_Piercing_Shadow_Box);
   - Item: Hasty_Mix
     SourceNeeded: 2
@@ -155,7 +155,7 @@ Body:
     SourceItem:
       - Item: Zelunium
         Amount: 10
-      - Item: Token_of_OrcGeneral
+      - Item: Valhalla_Flower
         Amount: 150
     Reward: getitem(5548,1); # Crimson Rose﻿
   - Item: Bs_Item_M_S_10
@@ -195,7 +195,7 @@ Body:
     SourceItem:
       - Item: Zelunium
         Amount: 10
-      - Item: Solid_Peeling
+      - Item: Shine_Spear_Blade
         Amount: 50
     Reward: getitem(5859,1); # Worldcup﻿ Hat of Honor﻿ [1]﻿
   - Item: Bs_Item_M_S_43
@@ -243,7 +243,7 @@ Body:
     SourceItem:
       - Item: Shadowdecon
         Amount: 10
-      - Item: Solid_Peeling
+      - Item: Shine_Spear_Blade
         Amount: 50
     Reward: getgroupitem(IG_Bs_Sha_M_S_19);
   - Item: Bs_Sha_M_S_20
@@ -523,7 +523,7 @@ Body:
     SourceItem:
       - Item: Zelunium
         Amount: 25
-      - Item: Token_of_OrcGeneral
+      - Item: Valhalla_Flower
         Amount: 150
     Reward: getitem(2573,1); # 대천사의 날개(1)
   - Item: Bs_Item_M_S_14
@@ -603,7 +603,7 @@ Body:
     SourceItem:
       - Item: Shadowdecon
         Amount: 25
-      - Item: Solid_Peeling
+      - Item: Shine_Spear_Blade
         Amount: 10
     Reward: getgroupitem(IG_Bs_Sha_M_S_21);
   - Item: Bs_Sha_M_S_22
@@ -619,7 +619,7 @@ Body:
     SourceItem:
       - Item: Zelunium
         Amount: 30
-      - Item: Token_of_OrcGeneral
+      - Item: Valhalla_Flower
         Amount: 300
     Reward: getitem(2589,1); # 타락천사의 날개(1)
   - Item: Bs_Item_M_S_3
@@ -699,7 +699,7 @@ Body:
     SourceItem:
       - Item: Zelunium
         Amount: 30
-      - Item: Solid_Peeling
+      - Item: Shine_Spear_Blade
         Amount: 50
     Reward: getitem(28942,1); # 저주받은 기사의 방패(1)
   - Item: Bs_Sha_M_S_3
@@ -755,8 +755,8 @@ Body:
     NeedRefineMin: 7
     SourceItem:
       - Item: S_Physical_Weapon
+      - Item: S_Physical_Earring
       - Item: S_Physical_Pendant
-      - Item: S_Magical_Earring
       - Item: S_Magical_Weapon
       - Item: S_Magical_Earring
       - Item: S_Magical_Pendant
@@ -805,27 +805,12 @@ Body:
       - Item: S_Infinity_Pendant
     Reward: getitem(24386,1); # 인피니티 웨폰 쉐도우
   - Item: Bs_Sha_M_S_8
-    SourceNeeded: 3
-    NeedRefineMin: 5
+    SourceNeeded: 2
     SourceItem:
-      - Item: S_Plasterer's_Armor
-      - Item: S_Plasterer's_Shoes
-      - Item: S_Insomniac_Armor
-      - Item: S_Insomniac_Shoes
-      - Item: S_Peerless_Armor
-      - Item: S_Peerless_Shoes
-      - Item: S_Adurate_Armor
-      - Item: S_Adurate_Shoes
-      - Item: Unfreez_Weapon_S
-      - Item: Unfreeze_Earing_S
-      - Item: Unfreeze_Pendent_S
-      - Item: Vitality_Earing_S
-      - Item: Vitality_Pendant_S
-      - Item: S_Neutral_Weapon
-      - Item: S_Neutral_Earring
-      - Item: S_Neutral_Pendent
-      - Item: S_Curse_Lift_Earring
-      - Item: S_Curse_Lift_Pendent
+      - Item: Shadowdecon
+        Amount: 20
+      - Item: Will_Of_Darkness_
+        Amount: 50
     Reward: getgroupitem(IG_Stability_Shadow_Box);
   - Item: Magical_Booster_Amplifier
     SourceItem:
@@ -945,20 +930,20 @@ Body:
   - Item: Class_Shadow_Box_Weapon
     NeedRefineMin: 7
     SourceItem:
-      - Item: S_Super_Novice_Weapon
+      - Item: S_SuperNovice_Weapon
       - Item: S_Gunslinger_Weapon
-      - Item: S_Taekwondo_Weapon
+      - Item: S_Taekwon_Weapon
       - Item: S_Ninja_Weapon
       - Item: S_DoramMagical_Weapon
       - Item: S_DoramPhysical_Weapon
-      - Item: S_Rune_Knight_Weapon
-      - Item: S_Royal_Guard_Weapon
-      - Item: S_Mechanic_Weapon
+      - Item: S_Runeknight_Weapon
+      - Item: S_Royalguard_Weapon
+      - Item: S_Mechanic_weapon
       - Item: S_Genetic_Weapon
-      - Item: S_Arcbishop_Weapon
-      - Item: S_Sura_Weapon
-      - Item: S_Guillotine_Cross_Weapon
-      - Item: S_Shadow_Chaser_Weapon
+      - Item: S_Archbishop_Weapon
+      - Item: S_Sura_weapon
+      - Item: S_Guillotine_Weapon
+      - Item: S_Shadowchaser_Weapon
       - Item: S_Warlock_Weapon
       - Item: S_Sorcerer_Weapon
       - Item: S_Ranger_Weapon
@@ -985,9 +970,9 @@ Body:
       - Item: S_Hunter_Armor
       - Item: S_Bard_Armor
       - Item: S_Dancer_Armor
-      - Item: S_Super_Novice_Weapon
-      - Item: S_Gunslinger_Weapon
-      - Item: S_Taekwondo_Weapon
+      - Item: S_Rebellion_Armor
+      - Item: S_Kagerou_Armor
+      - Item: S_Oboro_Armor
       - Item: S_DoramPhysical_Armor
       - Item: S_DoramMagical_Armor
       - Item: S_Star_Emperor_Armor
@@ -1028,14 +1013,14 @@ Body:
   - Item: Class_Shadow_Box_Shield
     NeedRefineMin: 7
     SourceItem:
-      - Item: S_Rune_Knight_Shield
-      - Item: S_Royal_Guard_Shield
+      - Item: S_Runeknight_Shield
+      - Item: S_Royalguard_Shield
       - Item: S_Mechanic_Shield
       - Item: S_Genetic_Shield
       - Item: S_Archbishop_Shield
       - Item: S_Sura_Shield
-      - Item: S_Guillotine_Cross_Shield
-      - Item: S_Shadow_Chaser_Shield
+      - Item: S_Guillotine_Shield
+      - Item: S_Shadowchaser_Shield
       - Item: S_Warlock_Shield
       - Item: S_Sorcerer_Shield
       - Item: S_Ranger_Shield
@@ -1045,7 +1030,7 @@ Body:
       - Item: S_Taekwon_Shield
       - Item: S_DoramPhysical_Shield
       - Item: S_DoramMagical_Shield
-      - Item: S_Super_Novice_Shield
+      - Item: S_SuperNovice_Shield
       - Item: S_Gunslinger_Shield
     Reward: |
       .@itemid = groupranditem(IG_Class_Shadow_Shield);
@@ -1069,12 +1054,12 @@ Body:
   - Item: Class_Shadow_Box_Earring
     NeedRefineMin: 7
     SourceItem:
-      - Item: S_Tempest_Shoes
-      - Item: S_Magic_Executioner_Holy_Water_Armor
-      - Item: S_Magic_Exorcist_Corrupted_Armor
-      - Item: S_Magic_Vibration_Dragon_Killer_Armor
-      - Item: S_Magic_Scissor_Hunting_Armor
-      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_Swordman_earring
+      - Item: S_Merchant_earring
+      - Item: S_Acolyte_earring
+      - Item: S_Magician_earring
+      - Item: S_Thief_earring
+      - Item: S_Archer_earring
     Reward: |
       .@itemid = groupranditem(IG_Class_Shadow_Earring);
       callfunc("F_Lapine_Class_Shadow_Earring_Options", .@refine, .@opts[0], .@vals[0]);
@@ -1318,10 +1303,10 @@ Body:
       - Item: S_Reload_Shoes
       - Item: S_Reload_Shield
       - Item: S_Reload_Armor
-      - Item: S_Swordman_Earring
-      - Item: S_Merchant_Earring
-      - Item: S_Acolyte_Earring
-      - Item: S_Magician_Earring
+      - Item: S_Swordman_earring
+      - Item: S_Merchant_earring
+      - Item: S_Acolyte_earring
+      - Item: S_Magician_earring
       - Item: S_Swordman_Pendant
       - Item: S_Merchant_Pendant
       - Item: S_Acolyte_Pendant
@@ -1354,33 +1339,33 @@ Body:
       - Item: S_Hunter_Armor
       - Item: S_Bard_Armor
       - Item: S_Dancer_Armor
-      - Item: S_Super_Novice_Weapon
+      - Item: S_SuperNovice_Weapon
       - Item: S_Gunslinger_Weapon
-      - Item: S_Taekwondo_Weapon
+      - Item: S_Taekwon_Weapon
       - Item: S_Ninja_Weapon
       - Item: S_DoramMagical_Weapon
       - Item: S_DoramPhysical_Weapon
-      - Item: S_Rune_Knight_Weapon
-      - Item: S_Royal_Guard_Weapon
-      - Item: S_Mechanic_Weapon
+      - Item: S_Runeknight_Weapon
+      - Item: S_Royalguard_Weapon
+      - Item: S_Mechanic_weapon
       - Item: S_Genetic_Weapon
-      - Item: S_Arcbishop_Weapon
-      - Item: S_Sura_Weapon
-      - Item: S_Guillotine_Cross_Weapon
-      - Item: S_Shadow_Chaser_Weapon
+      - Item: S_Archbishop_Weapon
+      - Item: S_Sura_weapon
+      - Item: S_Guillotine_Weapon
+      - Item: S_Shadowchaser_Weapon
       - Item: S_Warlock_Weapon
       - Item: S_Sorcerer_Weapon
       - Item: S_Ranger_Weapon
       - Item: S_Minstrel_Weapon
       - Item: S_Wanderer_Weapon
-      - Item: S_Rune_Knight_Shield
-      - Item: S_Royal_Guard_Shield
+      - Item: S_Runeknight_Shield
+      - Item: S_Royalguard_Shield
       - Item: S_Mechanic_Shield
       - Item: S_Genetic_Shield
       - Item: S_Archbishop_Shield
       - Item: S_Sura_Shield
-      - Item: S_Guillotine_Cross_Shield
-      - Item: S_Shadow_Chaser_Shield
+      - Item: S_Guillotine_Shield
+      - Item: S_Shadowchaser_Shield
       - Item: S_Warlock_Shield
       - Item: S_Sorcerer_Shield
       - Item: S_Ranger_Shield
@@ -1390,10 +1375,10 @@ Body:
       - Item: S_Taekwon_Shield
       - Item: S_DoramPhysical_Shield
       - Item: S_DoramMagical_Shield
-      - Item: S_Super_Novice_Shield
+      - Item: S_SuperNovice_Shield
       - Item: S_Gunslinger_Shield
-      - Item: S_Thief_Earring
-      - Item: S_Archer_Earring
+      - Item: S_Thief_earring
+      - Item: S_Archer_earring
       - Item: S_Hasty_Shoes_II
       - Item: S_Bearer's_Pendant_II
       - Item: S_Gemstone_Earring_II
@@ -1402,6 +1387,10 @@ Body:
       - Item: S_Malicious_Armor_II
       - Item: S_Sigrun_Armor
       - Item: S_Sigrun_Shield
+      - Item: S_Force_Executioner_Weapon
+      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S_Caster_Armor_II
+      - Item: S_Reload_Armor_II
       - Item: S_Critical_Shield
       - Item: S_Critical_Shoes
       - Item: S_Magic_Compose_Armor
@@ -1428,10 +1417,10 @@ Body:
       - Item: S_Uncursed_Pendant_II
       - Item: S_Tension_Weapon
       - Item: S_Tension_Earring
-      - Item: S_Tension_Pendant
+      - Item: S_Tension_Pendent
       - Item: S_Elegant_Weapon
       - Item: S_Elegant_Earring
-      - Item: S_Elegant_Pendant
+      - Item: S_Elegant_Pendent
       - Item: S_Healing_Shield
       - Item: S_Healing_Shoes
       - Item: S_Restore_Earring
@@ -1446,12 +1435,12 @@ Body:
       - Item: S_Vibration_Dragon_Killer_Armor
       - Item: S_Scissor_Hunting_Armor
       - Item: S_Fishing_Insect_Net_Armor
-      - Item: S_Sentimental_Weapon
-      - Item: S_Sentimental_Earring
-      - Item: S_Sentimental_Pendant
-      - Item: S_Enchanting_Weapon
-      - Item: S_Enchanting_Earring
-      - Item: S_Enchanting_Pendant
+      - Item: Sentimental_Weapone_S
+      - Item: Sentimental_Earring_S
+      - Item: Sentimental_Pendant_S
+      - Item: Enchanting_Weapone_S
+      - Item: Enchanting_Earring_S
+      - Item: Enchanting_Pendant_S
       - Item: S_Infinity_Weapon
       - Item: S_Physical_Shoes
       - Item: S_Physical_Shield
@@ -1459,10 +1448,10 @@ Body:
       - Item: S_Magical_Shoes
       - Item: S_Magical_Shield
       - Item: S_Magical_Armor
-      - Item: S_Immune_Athena_Shield
-      - Item: S_Hard_Champion_Shoes
-      - Item: S_Kingbird_Ancient_Armor
-      - Item: S_Cri_Hit_Armor
+      - Item: S_ImmunedAthena_Shield
+      - Item: S_HardChamption_Shoes
+      - Item: S_KingbirdAncient_Armor
+      - Item: S_CriticalHit_Armor
       - Item: S_Rebellion_Armor
       - Item: S_Kagerou_Armor
       - Item: S_Oboro_Armor
@@ -1479,8 +1468,8 @@ Body:
       - Item: S_Soul_Reaper_Shoes
       - Item: S_Tempest_Weapon
       - Item: S_Tempest_Armor
-      - Item: S_Perfect_Size_Weapon
-      - Item: S_Perfect_Size_Armor
+      - Item: S_PerfectSize_Weapon
+      - Item: S_PerfectSize_Armor
       - Item: S_M_Exo_Co_Weapon
       - Item: S_M_Viv_Dr_Weapon
       - Item: S_M_Sci_Hu_Weapon
@@ -1530,6 +1519,203 @@ Body:
       - Item: S_Arms_Weapon
       - Item: S_Arms_Pendant
       - Item: S_Arms_Earing
+      - Item: S_Rampage_Armor
+      - Item: S_Rampage_Shield
+      - Item: S_Rampage_Shoes
+      - Item: S_Skynetblow_Weapon
+      - Item: S_Skynetblow_Pendant
+      - Item: S_Skynetblow_Earing
+      - Item: S_Knucklearrow_Armor
+      - Item: S_Knucklearrow_Shield
+      - Item: S_Knucklearrow_Shoes
+      - Item: S_TigerCannon_Weapon
+      - Item: S_Tigercannon_Pendant
+      - Item: S_Tigercannon_Earing
+      - Item: S_Duplelight_Armor
+      - Item: S_Duplelight_Shield
+      - Item: S_Duplelight_Shoes
+      - Item: S_Adoramus_Weapon
+      - Item: S_Adoramus_Pendant
+      - Item: S_Adoramus_Earing
+      - Item: S_Judex_Armor
+      - Item: S_Judex_Shield
+      - Item: S_Judex_Shoes
+      - Item: S_Magnus_Weapon
+      - Item: S_Magnus_Pendant
+      - Item: S_Magnus_Earing
+      - Item: S_Rainstorm_Armor
+      - Item: S_Rainstorm_Shield
+      - Item: S_Rainstorm_Shoes
+      - Item: S_Arrowvulcan_Weapon
+      - Item: S_Arrowvulcan_Pendant
+      - Item: S_Arrowvulcan_Earing
+      - Item: S_Metalic_Armor
+      - Item: S_Metalic_Shield
+      - Item: S_Metalic_Shoes
+      - Item: S_Reverberation_Weapon
+      - Item: S_Reverberation_Pendant
+      - Item: S_Reverberation_Earing
+      - Item: S_Triangle_Armor
+      - Item: S_Triangle_Shield
+      - Item: S_Triangle_Shoes
+      - Item: S_Shadowspell_Weapon
+      - Item: S_Shadowspell_Pendant
+      - Item: S_Shadowspell_Earing
+      - Item: S_Menace_Armor
+      - Item: S_Menace_Shield
+      - Item: S_Menace_Shoes
+      - Item: S_Paint_Weapon
+      - Item: S_Paint_Pendant
+      - Item: S_Paint_Earing
+      - Item: S_Rolling_Armor
+      - Item: S_Rolling_Shield
+      - Item: S_Rolling_Shoes
+      - Item: S_Katar_Weapon
+      - Item: S_Katar_Pendant
+      - Item: S_Katar_Earing
+      - Item: S_Slash_Armor
+      - Item: S_Slash_Shield
+      - Item: S_Slash_Shoes
+      - Item: S_Ripper_Weapon
+      - Item: S_Ripper_Pendant
+      - Item: S_Ripper_Earing
+      - Item: S_Dust_Armor
+      - Item: S_Dust_Shield
+      - Item: S_Dust_Shoes
+      - Item: S_Grave_Weapon
+      - Item: S_Grave_Pendant
+      - Item: S_Grave_Earing
+      - Item: S_Psychic_Armor
+      - Item: S_Psychic_Shield
+      - Item: S_Psychic_Shoes
+      - Item: S_Varetyr_Weapon
+      - Item: S_Varetyr_Pendant
+      - Item: S_Varetyr_Earing
+      - Item: S_Jack_Armor
+      - Item: S_Jack_Shield
+      - Item: S_Jack_Shoes
+      - Item: S_Strain_Weapon
+      - Item: S_Strain_Pendant
+      - Item: S_Strain_Earing
+      - Item: S_Crimson_Armor
+      - Item: S_Crimson_Shield
+      - Item: S_Crimson_Shoes
+      - Item: S_Chain_Weapon
+      - Item: S_Chain_Pendant
+      - Item: S_Chain_Earing
+      - Item: S_Cart_Tornado_Armor
+      - Item: S_Cart_Tornado_Shield
+      - Item: S_Cart_Tornado_Shoes
+      - Item: S_Cannon_Cart_Weapon
+      - Item: S_Cannon_Cart_Pendant
+      - Item: S_Cannon_Cart_Earing
+      - Item: S_Spore_Bomb_Armor
+      - Item: S_Spore_Bomb_Shield
+      - Item: S_Spore_Bomb_Shoes
+      - Item: S_Crazy_Weapon
+      - Item: S_Crazy_Pendant
+      - Item: S_Crazy_Earing
+      - Item: S_Brand_Armor
+      - Item: S_Brand_Shield
+      - Item: S_Brand_Shoes
+      - Item: S_Chain_Press_Weapon
+      - Item: S_Chain_Press_Pendant
+      - Item: S_Chain_Press_Earing
+      - Item: S_Banish_Cannon_Armor
+      - Item: S_Banish_Cannon_Shield
+      - Item: S_Banish_Cannon_Shoes
+      - Item: S_Genesis_Weapon
+      - Item: S_Genesis_Pendant
+      - Item: S_Genesis_Earing
+      - Item: S_Tail_Dragon_Weapon
+      - Item: S_Tail_Dragon_Shield
+      - Item: S_Tail_Dragon_Armor
+      - Item: S_Flare_Dance_Earing
+      - Item: S_Flare_Dance_Pendant
+      - Item: S_Flare_Dance_Shoes
+      - Item: S_God_Hammer_Weapon
+      - Item: S_God_Hammer_Shield
+      - Item: S_God_Hammer_Armor
+      - Item: S_Shatter_Buster_Earing
+      - Item: S_Shatter_B_Pendant
+      - Item: S_Shatter_Buster_Shoes
+      - Item: S_Trip_Weapon
+      - Item: S_Trip_Shield
+      - Item: S_Trip_Armor
+      - Item: S_Super_Magic_Shield
+      - Item: S_Super_Magic_Armor
+      - Item: S_Super_Magic_Shoes
+      - Item: S_Super_Power_Weapon
+      - Item: S_Super_Power_Pendant
+      - Item: S_Super_Power_Earing
+      - Item: S_Kunai_Weapon
+      - Item: S_Kunai_Shield
+      - Item: S_Kunai_Armor
+      - Item: S_Syuriken_Earing
+      - Item: S_Syuriken_Pendant
+      - Item: S_Syuriken_Shoes
+      - Item: S_Kamaenraku_Weapon
+      - Item: S_Kamaenraku_Shield
+      - Item: S_Kamaenraku_Armor
+      - Item: S_Huusouka_Earing
+      - Item: S_Huusouka_Pendant
+      - Item: S_Huusouka_Shoes
+      - Item: S_Pickyrush_Weapon
+      - Item: S_Pickyrush_Shield
+      - Item: S_Pickyrush_Armor
+      - Item: S_SavageRabbit_Earing
+      - Item: S_SavageRabbit_Pendant
+      - Item: S_SavageRabbit_Shoes
+      - Item: S_Catnip_Weapon
+      - Item: S_Catnip_Shield
+      - Item: S_Catnip_Armor
+      - Item: S_Silvervine_Earing
+      - Item: S_Silvervine_Pendant
+      - Item: S_Silvervine_Shoes
+      - Item: S_Sunshine_Weapon
+      - Item: S_Sunshine_Shield
+      - Item: S_Sunshine_Armor
+      - Item: S_Moonlight_Earring
+      - Item: S_Moonlight_Pendant
+      - Item: S_Moonlight_Shoes
+      - Item: S_Stardust_Weapon
+      - Item: S_Stardust_Shield
+      - Item: S_Stardust_Armor
+      - Item: S_S_Weapon
+      - Item: S_S_Shield
+      - Item: S_S_Armor
+      - Item: S_Evilcurse_Earring
+      - Item: S_Evilcurse_Pendant
+      - Item: S_Evilcurse_Shoes
+      - Item: S_FullPene_Shoes
+      - Item: S_FullPene_Armor
+      - Item: S_FullPene_Pendant
+      - Item: S_FullPene_Earring
+      - Item: S_All_Race_Shoes
+      - Item: S_All_Race_Shield
+      - Item: S_Blitz_Weapon
+      - Item: S_Blitz_Armor
+      - Item: S_FullTemp_Earring
+      - Item: S_FullTemp_Pendant
+      - Item: S_FullTemp_Armor
+      - Item: S_FullTemp_Shoes
+      - Item: S_Mammoth_Armor
+      - Item: S_Mammoth_Shoes
+      - Item: S_Mammoth_Pendant
+      - Item: S_Mammoth_Earring
+      - Item: S_Mammoth_Weapon
+      - Item: S_Mammoth_Shield
+      - Item: S_TrueGem_Armor
+      - Item: S_TrueGem_Shoes
+      - Item: S_TrueGem_Earring
+      - Item: S_TrueGem_Pendant
+      - Item: S_M_Mammoth_Armor
+      - Item: S_M_Mammoth_Shoes
+      - Item: S_M_Mammoth_Earring
+      - Item: S_M_Mammoth_Pendant
+      - Item: S_EXP_Shield
+      - Item: S_Absorb_Shield
+      - Item: S_Absorb_Weapon
     Reward: getgroupitem(IG_Shadow_Exchange_Box);
   - Item: Drooping_Gunslinger_Scroll
     SourceItem:
@@ -1683,9 +1869,9 @@ Body:
       - Item: MechanicStone_Bottom
       - Item: MechanicStone_Robe
       - Item: WanderMinstrelStone_Top
-      - Item: WanderMinstrelStone_Middle
-      - Item: WanderMinstrelStone_Bottom
-      - Item: WanderMinstrelStone_Robe
+      - Item: WanderMinstStone_Middle
+      - Item: WanderMinstStone_Bottom
+      - Item: WanderMinstreStone_Robe
       - Item: HPStone_Bottom
       - Item: DoubleAttack_Stone
       - Item: Critical_Stone_Robe
@@ -1716,14 +1902,14 @@ Body:
       - Item: ShadowchasStone_Bottom2
       - Item: ShadowchasStone_Middle2
       - Item: ShadowchaserStone_Top2
-      - Item: SoulReaperStone_Robe
-      - Item: SoulLinkerStone_Top
-      - Item: SoulLinkerStone_Middle
-      - Item: SoulLinkerStone_Bottom
-      - Item: StarGladiatorStone_Top
-      - Item: StarGladiatorStone_Middle
-      - Item: StarGladiatorStone_Bottom
-      - Item: StarEmperorStone_Garment
+      - Item: SoulreaperStone_Robe
+      - Item: SoullinkerStone_Top
+      - Item: SoullinkerStone_Middle
+      - Item: SoullinkerStone_Bottom
+      - Item: GladiatorStone_Top
+      - Item: GladiatorStone_Middle
+      - Item: GladiatorStone_Bottom
+      - Item: StaremperorStone_Robe
       - Item: NinjaStone_Top
       - Item: NinjaStone_Middle
       - Item: NinjaStone_Bottom
@@ -1732,23 +1918,52 @@ Body:
       - Item: GunslingerStone_Top
       - Item: GunslingerStone_Middle
       - Item: GunslingerStone_Bottom
-      - Item: GunslingerStone_Robe
+      - Item: RebellionStone_Robe
       - Item: DoramStone_Top
       - Item: DoramStone_Middle
       - Item: DoramStone_Bottom
       - Item: DoramStone_Robe
-      - Item: RangerStone_II_Top
-      - Item: RangerStone_II_Middle
-      - Item: RangerStone_II_Bottom
-      - Item: RangerStone_II_Garment
-      - Item: MechanicStone_II_Top
-      - Item: MechanicStone_II_Middle
-      - Item: MechanicStone_II_Bottom
-      - Item: MechanicStone_II_Garment
-      - Item: HighpriestStone_II_Top
-      - Item: HighpriestStone_II_Middle
-      - Item: HighpriestStone_II_Bottom
-      - Item: ArchbishopStone_II_Garment
+      - Item: RangerStone_Top2
+      - Item: RangerStone_Middle2
+      - Item: RangerStone_Bottom2
+      - Item: RangerStone_Robe2
+      - Item: MechanicStone_Top2
+      - Item: MechanicStone_Middle2
+      - Item: MechanicStone_Bottom2
+      - Item: MechanicStone_Robe2
+      - Item: HighpriestStone_Top2
+      - Item: HighpriestStone_Middle2
+      - Item: HighpriestStone_Bottom2
+      - Item: ArchbishopStone_Robe2
+      - Item: WarlockStone_Robe2
+      - Item: WarlockStone_Top2
+      - Item: WarlockStone_Middle2
+      - Item: WarlockStone_Bottom2
+      - Item: RoyalguardStone_Robe2
+      - Item: PaladinStone_Top2
+      - Item: PaladinStone_Middle2
+      - Item: PaladinStone_Bottom2
+      - Item: GuillcrossStone_Robe2
+      - Item: AssacrossStone_Top2
+      - Item: AssacrossStone_Middle2
+      - Item: AssacrossStone_Bottom2
+      - Item: RuneknightStone_Robe2
+      - Item: RuneknightStone_Top2
+      - Item: RuneknightStone_Middle2
+      - Item: RuneknightStone_Bottom2
+      - Item: GeneticStone_Robe2
+      - Item: GeneticStone_Top2
+      - Item: GeneticStone_Middle2
+      - Item: GeneticStone_Bottom2
+      - Item: WanderMinsStone_Robe2
+      - Item: WanderMinsStone_Top2
+      - Item: WanderMinsStone_Middle2
+      - Item: WanderMinsStone_Bottom2
+      - Item: Range_Stone_Top
+      - Item: Range_Stone_Bottom
+      - Item: Melee_Stone_Top
+      - Item: Melee_Stone_Middle
+      - Item: Melee_Stone_Bottom
     Reward: getgroupitem(IG_Costume_Enchant_Stone_Box);
   - Item: Collectibles_Box
     SourceNeeded: 10
@@ -1991,11 +2206,11 @@ Body:
         Amount: 10
       - Item: Reins
         Amount: 10
-      - Item: Booby_Trap
-        Amount: 10
       - Item: Tree_Of_Archer_1
         Amount: 10
       - Item: Tree_Of_Archer_2
+        Amount: 10
+      - Item: Tree_Of_Archer_3
         Amount: 10
       - Item: Short_Daenggie
         Amount: 10
@@ -2119,7 +2334,7 @@ Body:
         Amount: 10
       - Item: Core_Jelly
         Amount: 10
-      - Item: Heart_Hunter_Seal
+      - Item: Clean_Bone
         Amount: 10
       - Item: Deadly_Poison_Powder
         Amount: 10
@@ -2175,6 +2390,12 @@ Body:
         Amount: 10
       - Item: Old_Shell
         Amount: 10
+      - Item: Ein_SOLIDDUST
+        Amount: 10
+      - Item: Ein_RUSTHELM
+        Amount: 10
+      - Item: Ein_EYEROCK
+        Amount: 10
     Reward: getgroupitem(IG_VioletBox); # TODO
   - Item: Pet_Egg_Box
     SourceNeeded: 2
@@ -2229,6 +2450,8 @@ Body:
       - Item: Medusa_Egg
       - Item: Stone_Shooter_Egg
       - Item: Incubus_Egg
+      - Item: Golem_Egg
+      - Item: Nightmare_Terror_Egg
       - Item: Succubus_Egg
       - Item: Imp_Egg
       - Item: Egg_Of_Tiny
@@ -2241,7 +2464,7 @@ Body:
       - Item: Nine_Tail_Egg
       - Item: Teddy_Bear_Egg
       - Item: Roween_Egg
-      - Item: Willow_Egg
+      - Item: Wilow_Egg
       - Item: Gremlin_Egg
       - Item: Mummy_Egg
       - Item: Scatletoncarrier
@@ -2269,7 +2492,7 @@ Body:
       - Item: C_Wing_Of_Happiness
       - Item: C_Subject_Aura
       - Item: C_Whisper_Tall_Hat
-      - Item: C_Subject_Aura
+      - Item: C_Poring_Mascot_Costume
       - Item: C_Mask_Of_Bankrupt
       - Item: C_Snowman_Hat
       - Item: C_Celines_Ribbon
@@ -2404,7 +2627,7 @@ Body:
       - Item: C_BelieversCap
       - Item: C_Pope_Ribbon
       - Item: C_Alice_Wig
-      - Item: Khalitzburg_KN_Helm_BL
+      - Item: C_Khalitzburg_Helm_BL
       - Item: C_Wanderer_Sakkat
       - Item: C_Wings_of_Michael
       - Item: C_Shura_King_Pledge
@@ -2416,6 +2639,7 @@ Body:
       - Item: C_Drooping_Argiope
       - Item: C_Chain_Puppet
       - Item: C_Sorcerer_Hood
+      - Item: C_Blinking_Thin_Eyes
       - Item: C_Baby_Penguin
       - Item: C_Fluffy_Heart_Earmuffs
       - Item: C_Archangel_Wing
@@ -2423,7 +2647,10 @@ Body:
       - Item: C_Luwmin_Ice
       - Item: C_Ghost_Holiday
       - Item: C_Blessing_Sky_Lantern
-      - Item: C_Blinking_Thin_Eyes
+      - Item: C_Astro_Circle
+      - Item: C_Elephangel_TH
+      - Item: C_Flying_Drone
+      - Item: C_White_Cat
       - Item: C_Bouquet_Hat
       - Item: C_Poring_Muffler
       - Item: C_Happy_Rabbit_Ribbon
@@ -2461,4 +2688,92 @@ Body:
       - Item: C_Panda_Rabbit
       - Item: C_Full_BloomCherry_Tree
       - Item: C_Fox
+      - Item: C_OpenAir_Headset
+      - Item: C_Mobile_Pursuit_System
+      - Item: C_Mecha_Cat_Ears
+      - Item: C_Cyber_Income
+      - Item: C_Cat_Fork
+      - Item: C_CatEarRibbon_TW
+      - Item: C_Garnet_Tiara
+      - Item: C_Peony_Hair_Ornament
+      - Item: C_Love_Piece
+      - Item: C_Pretty_Bear
+      - Item: C_Pigtail_Red_Hood
+      - Item: C_SharkHead
+      - Item: C_Baby_Panda
+      - Item: C_SavageB_On_Shoulder
+      - Item: C_BeachBall
+      - Item: C_Big_Foxtail
+      - Item: C_T_Bear_Bag
+      - Item: C_Poring_On_Shoulder
+      - Item: C_FortunetellinSealed
+      - Item: C_Pretty_Bear_WH
+      - Item: C_Bicolor_Cat_Witch_Hat
+      - Item: C_Nifl_Bloom
+      - Item: C_Floating_Ball_TW
+      - Item: C_Dark_Snake_Lord_Stall
+      - Item: C_Twin_Canon
+      - Item: C_Picnic_Basket
+      - Item: C_Magic_Helm
+      - Item: C_ManyStars_TW
+      - Item: C_Santa_Backpack
+      - Item: C_Fawn_Ear
+      - Item: C_Royalguard_Necklace
+      - Item: C_Happy_Cat_TW
+      - Item: C_Monochrome_Cap
+      - Item: C_Sky_of_Memory
+      - Item: C_Ice_Wing
+      - Item: C_Under_Rim_Glasses_Bu
+      - Item: C_Gimmick_One_Feather
+      - Item: C_Pocketwatch_Hair_Ornament
+      - Item: C_Poring_Traffic_Light
+      - Item: C_PGstone_Knit_Hat_PK
+      - Item: C_Lazy_Ninetail
+      - Item: C_Sakura_Wing
+      - Item: C_Looking
+      - Item: C_Wolf_Masquerade
+      - Item: C_Mike_Stand
+      - Item: C_Baby_Polar_Bear
+      - Item: C_Runaway_Accelerator
+      - Item: C_Half_Rim_Glasses
+      - Item: C_GiantCatBag_JP_BL
+      - Item: C_Romance_Rose_TW
+      - Item: C_Disapear_Time_TW
+      - Item: C_Magic_Heir_TW
+      - Item: C_Blink_Eyes_Sakura
+      - Item: C_Angola_Intention
+      - Item: C_Stall_Of_Dominions
+      - Item: C_Flowery_Vision_TH
+      - Item: C_Frill_Collar
+      - Item: C_Rose_Gothic_Bonnet
+      - Item: C_LittleGarden
+      - Item: C_Blinking_Eyes_RD
+      - Item: C_P_Ulysses_Feather
+      - Item: C_DancingButterfly_TW
+      - Item: C_Blue_Pencil_In_Mouth
+      - Item: C_Nut_Donut_In_Mouth
+      - Item: C_Leaf_Umbrella
+      - Item: C_Krathong_Crown_TH
+      - Item: C_Unicorn_Ornament
+      - Item: C_Frog_Hood
+      - Item: C_Lude_Hood
+      - Item: C_Blessings_Of_Soul
+      - Item: C_Gossip_Raven
+      - Item: C_Halloween_Hat
+      - Item: C_Blessed_Veil
+      - Item: C_Eyes_Of_Ifrit
+      - Item: C_Eyes_Of_Darkness
+      - Item: C_Sunglasses_Bball_Hat
+      - Item: C_Wildcat_Knit_Cap
+      - Item: C_Pink_Fur_Hat
+      - Item: C_Gift_Of_Snow
+      - Item: C_Large_Ribbon_Muffler_Red
+      - Item: C_Imperial_Glory
+      - Item: C_Black_Shiba_Inu_Hat
+      - Item: C_Black_Glasses
+      - Item: C_Snow_Powder
+      - Item: C_Blue_Pajamas_Hat
+      - Item: C_Lady_Tanee_TW
+      - Item: C_Fairy_Feathers
+      - Item: C_Giant_White_Rabbit
     Reward: getgroupitem(IG_Costume_Exchange_Box);

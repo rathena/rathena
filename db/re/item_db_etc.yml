@@ -36656,19 +36656,19 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25499
-    AegisName: WanderMinstrelStone_Middle
+    AegisName: WanderMinstStone_Middle
     Name: Clown Gypsy Stone (Middle)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25500
-    AegisName: WanderMinstrelStone_Bottom
+    AegisName: WanderMinstStone_Bottom
     Name: Clown Gypsy Stone (Lower)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25501
-    AegisName: WanderMinstrelStone_Robe
+    AegisName: WanderMinstreStone_Robe
     Name: Wanderer Minstrel Stone (Garment)
     Type: Etc
     Buy: 20
@@ -36970,7 +36970,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25670
-    AegisName: M_M_Defense
+    AegisName: EP17_1_EVT03
     Name: Modification Module (Defense)
     Type: Card
     Buy: 20
@@ -36985,7 +36985,7 @@ Body:
       }
       bonus bDef,.@def;
   - Id: 25671
-    AegisName: M_M_Magic_Defense
+    AegisName: EP17_1_EVT04
     Name: Modification Module (Magic Defense)
     Type: Card
     Buy: 20
@@ -37000,7 +37000,7 @@ Body:
       }
       bonus bMDef,.@mdef;
   - Id: 25672
-    AegisName: M_M_Vit
+    AegisName: EP17_1_EVT05
     Name: Modification Module (Vit)
     Type: Card
     Buy: 20
@@ -37008,7 +37008,7 @@ Body:
     Script: |
       bonus bVit,3;
   - Id: 25673
-    AegisName: M_M_Luk
+    AegisName: EP17_1_EVT06
     Name: Modification Module (Luk)
     Type: Card
     Buy: 20
@@ -37016,7 +37016,7 @@ Body:
     Script: |
       bonus bLuk,3;
   - Id: 25674
-    AegisName: M_M_Str
+    AegisName: EP17_1_EVT07
     Name: Modification Module (Str)
     Type: Card
     Buy: 20
@@ -37024,7 +37024,7 @@ Body:
     Script: |
       bonus bStr,3;
   - Id: 25675
-    AegisName: M_M_Agi
+    AegisName: EP17_1_EVT08
     Name: Modification Module (Agi)
     Type: Card
     Buy: 20
@@ -37032,7 +37032,7 @@ Body:
     Script: |
       bonus bAgi,3;
   - Id: 25676
-    AegisName: M_M_Int
+    AegisName: EP17_1_EVT09
     Name: Modification Module (Int)
     Type: Card
     Buy: 20
@@ -37040,7 +37040,7 @@ Body:
     Script: |
       bonus bInt,3;
   - Id: 25677
-    AegisName: M_M_Dex
+    AegisName: EP17_1_EVT10
     Name: Modification Module (Dex)
     Type: Card
     Buy: 20
@@ -37048,7 +37048,7 @@ Body:
     Script: |
       bonus bDex,3;
   - Id: 25678
-    AegisName: M_M_HP_recovery
+    AegisName: EP17_1_EVT11
     Name: Modification Module (HP recovery)
     Type: Card
     Buy: 20
@@ -37056,7 +37056,7 @@ Body:
     Script: |
       bonus bHPrecovRate,20;
   - Id: 25679
-    AegisName: M_M_SP_recovery
+    AegisName: EP17_1_EVT12
     Name: Modification Module (SP recovery)
     Type: Card
     Buy: 20
@@ -37064,7 +37064,7 @@ Body:
     Script: |
       bonus bSPrecovRate,20;
   - Id: 25680
-    AegisName: M_M_Spell5
+    AegisName: EP17_1_EVT13
     Name: Modification Module (Spell)
     Type: Card
     Buy: 20
@@ -37073,7 +37073,7 @@ Body:
       bonus bMatk,18;
       bonus bVariableCastrate,-10;
   - Id: 25681
-    AegisName: M_M_Attack_Delay_4
+    AegisName: EP17_1_EVT14
     Name: Modification Module (Attack Speed)
     Type: Card
     Buy: 20
@@ -37081,7 +37081,7 @@ Body:
     Script: |
       bonus bAspdRate,10;
   - Id: 25682
-    AegisName: M_M_Fatal4
+    AegisName: EP17_1_EVT15
     Name: Modification Module (Fatal)
     Type: Card
     Buy: 20
@@ -37090,7 +37090,7 @@ Body:
       bonus bCritAtkRate,10;
       bonus bCritical,4;
   - Id: 25683
-    AegisName: M_M_Expert_Archer5
+    AegisName: EP17_1_EVT16
     Name: Modification Module (Expert Archer)
     Type: Card
     Buy: 20
@@ -37098,7 +37098,7 @@ Body:
     Script: |
       bonus bLongAtkRate,10;
   - Id: 25684
-    AegisName: M_M_Vital
+    AegisName: EP17_1_EVT17
     Name: Modification Module (Vital)
     Type: Card
     Buy: 20
@@ -37112,7 +37112,7 @@ Body:
          bonus bMaxHP,500;
       }
   - Id: 25685
-    AegisName: M_M_Mental
+    AegisName: EP17_1_EVT18
     Name: Modification Module (Mental)
     Type: Card
     Buy: 20
@@ -37126,7 +37126,7 @@ Body:
          bonus bMaxSP,100;
       }
   - Id: 25686
-    AegisName: M_M_Heal
+    AegisName: EP17_1_EVT19
     Name: Modification Module (Heal)
     Type: Card
     Buy: 20
@@ -37141,7 +37141,7 @@ Body:
       }
       bonus bHealPower,.@val;
   - Id: 25687
-    AegisName: M_M_Power
+    AegisName: EP17_1_EVT20
     Name: Modification Module (Power)
     Type: Card
     Buy: 20
@@ -37155,7 +37155,7 @@ Body:
          bonus bBaseAtk,25;
       }
   - Id: 25688
-    AegisName: M_M_Magic
+    AegisName: EP17_1_EVT21
     Name: Modification Module (Magic)
     Type: Card
     Buy: 20
@@ -37169,7 +37169,7 @@ Body:
          bonus bMatk,25;
       }
   - Id: 25689
-    AegisName: M_M_Shooter
+    AegisName: EP17_1_EVT22
     Name: Modification Module (Shooter)
     Type: Card
     Buy: 20
@@ -37184,7 +37184,7 @@ Body:
       }
       bonus bLongAtkRate,.@val;
   - Id: 25690
-    AegisName: M_M_Fast
+    AegisName: EP17_1_EVT23
     Name: Modification Module (Fast)
     Type: Card
     Buy: 20
@@ -37198,7 +37198,7 @@ Body:
          bonus bAspdRate,3;
       }
   - Id: 25691
-    AegisName: M_M_Caster
+    AegisName: EP17_1_EVT24
     Name: Modification Module (Caster)
     Type: Card
     Buy: 20
@@ -37213,7 +37213,7 @@ Body:
       }
       bonus bVariableCastrate,.@val;
   - Id: 25692
-    AegisName: M_M_Critical
+    AegisName: EP17_1_EVT25
     Name: Modification Module (Critical)
     Type: Card
     Buy: 20
@@ -37227,7 +37227,7 @@ Body:
          bonus bCritAtkRate,5;
       }
   - Id: 25693
-    AegisName: M_M_Delay_After_skill
+    AegisName: EP17_1_EVT26
     Name: Modification Module (Delay after skill)
     Type: Card
     Buy: 20
@@ -37242,7 +37242,7 @@ Body:
       }
       bonus bDelayrate,.@val;
   - Id: 25694
-    AegisName: M_M_Fixed_Casting
+    AegisName: EP17_1_EVT27
     Name: Modification Module (Fixed Casting)
     Type: Card
     Buy: 20
@@ -37257,7 +37257,7 @@ Body:
       }
       bonus bFixedCast,.@val;
   - Id: 25695
-    AegisName: M_M_Above_All
+    AegisName: EP17_1_EVT28
     Name: Modification Module (Above All)
     Type: Card
     Buy: 20
@@ -37272,7 +37272,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,-5;
       } }
   - Id: 25696
-    AegisName: M_M_Drain_Life
+    AegisName: EP17_1_EVT29
     Name: Modification Module (Drain Life)
     Type: Card
     Buy: 20
@@ -37280,7 +37280,7 @@ Body:
     Script: |
       bonus2 bHPDrainRate,20,2;
   - Id: 25697
-    AegisName: M_M_Drain_Soul
+    AegisName: EP17_1_EVT30
     Name: Modification Module (Drain Soul)
     Type: Card
     Buy: 20
@@ -37288,7 +37288,7 @@ Body:
     Script: |
       bonus2 bSPDrainRate,10,1;
   - Id: 25698
-    AegisName: M_M_Magic_Healing
+    AegisName: EP17_1_EVT31
     Name: Modification Module (Magic Healing)
     Type: Card
     Buy: 20
@@ -37296,7 +37296,7 @@ Body:
     Script: |
       autobonus "{ bonus2 bHPRegenRate,400,500; }",20,10000,BF_MAGIC;
   - Id: 25699
-    AegisName: M_M_Magic_Soul
+    AegisName: EP17_1_EVT32
     Name: Modification Module (Magic Soul)
     Type: Card
     Buy: 20
@@ -37304,7 +37304,7 @@ Body:
     Script: |
       autobonus "{ bonus2 bSPRegenRate,80,500; }",10,10000,BF_MAGIC;
   - Id: 25700
-    AegisName: M_M_Unlimited_Vital
+    AegisName: EP17_1_EVT33
     Name: Modification Module (Unlimited Vital)
     Type: Card
     Buy: 20
@@ -37313,7 +37313,7 @@ Body:
       autobonus2 "{ bonus bVit,50; bonus2 bHPRegenRate,400,500; bonus2 bSPLossRate,20,1000; }",10,10000,BF_WEAPON|BF_MAGIC;
       /* unknown rate */
   - Id: 25701
-    AegisName: M_M_Spell_Buster
+    AegisName: EP17_1_EVT34
     Name: Modification Module (Spell Buster)
     Type: Card
     Buy: 20
@@ -37322,7 +37322,7 @@ Body:
       autobonus "{ bonus bInt,50; bonus bMatkRate,15; bonus2 bAddClass,Class_All,-15; }",20,10000,BF_MAGIC;
       /* unknown rate */
   - Id: 25702
-    AegisName: M_M_Firing_Shot
+    AegisName: EP17_1_EVT35
     Name: Modification Module (Firing Shot)
     Type: Card
     Buy: 20
@@ -37331,7 +37331,7 @@ Body:
       autobonus "{ bonus bDex,50; bonus bLongAtkRate,10; bonus2 bSPLossRate,20,1000; }",20,10000,BF_WEAPON;
       /* unknown rate */
   - Id: 25703
-    AegisName: M_M_Overpower
+    AegisName: EP17_1_EVT36
     Name: Modification Module (Overpower)
     Type: Card
     Buy: 20
@@ -37340,7 +37340,7 @@ Body:
       autobonus "{ bonus bStr,50; bonus2 bAddClass,Class_All,15; bonus bMatkRate,-15; }",20,10000,BF_WEAPON;
       /* unknown rate */
   - Id: 25704
-    AegisName: M_M_Fatal_Flash
+    AegisName: EP17_1_EVT37
     Name: Modification Module (Fatal Flash)
     Type: Card
     Buy: 20
@@ -37349,7 +37349,7 @@ Body:
       autobonus "{ bonus bStr,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_WEAPON;
       /* unknown rate */
   - Id: 25705
-    AegisName: M_M_Lucky_Strike
+    AegisName: EP17_1_EVT38
     Name: Modification Module (Lucky Strike)
     Type: Card
     Buy: 20
@@ -37871,42 +37871,42 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25842
-    AegisName: SoulReaperStone_Robe
+    AegisName: SoulreaperStone_Robe
     Name: Soul Reaper Stone (Garment)
     Type: Etc
     Weight: 100
   - Id: 25843
-    AegisName: SoulLinkerStone_Top
+    AegisName: SoullinkerStone_Top
     Name: Soul Linker Stone (Upper)
     Type: Etc
     Weight: 100
   - Id: 25844
-    AegisName: SoulLinkerStone_Middle
+    AegisName: SoullinkerStone_Middle
     Name: Soul Linker Stone (Middle)
     Type: Etc
     Weight: 100
   - Id: 25845
-    AegisName: SoulLinkerStone_Bottom
+    AegisName: SoullinkerStone_Bottom
     Name: Soul Linker Stone (Bottom)
     Type: Etc
     Weight: 100
   - Id: 25846
-    AegisName: StarGladiatorStone_Top
+    AegisName: GladiatorStone_Top
     Name: Star Gladiator Stone (Upper)
     Type: Etc
     Weight: 100
   - Id: 25847
-    AegisName: StarGladiatorStone_Middle
+    AegisName: GladiatorStone_Middle
     Name: Star Gladiator Stone (Middle)
     Type: Etc
     Weight: 100
   - Id: 25848
-    AegisName: StarGladiatorStone_Bottom
+    AegisName: GladiatorStone_Bottom
     Name: Star Gladiator Stone (Bottom)
     Type: Etc
     Weight: 100
   - Id: 25849
-    AegisName: StarEmperorStone_Garment
+    AegisName: StaremperorStone_Robe
     Name: Star Emperor Stone (Garment)
     Type: Etc
     Weight: 100
@@ -37951,7 +37951,7 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 25858
-    AegisName: GunslingerStone_Robe
+    AegisName: RebellionStone_Robe
     Name: Gunslinger Stone (Garment)
     Type: Etc
     Weight: 100
@@ -51458,62 +51458,62 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 1000008
-    AegisName: RangerStone_II_Top
+    AegisName: RangerStone_Top2
     Name: Sniper Stone II (Top)
     Type: Etc
     Weight: 100
   - Id: 1000009
-    AegisName: RangerStone_II_Middle
+    AegisName: RangerStone_Middle2
     Name: Sniper Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000010
-    AegisName: RangerStone_II_Bottom
+    AegisName: RangerStone_Bottom2
     Name: Sniper Stone II (Bottom)
     Type: Etc
     Weight: 100
   - Id: 1000011
-    AegisName: RangerStone_II_Garment
+    AegisName: RangerStone_Robe2
     Name: Ranger Stone II (Garment)
     Type: Etc
     Weight: 100
   - Id: 1000012
-    AegisName: MechanicStone_II_Top
+    AegisName: MechanicStone_Top2
     Name: Whitesmith Stone II (Top)
     Type: Etc
     Weight: 100
   - Id: 1000013
-    AegisName: MechanicStone_II_Middle
+    AegisName: MechanicStone_Middle2
     Name: Whitesmith Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000014
-    AegisName: MechanicStone_II_Bottom
+    AegisName: MechanicStone_Bottom2
     Name: Whitesmith Stone II (Bottom)
     Type: Etc
     Weight: 100
   - Id: 1000015
-    AegisName: MechanicStone_II_Garment
+    AegisName: MechanicStone_Robe2
     Name: Mechanic Stone II (Garment)
     Type: Etc
     Weight: 100
   - Id: 1000016
-    AegisName: HighpriestStone_II_Top
+    AegisName: HighpriestStone_Top2
     Name: High Priest Stone II (Top)
     Type: Etc
     Weight: 100
   - Id: 1000017
-    AegisName: HighpriestStone_II_Middle
+    AegisName: HighpriestStone_Middle2
     Name: High Priest Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000018
-    AegisName: HighpriestStone_II_Bottom
+    AegisName: HighpriestStone_Bottom2
     Name: High Priest Stone II (Bottom)
     Type: Etc
     Weight: 100
   - Id: 1000019
-    AegisName: ArchbishopStone_II_Garment
+    AegisName: ArchbishopStone_Robe2
     Name: Archbishop Stone II (Garment)
     Type: Etc
     Weight: 100
@@ -52204,42 +52204,42 @@ Body:
     Type: Etc
     Weight: 100
   - Id: 1000217
-    AegisName: RoyalGuardStone_Robe2
+    AegisName: RoyalguardStone_Robe2
     Name: Royal Guard Stone II (Garment)
     Type: Etc
     Weight: 100
   - Id: 1000218
-    AegisName: RoyalGuardStone_Top2
+    AegisName: PaladinStone_Top2
     Name: Paladin Stone II (Upper)
     Type: Etc
     Weight: 100
   - Id: 1000219
-    AegisName: RoyalGuardStone_Middle2
+    AegisName: PaladinStone_Middle2
     Name: Paladin Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000220
-    AegisName: RoyalGuardStone_Bottom2
+    AegisName: PaladinStone_Bottom2
     Name: Paladin Stone II (Lower)
     Type: Etc
     Weight: 100
   - Id: 1000221
-    AegisName: GuillotineCrossStone_Robe2
+    AegisName: GuillcrossStone_Robe2
     Name: Guillotine Cross Stone II (Garment)
     Type: Etc
     Weight: 100
   - Id: 1000222
-    AegisName: GuillotineCrossStone_Top2
+    AegisName: AssacrossStone_Top2
     Name: Assassin Cross Stone II (Upper)
     Type: Etc
     Weight: 100
   - Id: 1000223
-    AegisName: GuillotineCrossStone_Middle2
+    AegisName: AssacrossStone_Middle2
     Name: Assassin Cross Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1000224
-    AegisName: GuillotineCrossStone_Bottom2
+    AegisName: AssacrossStone_Bottom2
     Name: Assassin Cross Stone II (Lower)
     Type: Etc
     Weight: 100
