@@ -19755,7 +19755,7 @@ Body:
       SpRateCost: -10
       ItemCost:
         - Item: Blue_Gemstone
-          Amount: 1
+          Amount: 0
   - Id: 2040
     Name: AB_ADORAMUS
     Description: Adoramus
