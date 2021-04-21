@@ -104,11 +104,11 @@ function	script	F_Cursed_Fragment	{	// 23016
 	}
 	else if (.@r == 5) {
 		showscript "Please... Stay with me...";
-		warp "Random",0,0;
+		itemskill "AL_TELEPORT",1;
 	}
 	else if (.@r == 6) {
 		showscript "Stay... here with me...";
-		warp "Random",0,0;
+		itemskill "AL_TELEPORT",1;
 	}
 	else if (.@r == 7) {
 		showscript "You shouldn't have come here...";

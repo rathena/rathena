@@ -1455,7 +1455,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_GRANDDARKNESS:
-		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		attack_type |= BF_WEAPON;
 		break;
 
@@ -4219,6 +4219,7 @@ static TIMER_FUNC(skill_timerskill){
 					// Fall through
 				case PR_STRECOVERY:
 				case BS_HAMMERFALL:
+				case MER_LEXDIVINA:
 					sc_start(src, target, status_skill2sc(skl->skill_id), skl->type, skl->skill_lv, skill_get_time2(skl->skill_id, skl->skill_lv));
 					break;
 				case WZ_WATERBALL:
@@ -4742,7 +4743,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case LK_AURABLADE:
 	case LK_SPIRALPIERCE:
 	case ML_SPIRALPIERCE:
-	case LK_HEADCRUSH:
 	case CG_ARROWVULCAN:
 	case HW_MAGICCRASHER:
 	case ITM_TOMAHAWK:
@@ -4810,6 +4810,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
+	case LK_HEADCRUSH:
+		if (status_get_class_(bl) == CLASS_BOSS) {
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+			break;
+		}
+		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+		break;
+
 	case LK_JOINTBEAT:
 		flag = 1 << rnd() % 6;
 		if (flag != BREAK_NECK && tsc && tsc->data[SC_JOINTBEAT] && tsc->data[SC_JOINTBEAT]->val2 & BREAK_NECK)
@@ -4875,6 +4884,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 #ifndef RENEWAL
 	case SN_SHARPSHOOTING:
+		flag |= 1; // Flag for specific mob damage formula
 #endif
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
@@ -4890,6 +4900,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if (!(map_foreachindir(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
 			   skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
 			   skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY))) {
+#ifndef RENEWAL
+			   	if (skill_id == SN_SHARPSHOOTING)
+			   		flag &= ~1; // Only targets in the splash area are affected
+#endif
+
 				//These skills hit at least the target if the AoE doesn't hit
 				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 			}
@@ -5638,7 +5653,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case GC_CROSSIMPACT:
-		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 1, 1)) {
+		if (skill_check_unit_movepos(0, src, bl->x, bl->y, 1, 1)) {
 			skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_IGNORE_NO_KNOCKBACK); // Target position is actually one cell next to the target
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		} else {
@@ -11832,12 +11847,10 @@ TIMER_FUNC(skill_castend_id){
 				sd->canequip_tick = tick + skill_get_time(ud->skill_id, ud->skill_lv);
 				break;
 			case KN_BRANDISHSPEAR:
-			case KN_BOWLINGBASH:
-			case CR_GRANDCROSS:
-			case NPC_GRANDDARKNESS: {
+			case CR_GRANDCROSS: {
 				sc_type type;
 
-				if (ud->skill_id == KN_BRANDISHSPEAR || ud->skill_id == KN_BOWLINGBASH)
+				if (ud->skill_id == KN_BRANDISHSPEAR)
 					type = SC_STRIPWEAPON;
 				else
 					type = SC_STRIPSHIELD;
@@ -14688,8 +14701,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				(tsc->data[SC_VACUUM_EXTREME_POSTDELAY] && tsc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == sg->group_id))) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
 
-			if (unit_bl2ud(bl)->walktimer == INVALID_TIMER) // Apply effect and suck non-walking targets one-by-one each n seconds
-				sc_start4(ss, bl, type, 100, sg->skill_lv, sg->group_id, (sg->val1<<16)|(sg->val2), ++sg->val3*500, (sg->limit - DIFF_TICK(tick, sg->tick)));
+			// Apply effect and suck targets one-by-one each n seconds
+			sc_start4(ss, bl, type, 100, sg->skill_lv, sg->group_id, (sg->val1 << 16) | (sg->val2), ++sg->val3 * 500, (sg->limit - DIFF_TICK(tick, sg->tick)));
 			break;
 
 		case UNT_BANDING:
@@ -17483,7 +17496,27 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 				clif_upgrademessage(sd, 3, material[ditem->wlv]);
 				return;
 			}
-			per = status_get_refine_chance(static_cast<refine_type>(ditem->wlv), (int)item->refine, false);
+
+			std::shared_ptr<s_refine_level_info> info = refine_db.findLevelInfo( *ditem, *item );
+
+			if( info == nullptr ){
+				clif_skill_fail( sd, sd->menuskill_id, USESKILL_FAIL_LEVEL, 0 );
+				return;
+			}
+
+			std::shared_ptr<s_refine_cost> cost = util::umap_find( info->costs, (uint16)REFINE_COST_NORMAL );
+
+			if( cost == nullptr ){
+				clif_skill_fail( sd, sd->menuskill_id, USESKILL_FAIL_LEVEL, 0 );
+				return;
+			}
+
+			if( cost->nameid != material[ditem->wlv] ){
+				clif_skill_fail( sd, sd->menuskill_id, USESKILL_FAIL_LEVEL, 0 );
+				return;
+			}
+
+			per = ( cost->chance / 100 );
 			if( sd->class_&JOBL_THIRD )
 				per += 10;
 			else
