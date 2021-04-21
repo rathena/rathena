@@ -14,6 +14,7 @@
 #include "atcommand.hpp"
 #include "faction.hpp"
 #include "elemental.hpp"
+// #include "guild.hpp"
 #include "homunculus.hpp"
 #include "map.hpp"
 #include "mercenary.hpp"
@@ -32,6 +33,8 @@
 static DBMap* faction_db; // int faction_id -> struct faction_data*
 static DBMap* voting_db; // int char_id -> struct voting_data*
 
+struct guild factions[MAX_FACTION]; // Temporal fake guild information
+
 int faction_reload_fvf_sub(struct block_list *bl, va_list ap)
 {
 	if( !faction_get_id(bl) )
@@ -43,7 +46,7 @@ int faction_reload_fvf_sub(struct block_list *bl, va_list ap)
 				TBL_PC *sd = (TBL_PC*)bl;
 				status_calc_pc(sd,SCO_NONE);
 				if( !pc_isdead(sd) )
-					pc_setpos(sd, sd->mapindex, bl->x, bl->y, CLR_RESPAWN);
+					pc_setpos(sd, sd->mapindex, bl->x, bl->y, CLR_OUTSIGHT);
 			}
 		break;
 
@@ -98,14 +101,25 @@ void faction_hp(struct map_session_data *sd)
 	WBUFL(buf,2) = sd->status.account_id;
 	memcpy(WBUFP(buf,6), sd->status.name, NAME_LENGTH);
 
-	// Update name with reputation info
-	int value = sd->status.rep[sd->status.faction_id].value;
-	int i = sd->status.faction_id;
-	if(value <= battle_config.reputation_hated) strncpy(sd->status.rep[i].desc,"HATED",12);
-	else if(value <= battle_config.reputation_unfriendly) strncpy(sd->status.rep[i].desc,"UNFRIENDLY",12);
-	else if(value > battle_config.reputation_unfriendly && value < battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"NEUTRAL",12);
-	else if(value >= battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"FRIENDLY",12);
-	else strncpy(sd->status.rep[i].desc,"HONORED",12);
+	// struct guild* g;
+
+	// g = guild_search(SHRT_MAX - sd->status.faction_id);
+	// if (!g) {
+	// 	ShowError("faction_hp : Fake Guild not Found \n");
+	// 	return;
+	// }
+	// // sd->status.guild_id = SHRT_MAX - sd->status.faction_id;
+	// g->member[1].sd = sd;
+	// sd->guild = g;
+
+	// // Update name with reputation info
+	// int value = sd->status.rep[sd->status.faction_id].value;
+	// int i = sd->status.faction_id;
+	// if(value <= battle_config.reputation_hated) strncpy(sd->status.rep[i].desc,"HATED",12);
+	// else if(value <= battle_config.reputation_unfriendly) strncpy(sd->status.rep[i].desc,"UNFRIENDLY",12);
+	// else if(value > battle_config.reputation_unfriendly && value < battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"NEUTRAL",12);
+	// else if(value >= battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"FRIENDLY",12);
+	// else strncpy(sd->status.rep[i].desc,"HONORED",12);
 
 	if( sd->battle_status.max_hp > INT16_MAX ) {
 		WBUFW(buf,30) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
@@ -115,6 +129,7 @@ void faction_hp(struct map_session_data *sd)
 		WBUFW(buf,32) = sd->battle_status.max_hp;
 	}
 	clif_send(buf, packet_len(cmd), &sd->bl, FACTION_AREA_WOS);
+	ShowWarning("faction_hp : Entrou aqui\n");
 }
 
 void faction_spawn(struct block_list *bl)
@@ -122,35 +137,32 @@ void faction_spawn(struct block_list *bl)
 	struct faction_data *fdb;
 	uint8 buf[33];
 
-	if( (fdb = faction_search(faction_get_id(bl))) == NULL ) 
+	if( (fdb = faction_search(faction_get_id(bl))) == NULL )
 		return;
 
-	// if( map_getmapflag(bl->m, MF_FVF) ) {
-		if( battle_config.faction_ally_info_bl ) {
-			if( battle_config.faction_ally_info_bl&bl->type ) {
-				WBUFW(buf, 0) = 0x2dd;
-				WBUFL(buf,2) = bl->id;
-				safestrncpy((char*)WBUFP(buf,6), status_get_name(bl), NAME_LENGTH);
-				WBUFW(buf,30) = faction_get_id(bl);
-				clif_send(buf,packet_len(0x2dd), bl, FVF_OTHER_AREA_CHAT);
-			}
-		} else {
-			WBUFW(buf,0) = 0x1b4;
-			WBUFL(buf,2) = bl->id;
-			WBUFL(buf,6) = fdb->id;
-			WBUFW(buf,10) = fdb->emblem_id;
-			clif_send(buf, 12, bl, AREA_WOS);
-		}
-	// }
+	// // if( map_getmapflag(bl->m,MF_FVF) ) {
+	// 	if( battle_config.faction_ally_info_bl ) {
+	// 		if( battle_config.faction_ally_info_bl&bl->type ) {
+	// 			WBUFW(buf, 0) = 0x2dd;
+	// 			WBUFL(buf,2) = bl->id;
+	// 			safestrncpy((char*)WBUFP(buf,6), status_get_name(bl), NAME_LENGTH);
+	// 			WBUFW(buf,30) = faction_get_id(bl);
+	// 			clif_send(buf,packet_len(0x2dd), bl, FVF_OTHER_AREA_CHAT);
+	// 		}
+	// 	} else {
+	// 		WBUFW(buf,0) = 0x1b4;
+	// 		WBUFL(buf,2) = bl->id;
+	// 		WBUFL(buf,6) = fdb->id;
+	// 		WBUFW(buf,10) = fdb->emblem_id;
+	// 		clif_send(buf, 12, bl, AREA_WOS);
+	// 	}
+	// // }
 
-	//Biali we dont need this so far... lets just comment this out
-	// if( battle_config.faction_size_bl&bl->type && ((battle_config.fvf_visual_size&1 && map_getmapflag(bl->m, MF_FVF)) || battle_config.fvf_visual_size&2) ) {
-	// 	if( fdb->size == SZ_BIG )
-	// 		clif_specialeffect(bl,423,AREA);
-	// 	else if( fdb->size == SZ_MEDIUM )
-	// 		clif_specialeffect(bl,421,AREA);
-	// }
 
+	clif_faction_belonginfo(BL_CAST(BL_PC,bl));
+	clif_faction_emblem(BL_CAST(BL_PC,bl), fdb);
+	clif_name_area(bl);
+	clif_guild_emblem_area(bl);
 	faction_show_aura(bl);
 }
 
@@ -182,18 +194,21 @@ void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl
 	struct status_change *sc = NULL;
 	int i, fd;
 
-	if( !sd->status.faction_id || (fdb = faction_search(faction_get_id(bl))) == NULL )
+	if( (fdb = faction_search(faction_get_id(bl))) == NULL )
 		return;
 
 	fd = sd->fd;
-	// if( map_getmapflag(bl->m, MF_FVF) ) { //biali todo working here
-		if( battle_config.faction_ally_info_bl && battle_config.faction_ally_info_bl&bl->type && sd->status.faction_id != faction_get_id(bl)) {
-			WFIFOHEAD(fd,32);
-			WFIFOW(fd,0) = 0x2dd;
-			WFIFOL(fd,2) = bl->id;
-			safestrncpy((char*)WFIFOP(fd,6), status_get_name(bl), NAME_LENGTH);
-			WFIFOW(fd,30) = faction_get_id(bl);
-			WFIFOSET(fd,packet_len(0x2dd));
+// 	// if( map_getmapflag(bl->m, MF_FVF) ) { //biali todo working here
+		if( battle_config.faction_ally_info_bl && (faction_get_id(&sd->bl) != 0 && faction_get_id(&sd->bl) != faction_get_id(bl))) {
+			if(battle_config.faction_ally_info_bl&bl->type) {
+				WFIFOHEAD(fd,32);
+				WFIFOW(fd,0) = 0x2dd;
+				WFIFOL(fd,2) = bl->id;
+				safestrncpy((char*)WFIFOP(fd,6), status_get_name(bl), NAME_LENGTH);
+				WFIFOW(fd,30) = faction_get_id(bl);
+				WFIFOSET(fd,packet_len(0x2dd));
+				ShowWarning("faction_getareachar_unit : entrou aqui, sem emblema. type = %d \n", bl->type);
+			}
 		} else {
 			//send data to the world around
 			WFIFOHEAD(fd,fdb->emblem_len+12);
@@ -204,14 +219,10 @@ void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl
 			memcpy(WFIFOP(fd,12),fdb->emblem_data,fdb->emblem_len);
 			WFIFOSET(fd,WFIFOW(fd,2));
 		}
-	// }
+// //	}
 
-	if( battle_config.faction_size_bl&bl->type && ((battle_config.fvf_visual_size&1 && map_getmapflag(bl->m, MF_FVF)) || battle_config.fvf_visual_size&2) ) {
-		if( fdb->size == SZ_BIG )
-			clif_specialeffect_single(bl,423,fd);
-		else if( fdb->size == SZ_MEDIUM )
-			clif_specialeffect_single(bl,421,fd);
-	}
+	ShowWarning("faction_getareachar_unit : Entrou aqui : %s sd->bl/bl:%d/%d\n",sd->status.name,sd->bl,bl);
+
 
 	if( bl->type&(BL_CHAR|BL_NPC) ) {
 		sc = status_get_sc(bl);
@@ -285,6 +296,7 @@ int faction_get_id(struct block_list *bl)
 	return 0;
 }
 
+
 // ID,Faction Name,Faction Player name,Location,X,Y,Race,Element,Element lvl,Size,Clothes Color,Color of mes,{ Aura: #1 #2 #3 },{ Script Bonus }
 static int faction_readdb(void)
 {
@@ -294,6 +306,8 @@ static int faction_readdb(void)
 	char line[1024], path[256];
 	FILE *fp;
 	void *aChSysSave = NULL;
+
+	memset(&factions, 0, sizeof(factions));
 
 	sprintf(path, "%s/%s", db_path, filename);
 	if((fp = fopen(path, "r")) == NULL ) {
@@ -454,29 +468,26 @@ static int faction_readdb(void)
 		fdb->script = parse_script(str[12],path,lines,0);
 
 		fdb->emblem_id = 1;
-		//fdb->emblem_id = id; //biali
-		//sprintf(path, "db/faction_emblem/faction_id_%d.ebm", id);
-		sprintf(path, "%s/emblems/faction_%d.ebm", db_path, i);
+		sprintf(path, "%s/emblems/faction_%d.ebm", db_path, id);
 		if( (fp2 = fopen(path, "rb")) != NULL ) {
 			fseek(fp2, 0, SEEK_END);
 			fdb->emblem_len = ftell(fp2);
+			factions[id].emblem_len = ftell(fp2);
 			fseek(fp2, 0, SEEK_SET);
-			//fread(&fdb->emblem_data, sizeof(fdb->emblem_data), 1, fp2);
-			fread(&fdb->emblem_data, 1, fdb->emblem_len, fp2);
+			fread(&fdb->emblem_data, sizeof(fdb->emblem_data), 1, fp2);
+			fread(&factions[id].emblem_data, 1, factions[id].emblem_len, fp2);
 			fclose(fp2);
-		} else memset(fdb->emblem_data, 0, sizeof(fdb->emblem_data));
+		} else 
+			memset(fdb->emblem_data, 0, sizeof(fdb->emblem_data));
 
-		fdb->l_emblem_id = 2;
-		//fdb->l_emblem_id = id; //biali
-		//sprintf(path, "db/faction_emblem/faction_id_%d_leader.ebm", id);
-		sprintf(path, "%s/emblems/faction_%d.ebm", db_path, i);
-		if( (fp2 = fopen(path, "rb")) != NULL ) {
-			fseek(fp2, 0, SEEK_END);
-			fdb->l_emblem_len = ftell(fp2);
-			fseek(fp2, 0, SEEK_SET);
-			fread(&fdb->l_emblem_data, sizeof(fdb->l_emblem_data), 1, fp2);
-			fclose(fp2);
-		} else memset(fdb->l_emblem_data, 0, sizeof(fdb->l_emblem_data));
+		factions[id].emblem_id = 1; // Emblem Index
+		factions[id].guild_id = id;
+		factions[id].guild_lv = 1;
+		factions[id].max_member = MAX_CLAN;
+		snprintf(factions[id].name, NAME_LENGTH, fdb->name); 
+		safestrncpy(factions[id].master, fdb->pl_name, NAME_LENGTH);
+		snprintf(factions[id].position[0].name, NAME_LENGTH, "%s Leader", fdb->pl_name);
+		safestrncpy(factions[id].position[1].name, fdb->pl_name, NAME_LENGTH);
 
 		idb_put(faction_db,id,fdb);
 		count++;
@@ -486,6 +497,19 @@ static int faction_readdb(void)
 
 	return 0;
 }
+
+// by biali
+void faction_update_data(struct map_session_data *sd) {
+	nullpo_retv(sd);
+	struct faction_data *fdb = faction_search(sd->status.faction_id);
+	safestrncpy(sd->faction.name, fdb->name, NAME_LENGTH);
+	safestrncpy(sd->faction.pl_name, fdb->pl_name, NAME_LENGTH);
+	sd->faction.g = factions[fdb->id];
+	sd->guild_emblem_id = factions[fdb->id].emblem_id;
+
+	return;
+}
+
 
 static void destroy_faction_data(struct faction_data *self, int free_self)
 {

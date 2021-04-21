@@ -225,6 +225,8 @@ static int battle_getenemyarea_sub(struct block_list *bl, va_list ap)
 	return 0;
 }
 
+
+// Biali check this out TODO
 /**
  * Returns list of enemies within an area
  * @param src

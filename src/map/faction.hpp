@@ -25,9 +25,6 @@ struct faction_data {
 	int emblem_len, emblem_id;
 	char emblem_data[2048];
 
-	int l_emblem_len, l_emblem_id;
-	char l_emblem_data[2048];
-
 	struct Channel *channel;
 };
 
@@ -46,7 +43,8 @@ struct faction_data {
 		(status_get_party_id(src)>0 && status_get_party_id(src) == status_get_party_id(tbl)) || \
 		(status_get_guild_id(src)>0 && status_get_guild_id(src) == status_get_guild_id(tbl))) )
 
-
+extern struct guild factions[];
+void faction_update_data(struct map_session_data *sd);
 int faction_reload_fvf_sub(struct block_list *,va_list);
 
 void faction_factionaura(struct map_session_data *);

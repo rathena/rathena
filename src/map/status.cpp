@@ -8294,7 +8294,7 @@ int status_get_emblem_id(struct block_list *bl)
 			{
 				struct map_session_data* sd = BL_CAST(BL_PC,bl);
 				if(sd->status.faction_id){
-					return sd->faction.emblem_id;
+					return sd->faction.g.emblem_id;
 				} else
 					return sd->guild_emblem_id;
 			}

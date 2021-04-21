@@ -78,13 +78,34 @@ prontera,152,180,3,0,[1:-50,4:50]	shop	Example_Shop_0	100,7227:100;
  * Example script
  * Faction ID = 2
  **/
-prontera,154,180,3,2	script	Example_Script_2	100,{
-	mes "Hello!";
-	close;
-}
+// prontera,154,180,3,2	script	Example_Script_2	100,{
+// 	mes "Hello!";
+// 	close;
+// }
 
 /**
  * Example duplicate
  * Duplicate of 'Example_Script_2' but with Faction ID = 3
  **/
-prontera,156,180,5,3	duplicate(Example_Script_2)	Example_Script_3	100
+//prontera,156,180,5,3	duplicate(Example_Script_2)	Example_Script_3	100
+
+
+prontera,154,180,3	script	Clan Join	100,{
+	mes "Hello!";
+	switch(select("Join a Clan:Leave the Clan:")){
+		case 1:
+			if (clan_join(SWORDCLAN)) {
+				sc_start2 SC_SWORDCLAN, INFINITE_TICK, 0, SWORDCLAN;
+				mes "[Raffam Oranpere]";
+				mes "Welcome to the ^3131FFSword Clan^000000!";
+				mes "You can review Clan info with ^3131FFCtrl+G^000000.";
+				mes "At your service!";
+			} else
+				mes "An error has occurred.";
+			close;
+		case 2:
+			mes "done.";
+			clan_leave();
+			close;
+	}
+}

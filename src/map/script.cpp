@@ -8799,9 +8799,8 @@ BUILDIN_FUNC(strcharinfo)
 			script_pushconststr(st,map_getmapdata(sd->bl.m)->name);
 			break;
 		case 4:
-			struct faction_data* fdb; // Faction System [Biali]
-			if( ( fdb = faction_search(sd->status.faction_id) ) != NULL )
-				script_pushstrcopy(st,fdb->pl_name);
+			if(sd->status.faction_id)
+				script_pushstrcopy(st,sd->faction.pl_name);
 			else
 				script_pushconststr(st,"");
 			break;
@@ -25727,6 +25726,7 @@ BUILDIN_FUNC(setfaction)
 	}
 
 	sd->status.faction_id = faction_id;
+	faction_update_data(sd); //feed sd->faction with new faction data;
 	status_calc_pc(sd,SCO_NONE);
 	if( map_getmapflag(sd->bl.m, MF_FVF) )
 		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);

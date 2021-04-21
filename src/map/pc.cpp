@@ -2562,6 +2562,12 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->bally = 0;
 #endif
 
+	// Biali Faction System. update char's faction data if in a faction at the moment of their login
+	if(st->faction_id) {
+		faction_update_data(sd);
+		ShowInfo("pc_authok : Faction data loaded for char %d\n",sd->status.char_id);
+	}
+
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	sd->hatEffects = {};
 #endif
@@ -8137,13 +8143,8 @@ static void pc_calcrep(struct map_session_data *sd, t_exp base_exp)
 
 	for (i=1; i <= MAX_FACTION; i++) {
 		if(faction_search(i) && faction_id == i) {
-			int value = sd->status.rep[i].value = cap_value(sd->status.rep[i].value + exp, 1, INT_MAX);
-			
-			if(value <= battle_config.reputation_hated) strncpy(sd->status.rep[i].desc,"HATED",12);
-			else if(value <= battle_config.reputation_unfriendly) strncpy(sd->status.rep[i].desc,"UNFRIENDLY",12);
-			else if(value > battle_config.reputation_unfriendly && value < battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"NEUTRAL",12);
-			else if(value >= battle_config.reputation_friendly) strncpy(sd->status.rep[i].desc,"FRIENDLY",12);
-			else strncpy(sd->status.rep[i].desc,"HONORED",12);
+			sd->status.rep[i].value = cap_value(sd->status.rep[i].value + exp, 1, INT_MAX);
+			clif_name_area(&sd->bl);
 			ShowInfo("Player %d reputation with faction[%d] is now  %d. \n", sd->status.char_id, i, sd->status.rep[i].value);
 		} else {
 			sd->status.rep[i].value = cap_value(sd->status.rep[i].value - (int)(exp * 0.05), 1, INT_MAX);

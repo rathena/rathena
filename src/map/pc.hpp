@@ -611,8 +611,9 @@ struct map_session_data {
 	struct faction {
 		char name[NAME_LENGTH];
 		char pl_name[NAME_LENGTH];
-		int emblem_len, emblem_id;
-		char emblem_data[2048];
+		struct guild g;
+		// int emblem_len, emblem_id;
+		// char emblem_data[2048];
 	} faction;
 
 	int vended_id;

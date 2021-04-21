@@ -109,6 +109,8 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
  *  Checking if user was already scheduled for deletion, and remove that timer if found.
  * @param account_id : aid to remove from db
  */
+
+// Biali check this out for update logout TODO
 void login_remove_online_user(uint32 account_id) {
 	struct online_login_data* p = login_get_online_user( account_id );
 

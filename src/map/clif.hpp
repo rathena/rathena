@@ -665,6 +665,9 @@ void clif_refresh_storagewindow(struct map_session_data *sd);
 void clif_refresh(struct map_session_data *sd);	// self
 
 void clif_rank_info(struct map_session_data *sd, int points, int total, int flag); //biali damage log
+// void clif_faction_name( struct block_list* src, send_target target ); // biali update nametag on players when holding faction flags
+// #define clif_faction_name_self(bl) clif_faction_name( (bl), (bl), SELF )
+// #define clif_faction_name_area(bl) clif_faction_name( (bl), (bl), AREA )
 
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);
@@ -862,6 +865,12 @@ void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd);
 void clif_bg_queue_entry_init(struct map_session_data *sd);
 void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);
 void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
+
+// biali faction system
+void clif_faction_belonginfo (struct map_session_data *sd);
+void clif_faction_emblem (struct map_session_data *sd, struct faction_data *fdb);
+void clif_sendfactionemblem_single(int fd, struct map_session_data *sd);
+void clif_sendfactionemblem_area(struct map_session_data *sd);
 
 // Instancing
 void clif_instance_create(int instance_id, int num);
