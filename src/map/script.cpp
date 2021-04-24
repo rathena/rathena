@@ -21625,7 +21625,7 @@ BUILDIN_FUNC(get_githash) {
 	safestrncpy(buf,git,strlen(git)+1);
 
 	if ( git[0] != UNKNOWN_VERSION )
-		script_pushstr(st,buf);
+		script_pushstrcopy(st,buf);
 	else
 		script_pushconststr(st,"Unknown"); //unknown
 	return SCRIPT_CMD_SUCCESS;
