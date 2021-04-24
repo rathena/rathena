@@ -15980,7 +15980,7 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
  * DBs being read:
  *	attr_fix.txt: Attribute adjustment table for attacks
  *	size_fix.yml: Size adjustment table for weapons
- *	refine_db.txt: Refining data table
+ *	refine_db.yml: Refining data table
  * @return 0
  */
 int status_readdb( bool reload ){

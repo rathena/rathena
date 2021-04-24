@@ -22,7 +22,6 @@ struct status_change;
 
 /**
  * Max Refine available to your server
- * Changing this limit requires edits to refine_db.txt
  **/
 #ifdef RENEWAL
 #	define MAX_REFINE 20
