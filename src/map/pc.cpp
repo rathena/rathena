@@ -6048,6 +6048,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.warping = 1;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 	sd->state.mail_writing = false;
+	sd->state.refineui_open = false;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
