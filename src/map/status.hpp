@@ -2842,7 +2842,7 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 
 void initChangeTables(void);
-int status_readdb(void);
+int status_readdb( bool reload = false );
 int do_init_status(void);
 void do_final_status(void);
 
