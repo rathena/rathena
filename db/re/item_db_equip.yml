@@ -87517,7 +87517,7 @@ Body:
     Locations:
       Costume_Head_Top: true
     EquipLevelMin: 1
-    View: 241
+    View: 341
   - Id: 20237
     AegisName: C_Pink_Fur_Hat
     Name: Costume Pink Beanie
@@ -119573,7 +119573,7 @@ Body:
     Locations:
       Costume_Head_Top: true
     EquipLevelMin: 1
-    View: 31710
+    View: 740
   - Id: 31711
     AegisName: Costume_Jewel_Crown
     Name: C Jewel Crown
