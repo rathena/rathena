@@ -212,14 +212,18 @@ void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl
 		} else {
 			//send data to the world around
 			WFIFOHEAD(fd,fdb->emblem_len+12);
-			WFIFOW(fd,0)=0x152;
 			WFIFOW(fd,2)=fdb->emblem_len+12;
-			WFIFOL(fd,4)=fdb->id;
 			WFIFOL(fd,8)=fdb->emblem_id;
 			memcpy(WFIFOP(fd,12),fdb->emblem_data,fdb->emblem_len);
+
+			WFIFOW(fd,0)=0x152;
+			WFIFOL(fd,4)=fdb->id;
 			WFIFOSET(fd,WFIFOW(fd,2));
 		}
 // //	}
+		clif_faction_belonginfo(BL_CAST(BL_PC,bl));
+		clif_faction_emblem(BL_CAST(BL_PC,bl), fdb);
+		clif_guild_emblem_area(bl);
 
 	ShowWarning("faction_getareachar_unit : Entrou aqui : %s sd->bl/bl:%d/%d\n",sd->status.name,sd->bl,bl);
 

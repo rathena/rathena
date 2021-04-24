@@ -1737,11 +1737,13 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
 				clif_specialeffect(bl,EF_BABYBODY2,AREA);
+			if(sd->status.faction_id)
+				faction_getareachar_unit(sd, bl);
 #ifdef BGEXTENDED
-			if(battle_config.bg_eAmod_mode && sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
+			else if(battle_config.bg_eAmod_mode && sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_area(sd);
 #else
-			if( sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
+			else if( sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_area(sd);
 #endif
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
@@ -2033,6 +2035,11 @@ static void clif_move2( struct block_list *bl, struct view_data *vd, struct unit
 				clif_specialeffect(&sd->bl,EF_BABYBODY2,AREA);
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
+			//biali faction system working here
+			if( sd->status.faction_id ){
+				faction_getareachar_unit(sd, bl);
+				ShowWarning("clif_move2 : sd->bl name : %s\n", sd->status.name);
+			}
 		}
 		break;
 	case BL_MOB:
@@ -4925,17 +4932,18 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if(tsd->state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
+			//biali faction system working here
+			if( tsd->status.faction_id ){
+				faction_getareachar_unit(sd, bl);
+				ShowWarning("clif_getareachar_unit : sd->bl name : %s\n", sd->status.name);
+			}
 #ifdef BGEXTENDED
-			if(battle_config.bg_eAmod_mode && tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
+			else if(battle_config.bg_eAmod_mode && tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 #else
-			if( tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
+			else if( tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 #endif
-			//biali faction system
-			if( tsd->status.faction_id )
-				clif_sendfactionemblem_single(tsd->fd,tsd);
-
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
 			clif_efst_status_change_sub(&sd->bl, bl, SELF);
@@ -4981,7 +4989,6 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
-	faction_getareachar_unit(sd, bl);
 }
 
 //Modifies the type of damage according to status changes [Skotlex]
@@ -9952,8 +9959,8 @@ void clif_refresh(struct map_session_data *sd)
 	if( sd->ed )
 		clif_elemental_info(sd);
 	
-	// if( sd->status.faction_id ) // Faction System [Biali]
-	// 	faction_getareachar_unit(sd, &sd->bl);
+	if( sd->status.faction_id ) // Faction System [Biali]
+		faction_getareachar_unit(sd, &sd->bl);
 
 	map_foreachinallrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
@@ -10925,41 +10932,38 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	clif_updatestatus(sd,SP_WEIGHT);
 	clif_updatestatus(sd,SP_MAXWEIGHT);
 
-	if( sd->status.faction_id ) { // Faction System [Biali]
-		//biali faction system
-		//struct guild* g;
-		// g = &factions[sd->status.faction_id];
-		// if (!g) {
-		// 	ShowError("clif_spawn : Fake Guild not Found :: %d\n",&factions[sd->status.faction_id].guild_id);
-		// 	return;
-		// }
-
-		struct faction_data *fdb = faction_search(sd->status.faction_id);
-
-
+	if(fdb){
 		if (sd->status.faction_id) {
 			clif_faction_belonginfo(sd);
 			clif_faction_emblem(sd, fdb);
 			clif_guild_emblem_area(&sd->bl);
 		}
-
-		ShowWarning(">>>>>> clif_parse_loadendack : Biali : Carregou a funcao \n");
-
-
-
-		// if( map_getmapflag(sd->bl.m, MF_FVF) ) {
-			//Biali TODO test
-		//faction_getareachar_unit(sd, &sd->bl);
-			//clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
-			// ----
-			//faction_hp(sd);
-			//faction_spawn(&sd->bl);
-			
-			//clif_name(&sd->bl,&sd->bl,SELF);
-			// clif_name_area(&sd->bl);
-			// clif_name_self(&sd->bl);
-		// }
 	}
+	faction_getareachar_unit(sd, &sd->bl);
+
+	// if( sd->status.faction_id ) { // Faction System [Biali]
+	// 	//biali faction system
+	// 	//struct guild* g;
+	// 	// g = &factions[sd->status.faction_id];
+	// 	// if (!g) {
+	// 	// 	ShowError("clif_spawn : Fake Guild not Found :: %d\n",&factions[sd->status.faction_id].guild_id);
+	// 	// 	return;
+	// 	// }
+
+
+	// 	// if( map_getmapflag(sd->bl.m, MF_FVF) ) {
+	// 		//Biali TODO test
+		
+	// 		//clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
+	// 		// ----
+	// 		//faction_hp(sd);
+	// 		//faction_spawn(&sd->bl);
+			
+	// 		//clif_name(&sd->bl,&sd->bl,SELF);
+	// 		// clif_name_area(&sd->bl);
+	// 		// clif_name_self(&sd->bl);
+	// 	// }
+	// }
 
 	// guild
 	// (needs to go before clif_spawn() to show guild emblems correctly)
@@ -18334,6 +18338,8 @@ int clif_visual_emblem_id(struct block_list *bl)
 {
 	nullpo_ret(bl);
 	int bg_id,f_id;
+	struct faction_data *fdb = NULL;
+
 	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, (bg_id = bg_team_get_id(bl)));
 
 	if( battle_config.bg_eAmod_mode && (bg_id = bg_team_get_id(bl)) > 0 && bgd != NULL && bgd->g )
@@ -18467,7 +18473,6 @@ void clif_faction_belonginfo(struct map_session_data *sd)
 	WFIFOL(fd,15) = 0;
 	safestrncpy(WFIFOCP(fd,19),fdb->name,NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x16c));
-	ShowWarning("clif_faction_belonginfo : Chegou aqui com faction_id %d\n",sd->status.faction_id);
 
 	return;
 }
@@ -18693,8 +18698,6 @@ void clif_sendfactionemblem_area(struct map_session_data *sd)
 	WBUFW(buf,30) = sd->status.faction_id;
 	clif_send(buf,packet_len(0x2dd), &sd->bl, AREA);
 
-	ShowWarning("clif_sendfactionemblem_area : Entrou aqui \n");
-
 	return;
 }
 
@@ -18707,7 +18710,6 @@ void clif_sendfactionemblem_single(int fd, struct map_session_data *sd)
 	safestrncpy(WFIFOCP(fd,6), sd->status.name, NAME_LENGTH);
 	WFIFOW(fd,30) = sd->status.faction_id;
 	WFIFOSET(fd,packet_len(0x2dd));
-
 
 	ShowWarning("clif_sendfactionemblem_single : char: %s. faction id: %d emblem_id: %d \n",sd->status.name,sd->status.faction_id,sd->faction.g.emblem_id);
 
