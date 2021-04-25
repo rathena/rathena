@@ -2527,6 +2527,10 @@ struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub {
 	uint16 itemId;
 #endif
 	uint32 price;
+#ifdef ENABLE_CASHSHOP_PREVIEW_PATCH
+	uint16 viewSprite;
+	uint32 location;
+#endif  // ENABLE_CASHSHOP_PREVIEW_PATCH
 } __attribute__((packed));
 
 struct PACKET_ZC_ACK_SCHEDULER_CASHITEM {
@@ -4027,6 +4031,104 @@ struct PACKET_ZC_PERSONAL_INFOMATION {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_PERSONAL_INFOMATION, 0x097b);
 #endif  // PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 || defined(PACKETVER_ZERO)
+
+struct PACKET_CZ_REQUEST_ACTNPC {
+	int16 packetType;
+	uint32 GID;
+	uint32 targetGID;
+	int8 action;
+} __attribute__((packed));
+
+#if PACKETVER < 3
+struct PACKET_ZC_NOTIFY_SKILL {
+	int16 PacketType;
+	uint16 SKID;
+	uint32 AID;
+	uint32 targetID;
+	uint32 startTime;
+	int32 attackMT;
+	int32 attackedMT;
+	int16 damage;
+	int16 level;
+	int16 count;
+	int8 action;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_SKILL, 0x0114);
+#else
+struct PACKET_ZC_NOTIFY_SKILL {
+	int16 PacketType;
+	uint16 SKID;
+	uint32 AID;
+	uint32 targetID;
+	uint32 startTime;
+	int32 attackMT;
+	int32 attackedMT;
+	int32 damage;
+	int16 level;
+	int16 count;
+	int8 action;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_SKILL, 0x01de);
+#endif 
+
+#if PACKETVER_MAIN_NUM >= 20130731 || PACKETVER_RE_NUM >= 20130724 || defined(PACKETVER_ZERO)
+struct PACKET_ZC_USE_SKILL {
+	int16 PacketType;
+	uint16 SKID;
+	int32 level;
+	uint32 targetAID;
+	uint32 srcAID;
+	int8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_USE_SKILL, 0x09cb);
+#else
+struct PACKET_ZC_USE_SKILL {
+	int16 PacketType;
+	uint16 SKID;
+	int16 level;
+	uint32 targetAID;
+	uint32 srcAID;
+	int8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_USE_SKILL, 0x011a);
+#endif
+
+struct PACKET_ZC_NOTIFY_GROUNDSKILL {
+	int16 PacketType;
+	uint16 SKID;
+	uint32 AID;
+	int16 level;
+	int16 xPos;
+	int16 yPos;
+	uint32 startTime;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_GROUNDSKILL, 0x0117);
+
+#if PACKETVER_MAIN_NUM >= 20081112 || PACKETVER_RE_NUM >= 20081111 || defined(PACKETVER_ZERO)
+struct PACKET_ZC_SKILL_POSTDELAY {
+	int16 PacketType;
+	uint16 SKID;
+	uint32 DelayTM;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILL_POSTDELAY, 0x043d);
+#endif
+
+struct PACKET_ZC_NOTIFY_SKILL_POSITION {
+	int16 PacketType;
+	uint16 SKID;
+	uint32 AID;
+	uint32 targetID;
+	uint32 startTime;
+	int32 attackMT;
+	int32 attackedMT;
+	int16 xPos;
+	int16 yPos;
+	int16 damage;
+	int16 level;
+	int16 count;
+	int8 action;
+};
+DEFINE_PACKET_HEADER(ZC_NOTIFY_SKILL_POSITION, 0x0115);
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)
