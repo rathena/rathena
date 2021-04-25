@@ -105,9 +105,8 @@
 		mes "Well, even if it fails, it only decreases by 1 refine level.";
 		mes "Would you like to continue refining?";
 		next;
-		.@menu$ = "";
 		if (countitem(6635) < .@blacksmith_blessing_count)
-			setarray .@menu$[1], "Yes", "Not yet";
+			setarray .@menu$[0], "", "Yes", "Not yet";
 		else {
 			mes "[Blacksmith Mighty Hammer]";
 			mes "Ah! Is it the ^0000ffBlacksmith Blessing^000000?";
@@ -297,13 +296,12 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 		mes "It is impossible that the refine level will drop by, say, 3 or 4... that sounds scary.";
 		mes "Here it can only decrease by 1 level.";
 		next;
-		.@menu$ = "";
 		if (.@blacksmith_blessing_count == 0 || countitem(6635) < .@blacksmith_blessing_count) {
 			mes "[Basta]";
 			mes "Compared to other blacksmiths, the risk is smaller.";
 			mes "I've given all precautions. Do you want to try it?";
 			next;
-			setarray .@menu$[1], "Yes", "No";
+			setarray .@menu$[0], "", "Yes", "No";
 		}
 		else {
 			mes "[Basta]";
