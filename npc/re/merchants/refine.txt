@@ -43,7 +43,7 @@ payon_in01,18,132,3	duplicate(Vestri#prt)	Vestri#pay	4_M_DWARF
 //= To allow auto safe refining/multiple refining set the
 //= second argument to '1' in the function call.
 //= If you enable this function, be sure to edit the value of
-//= .@safe to the max safe refine in refine_db.yml as well.
+//= .@safe to the max safe refine in refine.yml as well.
 //=
 //= On official servers, if an item is unsuccessfully refined
 //= it will break at a 20% rate and downgrade at an 80% rate.
