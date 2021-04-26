@@ -2292,3 +2292,12 @@
 480090:470088,{ bonus2 bMagicAtkEle,Ele_All,15; }
 480091:470087,{ bonus bCritAtkRate,15; }
 480091:470088,{ bonus bVariableCastrate,-15; }
+//400134:530012,{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus bDelayrate,-10; bonus2 bSkillAtk,"LG_HESPERUSLIT",10*(.@r_weapon/2); }
+//400134:600016,{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus2 bAddSize,Size_All,10; bonus2 bSkillAtk,"RK_WINDCUTTER",10*(.@r_weapon/2); }
+//400134:620009,{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus2 bAddRace,RC_All,10; bonus2 bSkillAtk,"NC_AXETORNADO",10*(.@r_weapon/2); }
+450179:2980,{ bonus2 bMagicAddSize,Size_All,15; bonus bPerfectHitRate,10; bonus bMatkRate,10; autobonus "{ bonus2 bMagicAddRace,RC_All,15; bonus2 bMagicAddRace,RC_Player_Human,-15; bonus2 bMagicAddRace,RC_Player_Doram,-15; }",1,10000,BF_WEAPON; }
+450179:18849,{ .@sum = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_HEAD_TOP); bonus2 bMagicAtkEle,Ele_Ghost,.@sum; bonus2 bMagicAtkEle,Ele_Poison,.@sum; bonus2 bMagicAtkEle,Ele_Holy,.@sum; bonus2 bMagicAtkEle,Ele_Dark,.@sum; if (.@sum>=19) { bonus bMatkRate,15; if (.@sum>=23) { bonus2 bMagicAddEle,Ele_All,20; } } }
+450179:32237,{ .@sum = getequiprefinerycnt(EQI_ARMOR); bonus bMatk,10*.@r; if (.@sum>=9) { bonus bVariableCastrate,-5; if (.@sum>=11) { bonus2 bMagicAtkEle,Ele_Neutral,10; bonus2 bMagicAtkEle,Ele_Fire,10; bonus2 bMagicAtkEle,Ele_Earth,10; bonus2 bMagicAtkEle,Ele_Water,10; bonus2 bMagicAtkEle,Ele_Wind,10; if (.@sum>=13) { bonus bUnbreakableArmor; } } } }
+490120:450182,{ bonus bDelayrate,-10; }
+490121:450182,{ bonus bVariableCastrate,-10; }
+490121:490120,{ bonus bDelayrate,-5; }

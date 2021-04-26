@@ -66037,6 +66037,13 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,.@a;
       bonus2 bAddRace,RC_Player_Doram,.@a;
       bonus2 bMagicAddRace,RC_Player_Doram,.@a;
+  - Id: 15858
+    AegisName: C_Choco_Banana
+    Name: Costume Choco Banana Bonnet
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    View: 2087
   - Id: 16000
     AegisName: Erde
     Name: Erde
@@ -79254,6 +79261,21 @@ Body:
       else {
          autobonus "{ bonus2 bMagicAtkEle,Ele_Holy,10; }",(10+(.@r*2)),60000,BF_MAGIC,"{ specialeffect2 EF_ASPERSIO; }";
       }
+  - Id: 19265
+    AegisName: Smoky_TransformHat
+    Name: Smokie Transformation Leaf
+    Type: Armor
+    Weight: 600
+    Defense: 7
+    Slots: 1
+    Locations:
+      Head_Top: true
+    Refineable: true
+    View: 1646
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,.@r;
+      autobonus "{ .@r = getrefine(); bonus3 bAutoSpell,\"MG_COLDBOLT\",2,50; bonus3 bAutoSpell,\"MG_FIREBOLT\",2,50; bonus3 bAutoSpell,\"MG_LIGHTNINGBOLT\",2,50; bonus3 bAutoSpell,\"WZ_EARTHSPIKE\",2,50; if (.@r>=7) { bonus3 bAutoSpell,\"WZ_FROSTNOVA\",5,40; if (.@r>=8) { bonus3 bAutoSpell,\"MG_THUNDERSTORM\",5,30; if (BaseLevel>100) { if (.@r>=9) { bonus3 bAutoSpell,\"WL_HELLINFERNO\",5,20; if (.@r>=10) { bonus3 bAutoSpell,\"WL_CHAINLIGHTNING\",3,10; } } } } } }",1,5000,BF_WEAPON,"{ active_transform 1056,5000; /*SMOKIE*/ }";
   - Id: 19266
     AegisName: Survive_Circlet_
     Name: Survivor's Circlet
@@ -88824,6 +88846,13 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1091
+  - Id: 20413
+    AegisName: C_Isabella_Brown_Ear
+    Name: C Piamette Hairband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    View: 1031
   - Id: 20416
     AegisName: C_1Grade_Balloon
     Name: Costume Grade 1 Balloon
@@ -92829,6 +92858,19 @@ Body:
          bonus bMagicHPGainValue,200;
          bonus bMagicSPGainValue,20;
       }
+  - Id: 20988
+    AegisName: C_Mechanical_Butterfly
+    Name: "Costume: Mechanical Butterfly"
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    View: 92
+  - Id: 20990
+    AegisName: C_Rotating_Gears
+    Name: "Costume: Rotating Gears"
+    Type: Armor
+    Locations:
+      Costume_Garment: true
   - Id: 21000
     AegisName: Upg_Twohand_Sword
     Name: Upg Two-Handed Sword
@@ -93760,6 +93802,14 @@ Body:
     Locations:
       Costume_Head_Mid: true
       Costume_Head_Low: true
+  - Id: 21207
+    AegisName: C_Bullhead
+    Name: Costume Bull Head
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    View: 2078
   - Id: 21300
     AegisName: C_Guardian_Lion_Mask
     Name: Costume Lion Mask
@@ -120174,6 +120224,13 @@ Body:
     View: 1944
     Locations:
       Costume_Head_Low: true
+  - Id: 31847
+    AegisName: c_Blinking_Eyes_Cocktai_BU
+    Name: Costume Blinking Blue Eyes
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    View: 1945
   - Id: 31848
     AegisName: C_Rose_Gothic_Bonnet
     Name: Costume Rose Gothic Bonnet
@@ -120392,6 +120449,13 @@ Body:
     View: 1988
     Locations:
       Costume_Head_Low: true
+  - Id: 31921
+    AegisName: C_Fairy_Long_CB
+    Name: Costume Fairy Long (Sakura)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 1992
   - Id: 31922
     AegisName: C_Fluffy_Semi_Long_SV
     Name: Costume Fluffy Semi-Long (Silver)
@@ -120483,6 +120547,69 @@ Body:
     View: 2011
     Locations:
       Costume_Head_Low: true
+  - Id: 31959
+    AegisName: C_RK_Hair_BL
+    Name: Costume Firm Wave Hair(Black)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2062
+  - Id: 31960
+    AegisName: C_RK_Hair_BU
+    Name: Costume Firm Wave Hair(Blue)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2063
+  - Id: 31961
+    AegisName: C_RK_Hair_GN
+    Name: Costume Firm Wave Hair(Green)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2064
+  - Id: 31962
+    AegisName: C_RK_Hair_OM
+    Name: Costume Firm Wave Hair(Brown)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2065
+  - Id: 31963
+    AegisName: C_RK_Hair_PK
+    Name: Costume Firm Wave Hair(Pink)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2066
+  - Id: 31964
+    AegisName: C_RK_Hair_PP
+    Name: Costume Firm Wave Hair(Purple)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2067
+  - Id: 31965
+    AegisName: C_RK_Hair_RD
+    Name: Costume Firm Wave Hair(Red)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2068
+  - Id: 31966
+    AegisName: C_RK_Hair_WH
+    Name: Costume Firm Wave Hair(White)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2069
+  - Id: 31967
+    AegisName: C_RK_Hair_YL
+    Name: Costume Firm Wave Hair(Yellow)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2070
   - Id: 32004
     AegisName: Probation_Lance
     Name: Trial Royal Guard's Lance
@@ -121874,6 +122001,13 @@ Body:
          autobonus "{ bonus2 bHPRegenRate,300,1000; }",40,4000,BF_MAGIC;
          autobonus "{ bonus2 bSPRegenRate,70,1000; }",40,4000,BF_MAGIC;
       }
+  - Id: 400016
+    AegisName: Turkey_Hat
+    Name: Turkey Hat
+    Type: Armor
+    Locations:
+      Head_Top: true
+    Refineable: true
   - Id: 400020
     AegisName: C_BeachBall
     Name: Costume Beachball
@@ -122621,6 +122755,55 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 400127
+    AegisName: Ep18_Mini_Elly
+    Name: Mini Elly
+    Type: Armor
+    Locations:
+      Head_Top: true
+    Refineable: true
+    View: 2077
+    Trade:
+      Override: 100
+      NoDrop: True
+      NoTrade: True
+      NoSell: True
+      NoCart: True
+      NoStorage: True
+      NoGuildStorage: True
+      NoMail: True
+      NoAuction: True
+  - Id: 400128
+    AegisName: aegis_400128
+    Name: Costume Dropping Elly
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    View: 2077
+  - Id: 400134
+    AegisName: Thanos_Helm_1
+    Name: Thanos Warrior Helmet
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 190
+    Refineable: true
+    View: 511
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,4*(.@r/3);
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         if (.@r>=9) {
+            bonus bShortAtkRate,10;
+            if (.@r>=11) {
+               bonus2 bAddEle,Ele_All,15;
+            }
+         }
+      }
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -122725,6 +122908,13 @@ Body:
       NoAuction: true
     Script: |
       bonus bAspdRate,8;
+  - Id: 410029
+    AegisName: C_Wonder_Egg_Basket
+    Name: Costume Wonder Egg Basket
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    View: 2055
   - Id: 420003
     AegisName: aegis_420003
     Name: CD in Mouth
@@ -126572,6 +126762,14 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
       }
+  - Id: 450151
+    AegisName: aegis_450151
+    Name: Reinforced Cotton Shirt
+    Type: Armor
+    Slots: 1
+    Locations:
+      Armor: true
+    Refineable: true
   - Id: 450164
     AegisName: Egirnion_Armor
     Name: Aegirnion Armor
@@ -126626,6 +126824,32 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-15;
       }
+  - Id: 450179
+    AegisName: Bloody_Dress
+    Name: Celine's Dress
+    Type: Armor
+    Weight: 500
+    MagicAttack: 50
+    Defense: 40
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,10;
+            if (.@r>=11) {
+               bonus bDelayrate,-10;
+               if (.@r>=12) {
+                  bonus bDelayrate,-5;
+               }
+            }
+         }
+      }
   - Id: 450182
     AegisName: Sprint_Mail_IL
     Name: Illusion Sprint Mail
@@ -126650,6 +126874,15 @@ Body:
             }
          }
       }
+  - Id: 460012
+    AegisName: aegis_460012
+    Name: Reinforced Shield
+    Type: Armor
+    Weight: 500
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    Refineable: true
   - Id: 460017
     AegisName: Guard_IL
     Name: Illusion Guard
@@ -127494,6 +127727,20 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-5;
       }
+  - Id: 480069
+    AegisName: C_Wing_Of_Angel_Move
+    Name: Costume Heavenly Angel Wings
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    View: 61
+  - Id: 480071
+    AegisName: Calabash
+    Name: Costume Vial
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    View: 82
   - Id: 480083
     AegisName: Egirnion_Manteau
     Name: Aegirnion Manteau
@@ -128307,6 +128554,76 @@ Body:
     Script: |
       bonus bMatkRate,5;
       bonus2 bAddClass,Class_All,5;
+  - Id: 490106
+    AegisName: Gray_W_Pendant
+    Name: Gray Wolf Pendant
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 190
+    Script: |
+      bonus2 bAddClass,Class_All,7;
+      bonus bMaxHPrate,5;
+  - Id: 490107
+    AegisName: Gray_W_Ring
+    Name: Gray Wolf Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 190
+    Script: |
+      bonus2 bAddClass,Class_All,7;
+      bonus bMaxSPrate,5;
+  - Id: 490108
+    AegisName: Gray_W_Earing
+    Name: Gray Wolf Earring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 190
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMaxHPrate,5;
+  - Id: 490109
+    AegisName: Gray_W_Necklace
+    Name: Gray Wolf Necklace
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 190
+    Script: |
+      bonus bMatkRate,7;
+      bonus bMaxSPrate,5;
+  - Id: 490120
+    AegisName: Sprint_Ring_IL
+    Name: Illusion Sprint Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 130
+    Script: |
+      bonus bVariableCastrate,-10;
+  - Id: 490121
+    AegisName: Sprint_Glove_IL
+    Name: Illusion Sprint Glove
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 130
+    Script: |
+      bonus bDelayrate,-3;
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon
