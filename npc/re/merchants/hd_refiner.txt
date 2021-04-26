@@ -106,7 +106,7 @@
 		mes "Would you like to continue refining?";
 		next;
 		if (countitem(6635) < .@blacksmith_blessing_count)
-			setarray .@menu$[1], "Yes", "Not yet";
+			setarray .@menu$[0], "", "Yes", "Not yet";
 		else {
 			mes "[Blacksmith Mighty Hammer]";
 			mes "Ah! Is it the ^0000ffBlacksmith Blessing^000000?";
@@ -301,7 +301,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 			mes "Compared to other blacksmiths, the risk is smaller.";
 			mes "I've given all precautions. Do you want to try it?";
 			next;
-			setarray .@menu$[1], "Yes", "No";
+			setarray .@menu$[0], "", "Yes", "No";
 		}
 		else {
 			mes "[Basta]";
