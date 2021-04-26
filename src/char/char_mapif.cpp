@@ -176,7 +176,7 @@ void chmapif_send_misc(int fd) {
 	// Send name for wisp to player
 	safestrncpy( WBUFCP( buf, 5 ), charserv_config.wisp_server_name, NAME_LENGTH );
 	// Default map
-	safestrncpy( WBUFCP(buf, ( offs += NAME_LENGTH ) ), charserv_config.default_map, MAP_NAME_LENGTH ); // 29
+	safestrncpy( WBUFCP( buf, ( offs += NAME_LENGTH ) ), charserv_config.default_map, MAP_NAME_LENGTH ); // 29
 	WBUFW(buf, (offs+=MAP_NAME_LENGTH)) = charserv_config.default_map_x; // 41
 	WBUFW(buf, (offs+=2)) = charserv_config.default_map_y; // 43
 	offs+=2;
