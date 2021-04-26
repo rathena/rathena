@@ -14365,15 +14365,15 @@ Body:
       AllowWhenHidden: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     CopyFlags:
@@ -14398,15 +14398,15 @@ Body:
       AlterRangeShadowJump: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     Element: Weapon
