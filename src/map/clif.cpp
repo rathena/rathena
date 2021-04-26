@@ -18181,6 +18181,9 @@ void clif_bg_queue_entry_init(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
+	if (!clif_session_isValid(sd))
+		return;
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, packet_len(0x90e));
