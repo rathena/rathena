@@ -4201,7 +4201,14 @@ const std::string MobDatabase::getDefaultLocation() {
 
 bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops) {
 	const YAML::Node &dropNode = node[nodeName];
-	uint16 i = 0;
+	uint16 i;
+
+	// Find first empty spot
+	for( i = 0; i < max; i++ ){
+		if( drops[i].nameid == 0 ){
+			break;
+		}
+	}
 
 	for (const YAML::Node &dropit : dropNode) {
 		uint16 index;

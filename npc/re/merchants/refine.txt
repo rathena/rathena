@@ -16,22 +16,26 @@
 //=     The safe/multiple refine feature is now functional. [Euphy]
 //= 1.3 Updated to match the latest official script. [Euphy]
 //= 1.4 Added correct safe refines. [Haruna]
+//= 1.5 Added Refine UI [Atemo, Lemongrass]
 //============================================================
 
 // +11 and above Refiners
 //============================================================
-prt_in,90,72,5	script	Vestri#prt	826,{
-	callfunc "refinenew","Vestri",0;
-	end;
+prt_in,90,72,5	script	Vestri#prt	4_M_DWARF,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Vestri]";
+		mes "I'm the most skillful blacksmith!";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinenew","Vestri",0;
+		end;
+	}
 }
-morocc_in,64,41,5	script	Vestri#moc	826,{
-	callfunc "refinenew","Vestri",0;
-	end;
-}
-payon_in01,18,132,3	script	Vestri#pay	826,{
-	callfunc "refinenew","Vestri",0;
-	end;
-}
+
+morocc_in,64,41,5	duplicate(Vestri#prt)	Vestri#moc	4_M_DWARF
+payon_in01,18,132,3	duplicate(Vestri#prt)	Vestri#pay	4_M_DWARF
 
 //============================================================
 // +11 and above Refiner Function
@@ -39,7 +43,7 @@ payon_in01,18,132,3	script	Vestri#pay	826,{
 //= To allow auto safe refining/multiple refining set the
 //= second argument to '1' in the function call.
 //= If you enable this function, be sure to edit the value of
-//= .@safe to the max safe refine in refine_db.txt as well.
+//= .@safe to the max safe refine in refine.yml as well.
 //=
 //= On official servers, if an item is unsuccessfully refined
 //= it will break at a 20% rate and downgrade at an 80% rate.
@@ -101,8 +105,8 @@ function	script	refinenew	{
 	}
 	.@refineitemid = getequipid(.@part); // save id of the item
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	.@price = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_ZENY_COST);
-	.@material = getequiprefinecost(.@part, REFINE_COST_OVER10, REFINE_MATERIAL_ID);
+	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 	.@safe = 10;
 
 	if (getequipweaponlv(.@part) >= 1 && getequipweaponlv(.@part) <= 4) {
