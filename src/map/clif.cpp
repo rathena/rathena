@@ -18181,7 +18181,7 @@ void clif_bg_queue_entry_init(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	struct PACKET_ZC_ENTRY_QUEUE_INIT p;
+	struct PACKET_ZC_ENTRY_QUEUE_INIT p = {};
 
 	p.packetType = HEADER_ZC_ENTRY_QUEUE_INIT;
 
