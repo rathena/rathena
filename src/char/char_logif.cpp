@@ -757,7 +757,7 @@ int chlogif_parse(int fd) {
 }
 
 TIMER_FUNC(chlogif_check_connect_logserver){
-	if (login_fd > 0 && session[login_fd] != NULL)
+	if (chlogif_isconnected())
 		return 0;
 
 	ShowInfo("Attempt to connect to login-server...\n");
@@ -790,7 +790,7 @@ TIMER_FUNC(chlogif_check_connect_logserver){
 
 
 int chlogif_isconnected(){
-	return (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof);
+	return session_isActive(login_fd);
 }
 
 void do_init_chlogif(void) {
@@ -839,7 +839,7 @@ void chlogif_on_ready(void)
 	chlogif_send_acc_tologin(INVALID_TIMER, gettick(), 0, 0);
 
 	// if no map-server already connected, display a message...
-	ARR_FIND( 0, ARRAYLENGTH(map_server), i, map_server[i].fd > 0 && !map_server[i].map.empty() );
+	ARR_FIND( 0, ARRAYLENGTH(map_server), i, session_isValid(map_server[i].fd) && !map_server[i].map.empty() );
 	if( i == ARRAYLENGTH(map_server) )
 		ShowStatus("Awaiting maps from map-server.\n");
 }

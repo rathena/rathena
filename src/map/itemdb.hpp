@@ -87,7 +87,9 @@ enum item_itemid : t_itemid
 	ITEMID_ANGRA_MANYU					= 1599,
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
+	ITEMID_NEW_INSURANCE				= 6413,
 	ITEMID_STRANGE_EMBRYO				= 6415,
+	ITEMID_BLACKSMITH_BLESSING			= 6635,
 	ITEMID_STONE						= 7049,
 	ITEMID_FIRE_BOTTLE					= 7135,
 	ITEMID_ACID_BOTTLE					= 7136,
@@ -744,6 +746,12 @@ enum e_random_item_group {
 	IG_ENCHANT_STONE_BOX13,
 	IG_ENCHANT_STONE_BOX14,
 	IG_ENCHANT_STONE_BOX15,
+	IG_ENCHANT_STONE_BOX16,
+	IG_ENCHANT_STONE_BOX17,
+	IG_ENCHANT_STONE_BOX18,
+	IG_ENCHANT_STONE_BOX19,
+	IG_ENCHANT_STONE_BOX20,
+	IG_ENCHANT_STONE_BOX21,
 };
 
 /// Enum for bound/sell restricted selling
@@ -852,7 +860,6 @@ struct item_data
 	t_itemid nameid;
 	std::string name, ename;
 
-	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
 	uint32 value_buy;
 	uint32 value_sell;
 	item_types type;
@@ -1005,6 +1012,9 @@ public:
 extern RandomOptionGroupDatabase random_option_group;
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
+private:
+	e_sex defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id );
+
 public:
 	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 1) {
 

@@ -16,6 +16,7 @@
 //= 3.2a Added 'disable_items' command. [Euphy]
 //= 3.3 Some official script updates. [Euphy]
 //= 3.4 Added VIP features. [Euphy]
+//= 3.5 Added Refine UI [Atemo, Lemongrass]
 //============================================================
 
 // Christopher: Geffen Blacksmith
@@ -522,33 +523,102 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 
 // Weapon/Armor Refiners
 //============================================================
-prt_in,63,60,0	script	Hollgrehenn	85,{
-	callfunc "refinemain","Hollgrehenn",0;
-	end;
+prt_in,63,60,0	script	Hollgrehenn	4_M_03,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Hollgrehenn]";
+		mes "I'm a blacksmith who can refine weapons and equipment.";
+		mes "Do you have any items that you'd like to refine?";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Hollgrehenn",0;
+		end;
+	}
 }
-morocc_in,73,38,6	script	Aragham	99,{
-	callfunc "refinemain","Aragham",0;
-	end;
+
+morocc_in,73,38,6	script	Aragham	4W_M_03,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Aragham]";
+		mes "De~ sert~ Blacksmith~";
+		mes "Aragham Ssaleh~ who can refine anything Ssaleh~";
+		mes "Let me see what you'd like to refine~";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Aragham",0;
+		end;
+	}
 }
-payon,144,173,5	script	Antonio	88,{
-	callfunc "refinemain","Antonio",0;
-	end;
+
+payon,144,173,5	script	Antonio	4_M_ORIENT01,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Antonio]";
+		mes "Stop nagging and get me the equipment you want to refine.";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Antonio",0;
+		end;
+	}
 }
-alberta_in,28,58,0	script	Fredrik	85,{
-	callfunc "refinemain","Fredrik",0;
-	end;
+
+alberta_in,28,58,0	script	Fredrik	4_M_03,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Fredrik Hermanthorn]";
+		mes "I am a blacksmith who can refine your weapon or equipment.";
+		mes "Do you have anything that you'd like to refine?";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Fredrik",0;
+		end;
+	}
 }
-yuno_in01,171,21,4	script	Lambert	88,{
-	callfunc "refinemain","Lambert",0;
-	end;
+
+yuno_in01,171,21,4	script	Lambert	4_M_ORIENT01,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Lambert]";
+		mes "Wel...come... This is... the best... smithy... in Juno.";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Lambert",0;
+		end;
+	}
 }
-ein_in01,24,87,5	script	Manthasman	826,{
-	callfunc "refinemain","Manthasman Pruhag",0;
-	end;
+
+ein_in01,24,87,5	script	Manthasman	4_M_DWARF,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Manthasman Pruhag]";
+		mes "Hahaha, you already knew it. So you'd like to refine something?";
+		mes "Let's try something risky today!";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Manthasman Pruhag",0;
+		end;
+	}
 }
-lhz_in02,282,20,7	script	Fulerr	869,{
-	callfunc "refinemain","Fulerr",0;
-	end;
+
+lhz_in02,282,20,7	script	Fulerr	4_M_LGTMAN,{
+	if( getbattleflag( "feature.refineui" ) ){
+		mes "[Fulerr]";
+		mes "Hehe... You wanna refine?";
+		mes "Hehe.. Consider it done..";
+		mes "Hehe....";
+		close2;
+		refineui();
+		end;
+	}else{
+		callfunc "refinemain","Fulerr",0;
+		end;
+	}
 }
 
 //============================================================
@@ -557,7 +627,7 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 //= To allow auto safe refining/multiple refining set the
 //= second argument to '1' in the function call.
 //= If you enable this function, be sure to edit the value of
-//= .@safe to the max safe refine in refine_db.txt as well.
+//= .@safe to the max safe refine in refine.yml as well.
 //============================================================
 function	script	refinemain	{
 	disable_items;

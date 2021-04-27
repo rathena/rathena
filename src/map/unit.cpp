@@ -412,7 +412,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		case BL_MOB:
 			md = BL_CAST(BL_MOB, bl);
 
-			if (status_has_mode(&md->status,MD_STATUS_IMMUNE))
+			if (status_has_mode(&md->status,MD_STATUSIMMUNE))
 				icewall_walk_block = battle_config.boss_icewall_walk_block;
 			else
 				icewall_walk_block = battle_config.mob_icewall_walk_block;
@@ -1216,7 +1216,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 	switch (bl->type) {
 		case BL_MOB:
 			// Immune can't be knocked back
-			if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE))
+			if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACKIMMUNE))
 				&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
 				return UB_MD_KNOCKBACK_IMMUNE;
 			break;
@@ -1488,8 +1488,8 @@ int unit_can_move(struct block_list *bl) {
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
 		struct mob_data *md = BL_CAST(BL_MOB, bl);
-		if(md && ((status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
-			|| (!status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
+		if(md && ((status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
+			|| (!status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
 			return 0;
 		}
@@ -1541,7 +1541,7 @@ int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int typ
 
 	if (type) {
 		//Bosses can ignore skill induced walkdelay (but not damage induced)
-		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_STATUS_IMMUNE))
+		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_STATUSIMMUNE))
 			return 0;
 		//Make sure walk delay is not decreased
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
@@ -1965,11 +1965,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 		mobskill_event(md, src, tick, -1); // Cast targetted skill event.
 
-		if ((status_has_mode(tstatus,MD_CASTSENSOR_IDLE) || status_has_mode(tstatus,MD_CASTSENSOR_CHASE)) && battle_check_target(target, src, BCT_ENEMY) > 0) {
+		if ((status_has_mode(tstatus,MD_CASTSENSORIDLE) || status_has_mode(tstatus,MD_CASTSENSORCHASE)) && battle_check_target(target, src, BCT_ENEMY) > 0) {
 			switch (md->state.skillstate) {
 				case MSS_RUSH:
 				case MSS_FOLLOW:
-					if (!status_has_mode(tstatus,MD_CASTSENSOR_CHASE))
+					if (!status_has_mode(tstatus,MD_CASTSENSORCHASE))
 						break;
 
 					md->target_id = src->id;
@@ -1978,7 +1978,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 					break;
 				case MSS_IDLE:
 				case MSS_WALK:
-					if (!status_has_mode(tstatus,MD_CASTSENSOR_IDLE))
+					if (!status_has_mode(tstatus,MD_CASTSENSORIDLE))
 						break;
 
 					md->target_id = src->id;
@@ -3397,11 +3397,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->num_quests = sd->avail_quests = 0;
 			}
 
-			if (sd->qi_display) {
-				aFree(sd->qi_display);
-				sd->qi_display = NULL;
-			}
-			sd->qi_count = 0;
+			sd->qi_display.clear();
 
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 			sd->hatEffects.clear();
