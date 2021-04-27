@@ -1025,6 +1025,11 @@ struct packet_bgqueue_battlebegins {
 	char game_name[NAME_LENGTH];
 } __attribute__((packed));
 
+struct PACKET_ZC_ENTRY_QUEUE_INIT {
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ENTRY_QUEUE_INIT, 0x90e);
+
 struct packet_script_clear {
 	int16 PacketType;
 	uint32 NpcID;

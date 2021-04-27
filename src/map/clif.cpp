@@ -18181,14 +18181,11 @@ void clif_bg_queue_entry_init(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	if (!clif_session_isValid(sd))
-		return;
+	struct PACKET_ZC_ENTRY_QUEUE_INIT p;
 
-	int fd = sd->fd;
+	p.packetType = HEADER_ZC_ENTRY_QUEUE_INIT;
 
-	WFIFOHEAD(fd, packet_len(0x90e));
-	WFIFOW(fd,0) = 0x90e;
-	WFIFOSET(fd, packet_len(0x90e));
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
 /// Custom Fonts (ZC_NOTIFY_FONT).
