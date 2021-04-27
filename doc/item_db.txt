@@ -143,6 +143,8 @@ Swordman
 Taekwon
 Thief
 Wizard
+Soul_Reaper
+Star_Emperor
 
 ---------------------------------------
 

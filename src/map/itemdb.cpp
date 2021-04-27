@@ -2195,6 +2195,10 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["Rebellion"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		jobs["Summoner"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Soul_Reaper"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Star_Emperor"] = std::stoi(str[index]) ? "true" : "false";
 #endif
 
 	node["Classes"] = classes;
