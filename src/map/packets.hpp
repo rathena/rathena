@@ -207,6 +207,10 @@ struct PACKET_ZC_UNCONFIRMED_SPIRITS3{
 	uint16 amount;
 } __attribute__((packed));
 
+struct PACKET_ZC_ENTRY_QUEUE_INIT {
+	int16 packetType;
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -248,6 +252,7 @@ DEFINE_PACKET_HEADER(ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, 0x824)
 	DEFINE_PACKET_HEADER(ZC_SEARCH_STORE_INFO_ACK, 0x836)
 #endif
 DEFINE_PACKET_HEADER(CZ_SSILIST_ITEM_CLICK, 0x83c)
+DEFINE_PACKET_HEADER(ZC_ENTRY_QUEUE_INIT, 0x90e);
 DEFINE_PACKET_HEADER(CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO, 0x9ac)
 DEFINE_PACKET_HEADER(ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO, 0x9ad)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM, 0x9ae)
