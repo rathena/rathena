@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20191220
+//= 20200324
 //===== Description: =========================================
 //= Explanation of the skill_db.yml file and structure.
 //============================================================
@@ -56,6 +56,7 @@ IgnoreElement	- Skill ignores elemental adjustments.
 IgnoreDefense	- Skill ignores target's defense (Misc type always ignores).
 IgnoreFlee		- Skill ignores target's flee (Magic type always ignores)
 IgnoreDefCard	- Skill ignores target's defense cards.
+IgnoreLongCard	- Skill ignores caster's long range damage cards.
 Critical		- Skill can critical.
 
 ---------------------------------------
@@ -71,7 +72,7 @@ IsSong						- Song/Dance skill.
 IsEnsemble					- Ensemble skill.
 IsTrap						- Trap skill.
 TargetSelf					- Damages/targets self.
-NoTargetSelf				- Cannot target self. If TargetType is Self_Skill, changes to Attack_Skill.
+NoTargetSelf				- Cannot target self. If TargetType is Self, changes to Attack.
 PartyOnly					- Usable on party (and enemies if offensive).
 GuildOnly					- Usable on guild (and enemies if offensive).
 NoTargetEnemy				- Disable on enemies (for non-offensive).
@@ -97,11 +98,11 @@ AllowOnWarg					- Usable while riding Warg.
 AllowOnMado					- Usable while on Madogear.
 TargetManHole				- Target enemy with SC__MANHOLE.
 TargetHidden				- Target enemy with OPTION_HIDE.
-IncreaseGloomyDayDamage		- Increase SC_GLOOMYDAY_SK damage.
 IncreaseDanceWithWugDamage	- Increase SC_DANCEWITHWUG damage.
 IgnoreWugBite				- Ignore RA_WUGBITE.
-IgnoreAutoGuard			- Not blocked by SC_AUTOGUARD (Weapon_Skill only).
-IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (Weapon_Skill only).
+IgnoreAutoGuard				- Not blocked by SC_AUTOGUARD (When TargetType is Weapon only).
+IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (When TargetType is Weapon only).
+ShowScale					- Shows AoE area while casting
 
 ---------------------------------------
 
@@ -128,9 +129,9 @@ Sequence Map Form
 
 Hit: Skill hit type.
 
-Normal	- Passive/No damage skill. (Default)
-Single	- Single hit.
-Repeat	- Multiple hits.
+Normal		- Passive/No damage skill. (Default)
+Single		- Single hit.
+Multi_Hit	- Multiple hits.
 
 ---------------------------------------
 
@@ -442,7 +443,7 @@ Sequence Map Form
 
 ---------------------------------------
 
-FixedCastTime: Time that is fixed during cast of the skill in milliseconds.
+FixedCastTime: Time that is fixed during cast of the skill in milliseconds. A value of -1 will use 20% of CastTime as FixedCastTime. See battle_config::default_fixed_castrate to adjust the rate.
 
 Can be defined in scalar form or sequence map form:
 Scalar Form
@@ -693,6 +694,10 @@ Mado				- Requires OPTION_MADOGEAR.
 ElementalSpirit		- Requires an Elemental Spirit to be summoned.
 ElementalSpirit2	- Requires an Elemental Spirit to be summoned and will be removed after.
 Peco				- Requires OPTION_RIDING.
+Sunstance			- Requires Sun/Universe Stance status be active.
+Moonstance			- Requires Moon/Universe Stance status be active.
+Starstance			- Requires Star/Universe Stance status be active.
+Universestance		- Requires Universe Stance status be active.
 
 ------------------
 

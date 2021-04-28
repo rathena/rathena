@@ -160,7 +160,6 @@ struct Script_Config {
 	const char *loadmap_event_name;
 	const char *baselvup_event_name;
 	const char *joblvup_event_name;
-	const char *stat_calc_event_name;
 
 	// NPC related
 	const char* ontouch_event_name;
@@ -479,6 +478,7 @@ enum unitdata_mobtypes {
 	UMOB_TARGETID,
 	UMOB_ROBE,
 	UMOB_BODY2,
+	UMOB_GROUP_ID,
 };
 
 enum unitdata_homuntypes {
@@ -522,6 +522,7 @@ enum unitdata_homuntypes {
 	UHOM_ADELAY,
 	UHOM_DMOTION,
 	UHOM_TARGETID,
+	UHOM_GROUP_ID,
 };
 
 enum unitdata_pettypes {
@@ -562,6 +563,7 @@ enum unitdata_pettypes {
 	UPET_AMOTION,
 	UPET_ADELAY,
 	UPET_DMOTION,
+	UPET_GROUP_ID,
 };
 
 enum unitdata_merctypes {
@@ -602,6 +604,7 @@ enum unitdata_merctypes {
 	UMER_ADELAY,
 	UMER_DMOTION,
 	UMER_TARGETID,
+	UMER_GROUP_ID,
 };
 
 enum unitdata_elemtypes {
@@ -644,6 +647,7 @@ enum unitdata_elemtypes {
 	UELE_ADELAY,
 	UELE_DMOTION,
 	UELE_TARGETID,
+	UELE_GROUP_ID,
 };
 
 enum unitdata_npctypes {
@@ -692,6 +696,7 @@ enum unitdata_npctypes {
 	UNPC_ROBE,
 	UNPC_BODY2,
 	UNPC_DEADSIT,
+	UNPC_GROUP_ID,
 };
 
 enum navigation_service {
@@ -1837,7 +1842,7 @@ enum e_special_effects {
 	EF_MAX
 };
 
-enum e_hat_effects {
+enum e_hat_effects : int16{
 	HAT_EF_MIN = 0,
 	HAT_EF_BLOSSOM_FLUTTERING,
 	HAT_EF_MERMAID_LONGING,
@@ -1967,6 +1972,26 @@ enum e_hat_effects {
 	HAT_EF_2019RTC2ST_TW,
 	HAT_EF_2019RTC3ST_TW,
 	HAT_EF_CONS_OF_WIND,
+	HAT_EF_MAPLE_FALLS,
+	HAT_EF_BJ_HEADSETB,
+	HAT_EF_VIP_HAIR,
+	HAT_EF_C_MAGIC_HEIR_TW,
+	HAT_EF_C_SUDDEN_WEALTH_TW,
+	HAT_EF_C_ROMANCE_ROSE_TW,
+	HAT_EF_C_DISAPEAR_TIME_TW,
+	HAT_EF_2020RTC_01,
+	HAT_EF_2020RTC_02,
+	HAT_EF_2020RTC_03,
+	HAT_EF_C_2020RTC_IMP_TW,
+	HAT_EF_SUBJECT_AURA_BLACK,
+	HAT_EF_2020RTC_EFFECT_01,
+	HAT_EF_2020RTC_EFFECT_02,
+	HAT_EF_2020RTC_EFFECT_03,
+	HAT_EF_99LV_STAR_E_MBLUE,
+	HAT_EF_160LV_STAR_E_MBLUE,
+	HAT_EF_99LV_SOUL_R_GRAY,
+	HAT_EF_160LV_SOUL_R_GRAY,
+	HAT_EF_GEARWHEEL,
 	HAT_EF_MAX
 };
 
@@ -1992,6 +2017,29 @@ enum e_pcblock_action_flag : uint16 {
 	PCBLOCK_NPC      = 0x18D,
 	PCBLOCK_EMOTION  = 0x200,
 	PCBLOCK_ALL      = 0x3FF,
+};
+
+/* getiteminfo/setiteminfo script commands */
+enum e_iteminfo : uint8 {
+	ITEMINFO_BUY = 0,
+	ITEMINFO_SELL,
+	ITEMINFO_TYPE,
+	ITEMINFO_MAXCHANCE,
+	ITEMINFO_GENDER,
+	ITEMINFO_LOCATIONS,
+	ITEMINFO_WEIGHT,
+	ITEMINFO_ATTACK,
+	ITEMINFO_DEFENSE,
+	ITEMINFO_RANGE,
+	ITEMINFO_SLOT,
+	ITEMINFO_VIEW,
+	ITEMINFO_EQUIPLEVELMIN,
+	ITEMINFO_WEAPONLEVEL,
+	ITEMINFO_ALIASNAME,
+	ITEMINFO_EQUIPLEVELMAX,
+	ITEMINFO_MAGICATTACK,
+	ITEMINFO_ID,
+	ITEMINFO_AEGISNAME	// 18
 };
 
 /**

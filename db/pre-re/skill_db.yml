@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: true)
+#   CastCancel                Cancel cast when hit. (Default: false)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -1249,10 +1249,6 @@ Body:
           Size: 2
         - Level: 11
           Size: 3
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -2075,8 +2071,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -2085,6 +2079,7 @@ Body:
     ActiveInstance: 5
     Knockback: 2
     CastTime: 700
+    Duration1: 1000
     Requires:
       SpCost: 12
       Weapon:
@@ -3321,10 +3316,6 @@ Body:
           Size: 5
         - Level: 11
           Size: 7
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Range: 1
       Interval: 1250
       Target: Enemy
@@ -3416,12 +3407,6 @@ Body:
           Size: 2
         - Level: 10
           Size: 2
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Flag:
         PathCheck: true
@@ -5852,11 +5837,8 @@ Body:
     Name: NPC_DARKBREATH
     Description: Dark Breath
     MaxLevel: 5
-    Type: Misc
+    Type: Magic
     TargetType: Attack
-    DamageFlags:
-      IgnoreFlee: true
-      IgnoreDefCard: true
     Flags:
       IsNpc: true
     Range: 9
@@ -6713,8 +6695,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range:
       - Level: 1
         Size: 3
@@ -6831,8 +6811,8 @@ Body:
     CastDefenseReduction: 33
     CastTime: 3000
     AfterCastActDelay: 1500
-    AfterCastWalkDelay: 800
-    Duration1: 800
+    AfterCastWalkDelay: 1000
+    Duration1: 950
     Duration2: 30000
     Requires:
       SpCost:
@@ -7852,22 +7832,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 5
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Flag:
         PathCheck: true
@@ -9080,9 +9044,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Dark
-    AfterCastWalkDelay: 900
-    Duration1: 900
-    Duration2: 30000
+    AfterCastWalkDelay: 1000
+    Duration1: 30000
     Unit:
       Id: Dummyskill
       Layout: -1
@@ -9794,9 +9757,6 @@ Body:
       NoDamage: true
       IgnoreDefense: true
       IgnoreFlee: true
-    Flags:
-      IgnoreAutoGuard: true
-      IgnoreCicada: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -10691,7 +10651,6 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
@@ -12867,8 +12826,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 4
     Hit: Multi_Hit
     HitCount: 5
@@ -13017,6 +12974,8 @@ Body:
       IgnoreAtkCard: true
     Flags:
       AllowOnMado: true
+      IgnoreAutoGuard: true
+      IgnoreCicada: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -14406,15 +14365,15 @@ Body:
       AllowWhenHidden: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     CopyFlags:
@@ -14439,15 +14398,15 @@ Body:
       AlterRangeShadowJump: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -14944,12 +14903,6 @@ Body:
           Size: 3
         - Level: 10
           Size: 4
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Flag:
         PathCheck: true
@@ -15138,22 +15091,6 @@ Body:
           Size: 3
         - Level: 5
           Size: 4
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -15368,9 +15305,12 @@ Body:
     DamageFlags:
       Splash: true
       SplashSplit: true
+      IgnoreDefense: true
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
+      IgnoreLandProtector: true
     Hit: Multi_Hit
     HitCount: 1
     SplashArea:
@@ -15394,6 +15334,34 @@ Body:
         Area: 11
       - Level: 10
         Area: 13
+    Duration1: 910
+    Unit:
+      Id: Earthquake
+      Range:
+        - Level: 1
+          Size: 5
+        - Level: 2
+          Size: 7
+        - Level: 3
+          Size: 9
+        - Level: 4
+          Size: 11
+        - Level: 5
+          Size: 13
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 7
+        - Level: 8
+          Size: 9
+        - Level: 9
+          Size: 11
+        - Level: 10
+          Size: 13
+      Interval: 300
+      Target: Enemy
+      Flag:
+        PathCheck: true
   - Id: 654
     Name: NPC_FIREBREATH
     Description: Fire Breath
@@ -15476,6 +15444,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15522,6 +15491,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 7
@@ -15537,6 +15507,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 14
@@ -15551,6 +15522,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15575,6 +15547,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15599,6 +15572,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15623,6 +15597,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15647,6 +15622,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15671,6 +15647,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15696,6 +15673,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Fire
@@ -15714,6 +15692,7 @@ Body:
       IgnoreDefCard: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Range: 7
     Hit: Single
     HitCount: 1
@@ -15764,12 +15743,6 @@ Body:
           Size: 5
         - Level: 10
           Size: 13
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Flag:
         NoOverlap: true
@@ -15816,6 +15789,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15932,6 +15906,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15956,6 +15931,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15980,6 +15956,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16013,6 +15990,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16292,6 +16270,7 @@ Body:
     Flags:
       IsNpc: true
       IgnoreLandProtector: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Poison
@@ -16308,6 +16287,8 @@ Body:
     Name: NPC_COMET
     Description: Comet 2
     MaxLevel: 1
+    Flags:
+      ShowScale: true
   - Id: 716
     Name: NPC_MAXPAIN
     Description: Max Pain
@@ -16339,6 +16320,8 @@ Body:
     Name: NPC_JACKFROST
     Description: Jack Frost 2
     MaxLevel: 1
+    Flags:
+      ShowScale: true
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2
@@ -16351,6 +16334,7 @@ Body:
       IsNpc: true
       IsTrap: true
       DisableNearNpc: true
+      ShowScale: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -16391,10 +16375,186 @@ Body:
     Name: NPC_LEX_AETERNA
     Description: Lex Aeterna 2
     MaxLevel: 1
+    Flags:
+      ShowScale: true
   - Id: 728
     Name: NPC_ARROWSTORM
     Description: NPC Arrow Storm
     MaxLevel: 1
+  - Id: 739
+    Name: NPC_CLOUD_KILL
+    Description: Cloud Kill
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 8000
+      - Level: 2
+        Time: 10000
+      - Level: 3
+        Time: 12000
+      - Level: 4
+        Time: 14000
+      - Level: 5
+        Time: 16000
+    Unit:
+      Id: Cloud_Kill
+      Range:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 3
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 3
+      Interval: 500
+      Target: Enemy
+      Flag:
+        PathCheck: true
+        RemovedByFireRain: true
+  - Id: 740
+    Name: NPC_IGNITIONBREAK
+    Description: Ignition Break
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea: 5
+  - Id: 741
+    Name: NPC_PHANTOMTHRUST
+    Description: Phantom Thrust
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 7
+      - Level: 2
+        Size: 9
+      - Level: 3
+        Size: 11
+      - Level: 4
+        Size: 13
+      - Level: 5
+        Size: 15
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    CastCancel: true
+  - Id: 742
+    Name: NPC_POISON_BUSTER
+    Description: Poison Buster
+    MaxLevel: 2
+    Type: Magic
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    CastCancel: true
+    SplashArea: 1
+  - Id: 743
+    Name: NPC_HALLUCINATIONWALK
+    Description: Hallucination Walk
+    MaxLevel: 5
+    TargetType: Self
+    Flags:
+      IsNpc: true
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: 20000
+  - Id: 744
+    Name: NPC_ELECTRICWALK
+    Description: Electric Walk
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IgnoreHovering: true
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    ActiveInstance:
+      - Level: 1
+        Max: 8
+      - Level: 2
+        Max: 10
+      - Level: 3
+        Max: 12
+      - Level: 4
+        Max: 14
+      - Level: 5
+        Max: 16
+    CastCancel: true
+    Duration1: 12000
+    Unit:
+      Id: Electricwalk
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
+  - Id: 745
+    Name: NPC_FIREWALK
+    Description: Fire Walk
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IgnoreHovering: true
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    ActiveInstance:
+      - Level: 1
+        Max: 8
+      - Level: 2
+        Max: 10
+      - Level: 3
+        Max: 12
+      - Level: 4
+        Max: 14
+      - Level: 5
+        Max: 16
+    CastCancel: true
+    Duration1: 12000
+    Unit:
+      Id: Firewalk
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
@@ -16905,8 +17065,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: -5
@@ -18641,6 +18799,8 @@ Body:
     Duration1: 60000
     Requires:
       SpCost: 20
+      Status:
+        Weaponblock_On: true
   - Id: 2031
     Name: GC_VENOMPRESSURE
     Description: Venom Pressure
@@ -19302,10 +19462,10 @@ Body:
           Amount: 70
         - Level: 4
           Amount: 80
-#  - Id: 2049 # Removed on kRO
-#    Name: AB_EUCHARISTICA
-#    Description: Eucharistica
-#    MaxLevel: 10
+  - Id: 2049 # Removed on kRO
+    Name: AB_EUCHARISTICA
+    Description: Eucharistica
+    MaxLevel: 10
   - Id: 2050
     Name: AB_RENOVATIO
     Description: Renovatio
@@ -19945,9 +20105,9 @@ Body:
       IgnoreDefCard: true
     Flags:
       AllowOnWarg: true
-      IncreaseDanceWithWugDamage: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -19975,9 +20135,9 @@ Body:
       IgnoreDefCard: true
     Flags:
       AlterRangeVulture: true
-      IncreaseDanceWithWugDamage: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -24369,7 +24529,7 @@ Body:
         Reproduce: true
     Requires:
       SpCost: 1
-  - Id: 2417
+  - Id: 2417 # Removed on kRO
     Name: WM_DOMINION_IMPULSE
     Description: Dominion Impulse
     MaxLevel: 1
@@ -24382,6 +24542,7 @@ Body:
     HitCount: 1
     SplashArea: 5
     AfterCastActDelay: 1000
+    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 2418
@@ -25536,22 +25697,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 4
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -25621,22 +25766,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 4
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -25756,22 +25885,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 5
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 500
       Target: Enemy
       Flag:
@@ -26007,22 +26120,6 @@ Body:
           Size: 2
         - Level: 5
           Size: 3
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 500
       Target: Enemy
       Flag:
@@ -26826,8 +26923,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 11
-    Hit: Single
-    HitCount: 3
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -26897,7 +26994,7 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 2
+    Knockback: 1
     CopyFlags:
       Skill:
         Reproduce: true
@@ -27355,7 +27452,7 @@ Body:
       ItemCost:
         - Item: Mandragora_Flowerpot
           Amount: 1
-  - Id: 2493
+  - Id: 2493 # Removed on kRO
     Name: GN_SLINGITEM
     Description: Sling Item
     MaxLevel: 1
@@ -27368,6 +27465,7 @@ Body:
     Hit: Single
     HitCount: 1
     Cooldown: 1000
+    FixedCastTime: -1
     Requires:
       SpCost: 4
       Ammo:
@@ -27399,7 +27497,7 @@ Body:
           Amount: 5
         - Level: 2
           Amount: 40
-  - Id: 2496
+  - Id: 2496 # Removed on kRO
     Name: GN_MAKEBOMB
     Description: Create Bomb
     MaxLevel: 2
@@ -27425,7 +27523,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 12
-  - Id: 2498
+  - Id: 2498 # Removed on kRO
     Name: GN_SLINGITEM_RANGEMELEEATK
     Description: Sling Item Attack
     MaxLevel: 1
@@ -27538,6 +27636,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 40
+      State: Cart
   - Id: 2552
     Name: RL_RICHS_COIN
     Description: Rich's Coin
@@ -27719,22 +27818,6 @@ Body:
           Size: 3
         - Level: 5
           Size: 3
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 500
       Target: Enemy
       Flag:
@@ -28317,6 +28400,163 @@ Body:
     Element: Weapon
     Requires:
       SpCost: 1
+  - Id: 2574
+    Name: SJ_LIGHTOFMOON
+    Description: Light of Moon
+    MaxLevel: 1
+  - Id: 2575
+    Name: SJ_LUNARSTANCE
+    Description: Lunar Stance
+    MaxLevel: 1
+  - Id: 2576
+    Name: SJ_FULLMOONKICK
+    Description: Full Moon Kick
+    MaxLevel: 1
+  - Id: 2577
+    Name: SJ_LIGHTOFSTAR
+    Description: Light of Star
+    MaxLevel: 1
+  - Id: 2578
+    Name: SJ_STARSTANCE
+    Description: Star Stance
+    MaxLevel: 1
+  - Id: 2579
+    Name: SJ_NEWMOONKICK
+    Description: New Moon Kick
+    MaxLevel: 1
+  - Id: 2580
+    Name: SJ_FLASHKICK
+    Description: Flash Kick
+    MaxLevel: 1
+  - Id: 2581
+    Name: SJ_STAREMPEROR
+    Description: Star Emperor
+    MaxLevel: 1
+  - Id: 2582
+    Name: SJ_NOVAEXPLOSING
+    Description: Nova Explosion
+    MaxLevel: 1
+    Type: Misc
+  - Id: 2583
+    Name: SJ_UNIVERSESTANCE
+    Description: Universe Stance
+    MaxLevel: 1
+  - Id: 2584
+    Name: SJ_FALLINGSTAR
+    Description: Falling Star
+    MaxLevel: 1
+  - Id: 2585
+    Name: SJ_GRAVITYCONTROL
+    Description: Gravity Control
+    MaxLevel: 1
+  - Id: 2586
+    Name: SJ_BOOKOFDIMENSION
+    Description: Book of Dimension
+    MaxLevel: 1
+  - Id: 2587
+    Name: SJ_BOOKOFCREATINGSTAR
+    Description: Book of Creating Star
+    MaxLevel: 1
+  - Id: 2588
+    Name: SJ_DOCUMENT
+    Description: Document of Sun Moon and Star
+    MaxLevel: 1
+  - Id: 2589
+    Name: SJ_PURIFY
+    Description: Purification of Sun Moon and Star
+    MaxLevel: 1
+  - Id: 2590
+    Name: SJ_LIGHTOFSUN
+    Description: Light of Sun
+    MaxLevel: 1
+  - Id: 2591
+    Name: SJ_SUNSTANCE
+    Description: Sun Stance
+    MaxLevel: 1
+  - Id: 2592
+    Name: SJ_SOLARBURST
+    Description: Solar Burst
+    MaxLevel: 1
+  - Id: 2593
+    Name: SJ_PROMINENCEKICK
+    Description: Prominence Kick
+    MaxLevel: 1
+  - Id: 2594
+    Name: SJ_FALLINGSTAR_ATK
+    Description: Falling Star Attack
+    MaxLevel: 1
+  - Id: 2595
+    Name: SJ_FALLINGSTAR_ATK2
+    Description: Falling Star Attack 2
+    MaxLevel: 1
+  - Id: 2596
+    Name: SP_SOULGOLEM
+    Description: Golem's Soul
+    MaxLevel: 1
+  - Id: 2597
+    Name: SP_SOULSHADOW
+    Description: Shadow's Soul
+    MaxLevel: 1
+  - Id: 2598
+    Name: SP_SOULFALCON
+    Description: Falcon's Soul
+    MaxLevel: 1
+  - Id: 2599
+    Name: SP_SOULFAIRY
+    Description: Fairy's Soul
+    MaxLevel: 1
+  - Id: 2600
+    Name: SP_CURSEEXPLOSION
+    Description: Curse Explosion
+    MaxLevel: 1
+  - Id: 2601
+    Name: SP_SOULCURSE
+    Description: Soul Curse
+    MaxLevel: 1
+  - Id: 2602
+    Name: SP_SPA
+    Description: Espa
+    MaxLevel: 1
+  - Id: 2603
+    Name: SP_SHA
+    Description: Esha
+    MaxLevel: 1
+  - Id: 2604
+    Name: SP_SWHOO
+    Description: Eswhoo
+    MaxLevel: 1
+  - Id: 2605
+    Name: SP_SOULUNITY
+    Description: Soul Unity
+    MaxLevel: 1
+  - Id: 2606
+    Name: SP_SOULDIVISION
+    Description: Soul Division
+    MaxLevel: 1
+  - Id: 2607
+    Name: SP_SOULREAPER
+    Description: Soul Reaper
+    MaxLevel: 1
+  - Id: 2608
+    Name: SP_SOULREVOLVE
+    Description: Soul Revolution
+    MaxLevel: 1
+  - Id: 2609
+    Name: SP_SOULCOLLECT
+    Description: Soul Collect
+    MaxLevel: 1
+  - Id: 2610
+    Name: SP_SOULEXPLOSION
+    Description: Soul Explosion
+    MaxLevel: 1
+  - Id: 2611
+    Name: SP_SOULENERGY
+    Description: Soul Energy Research
+    MaxLevel: 1
+  - Id: 2612
+    Name: SP_KAUTE
+    Description: Kaute
+    MaxLevel: 1
   - Id: 3001
     Name: KO_YAMIKUMO
     Description: Shadow Hiding
@@ -28585,12 +28825,6 @@ Body:
           Size: 1
         - Level: 10
           Size: 2
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -30099,6 +30333,18 @@ Body:
     Name: AB_CONVENIO
     Description: Convenio
     MaxLevel: 1
+  - Id: 5075
+    Name: NV_BREAKTHROUGH
+    Description: Break Through
+    MaxLevel: 1
+  - Id: 5076
+    Name: NV_HELPANGEL
+    Description: Help Angel
+    MaxLevel: 1
+  - Id: 5077
+    Name: NV_TRANSCENDENCE
+    Description: Transcendence
+    MaxLevel: 1
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
@@ -30861,22 +31107,6 @@ Body:
           Size: 3
         - Level: 5
           Size: 4
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -31477,22 +31707,6 @@ Body:
           Size: 2
         - Level: 5
           Size: 3
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 2000
       Target: Enemy
       Flag:
@@ -32140,8 +32354,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -32166,7 +32378,6 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
@@ -32652,7 +32863,7 @@ Body:
     Hit: Single
     CastCancel: true
     AfterCastActDelay: 3000
-    Duration1:
+    Duration2:
       - Level: 1
         Time: 30000
       - Level: 2
@@ -33633,9 +33844,3 @@ Body:
       IgnoreKagehumi: true
     CastCancel: true
     Duration2: 300000
-  - Id: 10016
-    Name: GD_GUILD_STORAGE
-    Description: Guild Storage Expansion
-    MaxLevel: 5
-    Flags:
-      IsGuild: true

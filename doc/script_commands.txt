@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20180831
+//= 20201115
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -296,7 +296,7 @@ clicking) will cause a shop window to come up. No code whatsoever runs in shop
 NPCs and you can't change the prices otherwise than by editing the script
 itself.
 
-The Item ID is the number of item in the 'item_db.txt' database. If Price is set
+The Item ID is the number of item in the 'db/item_db.yml' database. If Price is set
 to -1, the 'buy price' given in the item database will be used. Otherwise, the
 price you gave will be used for this item, which is how you create differing
 prices for items in different shops.
@@ -958,13 +958,6 @@ mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
 
-OnPCStatCalcEvent:
-
-This special label triggers when a player's stats are recalculated, such as when
-changing stats, equipment, or maps, as well as when logging in, leveling up, and
-mounting a job mount. This can be used to grant additional item bonuses to certain
-player groups, for instance.
-
 OnWhisperGlobal:
 
 This special label triggers when a player whispers the NPC, and will run with the
@@ -1131,6 +1124,24 @@ URLs
 Similarly, you can create links to websites that launch in a new window:
 
 	<URL>Display Name<INFO>http://www.example.com/</INFO></URL>";
+
+Quests
+------
+You can link to a quest:
+
+	<QUEST>Quest<INFO>1</INFO></QUEST>
+
+Message
+-------
+You can show a message from the msgstringtable:
+
+	<MSG>1</MSG>
+
+Tips
+----
+You can show a tip box:
+
+	<TIPBOX>Show Tip<INFO>1</INFO></TIPBOX>
 
 ---------------------------------------
 
@@ -1648,7 +1659,7 @@ S_CheckFull:
 
 Example 2: callsub used repeatedly, with different arguments
 // notice how the Zeny check/delete is reused, instead of copy-pasting for every warp
-	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos") {
+	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos")) {
 		case 1:	callsub S_DunWarp,"hu_fild05",192,207;
 		case 2:	callsub S_DunWarp,"ama_in02",119,181;
 		case 3:	callsub S_DunWarp,"moc_fild20",164,145;
@@ -1908,7 +1919,7 @@ Example 3:
 Example 4:
 
 	mes "[Quest Person]";
-	if (countitem(512) < 1) {  // 512 is the item ID for Apple, found in item_db
+	if (countitem(512) < 1) {  // 512 is the item ID for Apple, found in db/item_db.yml
 		mes "Can you please bring me an apple?";
 		close;
 	}
@@ -2613,7 +2624,7 @@ on the invoking character or the specified equipment slot. If nothing is
 equipped there, it returns -1.
 Valid equipment slots are:
 
-EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script)
+EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script) - exclusive to getequipid
 EQI_ACC_L (0)             - Accessory 1
 EQI_ACC_R (1)             - Accessory 2
 EQI_SHOES (2)             - Footgear (shoes, boots)
@@ -2694,10 +2705,11 @@ See 'getequipid' for a full list of valid equipment slots.
 ---------------------------------------
 
 *getitemname(<item id>)
+*getitemname(<aegis item name>)
 
 Given the database ID number of an item, this function will return the text
-stored in the 'japanese name' field (which, in rAthena, stores an English name
-the players would normally see on screen.)
+stored in the 'Name' field in item_db_*.yml for text version
+or 'name_english' field for SQL version.
 
 ---------------------------------------
 
@@ -2840,12 +2852,8 @@ passed arguments <type> and <information>.
 Valid cost types are:
 
 REFINE_COST_NORMAL     - For normal refining
-REFINE_COST_OVER10     - For refining over +10
 REFINE_COST_HD         - For refining with HD ores
 REFINE_COST_ENRICHED   - For refining with enriched ores
-REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
-REFINE_COST_HOLINK     - For refining at Holink in Malangdo
-REFINE_COST_WAGJAK     - For refining at Refining Machine Wagjak in the Novice Academy
 
 This function will return required cost for refining based on <information> argument.
 
@@ -2855,7 +2863,15 @@ REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
 
 This function will return -1 on failure. The function fails if the cost type
-is invalid or if there is no item in the equipment slot. 
+is invalid or if there is no item in the equipment slot.
+
+---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
 
 ---------------------------------------
 
@@ -2868,8 +2884,7 @@ number.
 This is the only function around where a parameter may be either a string or a
 number! If it's a number, it means that only the items with that item ID number
 will be counted. If it is a string, it is assumed to mean the 'english name'
-field from the item database. If you give it an empty string, or something that
-isn't found from the item database, it will count items number '512' (apples).
+field from the item database.
 
 ---------------------------------------
 
@@ -2917,6 +2932,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_id5[]        - fifth array of random option IDs
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
+@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -2984,32 +3000,36 @@ Example:
 ---------------------------------------
 
 *getiteminfo(<item ID>,<type>)
+*getiteminfo(<item name>,<type>)
+*getiteminfo(<aegis item name>,<type>)
 
 This function will look up the item with the specified ID number in the database
 and return the info set by TYPE argument.
-It will return -1 if there is no such item.
+It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
-	0  - Buy Price
-	1  - Sell Price
-	2  - Type
-	3  - maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		 if = 0, then monsters don't drop it at all (rare or a quest item)
-		 if = 10000, then this item is sold in NPC shops only
-	4  - Gender
-	5  - Loc
-	6  - Weight
-	7  - ATK
-	8  - DEF
-	9  - Range
-	10 - Slot
-	11 - View
-	12 - eLV
-	13 - wLV
-	14 - SpriteID from 'db/item_avail.txt'
-	15 - eLVMax
-	16 - matk if RENEWAL is defined
-
+	ITEMINFO_BUY             (0)   -  Buy Price
+	ITEMINFO_SELL            (1)   -  Sell Price
+	ITEMINFO_TYPE            (2)   -  Type
+	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                        if = 0, then monsters don't drop it at all (rare or a quest item)
+		                        if = 10000, then this item is sold in NPC shops only
+	ITEMINFO_GENDER          (4)   -  Gender
+	ITEMINFO_LOCATIONS       (5)   -  Location(s)
+	ITEMINFO_WEIGHT          (6)   -  Weight
+	ITEMINFO_ATTACK          (7)   -  ATK
+	ITEMINFO_DEFENSE         (8)   -  DEF
+	ITEMINFO_RANGE           (9)   -  Range
+	ITEMINFO_SLOT           (10)   -  Slot
+	ITEMINFO_VIEW           (11)   -  View
+	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
+	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
+	ITEMINFO_ALIASNAME      (14)   -  AliasName
+	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
+	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
+	ITEMINFO_ID             (17)   -  item ID
+	ITEMINFO_AEGISNAME      (18)   -  aegis item name
+	
 See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------
@@ -3433,7 +3453,7 @@ recalculating guardians' HP.
 This function returns the level of the skill <skill id> of the guild <guild id>.
 If the guild does not have that skill, 0 is returned.
 If the guild does not exist, -1 is returned.
-Refer to 'db/(pre-)re/skill_db.txt' for the full list of skills. (GD_* are guild skills)
+Refer to 'db/(pre-)re/skill_db.yml' for the full list of skills. (GD_* are guild skills)
 
 ---------------------------------------
 
@@ -3466,7 +3486,7 @@ mes "You have " + getMapGuildUsers("prontera",getcharid(2)) + " guild members in
 
 This function returns the level of the specified skill that the invoking
 character has. If they don't have the skill, 0 will be returned. The full list
-of character skills is available in 'db/(pre-)re/skill_db.txt'.
+of character skills is available in 'db/(pre-)re/skill_db.yml'.
 
 There are two main uses for this function, it can check whether the character
 has a skill or not, and it can tell you if the level is high enough.
@@ -3839,11 +3859,17 @@ dragon and 0 if they aren't.
 
 ---------------------------------------
 
-*setmadogear {<flag>{,<char_id>}};
+*setmadogear {<flag>{,<type>{,<char_id>}}};
 *checkmadogear({<char_id>});
 
-If <flag> is 0 this command will remove the mount from the character.
-Otherwise it gives the invoking character a Mado (if they are a Mechanic).
+If <flag> is false this command will remove the mount from the character.
+Otherwise it gives the invoking character a Mado (if they are a Mechanic and have the skill NC_MADOLICENCE).
+
+When using client version PACKETVER_MAIN_NUM >= 20191120 or PACKETVER_RE_NUM >= 20191106
+the <type> flag can be used to specify a specific madogear.
+Types:
+	MADO_ROBOT (default)
+	MADO_SUIT
 
 The accompanying function will return 1 if the invoking character has a
 Mado and 0 if they don't.
@@ -3914,6 +3940,22 @@ Name is optional, and defaults to the attached player if omitted.
 
 ---------------------------------------
 
+*checkidlehom({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle for homunculus item/exp share.
+Name is optional, and defaults to the attached player if omitted.
+This will only work if 'hom_idle_no_share' and 'idletime_hom_option' are enabled (see '/conf/battle/homunc.conf').
+
+---------------------------------------
+
+*checkidlemer({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle for mercenary item share.
+Name is optional, and defaults to the attached player if omitted.
+This will only work if 'mer_idle_no_share' and 'idletime_mer_option' are enabled (see '/conf/battle/drops.conf').
+
+---------------------------------------
+
 *agitcheck()
 *agitcheck2()
 *agitcheck3()
@@ -3943,8 +3985,8 @@ more:
 Checks if a renewal feature is enabled or not in renewal.hpp, and returns 1 if
 enabled and 0 for disabled.
 
-The renewal feature to check is determined by type.
- 0 - RENEWAL (game renewal server mode)
+The renewal feature to check is determined by the number <type>.
+ 0 - RENEWAL enabled (game renewal server mode)
  1 - RENEWAL_CAST (renewal cast time)
  2 - RENEWAL_DROP (renewal drop rate algorithms)
  3 - RENEWAL_EXP (renewal exp rate algorithms)
@@ -4595,7 +4637,7 @@ online, items will be created in their inventory instead. If they are not
 online, nothing will happen.
 
 In the first and most commonly used version of this command, items are
-referred to by their database ID number found inside 'db/(pre-)re/item_db.txt'.
+referred to by their database ID number found inside 'db/item_db.yml'.
 
 	getitem 502,10 // The person will receive 10 apples
 	getitem 617,1  // The person will receive 1 Old Violet Box
@@ -4797,8 +4839,9 @@ for special cases such as removing a status change or resetting a variable or st
 of the player.
 
 This command can not be used to rent stackable items. Rental items cannot be
-dropped, traded, sold to NPCs, or placed in guild storage. (i.e. trade mask 75)
+dropped, traded, or placed in guild storage. (i.e. trade mask 67)
 Note: 'delitem' in an NPC script can still remove rental items.
+Note: 'countitem' will not count any item with a rental timer. Use 'rentalcountitem' instead.
 
 ---------------------------------------
 
@@ -4861,7 +4904,7 @@ Example to get Crimson Weapon with Ghost property:
 	// with Neutral Resistance +10% and 5% damage reduction from Demi-Human or Player
 	// when Valkyrie Randgris killed
 	OnNPCKillEvent:
-		if (killedrid == 1751 && rand(0,1000) > 950) { // Valkyrie Randgris
+		if (killedrid == 1751 && rand(0,10000) > 9950) { // Valkyrie Randgris
 			getmapxy(.@map$,.@x,.@y,BL_PC);
 			setarray .@OptID[0],RDMOPT_ATTR_TOLERACE_NOTHING,RDMOPT_RACE_TOLERACE_HUMAN;
 			setarray .@OptVal[0],10,5;
@@ -4900,7 +4943,7 @@ the results array is limited to 10 items.
 *delitem "<item name>",<amount>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character.
-Like all the item commands, it uses the item ID found inside 'db/(pre-)re/item_db.txt'.
+Like all the item commands, it uses the item ID found inside 'db/item_db.yml'.
 
     delitem 502,10; // The person will lose 10 apples
     delitem 617,1;  // The person will lose 1 Old Violet Box
@@ -5029,20 +5072,47 @@ If player is not in a guild or storage is open, 'guildstoragecountitem2' will re
 
 ---------------------------------------
 
+*rentalcountitem(<item id>{,<accountID>})
+*rentalcountitem("<item name>"{,<accountID>})
+
+This function will return the number of rental items for the specified item ID that the
+invoking character has in the inventory.
+
+---------------------------------------
+
+*rentalcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+
+Expanded version of 'rentalcountitem' function, used for created/carded/forged items.
+
+This function will return the number of rental items for the specified item ID and
+other parameters that the invoking character has in the inventory.
+See 'getitem2' for an explanation of the expanded parameters.
+
+'rentalcountitem3' is advance version of 'rentalcountitem2' that also use Item Random Option as criteria.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
+
+---------------------------------------
+
 *countbound({<bound type>{,<char_id>}})
 
-This function will return the number of bounded items in the character's
-inventory, and sets an array @bound_items[] containing all item IDs of the
-counted items. If a bound type is specified, only those items will be counted.
+This function will return the number of different bounded items in the character's
+inventory, and sets the arrays @bound_items[] and @bound_amount[] containing all item IDs of the
+counted items and their respective amount. If a bound type is specified, only those items will be counted.
 
 For a list of bound types see 'getitembound'.
 
 Example:
-	mes "You currently have " + countbound() + " bounded items.";
+	.@total_type = countbound();
+	mes "You currently have " + .@total_type + " different type of bounded items.";
 	next;
 	mes "The list of bounded items include:";
-	for(.@i = 0; .@i < getarraysize(@bound_items); .@i++)
-		mes getitemname(@bound_items[.@i]);
+	for(.@i = 0; .@i < .@total_type; .@i++)
+		mes "x" + @bound_amount[.@i] + " " + getitemname(@bound_items[.@i]);
 	close;
 
 ---------------------------------------
@@ -5114,19 +5184,34 @@ The default setting, 'item_enabled_npc', is defined in 'conf/battle/items.conf'.
 *itemskill "<skill name>",<skill level>{,<keep requirement>};
 
 This command is meant for item scripts to replicate single-use skills in usable
-items. It will not work properly if there is a visible dialog window or menu.
+items. It will not work properly if there is a visible dialog window or menu or if the item is not type 'Delayconsume'.
 If the skill is self or auto-targeting, it will be used immediately; otherwise a
 target cursor is shown.
 
 If <keep requirement> parameter is set to true, the skill's requirements will be checked.
 By default, the requirements for item skills are not checked, and therefore the default value is false.
 
-// When Anodyne is used, it will cast Endure (8), Level 1, as if the actual
-// skill has been used from skill tree.
-605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1; },{}
+// When Anodyne is used, it will cast Endure (8), Level 1, as if the actual skill has been used from skill tree.
+  - Id: 605
+    AegisName: Anodyne
+    Name: Anodyne
+    Type: Delayconsume
+    Buy: 2000
+    Weight: 100
+    Flags:
+      BuyingStore: true
+    Script: |
+      itemskill "SM_ENDURE",1;
 
 // When Sienna_Execrate_Scroll_1_5 is used, it will cast Sienna Execrate Level 5 and consume 2 Red_Gemstones.
-23194,Sienna_Execrate_Scroll_1_5,Level 5 Sienna Execrate,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_SIENNAEXECRATE",5,true; },{},{}
+  - Id: 23194
+    AegisName: Sienna_Execrate_Scroll_1_5
+    Name: Level 5 Sienna Execrate
+    Type: Delayconsume
+    Buy: 10
+    Weight: 10
+    Script: |
+      itemskill "WL_SIENNAEXECRATE",5,true;
 
 ---------------------------------------
 
@@ -5210,7 +5295,7 @@ a rune and has the appropriate raw materials in their inventory.
 
 *successremovecards <equipment slot>;
 
-This command will remove all cards of the cards slots defined by item_db.txt
+This command will remove all cards of the cards slots defined in db/item_db.yml
 from the item found in the specified equipment slot of the invoking character,
 create new card items and give them to the character.
 If any cards were removed in this manner, it will also show a success effect.
@@ -5582,7 +5667,7 @@ levels. This refers to the invoking character and will only work if the invoking
 character is a member of a guild AND its guild master, otherwise no failure
 message will be given and no error will occur, but nothing will happen - same
 about the guild skill trying to exceed the possible maximum. The full list of
-guild skills is available in 'db/(pre-)re/skill_db.txt', these are all the GD_ skills at
+guild skills is available in 'db/(pre-)re/skill_db.yml', these are all the GD_ skills at
 the end.
 
 // This would give your character's guild one level of Approval (GD_APPROVAL ID
@@ -5644,6 +5729,20 @@ the 'quest_skill_learn' option is set in there, the points in the quest skills
 will also count towards the total.
 
 Used in reset NPC's (duh!)
+
+---------------------------------------
+
+*resetfeel({<char_id>});
+
+This command will reset the Star Gladiator's designated maps on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
+
+---------------------------------------
+
+*resethate({<char_id>});
+
+This command will reset the Star Gladiator's designated monsters on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
 
 ---------------------------------------
 
@@ -5778,9 +5877,9 @@ Increase AGI Lv 5, and display appropriate effects.
 *npcskilleffect <skill id>,<number>,<x>,<y>;
 *npcskilleffect "<skill name>",<number>,<x>,<y>;
 
-This command behaves identically to 'skilleffect', however, the effect will not
-be centered on the invoking character's sprite, nor on the NPC sprite, if any,
-but will be centered at map coordinates given on the same map as the invoking
+This command behaves identically to 'skilleffect', however, ground type skill
+effects will be centered at the map coordinates given on the same map as the
+attached character and all other skill types will be centered on the attached
 character.
 
 ---------------------------------------
@@ -5945,8 +6044,16 @@ Types:
 Status_icon: See "Status Icon" section in 'src/map/script_constants.hpp'. Default is SI_BLANK (-1).
 
 Example:
-	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
-	512,Apple,Apple,0,15,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bStr,5; }",60; },{},{}
+  - Id: 512
+    AegisName: Apple
+    Name: Apple
+    Type: Healing
+    Buy: 15
+    Weight: 20
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus_script "{ bonus bStr,5; }",60;
 
 ---------------------------------------
 
@@ -5969,7 +6076,7 @@ These commands will give the invoking character a specified skill. This is also
 used for item scripts.
 
 Level is obvious. Skill id is the ID number of the skill in question as per
-'db/(pre-)re/skill_db.txt'. It is not known for certain whether this can be used to give
+'db/(pre-)re/skill_db.yml'. It is not known for certain whether this can be used to give
 a character a monster's skill, but you're welcome to try with the numbers given
 in 'db/(pre-)re/mob_skill_db.txt'.
 
@@ -6613,13 +6720,14 @@ Returns true if the command was executed on the other NPC successfully, false if
 
 ---------------------------------------
 
-*npctalk "<message>"{,"<NPC name>","<flag>"};
+*npctalk "<message>"{,"<NPC name>",<flag>{,<color>}};
 
 This command will display a message as if the NPC object running it was a player
 talking - that is, above their head and in the chat window.
 The display name of the NPC won't get appended in front of the message.
 If the <NPC name> option is given and not empty, then that NPC will display the message,
-else the attached NPC will display the message.
+else the attached NPC will display the message,
+the color format is in RGB (0xRRGGBB). The color is White by default.
 
 Target for <flag>:
 - bc_all  : Broadcast message is sent server-wide (only in the chat window).
@@ -6841,6 +6949,10 @@ character moves while the progress bar progresses, it is aborted and
 the script ends. The color format is in RGB (RRGGBB). The color is
 currently ignored by the client and appears always green.
 
+NOTE:
+Ragexe clients are known to randomly crash if a message window is still open.
+If possible make sure to close all message windows before triggering the progressbar command.
+
 ---------------------------------------
 
 *progressbar_npc "<color>",<seconds>{,<"NPC Name">};
@@ -6850,9 +6962,6 @@ above the head of the currently attached (or given) NPC. Once the
 given amount of seconds passes, the script resumes. The color format
 is in RGB (RRGGBB). The color is currently ignored by the client and
 appears always green.
-
-Note: If a player is attached to the NPC, they are detached from the NPC
-as soon as the progress bar activates.
 
 ---------------------------------------
 //
@@ -7511,11 +7620,21 @@ Example:
 
 *debugmes "<message>";
 
-This command will send the message to the server console (map-server window). It
+This command will send a debug message to the server console (map-server window). It
 will not be displayed anywhere else.
 
     // Displays "NAME has clicked me!" in the map-server window.
     debugmes strcharinfo(0) + " has clicked me!";
+
+---------------------------------------
+
+*errormes "<message>";
+
+This command will send an error message to the server console (map-server window). It
+will not be displayed anywhere else.
+
+    // Displays "NAME has clicked me!" in the map-server window.
+    errormes strcharinfo(0) + " has clicked me!";
 
 ---------------------------------------
 
@@ -7965,6 +8084,20 @@ Returns "Unknown" if unit is not found.
 
 ---------------------------------------
 
+*setunittitle <GID>,<title>;
+
+Apply a <title> to the given <GID>.
+
+Note: This only works on non-player types. It also will only work on mobs if battle_config.show_mob_info is not enabled.
+
+---------------------------------------
+
+*getunittitle <GID>;
+
+Returns the title of the given <GID>.
+
+---------------------------------------
+
 *getunitdata <GID>,<arrayname>;
 *setunitdata <GID>,<parameter>,<new value>;
 
@@ -8031,6 +8164,7 @@ Parameters (indexes) for monsters are:
 	UMOB_TARGETID
 	UMOB_ROBE
 	UMOB_BODY2
+	UMOB_GROUP_ID
 
 -----
 
@@ -8075,6 +8209,7 @@ Parameter (indexes) for homunculi are:
 	UHOM_ADELAY
 	UHOM_DMOTION
 	UHOM_TARGETID
+	UHOM_GROUP_ID
 
 -----
 
@@ -8116,6 +8251,7 @@ Parameter (indexes) for pets are:
 	UPET_AMOTION
 	UPET_ADELAY
 	UPET_DMOTION
+	UPET_GROUP_ID
 
 -----
 
@@ -8157,6 +8293,7 @@ Parameter (indexes) for mercenaries are:
 	UMER_ADELAY
 	UMER_DMOTION
 	UMER_TARGETID
+	UMER_GROUP_ID
 
 -----
 
@@ -8200,6 +8337,7 @@ Parameter (indexes) for elementals are:
 	UELE_ADELAY
 	UELE_DMOTION
 	UELE_TARGETID
+	UELE_GROUP_ID
 
 -----
 
@@ -8249,6 +8387,7 @@ Parameter (indexes) for NPCs are:
 	UNPC_ROBE
 	UNPC_BODY2
 	UNPC_DEADSIT
+	UNPC_GROUP_ID
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
@@ -8266,6 +8405,7 @@ Parameter (indexes) for NPCs are:
 		- *_ADELAY: see doc/mob_db.txt
 		- *_DMOTION: see doc/mob_db.txt
 		- *_BODY2: enable (1) the alternate display, or disable (0)
+		- *_TARGETID: when set to 0 the unit will release the target and stop attacking
 
 		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
 		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
@@ -8507,20 +8647,34 @@ Example:
 ---------------------------------------
 
 *setiteminfo(<item id>,<type>,<value>)
+*setiteminfo(<aegis item name>,<type>,<value>)
 
 This function will set some value of an item.
 Returns the new value on success, or -1 on fail (item_id not found or invalid type).
 
 Valid types are:
-	0 - Buy Price; 1 - Sell Price; 2 - Item Type;
-	3 - maxchance (Max drop chance of this item e.g. 1 = 0.01% , etc..
-		if = 0, then monsters don't drop it at all (rare or a quest item)
-		if = 10000, then this item is sold in NPC shops only
-	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
-	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+	ITEMINFO_BUY             (0)   -  Buy Price
+	ITEMINFO_SELL            (1)   -  Sell Price
+	ITEMINFO_TYPE            (2)   -  Type
+	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                        if = 0, then monsters don't drop it at all (rare or a quest item)
+		                        if = 10000, then this item is sold in NPC shops only
+	ITEMINFO_GENDER          (4)   -  Gender
+	ITEMINFO_LOCATIONS       (5)   -  Location(s)
+	ITEMINFO_WEIGHT          (6)   -  Weight
+	ITEMINFO_ATTACK          (7)   -  ATK
+	ITEMINFO_DEFENSE         (8)   -  DEF
+	ITEMINFO_RANGE           (9)   -  Range
+	ITEMINFO_SLOT           (10)   -  Slot
+	ITEMINFO_VIEW           (11)   -  View
+	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
+	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
+	ITEMINFO_ALIASNAME      (14)   -  AliasName
+	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
+	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
 
 Example:
-	setiteminfo 7049,6,9990; // Stone now weighs 999.0
+	setiteminfo 7049,ITEMINFO_WEIGHT,9990; // Stone now weighs 999.0
 
 ---------------------------------------
 
@@ -8956,7 +9110,7 @@ with the given character id.
 *instance_create("<instance name>"{,<instance mode>{,<owner id>}});
 
 Creates an instance for the <owner id> of <mode>. The instance name, along with
-all other instance data, is read from 'db/(pre-)re/instance_db.txt'. Upon success,
+all other instance data, is read from 'db/(pre-)re/instance_db.yml'. Upon success,
 the command generates a unique instance ID, duplicates all listed maps and NPCs,
 sets the alive time, and triggers the "OnInstanceInit" label in all NPCs inside
 the instance.
@@ -8989,7 +9143,7 @@ This will also trigger the "OnInstanceDestroy" label in all NPCs inside the inst
 Warps the attached player to the specified <instance id>. If no ID is specified,
 the IM_PARTY instance the invoking player is attached to is used.
 
-The map and coordinates are located in 'db/(pre-)re/instance_db.txt'.
+The map and coordinates are located in 'db/(pre-)re/instance_db.yml'.
 
 The command returns IE_OK upon success, and these values upon failure:
  IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
@@ -9186,7 +9340,7 @@ Examples:
 
 *questinfo <Icon>{,<Map Mark Color>{,"<condition>"}};
 
-This command should only be used in an OnInit label.
+This command should only be used in OnInit/OnInstanceInit labels.
 Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint".
 When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
 If questinfo is present, it will check if the player fulfill the condition.
@@ -9347,6 +9501,7 @@ QMARK_PURPLE - Purple Marker
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
 The player will also be warped to the default spawn point of the battle group or to the specified coordinates
 <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 ---------------------------------------
 
@@ -9392,6 +9547,7 @@ Returns battle group ID on success. Returns 0 on failure.
 
 Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
 to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 Returns true on success. Returns false on failure.
 
@@ -9409,19 +9565,19 @@ Example:
 
 ---------------------------------------
 
-*bg_reserve("<battleground_name>");
+*bg_reserve("<battleground_map_name>"{,<ended>});
 
-Reserves a slot for the given Battleground for the Battleground UI System.
+Reserves a Battleground map for the Battleground UI System. When a map is booked it prevents another similar
+queue from being created and will allow players to join an active Battlegrounds event.
 
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+If <ended> is true, then the Battleground is marked as over to prevent new players from joining. This state is meant
+for the period where players can get their Badges.
 
 ---------------------------------------
 
-*bg_unbook("<battleground_name>");
+*bg_unbook("<battleground_map_name>");
 
-Removes a spot for the given Battleground for the Battleground UI System.
-
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+Removes a Battleground map for the Battleground UI System. When a map is unbooked it allows a queue to be created.
 
 ---------------------------------------
 
@@ -9521,8 +9677,8 @@ Example:
 Retrieves data related to given Battle Group. Type can be one of the following:
 
 	0 - Amount of players currently belonging to the group.
-	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers
-		and returns amount of players currently belonging to the group.
+	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers,
+		stores and also returns the amount of players currently belonging to the group in $@arenamemberscount.
 
 ---------------------------------------
 
@@ -9718,7 +9874,7 @@ when pet performance is activated.
 
 This will make the pet use a specified support skill on the owner whenever the
 HP and SP are below the given percent values, with a specified delay time
-between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
+between activations. The skill numbers are as per 'db/(pre-)re/skill_db.yml'.
 
 It's not quite certain who's stats will be used for the skills cast, the
 character's or the pets. Probably, Skotlex can answer that question.
@@ -10308,6 +10464,19 @@ Returns 1 on success.
 
 	// Example to set delay
 	channel_setopt("#global",CHAN_OPT_MSG_DELAY,5000);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_getopt "<chname>",<option>;
+
+Get option value for the channel. The <option> values are the same as the
+'channel_create' options. Returns true or false except for CHAN_OPT_MSG_DELAY
+which returns an integer.
+
+	// Example to get the delay
+	.delay = channel_getopt("#global",CHAN_OPT_MSG_DELAY);
 
 Only for public and private channel.
 

@@ -948,13 +948,11 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 			close;
 		case 2:
 			if ($@re_moc < 3) {
-				getpartymember(getcharid(1));
-				set .@partymembercount,$@partymembercount;
-				copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-				for(.@i = 0; .@i < .@partymembercount; .@i++) {
-					if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
-						set .@onlinemembers,.@onlinemembers + 1;
-					}
+				getpartymember getcharid(1), 1, .@partymembercid;
+				.@partymembercount = $@partymembercount;
+				for (.@i = 0; .@i < .@partymembercount; .@i++) {
+					if (convertpcinfo(.@partymembercid[.@i], CPC_ACCOUNT))
+						.@onlinemembers++;
 				}
 				if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
 					mes "[Continental Guard]";
@@ -1009,13 +1007,11 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 		mes "[Continental Guard]";
 		mes "Ah, you're an adventurer working for the Continental Guard. Nice to meet you. Feel free to ask me if you need my assistance.";
 		next;
-		getpartymember(getcharid(1));
-		set .@partymembercount,$@partymembercount;
-		copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-		for(.@i = 0; .@i < .@partymembercount; .@i++) {
-			if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
-				set .@onlinemembers,.@onlinemembers + 1;
-			}
+		getpartymember getcharid(1), 1, .@partymembercid;
+		.@partymembercount = $@partymembercount;
+		for (.@i = 0; .@i < .@partymembercount; .@i++) {
+			if (convertpcinfo(.@partymembercid[.@i], CPC_ACCOUNT))
+				.@onlinemembers++;
 		}
 		switch(select("Enter the First Field to Investigate:Enter the Second Field to Investigate:Return to Morocc's Accident Site:Cancel Conversation")) {
 		case 1:
