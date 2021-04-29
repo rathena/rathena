@@ -4016,7 +4016,7 @@ ACMD_FUNC(reload) {
 		}
 		clif_displaymessage(fd, msg_txt(sd,255)); // Battle configuration has been reloaded.
 	} else if (strstr(command, "statusdb") || strncmp(message, "statusdb", 3) == 0) {
-		status_readdb();
+		status_readdb( true );
 		clif_displaymessage(fd, msg_txt(sd,256)); // Status database has been reloaded.
 	} else if (strstr(command, "pcdb") || strncmp(message, "pcdb", 2) == 0) {
 		pc_readdb();

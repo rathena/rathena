@@ -1421,7 +1421,7 @@ Affected files:
 -- questdb: quest_db.yml
 -- script: /npc/*.txt, /npc/*.conf
 -- skilldb: skill_db.yml, const.txt, skill_nocast_db.txt, skill_changematerial_db.txt, skill_damage_db.txt, abra_db.yml, create_arrow_db.txt, produce_db.txt, spellbook_db.yml, magicmushroom_db.yml
--- statusdb: attr_fix.txt, size_fix.yml, refine_db.txt
+-- statusdb: attr_fix.txt, size_fix.yml, refine.yml
 -- achievementdb: achievement_db.yml
 -- attendancedb: attendance.yml
 

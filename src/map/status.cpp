@@ -12638,7 +12638,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	if (current_equip_combo_pos && tick == INFINITE_TICK) {
-		ShowWarning("sc_start: Item combo contains an INFINITE_TICK duration. Skipping bonus.\n");
+		ShowWarning("sc_start: Item combo of item #%u contains an INFINITE_TICK duration. Skipping bonus.\n", sd->inventory_data[pc_checkequip(sd, current_equip_combo_pos)]->nameid);
 		return 0;
 	}
 
@@ -15945,11 +15945,10 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
  * DBs being read:
  *	attr_fix.txt: Attribute adjustment table for attacks
  *	size_fix.yml: Size adjustment table for weapons
- *	refine_db.txt: Refining data table
+ *	refine.yml: Refining data table
  * @return 0
  */
-int status_readdb(void)
-{
+int status_readdb( bool reload ){
 	int i, j, k;
 	const char* dbsubpath[] = {
 		"",
@@ -15990,8 +15989,13 @@ int status_readdb(void)
 		aFree(dbsubpath2);
 	}
 
-	size_fix_db.load();
-	refine_db.load();
+	if( reload ){
+		size_fix_db.reload();
+		refine_db.reload();
+	}else{
+		size_fix_db.load();
+		refine_db.load();
+	}
 
 	return 0;
 }

@@ -4884,8 +4884,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 #ifndef RENEWAL
 	case SN_SHARPSHOOTING:
-		flag |= 1; // Flag for specific mob damage formula
-#endif
+		flag |= 2; // Flag for specific mob damage formula
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
 	case NPC_DARKPIERCING:
@@ -4902,7 +4901,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			   skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY))) {
 #ifndef RENEWAL
 			   	if (skill_id == SN_SHARPSHOOTING)
-			   		flag &= ~1; // Only targets in the splash area are affected
+			   		flag &= ~2; // Only targets in the splash area are affected
 #endif
 
 				//These skills hit at least the target if the AoE doesn't hit
@@ -5215,7 +5214,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 			if (skill_id == RA_ARROWSTORM)
 				status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
-			if( skill_id == AS_SPLASHER ) {
+			if( skill_id == AS_SPLASHER || skill_id == GN_SPORE_EXPLOSION ) {
 				map_freeblock_unlock(); // Don't consume a second gemstone.
 				return 0;
 			}

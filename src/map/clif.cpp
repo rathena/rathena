@@ -16807,6 +16807,17 @@ void clif_cashshop_list( struct map_session_data* sd ){
 		for( int i = 0; i < cash_shop_items[tab].count; i++ ){
 			p->items[i].itemId = client_nameid( cash_shop_items[tab].item[i]->nameid );
 			p->items[i].price = cash_shop_items[tab].item[i]->price;
+#ifdef ENABLE_CASHSHOP_PREVIEW_PATCH
+			struct item_data* id = itemdb_search( cash_shop_items[tab].item[i]->nameid );
+
+			if( id == nullptr ){
+				p->items[i].location = 0;
+				p->items[i].viewSprite = 0;
+			}else{
+				p->items[i].location = pc_equippoint_sub( sd, id );
+				p->items[i].viewSprite = id->look;
+			}
+#endif
 		}
 
 		WFIFOSET( fd, len );
@@ -18170,11 +18181,11 @@ void clif_bg_queue_entry_init(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	int fd = sd->fd;
+	struct PACKET_ZC_ENTRY_QUEUE_INIT p = {};
 
-	WFIFOHEAD(fd, packet_len(0x90e));
-	WFIFOW(fd,0) = 0x90e;
-	WFIFOSET(fd, packet_len(0x90e));
+	p.packetType = HEADER_ZC_ENTRY_QUEUE_INIT;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
 /// Custom Fonts (ZC_NOTIFY_FONT).
