@@ -2466,17 +2466,17 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	.@s = select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1;
 	setarray .@ids[0], 28413,28416,28419;
 	.@start_ID = .@ids[.@s];
-	if ((countitem(.@start_ID) - isequippedcnt(.@start_ID))  > 0) {
+	if ((countitem(.@start_ID) - isequippedcnt(.@start_ID))  > 0) {	// basic amulet to upgrade
 		.@your_charm_ID = .@start_ID;
 		.@next_charm_ID = .@start_ID + 1;
 		.@needCoin = 30;
 	}
-	else if ((countitem(.@start_ID+1) - isequippedcnt(.@start_ID+1))  > 0) {
+	else if ((countitem(.@start_ID+1) - isequippedcnt(.@start_ID+1))  > 0) {	// intermediate
 		.@your_charm_ID = .@start_ID + 1;
 		.@next_charm_ID = .@start_ID + 2;
 		.@needCoin = 90;
 	}
-	else if ((countitem(.@start_ID+2) - isequippedcnt(.@start_ID+2))  > 0) {
+	else if ((countitem(.@start_ID+2) - isequippedcnt(.@start_ID+2))  > 0) {	// player have some "perfect" amulet in inventory
 		mes "[Goma Chara]";
 		mes "This amulet is already perfect!";
 		close;
