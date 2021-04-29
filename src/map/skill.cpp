@@ -4885,6 +4885,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #ifndef RENEWAL
 	case SN_SHARPSHOOTING:
 		flag |= 2; // Flag for specific mob damage formula
+#endif
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
 	case NPC_DARKPIERCING:
