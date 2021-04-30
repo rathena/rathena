@@ -1146,12 +1146,6 @@ struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_
 	return &skill_unit_layout[0]; // default 1x1 layout
 }
 
-struct s_skill_nounit_layout* skill_get_nounit_layout(uint16 skill_id, uint16 skill_lv, struct block_list* src, int x, int y, int dir)
-{
-	ShowError("skill_get_nounit_layout: unknown no-unit layout for skill %d (level %d)\n", skill_id, skill_lv);
-	return &skill_nounit_layout[0];
-}
-
 /** Stores temporary values.
  * Common usages:
  * [0] holds number of targets in area
@@ -5153,9 +5147,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						status_heal(src, heal, 0, 0);
 					}
 					break;
+#ifdef RENEWAL
 				case SN_SHARPSHOOTING:
 					status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 					break;
+#endif
 				case SJ_PROMINENCEKICK: // Trigger the 2nd hit. (100% fire damage.)
 					skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag|8|SD_ANIMATION);
 					break;
@@ -16846,6 +16842,11 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 								i = MAX_SKILL_ITEM_REQUIRE;
 								continue;
 							}
+							break;
+#else
+						case AM_CALLHOMUN:
+							if (sd->status.hom_id) //Don't delete items when hom is already out.
+								continue;
 							break;
 #endif
 						case AB_ADORAMUS:

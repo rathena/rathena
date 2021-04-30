@@ -9961,9 +9961,9 @@ current invoking character.
 
 ---------------------------------------
 
-*sethomintimacy <amount>{,<char_id>};
+*addhomintimacy <amount>{,<char_id>};
 
-Increase or decrease a homunculus' intimacy value. 100000 is full loyalty.
+Increase or decrease a homunculus' intimacy value by the given <amount>. 100000 is full loyalty.
 
 ---------------------------------------
 

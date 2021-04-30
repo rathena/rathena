@@ -49478,7 +49478,7 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      sethomintimacy 100; // !TODO: Confirm increase amount
+      addhomintimacy 100; // !TODO: Confirm increase amount
   - Id: 100376
     AegisName: Royal_Bow_K_Cube
     Name: Royal Bow Remodeling Cube

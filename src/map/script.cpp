@@ -15111,7 +15111,7 @@ BUILDIN_FUNC(gethominfo)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(sethomintimacy)
+BUILDIN_FUNC(addhomintimacy)
 {
 	map_session_data *sd;
 	homun_data *hd;
@@ -25426,7 +25426,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(recovery,"i???"),
 	BUILDIN_DEF(getpetinfo,"i?"),
 	BUILDIN_DEF(gethominfo,"i?"),
-	BUILDIN_DEF(sethomintimacy,"i?"),
+	BUILDIN_DEF(addhomintimacy,"i?"),
 	BUILDIN_DEF(getmercinfo,"i?"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
