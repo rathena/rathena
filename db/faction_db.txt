@@ -20,10 +20,10 @@
 // * { Script Bonus } : Script Bonus for each faction
 
 // Faction ID: 1
-1,Geffen Arcane,Angel,geffen,0,0,8,6,1,0,0,0x6495ED,{ #240 #418 },{ bonus bInt,3; }
+1,Geffen Arcane,Resistance Soldier,geffen,0,0,8,6,1,0,0,0x6495ED,{ #240 #418 },{ bonus bInt,3; }
 // Faction ID: 2
-2,Payon Royal Guard,Elf,payon,0,0,0,0,1,0,1,0x7CFC00,{ #678 #679 #680 },{ bonus bDex,3; }
+2,Payon Royal Guard,Resistance Soldier,payon,0,0,0,0,1,0,1,0x7CFC00,{ #678 #679 #680 },{ bonus bDex,3; }
 // Faction ID: 3
-3,Morocc Resistance,Demon,morocc,0,0,1,9,1,0,2,0xFF3030,{ #239 #485 },{ bonus bStr,3; }
+3,Morocc Rebels,Resistance Soldier,morocc,0,0,1,9,1,0,2,0xFF3030,{ #239 #485 },{ bonus bStr,3; }
 // Faction ID: 4
-4,Prontera Guard,Human,prontera,155,180,7,0,1,0,3,0xEE82EE,{ #200 #201 },{ bonus bLuk,3; }
+4,Prontera Guard,Resistance Soldier,prontera,155,180,7,0,1,0,3,0xEE82EE,{ #200 #201 },{ bonus bLuk,3; }

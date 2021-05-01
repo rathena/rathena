@@ -2564,7 +2564,8 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 	// Biali Faction System. update char's faction data if in a faction at the moment of their login
 	if(st->faction_id) {
-		faction_update_data(sd);
+		struct faction_data *fdb = faction_search(st->faction_id);
+		faction_update_data(sd, fdb);
 		ShowInfo("pc_authok : Faction data loaded for char %d\n",sd->status.char_id);
 	}
 

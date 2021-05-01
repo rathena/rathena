@@ -24,11 +24,11 @@ function	script	RM_DiarioDeBordo	{
 		close;
 	}
 
-	if(callfunc("isVs",strcharinfo(3))) {
-		mes "^0000FF[ Logbook ]^000000";
-		mes "Sorry, the use of the Logbook is not allowed in this map.";
-		close;
-	}
+	// if(callfunc("isVs",strcharinfo(3))) {
+	// 	mes "^0000FF[ Logbook ]^000000";
+	// 	mes "Sorry, the use of the Logbook is not allowed in this map.";
+	// 	close;
+	// }
 
 	set .SG_RESET_COST, getvariableofnpc(.SG_RESET_COST,"DiarioDeBordo");
 	getmapxy(.@mapName$,.@mapX,.@mapY,BL_PC,strcharinfo(0));
@@ -39,6 +39,11 @@ L_Menu:
 	else mes "Account: ^00AAFF[ Regular ]^000000";
 	mes (#CASHPOINTS)?"Mania$: ^0000FF" +#CASHPOINTS+ "^000000.":"Mania$: ^FF000000.00^000000.";
 	mes "-------------------";
+	if(getcharid(6)) {
+		mes "^0000FFEmpire Flags^000000";
+		mes factioninfo(getcharid(6),0);
+		mes "-------------------";
+	}
 	mes "Infamy: ^0000FF" + callfunc("F_InsertComma",readparam(136)) + " (+"+callfunc("F_InsertComma",readparam(136)/10000)+"% bonus)^000000";
 	mes "Total PK Kills: ^0000FF" + callfunc("F_InsertComma",readparam(137)) + "^000000";
 	mes "Total PK Deaths: ^0000FF" + callfunc("F_InsertComma",readparam(138)) + "^000000";
@@ -69,7 +74,7 @@ L_Menu:
 	next;
 
 	L_Loop:
-	switch(select("^f5b041Premium^000000 Services:Teleport Services")) {
+	switch(select("^f5b041Premium^000000 Services:Teleport Services:Empire Flags")) {
 		case 1: // PREMMY SERVICES
 			mes "^0000FF[ Logbook ]^000000";
 			if( !vip_status(1) && getgmlevel() < 10) {
@@ -203,7 +208,39 @@ L_Menu:
 					X1: warp "sala_premmy",40,38; end;
 					X2: warp "yuno",282,288; end;
 					break;
-			}			
+			}
+		case 3: // Empire Flags Options
+			if(getcharid(6)) { // player is already in a faction
+				mes "^0000FF[ Logbook ]^000000";
+				mes "Would you like to stop representing " + factioninfo(getcharid(6),0) + "?";
+				next;
+				mes "^0000FF[ Logbook ]^000000";
+				if(select("Yes:No") == 2) {
+					mes "No problem";
+					close;
+				} else {
+					setfaction(0);
+					mes "Changes made.";
+					close;
+				}
+			} else { // player is not in a faction yet
+				mes "^0000FF[ Logbook ]^000000";
+				for(.@i=1;.@i<=4;.@i++) {
+					if(factioninfo(.@i,2) == strcharinfo(3)) {
+						mes "Should we start representing ^0000FF"+strcharinfo(3)+"?";
+						if(select("Yes:No") == 2)
+							close;
+						else {
+							setfaction(.@i);
+							mes "All Done. Good luck and please read the book about the Empire Flags";
+							close;
+						}
+					}
+				}
+				mes "I am afraid you'll need to head to the town of your choice to start a representation.";
+				close;
+			}
+			
 		default:
 			close;
 			break;

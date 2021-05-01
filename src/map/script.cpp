@@ -25719,14 +25719,42 @@ BUILDIN_FUNC(setfaction)
 	}
 
 	faction_id = script_getnum(st,2);
-	if( (fdb = faction_search(faction_id)) == NULL )
+	if(faction_id == 0 ) {
+		sd->status.faction_id = 0;
+		if(sd->status.guild_id)
+			sd->guild_emblem_id = sd->guild->emblem_id;
+		else
+			sd->guild_emblem_id = 0;
+
+		sd->faction = {};
+		status_calc_pc(sd,SCO_NONE);
+
+		// This part I got from BG Leave code. Trying this out to clear shit after leaving a fake guild
+		struct guild *g = NULL;
+		if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL)
+		{
+			clif_guild_belonginfo(sd);
+			clif_guild_basicinfo(sd);
+			clif_guild_allianceinfo(sd);
+			clif_guild_memberlist(sd);
+			clif_guild_skillinfo(sd);
+			clif_guild_emblem(sd, g);
+		}
+		clif_name_area(&sd->bl);
+		clif_guild_emblem_area(&sd->bl);
+		// end
+
+		clif_refresh(sd);
+		return SCRIPT_CMD_SUCCESS;
+	} 
+	else if( (fdb = faction_search(faction_id)) == NULL )
 	{
 		ShowWarning("setfaction: Invalid faction id %d \n",faction_id);
 		return 0;
 	}
 
 	sd->status.faction_id = faction_id;
-	faction_update_data(sd); //feed sd->faction with new faction data;
+	faction_update_data(sd, fdb); //feed sd->faction with new faction data;
 	status_calc_pc(sd,SCO_NONE);
 	if( map_getmapflag(sd->bl.m, MF_FVF) )
 		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
