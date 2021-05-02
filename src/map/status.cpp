@@ -8242,7 +8242,10 @@ int status_get_guild_id(struct block_list *bl)
 	nullpo_ret(bl);
 	switch (bl->type) {
 		case BL_PC:
-			return ((TBL_PC*)bl)->status.guild_id;
+			if(((TBL_PC*)bl)->status.faction_id)
+				return ((TBL_PC*)bl)->faction.g.guild_id;
+			else
+				return ((TBL_PC*)bl)->status.guild_id;
 		case BL_PET:
 			if (((TBL_PET*)bl)->master)
 				return ((TBL_PET*)bl)->master->status.guild_id;

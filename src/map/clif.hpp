@@ -867,8 +867,8 @@ void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);
 void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
 
 // biali faction system
-void clif_faction_belonginfo (struct map_session_data *sd);
-void clif_faction_emblem (struct map_session_data *sd, struct faction_data *fdb);
+// void clif_faction_belonginfo (struct map_session_data *sd);
+// void clif_faction_emblem (struct map_session_data *sd, struct faction_data *fdb);
 void clif_sendfactionemblem_single(int fd, struct map_session_data *sd);
 void clif_sendfactionemblem_area(struct map_session_data *sd);
 

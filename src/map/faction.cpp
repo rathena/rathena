@@ -129,7 +129,6 @@ void faction_hp(struct map_session_data *sd)
 		WBUFW(buf,32) = sd->battle_status.max_hp;
 	}
 	clif_send(buf, packet_len(cmd), &sd->bl, FACTION_AREA_WOS);
-	ShowWarning("faction_hp : Entrou aqui\n");
 }
 
 void faction_spawn(struct block_list *bl)
@@ -159,10 +158,10 @@ void faction_spawn(struct block_list *bl)
 	// // }
 
 
-	clif_faction_belonginfo(BL_CAST(BL_PC,bl));
-	clif_faction_emblem(BL_CAST(BL_PC,bl), fdb);
-	clif_name_area(bl);
-	clif_guild_emblem_area(bl);
+	// clif_bg_belonginfo(BL_CAST(BL_PC,bl));
+	// clif_bg_emblem(BL_CAST(BL_PC,bl), &BL_CAST(BL_PC,bl)->faction.g);
+	// clif_name_area(bl);
+	// clif_guild_emblem_area(bl);
 	faction_show_aura(bl);
 }
 
@@ -190,6 +189,7 @@ void faction_show_aura(struct block_list *bl)
 
 void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl)
 {
+
 	struct faction_data *fdb;
 	struct status_change *sc = NULL;
 	int i, fd;
@@ -199,7 +199,7 @@ void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl
 
 	fd = sd->fd;
 // 	// if( map_getmapflag(bl->m, MF_FVF) ) { //biali todo working here
-		if( battle_config.faction_ally_info_bl && (faction_get_id(&sd->bl) != 0 && faction_get_id(&sd->bl) != faction_get_id(bl))) {
+		if( battle_config.faction_ally_info_bl && (faction_get_id(&sd->bl) > 0 && faction_get_id(&sd->bl) != faction_get_id(bl))) {
 			if(battle_config.faction_ally_info_bl&bl->type) {
 				WFIFOHEAD(fd,32);
 				WFIFOW(fd,0) = 0x2dd;
@@ -207,7 +207,7 @@ void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl
 				safestrncpy((char*)WFIFOP(fd,6), status_get_name(bl), NAME_LENGTH);
 				WFIFOW(fd,30) = faction_get_id(bl);
 				WFIFOSET(fd,packet_len(0x2dd));
-				ShowWarning("faction_getareachar_unit : entrou aqui, sem emblema. type = %d \n", bl->type);
+				ShowWarning("faction_getareachar_unit : entrou aqui \n");
 			}
 		} else {
 			//send data to the world around
@@ -221,11 +221,11 @@ void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl
 			WFIFOSET(fd,WFIFOW(fd,2));
 		}
 // //	}
-		clif_faction_belonginfo(BL_CAST(BL_PC,bl));
-		clif_faction_emblem(BL_CAST(BL_PC,bl), fdb);
-		clif_guild_emblem_area(bl);
-
-	ShowWarning("faction_getareachar_unit : Entrou aqui : %s sd->bl/bl:%d/%d\n",sd->status.name,sd->bl,bl);
+		if(sd->bl.id != bl->id){
+			clif_bg_belonginfo(BL_CAST(BL_PC,bl));
+			clif_bg_emblem(BL_CAST(BL_PC,bl), &BL_CAST(BL_PC,bl)->faction.g);
+			clif_guild_emblem_area(bl);
+		}
 
 
 	if( bl->type&(BL_CHAR|BL_NPC) ) {
@@ -476,24 +476,25 @@ static int faction_readdb(void)
 		if( (fp2 = fopen(path, "rb")) != NULL ) {
 			fseek(fp2, 0, SEEK_END);
 			fdb->emblem_len = ftell(fp2);
-			factions[id].emblem_len = ftell(fp2);
 			fseek(fp2, 0, SEEK_SET);
-			fread(&fdb->emblem_data, sizeof(fdb->emblem_data), 1, fp2);
-			fread(&factions[id].emblem_data, 1, factions[id].emblem_len, fp2);
+			fread(&fdb->emblem_data, 1, fdb->emblem_len, fp2);
 			fclose(fp2);
-		} else 
-			memset(fdb->emblem_data, 0, sizeof(fdb->emblem_data));
+		}
 
-		factions[id].emblem_id = 1; // Emblem Index
-		factions[id].guild_id = id;
+		idb_put(faction_db,id,fdb);
+
+		factions[id].guild_id = INT16_MAX - 100 - fdb->id;
 		factions[id].guild_lv = 1;
+		factions[id].emblem_id = 1; // Emblem Index
+		factions[id].emblem_len = fdb->emblem_len;
+		memcpy(factions[id].emblem_data, fdb->emblem_data, sizeof(fdb->emblem_data));
 		factions[id].max_member = MAX_CLAN;
 		snprintf(factions[id].name, NAME_LENGTH, fdb->name); 
 		safestrncpy(factions[id].master, fdb->pl_name, NAME_LENGTH);
 		snprintf(factions[id].position[0].name, NAME_LENGTH, "%s Leader", fdb->pl_name);
 		safestrncpy(factions[id].position[1].name, fdb->pl_name, NAME_LENGTH);
 
-		idb_put(faction_db,id,fdb);
+
 		count++;
 	}
 	fclose(fp);
@@ -505,13 +506,10 @@ static int faction_readdb(void)
 // by biali
 void faction_update_data(struct map_session_data *sd) {
 	nullpo_retv(sd);
-	struct faction_data *fdb = faction_search(sd->status.faction_id);
-	safestrncpy(sd->faction.name, fdb->name, NAME_LENGTH);
-	safestrncpy(sd->faction.pl_name, fdb->pl_name, NAME_LENGTH);
-	sd->faction.g = factions[fdb->id];
-	sd->guild_emblem_id = factions[fdb->id].emblem_id;
-
-	return;
+	sd->faction.g = factions[sd->status.faction_id];
+	sd->guild_emblem_id = factions[sd->status.faction_id].emblem_id;
+	safestrncpy(sd->faction.name, sd->faction.g.name, NAME_LENGTH);
+	safestrncpy(sd->faction.pl_name, sd->faction.g.position[1].name, NAME_LENGTH);
 }
 
 

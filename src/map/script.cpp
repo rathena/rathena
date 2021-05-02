@@ -25754,7 +25754,7 @@ BUILDIN_FUNC(setfaction)
 	}
 
 	sd->status.faction_id = faction_id;
-	faction_update_data(sd, fdb); //feed sd->faction with new faction data;
+	faction_update_data(sd); //feed sd->faction with new faction data;
 	status_calc_pc(sd,SCO_NONE);
 	if( map_getmapflag(sd->bl.m, MF_FVF) )
 		pc_setpos(sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);

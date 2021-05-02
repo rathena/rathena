@@ -43,6 +43,8 @@ struct faction_data {
 		(status_get_party_id(src)>0 && status_get_party_id(src) == status_get_party_id(tbl)) || \
 		(status_get_guild_id(src)>0 && status_get_guild_id(src) == status_get_guild_id(tbl))) )
 
+#define faction_check(sd,dstsd) ( (sd)->status.faction_id>0 && (sd)->status.faction_id == (dstsd)->status.faction_id )
+
 extern struct guild factions[];
 void faction_update_data(struct map_session_data *sd);
 int faction_reload_fvf_sub(struct block_list *,va_list);

@@ -2562,13 +2562,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->bally = 0;
 #endif
 
-	// Biali Faction System. update char's faction data if in a faction at the moment of their login
-	if(st->faction_id) {
-		struct faction_data *fdb = faction_search(st->faction_id);
-		faction_update_data(sd, fdb);
-		ShowInfo("pc_authok : Faction data loaded for char %d\n",sd->status.char_id);
-	}
-
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	sd->hatEffects = {};
 #endif

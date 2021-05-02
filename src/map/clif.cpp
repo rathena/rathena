@@ -1737,13 +1737,14 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
 				clif_specialeffect(bl,EF_BABYBODY2,AREA);
-			if(sd->status.faction_id)
-				faction_getareachar_unit(sd, bl);
+			//biali faction system
+			// if(sd->status.faction_id)
+			// 	faction_getareachar_unit(sd, bl);
 #ifdef BGEXTENDED
-			else if(battle_config.bg_eAmod_mode && sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
+			if((battle_config.bg_eAmod_mode && sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND)) || sd->status.faction_id )
 				clif_sendbgemblem_area(sd);
 #else
-			else if( sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
+			if( sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_area(sd);
 #endif
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
@@ -1753,20 +1754,12 @@ int clif_spawn( struct block_list *bl, bool walking ){
 
 			//biali faction system
 			if(sd->status.faction_id) {
-				struct guild* g;
-				g = &factions[sd->status.faction_id];
-				if (!g) {
-					ShowError("clif_spawn : Fake Guild not Found %d\n",&factions[sd->status.faction_id].guild_id);
-					return 0;
-				}
-
-				clif_faction_belonginfo(sd);
-				clif_faction_emblem(sd, fdb);
+				faction_update_data(sd);
+				clif_bg_belonginfo(sd);
+				clif_bg_emblem(sd, &sd->faction.g);
+				clif_guild_emblem_area(&sd->bl);
+				// clif_sendfactionemblem_area(sd);
 			}
-			//biali working here
-			clif_name_area(bl);
-			clif_guild_emblem_area(bl);
-			clif_sendfactionemblem_area(sd);
 
 			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_hat_effects(sd,bl,AREA);
@@ -2035,11 +2028,6 @@ static void clif_move2( struct block_list *bl, struct view_data *vd, struct unit
 				clif_specialeffect(&sd->bl,EF_BABYBODY2,AREA);
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
-			//biali faction system working here
-			if( sd->status.faction_id ){
-				faction_getareachar_unit(sd, bl);
-				ShowWarning("clif_move2 : sd->bl name : %s\n", sd->status.name);
-			}
 		}
 		break;
 	case BL_MOB:
@@ -4889,6 +4877,20 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 	// display link (dstsd - crusader) to sd
 	if( dstsd->sc.data[SC_DEVOTION] && (d_bl = map_id2bl(dstsd->sc.data[SC_DEVOTION]->val1)) != NULL )
 		clif_devotion(d_bl, sd);
+
+	//biali Faction System
+	if(dstsd->status.faction_id) { 
+		clif_sendbgemblem_single(sd->fd,dstsd);
+		clif_guild_emblem_area(&sd->bl);
+		// clif_sendfactionemblem_area(sd);
+		// faction_getareachar_unit(sd, &dstsd->bl);
+	}
+	if(sd->status.faction_id) { 
+		clif_sendbgemblem_single(dstsd->fd,sd);
+		clif_guild_emblem_area(&dstsd->bl);
+		// clif_sendfactionemblem_area(dstsd);
+		// faction_getareachar_unit(dstsd, &sd->bl);
+	}
 }
 
 void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
@@ -4932,16 +4934,11 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if(tsd->state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
-			//biali faction system working here
-			if( tsd->status.faction_id ){
-				faction_getareachar_unit(sd, bl);
-				ShowWarning("clif_getareachar_unit : sd->bl name : %s\n", sd->status.name);
-			}
 #ifdef BGEXTENDED
-			else if(battle_config.bg_eAmod_mode && tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
+			if(battle_config.bg_eAmod_mode && tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 #else
-			else if( tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
+			if( tsd->bg_id && map_getmapflag(tsd->bl.m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 #endif
 			if ( tsd->status.robe )
@@ -8657,7 +8654,7 @@ void clif_guild_belonginfo(struct map_session_data *sd)
 	//biali faction system
 	if(sd->status.faction_id) {
 		ShowWarning("clif_guild_belonginfo : Entrou aqui com faction_id %d\n",sd->status.faction_id);
-		clif_faction_belonginfo(sd);
+		clif_bg_belonginfo(sd);
 		return;
 	}
 
@@ -9958,9 +9955,6 @@ void clif_refresh(struct map_session_data *sd)
 	}
 	if( sd->ed )
 		clif_elemental_info(sd);
-	
-	if( sd->status.faction_id ) // Faction System [Biali]
-		faction_getareachar_unit(sd, &sd->bl);
 
 	map_foreachinallrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
@@ -10932,38 +10926,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	clif_updatestatus(sd,SP_WEIGHT);
 	clif_updatestatus(sd,SP_MAXWEIGHT);
 
-	if(fdb){
-		if (sd->status.faction_id) {
-			clif_faction_belonginfo(sd);
-			clif_faction_emblem(sd, fdb);
-			clif_guild_emblem_area(&sd->bl);
-		}
-	}
-	faction_getareachar_unit(sd, &sd->bl);
 
-	// if( sd->status.faction_id ) { // Faction System [Biali]
-	// 	//biali faction system
-	// 	//struct guild* g;
-	// 	// g = &factions[sd->status.faction_id];
-	// 	// if (!g) {
-	// 	// 	ShowError("clif_spawn : Fake Guild not Found :: %d\n",&factions[sd->status.faction_id].guild_id);
-	// 	// 	return;
-	// 	// }
-
-
-	// 	// if( map_getmapflag(sd->bl.m, MF_FVF) ) {
-	// 		//Biali TODO test
-		
-	// 		//clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
-	// 		// ----
-	// 		//faction_hp(sd);
-	// 		//faction_spawn(&sd->bl);
-			
-	// 		//clif_name(&sd->bl,&sd->bl,SELF);
-	// 		// clif_name_area(&sd->bl);
-	// 		// clif_name_self(&sd->bl);
-	// 	// }
-	// }
+	// biali faction system
+	// faction_getareachar_unit(sd, &sd->bl);
 
 	// guild
 	// (needs to go before clif_spawn() to show guild emblems correctly)
@@ -14437,12 +14402,10 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 #else
 	int guild_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 #endif
-	//Biali faction system TODO
-	if( sd->status.faction_id ) {
-		faction_data *fdb = faction_search(sd->status.faction_id);
-		int i = sd->status.faction_id - 1;
-		clif_faction_emblem(sd, fdb);
-	} else if( (g = guild_search(guild_id)) != NULL )
+	//Biali faction system
+	if( sd->status.faction_id )
+		clif_bg_emblem(sd, &sd->faction.g);
+	else if( (g = guild_search(guild_id)) != NULL )
 		clif_guild_emblem(sd,g);
 #ifdef BGEXTENDED
 	else if( guild_id > INT16_MAX - 13 && guild_id <= INT16_MAX ) {
@@ -18323,13 +18286,11 @@ void clif_readbook(int fd, int book_id, int page)
 int clif_visual_guild_id(struct block_list *bl)
 {
 	nullpo_ret(bl);
-	int bg_id,f_id;
+	int bg_id;
 	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, (bg_id = bg_team_get_id(bl)));
 
 	if( battle_config.bg_eAmod_mode && (bg_id = bg_team_get_id(bl)) > 0 && bgd != NULL && bgd->g )
 		return bgd->g->guild_id;
-	else if(f_id = (faction_get_id(bl)) > 0 )
-		return f_id;
 	else
 		return status_get_guild_id(bl);
 }
@@ -18337,8 +18298,7 @@ int clif_visual_guild_id(struct block_list *bl)
 int clif_visual_emblem_id(struct block_list *bl)
 {
 	nullpo_ret(bl);
-	int bg_id,f_id;
-	struct faction_data *fdb = NULL;
+	int bg_id;
 
 	std::shared_ptr<s_battleground_data> bgd = util::umap_find(bg_team_db, (bg_id = bg_team_get_id(bl)));
 
@@ -18415,11 +18375,8 @@ void clif_bg_belonginfo(struct map_session_data *sd)
 	struct guild *g;
 	nullpo_retv(sd);
 
-	if( !(battle_config.bg_eAmod_mode && sd->bg_id && (g = bg_guild_get(sd->bg_id)) != NULL) )
+	if( !(battle_config.bg_eAmod_mode && sd->bg_id && (g = bg_guild_get(sd->bg_id)) != NULL) && !(sd->status.faction_id && (g = &sd->faction.g) != NULL) )
 		return;
-
-	// if (sd->status.faction_id)
-	// 	return;
 
 	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x16c));
@@ -18431,7 +18388,32 @@ void clif_bg_belonginfo(struct map_session_data *sd)
 	WFIFOL(fd,15) = 0;
 	safestrncpy(WFIFOCP(fd,19),g->name,NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x16c));
+	ShowWarning("clif_bg_belonginfo : Entrou com guild_id %d \n",g->guild_id);
 }
+
+// //biali faction system
+// void clif_faction_belonginfo(struct map_session_data *sd)
+// {
+// 	int fd;
+// 	struct faction_data *fdb;
+// 	nullpo_retv(sd);
+
+// 	if( (fdb = faction_search(sd->status.faction_id)) == NULL)
+// 		return;
+
+// 	fd = sd->fd;
+// 	WFIFOHEAD(fd,packet_len(0x16c));
+// 	WFIFOW(fd,0) = 0x16c;
+// 	WFIFOL(fd,2) = fdb->id;
+// 	WFIFOL(fd,6) = fdb->emblem_id;
+// 	WFIFOL(fd,10) = 0;
+// 	WFIFOB(fd,14) = 0;
+// 	WFIFOL(fd,15) = 0;
+// 	safestrncpy(WFIFOCP(fd,19),fdb->name,NAME_LENGTH);
+// 	WFIFOSET(fd,packet_len(0x16c));
+
+// 	return;
+// }
 
 void clif_bg_emblem(struct map_session_data *sd, struct guild *g)
 {
@@ -18453,51 +18435,29 @@ void clif_bg_emblem(struct map_session_data *sd, struct guild *g)
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
-//biali faction system
-void clif_faction_belonginfo(struct map_session_data *sd)
-{
-	int fd;
-	struct faction_data *fdb;
-	nullpo_retv(sd);
 
-	if( (fdb = faction_search(sd->status.faction_id)) == NULL)
-		return;
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0x16c));
-	WFIFOW(fd,0) = 0x16c;
-	WFIFOL(fd,2) = fdb->id;
-	WFIFOL(fd,6) = fdb->emblem_id;
-	WFIFOL(fd,10) = 0;
-	WFIFOB(fd,14) = 0;
-	WFIFOL(fd,15) = 0;
-	safestrncpy(WFIFOCP(fd,19),fdb->name,NAME_LENGTH);
-	WFIFOSET(fd,packet_len(0x16c));
+// void clif_faction_emblem(struct map_session_data *sd, struct faction_data *fdb)
+// {
+// 	int fd;
 
-	return;
-}
+// 	nullpo_retv(sd);
+// 	nullpo_retv(fdb);
 
-void clif_faction_emblem(struct map_session_data *sd, struct faction_data *fdb)
-{
-	int fd;
+// 	if( fdb->emblem_len <= 0 )
+// 		return;
 
-	nullpo_retv(sd);
-	nullpo_retv(fdb);
+// 	fd = sd->fd;
+// 	WFIFOHEAD(fd,fdb->emblem_len+12);
+// 	WFIFOW(fd,0)=0x152;
+// 	WFIFOW(fd,2)=fdb->emblem_len+12;
+// 	WFIFOL(fd,4)=fdb->id;
+// 	WFIFOL(fd,8)=fdb->emblem_id;
+// 	memcpy(WFIFOP(fd,12),fdb->emblem_data,fdb->emblem_len);
+// 	WFIFOSET(fd,WFIFOW(fd,2));
 
-	if( fdb->emblem_len <= 0 )
-		return;
-
-	fd = sd->fd;
-	WFIFOHEAD(fd,fdb->emblem_len+12);
-	WFIFOW(fd,0)=0x152;
-	WFIFOW(fd,2)=fdb->emblem_len+12;
-	WFIFOL(fd,4)=fdb->id;
-	WFIFOL(fd,8)=fdb->emblem_id;
-	memcpy(WFIFOP(fd,12),fdb->emblem_data,fdb->emblem_len);
-	WFIFOSET(fd,WFIFOW(fd,2));
-
-	return;
-}
+// 	return;
+// }
 
 void clif_bg_leave(struct map_session_data *sd, const char *name, const char *mes)
 {
@@ -18661,7 +18621,7 @@ void clif_bg_updatescore_single(struct map_session_data *sd)
 }
 
 
-/// Battleground camp belong-information (ZC_BATTLEFIELD_NOTIFY_CAMPINFO).
+/// Battleground / Faction camp belong-information (ZC_BATTLEFIELD_NOTIFY_CAMPINFO).
 /// 02dd <account id>.L <name>.24B <camp>.W
 void clif_sendbgemblem_area(struct map_session_data *sd)
 {
@@ -18671,8 +18631,9 @@ void clif_sendbgemblem_area(struct map_session_data *sd)
 	WBUFW(buf, 0) = 0x2dd;
 	WBUFL(buf,2) = sd->bl.id;
 	safestrncpy(WBUFCP(buf,6), sd->status.name, NAME_LENGTH); // name don't show in screen.
-	WBUFW(buf,30) = sd->bg_id;
+	WBUFW(buf,30) = (sd->status.faction_id)? sd->status.faction_id : sd->bg_id;
 	clif_send(buf,packet_len(0x2dd), &sd->bl, AREA);
+	ShowWarning("clif_sendbgemblem_area : Entrou \n");
 }
 
 void clif_sendbgemblem_single(int fd, struct map_session_data *sd)
@@ -18682,7 +18643,7 @@ void clif_sendbgemblem_single(int fd, struct map_session_data *sd)
 	WFIFOW(fd,0) = 0x2dd;
 	WFIFOL(fd,2) = sd->bl.id;
 	safestrncpy(WFIFOCP(fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(fd,30) = sd->bg_id;
+	WFIFOW(fd,30) = (sd->status.faction_id)? sd->status.faction_id : sd->bg_id;
 	WFIFOSET(fd,packet_len(0x2dd));
 }
 
@@ -18715,8 +18676,6 @@ void clif_sendfactionemblem_single(int fd, struct map_session_data *sd)
 
 	return;
 }
-
-
 
 /// Battlegrounds queue incoming apply request from client.
 /// Queue types: 1 solo queue, 2 party queue, 4 guild queue.
