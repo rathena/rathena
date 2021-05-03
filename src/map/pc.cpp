@@ -1320,6 +1320,10 @@ void pc_calc_ranking(struct map_session_data *tsd, struct map_session_data *ssd,
 	if( !tsd || !ssd || tsd == ssd )
 		return;
 
+	// biali faction system
+	if(tsd->status.faction_id > 0 || ssd->status.faction_id > 0)
+		return;
+
 	m = ssd->bl.m;
 
 	if( map_allowed_woe(m) )
@@ -1335,6 +1339,7 @@ void pc_calc_ranking(struct map_session_data *tsd, struct map_session_data *ssd,
 
 		if( (tg = guild_search(tsd->status.guild_id)) == NULL || (sg = guild_search(ssd->status.guild_id)) == NULL )
 			return;
+
 
 		i = gc->castle_id;
 		Elo = (int)(10. / (1 + pow(10., (int)(sg->castle[i].offensive_score - tg->castle[i].offensive_score) / 2000.)));

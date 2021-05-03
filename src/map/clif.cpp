@@ -1737,9 +1737,6 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
 				clif_specialeffect(bl,EF_BABYBODY2,AREA);
-			//biali faction system
-			// if(sd->status.faction_id)
-			// 	faction_getareachar_unit(sd, bl);
 #ifdef BGEXTENDED
 			if((battle_config.bg_eAmod_mode && sd->bg_id && map_getmapflag(sd->bl.m, MF_BATTLEGROUND)) || sd->status.faction_id )
 				clif_sendbgemblem_area(sd);
@@ -1758,6 +1755,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_bg_belonginfo(sd);
 				clif_bg_emblem(sd, &sd->faction.g);
 				clif_guild_emblem_area(&sd->bl);
+				faction_show_aura(&sd->bl);
 				// clif_sendfactionemblem_area(sd);
 			}
 
@@ -1790,7 +1788,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
-	faction_spawn(bl);
+	// faction_spawn(bl);
 	return 0;
 }
 
@@ -4882,15 +4880,34 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 	if(dstsd->status.faction_id) { 
 		clif_sendbgemblem_single(sd->fd,dstsd);
 		clif_guild_emblem_area(&sd->bl);
+		// faction_show_aura(&sd->bl);
 		// clif_sendfactionemblem_area(sd);
 		// faction_getareachar_unit(sd, &dstsd->bl);
+		if( dstsd->bl.type&(BL_CHAR|BL_NPC) ) {
+		struct status_change *sc = NULL;
+		sc = status_get_sc(&dstsd->bl);
+		if( sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK|OPTION_INVISIBLE) || sc->data[SC_CAMOUFLAGE] )
+			return;
+		}
+
+		if( !((battle_config.faction_aura_settings&1 && map_getmapflag(dstsd->bl.m, MF_FVF)) || battle_config.faction_aura_settings&2) )
+			return;
+
+		if( battle_config.faction_aura_bl&dstsd->bl.type ) {
+			struct faction_data *fdb = faction_search(dstsd->status.faction_id);
+			for( i = 0; i < MAX_AURA_EFF; i++ )
+				if( fdb->aura[i] > 0 )
+					clif_specialeffect_single(&dstsd->bl, fdb->aura[i], sd->fd);
+		}
 	}
 	if(sd->status.faction_id) { 
 		clif_sendbgemblem_single(dstsd->fd,sd);
 		clif_guild_emblem_area(&dstsd->bl);
+		// faction_show_aura(&dstsd->bl);
 		// clif_sendfactionemblem_area(dstsd);
 		// faction_getareachar_unit(dstsd, &sd->bl);
 	}
+	
 }
 
 void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){

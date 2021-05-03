@@ -52,7 +52,7 @@ int faction_reload_fvf_sub(struct block_list *,va_list);
 void faction_factionaura(struct map_session_data *);
 void faction_calc(struct block_list *);
 void faction_hp(struct map_session_data *);
-void faction_spawn(struct block_list *);
+// void faction_spawn(struct block_list *);
 void faction_show_aura(struct block_list *);
 void faction_getareachar_unit(struct map_session_data *, struct block_list *);
 int faction_aura_clear(struct block_list *,va_list);
