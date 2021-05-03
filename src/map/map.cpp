@@ -4685,8 +4685,8 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		// 		default:
 		// 			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 		// 	}
-		// default:
-		// 	return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+		default:
+			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 	}
 }
 
@@ -5052,6 +5052,12 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				memcpy(&mapdata->contested, &args->contested, sizeof(struct s_contested_bonuses));
 				mapdata->flag[mapflag] = status;
 			}
+			break;
+		case MF_FVF: // biali Faction System
+			if (!status) 
+				mapdata->flag[mapflag] = false;
+			else 
+				mapdata->flag[mapflag] = true;
 			break;
 		default:
 			mapdata->flag[mapflag] = status;

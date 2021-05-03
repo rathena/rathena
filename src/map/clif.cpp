@@ -18647,35 +18647,35 @@ void clif_sendbgemblem_single(int fd, struct map_session_data *sd)
 	WFIFOSET(fd,packet_len(0x2dd));
 }
 
-//Biali Faction System
-void clif_sendfactionemblem_area(struct map_session_data *sd)
-{
-	unsigned char buf[33];
-	nullpo_retv(sd);
+// //Biali Faction System
+// void clif_sendfactionemblem_area(struct map_session_data *sd)
+// {
+// 	unsigned char buf[33];
+// 	nullpo_retv(sd);
 
-	WBUFW(buf, 0) = 0x2dd;
-	WBUFL(buf,2) = sd->bl.id;
-	safestrncpy(WBUFCP(buf,6), sd->status.name, NAME_LENGTH); // name don't show in screen.
-	WBUFW(buf,30) = sd->status.faction_id;
-	clif_send(buf,packet_len(0x2dd), &sd->bl, AREA);
+// 	WBUFW(buf, 0) = 0x2dd;
+// 	WBUFL(buf,2) = sd->bl.id;
+// 	safestrncpy(WBUFCP(buf,6), sd->status.name, NAME_LENGTH); // name don't show in screen.
+// 	WBUFW(buf,30) = sd->status.faction_id;
+// 	clif_send(buf,packet_len(0x2dd), &sd->bl, AREA);
 
-	return;
-}
+// 	return;
+// }
 
-void clif_sendfactionemblem_single(int fd, struct map_session_data *sd)
-{
-	nullpo_retv(sd);
-	WFIFOHEAD(fd,32);
-	WFIFOW(fd,0) = 0x2dd;
-	WFIFOL(fd,2) = sd->bl.id;
-	safestrncpy(WFIFOCP(fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(fd,30) = sd->status.faction_id;
-	WFIFOSET(fd,packet_len(0x2dd));
+// void clif_sendfactionemblem_single(int fd, struct map_session_data *sd)
+// {
+// 	nullpo_retv(sd);
+// 	WFIFOHEAD(fd,32);
+// 	WFIFOW(fd,0) = 0x2dd;
+// 	WFIFOL(fd,2) = sd->bl.id;
+// 	safestrncpy(WFIFOCP(fd,6), sd->status.name, NAME_LENGTH);
+// 	WFIFOW(fd,30) = sd->status.faction_id;
+// 	WFIFOSET(fd,packet_len(0x2dd));
 
-	ShowWarning("clif_sendfactionemblem_single : char: %s. faction id: %d emblem_id: %d \n",sd->status.name,sd->status.faction_id,sd->faction.g.emblem_id);
+// 	ShowWarning("clif_sendfactionemblem_single : char: %s. faction id: %d emblem_id: %d \n",sd->status.name,sd->status.faction_id,sd->faction.g.emblem_id);
 
-	return;
-}
+// 	return;
+// }
 
 /// Battlegrounds queue incoming apply request from client.
 /// Queue types: 1 solo queue, 2 party queue, 4 guild queue.

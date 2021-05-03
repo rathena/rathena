@@ -664,17 +664,17 @@ struct s_drop_list {
 	enum e_nightmare_drop_type drop_type;
 };
 
-/// Enum of faction data Biali
-enum e_faction_data_type : uint8 {
-	FACTION_ID,
-	FACTION_RELIC,
-	FACTION_MAX,
-};
+// /// Enum of faction data Biali
+// enum e_faction_data_type : uint8 {
+// 	FACTION_ID,
+// 	FACTION_RELIC,
+// 	FACTION_MAX,
+// };
 
-// Faction system biali
-struct s_faction_data {
-	int info[FACTION_MAX];
-};
+// // Faction system biali
+// struct s_faction_data {
+// 	int info[FACTION_MAX];
+// };
 
 /// Enum of global damage types [Cydh]
 enum e_global_damage_rate_type : uint8 {
@@ -729,7 +729,7 @@ union u_mapflag_args {
 	struct s_global_damage_rate atk_rate;
 	struct s_rpk rpk; //rpk biali
 	struct s_contested_bonuses contested; //Contested Territories Biali
-	struct s_faction_data faction_data; //biali faction system : keeps faction related bonuses on each map
+	// struct s_faction_data faction_data; //biali faction system : keeps faction related bonuses on each map
 	int flag_val;
 };
 
@@ -839,7 +839,7 @@ struct map_data {
 	struct s_global_damage_rate atk_rate; // Global Damage [Cydh]
 	struct s_rpk rpk; // rpk biali
 	struct s_contested_bonuses contested;
-	struct s_faction_data faction_data; // Biali Faction System
+	// struct s_faction_data faction_data; // Biali Faction System
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
