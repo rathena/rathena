@@ -2019,7 +2019,7 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		damage += (skill * 2);
 #endif
 
-	if ((skill = pc_checkskill(sd, NV_BREAKTHROUGH) > 0)
+	if ((skill = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
 		damage += 15 * skill + (skill > 4 ? 25 : 0);
 
 	// Kagerou/Oboro Spirit Charm bonus
