@@ -4382,7 +4382,7 @@ ACMD_FUNC(mapinfo) {
 			sprintf(atcmd_output,"  This map is currently guarded by guild %s.", g->name);
 			clif_displaymessage(fd,atcmd_output);
 			if(sd->status.guild_id > 0 && sd->status.guild_id == mapdata->contested.info[CONTESTED_OWNER_ID]) {
-				sprintf(atcmd_output," > Base Exp Bonus: %d%% | Job Exp Bonus: %d%% | Drop Rates Bonus: %d%%",
+				sprintf(atcmd_output," > Base Exp Bonus: %d | Job Exp Bonus: %d | Drop Rates Bonus: %d",
 					mapdata->contested.info[CONTESTED_BASE_BONUS],
 					mapdata->contested.info[CONTESTED_JOB_BONUS],
 					mapdata->contested.info[CONTESTED_DROP_BONUS]);
@@ -4391,15 +4391,14 @@ ACMD_FUNC(mapinfo) {
 		}
 	}
 	if (map_getmapflag_sub(m_id, MF_RPK, NULL)) {
-		char tr[9],dg[11],fl[16];
-		sprintf(atcmd_output, " PK Map %s %s %s",
-			((mapdata->rpk.info[RPK_MAP_TIER]) ? sprintf(tr," Tier %d%% ", mapdata->rpk.info[RPK_MAP_TIER]) : sprintf(tr,"")),
-			((mapdata->rpk.info[RPK_ISDG]) ? sprintf(dg," (dungeon) ") : sprintf(dg,"")),
-			((mapdata->rpk.info[RPK_ISHG]) ? sprintf(dg," (hellgate) ") : sprintf(dg,"")),
-			((mapdata->rpk.info[RPK_FULLLOOT]) ? sprintf(fl," Full-loot: ON ") : sprintf(fl," Full-loot: OFF "))
-		);
+		char tr[10],dg[4],hg[4],fl[16];
+		if(mapdata->rpk.info[RPK_MAP_TIER]) sprintf(tr,"Tier %d ", mapdata->rpk.info[RPK_MAP_TIER]); else sprintf(tr,"");
+		if(mapdata->rpk.info[RPK_ISDG]) sprintf(dg,"DG "); else sprintf(dg,"");
+		if(mapdata->rpk.info[RPK_ISHG]) sprintf(hg,"HG ");	else sprintf(hg,"");
+		if(mapdata->rpk.info[RPK_FULLLOOT]) sprintf(fl,"Full-loot: ON "); else sprintf(fl,"Full-loot: OFF ");
 
-		clif_displaymessage(fd,atcmd_output);
+		sprintf(atcmd_output, "PK Map %s%s%s%s",tr,dg,hg,fl);
+		// clif_displaymessage(fd,atcmd_output);
 	}
 
 	clif_displaymessage(fd, atcmd_output);
