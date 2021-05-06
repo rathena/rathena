@@ -4068,6 +4068,15 @@ Body:
         Count: 3
       - Mob: MM_MANA_YELLOW
         Count: 3
+  - Id: 7596
+    Title: Qualifications of the Guests
+    Drops:
+      - Mob: MM_GB_MOROCC_1
+        Item: Heart_of_Soul
+        Rate: 10000
+      - Mob: MM_GB_MOROCC_4
+        Item: Sheenas_Soul
+        Rate: 10000
   - Id: 7597
     Title: Fall of the False God
   - Id: 7598
@@ -4079,6 +4088,23 @@ Body:
   - Id: 7600
     Title: Promising Tomorrow
     TimeLimit: +23h
+  - Id: 7601
+    Title: Temple of the Demon God Phase 1
+    Targets:
+      - Mob: MM_BRINARANEA
+        Count: 1
+  - Id: 7602
+    Title: Temple of the Demon God Phase 1 Completed
+  - Id: 7603
+    Title: Temple of the Demon God Phase 2
+    Targets:
+      - Mob: MM_MUSPELLSKOLL
+        Count: 1
+  - Id: 7604
+    Title: Temple of the Demon God Phase 2 Completed
+  - Id: 7605
+    Title: Guardian's Blessing
+    TimeLimit: +3h
   - Id: 7606
     Title: Phantasmagorika Excavator Recruitment
   - Id: 7607
