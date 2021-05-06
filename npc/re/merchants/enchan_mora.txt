@@ -1155,7 +1155,7 @@ L_Socket:
 		delequip .@part;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
-		for ( .@i = getiteminfo(.@equip_id,10); .@i < MAX_SLOTS; .@i++ ) {
+		for ( .@i = getiteminfo(.@equip_id, ITEMINFO_SLOT); .@i < MAX_SLOTS; .@i++ ) {
 			if (callfunc("F_IsCharm",.@equip_card[.@i]) == true)
 				.@equip_card[.@i] = 0;// Armor Enchant System
 		}

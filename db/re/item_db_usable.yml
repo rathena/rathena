@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2019 rAthena Development Team
+#   Copyright(C) 2021 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -348,7 +348,6 @@ Body:
       sc_end SC_BLIND;
       sc_end SC_CONFUSION;
       sc_end SC_CURSE;
-      sc_end SC_Hallucination;
   - Id: 528
     AegisName: Monster's_Feed
     Name: Monster's Feed
@@ -1079,7 +1078,7 @@ Body:
     AegisName: Wing_Of_Fly
     Name: Fly Wing
     Type: Delayconsume
-    Buy: 60
+    Buy: 250
     Weight: 50
     Flags:
       BuyingStore: true
@@ -1089,7 +1088,7 @@ Body:
     AegisName: Wing_Of_Butterfly
     Name: Butterfly Wing
     Type: Delayconsume
-    Buy: 300
+    Buy: 1000
     Weight: 50
     Flags:
       BuyingStore: true
@@ -1181,7 +1180,7 @@ Body:
     AegisName: Leaf_Of_Yggdrasil
     Name: Yggdrasil Leaf
     Type: Delayconsume
-    Buy: 4000
+    Buy: 12000
     Weight: 100
     Flags:
       BuyingStore: true
@@ -1685,7 +1684,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      guildgetexp rand(600000,1200000);
+      guildgetexp rand(50000,100000);
   - Id: 659
     AegisName: Heart_Of_Her
     Name: Her Heart
@@ -1812,7 +1811,6 @@ Body:
     AegisName: Gold_Coin
     Name: Gold Coin
     Type: Usable
-    Buy: 10000
     Trade:
       Override: 100
       NoDrop: true
@@ -1837,7 +1835,6 @@ Body:
     AegisName: Silver_Coin
     Name: Silver Coin
     Type: Usable
-    Buy: 5000
     Trade:
       Override: 100
       NoDrop: true
@@ -2195,7 +2192,6 @@ Body:
     Buy: 100
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -2208,12 +2204,28 @@ Body:
     Script: |
       /*set pcroom,(gettimetick(2)+7200);*/
   - Id: 9510
-    AegisName: Costume_Enchant_Stone_Box17
+    AegisName: Enchant_Stone_Box17
     Name: Costume Enchant Stone Box17
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box17);*/
+      getgroupitem(IG_Enchant_Stone_Box17);
+  - Id: 9514
+    AegisName: Ein_Ddbox
+    Name: Physical Modification Permit
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 9514; */
   - Id: 9523
     AegisName: Metal_Smelting_Ticket
     Name: Metal Refining Ticket
@@ -2221,6 +2233,22 @@ Body:
     Weight: 1
     Script: |
       /*upgradeui 9523;*/
+  - Id: 9529
+    AegisName: Ein_Ddbox2
+    Name: Magical Modification Permit
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 9529; */
   - Id: 9550
     AegisName: Gemstone_Of_Time
     Name: Gemstone of Time
@@ -2235,6 +2263,34 @@ Body:
     Weight: 1
     Script: |
       /*upgradeui 9551;*/
+  - Id: 9785
+    AegisName: Frozen_Box_IL
+    Name: Frozen Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 9785; */
+  - Id: 9933
+    AegisName: True_Hunting_9Refine
+    Name: Troi Hunting 9 Refinement Package
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 9933; */
+  - Id: 9934
+    AegisName: True_Hunting_Opt_A
+    Name: Trois Hunting Physical Craft Kit
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 9934; */
+  - Id: 9935
+    AegisName: True_Hunting_Opt_B
+    Name: Trois Hunting Magical Craft Kit
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 9935; */
   - Id: 11500
     AegisName: Light_Yellow_Pot
     Name: Light Yellow Potion
@@ -2330,7 +2386,7 @@ Body:
     Name: Fanta Orange
     Type: Healing
     Buy: 800
-    Weight: 100
+    Weight: 10
     Script: |
       itemheal rand(50,70),rand(10,12);
   - Id: 11507
@@ -2338,7 +2394,7 @@ Body:
     Name: Fanta Grape
     Type: Healing
     Buy: 800
-    Weight: 100
+    Weight: 10
     Script: |
       itemheal rand(50,70),rand(10,12);
   - Id: 11508
@@ -2726,7 +2782,7 @@ Body:
     AegisName: Woe_Violet_Potion
     Name: Siege Purple Potion
     Type: Healing
-    Weight: 120
+    Weight: 80
     Flags:
       BuyingStore: true
     Script: |
@@ -2754,7 +2810,7 @@ Body:
     Name: Pumpkin Cake
     Type: Healing
     Buy: 10
-    Weight: 80
+    Weight: 40
     Script: |
       percentheal 5,5;
   - Id: 11551
@@ -3257,6 +3313,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1507,600000,SC_MTF_MHP,1000;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!! Bloody Murderer Fo-rm!!";
   - Id: 11593
     AegisName: Trance_Candy_B
     Name: Trans Candy Blue
@@ -3266,6 +3324,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1102,600000,SC_MTF_MSP,100;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!!! Bathory Fo-rm!!";
   - Id: 11594
     AegisName: Trance_Candy_Y
     Name: Trans Candy Yellow
@@ -3275,6 +3335,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1130,600000,SC_MTF_PUMPKIN,2000;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!! Jack Fo-rm!!";
   - Id: 11595
     AegisName: Trance_Candy_G
     Name: Trans Candy Green
@@ -3284,6 +3346,8 @@ Body:
     Script: |
       itemheal 45,0;
       transform 1508,600000,SC_MTF_HITFLEE,10,20;
+      specialeffect2 EF_CLOAKING;
+      showscript "Trans-Form-!! Cube Fo-rm!!";
   - Id: 11596
     AegisName: Blood_In_Skull
     Name: Blood In Skull
@@ -3312,7 +3376,7 @@ Body:
     Buy: 10
     Weight: 10
   - Id: 11600
-    AegisName: Shining_Holy_Water
+    AegisName: ShiningHolyWater
     Name: Shining Holy Water
     Type: Healing
     Buy: 10
@@ -3321,6 +3385,7 @@ Body:
       BuyingStore: true
     Script: |
       if (strcharinfo(3) == "prt_q") {
+         specialeffect2 EF_GUARD;
          bonus_script "{ bonus2 bSubSize,Size_All,10; }",600;
          sc_end SC_SILENCE;
          sc_end SC_POISON;
@@ -3328,26 +3393,28 @@ Body:
          heal 1000,0;
       }
   - Id: 11601
-    AegisName: Delicious_Anchovy
+    AegisName: Tasty_Anchovy
     Name: Delicious Anchovy
     Type: Healing
     Buy: 20
-    Weight: 30
+    Weight: 20
     Script: |
       itemheal rand(30,46),0;
+      specialeffect2 EF_HEAL3;
   - Id: 11602
-    AegisName: Catnip_Fruit
+    AegisName: Nepeta_Cataria
     Name: Catnip Fruit
     Type: Healing
     Buy: 15
     Weight: 1
     Script: |
-      itemheal rand(10,40),0;
+      itemheal rand(36,40),0;
+      specialeffect2 EF_HEAL3;
   - Id: 11605
     AegisName: Cookies_Bat
     Name: Cookie Bat
     Type: Healing
-    Weight: 50
+    Weight: 30
     Script: |
       itemheal rand(50,100),0;
       /*TODO*/
@@ -3364,7 +3431,7 @@ Body:
     Name: Red Syrup
     Type: Healing
     Buy: 800
-    Weight: 7
+    Weight: 70
     EquipLevelMin: 60
     Delay:
       Duration: 1000
@@ -3375,7 +3442,7 @@ Body:
     Name: Yellow Syrup
     Type: Healing
     Buy: 1200
-    Weight: 10
+    Weight: 100
     EquipLevelMin: 60
     Delay:
       Duration: 1000
@@ -3386,7 +3453,7 @@ Body:
     Name: White Syrup
     Type: Healing
     Buy: 1500
-    Weight: 14
+    Weight: 140
     EquipLevelMin: 60
     Delay:
       Duration: 1000
@@ -3397,7 +3464,7 @@ Body:
     Name: Blue Syrup
     Type: Healing
     Buy: 7000
-    Weight: 10
+    Weight: 100
     EquipLevelMin: 60
     Delay:
       Duration: 10000
@@ -3419,11 +3486,13 @@ Body:
     NoUse:
       Override: 100
       Sitting: true
+    Script: |
+      unitskilluseid getcharid(3),"AL_BLESSING",7;
   - Id: 11703
     AegisName: Mysterious_Blood
     Name: Mystery Blood
     Type: Healing
-    Weight: 30
+    Weight: 10
     Script: |
       itemheal 0,rand(25,35);
   - Id: 11704
@@ -3726,14 +3795,14 @@ Body:
     Type: Healing
     Weight: 10
     Script: |
-      itemheal rand(70,99),0;
+      getexp2 33333333,0;
   - Id: 12022
     AegisName: Spareribs
     Name: Galbi
     Type: Healing
     Weight: 10
     Script: |
-      itemheal rand(70,99),0;
+      getexp2 0,33333333;
   - Id: 12023
     AegisName: Giftbox_China
     Name: Wrapped Box
@@ -4947,7 +5016,8 @@ Body:
     Buy: 1
     Weight: 10
     Script: |
-      Zeny += rand(1000,10000);
+      .@r = BaseLevel*100;
+      getexp2 .@r,.@r;
   - Id: 12135
     AegisName: Green_Ale
     Name: Green Ale
@@ -5691,7 +5761,7 @@ Body:
     Name: Special Moon Cake
     Type: Usable
     Buy: 2
-    Weight: 500
+    Weight: 300
     Script: |
       sc_start SC_ASPDPOTION0,600000,4;
       sc_start SC_SPEEDUP0,600000,25;
@@ -5700,7 +5770,7 @@ Body:
     Name: Pumpkin Pie
     Type: Healing
     Buy: 20
-    Weight: 10
+    Weight: 30
     Script: |
       percentheal 5,5;
   - Id: 12193
@@ -5978,7 +6048,7 @@ Body:
   - Id: 12212
     AegisName: Giant_Fly_Wing
     Name: Giant Fly Wing
-    Type: Usable
+    Type: DelayConsume
     Buy: 2
     Weight: 10
     Trade:
@@ -6135,7 +6205,7 @@ Body:
       NoAuction: true
     Script: |
       skilleffect "SN_WINDWALK",0;
-      sc_start SC_WINDWALK,250000,5;
+      sc_start SC_WINDWALK,250000,10;
   - Id: 12220
     AegisName: Adrenaline_Scroll
     Name: LV5 Adrenaline Scroll
@@ -6155,7 +6225,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@type = getiteminfo(getequipid(EQI_HAND_R),11);
+      .@type = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
       if (.@type == W_1HAXE || .@type == W_2HAXE || .@type == W_MACE) {
          skilleffect "BS_ADRENALINE",0;
          sc_start SC_ADRENALINE,150000,5;
@@ -6307,7 +6377,7 @@ Body:
     Script: |
       percentheal 0,5;
       skilleffect "AL_BLESSING",0;
-      sc_start SC_BLESSING,240000,10;
+      sc_start SC_BLESSING,240000,5;
   - Id: 12236
     AegisName: Choco_Tart
     Name: Chocolate Tart
@@ -7340,7 +7410,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FLEEFOOD,300000,5;
+      sc_start SC_FLEEFOOD,300000,10;
   - Id: 12311
     AegisName: Large_Spray_Of_Flowers
     Name: Huge Spray Of Flowers
@@ -7542,7 +7612,7 @@ Body:
     Name: Large Firecracker
     Type: Usable
     Buy: 2
-    Weight: 20
+    Weight: 10
   - Id: 12327
     AegisName: Charm_Of_Luck
     Name: Charm Of Luck
@@ -7706,7 +7776,7 @@ Body:
     Name: Special Alloy Trap Box
     Type: Usable
     Buy: 30000
-    Weight: 10
+    Weight: 100
     Flags:
       BuyingStore: true
     Script: |
@@ -8088,7 +8158,7 @@ Body:
     Name: Boy's Pure Heart
     Type: Usable
     Buy: 20
-    Weight: 50
+    Weight: 10
     Flags:
       BuyingStore: true
     NoUse:
@@ -8120,7 +8190,7 @@ Body:
   - Id: 12376
     AegisName: Mysterious_Can2
     Name: Mysterious Can2
-    Type: Usable
+    Type: Delayconsume
     Buy: 10
     Weight: 100
     Flags:
@@ -8134,7 +8204,7 @@ Body:
   - Id: 12377
     AegisName: Mysterious_PET_Bottle2
     Name: Mysterious PET Bottle2
-    Type: Usable
+    Type: Delayconsume
     Buy: 10
     Weight: 100
     Flags:
@@ -8362,8 +8432,8 @@ Body:
     AegisName: RepairA
     Name: Repair A
     Type: Usable
-    Buy: 220
-    Weight: 100
+    Buy: 275
+    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -8378,8 +8448,8 @@ Body:
     AegisName: RepairB
     Name: Repair B
     Type: Usable
-    Buy: 500
-    Weight: 140
+    Buy: 625
+    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -8394,8 +8464,8 @@ Body:
     AegisName: RepairC
     Name: Repair C
     Type: Usable
-    Buy: 1100
-    Weight: 180
+    Buy: 1375
+    Weight: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -8426,16 +8496,15 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      .@rnd = rand(1,10);
+      .@rnd = rand(1,9);
       if (.@rnd == 1) itemskill "AL_TELEPORT",1;
       else if (.@rnd == 2) itemskill "AL_TELEPORT",3;
       else if (.@rnd == 3) percentheal 50,0;
       else if (.@rnd == 4) percentheal 0,50;
-      else if (.@rnd == 5) end;
-      else if (.@rnd == 6) getitem 512,1;
-      else if (.@rnd == 7) itemskill "ALL_REVERSEORCISH",1;
-      else if (.@rnd == 8) specialeffect2 EF_MAPPILLAR2;
-      else if (.@rnd == 9) specialeffect2 EF_ANGEL2;
+      else if (.@rnd == 5) getitem 512,1;
+      else if (.@rnd == 6) itemskill "ALL_REVERSEORCISH",1;
+      else if (.@rnd == 7) specialeffect2 EF_MAPPILLAR2;
+      else if (.@rnd == 8) specialeffect2 EF_ANGEL2;
       else specialeffect2 EF_COIN;
   - Id: 12397
     AegisName: Fools_Day_Box2
@@ -8447,16 +8516,15 @@ Body:
       Override: 100
       Sitting: true
     Script: |
-      .@rnd = rand(1,10);
+      .@rnd = rand(1,9);
       if (.@rnd == 1) itemskill "TF_DETOXIFY",1;
       else if (.@rnd == 2) itemskill "TF_PICKSTONE",1;
       else if (.@rnd == 3) itemskill "BA_FROSTJOKER",1;
       else if (.@rnd == 4) itemskill "DC_SCREAM",1;
-      else if (.@rnd == 5) end;
-      else if (.@rnd == 6) getitem 909,1;
-      else if (.@rnd == 7) itemskill "AL_RUWACH",1;
-      else if (.@rnd == 8) specialeffect2 EF_BEGINASURA;
-      else if (.@rnd == 9) specialeffect2 EF_MVP;
+      else if (.@rnd == 5) getitem 909,1;
+      else if (.@rnd == 6) itemskill "AL_RUWACH",1;
+      else if (.@rnd == 7) specialeffect2 EF_BEGINASURA;
+      else if (.@rnd == 8) specialeffect2 EF_MVP;
       else specialeffect2 EF_CURSEATTACK;
   - Id: 12398
     AegisName: PCBang_Gift_Box
@@ -8481,7 +8549,7 @@ Body:
     Buy: 20
     Weight: 1000
     Script: |
-      Zeny += 1000000;
+      Zeny += rand(50000,100000);
   - Id: 12400
     AegisName: Water_Of_Blessing_
     Name: Water Of Blessing
@@ -8805,7 +8873,7 @@ Body:
     Name: Concentrated White Potion Z
     Type: Healing
     Buy: 10
-    Weight: 10
+    Weight: 70
     Flags:
       BuyingStore: true
     Script: |
@@ -8877,7 +8945,7 @@ Body:
     Name: Vitata 500
     Type: Healing
     Buy: 10
-    Weight: 10
+    Weight: 50
     Flags:
       BuyingStore: true
     Script: |
@@ -8888,7 +8956,7 @@ Body:
     Name: Concentrated Ceromain Soup
     Type: Usable
     Buy: 10
-    Weight: 10
+    Weight: 50
     Flags:
       BuyingStore: true
     Script: |
@@ -8896,38 +8964,50 @@ Body:
   - Id: 12438
     AegisName: F_Giant_Fly_Wing
     Name: F Giant Fly Wing
-    Type: Usable
+    Type: DelayConsume
     Buy: 2
     Weight: 10
+    Script: |
+      callfunc "F_CashPartyCall";
   - Id: 12439
     AegisName: F_Battle_Manual
     Name: F Old Battle Manual
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_EXPBOOST,1800000,50;
   - Id: 12440
     AegisName: F_Insurance
     Name: F Insurance
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_LIFEINSURANCE,1800000,0;
   - Id: 12441
     AegisName: F_Bubble_Gum
     Name: F Old Bubble Gum
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_ITEMBOOST,1800000,100;
   - Id: 12442
     AegisName: F_Kafra_Card
     Name: F Kafra Card
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      callfunc "F_CashStore";
   - Id: 12443
     AegisName: F_Neuralizer
     Name: F Neuralizer
     Type: Usable
     Buy: 2
+    Script: |
+      callfunc "F_CashReset";
   - Id: 12444
     AegisName: F_Dun_Tele_Scroll1
     Name: WoE Telport Scroll
@@ -8943,6 +9023,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_STRFOOD,1800000,10;
+      percentheal 20,10;
   - Id: 12446
     AegisName: F_Agi_Dish10_
     Name: F Agi Dish10
@@ -8951,6 +9032,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_AGIFOOD,1800000,10;
+      percentheal 15,5;
   - Id: 12447
     AegisName: F_Int_Dish10_
     Name: F Int Dish10
@@ -8959,6 +9041,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_INTFOOD,1800000,10;
+      percentheal 10,20;
   - Id: 12448
     AegisName: F_Dex_Dish10_
     Name: F Dex Dish10
@@ -8967,6 +9050,7 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_DEXFOOD,1800000,10;
+      percentheal 10,10;
   - Id: 12449
     AegisName: F_Luk_Dish10_
     Name: F Luk Dish10
@@ -9006,18 +9090,26 @@ Body:
   - Id: 12456
     AegisName: F_Greed_Scroll
     Name: F Greed Scroll
-    Type: Usable
+    Type: Delayconsume
     Weight: 10
+    Script: |
+      itemskill "BS_GREED",1;
   - Id: 12457
     AegisName: F_Glass_Of_Illusion
     Name: F Glass Of Illusion
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_STEAL;
+      sc_start SC_INCFLEE2,60000,20;
   - Id: 12458
     AegisName: F_Abrasive
     Name: F Abrasive
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_MAGICALATTHIT;
+      sc_start SC_INCCRI,300000,30;
   - Id: 12459
     AegisName: F_Med_Life_Potion
     Name: F Med Life Potion
@@ -9039,6 +9131,9 @@ Body:
     Name: F Regeneration Potion
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_LIGHTSPHERE;
+      sc_start SC_INCHEALRATE,1800000,20;
   - Id: 12462
     AegisName: F_B_Mdef_Potion
     Name: F B Mdef Potion
@@ -9074,39 +9169,51 @@ Body:
   - Id: 12466
     AegisName: F_Blessing_10_Scroll
     Name: F Blessing 10 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "AL_BLESSING",10;
   - Id: 12467
     AegisName: F_Inc_Agi_10_Scroll
     Name: F Inc Agi 10 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "AL_INCAGI",10;
   - Id: 12468
     AegisName: F_Aspersio_5_Scroll
     Name: F Aspersio 5 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "PR_ASPERSIO",5;
   - Id: 12470
     AegisName: F_Wind_Walk_10_Scroll
     Name: F Wind Walk 10 Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "SN_WINDWALK",10;
   - Id: 12471
     AegisName: F_Adrenaline_Scroll
     Name: F Adrenaline Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
+    Script: |
+      itemskill "BS_ADRENALINE",5;
   - Id: 12472
     AegisName: F_Convex_Mirror
     Name: F Convex Mirror
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_BOSSMAPINFO,600000,0;
   - Id: 12473
     AegisName: RWC_Parti_Box
     Name: RWC Parti Box
@@ -9154,7 +9261,7 @@ Body:
     Name: Cure Free
     Type: Usable
     Buy: 20
-    Weight: 50
+    Weight: 10
     Flags:
       BuyingStore: true
     Script: |
@@ -9352,6 +9459,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    # Script: |
+      # mercenary_create VALK_MERC_H,1800000;
   - Id: 12489
     AegisName: Ticket_Gift_Box2
     Name: Ticket Gift Box2
@@ -9422,21 +9531,27 @@ Body:
   - Id: 12494
     AegisName: E_Giant_Fly_Wing
     Name: E Giant Fly Wing
-    Type: Usable
+    Type: DelayConsume
     Buy: 2
     Weight: 10
+    Script: |
+      callfunc "F_CashPartyCall";
   - Id: 12495
     AegisName: E_Battle_Manual
     Name: E Battle Manual
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_EXPBOOST,1800000,50;
   - Id: 12496
     AegisName: E_Insurance
     Name: E Insurance
     Type: Usable
     Buy: 2
     Weight: 10
+    Script: |
+      sc_start SC_LIFEINSURANCE,1800000,0;
   - Id: 12497
     AegisName: E_Bubble_Gum
     Name: E Bubble Gum
@@ -9652,13 +9767,18 @@ Body:
   - Id: 12512
     AegisName: E_Greed_Scroll
     Name: E Greed Scroll
-    Type: Usable
+    Type: Delayconsume
     Weight: 10
+    Script: |
+      itemskill "BS_GREED",1;
   - Id: 12513
     AegisName: E_Glass_Of_Illusion
     Name: E Glass Of Illusion
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_STEAL;
+      sc_start SC_INCFLEE2,60000,20;
   - Id: 12514
     AegisName: E_Abrasive
     Name: E Abrasive
@@ -9738,7 +9858,7 @@ Body:
   - Id: 12522
     AegisName: E_Blessing_10_Scroll
     Name: Blessing Scroll Lv 10
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Trade:
@@ -9755,7 +9875,7 @@ Body:
   - Id: 12523
     AegisName: E_Inc_Agi_10_Scroll
     Name: Increase Agility Scroll Lv 10
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Trade:
@@ -9772,7 +9892,7 @@ Body:
   - Id: 12524
     AegisName: E_Aspersio_5_Scroll
     Name: Aspersio Scroll Lv 5
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9780,7 +9900,7 @@ Body:
   - Id: 12525
     AegisName: E_Assumptio_5_Scroll
     Name: Assumptio Scroll Lv 5
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9788,7 +9908,7 @@ Body:
   - Id: 12526
     AegisName: E_Wind_Walk_10_Scroll
     Name: Wind Walk Scroll Lv 10
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9796,7 +9916,7 @@ Body:
   - Id: 12527
     AegisName: E_Adrenaline_Scroll
     Name: Adrenaline Scroll
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     Script: |
@@ -9922,6 +10042,8 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+    Script: |
+      percentheal 20,20;
   - Id: 12537
     AegisName: Solo_Gift_Basket
     Name: Solo Gift Basket
@@ -10205,7 +10327,7 @@ Body:
     AegisName: Cheer_Scarf_Box
     Name: Cheer Scarf Box
     Type: Usable
-    Weight: 10
+    Weight: 100
     Trade:
       Override: 100
       NoDrop: true
@@ -10219,7 +10341,7 @@ Body:
     AegisName: Cheer_Scarf2_Box
     Name: Cheer Scarf2 Box
     Type: Usable
-    Weight: 10
+    Weight: 100
     Trade:
       Override: 100
       NoDrop: true
@@ -11022,7 +11144,7 @@ Body:
     Name: Sow Bug Pocket
     Type: Usable
     Buy: 20
-    Weight: 10
+    Weight: 500
     Trade:
       Override: 100
       NoDrop: true
@@ -11588,7 +11710,7 @@ Body:
     Name: Siege Violet Potion Box
     Type: Usable
     Buy: 20
-    Weight: 500
+    Weight: 200
     Flags:
       BuyingStore: true
     Script: |
@@ -11603,7 +11725,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      getitem 1775,200;
+      getitem 1775,500;
   - Id: 12678
     AegisName: Siege_Arrow_Quiver_A
     Name: Siege Arrow Quiver A
@@ -11614,7 +11736,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      getitem 1776,200;
+      getitem 1776,500;
   - Id: 12679
     AegisName: Sg_White_Potion_Box
     Name: Siege White Potion Box
@@ -11824,7 +11946,7 @@ Body:
     AegisName: Old_Blue_Box_F
     Name: Old Blue Box
     Type: Usable
-    Weight: 10
+    Weight: 200
   - Id: 12702
     AegisName: Old_Bleu_Box
     Name: Old Navy Box
@@ -12789,7 +12911,7 @@ Body:
   - Id: 12796
     AegisName: Red_Booster
     Name: Red Booster
-    Type: Usable
+    Type: Delayconsume
     Buy: 20
     Weight: 10
     Trade:
@@ -12942,7 +13064,7 @@ Body:
     AegisName: Mother_Love_Box
     Name: Mother Love Box
     Type: Usable
-    EquipLevelMin: 40
+    EquipLevelMin: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -13305,6 +13427,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      warp "iz_ng01",26,57;
   - Id: 12846
     AegisName: Unripe_Apple2
     Name: Little Unripe Apple
@@ -13329,7 +13453,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 12848
-    AegisName: Falcon_Flute
+    AegisName: Falcon_Pipe
     Name: Falcon Flute
     Type: Delayconsume
     Weight: 10
@@ -13345,7 +13469,10 @@ Body:
     Buy: 40
     Weight: 10
     Script: |
-      cooking 30;
+      if (BaseLevel < 20)
+         cooking 30;
+      else
+         cooking 11;
   - Id: 12850
     AegisName: Heaven_Scroll
     Name: Heaven Scroll
@@ -21619,7 +21746,7 @@ Body:
     Name: Old Green Box
     Type: Usable
     Buy: 20
-    Weight: 10
+    Weight: 200
     Flags:
       UniqueId: true
   - Id: 13826
@@ -32056,7 +32183,7 @@ Body:
     Name: Blue Pajamas Hat Box
     Type: Cash
     Buy: 20
-    Weight: 10
+    Weight: 100
     Flags:
       UniqueId: true
     Trade:
@@ -32075,7 +32202,7 @@ Body:
     Name: Pink Pajamas Hat Box
     Type: Cash
     Buy: 20
-    Weight: 10
+    Weight: 100
     Flags:
       UniqueId: true
     Trade:
@@ -32711,7 +32838,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_EXPBOOST,1800000,100;
+      sc_start SC_EXPBOOST,3600000,100;
   - Id: 14534
     AegisName: Small_Life_Potion
     Name: Small Life Potion
@@ -33826,7 +33953,7 @@ Body:
   - Id: 14599
     AegisName: Greed_Scroll_C
     Name: Greed Scroll
-    Type: Usable
+    Type: Delayconsume
     Weight: 10
     NoUse:
       Override: 100
@@ -33963,6 +34090,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_JEXPBOOST,1800000,25;
   - Id: 14607
     AegisName: Luxurious_Dinner_W
     Name: Luxurious Western Food
@@ -34407,7 +34536,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 14695
-    AegisName: Costume_Enchant_Stone_Box_3
+    AegisName: Enchant_Stone_Box_3
     Name: Costume Enchant Stone Box III
     Type: Cash
     Weight: 10
@@ -35635,7 +35764,7 @@ Body:
     Name: HE Battle Manual Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem 12411,10;
   - Id: 16268
@@ -35643,7 +35772,7 @@ Body:
     Name: HE Bubble Gum Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem 12412,10;
   - Id: 16269
@@ -37754,7 +37883,7 @@ Body:
     Name: Thoughtful Hat Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
   - Id: 16589
@@ -37762,7 +37891,7 @@ Body:
     Name: Thoughtful Hat Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
   - Id: 16590
@@ -37770,7 +37899,7 @@ Body:
     Name: Thoughtful Hat Box
     Type: Usable
     Buy: 20
-    Weight: 1
+    Weight: 10
     Script: |
       getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;
   - Id: 16598
@@ -41948,7 +42077,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -42350,7 +42478,7 @@ Body:
     Name: Event Old Headgear Box
     Type: Usable
     Buy: 20
-    Weight: 50
+    Weight: 10
     Script: |
       /* TODO */
   - Id: 17396
@@ -44185,6 +44313,40 @@ Body:
       getrandgroupitem(IG_Candy_Holder,1);
       getrandgroupitem(IG_Candy_Holder,1);
       getrandgroupitem(IG_Candy_Holder,1);
+  - Id: 22515
+    AegisName: Key_Of_Twisted_Time
+    Name: Twisted Key of Time
+    Type: Delayconsume
+    Buy: 10
+    Weight: 300
+    Script: |
+      itemskill "NPC_WIDECURSE",2;
+  - Id: 22516
+    AegisName: Dark_Red_Clot
+    Name: Black As Night Piece
+    Type: Usable
+    Buy: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      sc_start SC_CURSE,4000,0,1500,0;
+  - Id: 22517
+    AegisName: Loki_Summon_Scroll
+    Name: Rocker Summoning Scroll
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      mercenary_create 2937,1800000;
   - Id: 22518
     AegisName: Idn_Wisdom_Egg
     Name: Egg Of Wisdom
@@ -44328,7 +44490,6 @@ Body:
     Weight: 20
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -44419,6 +44580,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    # Script: |
+      # mercenary_create 3024,1800000;
   - Id: 22536
     AegisName: WorkerScroll_B
     Name: Scroll Summoning Workers(Female)
@@ -44434,6 +44597,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    # Script: |
+      # mercenary_create 3025,1800000;
   - Id: 22537
     AegisName: PrizeOfHero
     Name: Prize Of Hero
@@ -44540,7 +44705,7 @@ Body:
     Script: |
       sc_start SC_ASPDPOTION1,1800000,6;
   - Id: 22545
-    AegisName: Speed_Potion
+    AegisName: Speed_Up_Potion_B
     Name: Speed Potion
     Type: Usable
     Buy: 10
@@ -44557,7 +44722,7 @@ Body:
     Script: |
       sc_start SC_SPEEDUP1,5000,50;
   - Id: 22546
-    AegisName: Slow_Potion
+    AegisName: Slow_Down_Potion_B
     Name: Slow Potion
     Type: Usable
     Buy: 10
@@ -44574,7 +44739,7 @@ Body:
     Script: |
       sc_start SC_SLOWDOWN,5000,100;
   - Id: 22547
-    AegisName: Anti-Payne_Moment
+    AegisName: Anodyne_B
     Name: Anti-Payne Moment
     Type: Usable
     Buy: 10
@@ -44589,7 +44754,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22548
-    AegisName: Wed_Cursed
+    AegisName: Water_Of_Darkness_B
     Name: Wed Cursed
     Type: Usable
     Buy: 10
@@ -44604,7 +44769,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 22549
-    AegisName: Poison_Bottle_
+    AegisName: Poison_Bottle_B
     Name: Poison Bottle
     Type: Usable
     Buy: 10
@@ -44684,6 +44849,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      sc_start SC_BATKFOOD,60000,10;
+      sc_start SC_MATKFOOD,60000,10;
   - Id: 22554
     AegisName: First_Aid_Box
     Name: First Aid Box
@@ -44765,22 +44933,23 @@ Body:
   - Id: 22567
     AegisName: Squad_Prize
     Name: Expedition Award Box
-    Type: Healing
+    Type: Usable
     Buy: 20
     Weight: 100
     Trade:
       Override: 100
       NoMail: true
       NoAuction: true
+    Script: |
+      /* TODO */
   - Id: 22568
     AegisName: Nyd_Summon_Scroll
     Name: Nidhoggur Summon Scroll
-    Type: Healing
+    Type: Usable
     Buy: 20
     Weight: 100
-    Gender: Female
-    Locations:
-      Right_Hand: true
+    # Script: |
+      # mercenary_create 3087,1800000;
   - Id: 22569
     AegisName: Gift_New_start
     Name: Gift New start
@@ -44851,13 +45020,15 @@ Body:
     Script: |
       /* TODO */
   - Id: 22612
-    AegisName: Corrupt_Reagents
+    AegisName: Decomposition_Potion
     Name: Corrupt Reagents
     Type: Delayconsume
     Buy: 10
     Weight: 50
     Script: |
-      /* TODO */
+      specialeffect2 EF_VENOMDUST;
+      showscript "Yeah! Zombie night! Yeah!!";
+#      transform 1015,60000,SC_GLASTHEIM_TRANS;  /* todo */
   - Id: 22613
     AegisName: Contaminated_Reagents
     Name: Contaminated Reagents
@@ -45489,43 +45660,43 @@ Body:
     Script: |
       /*TODO: getitem 12529,1; getitem 12323,200; getitem 12324,50; and 5 boxes that containing quivers + oridecons*/
   - Id: 22702
-    AegisName: STR_Soul_Potion
+    AegisName: Minus_Str
     Name: STR Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bStr,-1,22702;
   - Id: 22703
-    AegisName: AGI_Soul_Potion
-    Name: STR Reduction Potion
+    AegisName: Minus_Agi
+    Name: AGI Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bAgi,-1,22703;
   - Id: 22704
-    AegisName: VIT_Soul_Potion
-    Name: STR Reduction Potion
+    AegisName: Minus_Vit
+    Name: VIT Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bVit,-1,22704;
   - Id: 22705
-    AegisName: INT_Soul_Potion
-    Name: STR Reduction Potion
+    AegisName: Minus_Int
+    Name: INT Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bInt,-1,22705;
   - Id: 22706
-    AegisName: DEX_Soul_Potion
-    Name: STR Reduction Potion
+    AegisName: Minus_Dex
+    Name: DEX Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
       callfunc "F_CashReduceStat",bDex,-1,22706;
   - Id: 22707
-    AegisName: LUK_Soul_Potion
-    Name: STR Reduction Potion
+    AegisName: Minus_Luk
+    Name: LUK Reduction Potion
     Type: Delayconsume
     Buy: 10
     Script: |
@@ -46042,14 +46213,13 @@ Body:
       getitem 678,12;
       /*No Info*/
   - Id: 22808
-    AegisName: Special_Gift_Box
+    AegisName: NoviceBox
     Name: Special Gift Box
     Type: Usable
     Buy: 10
     Weight: 100
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46059,6 +46229,11 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      getitem 7444,1;
+      getitem 12610,1;
+      getitem 12265,5;
+      getitem 22979,5;
   - Id: 22812
     AegisName: Sealed_Dracula_Scroll
     Name: Sealed Dracula Scroll
@@ -46111,7 +46286,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46128,7 +46302,7 @@ Body:
     Name: Costume Enchantment Stone Box 4
     Type: Usable
     Buy: 10
-    Weight: 100
+    Weight: 10
     EquipLevelMin: 1
     Script: |
       getitem callfunc("F_Rand",6636,6637,6638,6639,6640,6641,6642,6643,6644,6645,6740,6741,6742,6743,6744,6745,6790,6791,6792,6908),1;
@@ -46140,7 +46314,6 @@ Body:
     Weight: 10
     Classes:
       All: false
-    Gender: Female
     Script: |
       /*No Info*/
   - Id: 22828
@@ -46148,7 +46321,7 @@ Body:
     Name: Sealed Album Scroll
     Type: Usable
     Buy: 10
-    Weight: 100
+    Weight: 10
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -46166,7 +46339,7 @@ Body:
     Name: Sealed Card Album
     Type: Usable
     Buy: 10
-    Weight: 100
+    Weight: 10
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -46185,7 +46358,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 50
-    EquipLevelMin: 1
+    EquipLevelMin: 50
     Trade:
       Override: 100
       NoDrop: true
@@ -46238,10 +46411,9 @@ Body:
     Name: Sealed Dracula Card Album
     Type: Usable
     Buy: 10
-    Weight: 10
+    Weight: 50
     Classes:
       All: false
-    Gender: Female
     Trade:
       Override: 100
       NoDrop: true
@@ -46298,7 +46470,7 @@ Body:
     Script: |
       warp "prontera",159,192;
   - Id: 22848
-    AegisName: Prison_Key
+    AegisName: KeysPrison
     Name: Prison Key
     Type: Usable
     Buy: 10
@@ -46306,10 +46478,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      warp "prt_prison",0,0;
-      /*No coord info*/
+      warp "prt_prison",188,23;
   - Id: 22849
-    AegisName: Prontera_Time_Crystal
+    AegisName: P_Temporal_Crystal
     Name: Prontera Time Crystal
     Type: Usable
     Buy: 10
@@ -46530,7 +46701,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box5);
+      getgroupitem(IG_Enchant_Stone_Box5);
   - Id: 22869
     AegisName: Lucky_Roulette_Tickets
     Name: Lucky Roulette Ticket
@@ -46585,11 +46756,12 @@ Body:
     Script: |
       /*No Info*/
   - Id: 22876
-    AegisName: Old_Money_Pocket
+    AegisName: Shabby_Purse
     Name: Old Money Pocket
     Type: Usable
     Script: |
-      Zeny += rand(500,550);
+      specialeffect2 EF_STEAL;
+      Zeny += rand(100,1000);
   - Id: 22881
     AegisName: Binding_Rope
     Name: Rope Gallows
@@ -46786,15 +46958,15 @@ Body:
     Script: |
       /*Works like item 6320, can reset up to 3x within 1 hour*/
   - Id: 22899
-    AegisName: Parchment_City
+    AegisName: DowntownMap
     Name: Parchment City
-    Type: Usable
+    Type: Delayconsume
     Buy: 20
     Script: |
       itemskill "AL_INCAGI",1;
       heal -15,0;
   - Id: 22901
-    AegisName: Question_Old_Blue_Box
+    AegisName: BlueboxOfQuestions
     Name: Mysterious Blue Box
     Type: Usable
     Buy: 20
@@ -46834,7 +47006,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box6);
+      getgroupitem(IG_Enchant_Stone_Box6);
   - Id: 22953
     AegisName: Enchant_Stone_Box7
     Name: Costume Enchant Stone Box 7
@@ -46843,9 +47015,9 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box7);
+      getgroupitem(IG_Enchant_Stone_Box7);
   - Id: 22979
-    AegisName: C_Battle_Gum_2
+    AegisName: Comp_Battle_Bubble
     Name: "[Sale] Battle Manual and Bubble Gum"
     Type: Usable
     Trade:
@@ -46861,7 +47033,7 @@ Body:
       sc_start SC_EXPBOOST,1800000,50;
       sc_start SC_ITEMBOOST,1800000,100;
   - Id: 22984
-    AegisName: Kahluna_Milk
+    AegisName: Dr_Life_Potion_01
     Name: Kahluna Milk
     Type: Healing
     Buy: 6
@@ -46869,7 +47041,7 @@ Body:
     Script: |
       sc_start SC_DORAM_BUF_01, 180000, 0;
   - Id: 22985
-    AegisName: Basil
+    AegisName: Dr_Life_Potion_02
     Name: Basil
     Type: Healing
     Buy: 10
@@ -46884,7 +47056,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box8);
+      getgroupitem(IG_Enchant_Stone_Box8);
   - Id: 23012
     AegisName: S_Small_Mana_Potion
     Name: "[Sale] Small Mana Potion"
@@ -46903,7 +47075,7 @@ Body:
       bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9;
       /* fix me: unknown flag and specialeffect ;  disabled when LK_BERSERK */
   - Id: 23016
-    AegisName: Cursed_Fragment
+    AegisName: Pieces_Of_Grudge
     Name: Cursed Fragment
     Type: Usable
     Buy: 1
@@ -46926,7 +47098,7 @@ Body:
     Script: |
       getitem 11573,200;
   - Id: 23042
-    AegisName: S_Seed_Of_Yggdrasil
+    AegisName: Seed_Of_Yggdrasil_
     Name: "[NotForSale]Yggdrasil Seed"
     Type: Healing
     Weight: 300
@@ -47066,7 +47238,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box10);
+      getgroupitem(IG_Enchant_Stone_Box10);
   - Id: 23087
     AegisName: Small_Leather_Bag
     Name: Small Leather Bag
@@ -47177,7 +47349,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box11);
+      getgroupitem(IG_Enchant_Stone_Box11);
   - Id: 23175
     AegisName: Uniform_Repair_Kit
     Name: Uniform Repair Kit
@@ -47203,21 +47375,21 @@ Body:
     Script: |
       callfunc "F_CashStore";
   - Id: 23187
-    AegisName: Sap_Liquid
+    AegisName: Sap_Jelly
     Name: Sap Liquid
     Type: Usable
     Buy: 10
     Script: |
       pet 1180;
   - Id: 23188
-    AegisName: Unprocessed_Parts
+    AegisName: Airship_Part
     Name: Unprocessed Parts
     Type: Usable
     Buy: 10
     Script: |
       pet 1632;
   - Id: 23189
-    AegisName: Small_Needle_Kit
+    AegisName: Little_Dall_Needle
     Name: Small Needle Kit
     Type: Usable
     Buy: 10
@@ -47276,7 +47448,7 @@ Body:
     Script: |
       getgroupitem(IG_Agust_Lucky_Scroll);
   - Id: 23228
-    AegisName: Hazy_Mooncake
+    AegisName: HazyMooncake
     Name: Hazy Mooncake
     Type: Healing
     Buy: 768
@@ -47362,19 +47534,114 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23250;*/
+  - Id: 23251
+    AegisName: Rose_Bundle_A
+    Name: Rose Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2192,1);
+      getitem(2743,1);
+  - Id: 23252
+    AegisName: Orleans_Bundle_A
+    Name: Orleans's Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2365,1);
+      getitem(2881,1);
+  - Id: 23253
+    AegisName: Black_Shiba_Bundle_A
+    Name: Black Shiba Inu Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2959,1);
+      getitem(18756,1);
+  - Id: 23255
+    AegisName: Kardui_Bundle_A
+    Name: Kardui Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(1649,1);
+      getitem(15169,1);
   - Id: 23256
-    AegisName: Elixir_Bandages
+    AegisName: Elixir_Bandage
     Name: Elixir Bandages
     Type: Usable
     Buy: 10
     Script: |
       pet 1041;
+  - Id: 23266
+    AegisName: Etran_Bundle_A
+    Name: Etran Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem(2371,1);
+      getitem(20797,1);
   - Id: 23277
     AegisName: Mado_Box
     Name: Emergency Magic Gear
     Type: Usable
     Buy: 10000
-    Weight: 3000
+    Weight: 300
     Jobs:
       Blacksmith: true
     Classes:
@@ -47383,7 +47650,8 @@ Body:
     Delay:
       Duration: 180000
     Script: |
-      setmadogear 1;
+      specialeffect2 EF_CLAYMORE;
+      setmadogear true;
   - Id: 23280
     AegisName: N_Fly_Wing_
     Name: Novice Fly Wing
@@ -47438,6 +47706,25 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23291;*/
+  - Id: 23294
+    AegisName: Pororoca_Shoes_Bundle_A
+    Name: Pororoca Shoes Bundle A
+    Type: Usable
+    Weight: 0
+    Flags:
+        Container: true
+    Trade:
+        Override: 100
+        NoDrop: true
+        NoTrade: true
+        NoSell: true
+        NoCart: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+    Script: |
+        getitem(1646,1);
+        getitem(22104,1);
   - Id: 23299
     AegisName: Enchant_Stone_Box12
     Name: Costume Enchant Stone Box 12
@@ -47446,7 +47733,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box12);
+      getgroupitem(IG_Enchant_Stone_Box12);
   - Id: 23307
     AegisName: S_Shining_Def_Scroll
     Name: "[Sale] Shining Defense Scroll"
@@ -47486,7 +47773,7 @@ Body:
     Script: |
       /*synthesisui 23324;*/
   - Id: 23340
-    AegisName: S_Megaphone
+    AegisName: Comp_Megaphone
     Name: "[Sale] Megaphone"
     Type: Usable
     Weight: 10
@@ -47515,6 +47802,22 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23474;*/
+  - Id: 23475
+    AegisName: Infinity_Drink
+    Name: Infinity Drink
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_POTION_BERSERK;
+      bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus bMatkRate,5; bonus bNoCastCancel; }",1800,1,1,EFST_INFINITY_DRINK;
   - Id: 23524
     AegisName: Enchant_Stone_Box13
     Name: Costume Enchant Stone Box 13
@@ -47523,7 +47826,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box13);
+      getgroupitem(IG_Enchant_Stone_Box13);
   - Id: 23545
     AegisName: Silver_Statue
     Name: Silver Statue
@@ -47553,7 +47856,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box14);
+      getgroupitem(IG_Enchant_Stone_Box14);
   - Id: 23665
     AegisName: PhysicalMagical_Mix
     Name: PhysicalMagical Mix
@@ -47572,7 +47875,7 @@ Body:
     AegisName: HardChamption_Mix
     Name: HardChampion Mix
     Type: Delayconsume
-    Weight: 100
+    Weight: 10
     Script: |
       /*synthesisui 23667;*/
   - Id: 23668
@@ -47632,7 +47935,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      getgroupitem(IG_Costume_Enchant_Stone_Box15);
+      getgroupitem(IG_Enchant_Stone_Box15);
   - Id: 23706
     AegisName: Charleston_Parts_W
     Name: Charleston Upgrade Parts (Physical)
@@ -47655,12 +47958,12 @@ Body:
     Script: |
       /*upgradeui 23720;*/
   - Id: 23770
-    AegisName: Costume_Enchant_Stone_Box16
+    AegisName: Enchant_Stone_Box16
     Name: Costume Enchant Stone Box16
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box16);*/
+      getgroupitem(IG_Enchant_Stone_Box16);
   - Id: 23776
     AegisName: EP17_1_SPC05
     Name: Weapon Modifier (Physical)
@@ -47896,7 +48199,7 @@ Body:
     AegisName: Bs_Item_M_S_37
     Name: Bandit's Hood SynthesisBox
     Type: Delayconsume
-    Weight: 1
+    Weight: 10
     Script: |
       /*synthesisui 23844;*/
   - Id: 23845
@@ -48256,11 +48559,18 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23967;*/
+  - Id: 23981
+    AegisName: Abyss_Ddbox
+    Name: Turbulence Dragon's Power
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 23981; */
   - Id: 100000
     AegisName: IDTest_Special
     Name: IDTest Special
     Type: Delayconsume
-    Weight: 1
+    Weight: 10
     Script: |
       /*synthesisui 100000;*/
   - Id: 100003
@@ -48275,6 +48585,13 @@ Body:
     Type: Delayconsume
     Script: |
       /*upgradeui 100004;*/
+  - Id: 100009
+    AegisName: Joy_Of_Victory
+    Name: Victorious Happiness
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100009; */
   - Id: 100010
     AegisName: PerfectSize_Mix
     Name: Perfect Size Shadow SynthesisBox
@@ -48290,12 +48607,12 @@ Body:
     Script: |
       /*synthesisui 100011;*/
   - Id: 100019
-    AegisName: Costume_Enchant_Stone_Box18
+    AegisName: Enchant_Stone_Box18
     Name: Costume Enchant Stone Box18
     Type: Cash
     Weight: 10
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box18);*/
+      getgroupitem(IG_Enchant_Stone_Box18);
   - Id: 100023
     AegisName: Ancient_Hero_Bravery
     Name: Ancient Hero Bravery
@@ -48330,7 +48647,7 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box19);*/
+      getgroupitem(IG_Enchant_Stone_Box19);
   - Id: 100053
     AegisName: Piercing_Mix
     Name: Piercing Shadow SynthesisBox
@@ -48432,6 +48749,21 @@ Body:
       NoConsume: true
     Script: |
       itemskill "WL_READING_SB_READING",10;
+  - Id: 100125
+    AegisName: Metal_7_Ticket
+    Name: Metal Weapon +7 Refinement Ticket
+    Type: DelayConsume
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100125; */
   - Id: 100128
     AegisName: Noblesses_Refine_Ticket
     Name: Noblesses Refine Ticket
@@ -48619,6 +48951,81 @@ Body:
       NoAuction: true
     Script: |
       /*upgradeui 100138;*/
+  - Id: 100142
+    AegisName: Abyss_Ddbox2
+    Name: Stable Dragon's Power
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100142; */
+  - Id: 100144
+    AegisName: Abyss_Ddbox3
+    Name: Burning Dragon's Power
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100144; */
+  - Id: 100145
+    AegisName: Abyss_Ddbox4
+    Name: Hot Dragon's Power
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100145; */
+  - Id: 100151
+    AegisName: Skill_Sha_M_S_Weapon
+    Name: Skill Shadow Weapon Combination Scroll
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100151; */
+  - Id: 100164
+    AegisName: Auto_Imp_Melee_1
+    Name: Normal Automatic Improvement Device (Physical)
+    Type: DelayConsume
+    Script: |
+      /* upgradeui 100164; */
+  - Id: 100165
+    AegisName: Auto_Imp_Melee_2
+    Name: Advanced Automatic Improvement Device (Physical)
+    Type: DelayConsume
+    Script: |
+      /* upgradeui 100165; */
+  - Id: 100166
+    AegisName: Auto_Imp_Melee_3
+    Name: Premium Automatic Improvement Device (Physical)
+    Type: DelayConsume
+    Script: |
+      /* upgradeui 100166; */
+  - Id: 100167
+    AegisName: Auto_Imp_Magic_1
+    Name: Normal Automatic Improvement Device (Magical)
+    Type: DelayConsume
+    Script: |
+      /* upgradeui 100167; */
+  - Id: 100168
+    AegisName: Auto_Imp_Magic_2
+    Name: Advanced Automatic Improvement Device (Magical)
+    Type: DelayConsume
+    Script: |
+      /* upgradeui 100168; */
+  - Id: 100169
+    AegisName: Auto_Imp_Magic_3
+    Name: Premium Automatic Improvement Device (Magical)
+    Type: DelayConsume
+    Script: |
+      /* upgradeui 100169; */
   - Id: 100202
     AegisName: Enchant_Stone_Box20
     Name: Costume Enchantment Stone Box 20
@@ -48627,7 +49034,78 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box20);*/
+      getgroupitem(IG_Enchant_Stone_Box20);
+  - Id: 100205
+    AegisName: Class_Sha_R_M_Melee
+    Name: Class Shadow Spellbook (Melee)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100205; */
+  - Id: 100206
+    AegisName: Class_Sha_R_M_Magic
+    Name: Class Shadow Spellbook (Magic)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100206; */
+  - Id: 100207
+    AegisName: Skill_Sha_R_M_Melee
+    Name: Skill Shadow Spellbook (Melee)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100207; */
+  - Id: 100208
+    AegisName: Skill_Sha_R_M_Magic
+    Name: Skill Shadow Spellbook (Magic)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100208; */
+  - Id: 100209
+    AegisName: Skill_Sha_M_S_Shield
+    Name: Skill Shadow Shield Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100209; */
+  - Id: 100210
+    AegisName: Skill_Sha_M_S_Pendant
+    Name: Skill Shadow Pendant Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100210; */
+  - Id: 100211
+    AegisName: Skill_Sha_M_S_Earing
+    Name: Skill Shadow Earring Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100211; */
+  - Id: 100212
+    AegisName: Skill_Sha_M_S_Shoes
+    Name: Skill Shadow Shoes Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100212; */
+  - Id: 100213
+    AegisName: Skill_Sha_M_S_Armor
+    Name: Skill Shadow Armor Recipe
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100213; */
   - Id: 100231
     AegisName: Ref_T_Potion
     Name: Golden X
@@ -48652,6 +49130,114 @@ Body:
     Weight: 30
     Script: |
       sc_start SC_ADD_MATK_DAMAGE,500000,15;
+  - Id: 100251
+    AegisName: Illu_Enhance_Cube
+    Name: Illusion Reinforcement Cube
+    Type: DelayConsume
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100251; */
+  - Id: 100252
+    AegisName: Auto_Enhance_Cube
+    Name: Automatic Reinforcement Cube
+    Type: DelayConsume
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100252; */
+  - Id: 100268
+    AegisName: Temporal_Refine_Cube
+    Name: Temporal Equipment 11 Refine Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100268; */
+  - Id: 100269
+    AegisName: Geffen_Refine_Cube
+    Name: Geffen Magic Tournament 12 Refine Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100269; */
+  - Id: 100270
+    AegisName: Old_Refine_Cube
+    Name: Fallen Warrior's Headgear 12 Refine Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100270; */
+  - Id: 100271
+    AegisName: Refine_Hero_Weapon
+    Name: Ancient Hero Weapon 9 Refine Permission
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100271; */
+  - Id: 100272
+    AegisName: Refine_Hero_Boots
+    Name: Ancient Hero Boots 9 Refine Permission
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100272; */
+  - Id: 100273
+    AegisName: Remodel_Hero_Boots
+    Name: Ancient Hero Boots Modification Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100273; */
+  - Id: 100274
+    AegisName: Oriental_Sword_Cube
+    Name: Oriental Sword Modification Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100274; */
+  - Id: 100275
+    AegisName: Dragonic_Slayer_Cube
+    Name: Dragonic Slayer Modification Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100275; */
+  - Id: 100276
+    AegisName: Shiver_Katar_K_Cube
+    Name: Shiver Katar Modification Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100276; */
+  - Id: 100277
+    AegisName: Blade_Katar_Cube
+    Name: Blade Katar Modification Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100277; */
   - Id: 100314
     AegisName: Enchant_Stone_Box21
     Name: Costume Enchantment Stone Box 21
@@ -48660,7 +49246,400 @@ Body:
     Weight: 10
     EquipLevelMin: 1
     Script: |
-      /*getgroupitem(IG_Costume_Enchant_Stone_Box21);*/
+      getgroupitem(IG_Enchant_Stone_Box21);
+  - Id: 100321
+    AegisName: OS_Weapon_Refine_Cube
+    Name: OS Weapon +11 Refinement Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100321; */
+  - Id: 100322
+    AegisName: Racecap_Refine_Cube
+    Name: Racing Cap +11 Refinement Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100322; */
+  - Id: 100327
+    AegisName: Sword_Of_Bluefire_Cube
+    Name: Red Lotus Sword Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100327; */
+  - Id: 100328
+    AegisName: Slate_Sword_Cube
+    Name: Slate Sword Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100328; */
+  - Id: 100329
+    AegisName: Narcis_Bow_Cube
+    Name: Narcissus Bow Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100329; */
+  - Id: 100330
+    AegisName: Trumpet_Shell_K_Cube
+    Name: Trumpet Shell Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100330; */
+  - Id: 100331
+    AegisName: Barb_Wire_K_Cube
+    Name: Barbed Wire Whip Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100331; */
+  - Id: 100338
+    AegisName: Booster_W_Up_1
+    Name: Booster Weapon Phase 1 Upgrade Package
+    Type: DelayConsume
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100338; */
+  - Id: 100339
+    AegisName: Booster_W_Up_2
+    Name: Booster Weapon Phase 2 Upgrade Package
+    Type: DelayConsume
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100339; */
+  - Id: 100340
+    AegisName: Booster_W_Up_3
+    Name: Booster Weapon Upgrade Package
+    Type: DelayConsume
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100340; */
+  - Id: 100341
+    AegisName: E_ILL_Up
+    Name: Illusion (Bound) Upgrade Package
+    Type: DelayConsume
+    EquipLevelMin: 130
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100341; */
+  - Id: 100354
+    AegisName: Auto_Armor_Refine_Cube
+    Name: Automatic Armor +11 Refinement Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100354; */
+  - Id: 100355
+    AegisName: Bio_Weapon_Refine_Cube
+    Name: Bio Lab Weapon +11 Refinement Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100355; */
+  - Id: 100360
+    AegisName: Avenger_Cube
+    Name: Avenger Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100360; */
+  - Id: 100361
+    AegisName: Meteor_Striker_Cube
+    Name: Meteor Striker Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100361; */
+  - Id: 100362
+    AegisName: Magic_Sword_Cube
+    Name: Mado Sword Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100362; */
+  - Id: 100363
+    AegisName: Fatalist_Cube
+    Name: Fatalist Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100363; */
+  - Id: 100365
+    AegisName: MD_Geffen_Rarmor
+    Name: MD Geffen Refine Armor
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100365; */
+  - Id: 100366
+    AegisName: MD_Geffen_Rhood
+    Name: MD Geffen Refine Hood
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100366; */
+  - Id: 100367
+    AegisName: MD_Geffen_Racc
+    Name: MD Geffen Refine Accessory
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100367; */
+  - Id: 100368
+    AegisName: MD_Geffen_Rsheild
+    Name: MD Geffen Refine Shield
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100368; */
+  - Id: 100376
+    AegisName: Royal_Bow_K_Cube
+    Name: Royal Bow Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100376; */
+  - Id: 100377
+    AegisName: Scalet_Dragon_L_Cube
+    Name: Scarlet Dragon Leather Bow Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100377; */
+  - Id: 100378
+    AegisName: Shadow_Staff_K_Cube
+    Name: Shadow Staff Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100378; */
+  - Id: 100379
+    AegisName: Freezing_Rod_Cube
+    Name: Chilling Cane Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100379; */
+  - Id: 100381
+    AegisName: 3Lv_9Refine_Weapon_7Gu
+    Name: +9 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100381; */
+  - Id: 100382
+    AegisName: 3Lv_10Refine_Weapon_8Gu
+    Name: +10 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100382; */
+  - Id: 100383
+    AegisName: 3Lv_11Refine_Weapon_9Gu
+    Name: +11 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100383; */
+  - Id: 100384
+    AegisName: 3Lv_12Refine_Weapon_10G
+    Name: +12 Lv3 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100384; */
+  - Id: 100385
+    AegisName: 4Lv_9Refine_Weapon_8Gu
+    Name: +9 Lv4 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100385; */
+  - Id: 100386
+    AegisName: 4Lv_10Refine_Weapon_9Gu
+    Name: +10 Lv4 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100386; */
+  - Id: 100387
+    AegisName: 4Lv_11Refine_Weapon_10G
+    Name: +11 Lv4 Weapon Refine Permission Exchange Hammer
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100387; */
+  - Id: 100388
+    AegisName: Iron_Nail_K_Cube
+    Name: Iron Nail Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100388; */
+  - Id: 100390
+    AegisName: Ray_Knuckle_Cube
+    Name: Ray Knuckle Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100390; */
+  - Id: 100391
+    AegisName: Moonlight_Box_IL
+    Name: Moonlight Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100391; */
+  - Id: 100392
+    AegisName: S_Moonlight_Box_IL
+    Name: Special Moonlight Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100392; */
+  - Id: 100393
+    AegisName: Undine_Spear_K_Cube
+    Name: Aquatic Spear Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100393; */
+  - Id: 100394
+    AegisName: Light_Blade_Cube
+    Name: Light Blade Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100394; */
+  - Id: 100395
+    AegisName: Iron_Staff_Cube
+    Name: Iron Staff Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100395; */
+  - Id: 100396
+    AegisName: Blue_Crystal_Staff_Cube
+    Name: Blue Crystal Staff Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100396; */
+  - Id: 100397
+    AegisName: Demon_Hunt_Bible_Cube
+    Name: Exorcist's Bible Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100397; */
+  - Id: 100398
+    AegisName: Saint_Hall_Cube
+    Name: Saint Scepter Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100398; */
+  - Id: 100399
+    AegisName: MeawFoxtail_Cube
+    Name: Meowmeow Foxtail Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100399; */
+  - Id: 100400
+    AegisName: Fog_Dew_Sword_Cube
+    Name: Kiri no Tsuyu Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100400; */
+  - Id: 100401
+    AegisName: Humma_Clear_Cube
+    Name: Clarity Huuma Shuriken Remodeling Cube
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100401; */
   - Id: 100402
     AegisName: Thousand_Sun_Cube
     Name: Thousand Sun Modification Cube
@@ -48710,6 +49689,453 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 100408;*/
+  - Id: 100158
+    AegisName: Mado_Box02
+    Name: Mado Strengthening Suit
+    Type: Usable
+    Buy: 10000
+    Weight: 300
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    EquipLevelMin: 100
+    Delay:
+      Duration: 180000
+    Script: |
+      specialeffect2 EF_CLAYMORE;
+      setmadogear true,MADO_SUIT;
+  - Id: 100412
+    AegisName: Great_Hero_Bravery
+    Name: Great Hero's Bravery
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100412; */
+  - Id: 100413
+    AegisName: Great_Hero_Wisdom
+    Name: Great Hero's Wisdom
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100413; */
+  - Id: 100414
+    AegisName: Vampire_Box_IL
+    Name: Vampire Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100414; */
+  - Id: 100415
+    AegisName: S_Vampire_Box_IL
+    Name: Special Vampire Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100415; */
+  - Id: 100416
+    AegisName: S_Frozen_Box_IL
+    Name: Special Frozen Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100416; */
+  - Id: 100417
+    AegisName: Turtle_Is_Box_IL
+    Name: Turtle Island Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100417; */
+  - Id: 100418
+    AegisName: S_Turtle_Is_Box_IL
+    Name: Special Turtle Island Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100418; */
+  - Id: 100419
+    AegisName: Teddy_Bear_Box_IL
+    Name: Teddy Bear Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100419; */
+  - Id: 100420
+    AegisName: S_Teddy_Bear_Box_IL
+    Name: Special Teddy Bear Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100420; */
+  - Id: 100421
+    AegisName: Luanda_Box_IL
+    Name: Luanda Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100421; */
+  - Id: 100422
+    AegisName: S_Luanda_Box_IL
+    Name: Special Luanda Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100422; */
+  - Id: 100423
+    AegisName: Labyrinth_Box_IL
+    Name: Labyrinth Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100423; */
+  - Id: 100424
+    AegisName: S_Labyrinth_Box_IL
+    Name: Special Labyrinth Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100424; */
+  - Id: 100425
+    AegisName: Underwater_Box_IL
+    Name: Underwater Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100425; */
+  - Id: 100426
+    AegisName: S_Underwater_Box_IL
+    Name: Special Underwater Refine Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100426; */
+  - Id: 100433
+    AegisName: EnchantStone_Recipe_3m
+    Name: March Costume Enchant Stone Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100433; */
+  - Id: 100436
+    AegisName: Circlet_Refine_Cube
+    Name: Temporal Circlet +11 Refine Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100436; */
+  - Id: 100466
+    AegisName: Egir_Power_Box
+    Name: Aegir's Power Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100466; */
+  - Id: 100467
+    AegisName: Egir_Magic_Box
+    Name: Aegir's Magical Power Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100467; */
+  - Id: 100468
+    AegisName: Egirnion_Box
+    Name: Aegirnian Box
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100468; */
+  - Id: 100476
+    AegisName: MD_Airboat_Random
+    Name: Ymir Beads
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100476; */
+  - Id: 100479
+    AegisName: Sakray_Fury
+    Name: Sakrai's Wraith
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100479; */
+  - Id: 100480
+    AegisName: Sakray_Fury2
+    Name: Condensed Sakrai's Wrath
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100480; */
+  - Id: 100481
+    AegisName: Overclocker
+    Name: Battle Processor Accelerator
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100481; */
+  - Id: 100485
+    AegisName: Sakray_Regret
+    Name: Sakrai's Regret
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100485; */
+  - Id: 100486
+    AegisName: Sakray_Regret2
+    Name: Condensed Sakrai's Regret
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100486; */
+  - Id: 100572
+    AegisName: FullPeneShadow_Mix
+    Name: Full Penetration Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100572; */
+  - Id: 100579
+    AegisName: PendantStoneForWork
+    Name: Pendant Gemstone of Force
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* synthesisui 100579; */
+  - Id: 100580
+    AegisName: Dark_Stone
+    Name: Dark Stone
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100580; */
+  - Id: 100596
+    AegisName: FullTempShadow_Mix
+    Name: Full Tempest Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100596; */
+  - Id: 100600
+    AegisName: Shadow_Mix_Recipe2
+    Name: New Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100600; */
+  - Id: 100601
+    AegisName: Illusion_Module_Mix
+    Name: Illusion Module Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100601; */
+  - Id: 100602
+    AegisName: Automatic_Module_Mix
+    Name: Automatic Module Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100602; */
+  - Id: 100620
+    AegisName: True_GemShadow_Mix
+    Name: True Gemstone Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100620; */
+  - Id: 100621
+    AegisName: Mammoth_Mix
+    Name: Maximum Mammonth Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100621; */
+  - Id: 100626
+    AegisName: GrayWolf_7_Ticket
+    Name: Gray Wolf +7 Refinement Box
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100626; */
+  - Id: 100627
+    AegisName: GrayWolf_9_Ticket
+    Name: Gray Wolf +9 Refinement Box
+    Type: DelayConsume
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100627; */
+  - Id: 100650
+    AegisName: Pontifex_Courage
+    Name: Pontifex Courage
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100650; */
+  - Id: 100651
+    AegisName: Pontifex_Wisdom
+    Name: Pontifex Wisdom
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100651; */
+  - Id: 100652
+    AegisName: Pontifex_Tenacity
+    Name: Pontifex Tenacity
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100652; */
+  - Id: 100653
+    AegisName: Pontifex_Belief
+    Name: Pontifex Belief
+    Type: DelayConsume
+    Weight: 10
+    EquipLevelMin: 180
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100653; */
+  - Id: 100661
+    AegisName: EXPShadow_Mix
+    Name: Experience Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100661; */
+  - Id: 100684
+    AegisName: Bio_Helm_Refine_Cube
+    Name: Biological Lab Helmet +11 Refinement Cube
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* upgradeui 100684; */
+  - Id: 100691
+    AegisName: AbsorbShadow_Mix
+    Name: Absolve Shadow Thump Box
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100691; */
+  - Id: 100699
+    AegisName: Twins_Box_IL
+    Name: Twins Smelt Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100699; */
+  - Id: 100700
+    AegisName: S_Twins_Box_IL
+    Name: Special Twins Smelting Box    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100700; */
+  - Id: 100710
+    AegisName: EXP_Overclocker
+    Name: EXP Advisor Retrofit    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100710; */
+  - Id: 100722
+    AegisName: Booster_RandomOpt_P
+    Name: Booster Modification Stone (Physical)    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100722; */
+  - Id: 100723
+    AegisName: Booster_RandomOpt_M
+    Name: Booster Modification Stone (Magical)    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /* upgradeui 100723; */
+  - Id: 100744
+    AegisName: Costama_Egg69
+    Name: Hero's Weapon Modification (Physical)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100744; */
+  - Id: 100745
+    AegisName: Hero_LT_Refine_Magic
+    Name: Hero's Weapon Modification Device (Magical)    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Script: |
+      /* upgradeui 100745; */
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion

@@ -48,14 +48,6 @@ enum e_regen {
 	RGN_SSP  = 0x08,
 };
 
-// Bonus values and upgrade chances for refining equipment
-static struct {
-	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
-	int bonus[MAX_REFINE]; /// Cumulative fixed bonus damage
-	int randombonus_max[MAX_REFINE]; /// Cumulative maximum random bonus damage
-	struct refine_cost cost[REFINE_COST_MAX];
-} refine_info[REFINE_TYPE_MAX];
-
 static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
@@ -114,6 +106,341 @@ static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
+
+const std::string RefineDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/refine.yml";
+}
+
+uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
+	std::string group_name;
+
+	if( !this->asString( node, "Group", group_name ) ){
+		return 0;
+	}
+
+	std::string group_name_constant = "REFINE_TYPE_" + group_name;
+	int64 constant;
+
+	if( !script_get_constant( group_name_constant.c_str(), &constant ) ){
+		this->invalidWarning(node["Group"], "Unknown refine group %s, skipping.\n", group_name.c_str() );
+		return 0;
+	}
+
+	uint16 group_id = static_cast<uint16>( constant );
+
+	std::shared_ptr<s_refine_info> info = this->find( group_id );
+	bool exists = info != nullptr;
+
+	if( !exists ){
+		info = std::make_shared<s_refine_info>();
+	}
+
+	if( this->nodeExists( node, "Levels" ) ){
+		for( const YAML::Node& levelNode : node["Levels"] ){
+			uint16 level;
+
+			if( !this->asUInt16( levelNode, "Level", level ) ){
+				return 0;
+			}
+
+			std::shared_ptr<s_refine_levels_info> levels_info = util::umap_find( info->levels, level );
+			bool levels_exists = levels_info != nullptr;
+
+			if( !levels_exists ){
+				levels_info = std::make_shared<s_refine_levels_info>();
+				levels_info->level = level;
+			}
+
+			if( this->nodeExists( levelNode, "RefineLevels" ) ){
+				for( const YAML::Node& refineLevelNode : levelNode["RefineLevels"] ){
+					uint16 refine_level;
+
+					if( !this->asUInt16( refineLevelNode, "Level", refine_level ) ){
+						return 0;
+					}
+
+					if( refine_level == 0 || refine_level > MAX_REFINE ){
+						this->invalidWarning( refineLevelNode["Level"], "Refine level %hu is invalid, skipping.\n", refine_level );
+						return 0;
+					}
+
+					// Database is 1 based, code is 0 based
+					refine_level -= 1;
+
+					std::shared_ptr<s_refine_level_info> level_info = util::umap_find( levels_info->levels, refine_level );
+					bool level_exists = level_info != nullptr;
+
+					if( !level_exists ){
+						level_info = std::make_shared<s_refine_level_info>();
+						level_info->level = refine_level;
+					}
+
+					if( this->nodeExists( refineLevelNode, "Bonus" ) ){
+						uint32 bonus;
+
+						if( !this->asUInt32( refineLevelNode, "Bonus", bonus ) ){
+							return 0;
+						}
+
+						level_info->bonus = bonus;
+					}else{
+						if( !level_exists ){
+							level_info->bonus = 0;
+						}
+					}
+
+					if( this->nodeExists( refineLevelNode, "RandomBonus" ) ){
+						uint32 bonus;
+
+						if( !this->asUInt32( refineLevelNode, "RandomBonus", bonus ) ){
+							return 0;
+						}
+
+						level_info->randombonus_max = bonus;
+					}else{
+						if( !level_exists ){
+							level_info->randombonus_max = 0;
+						}
+					}
+
+					if( this->nodeExists( refineLevelNode, "BlacksmithBlessingAmount" ) ){
+						uint16 amount;
+
+						if( !this->asUInt16( refineLevelNode, "BlacksmithBlessingAmount", amount ) ){
+							return 0;
+						}
+
+						if( amount > MAX_AMOUNT ){
+							this->invalidWarning( refineLevelNode["BlacksmithBlessingAmount"], "Blacksmith Blessing amount %hu too high, capping to MAX_AMOUNT.\n", amount );
+							amount = MAX_AMOUNT;
+						}
+
+						level_info->blessing_amount = amount;
+					}else{
+						if( !level_exists ){
+							level_info->blessing_amount = 0;
+						}
+					}
+
+					if( this->nodeExists( refineLevelNode, "Chances" ) ){
+						for( const YAML::Node& chanceNode : refineLevelNode["Chances"] ){
+							std::string cost_name;
+
+							if( !this->asString( chanceNode, "Type", cost_name ) ){
+								return 0;
+							}
+
+							std::string cost_name_constant = "REFINE_COST_" + cost_name;
+
+							if( !script_get_constant( cost_name_constant.c_str(), &constant ) ){
+								this->invalidWarning( chanceNode["Type"], "Unknown refine cost type %s, skipping.\n", cost_name.c_str() );
+								return 0;
+							}
+
+							if( constant >= REFINE_COST_MAX ){
+								this->invalidWarning( chanceNode["Type"], "Refine cost type %s is unsupported, skipping.\n", cost_name.c_str() );
+								return 0;
+							}
+
+							uint16 index = (uint16)constant;
+
+							std::shared_ptr<s_refine_cost> cost = util::umap_find( level_info->costs, index );
+							bool cost_exists = cost != nullptr;
+
+							if( !cost_exists ){
+								cost = std::make_shared<s_refine_cost>();
+								cost->index = index;
+							}
+
+							if( this->nodeExists( chanceNode, "Rate" ) ){
+								uint16 rate;
+
+								if( !this->asUInt16Rate( chanceNode, "Rate", rate ) ){
+									return 0;
+								}
+
+								cost->chance = rate;
+							}else{
+								if( !cost_exists ){
+									cost->chance = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "Price" ) ){
+								uint32 price;
+
+								if( !this->asUInt32( chanceNode, "Price", price ) ){
+									return 0;
+								}
+
+								if( price > MAX_ZENY ){
+									this->invalidWarning( chanceNode["Price"], "Price is above MAX_ZENY, capping...\n" );
+									price = MAX_ZENY;
+								}
+
+								cost->zeny = price;
+							}else{
+								if( !cost_exists ){
+									cost->zeny = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "Material" ) ){
+								std::string item_name;
+
+								if( !this->asString( chanceNode, "Material", item_name ) ){
+									return 0;
+								}
+
+								struct item_data* id = itemdb_search_aegisname( item_name.c_str() );
+
+								if( id == nullptr ){
+									this->invalidWarning( chanceNode["Material"], "Unknown refine material %s, skipping.\n", item_name.c_str() );
+									return 0;
+								}
+
+								cost->nameid = id->nameid;
+							}else{
+								if( !cost_exists ){
+									cost->nameid = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "BreakingRate" ) ){
+								uint16 breaking_rate;
+
+								if( !this->asUInt16Rate( chanceNode, "BreakingRate", breaking_rate ) ){
+									return 0;
+								}
+
+								cost->breaking_rate = breaking_rate;
+							}else{
+								if( !cost_exists ){
+									cost->breaking_rate = 0;
+								}
+							}
+
+							if( this->nodeExists( chanceNode, "DowngradeAmount" ) ){
+								uint16 downgrade_amount;
+
+								if( !this->asUInt16( chanceNode, "DowngradeAmount", downgrade_amount ) ){
+									return 0;
+								}
+
+								if( downgrade_amount > MAX_REFINE ){
+									this->invalidWarning( chanceNode["DowngradeAmount"], "Downgrade amount %hu is invalid, skipping.\n", downgrade_amount );
+									return 0;
+								}
+
+								cost->downgrade_amount = downgrade_amount;
+							}else{
+								if( !cost_exists ){
+									cost->downgrade_amount = 0;
+								}
+							}
+
+							if( !cost_exists ){
+								level_info->costs[index] = cost;
+							}
+						}
+					}
+
+					if( !level_exists ){
+						levels_info->levels[refine_level] = level_info;
+					}
+				}
+			}
+
+			if( !levels_exists ){
+				info->levels[level] = levels_info;
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( group_id, info );
+	}
+
+	return 1;
+}
+
+std::shared_ptr<s_refine_level_info> RefineDatabase::findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine ){
+	// Check if the item can be refined
+	if( data.flag.no_refine ){
+		return nullptr;
+	}
+
+	// Cap the refine level
+	if( refine > MAX_REFINE ){
+		refine = MAX_REFINE;
+	}
+
+	e_refine_type type;
+	uint16 level;
+
+	if( !this->calculate_refine_info( data, type, level ) ){
+		return nullptr;
+	}
+
+	std::shared_ptr<s_refine_info> info = this->find( type );
+
+	if( info == nullptr ){
+		return nullptr;
+	}
+
+	std::shared_ptr<s_refine_levels_info> levels_info = util::umap_find( info->levels, level );
+
+	if( levels_info == nullptr ){
+		return nullptr;
+	}
+
+	return util::umap_find( levels_info->levels, refine );
+}
+
+std::shared_ptr<s_refine_level_info> RefineDatabase::findLevelInfo( const struct item_data& data, struct item& item ){
+	// Check the current refine level
+	if( item.refine >= MAX_REFINE ){
+		return nullptr;
+	}
+
+	return this->findLevelInfoSub( data, item, item.refine );
+}
+
+std::shared_ptr<s_refine_level_info> RefineDatabase::findCurrentLevelInfo( const struct item_data& data, struct item& item ){
+	if( item.refine > 0 ){
+		return this->findLevelInfoSub( data, item, item.refine - 1 );
+	}else{
+		return nullptr;
+	}
+}
+
+bool RefineDatabase::calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level ){
+	if( data.type == IT_WEAPON ){
+		refine_type = REFINE_TYPE_WEAPON;
+		level = data.wlv;
+
+		return true;
+	}else if( data.type == IT_ARMOR ){
+		refine_type = REFINE_TYPE_ARMOR;
+		// TODO: implement when armor level is supported
+		level = 1;
+
+		return true;
+	}else if( data.type == IT_SHADOWGEAR ){
+		if( data.equip == EQP_SHADOW_WEAPON ){
+			refine_type = REFINE_TYPE_SHADOW_WEAPON;
+		}else{
+			refine_type = REFINE_TYPE_SHADOW_ARMOR;
+		}
+		level = 1;
+
+		return true;
+	}else{
+		return false;
+	}
+}
+
+RefineDatabase refine_db;
 
 const std::string SizeFixDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/size_fix.yml";
@@ -712,6 +1039,10 @@ void initChangeTables(void)
 	set_sc( NPC_COMET			, SC_BURNING		, EFST_BURNT		, SCB_MDEF );
 	set_sc_with_vfx( NPC_MAXPAIN	,	 SC_MAXPAIN	, EFST_MAXPAIN	, SCB_NONE );
 	add_sc( NPC_JACKFROST        , SC_FREEZE		  );
+	add_sc( NPC_ELECTRICWALK	, SC_PROPERTYWALK		);
+	add_sc( NPC_FIREWALK		, SC_PROPERTYWALK		);
+	add_sc( NPC_CLOUD_KILL   	, SC_POISON		);
+	set_sc( NPC_HALLUCINATIONWALK	, SC_NPC_HALLUCINATIONWALK	, EFST_NPC_HALLUCINATIONWALK	, SCB_FLEE );
 
 	set_sc( CASH_BLESSING		, SC_BLESSING		, EFST_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI		, SC_INCREASEAGI	, EFST_INC_AGI, SCB_AGI|SCB_SPEED );
@@ -1402,6 +1733,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_EP16_2_BUFF_SC] = EFST_EP16_2_BUFF_SC;
 	StatusIconChangeTable[SC_EP16_2_BUFF_AC] = EFST_EP16_2_BUFF_AC;
 
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+	StatusIconChangeTable[SC_MADOGEAR] = EFST_MADOGEAR;
+#else
+	StatusIconChangeTable[SC_MADOGEAR] = EFST_RIDING;
+#endif
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1588,6 +1925,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 
+	StatusChangeFlagTable[SC_MADOGEAR] |= SCB_SPEED;
+
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
 	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;
@@ -1630,6 +1969,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_HELLS_PLANT]     = BL_PC;
 	StatusDisplayType[SC_MISTY_FROST]     = BL_PC;
 	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
+	StatusDisplayType[SC_MADOGEAR]        = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -2387,13 +2727,13 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		case ALL_ODINS_POWER:
 			// Should fail when used on top of Land Protector [Skotlex]
 			if (src && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
-				&& !status_has_mode(status,MD_STATUS_IMMUNE)
+				&& !status_has_mode(status,MD_STATUSIMMUNE)
 				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id))
 				return false;
 			break;
 		case SC_MANHOLE:
 			// Skill is disabled against special racial grouped monsters(GvG and Battleground)
-			if (target && ( status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD ) )
+			if (target && ( util::vector_exists(status_get_race2(target), RC2_GVG) || util::vector_exists(status_get_race2(target), RC2_BATTLEFIELD) ) )
 				return false;
 		default:
 			break;
@@ -2406,7 +2746,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (sc->data[SC_ALL_RIDING])
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
-		if (flag == 1 && !status_has_mode(status,MD_STATUS_IMMUNE) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
+		if (flag == 1 && !status_has_mode(status,MD_STATUSIMMUNE) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
 			(sc->data[SC_ASH] && rnd()%2) || // Volcanic Ash has a 50% chance of causing skills to fail.
 			(sc->data[SC_KYOMU] && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
 		)) {
@@ -3816,7 +4156,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
 	memset (&sd->left_weapon.overrefine, 0, sizeof(sd->left_weapon) - sizeof(sd->left_weapon.atkmods));
 
-	if (sd->special_state.intravision && !sd->sc.data[SC_INTRAVISION]) // Clear intravision as long as nothing else is using it
+	if (sd->special_state.intravision)
 		clif_status_load(&sd->bl, EFST_CLAIRVOYANCE, 0);
 
 	if (sd->special_state.no_walk_delay)
@@ -3839,7 +4179,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	// !FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
 	// Give them all modes except these (useful for clones)
-	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUS_IMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
+	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUSIMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
 
 	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : (((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_size : SZ_MEDIUM);
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
@@ -3934,13 +4274,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if (sd->inventory.u.items_inventory[index].refine > MAX_REFINE)
 			sd->inventory.u.items_inventory[index].refine = MAX_REFINE;
 
+		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
+
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
-			int r = sd->inventory.u.items_inventory[index].refine, wlv = sd->inventory_data[index]->wlv;
+			int wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
 
-			if(wlv >= REFINE_TYPE_MAX)
-				wlv = REFINE_TYPE_MAX - 1;
+			if(wlv >= MAX_WEAPON_LEVEL)
+				wlv = MAX_WEAPON_LEVEL;
+
 			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
 				wa = &base_status->lhw;
@@ -3949,18 +4292,24 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 				wa = &base_status->rhw;
 			}
 			wa->atk += sd->inventory_data[index]->atk;
-			if(r)
-				wa->atk2 += refine_info[wlv].bonus[r-1] / 100;
+			if( info != nullptr ){
+				wa->atk2 += info->bonus / 100;
+			}
 #ifdef RENEWAL
 			if (sd->bonus.weapon_atk_rate)
 				wa->atk = wa->atk * sd->bonus.weapon_atk_rate / 100;
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
-			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
-				wa->matk += refine_info[wlv].bonus[r-1] / 100;
+			// Renewal magic attack refine bonus
+			if( info != nullptr && sd->weapontype1 != W_BOW ){
+				wa->matk += info->bonus / 100;
+			}
 #endif
-			if(r) // Overrefine bonus.
-				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
+			// Overrefine bonus.
+			if( info != nullptr ){
+				wd->overrefine = info->randombonus_max / 100;
+			}
+
 			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if (wd == &sd->left_weapon) {
@@ -3985,10 +4334,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 					wa->ele = (sd->inventory.u.items_inventory[index].card[1]&0x0f);
 			}
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
-			int r;
+			if( info != nullptr ){
+				refinedef += info->bonus;
+			}
 
-			if ( (r = sd->inventory.u.items_inventory[index].refine) )
-				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = 3;
@@ -5520,10 +5869,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	if(flag&SCB_MODE) {
 		status->mode = status_calc_mode(bl, sc, b_status->mode);
 
-		// Only switch between Normal and Boss classes as the others are determined by the race value
-		if (status->class_ == CLASS_NORMAL && status_has_mode(status, MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
+		if (status->class_ != CLASS_BATTLEFIELD && status_has_mode(status, MD_STATUSIMMUNE|MD_SKILLIMMUNE))
+			status->class_ = CLASS_BATTLEFIELD;
+		else if (status->class_ != CLASS_BOSS && status_has_mode(status, MD_STATUSIMMUNE|MD_KNOCKBACKIMMUNE|MD_DETECTOR))
 			status->class_ = CLASS_BOSS;
-		else if (status->class_ == CLASS_BOSS && !status_has_mode(status, MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
+		else if (status->class_ != CLASS_GUARDIAN && status_has_mode(status, MD_STATUSIMMUNE))
+			status->class_ = CLASS_GUARDIAN;
+		else if (status->class_ != CLASS_NORMAL)
 			status->class_ = CLASS_NORMAL;
 
 		// Since mode changed, reset their state.
@@ -6904,6 +7256,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee += sc->data[SC_MERC_FLEEUP]->val2;
 	if( sc->data[SC_HALLUCINATIONWALK] )
 		flee += sc->data[SC_HALLUCINATIONWALK]->val2;
+	if( sc->data[SC_NPC_HALLUCINATIONWALK] )
+		flee += sc->data[SC_NPC_HALLUCINATIONWALK]->val2;
 	if(sc->data[SC_MTF_HITFLEE])
 		flee += sc->data[SC_MTF_HITFLEE]->val2;
 	if( sc->data[SC_WATER_BARRIER] )
@@ -7490,6 +7844,9 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 		}
 
 		if (sc->data[SC_ASSNCROS] && bonus < sc->data[SC_ASSNCROS]->val2) {
+#ifdef RENEWAL
+			bonus += sc->data[SC_ASSNCROS]->val2;
+#else
 			if (bl->type != BL_PC)
 				bonus += sc->data[SC_ASSNCROS]->val2;
 			else {
@@ -7506,6 +7863,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 						break;
 				}
 			}
+#endif
 		}
 
 		if (bonus < 20 && sc->data[SC_MADNESSCANCEL])
@@ -7991,7 +8349,7 @@ void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd)
 				sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, 0, 0, MD_AGGRESSIVE, 0);
 			break;
 		case 4: // Overwrite with slave mode
-			sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOM_WALK|MD_CANATTACK, 0, 0, 0);
+			sc_start4(NULL, &md->bl, SC_MODECHANGE, 100, 1, MD_CANMOVE|MD_NORANDOMWALK|MD_CANATTACK, 0, 0, 0);
 			break;
 		default: //Copy master
 			if (status_has_mode(&mmd->status,MD_AGGRESSIVE))
@@ -8299,15 +8657,15 @@ int status_get_emblem_id(struct block_list *bl)
  * @param bl: Object whose race2 to get [MOB|PET]
  * @return race2
  */
-enum e_race2 status_get_race2(struct block_list *bl)
+std::vector<e_race2> status_get_race2(struct block_list *bl)
 {
-	nullpo_retr(RC2_NONE,bl);
+	nullpo_retr(std::vector<e_race2>(),bl);
 
 	if (bl->type == BL_MOB)
 		return ((struct mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
 		return ((struct pet_data *)bl)->db->race2;
-	return RC2_NONE;
+	return std::vector<e_race2>();
 }
 
 /**
@@ -8714,7 +9072,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			sc_def2 = status->mdef*100;
 			break;
 		case SC_ANKLE:
-			if(status_has_mode(status,MD_STATUS_IMMUNE)) // Lasts 5 times less on bosses
+			if(status_has_mode(status,MD_STATUSIMMUNE)) // Lasts 5 times less on bosses
 				tick /= 5;
 			sc_def = status->agi*50;
 			break;
@@ -9097,7 +9455,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Uncomment to prevent status adding hp to gvg mob (like bloodylust=hp*3 etc...
 //	if (bl->type == BL_MOB)
-//		if (status_get_race2(bl) == RC2_GVG && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
+//		if (util::vector_exists(status_get_race2(bl), RC2_GVG) && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
 
 	if( sc->data[SC_REFRESH] ) {
 		if( type >= SC_COMMON_MIN && type <= SC_COMMON_MAX) // Confirmed.
@@ -9204,7 +9562,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		)
 			return 0;
 	case SC_VACUUM_EXTREME:
-		if (sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HOVERING] || sc->data[SC_VACUUM_EXTREME] ||
+		if (sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_NPC_HALLUCINATIONWALK] || sc->data[SC_HOVERING] || sc->data[SC_VACUUM_EXTREME] ||
 			(sc->data[SC_VACUUM_EXTREME_POSTDELAY] && sc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == val2))) // Ignore post delay from other vacuum (this will make stack effect enabled)
 			return 0;
 		break;
@@ -9500,6 +9858,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_PYREXIA:
 	case SC_OBLIVIONCURSE:
 	case SC_LEECHESEND:
+		if (val3 == 0) // Don't display icon on self
+			flag |= SCSTART_NOICON;
 		for (int32 i = SC_TOXIN; i <= SC_LEECHESEND; i++) {
 			if (sc->data[i] && sc->data[i]->val3 == 1) // It doesn't stack or even renew on the target
 				return 0;
@@ -9554,7 +9914,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Check for resistances
-	if(status_has_mode(status,MD_STATUS_IMMUNE) && !(flag&SCSTART_NOAVOID)) {
+	if(status_has_mode(status,MD_STATUSIMMUNE) && !(flag&SCSTART_NOAVOID)) {
 		if (type>=SC_COMMON_MIN && type <= SC_COMMON_MAX)
 			return 0;
 		switch (type) {
@@ -10021,6 +10381,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if (sd && sd->special_state.no_walk_delay)
 			return 1;
 		break;
+	case SC_MADOGEAR:
+		for (const auto &sc : mado_statuses) {
+			uint16 skill_id = status_sc2skill(sc);
+
+			if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
+				status_change_end(bl, sc, INVALID_TIMER);
+		}
+		if (sd)
+			pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
+		break;
 	}
 
 	// Check for overlapping fails
@@ -10263,7 +10633,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_POISONREACT:
+#ifdef RENEWAL
+			val2=(val1 - ((val1-1) % 1 - 1)) / 2;
+#else
 			val2=(val1+1)/2 + val1/10; // Number of counters [Skotlex]
+#endif
 			val3=50; // + 5*val1; // Chance to counter. [Skotlex]
 			break;
 		case SC_MAGICROD:
@@ -11060,7 +11434,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3= 20*val1; // Int increase
 			break;
 		case SC_SWOO:
-			if(status_has_mode(status,MD_STATUS_IMMUNE))
+			if(status_has_mode(status,MD_STATUSIMMUNE))
 				tick /= 5; // !TODO: Reduce skill's duration. But for how long?
 			break;
 		case SC_ARMOR:
@@ -11240,6 +11614,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_HALLUCINATIONWALK:
+		case SC_NPC_HALLUCINATIONWALK:
 			val2 = 50 * val1; // Evasion rate of physical attacks. Flee
 			val3 = 10 * val1; // Evasion rate of magical attacks.
 			break;
@@ -11773,7 +12148,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 0; // hit % reduc
 			val3 = 0; // def % reduc
 			val4 = 0; // atk flee & reduc
-			if (!status_bl_has_mode(bl,MD_STATUS_IMMUNE)) {
+			if (!status_bl_has_mode(bl,MD_STATUSIMMUNE)) {
 				val2 = 50;
 				if (status_get_race(bl) == RC_PLANT) // plant type
 					val3 = 50;
@@ -12220,6 +12595,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_JUMPINGCLAN:
 		case SC_DRESSUP:
 		case SC_MISTY_FROST:
+		case SC_MADOGEAR:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -12247,6 +12623,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// Start |1|2|4 val_flag setting
 		case SC_POISONINGWEAPON:
 		case SC_CLOAKINGEXCEED:
+		case SC_NPC_HALLUCINATIONWALK:
 		case SC_HALLUCINATIONWALK:
 		case SC__SHADOWFORM:
 		case SC__GROOMY:
@@ -12268,7 +12645,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	if (current_equip_combo_pos && tick == INFINITE_TICK) {
-		ShowWarning("sc_start: Item combo contains an INFINITE_TICK duration. Skipping bonus.\n");
+		ShowWarning("sc_start: Item combo of item #%u contains an INFINITE_TICK duration. Skipping bonus.\n", sd->inventory_data[pc_checkequip(sd, current_equip_combo_pos)]->nameid);
 		return 0;
 	}
 
@@ -12865,6 +13242,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 			case SC_REUSE_LIMIT_LUXANIMA:
 			case SC_SOULENERGY:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12901,6 +13279,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_STYLE_CHANGE:
 			case SC_ENTRY_QUEUE_APPLY_DELAY:
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13557,6 +13936,18 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SOULENERGY:
 			if (sd)
 				pc_delsoulball(sd, sd->soulball, false);
+			break;
+		case SC_MADOGEAR:
+			status_change_end(bl, SC_SHAPESHIFT, INVALID_TIMER);
+			status_change_end(bl, SC_HOVERING, INVALID_TIMER);
+			status_change_end(bl, SC_ACCELERATION, INVALID_TIMER);
+			status_change_end(bl, SC_OVERHEAT_LIMITPOINT, INVALID_TIMER);
+			status_change_end(bl, SC_OVERHEAT, INVALID_TIMER);
+			status_change_end(bl, SC_MAGNETICFIELD, INVALID_TIMER);
+			status_change_end(bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
+			status_change_end(bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
+			if (sd)
+				pc_bonus_script_clear(sd, BSF_REM_ON_MADOGEAR);
 			break;
 	}
 
@@ -14654,12 +15045,17 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_VACUUM_EXTREME:
-		if (sce->val4) {
-			if (unit_movepos(bl, sce->val3>>16, sce->val3&0xFFFF, 0, false)) {
-				clif_slide(bl, sce->val3>>16, sce->val3&0xFFFF);
-				clif_fixpos(bl);
+		if (sce->val4 > 0) {
+			// Only slide targets to center if they are standing still
+			if (unit_bl2ud(bl)->walktimer == INVALID_TIMER) {
+				uint16 x = sce->val3 >> 16, y = sce->val3 & 0xFFFF;
+
+				if (distance_xy(x, y, bl->x, bl->y) <= skill_get_unit_range(status_sc2skill(type), sce->val1) && unit_movepos(bl, x, y, 0, false)) {
+					clif_slide(bl, x, y);
+					clif_fixpos(bl);
+				}
 			}
-			sc_timer_next(tick+sce->val4);
+			sc_timer_next(tick + sce->val4);
 			sce->val4 = 0;
 		}
 		break;
@@ -15157,7 +15553,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 	tick = gettick();
 
 	// Status Immunity resistance
-	if (status_bl_has_mode(src,MD_STATUS_IMMUNE) || status_bl_has_mode(bl,MD_STATUS_IMMUNE))
+	if (status_bl_has_mode(src,MD_STATUSIMMUNE) || status_bl_has_mode(bl,MD_STATUSIMMUNE))
 		return 0;
 
 	for( i = SC_COMMON_MIN; i < SC_MAX; i++ ) {
@@ -15440,24 +15836,6 @@ static TIMER_FUNC(status_natural_heal_timer){
 }
 
 /**
- * Get the chance to upgrade a piece of equipment
- * @param wlv: The weapon type of the item to refine (see see enum refine_type)
- * @param refine: The target's refine level
- * @return The chance to refine the item, in percent (0~100)
- */
-int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
-{
-	if ( refine < 0 || refine >= MAX_REFINE)
-		return 0;
-	
-	int type = enriched ? 1 : 0;
-	if (battle_config.event_refine_chance)
-		type |= 2;
-
-	return refine_info[wlv].chance[type][refine];
-}
-
-/**
  * Check if status is disabled on a map
  * @param type: Status Change data
  * @param mapIsVS: If the map is a map_flag_vs type
@@ -15542,123 +15920,6 @@ static bool status_readdb_status_disabled(char **str, int columns, int current)
 }
 
 /**
- * Reads and parses an entry from the refine_db
- * @param node: The YAML node containing the entry
- * @param refine_info_index: The sequential index of the current entry
- * @param file_name: File name for displaying only
- * @return True on success or false on failure
- */
-static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_info_index, const std::string &file_name) {
-	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
-		return false;
-
-	int bonus_per_level = node["StatsPerLevel"].as<int>();
-	int random_bonus_start_level = node["RandomBonusStartLevel"].as<int>();
-	int random_bonus = node["RandomBonusValue"].as<int>();
-
-	if (file_name.find("import") != std::string::npos) { // Import file, reset refine bonus before calculation
-		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
-			refine_info[refine_info_index].bonus[refine_level] = 0;
-	}
-
-	const YAML::Node &costs = node["Costs"];
-
-	for (const auto costit : costs) {
-		int64 idx_tmp = 0;
-		const YAML::Node &type = costit;
-		int idx = 0, price;
-		t_itemid material;
-		const std::string keys[] = { "Type", "Price", "Material" };
-
-		for (int i = 0; i < ARRAYLENGTH(keys); i++) {
-			if (!type[keys[i]].IsDefined())
-				ShowWarning("status_yaml_readdb_refine_sub: Invalid refine cost with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", keys[i].c_str(), file_name.c_str());
-		}
-
-		std::string refine_cost_const = type["Type"].as<std::string>();
-		if (ISDIGIT(refine_cost_const[0]))
-			idx = atoi(refine_cost_const.c_str());
-		else {
-			script_get_constant(refine_cost_const.c_str(), &idx_tmp);
-			idx = static_cast<int>(idx_tmp);
-		}
-		price = type["Price"].as<int>();
-		// TODO: item id verification
-		material = type["Material"].as<t_itemid>();
-
-		refine_info[refine_info_index].cost[idx].nameid = material;
-		refine_info[refine_info_index].cost[idx].zeny = price;
-	}
-
-	const YAML::Node &rates = node["Rates"];
-
-	for (const auto rateit : rates) {
-		const YAML::Node &level = rateit;
-		int refine_level = level["Level"].as<int>() - 1;
-
-		if (refine_level >= MAX_REFINE)
-			continue;
-
-		if (level["NormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = level["NormalChance"].as<int>();
-		if (level["EnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = level["EnrichedChance"].as<int>();
-		if (level["EventNormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = level["EventNormalChance"].as<int>();
-		if (level["EventEnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = level["EventEnrichedChance"].as<int>();
-		if (level["Bonus"].IsDefined())
-			refine_info[refine_info_index].bonus[refine_level] = level["Bonus"].as<int>();
-
-		if (refine_level >= random_bonus_start_level - 1)
-			refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
-	}
-	for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
-		refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
-
-	return true;
-}
-
-/**
- * Loads refine values from the refine_db
- * @param directory: Location of refine_db file
- * @param file: File name
- */
-static void status_yaml_readdb_refine(const std::string &directory, const std::string &file) {
-	int count = 0;
-	const std::string labels[] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
-	const std::string current_file = directory + "/" + file;
-	YAML::Node config;
-
-	try {
-		config = YAML::LoadFile(current_file);
-	}
-	catch (...) {
-		ShowError("Failed to read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
-		return;
-	}
-
-	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
-		const YAML::Node &node = config[labels[i]];
-
-		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, i, current_file))
-			count++;
-	}
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
-}
-
-/**
- * Returns refine cost (zeny or item) for a weapon level.
- * @param weapon_lv Weapon level
- * @param type Refine type (can be retrieved from refine_cost_type enum)
- * @param what true = returns zeny, false = returns item id
- * @return Refine cost for a weapon level
- */
-int status_get_refine_cost(int weapon_lv, int type, bool what) {
-	return what ? refine_info[weapon_lv].cost[type].zeny : refine_info[weapon_lv].cost[type].nameid;
-}
-
-/**
  * Read attribute fix database for attack calculations
  * Function stores information in the attr_fix_table
  * @return True
@@ -15719,32 +15980,20 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
  * DBs being read:
  *	attr_fix.txt: Attribute adjustment table for attacks
  *	size_fix.yml: Size adjustment table for weapons
- *	refine_db.txt: Refining data table
+ *	refine.yml: Refining data table
  * @return 0
  */
-int status_readdb(void)
-{
+int status_readdb( bool reload ){
 	int i, j, k;
 	const char* dbsubpath[] = {
 		"",
 		"/" DBIMPORT,
 		//add other path here
 	};
-	// Initialize databases to default
 
+	// Initialize databases to default
 	memset(SCDisabled, 0, sizeof(SCDisabled));
-	// refine_db.yml
-	for(i=0;i<ARRAYLENGTH(refine_info);i++)
-	{
-		memset(refine_info[i].cost, 0, sizeof(struct refine_cost));
-		for(j = 0; j < REFINE_CHANCE_TYPE_MAX; j++)
-			for(k=0;k<MAX_REFINE; k++)
-			{
-				refine_info[i].chance[j][k] = 100;
-				refine_info[i].bonus[k] = 0;
-				refine_info[i].randombonus_max[k] = 0;
-			}
-	}
+
 	// attr_fix.txt
 	for(i=0;i<MAX_ELE_LEVEL;i++)
 		for(j=0;j<ELE_ALL;j++)
@@ -15771,12 +16020,17 @@ int status_readdb(void)
 		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i > 0);
 
-		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
 
-	size_fix_db.load();
+	if( reload ){
+		size_fix_db.reload();
+		refine_db.reload();
+	}else{
+		size_fix_db.load();
+		refine_db.load();
+	}
 
 	return 0;
 }
