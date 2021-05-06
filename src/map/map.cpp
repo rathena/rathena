@@ -336,6 +336,9 @@ int map_addblock(struct block_list* bl)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if (mapdata->cell == nullptr) // Player warped to a freed map. Stop them!
+		return 1;
+
 	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 	{
 		ShowError("map_addblock: out-of-bounds coordinates (\"%s\",%d,%d), map is %dx%d\n", mapdata->name, x, y, mapdata->xs, mapdata->ys);
@@ -2850,6 +2853,7 @@ int map_delinstancemap(int m)
 	mapdata->damage_adjust = {};
 	mapdata->flag.clear();
 	mapdata->skill_damage.clear();
+	mapdata->instance_id = 0;
 
 	mapindex_removemap(mapdata->index);
 	map_removemapdb(mapdata);
