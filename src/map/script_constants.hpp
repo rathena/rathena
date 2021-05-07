@@ -8132,6 +8132,10 @@
 
 	// Fullloot Biali
 	export_constant(MF_RPK);
+	// export_constant(RPK_MAP_TIER);
+	// export_constant(RPK_FULLLOOT);
+	// export_constant(RPK_ISHG);
+	// export_constant(RPK_ISDG);
 
 	// Contested Territories Biali
 	export_constant(MF_CONTESTED);

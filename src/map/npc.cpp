@@ -4454,25 +4454,19 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 		case MF_RPK: { // Biali
 			union u_mapflag_args args = {};
-
-			if (!state)
+			if (!state) {
 				map_setmapflag_sub(m, MF_RPK, false, &args);
-			else {
-				if (sscanf(w4, "%11d,%11d,%11d,%11d",
-					&args.rpk.info[RPK_MAP_TIER], 
-					&args.rpk.info[RPK_FULLLOOT], 
-					&args.rpk.info[RPK_ISDG],
-					&args.rpk.info[RPK_ISHG]
-				) < 4) {
-					args.rpk.info[RPK_MAP_TIER] = 5;
-					args.rpk.info[RPK_FULLLOOT] = true;
-					args.rpk.info[RPK_ISDG] = false;
-					args.rpk.info[RPK_ISHG] = false;
-					ShowInfo("npc_parse_mapflag: rpk: Not sufficient values (file '%s', line '%d'). Defaulting it to Map tier5, fullloot, not dungeon, not hellgates.\n", filepath, strline(buffer, start - buffer));
-				} 
+			} else {
+				int64 idx = 0;
+				short value = 0;
+				char index[13];
+				sscanf(w4, "%13s %6hd", &index, &value);
+				script_get_constant(index,&idx);
+
+				ShowWarning("index: %s idx: %d value: %d \n",index, idx, value);
+				args.rpk.info[idx] = value;
 				map_setmapflag_sub(m, MF_RPK, true, &args);
 			}
-			// ShowWarning("npc_parse_mapflag : mf_rpk recebeu %d,%d,%d,%d.\n",args.rpk.info[RPK_MAP_TIER],args.rpk.info[RPK_FULLLOOT],args.rpk.info[RPK_ISDG],args.rpk.info[RPK_ISHG]);
 			break;
 		}
 
