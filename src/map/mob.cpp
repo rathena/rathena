@@ -1845,6 +1845,15 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		slave_lost_target = true;
 	}
 
+	//Biali Black Zone Mobs in the dungeons should go back to their spawn point and not chase too far
+	if(!md->roam && !check_distance_blxy(&md->bl, md->spawnx, md->spawny,20) && DIFF_TICK(tick, md->ud.canact_tick) > 0 && md->master_id == 0) {
+		md->next_walktime = tick+5000;
+		unit_movepos(&md->bl, md->spawnx,md->spawny,0,0);
+		mob_spawn(md);
+
+		return true;
+	}
+
 	// Scan area for targets
 	if (!tbl && can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
