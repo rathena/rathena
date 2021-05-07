@@ -22553,7 +22553,14 @@ Body:
     View: 3
     Script: |
       bonus bMdef,10;
-      bonus bMagicDamageReturn,3+((getrefine()>=9) ? 3 : 0);
+      .@r = getrefine();
+      .@val = 3;
+      if (.@r>6) {
+         .@val += 3;
+         if (.@r>8)
+            .@val += 3;
+      }
+      bonus bMagicDamageReturn,.@val;
   - Id: 2186
     AegisName: Encyclopedia_Revision
     Name: Great Encyclopedia Revision

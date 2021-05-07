@@ -625,7 +625,6 @@ struct Battle_Config
 	int death_penalty_maxlv;
 	int exp_cost_redemptio;
 	int exp_cost_redemptio_limit;
-	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
