@@ -1955,7 +1955,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		unit_stop_walking(src, 1); // Even though this is not how official works but this will do the trick. bugreport:6829
 
 	// SC_MAGICPOWER needs to switch states at start of cast
+#ifndef RENEWAL
 	skill_toggle_magicpower(src, skill_id);
+#endif
 
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
@@ -2214,7 +2216,9 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	unit_stop_walking(src,1);
 
 	// SC_MAGICPOWER needs to switch states at start of cast
+#ifndef RENEWAL
 	skill_toggle_magicpower(src, skill_id);
+#endif
 
 	// In official this is triggered even if no cast time.
 	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
@@ -3515,6 +3519,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 				if( sd )
 					sd->status.hom_id = 0;
+
+#ifdef RENEWAL
+				status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+#endif
 			}
 
 			if( sd )
