@@ -49472,6 +49472,13 @@ Body:
       NoAuction: true
     Script: |
       /* upgradeui 100368; */
+  - Id: 100371
+    AegisName: aegis_100371
+    Name: Homunculus Nutritional Supplement
+    Type: Usable
+    Weight: 10
+    Script: |
+      addhomintimacy 100; // !TODO: Confirm increase amount
   - Id: 100376
     AegisName: Royal_Bow_K_Cube
     Name: Royal Bow Remodeling Cube

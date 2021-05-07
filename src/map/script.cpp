@@ -15111,6 +15111,27 @@ BUILDIN_FUNC(gethominfo)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(addhomintimacy)
+{
+	map_session_data *sd;
+	homun_data *hd;
+
+	if (!script_charid2sd(3, sd) || !(hd = sd->hd))
+		return SCRIPT_CMD_FAILURE;
+
+	int32 value = script_getnum(st, 2);
+
+	if (value == 0) // Nothing to change
+		return SCRIPT_CMD_SUCCESS;
+
+	if (value > 0)
+		hom_increase_intimacy(hd, (uint32)value);
+	else
+		hom_decrease_intimacy(hd, (uint32)abs(value));
+	clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy / 100);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Retrieves information about character's mercenary
 /// getmercinfo <type>[,<char id>];
 BUILDIN_FUNC(getmercinfo)
@@ -25405,6 +25426,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(recovery,"i???"),
 	BUILDIN_DEF(getpetinfo,"i?"),
 	BUILDIN_DEF(gethominfo,"i?"),
+	BUILDIN_DEF(addhomintimacy,"i?"),
 	BUILDIN_DEF(getmercinfo,"i?"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
