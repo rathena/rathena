@@ -15,8 +15,7 @@
 		end;
 
 	OnPCDieEvent:
-		if(getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)){
-			callfunc "F_Fullloot";
+		if(.@merda = getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)){
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
 			warp @hg_map$,@hg_x,@hg_y;
@@ -30,7 +29,6 @@
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
 			sleep 500;
-			debugmes "chegou";
 			callfunc "hg_instance_destroy",.@hg_id;
 		}
 		end;
@@ -54,7 +52,7 @@
 			progressbar "0xff0000",5;
 			set getvariableofinstance('hg_party_count,@hg_id), getvariableofinstance('hg_party_count,@hg_id) + 1;
 			if(getvariableofinstance('hg_party_count,@hg_id) <= $@HG_PARTY_SIZE) { //'
-				getmapxy(@hg_map$,@hg_x,@hg_y);
+				getmapxy(@hg_map$,@hg_x,@hg_y,BL_PC);
 				if(@hg_created == 0) {
 					instance_enter("Hell",72,160,getcharid(0),@hg_id);
 				} else {
@@ -127,14 +125,6 @@
 
 	
 }
-
-
-// Hell Gates Entrances
-moc_fild18,244,212,0	duplicate(#hg_guardian)	#hg_moc_fild18	111
-pay_fild07,279,284,0	duplicate(#hg_guardian)	#hg_pay_fild07	111
-ra_fild13,225,277,0	duplicate(#hg_guardian)	#hg_ra_fild13	111
-prt_fild00,88,248,0	duplicate(#hg_guardian)	#hg_prt_fild00	111
-hu_fild03,346,262,0	duplicate(#hg_guardian)	#hg_hu_fild03	111
 
 
 
@@ -398,11 +388,14 @@ function	script	hg_setmapflag	{
 	for(.@i=0;.@i<getarraysize(.hg_mapflags);.@i++) {
 		setmapflag .@m$,.hg_mapflags[.@i];
 	}
-	setmapflag .@m$, MF_RPK,5,1,0,0;
+	setmapflag .@m$, MF_RPK,RPK_MAP_TIER,5;
+	setmapflag .@m$, MF_RPK,RPK_FULLLOOT,1;
 
 	if(.@m$ == "hell") {
 		// Hell mapflags applies only to the arena
-		setmapflag .@m$, MF_RPK,1,1,0,1;
+		setmapflag .@m$, MF_RPK,RPK_MAP_TIER,5;
+		setmapflag .@m$, MF_RPK,RPK_ISHG,1;
+		setmapflag .@m$, MF_RPK,RPK_FULLLOOT,1;
 		setmapflag .@m$, mf_noloot;
 		setmapflag .@m$, mf_partylock;
 		setmapflag .@m$, mf_guildlock;
@@ -417,9 +410,6 @@ function	script	hg_setmapflag	{
 		setmapflag .@m$, mf_nopenalty;
 		// setmapflag .@m$, mf_fog;
 
-
-
-		
 		// setmapflag .@m$, mf_player_dmg;
 		// setmapflag .@m$, mf_pc_dmg_weapon,50;
 		// setmapflag .@m$, mf_pc_dmg_magic,50;
@@ -444,3 +434,13 @@ function	script	hg_clear_vars	{
 
 	return;
 }
+
+
+// Hell Gates Entrances
+// ***************************************
+
+moc_fild18,244,212,0	duplicate(#hg_guardian)	#hg_moc_fild18	111
+pay_fild07,279,284,0	duplicate(#hg_guardian)	#hg_pay_fild07	111
+ra_fild13,225,277,0	duplicate(#hg_guardian)	#hg_ra_fild13	111
+prt_fild00,88,248,0	duplicate(#hg_guardian)	#hg_prt_fild00	111
+hu_fild03,346,262,0	duplicate(#hg_guardian)	#hg_hu_fild03	111

@@ -83,7 +83,8 @@ ars_dun01,122,29,0	script	#ars_dun01	45,1,1,{
 		setmapflag strnpcinfo(4),mf_noteleport;
 		setmapflag strnpcinfo(4),mf_nomemo;
 		setmapflag strnpcinfo(4),mf_nobranch;
-		setmapflag strnpcinfo(4),mf_rpk,5,1,1,0;
+		setmapflag strnpcinfo(4),mf_rpk,RPK_MAP_TIER,5;
+		setmapflag strnpcinfo(4),mf_rpk,RPK_ISDG,true;
 		setmapflag strnpcinfo(4),mf_loadevent;
 		setmapflag strnpcinfo(4),mf_monster_noteleport;
 		setmapflag strnpcinfo(4),mf_bexp,120;

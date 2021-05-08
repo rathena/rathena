@@ -12962,11 +12962,14 @@ BUILDIN_FUNC(setmapflag)
 			}
 			break;
 		case MF_RPK:
-			if (script_hasdata(st, 4) && script_hasdata(st, 5) && script_hasdata(st, 6) && script_hasdata(st, 7)) {
-				args.rpk.info[RPK_MAP_TIER] = script_getnum(st, 4);
-				args.rpk.info[RPK_FULLLOOT] = script_getnum(st, 5);
-				args.rpk.info[RPK_ISDG] = script_getnum(st, 6);
-				args.rpk.info[RPK_ISHG] = script_getnum(st, 7);
+			if (script_hasdata(st, 4) && script_hasdata(st, 5)) {
+				int idx = script_getnum(st,4);
+				int value = script_getnum(st,5);
+				args.rpk.info[idx] = value;
+				ShowWarning("setmapflag: map %s  idx %d value %d\n",str, idx,value);
+			} else {
+				ShowWarning("buildin_setmapflag: Unable to set rpk mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
 			}
 			break;
 		case MF_CONTESTED:

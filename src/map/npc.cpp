@@ -4457,7 +4457,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			if (!state) {
 				map_setmapflag_sub(m, MF_RPK, false, &args);
 			} else {
-				int64 idx = 0;
+				int64 idx = -1;
 				short value = 0;
 				char index[13];
 				sscanf(w4, "%13s %6hd", &index, &value);

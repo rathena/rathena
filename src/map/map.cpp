@@ -2785,6 +2785,11 @@ int map_addinstancemap(int src_m, int instance_id)
 	dst_map->bys = src_map->bys;
 	dst_map->iwall_num = src_map->iwall_num;
 
+	// Biali custom
+	dst_map->rpk = src_map->rpk;
+	dst_map->atk_rate = src_map->atk_rate;
+	dst_map->contested = src_map->contested;
+
 	memset(dst_map->npc, 0, sizeof(dst_map->npc));
 	dst_map->npc_num = 0;
 	dst_map->npc_num_area = 0;
@@ -4663,7 +4668,6 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		// 	}
 		// case MF_RPK:
 		// 	nullpo_retr(-1, args);
-
 		// 	switch (args->flag_val) {
 		// 		case RPK_MAP_TIER:
 		// 		case RPK_FULLLOOT:
@@ -4843,9 +4847,19 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_RPK: //Biali pk
 			mapdata->flag[mapflag] = status; // Must come first to properly set map property
 			if (!status) {
+				mapdata->rpk = {};
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
 			} else {
+				nullpo_retr(false, args);
+
+				for (int i = 0; i < RPK_MAX; i++) {
+					if(args->rpk.info[i]){ 
+						mapdata->rpk.info[i] = args->rpk.info[i];
+						// ShowWarning("map_setmapflag_sub : map %s : args->[%d] = %d\n",mapdata->name,i,args->rpk.info[i]);
+					}
+				}
+
 				clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
 				map_foreachinmap(map_mapflag_pvp_start_sub, m, BL_PC);
 
@@ -4877,12 +4891,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					mapdata->flag[MF_FVF] = false;
 					ShowWarning("map_setmapflag: Unable to set FvF and PK flags for the same map! Removing FvF flag from %s.\n", mapdata->name);
 				}
-
-				for (int i = RPK_MAP_TIER; i < RPK_MAX; i++) {
-					mapdata->rpk.info[i] = args->rpk.info[i];
-					// ShowWarning("map_setmapflag_sub : RPK map %s recebeu %d para o mpflag %d\n",mapdata->name,args->rpk.info[i],i);
-				}
-
 			}
 			break;
 		case MF_NOBASEEXP:
