@@ -4462,8 +4462,6 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				char index[13];
 				sscanf(w4, "%13s %6hd", &index, &value);
 				script_get_constant(index,&idx);
-
-				ShowWarning("index: %s idx: %d value: %d \n",index, idx, value);
 				args.rpk.info[idx] = value;
 				map_setmapflag_sub(m, MF_RPK, true, &args);
 			}

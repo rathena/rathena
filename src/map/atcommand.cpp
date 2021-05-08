@@ -4360,7 +4360,15 @@ ACMD_FUNC(mapinfo) {
 	if (map_getmapflag(m_id, MF_NOMEMO))
 		strcat(atcmd_output, "  NoMemo |");
 
-		strcpy(atcmd_output,"Ragnamania Mapflags"); // Ragnamania
+	clif_displaymessage(fd, atcmd_output);
+
+	sprintf(atcmd_output, msg_txt(sd,1065),  // No Exp Penalty: %s | No Zeny Penalty: %s
+		(map_getmapflag(m_id, MF_NOEXPPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067), (map_getmapflag(m_id, MF_NOZENYPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067)); // On / Off
+	clif_displaymessage(fd, atcmd_output);
+	
+	strcpy(atcmd_output,"Ragnamania Mapflags"); // Ragnamania
+	clif_displaymessage(fd,atcmd_output);
+
 	if (map_getmapflag(m_id, MF_BLOCKED))
 		strcat(atcmd_output, "  Map Blocked |");
 	if (map_getmapflag(m_id, MF_ANCIENT))
@@ -4390,22 +4398,18 @@ ACMD_FUNC(mapinfo) {
 			}
 		}
 	}
-	if (map_getmapflag_sub(m_id, MF_RPK, NULL)) {
+	if (map_getmapflag(m_id, MF_RPK)) {
 		char tr[10],dg[4],hg[4],fl[16];
 		if(mapdata->rpk.info[RPK_MAP_TIER]) sprintf(tr,"Tier %d ", mapdata->rpk.info[RPK_MAP_TIER]); else sprintf(tr,"");
+		if(mapdata->rpk.info[RPK_FULLLOOT]) sprintf(fl,"FL "); else sprintf(fl,"");
 		if(mapdata->rpk.info[RPK_ISDG]) sprintf(dg,"DG "); else sprintf(dg,"");
 		if(mapdata->rpk.info[RPK_ISHG]) sprintf(hg,"HG ");	else sprintf(hg,"");
-		if(mapdata->rpk.info[RPK_FULLLOOT]) sprintf(fl,"Full-loot: ON "); else sprintf(fl,"Full-loot: OFF ");
 
 		sprintf(atcmd_output, "PK Map %s%s%s%s",tr,dg,hg,fl);
-		// clif_displaymessage(fd,atcmd_output);
+		clif_displaymessage(fd,atcmd_output);
 	}
 
-	clif_displaymessage(fd, atcmd_output);
-
-	sprintf(atcmd_output, msg_txt(sd,1065),  // No Exp Penalty: %s | No Zeny Penalty: %s
-		(map_getmapflag(m_id, MF_NOEXPPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067), (map_getmapflag(m_id, MF_NOZENYPENALTY)) ? msg_txt(sd,1066) : msg_txt(sd,1067)); // On / Off
-	clif_displaymessage(fd, atcmd_output);
+	
 
 	if (map_getmapflag(m_id, MF_NOSAVE)) {
 		if (!mapdata->save.map)
