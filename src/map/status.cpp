@@ -1861,7 +1861,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_MTF_ASPD2] |= SCB_ASPD|SCB_HIT;
 	StatusChangeFlagTable[SC_MTF_MATK2] |= SCB_MATK;
 	StatusChangeFlagTable[SC_2011RWC_SCROLL] |= SCB_BATK|SCB_MATK|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
-	StatusChangeFlagTable[SC_MTF_HITFLEE] |= SCB_HIT|SCB_FLEE;
+	StatusChangeFlagTable[SC_MTF_HITFLEE] |= SCB_HIT|SCB_FLEE|SCB_CRI;
 	StatusChangeFlagTable[SC_MTF_MHP] |= SCB_MAXHP;
 	StatusChangeFlagTable[SC_MTF_MSP] |= SCB_MAXSP;
 
@@ -3700,8 +3700,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_PROMOTE_HEALTH_RESERCH]->val3;
 			if(sc->data[SC_SOLID_SKIN_OPTION])
 				bonus += 2000;
-			if(sc->data[SC_MTF_MHP])
-				bonus += sc->data[SC_MTF_MHP]->val1;
 			if(sc->data[SC_MARIONETTE])
 				bonus -= 1000;
 			if(sc->data[SC_SWORDCLAN])
@@ -3769,6 +3767,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_LUNARSTANCE]->val2;
 			if (sc->data[SC_LUXANIMA])
 				bonus += sc->data[SC_LUXANIMA]->val3;
+			if (sc->data[SC_MTF_MHP])
+				bonus += sc->data[SC_MTF_MHP]->val1;
 
 			//Decreasing
 			if (sc->data[SC_VENOMBLEED] && sc->data[SC_VENOMBLEED]->val3 == 1)
@@ -3865,8 +3865,6 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_INCMSP]->val1;
 			if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
 				bonus += 50;
-			if(sc->data[SC_MTF_MSP])
-				bonus += sc->data[SC_MTF_MSP]->val1;
 			if(sc->data[SC_SWORDCLAN])
 				bonus += 10;
 			if(sc->data[SC_ARCWANDCLAN])
@@ -3911,6 +3909,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_MERC_SPUP]->val2;
 			if (sc->data[SC_LUXANIMA])
 				bonus += sc->data[SC_LUXANIMA]->val3;
+			if (sc->data[SC_MTF_MSP])
+				bonus += sc->data[SC_MTF_MSP]->val1;
 
 			//Decreasing
 			if (sc->data[SC_MELODYOFSINK])
@@ -7137,6 +7137,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += 10 * sc->data[SC_SOULSHADOW]->val3;
 	if(sc->data[SC_BEYONDOFWARCRY])
 		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
+	if (sc->data[SC_MTF_HITFLEE])
+		critical += sc->data[SC_MTF_HITFLEE]->val1;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
