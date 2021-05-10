@@ -1951,7 +1951,7 @@
 	parseable_packet(0x08E0,51,clif_parse_bg_queue_lobby_reply,2,3,27);
 	packet(0x08E1,51);
 	parseable_packet(0x090A,26,clif_parse_bg_queue_request_queue_number,2);
-	packet(0x090E,2);
+	packet( HEADER_ZC_ENTRY_QUEUE_INIT , sizeof(PACKET_ZC_ENTRY_QUEUE_INIT) );
 	packet(0x0977,14); //Monster HP Bar
 	parseable_packet(0x0916,26,clif_parse_GuildInvite2,2);
 	parseable_packet(0x091d,41,clif_parse_PartyBookingRegisterReq,2,4,6);
@@ -2297,6 +2297,15 @@
 // 2016-06-22aRagexeRE
 #if PACKETVER >= 20160622
 	packet(0x0A84,94);
+#endif
+
+// 2016-10-12aRagexeRE
+#if PACKETVER >= 20161012
+	packet( HEADER_ZC_REFINE_OPEN_WINDOW, sizeof( struct PACKET_ZC_REFINE_OPEN_WINDOW ) );
+	parseable_packet( HEADER_CZ_REFINE_ADD_ITEM, sizeof( struct PACKET_CZ_REFINE_ADD_ITEM ), clif_parse_refineui_add, 0 );
+	packet( HEADER_ZC_REFINE_ADD_ITEM, -1 );
+	parseable_packet( HEADER_CZ_REFINE_ITEM_REQUEST, sizeof( struct PACKET_CZ_REFINE_ITEM_REQUEST ), clif_parse_refineui_refine, 0 );
+	parseable_packet( HEADER_CZ_REFINE_WINDOW_CLOSE, sizeof( struct PACKET_CZ_REFINE_WINDOW_CLOSE ), clif_parse_refineui_close, 0 );
 #endif
 
 // 2016-10-26bRagexeRE

@@ -88,6 +88,14 @@ typedef uint32 t_itemid;
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
 
+#ifdef RENEWAL
+	#define MAX_WEAPON_LEVEL 5
+	#define MAX_ARMOR_LEVEL 2
+#else
+	#define MAX_WEAPON_LEVEL 4
+	#define MAX_ARMOR_LEVEL 1
+#endif
+
 // for produce
 #define MIN_ATTRIBUTE 0
 #define MAX_ATTRIBUTE 4

@@ -139,7 +139,6 @@ Body:
       sc_end SC_Poison;
       sc_end SC_Silence;
       sc_end SC_Blind;
-      sc_end SC_Confusion;
   - Id: 507
     AegisName: Red_Herb
     Name: Red Herb
@@ -5103,7 +5102,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      set .@type,getiteminfo(getequipid(EQI_HAND_R),11);
+      set .@type,getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
       if (.@type == W_1HAXE || .@type == W_2HAXE || .@type == W_MACE) {
          skilleffect "BS_ADRENALINE",0;
          sc_start SC_ADRENALINE,150000,5;
