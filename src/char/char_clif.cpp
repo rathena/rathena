@@ -822,7 +822,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 			WFIFOHEAD(fd, 24);
 			WFIFOW(fd, 0) = 0x840;
 			WFIFOW(fd, 2) = 24;
-			memcpy(WFIFOP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
+			strncpy(WFIFOCP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
 			WFIFOSET(fd, 24);
 			return 1;
 		}

@@ -336,6 +336,9 @@ int map_addblock(struct block_list* bl)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if (mapdata->cell == nullptr) // Player warped to a freed map. Stop them!
+		return 1;
+
 	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 	{
 		ShowError("map_addblock: out-of-bounds coordinates (\"%s\",%d,%d), map is %dx%d\n", mapdata->name, x, y, mapdata->xs, mapdata->ys);
@@ -504,7 +507,9 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 				if (sc->data[SC_PROPERTYWALK]
 					&& sc->data[SC_PROPERTYWALK]->val3 < skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2)
 					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_ELECTRICWALK,NULL,0) == NULL
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,NPC_ELECTRICWALK,NULL,0) == NULL
 					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_FIREWALK,NULL,0) == NULL
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,NPC_FIREWALK,NULL,0) == NULL
 					&& skill_unitsetting(bl,sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2,x0, y0,0)) {
 						sc->data[SC_PROPERTYWALK]->val3++;
 				}
@@ -2724,19 +2729,10 @@ int map_addinstancemap(int src_m, int instance_id)
 
 	struct map_data *src_map = map_getmapdata(src_m);
 	struct map_data *dst_map = map_getmapdata(dst_m);
-	char iname[MAP_NAME_LENGTH];
-
-	strcpy(iname, name);
 
 	// Alter the name
-	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
-	if ((strchr(iname, '@') == nullptr) && strlen(iname) > 8) {
-		memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
-		snprintf(dst_map->name, sizeof(dst_map->name), "%d#%s", (instance_id % 1000), iname);
-	} else
-		snprintf(dst_map->name, sizeof(dst_map->name), "%.3d%s", (instance_id % 1000), iname);
-	dst_map->name[MAP_NAME_LENGTH - 1] = '\0';
+	instance_generate_mapname(src_m, instance_id, dst_map->name);
 
 	dst_map->m = dst_m;
 	dst_map->instance_id = instance_id;
@@ -2845,22 +2841,24 @@ int map_delinstancemap(int m)
 	// Free memory
 	if (mapdata->cell)
 		aFree(mapdata->cell);
-	mapdata->cell = NULL;
+	mapdata->cell = nullptr;
 	if (mapdata->block)
 		aFree(mapdata->block);
-	mapdata->block = NULL;
+	mapdata->block = nullptr;
 	if (mapdata->block_mob)
 		aFree(mapdata->block_mob);
-	mapdata->block_mob = NULL;
+	mapdata->block_mob = nullptr;
 
 	map_free_questinfo(mapdata);
 	mapdata->damage_adjust = {};
 	mapdata->flag.clear();
 	mapdata->skill_damage.clear();
+	mapdata->instance_id = 0;
 
 	mapindex_removemap(mapdata->index);
 	map_removemapdb(mapdata);
 
+	mapdata->index = 0;
 	memset(&mapdata->name, '\0', sizeof(map[0].name)); // just remove the name
 	return 1;
 }

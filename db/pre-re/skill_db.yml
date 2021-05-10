@@ -2079,6 +2079,7 @@ Body:
     ActiveInstance: 5
     Knockback: 2
     CastTime: 700
+    Duration1: 1000
     Requires:
       SpCost: 12
       Weapon:
@@ -6810,8 +6811,8 @@ Body:
     CastDefenseReduction: 33
     CastTime: 3000
     AfterCastActDelay: 1500
-    AfterCastWalkDelay: 800
-    Duration1: 800
+    AfterCastWalkDelay: 1000
+    Duration1: 950
     Duration2: 30000
     Requires:
       SpCost:
@@ -9043,9 +9044,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Dark
-    AfterCastWalkDelay: 900
-    Duration1: 900
-    Duration2: 30000
+    AfterCastWalkDelay: 1000
+    Duration1: 30000
     Unit:
       Id: Dummyskill
       Layout: -1
@@ -14365,15 +14365,15 @@ Body:
       AllowWhenHidden: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     CopyFlags:
@@ -14398,15 +14398,15 @@ Body:
       AlterRangeShadowJump: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -16381,6 +16381,180 @@ Body:
     Name: NPC_ARROWSTORM
     Description: NPC Arrow Storm
     MaxLevel: 1
+  - Id: 739
+    Name: NPC_CLOUD_KILL
+    Description: Cloud Kill
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 8000
+      - Level: 2
+        Time: 10000
+      - Level: 3
+        Time: 12000
+      - Level: 4
+        Time: 14000
+      - Level: 5
+        Time: 16000
+    Unit:
+      Id: Cloud_Kill
+      Range:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 3
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 3
+      Interval: 500
+      Target: Enemy
+      Flag:
+        PathCheck: true
+        RemovedByFireRain: true
+  - Id: 740
+    Name: NPC_IGNITIONBREAK
+    Description: Ignition Break
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea: 5
+  - Id: 741
+    Name: NPC_PHANTOMTHRUST
+    Description: Phantom Thrust
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 7
+      - Level: 2
+        Size: 9
+      - Level: 3
+        Size: 11
+      - Level: 4
+        Size: 13
+      - Level: 5
+        Size: 15
+    Hit: Single
+    HitCount: 1
+    Element: Neutral
+    CastCancel: true
+  - Id: 742
+    Name: NPC_POISON_BUSTER
+    Description: Poison Buster
+    MaxLevel: 2
+    Type: Magic
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    CastCancel: true
+    SplashArea: 1
+  - Id: 743
+    Name: NPC_HALLUCINATIONWALK
+    Description: Hallucination Walk
+    MaxLevel: 5
+    TargetType: Self
+    Flags:
+      IsNpc: true
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: 20000
+  - Id: 744
+    Name: NPC_ELECTRICWALK
+    Description: Electric Walk
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IgnoreHovering: true
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    ActiveInstance:
+      - Level: 1
+        Max: 8
+      - Level: 2
+        Max: 10
+      - Level: 3
+        Max: 12
+      - Level: 4
+        Max: 14
+      - Level: 5
+        Max: 16
+    CastCancel: true
+    Duration1: 12000
+    Unit:
+      Id: Electricwalk
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
+  - Id: 745
+    Name: NPC_FIREWALK
+    Description: Fire Walk
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IgnoreHovering: true
+      IsNpc: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    ActiveInstance:
+      - Level: 1
+        Max: 8
+      - Level: 2
+        Max: 10
+      - Level: 3
+        Max: 12
+      - Level: 4
+        Max: 14
+      - Level: 5
+        Max: 16
+    CastCancel: true
+    Duration1: 12000
+    Unit:
+      Id: Firewalk
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        NoOverlap: true
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack
@@ -32689,7 +32863,7 @@ Body:
     Hit: Single
     CastCancel: true
     AfterCastActDelay: 3000
-    Duration1:
+    Duration2:
       - Level: 1
         Time: 30000
       - Level: 2

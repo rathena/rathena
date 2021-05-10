@@ -27,7 +27,7 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_PRODUCE_DB	281 /// Max Produce DB
+#define MAX_SKILL_PRODUCE_DB	282 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
@@ -512,6 +512,7 @@ bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk);
 bool skill_get_inf2_(uint16 skill_id, std::vector<e_skill_inf2> inf2);
 #define skill_get_unit_flag(skill_id, unit) skill_get_unit_flag_(skill_id, { unit })
 bool skill_get_unit_flag_(uint16 skill_id, std::vector<e_skill_unit_flag> unit);
+int skill_get_unit_range(uint16 skill_id, uint16 skill_lv);
 // Accessor for skill requirements
 int skill_get_hp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_mhp( uint16 skill_id ,uint16 skill_lv );

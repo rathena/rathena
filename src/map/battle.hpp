@@ -625,7 +625,6 @@ struct Battle_Config
 	int death_penalty_maxlv;
 	int exp_cost_redemptio;
 	int exp_cost_redemptio_limit;
-	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
@@ -646,7 +645,6 @@ struct Battle_Config
 	int guild_alliance_onlygm;
 	int feature_achievement;
 	int allow_bound_sell;
-	int event_refine_chance;
 	int autoloot_adjust;
 	int feature_petevolution;
 	int feature_pet_autofeed;
@@ -689,6 +687,10 @@ struct Battle_Config
 	int homunculus_starving_delay;
 	int drop_connection_on_quit;
 	int mob_spawn_variance;
+	int mercenary_autoloot;
+	int mer_idle_no_share;
+	int idletime_mer_option;
+	int feature_refineui;
 
 #include "../custom/battle_config_struct.inc"
 };

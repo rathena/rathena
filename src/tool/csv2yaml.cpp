@@ -215,7 +215,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("QUEST_DB", 1, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("QUEST_DB", 2, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3 + MAX_QUEST_OBJECTIVES * 2 + MAX_QUEST_DROPS * 3, 100, -1, &quest_read_db, false);
 	})) {
 		return 0;
@@ -272,14 +272,14 @@ int do_init( int argc, char** argv ){
 #endif
 
 	mob_txt_data(path_db_mode, path_db);
-	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 2, { path_db_mode }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return 0;
 	}
 
 	mob_txt_data(path_db_import, path_db_import);
-	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
+	if (!process("MOB_DB", 2, { path_db_import }, "mob_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &mob_readdb_sub, false);
 	})) {
 		return 0;
@@ -3115,17 +3115,17 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				if (!header) {
 					body << YAML::Key << "RaceGroups";
 					body << YAML::BeginMap;
+					header = true;
 				}
 
 				body << YAML::Key << name2Upper(constant_lookup(race2.first, "RC2_") + 4) << YAML::Value << "true";
 
-				if (!header) {
-					body << YAML::EndMap;
-					header = true;
-				}
 			}
 		}
 	}
+
+	if (header)
+		body << YAML::EndMap;
 
 	if (fields[24]) {
 		int ele = strtol(fields[24], nullptr, 10);

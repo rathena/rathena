@@ -51,7 +51,8 @@ function	script	F_CashStore	{
 // - Summon Party members on party leader map to a 3x3 location around the leader.
 // - No arguments.
 function	script	F_CashPartyCall	{
-	warp "Random",0,0;
+	itemskill "AL_TELEPORT",1;
+	sleep2 1;	// a slight delay seems necessary after itemskill
 	if (is_party_leader() == true)
 		warpparty "Leader", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
 	return;

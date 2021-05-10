@@ -584,7 +584,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			if (appendEntry(locations["Costume_Head_Low"], value))
 				column.append("`location_costume_head_Low`,");
 			if (appendEntry(locations["Costume_Garment"], value))
-				column.append("`location_costume_Garment`,");
+				column.append("`location_costume_garment`,");
 			if (appendEntry(locations["Ammo"], value))
 				column.append("`location_ammo`,");
 			if (appendEntry(locations["Shadow_Armor"], value))
@@ -797,6 +797,8 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`attack_motion`,");
 		if (appendEntry(input["DamageMotion"], value))
 			column.append("`damage_motion`,");
+		if (appendEntry(input["DamageTaken"], value))
+			column.append("`damage_taken`,");
 		if (appendEntry(input["Ai"], value, true))
 			column.append("`ai`,");
 		if (appendEntry(input["Class"], value, true))

@@ -12871,13 +12871,33 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		}
 	}
 
-	.@price = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_ZENY_COST);
-	.@material = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_MATERIAL_ID);
+// Wagjak has different hardcoded prices
+//	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 
-	if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4))
-		.@type$ = "Level " + getequipweaponlv(.@part) + " weapon";
-	else
+	switch(getequipweaponlv(.@part)) {
+	default:
+	case 0: // Armor
+		.@price = 20000;
 		.@type$ = "Armor";
+		break;
+	case 1: // Level 1 Weapon
+		.@price = 1000;
+		.@type$ = "Level 1 weapon";
+		break;
+	case 2: // Level 2 Weapon
+		.@price = 2000;
+		.@type$ = "Level 2 weapon";
+		break;
+	case 3: // Level 3 Weapon
+		.@price = 10000;
+		.@type$ = "Level 3 weapon";
+		break;
+	case 4: // Level 4 Weapon
+		.@price = 20000;
+		.@type$ = "Level 4 weapon";
+		break;
+	}
 
 	mes "[Refining Machine Wagjak]";
 	mes "Type : "+ .@type$ +"";
