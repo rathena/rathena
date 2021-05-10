@@ -5642,6 +5642,12 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if (ud)
 			ud->state.change_walk_target = ud->state.speed_changed = 1;
 	}
+	
+	// This breaks monster stat change scripts!!
+	/*	if((!(bl->type&BL_REGEN)) && (!sc || !sc->count)) { // No difference.
+		status_cpy(status, b_status);
+		return;
+	} */
 
 	if(flag&SCB_STR) {
 		status->str = status_calc_str(bl, sc, b_status->str);
@@ -5736,6 +5742,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->watk2 = status_calc_watk(bl, sc, b_status->watk2);
 		}
 		else status->watk = status_calc_watk(bl, sc, b_status->watk);
+		// Monsters still use these in renewal so they are necessary
+		status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk);
+		status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2);
 #endif
 	}
 
@@ -5942,6 +5951,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		 * MATK = (sMATK + wMATK + eMATK) * Multiplicative Modifiers
 		 **/
 		int lv = status_get_lv(bl);
+		// We are using status instead of base_status to include INT changes, but base MATK isn't yet in status so copy it.
+		status->rhw.matk = b_status->rhw.matk;
 		status->matk_min = status_base_matk_min(bl, status, lv);
 		status->matk_max = status_base_matk_max(bl, status, lv);
 
