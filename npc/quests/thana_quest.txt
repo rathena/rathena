@@ -1216,7 +1216,7 @@ tha_t05,62,179,0	script	Brilliant Statue#tt3	111,3,3,{
 				mes "during a millennium war.^000000";
 				next;
 				mes ".........It's not clearly shown......";
-				mes "^b22222...Morroc has gone through this gate";
+				mes "^b22222...Morocc has gone through this gate";
 				mes "from the magical world into the Midgard continent after the millennium war terminated...";
 				next;
 				mes "^b22222The question is that when she come up here, the Satan appears at the same time...";
@@ -1457,7 +1457,7 @@ tha_t06,226,230,0	script	Brilliant Statue#tt4	111,3,3,{
 					mes "This tower used to be";
 					mes "a gate to summon demons ages ago.";
 					mes "And the last visitor was";
-					mes "the infamous Satan Morroc.";
+					mes "the infamous Satan Morocc.";
 					next;
 					mes "^b22222As I followed her trail";
 					mes "I realized that her spells";

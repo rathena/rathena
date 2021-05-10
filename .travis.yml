@@ -137,7 +137,7 @@ matrix:
 ##         MacOS default MySQL configuration does not like our card seller(only full group by)
 #        - ./tools/ci/npc.sh
 #        - make clean
-#        - make server
+#        - make all
 #        - ./login-server --run-once
 #        - ./char-server --run-once
 #        - ./map-server --run-once
@@ -181,7 +181,7 @@ script:
   - ./configure $CONFIGURE_FLAGS || travis_terminate 1
   - ./tools/ci/npc.sh
   - make clean || travis_terminate 1
-  - make server || travis_terminate 1
+  - make all || travis_terminate 1
   - ./login-server --run-once
   - ./char-server --run-once
   - ./map-server --run-once

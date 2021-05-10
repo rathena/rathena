@@ -522,7 +522,7 @@ comodo,237,217,5	script	Meruntei#1	732,{
 		mes "Oh! You brought all of them! Now I shall make you an Indian Headband of your very own.";
 		next;
 		mes "[Meruntei]";
-		mes "Take this! The items you have brought will be very useful for continuing my work in spreading headbands around Rune-Midgard.";
+		mes "Take this! The items you have brought will be very useful for continuing my work in spreading headbands around Midgard.";
 		delitem 5010,1; //Indian_Hair_Piece
 		delitem 5049,1; //Stripe_Band
 		delitem 7101,10; //Peco_Wing_Feather
@@ -550,7 +550,7 @@ comodo,237,217,5	script	Meruntei#1	732,{
 	mes "and ^FF000010,000 zeny!";
 	next;
 	mes "[Meruntei]";
-	mes "I will be using the items you've given me so I can continue my work in spreading Indian Headbands, and paying homage to the tribes of Rune-Midgard.";
+	mes "I will be using the items you've given me so I can continue my work in spreading Indian Headbands, and paying homage to the tribes of Midgard.";
 	next;
 	mes "[Meruntei]";
 	mes "^FF0000For your information, if you bring me any item that has a card inserted, or has been upgraded, the additional abilities of the item will disappear after I have used them. So please keep that in mind.^000000";
@@ -2438,7 +2438,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 		mes "[Lee Hester]";
 		mes "Beautiful...";
 		mes "But insanely hot.";
-		mes "I live here, I should know. Still, nothing can beat the Morroc sunset.";
+		mes "I live here, I should know. Still, nothing can beat the Morocc sunset.";
 		next;
 		mes "[Lee Hester]";
 		mes "It's amazing how so many different animals can live in the desert. I've been spending some time researching the ways of animals, reading books in the Juno Library...";
@@ -2447,7 +2447,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 		mes "Trying to figure out the Animal Kingdom's secrets of dealing with the heat.";
 		next;
 		mes "[Lee Hester]";
-		mes "I hope you're having a good time here in Morroc. If you ever question the special abilities of animals, just think of the majestic Desert Wolf that's able to thrive in the harsh Morroc deserts.";
+		mes "I hope you're having a good time here in Morocc. If you ever question the special abilities of animals, just think of the majestic Desert Wolf that's able to thrive in the harsh Morocc deserts.";
 		emotion ET_WRAP;
 		close;
 	}

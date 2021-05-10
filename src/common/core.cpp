@@ -3,6 +3,8 @@
 
 #include "core.hpp"
 
+#include "../config/core.hpp"
+
 #ifndef MINICORE
 #include "ers.hpp"
 #include "socket.hpp"
@@ -24,6 +26,16 @@
 #include "showmsg.hpp"
 #include "strlib.hpp"
 
+#ifndef DEPRECATED_COMPILER_SUPPORT
+	#if defined( _MSC_VER ) && _MSC_VER < 1900
+		#error "Visual Studio versions older than Visual Studio 2015 are not officially supported anymore"
+	#elif defined( __clang__ ) && __clang_major__ < 4 && !( __clang_major__ == 3 && __clang_minor__ >= 7 )
+		#error "clang versions older than clang 3.7 are not officially supported anymore"
+	#elif !defined( __clang__ ) && defined( __GNUC__ ) && __GNUC__ < 5
+		#error "GCC versions older than GCC 5 are not officially supported anymore"
+	#endif
+#endif
+
 /// Called when a terminate signal is received.
 void (*shutdown_callback)(void) = NULL;
 
@@ -33,6 +45,7 @@ void (*shutdown_callback)(void) = NULL;
 
 int runflag = CORE_ST_RUN;
 char db_path[12] = "db"; /// relative path for db from server
+char conf_path[12] = "conf"; /// relative path for conf from server
 
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;

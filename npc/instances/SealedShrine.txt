@@ -766,6 +766,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 		set 'ins_baphomet,5;
 		specialeffect EF_TELEPORTATION;
 		enablenpc instance_npcname("ins_bapho_to_2f");
+		donpcevent instance_npcname("ins_baphomet_1f_timer")+"::OnDisable";
 		mes "[Ancient Hero's Soul]";
 		mes "Now you can go to the main altar. It is located in the bottom right corner of this floor.";
 		next;
@@ -965,7 +966,7 @@ OnTimer3100000:
 	end;
 
 OnTimer3500000:
-	instance_warpall "monk_test",310,150;
+	instance_warpall "monk_test",310,150, instance_id();
 	stopnpctimer;
 	end;
 }

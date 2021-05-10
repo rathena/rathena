@@ -23,6 +23,7 @@
     <ClInclude Include="cli.hpp" />
     <ClInclude Include="conf.hpp" />
     <ClInclude Include="core.hpp" />
+    <ClInclude Include="database.hpp" />
     <ClInclude Include="db.hpp" />
     <ClInclude Include="des.hpp" />
     <ClInclude Include="ers.hpp" />
@@ -47,6 +48,7 @@
     <ClCompile Include="cli.cpp" />
     <ClCompile Include="conf.cpp" />
     <ClCompile Include="core.cpp" />
+    <ClCompile Include="database.cpp" />
     <ClCompile Include="db.cpp" />
     <ClCompile Include="des.cpp" />
     <ClCompile Include="ers.cpp" />

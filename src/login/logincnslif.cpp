@@ -28,7 +28,7 @@ void display_helpscreen(bool do_exit) {
 	ShowInfo("  -v [--version]\t\tDisplays the server's version.\n");
 	ShowInfo("  --run-once\t\t\tCloses server after loading (testing).\n");
 	ShowInfo("  --login-config <file>\t\tAlternative login-server configuration.\n");
-	ShowInfo("  --lan-config <file>\t\tAlternative lag configuration.\n");
+	ShowInfo("  --lan-config <file>\t\tAlternative lan configuration.\n");
 	ShowInfo("  --msg-config <file>\t\tAlternative message configuration.\n");
 	if( do_exit )
 		exit(EXIT_SUCCESS);
@@ -61,11 +61,9 @@ int logcnslif_get_options(int argc, char ** argv) {
 			} else if (SERVER_TYPE & (ATHENA_SERVER_LOGIN)) { //login
 				if (strcmp(arg, "lan-config") == 0) {
 					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.lanconf_name, argv[++i], sizeof(login_config.lanconf_name));
-				}
-				if (strcmp(arg, "login-config") == 0) {
+				} else if (strcmp(arg, "login-config") == 0) {
 					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
-				}
-				if (strcmp(arg, "msg-config") == 0) {
+				} else if (strcmp(arg, "msg-config") == 0) {
 					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
 				} else {
 					ShowError("Unknown option '%s'.\n", argv[i]);

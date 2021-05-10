@@ -1,0 +1,211 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Battleground Queue Database
+###########################################################################
+#
+# Battleground Queue Settings
+#
+###########################################################################
+# - Id                Unique ID for the battleground type.
+#   Name              Name of the battleground. Must be the exact same as in the client for players to be able to join.
+#   MinPlayers        Minimum number of players required on each team. (Default: 1)
+#   MaxPlayers        Maximum number of players on each team. (Default: MAX_BG_MEMBERS / 2)
+#   MinLevel          Minimum level required to join the battleground. (Default: 1)
+#   MaxLevel          Maximum level to join the battleground. (Default: MAX_LEVEL value)
+#   Deserter          Amount of time in seconds a player is marked deserter. (Default: 600)
+#   StartDelay        Amount of time in seconds once a queue is filled before players are warped. (Default: 0)
+#   Join:             Which application type is accepted. The entryqueuelist.lub can visually disable these options.
+#     Solo            Able to join a queue as an individual. (Default: true)
+#     Party           Able to join a queue as a party. (Default: true)
+#     Guild           Able to join a queue as a guild. (Default: true)
+#   JobRestrictions   List of jobs that are unable to join the battleground.
+#   Locations:        Battleground location settings.
+#     - Map           The map on which the battleground will be played.
+#       StartEvent    NPC event triggered when the battleground starts.
+#       TeamA:        TeamA settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
+#         Variable    Name of BG ID variable used in the battleground script.
+#       TeamB:        TeamB settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
+#         Variable    Name of BG ID variable used in the battleground script.
+###########################################################################
+
+Header:
+  Type: BATTLEGROUND_DB
+  Version: 1
+
+Body:
+  - Id: 1
+    Name: Tierra Gorge
+    MinPlayers: 6
+    MinLevel: 80
+    JobRestrictions:
+      Novice: true
+      SuperNovice: true
+      Novice_High: true
+      Baby: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+    Locations:
+      - Map: bat_a01
+        StartEvent: start#bat_a01::OnReadyCheck
+        TeamA:
+          RespawnX: 50
+          RespawnY: 374
+          QuitEvent: start#bat_a01::OnGuillaumeQuit
+          ActiveEvent: start#bat_a01::OnGuillaumeActive
+          Variable: $@TierraBG1_id1
+        TeamB:
+          RespawnX: 42
+          RespawnY: 16
+          QuitEvent: start#bat_a01::OnCroixQuit
+          ActiveEvent: start#bat_a01::OnCroixActive
+          Variable: $@TierraBG1_id2
+      - Map: bat_a02
+        StartEvent: start#bat_a02::OnReadyCheck
+        TeamA:
+          RespawnX: 50
+          RespawnY: 374
+          QuitEvent: start#bat_a02::OnGuillaumeQuit
+          ActiveEvent: start#bat_a02::OnGuillaumeActive
+          Variable: $@TierraBG2_id1
+        TeamB:
+          RespawnX: 42
+          RespawnY: 16
+          QuitEvent: start#bat_a02::OnCroixQuit
+          ActiveEvent: start#bat_a02::OnCroixActive
+          Variable: $@TierraBG2_id2
+  - Id: 2
+    Name: Flavius
+    MinPlayers: 6
+    MinLevel: 80
+    JobRestrictions:
+      Novice: true
+      SuperNovice: true
+      Novice_High: true
+      Baby: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+    Locations:
+      - Map: bat_b01
+        StartEvent: start#bat_b01::OnReadyCheck
+        TeamA:
+          RespawnX: 10
+          RespawnY: 290
+          QuitEvent: start#bat_b01::OnGuillaumeQuit
+          ActiveEvent: start#bat_b01::OnGuillaumeActive
+          Variable: $@FlaviusBG1_id1
+        TeamB:
+          RespawnX: 390
+          RespawnY: 10
+          QuitEvent: start#bat_b01::OnCroixQuit
+          ActiveEvent: start#bat_b01::OnCroixActive
+          Variable: $@FlaviusBG1_id2
+      - Map: bat_b02
+        StartEvent: start#bat_b02::OnReadyCheck
+        TeamA:
+          RespawnX: 10
+          RespawnY: 290
+          QuitEvent: start#bat_b02::OnGuillaumeQuit
+          ActiveEvent: start#bat_b02::OnGuillaumeActive
+          Variable: $@FlaviusBG2_id1
+        TeamB:
+          RespawnX: 390
+          RespawnY: 10
+          QuitEvent: start#bat_b02::OnCroixQuit
+          ActiveEvent: start#bat_b02::OnCroixActive
+          Variable: $@FlaviusBG2_id2
+  - Id: 3
+    Name: KVM (Level 80 and up)
+    MinPlayers: 5
+    MinLevel: 80
+    Locations:
+      - Map: bat_c01
+        StartEvent: KvM01_BG::OnStart
+        TeamA:
+          RespawnX: 52
+          RespawnY: 129
+          DeathEvent: KvM01_BG::OnGuillaumeDie
+          QuitEvent: KvM01_BG::OnGuillaumeQuit
+          ActiveEvent: KvM01_BG::OnGuillaumeActive
+          Variable: $@KvM01BG_id1
+        TeamB:
+          RespawnX: 147
+          RespawnY: 55
+          DeathEvent: KvM01_BG::OnCroixDie
+          QuitEvent: KvM01_BG::OnCroixQuit
+          ActiveEvent: KvM01_BG::OnCroixActive
+          Variable: $@KvM01BG_id2
+  - Id: 4
+    Name: KVM (Level 60~79)
+    MinPlayers: 5
+    MinLevel: 60
+    MaxLevel: 79
+    Locations:
+      - Map: bat_c02
+        StartEvent: KvM02_BG::OnStart
+        TeamA:
+          RespawnX: 52
+          RespawnY: 129
+          DeathEvent: KvM02_BG::OnGuillaumeDie
+          QuitEvent: KvM02_BG::OnGuillaumeQuit
+          ActiveEvent: KvM02_BG::OnGuillaumeActive
+          Variable: $@KvM02BG_id1
+        TeamB:
+          RespawnX: 147
+          RespawnY: 55
+          DeathEvent: KvM02_BG::OnCroixDie
+          QuitEvent: KvM02_BG::OnCroixQuit
+          ActiveEvent: KvM02_BG::OnCroixActive
+          Variable: $@KvM02BG_id2
+  - Id: 5
+    Name: KVM (Level 59 and below
+    MinPlayers: 5
+    MaxLevel: 59
+    Locations:
+      - Map: bat_c03
+        StartEvent: KvM03_BG::OnStart
+        TeamA:
+          RespawnX: 52
+          RespawnY: 129
+          DeathEvent: KvM03_BG::OnGuillaumeDie
+          QuitEvent: KvM03_BG::OnGuillaumeQuit
+          ActiveEvent: KvM03_BG::OnGuillaumeActive
+          Variable: $@KvM03BG_id1
+        TeamB:
+          RespawnX: 147
+          RespawnY: 55
+          DeathEvent: KvM03_BG::OnCroixDie
+          QuitEvent: KvM03_BG::OnCroixQuit
+          ActiveEvent: KvM03_BG::OnCroixActive
+          Variable: $@KvM03BG_id2
+
+Footer:
+  Imports:
+  - Path: db/import/battleground_db.yml

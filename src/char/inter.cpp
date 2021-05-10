@@ -11,6 +11,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/malloc.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/socket.hpp"
@@ -34,6 +35,9 @@
 #include "int_quest.hpp"
 #include "int_storage.hpp"
 
+std::string cfgFile = "inter_athena.yml"; ///< Inter-Config file
+InterServerDatabase interServerDb;
+
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 #define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis
 
@@ -41,12 +45,11 @@
 Sql* sql_handle = NULL;	///Link to mysql db, connection FD
 
 int char_server_port = 3306;
-char char_server_ip[32] = "127.0.0.1";
+char char_server_ip[64] = "127.0.0.1";
 char char_server_id[32] = "ragnarok";
 char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
 char char_server_db[32] = "ragnarok";
 char default_codepage[32] = ""; //Feature by irmin.
-struct Inter_Config interserv_config;
 unsigned int party_share_level = 10;
 
 /// Received packet Lengths from map-server
@@ -55,11 +58,11 @@ int inter_recv_packet_length[] = {
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
 	-1,10,-1,14, 15+NAME_LENGTH,19, 6,-1, 14,14, 6, 0,  0, 0,  0, 0,	// 3020- Party
 	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 18,19,186,-1,	// 3030-
-	-1, 9, 0, 0,  0, 0, 0, 0,  8, 6,11,10, 10,-1,6+NAME_LENGTH, 0,	// 3040-
+	-1, 9,10, 0,  0, 0, 0, 0,  8, 6,11,10, 10,-1,6+NAME_LENGTH, 0,	// 3040-
 	-1,-1,10,10,  0,-1,12, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-  Auction System [Zephyrus]
 	 6,-1, 6,-1, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-  Quest system [Kevin] [Inkfish] / Achievements [Aleos]
 	-1,10, 6,-1,  0, 0, 0, 0,  0, 0, 0, 0, -1,10,  6,-1,	// 3070-  Mercenary packets [Zephyrus], Elemental packets [pakpil]
-	48,14,-1, 6,  0, 0, 0, 0,  0, 0,13,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
+	52,14,-1, 6,  0, 0, 0, 0,  0, 0,13,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
 	-1,10,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3090-  Homunculus packets [albator]
 	 2,-1, 6, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 30A0-  Clan packets
 };
@@ -252,25 +255,25 @@ const char* job_name(int class_) {
 		case JOB_MECHANIC_T2:
 			return msg_txt(79);
 
-		case JOB_BABY_RUNE:
+		case JOB_BABY_RUNE_KNIGHT:
 		case JOB_BABY_WARLOCK:
 		case JOB_BABY_RANGER:
-		case JOB_BABY_BISHOP:
+		case JOB_BABY_ARCH_BISHOP:
 		case JOB_BABY_MECHANIC:
-		case JOB_BABY_CROSS:
-		case JOB_BABY_GUARD:
+		case JOB_BABY_GUILLOTINE_CROSS:
+		case JOB_BABY_ROYAL_GUARD:
 		case JOB_BABY_SORCERER:
 		case JOB_BABY_MINSTREL:
 		case JOB_BABY_WANDERER:
 		case JOB_BABY_SURA:
 		case JOB_BABY_GENETIC:
-		case JOB_BABY_CHASER:
-			return msg_txt(88 - JOB_BABY_RUNE+class_);
+		case JOB_BABY_SHADOW_CHASER:
+			return msg_txt(88 - JOB_BABY_RUNE_KNIGHT+class_);
 
-		case JOB_BABY_RUNE2:
+		case JOB_BABY_RUNE_KNIGHT2:
 			return msg_txt(88);
 
-		case JOB_BABY_GUARD2:
+		case JOB_BABY_ROYAL_GUARD2:
 			return msg_txt(94);
 
 		case JOB_BABY_RANGER2:
@@ -558,54 +561,54 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
  * @param val either str or int, depending on type
  * @param type false when int, true otherwise
  **/
-void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string)
+void inter_savereg(uint32 account_id, uint32 char_id, const char *key, uint32 index, int64 int_value, const char* string_value, bool is_string)
 {
 	char esc_val[254*2+1];
 	char esc_key[32*2+1];
 
 	Sql_EscapeString(sql_handle, esc_key, key);
-	if( is_string && val ) {
-		Sql_EscapeString(sql_handle, esc_val, (char*)val);
+	if( is_string && string_value ) {
+		Sql_EscapeString(sql_handle, esc_val, string_value);
 	}
 	if( key[0] == '#' && key[1] == '#' ) { // global account reg
 		if( session_isValid(login_fd) )
-			chlogif_send_global_accreg(key,index,val,is_string);
+			chlogif_send_global_accreg( key, index, int_value, string_value, is_string );
 		else {
-			ShowError("Login server unavailable, can't perform update on '%s' variable for AID:%d CID:%d\n",key,account_id,char_id);
+			ShowError("Login server unavailable, can't perform update on '%s' variable for AID:%" PRIu32 " CID:%" PRIu32 "\n",key,account_id,char_id);
 		}
 	} else if ( key[0] == '#' ) { // local account reg
 		if( is_string ) {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", schema_config.acc_reg_str_table, account_id, esc_key, index, esc_val) )
+			if( string_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.acc_reg_str_table, account_id, esc_key, index, esc_val) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.acc_reg_str_table, account_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_str_table, account_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		} else {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", schema_config.acc_reg_num_table, account_id, esc_key, index, (int)val) )
+			if( int_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.acc_reg_num_table, account_id, esc_key, index, int_value) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.acc_reg_num_table, account_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_num_table, account_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
 	} else { /* char reg */
 		if( is_string ) {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", schema_config.char_reg_str_table, char_id, esc_key, index, esc_val) )
+			if( string_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.char_reg_str_table, char_id, esc_key, index, esc_val) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.char_reg_str_table, char_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_str_table, char_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		} else {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", schema_config.char_reg_num_table, char_id, esc_key, index, (int)val) )
+			if( int_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.char_reg_num_table, char_id, esc_key, index, int_value) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.char_reg_num_table, char_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_num_table, char_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
@@ -621,11 +624,11 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 	switch( type ) {
 		case 3: //char reg
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%d'", schema_config.char_reg_str_table, char_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", schema_config.char_reg_str_table, char_id) )
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 2: //account reg
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", schema_config.acc_reg_str_table, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", schema_config.acc_reg_str_table, account_id) )
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 1: //account2 reg
@@ -664,7 +667,7 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
@@ -702,11 +705,11 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 	switch( type ) {
 		case 3: //char reg
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%d'", schema_config.char_reg_num_table, char_id))
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", schema_config.char_reg_num_table, char_id))
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 2: //account reg
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", schema_config.acc_reg_num_table, account_id))
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", schema_config.acc_reg_num_table, account_id))
 				Sql_ShowDebug(sql_handle);
 			break;
 #if 0 // This is already checked above.
@@ -744,13 +747,13 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
 
-		WFIFOL(fd, plen) = atoi(data);
-		plen += 4;
+		WFIFOQ(fd, plen) = strtoll(data,NULL,10);
+		plen += 8;
 
 		WFIFOW(fd, 14) += 1;
 
@@ -819,7 +822,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"log_inter"))
 			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"inter_server_conf"))
-			interserv_config.cfgFile = w2;
+			cfgFile = w2;
 		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
 	}
@@ -848,103 +851,85 @@ int inter_log(const char* fmt, ...)
 	return 0;
 }
 
-void yaml_invalid_warning(const char* fmt, YAML::Node &node, std::string &file) {
-	YAML::Emitter out;
-	out << node;
-	ShowWarning(fmt, file.c_str());
-	ShowMessage("%s\n", out.c_str());
+const std::string InterServerDatabase::getDefaultLocation(){
+	return std::string(conf_path) + "/" + cfgFile;
 }
 
 /**
- * Read inter config file
- **/
-void inter_config_readConf(void) {
-	std::vector<std::string> directories = { "conf/", "conf/import/" };
-	static const std::string file_name(interserv_config.cfgFile);
+ * Reads and parses an entry from the inter_server.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
+	uint32 id;
 
-	for (auto directory : directories) {
-		std::string current_file = directory + file_name;
-		YAML::Node config;
-		int count = 0;
-
-		try {
-			config = YAML::LoadFile(current_file);
-		}
-		catch (std::exception &e) {
-			ShowError("Cannot read storage definition file '" CL_WHITE "%s" CL_RESET "' (Caused by : " CL_WHITE "%s" CL_RESET ").\n", current_file.c_str(), e.what());
-			return;
-		}
-
-		if (config["Storages"]) {
-			for (auto node : config["Storages"]) {
-				unsigned int id;
-
-				if (!node["ID"]) {
-					yaml_invalid_warning("inter_config_readConf: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
-					continue;
-				}
-
-				try {
-					id = node["ID"].as<unsigned int>();
-				}
-				catch (const std::exception&) {
-					yaml_invalid_warning("inter_config_readConf: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
-					continue;
-				}
-
-				if( id > UINT8_MAX ){
-					yaml_invalid_warning("inter_config_readConf: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
-					continue;
-				}
-
-				bool existing = inter_premiumStorage_exists(id);
-				auto storage_table = existing ? interserv_config.storages[id] : std::make_shared<s_storage_table>();
-
-				if (!existing && (!node["Name"] || !node["Table"])) {
-					yaml_invalid_warning("inter_config_readConf: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, current_file);
-					continue;
-				}
-				
-				if (node["Name"])
-					safestrncpy(storage_table->name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
-				if(node["Table"])
-					safestrncpy(storage_table->table, node["Table"].as<std::string>().c_str(), DB_NAME_LEN);
-				if (node["Max"]) {
-					try {
-						storage_table->max_num = node["Max"].as<uint16>();
-					}
-					catch (const std::exception&) {
-						yaml_invalid_warning("inter_config_readConf: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, current_file);
-						continue;
-					}
-				}
-				else if (!existing)
-					storage_table->max_num = MAX_STORAGE;
-
-				if (!existing) {
-					storage_table->id = (uint8)id;
-					interserv_config.storages[id] = storage_table;
-				}
-
-				count++;
-			}
-		}
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' storage information in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
+	if( !this->asUInt32( node, "ID", id ) ){
+		return 0;
 	}
-}
 
-void inter_config_finalConf(void) {
+	auto storage_table = this->find( id );
+	bool existing = storage_table != nullptr;
 
-}
+	if( !existing ){
+		if( !this->nodeExists( node, "Name" ) ){
+			this->invalidWarning( node, "Node \"Name\" is missing.\n" );
+			return 0;
+		}
 
-void inter_config_defaults(void) {
-	interserv_config.cfgFile = "inter_server.yml";
+		if( !this->nodeExists( node, "Table" ) ){
+			this->invalidWarning( node, "Node \"Table\" is missing.\n" );
+			return 0;
+		}
+
+		storage_table = std::make_shared<s_storage_table>();
+
+		storage_table->id = (uint8)id;
+	}
+
+	if( this->nodeExists( node, "Name" ) ){
+		std::string name;
+
+		if( !this->asString( node, "Name", name ) ){
+			return 0;
+		}
+
+		safestrncpy( storage_table->name, name.c_str(), NAME_LENGTH );
+	}
+
+	if( this->nodeExists( node, "Table" ) ){
+		std::string table;
+
+		if( !this->asString( node, "Table", table ) ){
+			return 0;
+		}
+
+		safestrncpy( storage_table->table, table.c_str(), DB_NAME_LEN );
+	}
+
+	if( this->nodeExists( node, "Max" ) ){
+		uint16 max;
+
+		if( !this->asUInt16( node, "Max", max ) ){
+			return 0;
+		}
+
+		storage_table->max_num = max;
+	}else{
+		if( !existing ){
+			storage_table->max_num = MAX_STORAGE;
+		}
+	}
+
+	if( !existing ){
+		this->put( storage_table->id, storage_table );
+	}
+
+	return 1;
 }
 
 // initialize
 int inter_init_sql(const char *file)
 {
-	inter_config_defaults();
 	inter_config_read(file);
 
 	//DB connection initialized
@@ -965,7 +950,7 @@ int inter_init_sql(const char *file)
 	}
 
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
-	inter_config_readConf();
+	interServerDb.load();
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
@@ -986,7 +971,6 @@ void inter_final(void)
 {
 	wis_db->destroy(wis_db, NULL);
 
-	inter_config_finalConf();
 	inter_guild_sql_final();
 	inter_storage_sql_final();
 	inter_party_sql_final();
@@ -1009,13 +993,13 @@ void inter_final(void)
  * @param fd
  **/
 void inter_Storage_sendInfo(int fd) {
-	int size = sizeof(struct s_storage_table), len = 4 + interserv_config.storages.size() * size, offset;
+	int size = sizeof(struct s_storage_table), len = 4 + interServerDb.size() * size, offset;
 	// Send storage table information
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x388c;
 	WFIFOW(fd, 2) = len;
 	offset = 4;
-	for (auto storage : interserv_config.storages) {
+	for( auto storage : interServerDb ){
 		memcpy(WFIFOP(fd, offset), storage.second.get(), size);
 		offset += size;
 	}
@@ -1080,7 +1064,7 @@ int mapif_account_reg_reply(int fd, uint32 account_id, uint32 char_id, int type)
 //Request to kick char from a certain map server. [Skotlex]
 int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason)
 {
-	if (fd >= 0)
+	if (session_isValid(fd))
 	{
 		WFIFOHEAD(fd,7);
 		WFIFOW(fd,0) = 0x2b1f;
@@ -1141,13 +1125,13 @@ int mapif_parse_broadcast(int fd)
 
 /**
  * Parse received item broadcast and sends it to all connected map-serves
- * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
- * IZ 3809 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B
+ * IZ 3809 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B
  * @param fd
  * @return
  **/
 int mapif_parse_broadcast_item(int fd) {
-	unsigned char buf[9 + NAME_LENGTH*2];
+	unsigned char buf[11 + NAME_LENGTH*2];
 
 	memcpy(WBUFP(buf, 0), RFIFOP(fd, 0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3809;
@@ -1274,7 +1258,8 @@ int mapif_parse_WisToGM(int fd)
 // Save account_reg into sql (type=2)
 int mapif_parse_Registry(int fd)
 {
-	int account_id = RFIFOL(fd, 4), char_id = RFIFOL(fd, 8), count = RFIFOW(fd, 12);
+	uint32 account_id = RFIFOL(fd, 4), char_id = RFIFOL(fd, 8);
+	uint16 count = RFIFOW(fd, 12);
 
 	if( count ) {
 		int cursor = 14, i;
@@ -1289,20 +1274,17 @@ int mapif_parse_Registry(int fd)
 			std::string key( src_key, lenkey );
 			cursor += lenkey + 1;
 
-			unsigned int  index = RFIFOL(fd, cursor);
+			uint32  index = RFIFOL(fd, cursor);
 			cursor += 4;
 
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-				{
-					intptr_t lVal = RFIFOL( fd, cursor );
-					inter_savereg( account_id, char_id, key.c_str(), index, lVal, false );
-					cursor += 4;
+					inter_savereg( account_id, char_id, key.c_str(), index, RFIFOQ( fd, cursor ), nullptr, false );
+					cursor += 8;
 					break;
-				}
 				case 1:
-					inter_savereg(account_id,char_id,key.c_str(),index,0,false);
+					inter_savereg( account_id, char_id, key.c_str(), index, 0, nullptr, false );
 					break;
 				// str
 				case 2:
@@ -1311,11 +1293,11 @@ int mapif_parse_Registry(int fd)
 					const char* src_val= RFIFOCP(fd, cursor + 1);
 					std::string sval( src_val, len_val );
 					cursor += len_val + 1;
-					inter_savereg( account_id, char_id, key.c_str(), index, (intptr_t)sval.c_str(), true );
+					inter_savereg( account_id, char_id, key.c_str(), index, 0, sval.c_str(), true );
 					break;
 				}
 				case 3:
-					inter_savereg(account_id,char_id,key.c_str(),index,0,true);
+					inter_savereg( account_id, char_id, key.c_str(), index, 0, nullptr, true );
 					break;
 				default:
 					ShowError("mapif_parse_Registry: unknown type %d\n",RFIFOB(fd, cursor - 1));

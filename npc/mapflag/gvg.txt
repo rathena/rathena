@@ -1,12 +1,6 @@
 //===== rAthena Script =======================================
 //= Mapflag: Guild versus Guild mode.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.3
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Players can attack other guilds, and will have their guild
 //= icons shown. WoE damage reductions will also take place.
 //= gvg: Turns on GvG mode.
@@ -14,10 +8,11 @@
 //= gvg_dungeon: Describes dungeon maps for WoE.
 //= gvg_te: Turns on GvG mode for WoE:TE.
 //= gvg_te_castle: Describes castle maps for WoE:TE.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 1.1 Added Novice Guild Castles.
 //= 1.2 Updated with new meanings of gvg and gvg_castle.
 //= 1.3 Renewal split. [Euphy]
+//= 1.4 Disable costumes in GvG castles. [Aleos]
 //============================================================
 
 // GvG Arenas =============
@@ -125,3 +120,40 @@ schg_dun01	mapflag	gvg_dungeon
 2012rwc_06	mapflag	gvg
 2012rwc_07	mapflag	gvg
 2012rwc_08	mapflag	gvg
+
+// Disable Costumes =======
+aldeg_cas01	mapflag	nocostume
+aldeg_cas02	mapflag	nocostume
+aldeg_cas03	mapflag	nocostume
+aldeg_cas04	mapflag	nocostume
+aldeg_cas05	mapflag	nocostume
+gefg_cas01	mapflag	nocostume
+gefg_cas02	mapflag	nocostume
+gefg_cas03	mapflag	nocostume
+gefg_cas04	mapflag	nocostume
+gefg_cas05	mapflag	nocostume
+payg_cas01	mapflag	nocostume
+payg_cas02	mapflag	nocostume
+payg_cas03	mapflag	nocostume
+payg_cas04	mapflag	nocostume
+payg_cas05	mapflag	nocostume
+prtg_cas01	mapflag	nocostume
+prtg_cas02	mapflag	nocostume
+prtg_cas03	mapflag	nocostume
+prtg_cas04	mapflag	nocostume
+prtg_cas05	mapflag	nocostume
+schg_cas01	mapflag	nocostume
+schg_cas02	mapflag	nocostume
+schg_cas03	mapflag	nocostume
+schg_cas04	mapflag	nocostume
+schg_cas05	mapflag	nocostume
+arug_cas01	mapflag	nocostume
+arug_cas02	mapflag	nocostume
+arug_cas03	mapflag	nocostume
+arug_cas04	mapflag	nocostume
+arug_cas05	mapflag	nocostume
+//n_castle	mapflag	nocostume
+nguild_alde	mapflag	nocostume
+nguild_gef	mapflag	nocostume
+nguild_pay	mapflag	nocostume
+nguild_prt	mapflag	nocostume

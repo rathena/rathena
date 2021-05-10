@@ -35,7 +35,7 @@ valkyrie,53,56,3	script	Gypsy#Valkyrie	101,{
 	}
 	else if (ADVJOB == Job_Gypsy && Class == Job_Archer_High && JobLevel > 39) {
 		mes "[Gypsy]";
-		mes "The land of Rune-Midgard";
+		mes "The land of Midgard";
 		mes "is in need of talented women";
 		mes "to subtly change the balances";
 		mes "in the battle between good";

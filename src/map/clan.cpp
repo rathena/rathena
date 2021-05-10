@@ -12,6 +12,7 @@
 #include "../common/showmsg.hpp"
 
 #include "clif.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
 #include "log.hpp"
 #include "pc.hpp"
@@ -128,6 +129,9 @@ void clan_member_joined( struct map_session_data* sd ){
 
 		intif_clan_member_joined(clan->id);
 		clif_clan_onlinecount(clan);
+
+		if (clan->instance_id > 0)
+			instance_reqinfo(sd, clan->instance_id);
 	}
 }
 

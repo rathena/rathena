@@ -11,8 +11,8 @@
 //= Quest NPCs related to Dewata:
 //== Sapha's Visit, Doha's Secrect Order, Frede's Request,
 //== Department Quests, Document Quests,
-//== Chesire's Call, Cat Hands Enchantment
-//== Cat Hand Agent
+//== Chesire's Call, Cat Paw's Enchantment
+//== Cat Paw Agent
 //===== Additional Comments: =================================
 //= 1.0 First version. 14107 lines, oh, the pain...
 //= 1.1 Standardized and reduced by 7000+ lines. [Euphy]
@@ -2108,7 +2108,7 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				mes "The report robber is Cheshire.";
 				mes "Cheshire is Ahat's servant and they are related to the crack.";
 				mes "They are trying to hide something or someone at the crack";
-				mes "and the crack was created by the evil lord Morroc!";
+				mes "and the crack was created by the evil lord Morocc!";
 				next;
 				mes "[" + strcharinfo(0) + "]";
 				mes "Ahat is the evil lord?";
@@ -2194,7 +2194,7 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				mes "And tries to erase all traces found near the crack.";
 				mes "And Ahat wants to eliminate...";
 				next;
-				if (select("Ahat himself.:Morroc because of the crack?") == 1) {
+				if (select("Ahat himself.:Morocc because of the crack?") == 1) {
 					mes "[" + strcharinfo(0) + "]";
 					mes "Yes, Ahat might be a trace of himself.";
 					mes "Saphas want to hide something that is why they hired me";
@@ -2202,19 +2202,19 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				}
 				else {
 					mes "[" + strcharinfo(0) + "]";
-					mes "A bit dramatic but we cannot rule out the evil lord Morroc.";
-					mes "Because the crack was created by the evil lord Morroc himself.";
+					mes "A bit dramatic but we cannot rule out the evil lord Morocc.";
+					mes "Because the crack was created by the evil lord Morocc himself.";
 				}
 				set .@yes, .@yes + 1;
 				next;
 			}
 			else if (.@yes == 4) {
 				mes "[" + strcharinfo(0) + "]";
-				mes "Ahat and the crack and then Morroc..";
+				mes "Ahat and the crack and then Morocc..";
 				mes "I can tell there is a relationship between them but I can't pinpoint it.";
 				mes "And in the expedition's report...";
 				next;
-				if (select("Content of conflict between three countries.. :Content about evil lord Morroc..") == 1) {
+				if (select("Content of conflict between three countries.. :Content about evil lord Morocc..") == 1) {
 					mes "[" + strcharinfo(0) + "]";
 					mes "There was something about the conflict between three countries..";
 					mes "But.. I don't think it all adds up?";
@@ -2223,7 +2223,7 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				else {
 					mes "[" + strcharinfo(0) + "]";
 					mes "Yes. There is a report from the tracking team led by Echinacea.";
-					mes "It was about the evil lord Morroc.";
+					mes "It was about the evil lord Morocc.";
 					set .@yes, .@yes + 1;
 				}
 				next;
@@ -3692,7 +3692,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 		case 1:
 			mes "[Shay]";
 			mes "What will it be?";
-			mes "I have Tropical Sograt and Vermilion on the Beach flown in from Morroc.";
+			mes "I have Tropical Sograt and Vermilion on the Beach flown in from Morocc.";
 			mes "A bit on the expensive side though.";
 			next;		
 			if (select("Tropical Sorgrat - 2000z:Vermilion on the Beach - 2000z:Anything else?") == 3) {
@@ -3969,7 +3969,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "Because it is difficult to meet the minister.";
 				next;
 				mes "[Shay]";
-				mes "The crack here must have been created when the crack in Morroc appeared.";
+				mes "The crack here must have been created when the crack in Morocc appeared.";
 				mes "If he did it.";
 				next;
 				mes "[Shay]";
@@ -4077,7 +4077,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				next;
 				select("Oh..no..");
 				mes "[Shay]";
-				mes "When I was in Morroc.";
+				mes "When I was in Morocc.";
 				mes "A colleague from the guild used to make chocolate stuff you see?";
 				mes "I thought it would be simple since he was making it.";
 				next;
@@ -7446,38 +7446,38 @@ dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
 	close;
 }
 
-// Cat Hand Agent
+// Cat Paw Agent
 //============================================================
-moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
+moc_para01,44,19,3	script	Cat Paw Agent#gekk	496,{
 	if (BaseLevel < 70)	{
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Hey, human! Did you come to make a request, too? When will it be my turn?";
 		next;
-		mes "[Cat Hand Agent]";
-		mes "Our Cat Hand Merchant group really needs any help it can get. But by the looks of all those requests that Ebenor is holding in his hand, Cat Hand Merchant will be closed by the time my request is put up on the board!";
+		mes "[Cat Paw Agent]";
+		mes "Our Cat Paw Merchant group really needs any help it can get. But by the looks of all those requests that Ebenor is holding in his hand, Cat Paw Merchant will be closed by the time my request is put up on the board!";
 		next;
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "It breaks my heart to think my colleagues will be shivering in the blizzard. I hope I don't get into trouble since I can't do anything about it, right?";
 		close;
 	}
 	if (ep13_start != 100) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Hey, human! Did you come to make a request, too? When will it be my turn?";
 		next;
-		mes "[Cat Hand Agent]";
-		mes "Our Cat Hand Merchant group really needs any help it can get. But by the looks of all those requests that Ebenor is holding in his hand, Cat Hand Merchant will be closed by the time my request is put up on the board!";
+		mes "[Cat Paw Agent]";
+		mes "Our Cat Paw Merchant group really needs any help it can get. But by the looks of all those requests that Ebenor is holding in his hand, Cat Paw Merchant will be closed by the time my request is put up on the board!";
 		next;
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "It breaks my heart to think my colleagues will be shivering in the blizzard. I hope I don't get into trouble since I can't do anything about it, right?";
 		next;
 		if (select ("Why don't you collect it yourself?:I'm sorry to hear that.") == 1) {
 				emotion ET_HUK;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Human!! You're a genius!!";
 				mes "How did you come up with that?";
 				next;
 				mes "[Agent Geck]";
-				mes "I'm Agent Geck from the Cat Hand Merchant.";
+				mes "I'm Agent Geck from the Cat Paw Merchant.";
 				mes "Car Paw Merchant has been wandering for a long time in this Midgard world ever since we lost our homeland.";
 				next;
 				mes "[Agent Geck]";
@@ -7494,7 +7494,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 				mes "However, we plan to spare no efforts on it.";
 				next;
 				mes "[Agent Geck]";
-				mes "Human!! Did you know there is a huge hole near the Morroc village and nearby area?";
+				mes "Human!! Did you know there is a huge hole near the Morocc village and nearby area?";
 				mes "They say you can travel to a new area through the hole!";
 				next;
 				mes "[Agent Geck]";
@@ -7503,7 +7503,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 				next;
 				mes "[Agent Geck]";
 				mes "We must send someone as soon as possible to start exploring the area.";
-				mes "While the humans are frittering away, our Cat Hand Merchant should settle first and continue with our research.";
+				mes "While the humans are frittering away, our Cat Paw Merchant should settle first and continue with our research.";
 				next;
 				if (select ("I also want to go and help the merchants.:I'm not interested.") == 1) {
 						mes "[Agent Geck]";
@@ -7547,7 +7547,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 								set ep13_start, 100;
 								next;
 								mes "[Agent Geck]";
-								mes "Don't forget, human. The reason why Geck is helping you is to help the Cat Hand Merchant working hard in the other world.";
+								mes "Don't forget, human. The reason why Geck is helping you is to help the Cat Paw Merchant working hard in the other world.";
 								next;
 								mes "[Agent Geck]";
 								mes "Now, I will transport you. Go meet our agent in the right corner.";
@@ -7561,15 +7561,15 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 						close;
 				}
 				mes "[Agent Geck]";
-				mes "Did you meet the Cat Hand Merchant in Ash-Vacuum, human?";
+				mes "Did you meet the Cat Paw Merchant in Ash-Vacuum, human?";
 				close;
 		}
-		mes "[Cat Hand Agent]";
-		mes "But our Cat Hand Merchant will overcome any obstacle!";
+		mes "[Cat Paw Agent]";
+		mes "But our Cat Paw Merchant will overcome any obstacle!";
 		close;
 	}
 	mes "[Agent Geck]";
-	mes "Did you meet the Cat Hand Merchant in Ash-Vacuum, human?";
+	mes "Did you meet the Cat Paw Merchant in Ash-Vacuum, human?";
 	next;
 	if (select ("Send me back:I'm busy") == 1) {
 		mes "[Agent Geck]";
@@ -7579,7 +7579,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 		close;
 	}
 	mes "[Agent Geck]";
-	mes "Hey, human! Didn't you say you will help the Cat Hand Merchant!";
+	mes "Hey, human! Didn't you say you will help the Cat Paw Merchant!";
 	close;
 }
 
@@ -7589,47 +7589,47 @@ moc_fild20,368,197,3	script	Cat#to22	876,{
 		mes "Meow~";
 		close;
 	}
-	mes "A small Cat Hand Agent looks at you and nods its head towards the back.";
+	mes "A small Cat Paw Agent looks at you and nods its head towards the back.";
 	mes "Looks like it wants you to step up on its back to climb over the wall.";
 	next;
 	if (select ("But you are so cute...:Let's do this!") == 1) {
-		mes "The small Cat Hand Agent has small black patterns as if it were stamped on it's white fur.";
+		mes "The small Cat Paw Agent has small black patterns as if it were stamped on it's white fur.";
 		next;
 		mes "The small body isn't as tall as your ankle and its small but thick paws look like little cushions. The ears that bent backwards when it looked at how big you were stirred up your protective instinct.";
 		next;
-		mes "You don't seem to have the nerve to step on the Cat Hand Agent.";
+		mes "You don't seem to have the nerve to step on the Cat Paw Agent.";
 		emotion ET_CRY;
 		close;
 	}
-	mes "You look at the Cat Hand Agent's small back and climb over the wall as quick as possible so that it wouldn't notice your weight.";
+	mes "You look at the Cat Paw Agent's small back and climb over the wall as quick as possible so that it wouldn't notice your weight.";
 	close2;
 	warp "moc_fild22b", 175, 159;
 	end;
 }
 
-moc_fild22b,182,179,3	script	Cat Hand Agent#Tat	495,{
+moc_fild22b,182,179,3	script	Cat Paw Agent#Tat	495,{
 	if (ep13_start != 100) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "This place as no meaning for us.";
 		close;
 	}
-	mes "[Cat Hand Agent]";
+	mes "[Cat Paw Agent]";
 	mes "Heard from Geck.";
-	mes "I'm the Cat Hand Merchant's rising star, Tat.";
+	mes "I'm the Cat Paw Merchant's rising star, Tat.";
 	next;
 	mes "[Tat]";
 	mes "I heard you are offering high-quality fish to pay for our passage.";
 	mes "I also heard the fish is very fresh and has shiny golden scales.";
 	next;
 	mes "[Tat]";
-	mes "I usually only allow our Cat Hand Merchant agents to go through but since you are here on Geck's behalf and seeing you are reliable, I'll let you through.";
+	mes "I usually only allow our Cat Paw Merchant agents to go through but since you are here on Geck's behalf and seeing you are reliable, I'll let you through.";
 	next;
 	mes "[Tat]";
 	mes "Are you ready?";
 	next;
 	if (select ("To the other world!:I need some time.") == 1) {
 		mes "[Tat]";
-		mes "Don't forget you are in debt to the Cat Hand Merchant, human!";
+		mes "Don't forget you are in debt to the Cat Paw Merchant, human!";
 		close2;
 		warp "mid_camp", 210, 291;
 		end;

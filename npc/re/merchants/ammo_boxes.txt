@@ -15,7 +15,7 @@
 //= 2.2 Updated to new bullets. [Aleos]
 //============================================================
 
-alberta,118,157,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
+que_ng,187,149,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
 	mes "[Kenny]";
 	mes "Bullet bags will help you carry bullets much more easily.";
 	mes "Come take a look~";
@@ -286,5 +286,5 @@ S_Close:
 	close;
 }
 
-que_ng,187,149,3	duplicate(mdk)	Magazine Dealer Kenny#ng	83
-izlude_in,74,104,5	duplicate(mdk)	Magazine Dealer Kenny#iz	83
+alberta,118,157,3	duplicate(mdk)	Magazine Dealer Kenny#al	4_M_01
+izlude_in,74,104,5	duplicate(mdk)	Magazine Dealer Kenny#iz	4_M_01

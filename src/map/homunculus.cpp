@@ -30,7 +30,7 @@ struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TR
 
 static TIMER_FUNC(hom_hungry);
 static uint16 homunculus_count;
-static unsigned int hexptbl[MAX_LEVEL];
+static t_exp hexptbl[MAX_LEVEL];
 
 //For holding the view data of npc classes. [Skotlex]
 static struct view_data hom_viewdb[MAX_HOMUNCULUS_CLASS];
@@ -210,6 +210,11 @@ int hom_dead(struct homun_data *hd)
 		return 3;
 
 	clif_emotion(&sd->bl, ET_CRY);
+
+#ifdef RENEWAL
+	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+#endif
+
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
 	return 3;
 }
@@ -239,10 +244,17 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
-	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED)
-		memset(hd->blockskill, 0, sizeof(hd->blockskill));
+	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED) {
+		hd->blockskill.clear();
+		hd->blockskill.shrink_to_fit();
+	}
 	clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
+
+#ifdef RENEWAL
+	status_change_end(&sd->bl, status_skill2sc(AM_CALLHOMUN), INVALID_TIMER);
+#endif
+
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
 
@@ -667,7 +679,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 * @param hd
 * @param exp Added EXP
 */
-void hom_gainexp(struct homun_data *hd,int exp)
+void hom_gainexp(struct homun_data *hd,t_exp exp)
 {
 	int m_class;
 
@@ -713,7 +725,7 @@ void hom_gainexp(struct homun_data *hd,int exp)
 }
 
 /**
-* Increase homunculu sintimacy
+* Increase homunculus intimacy
 * @param hd
 * @param value Added intimacy
 * @return New intimacy value
@@ -732,7 +744,7 @@ int hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 }
 
 /**
-* Decrease homunculu sintimacy
+* Decrease homunculus intimacy
 * @param hd
 * @param value Reduced intimacy
 * @return New intimacy value
@@ -904,7 +916,10 @@ static TIMER_FUNC(hom_hungry){
 	}
 
 	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
-	hd->hungry_timer = add_timer(tick+hd->homunculusDB->hungryDelay,hom_hungry,sd->bl.id,0); //simple Fix albator
+
+	int hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
+
+	hd->hungry_timer = add_timer(tick+hunger_delay,hom_hungry,sd->bl.id,0); //simple Fix albator
 	return 0;
 }
 
@@ -1055,8 +1070,11 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 */
 void hom_init_timers(struct homun_data * hd)
 {
-	if (hd->hungry_timer == INVALID_TIMER)
-		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,hom_hungry,hd->master->bl.id,0);
+	if (hd->hungry_timer == INVALID_TIMER) {
+		int hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
+
+		hd->hungry_timer = add_timer(gettick()+hunger_delay,hom_hungry,hd->master->bl.id,0);
+	}
 	hd->regen.state.block = 0; //Restore HP/SP block.
 	hd->masterteleport_timer = INVALID_TIMER;
 }
@@ -1105,6 +1123,11 @@ bool hom_call(struct map_session_data *sd)
 	} else
 		//Warp him to master.
 		unit_warp(&hd->bl,sd->bl.m, sd->bl.x, sd->bl.y,CLR_OUTSIGHT);
+
+#ifdef RENEWAL
+	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+#endif
+
 	return true;
 }
 
@@ -1160,6 +1183,11 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		clif_homskillinfoblock(sd);
 		hom_init_timers(hd);
 	}
+
+#ifdef RENEWAL
+	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+#endif
+
 	return 1;
 }
 
@@ -1244,6 +1272,11 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 			return 0;
 		clif_spawn(&hd->bl);
 	}
+
+#ifdef RENEWAL
+	sc_start(&sd->bl, &sd->bl, status_skill2sc(AM_CALLHOMUN), 100, 1, skill_get_time(AM_CALLHOMUN, 1));
+#endif
+
 	return status_revive(&hd->bl, per, 0);
 }
 
@@ -1303,7 +1336,6 @@ int hom_shuffle(struct homun_data *hd)
 {
 	struct map_session_data *sd;
 	int lv, i, skillpts;
-	unsigned int exp;
 	struct s_skill b_skill[MAX_HOMUNSKILL];
 
 	if (!hom_is_active(hd))
@@ -1311,7 +1343,7 @@ int hom_shuffle(struct homun_data *hd)
 
 	sd = hd->master;
 	lv = hd->homunculus.level;
-	exp = hd->homunculus.exp;
+	t_exp exp = hd->homunculus.exp;
 	memcpy(&b_skill, &hd->homunculus.hskill, sizeof(b_skill));
 	skillpts = hd->homunculus.skillpts;
 	//Reset values to level 1.
@@ -1604,23 +1636,23 @@ void read_homunculus_expdb(void)
 		if (fp == NULL) {
 			if (i != 0)
 				continue;
-			ShowError("Can't read %s\n",line);
+			ShowError("read_homunculus_expdb: Can't read %s\n",line);
 			return;
 		}
 		while (fgets(line, sizeof(line), fp) && j < MAX_LEVEL) {
 			if (line[0] == '/' && line[1] == '/')
 				continue;
 
-			hexptbl[j] = strtoul(line, NULL, 10);
+			hexptbl[j] = strtoull(line, NULL, 10);
 			if (!hexptbl[j++])
 				break;
 		}
 		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
-			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
+			ShowWarning("read_homunculus_expdb: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s/%s" CL_RESET "'.\n", j, db_path, path);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s" CL_RESET "'.\n", j, path);
 	}
 }
 

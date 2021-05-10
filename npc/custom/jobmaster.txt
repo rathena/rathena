@@ -71,8 +71,8 @@ function	Can_Rebirth	{
 		return false; // Rebirth disabled
 	if( !(eaclass()&EAJL_2) )
 		return false; // Not second Class
-	if( eaclass()&EAJL_UPPER )
-		return false; // Already Rebirthed
+	if( eaclass()&(EAJL_UPPER|EAJL_THIRD) )
+		return false; // Already Rebirthed/ Third Class
 	if( roclass(eaclass()|EAJL_UPPER) < 0 )
 		return false; // Job has no transcended class
 	if( Is_Baby() && !.BabyClass )
@@ -126,7 +126,6 @@ function	Job_Options	{
 	Check_SkillPoints();
 
 	// initialisation
-	deletearray .@job_opt[0],getarraysize(.@job_opt);
 	.@eac = eaclass();
 	.@third_possible = Can_Change_Third();
 	.@rebirth_possible = Can_Rebirth();
@@ -300,6 +299,7 @@ function	Job_Menu	{
 
 // Executes the actual jobchange and closes.
 function	Job_Change	{
+	.@previous_class = Class;
 	.@to_cls = getarg(0);
 	next;
 	mes .NPCName$;
@@ -316,10 +316,12 @@ function	Job_Change	{
 	}
 	specialeffect2 EF_ANGEL2;
 	specialeffect2 EF_ELECTRIC;
-	if (.Platinum)
-		callfunc "F_GetPlatinumSkills";
-	if (.GetJobEquip)
-		Get_Job_Equip();
+	if (.@previous_class != Class) {
+		if (.Platinum)
+			callfunc "F_GetPlatinumSkills";
+		if (.GetJobEquip)
+			Get_Job_Equip();
+	}
 	close; // Always closes after the change
 }
 
@@ -327,7 +329,7 @@ function	Confirm_Change	{
 	// Player confirms he want to change into .@class
 	.@class = getarg(0, -1);
 	.@back = getarg(1, false);
-	if( .@class < 0 ) {
+	if( .@class < 0 || eaclass(.@class) == -1 ) {
 		mes "Unknown Class Error.";
 		close;
 	}
@@ -418,10 +420,6 @@ function	Get_Job_Equip	{
 				getitem 1960,1;	break;	//	Whip [1]
 			case Job_Super_Novice:
 				getitem 1208,1;	break;	//	Main Gauche [4]
-			case Job_Gunslinger:
-				getitem 13101,1; break;	//	Six Shooter [2]
-			case Job_Ninja:
-				getitem 13010,1; break;	//	Asura [2]
 			case Job_Star_Gladiator:
 				getitem 1550,1;	break;	//	Book [3]
 			case Job_Soul_Linker:
@@ -444,6 +442,10 @@ function	Get_Job_Equip	{
 				getitem 1302,1;	break;	//	Axe [4]
 			case Job_Thief:
 				getitem 1208,1;	break;	//	Main Gauche [4]
+			case Job_Gunslinger:
+				getitem 13101,1; break;	//	Six Shooter [2]
+			case Job_Ninja:
+				getitem 13010,1; break;	//	Asura [2]
 		}
 	}
 	return;

@@ -4,6 +4,9 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include <vector>
+
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
@@ -19,7 +22,6 @@ struct status_change;
 
 /**
  * Max Refine available to your server
- * Changing this limit requires edits to refine_db.txt
  **/
 #ifdef RENEWAL
 #	define MAX_REFINE 20
@@ -28,36 +30,91 @@ struct status_change;
 #endif
 
 /// Refine type
-enum refine_type {
-	REFINE_TYPE_ARMOR	= 0,
-	REFINE_TYPE_WEAPON1	= 1,
-	REFINE_TYPE_WEAPON2	= 2,
-	REFINE_TYPE_WEAPON3	= 3,
-	REFINE_TYPE_WEAPON4	= 4,
-	REFINE_TYPE_SHADOW	= 5,
-	REFINE_TYPE_MAX		= 6
+enum e_refine_type : uint16{
+	REFINE_TYPE_ARMOR = 0,
+	REFINE_TYPE_WEAPON,
+	REFINE_TYPE_SHADOW_ARMOR,
+	REFINE_TYPE_SHADOW_WEAPON,
+	REFINE_TYPE_MAX
 };
 
 /// Refine cost type
-enum refine_cost_type {
+enum e_refine_cost_type : uint16{
 	REFINE_COST_NORMAL = 0,
-	REFINE_COST_OVER10,
 	REFINE_COST_HD,
 	REFINE_COST_ENRICHED,
-	REFINE_COST_OVER10_HD,
-	REFINE_COST_HOLINK,
-	REFINE_COST_WAGJAK,
 	REFINE_COST_MAX
 };
 
-struct refine_cost {
-	unsigned short nameid;
-	int zeny;
+/// Refine script parameters
+enum e_refine_parameter{
+	REFINE_MATERIAL_ID = 0,
+	REFINE_ZENY_COST
 };
 
-/// Get refine chance
-int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
-int status_get_refine_cost(int weapon_lv, int type, bool what);
+struct s_refine_cost{
+	uint16 index;
+	t_itemid nameid;
+	uint16 chance;
+	uint32 zeny;
+	uint16 breaking_rate;
+	uint16 downgrade_amount;
+};
+
+struct s_refine_level_info{
+	uint16 level;
+	uint32 bonus;
+	uint32 randombonus_max;
+	uint16 blessing_amount;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_cost>> costs;
+};
+
+struct s_refine_levels_info{
+	uint16 level;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_level_info>> levels;
+};
+
+struct s_refine_info{
+	uint16 groupId;
+	std::unordered_map<uint16, std::shared_ptr<s_refine_levels_info>> levels;
+};
+
+class RefineDatabase : public TypesafeYamlDatabase<uint16, s_refine_info>{
+private:
+	bool calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level );
+	std::shared_ptr<s_refine_level_info> findLevelInfoSub( const struct item_data& data, struct item& item, uint16 refine );
+
+public:
+	RefineDatabase() : TypesafeYamlDatabase( "REFINE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+
+	// Additional
+	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
+	std::shared_ptr<s_refine_level_info> findCurrentLevelInfo( const struct item_data& data, struct item& item );
+};
+
+extern RefineDatabase refine_db;
+
+/// Weapon attack modification for size
+struct s_sizefix_db {
+	uint16 small, medium, large;
+};
+
+class SizeFixDatabase : public TypesafeYamlDatabase<int32, s_sizefix_db> {
+public:
+	SizeFixDatabase() : TypesafeYamlDatabase("SIZE_FIX_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern SizeFixDatabase size_fix_db;
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {
@@ -464,9 +521,9 @@ enum sc_type : int16 {
 	 **/
 	SC_REFLECTDAMAGE,
 	SC_FORCEOFVANGUARD,
-	SC_SHIELDSPELL_DEF,
-	SC_SHIELDSPELL_MDEF,
-	SC_SHIELDSPELL_REF,//380
+	SC_SHIELDSPELL_HP,
+	SC_SHIELDSPELL_SP,
+	SC_SHIELDSPELL_ATK,//380
 	SC_EXEEDBREAK,
 	SC_PRESTIGE,
 	SC_BANDING,
@@ -634,11 +691,7 @@ enum sc_type : int16 {
 	SC_SPELLBOOK4,
 	SC_SPELLBOOK5,
 	SC_SPELLBOOK6,
-/**
- * In official server there are only 7 maximum number of spell books that can be memorized
- * To increase the maximum value just add another status type before SC_MAXSPELLBOOK (ex. SC_SPELLBOOK7, SC_SPELLBOOK8 and so on)
- **/
-	SC_MAXSPELLBOOK,
+	SC_MAXSPELLBOOK, // SC_SPELLBOOK7
 	/* Max HP & SP */
 	SC_INCMHP,
 	SC_INCMSP,
@@ -860,6 +913,80 @@ enum sc_type : int16 {
 	SC_LHZ_DUN_N4,
 
 	SC_ANCILLA,
+	SC_EARTHSHAKER,
+	SC_WEAPONBLOCK_ON,
+	SC_SPORE_EXPLOSION,
+	SC_ADAPTATION,
+	SC_BASILICA_CELL, // Used in renewal mode for cell_basilica only
+
+	SC_ENTRY_QUEUE_APPLY_DELAY,
+	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
+
+	// Star Emperor
+	SC_LIGHTOFMOON,
+	SC_LIGHTOFSUN,
+	SC_LIGHTOFSTAR,
+	SC_LUNARSTANCE,
+	SC_UNIVERSESTANCE,
+	SC_SUNSTANCE,
+	SC_FLASHKICK,
+	SC_NEWMOON,
+	SC_STARSTANCE,
+	SC_DIMENSION,
+	SC_DIMENSION1,
+	SC_DIMENSION2,
+	SC_CREATINGSTAR,
+	SC_FALLINGSTAR,
+	SC_NOVAEXPLOSING,
+	SC_GRAVITYCONTROL,
+
+	// Soul Reaper
+	SC_SOULCOLLECT,
+	SC_SOULREAPER,
+	SC_SOULUNITY,
+	SC_SOULSHADOW,
+	SC_SOULFAIRY,
+	SC_SOULFALCON,
+	SC_SOULGOLEM,
+	SC_SOULDIVISION,
+	SC_SOULENERGY,
+	SC_USE_SKILL_SP_SPA,
+	SC_USE_SKILL_SP_SHA,
+	SC_SP_SHA,
+	SC_SOULCURSE,
+
+	SC_HELLS_PLANT,
+	SC_INCREASE_MAXHP, // EFST_ATKER_ASPD
+	SC_INCREASE_MAXSP, // EFST_ATKER_MOVESPEED
+	SC_REF_T_POTION,
+	SC_ADD_ATK_DAMAGE,
+	SC_ADD_MATK_DAMAGE,
+
+	SC_HELPANGEL,
+	SC_SOUNDOFDESTRUCTION,
+
+	SC_LUXANIMA,
+	SC_REUSE_LIMIT_LUXANIMA,
+	SC_ENSEMBLEFATIGUE,
+	SC_MISTY_FROST,
+	SC_MAGIC_POISON,
+
+	// ep16.2
+	SC_EP16_2_BUFF_SS,
+	SC_EP16_2_BUFF_SC,
+	SC_EP16_2_BUFF_AC,
+	
+	// Job Improvement Bundle
+	SC_OVERBRANDREADY,
+	SC_POISON_MIST,
+	SC_STONE_WALL,
+	SC_CLOUD_POISON,
+	SC_HOMUN_TIME,
+
+	SC_EMERGENCY_MOVE,
+	SC_MADOGEAR,
+
+	SC_NPC_HALLUCINATIONWALK,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1729,9 +1856,10 @@ enum efst_types : short{
 	EFST_MERMAID_LONGING,
 	EFST_MAGICAL_FEATHER,
 	EFST_DRACULA_CARD,
-
-	EFST_LIMIT_POWER_BOOSTER = 867,
+	EFST_ALL_PRONTERA_RECALL,
+	EFST_LIMIT_POWER_BOOSTER,
 	EFST_GIFT_OF_SNOW,
+	EFST_NPC_HALLUCINATIONWALK,
 
 	EFST_TIME_ACCESSORY = 872,
 	EFST_EP16_DEF,
@@ -1804,6 +1932,9 @@ enum efst_types : short{
 	EFST_AID_PERIOD_PLUSJOBEXP,
 	EFST_AID_PERIOD_DEADPENALTY,
 	EFST_AID_PERIOD_ADDSTOREITEMCOUNT,
+	EFST_ALL_GLASTHEIM_RECALL,
+
+	EFST_ALL_THANATOS_RECALL = 945,
 
 	EFST_MAGICSTONE_OF_GRACE_SET = 948,
 
@@ -1824,8 +1955,8 @@ enum efst_types : short{
 	EFST_BLAZE_BEAD = 979,
 	EFST_FROZEN_BEAD,
 	EFST_BREEZE_BEAD,
-
-	EFST_AID_PERIOD_RECEIVEITEM_2ND = 983,
+	EFST_SOULATTACK,
+	EFST_AID_PERIOD_RECEIVEITEM_2ND,
 	EFST_AID_PERIOD_PLUSEXP_2ND,
 	EFST_AID_PERIOD_PLUSJOBEXP_2ND,
 	EFST_PRONTERA_JP,
@@ -1835,8 +1966,9 @@ enum efst_types : short{
 	EFST_KIEL_CARD,
 
 	EFST_CHEERUP = 992,
-
-	EFST_S_MANAPOTION = 995,
+	EFST_GET_CNT_UNREAD_RODEX_CHARDB,
+	EFST_GET_CNT_UNREAD_RODEX_GLOBALDB,
+	EFST_S_MANAPOTION,
 	EFST_M_DEFSCROLL,
 
 	EFST_AS_RAGGED_GOLEM_CARD = 1000,
@@ -1860,8 +1992,9 @@ enum efst_types : short{
 	EFST_IMMUNE_PROPERTY_UNDEAD,
 	EFST_REUSE_LIMIT_NP,
 	EFST_SPECIALCOOKIE,
-
-	EFST_GLORY_OF_RETURN = 1030,
+	EFST_DAMAGE_HEAL2,
+	EFST_DAMAGE_HEAL3,
+	EFST_GLORY_OF_RETURN,
 	EFST_ATK_POPCORN,
 	EFST_MATK_POPCORN,
 	EFST_ASPD_POPCORN,
@@ -1905,7 +2038,13 @@ enum efst_types : short{
 	EFST_ABYSS_007,
 	EFST_ABYSS_008,
 
-	EFST_YGGDRASIL_BLESS = 1081,
+	EFST_REUSE_LIMIT_THM = 1075,
+	EFST_REUSE_LIMIT_TLI,
+	EFST_REUSE_LIMIT_TKC,
+	EFST_REUSE_LIMIT_TRP,
+	EFST_REUSE_LIMIT_TBG,
+	EFST_REUSE_LIMIT_TBM,
+	EFST_YGGDRASIL_BLESS,
 
 	EFST_HUNTING_EVENT = 1083,
 	EFST_PERIOD_RECEIVEITEM_2ND,
@@ -1918,6 +2057,7 @@ enum efst_types : short{
 	EFST_ANCILLA = 1095,
 
 	EFST_FESTIVE_ENERGY = 1104,
+	EFST_TEST_KR01,
 
 	EFST_WEAPONBLOCK_ON = 1107,
 	EFST_CRI_DAMAGE,
@@ -1936,33 +2076,228 @@ enum efst_types : short{
 	EFST_OVERLAPEXPUP2,
 
 	EFST_SOULCURSE = 1125,
-
-	EFST_NV_BREAKTHROUGH = 1129,
+	EFST_SOUND_OF_DESTRUCTION,
+	EFST_DF_MANAPLUS,
+	EFST_DF_FULLSWINGK,
+	EFST_NV_BREAKTHROUGH,
 	EFST_HELPANGEL,
 	EFST_NV_TRANSCENDENCE,
 	EFST_SWEETSFAIR_ATK,
 	EFST_SWEETSFAIR_MATK,
+
+	EFST_FLOWER_LEAF2 = 1135,
+	EFST_FLOWER_LEAF3,
+	EFST_FLOWER_LEAF4,
+
+	EFST_MISTY_FROST = 1141,
+	EFST_MAGIC_POISON,
+	EFST_KAUTE,
+
+	EFST_JPNONLY_TACTICS = 1147,
+
+	EFST_MADOGEAR = 1149,
+	EFST_DEADLY_DEFEASANCE,
+	EFST_CLIMAX_DES_HU,
+	EFST_CLIMAX,
+
+	EFST_LUXANIMA = 1154,
+	EFST_BATH_FOAM_A,
+	EFST_BATH_FOAM_B,
+	EFST_BATH_FOAM_C,
+	EFST_AROMA_OIL,
+	EFST_REUSE_LIMIT_LUXANIMA,
+	EFST_POWERFUL_FAITH,
+	EFST_SINCERE_FAITH,
+	EFST_FIRM_FAITH,
+	EFST_AIRSHIP_PIPE,
+	EFST_PIECES_OF_SHADOW,
+	EFST_HELLS_PLANT_ARMOR,
+	EFST_RELIEVE_DAMAGE,
+	EFST_LOCKON_LASER,
+
+	EFST_REF_T_POTION = 1169,
+	EFST_ADD_ATK_DAMAGE,
+	EFST_ADD_MATK_DAMAGE,
+	EFST_SERVANTWEAPON,
+	EFST_SERVANT_SIGN,
+	EFST_CHARGINGPIERCE,
+	EFST_CHARGINGPIERCE_COUNT,
+	EFST_DRAGONIC_AURA,
+	EFST_BIG_SCAR,
+	EFST_VIGOR,
+
+	EFST_PRESSURE = 1180,
+
+	EFST_CLIMAX_EARTH = 1182,
+	EFST_CLIMAX_BLOOM,
+	EFST_CLIMAX_CRYIMP,
+	EFST_MD_ME_POTION,
+	EFST_MD_MA_POTION,
+	EFST_MD_TA_POTION,
+	EFST_MD_RA_POTION,
+
+	EFST_HOLY_OIL = 1190,
+	EFST_CRYSTAL_IMPACT,
+	EFST_SHADOW_EXCEED,
+	EFST_DANCING_KNIFE,
+	EFST_POTENT_VENOM,
+	EFST_SHADOW_SCAR,
+	EFST_E_SLASH_COUNT,
+	EFST_MEDIALE,
+	EFST_A_VITA,
+	EFST_A_TELUM,
+	EFST_PRE_ACIES,
+	EFST_COMPETENTIA,
+	EFST_GUARD_STANCE,
+	EFST_ATTACK_STANCE,
+	EFST_GUARDIAN_S,
+	EFST_HANDICAPSTATE_DEEPBLIND,
+	EFST_HANDICAPSTATE_DEEPSILENCE,
+	EFST_HANDICAPSTATE_LASSITUDE,
+	EFST_HANDICAPSTATE_FROSTBITE,
+	EFST_HANDICAPSTATE_SWOONING,
+	EFST_HANDICAPSTATE_LIGHTNINGSTRIKE,
+	EFST_HANDICAPSTATE_CRYSTALLIZATION,
+	EFST_HANDICAPSTATE_CONFLAGRATION,
+	EFST_HANDICAPSTATE_MISFORTUNE,
+	EFST_HANDICAPSTATE_DEADLYPOISON,
+	EFST_HANDICAPSTATE_DEPRESSION,
+	EFST_HANDICAPSTATE_HOLYFLAME,
+	EFST_REBOUND_S,
+	EFST_SHIELD_MASTERY,
+	EFST_SPEAR_SWORD_M,
+	EFST_HOLY_S,
+	EFST_ULTIMATE_S,
+	EFST_SPEAR_SCAR,
+	EFST_SHIELD_POWER,
+
+	EFST_SHADOW_WEAPON = 1226,
+	EFST_RELIGIO,
+	EFST_BENEDICTUM,
+	EFST_MVPCARD_KIEL,
+	EFST_FIRST_BRAND,
+	EFST_SECOND_BRAND,
+	EFST_SECOND_JUDGE,
+	EFST_THIRD_EXOR_FLAME,
+	EFST_FIRST_FAITH_POWER,
+	EFST_AXE_STOMP,
+	EFST_A_MACHINE,
+	EFST_D_MACHINE,
+	EFST_MT_M_MACHINE_OPERATOR,
+	EFST_TWOAXEDEF,
+	EFST_DAGGER_AND_BOW_M,
+	EFST_MAGIC_SWORD_M,
+	EFST_SHADOW_STRIP,
+	EFST_ABYSS_DAGGER,
+	EFST_ABYSSFORCEWEAPON,
+	EFST_ABYSS_SLAYER,
+
+	EFST_PROTECTSHADOWEQUIP = 1247,
+	EFST_RESEARCHREPORT,
+	EFST_BO_HELL_DUSTY,
+	EFST_WINDSIGN,
+	EFST_CRESCIVEBOLT,
+	EFST_CALAMITYGALE,
+
+	EFST_STAGE_MANNER = 1254,
+	EFST_RETROSPECTION,
+	EFST_MYSTIC_SYMPHONY,
+	EFST_KVASIR_SONATA,
+	EFST_SOUNDBLEND,
+	EFST_GEF_NOCTURN,
+	EFST_AIN_RHAPSODY,
+	EFST_MUSICAL_INTERLUDE,
+	EFST_JAWAII_SERENADE,
+	EFST_PRON_MARCH,
+	EFST_ROSEBLOSSOM,
+
+	EFST_ACIDIFIED_ZONE_WATER = 1266,
+	EFST_ACIDIFIED_ZONE_GROUND,
+	EFST_ACIDIFIED_ZONE_WIND,
+	EFST_ACIDIFIED_ZONE_FIRE,
+	EFST_MAGIC_BOOK_M,
+	EFST_SPELL_ENCHANTING,
+	EFST_SUMMON_ELEMENTAL_ARDOR,
+	EFST_SUMMON_ELEMENTAL_DILUVIO,
+	EFST_SUMMON_ELEMENTAL_PROCELLA,
+	EFST_SUMMON_ELEMENTAL_TERREMOTUS,
+	EFST_SUMMON_ELEMENTAL_SERPENS,
+	EFST_FLAMETECHNIC,
+	EFST_FLAMETECHNIC_OPTION,
+	EFST_FLAMEARMOR,
+	EFST_FLAMEARMOR_OPTION,
+	EFST_COLD_FORCE,
+	EFST_COLD_FORCE_OPTION,
+	EFST_CRYSTAL_ARMOR,
+	EFST_CRYSTAL_ARMOR_OPTION,
+	EFST_GRACE_BREEZE,
+	EFST_GRACE_BREEZE_OPTION,
+	EFST_EYES_OF_STORM,
+	EFST_EYES_OF_STORM_OPTION,
+	EFST_EARTH_CARE,
+	EFST_EARTH_CARE_OPTION,
+	EFST_STRONG_PROTECTION,
+	EFST_STRONG_PROTECTION_OPTION,
+	EFST_DEEP_POISONING,
+	EFST_DEEP_POISONING_OPTION,
+	EFST_POISON_SHIELD,
+	EFST_POISON_SHIELD_OPTION,
+	EFST_ABR_BATTLE_WARIOR,
+	EFST_ABR_DUAL_CANNON,
+	EFST_ABR_MOTHER_NET,
+	EFST_ABR_INFINITY,
+	EFST_ELEMENTAL_VEIL,
+
+	EFST_HOMUN_TIME = 1303,
+	EFST_POWER_ACCELERATION,
+	EFST_MAX_HP_SP_AVOID,
+	EFST_ADD_ALL_STATE,
+	EFST_AID_PERIOD_POWER_ACCELERATION,
+	EFST_AID_PERIOD_MAX_HP_SP_AVOID,
+	EFST_AID_PERIOD_ADD_ALL_STATE,
+	EFST_POISON_MIST,
+
+	EFST_STONE_WALL = 1313,
+
+	EFST_OVERBRANDREADY = 1315,
+	EFST_SHIELDSPELL,
+
+	EFST_CLOUD_POISON = 1318,
+	EFST_SPORE_EXPLOSION_DEBUFF,
+
+	EFST_DEFSCROLL = 1321,
+
+	EFST_MASSIVE_F_BLASTER = 1326,
+
+	EFST_NOEQUIPWEAPON2 = 1330,
+	EFST_NOEQUIPARMOR2,
+	EFST_NOEQUIPSHIELD2,
+	EFST_NOEQUIPSHOES2,
+	EFST_NOEQUIPPENDANT2,
+	EFST_NOEQUIPEARING2,
+	EFST_NOEQUIPFULL2,
+	EFST_CURSE_R_CUBE,
+	EFST_CURSE_B_CUBE,
+	EFST_KILLING_AURA,
 /// @APIHOOK_END
 /// Do not modify code above this, since it will be automatically generated by the API again
 	EFST_MAX,
 };
 
 /// JOINTBEAT stackable ailments
-enum e_joint_break
-{
-	BREAK_ANKLE	= 0x01, ///< MoveSpeed reduced by 50%
-	BREAK_WRIST	= 0x02, ///< ASPD reduced by 25%
-	BREAK_KNEE	= 0x04, ///< MoveSpeed reduced by 30%, ASPD reduced by 10%
-	BREAK_SHOULDER	= 0x08, ///< DEF reduced by 50%
-	BREAK_WAIST	= 0x10, ///< DEF reduced by 25%, ATK reduced by 25%
-	BREAK_NECK	= 0x20, ///< current attack does 2x damage, inflicts 'bleeding' for 30 seconds
-	BREAK_FLAGS	= BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
+enum e_joint_break : uint8 {
+	BREAK_ANKLE = 0x01,		///< MoveSpeed reduced by 50%
+	BREAK_WRIST = 0x02,		///< ASPD reduced by 25%
+	BREAK_KNEE = 0x04,		///< MoveSpeed reduced by 30%, ASPD reduced by 10%
+	BREAK_SHOULDER = 0x08,	///< DEF reduced by 50%
+	BREAK_WAIST = 0x10,		///< DEF reduced by 25%, ATK reduced by 25%
+	BREAK_NECK = 0x20,		///< Current attack does 2x damage, inflicts 'bleeding' for 30 seconds
+	BREAK_FLAGS = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
 extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
-extern bool running_npc_stat_calc_event;
 extern short current_equip_opt_index;
 
 //Status change option definitions (options are what makes status changes visible to chars
@@ -2322,7 +2657,6 @@ struct status_change {
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
-	unsigned char jb_flag; //Joint Beat type flag
 	struct {
 		unsigned char move;
 		unsigned char pickup;
@@ -2338,8 +2672,20 @@ struct status_change {
 #ifndef RENEWAL
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
-	unsigned char bs_counter; // Blood Sucker counter
 	struct status_change_entry *data[SC_MAX];
+};
+
+/// Statuses that are cancelled/disabled while on Madogear
+static const std::vector<sc_type> mado_statuses = {
+	SC_LOUD,
+	SC_CARTBOOST,
+	SC_MELTDOWN,
+	SC_ADRENALINE,
+	SC_ADRENALINE2,
+	SC_WEAPONPERFECTION,
+	SC_MAXIMIZEPOWER,
+	SC_OVERTHRUST,
+	SC_MAXOVERTHRUST
 };
 
 // for looking up associated data
@@ -2348,13 +2694,13 @@ int status_sc2skill(sc_type sc);
 unsigned int status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
 
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag);
+int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag, uint16 skill_id);
 //Define for standard HP damage attacks.
-#define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
+#define status_fix_damage(src, target, hp, walkdelay, skill) status_damage(src, target, hp, 0, walkdelay, 0, skill)
 //Define for standard SP damage attacks.
-#define status_fix_spdamage(src, target, sp, walkdelay) status_damage(src, target, 0, sp, walkdelay, 0)
+#define status_fix_spdamage(src, target, sp, walkdelay, skill) status_damage(src, target, 0, sp, walkdelay, 0, skill)
 //Define for standard HP/SP damage triggers.
-#define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1)
+#define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1, 0)
 //Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP to use skills)
 int64 status_charge(struct block_list* bl, int64 hp, int64 sp);
 int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag);
@@ -2431,7 +2777,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 int status_get_party_id(struct block_list *bl);
 int status_get_guild_id(struct block_list *bl);
 int status_get_emblem_id(struct block_list *bl);
-enum e_race2 status_get_race2(struct block_list *bl);
+std::vector<e_race2> status_get_race2(struct block_list *bl);
 
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int class_);
@@ -2501,7 +2847,7 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 
 void initChangeTables(void);
-int status_readdb(void);
+int status_readdb( bool reload = false );
 int do_init_status(void);
 void do_final_status(void);
 

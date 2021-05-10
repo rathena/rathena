@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Raceway
+//= Morocc Raceway
 //===== By: ==================================================
 //= acky
 //===== Current Version: =====================================
@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Lets players race around Morroc (pvp_y_1-5)
+//= Lets players race around Morocc (pvp_y_1-5)
 //===== Additional Comments: =================================
 //= If there are more than 3 players, at least 3 people
 //= must finish before a new race can be started.
@@ -23,7 +23,7 @@
 //Warps you into race way
 morocc,166,105,6	script	Race Girl#01	116,{
 	mes "[Race Girl]";
-	mes "Would you like to visit ^0000FFMorroc Raceway^000000?";
+	mes "Would you like to visit ^0000FFMorocc Raceway^000000?";
 	next;
 	menu "Yes",L_Warp,"No",-;
 	mes "[Race Girl]";
@@ -37,14 +37,14 @@ L_Warp:
 //Warps you out of raceway
 pvp_y_1-5,169,265,5	script	Race Girl#02	116,{
 	mes "[Race Girl]";
-	mes "Welcome to Morroc Raceway!";
+	mes "Welcome to Morocc Raceway!";
 	next;
 	menu "Information",-,"Leave",L_Warp,"Cancel",L_Cancel;
 	mes "[Race Girl]";
 	mes "Someone must click on the Starter NPC to start the race.";
 	next;
 	mes "[Race Girl]";
-	mes "Once the race is started, run around Morroc anti-clockwise.";
+	mes "Once the race is started, run around Morocc anti-clockwise.";
 	next;
 	mes "[Race Girl]";
 	mes "You must reach all the checkpoints - No cheating!";

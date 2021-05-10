@@ -374,7 +374,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 	}
 }
 
-einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
+einbroch,184,194,3	script	Suspicious Man#nq	881,{
 	if (NINJ_Q == 1) {
 		mes "[Suspicious Man]";
 		mes "I've traveled to many";

@@ -19,7 +19,7 @@
 14#0xFF0000#This is how you attack? Watch and learn, weaklings!
 15#0xFF0000#It's time to finish the game!
 16#0xFF0000#Oh, you're stronger than I thought!
-17#0xFF0000#No, this can't be happening! I'm Satan Morroc, Demon King of Destruction!
+17#0xFF0000#No, this can't be happening! I'm Satan Morocc, Demon King of Destruction!
 18#0xFF0000#I can never die! I'll be coming back for you!
 19#0xFF0000#I was born to conquer this world! None shall stop me!
 20#0xFF0000#Your days are numbered!

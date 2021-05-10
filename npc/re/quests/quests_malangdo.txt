@@ -2703,21 +2703,21 @@ malangdo,190,167,7	script	Portali#mal	546,{
 			mes "Where are you going without canned food...?";
 			close;
 		}
-		switch(select("Rune-Midgarts:Schwaltzvalt Republic:Arunafeltz Kingdom")) {
+		switch(select("Rune-Midgarts:Schwarzwald Republic:Arunafeltz Kingdom")) {
 		case 1:
-			switch(select("Prontera:Morroc:Alberta:Al De Baran:Payon:Geffen")) {
+			switch(select("Prontera:Morocc:Alberta:Al De Baran:Payon:Geffen")) {
 				case 1: callsub L_Warp,"Prontera",4,"prontera",155,111;
-				case 2: callsub L_Warp,"Morroc",4,"morocc",159,255;
+				case 2: callsub L_Warp,"Morocc",4,"morocc",159,255;
 				case 3: callsub L_Warp,"Alberta",4,"alberta",95,66;
 				case 4: callsub L_Warp,"Al De Baran",4,"aldebaran",126,120;
 				case 5: callsub L_Warp,"Payon",4,"payon",198,135;
 				case 6: callsub L_Warp,"Geffen",4,"geffen",120,100;
 			}
 		case 2:
-			switch(select("Einbroch:Lighthalzen:Yuno:Hugel")) {
+			switch(select("Einbroch:Lighthalzen:Juno:Hugel")) {
 				case 1: callsub L_Warp,"Einbroch",6,"einbroch",229,196;
 				case 2: callsub L_Warp,"Lighthalzen",6,"lighthalzen",214,150;
-				case 3: callsub L_Warp,"Yuno",6,"yuno",157,220;
+				case 3: callsub L_Warp,"Juno",6,"yuno",157,220;
 				case 4: callsub L_Warp,"Hugel",6,"hugel",95,121;
 			}
 		case 3:
@@ -2733,8 +2733,8 @@ malangdo,190,167,7	script	Portali#mal	546,{
 	case 3:
 		mes "[Portali]";
 		mes "3 for Rune-Midgarts!";
-		mes "6 for Schwaltzvalt, 5 for Arunafeltz.";
-		mes "Schwaltzvalt is the nation of prohibited magic, and Arunafeltz seems to have a curse!";
+		mes "6 for Schwarzwald, 5 for Arunafeltz.";
+		mes "Schwarzwald is the nation of prohibited magic, and Arunafeltz seems to have a curse!";
 		close;
 	}
 	end;

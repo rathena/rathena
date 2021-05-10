@@ -4,8 +4,10 @@
 #include "guild.hpp"
 
 #include <stdlib.h>
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/ers.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mapindex.hpp"
@@ -13,6 +15,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -27,6 +30,8 @@
 #include "pc.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+
+using namespace rathena;
 
 static DBMap* guild_db; // int guild_id -> struct guild*
 static DBMap* castle_db; // int castle_id -> struct guild_castle*
@@ -46,19 +51,143 @@ struct eventlist {
 //Guild EXP cache
 struct guild_expcache {
 	int guild_id, account_id, char_id;
-	uint64 exp;
+	t_exp exp;
 };
 static struct eri *expcache_ers; //For handling of guild exp payment.
 
-#define MAX_GUILD_SKILL_REQUIRE 5
-struct s_guild_skill_tree {
-	int id;
-	int max;
-	struct{
-		short id;
-		short lv;
-	}need[MAX_GUILD_SKILL_REQUIRE];
-} guild_skill_tree[MAX_GUILDSKILL];
+struct s_guild_skill_requirement{
+	uint16 id;
+	uint16 lv;
+};
+
+struct s_guild_skill_tree{
+	uint16 id;
+	uint16 max;
+	std::unordered_map<uint16,std::shared_ptr<s_guild_skill_requirement>> need;
+};
+
+class GuildSkillTreeDatabase : public TypesafeYamlDatabase<uint16, s_guild_skill_tree>{
+public:
+	GuildSkillTreeDatabase() : TypesafeYamlDatabase( "GUILD_SKILL_TREE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+const std::string GuildSkillTreeDatabase::getDefaultLocation(){
+	return std::string(db_path) + "/guild_skill_tree.yml";
+}
+
+uint64 GuildSkillTreeDatabase::parseBodyNode( const YAML::Node &node ){
+	std::string name;
+
+	if( !this->asString( node, "Id", name ) ){
+		return 0;
+	}
+
+	uint16 skill_id;
+
+	if( !( skill_id = skill_name2id( name.c_str() ) ) ){
+		this->invalidWarning( node["Id"], "Invalid guild skill name \"%s\", skipping.\n", name.c_str() );
+		return 0;
+	}
+
+	if( !SKILL_CHK_GUILD( skill_id ) ){
+		this->invalidWarning( node["Id"], "Guild skill \"%s\" with Id %u is out of the guild skill range [%u-%u], skipping.\n", name.c_str(), skill_id, GD_SKILLBASE, GD_MAX );
+		return 0;
+	}
+
+	std::shared_ptr<s_guild_skill_tree> skill = this->find( skill_id );
+	bool exists = skill != nullptr;
+
+	if( !exists ){
+		if( !this->nodeExists( node, "MaxLevel" ) ){
+			this->invalidWarning( node, "Missing node \"MaxLevel\", skipping.\n" );
+			return 0;
+		}
+
+		skill = std::make_shared<s_guild_skill_tree>();
+		skill->id = skill_id;
+	}
+
+	if( this->nodeExists( node, "MaxLevel" ) ){
+		uint16 level;
+
+		if( !this->asUInt16( node, "MaxLevel", level ) ){
+			return 0;
+		}
+
+		// Enable Guild's Glory when required for emblems
+		if( skill_id == GD_GLORYGUILD && battle_config.require_glory_guild && level == 0 ){
+			level = 1;
+		}
+
+		skill->max = level;
+	}
+
+	if( this->nodeExists( node, "Required" ) ){
+		for( const YAML::Node& requiredNode : node["Required"] ){
+			std::string requiredName;
+
+			if( !this->asString( requiredNode, "Id", requiredName ) ){
+				return 0;
+			}
+
+			uint16 requiredSkillId;
+
+			if( !( requiredSkillId = skill_name2id( requiredName.c_str() ) ) ){
+				this->invalidWarning( requiredNode["Id"], "Invalid required guild skill name \"%s\", skipping.\n", requiredName.c_str() );
+				return 0;
+			}
+
+			if( !SKILL_CHK_GUILD( requiredSkillId ) ){
+				this->invalidWarning( requiredNode["Id"], "Required guild skill \"%s\" with Id %u is out of the guild skill range [%u-%u], skipping.\n", requiredName.c_str(), requiredSkillId, GD_SKILLBASE, GD_MAX );
+				return 0;
+			}
+
+			std::shared_ptr<s_guild_skill_requirement> requirement = util::umap_find( skill->need, requiredSkillId );
+			bool requirement_exists = requirement != nullptr;
+
+			if( !requirement_exists ){
+				if( !this->nodeExists( requiredNode, "Level" ) ){
+					this->invalidWarning( requiredNode, "Missing node \"Level\", skipping.\n" );
+					return 0;
+				}
+
+				requirement = std::make_shared<s_guild_skill_requirement>();
+				requirement->id = requiredSkillId;
+			}
+
+			if( this->nodeExists( requiredNode, "Level" ) ){
+				uint16 requiredLevel;
+
+				if( !this->asUInt16( requiredNode, "Level", requiredLevel ) ){
+					return 0;
+				}
+
+				if( requiredLevel == 0 ){
+					continue;
+				}
+
+				requirement->lv = requiredLevel;
+			}
+
+			if( !requirement_exists ){
+				skill->need[requiredSkillId] = requirement;
+			}
+		}
+	}
+
+	if( !exists ){
+		this->put( skill_id, skill );
+	}
+
+	return 1;
+}
+
+GuildSkillTreeDatabase guild_skill_tree_db;
 
 TIMER_FUNC(guild_payexp_timer);
 static TIMER_FUNC(guild_send_xy_timer);
@@ -68,7 +197,7 @@ struct npc_data **guild_flags;
 unsigned short guild_flags_count;
 
 /**
- * Get guild skill index in guild_skill_tree
+ * Get guild skill index in guild structure of mmo.hpp
  * @param skill_id
  * @return Index in skill_tree or -1
  **/
@@ -100,10 +229,14 @@ static TBL_PC* guild_sd_check(int guild_id, uint32 account_id, uint32 char_id) {
 }
 
 // Modified [Komurka]
-int guild_skill_get_max (int id) {
-	if ((id = guild_skill_get_index(id)) < 0)
+uint16 guild_skill_get_max( uint16 id ){
+	std::shared_ptr<s_guild_skill_tree> skill = guild_skill_tree_db.find( id );
+
+	if( skill == nullptr ){
 		return 0;
-	return guild_skill_tree[id].max;
+	}
+
+	return skill->max;
 }
 
 // Retrieve skill_lv learned by guild
@@ -114,52 +247,26 @@ int guild_checkskill(struct guild *g, int id) {
 }
 
 /*==========================================
- * guild_skill_tree.txt reading - from jA [Komurka]
+ * Guild skill check - from jA [Komurka]
  *------------------------------------------*/
-static bool guild_read_guildskill_tree_db(char* split[], int columns, int current) {// <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
-	int k, skill_id = atoi(split[0]);
-	short idx = -1;
-
-	if ((idx = guild_skill_get_index(skill_id)) < 0) {
-		ShowError("guild_read_guildskill_tree_db: Invalid Guild skill '%s'.\n", split[1]);
+bool guild_check_skill_require( struct guild *g, uint16 id ){
+	if( g == nullptr ){
 		return false;
 	}
 
-	guild_skill_tree[idx].id = skill_id;
-	guild_skill_tree[idx].max = atoi(split[1]);
+	std::shared_ptr<s_guild_skill_tree> skill = guild_skill_tree_db.find( id );
 
-	if( guild_skill_tree[idx].id == GD_GLORYGUILD && battle_config.require_glory_guild && guild_skill_tree[idx].max == 0 ) 	{// enable guild's glory when required for emblems
-		guild_skill_tree[idx].max = 1;
+	if( skill == nullptr ){
+		return false;
 	}
 
-	for( k = 0; k < MAX_GUILD_SKILL_REQUIRE; k++ ) 	{
-		guild_skill_tree[idx].need[k].id = atoi(split[k*2+2]);
-		guild_skill_tree[idx].need[k].lv = atoi(split[k*2+3]);
+	for( const auto& pair : skill->need ){
+		if( pair.second->lv > guild_checkskill( g, pair.second->id ) ){
+			return false;
+		}
 	}
 
 	return true;
-}
-
-/*==========================================
- * Guild skill check - from jA [Komurka]
- *------------------------------------------*/
-int guild_check_skill_require(struct guild *g,int id) {
-	uint8 i;
-	short idx = -1;
-
-	if(g == NULL)
-		return 0;
-
-	if ((idx = guild_skill_get_index(id)) < 0)
-		return 0;
-
-	for(i=0;i<MAX_GUILD_SKILL_REQUIRE;i++)
-	{
-		if(guild_skill_tree[idx].need[i].id == 0) break;
-		if(guild_skill_tree[idx].need[i].lv > guild_checkskill(g,guild_skill_tree[idx].need[i].id))
-			return 0;
-	}
-	return 1;
 }
 
 static bool guild_read_castledb(char* str[], int columns, int current) {// <castle id>,<map name>,<castle name>,<castle event>[,<reserved/unused switch flag>]
@@ -269,8 +376,7 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd) {
 	m->gender		= sd->status.sex;
 	m->class_		= sd->status.class_;
 	m->lv			= sd->status.base_level;
-//	m->exp			= 0;
-//	m->exp_payper	= 0;
+	m->exp			= 0;
 	m->online		= 1;
 	m->position		= MAX_GUILDPOSITION-1;
 	safestrncpy(m->name,sd->status.name,NAME_LENGTH);
@@ -296,10 +402,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 		return 0;
 	}
 
-	if (g->member[i].exp > UINT64_MAX - c->exp)
-		g->member[i].exp = UINT64_MAX;
-	else
-		g->member[i].exp+= c->exp;
+	g->member[i].exp = util::safe_addition_cap(g->member[i].exp, c->exp, MAX_GUILD_EXP);
 
 	intif_guild_change_memberinfo(g->guild_id,c->account_id,c->char_id,
 		GMI_EXP,&g->member[i].exp,sizeof(g->member[i].exp));
@@ -503,10 +606,12 @@ int guild_recv_info(struct guild *sg) {
 		//Perform the check on the user because the first load
 		guild_check_member(sg);
 		if ((sd = map_nick2sd(sg->master,false)) != NULL) {
+#ifndef RENEWAL
 			//If the guild master is online the first time the guild_info is received,
 			//that means he was the first to join, so apply guild skill blocking here.
 			if( battle_config.guild_skill_relog_delay )
 				guild_block_skill(sd, battle_config.guild_skill_relog_delay);
+#endif
 
 			//Also set the guild master flag.
 			sd->guild = g;
@@ -567,7 +672,7 @@ int guild_recv_info(struct guild *sg) {
 			clif_guild_notice(sd);
 			sd->guild_emblem_id = g->emblem_id;
 		}
-		if (g->instance_id != 0)
+		if (g->instance_id > 0)
 			instance_reqinfo(sd, g->instance_id);
 	}
 
@@ -701,9 +806,11 @@ void guild_member_joined(struct map_session_data *sd) {
 	}
 	if (strcmp(sd->status.name,g->master) == 0) {	// set the Guild Master flag
 		sd->state.gmaster_flag = 1;
+#ifndef RENEWAL
 		// prevent Guild Skills from being used directly after relog
 		if( battle_config.guild_skill_relog_delay )
 			guild_block_skill(sd, battle_config.guild_skill_relog_delay);
+#endif
 	}
 	i = guild_getindex(g, sd->status.account_id, sd->status.char_id);
 	if (i == -1)
@@ -712,7 +819,7 @@ void guild_member_joined(struct map_session_data *sd) {
 		g->member[i].sd = sd;
 		sd->guild = g;
 
-		if (g->instance_id != 0)
+		if (g->instance_id > 0)
 			instance_reqinfo(sd, g->instance_id);
 		if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
@@ -764,7 +871,7 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 	//Next line commented because it do nothing, look at guild_recv_info [LuzZza]
 	//clif_charnameupdate(sd); //Update display name [Skotlex]
 
-	if (g->instance_id != 0)
+	if (g->instance_id > 0)
 		instance_reqinfo(sd, g->instance_id);
 
 	return 0;
@@ -899,6 +1006,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
+		status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
 		//@TODO: Send emblem update to self and people around
 	}
 	return 0;
@@ -1157,19 +1265,46 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2) {
 }
 
 /*====================================================
+ * Check condition for changing guild emblem
+ *---------------------------------------------------*/
+bool guild_check_emblem_change_condition(map_session_data *sd)
+{
+	nullpo_ret(sd);
+	guild* g = sd->guild;
+
+	if (battle_config.require_glory_guild && g != nullptr && guild_checkskill(g, GD_GLORYGUILD) > 0) {
+		clif_skill_fail(sd, GD_GLORYGUILD, USESKILL_FAIL_LEVEL, 0);
+		return false;
+	}
+
+	return true;
+}
+
+/*====================================================
  * Change guild emblem
  *---------------------------------------------------*/
 int guild_change_emblem(struct map_session_data *sd,int len,const char *data) {
-	struct guild *g;
 	nullpo_ret(sd);
 
-	if (battle_config.require_glory_guild &&
-		!((g = sd->guild) && guild_checkskill(g, GD_GLORYGUILD)>0)) {
-		clif_skill_fail(sd,GD_GLORYGUILD,USESKILL_FAIL_LEVEL,0);
+	if (!guild_check_emblem_change_condition(sd)) {
 		return 0;
 	}
 
 	return intif_guild_emblem(sd->status.guild_id,len,data);
+}
+
+/*====================================================
+ * Change guild emblem version
+ *---------------------------------------------------*/
+int guild_change_emblem_version(map_session_data* sd, int version)
+{
+	nullpo_ret(sd);
+
+	if (!guild_check_emblem_change_condition(sd)) {
+		return 0;
+	}
+
+	return intif_guild_emblem_version(sd->status.guild_id, version);
 }
 
 /*====================================================
@@ -1182,7 +1317,8 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data) {
 	if(g==NULL)
 		return 0;
 
-	memcpy(g->emblem_data,data,len);
+	if (data != nullptr)
+		memcpy(g->emblem_data,data,len);
 	g->emblem_len=len;
 	g->emblem_id=emblem_id;
 
@@ -1250,7 +1386,7 @@ static DBData create_expcache(DBKey key, va_list args) {
 /*====================================================
  * Return taxed experience from player sd to guild
  *---------------------------------------------------*/
-unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
+t_exp guild_payexp(struct map_session_data *sd,t_exp exp) {
 	struct guild *g;
 	struct guild_expcache *c;
 	int per;
@@ -1271,11 +1407,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
 	//Otherwise tax everything.
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
-
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
-	else
-		c->exp += exp;
+	c->exp = util::safe_addition_cap(c->exp, exp, MAX_GUILD_EXP);
 
 	return exp;
 }
@@ -1285,7 +1417,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
  * Add this experience to guild exp
  * [Celest]
  *---------------------------------------------------*/
-int guild_getexp(struct map_session_data *sd,int exp) {
+t_exp guild_getexp(struct map_session_data *sd,t_exp exp) {
 	struct guild_expcache *c;
 	nullpo_ret(sd);
 
@@ -1293,10 +1425,8 @@ int guild_getexp(struct map_session_data *sd,int exp) {
 		return 0;
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
-	else
-		c->exp += exp;
+	c->exp = util::safe_addition_cap(c->exp, exp, MAX_GUILD_EXP);
+
 	return exp;
 }
 
@@ -1757,6 +1887,7 @@ int guild_broken(int guild_id,int flag) {
 			status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
 		}
 	}
 
@@ -1841,8 +1972,10 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t tim
 		g->member[0].sd->state.gmaster_flag = 1;
 		clif_name_area(&g->member[0].sd->bl);
 		//Block his skills to prevent abuse.
+#ifndef RENEWAL
 		if (battle_config.guild_skill_relog_delay)
 			guild_block_skill(g->member[0].sd, battle_config.guild_skill_relog_delay);
+#endif
 	}
 
 	// announce the change to all guild members
@@ -2314,20 +2447,19 @@ void do_init_guild(void) {
 	expcache_ers = ers_new(sizeof(struct guild_expcache),"guild.cpp::expcache_ers",ERS_OPT_NONE);
 
 	guild_flags_count = 0;
-
-	memset(guild_skill_tree,0,sizeof(guild_skill_tree));
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
+		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
-		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
+		safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 		
 		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 4, -1, &guild_read_castledb, i > 0);
-		sv_readdb(dbsubpath1, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, &guild_read_guildskill_tree_db, i > 0); //guild skill tree [Komurka]
-		
+
 		aFree(dbsubpath1);
 	}
-	
+
+	guild_skill_tree_db.load();
+
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");
 	add_timer_interval(gettick()+GUILD_PAYEXP_INTERVAL,guild_payexp_timer,0,0,GUILD_PAYEXP_INTERVAL);

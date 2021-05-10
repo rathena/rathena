@@ -588,7 +588,7 @@ ve_in02,54,49,2	script	Factory Worker#ve1	943,{
 		mes "[Bahed]";
 		mes "Then, all of a sudden,";
 		mes "these people from--I guess";
-		mes "it was Schwaltzvalt--came";
+		mes "it was Schwarzwald--came";
 		mes "and bought a lot of these";
 		mes "stones. Later, they even built";
 		mes "this factory to process them!";
@@ -865,7 +865,7 @@ prt_church,89,108,6	script	Bard#sch	741,{
 				mes "I guess the best thing";
 				mes "to do for now is to find";
 				mes "my friend in a prison in";
-				mes "^FF0000Morroc^000000, and see what";
+				mes "^FF0000Morocc^000000, and see what";
 				mes "you can do to help him..";
 				set que_sch,4;
 				close;
@@ -887,7 +887,7 @@ prt_church,89,108,6	script	Bard#sch	741,{
 		mes "[Lasda]";
 		mes "I still can't believe";
 		mes "Vitre is being held";
-		mes "in prison in Morroc. I mean,";
+		mes "in prison in Morocc. I mean,";
 		mes "what could have happened?";
 		mes "I hope you can help him...";
 		close;
@@ -1037,7 +1037,7 @@ morocc,53,87,7	script	Prison Ward#sch	707,{
 			mes "Thanks for the Fried";
 			mes "Monkey Tails~ Alright,";
 			mes "go talk to ^FF0000Sir Krieg^000000 in";
-			mes "Morroc Castle. Get his";
+			mes "Morocc Castle. Get his";
 			mes "approval, and I'll let you in.";
 			delitem 12066,1; //Luk_Dish01
 			set que_sch,7;
@@ -1116,7 +1116,7 @@ morocc_in,79,163,0	script	Public Security Officer	748,{
 	if (que_sch < 7) {
 		mes "[Krieg]";
 		mes "I'm in charge of public";
-		mes "security here in Morroc.";
+		mes "security here in Morocc.";
 		mes "Lately, there have been";
 		mes "more incidents disturbing";
 		mes "the public peace and";
@@ -1443,7 +1443,7 @@ ra_in01,58,389,0	script	Guant Prisoner#sch	929,{
 	close;
 }
 
-// Escort Dancers to Schwaltzvalt Republic
+// Escort Dancers to Schwarzwald Republic
 job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
@@ -1514,7 +1514,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 			mes "I want you to do me a favor.";
 			next;
 			mes "[Hianna]";
-			mes "The Schwaltzvalt Republic";
+			mes "The Schwarzwald Republic";
 			mes "requested me to send some";
 			mes "Dancers for some party, but";
 			mes "I don't have enough guards";
@@ -1524,7 +1524,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 			mes "[Hianna]";
 			mes "If you act as bodyguard";
 			mes "to my Dancers on the way";
-			mes "to the Schwaltzvalt Republic,";
+			mes "to the Schwarzwald Republic,";
 			mes "I'll lend you my Megaphone";
 			mes "once you come back. So...";
 			mes "How does that sound?";
@@ -1535,7 +1535,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 				mes "Okay, the Dancers are";
 				mes "waiting are the entrance,";
 				mes "so bring them over to the";
-				mes "Schwaltzvalt Republic as";
+				mes "Schwarzwald Republic as";
 				mes "soon as you're ready.";
 				set que_sch,12;
 				close;
@@ -1601,7 +1601,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 		mes "[Hianna]";
 		mes "Thanks for escorting";
 		mes "my Dancers over to the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Anything I can help";
 		mes "you with today?";
 		next;
@@ -1803,7 +1803,7 @@ airplane,75,53,0	script	Cheerful Dancer#sch2	724,{
 		mes "I've performed at many";
 		mes "venues, but this is the";
 		mes "frist time I'll be dancing";
-		mes "in the Schwaltzvalt Republic.";
+		mes "in the Schwarzwald Republic.";
 		mes "This is also my first time on";
 		mes "an airship. How exciting!";
 		close;
@@ -1826,7 +1826,7 @@ airplane,79,55,2	script	Mature Looking Dancer#s2	724,{
 	else if (que_sch == 13) {
 		mes "[Dancer]";
 		mes "This is the first time that";
-		mes "the Schwaltzvalt Republic";
+		mes "the Schwarzwald Republic";
 		mes "requested a performance";
 		mes "from us. Isn't that amazing?";
 		mes "I guess we earned a reputation";
@@ -2589,12 +2589,12 @@ comodo,135,299,0	script	Young Man#sch2	809,{
 		mes "No, they're too weak! His";
 		mes "steps now head to the group";
 		mes "of evil men trying to revive";
-		mes "Satan Morroc. I mean, come on!";
+		mes "Satan Morocc. I mean, come on!";
 		next;
 		mes "[Nosdan]";
 		mes "Sad news from an old comrade,";
 		mes "the evil group discovered...";
-		mes "Time to stop Satan Morroc's";
+		mes "Time to stop Satan Morocc's";
 		mes "revival~ La la la la la la la";
 		mes "la la la la la la la la la la";
 		mes "la la la la la la la la la la";
@@ -2622,12 +2622,12 @@ comodo,135,299,0	script	Young Man#sch2	809,{
 		mes "No, they're too weak! His";
 		mes "steps now head to the group";
 		mes "of evil men trying to revive";
-		mes "Satan Morroc. I mean, come on!";
+		mes "Satan Morocc. I mean, come on!";
 		next;
 		mes "[Nosdan]";
 		mes "Sad news from an old comrade,";
 		mes "the evil group discovered...";
-		mes "Time to stop Satan Morroc's";
+		mes "Time to stop Satan Morocc's";
 		mes "revival~ La la la la la la la";
 		mes "la la la la la la la la la la";
 		mes "la la la la la la la la la la";
@@ -6973,7 +6973,7 @@ OnTouch:
 		mes "^3355FFPeople are carrying";
 		mes "many heavy wooden boxes";
 		mes "imprinted with the stamp";
-		mes "of the Schwaltzvalt Republic.";
+		mes "of the Schwarzwald Republic.";
 		mes "These must contain military";
 		mes "supplies for the camp.^000000";
 		next;

@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Quest NPCs related to Gonryun
+//= Quest NPCs related to Kunlun
 //===== By: ==================================================
 //= KarLaeda
 //===== Current Version: ===================================== 
@@ -2559,7 +2559,7 @@ geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 					mes "Soon after, she started to suffer";
 					mes "from a serious illness. I've met";
 					mes "doctors from all around";
-					mes "Rune-Midgard...";
+					mes "Midgard...";
 					next;
 					mes "[Aumgarl]";
 					mes "But not one of them could";

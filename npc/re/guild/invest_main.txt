@@ -1394,7 +1394,7 @@ malangdo,218,123,1	script	Namis#invest	545,4,4,{
 			case 5: callsub L_Check,"5 Gemstones",7300,5,"Something useful for a change. The ore will end up as nice pieces of jewelry.",.@event1$[.@i];
 			case 6: callsub L_Check,"5 Heroic Emblems",968,5,"Good, good. This is the kind of name I wanted!",.@event1$[.@i];
 			case 7: callsub L_Check,"3 Taeguk Plates",7169,3,"Taking in something like this, maybe they're up to something dangerous.",.@event1$[.@i];
-			case 8: callsub L_Check,"3 Broken Pharaoh Symbols and 3 Tutankhamen's Masks",7113,3,"I hear the pyramids are in Morroc, but I've never been there. Some humans call it Morco.",.@event1$[.@i],7114,3;
+			case 8: callsub L_Check,"3 Broken Pharaoh Symbols and 3 Tutankhamen's Masks",7113,3,"I hear the pyramids are in Morocc, but I've never been there. Some humans call it Morco.",.@event1$[.@i],7114,3;
 			case 9: callsub L_Check,"2 Pocket Watches",7513,2,"Those lazy merchants, why do they need pocket watches they don't even use?",.@event1$[.@i];
 			case 10: callsub L_Check,"3 Young Twigs",7018,3,"Mellow Island has a climate like with where we cats used to live. But the trees die out sometimes due to it being an island.",.@event1$[.@i];
 			case 11: callsub L_Check,"5 Rossata Pieces",7211,5,"I guess they collect these because humans have them, but what's the use of researching ancient languages?",.@event1$[.@i];

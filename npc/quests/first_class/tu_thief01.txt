@@ -607,7 +607,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	4_M_02,{
 			next;
 			select("I'm here on behalf of 'Mana.'");
 			mes "[Yierhan]";
-			mes "Right, you must be the help that Mana sent! You came just at the right time. You see, we found something weird in South Morroc.";
+			mes "Right, you must be the help that Mana sent! You came just at the right time. You see, we found something weird in South Morocc.";
 			next;
 			mes "[Yierhan]";
 			mes "Basically, we found traces of poison that were used in a fight. We were going to investigate it, but we've been swamped with all this other work.";
@@ -618,7 +618,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	4_M_02,{
 			next;
 			mes "[Yierhan]";
 			mes "Anyway, head over to";
-			mes "South Morroc since it seems to be a good place to start investigating. You'll see what we found right outside the South Morroc gate.";
+			mes "South Morocc since it seems to be a good place to start investigating. You'll see what we found right outside the South Morocc gate.";
 			tu_magician01 = 8;
 			close;
 		}

@@ -126,6 +126,7 @@
 13416,16	// Krieger_Onehand_Sword1
 13417,16	// Krieger_Onehand_Sword2
 13418,16	// Krieger_Onehand_Sword3
+28918,16	// Shield_of_Chaos
 
 // Vellum Gear
 1293,16		// Velum_Jamadhar

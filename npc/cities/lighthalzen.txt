@@ -149,7 +149,7 @@ lighthalzen,233,121,3	script	Kariya#li_01	72,{
 	mes "Still, it's a fitting";
 	mes "name for the wealthiest";
 	mes "and most luxurious city in";
-	mes "all the Schwaltzvalt Republic.";
+	mes "all the Schwarzwald Republic.";
 	mes "So how do you like this place?";
 	close;
 }
@@ -485,7 +485,7 @@ lighthalzen,239,64,5	script	Jade#zen2	862,{
 	next;
 	mes "[Jade]";
 	mes "So are you from";
-	mes "Rune-Midgard?";
+	mes "Rune-Midgarts?";
 	mes "What do you think";
 	mes "of our city with its";
 	mes "advanced technology";
@@ -1556,7 +1556,7 @@ lhz_in03,193,25,2	script	Bartender#12	61,{
 	mes "on the verge of bein' totally";
 	mes "ghetto, but we're proud to";
 	mes "have the best rum in all of";
-	mes "Rune-Midgard. It's true~";
+	mes "Midgard. It's true~";
 	next;
 	mes "[Tony]";
 	mes "Just a sip of this";
@@ -2040,13 +2040,13 @@ lhz_in02,21,38,7	script	Bank Clerk#1::BankClerk	86,{
 lhz_in02,21,25,7	duplicate(BankClerk)	Bank Clerk#2	86
 lhz_in02,34,22,1	duplicate(BankClerk)	Bank Clerk#3	755
 
-// Lightalzen Prison Area -------------------------------------------------------------
+// Lighthalzen Prison Area -------------------------------------------------------------
 
 lhz_in02,145,177,0	script	Togii#07	849,{
 	mes "[Togii]";
 	mes "Oooh yeah...";
 	mes "Goes down smooth.";
-	mes "Morroc whiskey's the best!";
+	mes "Morocc whiskey's the best!";
 	mes "^333333*Hiccup*^000000 Whoa, this stuff";
 	mes "really works fast! Heh heh~";
 	close;
@@ -2678,13 +2678,13 @@ lhz_in02,267,25,4	script	Diana#npc	747,{
 	next;
 	mes "[Diana]";
 	mes "Oh, I was born";
-	mes "and raised in Morroc.";
+	mes "and raised in Morocc.";
 	next;
 	mes "[Shop Assistant]";
 	mes "Ah yes, I've heard many";
 	mes "good things about that town.";
 	mes "You've certainly proven that";
-	mes "people from Morroc truly have";
+	mes "people from Morocc truly have";
 	mes "good taste. Now, this Stiletto";
 	mes "is a steal at 39,800 zeny...";
 	next;

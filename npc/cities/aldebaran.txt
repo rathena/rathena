@@ -223,7 +223,7 @@ aldebaran,117,181,4	script	Phracon Guy#alde	48,{
 	switch(select("About Phracon:Advice about Phracon:End Conversation")) {
 	case 1:
 		mes "[Joy]";
-		mes "Phracon is a pretty common metal and can be found all over the Rune-Midgard continent.";
+		mes "Phracon is a pretty common metal and can be found all over the Midgard continent.";
 		next;
 		mes "[Joy]";
 		mes "Although it lacks the strength of other metals, it's easy to find and obtain. You can get Phracons by killing monsters or by buying them in Forging Shops in towns.";
@@ -309,7 +309,7 @@ aldebaran,121,231,4	script	Alchemy Guy#alde	49,{
 		close;
 	case 4:
 		mes "[Chemirre]";
-		mes "You can talk about Rune Midgard's alchemy";
+		mes "You can talk about Rune-Midgarts' alchemy";
 		mes "without talking about the Al De Baran Alchemist Guild!";
 		mes "Long Live Alchemists!";
 		close;
@@ -449,7 +449,7 @@ aldebaran,180,46,4	script	Joo Jahk#alde	88,{
 	next;
 	if (select("Continue.:End conversation.") == 1) {
 		mes "[Joo Jahk]";
-		mes "On one of my travels around Rune-Midgard, I've heard from a really high level Mage that physical attacks, or magic with Neutral Property, won't damage Spiritual Property monsters.";
+		mes "On one of my travels around Midgard, I've heard from a really high level Mage that physical attacks, or magic with Neutral Property, won't damage Spiritual Property monsters.";
 		next;
 		mes "[Joo Jahk]";
 		mes "Maybe that advice will come in handy, now that you know that. Always remember the importance of the Properties of your skills and weapons when battling monsters.";
@@ -950,7 +950,7 @@ aldeba_in,142,238,4	script	Kafra Service#3alde	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Roxie]";
 	mes "Welcome~!";
-	mes "The Kafra Corporation will always support Rune-Midgard's adventurers with our excellent services.";
+	mes "The Kafra Corporation will always support Midgard's adventurers with our excellent services.";
 	next;
 	mes "[Kafra Roxie]";
 	mes "My name is Roxie!";
@@ -989,7 +989,7 @@ aldeba_in,142,238,4	script	Kafra Service#3alde	114,{
 			break;
 		case 2:
 			mes "[Kafra Roxie]";
-			mes "As you may know, the Kafra Corporation has a special relationship with the Merchant Guild, as well as the Blacksmith and Alchemist guilds in Rune-Midgard.";
+			mes "As you may know, the Kafra Corporation has a special relationship with the Merchant Guild, as well as the Blacksmith and Alchemist guilds in Midgard.";
 			next;
 			mes "[Kafra Roxie]";
 			mes "The Kafra Corporation only rents Carts to Merchants, Blacksmiths and Alchemists since these job associations have a special contract with us.";
@@ -1492,17 +1492,17 @@ alde_dun03,264,16,4	script	Gatekeeper#ct1	101,{
 }
 
 function	script	F_ClockTowerGate	{
-	.@floor = getarg(0);
+	.@floor$ = getarg(0);
 	.@item_req = getarg(1);
 
 	mes "[Gatekeeper Boy]";
 	mes "Welcome to";
 	mes "Kinase - Blue Gallino";
 	mes "The one of Local Speciality in Aldebaran.";
-	mes "You can't go through from "+ .@floor +" Floor,";
+	mes "You can't go through from "+ .@floor$ +" Floor,";
 	mes "Please go back.";
 	next;
-	switch(select("About Clock Tower:About the "+ .@floor +" Floor:Move to the "+ .@floor +" Floor:End Dialogue")) {
+	switch(select("About Clock Tower:About the "+ .@floor$ +" Floor:Move to the "+ .@floor$ +" Floor:End Dialogue")) {
 	case 1:
 		mes "[Gatekeeper Boy]";
 		mes "Homeland of Alchemy,Aldebaran!";

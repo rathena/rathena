@@ -528,9 +528,9 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "Continuously, adventurers from Rune-Midgarts have attacked him and he is slowly losing his power. He would need more time to resurrect completely.";
 			next;
-			mes "Satan Morroc stopped to destroy the city of Morroc, turning it into a ruined desert, then started to rip the world apart.";
+			mes "Satan Morocc stopped to destroy the city of Morocc, turning it into a ruined desert, then started to rip the world apart.";
 			next;
-			mes "Satan Morroc was worried about those who would give chase, so he created Morocc clones to keep watch behind him.";
+			mes "Satan Morocc was worried about those who would give chase, so he created Morocc clones to keep watch behind him.";
 			next;
 			mes "Modeled after Morocc, their appearance made it difficult to go around the time-space gap.";
 			next;
@@ -538,13 +538,13 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "The reports of these adventurers have been sent to representatives of all kingdoms, and an expedition team has been created to find out more information.";
 			next;
-			mes "The scientists of Schwartzwalt created a combination metal, using fragments of metals found in the dimensional gorge.";
+			mes "The scientists of Schwarzwald created a combination metal, using fragments of metals found in the dimensional gorge.";
 			next;
-			mes "The Schwaltzvalt Republic requested approval to find the source of the new metal, and since Rune-Midgart couldn't complete the test themselves, they finally accepted.";
+			mes "The Schwarzwald Republic requested approval to find the source of the new metal, and since Rune-Midgarts couldn't complete the test themselves, they finally accepted.";
 			next;
 			mes "They associated together to gather volunteers. The Assassin Guild was the first to volunteer.";
 			next;
-			mes "The Assassins have a terrible past with Satan Morroc, so they gathered 18 members to chase him down.";
+			mes "The Assassins have a terrible past with Satan Morocc, so they gathered 18 members to chase him down.";
 			next;
 			mes "About 3 hours later, all 18 members returned without any problem, and each man and woman shared the information that they had collected.";
 			next;
@@ -1750,7 +1750,7 @@ OnTimer1830000:
 OnTimer1850000:
 	donpcevent instance_npcname("ins_nyd_1f_timer")+"::OnDisable";
 	donpcevent instance_npcname("nyd_call_mon_1")+"::OnDisable";
-	instance_warpall "mid_camp",310,150;
+	instance_warpall "mid_camp",310,150, instance_id();
 	stopnpctimer;
 	end;
 }
@@ -1888,7 +1888,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_red")+"::OnEnable";
-		instance_warpall .@map$,115,278;
+		instance_warpall .@map$,115,278, instance_id();
 		end;
 	case 2:
 		mapannounce .@map$, "Nidhoggur's Shadow : I will freeze every last drop of your blood.",bc_map,"0xFFFF00";
@@ -1896,7 +1896,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_white")+"::OnEnable";
-		instance_warpall .@map$,115,373;
+		instance_warpall .@map$,115,373, instance_id();
 		end;
 	case 3:
 		mapannounce .@map$, "Nidhoggur's Shadow : Sleep for eternity in an empty illusion.",bc_map,"0xFFFF00";
@@ -1904,7 +1904,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_white")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnEnable";
-		instance_warpall .@map$,284,278;
+		instance_warpall .@map$,284,278, instance_id();
 		end;
 	case 4:
 		mapannounce .@map$, "Nidhoggur's Shadow : I'll let you enjoy the pain of dying slowly.",bc_map,"0xFFFF00";
@@ -1912,7 +1912,7 @@ OnWarpColor:
 		donpcevent instance_npcname("nyd_2f_white")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_yellow")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green")+"::OnEnable";
-		instance_warpall .@map$,284,374;
+		instance_warpall .@map$,284,374, instance_id();
 		end;
 	}
 	end;

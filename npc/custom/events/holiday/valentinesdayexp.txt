@@ -77,7 +77,7 @@ OnInit:
 alberta,26,243,4	script	Stephen#val1	58,{
 	mes "[Stephen]";
 	mes "Guess what I've got?";
-	mes "A tasty treat not easily found in Rune-Midgard....";
+	mes "A tasty treat not easily found in Midgard....";
 	next;
 	mes "[Stephen]";
 	mes "Chocolate!";

@@ -28,7 +28,6 @@ int chmapif_parse_fwlog_changestatus(int fd);
 int chmapif_parse_updfamelist(int fd);
 void chmapif_send_ackdivorce(int partner_id1, int partner_id2);
 int chmapif_parse_reqdivorce(int fd);
-int chmapif_parse_updmapinfo(int fd);
 int chmapif_parse_setcharoffline(int fd);
 int chmapif_parse_setalloffline(int fd, int id);
 int chmapif_parse_setcharonline(int fd, int id);

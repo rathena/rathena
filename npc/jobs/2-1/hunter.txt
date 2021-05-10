@@ -60,7 +60,7 @@
 in_hunter,99,99,4	script	Hunter Info#hnt::HntNotice	727,{
 	mes "============ Notice ============";
 	mes "We would like to inform that the Hunter Job Change Location";
-	mes "has been moved to ^ff0000Hugel^000000 in the Schwaltzvalt Republic.";
+	mes "has been moved to ^ff0000Hugel^000000 in the Schwarzwald Republic.";
 	next;
 	mes "You can now use the Hugel airline, so please use the airship to visit Hugel.";
 	next;
@@ -476,7 +476,7 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 		mes "[Demon Hunter]";
 		mes "You see, we're having some financial problems. Let's see, we're short on these items...";
 		next;
-		if (checkre(RENEWAL) == true)
+		if (checkre(0) == true)
 			.@i = 1;
 		switch( rand(1,7) ) {
 		case 1:
@@ -532,7 +532,7 @@ hu_in01,382,382,4	script	Guild Receptionist#hnt	732,{
 		close;
 	}
 	else if (HNTR_Q >= 3 && HNTR_Q <= 9) {
-		if (checkre(RENEWAL) == true)
+		if (checkre(0) == true)
 			.@i = 1;
 		switch(HNTR_Q) {
 		case 3:

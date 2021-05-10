@@ -249,7 +249,7 @@ OnTouch_:
 	end;
 }
 
-nif_in,114,181,0	script	#Piano3	111,1,1,{
+-	script	Piano3	HIDDEN_NPC,{
 	end;
 
 OnTouch_:

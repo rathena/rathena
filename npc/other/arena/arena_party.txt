@@ -40,7 +40,7 @@ OnStart:
 	end;
 }
 
-prt_are_in,76,87,3	script	Helper#party	 67,4,4,{
+prt_are_in,76,87,3	script	Helper#party	67,4,4,{
 	if($arn_partywait == 0) {
 		set $arn_partywait,1;
 		emotion ET_SURPRISE;

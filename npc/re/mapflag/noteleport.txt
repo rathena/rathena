@@ -12,7 +12,11 @@
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added dali, dali02 [Nova]
 //= 1.2 Added WOE:TE maps [Cydh,Capuche]
+//= 1.3 Added Para Market maps [mazvi]
 //============================================================
+
+// Paradise Market =============
+paramk	mapflag	noteleport
 
 // Cities ========================
 moc_para01	mapflag	noteleport

@@ -825,11 +825,11 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 	} else if (ep14_1_mistwoods == 4) {
 		mes "[Loki]";
 		mes "Nydhogg was one of the guardians of the World Tree.";
-		mes "But he abandoned his duties as a guardian when he gave in to Morroc's temptation.";
+		mes "But he abandoned his duties as a guardian when he gave in to Morocc's temptation.";
 		next;
 		mes "[Loki]";
-		mes "Some fools performed a ritual to break the seal that held Morroc.";
-		mes "But the ritual didn't work right. The servant of Morroc failed to break the seal.";
+		mes "Some fools performed a ritual to break the seal that held Morocc.";
+		mes "But the ritual didn't work right. The servant of Morocc failed to break the seal.";
 		next;
 		mes "[Loki]";
 		mes "But the seal is so weak that it can break open any time.";
@@ -844,12 +844,12 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 		mes "As the World Tree became unstable, the influence it had on the seal grew weak.";
 		next;
 		mes "[Loki]";
-		mes "And Morroc broke himself free from the seal.";
+		mes "And Morocc broke himself free from the seal.";
 		mes "Although it seems like he used most of his powers just to break the seal...";
 		next;
 		mes "[Nydhogg the Guardian]";
 		mes "It's all my fault.";
-		mes "I couldn't break free from Morroc's temptation.";
+		mes "I couldn't break free from Morocc's temptation.";
 		mes "For too... too long...";
 		next;
 		mes "[Nydhogg the Guardian]";
@@ -879,7 +879,7 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 		next;
 		mes "[Nydhogg the Guardian]";
 		mes "...Oh, yes. It's late, but I have to fulfill my duties as a guardian.";
-		mes "Now I know. I'll destroy Morroc with my own hands.";
+		mes "Now I know. I'll destroy Morocc with my own hands.";
 		mes "I will fulfill my duties as a guardian.";
 		next;
 		switch(select("You're not alone.:Those are very important duties.")) {
@@ -923,7 +923,7 @@ mora,48,152,3	script	Sharp Eyed Man	512,{
 		mes "We may meet again.";
 		next;
 		mes "[Loki]";
-		mes "The day when Morroc reveals his despicable nature...";
+		mes "The day when Morocc reveals his despicable nature...";
 		mes "I will be waiting for him.";
 		close;
 	}

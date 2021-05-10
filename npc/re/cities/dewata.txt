@@ -875,7 +875,7 @@ OnTouch:
 	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Daddy]";
-	mes "She's gotten lost in Louyang, Amatsu, Moscovia, Brasilis, Kunlun,";
+	mes "She's gotten lost in Luoyang, Amatsu, Moscovia, Brasilis, Kunlun,";
 	mes "and in Ayothaya...";
 	emotion ET_PROFUSELY_SWEAT;
 	next;

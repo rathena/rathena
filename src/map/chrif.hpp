@@ -7,6 +7,7 @@
 #include <time.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp" // NAME_LENGTH
 #include "../common/timer.hpp" // t_tick
 #include "../common/socket.hpp" // enum chrif_req_op
 
@@ -46,6 +47,7 @@ void chrif_check_shutdown(void);
 
 extern int chrif_connected;
 extern int other_mapserver_count;
+extern char charserver_name[NAME_LENGTH];
 
 struct auth_node* chrif_search(uint32 account_id);
 struct auth_node* chrif_auth_check(uint32 account_id, uint32 char_id, enum sd_state state);
@@ -69,7 +71,6 @@ int chrif_req_login_operation(int aid, const char* character_name, enum chrif_re
 int chrif_updatefamelist(struct map_session_data *sd);
 int chrif_buildfamelist(void);
 int chrif_save_scdata(struct map_session_data *sd);
-int chrif_ragsrvinfo(int base_rate,int job_rate, int drop_rate);
 int chrif_char_offline(struct map_session_data *sd);
 int chrif_char_offline_nsd(uint32 account_id, uint32 char_id);
 int chrif_char_reset_offline(void);

@@ -314,7 +314,7 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 			mes "Alright, let me inform you then. Listen carefully. This test decides if you are worthy of becoming a Thief.";
 			next;
 			mes "[Thief Guide]";
-			mes "You will be sneaking to Shibu's Farm. He is the worst Merchant, in terms of character, in Morroc.";
+			mes "You will be sneaking to Shibu's Farm. He is the worst Merchant, in terms of character, in Morocc.";
 			next;
 			mes "[Thief Guide]";
 			mes "Alright, for your test, you gotta steal Mushrooms from his farm. Don't worry, that guy deserves to be robbed.";

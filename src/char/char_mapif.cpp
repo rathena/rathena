@@ -29,7 +29,7 @@ int chmapif_sendall(unsigned char *buf, unsigned int len){
 	c = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
 		int fd;
-		if ((fd = map_server[i].fd) > 0) {
+		if (session_isValid(fd = map_server[i].fd)) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -53,7 +53,7 @@ int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
 	c = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
 		int fd;
-		if ((fd = map_server[i].fd) > 0 && fd != sfd) {
+		if (session_isValid(fd = map_server[i].fd) && fd != sfd) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -72,7 +72,7 @@ int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
  * @return : the number of map-serv the packet was sent to (O|1)
  */
 int chmapif_send(int fd, unsigned char *buf, unsigned int len){
-	if (fd >= 0) {
+	if (session_isValid(fd)) {
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(map_server), i, fd == map_server[i].fd );
 		if( i < ARRAYLENGTH(map_server) )
@@ -122,7 +122,7 @@ int chmapif_send_fame_list(int fd){
 	// add total packet length
 	WBUFW(buf, 2) = len;
 
-	if (fd != -1)
+	if (session_isValid(fd))
 		chmapif_send(fd, buf, len);
 	else
 		chmapif_sendall(buf, len);
@@ -162,24 +162,26 @@ void chmapif_sendall_playercount(int users){
  * Send some misc info to new map-server.
  * - Server name for whisper name
  * - Default map
- * HZ 0x2afb <size>.W <status>.B <name>.24B <mapname>.11B <map_x>.W <map_y>.W
+ * HZ 0x2afb <size>.W <status>.B <whisper name>.24B <mapname>.11B <map_x>.W <map_y>.W <server name>.24B
  * @param fd
  **/
 void chmapif_send_misc(int fd) {
 	uint16 offs = 5;
-	unsigned char buf[45];
+	unsigned char buf[45+NAME_LENGTH];
 
 	memset(buf, '\0', sizeof(buf));
 	WBUFW(buf, 0) = 0x2afb;
 	// 0 succes, 1:failure
 	WBUFB(buf, 4) = 0;
 	// Send name for wisp to player
-	memcpy(WBUFP(buf, 5), charserv_config.wisp_server_name, NAME_LENGTH);
+	safestrncpy( WBUFCP( buf, 5 ), charserv_config.wisp_server_name, NAME_LENGTH );
 	// Default map
-	memcpy(WBUFP(buf, (offs+=NAME_LENGTH)), charserv_config.default_map, MAP_NAME_LENGTH); // 29
+	safestrncpy( WBUFCP( buf, ( offs += NAME_LENGTH ) ), charserv_config.default_map, MAP_NAME_LENGTH ); // 29
 	WBUFW(buf, (offs+=MAP_NAME_LENGTH)) = charserv_config.default_map_x; // 41
 	WBUFW(buf, (offs+=2)) = charserv_config.default_map_y; // 43
 	offs+=2;
+	safestrncpy( WBUFCP( buf, offs ), charserv_config.server_name, sizeof( charserv_config.server_name ) ); // 45
+	offs += NAME_LENGTH;
 
 	// Length
 	WBUFW(buf, 2) = offs;
@@ -212,7 +214,7 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
 
 	// Transmitting the maps of the other map-servers to the new map-server
 	for (x = 0; x < ARRAYLENGTH(map_server); x++) {
-		if (map_server[x].fd > 0 && x != map_id) {
+		if (session_isValid(map_server[x].fd) && x != map_id) {
 			uint16 i, j;
 
 			WFIFOHEAD(fd,10 +4*map_server[x].map.size());
@@ -856,26 +858,6 @@ int chmapif_parse_reqdivorce(int fd){
 }
 
 /**
- * Receive rates of this map index
- * @author [Wizputer]
- * @param fd: wich fd to parse from
- * @return : 0 not enough data received, 1 success
- */
-int chmapif_parse_updmapinfo(int fd){
-	if( RFIFOREST(fd) < 14 )
-		return 0;
-	else {
-		char esc_server_name[sizeof(charserv_config.server_name)*2+1];
-		Sql_EscapeString(sql_handle, esc_server_name, charserv_config.server_name);
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d'",
-			schema_config.ragsrvinfo_db, fd, esc_server_name, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)) )
-			Sql_ShowDebug(sql_handle);
-		RFIFOSKIP(fd,14);
-	}
-	return 1;
-}
-
-/**
  *  Character disconnected set online 0
  * @author [Wizputer]
  * @param fd: wich fd to parse from
@@ -1033,8 +1015,6 @@ int chmapif_parse_reqauth(int fd, int id){
 		}
 		if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
 			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-			if (cd->sex == SEX_ACCOUNT)
-				cd->sex = sex;
 
 			WFIFOHEAD(fd,mmo_charstatus_len);
 			WFIFOW(fd,0) = 0x2afd;
@@ -1062,8 +1042,6 @@ int chmapif_parse_reqauth(int fd, int id){
 			)
 		{// auth ok
 			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-			if (cd->sex == SEX_ACCOUNT)
-				cd->sex = sex;
 
 			WFIFOHEAD(fd,mmo_charstatus_len);
 			WFIFOW(fd,0) = 0x2afd;
@@ -1442,7 +1420,6 @@ int chmapif_parse(int fd){
 			case 0x2b11: next=chmapif_parse_reqdivorce(fd); break;
 			case 0x2b13: next=chmapif_parse_updmapip(fd,id); break;
 			case 0x2b15: next=chmapif_parse_req_saveskillcooldown(fd); break;
-			case 0x2b16: next=chmapif_parse_updmapinfo(fd); break;
 			case 0x2b17: next=chmapif_parse_setcharoffline(fd); break;
 			case 0x2b18: next=chmapif_parse_setalloffline(fd,id); break;
 			case 0x2b19: next=chmapif_parse_setcharonline(fd,id); break;
@@ -1530,8 +1507,6 @@ void chmapif_server_reset(int id){
 		WBUFW(buf,2) = j * 4 + 10;
 		chmapif_sendallwos(fd, buf, WBUFW(buf,2));
 	}
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `index`='%d'", schema_config.ragsrvinfo_db, map_server[id].fd) )
-		Sql_ShowDebug(sql_handle);
 	online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
 	chmapif_server_destroy(id);
 	chmapif_server_init(id);
