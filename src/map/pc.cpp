@@ -2089,8 +2089,13 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		uint16 skill_id = skill.second->nameid;
 		uint16 idx = skill_get_index(skill_id);
 
-		if( sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[idx].flag != SKILL_FLAG_PERM_GRANTED ) //Don't touch these
+		if (sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[idx].flag != SKILL_FLAG_PERM_GRANTED) { //Don't touch these
+#if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+			if (sd->status.skill[idx].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT)
+				clif_deleteskill(sd, skill_id, true);
+#endif
 			sd->status.skill[idx].id = 0; //First clear skills.
+		}
 		/* permanent skills that must be re-checked */
 		if( sd->status.skill[idx].flag == SKILL_FLAG_PERM_GRANTED ) {
 			if (skill_id == 0) {
