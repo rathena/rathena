@@ -22222,7 +22222,7 @@ BUILDIN_FUNC(countbound)
 				char* buf = (char*)aMalloc(maxlen * sizeof(char));
 				memset(buf, 0, maxlen);
 				snprintf(buf, 255, "%llu", (unsigned long long)sd->inventory.u.items_inventory[i].unique_id);
-				pc_setregstr(sd, reference_uid(add_str("@bound_unique_id$"), i), buf);
+				pc_setregstr(sd, reference_uid(add_str("@bound_unique_id$"), k), buf);
 				aFree(buf);
 			}
 			k++;
