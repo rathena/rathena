@@ -2691,9 +2691,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 *uniqueid_getiteminfo(<"item_unique_id">{,<char_id>})
 
-This function assigns the item information of <item_unique_id> to <array_variable>
-of the invoking character.
-If <char_id> is given, then it will be ran on the specified character.
+This function assigns the item information of <item_unique_id> to the variables mentioned down there.
 Returns true on success or false otherwise.
 
 .@uid_item_id      - item ID
@@ -2727,14 +2725,9 @@ Returns true on success or false otherwise.
 
 	//while equipped with a Top Headgear
 	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
-	if(uniqueid_getiteminfo(.@unique_id$, .@item_info)) {
-		//now '.@item_info' have all the Top Headgear information
-		for(.@i = 0; .@i < getarraysize(.@item_info); .@i++) {
-			mes .@i + " " + .@item_info[.@i];
-		}
-	} else {
-		mes "Item not found";
-	}
+	uniqueid_getiteminfo(.@unique_id$);
+	mes "Item ID: " + .@uid_item_id;
+	mes "Item Refine: " + .@uid_refine;
 	end;
 
 ---------------------------------------

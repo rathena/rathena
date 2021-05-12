@@ -8950,61 +8950,41 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct script_data* data = script_getdata(st, 3);
-
-	if (!data_isreference(data)) {
-		ShowError("buildin_uniqueid_getiteminfo: not a variable\n");
-		script_reportdata(data);
-		st->state = END;
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	const char *name = reference_getname(data);
-	int32 id = reference_getid(data);
-	int32 idx = reference_getindex(data);
-	struct reg_db *ref = reference_getref(data);
-
-	if (not_server_variable(*name) && !sd) {
-		ShowError("buildin_uniqueid_getiteminfo: Cannot use a player variable '%s' if no player is attached.\n", name);
-		script_reportdata(data);
-		st->state = END;
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (is_string_variable(name)) {
-		ShowError("buildin_uniqueid_getiteminfo: Cannot Assign String variable '%s'.\n", name);
-		script_reportdata(data);
-		st->state = END;
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	int i;
+	char card_var[NAME_LENGTH], randopt_var[50];
+	int i = -1, k;
 
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
-	if (i >= MAX_INVENTORY) {
+	if (i < 0 || i >= MAX_INVENTORY) {
 		ShowError("buildin_uniqueid_getiteminfo: Item not found (unique_id=%llu).\n", item_uniqueid);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	struct item *it = &sd->inventory.u.items_inventory[i];
-	int s = 0;
 
-	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->nameid, ref);
-	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->refine, ref);
-	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->identify, ref);
-	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->attribute, ref);
-	for (int k = 0; k < MAX_SLOTS; k++)
-		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->card[k], ref);
-	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->expire_time, ref);
-	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->bound, ref);
-
-	for (int k = 0; k < MAX_ITEM_RDM_OPT; k++) {
-		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->option[k].id, ref);
-		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->option[k].value, ref);
-		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->option[k].param, ref);
+	setd_sub_num(st, NULL, ".@uid_item_id", 0, it->nameid, NULL);
+	setd_sub_num(st, NULL, ".@uid_equip", 0, it->equip, NULL);
+	setd_sub_num(st, NULL, ".@uid_refine", 0, it->refine, NULL);
+	setd_sub_num(st, NULL, ".@uid_identify", 0, it->identify, NULL);
+	setd_sub_num(st, NULL, ".@uid_attribute", 0, it->attribute, NULL);
+	for (k = 0; k < MAX_SLOTS; k++)
+	{
+		sprintf(card_var, "@uid_card%d", k + 1);
+		setd_sub_num(st, NULL, card_var, 0, it->card[k], NULL);
 	}
+	setd_sub_num(st, NULL, ".@uid_expire", 0, it->expire_time, NULL);
+	setd_sub_num(st, NULL, ".@uid_bound", 0, it->bound, NULL);
+	for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
+	{
+		sprintf(randopt_var, ".@uid_option_id%d", k + 1);
+		setd_sub_num(st, NULL, randopt_var, 0, it->option[k].id, NULL);
+		sprintf(randopt_var, ".@uid_option_value%d", k + 1);
+		setd_sub_num(st, NULL, randopt_var, 0, it->option[k].value, NULL);
+		sprintf(randopt_var, ".@uid_option_parameter%d", k + 1);
+		setd_sub_num(st, NULL, randopt_var, 0, it->option[k].param, NULL);
+	}
+	setd_sub_num(st, NULL, ".@uid_tradable", 0, pc_can_trade_item(sd, i), NULL);
 
 	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
@@ -25291,7 +25271,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
-	BUILDIN_DEF(uniqueid_getiteminfo, "sr?"),
+	BUILDIN_DEF(uniqueid_getiteminfo, "s?"),
 	BUILDIN_DEF(uniqueid_delitem, "s?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]
