@@ -2689,7 +2689,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
 
-*uniqueid_getiteminfo(<item_unique_id>,<array_variable>{,<char_id>})
+*uniqueid_getiteminfo(<"item_unique_id">,<array_variable>{,<char_id>})
 
 This function assigns the item information of <item_unique_id> to <array_variable>
 of the invoking character.
@@ -2724,8 +2724,8 @@ Returns true on success or false otherwise.
 <array_variable>[24]     - option parameter 5
 
 	//while equipped with a Top Headgear
-	.@unique_id = getequipuniqueid(EQI_HEAD_TOP);
-	if(uniqueid_getiteminfo(.@unique_id, .@item_info)) {
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	if(uniqueid_getiteminfo(.@unique_id$, .@item_info)) {
 		//now '.@item_info' have all the Top Headgear information
 		for(.@i = 0; .@i < getarraysize(.@item_info); .@i++) {
 			mes .@i + " " + .@item_info[.@i];
@@ -2737,15 +2737,15 @@ Returns true on success or false otherwise.
 
 ---------------------------------------
 
-*uniqueid_delitem(<item_unique_id>{,<char_id>})
+*uniqueid_delitem(<"item_unique_id">{,<char_id>})
 
 This command will remove <item_unique_id> from the invoking character's inventory.
 If <char_id> is given, then it will be ran on the specified character.
 Return true on success or false otherwise.
 
 	//while you are equipped with a Top Headgear
-	.@unique_id = getequipuniqueid(EQI_HEAD_TOP);
-	if(uniqueid_delitem(.@unique_id)) {
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	if(uniqueid_delitem(.@unique_id$)) {
 		mes "item deleted";
 	} else {
 		mes "failed to delete the item";
@@ -2974,7 +2974,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card3[]               inscribed on the items, so you can explicitly check
 @inventorylist_card4[]               if the character owns an item made by a specific
                                      craftsman.
-@inventorylist_unique_id[]        - the item unique ids.
+@inventorylist_unique_id$[]        - the item unique ids.
 @inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
 @inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
 @inventorylist_count               - the number of items in these lists.
@@ -5158,7 +5158,7 @@ See 'getitem2' for an explanation of the expanded parameters.
 *countbound({<bound type>{,<char_id>}})
 
 This function will return the number of different bounded items in the character's
-inventory, and sets the arrays @bound_items[] and @bound_amount[] containing all item IDs of the
+inventory, and sets the arrays @bound_items[] and @bound_amount[] and @bound_unique_id$[] containing all item IDs of the
 counted items and their respective amount. If a bound type is specified, only those items will be counted.
 
 For a list of bound types see 'getitembound'.
