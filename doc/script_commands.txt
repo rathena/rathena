@@ -7093,7 +7093,7 @@ The label "OnSellItem" sets the following arrays:
 	@sold_refine        - refine count
 	@sold_attribute     - if the item is broken (1) or not (0)
 	@sold_identify      - if the item is identified (1) or not (0)
-	@sold_uniqueid     - item unique id
+	@sold_unique_id$     - item unique id
 	@sold_card1         - card slot 1
 	@sold_card2         - card slot 2
 	@sold_card3         - card slot 3
