@@ -8955,7 +8955,7 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
-	if (i < 0 || i >= MAX_INVENTORY) {
+	if (i >= MAX_INVENTORY) {
 		ShowError("buildin_uniqueid_getiteminfo: Item not found (unique_id=%llu).\n", item_uniqueid);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
@@ -9016,7 +9016,7 @@ BUILDIN_FUNC(uniqueid_delitem)
 
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
-	if (i < 0 || i >= MAX_INVENTORY) {
+	if (i >= MAX_INVENTORY) {
 		ShowError("buildin_uniqueid_delitem: Item not found (unique_id=%llu AID=%d).\n", item_uniqueid, sd->status.account_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
