@@ -9231,7 +9231,7 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 		if (sd->sc.data[SC_MTF_PUMPKIN]) {
 			if (itemid == ITEMID_PUMPKIN)
 				bonus += bonus * sd->sc.data[SC_MTF_PUMPKIN]->val1 / 100;
-			if (itemid == ITEMID_COOKIE_BAT)
+			else if (itemid == ITEMID_COOKIE_BAT)
 				bonus += sd->sc.data[SC_MTF_PUMPKIN]->val2;
 		}
 
