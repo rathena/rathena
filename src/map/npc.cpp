@@ -2182,7 +2182,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 				char* buf = (char*)aMalloc(maxlen * sizeof(char));
 				memset(buf, 0, maxlen);
 				snprintf(buf, 255, "%llu", (unsigned long long)sd->inventory.u.items_inventory[idx].unique_id);
-				pc_setregstr(sd, reference_uid(add_str("@sold_uniqueid$"), i), buf);
+				pc_setregstr(sd, reference_uid(add_str("@sold_unique_id$"), i), buf);
 				aFree(buf);
 			}
 			for( j = 0; j < MAX_SLOTS; j++ )

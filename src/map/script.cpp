@@ -22217,6 +22217,14 @@ BUILDIN_FUNC(countbound)
 		{
 			pc_setreg(sd,reference_uid(add_str("@bound_items"), k),sd->inventory.u.items_inventory[i].nameid);
 			pc_setreg(sd,reference_uid(add_str("@bound_amount"), k),sd->inventory.u.items_inventory[i].amount);
+			if (sd->inventory.u.items_inventory[i].unique_id) {
+				int maxlen = 256;
+				char* buf = (char*)aMalloc(maxlen * sizeof(char));
+				memset(buf, 0, maxlen);
+				snprintf(buf, 255, "%llu", (unsigned long long)sd->inventory.u.items_inventory[i].unique_id);
+				pc_setregstr(sd, reference_uid(add_str("@bound_unique_id$"), i), buf);
+				aFree(buf);
+			}
 			k++;
 		}
 	}
