@@ -3312,7 +3312,7 @@ Body:
     Weight: 30
     Script: |
       itemheal 45,0;
-      transform 1507,600000,SC_MTF_MHP,1000;
+      transform 1507,600000,SC_MTF_MHP,20;
       specialeffect2 EF_CLOAKING;
       showscript "Trans-Form-!! Bloody Murderer Fo-rm!!";
   - Id: 11593
@@ -3323,7 +3323,7 @@ Body:
     Weight: 30
     Script: |
       itemheal 45,0;
-      transform 1102,600000,SC_MTF_MSP,100;
+      transform 1102,600000,SC_MTF_MSP,20;
       specialeffect2 EF_CLOAKING;
       showscript "Trans-Form-!!! Bathory Fo-rm!!";
   - Id: 11594
@@ -3334,7 +3334,7 @@ Body:
     Weight: 30
     Script: |
       itemheal 45,0;
-      transform 1130,600000,SC_MTF_PUMPKIN,2000;
+      transform 1130,600000,SC_MTF_PUMPKIN,2000,100;
       specialeffect2 EF_CLOAKING;
       showscript "Trans-Form-!! Jack Fo-rm!!";
   - Id: 11595
@@ -11572,7 +11572,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      transform 1002,1200000,SC_MTF_CRIDAMAGE,25;
+      transform 1002,1200000,SC_MTF_CRIDAMAGE,5;
       showscript "Traaaansformation-!! Poring form!!";
   - Id: 12664
     AegisName: Trans_Scroll_Golem
