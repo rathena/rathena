@@ -871,6 +871,11 @@ void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbynam
 // void clif_faction_emblem (struct map_session_data *sd, struct faction_data *fdb);
 // void clif_sendfactionemblem_single(int fd, struct map_session_data *sd);
 // void clif_sendfactionemblem_area(struct map_session_data *sd);
+// eamod >>>
+void clif_sendauras(struct map_session_data *sd,  enum send_target type);
+void clif_faction_hp(struct map_session_data *sd);
+void clif_faction_area(struct map_session_data *sd);
+void clif_faction_single(int fd, struct map_session_data *sd);
 
 // Instancing
 void clif_instance_create(int instance_id, int num);

@@ -9401,11 +9401,11 @@ static const struct _battle_data {
 	{ "mythic_dg_reserved_char_id",         &battle_config.mythic_dg_reserved_char_id,      999995, 0,      INT_MAX,        },
 	{ "reserved_costume_id",                &battle_config.reserved_costume_id,             999999, 0,      INT_MAX,        },
 //	Reputation System Biali
-	{ "reputation_hated",                 	&battle_config.reputation_hated,              30000000, 0,     99999999,        },
-	{ "reputation_unfriendly",              &battle_config.reputation_unfriendly,         45000000, 0,     99999999,        },
-	{ "reputation_neutral",                 &battle_config.reputation_neutral,            50000000, 0,     99999999,        },
-	{ "reputation_friendly",                &battle_config.reputation_friendly,           60000000, 0,     99999999,        },
-	{ "reputation_honored",                 &battle_config.reputation_honored,            80000000, 0,     99999999,        },
+	{ "reputation_hated",                 	&battle_config.reputation_hated,             -45000000, -99999999,     99999999,},
+	{ "reputation_unfriendly",              &battle_config.reputation_unfriendly,        -30000000, -99999999,     99999999,},
+	{ "reputation_neutral",                 &battle_config.reputation_neutral,                   0, -99999999,     99999999,},
+	{ "reputation_friendly",                &battle_config.reputation_friendly,           60000000, -99999999,     99999999,},
+	{ "reputation_honored",                 &battle_config.reputation_honored,            80000000, -99999999,     99999999,},
 //	Infamy System
 	{ "infamy_given",					 	&battle_config.infamy_given,        	          7,    0,      100,            },
 	{ "infamy_taken",						&battle_config.infamy_taken,          	         10,    0,      100,            },
@@ -9417,6 +9417,8 @@ static const struct _battle_data {
 	{ "char_bg_log",  		                &battle_config.bg_log,                            0,    0,      1,              },
 	{ "char_pvp_log",  		                &battle_config.pvp_log,              		      0,    0,      1,              },
 	{ "char_woe_log",  		                &battle_config.woe_log,               		      0,    0,      1,              },
+// Ragnamania RPK full loot settings
+	{ "rpk_equips_break_chance",            &battle_config.break_chance,           		     70,    0,    100,              },
 
 #include "../custom/battle_config_init.inc"
 };

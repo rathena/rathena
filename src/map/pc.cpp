@@ -9657,6 +9657,60 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	//Reset "can log out" tick.
 	if( battle_config.prevent_logout )
 		sd->canlog_tick = gettick() - battle_config.prevent_logout;
+
+
+	//biali deadbody new
+	if(map_getmapflag(sd->bl.m,MF_RPK) || (src && faction_get_id(&sd->bl) > 0 && src->type == BL_PC )) {
+		
+		struct item lootbag[MAX_INVENTORY];
+		i = k = 0; //just to be on the safe side
+
+		for(i=0;i<MAX_INVENTORY;i++){
+			struct item_data *id = itemdb_exists(sd->inventory.u.items_inventory[i].nameid);
+			if(id == NULL) continue;
+
+			ShowWarning("Item encontrado : id:%d equip:%d \n",sd->inventory.u.items_inventory[i].nameid, id->equip);
+
+			// checks for the items we want to save for the player:
+			// dont drop/break costume items (Ragnamania custom creation from existem equips)
+			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_CREATE && 
+			   sd->inventory.u.items_inventory[i].card[2] == GetWord(battle_config.reserved_costume_id, 0) &&
+			   sd->inventory.u.items_inventory[i].card[3] == GetWord(battle_config.reserved_costume_id, 1)) {
+				   ShowWarning("Costume encontrado... Skipando %d \n",sd->inventory.u.items_inventory[i].nameid);
+					continue;
+			   }
+			
+			// dont drop/break costume items (costume gear by default)
+			if(id && (id->equip > EQP_ACC_L && id->equip < EQP_AMMO ) ) {
+				ShowWarning("Costume encontrado... Skipando %d \n",sd->inventory.u.items_inventory[i].nameid);
+				continue;
+			}
+
+			// now lets break some of his stuff:
+			if(!itemdb_isstackable2(id)) {
+			    // break all bound and rental items....
+				if(sd->inventory.u.items_inventory[i].expire_time ||
+				   sd->inventory.u.items_inventory[i].bound ||
+				   1+rand()%100 <= battle_config.break_chance
+				) {
+					ShowWarning("Quebrou item %d \n",sd->inventory.u.items_inventory[i].nameid);
+					sd->inventory.u.items_inventory[i] = {};
+					continue;
+				}
+			}
+			lootbag[k] = sd->inventory.u.items_inventory[i];
+			sd->inventory.u.items_inventory[i] = {};
+			ShowWarning("item eviado pra loot bag e destruido : %d\n",lootbag[k].nameid);
+			k++;
+		}
+		npc_duplicatenpc("deadbody", sd->faction.pl_name, map_mapid2mapname(sd->bl.m), sd->bl.x, sd->bl.y, 0, lootbag);
+		pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
+		
+		
+
+	}
+	
+
 	return 1;
 }
 
@@ -14610,6 +14664,132 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 
 	clif_attendence_response( sd, attendance_counter );
 }
+
+//Biali Ragnamania Blackzone
+
+
+
+// /**
+//  * Deadbody setup loot window
+//  * @param plname : name of the ceased player
+//  * @param data : itemlist data
+//  *	data := {<index>.w <amount>.w <value>.l}[count]
+//  * @param count : number of different items
+//  * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found
+//  * 
+//  * Biali
+//  * When a player get killed by another player in FvF fights or in Blackzone, the script will run through the deceased player's inventory
+//  * and clean up items that should be put in the deadbody (bound items, rent items, items that eventually broke, etc)
+//  * the npc will then call this function passing on a list (data) (eg: deadbody.id:qtty,) of all the items to be added to the deadbody sql table and eventually be available
+//  * to be looted by other players until the timer runs out and the deadbody npc is unloaded and the sql table gets a DELETE by GID
+//  */
+// int8 pc_create_deadbody_lootbag(struct npc_data* nd, struct map_session_data* sd, const char* gid, const uint8* data, int count)
+// {
+
+// 	/** first lets get all the items in the players inventory
+// 	 * excluding all the items that are designed to break upon death
+// 	 * and save to the deadbody table 
+// 	 */
+// 	char card_var[NAME_LENGTH], randopt_var[50];
+// 	int i,j=0,k;
+// 	struct s_vending bag[MAX_VENDING];
+
+
+// 	for(i=0;i<MAX_INVENTORY;i++){
+// 		if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount > 0){
+// 			bag[j].index = sd->inventory.u.items_inventory[i].nameid);
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_amount"), j),sd->inventory.u.items_inventory[i].amount);
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_equip"), j),sd->inventory.u.items_inventory[i].equip);
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_refine"), j),sd->inventory.u.items_inventory[i].refine);
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_identify"), j),sd->inventory.u.items_inventory[i].identify);
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_attribute"), j),sd->inventory.u.items_inventory[i].attribute);
+// 			for (k = 0; k < MAX_SLOTS; k++)
+// 			{
+// 				sprintf(card_var, "@inventorylist_card%d",k+1);
+// 				pc_setreg(sd,reference_uid(add_str(card_var), j),sd->inventory.u.items_inventory[i].card[k]);
+// 			}
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
+// 			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
+// 			{
+// 				sprintf(randopt_var, "@inventorylist_option_id%d",k+1);
+// 				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].id);
+// 				sprintf(randopt_var, "@inventorylist_option_value%d",k+1);
+// 				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].value);
+// 				sprintf(randopt_var, "@inventorylist_option_parameter%d",k+1);
+// 				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].param);
+// 			}
+// 			pc_setreg(sd,reference_uid(add_str("@inventorylist_tradable"), j),pc_can_trade_item(sd, i));
+// 			j++;
+// 		}
+// 	}
+// 	pc_setreg(sd,add_str("@inventorylist_count"),j);
+
+
+
+
+// 	// now we wipe player's inventory
+
+
+// 	// now we prepare the vending interface
+
+// 	// TODO: How to we attach the vending to the deadbody npc?!
+
+
+	
+// 	int i, j;
+// 	char message_sql[MESSAGE_SIZE*2];
+// 	StringBuf buf;
+
+
+// 	// check number of items in shop
+// 	if( count < 1 || count > MAX_INVENTORY ) { // invalid item count
+// 		return 3;
+// 	}
+
+// 	// filter out invalid items
+
+// 	for( j = 0; j < count; j++ ) {
+// 		short index        = *(uint16*)(data + 8*j + 0);
+// 		short amount       = *(uint16*)(data + 8*j + 2);
+// 		// unsigned int value = *(uint32*)(data + 8*j + 4);
+
+// 		index -= 2; // offset adjustment (client says that the first cart position is 2)
+
+// 		if( index < 0 || index >= MAX_INVENTORY // invalid position
+// //		||  pc_cartitem_amount(sd, index, amount) < 0 // invalid item or insufficient quantity
+// 			continue;
+
+// 		nd->vending[i].index = index;
+// 		nd->vending[i].amount = amount;
+// 		nd->vending[i].value = 0;
+// 		i++;
+// 	}
+
+// 	if( i == 0 ) // no valid item found
+// 		return 5;
+
+// 	StringBuf_Init(&buf);
+// 	StringBuf_Printf(&buf, "INSERT INTO `deadbody`(`char_id`,`nameid`,`amount`,`identify`,`refine`,`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`unique_id`,`enchantgrade`,`gid`) VALUES ");
+// 	for (j = 0; j < count; j++) {
+// 		StringBuf_Printf(&buf, "(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)", sd->status.char_id, j, sd->cart.u.items_cart[sd->vending[j].index].id, sd->vending[j].amount, sd->vending[j].value);
+// 		if (j < i-1)
+// 			StringBuf_AppendStr(&buf, ",");
+// 	}
+// 	if (SQL_ERROR == Sql_QueryStr(mmysql_handle, StringBuf_Value(&buf)))
+// 		Sql_ShowDebug(mmysql_handle);
+// 	StringBuf_Destroy(&buf);
+
+// 	clif_openvending(sd,sd->bl.id,sd->vending);
+// 	clif_showvendingboard(&sd->bl,message,0);
+
+// 	idb_put(vending_db, sd->status.char_id, sd);
+
+// 	return 0;
+// }
+
+
+
 
 /*==========================================
  * pc Init/Terminate

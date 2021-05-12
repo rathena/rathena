@@ -232,6 +232,7 @@ struct Battle_Config
 	int bg_log;// Biali black zone
 	int pvp_log;// Biali black zone
 	int woe_log;// Biali black zone
+	int break_chance;// Biali RPK fullloot equips break chance
 
 	int pet_catch_rate;
 	int pet_rename;

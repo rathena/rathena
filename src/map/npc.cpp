@@ -88,13 +88,16 @@ int npc_get_new_npc_id(void) {
 	}
 }
 
-static DBMap* ev_db; // const char* event_name -> struct event_data*
-static DBMap* npcname_db; // const char* npc_name -> struct npc_data*
+// biali dynamic npc creation
+// static DBMap* ev_db; // const char* event_name -> struct event_data*
+// static DBMap* npcname_db; // const char* npc_name -> struct npc_data*
 
-struct event_data {
-	struct npc_data *nd;
-	int pos;
-};
+// struct event_data {
+// 	struct npc_data *nd;
+// 	int pos;
+// };
+DBMap* ev_db; // const char* event_name -> struct event_data*
+DBMap* npcname_db; // const char* npc_name -> struct npc_data*
 
 static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 
@@ -2376,7 +2379,8 @@ static int npc_unload_ev(DBKey key, DBData *data, va_list ap)
 
 //Chk if npc matches src_id, then unload.
 //Sub-function used to find duplicates.
-static int npc_unload_dup_sub(struct npc_data* nd, va_list args)
+//static int npc_unload_dup_sub(struct npc_data* nd, va_list args)
+int npc_unload_dup_sub(struct npc_data* nd, va_list args) // biali dynamic npc creation
 {
 	int src_id;
 
@@ -3926,6 +3930,207 @@ void npc_setclass(struct npc_data* nd, short class_)
 	status_set_viewdata(&nd->bl, class_);
 	unit_refresh(&nd->bl);
 }
+
+
+
+
+
+// biali dynamic npc creation (frost)
+/*==========================================
+ * Duplicate any npc on live server
+ * duplicatenpc "<Source NPC name>","<New NPC shown name>","<New NPC hidden name>","<mapname>",<map_x>,<map_y>,<dir>
+ *------------------------------------------*/
+int npc_duplicatenpc(const char *sourcename, const char *new_shown_name, const char *mapname, int x, int y, int dir, struct item lootbag[])
+{
+	int map_x = x;
+	int map_y = y;
+	// int dir = dir;
+	int sourceid,spriteid, type, mapid, i;
+	// const char *sourcename = source;
+	// const char *new_shown_name = shownname;
+	// const char *new_hidden_name = hiddenname;
+	// const char *mapname = mapname;
+
+	char new_npc_name[24] = "";
+	struct npc_data *nd_source, *nd_target;
+
+
+	nd_source = npc_name2id(sourcename);
+
+	// if(script_hasdata(st, 9))
+	// 	spriteid = (script_getnum(st, 9) < -1) ? -1 : script_getnum(st, 9);
+	// else
+	spriteid = nd_source->class_;
+
+	if(nd_source == NULL) {
+		ShowError("buildin_duplicatenpc: original npc not found for duplicate. (%s)\n", sourcename);
+		return -1;
+	}
+	
+	sourceid = nd_source->bl.id;
+	type = nd_source->subtype;
+	mapid = map_mapname2mapid(mapname);
+
+	if(mapid < 0) {
+		ShowError("buildin_duplicatenpc: target map not found. (%s)\n", mapname);
+		return -1;
+	}
+
+	if(strlen(new_shown_name) > NAME_LENGTH) {
+		ShowError("buildin_duplicatenpc: New NPC shown name + New NPC hidden name is too long (max %d chars). (%s)\n", sourcename, NAME_LENGTH);
+		return -1;
+	}
+
+
+	// CREATE(nd_target, struct npc_data, 1);
+	nd_target = npc_create_npc(mapid, x, y);
+
+	nd_target->bl.id = npc_get_new_npc_id();
+	nd_target->bl.prev = nd_target->bl.next = nullptr;
+	
+	const char* new_hidden_name = (char*)nd_target->bl.id;
+
+	ShowWarning("Criado NPC com GID %d\n",nd_target->bl.id);
+	
+	strcat(new_npc_name, new_shown_name);
+	strncat(new_npc_name, "#", 1);
+	strncat(new_npc_name, new_hidden_name, strlen(new_hidden_name));
+	memcpy(nd_target->name,new_npc_name,NPC_NAME_LENGTH);
+	memcpy(nd_target->exname,new_npc_name,NPC_NAME_LENGTH);
+
+	nd_target->bl.m = mapid;
+	nd_target->bl.x = map_x;
+	nd_target->bl.y = map_y;
+	nd_target->class_ = spriteid;
+	nd_target->speed = 200;
+	nd_target->src_id = sourceid;
+	nd_target->bl.type = BL_NPC;
+	nd_target->subtype = (enum npc_subtype)type;
+
+	if(lootbag[0].nameid > 0){
+		memcpy(nd_target->lootbag, lootbag, sizeof(lootbag));
+	}
+
+	switch(type) {
+		case NPCTYPE_SCRIPT:
+			nd_target->u.scr.xs = 0;
+			nd_target->u.scr.ys = 0;
+			nd_target->u.scr.script = nd_source->u.scr.script;
+			nd_target->u.scr.label_list = nd_source->u.scr.label_list;
+			nd_target->u.scr.label_list_num = nd_source->u.scr.label_list_num;
+			break;
+		case NPCTYPE_SHOP:
+		case NPCTYPE_CASHSHOP:
+		case NPCTYPE_ITEMSHOP:
+		case NPCTYPE_POINTSHOP:
+		case NPCTYPE_MARKETSHOP:
+			nd_target->u.shop.shop_item = nd_source->u.shop.shop_item;
+			nd_target->u.shop.count = nd_source->u.shop.count;
+			break;
+		case NPCTYPE_WARP:
+			if( !battle_config.warp_point_debug )
+				nd_target->class_ = JT_WARPNPC;
+			else
+				nd_target->class_ = JT_GUILD_FLAG;
+			nd_target->u.warp.xs = 0;
+			nd_target->u.warp.ys = 0;
+			nd_target->u.warp.mapindex = nd_source->u.warp.mapindex;
+			nd_target->u.warp.x = nd_source->u.warp.x;
+			nd_target->u.warp.y = nd_source->u.warp.y;
+			nd_target->trigger_on_hidden = nd_source->trigger_on_hidden;
+			break;
+	}
+
+	map_addnpc(mapid, nd_target);
+	status_change_init(&nd_target->bl);
+	unit_dataset(&nd_target->bl);
+	nd_target->ud.dir = dir;
+	npc_setcells(nd_target);
+	map_addblock(&nd_target->bl);
+
+	if(spriteid >= 0) {
+		status_set_viewdata(&nd_target->bl, nd_target->class_);
+		clif_spawn(&nd_target->bl);
+	}
+
+	strdb_put(npcname_db, nd_target->exname, nd_target);
+
+	if(type == NPCTYPE_SCRIPT) {
+		for (i = 0; i < nd_target->u.scr.label_list_num; i++) {
+			char* lname = nd_target->u.scr.label_list[i].name;
+			int pos = nd_target->u.scr.label_list[i].pos;
+
+			if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n')) {
+				struct event_data* ev;
+				char buf[NAME_LENGTH*2+3];
+				snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd_target->exname, lname);
+
+				CREATE(ev, struct event_data, 1);
+				ev->nd = nd_target;
+				ev->pos = pos;
+				if(strdb_put(ev_db, buf, ev))
+					ShowWarning("npc_parse_duplicate : duplicate event %s (%s)\n", buf, nd_target->name);
+			}
+		}
+
+		for (i = 0; i < nd_target->u.scr.label_list_num; i++) {
+			int t = 0, k = 0;
+			char *lname = nd_target->u.scr.label_list[i].name;
+			int pos = nd_target->u.scr.label_list[i].pos;
+			if (sscanf(lname, "OnTimer%d%n", &t, &k) == 1 && lname[k] == '\0') {
+				struct npc_timerevent_list *te = nd_target->u.scr.timer_event;
+				int j, k = nd_target->u.scr.timeramount;
+				if (te == NULL)
+					te = (struct npc_timerevent_list *)aMalloc(sizeof(struct npc_timerevent_list));
+				else
+					te = (struct npc_timerevent_list *)aRealloc( te, sizeof(struct npc_timerevent_list) * (k+1) );
+				for (j = 0; j < k; j++) {
+					if (te[j].timer > t) {
+						memmove(te+j+1, te+j, sizeof(struct npc_timerevent_list)*(k-j));
+						break;
+					}
+				}
+				te[j].timer = t;
+				te[j].pos = pos;
+				nd_target->u.scr.timer_event = te;
+				nd_target->u.scr.timeramount++;
+			}
+		}
+		nd_target->u.scr.timerid = INVALID_TIMER;
+	}
+	//return its GID
+	return nd_target->bl.id;
+}
+
+// /*==========================================
+//  * Remove any npc duplicate on live server
+//  * duplicateremove "<NPC name>";
+//  *------------------------------------------*/
+// BUILDIN_FUNC(duplicateremove)
+// {
+// 	struct npc_data *nd;
+
+// 	if(script_hasdata(st, 2)) {
+// 		nd = npc_name2id(script_getstr(st, 2));
+// 		if(nd == NULL) {
+// 			script_pushint(st, -1);
+// 			return SCRIPT_CMD_FAILURE;
+// 		}
+// 	} else
+// 		nd = (struct npc_data *)map_id2bl(st->oid);
+
+// 	if(!nd->src_id)
+// 		npc_unload_duplicates(nd);
+// 	else
+// 		npc_unload(nd,true);
+
+// 	script_pushint(st, 1);
+// 	return SCRIPT_CMD_SUCCESS;
+// }
+
+
+
+
 
 // @commands (script based)
 int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname)
