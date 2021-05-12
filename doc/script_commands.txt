@@ -2689,39 +2689,41 @@ See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
 
-*uniqueid_getiteminfo(<"item_unique_id">,<array_variable>{,<char_id>})
+*uniqueid_getiteminfo(<"item_unique_id">{,<char_id>})
 
 This function assigns the item information of <item_unique_id> to <array_variable>
 of the invoking character.
 If <char_id> is given, then it will be ran on the specified character.
 Returns true on success or false otherwise.
 
-<array_variable>[0]      - item ID
-<array_variable>[1]      - refine
-<array_variable>[2]      - identify
-<array_variable>[3]      - attribute
-<array_variable>[4]      - card 1
-<array_variable>[5]      - card 2
-<array_variable>[6]      - card 3
-<array_variable>[7]      - card 4
-<array_variable>[8]      - expire time
-<array_variable>[9]      - bound type
-
-<array_variable>[10]     - option ID 1
-<array_variable>[11]     - option value 1
-<array_variable>[12]     - option parameter 1
-<array_variable>[13]     - option ID 2
-<array_variable>[14]     - option value 2
-<array_variable>[15]     - option parameter 2
-<array_variable>[16]     - option ID 3
-<array_variable>[17]     - option value 3
-<array_variable>[18]     - option parameter 3
-<array_variable>[19]     - option ID 4
-<array_variable>[20]     - option value 4
-<array_variable>[21]     - option parameter 4
-<array_variable>[22]     - option ID 5
-<array_variable>[23]     - option value 5
-<array_variable>[24]     - option parameter 5
+.@uid_item_id      - item ID
+.@uid_equip        - on which position the item is equipped (see EQP_* constants)
+                                     It will contain 0 if the item is not equipped.
+.@uid_refine       - refine
+.@uid_identify     - identify
+.@uid_attribute    - attribute
+.@uid_card1        - card 1
+.@uid_card2        - card 2
+.@uid_card3        - card 3
+.@uid_card4        - card 4
+.@uid_expire       - expire time
+.@uid_bound        - bound type
+.@uid_option_id1             - option ID 1
+.@uid_option_value1          - option value 1
+.@uid_option_parameter1      - option parameter 1
+.@uid_option_id2             - option ID 2
+.@uid_option_value2          - option value 2
+.@uid_option_parameter2      - option parameter 2
+.@uid_option_id3             - option ID 3
+.@uid_option_value3          - option value 3
+.@uid_option_parameter3      - option parameter 3
+.@uid_option_id4             - option ID 4
+.@uid_option_value4          - option value 4
+.@uid_option_parameter4      - option parameter 4
+.@uid_option_id5             - option ID 5
+.@uid_option_value5          - option value 5
+.@uid_option_parameter5      - option parameter 5
+.@uid_tradable               - item tradability
 
 	//while equipped with a Top Headgear
 	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
