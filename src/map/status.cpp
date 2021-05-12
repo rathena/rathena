@@ -12637,7 +12637,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	if (current_equip_combo_pos && tick == INFINITE_TICK) {
+	if (sd && current_equip_combo_pos > 0 && tick == INFINITE_TICK) {
 		ShowWarning("sc_start: Item combo of item #%u contains an INFINITE_TICK duration. Skipping bonus.\n", sd->inventory_data[pc_checkequip(sd, current_equip_combo_pos)]->nameid);
 		return 0;
 	}
