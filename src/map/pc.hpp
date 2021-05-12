@@ -1429,6 +1429,10 @@ extern struct fame_list pvprank_fame_list[MAX_FAME_LIST];
 extern struct fame_list bgrank_fame_list[MAX_FAME_LIST];
 extern struct fame_list bg_fame_list[MAX_FAME_LIST];
 
+//biali deadbody lootbag rework
+void pc_prepare_deadbody(struct map_session_data *sd, block_list *src);
+int8 pc_create_lootbag(struct npc_data* nd);
+
 void pc_readdb(void);
 void do_init_pc(void);
 void do_final_pc(void);

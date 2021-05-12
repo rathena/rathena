@@ -139,8 +139,9 @@ struct npc_data {
 	} progressbar;
 
 	//biali blackzone deadbody (new)
-	// struct s_lootbag bag[MAX_INVENTORY];
 	struct item lootbag[MAX_INVENTORY];
+	struct s_vending* bag[MAX_INVENTORY];
+
 };
 
 struct eri;
@@ -1365,7 +1366,7 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 // biali dynamic npc (frost)
 int npc_unload_dup_sub(struct npc_data *nd, va_list args);
 // biali dynmaic npc customization
-int npc_duplicatenpc(const char *sourcename, const char *new_shown_name, const char *mapname, int x, int y, int dir, struct item lootbag[]);
+struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_shown_name, const char *mapname, int x, int y, int dir, struct item lootbag[]);
 
 void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
 
