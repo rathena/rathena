@@ -8942,7 +8942,7 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int64 item_uniqueid = script_getnum64(st, 2);
+	uint64 item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
 
 	if (!item_uniqueid) {
 		ShowError("buildin_uniqueid_getiteminfo: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
@@ -9024,7 +9024,7 @@ BUILDIN_FUNC(uniqueid_delitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int64 item_uniqueid = script_getnum64(st, 2);
+	uint64 item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
 
 	if (!item_uniqueid) {
 		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
@@ -9041,18 +9041,16 @@ BUILDIN_FUNC(uniqueid_delitem)
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
-
-	struct item *it = &sd->inventory.u.items_inventory[i];
-
-	if (it->equip)
-		pc_unequipitem(sd, i, 3);
-
-	if (buildin_delitem_search(sd, it, 0, 0)) {
+	if (i >= 0) {
+		struct item* it = &sd->inventory.u.items_inventory[i];
+		if (it->equip)
+			pc_unequipitem(sd, i, 3);
+		pc_delitem(sd, i, 1, 0, 2, LOG_TYPE_SCRIPT);
 		script_pushint(st, true);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	ShowError("buildin_uniqueid_delitem: failed to delete (item_id=%hu unique_id=%llu AID=%d).\n", it->nameid, item_uniqueid, sd->status.account_id);
+	ShowError("buildin_uniqueid_delitem: failed to delete (unique_id=%llu AID=%d).\n", item_uniqueid, sd->status.account_id);
 	script_pushint(st, false);
 	return SCRIPT_CMD_FAILURE;
 }
@@ -25286,8 +25284,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
-	BUILDIN_DEF(uniqueid_getiteminfo, "ir?"),
-	BUILDIN_DEF(uniqueid_delitem, "i?"),
+	BUILDIN_DEF(uniqueid_getiteminfo, "sr?"),
+	BUILDIN_DEF(uniqueid_delitem, "s?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]
 	BUILDIN_DEF(repair,"i?"), // [Valaris]
