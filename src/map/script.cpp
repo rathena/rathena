@@ -9032,27 +9032,21 @@ BUILDIN_FUNC(uniqueid_delitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int i;
+	short i = -1;
 
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
-	if (i >= MAX_INVENTORY) {
-		ShowError("buildin_uniqueid_delitem: Item not found (unique_id=%llu).\n", item_uniqueid);
+	if (i < 0 || i >= MAX_INVENTORY) {
+		ShowError("buildin_uniqueid_delitem: Item not found (unique_id=%llu AID=%d).\n", item_uniqueid, sd->status.account_id);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
-	if (i >= 0) {
-		struct item* it = &sd->inventory.u.items_inventory[i];
-		if (it->equip)
-			pc_unequipitem(sd, i, 3);
-		pc_delitem(sd, i, 1, 0, 2, LOG_TYPE_SCRIPT);
-		script_pushint(st, true);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	ShowError("buildin_uniqueid_delitem: failed to delete (unique_id=%llu AID=%d).\n", item_uniqueid, sd->status.account_id);
-	script_pushint(st, false);
-	return SCRIPT_CMD_FAILURE;
+	struct item* it = &sd->inventory.u.items_inventory[i];
+	if (it->equip)
+		pc_unequipitem(sd, i, 3);
+	pc_delitem(sd, i, 1, 0, 2, LOG_TYPE_SCRIPT);
+	script_pushint(st, true);
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
