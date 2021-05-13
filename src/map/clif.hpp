@@ -669,6 +669,9 @@ void clif_rank_info(struct map_session_data *sd, int points, int total, int flag
 // #define clif_faction_name_self(bl) clif_faction_name( (bl), (bl), SELF )
 // #define clif_faction_name_area(bl) clif_faction_name( (bl), (bl), AREA )
 
+//Biali deadbody lootbag fullloot new system
+void clif_lootbaglist( struct map_session_data* sd, struct npc_data* vnd );
+
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect(struct block_list *bl);

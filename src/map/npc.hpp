@@ -10,6 +10,7 @@
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
+#include "vending.hpp" // for s_vending
 
 struct block_list;
 struct npc_data;
@@ -140,9 +141,13 @@ struct npc_data {
 
 	//biali blackzone deadbody (new)
 	struct item lootbag[MAX_INVENTORY];
-	struct s_vending* bag[MAX_INVENTORY];
+	struct s_vending bag[MAX_INVENTORY];
+	// int vended_id;
+	int vender_id;
+	int vend_num;
 
 };
+
 
 struct eri;
 extern struct eri *npc_sc_display_ers;

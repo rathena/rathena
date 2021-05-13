@@ -14670,6 +14670,7 @@ void pc_prepare_deadbody(struct map_session_data *sd, block_list *src) {
 		}
 		struct npc_data *nd = NULL;
 		nd = npc_createdeadbody("deadbody", sd->faction.pl_name, map_mapid2mapname(sd->bl.m), sd->bl.x, sd->bl.y, 0, lootbag);
+		ShowWarning("Criado npc deadbody com GID/fd = %d\n",nd->bl.id);
 		pc_create_lootbag(nd);
 		pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
 	}
@@ -14711,14 +14712,21 @@ int8 pc_create_lootbag(struct npc_data* nd)
 // 			continue;
 
 		ShowWarning("index: %d nameid: %d \n",nd->lootbag[j].id, nd->lootbag[j].nameid);
-		nd->bag[i]->index = nd->lootbag[j].nameid;
-		nd->bag[i]->amount = nd->lootbag[j].amount;
-		nd->bag[i]->value = 0;
+		nd->bag[i].index = nd->lootbag[j].nameid;
+		nd->bag[i].amount = nd->lootbag[j].amount;
+		nd->bag[i].value = 0;
 		i++;
 	}
 
 	if( i == 0 ) // no valid item found
 		return -1;
+
+	// sd->state.prevend = 0;
+	// sd->state.vending = true;
+	// sd->state.workinprogress = WIP_DISABLE_NONE;
+	nd->vender_id = nd->bl.id;
+	nd->vend_num = i;
+	// safestrncpy(sd->message, message, MESSAGE_SIZE);
 
 	// clif_openvending(sd,sd->bl.id,sd->vending);
 	clif_showvendingboard(&nd->bl,"Lootbag",0);
