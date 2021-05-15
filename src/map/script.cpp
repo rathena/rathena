@@ -10492,23 +10492,23 @@ BUILDIN_FUNC(makepet)
 BUILDIN_FUNC(getexp)
 {
 	TBL_PC* sd;
-	int base=0,job=0;
+	t_exp base=0,job=0;
 	double bonus;
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	base=script_getnum(st,2);
-	job =script_getnum(st,3);
+	base=script_getnum64(st,2);
+	job =script_getnum64(st,3);
 	if(base<0 || job<0)
 		return SCRIPT_CMD_SUCCESS;
 
 	// bonus for npc-given exp
 	bonus = battle_config.quest_exp_rate / 100.;
 	if (base)
-		base = (int) cap_value(base * bonus, 0, INT_MAX);
+		base = (t_exp) cap_value(base * bonus, 0, MAX_EXP);
 	if (job)
-		job = (int) cap_value(job * bonus, 0, INT_MAX);
+		job = (t_exp) cap_value(job * bonus, 0, MAX_EXP);
 
 	pc_gainexp(sd, NULL, base, job, 1);
 #ifdef RENEWAL
@@ -10525,12 +10525,12 @@ BUILDIN_FUNC(getexp)
 BUILDIN_FUNC(guildgetexp)
 {
 	TBL_PC* sd;
-	int exp;
+	t_exp exp;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
-	exp = script_getnum(st,2);
+	exp = script_getnum64(st,2);
 	if(exp < 0)
 		return SCRIPT_CMD_SUCCESS;
 	if(sd && sd->status.guild_id > 0)
@@ -23296,8 +23296,8 @@ BUILDIN_FUNC(minmax){
  **/
 BUILDIN_FUNC(getexp2) {
 	TBL_PC *sd = NULL;
-	int base_exp = script_getnum(st, 2);
-	int job_exp = script_getnum(st, 3);
+	t_exp base_exp = script_getnum64(st, 2);
+	t_exp job_exp = script_getnum64(st, 3);
 
 	if (!script_charid2sd(4, sd))
 		return SCRIPT_CMD_FAILURE;
