@@ -3,15 +3,16 @@
 
 #include "emblem_controller.hpp"
 
+#include <fstream>
 #include <iostream>
 #include <ostream>
-#include <fstream>
 
 #include "../common/showmsg.hpp"
+
 #include "auth.hpp"
-#include "web.hpp"
 #include "http.hpp"
 #include "sqllock.hpp"
+#include "web.hpp"
 
 // Max size is 50kb for gif
 #define MAX_EMBLEM_SIZE 50000
@@ -30,8 +31,16 @@ HANDLER_FUNC(emblem_download) {
 		return;
 	}
 
-	if (!req.has_file("GDID") || !req.has_file("WorldName")) {
-		ShowDebug("Missing required fields for emblem download!\n");
+	bool fail = false;
+	if (!req.has_file("GDID")) {
+		ShowDebug("Missing GuildID field for emblem download.\n");
+		fail = true;
+	}
+	if (!req.has_file("WorldName")) {
+		ShowDebug("Missing WorldName field for emblem download.\n");
+		fail = true;
+	}
+	if (fail) {
 		res.status = 400;
 		res.set_content("Error", "text/plain");
 		return;
@@ -67,7 +76,7 @@ HANDLER_FUNC(emblem_download) {
 
 	if (SqlStmt_NumRows(stmt) <= 0) {
 		SqlStmt_Free(stmt);
-		ShowError("[%d, \"%s\"] Not found in table\n", guild_id, world_name);
+		ShowError("[GuildID: %d / World: \"%s\"] Not found in table\n", guild_id, world_name);
 		sl.unlock();
 		res.status = 404;
 		res.set_content("Error", "text/plain");
@@ -92,7 +101,7 @@ HANDLER_FUNC(emblem_download) {
 	sl.unlock();
 
 	if (emblem_size > MAX_EMBLEM_SIZE) {
-		ShowDebug("Emblem is too big, size [%d] max length is %d\n", emblem_size, MAX_EMBLEM_SIZE);
+		ShowDebug("Emblem is too big, current size is %d and the max length is %d.\n", emblem_size, MAX_EMBLEM_SIZE);
 		res.status = 400;
 		res.set_content("Error", "text/plain");
 		return;
@@ -102,6 +111,12 @@ HANDLER_FUNC(emblem_download) {
 		content_type = "image/bmp";
 	else if (!strcmp(filetype, "GIF"))
 		content_type = "image/gif";
+	else {
+		ShowError("Invalid image type %s, rejecting!\n", filetype);
+		res.status = 404;
+		res.set_content("Error", "text/plain");
+		return;
+	}
 
 	res.body.assign(blob, emblem_size);
 	res.set_header("Content-Type", content_type);
@@ -115,8 +130,24 @@ HANDLER_FUNC(emblem_upload) {
 		return;
 	}
 
-	if (!req.has_file("GDID") || !req.has_file("WorldName") || !req.has_file("Img")|| !req.has_file("ImgType")) {
-		ShowDebug("Missing required fields for emblem download!\n");
+	bool fail = false;
+	if (!req.has_file("GDID")) {
+		ShowDebug("Missing GuildID field for emblem download.\n");
+		fail = true;
+	}
+	if (!req.has_file("WorldName")) {
+		ShowDebug("Missing WorldName field for emblem download.\n");
+		fail = true;
+	}
+	if (!req.has_file("Img")) {
+		ShowDebug("Missing Img field for emblem download.\n");
+		fail = true;
+	}
+	if (!req.has_file("ImgType")) {
+		ShowDebug("Missing ImgType for emblem download.\n");
+		fail = true;
+	}
+	if (fail) {
 		res.status = 400;
 		res.set_content("Error", "text/plain");
 		return;
@@ -130,7 +161,7 @@ HANDLER_FUNC(emblem_upload) {
 	auto img = req.get_file_value("Img").content;
 	
 	if (imgtype_str != "BMP" && imgtype_str != "GIF") {
-		ShowError("Invalid image type found [%s], rejecting!\n", imgtype);
+		ShowError("Invalid image type %s, rejecting!\n", imgtype);
 		res.status = 400;
 		res.set_content("Error", "text/plain");
 		return;
@@ -138,7 +169,7 @@ HANDLER_FUNC(emblem_upload) {
 
 	auto length = img.length();
 	if (length > MAX_EMBLEM_SIZE) {
-		ShowDebug("Emblem is too big, size [%d] max length is %d\n", length, MAX_EMBLEM_SIZE);
+		ShowDebug("Emblem is too big, current size is %d and the max length is %d.\n", length, MAX_EMBLEM_SIZE);
 		res.status = 400;
 		res.set_content("Error", "text/plain");
 		return;

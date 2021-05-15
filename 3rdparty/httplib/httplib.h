@@ -200,6 +200,7 @@ using socket_t = int;
 #include <mutex>
 #include <random>
 #include <regex>
+#include <set>
 #include <sstream>
 #include <string>
 #include <sys/stat.h>
@@ -256,7 +257,7 @@ namespace detail {
 
 template <class T, class... Args>
 typename std::enable_if<!std::is_array<T>::value, std::unique_ptr<T>>::type
-make_unique(Args &&... args) {
+make_unique(Args &&...args) {
   return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
 }
 
@@ -307,7 +308,7 @@ public:
   DataSink(DataSink &&) = delete;
   DataSink &operator=(DataSink &&) = delete;
 
-  std::function<void(const char *data, size_t data_len)> write;
+  std::function<bool(const char *data, size_t data_len)> write;
   std::function<void()> done;
   std::function<bool()> is_writable;
   std::ostream os;
@@ -394,7 +395,7 @@ struct Request {
   ContentReceiverWithProgress content_receiver;
   Progress progress;
 #ifdef CPPHTTPLIB_OPENSSL_SUPPORT
-  const SSL *ssl;
+  const SSL *ssl = nullptr;
 #endif
 
   bool has_header(const char *key) const;
@@ -486,7 +487,7 @@ public:
   virtual socket_t socket() const = 0;
 
   template <typename... Args>
-  ssize_t write_format(const char *fmt, const Args &... args);
+  ssize_t write_format(const char *fmt, const Args &...args);
   ssize_t write(const char *ptr);
   ssize_t write(const std::string &s);
 };
@@ -662,14 +663,24 @@ public:
   Server &set_expect_100_continue_handler(Expect100ContinueHandler handler);
   Server &set_logger(Logger logger);
 
+  Server &set_address_family(int family);
   Server &set_tcp_nodelay(bool on);
   Server &set_socket_options(SocketOptions socket_options);
 
   Server &set_keep_alive_max_count(size_t count);
   Server &set_keep_alive_timeout(time_t sec);
+
   Server &set_read_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  Server &set_read_timeout(const std::chrono::duration<Rep, Period> &duration);
+
   Server &set_write_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  Server &set_write_timeout(const std::chrono::duration<Rep, Period> &duration);
+
   Server &set_idle_interval(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  Server &set_idle_interval(const std::chrono::duration<Rep, Period> &duration);
 
   Server &set_payload_max_length(size_t length);
 
@@ -772,11 +783,12 @@ private:
   Logger logger_;
   Expect100ContinueHandler expect_100_continue_handler_;
 
+  int address_family_ = AF_UNSPEC;
   bool tcp_nodelay_ = CPPHTTPLIB_TCP_NODELAY;
   SocketOptions socket_options_ = default_socket_options;
 };
 
-enum Error {
+enum class Error {
   Success = 0,
   Unknown,
   Connection,
@@ -791,6 +803,12 @@ enum Error {
   UnsupportedMultipartBoundaryChars,
   Compression,
 };
+
+inline std::ostream& operator << (std::ostream& os, const Error& obj)
+{
+   os << static_cast<std::underlying_type<Error>::type>(obj);
+   return os;
+}
 
 class Result {
 public:
@@ -961,12 +979,22 @@ public:
 
   void set_default_headers(Headers headers);
 
+  void set_address_family(int family);
   void set_tcp_nodelay(bool on);
   void set_socket_options(SocketOptions socket_options);
 
   void set_connection_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  void
+  set_connection_timeout(const std::chrono::duration<Rep, Period> &duration);
+
   void set_read_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  void set_read_timeout(const std::chrono::duration<Rep, Period> &duration);
+
   void set_write_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  void set_write_timeout(const std::chrono::duration<Rep, Period> &duration);
 
   void set_basic_auth(const char *username, const char *password);
   void set_bearer_token_auth(const char *token);
@@ -1073,6 +1101,7 @@ protected:
   bool keep_alive_ = false;
   bool follow_location_ = false;
 
+  int address_family_ = AF_UNSPEC;
   bool tcp_nodelay_ = CPPHTTPLIB_TCP_NODELAY;
   SocketOptions socket_options_ = nullptr;
 
@@ -1263,12 +1292,22 @@ public:
 
   void set_default_headers(Headers headers);
 
+  void set_address_family(int family);
   void set_tcp_nodelay(bool on);
   void set_socket_options(SocketOptions socket_options);
 
   void set_connection_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  void
+  set_connection_timeout(const std::chrono::duration<Rep, Period> &duration);
+
   void set_read_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  void set_read_timeout(const std::chrono::duration<Rep, Period> &duration);
+
   void set_write_timeout(time_t sec, time_t usec = 0);
+  template <class Rep, class Period>
+  void set_write_timeout(const std::chrono::duration<Rep, Period> &duration);
 
   void set_basic_auth(const char *username, const char *password);
   void set_bearer_token_auth(const char *token);

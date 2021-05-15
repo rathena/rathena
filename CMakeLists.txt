@@ -229,7 +229,7 @@ endif()
 #
 # enable web server?
 #
-option( ENABLE_WEB_SERVER "Build web-server (default=OFF)" OFF )
+option( ENABLE_WEB_SERVER "Build web-server (default=ON)" ON )
 
 #
 # Test for big endian

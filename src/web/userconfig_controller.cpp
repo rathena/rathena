@@ -7,8 +7,9 @@
 
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
-#include "http.hpp"
+
 #include "auth.hpp"
+#include "http.hpp"
 #include "sqllock.hpp"
 #include "web.hpp"
 
@@ -88,7 +89,6 @@ HANDLER_FUNC(userconfig_save) {
 }
 
 HANDLER_FUNC(userconfig_load) {
-
 	if (!req.has_file("AID") || !req.has_file("WorldName")) {
 		res.status = 400;
 		res.set_content("Error", "text/plain");
@@ -127,7 +127,7 @@ HANDLER_FUNC(userconfig_load) {
 
 	if (SqlStmt_NumRows(stmt) <= 0) {
 		SqlStmt_Free(stmt);
-		ShowDebug("[%d, \"%s\"] Not found in table, sending new info\n", account_id, world_name);
+		ShowDebug("[AccountID: %d, World: \"%s\"] Not found in table, sending new info.\n", account_id, world_name);
 		sl.unlock();
 		res.set_content("{\"Type\": 1}", "application/json");
 		return;

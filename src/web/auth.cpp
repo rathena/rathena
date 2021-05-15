@@ -8,9 +8,9 @@
 #include "../common/showmsg.hpp"
 #include "../common/sql.hpp"
 
+#include "http.hpp"
 #include "sqllock.hpp"
 #include "web.hpp"
-#include "http.hpp"
 
 
 bool isAuthorized(const Request &request, bool checkGuildLeader) {

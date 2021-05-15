@@ -27,8 +27,8 @@
 
 
 #include "emblem_controller.hpp"
-#include "userconfig_controller.hpp"
 #include "http.hpp"
+#include "userconfig_controller.hpp"
 
 
 using namespace rathena;
@@ -415,16 +415,16 @@ int do_init(int argc, char** argv) {
 	for (int i = 0; i < 10; i++) {
 		if (svr->is_running() || runflag != WEBSERVER_ST_RUNNING)
 			break;
-		ShowDebug("Web server not running, sleeping 1 second\n");
+		ShowDebug("Web server not running, sleeping 1 second.\n");
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 
 	if (!svr->is_running()) {
-		ShowError("Web server hasn't started, stopping\n");
+		ShowError("Web server hasn't started, stopping.\n");
 		runflag = CORE_ST_STOP;
 		return 0;
 	}
 
-	ShowStatus("rAthena web server Started, listening on port %d\n", web_config.web_port);
+	ShowStatus("The web-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", web_config.web_port);
 	return 0;
 }

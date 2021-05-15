@@ -1378,9 +1378,7 @@ Optional Features:
   --disable-64bit         Enforce 32bit output on x86_64 systems.
   --enable-lto            Enables or Disables Linktime Code Optimization (LTO
                           is enabled by default)
-  --enable-web-service    Build the web service for later clients (disabled by
-                          default) Enable it if you want to use the web
-                          service.
+  --disable-web-service   Disable the web service
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -3494,13 +3492,13 @@ if test "${enable_web_service+set}" = set; then :
 		case $enableval in
 			"no");;
 			"yes");;
-			*) as_fn_error $? "invalid argument --enable-web-service=$enableval... stopping" "$LINENO" 5;;
+			*) as_fn_error $? "invalid argument --disable-web-service=$enableval... stopping" "$LINENO" 5;;
 		esac
 
 		enable_web_service="$enableval"
 
 else
-  enable_web_service="no"
+  enable_web_service="yes"
 
 fi
 

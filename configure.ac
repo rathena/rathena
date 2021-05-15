@@ -300,22 +300,21 @@ AC_ARG_ENABLE(
 AC_ARG_ENABLE(
 	[web-service],
 	AC_HELP_STRING(
-		[--enable-web-service],
+		[--disable-web-service],
 		[
-			Build the web service for later clients (disabled by default)
-			Enable it if you want to use the web service.
+			Disable the web service
 		]
 	),
 	[
 		case $enableval in
 			"no");;
 			"yes");;
-			*) AC_MSG_ERROR([[invalid argument --enable-web-service=$enableval... stopping]]);;
+			*) AC_MSG_ERROR([[invalid argument --disable-web-service=$enableval... stopping]]);;
 		esac
 
 		enable_web_service="$enableval"
 	],
-	[enable_web_service="no"]
+	[enable_web_service="yes"]
 )
 
 
