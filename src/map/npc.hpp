@@ -10,7 +10,7 @@
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
-#include "vending.hpp" // for s_vending
+// #include "vending.hpp" // for s_vending
 
 struct block_list;
 struct npc_data;
@@ -141,10 +141,9 @@ struct npc_data {
 
 	//biali blackzone deadbody (new)
 	struct item lootbag[MAX_INVENTORY];
-	struct s_vending bag[MAX_INVENTORY];
-	// int vended_id;
-	int vender_id;
-	int vend_num;
+	bool isdeadbody = false;
+	short lootbag_size = 0;
+	bool being_looted = false;
 
 };
 
@@ -1371,7 +1370,7 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 // biali dynamic npc (frost)
 int npc_unload_dup_sub(struct npc_data *nd, va_list args);
 // biali dynmaic npc customization
-struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_shown_name, const char *mapname, int x, int y, int dir, struct item lootbag[]);
+struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_shown_name, const char *mapname, int x, int y, int dir);
 
 void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
 

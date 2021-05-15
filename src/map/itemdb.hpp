@@ -122,6 +122,7 @@ enum item_itemid : t_itemid
 	ITEMID_WOB_LOCAL					= 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL		= 14591,
 	ITEMID_WL_MB_SG						= 100065,
+	ITEMID_LOGBOOK						= 24501, //Biali Diario de Bordo
 };
 
 ///Rune Knight

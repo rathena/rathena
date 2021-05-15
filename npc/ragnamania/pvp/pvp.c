@@ -87,10 +87,7 @@ OnPCKillEvent:	//-- Adding Stats
 		RepeatKill = 0;
 	}
 
-	//Debug
-	RepeatKill = 0;
-
-	announce "[Arenas Announcer ]: "+strcharinfo(0)+" has slain "+ rid2name(LastPK) + ((RepeatKill)?" for the "+callfunc("F_GetNumSuffix",RepeatKill)+" time in a row":"") +".",bc_all;
+	announce "[ Arenas Announcer ]: "+strcharinfo(0)+" has slain "+ rid2name(LastPK) + ((RepeatKill)?" for the "+callfunc("F_GetNumSuffix",RepeatKill)+" time in a row":"") +".",bc_all;
 	if(RepeatKill < .RepeatCount) {
 		.@qt = 1;
 		if(.HappyHour) .@qt += 2;

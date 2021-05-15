@@ -83,46 +83,30 @@ void vending_closevending(struct map_session_data* sd)
  */
 void vending_vendinglistreq(struct map_session_data* sd, int id)
 {
-
 	struct map_session_data* vsd;
-	struct npc_data* vnd; //biali new deadybody
-
 	nullpo_retv(sd);
 
-	vnd = map_id2nd(id);
-
-	if( (vsd = map_id2sd(id)) == NULL && (vnd = map_id2nd(id)) == NULL ) //biali new deadbody
+	if( (vsd = map_id2sd(id)) == NULL )
 		return;
-
-	ShowWarning("vending_vendinglistreq ENTROU 001 vnd->id: %d \n",vnd->bl.id);
-
-	if( !vsd->state.vending && vnd == NULL ) //biali
+	if( !vsd->state.vending )
 		return; // not vending
 
-	ShowWarning("vending_vendinglistreq ENTROU 002 vnd->id: %d \n",vnd->bl.id);
-
-	if(vnd) {
-		ShowWarning("vending_vendinglistreq ENTROU 003 vnd->id: %d \n",vnd->bl.id);
-		sd->vended_id = vnd->vender_id;  // register vending uid
-		clif_lootbaglist( sd, vnd );
-	} else {
-		if( sd->status.faction_id && vsd->status.faction_id )
-		{
-			if( !battle_config.faction_trade_settings && sd->status.faction_id != vsd->status.faction_id ) {
-				clif_displaymessage(sd->fd, msg_txt(sd,1553));
-				return;
-			}
-		}
-
-		if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) { //check if both GMs are allowed to trade
-			clif_displaymessage(sd->fd, msg_txt(sd,246));
+	if( sd->status.faction_id && vsd->status.faction_id )
+	{
+		if( !battle_config.faction_trade_settings && sd->status.faction_id != vsd->status.faction_id ) {
+			clif_displaymessage(sd->fd, msg_txt(sd,1553));
 			return;
 		}
-
-		sd->vended_id = vsd->vender_id;  // register vending uid
-
-		clif_vendinglist( sd, vsd );
 	}
+
+	if (!pc_can_give_items(sd) || !pc_can_give_items(vsd)) { //check if both GMs are allowed to trade
+		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		return;
+	}
+
+	sd->vended_id = vsd->vender_id;  // register vending uid
+
+	clif_vendinglist( sd, vsd );
 }
 
 /**

@@ -671,6 +671,7 @@ void clif_rank_info(struct map_session_data *sd, int points, int total, int flag
 
 //Biali deadbody lootbag fullloot new system
 void clif_lootbaglist( struct map_session_data* sd, struct npc_data* vnd );
+void clif_lootbag_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename);
 
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);

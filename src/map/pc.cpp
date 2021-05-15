@@ -59,7 +59,7 @@
 #include "status.hpp" // OPTION_*, struct weapon_atk
 #include "storage.hpp"
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
-#include "vending.hpp" // struct s_vending
+// #include "vending.hpp" // struct s_vending
 
 using namespace rathena;
 
@@ -9659,7 +9659,65 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		sd->canlog_tick = gettick() - battle_config.prevent_logout;
 
 	//biali deadbody rework
-	pc_prepare_deadbody(sd,src);
+		if(map_getmapflag(sd->bl.m,MF_RPK) || (src && faction_get_id(&sd->bl) > 0 && src->type == BL_PC )) {
+		
+		struct item lootbag[MAX_INVENTORY] = {};
+		i = k = 0;
+		struct item item_tmp = {};
+
+		for(i=0;i<MAX_INVENTORY;i++){
+			struct item_data *id = itemdb_exists(sd->inventory.u.items_inventory[i].nameid);
+			if(id == NULL) continue;
+
+			// checks for the items we want to save for the player:
+			// dont drop/break costume items (Ragnamania custom creation from existem equips)
+			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_CREATE && 
+			   sd->inventory.u.items_inventory[i].card[2] == GetWord(battle_config.reserved_costume_id, 0) &&
+			   sd->inventory.u.items_inventory[i].card[3] == GetWord(battle_config.reserved_costume_id, 1)) {
+					continue;
+			   }
+
+			//lets also skip items we should not break (itemdb.hpp can keep a list of constants for this)
+			if(sd->inventory.u.items_inventory[i].nameid == ITEMID_LOGBOOK)
+				continue;
+			
+			// dont drop/break costume items (costume gear by default)
+			if(id && ((id->equip&EQP_COSTUME_HEAD_LOW) ||
+				(id->equip&EQP_COSTUME_HEAD_MID) ||
+				(id->equip&EQP_COSTUME_HEAD_TOP) ||
+				(id->equip&EQP_COSTUME_GARMENT))
+			 )
+				continue;
+
+			// now lets break some of his stuff:
+			if(!itemdb_isstackable2(id)) {
+			    // break all bound and rental items....
+				if(sd->inventory.u.items_inventory[i].expire_time ||
+				   sd->inventory.u.items_inventory[i].bound ||
+				   1+rand()%100 <= battle_config.break_chance
+				) {
+					ShowWarning("Quebrou item %d \n",sd->inventory.u.items_inventory[i].nameid);
+					sd->inventory.u.items_inventory[i] = {};
+					continue;
+				}
+			}
+
+			item_tmp = sd->inventory.u.items_inventory[i];
+			item_tmp.attribute = 1;
+			item_tmp.id = k+1;
+			lootbag[k] = item_tmp;
+
+			sd->inventory.u.items_inventory[i] = {};
+			k++;
+		}
+		struct npc_data *nd = NULL;
+		nd = npc_createdeadbody("deadbody", sd->faction.pl_name, map_mapid2mapname(sd->bl.m), sd->bl.x, sd->bl.y, 0);
+		memcpy(nd->lootbag,lootbag,sizeof(lootbag));
+		nd->lootbag_size = k;
+		nd->isdeadbody = true;
+		nd->being_looted = false;
+		pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
+	}
 
 	return 1;
 }
@@ -14615,125 +14673,82 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	clif_attendence_response( sd, attendance_counter );
 }
 
-//Biali Ragnamania Blackzone
+//Biali Deadbody
+// show up the items in the deadbody using the storage window
+void pc_lootbag_storageopen(struct map_session_data *sd, struct npc_data *nd, int count)
+{
+	// nullpo_ret(sd);
+	// nullpo_ret(nd);
 
-void pc_prepare_deadbody(struct map_session_data *sd, block_list *src) {
-	// nullpo_retv(sd);
-	// nullpo_retv(src);
+	if(sd->state.deadbody_looting > 0 && sd->state.deadbody_looting != nd->bl.id)
+		return;
 
-	if(map_getmapflag(sd->bl.m,MF_RPK) || (src && faction_get_id(&sd->bl) > 0 && src->type == BL_PC )) {
-		
-		struct item lootbag[MAX_INVENTORY];
-		int i, k;
-		struct item item_tmp {0};
-
-		for(i=0;i<MAX_INVENTORY;i++){
-			struct item_data *id = itemdb_exists(sd->inventory.u.items_inventory[i].nameid);
-			if(id == NULL) continue;
-
-			// checks for the items we want to save for the player:
-			// dont drop/break costume items (Ragnamania custom creation from existem equips)
-			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_CREATE && 
-			   sd->inventory.u.items_inventory[i].card[2] == GetWord(battle_config.reserved_costume_id, 0) &&
-			   sd->inventory.u.items_inventory[i].card[3] == GetWord(battle_config.reserved_costume_id, 1)) {
-				   ShowWarning("Costume encontrado... Skipando %d \n",sd->inventory.u.items_inventory[i].nameid);
-					continue;
-			   }
-			
-			// dont drop/break costume items (costume gear by default)
-			if(id && (id->equip > EQP_ACC_L && id->equip < EQP_AMMO ) ) {
-				ShowWarning("Costume encontrado... Skipando %d \n",sd->inventory.u.items_inventory[i].nameid);
-				continue;
-			}
-
-			// now lets break some of his stuff:
-			if(!itemdb_isstackable2(id)) {
-			    // break all bound and rental items....
-				if(sd->inventory.u.items_inventory[i].expire_time ||
-				   sd->inventory.u.items_inventory[i].bound ||
-				   1+rand()%100 <= battle_config.break_chance
-				) {
-					ShowWarning("Quebrou item %d \n",sd->inventory.u.items_inventory[i].nameid);
-					sd->inventory.u.items_inventory[i] = {};
-					continue;
-				}
-			}
-
-			memcpy(&item_tmp,&sd->inventory.u.items_inventory[i],sizeof(&sd->inventory.u.items_inventory[i]));
-			item_tmp.attribute = 1;
-			item_tmp.id = k+1;
-			memcpy(&lootbag[k],&item_tmp,sizeof(&item_tmp));
-
-			sd->inventory.u.items_inventory[i] = {};
-			ShowWarning("item eviado pra loot bag e destruido : %d\n",lootbag[k].nameid);
-			k++;
-		}
-		struct npc_data *nd = NULL;
-		nd = npc_createdeadbody("deadbody", sd->faction.pl_name, map_mapid2mapname(sd->bl.m), sd->bl.x, sd->bl.y, 0, lootbag);
-		ShowWarning("Criado npc deadbody com GID/fd = %d\n",nd->bl.id);
-		pc_create_lootbag(nd);
-		pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
+	if(nd->being_looted == true) {
+		clif_messagecolor(&sd->bl,color_table[COLOR_CYAN],"Someone else is looting the body right now. Please try again later.",false,SELF);
+		return;
 	}
+
+	nd->being_looted = true;
+	sd->state.deadbody_looting = nd->bl.id;
+	clif_lootbag_storagelist(sd, nd->lootbag, count, "Lootbag");
+	clif_updatestorageamount(sd, count, MAX_INVENTORY);
+
+	//Why on earth this shit is showing the storage screen too behind/after the lootbag
+	storage_storageclose(sd);
+
+}
+// Biali transfer an item from the lootbag to the inventory/cart
+void pc_lootbag_storageget(struct map_session_data *sd, struct s_storage *stor, int index, int amount)
+{
+	unsigned char flag = 0;
+	enum e_storage_add result;
+
+	nullpo_retv(sd);
+
+	struct npc_data *nd = map_id2nd(sd->state.deadbody_looting);
+	pc_additem(sd,&nd->lootbag[index],amount,LOG_TYPE_NPC);
+	nd->lootbag[index] = {};
+	clif_storageitemremoved(sd,index,amount);
 }
 
-/**
- * Deadbody setup loot window
- * @param plname : name of the ceased player
- * @param data : itemlist data
- *	data := {<index>.w <amount>.w <value>.l}[count]
- * @param count : number of different items
- * @return 0 If success, 1 - Cannot open (die, not state.prevend, trading), 2 - No cart, 3 - Count issue, 4 - Cart data isn't saved yet, 5 - No valid item found
- * 
- * Biali
- * When a player get killed by another player in FvF fights or in Blackzone, the script will run through the deceased player's inventory
- * and clean up items that should be put in the deadbody (bound items, rent items, items that eventually broke, etc)
- * the npc will then call this function passing on a list (data) (eg: deadbody.id:qtty,) of all the items to be added to the deadbody sql table and eventually be available
- * to be looted by other players until the timer runs out and the deadbody npc is unloaded and the sql table gets a DELETE by GID
- */
-int8 pc_create_lootbag(struct npc_data* nd)
+// transfering from lootbag straight to the cart
+void pc_lootbag_storagegettocart(struct map_session_data* sd, struct s_storage *stor, int index, int amount)
 {
+	unsigned char flag = 0;
+	enum e_storage_add result;
 
-	int i, j;
-	// StringBuf buf;
+	nullpo_retv(sd);
 
-	if(nd == NULL)
-		return -1;
-
-
-	for( j = 0; j < MAX_INVENTORY; j++ ) {
-
-		if(nd->lootbag[j].nameid == 0)
-			continue;
-
-		// index -= 2; // offset adjustment (client says that the first cart position is 2)
-
-// 		if( index < 0 || index >= MAX_INVENTORY) // invalid position
-// //		||  pc_cartitem_amount(sd, index, amount) < 0 // invalid item or insufficient quantity
-// 			continue;
-
-		ShowWarning("index: %d nameid: %d \n",nd->lootbag[j].id, nd->lootbag[j].nameid);
-		nd->bag[i].index = nd->lootbag[j].nameid;
-		nd->bag[i].amount = nd->lootbag[j].amount;
-		nd->bag[i].value = 0;
-		i++;
+	if (sd->state.prevend) {
+		return;
 	}
 
-	if( i == 0 ) // no valid item found
-		return -1;
+	struct npc_data *nd = map_id2nd(sd->state.deadbody_looting);
 
-	// sd->state.prevend = 0;
-	// sd->state.vending = true;
-	// sd->state.workinprogress = WIP_DISABLE_NONE;
-	nd->vender_id = nd->bl.id;
-	nd->vend_num = i;
-	// safestrncpy(sd->message, message, MESSAGE_SIZE);
+	pc_cart_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE);
+	nd->lootbag[index] = {};
+	clif_storageitemremoved(sd,index,amount);
+	clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+}
 
-	// clif_openvending(sd,sd->bl.id,sd->vending);
-	clif_showvendingboard(&nd->bl,"Lootbag",0);
+//Biali close the lootbag
+void pc_lootbag_storageclose(struct map_session_data *sd)
+{
+	nullpo_retv(sd);
 
-	// idb_put(vending_db, sd->status.char_id, sd);
+	struct npc_data *nd = map_id2nd(sd->state.deadbody_looting);
+	nd->being_looted = false;
+	sd->state.deadbody_looting = 0;
+	chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+	clif_storageclose(sd);
 
-	return 0;
+	int i=0;
+	ARR_FIND( 0, MAX_INVENTORY, i, nd->lootbag[i].nameid > 0 );
+	if(i == MAX_INVENTORY)
+		npc_unload(nd, true);
+
+	//Why on earth this shit is showing the storage screen too behind/after the lootbag
+	storage_storageclose(sd);
 }
 
 

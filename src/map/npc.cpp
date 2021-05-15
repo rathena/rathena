@@ -1452,6 +1452,10 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 		return 1;
 	}
 
+	//Biali deadbody
+	if(nd->isdeadbody)
+		clif_skill_poseffect(&sd->bl, 152, 1, sd->bl.x, sd->bl.y, gettick());
+
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
 			clif_npcbuysell(sd,nd->bl.id);
@@ -2336,7 +2340,12 @@ int npc_remove_map(struct npc_data* nd)
 
 	if (nd->subtype == NPCTYPE_SCRIPT)
 		skill_clear_unitgroup(&nd->bl);
-	clif_clearunit_area(&nd->bl,CLR_RESPAWN);
+	
+	//biali deadbody
+	if(nd->isdeadbody)
+		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+	else
+		clif_clearunit_area(&nd->bl,CLR_RESPAWN);
 	npc_unsetcells(nd);
 	map_delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
@@ -3940,7 +3949,7 @@ void npc_setclass(struct npc_data* nd, short class_)
  * Duplicate any npc on live server
  * npc_createdeadbody "<Source NPC name>","<New NPC shown name>","<mapname>",<map_x>,<map_y>,<dir>,<lootbag>
  *------------------------------------------*/
-struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_shown_name, const char *mapname, int x, int y, int dir, struct item lootbag[])
+struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_shown_name, const char *mapname, int x, int y, int dir)
 {
 	int map_x = x;
 	int map_y = y;
@@ -3996,10 +4005,6 @@ struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_show
 	nd_target->u.scr.script = nd_source->u.scr.script;
 	nd_target->u.scr.label_list = nd_source->u.scr.label_list;
 	nd_target->u.scr.label_list_num = nd_source->u.scr.label_list_num;
-
-	if(lootbag[0].nameid > 0){
-		memcpy(nd_target->lootbag, lootbag, sizeof(lootbag));
-	}
 
 	map_addnpc(mapid, nd_target);
 	status_change_init(&nd_target->bl);

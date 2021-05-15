@@ -338,6 +338,7 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
+		int deadbody_looting; // biali flags if the player is looting a body at the time (keeps deadbody gid while lootbag is open)
 		unsigned int block_action : 10;
 		bool knocked; // Biali Black zone
 #ifdef BGEXTENDED
@@ -1430,8 +1431,13 @@ extern struct fame_list bgrank_fame_list[MAX_FAME_LIST];
 extern struct fame_list bg_fame_list[MAX_FAME_LIST];
 
 //biali deadbody lootbag rework
-void pc_prepare_deadbody(struct map_session_data *sd, block_list *src);
 int8 pc_create_lootbag(struct npc_data* nd);
+
+//new deadbody lootbag biali
+void pc_lootbag_storageopen(struct map_session_data *sd, struct npc_data *nd, int count);
+void pc_lootbag_storageget(struct map_session_data *sd, struct s_storage *stor, int index, int amount);
+void pc_lootbag_storagegettocart(struct map_session_data* sd, struct s_storage *stor, int index, int amount);
+void pc_lootbag_storageclose(struct map_session_data *sd);
 
 void pc_readdb(void);
 void do_init_pc(void);

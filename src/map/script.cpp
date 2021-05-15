@@ -11613,6 +11613,28 @@ BUILDIN_FUNC(clearunits)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+//biali deadbody
+BUILDIN_FUNC(openlootbag)
+{
+	TBL_PC* sd;
+	
+	if( !script_rid2sd(sd) )
+		return SCRIPT_CMD_SUCCESS;
+
+	TBL_NPC * nd = map_id2nd(st->oid);
+
+	int i=0;
+	ARR_FIND(0,MAX_INVENTORY,i,nd->lootbag[i].nameid > 0);
+	if(i == MAX_INVENTORY) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	pc_lootbag_storageopen(sd,nd,nd->lootbag_size);
+	script_pushint(st, 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 
 /*==========================================
  *------------------------------------------*/
@@ -24766,7 +24788,7 @@ BUILDIN_FUNC(unloadnpc) {
 	if( nd == NULL ){
 		ShowError( "buildin_unloadnpc: npc '%s' was not found.\n", name );
 		return SCRIPT_CMD_FAILURE;
-	} else if ( nd->bl.id == st->oid ) {
+	} else if ( nd->bl.id == st->oid && !nd->isdeadbody) { //biali deadbody
 		// Supporting self-unload isn't worth the problem it may cause. [Secret]
 		ShowError("buildin_unloadnpc: You cannot self-unload NPC '%s'.\n.", name);
 		return SCRIPT_CMD_FAILURE;
@@ -26572,6 +26594,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
 	BUILDIN_DEF(guildopenstorage_log,"?"),
+	BUILDIN_DEF(openlootbag,""), // biali deadbody
 	BUILDIN_DEF(guild_has_permission,"i?"),
 	BUILDIN_DEF(itemskill,"vi?"),
 	BUILDIN_DEF(produce,"i"),

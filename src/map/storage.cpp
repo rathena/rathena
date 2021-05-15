@@ -25,6 +25,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp" // struct map_session_data
+#include "npc.hpp"
 #include "packets.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
