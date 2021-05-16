@@ -182,7 +182,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
   <Target Name="AfterClean">
     <Delete Files="$(SolutionDir)libmysql.dll" ContinueOnError="true" />
     <Delete Files="$(SolutionDir)serv.bat" ContinueOnError="true" />

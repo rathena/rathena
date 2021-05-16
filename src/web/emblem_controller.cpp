@@ -169,7 +169,7 @@ HANDLER_FUNC(emblem_upload) {
 
 	auto length = img.length();
 	if (length > MAX_EMBLEM_SIZE) {
-		ShowDebug("Emblem is too big, current size is %d and the max length is %d.\n", length, MAX_EMBLEM_SIZE);
+		ShowDebug("Emblem is too big, current size is %lu and the max length is %d.\n", length, MAX_EMBLEM_SIZE);
 		res.status = 400;
 		res.set_content("Error", "text/plain");
 		return;

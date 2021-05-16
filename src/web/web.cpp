@@ -37,7 +37,7 @@ using namespace rathena;
 static char* msg_table[WEB_MAX_MSG];	/// Web Server messages_conf
 
 struct Web_Config web_config;
-std::shared_ptr<httplib::Server> svr;
+std::shared_ptr<httplib::Server> http_server;
 
 int login_server_port = 3306;
 char login_server_ip[64] = "127.0.0.1";
@@ -305,7 +305,7 @@ int web_sql_close(void)
 void do_final(void) {
 
 	ShowStatus("Terminating...\n");
-	svr->stop();
+	http_server->stop();
 	svr_thr.join();
 	web_sql_close();
 	do_final_msg();
@@ -331,7 +331,7 @@ void do_shutdown(void) {
  *  current signal catch : SIGSEGV, SIGFPE
  */
 void do_abort(void) {
-	svr->stop();
+	http_server->stop();
 	svr_thr.join();
 
 }
@@ -395,31 +395,31 @@ int do_init(int argc, char** argv) {
 
 	ShowStatus("Starting server...\n");
 
-	svr = std::make_shared<httplib::Server>();
+	http_server = std::make_shared<httplib::Server>();
 	// set up routes
-	svr->Post("/emblem/download", emblem_download);
-	svr->Post("/emblem/upload", emblem_upload);
-	svr->Post("/userconfig/load", userconfig_load);
-	svr->Post("/userconfig/save", userconfig_save);
+	http_server->Post("/emblem/download", emblem_download);
+	http_server->Post("/emblem/upload", emblem_upload);
+	http_server->Post("/userconfig/load", userconfig_load);
+	http_server->Post("/userconfig/save", userconfig_save);
 
 	// set up logger
-	svr->set_logger(logger);
+	http_server->set_logger(logger);
 	shutdown_callback = do_shutdown;
 
 	runflag = WEBSERVER_ST_RUNNING;
 
 	svr_thr = std::thread([] {
-		svr->listen(web_config.web_ip.c_str(), web_config.web_port);
+		http_server->listen(web_config.web_ip.c_str(), web_config.web_port);
 	});
 
 	for (int i = 0; i < 10; i++) {
-		if (svr->is_running() || runflag != WEBSERVER_ST_RUNNING)
+		if (http_server->is_running() || runflag != WEBSERVER_ST_RUNNING)
 			break;
 		ShowDebug("Web server not running, sleeping 1 second.\n");
 		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 
-	if (!svr->is_running()) {
+	if (!http_server->is_running()) {
 		ShowError("Web server hasn't started, stopping.\n");
 		runflag = CORE_ST_STOP;
 		return 0;
