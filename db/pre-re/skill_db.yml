@@ -2096,6 +2096,7 @@ Body:
     ActiveInstance: 5
     Knockback: 2
     CastTime: 700
+    Duration1: 1000
     Requires:
       SpCost: 12
       Weapon:
@@ -6906,8 +6907,8 @@ Body:
     CastDefenseReduction: 33
     CastTime: 3000
     AfterCastActDelay: 1500
-    AfterCastWalkDelay: 800
-    Duration1: 800
+    AfterCastWalkDelay: 1000
+    Duration1: 950
     Duration2: 30000
     Requires:
       SpCost:
@@ -9178,9 +9179,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Dark
-    AfterCastWalkDelay: 900
-    Duration1: 900
-    Duration2: 30000
+    AfterCastWalkDelay: 1000
+    Duration1: 30000
     Unit:
       Id: Dummyskill
       Layout: -1
@@ -14597,15 +14597,15 @@ Body:
       AllowWhenHidden: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     CopyFlags:
@@ -14630,15 +14630,15 @@ Body:
       AlterRangeShadowJump: true
     Range:
       - Level: 1
-        Size: 7
+        Size: 5
       - Level: 2
-        Size: 9
+        Size: 6
       - Level: 3
-        Size: 11
+        Size: 7
       - Level: 4
-        Size: 13
+        Size: 8
       - Level: 5
-        Size: 15
+        Size: 9
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -33149,7 +33149,7 @@ Body:
     Hit: Single
     CastCancel: true
     AfterCastActDelay: 3000
-    Duration1:
+    Duration2:
       - Level: 1
         Time: 30000
       - Level: 2

@@ -73,29 +73,35 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	.@price = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_ZENY_COST);
-	.@material = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_MATERIAL_ID);
+// Holink has different hardcoded prices
+//	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0: // Armor
 		.@type$ = "armor";
+		.@price = 15000;
 		mes "You have chosen an armor, meow~";
 		break;
 	case 1: // Level 1 Weapon
 		.@type$ = "weapon";
+		.@price = 500;
 		mes "A level 1 weapon...?";
 		break;
 	case 2: // Level 2 Weapon
 		.@type$ = "weapon";
+		.@price = 2000;
 		mes "Meow, a level 2 weapon...?";
 		break;
 	case 3: // Level 3 Weapon
 		.@type$ = "weapon";
+		.@price = 20000;
 		mes "Meow Meow~~ A level 3 weapon~~";
 		break;
 	case 4: // Level 4 Weapon
 		.@type$ = "weapon";
+		.@price = 50000;
 		mes "Me-Meow!... A level 4 weapon...!";
 		mes "I've only seen it twice while";
 		mes "learning from Aragam... Me-Meow!!";

@@ -170,7 +170,7 @@ Fire
 Wind
 Poison
 Holy
-Shadow
+Dark
 Ghost
 Undead
 

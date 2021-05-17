@@ -114,6 +114,7 @@ static uint16 char_port = 6121;
 static char userid[NAME_LENGTH], passwd[NAME_LENGTH];
 static int chrif_state = 0;
 int other_mapserver_count=0; //Holds count of how many other map servers are online (apart of this instance) [Skotlex]
+char charserver_name[NAME_LENGTH];
 
 //Interval at which map server updates online listing. [Valaris]
 #define CHECK_INTERVAL 3600000
@@ -608,14 +609,19 @@ int chrif_sendmapack(int fd) {
 		exit(EXIT_FAILURE);
 	}
 
-	// Server name
-	memcpy(wisp_server_name, RFIFOP(fd,5), NAME_LENGTH);
-	ShowStatus("Map-server connected to char-server '" CL_WHITE "%s" CL_RESET "'.\n", wisp_server_name);
+	// Whisper name
+	safestrncpy( wisp_server_name, RFIFOCP( fd, offs ), NAME_LENGTH );
 
 	// Default map
-	memcpy(map_default.mapname, RFIFOP(fd, (offs+=NAME_LENGTH)), MAP_NAME_LENGTH);
+	safestrncpy( map_default.mapname, RFIFOCP( fd, ( offs += NAME_LENGTH ) ), MAP_NAME_LENGTH );
 	map_default.x = RFIFOW(fd, (offs+=MAP_NAME_LENGTH));
 	map_default.y = RFIFOW(fd, (offs+=2));
+
+	// Server name
+	safestrncpy( charserver_name, RFIFOCP( fd, ( offs += 2 ) ), NAME_LENGTH );
+
+	ShowStatus( "Map-server connected to char-server '" CL_WHITE "%s" CL_RESET "' (whispername: %s).\n", charserver_name, wisp_server_name );
+
 	if (battle_config.etc_log)
 		ShowInfo("Received default map from char-server '" CL_WHITE "%s %d,%d" CL_RESET "'.\n", map_default.mapname, map_default.x, map_default.y);
 

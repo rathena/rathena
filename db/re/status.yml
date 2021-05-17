@@ -3346,7 +3346,6 @@ Body:
       Stop_Attacking: true
       Overlap_Fail: true
     End:
-      Dancing: true
       Burning: true
       Freezing: true
       Freeze: true
@@ -3928,33 +3927,29 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
 
-  - Status: Shieldspell_Def
-    Icon: Shieldspell_Def
+  - Status: Shieldspell_Hp
+    Icon: Shieldspell
+    DurationLookup: LG_SHIELDSPELL
+    End:
+      Shieldspell_Sp: true
+      Shieldspell_Atk: true
+
+  - Status: Shieldspell_Sp
+    Icon: Shieldspell
+    DurationLookup: LG_SHIELDSPELL
+    End:
+      Shieldspell_Hp: true
+      Shieldspell_Atk: true
+
+  - Status: Shieldspell_Atk
+    Icon: Shieldspell
     DurationLookup: LG_SHIELDSPELL
     CalcFlags:
       Watk: true
+      Matk: true
     End:
-      Magnificat: true
-      Shieldspell_Mdef: true
-      Shieldspell_Ref: true
-
-  - Status: Shieldspell_Mdef
-    Icon: Shieldspell_Mdef
-    DurationLookup: LG_SHIELDSPELL
-    End:
-      Magnificat: true
-      Shieldspell_Def: true
-      Shieldspell_Ref: true
-
-  - Status: Shieldspell_Ref
-    Icon: Shieldspell_Ref
-    DurationLookup: LG_SHIELDSPELL
-    CalcFlags:
-      Def: true
-    End:
-      Magnificat: true
-      Shieldspell_Def: true
-      Shieldspell_Mdef: true
+      Shieldspell_Hp: true
+      Shieldspell_Sp: true
 
   - Status: Exeedbreak
     Icon: Exeedbreak
@@ -3975,8 +3970,6 @@ Body:
     DurationLookup: LG_BANDING
     CalcFlags:
       Def: true
-      Watk: true
-      Regen: true
     Flags:
       Display_Pc: true
       Overlap_Fail: true
@@ -3988,8 +3981,6 @@ Body:
 
   - Status: Banding_Defence
     Icon: Banding_Defence
-    CalcFlags:
-      Speed: true
     Flags:
       Boss_Resist: true
       Overlap_Fail: true
@@ -3997,9 +3988,6 @@ Body:
   - Status: Earthdrive
     Icon: Earthdrive
     DurationLookup: LG_EARTHDRIVE
-    CalcFlags:
-      Def: true
-      Aspd: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -4009,6 +3997,7 @@ Body:
     DurationLookup: LG_INSPIRATION
     CalcFlags:
       Watk: true
+      Matk: true
       Str: true
       Agi: true
       Vit: true
@@ -4054,8 +4043,7 @@ Body:
     Icon: Striking
     DurationLookup: SO_STRIKING
     CalcFlags:
-      Watk: true
-      Cri: true
+      All: true
     Flags:
       No_Save: true
 
@@ -4526,7 +4514,6 @@ Body:
     Icon: Raisingdragon
     DurationLookup: SR_RAISINGDRAGON
     CalcFlags:
-      Regen: true
       MaxHp: true
       MaxSp: true
     Flags:
@@ -4602,7 +4589,6 @@ Body:
     DurationLookup: GN_BLOOD_SUCKER
     Flags:
       Bleffect: true
-      Display_Pc: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -4857,6 +4843,8 @@ Body:
   - Status: _Autoshadowspell
     Icon: Autoshadowspell
     DurationLookup: SC_AUTOSHADOWSPELL
+    CalcFlags:
+      Matk: true
 
   - Status: _Shadowform
     Icon: Shadowform
@@ -5867,7 +5855,7 @@ Body:
       NoEquipItem: true
     CalcFlags:
       Batk: true
-      Atk_Ele: true
+      Watk: true
 
   - Status: Paralysis
     Icon: Needle_Of_Paralyze
@@ -5887,8 +5875,6 @@ Body:
   - Status: Pain_Killer
     Icon: Pain_Killer
     DurationLookup: MH_PAIN_KILLER
-    CalcFlags:
-      Aspd: true
     Flags:
       No_Rem_Ondead: true
       No_Dispell: true
@@ -5959,11 +5945,6 @@ Body:
   - Status: Unlimit
     Icon: Unlimit
     DurationLookup: RA_UNLIMIT
-    CalcFlags:
-      Def: true
-      Def2: true
-      Mdef: true
-      MDef2: true
     Flags:
       Display_Pc: true
 
@@ -6474,6 +6455,7 @@ Body:
     CalcFlags:
       Hit: true
       Flee: true
+      Cri: true
     Flags:
       No_Rem_Ondead: true
       No_Clearbuff: true
@@ -7305,7 +7287,7 @@ Body:
       No_Clearbuff: true
 
   - Status: Spore_Explosion
-    Icon: Spore_Explosion
+    Icon: Spore_Explosion_Debuff
     DurationLookup: GN_SPORE_EXPLOSION
     Flags:
       No_Dispell: true
@@ -7699,6 +7681,45 @@ Body:
   - Status: Ep16_2_Buff_Ac
     Icon: Ep16_2_Buff_Ac
     Flags:
+      No_Banishing_Buster: true
+      No_Dispell: true
+      No_Clearance: true
+      No_Clearbuff: true
+
+  - Status: OverBrandReady
+    Icon: OverBrandReady
+    Flags:
+      
+
+  - Status: Poison_Mist
+    Icon: Poison_Mist
+    DurationLookup: MH_POISON_MIST
+    CalcFlags:
+      Flee: true
+    Flags:
+      
+
+  - Status: Stone_Wall
+    Icon: Stone_Wall
+    DurationLookup: MH_STEINWAND
+    CalcFlags:
+      Def: true
+      Mdef: true
+    Flags:
+      
+
+  - Status: Cloud_Poison
+    Icon: Cloud_Poison
+    DurationLookup: SO_CLOUD_KILL
+    Flags:
+      
+
+  - Status: Homun_Time
+    Icon: Homun_Time
+    Flags:
+      Display_Pc: true
+      Bleffect: true
+      No_Rem_Ondead: true
       No_Banishing_Buster: true
       No_Dispell: true
       No_Clearance: true

@@ -3816,33 +3816,29 @@ Body:
       No_Banishing_Buster: true
       No_Clearance: true
 
-  - Status: Shieldspell_Def
+  - Status: Shieldspell_Hp
     Icon: Shieldspell_Def
     DurationLookup: LG_SHIELDSPELL
-    CalcFlags:
-      Watk: true
     End:
-      Magnificat: true
-      Shieldspell_Mdef: true
-      Shieldspell_Ref: true
+      Shieldspell_Sp: true
+      Shieldspell_Atk: true
 
-  - Status: Shieldspell_Mdef
+  - Status: Shieldspell_Sp
     Icon: Shieldspell_Mdef
     DurationLookup: LG_SHIELDSPELL
     End:
-      Magnificat: true
-      Shieldspell_Def: true
-      Shieldspell_Ref: true
+      Shieldspell_Hp: true
+      Shieldspell_Atk: true
 
-  - Status: Shieldspell_Ref
+  - Status: Shieldspell_Atk
     Icon: Shieldspell_Ref
     DurationLookup: LG_SHIELDSPELL
     CalcFlags:
-      Def: true
+      Watk: true
+      Matk: true
     End:
-      Magnificat: true
-      Shieldspell_Def: true
-      Shieldspell_Mdef: true
+      Shieldspell_Hp: true
+      Shieldspell_Sp: true
 
   - Status: Exeedbreak
     Icon: Exeedbreak
@@ -3942,8 +3938,7 @@ Body:
     Icon: Striking
     DurationLookup: SO_STRIKING
     CalcFlags:
-      Watk: true
-      Cri: true
+      All: true
     Flags:
       No_Save: true
 
@@ -6292,6 +6287,7 @@ Body:
     CalcFlags:
       Hit: true
       Flee: true
+      Cri: true
     Flags:
       No_Rem_Ondead: true
       No_Clearbuff: true
