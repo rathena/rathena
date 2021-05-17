@@ -762,7 +762,7 @@ function	script	refinemain	{
 			emotion (!rand(5))?ET_MONEY:ET_HUK;
 			.@lose = rand(1,3);
 			if (.@lose == 1) {
-				mes "โอ้พระเจ้า!
+				mes "โอ้พระเจ้า!";
 				mes "ให้ตายเถอะ! ไม่อีกแล้ว!";
 				mes "ฉันขอโทษอย่างมาก แต่คุณรู้ไหมว่าการฝึกฝนทำให้สมบูรณ์แบบ";
 				mes "อืมใช่มั้ยหึหึ...";
