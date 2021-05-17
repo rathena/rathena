@@ -9419,6 +9419,7 @@ static const struct _battle_data {
 	{ "char_woe_log",  		                &battle_config.woe_log,               		      0,    0,      1,              },
 // Ragnamania RPK full loot settings
 	{ "rpk_equips_break_chance",            &battle_config.break_chance,           		     70,    0,    100,              },
+	{ "rpk_remove_deadbody_timer",          &battle_config.remove_deadbody_timer,  	    1800000,    0,    INT_MAX,          },
 
 #include "../custom/battle_config_init.inc"
 };

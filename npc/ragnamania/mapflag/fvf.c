@@ -265,3 +265,265 @@ pvp_2vs2	mapflag	fvf	off
 turbo_e_4	mapflag	fvf	off
 turbo_e_8	mapflag	fvf	off
 turbo_e_16	mapflag	fvf	off
+
+//Ragnamania
+
+new_zone01	mapflag	fvf	off
+new_zone02	mapflag	fvf	off
+new_zone03	mapflag	fvf	off
+new_zone04	mapflag	fvf	off
+new_1-1	mapflag	fvf	off
+new_1-2	mapflag	fvf	off
+new_1-3	mapflag	fvf	off
+new_1-4	mapflag	fvf	off
+new_2-1	mapflag	fvf	off
+new_2-2	mapflag	fvf	off
+new_2-3	mapflag	fvf	off
+new_2-4	mapflag	fvf	off
+new_3-1	mapflag	fvf	off
+new_3-2	mapflag	fvf	off
+new_3-3	mapflag	fvf	off
+new_3-4	mapflag	fvf	off
+new_4-1	mapflag	fvf	off
+new_4-2	mapflag	fvf	off
+new_4-3	mapflag	fvf	off
+new_4-4	mapflag	fvf	off
+new_5-1	mapflag	fvf	off
+new_5-2	mapflag	fvf	off
+new_5-3	mapflag	fvf	off
+new_5-4	mapflag	fvf	off
+
+guild_vs1	mapflag	fvf	off
+guild_vs2	mapflag	fvf	off
+guild_vs3	mapflag	fvf	off
+guild_vs4	mapflag	fvf	off
+guild_vs5	mapflag	fvf	off
+
+aldeg_cas01	mapflag	fvf	off
+aldeg_cas02	mapflag	fvf	off
+aldeg_cas03	mapflag	fvf	off
+aldeg_cas04	mapflag	fvf	off
+aldeg_cas05	mapflag	fvf	off
+
+gefg_cas01	mapflag	fvf	off
+gefg_cas02	mapflag	fvf	off
+gefg_cas03	mapflag	fvf	off
+gefg_cas04	mapflag	fvf	off
+gefg_cas05	mapflag	fvf	off
+
+payg_cas01	mapflag	fvf	off
+payg_cas02	mapflag	fvf	off
+payg_cas03	mapflag	fvf	off
+payg_cas04	mapflag	fvf	off
+payg_cas05	mapflag	fvf	off
+
+prtg_cas01	mapflag	fvf	off
+prtg_cas02	mapflag	fvf	off
+prtg_cas03	mapflag	fvf	off
+prtg_cas04	mapflag	fvf	off
+prtg_cas05	mapflag	fvf	off
+
+arug_cas01	mapflag	fvf	off
+arug_cas02	mapflag	fvf	off
+arug_cas03	mapflag	fvf	off
+arug_cas04	mapflag	fvf	off
+arug_cas05	mapflag	fvf	off
+arug_cas06	mapflag	fvf	off
+arug_cas07	mapflag	fvf	off
+arug_cas08	mapflag	fvf	off
+
+schg_cas01	mapflag	fvf	off
+schg_cas02	mapflag	fvf	off
+schg_cas03	mapflag	fvf	off
+schg_cas04	mapflag	fvf	off
+schg_cas05	mapflag	fvf	off
+schg_cas06	mapflag	fvf	off
+schg_cas07	mapflag	fvf	off
+schg_cas08	mapflag	fvf	off
+
+nguild_alde	mapflag	fvf	off
+nguild_gef	mapflag	fvf	off
+nguild_pay	mapflag	fvf	off
+nguild_prt	mapflag	fvf	off
+
+arug_dun01	mapflag	fvf	off
+schg_dun01	mapflag	fvf	off
+
+gld_dun01	mapflag	fvf	off
+gld_dun02	mapflag	fvf	off
+gld_dun03	mapflag	fvf	off
+gld_dun04	mapflag	fvf	off
+
+
+2009rwc_01	mapflag	fvf	off
+2009rwc_02	mapflag	fvf	off
+2009rwc_03	mapflag	fvf	off
+2009rwc_04	mapflag	fvf	off
+2009rwc_05	mapflag	fvf	off
+2009rwc_06	mapflag	fvf	off
+2009rwc_07	mapflag	fvf	off
+2009rwc_08	mapflag	fvf	off
+2009rwc_f01	mapflag	fvf	off
+
+2012rwc_01	mapflag	fvf	off
+2012rwc_02	mapflag	fvf	off
+2012rwc_03	mapflag	fvf	off
+2012rwc_04	mapflag	fvf	off
+2012rwc_05	mapflag	fvf	off
+2012rwc_06	mapflag	fvf	off
+2012rwc_07	mapflag	fvf	off
+2012rwc_08	mapflag	fvf	off
+
+sec_pri	mapflag	fvf	off
+
+bat_a03	mapflag	fvf	off
+bat_a04	mapflag	fvf	off
+bat_b03	mapflag	fvf	off
+bat_b04	mapflag	fvf	off
+
+soccer3	mapflag	fvf	off
+
+rush_cas01	mapflag	fvf	off
+rush_cas02	mapflag	fvf	off
+rush_cas03	mapflag	fvf	off
+rush_cas04	mapflag	fvf	off
+
+region_8	mapflag	fvf	off
+
+bomberman	mapflag	fvf	off
+bg_bomber	mapflag	fvf	off
+bg_bomber2	mapflag	fvf	off
+
+ars_fild01	mapflag	fvf	off
+ars_fild02	mapflag	fvf	off
+ars_fild03	mapflag	fvf	off
+ars_fild04	mapflag	fvf	off
+ars_fild05	mapflag	fvf	off
+ars_fild06	mapflag	fvf	off
+ars_fild07	mapflag	fvf	off
+ars_fild08	mapflag	fvf	off
+ars_fild09	mapflag	fvf	off
+ars_fild10	mapflag	fvf	off
+ars_fild11	mapflag	fvf	off
+ars_fild12	mapflag	fvf	off
+ars_fild13	mapflag	fvf	off
+ars_fild14	mapflag	fvf	off
+ars_fild15	mapflag	fvf	off
+ars_fild16	mapflag	fvf	off
+ars_fild17	mapflag	fvf	off
+ars_fild18	mapflag	fvf	off
+ars_fild19	mapflag	fvf	off
+ars_fild20	mapflag	fvf	off
+ars_fild21	mapflag	fvf	off
+ars_fild22	mapflag	fvf	off
+ars_fild23	mapflag	fvf	off
+ars_fild24	mapflag	fvf	off
+ars_fild25	mapflag	fvf	off
+ars_fild26	mapflag	fvf	off
+ars_fild27	mapflag	fvf	off
+ars_fild28	mapflag	fvf	off
+ars_fild29	mapflag	fvf	off
+ars_fild30	mapflag	fvf	off
+ars_fild31	mapflag	fvf	off
+ars_fild32	mapflag	fvf	off
+ars_fild33	mapflag	fvf	off
+ars_fild34	mapflag	fvf	off
+ars_fild35	mapflag	fvf	off
+ars_fild36	mapflag	fvf	off
+ars_fild37	mapflag	fvf	off
+ars_fild38	mapflag	fvf	off
+ars_fild39	mapflag	fvf	off
+ars_fild40	mapflag	fvf	off
+ars_fild41	mapflag	fvf	off
+ars_fild42	mapflag	fvf	off
+ars_fild43	mapflag	fvf	off
+ars_fild44	mapflag	fvf	off
+ars_fild45	mapflag	fvf	off
+ars_fild46	mapflag	fvf	off
+ars_fild47	mapflag	fvf	off
+ars_fild48	mapflag	fvf	off
+ars_fild49	mapflag	fvf	off
+ars_fild50	mapflag	fvf	off
+ars_fild51	mapflag	fvf	off
+ars_fild52	mapflag	fvf	off
+ars_fild53	mapflag	fvf	off
+ars_fild54	mapflag	fvf	off
+ars_fild55	mapflag	fvf	off
+ars_fild56	mapflag	fvf	off
+ars_fild57	mapflag	fvf	off
+ars_fild58	mapflag	fvf	off
+ars_fild59	mapflag	fvf	off
+ars_fild60	mapflag	fvf	off
+ars_fild61	mapflag	fvf	off
+ars_fild62	mapflag	fvf	off
+				
+ars_dun01	mapflag	fvf	off
+ars_dun02	mapflag	fvf	off
+ars_dun03	mapflag	fvf	off
+ars_dun04	mapflag	fvf	off
+ars_dun05	mapflag	fvf	off
+ars_dun06	mapflag	fvf	off
+ars_dun07	mapflag	fvf	off
+ars_dun08	mapflag	fvf	off
+ars_dun09	mapflag	fvf	off
+ars_dun10	mapflag	fvf	off
+ars_dun11	mapflag	fvf	off
+ars_dun12	mapflag	fvf	off
+ars_dun13	mapflag	fvf	off
+ars_dun14	mapflag	fvf	off
+ars_dun15	mapflag	fvf	off
+ars_dun16	mapflag	fvf	off
+ars_dun17	mapflag	fvf	off
+ars_dun18	mapflag	fvf	off
+ars_dun19	mapflag	fvf	off
+ars_dun20	mapflag	fvf	off
+ars_dun21	mapflag	fvf	off
+ars_dun22	mapflag	fvf	off
+ars_dun23	mapflag	fvf	off
+ars_dun24	mapflag	fvf	off
+ars_dun25	mapflag	fvf	off
+ars_dun26	mapflag	fvf	off
+ars_dun27	mapflag	fvf	off
+ars_dun28	mapflag	fvf	off
+ars_dun29	mapflag	fvf	off
+ars_dun30	mapflag	fvf	off
+ars_dun31	mapflag	fvf	off
+ars_dun32	mapflag	fvf	off
+ars_dun33	mapflag	fvf	off
+ars_dun34	mapflag	fvf	off
+ars_dun35	mapflag	fvf	off
+ars_dun36	mapflag	fvf	off
+ars_dun37	mapflag	fvf	off
+ars_dun38	mapflag	fvf	off
+ars_dun39	mapflag	fvf	off
+ars_dun40	mapflag	fvf	off
+				
+ars_in01	mapflag	fvf	off
+ars_in02	mapflag	fvf	off
+ars_in03	mapflag	fvf	off
+ars_in04	mapflag	fvf	off
+ars_in05	mapflag	fvf	off
+ars_in06	mapflag	fvf	off
+ars_in07	mapflag	fvf	off
+ars_in08	mapflag	fvf	off
+ars_in09	mapflag	fvf	off
+ars_in10	mapflag	fvf	off
+ars_in11	mapflag	fvf	off
+ars_in12	mapflag	fvf	off
+ars_in13	mapflag	fvf	off
+ars_in14	mapflag	fvf	off
+ars_in15	mapflag	fvf	off
+ars_in16	mapflag	fvf	off
+ars_in17	mapflag	fvf	off
+				
+coppa	mapflag	fvf	off
+tantale_ile	mapflag	fvf	off
+ars_phare	mapflag	fvf	off
+
+//hell gates entrances - RPK
+prt_fild00	mapflag	fvf	off
+moc_fild18	mapflag	fvf	off
+ra_fild13	mapflag	fvf	off
+pay_fild07	mapflag	fvf	off
+hu_fild03	mapflag	fvf	off
+hell	mapflag	fvf	off

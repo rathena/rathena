@@ -52,7 +52,8 @@ OnCollectLootBag:
 		end;
 
 	OnPcDieEvent:
-		if(getmapflag(strcharinfo(3),MF_RPK,RPK_FULLLOOT)){
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_FULLLOOT) || (getcharid(6) > 0 && getcharid(6,rid2name(killerid)) > 0 )){
+			// Biali Todo: Need to treat fullloot when player get killed by a factioned monster
 			if(killerrid > 100000000) end;
 			full_loot();
 			sleep2 200;

@@ -430,7 +430,6 @@ ars_dun16	mapflag	nomemo
 ars_dun16	mapflag	nobranch
 ars_dun16	mapflag	restricted	8
 ars_dun16	mapflag	monster_noteleport
-ars_dun16	mapflag	gvg
 ars_dun16	mapflag	partylock
 
 ars_dun17	mapflag	noteleport

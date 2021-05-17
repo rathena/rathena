@@ -2405,6 +2405,14 @@ void npc_unload_duplicates(struct npc_data* nd)
 	map_foreachnpc(npc_unload_dup_sub,nd->bl.id);
 }
 
+//biali dynamic npc deadbody
+TIMER_FUNC(npc_remove_deadbody) {
+	struct npc_data* nd=(struct npc_data *)map_id2bl(id);
+	if(nd != NULL)
+		npc_unload(nd,false);
+	return 0;
+}
+
 //Removes an npc from map and db.
 //Single is to free name (for duplicates).
 int npc_unload(struct npc_data* nd, bool single) {
@@ -3962,7 +3970,7 @@ struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_show
 	spriteid = nd_source->class_;
 
 	if(nd_source == NULL) {
-		ShowError("buildin_duplicatenpc: original npc not found for duplicate. (%s)\n", sourcename);
+		ShowError("createdeadbody: original npc not found for duplicate. (%s)\n", sourcename);
 		return NULL;
 	}
 	
@@ -3971,17 +3979,19 @@ struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_show
 	mapid = map_mapname2mapid(mapname);
 
 	if(mapid < 0) {
-		ShowError("buildin_duplicatenpc: target map not found. (%s)\n", mapname);
+		ShowError("createdeadbody: target map not found. (%s)\n", mapname);
 		return NULL;
 	}
 
 	if(strlen(new_shown_name) > NAME_LENGTH) {
-		ShowError("buildin_duplicatenpc: New NPC shown name + New NPC hidden name is too long (max %d chars). (%s)\n", sourcename, NAME_LENGTH);
+		ShowError("createdeadbody: New NPC shown name + New NPC hidden name is too long (max %d chars). (%s)\n", sourcename, NAME_LENGTH);
 		return NULL;
 	}
 
 	nd_target = npc_create_npc(mapid, x, y);
-	const char* new_hidden_name = (char*)nd_target->bl.id;
+	char str[10];
+	sprintf(str, "%d", nd_target->bl.id);
+	const char* new_hidden_name = str;
 	nd_target->bl.id = npc_get_new_npc_id();
 	nd_target->bl.prev = nd_target->bl.next = nullptr;
 	
@@ -4021,6 +4031,24 @@ struct npc_data* npc_createdeadbody(const char *sourcename, const char *new_show
 	strdb_put(npcname_db, nd_target->exname, nd_target);
 
 	if(type == NPCTYPE_SCRIPT) {
+
+		for (i = 0; i < nd_target->u.scr.label_list_num; i++) {
+			char* lname = nd_target->u.scr.label_list[i].name;
+			int pos = nd_target->u.scr.label_list[i].pos;
+
+			if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n')) {
+				struct event_data* ev;
+				char buf[NAME_LENGTH*2+3];
+				snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd_target->exname, lname);
+
+				CREATE(ev, struct event_data, 1);
+				ev->nd = nd_target;
+				ev->pos = pos;
+				if(strdb_put(ev_db, buf, ev))
+					ShowWarning("npc_parse_duplicate : duplicate event %s (%s)\n", buf, nd_target->name);
+			}
+		}
+
 		for (i = 0; i < nd_target->u.scr.label_list_num; i++) {
 			int t = 0, k = 0;
 			char *lname = nd_target->u.scr.label_list[i].name;
@@ -5168,6 +5196,9 @@ void do_init_npc(void){
 
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
+	//biali deadbody
+	// Add homunc timer function to timer func list [Toms]
+	add_timer_func_list(npc_remove_deadbody, "npc_remove_deadbody");
 
 	// Init dummy NPC
 	fake_nd = (struct npc_data *)aCalloc(1,sizeof(struct npc_data));

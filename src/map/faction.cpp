@@ -14,8 +14,9 @@
 #include "atcommand.hpp"
 #include "faction.hpp"
 #include "elemental.hpp"
-// #include "guild.hpp"
+#include "guild.hpp"
 #include "homunculus.hpp"
+#include "intif.hpp"
 #include "map.hpp"
 #include "mercenary.hpp"
 #include "mapreg.hpp"
@@ -131,39 +132,19 @@ void faction_hp(struct map_session_data *sd)
 	clif_send(buf, packet_len(cmd), &sd->bl, FACTION_AREA_WOS);
 }
 
-// void faction_spawn(struct block_list *bl)
-// {
-// 	struct faction_data *fdb;
-// 	uint8 buf[33];
+void faction_spawn(struct map_session_data *sd)
+{
 
-// 	if( (fdb = faction_search(faction_get_id(bl))) == NULL )
-// 		return;
-
-// 	// // if( map_getmapflag(bl->m,MF_FVF) ) {
-// 	// 	if( battle_config.faction_ally_info_bl ) {
-// 	// 		if( battle_config.faction_ally_info_bl&bl->type ) {
-// 	// 			WBUFW(buf, 0) = 0x2dd;
-// 	// 			WBUFL(buf,2) = bl->id;
-// 	// 			safestrncpy((char*)WBUFP(buf,6), status_get_name(bl), NAME_LENGTH);
-// 	// 			WBUFW(buf,30) = faction_get_id(bl);
-// 	// 			clif_send(buf,packet_len(0x2dd), bl, FVF_OTHER_AREA_CHAT);
-// 	// 		}
-// 	// 	} else {
-// 	// 		WBUFW(buf,0) = 0x1b4;
-// 	// 		WBUFL(buf,2) = bl->id;
-// 	// 		WBUFL(buf,6) = fdb->id;
-// 	// 		WBUFW(buf,10) = fdb->emblem_id;
-// 	// 		clif_send(buf, 12, bl, AREA_WOS);
-// 	// 	}
-// 	// // }
-
-
-// 	// clif_bg_belonginfo(BL_CAST(BL_PC,bl));
-// 	// clif_bg_emblem(BL_CAST(BL_PC,bl), &BL_CAST(BL_PC,bl)->faction.g);
-// 	// clif_name_area(bl);
-// 	// clif_guild_emblem_area(bl);
-// 	faction_show_aura(bl);
-// }
+	//biali faction system
+	if(sd->status.faction_id) {
+		faction_update_data(sd);
+		clif_bg_belonginfo(sd);
+		clif_bg_emblem(sd, &sd->faction.g);
+		// clif_guild_emblem_area(&sd->bl);
+		// faction_show_aura(&sd->bl);
+		// clif_sendbgemblem_single(sd->fd,sd);
+	}
+}
 
 void faction_show_aura(struct block_list *bl)
 {
@@ -186,63 +167,6 @@ void faction_show_aura(struct block_list *bl)
 				clif_specialeffect(bl, fdb->aura[i], AREA);
 	}
 }
-
-// void faction_getareachar_unit(struct map_session_data *sd, struct block_list *bl)
-// {
-
-// 	struct faction_data *fdb;
-// 	struct status_change *sc = NULL;
-// 	int i, fd;
-
-// 	if( (fdb = faction_search(faction_get_id(bl))) == NULL )
-// 		return;
-
-// 	fd = sd->fd;
-// // 	// if( map_getmapflag(bl->m, MF_FVF) ) { //biali todo working here
-// 		if( battle_config.faction_ally_info_bl && (faction_get_id(&sd->bl) > 0 && faction_get_id(&sd->bl) != faction_get_id(bl))) {
-// 			if(battle_config.faction_ally_info_bl&bl->type) {
-// 				WFIFOHEAD(fd,32);
-// 				WFIFOW(fd,0) = 0x2dd;
-// 				WFIFOL(fd,2) = bl->id;
-// 				safestrncpy((char*)WFIFOP(fd,6), status_get_name(bl), NAME_LENGTH);
-// 				WFIFOW(fd,30) = faction_get_id(bl);
-// 				WFIFOSET(fd,packet_len(0x2dd));
-// 				ShowWarning("faction_getareachar_unit : entrou aqui \n");
-// 			}
-// 		} else {
-// 			//send data to the world around
-// 			WFIFOHEAD(fd,fdb->emblem_len+12);
-// 			WFIFOW(fd,2)=fdb->emblem_len+12;
-// 			WFIFOL(fd,8)=fdb->emblem_id;
-// 			memcpy(WFIFOP(fd,12),fdb->emblem_data,fdb->emblem_len);
-
-// 			WFIFOW(fd,0)=0x152;
-// 			WFIFOL(fd,4)=fdb->id;
-// 			WFIFOSET(fd,WFIFOW(fd,2));
-// 		}
-// // //	}
-// 		if(sd->bl.id != bl->id){
-// 			clif_bg_belonginfo(BL_CAST(BL_PC,bl));
-// 			clif_bg_emblem(BL_CAST(BL_PC,bl), &BL_CAST(BL_PC,bl)->faction.g);
-// 			clif_guild_emblem_area(bl);
-// 		}
-
-
-// 	if( bl->type&(BL_CHAR|BL_NPC) ) {
-// 		sc = status_get_sc(bl);
-// 		if( sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK|OPTION_INVISIBLE) || sc->data[SC_CAMOUFLAGE] )
-// 			return;
-// 	}
-
-// 	if( !((battle_config.faction_aura_settings&1 && map_getmapflag(bl->m, MF_FVF)) || battle_config.faction_aura_settings&2) )
-// 		return;
-
-// 	if( battle_config.faction_aura_bl&bl->type ) {
-// 		for( i = 0; i < MAX_AURA_EFF; i++ )
-// 			if( fdb->aura[i] > 0 )
-// 				clif_specialeffect_single(bl, fdb->aura[i], fd);
-// 	}
-// }
 
 int faction_aura_clear(struct block_list *bl,va_list ap)
 {
@@ -505,11 +429,53 @@ static int faction_readdb(void)
 
 // by biali
 void faction_update_data(struct map_session_data *sd) {
+	
 	nullpo_retv(sd);
-	sd->faction.g = factions[sd->status.faction_id];
-	sd->guild_emblem_id = factions[sd->status.faction_id].emblem_id;
-	safestrncpy(sd->faction.name, sd->faction.g.name, NAME_LENGTH);
-	safestrncpy(sd->faction.pl_name, sd->faction.g.position[1].name, NAME_LENGTH);
+	
+	if(sd->status.faction_id > 0) { 
+		//someone has joined the faction
+		sd->faction.g = factions[sd->status.faction_id];
+		sd->guild_emblem_id = factions[sd->status.faction_id].emblem_id;
+		safestrncpy(sd->faction.name, sd->faction.g.name, NAME_LENGTH);
+		safestrncpy(sd->faction.pl_name, sd->faction.g.position[1].name, NAME_LENGTH);
+	} else {
+		//someone has left the faction
+		faction_leave(sd);
+	}
+
+	return;
+}
+
+void faction_leave( struct map_session_data *sd) {
+	
+	nullpo_retv(sd);
+
+	struct guild *g = NULL;
+	sd->status.faction_id = 0;
+	sd->faction = {};
+	sd->faction.g = {};
+	sd->guild_emblem_id = 0;
+	if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL) {
+		//if player was originally in a guild... reload its info
+		sd->guild_emblem_id = sd->guild->emblem_id;
+		clif_guild_belonginfo(sd);
+		clif_guild_basicinfo(sd);
+		clif_guild_allianceinfo(sd);
+		clif_guild_memberlist(sd);
+		clif_guild_skillinfo(sd);
+		clif_guild_emblem(sd, g);
+	} else {
+		//else clean all the visuals related to guild
+		// clif_sendbgemblem_single(sd->fd,sd);
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], "Please log out to reload the visual information of your char.", false, SELF);
+	}
+	// clif_changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
+	clif_name_area(&sd->bl);
+	// clif_refresh(sd);
+	clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,AREA);
+	// clif_guild_emblem_area(&sd->bl);
+
+	return;
 }
 
 

@@ -219,7 +219,7 @@ L_Menu:
 					mes "No problem";
 					close;
 				} else {
-					setfaction(0);
+					factionleave();
 					mes "Changes made.";
 					close;
 				}

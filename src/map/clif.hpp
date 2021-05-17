@@ -668,6 +668,7 @@ void clif_rank_info(struct map_session_data *sd, int points, int total, int flag
 // void clif_faction_name( struct block_list* src, send_target target ); // biali update nametag on players when holding faction flags
 // #define clif_faction_name_self(bl) clif_faction_name( (bl), (bl), SELF )
 // #define clif_faction_name_area(bl) clif_faction_name( (bl), (bl), AREA )
+void clif_parse_GuildLeave(int fd,struct map_session_data *sd); // biali trying to get rid of emblem when leaving faction
 
 //Biali deadbody lootbag fullloot new system
 void clif_lootbaglist( struct map_session_data* sd, struct npc_data* vnd );

@@ -1984,7 +1984,7 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t tim
 		if( g->member[i].sd && g->member[i].sd->fd ) {
 			clif_guild_basicinfo(g->member[i].sd);
 			clif_guild_memberlist(g->member[i].sd);
-			clif_guild_belonginfo(g->member[i].sd); // Update clientside guildmaster flag
+			clif_guild_belonginfo(g->member[i].sd); // Update clientside guildmaster flag Biali check this out
 		}
 	}
 

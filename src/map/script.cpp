@@ -25672,6 +25672,54 @@ BUILDIN_FUNC(isnpccloaked)
 
 #include "../custom/script.inc"
 
+//biali faction system
+BUILDIN_FUNC(setfactionmap) 
+{
+	if(script_hasdata(st,2)) {
+		int faction_id = script_getnum(st,2);
+		struct faction_data* fdb = NULL;
+		if((fdb = faction_search(faction_id)) != NULL ) {
+			TBL_NPC* nd = map_id2nd(st->oid);
+			struct map_data *mapdata = map_getmapdata(nd->bl.m);
+			mapdata->faction_id = faction_id;
+			script_pushint(st, 1);
+		} else{
+			script_pushint(st, -1);
+			ShowWarning("setfactionmap : Invalid faction id \n");
+		}
+	} else {
+		script_pushint(st,-1);
+		ShowWarning("setfactionmap : No Faction Id give \n");
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(getfactionmap) 
+{
+	if(script_hasdata(st,2)) {
+		int faction_id = -1;
+		const char *str = script_getstr(st,2);
+		int m_id = map_mapname2mapid(str);
+		if(m_id >= 0) {
+			struct map_data *mapdata = map_getmapdata(m_id);
+			script_pushint(st, mapdata->faction_id);
+		} else {
+			script_pushint(st, -1);
+		}
+		return SCRIPT_CMD_SUCCESS;
+	}
+}
+
+
+BUILDIN_FUNC(removefactionmap) 
+{
+	TBL_NPC* nd = map_id2nd(st->oid);
+	struct map_data *mapdata = map_getmapdata(nd->bl.m);
+	mapdata->faction_id = 0;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * Complete Faction System [Lilith]
  * factioninfo(<Faction ID>,<Type>[,<Val>]);
@@ -25746,29 +25794,6 @@ BUILDIN_FUNC(setfaction)
 	if(faction_id == 0 ) {
 		sd->status.faction_id = 0;
 		faction_update_data(sd);
-		// sd->status.faction_id = 0;
-		// if(sd->status.guild_id)
-		// 	sd->guild_emblem_id = sd->guild->emblem_id;
-		// else
-		// 	sd->guild_emblem_id = 0;
-
-		// sd->faction = {};
-		// status_calc_pc(sd,SCO_NONE);
-
-		// // This part I got from BG Leave code. Trying this out to clear shit after leaving a fake guild
-		// struct guild *g = NULL;
-		// if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL)
-		// {
-		// 	clif_guild_belonginfo(sd);
-		// 	clif_guild_basicinfo(sd);
-		// 	clif_guild_allianceinfo(sd);
-		// 	clif_guild_memberlist(sd);
-		// 	clif_guild_skillinfo(sd);
-		// 	clif_guild_emblem(sd, g);
-		// }
-		// clif_name_area(&sd->bl);
-		// clif_guild_emblem_area(&sd->bl);
-		// // end
 
 		clif_refresh(sd);
 		return SCRIPT_CMD_SUCCESS;
@@ -25787,6 +25812,21 @@ BUILDIN_FUNC(setfaction)
 
 	clif_refresh(sd);
 	return 0;
+}
+
+BUILDIN_FUNC(factionleave) 
+{
+	TBL_PC* sd = NULL;
+
+	if (!script_rid2sd(sd))
+		return SCRIPT_CMD_SUCCESS;// no player attached
+
+	if(sd->status.faction_id)
+		faction_leave(sd);
+	else
+		ShowWarning("factionleave : tried to leave faction while not in a faction \n");
+
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
@@ -26989,10 +27029,14 @@ struct script_function buildin_func[] = {
 	**/
 	BUILDIN_DEF(factioninfo, "ii?"),
 	BUILDIN_DEF(setfaction, "i?"),
+	BUILDIN_DEF(factionleave, ""),
 	BUILDIN_DEF(factionmonster,"isiisii?"),
 	BUILDIN_DEF(areafactionmonster,"isiiiisii?"),
 	BUILDIN_DEF(fvfon,"s?"),
 	BUILDIN_DEF(fvfoff,"s"),
+	BUILDIN_DEF(setfactionmap,"i"),
+	BUILDIN_DEF(getfactionmap,"s"),
+	BUILDIN_DEF(removefactionmap,""),
 
 	/**
 	* Contested System [Biali]

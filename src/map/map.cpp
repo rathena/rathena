@@ -2113,6 +2113,10 @@ int map_quit(struct map_session_data *sd) {
 	if( sd->status.clan_id )
 		clan_member_left(sd);
 
+	//faction system
+	if(sd->status.faction_id)
+		sd->status.faction_id = 0;
+
 	pc_itemcd_do(sd,false);
 
 	npc_script_event(sd, NPCE_LOGOUT);
@@ -3728,6 +3732,9 @@ void map_flags_init(void){
 		mapdata->contested.info[CONTESTED_BASE_BONUS] = NULL;
 		mapdata->contested.info[CONTESTED_JOB_BONUS] = NULL;
 		mapdata->contested.info[CONTESTED_DROP_BONUS] = NULL;
+
+		// Biali FvF Maps (ON for all maps except the ones in ragnamania/mapflags/fvf.c)
+		map_setmapflag_sub(i, MF_FVF, true, &args);
 
 		if (instance_start && i >= instance_start)
 			continue;

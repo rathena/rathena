@@ -6072,11 +6072,9 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
  *------------------------------------------*/
 char pc_delitem(struct map_session_data *sd,int n,int amount,int type, short reason, e_log_pick_type log_type)
 {
-	int item_id = 0;
-
 	nullpo_retr(1, sd);
 
-	if(n < 0 || (item_id = sd->inventory.u.items_inventory[n].nameid) || amount <= 0 || sd->inventory.u.items_inventory[n].amount<amount || sd->inventory_data[n] == NULL)
+	if(n < 0 || sd->inventory.u.items_inventory[n].nameid == 0 || amount <= 0 || sd->inventory.u.items_inventory[n].amount<amount || sd->inventory_data[n] == NULL)
 		return 1;
 
 	log_pick_pc(sd, log_type, -amount, &sd->inventory.u.items_inventory[n]);
@@ -6095,11 +6093,6 @@ char pc_delitem(struct map_session_data *sd,int n,int amount,int type, short rea
 		clif_updatestatus(sd,SP_WEIGHT);
 
 	pc_show_questinfo(sd);
-
-	if(log_type == LOG_TYPE_CONSUME) {
-		pc_setparam(sd, SP_ITEMUSEDID, item_id);
-		npc_script_event(sd, NPCE_ITEMUSED);
-	}
 
 	return 0;
 }
@@ -6470,14 +6463,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		}
 		return 0;/* regardless, effect is not run */
 	}
-#ifdef BGEXTENDED
-	if( sd->inventory.u.items_inventory[n].card[0] == CARD0_CREATE) {
-		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.bg_reserved_char_id && !map_getmapflag(sd->bl.m, MF_BATTLEGROUND))
-			return 0;
-		if (MakeDWord(sd->inventory.u.items_inventory[n].card[2], sd->inventory.u.items_inventory[n].card[3]) == battle_config.woe_reserved_char_id && !mapdata_flag_gvg(map_getmapdata(sd->bl.m)))
-			return 0;
-	}
-#endif
+
 	sd->itemid = item.nameid;
 	sd->itemindex = n;
 	if(sd->catch_target_class != PET_CATCH_FAIL) //Abort pet catching.
@@ -6692,6 +6678,7 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 		clif_cart_additem(sd, idx, amount);
 	}
 }
+
 
 /*==========================================
  * Bound Item Check
@@ -9655,12 +9642,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	//Reset "can log out" tick.
+	//Biali check this out blackzone
 	if( battle_config.prevent_logout )
 		sd->canlog_tick = gettick() - battle_config.prevent_logout;
 
 	//biali deadbody rework
-		if(map_getmapflag(sd->bl.m,MF_RPK) || (src && faction_get_id(&sd->bl) > 0 && src->type == BL_PC )) {
-		
+	if(map_getmapflag(sd->bl.m,MF_RPK) || (src && faction_get_id(&sd->bl) > 0 && src->type == BL_PC )) {
+	
 		struct item lootbag[MAX_INVENTORY] = {};
 		i = k = 0;
 		struct item item_tmp = {};
@@ -9672,10 +9660,10 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			// checks for the items we want to save for the player:
 			// dont drop/break costume items (Ragnamania custom creation from existem equips)
 			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_CREATE && 
-			   sd->inventory.u.items_inventory[i].card[2] == GetWord(battle_config.reserved_costume_id, 0) &&
-			   sd->inventory.u.items_inventory[i].card[3] == GetWord(battle_config.reserved_costume_id, 1)) {
+			sd->inventory.u.items_inventory[i].card[2] == GetWord(battle_config.reserved_costume_id, 0) &&
+			sd->inventory.u.items_inventory[i].card[3] == GetWord(battle_config.reserved_costume_id, 1)) {
 					continue;
-			   }
+			}
 
 			//lets also skip items we should not break (itemdb.hpp can keep a list of constants for this)
 			if(sd->inventory.u.items_inventory[i].nameid == ITEMID_LOGBOOK)
@@ -9686,17 +9674,23 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				(id->equip&EQP_COSTUME_HEAD_MID) ||
 				(id->equip&EQP_COSTUME_HEAD_TOP) ||
 				(id->equip&EQP_COSTUME_GARMENT))
-			 )
+			)
 				continue;
 
 			// now lets break some of his stuff:
 			if(!itemdb_isstackable2(id)) {
-			    // break all bound and rental items....
+				// break all bound and rental items....
 				if(sd->inventory.u.items_inventory[i].expire_time ||
-				   sd->inventory.u.items_inventory[i].bound ||
-				   1+rand()%100 <= battle_config.break_chance
-				) {
-					ShowWarning("Quebrou item %d \n",sd->inventory.u.items_inventory[i].nameid);
+				sd->inventory.u.items_inventory[i].bound) {
+					sd->inventory.u.items_inventory[i] = {};
+					continue;
+				} else if(1+rand()%100 < battle_config.break_chance) {
+					if( sd->inventory.u.items_inventory[i].equip != 0 )
+						pc_unequipitem(sd, i, 3);
+					if( itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) )
+						pet_return_egg( sd, sd->pd );
+					pc_equipswitch_remove(sd, i);
+
 					sd->inventory.u.items_inventory[i] = {};
 					continue;
 				}
@@ -9716,10 +9710,18 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		nd->lootbag_size = k;
 		nd->isdeadbody = true;
 		nd->being_looted = false;
+
+		//Set a timer to unload the deadbody
+		add_timer(gettick()+battle_config.remove_deadbody_timer,npc_remove_deadbody,nd->bl.id,0);
+
+		sd->status.faction_id = 0;
+		faction_update_data(sd);
 		pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
+
+		return 1;
 	}
 
-	return 1;
+	
 }
 
 void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
