@@ -103,8 +103,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			constant = IT_USABLE;
 			item->flag.delay_consume |= DELAYCONSUME_TEMP;
 		} else {
-			if (exists && item->flag.delay_consume & DELAYCONSUME_TEMP) // Remove delayed consumption flag if switching types
-				item->flag.delay_consume &= ~DELAYCONSUME_TEMP;
+			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
 		}
 
 		item->type = static_cast<item_types>(constant);
