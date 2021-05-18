@@ -5529,11 +5529,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddDamageClass,1285,-50;
-      bonus2 bAddDamageClass,1286,-50;
-      bonus2 bAddDamageClass,1287,-50;
-      bonus2 bAddDamageClass,1899,-50;
-      bonus2 bAddDamageClass,1900,-50;  
+      bonus2 bSubClass,CLASS_GUARDIAN,50; 
   - Id: 4232
     AegisName: Wild_Ginseng_Card
     Name: Hermit Plant Card
@@ -5801,11 +5797,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddDamageClass,1285,40;
-      bonus2 bAddDamageClass,1286,40;
-      bonus2 bAddDamageClass,1287,40;
-      bonus2 bAddDamageClass,1899,40;
-      bonus2 bAddDamageClass,1900,40;
+     bonus2 bAddClass,CLASS_GUARDIAN,40;
   - Id: 4252
     AegisName: Alligator_Card
     Name: Alligator Card
