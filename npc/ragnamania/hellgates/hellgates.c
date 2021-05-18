@@ -15,10 +15,10 @@
 		end;
 
 	OnPCDieEvent:
-		if(.@merda = getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)){
+		if(getmapflag(strcharinfo(3),MF_RPK,RPK_ISHG)){
 			.@hg_id = @hg_id;
 			callfunc "hg_clear_vars";
-			warp @hg_map$,@hg_x,@hg_y;
+			// warp @hg_map$,@hg_x,@hg_y;
 			sleep 500;
 			callfunc "hg_instance_destroy",.@hg_id;
 		}

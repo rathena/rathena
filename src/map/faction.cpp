@@ -450,6 +450,9 @@ void faction_leave( struct map_session_data *sd) {
 	
 	nullpo_retv(sd);
 
+	if(!sd->status.faction_id)
+		return;
+
 	struct guild *g = NULL;
 	sd->status.faction_id = 0;
 	sd->faction = {};

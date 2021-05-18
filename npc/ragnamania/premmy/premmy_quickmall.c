@@ -1,4 +1,8 @@
 sala_premmy,42,49,2	script	Quick Mall	556,{
+
+	if(!vip_status(1) && getgmlevel()<10) 
+		end;
+	
 	callfunc "allinonemall";
 	end;
 }

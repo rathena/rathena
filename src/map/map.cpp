@@ -4673,17 +4673,19 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
 		// 		default:
 		// 			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
 		// 	}
-		// case MF_RPK:
-		// 	nullpo_retr(-1, args);
-		// 	switch (args->flag_val) {
-		// 		case RPK_MAP_TIER:
-		// 		case RPK_FULLLOOT:
-		// 		case RPK_ISDG:
-		// 		case RPK_ISHG:
-		// 			return mapdata->rpk.info[args->flag_val];
-		// 		default:
-		// 			return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
-		// 	}
+		case MF_RPK:
+			if(args == NULL)
+				return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+
+			switch (args->flag_val) {
+				case RPK_MAP_TIER:
+				case RPK_FULLLOOT:
+				case RPK_ISDG:
+				case RPK_ISHG:
+					return mapdata->rpk.info[args->flag_val];
+				default:
+					return util::umap_get(mapdata->flag, static_cast<int16>(mapflag), 0);
+			}
 		// case MF_CONTESTED:
 		// 	nullpo_retr(-1, args);
 

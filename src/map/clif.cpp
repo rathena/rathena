@@ -11325,12 +11325,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 			// RPK system (fullloot and hellgates)
 			if(map_getmapflag(sd->bl.m,MF_RPK)) {
+					sprintf(output,"");
 				if(mapdata->rpk.info[RPK_ISHG])
-					strcat(output,"You've descented into Hell \n");
+					strcat(output,"You've descented into Hell |");
 				if(mapdata->rpk.info[RPK_ISDG])
-					strcat(output,"You've entered a Transcedental Dungeon \n");
+					strcat(output,"You've entered a Transcedental Dungeon |");
 				if(mapdata->rpk.info[RPK_FULLLOOT])
-					strcat(output,"This is a Full Loot area");
+					strcat(output," This is a Full Loot area");
 				clif_broadcast2(&sd->bl, output, (int)strlen(output)+1, strtol("0x00ffff", (char **)NULL, 0), FW_BOLD, 14, 0, 0, SELF);
 				
 				if(mapdata->rpk.info[RPK_MAP_TIER]) {

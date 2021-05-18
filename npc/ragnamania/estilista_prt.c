@@ -142,19 +142,10 @@ OnInit:
 		1,	//	Hair Color ( 10,000 Zeny )
 		1;	//	Cloth Color ( 10,000 Zeny )
 		
-	// Blacklisted Style for each style and each gender.
-	// --- Female ---
-	.blacklist_hairstyle_0$ = "2,4,6";
-	.blacklist_haircolor_0$ = "1,3,5";
-	.blacklist_cloth_0$ = "1,2,3";
-	// --- Male ---
-	.blacklist_hairstyle_1$ = "";//"3,5,7";
-	.blacklist_haircolor_1$ = "2,4,6";
-	.blacklist_cloth_1$ = "4,5,6";
 
 	// Dont edit
-	setarray .min_style,getbattleflag( "min_hair_style" ),getbattleflag( "min_hair_color" ),getbattleflag( "min_cloth_color" );
-	setarray .max_style,getbattleflag( "max_hair_style" ),getbattleflag( "max_hair_color" ),getbattleflag( "max_cloth_color" );
+	setarray .min_style,0,0,0;
+	setarray .max_style,23,9,5;
 	.menu_size = getarraysize( .menu_name$ );
 	.cost_size = getarraysize( .cost );
 	setarray .look_type,LOOK_HAIR,LOOK_HAIR_COLOR,LOOK_CLOTHES_COLOR;

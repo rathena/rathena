@@ -2464,6 +2464,7 @@ Type is the kind of associated ID number required:
  3 - Account ID
  4 - Battle Ground ID
  5 - Clan ID
+ 6 - Faction ID
 
 For most purposes other than printing it, a number is better to have than a name
 (people do horrifying things to their character names).

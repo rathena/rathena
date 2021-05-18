@@ -1,16 +1,25 @@
--	script	City Register	-1,{
+-	script	City Register::factions	-1,{
 	end;
 
 OnInit:
-	setfactionmap strnpcinfo(2);
+	if(atoi(strnpcinfo(2)) > 0) { 
+		setmapflag strnpcinfo(4), mf_loadevent;
+		setfactionmap atoi(strnpcinfo(2));
+	}
+	end;
+
+OnPCLoadMapEvent:
+	if(getcharid(6) == 0)
+		if(strcharinfo(3) == strnpcinfo(4))
+			announce "Welcome to the sanctuary of " + factioninfo(atoi(strnpcinfo(2)),0),bc_blue|bc_self;
 	end;
 	
 }
 
-geffen,135,116,4	duplicate(City Register)	Prontera Register#1	4_F_KAFRA6
-payon,135,116,4	duplicate(City Register)	Prontera Register#2	4_F_KAFRA6
-morocc,135,116,4	duplicate(City Register)	Prontera Register#3	4_F_KAFRA6
-prontera,135,116,4	duplicate(City Register)	Prontera Register#4	4_F_KAFRA6
+geffen,0,0,4	duplicate(factions)	Geffen Register#1	4_F_KAFRA6
+payon,0,0,4	duplicate(factions)	Payon Register#2	4_F_KAFRA6
+morocc,0,0,4	duplicate(factions)	Morocc Register#3	4_F_KAFRA6
+prontera,146,196,4	duplicate(factions)	Prontera Register#4	4_F_KAFRA6
 
 
 

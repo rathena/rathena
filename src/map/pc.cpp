@@ -1514,7 +1514,7 @@ void pc_calc_ranking(struct map_session_data *tsd, struct map_session_data *ssd,
 		add2limit(ssd->status.pvp.kill_count, 1, USHRT_MAX);
 		add2limit(tsd->status.pvp.death_count, 1, USHRT_MAX);
 	}
-	else if( map_getmapflag(m,MF_RPK) )
+	else if( map_getmapflag_sub(m,MF_RPK,NULL) )
 	{
 		/*==========================================
 		 * Blackzone PK Ranking
@@ -8293,7 +8293,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 	// in non full-loot maps infamy is a 10th of that
 	if(src->type == BL_MOB) {
 		int inf = 0;
-		if(map_getmapflag(src->m,MF_RPK))
+		if(map_getmapflag_sub(src->m,MF_RPK, NULL))
 			inf=(base_exp * battle_config.infamy_from_mobs)/100;
 		else
 			inf=(base_exp * (battle_config.infamy_from_mobs * .10))/100;
@@ -9641,13 +9641,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 	}
 
-	//Reset "can log out" tick.
-	//Biali check this out blackzone
-	if( battle_config.prevent_logout )
-		sd->canlog_tick = gettick() - battle_config.prevent_logout;
-
 	//biali deadbody rework
-	if(map_getmapflag(sd->bl.m,MF_RPK) || (src && faction_get_id(&sd->bl) > 0 && src->type == BL_PC )) {
+	if(map_getmapflag_sub(sd->bl.m,MF_RPK,NULL) || (src && faction_get_id(&sd->bl) > 0 && src->type == BL_PC )) {
 	
 		struct item lootbag[MAX_INVENTORY] = {};
 		i = k = 0;
@@ -9678,19 +9673,23 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				continue;
 
 			// now lets break some of his stuff:
-			if(!itemdb_isstackable2(id)) {
-				// break all bound and rental items....
-				if(sd->inventory.u.items_inventory[i].expire_time ||
-				sd->inventory.u.items_inventory[i].bound) {
+			if(!pc_candrop(sd,&sd->inventory.u.items_inventory[i])) {
+					// Non-tradebla items, bye!
 					sd->inventory.u.items_inventory[i] = {};
 					continue;
-				} else if(1+rand()%100 < battle_config.break_chance) {
+			}
+			if(!itemdb_isstackable2(id)) {
+				// rental item? bound? bad luck? bye!
+				if(sd->inventory.u.items_inventory[i].expire_time ||
+				   sd->inventory.u.items_inventory[i].bound ||
+				   (1+rand()%100 < battle_config.break_chance)) {
+					
 					if( sd->inventory.u.items_inventory[i].equip != 0 )
 						pc_unequipitem(sd, i, 3);
 					if( itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) )
 						pet_return_egg( sd, sd->pd );
+					
 					pc_equipswitch_remove(sd, i);
-
 					sd->inventory.u.items_inventory[i] = {};
 					continue;
 				}
@@ -9716,12 +9715,18 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 		sd->status.faction_id = 0;
 		faction_update_data(sd);
-		pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_OUTSIGHT);
 
+		sd->respawn_tid = add_timer(tick+500, pc_respawn_timer, sd->bl.id, 0);
 		return 1;
 	}
 
-	
+	//Reset "can log out" tick.
+	//Biali check this out blackzone
+	if( battle_config.prevent_logout )
+		sd->canlog_tick = gettick() - battle_config.prevent_logout;
+
+	return 1;
+
 }
 
 void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
