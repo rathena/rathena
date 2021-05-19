@@ -102,6 +102,8 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (constant == IT_DELAYCONSUME) { // Items that are consumed only after target confirmation
 			constant = IT_USABLE;
 			item->flag.delay_consume |= DELAYCONSUME_TEMP;
+		} else {
+			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
 		}
 
 		item->type = static_cast<item_types>(constant);
