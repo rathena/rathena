@@ -365,7 +365,7 @@ void write_npc(std::ostream &os, const struct npc_data *nd, int id) {
 	os << "},\n";
 }
 
-void write_spawn(std::ostream &os, const struct map_data * m, const struct mob_db *mobinfo, int amount, int idx) {
+void write_spawn(std::ostream &os, const struct map_data * m, const std::shared_ptr<s_mob_db> mobinfo, int amount, int idx) {
 
 	os << "\t{";
 	os << "\"" << m->name << "\", ";
@@ -441,7 +441,7 @@ void write_object_lists() {
 			if (m->moblist[mobidx] == nullptr)
 				continue;
 
-			const auto mobinfo = mob_db(m->moblist[mobidx]->id);
+			const auto mobinfo = mob_db.find(m->moblist[mobidx]->id);
 			if (mobinfo == nullptr)
 				continue;
 			
