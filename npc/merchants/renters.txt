@@ -35,35 +35,27 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 
 	mes "[Peco Peco Breeder]";
 	if (BaseJob == Job_Knight && Class < Job_Rune_Knight) {
-		mes "Welcome.";
-		mes "Honorable Knight,";
-		mes "would you like to rent";
-		mes "a Peco Peco? The rental";
-		mes "fee is "+.@price+" zeny.";
+		mes "ยินดีต้อนรับ";
+		mes "อัศวินผู้มีเกียรติคุณต้องการเช่า Peco Peco หรือไม่";
+		mes "ค่าเช่า " +.@price + " zeny.";
 		next;
-		switch(select("Rent Peco Peco:Cancel")) {
+		switch(select("เช่า Peco Peco:ยกเลิก")) {
 		case 1:
 			if (Zeny < .@price) {
 				mes "[Peco Peco Breeder]";
-				mes "You do not";
-				mes "have enough zeny.";
-				mes "Are you...";
-				mes "bankrupt?";
+				mes "คุณมี zeny ไม่พอ";
+				mes "คุณ...ล้มละลายหรือเปล่า";
 				close;
 			}
 			else if(getskilllv("KN_RIDING") == 0) {
 				mes "[Peco Peco Breeder]";
-				mes "I'm sorry, but you're";
-				mes "not eligible for this";
-				mes "service. Please go learn";
-				mes "the Peco Peco Ride skill first.";
+				mes "ฉันขอโทษ แต่คุณไม่มีสิทธิ์ใช้บริการนี้";
+				mes "กรุณาไปเรียนรู้ทักษะ Peco Peco Ride ก่อน";
 				close;
 			}
 			else if(checkriding()) {
 				mes "[Peco Peco Breeder]";
-				mes "You're already";
-				mes "mounted on a";
-				mes "Peco Peco.";
+				mes "คุณได้ติดตั้ง Peco Peco แล้ว";
 				close;
 			}
 			else if(ismounting()) {
@@ -76,16 +68,12 @@ prontera,55,350,5	script	Peco Peco Breeder#knt	105,{
 			close;
 		case 2:
 			mes "[Peco Peco Breeder]";
-			mes "I see.";
-			mes "Well then,";
-			mes "have a good day.";
+			mes "ฉันเข้าใจ";
+			mes "ถ้าอย่างนั้นขอให้มีความสุขในวันนี้";
 			close;
 		}
 	} else {
-		mes "I'm sorry, but these";
-		mes "Peco Pecos are only";
-		mes "available for Knights";
-		mes "and Lord Knights.";
+		mes "ฉันขอโทษ แต่ Peco Pecos เหล่านี้มีให้สำหรับ Knights และ Lord Knights เท่านั้น";
 		close;
 	}
 }
@@ -99,35 +87,26 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 
 	mes "[PecoPeco Breeder]";
 	if (BaseJob == Job_Crusader && Class < Job_Rune_Knight) {
-		if(Upper != 1 ) mes "Welcome, Crusader.";
-		else mes "Welcome, Paladin.";
-		mes "We have a special";
-		mes "Peco Peco prepared";
-		mes "for you. To rent one";
-		mes "will cost "+.@price+" zeny.";
+		if(Upper != 1 ) mes "ยินดีต้อนรับ, Crusader.";
+		else mes "ยินดีต้อนรับ, Paladin.";
+		mes "เรามี Peco Peco แบบพิเศษเตรียมไว้สำหรับคุณหากต้องการเช่าจะมีราคา " +.@price + " zeny.";
 		next;
-		switch(select("Rent a PecoPeco:Quit")) {
+		switch(select("เช่า PecoPeco:ออก")) {
 		case 1:
 			if (Zeny < .@price) {
 				mes "[Peco Peco Breeder]";
-				mes "You do not";
-				mes "have enough zeny.";
-				mes "If you would like";
-				mes "a Peco Peco please";
-				mes "bring "+.@price+" zeny...";
+				mes "คุณมี zeny ไม่พอ";
+				mes "หากต้องการ Peco Peco กรุณานำ " +.@price + " zeny...";
 				close;
 			}
 			else if(getskilllv("KN_RIDING") == 0) {
 				mes "[Peco Peco Breeder]";
-				mes "You must first learn";
-				mes "to ride a PecoPeco before";
-				mes "I can rent one to you.";
+				mes "ก่อนอื่นคุณต้องเรียนรู้ที่จะขี่ PecoPeco ก่อนถึงจะเช่ารถให้คุณได้";
 				close;
 			}
 			else if(checkriding()) {
 				mes "[Peco Peco Breeder]";
-				mes "You are already";
-				mes "mounted on a Peco Peco.";
+				mes "คุณได้ติดตั้ง Peco Peco แล้ว";
 				close;
 			}
 			else if(ismounting()) {
@@ -140,15 +119,12 @@ prontera,232,318,3	script	Peco Peco Breeder#cru	105,{
 			close;
 		case 2:
 			mes "[PecoPeco Breeder]";
-			mes "See you around.";
+			mes "เจอกันใหม่";
 			close;
 		}
 	} else {
-		mes "What can I do for you?";
-		mes "Please be aware that";
-		mes "this Peco Peco rental";
-		mes "service is strictly for";
-		mes "Crusaders and Paladins.";
+		mes "ให้ฉันทำอะไรให้";
+		mes "โปรดทราบว่าบริการเช่ารถ Peco Peco นี้มีไว้สำหรับพวก Crusaders และ Paladins เท่านั้น";
 		close;
 	}
 }
@@ -163,51 +139,39 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 	mes "[Falcon Breeder]";
 	if (BaseJob == Job_Hunter) {
 		if (checkwug()) {
-			mes "Um...";
-			mes "You can't rent a Falcon";
-			mes "until you dismiss your warg first!";
+			mes "อืม...";
+			mes "คุณไม่สามารถเช่าเหยี่ยวได้จนกว่าคุณจะเลิกใช้ warg ก่อน!";
 			close;
 		}
-		mes "Do you need a Falcon?";
-		mes "You can rent your own";
-		mes "trusty bird of prey for a";
-		mes "fee of just "+.@price+" zeny~";
+		mes "คุณต้องการเหยี่ยวหรือไม่";
+		mes "เช่านกล่าเหยื่อคู่ใจได้ในราคาเพียง " +.@price + " zeny~";
 		next;
-		switch(select("Rent Falcon:Cancel")) {
+		switch(select("เช่าเหยี่ยว:ยกเลิก")) {
 		case 1:
 			if (checkwug()) {
 				mes "[Falcon Breeder]";
-				mes "Um...";
-				mes "You can't rent a Falcon";
-				mes "until you dismiss your warg first!";
+				mes "อืม...";
+				mes "คุณไม่สามารถเช่าเหยี่ยวได้จนกว่าคุณจะเลิกใช้ warg ก่อน!";
 				close;
 			}
 			if (Zeny < .@price) {
 				mes "[Falcon Breeder]";
-				mes "What is this?";
-				mes "You don't have";
-				mes "enough zeny?!";
-				mes "You better start";
-				mes "hunting money";
-				mes "instead of monsters~";
+				mes "นี่คืออะไร";
+				mes "คุณมี zeny ไม่พอเหรอ!";
+				mes "เริ่มล่าเงินแทนมอนสเตอร์ดีกว่า~";
 				close;
 			}
 			else if(getskilllv("HT_FALCON") == 0) {
 				mes "[Falcon Breeder]";
-				mes "Gosh~";
-				mes "Go learn how to";
-				mes "manage a Falcon";
-				mes "first! I can't rent one";
-				mes "to you if you can't";
-				mes "handle it, you know.";
+				mes "เอ้ย~";
+				mes "ไปเรียนรู้วิธีจัดการเหยี่ยวก่อน!";
+				mes "ฉันไม่สามารถเช่าให้คุณได้ถ้าคุณไม่สามารถจัดการได้คุณก็รู้";
 				close;
 			}
 			else if(checkfalcon()) {
 				mes "[Falcon Breeder]";
-				mes "Um...";
-				mes "You already have";
-				mes "a Falcon. It's right";
-				mes "there, can't you see it?";
+				mes "อืม... ";
+				mes "คุณมีเหยี่ยวอยู่แล้วมันอยู่ตรงนั้นไม่เห็นเหรอ?";
 				close;
 			}
 			set Zeny, Zeny-.@price;
@@ -215,18 +179,14 @@ hu_in01,381,304,5	script	Falcon Breeder#hnt	105,{
 			close;
 		case 2:
 			mes "[Falcon Breeder]";
-			mes "W-wait, where're";
-			mes "you goin'? These";
-			mes "Falcons are top notch,";
-			mes "I guarantee it! C'mon, yo~";
+			mes "รอ - เดี๋ยวก่อนคุณจะไปไหน";
+			mes "ฟอลคอนพวกนี้สุดยอดมากรับรองได้เลย! C'mon, yo ~";
 			close;
 		}
 	} else {
-		mes "Young fool!";
-		mes "Falcons can only";
-		mes "be used by Hunters";
-		mes "and Snipers, capish?";
-		mes "...Heh heh, jealous?";
+		mes "ยัยโง่!";
+		mes "เหยียวใช้ได้เฉพาะกับ Hunters และ Snipers เท่านั้น";
+		mes "...หึหึอิจฉา?";
 		close;
 	}
 }
