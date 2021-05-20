@@ -2002,7 +2002,7 @@
 15210:19275,{ bonus bVariableCastrate,-30; bonus bFlee2,15; }
 15246:20902:22168,{ bonus bDelayrate,-7; if (getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)>=9) { bonus bDelayrate,-8; } }
 15247:20903:22169,{ bonus bDelayrate,-5; }
-15344:20733,{ bonus2 bSkillAtk,"NC_ARMSCANNON",50; }
+15344:20733:22044:2996,{ bonus2 bSkillAtk,"NC_ARMSCANNON",50; }
 15383:20939,{ bonus bDelayrate,-10; }
 15390:20945:22206,{ bonus bVariableCastrate,-7; if (getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)>=9) { bonus bVariableCastrate,-5; } }
 19097:28901,{ autobonus2 "{ }",1,3000,BF_WEAPON|BF_MAGIC,"{ heal 5000,0; unitskilluseid getcharid(3),\"WM_LULLABY_DEEPSLEEP\",1; active_transform 1930,3000; /*PIAMETTE, unknown timer*/ }"; }
