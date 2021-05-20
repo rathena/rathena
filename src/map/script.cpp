@@ -8991,6 +8991,40 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 }
 
 /*==========================================
+  * Check if the player have the item with the unique id provided.
+  * Return true if the player have an item or false otherwise
+  * uniqueid_find(<"item_unique_id">,,<char_id>})
+  *------------------------------------------*/
+BUILDIN_FUNC(uniqueid_find)
+{
+	TBL_PC* sd;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint64 item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
+
+	if (!item_uniqueid) {
+		ShowError("buildin_uniqueid_find: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int i = -1;
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
+
+	if (i >= MAX_INVENTORY)
+		script_pushint(st, false);
+	else
+		script_pushint(st, true);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * Delete the item with the specified unique id
  * Return true on success or false otherwise
  * uniqueid_delitem(<item_unique_id>{,<char_id>})
@@ -25272,6 +25306,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(uniqueid_getiteminfo, "s?"),
+	BUILDIN_DEF(uniqueid_find,"s?"),
 	BUILDIN_DEF(uniqueid_delitem, "s?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]

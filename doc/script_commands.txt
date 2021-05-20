@@ -2732,6 +2732,22 @@ Returns true on success or false otherwise.
 
 ---------------------------------------
 
+*uniqueid_find(<"item_unique_id">{,<char_id>})
+
+Check if the player have an item with the unique id provided.
+return true if the item found , return false otherwise.
+
+	//while you are equipped with a Top Headgear
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	if(uniqueid_find(.@unique_id$)) {
+		mes "item found!";
+	} else {
+		mes "item not found!";
+	}
+	end;
+
+---------------------------------------
+
 *uniqueid_delitem(<"item_unique_id">{,<char_id>})
 
 This command will remove <item_unique_id> from the invoking character's inventory.
