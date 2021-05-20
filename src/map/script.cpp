@@ -8970,7 +8970,7 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 	setd_sub_num(st, NULL, ".@uid_attribute", 0, it->attribute, NULL);
 	for (k = 0; k < MAX_SLOTS; k++)
 	{
-		sprintf(card_var, "@uid_card%d", k + 1);
+		sprintf(card_var, ".@uid_card%d", k + 1);
 		setd_sub_num(st, NULL, card_var, 0, it->card[k], NULL);
 	}
 	setd_sub_num(st, NULL, ".@uid_expire", 0, it->expire_time, NULL);
