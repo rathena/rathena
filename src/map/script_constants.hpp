@@ -969,7 +969,7 @@
 	export_constant(SC_ARMOR);
 	export_constant(SC_ARMOR_ELEMENT_WATER);
 	export_constant(SC_NOCHAT);
-	export_constant(SC_BABY);
+	export_constant(SC_PROTECTEXP);
 	export_constant(SC_AURABLADE);
 	export_constant(SC_PARRYING);
 	export_constant(SC_CONCENTRATION);
@@ -1526,6 +1526,7 @@
 	export_constant(SC_GOLDENMACECLAN);
 	export_constant(SC_CROSSBOWCLAN);
 	export_constant(SC_JUMPINGCLAN);
+	export_constant(SC_TAROTCARD);
 	export_constant(SC_GEFFEN_MAGIC1);
 	export_constant(SC_GEFFEN_MAGIC2);
 	export_constant(SC_GEFFEN_MAGIC3);
@@ -1562,6 +1563,7 @@
 	export_constant(SC_ANCILLA);
 	export_constant(SC_EARTHSHAKER);
 	export_constant(SC_WEAPONBLOCK_ON);
+	export_constant(SC_SPORE_EXPLOSION);
 	export_constant(SC_ENTRY_QUEUE_APPLY_DELAY);
 	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
 	export_constant(SC_ADAPTATION);
@@ -1606,6 +1608,8 @@
 	export_constant(SC_LUXANIMA);
 	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 	export_constant(SC_ENSEMBLEFATIGUE);
+	export_constant(SC_MISTY_FROST);
+	export_constant(SC_MAGIC_POISON);
 	export_constant(SC_EP16_2_BUFF_SS);
 	export_constant(SC_EP16_2_BUFF_SC);
 	export_constant(SC_EP16_2_BUFF_AC);
@@ -8110,6 +8114,145 @@
 	export_constant(REFINE_TYPE_WEAPON);
 	export_constant(REFINE_TYPE_SHADOW_ARMOR);
 	export_constant(REFINE_TYPE_SHADOW_WEAPON);
+
+	/* status calc bl */
+	export_constant(SCB_NONE);
+	export_constant(SCB_BASE);
+	export_constant(SCB_MAXHP);
+	export_constant(SCB_MAXSP);
+	export_constant(SCB_STR);
+	export_constant(SCB_AGI);
+	export_constant(SCB_VIT);
+	export_constant(SCB_INT);
+	export_constant(SCB_DEX);
+	export_constant(SCB_LUK);
+	export_constant(SCB_BATK);
+	export_constant(SCB_WATK);
+	export_constant(SCB_MATK);
+	export_constant(SCB_HIT);
+	export_constant(SCB_FLEE);
+	export_constant(SCB_DEF);
+	export_constant(SCB_DEF2);
+	export_constant(SCB_MDEF);
+	export_constant(SCB_MDEF2);
+	export_constant(SCB_SPEED);
+	export_constant(SCB_ASPD);
+	export_constant(SCB_DSPD);
+	export_constant(SCB_CRI);
+	export_constant(SCB_FLEE2);
+	export_constant(SCB_ATK_ELE);
+	export_constant(SCB_DEF_ELE);
+	export_constant(SCB_MODE);
+	export_constant(SCB_SIZE);
+	export_constant(SCB_RACE);
+	export_constant(SCB_RANGE);
+	export_constant(SCB_REGEN);
+	export_constant(SCB_DYE);
+	export_constant(SCB_BATTLE);
+	export_constant(SCB_ALL);
+
+	/* status change states */
+	export_constant(SCS_NONE);
+	export_constant(SCS_NOMOVECOND);
+	export_constant(SCS_NOMOVE);
+	export_constant(SCS_NOPICKITEMCOND);
+	export_constant(SCS_NOPICKITEM);
+	export_constant(SCS_NODROPITEMCOND);
+	export_constant(SCS_NODROPITEM);
+	export_constant(SCS_NOCASTCOND);
+	export_constant(SCS_NOCAST);
+	export_constant(SCS_NOCHAT);
+	export_constant(SCS_NOCHATCOND);
+	export_constant(SCS_NOEQUIPITEM);
+	export_constant(SCS_NOEQUIPITEMCOND);
+	export_constant(SCS_NOUNEQUIPITEM);
+	export_constant(SCS_NOUNEQUIPITEMCOND);
+	export_constant(SCS_NOCONSUMEITEM);
+	export_constant(SCS_NOCONSUMEITEMCOND);
+	export_constant(SCS_NOATTACK);
+	export_constant(SCS_NOATTACKCOND);
+	export_constant(SCS_NOWARP);
+	export_constant(SCS_NOWARPCOND);
+	export_constant(SCS_NODEATHPENALTY);
+	export_constant(SCS_NODEATHPENALTYCOND);
+
+	/* body states */
+	export_constant(OPT1_STONE);
+	export_constant(OPT1_FREEZE);
+	export_constant(OPT1_STUN);
+	export_constant(OPT1_SLEEP);
+	export_constant(OPT1_STONEWAIT);
+	export_constant(OPT1_BURNING);
+	export_constant(OPT1_IMPRISON);
+
+	/* health states */
+	export_constant(OPT2_POISON);
+	export_constant(OPT2_CURSE);
+	export_constant(OPT2_SILENCE);
+	export_constant(OPT2_SIGNUMCRUCIS);
+	export_constant(OPT2_BLIND);
+	export_constant(OPT2_ANGELUS);
+	export_constant(OPT2_BLEEDING);
+	export_constant(OPT2_DPOISON);
+	export_constant(OPT2_FEAR);
+
+	/* show effect states */
+	export_constant(OPT3_NORMAL);
+	export_constant(OPT3_QUICKEN);
+	export_constant(OPT3_OVERTHRUST);
+	export_constant(OPT3_ENERGYCOAT);
+	export_constant(OPT3_EXPLOSIONSPIRITS);
+	export_constant(OPT3_STEELBODY);
+	export_constant(OPT3_BLADESTOP);
+	export_constant(OPT3_AURABLADE);
+	export_constant(OPT3_BERSERK);
+	export_constant(OPT3_LIGHTBLADE);
+	export_constant(OPT3_MOONLIT);
+	export_constant(OPT3_MARIONETTE);
+	export_constant(OPT3_ASSUMPTIO);
+	export_constant(OPT3_WARM);
+	export_constant(OPT3_KAITE);
+	export_constant(OPT3_BUNSIN);
+	export_constant(OPT3_SOULLINK);
+	export_constant(OPT3_UNDEAD);
+	export_constant(OPT3_CONTRACT);
+
+	/* status change flags */
+	export_constant(SCF_BLEFFECT);
+	export_constant(SCF_DISPLAY_PC);
+	export_constant(SCF_NO_CLEARBUFF);
+	export_constant(SCF_NO_REM_ONDEAD);
+	export_constant(SCF_NO_DISPELL);
+	export_constant(SCF_NO_CLEARANCE);
+	export_constant(SCF_NO_BANISHING_BUSTER);
+	export_constant(SCF_NO_SAVE);
+	export_constant(SCF_REM_ON_DAMAGED);
+	export_constant(SCF_REM_ON_REFRESH);
+	export_constant(SCF_REM_ON_LUXANIMA);
+	export_constant(SCF_STOP_ATTACKING);
+	export_constant(SCF_STOP_CASTING);
+	export_constant(SCF_STOP_WALKING);
+	export_constant(SCF_BOSS_RESIST);
+	export_constant(SCF_MVP_RESIST);
+	export_constant(SCF_SET_STAND);
+	export_constant(SCF_FAILED_MADO);
+	export_constant(SCF_DEBUFF);
+	export_constant(SCF_REM_ON_CHANGEMAP);
+	export_constant(SCF_REM_ON_MAPWARP);
+	export_constant(SCF_REM_CHEM_PROTECT);
+	export_constant(SCF_OVERLAP_FAIL);
+	export_constant(SCF_OPT_CHANGEOPTION);
+	export_constant(SCF_OPT_CHANGELOOK);
+	export_constant(SCF_TRIGGER_ONTOUCH_);
+	export_constant(SCF_DISPLAY_NPC);
+	export_constant(SCF_REQUIRE_WEAPON);
+	export_constant(SCF_REQUIRE_SHIELD);
+	export_constant(SCF_MOBLOSETARGET);
+	export_constant(SCF_REM_ELEMENTALOPTION);
+	export_constant(SCF_SUPERNOVICEANGEL);
+	export_constant(SCF_TAEKWONANGEL);
+	export_constant(SCF_MADOCANCEL);
+	export_constant(SCF_MADOENDCANCEL);
 
 	#undef export_constant
 	#undef export_constant2

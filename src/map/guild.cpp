@@ -1492,16 +1492,16 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
 	struct skill_unit_group* group = NULL;
-	sc_type type = status_skill2sc(skill_id);
+	sc_type type = skill_get_sc(skill_id);
+
+	if (type == SC_NONE)
+		return;
 	if( !(battle_config.guild_aura&(is_agit_start()?2:1)) &&
 			!(battle_config.guild_aura&(map_flag_gvg2(sd->bl.m)?8:4)) )
 		return;
 	if( !skill_lv )
 		return;
-	if( sd->sc.data[type] && (group = skill_id2group(sd->sc.data[type]->val4)) ) {
-		skill_delunitgroup(group);
-		status_change_end(&sd->bl,type,INVALID_TIMER);
-	}
+	status_change_end(&sd->bl, type, INVALID_TIMER);
 	group = skill_unitsetting(&sd->bl,skill_id,skill_lv,sd->bl.x,sd->bl.y,0);
 	if( group )
 		sc_start4(NULL,&sd->bl,type,100,(battle_config.guild_aura&16)?0:skill_lv,0,0,group->group_id,600000);//duration doesn't matter these status never end with val4

@@ -4,11 +4,17 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include <algorithm>
+#include <bitset>
+#include <memory>
+#include <unordered_map>
 #include <vector>
 
 #include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
+
+#include "script.hpp"
 
 enum e_race2 : uint8;
 struct block_list;
@@ -223,7 +229,7 @@ enum sc_type : int16 {
 	SC_ARMOR,
 	SC_ARMOR_ELEMENT_WATER,
 	SC_NOCHAT,
-	SC_BABY,
+	SC_PROTECTEXP,
 	SC_AURABLADE,
 	SC_PARRYING,
 	SC_CONCENTRATION, //110
@@ -995,7 +1001,7 @@ enum sc_type : int16 {
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_types : short{
+enum efst_type : short{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
@@ -2095,7 +2101,11 @@ enum efst_types : short{
 
 	EFST_JPNONLY_TACTICS = 1147,
 
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
 	EFST_MADOGEAR = 1149,
+#else
+	EFST_MADOGEAR = EFST_RIDING,
+#endif
 	EFST_DEADLY_DEFEASANCE,
 	EFST_CLIMAX_DES_HU,
 	EFST_CLIMAX,
@@ -2304,7 +2314,8 @@ extern short current_equip_opt_index;
 //who were not on your field of sight when it happened)
 
 ///opt1: (BODYSTATE_*) Non stackable status changes.
-enum sc_opt1 {
+enum e_sc_opt1 : uint16 {
+	OPT1_NONE = 0,
 	OPT1_STONE = 1, //Petrified
 	OPT1_FREEZE,
 	OPT1_STUN,
@@ -2313,10 +2324,12 @@ enum sc_opt1 {
 	OPT1_STONEWAIT = 6, //Petrifying
 	OPT1_BURNING,
 	OPT1_IMPRISON,
+	OPT1_MAX
 };
 
 ///opt2: (HEALTHSTATE_*) Stackable status changes.
-enum sc_opt2 {
+enum e_sc_opt2 : uint16 {
+	OPT2_NONE		= 0x0,
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,
@@ -2326,11 +2339,12 @@ enum sc_opt2 {
 	OPT2_BLEEDING		= 0x0040,
 	OPT2_DPOISON		= 0x0080,
 	OPT2_FEAR		= 0x0100,
+	OPT2_MAX
 };
 
 ///opt3: (SHOW_EFST_*)
-enum sc_opt3 {
-	OPT3_NORMAL		= 0x00000000,
+enum e_sc_opt3 : uint32 {
+	OPT3_NORMAL			= 0x0,
 	OPT3_QUICKEN		= 0x00000001,
 	OPT3_OVERTHRUST		= 0x00000002,
 	OPT3_ENERGYCOAT		= 0x00000004,
@@ -2349,11 +2363,12 @@ enum sc_opt3 {
 	OPT3_SOULLINK		= 0x00008000,
 	OPT3_UNDEAD		= 0x00010000,
 	OPT3_CONTRACT		= 0x00020000,
+	OPT3_MAX
 };
 
 ///Option (EFFECTSTATE_*)
-enum e_option {
-	OPTION_NOTHING		= 0x00000000,
+enum e_option : uint32 {
+	OPTION_NOTHING		= 0x0,
 	OPTION_SIGHT		= 0x00000001,
 	OPTION_HIDE			= 0x00000002,
 	OPTION_CLOAK		= 0x00000004,
@@ -2384,6 +2399,7 @@ enum e_option {
 	OPTION_HANBOK		= 0x08000000,
 	OPTION_OKTOBERFEST	= 0x10000000,
 	OPTION_SUMMER2		= 0x20000000,
+	OPTION_MAX,
 
 	// compound constant for older carts
 	OPTION_CART	= OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
@@ -2404,23 +2420,36 @@ enum manner_flags
 };
 
 /// Status Change State Flags
-enum scs_flag {
-	SCS_NOMOVECOND		= 0x00000001, ///< cond flag for nomove
-	SCS_NOMOVE			= 0x00000002, ///< unit unable to move
-	SCS_NOPICKITEMCOND	= 0x00000004, ///< cond flag for nopickitem
-	SCS_NOPICKITEM		= 0x00000008, ///< player unable to pick up items
-	SCS_NODROPITEMCOND	= 0x00000010, ///< cond flag for nodropitem
-	SCS_NODROPITEM		= 0x00000020, ///< player unable to drop items
-	SCS_NOCASTCOND		= 0x00000040, ///< cond flag for nocast
-	SCS_NOCAST			= 0x00000080, ///< unit unable to cast skills
-	SCS_NOCHAT			= 0x00000100, ///< unit can't talk
-	SCS_NOCHATCOND		= 0x00000200, ///< cond flag for notalk
+enum e_scs_flag : uint32 {
+	SCS_NONE				= 0x0,
+	SCS_NOMOVECOND			= 0x000001, ///< cond flag for SCS_NOMOVE
+	SCS_NOMOVE				= 0x000002, ///< unit unable to move
+	SCS_NOPICKITEMCOND		= 0x000004, ///< cond flag for SCS_NOPICKITEM
+	SCS_NOPICKITEM			= 0x000008, ///< player unable to pick up items
+	SCS_NODROPITEMCOND		= 0x000010, ///< cond flag for SCS_NODROPITEM
+	SCS_NODROPITEM			= 0x000020, ///< player unable to drop items
+	SCS_NOCASTCOND			= 0x000040, ///< cond flag for SCS_NOCAST
+	SCS_NOCAST				= 0x000080, ///< unit unable to cast skills
+	SCS_NOCHAT				= 0x000100, ///< unit can't talk
+	SCS_NOCHATCOND			= 0x000200, ///< cond flag for SCS_NOCHAT
+	SCS_NOEQUIPITEM			= 0x000400, ///< player can't puts on equip
+	SCS_NOEQUIPITEMCOND		= 0x000800, ///< cond flag for SCS_NOEQUIPITEM
+	SCS_NOUNEQUIPITEM		= 0x001000, ///< player can't puts off equip
+	SCS_NOUNEQUIPITEMCOND	= 0x002000, ///< cond flag for SCS_NOUNEQUIPITEM
+	SCS_NOCONSUMEITEM		= 0x004000, ///< player can't consumes equip
+	SCS_NOCONSUMEITEMCOND	= 0x008000, ///< cond flag for SCS_NOCONSUMEITEM
+	SCS_NOATTACK			= 0x010000, ///< unit can't attack
+	SCS_NOATTACKCOND		= 0x020000, ///< cond flag for SCS_NOATTACK
+	SCS_NOWARP				= 0x040000, ///< unit can't warp
+	SCS_NOWARPCOND			= 0x080000, ///< cond flag for SCS_NOWARP
+	SCS_NODEATHPENALTY		= 0x100000, ///< player doesn't experience EXP loss
+	SCS_NODEATHPENALTYCOND	= 0x200000, ///< cond flag for SCS_NODEATHPENALTYCOND
+	SCS_MAX
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum scb_flag
-{
-	SCB_NONE	= 0x00000000,
+enum e_scb_flag : uint32 {
+	SCB_NONE	= 0x0,
 	SCB_BASE	= 0x00000001,
 	SCB_MAXHP	= 0x00000002,
 	SCB_MAXSP	= 0x00000004,
@@ -2452,6 +2481,7 @@ enum scb_flag
 	SCB_RANGE	= 0x10000000,
 	SCB_REGEN	= 0x20000000,
 	SCB_DYE		= 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
+	SCB_MAX,
 
 	SCB_BATTLE	= 0x3FFFFFFE,
 	SCB_ALL		= 0x3FFFFFFF
@@ -2464,8 +2494,8 @@ enum e_status_calc_opt {
 };
 
 /// Flags for status_change_start and status_get_sc_def
-enum e_status_change_start_flags {
-	SCSTART_NONE       = 0x00,
+enum e_status_change_start_flags : int64 {
+	SCSTART_NONE       = 0x0,
 	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
 	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
 	SCSTART_LOADED     = 0x04, /// When sc_data loaded (fetched from table), no values (val1 ~ val4) have to be altered/recalculate
@@ -2474,7 +2504,7 @@ enum e_status_change_start_flags {
 };
 
 /// Enum for status_change_clear_buffs
-enum e_status_change_clear_buffs_flags {
+enum e_status_change_clear_buffs_flags : int64 {
 	SCCB_BUFFS        = 0x01,
 	SCCB_DEBUFFS      = 0x02,
 	SCCB_REFRESH      = 0x04,
@@ -2483,7 +2513,7 @@ enum e_status_change_clear_buffs_flags {
 };
 
 ///Enum for bonus_script's flag [Cydh]
-enum e_bonus_script_flags {
+enum e_bonus_script_flags : uint32 {
 	BSF_REM_ON_DEAD				= 0x001, ///< Removed when dead
 	BSF_REM_ON_DISPELL			= 0x002, ///< Removed by Dispell
 	BSF_REM_ON_CLEARANCE		= 0x004, ///< Removed by Clearance
@@ -2510,6 +2540,106 @@ enum e_status_bonus {
 	STATUS_BONUS_FIX = 0,
 	STATUS_BONUS_RATE = 1,
 };
+
+///Enum of Status Change Flags [Cydh]
+enum e_status_change_flag : uint16 {
+	SCF_NONE = 0,
+	SCF_BLEFFECT,
+	SCF_DISPLAY_PC,
+	SCF_NO_CLEARBUFF,
+	SCF_NO_REM_ONDEAD,
+	SCF_NO_DISPELL,
+	SCF_NO_CLEARANCE,
+	SCF_NO_BANISHING_BUSTER,
+	SCF_NO_SAVE,
+	SCF_REM_ON_DAMAGED,
+	SCF_REM_ON_REFRESH,
+	SCF_REM_ON_LUXANIMA,
+	SCF_STOP_ATTACKING,
+	SCF_STOP_CASTING,
+	SCF_STOP_WALKING,
+	SCF_BOSS_RESIST,
+	SCF_MVP_RESIST,
+	SCF_SET_STAND,
+	SCF_FAILED_MADO,
+	SCF_DEBUFF,
+	SCF_REM_ON_CHANGEMAP,
+	SCF_REM_ON_MAPWARP,
+	SCF_REM_CHEM_PROTECT,
+	SCF_OVERLAP_FAIL,
+	SCF_OPT_CHANGEOPTION,
+	SCF_OPT_CHANGELOOK,
+	SCF_TRIGGER_ONTOUCH_,
+	SCF_DISPLAY_NPC,
+	SCF_REQUIRE_WEAPON,
+	SCF_REQUIRE_SHIELD,
+	SCF_MOBLOSETARGET,
+	SCF_REM_ELEMENTALOPTION,
+	SCF_SUPERNOVICEANGEL,
+	SCF_TAEKWONANGEL,
+	SCF_MADOCANCEL,
+	SCF_MADOENDCANCEL,
+	SCF_MAX
+};
+
+/// Struct of SC configs [Cydh]
+struct s_status_change_db {
+	sc_type type;				///< SC_
+	efst_type icon;				///< EFST_
+	uint32 state;				///< SCS_
+	uint32 calc_flag;			///< SCB_ flags
+	uint16 opt1;				///< OPT1_
+	uint16 opt2;				///< OPT2_
+	uint32 opt3;				///< OPT3_
+	uint32 look;				///, OPTION_ Changelook
+	std::bitset<SCF_MAX> flag;	///< SCF_ Flags, enum e_status_change_flag
+	bool display;				///< Display status effect/icon (for certain state)
+	uint16 skill_id;			///< Associated skill for (addeff) duration lookups
+	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
+	std::vector<sc_type> fail;	///< List of SC that causing this SC cannot be activated
+	bool end_return;			///< After SC ends the SC from end list, it does nothing
+	script_code *script;		///< Executes this script when SC starts
+	t_tick min_duration;		///< Minimum duration effect (after all status reduction)
+	uint16 min_rate;			///< Minimum rate to be applied (after all status reduction)
+
+	~s_status_change_db()
+	{
+		if (script)
+			script_free_code(script);
+	}
+};
+
+class StatusDatabase : public TypesafeCachedYamlDatabase<uint16, s_status_change_db> {
+public:
+	StatusDatabase() : TypesafeCachedYamlDatabase("STATUS_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+
+	// Extras
+	efst_type getIcon(sc_type type);
+	uint32 getState(sc_type type);
+	uint32 getCalcFlag(sc_type type);
+	uint16 getOpt1(sc_type type);
+	uint16 getOpt2(sc_type type);
+	uint32 getOpt3(sc_type type);
+	uint32 getOption(sc_type type);
+	std::bitset<SCF_MAX> getFlag(sc_type type);
+	t_tick getMinDuration(sc_type type);
+	uint16 getMinRate(sc_type type);
+	script_code *getScript(sc_type type);
+	bool getEndReturn(sc_type type);
+	std::vector<sc_type> getEnd(sc_type type);
+	std::vector<sc_type> getFail(sc_type type);
+	uint16 getSkill(sc_type type);
+	bool hasSCF(status_change *sc, e_status_change_flag flag);
+	void removeByStatusFlag(block_list *bl, std::vector<e_status_change_flag> flag);
+	void changeSkillTree(map_session_data *sd);
+};
+
+extern StatusDatabase status_db;
 
 /// Enum for status_calc_weight and status_calc_cart_weight
 enum e_status_calc_weight_opt {
@@ -2547,14 +2677,6 @@ struct weapon_atk {
 	unsigned char wlv;
 #endif
 };
-
-extern sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
-extern int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-extern unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
-extern int StatusSkillChangeTable[SC_MAX];          /// status -> skill
-extern int StatusRelevantBLTypes[EFST_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
-extern unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
-extern unsigned int StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
@@ -2658,11 +2780,17 @@ struct status_change {
 	unsigned char count;
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
-		unsigned char move;
-		unsigned char pickup;
-		unsigned char drop;
-		unsigned char cast;
-		unsigned char chat;
+		bool move;
+		bool pickup;
+		bool drop;
+		bool cast;
+		bool chat;
+		bool equip;
+		bool unequip;
+		bool consume;
+		bool attack;
+		bool warp;
+		bool deathpenalty;
 	} cant;/* status change state flags */
 	//int sg_id; //ID of the previous Storm gust that hit you
 	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
@@ -2675,26 +2803,8 @@ struct status_change {
 	struct status_change_entry *data[SC_MAX];
 };
 
-/// Statuses that are cancelled/disabled while on Madogear
-static const std::vector<sc_type> mado_statuses = {
-	SC_LOUD,
-	SC_CARTBOOST,
-	SC_MELTDOWN,
-	SC_ADRENALINE,
-	SC_ADRENALINE2,
-	SC_WEAPONPERFECTION,
-	SC_MAXIMIZEPOWER,
-	SC_OVERTHRUST,
-	SC_MAXOVERTHRUST
-};
-
-// for looking up associated data
-sc_type status_skill2sc(int skill);
-int status_sc2skill(sc_type sc);
-unsigned int status_sc2scb_flag(sc_type sc);
-int status_type2relevant_bl_types(int type);
-
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag, uint16 skill_id);
+
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay, skill) status_damage(src, target, hp, 0, walkdelay, 0, skill)
 //Define for standard SP damage attacks.
@@ -2802,7 +2912,7 @@ int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), SCO_NONE)
+#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum e_scb_flag)(flag), SCO_NONE)
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
 #define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, SCB_ALL, opt)
 #define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, SCB_ALL, opt)
@@ -2813,7 +2923,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
+void status_calc_bl_(struct block_list *bl, enum e_scb_flag flag, enum e_status_calc_opt opt);
 int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
 void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
 int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
@@ -2825,6 +2935,7 @@ int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt);
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
+void status_calc_state(struct block_list *bl, struct status_change *sc, enum e_scs_flag flag, bool start);
 
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
@@ -2846,9 +2957,11 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 
-void initChangeTables(void);
-int status_readdb( bool reload = false );
-int do_init_status(void);
+// Status changes accessors for StatusChange database
+uint16 status_efst_get_bl_type(enum efst_type efst);
+
+void status_readdb( bool reload = false );
+void do_init_status(void);
 void do_final_status(void);
 
 #endif /* STATUS_HPP */
