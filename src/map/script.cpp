@@ -8931,13 +8931,13 @@ BUILDIN_FUNC(getequipuniqueid)
   * Get the item information with the specified unique id
   * and assign it to the variables.
   * Return true on success or false otherwise
-  * uniqueid_getiteminfo(<item_unique_id>,,<char_id>})
+  * uniqueid_getiteminfo(<"item_unique_id">,,<char_id>})
   *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_getiteminfo)
 {
 	TBL_PC *sd;
 
-	if (!script_charid2sd(4, sd)) {
+	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -9027,7 +9027,7 @@ BUILDIN_FUNC(uniqueid_find)
 /*==========================================
  * Delete the item with the specified unique id
  * Return true on success or false otherwise
- * uniqueid_delitem(<item_unique_id>{,<char_id>})
+ * uniqueid_delitem(<"item_unique_id">{,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_delitem)
 {
