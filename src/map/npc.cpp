@@ -4622,6 +4622,91 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 	return vector.size();
 }
 
+struct npc_data* dup_npc(struct npc_data* dnd, const char* name)
+{
+	struct npc_data* nd;
+	nd = npc_create_npc(dnd->bl.m, dnd->bl.x, dnd->bl.y);
+	nd->src_id = dnd->src_id ? dnd->src_id : dnd->bl.id;
+	nd->class_ = dnd->class_;
+	nd->speed = dnd->speed;
+	nd->bl.type = dnd->bl.type;
+	nd->subtype = dnd->subtype;
+	switch (nd->subtype) {
+	case NPCTYPE_SCRIPT:
+		++npc_script;
+		nd->u.scr.xs = dnd->u.scr.xs;
+		nd->u.scr.ys = dnd->u.scr.ys;
+		nd->u.scr.script = dnd->u.scr.script;
+		nd->u.scr.label_list = dnd->u.scr.label_list;
+		nd->u.scr.label_list_num = dnd->u.scr.label_list_num;
+		break;
+	case NPCTYPE_SHOP:
+	case NPCTYPE_CASHSHOP:
+	case NPCTYPE_ITEMSHOP:
+	case NPCTYPE_POINTSHOP:
+	case NPCTYPE_MARKETSHOP:
+		++npc_shop;
+		safestrncpy(nd->u.shop.pointshop_str, dnd->u.shop.pointshop_str, strlen(dnd->u.shop.pointshop_str));
+		nd->u.shop.itemshop_nameid = dnd->u.shop.itemshop_nameid;
+		nd->u.shop.shop_item = dnd->u.shop.shop_item;
+		nd->u.shop.count = dnd->u.shop.count;
+		nd->u.shop.discount = dnd->u.shop.discount;
+		break;
+	case NPCTYPE_WARP:
+		++npc_warp;
+		if (!battle_config.warp_point_debug)
+			nd->class_ = JT_WARPNPC;
+		else
+			nd->class_ = JT_GUILD_FLAG;
+		nd->u.warp.xs = dnd->u.warp.xs;
+		nd->u.warp.ys = dnd->u.warp.ys;
+		nd->u.warp.mapindex = dnd->u.warp.mapindex;
+		nd->u.warp.x = dnd->u.warp.x;
+		nd->u.warp.y = dnd->u.warp.y;
+		nd->trigger_on_hidden = dnd->trigger_on_hidden;
+		break;
+
+	}
+
+	if (nd->bl.m >= 0) {
+		map_addnpc(nd->bl.m, nd);
+		status_change_init(&nd->bl);
+		unit_dataset(&nd->bl);
+		nd->ud.dir = dnd->ud.dir;
+		npc_setcells(nd);
+		if (map_addblock(&nd->bl))
+			return nd;
+		if (nd->class_ != JT_FAKENPC) {
+			status_set_viewdata(&nd->bl, nd->class_);
+			if (map_getmapdata(nd->bl.m)->users)
+				clif_spawn(&nd->bl);
+		}
+	}
+	else {
+		map_addiddb(&nd->bl);
+	}
+	if (name == "") {
+		safesnprintf(nd->exname, ARRAYLENGTH(nd->exname), "dup_%d", nd->bl.id);
+	}
+	else {
+		strcpy(nd->exname, name);
+	}
+	strdb_put(npcname_db, nd->exname, nd);
+
+	if (nd->subtype != NPCTYPE_SCRIPT)
+		return nd;
+
+	for (int i = 0; i < nd->u.scr.label_list_num; i++) {
+		if (npc_event_export(nd, i)) {
+			ShowWarning("npc_parse_duplicate : duplicate event %s::%s \n",
+				nd->exname, nd->u.scr.label_list[i].name);
+		}
+		npc_timerevent_export(nd, i);
+	}
+	nd->u.scr.timerid = INVALID_TIMER;
+	return nd;
+}
+
 const char *npc_get_script_event_name(int npce_index)
 {
 	switch (npce_index) {

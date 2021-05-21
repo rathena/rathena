@@ -2491,6 +2491,7 @@ to retrieve and can be one of the following:
     0 - NPC Game ID
 
 If an invalid type is given or the NPC does not exist, 0 is returned.
+If the "npc name" is provided , it return 0 if the npc is not found.
 
 ---------------------------------------
 
@@ -6602,6 +6603,14 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
+*duplicate "<NPC object name>"{,"<Duplicate object name>"};
+
+This command will duplicate the npc provided.
+if the duplicates object name is not provided , it will generate a new object name.
+return the duplicate object name.
+
+---------------------------------------
+
 *cloakonnpc "<NPC object name>"{,<character ID>};
 *cloakoffnpc "<NPC object name>"{,<character ID>};
 
