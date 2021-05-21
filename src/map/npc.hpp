@@ -221,11 +221,8 @@ struct npc_data {
 	} progressbar;
 
 #ifdef GENERATE_NAVI
-	struct {
-		int id;
-		struct navi_pos pos;
-		struct navi_pos warp_dest; // only set for warps
-	} navi;
+	struct navi_link navi; // for warps and the src of npcs
+	std::vector<navi_link> links; // for extra links, like warper npc
 #endif
 };
 

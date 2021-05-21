@@ -526,6 +526,59 @@ S9: Restrict("RE");
 	Go("paramk",97,17);
 S10: Go("turbo_room",99,114);
 
+OnNaviGenerate:
+	naviregisterwarp("Warper > Prontera", "prontera", 155, 183);
+	naviregisterwarp("Warper > Alberta", "alberta", 28, 234);
+	naviregisterwarp("Warper > Aldebaran", "aldebaran", 140, 131);
+	naviregisterwarp("Warper > Amatsu", "amatsu", 198, 84);
+	naviregisterwarp("Warper > Ayothoya", "ayothaya", 208, 166);
+	
+	if (checkre(0)) {
+		naviregisterwarp("Warper > Brasilis", "brasilis", 196, 217);
+	}
+	// T6: Restrict("RE");
+	// 	Go("brasilis",196,217);
+	// T7: Go("comodo",209,143);
+	// T8: Restrict("RE");
+	// 	Go("dewata",200,180);
+	// T9: Restrict("RE");
+	// 	Go("ecl_in01",48,53);
+	// T10: Go("einbech",63,35);
+	// T11: Go("einbroch",64,200);
+	// T12: Restrict("RE");
+	// 	Go("dicastes01",198,187);
+	// T13: Go("geffen",119,59);
+	// T14: Go("gonryun",160,120);
+	// T15: Go("hugel",96,145);
+	// T16: Go("izlude",128,(checkre(3)?146:114));
+	// T17: Go("jawaii",251,132);
+	// T18: Restrict("RE");
+	// 	Go("lasagna",193,182);
+	// T19: Go("lighthalzen",158,92);
+	// T20: Go("louyang",217,100);
+	// T21: Go("xmas",147,134);
+	// T22: Restrict("RE");
+	// 	Go("malangdo",140,114);
+	// T23: Restrict("RE");
+	// 	Go("malaya",231,200);
+	// T24: Go("manuk",282,138);
+	// T25: Go("mid_camp",210,288);
+	// T26: Restrict("RE");
+	// 	Go("mora",55,146);
+	// T27: Go("morocc",156,93);
+	// T28: Go("moscovia",223,184);
+	// T29: Go("nameless_n",256,215);
+	// T30: Go("niflheim",202,174);
+	// T31: Go("payon",179,100);
+	// T32: Go("rachel",130,110);
+	// T33: Go("splendide",201,147);
+	// T34: Go("thor_camp",246,68);
+	// T35: Go("umbala",97,153);
+	// T36: Go("veins",216,123);
+	// T37: Go("yuno",157,51);
+
+	end;
+
 OnInit:
 	.Satan_Morocc = true;	//	false will enable moc_fild 4,5,6,8,9,10,14,15 while disable moc_fild 20,21,22 Default is true.
 	.OnlyFirstFld = false;	//	true will teleport to the first level of the Fields  Default is false.

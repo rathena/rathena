@@ -19,17 +19,6 @@
 #include "npc.hpp"
 #include "path.hpp"
 
-#ifdef COMPACT_OUTPUT
-#define OUT_INDENT ""
-#define OUT_SEPARATOR " "
-#define OUT_FINDENT " "
-#else
-#define OUT_INDENT "\t"
-#define OUT_SEPARATOR "\n"
-#define OUT_FINDENT "\t"
-#endif
-
-
 
 #define SET_OPEN 0
 #define SET_CLOSED 1
@@ -310,38 +299,36 @@ void write_map(std::ostream& os, const struct map_data * m) {
 	os << map_type(m) << ", " << m->xs << ", " << m->ys << "},\n";
 }
 
-void write_warp(std::ostream& os, const struct npc_data *nd, int target, int id) {
-	if (nd == nullptr) {
-		ShowError("Unable to find NPC ID for NPC '%s'. Skipping...\n", nd->exname);
-		return;
-	}
-
+void write_warp(std::ostream& os, const struct navi_link &nl) {
 	const struct map_data *msrc, *mdest;
 
-	msrc = map_getmapdata(nd->navi.pos.m);
-	mdest = map_getmapdata(nd->navi.warp_dest.m);
+	msrc = map_getmapdata(nl.pos.m);
+	mdest = map_getmapdata(nl.warp_dest.m);
 
 	if (msrc == nullptr || mdest == nullptr)
 		return;
 
 	os << "\t{";
 	os << "\"" << msrc->name << "\", ";
-	os << nd->navi.id << ", "; // gid
+	os << nl.id << ", "; // gid
 	// 200 = warp , 201 = npc script, 202 = Kafra Dungeon Warp,
 	// 203 = Cool Event Dungeon Warp, 204 Kafra/Cool Event/Alberta warp,
 	// 205 = airport  (currently we only support warps)
-	os << 200 << ", ";
+	os << ((nl.npc->subtype == NPCTYPE_WARP) ? 200 : 201) << ", ";
 	// sprite id, 99999 = warp portal
-	os << ((nd->vd.class_ == JT_WARPNPC) ? 99999 : (int)nd->vd.class_) << ", ";
-	os << "\"" << msrc->name << "_" << mdest->name << "_" << id << "\", ";
+	os << ((nl.npc->vd.class_ == JT_WARPNPC) ? 99999 : (int)nl.npc->vd.class_) << ", ";
+	if (nl.name.empty())
+		os << "\"" << msrc->name << "_" << mdest->name << "_" << nl.id << "\", ";
+	else
+		os << "\"" << nl.name << "\", ";
 	os << "\"\", "; // unique name
-	os << nd->navi.pos.x << ", " << nd->navi.pos.y << ", ";
+	os << nl.pos.x << ", " << nl.pos.y << ", ";
 	os << "\"" << mdest->name << "\", ";
-	os << nd->navi.warp_dest.x << ", " << nd->navi.warp_dest.y;
+	os << nl.warp_dest.x << ", " << nl.warp_dest.y;
 	os << "},\n";
 }
 
-void write_npc(std::ostream &os, const struct npc_data *nd, int id) {
+void write_npc(std::ostream &os, const struct npc_data *nd) {
 	if (nd == nullptr) {
 		ShowError("Unable to find NPC ID for NPC '%s'. Skipping...\n", nd->exname);
 		return;
@@ -418,19 +405,29 @@ void write_object_lists() {
 				if (target < 0)
 					continue;
 
-				nd->navi.id = 13350 + warp_count;
-				write_warp(links_file, nd, target, warp_count);
-				m->navi.warps_outof.push_back(nd);
-				map[target].navi.warps_into.push_back(nd);
+				nd->navi.id = 13350 + warp_count++;
+				write_warp(links_file, nd->navi);
+				m->navi.warps_outof.push_back(&nd->navi);
+				map[target].navi.warps_into.push_back(&nd->navi);
 				
-				warp_count++;
 			} else { // Other NPCs
 				if (nd->class_ == -1 || nd->class_ == JT_HIDDEN_NPC || nd->class_ == JT_HIDDEN_WARP_NPC || nd->class_ == JT_GUILD_FLAG)
 					continue;
 				
 				nd->navi.id = 11984 + npc_count;
-				write_npc(npc_file, nd, npc_count);
+				write_npc(npc_file, nd);
 				m->navi.npcs.push_back(nd);
+
+				for (auto &link : nd->links) {
+					int target = link.warp_dest.m;
+					if (target < 0)
+						continue;
+					
+					link.id = 13350 + warp_count++;
+					write_warp(links_file, link);
+					m->navi.warps_outof.push_back(&link);
+					map[target].navi.warps_into.push_back(&link);
+				}
 
 				npc_count++;
 			}
@@ -476,15 +473,15 @@ void write_npc_distance(std::ostream &os, const struct npc_data * nd, const stru
 	os << "\t\t{ " << nd->navi.id << ", -- (" << nd->name << " " << msrc->name << ", " << nd->navi.pos.x << ", " << nd->navi.pos.y << ")\n";
 	for (const auto warp : msrc->navi.warps_into) {
 		struct navi_walkpath_data wpd = {0};
-		auto mdest = map_getmapdata(warp->navi.pos.m);
+		auto mdest = map_getmapdata(warp->pos.m);
 
 		// Find a path from the npc to the warp destination
 		// The warp is into the map, so this makes sense
-		if (!navi_path_search(&wpd, &nd->navi.pos, &warp->navi.warp_dest, CELL_CHKNOREACH)) {
+		if (!navi_path_search(&wpd, &nd->navi.pos, &warp->warp_dest, CELL_CHKNOREACH)) {
 			continue;
 		}
 
-		os << "\t\t\t{ \"" << mdest->name << "\", " << warp->navi.id << ", " << std::to_string(wpd.path_len) << "}, -- (" << msrc->name << ", " << warp->navi.pos.x << ", " << warp->navi.pos.y << ")\n";
+		os << "\t\t\t{ \"" << mdest->name << "\", " << warp->id << ", " << std::to_string(wpd.path_len) << "}, -- (" << msrc->name << ", " << warp->pos.x << ", " << warp->pos.y << ")\n";
 	}
 	os << "\t\t\t{\"\", 0, 0}\n";
 	os << "\t\t},\n";
@@ -492,6 +489,7 @@ void write_npc_distance(std::ostream &os, const struct npc_data * nd, const stru
 
 void write_npc_distances() {
 	std::ofstream dist_npc_file = std::ofstream("./navi_npcdistance_krpri.lub");
+
 	write_header(dist_npc_file, "Navi_NpcDistance");
 
 	for (int mapid = 0; mapid < map_num; mapid++) {
@@ -533,24 +531,24 @@ void write_mapdist_header(std::ostream &os, const struct map_data * m) {
 			find a path from warp1->dest to warp3->src
 			Add this as an "E" Warp
  */
-void write_map_distance(std::ostream &os, const struct npc_data * warp1, const struct map_data * m) {
-	os << "\t\t{ " << warp1->navi.id << ", -- (" << " " << m->name << ", " << warp1->navi.pos.x << ", " << warp1->navi.pos.y << ")\n";
+void write_map_distance(std::ostream &os, const struct navi_link * warp1, const struct map_data * m) {
+	os << "\t\t{ " << warp1->id << ", -- (" << " " << m->name << ", " << warp1->pos.x << ", " << warp1->pos.y << ")\n";
 	for (const auto warp2 : m->navi.warps_outof) {
 		struct navi_walkpath_data wpd = {0};
 		if (warp1 == warp2)
 			continue;
-		if (!navi_path_search(&wpd, &warp1->navi.pos, &warp2->navi.pos, CELL_CHKNOREACH))
+		if (!navi_path_search(&wpd, &warp1->pos, &warp2->pos, CELL_CHKNOREACH))
 			continue;
-		os << "\t\t\t{ \"P\", " << warp2->navi.id << ", " << std::to_string(wpd.path_len) << "}, -- ReachableFromSrc warp (" << m->name << ", " << warp2->navi.pos.x << ", " << warp2->navi.pos.y << ")\n";
+		os << "\t\t\t{ \"P\", " << warp2->id << ", " << std::to_string(wpd.path_len) << "}, -- ReachableFromSrc warp (" << m->name << ", " << warp2->pos.x << ", " << warp2->pos.y << ")\n";
 	}
 
-	for (const auto warp3 : map_getmapdata(warp1->navi.warp_dest.m)->navi.warps_outof) {
+	for (const auto warp3 : map_getmapdata(warp1->warp_dest.m)->navi.warps_outof) {
 		struct navi_walkpath_data wpd = {0};
 
-		if (!navi_path_search(&wpd, &warp1->navi.warp_dest, &warp3->navi.pos, CELL_CHKNOREACH))
+		if (!navi_path_search(&wpd, &warp1->warp_dest, &warp3->pos, CELL_CHKNOREACH))
 			continue;
 		
-		os << "\t\t\t{ \"E\", " << warp3->navi.id << ", " << std::to_string(wpd.path_len) << "}, -- ReachableFromDst warp (" << map_getmapdata(warp3->navi.pos.m)->name << ", " << warp3->navi.pos.x << ", " << warp3->navi.pos.y << ")\n";
+		os << "\t\t\t{ \"E\", " << warp3->id << ", " << std::to_string(wpd.path_len) << "}, -- ReachableFromDst warp (" << map_getmapdata(warp3->pos.m)->name << ", " << warp3->pos.x << ", " << warp3->pos.y << ")\n";
 	}
 
 	os << "\t\t\t{\"NULL\", 0, 0}\n";
@@ -578,6 +576,8 @@ void create_lists() {
 	BHEAP_INIT(g_open_set);
 
 	auto starttime = std::chrono::system_clock::now();
+
+	npc_event_runall(script_config.navi_generate_name);
 
 	write_object_lists();
 	auto currenttime = std::chrono::system_clock::now();

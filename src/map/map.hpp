@@ -809,8 +809,8 @@ struct map_data {
 #ifdef GENERATE_NAVI
 	struct {
 		std::vector<const struct npc_data *> npcs;
-		std::vector<const struct npc_data *> warps_into;
-		std::vector<const struct npc_data *> warps_outof;
+		std::vector<const struct navi_link *> warps_into;
+		std::vector<const struct navi_link *> warps_outof;
 	} navi;
 #endif
 };
