@@ -1617,6 +1617,16 @@
 	export_constant(SC_STONE_WALL);
 	export_constant(SC_CLOUD_POISON);
 	export_constant(SC_HOMUN_TIME);
+	export_constant(SC_PACKING_ENVELOPE1);
+	export_constant(SC_PACKING_ENVELOPE2);
+	export_constant(SC_PACKING_ENVELOPE3);
+	export_constant(SC_PACKING_ENVELOPE4);
+	export_constant(SC_PACKING_ENVELOPE5);
+	export_constant(SC_PACKING_ENVELOPE6);
+	export_constant(SC_PACKING_ENVELOPE7);
+	export_constant(SC_PACKING_ENVELOPE8);
+	export_constant(SC_PACKING_ENVELOPE9);
+	export_constant(SC_PACKING_ENVELOPE10);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
