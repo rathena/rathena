@@ -2301,71 +2301,41 @@
 490120:450182,{ bonus bDelayrate,-10; }
 490121:450182,{ bonus bVariableCastrate,-10; }
 490121:490120,{ bonus bDelayrate,-5; }
-// Spiritual Ring + (Soul Staff || Wizardry Staff)
 2786:1472,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatkRate,6*.@r; bonus bDex,2*.@r; bonus bVariableCastrate,-.@r; }
 2786:1473,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatkRate,6*.@r; bonus bDex,2*.@r; bonus bVariableCastrate,-.@r; }
-// Thief Handcuffs + Bloody Iron Ball
 2913:2655,{ bonus bBaseAtk,10; }
-// Thief Handcuffs + Blinkers
 2913:19089,{ bonus bBaseAtk,10; }
-// Devil wing + Skin of Ventus
 2948:2536,{ if (getequiprefinerycnt(EQI_GARMENT)>=7) { bonus bFlee2,2; } }
-// Supplement Part DEX + Supplement Part STR
 2995:15343,{ bonus2 bSkillAtk,"NC_AXEBOOMERANG",100; }
-// Wandering Wolf King Helmet + Angry Snarl
 5498:5113,{ bonus bCritical,10; if (getequiprefinerycnt(EQI_HEAD_TOP)>=7) { bonus bCritAtkRate,10; if (getequiprefinerycnt(EQI_HEAD_TOP)>=9) { bonus bAspd,1; } } }
-// Amistr Cap + Romantic Flower
 5766:2269,{ bonus bMaxSP,20*(getequiprefinerycnt(EQI_HEAD_TOP)/2); }
-// Amistr Cap + Romantic Leaf
 5766:2270,{ bonus bShortWeaponDamageReturn,(getequiprefinerycnt(EQI_HEAD_TOP)/2); }
-// Upgrade Part - Plate + Upgrade Part - Engine + Reinforced Parts - Booster + Reinforced Parts - Gun Barrel
 15111:20733:22044:2996,{ bonus2 bSkillAtk,"NC_ARMSCANNON",50; }
-// Agenda Robe + Manteau of Survival
 15163:2509,{ bonus5 bAutoSpell,"AL_HEAL",1,(10*getequiprefinerycnt(EQI_ARMOR)),BF_MAGIC,0; }
-// Surfer Swimsuit + Scuba Mask
 15174:5397,{ bonus bVariableCastrate,-10; bonus bFlee2,10; }
-// Drooping Pope + Blush
 18673:18607,{ bonus bHealPower,10; }
-// Scuba Mask + (Surfer Swimsuit || Oxygen Bottle)
 19162:20819,{ bonus2 bCriticalAddRace,RC_Fish,50; bonus bAspdRate,10; }
 19162:15174,{ bonus2 bCriticalAddRace,RC_Fish,50; bonus bAspdRate,10; }
-// Elemental Crown + (Burning Bow || Frozen Bow || Earth Bow || Gust Bow)
 19177:1730,{ bonus bLongAtkRate,45; }
 19177:1731,{ bonus bLongAtkRate,45; }
 19177:1732,{ bonus bLongAtkRate,45; }
 19177:1733,{ bonus bLongAtkRate,45; }
-// Elemental Crown + (Burning Bow || Frozen Bow || Earth Bow || Gust Bow)
 19178:1730,{ bonus bLongAtkRate,45; }
 19178:1731,{ bonus bLongAtkRate,45; }
 19178:1732,{ bonus bLongAtkRate,45; }
 19178:1733,{ bonus bLongAtkRate,45; }
-// Supplement Part VIT + Supplement Part STR
 20732:15343,{ bonus2 bSkillAtk,"NC_AXETORNADO",25; }
-// Supplement Part AGI + Supplement Part STR
 22043:15343,{ bonus bBaseAtk,30; }
-// Cluster Shadow Shield + Ranger Shadow Weapon
 24453:24298,{ .@sum = getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-40-.@sum; }
-// Boomerang Shadow Weapon + Mechanic Shadow Shield
 24467:24303,{ .@sum = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-40-.@sum; }
-// STR+3 DEX-3 + STR+3 INT-3
 29015:29014,{ bonus bInt,3; bonus bDex,3; }
-// INT+3 VIT-3 + INT+3 DEX-3
 29017:29016,{ bonus bVit,3; bonus bDex,3; }
-// DEX+3 AGI-3 + DEX+3 VIT-3
 29019:29018,{ bonus bAgi,3; bonus bVit,3; }
-// VIT+3 LUK-3 + VIT+3 AGI-3
 29021:29020,{ bonus bAgi,3; bonus bLuk,3; }
-// AGI+3 STR-3 + AGI+3 LUK-3
 29023:29022,{ bonus bStr,3; bonus bLuk,3; }
-// LUK+3 INT-3 + LUK+3 STR-3
 29025:29024,{ bonus bStr,3; bonus bInt,3; }
-// ATK+1% + ATK+1%
 29028:4819,{ bonus2 bAddClass,Class_All,2; }
-// MATK+1% + MATK+1%
 29030:4883,{ bonus bMatkRate,2; }
-// MDEF+4 + DEF+20
 29033:29026,{ bonus bHit,5; bonus bFlee,5; }
-// Froid Manteau + Froid Shield
 2593:2163,{ bonus2 bSubRace,RC_Brute,getequiprefinerycnt(EQI_GARMENT); bonus2 bAddEle,Ele_Water,getequiprefinerycnt(EQI_HAND_L); }
-// L'Amour Manteau + L'Amour Shield
 2598:2158,{ bonus2 bSubRace,RC_DemiHuman,getequiprefinerycnt(EQI_GARMENT); bonus2 bAddEle,Ele_Undead,getequiprefinerycnt(EQI_HAND_L); }
