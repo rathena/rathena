@@ -2002,7 +2002,7 @@
 15210:19275,{ bonus bVariableCastrate,-30; bonus bFlee2,15; }
 15246:20902:22168,{ bonus bDelayrate,-7; if (getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)>=9) { bonus bDelayrate,-8; } }
 15247:20903:22169,{ bonus bDelayrate,-5; }
-15344:20733,{ bonus2 bSkillAtk,"NC_ARMSCANNON",50; }
+15344:20733:22044:2996,{ bonus2 bSkillAtk,"NC_ARMSCANNON",50; }
 15383:20939,{ bonus bDelayrate,-10; }
 15390:20945:22206,{ bonus bVariableCastrate,-7; if (getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)>=9) { bonus bVariableCastrate,-5; } }
 19097:28901,{ autobonus2 "{ }",1,3000,BF_WEAPON|BF_MAGIC,"{ heal 5000,0; unitskilluseid getcharid(3),\"WM_LULLABY_DEEPSLEEP\",1; active_transform 1930,3000; /*PIAMETTE, unknown timer*/ }"; }
@@ -2301,3 +2301,41 @@
 490120:450182,{ bonus bDelayrate,-10; }
 490121:450182,{ bonus bVariableCastrate,-10; }
 490121:490120,{ bonus bDelayrate,-5; }
+2786:1472,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatkRate,6*.@r; bonus bDex,2*.@r; bonus bVariableCastrate,-.@r; }
+2786:1473,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatkRate,6*.@r; bonus bDex,2*.@r; bonus bVariableCastrate,-.@r; }
+2913:2655,{ bonus bBaseAtk,10; }
+2913:19089,{ bonus bBaseAtk,10; }
+2948:2536,{ if (getequiprefinerycnt(EQI_GARMENT)>=7) { bonus bFlee2,2; } }
+2995:15343,{ bonus2 bSkillAtk,"NC_AXEBOOMERANG",100; }
+5498:5113,{ bonus bCritical,10; if (getequiprefinerycnt(EQI_HEAD_TOP)>=7) { bonus bCritAtkRate,10; if (getequiprefinerycnt(EQI_HEAD_TOP)>=9) { bonus bAspd,1; } } }
+5766:2269,{ bonus bMaxSP,20*(getequiprefinerycnt(EQI_HEAD_TOP)/2); }
+5766:2270,{ bonus bShortWeaponDamageReturn,(getequiprefinerycnt(EQI_HEAD_TOP)/2); }
+15111:20733:22044:2996,{ bonus2 bSkillAtk,"NC_ARMSCANNON",50; }
+15163:2509,{ bonus5 bAutoSpell,"AL_HEAL",1,(10*getequiprefinerycnt(EQI_ARMOR)),BF_MAGIC,0; }
+15174:5397,{ bonus bVariableCastrate,-10; bonus bFlee2,10; }
+18673:18607,{ bonus bHealPower,10; }
+19162:20819,{ bonus2 bCriticalAddRace,RC_Fish,50; bonus bAspdRate,10; }
+19162:15174,{ bonus2 bCriticalAddRace,RC_Fish,50; bonus bAspdRate,10; }
+19177:1730,{ bonus bLongAtkRate,45; }
+19177:1731,{ bonus bLongAtkRate,45; }
+19177:1732,{ bonus bLongAtkRate,45; }
+19177:1733,{ bonus bLongAtkRate,45; }
+19178:1730,{ bonus bLongAtkRate,45; }
+19178:1731,{ bonus bLongAtkRate,45; }
+19178:1732,{ bonus bLongAtkRate,45; }
+19178:1733,{ bonus bLongAtkRate,45; }
+20732:15343,{ bonus2 bSkillAtk,"NC_AXETORNADO",25; }
+22043:15343,{ bonus bBaseAtk,30; }
+24453:24298,{ .@sum = getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-40-.@sum; }
+24467:24303,{ .@sum = getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-40-.@sum; }
+29015:29014,{ bonus bInt,3; bonus bDex,3; }
+29017:29016,{ bonus bVit,3; bonus bDex,3; }
+29019:29018,{ bonus bAgi,3; bonus bVit,3; }
+29021:29020,{ bonus bAgi,3; bonus bLuk,3; }
+29023:29022,{ bonus bStr,3; bonus bLuk,3; }
+29025:29024,{ bonus bStr,3; bonus bInt,3; }
+29028:4819,{ bonus2 bAddClass,Class_All,2; }
+29030:4883,{ bonus bMatkRate,2; }
+29033:29026,{ bonus bHit,5; bonus bFlee,5; }
+2593:2163,{ bonus2 bSubRace,RC_Brute,getequiprefinerycnt(EQI_GARMENT); bonus2 bAddEle,Ele_Water,getequiprefinerycnt(EQI_HAND_L); }
+2598:2158,{ bonus2 bSubRace,RC_DemiHuman,getequiprefinerycnt(EQI_GARMENT); bonus2 bAddEle,Ele_Undead,getequiprefinerycnt(EQI_HAND_L); }
