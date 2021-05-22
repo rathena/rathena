@@ -532,50 +532,42 @@ OnNaviGenerate:
 	naviregisterwarp("Warper > Aldebaran", "aldebaran", 140, 131);
 	naviregisterwarp("Warper > Amatsu", "amatsu", 198, 84);
 	naviregisterwarp("Warper > Ayothoya", "ayothaya", 208, 166);
-	
+	naviregisterwarp("Warper > Einbech", "einbech",63,35);
+	naviregisterwarp("Warper > Einbroch", "einbroch",64,200);
+	naviregisterwarp("Warper > Geffen", "geffen",119,59);
+	naviregisterwarp("Warper > Gonryun", "gonryun",160,120);
+	naviregisterwarp("Warper > Hugel", "hugel",96,145);
+	naviregisterwarp("Warper > Izlude", "izlude",128,(checkre(3)?146:114));
+	naviregisterwarp("Warper > Jawaii", "jawaii",251,132);
+	naviregisterwarp("Warper > Lighthalzen", "lighthalzen",158,92);
+	naviregisterwarp("Warper > Louyang", "louyang",217,100);
+	naviregisterwarp("Warper > Lutie", "xmas",147,134);
+	naviregisterwarp("Warper > Manuk", "manuk",282,138);
+	naviregisterwarp("Warper > Midgarts Expedition Camp", "mid_camp",210,288);
+	naviregisterwarp("Warper > Morroc", "morocc",156,93);
+	naviregisterwarp("Warper > Moscovia", "moscovia",223,184);
+	naviregisterwarp("Warper > Nameless Island", "nameless_n",256,215);
+	naviregisterwarp("Warper > Niflheim", "niflheim",202,174);
+	naviregisterwarp("Warper > Payon", "payon",179,100);
+	naviregisterwarp("Warper > Rachel", "rachel",130,110);
+	naviregisterwarp("Warper > Splendide", "splendide",201,147);
+	naviregisterwarp("Warper > Thor Camp", "thor_camp",246,68);
+	naviregisterwarp("Warper > Umbala", "umbala",97,153);
+	naviregisterwarp("Warper > Veins", "veins",216,123);
+	naviregisterwarp("Warper > Yuno", "yuno",157,51);
+
 	if (checkre(0)) {
 		naviregisterwarp("Warper > Brasilis", "brasilis", 196, 217);
+		naviregisterwarp("Warper > Dewata", "dewata",200,180);
+		naviregisterwarp("Warper > Eclage", "ecl_in01",48,53);
+		naviregisterwarp("Warper > El Dicastes", "dicastes01",198,187);
+		naviregisterwarp("Warper > Lasagna", "lasagna",193,182);
+		naviregisterwarp("Warper > Malangdo", "malangdo",140,114);
+		naviregisterwarp("Warper > Malaya", "malaya",231,200);
+		naviregisterwarp("Warper > Mora", "mora",55,146);
 	}
-	// T6: Restrict("RE");
-	// 	Go("brasilis",196,217);
-	// T7: Go("comodo",209,143);
-	// T8: Restrict("RE");
-	// 	Go("dewata",200,180);
-	// T9: Restrict("RE");
-	// 	Go("ecl_in01",48,53);
-	// T10: Go("einbech",63,35);
-	// T11: Go("einbroch",64,200);
-	// T12: Restrict("RE");
-	// 	Go("dicastes01",198,187);
-	// T13: Go("geffen",119,59);
-	// T14: Go("gonryun",160,120);
-	// T15: Go("hugel",96,145);
-	// T16: Go("izlude",128,(checkre(3)?146:114));
-	// T17: Go("jawaii",251,132);
-	// T18: Restrict("RE");
-	// 	Go("lasagna",193,182);
-	// T19: Go("lighthalzen",158,92);
-	// T20: Go("louyang",217,100);
-	// T21: Go("xmas",147,134);
-	// T22: Restrict("RE");
-	// 	Go("malangdo",140,114);
-	// T23: Restrict("RE");
-	// 	Go("malaya",231,200);
-	// T24: Go("manuk",282,138);
-	// T25: Go("mid_camp",210,288);
-	// T26: Restrict("RE");
-	// 	Go("mora",55,146);
-	// T27: Go("morocc",156,93);
-	// T28: Go("moscovia",223,184);
-	// T29: Go("nameless_n",256,215);
-	// T30: Go("niflheim",202,174);
-	// T31: Go("payon",179,100);
-	// T32: Go("rachel",130,110);
-	// T33: Go("splendide",201,147);
-	// T34: Go("thor_camp",246,68);
-	// T35: Go("umbala",97,153);
-	// T36: Go("veins",216,123);
-	// T37: Go("yuno",157,51);
+
+
 
 	end;
 
