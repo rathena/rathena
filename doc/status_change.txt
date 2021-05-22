@@ -2719,40 +2719,40 @@ SC_DORAM_BUF_02 ()
 
 SC_PACKING_ENVELOPE1	(EFST_PACKING_ENVELOPE1)
 	desc: Increases ATK
-	val1: +33 watk
+	val1: + watk
 
 SC_PACKING_ENVELOPE2	(EFST_PACKING_ENVELOPE2)
 	desc: Increases MATK
-	val1: +33 ematk
+	val1: + ematk
 
 SC_PACKING_ENVELOPE3	(EFST_PACKING_ENVELOPE3)
 	desc: Increases MaxHP
-	val1: +3% MaxHP
+	val1: +% MaxHP
 
 SC_PACKING_ENVELOPE4	(EFST_PACKING_ENVELOPE4)
 	desc: Increases MaxSP
-	val1: +3% MaxSP
+	val1: +% MaxSP
 
 SC_PACKING_ENVELOPE5	(EFST_PACKING_ENVELOPE5)
 	desc: Increases FLEE
-	val1: +33 Flee
+	val1: + Flee
 
 SC_PACKING_ENVELOPE6	(EFST_PACKING_ENVELOPE6)
 	desc: Increases ASPD
-	val1: +3 ASPD
+	val1: + ASPD
 
 SC_PACKING_ENVELOPE7	(EFST_PACKING_ENVELOPE7)
 	desc: Increases DEF
-	val1: +33 DEF
+	val1: + DEF
 
 SC_PACKING_ENVELOPE8	(EFST_PACKING_ENVELOPE8)
 	desc: Increases MDEF
-	val1: +33 MDEF
+	val1: + MDEF
 
 SC_PACKING_ENVELOPE9	(EFST_PACKING_ENVELOPE9)
 	desc: Increases Critical rate
-	val1: +33 Critical rate
+	val1: + Critical rate
 
 SC_PACKING_ENVELOPE10	(EFST_PACKING_ENVELOPE10)
 	desc: Increases HIT
-	val1: +33 HIT
+	val1: + HIT
