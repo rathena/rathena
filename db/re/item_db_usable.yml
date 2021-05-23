@@ -45014,11 +45014,31 @@ Body:
   - Id: 22611
     AegisName: Packing_Envelope
     Name: Packed Envelope
-    Type: Delayconsume
+    Type: Usable
     Buy: 10
     Weight: 10
     Script: |
-      /* TODO */
+      .@r = rand(1,10);
+      if (.@r == 1)
+         sc_start SC_PACKING_ENVELOPE1,30000,33; // +atk
+      else if (.@r == 2)
+         sc_start SC_PACKING_ENVELOPE2,30000,33; // +matk
+      else if (.@r == 3)
+         sc_start SC_PACKING_ENVELOPE3,30000,3; // +hp%
+      else if (.@r == 4)
+         sc_start SC_PACKING_ENVELOPE4,30000,3; // +sp%
+      else if (.@r == 5)
+         sc_start SC_PACKING_ENVELOPE5,30000,33; // +flee
+      else if (.@r == 6)
+         sc_start SC_PACKING_ENVELOPE6,30000,3; // +aspd
+      else if (.@r == 7)
+         sc_start SC_PACKING_ENVELOPE7,30000,33; // +def
+      else if (.@r == 8)
+         sc_start SC_PACKING_ENVELOPE8,30000,33; // +mdef
+      else if (.@r == 9)
+         sc_start SC_PACKING_ENVELOPE9,30000,33; // +crit
+      else
+         sc_start SC_PACKING_ENVELOPE10,30000,33; // +hit
   - Id: 22612
     AegisName: Decomposition_Potion
     Name: Corrupt Reagents
