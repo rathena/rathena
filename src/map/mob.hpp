@@ -339,6 +339,27 @@ public:
 	uint64 parseBodyNode(const YAML::Node& node);
 };
 
+struct s_randomsummon_entry {
+	uint16 mob_id;
+	uint32 rate;
+};
+
+struct s_randomsummon_group {
+	uint8 random_id;
+	uint16 default_mob_id;
+	std::vector<std::shared_ptr<s_randomsummon_entry>> list;
+};
+
+class MobSummonDatabase : public TypesafeYamlDatabase<uint8, s_randomsummon_group> {
+public:
+	MobSummonDatabase() : TypesafeYamlDatabase("MOB_SUMMONABLE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
 enum e_mob_skill_target {
 	MST_TARGET	=	0,
 	MST_RANDOM,	//Random Target!
