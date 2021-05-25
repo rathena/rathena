@@ -4199,7 +4199,7 @@ const std::string MobDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/mob_db.yml";
 }
 
-bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops) {
+bool MobDatabase::parseDropNode(const std::string& nodeName, const YAML::Node& node, uint8 max, s_mob_drop *drops) {
 	const YAML::Node &dropNode = node[nodeName];
 	uint16 i;
 
@@ -4221,12 +4221,45 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
 				this->invalidWarning(dropit["Index"], "Invalid monster %s index %hu. Must be between 0~%hu, skipping.\n", nodeName.c_str(), index, max - 1);
 				continue;
 			}
+
+			if( this->nodeExists( dropit, "Clear" ) ){
+				bool clear;
+
+				if( !this->asBool( node, "Clear", clear ) ){
+					return false;
+				}
+
+				if( clear ){
+					// Clear specific index
+					drops[index] = {};
+				}
+			}
 		} else {
 			index = i++;
 
 			if (index >= max) {
 				this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", max, nodeName.c_str());
 				continue;
+			}
+
+			if( this->nodeExists( dropit, "Clear" ) ){
+				bool clear;
+
+				if( !this->asBool( node, "Clear", clear ) ){
+					return false;
+				}
+
+				if( clear ){
+					// Clear all
+					for( uint8 i = 0; i < max; i++ ){
+						drops[i] = {};
+					}
+
+					if( !this->nodeExists( node, "Item" ) ){
+						// Continue with next yaml node
+						continue;
+					}
+				}
 			}
 		}
 
