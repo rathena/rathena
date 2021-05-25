@@ -1105,6 +1105,8 @@ void bg_queue_join_guild(const char *name, struct map_session_data *sd)
  */
 void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector <map_session_data *> list)
 {
+	std::vector<map_session_data*> *team = NULL;
+	
 	if (!sd) {
 		ShowError("bg_queue_join_multi: Tried to join non-existent player\n.");
 		return;
@@ -1130,19 +1132,11 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 			break;
 		}
 
-		bool r = rnd() % 2 != 0;
-		std::vector<map_session_data *> *team = r ? &queue->teamb_members : &queue->teama_members;
-
-		if (queue->state == QUEUE_STATE_ACTIVE) {
-			// If one team has lesser members try to balance (on an active BG)
-			if (r && queue->teama_members.size() < queue->teamb_members.size())
-				team = &queue->teama_members;
-			else if (!r && queue->teamb_members.size() < queue->teama_members.size())
-				team = &queue->teamb_members;
+		// Balance teams based on team sizes.
+		if (queue->teama_members.size() <= queue->teamb_members.size()) {
+			team = &queue->teama_members;
 		} else {
-			// If the designated team is full, put the player into the other team
-			if (team->size() + list.size() > bg->required_players)
-				team = r ? &queue->teama_members : &queue->teamb_members;
+			team = &queue->teamb_members;
 		}
 
 		while (!list.empty() && team->size() < bg->max_players) {
