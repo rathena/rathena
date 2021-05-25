@@ -9810,7 +9810,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				packet.gid = bl->id;
 				safestrncpy( packet.name, md->name, NAME_LENGTH );
 				safestrncpy( packet.guild_name, md->guardian_data->guild_name, NAME_LENGTH );
-				safestrncpy( packet.position_name, md->guardian_data->castle->castle_name, NAME_LENGTH );
+				safestrncpy( packet.position_name, md->guardian_data->castle->castle_name.c_str(), NAME_LENGTH );
 
 				clif_send(&packet, sizeof(packet), src, target);
 			}else if( battle_config.show_mob_info ){
