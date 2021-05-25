@@ -5233,6 +5233,7 @@
 	export_constant(USW_ALL);
 
 	/* achievement groups */
+	export_constant(AG_NONE);
 	export_constant(AG_ADD_FRIEND);
 	export_constant(AG_ADVENTURE);
 	export_constant(AG_BABY);
