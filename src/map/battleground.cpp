@@ -1136,7 +1136,7 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 
 		// Balance active BG based on team sizes.
 		if (queue->state == QUEUE_STATE_ACTIVE) {
-			if (bgteam1->members.size() <= bgteam2->members.size()) {
+			if (bg_active_team1->members.size() <= bg_active_team2->members.size()) {
 				team = &queue->teama_members;
 			} else {
 				team = &queue->teamb_members;
