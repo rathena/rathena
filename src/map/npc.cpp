@@ -4666,7 +4666,6 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 		nd->u.warp.y = dnd->u.warp.y;
 		nd->trigger_on_hidden = dnd->trigger_on_hidden;
 		break;
-
 	}
 
 	if (nd->bl.m >= 0) {
