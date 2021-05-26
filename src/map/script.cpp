@@ -24180,9 +24180,9 @@ BUILDIN_FUNC(unloadnpc) {
 }
 
 /**
- * Duplicate npc.
- * return the duplicate name
- * duplicate(<"Npc Name">{,<"Npc Duplicate Name">});
+ * Duplicate a NPC.
+ * Return the duplicate name on success.
+ * duplicate(<"NPC name">{,<"Duplicate NPC name">});
  */
 BUILDIN_FUNC(duplicate)
 {
