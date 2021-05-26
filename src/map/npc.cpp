@@ -4622,7 +4622,7 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 	return vector.size();
 }
 
-struct npc_data* dup_npc(struct npc_data* dnd, const char* name)
+struct npc_data* dup_npc(npc_data* dnd, const char* name)
 {
 	struct npc_data* nd;
 	nd = npc_create_npc(dnd->bl.m, dnd->bl.x, dnd->bl.y);
