@@ -4631,6 +4631,7 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 	nd->speed = dnd->speed;
 	nd->bl.type = dnd->bl.type;
 	nd->subtype = dnd->subtype;
+
 	switch (nd->subtype) {
 	case NPCTYPE_SCRIPT:
 		++npc_script;
