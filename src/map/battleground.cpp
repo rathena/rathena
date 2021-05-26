@@ -1106,6 +1106,8 @@ void bg_queue_join_guild(const char *name, struct map_session_data *sd)
 void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector <map_session_data *> list)
 {
 	std::vector<map_session_data*> *team = NULL;
+	std::shared_ptr<s_battleground_data> bg_active_team1 = util::umap_find(bg_team_db, 1);
+	std::shared_ptr<s_battleground_data> bg_active_team2 = util::umap_find(bg_team_db, 2);
 	
 	if (!sd) {
 		ShowError("bg_queue_join_multi: Tried to join non-existent player\n.");
@@ -1132,11 +1134,19 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 			break;
 		}
 
-		// Balance teams based on team sizes.
-		if (queue->teama_members.size() <= queue->teamb_members.size()) {
-			team = &queue->teama_members;
+		// Balance active BG based on team sizes.
+		if (queue->state == QUEUE_STATE_ACTIVE) {
+			if (bgteam1->members.size() <= bgteam2->members.size()) {
+				team = &queue->teama_members;
+			} else {
+				team = &queue->teamb_members;
+			}
 		} else {
-			team = &queue->teamb_members;
+			if ((queue->teama_members.size()) <= queue->teamb_members.size()) {
+				team = &queue->teama_members;
+			} else {
+				team = &queue->teamb_members;
+			}
 		}
 
 		while (!list.empty() && team->size() < bg->max_players) {
