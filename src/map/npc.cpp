@@ -4698,8 +4698,7 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 
 	for (int i = 0; i < nd->u.scr.label_list_num; i++) {
 		if (npc_event_export(nd, i)) {
-			ShowWarning("npc_parse_duplicate : duplicate event %s::%s \n",
-				nd->exname, nd->u.scr.label_list[i].name);
+			ShowWarning("npc_parse_duplicate : duplicate event %s::%s \n", nd->exname, nd->u.scr.label_list[i].name);
 		}
 		npc_timerevent_export(nd, i);
 	}
