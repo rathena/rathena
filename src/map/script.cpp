@@ -24197,7 +24197,7 @@ BUILDIN_FUNC(duplicate)
 
 	if (script_hasdata(st, 3)) {
 		if ((nd = npc_name2id(script_getstr(st, 3))) != nullptr) {
-			ShowError("buildin_duplicate: There is a npc with this name already! '%s'.\n", script_getstr(st, 3));
+			ShowError("buildin_duplicate: NPC name '%s' is already in use!\n", script_getstr(st, 3));
 			return SCRIPT_CMD_FAILURE;
 		}
 		nd = dup_npc(dnd, script_getstr(st, 3));
