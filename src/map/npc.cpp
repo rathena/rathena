@@ -4633,6 +4633,7 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 	nd->subtype = dnd->subtype;
 
 	switch (nd->subtype) {
+
 	case NPCTYPE_SCRIPT:
 		++npc_script;
 		nd->u.scr.xs = dnd->u.scr.xs;
@@ -4641,6 +4642,7 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 		nd->u.scr.label_list = dnd->u.scr.label_list;
 		nd->u.scr.label_list_num = dnd->u.scr.label_list_num;
 		break;
+
 	case NPCTYPE_SHOP:
 	case NPCTYPE_CASHSHOP:
 	case NPCTYPE_ITEMSHOP:
@@ -4653,6 +4655,7 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 		nd->u.shop.count = dnd->u.shop.count;
 		nd->u.shop.discount = dnd->u.shop.discount;
 		break;
+
 	case NPCTYPE_WARP:
 		++npc_warp;
 		if (!battle_config.warp_point_debug)
