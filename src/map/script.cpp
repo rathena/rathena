@@ -24196,7 +24196,7 @@ BUILDIN_FUNC(duplicate)
 	npc_data* nd = nullptr;
 
 	if (script_hasdata(st, 3)) {
-		if ((nd = npc_name2id(script_getstr(st, 3))) != nullptr) {
+		if (npc_name2id(script_getstr(st, 3)) != nullptr) {
 			ShowError("buildin_duplicate: NPC name '%s' is already in use!\n", script_getstr(st, 3));
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -24206,7 +24206,7 @@ BUILDIN_FUNC(duplicate)
 		nd = dup_npc(dnd, "");
 	}
 
-	script_pushstr(st, nd->exname);
+	script_pushstr(st, aStrdup(nd->exname));
 	return SCRIPT_CMD_SUCCESS;
 }
 
