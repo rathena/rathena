@@ -24196,8 +24196,7 @@ BUILDIN_FUNC(duplicate)
 	npc_data* nd = nullptr;
 
 	if (script_hasdata(st, 3)) {
-		if ((nd = npc_name2id(script_getstr(st, 3))) != NULL)
-		{
+		if ((nd = npc_name2id(script_getstr(st, 3))) != nullptr) {
 			ShowError("buildin_duplicate: There is a npc with this name already! '%s'.\n", script_getstr(st, 3));
 			return SCRIPT_CMD_FAILURE;
 		}
