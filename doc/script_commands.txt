@@ -2491,7 +2491,6 @@ to retrieve and can be one of the following:
     0 - NPC Game ID
 
 If an invalid type is given or the NPC does not exist, 0 is returned.
-If the "npc name" is provided , it return 0 if the npc is not found.
 
 ---------------------------------------
 
