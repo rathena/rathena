@@ -8530,7 +8530,7 @@ BUILDIN_FUNC(getcharid)
 
 /*==========================================
  * returns the GID of an NPC
- * if npc object name provided ,returns 0 if the npc not found.
+ * Returns 0 if the NPC name provided is not found.
  *------------------------------------------*/
 BUILDIN_FUNC(getnpcid)
 {
