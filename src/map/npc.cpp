@@ -4624,8 +4624,8 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 
 struct npc_data* dup_npc(npc_data* dnd, const char* name)
 {
-	struct npc_data* nd;
-	nd = npc_create_npc(dnd->bl.m, dnd->bl.x, dnd->bl.y);
+	npc_data* nd = npc_create_npc(dnd->bl.m, dnd->bl.x, dnd->bl.y);
+
 	nd->src_id = dnd->src_id ? dnd->src_id : dnd->bl.id;
 	nd->class_ = dnd->class_;
 	nd->speed = dnd->speed;
