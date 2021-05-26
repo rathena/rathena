@@ -24192,7 +24192,9 @@ BUILDIN_FUNC(duplicate)
 		ShowError("buildin_duplicate: No such NPC '%s'.\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
-	struct npc_data* nd = NULL;
+
+	npc_data* nd = nullptr;
+
 	if (script_hasdata(st, 3)) {
 		if ((nd = npc_name2id(script_getstr(st, 3))) != NULL)
 		{
