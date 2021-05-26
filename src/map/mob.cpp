@@ -5537,8 +5537,7 @@ uint64 MobChatDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = chat != nullptr;
 
 	if (!exists) {
-		if (!this->nodesExist(node, { "Dialog", "Color" })) {
-			this->invalidWarning(node["Id"], "Missing node 'Dialog' or 'Color'.\n");
+		if (!this->nodesExist(node, { "Dialog" })) {
 			return 0;
 		}
 
@@ -5552,7 +5551,10 @@ uint64 MobChatDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Color", hex))
 			return 0;
 
-		chat->color = strtoul(hex.c_str(),nullptr,0);
+		chat->color = strtoul(hex.c_str(), nullptr, 0);
+	} else {
+		if (!exists)
+			chat->color = strtoul("0xFF0000", nullptr, 0);
 	}
 
 	if (this->nodeExists(node, "Dialog")) {
@@ -5808,8 +5810,13 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		ms->emotion = -1;
 
 	if (*str[18]) {
-		uint16 id = static_cast<uint16>(atoi(str[18]));
-		ms->msg_id = ((mob_chat_db.find(id) != nullptr) ? id : 0);
+		uint16 id = static_cast<uint16>(strtol(str[18], nullptr, 10));
+		if (mob_chat_db.find(id) != nullptr)
+			ms->msg_id = id;
+		else {
+			ms->msg_id = 0;
+			ShowWarning("mob_parse_row_mobskilldb: Unknown chat ID %s for monster %d.\n", str[18], mob_id);
+		}
 	}
 	else
 		ms->msg_id = 0;

@@ -3443,7 +3443,8 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current) {
 
 	body << YAML::BeginMap;
 	body << YAML::Key << "Id" << YAML::Value << msg_id;
-	body << YAML::Key << "Color" << YAML::Value << fields[1];
+	if (strcmp(fields[1], "0xFF0000") != 0)	// default color
+		body << YAML::Key << "Color" << YAML::Value << fields[1];
 	body << YAML::Key << "Dialog" << YAML::Value << msg;
 	body << YAML::EndMap;
 

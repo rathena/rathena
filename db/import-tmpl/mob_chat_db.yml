@@ -23,7 +23,7 @@
 #
 ###########################################################################
 # - Id                      Index of the message.
-#   Color                   Hexadecimal color.
+#   Color                   Hexadecimal color (Default: 0xFF0000).
 #   Dialog                  Text displayed by the monster.
 ###########################################################################
 

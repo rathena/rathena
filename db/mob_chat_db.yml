@@ -23,7 +23,7 @@
 #
 ###########################################################################
 # - Id                      Index of the message.
-#   Color                   Hexadecimal color.
+#   Color                   Hexadecimal color (Default: 0xFF0000).
 #   Dialog                  Text displayed by the monster.
 ###########################################################################
 
@@ -33,124 +33,84 @@ Header:
 
 Body:
   - Id: 1
-    Color: 0xFF0000
     Dialog: Weakling! Challenge me if you have any courage!
   - Id: 2
-    Color: 0xFF0000
     Dialog: Impressive! I wonder how far your recklessness will take you.
   - Id: 3
-    Color: 0xFF0000
     Dialog: I almost pity how outmatched you are against me. Now prepare for my attack!
   - Id: 4
-    Color: 0xFF0000
     Dialog: My loyal servants! Welcome them with a painful death!
   - Id: 5
-    Color: 0xFF0000
     Dialog: Don't you run away!
   - Id: 6
-    Color: 0xFF0000
     Dialog: You worthless humans. Your so-called holy powers have no effect on me!
   - Id: 7
-    Color: 0xFF0000
     Dialog: Useless underlings!...Well, that's fine, I have more weapons to use and dispose.
   - Id: 8
-    Color: 0xFF0000
     Dialog: Pray to your gods!
   - Id: 9
-    Color: 0xFF0000
     Dialog: Do you still think you're a match to me?!
   - Id: 10
-    Color: 0xFF0000
     Dialog: Vanish!
   - Id: 11
-    Color: 0xFF0000
     Dialog: Let's see how long you can endure my power!
   - Id: 12
-    Color: 0xFF0000
     Dialog: Is this all you've got?!
   - Id: 13
-    Color: 0xFF0000
     Dialog: You're tickling me!
   - Id: 14
-    Color: 0xFF0000
     Dialog: This is how you attack? Watch and learn, weaklings!
   - Id: 15
-    Color: 0xFF0000
     Dialog: It's time to finish the game!
   - Id: 16
-    Color: 0xFF0000
     Dialog: Oh, you're stronger than I thought!
   - Id: 17
-    Color: 0xFF0000
     Dialog: No, this can't be happening! I'm Satan Morocc, Demon King of Destruction!
   - Id: 18
-    Color: 0xFF0000
     Dialog: I can never die! I'll be coming back for you!
   - Id: 19
-    Color: 0xFF0000
     Dialog: I was born to conquer this world! None shall stop me!
   - Id: 20
-    Color: 0xFF0000
     Dialog: Your days are numbered!
   - Id: 21
-    Color: 0xFF0000
     Dialog: Pulse Strike! My fingers tear steel!
   - Id: 22
-    Color: 0xFF0000
     Dialog: Hahaha, tell me who I am! I'm Baphomet, the Heir of Hell!
   - Id: 23
-    Color: 0xFF0000
     Dialog: Enjoy your time on the mortal plane while you can, your hope will soon turn into despair!
   - Id: 24
-    Color: 0xFF0000
     Dialog: When are you going to learn your lesson? In death?
   - Id: 25
-    Color: 0xFF0000
     Dialog: No... I can't lose! I won't beg for my life! I'm not running away! I don't accept this as defeat!
   - Id: 26
-    Color: 0xFF0000
     Dialog: Argh... I... I'm weakening...
   - Id: 27
-    Color: 0xFF0000
     Dialog: What do you want from me?
   - Id: 28
-    Color: 0xFF0000
     Dialog: No! I didn't do this! He's the one who planned out all this!
   - Id: 29
-    Color: 0xFF0000
     Dialog: I just wanted to find peace..!  That's why I have been fleeing away!
   - Id: 30
-    Color: 0xFF0000
     Dialog: Ahhhh!!! Now, I just have to kill you all!
   - Id: 31
-    Color: 0xFF0000
     Dialog: Annoying flies!! Get off of me!
   - Id: 32
-    Color: 0xFF0000
     Dialog: Suffer in Hell!
   - Id: 33
-    Color: 0xFF0000
     Dialog: Mwahahaha! Taste the anger of the earth!!!
   - Id: 34
-    Color: 0xFF0000
     Dialog: No... I won't accept this as defeat!
   - Id: 35
-    Color: 0xFF0000
     Dialog: Will it ease your loneliness to hit me?  Why don't you stay here with me forever, human?
   - Id: 36
-    Color: 0xFF0000
     Dialog: You will forgot the meaning of time.  I wonder how long can you last in here...
   - Id: 37
-    Color: 0xFF0000
     Dialog: Is there anyone waiting for you outside of here?  Throw them all away, you are mine now...
   - Id: 38
-    Color: 0xFF0000
     Dialog: Discard your life and stay confined here.  You will yearn for freedom in captivity !!
   - Id: 39
-    Color: 0xFF0000
     Dialog: How much will the outside world change if you stay here in solitude for one thousand years?
   - Id: 40
-    Color: 0xFF0000
     Dialog: Yes! Yearn for your freedom from this confined place, your captivity here will be permanent !!
 
 Footer:
