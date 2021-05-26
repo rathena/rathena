@@ -24186,9 +24186,9 @@ BUILDIN_FUNC(unloadnpc) {
  */
 BUILDIN_FUNC(duplicate)
 {
-	struct npc_data* dnd = NULL;
-	if ((dnd = npc_name2id(script_getstr(st, 2))) == NULL)
-	{
+	npc_data* dnd = npc_name2id(script_getstr(st, 2));
+
+	if (dnd == nullptr) {
 		ShowError("buildin_duplicate: No such NPC '%s'.\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
