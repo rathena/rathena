@@ -6603,11 +6603,11 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
-*duplicate "<NPC object name>"{,"<Duplicate object name>"};
+*duplicate "<NPC name>"{,"<Duplicate NPC name>"};
 
-This command will duplicate the npc provided.
-if the duplicates object name is not provided , it will generate a new object name.
-return the duplicate object name.
+This command will duplicate the NPC provided. If the duplicate NPC name is not
+provided it will generate a new name.
+The duplicate NPC name is returned on success.
 
 ---------------------------------------
 
