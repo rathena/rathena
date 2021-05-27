@@ -18,6 +18,9 @@
     <ClCompile Include="auth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="charconfig_controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="emblem_controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -33,6 +36,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="auth.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="charconfig_controller.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="emblem_controller.hpp">

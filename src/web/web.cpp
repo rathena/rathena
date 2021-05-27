@@ -25,7 +25,7 @@
 #include "../common/utils.hpp"
 #include "../config/core.hpp"
 
-
+#include "charconfig_controller.hpp"
 #include "emblem_controller.hpp"
 #include "http.hpp"
 #include "userconfig_controller.hpp"
