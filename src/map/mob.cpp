@@ -4225,13 +4225,18 @@ bool MobDatabase::parseDropNode(const std::string& nodeName, const YAML::Node& n
 			if( this->nodeExists( dropit, "Clear" ) ){
 				bool clear;
 
-				if( !this->asBool( node, "Clear", clear ) ){
+				if( !this->asBool( dropit, "Clear", clear ) ){
 					return false;
 				}
 
 				if( clear ){
 					// Clear specific index
 					drops[index] = {};
+
+					if( !this->nodeExists( dropit, "Item" ) ){
+						// Continue with next yaml node
+						continue;
+					}
 				}
 			}
 		} else {
@@ -4245,7 +4250,7 @@ bool MobDatabase::parseDropNode(const std::string& nodeName, const YAML::Node& n
 			if( this->nodeExists( dropit, "Clear" ) ){
 				bool clear;
 
-				if( !this->asBool( node, "Clear", clear ) ){
+				if( !this->asBool( dropit, "Clear", clear ) ){
 					return false;
 				}
 
@@ -4255,7 +4260,7 @@ bool MobDatabase::parseDropNode(const std::string& nodeName, const YAML::Node& n
 						drops[i] = {};
 					}
 
-					if( !this->nodeExists( node, "Item" ) ){
+					if( !this->nodeExists( dropit, "Item" ) ){
 						// Continue with next yaml node
 						continue;
 					}
