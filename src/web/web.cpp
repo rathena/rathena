@@ -404,6 +404,8 @@ int do_init(int argc, char** argv) {
 	http_server->Post("/emblem/upload", emblem_upload);
 	http_server->Post("/userconfig/load", userconfig_load);
 	http_server->Post("/userconfig/save", userconfig_save);
+	http_server->Post("/charconfig/load", charconfig_load);
+	http_server->Post("/charconfig/save", charconfig_save);
 
 	// set up logger
 	http_server->set_logger(logger);
