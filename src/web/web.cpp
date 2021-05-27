@@ -66,6 +66,7 @@ Sql * web_handle = NULL;
 char login_table[32] = "login";
 char guild_emblems_table[32] = "guild_emblems";
 char user_configs_table[32] = "user_configs";
+char char_configs_table[32] = "char_configs";
 char guild_db_table[32] = "guild";
 char char_db_table[32] = "char";
 
@@ -196,6 +197,8 @@ int inter_config_read(const char* cfgName)
 			safestrncpy(default_codepage,w2,sizeof(default_codepage));
 		else if (!strcmpi(w1, "user_configs"))
 			safestrncpy(user_configs_table, w2, sizeof(user_configs_table));
+		else if (!strcmpi(w1, "char_configs"))
+			safestrncpy(char_configs_table, w2, sizeof(char_configs_table));
 		else if (!strcmpi(w1, "guild_emblems"))
 			safestrncpy(guild_emblems_table, w2, sizeof(guild_emblems_table));
 		else if (!strcmpi(w1, "login_server_account_db"))

@@ -35,6 +35,7 @@ extern struct Web_Config web_config;
 extern char login_table[32];
 extern char guild_emblems_table[32];
 extern char user_configs_table[32];
+extern char char_configs_table[32];
 extern char guild_db_table[32];
 extern char char_db_table[32];
 
