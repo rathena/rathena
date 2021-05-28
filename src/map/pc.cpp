@@ -969,13 +969,11 @@ bool pc_can_give_bounded_items(struct map_session_data *sd)
  * @param index: Item inventory index
  * @return True if the item can be traded or false otherwise
  */
-bool pc_can_trade_item(map_session_data *sd, int index) {
-	if (sd && index >= 0) {
-		return (sd->inventory.u.items_inventory[index].expire_time == 0 &&
-			(sd->inventory.u.items_inventory[index].bound == 0 || pc_can_give_bounded_items(sd)) &&
-			itemdb_cantrade(&sd->inventory.u.items_inventory[index], pc_get_group_level(sd), pc_get_group_level(sd))
-			);
-	}
+bool pc_can_trade_item(map_session_data& sd, struct item& item) {
+	return (item.expire_time == 0 &&
+		(item.bound == 0 || pc_can_give_bounded_items(&sd)) &&
+		itemdb_cantrade(&item, pc_get_group_level(&sd), pc_get_group_level(&sd))
+		);
 
 	return false;
 }

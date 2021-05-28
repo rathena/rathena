@@ -1,0 +1,66 @@
+
+//===== rAthena Script =======================================
+//= Test: get--list script commands
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20210318
+//===== Description: ========================================= 
+//= Quick tests of 'getinventorylist', 'getcartlist', 
+//  'getstoragelist' and 'getguildstoragelist'.
+//============================================================
+
+prontera,161,181,6	script	get--list	763,{
+	switch( select( "getinventorylist", "getcartlist", "getstoragelist", "getguildstoragelist" ) ) {
+	case 1:
+		getinventorylist();
+		mes "Item data from getinventorylist:";
+		break;
+	case 2:
+		getcartlist();
+		mes "Item data from getcartlist:";
+		break;
+	case 3:
+		getstoragelist();
+		mes "Item data from getstoragelist:";
+		break;
+	case 4:
+		getguildstoragelist();
+		mes "Item data from getguildstoragelist:";
+		break;
+	}
+	mes "Total = " + @inventorylist_count;
+	mes "For readability 'inventorylist' variable name is replaced by -";
+	for ( .@i = 0; .@i < @inventorylist_count; ++.@i ) {
+		next;
+		mes "@-_id[" + .@i + "] : " + @inventorylist_id[.@i];
+		mes "@-_amount[" + .@i + "] : " + @inventorylist_amount[.@i];
+		mes "@-_equip[" + .@i + "] : " + @inventorylist_equip[.@i];
+		mes "@-_refine[" + .@i + "] : " + @inventorylist_refine[.@i];
+		mes "@-_identify[" + .@i + "] : " + @inventorylist_identify[.@i];
+		mes "@-_attribute[" + .@i + "] : " + @inventorylist_attribute[.@i];
+		mes "@-_card1[" + .@i + "] : " + @inventorylist_card1[.@i];
+		mes "@-_card2[" + .@i + "] : " + @inventorylist_card2[.@i];
+		mes "@-_card3[" + .@i + "] : " + @inventorylist_card3[.@i];
+		mes "@-_card4[" + .@i + "] : " + @inventorylist_card4[.@i];
+		mes "@-_expire[" + .@i + "] : " + @inventorylist_expire[.@i];
+		mes "@-_bound[" + .@i + "] : " + @inventorylist_bound[.@i];
+		mes "@-_option_id1[" + .@i + "] : " + @inventorylist_option_id1[.@i];
+		mes "@-_option_id2[" + .@i + "] : " + @inventorylist_option_id2[.@i];
+		mes "@-_option_id3[" + .@i + "] : " + @inventorylist_option_id3[.@i];
+		mes "@-_option_id4[" + .@i + "] : " + @inventorylist_option_id4[.@i];
+		mes "@-_option_id5[" + .@i + "] : " + @inventorylist_option_id5[.@i];
+		mes "@-_option_value1[" + .@i + "] : " + @inventorylist_option_value1[.@i];
+		mes "@-_option_value2[" + .@i + "] : " + @inventorylist_option_value2[.@i];
+		mes "@-_option_value3[" + .@i + "] : " + @inventorylist_option_value3[.@i];
+		mes "@-_option_value4[" + .@i + "] : " + @inventorylist_option_value4[.@i];
+		mes "@-_option_value5[" + .@i + "] : " + @inventorylist_option_value5[.@i];
+		mes "@-_option_parameter1[" + .@i + "] : " + @inventorylist_option_parameter1[.@i];
+		mes "@-_option_parameter2[" + .@i + "] : " + @inventorylist_option_parameter2[.@i];
+		mes "@-_option_parameter3[" + .@i + "] : " + @inventorylist_option_parameter3[.@i];
+		mes "@-_option_parameter4[" + .@i + "] : " + @inventorylist_option_parameter4[.@i];
+		mes "@-_option_parameter5[" + .@i + "] : " + @inventorylist_option_parameter5[.@i];
+		mes "@-_tradable[" + .@i + "] : " + @inventorylist_tradable[.@i];
+	}
+	close;
+}

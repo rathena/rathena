@@ -14224,36 +14224,94 @@ BUILDIN_FUNC(petloot)
 BUILDIN_FUNC(getinventorylist)
 {
 	TBL_PC *sd;
-	char card_var[NAME_LENGTH], randopt_var[50];
-	int i,j=0,k;
 
-	if (!script_charid2sd(2,sd))
+	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
-	for(i=0;i<MAX_INVENTORY;i++){
-		if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount > 0){
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_id"), j),sd->inventory.u.items_inventory[i].nameid);
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_amount"), j),sd->inventory.u.items_inventory[i].amount);
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_equip"), j),sd->inventory.u.items_inventory[i].equip);
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_refine"), j),sd->inventory.u.items_inventory[i].refine);
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_identify"), j),sd->inventory.u.items_inventory[i].identify);
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_attribute"), j),sd->inventory.u.items_inventory[i].attribute);
+
+	const char* command = script_getfuncname(st);
+	int loc = TABLE_INVENTORY;
+
+	if (!strcmp(command, "getcartlist"))
+		loc = TABLE_CART;
+	else if (!strcmp(command, "getstoragelist"))
+		loc = TABLE_STORAGE;
+	else if (!strcmp(command, "getguildstoragelist"))
+		loc = TABLE_GUILD_STORAGE;
+
+	int size;
+	struct item *items;
+	
+	switch(loc) {
+	case TABLE_CART:
+		if (!pc_iscarton(sd)) {
+			ShowError("buildin_%s: player doesn't have cart (CID=%d).\n", command, sd->status.char_id);
+			pc_setreg(sd,add_str("@inventorylist_count"),0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		size = MAX_CART;
+		items = sd->cart.u.items_cart;
+		break;
+	case TABLE_STORAGE:
+		if (sd->state.storage_flag != 0) {
+			pc_setreg(sd,add_str("@inventorylist_count"),0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+		size = MAX_STORAGE;
+		items = sd->storage.u.items_storage;
+		break;
+	case TABLE_GUILD_STORAGE:
+	{
+		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+		if (gstor == nullptr) {
+			ShowError("buildin_%s: player doesn't have a guild (CID=%d).\n", command, sd->status.char_id);
+			pc_setreg(sd,add_str("@inventorylist_count"),0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (sd->state.storage_flag != 0) {
+			pc_setreg(sd,add_str("@inventorylist_count"),0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		size = MAX_GUILD_STORAGE;
+		items = gstor->u.items_guild;
+	}
+		break;
+	default: // TABLE_INVENTORY
+		size = MAX_INVENTORY;
+		items = sd->inventory.u.items_inventory;
+		break;
+	}
+
+	char card_var[NAME_LENGTH], randopt_var[50];
+	int j = 0, k;
+
+	for (int i = 0; i < size; i++) {
+		struct item *itm = &items[i];
+
+		if(itm && itm->nameid > 0 && itm->amount > 0){
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_id"), j),itm->nameid);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_amount"), j),itm->amount);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_equip"), j),itm->equip);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_refine"), j),itm->refine);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_identify"), j),itm->identify);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_attribute"), j),itm->attribute);
 			for (k = 0; k < MAX_SLOTS; k++)
 			{
 				sprintf(card_var, "@inventorylist_card%d",k+1);
-				pc_setreg(sd,reference_uid(add_str(card_var), j),sd->inventory.u.items_inventory[i].card[k]);
+				pc_setreg(sd,reference_uid(add_str(card_var), j),itm->card[k]);
 			}
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),itm->expire_time);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),itm->bound);
 			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
 			{
 				sprintf(randopt_var, "@inventorylist_option_id%d",k+1);
-				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].id);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),itm->option[k].id);
 				sprintf(randopt_var, "@inventorylist_option_value%d",k+1);
-				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].value);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),itm->option[k].value);
 				sprintf(randopt_var, "@inventorylist_option_parameter%d",k+1);
-				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].param);
+				pc_setreg(sd,reference_uid(add_str(randopt_var), j),itm->option[k].param);
 			}
-			pc_setreg(sd,reference_uid(add_str("@inventorylist_tradable"), j),pc_can_trade_item(sd, i));
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_tradable"), j),pc_can_trade_item(*sd, *itm));
 			j++;
 		}
 	}
@@ -24499,7 +24557,7 @@ BUILDIN_FUNC(getequiptradability) {
 	}
 
 	if (i >= 0)
-		script_pushint(st, pc_can_trade_item(sd, i));
+		script_pushint(st, pc_can_trade_item(*sd, sd->inventory.u.items_inventory[i]));
 	else
 		script_pushint(st, false);
 
@@ -25386,6 +25444,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(makepet,"i"),
 	BUILDIN_DEF(getexp,"ii?"),
 	BUILDIN_DEF(getinventorylist,"?"),
+	BUILDIN_DEF2(getinventorylist,"getcartlist","?"),
+	BUILDIN_DEF2(getinventorylist,"getstoragelist","?"),
+	BUILDIN_DEF2(getinventorylist,"getguildstoragelist","?"),
 	BUILDIN_DEF(getskilllist,"?"),
 	BUILDIN_DEF(clearitem,"?"),
 	BUILDIN_DEF(classchange,"i??"),
