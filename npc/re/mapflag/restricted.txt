@@ -25,9 +25,9 @@
 2@gl_k	mapflag	restricted	6
 
 // Wave Mode Memorial Dungeon ====
-1@def01	mapflag	restricted	6
-1@def02	mapflag	restricted	6
-1@def03	mapflag	restricted	6
+1@def01	mapflag	restricted	9
+1@def02	mapflag	restricted	9
+1@def03	mapflag	restricted	9
 
 // Heroes' Trail - Part 1 ========
 1@face	mapflag	restricted	6

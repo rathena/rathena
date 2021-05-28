@@ -367,6 +367,7 @@ enum mob_ai {
 	AI_LEGION,
 	AI_FAW,
 	AI_GUILD,
+	AI_WAVEMODE,
 	AI_MAX
 };
 
