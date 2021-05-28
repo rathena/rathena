@@ -8928,6 +8928,142 @@ BUILDIN_FUNC(getequipuniqueid)
 }
 
 /*==========================================
+  * Get the item information with the specified unique id
+  * and assign it to the variables.
+  * Return true on success or false otherwise
+  * uniqueid_getiteminfo(<"item_unique_id">,,<char_id>})
+  *------------------------------------------*/
+BUILDIN_FUNC(uniqueid_getiteminfo)
+{
+	TBL_PC *sd;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint64 item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
+
+	if (!item_uniqueid) {
+		ShowError("buildin_uniqueid_getiteminfo: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	char card_var[NAME_LENGTH], randopt_var[50];
+	int i = -1, k;
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
+
+	if (i >= MAX_INVENTORY) {
+		ShowError("buildin_uniqueid_getiteminfo: Item not found (unique_id=%llu).\n", item_uniqueid);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct item *it = &sd->inventory.u.items_inventory[i];
+
+	setd_sub_num(st, NULL, ".@uid_item_id", 0, it->nameid, NULL);
+	setd_sub_num(st, NULL, ".@uid_equip", 0, it->equip, NULL);
+	setd_sub_num(st, NULL, ".@uid_refine", 0, it->refine, NULL);
+	setd_sub_num(st, NULL, ".@uid_identify", 0, it->identify, NULL);
+	setd_sub_num(st, NULL, ".@uid_attribute", 0, it->attribute, NULL);
+	for (k = 0; k < MAX_SLOTS; k++)
+	{
+		sprintf(card_var, ".@uid_card%d", k + 1);
+		setd_sub_num(st, NULL, card_var, 0, it->card[k], NULL);
+	}
+	setd_sub_num(st, NULL, ".@uid_expire", 0, it->expire_time, NULL);
+	setd_sub_num(st, NULL, ".@uid_bound", 0, it->bound, NULL);
+	for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
+	{
+		sprintf(randopt_var, ".@uid_option_id%d", k + 1);
+		setd_sub_num(st, NULL, randopt_var, 0, it->option[k].id, NULL);
+		sprintf(randopt_var, ".@uid_option_value%d", k + 1);
+		setd_sub_num(st, NULL, randopt_var, 0, it->option[k].value, NULL);
+		sprintf(randopt_var, ".@uid_option_parameter%d", k + 1);
+		setd_sub_num(st, NULL, randopt_var, 0, it->option[k].param, NULL);
+	}
+	setd_sub_num(st, NULL, ".@uid_tradable", 0, pc_can_trade_item(sd, i), NULL);
+
+	script_pushint(st, true);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+  * Check if the player have the item with the unique id provided.
+  * Return true if the player have an item or false otherwise
+  * uniqueid_find(<"item_unique_id">,,<char_id>})
+  *------------------------------------------*/
+BUILDIN_FUNC(uniqueid_find)
+{
+	TBL_PC* sd;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint64 item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
+
+	if (!item_uniqueid) {
+		ShowError("buildin_uniqueid_find: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int i = -1;
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
+
+	if (i >= MAX_INVENTORY)
+		script_pushint(st, false);
+	else
+		script_pushint(st, true);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * Delete the item with the specified unique id
+ * Return true on success or false otherwise
+ * uniqueid_delitem(<"item_unique_id">{,<char_id>})
+ *------------------------------------------*/
+BUILDIN_FUNC(uniqueid_delitem)
+{
+	TBL_PC* sd;
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint64 item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
+
+	if (!item_uniqueid) {
+		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	short i = -1;
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
+
+	if (i >= MAX_INVENTORY) {
+		ShowError("buildin_uniqueid_delitem: Item not found (unique_id=%llu AID=%d).\n", item_uniqueid, sd->status.account_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+	struct item* it = &sd->inventory.u.items_inventory[i];
+	if (it->equip)
+		pc_unequipitem(sd, i, 3);
+	pc_delitem(sd, i, 1, 0, 2, LOG_TYPE_SCRIPT);
+	script_pushint(st, true);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * Get the equipement name at pos
  * return item jname or ""
  * getequipname(<equipment slot>{,<char_id>})
@@ -14244,6 +14380,14 @@ BUILDIN_FUNC(getinventorylist)
 			}
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
+			if (sd->inventory.u.items_inventory[i].unique_id) {
+				int maxlen = 256;
+				char* buf = (char*)aMalloc(maxlen * sizeof(char));
+				memset(buf, 0, maxlen);
+				snprintf(buf, maxlen - 1, "%llu", (unsigned long long)sd->inventory.u.items_inventory[i].unique_id);
+				pc_setregstr(sd, reference_uid(add_str("@inventorylist_unique_id$"), j), buf);
+				aFree(buf);
+			}
 			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
 			{
 				sprintf(randopt_var, "@inventorylist_option_id%d",k+1);
@@ -22106,6 +22250,14 @@ BUILDIN_FUNC(countbound)
 		{
 			pc_setreg(sd,reference_uid(add_str("@bound_items"), k),sd->inventory.u.items_inventory[i].nameid);
 			pc_setreg(sd,reference_uid(add_str("@bound_amount"), k),sd->inventory.u.items_inventory[i].amount);
+			if (sd->inventory.u.items_inventory[i].unique_id) {
+				int maxlen = 256;
+				char* buf = (char*)aMalloc(maxlen * sizeof(char));
+				memset(buf, 0, maxlen);
+				snprintf(buf, 255, "%llu", (unsigned long long)sd->inventory.u.items_inventory[i].unique_id);
+				pc_setregstr(sd, reference_uid(add_str("@bound_unique_id$"), k), buf);
+				aFree(buf);
+			}
 			k++;
 		}
 	}
@@ -25225,6 +25377,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
+	BUILDIN_DEF(uniqueid_getiteminfo, "s?"),
+	BUILDIN_DEF(uniqueid_find,"s?"),
+	BUILDIN_DEF(uniqueid_delitem, "s?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]
 	BUILDIN_DEF(repair,"i?"), // [Valaris]

@@ -2689,6 +2689,82 @@ See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
 
+*uniqueid_getiteminfo(<"item_unique_id">{,<char_id>})
+
+This function assigns the item information of <item_unique_id> to the variables mentioned down there.
+Returns true on success or false otherwise.
+
+.@uid_item_id      - item ID
+.@uid_equip        - on which position the item is equipped (see EQP_* constants)
+                                     It will contain 0 if the item is not equipped.
+.@uid_refine       - refine
+.@uid_identify     - identify
+.@uid_attribute    - attribute
+.@uid_card1        - card 1
+.@uid_card2        - card 2
+.@uid_card3        - card 3
+.@uid_card4        - card 4
+.@uid_expire       - expire time
+.@uid_bound        - bound type
+.@uid_option_id1             - option ID 1
+.@uid_option_value1          - option value 1
+.@uid_option_parameter1      - option parameter 1
+.@uid_option_id2             - option ID 2
+.@uid_option_value2          - option value 2
+.@uid_option_parameter2      - option parameter 2
+.@uid_option_id3             - option ID 3
+.@uid_option_value3          - option value 3
+.@uid_option_parameter3      - option parameter 3
+.@uid_option_id4             - option ID 4
+.@uid_option_value4          - option value 4
+.@uid_option_parameter4      - option parameter 4
+.@uid_option_id5             - option ID 5
+.@uid_option_value5          - option value 5
+.@uid_option_parameter5      - option parameter 5
+.@uid_tradable               - item tradability
+
+	//while equipped with a Top Headgear
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	uniqueid_getiteminfo(.@unique_id$);
+	mes "Item ID: " + .@uid_item_id;
+	mes "Item Refine: " + .@uid_refine;
+	end;
+
+---------------------------------------
+
+*uniqueid_find(<"item_unique_id">{,<char_id>})
+
+Check if the player have an item with the unique id provided.
+return true if the item found , return false otherwise.
+
+	//while you are equipped with a Top Headgear
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	if(uniqueid_find(.@unique_id$)) {
+		mes "item found!";
+	} else {
+		mes "item not found!";
+	}
+	end;
+
+---------------------------------------
+
+*uniqueid_delitem(<"item_unique_id">{,<char_id>})
+
+This command will remove <item_unique_id> from the invoking character's inventory.
+If <char_id> is given, then it will be ran on the specified character.
+Return true on success or false otherwise.
+
+	//while you are equipped with a Top Headgear
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	if(uniqueid_delitem(.@unique_id$)) {
+		mes "item deleted";
+	} else {
+		mes "failed to delete the item";
+	}
+	end;
+
+---------------------------------------
+
 *getequipname(<equipment slot>{,<char_id>})
 
 Returns the jname of the item equipped in the specified equipment slot on the
@@ -2914,6 +2990,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card3[]               inscribed on the items, so you can explicitly check
 @inventorylist_card4[]               if the character owns an item made by a specific
                                      craftsman.
+@inventorylist_unique_id$[]        - the item unique ids.
 @inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
 @inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
 @inventorylist_count               - the number of items in these lists.
@@ -5101,7 +5178,7 @@ See 'getitem2' for an explanation of the expanded parameters.
 *countbound({<bound type>{,<char_id>}})
 
 This function will return the number of different bounded items in the character's
-inventory, and sets the arrays @bound_items[] and @bound_amount[] containing all item IDs of the
+inventory, and sets the arrays @bound_items[] and @bound_amount[] and @bound_unique_id$[] containing all item IDs of the
 counted items and their respective amount. If a bound type is specified, only those items will be counted.
 
 For a list of bound types see 'getitembound'.
@@ -7059,6 +7136,7 @@ The label "OnSellItem" sets the following arrays:
 	@sold_refine        - refine count
 	@sold_attribute     - if the item is broken (1) or not (0)
 	@sold_identify      - if the item is identified (1) or not (0)
+	@sold_unique_id$     - item unique id
 	@sold_card1         - card slot 1
 	@sold_card2         - card slot 2
 	@sold_card3         - card slot 3
