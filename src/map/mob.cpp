@@ -4240,12 +4240,21 @@ bool MobDatabase::parseDropNode(const std::string& nodeName, const YAML::Node& n
 				}
 			}
 		} else {
-			index = i++;
+			// Find next empty slot
+			for( ; i < max; i++ ){
+				if( drops[i].nameid == 0 ){
+					break;
+				}
+			}
 
-			if (index >= max) {
+			// No empty slots anymore
+			if (i >= max) {
 				this->invalidWarning(dropit, "Maximum of %d monster %s met, skipping.\n", max, nodeName.c_str());
 				continue;
 			}
+
+			// Use free index and increment it for the next entry
+			index = i++;
 
 			if( this->nodeExists( dropit, "Clear" ) ){
 				bool clear;
@@ -4256,9 +4265,12 @@ bool MobDatabase::parseDropNode(const std::string& nodeName, const YAML::Node& n
 
 				if( clear ){
 					// Clear all
-					for( uint8 i = 0; i < max; i++ ){
-						drops[i] = {};
+					for( uint8 j = 0; j < max; j++ ){
+						drops[j] = {};
 					}
+
+					// Reset current index for next entry
+					i = 0;
 
 					if( !this->nodeExists( dropit, "Item" ) ){
 						// Continue with next yaml node
