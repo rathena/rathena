@@ -904,7 +904,7 @@
 15346:22011,{ bonus bCritAtkRate,10; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } }
 15346:22118,{ bonus bCritAtkRate,10; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } }
 15347:22007,{ bonus bMaxHPrate,10; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } }
-15347:22116,{ bonus bMaxHPrate,10; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } } }
+15347:22116,{ bonus bMaxHPrate,10; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } }
 15353:22010,{ bonus bAspd,1; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } }
 15353:22115,{ bonus bAspd,1; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } }
 15354:22008,{ bonus bLongAtkRate,5; .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_SHOES); if (.@r>=21) { bonus2 bIgnoreDefRaceRate,RC_Brute,20; bonus2 bIgnoreDefRaceRate,RC_Demon,20; } }

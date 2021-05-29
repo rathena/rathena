@@ -1,0 +1,11 @@
+###########################################################################
+# Item Combo Database
+###########################################################################
+#
+# Settings
+#
+###########################################################################
+# - Combo:                  Sequence of items to define a set (minimum 2).
+#   Script                  Script to execute when the set is equipped. (Default: null)
+#   Clear                   Remove the set(s) from database. (Default: false)
+###########################################################################

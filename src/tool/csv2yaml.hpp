@@ -446,5 +446,6 @@ static bool guild_read_castledb(char* str[], int columns, int current);
 static bool exp_guild_parse_row(char* split[], int column, int current);
 static bool itemdb_read_group(char* fields[], int columns, int current);
 static bool itemdb_read_group_yaml(void);
+static bool itemdb_read_combos(const char* file);
 
 #endif /* CSV2YAML_HPP */
