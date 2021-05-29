@@ -5017,12 +5017,12 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// Process and check item combos
 	if (!sd->combos.empty()) {
 		for (const auto &combo : sd->combos) {
-			s_item_combo *item_combo;
+			std::shared_ptr<s_item_combo> item_combo;
 
 			current_equip_item_index = -1;
 			current_equip_combo_pos = combo->pos;
 
-			if (combo->bonus == nullptr || !(item_combo = itemdb_combo_exists(combo->id)))
+			if (combo->bonus == nullptr || !(item_combo = itemdb_combo.find(combo->id)))
 				continue;
 
 			bool no_run = false;

@@ -508,5 +508,6 @@ static bool mercenary_read_skilldb(char* str[], int columns, int current);
 static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
+static bool itemdb_read_combos(const char* file);
 
 #endif /* CSV2YAML_HPP */
