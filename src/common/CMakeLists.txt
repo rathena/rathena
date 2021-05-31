@@ -56,26 +56,25 @@ set( COMMON_ALL_HEADERS
 	"${COMMON_SOURCE_DIR}/mmo.hpp"
 	)
 
-set( COMMON_MINI_HEADERS
-	${COMMON_ALL_HEADERS}
-	"${COMMON_SOURCE_DIR}/core.hpp"
-	"${COMMON_SOURCE_DIR}/malloc.hpp"
-	"${COMMON_SOURCE_DIR}/showmsg.hpp"
-	"${COMMON_SOURCE_DIR}/strlib.hpp"
-	${LIBCONFIG_HEADERS} # needed by showmsg.hpp
-	${COMMON_ADDITIONALL_HPP} # needed by Windows
-	CACHE INTERNAL "" )
-set( COMMON_MINI_SOURCES
+add_library(minicore)
+
+target_sources(minicore PRIVATE
 	"${COMMON_SOURCE_DIR}/core.cpp"
 	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/showmsg.cpp"
 	"${COMMON_SOURCE_DIR}/strlib.cpp"
 	${LIBCONFIG_SOURCES} # needed by showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
-	CACHE INTERNAL "" )
-set( COMMON_MINI_INCLUDE_DIRS ${LIBCONFIG_INCLUDE_DIRS} CACHE INTERNAL "" )
-set( COMMON_MINI_DEFINITIONS "-DMINICORE ${LIBCONFIG_DEFINITIONS}" CACHE INTERNAL "" )
+)
 
+target_include_directories(minicore PUBLIC
+	${COMMON_SOURCE_DIR}
+	${LIBCONFIG_INCLUDE_DIRS}
+	${COMMON_ADDITIONALL_HPP} # needed by Windows
+)
+
+
+target_compile_definitions(minicore PRIVATE "-DMINICORE" ${LIBCONFIG_DEFINITIONS})
 
 #
 # common_base
