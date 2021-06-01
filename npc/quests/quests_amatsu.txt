@@ -2178,9 +2178,10 @@ ama_in01,180,173,3	script	Kitsune Mask#ama	762,{
 		mes "Good. Show that spiritual";
 		mes "energy to the fox several times.";
 		mes "Sooner or later, you'll be successful.";
-		if (isbegin_quest(8133) == 1)
-			erasequest 8133;
-		setquest 8134;
+		if (isbegin_quest(8132) == 1)
+			changequest 8132,8134;
+		else if (isbegin_quest(8133) == 1)
+			changequest 8133,8134;
 		close;
 	}
 	else if (event_amatsu == 4) {
