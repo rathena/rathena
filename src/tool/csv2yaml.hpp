@@ -380,5 +380,6 @@ static bool itemdb_read_randomopt_group(char *str[], int columns, int current);
 static bool itemdb_randomopt_group_yaml(void);
 static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
 static bool pc_levelpenalty_yaml();
+static bool mob_parse_row_chatdb(char* fields[], int columns, int current);
 
 #endif /* CSV2YAML_HPP */
