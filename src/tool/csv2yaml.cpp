@@ -285,6 +285,12 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("MOB_CHAT_DB", 1, root_paths, "mob_chat_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), '#', 3, 3, -1, &mob_parse_row_chatdb, false);
+	})) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -3407,3 +3413,41 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 
 	return true;
 }
+
+// Copied and adjusted from mob.cpp
+static bool mob_parse_row_chatdb(char* fields[], int columns, int current) {
+	int msg_id = atoi(fields[0]);
+
+	if (msg_id <= 0){
+		ShowError("Invalid chat ID '%d' in line %d\n", msg_id, current);
+		return false;
+	}
+
+	char* msg = fields[2];
+	size_t len = strlen(msg);
+
+	while( len && ( msg[len-1] == '\r' || msg[len-1] == '\n' ) ) {// find EOL to strip
+		len--;
+	}
+
+	if (len > (CHAT_SIZE_MAX-1)) {
+		ShowError("Message too long! Line %d, id: %d\n", current, msg_id);
+		return false;
+	}
+	else if (len == 0) {
+		ShowWarning("Empty message for id %d.\n", msg_id);
+		return false;
+	}
+
+	msg[len] = 0;  // strip previously found EOL
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << msg_id;
+	if (strcmp(fields[1], "0xFF0000") != 0)	// default color
+		body << YAML::Key << "Color" << YAML::Value << fields[1];
+	body << YAML::Key << "Dialog" << YAML::Value << msg;
+	body << YAML::EndMap;
+
+	return true;
+}
+

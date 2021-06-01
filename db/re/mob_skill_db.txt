@@ -10987,17 +10987,29 @@
 2940,Evil Shadow@NPC_DARKSTRIKE,attack,340,1,3000,0,5000,yes,target,always,0,,,,,,,
 2941,Evil Shadow@NPC_CRITICALSLASH,chase,170,1,3000,0,5000,yes,target,always,0,,,,,,,
 2941,Evil Shadow@NPC_PETRIFYATTACK,attack,180,5,3500,0,5000,yes,target,always,0,,,,,,,
-2942,Evil Fanatics@NPC_INVINCIBLE,idle,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,90,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,80,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,70,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,60,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,50,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,40,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,30,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,20,,,,,,,42
-2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,10,,,,,,,42
+2942,Evil Fanatics@NPC_INVINCIBLE,idle,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,90,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,80,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,70,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,60,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,50,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,40,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,30,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,20,,,,,,,
+2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,10,,,,,,,
+// unknown monster chat
+// 2942,Evil Fanatics@NPC_INVINCIBLE,idle,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,100,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,90,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,80,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,70,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,60,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,50,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,40,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,30,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,20,,,,,,,42
+// 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,10,,,,,,,42
 // 2942,Evil Fanatics@NPC_DANCINGBLADE,attack,713,1,1000,0,15000,yes,self,always,0,,,,,,,
 // 2942,Evil Fanatics@NPC_PULSESTRIKE2,attack,712,1,800,0,15000,yes,self,always,0,,,,,,,
 // 2942,Evil Fanatics@NPC_DARKPIERCING,attack,715,1,2500,0,60000,yes,self,always,0,,,,,,,
