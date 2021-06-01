@@ -46265,6 +46265,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      bonus3 bAutoSpellWhenHit,"AL_HEAL",1,20;
   - Id: 5552
     AegisName: Fest_Lord_Circlet
     Name: Festival Grand Circlet
