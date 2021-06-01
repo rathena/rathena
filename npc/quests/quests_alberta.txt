@@ -2792,7 +2792,6 @@ alberta_in,120,93,3	script	Iromo's Mother#ep3_2	53,{
 		mes "he spent all his pocket money,";
 		mes "but I don't know what he has been eating.";
 		next;
-		set ep13_2_hiki,3;
 		mes "[Mother]";
 		mes "Oh, why don't you ask Iromo's friend?";
 		mes "I think he would know about his favorite food.";
