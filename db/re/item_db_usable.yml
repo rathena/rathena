@@ -45739,7 +45739,7 @@ Body:
     Script: |
       /*No clue the random item yet*/
   - Id: 22721
-    AegisName: ?_Box
+    AegisName: "?_Box"
     Name: "? Box"
     Type: Cash
     Buy: 10

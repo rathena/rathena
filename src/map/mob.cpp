@@ -4199,8 +4199,8 @@ const std::string MobDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/mob_db.yml";
 }
 
-bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops) {
-	const YAML::Node &dropNode = node[nodeName];
+bool MobDatabase::parseDropNode(std::string nodeName, ryml::NodeRef node, uint8 max, s_mob_drop *drops) {
+	const auto dropNode = node[c4::to_csubstr(nodeName)];
 	uint16 i;
 
 	// Find first empty spot
@@ -4210,7 +4210,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
 		}
 	}
 
-	for (const YAML::Node &dropit : dropNode) {
+	for (const auto dropit : dropNode.children()) {
 		uint16 index;
 
 		if (this->nodeExists(dropit, "Index")) {
@@ -4280,7 +4280,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 MobDatabase::parseBodyNode(const ryml::NodeRef node) {
 	uint32 mob_id;
 
 	if (!this->asUInt32(node, "Id", mob_id))
@@ -4632,19 +4632,21 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "RaceGroups")) {
-		const YAML::Node &raceNode = node["RaceGroups"];
+		const auto raceNode = node["RaceGroups"];
 
-		for (const auto &raceit : raceNode) {
-			std::string raceName = raceit.first.as<std::string>(), raceName_constant = "RC2_" + raceName;
+		for (const auto &raceit : raceNode.children()) {
+			std::string raceName;
+			c4::from_chars(raceit.key(), &raceName);
+			std::string raceName_constant = "RC2_" + raceName;
 			int64 constant;
 
 			if (!script_get_constant(raceName_constant.c_str(), &constant)) {
-				this->invalidWarning(raceNode[raceName], "Unknown monster race group %s, skipping.\n", raceName.c_str());
+				this->invalidWarning(raceNode[raceit.key()], "Unknown monster race group %s, skipping.\n", raceName.c_str());
 				continue;
 			}
 
 			if (!CHK_RACE2(constant)) {
-				this->invalidWarning(raceNode[raceName], "Invalid monster race group %s, skipping.\n", raceName.c_str());
+				this->invalidWarning(raceNode[raceit.key()], "Invalid monster race group %s, skipping.\n", raceName.c_str());
 				continue;
 			}
 
@@ -4821,19 +4823,21 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Modes")) {
-		const YAML::Node &modeNode = node["Modes"];
+		const auto modeNode = node["Modes"];
 
-		for (const auto &modeit : modeNode) {
-			std::string modeName = modeit.first.as<std::string>(), modeName_constant = "MD_" + modeName;
+		for (const auto modeit : modeNode.children()) {
+			std::string modeName;
+			c4::from_chars(modeit.key(), &modeName);
+			std::string modeName_constant = "MD_" + modeName;
 			int64 constant;
 
 			if (!script_get_constant(modeName_constant.c_str(), &constant)) {
-				this->invalidWarning(modeNode[modeName], "Unknown monster mode %s, skipping.\n", modeName.c_str());
+				this->invalidWarning(modeNode[modeit.key()], "Unknown monster mode %s, skipping.\n", modeName.c_str());
 				continue;
 			}
 
 			if (constant < MD_NONE || constant > MD_SKILLIMMUNE) {
-				this->invalidWarning(modeNode[modeName], "Invalid monster mode %s, skipping.\n", modeName.c_str());
+				this->invalidWarning(modeNode[modeit.key()], "Invalid monster mode %s, skipping.\n", modeName.c_str());
 				continue;
 			}
 
@@ -4935,171 +4939,173 @@ MobDatabase mob_db;
  * @return True on success or false otherwise
  */
 static bool mob_read_sqldb_sub(std::vector<std::string> str) {
-	YAML::Node node;
+	ryml::Tree tree;
+	ryml::NodeRef node = tree.rootref();
 	int32 index = -1;
 
-	node["Id"] = std::stoul(str[++index]);
-	node["AegisName"] = str[++index];
-	node["Name"] = str[++index];
+	node["Id"] << str[++index];
+	node["AegisName"] << str[++index];
+	node["Name"] << str[++index];
 	if (!str[++index].empty())
-		node["JapaneseName"] = str[index];
+		node["JapaneseName"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["Level"] = std::stoi(str[index]);
+		node["Level"] << str[index];
 	if (!str[++index].empty() && std::stoul(str[index]) > 1)
-		node["Hp"] = std::stoul(str[index]);
+		node["Hp"] << str[index];
 	if (!str[++index].empty() && std::stoul(str[index]) > 1)
-		node["Sp"] = std::stoul(str[index]);
+		node["Sp"] << str[index];
 	if (!str[++index].empty())
-		node["BaseExp"] = std::stoul(str[index]);
+		node["BaseExp"] << str[index];
 	if (!str[++index].empty())
-		node["JobExp"] = std::stoul(str[index]);
+		node["JobExp"] << str[index];
 	if (!str[++index].empty())
-		node["MvpExp"] = std::stoul(str[index]);
+		node["MvpExp"] << str[index];
 	if (!str[++index].empty())
-		node["Attack"] = std::stoi(str[index]);
+		node["Attack"] << str[index];
 	if (!str[++index].empty())
-		node["Attack2"] = std::stoi(str[index]);
+		node["Attack2"] << str[index];
 	if (!str[++index].empty())
-		node["Defense"] = std::stoi(str[index]);
+		node["Defense"] << str[index];
 	if (!str[++index].empty())
-		node["MagicDefense"] = std::stoi(str[index]);
+		node["MagicDefense"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["Str"] = std::stoi(str[index]);
+		node["Str"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["Agi"] = std::stoi(str[index]);
+		node["Agi"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["Vit"] = std::stoi(str[index]);
+		node["Vit"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["Int"] = std::stoi(str[index]);
+		node["Int"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["Dex"] = std::stoi(str[index]);
+		node["Dex"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["Luk"] = std::stoi(str[index]);
+		node["Luk"] << str[index];
 	if (!str[++index].empty())
-		node["AttackRange"] = std::stoi(str[index]);
+		node["AttackRange"] << str[index];
 	if (!str[++index].empty())
-		node["SkillRange"] = std::stoi(str[index]);
+		node["SkillRange"] << str[index];
 	if (!str[++index].empty())
-		node["ChaseRange"] = std::stoi(str[index]);
+		node["ChaseRange"] << str[index];
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Small") != 0)
-		node["Size"] = str[index];
+		node["Size"] << str[index];
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Formless") != 0)
-		node["Race"] = str[index];
+		node["Race"] << str[index];
 
 	for (uint16 i = 1; i < RC2_MAX; i++) {
-		if (!str[i + index].empty())
-			node["RaceGroups"][script_get_constant_str("RC2_", i) + 4] = std::stoi(str[i + index]) ? "true" : "false";
+		if (!str[i + index].empty()) {
+			auto raceGroupsNode = node["RaceGroups"];
+			raceGroupsNode |= ryml::MAP;
+			node["RaceGroups"][c4::to_csubstr(script_get_constant_str("RC2_", i) + 4)] << (std::stoi(str[i + index]) ? "true" : "false");
+		}
 	}
 
 	index += RC2_MAX - 1;
 
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Neutral") != 0)
-		node["Element"] = str[index];
+		node["Element"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
-		node["ElementLevel"] = std::stoi(str[index]);
+		node["ElementLevel"] << str[index];
 	if (!str[++index].empty())
-		node["WalkSpeed"] = std::stoi(str[index]);
+		node["WalkSpeed"] << str[index];
 	if (!str[++index].empty())
-		node["AttackDelay"] = std::stoi(str[index]);
+		node["AttackDelay"] << str[index];
 	if (!str[++index].empty())
-		node["AttackMotion"] = std::stoi(str[index]);
+		node["AttackMotion"] << str[index];
 	if (!str[++index].empty())
-		node["DamageMotion"] = std::stoi(str[index]);
+		node["DamageMotion"] << str[index];
 	if (!str[++index].empty())
-		node["DamageTaken"] = std::stoi(str[index]);
+		node["DamageTaken"] << str[index];
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "06") != 0)
-		node["Ai"] = str[index];
+		node["Ai"] << str[index];
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Normal") != 0)
-		node["Class"] = str[index];
+		node["Class"] << str[index];
 
-	YAML::Node modes;
+	ryml::NodeRef modes = node["Modes"];
+	modes |= ryml::MAP;
 
 	if (!str[++index].empty())
-		modes["CanMove"] = std::stoi(str[index]) ? "true" : "false";
+		modes["CanMove"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["Looter"] = std::stoi(str[index]) ? "true" : "false";
+		modes["Looter"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["Aggressive"] = std::stoi(str[index]) ? "true" : "false";
+		modes["Aggressive"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["Assist"] = std::stoi(str[index]) ? "true" : "false";
+		modes["Assist"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["CastSensorIdle"] = std::stoi(str[index]) ? "true" : "false";
+		modes["CastSensorIdle"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["NoRandomWalk"] = std::stoi(str[index]) ? "true" : "false";
+		modes["NoRandomWalk"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["NoCast"] = std::stoi(str[index]) ? "true" : "false";
+		modes["NoCast"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["CanAttack"] = std::stoi(str[index]) ? "true" : "false";
+		modes["CanAttack"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["CastSensorChase"] = std::stoi(str[index]) ? "true" : "false";
+		modes["CastSensorChase"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["ChangeChase"] = std::stoi(str[index]) ? "true" : "false";
+		modes["ChangeChase"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["Angry"] = std::stoi(str[index]) ? "true" : "false";
+		modes["Angry"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["ChangeTargetMelee"] = std::stoi(str[index]) ? "true" : "false";
+		modes["ChangeTargetMelee"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["ChangeTargetChase"] = std::stoi(str[index]) ? "true" : "false";
+		modes["ChangeTargetChase"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["TargetWeak"] = std::stoi(str[index]) ? "true" : "false";
+		modes["TargetWeak"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["RandomTarget"] = std::stoi(str[index]) ? "true" : "false";
+		modes["RandomTarget"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["IgnoreMelee"] = std::stoi(str[index]) ? "true" : "false";
+		modes["IgnoreMelee"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["IgnoreMagic"] = std::stoi(str[index]) ? "true" : "false";
+		modes["IgnoreMagic"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["IgnoreRanged"] = std::stoi(str[index]) ? "true" : "false";
+		modes["IgnoreRanged"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["Mvp"] = std::stoi(str[index]) ? "true" : "false";
+		modes["Mvp"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["IgnoreMisc"] = std::stoi(str[index]) ? "true" : "false";
+		modes["IgnoreMisc"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["KnockBackImmune"] = std::stoi(str[index]) ? "true" : "false";
+		modes["KnockBackImmune"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["TeleportBlock"] = std::stoi(str[index]) ? "true" : "false";
+		modes["TeleportBlock"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["FixedItemDrop"] = std::stoi(str[index]) ? "true" : "false";
+		modes["FixedItemDrop"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["Detector"] = std::stoi(str[index]) ? "true" : "false";
+		modes["Detector"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["StatusImmune"] = std::stoi(str[index]) ? "true" : "false";
+		modes["StatusImmune"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
-		modes["SkillImmune"] = std::stoi(str[index]) ? "true" : "false";
-	node["Modes"] = modes;
+		modes["SkillImmune"] << (std::stoi(str[index]) ? "true" : "false");
 
 	for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
-		YAML::Node mvpdrops;
-
-		if (!str[++index].empty())
-			mvpdrops["Item"] = str[index];
-		if (!str[++index].empty())
-			mvpdrops["Rate"] = std::stoi(str[index]);
-		if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
-			mvpdrops["RandomOptionGroup"] = str[index];
-		if (!str[++index].empty() && std::stoi(str[index]) >= 0)
-			mvpdrops["Index"] = std::stoi(str[index]);
-
-		if (!mvpdrops.IsNull())
-			node["MvpDrops"][i] = mvpdrops;
+		ryml::NodeRef mvpDropsNode = node["MvpDrops"];
+		mvpDropsNode |= ryml::SEQ;
+		
+		if (!str[++index].empty()) {
+			mvpDropsNode.append_child() << ryml::key("Item") << str[index];
+			if (!str[++index].empty())
+				mvpDropsNode[i].append_sibling() << ryml::key("Rate") << str[index];
+			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
+				mvpDropsNode[i].append_sibling() << ryml::key("RandomOptionGroup") << str[index];
+			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
+				mvpDropsNode[i].append_sibling() << ryml::key("Index") << str[index];
+		}
 	}
 
 	for (uint8 i = 0; i < MAX_MOB_DROP; i++) {
-		YAML::Node drops;
+		ryml::NodeRef dropsNode = node["Drops"];
+		dropsNode |= ryml::SEQ;
 
-		if (!str[++index].empty())
-			drops["Item"] = str[index];
-		if (!str[++index].empty())
-			drops["Rate"] = std::stoi(str[index]);
-		if (!str[++index].empty())
-			drops["StealProtected"] = std::stoi(str[index]) ? "true" : "false";
-		if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
-			drops["RandomOptionGroup"] = str[index];
-		if (!str[++index].empty() && std::stoi(str[index]) >= 0)
-			drops["Index"] = std::stoi(str[index]);
-
-		if (!drops.IsNull())
-			node["Drops"][i] = drops;
+		if (!str[++index].empty()) {
+			dropsNode.append_child() << ryml::key("Item") << str[index];
+			if (!str[++index].empty())
+				dropsNode[i].append_sibling() << ryml::key("Rate") << str[index];
+			if (!str[++index].empty())
+				dropsNode[i].append_sibling() << ryml::key("StealProtected") << (std::stoi(str[index]) ? "true" : "false");
+			if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
+				dropsNode[i].append_sibling() << ryml::key("RandomOptionGroup") << str[index];
+			if (!str[++index].empty() && std::stoi(str[index]) >= 0)
+				dropsNode[i].append_sibling() << ryml::key("Index") << str[index];
+		}
 	}
 
 	return mob_db.parseBodyNode(node) > 0;
@@ -5173,7 +5179,7 @@ const std::string MobAvailDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string mob_name;
 
 	if (!this->asString(node, "Mob", mob_name))
@@ -5430,10 +5436,12 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		const YAML::Node &optionNode = node["Options"];
+		const auto optionNode = node["Options"];
 
-		for (const auto &it : optionNode) {
-			std::string option = it.first.as<std::string>(), option_constant = "OPTION_" + option;
+		for (const auto it : optionNode.children()) {
+			std::string option;
+			c4::from_chars(it.key(), &option);
+			std::string option_constant = "OPTION_" + option;
 			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {

@@ -3,12 +3,13 @@
 
 #include "inter.hpp"
 
+#include <chrono>
+#include <iostream>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
 #include <sys/stat.h> // for stat/lstat/fstat - [Dekamaster/Ultimate GM Tool]
 #include <vector>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -860,7 +861,7 @@ const std::string InterServerDatabase::getDefaultLocation(){
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef node ){
 	uint32 id;
 
 	if( !this->asUInt32( node, "ID", id ) ){
@@ -950,7 +951,10 @@ int inter_init_sql(const char *file)
 	}
 
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	auto start = std::chrono::high_resolution_clock::now();
 	interServerDb.load();
+	auto fin = std::chrono::high_resolution_clock::now();
+	ShowDebug("Took %dms to load inter_server.yml\n", std::chrono::duration_cast<std::chrono::milliseconds>(fin - start).count());
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
