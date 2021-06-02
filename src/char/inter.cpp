@@ -3,8 +3,6 @@
 
 #include "inter.hpp"
 
-#include <chrono>
-#include <iostream>
 #include <stdlib.h>
 #include <string.h>
 #include <string>
@@ -951,10 +949,7 @@ int inter_init_sql(const char *file)
 	}
 
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
-	auto start = std::chrono::high_resolution_clock::now();
 	interServerDb.load();
-	auto fin = std::chrono::high_resolution_clock::now();
-	ShowDebug("Took %dms to load inter_server.yml\n", std::chrono::duration_cast<std::chrono::milliseconds>(fin - start).count());
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
