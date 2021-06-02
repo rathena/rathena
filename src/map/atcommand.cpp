@@ -8006,8 +8006,11 @@ ACMD_FUNC(whodrops)
 				if(!mob) continue;
 
 #ifdef RENEWAL_DROP
-				if( battle_config.atcommand_mobinfo_type )
+				if( battle_config.atcommand_mobinfo_type ) {
 					dropchance = dropchance * pc_level_penalty_mod( sd, PENALTY_DROP, mob ) / 100;
+					if (dropchance <= 0 && !battle_config.drop_rate0item)
+						dropchance = 1;
+				}
 #endif
 				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
