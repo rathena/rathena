@@ -82,26 +82,11 @@ struct skill_usave {
 	uint16 skill_id, skill_lv;
 };
 
-struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
-static unsigned short skill_produce_count;
-
 AbraDatabase abra_db;
+MagicMushroomDatabase magic_mushroom_db;
 ReadingSpellbookDatabase reading_spellbook_db;
 SkillArrowDatabase skill_arrow_db;
-
-#define MAX_SKILL_CHANGEMATERIAL_DB 75
-#define MAX_SKILL_CHANGEMATERIAL_SET 3
-struct s_skill_changematerial_db {
-	t_itemid nameid;
-	unsigned short rate;
-	unsigned short qty[MAX_SKILL_CHANGEMATERIAL_SET];
-	unsigned short qty_rate[MAX_SKILL_CHANGEMATERIAL_SET];
-};
-struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_CHANGEMATERIAL_DB];
-static unsigned short skill_changematerial_count;
-
-
-MagicMushroomDatabase magic_mushroom_db;
+SkillProduceDatabase skill_produce_db;
 
 struct s_skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
@@ -8992,7 +8977,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AL_HOLYWATER:
 		if(sd) {
-			if (skill_produce_mix(sd, skill_id, ITEMID_HOLY_WATER, 0, 0, 0, 1, -1)) {
+			if (skill_produce_mix(sd, skill_id, ITEMID_HOLY_WATER, 0, 0, 0, 1, nullptr)) {
 				struct skill_unit* su;
 				if ((su = map_find_skill_unit_oncell(bl, bl->x, bl->y, NJ_SUITON, NULL, 0)) != NULL)
 					skill_delunit(su);
@@ -9027,7 +9012,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case ASC_CDP:
 		if(sd) {
-			if(skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, -1)) //Produce a Poison Bottle.
+			if(skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, nullptr)) //Produce a Poison Bottle.
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			else
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_STUFF_INSUFFICIENT,0);
@@ -9217,7 +9202,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			//Prepare 200 White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200, -1))
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200, nullptr))
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
@@ -9225,29 +9210,33 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			//Prepare 200 Slim White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200, -1))
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200, nullptr))
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 	case AM_TWILIGHT3:
 		if (sd) {
 			int ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
-			short alcohol_idx = -1, acid_idx = -1, fire_idx = -1;
+
+			std::shared_ptr<s_skill_produce_db_entry> produce_alcohol = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100);
+			std::shared_ptr<s_skill_produce_db_entry> produce_acid = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50);
+			std::shared_ptr<s_skill_produce_db_entry> produce_fire = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50);
+
 			if( ebottle >= 0 )
 				ebottle = sd->inventory.u.items_inventory[ebottle].amount;
 			//check if you can produce all three, if not, then fail:
-			if (!(alcohol_idx = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100)) //100 Alcohol
-				|| !(acid_idx = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50)) //50 Acid Bottle
-				|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50)) //50 Flame Bottle
+			if (produce_alcohol == nullptr //100 Alcohol
+				|| produce_acid == nullptr //50 Acid Bottle
+				|| produce_fire == nullptr //50 Flame Bottle
 				|| ebottle < 200 //200 empty bottle are required at total.
 			) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, alcohol_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, acid_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, fire_idx-1);
+			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, produce_alcohol);
+			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, produce_acid);
+			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, produce_fire);
 		}
 		break;
 	case SA_DISPELL:
@@ -10722,7 +10711,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AB_ANCILLA:
 		if( sd ) {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_ANCILLA, 0, 0, 0, 1, -1);
+			skill_produce_mix(sd, skill_id, ITEMID_ANCILLA, 0, 0, 0, 1, nullptr);
 		}
 		break;
 
@@ -21288,74 +21277,83 @@ void skill_unit_move_unit_group(std::shared_ptr<s_skill_unit_group> group, int16
  * @param nameid Product requested
  * @param trigger Trigger criteria to match will 'ItemLv'
  * @param qty Amount of item will be created
- * @return 0 If failed or Index+1 of item found on skill_produce_db[]
+ * @return nullptr If failed or s_skill_produce_db_entry on success
  */
-short skill_can_produce_mix(struct map_session_data *sd, t_itemid nameid, int trigger, int qty)
+std::shared_ptr<s_skill_produce_db_entry> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int trigger, int qty)
 {
-	short i, j;
+	if (sd == nullptr)
+		return nullptr;
 
-	nullpo_ret(sd);
+	if (!nameid || !item_db.exists(nameid))
+		return nullptr;
 
-	if (!nameid || !itemdb_exists(nameid))
-		return 0;
+	std::shared_ptr<s_skill_produce_db_entry> produce = nullptr;
 
-	for (i = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
-		if (skill_produce_db[i].nameid == nameid) {
-			if ((j = skill_produce_db[i].req_skill) > 0 &&
-				pc_checkskill(sd,j) < skill_produce_db[i].req_skill_lv)
-				continue; // must iterate again to check other skills that produce it. [malufett]
-			if (j > 0 && sd->menuskill_id > 0 && sd->menuskill_id != j)
-				continue; // special case
-			break;
+	for (const auto &itemlvit : skill_produce_db) {
+		if (itemlvit.second->data.empty())
+			continue;
+		for (const auto &datait : itemlvit.second->data) {
+			if (datait.second->nameid == nameid) {
+				if (datait.second->req_skill > 0 && pc_checkskill(sd, datait.second->req_skill) < datait.second->req_skill_lv)
+					continue; // must iterate again to check other skills that produce it. [malufett]
+				if (datait.second->req_skill > 0 && sd->menuskill_id > 0 && sd->menuskill_id != datait.second->req_skill)
+					continue; // special case
+				produce = datait.second;
+				break;
+			}
 		}
+		if (produce != nullptr)
+			break;
 	}
 
 	if (nameid == ITEMID_HOMUNCULUS_SUPPLEMENT) { // Temporary check since the produce_db specifically wants the Pharmacy skill to use
 		if (pc_checkskill(sd, AM_BIOETHICS) == 0)
-			return 0;
+			return nullptr;
 	}
 
-	if (i >= MAX_SKILL_PRODUCE_DB)
-		return 0;
+	if (produce == nullptr)
+		return nullptr;
 
 	// Cannot carry the produced stuff
 	if (pc_checkadditem(sd, nameid, qty) == CHKADDITEM_OVERAMOUNT)
-		return 0;
+		return nullptr;
 
 	// Matching the requested produce list
 	if (trigger >= 0) {
 		if (trigger > 20) { // Non-weapon, non-food item (itemlv must match)
-			if (skill_produce_db[i].itemlv != trigger)
-				return 0;
+			if (produce->itemlv != trigger)
+				return nullptr;
 		} else if (trigger > 10) { // Food (any item level between 10 and 20 will do)
-			if (skill_produce_db[i].itemlv <= 10 || skill_produce_db[i].itemlv > 20)
-				return 0;
+			if (produce->itemlv <= 10 || produce->itemlv > 20)
+				return nullptr;
 		} else { // Weapon (itemlv must be higher or equal)
-			if (skill_produce_db[i].itemlv > trigger)
-				return 0;
+			if (produce->itemlv > trigger)
+				return nullptr;
 		}
 	}
 
-	// Check on player's inventory
-	for (j = 0; j < MAX_PRODUCE_RESOURCE; j++) {
-		t_itemid nameid_produce;
+	if (produce->materials.empty())
+		return produce;
 
-		if (!(nameid_produce = skill_produce_db[i].mat_id[j]))
-			continue;
-		if (skill_produce_db[i].mat_amount[j] == 0) {
-			if (pc_search_inventory(sd,nameid_produce) < 0)
-				return 0;
+	// Check on player's inventory
+	for (const auto &it : produce->materials) {
+		if (!item_db.exists(it.first))
+			return nullptr;
+		if (it.second == 0) {
+			if (pc_search_inventory(sd, it.first) < 0)
+				return nullptr;
 		} else {
 			unsigned short idx, amt;
 
 			for (idx = 0, amt = 0; idx < MAX_INVENTORY; idx++)
-				if (sd->inventory.u.items_inventory[idx].nameid == nameid_produce)
+				if (sd->inventory.u.items_inventory[idx].nameid == it.first)
 					amt += sd->inventory.u.items_inventory[idx].amount;
-			if (amt < qty * skill_produce_db[i].mat_amount[j])
-				return 0;
+			if (amt < qty * it.second)
+				return nullptr;
 		}
 	}
-	return i + 1;
+
+	return produce;
 }
 
 /**
@@ -21367,40 +21365,39 @@ short skill_can_produce_mix(struct map_session_data *sd, t_itemid nameid, int tr
  * @param slot2
  * @param slot3
  * @param qty Amount of requested item
- * @param produce_idx Index of produce entry in skill_produce_db[]. (Optional. Assumed the requirements are complete, checked somewhere)
+ * @param s_skill_produce_db_entry. (Optional. Assumed the requirements are complete, checked somewhere)
  * @return True is success, False if failed
  */
-bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid nameid, int slot1, int slot2, int slot3, int qty, short produce_idx)
+bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid nameid, int slot1, int slot2, int slot3, int qty, std::shared_ptr<s_skill_produce_db_entry> produce)
 {
-	int slot[3];
-	int i, sc, ele, idx, equip, wlv, make_per = 0, flag = 0, skill_lv = 0;
-	int num = -1; // exclude the recipe
-	struct status_data *status;
-
 	nullpo_ret(sd);
 
-	status = status_get_status_data(&sd->bl);
+	if (!item_db.exists(nameid))
+		return false;
+
+	int i, sc, ele, equip, wlv, make_per = 0, flag = 0, skill_lv = 0;
+	int num = -1; // exclude the recipe
+	struct status_data *status = status_get_status_data(&sd->bl);
 
 	if( sd->skill_id_old == skill_id )
 		skill_lv = sd->skill_lv_old;
 
-	if (produce_idx == -1) {
-		if( !(idx = skill_can_produce_mix(sd,nameid,-1, qty)) )
+	if (produce == nullptr) {
+		produce = skill_can_produce_mix(sd,nameid,-1, qty);
+		if( produce == nullptr )
 			return false;
-
-		idx--;
 	}
-	else
-		idx = produce_idx;
 
 	if (qty < 1)
 		qty = 1;
 
 	if (!skill_id) //A skill can be specified for some override cases.
-		skill_id = skill_produce_db[idx].req_skill;
+		skill_id = produce->req_skill;
 
 	if( skill_id == GC_RESEARCHNEWPOISON )
 		skill_id = GC_CREATENEWPOISON;
+
+	int slot[3];
 
 	slot[0] = slot1;
 	slot[1] = slot2;
@@ -21424,30 +21421,32 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 		}
 	}
 
-	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++) {
-		short x, j;
-		t_itemid id;
+	if (!produce->materials.empty()) {
+		for (const auto &mat : produce->materials) {
+			short x, j;
+			t_itemid id = mat.first;
 
-		if (!(id = skill_produce_db[idx].mat_id[i]) || !itemdb_exists(id))
-			continue;
-		num++;
-		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * skill_produce_db[idx].mat_amount[i];
-		do {
-			int y = 0;
+			if (!item_db.exists(id))
+				continue;
+			num++;
+			x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * mat.second;
+			do {
+				int y = 0;
 
-			j = pc_search_inventory(sd,id);
+				j = pc_search_inventory(sd,id);
 
-			if (j >= 0) {
-				y = sd->inventory.u.items_inventory[j].amount;
-				if (y > x)
-					y = x;
-				pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
-			} else {
-				ShowError("skill_produce_mix: material item error\n");
-				return false;
-			}
-			x -= y;
-		} while( j >= 0 && x > 0 );
+				if (j >= 0) {
+					y = sd->inventory.u.items_inventory[j].amount;
+					if (y > x)
+						y = x;
+					pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
+				} else {
+					ShowError("skill_produce_mix: material item error\n");
+					return false;
+				}
+				x -= y;
+			} while( j >= 0 && x > 0 );
+		}
 	}
 
 	if ((equip = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB)) && itemdb_type(nameid) == IT_WEAPON )
@@ -21580,12 +21579,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 				qty = 1+rnd()%pc_checkskill(sd,GC_RESEARCHNEWPOISON);
 				break;
 			case GN_CHANGEMATERIAL:
-				for (i = 0; i < MAX_SKILL_CHANGEMATERIAL_DB; i++) {
-					if (skill_changematerial_db[i].nameid == nameid) {
-						make_per = skill_changematerial_db[i].rate * 10;
-						break;
-					}
-				}
+				make_per = produce->baserate * 10;
 				break;
 			case GN_S_PHARMACY:
 				{
@@ -21710,7 +21704,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 							+ 20  * (sd->status.base_level + 1)
 							+ 20  * (status->dex + 1)
 							+ 100 * (rnd()%(30+5*(sd->cook_mastery/400) - (6+sd->cook_mastery/80)) + (6+sd->cook_mastery/80))
-							- 400 * (skill_produce_db[idx].itemlv - 11 + 1)
+							- 400 * (produce->itemlv - 11 + 1)
 							- 10  * (100 - status->luk + 1)
 							- 500 * (num - 1)
 							- 100 * (rnd()%4 + 1);
@@ -21866,37 +21860,34 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 					clif_misceffect(&sd->bl,3);
 					break;
 				default: //Those that don't require a skill?
-					if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20) { //Cooking items.
+					if (produce->itemlv > 10 && produce->itemlv <= 20) { //Cooking items.
 						clif_specialeffect(&sd->bl, EF_COOKING_OK, AREA);
 						if (sd->cook_mastery < 1999)
-							pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery + ( 1 << ( (skill_produce_db[idx].itemlv - 11) / 2 ) ) * 5);
+							pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery + ( 1 << ( (produce->itemlv - 11) / 2 ) ) * 5);
 					}
 					break;
 			}
 		}
 
 		if (skill_id == GN_CHANGEMATERIAL && tmp_item.amount) { //Success
-			int j, k = 0, l;
+			int k = 0, l;
 			bool isStackable = itemdb_isstackable(tmp_item.nameid);
 
-			for (i = 0; i < MAX_SKILL_CHANGEMATERIAL_DB; i++) {
-				if (skill_changematerial_db[i].nameid == nameid){
-					for (j = 0; j < MAX_SKILL_CHANGEMATERIAL_SET; j++){
-						if (rnd()%1000 < skill_changematerial_db[i].qty_rate[j]){
-							uint16 total_qty = qty * skill_changematerial_db[i].qty[j];
-							tmp_item.amount = (isStackable ? total_qty : 1);
-							for (l = 0; l < total_qty; l += tmp_item.amount) {
-								if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
-									clif_additem(sd,0,0,flag);
-									if( battle_config.skill_drop_items_full ){
-										map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
-									}
+			if (!produce->qty.empty()) {
+				for (const auto &qtyit : produce->qty) {
+					if (rnd()%1000 < qtyit.second){
+						uint16 total_qty = qty * qtyit.first;
+						tmp_item.amount = (isStackable ? total_qty : 1);
+						for (l = 0; l < total_qty; l += tmp_item.amount) {
+							if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
+								clif_additem(sd,0,0,flag);
+								if( battle_config.skill_drop_items_full ){
+									map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 								}
 							}
-							k++;
 						}
+						k++;
 					}
-					break;
 				}
 			}
 			if (k) {
@@ -22021,10 +22012,10 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 				clif_msg_skill(sd, skill_id, ITEM_PRODUCE_FAIL);
 				break;
 			default:
-				if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20 ) { //Cooking items.
+				if (produce->itemlv > 10 && produce->itemlv <= 20 ) { //Cooking items.
 					clif_specialeffect(&sd->bl, EF_COOKING_FAIL, AREA);
 					if (sd->cook_mastery > 0)
-						pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery - ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) - ( ( ( 1 << ((skill_produce_db[idx].itemlv - 11) / 2) ) >> 1 ) * 3 ));
+						pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery - ( 1 << ((produce->itemlv - 11) / 2) ) - ( ( ( 1 << ((produce->itemlv - 11) / 2) ) >> 1 ) * 3 ));
 				}
 				break;
 		}
@@ -22368,49 +22359,54 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 }
 
 int skill_changematerial(struct map_session_data *sd, int n, unsigned short *item_list) {
-	int i, j, k, c, p = 0, amount;
+	int k, c, p = 0, amount;
 	t_itemid nameid;
 
 	nullpo_ret(sd);
 	nullpo_ret(item_list);
 
+	uint16 item_lv = 26;
+	std::shared_ptr<s_skill_produce_db> produce = skill_produce_db.find(item_lv);
+	if (produce == nullptr || produce->data.empty())
+		return 0;
+
 	// Search for objects that can be created.
-	for( i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ) {
-		if( skill_produce_db[i].itemlv == 26 && skill_produce_db[i].nameid > 0 ) {
-			p = 0;
-			do {
-				c = 0;
-				// Verification of overlap between the objects required and the list submitted.
-				for( j = 0; j < MAX_PRODUCE_RESOURCE; j++ ) {
-					if( skill_produce_db[i].mat_id[j] > 0 ) {
-						for( k = 0; k < n; k++ ) {
-							int idx = item_list[k*2+0]-2;
+	for (const auto &datait : produce->data) {
+		std::shared_ptr<s_skill_produce_db_entry> data = datait.second;
 
-							if( idx < 0 || idx >= MAX_INVENTORY ){
-								return 0;
-							}
+		if (!item_db.exists(data->nameid))
+			return 0;
+		if (data->materials.empty())
+			return 0;
 
-							nameid = sd->inventory.u.items_inventory[idx].nameid;
-							amount = item_list[k*2+1];
-							if( nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-								clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
-								return 0;
-							}
-							if( nameid == skill_produce_db[i].mat_id[j] && (amount-p*skill_produce_db[i].mat_amount[j]) >= skill_produce_db[i].mat_amount[j]
-								&& (amount-p*skill_produce_db[i].mat_amount[j])%skill_produce_db[i].mat_amount[j] == 0 ) // must be in exact amount
-								c++; // match
-						}
+		p = 0;
+		do {
+			c = 0;
+			// Verification of overlap between the objects required and the list submitted.
+			for (const auto &mat : data->materials) {
+				for( k = 0; k < n; k++ ) {
+					int idx = item_list[k*2]-2;
+
+					if( idx < 0 || idx >= MAX_INVENTORY ){
+						return 0;
 					}
-					else
-						break;	// No more items required
+
+					nameid = sd->inventory.u.items_inventory[idx].nameid;
+					amount = item_list[k*2+1];
+					if( nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
+						clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
+						return 0;
+					}
+					if (nameid == mat.first && (amount - p * mat.second) >= mat.second && (amount - p * mat.second) % mat.second == 0) // must be in exact amount
+						c++; // match
 				}
-				p++;
-			} while(n == j && c == n);
-			p--;
-			if ( p > 0 ) {
-				skill_produce_mix(sd,GN_CHANGEMATERIAL,skill_produce_db[i].nameid,0,0,0,p,i);
-				return 1;
 			}
+			p++;
+		} while(n == data->materials.size() && c == n);
+		p--;
+		if ( p > 0 ) {
+			skill_produce_mix(sd,GN_CHANGEMATERIAL,datait.second->nameid,0,0,0,p, datait.second);
+			return 1;
 		}
 	}
 
@@ -24416,48 +24412,225 @@ static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
 	return true;
 }
 
-/** Reads Produce db
- * Structure: ProduceItemID,ItemLV,RequireSkill,Requireskill_lv,MaterialID1,MaterialAmount1,...
+bool SkillProduceDatabase::add_itemconsumed(const YAML::Node& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed) {
+	for (const auto &it : node) {
+		if (this->nodeExists(it, "Clear")) {
+			std::string item_name;
+
+			if (!this->asString(it, "Clear", item_name))
+				return 0;
+
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+			if (item == nullptr) {
+				this->invalidWarning(it["Clear"], "Item %s does not exist.\n", item_name.c_str());
+				return 0;
+			}
+
+			if (entry->materials.erase(item->nameid) == 0)
+				this->invalidWarning(it["Clear"], "Item %s was not defined.\n", item_name.c_str());
+
+			continue;
+		}
+
+		std::string item_name;
+
+		if (!this->asString(it, "Item", item_name))
+			return 0;
+
+		std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+		if (item == nullptr) {
+			this->invalidWarning(it["Item"], "Item %s does not exist.\n", item_name.c_str());
+			return 0;
+		}
+
+		uint16 amount;
+
+		if (!isConsumed)
+			amount = 0;
+		else {
+			if (!this->asUInt16Rate(it, "Amount", amount, MAX_AMOUNT))
+				return 0;
+		}
+
+		entry->materials[item->nameid] = amount;
+	}
+	return 1;
+}
+
+const std::string SkillProduceDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/produce_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the produce_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
  */
-static bool skill_parse_row_producedb(char* split[], int columns, int current)
-{
-	unsigned short x, y;
-	unsigned short id = atoi(split[0]);
-	t_itemid nameid = 0;
-	bool found = false;
+uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
+	uint16 itemlv;
 
-	if (id >= ARRAYLENGTH(skill_produce_db)) {
-		ShowError("skill_parse_row_producedb: Maximum db entries reached.\n");
-		return false;
+	if (!this->asUInt16(node, "ItemLevel", itemlv))
+		return 0;
+
+	std::shared_ptr<s_skill_produce_db> produce = this->find(itemlv);
+	bool exists = produce != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Recipe" }))
+			return 0;
+
+		produce = std::make_shared<s_skill_produce_db>();
+		produce->itemlv = static_cast<uint8>(itemlv);
 	}
 
-	// Clear previous data, for importing support
-	memset(&skill_produce_db[id], 0, sizeof(skill_produce_db[id]));
-	// Import just for clearing/disabling from original data
-	if (!(nameid = strtoul(split[1], nullptr, 10))) {
-		//ShowInfo("skill_parse_row_producedb: Product list with ID %d removed from list.\n", id);
-		return true;
+	t_itemid nameid;
+	const YAML::Node &subNode = node["Recipe"];
+
+	for (const auto &subit : subNode) {
+		std::string produced_name;
+
+		if (this->nodeExists(subit, "Clear")) {
+			if (!this->asString(subit, "Clear", produced_name))
+				return 0;
+
+			std::shared_ptr<item_data> item = item_db.search_aegisname(produced_name.c_str());
+
+			if (item == nullptr) {
+				this->invalidWarning(subit["Clear"], "Item %s does not exist.\n", produced_name.c_str());
+				return 0;
+			}
+
+			nameid = item->nameid;
+
+			if (produce->data.erase(nameid) == 0)
+				this->invalidWarning(subit["Clear"], "Item %s was not defined.\n", produced_name.c_str());
+
+			continue;
+		}
+
+		if (!this->asString(subit, "Product", produced_name))
+			return 0;
+
+		std::shared_ptr<item_data> item = item_db.search_aegisname(produced_name.c_str());
+
+		if (item == nullptr) {
+			this->invalidWarning(subit["Product"], "Item %s does not exist.\n", produced_name.c_str());
+			return 0;
+		}
+
+		nameid = item->nameid;
+
+		bool id_exists = produce->data.count(nameid) != 0;
+		std::shared_ptr<s_skill_produce_db_entry> entry;
+
+		if (id_exists)
+			entry = produce->data[nameid];
+		else {
+			entry = std::make_shared<s_skill_produce_db_entry>();
+			entry->nameid = nameid;
+		}
+
+		entry->itemlv = static_cast<uint8>(itemlv);
+
+		if (this->nodeExists(subit, "BaseRate")) {	// note: BaseRate is only used for skill changematerial (itemlv 26)
+			uint16 baserate;
+
+			if (!this->asUInt16Rate(subit, "BaseRate", baserate, 1000))
+				return 0;
+
+			entry->baserate = baserate;
+		} else {
+			if (!id_exists) {
+				entry->baserate = 1000;
+			}
+		}
+
+		if (this->nodeExists(subit, "Quantity")) {	// note: Quantity is only used for skill changematerial (itemlv 26)
+			const YAML::Node &QuantityNode = subit["Quantity"];
+
+			for (const auto &Quantityit : QuantityNode) {
+				uint16 amount;
+
+				if (!this->asUInt16Rate(Quantityit, "Amount", amount, MAX_AMOUNT))
+					return 0;
+
+				uint16 rate;
+
+				if (this->nodeExists(Quantityit, "Rate")) {
+					if (!this->asUInt16(Quantityit, "Rate", rate))
+						return 0;
+
+					if (rate == 0) {
+						if (entry->qty.erase(amount) == 0)
+							this->invalidWarning(Quantityit["Rate"], "Amount %hu was not defined.\n", amount);
+						continue;
+					}
+					if (rate > 1000) {
+						this->invalidWarning(Quantityit["Rate"], "Rate %hu can't be higher than 1000, capping.\n", rate);
+						rate = 1000;
+					}
+				} else {
+					rate = 1000;
+				}
+
+				entry->qty[amount] = rate;
+			}
+		}
+
+		if (this->nodeExists(subit, "Skill")) {
+			const YAML::Node &skillNode = subit["Skill"];
+
+			if (!exists && !this->nodesExist(skillNode, { "Name", "Level" }))
+				return 0;
+
+			if (this->nodeExists(skillNode, "Name")) {
+				std::string skill_name;
+
+				if (!this->asString(skillNode, "Name", skill_name))
+					return 0;
+
+				uint16 skill_id = skill_name2id(skill_name.c_str());
+
+				if (!skill_id) {
+					this->invalidWarning(skillNode["Name"], "Invalid skill name \"%s\", skipping.\n", skill_name.c_str());
+					return 0;
+				}
+
+				entry->req_skill = skill_id;
+			}
+
+			if (this->nodeExists(skillNode, "Level")) {
+				uint16 skill_lv;
+
+				if (!this->asUInt16(skillNode, "Level", skill_lv))
+					return 0;
+
+				entry->req_skill_lv = static_cast<uint8>(skill_lv);
+			}
+		}
+
+		if (this->nodeExists(subit, "Consumed")) {
+			if (!this->add_itemconsumed(subit["Consumed"], entry, true))
+				return 0;
+		}
+
+		if (this->nodeExists(subit, "NotConsumed")) {
+			if (!this->add_itemconsumed(subit["NotConsumed"], entry, false))
+				return 0;
+		}
+
+		if (!id_exists) {
+			produce->data.insert({ nameid, entry });
+			this->total_id++;
+		}
 	}
 
-	if (!itemdb_exists(nameid)) {
-		ShowError("skill_parse_row_producedb: Invalid item %u.\n", nameid);
-		return false;
-	}
+	if (!exists)
+		this->put(itemlv, produce);
 
-	skill_produce_db[id].nameid = nameid;
-	skill_produce_db[id].itemlv = atoi(split[2]);
-	skill_produce_db[id].req_skill = atoi(split[3]);
-	skill_produce_db[id].req_skill_lv = atoi(split[4]);
-
-	for (x = 5, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_PRODUCE_RESOURCE; x += 2, y++) {
-		skill_produce_db[id].mat_id[y] = strtoul(split[x], nullptr, 10);
-		skill_produce_db[id].mat_amount[y] = atoi(split[x+1]);
-	}
-
-	if (!found)
-		skill_produce_count++;
-
-	return true;
+	return 1;
 }
 
 const std::string SkillArrowDatabase::getDefaultLocation() {
@@ -24606,62 +24779,6 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
-/** Reads change material db
- * Structure: ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
- */
-static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
-{
-	uint16 id = atoi(split[0]);
-	t_itemid nameid = strtoul(split[1], nullptr, 10);
-	short rate = atoi(split[2]);
-	bool found = false;
-	int x, y;
-
-	if (id >= MAX_SKILL_CHANGEMATERIAL_DB) {
-		ShowError("skill_parse_row_changematerialdb: Maximum amount of entries reached (%d), increase MAX_SKILL_CHANGEMATERIAL_DB\n",MAX_SKILL_CHANGEMATERIAL_DB);
-		return false;
-	}
-
-	// Clear previous data, for importing support
-	if (id < ARRAYLENGTH(skill_changematerial_db) && skill_changematerial_db[id].nameid > 0) {
-		found = true;
-		memset(&skill_changematerial_db[id], 0, sizeof(skill_changematerial_db[id]));
-	}
-
-	// Import just for clearing/disabling from original data
-	// NOTE: If import for disabling, better disable list from produce_db instead of here, or creation just failed with deleting requirements.
-	if (nameid == 0) {
-		memset(&skill_changematerial_db[id], 0, sizeof(skill_changematerial_db[id]));
-		//ShowInfo("skill_parse_row_changematerialdb: Change Material list with ID %d removed from list.\n", id);
-		return true;
-	}
-
-	// Entry must be exists in skill_produce_db and with required skill GN_CHANGEMATERIAL
-	for (x = 0; x < MAX_SKILL_PRODUCE_DB; x++) {
-		if (skill_produce_db[x].nameid == nameid)
-			if( skill_produce_db[x].req_skill == GN_CHANGEMATERIAL )
-				break;
-	}
-
-	if (x >= MAX_SKILL_PRODUCE_DB) {
-		ShowError("skill_parse_row_changematerialdb: Not supported item ID (%u) for Change Material. \n", nameid);
-		return false;
-	}
-
-	skill_changematerial_db[id].nameid = nameid;
-	skill_changematerial_db[id].rate = rate;
-
-	for (x = 3, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_SKILL_CHANGEMATERIAL_SET; x += 2, y++) {
-		skill_changematerial_db[id].qty[y] = atoi(split[x]);
-		skill_changematerial_db[id].qty_rate[y] = atoi(split[x+1]);
-	}
-
-	if (!found)
-		skill_changematerial_count++;
-
-	return true;
-}
-
 /**
  * Reads skill damage adjustment
  * @author [Lilith]
@@ -24749,10 +24866,6 @@ static void skill_readdb(void)
 		//add other path here
 	};
 
-	memset(skill_produce_db,0,sizeof(skill_produce_db));
-	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
-	skill_produce_count = skill_changematerial_count = 0;
-
 	skill_db.load();
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
@@ -24769,9 +24882,6 @@ static void skill_readdb(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 		sv_readdb(dbsubpath2, "skill_nocast_db.txt"   , ',',   2,  2, -1, skill_parse_row_nocastdb, i > 0);
-
-		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i > 0);
-		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  3+SKILLDMG_MAX, -1, skill_parse_row_skilldamage, i > 0);
 
 		aFree(dbsubpath1);
@@ -24782,6 +24892,7 @@ static void skill_readdb(void)
 	magic_mushroom_db.load();
 	reading_spellbook_db.load();
 	skill_arrow_db.load();
+	skill_produce_db.load();
 
 	skill_init_unit_layout();
 	skill_init_nounit_layout();
@@ -24793,6 +24904,7 @@ void skill_reload (void) {
 	magic_mushroom_db.clear();
 	reading_spellbook_db.clear();
 	skill_arrow_db.clear();
+	skill_produce_db.clear();
 
 	skill_readdb();
 	initChangeTables(); // Re-init Status Change tables
@@ -24838,6 +24950,7 @@ void do_final_skill(void)
 	magic_mushroom_db.clear();
 	reading_spellbook_db.clear();
 	skill_arrow_db.clear();
+	skill_produce_db.clear();
 
 	db_destroy(skillunit_db);
 	db_destroy(skillusave_db);

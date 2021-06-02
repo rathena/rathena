@@ -6247,37 +6247,34 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 void clif_skill_produce_mix_list( struct map_session_data *sd, int skill_id, int trigger ){
 	nullpo_retv(sd);
 
-	int fd = sd->fd;
-
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
 	if (sd->menuskill_id == skill_id)
 		return; //Avoid resending the menu twice or more times...
 	if (skill_id == GC_CREATENEWPOISON)
 		skill_id = GC_RESEARCHNEWPOISON;
 
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_MAKABLEITEMLIST ) + MAX_SKILL_PRODUCE_DB * sizeof( struct PACKET_ZC_MAKABLEITEMLIST_sub ) );
-	struct PACKET_ZC_MAKABLEITEMLIST *p = (struct PACKET_ZC_MAKABLEITEMLIST *)WFIFOP( fd, 0 );
+	struct PACKET_ZC_MAKABLEITEMLIST *p = (struct PACKET_ZC_MAKABLEITEMLIST *)packet_buffer;
 	p->packetType = 0x18d;
 
 	int count = 0;
-	for( int i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
-		if (skill_can_produce_mix(sd,skill_produce_db[i].nameid, trigger, 1) &&
-			(skill_id <= 0 || (skill_id > 0 && skill_produce_db[i].req_skill == skill_id))
-			)
-		{
-			p->items[count].itemId = client_nameid( skill_produce_db[i].nameid );
-			p->items[count].material[0] = 0;
-			p->items[count].material[1] = 0;
-			p->items[count].material[2] = 0;
-			count++;
+	for (const auto &itemlvit : skill_produce_db) {
+		if (itemlvit.second->data.empty())
+			continue;
+		for (const auto &datait : itemlvit.second->data) {
+			if (skill_can_produce_mix(sd, datait.second->nameid, trigger, 1) != nullptr &&
+				(skill_id <= 0 || (skill_id > 0 && datait.second->req_skill == skill_id))
+				)
+			{
+				p->items[count].itemId = client_nameid( datait.second->nameid );
+				p->items[count].material[0] = 0;
+				p->items[count].material[1] = 0;
+				p->items[count].material[2] = 0;
+				count++;
+			}
 		}
 	}
 
 	p->packetLength = sizeof( struct PACKET_ZC_MAKABLEITEMLIST ) + count * sizeof( struct PACKET_ZC_MAKABLEITEMLIST_sub );
-	WFIFOSET( fd, p->packetLength );
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 
 	if( count > 0 ){
 		sd->menuskill_id = skill_id;
@@ -6306,31 +6303,28 @@ void clif_cooking_list( struct map_session_data *sd, int trigger, uint16 skill_i
 		return;
 	}
 
-	int fd = sd->fd;
-
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + MAX_SKILL_PRODUCE_DB * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub ) );
-	struct PACKET_ZC_MAKINGITEM_LIST *p = (struct PACKET_ZC_MAKINGITEM_LIST *)WFIFOP( fd, 0 );
+	struct PACKET_ZC_MAKINGITEM_LIST *p = (struct PACKET_ZC_MAKINGITEM_LIST *)packet_buffer;
 	p->packetType = 0x25a;
 	p->makeItem = list_type; // list type
 
 	int count = 0;
 
-	for( int i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
-		if( !skill_can_produce_mix( sd, skill_produce_db[i].nameid, trigger, qty ) ){
+	for (const auto &itemlvit : skill_produce_db) {
+		if (itemlvit.second->data.empty())
 			continue;
-		}
+		for (const auto &datait : itemlvit.second->data) {
+			if( skill_can_produce_mix( sd, datait.second->nameid, trigger, qty ) == nullptr ){
+				continue;
+			}
 
-		p->items[count].itemId = client_nameid( skill_produce_db[i].nameid );
-		count++;
+			p->items[count].itemId = client_nameid( datait.second->nameid );
+			count++;
+		}
 	}
 
 	if( count > 0 || skill_id == AM_PHARMACY ){
 		p->packetLength = sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub );
-		WFIFOSET( fd, p->packetLength );
+		clif_send( p, p->packetLength, &sd->bl, SELF );
 
 		sd->menuskill_id = skill_id;
 		sd->menuskill_val = trigger;
@@ -6341,7 +6335,7 @@ void clif_cooking_list( struct map_session_data *sd, int trigger, uint16 skill_i
 			clif_msg_skill( sd, skill_id, INVENTORY_SPACE_FULL );
 #else
 			p->packetLength = sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub );
-			WFIFOSET( fd, p->packetLength );
+			clif_send( p, p->packetLength, &sd->bl, SELF );
 #endif
 	}
 }
@@ -13172,10 +13166,10 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd){
 		return;
 	}
 
-	int produce_idx;
+	std::shared_ptr<s_skill_produce_db_entry> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, 1);
 
-	if( (produce_idx = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, 1)) )
-		skill_produce_mix(sd,0,p->itemId,p->material[0],p->material[1],p->material[2],1,produce_idx-1);
+	if( produce != nullptr )
+		skill_produce_mix(sd,0,p->itemId,p->material[0],p->material[1],p->material[2],1,produce);
 	clif_menuskill_clear(sd);
 }
 
@@ -13195,7 +13189,6 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 	const struct PACKET_CZ_REQ_MAKINGITEM *p = (struct PACKET_CZ_REQ_MAKINGITEM *)RFIFOP( fd, 0 );
 
 	int amount = sd->menuskill_val2 ? sd->menuskill_val2 : 1;
-	short food_idx = -1;
 
 	if( p->type == 6 && sd->menuskill_id != GN_MIX_COOKING && sd->menuskill_id != GN_S_PHARMACY )
 		return;
@@ -13206,8 +13199,11 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 		clif_menuskill_clear(sd);
 		return;
 	}
-	if( (food_idx = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, amount)) )
-		skill_produce_mix(sd,(p->type>1?sd->menuskill_id:0),p->itemId,0,0,0,amount,food_idx-1);
+
+	std::shared_ptr<s_skill_produce_db_entry> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, amount);
+
+	if( produce != nullptr )
+		skill_produce_mix(sd,(p->type>1?sd->menuskill_id:0),p->itemId,0,0,0,amount,produce);
 	clif_menuskill_clear(sd);
 }
 
@@ -13394,7 +13390,7 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 			skill_arrow_create(sd,p->itemId);
 			break;
 		case SA_CREATECON:
-			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
+			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1, nullptr);
 			break;
 		case GC_POISONINGWEAPON:
 			skill_poisoningweapon(sd,p->itemId);
@@ -19371,10 +19367,14 @@ void clif_elementalconverter_list( struct map_session_data *sd ){
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
 
 	int count = 0;
-	for( int i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
-		if( skill_can_produce_mix( sd, skill_produce_db[i].nameid, 23, 1 ) ){
-			p->items[count].itemId = client_nameid( skill_produce_db[i].nameid );
-			count++;
+	for (const auto &itemlvit : skill_produce_db) {
+		if (itemlvit.second->data.empty())
+			continue;
+		for (const auto &datait : itemlvit.second->data) {
+			if( skill_can_produce_mix( sd, datait.second->nameid, 23, 1 ) ){
+				p->items[count].itemId = client_nameid( datait.second->nameid );
+				count++;
+			}
 		}
 	}
 
