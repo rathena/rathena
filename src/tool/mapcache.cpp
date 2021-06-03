@@ -142,7 +142,8 @@ int find_map(char *name)
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
 
 	for(i = 0; i < header.map_count; i++) {
-		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("An error as occured in fread while reading map_cache\n");
+		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1)
+			printf("An error has occurred in fread while reading map_cache_fp.\n");
 		if(strcmp(name, info.name) == 0) // Map found
 			return 1;
 		else // Map not found, jump to the beginning of the next map info header
@@ -187,39 +188,42 @@ void process_args(int argc, char *argv[])
 
 int do_init(int argc, char** argv)
 {
-	/* setup pre-defined, #define-dependant */
-	map_cache_file = std::string(db_path) + "/" + std::string(DBPATH) + "map_cache.dat";
-
 	// Process the command-line arguments
 	process_args(argc, argv);
 
 	ShowStatus("Initializing grfio with %s\n", grf_list_file.c_str());
 	grfio_init(grf_list_file.c_str());
 
-	// Attempt to open the map cache file and force rebuild if not found
-	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
-	if(!rebuild) {
-		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
-		if(map_cache_fp == NULL) {
-			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
-			rebuild = 1;
-		} else
-			fclose(map_cache_fp);
-	}
-	if(rebuild)
-		map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
-	else
-		map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
-	if(map_cache_fp == NULL) {
-		ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
-		exit(EXIT_FAILURE);
-	}
-
 	// Open the map list
 	FILE *list;
 	std::vector<std::string> directories = { std::string(db_path) + "/",  std::string(db_path) + "/" + std::string(DBIMPORT) + "/" };
 
 	for (const auto &directory : directories) {
+		/* setup pre-defined, #define-dependant */
+		if (directory.find("import") != std::string::npos)
+			map_cache_file = std::string(db_path) + "/" + std::string(DBIMPORT) + "map_cache.dat";
+		else
+			map_cache_file = std::string(db_path) + "/" + std::string(DBPATH) + "/map_cache.dat";
+
+		// Attempt to open the map cache file and force rebuild if not found
+		ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
+		if (!rebuild) {
+			map_cache_fp = fopen(map_cache_file.c_str(), "rb");
+			if (map_cache_fp == NULL) {
+				ShowNotice("Existing map cache not found, forcing rebuild mode\n");
+				rebuild = 1;
+			} else
+				fclose(map_cache_fp);
+		}
+		if (rebuild)
+			map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
+		else
+			map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
+		if (map_cache_fp == NULL) {
+			ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
+			exit(EXIT_FAILURE);
+		}
+
 		std::string filename = directory + map_list_file;
 
 		ShowStatus("Opening map list: %s\n", filename.c_str());
@@ -234,7 +238,8 @@ int do_init(int argc, char** argv)
 			header.file_size = sizeof(struct main_header);
 			header.map_count = 0;
 		} else {
-			if (fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1) { printf("An error as occured while reading map_cache_fp \n"); }
+			if (fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1)
+				printf("An error has occurred in fread while reading map_cache_fp.\n");
 			header.file_size = GetULong((unsigned char *)&(header.file_size));
 			header.map_count = GetUShort((unsigned char *)&(header.map_count));
 		}
@@ -270,15 +275,15 @@ int do_init(int argc, char** argv)
 
 		}
 
+		// Write the main header and close the map cache
+		ShowStatus("Closing map cache: %s\n", map_cache_file.c_str());
+		fseek(map_cache_fp, 0, SEEK_SET);
+		fwrite(&header, sizeof(struct main_header), 1, map_cache_fp);
+		fclose(map_cache_fp);
+
 		ShowStatus("Closing map list: %s\n", filename.c_str());
 		fclose(list);
 	}
-
-	// Write the main header and close the map cache
-	ShowStatus("Closing map cache: %s\n", map_cache_file.c_str());
-	fseek(map_cache_fp, 0, SEEK_SET);
-	fwrite(&header, sizeof(struct main_header), 1, map_cache_fp);
-	fclose(map_cache_fp);
 
 	ShowStatus("Finalizing grfio\n");
 	grfio_final();
