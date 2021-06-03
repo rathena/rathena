@@ -7247,7 +7247,7 @@ OnTouch:
 		set ra_tem_q,19;
 		if (isbegin_quest(8102) == 1)
 			changequest 8102,8103;
-		else (isbegin_quest(8101) == 1)
+		else if (isbegin_quest(8101) == 1)
 			changequest 8101,8103;
 		close;
 	}
