@@ -195,4 +195,6 @@ public:
 	}
 };
 
+void do_init_yaml_database();
+
 #endif /* DATABASE_HPP */

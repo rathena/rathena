@@ -315,3 +315,8 @@ void YamlDatabase::invalidWarning( const ryml::NodeRef node, const char* fmt, ..
 std::string YamlDatabase::getCurrentFile(){
 	return this->currentFile;
 }
+
+void do_init_yaml_database()
+{
+
+}
