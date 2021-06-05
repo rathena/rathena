@@ -97,6 +97,28 @@ static void branch_txt_data(const std::string& modePath, const std::string& fixe
 		sv_readdb(fixedPath.c_str(), "mob_classchange.txt", ',', 4, 4, -1, mob_readdb_group, false);
 }
 
+// Item Group database data to memory
+static void item_group_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	item_group.clear();
+
+	if (fileExists(modePath + "/item_bluebox.txt"))
+		sv_readdb(modePath.c_str(), "item_bluebox.txt", ',', 2, 10, -1, itemdb_read_group, false);
+	if (fileExists(modePath + "/item_violetbox.txt"))
+		sv_readdb(modePath.c_str(), "item_violetbox.txt", ',', 2, 10, -1, itemdb_read_group, false);
+	if (fileExists(modePath + "/item_cardalbum.txt"))
+		sv_readdb(modePath.c_str(), "item_cardalbum.txt", ',', 2, 10, -1, itemdb_read_group, false);
+	if (fileExists(fixedPath + "/item_findingore.txt"))
+		sv_readdb(fixedPath.c_str(), "item_findingore.txt", ',', 2, 10, -1, itemdb_read_group, false);
+	if (fileExists(modePath + "/item_giftbox.txt"))
+		sv_readdb(modePath.c_str(), "item_giftbox.txt", ',', 2, 10, -1, itemdb_read_group, false);
+	if (fileExists(modePath + "/item_misc.txt"))
+		sv_readdb(modePath.c_str(), "item_misc.txt", ',', 2, 10, -1, itemdb_read_group, false);
+	if (fileExists(modePath + "/item_group_db.txt"))
+		sv_readdb(modePath.c_str(), "item_group_db.txt", ',', 2, 10, -1, itemdb_read_group, false);
+	if (fileExists(modePath + "/item_package.txt"))
+		sv_readdb(modePath.c_str(), "item_package.txt", ',', 2, 10, -1, itemdb_read_group, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -368,6 +390,20 @@ int do_init( int argc, char** argv ){
 
 	if (!process("GUILD_EXP_DB", 1, { path_db_import }, "exp_guild", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, MAX_GUILDLEVEL, &exp_guild_parse_row, false);
+	})) {
+		return 0;
+	}
+
+	item_group_txt_data(path_db_mode, path_db);
+	if (!process("ITEM_GROUP_DB", 1, { path_db_mode }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return itemdb_read_group_yaml();
+	})) {
+		return 0;
+	}
+
+	item_group_txt_data(path_db_import, path_db_import);
+	if (!process("ITEM_GROUP_DB", 1, { path_db_import }, "item_group_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return itemdb_read_group_yaml();
 	})) {
 		return 0;
 	}
@@ -3753,5 +3789,142 @@ static bool exp_guild_parse_row(char* split[], int column, int current) {
 	body << YAML::Key << "Exp" << YAML::Value << exp;
 	body << YAML::EndMap;
 
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_group(char* str[], int columns, int current) {
+	if (strncasecmp(str[0], "IG_", 3) != 0) {
+		ShowError("The group %s must start with 'IG_'.\n", str[0]);
+		return false;
+	}
+	if (columns < 3) {
+		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
+		return false;
+	}
+
+	std::string group_name = trim(str[0]);
+	group_name.erase(0, 3);
+	std::transform(group_name.begin(), group_name.end(), group_name.begin(), ::toupper);
+
+	if (strcmpi( str[1], "clear" ) == 0) {
+		item_group.erase(group_name);
+		return true;
+	}
+
+	// check item name
+	str[1] = trim(str[1]);
+	t_itemid nameid = strtoul(str[1], nullptr, 10);
+
+	std::string *item_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (!item_name) {
+		ShowWarning( "itemdb_read_group: Non-existant item '%s'\n", str[1] );
+		return false;
+	}
+	// todo check if str[1] == item aegisname ?
+
+	// Checking sub group
+	uint32 prob = atoi(str[2]);
+	uint32 rand_group;
+
+	if (columns < 5)
+		rand_group = 1;	// default
+	else
+		rand_group = atoi(str[4]);
+
+	if (rand_group > 0 && prob == 0) {
+		ShowWarning( "itemdb_read_group: Random item must have a probability. Group '%s'\n", str[0] );
+		return false;
+	}
+
+	// update group
+	s_item_group_db_csv2yaml *group = util::map_find(item_group, group_name);
+	s_item_group_db_csv2yaml group_entry;
+
+	bool exists = group != nullptr;
+
+	if (!exists)
+		group_entry.group_name = group_name;
+
+	s_item_group_entry_csv2yaml entry = {};
+
+	entry.item_name = *item_name;
+	if (columns > 3) {
+		int32 amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
+		if (amount > 1)
+			entry.amount = amount;
+	}
+	if (columns > 5) entry.isAnnounced = atoi(str[5]) > 0;
+	if (columns > 6) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
+	if (columns > 7) entry.GUID = atoi(str[7]) > 0;
+	if (columns > 8) {
+		int32 bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
+		if (bound > 0) {
+			std::string constant = constant_lookup(bound, "BOUND_");
+			constant.erase(0, 6);
+			entry.bound = constant;
+		}
+	}
+	if (columns > 9) entry.isNamed = atoi(str[9]) > 0;
+
+	if (rand_group == 0 && prob > 0) {	// in this case, we add x2 entries to keep the previous system: x1 in subgroup 0 without rate and x1 in subgroup 1 with rate
+		if (exists)
+			group->item[rand_group].push_back(entry);
+		else
+			group_entry.item[rand_group].push_back(entry);
+		rand_group = 1;
+	}
+
+	entry.rate = prob;
+
+	if (exists)
+		group->item[rand_group].push_back(entry);
+	else {
+		group_entry.item[rand_group].push_back(entry);
+		item_group.insert({ group_name, group_entry });
+	}
+
+	return true;
+}
+
+static bool itemdb_read_group_yaml(void) {
+	for (const auto &it : item_group) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Group" << YAML::Value << it.first;
+		body << YAML::Key << "Contain";
+		body << YAML::BeginSeq;
+
+		for (const auto &item : it.second.item) {	// subgroup
+			body << YAML::BeginMap;
+			body << YAML::Key << "SubGroup" << YAML::Value << item.first;
+			body << YAML::Key << "List";
+			body << YAML::BeginSeq;
+			for (const auto &listit : item.second) {
+				body << YAML::BeginMap;
+				body << YAML::Key << "Item" << YAML::Value << listit.item_name;
+				if (listit.rate > 0)
+					body << YAML::Key << "Rate" << YAML::Value << listit.rate;
+				if (listit.amount > 1)
+					body << YAML::Key << "Amount" << YAML::Value << listit.amount;
+				if (listit.duration > 0)
+					body << YAML::Key << "Duration" << YAML::Value << listit.duration;
+				if (listit.isAnnounced)
+					body << YAML::Key << "Announced" << YAML::Value << "true";
+				if (listit.GUID)
+					body << YAML::Key << "GUID" << YAML::Value << "true";
+				if (listit.isNamed)
+					body << YAML::Key << "Named" << YAML::Value << "true";
+				if (!listit.bound.empty())
+					body << YAML::Key << "Bound" << YAML::Value << listit.bound;
+				body << YAML::EndMap;
+			}
+			body << YAML::EndSeq;
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
 	return true;
 }

@@ -527,7 +527,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		return entry->mob_id;
 	}
 
-	if (mob_db.find( summon->default_mob_id ) == nullptr) {
+	if (!mob_db.exists( summon->default_mob_id )) {
 		ShowError("mob_get_random_id: Default monster is not defined for type %d.\n", type);
 		return 0;
 	}
