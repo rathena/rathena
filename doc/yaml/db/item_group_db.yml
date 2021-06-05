@@ -1,0 +1,22 @@
+###########################################################################
+# Item Group Database
+###########################################################################
+#
+# Item Group Settings
+#
+###########################################################################
+# - Group                      Group name of the item. 'IG_' is appended to the name when the file is read.
+#   Contain:
+#     - SubGroup:              SubGroup number associated with the list of item. 0 is exclusive to 'Must' SubGroup, a SubGroup which doesn't use Rate. 
+#                              Anything above 0 is for 'Random' SubGroup. 'Random' SubGroup requires Rate. Read doc/item_group.txt for more informations.
+#       List:                  List of item(s) for the SubGroup.
+#        - Item                Available item that will be obtained from this item group. Requires the AegisName of the item.
+#          Rate                Probability to get the item. Not a percentage value!
+#          Amount              Amount of item that will be obtained (Default: 1).
+#          Duration            Makes the item a rental item, which will be expire in the given amount of minutes. Not intended for use with stackable items (Default: 0).
+#          Announced           If player obtained this item, it will be broadcast to the server (true/false. Default: false).
+#          GUID                Makes the given item(s) with Unique ID (true/false. Default: false).
+#          Named               Inscribes the item with the obtainer's name (true/false. Default: false).
+#          Bound               Binds the obtained item. CHAR, ACCOUNT, GUILD, PARTY or NONE (Default: NONE).
+#       Clear                  Remove the given SubGroup (Optional).
+###########################################################################
