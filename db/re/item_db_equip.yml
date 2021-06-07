@@ -19755,11 +19755,8 @@ Body:
     Buy: 20
     Weight: 1900
     Attack: 80
-    MagicAttack: 150
     Range: 1
     Jobs:
-      Mage: true
-      Sage: true
       SoulLinker: true
       Wizard: true
     Locations:
@@ -19768,8 +19765,9 @@ Body:
     EquipLevelMin: 60
     Refineable: true
     Script: |
-      bonus bAtkEle,Ele_Holy;
       bonus bInt,6;
+      bonus bMaxSP,150;
+      bonus bMatkRate,18;
   - Id: 2007
     AegisName: Golden_Rod_Staff
     Name: Golden Rod Staff
@@ -77774,7 +77772,7 @@ Body:
     EquipLevelMin: 1
     View: 1430
     Script: |
-      bonus4 bAutoSpellWhenHit,"WZ_QUAGMIRE",1,50,0;
+      bonus4 bAutoSpell,"WZ_QUAGMIRE",1,5,0;
       bonus2 bExpAddRace,RC_All,5;
       bonus2 bDropAddRace,RC_All,5;
   - Id: 19147
@@ -101275,9 +101273,10 @@ Body:
       if (.@r > 1) {
          .@val = .@r/2;
          bonus3 bAutoSpell,"MG_COLDBOLT",.@val,(5+.@r);
-         bonus4 bAutoSpellOnSkill,"MG_COLDBOLT","MG_FIREBOLT",.@val,1000;
-         bonus4 bAutoSpellOnSkill,"MG_FIREBOLT","MG_LIGHTNINGBOLT",.@val,1000;
-         bonus4 bAutoSpellOnSkill,"MG_LIGHTNINGBOLT","WZ_EARTHSPIKE",.@val,1000;
+         bonus3 bAutoSpell,"MG_COLDBOLT",.@val,(5+.@r);
+         bonus3 bAutoSpell,"MG_FIREBOLT",.@val,(5+.@r);
+         bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",.@val,(5+.@r);
+         bonus3 bAutoSpell,"WZ_EARTHSPIKE",.@val,(5+.@r);
       }
   - Id: 24335
     AegisName: S_Gemstone_Weapon_II
@@ -101290,10 +101289,10 @@ Body:
     Script: |
       bonus bHit,5;
       if (getrefine() >= 7) {
-         bonus bUseSPrate,3;
+         bonus bUseSPrate,-3;
       }
       else {
-         bonus bUseSPrate,2;
+         bonus bUseSPrate,-2;
       }
   - Id: 24336
     AegisName: S_Gemstone_Shield_II
@@ -101306,10 +101305,10 @@ Body:
     Script: |
       bonus bDef,5;
       if (getrefine() >= 7) {
-         bonus bUseSPrate,3;
+         bonus bUseSPrate,-3;
       }
       else {
-         bonus bUseSPrate,2;
+         bonus bUseSPrate,-2;
       }
   - Id: 24337
     AegisName: S_Bearer's_Armor_II
@@ -101886,7 +101885,6 @@ Body:
       .@val = 5 + (getrefine()/2);
       bonus2 bIgnoreDefRaceRate,RC_Plant,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Brute,.@val;
-      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,.@val;
   - Id: 24379
     AegisName: S_Fishing_Insect_Net_Armor
     Name: Fishing Insect Net Shadow Armor
@@ -102173,12 +102171,12 @@ Body:
     Script: |
       .@r = getrefine();
       if (.@r >= 9) {
-         bonus bVariableCastrate,8;
+         bonus bVariableCastrate,-8;
       } else if (.@r >= 7) {
-         bonus bVariableCastrate,5;
+         bonus bVariableCastrate,-5;
       }
       else {
-         bonus bVariableCastrate,2;
+         bonus bVariableCastrate,-2;
       }
   - Id: 24397
     AegisName: S_Magical_Shield
@@ -102643,7 +102641,7 @@ Body:
       bonus2 bSubSize,Size_All,2;
       /*bonus2 bMagicSubSize,Size_All,2;*/
       .@r = getrefine();
-      bonus bDef,.@r;
+      bonus bDef,.@r*10;
       if (.@r >= 7) {
          bonus2 bSubSize,Size_All,2;
          /*bonus2 bMagicSubSize,Size_All,2;*/
@@ -102716,7 +102714,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bIgnoreDefRaceRate,RC_All,5+.@r/2;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+.@r/2;
   - Id: 24433
     AegisName: S_Penetration_Armor
     Name: Penetration Shadow Armor
@@ -102726,7 +102724,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bIgnoreDefRaceRate,RC_All,5+.@r/2;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+.@r/2;
   - Id: 24434
     AegisName: S_Exe_Ho_Weapon
     Name: Executioner Holy Water Shadow Weapon
@@ -102857,7 +102855,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus3 bAutoSpell,"RK_IGNITIONBREAK",max(3,getskilllv("RK_IGNITIONBREAK")),10+(.@r>=7?1:0)+(.@r>=9?2:0);
+      bonus3 bAutoSpell,"RK_IGNITIONBREAK",max(3,getskilllv("RK_IGNITIONBREAK")),10+(.@r>=7?10:0)+(.@r>=9?20:0);
   - Id: 24444
     AegisName: S_Ignition_Pendant
     Name: Ignition Shadow Pendant
