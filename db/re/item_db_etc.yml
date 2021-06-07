@@ -11609,9 +11609,11 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bCritical,9;
       if (BaseLevel<100) {
-         bonus bCritical,1;
+         bonus bCritical,9;
+      }
+      else {
+         bonus bCritical,10;
          bonus bCritAtkRate,5;
       }
   - Id: 4635

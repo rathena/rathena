@@ -19766,8 +19766,8 @@ Body:
     Refineable: true
     Script: |
       bonus bInt,6;
-          bonus bMaxSP,150;
-          bonus bMatkRate,18;
+      bonus bMaxSP,150;
+      bonus bMatkRate,18;
   - Id: 2007
     AegisName: Golden_Rod_Staff
     Name: Golden Rod Staff
@@ -43825,7 +43825,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bSubEle,Ele_Fire,10;
-      bonus4 bAutoSpellWhenHit,"MG_FIREBALL",5,30,1;
+      bonus4 bAutoSpellWhenHit,"MG_FIREBALL",5,500,1;
   - Id: 5415
     AegisName: Poring_Cake_Cap
     Name: Poring Cake Hat
@@ -101147,7 +101147,7 @@ Body:
       .@r = getrefine();
       bonus bLuk,1;
       bonus bHit,.@r;
-      if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Star_Gladiator)) {
+      if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Soul_Linker)) {
          bonus bBaseAtk,15;
       } else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) {
          bonus bLongAtkRate,3;
@@ -101169,7 +101169,7 @@ Body:
       .@r = getrefine();
       bonus bVit,1;
       bonus bDef,5*.@r;
-      if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Star_Gladiator)) {
+      if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Soul_Linker)) {
          bonus bAspd,1;
       } else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) {
          bonus bFlee,15;
@@ -103012,7 +103012,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+2*(getrefine()/2);
+      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+3*(getrefine()/2);
   - Id: 24455
     AegisName: S_Aimed_Weapon
     Name: Aimed Shadow Weapon
