@@ -73,7 +73,7 @@ uint64 HomExpDatabase::parseBodyNode(const YAML::Node &node) {
 		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
 		return 0;
 	}
-	if (level > MAX_LEVEL) {
+	if (level >= MAX_LEVEL) {
 		this->invalidWarning(node["Level"], "Homunculus level %d exceeds maximum level %d, skipping.\n", level, MAX_LEVEL);
 		return 0;
 	}
@@ -102,12 +102,11 @@ HomExpDatabase homun_exp_db;
  * @return Experience
  */
 t_exp HomExpDatabase::get_nextexp(uint16 level) {
-	if (level < MAX_LEVEL) {
-		auto next_exp = this->find(level);
-		if (next_exp)
-			return next_exp->exp;
-	}
-	return 0;
+	auto next_exp = this->find(level);
+	if (next_exp)
+		return next_exp->exp;
+	else
+		return 0;
 }
 
 /**

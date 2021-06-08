@@ -3483,10 +3483,12 @@ static bool read_homunculus_expdb(const char* file) {
 
 		t_exp exp = strtoull(line, nullptr, 10);
 
-		body << YAML::BeginMap;
-		body << YAML::Key << "Level" << YAML::Value << (count+1);
-		body << YAML::Key << "Exp" << YAML::Value << exp;
-		body << YAML::EndMap;
+		if( exp > 0 ){
+			body << YAML::BeginMap;
+			body << YAML::Key << "Level" << YAML::Value << (count+1);
+			body << YAML::Key << "Exp" << YAML::Value << exp;
+			body << YAML::EndMap;
+		}
 
 		count++;
 	}

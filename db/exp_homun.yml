@@ -23,7 +23,7 @@
 #
 ###########################################################################
 # - Level   Level required.
-#   Exp     Experience required for the next level. 0: no next level (default 0). 
+#   Exp     Experience required for the next level.
 ###########################################################################
 
 Header:
