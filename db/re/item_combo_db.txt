@@ -1714,7 +1714,7 @@
 400054:13493,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,30; bonus2 bSkillAtk,"WL_HELLINFERNO",4*(.@r/2); }
 400054:26151,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,30; bonus2 bSkillAtk,"WL_COMET",5*(.@r/2); }
 400054:28755,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bMagicAtkEle,Ele_Fire,5; bonus2 bMagicAtkEle,Ele_Water,5; bonus2 bMagicAtkEle,Ele_Wind,5; bonus2 bSkillAtk,"NJ_KOUENKA",3*(.@r/2); bonus2 bSkillAtk,"NJ_HYOUSENSOU",3*(.@r/2); bonus2 bSkillAtk,"NJ_HUUJIN",3*(.@r/2); }
-450144:1846,{ .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR); bonus bBaseAtk,30; if (.@sum>=7) { bonus2 bAddClass,Class_All,5; } if (.@sum>=18) { bonus2 bSkillAtk,"SR_SKYNETBLOW",20; } if (.@sum>=22) { bonus bDelayrate,-10; } }
+450144:1846,{ .@eq = getequiprefinerycnt(EQI_ARMOR); .@weapon = getequiprefinerycnt(EQI_HAND_R); bonus bBaseAtk,30; if (.@eq >= 7 && .@weapon >= 7) { bonus2 bAddClass,Class_All,5; } if ((.@eq + .@weapon) >= 18) { bonus2 bSkillAtk,"SR_SKYNETBLOW",20; } if ((.@eq + .@weapon) >= 22) { bonus bDelayrate,-10; } }
 450146:610012,{ .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_ARMOR); bonus2 bAddClass,Class_All,5; if (.@sum>=7) { bonus bCritical,5; } if (.@sum>=18) { bonus bCritAtkRate,15; } if (.@sum>=22) { bonus2 bAddEle,Ele_Fire,10; bonus2 bAddRace,RC_Insect,10; } }
 490069:490070,{ bonus bAspdRate,10; bonus2 bAddClass,Class_All,10; }
 570008:20838,{ .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_GARMENT); bonus bBaseAtk,30; if (.@sum>=7) { bonus bLongAtkRate,5; } if (.@sum>=18) { bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20; } if (.@sum>=22) { bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; } }
