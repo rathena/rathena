@@ -291,6 +291,18 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("HOMUN_EXP_DB", 1, { path_db_mode }, "exp_homun", [](const std::string &path, const std::string &name_ext) -> bool {
+		return read_homunculus_expdb((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	if (!process("HOMUN_EXP_DB", 1, { path_db_import }, "exp_homun", [](const std::string &path, const std::string &name_ext) -> bool {
+		return read_homunculus_expdb((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -3451,3 +3463,37 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current) {
 	return true;
 }
 
+// Copied and adjusted from homunculus.cpp
+static bool read_homunculus_expdb(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return false;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+
+	while (fgets(line, sizeof(line), fp)) {
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/') // Ignore comments
+			continue;
+
+		t_exp exp = strtoull(line, nullptr, 10);
+
+		if( exp > 0 ){
+			body << YAML::BeginMap;
+			body << YAML::Key << "Level" << YAML::Value << (count+1);
+			body << YAML::Key << "Exp" << YAML::Value << exp;
+			body << YAML::EndMap;
+		}
+
+		count++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+	return true;
+}
