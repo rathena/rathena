@@ -2916,6 +2916,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
                                      craftsman.
 @inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
 @inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
+@inventorylist_enchantgrade[]      - the enchantgrade of the items
 @inventorylist_count               - the number of items in these lists.
 @inventorylist_option_id1[]        - first array of random option IDs
 @inventorylist_option_value1[]     - first array of random option values
@@ -3078,6 +3079,15 @@ Returns false otherwise.
 Returns the count of unidentified items in the player inventory.
 If <type> is true the command will identify all the unidentified items as well (default).
 If <type> is false the command only returns the count of unidentified items.
+
+---------------------------------------
+
+*getenchantgrade()
+
+This function will return the enchantgrade of the equipment from which the
+function is called.
+
+This function is intended for use in item scripts.
 
 ---------------------------------------
 //
@@ -7059,6 +7069,7 @@ The label "OnSellItem" sets the following arrays:
 	@sold_refine        - refine count
 	@sold_attribute     - if the item is broken (1) or not (0)
 	@sold_identify      - if the item is identified (1) or not (0)
+	@sold_enchantgrade  - enchantgrade
 	@sold_card1         - card slot 1
 	@sold_card2         - card slot 2
 	@sold_card3         - card slot 3
@@ -9958,6 +9969,12 @@ Valid types are:
 
 This will recalculate the homunculus stats according to its level, of the
 current invoking character.
+
+---------------------------------------
+
+*addhomintimacy <amount>{,<char_id>};
+
+Increase or decrease a homunculus' intimacy value by the given <amount>. 100000 is full loyalty.
 
 ---------------------------------------
 

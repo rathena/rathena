@@ -5833,11 +5833,11 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddDamageClass,1285,-50;
-      bonus2 bAddDamageClass,1286,-50;
-      bonus2 bAddDamageClass,1287,-50;
-      bonus2 bAddDamageClass,1899,-50;
-      bonus2 bAddDamageClass,1900,-50;
+      bonus2 bAddDefMonster,1285,-50;
+      bonus2 bAddDefMonster,1286,-50;
+      bonus2 bAddDefMonster,1287,-50;
+      bonus2 bAddDefMonster,1899,-50;
+      bonus2 bAddDefMonster,1900,-50;
   - Id: 4232
     AegisName: Wild_Ginseng_Card
     Name: Hermit Plant Card
@@ -7821,7 +7821,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bHPDrainRate,50,20;
-      bonus bHPrecovRate,-10;
+      bonus bHPrecovRate,-100;
   - Id: 4368
     AegisName: Shecil_Card
     Name: Cecil Damon Card
@@ -14943,7 +14943,7 @@ Body:
       if (getrefine()>=7)
          bonus2 bSPRegenRate,5,5000;
       else
-         bonus2 bHPRegenRate,3,5000;
+         bonus2 bSPRegenRate,3,5000;
   - Id: 4980
     AegisName: Reactor_Cure_201
     Name: Recovery Reactor 201

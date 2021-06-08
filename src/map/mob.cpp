@@ -73,12 +73,6 @@ const t_tick MOB_MAX_DELAY = 24 * 3600 * 1000;
 // holds Monster Spawn informations
 std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
-//Dynamic mob chat database
-std::map<short,struct mob_chat> mob_chat_db;
-struct mob_chat *mob_chat(short id) {
-	return util::map_find( mob_chat_db, id );
-}
-
 //Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
 #define MAX_ITEMRATIO_MOBS 10
 struct s_mob_item_drop_ratio {
@@ -111,6 +105,8 @@ struct s_randomsummon_group {
 };
 
 static DBMap *mob_summon_db; /// Random Summon DB. struct s_randomsummon_group -> group_id
+
+MobChatDatabase mob_chat_db;
 
 /*==========================================
  * Local prototype declaration   (only required thing)
@@ -3856,7 +3852,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 		}
 		//Skill used. Post-setups...
 		if ( ms[i]->msg_id ){ //Display color message [SnakeDrak]
-			struct mob_chat *mc = mob_chat(ms[i]->msg_id);
+			std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(ms[i]->msg_id);
 
 			if (mc) {
 				std::string name = md->name, output;
@@ -5522,59 +5518,62 @@ static bool mob_readdb_group(char* str[], int columns, int current){
 	return true;
 }
 
-//processes one mob_chat_db entry [SnakeDrak]
-//db struct: Line_ID,Color_Code,Dialog
-static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
-{
-	char* msg;
-	struct mob_chat *ms;
-	int msg_id;
-	size_t len;
+const std::string MobChatDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/mob_chat_db.yml";
+}
 
-	msg_id = atoi(fields[0]);
+/**
+ * Reads and parses an entry from the mob_chat_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MobChatDatabase::parseBodyNode(const YAML::Node &node) {
+	uint16 id;
 
-	if (msg_id <= 0){
-		ShowError("mob_parse_row_chatdb: Invalid chat ID '%d' in line %d\n", msg_id, current);
-		return false;
-	}
+	if (!this->asUInt16(node, "Id", id))
+		return 0;
 
-	ms = mob_chat(msg_id);
+	std::shared_ptr<s_mob_chat> chat = this->find(id);
+	bool exists = chat != nullptr;
 
-	if( ms == NULL ){
-		try{
-			ms = &mob_chat_db[msg_id];
-		}catch( const std::bad_alloc& ){
-			ShowError( "mob_parse_row_chatdb: Memory allocation for chat ID '%d' failed.\n", msg_id );
-			return false;
+	if (!exists) {
+		if (!this->nodesExist(node, { "Dialog" })) {
+			return 0;
 		}
+
+		chat = std::make_shared<s_mob_chat>();
+		chat->msg_id = id;
 	}
 	
-	//MSG ID
-	ms->msg_id=msg_id;
-	//Color
-	ms->color=strtoul(fields[1],NULL,0);
-	//Message
-	msg = fields[2];
-	len = strlen(msg);
+	if (this->nodeExists(node, "Color")) {
+		std::string hex;
 
-	while( len && ( msg[len-1]=='\r' || msg[len-1]=='\n' ) )
-	{// find EOL to strip
-		len--;
+		if (!this->asString(node, "Color", hex))
+			return 0;
+
+		chat->color = strtoul(hex.c_str(), nullptr, 0);
+	} else {
+		if (!exists)
+			chat->color = strtoul("0xFF0000", nullptr, 0);
 	}
 
-	if(len>(CHAT_SIZE_MAX-1)){
-		ShowError("mob_parse_row_chatdb: Message too long! Line %d, id: %d\n", current, msg_id);
-		return false;
-	}
-	else if( !len ){
-		ShowWarning("mob_parse_row_chatdb: Empty message for id %d.\n", msg_id);
-		return false;
+	if (this->nodeExists(node, "Dialog")) {
+		std::string msg;
+
+		if (!this->asString(node, "Dialog", msg))
+			return 0;
+
+		if (msg.length() > (CHAT_SIZE_MAX-1)) {
+			this->invalidWarning(node["Dialog"], "Message too long!\n");
+			return 0;
+		}
+		chat->msg = msg;
 	}
 
-	msg[len] = 0;  // strip previously found EOL
-	safestrncpy(ms->msg, fields[2], CHAT_SIZE_MAX);
+	if (!exists)
+		this->put(id, chat);
 
-	return true;
+	return 1;
 }
 
 /*==========================================
@@ -5810,8 +5809,15 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	else
 		ms->emotion = -1;
 
-	if(str[18] != NULL && mob_chat(atoi(str[18]))!=NULL)
-		ms->msg_id = atoi(str[18]);
+	if (*str[18]) {
+		uint16 id = static_cast<uint16>(strtol(str[18], nullptr, 10));
+		if (mob_chat_db.find(id) != nullptr)
+			ms->msg_id = id;
+		else {
+			ms->msg_id = 0;
+			ShowWarning("mob_parse_row_mobskilldb: Unknown chat ID %s for monster %d.\n", str[18], mob_id);
+		}
+	}
 	else
 		ms->msg_id = 0;
 
@@ -6191,6 +6197,8 @@ static void mob_load(void)
 	else
 		mob_db.load();
 
+	mob_chat_db.load();	// load before mob_skill_db
+
 	for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){	
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
@@ -6206,8 +6214,6 @@ static void mob_load(void)
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
-
-		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
 
 		if( db_use_sqldbs && i == 0 )
 			mob_read_sqlskilldb();

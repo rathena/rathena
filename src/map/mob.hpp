@@ -189,10 +189,20 @@ struct s_mob_skill {
 	unsigned short msg_id;
 };
 
-struct mob_chat {
-	unsigned short msg_id;
-	unsigned long color;
-	char msg[CHAT_SIZE_MAX];
+struct s_mob_chat {
+	uint16 msg_id;
+	uint32 color;
+	std::string msg;
+};
+
+class MobChatDatabase : public TypesafeYamlDatabase<uint16, s_mob_chat> {
+public:
+	MobChatDatabase() : TypesafeYamlDatabase("MOB_CHAT_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
 };
 
 struct spawn_info {
