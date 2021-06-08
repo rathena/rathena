@@ -70,15 +70,13 @@ uint64 HomExpDatabase::parseBodyNode(const YAML::Node &node) {
 		return 0;
 
 	if (level == 0) {
-		this->invalidWarning(node, "The minimum level is 1.\n");
+		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
 		return 0;
 	}
 	if (level > MAX_LEVEL) {
 		this->invalidWarning(node["Level"], "Homunculus level %d exceeds maximum level %d, skipping.\n", level, MAX_LEVEL);
 		return 0;
 	}
-	if (level == MAX_LEVEL && exp > 0) // Last permitted level have to be 0!
-		exp = 0;
 
 	std::shared_ptr<s_homun_exp_db> homun_exp = this->find(level);
 	bool exists = homun_exp != nullptr;
@@ -104,9 +102,12 @@ HomExpDatabase homun_exp_db;
  * @return Experience
  */
 t_exp HomExpDatabase::get_nextexp(uint16 level) {
-	auto homun_exp = this->find(level);
-
-	return ((homun_exp == nullptr) ? 0 : homun_exp->exp);
+	if (level < MAX_LEVEL) {
+		auto next_exp = this->find(level);
+		if (next_exp)
+			return next_exp->exp;
+	}
+	return 0;
 }
 
 /**
@@ -1381,7 +1382,7 @@ void hom_reset_stats(struct homun_data *hd)
 	hom->dex = base->dex *10;
 	hom->luk = base->luk *10;
 	hom->exp = 0;
-	hd->exp_next = homun_exp_db.get_nextexp(1);
+	hd->exp_next = homun_exp_db.get_nextexp(hom->level);
 	memset(&hd->homunculus.hskill, 0, sizeof hd->homunculus.hskill);
 	hd->homunculus.skillpts = 0;
 }
@@ -1673,7 +1674,7 @@ static void read_homunculus_skilldb(void) {
 
 void hom_reload(void){
 	read_homunculusdb();
-	homun_exp_db.load();
+	homun_exp_db.reload();
 }
 
 void hom_reload_skill(void){
