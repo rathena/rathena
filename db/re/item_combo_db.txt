@@ -86,7 +86,6 @@
 1657:2471:2569:15029,{ bonus bHealPower,25; bonus2 bSkillUseSP,"AL_HEAL",-20; bonus2 bSkillCooldown,"AB_SECRAMENT",-2000; bonus2 bSkillCooldown,"AB_LAUDAAGNUS",-2000; bonus2 bSkillCooldown,"AB_LAUDARAMUS",-2000; }
 1659:5920,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillUseSP,"AL_HEAL",6*.@r; bonus2 bSkillUseSP,"AB_CHEAL",10*.@r; bonus2 bSkillUseSP,"AB_HIGHNESSHEAL",14*.@r; }
 1660:2471:2569:15029,{ bonus bHealPower,45; bonus2 bSkillUseSP,"AL_HEAL",-50; bonus3 bAutoSpellWhenHit,"AB_SILENTIUM",1,100; bonus2 bSkillCooldown,"AB_CLEARANCE",-3000; bonus2 bSkillCooldown,"AB_LAUDAAGNUS",-3000; bonus2 bSkillCooldown,"AB_LAUDARAMUS",-3000; }
-1666:18542,{ bonus bHealPower,getrefine(); }
 1668:15089,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bDelayrate,-10-min(.@r,10); }
 1670:2968,{ bonus bMatk,getequiprefinerycnt(EQI_HAND_R)*5; }
 1670:2968:2969,{ bonus bMatk,-(getequiprefinerycnt(EQI_HAND_R)*5); }
