@@ -14659,7 +14659,7 @@ Body:
       .@r = getrefine();
       bonus2 bSkillAtk,"WL_HELLINFERNO",(getskilllv("WL_HELLINFERNO") >= 5 ? 100 : 0) + (.@r*10);
       bonus2 bIgnoreMdefRaceRate,RC_All,5;
-      autobonus "{ bonus2 bVariableCastrate,"WL_HELLINFERNO",-30; }",.@r*20,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }";
+      autobonus "{ bonus2 bVariableCastrate,\"WL_HELLINFERNO\",-30; }",.@r*20,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }";
   - Id: 1683
     AegisName: Abundantly_Foxtail
     Name: Enriched Foxtail Staff
