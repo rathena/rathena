@@ -1,3 +1,4 @@
+
 //--------------------------------------------------------------
 // rAthena Battle Configuration File
 // Originally Translated by Peter Kieser <pfak@telus.net>
@@ -21,11 +22,11 @@ left_cardfix_to_right: yes
 
 // The amount of HP a player will respawn with, 0 is default.
 // (Unit is in percentage of total HP, 100 is full heal of HP, 0 is respawn with 1HP total.)
-restart_hp_rate: 0
+restart_hp_rate: 50
 
 // The amount of SP a player will respawn with, 0 is default.
 // (Unit is in percentage of total SP, 100 is full heal of SP, 0 is respawn with 1SP total.)
-restart_sp_rate: 0
+restart_sp_rate: 50
 
 // Can a normal player by-pass the skill tree? (Note 1)
 player_skillfree: no
@@ -62,8 +63,8 @@ natural_heal_skill_interval: 10000
 
 // The maximum weight for a character to carry when the character stops healing naturally. (in %)
 // For renewal: Requires client 20171025 or newer to display properly
-natural_heal_weight_rate: 50
-natural_heal_weight_rate_renewal: 70
+natural_heal_weight_rate: 100
+natural_heal_weight_rate_renewal: 90
 
 // Maximum atk speed. (Default 190, Highest allowed 199)
 max_aspd: 190
@@ -159,7 +160,7 @@ invite_request_check: yes
 // 0 = Disabled
 // 1 = Dropped only in PvP maps
 // 2 = Dropped in all situations
-bone_drop: 0
+bone_drop: 1
 
 // Do mounted (on Peco) characters increase their size?
 // 0 = no
@@ -284,5 +285,3 @@ idletime_option: 0x7C1F
 // - Summoners are small size (0) instead of medium (1)
 summoner_race: 11
 summoner_size: 0
-
-import: conf/battle/import/player_conf.txt
