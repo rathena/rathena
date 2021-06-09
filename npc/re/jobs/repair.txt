@@ -264,7 +264,7 @@ L_Third:
 in_moc_16,17,33,4	duplicate(Valerie#sign)	Valerie#asn	837
 ein_in01,13,28,4	duplicate(Valerie#sign)	Valerie#bls	837
 hu_in01,386,377,4	duplicate(Valerie#sign)	Valerie#hnt	837
-prt_in,88,108,4	duplicate(Valerie#sign)	Valerie#knt	837
+// prt_in,88,108,4	duplicate(Valerie#sign)	Valerie#knt	837
 prt_church,19,36,4	duplicate(Valerie#sign)	Valerie#prst	837
 gef_tower,110,30,4	duplicate(Valerie#sign)	Valerie#wiz	837
 comodo,215,155,4	duplicate(Valerie#sign)	Valerie#danc	837
@@ -276,7 +276,7 @@ prt_church,103,86,4	duplicate(Valerie#sign)	Valerie#arch	837
 que_job01,75,92,4	duplicate(Valerie#sign)	Valerie#gc	837
 yuno,129,150,4	duplicate(Valerie#sign)	Valerie#mech	837
 tur_dun01,159,40,4	duplicate(Valerie#sign)	Valerie#ran	837
-prt_in,167,24,4	duplicate(Valerie#sign)	Valerie#rk	837
+// prt_in,167,24,4	duplicate(Valerie#sign)	Valerie#rk	837
 spl_in02,81,102,4	duplicate(Valerie#sign)	Valerie#wl	837
 alde_alche,38,181,4	duplicate(Valerie#sign)	Valerie#alche	837
 alberta,198,129,4	duplicate(Valerie#sign)	Valerie#min	837

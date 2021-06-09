@@ -103,8 +103,14 @@ Body:
     AegisName: Mithril_Coin
     Name: Mithril Coin
     Type: Etc
-    Buy: 5000
-    Weight: 40
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 676
     AegisName: Silver_Coin_Moneybag
     Name: Bag of Silver Coins
@@ -5833,11 +5839,11 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddDefMonster,1285,-50;
-      bonus2 bAddDefMonster,1286,-50;
-      bonus2 bAddDefMonster,1287,-50;
-      bonus2 bAddDefMonster,1899,-50;
-      bonus2 bAddDefMonster,1900,-50;
+      bonus2 bAddDamageClass,1285,-50;
+      bonus2 bAddDamageClass,1286,-50;
+      bonus2 bAddDamageClass,1287,-50;
+      bonus2 bAddDamageClass,1899,-50;
+      bonus2 bAddDamageClass,1900,-50;
   - Id: 4232
     AegisName: Wild_Ginseng_Card
     Name: Hermit Plant Card
@@ -24723,7 +24729,7 @@ Body:
     AegisName: Burning_Heart
     Name: Burning Heart
     Type: Etc
-    Buy: 924
+    Buy: 150
     Weight: 10
     Flags:
       BuyingStore: true

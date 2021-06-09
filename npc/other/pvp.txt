@@ -322,13 +322,13 @@ function	script	F_PVP_FSRS	{
 // Event Contestant Entrance
 //============================================================ 
 pvp_room,54,85,4	script	Registration Staff#1	105,{
-	if (countitem(7028) == 0) {
-		mes "[PVP Combat Square Register Staff]";
-		mes "Eh? How did you get in here?";
-		mes "This is the entrance for players only.";
-		mes "For details about viewers please proceed to the Register Staff on your right.";
-		close;
-	}
+	// if (countitem(7028) == 0) {
+	// 	mes "[PVP Combat Square Register Staff]";
+	// 	mes "Eh? How did you get in here?";
+	// 	mes "This is the entrance for players only.";
+	// 	mes "For details about viewers please proceed to the Register Staff on your right.";
+	// 	close;
+	// }
 	set .@size, getarraysize(.warp_x);
 	if (.@size == 0) {
 		setarray .warp_x,40,59,20,40;
@@ -344,7 +344,6 @@ pvp_room,54,85,4	script	Registration Staff#1	105,{
 			mes "OK! I will send you inside";
 			mes "Good luck!";
 			close2;
-			delitem 7028,1; //Invite_For_Duel
 			set .@rand, rand(.@size);
 			warp "pvp_2vs2", .warp_x[.@rand], .warp_y[.@rand];
 			deletearray .warp_x[.@rand],1;
@@ -364,18 +363,11 @@ OnInit:
 
 // Spectator Entrance
 //============================================================ 
--	script	Spectator's Entrance#dum::PVPSpectator	-1,{
-	if (countitem(7029) == 0) {
-		mes "[PVP Compete Square Register Staff]";
-		mes "This is the entrance for viewers.";
-		mes "For details about players entrance please proceed to the Register Staff on your left.";
-		close;
-	}
+-	script	Spectator Entrance#dum::PVPSpectator	-1,{
 	if (select("Compete Square one:Cancel") == 1) {
 		mes "[PVP Combat Square Register Staff]";
 		mes "You got it, thanks for participating. Have fun!";
 		close2;
-		delitem 7029,1; //Admission_For_Duel
 		switch(rand(1,4)) {
 			case 1: warp "pvp_2vs2",39,7; end;
 			case 2: warp "pvp_2vs2",39,73; end;
@@ -437,12 +429,8 @@ OnTouch_:
 	mes "Did you have fun in Combat Square?";
 	mes "May I ask where you want to go?";
 	next;
-	switch(select("Prontera.:Morocc.:Geffen.:Payon.:Alberta.:Cancel.")) {
-		case 1: warp "prontera",107,60; end;
-		case 2: warp "morocc",157,96; end;
-		case 3: warp "geffen",120,36; end;
-		case 4: warp "payon",96,100; end;
-		case 5: warp "alberta",41,243; end;
-		case 6: close;
+	switch(select("Dandago Mines:Cancel.")) {
+		case 1: warp "ein_dun02",136,154; end;
+		case 2: close;
 	}
 }

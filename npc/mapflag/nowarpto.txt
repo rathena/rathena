@@ -129,7 +129,6 @@ bat_a02	mapflag	nowarpto
 // Episode 13 ====================
 mid_campin	mapflag	nowarpto
 man_fild01	mapflag	nowarpto
-man_fild03	mapflag	nowarpto
 spl_fild02	mapflag	nowarpto
 spl_fild03	mapflag	nowarpto
 moc_fild22b	mapflag	nowarpto

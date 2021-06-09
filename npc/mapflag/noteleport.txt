@@ -129,7 +129,6 @@ kh_vila	mapflag	noteleport
 kh_dun01	mapflag	noteleport
 ve_in	mapflag	noteleport
 ve_in02	mapflag	noteleport
-thor_camp	mapflag	noteleport
 
 // Job Quests ====================
 job_sword1	mapflag	noteleport

@@ -18186,7 +18186,7 @@ Body:
     AegisName: G_FARMILIAR
     Name: Familiar
     Level: 8
-    Hp: 155
+    Hp: 145
     Attack: 20
     Attack2: 28
     Agi: 12
@@ -26482,25 +26482,25 @@ Body:
   - Id: 1669
     AegisName: DIMIK
     Name: Dimik
-    Level: 77
-    Hp: 10000
-    Attack: 1040
-    Attack2: 1880
-    Defense: 45
-    MagicDefense: 28
-    Str: 15
-    Agi: 35
-    Vit: 40
-    Int: 15
-    Dex: 120
-    Luk: 42
-    AttackRange: 5
+    Level: 24
+    Hp: 1109
+    BaseExp: 287
+    JobExp: 176
+    Attack: 80
+    Attack2: 135
+    Defense: 30
+    Agi: 24
+    Vit: 24
+    Int: 5
+    Dex: 52
+    Luk: 5
+    AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
     Size: Medium
     Race: Formless
     Element: Neutral
-    ElementLevel: 2
+    ElementLevel: 1
     WalkSpeed: 200
     AttackDelay: 576
     AttackMotion: 720
@@ -39092,26 +39092,27 @@ Body:
   - Id: 2016
     AegisName: AQUA_ELEMENTAL
     Name: Aqua Elemental
-    Level: 83
-    Hp: 33220
-    BaseExp: 5430
-    JobExp: 15300
-    Attack: 400
-    Attack2: 1600
-    Defense: 8
-    MagicDefense: 12
-    Agi: 23
-    Vit: 19
-    Int: 87
-    Dex: 77
-    Luk: 2
+    Level: 18
+    Hp: 217
+    BaseExp: 117
+    JobExp: 87
+    Attack: 23
+    Attack2: 5
+    Defense: 9
+    MagicDefense: 8
+    Str: 10
+    Agi: 8
+    Vit: 18
+    Int: 10
+    Dex: 14
+    Luk: 15
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
-    Size: Large
-    Race: Formless
+    Size: Medium
+    Race: Undead
     Element: Water
-    ElementLevel: 4
+    ElementLevel: 1
     WalkSpeed: 230
     AttackDelay: 504
     AttackMotion: 960

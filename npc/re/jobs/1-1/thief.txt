@@ -12,7 +12,7 @@
 //= 1.0 First Version. [Kisuka]
 //= 1.1 Added support for Baby classes. [Euphy]
 //============================================================ 
-moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
+ein_dun02,188,140,5	script	Thief Guide#thief	69,8,8,{
 	if (Upper == 1) {
 		if (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) {
 			if (Class == Job_Novice_High) {
@@ -56,15 +56,6 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 			mes "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!";
 			close;
 		}
-	}
-	if(q_job_thief == 1) {
-		mes "[Thief Guildsman]";
-		mes "Ehh... Seems like a beloved "+(Sex == SEX_MALE?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
-		next;
-		mes "[Thief Guildsman]";
-		mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
-		mes "If you want to become a Thief, ask the sharp-eyed guy next to me.";
-		close;
 	}
 	mes "[Thief Guildsman]";
 	if(BaseJob != Job_Novice) {
@@ -148,10 +139,18 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 	mes ""+strcharinfo(0)+". I now declare that you have passed the job interview!";
 	next;
 	mes "[Thief Guildsman]";
-	mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
-	mes "If you want to become a Thief, ask the guy next to me.";
-	set q_job_thief,1;
+	mes "Well, I recently got promoted and have full permission to grant you the class of Thief.";
+	callfunc "Job_Change",Job_Thief;
+		set q_job_thief,0;
+		getitem 13041,1;	// N_Main_Gauche
 	close;
+OnTouch:
+	if (BaseJob == JOB_NOVICE && JobLevel == 10) {
+		npctalk "Got what it takes to be sneaky? Talk to me.";
+	}
+onInit:
+	questinfo QTYPE_JOB, QMARK_GREEN, "BaseClass == JOB_NOVICE && JobLevel == 10";
+	end;
 }
 
 moc_prydb1,42,133,2	script	Thief Guildsman#thief	118,{

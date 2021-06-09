@@ -19,18 +19,1347 @@
 //==================================================
 // ein_dun01 - Mine Dungeon
 //==================================================
-ein_dun01,0,0	monster	Pitman	1616,70,5000
-ein_dun01,0,0	monster	Noxious	1620,30,5000
-ein_dun01,0,0	monster	Porcellio	1619,30,5000
-ein_dun01,0,0	monster	Venomous	1621,10,5000
-ein_dun01,0,0	monster	Old Stove	1617,1,5000
-ein_dun01,0,0	monster	Ungoliant	1618,1,3600000,3000000
+// ein_dun01,0,0	monster	Pitman	1616,70,5000
+// ein_dun01,0,0	monster	Noxious	1620,30,5000
+// ein_dun01,0,0	monster	Porcellio	1619,30,5000
+// ein_dun01,0,0	monster	Venomous	1621,10,5000
+// ein_dun01,0,0	monster	Old Stove	1617,1,5000
+// ein_dun01,0,0	monster	Ungoliant	1618,1,3600000,3000000
 
 //==================================================
 // ein_dun02 - Mine Dungeon
 //==================================================
-ein_dun02,0,0	monster	Mineral	1614,50,5000
-ein_dun02,0,0	monster	Obsidian	1615,40,5000
-ein_dun02,0,0	monster	Old Stove	1617,30,5000
-ein_dun02,0,0	monster	Teddy Bear	1622,30,5000
-ein_dun02,0,0,0,0	boss_monster	RSX-0806	1623,1,7500000,600000,0
+ein_dun02,212,273,12,24	monster	Rat	1175,4,30000
+ein_dun02,183,236,24,12	monster	Rat	1175,4,30000
+ein_dun02,0,0	monster	Poring	1002,30,5000
+ein_dun02,0,0	monster	Chunky Poring	2696,2,300000
+ein_dun02,186,198,12,12	monster	Familiar	1419,4,30000
+ein_dun02,207,175,12,12	monster	Familiar	1419,4,30000
+ein_dun02,264,184,12,12	monster	Familiar	1419,4,30000
+ein_dun02,37,71,36,36	monster	Skeleton Soldier	3950,6,20000
+ein_dun02,249,80,48,48	monster	Dirt Gnome	1121,8,30000
+ein_dun02,30,258,6	monster	Toxic Fumes	1620,1,20000
+ein_dun02,43,230,6	monster	Toxic Fumes	1620,1,20000
+ein_dun02,36,242,6	monster	Toxic Fumes	1620,1,20000
+ein_dun02,54,208,6	monster	Toxic Fumes	1620,1,20000
+
+// Mine Dwellers
+ein_dun02,171,132,2	script	Tango#tango1	4_M_LGTPOOR,{
+	if (BaseClass != JOB_NOVICE) {
+		if (MAINQ < 3 && BaseLevel > 5) {
+			switch(isbegin_quest(90004)) {
+				case 0:
+					mes "[Tango]";
+					mes "Alright, are you warmed up and ready for some real work?";
+					next;
+					mes "[Tango]";
+					mes "We still need somebody to mark the cargo crate we have stashed up north.";
+					mes "You wanna help?";
+					menu "Accept",L_Yes,"Decline",L_No;
+						L_Yes:
+							setquest 90004;
+							set MAINQ,1;
+							mes "[Tango]";
+							mes "Welcome aboard buddy.";
+							mes "Here's some more starting equipment for you.";
+							getitem 2404,1;
+							close;
+							end;
+						L_No:
+							mes "[Tango]";
+							mes "You'll change your mind.";
+							close;
+							end;
+					end;
+				case 1:
+					if (MAINQ < 2) {
+						mes "[Tango]";
+						mes "The crate will be north-west of here. Not over the bridges though, I heard they've been smelling gas over there.";
+						set MAINQ,1;
+						close;
+					} else {
+						mes "[Tango]";
+						mes "What? You say you were attacked by a skeleton soldier?";
+						mes "...";
+						mes "They must be preparing for their attack sooner than we thought!";
+						completequest 90004;
+						getexp 80,20;
+						Zeny += 3000;
+						set MAINQ,3;
+						close;
+					}
+					end;
+				case 2:
+					mes "Grandfather and the others have been saying folks on the surface are coming to get us.";
+					close;
+					end;
+			}
+		} else if (MAINQ == 3 && BaseLevel >=8 ) {
+			switch(isbegin_quest(90008)) {
+				case 0:
+					mes "[Tango]";
+					mes "We haven't heard from our neighbors over the bridge in a couple of days now.";
+					mes "Could you do us a favor and go check on them?";
+					mes " ";
+					menu "Yes",L_YesQ4,"No",L_NoQ4;
+						L_YesQ4:
+							setquest 90008;
+							set MAINQ,4;
+							mes "[Tango]";
+							mes "Thanks " + strcharinfo(0) + ", you've always been a great help around camp.";
+							mes "Go find Damien, he's the most competant out of 'em.";
+							close;
+							end;
+						L_NoQ4:
+							mes "[Tango]";
+							mes "None of 'em showed up for work today...";
+							close;
+							end;
+					end;
+				}
+		} else if (MAINQ == 4) {
+			mes "[Tango]";
+			mes "Go talk to Damien.";
+			close;
+		} else if (MAINQ == 5) {
+			mes "[Tango]";
+			mes "They were all DEAD?!";
+			if (checkquest(90009,HUNTING) == 2) {
+				mes "Wh-what's going on? We need to talk to the chief!";
+				completequest(90009);
+				getexp 90,90;
+				next;
+				mes "[Tango]";
+				mes "Alright " + strcharinfo(0) + ". Things seem like they're really getting serious. I thought we had more time.";
+				next;
+				mes "[Tango]";
+				mes "Your next assignment is to head up north with Serene and find the chief.";
+				next;
+				mes "[Tango]";
+				mes "Go meet with Jaren across the southern-most bridge, he'll show you the back way out of the mines.";
+				setquest 90012;
+				set MAINQ,6;
+				next;
+				disablenpc strnpcinfo(0);
+				end;
+			} else {
+				mes "Looks like some skeletons have followed you back, take care of them first!";
+			}
+			end;
+		} else if (MAINQ == 15) {
+			mes "[Tango]";
+			mes strcharinfo(0) + "! You made it back!";
+			close;
+		}
+	} else {
+		mes "[Tango]";
+		mes "Morning " + strcharinfo(0) + ". Today's the day you're going to graduate from being a Novice.";
+		next;
+		mes "[Tango]";
+		mes "Report back to me once you've chosen your job.";
+		close;
+	}
+	end;
+
+	onInit:
+		questinfo QTYPE_QUEST, QMARK_YELLOW, "(BaseClass != JOB_NOVICE && BaseLevel > 5 && isbegin_quest(90004) == 0)";
+		questinfo QTYPE_QUEST, QMARK_YELLOW, "(MAINQ == 3 && BaseLevel > 7 && isbegin_quest(90008) == 0)";
+		questinfo QTYPE_QUEST2, QMARK_YELLOW, "(MAINQ == 2 && isbegin_quest(90004) == 1) || (MAINQ == 5 && checkquest(90009,HUNTING) == 2)";
+		questinfo QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(90022) == 1";
+		end;
+}
+
+ein_dun02,130,28,2	script	Jaret	4_M_LGTPOOR,{
+	if (MAINQ >= 6) {
+		mes "[Jaret]";
+		mes "Oi buddy! Tango said to show ya the secret way outta here. Heading outside to the Crystalline Ridge?";
+		menu "Yes",L_Yes,"No",L_No;
+		L_Yes:
+			if (MAINQ == 6) {
+				set MAINQ,7;
+				completequest(90012);
+				setquest(90013);
+			}
+			warp "man_fild03",259,93;
+			end;
+		L_No:
+			end;
+		end;
+	} else {
+		mes "[Jaret]";
+		mes "Oi! Whatcha gettin at whelp? I'm workin' here!";
+		close;
+	}
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "(MAINQ == 6 && isbegin_quest(90012) == 1)";
+	end;
+}
+
+ein_dun02,167,115,1	script	_#dwellerB	4_M_DST_CHILD,{
+    mes "Mom says we might have to return to the surface.";
+    next;
+    mes "What's the surface?";
+    close;
+}
+
+ein_dun02,153,145,3	script	_#dwellerC	4_M_RACHOLD,{
+    OnInit:
+    startnpctimer;
+    npcspeed 450;
+    end;
+
+    OnTimer5000:
+    npcwalkto 144,145;
+    end;
+
+    OnTimer15000:
+    npcwalkto 153,145;
+    end;
+
+    OnTimer20000:
+    stopnpctimer;
+    initnpctimer;
+    end;
+}
+
+ein_dun02,166,154,4	script	Serene#sereneA	4_F_ANYA,18,18,{
+	switch(isbegin_quest(90001)) {
+		case 0:
+			if (EIN_TALK_SERENE_1 == 0) {
+				mes "[Serene]";
+				mes "Hey " + strcharinfo(0) + "! You're finally moving on from being a Novice today too, eh?";
+				next;
+				mes "[Serene]";
+				mes "Well Tango let me know that you and I will be working together through this.";
+				next;
+				emotion ET_SCRATCH;
+				sleep2(2000);
+				mes "[Serene]";
+				mes "I know we haven't talked much in the past except for that one time in school.";
+				mes " ";
+				mes "I'm looking forward to getting to know you!";
+				next;
+				EIN_TALK_SERENE_1 = 1;
+			}
+			mes "[Serene]";
+			mes "As for today's duties, we're supposed to help out with some tasks around the village.";
+			next;
+			mes "[Serene]";
+			mes "The first few tasks for you are related to pest extermination. You'll be hunting 10 Porings.";
+			menu "Accept",L_Yes,"Decline",L_No;
+				L_Yes:
+					setquest 90001;
+					mes "[Serene]";
+					mes "Awesome! I'll care of the tasks I've been given around town here while you're out in the field.";
+					next;
+					mes "[Serene]";
+					mes "Make sure you check with other villagers for more work, we need to impress Tango!";
+					close;
+					end;
+				L_No:
+					mes "[Serene]";
+					mes "Ha. Still haven't had breakfast yet? I'll be waiting here when you're ready to begin.";
+					close;
+					end;
+		case 1:
+			switch(checkquest(90001,HUNTING)) {
+				case 0:
+				case 1:
+					mes "[Serene]";
+					mes "Make sure you check with other villagers for more work, we need to impress Tango!";
+					close;
+				case 2:
+					getexp 30,30;
+					Zeny += 2000;
+					completequest 90001;
+					mes "[Serene]";
+					mes "Nice job " + strcharinfo(0) + ". Help out some other villagers with their tasks until you feel like you're ready to move on.";
+					next;
+			}
+			end;
+		case 2:
+			mes "[Serene]";
+			mes "Once you you're ready, talk to one of the instructors around town to choose your job!";
+			close;
+	}
+	end;
+
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90001) == 0";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90001,HUNTING) == 2";
+	end;
+onTouch:
+	questinfo_refresh();
+	if (MAINQ > 6) {
+		disablenpc strnpcinfo(0);
+	}
+	end;
+}
+
+ein_dun02,139,156,4	script	Mysterious Guy#einPvpGuy	4_M_MOCASS2,{
+	mes "[Mysterious Guy]";
+	mes "Ready to test your skills against your friends?";
+	next;
+	switch(select("Let's go!:Not right now.")) {
+		case 1: warp "pvp_room",54,29; end;
+		case 2: close;
+	}
+	end;
+}
+
+ein_dun02,181,157,4	shop	Tool Dealer#q	4_M_HUMAN_01,1750:-1,611:-1,643:1000,531:50,501:20,502:60,506:30,645:-1,601:-1,602:-1
+ein_dun02,183,130,4	shop	Weapon Dealer#quest	4_M_BARYO_MAN,1750:-1,1751:-1,1701:-1,1601:-1,1201:-1,1204:-1,1207:-1,1101:-1,1104:-1,1107:-1,1116:-1,1151:-1,1154:-1,1157:-1,1160:-1,1301:-1
+ein_dun02,180,126,2	shop	Armor Dealer#quest	4_M_BARYO_BOY,2103:-1,2105:-1,2403:-1,2405:-1,2503:-1,2505:-1,2226:-1,2228:-1,2303:-1,2305:-1,2328:-1,2307:-1,2309:-1,2312:-1,2314:-1,2316:-1,2607:7500
+
+ein_dun02,147,110,7	script	Scrambles the Coin Cat#ein	4_DR_AGLIO,{
+	if (EIN_SCRAMBLES_INTRO == 0) {
+		mes "[Scrambles]";
+		mes "Greetings meowster!";
+		mes "I am Scrambles, the famous coin collector!";
+		next;
+		mes "[Scrambles]";
+		mes "You're an aspiring adventurer, no?";
+		mes "You're probably going to come across a lot of cool treasure in your journey.";
+		next;
+		mes "[Scrambles]";
+		mes "And among that treasure is bound to be BEAUTIFUL SHINY COINS!";
+		next;
+		EIN_SCRAMBLES_INTRO = 1;
+	}
+	mes "[Scrambles]";
+	mes "Right now I'm looking for Mythril Coins, I hear tough monsters like to hoard them.";
+	mes " ";
+	mes "Feel free to use the Goodie Dispenser here if you come across any!";
+	close;
+	end;
+}
+
+ein_dun02,146,113,7	itemshop	Coin Exchange#ein	2_VENDING_MACHINE1,674,2203:1,2295:1,5154:2,4077:1
+
+ein_dun02,138,143,4	script	Kafra Employee::kaf_min	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "ein_dun02",138,144,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
+}
+
+ein_dun02,177,158,4	script	Katrina#dwellerE	4_F_MD_KATRINN,{
+	if (isbegin_quest(90000) == 0){
+		if (checkquest(90001) == 2 && checkquest(90002) == 2 && checkquest(90003) == 2) {
+			mes "[Katrina]";
+			mes "Seems like you've been working hard with the exterminations lately.";
+			next;
+			mes "[Katrina]";
+			mes "With everybody working on the fortification effort, we've had to neglect some of our weekly duties.";
+			next;
+			mes "[Katrina]";
+			mes "Would you be willing to help out with one more beast?";
+			menu "Accept",L_Yes,"Decline",L_No;
+				L_Yes:
+					mes "[Katrina]";
+					mes "You're awesome!";
+					mes "A Bigfoot's found its way into the storage area up north. It's a danger to the kids for it to be this close to camp.";
+					setquest 90000;
+					close;
+					end;
+				L_No:
+					mes "[Katrina]";
+					mes "Please let me know if you change your mind, I'll pay you.";
+					close;
+					end;
+			end;
+		}
+	}
+	else if (isbegin_quest(90000) == 1) {
+		if (checkquest(90000, HUNTING) == 2) {
+			mes "[Katrina]";
+			mes "Thank you so much! This will keep the parents' minds more at ease when letting their kids play";
+			getexp 90,10;
+			Zeny += 3000;
+			completequest 90000;
+			close;
+		} else {
+			mes "[Katrina]";
+			mes "Still working?";
+		}
+	}
+	else {
+		mes "[Katrina]";
+		mes "I don't know what to tell my son anymore.";
+		next;
+		mes "[Katrina]";
+		mes "Will the plan work?";
+		close;
+		end;
+	}
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(90001) == 2 && checkquest(90002) == 2 && checkquest(90003) == 2 && isbegin_quest(90000) == 0";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90000,HUNTING) == 2";
+	end;
+onTouch:
+	questinfo_refresh();
+	end;
+}
+
+ein_dun02,158,148,1	script	Larissa#dwellerF	1_F_MERCHANT_02,18,18,{
+	switch(isbegin_quest(90002)) {
+		case 0:
+			mes "[Larissa]";
+			mes "Oi, kid. Will ya go take care of somma the rats? I need 5 of their tails!";
+			mes " ";
+			mes "I been meanin' to cook up more o' me special stew! Hehehe!";
+			menu "Accept",L_Yes,"Decline",L_No;
+			    L_Yes:
+					setquest 90002;
+					mes "[Larissa]";
+					mes "Oi, yer the best kiddo! Grandpa will be lickin' his chops tonight! Hehehe!";
+					close;
+					end;
+				L_No:
+					mes "[Larissa]";
+					mes "Oi, please let me know if ya change yer mind.";
+					close;
+					end;
+			end;
+		case 1:
+			if (countitem(1016) >= 5) {
+				mes "[Larissa]";
+				mes "Oi! Ya got the tails! Hand 'em over.";
+				menu "Yes",L_Yes2,"No",L_No2;
+			    L_Yes2:
+					getexp 30,30;
+					Zeny += 2000;
+					delitem 1016,5;
+					completequest 90002;
+					mes "[Larissa]";
+					mes "Oi boy howdy! Grandpa will be eatin' good tonight! HEHEHE!";
+					mes " ";
+					mes "Thanks kiddo.";
+					close;
+				L_No2:
+					emotion ET_COMEON;
+					mes "[Larissa]";
+					mes "What are ya waitin' for? Don't tell me you want to keep 'em to make yer own stew!";
+					close;
+			} else {
+				mes "[Larissa]";
+				mes "Oi! There should be a whole nest o' rats to the north-east.";
+				mes "Bring back 5 Rat Tails!";
+				close;
+			}
+			end;
+		case 2:
+			mes "[Larissa]";
+			mes "Oi! Grandpa's been saying folks outside are comin' to get us.";
+			close;
+			end;
+	}
+    end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90002) == 0";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(90002) == 1 && countitem(1016) >= 5";
+	end;
+onTouch:
+	questinfo_refresh();
+	end;
+}
+
+ein_dun02,184,276,4	script	Robert Westbury#kidA	4_M_DST_CHILD,18,18,{
+	if (EIN_TALK_ROBERT == 0) {
+		mes "[Robert Westbury]";
+		mes "WAHH! I don't want to go to the surface!";
+		menu "Are you from camp?",OP11,"Leave",OP12;
+			OP11:
+				mes "[Robert Westbury]";
+				mes "G..grandpa was saying th-the bad people are coming to kick us out of our home.";
+				next;
+				mes "[Robert Westbury]";
+				mes "I thought if I ran away as far as I could then they couldn't make me. This is the farthest I've ever been from home!";
+				menu "You should head home.",OP21;
+					OP21:
+						mes "[Robert Westbury]";
+						mes "Okay.. *sniff* maybe I shouldn't have ran away.";
+						next;
+						EIN_TALK_ROBERT = 1;
+						getexp 20,20;
+						disablenpc strnpcinfo(0);
+						end;
+
+			OP12:
+				mes "[Robert Westbury]";
+				mes "WAHH!!!!";
+				close;
+		end;
+	}
+OnTouch:
+	if (EIN_TALK_ROBERT == 0) {
+		enablenpc strnpcinfo(0);
+	} else {
+		disablenpc strnpcinfo(0);
+	}
+	end;
+}
+
+ein_dun02,146,121,1	script	Tracy#dwellerF	4W_F_01,{
+	switch(isbegin_quest(90003)) {
+		case 0:
+			mes "[Tracy]";
+			mes "The amount of bats in the area has been CRAZY lately.";
+			next;
+			mes "[Tracy]";
+			mes "Would you PLEASE take care of them for me";
+			menu "Accept",L_Yes,"Decline",L_No;
+			    L_Yes:
+					setquest 90003;
+					mes "Thank you so much!";
+					close;
+					end;
+				L_No:
+					mes "UGHHHH!";
+					close;
+					end;
+			end;
+		case 1:
+			switch(checkquest(90003,HUNTING)) {
+				case 0:
+				case 1:
+					mes "Still hunting?";
+					close;
+					end;
+				case 2:
+					getexp 30,30;
+					Zeny += 2000;
+					completequest 90003;
+					mes "[Tracy]";
+					mes "Thanks " + strcharinfo(0) + "! You know how when you see one bat you feel like there's a million of them crawling all over you?";
+					next;
+					emotion ET_QUESTION;
+					mes "[Tracy]";
+					mes "What? You think I mean spiders?";
+					close;
+					end;
+			}
+			end;
+		case 2:
+			mes "Grandfather and the others have been saying folks on the surface are coming to get us.";
+			close;
+			end;
+	}
+    end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90003) == 0";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90003,HUNTING) == 2";
+	end;
+onTouch:
+	questinfo_refresh();
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90003) == 0";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90003,HUNTING) == 2";
+	end;
+}
+
+ein_dun02,164,165,4	script	Daff#swordmasterA	2_M_SWORDMASTER,8,8,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Lord_Knight || ADVJOB == Job_Paladin)) {
+			mes "[Swordman]";
+			mes "It...";
+			mes "Can't be...";
+			mes "You've been reborn, haven't you?";
+			next;
+			mes "[Swordman]";
+			mes "I see you're retreading the path of the Swordman! Once you've gotten used to brandishing a sword, you can never go back!!";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[Swordman]";
+				mes "Hmm? Ah, you must first master the Basic Skills before you are ready to become a Swordman.";
+				next;
+				mes "[Swordman]";
+				mes "Come back to me when you have finished learning the Basic Novice Skills.";
+				close;
+			}
+			mes "[Swordman]";
+			mes "Excellent! Let me promote you to a Swordman right away!";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Swordman_High;
+			skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+			skill "SM_FATALBLOW",1,SKILL_PERM;
+			skill "SM_AUTOBERSERK",1,SKILL_PERM;
+			mes "[Swordman]";
+			mes "Hmm... You look like a well-experienced Swordman. Still, I'm sure that you must train to improve your skills and gain strength!";
+			close;
+		}else{
+			mes "[Swordman]";
+			mes "Hm...?";
+			mes "You're a reborn";
+			mes "warrior, aren't you?";
+			next;
+			mes "[Swordman]";
+			mes "Hmmm...";
+			mes "It seems that being";
+			mes "a Swordman is not part";
+			mes "of your destiny. I'm sorry,";
+			mes "but it seems there is nothing";
+			mes "I can do for you.";
+			close;
+		}
+	}
+	mes "[Swordman Guildsman]";
+	mes "This is the Swordman Guild.";
+	mes "Why are you here?";
+	next;
+	switch(select("Tell me about being a Swordman.:I want to be a Swordman.:Nothing.")) {
+	case 1:
+		mes "[Swordman Guildsman]";
+		mes "So you wish to know more about the mighty Swordman? Okay!";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "The most distinctive feature of the Swordman is that the Swordman can show us his/her real abilities in close combat.";
+		mes "There are three reasons!";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "First, Swordman has higher HP than other jobs.";
+		mes "Second, except for Bows and Rods, Swordman can use all other weapons so they can fight at their optimal ability.";
+		mes "And third, most of the skills of the Swordman give powerful physical attacks.";
+		next;
+		mes "[Swordman Guildsman]";
+		mes "Though I gave you a simple explanation, I believe you understand the core meaning of what it is to be a Swordman.";
+		mes "In my opinion, Swordman is the best job ever!";
+		close;
+	case 2:
+		mes "[Swordman Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Swordman) {
+				mes "You are already an excellent Swordman, aren't you?";
+				mes "Just devote yourself to be a great Swordman.";
+			} else {
+				mes "You already have one of the other jobs, don't you?";
+				mes "You've gone too far with that joke.";
+			}
+			close;
+		}else{
+			if (!callfunc("F_CanChangeJob")) {
+				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4A4AFFJob Level 10^000000.";
+				mes "and ^4A4AFFBasic Skill Level 9^000000.";
+				next;
+				mes "[Swordman Guildsman]";
+				mes "Want to be a Swordman without having the minimum requirement?";
+				mes "Do you think being a Swordman is that easy?";
+				close;
+			}
+			mes "Hmm, both your Job Level and Basic Skill Level check out.";
+			mes "Good. Do you want to be a Swordman right away?";
+			next;
+			if(select("Yes, I do.:I'll consider it again.") == 2) {
+				mes "[Swordman Guildsman]";
+				mes "Yeah. Prudent decision is needed for choosing a job.";
+				mes "But I feel sorry... that you consider it again after overcoming all the hardships....";
+				close;
+			}
+			mes "[Swordman Guildsman]";
+			mes "Congratulations! From now on, you are going to live a Swordman's life!";
+			mes "Let's do it right now!";
+			next;
+			mes "[Swordman Guildsman]";
+			mes "Congratulations again for being a Swordman and I hope that you participate in many activities for the revival of our guild.";
+			callfunc "Job_Change",Job_Swordman;
+			getitem 13415,1; // N_Falchion
+			close;
+		}
+	case 3:
+		end;
+	}
+OnTouch:
+	if (BaseJob == JOB_NOVICE && JobLevel == 10) {
+		npctalk "What's it going to be " + strcharinfo(0) + "? Will you become a Swordsman and take up the blade?";
+	}
+	end;
+onInit:
+	questinfo QTYPE_JOB, QMARK_GREEN, "BaseClass == JOB_NOVICE && JobLevel == 10";
+	end;
+}
+
+ein_dun02,236,144,4	script	Jack Einbachs#superNoviceA	4_M_BELIEVER01,6,6,{
+	if (BaseJob == Job_Novice && JobLevel == 10) {
+		mes "[Jack Einbachs]";
+		mes "Oh, hello son.";
+		mes "You've completed your Novice courses, yet you're back here speaking with me. Do none of the other jobs speak to you?";
+		menu "Nothing speaks to me.",L_Yes,"Uh, I'm fine, thanks.",L_No;
+			L_Yes:
+				next;
+				mes "[Jack Einbachs]";
+				mes "Well then, may I ask you:";
+				mes "Do you desire a life where you are a Master of Mediocrity?";
+				menu "Yes, that's exactly it!",L_Yes2,"No, who would want to do that?",L_No2;
+					L_Yes2:
+						mes "[Jack Einbachs]";
+						mes "Ohoho! It seems I may have found my new apprentice then!";
+						next;
+						mes "[Jack Einbachs]";
+						mes "Final question:";
+						mes "Do you want to commit yourself to being a Super Novice?";
+						menu "Yes, I want to be a Super Novice.",L_Yes3,"No, I do not",L_No3;
+							L_Yes3:
+								if (!callfunc("F_CanChangeJob")) {
+									mes "[Jack Einbachs]";
+									mes "Ah my friend! Make sure to complete your Basic Skills first.";
+									mes "Only then can I make you a Super Novice.";
+									close;
+								}
+								callfunc "Job_Change",Job_Super_Novice;
+								getitem 2278,1;
+								getitem 1207,1;
+								mes "[Jack Einbachs]";
+								mes "You have now been enlightened my friend.";
+								mes "Go on and show the world the power of Mediocrity!";
+								close;
+							L_No3:								
+								mes "[Jack Einbachs]";
+								mes "Aw, you got my hopes up!";
+								close;
+					L_No2:
+						mes "[Jack Einbachs]";
+						mes "Somebody who wants to see how far they can push the limits farther than they were meant to ever go!";
+						close;
+			L_No:
+				mes "[Jack Einbachs]";
+				mes "Life is happy!";
+				close;
+		end;
+	} else {
+		mes "[Jack Einbachs]";
+		mes "Life is happy!";
+		close;
+	}
+OnTouch:
+	questinfo_refresh();
+	if (BaseJob == JOB_NOVICE && JobLevel == 10) {
+		npctalk "Feeling a little lost? Try the life of a Super Novice";
+	}
+	end;
+onInit:
+	questinfo QTYPE_JOB, QMARK_GREEN, "BaseClass == JOB_NOVICE && JobLevel == 10";
+	end;
+}
+
+ein_dun02,170,206,3	script	_#minerA	4_M_EINMINER,{
+    mes "We've got a good deal going on between us and the overlords right now.";
+    next;
+    mes "Daff and the others better not ruin this for us...";
+    close;
+}
+
+ein_dun02,249,113,1	script	_#minerB	4_M_EINMINER,{
+    mes "Are you here to help me with these bombs?";
+	if (isbegin_quest(90006) == 1) {
+		next;
+		mes "You're just here to collect their cores then I'm on my own again?!";
+	}
+    close;
+}
+
+ein_dun02,155,137,5	script	Mr. Michel	4_M_TWOLDMAN,8,8,{
+	if (Upper == 1) {
+		if (ADVJOB == Job_High_Wizard || ADVJOB == Job_Professor) {
+			if (Class == Job_Novice_High) {
+				mes "[Mage Guildsman]";
+				mes "Whoa, long time no see! But weren't you supposed to be dead?";
+				next;
+				mes "[Mage Guildsman]";
+				mes "Ah, you must have been reborn. Well, I'm glad to have you back.";
+				next;
+				if (!callfunc("F_CanChangeJob")) {
+					mes "[Mage Guildsman]";
+					mes "I'm sorry, but I don't think you're ready to learn magic yet. Why don't you go finish learning the Basic Skills first?";
+					next;
+					mes "[Mage Guildsman]";
+					mes "Take your time. The more you learn, the more ready you'll be to learn magic again.";
+					close;
+				}
+				mes "[Mage Guildsman]";
+				mes "Well, since you have passed the Mage test once, I will not question your qualification. You want to have your magic skills back immediately, don't you?";
+				next;
+				skill "NV_TRICKDEAD",0,SKILL_PERM;
+				jobchange Job_Mage_High;
+				skill "MG_ENERGYCOAT",1,SKILL_PERM;
+				mes "[Mage Guildsman]";
+				mes "Wow, for some reason, you look way better than you did before. Anyway, I believe you will do a better job being a Mage as well.";
+				close;
+			}else{
+				mes "[Mage Guildsman]";
+				mes "Is there anything more I can help you with? If not, why don't you go test your skills? The world is waiting for you~!";
+				close;
+			}
+		}else{
+			mes "[Mage Guildsman]";
+			mes "What, are you interested in the Mage guild? I didn't want to tell you this, but you don't belong here.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "I am not sure why you're still standing in front of me, but I can tell that you're not meant to be a Mage.";
+			close;
+		}
+	}
+	mes "[Mage Guildsman]";
+	if(BaseJob != Job_Novice) {
+		if(BaseJob == Job_Mage) {
+			mes "Hey, haven't you realized? You're already a Mage, silly!";
+			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
+		} else
+			mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";
+		close;
+	}else{
+		mes "Hey?";
+		next;
+		switch(select("I want to be a Mage:What are the requirements to be a Mage?:Nothing, thanks.")) {
+		case 1:
+			mes "[Mage Guildsman]";
+			mes "Wanna be a Mage? Eh...";
+			next;
+			mes "[Mage Guildsman]";
+			if (Sex == SEX_MALE) {
+				mes "Hey, look at you! You're kinda cute~! Not my type though...";
+			}else{
+				mes "Oooh, you're such a hot babe~!";
+				mes "I like girls like you~";
+			}
+			mes "Right, you said that you wanna be a Mage?";
+			next;
+			if(select("I want to be a Mage.:Nothing, thanks.") == 2) {
+				mes "[Mage Guildsman]";
+				mes "Whaaaaat~?! Right after you tell me that you wanna become a Mage, you change your mind?! Be a bit more decisive!";
+				close;
+			}
+			mes "[Mage Guildsman]";
+			if (!callfunc("F_CanChangeJob")) {
+				mes "Oh, man your Basic Skill Level doesn't reach enough to be a Mage.";
+				mes "Go back and level up your Basic Skill.";
+				close;
+			}
+			mes "Alright.. sign the application form.... Wow~ you have good handwriting! Ahh, okay. That's enough.";
+			mes "You are... "+strcharinfo(0)+".";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Hmm I can see that you've tried hard in your own way. Though it seems to be a little clumsy, but well I think it's okay!";
+			mes "Good! Always sticking to the basics is the best! I will transform you right away.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Hahh..! You are now a Mage, one of our colleagues!";
+			mes "We welcome you to the Mage Guild, our new friend!";
+			next;
+			mes "[Mage Guildsman]";
+			mes "'Welcome to the Mage Guild~'";
+			mes "Congratulations on becoming a member of the Mage Guild! Go for it!";
+			callfunc "Job_Change",Job_Mage;
+			getitem 1639,1;	// N_Rod
+			close;
+		case 2:
+			mes "[Mage Guildsman]";
+			mes "Wanna be a Mage, eh?";
+			mes "I'd be happy to explain the requirements for a pretty girl like you!";
+			next;
+			mes "[Mage Guildsman]";
+			mes "First of all, you have to reach Novice Job Level 10 and learn all of the Basic Skills.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "In the past, there was a complicated potion making test. Because of that, we'd lost an aplicant slowly.";
+			mes "So, we decided to accept all aplicants who meet the basic requirements.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Don't hesitate. Just be a magician!";
+			close;
+		case 3:
+			mes "[Mage Guildsman]";
+			mes "Nothing...?";
+			close;
+		}
+	}
+OnTouch:
+	if (BaseJob == JOB_NOVICE && JobLevel == 10) {
+		npctalk "I've seen your potential, unleash it through the power of a Mage!";
+	}
+	end;
+onInit:
+	questinfo QTYPE_JOB, QMARK_GREEN, "BaseClass == JOB_NOVICE && JobLevel == 10";
+	end;
+}
+
+ein_dun02,151,137,5	script	Archer Guildsman#archerB	85,8,8,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy)) {
+			mes "[Archer Guildsman]";
+			mes "Hey, I know you.";
+			mes "You took this test";
+			mes "before, didn't you?";
+			next;
+			mes "[Archer Guildsman]";
+			mes "Ah, you must have been";
+			mes "to Valhalla and been reborn.";
+			mes "Wow, that's so impressive!";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[Archer Guildsman]";
+				mes "Err...";
+				mes "You'd better learn all the Basic Skills first before you can become an Archer.";
+				next;
+				mes "[Archer Guildsman]";
+				mes "Alright, see you later.";
+				close;
+			}
+			mes "[Archer Guildsman]";
+			mes "Well then. I don't";
+			mes "need to say anything else.";
+			mes "I know you'll make a great Archer...";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Archer_high;
+			skill "AC_MAKINGARROW",1,SKILL_PERM;
+			skill "AC_CHARGEARROW",1,SKILL_PERM;
+			mes "[Archer Guildsman]";
+			mes "Although there's no special";
+			mes "reward for you this time, I hope you understand. Take care of yourself.";
+			close;
+		}else{
+			mes "[Archer Guildsman]";
+			mes "Oh...?";
+			mes "Hey, what are";
+			mes "you doing here...?";
+			next;
+			mes "[Archer Guildsman]";
+			mes "I can tell that you're not cut out to be an Archer. It sort of feels like you're meant to do";
+			mes "something else...";
+			close;
+		}
+	}
+	mes "[Archer Guildsman]";
+	mes "Nice to meet you. How may I help you?";
+	next;
+	switch(select("I want to be an Archer.:I need the requirements, please.:Nothing, thanks.")) {
+	case 1:
+		mes "[Archer Guildsman]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Archer)
+				mes "Haha, you are kidding me...";
+			else {
+				mes "I feel sorry but only Novices can change their job.";
+				mes "You already have your own decent job, don't you?";
+			}
+			close;
+		}else{
+			mes "You are... "+strcharinfo(0)+", right?";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[Archer Guildsman]";
+				mes "Well, you're not at the right skill level.";
+				mes "Your job level must be at least ^4A4AFF10^000000 and your Basic Skill level should reach ^4A4AFFlevel 9";
+				next;
+				mes "[Archer Guildsman]";
+				mes "Because an Archer needs extremely high concentration, so we do not accept those who have little patience.";
+				close;
+			}
+			mes "[Archer Guildsman]";
+			mes "Your Basic Skill is now enough..";
+			mes "....Hm~~ so you are now ready to be an Archer. I will take the step right away.";
+			next;
+			mes "[Archer Guildsman]";
+			mes "Congratulations! You are now an Archer! Also, we hope that you actively participate in many programs for the revival of the Archer Guild.";
+			mes "Ah, items have arrived from the Production Department. Here, take these! These are all yours!";
+			callfunc "Job_Change",Job_Archer;
+			getitem 1742,1;	// N_Composite_Bow
+			getitem 12004,1;	// Arrow_Container
+			getitem 12009,1;	// Silver_Arrow_Container
+			getitem 12008,1;	// Fire_Arrow_Container
+			next;
+			mes "[Archer Guildsman]";
+			mes "Having a bow and arrows, now you became a real Archer.";
+			mes "If you open the arrow container, there are arrows in it and then you can equip them.";
+			mes "Well, I expect to hear better news from you. It's time to say goodbye.";
+			mes "Bye.";
+			close;
+		}
+	case 2:
+		mes "[Archer Guildsman]";
+		mes "An Archer has skills using a bow and has various talents.";
+		mes "The greatest ability of an Archer is attacking enemies from a long distance.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "Although an Archer has weaker HP, he or she can shoot enemies at a long range,";
+		mes "so an Archer is safer in a real battle.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "Although an Archer in Ragnarok has lower HP, he or she has high accuracy and attack rate so that the archer can kill monsters before they get close to an Archer.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "^8C2121An Archer can change jobs to a Hunter.^000000";
+		mes "^8C2121Other than Hunter, if you are a man, you can change your job to Bard and if you are a woman, you can change your job to Dancer.^000000";
+		close;
+	case 3:
+		mes "[Archer Guildsman]";
+		mes "If you have any questions, feel free to come and ask me.";
+		close;
+	}
+OnTouch:
+	if (BaseJob == JOB_NOVICE && JobLevel == 10) {
+		npctalk "Think you have a good shot with a bow? Become an Archer!";
+	}
+	end;
+onInit:
+	questinfo QTYPE_JOB, QMARK_GREEN, "BaseClass == JOB_NOVICE && JobLevel == 10";
+	end;
+}
+
+ein_dun02,127,217,7	script	Beans#catA	4_CAT_SAILOR1,12,12,{
+	switch(isbegin_quest(90007)) {
+		case 0:
+			if (BaseClass != JOB_NOVICE && BaseLevel > 7) {
+				if ( BEANS_STEP < 1) {
+					BEANS_STEP = 1;
+					mes "[Beans]";
+					mes "Yohoho meowster!";
+					mes " ";
+					mes "...What am I doing up here?";
+					next;
+					mes "[Beans]";
+					mes "I came up here because I can't breathe down there!";
+					mes " ";
+					mes "My dwelling has been smoked out by all of that toxic gas floating in.";
+					next;
+					mes "[Beans]";
+					mes "And to make matters worse, I dropped some of my belongings as I was coughing my way out of there!";
+					next;
+				}
+				mes "[Beans]";
+				mes "Could you help me find my belongings meowster?";
+				menu "Accept",L_Yes,"Decline",L_No;
+					L_Yes:
+						setquest 90007;
+						mes "[Beans]";
+						mes "Thanks! The source of the gas is over the rails to the west of here.";
+						close;
+						end;
+					L_No:
+						mes "[Beans]";
+						mes "Meowwwwwww! Come on help me out!";
+						close;
+						end;
+			} else {
+				mes "[Beans]";
+				mes "Meeeeeeeeeeeeow!";
+				mes "I can't leave my business up to a Novice! Sorry friend!";
+				close;
+				end;
+			}
+		case 1:
+			if (countitem(6520) >= 1) {
+				mes "[Beans]";
+				mes "YES! That's my stuff! Hand it over meow!";
+				next;
+				completequest 90007;
+				delitem 6520, countitem(6520);
+				getexp 90, 90;
+				mes "[Beans]";
+				mes "Thank you a ton meowster! I'll pay you back someday!";
+				close;
+			} else {
+				mes "[Beans]";
+				mes "The source of the gas is over the rails to the west of here.";
+			}
+		case 2:
+			mes "[Beans]";
+			mes "Thanks again!";
+			close;
+	}
+	end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90007) == 0 && BaseLevel > 7 && BaseClass != JOB_NOVICE";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "countitem(6520) >= 1";
+	end;
+onTouch:
+	questinfo_refresh();
+	end;
+}
+
+ein_dun02,31,29,4	script	Trev#dwellerG	4_TOWER_03,{
+	if (TREV_GET == 0) {
+		set TREV_GET, 1;
+		mes "Trev Royal.";
+		mes "...";
+		mes "You remember him as being a bit of a creep, but he was nice.";
+		mes "Better report this.";
+		close;
+	} else {
+		mes "...";
+		mes "No response.";
+		close;
+	}
+	end;
+}
+
+ein_dun02,43,73,4	script	Jamie#dwellerH	4_M_MD_HARWORD_D,{
+    mes "...";
+	mes "No response.";
+    close;
+	end;
+}
+
+ein_dun02,41,85,4	script	Damien#dwellerJ	4_M_DSTMANDEAD,{
+	if (isbegin_quest(90008) == 1) {
+		mes "You find Damien dead, slain by nearby skeleton soldiers";
+		changequest 90008,90009;
+		completequest 90008;
+		set MAINQ,5;
+		mes "Fight the surrounding enemies back!";
+		close;
+	}
+	end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90008) == 1";
+	end;
+}
+
+ein_dun02,17,69,4	script	Tron#dwellerH	4_M_DIEMAN,{
+    mes "...";
+	mes "No response.";
+    close;
+	end;
+}
+
+ein_dun02,188,142,3	script	_#frogA	4_FROG,{}
+
+// Cozy Fire
+ein_dun02,173,131,1	script	_#cozyFireA	4_BONFIRE,{}
+ein_dun02,169,117,1	script	_#cozyFireB	4_BONFIRE,{}
+ein_dun02,182,155,1	script	_#cozyFireC	4_BONFIRE,{}
+ein_dun02,161,166,1	script	_#cozyFireD	4_BONFIRE,{}
+
+ein_dun02,146,109,1	script	_#woodboxA	4_WOODBOX,{
+	MAINQ = 15;
+}
+ein_dun02,127,215,1	script	_#woodboxB	4_WOODBOX,{
+}
+
+ein_dun02,191,135,1	script	_#signA	4_BULLETIN_BOARD2,{
+	mes "-- Bouldie's Inn --";
+	close;
+	end;
+}
+ein_dun02,175,82,1	script	_#signB	4_BULLETIN_BOARD2,{
+	mes "------ WARNING ------";
+	mes "-- HOT COALS AHEAD --";
+	mes " ";
+	mes "Signed,";
+	mes "Dandago Mines Citizens For Safety Commission";
+	close;
+	end;
+}
+
+ein_dun02,133,244,1	script	_#steelboxA	4_STEELBOX,{
+	if (isbegin_quest(90004) == 1 && MAINQ == 1) {
+		mes "You mark the box.";
+		next;
+		monster "ein_dun02",135,239,"Skulking Soldier",3950,1;
+		mes "A soldier appears!";
+		set MAINQ,2;
+		close;
+	}
+	end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 1 && isbegin_quest(90004) == 1";
+	end;
+}
+
+ein_dun02,107,248,1	script	Suspicious Soil	4_SOIL,{
+	if (isbegin_quest(90000) == 1 && checkquest(90000,HUNTING) != 2) {
+		monster "ein_dun02",108,248,"Bothersome Bigfoot",3951,1;
+		close;
+	}
+	end;
+}
+
+ein_dun02,167,115,1	script	_#dwellerK	4_M_DST_CHILD,{
+    mes "Mom says we have to return to the surface.";
+    next;
+    mes "What's the surface?";
+    close;
+}
+
+
+// Inn
+prt_in,88,106,1	script	Rach#innA	1_F_01,12,12,{
+	mes EIN_TALK_ROBERT;
+	mes "[Rach]";
+	mes "I help out around the inn.";
+	close;
+onTouch:
+	playbgm "88";
+	end;
+}
+
+prt_in,88,102,1	script	Linda#innB	4_F_BARYO_OLD,{
+	if (LINDA_STEP < 1 && BaseClass != JOB_NOVICE) {
+		mes "[Linda]";
+		mes "Oh honey, I see you were approved for a job! Congratulations! Take this Muffler I knitted.";
+		next;
+		mes "[Linda]";
+		mes "If business brings you outside, you'll definitely want it to keep your ears warm!";
+		getitem 2503,1;
+		LINDA_STEP = 1;
+		next;
+	}
+	mes "[Linda]";
+	mes "Can I help you with anything today sweetie?";
+	close;
+}
+
+prt_in,87,93,4	script	Old Richard#smithyB	2_M_OLDBLSMITH,{
+	mes "[Old Richard]";
+    mes "ARGH! I messed me knee up real bad.";
+	next;
+	mes "[Old Richard]";
+	mes "I feel like dead weight with chores around town this week.";
+    close;
+	end;
+}
+
+ein_dun02,156,105,4	script	Mary#dwellerL	4_F_EINWOMAN,20,20,{
+	switch(isbegin_quest(90015)) {
+		case 0:
+			if (BaseLevel >= 6) {
+				mes "[Mary]";
+				mes "Oi, could ya help me out over here, eh?";
+				next;
+				mes "[Mary]";
+				mes "I was down in the south-east mines when a loada Dirt Gnomes ganged up on me!";
+				mes "They chased me all the way back here! Nasty lil buggers.";
+				next;
+				mes "[Mary]";
+				mes "Anyways, I left behind a large amount of rope that I need to complete me tasks for the day.";
+				mes "Would ya mind goin' out there and gettin' it for me?";
+				menu "Sure.",L_Yes,"A little busy right now.",L_No;
+					L_Yes:
+						mes "[Mary]";
+						mes "Thank ya buddy. You'll be in Dirt Gnome territory, don't let 'em put you to sleep!";
+						setquest 90015;
+						EIN_GET_ROPE = 1;
+						close;
+					L_No:
+						mes "[Mary]";
+						mes "Please let me know if you reconsider, I twisted me ankle when they was chasin' me.";
+						close;
+
+			}
+			end;
+		case 1:
+			if (EIN_GET_ROPE == 2 && countitem(6687) >= 1) {
+				mes "[Mary]";
+				mes "Oh is that me rope you have there?";
+				menu "Here you go.",L_Yes2,"No, sorry",L_No2;
+					L_Yes2:
+						completequest 90015;
+						Zeny += 3000;
+						getexp 30,30;
+						delitem 6687,1;
+						EIN_GET_ROPE = 3;
+						mes "[Mary]";
+						mes "Thank ya friend! You really saved me ass today!";
+						close;
+					L_No2:
+						end;
+			} else {
+				mes "[Mary]";
+				mes "I need ya to fetch me rope from the south-east tunnels. Ye'll be in Dirt Gnome territory, don't let 'em put ya to sleep!";
+				close;
+			}
+			end;
+		case 2:
+			mes "[Mary]";
+			mes "Thanks again!";
+			end;
+	}
+	end;
+onTouch:
+	questinfo_refresh();
+	end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90015) == 0";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "EIN_GET_ROPE == 2";
+	end;
+}
+
+ein_dun02,285,17,4	script	#questpointA	4_ROPEPILE,24,24,{
+	if (EIN_GET_ROPE == 1) {
+		mes "This must be the rope Mary left behind";
+		menu "Take it.",L_Yes,"Leave it.",L_No;
+			L_Yes:
+				getitem 6687,1;
+				EIN_GET_ROPE = 2;
+				disablenpc strnpcinfo(0);
+			L_No:
+				end;
+		end;
+	}
+
+onTouch:
+	if (EIN_GET_ROPE != 1) {
+		disablenpc strnpcinfo(0);
+	} else {
+		enablenpc strnpcinfo(0);
+	}
+	end;
+}
+
+prt_in,71,106,4	script	Eugene Westbury#fatherA	4_M_05,5,5,{
+	if (EIN_TALK_ROBERT == 1) {
+		mes "[Eugene Westbury]";
+		mes "Ohoho! My grandson tells me you helped him find his way back home. His parents are off working and I'm the babysitter for the day.";
+		next;
+		mes "[Eugene Westbury]";
+		mes "What? How did I lose him in the first place?";
+		mes "[Eugene Westbury]";
+		mes "Here now kid, take this as a little reward and we will never speak of this again.";
+		mes " ";
+		mes "Eugene gives you 2500 Zeny! Score!";
+		Zeny += 2500;
+		EIN_TALK_ROBERT = 2;
+		close;
+	}
+	end;
+onTouch:
+	if (EIN_TALK_ROBERT == 0) {
+		npctalk "Now where could little Robert have gotten off to...";
+	}
+	end;
+}
+
+prt_in,73,106,4	script	Robert Westbury#kidB	4_M_DST_CHILD,12,12,{
+	if (EIN_TALK_ROBERT >= 1) {
+		mes "[Robert Westbury]";
+		mes "Thanks I guess, for helping me out there.";
+		close;
+	}
+	end;
+
+onInit:
+	disablenpc strnpcinfo(0);
+	end;
+
+onTouch:
+	if (EIN_TALK_ROBERT < 1) {
+		disablenpc strnpcinfo(0);
+	} else {
+		enablenpc strnpcinfo(0);
+	}
+	end;
+}
+
+// Warps
+prt_in,80,113,0	warp	prt11-1	2,1,ein_dun02,191,131
+ein_dun02,195,130,0	warp	EinCave02B_EinCave02A	1,1,prt_in,79,109
+
+ein_dun02,216,210,0	warp	EinCave01A_EinCave01B	1,1,ein_dun02,208,228
+// ein_dun02,228,109,0	warp	EinCave02A_EinCave02B	1,1,ein_dun02,191,130
+ein_dun02,210,225,0	warp	EinCave01B_EinCave01A	1,1,ein_dun02,216,207
+
+
+
+// Overworld
+
+

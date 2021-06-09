@@ -104,7 +104,6 @@ ra_temple	mapflag	nobranch
 ra_temsky	mapflag	nobranch
 ve_in	mapflag	nobranch
 ve_in02	mapflag	nobranch
-thor_camp	mapflag	nobranch
 cave	mapflag	nobranch
 
 // Job Quests ==================

@@ -6186,1207 +6186,1207 @@ thor_v02,165,37,3	script	Hot Land Surface#2	111,{
 	close;
 }
 
-thor_v02,170,100,3	script	Hot Land Surface#3	111,{
-	if (aru_vol == 10) {
-		if ((countitem(7704) > 0) && (countitem(7342) > 0)) {
-			mes "^3355FFYou use the pyrometer";
-			mes "to check the surface";
-			mes "temperature of the ground";
-			mes "here in the volcano.^000000";
-			next;
-			mes "^3131FFBeep-- Beep-- Bee-^000000";
-			next;
-			mes "^3131FFCurrent Temperature: 2500 ThT^000000";
-			next;
-			mes "^3355FFYou record the";
-			mes "temperature in";
-			mes "your report.^000000";
-			next;
-			mes "["+strcharinfo(0)+"]";
-			mes "I've taken enough";
-			mes "measurements. I should";
-			mes "submit this report to the";
-			mes "geological camp now~";
-			changequest 2119,2120;
-			set aru_vol,11;
-			close;
-		}
-		mes "^3355FFYou need both the";
-		mes "pyrometer and the";
-		mes "report form to measure";
-		mes "and record the temperature";
-		mes "of the ground's surface here.^000000";
-		close;
-	}
-	else if (aru_vol == 11) {
-		mes "["+strcharinfo(0)+"]";
-		mes "I've taken enough";
-		mes "measurements. I should";
-		mes "submit this report to the";
-		mes "geological camp now~";
-		close;
-	}
-	mes "^3355FFThis patch of ground";
-	mes "emits an intense heat";
-	mes "that stings your face.^000000";
-	close;
-}
+// thor_v02,170,100,3	script	Hot Land Surface#3	111,{
+// 	if (aru_vol == 10) {
+// 		if ((countitem(7704) > 0) && (countitem(7342) > 0)) {
+// 			mes "^3355FFYou use the pyrometer";
+// 			mes "to check the surface";
+// 			mes "temperature of the ground";
+// 			mes "here in the volcano.^000000";
+// 			next;
+// 			mes "^3131FFBeep-- Beep-- Bee-^000000";
+// 			next;
+// 			mes "^3131FFCurrent Temperature: 2500 ThT^000000";
+// 			next;
+// 			mes "^3355FFYou record the";
+// 			mes "temperature in";
+// 			mes "your report.^000000";
+// 			next;
+// 			mes "["+strcharinfo(0)+"]";
+// 			mes "I've taken enough";
+// 			mes "measurements. I should";
+// 			mes "submit this report to the";
+// 			mes "geological camp now~";
+// 			changequest 2119,2120;
+// 			set aru_vol,11;
+// 			close;
+// 		}
+// 		mes "^3355FFYou need both the";
+// 		mes "pyrometer and the";
+// 		mes "report form to measure";
+// 		mes "and record the temperature";
+// 		mes "of the ground's surface here.^000000";
+// 		close;
+// 	}
+// 	else if (aru_vol == 11) {
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "I've taken enough";
+// 		mes "measurements. I should";
+// 		mes "submit this report to the";
+// 		mes "geological camp now~";
+// 		close;
+// 	}
+// 	mes "^3355FFThis patch of ground";
+// 	mes "emits an intense heat";
+// 	mes "that stings your face.^000000";
+// 	close;
+// }
 
-que_thor,145,66,3	script	Guard#vol::VeinsGuard	939,{
-	if (aru_vol == 11) {
-		mes "[Guard]";
-		mes "Only authorized";
-		mes "personnel can enter this";
-		mes "area. Identify yourself!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "I'm a research student working";
-		mes "under Director Gio for the";
-		mes "Veins Geological Research";
-		mes "Institute. Would you please";
-		mes "stamp this temperature";
-		mes "report for me?";
-		next;
-		mes "[Guard]";
-		mes "Oh, I see. Well, I'm";
-		mes "not the one that stamps";
-		mes "reports. Go inside and";
-		mes "ask Sahedi to help you.";
-		mes "He's at the airship just";
-		mes "south of the train station.";
-		changequest 2120,2121;
-		set aru_vol,12;
-		close2;
-		warp "thor_camp",248,190;
-		end;
-	}
-	else if ((aru_vol > 11) && (aru_vol < 24)) {
-		mes "[Guard]";
-		mes "Oh, you're that student";
-		mes "from the institute. I don't";
-		mes "think we're expecting";
-		mes "any reports soon.";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Oh, we just found out";
-		mes "that the instruments we";
-		mes "used were faulty, so we";
-		mes "had to revise our report.";
-		next;
-		mes "[Guard]";
-		mes "Your tools were broken";
-		mes "the first time? Okay, okay,";
-		mes "I can understand that.";
-		mes "Alright, you can pass.";
-		close2;
-		warp "thor_camp",248,190;
-		end;
-	}
-	mes "[Guard]";
-	mes "Who are you?!";
-	close;
-}
+// que_thor,145,66,3	script	Guard#vol::VeinsGuard	939,{
+// 	if (aru_vol == 11) {
+// 		mes "[Guard]";
+// 		mes "Only authorized";
+// 		mes "personnel can enter this";
+// 		mes "area. Identify yourself!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "I'm a research student working";
+// 		mes "under Director Gio for the";
+// 		mes "Veins Geological Research";
+// 		mes "Institute. Would you please";
+// 		mes "stamp this temperature";
+// 		mes "report for me?";
+// 		next;
+// 		mes "[Guard]";
+// 		mes "Oh, I see. Well, I'm";
+// 		mes "not the one that stamps";
+// 		mes "reports. Go inside and";
+// 		mes "ask Sahedi to help you.";
+// 		mes "He's at the airship just";
+// 		mes "south of the train station.";
+// 		changequest 2120,2121;
+// 		set aru_vol,12;
+// 		close2;
+// 		warp "thor_camp",248,190;
+// 		end;
+// 	}
+// 	else if ((aru_vol > 11) && (aru_vol < 24)) {
+// 		mes "[Guard]";
+// 		mes "Oh, you're that student";
+// 		mes "from the institute. I don't";
+// 		mes "think we're expecting";
+// 		mes "any reports soon.";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Oh, we just found out";
+// 		mes "that the instruments we";
+// 		mes "used were faulty, so we";
+// 		mes "had to revise our report.";
+// 		next;
+// 		mes "[Guard]";
+// 		mes "Your tools were broken";
+// 		mes "the first time? Okay, okay,";
+// 		mes "I can understand that.";
+// 		mes "Alright, you can pass.";
+// 		close2;
+// 		warp "thor_camp",248,190;
+// 		end;
+// 	}
+// 	mes "[Guard]";
+// 	mes "Who are you?!";
+// 	close;
+// }
 
-que_thor,136,66,3	duplicate(VeinsGuard)	Guard#vol2	939
-que_thor,127,60,5	duplicate(VeinsGuard)	Guard#vol3	939
+// que_thor,136,66,3	duplicate(VeinsGuard)	Guard#vol2	939
+// que_thor,127,60,5	duplicate(VeinsGuard)	Guard#vol3	939
 
-thor_camp,250,104,3	script	Sahedi#vol	934,{
-	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
-		mes "^3355FFWait a second!";
-		mes "Right now, you're carrying";
-		mes "too many things with you.";
-		mes "Please come back after";
-		mes "using the Kafra Service";
-		mes "to store some of your items.^000000";
-		close;
-	}
-	if (aru_vol == 12) {
-		mes "[Sahedi]";
-		mes "I'm sorry, but I don't";
-		mes "think I know you. Only";
-		mes "authorized personnel is";
-		mes "allowed in this area, so";
-		mes "if you don't have any";
-		mes "reason to be here...";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "I'm a research student working";
-		mes "under Director Gio for the";
-		mes "Veins Geological Research";
-		mes "Institute. Would you please";
-		mes "stamp this temperature";
-		mes "report for me?";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Um, Gio is sick right";
-		mes "now, so that's why he";
-		mes "had me fill out this report";
-		mes "form and submit it for him.";
-		next;
-		mes "[Sahedi]";
-		mes "Ah, so that's why his";
-		mes "report's late this time.";
-		mes "I'm sorry to hear that.";
-		mes "And here I thought he was";
-		mes "just wasting his time on";
-		mes "women and alcohol...";
-		next;
-		mes "[Sahedi]";
-		mes "Let's see...";
-		next;
-		emotion ET_HUK;
-		mes "[Sahedi]";
-		mes "Oh God! Why is the";
-		mes "temperature so high?!";
-		mes "We've had a few reports";
-		mes "like this in the past, but...";
-		mes "Is this... How bad is this?";
-		next;
-		emotion ET_PROFUSELY_SWEAT, playerattached();
-		mes "["+strcharinfo(0)+"]";
-		mes "Oh... Oh, no!";
-		mes "Yikes! I guess if it's";
-		mes "higher than normal...";
-		mes "It might be bad?";
-		next;
-		mes "[Sahedi]";
-		mes "What should I do?";
-		mes "Should I activate";
-		mes "the alarm? I don't...";
-		mes "I don't wanna die!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "You might want to calm";
-		mes "down first. I'll take a look";
-		mes "around the camp, so please";
-		mes "don't say anything that will";
-		mes "make anyone else panic for now.";
-		next;
-		mes "[Sahedi]";
-		mes "Okay...";
-		mes "Please go ahead, and";
-		mes "see if this camp will be";
-		mes "safe from any disaster.";
-		changequest 2121,2122;
-		set aru_vol,13;
-		delitem 7342,1; //File01
-		close;
-	}
-	else if ((aru_vol > 12) && (aru_vol < 23)) {
-		mes "[Sahedi]";
-		mes "So, are we in any";
-		mes "danger? Does it look";
-		mes "like this volcano will";
-		mes "erupt anytime soon?";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Oh, I'm not finished";
-		mes "investigating yet. Would";
-		mes "you please wait a bit longer?";
-		next;
-		mes "[Sahedi]";
-		mes "Sure, sure. Just make";
-		mes "sure that you do a real";
-		mes "thorough check of everything";
-		mes "in the volcano for me, yeah?";
-		close;
-	}
-	else if (aru_vol == 23) {
-		mes "[Sahedi]";
-		mes "So, are we in any";
-		mes "danger? Does it look";
-		mes "like this volcano will";
-		mes "erupt anytime soon?";
-		next;
-		while(1) {
-			if (select("Yes:No") == 1) {
-				mes "["+strcharinfo(0)+"]";
-				mes "I guess I can't hide it";
-				mes "from you... The recent";
-				mes "activity of this volcano";
-				mes "has recently been fairly...";
-				mes "disconcerting.";
-				next;
-				break;
-			}
-			else {
-				mes "^3355FFWait... You should take";
-				mes "advantage of this situation.";
-				mes "This could be your chance to";
-				mes "intervene in the conflict";
-				mes "between two contries!^000000";
-				next;
-				mes "^3355FFYou might not be able";
-				mes "to stop their war, but";
-				mes "maybe you can distract";
-				mes "them with the threat";
-				mes "of natural disaster...^000000";
-				next;
-			}
-		}
-		emotion ET_HUK;
-		mes "[Sahedi]";
-		mes "Huh? Are you serious?";
-		mes "Thor Volcano's gonna";
-		mes "erupt?! We-we have to";
-		mes "get the hell out of here!";
-		mes "It'll be a disaster, just";
-		mes "like it happened in the past!";
-		next;
-		emotion ET_SPARK, playerattached();
-		mes "["+strcharinfo(0)+"]";
-		mes "Yes, I agree. There's";
-		mes "a good chance of an...";
-		mes "explosion that'll cause";
-		mes "a lot of collateral damage.";
-		next;
-		mes "[Sahedi]";
-		mes "What are our chances?";
-		mes "How much time do we";
-		mes "have to evacuate?";
-		next;
-		emotion ET_SPARK, playerattached();
-		mes "["+strcharinfo(0)+"]";
-		mes "Well... Uh...";
-		mes "According to my data...";
-		mes "Analysis... There's a 75%";
-		mes "chance of eruption within";
-		mes "the next thirty days.";
-		next;
-		mes "[Sahedi]";
-		mes "What?! We must report";
-		mes "this to the high priest";
-		mes "immediately! Aitra!";
-		next;
-		enablenpc "Aitra#vol";
-		mes "[Aitra]";
-		mes "Yes, sir!";
-		next;
-		mes "[Sahedi]";
-		mes "This is an emergency.";
-		mes "Bring this message to";
-		mes "the high priest as soon";
-		mes "as possible. And don't";
-		mes "forget to pack all your";
-		mes "things before you leave.";
-		next;
-		mes "[Aitra]";
-		mes "Huh?";
-		mes " ...Yes, sir.";
-		next;
-		disablenpc "Aitra#vol";
-		mes "[Sahedi]";
-		mes "Oh, this is a nightmare...";
-		mes "Will you please take your";
-		mes "report to your director, Gio?";
-		mes "Hopefully he'll have some";
-		mes "advice for what we can";
-		mes "do about this disaster...";
-		changequest 2128,60211;
-		set aru_vol,24;
-		getitem 7342,1; //File01
-		close;
-	}
-	mes "[Sahedi]";
-	mes "Argh, I'm so busy!";
-	close;
-}
+// thor_camp,250,104,3	script	Sahedi#vol	934,{
+// 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
+// 		mes "^3355FFWait a second!";
+// 		mes "Right now, you're carrying";
+// 		mes "too many things with you.";
+// 		mes "Please come back after";
+// 		mes "using the Kafra Service";
+// 		mes "to store some of your items.^000000";
+// 		close;
+// 	}
+// 	if (aru_vol == 12) {
+// 		mes "[Sahedi]";
+// 		mes "I'm sorry, but I don't";
+// 		mes "think I know you. Only";
+// 		mes "authorized personnel is";
+// 		mes "allowed in this area, so";
+// 		mes "if you don't have any";
+// 		mes "reason to be here...";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "I'm a research student working";
+// 		mes "under Director Gio for the";
+// 		mes "Veins Geological Research";
+// 		mes "Institute. Would you please";
+// 		mes "stamp this temperature";
+// 		mes "report for me?";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Um, Gio is sick right";
+// 		mes "now, so that's why he";
+// 		mes "had me fill out this report";
+// 		mes "form and submit it for him.";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "Ah, so that's why his";
+// 		mes "report's late this time.";
+// 		mes "I'm sorry to hear that.";
+// 		mes "And here I thought he was";
+// 		mes "just wasting his time on";
+// 		mes "women and alcohol...";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "Let's see...";
+// 		next;
+// 		emotion ET_HUK;
+// 		mes "[Sahedi]";
+// 		mes "Oh God! Why is the";
+// 		mes "temperature so high?!";
+// 		mes "We've had a few reports";
+// 		mes "like this in the past, but...";
+// 		mes "Is this... How bad is this?";
+// 		next;
+// 		emotion ET_PROFUSELY_SWEAT, playerattached();
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Oh... Oh, no!";
+// 		mes "Yikes! I guess if it's";
+// 		mes "higher than normal...";
+// 		mes "It might be bad?";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "What should I do?";
+// 		mes "Should I activate";
+// 		mes "the alarm? I don't...";
+// 		mes "I don't wanna die!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "You might want to calm";
+// 		mes "down first. I'll take a look";
+// 		mes "around the camp, so please";
+// 		mes "don't say anything that will";
+// 		mes "make anyone else panic for now.";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "Okay...";
+// 		mes "Please go ahead, and";
+// 		mes "see if this camp will be";
+// 		mes "safe from any disaster.";
+// 		changequest 2121,2122;
+// 		set aru_vol,13;
+// 		delitem 7342,1; //File01
+// 		close;
+// 	}
+// 	else if ((aru_vol > 12) && (aru_vol < 23)) {
+// 		mes "[Sahedi]";
+// 		mes "So, are we in any";
+// 		mes "danger? Does it look";
+// 		mes "like this volcano will";
+// 		mes "erupt anytime soon?";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Oh, I'm not finished";
+// 		mes "investigating yet. Would";
+// 		mes "you please wait a bit longer?";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "Sure, sure. Just make";
+// 		mes "sure that you do a real";
+// 		mes "thorough check of everything";
+// 		mes "in the volcano for me, yeah?";
+// 		close;
+// 	}
+// 	else if (aru_vol == 23) {
+// 		mes "[Sahedi]";
+// 		mes "So, are we in any";
+// 		mes "danger? Does it look";
+// 		mes "like this volcano will";
+// 		mes "erupt anytime soon?";
+// 		next;
+// 		while(1) {
+// 			if (select("Yes:No") == 1) {
+// 				mes "["+strcharinfo(0)+"]";
+// 				mes "I guess I can't hide it";
+// 				mes "from you... The recent";
+// 				mes "activity of this volcano";
+// 				mes "has recently been fairly...";
+// 				mes "disconcerting.";
+// 				next;
+// 				break;
+// 			}
+// 			else {
+// 				mes "^3355FFWait... You should take";
+// 				mes "advantage of this situation.";
+// 				mes "This could be your chance to";
+// 				mes "intervene in the conflict";
+// 				mes "between two contries!^000000";
+// 				next;
+// 				mes "^3355FFYou might not be able";
+// 				mes "to stop their war, but";
+// 				mes "maybe you can distract";
+// 				mes "them with the threat";
+// 				mes "of natural disaster...^000000";
+// 				next;
+// 			}
+// 		}
+// 		emotion ET_HUK;
+// 		mes "[Sahedi]";
+// 		mes "Huh? Are you serious?";
+// 		mes "Thor Volcano's gonna";
+// 		mes "erupt?! We-we have to";
+// 		mes "get the hell out of here!";
+// 		mes "It'll be a disaster, just";
+// 		mes "like it happened in the past!";
+// 		next;
+// 		emotion ET_SPARK, playerattached();
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Yes, I agree. There's";
+// 		mes "a good chance of an...";
+// 		mes "explosion that'll cause";
+// 		mes "a lot of collateral damage.";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "What are our chances?";
+// 		mes "How much time do we";
+// 		mes "have to evacuate?";
+// 		next;
+// 		emotion ET_SPARK, playerattached();
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Well... Uh...";
+// 		mes "According to my data...";
+// 		mes "Analysis... There's a 75%";
+// 		mes "chance of eruption within";
+// 		mes "the next thirty days.";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "What?! We must report";
+// 		mes "this to the high priest";
+// 		mes "immediately! Aitra!";
+// 		next;
+// 		enablenpc "Aitra#vol";
+// 		mes "[Aitra]";
+// 		mes "Yes, sir!";
+// 		next;
+// 		mes "[Sahedi]";
+// 		mes "This is an emergency.";
+// 		mes "Bring this message to";
+// 		mes "the high priest as soon";
+// 		mes "as possible. And don't";
+// 		mes "forget to pack all your";
+// 		mes "things before you leave.";
+// 		next;
+// 		mes "[Aitra]";
+// 		mes "Huh?";
+// 		mes " ...Yes, sir.";
+// 		next;
+// 		disablenpc "Aitra#vol";
+// 		mes "[Sahedi]";
+// 		mes "Oh, this is a nightmare...";
+// 		mes "Will you please take your";
+// 		mes "report to your director, Gio?";
+// 		mes "Hopefully he'll have some";
+// 		mes "advice for what we can";
+// 		mes "do about this disaster...";
+// 		changequest 2128,60211;
+// 		set aru_vol,24;
+// 		getitem 7342,1; //File01
+// 		close;
+// 	}
+// 	mes "[Sahedi]";
+// 	mes "Argh, I'm so busy!";
+// 	close;
+// }
 
 
-thor_camp,194,220,0	script	#Colonel1	-1,5,5,{
-OnTouch:
-	if (aru_vol == 13) {
-		enablenpc "Colonel Vito#1";
-		mes "[????]";
-		mes "You...!";
-		mes "What are you doing";
-		mes "just standing around?!";
-		mes "Aren't you supposed to";
-		mes "be transporting cargo? ";
-		mes "Attention to orders!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Are you talking to me?";
-		mes "No, I'm from the Veins Geo--";
-		next;
-		mes "[Colonel Vito]";
-		mes "Look at you. You don't";
-		mes "even have your uniform";
-		mes "yet. Still a rookie, eh?";
-		mes "Looks like I'll have to";
-		mes "personally train you as";
-		mes "one of our holy knights!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "But I'm not--";
-		next;
-		mes "[Colonel Vito]";
-		mes "You should be honored to";
-		mes "have the rare opportunity";
-		mes "to be trained by me, the";
-		mes "great Colonel Vito. I'll mold";
-		mes "you into a true warrior for";
-		mes "Freya! Now follow me!";
-		changequest 2122,2123;
-		set aru_vol,14;
-		close2;
-		disablenpc "Colonel Vito#1";
-		warp "thor_camp",156,68;
-		end;
-	}
-	else if (aru_vol == 14) {
-		enablenpc "Colonel Vito#1";
-		mes "[Colonel Vito]";
-		mes "What are you still";
-		mes "doing standing there?";
-		mes "Don't slack off! Come!";
-		close2;
-		disablenpc "Colonel Vito#1";
-		warp "thor_camp",156,68;
-		end;
-	}
-	end;
-}
+// thor_camp,194,220,0	script	#Colonel1	-1,5,5,{
+// OnTouch:
+// 	if (aru_vol == 13) {
+// 		enablenpc "Colonel Vito#1";
+// 		mes "[????]";
+// 		mes "You...!";
+// 		mes "What are you doing";
+// 		mes "just standing around?!";
+// 		mes "Aren't you supposed to";
+// 		mes "be transporting cargo? ";
+// 		mes "Attention to orders!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Are you talking to me?";
+// 		mes "No, I'm from the Veins Geo--";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Look at you. You don't";
+// 		mes "even have your uniform";
+// 		mes "yet. Still a rookie, eh?";
+// 		mes "Looks like I'll have to";
+// 		mes "personally train you as";
+// 		mes "one of our holy knights!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "But I'm not--";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "You should be honored to";
+// 		mes "have the rare opportunity";
+// 		mes "to be trained by me, the";
+// 		mes "great Colonel Vito. I'll mold";
+// 		mes "you into a true warrior for";
+// 		mes "Freya! Now follow me!";
+// 		changequest 2122,2123;
+// 		set aru_vol,14;
+// 		close2;
+// 		disablenpc "Colonel Vito#1";
+// 		warp "thor_camp",156,68;
+// 		end;
+// 	}
+// 	else if (aru_vol == 14) {
+// 		enablenpc "Colonel Vito#1";
+// 		mes "[Colonel Vito]";
+// 		mes "What are you still";
+// 		mes "doing standing there?";
+// 		mes "Don't slack off! Come!";
+// 		close2;
+// 		disablenpc "Colonel Vito#1";
+// 		warp "thor_camp",156,68;
+// 		end;
+// 	}
+// 	end;
+// }
 
-thor_camp,162,182,0	script	#Colonel2	-1,7,7,{
-OnTouch:
-	if (aru_vol == 13) {
-		enablenpc "Colonel Vito#2";
-		mes "[????]";
-		mes "You...!";
-		mes "What are you doing";
-		mes "just standing around?!";
-		mes "Aren't you supposed to";
-		mes "be transporting cargo? ";
-		mes "Attention to orders!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Are you talking to me?";
-		mes "No, I'm from the Veins Geo--";
-		next;
-		mes "[Colonel Vito]";
-		mes "Look at you. You don't";
-		mes "even have your uniform";
-		mes "yet. Still a rookie, eh?";
-		mes "Looks like I'll have to";
-		mes "personally train you as";
-		mes "one of our holy knights!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "But I'm not--";
-		next;
-		mes "[Colonel Vito]";
-		mes "You should be honored to";
-		mes "have the rare opportunity";
-		mes "to be trained by me, the";
-		mes "great Colonel Vito. I'll mold";
-		mes "you into a true warrior for";
-		mes "Freya! Now follow me!";
-		changequest 2122,2123;
-		set aru_vol,14;
-		disablenpc "Colonel Vito#2";
-		close2;
-		warp "thor_camp",156,68;
-		end;
-	}
-	else if (aru_vol == 14) {
-		enablenpc "Colonel Vito#1";
-		mes "[Colonel Vito]";
-		mes "What are you still";
-		mes "doing standing there?";
-		mes "Don't slack off! Come!";
-		close2;
-		disablenpc "Colonel Vito#2";
-		warp "thor_camp",156,68;
-		end;
-	}
-	end;
-}
+// thor_camp,162,182,0	script	#Colonel2	-1,7,7,{
+// OnTouch:
+// 	if (aru_vol == 13) {
+// 		enablenpc "Colonel Vito#2";
+// 		mes "[????]";
+// 		mes "You...!";
+// 		mes "What are you doing";
+// 		mes "just standing around?!";
+// 		mes "Aren't you supposed to";
+// 		mes "be transporting cargo? ";
+// 		mes "Attention to orders!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Are you talking to me?";
+// 		mes "No, I'm from the Veins Geo--";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Look at you. You don't";
+// 		mes "even have your uniform";
+// 		mes "yet. Still a rookie, eh?";
+// 		mes "Looks like I'll have to";
+// 		mes "personally train you as";
+// 		mes "one of our holy knights!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "But I'm not--";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "You should be honored to";
+// 		mes "have the rare opportunity";
+// 		mes "to be trained by me, the";
+// 		mes "great Colonel Vito. I'll mold";
+// 		mes "you into a true warrior for";
+// 		mes "Freya! Now follow me!";
+// 		changequest 2122,2123;
+// 		set aru_vol,14;
+// 		disablenpc "Colonel Vito#2";
+// 		close2;
+// 		warp "thor_camp",156,68;
+// 		end;
+// 	}
+// 	else if (aru_vol == 14) {
+// 		enablenpc "Colonel Vito#1";
+// 		mes "[Colonel Vito]";
+// 		mes "What are you still";
+// 		mes "doing standing there?";
+// 		mes "Don't slack off! Come!";
+// 		close2;
+// 		disablenpc "Colonel Vito#2";
+// 		warp "thor_camp",156,68;
+// 		end;
+// 	}
+// 	end;
+// }
 
-thor_camp,187,228,5	script	Colonel Vito#1	946,{
-	end;
+// thor_camp,187,228,5	script	Colonel Vito#1	946,{
+// 	end;
 
-OnInit:
-	disablenpc "Colonel Vito#1";
-	end;
-}
+// OnInit:
+// 	disablenpc "Colonel Vito#1";
+// 	end;
+// }
 
-thor_camp,155,175,7	script	Colonel Vito#2	946,{
-	end;
+// thor_camp,155,175,7	script	Colonel Vito#2	946,{
+// 	end;
 
-OnInit:
-	disablenpc "Colonel Vito#2";
-	end;
-}
+// OnInit:
+// 	disablenpc "Colonel Vito#2";
+// 	end;
+// }
 
-thor_camp,159,74,3	script	Colonel Vito#3	946,{
-	if (aru_vol == 14) {
-		mes "[Colonel Vito]";
-		mes "I am Colonel Vito,";
-		mes "and I'm in charge of";
-		mes "the Arunafeltz camp";
-		mes "here in Thor Volcano.";
-		mes "What's your name, soldier?";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes ""+strcharinfo(0)+", sir.";
-		next;
-		mes "[Colonel Vito]";
-		mes "Hmpf! That's a weakling's";
-		mes "name! I can tell that your";
-		mes "mind and body are too weak!";
-		mes "That won't do. How will you";
-		mes "be worthy of serving the";
-		mes "beautiful, graceful Freya?";
-		next;
-		mes "[Colonel Vito]";
-		mes "You need more training.";
-		mes "Take a break first, and";
-		mes "prepare yourself. We will";
-		mes "begin as soon as you're ready.";
-		set aru_vol,15;
-		close;
-	}
-	else if (aru_vol == 15) {
-		mes "[Colonel Vito]";
-		mes "First, we need to take";
-		mes "care of that weak mind";
-		mes "of yours. This first";
-		mes "training exercise will";
-		mes "be verbal based.";
-		next;
-		while(1) {
-			mes "[Colonel Vito]";
-			mes "Question one!";
-			mes "Who do we fight for?";
-			mes "Who do we live for?";
-			next;
-			if (select("Odin:Freya:Thor") == 2) {
-				break;
-			}
-			mes "[Colonel Vito]";
-			mes "You idiot!";
-			percentheal -10,0;
-			specialeffect2 EF_HIT2;
-			next;
-		}
-		mes "[Colonel Vito]";
-		mes "Right! Freya is not only";
-		mes "a goddess of love, but she's";
-		mes "also a goddess of war.";
-		mes "We are on a sacred mission";
-		mes "to recover the pieces of";
-		mes "Ymir's Heart for her sake.";
-		next;
-		mes "[Colonel Vito]";
-		mes "Freya was greatly wounded";
-		mes "in the war among gods,";
-		mes "humans, and demons.";
-		mes "Odin, the leader of the";
-		mes "gods, tried to help her, but";
-		mes "even his power wasn't enough.";
-		next;
-		mes "[Colonel Vito]";
-		mes "Odin did advise her to";
-		mes "obtain Ymir's Heart, as";
-		mes "it would fully recover her";
-		mes "powers. That is why we are";
-		mes "preparing for war: we must";
-		mes "obtain Ymir's Heart for Freya!";
-		next;
-		mes "[Colonel Vito]";
-		mes "DO YOU UNDERSTAND?!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Yes, sir!";
-		next;
-		mes "[Colonel Vito]";
-		mes "Now, there's a country";
-		mes "called the Rune-Midgarts";
-		mes "Kingdom that's full of fools.";
-		mes "Their ancestors branded us";
-		mes "as heretics and drove us";
-		mes "to this deserted land.";
-		next;
-		mes "[Colonel Vito]";
-		mes "We cannot forgive how they";
-		mes "denied us our freedom to";
-		mes "worship Freya. Our people";
-		mes "will have revenge on them.";
-		mes "Mark my word, soldier.";
-		mes "Now, repeat after me.";
-		next;
-		mes "[Colonel Vito]";
-		mes "I, "+strcharinfo(0)+",";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "I, "+strcharinfo(0)+",";
-		next;
-		while(1) {
-			mes "[Colonel Vito]";
-			mes "^FF0000as a devoted servant";
-			mes "of Goddess Freya";
-			next;
-			input .@input$;
-			set .@answer$,"as a devoted servant of Goddess Freya";
-			if (.@input$ == .@answer$) {
-				mes "["+strcharinfo(0)+"]";
-				mes "as a devoted servant";
-				mes "of Goddess Freya, the";
-				mes "patron saint of the";
-				mes "great Arunafeltz,^000000";
-				next;
-				break;
-			}
-			else {
-				mes "[Colonel Vito]";
-				mes "Wrong! Try again!";
-				next;
-			}
-		}
-		while(1) {
-			mes "[Colonel Vito]";
-			mes "^FF0000I pledge my honor to";
-			mes "overthrow our mortal enemy";
-			next;
-			input .@input$;
-			set .@answer$,"I pledge my honor to overthrow our mortal enemy";
-			if (.@input$ == .@answer$) {
-				mes "["+strcharinfo(0)+"]";
-				mes "I pledge my honor to";
-				mes "overthrow our mortal enemy,";
-				mes "the Rune-Midgarts Kingdom.";
-				next;
-				break;
-			}
-			else {
-				mes "[Colonel Vito]";
-				mes "Wrong! Try again!";
-				next;
-			}
-		}
-		while(1) {
-			mes "[Colonel Vito]";
-			mes "^FF0000I will show no mercy^000000";
-			next;
-			input .@input$;
-			set .@answer$,"I will show no mercy";
-			if (.@input$ == .@answer$) {
-				mes "["+strcharinfo(0)+"]";
-				mes "I will show no mercy.";
-				mes "Nothing will stay my hand.^000000";
-				next;
-				break;
-			}
-			else {
-				mes "[Colonel Vito]";
-				mes "Wrong! Try again!";
-				next;
-			}
-		}
-		while(1) {
-			mes "[Colonel Vito]";
-			mes "^FF0000I shall devote";
-			mes "my entire life^000000";
-			next;
-			input .@input$;
-			set .@answer$,"I shall devote my entire life";
-			if (.@input$ == .@answer$) {
-				mes "["+strcharinfo(0)+"]";
-				mes "I shall devote my";
-				mes "entire life to the";
-				mes "full recovery of";
-				mes "Goddess Freya.^000000";
-				next;
-				break;
-			}
-			else {
-				mes "[Colonel Vito]";
-				mes "Wrong! Try again!";
-				next;
-			}
-		}
-		while(1) {
-			mes "[Colonel Vito]";
-			mes "^FF0000Down with the";
-			mes "Rune-Midgarts Kingdom!^000000";
-			next;
-			input .@input$;
-			set .@answer$,"Down with the Rune-Midgarts Kingdom!";
-			if (.@input$ == .@answer$) {
-				mes "["+strcharinfo(0)+"]";
-				mes "Down with the";
-				mes "Rune-Midgarts Kingdom!^000000";
-				next;
-				break;
-			}
-			else {
-				mes "[Colonel Vito]";
-				mes "Wrong! Try again!";
-				next;
-			}
-		}
-		mes "[Colonel Vito]";
-		mes "Good. Now you know the";
-		mes "kind of attitude that you";
-		mes "must have as a holy warrior";
-		mes "in Freya's service. That";
-		mes "is all for the first exercise,";
-		mes "but there's one more left.";
-		changequest 2123,2124;
-		set aru_vol,16;
-		close;
-	}
-	else if (aru_vol == 16) {
-		mes "[Colonel Vito]";
-		mes "Before we actually do";
-		mes "the 2nd training exercise,";
-		mes "I have a duty to assign to";
-		mes "you. Find the huge pipe zone";
-		mes "to the north of this building";
-		mes "and find any broken machines.";
-		set aru_vol,17;
-		close;
-	}
-	else if (aru_vol == 17) {
-		mes "[Colonel Vito]";
-		mes "Inspect the machines";
-		mes "in the pipe zone to the";
-		mes "north of this building.";
-		mes "Don't dawdle: move out!";
-		close;
-	}
-	else if (aru_vol == 18) {
-		mes "[Colonel Vito]";
-		mes "Good work. Remember";
-		mes "that your first priority is to";
-		mes "check the control panel.";
-		mes "It needs to be regularly";
-		mes "inspected since it controls";
-		mes "the camp's energy resources.";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Yes, sir!";
-		next;
-		mes "[Colonel Vito]";
-		mes "Now it's time for the";
-		mes "second training exercise";
-		mes "which will strengthen your";
-		mes "body. See the dummy in";
-		mes "front of you? Practice by";
-		mes "chopping it 10 times. Go!";
-		changequest 2125,2126;
-		set aru_vol,19;
-		next;
-		if (select("Yes, sir!:What do you mean by chop?") == 1) {
-			mes "[Colonel Vito]";
-			mes "Focus your energy in";
-			mes "your yell when you strike!";
-			mes "Chop! 10 Times! Do it!";
-			close;
-		}
-		mes "[Colonel Vito]";
-		mes "Chop...? It's a hand chop.";
-		mes "You strike the enemy with";
-		mes "the bottom of your hand";
-		mes "like a knife blade. How";
-		mes "did you join the army";
-		mes "without knowing that?";
-		next;
-		mes "[Colonel Vito]";
-		mes "Focus your energy in";
-		mes "your yell when you strike!";
-		mes "Chop! 10 Times! Do it!";
-		close;
-	}
-	else if (aru_vol == 20) {
-		mes "[Colonel Vito]";
-		mes "The more you train,";
-		mes "the stronger you become.";
-		mes "As you grow stronger, so";
-		mes "does Freya's holy troops.";
-		mes "Train everyday, and don't";
-		mes "you ever slack off!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Yes, sir!";
-		next;
-		mes "[Colonel Vito]";
-		mes "That is all for your";
-		mes "training. If you have";
-		mes "any questions about camp";
-		mes "life, go ask Sahedi right";
-		mes "outside this building.";
-		mes "You are dismissed.";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "(^333333Well... I think";
-		mes "I will go back to";
-		mes "Sahedi. Hopefully,";
-		mes "he'll think of me as";
-		mes "a geological researcher";
-		mes "instead of as a soldier.^000000)";
-		changequest 2126,2127;
-		set aru_vol,21;
-		close;
-	}
-	mes "[Colonel Vito]";
-	mes "We must be ever";
-	mes "vigilant in our training.";
-	mes "You can never know when";
-	mes "Freya will call on us to fight!";
-	close;
-}
+// thor_camp,159,74,3	script	Colonel Vito#3	946,{
+// 	if (aru_vol == 14) {
+// 		mes "[Colonel Vito]";
+// 		mes "I am Colonel Vito,";
+// 		mes "and I'm in charge of";
+// 		mes "the Arunafeltz camp";
+// 		mes "here in Thor Volcano.";
+// 		mes "What's your name, soldier?";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes ""+strcharinfo(0)+", sir.";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Hmpf! That's a weakling's";
+// 		mes "name! I can tell that your";
+// 		mes "mind and body are too weak!";
+// 		mes "That won't do. How will you";
+// 		mes "be worthy of serving the";
+// 		mes "beautiful, graceful Freya?";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "You need more training.";
+// 		mes "Take a break first, and";
+// 		mes "prepare yourself. We will";
+// 		mes "begin as soon as you're ready.";
+// 		set aru_vol,15;
+// 		close;
+// 	}
+// 	else if (aru_vol == 15) {
+// 		mes "[Colonel Vito]";
+// 		mes "First, we need to take";
+// 		mes "care of that weak mind";
+// 		mes "of yours. This first";
+// 		mes "training exercise will";
+// 		mes "be verbal based.";
+// 		next;
+// 		while(1) {
+// 			mes "[Colonel Vito]";
+// 			mes "Question one!";
+// 			mes "Who do we fight for?";
+// 			mes "Who do we live for?";
+// 			next;
+// 			if (select("Odin:Freya:Thor") == 2) {
+// 				break;
+// 			}
+// 			mes "[Colonel Vito]";
+// 			mes "You idiot!";
+// 			percentheal -10,0;
+// 			specialeffect2 EF_HIT2;
+// 			next;
+// 		}
+// 		mes "[Colonel Vito]";
+// 		mes "Right! Freya is not only";
+// 		mes "a goddess of love, but she's";
+// 		mes "also a goddess of war.";
+// 		mes "We are on a sacred mission";
+// 		mes "to recover the pieces of";
+// 		mes "Ymir's Heart for her sake.";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Freya was greatly wounded";
+// 		mes "in the war among gods,";
+// 		mes "humans, and demons.";
+// 		mes "Odin, the leader of the";
+// 		mes "gods, tried to help her, but";
+// 		mes "even his power wasn't enough.";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Odin did advise her to";
+// 		mes "obtain Ymir's Heart, as";
+// 		mes "it would fully recover her";
+// 		mes "powers. That is why we are";
+// 		mes "preparing for war: we must";
+// 		mes "obtain Ymir's Heart for Freya!";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "DO YOU UNDERSTAND?!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Yes, sir!";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Now, there's a country";
+// 		mes "called the Rune-Midgarts";
+// 		mes "Kingdom that's full of fools.";
+// 		mes "Their ancestors branded us";
+// 		mes "as heretics and drove us";
+// 		mes "to this deserted land.";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "We cannot forgive how they";
+// 		mes "denied us our freedom to";
+// 		mes "worship Freya. Our people";
+// 		mes "will have revenge on them.";
+// 		mes "Mark my word, soldier.";
+// 		mes "Now, repeat after me.";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "I, "+strcharinfo(0)+",";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "I, "+strcharinfo(0)+",";
+// 		next;
+// 		while(1) {
+// 			mes "[Colonel Vito]";
+// 			mes "^FF0000as a devoted servant";
+// 			mes "of Goddess Freya";
+// 			next;
+// 			input .@input$;
+// 			set .@answer$,"as a devoted servant of Goddess Freya";
+// 			if (.@input$ == .@answer$) {
+// 				mes "["+strcharinfo(0)+"]";
+// 				mes "as a devoted servant";
+// 				mes "of Goddess Freya, the";
+// 				mes "patron saint of the";
+// 				mes "great Arunafeltz,^000000";
+// 				next;
+// 				break;
+// 			}
+// 			else {
+// 				mes "[Colonel Vito]";
+// 				mes "Wrong! Try again!";
+// 				next;
+// 			}
+// 		}
+// 		while(1) {
+// 			mes "[Colonel Vito]";
+// 			mes "^FF0000I pledge my honor to";
+// 			mes "overthrow our mortal enemy";
+// 			next;
+// 			input .@input$;
+// 			set .@answer$,"I pledge my honor to overthrow our mortal enemy";
+// 			if (.@input$ == .@answer$) {
+// 				mes "["+strcharinfo(0)+"]";
+// 				mes "I pledge my honor to";
+// 				mes "overthrow our mortal enemy,";
+// 				mes "the Rune-Midgarts Kingdom.";
+// 				next;
+// 				break;
+// 			}
+// 			else {
+// 				mes "[Colonel Vito]";
+// 				mes "Wrong! Try again!";
+// 				next;
+// 			}
+// 		}
+// 		while(1) {
+// 			mes "[Colonel Vito]";
+// 			mes "^FF0000I will show no mercy^000000";
+// 			next;
+// 			input .@input$;
+// 			set .@answer$,"I will show no mercy";
+// 			if (.@input$ == .@answer$) {
+// 				mes "["+strcharinfo(0)+"]";
+// 				mes "I will show no mercy.";
+// 				mes "Nothing will stay my hand.^000000";
+// 				next;
+// 				break;
+// 			}
+// 			else {
+// 				mes "[Colonel Vito]";
+// 				mes "Wrong! Try again!";
+// 				next;
+// 			}
+// 		}
+// 		while(1) {
+// 			mes "[Colonel Vito]";
+// 			mes "^FF0000I shall devote";
+// 			mes "my entire life^000000";
+// 			next;
+// 			input .@input$;
+// 			set .@answer$,"I shall devote my entire life";
+// 			if (.@input$ == .@answer$) {
+// 				mes "["+strcharinfo(0)+"]";
+// 				mes "I shall devote my";
+// 				mes "entire life to the";
+// 				mes "full recovery of";
+// 				mes "Goddess Freya.^000000";
+// 				next;
+// 				break;
+// 			}
+// 			else {
+// 				mes "[Colonel Vito]";
+// 				mes "Wrong! Try again!";
+// 				next;
+// 			}
+// 		}
+// 		while(1) {
+// 			mes "[Colonel Vito]";
+// 			mes "^FF0000Down with the";
+// 			mes "Rune-Midgarts Kingdom!^000000";
+// 			next;
+// 			input .@input$;
+// 			set .@answer$,"Down with the Rune-Midgarts Kingdom!";
+// 			if (.@input$ == .@answer$) {
+// 				mes "["+strcharinfo(0)+"]";
+// 				mes "Down with the";
+// 				mes "Rune-Midgarts Kingdom!^000000";
+// 				next;
+// 				break;
+// 			}
+// 			else {
+// 				mes "[Colonel Vito]";
+// 				mes "Wrong! Try again!";
+// 				next;
+// 			}
+// 		}
+// 		mes "[Colonel Vito]";
+// 		mes "Good. Now you know the";
+// 		mes "kind of attitude that you";
+// 		mes "must have as a holy warrior";
+// 		mes "in Freya's service. That";
+// 		mes "is all for the first exercise,";
+// 		mes "but there's one more left.";
+// 		changequest 2123,2124;
+// 		set aru_vol,16;
+// 		close;
+// 	}
+// 	else if (aru_vol == 16) {
+// 		mes "[Colonel Vito]";
+// 		mes "Before we actually do";
+// 		mes "the 2nd training exercise,";
+// 		mes "I have a duty to assign to";
+// 		mes "you. Find the huge pipe zone";
+// 		mes "to the north of this building";
+// 		mes "and find any broken machines.";
+// 		set aru_vol,17;
+// 		close;
+// 	}
+// 	else if (aru_vol == 17) {
+// 		mes "[Colonel Vito]";
+// 		mes "Inspect the machines";
+// 		mes "in the pipe zone to the";
+// 		mes "north of this building.";
+// 		mes "Don't dawdle: move out!";
+// 		close;
+// 	}
+// 	else if (aru_vol == 18) {
+// 		mes "[Colonel Vito]";
+// 		mes "Good work. Remember";
+// 		mes "that your first priority is to";
+// 		mes "check the control panel.";
+// 		mes "It needs to be regularly";
+// 		mes "inspected since it controls";
+// 		mes "the camp's energy resources.";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Yes, sir!";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Now it's time for the";
+// 		mes "second training exercise";
+// 		mes "which will strengthen your";
+// 		mes "body. See the dummy in";
+// 		mes "front of you? Practice by";
+// 		mes "chopping it 10 times. Go!";
+// 		changequest 2125,2126;
+// 		set aru_vol,19;
+// 		next;
+// 		if (select("Yes, sir!:What do you mean by chop?") == 1) {
+// 			mes "[Colonel Vito]";
+// 			mes "Focus your energy in";
+// 			mes "your yell when you strike!";
+// 			mes "Chop! 10 Times! Do it!";
+// 			close;
+// 		}
+// 		mes "[Colonel Vito]";
+// 		mes "Chop...? It's a hand chop.";
+// 		mes "You strike the enemy with";
+// 		mes "the bottom of your hand";
+// 		mes "like a knife blade. How";
+// 		mes "did you join the army";
+// 		mes "without knowing that?";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Focus your energy in";
+// 		mes "your yell when you strike!";
+// 		mes "Chop! 10 Times! Do it!";
+// 		close;
+// 	}
+// 	else if (aru_vol == 20) {
+// 		mes "[Colonel Vito]";
+// 		mes "The more you train,";
+// 		mes "the stronger you become.";
+// 		mes "As you grow stronger, so";
+// 		mes "does Freya's holy troops.";
+// 		mes "Train everyday, and don't";
+// 		mes "you ever slack off!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Yes, sir!";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "That is all for your";
+// 		mes "training. If you have";
+// 		mes "any questions about camp";
+// 		mes "life, go ask Sahedi right";
+// 		mes "outside this building.";
+// 		mes "You are dismissed.";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "(^333333Well... I think";
+// 		mes "I will go back to";
+// 		mes "Sahedi. Hopefully,";
+// 		mes "he'll think of me as";
+// 		mes "a geological researcher";
+// 		mes "instead of as a soldier.^000000)";
+// 		changequest 2126,2127;
+// 		set aru_vol,21;
+// 		close;
+// 	}
+// 	mes "[Colonel Vito]";
+// 	mes "We must be ever";
+// 	mes "vigilant in our training.";
+// 	mes "You can never know when";
+// 	mes "Freya will call on us to fight!";
+// 	close;
+// }
 
-thor_camp,141,62,0	script	#vol_study1::VeinsWarp	-1,3,3,{
-OnTouch:
-	if ((aru_vol > 13 && aru_vol < 17) || (aru_vol == 19)) {
-		warp "thor_camp",156,67;
-	}
-	end;
-}
+// thor_camp,141,62,0	script	#vol_study1::VeinsWarp	-1,3,3,{
+// OnTouch:
+// 	if ((aru_vol > 13 && aru_vol < 17) || (aru_vol == 19)) {
+// 		warp "thor_camp",156,67;
+// 	}
+// 	end;
+// }
 
-thor_camp,172,72,0	duplicate(VeinsWarp)	#vol_study2	-1,3,3
-thor_camp,172,38,0	duplicate(VeinsWarp)	#vol_study3	-1,3,3
+// thor_camp,172,72,0	duplicate(VeinsWarp)	#vol_study2	-1,3,3
+// thor_camp,172,38,0	duplicate(VeinsWarp)	#vol_study3	-1,3,3
 
-thor_camp,172,132,0	script	#sita_vol	-1,3,3,{
-OnTouch:
-	if (aru_vol == 21) {
-		mes "^3355FFThere's a stream of";
-		mes "magma running down";
-		mes "through a path under";
-		mes "the barbed wires.^000000";
-		next;
-		mes "^3355FFYou can hear the faint";
-		mes "sound of hammering, as if";
-		mes "iron was being manufactured";
-		mes "from deep underground.^000000";
-		set aru_vol,22;
-		close;
-	}
-	end;
-}
+// thor_camp,172,132,0	script	#sita_vol	-1,3,3,{
+// OnTouch:
+// 	if (aru_vol == 21) {
+// 		mes "^3355FFThere's a stream of";
+// 		mes "magma running down";
+// 		mes "through a path under";
+// 		mes "the barbed wires.^000000";
+// 		next;
+// 		mes "^3355FFYou can hear the faint";
+// 		mes "sound of hammering, as if";
+// 		mes "iron was being manufactured";
+// 		mes "from deep underground.^000000";
+// 		set aru_vol,22;
+// 		close;
+// 	}
+// 	end;
+// }
 
-thor_camp,148,310,0	script	#buki_vol	-1,5,5,{
-OnTouch:
-	if (aru_vol == 22) {
-		mes "^3355FFPeople are carrying";
-		mes "many heavy wooden boxes";
-		mes "imprinted with the stamp";
-		mes "of the Schwarzwald Republic.";
-		mes "These must contain military";
-		mes "supplies for the camp.^000000";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "I should go back";
-		mes "to Sahedi now.";
-		changequest 2127,2128;
-		set aru_vol,23;
-		close;
-	}
-	end;
-}
+// thor_camp,148,310,0	script	#buki_vol	-1,5,5,{
+// OnTouch:
+// 	if (aru_vol == 22) {
+// 		mes "^3355FFPeople are carrying";
+// 		mes "many heavy wooden boxes";
+// 		mes "imprinted with the stamp";
+// 		mes "of the Schwarzwald Republic.";
+// 		mes "These must contain military";
+// 		mes "supplies for the camp.^000000";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "I should go back";
+// 		mes "to Sahedi now.";
+// 		changequest 2127,2128;
+// 		set aru_vol,23;
+// 		close;
+// 	}
+// 	end;
+// }
 
-thor_camp,124,314,1	script	Soldier#vol1	939,{
-	mes "[Thor Volcano Camp Soldier]";
-	mes "Freya, I'm so exhausted!";
-	mes "I'm starving to death too!";
-	mes "When will we get more rations?";
-	close;
-}
+// thor_camp,124,314,1	script	Soldier#vol1	939,{
+// 	mes "[Thor Volcano Camp Soldier]";
+// 	mes "Freya, I'm so exhausted!";
+// 	mes "I'm starving to death too!";
+// 	mes "When will we get more rations?";
+// 	close;
+// }
 
-thor_camp,134,309,5	script	Soldier#vol2	939,{
-	mes "[Thor Volcano Camp Soldier]";
-	mes "I hear we'll be eating";
-	mes "chicken salad, fried chicken,";
-	mes "and Kunlun style chicken for";
-	mes "dinner tonight! I wonder who";
-	mes "was rich enough to donate";
-	mes "so much chicken to us?";
-	next;
-	mes "[Thor Volcano Camp Soldier]";
-	mes "Heheh...";
-	mes "I can't wait for dinner!";
-	close;
-}
+// thor_camp,134,309,5	script	Soldier#vol2	939,{
+// 	mes "[Thor Volcano Camp Soldier]";
+// 	mes "I hear we'll be eating";
+// 	mes "chicken salad, fried chicken,";
+// 	mes "and Kunlun style chicken for";
+// 	mes "dinner tonight! I wonder who";
+// 	mes "was rich enough to donate";
+// 	mes "so much chicken to us?";
+// 	next;
+// 	mes "[Thor Volcano Camp Soldier]";
+// 	mes "Heheh...";
+// 	mes "I can't wait for dinner!";
+// 	close;
+// }
 
-thor_camp,109,167,3	script	Control Panel#vol	111,{
-	if (aru_vol == 17) {
-		mes "^3355FFThis control panel";
-		mes "controls the main power";
-		mes "resources for the Thor";
-		mes "Volcano camp, helping it";
-		mes "run its operations smoothly";
-		mes "under the ground.";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "All these pipes with molten";
-		mes "rock flowing through them...";
-		mes "I guess their heat is what";
-		mes "powers this camp. That's";
-		mes "actually a smart idea~";
-		next;
-		mes "^3355FFThe control panel emits";
-		mes "faint mechanical noises";
-		mes "and seems to be running";
-		mes "pretty smoothly. Everything";
-		mes "looks to be in working order.";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "No problems here.";
-		mes "I guess I can go";
-		mes "back to that colonel.";
-		changequest 2124,2125;
-		set aru_vol,18;
-		close;
-	}
-	end;
-}
+// thor_camp,109,167,3	script	Control Panel#vol	111,{
+// 	if (aru_vol == 17) {
+// 		mes "^3355FFThis control panel";
+// 		mes "controls the main power";
+// 		mes "resources for the Thor";
+// 		mes "Volcano camp, helping it";
+// 		mes "run its operations smoothly";
+// 		mes "under the ground.";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "All these pipes with molten";
+// 		mes "rock flowing through them...";
+// 		mes "I guess their heat is what";
+// 		mes "powers this camp. That's";
+// 		mes "actually a smart idea~";
+// 		next;
+// 		mes "^3355FFThe control panel emits";
+// 		mes "faint mechanical noises";
+// 		mes "and seems to be running";
+// 		mes "pretty smoothly. Everything";
+// 		mes "looks to be in working order.";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "No problems here.";
+// 		mes "I guess I can go";
+// 		mes "back to that colonel.";
+// 		changequest 2124,2125;
+// 		set aru_vol,18;
+// 		close;
+// 	}
+// 	end;
+// }
 
-thor_camp,150,65,3	script	Dummy#1::VeinsDummy	111,{
-	if (aru_vol == 19) {
-		mes "^3355FFIt's a training dummy";
-		mes "that looks like it can";
-		mes "take a beating. Its chest";
-		mes "is marked with the emblem";
-		mes "of the Rune-Midgarts Kingdom.^000000";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Wow...";
-		mes "They really hate the";
-		mes "Rune-Midgarts Kingdom...";
-		mes "(^333333Technically, I shouldn't";
-		mes "be doing this. Isn't this";
-		mes "considered treason?^000000)";
-		next;
-		mes "[Colonel Vito]";
-		mes "I can't hear you,";
-		mes "soldier! Make your";
-		mes "voice loud and clear!";
-		mes "Now... Execute attack!";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "Yes, sir!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "One!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Two!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Three!!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Four!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Five!!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Six!!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Seven!!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Eight!!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Nine!";
-		next;
-		specialeffect EF_HIT2;
-		mes "["+strcharinfo(0)+"]";
-		mes "Ten!";
-		set aru_vol,20;
-		close;
-	}
-	else if (aru_vol == 20) {
-		mes "^3355FF*THUD*^000000";
-		specialeffect EF_HIT2;
-		emotion ET_HUK, playerattached();
-		next;
-		mes "[Colonel Vito]";
-		mes "Soldier...";
-		mes "How many times";
-		mes "did I order you to";
-		mes "chop the dummy?";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "10 times, sir!";
-		next;
-		mes "[Colonel Vito]";
-		mes "And how many times";
-		mes "did you actually";
-		mes "chop the dummy?";
-		next;
-		mes "["+strcharinfo(0)+"]";
-		mes "11 times, sir!";
-		next;
-		mes "[Colonel Vito]";
-		mes "Unacceptable!";
-		mes "Listen to your orders";
-		mes "this time, and do it";
-		mes "again properly!";
-		set aru_vol,19;
-		close;
-	}
-}
+// thor_camp,150,65,3	script	Dummy#1::VeinsDummy	111,{
+// 	if (aru_vol == 19) {
+// 		mes "^3355FFIt's a training dummy";
+// 		mes "that looks like it can";
+// 		mes "take a beating. Its chest";
+// 		mes "is marked with the emblem";
+// 		mes "of the Rune-Midgarts Kingdom.^000000";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Wow...";
+// 		mes "They really hate the";
+// 		mes "Rune-Midgarts Kingdom...";
+// 		mes "(^333333Technically, I shouldn't";
+// 		mes "be doing this. Isn't this";
+// 		mes "considered treason?^000000)";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "I can't hear you,";
+// 		mes "soldier! Make your";
+// 		mes "voice loud and clear!";
+// 		mes "Now... Execute attack!";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Yes, sir!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "One!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Two!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Three!!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Four!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Five!!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Six!!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Seven!!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Eight!!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Nine!";
+// 		next;
+// 		specialeffect EF_HIT2;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "Ten!";
+// 		set aru_vol,20;
+// 		close;
+// 	}
+// 	else if (aru_vol == 20) {
+// 		mes "^3355FF*THUD*^000000";
+// 		specialeffect EF_HIT2;
+// 		emotion ET_HUK, playerattached();
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Soldier...";
+// 		mes "How many times";
+// 		mes "did I order you to";
+// 		mes "chop the dummy?";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "10 times, sir!";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "And how many times";
+// 		mes "did you actually";
+// 		mes "chop the dummy?";
+// 		next;
+// 		mes "["+strcharinfo(0)+"]";
+// 		mes "11 times, sir!";
+// 		next;
+// 		mes "[Colonel Vito]";
+// 		mes "Unacceptable!";
+// 		mes "Listen to your orders";
+// 		mes "this time, and do it";
+// 		mes "again properly!";
+// 		set aru_vol,19;
+// 		close;
+// 	}
+// }
 
-thor_camp,156,65,3	duplicate(VeinsDummy)	Dummy#2	111
-thor_camp,162,65,3	duplicate(VeinsDummy)	Dummy#3	111
-thor_camp,150,57,3	duplicate(VeinsDummy)	Dummy#4	111
-thor_camp,156,57,3	duplicate(VeinsDummy)	Dummy#5	111
-thor_camp,162,57,3	duplicate(VeinsDummy)	Dummy#6	111
+// thor_camp,156,65,3	duplicate(VeinsDummy)	Dummy#2	111
+// thor_camp,162,65,3	duplicate(VeinsDummy)	Dummy#3	111
+// thor_camp,150,57,3	duplicate(VeinsDummy)	Dummy#4	111
+// thor_camp,156,57,3	duplicate(VeinsDummy)	Dummy#5	111
+// thor_camp,162,57,3	duplicate(VeinsDummy)	Dummy#6	111
 
-thor_camp,248,104,5	script	Aitra#vol	939,{
-	end;
-OnInit:
-	disablenpc "Aitra#vol";
-	end;
-}
+// thor_camp,248,104,5	script	Aitra#vol	939,{
+// 	end;
+// OnInit:
+// 	disablenpc "Aitra#vol";
+// 	end;
+// }
 
-thor_camp,49,97,3	script	High Priest#vol	933,{
-	mes "^3355FFYou'd better not";
-	mes "do anything too";
-	mes "conspicuous in";
-	mes "front of him.^000000";
-	close;
-}
+// thor_camp,49,97,3	script	High Priest#vol	933,{
+// 	mes "^3355FFYou'd better not";
+// 	mes "do anything too";
+// 	mes "conspicuous in";
+// 	mes "front of him.^000000";
+// 	close;
+// }
 
-thor_camp,49,122,1	script	Thor Volcano Soldier#vo1	939,{
-	mes "^3355FFYou'd better not";
-	mes "do anything too";
-	mes "conspicuous in";
-	mes "front of him.^000000";
-	close;
-}
+// thor_camp,49,122,1	script	Thor Volcano Soldier#vo1	939,{
+// 	mes "^3355FFYou'd better not";
+// 	mes "do anything too";
+// 	mes "conspicuous in";
+// 	mes "front of him.^000000";
+// 	close;
+// }
 
-thor_camp,31,93,1	script	Thor Volcano Soldier#vo2	939,{
-	mes "^3355FFYou'd better not";
-	mes "do anything too";
-	mes "conspicuous in";
-	mes "front of him.^000000";
-	close;
-}
+// thor_camp,31,93,1	script	Thor Volcano Soldier#vo2	939,{
+// 	mes "^3355FFYou'd better not";
+// 	mes "do anything too";
+// 	mes "conspicuous in";
+// 	mes "front of him.^000000";
+// 	close;
+// }
 
-thor_camp,59,79,1	script	Thor Volcano Soldier#vo3	939,{
-	mes "^3355FFYou'd better not";
-	mes "do anything too";
-	mes "conspicuous in";
-	mes "front of him.^000000";
-	close;
-}
+// thor_camp,59,79,1	script	Thor Volcano Soldier#vo3	939,{
+// 	mes "^3355FFYou'd better not";
+// 	mes "do anything too";
+// 	mes "conspicuous in";
+// 	mes "front of him.^000000";
+// 	close;
+// }
 
-thor_camp,143,114,1	script	Thor Volcano Soldier#vo4	939,{
-	emotion ET_CRY;
-	mes "[Soldier]";
-	mes "Oh Freya...";
-	mes "Bless this Old Blue Box";
-	mes "so that I don't get anything";
-	mes "lame again. I am so tired";
-	mes "of getting arrows from these...";
-	close;
-}
+// thor_camp,143,114,1	script	Thor Volcano Soldier#vo4	939,{
+// 	emotion ET_CRY;
+// 	mes "[Soldier]";
+// 	mes "Oh Freya...";
+// 	mes "Bless this Old Blue Box";
+// 	mes "so that I don't get anything";
+// 	mes "lame again. I am so tired";
+// 	mes "of getting arrows from these...";
+// 	close;
+// }
 
-thor_camp,206,92,3	script	Thor Volcano Soldier#vo5	939,{
-	mes "[Soldier]";
-	mes "Ah, time to";
-	mes "go to work.";
-	next;
-	mes "[Soldier]";
-	mes "What th-?!";
-	mes "Something smells";
-	mes "like sweaty socks that";
-	mes "haven't been washed!";
-	close;
-}
+// thor_camp,206,92,3	script	Thor Volcano Soldier#vo5	939,{
+// 	mes "[Soldier]";
+// 	mes "Ah, time to";
+// 	mes "go to work.";
+// 	next;
+// 	mes "[Soldier]";
+// 	mes "What th-?!";
+// 	mes "Something smells";
+// 	mes "like sweaty socks that";
+// 	mes "haven't been washed!";
+// 	close;
+// }
 
-thor_camp,201,321,1	script	Thor Volcano Soldier#vo6	939,{
-	mes "[Soldier]";
-	mes "Yo-ho! Yo-ho!";
-	close;
-}
+// thor_camp,201,321,1	script	Thor Volcano Soldier#vo6	939,{
+// 	mes "[Soldier]";
+// 	mes "Yo-ho! Yo-ho!";
+// 	close;
+// }
 
-thor_camp,196,315,7	script	Thor Volcano Soldier#vo7	939,{
-	mes "[Soldier]";
-	mes "I guess I need to go";
-	mes "on Guardian polishing";
-	mes "duty. Those things are";
-	mes "so huge, and I gotta";
-	mes "clean up about twenty...";
-	close;
-}
+// thor_camp,196,315,7	script	Thor Volcano Soldier#vo7	939,{
+// 	mes "[Soldier]";
+// 	mes "I guess I need to go";
+// 	mes "on Guardian polishing";
+// 	mes "duty. Those things are";
+// 	mes "so huge, and I gotta";
+// 	mes "clean up about twenty...";
+// 	close;
+// }
 
-thor_camp,181,231,0	script	Guardian#vol_7	111,{
-	mes "^3355FFThere are many guardians";
-	mes "here in different stages";
-	mes "of disassembly. It looks";
-	mes "like they're all in the";
-	mes "middle of being repaired.^000000";
-	close;
-}
+// thor_camp,181,231,0	script	Guardian#vol_7	111,{
+// 	mes "^3355FFThere are many guardians";
+// 	mes "here in different stages";
+// 	mes "of disassembly. It looks";
+// 	mes "like they're all in the";
+// 	mes "middle of being repaired.^000000";
+// 	close;
+// }
 
-thor_camp,98,213,5	script	Thor Volcano Soldier#vo8	939,{
-	mes "[Soldier]";
-	mes "Aren't you the one from";
-	mes "the geological research";
-	mes "center? There's nothing";
-	mes "for you here, we're just";
-	mes "performing maintenance";
-	mes "on these guardians.";
-	close;
-}
+// thor_camp,98,213,5	script	Thor Volcano Soldier#vo8	939,{
+// 	mes "[Soldier]";
+// 	mes "Aren't you the one from";
+// 	mes "the geological research";
+// 	mes "center? There's nothing";
+// 	mes "for you here, we're just";
+// 	mes "performing maintenance";
+// 	mes "on these guardians.";
+// 	close;
+// }
 
-thor_camp,98,209,5	script	Thor Volcano Soldier#vo9	939,{
-	mes "[Soldier]";
-	mes "Why am I always";
-	mes "stationed here?!";
-	mes "No one ever comes";
-	mes "here! Nobody!";
-	close;
-}
+// thor_camp,98,209,5	script	Thor Volcano Soldier#vo9	939,{
+// 	mes "[Soldier]";
+// 	mes "Why am I always";
+// 	mes "stationed here?!";
+// 	mes "No one ever comes";
+// 	mes "here! Nobody!";
+// 	close;
+// }
 
-thor_v02,143,78,0	script	#totcamp	45,2,2,{
-OnTouch_:
-	if (rachel_camel < 24) {
-		warp "que_thor",65,55;
-		end;
-	}
-	warp "que_thor",182,55;
-	end;
-}
+// thor_v02,143,78,0	script	#totcamp	45,2,2,{
+// OnTouch_:
+// 	if (rachel_camel < 24) {
+// 		warp "que_thor",65,55;
+// 		end;
+// 	}
+// 	warp "que_thor",182,55;
+// 	end;
+// }
 
-que_thor,69,56,0	script	#tov_1	45,2,2,{
-OnTouch_:
-	warp "thor_v02",146,84;
-	end;
-}
+// que_thor,69,56,0	script	#tov_1	45,2,2,{
+// OnTouch_:
+// 	warp "thor_v02",146,84;
+// 	end;
+// }
 
-que_thor,187,56,0	script	#tov_2	45,2,2,{
-OnTouch_:
-	warp "thor_v02",146,84;
-	end;
-}
+// que_thor,187,56,0	script	#tov_2	45,2,2,{
+// OnTouch_:
+// 	warp "thor_v02",146,84;
+// 	end;
+// }
 
-thor_camp,62,98,0	script	#volbq	-1,5,5,{
-OnTouch:
-	mes "^3355FFThere is an old man";
-	mes "in high priest robes";
-	mes "in front of you.^000000";
-	next;
-	mes "^3355FFYou'd better not";
-	mes "do anything too";
-	mes "conspicuous in";
-	mes "front of him.^000000";
-	close;
-}
+// thor_camp,62,98,0	script	#volbq	-1,5,5,{
+// OnTouch:
+// 	mes "^3355FFThere is an old man";
+// 	mes "in high priest robes";
+// 	mes "in front of you.^000000";
+// 	next;
+// 	mes "^3355FFYou'd better not";
+// 	mes "do anything too";
+// 	mes "conspicuous in";
+// 	mes "front of him.^000000";
+// 	close;
+// }
 
-thor_camp,246,191,3	script	Guard#goto	939,{
-	mes "[Guard]";
-	mes "What now?";
-	mes "Can't you see I'm busy?";
-	next;
-	if (select("Let me go out.:I'm sorry.") == 1) {
-		mes "[Guard]";
-		mes "Hurry up, and get out!";
-		close2;
-		warp "que_thor",145,60;
-		end;
-	}
-	mes "[Guard]";
-	mes "If you're sorry,";
-	mes "stop bugging me!";
-	close;
-}
+// thor_camp,246,191,3	script	Guard#goto	939,{
+// 	mes "[Guard]";
+// 	mes "What now?";
+// 	mes "Can't you see I'm busy?";
+// 	next;
+// 	if (select("Let me go out.:I'm sorry.") == 1) {
+// 		mes "[Guard]";
+// 		mes "Hurry up, and get out!";
+// 		close2;
+// 		warp "que_thor",145,60;
+// 		end;
+// 	}
+// 	mes "[Guard]";
+// 	mes "If you're sorry,";
+// 	mes "stop bugging me!";
+// 	close;
+// }
 
-veins,302,166,0	script	#whoau	-1,2,2,{
-OnTouch_:
-	mes "[House Owner]";
-	mes "Wh-who the hell";
-	mes "are you? Honey!";
-	mes "There's this...";
-	mes "person in our home!";
-	next;
-	mes "^3355FFHubbie never came.";
-	mes "Nobody messes with";
-	mes ""+strcharinfo(0)+". Nobody.^000000";
-	close;
-}
+// veins,302,166,0	script	#whoau	-1,2,2,{
+// OnTouch_:
+// 	mes "[House Owner]";
+// 	mes "Wh-who the hell";
+// 	mes "are you? Honey!";
+// 	mes "There's this...";
+// 	mes "person in our home!";
+// 	next;
+// 	mes "^3355FFHubbie never came.";
+// 	mes "Nobody messes with";
+// 	mes ""+strcharinfo(0)+". Nobody.^000000";
+// 	close;
+// }
 
-ve_in,235,135,5	script	Bartender#ve	947,{
-	mes "[Bartender]";
-	mes "Welcome to our tavern.";
-	mes "Please, have a seat.";
-	mes "Let me bring you a";
-	mes "glass of ice water first.";
-	close;
-}
+// ve_in,235,135,5	script	Bartender#ve	947,{
+// 	mes "[Bartender]";
+// 	mes "Welcome to our tavern.";
+// 	mes "Please, have a seat.";
+// 	mes "Let me bring you a";
+// 	mes "glass of ice water first.";
+// 	close;
+// }
 
-ve_in,237,131,1	script	Female Customer#ve1	940,{
-	mes "[Female Customer]";
-	mes "Bartender, aren't any of";
-	mes "your regulars nice young";
-	mes "men? You know, I've been";
-	mes "pretty lonely lately...";
-	next;
-	if (Sex == SEX_FEMALE) {
-		mes "[Bartender]";
-		mes "Haha, well,";
-		mes "I'm not so sure..";
-		next;
-		mes "[Bartender]";
-		mes "How about... me?";
-		next;
-		mes "[Female Customer]";
-		mes "Hmpf...";
-		next;
-		mes "[Bartender]";
-		mes "Oh, come on!";
-		mes "I was kidding~";
-		emotion ET_CRY;
-		close;
-	}
-	mes "[Bartender]";
-	mes "Haha, well,";
-	mes "I'm not so sure..";
-	mes "What about this nice";
-	mes "young adventurer here?";
-	next;
-	mes "["+strcharinfo(0)+"]";
-	mes "Meee?";
-	emotion ET_PROFUSELY_SWEAT, playerattached();
-	next;
-	mes "[Female Customer]";
-	mes "Mmm...";
-	mes "Not my style.";
-	emotion ET_THINK, playerattached();
-	close;
-}
+// ve_in,237,131,1	script	Female Customer#ve1	940,{
+// 	mes "[Female Customer]";
+// 	mes "Bartender, aren't any of";
+// 	mes "your regulars nice young";
+// 	mes "men? You know, I've been";
+// 	mes "pretty lonely lately...";
+// 	next;
+// 	if (Sex == SEX_FEMALE) {
+// 		mes "[Bartender]";
+// 		mes "Haha, well,";
+// 		mes "I'm not so sure..";
+// 		next;
+// 		mes "[Bartender]";
+// 		mes "How about... me?";
+// 		next;
+// 		mes "[Female Customer]";
+// 		mes "Hmpf...";
+// 		next;
+// 		mes "[Bartender]";
+// 		mes "Oh, come on!";
+// 		mes "I was kidding~";
+// 		emotion ET_CRY;
+// 		close;
+// 	}
+// 	mes "[Bartender]";
+// 	mes "Haha, well,";
+// 	mes "I'm not so sure..";
+// 	mes "What about this nice";
+// 	mes "young adventurer here?";
+// 	next;
+// 	mes "["+strcharinfo(0)+"]";
+// 	mes "Meee?";
+// 	emotion ET_PROFUSELY_SWEAT, playerattached();
+// 	next;
+// 	mes "[Female Customer]";
+// 	mes "Mmm...";
+// 	mes "Not my style.";
+// 	emotion ET_THINK, playerattached();
+// 	close;
+// }
 
-ve_in,239,107,1	script	Male Customer#ve2	943,{
-	mes "[Male Customer]";
-	mes "How can that ugly old";
-	mes "man have girls hanging";
-	mes "off his arms when I just";
-	mes "got dumped by my girlfriend";
-	mes "and ditched by all my friends?!";
-	next;
-	mes "[Male Customer]";
-	mes "Oh, alcohol...";
-	mes "Right now, you're";
-	mes "my only friend in";
-	mes "all the world...";
-	mes "A toast... To drinking!";
-	specialeffect EF_ASPERSIO;
-	close;
-}
+// ve_in,239,107,1	script	Male Customer#ve2	943,{
+// 	mes "[Male Customer]";
+// 	mes "How can that ugly old";
+// 	mes "man have girls hanging";
+// 	mes "off his arms when I just";
+// 	mes "got dumped by my girlfriend";
+// 	mes "and ditched by all my friends?!";
+// 	next;
+// 	mes "[Male Customer]";
+// 	mes "Oh, alcohol...";
+// 	mes "Right now, you're";
+// 	mes "my only friend in";
+// 	mes "all the world...";
+// 	mes "A toast... To drinking!";
+// 	specialeffect EF_ASPERSIO;
+// 	close;
+// }

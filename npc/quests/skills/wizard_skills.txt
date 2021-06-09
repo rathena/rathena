@@ -353,86 +353,86 @@ gef_tower,115,36,4	script	Meow#q_wiz	876,{
 	}
 }
 
-prt_in,82,98,3	script	Simon Mayace#q_wiz	46,{
-	if (WIZ_SK == 1) {
-		mes "[Simon]";
-		mes "Ah, you must be a skilled";
-		mes "practitioner of magic. Mmm,";
-		mes "you must one of those Wizards.";
-		mes "High Wizards? I can't really";
-		mes "tell the difference. Ah, may";
-		mes "I be of service to you?";
-		next;
-		if (select("I'm fine, thank you.:I want to learn about push backs.") == 1) {
-			mes "[Simon]";
-			mes "I'm surprised that you chose";
-			mes "to practice magic: judging";
-			mes "from your build, I'd say that";
-			mes "you'd be well suited to wielding a sword. Haha, but that's just";
-			mes "a humble Knight's opinion.";
-			close;
-		}
-		mes "[Simon]";
-		mes "Wait, are you asking me";
-		mes "to teach you a Push-Back";
-		mes "attack technique? You can";
-		mes "defend yourself using spells";
-		mes "like Fire Wall or Fire Bolt";
-		mes "much more effectively, right?";
-		next;
-		select("But at close range...");
-		mes "[Simon]";
-		mes "Oh, I see. Yeah, Wizards";
-		mes "aren't very effective in close";
-		mes "range battles. Okay, I can see";
-		mes "why you'd want to learn some";
-		mes "Push-Back technique. Alright,";
-		mes "I can teach you a few basics.";
-		next;
-		mes "[Simon]";
-		mes "Now, every adventurer knows";
-		mes "the fundamentals of attacking.";
-		mes "You strike, and then ready your";
-		mes "next action, which is either";
-		mes "another strike, a dodge or a";
-		mes "guard. Simple stuff, right?";
-		next;
-		mes "[Simon]";
-		mes "To push an enemy back, you've";
-		mes "got to attack using a strike";
-		mes "with continuous force. It's all";
-		mes "in the follow through. Now, if";
-		mes "you strike the head, the push";
-		mes "distance will be too short.";
-		next;
-		mes "[Simon]";
-		mes "If you deliver a pushing";
-		mes "strike to the legs, your";
-		mes "enemy will fall towards you.";
-		mes "The best target for pushing";
-		mes "attacks is the torso since it";
-		mes "allows more control of the push.";
-		next;
-		mes "[Simon]";
-		mes "Well, I've explained";
-		mes "pushing as best as I can.";
-		mes "Concentrate and practice the";
-		mes "theory on your own, and you";
-		mes "should be able to do it. Good luck on your travels, adventurer~";
-		set WIZ_SK,2;
-		close;
-	}
-	else {
-		mes "[Simon]";
-		mes "Make no mistake:";
-		mes "swordplay is an art.";
-		mes "The techniques may seem";
-		mes "brutish at first glance, but";
-		mes "there's a keen strategy that";
-		mes "Knights innately understand.";
-		close;
-	}
-}
+// prt_in,82,98,3	script	Simon Mayace#q_wiz	46,{
+// 	if (WIZ_SK == 1) {
+// 		mes "[Simon]";
+// 		mes "Ah, you must be a skilled";
+// 		mes "practitioner of magic. Mmm,";
+// 		mes "you must one of those Wizards.";
+// 		mes "High Wizards? I can't really";
+// 		mes "tell the difference. Ah, may";
+// 		mes "I be of service to you?";
+// 		next;
+// 		if (select("I'm fine, thank you.:I want to learn about push backs.") == 1) {
+// 			mes "[Simon]";
+// 			mes "I'm surprised that you chose";
+// 			mes "to practice magic: judging";
+// 			mes "from your build, I'd say that";
+// 			mes "you'd be well suited to wielding a sword. Haha, but that's just";
+// 			mes "a humble Knight's opinion.";
+// 			close;
+// 		}
+// 		mes "[Simon]";
+// 		mes "Wait, are you asking me";
+// 		mes "to teach you a Push-Back";
+// 		mes "attack technique? You can";
+// 		mes "defend yourself using spells";
+// 		mes "like Fire Wall or Fire Bolt";
+// 		mes "much more effectively, right?";
+// 		next;
+// 		select("But at close range...");
+// 		mes "[Simon]";
+// 		mes "Oh, I see. Yeah, Wizards";
+// 		mes "aren't very effective in close";
+// 		mes "range battles. Okay, I can see";
+// 		mes "why you'd want to learn some";
+// 		mes "Push-Back technique. Alright,";
+// 		mes "I can teach you a few basics.";
+// 		next;
+// 		mes "[Simon]";
+// 		mes "Now, every adventurer knows";
+// 		mes "the fundamentals of attacking.";
+// 		mes "You strike, and then ready your";
+// 		mes "next action, which is either";
+// 		mes "another strike, a dodge or a";
+// 		mes "guard. Simple stuff, right?";
+// 		next;
+// 		mes "[Simon]";
+// 		mes "To push an enemy back, you've";
+// 		mes "got to attack using a strike";
+// 		mes "with continuous force. It's all";
+// 		mes "in the follow through. Now, if";
+// 		mes "you strike the head, the push";
+// 		mes "distance will be too short.";
+// 		next;
+// 		mes "[Simon]";
+// 		mes "If you deliver a pushing";
+// 		mes "strike to the legs, your";
+// 		mes "enemy will fall towards you.";
+// 		mes "The best target for pushing";
+// 		mes "attacks is the torso since it";
+// 		mes "allows more control of the push.";
+// 		next;
+// 		mes "[Simon]";
+// 		mes "Well, I've explained";
+// 		mes "pushing as best as I can.";
+// 		mes "Concentrate and practice the";
+// 		mes "theory on your own, and you";
+// 		mes "should be able to do it. Good luck on your travels, adventurer~";
+// 		set WIZ_SK,2;
+// 		close;
+// 	}
+// 	else {
+// 		mes "[Simon]";
+// 		mes "Make no mistake:";
+// 		mes "swordplay is an art.";
+// 		mes "The techniques may seem";
+// 		mes "brutish at first glance, but";
+// 		mes "there's a keen strategy that";
+// 		mes "Knights innately understand.";
+// 		close;
+// 	}
+// }
 
 //============================================================ 
 // Old changelog

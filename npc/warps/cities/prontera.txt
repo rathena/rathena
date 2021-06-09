@@ -64,7 +64,7 @@ prt_in,68,130,0	warp	prt08-1	2,1,prontera,204,188
 prt_in,69,65,0	warp	prt19a	1,3,prt_in,84,65
 prt_in,70,143,0	warp	prt20	2,1,prt_in,70,165
 prt_in,70,162,0	warp	prt20-1	2,1,prt_in,70,140
-prt_in,80,113,0	warp	prt11-1	2,1,prontera,48,343
+// prt_in,80,113,0	warp	prt11-1	2,1,ein_dun02,107,248
 prt_in,82,65,0	warp	prt19b	1,3,prt_in,66,65
 prt_in,227,15,0	warp	prt20-2	2,2,prontera,263,275
 

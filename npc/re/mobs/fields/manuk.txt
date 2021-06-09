@@ -16,22 +16,1235 @@
 //==================================================
 // man_fild01 - Manuk Field
 //==================================================
-man_fild01,0,0	monster	Nepenthes	1988,148,5000
-man_fild01,0,0	monster	Centipede Larva	1999,42,5000
-man_fild01,0,0	monster	Hillslion	1989,14,5000
-man_fild01,0,0	monster	Centipede	1987,2,5000
 
-//==================================================
-// man_fild02 - Manuk Field
-//==================================================
-man_fild02,0,0	monster	Bradium Golem	2024,75,5000
-man_fild02,0,0	monster	Centipede	1987,52,5000
-man_fild02,0,0	monster	Tatacho	1986,37,5000
+// //==================================================
+// // man_fild02 - Manuk Field
+// //==================================================
 
-//==================================================
-// man_fild03 - Manuk Field
-//==================================================
-man_fild03,0,0	monster	Hillslion	1989,33,5000
-man_fild03,0,0	monster	Tatacho	1986,33,5000
-man_fild03,0,0	monster	Centipede	1987,33,5000
-man_fild03,0,0	monster	Hardrock Mammoth	1990,1,14400000
+// //==================================================
+// // man_fild03 - Manuk Field
+// //==================================================
+man_fild03,0,0	monster	Pouring	1894,15,5000
+man_fild03,0,0	monster	Frozen Zombie	1015,15,5000
+
+man_fild03,0,0	monster	Angry Zombie	2606,2,300000
+
+man_fild03,168,213,24,24	monster	Wolf	1013,8,20000
+man_fild03,168,213,24,24	monster	Wolf Baby	1107,4,20000,5000,"Serene#sereneD::OnPuppyKill"
+
+man_fild03,86,119,12,12	monster	Ectophantom	2016,4,20000
+
+// Creepy Bunny Lair
+man_fild03,140,263,12,12	monster	Creepy Bunny	1690,1,180000,120000
+
+man_fild03,243,103,5	script	Serene#sereneB	4_F_ANYA,12,12,{
+    if (!@zombieCount && MAINQ == 7) {
+        emotion ET_SURPRISE;
+        sleep2 1000;
+        mes "[Serene]";
+        mes "Looks like luck wasn't on our side today. There are undead starting to wander even here.";
+        next;
+        mes "[Serene]";
+        mes "Woah, watch out!";
+        next;
+        @zombieCount = 1;
+        monster "man_fild03",236,103,"Frozen Zombie",1015,1,"Serene#sereneB::onZombieKill";
+        monster "man_fild03",235,99,"Frozen Zombie",1015,1,"Serene#sereneB::onZombieKill";
+        end;
+    }
+    end;
+onZombieKill:
+    @zombieCount++;
+    if (@zombieCount == 3) {
+        mes "[Serene]";
+        mes "We really need to stay on guard here, " + strcharinfo(0) + ". Let's get going.";
+        next;
+        set MAINQ,8;
+        disablenpc strnpcinfo(0);
+        close;
+    }
+    end;
+onTouch:
+    // if (MAINQ != 7) {
+    //     disablenpc strnpcinfo(0);
+    // }
+    questinfo_refresh();
+    end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 7";
+    questinfo QTYPE_QUEST2, QMARK_YELLOW, "@zombieCount == 3 && MAINQ == 7";
+	end;
+}
+
+man_fild03,251,98,5	script	Kafra Employee::kaf_manfild2	4_F_KAFRA1,6,6,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "man_fild03",251,98,1,1;
+	callfunc "F_KafEnd",0,1,"Greetings.";
+
+onTouch:
+    npctalk "Don't forget to Save your progress frequently.";
+    end;
+}
+
+man_fild03,172,174,1	script	Serene#sereneC	4_F_ANYA,12,12,{
+    mes MAINQ;
+    next;
+    if (MAINQ == 8) {
+        mes "[Serene]";
+        mes "Phew, luckily these dogs aren't aggressive towards us. We've got enough to worry about right now";
+        next;
+        mes "[Serene]";
+        mes "The puppies are really cute but they sure are yappy.";
+        emotion ET_THROB;
+        next;
+        mes "[Serene]";
+        mes "...DON'T HURT THEM!";
+        next;
+        mes "[Serene]";
+        mes "Woah watch out we've got more enemies ahead!";
+        next;
+        monster "man_fild03",168,181,"Frozen Zombie",1015,1,"Serene#sereneC::onZombieKill";
+        monster "man_fild03",175,184,"Frozen Zombie",1015,1,"Serene#sereneC::onZombieKill";
+        monster "man_fild03",179,179,"Frozen Zombie",1015,1,"Serene#sereneC::onZombieKill";
+        close;
+    }
+    end;
+
+onZombieKill:
+    @zombieCount2++;
+    if (@zombieCount2 == 3) {
+        mes "[Serene]";
+        mes "Phew, let's keep moving.";
+        next;
+        set MAINQ,9;
+        disablenpc strnpcinfo(0);
+        close;
+    }
+    end;
+onTouch:
+    // if (MAINQ != 8) {
+    //     disablenpc strnpcinfo(0);
+    // }
+    questinfo_refresh();
+    end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 8";
+	end;
+}
+
+man_fild03,84,258,7	script	Serene#sereneD	4_F_ANYA,12,12,{
+    if (MANUK_SERENE_PUPPY_GIFT == 0) {
+        emotion ET_THROB;
+        mes "[Serene]";
+        mes strcharinfo(0) + "! Check out these cute puppy ears the merchant up there gave me as a gift.";
+        next;
+        if (PUPPY_KILLER == 1) {
+            mes "[Serene]";
+            mes "It's a shame you don't like dogs. I've always grown up around animals so I feel at peace with them.";
+            next;
+        } else {
+            mes "[Serene]";
+            mes "...and I was able to get a pair for you too!";
+            next;
+            getitem(5118,1);
+        }
+        MANUK_SERENE_PUPPY_GIFT = 1;
+    }
+
+    if (MAINQ == 9) {
+        mes "[Serene]";
+        mes "We're almost to the border, I found this group of merchants camping out here.";
+        next;
+        mes "[Serene]";
+        mes "I'm going to speak with the Kafra lady, then I'll meet you up north!";
+        MAINQ = 10;
+        disablenpc strnpcinfo(0);
+        close;
+    }
+    end;
+
+OnPuppyKill:
+    npctalk "Why would you do that?";
+    set PUPPY_KILLER,1;
+    end;
+onTouch:
+    questinfo_refresh();
+    // if (MAINQ != 9) {
+    //     disablenpc strnpcinfo(0);
+    // }
+    end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 9";
+	end;
+}
+
+man_fild03,78,312,5	script	Serene#sereneE	4_F_ANYA,12,12,{
+    if (MAINQ == 10) {
+        mes "[Serene]";
+        mes "We're almost there!";
+        next;
+        enablenpc "#spiderSpawn";
+        doevent "#spiderSpawn::onAwaken";
+        movenpc strnpcinfo(0),78,312,0;
+        sleep2(1500);
+        mes "[Serene]";
+        mes "What was that?!";
+        next;
+        monster "man_fild03",88,321,"Crystal Spider",2092,1,"Serene#sereneE::onSpiderKill";
+        playbgm "256";
+    }
+    end;
+onSpiderKill:
+    playbgm "127";
+    mes "[Serene]";
+    mes "WOW " + strcharinfo(0) + "! You took on that spider like it was no problem at all!";
+    next;
+    mes "[Serene]";
+    mes "I was completely frozen!";
+    next;
+    mes "[Serene]";
+    mes "I'm already not sure if I'm cut out for this...";
+    next;
+    sleep2(500);
+    mes "[Serene]";
+    mes "Well, anyway, let's get going! The outpost is right over the hill here!";
+    next;
+    MAINQ = 11;
+    npcwalkto 78,316;
+    sleep2(500);
+    disablenpc strnpcinfo(0);
+    end;
+onTouch:
+    questinfo_refresh();
+    if (MAINQ != 10) {
+        // disablenpc strnpcinfo(0);
+    } else {
+        // enablenpc strnpcinfo(0);
+    }
+    end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 10";
+	end;
+}
+
+man_fild03,80,321,5	script	#spiderSpawn	4_BB_PORING,12,12,{
+onAwaken:
+    hideonnpc strnpcinfo(0);
+    misceffect 192;
+    soundeffect "monsterRoar2.wav",0;
+    sleep2(500);
+    disablenpc strnpcinfo(0); 
+    end;
+
+onInit:
+    disablenpc strnpcinfo(0);
+    end;
+}
+
+man_fild03,130,203,5	script	Ghostly Presence#ghostA	4_SYS_MSG,20,20,{
+    switch(isbegin_quest(90011)) {
+        case 0:
+            if (BaseLevel >= 10) {
+                mes "[Ghostly Presence]";
+                mes "Huh? You can see me?";
+                next;
+                mes "[Ghostly Presence]";
+                mes "AND you can hear me?!";
+                next;
+                mes "[Ghostly Presence]";
+                mes "Please! Help me before I'm lost forever!";
+                menu "Accept",L_Yes,"Decline",L_No;
+                    L_Yes:
+                        setquest 90011;
+                        mes "The Ectophantoms to the south have Crystallized Teardrops.";
+                        mes "5 drops of the ghostly goo should be enough ectoplasm to give me form.";
+                        close;
+                        end;
+                    L_No:
+                        mes "Come on help me out!";
+                        close;
+                        end;
+                close;
+                end;
+            }
+        case 1:
+            if (countitem(6075) >= 5) {
+                mes "[Ghostly Presence]";
+				mes "If I consume this condensed ectoplasm I should be able to gain my form back.";
+				next;
+				completequest 90011;
+				delitem 6075, countitem(6075);
+				getexp 90, 90;
+                if(Class == JOB_SWORDMAN) {
+                    getitem 1110,1;
+                }
+                else if(Class == JOB_MAGE) {
+                    getitem 1607,1;
+                }
+                else if (Class == JOB_ARCHER) {
+                    getitem 1749,1;
+                }
+                else if (Class == JOB_THIEF) {
+                    getitem 1217,1;
+                }
+                mes "[Ghostly Presence]";
+				mes "Urgh..";
+                enablenpc "An Uncanny Figure#ghostB";
+                doevent "An Uncanny Figure#ghostB::onAwaken";
+                disablenpc strnpcinfo(0);
+				close;
+			} else {
+				mes "[Ghostly Presence]";
+                mes "5 Crystallized Tears please!";
+                close;
+			}
+            end;
+    }
+onTouch:
+    npctalk isbegin_quest(90011);
+    questinfo_refresh();
+    if (isbegin_quest(90011) == 2) {
+        disablenpc strnpcinfo(0);
+    } else {
+        enablenpc strnpcinfo(0);
+    }
+    end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90011) == 0 && BaseLevel > 10";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(90011) == 1 && countitem(6075) >= 5";
+	end;
+}
+
+man_fild03,130,203,5	script	An Uncanny Figure#ghostB	4_ARMAIA,{
+onAwaken:
+    sleep2(500);
+    misceffect 361;
+    sleep(1000);
+    misceffect 361;
+    sleep(100);
+    misceffect 361;
+    sleep(1000);
+    misceffect 361;
+    sleep(100);
+    misceffect 361;
+    sleep(100);
+    misceffect 361;
+    sleep(100);
+    misceffect 361;
+    sleep(100);
+    misceffect 361;
+    sleep(1000);
+    misceffect 730;
+    enablenpc("Ghost Dust#ghostC");
+    disablenpc strnpcinfo(0);
+    end;
+onInit:
+    disablenpc strnpcinfo(0);
+    end;
+}
+
+man_fild03,130,203,5	script	Ghost Dust#ghostC	4_SOIL,{
+    mes "I guess it didn't work.";
+    next;
+    disablenpc("Ghost Dust#ghostC");
+    close;
+    end;
+onInit:
+    disablenpc strnpcinfo(0);
+    end;
+}
+
+man_fild03,136,186,1	script	#bonfireManukA	4_BONFIRE,{}
+
+man_fild03,61,345,7	script	Airship Pilot#pilotA	4_M_EINMAN2,{
+    mes "[Airship Pilot]";
+    mes "Lookin' for a ride around the mountain to Dunleth Mines?";
+    menu "Yes",L_A,"No",L_B;
+        L_A:
+            if (MAINQ >= 11) {
+                warp "thor_camp",255,89;
+                end;
+            } else {
+
+            }
+        L_B:
+            end;
+    end;
+
+}
+
+man_fild03,78,259,6	shop	Lerone Cat#mercatManukaA	4_M_MERCAT2,2248:7500,2223:7500,2245:7500,2275:7500,5197:7500
+man_fild03,78,259,6	shop	Lerone Cat#mercatManukaC	4_M_MERCAT2,2248:7500,2223:7500,2245:7500,2275:7500,5197:7500,2214:7500
+
+man_fild03,76,262,8	script	Toby#mercatManukaA	4_M_MERCAT1,{
+    switch(isbegin_quest(90014)) {
+        case 0:
+            if (BaseLevel >= 11) {
+                if (MANUK_TOBY_INTRO == 0) {
+                    mes "[Toby Cat]";
+                    mes "Hey there kid, what's brings you out this way?";
+                    menu "Top secret.",L_A,"The dead have begun their attack!",L_B;
+                        L_A:
+                            mes "[Toby Cat]";
+                            mes "What's with the secrecy? You's one of them Imperial agents or somethin'?";
+                            next;
+                            goto tobyAccept1;
+                        L_B:
+                            mes "[Toby Cat]";
+                            mes "Yeah, I seen it.";
+                            next;
+                            goto tobyAccept1;
+                }
+                goto tobyAccept2;
+            }
+        case 1:
+            if (checkquest(90014,HUNTING) == 2) {
+                mes "[Toby Cat]";
+                mes "You take care of business?";
+                next;
+                menu "Yep.",L_Yes2, "Not yet.", L_No2;
+                L_Yes2:
+                    completequest 90014;
+                    getexp 90,90;
+                    Zeny += 5000;
+                    mes "[Toby Cat]";
+                    mes "AHA! Finally, I was gettin' sick of seein' that thing.";
+                    next;
+                    mes "[Toby Cat]";
+                    mes "Maybe now we'll make it on time to our next gig up north. Maybe we'll see ya around kid!";
+                    close;
+                L_No2:
+                    mes "[Toby Cat]";
+                    mes "What's the hold up?";
+                    close;
+			} else {
+				mes "[Toby Cat]";
+                mes "Lemme know when you take care of that bunny. You won't go without a reward!";
+                close;
+			}
+            end;
+    }
+    end;
+tobyAccept1:
+    mes "[Toby Cat]";
+    mes "All's I know is, things have gotten WEIRD lately. Real weird.";
+    menu "Yeah, with the zombies and all.",L_A2;
+        L_A2:
+            mes "[Toby Cat]";
+            mes "Zombies ain't even half of it bruv!";
+            mes "You seen the creepy humanoid bunny yet?";
+            next;
+            MANUK_TOBY_INTRO = 1;
+            mes "[Toby Cat]";
+            mes "Now THAT thing is made of nightmares, we seen it skulking around the area for days now, making us afraid to leave for our next gig.";
+            next;
+
+tobyAccept2:
+    mes "[Toby Cat]";
+    mes "You seem like a pretty tough cookie.";
+    mes "Would you mind making sure that undead bunny goes back into the dirt for us?";
+    next;
+    menu "Accept",L_Yes, "Decline", L_No;
+    L_Yes:
+        setquest 90014;
+        mes "[Toby Cat]";
+        mes "Thanks kid!";
+        next;
+        mes "[Toby Cat]";
+        mes "Our soon to be dead-again friend wanders around east of here";
+        close;
+    L_No:
+        mes "[Toby Cat]";
+        mes "Hope we don't get stuck here for too long...";
+        close;       
+
+onTouch:
+    npctalk isbegin_quest(90014);
+    questinfo_refresh();
+    if (isbegin_quest(90014) == 2) {
+        disablenpc strnpcinfo(0);
+    }
+    end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90014) == 0 && BaseLevel >= 13";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(90014) == 1 && checkquest(90014,HUNTING) == 2";
+	end;
+}
+
+man_fild03,78,261,7	script	Kafra Employee::kaf_manfild	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "man_fild03",78,261,1,1;
+	callfunc "F_KafEnd",0,1,"Greetings.";
+}
+
+man_fild03,121,198,6	script	#signManukA	4_BULLETIN_BOARD2,{
+	mes ">--- Head North --->";
+    mes ">- Airship Landing -->";
+	close;
+	end;
+}
+
+man_fild03,221,110,5	script	Spiritomb#tombstoneA	4_4JOB_SEALSTONE,{
+    MAINQ = 7;
+    mes "It reads:";
+    mes " ";
+    mes "\"Here lie the remains of one who's adventure started, but ended unexpectedly.\"";
+    close;
+    end;
+}
+
+man_fild03,155,191,5	script	Spiritomb#tombstoneB	4_4JOB_SEALSTONE,{
+    mes "It reads:";
+    mes " ";
+    mes "\"Here lie the remains of one who's adventure ended before it actually started.\"";
+    close;
+    end;
+}
+
+
+
+// Thor Volcano
+
+thor_camp,207,221,80,80	monster	Ghoul	1036,15,5000
+thor_camp,207,221,80,80	monster	Metaling	2065,15,5000
+thor_camp,183,221,18,18	monster	Zombie Guard	3452,5,30000
+
+thor_camp,99,220,12,12	monster	MACH-1	1669,2,20000
+thor_camp,77,234,24,12	monster	MACH-1	1669,4,20000
+
+thor_camp,185,302,24,12	monster	MACH-S	3153,6,30000
+
+thor_camp,172,182,12,12	monster	Flameball	1367,4,20000
+
+// MVP
+// thor_camp,207,221,80,80	monster	Fallen Kafra	20362,1,320000
+
+thor_camp,202,92,4	shop	Tool Dealer#thor	4_M_HUMAN_01,1750:-1,611:-1,643:5000,531:50,501:20,502:60,506:30,645:-1,601:-1,602:-1
+thor_camp,198,92,4	shop	Weapon Dealer#thor	4_M_BARYO_MAN,1750:-1,1751:-1,1701:-1,1601:-1,1201:-1,1204:-1,1207:-1,1101:-1,1104:-1,1107:-1,1116:-1,1151:-1,1154:-1,1157:-1,1160:-1,1301:-1
+thor_camp,206,92,4	shop	Armor Dealer#thor	4_M_BARYO_BOY,2103:-1,2105:-1,2403:-1,2405:-1,2503:-1,2505:-1,2226:-1,2228:-1,2303:-1,2305:-1,2328:-1,2307:-1,2309:-1,2312:-1,2314:-1,2316:-1,2607:7500
+
+thor_camp,202,69,8	itemshop	Coin Exchange#thor	2_VENDING_MACHINE1,674,5347:5,2287:5,2686:3,4077:1
+
+thor_camp,205,69,8	script	Scrambles the Coin Cat#thor	4_DR_AGLIO,{
+	if (THOR_SCRAMBLES_INTRO == 0) {
+		mes "[Scrambles]";
+		mes "Greetings meowster! Good to see you here!";
+		next;
+		mes "[Scrambles]";
+		mes "Things are looking a little rough in this area...";
+		next;
+        mes "[Scrambles]";
+        mes "...Which means there must be some tough meownsters in the area!";
+        mes "Find coins for me!";
+		THOR_SCRAMBLES_INTRO = 1;
+	}
+	mes "[Scrambles]";
+	mes "Right now I'm looking for Mythril Coins, I hear tough monsters like to hoard them.";
+	mes " ";
+	mes "Feel free to use the Goodie Dispenser here if you come across any!";
+	close;
+	end;
+}
+
+thor_camp,257,90,3	script	Airship Pilot#pilotB	4_M_EINMAN2,{
+    mes "[Airship Pilot]";
+    mes "Lookin' for a ride? We're currently enroute for Elica Mountainside.";
+    menu "Yes",L_A,"No",L_B;
+        L_A:
+            warp "man_fild03",61,345;
+            end;
+        L_B:
+            end;
+    end;
+}
+
+-	script	::Dunleth_soldier	-1,{
+	mes "[Dunleth Soldier]";
+	mes "Move along.";
+    close;
+}
+
+thor_camp,256,71,3	duplicate(Dunleth_soldier)	Dunleth Soldier#a	4_M_EIN_SOLDIER
+thor_camp,225,103,6	duplicate(Dunleth_soldier)	Dunleth Soldier#b	4_M_EIN_SOLDIER
+thor_camp,225,112,6	duplicate(Dunleth_soldier)	Dunleth Soldier#c	4_M_EIN_SOLDIER
+thor_camp,175,90,0	duplicate(Dunleth_soldier)	Dunleth Soldier#d	4_M_EIN_SOLDIER
+thor_camp,155,101,5	duplicate(Dunleth_soldier)	Dunleth Soldier#e	4_M_EIN_SOLDIER
+thor_camp,132,101,5	duplicate(Dunleth_soldier)	Dunleth Soldier#f	4_M_EIN_SOLDIER
+thor_camp,81,92,6	duplicate(Dunleth_soldier)	Dunleth Soldier#g	4_M_EIN_SOLDIER
+thor_camp,81,101,6	duplicate(Dunleth_soldier)	Dunleth Soldier#h	4_M_EIN_SOLDIER
+thor_camp,33,106,6	duplicate(Dunleth_soldier)	Dunleth Soldier#i	4_M_EIN_SOLDIER
+thor_camp,33,85,6	duplicate(Dunleth_soldier)	Dunleth Soldier#j	4_M_EIN_SOLDIER
+thor_camp,146,146,0	duplicate(Dunleth_soldier)	Dunleth Soldier#k	4_M_EIN_SOLDIER
+
+thor_camp,243,129,6	script	#deadBodyA	4_F_MD_SHECIL_D,{}
+thor_camp,243,126,6	script	#deadBodyB	4_F_ANES_D,{}
+thor_camp,241,126,6	script	#deadBodyC	4_M_DIEMAN,{}
+thor_camp,244,124,6	script	#deadBodyD	4_M_LIEMAN,{}
+
+thor_camp,246,127,3	script	#fireA	4_BONFIRE,{}
+thor_camp,245,129,6	script	#fireB	4_BONFIRE,{}
+thor_camp,247,124,3	script	#fireC	4_BONFIRE,{}
+
+thor_camp,106,239,5	script	Janessa#civA	4_F_EDEN_OFFICER,{
+    switch(JANESSA) {
+        // Before meeting chief
+        case 0:
+        // After talking to chief
+        case 1:
+            if (isbegin_quest(90017) == 1) {
+                mes "[Janessa]";
+                mes "Hey there! What brings you out here?";
+                next;
+                switch(select("I'm here to exterminate these machines.:Nothing.")) {
+                    case 1:
+                        mes "[Janessa]";
+                        mes "Woah woah woah! I'm currently studying these beauties. I've never seen such advanced tech!";
+                        next;
+                        mes "[Janessa]";
+                        mes "Why do you need to exterminate them? Under who's authority?!";
+                        next;
+                        if(select("Chief believes they are spreading the plague.") != 1) end;
+                        emotion ET_THINK;
+                        sleep2(1500);
+                        mes "[Janessa]";
+                        mes "Ugh...I have...";
+                        mes "...confirmed that this is true.";
+                        next;
+                        emotion ET_CRY;
+                        mes "[Janessa]";
+                        mes "I just wish I had a little more time with them. They are so fascinating!";
+                        mes "I guess I will have to settle for the scraps you leave behind, please be gentle!";
+                        next;
+                        getexp 20,20;
+                        changequest 90017,90018;
+                        JANESSA = 2;
+                        mes "[Janessa]";
+                        mes "I think 10 of the MACH-1 variety should take care of this area.";
+                        close;
+                }
+            }
+        // After getting 1st quest
+        case 2:
+            if (checkquest(90018,HUNTING) == 2) {
+                mes "[Janessa]";
+                mes "Enough! Enough! Let's put an end to this now.";
+                next;
+                switch (select("I'm done.:Not yet.")) {
+                    case 1:
+                        completequest 90018;
+                        getexp 60,60;
+                        JANESSA = 3;
+                        mes "[Janessa]";
+                        mes "It was terrible to watch! I had a dream of reprogramming one to be my lab assistant, to teach it how to make me coffee and breakfast...";
+                        next;
+                        if(!select("Are there anymore machines?")) end;
+                        mes "[Janessa]";
+                        mes "Ummmm...maaaaaybee....";
+                        next;
+                        if(!select("Spill it!")) end;
+                        mes "[Janessa]";
+                        mes "Fine. You've already beaten me down so hard today, why not a little more?";
+                        next;
+                        mes "[Janessa]";
+                        mes "There are some serpent-like machines just up north. I haven't had a chance to get a close look at them yet, but they seem to be used for excavation.";
+                        next;
+                        mes "[Janessa]";
+                        mes "...so if they aren't distributing the plague, then perhaps we could let them live for my research?";
+                        if (!select("Sorry, they've gotta go.")) end;
+                        mes "[Janessa]";
+                        mes "Ughhhh...I had a feeling you'd say that.";
+                        next;
+                        mes "[Janessa]";
+                        mes "Well, just head north across the bridge past the guard house a little bit to the east of here. You'll find them there.";
+                        next;
+                        if (!select("Sounds good.:I'll come back.")) end;
+                        setquest 90019;
+                        end;
+                    case 2:
+                        mes "[Janessa]";
+                        mes "Please no more! Leave them alone!";
+                        close;
+                }
+            } else {
+                emotion ET_CRY;
+                mes "[Janessa]";
+                mes "Please at least save a CPU for me!";
+                close;
+            }
+        // After finishing 1st quest
+        case 3:
+            switch(isbegin_quest(90019)) {
+                case 0:
+                    mes "[Janessa]";
+                    mes "Head north across the bridge past the guardhouse a little to the east of here. You'll find them there.";
+                    next;
+                    if (!select("Sounds good.:I'll come back.")) end;
+                    setquest 90019;
+                    end;
+                case 1:
+                    if (checkquest(90019,HUNTING) == 2) {
+                        completequest 90019;
+                        JANESSA = 4;
+                        getexp 60,60;
+                        Zeny += 7000;
+                        mes "[Janessa]";
+                        mes "About time! While you were away I was digging through scraps you left behind after your previous and I've gotta say, we've got some nice looking parts to take home with us.";
+                        next;
+                        mes "[Janessa]";
+                        mes "Well, that's it. Let's wrap it up and head on back to camp with our loot.";
+                        next;
+                        if (!select("Are there more machines?")) end;
+                        emotion ET_SWEAT;
+                        mes "[Janessa]";
+                        mes "What?! Nooooo no no no of course not...";
+                        next;
+                        mes "[Janessa]";
+                        mes "This was uh, definitely all of 'em";
+                        next;
+                        if (!select("Janessa, where are the rest of the machines?")) end;
+                        mes "[Janessa]";
+                        mes "Ugh. Why do you rip my heart out like this? Okay fine.";
+                        next;
+                        mes "[Janessa]";
+                        mes "There's a big one. A REAL big one. And yes, I would love to study it, I just haven't built up the courage to actually approach it yet...";
+                        next;
+                        mes "[Janessa]";
+                        mes "Because when I say it's big and bad...";
+                        next;
+                        mes "[Janessa]";
+                        mes "...I MEAN IT! This thing could swat me like a fly. I call it... MACH-DEATH. Cool, right?";
+                        next;
+                        if(!select("I'm not scared. I can take it.")) end;
+                        mes "[Janessa]";
+                        mes "WHAAAAAAAAAT?! Are you insane, kid? Don't you value your life?!";
+                        next;
+                        setquest 90020;
+                        mes "[Janessa]";
+                        mes "But whatever, it's your funeral. This thing hangs out on the other side of the rails to the east.";
+                        close;
+                        
+                    } else {
+                        mes "[Janessa]";
+                        mes "Are you done yet?";
+                    }
+            }
+        // After finishing 2nd quest
+        case 4:
+            switch(isbegin_quest(90020)) {
+                case 1:
+                    if (checkquest(90020,HUNTING) == 2) {
+                        completequest 90020;
+                        setquest 90021;
+                        getexp 90,90;
+                        JANESSA = 5;
+                        mes "[Janessa]";
+                        mes "You...you actually did it?!";
+                        next;
+                        mes "[Janessa]";
+                        mes "WOW! You. are. cool.";
+                        mes "As sad as I am that all of my babies are gone, I will admit...I'm happy that the plague can stop spreading...for now at least.";
+                        next;
+                        mes "[Janessa]";
+                        mes "You should probably head back to the chief now and tell him the news.";
+                        next;
+                        if(select("See you around.:Janessa, are there anymore machines???") == 1) end;
+                        soundeffect "ac-shocked.wav",0;
+                        mes "[Janessa]";
+                        emotion ET_SWEAT;
+                        mes "WHAT?!";
+                        next;
+                        mes "[Janessa]";
+                        mes "No! I swear! The plague should stop spreading! There are no more machines!";
+                        next;
+                        emotion ET_STARE_ABOUT;
+                        sleep2(1500);
+                        emotion ET_KIK;
+                        sleep2(1500);
+                        end;
+                    } else {
+                        mes "[Janessa]";
+                        mes "Nice knowin' ya " + strcharinfo(0) + ". You can find the MACH-Death to the east across the rails.";
+                    }
+            }
+        // After finishing 3rd quest
+        case 5:
+            emotion ET_CRY;
+            mes "[Janessa]";
+            mes "Work just hasn't been as been as fun ever since you crushed my hopes and dreams.";
+            close;
+
+    }
+    end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 13 && isbegin_quest(90017) == 1";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90018,HUNTING) == 2";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90019,HUNTING) == 2";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90020,HUNTING) == 2";
+	end;
+}
+
+thor_camp,114,243,5	script	Spiritomb#tombstoneC	4_4JOB_SEALSTONE,{
+    JANESSA = 4;
+    mes "It reads:";
+    mes " ";
+    mes "\"Here lie the remains of one who's adventure started, but ended unexpectedly.\"";
+    close;
+    end;
+}
+
+thor_camp,279,269,5	script	Spiritomb#machdeath	4_4JOB_SEALSTONE,{
+    erasequest 90020;
+    setquest 90020;
+    mes "It reads:";
+    mes " ";
+    mes "\"Here lie the remains of one who's adventure started, but ended unexpectedly.\"";
+    close;
+    end;
+}
+
+thor_camp,270,267,5	script	Mysterious Device#a	4_MACHINE_DEVICE,{
+    if (isbegin_quest(90020) == 1 && MACHDEATH == 0) {
+        mes "This is the device that will get the MACH-Death's attention.";
+        next;
+        if (select("Use it.:Not yet.") == 2) end;
+        mes "A loud alarm echos throughout the area.";
+        close2;
+        soundeffect "chronoAlarm.wav",0;
+        sleep2(4000);
+        soundeffect "roboReady.wav",0;
+        sleep2(2000);
+        MACHDEATH = 1;
+        monster "thor_camp",270,282,"MACH-DEATH",3124,1,"Mysterious Device#a::onDeath";
+        startnpctimer;
+        playbgm "256";
+        end;
+    }
+    end;
+
+onDeath:
+    MACHDEATH = 2;
+    playbgm "106";
+    end;
+
+onTimer90000:
+    killmonster "thor_camp","Mysterious Device#a::onDeath";
+    stopnpctimer;
+    end;
+
+onInit:
+    questinfo QTYPE_QUEST2, QMARK_YELLOW, "checkquest(90020,HUNTING) == 1";
+    end;
+}
+
+thor_camp,236,81,0	script	Ann Banks#civA	4_F_SHABBY,{
+    getexp 10000,10000;
+}
+
+thor_camp,245,119,3	script	Evan Stone#civB	4_M_DSTMAN,{
+	switch(isbegin_quest(90006)) {
+		case 0:
+			if (BaseLevel >= 16) {
+				mes "[Evan]";
+				mes "...";
+                menu "What are you doing?",L_Yes,"See you.",L_No;
+                    L_Yes:
+                        mes "[Evan]";
+                        mes "We're preparing the bodies to burn.";
+                        mes "These people...this one...was my friend...";
+                        next;
+                        mes "[Evan]";
+                        mes "...but...no...I can't let him become one of those things.";
+                        mes "It seems like the only way to prevent them from turning is burning the bodies now...";
+                        next;
+                        mes "[Evan]";
+                        mes "You. You're here to help, right?";
+                        mes "We need more fuel. Would you go gather some Burning Hearts from the Living Flames in the area for me?";
+                        menu "Accept",L_Yes_Q,"Decline",L_No_Q;
+                            L_Yes_Q:
+                                setquest 90006;
+                                next;
+                                mes "[Evan]";
+                                mes "Thank you...I'll stay here and prepare the kindling.";
+                                close;
+                                end;
+                            L_No_Q:
+                                mes "[Evan]";
+                                mes "We still need to find somebody.";
+                                close;
+                                end;
+                    L_No:
+                        end;
+                
+				
+			}
+			end;
+		case 1:
+			if(countitem(7097) >= 5) {
+                mes "[Evan]";
+                mes "Did you find some?";
+                mes " ";
+				mes "Hand over 5 Burning Hearts?";
+				menu "Here you go.",L_Yes_I,"No, sorry.",L_No_I;
+					L_Yes_I:
+						getexp 60,60;
+						delitem 7097,5;
+						Zeny += 6000;
+						completequest 90006;
+						mes "[Evan]";
+                        mes "Thank you, what was it, " + strcharinfo(0) + "?";
+                        next;
+                        mes "[Evan]";
+                        mes "Time to get this over with.";
+                        mes "I'm sorry, Sam...";
+						close;
+						end;
+				close;
+					L_No_I:
+						mes "[Evan]";
+                        mes "Please hurry, they could turn at any time.";
+						close;
+						end;
+
+			} else {
+				mes "[Evan]";
+                mes "Please hurry, they could turn at any time.";
+				close;
+			}
+			end;
+		case 2:
+        if (isbegin_quest(90016) == 0) {
+			mes "[Evan]";
+            mes "You seem pretty tough, um...";
+            mes "Do you think you could help me move my friend's body in place as well?";
+            menu "I can help you.",L_Yes2,"Do it yourself.",L_No2;
+                L_Yes2:
+                    mes "[Evan]";
+                    mes "Thank you so much.";
+                    mes "This is really hard for me...";
+                    setquest 90016;
+                    close;
+                L_No2:
+                    mes "[Evan]";
+                    mes "I...can't...";
+                    close;
+			end;
+        }
+	}
+    end;
+
+onZombieSpawn:
+    npctalk "Oh my god!";
+    end;
+
+onFirstWaveKill:
+    sleep2(1000);
+    soundeffect "monsterRoar2.wav",0;
+    monster "thor_camp",243,123,"Zombie",1036,1,"Evan Stone#civB::onSecondWaveKill";
+    end;
+
+onSecondWaveKill:
+    sleep2(1000);
+    mes "[Evan]";
+    mes "Oh my god!";
+    mes "I can't even...what is even going on?!";
+    completequest 90016;
+    Zeny += 3000;
+    getexp 30,30;
+    close;
+
+onInit:
+    questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90016) == 0 && BaseLevel >= 18";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(90006) == 0 && BaseLevel >= 18";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(90006) == 1 && countItem(7097) >= 5";
+	end;
+}
+
+thor_camp,247,118,3	script	Sam Lee#civC	4_M_DSTMANDEAD,12,12,{
+    if (isbegin_quest(90016) == 1) {
+        mes "What will you do?";
+        menu "Pick up Sam.",L_Yes,"No thanks.",L_No;
+        L_Yes:
+            sleep2(1000);
+            soundeffect "monsterRoar2.wav",0;
+            doevent "Evan Stone#civB::onZombieSpawn";
+            monster "thor_camp",251,118,"Zombie",1036,1,"Evan Stone#civB::onFirstWaveKill";
+            disablenpc strnpcinfo(0);
+            close;
+        L_No:
+            end;
+        end;
+    }
+onTouch:
+    if (isbegin_quest(90016) == 2) {
+        disablenpc strnpcinfo(0);
+    }
+    end;
+}
+
+thor_camp,241,131,6	script	Marjorie Baxter#acolyteA	4_F_ACOLYTE,{}
+thor_camp,149,115,1	script	Taylor Loughton#acolyteB	4_F_ACOLYTE,{}
+
+thor_camp,195,118,6	script	#thorDogA	4_DOG01,6,6,{
+    end;
+onTouch:
+    soundeffect "bark.wav",0;
+    sleep2(250);
+    soundeffect "bark.wav",0;
+    end;
+}
+
+thor_camp,248,76,3	script	Serene#thorSereneA	4_F_ANYA,24,24,{
+    if (MAINQ == 11) {
+        mes "[Serene]";
+        mes "We made it!";
+        mes "...but things here don't seem to be going so well...";
+        next;
+        mes "[Serene]";
+        mes "Just take a look around...";
+        mes " ";
+        mes "Let's go find who's in charge here and figure out what's going on.";
+        next;
+        mes "[Serene]";
+        mes "By the way, thanks for hiking all the way here with me!";
+        next;
+        completequest 90013;
+        getexp 90,90;
+        Zeny += 8000;
+        MAINQ = 12;
+        if (Class == Job_Archer) {
+            getitem 2769,1;
+        } else if (Class == Job_Thief) {
+            getitem 2770,1;
+        } else if(Class == Job_Swordman) {
+            getitem 2766,1;
+        } else if (Class == Job_Mage) {
+            getitem 2768,1;
+        }
+        disablenpc strnpcinfo(0);
+        close;
+    }
+onTouch:
+    questinfo_refresh();
+    if (MAINQ != 11) {
+        disablenpc strnpcinfo(0);
+    }
+    end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 11";
+	end;
+}
+
+thor_camp,239,117,3	script	Serene#thorSereneB	4_F_ANYA,18,18,{
+    mes "[Serene]";
+    mes "What the...?";
+    next;
+    mes "[Serene]";
+    mes "This...this is horrible...";
+    next;
+    emotion ET_CRY;
+    sleep2(1000);
+    mes "[A Nearby Soldier]";
+    mes "Watch out! Here comes another one!";
+    next;
+    monster "thor_camp",231,123,"Zombie",3452,1,"Serene#thorSereneB::onEnemyKill";
+    close;
+    end;
+onEnemyKill:
+    mes "[Serene]";
+    mes "Things are WAY worse than I expected.";
+    next;
+    mes "[Serene]";
+    mes "Seeing all of these bodies...I...";
+    next;
+    mes "[Serene]";
+    mes "Okay okay, onto the chief.";
+    MAINQ = 13;
+    questinfo_refresh();
+    getexp(20,20);
+    npcwalkto 235,117;
+    sleep2(500);
+    disablenpc strnpcinfo(0);
+    end;
+onTouch:
+    questinfo_refresh();
+    if (MAINQ != 12) {
+        disablenpc strnpcinfo(0);
+    }
+    end;
+onInit:
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "MAINQ == 12";
+	end;
+}
+
+thor_camp,40,95,3	script	Serene#thorSereneC	4_F_ANYA,{
+    
+function	EmotionWait	{
+    emotion getarg(0);
+    sleep2(1500);
+}
+
+switch(isbegin_quest(90017)) {
+    case 0:
+        if (MAINQ == 13) {
+            mes "[Serene]";
+            mes "Chief! I am Serene and this is " + strcharinfo(0) + ", we bring news from Dandago Mines.";
+            next;
+            mes "[Serene]";
+            mes "One of our teams was massacred by a group of undead...but it seems like you're already having problems of your own.";
+            next;
+            donpcevent "Chief Erickson#a::onAnger";
+            mes "[Chief Erickson]";
+            mes "For the love of...They already made their way into Dandago?!";
+            next;
+            if(select("Yeah.:It was a small group of skeletons.") == 2) {
+                mes "[Chief Erickson]";
+                mes "Scouts.";
+                mes " ";
+                mes "We found our own group of skellys skulkin' around the forge 3 days ago.";
+                next;
+                mes "[Chief Erickson]";
+                mes "...and then hell was unleashed upon us.";
+                next;
+            }
+            mes "[Chief Erickson]";
+            mes "Dunleth Camp has been under siege for the past 2 days now, and it's just getting worse.";
+            next;
+            mes "[Chief Erickson]";
+            mes "If the undead take Dunleth, then you can rest assured they will be coming full force for Dandago next.";
+            next;
+            emotion ET_QUESTION;
+            mes "[Serene]";
+            mes "Chief, if I may ask...what do you believe the cause of this to be? Dark magic?";
+            next;
+            mes "[Chief Erickson]";
+            mes "We have strong evidence to believe that this is the doing of the Utopian Empire.";
+            next;
+            mes "[Chief Erickson]";
+            mes "Biological warfare is the game these bloody cowards are playing.";
+            next;
+            mes "[Chief Erickson]";
+            mes "I've got work for you two.";
+            mes " ";
+            mes "We believe this plague is being distributed by machines. We need to eliminate them to end this.";
+            next;
+            mes "[Chief Erickson]";
+            mes "Go meet with Janessa north of camp. She's one of the best engineers we've got and I sent her out to study the machines' behavior.";
+            mes "Does that sound good to you?";
+            next;
+            switch(select("Yes, we will check it out.:Not right now.")) {
+                case 1:
+                    setquest 90017;
+                    JANESSA = 1;
+                    MAINQ = 14;
+                    mes "[Chief Erickson]";
+                    mes "Thank you! Good luck, it's getting worse outside of the camp.";
+                    next;
+                    sleep2(500);
+                    mes "[Serene]";
+                    mes strcharinfo(0) + ", I...I don't think I'm cut out for action in the field...";
+                    next;
+                    mes "[Serene]";
+                    mes "Exterminating pests back home was already tough enough sometimes...but now zombies and man-eating crystal spiders?";
+                    next;
+                    mes "[Serene]";
+                    mes "But don't take this the wrong way, I still want to help! I promise I will handle any administrative and diplomatic issues that arise back in town. You do the fighting, I'll take care of everything else!";
+                    next;
+                    mes "[Serene]";
+                    mes "Good luck with Janessa!";
+                    next;
+                    EmotionWait(ET_OK);
+                    end;
+                case 2:
+                    end;
+            }
+            end;
+        }
+}
+end;
+
+onMainQ14End:
+    mes "[Serene]";
+    mes "Hopefully this will slow down their advance towards Dundago as well.";
+    next;
+    emotion ET_SURPRISE;
+    setquest 90022;
+    mes "[Serene]";
+    mes strcharinfo(0) + "! Let's get back to Dundago and check in with Tango.";
+    end;
+onInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "MAINQ == 13 && isbegin_quest(90017) == 0";
+	end;
+}
+
+thor_camp,36,92,7	script	Chief Erickson#a	4_M_REKENBER,{
+    if (isbegin_quest(90021) == 1) {
+        completequest 90021;
+        MAINQ = 15;
+        mes "[Chief Erickson]";
+        mes "Ah " + strcharinfo(0) + ", you've come back from your rendezvous with Janessa.";
+        mes "What's your report?";
+        next;
+        if (!select("All known machines have been eliminated.")) end;
+        mes "[Chief Erickson]";
+        mes "Very nicely done! I believe we may have underestimated you. Please take this on behalf of Dunleth. You are welcome here anytime.";
+        next;
+        Zeny += 12000;
+        mes "You receive 12000 Zeny.";
+        mes " ";
+        mes "[Chief Erickson]";
+        mes "Without the machines spreading the bioweapon anymore, our citizens turning into undead abominations should come to a halt.";
+        close2;
+        doevent "Serene#thorSereneC::onMainQ14End";
+    }
+    end;
+onAnger:
+    emotion ET_ANGER;
+    end;
+onInit:
+	questinfo QTYPE_QUEST2,QMARK_YELLOW, "isbegin_quest(90021) == 1";
+	end;
+}
+
+thor_camp,36,99,7	script	Captain Erickson#a	4_M_BLACKMAN,{
+    erasequest 90021;
+    setquest 90021;
+    end;
+}
+
+thor_camp,203,46,2	script	#signThorA	4_BULLETIN_BOARD2,{
+	mes "-- Dunleth Hostel --";
+	close;
+	end;
+}
+
+thor_camp,211,39,2	script	#civilianA	4_F_EDEN_MASTER,{
+	mes "";
+	close;
+	end;
+}
+
+thor_camp,202,57,4	script	#civilianB	4_M_DST_MASTER,{
+	mes "";
+	close;
+	end;
+}
+
+thor_camp,193,30,6	script	#civilianC	4_M_BARD,{
+	mes "";
+	close;
+	end;
+}
+
+thor_camp,250,76,3	script	Kafra Employee::kaf_thorcamp	4_F_KAFRA1,6,6,{
+	cutin "kafra_01",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "thor_camp",210,82,1,1;
+	callfunc "F_KafEnd",0,1,"Greetings.";
+
+onTouch:
+    npctalk "Don't forget to Save your progress frequently.";
+    end;
+}
+
