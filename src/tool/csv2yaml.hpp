@@ -404,6 +404,7 @@ static bool itemdb_randomopt_group_yaml(void);
 static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
 static bool pc_levelpenalty_yaml();
 static bool mob_parse_row_chatdb(char* fields[], int columns, int current);
+static bool read_homunculus_expdb(const char* file);
 static bool pc_readdb_job2(char *fields[], int columns, int current);
 static bool pc_readdb_job_param(char *fields[], int columns, int current);
 static bool pc_readdb_job_exp(char *fields[], int columns, int current);
