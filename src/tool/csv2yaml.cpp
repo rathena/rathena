@@ -3533,12 +3533,16 @@ static bool read_homunculus_expdb(const char* file) {
 }
 // Copied and adjusted from mob.cpp
 static bool mob_readdb_group(char* str[], int columns, int current) {
-	std::string group_name = str[0];
+	if (strncasecmp(str[0], "MOBG_", 5) != 0) {
+		ShowError("The group named %s must start with 'MOBG_'.\n", str[0]);
+		return false;
+	}
+
 	uint16 mob_id = static_cast<uint16>(strtol(str[1], nullptr, 10));
 	bool is_default = mob_id == 0;
 
-	if (group_name.rfind("MOBG_", 0) == 0)
-		group_name.erase(0, 5);
+	std::string group_name = str[0];
+	group_name.erase(0, 5);
 	group_name = name2Upper(group_name);
 
 	s_randomsummon_group_csv2yaml *group = util::map_find(summon_group, group_name);
@@ -3552,7 +3556,7 @@ static bool mob_readdb_group(char* str[], int columns, int current) {
 	std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
 
 	if (!mob_name) {
-		ShowWarning("Unknown mob id %d for group %s.\n", mob_id, str[0]);
+		ShowError("Unknown mob id %d for group %s.\n", mob_id, str[0]);
 		return false;
 	}
 

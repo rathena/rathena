@@ -515,7 +515,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 	std::shared_ptr<s_randomsummon_entry> entry = nullptr;
 
 	do {
-		entry = util::vector_random(summon->list);
+		entry = util::umap_random(summon->list);
 		mob_id = entry->mob_id;
 		mob = mob_db.find(mob_id);
 	} while ((
@@ -526,7 +526,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		(flag&RMF_MOB_NOT_BOSS && status_has_mode(&mob->status,MD_STATUSIMMUNE) ) ||
 		(flag&RMF_MOB_NOT_SPAWN && !mob_has_spawn(mob_id)) ||
 		(flag&RMF_MOB_NOT_PLANT && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
-	) && (i++) < MAX_MOB_DB && summon->list.size() > 0);
+	) && (i++) < MAX_MOB_DB);
 
 	if (i >= MAX_MOB_DB && summon->default_mob_id > 0) {
 		ShowError("mob_get_random_id: no suitable monster found, use fallback for given list. Last_MobID: %d\n", mob_id);
@@ -5462,9 +5462,6 @@ const std::string MobSummonDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
-	if (!this->nodesExist(node, { "Group" })) {
-		return 0;
-	}
 	std::string group_name;
 
 	if (!this->asString(node, "Group", group_name))
@@ -5478,7 +5475,7 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 		return 0;
 	}
 
-	uint8 id = static_cast<uint8>(constant);
+	uint16 id = static_cast<uint16>(constant);
 
 	std::shared_ptr<s_randomsummon_group> summon = this->find(id);
 	bool exists = summon != nullptr;
@@ -5531,28 +5528,29 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asUInt32(mobit, "Rate", rate))
 				continue;
 
-			if (rate == 0) {	// remove
-				summon->list.erase( std::remove_if( summon->list.begin(), summon->list.end(),
-					[&] (std::shared_ptr<s_randomsummon_entry> const &v) { return (*v).mob_id == mob->vd.class_; } ), summon->list.end() );
+			uint16 mob_id = mob->vd.class_;
+			std::shared_ptr<s_randomsummon_entry> entry = util::umap_find(summon->list, mob_id);
+
+			bool exists = entry != nullptr;
+
+			if (rate == 0) {
+				if (!exists)
+					this->invalidWarning(mobit["Rate"], "Failed to remove %s, the monster doesn't exist in group %s.\n", mob_name.c_str(), group_name.c_str());
+				else
+					summon->list.erase(mob_id);
 				continue;
 			}
 
-			std::shared_ptr<s_randomsummon_entry> entry = nullptr;
-
-			std::vector<std::shared_ptr<s_randomsummon_entry>>::iterator it = 
-				std::find_if(summon->list.begin(), summon->list.end(), [&](std::shared_ptr<s_randomsummon_entry> const &v) {
-				return (*v).mob_id == mob->vd.class_;
-			});
-
-			if (it != summon->list.end())
-				entry = (*it);
-			else {
+			if (!exists) {
 				entry = std::make_shared<s_randomsummon_entry>();
 				entry->mob_id = mob->vd.class_;
 			}
 			entry->rate = rate;
 
-			summon->list.push_back(entry);
+			if (!exists)
+				summon->list.insert({ mob_id, entry });
+			else
+				summon->list[mob_id] = entry;
 		}
 	}
 
