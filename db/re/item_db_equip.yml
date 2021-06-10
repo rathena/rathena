@@ -19605,6 +19605,7 @@ Body:
     Script: |
       bonus bAtkEle,Ele_Holy;
       bonus bDex,4;
+      bonus bMatkRate,15;
       bonus2 bSubRace,RC_Demon,15;
       bonus2 bSubRace,RC_Undead,15;
   - Id: 2002
@@ -19639,23 +19640,22 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@r = getrefine();
+      .@r = min(14,getrefine());
       bonus bMatkRate,.@r;
-      bonus2 bMagicAddRace,RC_DemiHuman,15;
-      bonus2 bMagicAddRace,RC_Player_Human,15;
-      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25;
-      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,25;
       bonus bUnbreakableWeapon;
       if (.@r>5) {
-         bonus bMatkRate,5;
-         bonus2 bMagicAddRace,RC_DemiHuman,(min(14,.@r)-5)*2;
-         bonus2 bMagicAddRace,RC_Player_Human,(min(14,.@r)-5)*2;
+         .@bonus1 = 5;
+         .@bonus2 = (.@r-5) * 2;
       }
       if (.@r>8) {
          bonus5 bAutoSpellOnSkill,"WZ_STORMGUST","MG_SAFETYWALL",10,200,1;
          bonus5 bAutoSpellOnSkill,"WZ_METEOR","MG_SAFETYWALL",10,200,1;
          bonus5 bAutoSpellOnSkill,"WZ_VERMILION","MG_SAFETYWALL",10,200,1;
       }
+      bonus2 bMagicAddRace,RC_DemiHuman,15+.@bonus2;
+      bonus2 bMagicAddRace,RC_Player_Human,15+.@bonus2;
+      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25+.@bonus1+.@bonus2;
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,25+.@bonus1+.@bonus2;
   - Id: 2003
     AegisName: Destruction_Rod_M
     Name: Staff of Destruction
@@ -105443,7 +105443,6 @@ Body:
       NoAuction: true
     Script: |
       bonus bMaxHP,100;
-      bonus bMatk,15;
   - Id: 24588
     AegisName: S_Booster_Pandent
     Name: Booster Shadow Pendant
