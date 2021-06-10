@@ -73,14 +73,7 @@ const t_tick MOB_MAX_DELAY = 24 * 3600 * 1000;
 // holds Monster Spawn informations
 std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
-//Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
-#define MAX_ITEMRATIO_MOBS 10
-struct s_mob_item_drop_ratio {
-	t_itemid nameid;
-	int drop_ratio;
-	unsigned short mob_id[MAX_ITEMRATIO_MOBS];
-};
-static DBMap *mob_item_drop_ratio;
+MobItemRatioDatabase mob_item_drop_ratio;
 
 /// Mob skill struct for temporary storage
 struct s_mob_skill_db {
@@ -4158,19 +4151,17 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
 
 /**
  * Check if global item drop rate is overriden for given item
- * in db/mob_item_ratio.txt
+ * in db/mob_item_ratio.yml
  * @param nameid ID of the item
  * @param mob_id ID of the monster
  * @param rate_adjust pointer to store ratio if found
  */
 static void item_dropratio_adjust(t_itemid nameid, int mob_id, int *rate_adjust)
 {
-	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)uidb_get(mob_item_drop_ratio, nameid);
+	std::shared_ptr<s_mob_item_drop_ratio> item_ratio = mob_item_drop_ratio.find(nameid);
 	if( item_ratio) {
-		if( item_ratio->mob_id[0] ) { // only for listed mobs
-			int i;
-			ARR_FIND(0, MAX_ITEMRATIO_MOBS, i, item_ratio->mob_id[i] == mob_id);
-			if( i < MAX_ITEMRATIO_MOBS ) // found
+		if( !item_ratio->mob_id.empty() ) { // only for listed mobs
+			if (util::vector_exists(item_ratio->mob_id, static_cast<uint16>(mob_id)))
 				*rate_adjust = item_ratio->drop_ratio;
 		}
 		else // for all mobs
@@ -5931,51 +5922,103 @@ static int mob_read_sqlskilldb(void)
 	return 0;
 }
 
-/**
- * Read mob_item_ratio.txt
- */
-static bool mob_readdb_itemratio(char* str[], int columns, int current)
-{
-	t_itemid nameid;
-	int ratio, i;
-	struct s_mob_item_drop_ratio *item_ratio;
-	nameid = strtoul(str[0], nullptr, 10);
-
-	if (itemdb_exists(nameid) == NULL) {
-		ShowWarning("mob_readdb_itemratio: Invalid item id %u.\n", nameid);
-		return false;
-	}
-
-	ratio = atoi(str[1]);
-
-	if (!(item_ratio = (struct s_mob_item_drop_ratio *)uidb_get(mob_item_drop_ratio,nameid)))
-		CREATE(item_ratio, struct s_mob_item_drop_ratio, 1);
-
-	item_ratio->drop_ratio = ratio;
-	memset(item_ratio->mob_id, 0, sizeof(item_ratio->mob_id));
-	for (i = 0; i < columns-2; i++) {
-		uint16 mob_id = atoi(str[i+2]);
-		if (mob_db.find(mob_id) == nullptr)
-			ShowError("mob_readdb_itemratio: Invalid monster with ID %hu (Item:%u Col:%d).\n", mob_id, nameid, columns);
-		else
-			item_ratio->mob_id[i] = atoi(str[i+2]);
-	}
-
-	if (!item_ratio->nameid) {
-		item_ratio->nameid = nameid;
-		uidb_put(mob_item_drop_ratio, nameid, item_ratio);
-	}
-
-	return true;
+const std::string MobItemRatioDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/mob_item_ratio.yml";
 }
 
 /**
- * Free drop ratio data
- **/
-static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
-	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)db_data2ptr(data);
-	aFree(item_ratio);
-	return 0;
+ * Reads and parses an entry from the mob_item_ratio.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string item_name;
+
+	if (!this->asString(node, "Item", item_name))
+		return false;
+
+	item_data *item = itemdb_search_aegisname(item_name.c_str());
+
+	if (item == nullptr) {
+		this->invalidWarning(node["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());
+		return false;
+	}
+
+	t_itemid nameid = item->nameid;
+
+	std::shared_ptr<s_mob_item_drop_ratio> data = this->find(nameid);
+	bool exists = data != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Ratio" })) {
+			return 0;
+		}
+
+		data = std::make_shared<s_mob_item_drop_ratio>();
+		data->nameid = nameid;
+	}
+	
+	if (this->nodeExists(node, "Ratio")) {
+		uint16 ratio;
+
+		if (!this->asUInt16(node, "Ratio", ratio))
+			return 0;
+
+		data->drop_ratio = ratio;
+	}
+
+	if (this->nodeExists(node, "List")) {
+		const YAML::Node &MobNode = node["List"];
+
+		for (const YAML::Node &mobit : MobNode) {
+			if (this->nodeExists(mobit, "Clear")) {
+				std::string mob_name;
+
+				if (!this->asString(mobit, "Clear", mob_name))
+					continue;
+
+				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
+
+				if (mob == nullptr) {
+					this->invalidWarning(mobit["Clear"], "Unknown mob %s, skipping.\n", mob_name.c_str());
+					continue;
+				}
+				uint16 mob_id = mob->vd.class_;
+
+				if (!util::vector_exists(data->mob_id, mob_id)) {
+					this->invalidWarning(mobit["Clear"], "%s was not defined in the Mob List, skipping.\n", mob_name.c_str());
+					continue;
+				}
+
+				util::vector_erase_if_exists(data->mob_id, mob_id);
+				continue;
+			}
+
+			std::string mob_name;
+
+			if (!this->asString(mobit, "Mob", mob_name))
+				continue;
+
+			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
+
+			if (mob == nullptr) {
+				this->invalidWarning(mobit["Mob"], "Unknown mob %s, skipping.\n", mob_name.c_str());
+				continue;
+			}
+			uint16 mob_id = mob->vd.class_;
+			
+			
+			if (util::vector_exists(data->mob_id, mob_id))
+				continue;
+			
+			data->mob_id.push_back(mob_id);
+		}
+	}
+
+	if (!exists)
+		this->put(nameid, data);
+
+	return 1;
 }
 
 /**
@@ -6133,7 +6176,7 @@ static void mob_drop_ratio_adjust(void){
 	}
 
 	// Now that we are done we can delete the stored item ratios
-	mob_item_drop_ratio->clear( mob_item_drop_ratio, mob_item_drop_ratio_free );
+	mob_item_drop_ratio.clear();
 }
 
 /**
@@ -6239,12 +6282,12 @@ static void mob_load(void)
 		else
 			mob_readskilldb(dbsubpath2, silent);
 
-		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, silent);
 
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
 
+	mob_item_drop_ratio.load();
 	mob_avail_db.load();
 	mob_summon_db.load();
 
@@ -6262,7 +6305,6 @@ void mob_db_load(bool is_reload){
 		item_drop_ers = ers_new(sizeof(struct item_drop),"mob.cpp::item_drop_ers",ERS_OPT_CLEAN);
 		item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.cpp::item_drop_list_ers",ERS_OPT_NONE);
 	}
-	mob_item_drop_ratio = uidb_alloc(DB_OPT_BASE);
 	mob_load();
 }
 
@@ -6411,7 +6453,7 @@ void do_final_mob(bool is_reload){
 	mob_chat_db.clear();
 	mob_skill_db.clear();
 
-	mob_item_drop_ratio->destroy(mob_item_drop_ratio,mob_item_drop_ratio_free);
+	mob_item_drop_ratio.clear();
 	mob_summon_db.clear();
 	if( !is_reload ) {
 		ers_destroy(item_drop_ers);
