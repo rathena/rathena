@@ -344,6 +344,19 @@ enum e_element : int8{
 	ELE_RANDOM,
 };
 
+static std::unordered_map<std::string, e_element> um_eleid2elename {
+	{ "Neutral", ELE_NEUTRAL },
+	{ "Water", ELE_WATER },
+	{ "Earth", ELE_EARTH },
+	{ "Fire", ELE_FIRE },
+	{ "Wind", ELE_WIND },
+	{ "Poison", ELE_POISON },
+	{ "Holy", ELE_HOLY },
+	{ "Dark", ELE_DARK },
+	{ "Ghost", ELE_GHOST },
+	{ "Undead", ELE_UNDEAD },
+};
+
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
 
 /**
