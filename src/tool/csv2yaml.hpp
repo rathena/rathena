@@ -448,5 +448,6 @@ static bool exp_guild_parse_row(char* split[], int column, int current);
 static bool itemdb_read_group(char* fields[], int columns, int current);
 static bool itemdb_read_group_yaml(void);
 static bool mob_readdb_itemratio(char* fields[], int columns, int current);
+static bool status_readdb_attrfix(const char* file);
 
 #endif /* CSV2YAML_HPP */

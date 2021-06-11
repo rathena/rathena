@@ -87,9 +87,6 @@ struct Damage {
 	bool isspdamage; /// Display blue damage numbers in clif_damage
 };
 
-//(Used in read pc.cpp) attribute table (battle_attr_fix)
-extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
-
 // Damage Calculation
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int flag);
