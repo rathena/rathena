@@ -20578,6 +20578,14 @@ Body:
     MagicAttack: 300
     Range: 1
     Slots: 2
+    Jobs:
+      Mage: true
+      Acolyte: true
+      Monk: true
+      Priest: true
+      Sage: true
+      Wizard: true
+      SoulLinker: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
