@@ -50,6 +50,7 @@
 #include "pc_groups.hpp"
 #include "pet.hpp" // pet_unlocktarget()
 #include "quest.hpp"
+#include "skill.hpp" // skill_isCopyable()
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // OPTION_*, struct weapon_atk
@@ -5082,6 +5083,80 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 	}
 	return true;
 }
+
+bool pc_skill_plagiarism(struct map_session_data *sd, uint16 skill_id, int lv)
+{
+	if (sd != NULL) {
+		int idx = 0;
+
+		int type = skill_isCopyable(sd, skill_id);
+		skill_id = skill_dummy2skill_id(skill_id);
+		lv = cap_value(lv, 1, skill_get_max(skill_id));
+
+		//Use skill index, avoiding out-of-bound array [Cydh]
+		if (!(idx = skill_get_index(skill_id))) {
+			ShowWarning("pc_skill_plagiarism: invalild skill idx %d for skill %d.\n", idx, skill_id);
+			return false;
+		}
+
+		if (type == 1) {
+			pc_skill_plagiarism_reset(sd, type);
+
+			sd->cloneskill_idx = idx;
+			pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
+			pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), lv);
+		}
+		else if (type == 2) {
+			pc_skill_plagiarism_reset(sd, type);
+
+			sd->reproduceskill_idx = idx;
+			pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), skill_id);
+			pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), lv);
+		}
+
+		if (idx > 0) {
+			sd->status.skill[idx].id = skill_id;
+			sd->status.skill[idx].lv = lv;
+			sd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
+			clif_addskill(sd, skill_id);
+		}
+	}
+
+	return true;
+}
+
+bool pc_skill_plagiarism_reset(struct map_session_data *sd, int8 type)
+{
+	if (sd != NULL) {
+		int idx = 0;
+		if (type == 1) 
+			idx = sd->cloneskill_idx;
+		else if (type == 2)
+			idx = sd->reproduceskill_idx;
+
+		if (idx > 0 && sd->status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
+			int skill_id = sd->status.skill[idx].id;
+			sd->status.skill[idx].id = 0;
+			sd->status.skill[idx].lv = 0;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
+			clif_deleteskill(sd, skill_id);
+			
+			if (type == 1) {
+				sd->cloneskill_idx = 0;
+				pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), 0);
+				pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), 0);
+			}
+			else if (type == 2) {
+				sd->reproduceskill_idx = 0;
+				pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), 0);
+				pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
+			}
+		}
+	}
+	
+	return true;
+}
+
 /*==========================================
  * Append a card to an item ?
  *------------------------------------------*/
@@ -10297,27 +10372,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	if(sd->cloneskill_idx > 0) {
-		if( sd->status.skill[sd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-			sd->status.skill[sd->cloneskill_idx].id = 0;
-			sd->status.skill[sd->cloneskill_idx].lv = 0;
-			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM))));
-		}
-		sd->cloneskill_idx = 0;
-		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), 0);
-		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), 0);
+		pc_skill_plagiarism_reset(sd, 1);
 	}
 
 	if(sd->reproduceskill_idx > 0) {
-		if( sd->status.skill[sd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-			sd->status.skill[sd->reproduceskill_idx].id = 0;
-			sd->status.skill[sd->reproduceskill_idx].lv = 0;
-			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE))));
-		}
-		sd->reproduceskill_idx = 0;
-		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), 0);
-		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
+		pc_skill_plagiarism_reset(sd, 2);
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.

@@ -6277,6 +6277,24 @@ it just removes non-permanent script.
 
 ---------------------------------------
 
+*skill_plagiarism <skill_id>,<level>;
+
+Enable player to plagiarism a specified skill that are copyable.
+Return 1 if success, 0 otherwise.
+
+---------------------------------------
+
+*skill_plagiarism_reset <flag>;
+
+Enable player to remove a learned plagiarism skill.
+Return 1 if success, 0 otherwise.
+
+Flag constants:
+	1 - Use for Plagiarism Skill
+	2 - Use for Reproduce Skill
+
+---------------------------------------
+
 *skill <skill id>,<level>{,<flag>};
 *skill "<skill name>",<level>{,<flag>};
 *addtoskill <skill id>,<level>{,<flag>};
