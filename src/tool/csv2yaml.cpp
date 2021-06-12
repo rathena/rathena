@@ -3534,7 +3534,7 @@ static bool read_homunculus_expdb(const char* file) {
 // Copied and adjusted from mob.cpp
 static bool mob_readdb_group(char* str[], int columns, int current) {
 	if (strncasecmp(str[0], "MOBG_", 5) != 0) {
-		ShowError("The group named %s must start with 'MOBG_'.\n", str[0]);
+		ShowError("The group %s must start with 'MOBG_'.\n", str[0]);
 		return false;
 	}
 
@@ -3543,7 +3543,7 @@ static bool mob_readdb_group(char* str[], int columns, int current) {
 
 	std::string group_name = str[0];
 	group_name.erase(0, 5);
-	group_name = name2Upper(group_name);
+	std::transform(group_name.begin(), group_name.end(), group_name.begin(), ::toupper);
 
 	s_randomsummon_group_csv2yaml *group = util::map_find(summon_group, group_name);
 	bool exists = group != nullptr;

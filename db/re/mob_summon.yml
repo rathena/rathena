@@ -34,7 +34,7 @@ Header:
   Version: 1
 
 Body:
-  - Group: Bloody_Dead_Branch
+  - Group: BLOODY_DEAD_BRANCH
     Default: BAPHOMET
     Summon:
       - Mob: OSIRIS
@@ -129,7 +129,7 @@ Body:
         Rate: 500000
       - Mob: QUEEN_SCARABA
         Rate: 500000
-  - Group: Branch_Of_Dead_Tree
+  - Group: BRANCH_OF_DEAD_TREE
     Default: SCORPION
     Summon:
       - Mob: SCORPION
@@ -1090,7 +1090,7 @@ Body:
         Rate: 71428
       - Mob: BOTARING
         Rate: 142857
-  - Group: Classchange
+  - Group: CLASSCHANGE
     Default: BAPHOMET
     Summon:
       - Mob: OSIRIS
@@ -1141,7 +1141,7 @@ Body:
         Rate: 1000000
       - Mob: TAO_GUNKA
         Rate: 1000000
-  - Group: Poring_Box
+  - Group: PORING_BOX
     Default: PORING
     Summon:
       - Mob: PORING
@@ -1170,7 +1170,7 @@ Body:
         Rate: 1000000
       - Mob: BOTARING
         Rate: 400000
-  - Group: Red_Pouch_Of_Surprise
+  - Group: RED_POUCH_OF_SURPRISE
     Default: PORING
     Summon:
       - Mob: SCORPION
@@ -1833,7 +1833,7 @@ Body:
         Rate: 71428
       - Mob: TEDDY_BEAR
         Rate: 142857
-  - Group: Taekwon_Mission
+  - Group: TAEKWON_MISSION
     Default: SCORPION
     Summon:
       - Mob: SCORPION

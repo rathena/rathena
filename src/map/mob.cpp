@@ -497,7 +497,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 {
 	std::shared_ptr<s_randomsummon_group> summon = mob_summon_db.find(type);
 
-	if (type == MOBG_Bloody_Dead_Branch && flag&RMF_MOB_NOT_BOSS)
+	if (type == MOBG_BLOODY_DEAD_BRANCH && flag&RMF_MOB_NOT_BOSS)
 		flag = static_cast<e_random_monster_flags>(flag&~RMF_MOB_NOT_BOSS);
 	
 	if (!summon) {
@@ -509,30 +509,25 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		return 0;
 	}
 
-	std::shared_ptr<s_mob_db> mob;
-	uint32 i = 0;
-	uint16 mob_id = 0;
-	std::shared_ptr<s_randomsummon_entry> entry = nullptr;
+	for( size_t i = 0, max = summon->list.size() * 3; i < max; i++ ){
+		std::shared_ptr<s_randomsummon_entry> entry = util::umap_random( summon->list );
+		std::shared_ptr<s_mob_db> mob = mob_db.find( entry->mob_id );
 
-	do {
-		entry = util::umap_random(summon->list);
-		mob_id = entry->mob_id;
-		mob = mob_db.find(mob_id);
-	} while ((
-		mob == nullptr ||
-		mob_is_clone(mob_id) ||
-		(flag&RMF_DB_RATE && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
-		(flag&RMF_CHECK_MOB_LV && lv < mob->lv) ||
-		(flag&RMF_MOB_NOT_BOSS && status_has_mode(&mob->status,MD_STATUSIMMUNE) ) ||
-		(flag&RMF_MOB_NOT_SPAWN && !mob_has_spawn(mob_id)) ||
-		(flag&RMF_MOB_NOT_PLANT && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
-	) && (i++) < MAX_MOB_DB);
+		if(mob == nullptr ||
+			mob_is_clone( entry->mob_id ) ||
+			(flag&RMF_DB_RATE && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
+			(flag&RMF_CHECK_MOB_LV && lv < mob->lv) ||
+			(flag&RMF_MOB_NOT_BOSS && status_has_mode(&mob->status,MD_STATUSIMMUNE) ) ||
+			(flag&RMF_MOB_NOT_SPAWN && !mob_has_spawn( entry->mob_id )) ||
+			(flag&RMF_MOB_NOT_PLANT && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
+		){
+			continue;
+		}
 
-	if (i >= MAX_MOB_DB && summon->default_mob_id > 0) {
-		ShowError("mob_get_random_id: no suitable monster found, use fallback for given list. Last_MobID: %d\n", mob_id);
-		mob_id = summon->default_mob_id;
+		return entry->mob_id;
 	}
-	return mob_id;
+
+	return summon->default_mob_id;
 }
 
 /*==========================================
@@ -3049,7 +3044,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				((battle_config.taekwon_mission_mobname == 1 && util::vector_exists(status_get_race2(&md->bl), RC2_GOBLIN) && util::vector_exists(mission_mdb->race2, RC2_GOBLIN)) ||
 				(battle_config.taekwon_mission_mobname == 2 && mob->jname.compare(mission_mdb->jname) == 0))))
 			{ //TK_MISSION [Skotlex]
-				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, static_cast<e_random_monster_flags>(RMF_CHECK_MOB_LV|RMF_MOB_NOT_BOSS|RMF_MOB_NOT_SPAWN), sd->status.base_level)))
+				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_BRANCH_OF_DEAD_TREE, static_cast<e_random_monster_flags>(RMF_CHECK_MOB_LV|RMF_MOB_NOT_BOSS|RMF_MOB_NOT_SPAWN), sd->status.base_level)))
 				{
 					pc_addfame(sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
@@ -5470,7 +5465,7 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string group_name_constant = "MOBG_" + group_name;
 	int64 constant;
 
-	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < MOBG_Branch_Of_Dead_Tree || constant > MOBG_Taekwon_Mission) {
+	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < MOBG_BRANCH_OF_DEAD_TREE || constant >= MOBG_MAX) {
 		this->invalidWarning(node["Group"], "Invalid monster group %s.\n", group_name.c_str());
 		return 0;
 	}
@@ -5531,26 +5526,18 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 			uint16 mob_id = mob->vd.class_;
 			std::shared_ptr<s_randomsummon_entry> entry = util::umap_find(summon->list, mob_id);
 
-			bool exists = entry != nullptr;
-
 			if (rate == 0) {
-				if (!exists)
+				if (summon->list.erase(mob_id) == 0)
 					this->invalidWarning(mobit["Rate"], "Failed to remove %s, the monster doesn't exist in group %s.\n", mob_name.c_str(), group_name.c_str());
-				else
-					summon->list.erase(mob_id);
 				continue;
 			}
 
-			if (!exists) {
+			if (entry == nullptr) {
 				entry = std::make_shared<s_randomsummon_entry>();
 				entry->mob_id = mob->vd.class_;
+				summon->list[mob_id] = entry;
 			}
 			entry->rate = rate;
-
-			if (!exists)
-				summon->list.insert({ mob_id, entry });
-			else
-				summon->list[mob_id] = entry;
 		}
 	}
 
