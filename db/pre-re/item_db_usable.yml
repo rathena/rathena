@@ -1070,7 +1070,7 @@ Body:
       BuyingStore: true
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-1,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_BRANCH_OF_DEAD_TREE,1,"";
   - Id: 605
     AegisName: Anodyne
     Name: Anodyne
@@ -2724,7 +2724,7 @@ Body:
     Flags:
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-4,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_RED_POUCH_OF_SURPRISE,1,"";
   - Id: 12025
     AegisName: Egg_Boy
     Name: Dano Festival Egg
@@ -3584,7 +3584,7 @@ Body:
       BuyingStore: true
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-3,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_BLOODY_DEAD_BRANCH,1,"";
   - Id: 12104
     AegisName: Random_Quiver
     Name: Random Quiver
@@ -3656,7 +3656,7 @@ Body:
       BuyingStore: true
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-2,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_PORING_BOX,1,"";
   - Id: 12110
     AegisName: First_Aid_Kit
     Name: First Aid Kit

@@ -108,12 +108,13 @@ enum e_size : uint8 {
 
 /// Random Monster Groups
 enum e_random_monster : uint16 {
-	MOBG_Branch_Of_Dead_Tree = 0,
-	MOBG_Poring_Box,
-	MOBG_Bloody_Dead_Branch,
-	MOBG_Red_Pouch_Of_Surprise,
-	MOBG_ClassChange,
-	MOBG_Taekwon_Mission,
+	MOBG_BRANCH_OF_DEAD_TREE = 0,
+	MOBG_PORING_BOX,
+	MOBG_BLOODY_DEAD_BRANCH,
+	MOBG_RED_POUCH_OF_SURPRISE,
+	MOBG_CLASSCHANGE,
+	MOBG_TAEKWON_MISSION,
+	MOBG_MAX,
 };
 
 /// Random Monster Group Flags
@@ -121,7 +122,7 @@ enum e_random_monster_flags {
 	RMF_NONE			= 0x00, ///< Apply no flags
 	RMF_DB_RATE			= 0x01, ///< Apply the summon success chance found in the list (otherwise get any monster from the db)
 	RMF_CHECK_MOB_LV	= 0x02, ///< Apply a monster level check
-	RMF_MOB_NOT_BOSS	= 0x04, ///< Selected monster should not be a Boss type (except those from MOBG_Bloody_Dead_Branch)
+	RMF_MOB_NOT_BOSS	= 0x04, ///< Selected monster should not be a Boss type (except those from MOBG_BLOODY_DEAD_BRANCH)
 	RMF_MOB_NOT_SPAWN	= 0x08, ///< Selected monster must have normal spawn
 	RMF_MOB_NOT_PLANT	= 0x10, ///< Selected monster should not be a Plant type
 	RMF_ALL				= 0xFF, ///< Apply all flags
@@ -337,6 +338,27 @@ public:
 	void clear() { };
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+struct s_randomsummon_entry {
+	uint16 mob_id;
+	uint32 rate;
+};
+
+struct s_randomsummon_group {
+	uint16 random_id;
+	uint16 default_mob_id;
+	std::unordered_map<uint16, std::shared_ptr<s_randomsummon_entry>> list;
+};
+
+class MobSummonDatabase : public TypesafeYamlDatabase<uint16, s_randomsummon_group> {
+public:
+	MobSummonDatabase() : TypesafeYamlDatabase("MOB_SUMMONABLE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
 };
 
 enum e_mob_skill_target {
