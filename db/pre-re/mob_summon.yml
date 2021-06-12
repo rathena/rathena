@@ -22,7 +22,7 @@
 # Summonable Monsters Settings
 #
 ###########################################################################
-# - Group                   Monster random group name. "MOBG_" is appended during the parsing.
+# - Group                   Monster random group name. "MOBG_" is appended to the name during the parsing.
 #   Default                 Monster AegisName summoned by default when the summon fails.
 #   Summon:                 List of Summonable Monsters.
 #     - Mob                 Monster AegisName.

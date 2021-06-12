@@ -527,6 +527,11 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		return entry->mob_id;
 	}
 
+	if (mob_db.find( summon->default_mob_id ) == nullptr) {
+		ShowError("mob_get_random_id: Default monster is not defined for type %d.\n", type);
+		return 0;
+	}
+
 	return summon->default_mob_id;
 }
 
@@ -5524,13 +5529,14 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 				continue;
 
 			uint16 mob_id = mob->vd.class_;
-			std::shared_ptr<s_randomsummon_entry> entry = util::umap_find(summon->list, mob_id);
 
 			if (rate == 0) {
 				if (summon->list.erase(mob_id) == 0)
 					this->invalidWarning(mobit["Rate"], "Failed to remove %s, the monster doesn't exist in group %s.\n", mob_name.c_str(), group_name.c_str());
 				continue;
 			}
+
+			std::shared_ptr<s_randomsummon_entry> entry = util::umap_find(summon->list, mob_id);
 
 			if (entry == nullptr) {
 				entry = std::make_shared<s_randomsummon_entry>();

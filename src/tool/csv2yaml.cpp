@@ -3531,6 +3531,7 @@ static bool read_homunculus_expdb(const char* file) {
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
 	return true;
 }
+
 // Copied and adjusted from mob.cpp
 static bool mob_readdb_group(char* str[], int columns, int current) {
 	if (strncasecmp(str[0], "MOBG_", 5) != 0) {
