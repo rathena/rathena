@@ -69,6 +69,19 @@ struct s_random_opt_group_csv : s_random_opt_group {
 std::unordered_map<uint16, std::string> rand_opt_db;
 std::unordered_map<uint16, s_random_opt_group_csv> rand_opt_group;
 
+struct s_randomsummon_entry_csv2yaml {
+	std::string mob_name;
+	uint32 rate;
+};
+
+struct s_randomsummon_group_csv2yaml {
+	std::string group_name,
+		default_mob;
+	std::vector<std::shared_ptr<s_randomsummon_entry_csv2yaml>> list;
+};
+
+std::map<std::string, s_randomsummon_group_csv2yaml> summon_group;
+
 static std::map<std::string, int> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
 	{ "SuperNovice", JOB_NOVICE },
@@ -382,5 +395,7 @@ static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
 static bool pc_levelpenalty_yaml();
 static bool mob_parse_row_chatdb(char* fields[], int columns, int current);
 static bool read_homunculus_expdb(const char* file);
+static bool mob_readdb_group(char* str[], int columns, int current);
+static bool mob_readdb_group_yaml(void);
 
 #endif /* CSV2YAML_HPP */

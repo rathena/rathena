@@ -77,6 +77,26 @@ static void mob_txt_data(const std::string &modePath, const std::string &fixedPa
 		sv_readdb(modePath.c_str(), "mob_drop.txt", ',', 3, 5, -1, mob_readdb_drop, false);
 }
 
+// Branch database data to memory
+static void branch_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	summon_group.clear();
+
+	if (fileExists(modePath + "/mob_branch.txt"))
+		sv_readdb(modePath.c_str(), "mob_branch.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(modePath + "/mob_random_db.txt"))
+		sv_readdb(modePath.c_str(), "mob_random_db.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(modePath + "/mob_poring.txt"))
+		sv_readdb(modePath.c_str(), "mob_poring.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(modePath + "/mob_boss.txt"))
+		sv_readdb(modePath.c_str(), "mob_boss.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(fixedPath + "/mob_pouch.txt"))
+		sv_readdb(fixedPath.c_str(), "mob_pouch.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(fixedPath + "/mob_mission.txt"))
+		sv_readdb(fixedPath.c_str(), "mob_mission.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(fixedPath + "/mob_classchange.txt"))
+		sv_readdb(fixedPath.c_str(), "mob_classchange.txt", ',', 4, 4, -1, mob_readdb_group, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -300,6 +320,20 @@ int do_init( int argc, char** argv ){
 	if (!process("HOMUN_EXP_DB", 1, { path_db_import }, "exp_homun", [](const std::string &path, const std::string &name_ext) -> bool {
 		return read_homunculus_expdb((path + name_ext).c_str());
 	})) {
+		return 0;
+	}
+
+	branch_txt_data(path_db_mode, path_db);
+	if (!process("MOB_SUMMONABLE_DB", 1, { path_db_mode }, "mob_branch", [](const std::string &path, const std::string &name_ext) -> bool {
+		return mob_readdb_group_yaml();
+	}, "mob_summon")) {
+		return 0;
+	}
+
+	branch_txt_data(path_db_import, path_db_import);
+	if (!process("MOB_SUMMONABLE_DB", 1, { path_db_import }, "mob_branch", [](const std::string &path, const std::string &name_ext) -> bool {
+		return mob_readdb_group_yaml();
+	}, "mob_summon")) {
 		return 0;
 	}
 
@@ -3495,5 +3529,81 @@ static bool read_homunculus_expdb(const char* file) {
 
 	fclose(fp);
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+	return true;
+}
+
+// Copied and adjusted from mob.cpp
+static bool mob_readdb_group(char* str[], int columns, int current) {
+	if (strncasecmp(str[0], "MOBG_", 5) != 0) {
+		ShowError("The group %s must start with 'MOBG_'.\n", str[0]);
+		return false;
+	}
+
+	uint16 mob_id = static_cast<uint16>(strtol(str[1], nullptr, 10));
+	bool is_default = mob_id == 0;
+
+	std::string group_name = str[0];
+	group_name.erase(0, 5);
+	std::transform(group_name.begin(), group_name.end(), group_name.begin(), ::toupper);
+
+	s_randomsummon_group_csv2yaml *group = util::map_find(summon_group, group_name);
+	bool exists = group != nullptr;
+
+	s_randomsummon_group_csv2yaml group_entry;
+
+	if (is_default)
+		mob_id = static_cast<uint16>(strtol(str[3], nullptr, 10));
+	
+	std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+
+	if (!mob_name) {
+		ShowError("Unknown mob id %d for group %s.\n", mob_id, str[0]);
+		return false;
+	}
+
+	if (!exists) {
+		group_entry.default_mob = *mob_name;
+		group_entry.group_name = group_name;
+	}
+
+	if (is_default) {
+		if (exists)
+			group->default_mob = *mob_name;
+		else
+			summon_group.insert({ group_name, group_entry });
+	}
+	else {
+		std::shared_ptr<s_randomsummon_entry_csv2yaml> entry = std::make_shared<s_randomsummon_entry_csv2yaml>();
+
+		entry->mob_name = *mob_name;
+		entry->rate = strtol(str[3], nullptr, 10);
+
+		if (exists)
+			group->list.push_back(entry);
+		else {
+			group_entry.list.push_back(entry);
+			summon_group.insert({ group_name, group_entry });
+		}
+	}
+
+	return true;
+}
+
+static bool mob_readdb_group_yaml(void) {
+	for (const auto &it : summon_group) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Group" << YAML::Value << it.first;
+		body << YAML::Key << "Default" << YAML::Value << it.second.default_mob;
+		body << YAML::Key << "Summon";
+		body << YAML::BeginSeq;
+		for (const auto &sumit : it.second.list) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Mob" << YAML::Value << sumit->mob_name;
+			body << YAML::Key << "Rate" << YAML::Value << sumit->rate;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
 	return true;
 }
