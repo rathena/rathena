@@ -9687,7 +9687,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,pow(.@r,2);
+      bonus bBaseAtk,(.@r<=15?pow(.@r,2):225);
       bonus bBaseAtk,(max(0,BaseLevel-70)/10)*5;
   - Id: 1499
     AegisName: Requiem_Lance
@@ -11797,7 +11797,6 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bMatkRate,15;
       bonus bInt,3;
       bonus bDex,2;
       bonus bCritical,20+((readparam(bLuk)*2)/10);
@@ -12249,8 +12248,8 @@ Body:
       bonus bInt,1;
       bonus2 bAddRace,RC_DemiHuman,35;
       bonus2 bAddRace,RC_Player_Human,35;
-      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,10;
-      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,10;
+      bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,10;
   - Id: 1598
     AegisName: Snake_Encyclopedia_
     Name: Daizenshu Dakatsu
@@ -12750,6 +12749,7 @@ Body:
     Refineable: true
     Script: |
       bonus bVariableCastrate,-5;
+      bonus bAtkEle,Ele_Wind;
   - Id: 1617
     AegisName: Survival_Rod
     Name: Survivor's Rod
@@ -12932,7 +12932,6 @@ Body:
     Script: |
       bonus bInt,4;
       bonus bStr,10;
-      bonus bMatkRate,5;
       bonus bSPDrainValue,-1;
   - Id: 1624
     AegisName: Lich_Bone_Wand
@@ -13051,8 +13050,6 @@ Body:
       NoAuction: true
     Script: |
       bonus bInt,4;
-      bonus bMatkRate,15;
-      bonus2 bAddClass,Class_All,50;
   - Id: 1628
     AegisName: Survival_Rod_C
     Name: Refined Survivor's Rod
@@ -13085,7 +13082,6 @@ Body:
       NoAuction: true
     Script: |
       bonus bDex,4;
-      bonus bMatkRate,20;
       bonus bMaxHP,500;
   - Id: 1629
     AegisName: Walking_Stick
@@ -13113,7 +13109,6 @@ Body:
     Refineable: true
     Script: |
       bonus bDex,1;
-      bonus bMatkRate,15;
   - Id: 1630
     AegisName: Release_Of_Wish
     Name: Release of Wish
@@ -13401,7 +13396,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bAtkEle,Ele_Holy;
-      bonus bHealPower,(getrefine()*3/2);
+      bonus bHealPower,15;
   - Id: 1639
     AegisName: N_Rod
     Name: Novice Rod
@@ -14066,7 +14061,7 @@ Body:
       All_Third: true
     Locations:
       Right_Hand: true
-    WeaponLevel: 3
+    WeaponLevel: 4
     EquipLevelMin: 130
     Refineable: true
     Script: |
@@ -14428,7 +14423,6 @@ Body:
       bonus bDex,2;
       bonus bDelayrate,-10;
       bonus2 bSPLossRate,5,12000;
-      bonus bUnbreakableWeapon;
   - Id: 1674
     AegisName: Half_BF_Staff2
     Name: Half BF Staff2
@@ -14456,8 +14450,7 @@ Body:
       bonus bDex,3;
       bonus2 bMagicAddRace,RC_DemiHuman,10;
       bonus2 bMagicAddRace,RC_Player_Human,10;
-      bonus3 bAddEff,Eff_Stun,200,ATF_SKILL;
-      bonus bUnbreakableWeapon;
+      bonus3 bAddEff,Eff_Stun,200,ATF_MAGIC;
   - Id: 1675
     AegisName: Walking_Stick_
     Name: Gentleman's Staff
@@ -14511,8 +14504,6 @@ Body:
     EquipLevelMin: 80
     Refineable: true
     Script: |
-      bonus bAtkEle,Ele_Dark;
-      bonus bUnbreakableWeapon;
       bonus bVariableCastrate,-10;
       if (BaseLevel > 99) {
          bonus bMatk,30;
@@ -14549,6 +14540,7 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 50
+    MagicAttack: 170
     Range: 1
     Slots: 2
     Jobs:
@@ -14620,7 +14612,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bInt,4;
-      bonus bMatk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bMatk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
       bonus bUnbreakableWeapon;
   - Id: 1681
     AegisName: Short_Foxtail_Staff
@@ -14651,7 +14643,6 @@ Body:
     Type: Weapon
     SubType: Staff
     Weight: 600
-    Attack: 70
     MagicAttack: 130
     Range: 1
     Slots: 2
@@ -14689,6 +14680,7 @@ Body:
     Refineable: true
     Script: |
       bonus bMaxSP,50;
+      bonus bUnbreakableWeapon;
   - Id: 1684
     AegisName: Long_Foxtail
     Name: Long Foxtail Staff
@@ -14709,6 +14701,7 @@ Body:
     Script: |
       bonus bLongAtkRate,5;
       bonus bMaxHP,200;
+      bonus bUnbreakableWeapon;
   - Id: 1685
     AegisName: DragonFry_Foxtail
     Name: Dragonfly Sitting Foxtail Staff
@@ -14731,6 +14724,7 @@ Body:
       bonus bInt,1;
       bonus bMaxHP,100;
       bonus bMaxSP,150;
+      bonus bUnbreakableWeapon;
   - Id: 1686
     AegisName: BigSize_Foxtail
     Name: Large Foxtail Staff
@@ -14753,6 +14747,7 @@ Body:
       bonus bDex,1;
       bonus bMaxHP,200;
       bonus bMaxSP,100;
+      bonus bUnbreakableWeapon;
   - Id: 1687
     AegisName: Beginner_FoxTail
     Name: Beginner Foxtail Staff
@@ -14781,12 +14776,13 @@ Body:
       NoAuction: true
     Script: |
       bonus bMaxHP,100;
+      bonus bUnbreakableWeapon;
   - Id: 1690
     AegisName: Amazing_Foxtail
     Name: Mysterious Foxtail Staff
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 10000
     Weight: 400
     Attack: 80
     MagicAttack: 180
@@ -14803,12 +14799,13 @@ Body:
       .@r = getrefine();
       bonus bMaxSP,10*(.@r/3)+50;
       bonus bMatk,10*(.@r/3);
+      bonus bUnbreakableWeapon;
   - Id: 1691
     AegisName: Strange_Foxtail
     Name: Strange God Foxtail Staff
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 50000
     Weight: 500
     Attack: 100
     MagicAttack: 240
@@ -14837,7 +14834,7 @@ Body:
     Name: Magical Foxtail Staff
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 100000
     Weight: 600
     Attack: 120
     MagicAttack: 260
@@ -14860,12 +14857,13 @@ Body:
          bonus bBaseAtk,(24*.@r)+48;
          bonus bMatk,(52*.@r)+104;
       }
+      bonus bUnbreakableWeapon;
   - Id: 1693
     AegisName: Magical_Y_Foxtail
     Name: Magical Yellow Foxtail Staff
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 200000
     Weight: 700
     Attack: 140
     MagicAttack: 280
@@ -14888,12 +14886,13 @@ Body:
          bonus bBaseAtk,(28*.@r)+56;
          bonus bMatk,(56*.@r)+112;
       }
+      bonus bUnbreakableWeapon;
   - Id: 1694
     AegisName: Model_Foxtail
     Name: Foxtail Model
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 10000
     Weight: 300
     Attack: 150
     Range: 1
@@ -14916,7 +14915,7 @@ Body:
     Name: Delicate Foxtail Model
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 50000
     Weight: 300
     Attack: 195
     Range: 1
@@ -14943,7 +14942,7 @@ Body:
     Name: Exquisite Foxtail Model
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 100000
     Weight: 300
     Attack: 240
     Range: 1
@@ -14970,7 +14969,7 @@ Body:
     Name: Exquisite Yellow Foxtail Model
     Type: Weapon
     SubType: Staff
-    Buy: 20
+    Buy: 200000
     Weight: 300
     Attack: 270
     Range: 1
@@ -15008,6 +15007,7 @@ Body:
       Mage: true
       Novice: true
       SuperNovice: true
+      SoulLinker: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -15804,7 +15804,10 @@ Body:
     Range: 5
     Slots: 3
     Jobs:
+      Archer: true
+      BardDancer: true
       Hunter: true
+      Rogue: true
     Classes:
       All_Upper: true
     Locations:
@@ -15835,7 +15838,6 @@ Body:
     Refineable: true
     Script: |
       autobonus "{ bonus bAspdRate,7; }",10+(getrefine()*2),7000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
-      bonus2 bAddSkillBlow,"AC_CHARGEARROW",3;
   - Id: 1738
     AegisName: BF_Bow1
     Name: Valorous Battle CrossBow
@@ -17120,7 +17122,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
       bonus bUnbreakableWeapon;
   - Id: 1840
     AegisName: Requiem_Knuckle
@@ -18385,7 +18387,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
   - Id: 1940
     AegisName: Trumpet_Shell
     Name: Trumpet Shell
@@ -19503,7 +19505,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
   - Id: 1996
     AegisName: Sinister_Wire
     Name: Wire of Vicious Mind
@@ -19638,24 +19640,22 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@r = getrefine();
+      .@r = min(14,getrefine());
       bonus bMatkRate,.@r;
-      bonus2 bMagicAddRace,RC_DemiHuman,15;
-      bonus2 bMagicAddRace,RC_Player_Human,15;
-      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25;
-      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,25;
       bonus bUnbreakableWeapon;
       if (.@r>5) {
-         bonus2 bMagicAddRace,RC_DemiHuman,(min(14,.@r)-5)*2;
-         bonus2 bMagicAddRace,RC_Player_Human,(min(14,.@r)-5)*2;
-         bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5+(min(14,.@r)-5)*2;
-         bonus2 bIgnoreMdefRaceRate,RC_Player_Human,5+(min(14,.@r)-5)*2;
+         .@bonus1 = 5;
+         .@bonus2 = (.@r-5) * 2;
       }
       if (.@r>8) {
          bonus5 bAutoSpellOnSkill,"WZ_STORMGUST","MG_SAFETYWALL",10,200,1;
          bonus5 bAutoSpellOnSkill,"WZ_METEOR","MG_SAFETYWALL",10,200,1;
          bonus5 bAutoSpellOnSkill,"WZ_VERMILION","MG_SAFETYWALL",10,200,1;
       }
+      bonus2 bMagicAddRace,RC_DemiHuman,15+.@bonus2;
+      bonus2 bMagicAddRace,RC_Player_Human,15+.@bonus2;
+      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,25+.@bonus1+.@bonus2;
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,25+.@bonus1+.@bonus2;
   - Id: 2003
     AegisName: Destruction_Rod_M
     Name: Staff of Destruction
@@ -19687,7 +19687,7 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine();
-      bonus bMatkRate,.@r/2;
+      bonus bMatkRate,25+(.@r/2);
       bonus bInt,3;
       bonus bAgi,10;
       bonus bUseSPrate,(.@r*2);
@@ -19768,6 +19768,7 @@ Body:
       bonus bInt,6;
       bonus bMaxSP,150;
       bonus bMatkRate,18;
+      bonus bAtkEle,Ele_Holy;
   - Id: 2007
     AegisName: Golden_Rod_Staff
     Name: Golden Rod Staff
@@ -20281,6 +20282,7 @@ Body:
     Buy: 20
     Weight: 1000
     Attack: 100
+    MagicAttack: 150
     Range: 1
     Slots: 2
     Jobs:
@@ -20296,7 +20298,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bInt,5;
-      bonus bMatk,150+((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bMatk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
   - Id: 2026
     AegisName: Sinister_Staff
     Name: Staff of Vicious Mind
@@ -20576,6 +20578,14 @@ Body:
     MagicAttack: 300
     Range: 1
     Slots: 2
+    Jobs:
+      Mage: true
+      Acolyte: true
+      Monk: true
+      Priest: true
+      Sage: true
+      Wizard: true
+      SoulLinker: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -61089,7 +61099,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
   - Id: 13455
     AegisName: Sinister_Saber
     Name: Saber of Vicious Mind
@@ -67210,7 +67220,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
   - Id: 16041
     AegisName: Sinister_Mace
     Name: Mace of Vicious Mind
@@ -68606,7 +68616,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
   - Id: 18132
     AegisName: Unity_Bow
     Name: Unity Bow
@@ -93283,7 +93293,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
       bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);
   - Id: 21016
     AegisName: Sinister_Twohand_Sword
@@ -104302,7 +104312,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus3 bAutoSpell,"SO_PSYCHIC_WAVE",3,1+(.@r>=7?1:0)+(.@r>=9?2:0);
+      bonus3 bAutoSpell,"SO_PSYCHIC_WAVE",3,1+(.@r>=7?10:0)+(.@r>=9?20:0);
   - Id: 24528
     AegisName: S_Shadowspell_Pendant
     Name: Shadowspell Shadow Pendant
@@ -106661,7 +106671,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bMagicAddSize,Size_All,5+2*(getrefine()/2);
+      bonus2 bMagicAddSize,Size_All,5+(getrefine()/2);
   - Id: 24657
     AegisName: S_S_Armor
     Name: Es Shadow Armor
@@ -108339,7 +108349,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
   - Id: 28008
     AegisName: Sinister_Katar
     Name: Katar of Vicious Mind
@@ -108967,7 +108977,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
       bonus bUnbreakableWeapon;
   - Id: 28107
     AegisName: Sinister_Twohand_Axe
@@ -112679,7 +112689,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
       bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);
   - Id: 28605
     AegisName: Sinister_Book
@@ -113408,7 +113418,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      bonus bBaseAtk,(((BaseLevel-70)/10)*5)+(.@r<=15?pow(.@r,2):225);
       bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);
   - Id: 28706
     AegisName: Sinister_Dagger
