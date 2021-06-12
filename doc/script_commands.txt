@@ -4901,8 +4901,8 @@ Example to get Crimson Weapon with Ghost property:
 
 ---------------------------------------
 
-*makeitem <item id>,<amount>,"<map name>",<X>,<Y>;
-*makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
+*makeitem <item id>,<amount>,"<map name>",<X>,<Y>{,<canShowEffect>};
+*makeitem "<item name>",<amount>,"<map name>",<X>,<Y>{,<canShowEffect>};
 
 This command will create an item on the specified cell of a map.
 
@@ -4913,13 +4913,14 @@ given amount, not multiple stacks of 1.
 Like 'getitem', it also accepts an 'english name' field from the database and creates
 Apples if the name isn't found.
 If the map name is given as "this", the map the invoking character is on will be used.
+If <canShowEffect> flag is set to true, it will show a pillar effect on the ground when dropped, depending on the item database's DropEffect flag.
 
 ---------------------------------------
 
-*makeitem2 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
-*makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
-*makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
-*makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
+*makeitem2 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<canShowEffect>};
+*makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<canShowEffect>};
+*makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+*makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
 
 This command will create an item on the specified cell of a map. See 'makeitem' for
 further details.
