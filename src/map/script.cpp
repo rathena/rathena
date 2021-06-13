@@ -25666,6 +25666,7 @@ BUILDIN_FUNC(naviregisterwarp) {
 	link.pos = nd->navi.pos;
 	link.warp_dest = {m, x, y};
 	link.name = warpname;
+	link.hidden = nd->navi.hidden;
 
 	nd->links.push_back(link);
 	
@@ -25700,6 +25701,7 @@ BUILDIN_FUNC(mob_setidleevent){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+<<<<<<< HEAD
 BUILDIN_FUNC( openstylist ){
 #if PACKETVER >= 20151104
 	struct map_session_data* sd;
@@ -25715,6 +25717,23 @@ BUILDIN_FUNC( openstylist ){
 	ShowError( "buildin_openstylist: This command requires packet version 2015-11-04 or newer.\n" );
 	return SCRIPT_CMD_FAILURE;
 #endif
+=======
+BUILDIN_FUNC(navihide) {
+#ifdef GENERATE_NAVI
+	TBL_NPC *nd;
+
+	nd = map_id2nd(st->oid);
+	if (!nd) {
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	nd->navi.hidden = true;
+	for (auto &link : nd->links) {
+		link.hidden = true;
+	}
+#endif
+return SCRIPT_CMD_SUCCESS;
+>>>>>>> 2cdd0d722... Add ability to hide an npc
 }
 
 #include "../custom/script.inc"
@@ -26426,6 +26445,8 @@ struct script_function buildin_func[] = {
 
 	// Navigation Generation System
 	BUILDIN_DEF(naviregisterwarp, "ssii"),
+	BUILDIN_DEF(navihide, ""),
+
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

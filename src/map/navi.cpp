@@ -363,8 +363,8 @@ void write_spawn(std::ostream &os, const struct map_data * m, const std::shared_
 #else
 	os << "\t\t" << mobinfo->vd.class_ << ", ";
 #endif
-	os << "\"" << mobinfo->jname << "\", ";
-	os << "\"" << mobinfo->sprite << "\", ";
+	os << "\"" << mobinfo->jname.c_str() << "\", "; //c_str'ed because the strings have been resized to 24
+	os << "\"" << mobinfo->sprite.c_str() << "\", ";
 	os << "" << mobinfo->lv << ", ";
 	os << "" << 
 		(((mobinfo->status.ele_lv * 20 + mobinfo->status.def_ele) << 16)
@@ -411,7 +411,9 @@ void write_object_lists() {
 				map[target].navi.warps_into.push_back(&nd->navi);
 				
 			} else { // Other NPCs
-				if (nd->class_ == -1 || nd->class_ == JT_HIDDEN_NPC || nd->class_ == JT_HIDDEN_WARP_NPC || nd->class_ == JT_GUILD_FLAG)
+				if (nd->class_ == -1 || nd->class_ == JT_HIDDEN_NPC
+					|| nd->class_ == JT_HIDDEN_WARP_NPC || nd->class_ == JT_GUILD_FLAG
+					|| nd->navi.hidden)
 					continue;
 				
 				nd->navi.id = 11984 + npc_count;

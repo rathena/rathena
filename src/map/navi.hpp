@@ -24,6 +24,7 @@ struct navi_link {
 	int id;
 	struct navi_pos pos;
 	struct navi_pos warp_dest; // only set for warps
+	bool hidden; // hidden by script
 	std::string name; // custom name
 };
 
