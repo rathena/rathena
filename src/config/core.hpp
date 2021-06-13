@@ -69,7 +69,7 @@
 #define SCRIPT_CONSTANT_DEPRECATION
 
 // Uncomment to have the map server generate the client's navigation files
-#define GENERATE_NAVI
+//#define GENERATE_NAVI
 
 // Uncomment to enable deprecated support for Windows XP and lower
 // Note:
