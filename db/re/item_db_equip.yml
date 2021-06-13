@@ -107340,7 +107340,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,15;
+      bonus bBaseAtk,15;
       bonus bMaxHP,100;
   - Id: 24698
     AegisName: S_2Para_RK_Weapon
@@ -107364,7 +107364,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24699
     AegisName: S_2Para_LG_Weapon
@@ -107388,7 +107388,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24700
     AegisName: S_2Para_NC_Weapon
@@ -107412,7 +107412,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24701
     AegisName: S_2Para_GN_Weapon
@@ -107436,7 +107436,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24702
     AegisName: S_2Para_GC_Weapon
@@ -107460,7 +107460,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24703
     AegisName: S_2Para_SC_Weapon
@@ -107484,7 +107484,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24704
     AegisName: S_2Para_WL_Weapon
@@ -107508,7 +107508,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24705
     AegisName: S_2Para_SO_Weapon
@@ -107532,7 +107532,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24706
     AegisName: S_2Para_AB_Weapon
@@ -107556,7 +107556,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24707
     AegisName: S_2Para_SR_Weapon
@@ -107580,7 +107580,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24708
     AegisName: S_2Para_RA_Weapon
@@ -107604,7 +107604,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24709
     AegisName: S_2Para_WM_Weapon
@@ -107628,7 +107628,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24710
     AegisName: S_2Para_KO_Weapon
@@ -107650,7 +107650,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24711
     AegisName: S_2Para_RL_Weapon
@@ -107672,7 +107672,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24712
     AegisName: S_2Para_SJ_Weapon
@@ -107696,7 +107696,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24713
     AegisName: S_2Para_SP_Weapon
@@ -107720,7 +107720,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24714
     AegisName: S_2Para_SU_Weapon
@@ -107742,7 +107742,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 24715
     AegisName: S_2Para_NV_Weapon
@@ -107764,7 +107764,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,10;
+      bonus bBaseAtk,10;
       bonus bMatk,10;
   - Id: 26001
     AegisName: Toughen_Metal_Lance
