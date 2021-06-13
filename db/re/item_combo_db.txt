@@ -2253,6 +2253,7 @@
 24677:24678,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bMatkRate,2; if (.@sum>=18) { bonus bUseSPrate,40; bonus bNoGemStone; if (.@sum>=20) { bonus2 bMagicAddSize,Size_All,12; } } }
 24679:24680,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
 24681:24682,{ .@sum = getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bAddClass,Class_All,2; if (.@sum>=18) { bonus bNoKnockback; if (.@sum>=20) { bonus2 bAddEle,Ele_All,12; } } }
+24687:24688:24689:24690:24691:24692,{ bonus bAspdRate,2; bonus bVariableCastrate,10; bonus2 bIgnoreDefRaceRate,RC_All,50; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50; bonus2 bIgnoreMdefRaceRate,RC_All,50; bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50; bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50; }
 27394:27196:27199,{ bonus2 bMagicAddRace,RC_Brute,7; bonus2 bMagicAddSize,Size_Small,7; }
 27394:300128:300130,{ bonus2 bMagicAddSize,Size_Medium,7; bonus bDelayrate,-5; }
 27396:27197:27198,{ bonus2 bAddSize,Size_Small,7; }

@@ -107125,6 +107125,123 @@ Body:
             bonus2 bSPDrainRate,10,2;
          }
       }
+  - Id: 24687
+    AegisName: S_1Para_Weapon
+    Name: Paradise Shadow Weapon
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+      bonus bShortAtkRate,5;
+      bonus bLongAtkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 24688
+    AegisName: S_1Para_Shield
+    Name: Paradise Shadow Shield
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bVariableCastrate,5;
+  - Id: 24689
+    AegisName: S_1Para_Armor
+    Name: Paradise Shadow Armor
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bHit,5;
+      bonus bMaxHP,100;
+  - Id: 24690
+    AegisName: S_1Para_Shoes
+    Name: Paradise Shadow Shoes
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,5;
+      bonus bMaxHP,100;
+  - Id: 24691
+    AegisName: S_1Para_Earing
+    Name: Paradise Shadow Earring
+    Type: Shadowgear
+    Locations:
+      Shadow_Right_Accessory: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,5;
+      bonus bMaxHP,100;
+  - Id: 24692
+    AegisName: S_1Para_Pendant
+    Name: Paradise Shadow Pendant
+    Type: Shadowgear
+    Locations:
+      Shadow_Left_Accessory: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAtk,5;
+      bonus bMaxHP,100;
   - Id: 26001
     AegisName: Toughen_Metal_Lance
     Name: Enhanced Metal Lance
