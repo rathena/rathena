@@ -951,12 +951,11 @@ public:
 };
 
 struct s_job_info {
-	std::vector<uint32> base_hp, base_sp; //Storage for the first calculation with hp/sp factor and multiplicator
-	int hp_factor, hp_multiplicator, sp_factor;
-	int max_weight_base;
+	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
+	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
 	std::vector<std::vector<uint8>> job_bonus;
 	std::vector<int16> aspd_base;
-	t_exp exp_table[2][MAX_LEVEL];
+	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
 	uint16 max_base_level, max_job_level;
 	struct s_params {
 		uint16 str, agi, vit, int_, dex, luk,
@@ -968,9 +967,9 @@ struct s_job_info {
 	} noenter_map;
 };
 
-class JobDatabase : public TypesafeYamlDatabase<uint16, s_job_info> {
+class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeYamlDatabase("JOB_DB", 1) {
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
 
 	}
 
@@ -980,19 +979,19 @@ public:
 	// Extras
 	uint32 get_maxBaseLv(uint16 job_id);
 	uint32 get_maxJobLv(uint16 job_id);
-	int64 get_baseExp(uint16 job_id, uint32 level);
-	int64 get_jobExp(uint16 job_id, uint32 level);
+	t_exp get_baseExp(uint16 job_id, uint32 level);
+	t_exp get_jobExp(uint16 job_id, uint32 level);
 	uint32 get_baseHp(uint16 job_id, uint32 level);
 	uint32 get_baseSp(uint16 job_id, uint32 level);
 	int32 get_maxWeight(uint16 job_id);
-	std::vector<std::vector<uint8>> get_jobBonus(uint16 job_id);
+	std::vector<std::vector<uint8>>& get_jobBonus(uint16 job_id);
 };
 
 extern JobDatabase job_db;
 
 class JobExpDatabase : public YamlDatabase {
 public:
-	JobExpDatabase() : YamlDatabase("JOB_EXP_DB", 1) {
+	JobExpDatabase() : YamlDatabase("JOB_EXP", 1) {
 
 	}
 
@@ -1001,9 +1000,9 @@ public:
 	uint64 parseBodyNode(const YAML::Node &node);
 };
 
-class JobBaseHPSPDatabase : public YamlDatabase {
+class JobBaseHPSPAPDatabase : public YamlDatabase {
 public:
-	JobBaseHPSPDatabase() : YamlDatabase("JOB_BASEHPSP_DB", 1) {
+	JobBaseHPSPAPDatabase() : YamlDatabase("JOB_BASEHPSPAP", 1) {
 
 	}
 
@@ -1308,6 +1307,7 @@ void pc_gainexp_disp(struct map_session_data *sd, t_exp base_exp, t_exp next_bas
 void pc_lostexp(struct map_session_data *sd, t_exp base_exp, t_exp job_exp);
 t_exp pc_nextbaseexp(struct map_session_data *sd);
 t_exp pc_nextjobexp(struct map_session_data *sd);
+uint16 pc_getstat(map_session_data *sd, int type);
 int pc_gets_status_point(int);
 int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);

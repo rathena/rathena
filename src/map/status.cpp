@@ -3016,8 +3016,12 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
  */
 int status_base_amotion_pc(struct map_session_data* sd, struct status_data* status)
 {
-	int amotion;
 	std::shared_ptr<s_job_info> job = job_db.find(sd->status.class_);
+
+	if (job == nullptr)
+		return 2000;
+
+	int amotion;
 #ifdef RENEWAL_ASPD
 	int16 skill_lv, val = 0;
 	float temp_aspd = 0;
@@ -3705,7 +3709,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
 			if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
-#ifndef HP_SP_TABLES
+#ifndef HP_SP_AP_TABLES
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 				bonus += 2000; // Supernovice lvl99 hp bonus.
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 150)
@@ -3999,6 +4003,9 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 	double dmax = 0;
 	uint32 level = umax(sd->status.base_level,1);
 	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(sd->class_, sd->status.sex));
+
+	if (job == nullptr)
+		return 1;
 
 	if (isHP) { //Calculates MaxHP
 		double equip_bonus = 0, item_bonus = 0;
@@ -4586,14 +4593,12 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 					case PARAM_INT: base_status->int_++; break;
 					case PARAM_DEX: base_status->dex++; break;
 					case PARAM_LUK: base_status->luk++; break;
-#ifdef RENEWAL
 					case PARAM_POW: base_status->pow++; break;
 					case PARAM_STA: base_status->sta++; break;
 					case PARAM_WIS: base_status->wis++; break;
 					case PARAM_SPL: base_status->spl++; break;
 					case PARAM_CON: base_status->con++; break;
 					case PARAM_CRT: base_status->crt++; break;
-#endif
 				}
 			}
 		}

@@ -14,4 +14,7 @@
 #   BaseSp:                  Base SP per base level.
 #     - Level                Base level.
 #       Sp                   Base SP.
+#   BaseAp:                  Base AP per base level.
+#     - Level                Base level.
+#       Ap                   Base AP.
 ###########################################################################

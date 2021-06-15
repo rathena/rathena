@@ -29,7 +29,7 @@
 #   SPFactor                 Base SP factor. (Default: 100)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
 #     Weapon                 Weapon type with associated ASPD.
-#   BonusStats:              Job level bonus stats.
+#   BonusStats:              Job level bonus stats/traits.
 #     - Level                Job level.
 #       Str                  If stength is increased.
 #       Agi                  If agility is increased.
@@ -43,15 +43,29 @@
 #       Spl                  If spell is increased.
 #       Con                  If concentration is increased.
 #       Crt                  If creative is increased.
-#   MaxStats:                Maximum stats applicable. (Default: battle_config::max_*_parameter)
+#   MaxStats:                Maximum stats/traits applicable. (Default: battle_config::max_*_parameter)
 #     Str                    Strength.
 #     Agi                    Agility.
 #     Vit                    Vitality.
 #     Int                    Intelligence.
 #     Dex                    Dexterity.
 #     Luk                    Luck.
+#     Pow                    Power.
+#     Sta                    Stamina.
+#     Wis                    Wisdom.
+#     Spl                    Spell.
+#     Con                    Concentration.
+#     Crt                    Creative.
 ###########################################################################
 
 Header:
-  Type: JOB_DB
+  Type: JOB_STATS
   Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/job_db.yml
+    Mode: Prerenewal
+  - Path: db/re/job_db.yml
+    Mode: Renewal
+  - Path: db/import/job_db.yml

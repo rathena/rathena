@@ -7554,10 +7554,10 @@ bool pc_is_maxjoblv(struct map_session_data *sd) {
  * @param level: Player's level
  * @return Base EXP
  */
-int64 JobDatabase::get_baseExp(uint16 job_id, uint32 level) {
+t_exp JobDatabase::get_baseExp(uint16 job_id, uint32 level) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
-	return job ? job->exp_table[0][level - 1] : 0;
+	return job ? job->base_exp[level - 1] : 0;
 }
 
 /**
@@ -7571,7 +7571,7 @@ t_exp pc_nextbaseexp(struct map_session_data *sd){
 		return 0;
 	if (pc_is_maxbaselv(sd))
 		return MAX_LEVEL_BASE_EXP; // On max level, player's base EXP limit is 99,999,999
-	return static_cast<uint32>(job_db.get_baseExp(sd->status.class_, sd->status.base_level));
+	return static_cast<t_exp>(job_db.get_baseExp(sd->status.class_, sd->status.base_level));
 }
 
 /**
@@ -7580,10 +7580,10 @@ t_exp pc_nextbaseexp(struct map_session_data *sd){
  * @param level: Player's level
  * @return Job EXP
  */
-int64 JobDatabase::get_jobExp(uint16 job_id, uint32 level) {
+t_exp JobDatabase::get_jobExp(uint16 job_id, uint32 level) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
-	return job ? job->exp_table[1][level - 1] : 0;
+	return job ? job->job_exp[level - 1] : 0;
 }
 
 /**
@@ -7597,7 +7597,7 @@ t_exp pc_nextjobexp(struct map_session_data *sd){
 		return 0;
 	if (pc_is_maxjoblv(sd))
 		return MAX_LEVEL_JOB_EXP; // On max level, player's job EXP limit is 999,999,999
-	return static_cast<uint32>(job_db.get_jobExp(sd->status.class_, sd->status.job_level));
+	return static_cast<t_exp>(job_db.get_jobExp(sd->status.class_, sd->status.job_level));
 }
 
 /**
@@ -7640,14 +7640,14 @@ int32 JobDatabase::get_maxWeight(uint16 job_id) {
  * @param job_id: Player's job
  * @return Job Bonus array
  */
-std::vector<std::vector<uint8>> JobDatabase::get_jobBonus(uint16 job_id) {
+std::vector<std::vector<uint8>>& JobDatabase::get_jobBonus(uint16 job_id) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
 	return job ? job->job_bonus : std::vector<std::vector<uint8>> (0);
 }
 
 /// Returns the value of the specified stat.
-static int pc_getstat(struct map_session_data* sd, int type)
+uint16 pc_getstat(struct map_session_data* sd, int type)
 {
 	nullpo_retr(-1, sd);
 
@@ -12119,18 +12119,21 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	return true;
 }
 
-/** [Cydh]
-* Calculates base hp of player. Reference: http://irowiki.org/wiki/Max_HP
-* @param level: Base level of player
-* @param job_id: Job ID @see enum e_job
-* @return base_hp
-*/
+#ifndef HP_SP_AP_TABLES
+/**
+ * Calculates base hp of player. Reference: http://irowiki.org/wiki/Max_HP
+ * @param level: Base level of player
+ * @param job_id: Job ID @see enum e_job
+ * @return base_hp
+ * @author [Cydh]
+ */
 static unsigned int pc_calc_basehp(uint16 level, uint16 job_id) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 	double base_hp = 35 + level * (job->hp_multiplicator / 100.);
 
 #ifndef RENEWAL
-	if(level >= 10 && (job_id == JOB_NINJA || job_id == JOB_GUNSLINGER)) base_hp += 90;
+	if (level >= 10 && (job_id == JOB_NINJA || job_id == JOB_GUNSLINGER))
+		base_hp += 90;
 #endif
 	for (uint16 i = 2; i <= level; i++)
 		base_hp += floor(((job->hp_factor / 100.) * i) + 0.5); //Don't have round()
@@ -12139,12 +12142,13 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 job_id) {
 	return (unsigned int)base_hp;
 }
 
-/** [Playtester]
-* Calculates base sp of player.
-* @param level: Base level of player
-* @param job_id: Job ID @see enum e_job
-* @return base_sp
-*/
+/**
+ * Calculates base sp of player.
+ * @param level: Base level of player
+ * @param job_id: Job ID @see enum e_job
+ * @return base_sp
+ * @author [Playtester]
+ */
 static unsigned int pc_calc_basesp(uint16 level, uint16 job_id) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 	double base_sp = 10 + floor(level * (job->sp_factor / 100.));
@@ -12169,6 +12173,7 @@ static unsigned int pc_calc_basesp(uint16 level, uint16 job_id) {
 
 	return (unsigned int)base_sp;
 }
+#endif
 
 const std::string JobDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/job_db.yml";
@@ -12200,9 +12205,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 		job = std::make_shared<s_job_info>();
 
 	if (this->nodeExists(node, "MaxWeight")) {
-		int32 weight;
+		uint32 weight;
 
-		if (!this->asInt32(node, "MaxWeight", weight))
+		if (!this->asUInt32(node, "MaxWeight", weight))
 			return 0;
 
 		job->max_weight_base = weight;
@@ -12212,9 +12217,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "HPFactor")) {
-		int32 hp;
+		uint32 hp;
 
-		if (!this->asInt32(node, "HPFactor", hp))
+		if (!this->asUInt32(node, "HPFactor", hp))
 			return 0;
 
 		job->hp_factor = hp;
@@ -12224,9 +12229,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "HPMultiplicator")) {
-		int32 hp;
+		uint32 hp;
 
-		if (!this->asInt32(node, "HPMultiplicator", hp))
+		if (!this->asUInt32(node, "HPMultiplicator", hp))
 			return 0;
 
 		job->hp_multiplicator = hp;
@@ -12236,9 +12241,9 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "SPFactor")) {
-		int32 sp;
+		uint32 sp;
 
-		if (!this->asInt32(node, "SPFactor", sp))
+		if (!this->asUInt32(node, "SPFactor", sp))
 			return 0;
 
 		job->sp_factor = sp;
@@ -12249,15 +12254,15 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "BaseASPD")) {
 		const YAML::Node &aspdNode = node["BaseASPD"];
-		bool shield =
-#ifdef RENEWAL
-			true;
+		uint8 max = MAX_WEAPON_TYPE +
+#ifdef RENEWAL // Renewal adds an extra column for shields
+			1;
 #else
-			false;
+			0;
 #endif
 
 		if (!exists) {
-			job->aspd_base.resize(MAX_WEAPON_TYPE + shield);
+			job->aspd_base.resize(max);
 			std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
 		}
 
@@ -12265,7 +12270,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			std::string weapon = aspdit.first.as<std::string>(), weapon_constant = "W_" + weapon;
 			int64 constant;
 
-			if (!script_get_constant(weapon_constant.c_str(), &constant) || constant < W_FIST || constant > MAX_WEAPON_TYPE + shield) {
+			if (!script_get_constant(weapon_constant.c_str(), &constant) || constant < W_FIST || constant > max) {
 				this->invalidWarning(aspdNode["BaseASPD"], "Invalid weapon type %s specified for %s, skipping.\n", weapon.c_str(), job_name.c_str());
 				continue;
 			}
@@ -12294,148 +12299,20 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 			}
 
-			if (this->nodeExists(levelNode, "Str")) {
-				bool active;
+			std::vector<std::string> stats = { "Str", "Agi", "Vit", "Int", "Dex", "Luk", "Pow", "Sta", "Wis", "Spl", "Con", "Crt" };
 
-				if (!this->asBool(levelNode, "Str", active))
-					return 0;
+			for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
+				if (this->nodeExists(levelNode, stats[idx])) {
+					bool active;
 
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_STR);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_STR);
-			}
+					if (!this->asBool(levelNode, stats[idx], active))
+						return 0;
 
-			if (this->nodeExists(levelNode, "Agi")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Agi", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_AGI);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_AGI);
-			}
-
-			if (this->nodeExists(levelNode, "Vit")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Vit", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_VIT);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_VIT);
-			}
-
-			if (this->nodeExists(levelNode, "Int")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Int", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_INT);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_INT);
-			}
-
-			if (this->nodeExists(levelNode, "Dex")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Dex", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_DEX);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_DEX);
-			}
-
-			if (this->nodeExists(levelNode, "Luk")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Luk", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_LUK);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_LUK);
-			}
-
-			if (this->nodeExists(levelNode, "Pow")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Pow", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_POW);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_POW);
-			}
-
-			if (this->nodeExists(levelNode, "Sta")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Sta", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_STA);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_STA);
-			}
-
-			if (this->nodeExists(levelNode, "Wis")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Wis", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_WIS);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_WIS);
-			}
-
-			if (this->nodeExists(levelNode, "Spl")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Spl", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_SPL);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_SPL);
-			}
-
-			if (this->nodeExists(levelNode, "Con")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Con", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_CON);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_CON);
-			}
-
-			if (this->nodeExists(levelNode, "Crt")) {
-				bool active;
-
-				if (!this->asBool(levelNode, "Crt", active))
-					return 0;
-
-				if (active)
-					job->job_bonus[level - 1].push_back(PARAM_CRT);
-				else
-					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_CRT);
+					if (active)
+						job->job_bonus[level - 1].push_back(idx);
+					else
+						util::vector_erase_if_exists(job->job_bonus[level - 1], idx);
+				}
 			}
 		}
 	}
@@ -12557,7 +12434,7 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 						if (!this->asUInt64(bexpNode, "Exp", exp))
 							return 0;
 
-						job->exp_table[0][level] = exp;
+						job->base_exp[level] = exp;
 					}
 				}
 			}
@@ -12596,7 +12473,7 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 						if (!this->asUInt64(jexpNode, "Exp", exp))
 							return 0;
 
-						job->exp_table[1][level] = exp;
+						job->job_exp[level] = exp;
 					}
 				}
 			}
@@ -12608,7 +12485,7 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 
 JobExpDatabase job_exp_db;
 
-const std::string JobBaseHPSPDatabase::getDefaultLocation() {
+const std::string JobBaseHPSPAPDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/job_basehpsp_db.yml";
 }
 
@@ -12617,7 +12494,7 @@ const std::string JobBaseHPSPDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 JobBaseHPSPDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 	//int base_group;
 
 	//if (!this->asInt32(node, "BaseGroup", base_group))
@@ -12656,7 +12533,7 @@ uint64 JobBaseHPSPDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-#ifdef HP_SP_TABLES
+#ifdef HP_SP_AP_TABLES
 					if (this->nodeExists(bhpNode, "Hp")) {
 						uint32 points;
 
@@ -12683,7 +12560,7 @@ uint64 JobBaseHPSPDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-#ifdef HP_SP_TABLES
+#ifdef HP_SP_AP_TABLES
 					if (this->nodeExists(bspNode, "Sp")) {
 						uint32 points;
 
@@ -12695,13 +12572,40 @@ uint64 JobBaseHPSPDatabase::parseBodyNode(const YAML::Node &node) {
 #endif
 				}
 			}
+
+			if (this->nodeExists(node, "BaseAp")) {
+				job->base_ap.resize(job->max_base_level, 1);
+
+				for (const YAML::Node &bapNode : node["BaseAp"]) {
+					uint16 level;
+
+					if (!this->asUInt16(bapNode, "Level", level))
+						return 0;
+
+					if (level > MAX_LEVEL) {
+						this->invalidWarning(bapNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+#ifdef HP_SP_AP_TABLES
+					if (this->nodeExists(bapNode, "Ap")) {
+						uint32 points;
+
+						if (!this->asUInt32(bapNode, "Ap", points))
+							return 0;
+
+						job->base_ap[level - 1] = points;
+					}
+#endif
+				}
+			}
 		}
 	}
 
 	return 1;
 }
 
-JobBaseHPSPDatabase job_basehpsp_db;
+JobBaseHPSPAPDatabase job_basehpspap_db;
 
 /**
  * Read job_noenter_map.txt
@@ -12795,7 +12699,7 @@ void pc_readdb(void) {
 
 	job_db.load();
 	job_exp_db.load();
-	job_basehpsp_db.load();
+	job_basehpspap_db.load();
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
@@ -12848,7 +12752,8 @@ void pc_readdb(void) {
 			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(job_id), job_id);
 		if (!maxJobLv)
 			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(job_id), job_id);
-		
+
+#ifndef HP_SP_AP_TABLES
 		//Init and checking the empty value of Base HP/SP [Cydh]
 		if (job->base_hp.size() == 0)
 			job->base_hp.resize(maxBaseLv);
@@ -12862,6 +12767,7 @@ void pc_readdb(void) {
 			if (job->base_sp[j] == 0)
 				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
 		}
+#endif
 	}
 }
 
@@ -13553,6 +13459,12 @@ uint16 pc_maxparameter(struct map_session_data *sd, e_params param) {
 			case PARAM_INT: max_param = job->max_param.int_; break;
 			case PARAM_DEX: max_param = job->max_param.dex; break;
 			case PARAM_LUK: max_param = job->max_param.luk; break;
+			case PARAM_POW: max_param = job->max_param.pow; break;
+			case PARAM_STA: max_param = job->max_param.sta; break;
+			case PARAM_WIS: max_param = job->max_param.wis; break;
+			case PARAM_SPL: max_param = job->max_param.spl; break;
+			case PARAM_CON: max_param = job->max_param.con; break;
+			case PARAM_CRT: max_param = job->max_param.crt; break;
 		}
 
 		if (max_param > 0)

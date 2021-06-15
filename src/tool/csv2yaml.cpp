@@ -306,37 +306,37 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("JOB_EXP_DB", 1, root_paths, "job_exp", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_EXP", 1, root_paths, "job_exp", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 1000 + 3, CLASS_COUNT * 2, &pc_readdb_job_exp, false);
-	}, "job_exp_db")) {
+	}, "job_exp")) {
 		return 0;
 	}
 
-	if (!process("JOB_BASEHPSP_DB", 1, root_paths, "job_basehpsp_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_BASEHPSPAP", 1, root_paths, "job_basehpsp_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4 + 500, CLASS_COUNT * 2, &pc_readdb_job_basehpsp, false);
-	})) {
+	}, "job_basehpspap")) {
 		return 0;
 	}
 
 	job_txt_data(path_db_mode, path_db);
-	if (!process("JOB_DB", 1, { path_db_mode }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 1, { path_db_mode }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
 #ifdef RENEWAL_ASPD
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 6 + MAX_WEAPON_TYPE, 6 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #else
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5 + MAX_WEAPON_TYPE, 5 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #endif
-	}, "job_db")) {
+	}, "job_stats")) {
 		return 0;
 	}
 
 	job_txt_data(path_db_import, path_db_import);
-	if (!process("JOB_DB", 1, { path_db_import }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 1, { path_db_import }, "job_db1", [](const std::string& path, const std::string& name_ext) -> bool {
 #ifdef RENEWAL_ASPD
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 6 + MAX_WEAPON_TYPE, 6 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #else
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5 + MAX_WEAPON_TYPE, 5 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #endif
-	}, "job_db")) {
+	}, "job_stats")) {
 		return 0;
 	}
 

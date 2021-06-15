@@ -2638,12 +2638,16 @@ ACMD_FUNC(zeny)
  *------------------------------------------*/
 ACMD_FUNC(param)
 {
-	uint8 i;
-	int value = 0;
-	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk" };
-	unsigned short new_value, *status[6], max_status[6];
- 	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
+
+	uint8 i, stat;
+	int value = 0;
+	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk"
+#ifdef RENEWAL
+		, "pow", "sta", "wis", "spl", "con", "crt"
+#endif
+	};
+	uint16 new_value, status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
@@ -2652,42 +2656,51 @@ ACMD_FUNC(param)
 		return -1;
 	}
 
-	ARR_FIND( 0, ARRAYLENGTH(param), i, strcmpi(command+1, param[i]) == 0 );
+	ARR_FIND( 0, ARRAYLENGTH(param), stat, strcmpi(command + 1, param[stat]) == 0 );
 
-	if( i == ARRAYLENGTH(param) || i > MAX_STATUS_TYPE) { // normally impossible...
+	if( stat == ARRAYLENGTH(param) || stat > MAX_STATUS_TYPE) { // normally impossible...
 		clif_displaymessage(fd, msg_txt(sd,1013)); // Please enter a valid value (usage: @str/@agi/@vit/@int/@dex/@luk <+/-adjustment>).
 		return -1;
 	}
 
-	status[0] = &sd->status.str;
-	status[1] = &sd->status.agi;
-	status[2] = &sd->status.vit;
-	status[3] = &sd->status.int_;
-	status[4] = &sd->status.dex;
-	status[5] = &sd->status.luk;
-
-	if( pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT) )
-		max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
-	else {
-		max_status[0] = pc_maxparameter(sd,PARAM_STR);
-		max_status[1] = pc_maxparameter(sd,PARAM_AGI);
-		max_status[2] = pc_maxparameter(sd,PARAM_VIT);
-		max_status[3] = pc_maxparameter(sd,PARAM_INT);
-		max_status[4] = pc_maxparameter(sd,PARAM_DEX);
-		max_status[5] = pc_maxparameter(sd,PARAM_LUK);
+	for (i = PARAM_STR; i < PARAM_POW; i++)
+		status[i] = pc_getstat(sd, SP_STR + i);
+	if (sd->class_ & JOBL_FOURTH) {
+		for (i = PARAM_POW; i < PARAM_MAX; i++)
+			status[i] = pc_getstat(sd, SP_POW + i - PARAM_LUK);
 	}
 
-	if(value > 0  && *status[i] + value >= max_status[i])
-		new_value = max_status[i];
-	else if(value < 0 && *status[i] <= -value)
+	if (pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT)) {
+		for (i = PARAM_STR; i < PARAM_MAX; i++) {
+			if (i >= PARAM_POW && !(sd->class_ & JOBL_FOURTH))
+				continue;
+			status[i] = SHRT_MAX;
+		}
+	} else {
+		for (i = PARAM_STR; i < PARAM_POW; i++)
+			status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
+		if (sd->class_ & JOBL_FOURTH) {
+			for (i = PARAM_POW; i < PARAM_MAX; i++)
+				status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
+		}
+	}
+
+	if(value > 0  && status[stat] + value >= max_status[stat])
+		new_value = max_status[stat];
+	else if(value < 0 && status[stat] <= -value)
 		new_value = 1;
 	else
-		new_value = *status[i] + value;
+		new_value = status[stat] + value;
 
-	if (new_value != *status[i]) {
-		*status[i] = new_value;
-		clif_updatestatus(sd, SP_STR + i);
-		clif_updatestatus(sd, SP_USTR + i);
+	if (new_value != status[stat]) {
+		status[stat] = new_value;
+		if (stat < PARAM_POW) {
+			clif_updatestatus(sd, SP_STR + stat);
+			clif_updatestatus(sd, SP_USTR + stat);
+		} else {
+			clif_updatestatus(sd, SP_POW + stat);
+			clif_updatestatus(sd, SP_UPOW + stat);
+		}
 		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,42)); // Stat changed.
 
@@ -2708,52 +2721,42 @@ ACMD_FUNC(param)
  *------------------------------------------*/
 ACMD_FUNC(stat_all)
 {
-	int value = 0;
-	uint8 count, i;
-	unsigned short *status[PARAM_MAX - 1], max_status[PARAM_MAX - 1];
- 	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
-	status[0] = &sd->status.str;
-	status[1] = &sd->status.agi;
-	status[2] = &sd->status.vit;
-	status[3] = &sd->status.int_;
-	status[4] = &sd->status.dex;
-	status[5] = &sd->status.luk;
+	int value = 0;
+	uint8 count, i;
+	uint16 status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
+
+	for (i = PARAM_STR; i < PARAM_POW; i++)
+		status[i] = pc_getstat(sd, SP_STR + i);
 
 	if (!message || !*message || sscanf(message, "%11d", &value) < 1 || value == 0) {
-		max_status[0] = pc_maxparameter(sd,PARAM_STR);
-		max_status[1] = pc_maxparameter(sd,PARAM_AGI);
-		max_status[2] = pc_maxparameter(sd,PARAM_VIT);
-		max_status[3] = pc_maxparameter(sd,PARAM_INT);
-		max_status[4] = pc_maxparameter(sd,PARAM_DEX);
-		max_status[5] = pc_maxparameter(sd,PARAM_LUK);
+		for (i = PARAM_STR; i < PARAM_POW; i++)
+			max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
 		value = SHRT_MAX;
 	} else {
-		if( pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT) )
-			max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
-		else {
-			max_status[0] = pc_maxparameter(sd,PARAM_STR);
-			max_status[1] = pc_maxparameter(sd,PARAM_AGI);
-			max_status[2] = pc_maxparameter(sd,PARAM_VIT);
-			max_status[3] = pc_maxparameter(sd,PARAM_INT);
-			max_status[4] = pc_maxparameter(sd,PARAM_DEX);
-			max_status[5] = pc_maxparameter(sd,PARAM_LUK);
+		if (pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT)) {
+			for (i = PARAM_STR; i < PARAM_MAX; i++)
+				max_status[i] = SHRT_MAX;
+		} else {
+			for (i = PARAM_STR; i < PARAM_POW; i++)
+				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
 		}
 	}
 	
 	count = 0;
-	for (i = 0; i < ARRAYLENGTH(status); i++) {
+	for (i = PARAM_STR; i <= PARAM_LUK; i++) {
 		short new_value;
-		if (value > 0 && *status[i] + value >= max_status[i])
+
+		if (value > 0 && status[i] + value >= max_status[i])
 			new_value = max_status[i];
-		else if (value < 0 && *status[i] <= -value)
+		else if (value < 0 && status[i] <= -value)
 			new_value = 1;
 		else
-			new_value = *status[i] + value;
+			new_value = status[i] + value;
 
-		if (new_value != *status[i]) {
-			*status[i] = new_value;
+		if (new_value != status[i]) {
+			status[i] = new_value;
 			clif_updatestatus(sd, SP_STR + i);
 			clif_updatestatus(sd, SP_USTR + i);
 			count++;
@@ -2770,6 +2773,79 @@ ACMD_FUNC(stat_all)
 			clif_displaymessage(fd, msg_txt(sd,177)); // You cannot decrease that stat anymore.
 		else
 			clif_displaymessage(fd, msg_txt(sd,178)); // You cannot increase that stat anymore.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Traits
+ *------------------------------------------*/
+ACMD_FUNC(trait_all) {
+	nullpo_retr(-1, sd);
+
+#ifndef RENEWAL
+	return -1;
+#endif
+#if PACKETVER_MAIN_NUM < 20200916 || PACKETVER_RE_NUM < 20200724
+	return -1;
+#endif
+
+	if (!(sd->class_ & JOBL_FOURTH))
+		return -1;
+
+	int value = 0;
+	uint8 i;
+	uint16 status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
+
+	for (i = PARAM_POW; i < PARAM_MAX; i++)
+		status[i] = pc_getstat(sd, SP_POW + i - PARAM_LUK);
+
+	if (!message || !*message || sscanf(message, "%11d", &value) < 1 || value == 0) {
+		for (i = PARAM_POW; i < PARAM_MAX; i++)
+			max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
+		value = SHRT_MAX;
+	} else {
+		if (pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT)) {
+			for (i = PARAM_POW; i < PARAM_MAX; i++)
+				max_status[i] = SHRT_MAX;
+		} else {
+			for (i = PARAM_POW; i < PARAM_MAX; i++)
+				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
+		}
+	}
+
+	uint8 count = 0;
+
+	for (i = PARAM_POW; i < PARAM_MAX; i++) {
+		short new_value;
+
+		if (value > 0 && status[i] + value >= max_status[i])
+			new_value = max_status[i];
+		else if (value < 0 && status[i] <= -value)
+			new_value = 1;
+		else
+			new_value = status[i] + value;
+
+		if (new_value != status[i]) {
+			status[i] = new_value;
+			clif_updatestatus(sd, SP_POW + i - PARAM_POW);
+			clif_updatestatus(sd, SP_UPOW + i - PARAM_POW);
+			count++;
+		}
+	}
+
+	if (count > 0) { // if at least 1 stat modified
+		status_calc_pc(sd, SCO_FORCE);
+		clif_displaymessage(fd, msg_txt(sd, 84)); // All stats changed!
+
+		achievement_update_objective(sd, AG_GOAL_STATUS, 0);
+	} else {
+		if (value < 0)
+			clif_displaymessage(fd, msg_txt(sd, 177)); // You cannot decrease that stat anymore.
+		else
+			clif_displaymessage(fd, msg_txt(sd, 178)); // You cannot increase that stat anymore.
 		return -1;
 	}
 
@@ -10152,18 +10228,21 @@ ACMD_FUNC(clonestat) {
 	}
 	else {
 		uint8 i;
-		short max_status[6];
+		short max_status[PARAM_MAX] = {};
 
 		pc_resetstate(sd);
-		if (pc_has_permission(sd, PC_PERM_BYPASS_STAT_ONCLONE))
-			max_status[0] = max_status[1] = max_status[2] = max_status[3] = max_status[4] = max_status[5] = SHRT_MAX;
-		else {
-			max_status[0] = pc_maxparameter(sd, PARAM_STR);
-			max_status[1] = pc_maxparameter(sd, PARAM_AGI);
-			max_status[2] = pc_maxparameter(sd, PARAM_VIT);
-			max_status[3] = pc_maxparameter(sd, PARAM_INT);
-			max_status[4] = pc_maxparameter(sd, PARAM_DEX);
-			max_status[5] = pc_maxparameter(sd, PARAM_LUK);
+		if (pc_has_permission(sd, PC_PERM_BYPASS_STAT_ONCLONE)) {
+			for (i = PARAM_STR; i < PARAM_MAX; i++) {
+				if (i >= PARAM_POW && !(sd->class_ & JOBL_FOURTH))
+					continue;
+				max_status[i] = SHRT_MAX;
+			}
+		} else {
+			for (i = PARAM_STR; i < PARAM_MAX; i++) {
+				if (i >= PARAM_POW && sd->class_ & JOBL_FOURTH)
+					continue;
+				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
+			}
 		}
 
 #define clonestat_check(cmd,stat)\
@@ -10185,10 +10264,26 @@ ACMD_FUNC(clonestat) {
 		clonestat_check(dex, PARAM_DEX);
 		clonestat_check(luk, PARAM_LUK);
 
-		for (i = 0; i < PARAM_MAX - 1; i++) {
+		for (i = PARAM_STR; i < PARAM_POW; i++) {
 			clif_updatestatus(sd, SP_STR + i);
 			clif_updatestatus(sd, SP_USTR + i);
 		}
+
+		if (sd->class_ & JOBL_FOURTH) {
+			clonestat_check(pow, PARAM_POW);
+			clonestat_check(sta, PARAM_STA);
+			clonestat_check(wis, PARAM_WIS);
+			clonestat_check(spl, PARAM_SPL);
+			clonestat_check(con, PARAM_CON);
+			clonestat_check(crt, PARAM_CRT);
+
+			for (i = PARAM_POW; i < PARAM_MAX; i++) {
+				clif_updatestatus(sd, SP_POW + i);
+				clif_updatestatus(sd, SP_UPOW + i);
+			}
+
+		}
+
 		status_calc_pc(sd, SCO_FORCE);
 	}
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -10453,6 +10548,12 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("int", param),
 		ACMD_DEF2("dex", param),
 		ACMD_DEF2("luk", param),
+		ACMD_DEF2("pow", param),
+		ACMD_DEF2("sta", param),
+		ACMD_DEF2("wis", param),
+		ACMD_DEF2("spl", param),
+		ACMD_DEF2("con", param),
+		ACMD_DEF2("crt", param),
 		ACMD_DEF2("glvl", guildlevelup),
 		ACMD_DEF(makeegg),
 		ACMD_DEF(hatch),
@@ -10504,6 +10605,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("hairstyle", hair_style),
 		ACMD_DEF2("haircolor", hair_color),
 		ACMD_DEF2("allstats", stat_all),
+		ACMD_DEF2("alltraits", trait_all),
 		ACMD_DEF2("block", char_block),
 		ACMD_DEF2("ban", char_ban),
 		ACMD_DEF2("unblock", char_unblock),
