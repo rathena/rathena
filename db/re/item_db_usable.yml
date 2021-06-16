@@ -2207,7 +2207,6 @@ Body:
     AegisName: Enchant_Stone_Box17
     Name: Costume Enchant Stone Box 17
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -46330,7 +46329,6 @@ Body:
     AegisName: Enchant_Stone_Box4
     Name: Costume Enchant Stone Box 4
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -46727,7 +46725,6 @@ Body:
     AegisName: Enchant_Stone_Box5
     Name: Costume Enchant Stone Box 5
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47033,7 +47030,6 @@ Body:
     AegisName: Enchant_Stone_Box6
     Name: Costume Enchant Stone Box 6
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47043,7 +47039,6 @@ Body:
     AegisName: Enchant_Stone_Box7
     Name: Costume Enchant Stone Box 7
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47085,7 +47080,6 @@ Body:
     AegisName: Enchant_Stone_Box8
     Name: Costume Enchant Stone Box 8
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47221,7 +47215,6 @@ Body:
     AegisName: Enchant_Stone_Box9
     Name: Costume Enchant Stone Box 9
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47269,7 +47262,6 @@ Body:
     AegisName: Enchant_Stone_Box10
     Name: Costume Enchant Stone Box 10
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47381,7 +47373,6 @@ Body:
     AegisName: Enchant_Stone_Box11
     Name: Costume Enchant Stone Box 11
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47766,7 +47757,6 @@ Body:
     AegisName: Enchant_Stone_Box12
     Name: Costume Enchant Stone Box 12
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47860,7 +47850,6 @@ Body:
     AegisName: Enchant_Stone_Box13
     Name: Costume Enchant Stone Box 13
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47891,7 +47880,6 @@ Body:
     AegisName: Enchant_Stone_Box14
     Name: Costume Enchant Stone Box 14
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -47971,7 +47959,6 @@ Body:
     AegisName: Enchant_Stone_Box15
     Name: Costume Enchant Stone Box 15
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -48002,7 +47989,6 @@ Body:
     AegisName: Enchant_Stone_Box16
     Name: Costume Enchant Stone Box 16
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -48654,7 +48640,6 @@ Body:
     AegisName: Enchant_Stone_Box18
     Name: Costume Enchant Stone Box 18
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -48690,7 +48675,6 @@ Body:
     AegisName: Enchant_Stone_Box19
     Name: Costume Enchant Stone Box 19
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -49078,7 +49062,6 @@ Body:
     AegisName: Enchant_Stone_Box20
     Name: Costume Enchant Stone Box 20
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -49291,7 +49274,6 @@ Body:
     AegisName: Enchant_Stone_Box21
     Name: Costume Enchant Stone Box 21
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
@@ -49958,7 +49940,6 @@ Body:
     AegisName: Enchant_Stone_Box22
     Name: Costume Enchant Stone Box 22
     Type: Usable
-    Buy: 10
     Weight: 10
     Flags:
       Container: true
