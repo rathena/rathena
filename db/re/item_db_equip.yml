@@ -107125,6 +107125,647 @@ Body:
             bonus2 bSPDrainRate,10,2;
          }
       }
+  - Id: 24687
+    AegisName: S_1Para_Weapon
+    Name: Paradise Shadow Weapon
+    Type: Shadowgear
+    Locations:
+      Shadow_Weapon: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+      bonus bShortAtkRate,5;
+      bonus bLongAtkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 24688
+    AegisName: S_1Para_Shield
+    Name: Paradise Shadow Shield
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bVariableCastrate,-5;
+  - Id: 24689
+    AegisName: S_1Para_Armor
+    Name: Paradise Shadow Armor
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bHit,5;
+      bonus bMaxHP,100;
+  - Id: 24690
+    AegisName: S_1Para_Shoes
+    Name: Paradise Shadow Shoes
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,5;
+      bonus bMaxHP,100;
+  - Id: 24691
+    AegisName: S_1Para_Earing
+    Name: Paradise Shadow Earring
+    Type: Shadowgear
+    Locations:
+      Shadow_Right_Accessory: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,5;
+      bonus bMaxHP,100;
+  - Id: 24692
+    AegisName: S_1Para_Pendant
+    Name: Paradise Shadow Pendant
+    Type: Shadowgear
+    Locations:
+      Shadow_Left_Accessory: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,5;
+      bonus bMaxHP,100;
+  - Id: 24693
+    AegisName: S_2Para_Shield
+    Name: Advanced Paradise Shadow Shield
+    Type: Shadowgear
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bVariableCastrate,5;
+  - Id: 24694
+    AegisName: S_2Para_Armor
+    Name: Advanced Paradise Shadow Armor
+    Type: Shadowgear
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bHit,15;
+      bonus bMaxHP,100;
+  - Id: 24695
+    AegisName: S_2Para_Shoes
+    Name: Advanced Paradise Shadow Shoes
+    Type: Shadowgear
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,7;
+      bonus bMaxHP,100;
+  - Id: 24696
+    AegisName: S_2Para_Earing
+    Name: Advanced Paradise Shadow Earring
+    Type: Shadowgear
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,15;
+      bonus bMaxHP,100;
+  - Id: 24697
+    AegisName: S_2Para_Pendant
+    Name: Advanced Paradise Shadow Pendant
+    Type: Shadowgear
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,15;
+      bonus bMaxHP,100;
+  - Id: 24698
+    AegisName: S_2Para_RK_Weapon
+    Name: Rune Knight Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24699
+    AegisName: S_2Para_LG_Weapon
+    Name: Royal Guard Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Crusader: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24700
+    AegisName: S_2Para_NC_Weapon
+    Name: Mechanic Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24701
+    AegisName: S_2Para_GN_Weapon
+    Name: Genetic Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Alchemist: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24702
+    AegisName: S_2Para_GC_Weapon
+    Name: Guillotine Cross Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24703
+    AegisName: S_2Para_SC_Weapon
+    Name: Shadow Chaser Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Rogue: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24704
+    AegisName: S_2Para_WL_Weapon
+    Name: Warlock Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24705
+    AegisName: S_2Para_SO_Weapon
+    Name: Sorcerer Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Sage: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24706
+    AegisName: S_2Para_AB_Weapon
+    Name: Arch Bishop Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Priest: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24707
+    AegisName: S_2Para_SR_Weapon
+    Name: Sura Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Monk: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24708
+    AegisName: S_2Para_RA_Weapon
+    Name: Ranger Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Hunter: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24709
+    AegisName: S_2Para_WM_Weapon
+    Name: Minstrel & Wanderer Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24710
+    AegisName: S_2Para_KO_Weapon
+    Name: Kagerou & Oboro Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24711
+    AegisName: S_2Para_RL_Weapon
+    Name: Rebellion Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Rebellion: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24712
+    AegisName: S_2Para_SJ_Weapon
+    Name: Star Emperor Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24713
+    AegisName: S_2Para_SP_Weapon
+    Name: Soul Reaper Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      SoulLinker: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24714
+    AegisName: S_2Para_SU_Weapon
+    Name: Doram Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
+  - Id: 24715
+    AegisName: S_2Para_NV_Weapon
+    Name: Super Novice Advanced Paradise Shadow Weapon
+    Type: Shadowgear
+    Jobs:
+      SuperNovice: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,10;
+      bonus bMatk,10;
   - Id: 26001
     AegisName: Toughen_Metal_Lance
     Name: Enhanced Metal Lance
