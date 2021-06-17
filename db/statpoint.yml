@@ -23,7 +23,7 @@
 #
 ###########################################################################
 # - Level             BaseLevel required.
-#   Point             Total of the statpoint given from BaseLevel 1 to 'Level'.
+#   Points            Total status points given from BaseLevel 1 to 'Level'.
 ###########################################################################
 
 Header:

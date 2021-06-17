@@ -7595,12 +7595,21 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 
 	return val;
 }
-
+/**
+ * Gets the total number of status points at the provided level.
+ * @param level: Player base level.
+ * @return Total number of status points at specific base level.
+ */
 uint32 PlayerStatPointDatabase::get_table_point(uint16 level) {
 	return this->statpoint_table[level];
 }
 
-// Calculates the number of status points PC gets when leveling up (from level to level+1)
+/**
+ * Calculates the number of status points PC gets when leveling up (from level to level+1)
+ * @param level: Player base level.
+ * @param table: Use table value or formula.
+ * @return Status points at specific base level.
+ */
 uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level, bool table) {
 	if (!table)	//Default increase
 		return ((level+15) / 5);
@@ -12332,17 +12341,12 @@ static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
 	return true;
 }
 
-
-void PlayerStatPointDatabase::clear() {
-	this->statpoint_table.clear();
-}
-
 const std::string PlayerStatPointDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/statpoint.yml";
 }
 
 uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
-	if (!this->nodesExist(node, { "Level", "Point" })) {
+	if (!this->nodesExist(node, { "Level", "Points" })) {
 		return 0;
 	}
 
@@ -12353,11 +12357,11 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
 
 	uint32 point;
 
-	if (!this->asUInt32(node, "Point", point))
+	if (!this->asUInt32(node, "Points", point))
 		return 0;
 
 	if (level == 0) {
-		this->invalidWarning(node, "The minimum level is 1.\n");
+		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
 		return 0;
 	}
 
@@ -12371,15 +12375,16 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
-
-// generate the remaining parts of the db if necessary
+/**
+ * Generate the remaining parts of the db if necessary.
+ */
 void PlayerStatPointDatabase::loadingFinished() {
 	this->statpoint_table[0] = 45; // seed value
 
 	for (uint16 i = 1; i <= MAX_LEVEL; i++) {
 		if (util::umap_find(this->statpoint_table, i) == nullptr) {
 			this->statpoint_table[i] = this->statpoint_table[i-1] + this->pc_gets_status_point((i-1), false);
-			ShowError("Missing statpoint for Level %d in statpoint.yml\n", i);
+			ShowError("Missing status point for Level %d in %s\n", i, this->getCurrentFile().c_str());
 		}
 	}
 }

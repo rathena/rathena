@@ -3699,7 +3699,7 @@ static bool pc_read_statsdb(const char* file) {
 
 		body << YAML::BeginMap;
 		body << YAML::Key << "Level" << YAML::Value << (count+1);
-		body << YAML::Key << "Point" << YAML::Value << static_cast<uint32>(strtoul(line, nullptr, 10));
+		body << YAML::Key << "Points" << YAML::Value << static_cast<uint32>(strtoul(line, nullptr, 10));
 		body << YAML::EndMap;
 
 		count++;

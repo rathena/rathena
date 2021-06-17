@@ -1126,7 +1126,7 @@ public:
 
 	}
 
-	void clear();
+	void clear() { };
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
