@@ -649,10 +649,6 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 #else
 			hp += hp * sc->data[SC_GLASTHEIM_HEAL]->val1 / 100;
 #endif
-#ifdef RENEWAL
-		if (sc->data[SC_ASSUMPTIO])
-			hp_bonus += sc->data[SC_ASSUMPTIO]->val1 * 2;
-#endif
 	}
 
 	if (tsc && tsc->count) {
@@ -676,6 +672,10 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp += hp * tsc->data[SC_ANCILLA]->val1 / 100;
 			if (tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2)
 				hp += hp / 10;
+#endif
+#ifdef RENEWAL
+			if (tsc->data[SC_ASSUMPTIO])
+				hp_bonus += tsc->data[SC_ASSUMPTIO]->val1 * 2;
 #endif
 		}
 	}

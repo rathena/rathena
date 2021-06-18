@@ -476,7 +476,7 @@ SC_GOSPEL	(EFST_GOSPEL)
 
 SC_ASSUMPTIO	(RE: EFST_ASSUMPTIO2. Pre-RE: EFST_ASSUMPTIO)
 	desc: HP_ASSUMPTIO's effect
-	val1: Level (unused)
+	val1: Level // * 2 Bonus heal % (in RENEWAL)
 
 SC_BASILICA	()
 	desc: Can't move; Can't use skill except the Basilica caster to cancel the basilica itself; Clear the skill area; Knockback enemy except Boss
