@@ -13,6 +13,7 @@
 #define MAX_SKILL_EQUIP_REQUIRE 10
 #define MAX_QUEST_DROPS 3
 #define MAX_MAP_PER_INSTANCE 255
+#define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 
 // Database to memory maps
 struct s_skill_unit_csv : s_skill_db {
@@ -397,5 +398,6 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current);
 static bool read_homunculus_expdb(const char* file);
 static bool mob_readdb_group(char* str[], int columns, int current);
 static bool mob_readdb_group_yaml(void);
+static bool skill_parse_row_createarrowdb(char* fields[], int columns, int current);
 
 #endif /* CSV2YAML_HPP */

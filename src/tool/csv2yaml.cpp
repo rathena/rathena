@@ -337,6 +337,12 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("CREATE_ARROW_DB", 1, root_paths, "create_arrow_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1+2, 1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, &skill_parse_row_createarrowdb, false);
+	})) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -3605,5 +3611,58 @@ static bool mob_readdb_group_yaml(void) {
 		body << YAML::EndSeq;
 		body << YAML::EndMap;
 	}
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
+{
+	t_itemid nameid = static_cast<t_itemid>(strtoul(split[0], nullptr, 10));
+
+	if (nameid == 0)
+		return true;
+
+	std::string *material_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (!material_name) {
+		ShowError("skill_parse_row_createarrowdb: Invalid item %u.\n", nameid);
+		return false;
+	}
+
+	// Import just for clearing/disabling from original data
+	if (strtoul(split[1], nullptr, 10) == 0) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Remove" << YAML::Value << *material_name;
+		body << YAML::EndMap;
+		return true;
+	}
+
+	std::map<std::string, uint32> item_created;
+	
+	for (uint16 x = 1; x+1 < columns && split[x] && split[x+1]; x += 2) {
+		nameid = static_cast<t_itemid>(strtoul(split[x], nullptr, 10));
+		std::string* item_name = util::umap_find(aegis_itemnames, nameid);
+
+		if (!item_name) {
+			ShowError("skill_parse_row_createarrowdb: Invalid item %u.\n", nameid);
+			return false;
+		}
+
+		item_created.insert({ *item_name, strtoul(split[x+1], nullptr, 10) });
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Source" << YAML::Value << *material_name;
+	body << YAML::Key << "Make";
+	body << YAML::BeginSeq;
+	for (const auto &it : item_created) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Item" << YAML::Value << it.first;
+		body << YAML::Key << "Amount" << YAML::Value << it.second;
+		body << YAML::EndMap;
+	}
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+
 	return true;
 }
