@@ -1087,6 +1087,53 @@ s_item_combo *itemdb_combo_exists(uint32 combo_id) {
 	return item.get();
 }
 
+/**
+ * Check if an item exists in a group
+ * @param group_id: Item Group ID
+ * @param nameid: Item to check for in group
+ * @return True if item is in group, else false
+ */
+bool itemdb_group_item_exists(uint16 group_id, t_itemid nameid)
+{
+	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
+
+	if (group == nullptr)
+		return false;
+
+	for (const auto &random : group->random) {
+		for (const auto &it : random.second->data) {
+			if (it->nameid == nameid)
+				return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Check if an item exists from a group in a player's inventory
+ * @param group_id: Item Group ID
+ * @return Item's index if found or -1 otherwise
+ */
+int16 itemdb_group_item_exists_pc(map_session_data *sd, uint16 group_id)
+{
+	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
+
+	if (!group)
+		return -1;
+
+	for (const auto &random : group->random) {
+		for (const auto &it : random.second->data) {
+			int16 item_position = pc_search_inventory(sd, it->nameid);
+
+			if (item_position != -1)
+				return item_position;
+		}
+	}
+
+	return -1;
+}
+
 /*==========================================
  * Return item data from item name. (lookup)
  * @param str Item Name
@@ -1141,6 +1188,135 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 	}
 
 	return count;
+}
+
+std::shared_ptr<s_item_group_entry> itemdb_get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
+	if (random == nullptr)
+		return nullptr;
+
+	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
+		std::shared_ptr<s_item_group_entry> entry = util::vector_random(random->data);
+
+		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// rate 0 for 'must' item
+			return entry;
+	}
+
+	return util::vector_random(random->data);
+}
+	
+/**
+* Return a random group entry from Item Group
+* @param group_id
+* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @return Item group entry or NULL on fail
+*/
+std::shared_ptr<s_item_group_entry> itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group) {
+	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
+
+	if (!group) {
+		ShowError("itemdb_get_randgroupitem: Invalid group id %hu\n", group_id);
+		return nullptr;
+	}
+
+	if (group->random.count(sub_group) == 0) {
+		ShowError("itemdb_get_randgroupitem: No item entries for group id %hu and sub group %hu\n", group_id, sub_group);
+		return nullptr;
+	}
+
+	return itemdb_get_random_itemsubgroup(group->random[sub_group]);
+}
+
+/**
+* Return a random Item ID from from Item Group
+* @param group_id
+* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @return Item ID or UNKNOWN_ITEM_ID on fail
+*/
+t_itemid itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
+	std::shared_ptr<s_item_group_entry> entry = itemdb_get_randgroupitem(group_id, sub_group);
+	return entry ? entry->nameid : UNKNOWN_ITEM_ID;
+}
+
+/** [Cydh]
+* Gives item(s) to the player based on item group
+* @param sd: Player that obtains item from item group
+* @param group_id: The group ID of item that obtained by player
+* @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
+*/
+static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std::shared_ptr<s_item_group_entry> data) {
+	if (data == nullptr)
+		return;
+
+	struct item tmp;
+	memset(&tmp, 0, sizeof(tmp));
+
+	tmp.nameid = data->nameid;
+	tmp.bound = data->bound;
+	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
+	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
+	if (data->isNamed) {
+		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
+		tmp.card[1] = 0;
+		tmp.card[2] = GetWord(sd->status.char_id, 0);
+		tmp.card[3] = GetWord(sd->status.char_id, 1);
+	}
+
+	uint16 get_amt = 0;
+
+	if (!itemdb_isstackable(data->nameid))
+		get_amt = 1;
+	else
+		get_amt = data->amount;
+
+	tmp.amount = get_amt;
+
+	// Do loop for non-stackable item
+	for (uint16 i = 0; i < data->amount; i += get_amt) {
+		char flag = 0;
+		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
+			clif_additem(sd, 0, 0, flag);
+			if (pc_candrop(sd, &tmp))
+				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
+		}
+		else if (!flag && data->isAnnounced)
+			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
+	}
+}
+
+/** [Cydh]
+* Find item(s) that will be obtained by player based on Item Group
+* @param group_id: The group ID that will be gained by player
+* @param nameid: The item that trigger this item group
+* @return val: 0:success, 1:no sd, 2:invalid item group
+*/
+uint8 itemdb_pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
+	nullpo_retr(1,sd);
+
+	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
+	
+	if (group == nullptr) {
+		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
+		return 2;
+	}
+	
+	// Get all the 'must' item(s) (subgroup 0)
+	uint16 subgroup = 0;
+	std::shared_ptr<s_item_group_random> random = util::map_find(group->random, subgroup);
+
+	if (random != nullptr) {
+		for (const auto &it : random->data)
+			itemdb_pc_get_itemgroup_sub(sd, identify, it);
+	}
+
+	// Get 1 'random' item from each subgroup
+	for (const auto &random : group->random) {
+		if (random.first == 0)
+			continue;
+		itemdb_pc_get_itemgroup_sub(sd, identify, itemdb_get_random_itemsubgroup(random.second));
+	}
+
+	return 0;
 }
 
 /** Searches for the item_data. Use this to check if item exists or not.
@@ -1351,183 +1527,6 @@ char itemdb_isidentified(t_itemid nameid) {
 		default:
 			return 1;
 	}
-}
-
-/**
- * Check if an item exists in a group
- * @param group_id: Item Group ID
- * @param nameid: Item to check for in group
- * @return True if item is in group, else false
- */
-bool itemdb_group_item_exists(uint16 group_id, t_itemid nameid)
-{
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
-
-	if (group == nullptr)
-		return false;
-
-	for (const auto &random : group->random) {
-		for (const auto &it : random.second->data) {
-			if (it->nameid == nameid)
-				return true;
-		}
-	}
-
-	return false;
-}
-
-/**
- * Check if an item exists from a group in a player's inventory
- * @param group_id: Item Group ID
- * @return Item's index if found or -1 otherwise
- */
-int16 itemdb_group_item_exists_pc(map_session_data *sd, uint16 group_id)
-{
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
-
-	if (!group)
-		return -1;
-
-	for (const auto &random : group->random) {
-		for (const auto &it : random.second->data) {
-			int16 item_position = pc_search_inventory(sd, it->nameid);
-
-			if (item_position != -1)
-				return item_position;
-		}
-	}
-
-	return -1;
-}
-
-std::shared_ptr<s_item_group_entry> itemdb_get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
-	if (random == nullptr)
-		return nullptr;
-
-	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
-		std::shared_ptr<s_item_group_entry> entry = util::vector_random(random->data);
-
-		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// rate 0 for 'must' item
-			return entry;
-	}
-
-	return util::vector_random(random->data);
-}
-	
-/**
-* Return a random group entry from Item Group
-* @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
-* @return Item group entry or NULL on fail
-*/
-std::shared_ptr<s_item_group_entry> itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group) {
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
-
-	if (!group) {
-		ShowError("itemdb_get_randgroupitem: Invalid group id %hu\n", group_id);
-		return nullptr;
-	}
-
-	if (group->random.count(sub_group) == 0) {
-		ShowError("itemdb_get_randgroupitem: No item entries for group id %hu and sub group %hu\n", group_id, sub_group);
-		return nullptr;
-	}
-
-	return itemdb_get_random_itemsubgroup(group->random[sub_group]);
-}
-
-/**
-* Return a random Item ID from from Item Group
-* @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
-* @return Item ID or UNKNOWN_ITEM_ID on fail
-*/
-t_itemid itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
-	std::shared_ptr<s_item_group_entry> entry = itemdb_get_randgroupitem(group_id, sub_group);
-	return entry ? entry->nameid : UNKNOWN_ITEM_ID;
-}
-
-/** [Cydh]
-* Gives item(s) to the player based on item group
-* @param sd: Player that obtains item from item group
-* @param group_id: The group ID of item that obtained by player
-* @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
-*/
-static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std::shared_ptr<s_item_group_entry> data) {
-	if (data == nullptr)
-		return;
-
-	struct item tmp;
-	memset(&tmp, 0, sizeof(tmp));
-
-	tmp.nameid = data->nameid;
-	tmp.bound = data->bound;
-	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
-	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
-	if (data->isNamed) {
-		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
-		tmp.card[1] = 0;
-		tmp.card[2] = GetWord(sd->status.char_id, 0);
-		tmp.card[3] = GetWord(sd->status.char_id, 1);
-	}
-
-	uint16 get_amt = 0;
-
-	if (!itemdb_isstackable(data->nameid))
-		get_amt = 1;
-	else
-		get_amt = data->amount;
-
-	tmp.amount = get_amt;
-
-	// Do loop for non-stackable item
-	for (uint16 i = 0; i < data->amount; i += get_amt) {
-		char flag = 0;
-		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
-		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
-			clif_additem(sd, 0, 0, flag);
-			if (pc_candrop(sd, &tmp))
-				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
-		}
-		else if (!flag && data->isAnnounced)
-			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
-	}
-}
-
-	
-/** [Cydh]
-* Find item(s) that will be obtained by player based on Item Group
-* @param group_id: The group ID that will be gained by player
-* @param nameid: The item that trigger this item group
-* @return val: 0:success, 1:no sd, 2:invalid item group
-*/
-uint8 itemdb_pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
-	nullpo_retr(1,sd);
-
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
-	
-	if (group == nullptr) {
-		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
-		return 2;
-	}
-	
-	// Get all the 'must' item(s) (subgroup 0)
-	uint16 subgroup = 0;
-	std::shared_ptr<s_item_group_random> random = util::map_find(group->random, subgroup);
-
-	if (random != nullptr) {
-		for (const auto &it : random->data)
-			itemdb_pc_get_itemgroup_sub(sd, identify, it);
-	}
-
-	// Get 1 'random' item from each subgroup
-	for (const auto &random : group->random) {
-		if (random.first == 0)
-			continue;
-		itemdb_pc_get_itemgroup_sub(sd, identify, itemdb_get_random_itemsubgroup(random.second));
-	}
-
-	return 0;
 }
 
 const std::string ItemGroupDatabase::getDefaultLocation() {
