@@ -5206,6 +5206,10 @@
 	export_constant(IG_PRIZEOFHERO);
 	export_constant(IG_PRIVATE_AIRSHIP);
 	export_constant(IG_TOKEN_OF_SIEGFRIED);
+	export_constant(IG_ENCHANT_STONE_BOX);
+	export_constant(IG_ENCHANT_STONE_BOX2);
+	export_constant(IG_ENCHANT_STONE_BOX3);
+	export_constant(IG_ENCHANT_STONE_BOX4);
 	export_constant(IG_ENCHANT_STONE_BOX5);
 	export_constant(IG_ENCHANT_STONE_BOX6);
 	export_constant(IG_ENCHANT_STONE_BOX7);
