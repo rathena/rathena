@@ -881,6 +881,10 @@ Body:
     Option: RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM
     Script: |
       bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,getrandomoptinfo(ROA_VALUE);
+  - Id: 218
+    Option: REFLECT_DAMAGE_PERCENT
+    Script: |
+      bonus bReduceDamageReturn,getrandomoptinfo(ROA_VALUE);
   - Id: 219
     Option: MELEE_ATTACK_DAMAGE_TARGET
     Script: |
@@ -889,3 +893,91 @@ Body:
     Option: MELEE_ATTACK_DAMAGE_USER
     Script: |
       bonus bNearAtkDef,getrandomoptinfo(ROA_VALUE);
+  - Id: 221
+    Option: ADDSKILLMDAMAGE_NOTHING
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE);
+  - Id: 222
+    Option: ADDSKILLMDAMAGE_WATER
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Water,getrandomoptinfo(ROA_VALUE);
+  - Id: 223
+    Option: ADDSKILLMDAMAGE_GROUND
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Earth,getrandomoptinfo(ROA_VALUE);
+  - Id: 224
+    Option: ADDSKILLMDAMAGE_FIRE
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Fire,getrandomoptinfo(ROA_VALUE);
+  - Id: 225
+    Option: ADDSKILLMDAMAGE_WIND
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Wind,getrandomoptinfo(ROA_VALUE);
+  - Id: 226
+    Option: ADDSKILLMDAMAGE_POISON
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,getrandomoptinfo(ROA_VALUE);
+  - Id: 227
+    Option: ADDSKILLMDAMAGE_SAINT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,getrandomoptinfo(ROA_VALUE);
+  - Id: 228
+    Option: ADDSKILLMDAMAGE_DARKNESS
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Dark,getrandomoptinfo(ROA_VALUE);
+  - Id: 229
+    Option: ADDSKILLMDAMAGE_TELEKINESIS
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE);
+  - Id: 230
+    Option: ADDSKILLMDAMAGE_UNDEAD
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Undead,getrandomoptinfo(ROA_VALUE);
+  - Id: 231
+    Option: ADDSKILLMDAMAGE_ALL
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,getrandomoptinfo(ROA_VALUE);
+  - Id: 232
+    Option: ADDEXPPERCENT_KILLRACE_NOTHING
+    Script: |
+      bonus2 bExpAddRace,RC_Formless,getrandomoptinfo(ROA_VALUE);
+  - Id: 233
+    Option: ADDEXPPERCENT_KILLRACE_UNDEAD
+    Script: |
+      bonus2 bExpAddRace,RC_Undead,getrandomoptinfo(ROA_VALUE);
+  - Id: 234
+    Option: ADDEXPPERCENT_KILLRACE_ANIMAL
+    Script: |
+      bonus2 bExpAddRace,RC_Brute,getrandomoptinfo(ROA_VALUE);
+  - Id: 235
+    Option: ADDEXPPERCENT_KILLRACE_PLANT
+    Script: |
+      bonus2 bExpAddRace,RC_Plant,getrandomoptinfo(ROA_VALUE);
+  - Id: 236
+    Option: ADDEXPPERCENT_KILLRACE_INSECT
+    Script: |
+      bonus2 bExpAddRace,RC_Insect,getrandomoptinfo(ROA_VALUE);
+  - Id: 237
+    Option: ADDEXPPERCENT_KILLRACE_FISHS
+    Script: |
+      bonus2 bExpAddRace,RC_Fish,getrandomoptinfo(ROA_VALUE);
+  - Id: 238
+    Option: ADDEXPPERCENT_KILLRACE_DEVIL
+    Script: |
+      bonus2 bExpAddRace,RC_Demon,getrandomoptinfo(ROA_VALUE);
+  - Id: 239
+    Option: ADDEXPPERCENT_KILLRACE_HUMAN
+    Script: |
+      bonus2 bExpAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE);
+  - Id: 240
+    Option: ADDEXPPERCENT_KILLRACE_ANGEL
+    Script: |
+      bonus2 bExpAddRace,RC_Angel,getrandomoptinfo(ROA_VALUE);
+  - Id: 241
+    Option: ADDEXPPERCENT_KILLRACE_DRAGON
+    Script: |
+      bonus2 bExpAddRace,RC_Dragon,getrandomoptinfo(ROA_VALUE);
+  - Id: 242
+    Option: ADDEXPPERCENT_KILLRACE_ALL
+    Script: |
+      bonus2 bExpAddRace,RC_All,getrandomoptinfo(ROA_VALUE);
