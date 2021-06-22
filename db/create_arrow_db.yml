@@ -744,4 +744,6 @@ Body:
       - Item: Rusty_Arrow
         Amount: 50
 
+Footer:
+  Imports:
   - Path: db/import/create_arrow_db.yml
