@@ -431,7 +431,7 @@ extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 /// Creating database arrow
 struct s_skill_arrow_db {
 	t_itemid nameid; /// Material ID
-	std::map<t_itemid, uint16> created; /// Arrow created
+	std::unordered_map<t_itemid, uint16> created; /// Arrow created
 };
 
 class SkillArrowDatabase : public TypesafeYamlDatabase<t_itemid, s_skill_arrow_db> {
