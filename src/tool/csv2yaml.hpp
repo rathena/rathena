@@ -14,6 +14,7 @@
 #define MAX_QUEST_DROPS 3
 #define MAX_MAP_PER_INSTANCE 255
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
+#define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 
 // Database to memory maps
 struct s_skill_unit_csv : s_skill_db {
