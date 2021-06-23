@@ -3584,7 +3584,7 @@ void intif_parse_StorageInfo_recv(int fd) {
 	}
 
 	if (battle_config.etc_log)
-		ShowInfo("Received '" CL_WHITE "%d" CL_RESET "' storage info from inter-server.\n", storage_db.size());
+		ShowInfo("Received '" CL_WHITE PRIdPTR CL_RESET "' storage info from inter-server.\n", storage_db.size());
 }
 
 /**
