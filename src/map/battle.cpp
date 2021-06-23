@@ -1285,7 +1285,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	// ATK_DEF Type
-	if ((sce = sc->data[SC_LIGHTNINGWALK]) && flag&BF_LONG && rnd() % 100 < sce->val1) {
+	if ((sce = sc->data[SC_LIGHTNINGWALK]) && !(flag & BF_MAGIC) && flag&BF_LONG && rnd() % 100 < sce->val1) {
 		const int dx[8] = { 0,-1,-1,-1,0,1,1,1 };
 		const int dy[8] = { 1,1,0,-1,-1,-1,0,1 };
 		uint8 dir = map_calc_dir(target, src->x, src->y);
