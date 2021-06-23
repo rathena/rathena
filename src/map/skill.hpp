@@ -29,7 +29,6 @@ struct status_change_entry;
 
 #define MAX_SKILL_PRODUCE_DB	282 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
-#define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)

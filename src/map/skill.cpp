@@ -22745,11 +22745,6 @@ uint64 SkillArrowDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = arrow != nullptr;
 
 	if (!exists) {
-		if (this->size() >= MAX_SKILL_ARROW_DB) {
-			this->invalidWarning(node["Source"], "Maximum db entries reached. Increases MAX_SKILL_ARROW_DB to add more 'Source'.\n");
-			return 0;
-		}
-
 		arrow = std::make_shared<s_skill_arrow_db>();
 		arrow->nameid = nameid;
 	}
