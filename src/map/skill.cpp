@@ -20358,14 +20358,13 @@ bool skill_arrow_create(struct map_session_data *sd, t_itemid nameid)
 
 	pc_delitem(sd,j,1,0,0,LOG_TYPE_PRODUCE);
 
-	struct item tmp_item;
-
 	for (const auto &it : arrow->created) {
 		char flag = 0;
 
 		if (it.first == 0 || !item_db.exists(it.first) || it.second == 0)
 			continue;
-		memset(&tmp_item,0,sizeof(tmp_item));
+
+		struct item tmp_item = { 0 };
 		tmp_item.identify = 1;
 		tmp_item.nameid = it.first;
 		tmp_item.amount = it.second;
