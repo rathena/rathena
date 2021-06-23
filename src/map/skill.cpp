@@ -22734,7 +22734,7 @@ uint64 SkillArrowDatabase::parseBodyNode(const YAML::Node &node) {
 	struct item_data *item = itemdb_search_aegisname(source_name.c_str());
 
 	if (item == nullptr) {
-		this->invalidWarning(node["Source"], "Item %s does not exist for Source.\n", source_name.c_str());
+		this->invalidWarning(node["Source"], "Item %s does not exist.\n", source_name.c_str());
 		return 0;
 	}
 
