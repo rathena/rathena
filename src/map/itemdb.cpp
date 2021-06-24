@@ -1247,8 +1247,7 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 	if (data == nullptr)
 		return;
 
-	struct item tmp;
-	memset(&tmp, 0, sizeof(tmp));
+	item tmp = {};
 
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
