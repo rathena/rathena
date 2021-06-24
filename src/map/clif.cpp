@@ -3883,7 +3883,7 @@ void clif_arrow_create_list( struct map_session_data *sd ){
 
 	p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
 
-	clif_send( &p, p->packetLength, &sd->bl, SELF );
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 
 	if( count > 0 ){
 		sd->menuskill_id = AC_MAKINGARROW;
@@ -19041,7 +19041,7 @@ void clif_elementalconverter_list( struct map_session_data *sd ){
 
 	p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
 
-	clif_send( &p, p->packetLength, &sd->bl, SELF );
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 
 	if( count > 0 ){
 		sd->menuskill_id = SA_CREATECON;
