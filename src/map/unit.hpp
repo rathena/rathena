@@ -68,6 +68,7 @@ struct view_data {
 	unsigned int class_; //why arch dependant ??? make no sense imo [lighta]
 #else
 	unsigned short class_;
+	unsigned short class_o;
 #endif
 	t_itemid
 		weapon,

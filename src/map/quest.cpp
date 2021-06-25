@@ -128,7 +128,10 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 				}
 
-				mob_id = mob->vd.class_;
+				if (mob->vd.class_o)
+					mob_id = mob->vd.class_o;
+				else
+					mob_id = mob->vd.class_;
 
 				it = std::find_if(quest->objectives.begin(), quest->objectives.end(), [&](std::shared_ptr<s_quest_objective> const &v) {
 					return (*v).mob_id == mob_id;

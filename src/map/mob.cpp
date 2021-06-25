@@ -5193,7 +5193,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 			constant = sprite_mob->vd.class_;
 		}
-
+		mob->vd.class_o = mob->vd.class_;
 		mob->vd.class_ = (unsigned short)constant;
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
