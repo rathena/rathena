@@ -3851,21 +3851,15 @@ void clif_arrow_fail(struct map_session_data *sd,int type) {
 void clif_arrow_create_list( struct map_session_data *sd ){
 	nullpo_retv( sd );
 
-	int fd = sd->fd;
-
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + MAX_SKILL_ARROW_DB * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
-	struct PACKET_ZC_MAKINGARROW_LIST *p = (struct PACKET_ZC_MAKINGARROW_LIST *)WFIFOP( fd, 0 );
+	struct PACKET_ZC_MAKINGARROW_LIST *p = (struct PACKET_ZC_MAKINGARROW_LIST *)packet_buffer;
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
 
 	int count = 0;
-	for( int i = 0; i < MAX_SKILL_ARROW_DB; i++ ){
-		t_itemid nameid = skill_arrow_db[i].nameid;
 
-		if( !itemdb_exists( nameid ) ){
+	for (const auto &it : skill_arrow_db) {
+		t_itemid nameid = it.second->nameid;
+
+		if( !item_db.exists( nameid ) ){
 			continue;
 		}
 
@@ -3888,7 +3882,8 @@ void clif_arrow_create_list( struct map_session_data *sd ){
 	}
 
 	p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
-	WFIFOSET( fd, p->packetLength );
+
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 
 	if( count > 0 ){
 		sd->menuskill_id = AC_MAKINGARROW;
@@ -19033,14 +19028,7 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 void clif_elementalconverter_list( struct map_session_data *sd ){
 	nullpo_retv( sd );
 
-	int fd = sd->fd;
-
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + MAX_SKILL_ARROW_DB * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
-	struct PACKET_ZC_MAKINGARROW_LIST *p = (struct PACKET_ZC_MAKINGARROW_LIST *)WFIFOP( fd, 0 );
+	struct PACKET_ZC_MAKINGARROW_LIST *p = (struct PACKET_ZC_MAKINGARROW_LIST *)packet_buffer;
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
 
 	int count = 0;
@@ -19052,7 +19040,8 @@ void clif_elementalconverter_list( struct map_session_data *sd ){
 	}
 
 	p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
-	WFIFOSET( fd, p->packetLength );
+
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 
 	if( count > 0 ){
 		sd->menuskill_id = SA_CREATECON;
