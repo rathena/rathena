@@ -75,7 +75,7 @@ static unsigned short status_calc_dex(struct block_list *,struct status_change *
 static unsigned short status_calc_luk(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_batk(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_watk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_matk(struct block_list *,struct status_change *,int);
+static unsigned int status_calc_matk(struct block_list *,struct status_change *,int);
 static signed short status_calc_hit(struct block_list *,struct status_change *,int);
 static signed short status_calc_critical(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee(struct block_list *,struct status_change *,int);
@@ -1155,7 +1155,7 @@ void initChangeTables(void)
 	set_sc( RK_CRUSHSTRIKE		, SC_CRUSHSTRIKE	, EFST_CRUSHSTRIKE		, SCB_NONE );
 	set_sc_with_vfx( RK_DRAGONBREATH_WATER	, SC_FREEZING	, EFST_FROSTMISTY			, SCB_ASPD|SCB_SPEED|SCB_DEF );
 	set_sc( RK_LUXANIMA			, SC_LUXANIMA		, EFST_LUXANIMA			, SCB_ALL );
-	
+
 	/* GC Guillotine Cross */
 	set_sc_with_vfx( GC_VENOMIMPRESS, SC_VENOMIMPRESS	, EFST_VENOMIMPRESS	, SCB_NONE );
 	set_sc( GC_POISONINGWEAPON	, SC_POISONINGWEAPON	, EFST_POISONINGWEAPON	, SCB_NONE );
@@ -3171,14 +3171,14 @@ unsigned int status_weapon_atk(weapon_atk &wa)
 #endif
 
 #ifndef RENEWAL
-unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
-unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
+unsigned int status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
+unsigned int status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
 #else
 /*
 * Calculates minimum attack variance 80% from db's ATK1 for non BL_PC
 * status->batk (base attack) will be added in battle_calc_base_damage
 */
-unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int level)
+unsigned int status_base_atk_min(struct block_list *bl, const struct status_data* status, int level)
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -3197,7 +3197,7 @@ unsigned short status_base_atk_min(struct block_list *bl, const struct status_da
 * Calculates maximum attack variance 120% from db's ATK1 for non BL_PC
 * status->batk (base attack) will be added in battle_calc_base_damage
 */
-unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int level)
+unsigned int status_base_atk_max(struct block_list *bl, const struct status_data* status, int level)
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -3215,7 +3215,7 @@ unsigned short status_base_atk_max(struct block_list *bl, const struct status_da
 /*
 * Calculates minimum magic attack
 */
-unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int level)
+unsigned int status_base_matk_min(struct block_list *bl, const struct status_data* status, int level)
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -3234,7 +3234,7 @@ unsigned short status_base_matk_min(struct block_list *bl, const struct status_d
 /*
 * Calculates maximum magic attack
 */
-unsigned short status_base_matk_max(struct block_list *bl, const struct status_data* status, int level)
+unsigned int status_base_matk_max(struct block_list *bl, const struct status_data* status, int level)
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -6245,8 +6245,15 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_ca
 			clif_updatestatus(sd,SP_CRITICAL);
 #ifndef RENEWAL
 		if(b_status.matk_max != status->matk_max)
+			// Cheap way to trigger a recalculation (Danil0v3s)
+			if (b_status.matk_max == 0) {
+				status->matk_max -= 1;
+			}
 			clif_updatestatus(sd,SP_MATK1);
 		if(b_status.matk_min != status->matk_min)
+			if (b_status.matk_min == 0) {
+				status->matk_min -= 1;
+			}
 			clif_updatestatus(sd,SP_MATK2);
 #else
 		if(b_status.matk_max != status->matk_max || b_status.matk_min != status->matk_min) {
@@ -7061,7 +7068,7 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
  * @param matk: Initial matk
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-static unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk)
+static unsigned int status_calc_matk(struct block_list *bl, struct status_change *sc, int matk)
 {
 	if(!sc || !sc->count)
 		return cap_value(matk,0,USHRT_MAX);
@@ -7125,7 +7132,7 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	if (sc->data[SC_SHIELDSPELL_ATK])
 		matk += sc->data[SC_SHIELDSPELL_ATK]->val2;
 
-	return (unsigned short)cap_value(matk,0,USHRT_MAX);
+	return (unsigned int)cap_value(matk,0,USHRT_MAX);
 }
 
 /**
