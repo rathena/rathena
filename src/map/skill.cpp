@@ -16813,9 +16813,11 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		case SO_FIRE_INSIGNIA:
 		case SO_WIND_INSIGNIA:
 		case SO_EARTH_INSIGNIA:
-		case WZ_FIREPILLAR: // no gems required at level 1-5 [celest]
 			req.itemid[0] = skill->require.itemid[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
 			req.amount[0] = skill->require.amount[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
+		case WZ_FIREPILLAR: // no gems required at level 1-5 [celest]
+			if (skill_id == WZ_FIREPILLAR && skill_lv < 6)
+				break;
 			level_dependent = true;
 
 		/* Normal skill requirements and gemstone checks */
