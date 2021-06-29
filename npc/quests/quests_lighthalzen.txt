@@ -11762,7 +11762,7 @@ OnStop:
 	close;
 }
 
-airplane_01,1,1,1	script	#bully1	HIDDEN_NPC,{
+-	script	#bully1	HIDDEN_NPC,{
 
 OnInit:
 	disablenpc "#bully1";
@@ -11805,7 +11805,7 @@ OnTimer120000:
 	end;
 }
 
-airplane_01,2,2,1	script	#bully2	HIDDEN_NPC,{
+-	script	#bully2	HIDDEN_NPC,{
 
 OnInit:
 	disablenpc "#bully2";
