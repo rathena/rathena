@@ -101,7 +101,7 @@ Body:
     Buy: 10
     Weight: 70
     Script: |
-      itemheal rand(45,65),0;
+      itemheal 45,0;
   - Id: 502
     AegisName: Orange_Potion
     Name: Orange Potion
@@ -109,7 +109,7 @@ Body:
     Buy: 50
     Weight: 100
     Script: |
-      itemheal rand(105,145),0;
+      itemheal 105,0;
   - Id: 503
     AegisName: Yellow_Potion
     Name: Yellow Potion
@@ -117,7 +117,7 @@ Body:
     Buy: 180
     Weight: 130
     Script: |
-      itemheal rand(175,235),0;
+      itemheal 175,0;
   - Id: 504
     AegisName: White_Potion
     Name: White Potion
@@ -125,7 +125,7 @@ Body:
     Buy: 1200
     Weight: 150
     Script: |
-      itemheal rand(325,405),0;
+      itemheal 325,0;
   - Id: 505
     AegisName: Blue_Potion
     Name: Blue Potion
@@ -133,7 +133,7 @@ Body:
     Buy: 5000
     Weight: 150
     Script: |
-      itemheal 0,rand(40,60);
+      itemheal 0,60;
   - Id: 506
     AegisName: Green_Potion
     Name: Green Potion
@@ -157,7 +157,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(18,28),0;
+      itemheal 18,0;
   - Id: 508
     AegisName: Yellow_Herb
     Name: Yellow Herb
@@ -167,7 +167,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(38,58),0;
+      itemheal 38,0;
   - Id: 509
     AegisName: White_Herb
     Name: White Herb
@@ -177,7 +177,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal rand(75,115),0;
+      itemheal 75,0;
   - Id: 510
     AegisName: Blue_Herb
     Name: Blue Herb
@@ -187,7 +187,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemheal 0,rand(15,30);
+      itemheal 0,30;
   - Id: 511
     AegisName: Green_Herb
     Name: Green Herb
