@@ -128,7 +128,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 				}
 
-				mob_id = mob->vd.class_;
+				mob_id = mob->id;
 
 				it = std::find_if(quest->objectives.begin(), quest->objectives.end(), [&](std::shared_ptr<s_quest_objective> const &v) {
 					return (*v).mob_id == mob_id;
@@ -338,7 +338,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					continue;
 				}
 
-				mob_id = mob->vd.class_;
+				mob_id = mob->id;
 			}
 
 			//std::shared_ptr<s_quest_dropitem> target = util::vector_find(quest->dropitem, mob_id);

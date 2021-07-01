@@ -4283,7 +4283,8 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		mob = std::make_shared<s_mob_db>();
-		mob->vd.class_ = static_cast<uint16>(mob_id);
+		mob->id = mob_id;
+		mob->vd.class_ = static_cast<uint16>(mob->id);
 	}
 
 	if (this->nodeExists(node, "AegisName")) {
@@ -5191,7 +5192,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 			}
 
-			constant = sprite_mob->vd.class_;
+			constant = sprite_mob->id;
 		}
 
 		mob->vd.class_ = (unsigned short)constant;
@@ -5391,7 +5392,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "PetEquip")) {
-		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob->vd.class_);
+		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob->id);
 
 		if (pet_db_ptr == nullptr) {
 			this->invalidWarning(node["PetEquip"], "PetEquip is only applicable to defined pets.\n");
@@ -5500,7 +5501,8 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 			this->invalidWarning(node["Default"], "Unknown mob %s.\n", mob_name.c_str());
 			return 0;
 		}
-		summon->default_mob_id = mob->vd.class_;
+
+		summon->default_mob_id = mob->id;
 	}
 
 	if (this->nodeExists(node, "Summon")) {
@@ -5528,7 +5530,7 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asUInt32(mobit, "Rate", rate))
 				continue;
 
-			uint16 mob_id = mob->vd.class_;
+			uint16 mob_id = mob->id;
 
 			if (rate == 0) {
 				if (summon->list.erase(mob_id) == 0)
@@ -5540,7 +5542,7 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (entry == nullptr) {
 				entry = std::make_shared<s_randomsummon_entry>();
-				entry->mob_id = mob->vd.class_;
+				entry->mob_id = mob_id;
 				summon->list[mob_id] = entry;
 			}
 			entry->rate = rate;
@@ -6153,7 +6155,7 @@ static void mob_skill_db_set_single_sub(std::shared_ptr<s_mob_db> mob, struct s_
 	}
 
 	if (i < skill->skill.size())
-		ShowWarning("Monster '%s' (%d, src:%d) reaches max skill limit %d. Ignores '%zu' skills left.\n", mob->sprite.c_str(), mob->vd.class_, skill->mob_id, MAX_MOBSKILL, skill->skill.size() - i);
+		ShowWarning("Monster '%s' (%d, src:%d) reaches max skill limit %d. Ignores '%zu' skills left.\n", mob->sprite.c_str(), mob->id, skill->mob_id, MAX_MOBSKILL, skill->skill.size() - i);
 }
 
 /**
