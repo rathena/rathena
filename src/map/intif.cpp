@@ -3540,10 +3540,28 @@ static void intif_parse_StorageSaved(int fd)
 				//ShowInfo("Inventory has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				break;
 			case TABLE_STORAGE: //storage
-				//if (RFIFOB(fd, 8))
-				//	ShowInfo("Storage %d has been saved (AID: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 8) );
-				//else
-				//	ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
+				{
+					struct map_session_data *sd = map_id2sd( RFIFOL( fd, 2 ) );
+					struct s_storage* stor = nullptr;
+
+					if( RFIFOB( fd, 8 ) ){
+						// ShowInfo("Storage %d has been saved (AID: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 8) );
+
+						if( sd ){
+							stor = &sd->premiumStorage;
+						}
+					}else{
+						// ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
+
+						if( sd ){
+							stor = &sd->storage;
+						}
+					}
+
+					if( stor ){
+						stor->dirty = false;
+					}
+				}
 				break;
 			case TABLE_CART: // cart
 				//ShowInfo("Cart has been saved (AID: %d).\n", RFIFOL(fd, 2));
