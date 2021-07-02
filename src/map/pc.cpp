@@ -7984,15 +7984,11 @@ int pc_resetstate(struct map_session_data* sd)
 	}
 	else
 	{
-		int add=0;
-		add += pc_need_status_point(sd, SP_STR, 1-pc_getstat(sd, SP_STR));
-		add += pc_need_status_point(sd, SP_AGI, 1-pc_getstat(sd, SP_AGI));
-		add += pc_need_status_point(sd, SP_VIT, 1-pc_getstat(sd, SP_VIT));
-		add += pc_need_status_point(sd, SP_INT, 1-pc_getstat(sd, SP_INT));
-		add += pc_need_status_point(sd, SP_DEX, 1-pc_getstat(sd, SP_DEX));
-		add += pc_need_status_point(sd, SP_LUK, 1-pc_getstat(sd, SP_LUK));
+		sd->status.status_point = 48;
 
-		sd->status.status_point+=add;
+		for( int i = 1; i < sd->status.base_level; i++ ){
+			sd->status.status_point += pc_gets_status_point( i );
+		}
 	}
 
 	if( ( sd->class_&JOBL_UPPER ) != 0 ){
