@@ -19619,7 +19619,7 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
  * @param nameid Product requested
  * @param trigger Trigger criteria to match will 'ItemLv'
  * @param qty Amount of item will be created
- * @return nullptr If failed or s_skill_produce_db_entry
+ * @return nullptr If failed or s_skill_produce_db_entry on success
  */
 std::shared_ptr<s_skill_produce_db_entry> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int trigger, int qty)
 {
@@ -22717,7 +22717,7 @@ const std::string SkillProduceDatabase::getDefaultLocation() {
 uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 	uint16 itemlv;
 
-	if (!this->asUInt16(node, "ItemLV", itemlv))
+	if (!this->asUInt16(node, "ItemLevel", itemlv))
 		return 0;
 
 	std::shared_ptr<s_skill_produce_db> produce = this->find(itemlv);
@@ -22756,13 +22756,13 @@ uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 			continue;
 		}
 
-		if (!this->asString(subit, "Produced", produced_name))
+		if (!this->asString(subit, "Product", produced_name))
 			return 0;
 
 		struct item_data *item = itemdb_search_aegisname(produced_name.c_str());
 
 		if (item == nullptr) {
-			this->invalidWarning(subit["Produced"], "Item %s does not exist.\n", produced_name.c_str());
+			this->invalidWarning(subit["Product"], "Item %s does not exist.\n", produced_name.c_str());
 			return 0;
 		}
 
@@ -22818,8 +22818,8 @@ uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 						continue;
 					}
 					if (rate > 1000) {
-						this->invalidWarning(Quantityit["Rate"], "Rate %hu can't be highter than 1000.\n", rate);
-						return 0;
+						this->invalidWarning(Quantityit["Rate"], "Rate %hu can't be higher than 1000, capping.\n", rate);
+						rate = 1000;
 					}
 				} else {
 					rate = 1000;

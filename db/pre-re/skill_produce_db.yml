@@ -22,19 +22,19 @@
 # Item Produce Settings
 #
 ###########################################################################
-# - ItemLV                     Number which determines what kind of a crafting window will pop-up.
+# - ItemLevel                  Number which determines what kind of a crafting window will pop-up.
 #   Recipe:
-#    - Produced                Item produced.
-#      Skill:
+#    - Product                 AegisName of the produced item.
+#      Skill:                  Skill requirement. (Default: null)
 #        Name                  Skill name required.
 #        Level                 Skill level required.
-#      Consumed:               List of Item/Amount consumed to produce the item.
-#        - Item                AegisName of the item.
+#      Consumed:               List of items consumed to produce the Product.
+#        - Item                AegisName of the consumed item.
 #          Amount              Amount required.
-#          Clear               Remove the item with the given AegisName from Consumed (Optional).
-#      NotConsumed:            List of Item not consumed.
-#        - Item                AegisName of the item.
-#          Clear               Remove the item with the given AegisName from NotConsumed (Optional).
+#          Clear               Remove the item with the given AegisName from Consumed. (Optional)
+#      NotConsumed:            List of items not consumed to produce the Product. (Default: null)
+#        - Item                AegisName of the unconsumed item.
+#          Clear               Remove the item with the given AegisName from NotConsumed. (Optional)
 ###########################################################################
 
 Header:
