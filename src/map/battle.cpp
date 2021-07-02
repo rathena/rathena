@@ -6051,13 +6051,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			break;
 		case SR_GATEOFHELL: {
 			status_data *sstatus = status_get_status_data(src);
-			int64 bonus = 1 + skill_lv * 2 / 10;
+			double bonus = 1 + skill_lv * 2 / 10;
 
 			ATK_ADD(wd.damage, wd.damage2, sstatus->max_hp - sstatus->hp);
 			if(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE) {
-				ATK_ADD(wd.damage, wd.damage2, (sstatus->max_sp * bonus) + 40 * status_get_lv(src));
+				ATK_ADD(wd.damage, wd.damage2, static_cast<int64>(sstatus->max_sp * bonus) + 40 * status_get_lv(src));
 			} else
-				ATK_ADD(wd.damage, wd.damage2, (sstatus->sp * bonus) + 10 * status_get_lv(src));
+				ATK_ADD(wd.damage, wd.damage2, static_cast<int64>(sstatus->sp * bonus) + 10 * status_get_lv(src));
 		}
 			break;
 		case MH_TINDER_BREAKER:
