@@ -6253,19 +6253,29 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
 
-		if( spheres_sent && type >= SC_SPHERE_1 && type <= SC_SPHERE_5 ){
-#if PACKETVER > 20120418
-			clif_efst_status_change(tbl, bl->id, AREA_WOS, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
-#else
-			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, AREA_WOS);
-#endif
-		}else{
-#if PACKETVER > 20120418
-			clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
-#else
-			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
-#endif
+		// Status changes that need special handling
+		switch( type ){
+			case SC_SPHERE_1:
+			case SC_SPHERE_2:
+			case SC_SPHERE_3:
+			case SC_SPHERE_4:
+			case SC_SPHERE_5:
+				if( spheres_sent ){
+					target = AREA_WOS;
+				}
+				break;
+			case SC_HELLS_PLANT:
+				if( sc && sc->data[type] ){
+					tick = sc->data[type]->val4;
+				}
+				break;
 		}
+
+#if PACKETVER > 20120418
+		clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+#else
+		clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+#endif
 	}
 }
 
