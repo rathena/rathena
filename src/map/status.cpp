@@ -8973,6 +8973,8 @@ static int status_get_sc_interval(enum sc_type type)
 		case SC_BLEEDING:
 		case SC_TOXIN:
 			return 10000;
+		case SC_HELLS_PLANT:
+			return 333;
 		case SC_SHIELDSPELL_HP:
 			return 3000;
 		case SC_SHIELDSPELL_SP:
@@ -11804,8 +11806,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 3000;
 			break;
 		case SC_HELLS_PLANT:
-			tick_time = 333;
-			val4 = tick / tick_time;
+			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_SWINGDANCE:
 			val3 = 3 * val1 + val2; // Walk speed and aspd reduction.
@@ -14775,10 +14777,8 @@ TIMER_FUNC(status_change_timer){
 		}
 
 	case SC_HELLS_PLANT:
-		if (--(sce->val4) > 0) {
-			skill_castend_damage_id(bl, bl, GN_HELLS_PLANT_ATK, sce->val1, tick, 0);
-			sc_timer_next(333 + tick);
-			return 0;
+		if( sce->val4 >= 0 ){
+			skill_castend_damage_id( bl, bl, GN_HELLS_PLANT_ATK, sce->val1, tick, 0 );
 		}
 		break;
 
