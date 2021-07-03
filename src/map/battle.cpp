@@ -1515,7 +1515,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 #endif
 
-		if (sc->data[SC_DEFENDER] && skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
+		if (sc->data[SC_DEFENDER] &&
+			skill_id != NJ_ZENYNAGE && skill_id != KO_MUCHANAGE &&
+#ifdef RENEWAL
+			((flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON) || skill_id == GN_FIRE_EXPANSION_ACID))
+#else
+			(flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
+#endif
 			damage -= damage * sc->data[SC_DEFENDER]->val2 / 100;
 
 		if(sc->data[SC_ADJUSTMENT] && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
@@ -3229,6 +3235,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 			case SR_FALLENEMPIRE:
 			case SR_CRESCENTELBOW_AUTOSPELL:
 			case SR_GATEOFHELL:
+			case GN_FIRE_EXPANSION_ACID:
 				wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 				if (is_attack_left_handed(src, skill_id))
 					wd->damage2 = battle_attr_fix(src, target, wd->damage2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
@@ -3607,6 +3614,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				switch(sd->status.weapon) {
 					case W_BOW:
 					case W_REVOLVER:
+					case W_RIFLE:
 					case W_GATLING:
 					case W_SHOTGUN:
 					case W_GRENADE:
@@ -4147,7 +4155,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 100 + 50 * skill_lv;
 #endif
 			break;
-		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
 		case CR_ACIDDEMONSTRATION:
 			skillratio += -100 + 200 * skill_lv + sstatus->int_ + tstatus->vit; // !TODO: Confirm status bonus
@@ -6113,6 +6120,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 		switch(skill_id) {
 			case NJ_ISSEN:
+			case GN_FIRE_EXPANSION_ACID:
 				break; //These skills will do a card fix later
 			default:
 #endif
@@ -6139,6 +6147,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 	switch (skill_id) {
 		case NJ_ISSEN:
+			case GN_FIRE_EXPANSION_ACID:
 			return wd; //These skills will do a GVG fix later
 		default:
 #endif
@@ -7106,15 +7115,30 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 					md.damage = 0;
 			}
 			break;
-#ifndef RENEWAL
+		case GN_FIRE_EXPANSION_ACID:
+#ifdef RENEWAL
+			// Official Renewal formula [helvetica]
+			// damage = 7 * ((atk + matk)/skill level) * (target vit/100)
+			// skill is a "forced neutral" type skill, it benefits from weapon element but final damage
+			// 	is considered "neutral" for purposes of resistances
+			{
+				struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
+				struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
+				md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
+
+				// AD benefits from endow/element but damage is forced back to neutral
+				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+			}
+			// Fall through
+#else
 		case CR_ACIDDEMONSTRATION:
 			if(tstatus->vit+sstatus->int_) //crash fix
 				md.damage = (int)((int64)7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_)));
 			else
 				md.damage = 0;
 			if (tsd) md.damage>>=1;
-			break;
 #endif
+			break;
 		case NJ_ZENYNAGE:
 		case KO_MUCHANAGE:
 				md.damage = skill_get_zeny(skill_id, skill_lv);
