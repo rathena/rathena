@@ -7610,10 +7610,8 @@ uint32 PlayerStatPointDatabase::get_table_point(uint16 level) {
  * @param table: Use table value or formula.
  * @return Status points at specific base level.
  */
-uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level, bool table) {
-	if (!table)	//Default increase
-		return ((level+15) / 5);
-	else if (this->statpoint_table[level+1] > this->statpoint_table[level])	//Use values from "db/statpoint.yml"
+uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) {
+	if (this->statpoint_table[level+1] > this->statpoint_table[level])
 		return (this->statpoint_table[level+1] - this->statpoint_table[level]);
 	return 0;
 }
@@ -7986,14 +7984,15 @@ int pc_resetstate(struct map_session_data* sd)
 
 	if (battle_config.use_statpoint_table)
 	{	// New statpoint table used here - Dexity
-		if (sd->status.base_level > MAX_LEVEL)
+		uint32 level = sd->status.base_level;
+		if (level > pc_maxbaselv(sd))
 		{	//out of bounds, can't reset!
-			ShowError("pc_resetstate: Can't reset stats of %d:%d, the base level (%d) is greater than the max level supported (%d)\n",
-				sd->status.account_id, sd->status.char_id, sd->status.base_level, MAX_LEVEL);
-			return 0;
+			level = pc_maxbaselv(sd);
+			ShowError("pc_resetstate: Capping the Level to %d to reset the stats of %d:%d, the base level (%d) is greater than the max level supported.\n",
+				level, sd->status.account_id, sd->status.char_id, sd->status.base_level);
 		}
 
-		sd->status.status_point = statpoint_db.get_table_point(sd->status.base_level);
+		sd->status.status_point = statpoint_db.get_table_point(level);
 	}
 	else
 	{
@@ -12366,7 +12365,7 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (level > MAX_LEVEL) {
-		// this->invalidWarning(node["Level"], "Level %d exceeds maximum BaseLevel %d, skipping.\n", level, MAX_LEVEL);
+		this->invalidWarning(node["Level"], "Level %d exceeds maximum BaseLevel %d, skipping.\n", level, MAX_LEVEL);
 		return 0;
 	}
 
@@ -12379,12 +12378,14 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
  * Generate the remaining parts of the db if necessary.
  */
 void PlayerStatPointDatabase::loadingFinished() {
-	this->statpoint_table[0] = 45; // seed value
+	uint16 level = 1;
+	this->statpoint_table[level] = 48;
 
-	for (uint16 i = 1; i <= MAX_LEVEL; i++) {
-		if (util::umap_find(this->statpoint_table, i) == nullptr) {
-			this->statpoint_table[i] = this->statpoint_table[i-1] + this->pc_gets_status_point((i-1), false);
-			ShowError("Missing status point for Level %d in %s\n", i, this->getCurrentFile().c_str());
+	for (level = 2; level <= MAX_LEVEL; level++) {
+		if (battle_config.use_statpoint_table || util::umap_find(this->statpoint_table, level) == nullptr) {
+			if (util::umap_find(this->statpoint_table, level) == nullptr)
+				ShowError("Missing status point for Level %d in %s\n", level, this->getCurrentFile().c_str());
+			this->statpoint_table[level] = this->statpoint_table[level-1] + ((level-1+15) / 5);
 		}
 	}
 }
@@ -12454,7 +12455,7 @@ void pc_readdb(void) {
 	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 0);
 	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 1);
 
-	statpoint_db.load();
+	statpoint_db.reload();
 
 	//Checking if all class have their data
 	for (i = 0; i < JOB_MAX; i++) {

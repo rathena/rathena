@@ -1131,7 +1131,7 @@ public:
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
 
-	uint32 pc_gets_status_point(uint16 level, bool table = true);
+	uint32 pc_gets_status_point(uint16 level);
 	uint32 get_table_point(uint16 level);
 };
 
