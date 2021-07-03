@@ -64,11 +64,7 @@ struct unit_data {
 };
 
 struct view_data {
-#ifdef __64BIT__
-	unsigned int class_; //why arch dependant ??? make no sense imo [lighta]
-#else
-	unsigned short class_;
-#endif
+	uint16 class_;
 	t_itemid
 		weapon,
 		shield, //Or left-hand weapon.
