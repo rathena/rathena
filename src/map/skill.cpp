@@ -19632,6 +19632,8 @@ std::shared_ptr<s_skill_produce_db_entry> skill_can_produce_mix(map_session_data
 	std::shared_ptr<s_skill_produce_db_entry> produce = nullptr;
 
 	for (const auto &itemlvit : skill_produce_db) {
+		if (itemlvit.second->data.empty())
+			continue;
 		for (const auto &datait : itemlvit.second->data) {
 			if (datait.second->nameid == nameid) {
 				if (datait.second->req_skill > 0 && pc_checkskill(sd, datait.second->req_skill) < datait.second->req_skill_lv)
@@ -19761,30 +19763,32 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 		}
 	}
 
-	for (const auto &mat : produce->materials) {
-		short x, j;
-		t_itemid id = mat.first;
+	if (!produce->materials.empty()) {
+		for (const auto &mat : produce->materials) {
+			short x, j;
+			t_itemid id = mat.first;
 
-		if (!item_db.exists(id))
-			continue;
-		num++;
-		x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * mat.second;
-		do {
-			int y = 0;
+			if (!item_db.exists(id))
+				continue;
+			num++;
+			x = (skill_id == RK_RUNEMASTERY ? 1 : qty) * mat.second;
+			do {
+				int y = 0;
 
-			j = pc_search_inventory(sd,id);
+				j = pc_search_inventory(sd,id);
 
-			if (j >= 0) {
-				y = sd->inventory.u.items_inventory[j].amount;
-				if (y > x)
-					y = x;
-				pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
-			} else {
-				ShowError("skill_produce_mix: material item error\n");
-				return false;
-			}
-			x -= y;
-		} while( j >= 0 && x > 0 );
+				if (j >= 0) {
+					y = sd->inventory.u.items_inventory[j].amount;
+					if (y > x)
+						y = x;
+					pc_delitem(sd,j,y,0,0,LOG_TYPE_PRODUCE);
+				} else {
+					ShowError("skill_produce_mix: material item error\n");
+					return false;
+				}
+				x -= y;
+			} while( j >= 0 && x > 0 );
+		}
 	}
 
 	if ((equip = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB  )))
@@ -20187,19 +20191,21 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 			int k = 0, l;
 			bool isStackable = itemdb_isstackable(tmp_item.nameid);
 
-			for (const auto &qtyit : produce->qty) {
-				if (rnd()%1000 < qtyit.second){
-					uint16 total_qty = qty * qtyit.first;
-					tmp_item.amount = (isStackable ? total_qty : 1);
-					for (l = 0; l < total_qty; l += tmp_item.amount) {
-						if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
-							clif_additem(sd,0,0,flag);
-							if( battle_config.skill_drop_items_full ){
-								map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+			if (!produce->qty.empty()) {
+				for (const auto &qtyit : produce->qty) {
+					if (rnd()%1000 < qtyit.second){
+						uint16 total_qty = qty * qtyit.first;
+						tmp_item.amount = (isStackable ? total_qty : 1);
+						for (l = 0; l < total_qty; l += tmp_item.amount) {
+							if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
+								clif_additem(sd,0,0,flag);
+								if( battle_config.skill_drop_items_full ){
+									map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+								}
 							}
 						}
+						k++;
 					}
-					k++;
 				}
 			}
 			if (k) {
@@ -20659,12 +20665,16 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 
 	uint16 item_lv = 26;
 	std::shared_ptr<s_skill_produce_db> produce = skill_produce_db.find(item_lv);
+	if (produce == nullptr || produce->data.empty())
+		return 0;
 
 	// Search for objects that can be created.
 	for (const auto &datait : produce->data) {
 		std::shared_ptr<s_skill_produce_db_entry> data = datait.second;
 
 		if (!item_db.exists(data->nameid))
+			return 0;
+		if (data->materials.empty())
 			return 0;
 
 		p = 0;
@@ -22774,10 +22784,6 @@ uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 		if (id_exists)
 			entry = produce->data[nameid];
 		else {
-			if (this->total_id >= MAX_SKILL_PRODUCE_DB) {
-				this->invalidWarning(subit["Produced"], "Maximum db entries reached. Increase MAX_SKILL_PRODUCE_DB.\n");
-				return 0;
-			}
 			entry = std::make_shared<s_skill_produce_db_entry>();
 			entry->nameid = nameid;
 		}

@@ -46,9 +46,9 @@ Header:
   Version: 1
 
 Body:
-  - ItemLV: 26
+  - ItemLevel: 26
     Recipe:
-      - Produced: Sacred_Masque
+      - Product: Sacred_Masque
         BaseRate: 800
         Quantity:
           - Amount: 8
@@ -60,7 +60,7 @@ Body:
             Amount: 45
           - Item: Yoyo_Tail
             Amount: 35
-      - Produced: Long_Hair
+      - Product: Long_Hair
         Quantity:
           - Amount: 4
             Rate: 800
@@ -74,7 +74,7 @@ Body:
             Amount: 40
           - Item: Tiger's_Skin
             Amount: 5
-      - Produced: Phracon
+      - Product: Phracon
         BaseRate: 800
         Quantity:
           - Amount: 8
@@ -86,7 +86,7 @@ Body:
             Amount: 40
           - Item: Spawn
             Amount: 45
-      - Produced: Lantern
+      - Product: Lantern
         BaseRate: 800
         Quantity:
           - Amount: 3
@@ -98,7 +98,7 @@ Body:
             Amount: 20
           - Item: Solid_Shell
             Amount: 10
-      - Produced: Acorn
+      - Product: Acorn
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -110,7 +110,7 @@ Body:
             Amount: 30
           - Item: Snail's_Shell
             Amount: 10
-      - Produced: Frozen_Heart
+      - Product: Frozen_Heart
         BaseRate: 800
         Quantity:
           - Amount: 6
@@ -122,7 +122,7 @@ Body:
             Amount: 35
           - Item: Raccoondog_Doll
             Amount: 25
-      - Produced: Horrendous_Mouth
+      - Product: Horrendous_Mouth
         BaseRate: 800
         Quantity:
           - Amount: 9
@@ -134,7 +134,7 @@ Body:
             Amount: 45
           - Item: Stem
             Amount: 45
-      - Produced: Detrimindexta
+      - Product: Detrimindexta
         BaseRate: 800
         Quantity:
           - Amount: 5
@@ -146,7 +146,7 @@ Body:
             Amount: 40
           - Item: Flesh_Of_Clam
             Amount: 10
-      - Produced: Detonator
+      - Product: Detonator
         BaseRate: 800
         Quantity:
           - Amount: 7
@@ -158,7 +158,7 @@ Body:
             Amount: 25
           - Item: Nose_Ring
             Amount: 45
-      - Produced: Tweezer
+      - Product: Tweezer
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -170,7 +170,7 @@ Body:
             Amount: 5
           - Item: Worm_Peelings
             Amount: 40
-      - Produced: Petite_DiablOfs_Horn
+      - Product: Petite_DiablOfs_Horn
         Quantity:
           - Amount: 1
         Skill:
@@ -181,7 +181,7 @@ Body:
             Amount: 10
           - Item: Stone_Heart
             Amount: 5
-      - Produced: Root_Of_Maneater
+      - Product: Root_Of_Maneater
         Quantity:
           - Amount: 4
             Rate: 800
@@ -195,7 +195,7 @@ Body:
             Amount: 25
           - Item: Tooth_Of_
             Amount: 20
-      - Produced: Conch
+      - Product: Conch
         BaseRate: 800
         Quantity:
           - Amount: 3
@@ -207,7 +207,7 @@ Body:
             Amount: 5
           - Item: Immortal_Heart
             Amount: 25
-      - Produced: Rotten_Scale
+      - Product: Rotten_Scale
         BaseRate: 800
         Quantity:
           - Amount: 7
@@ -219,7 +219,7 @@ Body:
             Amount: 20
           - Item: Thin_N'_Long_Tongue
             Amount: 50
-      - Produced: Elder_Pixie's_Beard
+      - Product: Elder_Pixie's_Beard
         Quantity:
           - Amount: 8
             Rate: 800
@@ -233,7 +233,7 @@ Body:
             Amount: 35
           - Item: Petite_DiablOfs_Wing
             Amount: 45
-      - Produced: Lizard_Scruff
+      - Product: Lizard_Scruff
         BaseRate: 800
         Quantity:
           - Amount: 3
@@ -245,7 +245,7 @@ Body:
             Amount: 15
           - Item: Scale_Of_Snakes
             Amount: 20
-      - Produced: Emveretarcon
+      - Product: Emveretarcon
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -257,7 +257,7 @@ Body:
             Amount: 40
           - Item: Heart_Of_Mermaid
             Amount: 5
-      - Produced: Chinese_Ink
+      - Product: Chinese_Ink
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -269,7 +269,7 @@ Body:
             Amount: 20
           - Item: Black_Ladle
             Amount: 25
-      - Produced: Spiderweb
+      - Product: Spiderweb
         BaseRate: 800
         Quantity:
           - Amount: 8
@@ -281,7 +281,7 @@ Body:
             Amount: 50
           - Item: Slender_Snake
             Amount: 35
-      - Produced: Reins
+      - Product: Reins
         BaseRate: 800
         Quantity:
           - Amount: 8
@@ -293,7 +293,7 @@ Body:
             Amount: 30
           - Item: Stuffed_Doll
             Amount: 50
-      - Produced: Wooden_Block
+      - Product: Wooden_Block
         BaseRate: 800
         Quantity:
           - Amount: 2
@@ -305,7 +305,7 @@ Body:
             Amount: 10
           - Item: Single_Cell
             Amount: 10
-      - Produced: Tentacle
+      - Product: Tentacle
         Quantity:
           - Amount: 4
             Rate: 800
@@ -319,7 +319,7 @@ Body:
             Amount: 40
           - Item: Wild_Boar's_Mane
             Amount: 5
-      - Produced: Mixture
+      - Product: Mixture
         Quantity:
           - Amount: 4
             Rate: 800
@@ -333,7 +333,7 @@ Body:
             Amount: 15
           - Item: Powder_Of_Butterfly
             Amount: 30
-      - Produced: Colorful_Shell
+      - Product: Colorful_Shell
         Quantity:
           - Amount: 9
             Rate: 800
@@ -347,7 +347,7 @@ Body:
             Amount: 50
           - Item: Zargon
             Amount: 45
-      - Produced: Wing_Of_Moth
+      - Product: Wing_Of_Moth
         BaseRate: 800
         Quantity:
           - Amount: 5
@@ -359,7 +359,7 @@ Body:
             Amount: 20
           - Item: Reptile_Tongue
             Amount: 30
-      - Produced: Nipper
+      - Product: Nipper
         Quantity:
           - Amount: 6
             Rate: 800
@@ -373,7 +373,7 @@ Body:
             Amount: 40
           - Item: Sticky_Mucus
             Amount: 25
-      - Produced: Turtle_Shell
+      - Product: Turtle_Shell
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -385,7 +385,7 @@ Body:
             Amount: 5
           - Item: Poring_Doll
             Amount: 40
-      - Produced: Nail_Of_Orc
+      - Product: Nail_Of_Orc
         BaseRate: 800
         Quantity:
           - Amount: 6
@@ -397,7 +397,7 @@ Body:
             Amount: 10
           - Item: Raccoon_Leaf
             Amount: 50
-      - Produced: Dragon_Canine
+      - Product: Dragon_Canine
         Quantity:
           - Amount: 8
             Rate: 800
@@ -411,7 +411,7 @@ Body:
             Amount: 50
           - Item: Sticky_Webfoot
             Amount: 35
-      - Produced: Skirt_Of_Virgin
+      - Product: Skirt_Of_Virgin
         BaseRate: 800
         Quantity:
           - Amount: 6
@@ -423,7 +423,7 @@ Body:
             Amount: 35
           - Item: Scales_Shell
             Amount: 30
-      - Produced: Dragon_Train
+      - Product: Dragon_Train
         BaseRate: 800
         Quantity:
           - Amount: 6
@@ -435,7 +435,7 @@ Body:
             Amount: 35
           - Item: Tooth_Of_Bat
             Amount: 25
-      - Produced: Dokkaebi_Horn
+      - Product: Dokkaebi_Horn
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -447,7 +447,7 @@ Body:
             Amount: 25
           - Item: Shining_Scales
             Amount: 15
-      - Produced: Grit
+      - Product: Grit
         BaseRate: 800
         Quantity:
           - Amount: 8
@@ -459,7 +459,7 @@ Body:
             Amount: 35
           - Item: Limb_Of_Mantis
             Amount: 50
-      - Produced: Sharp_Scale
+      - Product: Sharp_Scale
         BaseRate: 800
         Quantity:
           - Amount: 3
@@ -471,7 +471,7 @@ Body:
             Amount: 20
           - Item: Horseshoe
             Amount: 10
-      - Produced: Short_Leg
+      - Product: Short_Leg
         BaseRate: 800
         Quantity:
           - Amount: 6
@@ -483,7 +483,7 @@ Body:
             Amount: 20
           - Item: Scell
             Amount: 45
-      - Produced: Starsand_Of_Witch
+      - Product: Starsand_Of_Witch
         BaseRate: 800
         Quantity:
           - Amount: 2
@@ -495,7 +495,7 @@ Body:
             Amount: 15
           - Item: Insect_Feeler
             Amount: 10
-      - Produced: Fox_Tail
+      - Product: Fox_Tail
         Quantity:
           - Amount: 2
             Rate: 800
@@ -509,7 +509,7 @@ Body:
             Amount: 10
           - Item: Rouge
             Amount: 15
-      - Produced: Cobold_Hair
+      - Product: Cobold_Hair
         Quantity:
           - Amount: 6
             Rate: 800
@@ -523,7 +523,7 @@ Body:
             Amount: 45
           - Item: Wedding_Bouquet
             Amount: 20
-      - Produced: Jaws_Of_Ant
+      - Product: Jaws_Of_Ant
         Quantity:
           - Amount: 4
             Rate: 800
@@ -537,7 +537,7 @@ Body:
             Amount: 20
           - Item: Witherless_Rose
             Amount: 20
-      - Produced: Voucher_Of_Orcish_Hero
+      - Product: Voucher_Of_Orcish_Hero
         BaseRate: 800
         Quantity:
           - Amount: 5
@@ -549,7 +549,7 @@ Body:
             Amount: 45
           - Item: Tree_Root
             Amount: 5
-      - Produced: Sacred_Marks
+      - Product: Sacred_Marks
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -561,7 +561,7 @@ Body:
             Amount: 30
           - Item: Scorpion's_Tail
             Amount: 10
-      - Produced: Alchol
+      - Product: Alchol
         BaseRate: 800
         Quantity:
           - Amount: 9
@@ -573,7 +573,7 @@ Body:
             Amount: 50
           - Item: Skel_Bone
             Amount: 40
-      - Produced: Crap_Shell
+      - Product: Crap_Shell
         BaseRate: 800
         Quantity:
           - Amount: 8
@@ -585,7 +585,7 @@ Body:
             Amount: 50
           - Item: Fish_Tail
             Amount: 30
-      - Produced: Tendon
+      - Product: Tendon
         BaseRate: 800
         Quantity:
           - Amount: 3
@@ -597,7 +597,7 @@ Body:
             Amount: 5
           - Item: Orcish_Cuspid
             Amount: 25
-      - Produced: Tiger_Footskin
+      - Product: Tiger_Footskin
         BaseRate: 800
         Quantity:
           - Amount: 2
@@ -609,7 +609,7 @@ Body:
             Amount: 5
           - Item: White_Platter
             Amount: 20
-      - Produced: Hinalle
+      - Product: Hinalle
         Quantity:
           - Amount: 2
             Rate: 200
@@ -623,7 +623,7 @@ Body:
             Amount: 45
           - Item: Moustache_Of_Mole
             Amount: 40
-      - Produced: Counteragent
+      - Product: Counteragent
         BaseRate: 800
         Quantity:
           - Amount: 4
@@ -635,7 +635,7 @@ Body:
             Amount: 15
           - Item: Mementos
             Amount: 30
-      - Produced: Tooth_Of_Ancient_Fish
+      - Product: Tooth_Of_Ancient_Fish
         Quantity:
           - Amount: 6
             Rate: 800
@@ -649,7 +649,7 @@ Body:
             Amount: 35
           - Item: Transparent_Cloth
             Amount: 30
-      - Produced: Rat_Tail
+      - Product: Rat_Tail
         Quantity:
           - Amount: 7
             Rate: 800
@@ -663,7 +663,7 @@ Body:
             Amount: 40
           - Item: Mushroom_Spore
             Amount: 35
-      - Produced: Coal
+      - Product: Coal
         BaseRate: 500
         Quantity:
           - Amount: 1
@@ -673,7 +673,7 @@ Body:
         Consumed:
           - Item: Guard
             Amount: 1
-      - Produced: Steel
+      - Product: Steel
         Quantity:
           - Amount: 10
         Skill:
@@ -682,7 +682,7 @@ Body:
         Consumed:
           - Item: Tsurugi
             Amount: 1
-      - Produced: Cigar
+      - Product: Cigar
         Quantity:
           - Amount: 1
         Skill:
@@ -691,7 +691,7 @@ Body:
         Consumed:
           - Item: Orcish_Axe
             Amount: 1
-      - Produced: Bone_Wand
+      - Product: Bone_Wand
         BaseRate: 200
         Quantity:
           - Amount: 1
@@ -703,7 +703,7 @@ Body:
             Amount: 100
           - Item: Clattering_Skull
             Amount: 100
-      - Produced: Cigar
+      - Product: Cigar
         Quantity:
           - Amount: 1
         Skill:
@@ -714,7 +714,7 @@ Body:
             Amount: 1
           - Item: Orcish_Voucher
             Amount: 100
-      - Produced: Starsand_Of_Witch
+      - Product: Starsand_Of_Witch
         BaseRate: 800
         Quantity:
           - Amount: 2
@@ -726,7 +726,7 @@ Body:
             Amount: 100
           - Item: Scell
             Amount: 100
-      - Produced: Soft_Feather
+      - Product: Soft_Feather
         Quantity:
           - Amount: 1
             Rate: 200
@@ -738,7 +738,7 @@ Body:
             Amount: 30
           - Item: Feather_Of_Birds
             Amount: 30
-      - Produced: Wind_Of_Verdure
+      - Product: Wind_Of_Verdure
         Quantity:
           - Amount: 1
             Rate: 500
@@ -748,7 +748,7 @@ Body:
         Consumed:
           - Item: Ice_Piece
             Amount: 100
-      - Produced: Crystal_Blue
+      - Product: Crystal_Blue
         Quantity:
           - Amount: 1
             Rate: 500
@@ -758,7 +758,7 @@ Body:
         Consumed:
           - Item: Claw_Of_Wolves
             Amount: 100
-      - Produced: Soft_Silk_Cloth
+      - Product: Soft_Silk_Cloth
         Quantity:
           - Amount: 2
         Skill:
@@ -767,7 +767,7 @@ Body:
         Consumed:
           - Item: Transparent_Cloth
             Amount: 10
-      - Produced: Transparent_Cloth
+      - Product: Transparent_Cloth
         Quantity:
           - Amount: 5
         Skill:
@@ -776,7 +776,7 @@ Body:
         Consumed:
           - Item: Soft_Silk_Cloth
             Amount: 2
-      - Produced: Boost500_To_Throw
+      - Product: Boost500_To_Throw
         Quantity:
           - Amount: 1
             Rate: 100
@@ -794,7 +794,7 @@ Body:
             Amount: 10
           - Item: Flexible_String
             Amount: 10
-      - Produced: Full_SwingK_To_Throw
+      - Product: Full_SwingK_To_Throw
         Quantity:
           - Amount: 1
             Rate: 100
@@ -812,7 +812,7 @@ Body:
             Amount: 10
           - Item: Full_SwingK
             Amount: 10
-      - Produced: Mana_Plus_To_Throw
+      - Product: Mana_Plus_To_Throw
         Quantity:
           - Amount: 1
             Rate: 100
@@ -830,7 +830,7 @@ Body:
             Amount: 10
           - Item: Mana_Plus
             Amount: 10
-      - Produced: Cure_Free_To_Throw
+      - Product: Cure_Free_To_Throw
         Quantity:
           - Amount: 1
             Rate: 100
@@ -848,7 +848,7 @@ Body:
             Amount: 10
           - Item: Flexible_String
             Amount: 10
-      - Produced: Stamina_Up_M_To_Throw
+      - Product: Stamina_Up_M_To_Throw
         Quantity:
           - Amount: 1
             Rate: 100
@@ -866,7 +866,7 @@ Body:
             Amount: 10
           - Item: Stamina_Up_M
             Amount: 10
-      - Produced: Digestive_F_To_Throw
+      - Product: Digestive_F_To_Throw
         Quantity:
           - Amount: 1
             Rate: 100
@@ -884,7 +884,7 @@ Body:
             Amount: 10
           - Item: Flexible_String
             Amount: 10
-      - Produced: HP_Inc_PotS_To_Throw
+      - Product: HP_Inc_PotS_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -895,7 +895,7 @@ Body:
             Amount: 10
           - Item: HP_Increase_PotionS
             Amount: 10
-      - Produced: HP_Inc_PotM_To_Throw
+      - Product: HP_Inc_PotM_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -906,7 +906,7 @@ Body:
             Amount: 10
           - Item: HP_Increase_PotionM
             Amount: 10
-      - Produced: HP_Inc_PotL_To_Throw
+      - Product: HP_Inc_PotL_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -917,7 +917,7 @@ Body:
             Amount: 10
           - Item: HP_Increase_PotionL
             Amount: 10
-      - Produced: SP_Inc_PotS_To_Throw
+      - Product: SP_Inc_PotS_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -928,7 +928,7 @@ Body:
             Amount: 10
           - Item: SP_Increase_PotionS
             Amount: 10
-      - Produced: SP_Inc_PotM_To_Throw
+      - Product: SP_Inc_PotM_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -939,7 +939,7 @@ Body:
             Amount: 10
           - Item: SP_Increase_PotionM
             Amount: 10
-      - Produced: SP_Inc_PotL_To_Throw
+      - Product: SP_Inc_PotL_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -950,7 +950,7 @@ Body:
             Amount: 10
           - Item: SP_Increase_PotionL
             Amount: 10
-      - Produced: En_White_PotZ_To_Throw
+      - Product: En_White_PotZ_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -961,7 +961,7 @@ Body:
             Amount: 10
           - Item: Enrich_White_PotionZ
             Amount: 10
-      - Produced: Vitata500_To_Throw
+      - Product: Vitata500_To_Throw
         Quantity:
           - Amount: 10
         Skill:
@@ -972,7 +972,7 @@ Body:
             Amount: 10
           - Item: Vitata500
             Amount: 10
-      - Produced: En_Cel_Juice_To_Throw
+      - Product: En_Cel_Juice_To_Throw
         Quantity:
           - Amount: 10
         Skill:

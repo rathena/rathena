@@ -17,6 +17,7 @@
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_SKILL_CHANGEMATERIAL_DB 75
 #define MAX_SKILL_CHANGEMATERIAL_SET 3
+#define MAX_SKILL_PRODUCE_DB	282 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 
 // Database to memory maps

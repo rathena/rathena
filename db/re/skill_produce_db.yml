@@ -42,23 +42,23 @@ Header:
   Version: 1
 
 Body:
-  - ItemLV: 1
+  - ItemLevel: 1
     Recipe:
-      - Produced: Sword
+      - Product: Sword
         Skill:
           Name: BS_SWORD
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 2
-      - Produced: Falchion
+      - Product: Falchion
         Skill:
           Name: BS_SWORD
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 30
-      - Produced: Blade
+      - Product: Blade
         Skill:
           Name: BS_SWORD
           Level: 1
@@ -67,7 +67,7 @@ Body:
             Amount: 45
           - Item: Tooth_Of_Bat
             Amount: 25
-      - Produced: Knife
+      - Product: Knife
         Skill:
           Name: BS_DAGGER
           Level: 1
@@ -76,21 +76,21 @@ Body:
             Amount: 1
           - Item: Jellopy
             Amount: 10
-      - Produced: Cutter
+      - Product: Cutter
         Skill:
           Name: BS_DAGGER
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 25
-      - Produced: Main_Gauche
+      - Product: Main_Gauche
         Skill:
           Name: BS_DAGGER
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 50
-      - Produced: Katana
+      - Product: Katana
         Skill:
           Name: BS_TWOHANDSWORD
           Level: 1
@@ -99,35 +99,35 @@ Body:
             Amount: 15
           - Item: Iron
             Amount: 35
-      - Produced: Axe
+      - Product: Axe
         Skill:
           Name: BS_AXE
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 10
-      - Produced: Battle_Axe
+      - Product: Battle_Axe
         Skill:
           Name: BS_AXE
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 110
-      - Produced: Club
+      - Product: Club
         Skill:
           Name: BS_MACE
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 3
-      - Produced: Mace
+      - Product: Mace
         Skill:
           Name: BS_MACE
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 30
-      - Produced: Waghnakh
+      - Product: Waghnakh
         Skill:
           Name: BS_KNUCKLE
           Level: 1
@@ -136,44 +136,44 @@ Body:
             Amount: 160
           - Item: Scarlet_Jewel
             Amount: 1
-      - Produced: Javelin
+      - Product: Javelin
         Skill:
           Name: BS_SPEAR
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 3
-      - Produced: Spear
+      - Product: Spear
         Skill:
           Name: BS_SPEAR
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 35
-      - Produced: Pike
+      - Product: Pike
         Skill:
           Name: BS_SPEAR
           Level: 1
         Consumed:
           - Item: Iron
             Amount: 70
-  - ItemLV: 2
+  - ItemLevel: 2
     Recipe:
-      - Produced: Lapier
+      - Product: Lapier
         Skill:
           Name: BS_SWORD
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 20
-      - Produced: Scimiter
+      - Product: Scimiter
         Skill:
           Name: BS_SWORD
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 35
-      - Produced: Ring_Pommel_Saber
+      - Product: Ring_Pommel_Saber
         Skill:
           Name: BS_SWORD
           Level: 2
@@ -182,28 +182,28 @@ Body:
             Amount: 50
           - Item: Steel
             Amount: 40
-      - Produced: Dirk
+      - Product: Dirk
         Skill:
           Name: BS_DAGGER
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 17
-      - Produced: Dagger
+      - Product: Dagger
         Skill:
           Name: BS_DAGGER
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 30
-      - Produced: Stiletto
+      - Product: Stiletto
         Skill:
           Name: BS_DAGGER
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 40
-      - Produced: Slayer
+      - Product: Slayer
         Skill:
           Name: BS_TWOHANDSWORD
           Level: 2
@@ -212,79 +212,79 @@ Body:
             Amount: 20
           - Item: Steel
             Amount: 25
-      - Produced: Bastard_Sword
+      - Product: Bastard_Sword
         Skill:
           Name: BS_TWOHANDSWORD
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 45
-      - Produced: Hammer
+      - Product: Hammer
         Skill:
           Name: BS_AXE
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 30
-      - Produced: Smasher
+      - Product: Smasher
         Skill:
           Name: BS_MACE
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 20
-      - Produced: Flail
+      - Product: Flail
         Skill:
           Name: BS_MACE
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 33
-      - Produced: Chain
+      - Product: Chain
         Skill:
           Name: BS_MACE
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 45
-      - Produced: Knuckle_Duster
+      - Product: Knuckle_Duster
         Skill:
           Name: BS_KNUCKLE
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 50
-      - Produced: Hora
+      - Product: Hora
         Skill:
           Name: BS_KNUCKLE
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 65
-      - Produced: Guisarme
+      - Product: Guisarme
         Skill:
           Name: BS_SPEAR
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 25
-      - Produced: Glaive
+      - Product: Glaive
         Skill:
           Name: BS_SPEAR
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 40
-      - Produced: Partizan
+      - Product: Partizan
         Skill:
           Name: BS_SPEAR
           Level: 2
         Consumed:
           - Item: Steel
             Amount: 55
-  - ItemLV: 3
+  - ItemLevel: 3
     Recipe:
-      - Produced: Saber
+      - Product: Saber
         Skill:
           Name: BS_SWORD
           Level: 3
@@ -295,7 +295,7 @@ Body:
             Amount: 5
           - Item: White_Jewel
             Amount: 1
-      - Produced: Haedonggum
+      - Product: Haedonggum
         Skill:
           Name: BS_SWORD
           Level: 3
@@ -306,7 +306,7 @@ Body:
             Amount: 8
           - Item: Steel
             Amount: 10
-      - Produced: Tsurugi
+      - Product: Tsurugi
         Skill:
           Name: BS_SWORD
           Level: 3
@@ -317,7 +317,7 @@ Body:
             Amount: 8
           - Item: Steel
             Amount: 15
-      - Produced: Flamberge
+      - Product: Flamberge
         Skill:
           Name: BS_SWORD
           Level: 3
@@ -326,7 +326,7 @@ Body:
             Amount: 1
           - Item: Oridecon
             Amount: 16
-      - Produced: Gladius
+      - Product: Gladius
         Skill:
           Name: BS_DAGGER
           Level: 3
@@ -337,7 +337,7 @@ Body:
             Amount: 4
           - Item: Steel
             Amount: 40
-      - Produced: Damascus
+      - Product: Damascus
         Skill:
           Name: BS_DAGGER
           Level: 3
@@ -348,7 +348,7 @@ Body:
             Amount: 4
           - Item: Steel
             Amount: 60
-      - Produced: Two_Hand_Sword
+      - Product: Two_Hand_Sword
         Skill:
           Name: BS_TWOHANDSWORD
           Level: 3
@@ -357,7 +357,7 @@ Body:
             Amount: 12
           - Item: Steel
             Amount: 10
-      - Produced: Broad_Sword
+      - Product: Broad_Sword
         Skill:
           Name: BS_TWOHANDSWORD
           Level: 3
@@ -366,7 +366,7 @@ Body:
             Amount: 12
           - Item: Steel
             Amount: 20
-      - Produced: Claymore
+      - Product: Claymore
         Skill:
           Name: BS_TWOHANDSWORD
           Level: 3
@@ -377,7 +377,7 @@ Body:
             Amount: 16
           - Item: Steel
             Amount: 20
-      - Produced: Buster
+      - Product: Buster
         Skill:
           Name: BS_AXE
           Level: 3
@@ -388,7 +388,7 @@ Body:
             Amount: 4
           - Item: Steel
             Amount: 20
-      - Produced: Two_Handed_Axe
+      - Product: Two_Handed_Axe
         Skill:
           Name: BS_AXE
           Level: 3
@@ -399,7 +399,7 @@ Body:
             Amount: 10
           - Item: Violet_Jewel
             Amount: 1
-      - Produced: Morning_Star
+      - Product: Morning_Star
         Skill:
           Name: BS_MACE
           Level: 3
@@ -408,7 +408,7 @@ Body:
             Amount: 1
           - Item: Steel
             Amount: 85
-      - Produced: Sword_Mace
+      - Product: Sword_Mace
         Skill:
           Name: BS_MACE
           Level: 3
@@ -417,7 +417,7 @@ Body:
             Amount: 20
           - Item: Steel
             Amount: 100
-      - Produced: Stunner
+      - Product: Stunner
         Skill:
           Name: BS_MACE
           Level: 3
@@ -426,7 +426,7 @@ Body:
             Amount: 120
           - Item: Voucher_Of_Orcish_Hero
             Amount: 1
-      - Produced: Fist
+      - Product: Fist
         Skill:
           Name: BS_KNUCKLE
           Level: 3
@@ -435,7 +435,7 @@ Body:
             Amount: 10
           - Item: Oridecon
             Amount: 4
-      - Produced: Claw
+      - Product: Claw
         Skill:
           Name: BS_KNUCKLE
           Level: 3
@@ -444,7 +444,7 @@ Body:
             Amount: 10
           - Item: Oridecon
             Amount: 8
-      - Produced: Finger
+      - Product: Finger
         Skill:
           Name: BS_KNUCKLE
           Level: 3
@@ -453,7 +453,7 @@ Body:
             Amount: 4
           - Item: White_Jewel
             Amount: 10
-      - Produced: Trident
+      - Product: Trident
         Skill:
           Name: BS_SPEAR
           Level: 3
@@ -464,7 +464,7 @@ Body:
             Amount: 5
           - Item: Steel
             Amount: 10
-      - Produced: Halberd
+      - Product: Halberd
         Skill:
           Name: BS_SPEAR
           Level: 3
@@ -473,7 +473,7 @@ Body:
             Amount: 12
           - Item: Steel
             Amount: 10
-      - Produced: Lance
+      - Product: Lance
         Skill:
           Name: BS_SPEAR
           Level: 3
@@ -484,9 +484,9 @@ Body:
             Amount: 2
           - Item: Oridecon
             Amount: 12
-  - ItemLV: 11
+  - ItemLevel: 11
     Recipe:
-      - Produced: Str_Dish01
+      - Product: Str_Dish01
         Consumed:
           - Item: Cooking_Oil
             Amount: 1
@@ -496,7 +496,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook01
-      - Produced: Int_Dish01
+      - Product: Int_Dish01
         Consumed:
           - Item: Grape
             Amount: 3
@@ -504,7 +504,7 @@ Body:
             Amount: 2
         NotConsumed:
           - Item: Cookbook01
-      - Produced: Vit_Dish01
+      - Product: Vit_Dish01
         Consumed:
           - Item: Green_Herb
             Amount: 10
@@ -514,7 +514,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook01
-      - Produced: Agi_Dish01
+      - Product: Agi_Dish01
         Consumed:
           - Item: Chinese_Ink
             Amount: 1
@@ -524,7 +524,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook01
-      - Produced: Dex_Dish01
+      - Product: Dex_Dish01
         Consumed:
           - Item: Grape
             Amount: 2
@@ -534,7 +534,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook01
-      - Produced: Luk_Dish01
+      - Product: Luk_Dish01
         Consumed:
           - Item: Cooking_Oil
             Amount: 1
@@ -544,9 +544,9 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Cookbook01
-  - ItemLV: 12
+  - ItemLevel: 12
     Recipe:
-      - Produced: Str_Dish02
+      - Product: Str_Dish02
         Consumed:
           - Item: Green_Herb
             Amount: 10
@@ -558,7 +558,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook02
-      - Produced: Vit_Dish02
+      - Product: Vit_Dish02
         Consumed:
           - Item: Delicious_Fish
             Amount: 1
@@ -570,7 +570,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Cookbook02
-      - Produced: Int_Dish02
+      - Product: Int_Dish02
         Consumed:
           - Item: Blue_Herb
             Amount: 5
@@ -580,7 +580,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook02
-      - Produced: Agi_Dish02
+      - Product: Agi_Dish02
         Consumed:
           - Item: Carrot
             Amount: 3
@@ -592,7 +592,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Cookbook02
-      - Produced: Dex_Dish02
+      - Product: Dex_Dish02
         Consumed:
           - Item: Cacao
             Amount: 10
@@ -604,7 +604,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook02
-      - Produced: Luk_Dish02
+      - Product: Luk_Dish02
         Consumed:
           - Item: Apple_Juice
             Amount: 3
@@ -616,9 +616,9 @@ Body:
             Amount: 2
         NotConsumed:
           - Item: Cookbook02
-  - ItemLV: 13
+  - ItemLevel: 13
     Recipe:
-      - Produced: Dex_Dish03
+      - Product: Dex_Dish03
         Consumed:
           - Item: Apple
             Amount: 5
@@ -632,7 +632,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook03
-      - Produced: Int_Dish03
+      - Product: Int_Dish03
         Consumed:
           - Item: Honey
             Amount: 2
@@ -642,7 +642,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook03
-      - Produced: Str_Dish03
+      - Product: Str_Dish03
         Consumed:
           - Item: Chilli
             Amount: 5
@@ -656,7 +656,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook03
-      - Produced: Vit_Dish03
+      - Product: Vit_Dish03
         Consumed:
           - Item: Conch
             Amount: 10
@@ -668,7 +668,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook03
-      - Produced: Agi_Dish03
+      - Product: Agi_Dish03
         Consumed:
           - Item: Cheese
             Amount: 10
@@ -680,7 +680,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook03
-      - Produced: Luk_Dish03
+      - Product: Luk_Dish03
         Consumed:
           - Item: Baked_Yam
             Amount: 1
@@ -692,9 +692,9 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook03
-  - ItemLV: 14
+  - ItemLevel: 14
     Recipe:
-      - Produced: Int_Dish04
+      - Product: Int_Dish04
         Consumed:
           - Item: Alchol
             Amount: 2
@@ -708,7 +708,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook04
-      - Produced: Vit_Dish04
+      - Product: Vit_Dish04
         Consumed:
           - Item: Chinese_Ink
             Amount: 20
@@ -722,7 +722,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook04
-      - Produced: Str_Dish04
+      - Product: Str_Dish04
         Consumed:
           - Item: Green_Herb
             Amount: 3
@@ -738,7 +738,7 @@ Body:
             Amount: 2
         NotConsumed:
           - Item: Cookbook04
-      - Produced: Dex_Dish04
+      - Product: Dex_Dish04
         Consumed:
           - Item: Bread
             Amount: 5
@@ -754,7 +754,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook04
-      - Produced: Agi_Dish04
+      - Product: Agi_Dish04
         Consumed:
           - Item: Carrot
             Amount: 10
@@ -768,7 +768,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook04
-      - Produced: Luk_Dish04
+      - Product: Luk_Dish04
         Consumed:
           - Item: Delicious_Fish
             Amount: 5
@@ -782,9 +782,9 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook04
-  - ItemLV: 15
+  - ItemLevel: 15
     Recipe:
-      - Produced: Int_Dish05
+      - Product: Int_Dish05
         Consumed:
           - Item: Alchol
             Amount: 2
@@ -798,7 +798,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook05
-      - Produced: Str_Dish05
+      - Product: Str_Dish05
         Consumed:
           - Item: Carrot
             Amount: 3
@@ -812,7 +812,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook05
-      - Produced: Dex_Dish05
+      - Product: Dex_Dish05
         Consumed:
           - Item: Great_Leaf
             Amount: 6
@@ -828,7 +828,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook05
-      - Produced: Agi_Dish05
+      - Product: Agi_Dish05
         Consumed:
           - Item: Leaflet_Of_Hinal
             Amount: 10
@@ -842,7 +842,7 @@ Body:
             Amount: 20
         NotConsumed:
           - Item: Cookbook05
-      - Produced: Vit_Dish05
+      - Product: Vit_Dish05
         Consumed:
           - Item: Bun
             Amount: 20
@@ -856,7 +856,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook05
-      - Produced: Luk_Dish05
+      - Product: Luk_Dish05
         Consumed:
           - Item: Cooking_Oil
             Amount: 1
@@ -870,9 +870,9 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook05
-  - ItemLV: 16
+  - ItemLevel: 16
     Recipe:
-      - Produced: Str_Dish06
+      - Product: Str_Dish06
         Consumed:
           - Item: Fruit_Of_Mastela
             Amount: 1
@@ -886,7 +886,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook06
-      - Produced: Int_Dish06
+      - Product: Int_Dish06
         Consumed:
           - Item: Alchol
             Amount: 1
@@ -900,7 +900,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook06
-      - Produced: Dex_Dish06
+      - Product: Dex_Dish06
         Consumed:
           - Item: Cheese
             Amount: 10
@@ -916,7 +916,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook06
-      - Produced: Agi_Dish06
+      - Product: Agi_Dish06
         Consumed:
           - Item: Chilli
             Amount: 20
@@ -928,7 +928,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook06
-      - Produced: Vit_Dish06
+      - Product: Vit_Dish06
         Consumed:
           - Item: Browny_Root
             Amount: 20
@@ -942,7 +942,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook06
-      - Produced: Luk_Dish06
+      - Product: Luk_Dish06
         Consumed:
           - Item: Aloe
             Amount: 1
@@ -956,9 +956,9 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Cookbook06
-  - ItemLV: 17
+  - ItemLevel: 17
     Recipe:
-      - Produced: Str_Dish07
+      - Product: Str_Dish07
         Consumed:
           - Item: Coal
             Amount: 2
@@ -974,7 +974,7 @@ Body:
             Amount: 15
         NotConsumed:
           - Item: Cookbook07
-      - Produced: Int_Dish07
+      - Product: Int_Dish07
         Consumed:
           - Item: Honey
             Amount: 2
@@ -988,7 +988,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook07
-      - Produced: Dex_Dish07
+      - Product: Dex_Dish07
         Consumed:
           - Item: Amulet
             Amount: 5
@@ -1004,7 +1004,7 @@ Body:
             Amount: 2
         NotConsumed:
           - Item: Cookbook07
-      - Produced: Agi_Dish07
+      - Product: Agi_Dish07
         Consumed:
           - Item: Anolian_Skin
             Amount: 10
@@ -1020,7 +1020,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook07
-      - Produced: Vit_Dish07
+      - Product: Vit_Dish07
         Consumed:
           - Item: Delicious_Fish
             Amount: 2
@@ -1036,7 +1036,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook07
-      - Produced: Luk_Dish07
+      - Product: Luk_Dish07
         Consumed:
           - Item: Flesh_Of_Clam
             Amount: 10
@@ -1052,9 +1052,9 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook07
-  - ItemLV: 18
+  - ItemLevel: 18
     Recipe:
-      - Produced: Str_Dish08
+      - Product: Str_Dish08
         Consumed:
           - Item: Bear's_Foot
             Amount: 20
@@ -1070,7 +1070,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook08
-      - Produced: Int_Dish08
+      - Product: Int_Dish08
         Consumed:
           - Item: Leaf_Of_Yggdrasil
             Amount: 3
@@ -1086,7 +1086,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook08
-      - Produced: Dex_Dish08
+      - Product: Dex_Dish08
         Consumed:
           - Item: Bread
             Amount: 10
@@ -1104,7 +1104,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook08
-      - Produced: Agi_Dish08
+      - Product: Agi_Dish08
         Consumed:
           - Item: Aloebera
             Amount: 1
@@ -1120,7 +1120,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Cookbook08
-      - Produced: Vit_Dish08
+      - Product: Vit_Dish08
         Consumed:
           - Item: Grain
             Amount: 2
@@ -1136,7 +1136,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Cookbook08
-      - Produced: Luk_Dish08
+      - Product: Luk_Dish08
         Consumed:
           - Item: Grain
             Amount: 5
@@ -1152,9 +1152,9 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook08
-  - ItemLV: 19
+  - ItemLevel: 19
     Recipe:
-      - Produced: Str_Dish09
+      - Product: Str_Dish09
         Consumed:
           - Item: Cheese
             Amount: 10
@@ -1172,7 +1172,7 @@ Body:
             Amount: 40
         NotConsumed:
           - Item: Cookbook09
-      - Produced: Int_Dish09
+      - Product: Int_Dish09
         Consumed:
           - Item: Alchol
             Amount: 5
@@ -1190,7 +1190,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook09
-      - Produced: Dex_Dish09
+      - Product: Dex_Dish09
         Consumed:
           - Item: Alchol
             Amount: 2
@@ -1208,7 +1208,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Cookbook09
-      - Produced: Agi_Dish09
+      - Product: Agi_Dish09
         Consumed:
           - Item: Meat
             Amount: 10
@@ -1226,7 +1226,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Cookbook09
-      - Produced: Vit_Dish09
+      - Product: Vit_Dish09
         Consumed:
           - Item: Dragon's_Skin
             Amount: 10
@@ -1244,7 +1244,7 @@ Body:
             Amount: 6
         NotConsumed:
           - Item: Cookbook09
-      - Produced: Luk_Dish09
+      - Product: Luk_Dish09
         Consumed:
           - Item: Alchol
             Amount: 2
@@ -1262,9 +1262,9 @@ Body:
             Amount: 6
         NotConsumed:
           - Item: Cookbook09
-  - ItemLV: 20
+  - ItemLevel: 20
     Recipe:
-      - Produced: Str_Dish10
+      - Product: Str_Dish10
         Consumed:
           - Item: Alchol
             Amount: 1
@@ -1284,7 +1284,7 @@ Body:
             Amount: 20
         NotConsumed:
           - Item: Cookbook10
-      - Produced: Int_Dish10
+      - Product: Int_Dish10
         Consumed:
           - Item: Blue_Herb
             Amount: 10
@@ -1304,7 +1304,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook10
-      - Produced: Dex_Dish10
+      - Product: Dex_Dish10
         Consumed:
           - Item: Alchol
             Amount: 5
@@ -1324,7 +1324,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook10
-      - Produced: Agi_Dish10
+      - Product: Agi_Dish10
         Consumed:
           - Item: Aloebera
             Amount: 2
@@ -1344,7 +1344,7 @@ Body:
             Amount: 20
         NotConsumed:
           - Item: Cookbook10
-      - Produced: Vit_Dish10
+      - Product: Vit_Dish10
         Consumed:
           - Item: Amulet
             Amount: 10
@@ -1364,7 +1364,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook10
-      - Produced: Luk_Dish10
+      - Product: Luk_Dish10
         Consumed:
           - Item: Four_Leaf_Clover
             Amount: 2
@@ -1384,16 +1384,16 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Cookbook10
-  - ItemLV: 21
+  - ItemLevel: 21
     Recipe:
-      - Produced: Iron
+      - Product: Iron
         Skill:
           Name: BS_IRON
           Level: 1
         Consumed:
           - Item: Iron_Ore
             Amount: 1
-      - Produced: Steel
+      - Product: Steel
         Skill:
           Name: BS_STEEL
           Level: 1
@@ -1402,44 +1402,44 @@ Body:
             Amount: 1
           - Item: Iron
             Amount: 5
-      - Produced: Star_Crumb
+      - Product: Star_Crumb
         Skill:
           Name: BS_ENCHANTEDSTONE
           Level: 1
         Consumed:
           - Item: Sparkling_Dust
             Amount: 10
-      - Produced: Flame_Heart
+      - Product: Flame_Heart
         Skill:
           Name: BS_ENCHANTEDSTONE
           Level: 1
         Consumed:
           - Item: Boody_Red
             Amount: 10
-      - Produced: Mistic_Frozen
+      - Product: Mistic_Frozen
         Skill:
           Name: BS_ENCHANTEDSTONE
           Level: 1
         Consumed:
           - Item: Crystal_Blue
             Amount: 10
-      - Produced: Great_Nature
+      - Product: Great_Nature
         Skill:
           Name: BS_ENCHANTEDSTONE
           Level: 1
         Consumed:
           - Item: Yellow_Live
             Amount: 10
-      - Produced: Rough_Wind
+      - Product: Rough_Wind
         Skill:
           Name: BS_ENCHANTEDSTONE
           Level: 1
         Consumed:
           - Item: Wind_Of_Verdure
             Amount: 10
-  - ItemLV: 22
+  - ItemLevel: 22
     Recipe:
-      - Produced: Red_Potion
+      - Product: Red_Potion
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1450,7 +1450,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Produced: Yellow_Potion
+      - Product: Yellow_Potion
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1461,7 +1461,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Produced: White_Potion
+      - Product: White_Potion
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1472,7 +1472,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Produced: Blue_Potion
+      - Product: Blue_Potion
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1485,7 +1485,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Produced: Red_Slim_Potion
+      - Product: Red_Slim_Potion
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1498,7 +1498,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Slim_Potion_Create_Book
-      - Produced: Yellow_Slim_Potion
+      - Product: Yellow_Slim_Potion
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1511,7 +1511,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Slim_Potion_Create_Book
-      - Produced: White_Slim_Potion
+      - Product: White_Slim_Potion
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1524,14 +1524,14 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Slim_Potion_Create_Book
-      - Produced: Holy_Water
+      - Product: Holy_Water
         Skill:
           Name: AL_HOLYWATER
           Level: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 1
-      - Produced: Poison_Bottle
+      - Product: Poison_Bottle
         Skill:
           Name: ASC_CDP
           Level: 1
@@ -1550,7 +1550,7 @@ Body:
             Amount: 1
           - Item: Posionous_Canine
             Amount: 1
-      - Produced: Fire_Bottle
+      - Product: Fire_Bottle
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1563,7 +1563,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: FireBottle_Create_Book
-      - Produced: Acid_Bottle
+      - Product: Acid_Bottle
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1574,7 +1574,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Acid_Create_Book
-      - Produced: MenEater_Plant_Bottle
+      - Product: MenEater_Plant_Bottle
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1585,7 +1585,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Plant_Create_Book
-      - Produced: Mini_Bottle
+      - Product: Mini_Bottle
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1598,7 +1598,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Mine_Create_Book
-      - Produced: Coating_Bottle
+      - Product: Coating_Bottle
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1613,7 +1613,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Coating_Create_Book
-      - Produced: Resist_Fire
+      - Product: Resist_Fire
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1626,7 +1626,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Elemental_Potion_Book
-      - Produced: Resist_Water
+      - Product: Resist_Water
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1639,7 +1639,7 @@ Body:
             Amount: 3
         NotConsumed:
           - Item: Elemental_Potion_Book
-      - Produced: Resist_Earth
+      - Product: Resist_Earth
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1652,7 +1652,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Elemental_Potion_Book
-      - Produced: Resist_Wind
+      - Product: Resist_Wind
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1665,7 +1665,7 @@ Body:
             Amount: 3
         NotConsumed:
           - Item: Elemental_Potion_Book
-      - Produced: Anodyne
+      - Product: Anodyne
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1678,7 +1678,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Produced: Aloebera
+      - Product: Aloebera
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1691,7 +1691,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Produced: Alchol
+      - Product: Alchol
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1706,7 +1706,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Alcol_Create_Book
-      - Produced: Germination_Breed
+      - Product: Germination_Breed
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1719,7 +1719,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-      - Produced: aegis_100371
+      - Product: aegis_100371
         Skill:
           Name: AM_PHARMACY
           Level: 1
@@ -1732,9 +1732,9 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Normal_Potion_Book
-  - ItemLV: 23
+  - ItemLevel: 23
     Recipe:
-      - Produced: Elemental_Fire
+      - Product: Elemental_Fire
         Skill:
           Name: SA_CREATECON
           Level: 1
@@ -1743,7 +1743,7 @@ Body:
             Amount: 3
           - Item: Scroll
             Amount: 1
-      - Produced: Elemental_Water
+      - Product: Elemental_Water
         Skill:
           Name: SA_CREATECON
           Level: 1
@@ -1752,7 +1752,7 @@ Body:
             Amount: 1
           - Item: Snail's_Shell
             Amount: 3
-      - Produced: Elemental_Earth
+      - Product: Elemental_Earth
         Skill:
           Name: SA_CREATECON
           Level: 1
@@ -1761,7 +1761,7 @@ Body:
             Amount: 3
           - Item: Scroll
             Amount: 1
-      - Produced: Elemental_Wind
+      - Product: Elemental_Wind
         Skill:
           Name: SA_CREATECON
           Level: 1
@@ -1770,16 +1770,16 @@ Body:
             Amount: 3
           - Item: Scroll
             Amount: 1
-  - ItemLV: 24
+  - ItemLevel: 24
     Recipe:
-      - Produced: Ansila
+      - Product: Ansila
         Skill:
           Name: AB_ANCILLA
           Level: 1
         Consumed:
           - Item: Blue_Gemstone
             Amount: 1
-      - Produced: Runstone_Nosiege
+      - Product: Runstone_Nosiege
         Skill:
           Name: RK_RUNEMASTERY
           Level: 8
@@ -1792,7 +1792,7 @@ Body:
             Amount: 1
           - Item: Old_Magic_Circle
             Amount: 1
-      - Produced: Runstone_Rhydo
+      - Product: Runstone_Rhydo
         Skill:
           Name: RK_RUNEMASTERY
           Level: 7
@@ -1803,7 +1803,7 @@ Body:
             Amount: 1
           - Item: Red_Gemstone
             Amount: 1
-      - Produced: Runstone_Verkana
+      - Product: Runstone_Verkana
         Skill:
           Name: RK_RUNEMASTERY
           Level: 9
@@ -1812,7 +1812,7 @@ Body:
             Amount: 1
           - Item: Elder_Branch
             Amount: 1
-      - Produced: Runstone_Isia
+      - Product: Runstone_Isia
         Skill:
           Name: RK_RUNEMASTERY
           Level: 2
@@ -1821,7 +1821,7 @@ Body:
             Amount: 1
           - Item: Elder_Branch
             Amount: 1
-      - Produced: Runstone_Asir
+      - Product: Runstone_Asir
         Skill:
           Name: RK_RUNEMASTERY
           Level: 5
@@ -1832,7 +1832,7 @@ Body:
             Amount: 1
           - Item: Ogre_Tooth
             Amount: 1
-      - Produced: Runstone_Urj
+      - Product: Runstone_Urj
         Skill:
           Name: RK_RUNEMASTERY
           Level: 6
@@ -1843,7 +1843,7 @@ Body:
             Amount: 1
           - Item: Slender_Snake
             Amount: 1
-      - Produced: Runstone_Turisus
+      - Product: Runstone_Turisus
         Skill:
           Name: RK_RUNEMASTERY
           Level: 1
@@ -1854,7 +1854,7 @@ Body:
             Amount: 1
           - Item: Elder_Branch
             Amount: 1
-      - Produced: Runstone_Pertz
+      - Product: Runstone_Pertz
         Skill:
           Name: RK_RUNEMASTERY
           Level: 3
@@ -1867,7 +1867,7 @@ Body:
             Amount: 1
           - Item: Tangled_Chain
             Amount: 1
-      - Produced: Runstone_Hagalas
+      - Product: Runstone_Hagalas
         Skill:
           Name: RK_RUNEMASTERY
           Level: 4
@@ -1878,7 +1878,7 @@ Body:
             Amount: 1
           - Item: Round_Shell
             Amount: 1
-      - Produced: Runstone_Lux
+      - Product: Runstone_Lux
         Skill:
           Name: RK_RUNEMASTERY
           Level: 10
@@ -1887,9 +1887,9 @@ Body:
             Amount: 3
           - Item: Light_Granule
             Amount: 3
-  - ItemLV: 25
+  - ItemLevel: 25
     Recipe:
-      - Produced: Guillotine_Antidote
+      - Product: Guillotine_Antidote
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 5
@@ -1900,7 +1900,7 @@ Body:
             Amount: 2
           - Item: White_Herb
             Amount: 1
-      - Produced: Poison_Paralysis
+      - Product: Poison_Paralysis
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 1
@@ -1913,7 +1913,7 @@ Body:
             Amount: 1
           - Item: Poison_Toad's_Skin
             Amount: 20
-      - Produced: Poison_Leech
+      - Product: Poison_Leech
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 4
@@ -1926,7 +1926,7 @@ Body:
             Amount: 1
           - Item: Poison_Kit
             Amount: 1
-      - Produced: Poison_Oblivion
+      - Product: Poison_Oblivion
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 9
@@ -1939,7 +1939,7 @@ Body:
             Amount: 1
           - Item: Poison_Kit
             Amount: 1
-      - Produced: Poison_Contamination
+      - Product: Poison_Contamination
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 3
@@ -1952,7 +1952,7 @@ Body:
             Amount: 1
           - Item: Poison_Kit
             Amount: 1
-      - Produced: Poison_Numb
+      - Product: Poison_Numb
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 8
@@ -1965,7 +1965,7 @@ Body:
             Amount: 1
           - Item: Sticky_Poison
             Amount: 10
-      - Produced: Poison_Fever
+      - Product: Poison_Fever
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 2
@@ -1978,7 +1978,7 @@ Body:
             Amount: 1
           - Item: Poison_Kit
             Amount: 1
-      - Produced: Poison_Laughing
+      - Product: Poison_Laughing
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 7
@@ -1991,7 +1991,7 @@ Body:
             Amount: 1
           - Item: Poison_Spore
             Amount: 10
-      - Produced: Poison_Fatigue
+      - Product: Poison_Fatigue
         Skill:
           Name: GC_RESEARCHNEWPOISON
           Level: 6
@@ -2004,9 +2004,9 @@ Body:
             Amount: 1
           - Item: Sticky_Poison
             Amount: 10
-  - ItemLV: 27
+  - ItemLevel: 27
     Recipe:
-      - Produced: Savage_BBQ
+      - Product: Savage_BBQ
         Skill:
           Name: GN_MIX_COOKING
           Level: 1
@@ -2021,7 +2021,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Mix_Cook_Book
-      - Produced: Wug_Blood_Cocktail
+      - Product: Wug_Blood_Cocktail
         Skill:
           Name: GN_MIX_COOKING
           Level: 1
@@ -2034,7 +2034,7 @@ Body:
             Amount: 3
         NotConsumed:
           - Item: Mix_Cook_Book
-      - Produced: Minor_Brisket
+      - Product: Minor_Brisket
         Skill:
           Name: GN_MIX_COOKING
           Level: 1
@@ -2047,7 +2047,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Mix_Cook_Book
-      - Produced: Siroma_Icetea
+      - Product: Siroma_Icetea
         Skill:
           Name: GN_MIX_COOKING
           Level: 1
@@ -2062,7 +2062,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Mix_Cook_Book
-      - Produced: Drocera_Herb_Stew
+      - Product: Drocera_Herb_Stew
         Skill:
           Name: GN_MIX_COOKING
           Level: 1
@@ -2081,7 +2081,7 @@ Body:
             Amount: 3
         NotConsumed:
           - Item: Mix_Cook_Book
-      - Produced: Petti_Tail_Noodle
+      - Product: Petti_Tail_Noodle
         Skill:
           Name: GN_MIX_COOKING
           Level: 1
@@ -2096,9 +2096,9 @@ Body:
             Amount: 2
         NotConsumed:
           - Item: Mix_Cook_Book
-  - ItemLV: 29
+  - ItemLevel: 29
     Recipe:
-      - Produced: Seed_Of_Horny_Plant
+      - Product: Seed_Of_Horny_Plant
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2107,7 +2107,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Plant_Genetic_Grow
-      - Produced: Bloodsuck_Plant_Seed
+      - Product: Bloodsuck_Plant_Seed
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2116,7 +2116,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Plant_Genetic_Grow
-      - Produced: Bomb_Mushroom_Spore
+      - Product: Bomb_Mushroom_Spore
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2129,7 +2129,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Plant_Genetic_Grow
-      - Produced: HP_Increase_PotionS
+      - Product: HP_Increase_PotionS
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2144,7 +2144,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Increase_Stamina_Study
-      - Produced: HP_Increase_PotionM
+      - Product: HP_Increase_PotionM
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2159,7 +2159,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Increase_Stamina_Study
-      - Produced: HP_Increase_PotionL
+      - Product: HP_Increase_PotionL
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2176,7 +2176,7 @@ Body:
             Amount: 15
         NotConsumed:
           - Item: Increase_Stamina_Study
-      - Produced: SP_Increase_PotionS
+      - Product: SP_Increase_PotionS
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2191,7 +2191,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Vital_Drink_CB
-      - Produced: SP_Increase_PotionM
+      - Product: SP_Increase_PotionM
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2206,7 +2206,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Vital_Drink_CB
-      - Produced: SP_Increase_PotionL
+      - Product: SP_Increase_PotionL
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2221,7 +2221,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Vital_Drink_CB
-      - Produced: Enrich_White_PotionZ
+      - Product: Enrich_White_PotionZ
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2236,7 +2236,7 @@ Body:
             Amount: 20
         NotConsumed:
           - Item: Quality_Potion_Book
-      - Produced: Vitata500
+      - Product: Vitata500
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2251,7 +2251,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Quality_Potion_Book
-      - Produced: Enrich_Celermine_Juice
+      - Product: Enrich_Celermine_Juice
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2266,7 +2266,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Quality_Potion_Book
-      - Produced: Cure_Free
+      - Product: Cure_Free
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2283,7 +2283,7 @@ Body:
             Amount: 5
         NotConsumed:
           - Item: Quality_Potion_Book
-      - Produced: Ref_T_Potion
+      - Product: Ref_T_Potion
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2294,7 +2294,7 @@ Body:
             Amount: 5
           - Item: Yggdrasilberry
             Amount: 10
-      - Produced: Add_Atk_Potion
+      - Product: Add_Atk_Potion
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2305,7 +2305,7 @@ Body:
             Amount: 45
           - Item: Seed_Of_Yggdrasil
             Amount: 5
-      - Produced: Add_Matk_Potion
+      - Product: Add_Matk_Potion
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2316,7 +2316,7 @@ Body:
             Amount: 10
           - Item: Seed_Of_Yggdrasil
             Amount: 5
-      - Produced: Concentrated_R_P
+      - Product: Concentrated_R_P
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2327,7 +2327,7 @@ Body:
             Amount: 5
           - Item: Red_Syrup
             Amount: 15
-      - Produced: Concentrated_B_P
+      - Product: Concentrated_B_P
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2338,7 +2338,7 @@ Body:
             Amount: 10
           - Item: Empty_Potion
             Amount: 5
-      - Produced: Concentrated_G_P
+      - Product: Concentrated_G_P
         Skill:
           Name: GN_S_PHARMACY
           Level: 1
@@ -2351,9 +2351,9 @@ Body:
             Amount: 10
           - Item: Yellow_Syrup
             Amount: 10
-  - ItemLV: 30
+  - ItemLevel: 30
     Recipe:
-      - Produced: Novice_Potion
+      - Product: Novice_Potion
         Consumed:
           - Item: Apple
             Amount: 1
@@ -2361,7 +2361,7 @@ Body:
             Amount: 2
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: N_Magnifier
+      - Product: N_Magnifier
         Consumed:
           - Item: Jellopy
             Amount: 1
@@ -2369,7 +2369,7 @@ Body:
             Amount: 3
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: N_Fly_Wing
+      - Product: N_Fly_Wing
         Consumed:
           - Item: Feather
             Amount: 2
@@ -2379,7 +2379,7 @@ Body:
             Amount: 2
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: N_Cutter
+      - Product: N_Cutter
         Consumed:
           - Item: Phracon
             Amount: 1
@@ -2389,7 +2389,7 @@ Body:
             Amount: 10
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: Unripe_Apple2
+      - Product: Unripe_Apple2
         Consumed:
           - Item: Apple
             Amount: 1
@@ -2397,7 +2397,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: Four_Leaf_Clover
+      - Product: Four_Leaf_Clover
         Consumed:
           - Item: Clover
             Amount: 200
@@ -2405,7 +2405,7 @@ Body:
             Amount: 200
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: Banana_Juice
+      - Product: Banana_Juice
         Consumed:
           - Item: Banana
             Amount: 1
@@ -2413,7 +2413,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: Apple_Juice
+      - Product: Apple_Juice
         Consumed:
           - Item: Apple
             Amount: 1
@@ -2421,7 +2421,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: Carrot_Juice
+      - Product: Carrot_Juice
         Consumed:
           - Item: Carrot
             Amount: 1
@@ -2429,7 +2429,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: Grape_Juice
+      - Product: Grape_Juice
         Consumed:
           - Item: Grape
             Amount: 1
@@ -2437,7 +2437,7 @@ Body:
             Amount: 1
         NotConsumed:
           - Item: Novice_Combi_Book
-      - Produced: Unripe_Apple
+      - Product: Unripe_Apple
         Consumed:
           - Item: Apple
             Amount: 10
