@@ -12362,13 +12362,19 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
  * Generate the remaining parts of the db if necessary.
  */
 void PlayerStatPointDatabase::loadingFinished() {
-	uint16 level = 1;
-	this->statpoint_table[level] = 48;
+	if( battle_config.use_statpoint_table ){
+		this->statpoint_table[1] = start_status_points;
+	}
 
-	for (level = 2; level <= MAX_LEVEL; level++) {
+	if( this->statpoint_table[1] != start_status_points ){
+		ShowError( "Status points for Level 1 (=%d) do not match inter_athena.conf value (=%d).\n", this->statpoint_table[1], start_status_points );
+		this->statpoint_table[1] = start_status_points;
+	}
+
+	for (uint16 level = 2; level <= MAX_LEVEL; level++) {
 		if (battle_config.use_statpoint_table || util::umap_find(this->statpoint_table, level) == nullptr) {
-			if (util::umap_find(this->statpoint_table, level) == nullptr)
-				ShowError("Missing status point for Level %d in %s\n", level, this->getCurrentFile().c_str());
+			if (!battle_config.use_statpoint_table)
+				ShowError("Missing status points for Level %d\n", level);
 			this->statpoint_table[level] = this->statpoint_table[level-1] + ((level-1+15) / 5);
 		}
 	}
