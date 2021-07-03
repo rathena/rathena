@@ -7982,26 +7982,14 @@ int pc_resetstate(struct map_session_data* sd)
 {
 	nullpo_ret(sd);
 
-	if (battle_config.use_statpoint_table)
-	{	// New statpoint table used here - Dexity
-		uint32 level = sd->status.base_level;
-		if (level > pc_maxbaselv(sd))
-		{	//out of bounds, can't reset!
-			level = pc_maxbaselv(sd);
-			ShowError("pc_resetstate: Capping the Level to %d to reset the stats of %d:%d, the base level (%d) is greater than the max level supported.\n",
-				level, sd->status.account_id, sd->status.char_id, sd->status.base_level);
-		}
-
-		sd->status.status_point = statpoint_db.get_table_point(level);
+	if( sd->status.base_level > pc_maxbaselv( sd ) ){
+		ShowError( "pc_resetstate: Capping the Level to %d to reset the stats of %d:%d, the base level (%d) is greater than the max level supported.\n",
+			pc_maxbaselv( sd ), sd->status.account_id, sd->status.char_id, sd->status.base_level );
+		sd->status.base_level = pc_maxbaselv( sd );
+		clif_updatestatus( sd, SP_BASELEVEL );
 	}
-	else
-	{
-		sd->status.status_point = 48;
 
-		for( int i = 1; i < sd->status.base_level; i++ ){
-			sd->status.status_point += pc_gets_status_point( i );
-		}
-	}
+	sd->status.status_point = statpoint_db.get_table_point( sd->status.base_level );
 
 	if( ( sd->class_&JOBL_UPPER ) != 0 ){
 		sd->status.status_point += battle_config.transcendent_status_points;
