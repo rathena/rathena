@@ -1,0 +1,19 @@
+###########################################################################
+# Skill Tree Database
+###########################################################################
+#
+# Skill Tree Settings
+#
+###########################################################################
+# - Job                   Job name
+#   Inherit               Map of job name from which Job will inherit the skill tree. Note that it doesn't inherit the child. (Default: null)
+#   Tree:                 List of skills. (Default: null)
+#     - Name              Skill name.
+#       MaxLevel          Max level of the skill. Set to 0 to remove the skill.
+#       Exclude           Set to true to exclude the skill when inherit. (Default: false)
+#       BaseLevel         Base level minimum required to unblock the skill. (Default: 0)
+#       JobLevel          Job level minimum required. (Default: 0)
+#       Requires:         List of skills required to unblock the skill. (Default: null)
+#         - Name          Skill name.
+#           Level         Self-explanatory. Set to 0 to remove the skill.
+###########################################################################

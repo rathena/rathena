@@ -1,0 +1,47 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+############################################################################
+# Skill Tree Database
+###########################################################################
+#
+# Skill Tree Settings
+#
+###########################################################################
+# - Job                   Job name
+#   Inherit               Map of job name from which Job will inherit the skill tree. Note that it doesn't inherit the child. (Default: null)
+#   Tree:                 List of skills. (Default: null)
+#     - Name              Skill name.
+#       MaxLevel          Max level of the skill. Set to 0 to remove the skill.
+#       Exclude           Set to true to exclude the skill when inherit. (Default: false)
+#       BaseLevel         Base level minimum required to unblock the skill. (Default: 0)
+#       JobLevel          Job level minimum required. (Default: 0)
+#       Requires:         List of skills required to unblock the skill. (Default: null)
+#         - Name          Skill name.
+#           Level         Self-explanatory. Set to 0 to remove the skill.
+###########################################################################
+
+Header:
+  Type: SKILL_TREE_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/skill_tree.yml
+    Mode: Prerenewal
+  - Path: db/re/skill_tree.yml
+    Mode: Renewal
+  - Path: db/import/skill_tree.yml
