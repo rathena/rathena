@@ -804,7 +804,7 @@ void guild_member_joined(struct map_session_data *sd) {
 		guild_request_info(sd->status.guild_id);
 		return;
 	}
-	if (strcmp(sd->status.name,g->master) == 0) {	// set the Guild Master flag
+	if (sd->state.connect_new == 1 && strcmp(sd->status.name,g->master) == 0) {	// set the Guild Master flag
 		sd->state.gmaster_flag = 1;
 #ifndef RENEWAL
 		// prevent Guild Skills from being used directly after relog
