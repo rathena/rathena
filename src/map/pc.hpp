@@ -1388,7 +1388,7 @@ const char * job_name(int class_);
 
 struct s_skill_tree_entry {
 	uint16 skill_id, max_lv;
-	uint32 baselv, joblv;
+	uint16 baselv, joblv;
 	std::unordered_map<uint16, uint16> need;	/// skill_id, skill_lv
 	bool exclude_inherit;	// exclude the skill from inherit when loading the table
 };

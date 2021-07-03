@@ -4016,9 +4016,12 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 
 	//Go Backwards to give better priority to advanced skills.
 	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
+
 	if (tree == nullptr || tree->skills.empty())
 		return 0;
+
 	std::vector<uint16> skill_list;
+
 	for (const auto &it : tree->skills)
 		skill_list.push_back(it.first);
 	std::sort(skill_list.rbegin(), skill_list.rend());

@@ -12082,9 +12082,6 @@ uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "Tree")) {
 		for (const auto &it : node["Tree"]) {
-			if (!this->nodesExist(it, { "Name" }))
-				return 0;
-
 			std::string skill_name;
 
 			if (!this->asString(it, "Name", skill_name))
@@ -12145,8 +12142,8 @@ uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
 				uint16 baselv_max = static_cast<uint16>(pc_class_maxbaselv(job_id));
 
 				if (baselv > baselv_max) {
-					this->invalidWarning(it["BaseLevel"], "Skill %hu's base level requirement %d exceeds job %s's max base level %d. Capping skill base level.\n",
-						skill_id, baselv, job_name, baselv_max);
+					this->invalidWarning(it["BaseLevel"], "Skill %hu's base level requirement %hu exceeds job %s's max base level %d. Capping skill base level.\n",
+						skill_id, baselv, job_name.c_str(), baselv_max);
 					baselv = baselv_max;
 				}
 				entry->baselv = baselv;
@@ -12164,8 +12161,8 @@ uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
 				uint16 joblv_max = static_cast<uint16>(pc_class_maxjoblv(job_id));
 
 				if (joblv > joblv_max) {
-					this->invalidWarning(it["JobLevel"], "Skill %hu's job level requirement %d exceeds job %s's max job level %d. Capping skill job level.\n",
-						skill_id, joblv, job_name, joblv_max);
+					this->invalidWarning(it["JobLevel"], "Skill %hu's job level requirement %hu exceeds job %s's max job level %d. Capping skill job level.\n",
+						skill_id, joblv, job_name.c_str(), joblv_max);
 					joblv = joblv_max;
 				}
 				entry->joblv = joblv;
@@ -12264,12 +12261,12 @@ void SkillTreeDatabase::loadingFinished() {
 				std::shared_ptr<s_skill_tree_entry> skill = skill_tree->skills[it.first];
 
 				if (skill->baselv > baselv_max) {
-					ShowWarning("SkillTreeDatabase: Skill %hu's base level requirement %d exceeds job %s's max base level %d. Capping skill base level.\n",
+					ShowWarning("SkillTreeDatabase: Skill %hu's base level requirement %hu exceeds job %s's max base level %d. Capping skill base level.\n",
 						skill->skill_id, skill->baselv, job_name(data.first), baselv_max);
 					skill->baselv = baselv_max;
 				}
 				if (skill->joblv > joblv_max) {
-					ShowWarning("SkillTreeDatabase: Skill %hu's job level requirement %d exceeds job %s's max job level %d. Capping skill job level.\n",
+					ShowWarning("SkillTreeDatabase: Skill %hu's job level requirement %hu exceeds job %s's max job level %d. Capping skill job level.\n",
 						skill->skill_id, skill->joblv, job_name(data.first), joblv_max);
 					skill->joblv = joblv_max;
 				}
@@ -12287,13 +12284,22 @@ void SkillTreeDatabase::loadingFinished() {
 		}
 	}
 
-	// remove skills lvl 0
-	for (auto &data : *this) {
-		if (data.second->skills.empty())
+	// remove skills with max_lv = 0
+	std::unordered_map<uint16, std::vector<uint16>> max_lv_zero;
+
+	for (const auto &job : *this) {
+		if (job.second->skills.empty())
 			continue;
-		for (auto &it : data.second->skills) {
-			if (it.second->max_lv == 0)
-				data.second->skills.erase(it.first);
+		for (const auto &skill : job.second->skills) {
+			if (skill.second->max_lv == 0)
+				max_lv_zero[job.first].push_back(skill.first);
+		}
+	}
+
+	for (const auto &job : max_lv_zero) {
+		for (const auto &skill : job.second) {
+			std::shared_ptr<s_skill_tree> tree = this->find(job.first);
+			tree->skills.erase(skill);
 		}
 	}
 }

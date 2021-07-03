@@ -438,12 +438,12 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-
 	if (!process("CONSTANT_DB", 1, root_paths, "const", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 3, -1, &read_constdb, false);
 	})) {
 		return 0;
 	}
+
 	skilltree_txt_data(path_db_mode, path_db);
 	if (!process("SKILL_TREE_DB", 1, { path_db_mode }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
 		return pc_readdb_skilltree_yaml();
