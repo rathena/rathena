@@ -12372,8 +12372,8 @@ void PlayerStatPointDatabase::loadingFinished() {
 	}
 
 	for (uint16 level = 2; level <= MAX_LEVEL; level++) {
-		if (battle_config.use_statpoint_table || util::umap_find(this->statpoint_table, level) == nullptr) {
-			if (!battle_config.use_statpoint_table)
+		if (!battle_config.use_statpoint_table || util::umap_find(this->statpoint_table, level) == nullptr) {
+			if (battle_config.use_statpoint_table)
 				ShowError("Missing status points for Level %d\n", level);
 			this->statpoint_table[level] = this->statpoint_table[level-1] + ((level-1+15) / 5);
 		}
