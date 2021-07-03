@@ -226,6 +226,7 @@ struct s_mob_drop {
 };
 
 struct s_mob_db {
+	uint32 id;
 	std::string sprite, name, jname;
 	t_exp base_exp;
 	t_exp job_exp;
