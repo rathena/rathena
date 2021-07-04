@@ -32273,8 +32273,6 @@ Body:
     AttackMotion: 1332
     DamageMotion: 672
     Ai: 21
-    Drops:
-        StealProtected: true
   - Id: 1794
     AegisName: G_ROWEEN
     Name: Roween
@@ -32302,8 +32300,6 @@ Body:
     AttackMotion: 840
     DamageMotion: 300
     Ai: 20
-    Drops:
-        StealProtected: true
   - Id: 1795
     AegisName: BLOODY_KNIGHT_
     Name: Bloody Knight
@@ -35811,8 +35807,6 @@ Body:
     AttackMotion: 504
     DamageMotion: 360
     Ai: 21
-    Drops:
-        StealProtected: true
   - Id: 1887
     AegisName: FREEZER_R
     Name: Freezer
@@ -35973,8 +35967,6 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Drops:
-        StealProtected: true
   - Id: 1892
     AegisName: G_LOLI_RURI
     Name: Lolo Ruri
