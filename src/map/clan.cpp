@@ -116,6 +116,12 @@ void clan_member_joined( struct map_session_data* sd ){
 
 	nullpo_retv(sd);
 
+	if( sd->clan != nullptr ){
+		clif_clan_basicinfo( sd );
+		clif_clan_onlinecount( sd->clan );
+		return;
+	}
+
 	clan = clan_search(sd->status.clan_id);
 
 	nullpo_retv(clan);
