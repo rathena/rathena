@@ -3932,7 +3932,7 @@ static bool mob_clone_disabled_skills(uint16 skill_id) {
 int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration)
 {
 	int mob_id;
-	int i,j,inf, fd;
+	int i = 0,inf, fd;
 	struct mob_data *md;
 	struct status_data *status;
 
@@ -3981,8 +3981,18 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	sd->fd = 0;
 
 	//Go Backwards to give better priority to advanced skills.
-	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
-		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
+	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
+	if (tree == nullptr || tree->skills.empty())
+		return 0;
+	std::vector<uint16> skill_list;
+	for (const auto &it : tree->skills)
+		skill_list.push_back(it.first);
+	std::sort(skill_list.rbegin(), skill_list.rend());
+
+	for (const auto &it : skill_list) {
+		if (i >= MAX_MOBSKILL)
+			break;
+		uint16 skill_id = it;
 		uint16 sk_idx = 0;
 
 		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||

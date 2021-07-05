@@ -97,6 +97,14 @@ static void branch_txt_data(const std::string& modePath, const std::string& fixe
 		sv_readdb(fixedPath.c_str(), "mob_classchange.txt", ',', 4, 4, -1, mob_readdb_group, false);
 }
 
+// Skill tree database data to memory
+static void skilltree_txt_data(const std::string &modePath, const std::string &fixedPath) {
+	skill_tree.clear();
+
+	if (fileExists(modePath + "/skill_tree.txt"))
+		sv_readdb(modePath.c_str(), "skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, pc_readdb_skilltree, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -339,6 +347,20 @@ int do_init( int argc, char** argv ){
 
 	if (!process("CREATE_ARROW_DB", 1, root_paths, "create_arrow_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1+2, 1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, &skill_parse_row_createarrowdb, false);
+	})) {
+		return 0;
+	}
+
+	skilltree_txt_data(path_db_mode, path_db);
+	if (!process("SKILL_TREE_DB", 1, { path_db_mode }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_readdb_skilltree_yaml();
+	})) {
+		return 0;
+	}
+
+	skilltree_txt_data(path_db_import, path_db_import);
+	if (!process("SKILL_TREE_DB", 1, { path_db_import }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_readdb_skilltree_yaml();
 	})) {
 		return 0;
 	}
@@ -3664,5 +3686,113 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	body << YAML::EndSeq;
 	body << YAML::EndMap;
 
+	return true;
+}
+
+// Copied and adjusted from pc.cpp
+static bool pc_readdb_skilltree(char* fields[], int columns, int current) {
+	uint16 baselv, joblv, offset;
+	uint16 class_  = (uint16)atoi(fields[0]);
+	uint16 skill_id = (uint16)atoi(fields[1]);
+
+	if (columns == 5 + MAX_PC_SKILL_REQUIRE * 2) { // Base/Job level requirement extra columns
+		baselv = (uint16)atoi(fields[3]);
+		joblv = (uint16)atoi(fields[4]);
+		offset = 5;
+	}
+	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
+		baselv = joblv = 0;
+		offset = 3;
+	}
+	else {
+		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
+		return false;
+	}
+
+	const char* constant = constant_lookup(class_, "JOB_");
+	if (constant == nullptr) {
+		ShowWarning("pc_readdb_skilltree: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	std::string job_name(constant);
+
+	std::string* skill_name = util::umap_find( aegis_skillnames, skill_id );
+
+	if( skill_name == nullptr ){
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree.\n", skill_id, class_);
+		return false;
+	}
+
+	uint16 skill_lv = (uint16)atoi(fields[2]);
+
+	std::vector<s_skill_tree_entry_csv> *job = util::map_find(skill_tree, class_);
+	bool exists = job != nullptr;
+
+	s_skill_tree_entry_csv entry;
+
+	entry.skill_name = *skill_name;
+	entry.skill_id = skill_id;
+	entry.skill_lv = skill_lv;
+	entry.baselv = baselv;
+	entry.joblv = joblv;
+
+	for (uint16 i = 0; i < MAX_PC_SKILL_REQUIRE; i++) {
+		uint16 req_skill_id = (uint16)atoi(fields[i * 2 + offset]);
+		skill_lv = (uint16)atoi(fields[i * 2 + offset + 1]);
+
+		if (req_skill_id == 0)
+			continue;
+
+		skill_name = util::umap_find( aegis_skillnames, req_skill_id );
+
+		if( skill_name == nullptr ){
+			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", req_skill_id, class_);
+			return false;
+		}
+		entry.need.insert({ *skill_name, skill_lv });
+	}
+
+	if (exists)
+		job->push_back(entry);
+	else {
+		std::vector<s_skill_tree_entry_csv> tree;
+
+		tree.push_back(entry);
+		skill_tree.insert({ class_, tree });
+	}
+
+	return true;
+}
+
+static bool pc_readdb_skilltree_yaml(void) {
+	for (const auto &it : skill_tree) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Job" << YAML::Value << constant_lookup(it.first, "JOB_");
+		body << YAML::Key << "Tree";
+		body << YAML::BeginSeq;
+		for (const auto &subit : it.second) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Name" << YAML::Value << subit.skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << subit.skill_lv;
+			if (!subit.need.empty()) {
+				body << YAML::Key << "Requires";
+				body << YAML::BeginSeq;
+				for (const auto &terit : subit.need) {
+					body << YAML::BeginMap;
+					body << YAML::Key << "Name" << YAML::Value << terit.first;
+					body << YAML::Key << "Level" << YAML::Value << terit.second;
+					body << YAML::EndMap;
+				}
+				body << YAML::EndSeq;
+			}
+			if (subit.baselv > 0)
+				body << YAML::Key << "BaseLevel" << YAML::Value << subit.baselv;
+			if (subit.joblv > 0)
+				body << YAML::Key << "JobLevel" << YAML::Value << subit.joblv;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
 	return true;
 }

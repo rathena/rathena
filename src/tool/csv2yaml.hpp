@@ -15,6 +15,17 @@
 #define MAX_MAP_PER_INSTANCE 255
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
+//Update this max as necessary. 55 is the value needed for Super Baby currently
+//Raised to 105 since Expanded Super Baby needs it.
+#define MAX_SKILL_TREE 105
+#define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+
+struct s_skill_tree_entry_csv {
+	std::string skill_name;
+	uint16 skill_id, skill_lv, baselv, joblv;
+	std::map<std::string, uint16> need;	/// skill_id, skill_lv
+};
+std::map<uint16, std::vector<s_skill_tree_entry_csv>> skill_tree;	/// job id (for order), entry
 
 // Database to memory maps
 struct s_skill_unit_csv : s_skill_db {
@@ -423,5 +434,7 @@ static bool read_homunculus_expdb(const char* file);
 static bool mob_readdb_group(char* str[], int columns, int current);
 static bool mob_readdb_group_yaml(void);
 static bool skill_parse_row_createarrowdb(char* fields[], int columns, int current);
+static bool pc_readdb_skilltree(char* str[], int columns, int current);
+static bool pc_readdb_skilltree_yaml(void);
 
 #endif /* CSV2YAML_HPP */

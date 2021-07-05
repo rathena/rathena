@@ -351,7 +351,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_damage_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_damage_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_nocast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_nocast_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_tree.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_tree.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_tree.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\spellbook_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\spellbook_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\statpoint.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\statpoint.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />

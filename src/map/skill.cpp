@@ -312,14 +312,10 @@ bool skill_get_unit_flag_(uint16 skill_id, std::vector<e_skill_unit_flag> unit) 
 	return false;
 }
 
-int skill_tree_get_max(uint16 skill_id, int b_class)
-{
-	int i;
-	b_class = pc_class2idx(b_class);
-
-	ARR_FIND( 0, MAX_SKILL_TREE, i, skill_tree[b_class][i].skill_id == 0 || skill_tree[b_class][i].skill_id == skill_id );
-	if( i < MAX_SKILL_TREE && skill_tree[b_class][i].skill_id == skill_id )
-		return skill_tree[b_class][i].skill_lv;
+int skill_tree_get_max(uint16 skill_id, int b_class) {
+	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(b_class);
+	if (tree != nullptr && !tree->skills.empty() && tree->skills.count(skill_id) > 0)
+		return tree->skills[skill_id]->max_lv;
 	else
 		return skill_get_max(skill_id);
 }

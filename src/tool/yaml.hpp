@@ -81,7 +81,8 @@ std::unordered_map<const char *, int64> constants;
 
 // Implement the function instead of including the original version by linking
 void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
-	constants[name] = value;
+	if (!deprecated)
+		constants[name] = value;
 }
 
 const char *constant_lookup(int32 value, const char *prefix) {
