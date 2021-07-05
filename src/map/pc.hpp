@@ -1126,7 +1126,9 @@ public:
 
 	}
 
-	void clear() { };
+	void clear(){
+		statpoint_table.clear();
+	}
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
