@@ -13228,10 +13228,10 @@ short pc_get_itemgroup_bonus(struct map_session_data* sd, t_itemid nameid) {
 		uint16 group_id = it.id;
 		std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
 
-		if (group_id == 0 || !group || group->random.empty())
+		if (group_id == 0 || group == nullptr || group->random.empty())
 			continue;
 
-		if (group->random.count(0) > 0) {
+		if (group->random.count(0) > 0 && !group->random[0]->data.empty()) {
 			for (const auto &random : group->random[0]->data) {
 				if (random->nameid == nameid) {
 					bonus += it.val;
