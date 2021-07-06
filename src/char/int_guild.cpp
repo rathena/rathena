@@ -759,7 +759,7 @@ uint64 GuildExpDatabase::parseBodyNode(const YAML::Node &node) {
 		this->invalidWarning(node, "The minimum guild level is 1.\n");
 		return 0;
 	}
-	if (level > MAX_GUILDLEVEL) {
+	if (level >= MAX_GUILDLEVEL) {
 		this->invalidWarning(node["Level"], "Guild level %d exceeds maximum level %d, skipping.\n", level, MAX_GUILDLEVEL);
 		return 0;
 	}
