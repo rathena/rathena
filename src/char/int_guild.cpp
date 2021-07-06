@@ -764,10 +764,15 @@ uint64 GuildExpDatabase::parseBodyNode(const YAML::Node &node) {
 		return 0;
 	}
 
-	uint64 exp;
+	t_exp exp;
 
 	if (!this->asUInt64(node, "Exp", exp))
 		return 0;
+
+	if (exp > MAX_GUILD_EXP) {
+		this->invalidWarning(node["Exp"], "Guild exp %" PRIu64 " exceeds max of %" PRIu64 ".\n", exp, MAX_GUILD_EXP);
+		return 0;
+	}
 
 	std::shared_ptr<s_guild_exp_db> guild_exp = this->find(level);
 	bool exists = guild_exp != nullptr;
@@ -788,7 +793,7 @@ uint64 GuildExpDatabase::parseBodyNode(const YAML::Node &node) {
 GuildExpDatabase guild_exp_db;
 
 void GuildExpDatabase::loadingFinished() {
-	for (uint16 level = 1; level < MAX_GUILDLEVEL; level++) {	// note: 49 entries of exp for pre-renewal, 50 for renewal
+	for (uint16 level = 1; level < MAX_GUILDLEVEL; level++) {
 		if (this->get_nextexp(level) == 0)
 			ShowError("Missing experience for level %d in exp_guild.yml\n", level);
 	}
@@ -886,7 +891,7 @@ int guild_calcinfo(struct guild *g)
 	g->next_exp = guild_exp_db.get_nextexp(g->guild_lv);
 
 	// Consume guild exp and increase guild level
-	while(g->exp >= g->next_exp && g->next_exp > 0){
+	while(g->exp >= g->next_exp && g->next_exp > 0 && g->guild_lv < MAX_GUILDLEVEL){
 		g->exp-=g->next_exp;
 		g->guild_lv++;
 		g->skill_point++;
