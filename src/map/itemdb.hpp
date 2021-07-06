@@ -847,7 +847,7 @@ struct s_item_group_random
 struct s_item_group_db
 {
 	uint16 id; /// Item Group ID
-	std::map<uint16, std::shared_ptr<s_item_group_random>> random;
+	std::unordered_map<uint16, std::shared_ptr<s_item_group_random>> random;
 };
 
 /// Struct of Roulette db
