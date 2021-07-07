@@ -1448,7 +1448,7 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 
 	status_points = 0;
 #else
-	status_points = 48;
+	status_points = charserv_config.start_status_points;
 #endif
 
 	// check the number of already existing chars in this account
@@ -2639,6 +2639,8 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.clan_alliance_table, w2, sizeof(schema_config.clan_alliance_table));
 		else if(!strcmpi(w1,"achievement_table"))
 			safestrncpy(schema_config.achievement_table, w2, sizeof(schema_config.achievement_table));
+		else if(!strcmpi(w1, "start_status_points"))
+			charserv_config.start_status_points = atoi(w2);
 		//support the import command, just like any other config
 		else if(!strcmpi(w1,"import"))
 			char_sql_config_read(w2);
@@ -2769,6 +2771,8 @@ void char_set_defaults(){
 	charserv_config.start_items_doram[1].amount = 1;
 	charserv_config.start_items_doram[1].pos = EQP_ARMOR;
 #endif
+
+	charserv_config.start_status_points = 48;
 
 	charserv_config.console = 0;
 	charserv_config.max_connect_user = -1;

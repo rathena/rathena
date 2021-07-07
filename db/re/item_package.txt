@@ -4676,6 +4676,79 @@ IG_Santa_Gift,12350,500,5,1,0,0,0	// 5x Angeling_Potion
 IG_Santa_Gift,12710,500,5,1,0,0,0	// 5x Guyak_Pudding
 IG_Santa_Gift,12259,500,2,1,0,0,0	// 2x Miracle_Medicine
 
+// Enchant_Stone_Box
+IG_Enchant_Stone_Box,6636,1000	// STRStone_Top
+IG_Enchant_Stone_Box,6637,1000	// INTStone_Top
+IG_Enchant_Stone_Box,6638,1000	// AGIStone_Top
+IG_Enchant_Stone_Box,6639,1000	// DEXStone_Top
+IG_Enchant_Stone_Box,6640,1000	// VITStone_Top
+IG_Enchant_Stone_Box,6641,1000	// LUKStone_Top
+IG_Enchant_Stone_Box,6642,1000	// ATKStone_Middle
+IG_Enchant_Stone_Box,6643,1000	// MATKStone_Middle
+IG_Enchant_Stone_Box,6644,1000	// HITStone_Bottom
+IG_Enchant_Stone_Box,6645,1000	// FLEEStone_Bottom
+
+// Enchant_Stone_Box2
+IG_Enchant_Stone_Box2,6636,330	// STRStone_Top
+IG_Enchant_Stone_Box2,6637,330	// INTStone_Top
+IG_Enchant_Stone_Box2,6638,330	// AGIStone_Top
+IG_Enchant_Stone_Box2,6639,330	// DEXStone_Top
+IG_Enchant_Stone_Box2,6640,330	// VITStone_Top
+IG_Enchant_Stone_Box2,6641,330	// LUKStone_Top
+IG_Enchant_Stone_Box2,6642,330	// ATKStone_Middle
+IG_Enchant_Stone_Box2,6643,330	// MATKStone_Middle
+IG_Enchant_Stone_Box2,6644,330	// HITStone_Bottom
+IG_Enchant_Stone_Box2,6645,330	// FLEEStone_Bottom
+IG_Enchant_Stone_Box2,6744,1110	// SPStone_Middle
+IG_Enchant_Stone_Box2,6745,1110	// HealStone_Bottom
+IG_Enchant_Stone_Box2,6740,1120	// HealStone_Top
+IG_Enchant_Stone_Box2,6741,1120	// HealStone2_Top
+IG_Enchant_Stone_Box2,6742,1120	// HealStone_Middle
+IG_Enchant_Stone_Box2,6743,1120	// HPStone_Middle
+
+// Enchant_Stone_Box3
+IG_Enchant_Stone_Box3,6636,500	// STRStone_Top
+IG_Enchant_Stone_Box3,6637,500	// INTStone_Top
+IG_Enchant_Stone_Box3,6638,500	// AGIStone_Top
+IG_Enchant_Stone_Box3,6639,500	// DEXStone_Top
+IG_Enchant_Stone_Box3,6640,500	// VITStone_Top
+IG_Enchant_Stone_Box3,6641,500	// LUKStone_Top
+IG_Enchant_Stone_Box3,6642,500	// ATKStone_Middle
+IG_Enchant_Stone_Box3,6643,500	// MATKStone_Middle
+IG_Enchant_Stone_Box3,6644,500	// HITStone_Bottom
+IG_Enchant_Stone_Box3,6645,500	// FLEEStone_Bottom
+IG_Enchant_Stone_Box3,6740,500	// HealStone_Top
+IG_Enchant_Stone_Box3,6741,500	// HealStone2_Top
+IG_Enchant_Stone_Box3,6742,500	// HealStone_Middle
+IG_Enchant_Stone_Box3,6745,500	// HealStone_Bottom
+IG_Enchant_Stone_Box3,6743,600	// HPStone_Middle
+IG_Enchant_Stone_Box3,6744,600	// SPStone_Middle
+IG_Enchant_Stone_Box3,6790,600	// BigStone_Top
+IG_Enchant_Stone_Box3,6791,600	// MediumStone_Top
+IG_Enchant_Stone_Box3,6792,600	// SmallStone_Top
+
+// Enchant_Stone_Box4
+IG_Enchant_Stone_Box4,6636,500	// STRStone_Top
+IG_Enchant_Stone_Box4,6637,500	// INTStone_Top
+IG_Enchant_Stone_Box4,6638,500	// AGIStone_Top
+IG_Enchant_Stone_Box4,6639,500	// DEXStone_Top
+IG_Enchant_Stone_Box4,6640,500	// VITStone_Top
+IG_Enchant_Stone_Box4,6641,500	// LUKStone_Top
+IG_Enchant_Stone_Box4,6642,500	// ATKStone_Middle
+IG_Enchant_Stone_Box4,6643,500	// MATKStone_Middle
+IG_Enchant_Stone_Box4,6644,500	// HITStone_Bottom
+IG_Enchant_Stone_Box4,6645,500	// FLEEStone_Bottom
+IG_Enchant_Stone_Box4,6740,500	// HealStone_Top
+IG_Enchant_Stone_Box4,6741,500	// HealStone2_Top
+IG_Enchant_Stone_Box4,6742,500	// HealStone_Middle
+IG_Enchant_Stone_Box4,6743,500	// HPStone_Middle
+IG_Enchant_Stone_Box4,6744,500	// SPStone_Middle
+IG_Enchant_Stone_Box4,6745,500	// HealStone_Bottom
+IG_Enchant_Stone_Box4,6790,500	// BigStone_Top
+IG_Enchant_Stone_Box4,6791,500	// MediumStone_Top
+IG_Enchant_Stone_Box4,6792,500	// SmallStone_Top
+IG_Enchant_Stone_Box4,6908,500	// ASPDStone_Robe
+
 // Enchant_Stone_Box5
 IG_Enchant_Stone_Box5,6908,168	// ASPDStone_Robe
 IG_Enchant_Stone_Box5,6642,252	// ATKStone_Middle

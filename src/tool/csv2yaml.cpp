@@ -65,6 +65,26 @@ static void mob_txt_data(const std::string &modePath, const std::string &fixedPa
 		sv_readdb(modePath.c_str(), "mob_drop.txt", ',', 3, 5, -1, mob_readdb_drop, false);
 }
 
+// Branch database data to memory
+static void branch_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	summon_group.clear();
+
+	if (fileExists(modePath + "/mob_branch.txt"))
+		sv_readdb(modePath.c_str(), "mob_branch.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(modePath + "/mob_random_db.txt"))
+		sv_readdb(modePath.c_str(), "mob_random_db.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(modePath + "/mob_poring.txt"))
+		sv_readdb(modePath.c_str(), "mob_poring.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(modePath + "/mob_boss.txt"))
+		sv_readdb(modePath.c_str(), "mob_boss.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(fixedPath + "/mob_pouch.txt"))
+		sv_readdb(fixedPath.c_str(), "mob_pouch.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(fixedPath + "/mob_mission.txt"))
+		sv_readdb(fixedPath.c_str(), "mob_mission.txt", ',', 4, 4, -1, mob_readdb_group, false);
+	if (fileExists(fixedPath + "/mob_classchange.txt"))
+		sv_readdb(fixedPath.c_str(), "mob_classchange.txt", ',', 4, 4, -1, mob_readdb_group, false);
+}
+
 // Job database data to memory
 static void job_txt_data(const std::string &modePath, const std::string &fixedPath) {
 	job_db2.clear();
@@ -302,6 +322,38 @@ int do_init( int argc, char** argv ){
 
 	if (!process("HOMUN_EXP_DB", 1, { path_db_import }, "exp_homun", [](const std::string &path, const std::string &name_ext) -> bool {
 		return read_homunculus_expdb((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	branch_txt_data(path_db_mode, path_db);
+	if (!process("MOB_SUMMONABLE_DB", 1, { path_db_mode }, "mob_branch", [](const std::string &path, const std::string &name_ext) -> bool {
+		return mob_readdb_group_yaml();
+	}, "mob_summon")) {
+		return 0;
+	}
+
+	branch_txt_data(path_db_import, path_db_import);
+	if (!process("MOB_SUMMONABLE_DB", 1, { path_db_import }, "mob_branch", [](const std::string &path, const std::string &name_ext) -> bool {
+		return mob_readdb_group_yaml();
+	}, "mob_summon")) {
+		return 0;
+	}
+
+	if (!process("CREATE_ARROW_DB", 1, root_paths, "create_arrow_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1+2, 1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, &skill_parse_row_createarrowdb, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("STATPOINT_DB", 1, { path_db_mode }, "statpoint", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_read_statsdb((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	if (!process("STATPOINT_DB", 1, { path_db_import }, "statpoint", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_read_statsdb((path + name_ext).c_str());
 	})) {
 		return 0;
 	}
@@ -3535,6 +3587,167 @@ static bool read_homunculus_expdb(const char* file) {
 	return true;
 }
 
+// Copied and adjusted from mob.cpp
+static bool mob_readdb_group(char* str[], int columns, int current) {
+	if (strncasecmp(str[0], "MOBG_", 5) != 0) {
+		ShowError("The group %s must start with 'MOBG_'.\n", str[0]);
+		return false;
+	}
+
+	uint16 mob_id = static_cast<uint16>(strtol(str[1], nullptr, 10));
+	bool is_default = mob_id == 0;
+
+	std::string group_name = str[0];
+	group_name.erase(0, 5);
+	std::transform(group_name.begin(), group_name.end(), group_name.begin(), ::toupper);
+
+	s_randomsummon_group_csv2yaml *group = util::map_find(summon_group, group_name);
+	bool exists = group != nullptr;
+
+	s_randomsummon_group_csv2yaml group_entry;
+
+	if (is_default)
+		mob_id = static_cast<uint16>(strtol(str[3], nullptr, 10));
+	
+	std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+
+	if (!mob_name) {
+		ShowError("Unknown mob id %d for group %s.\n", mob_id, str[0]);
+		return false;
+	}
+
+	if (!exists) {
+		group_entry.default_mob = *mob_name;
+		group_entry.group_name = group_name;
+	}
+
+	if (is_default) {
+		if (exists)
+			group->default_mob = *mob_name;
+		else
+			summon_group.insert({ group_name, group_entry });
+	}
+	else {
+		std::shared_ptr<s_randomsummon_entry_csv2yaml> entry = std::make_shared<s_randomsummon_entry_csv2yaml>();
+
+		entry->mob_name = *mob_name;
+		entry->rate = strtol(str[3], nullptr, 10);
+
+		if (exists)
+			group->list.push_back(entry);
+		else {
+			group_entry.list.push_back(entry);
+			summon_group.insert({ group_name, group_entry });
+		}
+	}
+
+	return true;
+}
+
+static bool mob_readdb_group_yaml(void) {
+	for (const auto &it : summon_group) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Group" << YAML::Value << it.first;
+		body << YAML::Key << "Default" << YAML::Value << it.second.default_mob;
+		body << YAML::Key << "Summon";
+		body << YAML::BeginSeq;
+		for (const auto &sumit : it.second.list) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Mob" << YAML::Value << sumit->mob_name;
+			body << YAML::Key << "Rate" << YAML::Value << sumit->rate;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
+{
+	t_itemid nameid = static_cast<t_itemid>(strtoul(split[0], nullptr, 10));
+
+	if (nameid == 0)
+		return true;
+
+	std::string *material_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (!material_name) {
+		ShowError("skill_parse_row_createarrowdb: Invalid item %u.\n", nameid);
+		return false;
+	}
+
+	// Import just for clearing/disabling from original data
+	if (strtoul(split[1], nullptr, 10) == 0) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Remove" << YAML::Value << *material_name;
+		body << YAML::EndMap;
+		return true;
+	}
+
+	std::map<std::string, uint32> item_created;
+	
+	for (uint16 x = 1; x+1 < columns && split[x] && split[x+1]; x += 2) {
+		nameid = static_cast<t_itemid>(strtoul(split[x], nullptr, 10));
+		std::string* item_name = util::umap_find(aegis_itemnames, nameid);
+
+		if (!item_name) {
+			ShowError("skill_parse_row_createarrowdb: Invalid item %u.\n", nameid);
+			return false;
+		}
+
+		item_created.insert({ *item_name, strtoul(split[x+1], nullptr, 10) });
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Source" << YAML::Value << *material_name;
+	body << YAML::Key << "Make";
+	body << YAML::BeginSeq;
+	for (const auto &it : item_created) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Item" << YAML::Value << it.first;
+		body << YAML::Key << "Amount" << YAML::Value << it.second;
+		body << YAML::EndMap;
+	}
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from pc.cpp
+static bool pc_read_statsdb(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return false;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	
+	while (fgets(line, sizeof(line), fp)) {
+		lines++;
+
+		trim(line);
+		if (line[0] == '/' && line[1] == '/') // Ignore comments
+			continue;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Level" << YAML::Value << (count+1);
+		body << YAML::Key << "Points" << YAML::Value << static_cast<uint32>(strtoul(line, nullptr, 10));
+		body << YAML::EndMap;
+
+		count++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+	return true;
+}
+
 // job_db.yml function
 //----------------------
 static bool pc_readdb_job2(char* fields[], int columns, int current) {
@@ -3672,7 +3885,6 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current) {
 			}
 		}
 	}
-
 	body << YAML::EndSeq;
 	body << YAML::EndMap;
 

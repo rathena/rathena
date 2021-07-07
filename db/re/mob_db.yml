@@ -83432,6 +83432,9 @@ Body:
         Rate: 15
       - Item: Oridecon
         Rate: 8
+      - Item: Heart_Hunter_Card
+        Rate: 1
+        StealProtected: true
   - Id: 3623
     AegisName: EP16_2_MM_U_ENERGY_R
     Name: Plasma R
@@ -83766,13 +83769,10 @@ Body:
         Rate: 30
       - Item: Seed_Of_Yggdrasil
         Rate: 30
-      - Item: Oridecon_Stone
-        Rate: 150
       - Item: Oridecon
         Rate: 80
       - Item: Build_Up_Potion_SS
         Rate: 200
-        StealProtected: true
       - Item: Human_Kimera_Card
         Rate: 1
         StealProtected: true
@@ -83817,13 +83817,10 @@ Body:
         Rate: 30
       - Item: Seed_Of_Yggdrasil
         Rate: 30
-      - Item: Oridecon_Stone
-        Rate: 150
       - Item: Oridecon
         Rate: 80
       - Item: Build_Up_Potion_SS
         Rate: 200
-        StealProtected: true
       - Item: Matter_Kimera_Card
         Rate: 1
         StealProtected: true

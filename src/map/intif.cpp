@@ -3540,9 +3540,28 @@ static void intif_parse_StorageSaved(int fd)
 				//ShowInfo("Inventory has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				break;
 			case TABLE_STORAGE: //storage
-				//ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
-				if (RFIFOB(fd, 8))
-					storage_premiumStorage_saved(map_id2sd(RFIFOL(fd, 2)));
+				{
+					struct map_session_data *sd = map_id2sd( RFIFOL( fd, 2 ) );
+					struct s_storage* stor = nullptr;
+
+					if( RFIFOB( fd, 8 ) ){
+						// ShowInfo("Storage %d has been saved (AID: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 8) );
+
+						if( sd ){
+							stor = &sd->premiumStorage;
+						}
+					}else{
+						// ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
+
+						if( sd ){
+							stor = &sd->storage;
+						}
+					}
+
+					if( stor ){
+						stor->dirty = false;
+					}
+				}
 				break;
 			case TABLE_CART: // cart
 				//ShowInfo("Cart has been saved (AID: %d).\n", RFIFOL(fd, 2));
@@ -3566,21 +3585,24 @@ static void intif_parse_StorageSaved(int fd)
  * Receive storage information
  **/
 void intif_parse_StorageInfo_recv(int fd) {
-	int i, size = sizeof(struct s_storage_table), count = (RFIFOW(fd, 2) - 4) / size;
+	int size = sizeof(struct s_storage_table), count = (RFIFOW(fd, 2) - 4) / size;
 
-	storage_count = 0;
-	if (storage_db)
-		aFree(storage_db);
-	storage_db = NULL;
+	storage_db.clear();
 
-	for (i = 0; i < count; i++) {
-		RECREATE(storage_db, struct s_storage_table, storage_count+1);
-		memcpy(&storage_db[storage_count], RFIFOP(fd, 4 + size * i), size);
-		storage_count++;
+	for( int i = 0; i < count; i++ ){
+		struct s_storage_table* ptr = (struct s_storage_table*)RFIFOP( fd, 4 + size * i );
+		std::shared_ptr<struct s_storage_table> storage = std::make_shared<struct s_storage_table>();
+
+		safestrncpy( storage->name, ptr->name, sizeof( storage->name ) );
+		safestrncpy( storage->table, ptr->table, sizeof( storage->table ) );
+		storage->max_num = ptr->max_num;
+		storage->id = ptr->id;
+
+		storage_db[storage->id] = storage;
 	}
 
 	if (battle_config.etc_log)
-		ShowInfo("Received '" CL_WHITE "%d" CL_RESET "' storage info from inter-server.\n", storage_count);
+		ShowInfo("Received '" CL_WHITE PRIdPTR CL_RESET "' storage info from inter-server.\n", storage_db.size());
 }
 
 /**
