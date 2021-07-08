@@ -3892,7 +3892,7 @@ static bool itemdb_read_group_yaml(void) {
 	for (const auto &it : item_group) {
 		body << YAML::BeginMap;
 		body << YAML::Key << "Group" << YAML::Value << it.first;
-		body << YAML::Key << "Contain";
+		body << YAML::Key << "SubGroups";
 		body << YAML::BeginSeq;
 
 		for (const auto &item : it.second.item) {	// subgroup
@@ -3912,7 +3912,7 @@ static bool itemdb_read_group_yaml(void) {
 				if (listit.isAnnounced)
 					body << YAML::Key << "Announced" << YAML::Value << "true";
 				if (listit.GUID)
-					body << YAML::Key << "GUID" << YAML::Value << "true";
+					body << YAML::Key << "UniqueId" << YAML::Value << "true";
 				if (listit.isNamed)
 					body << YAML::Key << "Named" << YAML::Value << "true";
 				if (!listit.bound.empty())
