@@ -1097,12 +1097,10 @@ bool itemdb_group_item_exists(uint16 group_id, t_itemid nameid)
 {
 	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
 
-	if (group == nullptr || group->random.empty())
+	if (group == nullptr)
 		return false;
 
 	for (const auto &random : group->random) {
-		if (random.second->data.empty())
-			continue;
 		for (const auto &it : random.second->data) {
 			if (it->nameid == nameid)
 				return true;
@@ -1125,8 +1123,6 @@ int16 itemdb_group_item_exists_pc(map_session_data *sd, uint16 group_id)
 		return -1;
 
 	for (const auto &random : group->random) {
-		if (random.second->data.empty())
-			continue;
 		for (const auto &it : random.second->data) {
 			int16 item_position = pc_search_inventory(sd, it->nameid);
 
@@ -1567,8 +1563,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 		group->id = id;
 	}
 
-	if (this->nodeExists(node, "Contain")) {
-		const YAML::Node &subNode = node["Contain"];
+	if (this->nodeExists(node, "SubGroups")) {
+		const YAML::Node &subNode = node["SubGroups"];
 
 		for (const YAML::Node &subit : subNode) {
 			if (this->nodeExists(subit, "Clear")) {
@@ -1594,6 +1590,13 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 					continue;
 			} else {
 				subgroup = 1;
+			}
+
+			std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
+
+			if (random == nullptr) {
+				random = std::make_shared<s_item_group_random>();
+				group->random[subgroup] = random;
 			}
 
 			const YAML::Node &listNode = subit["List"];
@@ -1667,10 +1670,10 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 					entry->isAnnounced = false;
 				}
 
-				if (this->nodeExists(listit, "GUID")) {
+				if (this->nodeExists(listit, "UniqueId")) {
 					bool guid;
 
-					if (!this->asBool(listit, "GUID", guid))
+					if (!this->asBool(listit, "UniqueId", guid))
 						continue;
 
 					entry->GUID = guid;
@@ -1708,12 +1711,6 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 					entry->bound = BOUND_NONE;
 				}
 
-				std::shared_ptr<s_item_group_random> random = util::umap_find(group->random, subgroup);
-
-				if (random == nullptr) {
-					random = std::make_shared<s_item_group_random>();
-					group->random[subgroup] = random;
-				}
 				random->data.push_back(entry);
 			}
 		}
@@ -1728,6 +1725,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 void ItemGroupDatabase::loadingFinished() {
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
+			random.second->total_rate = 0;
 			for (const auto &it : random.second->data) {
 				random.second->total_rate += it->rate;
 			}
