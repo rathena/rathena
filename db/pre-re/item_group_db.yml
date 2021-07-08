@@ -43,7 +43,7 @@ Header:
 
 Body:
   - Group: ACCESORY
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Ring
@@ -131,7 +131,7 @@ Body:
           - Item: Iron_Wrist
             Rate: 1
   - Group: BLEUBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Milk
@@ -157,7 +157,7 @@ Body:
           - Item: Holy_Scroll_1_5
             Rate: 1
   - Group: BLUEBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -2205,7 +2205,7 @@ Body:
           - Item: Huuma_Calm_Mind
             Rate: 1
   - Group: BOMB
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Apple_Bomb
@@ -2225,7 +2225,7 @@ Body:
           - Item: Very_Hard_Lump
             Rate: 1
   - Group: BOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Old_Blue_Box
@@ -2235,7 +2235,7 @@ Body:
           - Item: Gift_Box
             Rate: 1
   - Group: CANDY
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Candy
@@ -2243,7 +2243,7 @@ Body:
           - Item: Candy_Striper
             Rate: 1
   - Group: CARDALBUM
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Poring_Card
@@ -2971,7 +2971,7 @@ Body:
           - Item: Necromancer_Card
             Rate: 1
   - Group: CASH_FOOD
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Str_Dish10_
@@ -2987,7 +2987,7 @@ Body:
           - Item: Vit_Dish10_
             Rate: 1
   - Group: CHERISH_BOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Dog_Cap_
@@ -2997,7 +2997,7 @@ Body:
           - Item: Vacation_Hat_
             Rate: 5
   - Group: CHERISH_BOX_ORI
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Ragnarok_Limited_Ed
@@ -3011,7 +3011,7 @@ Body:
           - Item: Loki_Mask
             Rate: 2
   - Group: COOKIEBAG
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Candy
@@ -3047,7 +3047,7 @@ Body:
           - Item: Rainbow_Cake
             Rate: 1
   - Group: EASTER_SCROLL
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: No_Recipient
@@ -3079,7 +3079,7 @@ Body:
           - Item: Bongun_Hat_
             Rate: 1
   - Group: EGGBOY
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Grape
@@ -3097,7 +3097,7 @@ Body:
           - Item: Inccubus_Horn
             Rate: 2
   - Group: EGGGIRL
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Grape
@@ -3115,7 +3115,7 @@ Body:
           - Item: Horn_Of_Succubus
             Rate: 2
   - Group: ELEMENT
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Scarlet_Pts
@@ -3127,7 +3127,7 @@ Body:
           - Item: Lime_Green_Pts
             Rate: 1
   - Group: FINDINGORE
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Emperium
@@ -3171,7 +3171,7 @@ Body:
           - Item: Emveretarcon
             Rate: 55
   - Group: FIRSTAID
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -3211,7 +3211,7 @@ Body:
           - Item: Water_Of_Darkness
             Rate: 5
   - Group: FISH
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Fish_Slice
@@ -3219,7 +3219,7 @@ Body:
           - Item: Shusi
             Rate: 1
   - Group: FOOD
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Royal_Jelly
@@ -3267,7 +3267,7 @@ Body:
           - Item: Apple
             Rate: 600
   - Group: FOODBAG
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Apple
@@ -3359,7 +3359,7 @@ Body:
           - Item: Rice_Cake_Soup
             Rate: 1
   - Group: FRUIT
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Apple
@@ -3373,7 +3373,7 @@ Body:
           - Item: Sweet_Potato
             Rate: 1
   - Group: GEMSTONE
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Yellow_Gemstone
@@ -3383,7 +3383,7 @@ Body:
           - Item: Blue_Gemstone
             Rate: 1
   - Group: GIFTBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -3527,7 +3527,7 @@ Body:
           - Item: Red_Socks_With_Holes
             Rate: 1
   - Group: GIFTBOXCHINA
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -4059,7 +4059,7 @@ Body:
           - Item: Egg_Shell
             Rate: 2
   - Group: GIFTBOX_1
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -4203,7 +4203,7 @@ Body:
           - Item: Red_Socks_With_Holes
             Rate: 1
   - Group: GIFTBOX_2
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -4347,7 +4347,7 @@ Body:
           - Item: Red_Socks_With_Holes
             Rate: 1
   - Group: GIFTBOX_3
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -4491,7 +4491,7 @@ Body:
           - Item: Red_Socks_With_Holes
             Rate: 1
   - Group: GIFTBOX_4
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -4635,7 +4635,7 @@ Body:
           - Item: Red_Socks_With_Holes
             Rate: 1
   - Group: GREENBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Chocolate_Drink
@@ -4661,7 +4661,7 @@ Body:
           - Item: Luk_Dish10
             Rate: 100
   - Group: HERB
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Herb
@@ -4671,7 +4671,7 @@ Body:
           - Item: White_Herb
             Rate: 1
   - Group: HOMETOWNGIFT
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Korea_Rice_Cake
@@ -4691,7 +4691,7 @@ Body:
           - Item: Lucky_Rice_Cake
             Rate: 1
   - Group: JEWEL
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Yellow_Gemstone
@@ -4735,7 +4735,7 @@ Body:
           - Item: Glass_Bead
             Rate: 50
   - Group: JUICE
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Apple_Juice
@@ -4745,7 +4745,7 @@ Body:
           - Item: Carrot_Juice
             Rate: 1
   - Group: LOTTOBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Lotto31
@@ -4769,7 +4769,7 @@ Body:
           - Item: Lotto40
             Rate: 1
   - Group: LOUISE_COSTUME_BOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Bag
@@ -4777,7 +4777,7 @@ Body:
           - Item: Cool_Summer_Outfit
             Rate: 2
   - Group: MAGICCARDALBUM
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Ghostring_Card
@@ -4843,7 +4843,7 @@ Body:
           - Item: Tha_Despero_Card
             Rate: 3
   - Group: MASK
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Mr_Smile
@@ -4873,7 +4873,7 @@ Body:
           - Item: Hahoe_Mask
             Rate: 2
   - Group: MASQUERADE
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Drooping_Nine_Tail_
@@ -4885,7 +4885,7 @@ Body:
           - Item: Ati_Atihan_Hat_
             Rate: 10
   - Group: MASQUERADE_2
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Dress_Hat
@@ -4897,7 +4897,7 @@ Body:
           - Item: Cap_Of_Blindness
             Rate: 10
   - Group: MEAT
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Meat
@@ -4905,7 +4905,7 @@ Body:
           - Item: Monster's_Feed
             Rate: 1
   - Group: MERCENARY
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Bow_Mercenary_Scroll1
@@ -4969,7 +4969,7 @@ Body:
           - Item: SpearMercenary_Scroll10
             Rate: 1
   - Group: MINERAL
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Emperium
@@ -5013,7 +5013,7 @@ Body:
           - Item: Emveretarcon
             Rate: 1
   - Group: OLDGIFTBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Fallen_Leaves_
@@ -5023,7 +5023,7 @@ Body:
           - Item: Tongue_Mask_
             Rate: 40
   - Group: ORE
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Iron_Ore
@@ -5067,7 +5067,7 @@ Body:
           - Item: Emperium
             Rate: 1
   - Group: PIERRE_TREASUREBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Old_Blue_Box
@@ -5127,7 +5127,7 @@ Body:
           - Item: Bloody_Dead_Branch
             Rate: 1
   - Group: POISON
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Poison_Paralysis
@@ -5147,7 +5147,7 @@ Body:
           - Item: Poison_Fatigue
             Rate: 1
   - Group: POTION
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -5159,7 +5159,7 @@ Body:
           - Item: White_Potion
             Rate: 1
   - Group: QUIVER
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Arrow_Container
@@ -5189,7 +5189,7 @@ Body:
           - Item: Holy_Arrow_Quiver
             Rate: 2
   - Group: RECOVERY
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Fruit_Of_Mastela
@@ -5221,7 +5221,7 @@ Body:
           - Item: Popped_Rice
             Rate: 600
   - Group: REDBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Cat_Hat
@@ -5253,7 +5253,7 @@ Body:
           - Item: Twin_Ribbon
             Rate: 10
   - Group: REDBOX_2
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Alice_Doll
@@ -5265,7 +5265,7 @@ Body:
           - Item: Charming_Ribbon
             Rate: 10
   - Group: RESIST
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Resist_Fire
@@ -5277,7 +5277,7 @@ Body:
           - Item: Resist_Wind
             Rate: 1
   - Group: SCROLL
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Earth_Scroll_1_3
@@ -5317,7 +5317,7 @@ Body:
           - Item: Holy_Scroll_1_5
             Rate: 1
   - Group: TAMING
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Unripe_Apple
@@ -5421,7 +5421,7 @@ Body:
           - Item: Tantanmen
             Rate: 1
   - Group: THROWABLE
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Mysterious_Powder
@@ -5471,7 +5471,7 @@ Body:
           - Item: Black_Thing_To_Throw
             Rate: 1
   - Group: TOKEN_OF_SIEGFRIED
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: F_Token_Of_Siegfried
@@ -5481,7 +5481,7 @@ Body:
           - Item: Token_Of_Siegfried
             Rate: 1
   - Group: TRESURE_BOX_WOE
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Old_Blue_Box
@@ -5525,7 +5525,7 @@ Body:
           - Item: Old_Bleu_Box
             Rate: 8
   - Group: VIOLETBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Red_Potion
@@ -7375,7 +7375,7 @@ Body:
           - Item: Huuma_Calm_Mind
             Rate: 1
   - Group: XMAS_GIFT
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: HandMade_Chocolate
@@ -7417,7 +7417,7 @@ Body:
           - Item: Fire_Cracker_Xmas
             Rate: 6
   - Group: YELLOWBOX
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
           - Item: Elephant_Hat_
