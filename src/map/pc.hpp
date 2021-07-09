@@ -137,6 +137,23 @@ enum npc_timeout_type {
 	NPCT_WAIT  = 2,
 };
 
+/// Enum of Player's Parameter
+enum e_params {
+	PARAM_STR = 0,
+	PARAM_AGI,
+	PARAM_VIT,
+	PARAM_INT,
+	PARAM_DEX,
+	PARAM_LUK,
+	PARAM_POW,
+	PARAM_STA,
+	PARAM_WIS,
+	PARAM_SPL,
+	PARAM_CON,
+	PARAM_CRT,
+	PARAM_MAX
+};
+
 extern unsigned int equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
@@ -440,7 +457,7 @@ struct map_session_data {
 
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	struct s_indexed_bonus {
-		int param_bonus[6], param_equip[6]; //Stores card/equipment bonuses.
+		int param_bonus[PARAM_MAX], param_equip[PARAM_MAX]; //Stores card/equipment bonuses.
 		int subele[ELE_MAX];
 		int subele_script[ELE_MAX];
 		int subdefele[ELE_MAX];
@@ -635,8 +652,8 @@ struct map_session_data {
 	int eventtimer[MAX_EVENTTIMER];
 	unsigned short eventcount; // [celest]
 
-	unsigned char change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
-	unsigned char change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
+	uint16 change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
+	uint16 change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
@@ -851,6 +868,7 @@ enum weapon_type : uint8 {
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
 	MAX_WEAPON_TYPE_ALL,
+	W_SHIELD = MAX_WEAPON_TYPE,
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
@@ -933,26 +951,65 @@ public:
 };
 
 struct s_job_info {
-	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
-	int hp_factor, hp_multiplicator, sp_factor;
-	int max_weight_base;
-	char job_bonus[MAX_LEVEL];
-#ifdef RENEWAL_ASPD
-	int aspd_base[MAX_WEAPON_TYPE+1];
-#else
-	int aspd_base[MAX_WEAPON_TYPE];	//[blackhole89]
-#endif
-	t_exp exp_table[2][MAX_LEVEL];
-	uint32 max_level[2];
+	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
+	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
+	std::vector<std::vector<uint8>> job_bonus;
+	std::vector<int16> aspd_base;
+	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
+	uint16 max_base_level, max_job_level;
 	struct s_params {
-		uint16 str, agi, vit, int_, dex, luk;
+		uint16 str, agi, vit, int_, dex, luk,
+			pow, sta, wis, spl, con, crt;
 	} max_param;
 	struct s_job_noenter_map {
 		uint32 zone;
 		uint8 group_lv;
 	} noenter_map;
 };
-extern struct s_job_info job_info[CLASS_COUNT];
+
+class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
+public:
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+
+	// Extras
+	uint32 get_maxBaseLv(uint16 job_id);
+	uint32 get_maxJobLv(uint16 job_id);
+	t_exp get_baseExp(uint16 job_id, uint32 level);
+	t_exp get_jobExp(uint16 job_id, uint32 level);
+	uint32 get_baseHp(uint16 job_id, uint32 level);
+	uint32 get_baseSp(uint16 job_id, uint32 level);
+	int32 get_maxWeight(uint16 job_id);
+	std::vector<std::vector<uint8>>& get_jobBonus(uint16 job_id);
+};
+
+extern JobDatabase job_db;
+
+class JobExpDatabase : public YamlDatabase {
+public:
+	JobExpDatabase() : YamlDatabase("JOB_EXP", 1) {
+
+	}
+
+	void clear() { };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+class JobBaseHPSPAPDatabase : public YamlDatabase {
+public:
+	JobBaseHPSPAPDatabase() : YamlDatabase("JOB_BASEHPSPAP", 1) {
+
+	}
+
+	void clear() { };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
@@ -1011,17 +1068,7 @@ static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block 
 	return sd == NULL || (sd->state.workinprogress&progress) == progress;
 }
 
-/// Enum of Player's Parameter
-enum e_params {
-	PARAM_STR = 0,
-	PARAM_AGI,
-	PARAM_VIT,
-	PARAM_INT,
-	PARAM_DEX,
-	PARAM_LUK,
-	PARAM_MAX
-};
-short pc_maxparameter(struct map_session_data *sd, enum e_params param);
+uint16 pc_maxparameter(struct map_session_data *sd, e_params param);
 short pc_maxaspd(struct map_session_data *sd);
 
 /**
@@ -1147,7 +1194,6 @@ enum e_summoner_power_type {
 };
 
 void pc_set_reg_load(bool val);
-int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);

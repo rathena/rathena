@@ -509,6 +509,30 @@ Body:
     Help: |
       Params: <amount>
       Raises LUK by given amount.
+  - Command: pow
+    Help: |
+      Params: <amount>
+      Raises POW by given amount.
+  - Command: sta
+    Help: |
+      Params: <amount>
+      Raises STA by given amount.
+  - Command: wis
+    Help: |
+      Params: <amount>
+      Raises WIS by given amount.
+  - Command: spl
+    Help: |
+      Params: <amount>
+      Raises SPL by given amount.
+  - Command: con
+    Help: |
+      Params: <amount>
+      Raises CON by given amount.
+  - Command: crt
+    Help: |
+      Params: <amount>
+      Raises CRT by given amount.
   - Command: allstats
     Aliases:
       - allstat
@@ -517,6 +541,14 @@ Body:
     Help: |
       Params: <value>
       Adds value in all stats (maximum if no value).
+  - Command: alltraits
+    Aliases:
+      - alltrait
+      - traitall
+      - traitsall
+    Help: |
+      Params: <value>
+      Adds value in all traits (maximum if no value).
   - Command: addwarp
     Help: |
       Params: <map name> <x coord> <y coord> <NPC name>

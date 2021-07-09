@@ -591,12 +591,6 @@
 21,258,10,55,10,0,0,0,0,0,0,0,0 //CR_SPEARQUICKEN#Spear Quicken#
 21,1002,1,0,0,0,0,0,0,0,0,0,0 //CR_SHRINK#Shrink#
 21,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
-//WeddingClass
-22,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
-22,334,1,0,0,0,0,0,0,0,0,0,0 //WE_MALE#I Will Protect You#
-22,335,1,0,0,0,0,0,0,0,0,0,0 //WE_FEMALE#I Look up to You#
-22,336,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLPARTNER#I miss You#
-22,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 //SuperNovice
 23,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 23,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
