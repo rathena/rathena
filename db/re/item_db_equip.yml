@@ -13992,7 +13992,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 1
-    EquipLevelMin: 1
+    EquipLevelMin: 30
     Refineable: true
     Script: |
       bonus bUnbreakableWeapon;
@@ -128465,8 +128465,8 @@ Body:
     Name: Costume Heavenly Fallen Angel's Wings    # !todo check english name
     Type: Armor
     Locations:
-      Garment: true
-    Refineable: true
+      Costume_Garment: true
+    View: 3
   - Id: 480062
     AegisName: E_Illusion_Engine_A
     Name: Illusion engine wing type A (attributable)    # !todo check english name

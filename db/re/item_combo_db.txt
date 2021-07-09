@@ -76,7 +76,7 @@
 1620:2509:19139,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatkRate,1; if (.@r >= 5) { bonus bMatkRate,2; if (.@r >= 7) { bonus bMatkRate,2; } } }
 1620:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1620:19020,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
-1625:18542,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bHealPower,3*(.@r/2); }
+1625:18542,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bHealPower,3*(.@r/2); }
 1628:2509,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1629:5045,{ bonus bDex,2; bonus bInt,2; bonus bSPrecovRate,5; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R); }
 1631:2129,{ bonus2 bSkillAtk,"PR_MAGNUS",20; bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",1,20; }
@@ -769,6 +769,7 @@
 5498:5521,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if(.@r>=7) bonus bCritAtkRate,10; if(.@r>=9) bonus bAspd,1; }
 5548:5766,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bBaseAtk,min(.@r,10); bonus bMatk,min(.@r,10); }
 5917:1525,{ bonus bLongAtkDef,10; }
+5920:18542,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bHealPower,3*(.@r/2); }
 5933:19112,{ bonus2 bAddSize,Size_All,1; bonus bLongAtkRate,1; if(readparam(bStr)>=108) { bonus2 bAddSize,Size_All,2; bonus bLongAtkRate,1; } if(readparam(bStr)>=120) { bonus2 bAddSize,Size_All,3; bonus bLongAtkRate,1; } }
 5965:28370,{ bonus bDelayrate,-15; }
 5965:28371,{ bonus bVariableCastrate,-20; }
