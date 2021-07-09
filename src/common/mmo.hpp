@@ -4,7 +4,6 @@
 #ifndef MMO_HPP
 #define MMO_HPP
 
-#include <string>
 #include <time.h>
 
 #include "../config/core.hpp"
@@ -722,9 +721,9 @@ struct guild {
 
 struct guild_castle {
 	int castle_id;
-	uint16 mapindex;
-	std::string castle_name,
-		castle_event;
+	int mapindex;
+	char castle_name[NAME_LENGTH];
+	char castle_event[NPC_NAME_LENGTH];
 	int guild_id;
 	int economy;
 	int defense;

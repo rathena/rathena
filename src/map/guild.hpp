@@ -125,8 +125,8 @@ public:
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node &node);
 
-	std::shared_ptr<guild_castle> guild_mapname2gc(const char* mapname);
-	std::shared_ptr<guild_castle> guild_mapindex2gc(int16 mapindex);
+	std::shared_ptr<guild_castle> mapname2gc(const char* mapname);
+	std::shared_ptr<guild_castle> mapindex2gc(int16 mapindex);
 };
 
 extern CastleDatabase castle_db;

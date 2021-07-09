@@ -3722,7 +3722,7 @@ static bool guild_read_castledb(char* str[], int columns, int current) {
 	body << YAML::Key << "Id" << YAML::Value << str[0];
 	body << YAML::Key << "Map" << YAML::Value << str[1];
 	body << YAML::Key << "Name" << YAML::Value << trim(str[2]);
-	body << YAML::Key << "NPC" << YAML::Value << trim(str[3]);
+	body << YAML::Key << "Npc" << YAML::Value << trim(str[3]);
 	body << YAML::EndMap;
 	return true;
 }

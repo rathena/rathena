@@ -284,7 +284,7 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = gc != nullptr;
 
 	if (!exists) {
-		if (!this->nodesExist(node, { "Map", "Name", "NPC" }))
+		if (!this->nodesExist(node, { "Map", "Name", "Npc" }))
 			return 0;
 
 		gc = std::make_shared<guild_castle>();
@@ -297,7 +297,7 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Map", map_name))
 			return 0;
 
-		uint16 mapindex = mapindex_name2id(map_name.c_str());
+		uint16 mapindex = mapindex_name2idx(map_name.c_str(), nullptr);
 
 		if (map_mapindex2mapid(mapindex) < 0) {
 			this->invalidWarning(node["Map"], "Map %s doesn't exist, skipping.\n", map_name.c_str());
@@ -313,23 +313,21 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", castle_name))
 			return 0;
 
-		castle_name.resize(NAME_LENGTH);
-		gc->castle_name = castle_name;
+		safestrncpy(gc->castle_name, castle_name.c_str(), sizeof(gc->castle_name));
 	}
 
-	if (this->nodeExists(node, "NPC")) {
+	if (this->nodeExists(node, "Npc")) {
 		std::string npc_name;
 
-		if (!this->asString(node, "NPC", npc_name))
+		if (!this->asString(node, "Npc", npc_name))
 			return 0;
 
-		if (npc_name.size() > EVENT_NAME_LENGTH) {
-			this->invalidWarning(node["NPC"], "Event name %s too long, skipping.\n", npc_name.c_str());
+		if (npc_name.size() > NPC_NAME_LENGTH) {
+			this->invalidWarning(node["NPC"], "Npc name %s too long, skipping.\n", npc_name.c_str());
 			return 0;
 		}
-	
-		npc_name.resize(EVENT_NAME_LENGTH);
-		gc->castle_event = npc_name;
+
+		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
 	if (!exists)
@@ -358,7 +356,7 @@ struct guild* guild_searchname(char* str) {
 }
 
 /// lookup: map index -> castle*
-std::shared_ptr<guild_castle> CastleDatabase::guild_mapindex2gc(int16 mapindex) {
+std::shared_ptr<guild_castle> CastleDatabase::mapindex2gc(int16 mapindex) {
 	for (const auto &it : castle_db) {
 		if (it.second->mapindex == mapindex)
 			return it.second;
@@ -367,8 +365,8 @@ std::shared_ptr<guild_castle> CastleDatabase::guild_mapindex2gc(int16 mapindex) 
 }
 
 /// lookup: map name -> castle*
-std::shared_ptr<guild_castle> CastleDatabase::guild_mapname2gc(const char* mapname) {
-	return castle_db.guild_mapindex2gc(mapindex_name2id(mapname));
+std::shared_ptr<guild_castle> CastleDatabase::mapname2gc(const char* mapname) {
+	return castle_db.mapindex2gc(mapindex_name2id(mapname));
 }
 
 struct map_session_data* guild_getavailablesd(struct guild* g) {
@@ -1886,7 +1884,7 @@ void castle_guild_broken_sub(int guild_id) {
 			char name[EVENT_NAME_LENGTH];
 			// We call castle_event::OnGuildBreak of all castles of the guild
 			// You can set all castle_events in the 'db/castle_db.txt'
-			safesnprintf(name, EVENT_NAME_LENGTH, "%s::%s", gc->castle_event.c_str(), script_config.guild_break_event_name);
+			safesnprintf(name, EVENT_NAME_LENGTH, "%s::%s", gc->castle_event, script_config.guild_break_event_name);
 			npc_event_do(name);
 
 			//Save the new 'owner', this should invoke guardian clean up and other such things.
