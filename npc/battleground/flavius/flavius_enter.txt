@@ -26,7 +26,7 @@ bat_room,133,178,5	script	Flavius Officer#01a	418,{
 	next;
 	switch(select("ข้าต้องการเข้าร่วมกองทัพของท่าน!:จบการสนทนา")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Guillaume Army Officer]";
 			mes "ข้ายินดีมากที่ท่านต้องการเข้าร่วมและต่อสู้กับกองทัพ Guillaume แต่ข้าขออภัย: ข้าไม่สามารถส่งมือใหม่อย่างท่านไปตายในสนามรบที่โหดร้ายได้";
 		}
@@ -95,7 +95,7 @@ bat_room,133,121,1	script	Flavius Officer#01b	414,{
 	next;
 	switch(select("ข้าต้องการเข้าร่วมกองทัพของท่าน!:จบการสนทนา")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Croix Army Officer]";
 			mes "ข้ายินดีมากที่ท่านต้องการเข้าร่วมและต่อสู้กับกองทัพ Croix แต่ข้าขออภัย: ข้าไม่สามารถส่งมือใหม่อย่างท่านไปตายในสนามรบที่โหดร้ายได้";
 		}
@@ -228,7 +228,7 @@ bat_room,148,178,5	script	Flavius Officer#02a	418,{
 	next;
 	switch(select("ข้าต้องการเข้าร่วมกองทัพของท่าน!:จบการสนทนา")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Guillaume Army Officer]";
 			mes "ข้ายินดีมากที่ท่านต้องการเข้าร่วมและต่อสู้กับกองทัพ Guillaume แต่ข้าขออภัย: ข้าไม่สามารถส่งมือใหม่อย่างท่านไปตายในสนามรบที่โหดร้ายได้";
 		}
@@ -297,7 +297,7 @@ bat_room,148,121,1	script	Flavius Officer#02b	414,{
 	next;
 	switch(select("ข้าต้องการเข้าร่วมกองทัพของท่าน!:จบการสนทนา")) {
 	case 1:
-		if ((Class == Job_Novice) || (BaseClass == Job_Super_Novice)) {
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 			mes "[Croix Army Officer]";
 			mes "ข้ายินดีมากที่ท่านต้องการเข้าร่วมและต่อสู้กับกองทัพ Croix แต่ข้าขออภัย: ข้าไม่สามารถส่งมือใหม่อย่างท่านไปตายในสนามรบที่โหดร้ายได้";
 		}
