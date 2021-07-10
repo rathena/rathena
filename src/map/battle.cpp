@@ -1413,9 +1413,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if( sc && sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 		return 1;
 
-	if (sc && sc->data[SC_MAXPAIN])
-		return 0;
-
 	switch (skill_id) {
 #ifndef RENEWAL
 		case PA_PRESSURE:
@@ -2406,6 +2403,9 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		case GC_CROSSIMPACT:
 			// Cast range is 7 cells and player jumps to target but skill is considered melee
 			return BF_SHORT;
+
+		case NPC_MAXPAIN_ATK:
+			return BF_MISC;
 	}
 
 	//Skill Range Criteria
@@ -5819,6 +5819,14 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 
 		if (!tsc)
 			return;
+		
+		if (tsc->data[SC_MAXPAIN]) {
+			rdamage = wd->damage + wd->damage2;
+			tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
+			if (!tsc->data[SC_KYOMU] && !(tsc->data[SC_DARKCROW] && wd->flag&BF_SHORT)) { //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
+				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
+			}
+		}
 
 		// Calculate skill reflect damage separately
 		if ((ud && !ud->immune_attack) || !status_bl_has_mode(target, MD_SKILLIMMUNE))
@@ -5829,11 +5837,6 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 
 			if (sc && sc->data[SC_VITALITYACTIVATION])
 				rdamage /= 2;
-			if (tsc->data[SC_MAXPAIN]) {
-				tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
-				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, wd->flag);
-				tsc->data[SC_MAXPAIN]->val2 = 0;
-			}
 			else if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 				map_foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
@@ -7212,10 +7215,15 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage /= 10;
 			break;
 		case NPC_MAXPAIN_ATK:
-			if (ssc && ssc->data[SC_MAXPAIN])
-				md.damage = ssc->data[SC_MAXPAIN]->val2;
-			else
+			if (ssc && ssc->data[SC_MAXPAIN]) {
+				if (ssc->data[SC_MAXPAIN]->val2) {
+					md.damage = ssc->data[SC_MAXPAIN]->val2 * skill_lv / 10;
+				} else if (ssc->data[SC_MAXPAIN]->val3) {
+					md.damage = ssc->data[SC_MAXPAIN]->val3 * skill_lv / 10;
+				}
+			} else {
 				md.damage = 0;
+			}
 			break;
 		case SU_SV_ROOTTWIST_ATK:
 			md.damage = 100;
@@ -7518,11 +7526,6 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 
 		if (rdamage > 0 && ssc->data[SC_REF_T_POTION])
 			return 1; // Returns 1 damage
-	}
-
-	if (sc) {
-		if (sc->data[SC_MAXPAIN])
-			rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
 	return cap_value(min(rdamage,max_damage),INT_MIN,INT_MAX);
