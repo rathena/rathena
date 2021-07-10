@@ -4,7 +4,6 @@
 #include "guild.hpp"
 
 #include <stdlib.h>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
@@ -73,14 +72,14 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef node );
 };
 
 const std::string GuildSkillTreeDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/guild_skill_tree.yml";
 }
 
-uint64 GuildSkillTreeDatabase::parseBodyNode( const YAML::Node &node ){
+uint64 GuildSkillTreeDatabase::parseBodyNode( const ryml::NodeRef node ){
 	std::string name;
 
 	if( !this->asString( node, "Id", name ) ){
@@ -128,7 +127,8 @@ uint64 GuildSkillTreeDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if( this->nodeExists( node, "Required" ) ){
-		for( const YAML::Node& requiredNode : node["Required"] ){
+		const auto reqNode = node["Required"];
+		for( const auto  requiredNode : reqNode.children() ){
 			std::string requiredName;
 
 			if( !this->asString( requiredNode, "Id", requiredName ) ){

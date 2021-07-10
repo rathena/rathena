@@ -21,7 +21,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode( const ryml::NodeRef node );
 };
 
 extern InterServerDatabase interServerDb;

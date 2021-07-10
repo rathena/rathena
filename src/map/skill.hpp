@@ -306,8 +306,8 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	template<typename T, size_t S> bool parseNode(std::string nodeName, std::string subNodeName, YAML::Node node, T (&arr)[S]);
-	uint64 parseBodyNode(const YAML::Node &node);
+	template<typename T, size_t S> bool parseNode(std::string nodeName, std::string subNodeName, ryml::NodeRef node, T (&arr)[S]);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 	void clear();
 };
 
@@ -459,7 +459,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 };
 
 struct s_skill_improvise_db {
@@ -473,7 +473,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 };
 
 void do_init_skill(void);
@@ -2293,7 +2293,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 	std::shared_ptr<s_skill_spellbook_db> findBook(t_itemid nameid);
 };
 
@@ -2314,7 +2314,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 };
 
 extern MagicMushroomDatabase magic_mushroom_db;

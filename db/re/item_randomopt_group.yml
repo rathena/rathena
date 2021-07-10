@@ -5967,7 +5967,7 @@ Body:
     Group: H_Anto_Melee
     Slots:
       - Slot: 1
-        Option:
+        Options:
           - Option: VAR_ATTPOWER
             MinValue: 1
             MaxValue: 20

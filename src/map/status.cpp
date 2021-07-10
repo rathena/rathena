@@ -7,7 +7,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string>
-#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/ers.hpp"
@@ -111,7 +110,7 @@ const std::string RefineDatabase::getDefaultLocation(){
 	return std::string( db_path ) + "/refine.yml";
 }
 
-uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
+uint64 RefineDatabase::parseBodyNode( const ryml::NodeRef node ){
 	std::string group_name;
 
 	if( !this->asString( node, "Group", group_name ) ){
@@ -136,7 +135,8 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 	}
 
 	if( this->nodeExists( node, "Levels" ) ){
-		for( const YAML::Node& levelNode : node["Levels"] ){
+		const auto levelsNode = node["Levels"];
+		for( const auto levelNode : levelsNode.children() ){
 			uint16 level;
 
 			if( !this->asUInt16( levelNode, "Level", level ) ){
@@ -152,7 +152,8 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 			}
 
 			if( this->nodeExists( levelNode, "RefineLevels" ) ){
-				for( const YAML::Node& refineLevelNode : levelNode["RefineLevels"] ){
+				const auto refineLevelsNode = levelNode["RefineLevels"];
+				for( const auto refineLevelNode : refineLevelsNode.children() ){
 					uint16 refine_level;
 
 					if( !this->asUInt16( refineLevelNode, "Level", refine_level ) ){
@@ -223,7 +224,8 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 					}
 
 					if( this->nodeExists( refineLevelNode, "Chances" ) ){
-						for( const YAML::Node& chanceNode : refineLevelNode["Chances"] ){
+						const auto chancesNode = refineLevelNode["Chances"];
+						for( const auto chanceNode : chancesNode ){
 							std::string cost_name;
 
 							if( !this->asString( chanceNode, "Type", cost_name ) ){
@@ -451,7 +453,7 @@ const std::string SizeFixDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 SizeFixDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string weapon_name;
 
 	if (!this->asString(node, "Weapon", weapon_name))
