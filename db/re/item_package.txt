@@ -916,8 +916,7 @@ IG_Br_SwordPackage,2406,0,1,0,0,0,1	// 1x Boots_
 IG_Br_SwordPackage,2506,0,1,0,0,0,1	// 1x Manteau_
 IG_Br_SwordPackage,4003,0,1,0,0,0,1	// 1x Pupa_Card
 IG_Br_SwordPackage,4133,0,1,0,0,0,1	// 1x Daydric_Card
-IG_Br_SwordPackage,2607,0,1,0,0,0,1	// 1x Clip
-IG_Br_SwordPackage,2607,0,1,0,0,0,1	// 1x Clip
+IG_Br_SwordPackage,2607,0,2,0,0,0,1	// 2x Clip
 IG_Br_SwordPackage,2229,0,1,0,0,0,1	// 1x Helm_
 IG_Br_SwordPackage,2266,0,1,0,0,0,1	// 1x Iron_Cane
 
@@ -927,8 +926,7 @@ IG_Br_MagePackage,2404,0,1,0,0,0,1	// 1x Shoes_
 IG_Br_MagePackage,2504,0,1,0,0,0,1	// 1x Muffler_
 IG_Br_MagePackage,4003,0,1,0,0,0,1	// 1x Pupa_Card
 IG_Br_MagePackage,4077,0,1,0,0,0,1	// 1x Phen_Card
-IG_Br_MagePackage,2607,0,1,0,0,0,1	// 1x Clip
-IG_Br_MagePackage,2607,0,1,0,0,0,1	// 1x Clip
+IG_Br_MagePackage,2607,0,2,0,0,0,1	// 2x Clip
 IG_Br_MagePackage,5027,0,1,0,0,0,1	// 1x Wizardry_Hat
 
 IG_Br_AcolPackage,2326,0,1,0,0,0,1	// 1x Saint_Robe_
@@ -937,8 +935,7 @@ IG_Br_AcolPackage,2404,0,1,0,0,0,1	// 1x Shoes_
 IG_Br_AcolPackage,2504,0,1,0,0,0,1	// 1x Muffler_
 IG_Br_AcolPackage,4003,0,1,0,0,0,1	// 1x Pupa_Card
 IG_Br_AcolPackage,4100,0,1,0,0,0,1	// 1x Sohee_Card
-IG_Br_AcolPackage,2607,0,1,0,0,0,1	// 1x Clip
-IG_Br_AcolPackage,2607,0,1,0,0,0,1	// 1x Clip
+IG_Br_AcolPackage,2607,0,2,0,0,0,1	// 2x Clip
 IG_Br_AcolPackage,2217,0,1,0,0,0,1	// 1x Biretta_
 
 IG_Br_ArcherPackage,2331,0,1,0,0,0,1	// 1x Tights_
@@ -947,8 +944,7 @@ IG_Br_ArcherPackage,2406,0,1,0,0,0,1	// 1x Boots_
 IG_Br_ArcherPackage,2504,0,1,0,0,0,1	// 1x Muffler_
 IG_Br_ArcherPackage,4064,0,1,0,0,0,1	// 1x Zerom_Card
 IG_Br_ArcherPackage,4102,0,1,0,0,0,1	// 1x Whisper_Card
-IG_Br_ArcherPackage,2607,0,1,0,0,0,1	// 1x Clip
-IG_Br_ArcherPackage,2607,0,1,0,0,0,1	// 1x Clip
+IG_Br_ArcherPackage,2607,0,2,0,0,0,1	// 2x Clip
 IG_Br_ArcherPackage,2285,0,1,0,0,0,1	// 1x Apple_Of_Archer
 
 IG_Br_MerPackage,2315,0,1,0,0,0,1	// 1x Chain_Mail_
@@ -957,8 +953,7 @@ IG_Br_MerPackage,2406,0,1,0,0,0,1	// 1x Boots_
 IG_Br_MerPackage,2506,0,1,0,0,0,1	// 1x Manteau_
 IG_Br_MerPackage,4003,0,1,0,0,0,1	// 1x Pupa_Card
 IG_Br_MerPackage,4133,0,1,0,0,0,1	// 1x Daydric_Card
-IG_Br_MerPackage,2607,0,1,0,0,0,1	// 1x Clip
-IG_Br_MerPackage,2607,0,1,0,0,0,1	// 1x Clip
+IG_Br_MerPackage,2607,0,2,0,0,0,1	// 2x Clip
 IG_Br_MerPackage,5021,0,1,0,0,0,1	// 1x Bankruptcy_Of_Heart
 
 IG_Br_ThiefPackage,2336,0,1,0,0,0,1	// 1x Thief_Clothes_
@@ -967,8 +962,7 @@ IG_Br_ThiefPackage,2406,0,1,0,0,0,1	// 1x Boots_
 IG_Br_ThiefPackage,2506,0,1,0,0,0,1	// 1x Manteau_
 IG_Br_ThiefPackage,4097,0,1,0,0,0,1	// 1x Matyr_Card
 IG_Br_ThiefPackage,4102,0,1,0,0,0,1	// 1x Whisper_Card
-IG_Br_ThiefPackage,2607,0,1,0,0,0,1	// 1x Clip
-IG_Br_ThiefPackage,2607,0,1,0,0,0,1	// 1x Clip
+IG_Br_ThiefPackage,2607,0,2,0,0,0,1	// 2x Clip
 IG_Br_ThiefPackage,2274,0,1,0,0,0,1	// 1x Ghost_Bandana
 
 IG_Acidbomb_10_Box,7135,0,10,0,0,0,1	// 10x Fire_Bottle
@@ -3555,7 +3549,6 @@ IG_Erzulie_Lucky_Scroll,4137,1,1,1,1,0,0	// 1x Drake_Card
 // Majestic_Lucky_Scroll
 IG_Majestic_Lucky_Scroll,12221,1290,10,1,0,0,0	// 10x Megaphone_
 IG_Majestic_Lucky_Scroll,14617,1200,10,1,0,0,0	// 10x VIT_Biscuit_Stick
-IG_Majestic_Lucky_Scroll,14617,1200,10,1,0,0,0	// 10x VIT_Biscuit_Stick
 IG_Majestic_Lucky_Scroll,12901,1300,10,1,0,0,0	// 10x Insurance_Package
 IG_Majestic_Lucky_Scroll,14620,1200,10,1,0,0,0	// 10x DEX_Biscuit_Stick
 IG_Majestic_Lucky_Scroll,12411,1100,10,1,0,0,0	// 10x HE_Battle_Manual
@@ -3580,7 +3573,6 @@ IG_Majestic_Lucky_Scroll,4403,1,1,1,1,0,0	// 1x Kiel_Card
 
 // Epic_Heroes_Scroll
 IG_Epic_Heroes_Lucky_Egg,12221,1290,10,1,0,0,0	// 10x Megaphone_
-IG_Epic_Heroes_Lucky_Egg,14617,1200,10,1,0,0,0	// 10x VIT_Biscuit_Stick
 IG_Epic_Heroes_Lucky_Egg,14617,1200,10,1,0,0,0	// 10x VIT_Biscuit_Stick
 IG_Epic_Heroes_Lucky_Egg,12901,1300,10,1,0,0,0	// 10x Insurance_Package
 IG_Epic_Heroes_Lucky_Egg,14620,1200,10,1,0,0,0	// 10x DEX_Biscuit_Stick
@@ -3674,7 +3666,6 @@ IG_TW_13y_Lucky_Egg_06,4302,1,1,1,1,0,0	// 1x Tao_Gunka_Card
 
 // Happy_Time_Scroll
 IG_Happy_Time_Scroll,12221,1290,10,1,0,0,0	// 10x Megaphone_
-IG_Happy_Time_Scroll,14617,1200,10,1,0,0,0	// 10x VIT_Biscuit_Stick
 IG_Happy_Time_Scroll,14617,1200,10,1,0,0,0	// 10x VIT_Biscuit_Stick
 IG_Happy_Time_Scroll,12901,1300,10,1,0,0,0	// 10x Insurance_Package
 IG_Happy_Time_Scroll,14620,1200,10,1,0,0,0	// 10x DEX_Biscuit_Stick

@@ -1190,7 +1190,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 	return count;
 }
 
-std::shared_ptr<s_item_group_entry> itemdb_get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
+std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random) {
 	if (random == nullptr)
 		return nullptr;
 
@@ -1203,7 +1203,7 @@ std::shared_ptr<s_item_group_entry> itemdb_get_random_itemsubgroup(std::shared_p
 
 	return util::vector_random(random->data);
 }
-	
+
 /**
 * Return a random group entry from Item Group
 * @param group_id
@@ -1223,7 +1223,7 @@ std::shared_ptr<s_item_group_entry> itemdb_get_randgroupitem(uint16 group_id, ui
 		return nullptr;
 	}
 
-	return itemdb_get_random_itemsubgroup(group->random[sub_group]);
+	return get_random_itemsubgroup(group->random[sub_group]);
 }
 
 /**
@@ -1314,7 +1314,7 @@ uint8 itemdb_pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *
 	for (const auto &random : group->random) {
 		if (random.first == 0 || random.second->data.empty())
 			continue;
-		itemdb_pc_get_itemgroup_sub(sd, identify, itemdb_get_random_itemsubgroup(random.second));
+		itemdb_pc_get_itemgroup_sub(sd, identify, get_random_itemsubgroup(random.second));
 	}
 
 	return 0;
