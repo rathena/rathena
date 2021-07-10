@@ -841,7 +841,8 @@ struct s_item_group_random
 {
 	uint32 total_rate;
 	std::vector<std::shared_ptr<s_item_group_entry>> data; /// Random group entry
-	// std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(); /// Random group entry
+
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup();
 };
 
 /// Struct of item group that will be used for db

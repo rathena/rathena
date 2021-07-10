@@ -3718,8 +3718,7 @@ Body:
           - Item: Sohee_Card
             UniqueId: true
           - Item: Clip
-            UniqueId: true
-          - Item: Clip
+            Amount: 2
             UniqueId: true
           - Item: Biretta_
             UniqueId: true
@@ -3740,8 +3739,7 @@ Body:
           - Item: Whisper_Card
             UniqueId: true
           - Item: Clip
-            UniqueId: true
-          - Item: Clip
+            Amount: 2
             UniqueId: true
           - Item: Apple_Of_Archer
             UniqueId: true
@@ -3821,8 +3819,7 @@ Body:
           - Item: Phen_Card
             UniqueId: true
           - Item: Clip
-            UniqueId: true
-          - Item: Clip
+            Amount: 2
             UniqueId: true
           - Item: Wizardry_Hat
             UniqueId: true
@@ -3843,8 +3840,7 @@ Body:
           - Item: Daydric_Card
             UniqueId: true
           - Item: Clip
-            UniqueId: true
-          - Item: Clip
+            Amount: 2
             UniqueId: true
           - Item: Bankruptcy_Of_Heart
             UniqueId: true
@@ -3865,8 +3861,7 @@ Body:
           - Item: Daydric_Card
             UniqueId: true
           - Item: Clip
-            UniqueId: true
-          - Item: Clip
+            Amount: 2
             UniqueId: true
           - Item: Helm_
             UniqueId: true
@@ -3889,8 +3884,7 @@ Body:
           - Item: Whisper_Card
             UniqueId: true
           - Item: Clip
-            UniqueId: true
-          - Item: Clip
+            Amount: 2
             UniqueId: true
           - Item: Ghost_Bandana
             UniqueId: true
@@ -6631,6 +6625,30 @@ Body:
           - Item: Elven_Ears_C
             Duration: 10080
             UniqueId: true
+  - Group: ENCHANT_STONE_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: STRStone_Top
+            Rate: 1000
+          - Item: INTStone_Top
+            Rate: 1000
+          - Item: AGIStone_Top
+            Rate: 1000
+          - Item: DEXStone_Top
+            Rate: 1000
+          - Item: VITStone_Top
+            Rate: 1000
+          - Item: LUKStone_Top
+            Rate: 1000
+          - Item: ATKStone_Middle
+            Rate: 1000
+          - Item: MATKStone_Middle
+            Rate: 1000
+          - Item: HITStone_Bottom
+            Rate: 1000
+          - Item: FLEEStone_Bottom
+            Rate: 1000
   - Group: ENCHANT_STONE_BOX10
     SubGroups:
       - SubGroup: 1
@@ -7487,6 +7505,42 @@ Body:
             Rate: 37
           - Item: HighpriestStone_II_Bottom
             Rate: 37
+  - Group: ENCHANT_STONE_BOX2
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: STRStone_Top
+            Rate: 330
+          - Item: INTStone_Top
+            Rate: 330
+          - Item: AGIStone_Top
+            Rate: 330
+          - Item: DEXStone_Top
+            Rate: 330
+          - Item: VITStone_Top
+            Rate: 330
+          - Item: LUKStone_Top
+            Rate: 330
+          - Item: ATKStone_Middle
+            Rate: 330
+          - Item: MATKStone_Middle
+            Rate: 330
+          - Item: HITStone_Bottom
+            Rate: 330
+          - Item: FLEEStone_Bottom
+            Rate: 330
+          - Item: SPStone_Middle
+            Rate: 1110
+          - Item: HealStone_Bottom
+            Rate: 1110
+          - Item: HealStone_Top
+            Rate: 1120
+          - Item: HealStone2_Top
+            Rate: 1120
+          - Item: HealStone_Middle
+            Rate: 1120
+          - Item: HPStone_Middle
+            Rate: 1120
   - Group: ENCHANT_STONE_BOX20
     SubGroups:
       - SubGroup: 1
@@ -7655,6 +7709,92 @@ Body:
             Rate: 37
           - Item: Critical_Stone_Bottom
             Rate: 37
+  - Group: ENCHANT_STONE_BOX3
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: STRStone_Top
+            Rate: 500
+          - Item: INTStone_Top
+            Rate: 500
+          - Item: AGIStone_Top
+            Rate: 500
+          - Item: DEXStone_Top
+            Rate: 500
+          - Item: VITStone_Top
+            Rate: 500
+          - Item: LUKStone_Top
+            Rate: 500
+          - Item: ATKStone_Middle
+            Rate: 500
+          - Item: MATKStone_Middle
+            Rate: 500
+          - Item: HITStone_Bottom
+            Rate: 500
+          - Item: FLEEStone_Bottom
+            Rate: 500
+          - Item: HealStone_Top
+            Rate: 500
+          - Item: HealStone2_Top
+            Rate: 500
+          - Item: HealStone_Middle
+            Rate: 500
+          - Item: HealStone_Bottom
+            Rate: 500
+          - Item: HPStone_Middle
+            Rate: 600
+          - Item: SPStone_Middle
+            Rate: 600
+          - Item: BigStone_Top
+            Rate: 600
+          - Item: MediumStone_Top
+            Rate: 600
+          - Item: SmallStone_Top
+            Rate: 600
+  - Group: ENCHANT_STONE_BOX4
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: STRStone_Top
+            Rate: 500
+          - Item: INTStone_Top
+            Rate: 500
+          - Item: AGIStone_Top
+            Rate: 500
+          - Item: DEXStone_Top
+            Rate: 500
+          - Item: VITStone_Top
+            Rate: 500
+          - Item: LUKStone_Top
+            Rate: 500
+          - Item: ATKStone_Middle
+            Rate: 500
+          - Item: MATKStone_Middle
+            Rate: 500
+          - Item: HITStone_Bottom
+            Rate: 500
+          - Item: FLEEStone_Bottom
+            Rate: 500
+          - Item: HealStone_Top
+            Rate: 500
+          - Item: HealStone2_Top
+            Rate: 500
+          - Item: HealStone_Middle
+            Rate: 500
+          - Item: HPStone_Middle
+            Rate: 500
+          - Item: SPStone_Middle
+            Rate: 500
+          - Item: HealStone_Bottom
+            Rate: 500
+          - Item: BigStone_Top
+            Rate: 500
+          - Item: MediumStone_Top
+            Rate: 500
+          - Item: SmallStone_Top
+            Rate: 500
+          - Item: ASPDStone_Robe
+            Rate: 500
   - Group: ENCHANT_STONE_BOX5
     SubGroups:
       - SubGroup: 1
@@ -8091,9 +8231,6 @@ Body:
         List:
           - Item: Megaphone_
             Rate: 1290
-            Amount: 10
-          - Item: VIT_Biscuit_Stick
-            Rate: 1200
             Amount: 10
           - Item: VIT_Biscuit_Stick
             Rate: 1200
@@ -10623,9 +10760,6 @@ Body:
         List:
           - Item: Megaphone_
             Rate: 1290
-            Amount: 10
-          - Item: VIT_Biscuit_Stick
-            Rate: 1200
             Amount: 10
           - Item: VIT_Biscuit_Stick
             Rate: 1200
@@ -13302,9 +13436,6 @@ Body:
         List:
           - Item: Megaphone_
             Rate: 1290
-            Amount: 10
-          - Item: VIT_Biscuit_Stick
-            Rate: 1200
             Amount: 10
           - Item: VIT_Biscuit_Stick
             Rate: 1200
