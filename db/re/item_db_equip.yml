@@ -52387,7 +52387,7 @@ Body:
     Defense: 10
     Slots: 1
     Locations:
-      Head_Top: true
+      Costume_Head_Top: true
     Refineable: true
   - Id: 5916
     AegisName: Exosrcist_Glass
@@ -83308,7 +83308,7 @@ Body:
     Type: Armor
     Buy: 10
     Locations:
-      Head_Top: true
+      Costume_Head_Top: true
     EquipLevelMin: 1
     View: 413
   - Id: 19709

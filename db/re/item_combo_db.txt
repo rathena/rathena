@@ -162,7 +162,7 @@
 2183:15068:18776:20710:22015,{ bonus bMaxHP,900; bonus bMaxSP,100; bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",1,30; }
 2183:22015,{ bonus bAllStats,2; }
 2195:20753,{ bonus2 bAddEle,Ele_Neutral,getequiprefinerycnt(EQI_HAND_L); bonus2 bSubRace,RC_Formless,getequiprefinerycnt(EQI_GARMENT); }
-2198:5966,{ .@r = getequiprefinerycnt(EQI_HAND_L); if (.@r > 7) bonus2 bSkillCooldown,"WL_COMET",-20000+(.@r > 9 ? -20000 : 0); }
+2198:5966,{ .@r = getequiprefinerycnt(EQI_HAND_L); if (.@r >= 7) bonus2 bSkillCooldown,"WL_COMET",-20000+(.@r >= 9 ? -20000 : 0); }
 2241:5136,{ bonus bMaxHP,700; bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"AL_INCAGI",10,30,1; }
 2268:18573,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if(.@r > 6) { bonus bMaxHPrate,((.@r-5)/2)*2; bonus bHit,(.@r-5)/2; } }
 2268:19082,{ bonus bDelayrate,-5; }
