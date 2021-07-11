@@ -27942,9 +27942,15 @@ Body:
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
     MaxLevel: 10
-    Type: Weapon
+    Type: Misc
     TargetType: Attack
-    Range: 9
+    DamageFlags:
+      IgnoreDefense: true
+      IgnoreFlee: true
+    Flags:
+      IgnoreBgReduction: true
+      IgnoreGvgReduction: true
+    Range: 11
     Hit: Multi_Hit
     HitCount:
       - Level: 1
