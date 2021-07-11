@@ -3852,7 +3852,7 @@
 	export_constant(ATF_WEAPON);
 	export_constant(ATF_MAGIC);
 	export_constant(ATF_MISC);
-	// TODO: Check why this was in const.txt, but not on source side
+	// TODO: Check why this was in const.yml, but not on source side
 	export_constant2("ATF_SKILL",ATF_MAGIC|ATF_MISC);
 
 	/* emoticons */

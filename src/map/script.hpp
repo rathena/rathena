@@ -4,6 +4,7 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#include "../common/database.hpp"
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp"
@@ -2040,6 +2041,17 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_MAGICATTACK,
 	ITEMINFO_ID,
 	ITEMINFO_AEGISNAME	// 18
+};
+
+class ConstantDatabase : public YamlDatabase {
+public:
+	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
+
+	}
+
+	void clear() { };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
 };
 
 /**
