@@ -167,7 +167,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 					return 0;
 				}
 
-				uint32 mob_id = mob->vd.class_;
+				uint32 mob_id = mob->id;
 
 				if( !this->mobexists( mob_id ) ){
 					this->achievement_mobs.push_back( mob_id );

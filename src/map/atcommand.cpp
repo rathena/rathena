@@ -1552,7 +1552,7 @@ ACMD_FUNC(baselevelup)
 		if ((unsigned int)level > pc_maxbaselv(sd) || (unsigned int)level > pc_maxbaselv(sd) - sd->status.base_level) // fix positive overflow
 			level = pc_maxbaselv(sd) - sd->status.base_level;
 		for (i = 0; i < level; i++)
-			status_point += pc_gets_status_point(sd->status.base_level + i);
+			status_point += statpoint_db.pc_gets_status_point(sd->status.base_level + i);
 
 		sd->status.status_point += status_point;
 		sd->status.base_level += (unsigned int)level;
@@ -1573,7 +1573,7 @@ ACMD_FUNC(baselevelup)
 		if ((unsigned int)level >= sd->status.base_level)
 			level = sd->status.base_level-1;
 		for (i = 0; i > -level; i--)
-			status_point += pc_gets_status_point(sd->status.base_level + i - 1);
+			status_point += statpoint_db.pc_gets_status_point(sd->status.base_level + i - 1);
 		if (sd->status.status_point < status_point)
 			pc_resetstate(sd);
 		if (sd->status.status_point < status_point)
@@ -7431,9 +7431,9 @@ ACMD_FUNC(mobinfo)
 #endif
 		// stats
 		if( mob->get_bosstype() == BOSSTYPE_MVP )
-			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->vd.class_); // MVP Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->id); // MVP Monster: '%s'/'%s'/'%s' (%d)
 		else
-			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->vd.class_); // Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->jname.c_str(), mob->sprite.c_str(), mob->id); // Monster: '%s'/'%s'/'%s' (%d)
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%llu  Job EXP:%llu  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);

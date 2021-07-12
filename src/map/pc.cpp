@@ -66,7 +66,7 @@ static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
 
-static unsigned int statp[MAX_LEVEL+1];
+PlayerStatPointDatabase statpoint_db;
 
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
@@ -6201,7 +6201,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	if( sd->status.guild_id > 0 && mapdata->flag[MF_GVG_CASTLE] )
 	{	// Increased guild castle regen [Valaris]
-		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);
+		std::shared_ptr<guild_castle> gc = castle_db.mapindex2gc(sd->mapindex);
 		if(gc && gc->guild_id == sd->status.guild_id)
 			sd->regen.state.gc = 1;
 	}
@@ -7181,7 +7181,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 		if( ( !battle_config.multi_level_up || ( battle_config.multi_level_up_base > 0 && sd->status.base_level >= battle_config.multi_level_up_base ) ) && sd->status.base_exp > next-1 )
 			sd->status.base_exp = next-1;
 
-		sd->status.status_point += pc_gets_status_point(sd->status.base_level++);
+		sd->status.status_point += statpoint_db.pc_gets_status_point(sd->status.base_level++);
 
 		if( pc_is_maxbaselv(sd) ){
 			sd->status.base_exp = u64min(sd->status.base_exp,MAX_LEVEL_BASE_EXP);
@@ -7595,14 +7595,25 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 
 	return val;
 }
+/**
+ * Gets the total number of status points at the provided level.
+ * @param level: Player base level.
+ * @return Total number of status points at specific base level.
+ */
+uint32 PlayerStatPointDatabase::get_table_point(uint16 level) {
+	return this->statpoint_table[level];
+}
 
-// Calculates the number of status points PC gets when leveling up (from level to level+1)
-int pc_gets_status_point(int level)
-{
-	if (battle_config.use_statpoint_table) //Use values from "db/statpoint.txt"
-		return (statp[level+1] - statp[level]);
-	else //Default increase
-		return ((level+15) / 5);
+/**
+ * Calculates the number of status points PC gets when leveling up (from level to level+1)
+ * @param level: Player base level.
+ * @param table: Use table value or formula.
+ * @return Status points at specific base level.
+ */
+uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) {
+	if (this->statpoint_table[level+1] > this->statpoint_table[level])
+		return (this->statpoint_table[level+1] - this->statpoint_table[level]);
+	return 0;
 }
 
 #ifdef RENEWAL_STAT
@@ -7971,29 +7982,14 @@ int pc_resetstate(struct map_session_data* sd)
 {
 	nullpo_ret(sd);
 
-	if (battle_config.use_statpoint_table)
-	{	// New statpoint table used here - Dexity
-		if (sd->status.base_level > MAX_LEVEL)
-		{	//statp[] goes out of bounds, can't reset!
-			ShowError("pc_resetstate: Can't reset stats of %d:%d, the base level (%d) is greater than the max level supported (%d)\n",
-				sd->status.account_id, sd->status.char_id, sd->status.base_level, MAX_LEVEL);
-			return 0;
-		}
-
-		sd->status.status_point = statp[sd->status.base_level];
+	if( sd->status.base_level > pc_maxbaselv( sd ) ){
+		ShowError( "pc_resetstate: Capping the Level to %d to reset the stats of %d:%d, the base level (%d) is greater than the max level supported.\n",
+			pc_maxbaselv( sd ), sd->status.account_id, sd->status.char_id, sd->status.base_level );
+		sd->status.base_level = pc_maxbaselv( sd );
+		clif_updatestatus( sd, SP_BASELEVEL );
 	}
-	else
-	{
-		int add=0;
-		add += pc_need_status_point(sd, SP_STR, 1-pc_getstat(sd, SP_STR));
-		add += pc_need_status_point(sd, SP_AGI, 1-pc_getstat(sd, SP_AGI));
-		add += pc_need_status_point(sd, SP_VIT, 1-pc_getstat(sd, SP_VIT));
-		add += pc_need_status_point(sd, SP_INT, 1-pc_getstat(sd, SP_INT));
-		add += pc_need_status_point(sd, SP_DEX, 1-pc_getstat(sd, SP_DEX));
-		add += pc_need_status_point(sd, SP_LUK, 1-pc_getstat(sd, SP_LUK));
 
-		sd->status.status_point+=add;
-	}
+	sd->status.status_point = statpoint_db.get_table_point( sd->status.base_level );
 
 	if( ( sd->class_&JOBL_UPPER ) != 0 ){
 		sd->status.status_point += battle_config.transcendent_status_points;
@@ -8966,7 +8962,7 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 			int i = 0;
 			int stat=0;
 			for (i = 0; i < (int)(val - sd->status.base_level); i++)
-				stat += pc_gets_status_point(sd->status.base_level + i);
+				stat += statpoint_db.pc_gets_status_point(sd->status.base_level + i);
 			sd->status.status_point += stat;
 		}
 		sd->status.base_level = val;
@@ -12328,36 +12324,60 @@ static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
 	return true;
 }
 
-static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
-	int i=1;
-	char line[24000]; //FIXME this seem too big
-	FILE *fp;
-	
-	sprintf(line, "%s/statpoint.txt", basedir);
-	fp=fopen(line,"r");
-	if(fp == NULL){
-		if(silent==0) ShowWarning("Can't read '" CL_WHITE "%s" CL_RESET "'... Generating DB.\n",line);
-		return max(last_s,i);
-	} else {
-		int entries=0;
-		while(fgets(line, sizeof(line), fp))
-		{
-			int stat;
-			trim(line);
-			if(line[0] == '\0' || (line[0]=='/' && line[1]=='/'))
-				continue;
-			if ((stat=strtoul(line,NULL,10))<0)
-				stat=0;
-			if (i > MAX_LEVEL)
-				break;
-			statp[i]=stat;
-			i++;
-			entries++;
-		}
-		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s/%s" CL_RESET "'.\n", entries, basedir,"statpoint.txt");
+const std::string PlayerStatPointDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/statpoint.yml";
+}
+
+uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
+	if (!this->nodesExist(node, { "Level", "Points" })) {
+		return 0;
 	}
-	return max(last_s,i);
+
+	uint16 level;
+
+	if (!this->asUInt16(node, "Level", level))
+		return 0;
+
+	uint32 point;
+
+	if (!this->asUInt32(node, "Points", point))
+		return 0;
+
+	if (level == 0) {
+		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
+		return 0;
+	}
+
+	if (level > MAX_LEVEL) {
+		this->invalidWarning(node["Level"], "Level %d exceeds maximum BaseLevel %d, skipping.\n", level, MAX_LEVEL);
+		return 0;
+	}
+
+	this->statpoint_table[level] = point;
+
+	return 1;
+}
+
+/**
+ * Generate the remaining parts of the db if necessary.
+ */
+void PlayerStatPointDatabase::loadingFinished() {
+	if( battle_config.use_statpoint_table ){
+		this->statpoint_table[1] = start_status_points;
+	}
+
+	if( this->statpoint_table[1] != start_status_points ){
+		ShowError( "Status points for Level 1 (=%d) do not match inter_athena.conf value (=%d).\n", this->statpoint_table[1], start_status_points );
+		this->statpoint_table[1] = start_status_points;
+	}
+
+	for (uint16 level = 2; level <= MAX_LEVEL; level++) {
+		if (!battle_config.use_statpoint_table || util::umap_find(this->statpoint_table, level) == nullptr) {
+			if (battle_config.use_statpoint_table)
+				ShowError("Missing status points for Level %d\n", level);
+			this->statpoint_table[level] = this->statpoint_table[level-1] + ((level-1+15) / 5);
+		}
+	}
 }
 
 /*==========================================
@@ -12370,7 +12390,7 @@ static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
  * job_maxhpsp_db.txt	- strtlvl,maxlvl,job,type,values/lvl (values=hp|sp)
  *------------------------------------------*/
 void pc_readdb(void) {
-	int i, k, s = 1;
+	int i, s = 1;
 	const char* dbsubpath[] = {
 		"",
 		"/" DBIMPORT,
@@ -12384,8 +12404,8 @@ void pc_readdb(void) {
 	penalty_db.load();
 #endif
 
-	 // reset then read statspoint
-	memset(statp,0,sizeof(statp));
+	statpoint_db.clear();
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
 		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
@@ -12401,7 +12421,6 @@ void pc_readdb(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		s = pc_read_statsdb(dbsubpath2,s,i > 0);
 		if (i == 0)
 #ifdef RENEWAL_ASPD // Paths are hardcoded here to specifically pick the correct database
 			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
@@ -12426,14 +12445,8 @@ void pc_readdb(void) {
 	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 0);
 	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 1);
 
-	// generate the remaining parts of the db if necessary
-	k = battle_config.use_statpoint_table; //save setting
-	battle_config.use_statpoint_table = 0; //temporarily disable to force pc_gets_status_point use default values
-	statp[0] = 45; // seed value
-	for (; s <= MAX_LEVEL; s++)
-		statp[s] = statp[s-1] + pc_gets_status_point(s-1);
-	battle_config.use_statpoint_table = k; //restore setting
-	
+	statpoint_db.load();
+
 	//Checking if all class have their data
 	for (i = 0; i < JOB_MAX; i++) {
 		int idx;
