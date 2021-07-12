@@ -3816,13 +3816,25 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	str[1] = trim(str[1]);
 	t_itemid nameid = strtoul(str[1], nullptr, 10);
 
-	std::string *item_name = util::umap_find(aegis_itemnames, nameid);
+	std::string *name = util::umap_find(aegis_itemnames, nameid);
+	std::string item_name;
 
-	if (!item_name) {
-		ShowWarning( "itemdb_read_group: Non-existant item '%s'\n", str[1] );
-		return false;
+	if (name)
+		item_name = *name;
+	else {
+		std::string tmp = str[1];
+		auto it = aegis_itemnames.begin();
+
+		for (; it != aegis_itemnames.end(); ++it) {
+			if (it->second == tmp)
+				break;
+		}
+		if (it == std::end(aegis_itemnames)) {
+			ShowWarning( "itemdb_read_group: Non-existant item '%s'\n", str[1] );
+			return false;
+		}
+		item_name = it->second;
 	}
-	// todo check if str[1] == item aegisname ?
 
 	// Checking sub group
 	uint32 prob = atoi(str[2]);
@@ -3849,7 +3861,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 
 	s_item_group_entry_csv2yaml entry = {};
 
-	entry.item_name = *item_name;
+	entry.item_name = item_name;
 	if (columns > 3) {
 		int32 amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
 		if (amount > 1)

@@ -34,6 +34,7 @@
 #          UniqueId            Makes the given item(s) have a Unique ID. (Default: false)
 #          Named               Inscribes the item with the obtainer's name. (Default: false)
 #          Bound               Binds the obtained item. (Default: None)
+#          Clear               Remove the given item. (Optional)
 #       Clear                  Remove the given SubGroup. (Optional)
 ###########################################################################
 

@@ -1334,16 +1334,7 @@ IG_Sagittarius_Scroll,13607,130,1,1,0,0,1	// 1x Bubble_Gum_Box5
 IG_Sagittarius_Scroll,12710,160,5,1,0,0,1	// 5x Guyak_Pudding
 IG_Sagittarius_Scroll,14601,110,1,1,0,0,1	// 1x Tyr's_Blessing
 
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
-IG_Sagittarius_Scr_Box,16775,0,1,0,0,0,1	// 1x Sagittarius_Scroll
+IG_Sagittarius_Scr_Box,16775,0,10,0,0,0,1	// 10x Sagittarius_Scroll
 
 IG_Sagittar_Diadem_Scroll,14343,2,1,1,0,0,1	// 1x Spiked_Scarf_Box
 IG_Sagittar_Diadem_Scroll,16775,10,1,1,0,0,1	// 1x Sagittarius_Scroll
@@ -1359,16 +1350,7 @@ IG_Sagittar_Diadem_Scroll,13599,160,1,1,0,0,1	// 1x Battle_Manual_Box5
 IG_Sagittar_Diadem_Scroll,13607,130,1,1,0,0,1	// 1x Bubble_Gum_Box5
 IG_Sagittar_Diadem_Scroll,12710,180,5,1,0,0,1	// 5x Guyak_Pudding
 
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
-IG_Sagittar_Di_Scroll_Box,16990,0,1,0,0,0,1	// 1x Sagittar_Diadem_Scroll
+IG_Sagittar_Di_Scroll_Box,16990,0,10,0,0,0,1	// 10x Sagittar_Diadem_Scroll
 
 IG_Capri_Crown_Scroll,13903,1,1,1,0,0,1	// 1x Santa_Poring_Hat_Box
 IG_Capri_Crown_Scroll,2749,2,1,1,0,0,1	// 1x Linen_Glove
@@ -1385,16 +1367,7 @@ IG_Capri_Crown_Scroll,12922,100,1,1,0,0,1	// 1x Token_Of_Siegfried_Box
 IG_Capri_Crown_Scroll,13610,180,1,1,0,0,1	// 1x Enriched_Elunium_Box5
 IG_Capri_Crown_Scroll,12917,60,1,1,0,0,1	// 1x Wind_Walk_10_Scroll_Box
 
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
-IG_Capri_Crown_Scroll_Box,16996,0,1,0,0,0,1	// 1x Capri_Crown_Scroll
+IG_Capri_Crown_Scroll_Box,16996,0,10,0,0,0,1	// 10x Capri_Crown_Scroll
 
 IG_Capricon_Di_Scroll,13937,1,1,1,0,0,1	// 1x Robo_Eye_Box
 IG_Capricon_Di_Scroll,2390,3,1,1,0,0,1	// 1x Improved_Tights
@@ -1411,16 +1384,7 @@ IG_Capricon_Di_Scroll,12710,150,5,1,0,0,1	// 5x Guyak_Pudding
 IG_Capricon_Di_Scroll,13611,170,1,1,0,0,1	// 1x Enriched_Oridecon_Box5
 IG_Capricon_Di_Scroll,13712,10,1,1,0,0,1	// 1x Small_Life_Potion_Box30
 
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
-IG_Capricon_Di_Scroll_Box,17011,0,1,0,0,0,1	// 1x Capricon_Di_Scroll
+IG_Capricon_Di_Scroll_Box,17011,0,10,0,0,0,1	// 10x Capricon_Di_Scroll
 
 IG_Aquarius_Diadem_Scroll,14300,1,1,1,0,0,1	// 1x Mask_Of_Ifrit_Box
 IG_Aquarius_Diadem_Scroll,5512,30,1,1,0,0,1	// 1x Aquarius_Diadem
@@ -1437,16 +1401,7 @@ IG_Aquarius_Diadem_Scroll,12710,210,5,1,0,0,1	// 5x Guyak_Pudding
 IG_Aquarius_Diadem_Scroll,16390,155,1,1,0,0,1	// 1x BGum_Box_In_Mouth4
 IG_Aquarius_Diadem_Scroll,12033,175,5,1,0,0,1	// 5x Box_Of_Sunlight
 
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
-IG_Aquarius_Di_Scroll_Box,17016,0,1,0,0,0,1	// 1x Aquarius_Diadem_Scroll
+IG_Aquarius_Di_Scroll_Box,17016,0,10,0,0,0,1	// 10x Aquarius_Diadem_Scroll
 
 IG_Lovely_Aquarius_Scroll,2790,1,1,1,0,0,1	// 1x Bradium_Brooch
 IG_Lovely_Aquarius_Scroll,12911,4,1,1,0,0,1	// 1x Neuralizer_Box
@@ -1463,16 +1418,7 @@ IG_Lovely_Aquarius_Scroll,12710,170,5,1,0,0,1	// 5x Guyak_Pudding
 IG_Lovely_Aquarius_Scroll,13607,140,1,1,0,0,1	// 1x Bubble_Gum_Box5
 IG_Lovely_Aquarius_Scroll,13804,20,2,1,0,0,1	// 2x Fire_Cracker_Love_Box
 
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
-IG_Lovely_Aquarius_Box,17024,0,1,0,0,0,1	// 1x Lovely_Aquarius_Scroll
+IG_Lovely_Aquarius_Box,17024,0,10,0,0,0,1	// 10x Lovely_Aquarius_Scroll
 
 IG_Pisces_Diadem_Scroll,14301,1,1,1,0,0,1	// 1x Ifrit's_Ear_Box
 IG_Pisces_Diadem_Scroll,2788,2,1,1,0,0,1	// 1x Bradium_Earing
@@ -1489,16 +1435,7 @@ IG_Pisces_Diadem_Scroll,12710,180,5,1,0,0,1	// 5x Guyak_Pudding
 IG_Pisces_Diadem_Scroll,13599,200,1,1,0,0,1	// 1x Battle_Manual_Box5
 IG_Pisces_Diadem_Scroll,14232,70,1,1,0,0,1	// 1x Yggdrasilberry_Box_
 
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
-IG_Pisces_Diadem_Box,17028,0,1,0,0,0,1	// 1x Pisces_Diadem_Scroll
+IG_Pisces_Diadem_Box,17028,0,10,0,0,0,1	// 10x Pisces_Diadem_Scroll
 
 IG_Energetic_Pisces_Scroll,2789,1,1,1,0,0,1	// 1x Bradium_Ring
 IG_Energetic_Pisces_Scroll,5515,10,1,1,0,0,1	// 1x Pisces_Crown
@@ -1515,16 +1452,7 @@ IG_Energetic_Pisces_Scroll,12710,190,5,1,0,0,1	// 5x Guyak_Pudding
 IG_Energetic_Pisces_Scroll,13611,150,1,1,0,0,1	// 1x Enriched_Oridecon_Box5
 IG_Energetic_Pisces_Scroll,13725,100,1,1,0,0,1	// 1x Ramen_Hat_Box
 
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
-IG_Energetic_Pisces_Box,17035,0,1,0,0,0,1	// 1x Energetic_Pisces_Scroll
+IG_Energetic_Pisces_Box,17035,0,10,0,0,0,1	// 10x Energetic_Pisces_Scroll
 
 IG_Aries_Scroll,2428,5,1,1,1,0,0	// 1x Freyja_Boots
 IG_Aries_Scroll,12246,45,1,1,1,0,0	// 1x Magic_Card_Album
@@ -1541,16 +1469,7 @@ IG_Aries_Scroll,13753,1800,1,1,0,0,0	// 1x S_Mdef_Potion_Box30
 IG_Aries_Scroll,13747,1800,1,1,0,0,0	// 1x S_Def_Potion_Box30
 IG_Aries_Scroll,14508,2300,10,1,0,0,0	// 10x Zeny_Scroll
 
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
-IG_Aries_Scroll_Box,17050,0,1,0,0,0,1	// 1x Aries_Scroll
+IG_Aries_Scroll_Box,17050,0,10,0,0,0,1	// 10x Aries_Scroll0
 
 IG_Boarding_Halter_Box,12622,0,1,0,0,10080,1	// 1x Boarding_Halter
 
@@ -1569,16 +1488,7 @@ IG_Taurus_Diadem_Scroll,13721,1500,1,1,0,0,0	// 1x Dun_Tele_Scroll_Box10
 IG_Taurus_Diadem_Scroll,14601,1700,1,1,0,0,0	// 1x Tyr's_Blessing
 IG_Taurus_Diadem_Scroll,14508,2004,10,1,0,0,0	// 10x Zeny_Scroll
 
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
-IG_Taurus_Di_Scroll_Box,17062,0,1,0,0,0,1	// 1x Taurus_Diadem_Scroll
+IG_Taurus_Di_Scroll_Box,17062,0,10,0,0,0,1	// 10x Taurus_Diadem_Scroll
 
 IG_Umbala_Spirit_Box2,18505,0,1,0,0,10080,1	// 1x Umbala_Spirit
 
@@ -1599,16 +1509,7 @@ IG_Taurus_Crown_Scroll,13607,1500,1,1,0,0,0	// 1x Bubble_Gum_Box5
 IG_Taurus_Crown_Scroll,13712,1800,1,1,0,0,0	// 1x Small_Life_Potion_Box30
 IG_Taurus_Crown_Scroll,14508,2004,10,1,0,0,0	// 10x Zeny_Scroll
 
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
-IG_Taurus_Crown_Scroll_Box,17077,0,1,0,0,0,1	// 1x Taurus_Crown_Scroll
+IG_Taurus_Crown_Scroll_Box,17077,0,10,0,0,0,1	// 10x Taurus_Crown_Scroll
 
 IG_Gemi_Diadem_Scroll,4429,1,1,1,0,0,0	// 1x Salamander_Card
 IG_Gemi_Diadem_Scroll,2369,1,1,1,0,0,0	// 1x Freyja_Overcoat
@@ -1625,16 +1526,7 @@ IG_Gemi_Diadem_Scroll,13847,1600,1,1,0,0,0	// 1x Mysterious_Travel_Sack3
 IG_Gemi_Diadem_Scroll,12917,1800,1,1,0,0,0	// 1x Wind_Walk_10_Scroll_Box
 IG_Gemi_Diadem_Scroll,12107,2004,1,1,0,0,0	// 1x Wrapped_Mask
 
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
-IG_Gemi_Diadem_Scroll_Box,17082,0,1,0,0,0,1	// 1x Gemi_Diadem_Scroll
+IG_Gemi_Diadem_Scroll_Box,17082,0,10,0,0,0,1	// 10x Gemi_Diadem_Scroll
 
 IG_Super_Pet_Egg1_2,2234,70,1,1,0,0,0	// 1x Tiara
 IG_Super_Pet_Egg1_2,2235,70,1,1,0,0,0	// 1x Crown
@@ -1708,16 +1600,7 @@ IG_Gemi_Crown_Scroll,12918,1600,1,1,0,0,0	// 1x Adrenaline_Scroll_Box
 IG_Gemi_Crown_Scroll,13541,1800,1,1,0,0,0	// 1x Lex_Aeterna_Scroll_Box
 IG_Gemi_Crown_Scroll,13909,2000,1,1,0,0,0	// 1x MVP_Hunt_Box
 
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
-IG_Gemi_Crown_Scroll_Box,17107,0,1,0,0,0,1	// 1x Gemi_Crown_Scroll
+IG_Gemi_Crown_Scroll_Box,17107,0,10,0,0,0,1	// 10x Gemi_Crown_Scroll
 
 IG_RWC_Special_Scroll,5337,4,1,1,0,0,0	// 1x Party_Recruiter_Hat
 IG_RWC_Special_Scroll,12214,150,1,1,0,0,0	// 1x Convex_Mirror
