@@ -119,6 +119,7 @@ IG_VioletBox,710,14	// Illusion Flower
 IG_VioletBox,711,14	// Shoot
 IG_VioletBox,712,14	// Flower
 IG_VioletBox,713,14	// Empty Bottle
+IG_VioletBox,714,14	// Emperium
 IG_VioletBox,715,14	// Yellow Gemstone
 IG_VioletBox,716,14	// Red Gemstone
 IG_VioletBox,717,14	// Blue Gemstone
@@ -159,6 +160,8 @@ IG_VioletBox,751,14	// Osiris Doll
 IG_VioletBox,752,14	// Grasshopper Doll
 IG_VioletBox,753,14	// Yoyo Doll
 IG_VioletBox,754,14	// Raccoon Doll
+IG_VioletBox,756,14	// Rough Oridecon
+IG_VioletBox,757,14	// Rough Elunium
 IG_VioletBox,901,14	// Danggie
 IG_VioletBox,902,14	// Tree Root
 IG_VioletBox,903,14	// Reptile Tongue
@@ -226,6 +229,7 @@ IG_VioletBox,966,14	// Clam Flesh
 IG_VioletBox,967,14	// Turtle Shell
 IG_VioletBox,968,14	// Heroic Emblem
 IG_VioletBox,969,14	// Gold
+IG_VioletBox,970,14	// Alcohol
 IG_VioletBox,971,14	// Detrimindexta
 IG_VioletBox,972,14	// Karvodailnirol
 IG_VioletBox,973,14	// Counteragent
@@ -238,6 +242,8 @@ IG_VioletBox,980,14	// Orange Dyestuff
 IG_VioletBox,981,14	// Violet Dyestuff
 IG_VioletBox,982,14	// White Dyestuff
 IG_VioletBox,983,14	// Black Dyestuff
+IG_VioletBox,984,14	// Oridecon
+IG_VioletBox,985,14	// Elunium
 IG_VioletBox,986,14	// Anvil
 IG_VioletBox,987,14	// Oridecon Anvil
 IG_VioletBox,988,14	// Golden Anvil
@@ -282,6 +288,7 @@ IG_VioletBox,1026,14	// Acorn
 IG_VioletBox,1027,14	// Porcupine Quill
 IG_VioletBox,1028,14	// Mane
 IG_VioletBox,1029,14	// Tiger Skin
+IG_VioletBox,1030,14	// Tiger's Footskin
 IG_VioletBox,1031,14	// Mantis Scythe
 IG_VioletBox,1032,14	// Maneater Blossom
 IG_VioletBox,1033,14	// Maneater Root
@@ -349,6 +356,7 @@ IG_VioletBox,1155,7		// Bastard Sword
 IG_VioletBox,1158,7		// Two-Handed Sword
 IG_VioletBox,1162,7		// Broad Sword
 IG_VioletBox,1163,7		// Claymore
+IG_VioletBox,1196,1		// Two Handed Chrome Metal Sword
 IG_VioletBox,1202,7		// Knife
 IG_VioletBox,1205,7		// Cutter
 IG_VioletBox,1208,7		// Main Gauche
@@ -385,6 +393,7 @@ IG_VioletBox,1402,7		// Javelin
 IG_VioletBox,1405,7		// Spear
 IG_VioletBox,1408,7		// Pike
 IG_VioletBox,1411,7		// Lance
+IG_VioletBox,1433,1		// Imperial Spear
 IG_VioletBox,1452,7		// Guisarme
 IG_VioletBox,1455,7		// Glaive
 IG_VioletBox,1458,7		// Partizan
@@ -423,6 +432,7 @@ IG_VioletBox,1616,1		// Wing Staff
 IG_VioletBox,1618,1		// Survivor's Rod
 IG_VioletBox,1620,1		// Survivor's Rod
 IG_VioletBox,1622,1		// Hypnotist's Staff
+IG_VioletBox,1654,1		// Mental Stick
 IG_VioletBox,1702,7		// Bow
 IG_VioletBox,1705,7		// Composite Bow
 IG_VioletBox,1708,7		// Great Bow
@@ -468,6 +478,7 @@ IG_VioletBox,1819,1		// Icicle Fist
 IG_VioletBox,1820,1		// Electric Fist
 IG_VioletBox,1821,1		// Seismic Fist
 IG_VioletBox,1822,1		// Combo Battle Glove
+IG_VioletBox,1830,1		// Sura's Rampage
 IG_VioletBox,1902,7		// Violin
 IG_VioletBox,1904,7		// Mandolin
 IG_VioletBox,1906,7		// Lute
@@ -480,6 +491,7 @@ IG_VioletBox,1916,1		// Green Acre Guitar
 IG_VioletBox,1917,1		// Gentle Breeze Guitar
 IG_VioletBox,1918,1		// Oriental Lute
 IG_VioletBox,1919,1		// Base Guitar
+IG_VioletBox,1930,1		// Green Whistle
 IG_VioletBox,1951,7		// Rope
 IG_VioletBox,1953,7		// Whip
 IG_VioletBox,1955,7		// Wire Whip
@@ -496,12 +508,15 @@ IG_VioletBox,1971,1		// Electric Wire
 IG_VioletBox,1972,1		// Electric Eel
 IG_VioletBox,1973,1		// Sea Witch's Foot
 IG_VioletBox,1974,1		// Carrot Whip
+IG_VioletBox,1984,1		// Stem Whip
+IG_VioletBox,1985,1		// Rosevine
 IG_VioletBox,2102,7		// Guard
 IG_VioletBox,2104,7		// Buckler
 IG_VioletBox,2106,7		// Shield
 IG_VioletBox,2108,7		// Mirror Shield
 IG_VioletBox,2109,7		// Memory Book
 IG_VioletBox,2112,7		// Novice Guard
+IG_VioletBox,2153,1		// Imperial Guard
 IG_VioletBox,2201,7		// Sunglasses
 IG_VioletBox,2203,7		// Glasses
 IG_VioletBox,2205,7		// Diver Goggles
@@ -532,6 +547,8 @@ IG_VioletBox,2230,7		// Gemmed Sallet
 IG_VioletBox,2231,7		// Gemmed Sallet
 IG_VioletBox,2232,7		// Circlet
 IG_VioletBox,2233,7		// Circlet
+IG_VioletBox,2234,1		// Tiara
+IG_VioletBox,2235,1		// Crown
 IG_VioletBox,2236,7		// Santa Hat
 IG_VioletBox,2239,7		// Monocle
 IG_VioletBox,2241,7		// Grandpa Beard
@@ -549,6 +566,7 @@ IG_VioletBox,2252,7		// Wizard Hat
 IG_VioletBox,2253,7		// Sunflower
 IG_VioletBox,2254,1		// Angel Wing
 IG_VioletBox,2255,1		// Evil Wing
+IG_VioletBox,2256,1		// Majestic Goat
 IG_VioletBox,2257,7		// Unicorn Horn
 IG_VioletBox,2258,1		// Spiky Band
 IG_VioletBox,2259,7		// Mini Propeller
@@ -603,6 +621,7 @@ IG_VioletBox,2333,7		// Silver Robe
 IG_VioletBox,2334,1		// Mage Coat
 IG_VioletBox,2336,7		// Thief Clothes
 IG_VioletBox,2337,7		// Ninja Suit
+IG_VioletBox,2338,7		// Wedding Dress
 IG_VioletBox,2339,7		// Pantie
 IG_VioletBox,2340,7		// Novice Breastplate
 IG_VioletBox,2352,7		// Tattered Novice Ninja Suit
@@ -614,6 +633,8 @@ IG_VioletBox,2408,7		// Shackles
 IG_VioletBox,2409,7		// High Heels
 IG_VioletBox,2411,7		// Greaves
 IG_VioletBox,2414,7		// Novice Slippers
+IG_VioletBox,2463,1		// Feral Boots
+IG_VioletBox,2465,1		// Dance Shoes
 IG_VioletBox,2502,7		// Hood
 IG_VioletBox,2504,7		// Muffler
 IG_VioletBox,2506,7		// Manteau
@@ -623,6 +644,7 @@ IG_VioletBox,2510,7		// Somber Novice Hood
 IG_VioletBox,2513,1		// Heavenly Maiden Robe
 IG_VioletBox,2514,1		// Pauldron
 IG_VioletBox,2515,1		// Eagle Wing
+IG_VioletBox,2564,1		// Feral Tail
 IG_VioletBox,2601,7		// Ring
 IG_VioletBox,2602,7		// Earring
 IG_VioletBox,2603,7		// Necklace
@@ -652,21 +674,28 @@ IG_VioletBox,2652,1		// Goddess of Fortune's Cursed Brooch
 IG_VioletBox,2654,1		// Shinobi Sash
 IG_VioletBox,2655,1		// Bloodied Shackle Ball
 IG_VioletBox,2656,1		// Armor Charm
+IG_VioletBox,2843,1		// Golden Bell
+IG_VioletBox,2844,1		// Light of El Dicastes
+IG_VioletBox,2853,1		// Telekinetic Orb
+IG_VioletBox,2854,1		// Alchemy Glove
 IG_VioletBox,5002,1		// Jewel Crown
 IG_VioletBox,5003,7		// Joker Jester
 IG_VioletBox,5005,7		// Gas Mask
 IG_VioletBox,5006,7		// Machoman's Glasses
 IG_VioletBox,5007,1		// Grand Circlet
+IG_VioletBox,5008,7		// Puppy Love
 IG_VioletBox,5009,7		// Safety Helmet
 IG_VioletBox,5010,7		// Indian Fillet
 IG_VioletBox,5011,7		// Aerial
 IG_VioletBox,5014,7		// Fin Helm
 IG_VioletBox,5015,7		// Egg Shell
 IG_VioletBox,5017,1		// Bone Helm
+IG_VioletBox,5019,1		// Corsair
 IG_VioletBox,5030,7		// Panda Hat
 IG_VioletBox,5035,7		// Poring Hat
 IG_VioletBox,5037,7		// Nutshell
 IG_VioletBox,5053,1		// Sphinx Hat
+IG_VioletBox,5054,1		// Assassin Mask
 IG_VioletBox,5055,7		// Novice False Eggshell
 IG_VioletBox,5066,1		// Succubus Horn
 IG_VioletBox,5072,1		// Incubus Horn
@@ -781,6 +810,7 @@ IG_VioletBox,7166,14	// Soft Silk
 IG_VioletBox,7167,14	// Strange Steel Piece
 IG_VioletBox,7168,14	// Giant Butterfly Wing
 IG_VioletBox,7169,14	// Ba_Gua
+IG_VioletBox,7170,14	// Tuxedo
 IG_VioletBox,7171,14	// Leopard Skin
 IG_VioletBox,7172,14	// Leopard Claw
 IG_VioletBox,7174,14	// Wrapping Lace
@@ -912,6 +942,8 @@ IG_VioletBox,10020,7	// Grave Keeper's Sword
 IG_VioletBox,13001,1	// Dragon Killer
 IG_VioletBox,13002,1	// Ginnungagap
 IG_VioletBox,13004,1	// Cowardice Blade
+IG_VioletBox,13061,1	// Black Wing
+IG_VioletBox,13062,1	// Ancient Dagger
 IG_VioletBox,13163,1	// Long Barrel
 IG_VioletBox,13164,1	// Long Barrel
 IG_VioletBox,13167,1	// Gate Keeper-DD
@@ -926,3 +958,6 @@ IG_VioletBox,13205,1	// Poison Sphere
 IG_VioletBox,13206,1	// Blind Sphere
 IG_VioletBox,13207,1	// Freezing Sphere
 IG_VioletBox,13304,1	// Huuma Calm Mind
+IG_VioletBox,13431,1	// Chrome Metal Sword
+IG_VioletBox,16010,1	// Red Ether Bag
+IG_VioletBox,18103,1	// Mystic Bow

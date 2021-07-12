@@ -117,6 +117,7 @@ IG_BlueBox,710,12	// Illusion Flower
 IG_BlueBox,711,12	// Shoot
 IG_BlueBox,712,12	// Flower
 IG_BlueBox,713,12	// Empty Bottle
+IG_BlueBox,714,12	// Emperium
 IG_BlueBox,715,12	// Yellow Gemstone
 IG_BlueBox,716,12	// Red Gemstone
 IG_BlueBox,717,12	// Blue Gemstone
@@ -157,6 +158,8 @@ IG_BlueBox,751,12	// Osiris Doll
 IG_BlueBox,752,12	// Grasshopper Doll
 IG_BlueBox,753,12	// Yoyo Doll
 IG_BlueBox,754,12	// Raccoon Doll
+IG_BlueBox,756,12	// Rough Oridecon
+IG_BlueBox,757,12	// Rough Elunium
 IG_BlueBox,901,12	// Danggie
 IG_BlueBox,902,12	// Tree Root
 IG_BlueBox,903,12	// Reptile Tongue
@@ -224,6 +227,7 @@ IG_BlueBox,966,12	// Clam Flesh
 IG_BlueBox,967,12	// Turtle Shell
 IG_BlueBox,968,12	// Heroic Emblem
 IG_BlueBox,969,12	// Gold
+IG_BlueBox,970,12	// Alcohol
 IG_BlueBox,971,12	// Detrimindexta
 IG_BlueBox,972,12	// Karvodailnirol
 IG_BlueBox,973,12	// Counteragent
@@ -236,6 +240,8 @@ IG_BlueBox,980,12	// Orange Dyestuff
 IG_BlueBox,981,12	// Violet Dyestuff
 IG_BlueBox,982,12	// White Dyestuff
 IG_BlueBox,983,12	// Black Dyestuff
+IG_BlueBox,984,12	// Oridecon
+IG_BlueBox,985,12	// Elunium
 IG_BlueBox,986,12	// Anvil
 IG_BlueBox,987,12	// Oridecon Anvil
 IG_BlueBox,988,12	// Golden Anvil
@@ -280,6 +286,7 @@ IG_BlueBox,1026,12	// Acorn
 IG_BlueBox,1027,12	// Porcupine Quill
 IG_BlueBox,1028,12	// Mane
 IG_BlueBox,1029,12	// Tiger Skin
+IG_BlueBox,1030,12	// Tiger's Footskin
 IG_BlueBox,1031,12	// Mantis Scythe
 IG_BlueBox,1032,12	// Maneater Blossom
 IG_BlueBox,1033,12	// Maneater Root
@@ -703,6 +710,7 @@ IG_BlueBox,2333,3	// Silver Robe
 IG_BlueBox,2335,3	// Thief Clothes
 IG_BlueBox,2336,3	// Thief Clothes
 IG_BlueBox,2337,3	// Ninja Suit
+IG_BlueBox,2338,3	// Wedding Dress
 IG_BlueBox,2339,3	// Pantie
 IG_BlueBox,2340,3	// Novice Breastplate
 IG_BlueBox,2341,3	// Legion Plate Armor
@@ -763,6 +771,7 @@ IG_BlueBox,5002,1	// Jewel Crown
 IG_BlueBox,5003,3	// Joker Jester
 IG_BlueBox,5005,3	// Gas Mask
 IG_BlueBox,5006,3	// Machoman's Glasses
+IG_BlueBox,5008,3	// Puppy Love
 IG_BlueBox,5009,3	// Safety Helmet
 IG_BlueBox,5010,3	// Indian Fillet
 IG_BlueBox,5011,3	// Aerial
@@ -887,6 +896,7 @@ IG_BlueBox,7166,12	// Soft Silk
 IG_BlueBox,7167,12	// Strange Steel Piece
 IG_BlueBox,7168,12	// Giant Butterfly Wing
 IG_BlueBox,7169,12	// Ba_Gua
+IG_BlueBox,7170,12	// Tuxedo
 IG_BlueBox,7171,12	// Leopard Skin
 IG_BlueBox,7172,12	// Leopard Claw
 IG_BlueBox,7174,12	// Wrapping Lace
