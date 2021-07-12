@@ -1093,16 +1093,16 @@ s_item_combo *itemdb_combo_exists(uint32 combo_id) {
  * @param nameid: Item to check for in group
  * @return True if item is in group, else false
  */
-bool itemdb_group_item_exists(uint16 group_id, t_itemid nameid)
+bool ItemGroupDatabase::item_exists(uint16 group_id, t_itemid nameid)
 {
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
+	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr)
 		return false;
 
 	for (const auto &random : group->random) {
 		for (const auto &it : random.second->data) {
-			if (it->nameid == nameid)
+			if (it.second->nameid == nameid)
 				return true;
 		}
 	}
@@ -1115,16 +1115,16 @@ bool itemdb_group_item_exists(uint16 group_id, t_itemid nameid)
  * @param group_id: Item Group ID
  * @return Item's index if found or -1 otherwise
  */
-int16 itemdb_group_item_exists_pc(map_session_data *sd, uint16 group_id)
+int16 ItemGroupDatabase::item_exists_pc(map_session_data *sd, uint16 group_id)
 {
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
+	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr || group->random.empty())
 		return -1;
 
 	for (const auto &random : group->random) {
 		for (const auto &it : random.second->data) {
-			int16 item_position = pc_search_inventory(sd, it->nameid);
+			int16 item_position = pc_search_inventory(sd, it.second->nameid);
 
 			if (item_position != -1)
 				return item_position;
@@ -1195,13 +1195,13 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 		return nullptr;
 
 	for (size_t j = 0, max = random->data.size() * 3; j < max; j++) {
-		std::shared_ptr<s_item_group_entry> entry = util::vector_random(random->data);
+		std::shared_ptr<s_item_group_entry> entry = util::umap_random(random->data);
 
 		if (entry->rate == 0 || rnd() % random->total_rate < entry->rate)	// always return entry for rate 0 ('must' item)
 			return entry;
 	}
 
-	return util::vector_random(random->data);
+	return util::umap_random(random->data);
 }
 
 /**
@@ -1210,16 +1210,16 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 * @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
 * @return Item group entry or NULL on fail
 */
-std::shared_ptr<s_item_group_entry> itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group) {
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
+std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
+	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
-		ShowError("itemdb_get_randgroupitem: Invalid group id %hu\n", group_id);
+		ShowError("get_random_entry: Invalid group id %hu\n", group_id);
 		return nullptr;
 	}
 
 	if (group->random.empty() || group->random.count(sub_group) == 0) {
-		ShowError("itemdb_get_randgroupitem: No item entries for group id %hu and sub group %hu\n", group_id, sub_group);
+		ShowError("get_random_entry: No item entries for group id %hu and sub group %hu\n", group_id, sub_group);
 		return nullptr;
 	}
 
@@ -1227,14 +1227,14 @@ std::shared_ptr<s_item_group_entry> itemdb_get_randgroupitem(uint16 group_id, ui
 }
 
 /**
-* Return a random Item ID from from Item Group
+* Return a random Item ID from Item Group
 * @param group_id
 * @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
 * @return Item ID or UNKNOWN_ITEM_ID on fail
 */
-t_itemid itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
-	std::shared_ptr<s_item_group_entry> entry = itemdb_get_randgroupitem(group_id, sub_group);
-	return entry ? entry->nameid : UNKNOWN_ITEM_ID;
+t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group) {
+	std::shared_ptr<s_item_group_entry> entry = this->get_random_entry(group_id, sub_group);
+	return entry != nullptr ? entry->nameid : UNKNOWN_ITEM_ID;
 }
 
 /** [Cydh]
@@ -1262,14 +1262,14 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	uint16 get_amt = 0;
 
-	if (!itemdb_isstackable(data->nameid))
-		get_amt = 1;
-	else
+	if (itemdb_isstackable(data->nameid) && data->GUID == 0)
 		get_amt = data->amount;
+	else
+		get_amt = 1;
 
 	tmp.amount = get_amt;
 
-	// Do loop for non-stackable item
+	// Do loop for non-stackable item / stackable item with GUID
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;
 		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
@@ -1289,13 +1289,13 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 * @param nameid: The item that trigger this item group
 * @return val: 0:success, 1:no sd, 2:invalid item group
 */
-uint8 itemdb_pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
+uint8 ItemGroupDatabase::pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd) {
 	nullpo_retr(1,sd);
 
-	std::shared_ptr<s_item_group_db> group = itemdb_group.find(group_id);
-	
+	std::shared_ptr<s_item_group_db> group = this->find(group_id);
+
 	if (group == nullptr) {
-		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
+		ShowError("pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
 		return 2;
 	}
 	if (group->random.empty())
@@ -1307,7 +1307,7 @@ uint8 itemdb_pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *
 
 	if (random != nullptr && !random->data.empty()) {
 		for (const auto &it : random->data)
-			itemdb_pc_get_itemgroup_sub(sd, identify, it);
+			itemdb_pc_get_itemgroup_sub(sd, identify, it.second);
 	}
 
 	// Get 1 'random' item from each subgroup
@@ -1602,6 +1602,25 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 			const YAML::Node &listNode = subit["List"];
 
 			for (const YAML::Node &listit : listNode) {
+				if (this->nodeExists(listit, "Clear")) {
+					std::string item_name;
+
+					if (!this->asString(listit, "Clear", item_name))
+						continue;
+
+					struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+
+					if (item == nullptr) {
+						this->invalidWarning(listit["Clear"], "Unknown Item %s. Clear failed.\n", item_name.c_str());
+						continue;
+					}
+
+					if (random->data.erase(item->nameid) == 0)
+						this->invalidWarning(listit["Clear"], "Item %hu doesn't exist in the SubGroup %hu (group %s). Clear failed.\n", item->nameid, subgroup, group_name.c_str());
+
+					continue;
+				}
+
 				std::string item_name;
 
 				if (!this->asString(listit, "Item", item_name))
@@ -1614,7 +1633,14 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 					continue;
 				}
 
-				auto entry = std::make_shared<s_item_group_entry>();
+				std::shared_ptr<s_item_group_entry> entry = util::umap_find(random->data, item->nameid);
+				bool entry_exists = entry != nullptr;
+
+				if (!entry_exists) {
+					entry = std::make_shared<s_item_group_entry>();
+					random->data[item->nameid] = entry;
+				}
+
 				entry->nameid = item->nameid;
 
 				if (this->nodeExists(listit, "Rate")) {
@@ -1625,15 +1651,16 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 					entry->rate = rate;
 				} else {
-					entry->rate = 0;
+					if (!entry_exists)
+						entry->rate = 0;
 				}
 
 				if (subgroup == 0 && entry->rate > 0) {
-					this->invalidWarning(listit["Item"], "SubGroup 0 is reserved for item without rate ('must' item). Defaulting to 0.\n");
+					this->invalidWarning(listit["Item"], "SubGroup 0 is reserved for item without Rate ('must' item). Defaulting Rate to 0.\n");
 					entry->rate = 0;
 				}
 				if (subgroup != 0 && entry->rate == 0) {
-					this->invalidWarning(listit["Item"], "Entry must have a probability for group above 0, skipping.\n");
+					this->invalidWarning(listit["Item"], "Entry must have a Rate for group above 0, skipping.\n");
 					continue;
 				}
 
@@ -1645,7 +1672,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 					entry->amount = cap_value(amount, 1, MAX_AMOUNT);
 				} else {
-					entry->amount = 1;
+					if (!entry_exists)
+						entry->amount = 1;
 				}
 
 				if (this->nodeExists(listit, "Duration")) {
@@ -1656,7 +1684,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 					entry->duration = duration;
 				} else {
-					entry->duration = 0;
+					if (!entry_exists)
+						entry->duration = 0;
 				}
 
 				if (this->nodeExists(listit, "Announced")) {
@@ -1667,7 +1696,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 					entry->isAnnounced = isAnnounced;
 				} else {
-					entry->isAnnounced = false;
+					if (!entry_exists)
+						entry->isAnnounced = false;
 				}
 
 				if (this->nodeExists(listit, "UniqueId")) {
@@ -1678,7 +1708,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 					entry->GUID = guid;
 				} else {
-					entry->GUID = false;
+					if (!entry_exists)
+						entry->GUID = false;
 				}
 
 				if (this->nodeExists(listit, "Named")) {
@@ -1689,7 +1720,8 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 					entry->isNamed = named;
 				} else {
-					entry->isNamed = false;
+					if (!entry_exists)
+						entry->isNamed = false;
 				}
 
 				if (this->nodeExists(listit, "Bound")) {
@@ -1708,10 +1740,9 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 					entry->bound = static_cast<uint8>(bound);
 				} else {
-					entry->bound = BOUND_NONE;
+					if (!entry_exists)
+						entry->bound = BOUND_NONE;
 				}
-
-				random->data.push_back(entry);
 			}
 		}
 	}
@@ -1727,7 +1758,7 @@ void ItemGroupDatabase::loadingFinished() {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
 			for (const auto &it : random.second->data) {
-				random.second->total_rate += it->rate;
+				random.second->total_rate += it.second->rate;
 			}
 		}
 	}

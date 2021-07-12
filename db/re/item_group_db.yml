@@ -34,6 +34,7 @@
 #          UniqueId            Makes the given item(s) have a Unique ID. (Default: false)
 #          Named               Inscribes the item with the obtainer's name. (Default: false)
 #          Bound               Binds the obtained item. (Default: None)
+#          Clear               Remove the given item. (Optional)
 #       Clear                  Remove the given SubGroup. (Optional)
 ###########################################################################
 
@@ -887,24 +888,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
-            UniqueId: true
-          - Item: Aquarius_Diadem_Scroll
+            Amount: 10
             UniqueId: true
   - Group: ARCHER_CARD_BOX
     SubGroups:
@@ -962,24 +946,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
-            UniqueId: true
-          - Item: Aries_Scroll_
+            Amount: 10
             UniqueId: true
   - Group: ASGARD_SCROLL
     SubGroups:
@@ -4039,24 +4006,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
-            UniqueId: true
-          - Item: Capricon_Di_Scroll
+            Amount: 10
             UniqueId: true
   - Group: CAPRI_CROWN_SCROLL
     SubGroups:
@@ -4112,24 +4062,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
-            UniqueId: true
-          - Item: Capri_Crown_Scroll
+            Amount: 10
             UniqueId: true
   - Group: CARACAS_RING_BOX
     SubGroups:
@@ -8158,24 +8091,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
-            UniqueId: true
-          - Item: Energetic_Pisces_Scroll
+            Amount: 10
             UniqueId: true
   - Group: ENERGETIC_PISCES_SCROLL
     SubGroups:
@@ -9165,24 +9081,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
-            UniqueId: true
-          - Item: Gemi_Crown_Scroll
+            Amount: 10
             UniqueId: true
   - Group: GEMI_DIADEM_SCROLL
     SubGroups:
@@ -9222,24 +9121,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
-            UniqueId: true
-          - Item: Gemi_Diadem_Scroll
+            Amount: 10
             UniqueId: true
   - Group: GEMSTONE
     SubGroups:
@@ -12511,24 +12393,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
-            UniqueId: true
-          - Item: Lovely_Aquarius_Scroll
+            Amount: 10
             UniqueId: true
   - Group: LOVELY_AQUARIUS_SCROLL
     SubGroups:
@@ -15650,24 +15515,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
-            UniqueId: true
-          - Item: Pisces_Diadem_Scroll
+            Amount: 10
             UniqueId: true
   - Group: PISCES_DIADEM_SCROLL
     SubGroups:
@@ -16486,24 +16334,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
-            UniqueId: true
-          - Item: Sagittarius_Scroll
+            Amount: 10
             UniqueId: true
   - Group: SAGITTAR_DIADEM_SCROLL
     SubGroups:
@@ -16554,24 +16385,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
-            UniqueId: true
-          - Item: Sagittar_Diadem_Scroll
+            Amount: 10
             UniqueId: true
   - Group: SAHKKAT_BOX
     SubGroups:
@@ -19331,24 +19145,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
-            UniqueId: true
-          - Item: Taurus_Crown_Scroll
+            Amount: 10
             UniqueId: true
   - Group: TAURUS_DIADEM_SCROLL
     SubGroups:
@@ -19392,24 +19189,7 @@ Body:
       - SubGroup: 0
         List:
           - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
-            UniqueId: true
-          - Item: Taurus_Diadem_Scroll
+            Amount: 10
             UniqueId: true
   - Group: TCG_CARD_SCROLL
     SubGroups:

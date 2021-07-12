@@ -840,7 +840,7 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
-	std::vector<std::shared_ptr<s_item_group_entry>> data; /// Random group entry
+	std::unordered_map<t_itemid, std::shared_ptr<s_item_group_entry>> data; /// item ID, s_item_group_entry
 
 	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup();
 };
@@ -849,7 +849,7 @@ struct s_item_group_random
 struct s_item_group_db
 {
 	uint16 id; /// Item Group ID
-	std::unordered_map<uint16, std::shared_ptr<s_item_group_random>> random;
+	std::unordered_map<uint16, std::shared_ptr<s_item_group_random>> random;	/// group ID, s_item_group_random
 };
 
 /// Struct of Roulette db
@@ -1043,6 +1043,13 @@ public:
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
+
+	// Additional
+	bool item_exists(uint16 group_id, t_itemid nameid);
+	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
+	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
+	uint8 pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd);
 };
 
 extern ItemGroupDatabase itemdb_group;
@@ -1073,9 +1080,6 @@ struct item_data* itemdb_exists(t_itemid nameid);
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (e_ammo_type ammo);
-
-std::shared_ptr<s_item_group_entry> itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
-t_itemid itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
@@ -1110,10 +1114,6 @@ bool itemdb_isstackable2(struct item_data *id);
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
 s_item_combo *itemdb_combo_exists(uint32 combo_id);
-
-bool itemdb_group_item_exists(uint16 group_id, t_itemid nameid);
-int16 itemdb_group_item_exists_pc(map_session_data *sd, uint16 group_id);
-uint8 itemdb_pc_get_itemgroup(uint16 group_id, bool identify, map_session_data *sd);
 
 bool itemdb_parse_roulette_db(void);
 
