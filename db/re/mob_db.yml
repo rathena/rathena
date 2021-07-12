@@ -29914,7 +29914,6 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 1734
     AegisName: KIEL_
     Name: Kiel D-01
@@ -31103,7 +31102,6 @@ Body:
         Rate: 5000
       - Item: Poring_Doll
         Rate: 5000
-    Drops:
   - Id: 1767
     AegisName: EM_DEVILING
     Name: Deviling
@@ -31141,7 +31139,6 @@ Body:
         Rate: 5000
       - Item: Poring_Doll
         Rate: 5000
-    Drops:
   - Id: 1768
     AegisName: GLOOMUNDERNIGHT
     Name: Gloom Under Night
@@ -79783,7 +79780,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3215
     AegisName: V_G_MAGALETA
     Name: Arch Bishop Margaretha
@@ -79815,7 +79811,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3216
     AegisName: V_G_KATRINN
     Name: Warlock Kathryne
@@ -79847,7 +79842,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3217
     AegisName: V_G_SHECIL
     Name: Ranger Cecil
@@ -79879,7 +79873,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3218
     AegisName: V_G_HARWORD
     Name: Mechanic Howard
@@ -79911,7 +79904,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3219
     AegisName: V_G_SEYREN
     Name: Rune Knight Seyren
@@ -79943,7 +79935,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3220
     AegisName: V_B_EREMES
     Name: Guillotine Cross Eremes
@@ -80647,7 +80638,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3234
     AegisName: V_G_FLAMEL
     Name: Genetic Flamel
@@ -80679,7 +80669,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3235
     AegisName: V_G_CELIA
     Name: Sorcerer Celia
@@ -80711,7 +80700,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3236
     AegisName: V_G_CHEN
     Name: Sura Chen
@@ -80743,7 +80731,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3237
     AegisName: V_G_GERTIE
     Name: Shadow Chaser Gertie
@@ -80775,7 +80762,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3238
     AegisName: V_G_ALPHOCCIO
     Name: Minstrel Alphoccio
@@ -80807,7 +80793,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3239
     AegisName: V_G_TRENTINI
     Name: Wanderer Trentini
@@ -80839,7 +80824,6 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Drops:
   - Id: 3240
     AegisName: V_B_RANDEL
     Name: Royal Guard Randel
