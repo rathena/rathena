@@ -37,102 +37,102 @@ Body:
   - Id: 0
     Map: aldeg_cas01
     Name: Neuschwanstein
-    # Name: Noisyubantian    # kRO
+    #Name: Noisyubantian
     Npc: Agit#aldeg_cas01
   - Id: 1
     Map: aldeg_cas02
     Name: Hohenschwangau
-    # Name: Hohensyubangawoo    # kRO
+    #Name: Hohensyubangawoo
     Npc: Agit#aldeg_cas02
   - Id: 2
     Map: aldeg_cas03
     Name: Nuernberg
-    # Name: Nyirenverk    # kRO
+    #Name: Nyirenverk
     Npc: Agit#aldeg_cas03
   - Id: 3
     Map: aldeg_cas04
     Name: Wuerzburg
-    # Name: Byirtsburi    # kRO
+    #Name: Byirtsburi
     Npc: Agit#aldeg_cas04
   - Id: 4
     Map: aldeg_cas05
     Name: Rothenburg
-    # Name: Rotenburk    # kRO
+    #Name: Rotenburk
     Npc: Agit#aldeg_cas05
   - Id: 5
     Map: gefg_cas01
     Name: Repherion
-    # Name: Reprion    # kRO
+    #Name: Reprion
     Npc: Agit#gefg_cas01
   - Id: 6
     Map: gefg_cas02
     Name: Eeyolbriggar
-    # Name: Yolbriger    # kRO
+    #Name: Yolbriger
     Npc: Agit#gefg_cas02
   - Id: 7
     Map: gefg_cas03
     Name: Yesnelph
-    # Name: Isinlife    # kRO
+    #Name: Isinlife
     Npc: Agit#gefg_cas03
   - Id: 8
     Map: gefg_cas04
     Name: Bergel
-    # Name: Berigel    # kRO
+    #Name: Berigel
     Npc: Agit#gefg_cas04
   - Id: 9
     Map: gefg_cas05
     Name: Mersetzdeitz
-    # Name: Melsedetsu    # kRO
+    #Name: Melsedetsu
     Npc: Agit#gefg_cas05
   - Id: 10
     Map: payg_cas01
     Name: Bright Arbor
-    # Name: Mingting    # kRO
+    #Name: Mingting
     Npc: Agit#payg_cas01
   - Id: 11
     Map: payg_cas02
     Name: Scarlet Palace
-    # Name: Tiantan    # kRO
+    #Name: Tiantan
     Npc: Agit#payg_cas02
   - Id: 12
     Map: payg_cas03
     Name: Holy Shadow
-    # Name: Fuying    # kRO
+    #Name: Fuying
     Npc: Agit#payg_cas03
   - Id: 13
     Map: payg_cas04
     Name: Sacred Altar
-    # Name: Honglou    # kRO
+    #Name: Honglou
     Npc: Agit#payg_cas04
   - Id: 14
     Map: payg_cas05
     Name: Bamboo Grove Hill
-    # Name: Zhulinxian    # kRO
+    #Name: Zhulinxian
     Npc: Agit#payg_cas05
   - Id: 15
     Map: prtg_cas01
     Name: Kriemhild
-    # Name: Creamhilt    # kRO
+    #Name: Creamhilt
     Npc: Agit#prtg_cas01
   - Id: 16
     Map: prtg_cas02
     Name: Swanhild
-    # Name: Sbanhealt    # kRO
+    #Name: Sbanhealt
     Npc: Agit#prtg_cas02
   - Id: 17
     Map: prtg_cas03
     Name: Fadhgridh
-    # Name: Lazrigees    # kRO
+    #Name: Lazrigees
     Npc: Agit#prtg_cas03
   - Id: 18
     Map: prtg_cas04
     Name: Skoegul
-    # Name: Squagul    # kRO
+    #Name: Squagul
     Npc: Agit#prtg_cas04
   - Id: 19
     Map: prtg_cas05
     Name: Gondul
-    # Name: Guindull    # kRO
+    #Name: Guindull
     Npc: Agit#prtg_cas05
 
 # WOE NGuild castle
