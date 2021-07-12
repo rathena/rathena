@@ -3463,7 +3463,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 
 			if( md->guardian_data ) {
-				struct guild_castle* gc = md->guardian_data->castle;
+				std::shared_ptr<guild_castle> gc = md->guardian_data->castle;
 
 				if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 					gc->guardian[md->guardian_data->number].id = 0;
