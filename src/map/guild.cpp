@@ -2094,20 +2094,14 @@ int guild_break(struct map_session_data *sd,char *name) {
  * from char-server.
  */
 void guild_castle_map_init(void) {
-	int num = castle_db.size();
+	std::vector<int32> castle_ids;
 
-	if (num > 0) {
-		int *castle_ids, *cursor;
+	for( const auto &it : castle_db ){
+		castle_ids.push_back( it.first );
+	}
 
-		CREATE(castle_ids, int, num);
-		cursor = castle_ids;
-		
-		for (const auto &it : castle_db) {
-			*(cursor++) = it.first;
-		}
-		if (intif_guild_castle_dataload(num, castle_ids))
-			ShowStatus("Requested '" CL_WHITE "%d" CL_RESET "' guild castles from char-server...\n", num);
-		aFree(castle_ids);
+	if( !castle_ids.empty() && intif_guild_castle_dataload( castle_ids ) ){
+		ShowStatus( "Requested '" CL_WHITE "%" PRIdPTR CL_RESET "' guild castles from char-server...\n", castle_ids.size() );
 	}
 }
 
