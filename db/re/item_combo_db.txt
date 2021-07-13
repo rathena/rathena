@@ -67,7 +67,7 @@
 1618:19139,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,10*.@r; if (.@r>=10) { bonus bVariableCastrate,-3; bonus2 bSkillAtk,"WL_EARTHSTRAIN",15; bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",70; bonus2 bSkillAtk,"WZ_JUPITEL",70; } if (BaseLevel>=100) { bonus bVariableCastrate,-3; bonus2 bSkillAtk,"WL_EARTHSTRAIN",30; bonus2 bSkillAtk,"WL_CHAINLIGHTNING",30; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",140; bonus2 bSkillAtk,"WZ_JUPITEL",140; } }
 1618:20813,{ bonus bMaxHP,300; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)-5; bonus2 bSubEle,Ele_Neutral,getequiprefinerycnt(EQI_GARMENT)*3; }
 1618:20813:19139,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatkRate,1; if (.@r >= 5) { bonus bMatkRate,2; if (.@r >= 7) { bonus bMatkRate,2; } } }
-1618:20847,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_GARMENT); bonus bMaxHP,1000; bonus bMatk,(-50+(20*.@weapon)); bonus bDelayrate,-(3*(.@weapon/3)); bonus2 bSubEle,Ele_Neutral,.@eq/2; }
+1618:20847,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = min(.@weapon,10); bonus bMaxHP,1000; bonus bMatk,(-50+(20*.@weapon)); bonus bDelayrate,-(3*(.@weapon/3)); bonus2 bSubEle,Ele_Neutral,(min(.@eq,10)/2); }
 1619:19020,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
 1620:19139,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,10*.@r; if (.@r>=10) { bonus bVariableCastrate,-3; bonus2 bSkillAtk,"WL_EARTHSTRAIN",15; bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",70; bonus2 bSkillAtk,"WZ_JUPITEL",70; } if (BaseLevel>=100) { bonus bVariableCastrate,-3; bonus2 bSkillAtk,"WL_EARTHSTRAIN",30; bonus2 bSkillAtk,"WL_CHAINLIGHTNING",30; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",140; bonus2 bSkillAtk,"WZ_JUPITEL",140; } }
 1620:20813,{ bonus bMaxHP,300; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)-5; bonus2 bSubEle,Ele_Neutral,getequiprefinerycnt(EQI_GARMENT)*3; }
@@ -76,7 +76,7 @@
 1620:2509:19139,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatkRate,1; if (.@r >= 5) { bonus bMatkRate,2; if (.@r >= 7) { bonus bMatkRate,2; } } }
 1620:2535,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1620:19020,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
-1625:18542,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bHealPower,3*(.@r/2); }
+1625:18542,{ bonus bHealPower,getequiprefinerycnt(EQI_HAND_R); }
 1628:2509,{ bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; }
 1629:5045,{ bonus bDex,2; bonus bInt,2; bonus bSPrecovRate,5; bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R); }
 1631:2129,{ bonus2 bSkillAtk,"PR_MAGNUS",20; bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",1,20; }
@@ -2365,3 +2365,4 @@
 2593:2163,{ bonus2 bSubRace,RC_Brute,getequiprefinerycnt(EQI_GARMENT); bonus2 bAddEle,Ele_Water,getequiprefinerycnt(EQI_HAND_L); }
 2598:2158,{ bonus2 bSubRace,RC_DemiHuman,getequiprefinerycnt(EQI_GARMENT); bonus2 bAddEle,Ele_Undead,getequiprefinerycnt(EQI_HAND_L); }
 18541:1745,{ if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus2 bVariableCastrate,"SN_SHARPSHOOTING",-50; }
+1688:490022,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
