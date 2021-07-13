@@ -3516,11 +3516,10 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 	status_calc_misc(&md->bl, status, md->level);
 
 	if(flag&4) { // Strengthen Guardians - custom value +10% / lv
-		struct guild_castle *gc;
 		struct map_data *mapdata = map_getmapdata(md->bl.m);
+		std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapdata->name);
 
-		gc=guild_mapname2gc(mapdata->name);
-		if (!gc)
+		if (gc == nullptr)
 			ShowError("status_calc_mob: No castle set at map %s\n", mapdata->name);
 		else if(gc->castle_id < 24 || md->mob_id == MOBID_EMPERIUM) {
 #ifdef RENEWAL

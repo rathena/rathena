@@ -1152,16 +1152,22 @@ int intif_guild_emblem_version(int guild_id, int emblem_id)
  * @param num Number of castles, size of castle_ids array.
  * @param castle_ids Pointer to array of castle IDs.
  */
-int intif_guild_castle_dataload(int num, int *castle_ids)
-{
-	if (CheckForCharServer())
-		return 0;
-	WFIFOHEAD(inter_fd, 4 + num * sizeof(int));
+bool intif_guild_castle_dataload( const std::vector<int32>& castle_ids ){
+	if( CheckForCharServer() ){
+		return false;
+	}
+
+	uint16 size = (uint16)( 4 + castle_ids.size() * sizeof( int32 ) );
+
+	WFIFOHEAD( inter_fd, size );
 	WFIFOW(inter_fd, 0) = 0x3040;
-	WFIFOW(inter_fd, 2) = 4 + num * sizeof(int);
-	memcpy(WFIFOP(inter_fd, 4), castle_ids, num * sizeof(int));
-	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
-	return 1;
+	WFIFOW( inter_fd, 2 ) = size;
+	for( size_t i = 0; i < castle_ids.size(); i++ ){
+		WFIFOL( inter_fd, 4 + i * sizeof( int32 ) ) = castle_ids[i];
+	}
+	WFIFOSET( inter_fd, size );
+
+	return true;
 }
 
 /**
