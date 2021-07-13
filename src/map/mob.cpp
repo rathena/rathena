@@ -686,7 +686,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 
 		if (mob_id == MOBID_EMPERIUM)
 		{
-			struct guild_castle* gc = guild_mapindex2gc(map_getmapdata(m)->index);
+			std::shared_ptr<guild_castle> gc = castle_db.mapindex2gc(map_getmapdata(m)->index);
 			struct guild* g = (gc) ? guild_search(gc->guild_id) : nullptr;
 			if (gc)
 			{
@@ -827,7 +827,6 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	struct mob_data *md=nullptr;
 	struct spawn_data data;
 	struct guild *g=nullptr;
-	struct guild_castle *gc;
 	int16 m;
 	memset(&data, 0, sizeof(struct spawn_data)); //fixme
 	data.num = 1;
@@ -871,8 +870,8 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	if (!mob_parse_dataset(&data))
 		return 0;
 
-	gc=guild_mapname2gc(mapname);
-	if (gc == NULL)
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
+	if (gc == nullptr)
 	{
 		ShowError("mob_spawn_guardian: No castle set at map %s\n", mapname);
 		return 0;

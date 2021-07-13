@@ -723,7 +723,7 @@ struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
-	char castle_event[EVENT_NAME_LENGTH];
+	char castle_event[NPC_NAME_LENGTH];
 	int guild_id;
 	int economy;
 	int defense;
