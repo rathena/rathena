@@ -14,6 +14,7 @@
 //= 1.0.1 Converted item constants to IDs and added hair coupon. [Kisuka]
 //= 2.0.0 Converted from Hercules Script to rAthena Script. [Capuche]
 //= 2.0.1 Add new Intro Renewal based on Hercules [Jenkijo]
+//= 2.0.2 Updated few npcs to match new Izlude Academy map. [mundussan]
 //==============================================================================
 
 //== Starting Point  (iz_int) =================================
