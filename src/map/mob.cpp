@@ -4712,7 +4712,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		mob->status.adelay = cap_value(speed, battle_config.monster_max_aspd * 2, 4000);
 	} else {
 		if (!exists)
-			mob->status.adelay = 0;
+			mob->status.adelay = cap_value(0, battle_config.monster_max_aspd * 2, 4000);
 	}
 	
 	if (this->nodeExists(node, "AttackMotion")) {
@@ -4724,7 +4724,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		mob->status.amotion = cap_value(speed, battle_config.monster_max_aspd, 2000);
 	} else {
 		if (!exists)
-			mob->status.amotion = 0;
+			mob->status.amotion = cap_value(0, battle_config.monster_max_aspd, 2000);
 	}
 
 	if (this->nodeExists(node, "DamageMotion")) {
