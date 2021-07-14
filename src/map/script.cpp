@@ -8531,6 +8531,7 @@ BUILDIN_FUNC(getcharid)
 
 /*==========================================
  * returns the GID of an NPC
+ * Returns 0 if the NPC name provided is not found.
  *------------------------------------------*/
 BUILDIN_FUNC(getnpcid)
 {
@@ -8541,9 +8542,9 @@ BUILDIN_FUNC(getnpcid)
 	{// unique npc name
 		if( ( nd = npc_name2id(script_getstr(st,3)) ) == NULL )
 		{
-			ShowError("buildin_getnpcid: No such NPC '%s'.\n", script_getstr(st,3));
+			//Npc not found.
 			script_pushint(st,0);
-			return SCRIPT_CMD_FAILURE;
+			return SCRIPT_CMD_SUCCESS;
 		}
 	}
 
@@ -24183,6 +24184,37 @@ BUILDIN_FUNC(unloadnpc) {
 }
 
 /**
+ * Duplicate a NPC.
+ * Return the duplicate name on success.
+ * duplicate(<"NPC name">{,<"Duplicate NPC name">});
+ */
+BUILDIN_FUNC(duplicate)
+{
+	npc_data* dnd = npc_name2id(script_getstr(st, 2));
+
+	if (dnd == nullptr) {
+		ShowError("buildin_duplicate: No such NPC '%s'.\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	npc_data* nd = nullptr;
+
+	if (script_hasdata(st, 3)) {
+		if (npc_name2id(script_getstr(st, 3)) != nullptr) {
+			ShowError("buildin_duplicate: NPC name '%s' is already in use!\n", script_getstr(st, 3));
+			return SCRIPT_CMD_FAILURE;
+		}
+		nd = dup_npc(dnd, script_getstr(st, 3));
+	}
+	else {
+		nd = dup_npc(dnd, "");
+	}
+
+	script_pushstr(st, aStrdup(nd->exname));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
  * Add an achievement to the player's log
  * achievementadd(<achievement ID>{,<char ID>});
  */
@@ -25739,6 +25771,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(jobcanentermap,"s?"),
 	BUILDIN_DEF(openstorage2,"ii?"),
 	BUILDIN_DEF(unloadnpc, "s"),
+	BUILDIN_DEF(duplicate, "s?"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),

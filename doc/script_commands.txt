@@ -6612,6 +6612,14 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
+*duplicate "<NPC name>"{,"<Duplicate NPC name>"};
+
+This command will duplicate the NPC provided. If the duplicate NPC name is not
+provided it will generate a new name.
+The duplicate NPC name is returned on success.
+
+---------------------------------------
+
 *cloakonnpc "<NPC object name>"{,<character ID>};
 *cloakoffnpc "<NPC object name>"{,<character ID>};
 
