@@ -15,6 +15,7 @@
 //= 1.6 Added new warps. [Streusel]
 //= 1.7 Updated to match the official scripts. [Euphy]
 //= 1.8 Added Izlude & Prontera Field 8 duplicates. [Euphy]
+//= 1.9 Updated Izlude Academy warps. [mundussan]
 //============================================================
 
 //= Izlude City ==============================================
