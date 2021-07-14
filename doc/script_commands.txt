@@ -10403,6 +10403,39 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
+*synthesisui(<id>,{<char_id>})
+
+Open Item Synthesis UI for attached player. The id must be valid from
+db/[pre-]re/item_synthesis.yml.
+
+Returns 1 on success and 0 of failure.
+
+---------------------------------------
+
+*upgradeui(<id>,{<char_id>})
+
+Open Item Upgrade UI for attached player. The id must be valid from
+db/[pre-]re/item_upgrade.yml.
+
+Returns 1 on success and 0 of failure.
+
+If validation process is success, these variables are set:
+@last_lapine_id             - Item ID of target item
+@last_lapine_idx            - Inventory index of target item
+@last_lapine_refine         - Refine level
+@last_lapine_attribute      - Attribute flag
+@last_lapine_card1          - Card value at slot 0
+@last_lapine_card2          - Card value at slot 1
+@last_lapine_card3          - Card value at slot 2
+@last_lapine_card4          - Card value at slot 3
+@last_lapine_bound          - Bound flag
+@last_lapine_uniqueid$      - Unqiue ID
+@last_lapine_option_id[]    - Array of Random Option IDs
+@last_lapine_option_value[] - Array of Random Option Values
+@last_lapine_option_param[] - Array of Random Option Params
+
+---------------------------------------
+
 ========================
 |14.- Channel commands.|
 ========================

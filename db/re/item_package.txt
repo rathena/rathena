@@ -5439,3 +5439,1295 @@ IG_Enchant_Stone_Box21,25017,37	// MATKStone_Bottom
 IG_Enchant_Stone_Box21,25304,37	// Critical_Stone_Top
 IG_Enchant_Stone_Box21,25060,37	// Critical_Stone
 IG_Enchant_Stone_Box21,25305,37	// Critical_Stone_Bottom
+
+IG_Bs_Sha_M_S_1,24038,1,1,1,0,0,0 // S_Vital_Shoes
+IG_Bs_Sha_M_S_1,24044,1,1,1,0,0,0 // S_Vital_Shield
+IG_Bs_Sha_M_S_1,24041,1,1,1,0,0,0 // S_Power_Pendant
+IG_Bs_Sha_M_S_1,24035,1,1,1,0,0,0 // S_Power_Earring
+IG_Bs_Sha_M_S_1,24036,1,1,1,0,0,0 // S_Int_Pendant
+IG_Bs_Sha_M_S_1,24042,1,1,1,0,0,0 // S_Int_Earring
+IG_Bs_Sha_M_S_1,24043,1,1,1,0,0,0 // S_Dexterous_Weapon
+IG_Bs_Sha_M_S_1,24037,1,1,1,0,0,0 // S_Dexterous_Armor
+IG_Bs_Sha_M_S_1,24045,1,1,1,0,0,0 // S_Athletic_Shoes
+IG_Bs_Sha_M_S_1,24039,1,1,1,0,0,0 // S_Athletic_Shield
+IG_Bs_Sha_M_S_1,24034,1,1,1,0,0,0 // S_Lucky_Weapon
+IG_Bs_Sha_M_S_1,24040,1,1,1,0,0,0 // S_Lucky_Armor
+
+IG_Bs_Sha_M_S_17,24365,1,1,1,0,0,0 // S_Elegant_Pendent
+IG_Bs_Sha_M_S_17,24364,1,1,1,0,0,0 // S_Elegant_Earring
+IG_Bs_Sha_M_S_17,24363,1,1,1,0,0,0 // S_Elegant_Weapon
+
+IG_Bs_Sha_M_S_18,24362,1,1,1,0,0,0 // S_Tension_Pendent
+IG_Bs_Sha_M_S_18,24361,1,1,1,0,0,0 // S_Tension_Earring
+IG_Bs_Sha_M_S_18,24360,1,1,1,0,0,0 // S_Tension_Weapon
+
+IG_Bs_Sha_M_S_19,24369,1,1,1,0,0,0 // S_Restore_Pendant
+IG_Bs_Sha_M_S_19,24368,1,1,1,0,0,0 // S_Restore_Earring
+
+IG_Bs_Sha_M_S_20,24366,1,1,1,0,0,0 // S_Healing_Shield
+IG_Bs_Sha_M_S_20,24367,1,1,1,0,0,0 // S_Healing_Shoes
+IG_Bs_Sha_M_S_20,24033,1,1,1,0,0,0 // S_Healing_Weapon
+
+IG_Bs_Item_M_S_12,20844,1,1,1,0,0,0 // Bag_Of_Antonio_
+IG_Bs_Item_M_S_12,20843,1,1,1,0,0,0 // Bag_Of_Antonio_S
+IG_Bs_Item_M_S_12,20842,1,1,1,0,0,0 // Bag_Of_Antonio_P
+
+IG_Bs_Item_M_S_15,19267,1,1,1,0,0,0 // SurviveOrb_K
+IG_Bs_Item_M_S_15,19266,1,1,1,0,0,0 // Survive_Circlet_
+
+IG_Bs_Sha_M_S_5,24112,1,1,1,0,0,0 // S_Spell_Flow_Armor
+IG_Bs_Sha_M_S_5,24111,1,1,1,0,0,0 // S_Spell_Flow_Shoes
+IG_Bs_Sha_M_S_5,24113,1,1,1,0,0,0 // S_Spell_Flow_Shield
+IG_Bs_Sha_M_S_5,24110,1,1,1,0,0,0 // S_Caster_Weapon
+IG_Bs_Sha_M_S_5,24048,1,1,1,0,0,0 // S_Caster_Pendant
+IG_Bs_Sha_M_S_5,24109,1,1,1,0,0,0 // S_Caster_earring
+IG_Bs_Sha_M_S_5,24242,1,1,1,0,0,0 // S_Caster_Armor
+IG_Bs_Sha_M_S_5,24240,1,1,1,0,0,0 // S_Caster_Shoes
+IG_Bs_Sha_M_S_5,24241,1,1,1,0,0,0 // S_Caster_Shield
+
+IG_Bs_Sha_M_S_6,24072,1,1,1,0,0,0 // S_Big_Armor
+IG_Bs_Sha_M_S_6,24073,1,1,1,0,0,0 // S_Medium_Armor
+IG_Bs_Sha_M_S_6,24074,1,1,1,0,0,0 // S_Small_Armor
+IG_Bs_Sha_M_S_6,24075,1,1,1,0,0,0 // S_Big_Weapon
+IG_Bs_Sha_M_S_6,24076,1,1,1,0,0,0 // S_Medium_Weapon
+IG_Bs_Sha_M_S_6,24077,1,1,1,0,0,0 // S_Small_Weapon
+IG_Bs_Sha_M_S_6,24235,1,1,1,0,0,0 // S_Titan_Pendant
+IG_Bs_Sha_M_S_6,24234,1,1,1,0,0,0 // S_Titan_Earring
+IG_Bs_Sha_M_S_6,24237,1,1,1,0,0,0 // S_Boned_Pendant
+IG_Bs_Sha_M_S_6,24236,1,1,1,0,0,0 // S_Boned_Earring
+IG_Bs_Sha_M_S_6,24239,1,1,1,0,0,0 // S_Gigantic_Pendant
+IG_Bs_Sha_M_S_6,24238,1,1,1,0,0,0 // S_Gigantic_Earring
+
+IG_Bs_Sha_M_S_7,24056,1,1,1,0,0,0 // S_Homers_Shield
+IG_Bs_Sha_M_S_7,24055,1,1,1,0,0,0 // S_Gargantua_Shield
+IG_Bs_Sha_M_S_7,24053,1,1,1,0,0,0 // S_Safeguard_Shield
+IG_Bs_Sha_M_S_7,24054,1,1,1,0,0,0 // S_Brutal_Shield
+IG_Bs_Sha_M_S_7,24052,1,1,1,0,0,0 // S_Cranial_Shield
+IG_Bs_Sha_M_S_7,24057,1,1,1,0,0,0 // S_Dragoon_Shield
+IG_Bs_Sha_M_S_7,24058,1,1,1,0,0,0 // S_Satanic_Shield
+IG_Bs_Sha_M_S_7,24059,1,1,1,0,0,0 // S_Flameguard_Shield
+IG_Bs_Sha_M_S_7,24060,1,1,1,0,0,0 // S_Requiem_Shield
+IG_Bs_Sha_M_S_7,24061,1,1,1,0,0,0 // S_Cadi_Shield
+IG_Bs_Sha_M_S_7,24071,1,1,1,0,0,0 // S_Dragoon_Shoes
+IG_Bs_Sha_M_S_7,24064,1,1,1,0,0,0 // S_Chemical_Shoes
+IG_Bs_Sha_M_S_7,24068,1,1,1,0,0,0 // S_Seraphim_Shoes
+IG_Bs_Sha_M_S_7,24069,1,1,1,0,0,0 // S_Beholder_Shoes
+IG_Bs_Sha_M_S_7,24070,1,1,1,0,0,0 // S_Divine_Shoes
+IG_Bs_Sha_M_S_7,24062,1,1,1,0,0,0 // S_Bloody_Shoes
+IG_Bs_Sha_M_S_7,24063,1,1,1,0,0,0 // S_Liberation_Shoes
+IG_Bs_Sha_M_S_7,24065,1,1,1,0,0,0 // S_Clamorous_Shoes
+IG_Bs_Sha_M_S_7,24066,1,1,1,0,0,0 // S_Insecticide_Shoes
+IG_Bs_Sha_M_S_7,24067,1,1,1,0,0,0 // S_Fisher_Shoes
+
+IG_Bs_Sha_M_S_8,24090,1,1,1,0,0,0 // S_Stability_Shield
+IG_Bs_Sha_M_S_8,24091,1,1,1,0,0,0 // S_Plasterer's_Armor
+IG_Bs_Sha_M_S_8,24092,1,1,1,0,0,0 // S_Plasterer's_Shoes
+IG_Bs_Sha_M_S_8,24093,1,1,1,0,0,0 // S_Insomniac_Armor
+IG_Bs_Sha_M_S_8,24094,1,1,1,0,0,0 // S_Insomniac_Shoes
+IG_Bs_Sha_M_S_8,24095,1,1,1,0,0,0 // S_Peerless_Armor
+IG_Bs_Sha_M_S_8,24096,1,1,1,0,0,0 // S_Peerless_Shoes
+IG_Bs_Sha_M_S_8,24097,1,1,1,0,0,0 // S_Adurate_Armor
+IG_Bs_Sha_M_S_8,24098,1,1,1,0,0,0 // S_Adurate_Shoes
+IG_Bs_Sha_M_S_8,24099,1,1,1,0,0,0 // Unfreez_Weapon_S
+IG_Bs_Sha_M_S_8,24100,1,1,1,0,0,0 // Unfreeze_Earing_S
+IG_Bs_Sha_M_S_8,24101,1,1,1,0,0,0 // Unfreeze_Pendent_S
+IG_Bs_Sha_M_S_8,24104,1,1,1,0,0,0 // S_Neutral_Weapon
+IG_Bs_Sha_M_S_8,24105,1,1,1,0,0,0 // S_Neutral_Earring
+IG_Bs_Sha_M_S_8,24106,1,1,1,0,0,0 // S_Neutral_Pendent
+IG_Bs_Sha_M_S_8,24107,1,1,1,0,0,0 // S_Curse_Lift_Earring
+IG_Bs_Sha_M_S_8,24108,1,1,1,0,0,0 // S_Curse_Lift_Pendent
+IG_Bs_Sha_M_S_8,24102,1,1,1,0,0,0 // Vitality_Earing_S
+IG_Bs_Sha_M_S_8,24103,1,1,1,0,0,0 // Vitality_Pendant_S
+
+IG_Bs_Sha_M_S_13,24031,1,1,1,0,0,0 // S_Kingbird_Weapon
+IG_Bs_Sha_M_S_13,24032,1,1,1,0,0,0 // S_Cri_Hit_Weapon
+IG_Bs_Sha_M_S_13,24033,1,1,1,0,0,0 // S_Healing_Weapon
+IG_Bs_Sha_M_S_13,24029,1,1,1,0,0,0 // S_Ancient_Armor
+IG_Bs_Sha_M_S_13,24030,1,1,1,0,0,0 // S_Critical_Armor
+IG_Bs_Sha_M_S_13,24027,1,1,1,0,0,0 // S_Immune_Armor
+IG_Bs_Sha_M_S_13,24028,1,1,1,0,0,0 // S_Hard_Armor
+IG_Bs_Sha_M_S_13,24049,1,1,1,0,0,0 // S_Hard_Earring
+IG_Bs_Sha_M_S_13,24026,1,1,1,0,0,0 // S_Athena_Shield
+IG_Bs_Sha_M_S_13,24080,1,1,1,0,0,0 // S_Spiritual_Pendent
+IG_Bs_Sha_M_S_13,24079,1,1,1,0,0,0 // S_Spiritual_Earring
+IG_Bs_Sha_M_S_13,24078,1,1,1,0,0,0 // S_Spiritual_Weapon
+IG_Bs_Sha_M_S_13,24051,1,1,1,0,0,0 // S_Athena_Earring
+IG_Bs_Sha_M_S_13,24046,1,1,1,0,0,0 // S_Resist_Spell_Pendant
+IG_Bs_Sha_M_S_13,24155,1,1,1,0,0,0 // S_Immortal_Pendant
+IG_Bs_Sha_M_S_13,24383,1,1,1,0,0,0 // Enchanting_Weapone_S
+IG_Bs_Sha_M_S_13,24152,1,1,1,0,0,0 // S_Solid_Weapon
+IG_Bs_Sha_M_S_13,24153,1,1,1,0,0,0 // S_Solid_Earring
+IG_Bs_Sha_M_S_13,24047,1,1,1,0,0,0 // S_Rapid_Pendant
+IG_Bs_Sha_M_S_13,24050,1,1,1,0,0,0 // S_Wise_Earring
+IG_Bs_Sha_M_S_13,24024,1,1,1,0,0,0 // S_Breezy_Armor
+IG_Bs_Sha_M_S_13,24025,1,1,1,0,0,0 // S_Champion_Shoes
+IG_Bs_Sha_M_S_13,24081,1,1,1,0,0,0 // S_Malicious_Armor
+IG_Bs_Sha_M_S_13,24082,1,1,1,0,0,0 // S_Malicious_Shoes
+IG_Bs_Sha_M_S_13,24083,1,1,1,0,0,0 // S_Malicious_Shield
+
+IG_Bs_Sha_M_S_15,24018,1,1,1,0,0,0 // S_Physical_Earring
+IG_Bs_Sha_M_S_15,24019,1,1,1,0,0,0 // S_Physical_Weapon
+IG_Bs_Sha_M_S_15,24020,1,1,1,0,0,0 // S_Physical_Pendant
+
+IG_Bs_Sha_M_S_16,24021,1,1,1,0,0,0 // S_Magical_Earring
+IG_Bs_Sha_M_S_16,24022,1,1,1,0,0,0 // S_Magical_Weapon
+IG_Bs_Sha_M_S_16,24023,1,1,1,0,0,0 // S_Magical_Pendant
+
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // S_Beginner_Shoes
+IG_Bs_Sha_M_S_23,24211,1,1,1,0,0,0 // S_Beginner_Shield
+IG_Bs_Sha_M_S_23,24212,1,1,1,0,0,0 // S_Rookie_Shoes
+IG_Bs_Sha_M_S_23,24213,1,1,1,0,0,0 // S_Rookie_Shield
+IG_Bs_Sha_M_S_23,24214,1,1,1,0,0,0 // S_Advanced_Shoes
+IG_Bs_Sha_M_S_23,24215,1,1,1,0,0,0 // S_Advanced_Shield
+IG_Bs_Sha_M_S_23,24209,1,1,1,0,0,0 // S_Expert_Shield
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // S_Expert_Shoes
+
+IG_Bs_Item_M_S_5,28901,1,1,1,0,0,0 // Mad_Bunny_K
+IG_Bs_Item_M_S_5,28902,1,1,1,0,0,0 // Mad_Bunny_K_
+
+IG_Bs_Sha_M_S_9,24084,1,1,1,0,0,0 // S_Gemstone_Armor
+IG_Bs_Sha_M_S_9,24086,1,1,1,0,0,0 // S_Gemstone_Shield
+IG_Bs_Sha_M_S_9,24087,1,1,1,0,0,0 // S_Gemstone_Weapon
+IG_Bs_Sha_M_S_9,24085,1,1,1,0,0,0 // S_Gemstone_Shoes
+IG_Bs_Sha_M_S_9,24088,1,1,1,0,0,0 // S_Gemstone_Earring
+IG_Bs_Sha_M_S_9,24089,1,1,1,0,0,0 // S_Gemstone_Pendent
+
+IG_Bs_Sha_M_S_10,24180,1,1,1,0,0,0 // S_Bearers_Armor
+IG_Bs_Sha_M_S_10,24182,1,1,1,0,0,0 // S_Bearers_Shield
+IG_Bs_Sha_M_S_10,24183,1,1,1,0,0,0 // S_Bearers_Weapon
+IG_Bs_Sha_M_S_10,24181,1,1,1,0,0,0 // S_Bearers_Shoes
+IG_Bs_Sha_M_S_10,24184,1,1,1,0,0,0 // S_Bearers_Earring
+IG_Bs_Sha_M_S_10,24185,1,1,1,0,0,0 // S_Bearers_Pendent
+
+IG_Bs_Sha_M_S_11,24197,1,1,1,0,0,0 // S_Hasty_Armor
+IG_Bs_Sha_M_S_11,24196,1,1,1,0,0,0 // S_Hasty_Shoes
+
+IG_Bs_Sha_M_S_21,24030,1,1,1,0,0,0 // S_Critical_Armor
+IG_Bs_Sha_M_S_21,24333,1,1,1,0,0,0 // S_Critical_Shoes
+IG_Bs_Sha_M_S_21,24332,1,1,1,0,0,0 // S_Critical_Shield
+
+IG_Bs_Sha_M_S_20,24371,1,1,1,0,0,0 // S_Mortal_Blow_Earring
+IG_Bs_Sha_M_S_20,24372,1,1,1,0,0,0 // S_Mortal_Blow_Pendant
+IG_Bs_Sha_M_S_20,24370,1,1,1,0,0,0 // S_Mortal_Blow_Weapon
+
+IG_Bs_Sha_M_S_3,24373,1,1,1,0,0,0 // S_Penetration_Shoes
+IG_Bs_Sha_M_S_3,24374,1,1,1,0,0,0 // S_Penetration_Shield
+IG_Bs_Sha_M_S_3,24375,1,1,1,0,0,0 // S_Executioner_Holy_Water_Armor
+IG_Bs_Sha_M_S_3,24376,1,1,1,0,0,0 // S_Exorcist_Corrupted_Armor
+IG_Bs_Sha_M_S_3,24377,1,1,1,0,0,0 // S_Vibration_Dragon_Killer_Armor
+IG_Bs_Sha_M_S_3,24378,1,1,1,0,0,0 // S_Scissor_Hunting_Armor
+IG_Bs_Sha_M_S_3,24379,1,1,1,0,0,0 // S_Fishing_Insect_Net_Armor
+IG_Bs_Sha_M_S_3,24166,1,1,1,0,0,0 // S_Penetration_Earring
+IG_Bs_Sha_M_S_3,24167,1,1,1,0,0,0 // S_Penetration_Pendent
+IG_Bs_Sha_M_S_3,24156,1,1,1,0,0,0 // S_Executioner_Weapon
+IG_Bs_Sha_M_S_3,24157,1,1,1,0,0,0 // S_Exorcist_Weapon
+IG_Bs_Sha_M_S_3,24158,1,1,1,0,0,0 // S_Hunting_Weapon
+IG_Bs_Sha_M_S_3,24159,1,1,1,0,0,0 // S_Insect_Net_Weapon
+IG_Bs_Sha_M_S_3,24160,1,1,1,0,0,0 // S_Fishing_Weapon
+IG_Bs_Sha_M_S_3,24161,1,1,1,0,0,0 // S_Dragon_Killer_Weapon
+IG_Bs_Sha_M_S_3,24162,1,1,1,0,0,0 // S_Corrupt_Weapon
+IG_Bs_Sha_M_S_3,24163,1,1,1,0,0,0 // S_Vibration_Weapon
+IG_Bs_Sha_M_S_3,24164,1,1,1,0,0,0 // S_Holy_Water_Weapon
+IG_Bs_Sha_M_S_3,24165,1,1,1,0,0,0 // S_Scissors_Weapon
+
+IG_Bs_Sha_M_S_4,24346,1,1,1,0,0,0 // S_Tempest_Shoes
+IG_Bs_Sha_M_S_4,24345,1,1,1,0,0,0 // S_Tempest_Shield
+IG_Bs_Sha_M_S_4,24347,1,1,1,0,0,0 // S_Magic_Executioner_Holy_Water_Armor
+IG_Bs_Sha_M_S_4,24348,1,1,1,0,0,0 // S_Magic_Exorcist_Corrupted_Armor
+IG_Bs_Sha_M_S_4,24349,1,1,1,0,0,0 // S_Magic_Vibration_Dragon_Killer_Armor
+IG_Bs_Sha_M_S_4,24350,1,1,1,0,0,0 // S_Magic_Scissor_Hunting_Armor
+IG_Bs_Sha_M_S_4,24351,1,1,1,0,0,0 // S_Magic_Fishing_Insect_Net_Armor
+IG_Bs_Sha_M_S_4,24168,1,1,1,0,0,0 // S_Tempest_Earring
+IG_Bs_Sha_M_S_4,24169,1,1,1,0,0,0 // S_Tempest_Pendent
+IG_Bs_Sha_M_S_4,24170,1,1,1,0,0,0 // S_M_Executioner_Weapon
+IG_Bs_Sha_M_S_4,24171,1,1,1,0,0,0 // S_M_Exorcist_Weapon
+IG_Bs_Sha_M_S_4,24172,1,1,1,0,0,0 // S_M_Hunting_Weapon
+IG_Bs_Sha_M_S_4,24173,1,1,1,0,0,0 // S_M_Insect_Net_Weapon
+IG_Bs_Sha_M_S_4,24174,1,1,1,0,0,0 // S_M_Fishing_Weapon
+IG_Bs_Sha_M_S_4,24175,1,1,1,0,0,0 // S_M_Dragon_K_Weapon
+IG_Bs_Sha_M_S_4,24176,1,1,1,0,0,0 // S_M_Corrupt_Weapon
+IG_Bs_Sha_M_S_4,24177,1,1,1,0,0,0 // S_M_Vibration_Weapon
+IG_Bs_Sha_M_S_4,24178,1,1,1,0,0,0 // S_M_Holy_Water_Weapon
+IG_Bs_Sha_M_S_4,24179,1,1,1,0,0,0 // S_M_Scissors_Weapon
+
+IG_Bs_Sha_M_S_12,24344,1,1,1,0,0,0 // S_Blitz_Armor
+IG_Bs_Sha_M_S_12,24343,1,1,1,0,0,0 // S_Blitz_Weapon
+IG_Bs_Sha_M_S_12,24232,1,1,1,0,0,0 // S_Blitz_Shield
+IG_Bs_Sha_M_S_12,24231,1,1,1,0,0,0 // S_Blitz_Shoes
+IG_Bs_Sha_M_S_12,24218,1,1,1,0,0,0 // S_Blitz_Pendent
+IG_Bs_Sha_M_S_12,24217,1,1,1,0,0,0 // S_Blitz_Earring
+
+IG_Bs_Sha_M_S_14,24245,1,1,1,0,0,0 // S_Reload_Armor
+IG_Bs_Sha_M_S_14,24243,1,1,1,0,0,0 // S_Reload_Shoes
+IG_Bs_Sha_M_S_14,24244,1,1,1,0,0,0 // S_Reload_Shield
+
+IG_Bs_Sha_M_S_24,24224,1,1,1,0,0,0 // S_Force_Weapon
+IG_Bs_Sha_M_S_24,24225,1,1,1,0,0,0 // S_Force_Earring
+IG_Bs_Sha_M_S_24,24226,1,1,1,0,0,0 // S_Force_Pendant
+IG_Bs_Sha_M_S_24,24223,1,1,1,0,0,0 // S_Enhance_Force_Weapon
+IG_Bs_Sha_M_S_24,24228,1,1,1,0,0,0 // S_Spirit_Weapon
+IG_Bs_Sha_M_S_24,24229,1,1,1,0,0,0 // S_Spirit_Earring
+IG_Bs_Sha_M_S_24,24230,1,1,1,0,0,0 // S_Spirit_Pendant
+IG_Bs_Sha_M_S_24,24227,1,1,1,0,0,0 // S_Enhance_Spirit_Weapon
+
+IG_Bs_Sha_M_S_25,24151,1,1,1,0,0,0 // S_Infinity_Pendant
+IG_Bs_Sha_M_S_25,24150,1,1,1,0,0,0 // S_Infinity_Earring
+
+IG_PhysicalMagical_Mix,24395,1,1,1,0,0,0 // S_Physical_Armor
+IG_PhysicalMagical_Mix,24393,1,1,1,0,0,0 // S_Physical_Shoes
+IG_PhysicalMagical_Mix,24394,1,1,1,0,0,0 // S_Physical_Shield
+IG_PhysicalMagical_Mix,24398,1,1,1,0,0,0 // S_Magical_Armor
+IG_PhysicalMagical_Mix,24396,1,1,1,0,0,0 // S_Magical_Shoes
+IG_PhysicalMagical_Mix,24397,1,1,1,0,0,0 // S_Magical_Shield
+
+IG_Silver_Statue,28942,900,1,1,0,0,0 // Bloody_Knight_Shield
+IG_Silver_Statue,28945,99,1,1,0,0,0 // Bloody_Knight_Shield_
+IG_Silver_Statue,28946,1,1,1,0,0,0 // Bloody_Knight_Shield__
+
+IG_Stability_Shadow_Box,24352,1,1,1,0,0,0 // S_Plasterer's_Armor_II
+IG_Stability_Shadow_Box,24353,1,1,1,0,0,0 // S_Insomniac_Shoes_II
+IG_Stability_Shadow_Box,24354,1,1,1,0,0,0 // S_Peerless_Armor_II
+IG_Stability_Shadow_Box,24355,1,1,1,0,0,0 // S_Adulate_Shoes_II
+IG_Stability_Shadow_Box,24356,1,1,1,0,0,0 // S_Unfreezing_Weapon_II
+IG_Stability_Shadow_Box,24357,1,1,1,0,0,0 // S_Vitality_Earring_II
+IG_Stability_Shadow_Box,24358,1,1,1,0,0,0 // S_Neutral_Weapon_II
+IG_Stability_Shadow_Box,24359,1,1,1,0,0,0 // S_Uncursed_Pendant_II
+
+IG_Race_Shadow_Box,24341,1,1,1,0,0,0 // S_All_Race_Shoes
+IG_Race_Shadow_Box,24342,1,1,1,0,0,0 // S_All_Race_Shield
+
+IG_Bearers_S_Conversion_Box,24337,1,1,1,0,0,0 // S_Bearer's_Armor_II
+IG_Bearers_S_Conversion_Box,24338,1,1,1,0,0,0 // S_Bearer's_Shoes_II
+
+IG_Gemstone_S_Conversion_Box,24335,1,1,1,0,0,0 // S_Gemstone_Weapon_II
+IG_Gemstone_S_Conversion_Box,24336,1,1,1,0,0,0 // S_Gemstone_Shield_II
+
+IG_Status_S_Conversion_Box,24339,1,1,1,0,0,0 // S_Almighty_Earring
+IG_Status_S_Conversion_Box,24340,1,1,1,0,0,0 // S_Almighty_Pendant
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3954787
+
+IG_Shadow_Exchange_Box,24018,362,1,1	// S_Physical_Earring
+IG_Shadow_Exchange_Box,24019,362,1,1	// S_Physical_Weapon
+IG_Shadow_Exchange_Box,24020,362,1,1	// S_Physical_Pendant
+IG_Shadow_Exchange_Box,24021,362,1,1	// S_Magical_Earring
+IG_Shadow_Exchange_Box,24022,362,1,1	// S_Magical_Weapon
+IG_Shadow_Exchange_Box,24023,362,1,1	// S_Magical_Pendant
+IG_Shadow_Exchange_Box,24024,362,1,1	// S_Breezy_Armor
+IG_Shadow_Exchange_Box,24025,362,1,1	// S_Champion_Shoes
+IG_Shadow_Exchange_Box,24026,362,1,1	// S_Athena_Shield
+IG_Shadow_Exchange_Box,24027,217,1,1	// S_Immune_Armor
+IG_Shadow_Exchange_Box,24028,362,1,1	// S_Hard_Armor
+IG_Shadow_Exchange_Box,24029,217,1,1	// S_Ancient_Armor
+IG_Shadow_Exchange_Box,24030,217,1,1	// S_Critical_Armor
+IG_Shadow_Exchange_Box,24031,362,1,1	// S_Kingbird_Weapon
+IG_Shadow_Exchange_Box,24032,362,1,1	// S_Cri_Hit_Weapon
+IG_Shadow_Exchange_Box,24033,362,1,1	// S_Healing_Weapon
+IG_Shadow_Exchange_Box,24034,362,1,1	// S_Lucky_Weapon
+IG_Shadow_Exchange_Box,24035,362,1,1	// S_Power_Earring
+IG_Shadow_Exchange_Box,24036,362,1,1	// S_Int_Pendant
+IG_Shadow_Exchange_Box,24037,362,1,1	// S_Dexterous_Armor
+IG_Shadow_Exchange_Box,24038,362,1,1	// S_Vital_Shoes
+IG_Shadow_Exchange_Box,24039,362,1,1	// S_Athletic_Shield
+IG_Shadow_Exchange_Box,24040,362,1,1	// S_Lucky_Armor
+IG_Shadow_Exchange_Box,24041,362,1,1	// S_Power_Pendant
+IG_Shadow_Exchange_Box,24042,362,1,1	// S_Int_Earring
+IG_Shadow_Exchange_Box,24043,362,1,1	// S_Dexterous_Weapon
+IG_Shadow_Exchange_Box,24044,362,1,1	// S_Vital_Shield
+IG_Shadow_Exchange_Box,24045,362,1,1	// S_Athletic_Shoes
+IG_Shadow_Exchange_Box,24046,362,1,1	// S_Resist_Spell_Pendant
+IG_Shadow_Exchange_Box,24047,362,1,1	// S_Rapid_Pendant
+IG_Shadow_Exchange_Box,24048,217,1,1	// S_Caster_Pendant
+IG_Shadow_Exchange_Box,24049,362,1,1	// S_Hard_Earring
+IG_Shadow_Exchange_Box,24050,362,1,1	// S_Wise_Earring
+IG_Shadow_Exchange_Box,24051,362,1,1	// S_Athena_Earring
+IG_Shadow_Exchange_Box,24052,217,1,1	// S_Cranial_Shield
+IG_Shadow_Exchange_Box,24053,217,1,1	// S_Safeguard_Shield
+IG_Shadow_Exchange_Box,24054,362,1,1	// S_Brutal_Shield
+IG_Shadow_Exchange_Box,24055,362,1,1	// S_Gargantua_Shield
+IG_Shadow_Exchange_Box,24056,362,1,1	// S_Homers_Shield
+IG_Shadow_Exchange_Box,24057,362,1,1	// S_Dragoon_Shield
+IG_Shadow_Exchange_Box,24058,362,1,1	// S_Satanic_Shield
+IG_Shadow_Exchange_Box,24059,362,1,1	// S_Flameguard_Shield
+IG_Shadow_Exchange_Box,24060,362,1,1	// S_Requiem_Shield
+IG_Shadow_Exchange_Box,24061,362,1,1	// S_Cadi_Shield
+IG_Shadow_Exchange_Box,24062,362,1,1	// S_Bloody_Shoes
+IG_Shadow_Exchange_Box,24063,217,1,1	// S_Liberation_Shoes
+IG_Shadow_Exchange_Box,24064,362,1,1	// S_Chemical_Shoes
+IG_Shadow_Exchange_Box,24065,362,1,1	// S_Clamorous_Shoes
+IG_Shadow_Exchange_Box,24066,362,1,1	// S_Insecticide_Shoes
+IG_Shadow_Exchange_Box,24067,362,1,1	// S_Fisher_Shoes
+IG_Shadow_Exchange_Box,24068,362,1,1	// S_Seraphim_Shoes
+IG_Shadow_Exchange_Box,24069,362,1,1	// S_Beholder_Shoes
+IG_Shadow_Exchange_Box,24070,362,1,1	// S_Divine_Shoes
+IG_Shadow_Exchange_Box,24071,362,1,1	// S_Dragoon_Shoes
+IG_Shadow_Exchange_Box,24072,362,1,1	// S_Big_Armor
+IG_Shadow_Exchange_Box,24073,362,1,1	// S_Medium_Armor
+IG_Shadow_Exchange_Box,24074,362,1,1	// S_Small_Armor
+IG_Shadow_Exchange_Box,24075,362,1,1	// S_Big_Weapon
+IG_Shadow_Exchange_Box,24076,362,1,1	// S_Medium_Weapon
+IG_Shadow_Exchange_Box,24077,362,1,1	// S_Small_Weapon
+IG_Shadow_Exchange_Box,24078,217,1,1	// S_Spiritual_Weapon
+IG_Shadow_Exchange_Box,24079,217,1,1	// S_Spiritual_Earring
+IG_Shadow_Exchange_Box,24080,217,1,1	// S_Spiritual_Pendent
+IG_Shadow_Exchange_Box,24081,217,1,1	// S_Malicious_Armor
+IG_Shadow_Exchange_Box,24082,217,1,1	// S_Malicious_Shoes
+IG_Shadow_Exchange_Box,24083,217,1,1	// S_Malicious_Shield
+IG_Shadow_Exchange_Box,24084,217,1,1	// S_Gemstone_Armor
+IG_Shadow_Exchange_Box,24085,217,1,1	// S_Gemstone_Shoes
+IG_Shadow_Exchange_Box,24086,217,1,1	// S_Gemstone_Shield
+IG_Shadow_Exchange_Box,24087,217,1,1	// S_Gemstone_Weapon
+IG_Shadow_Exchange_Box,24088,217,1,1	// S_Gemstone_Earring
+IG_Shadow_Exchange_Box,24089,217,1,1	// S_Gemstone_Pendent
+IG_Shadow_Exchange_Box,24090,362,1,1	// S_Stability_Shield
+IG_Shadow_Exchange_Box,24091,362,1,1	// S_Plasterer's_Armor
+IG_Shadow_Exchange_Box,24092,362,1,1	// S_Plasterer's_Shoes
+IG_Shadow_Exchange_Box,24093,362,1,1	// S_Insomniac_Armor
+IG_Shadow_Exchange_Box,24094,362,1,1	// S_Insomniac_Shoes
+IG_Shadow_Exchange_Box,24095,362,1,1	// S_Peerless_Armor
+IG_Shadow_Exchange_Box,24096,362,1,1	// S_Peerless_Shoes
+IG_Shadow_Exchange_Box,24097,362,1,1	// S_Adurate_Armor
+IG_Shadow_Exchange_Box,24098,362,1,1	// S_Adurate_Shoes
+IG_Shadow_Exchange_Box,24099,362,1,1	// Unfreez_Weapon_S
+IG_Shadow_Exchange_Box,24100,362,1,1	// Unfreeze_Earing_S
+IG_Shadow_Exchange_Box,24101,362,1,1	// Unfreeze_Pendent_S
+IG_Shadow_Exchange_Box,24102,362,1,1	// Vitality_Earing_S
+IG_Shadow_Exchange_Box,24103,362,1,1	// Vitality_Pendant_S
+IG_Shadow_Exchange_Box,24104,362,1,1	// S_Neutral_Weapon
+IG_Shadow_Exchange_Box,24105,362,1,1	// S_Neutral_Earring
+IG_Shadow_Exchange_Box,24106,362,1,1	// S_Neutral_Pendent
+IG_Shadow_Exchange_Box,24107,362,1,1	// S_Curse_Lift_Earring
+IG_Shadow_Exchange_Box,24108,362,1,1	// S_Curse_Lift_Pendent
+IG_Shadow_Exchange_Box,24109,217,1,1	// S_Caster_earring
+IG_Shadow_Exchange_Box,24110,217,1,1	// S_Caster_Weapon
+IG_Shadow_Exchange_Box,24111,217,1,1	// S_Spell_Flow_Shoes
+IG_Shadow_Exchange_Box,24112,217,1,1	// S_Spell_Flow_Armor
+IG_Shadow_Exchange_Box,24113,217,1,1	// S_Spell_Flow_Shield
+IG_Shadow_Exchange_Box,24114,72,1,1	// S_Greed_Armor
+IG_Shadow_Exchange_Box,24115,72,1,1	// S_Greed_Shoes
+IG_Shadow_Exchange_Box,24116,72,1,1	// S_Greed_Shield
+IG_Shadow_Exchange_Box,24117,72,1,1	// S_Greed_Weapon
+IG_Shadow_Exchange_Box,24118,72,1,1	// S_Greed_Earring
+IG_Shadow_Exchange_Box,24119,72,1,1	// S_Greed_Pendant
+IG_Shadow_Exchange_Box,24120,362,1,1	// S_Heal_Armor
+IG_Shadow_Exchange_Box,24121,362,1,1	// S_Heal_Shoes
+IG_Shadow_Exchange_Box,24122,362,1,1	// S_Heal_Shield
+IG_Shadow_Exchange_Box,24123,362,1,1	// S_Heal_Weapon
+IG_Shadow_Exchange_Box,24124,362,1,1	// S_Heal_Earring
+IG_Shadow_Exchange_Box,24125,362,1,1	// S_Heal_Pendant
+IG_Shadow_Exchange_Box,24126,362,1,1	// S_Hiding_Armor
+IG_Shadow_Exchange_Box,24127,362,1,1	// S_Hiding_Shoes
+IG_Shadow_Exchange_Box,24128,362,1,1	// S_Hiding_Shield
+IG_Shadow_Exchange_Box,24129,362,1,1	// S_Hiding_Weapon
+IG_Shadow_Exchange_Box,24130,362,1,1	// S_Hiding_Earring
+IG_Shadow_Exchange_Box,24131,362,1,1	// S_Hiding_Pendant
+IG_Shadow_Exchange_Box,24132,362,1,1	// S_Cloaking_Armor
+IG_Shadow_Exchange_Box,24133,362,1,1	// S_Cloaking_Shoes
+IG_Shadow_Exchange_Box,24134,362,1,1	// S_Cloaking_Shield
+IG_Shadow_Exchange_Box,24135,362,1,1	// S_Cloaking_Weapon
+IG_Shadow_Exchange_Box,24136,362,1,1	// S_Cloaking_Earring
+IG_Shadow_Exchange_Box,24137,362,1,1	// S_Cloaking_Pendant
+IG_Shadow_Exchange_Box,24138,362,1,1	// S_Teleport_Armor
+IG_Shadow_Exchange_Box,24139,362,1,1	// S_Teleport_Shoes
+IG_Shadow_Exchange_Box,24140,362,1,1	// S_Teleport_Shield
+IG_Shadow_Exchange_Box,24141,362,1,1	// S_Teleport_Weapon
+IG_Shadow_Exchange_Box,24142,362,1,1	// S_Teleport_Earring
+IG_Shadow_Exchange_Box,24143,362,1,1	// S_Teleport_Pendant
+IG_Shadow_Exchange_Box,24144,362,1,1	// S_Steal_Armor
+IG_Shadow_Exchange_Box,24145,362,1,1	// S_Steal_Shoes
+IG_Shadow_Exchange_Box,24146,362,1,1	// S_Steal_Shield
+IG_Shadow_Exchange_Box,24147,362,1,1	// S_Steal_Weapon
+IG_Shadow_Exchange_Box,24148,362,1,1	// S_Steal_Earring
+IG_Shadow_Exchange_Box,24149,362,1,1	// S_Steal_Pendant
+IG_Shadow_Exchange_Box,24150,72,1,1	// S_Infinity_Earring
+IG_Shadow_Exchange_Box,24151,72,1,1	// S_Infinity_Pendant
+IG_Shadow_Exchange_Box,24152,362,1,1	// S_Solid_Weapon
+IG_Shadow_Exchange_Box,24153,362,1,1	// S_Solid_Earring
+IG_Shadow_Exchange_Box,24154,362,1,1	// S_Immortal_Armor
+IG_Shadow_Exchange_Box,24155,362,1,1	// S_Immortal_Pendant
+IG_Shadow_Exchange_Box,24156,72,1,1	// S_Executioner_Weapon
+IG_Shadow_Exchange_Box,24157,72,1,1	// S_Exorcist_Weapon
+IG_Shadow_Exchange_Box,24158,72,1,1	// S_Hunting_Weapon
+IG_Shadow_Exchange_Box,24159,72,1,1	// S_Insect_Net_Weapon
+IG_Shadow_Exchange_Box,24160,72,1,1	// S_Fishing_Weapon
+IG_Shadow_Exchange_Box,24161,72,1,1	// S_Dragon_Killer_Weapon
+IG_Shadow_Exchange_Box,24162,72,1,1	// S_Corrupt_Weapon
+IG_Shadow_Exchange_Box,24163,72,1,1	// S_Vibration_Weapon
+IG_Shadow_Exchange_Box,24164,72,1,1	// S_Holy_Water_Weapon
+IG_Shadow_Exchange_Box,24165,72,1,1	// S_Scissors_Weapon
+IG_Shadow_Exchange_Box,24166,72,1,1	// S_Penetration_Earring
+IG_Shadow_Exchange_Box,24167,72,1,1	// S_Penetration_Pendent
+IG_Shadow_Exchange_Box,24168,72,1,1	// S_Tempest_Earring
+IG_Shadow_Exchange_Box,24169,72,1,1	// S_Tempest_Pendent
+IG_Shadow_Exchange_Box,24170,72,1,1	// S_M_Executioner_Weapon
+IG_Shadow_Exchange_Box,24171,72,1,1	// S_M_Exorcist_Weapon
+IG_Shadow_Exchange_Box,24172,72,1,1	// S_M_Hunting_Weapon
+IG_Shadow_Exchange_Box,24173,72,1,1	// S_M_Insect_Net_Weapon
+IG_Shadow_Exchange_Box,24174,72,1,1	// S_M_Fishing_Weapon
+IG_Shadow_Exchange_Box,24175,72,1,1	// S_M_Dragon_K_Weapon
+IG_Shadow_Exchange_Box,24176,72,1,1	// S_M_Corrupt_Weapon
+IG_Shadow_Exchange_Box,24177,72,1,1	// S_M_Vibration_Weapon
+IG_Shadow_Exchange_Box,24178,72,1,1	// S_M_Holy_Water_Weapon
+IG_Shadow_Exchange_Box,24179,72,1,1	// S_M_Scissors_Weapon
+IG_Shadow_Exchange_Box,24180,72,1,1	// S_Bearers_Armor
+IG_Shadow_Exchange_Box,24181,72,1,1	// S_Bearers_Shoes
+IG_Shadow_Exchange_Box,24182,72,1,1	// S_Bearers_Shield
+IG_Shadow_Exchange_Box,24183,72,1,1	// S_Bearers_Weapon
+IG_Shadow_Exchange_Box,24184,72,1,1	// S_Bearers_Earring
+IG_Shadow_Exchange_Box,24185,72,1,1	// S_Bearers_Pendent
+IG_Shadow_Exchange_Box,24186,72,1,1	// S_Basis_Armor
+IG_Shadow_Exchange_Box,24187,362,1,1	// S_Hallowed_Armor
+IG_Shadow_Exchange_Box,24188,362,1,1	// S_Saharic_Armor
+IG_Shadow_Exchange_Box,24189,362,1,1	// S_Underneath_Armor
+IG_Shadow_Exchange_Box,24190,362,1,1	// S_Flam_Armor
+IG_Shadow_Exchange_Box,24191,362,1,1	// S_Windy_Armor
+IG_Shadow_Exchange_Box,24192,362,1,1	// S_Envenom_Armor
+IG_Shadow_Exchange_Box,24193,362,1,1	// S_Damned_Armor
+IG_Shadow_Exchange_Box,24194,362,1,1	// S_Geist_Armor
+IG_Shadow_Exchange_Box,24195,362,1,1	// S_Divine_Armor
+IG_Shadow_Exchange_Box,24196,217,1,1	// S_Hasty_Shoes
+IG_Shadow_Exchange_Box,24197,217,1,1	// S_Hasty_Armor
+IG_Shadow_Exchange_Box,24198,362,1,1	// S_Basis_Shield
+IG_Shadow_Exchange_Box,24199,362,1,1	// S_Hallowed_Shield
+IG_Shadow_Exchange_Box,24200,362,1,1	// S_Saharic_Shield
+IG_Shadow_Exchange_Box,24201,362,1,1	// S_Underneath_Shield
+IG_Shadow_Exchange_Box,24202,362,1,1	// S_Flam_Shield
+IG_Shadow_Exchange_Box,24203,362,1,1	// S_Windy_Shield
+IG_Shadow_Exchange_Box,24204,362,1,1	// S_Envenom_Shield
+IG_Shadow_Exchange_Box,24205,362,1,1	// S_Damned_Shield
+IG_Shadow_Exchange_Box,24206,362,1,1	// S_Geist_Shield
+IG_Shadow_Exchange_Box,24207,362,1,1	// S_Divine_Shield
+IG_Shadow_Exchange_Box,24208,217,1,1	// S_Expert_Shoes
+IG_Shadow_Exchange_Box,24209,217,1,1	// S_Expert_Shield
+IG_Shadow_Exchange_Box,24210,217,1,1	// S_Beginner_Shoes
+IG_Shadow_Exchange_Box,24211,217,1,1	// S_Beginner_Shield
+IG_Shadow_Exchange_Box,24212,217,1,1	// S_Rookie_Shoes
+IG_Shadow_Exchange_Box,24213,217,1,1	// S_Rookie_Shield
+IG_Shadow_Exchange_Box,24214,217,1,1	// S_Advanced_Shoes
+IG_Shadow_Exchange_Box,24215,217,1,1	// S_Advanced_Shield
+IG_Shadow_Exchange_Box,24216,217,1,1	// S_Attack_Armor
+IG_Shadow_Exchange_Box,24217,72,1,1	// S_Blitz_Earring
+IG_Shadow_Exchange_Box,24218,72,1,1	// S_Blitz_Pendent
+IG_Shadow_Exchange_Box,24219,362,1,1	// S_ColdBolt_Armor
+IG_Shadow_Exchange_Box,24220,362,1,1	// S_FireBolt_Armor
+IG_Shadow_Exchange_Box,24221,362,1,1	// S_LightingBolt_Armor
+IG_Shadow_Exchange_Box,24222,362,1,1	// S_EarthSpike_Armor
+IG_Shadow_Exchange_Box,24223,362,1,1	// S_Enhance_Force_Weapon
+IG_Shadow_Exchange_Box,24224,362,1,1	// S_Force_Weapon
+IG_Shadow_Exchange_Box,24225,362,1,1	// S_Force_Earring
+IG_Shadow_Exchange_Box,24226,362,1,1	// S_Force_Pendant
+IG_Shadow_Exchange_Box,24227,362,1,1	// S_Enhance_Spirit_Weapon
+IG_Shadow_Exchange_Box,24228,362,1,1	// S_Spirit_Weapon
+IG_Shadow_Exchange_Box,24229,362,1,1	// S_Spirit_Earring
+IG_Shadow_Exchange_Box,24230,362,1,1	// S_Spirit_Pendant
+IG_Shadow_Exchange_Box,24231,72,1,1	// S_Blitz_Shoes
+IG_Shadow_Exchange_Box,24232,72,1,1	// S_Blitz_Shield
+IG_Shadow_Exchange_Box,24233,362,1,1	// S_Exceed_Weapon
+IG_Shadow_Exchange_Box,24234,362,1,1	// S_Titan_Earring
+IG_Shadow_Exchange_Box,24235,362,1,1	// S_Titan_Pendant
+IG_Shadow_Exchange_Box,24236,362,1,1	// S_Boned_Earring
+IG_Shadow_Exchange_Box,24237,362,1,1	// S_Boned_Pendant
+IG_Shadow_Exchange_Box,24238,362,1,1	// S_Gigantic_Earring
+IG_Shadow_Exchange_Box,24239,362,1,1	// S_Gigantic_Pendant
+IG_Shadow_Exchange_Box,24240,217,1,1	// S_Caster_Shoes
+IG_Shadow_Exchange_Box,24241,217,1,1	// S_Caster_Shield
+IG_Shadow_Exchange_Box,24242,217,1,1	// S_Caster_Armor
+IG_Shadow_Exchange_Box,24243,217,1,1	// S_Reload_Shoes
+IG_Shadow_Exchange_Box,24244,217,1,1	// S_Reload_Shield
+IG_Shadow_Exchange_Box,24245,217,1,1	// S_Reload_Armor
+IG_Shadow_Exchange_Box,24246,217,1,1	// S_Swordman_earring
+IG_Shadow_Exchange_Box,24247,217,1,1	// S_Merchant_earring
+IG_Shadow_Exchange_Box,24248,217,1,1	// S_Acolyte_earring
+IG_Shadow_Exchange_Box,24249,217,1,1	// S_Magician_earring
+IG_Shadow_Exchange_Box,24250,217,1,1	// S_Swordman_Pendant
+IG_Shadow_Exchange_Box,24251,217,1,1	// S_Merchant_Pendant
+IG_Shadow_Exchange_Box,24252,217,1,1	// S_Acolyte_Pendant
+IG_Shadow_Exchange_Box,24253,217,1,1	// S_Thief_Pendant
+IG_Shadow_Exchange_Box,24254,217,1,1	// S_Magician_Pendant
+IG_Shadow_Exchange_Box,24255,217,1,1	// S_Archer_Pendant
+IG_Shadow_Exchange_Box,24256,217,1,1	// S_Knight_Shoes
+IG_Shadow_Exchange_Box,24257,217,1,1	// S_Crusader_Shoes
+IG_Shadow_Exchange_Box,24258,217,1,1	// S_Blacksmith_Shoes
+IG_Shadow_Exchange_Box,24259,217,1,1	// S_Alchemist_Shoes
+IG_Shadow_Exchange_Box,24260,217,1,1	// S_Priest_Shoes
+IG_Shadow_Exchange_Box,24261,217,1,1	// S_Monk_Shoes
+IG_Shadow_Exchange_Box,24262,217,1,1	// S_Assassin_Shoes
+IG_Shadow_Exchange_Box,24263,217,1,1	// S_Rogue_Shoes
+IG_Shadow_Exchange_Box,24264,217,1,1	// S_Wizard_Shoes
+IG_Shadow_Exchange_Box,24265,217,1,1	// S_Sage_Shoes
+IG_Shadow_Exchange_Box,24266,217,1,1	// S_Hunter_Shoes
+IG_Shadow_Exchange_Box,24267,217,1,1	// S_Bard_Shoes
+IG_Shadow_Exchange_Box,24268,217,1,1	// S_Dancer_Shoes
+IG_Shadow_Exchange_Box,24269,217,1,1	// S_Knight_Armor
+IG_Shadow_Exchange_Box,24270,217,1,1	// S_Crusader_Armor
+IG_Shadow_Exchange_Box,24271,217,1,1	// S_Blacksmith_Armor
+IG_Shadow_Exchange_Box,24272,217,1,1	// S_Alchemist_Armor
+IG_Shadow_Exchange_Box,24273,217,1,1	// S_Priest_Armor
+IG_Shadow_Exchange_Box,24274,217,1,1	// S_Monk_Armor
+IG_Shadow_Exchange_Box,24275,217,1,1	// S_Assassin_Armor
+IG_Shadow_Exchange_Box,24276,217,1,1	// S_Rogue_Armor
+IG_Shadow_Exchange_Box,24277,217,1,1	// S_Wizard_Armor
+IG_Shadow_Exchange_Box,24278,217,1,1	// S_Sage_Armor
+IG_Shadow_Exchange_Box,24279,217,1,1	// S_Hunter_Armor
+IG_Shadow_Exchange_Box,24280,218,1,1	// S_Bard_Armor
+IG_Shadow_Exchange_Box,24281,218,1,1	// S_Dancer_Armor
+IG_Shadow_Exchange_Box,24282,218,1,1	// S_SuperNovice_Weapon
+IG_Shadow_Exchange_Box,24283,218,1,1	// S_Gunslinger_Weapon
+IG_Shadow_Exchange_Box,24284,218,1,1	// S_Taekwon_Weapon
+IG_Shadow_Exchange_Box,24285,218,1,1	// S_Ninja_Weapon
+IG_Shadow_Exchange_Box,24286,218,1,1	// S_DoramMagical_Weapon
+IG_Shadow_Exchange_Box,24287,218,1,1	// S_DoramPhysical_Weapon
+IG_Shadow_Exchange_Box,24288,218,1,1	// S_Runeknight_Weapon
+IG_Shadow_Exchange_Box,24289,218,1,1	// S_Royalguard_Weapon
+IG_Shadow_Exchange_Box,24290,218,1,1	// S_Mechanic_weapon
+IG_Shadow_Exchange_Box,24291,218,1,1	// S_Genetic_Weapon
+IG_Shadow_Exchange_Box,24292,218,1,1	// S_Archbishop_Weapon
+IG_Shadow_Exchange_Box,24293,218,1,1	// S_Sura_weapon
+IG_Shadow_Exchange_Box,24294,218,1,1	// S_Guillotine_Weapon
+IG_Shadow_Exchange_Box,24295,218,1,1	// S_Shadowchaser_Weapon
+IG_Shadow_Exchange_Box,24296,218,1,1	// S_Warlock_Weapon
+IG_Shadow_Exchange_Box,24297,218,1,1	// S_Sorcerer_Weapon
+IG_Shadow_Exchange_Box,24298,218,1,1	// S_Ranger_Weapon
+IG_Shadow_Exchange_Box,24299,218,1,1	// S_Minstrel_Weapon
+IG_Shadow_Exchange_Box,24300,218,1,1	// S_Wanderer_Weapon
+IG_Shadow_Exchange_Box,24301,218,1,1	// S_Runeknight_Shield
+IG_Shadow_Exchange_Box,24302,218,1,1	// S_Royalguard_Shield
+IG_Shadow_Exchange_Box,24303,218,1,1	// S_Mechanic_Shield
+IG_Shadow_Exchange_Box,24304,218,1,1	// S_Genetic_Shield
+IG_Shadow_Exchange_Box,24305,218,1,1	// S_Archbishop_Shield
+IG_Shadow_Exchange_Box,24306,218,1,1	// S_Sura_Shield
+IG_Shadow_Exchange_Box,24307,218,1,1	// S_Guillotine_Shield
+IG_Shadow_Exchange_Box,24308,218,1,1	// S_Shadowchaser_Shield
+IG_Shadow_Exchange_Box,24309,218,1,1	// S_Warlock_Shield
+IG_Shadow_Exchange_Box,24310,218,1,1	// S_Sorcerer_Shield
+IG_Shadow_Exchange_Box,24311,218,1,1	// S_Ranger_Shield
+IG_Shadow_Exchange_Box,24312,218,1,1	// S_Minstrel_Shield
+IG_Shadow_Exchange_Box,24313,218,1,1	// S_Wanderer_Shield
+IG_Shadow_Exchange_Box,24314,218,1,1	// S_Ninja_Shield
+IG_Shadow_Exchange_Box,24315,218,1,1	// S_Taekwon_Shield
+IG_Shadow_Exchange_Box,24316,218,1,1	// S_DoramPhysical_Shield
+IG_Shadow_Exchange_Box,24317,218,1,1	// S_DoramMagical_Shield
+IG_Shadow_Exchange_Box,24318,218,1,1	// S_SuperNovice_Shield
+IG_Shadow_Exchange_Box,24319,218,1,1	// S_Gunslinger_Shield
+IG_Shadow_Exchange_Box,28391,218,1,1	// S_Thief_earring
+IG_Shadow_Exchange_Box,28392,218,1,1	// S_Archer_earring
+IG_Shadow_Exchange_Box,24320,73,1,1	// S_Hasty_Shoes_II
+IG_Shadow_Exchange_Box,24321,73,1,1	// S_Bearer's_Pendant_II
+IG_Shadow_Exchange_Box,24322,73,1,1	// S_Gemstone_Earring_II
+IG_Shadow_Exchange_Box,24323,73,1,1	// S_Spellflow_Shield_II
+IG_Shadow_Exchange_Box,24324,73,1,1	// S_Spiritual_Weapon_II
+IG_Shadow_Exchange_Box,24325,73,1,1	// S_Malicious_Armor_II
+IG_Shadow_Exchange_Box,24326,73,1,1	// S_Sigrun_Armor
+IG_Shadow_Exchange_Box,24327,73,1,1	// S_Sigrun_Shield
+IG_Shadow_Exchange_Box,24328,73,1,1	// S_Force_Executioner_Weapon
+IG_Shadow_Exchange_Box,24329,73,1,1	// S_Spirit_Magic_Executioner_Weapon
+IG_Shadow_Exchange_Box,24330,73,1,1	// S_Caster_Armor_II
+IG_Shadow_Exchange_Box,24331,73,1,1	// S_Reload_Armor_II
+IG_Shadow_Exchange_Box,24332,73,1,1	// S_Critical_Shield
+IG_Shadow_Exchange_Box,24333,73,1,1	// S_Critical_Shoes
+IG_Shadow_Exchange_Box,24345,73,1,1	// S_Tempest_Shield
+IG_Shadow_Exchange_Box,24346,73,1,1	// S_Tempest_Shoes
+IG_Shadow_Exchange_Box,24347,73,1,1	// S_Magic_Executioner_Holy_Water_Armor
+IG_Shadow_Exchange_Box,24348,73,1,1	// S_Magic_Exorcist_Corrupted_Armor
+IG_Shadow_Exchange_Box,24349,73,1,1	// S_Magic_Vibration_Dragon_Killer_Armor
+IG_Shadow_Exchange_Box,24350,73,1,1	// S_Magic_Scissor_Hunting_Armor
+IG_Shadow_Exchange_Box,24351,73,1,1	// S_Magic_Fishing_Insect_Net_Armor
+IG_Shadow_Exchange_Box,24360,73,1,1	// S_Tension_Weapon
+IG_Shadow_Exchange_Box,24361,73,1,1	// S_Tension_Earring
+IG_Shadow_Exchange_Box,24362,73,1,1	// S_Tension_Pendent
+IG_Shadow_Exchange_Box,24363,73,1,1	// S_Elegant_Weapon
+IG_Shadow_Exchange_Box,24364,73,1,1	// S_Elegant_Earring
+IG_Shadow_Exchange_Box,24365,73,1,1	// S_Elegant_Pendent
+IG_Shadow_Exchange_Box,24366,73,1,1	// S_Healing_Shield
+IG_Shadow_Exchange_Box,24367,73,1,1	// S_Healing_Shoes
+IG_Shadow_Exchange_Box,24368,73,1,1	// S_Restore_Earring
+IG_Shadow_Exchange_Box,24369,73,1,1	// S_Restore_Pendant
+IG_Shadow_Exchange_Box,24370,73,1,1	// S_Mortal_Blow_Weapon
+IG_Shadow_Exchange_Box,24371,73,1,1	// S_Mortal_Blow_Earring
+IG_Shadow_Exchange_Box,24372,73,1,1	// S_Mortal_Blow_Pendant
+IG_Shadow_Exchange_Box,24373,73,1,1	// S_Penetration_Shoes
+IG_Shadow_Exchange_Box,24374,73,1,1	// S_Penetration_Shield
+IG_Shadow_Exchange_Box,24375,73,1,1	// S_Executioner_Holy_Water_Armor
+IG_Shadow_Exchange_Box,24376,73,1,1	// S_Exorcist_Corrupted_Armor
+IG_Shadow_Exchange_Box,24377,73,1,1	// S_Vibration_Dragon_Killer_Armor
+IG_Shadow_Exchange_Box,24378,73,1,1	// S_Scissor_Hunting_Armor
+IG_Shadow_Exchange_Box,24379,73,1,1	// S_Fishing_Insect_Net_Armor
+IG_Shadow_Exchange_Box,24380,73,1,1	// Sentimental_Weapone_S
+IG_Shadow_Exchange_Box,24381,73,1,1	// Sentimental_Earring_S
+IG_Shadow_Exchange_Box,24382,73,1,1	// Sentimental_Pendant_S
+IG_Shadow_Exchange_Box,24383,73,1,1	// Enchanting_Weapone_S
+IG_Shadow_Exchange_Box,24384,73,1,1	// Enchanting_Earring_S
+IG_Shadow_Exchange_Box,24385,73,1,1	// Enchanting_Pendant_S
+IG_Shadow_Exchange_Box,24402,73,1,1	// S_Rebellion_Armor
+IG_Shadow_Exchange_Box,24403,73,1,1	// S_Kagerou_Armor
+IG_Shadow_Exchange_Box,24404,73,1,1	// S_Oboro_Armor
+IG_Shadow_Exchange_Box,24405,73,1,1	// S_Rebellion_Shoes
+IG_Shadow_Exchange_Box,24406,73,1,1	// S_Kagerou_Shoes
+IG_Shadow_Exchange_Box,24407,73,1,1	// S_Oboro_Shoes
+IG_Shadow_Exchange_Box,24408,73,1,1	// S_DoramPhysical_Armor
+IG_Shadow_Exchange_Box,24409,73,1,1	// S_DoramPhysical_Shoes
+IG_Shadow_Exchange_Box,24410,73,1,1	// S_DoramMagical_Armor
+IG_Shadow_Exchange_Box,24411,73,1,1	// S_DoramMagical_Shoes
+IG_Shadow_Exchange_Box,24412,73,1,1	// S_Star_Emperor_Armor
+IG_Shadow_Exchange_Box,24413,73,1,1	// S_Star_Emperor_Shoes
+IG_Shadow_Exchange_Box,24414,73,1,1	// S_Soul_Reaper_Armor
+IG_Shadow_Exchange_Box,24415,73,1,1	// S_Soul_Reaper_Shoes
+IG_Shadow_Exchange_Box,24423,73,1,1	// S_Tempest_Weapon
+IG_Shadow_Exchange_Box,24424,73,1,1	// S_Tempest_Armor
+IG_Shadow_Exchange_Box,24425,73,1,1	// S_Perfect_Size_Weapon
+IG_Shadow_Exchange_Box,24426,73,1,1	// S_Perfect_Size_Armor
+IG_Shadow_Exchange_Box,24427,73,1,1	// S_M_Exo_Co_Weapon
+IG_Shadow_Exchange_Box,24428,73,1,1	// S_M_Viv_Dr_Weapon
+IG_Shadow_Exchange_Box,24429,73,1,1	// S_M_Sci_Hu_Weapon
+IG_Shadow_Exchange_Box,24430,73,1,1	// S_M_Fis_In_Weapon
+IG_Shadow_Exchange_Box,24431,73,1,1	// S_M_Exe_Ho_Weapon
+IG_Shadow_Exchange_Box,24432,73,1,1	// S_Penetration_Weapon
+IG_Shadow_Exchange_Box,24433,73,1,1	// S_Penetration_Armor
+IG_Shadow_Exchange_Box,24434,73,1,1	// S_Exe_Ho_Weapon
+IG_Shadow_Exchange_Box,24435,73,1,1	// S_Fis_In_Weapon
+IG_Shadow_Exchange_Box,24436,73,1,1	// S_Sci_Hu_Weapon
+IG_Shadow_Exchange_Box,24437,73,1,1	// S_Viv_Dr_Weapon
+IG_Shadow_Exchange_Box,24438,73,1,1	// S_Exo_Co_Weapon
+IG_Shadow_Exchange_Box,24439,73,1,1	// S_Hasty_Weapon
+IG_Shadow_Exchange_Box,24440,73,1,1	// S_Sonic_Armor
+IG_Shadow_Exchange_Box,24441,73,1,1	// S_Sonic_Shield
+IG_Shadow_Exchange_Box,24442,73,1,1	// S_Sonic_Shoes
+IG_Shadow_Exchange_Box,24443,73,1,1	// S_Ignition_Weapon
+IG_Shadow_Exchange_Box,24444,73,1,1	// S_Ignition_Pendant
+IG_Shadow_Exchange_Box,24445,73,1,1	// S_Ignition_Earing
+IG_Shadow_Exchange_Box,24446,73,1,1	// S_W_Breath_Armor
+IG_Shadow_Exchange_Box,24447,73,1,1	// S_W_Breath_Shield
+IG_Shadow_Exchange_Box,24448,73,1,1	// S_W_Breath_Shoes
+IG_Shadow_Exchange_Box,24449,73,1,1	// S_F_Breath_Weapon
+IG_Shadow_Exchange_Box,24450,73,1,1	// S_F_Breath_Pendant
+IG_Shadow_Exchange_Box,24451,73,1,1	// S_F_Breath_Earing
+IG_Shadow_Exchange_Box,24452,73,1,1	// S_Cluster_Armor
+IG_Shadow_Exchange_Box,24453,73,1,1	// S_Cluster_Shield
+IG_Shadow_Exchange_Box,24454,73,1,1	// S_Cluster_Shoes
+IG_Shadow_Exchange_Box,24455,73,1,1	// S_Aimed_Weapon
+IG_Shadow_Exchange_Box,24456,73,1,1	// S_Aimed_Pendant
+IG_Shadow_Exchange_Box,24457,73,1,1	// S_Aimed_Earing
+IG_Shadow_Exchange_Box,24458,73,1,1	// S_Arrow_Armor
+IG_Shadow_Exchange_Box,24459,73,1,1	// S_Arrow_Shield
+IG_Shadow_Exchange_Box,24460,73,1,1	// S_Arrow_Shoes
+IG_Shadow_Exchange_Box,24461,73,1,1	// S_Shooting_Weapon
+IG_Shadow_Exchange_Box,24462,73,1,1	// S_Shooting_Pendant
+IG_Shadow_Exchange_Box,24463,73,1,1	// S_Shooting_Earing
+IG_Shadow_Exchange_Box,24464,73,1,1	// S_Tornado_Armor
+IG_Shadow_Exchange_Box,24465,73,1,1	// S_Tornado_Shield
+IG_Shadow_Exchange_Box,24466,73,1,1	// S_Tornado_Shoes
+IG_Shadow_Exchange_Box,24467,73,1,1	// S_Boomerang_Weapon
+IG_Shadow_Exchange_Box,24468,73,1,1	// S_Boomerang_Pendant
+IG_Shadow_Exchange_Box,24469,73,1,1	// S_Boomerang_Earing
+IG_Shadow_Exchange_Box,24470,73,1,1	// S_Vulcan_Armor
+IG_Shadow_Exchange_Box,24471,73,1,1	// S_Vulcan_Shield
+IG_Shadow_Exchange_Box,24472,73,1,1	// S_Vulcan_Shoes
+IG_Shadow_Exchange_Box,24473,73,1,1	// S_Arms_Weapon
+IG_Shadow_Exchange_Box,24474,73,1,1	// S_Arms_Pendant
+IG_Shadow_Exchange_Box,24475,73,1,1	// S_Arms_Earing
+IG_Shadow_Exchange_Box,24476,73,1,1	// S_Rampage_Armor
+IG_Shadow_Exchange_Box,24477,73,1,1	// S_Rampage_Shield
+IG_Shadow_Exchange_Box,24478,73,1,1	// S_Rampage_Shoes
+IG_Shadow_Exchange_Box,24479,73,1,1	// S_Skynetblow_Weapon
+IG_Shadow_Exchange_Box,24480,73,1,1	// S_Skynetblow_Pendant
+IG_Shadow_Exchange_Box,24481,73,1,1	// S_Skynetblow_Earing
+IG_Shadow_Exchange_Box,24482,73,1,1	// S_Knucklearrow_Armor
+IG_Shadow_Exchange_Box,24483,73,1,1	// S_Knucklearrow_Shield
+IG_Shadow_Exchange_Box,24484,73,1,1	// S_Knucklearrow_Shoes
+IG_Shadow_Exchange_Box,24485,73,1,1	// S_TigerCannon_Weapon
+IG_Shadow_Exchange_Box,24486,73,1,1	// S_Tigercannon_Pendant
+IG_Shadow_Exchange_Box,24487,73,1,1	// S_Tigercannon_Earing
+IG_Shadow_Exchange_Box,24488,73,1,1	// S_Duplelight_Armor
+IG_Shadow_Exchange_Box,24489,73,1,1	// S_Duplelight_Shield
+IG_Shadow_Exchange_Box,24490,73,1,1	// S_Duplelight_Shoes
+IG_Shadow_Exchange_Box,24491,73,1,1	// S_Adoramus_Weapon
+IG_Shadow_Exchange_Box,24492,73,1,1	// S_Adoramus_Pendant
+IG_Shadow_Exchange_Box,24493,73,1,1	// S_Adoramus_Earing
+IG_Shadow_Exchange_Box,24494,73,1,1	// S_Judex_Armor
+IG_Shadow_Exchange_Box,24495,73,1,1	// S_Judex_Shield
+IG_Shadow_Exchange_Box,24496,73,1,1	// S_Judex_Shoes
+IG_Shadow_Exchange_Box,24497,73,1,1	// S_Magnus_Weapon
+IG_Shadow_Exchange_Box,24498,73,1,1	// S_Magnus_Pendant
+IG_Shadow_Exchange_Box,24499,73,1,1	// S_Magnus_Earing
+IG_Shadow_Exchange_Box,24500,73,1,1	// S_Rainstorm_Armor
+IG_Shadow_Exchange_Box,24501,73,1,1	// S_Rainstorm_Shield
+IG_Shadow_Exchange_Box,24502,73,1,1	// S_Rainstorm_Shoes
+IG_Shadow_Exchange_Box,24503,73,1,1	// S_Arrowvulcan_Weapon
+IG_Shadow_Exchange_Box,24504,73,1,1	// S_Arrowvulcan_Pendant
+IG_Shadow_Exchange_Box,24505,73,1,1	// S_Arrowvulcan_Earing
+IG_Shadow_Exchange_Box,24506,73,1,1	// S_Metalic_Armor
+IG_Shadow_Exchange_Box,24507,73,1,1	// S_Metalic_Shield
+IG_Shadow_Exchange_Box,24508,73,1,1	// S_Metalic_Shoes
+IG_Shadow_Exchange_Box,24509,73,1,1	// S_Reverberation_Weapon
+IG_Shadow_Exchange_Box,24510,73,1,1	// S_Reverberation_Pendant
+IG_Shadow_Exchange_Box,24511,73,1,1	// S_Reverberation_Earing
+IG_Shadow_Exchange_Box,24524,73,1,1	// S_Triangle_Armor
+IG_Shadow_Exchange_Box,24525,73,1,1	// S_Triangle_Shield
+IG_Shadow_Exchange_Box,24526,73,1,1	// S_Triangle_Shoes
+IG_Shadow_Exchange_Box,24527,73,1,1	// S_Shadowspell_Weapon
+IG_Shadow_Exchange_Box,24528,73,1,1	// S_Shadowspell_Pendant
+IG_Shadow_Exchange_Box,24529,73,1,1	// S_Shadowspell_Earing
+IG_Shadow_Exchange_Box,24530,73,1,1	// S_Menace_Armor
+IG_Shadow_Exchange_Box,24531,73,1,1	// S_Menace_Shield
+IG_Shadow_Exchange_Box,24532,73,1,1	// S_Menace_Shoes
+IG_Shadow_Exchange_Box,24533,73,1,1	// S_Paint_Weapon
+IG_Shadow_Exchange_Box,24534,73,1,1	// S_Paint_Pendant
+IG_Shadow_Exchange_Box,24535,73,1,1	// S_Paint_Earing
+IG_Shadow_Exchange_Box,24536,73,1,1	// S_Rolling_Armor
+IG_Shadow_Exchange_Box,24537,73,1,1	// S_Rolling_Shield
+IG_Shadow_Exchange_Box,24538,73,1,1	// S_Rolling_Shoes
+IG_Shadow_Exchange_Box,24539,73,1,1	// S_Katar_Weapon
+IG_Shadow_Exchange_Box,24540,73,1,1	// S_Katar_Pendant
+IG_Shadow_Exchange_Box,24541,73,1,1	// S_Katar_Earing
+IG_Shadow_Exchange_Box,24542,73,1,1	// S_Slash_Armor
+IG_Shadow_Exchange_Box,24543,73,1,1	// S_Slash_Shield
+IG_Shadow_Exchange_Box,24544,73,1,1	// S_Slash_Shoes
+IG_Shadow_Exchange_Box,24545,73,1,1	// S_Ripper_Weapon
+IG_Shadow_Exchange_Box,24546,73,1,1	// S_Ripper_Pendant
+IG_Shadow_Exchange_Box,24547,73,1,1	// S_Ripper_Earing
+IG_Shadow_Exchange_Box,24548,73,1,1	// S_Dust_Armor
+IG_Shadow_Exchange_Box,24549,73,1,1	// S_Dust_Shield
+IG_Shadow_Exchange_Box,24550,73,1,1	// S_Dust_Shoes
+IG_Shadow_Exchange_Box,24551,73,1,1	// S_Grave_Weapon
+IG_Shadow_Exchange_Box,24552,73,1,1	// S_Grave_Pendant
+IG_Shadow_Exchange_Box,24553,73,1,1	// S_Grave_Earing
+IG_Shadow_Exchange_Box,24554,73,1,1	// S_Psychic_Armor
+IG_Shadow_Exchange_Box,24555,73,1,1	// S_Psychic_Shield
+IG_Shadow_Exchange_Box,24556,73,1,1	// S_Psychic_Shoes
+IG_Shadow_Exchange_Box,24557,73,1,1	// S_Varetyr_Weapon
+IG_Shadow_Exchange_Box,24558,73,1,1	// S_Varetyr_Pendant
+IG_Shadow_Exchange_Box,24559,73,1,1	// S_Varetyr_Earing
+IG_Shadow_Exchange_Box,24512,73,1,1	// S_Jack_Armor
+IG_Shadow_Exchange_Box,24513,73,1,1	// S_Jack_Shield
+IG_Shadow_Exchange_Box,24514,73,1,1	// S_Jack_Shoes
+IG_Shadow_Exchange_Box,24515,73,1,1	// S_Strain_Weapon
+IG_Shadow_Exchange_Box,24516,73,1,1	// S_Strain_Pendant
+IG_Shadow_Exchange_Box,24517,73,1,1	// S_Strain_Earing
+IG_Shadow_Exchange_Box,24518,73,1,1	// S_Crimson_Armor
+IG_Shadow_Exchange_Box,24519,73,1,1	// S_Crimson_Shield
+IG_Shadow_Exchange_Box,24520,73,1,1	// S_Crimson_Shoes
+IG_Shadow_Exchange_Box,24521,73,1,1	// S_Chain_Weapon
+IG_Shadow_Exchange_Box,24522,73,1,1	// S_Chain_Pendant
+IG_Shadow_Exchange_Box,24523,73,1,1	// S_Chain_Earing
+IG_Shadow_Exchange_Box,24560,73,1,1	// S_Cart_Tornado_Armor
+IG_Shadow_Exchange_Box,24561,73,1,1	// S_Cart_Tornado_Shield
+IG_Shadow_Exchange_Box,24562,73,1,1	// S_Cart_Tornado_Shoes
+IG_Shadow_Exchange_Box,24563,73,1,1	// S_Cannon_Cart_Weapon
+IG_Shadow_Exchange_Box,24564,73,1,1	// S_Cannon_Cart_Pendant
+IG_Shadow_Exchange_Box,24565,73,1,1	// S_Cannon_Cart_Earing
+IG_Shadow_Exchange_Box,24566,73,1,1	// S_Spore_Bomb_Armor
+IG_Shadow_Exchange_Box,24567,73,1,1	// S_Spore_Bomb_Shield
+IG_Shadow_Exchange_Box,24568,73,1,1	// S_Spore_Bomb_Shoes
+IG_Shadow_Exchange_Box,24569,73,1,1	// S_Crazy_Weapon
+IG_Shadow_Exchange_Box,24570,73,1,1	// S_Crazy_Pendant
+IG_Shadow_Exchange_Box,24571,73,1,1	// S_Crazy_Earing
+IG_Shadow_Exchange_Box,24572,73,1,1	// S_Brand_Armor
+IG_Shadow_Exchange_Box,24573,73,1,1	// S_Brand_Shield
+IG_Shadow_Exchange_Box,24574,73,1,1	// S_Brand_Shoes
+IG_Shadow_Exchange_Box,24575,73,1,1	// S_Chain_Press_Weapon
+IG_Shadow_Exchange_Box,24576,73,1,1	// S_Chain_Press_Pendant
+IG_Shadow_Exchange_Box,24577,73,1,1	// S_Chain_Press_Earing
+IG_Shadow_Exchange_Box,24578,73,1,1	// S_Banish_Cannon_Armor
+IG_Shadow_Exchange_Box,24579,73,1,1	// S_Banish_Cannon_Shield
+IG_Shadow_Exchange_Box,24580,73,1,1	// S_Banish_Cannon_Shoes
+IG_Shadow_Exchange_Box,24581,73,1,1	// S_Genesis_Weapon
+IG_Shadow_Exchange_Box,24582,73,1,1	// S_Genesis_Pendant
+IG_Shadow_Exchange_Box,24583,73,1,1	// S_Genesis_Earing
+IG_Shadow_Exchange_Box,24622,73,1,1	// S_Kunai_Weapon
+IG_Shadow_Exchange_Box,24623,73,1,1	// S_Kunai_Shield
+IG_Shadow_Exchange_Box,24624,73,1,1	// S_Kunai_Armor
+IG_Shadow_Exchange_Box,24625,73,1,1	// S_Syuriken_Earing
+IG_Shadow_Exchange_Box,24626,73,1,1	// S_Syuriken_Pendant
+IG_Shadow_Exchange_Box,24627,73,1,1	// S_Syuriken_Shoes
+IG_Shadow_Exchange_Box,24628,73,1,1	// S_Kamaenraku_Weapon
+IG_Shadow_Exchange_Box,24629,73,1,1	// S_Kamaenraku_Shield
+IG_Shadow_Exchange_Box,24630,73,1,1	// S_Kamaenraku_Armor
+IG_Shadow_Exchange_Box,24631,73,1,1	// S_Huusouka_Earing
+IG_Shadow_Exchange_Box,24632,73,1,1	// S_Huusouka_Pendant
+IG_Shadow_Exchange_Box,24633,73,1,1	// S_Huusouka_Shoes
+IG_Shadow_Exchange_Box,24634,73,1,1	// S_Pickyrush_Weapon
+IG_Shadow_Exchange_Box,24635,73,1,1	// S_Pickyrush_Shield
+IG_Shadow_Exchange_Box,24636,73,1,1	// S_Pickyrush_Armor
+IG_Shadow_Exchange_Box,24637,73,1,1	// S_SavageRabbit_Earing
+IG_Shadow_Exchange_Box,24638,73,1,1	// S_SavageRabbit_Pendant
+IG_Shadow_Exchange_Box,24639,73,1,1	// S_SavageRabbit_Shoes
+IG_Shadow_Exchange_Box,24640,73,1,1	// S_Catnip_Weapon
+IG_Shadow_Exchange_Box,24641,73,1,1	// S_Catnip_Shield
+IG_Shadow_Exchange_Box,24642,73,1,1	// S_Catnip_Armor
+IG_Shadow_Exchange_Box,24643,73,1,1	// S_Silvervine_Earing
+IG_Shadow_Exchange_Box,24644,73,1,1	// S_Silvervine_Pendant
+IG_Shadow_Exchange_Box,24645,73,1,1	// S_Silvervine_Shoes
+IG_Shadow_Exchange_Box,24646,73,1,1	// S_Sunshine_Weapon
+IG_Shadow_Exchange_Box,24647,73,1,1	// S_Sunshine_Shield
+IG_Shadow_Exchange_Box,24648,73,1,1	// S_Sunshine_Armor
+IG_Shadow_Exchange_Box,24649,73,1,1	// S_Moonlight_Earring
+IG_Shadow_Exchange_Box,24650,73,1,1	// S_Moonlight_Pendant
+IG_Shadow_Exchange_Box,24651,73,1,1	// S_Moonlight_Shoes
+IG_Shadow_Exchange_Box,24652,73,1,1	// S_Stardust_Weapon
+IG_Shadow_Exchange_Box,24653,73,1,1	// S_Stardust_Shield
+IG_Shadow_Exchange_Box,24654,73,1,1	// S_Stardust_Armor
+IG_Shadow_Exchange_Box,24655,73,1,1	// S_S_Weapon
+IG_Shadow_Exchange_Box,24656,73,1,1	// S_S_Shield
+IG_Shadow_Exchange_Box,24657,73,1,1	// S_S_Armor
+IG_Shadow_Exchange_Box,24658,73,1,1	// S_Evilcurse_Earring
+IG_Shadow_Exchange_Box,24659,73,1,1	// S_Evilcurse_Pendant
+IG_Shadow_Exchange_Box,24660,73,1,1	// S_Evilcurse_Shoes
+IG_Shadow_Exchange_Box,24664,73,1,1	// S_FullPene_Shoes
+IG_Shadow_Exchange_Box,24663,73,1,1	// S_FullPene_Armor
+IG_Shadow_Exchange_Box,24662,73,1,1	// S_FullPene_Pendant
+IG_Shadow_Exchange_Box,24661,73,1,1	// S_FullPene_Earring
+
+//!TODO http://ro.gnjoy.com/news/probability/View.asp?&seq=3954790
+IG_Costume_Enchant_Stone_Box,22826,1,1,1,0,0,0 // Enchant_Stone_Box4
+IG_Costume_Enchant_Stone_Box,22868,1,1,1,0,0,0 // Enchant_Stone_Box5
+IG_Costume_Enchant_Stone_Box,22905,1,1,1,0,0,0 // Enchant_Stone_Box6
+IG_Costume_Enchant_Stone_Box,22953,1,1,1,0,0,0 // Enchant_Stone_Box7
+IG_Costume_Enchant_Stone_Box,23001,1,1,1,0,0,0 // Enchant_Stone_Box8
+IG_Costume_Enchant_Stone_Box,23058,1,1,1,0,0,0 // Enchant_Stone_Box9
+IG_Costume_Enchant_Stone_Box,23086,1,1,1,0,0,0 // Enchant_Stone_Box10
+IG_Costume_Enchant_Stone_Box,23174,1,1,1,0,0,0 // Enchant_Stone_Box11
+IG_Costume_Enchant_Stone_Box,23299,1,1,1,0,0,0 // Enchant_Stone_Box12
+IG_Costume_Enchant_Stone_Box,23524,1,1,1,0,0,0 // Enchant_Stone_Box13
+IG_Costume_Enchant_Stone_Box,23629,1,1,1,0,0,0 // Enchant_Stone_Box14
+IG_Costume_Enchant_Stone_Box,23682,1,1,1,0,0,0 // Enchant_Stone_Box15
+IG_Costume_Enchant_Stone_Box,23770,1,1,1,0,0,0 // Enchant_Stone_Box16
+IG_Costume_Enchant_Stone_Box,9510,1,1,1,0,0,0 // Enchant_Stone_Box17
+IG_Costume_Enchant_Stone_Box,100019,1,1,1,0,0,0 // Enchant_Stone_Box18
+IG_Costume_Enchant_Stone_Box,100052,1,1,1,0,0,0 // Enchant_Stone_Box19
+
+IG_Piercing_Shadow_Box,24434,1,1,1,0,0,0 // S_Exe_Ho_Weapon
+IG_Piercing_Shadow_Box,24437,1,1,1,0,0,0 // S_Viv_Dr_Weapon
+IG_Piercing_Shadow_Box,24436,1,1,1,0,0,0 // S_Sci_Hu_Weapon
+IG_Piercing_Shadow_Box,24435,1,1,1,0,0,0 // S_Fis_In_Weapon
+IG_Piercing_Shadow_Box,24438,1,1,1,0,0,0 // S_Exo_Co_Weapon
+
+IG_EnchantStone_Recipe_4m,23524,1,1,1,0,0,0 // Enchant_Stone_Box13
+IG_EnchantStone_Recipe_4m,23629,1,1,1,0,0,0 // Enchant_Stone_Box14
+IG_EnchantStone_Recipe_4m,23682,1,1,1,0,0,0 // Enchant_Stone_Box15
+IG_EnchantStone_Recipe_4m,23770,1,1,1,0,0,0 // Enchant_Stone_Box16
+IG_EnchantStone_Recipe_4m,9510,1,1,1,0,0,0 // Enchant_Stone_Box17
+IG_EnchantStone_Recipe_4m,100019,1,1,1,0,0,0 // Enchant_Stone_Box18
+IG_EnchantStone_Recipe_4m,100052,1,1,1,0,0,0 // Enchant_Stone_Box19
+
+IG_EnchantStone_Recipe_9m,23524,1,1,1,0,0,0 // Enchant_Stone_Box13
+IG_EnchantStone_Recipe_9m,23629,1,1,1,0,0,0 // Enchant_Stone_Box14
+IG_EnchantStone_Recipe_9m,23682,1,1,1,0,0,0 // Enchant_Stone_Box15
+IG_EnchantStone_Recipe_9m,23770,1,1,1,0,0,0 // Enchant_Stone_Box16
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955672
+IG_Class_Shadow_Pendant,24250,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24251,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24252,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24253,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24254,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24255,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955674
+IG_Class_Shadow_Earring,24246,1,1,1,0,0,0
+IG_Class_Shadow_Earring,24247,1,1,1,0,0,0
+IG_Class_Shadow_Earring,24248,1,1,1,0,0,0
+IG_Class_Shadow_Earring,24249,1,1,1,0,0,0
+IG_Class_Shadow_Earring,28391,1,1,1,0,0,0
+IG_Class_Shadow_Earring,28392,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955671
+IG_Class_Shadow_Shield,24301,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24302,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24303,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24304,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24305,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24306,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24307,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24308,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24309,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24310,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24311,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24312,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24313,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24314,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24315,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24316,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24317,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24318,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24319,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955669
+IG_Class_Shadow_Shoes,24256,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24257,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24258,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24259,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24260,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24261,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24262,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24263,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24264,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24265,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24266,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24267,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24268,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24405,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24406,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24407,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24409,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24411,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24413,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24415,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955664
+IG_Class_Shadow_Armor,24269,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24270,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24271,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24272,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24273,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24274,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24275,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24276,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24277,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24278,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24279,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24280,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24281,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24402,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24403,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24404,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24408,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24410,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24412,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24414,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955662
+IG_Class_Shadow_Weapon,24282,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24283,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24284,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24285,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24286,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24287,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24288,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24289,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24290,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24291,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24292,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24293,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24294,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24295,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24296,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24297,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24298,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24299,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24300,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3954791
+IG_Costume_Exchange_Box,19876,1370,1,1	// C_Rabbit_Ear_Hat
+IG_Costume_Exchange_Box,19654,1370,1,1	// C_J_Captain_Hat
+IG_Costume_Exchange_Box,19608,1370,1,1	// C_Chick_Hat
+IG_Costume_Exchange_Box,19712,1370,1,1	// C_Little_Angel_Doll
+IG_Costume_Exchange_Box,20145,1370,1,1	// C_Robo_Eye
+IG_Costume_Exchange_Box,19721,1370,1,1	// C_Darkness_Helm
+IG_Costume_Exchange_Box,20146,1370,1,1	// C_Angel_Spirit
+IG_Costume_Exchange_Box,19823,1370,1,1	// C_White_Cat_Hood
+IG_Costume_Exchange_Box,20036,1370,1,1	// C_Sword_Master_Crown
+IG_Costume_Exchange_Box,20147,1370,1,1	// C_Bell_Pigeon
+IG_Costume_Exchange_Box,20746,140,1,1	// C_Rudra_Wing
+IG_Costume_Exchange_Box,19643,1370,1,1	// C_Whikebain_Ears
+IG_Costume_Exchange_Box,20199,1370,1,1	// C_Evil_Marcher_Hat
+IG_Costume_Exchange_Box,20200,1370,1,1	// C_Rabbit_Head_Dress
+IG_Costume_Exchange_Box,20201,1370,1,1	// C_Banshee_Master_Kiss
+IG_Costume_Exchange_Box,20202,1370,1,1	// C_Deviruchi_Balloon
+IG_Costume_Exchange_Box,20761,140,1,1	// C_Wing_Of_Happiness
+IG_Costume_Exchange_Box,20132,270,1,1	// C_Subject_Aura
+IG_Costume_Exchange_Box,20130,1370,1,1	// C_Whisper_Tall_Hat
+IG_Costume_Exchange_Box,20133,1370,1,1	// C_Poring_Mascot_Costume
+IG_Costume_Exchange_Box,20230,1370,1,1	// C_Mask_Of_Bankrupt
+IG_Costume_Exchange_Box,20231,1370,1,1	// C_Snowman_Hat
+IG_Costume_Exchange_Box,20232,1370,1,1	// C_Celines_Ribbon
+IG_Costume_Exchange_Box,20233,1370,1,1	// C_Gold_Angel_Sculpture
+IG_Costume_Exchange_Box,20273,1370,1,1	// C_Soft_Sheep_Hat
+IG_Costume_Exchange_Box,20242,1370,1,1	// C_Snownow_Hat
+IG_Costume_Exchange_Box,20762,140,1,1	// C_GreatDevilWing
+IG_Costume_Exchange_Box,20239,1370,1,1	// C_Large_Ribbon_Muffler
+IG_Costume_Exchange_Box,20071,1370,1,1	// C_Worg_In_Mouth
+IG_Costume_Exchange_Box,19954,1370,1,1	// C_3D_Glasses
+IG_Costume_Exchange_Box,19815,1370,1,1	// C_Lolita_Ten_Gallon_Hat
+IG_Costume_Exchange_Box,20268,1370,1,1	// C_Sleep_Eclipse_Family
+IG_Costume_Exchange_Box,20249,1370,1,1	// C_Red_Strong_Hair
+IG_Costume_Exchange_Box,20266,1370,1,1	// C_Secret_Zipper
+IG_Costume_Exchange_Box,20255,1370,1,1	// C_Love_Cheek
+IG_Costume_Exchange_Box,20329,1370,1,1	// C_Tare_HSchool_Doll_Hat
+IG_Costume_Exchange_Box,20330,1370,1,1	// C_Sombrero
+IG_Costume_Exchange_Box,20286,1370,1,1	// C_Under_Rim_Glasses_Red
+IG_Costume_Exchange_Box,20349,400,1,1	// C_FlyingGalapago
+IG_Costume_Exchange_Box,20299,400,1,1	// C_Face_Crusher
+IG_Costume_Exchange_Box,20300,400,1,1	// C_Hill_Wind_Mask
+IG_Costume_Exchange_Box,20315,400,1,1	// C_Analyze_Eye
+IG_Costume_Exchange_Box,20350,140,1,1	// C_Cowlick_YL
+IG_Costume_Exchange_Box,20351,140,1,1	// C_Cowlick_GN
+IG_Costume_Exchange_Box,20352,140,1,1	// C_Cowlick_PP
+IG_Costume_Exchange_Box,20353,140,1,1	// C_Cowlick_RD
+IG_Costume_Exchange_Box,20354,140,1,1	// C_Cowlick_OM
+IG_Costume_Exchange_Box,20355,140,1,1	// C_Cowlick_BU
+IG_Costume_Exchange_Box,20356,140,1,1	// C_Cowlick_WH
+IG_Costume_Exchange_Box,20341,140,1,1	// C_Bouncing_Hair_Black
+IG_Costume_Exchange_Box,20357,140,1,1	// C_Straight_Pony_YL
+IG_Costume_Exchange_Box,20358,140,1,1	// C_Straight_Pony_GN
+IG_Costume_Exchange_Box,20359,140,1,1	// C_Straight_Pony_PP
+IG_Costume_Exchange_Box,20360,140,1,1	// C_Straight_Pony_RD
+IG_Costume_Exchange_Box,20361,140,1,1	// C_Straight_Pony_OM
+IG_Costume_Exchange_Box,20362,140,1,1	// C_Straight_Pony_BU
+IG_Costume_Exchange_Box,20363,140,1,1	// C_Straight_Pony_WH
+IG_Costume_Exchange_Box,20340,140,1,1	// C_Straight_Pony_Black
+IG_Costume_Exchange_Box,20364,140,1,1	// C_Loose_Wave_Twin_YL
+IG_Costume_Exchange_Box,20365,140,1,1	// C_Loose_Wave_Twin_GN
+IG_Costume_Exchange_Box,20366,140,1,1	// C_Loose_Wave_Twin_PP
+IG_Costume_Exchange_Box,20367,140,1,1	// C_Loose_Wave_Twin_RD
+IG_Costume_Exchange_Box,20368,140,1,1	// C_Loose_Wave_Twin_OM
+IG_Costume_Exchange_Box,20369,140,1,1	// C_Loose_Wave_Twin_BU
+IG_Costume_Exchange_Box,20370,140,1,1	// C_Loose_Wave_Twin_WH
+IG_Costume_Exchange_Box,20342,140,1,1	// C_Loose_Wave_Twin
+IG_Costume_Exchange_Box,20504,140,1,1	// C_Cupid_Wing_Pink
+IG_Costume_Exchange_Box,19816,400,1,1	// C_Pecopeco_Cap
+IG_Costume_Exchange_Box,20396,400,1,1	// C_Green_Hat
+IG_Costume_Exchange_Box,20325,400,1,1	// C_Little_Aquarium
+IG_Costume_Exchange_Box,5979,270,1,1	// C_Angel_Fluttering
+IG_Costume_Exchange_Box,20398,1370,1,1	// C_Niflheim_Bunny_Hat
+IG_Costume_Exchange_Box,20399,1370,1,1	// C_Crow_Tengu_Mask
+IG_Costume_Exchange_Box,20172,1370,1,1	// C_Pumpkin_Head
+IG_Costume_Exchange_Box,20405,270,1,1	// C_Eremes_Scarf
+IG_Costume_Exchange_Box,20404,270,1,1	// C_Blessing_Of_Angels
+IG_Costume_Exchange_Box,19761,1370,1,1	// C_White_Lily
+IG_Costume_Exchange_Box,20447,1370,1,1	// C_Small_Poring_Band
+IG_Costume_Exchange_Box,20458,1370,1,1	// C_Wild_Poring_Rider
+IG_Costume_Exchange_Box,20459,1370,1,1	// C_Valhalla_Idol
+IG_Costume_Exchange_Box,20433,1370,1,1	// C_Louise_Red_Hat
+IG_Costume_Exchange_Box,20507,140,1,1	// C_Poring_Bag
+IG_Costume_Exchange_Box,20430,270,1,1	// C_Morocc_Kid_Servant
+IG_Costume_Exchange_Box,20464,1370,1,1	// C_Monochrome_RibbonHat
+IG_Costume_Exchange_Box,20432,1370,1,1	// C_Khalitzburg_KN_Helm
+IG_Costume_Exchange_Box,20491,1370,1,1	// C_Laser_of_Eagle
+IG_Costume_Exchange_Box,20502,140,1,1	// C_Devil_Wing
+IG_Costume_Exchange_Box,20440,140,1,1	// C_Tone_of_Gold
+IG_Costume_Exchange_Box,31087,140,1,1	// C_Dwarf_Beard
+IG_Costume_Exchange_Box,31088,140,1,1	// C_Mad_Hatter
+IG_Costume_Exchange_Box,20448,140,1,1	// C_Cons_Of_Water
+IG_Costume_Exchange_Box,20487,140,1,1	// C_Floral_Waltz
+IG_Costume_Exchange_Box,19158,140,1,1	// C_Gemini_Eyes
+IG_Costume_Exchange_Box,20489,140,1,1	// C_Pope_Crown
+IG_Costume_Exchange_Box,20318,140,1,1	// C_Charleston_Antenna
+IG_Costume_Exchange_Box,20509,140,1,1	// C_Wings_of_Uriel
+IG_Costume_Exchange_Box,31029,140,1,1	// C_Pig_Nose
+IG_Costume_Exchange_Box,20499,140,1,1	// C_Cat_Ears_Hat
+IG_Costume_Exchange_Box,5909,140,1,1	// C_Valkyrie_Circlet
+IG_Costume_Exchange_Box,31057,140,1,1	// C_Eremes_Scarf_Black
+IG_Costume_Exchange_Box,31062,140,1,1	// C_Eleanor_Wig
+IG_Costume_Exchange_Box,31125,140,1,1	// C_QueenAnzRevenge
+IG_Costume_Exchange_Box,31118,140,1,1	// C_Assassin_Skull_Mask
+IG_Costume_Exchange_Box,31120,140,1,1	// C_Vampire_Familiar
+IG_Costume_Exchange_Box,31123,140,1,1	// C_Ghostring_Tall_Hat
+IG_Costume_Exchange_Box,31040,140,1,1	// C_Magical_Feather
+IG_Costume_Exchange_Box,20381,140,1,1	// C_Steampunk_Hat
+IG_Costume_Exchange_Box,31055,140,1,1	// C_Poring_Soap_Pipe
+IG_Costume_Exchange_Box,20510,140,1,1	// C_SwordWing
+IG_Costume_Exchange_Box,31063,140,1,1	// C_Hair_Bun_BU
+IG_Costume_Exchange_Box,31064,140,1,1	// C_Hair_Bun_RD
+IG_Costume_Exchange_Box,31065,140,1,1	// C_Hair_Bun_YL
+IG_Costume_Exchange_Box,31066,140,1,1	// C_Hair_Bun_GN
+IG_Costume_Exchange_Box,31067,140,1,1	// C_Hair_Bun_BL
+IG_Costume_Exchange_Box,31068,140,1,1	// C_Hair_Bun_WH
+IG_Costume_Exchange_Box,31069,140,1,1	// C_Hair_Bun_OM
+IG_Costume_Exchange_Box,31070,140,1,1	// C_Hair_Bun_PP
+IG_Costume_Exchange_Box,31071,140,1,1	// C_Roll_Twin_BU
+IG_Costume_Exchange_Box,31072,140,1,1	// C_Roll_Twin_RD
+IG_Costume_Exchange_Box,31073,140,1,1	// C_Roll_Twin_YL
+IG_Costume_Exchange_Box,31074,140,1,1	// C_Roll_Twin_GN
+IG_Costume_Exchange_Box,31075,140,1,1	// C_Roll_Twin_BL
+IG_Costume_Exchange_Box,31076,140,1,1	// C_Roll_Twin_WH
+IG_Costume_Exchange_Box,31077,140,1,1	// C_Roll_Twin_OM
+IG_Costume_Exchange_Box,31078,140,1,1	// C_Roll_Twin_PP
+IG_Costume_Exchange_Box,31079,140,1,1	// C_Long_Pony_BU
+IG_Costume_Exchange_Box,31080,140,1,1	// C_Long_Pony_RD
+IG_Costume_Exchange_Box,31081,140,1,1	// C_Long_Pony_YL
+IG_Costume_Exchange_Box,31082,140,1,1	// C_Long_Pony_GN
+IG_Costume_Exchange_Box,31083,140,1,1	// C_Long_Pony_BL
+IG_Costume_Exchange_Box,31084,140,1,1	// C_Long_Pony_WH
+IG_Costume_Exchange_Box,31085,140,1,1	// C_Long_Pony_OM
+IG_Costume_Exchange_Box,31086,140,1,1	// C_Long_Pony_PP
+IG_Costume_Exchange_Box,31165,140,1,1	// C_Piggyback
+IG_Costume_Exchange_Box,31160,140,1,1	// C_RuneHelm
+IG_Costume_Exchange_Box,31162,140,1,1	// C_Shaving_Foam
+IG_Costume_Exchange_Box,20511,140,1,1	// C_Blue_Fairy_Wing
+IG_Costume_Exchange_Box,31186,140,1,1	// C_Black_Cat
+IG_Costume_Exchange_Box,20449,140,1,1	// C_White_Black_Temp
+IG_Costume_Exchange_Box,20195,140,1,1	// C_Scratching_Cat
+IG_Costume_Exchange_Box,20514,140,1,1	// C_Thanatos_Sword
+IG_Costume_Exchange_Box,31300,140,1,1	// C_Warm_Cat_Muffler
+IG_Costume_Exchange_Box,31136,140,1,1	// C_Clock_Casket
+IG_Costume_Exchange_Box,31134,140,1,1	// C_Happy_Parrot_J
+IG_Costume_Exchange_Box,31178,140,1,1	// C_Flame_Muffler
+IG_Costume_Exchange_Box,31166,140,1,1	// C_Teddy_Bear_Hood
+IG_Costume_Exchange_Box,31168,140,1,1	// C_Mouton_Life_BL
+IG_Costume_Exchange_Box,31164,140,1,1	// C_Brown_Stall
+IG_Costume_Exchange_Box,31397,140,1,1	// C_Pope_Sitting_Head
+IG_Costume_Exchange_Box,31031,140,1,1	// C_Tare_Pope_Casual
+IG_Costume_Exchange_Box,31033,140,1,1	// C_BelieversCap
+IG_Costume_Exchange_Box,20488,140,1,1	// C_Pope_Ribbon
+IG_Costume_Exchange_Box,31329,140,1,1	// C_Alice_Wig
+IG_Costume_Exchange_Box,31332,140,1,1	// Khalitzburg_KN_Helm_BL
+IG_Costume_Exchange_Box,31415,140,1,1	// C_Wanderer_Sakkat
+IG_Costume_Exchange_Box,20516,140,1,1	// C_Wings_of_Michael
+IG_Costume_Exchange_Box,31180,140,1,1	// C_Shura_King_Pledge
+IG_Costume_Exchange_Box,19294,140,1,1	// C_CatEars_Cyber_HeadP_R
+IG_Costume_Exchange_Box,19289,140,1,1	// C_Moon_Eyepatch
+IG_Costume_Exchange_Box,19291,140,1,1	// C_Shiba_Inu
+IG_Costume_Exchange_Box,20515,140,1,1	// C_Magic_Circle
+IG_Costume_Exchange_Box,19992,140,1,1	// C_Chilly_Breath
+IG_Costume_Exchange_Box,19959,140,1,1	// C_Drooping_Argiope
+IG_Costume_Exchange_Box,19960,140,1,1	// C_Chain_Puppet
+IG_Costume_Exchange_Box,31396,140,1,1	// C_Sorcerer_Hood
+IG_Costume_Exchange_Box,31437,140,1,1	// C_Baby_Penguin
+IG_Costume_Exchange_Box,31439,140,1,1	// C_Fluffy_Heart_Earmuffs
+IG_Costume_Exchange_Box,20765,140,1,1	// C_Archangel_Wing
+IG_Costume_Exchange_Box,20517,140,1,1	// C_GiantCatBag_TW
+IG_Costume_Exchange_Box,31432,140,1,1	// C_Luwmin_Ice
+IG_Costume_Exchange_Box,31314,140,1,1	// C_Ghost_Holiday
+IG_Costume_Exchange_Box,31460,140,1,1	// C_Blessing_Sky_Lantern
+IG_Costume_Exchange_Box,31398,140,1,1	// C_Blinking_Thin_Eyes
+IG_Costume_Exchange_Box,31433,140,1,1	// C_Astro_Circle
+IG_Costume_Exchange_Box,31498,140,1,1	// C_Elephangel_TH
+IG_Costume_Exchange_Box,31463,140,1,1	// C_Flying_Drone
+IG_Costume_Exchange_Box,31452,140,1,1	// C_White_Cat
+IG_Costume_Exchange_Box,31489,140,1,1	// C_Bouquet_Hat
+IG_Costume_Exchange_Box,31490,140,1,1	// C_Poring_Muffler
+IG_Costume_Exchange_Box,31529,140,1,1	// C_Happy_Rabbit_Ribbon
+IG_Costume_Exchange_Box,20533,140,1,1	// C_PinkButterfly_Wing_T
+IG_Costume_Exchange_Box,20171,140,1,1	// C_Sepia_Cap
+IG_Costume_Exchange_Box,20482,140,1,1	// C_Heaven_Cage
+IG_Costume_Exchange_Box,20033,140,1,1	// C_Buddhist_Priest_Crown
+IG_Costume_Exchange_Box,20535,140,1,1	// C_Digital_Space
+IG_Costume_Exchange_Box,31139,140,1,1	// C_White_Rabbit_Ear
+IG_Costume_Exchange_Box,31606,140,1,1	// C_Autumn_Headband
+IG_Costume_Exchange_Box,31249,140,1,1	// C_Rabbit_Hopping
+IG_Costume_Exchange_Box,20543,140,1,1	// C_Halloween_Poring_Bag
+IG_Costume_Exchange_Box,20174,140,1,1	// C_Halloween_Hat_Orange
+IG_Costume_Exchange_Box,20098,140,1,1	// C_Vampire_Hairband
+IG_Costume_Exchange_Box,20395,140,1,1	// C_Black_Witch_Hat
+IG_Costume_Exchange_Box,20175,140,1,1	// C_Diabolic_Headphone
+IG_Costume_Exchange_Box,31565,140,1,1	// C_Princess_Ribbon_Crown
+IG_Costume_Exchange_Box,31586,140,1,1	// C_Poporing_Muffler
+IG_Costume_Exchange_Box,31625,140,1,1	// C_Protect_Cloth
+IG_Costume_Exchange_Box,20546,140,1,1	// C_Backside_Ribbon_Bell
+IG_Costume_Exchange_Box,20764,140,1,1	// C_Fallen_Angel_Wing
+IG_Costume_Exchange_Box,19990,140,1,1	// C_Snow_Rabbit_Knit_Hat
+IG_Costume_Exchange_Box,31440,140,1,1	// C_Snow_Bear_Food
+IG_Costume_Exchange_Box,31693,140,1,1	// C_LunaticMuffler
+IG_Costume_Exchange_Box,31616,140,1,1	// C_Sleep_Sheep_TW
+IG_Costume_Exchange_Box,20570,140,1,1	// C_HeartChocoBag
+IG_Costume_Exchange_Box,31382,140,1,1	// C_Cat_Ears_Punkish
+IG_Costume_Exchange_Box,31481,140,1,1	// C_CatCoffeeCup_TW
+IG_Costume_Exchange_Box,31624,140,1,1	// C_HeartOfCat_TW
+IG_Costume_Exchange_Box,20486,140,1,1	// C_Twin_Margaret
+IG_Costume_Exchange_Box,20257,140,1,1	// C_Black_Rabbit_Bonnet
+IG_Costume_Exchange_Box,31699,140,1,1	// C_Smiling_Eyes
+IG_Costume_Exchange_Box,20572,140,1,1	// C_WingOfHeart
+IG_Costume_Exchange_Box,31719,140,1,1	// Costume_Master_Of_Flames
+IG_Costume_Exchange_Box,31600,140,1,1	// C_Kishu_Inu
+IG_Costume_Exchange_Box,31512,140,1,1	// C_Panda_Rabbit
+IG_Costume_Exchange_Box,20519,140,1,1	// C_Full_BloomCherry_Tree
+IG_Costume_Exchange_Box,31614,140,1,1	// C_Fox
+IG_Costume_Exchange_Box,31569,140,1,1	// C_OpenAir_Headset
+IG_Costume_Exchange_Box,31572,140,1,1	// C_Mobile_Pursuit_System
+IG_Costume_Exchange_Box,31573,140,1,1	// C_Mecha_Cat_Ears
+IG_Costume_Exchange_Box,31574,140,1,1	// C_Cyber_Income
+IG_Costume_Exchange_Box,20576,140,1,1	// C_Cat_Fork
+IG_Costume_Exchange_Box,31483,140,1,1	// C_CatEarRibbon_TW
+IG_Costume_Exchange_Box,31765,140,1,1	// C_Garnet_Tiara
+IG_Costume_Exchange_Box,31766,140,1,1	// C_Peony_Hair_Ornament
+IG_Costume_Exchange_Box,20022,140,1,1	// C_Love_Piece
+IG_Costume_Exchange_Box,31027,140,1,1	// C_Pretty_Bear
+IG_Costume_Exchange_Box,31698,140,1,1	// C_Pigtail_Red_Hood
+IG_Costume_Exchange_Box,440000,140,1,1	// C_SharkHead
+IG_Costume_Exchange_Box,31798,140,1,1	// C_Baby_Panda
+IG_Costume_Exchange_Box,31787,140,1,1	// C_SavageB_On_Shoulder
+IG_Costume_Exchange_Box,400020,140,1,1	// C_BeachBall
+IG_Costume_Exchange_Box,20584,140,1,1	// C_Big_Foxtail
+IG_Costume_Exchange_Box,20582,140,1,1	// C_T_Bear_Bag
+IG_Costume_Exchange_Box,31688,140,1,1	// C_Poring_On_Shoulder
+IG_Costume_Exchange_Box,31735,140,1,1	// Costume_Yawata_Seal
+IG_Costume_Exchange_Box,31799,140,1,1	// C_Pretty_Bear_WH
+IG_Costume_Exchange_Box,31832,140,1,1	// C_Bicolor_Cat_Witch_Hat
+IG_Costume_Exchange_Box,20588,140,1,1	// C_Nifl_Bloom
+IG_Costume_Exchange_Box,31568,140,1,1	// C_Floating_Ball_TW
+IG_Costume_Exchange_Box,31611,140,1,1	// C_Dark_Snake_Lord_Stall
+IG_Costume_Exchange_Box,31671,140,1,1	// Costume_Twin_Cannon
+IG_Costume_Exchange_Box,31673,140,1,1	// C_Picnic_Basket
+IG_Costume_Exchange_Box,31884,140,1,1	// C_Magic_Helm
+IG_Costume_Exchange_Box,31479,140,1,1	// C_ManyStars_TW
+IG_Costume_Exchange_Box,20592,140,1,1	// C_Santa_Backpack
+IG_Costume_Exchange_Box,31509,140,1,1	// C_Fawn_Ear
+IG_Costume_Exchange_Box,31559,140,1,1	// C_Royalguard_Necklace
+IG_Costume_Exchange_Box,440002,140,1,1	// C_Happy_Cat_TW
+IG_Costume_Exchange_Box,20153,140,1,1	// C_Monochrome_Cap
+IG_Costume_Exchange_Box,20451,140,1,1	// C_Sky_of_Memory
+IG_Costume_Exchange_Box,20593,140,1,1	// C_Ice_Wing
+IG_Costume_Exchange_Box,31601,140,1,1	// C_Under_Rim_Glasses_Blue
+IG_Costume_Exchange_Box,20589,140,1,1	// C_Gimmick_One_Feather
+IG_Costume_Exchange_Box,20379,140,1,1	// C_Pocketwatch_Hair_Ornament
+IG_Costume_Exchange_Box,31404,140,1,1	// C_Poring_Traffic_Light
+IG_Costume_Exchange_Box,31906,140,1,1	// C_PGstone_Knit_Hat_PK
+IG_Costume_Exchange_Box,19802,140,1,1	// C_Lazy_Ninetail
+IG_Costume_Exchange_Box,20599,140,1,1	// C_Sakura_Wing
+IG_Costume_Exchange_Box,31176,140,1,1	// C_Looking
+IG_Costume_Exchange_Box,31179,140,1,1	// C_Wolf_Masquerade
+IG_Costume_Exchange_Box,31930,140,1,1	// C_Mike_Stand
+IG_Costume_Exchange_Box,31923,140,1,1	// C_Baby_Polar_Bear
+IG_Costume_Exchange_Box,31849,140,1,1	// C_Runaway_Accelerator
+IG_Costume_Exchange_Box,31931,140,1,1	// C_Half_Rim_Glasses
+IG_Costume_Exchange_Box,20598,140,1,1	// C_GiantCatBag_JP_BL
+IG_Costume_Exchange_Box,400073,140,1,1	// C_Romance_Rose_TW
+IG_Costume_Exchange_Box,400074,140,1,1	// C_Disapear_Time_TW
+IG_Costume_Exchange_Box,410005,140,1,1	// C_Magic_Heir_TW
+IG_Costume_Exchange_Box,31916,140,1,1	// C_Frill_Collar
+IG_Costume_Exchange_Box,31848,140,1,1	// C_Rose_Gothic_Bonnet
+IG_Costume_Exchange_Box,31911,140,1,1	// C_LittleGarden
+IG_Costume_Exchange_Box,31716,140,1,1	// Costume_Twinkling_Red_Eyes
+IG_Costume_Exchange_Box,31934,140,1,1	// C_Blink_Eyes_Sakura
+IG_Costume_Exchange_Box,31815,140,1,1	// Costume_Angola_Intention
+IG_Costume_Exchange_Box,31566,140,1,1	// C_Stole_Of_Dominion
+IG_Costume_Exchange_Box,31497,140,1,1	// C_Flowery_Vision_TH
+IG_Costume_Exchange_Box,20603,140,1,1	// C_P_Ulysses_Feather
+IG_Costume_Exchange_Box,31618,140,1,1	// C_DancingButterfly_TW
+IG_Costume_Exchange_Box,31927,140,1,1	// C_Blue_Pencil_In_Mouth
+IG_Costume_Exchange_Box,31936,140,1,1	// C_Nut_Donut_In_Mouth
+IG_Costume_Exchange_Box,20605,130,1,1	// C_Leaf_Umbrella
+IG_Costume_Exchange_Box,31143,130,1,1	// C_Krathong_Crown_TH
+IG_Costume_Exchange_Box,31937,130,1,1	// C_Unicorn_Ornament
+IG_Costume_Exchange_Box,31943,130,1,1	// C_Frog_Hood
+IG_Costume_Exchange_Box,20173,130,1,1	// C_Lude_Hood
+IG_Costume_Exchange_Box,20522,130,1,1	// C_Blessings_Of_Soul
+IG_Costume_Exchange_Box,31380,130,1,1	// C_Crow
+IG_Costume_Exchange_Box,19910,130,1,1	// C_Halloween_Hat
+IG_Costume_Exchange_Box,20604,130,1,1	// C_Blessed_Veil
+IG_Costume_Exchange_Box,20221,130,1,1	// C_Eyes_Of_Ifrit
+IG_Costume_Exchange_Box,19877,130,1,1	// C_Eyes_Of_Darkness
+IG_Costume_Exchange_Box,31805,130,1,1	// C_Sunglasses_Bball_Hat
+IG_Costume_Exchange_Box,19292,130,1,1	// C_Wildcat_Knit_Cap
+IG_Costume_Exchange_Box,20237,130,1,1	// C_Pink_Fur_Hat
+IG_Costume_Exchange_Box,20240,130,1,1	// C_Gift_Of_Snow
+IG_Costume_Exchange_Box,20441,130,1,1	// C_Large_Ribbon_Muffler_Red
+IG_Costume_Exchange_Box,420029,130,1,1	// C_Imperial_Glory
+IG_Costume_Exchange_Box,20496,130,1,1	// C_Black_Shiba_Inu_Hat
+IG_Costume_Exchange_Box,19722,130,1,1	// C_Black_Glasses
+IG_Costume_Exchange_Box,480097,130,1,1	// C_Snow_Powder
+IG_Costume_Exchange_Box,19866,130,1,1	// C_Blue_Pajamas_Hat
+IG_Costume_Exchange_Box,31617,130,1,1	// C_Lady_Tanee_TW
+IG_Costume_Exchange_Box,31472,130,1,1	// C_Fairy_Feathers
+IG_Costume_Exchange_Box,480095,130,1,1	// C_Giant_White_Rabbit
+
+// TODO: IG_Collectibles_Exchange_Box
+
+IG_PERFECTSIZE_MIX,24425,1 // S_Perfect_Size_Weapon
+IG_PERFECTSIZE_MIX,24426,1 // S_Perfect_Size_Armor
+
+IG_MAGICPIERCING_MIX,24427,1 // S_M_Exo_Co_Weapon
+IG_MAGICPIERCING_MIX,24428,1 // S_M_Viv_Dr_Weapon
+IG_MAGICPIERCING_MIX,24429,1 // S_M_Sci_Hu_Weapon
+IG_MAGICPIERCING_MIX,24430,1 // S_M_Fis_In_Weapon
+IG_MAGICPIERCING_MIX,24431,1 // S_M_Exe_Ho_Weapon

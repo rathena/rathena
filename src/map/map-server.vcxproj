@@ -186,6 +186,8 @@
     <ClInclude Include="instance.hpp" />
     <ClInclude Include="intif.hpp" />
     <ClInclude Include="itemdb.hpp" />
+    <ClInclude Include="item_synthesis.hpp" />
+    <ClInclude Include="item_upgrade.hpp" />
     <ClInclude Include="log.hpp" />
     <ClInclude Include="mail.hpp" />
     <ClInclude Include="map.hpp" />
@@ -231,6 +233,8 @@
     <ClCompile Include="instance.cpp" />
     <ClCompile Include="intif.cpp" />
     <ClCompile Include="itemdb.cpp" />
+    <ClCompile Include="item_synthesis.cpp" />
+    <ClCompile Include="item_upgrade.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="mail.cpp" />
     <ClCompile Include="map.cpp" />
@@ -321,6 +325,12 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_misc.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_misc.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_noequip.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_noequip.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_package.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_package.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_group.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_group.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_stack.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_stack.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_trade.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_trade.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_synthesis.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_synthesis.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_upgrade.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_upgrade.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_group.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_group.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_violetbox.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_violetbox.txt')" />
