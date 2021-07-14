@@ -120,8 +120,9 @@ struct AccountDB {
 	///
 	/// @param self Database
 	/// @param acc Account data
+	/// @param refresh_token Whether or not to refresh the web auth token
 	/// @return true if successful
-	bool (*save)(AccountDB* self, const struct mmo_account* acc);
+	bool (*save)(AccountDB* self, const struct mmo_account* acc, bool refresh_token);
 
 	/// Finds an account with account_id and copies it to acc.
 	///

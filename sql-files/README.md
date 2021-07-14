@@ -10,6 +10,7 @@ For a new install, the following needs to be imported into the 'ragnarok' schema
 Note: The schema name is defined in `conf/inter_athena.conf::map_server_db`.
 
 * main.sql - Contains tables for normal server usage.
+* web.sql - Contains tables for the web service
 * roulette_default_data.sql - Contains data for the client's roulette game.
 
 For a new install, the following needs to be imported into the 'log' schema:
@@ -72,3 +73,7 @@ To run these queries the user requires the [FILE](https://dev.mysql.com/doc/refm
 * item_db_to_txt.sql - Dumps the __pre-renewal__ item data table to TXT format.
 * item_db2_re_to_txt.sql - Dumps the __renewal__ item data table (import) to TXT format.
 * item_db2_to_txt.sql - Dumps the __pre-renewal__ item data table (import) to TXT format.
+
+### Notes
+---
+The web-server must be able to read the `login` and `guild` tables from the `login-server` and `char-server`, respectively.

@@ -289,7 +289,7 @@ int logchrif_parse_reqchangemail(int fd, int id, char* ip){
 			safestrncpy(acc.email, new_email, 40);
 			ShowNotice("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d (%s), new e-mail: %s, ip: %s).\n", ch_server[id].name, account_id, acc.userid, new_email, ip);
 			// Save
-			accounts->save(accounts, &acc);
+			accounts->save(accounts, &acc, false);
 		}
 	}
 	return 1;
@@ -324,7 +324,7 @@ int logchrif_parse_requpdaccstate(int fd, int id, char* ip){
 
 			acc.state = state;
 			// Save
-			accounts->save(accounts, &acc);
+			accounts->save(accounts, &acc, false);
 
 			// notify other servers
 			if (state != 0){
@@ -381,7 +381,7 @@ int logchrif_parse_reqbanacc(int fd, int id, char* ip){
 				acc.unban_time = timestamp;
 
 				// Save
-				accounts->save(accounts, &acc);
+				accounts->save(accounts, &acc, false);
 
 				WBUFW(buf,0) = 0x2731;
 				WBUFL(buf,2) = account_id;
@@ -423,7 +423,7 @@ int logchrif_parse_reqchgsex(int fd, int id, char* ip){
 
 			acc.sex = sex;
 			// Save
-			accounts->save(accounts, &acc);
+			accounts->save(accounts, &acc, false);
 
 			// announce to other servers
 			WBUFW(buf,0) = 0x2723;
@@ -483,7 +483,7 @@ int logchrif_parse_requnbanacc(int fd, int id, char* ip){
 		else{
 			ShowNotice("Char-server '%s': UnBan request (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
 			acc.unban_time = 0;
-			accounts->save(accounts, &acc);
+			accounts->save(accounts, &acc, false);
 		}
 	}
 	return 1;
@@ -605,7 +605,7 @@ int logchrif_parse_updpincode(int fd){
 		if( accounts->load_num(accounts, &acc, RFIFOL(fd,4) ) ){
 			strncpy( acc.pincode, RFIFOCP(fd,8), PINCODE_LENGTH+1 );
 			acc.pincode_change = time( NULL );
-			accounts->save(accounts, &acc);
+			accounts->save(accounts, &acc, false);
 		}
 		RFIFOSKIP(fd,8 + PINCODE_LENGTH+1);
 	}
@@ -689,7 +689,7 @@ int logchrif_parse_reqvipdata(int fd) {
 				acc.char_slots = login_config.char_per_account;
 			}
 			acc.vip_time = vip_time;
-			accounts->save(accounts,&acc);
+			accounts->save(accounts,&acc, false);
 			if( flag&1 )
 				logchrif_sendvipdata(fd,&acc,((isvip)?0x1:0)|((flag&0x8)?0x4:0),mapfd);
 		}

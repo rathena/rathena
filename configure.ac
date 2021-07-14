@@ -8,9 +8,10 @@ AC_LANG([C++])
 AC_LANG_COMPILER_REQUIRE
 AC_CONFIG_SRCDIR([src/common/cbasetypes.hpp])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
-AC_CONFIG_FILES([3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile])
+AC_CONFIG_FILES([3rdparty/libconfig/Makefile 3rdparty/yaml-cpp/Makefile 3rdparty/httplib/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/tool/Makefile])
+AC_CONFIG_FILES([src/web/Makefile])
 
 AC_GNU_SOURCE
 
@@ -46,7 +47,7 @@ AC_ARG_ENABLE(
 	[packetver],
 	AC_HELP_STRING(
 		[--enable-packetver=ARG],
-		[Sets the PACKETVER define. (see src/common/mmo.h)]
+		[Sets the PACKETVER define. (see src/common/mmo.hpp)]
 	),
 	[enable_packetver="$enableval"],
 	[enable_packetver=""]
@@ -293,6 +294,29 @@ AC_ARG_ENABLE(
     [enable_lto="yes"]
 )
 
+#
+# Build web service?
+#
+AC_ARG_ENABLE(
+	[web-service],
+	AC_HELP_STRING(
+		[--disable-web-service],
+		[
+			Disable the web service
+		]
+	),
+	[
+		case $enableval in
+			"no");;
+			"yes");;
+			*) AC_MSG_ERROR([[invalid argument --disable-web-service=$enableval... stopping]]);;
+		esac
+
+		enable_web_service="$enableval"
+	],
+	[enable_web_service="yes"]
+)
+
 
 #
 # Optionally set the maximum number of network connections
@@ -302,7 +326,8 @@ AC_ARG_WITH(
 	[maxconn],
 	AC_HELP_STRING(
 		[--with-maxconn@<:@=ARG@:>@],
-		[optionally set the maximum connections the core can handle. By default the system header value is used.]
+		[optionally set the maximum connections the core can handle. By default the system header value will be used.
+		 This will only be the compile time limit, make sure you set the correct limit with ulimit on your OS.]
 	),
 	[
 		if ! test "$withval" -ge 0 -o "$withval" -lt 0 2>&- ; then
@@ -352,6 +377,17 @@ AC_ARG_WITH(
 	[output_map="map-server"]
 )
 AC_SUBST([OMAP],$output_map)
+
+AC_ARG_WITH(
+	[outputweb],
+	AC_HELP_STRING(
+		[--with-outputweb@<:@=ARG@:>@],
+		[Specify the web-serv output name (defaults to web-server)]
+	),
+	[output_web="$withval"],
+	[output_web="web-server"]
+)
+AC_SUBST([OWEB],$output_web)
 
 
 #
@@ -635,7 +671,7 @@ if test "$enable_lto" != "no" ; then
 fi
 
 
-AC_DEFUN(AC_CHECK_COMPILER_WFLAG,
+AC_DEFUN([AC_CHECK_COMPILER_WFLAG],
 	[
 		AC_MSG_CHECKING([whether $CC supports -W$1])
 		OLD_CFLAGS="$CFLAGS"
@@ -670,7 +706,7 @@ AC_DEFUN(AC_CHECK_COMPILER_WFLAG,
 	]
 )
 
-AC_DEFUN(AC_CHECK_COMPILER_WNOFLAG,
+AC_DEFUN([AC_CHECK_COMPILER_WNOFLAG],
 	[
 		AC_MSG_CHECKING([whether $CC supports -Wno-$1])
 		OLD_CFLAGS="$CFLAGS"
@@ -1301,6 +1337,18 @@ AC_SUBST([PCRE_VERSION])
 AC_SUBST([PCRE_LIBS])
 AC_SUBST([PCRE_CFLAGS])
 
+#
+# web server (optional)
+#
+if test "$enable_web_service" = "no" ; then
+	AC_MSG_NOTICE([ignoring web service (optional)])
+	WANTS_WEBSERVICE="no"
+else
+	AC_MSG_NOTICE([enabling web service])
+	WANTS_WEBSERVICE="yes"
+fi
+
+AC_SUBST([WANTS_WEBSERVICE])
 
 #
 # Host specific stuff
