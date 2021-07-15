@@ -306,6 +306,7 @@ struct Script_Config script_config = {
 	// Instance related
 	"OnInstanceInit", //instance_init_event_name (is executed right after instance creation)
 	"OnInstanceDestroy", //instance_destroy_event_name (is executed right before instance destruction)
+	"OnNaviGenerate", //navi_generate_name (is executed right before navi genertion)
 };
 
 static jmp_buf     error_jump;
@@ -25108,8 +25109,56 @@ BUILDIN_FUNC(getenchantgrade){
 	}
 
 	script_pushint( st, sd->inventory.u.items_inventory[current_equip_item_index].enchantgrade );
-
 	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(naviregisterwarp) {
+#ifdef GENERATE_NAVI
+	TBL_NPC* nd;
+	int x, y, m;
+	const char *warpname, *mapname=NULL;
+
+	struct navi_link link;
+
+	nd = map_id2nd(st->oid);
+	if (!nd) {
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	warpname = script_getstr(st, 2);
+	mapname = script_getstr(st, 3);
+	x = script_getnum(st,4);
+	y = script_getnum(st,5);
+	m = map_mapname2mapid(mapname);
+
+	link.npc = nd;
+	link.id = 0;
+	link.pos = nd->navi.pos;
+	link.warp_dest = {m, x, y};
+	link.name = warpname;
+	link.hidden = nd->navi.hidden;
+
+	nd->links.push_back(link);
+	
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(navihide) {
+#ifdef GENERATE_NAVI
+	TBL_NPC *nd;
+
+	nd = map_id2nd(st->oid);
+	if (!nd) {
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	nd->navi.hidden = true;
+	for (auto &link : nd->links) {
+		link.hidden = true;
+	}
+#endif
+return SCRIPT_CMD_SUCCESS;
 }
 
 #include "../custom/script.inc"
@@ -25803,6 +25852,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem3", "viiiiiiirrr?"),
 
 	BUILDIN_DEF(getenchantgrade, ""),
+
+	// Navigation Generation System
+	BUILDIN_DEF(naviregisterwarp, "ssii"),
+	BUILDIN_DEF(navihide, ""),
 
 #include "../custom/script_def.inc"
 

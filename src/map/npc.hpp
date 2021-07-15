@@ -5,10 +5,12 @@
 #define NPC_HPP
 
 #include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
+#include "navi.hpp" // navi stuff
 
 struct block_list;
 struct npc_data;
@@ -130,6 +132,11 @@ struct npc_data {
 		t_tick timeout;
 		unsigned long color;
 	} progressbar;
+
+#ifdef GENERATE_NAVI
+	struct navi_link navi; // for warps and the src of npcs
+	std::vector<navi_link> links; // for extra links, like warper npc
+#endif
 };
 
 struct eri;

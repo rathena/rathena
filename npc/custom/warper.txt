@@ -526,6 +526,65 @@ S9: Restrict("RE");
 	Go("paramk",97,17);
 S10: Go("turbo_room",99,114);
 
+OnNaviGenerate:
+	naviregisterwarp("Warper > Prontera", "prontera", 155, 183);
+	naviregisterwarp("Warper > Alberta", "alberta", 28, 234);
+	naviregisterwarp("Warper > Aldebaran", "aldebaran", 140, 131);
+	naviregisterwarp("Warper > Amatsu", "amatsu", 198, 84);
+	naviregisterwarp("Warper > Ayothoya", "ayothaya", 208, 166);
+	naviregisterwarp("Warper > Einbech", "einbech",63,35);
+	naviregisterwarp("Warper > Einbroch", "einbroch",64,200);
+	naviregisterwarp("Warper > Geffen", "geffen",119,59);
+	naviregisterwarp("Warper > Gonryun", "gonryun",160,120);
+	naviregisterwarp("Warper > Hugel", "hugel",96,145);
+	naviregisterwarp("Warper > Izlude", "izlude",128,(checkre(3)?146:114));
+	naviregisterwarp("Warper > Jawaii", "jawaii",251,132);
+	naviregisterwarp("Warper > Lighthalzen", "lighthalzen",158,92);
+	naviregisterwarp("Warper > Louyang", "louyang",217,100);
+	naviregisterwarp("Warper > Lutie", "xmas",147,134);
+	naviregisterwarp("Warper > Manuk", "manuk",282,138);
+	naviregisterwarp("Warper > Midgarts Expedition Camp", "mid_camp",210,288);
+	naviregisterwarp("Warper > Morroc", "morocc",156,93);
+	naviregisterwarp("Warper > Moscovia", "moscovia",223,184);
+	naviregisterwarp("Warper > Nameless Island", "nameless_n",256,215);
+	naviregisterwarp("Warper > Niflheim", "niflheim",202,174);
+	naviregisterwarp("Warper > Payon", "payon",179,100);
+	naviregisterwarp("Warper > Rachel", "rachel",130,110);
+	naviregisterwarp("Warper > Splendide", "splendide",201,147);
+	naviregisterwarp("Warper > Thor Camp", "thor_camp",246,68);
+	naviregisterwarp("Warper > Umbala", "umbala",97,153);
+	naviregisterwarp("Warper > Veins", "veins",216,123);
+	naviregisterwarp("Warper > Yuno", "yuno",157,51);
+
+	if (checkre(0)) {
+		naviregisterwarp("Warper > Brasilis", "brasilis", 196, 217);
+		naviregisterwarp("Warper > Dewata", "dewata",200,180);
+		naviregisterwarp("Warper > Eclage", "ecl_in01",48,53);
+		naviregisterwarp("Warper > El Dicastes", "dicastes01",198,187);
+		naviregisterwarp("Warper > Lasagna", "lasagna",193,182);
+		naviregisterwarp("Warper > Malangdo", "malangdo",140,114);
+		naviregisterwarp("Warper > Malaya", "malaya",231,200);
+		naviregisterwarp("Warper > Mora", "mora",55,146);
+	}
+
+	// fields
+	naviregisterwarp("Warper > Amatsu Field", "ama_fild01", 190, 197);
+	naviregisterwarp("Warper > Ayothoa Field", "ayo_fild01", 173, 134);
+
+	if (checkre(0)) {
+		naviregisterwarp("Warper > Bifrost Field", "bif_fild02", 193, 220);
+	}
+
+	if (!.OnlyFirstFld) {
+		naviregisterwarp("Warper > Ayothoa Field", "ayo_fild02", 212, 150);
+		
+		if (checkre(0)) {
+			naviregisterwarp("Warper > Bifrost Field", "bif_fild02", 220, 187);
+		}
+	}
+
+	end;
+
 OnInit:
 	.Satan_Morocc = true;	//	false will enable moc_fild 4,5,6,8,9,10,14,15 while disable moc_fild 20,21,22 Default is true.
 	.OnlyFirstFld = false;	//	true will teleport to the first level of the Fields  Default is false.
