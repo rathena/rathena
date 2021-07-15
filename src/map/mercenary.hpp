@@ -6,6 +6,7 @@
 
 #include "../common/cbasetypes.hpp"
 
+#include "battle.hpp"	// battle_config
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
 
@@ -29,15 +30,13 @@ enum MERID {
 };
 
 struct s_mercenary_db {
-	int class_;
+	int32 class_;
 	char sprite[NAME_LENGTH], name[NAME_LENGTH];
-	unsigned short lv;
-	short range2, range3;
-	struct status_data status;
-	struct view_data vd;
-	struct {
-		unsigned short id, lv;
-	} skill[MAX_MERCSKILL];
+	uint16 lv;
+	uint16 range2, range3;
+	status_data status;
+	view_data vd;
+	std::unordered_map<uint16, uint16> skill;
 };
 
 struct mercenary_data {
@@ -48,7 +47,7 @@ struct mercenary_data {
 	struct status_change sc;
 	struct regen_data regen;
 
-	struct s_mercenary_db *db;
+	std::shared_ptr<s_mercenary_db> db;
 	struct s_mercenary mercenary;
 	std::vector<uint16> blockskill;
 
@@ -59,8 +58,20 @@ struct mercenary_data {
 	unsigned devotion_flag : 1;
 };
 
-struct s_mercenary_db *mercenary_db(uint16 class_);
 struct view_data * mercenary_get_viewdata(uint16 class_);
+
+class MercenaryDatabase : public TypesafeYamlDatabase<int32, s_mercenary_db> {
+public:
+	MercenaryDatabase() : TypesafeYamlDatabase("MERCENARY_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	void loadingFinished();
+};
+
+extern MercenaryDatabase mercenary_db;
 
 bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime);
 bool mercenary_recv_data(struct s_mercenary *merc, bool flag);
@@ -80,14 +91,7 @@ int mercenary_get_calls(struct mercenary_data *md);
 void mercenary_set_calls(struct mercenary_data *md, int value);
 void mercenary_kills(struct mercenary_data *md);
 
-int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
-short mercenary_skill_get_index(uint16 skill_id);
-
-/**
- * atcommand.cpp required
- **/
-void mercenary_readdb(void);
-void mercenary_read_skilldb(void);
+uint16 mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
 
 void do_init_mercenary(void);
 void do_final_mercenary(void);

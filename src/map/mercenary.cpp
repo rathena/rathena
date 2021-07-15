@@ -29,16 +29,7 @@
 
 using namespace rathena;
 
-std::map<uint16, struct s_mercenary_db> mercenary_db_data;
-
-/**
- * Search Mercenary by class
- * @param class_ Class ID of Mercenary
- * @return A pointer to the mercenary db entry or nullptr if not found
- **/
-struct s_mercenary_db *mercenary_db( uint16 class_ ){
-	return util::map_find( mercenary_db_data, class_ );
-}
+MercenaryDatabase mercenary_db;
 
 /**
 * Get View Data of Mercenary by Class ID
@@ -46,27 +37,13 @@ struct s_mercenary_db *mercenary_db( uint16 class_ ){
 * @return View Data of Mercenary
 **/
 struct view_data *mercenary_get_viewdata( uint16 class_ ){
-	struct s_mercenary_db *db = mercenary_db(class_);
+	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(class_);
 
 	if( db ){
 		return &db->vd;
 	}else{
 		return nullptr;
 	}
-}
-
-/**
- * Get mercenary skill index for mercenary skill tree
- * @param skill_id
- * @return Index in skill_tree or -1
- **/
-short mercenary_skill_get_index(uint16 skill_id) {
-	if (!SKILL_CHK_MERC(skill_id))
-		return -1;
-	skill_id -= MC_SKILLBASE;
-	if (skill_id >= MAX_MERCSKILL)
-		return -1;
-	return skill_id;
 }
 
 /**
@@ -78,10 +55,9 @@ short mercenary_skill_get_index(uint16 skill_id) {
 **/
 bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime) {
 	struct s_mercenary merc;
-	struct s_mercenary_db *db;
 	nullpo_retr(false,sd);
 
-	db = mercenary_db(class_);
+	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(class_);
 
 	if( !db ){
 		return false;
@@ -357,9 +333,8 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 {
 	struct map_session_data *sd;
 	struct mercenary_data *md;
-	struct s_mercenary_db *db;
 
-	db = mercenary_db(merc->class_);
+	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(merc->class_);
 
 	if( (sd = map_charid2sd(merc->char_id)) == NULL )
 		return false;
@@ -474,128 +449,460 @@ void mercenary_kills(struct mercenary_data *md){
 * @param skill_id The skill
 * @return Skill Level or 0 if Mercenary doesn't have the skill
 **/
-int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id) {
-	short idx = mercenary_skill_get_index(skill_id);
-
-	if( !md || !md->db || idx == -1)
+uint16 mercenary_checkskill(struct mercenary_data *md, uint16 skill_id) {
+	if (!md || !md->db || md->db->skill.count(skill_id) == 0)
 		return 0;
-	return md->db->skill[idx].lv;
+	return md->db->skill[skill_id];
 }
 
-/**
-* Read each line of Mercenary's database
-**/
-static bool mercenary_readdb_sub(char* str[], int columns, int current)
-{
-	int ele;
-	uint16 class_ = atoi(str[0]);
-	struct s_mercenary_db *db;
-	struct status_data *status;
+const std::string MercenaryDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/mercenary_db.yml";
+}
 
-	db = &mercenary_db_data[class_];
+/*
+ * Reads and parses an entry from the mercenary_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
+	uint32 id;
 
-	db->class_ = class_;
-	safestrncpy(db->sprite, str[1], NAME_LENGTH);
-	safestrncpy(db->name, str[2], NAME_LENGTH);
-	db->lv = atoi(str[3]);
+	if (!this->asUInt32(node, "Id", id))
+		return 0;
 
-	status = &db->status;
-	db->vd.class_ = db->class_;
+	std::shared_ptr<s_mercenary_db> mercenary = this->find(id);
+	bool exists = mercenary != nullptr;
 
-	status->max_hp = atoi(str[4]);
-	status->max_sp = atoi(str[5]);
-	status->rhw.range = atoi(str[6]);
-	status->rhw.atk = atoi(str[7]);
-	status->rhw.atk2 = status->rhw.atk + atoi(str[8]);
-	status->def = atoi(str[9]);
-	status->mdef = atoi(str[10]);
-	status->str = atoi(str[11]);
-	status->agi = atoi(str[12]);
-	status->vit = atoi(str[13]);
-	status->int_ = atoi(str[14]);
-	status->dex = atoi(str[15]);
-	status->luk = atoi(str[16]);
-	db->range2 = atoi(str[17]);
-	db->range3 = atoi(str[18]);
-	status->size = atoi(str[19]);
-	status->race = atoi(str[20]);
+	if (!exists) {
+		if (!this->nodesExist(node, { "AegisName", "Name" }))
+			return 0;
 
-	ele = atoi(str[21]);
-	status->def_ele = ele%20;
-	status->ele_lv = (unsigned char)floor(ele/20.);
-	if( !CHK_ELEMENT(status->def_ele) )
-	{
-		ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
-		status->def_ele = ELE_NEUTRAL;
-	}
-	if( !CHK_ELEMENT_LEVEL(status->ele_lv) )
-	{
-		ShowWarning("Mercenary %d has invalid element level %d (max is %d)\n", db->class_, status->ele_lv, MAX_ELE_LEVEL);
-		status->ele_lv = 1;
+		mercenary = std::make_shared<s_mercenary_db>();
+		mercenary->class_ = id;
 	}
 
-	status->aspd_rate = 1000;
-	status->speed = atoi(str[22]);
-	status->adelay = atoi(str[23]);
-	status->amotion = atoi(str[24]);
-	status->dmotion = atoi(str[25]);
+	if (this->nodeExists(node, "AegisName")) {
+		std::string name;
+
+		if (!this->asString(node, "AegisName", name))
+			return 0;
+
+		if (name.size() > NAME_LENGTH) {
+			this->invalidWarning(node["AegisName"], "%s's size exceeds %d, skipping.\n", name.c_str(), NAME_LENGTH);
+			return 0;
+		}
+
+		safestrncpy(mercenary->sprite, name.c_str(), sizeof(mercenary->sprite));
+	}
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+
+		if (!this->asString(node, "Name", name))
+			return 0;
+
+		safestrncpy(mercenary->name, name.c_str(), sizeof(mercenary->name));
+	}
+
+	if (this->nodeExists(node, "Level")) {
+		uint16 level;
+
+		if (!this->asUInt16(node, "Level", level))
+			return 0;
+
+		mercenary->lv = level;
+	} else {
+		if (!exists)
+			mercenary->lv = 1;
+	}
+
+	if (this->nodeExists(node, "Hp")) {
+		uint32 hp;
+
+		if (!this->asUInt32(node, "Hp", hp))
+			return 0;
+
+		mercenary->status.max_hp = hp;
+	} else {
+		if (!exists)
+			mercenary->status.max_hp = 1;
+	}
 	
+	if (this->nodeExists(node, "Sp")) {
+		uint32 sp;
+
+		if (!this->asUInt32(node, "Sp", sp))
+			return 0;
+
+		mercenary->status.max_sp = sp;
+	} else {
+		if (!exists)
+			mercenary->status.max_sp = 1;
+	}
+
+	if (this->nodeExists(node, "Attack")) {
+		uint16 atk;
+
+		if (!this->asUInt16(node, "Attack", atk))
+			return 0;
+
+		mercenary->status.rhw.atk = atk;
+	} else {
+		if (!exists)
+			mercenary->status.rhw.atk = 0;
+	}
+	
+	if (this->nodeExists(node, "Attack2")) {
+		uint16 atk;
+
+		if (!this->asUInt16(node, "Attack2", atk))
+			return 0;
+
+		mercenary->status.rhw.atk2 = mercenary->status.rhw.atk + atk;
+	} else {
+		if (!exists)
+			mercenary->status.rhw.atk2 = mercenary->status.rhw.atk;
+	}
+
+	if (this->nodeExists(node, "Defense")) {
+		uint16 def;
+
+		if (!this->asUInt16(node, "Defense", def))
+			return 0;
+
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["Defense"], "Invalid mercenary defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
+
+		mercenary->status.def = static_cast<defType>(def);
+	} else {
+		if (!exists)
+			mercenary->status.def = 0;
+	}
+	
+	if (this->nodeExists(node, "MagicDefense")) {
+		uint16 def;
+
+		if (!this->asUInt16(node, "MagicDefense", def))
+			return 0;
+
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["MagicDefense"], "Invalid mercenary magic defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
+
+		mercenary->status.mdef = static_cast<defType>(def);
+	} else {
+		if (!exists)
+			mercenary->status.mdef = 0;
+	}
+
+	if (this->nodeExists(node, "Str")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Str", stat))
+			return 0;
+
+		mercenary->status.str = stat;
+	} else {
+		if (!exists)
+			mercenary->status.str = 1;
+	}
+
+	if (this->nodeExists(node, "Agi")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Agi", stat))
+			return 0;
+
+		mercenary->status.agi = stat;
+	} else {
+		if (!exists)
+			mercenary->status.agi = 1;
+	}
+
+	if (this->nodeExists(node, "Vit")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Vit", stat))
+			return 0;
+
+		mercenary->status.vit = stat;
+	} else {
+		if (!exists)
+			mercenary->status.vit = 1;
+	}
+
+	if (this->nodeExists(node, "Int")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Int", stat))
+			return 0;
+
+		mercenary->status.int_ = stat;
+	} else {
+		if (!exists)
+			mercenary->status.int_ = 1;
+	}
+
+	if (this->nodeExists(node, "Dex")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Dex", stat))
+			return 0;
+
+		mercenary->status.dex = stat;
+	} else {
+		if (!exists)
+			mercenary->status.dex = 1;
+	}
+
+	if (this->nodeExists(node, "Luk")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Luk", stat))
+			return 0;
+
+		mercenary->status.luk = stat;
+	} else {
+		if (!exists)
+			mercenary->status.luk = 1;
+	}
+
+	if (this->nodeExists(node, "AttackRange")) {
+		uint16 range;
+
+		if (!this->asUInt16(node, "AttackRange", range))
+			return 0;
+
+		mercenary->status.rhw.range = range;
+	} else {
+		if (!exists)
+			mercenary->status.rhw.range = 0;
+	}
+	
+	if (this->nodeExists(node, "SkillRange")) {
+		uint16 range;
+
+		if (!this->asUInt16(node, "SkillRange", range))
+			return 0;
+
+		mercenary->range2 = range;
+	} else {
+		if (!exists)
+			mercenary->range2 = 0;
+	}
+	
+	if (this->nodeExists(node, "ChaseRange")) {
+		uint16 range;
+
+		if (!this->asUInt16(node, "ChaseRange", range))
+			return 0;
+
+		mercenary->range3 = range;
+	} else {
+		if (!exists)
+			mercenary->range3 = 0;
+	}
+
+	if (this->nodeExists(node, "Size")) {
+		std::string size;
+
+		if (!this->asString(node, "Size", size))
+			return 0;
+
+		std::string size_constant = "Size_" + size;
+		int64 constant;
+
+		if (!script_get_constant(size_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Size"], "Unknown mercenary size %s, defaulting to Size_Small.\n", size.c_str());
+			constant = SZ_SMALL;
+		}
+
+		if (constant < SZ_SMALL || constant > SZ_BIG) {
+			this->invalidWarning(node["Size"], "Invalid mercenary size %s, defaulting to Size_Small.\n", size.c_str());
+			constant = SZ_SMALL;
+		}
+
+		mercenary->status.size = static_cast<e_size>(constant);
+	} else {
+		if (!exists)
+			mercenary->status.size = SZ_SMALL;
+	}
+	
+	if (this->nodeExists(node, "Race")) {
+		std::string race;
+
+		if (!this->asString(node, "Race", race))
+			return 0;
+
+		std::string race_constant = "RC_" + race;
+		int64 constant;
+
+		if (!script_get_constant(race_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Race"], "Unknown mercenary race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			constant = RC_FORMLESS;
+		}
+
+		if (!CHK_RACE(constant)) {
+			this->invalidWarning(node["Race"], "Invalid mercenary race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			constant = RC_FORMLESS;
+		}
+
+		mercenary->status.race = static_cast<e_race>(constant);
+	} else {
+		if (!exists)
+			mercenary->status.race = RC_FORMLESS;
+	}
+
+	if (this->nodeExists(node, "Element")) {
+		std::string ele;
+
+		if (!this->asString(node, "Element", ele))
+			return 0;
+
+		std::string ele_constant = "ELE_" + ele;
+		int64 constant;
+
+		if (!script_get_constant(ele_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Element"], "Unknown mercenary element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			constant = ELE_NEUTRAL;
+		}
+
+		if (!CHK_ELEMENT(constant)) {
+			this->invalidWarning(node["Element"], "Invalid mercenary element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			constant = ELE_NEUTRAL;
+		}
+
+		mercenary->status.def_ele = static_cast<e_element>(constant);
+	} else {
+		if (!exists)
+			mercenary->status.def_ele = ELE_NEUTRAL;
+	}
+
+	if (this->nodeExists(node, "ElementLevel")) {
+		uint16 level;
+
+		if (!this->asUInt16(node, "ElementLevel", level))
+			return 0;
+
+		if (!CHK_ELEMENT_LEVEL(level)) {
+			this->invalidWarning(node["ElementLevel"], "Invalid mercenary element level %hu, defaulting to 1.\n", level);
+			level = 1;
+		}
+
+		mercenary->status.ele_lv = static_cast<uint8>(level);
+	} else {
+		if (!exists)
+			mercenary->status.ele_lv = 1;
+	}
+
+	if (this->nodeExists(node, "WalkSpeed")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "WalkSpeed", speed))
+			return 0;
+
+		if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+			this->invalidWarning(node["WalkSpeed"], "Invalid mercenary walk speed %hu, capping...\n", speed);
+			speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+		}
+
+		mercenary->status.speed = speed;
+	} else {
+		if (!exists)
+			mercenary->status.speed = DEFAULT_WALK_SPEED;
+	}
+
+	if (this->nodeExists(node, "AttackDelay")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "AttackDelay", speed))
+			return 0;
+
+		mercenary->status.adelay = cap_value(speed, battle_config.monster_max_aspd * 2, 4000);
+	} else {
+		if (!exists)
+			mercenary->status.adelay = cap_value(0, battle_config.monster_max_aspd * 2, 4000);
+	}
+	
+	if (this->nodeExists(node, "AttackMotion")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "AttackMotion", speed))
+			return 0;
+
+		mercenary->status.amotion = cap_value(speed, battle_config.monster_max_aspd, 2000);
+	} else {
+		if (!exists)
+			mercenary->status.amotion = cap_value(0, battle_config.monster_max_aspd, 2000);
+	}
+
+	if (this->nodeExists(node, "DamageMotion")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "DamageMotion", speed))
+			return 0;
+
+		if (battle_config.monster_damage_delay_rate != 100)
+			speed = speed * battle_config.monster_damage_delay_rate / 100;
+
+		mercenary->status.dmotion = speed;
+	} else {
+		if (!exists)
+			mercenary->status.dmotion = 0;
+	}
+
+	if (this->nodeExists(node, "Skills")) {
+		const YAML::Node &skillsNode = node["Skills"];
+
+		for (const YAML::Node &skill : skillsNode) {
+			std::string skill_name;
+
+			if (!this->asString(skill, "Name", skill_name))
+				return 0;
+
+			uint16 skill_id = skill_name2id(skill_name.c_str());
+
+			if (skill_id == 0) {
+				this->invalidWarning(skill["Name"], "Invalid skill %s, skipping.\n", skill_name.c_str());
+				return 0;
+			}
+
+			if (!SKILL_CHK_MERC(skill_id)) {
+				this->invalidWarning(skill["Name"], "Skill %s (%u) is out of the mercenary skill range [%u-%u], skipping.\n", skill_name.c_str(), skill_id, MC_SKILLBASE, MC_SKILLBASE + MAX_MERCSKILL - 1);
+				return 0;
+			}
+
+			uint16 level;
+
+			if (!this->asUInt16(skill, "MaxLevel", level))
+				return 0;
+
+			mercenary->skill[skill_id] = level;
+		}
+	}
+
+	if (!exists)
+		this->put(id, mercenary);
+
 	return true;
 }
 
-/**
-* Load Mercenary's database
-**/
-void mercenary_readdb(void) {
-	const char *filename[]={ "mercenary_db.txt",DBIMPORT"/mercenary_db.txt"};
-	uint8 i;
+// copied from mob.cpp, required ?
+void MercenaryDatabase::loadingFinished() {
+	for (auto &data : *this) {
+		std::shared_ptr<s_mercenary_db> mercenary = data.second;
 
-	mercenary_db_data.clear();
+		if (battle_config.view_range_rate != 100)
+			mercenary->range2 = cap_value(mercenary->range2, 1, mercenary->range2 * battle_config.view_range_rate / 100);
+		if (battle_config.chase_range_rate != 100)
+			mercenary->range3 = cap_value(mercenary->range3, mercenary->range2, mercenary->range3 * battle_config.chase_range_rate / 100);
 
-	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 26, 26, -1, &mercenary_readdb_sub, i > 0);
-	}
-}
-
-/**
-* Read each line of Mercenary's skill
-**/
-static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
-{// <merc id>,<skill id>,<skill level>
-	struct s_mercenary_db *db;
-	uint16 class_, skill_id, skill_lv;
-	short idx = -1;
-
-	class_ = atoi(str[0]);
-	db = mercenary_db(class_);
-	if( !db ){
-		ShowError("read_mercenary_skilldb : Class %d not found in mercenary_db for skill entry.\n", class_);
-		return false;
-	}
-
-	skill_id = atoi(str[1]);
-	if( (idx = mercenary_skill_get_index(skill_id)) == -1 ) {
-		ShowError("read_mercenary_skilldb: Invalid Mercenary skill '%s'.\n", str[1]);
-		return false;
-	}
-
-	skill_lv = atoi(str[2]);
-
-	db->skill[idx].id = skill_id;
-	db->skill[idx].lv = skill_lv;
-
-	return true;
-}
-
-/**
-* Load Mercenary's skill database
-**/
-void mercenary_read_skilldb(void){
-	const char *filename[]={ "mercenary_skill_db.txt",DBIMPORT"/mercenary_skill_db.txt"};
-	uint8 i;
-
-	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 3, 3, -1, &mercenary_read_skilldb_sub, i > 0);
+		mercenary->range3 += 2;
+		mercenary->status.adelay = max(mercenary->status.adelay, mercenary->status.amotion);
+		mercenary->status.aspd_rate = 1000;
 	}
 }
 
@@ -603,8 +910,7 @@ void mercenary_read_skilldb(void){
 * Init Mercenary datas
 **/
 void do_init_mercenary(void){
-	mercenary_readdb();
-	mercenary_read_skilldb();
+	mercenary_db.load();
 
 	//add_timer_func_list(mercenary_contract, "mercenary_contract");
 }
@@ -613,5 +919,5 @@ void do_init_mercenary(void){
 * Do Final Mercenary datas
 **/
 void do_final_mercenary(void){
-	mercenary_db_data.clear();
+	mercenary_db.clear();
 }
