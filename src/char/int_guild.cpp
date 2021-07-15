@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #define __STDC_WANT_LIB_EXT1__ 1
 #include <string.h>
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
@@ -37,8 +38,6 @@ static const char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9
 //Guild cache
 static DBMap* guild_db_; // int guild_id -> struct guild*
 static DBMap *castle_db;
-
-static t_exp guild_exp[MAX_GUILDLEVEL];
 
 int mapif_parse_GuildLeave(int fd,int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes);
 int mapif_guild_broken(int guild_id,int flag);
@@ -637,21 +636,6 @@ struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 }
 
 
-// Read exp_guild.txt
-bool exp_guild_parse_row(char* split[], int column, int current)
-{
-	t_exp exp = strtoull(split[0], nullptr, 10);
-
-	if (exp > MAX_GUILD_EXP) {
-		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d, exceeds max of %" PRIu64 "\n", exp, current, MAX_GUILD_EXP);
-		return false;
-	}
-
-	guild_exp[current] = exp;
-	return true;
-}
-
-
 int inter_guild_CharOnline(uint32 char_id, int guild_id)
 {
 	struct guild *g;
@@ -757,23 +741,73 @@ int inter_guild_CharOffline(uint32 char_id, int guild_id)
 	return 1;
 }
 
-// Initialize guild sql
-int inter_guild_sql_init(void)
-{
-	const char *filename[]={ DBPATH"exp_guild.txt", DBIMPORT"/exp_guild.txt"};
-	int i;
+const std::string GuildExpDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/exp_guild.yml";
+}
+
+uint64 GuildExpDatabase::parseBodyNode(const YAML::Node &node) {
+	if (!this->nodesExist(node, { "Level", "Exp" })) {
+		return 0;
+	}
+
+	uint16 level;
+
+	if (!this->asUInt16(node, "Level", level))
+		return 0;
+
+	if (level == 0) {
+		this->invalidWarning(node, "The minimum guild level is 1.\n");
+		return 0;
+	}
+	if (level >= MAX_GUILDLEVEL) {
+		this->invalidWarning(node["Level"], "Guild level %d exceeds maximum level %d, skipping.\n", level, MAX_GUILDLEVEL);
+		return 0;
+	}
+
+	t_exp exp;
+
+	if (!this->asUInt64(node, "Exp", exp))
+		return 0;
+
+	if (exp > MAX_GUILD_EXP) {
+		this->invalidWarning(node["Exp"], "Guild exp %" PRIu64 " exceeds max of %" PRIu64 ".\n", exp, MAX_GUILD_EXP);
+		return 0;
+	}
+
+	std::shared_ptr<s_guild_exp_db> guild_exp = this->find(level);
+	bool exists = guild_exp != nullptr;
+
+	if (!exists) {
+		guild_exp = std::make_shared<s_guild_exp_db>();
+		guild_exp->level = level;
+	}
+
+	guild_exp->exp = static_cast<t_exp>(exp);
+
+	if (!exists)
+		this->put(level, guild_exp);
+
+	return 1;
+}
+
+GuildExpDatabase guild_exp_db;
+
+void GuildExpDatabase::loadingFinished() {
+	for (uint16 level = 1; level < MAX_GUILDLEVEL; level++) {
+		if (this->get_nextexp(level) == 0)
+			ShowError("Missing experience for guild level %d.\n", level);
+	}
+}
+
+// Initialize guild sql and read exp_guild.yml
+void inter_guild_sql_init(void) {
 	//Initialize the guild cache
 	guild_db_= idb_alloc(DB_OPT_RELEASE_DATA);
 	castle_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
-	//Read exp file
-	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 1, 1, MAX_GUILDLEVEL, exp_guild_parse_row, i > 0);
-	}
-
+	guild_exp_db.load();
 	add_timer_func_list(guild_save_timer, "guild_save_timer");
 	add_timer(gettick() + 10000, guild_save_timer, 0, 0);
-	return 0;
 }
 
 /**
@@ -835,14 +869,10 @@ bool guild_check_empty(struct guild *g)
 	return i < g->max_member ? false : true; // not empty
 }
 
-t_exp guild_nextexp(int level)
-{
-	if (level == 0)
-		return 1;
-	if (level < 0 || level > MAX_GUILDLEVEL)
-		return 0;
+t_exp GuildExpDatabase::get_nextexp(uint16 level) {
+	std::shared_ptr<s_guild_exp_db> guild_exp = guild_exp_db.find(level);
 
-	return guild_exp[level-1];
+	return ((guild_exp == nullptr) ? 0 : guild_exp->exp);
 }
 
 int guild_checkskill(struct guild *g,int id)
@@ -854,23 +884,19 @@ int guild_checkskill(struct guild *g,int id)
 int guild_calcinfo(struct guild *g)
 {
 	int i,c;
-	t_exp nextexp;
 	struct guild before = *g; // Save guild current values
 
 	if(g->guild_lv<=0)
 		g->guild_lv = 1;
-	nextexp = guild_nextexp(g->guild_lv);
+	g->next_exp = guild_exp_db.get_nextexp(g->guild_lv);
 
 	// Consume guild exp and increase guild level
-	while(g->exp >= nextexp && nextexp > 0){	//fixed guild exp overflow [Kevin]
-		g->exp-=nextexp;
+	while(g->exp >= g->next_exp && g->next_exp > 0 && g->guild_lv < MAX_GUILDLEVEL){
+		g->exp-=g->next_exp;
 		g->guild_lv++;
 		g->skill_point++;
-		nextexp = guild_nextexp(g->guild_lv);
+		g->next_exp = guild_exp_db.get_nextexp(g->guild_lv);
 	}
-
-	// Save next exp step
-	g->next_exp = nextexp;
 
 	// Set the max number of members, Guild Extention skill - currently adds 6 to max per skill lv.
 	g->max_member = 16 + guild_checkskill(g, GD_EXTENSION) * 6;

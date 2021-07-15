@@ -425,5 +425,6 @@ static bool mob_readdb_group_yaml(void);
 static bool skill_parse_row_createarrowdb(char* fields[], int columns, int current);
 static bool pc_read_statsdb(const char* file);
 static bool guild_read_castledb(char* str[], int columns, int current);
+static bool exp_guild_parse_row(char* split[], int column, int current);
 
 #endif /* CSV2YAML_HPP */

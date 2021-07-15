@@ -360,6 +360,18 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("GUILD_EXP_DB", 1, { path_db_mode }, "exp_guild", [](const std::string &path, const std::string &name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, MAX_GUILDLEVEL, &exp_guild_parse_row, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("GUILD_EXP_DB", 1, { path_db_import }, "exp_guild", [](const std::string &path, const std::string &name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, MAX_GUILDLEVEL, &exp_guild_parse_row, false);
+	})) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -3724,5 +3736,22 @@ static bool guild_read_castledb(char* str[], int columns, int current) {
 	body << YAML::Key << "Name" << YAML::Value << trim(str[2]);
 	body << YAML::Key << "Npc" << YAML::Value << trim(str[3]);
 	body << YAML::EndMap;
+	return true;
+}
+
+// Copied and adjusted from int_guild.cpp
+static bool exp_guild_parse_row(char* split[], int column, int current) {
+	t_exp exp = strtoull(split[0], nullptr, 10);
+
+	if (exp > MAX_GUILD_EXP) {
+		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d, exceeds max of %" PRIu64 "\n", exp, current, MAX_GUILD_EXP);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Level" << YAML::Value << (current+1);
+	body << YAML::Key << "Exp" << YAML::Value << exp;
+	body << YAML::EndMap;
+
 	return true;
 }
