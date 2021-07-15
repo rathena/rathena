@@ -321,6 +321,7 @@ struct script_state {
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
 	char* funcname; // Stores the current running function name
 	unsigned int id;
+	bool asyncSleep;
 };
 
 struct script_reg {

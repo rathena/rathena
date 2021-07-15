@@ -27,7 +27,9 @@
     <ClInclude Include="db.hpp" />
     <ClInclude Include="des.hpp" />
     <ClInclude Include="ers.hpp" />
+    <ClInclude Include="future.hpp" />
     <ClInclude Include="grfio.hpp" />
+    <ClInclude Include="jobqueue.hpp" />
     <ClInclude Include="malloc.hpp" />
     <ClInclude Include="mapindex.hpp" />
     <ClInclude Include="md5calc.hpp" />
@@ -52,6 +54,7 @@
     <ClCompile Include="db.cpp" />
     <ClCompile Include="des.cpp" />
     <ClCompile Include="ers.cpp" />
+    <ClCompile Include="future.cpp" />
     <ClCompile Include="grfio.cpp" />
     <ClCompile Include="malloc.cpp" />
     <ClCompile Include="mapindex.cpp" />

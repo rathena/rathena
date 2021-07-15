@@ -104,6 +104,7 @@ set( COMMON_BASE_HEADERS
 	"${COMMON_SOURCE_DIR}/msg_conf.hpp"
 	"${COMMON_SOURCE_DIR}/cli.hpp"
 	"${COMMON_SOURCE_DIR}/utilities.hpp"
+	"${COMMON_SOURCE_DIR}/future.hpp"
 	${LIBCONFIG_HEADERS} # needed by conf.hpp/showmsg.hpp
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 	CACHE INTERNAL "common_base headers" )
@@ -128,6 +129,7 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/msg_conf.cpp"
 	"${COMMON_SOURCE_DIR}/cli.cpp"
 	"${COMMON_SOURCE_DIR}/utilities.cpp"
+	"${COMMON_SOURCE_DIR}/future.cpp"
 	${LIBCONFIG_SOURCES} # needed by conf.cpp/showmsg.cpp
 	${COMMON_ADDITIONALL_CPP} # needed by Windows
 	CACHE INTERNAL "common_base sources" )
