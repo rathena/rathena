@@ -527,7 +527,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		return entry->mob_id;
 	}
 
-	if (mob_db.find( summon->default_mob_id ) == nullptr) {
+	if (!mob_db.exists( summon->default_mob_id )) {
 		ShowError("mob_get_random_id: Default monster is not defined for type %d.\n", type);
 		return 0;
 	}
@@ -2840,7 +2840,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if (sd == mvp_sd && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rnd()%10000) {
 			struct s_mob_drop mobdrop;
 			memset(&mobdrop, 0, sizeof(struct s_mob_drop));
-			mobdrop.nameid = itemdb_searchrandomid(IG_FINDINGORE,1);
+			mobdrop.nameid = itemdb_group.get_random_item_id(IG_FINDINGORE,1);
 			ditem = mob_setdropitem(&mobdrop, 1, md->mob_id);
 			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10, homkillonly || merckillonly);
 		}
@@ -2870,7 +2870,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 					if (rnd()%10000 >= drop_rate)
 						continue;
-					dropid = (it.nameid > 0) ? it.nameid : itemdb_searchrandomid(it.group,1);
+					dropid = (it.nameid > 0) ? it.nameid : itemdb_group.get_random_item_id(it.group,1);
 					memset(&mobdrop, 0, sizeof(struct s_mob_drop));
 					mobdrop.nameid = dropid;
 
