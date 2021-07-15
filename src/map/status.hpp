@@ -975,7 +975,7 @@ enum sc_type : int16 {
 	SC_EP16_2_BUFF_SS,
 	SC_EP16_2_BUFF_SC,
 	SC_EP16_2_BUFF_AC,
-	
+
 	// Job Improvement Bundle
 	SC_OVERBRANDREADY,
 	SC_POISON_MIST,
@@ -2571,7 +2571,7 @@ extern unsigned int StatusDisplayType[SC_MAX];
 struct status_data {
 	unsigned int
 		hp, sp,  // see status_cpy before adding members before hp and sp
-		max_hp, max_sp;
+		max_hp, max_sp, matk_min, matk_max;
 	short
 		str, agi, vit, int_, dex, luk,
 		eatk;
@@ -2581,7 +2581,6 @@ struct status_data {
 		watk,
 		watk2,
 #endif
-		matk_min, matk_max,
 		speed,
 		amotion, adelay, dmotion;
 	enum e_mode mode;
@@ -2845,14 +2844,14 @@ int status_check_visibility(struct block_list *src, struct block_list *target);
 int status_change_spread(struct block_list *src, struct block_list *bl, bool type);
 
 #ifndef RENEWAL
-unsigned short status_base_matk_min(const struct status_data* status);
-unsigned short status_base_matk_max(const struct status_data* status);
+unsigned int status_base_matk_min(const struct status_data* status);
+unsigned int status_base_matk_max(const struct status_data* status);
 #else
 unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd);
-unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int level);
-unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int level);
-unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int level);
-unsigned short status_base_matk_max(struct block_list *bl, const struct status_data* status, int level);
+unsigned int status_base_atk_min(struct block_list *bl, const struct status_data* status, int level);
+unsigned int status_base_atk_max(struct block_list *bl, const struct status_data* status, int level);
+unsigned int status_base_matk_min(struct block_list *bl, const struct status_data* status, int level);
+unsigned int status_base_matk_max(struct block_list *bl, const struct status_data* status, int level);
 #endif
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
