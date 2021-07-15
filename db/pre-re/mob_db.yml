@@ -65,12 +65,14 @@
 #       Rate                Drop rate of item.
 #       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
 #       Index               Index used for overwriting item. (Optional)
+#       Clear               If an index is given only the specific drop is cleared otherwise all drops are cleared. (Optional)
 #   Drops:                  List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
 #     - Item                Item name.
 #       Rate                Drop rate of item.
 #       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
 #       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
 #       Index               Index used for overwriting item. (Optional)
+#       Clear               If an index is given only the specific drop is cleared otherwise all drops are cleared. (Optional)
 ###########################################################################
 
 Header:

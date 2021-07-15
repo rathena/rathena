@@ -27,7 +27,6 @@ private:
 	bool load( const std::string& path );
 	void parse( const YAML::Node& rootNode );
 	void parseImports( const YAML::Node& rootNode );
-	template <typename R> bool asType( const YAML::Node& node, const std::string& name, R& out );
 
 // These should be visible/usable by the implementation provider
 protected:
@@ -38,6 +37,7 @@ protected:
 	std::string getCurrentFile();
 
 	// Conversion functions
+	template <typename R> bool asType( const YAML::Node& node, const std::string& name, R& out );
 	bool asBool(const YAML::Node &node, const std::string &name, bool &out);
 	bool asInt16(const YAML::Node& node, const std::string& name, int16& out );
 	bool asUInt16(const YAML::Node& node, const std::string& name, uint16& out);
@@ -70,6 +70,7 @@ public:
 	// Functions that need to be implemented for each type
 	virtual void clear() = 0;
 	virtual const std::string getDefaultLocation() = 0;
+	virtual void removeBodyNode( const YAML::Node& node ) = 0;
 	virtual uint64 parseBodyNode( const YAML::Node& node ) = 0;
 };
 
@@ -132,6 +133,14 @@ public:
 
 	void erase(keytype key) {
 		this->data.erase(key);
+	}
+
+	void removeBodyNode( const YAML::Node& node ){
+		keytype key;
+
+		if( this->asType<keytype>( node, "Remove", key ) ){
+			this->data.erase( key );
+		}
 	}
 };
 
