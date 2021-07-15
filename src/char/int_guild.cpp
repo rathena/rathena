@@ -795,7 +795,7 @@ GuildExpDatabase guild_exp_db;
 void GuildExpDatabase::loadingFinished() {
 	for (uint16 level = 1; level < MAX_GUILDLEVEL; level++) {
 		if (this->get_nextexp(level) == 0)
-			ShowError("Missing experience for level %d in exp_guild.yml\n", level);
+			ShowError("Missing experience for guild level %d.\n", level);
 	}
 }
 
