@@ -8809,7 +8809,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		vd = hom_get_viewdata(class_);
 	else if (mercenary_db(class_))
 		vd = mercenary_get_viewdata(class_);
-	else if (elemental_class(class_))
+	else if (elemental_db.exists(class_))
 		vd = elemental_get_viewdata(class_);
 	else
 		vd = NULL;

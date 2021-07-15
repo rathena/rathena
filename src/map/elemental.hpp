@@ -4,6 +4,7 @@
 #ifndef ELEMENTAL_HPP
 #define ELEMENTAL_HPP
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
@@ -41,22 +42,19 @@ enum elemental_elementalid  : uint16 {
 	ELEMENTALID_TERA_L,
 };
 
-struct elemental_skill {
-	unsigned short id, lv;
-	short mode;
+struct s_elemental_skill {
+	uint16 id, lv;
 };
 
 struct s_elemental_db {
-	int class_;
+	int32 class_;
 	char sprite[NAME_LENGTH], name[NAME_LENGTH];
-	unsigned short lv;
-	short range2, range3;
-	struct status_data status;
-	struct view_data vd;
-	struct elemental_skill skill[MAX_ELESKILLTREE];
+	uint16 lv;
+	uint16 range2, range3;
+	status_data status;
+	view_data vd;
+	std::unordered_map<elemental_skillmode, std::shared_ptr<s_elemental_skill>> skill;	/// mode, skill
 };
-
-extern struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS];
 
 struct elemental_data {
 	struct block_list bl;
@@ -66,7 +64,7 @@ struct elemental_data {
 	struct status_change sc;
 	struct regen_data regen;
 
-	struct s_elemental_db *db;
+	std::shared_ptr<s_elemental_db> db;
 	struct s_elemental elemental;
 
 	int masterteleport_timer;
@@ -79,7 +77,18 @@ struct elemental_data {
 	int target_id, attacked_id;
 };
 
-bool elemental_class(int class_);
+class ElementalDatabase : public TypesafeYamlDatabase<int32, s_elemental_db> {
+public:
+	ElementalDatabase() : TypesafeYamlDatabase("ELEMENTAL_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern ElementalDatabase elemental_db;
+
 struct view_data * elemental_get_viewdata(int class_);
 
 int elemental_create(struct map_session_data *sd, int class_, unsigned int lifetime);
@@ -109,8 +118,6 @@ struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint1
 #define elemental_stop_attack(ed) unit_stop_attack(&(ed)->bl)
 
 void read_elemental_skilldb(void);
-void reload_elementaldb(void);
-void reload_elemental_skilldb(void);
 void do_init_elemental(void);
 void do_final_elemental(void);
 

@@ -8242,6 +8242,11 @@
 	export_constant(PARAM_CON);
 	export_constant(PARAM_CRT);
 
+	/* Elemental Skill Mode */
+	export_constant(EL_SKILLMODE_PASSIVE);
+	export_constant(EL_SKILLMODE_ASSIST);
+	export_constant(EL_SKILLMODE_AGGRESSIVE);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

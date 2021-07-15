@@ -28,44 +28,33 @@
 #include "pc.hpp"
 #include "trade.hpp"
 
-struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
-static uint16 elemental_count;
+using namespace rathena;
 
-int elemental_search_index(int class_) {
-	int i;
-	ARR_FIND(0, elemental_count, i, elemental_db[i].class_ == class_);
-	return (i == elemental_count)?-1:i;
-}
-
-bool elemental_class(int class_) {
-	return (bool)(elemental_search_index(class_) > -1);
-}
+ElementalDatabase elemental_db;
 
 struct view_data * elemental_get_viewdata(int class_) {
-	int i = elemental_search_index(class_);
-	if( i < 0 )
+	std::shared_ptr<s_elemental_db> db = elemental_db.find(class_);
+	if (db == nullptr)
 		return 0;
 
-	return &elemental_db[i].vd;
+	return &db->vd;
 }
 
 int elemental_create(struct map_session_data *sd, int class_, unsigned int lifetime) {
-	struct s_elemental ele;
-	struct s_elemental_db *db;
-	int i;
-
 	nullpo_retr(1,sd);
 
-	if( (i = elemental_search_index(class_)) < 0 )
+	std::shared_ptr<s_elemental_db> db = elemental_db.find(class_);
+	if (db == nullptr) {
+		ShowError("elemental_create: Unknown elemental class %d.\n", class_);
 		return 0;
+	}
 
-	db = &elemental_db[i];
-	memset(&ele,0,sizeof(struct s_elemental));
+	struct s_elemental ele = {};
 
 	ele.char_id = sd->status.char_id;
 	ele.class_ = class_;
 	ele.mode = EL_MODE_PASSIVE; // Initial mode
-	i = db->status.size+1; // summon level
+	int i = db->status.size+1; // summon level
 
 	//[(Caster's Max HP/ 3 ) + (Caster's INT x 10 )+ (Caster's Job Level x 20 )] x [(Elemental Summon Level + 2) / 3]
 	ele.hp = ele.max_hp = (sd->battle_status.max_hp/3 + sd->battle_status.int_*10 + sd->status.job_level*20) * ((i + 2) / 3);
@@ -220,18 +209,17 @@ void elemental_summon_init(struct elemental_data *ed) {
 int elemental_data_received(struct s_elemental *ele, bool flag) {
 	struct map_session_data *sd;
 	struct elemental_data *ed;
-	struct s_elemental_db *db;
-	int i = elemental_search_index(ele->class_);
 
 	if( (sd = map_charid2sd(ele->char_id)) == NULL )
 		return 0;
 
-	if( !flag || i < 0 ) { // Not created - loaded - DB info
+	std::shared_ptr<s_elemental_db> db = elemental_db.find(ele->class_);
+
+	if( !flag || db == nullptr ) { // Not created - loaded - DB info
 		sd->status.ele_id = 0;
 		return 0;
 	}
 
-	db = &elemental_db[i];
 	if( !sd->ed ) {	// Initialize it after first summon.
 		sd->ed = ed = (struct elemental_data*)aCalloc(1,sizeof(struct elemental_data));
 		ed->bl.type = BL_ELEM;
@@ -386,10 +374,6 @@ int elemental_clean_effect(struct elemental_data *ed) {
 }
 
 int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick) {
-	struct s_skill_condition req;
-	uint16 skill_id, skill_lv;
-	int i;
-
 	nullpo_ret(ed);
 	nullpo_ret(bl);
 
@@ -399,12 +383,12 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick ti
 	if( ed->target_id )
 		elemental_unlocktarget(ed);	// Remove previous target.
 
-	ARR_FIND(0, MAX_ELESKILLTREE, i, ed->db->skill[i].id && (ed->db->skill[i].mode&EL_SKILLMODE_AGGRESSIVE));
-	if( i == MAX_ELESKILLTREE )
+	std::shared_ptr<s_elemental_skill> skill = util::umap_find(ed->db->skill, EL_SKILLMODE_AGGRESSIVE);	// only one skill per mode is supported
+	if (skill == nullptr)
 		return 0;
 
-	skill_id = ed->db->skill[i].id;
-	skill_lv = ed->db->skill[i].lv;
+	uint16 skill_id = skill->id;
+	uint16 skill_lv = skill->lv;
 
 	if( elemental_skillnotok(skill_id, ed) )
 		return 0;
@@ -434,10 +418,9 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick ti
 				ed->ud.skilltimer = add_timer( tick+(t_tick)status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
 		}
 		return 1;
-
 	}
 
-	req = elemental_skill_get_requirements(skill_id, skill_lv);
+	s_skill_condition req = elemental_skill_get_requirements(skill_id, skill_lv);
 
 	if(req.hp || req.sp){
 		struct map_session_data *sd = BL_CAST(BL_PC, battle_get_master(&ed->bl));
@@ -467,22 +450,18 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick ti
  * Activates one of the skills of the new mode.
  *-------------------------------------------------------------*/
 int elemental_change_mode_ack(struct elemental_data *ed, enum elemental_skillmode skill_mode) {
-	struct block_list *bl = &ed->master->bl;
-	uint16 skill_id, skill_lv;
-	int i;
-
 	nullpo_ret(ed);
 
+	struct block_list *bl = &ed->master->bl;
 	if( !bl )
 		return 0;
 
-	// Select a skill.
-	ARR_FIND(0, MAX_ELESKILLTREE, i, ed->db->skill[i].id && (ed->db->skill[i].mode&skill_mode));
-	if( i == MAX_ELESKILLTREE )
+	std::shared_ptr<s_elemental_skill> skill = util::umap_find(ed->db->skill, skill_mode);
+	if (skill == nullptr)
 		return 0;
 
-	skill_id = ed->db->skill[i].id;
-	skill_lv = ed->db->skill[i].lv;
+	uint16 skill_id = skill->id;
+	uint16 skill_lv = skill->lv;
 
 	if( elemental_skillnotok(skill_id, ed) )
 		return 0;
@@ -753,152 +732,466 @@ static TIMER_FUNC(elemental_ai_timer){
 	return 0;
 }
 
-/**
-* Reads Elemental DB lines
-* ID,Sprite_Name,Name,LV,HP,SP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Speed,aDelay,aMotion,dMotion
-*/
-static bool read_elementaldb_sub(char* str[], int columns, int current) {
-	uint16 class_ = atoi(str[0]), i, ele;
-	struct s_elemental_db *db;
-	struct status_data *status;
+const std::string ElementalDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/elemental_db.yml";
+}
 
-	//Find the ID, already exist or not in elemental_db
-	ARR_FIND(0,elemental_count,i,elemental_db[i].class_ == class_);
-	if (i >= elemental_count)
-		db = &elemental_db[elemental_count];
-	else
-		db = &elemental_db[i];
-	
-	db->class_ = atoi(str[0]);
-	safestrncpy(db->sprite, str[1], NAME_LENGTH);
-	safestrncpy(db->name, str[2], NAME_LENGTH);
-	db->lv = atoi(str[3]);
+/*
+ * Reads and parses an entry from the elemental_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
+	int32 id;
 
-	status = &db->status;
-	db->vd.class_ = db->class_;
+	if (!this->asInt32(node, "Id", id))
+		return 0;
 
-	status->max_hp = atoi(str[4]);
-	status->max_sp = atoi(str[5]);
-	status->rhw.range = atoi(str[6]);
+	if (id < ELEMENTALID_AGNI_S || id > ELEMENTALID_TERA_L) {
+		this->invalidWarning(node["Id"], "Invalid Id %d (valid range: %d-%d).\n", id, ELEMENTALID_AGNI_S, ELEMENTALID_TERA_L);
+		return 0;
+	}
+
+	std::shared_ptr<s_elemental_db> elemental = this->find(id);
+	bool exists = elemental != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "AegisName", "Name", "Size", "Element", "ElementLevel" }))
+			return 0;
+
+		elemental = std::make_shared<s_elemental_db>();
+		elemental->class_ = id;
+		elemental->vd.class_ = id;
+	}
+
+	if (this->nodeExists(node, "AegisName")) {
+		std::string name;
+
+		if (!this->asString(node, "AegisName", name))
+			return 0;
+
+		safestrncpy(elemental->sprite, name.c_str(), sizeof(elemental->sprite));
+	}
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+
+		if (!this->asString(node, "Name", name))
+			return 0;
+
+		safestrncpy(elemental->name, name.c_str(), sizeof(elemental->name));
+	}
+
+	if (this->nodeExists(node, "Level")) {
+		uint16 level;
+
+		if (!this->asUInt16(node, "Level", level))
+			return 0;
+
+		if (level > MAX_LEVEL) {
+			this->invalidWarning(node["Level"], "Level %d exceeds MAX_LEVEL, capping to %d.\n", level, MAX_LEVEL);
+			level = MAX_LEVEL;
+		}
+
+		elemental->lv = level;
+	} else {
+		if (!exists)
+			elemental->lv = 1;
+	}
+
+	if (this->nodeExists(node, "Hp")) {
+		uint32 hp;
+
+		if (!this->asUInt32(node, "Hp", hp))
+			return 0;
+
+		elemental->status.max_hp = hp;
+	} else {
+		if (!exists)
+			elemental->status.max_hp = 0;
+	}
+
+	if (this->nodeExists(node, "Sp")) {
+		uint32 sp;
+
+		if (!this->asUInt32(node, "Sp", sp))
+			return 0;
+
+		elemental->status.max_sp = sp;
+	} else {
+		if (!exists)
+			elemental->status.max_sp = 1;
+	}
+
+	if (this->nodeExists(node, "Attack")) {
+		uint16 atk;
+
+		if (!this->asUInt16(node, "Attack", atk))
+			return 0;
+
+		elemental->status.rhw.atk = atk;
+	} else {
+		if (!exists)
+			elemental->status.rhw.atk = 1;
+	}
+
+	if (this->nodeExists(node, "Attack2")) {
+		uint16 atk;
+
+		if (!this->asUInt16(node, "Attack2", atk))
+			return 0;
+
 #ifdef RENEWAL
-	status->rhw.atk = atoi(str[7]); // BaseATK
-	status->rhw.matk = atoi(str[8]); // BaseMATK
+		elemental->status.rhw.matk = atk;
 #else
-	status->rhw.atk = atoi(str[7]); // MinATK
-	status->rhw.atk2 = atoi(str[8]); // MaxATK
+		elemental->status.rhw.atk2 = atk;
 #endif
-	status->def = atoi(str[9]);
-	status->mdef = atoi(str[10]);
-	status->str = atoi(str[11]);
-	status->agi = atoi(str[12]);
-	status->vit = atoi(str[13]);
-	status->int_ = atoi(str[14]);
-	status->dex = atoi(str[15]);
-	status->luk = atoi(str[16]);
-	db->range2 = atoi(str[17]);
-	db->range3 = atoi(str[18]);
-	status->size = atoi(str[19]);
-	status->race = atoi(str[20]);
-
-	ele = atoi(str[21]);
-	status->def_ele = ele%20;
-	status->ele_lv = (unsigned char)floor(ele/20.);
-	if( !CHK_ELEMENT(status->def_ele) ) {
-		ShowWarning("read_elementaldb_sub: Elemental %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
-		status->def_ele = ELE_NEUTRAL;
-	}
-	if( !CHK_ELEMENT_LEVEL(status->ele_lv) ) {
-		ShowWarning("read_elementaldb_sub: Elemental %d has invalid element level %d (max is %d)\n", db->class_, status->ele_lv, MAX_ELE_LEVEL);
-		status->ele_lv = 1;
+	} else {
+		if (!exists)
+#ifdef RENEWAL
+			elemental->status.rhw.matk = 0;
+#else
+			elemental->status.rhw.atk2 = 0;
+#endif
 	}
 
-	status->aspd_rate = 1000;
-	status->speed = atoi(str[22]);
-	status->adelay = atoi(str[23]);
-	status->amotion = atoi(str[24]);
-	status->dmotion = atoi(str[25]);
+	if (this->nodeExists(node, "Defense")) {
+		uint16 def;
 
-	if (i >= elemental_count)
-		elemental_count++;
-	return true;
-}
+		if (!this->asUInt16(node, "Defense", def))
+			return 0;
 
-void read_elementaldb(void) {
-	const char *filename[] = { "elemental_db.txt", DBIMPORT"/elemental_db.txt" };
-	uint8 i;
-
-	elemental_count = 0;
-	memset(elemental_db, 0, sizeof(elemental_db));
-	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 26, 26, -1, &read_elementaldb_sub, i > 0);
-	}
-}
-
-/**
-* Reads Elemental Skill DB lines
-* ElementalID,SkillID,SkillLevel,ReqMode
-*/
-static bool read_elemental_skilldb_sub(char* str[], int columns, int current) {
-	uint16 class_ = atoi(str[0]), skill_id, skill_lv, skillmode;
-	uint8 i;
-	struct s_elemental_db *db;
-
-	ARR_FIND(0, MAX_ELEMENTAL_CLASS, i, class_ == elemental_db[i].class_);
-	if( i == MAX_ELEMENTAL_CLASS ) {
-		ShowError("read_elemental_skilldb_sub: Class not found in elemental_db for skill entry, line %d.\n", current);
-		return false;
+		elemental->status.def = static_cast<defType>(def);
+	} else {
+		if (!exists)
+			elemental->status.def = 0;
 	}
 
-	skill_id = atoi(str[1]);
-	if( !SKILL_CHK_ELEM(skill_id) ) {
-		ShowError("read_elemental_skilldb_sub: Invalid Elemental skill '%d'.\n", skill_id);
-		return false;
+	if (this->nodeExists(node, "MagicDefense")) {
+		uint16 def;
+
+		if (!this->asUInt16(node, "MagicDefense", def))
+			return 0;
+
+		elemental->status.mdef = static_cast<defType>(def);
+	} else {
+		if (!exists)
+			elemental->status.mdef = 0;
 	}
 
-	db = &elemental_db[i];
-	skill_lv = atoi(str[2]);
+	if (this->nodeExists(node, "Str")) {
+		uint16 stat;
 
-	skillmode = atoi(str[3]);
-	if( skillmode < EL_SKILLMODE_PASSIVE || skillmode > EL_SKILLMODE_AGGRESSIVE ) {
-		ShowError("read_elemental_skilldb_sub: Skillmode out of range, line %d.\n",current);
-		return false;
+		if (!this->asUInt16(node, "Str", stat))
+			return 0;
+
+		elemental->status.str = stat;
+	} else {
+		if (!exists)
+			elemental->status.str = 0;
 	}
-	ARR_FIND( 0, MAX_ELESKILLTREE, i, db->skill[i].id == 0 || db->skill[i].id == skill_id );
-	if( i == MAX_ELESKILLTREE ) {
-		ShowWarning("read_elemental_skilldb_sub: Unable to load skill %d into Elemental %d's tree. Maximum number of skills per elemental has been reached.\n", skill_id, class_);
-		return false;
+
+	if (this->nodeExists(node, "Agi")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Agi", stat))
+			return 0;
+
+		elemental->status.agi = stat;
+	} else {
+		if (!exists)
+			elemental->status.agi = 0;
 	}
-	db->skill[i].id = skill_id;
-	db->skill[i].lv = skill_lv;
-	db->skill[i].mode = skillmode;
-	return true;
-}
 
-void read_elemental_skilldb(void) {
-	const char *filename[] = { "elemental_skill_db.txt", DBIMPORT"/elemental_skill_db.txt" };
-	uint8 i;
-	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 4, 4, -1, &read_elemental_skilldb_sub, i > 0);
+	if (this->nodeExists(node, "Vit")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Vit", stat))
+			return 0;
+
+		elemental->status.vit = stat;
+	} else {
+		if (!exists)
+			elemental->status.vit = 0;
 	}
-}
 
-void reload_elementaldb(void) {
-	read_elementaldb();
-	reload_elemental_skilldb();
-}
+	if (this->nodeExists(node, "Int")) {
+		uint16 stat;
 
-void reload_elemental_skilldb(void) {
-	read_elemental_skilldb();
+		if (!this->asUInt16(node, "Int", stat))
+			return 0;
+
+		elemental->status.int_ = stat;
+	} else {
+		if (!exists)
+			elemental->status.int_ = 0;
+	}
+
+	if (this->nodeExists(node, "Dex")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Dex", stat))
+			return 0;
+
+		elemental->status.dex = stat;
+	} else {
+		if (!exists)
+			elemental->status.dex = 0;
+	}
+
+	if (this->nodeExists(node, "Luk")) {
+		uint16 stat;
+
+		if (!this->asUInt16(node, "Luk", stat))
+			return 0;
+
+		elemental->status.luk = stat;
+	} else {
+		if (!exists)
+			elemental->status.luk = 0;
+	}
+
+	if (this->nodeExists(node, "AttackRange")) {
+		uint16 range;
+
+		if (!this->asUInt16(node, "AttackRange", range))
+			return 0;
+
+		elemental->status.rhw.range = range;
+	} else {
+		if (!exists)
+			elemental->status.rhw.range = 0;
+	}
+
+	if (this->nodeExists(node, "SkillRange")) {
+		uint16 range;
+
+		if (!this->asUInt16(node, "SkillRange", range))
+			return 0;
+
+		elemental->range2 = range;
+	} else {
+		if (!exists)
+			elemental->range2 = 5;
+	}
+
+	if (this->nodeExists(node, "ChaseRange")) {
+		uint16 range;
+
+		if (!this->asUInt16(node, "ChaseRange", range))
+			return 0;
+
+		elemental->range3 = range;
+	} else {
+		if (!exists)
+			elemental->range3 = 12;
+	}
+
+	if (this->nodeExists(node, "Size")) {
+		std::string size;
+
+		if (!this->asString(node, "Size", size))
+			return 0;
+
+		std::string size_constant = "Size_" + size;
+		int64 constant;
+
+		if (!script_get_constant(size_constant.c_str(), &constant) || constant < SZ_SMALL || constant > SZ_BIG) {
+			this->invalidWarning(node["Size"], "Invalid size %s, defaulting to Small.\n", size.c_str());
+			constant = SZ_SMALL;
+		}
+
+		elemental->status.size = static_cast<e_size>(constant);
+	}
+
+	if (this->nodeExists(node, "Race")) {
+		std::string race;
+
+		if (!this->asString(node, "Race", race))
+			return 0;
+
+		std::string race_constant = "RC_" + race;
+		int64 constant;
+
+		if (!script_get_constant(race_constant.c_str(), &constant) || !CHK_RACE(constant)) {
+			this->invalidWarning(node["Race"], "Invalid race %s, defaulting to Formless.\n", race.c_str());
+			constant = RC_FORMLESS;
+		}
+
+		elemental->status.race = static_cast<e_race>(constant);
+	} else {
+		if (!exists)
+			elemental->status.race = RC_FORMLESS;
+	}
+
+	if (this->nodeExists(node, "Element")) {
+		std::string ele;
+
+		if (!this->asString(node, "Element", ele))
+			return 0;
+
+		std::string ele_constant = "ELE_" + ele;
+		int64 constant;
+
+		if (!script_get_constant(ele_constant.c_str(), &constant) || !CHK_ELEMENT(constant)) {
+			this->invalidWarning(node["Element"], "Invalid element %s, defaulting to Neutral.\n", ele.c_str());
+			constant = ELE_NEUTRAL;
+		}
+
+		elemental->status.def_ele = static_cast<e_element>(constant);
+	}
+
+	if (this->nodeExists(node, "ElementLevel")) {
+		uint16 level;
+
+		if (!this->asUInt16(node, "ElementLevel", level))
+			return 0;
+
+		if (!CHK_ELEMENT_LEVEL(level)) {
+			this->invalidWarning(node["ElementLevel"], "Invalid element level %hu, defaulting to 1.\n", level);
+			level = 1;
+		}
+
+		elemental->status.ele_lv = static_cast<uint8>(level);
+	}
+
+	if (this->nodeExists(node, "WalkSpeed")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "WalkSpeed", speed))
+			return 0;
+
+		if (speed < MIN_WALK_SPEED || speed > MAX_WALK_SPEED) {
+			this->invalidWarning(node["WalkSpeed"], "Invalid walk speed %hu, capping...\n", speed);
+			speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
+		}
+
+		elemental->status.speed = speed;
+	} else {
+		if (!exists)
+			elemental->status.speed = 200;
+	}
+
+	if (this->nodeExists(node, "AttackDelay")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "AttackDelay", speed))
+			return 0;
+
+		elemental->status.adelay = cap_value(speed, 0, 4000);
+	} else {
+		if (!exists)
+			elemental->status.adelay = 504;
+	}
+
+	if (this->nodeExists(node, "AttackMotion")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "AttackMotion", speed))
+			return 0;
+
+		elemental->status.amotion = cap_value(speed, 0, 2000);
+	} else {
+		if (!exists)
+			elemental->status.amotion = 1020;
+	}
+
+	if (this->nodeExists(node, "DamageMotion")) {
+		uint16 speed;
+
+		if (!this->asUInt16(node, "DamageMotion", speed))
+			return 0;
+
+		elemental->status.dmotion = speed;
+	} else {
+		if (!exists)
+			elemental->status.dmotion = 360;
+	}
+
+	elemental->status.aspd_rate = 1000;
+
+	if (this->nodeExists(node, "Mode")) {
+		const YAML::Node &ModeNode = node["Mode"];
+
+		for (const auto &Modeit : ModeNode) {
+			std::string mode_name = Modeit.first.as<std::string>();
+
+			std::string mode_constant = "EL_SKILLMODE_" + mode_name;
+			int64 constant;
+
+			if (!script_get_constant(mode_constant.c_str(), &constant) || constant < EL_SKILLMODE_PASSIVE || constant > EL_SKILLMODE_AGGRESSIVE) {
+				this->invalidWarning(node["Mode"], "Invalid mode %s, skipping.\n", mode_name.c_str());
+				continue;
+			}
+
+			elemental_skillmode mode = static_cast<elemental_skillmode>(constant);
+
+			std::shared_ptr<s_elemental_skill> entry = util::umap_find(elemental->skill, mode);
+			bool mode_exists = entry != nullptr;
+
+			if (!mode_exists)
+				entry = std::make_shared<s_elemental_skill>();
+
+			const YAML::Node &SkillNode = ModeNode[mode_name];
+			std::string skill_name;
+
+			if (!this->asString(SkillNode, "Skill", skill_name))
+				return 0;
+
+			uint16 skill_id = skill_name2id(skill_name.c_str());
+
+			if (skill_id == 0) {
+				this->invalidWarning(SkillNode["Skill"], "Skipping invalid skill %s for mode %s.\n", skill_name.c_str(), mode_name.c_str());
+				return 0;
+			}
+
+			if (!SKILL_CHK_ELEM(skill_id)) {
+				this->invalidWarning(SkillNode["Skill"], "Skill %s (%u) is out of the skill range [%u-%u], skipping.\n", skill_name.c_str(), skill_id, EL_SKILLBASE, EL_SKILLBASE + MAX_ELEMENTALSKILL - 1);
+				return 0;
+			}
+
+			entry->id = skill_id;
+
+			if (this->nodeExists(SkillNode, "Level")) {
+				uint16 level;
+
+				if (!this->asUInt16(SkillNode, "Level", level))
+					return 0;
+
+				if (level > skill_get_max(skill_id)) {
+					this->invalidWarning(SkillNode["Level"], "Skill %s's level %hu exceeds max level %hu.\n", skill_name.c_str(), level, skill_get_max(skill_id));
+					return 0;
+				}
+
+				entry->lv = level;
+			} else {
+				if (!mode_exists)
+					entry->lv = 1;
+			}
+
+			if (entry->lv == 0) {
+				elemental->skill.erase(mode);
+				return 0;
+			}
+
+			if (!mode_exists)
+				elemental->skill.insert({ mode, entry });
+		}
+	}
+
+	if (!exists)
+		this->put(id, elemental);
+
+	return 1;
 }
 
 void do_init_elemental(void) {
-	read_elementaldb();
-	read_elemental_skilldb();
+	elemental_db.load();
 
 	add_timer_func_list(elemental_ai_timer,"elemental_ai_timer");
 	add_timer_interval(gettick()+MIN_ELETHINKTIME,elemental_ai_timer,0,0,MIN_ELETHINKTIME);
 }
 
 void do_final_elemental(void) {
-	return;
+	elemental_db.clear();
 }
