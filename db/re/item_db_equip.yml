@@ -96737,7 +96737,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      i f (.@r>=7)
+      if (.@r>=7)
         bonus bMaxSP,100;
       if (.@r>=9)
          bonus bMaxSP,200;
