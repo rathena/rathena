@@ -33319,10 +33319,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if (BaseLevel<80) {
-         bonus bMaxHP,400;
-         bonus bMaxSP,200;
-      }
+      bonus bInt,2;
+      bonus bMatkRate,3;
+      bonus bMaxHP,100;
   - Id: 2752
     AegisName: Praxinus_C
     Name: Praccsinos
