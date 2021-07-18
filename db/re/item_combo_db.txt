@@ -2413,7 +2413,7 @@
 27032:28610,{ bonus2 bSPDrainRate,100,5; }
 27032:28723,{ bonus2 bSPDrainRate,100,5; }
 27032:32002,{ bonus2 bSPDrainRate,100,5; }
-15188:20828:22128,{ bonus2 bSPDrainRate,100,5; }
+15188:20828:22128,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; }
 1750:18133,{ bonus2 bAddRace,RC_Fish,15; bonus2 bAddEle,Ele_Water,15; }
 490022:1444,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
 490022:13130,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
