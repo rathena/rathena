@@ -10531,9 +10531,9 @@ Body:
       if (BaseJob == Job_Rogue) {
          bonus bMatkRate,10;
          bonus2 bAddClass,Class_All,10;
-         bonus bMaxHPrate,getrefine()/2;
       }
-      /* Adds a chance of inflicting Confuse on target when using Body Paint skill. */
+      bonus bMaxHPrate,getrefine()/2;
+      bonus3 bAddEffOnSkill,"SC_BODYPAINT",Eff_Stun,1000;
   - Id: 4548
     AegisName: Upd_Salamander_Card
     Name: Enhanced Salamander Card
