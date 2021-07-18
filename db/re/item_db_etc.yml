@@ -11358,9 +11358,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_SHORT,0;
   - Id: 4604
     AegisName: CorruptionRootH_Card
     Name: Realized Corruption Root Card
@@ -11374,9 +11374,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,30;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_SHORT,0;
   - Id: 4605
     AegisName: UndeadKnightM_Card
     Name: Agony Of Royal Knight Card
