@@ -96301,20 +96301,8 @@ Body:
     Weight: 600
     Defense: 25
     Jobs:
-      Alchemist: true
-      Assassin: true
-      BardDancer: true
-      Blacksmith: true
-      Crusader: true
-      Hunter: true
-      Knight: true
-      Monk: true
-      Priest: true
-      Rogue: true
-      Sage: true
-      Wizard: true
-    Classes:
-      All_Third: true
+      KagerouOboro: true
+      Rebellion: true
     Locations:
       Shoes: true
     EquipLevelMin: 99
