@@ -2045,7 +2045,7 @@ ayo_dun01,99,118,0	script	 #hun_thai_5	111,{
 ayo_dun01,16,188,0	script	 #hun_thai_6	111,{
 	if (ayodunquest == 8) {
 		set ayodunquest,9;
-		setquest 12036;
+		// setquest 12036;
 		mes "^3355FFYou find a piece of a stone slate with letters etched on it. It seems to be the last part of the slate.^000000";
 		next;
 		mes "^3355FFIt reads '^0000FFOtherwise, it's impossible...^3355FF' You are unable to read the rest of the message.^000000";
@@ -2094,7 +2094,7 @@ ayo_dun02,268,108,0	script	 #reward_tiger	111,{
 		mes "^3355FFYou pick";
 		mes "up the box.^000000";
 		set ayodunquest,12;
-		completequest 12039;
+		// completequest 12039;
 		getitem 603,1; //Old_Blue_Box
 		close;
 	}

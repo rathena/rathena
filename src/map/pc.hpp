@@ -1117,6 +1117,28 @@ public:
 
 extern AttendanceDatabase attendance_db;
 
+class PlayerStatPointDatabase : public YamlDatabase {
+private:
+	std::unordered_map<uint16, uint32> statpoint_table;
+
+public:
+	PlayerStatPointDatabase() : YamlDatabase("STATPOINT_DB", 1) {
+
+	}
+
+	void clear(){
+		statpoint_table.clear();
+	}
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	void loadingFinished();
+
+	uint32 pc_gets_status_point(uint16 level);
+	uint32 get_table_point(uint16 level);
+};
+
+extern PlayerStatPointDatabase statpoint_db;
+
 /// Enum of Summoner Power of 
 enum e_summoner_power_type {
 	SUMMONER_POWER_LAND = 0,
@@ -1261,7 +1283,6 @@ void pc_gainexp_disp(struct map_session_data *sd, t_exp base_exp, t_exp next_bas
 void pc_lostexp(struct map_session_data *sd, t_exp base_exp, t_exp job_exp);
 t_exp pc_nextbaseexp(struct map_session_data *sd);
 t_exp pc_nextjobexp(struct map_session_data *sd);
-int pc_gets_status_point(int);
 int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);
 bool pc_statusup(struct map_session_data*,int,int);

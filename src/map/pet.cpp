@@ -51,7 +51,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 		return 0;
 	}
 
-	uint16 mob_id = mob->vd.class_;
+	uint16 mob_id = mob->id;
 
 	std::shared_ptr<s_pet_db> pet = this->find( mob_id );
 	bool exists = pet != nullptr;
@@ -418,7 +418,7 @@ uint64 PetDatabase::parseBodyNode( const ryml::NodeRef node ){
 				return 0;
 			}
 
-			uint16 targetId = mob->vd.class_;
+			uint16 targetId = mob->id;
 
 			if( !this->nodeExists( evolutionNode, "ItemRequirements" ) ){
 				this->invalidWarning( evolutionNode, "Missing required node \"ItemRequirements\".\n" );

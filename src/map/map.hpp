@@ -781,6 +781,8 @@ extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
 
+extern uint32 start_status_points;
+
 // Agit Flags
 extern bool agit_flag;
 extern bool agit2_flag;
