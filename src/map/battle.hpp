@@ -679,6 +679,10 @@ struct Battle_Config
 	int rental_item_novalue;
 	int ping_timer_interval;
 	int ping_time;
+
+	/* TXT Itemdb */
+	int itemdb_txt;
+
 	int show_skill_scale;
 	int achievement_mob_share;
 	int slave_stick_with_master;

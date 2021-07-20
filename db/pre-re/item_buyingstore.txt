@@ -1,0 +1,1957 @@
+// Buying Store Item List
+// List of items that can be sold to buying stores.
+//
+// Structure of Database:
+// ItemID
+//
+// Note:
+//  Items are in same order as data\buyingstoreitemlist.txt, which
+//  must be edited as well for the client to accept added items.
+
+//--- 2015 / 12 / 16 - 전사자무덤
+//25127
+//25128
+//25129
+//25130
+//25131
+//23016
+//23080
+//4671
+//4672
+//4673
+//4674
+//4675
+//4676
+//4677
+//4678
+//4679
+//4680
+//4681
+//4682
+//4683
+//4684
+//4685
+//4686
+//4687
+//4688
+//4689
+//4690
+//4691
+//4692
+//4693
+//4694
+//4695
+//4696
+//--- 2015 / 11 19 - 부서진 마법석 추가
+//6905
+//--- 2015 / 11 / 30 - 카드 추가
+4001  // Poring_Card
+4002  // Fabre_Card
+4003  // Pupa_Card
+4004  // Drops_Card
+4005  // Poring__Card
+4006  // Lunatic_Card
+4007  // Pecopeco_Egg_Card
+4008  // Picky_Card
+4009  // Chonchon_Card
+4010  // Wilow_Card
+4011  // Picky__Card
+4012  // Thief_Bug_Egg_Card
+4013  // Andre_Egg_Card
+4014  // Roda_Frog_Card
+4015  // Condor_Card
+4016  // Thief_Bug_Card
+4017  // Savage_Babe_Card
+4018  // Andre_Larva_Card
+4019  // Hornet_Card
+4020  // Farmiliar_Card
+4021  // Rocker_Card
+4022  // Spore_Card
+4023  // Desert_Wolf_Babe_Card
+4024  // Plankton_Card
+4025  // Skeleton_Card
+4026  // Thief_Bug_Female_Card
+4027  // Kukre_Card
+4028  // Tarou_Card
+4029  // Wolf_Card
+4030  // Mandragora_Card
+4031  // Pecopeco_Card
+4032  // Ambernite_Card
+4033  // Poporing_Card
+4034  // Worm_Tail_Card
+4035  // Hydra_Card
+4036  // Muka_Card
+4037  // Snake_Card
+4038  // Zombie_Card
+4039  // Stainer_Card
+4040  // Creamy_Card
+4041  // Coco_Card
+4042  // Steel_Chonchon_Card
+4043  // Andre_Card
+4044  // Smokie_Card
+4045  // Horn_Card
+4046  // Martin_Card
+4047  // Ghostring_Card
+4048  // Poison_Spore_Card
+4049  // Vadon_Card
+4050  // Thief_Bug_Male_Card
+4051  // Yoyo_Card
+4052  // Elder_Wilow_Card
+4053  // Vitata_Card
+4054  // Angeling_Card
+4055  // Marina_Card
+4056  // Dustiness_Card
+4057  // Metaller_Card
+4058  // Thara_Frog_Card
+4059  // Soldier_Andre_Card
+4060  // Goblin_Card
+4061  // Cornutus_Card
+4062  // Anacondaq_Card
+4063  // Caramel_Card
+4064  // Zerom_Card
+4065  // Kaho_Card
+4066  // Orc_Warrior_Card
+4067  // Megalodon_Card
+4068  // Scorpion_Card
+4069  // Drainliar_Card
+4070  // Eggyra_Card
+4071  // Orc_Zombie_Card
+4072  // Golem_Card
+4073  // Pirate_Skel_Card
+4074  // BigFoot_Card
+4075  // Argos_Card
+4076  // Magnolia_Card
+4077  // Phen_Card
+4078  // Savage_Card
+4079  // Mantis_Card
+4080  // Flora_Card
+4081  // Hode_Card
+4082  // Desert_Wolf_Card
+4083  // Rafflesia_Card
+4084  // Marine_Sphere_Card
+4085  // Orc_Skeleton_Card
+4086  // Soldier_Skeleton_Card
+4087  // Giearth_Card
+4088  // Frilldora_Card
+4089  // Sword_Fish_Card
+4090  // Munak_Card
+4091  // Kobold_Card
+4092  // Skel_Worker_Card
+4093  // Obeaune_Card
+4094  // Archer_Skeleton_Card
+4095  // Marse_Card
+4096  // Zenorc_Card
+4097  // Matyr_Card
+4098  // Dokebi_Card
+4099  // Pasana_Card
+4100  // Sohee_Card
+4101  // Sand_Man_Card
+4102  // Whisper_Card
+4103  // Horong_Card
+4104  // Requiem_Card
+4105  // Marc_Card
+4106  // Mummy_Card
+4107  // Verit_Card
+4108  // Myst_Card
+4109  // Jakk_Card
+4110  // Ghoul_Card
+4111  // Strouf_Card
+4112  // Marduk_Card
+4113  // Marionette_Card
+4114  // Argiope_Card
+4115  // Hunter_Fly_Card
+4116  // Isis_Card
+4117  // Side_Winder_Card
+4118  // Petit_Card
+4119  // Bathory_Card
+4120  // Petit__Card
+4121  // Phreeoni_Card
+4122  // Deviruchi_Card
+4123  // Eddga_Card
+4124  // Medusa_Card
+4125  // Deviace_Card
+4126  // Minorous_Card
+4127  // Nightmare_Card
+4128  // Golden_Bug_Card
+4129  // Baphomet__Card
+4130  // Scorpion_King_Card
+4131  // Moonlight_Flower_Card
+4132  // Mistress_Card
+4133  // Daydric_Card
+4134  // Dracula_Card
+4135  // Orc_Load_Card
+4136  // Khalitzburg_Card
+4137  // Drake_Card
+4138  // Anubis_Card
+4139  // Joker_Card
+4140  // Knight_Of_Abyss_Card
+4141  // Evil_Druid_Card
+4142  // Doppelganger_Card
+4143  // Orc_Hero_Card
+4144  // Osiris_Card
+4145  // Berzebub_Card
+4146  // Maya_Card
+4147  // Baphomet_Card
+4148  // Pharaoh_Card
+4149  // Gargoyle_Card
+4150  // Goat_Card
+4151  // Gajomart_Card
+4152  // Galapago_Card
+4153  // Crab_Card
+4154  // Rice_Cake_Boy_Card
+4155  // Goblin_Leader_Card
+4156  // Steam_Goblin_Card
+4157  // Goblin_Archer_Card
+4158  // Flying_Deleter_Card
+4159  // Nine_Tail_Card
+4160  // Antique_Firelock_Card
+4161  // Grand_Peco_Card
+4162  // Grizzly_Card
+4163  // Gryphon_Card
+4164  // Gullinbursti_Card
+4165  // Gig_Card
+4166  // Nightmare_Terror_Card
+4167  // Neraid_Card
+4168  // Dark_Lord_Card
+4169  // Dark_Illusion_Card
+4170  // Dark_Frame_Card
+4171  // Dark_Priest_Card
+4172  // The_Paper_Card
+4173  // Demon_Pungus_Card
+4174  // Deviling_Card
+4175  // Poison_Toad_Card
+4176  // Dullahan_Card
+4177  // Dryad_Card
+4178  // Dragon_Tail_Card
+4179  // Dragon_Fly_Card
+4180  // Driller_Card
+4181  // Disguise_Card
+4182  // Diabolic_Card
+4183  // Vagabond_Wolf_Card
+4184  // Lava_Golem_Card
+4185  // Rideword_Card
+4186  // Raggler_Card
+4187  // Raydric_Archer_Card
+4188  // Leib_Olmai_Card
+4189  // Wraith_Dead_Card
+4190  // Wraith_Card
+4191  // Loli_Ruri_Card
+4192  // Rotar_Zairo_Card
+4193  // Lude_Card
+4194  // Rybio_Card
+4195  // Leaf_Cat_Card
+4196  // Marin_Card
+4197  // Mastering_Card
+4198  // Maya_Puple_Card
+4199  // Merman_Card
+4200  // Megalith_Card
+4201  // Majoruros_Card
+4202  // Civil_Servant_Card
+4203  // Mutant_Dragon_Card
+4204  // Mini_Demon_Card
+4205  // Mimic_Card
+4206  // Mystcase_Card
+4207  // Mysteltainn_Card
+4208  // Miyabi_Ningyo_Card
+4209  // Violy_Card
+4210  // Wander_Man_Card
+4211  // Vocal_Card
+4212  // Bon_Gun_Card
+4213  // Brilight_Card
+4214  // Bloody_Murderer_Card
+4215  // Blazzer_Card
+4216  // Sasquatch_Card
+4217  // Live_Peach_Tree_Card
+4218  // Succubus_Card
+4219  // Sageworm_Card
+4220  // Solider_Card
+4221  // Skeleton_General_Card
+4222  // Skel_Prisoner_Card
+4223  // Stalactic_Golem_Card
+4224  // Stem_Worm_Card
+4225  // Stone_Shooter_Card
+4226  // Sting_Card
+4227  // Spring_Rabbit_Card
+4228  // Sleeper_Card
+4229  // C_Tower_Manager_Card
+4230  // Shinobi_Card
+4231  // Increase_Soil_Card
+4232  // Wild_Ginseng_Card
+4233  // Baby_Leopard_Card
+4234  // Anolian_Card
+4235  // Cookie_XMAS_Card
+4236  // Amon_Ra_Card
+4237  // Owl_Duke_Card
+4238  // Owl_Baron_Card
+4239  // Iron_Fist_Card
+4240  // Arclouse_Card
+4241  // Archangeling_Card
+4242  // Apocalips_Card
+4243  // Antonio_Card
+4244  // Alarm_Card
+4245  // Am_Mut_Card
+4246  // Assulter_Card
+4247  // Aster_Card
+4248  // Ancient_Mummy_Card
+4249  // Ancient_Worm_Card
+4250  // Executioner_Card
+4251  // Elder_Card
+4252  // Alligator_Card
+4253  // Alice_Card
+4254  // Tirfing_Card
+4255  // Orc_Lady_Card
+4256  // Orc_Archer_Card
+4257  // Wild_Rose_Card
+4258  // Wicked_Nymph_Card
+4259  // Wooden_Golem_Card
+4260  // Wootan_Shooter_Card
+4261  // Wootan_Fighter_Card
+4262  // Evil_Cloud_Hermit_Card
+4263  // Incant_Samurai_Card
+4264  // Wind_Ghost_Card
+4265  // Li_Me_Mang_Ryang_Card
+4266  // Eclipse_Card
+4267  // Explosion_Card
+4268  // Injustice_Card
+4269  // Incubus_Card
+4270  // Giant_Spider_Card
+4271  // Giant_Honet_Card
+4272  // Dancing_Dragon_Card
+4273  // Shellfish_Card
+4274  // Zombie_Master_Card
+4275  // Zombie_Prisoner_Card
+4276  // Lord_Of_Death_Card
+4277  // Zherlthsh_Card
+4278  // Gibbet_Card
+4279  // Deleter_Card
+4280  // Geographer_Card
+4281  // Zipper_Bear_Card
+4282  // Tengu_Card
+4283  // Greatest_General_Card
+4284  // Chepet_Card
+4285  // Choco_Card
+4286  // Karakasa_Card
+4287  // Kapha_Card
+4288  // Carat_Card
+4289  // Caterpillar_Card
+4290  // Cat_O_Nine_Tail_Card
+4291  // Kobold_Leader_Card
+4292  // Kobold_Archer_Card
+4293  // Cookie_Card
+4294  // Quve_Card
+4295  // Kraben_Card
+4296  // Cramp_Card
+4297  // Cruiser_Card
+4298  // Cremy_Fear_Card
+4299  // Clock_Card
+4300  // Chimera_Card
+4301  // Killer_Mantis_Card
+4302  // Tao_Gunka_Card
+4303  // Whisper_Boss_Card
+4304  // Tamruan_Card
+4305  // Turtle_General_Card
+4306  // Toad_Card
+4307  // Kind_Of_Beetle_Card
+4308  // Tri_Joint_Card
+4309  // Parasite_Card
+4310  // Panzer_Goblin_Card
+4311  // Permeter_Card
+4312  // Fur_Seal_Card
+4313  // Punk_Card
+4314  // Penomena_Card
+4315  // Pest_Card
+4316  // Fake_Angel_Card
+4317  // Mobster_Card
+4318  // Knight_Windstorm_Card
+4319  // Freezer_Card
+4320  // Bloody_Knight_Card
+4321  // Hylozoist_Card
+4322  // High_Orc_Card
+4323  // Garm_Baby_Card
+4324  // Garm_Card
+4325  // Harpy_Card
+4326  // See_Otter_Card
+4327  // Blood_Butterfly_Card
+4328  // Hyegun_Card
+4329  // Phendark_Card
+4330  // Dark_Snake_Lord_Card
+4331  // Heater_Card
+4332  // Waste_Stove_Card
+4333  // Venomous_Card
+4334  // Noxious_Card
+4335  // Pitman_Card
+4336  // Ungoliant_Card
+4337  // Porcellio_Card
+4338  // Obsidian_Card
+4339  // Mineral_Card
+4340  // Teddy_Bear_Card
+4341  // Metaling_Card
+4342  // Rsx_0806_Card
+4343  // Mole_Card
+4344  // Anopheles_Card
+4345  // Hill_Wind_Card
+4346  // Ygnizem_Card
+4347  // Armaia_Card
+4348  // Whikebain_Card
+4349  // Erend_Card
+4350  // Rawrel_Card
+4351  // Kavac_Card
+4352  // B_Ygnizem_Card
+4353  // Removal_Card
+4354  // Gemini_Card
+4355  // Gremlin_Card
+4356  // Beholder_Card
+4357  // B_Seyren_Card
+4358  // Seyren_Card
+4359  // B_Eremes_Card
+4360  // Eremes_Card
+4361  // B_Harword_Card
+4362  // Harword_Card
+4363  // B_Magaleta_Card
+4364  // Magaleta_Card
+4365  // B_Katrinn_Card
+4366  // Katrinn_Card
+4367  // B_Shecil_Card
+4368  // Shecil_Card
+4369  // Venatu_Card
+4370  // Dimik_Card
+4371  // Archdam_Card
+4372  // Bacsojin_Card
+4373  // Chung_E_Card
+4374  // Apocalips_H_Card
+4375  // Orc_Baby_Card
+4376  // Lady_Tanee_Card
+4377  // Green_Iguana_Card
+4378  // Acidus_Card
+4379  // Acidus__Card
+4380  // Ferus_Card
+4381  // Ferus__Card
+4382  // Novus__Card
+4383  // Novus_Card
+4384  // Hydro_Card
+4385  // Dragon_Egg_Card
+4386  // Detale_Card
+4387  // Ancient_Mimic_Card
+4388  // Deathword_Card
+4389  // Plasma_Card
+4390  // Breeze_Card
+4391  // Retribution_Card
+4392  // Observation_Card
+4393  // Shelter_Card
+4394  // Solace_Card
+4395  // Tha_Maero_Card
+4396  // Tha_Odium_Card
+4397  // Tha_Despero_Card
+4398  // Tha_Dolor_Card
+4399  // Thanatos_Card
+4400  // Aliza_Card
+4401  // Alicel_Card
+4402  // Aliot_Card
+4403  // Kiel_Card
+4404  // Skogul_Card
+4405  // Frus_Card
+4406  // Skeggiold_Card
+4407  // Randgris_Card
+4408  // Gloom_Under_Night_Card
+4409  // Agav_Card
+4410  // Echio_Card
+4411  // Vanberk_Card
+4412  // Isilla_Card
+4413  // Hodremlin_Card
+4414  // Seeker_Card
+4415  // Snowier_Card
+4416  // Siroma_Card
+4417  // Ice_Titan_Card
+4418  // Gazeti_Card
+4419  // Ktullanux_Card
+4420  // Muscipular_Card
+4421  // Drosera_Card
+4422  // Roween_Card
+4423  // Galion_Card
+4424  // Stapo_Card
+4425  // Atroce_Card
+4426  // Byorgue_Card
+4427  // Sword_Guardian_Card
+4428  // Bow_Guardian_Card
+4429  // Salamander_Card
+4430  // Ifrit_Card
+4431  // Kasa_Card
+4432  // Magmaring_Card
+4433  // Imp_Card
+4434  // Knocker_Card
+4435  // Zombie_Slaughter_Card
+4436  // Ragged_Zombie_Card
+4437  // Hell_Poodle_Card
+4438  // Banshee_Card
+4439  // Flame_Skull_Card
+4440  // Necromancer_Card
+4441  // Fallen_Bishop_Card
+4442  // Tatacho_Card
+4443  // Aqua_Elemental_Card
+4444  // Draco_Card
+4445  // Luciola_Vespa_Card
+//4446
+4447  // Centipede_Card
+4448  // Cornus_Card
+4449  // Dark_Shadow_Card
+4450  // Banshee_Master_Card
+4451  // Entweihen_Card
+4452  // Centipede_Larva_Card
+4453  // Hilsrion_Card
+//4454
+//4455
+//4456
+//4457
+//4458
+//4459
+//4460
+//4461
+//4462
+//4463
+//4464
+//4465
+//4466
+//4467
+//4468
+//4469
+//4470
+//4471
+//4472
+//4473
+//4474
+//4475
+//4476
+//4477
+//4478
+//4479
+//4480
+//4481
+//4482
+//4483
+//4484
+//4485
+//4486
+//4487
+//4488
+//4489
+//4490
+//4491
+//4492
+//4493
+//4494
+//4495
+//4496
+//4497
+//4498
+//4499
+//4500
+//4501
+//4502
+//4503
+//4504
+//4505
+//4506
+//4507
+//4508
+//4509
+//4510
+//4511
+//4512
+//4513
+//4514
+//4515
+//4516
+//4517
+//4518
+//4519
+//4520
+//4521
+//4522
+//4523
+//4524
+//4525
+//4526
+//4527
+//4528
+//4529
+//4530
+//4531
+//4532
+//4533
+//4534
+//4535
+//4536
+//4537
+//4538
+//4539
+//4540
+//4541
+//4542
+//4543
+//4544
+//4545
+//4546
+//4547
+//4548
+//4549
+//4550
+//4551
+//4552
+//4553
+//4554
+//4555
+//4556
+//4557
+//4558
+//4559
+//4560
+//4561
+//4562
+//4563
+//4564
+//4565
+//4566
+//4567
+//4568
+//4569
+//4570
+//4571
+//4572
+//4573
+//4574
+//4575
+//4576
+//4577
+//4578
+//4579
+//4580
+//4581
+//4582
+//4583
+//4584
+//4585
+//4586
+//4587
+//4588
+//4589
+//4590
+//4591
+//4592
+//4593
+//4594
+//4595
+//4596
+//4597
+//4598
+//4599
+//4600
+//4601
+//4602
+//4603
+//4604
+//4605
+//4606
+//4607
+//4608
+//4609
+//4610
+//4625
+//4626
+//4627
+//4628
+//4629
+//4630
+//4631
+//4632
+//4633
+//4634
+//4635
+//4636
+//4637
+//4638
+//4639
+//4640
+//4641
+//4642
+//4643
+//4644
+//4645
+//4646
+//4647
+//4648
+//4649
+//4650
+//4651
+//4652
+//4653
+//4654
+//4655
+//4656
+//4657
+//4658
+//--- 2015 / 7 / 9 - 최종수정일
+//11600
+//22847
+//22848
+//22849
+//6921
+//6922
+//6924
+//6936
+//6937
+//6938
+//6939
+//6940
+//6941
+//6942
+//6961
+//6962
+//6905
+//--- 2014 / 12 / 17
+12739  // Snow_Flower
+//--- 2014 / 07 / 09
+//6897
+//6898
+//6899
+//6900
+//6901
+//6902
+//6903
+//22770
+//22771
+//22772
+//22773
+//22774
+//22775
+//22776
+//--- 2014 / 04 / 21
+//6691
+//6692
+//6693
+//6694
+//6695
+//6696
+12490  // Vivid_Notation
+//22516
+//22534
+//11563
+//11564
+//--- 2013 / 12 / 23
+//6832
+//11597
+//22699
+//22679
+//22687
+//6615
+//--- 2013 / 08 / 02
+//6750
+//6751
+//22648
+//22649
+//6797
+//11556
+//6770
+//6771
+//6772
+//6773
+//6774
+//6775
+//6776
+//6777
+//6778
+//6779
+//6780
+//6781
+//6782
+//11589
+//11590
+//22620
+//22621
+
+//--- 2013 / 04 / 16
+//6557
+//6558
+//6559
+//6560
+//6561
+//12812
+//12813
+//12814
+//12815
+//6592
+//6594
+//6595
+//6596
+//6597
+//6598
+//6599
+//6600
+//6601
+//6602
+//6603
+//6604
+//6605
+//6668
+7056  // Payroll_Of_Kafra
+//11557
+//11558
+//6607
+//6608
+//6609
+//6610
+//6611
+//6612
+//6613
+7228  // Gold_Bullion
+7229  // Silver_Bullion
+7230  // White_Gold_Bullion
+//6699
+//6700
+//6701
+//6702
+//6703
+//6704
+//6705
+//6706
+//6683
+//7640
+//7642
+//7643
+//7644
+//6521
+//6522
+//6531
+//6557
+//6558
+//6559
+//6560
+//6561
+//12812
+//12813
+//12814
+//12815
+714  // Emperium
+6381  // Field_Shovel
+6382  // Urn
+6393  // Round_Feather
+6394  // Golden_Feather
+6395  // Angel_Magic_Power
+//6403
+//6404
+//6405
+//6423
+//6469
+//6470
+//6471
+6493  // Makibishi
+//6496
+//6497
+//6498
+6499  // Ancient_Grudge
+//6508
+//6509
+//6510
+//6511
+6512  // Charm_Fire
+6513  // Charm_Ice
+6514  // Charm_Wind
+6515  // Charm_Earth
+//6516
+//6517
+//6518
+//6523
+//6524
+//6525
+7347  // Lab_Staff_Record
+7760  // Yaga_Magic_Book
+7762  // Yaga_Pestle
+7824  // Spirit_Liquor
+11519  // Beef_Toast
+11520  // Mora_Mandarin
+11521  // Pingui_Berry_Juice
+11522  // Red_Raffle_Sap
+11523  // Yellow_Raffle_Sap
+11524  // White_Raffle_Sap
+11525  // Mora_Hip_Tea
+11526  // Rafflecino
+//11532
+//11533
+//11534
+//11536
+//11537
+//11547
+//11548
+//11549
+12329  // Recall_MaleGM
+12330  // Recall_FemaleGM
+12342  // Manuk's_Opportunity
+12343  // Manuk's_Courage
+12344  // Pinguicula's_fruit_Jam
+12345  // Luciola's_Honey_Jam
+12348  // Manuk's_Faith
+12349  // Cornus'_Tears
+12350  // Angeling_Potion
+12351  // Shout_Megaphone
+12354  // Buche_De_Noel
+12355  // Xmas_Gift
+12356  // Louise_Costume_Box
+12418  // Full_SwingK
+12419  // Mana_Plus
+12422  // HP_Increase_Potion_(Small)
+12423  // HP_Increase_Potion_(Medium)
+12424  // HP_Increase_Potion_(Large)
+12425  // SP_Increase_Potion_(Small)
+12426  // SP_Increase_Potion_(Medium)
+12427  // SP_Increase_Potion_(Large)
+12428  // Concentrated_White_Potion_Z
+12429  // Savage_Full_Roast
+12430  // Cocktail_Warg_Blood
+12431  // Minor_Stew
+12432  // Siroma_Iced_Tea
+12433  // Drosera_Herb_Salad
+12434  // Petite_Tail_Noodles
+12436  // Vitata_500
+12437  // Concentrated_Ceromain_Soup
+12475  // Cure_Free
+12536  // NY_Rice_Cake_Soup
+12539  // Splendid_Box
+12561  // Mysterious_Seed
+12574  // Mora_Berry
+12575  // Arrow_Of_Elf_Cntr
+12576  // Hunting_Arrow_Cntr
+//12582
+//12608
+//12609
+//12612
+//12613
+//12614
+//12615
+//12616
+//12617
+//12618
+//12619
+//12620
+//12621
+//12623
+//12675
+//12676
+//12677
+//12678
+//12679
+//12680
+//12683
+//12690
+//12691
+//12692
+//12693
+//12694
+//12695
+//12698
+//12699
+//12700
+//12775
+
+//--- 2010 / 03 / 12
+601  // Wing_Of_Fly
+602  // Wing_Of_Butterfly
+603  // Old_Blue_Box
+604  // Branch_Of_Dead_Tree
+605  // Anodyne
+606  // Aloebera
+607  // Yggdrasilberry
+608  // Seed_Of_Yggdrasil
+609  // Amulet
+610  // Leaf_Of_Yggdrasil
+611  // Spectacles
+612  // Portable_Furnace
+613  // Iron_Hammer
+614  // Golden_Hammer
+615  // Oridecon_Hammer
+616  // Old_Card_Album
+617  // Old_Violet_Box
+618  // Worn_Out_Scroll
+619  // Unripe_Apple
+620  // Orange_Juice
+621  // Bitter_Herb
+622  // Rainbow_Carrot
+623  // Earthworm_The_Dude
+624  // Rotten_Fish
+625  // Lusty_Iron
+626  // Monster_Juice
+627  // Sweet_Milk
+628  // Well_Dried_Bone
+629  // Singing_Flower
+630  // Dew_Laden_Moss
+631  // Deadly_Noxious_Herb
+632  // Fatty_Chubby_Earthworm
+633  // Baked_Yam
+634  // Tropical_Banana
+635  // Horror_Of_Tribe
+636  // No_Recipient
+637  // Old_Broom
+638  // Silver_Knife_Of_Chaste
+639  // Armlet_Of_Obedience
+640  // Shining_Stone
+641  // Contracts_In_Shadow
+642  // Book_Of_Devil
+643  // Pet_Incubator
+644  // Gift_Box
+645  // Center_Potion
+656  // Awakening_Potion
+657  // Berserk_Potion
+658  // Union_Of_Tribe
+659  // Heart_Of_Her
+660  // Prohibition_Red_Candle
+661  // Sway_Apron
+662  // Inspector_Certificate
+663  // Korea_Rice_Cake
+664  // Gift_Box_1
+665  // Gift_Box_2
+666  // Gift_Box_3
+667  // Gift_Box_4
+668  // Handsei
+669  // Rice_Cake_Soup
+678  // Poison_Bottle
+679  // Gold_Pill
+681  // Memory_Of_Wedding
+682  // Realgar_Wine
+683  // Exorcize_Herb
+684  // Durian
+686  // Earth_Scroll_1_3
+687  // Earth_Scroll_1_5
+688  // Cold_Scroll_1_3
+689  // Cold_Scroll_1_5
+690  // Fire_Scroll_1_3
+691  // Fire_Scroll_1_5
+692  // Wind_Scroll_1_3
+693  // Wind_Scroll_1_5
+694  // Ghost_Scroll_1_3
+695  // Ghost_Scroll_1_5
+696  // Fire_Scroll_2_1
+697  // Fire_Scroll_2_5
+698  // Fire_Scroll_3_1
+699  // Fire_Scroll_3_5
+700  // Cold_Scroll_2_1
+12000  // Cold_Scroll_2_5
+12001  // Holy_Scroll_1_3
+12002  // Holy_Scroll_1_5
+12003  // Holy_Scroll_2_1
+12004  // Arrow_Container
+12005  // Iron_Arrow_Container
+12006  // Steel_Arrow_Container
+12007  // Ori_Arrow_Container
+12008  // Fire_Arrow_Container
+12009  // Silver_Arrow_Container
+12010  // Wind_Arrow_Container
+12011  // Stone_Arrow_Container
+12012  // Crystal_Arrow_Container
+12013  // Shadow_Arrow_Container
+12014  // Imma_Arrow_Container
+12015  // Rusty_Arrow_Container
+12016  // Speed_Up_Potion
+12017  // Slow_Down_Potion
+12018  // Fire_Cracker
+12020  // Water_Of_Darkness
+12027  // Giggling_Box
+12028  // Box_Of_Thunder
+12029  // Gloomy_Box
+12030  // Box_Of_Grudge
+12031  // Sleepy_Box
+12032  // Box_Of_Storm
+12033  // Box_Of_Sunlight
+12034  // Painting_Box
+12040  // Stone_Of_Intelligence_
+12041  // Str_Dish01
+12042  // Str_Dish02
+12043  // Str_Dish03
+12044  // Str_Dish04
+12045  // Str_Dish05
+12046  // Int_Dish01
+12047  // Int_Dish02
+12048  // Int_Dish03
+12049  // Int_Dish04
+12050  // Int_Dish05
+12051  // Vit_Dish01
+12052  // Vit_Dish02
+12053  // Vit_Dish03
+12054  // Vit_Dish04
+12055  // Vit_Dish05
+12056  // Agi_Dish01
+12057  // Agi_Dish02
+12058  // Agi_Dish03
+12059  // Agi_Dish04
+12060  // Agi_Dish05
+12061  // Dex_Dish01
+12062  // Dex_Dish02
+12063  // Dex_Dish03
+12064  // Dex_Dish04
+12065  // Dex_Dish05
+12066  // Luk_Dish01
+12067  // Luk_Dish02
+12068  // Luk_Dish03
+12069  // Luk_Dish04
+12070  // Luk_Dish05
+12071  // Str_Dish06
+12072  // Str_Dish07
+12073  // Str_Dish08
+12074  // Str_Dish09
+12075  // Str_Dish10
+12076  // Int_Dish06
+12077  // Int_Dish07
+12078  // Int_Dish08
+12079  // Int_Dish09
+12080  // Int_Dish10
+12081  // Vit_Dish06
+12082  // Vit_Dish07
+12083  // Vit_Dish08
+12084  // Vit_Dish09
+12085  // Vit_Dish10
+12086  // Agi_Dish06
+12087  // Agi_Dish07
+12088  // Agi_Dish08
+12089  // Agi_Dish09
+12090  // Agi_Dish10
+12091  // Dex_Dish06
+12092  // Dex_Dish07
+12093  // Dex_Dish08
+12094  // Dex_Dish09
+12095  // Dex_Dish10
+12096  // Luk_Dish06
+12097  // Luk_Dish07
+12098  // Luk_Dish08
+12099  // Luk_Dish09
+12100  // Luk_Dish10
+12101  // Citron
+12102  // Meat_Skewer
+12103  // Bloody_Dead_Branch
+12104  // Random_Quiver
+12105  // Set_Of_Taiming_Item
+12106  // Accessory_Box
+12107  // Wrapped_Mask
+12108  // Bundle_Of_Magic_Scroll
+12109  // Poring_Box
+12110  // First_Aid_Kit
+12111  // Food_Package
+12112  // Tropical_Sograt
+12113  // Vermilion_The_Beach
+12114  // Elemental_Fire
+12115  // Elemental_Water
+12116  // Elemental_Earth
+12117  // Elemental_Wind
+12118  // Resist_Fire
+12119  // Resist_Water
+12120  // Resist_Earth
+12121  // Resist_Wind
+12122  // Sesame_Pastry
+12123  // Honey_Pastry
+12124  // Rainbow_Cake
+12125  // Outdoor_Cooking_Kits
+12126  // Indoor_Cooking_Kits
+12127  // High_end_Cooking_Kits
+12128  // Imperial_Cooking_Kits
+12129  // Fantastic_Cooking_Kits
+12130  // Cookie_Bag
+12132  // Red_Bag
+12144  // Sphere_Case_Wind
+12145  // Sphere_Case_Darkness
+12146  // Sphere_Case_Poison
+12147  // Sphere_Case_Water
+12148  // Sphere_Case_Fire
+12149  // Bullet_Case
+12150  // Bullet_Case_Blood
+12151  // Bullet_Case_Silver
+12183  // Holy_Arrow_Quiver
+12184  // Mercenary_Red_Potion
+12185  // Mercenary_Blue_Potion
+12194  // Hometown_Gift
+12195  // Plain_Rice_Cake
+12196  // Hearty_Rice_Cake
+12197  // Salty_Rice_Cake
+12198  // Lucky_Rice_Cake
+12241  // M_Center_Potion
+12242  // M_Awakening_Potion
+12243  // M_Berserk_Potion
+12246  // Magic_Card_Album
+12260  // Cool_Summer_Outfit
+12290  // Mysterious_Can
+12291  // Mysterious_PET_Bottle
+12292  // Unripe_Fruit
+12293  // Dried_Yggdrasilberry
+12341  // Special_Alloy_Trap_Box
+12346  // Unripe_Acorn
+12347  // Acorn_Jelly
+12353  // Tiny_Waterbottle
+12358  // Fan_Of_Wind
+12359  // Very_Soft_Plant
+12360  // Very_Red_Juice
+12362  // Kuloren
+12364  // Staff_Of_Leader
+12365  // Charming_Lotus
+12366  // Gril_Doll
+12367  // Luxury_Whisky_Bottle
+12368  // Splendid_Mirror
+12369  // Oilpalm_Coconut
+12371  // Magical_Lithography
+12372  // Hell_Contract
+12373  // Boy's_Naivety
+12374  // Flaming_Ice
+12376  // Mysterious_Can2
+12377  // Mysterious_PET_Bottle2
+12379  // Pope's_Cookie
+12383  // Vulcan_Bullet_Magazine
+12392  // Repair_A
+12393  // Repair_B
+12394  // Repair_C
+12395  // Tantanmen
+12414  // Guarana_Candy
+12717  // Poison_Paralysis
+12718  // Poison_Leech
+12719  // Poison_Oblivion
+12720  // Poison_Disheart
+12721  // Poison_Numb
+12722  // Poison_Fever
+12723  // Poison_Laughing
+12724  // Poison_Fatigue
+12734  // Runstone_Quality
+12735  // Runstone_Ancient
+12736  // Runstone_Mystic
+12737  // Runstone_Ordinary
+12738  // Runstone_Rare
+506  // Green_Potion
+507  // Red_Herb
+508  // Yellow_Herb
+509  // White_Herb
+510  // Blue_Herb
+511  // Green_Herb
+512  // Apple
+513  // Banana
+514  // Grape
+515  // Carrot
+516  // Sweet_Potato
+517  // Meat
+518  // Honey
+519  // Milk
+520  // Leaflet_Of_Hinal
+521  // Leaflet_Of_Aloe
+522  // Fruit_Of_Mastela
+523  // Holy_Water
+525  // Panacea
+526  // Royal_Jelly
+528  // Monster's_Feed
+529  // Candy
+530  // Candy_Striper
+531  // Apple_Juice
+532  // Banana_Juice
+533  // Grape_Juice
+534  // Carrot_Juice
+535  // Pumpkin
+536  // Ice_Cream
+537  // Pet_Food
+538  // Well_Baked_Cookie
+539  // Piece_Of_Cake
+544  // Fish_Slice
+548  // Cheese
+549  // Nice_Sweet_Potato
+550  // Popped_Rice
+551  // Shusi
+553  // Bun
+564  // Rice_Ball
+566  // Tomyumkung
+567  // Prawn
+568  // Lemon
+569  // Novice_Potion
+570  // Lucky_Candy
+571  // Lucky_Candy_Cane
+572  // Lucky_Cookie
+574  // Egg
+576  // Prickly_Fruit
+577  // Grain
+578  // Strawberry
+579  // Delicious_Fish
+580  // Bread
+581  // Mushroom
+582  // Orange
+584  // Fish_Ball_Soup
+587  // Prickly_Fruit_
+591  // Caviar_Pancake
+592  // Jam_Pancake
+593  // Honey_Pancake
+594  // Sour_Cream_Pancake
+595  // Mushroom_Pancake
+11513  // Protect_Neck_Candy
+11515  // Coconut
+11516  // Asai_Fruit
+11517  // Puri_Potion
+701  // Ora_Ora
+702  // Animal_Blood
+703  // Hinalle
+704  // Aloe
+705  // Clover
+706  // Four_Leaf_Clover
+707  // Singing_Plant
+708  // Ment
+709  // Izidor
+710  // Illusion_Flower
+711  // Shoot
+712  // Flower
+713  // Empty_Bottle
+715  // Yellow_Gemstone
+716  // Red_Gemstone
+717  // Blue_Gemstone
+718  // Dark_Red_Jewel
+719  // Violet_Jewel
+720  // Skyblue_Jewel
+721  // Azure_Jewel
+722  // Scarlet_Jewel
+723  // Cardinal_Jewel
+724  // Cardinal_Jewel_
+725  // Red_Jewel
+726  // Blue_Jewel
+727  // White_Jewel
+728  // Golden_Jewel
+729  // Bluish_Green_Jewel
+730  // Crystal_Jewel
+731  // Crystal_Jewel_
+732  // Crystal_Jewel__
+733  // Crystal_Jewel___
+734  // Red_Frame
+735  // Blue_Porcelain
+736  // White_Platter
+737  // Black_Ladle
+738  // Pencil_Case
+739  // Rouge
+740  // Stuffed_Doll
+741  // Poring_Doll
+742  // Chonchon_Doll
+743  // Spore_Doll
+744  // Bunch_Of_Flowers
+745  // Wedding_Bouquet
+746  // Glass_Bead
+747  // Crystal_Mirror
+748  // Witherless_Rose
+749  // Frozen_Rose
+750  // Baphomet_Doll
+751  // Osiris_Doll
+752  // Grasshopper_Doll
+753  // Monkey_Doll
+754  // Raccoondog_Doll
+756  // Oridecon_Stone
+757  // Elunium_Stone
+901  // Danggie
+902  // Tree_Root
+903  // Reptile_Tongue
+904  // Scorpion's_Tail
+905  // Stem
+906  // Pointed_Scale
+907  // Resin
+908  // Spawn
+909  // Jellopy
+910  // Garlet
+911  // Scell
+912  // Zargon
+913  // Tooth_Of_Bat
+914  // Fluff
+915  // Chrysalis
+916  // Feather_Of_Birds
+917  // Talon
+918  // Sticky_Webfoot
+919  // Animal's_Skin
+920  // Claw_Of_Wolves
+921  // Mushroom_Spore
+922  // Orcish_Cuspid
+923  // Evil_Horn
+924  // Powder_Of_Butterfly
+925  // Bill_Of_Birds
+926  // Scale_Of_Snakes
+928  // Insect_Feeler
+929  // Immortal_Heart
+930  // Rotten_Bandage
+931  // Orcish_Voucher
+932  // Skel_Bone
+934  // Mementos
+935  // Shell
+936  // Scales_Shell
+937  // Posionous_Canine
+938  // Sticky_Mucus
+939  // Bee_Sting
+940  // Grasshopper's_Leg
+941  // Nose_Ring
+942  // Yoyo_Tail
+943  // Solid_Shell
+944  // Horseshoe
+945  // Raccoon_Leaf
+946  // Snail's_Shell
+947  // Horn
+948  // Bear's_Foot
+949  // Feather
+950  // Heart_Of_Mermaid
+951  // Fin
+952  // Cactus_Needle
+953  // Stone_Heart
+954  // Shining_Scales
+955  // Worm_Peelings
+956  // Gill
+957  // Decayed_Nail
+958  // Horrendous_Mouth
+959  // Rotten_Scale
+960  // Nipper
+961  // Conch
+962  // Tentacle
+963  // Sharp_Scale
+964  // Crap_Shell
+965  // Clam_Shell
+966  // Flesh_Of_Clam
+967  // Turtle_Shell
+968  // Voucher_Of_Orcish_Hero
+969  // Gold
+970  // Alchol
+971  // Detrimindexta
+972  // Karvodailnirol
+973  // Counteragent
+974  // Mixture
+975  // Scarlet_Dyestuffs
+976  // Lemon_Dyestuffs
+978  // Cobaltblue_Dyestuffs
+979  // Darkgreen_Dyestuffs
+980  // Orange_Dyestuffs
+981  // Violet_Dyestuffs
+982  // White_Dyestuffs
+983  // Black_Dyestuffs
+984  // Oridecon
+985  // Elunium
+986  // Anvil
+987  // Oridecon_Anvil
+988  // Golden_Anvil
+989  // Emperium_Anvil
+990  // Boody_Red
+991  // Crystal_Blue
+992  // Wind_Of_Verdure
+993  // Yellow_Live
+994  // Flame_Heart
+995  // Mistic_Frozen
+996  // Rough_Wind
+997  // Great_Nature
+998  // Iron
+999  // Steel
+1000  // Star_Crumb
+1001  // Sparkling_Dust
+1002  // Iron_Ore
+1003  // Coal
+1004  // Patriotism_Marks
+1005  // Hammer_Of_Blacksmith
+1006  // Old_Magic_Book
+1007  // Penetration
+1008  // Frozen_Heart
+1009  // Sacred_Marks
+1010  // Phracon
+1011  // Emveretarcon
+1012  // Lizard_Scruff
+1013  // Colorful_Shell
+1014  // Jaws_Of_Ant
+1015  // Thin_N'_Long_Tongue
+1016  // Rat_Tail
+1017  // Moustache_Of_Mole
+1018  // Nail_Of_Mole
+1019  // Wooden_Block
+1020  // Long_Hair
+1021  // Dokkaebi_Horn
+1022  // Fox_Tail
+1023  // Fish_Tail
+1024  // Chinese_Ink
+1025  // Spiderweb
+1026  // Acorn
+1027  // Porcupine_Spike
+1028  // Wild_Boar's_Mane
+1029  // Tiger's_Skin
+1030  // Tiger_Footskin
+1031  // Limb_Of_Mantis
+1032  // Blossom_Of_Maneater
+1033  // Root_Of_Maneater
+1034  // Cobold_Hair
+1035  // Dragon_Canine
+1036  // Dragon_Scale
+1037  // Dragon_Train
+1038  // Petite_DiablOfs_Horn
+1039  // Petite_DiablOfs_Wing
+1040  // Elder_Pixie's_Beard
+1041  // Lantern
+1042  // Short_Leg
+1043  // Nail_Of_Orc
+1044  // Tooth_Of_
+1045  // Sacred_Masque
+1046  // Tweezer
+1047  // Head_Of_Medusa
+1048  // Slender_Snake
+1049  // Skirt_Of_Virgin
+1050  // Tendon
+1051  // Detonator
+1052  // Single_Cell
+1053  // Tooth_Of_Ancient_Fish
+1054  // Lip_Of_Ancient_Fish
+1055  // Earthworm_Peeling
+1056  // Grit
+1057  // Moth_Dust
+1058  // Wing_Of_Moth
+1059  // Transparent_Cloth
+1060  // Golden_Hair
+1061  // Starsand_Of_Witch
+1062  // Pumpkin_Head
+1063  // Sharpened_Cuspid
+1064  // Reins
+1065  // Booby_Trap
+1066  // Tree_Of_Archer_1
+1067  // Tree_Of_Archer_2
+1068  // Tree_Of_Archer_3
+1088  // Morocc_Potion
+1089  // Payon_Potion
+1092  // Empty_Cylinder
+1093  // Empty_Potion
+1094  // Short_Daenggie
+1095  // Needle_Of_Alarm
+1096  // Round_Shell
+1097  // Worn_Out_Page
+1098  // Manacles
+1099  // Worn_Out_Prison_Uniform
+6001  // Essence_Of_Fire
+6002  // Token_Of_Apostle
+6003  // Soul_Pendant
+6004  // Bapho_Doll
+6008  // Wood
+6010  // Pickaxe
+6020  // Fur
+6021  // Peaked_Hat
+6022  // Hard_Skin
+6023  // Mystic_Horn
+6032  // Horn_Of_Hilsrion
+6033  // Horn_Of_Tendrilion
+6073  // Dragon's_Mane
+6075  // Crystalized_Teardrop
+6086  // Withered_Flower
+6087  // Crystal_Of_Soul_01
+6088  // Crystal_Of_Soul_02
+6089  // Piece_Of_Darkness
+6090  // Purified_Bradium
+6091  // Dark_Red_Scale
+6095  // Flavored_Alcohol
+6096  // Fish_With_Blue_Back
+6097  // Pumpkin_Pie_
+6098  // Small_Snow_Flower
+6099  // Grilled_Rice_Cake
+6100  // Damp_Darkness
+6104  // Big_Cell
+6105  // Morning_Dew
+6106  // Well_Ripened_Berry
+6107  // Sunset_On_The_Rock
+6108  // Apple_Pudding
+6109  // Plant_Neutrient
+6110  // Vital_Flower
+6111  // Mystic_Stone
+6112  // Fresh_Plant
+6113  // Vital_Flower_
+6114  // Flame_Gemstone
+6115  // Bun_
+6120  // Face_Paint
+6123  // Surface_Paint
+6128  // Guillotine_Antidote
+6144  // Heartbroken_Tears
+6145  // Vulcan_Bullet
+6146  // Magic_Gear_Fuel
+6147  // Liquid_Condensed_Bullet
+6186  // Monkey_Wrench
+6189  // Magic_Book_FB
+6190  // Magic_Book_CB
+6191  // Magic_Book_LB
+6192  // Magic_Book_SG
+6193  // Magic_Book_LOV
+6194  // Magic_Book_MS
+6195  // Magic_Book_CM
+6196  // Magic_Book_TV
+6197  // Magic_Book_TS
+6198  // Magic_Book_JT
+6199  // Magic_Book_WB
+6200  // Magic_Book_HD
+6201  // Magic_Book_ES
+6202  // Magic_Book_ES_
+6203  // Magic_Book_CL
+6204  // Magic_Book_CR
+6205  // Magic_Book_DL
+6210  // Seed_Of_Horny_Plant
+6211  // Bloodsuck_Plant_Seed
+6212  // Bomb_Mushroom_Spore
+6213  // Explosive_Powder
+6214  // Smoke_Powder
+6215  // Tear_Gas
+6216  // Oil_Bottle
+6217  // Mandragora_Flowerpot
+6223  // Carnium
+6224  // Bradium
+6244  // Gun_Powder
+6245  // Black_Powder
+6246  // Yellow_Powder
+6247  // White_Powder
+6248  // Melange_Pot
+6249  // Savage_Meat
+6250  // Cooking_Skewer
+6251  // Black_Charcoal
+6252  // Wolf_Blood
+6253  // Cold_Ice
+6254  // Beef_Head_Meat
+6255  // Large_Cookpot
+6256  // Ice_Fragment
+6257  // Ice_Crystal
+6258  // Comodo_Tropic_Fruit
+6259  // Drocera_Tentacle
+6260  // Petti_Tail
+6261  // Fine_Noodle
+6262  // Cool_Gravy
+6263  // Coconut_Fruit
+6264  // Melon
+6265  // Pineapple
+6279  // Apple_Bomb_CB
+6280  // Pinepple_Bomb_CB
+6281  // Coconut_Bomb_CB
+6282  // Melon_Bomb_CB
+6283  // Banana_Bomb_CB
+6284  // Plant_Genetic_Grow
+6285  // Quality_Potion_Book
+6297  // Bottle_To_Throw
+6321  // Rakehorn_Helm
+6322  // Antler_Helm
+6323  // Twinhorn_Helm
+6324  // Singlehorn_Helm
+6325  // White_Spider_Limb
+6326  // Queen_Wing_Piece
+6360  // Scarlet_Pts
+6361  // Indigo_Pts
+6362  // Yellow_Wish_Pts
+6363  // Lime_Green_Pts
+7001  // Mould_Powder
+7002  // Ogre_Tooth
+7003  // Anolian_Skin
+7004  // Mud_Lump
+7005  // Skull
+7006  // Wing_Of_Red_Bat
+7007  // Claw_Of_Rat
+7008  // Stiff_Horn
+7009  // Glitter_Shell
+7010  // Tail_Of_Steel_Scorpion
+7011  // Claw_Of_Monkey
+7012  // Tough_Scalelike_Stem
+7013  // Coral_Reef
+7014  // Old_Portrait
+7015  // Bookclip_In_Memory
+7016  // Spoon_Stub
+7017  // Executioner's_Mitten
+7018  // Young_Twig
+7019  // Loki's_Whispers
+7020  // Mother's_Nightmare
+7021  // Foolishness_Of_Blind
+7022  // Old_Hilt
+7023  // Blade_Lost_In_Darkness
+7024  // Bloody_Edge
+7026  // Key_Of_Clock_Tower
+7027  // Underground_Key
+7030  // Claw_Of_Desert_Wolf
+7031  // Old_Frying_Pan
+7032  // Piece_Of_Egg_Shell
+7033  // Poison_Spore
+7034  // Red_Socks_With_Holes
+7035  // Matchstick
+7036  // Fang_Of_Garm
+7038  // Yarn
+7041  // Fine_Grit
+7043  // Fine_Sand
+7047  // Alice's_Apron
+7048  // Talon_Of_Griffin
+7049  // Stone
+7053  // Cyfar
+7054  // Brigan
+7055  // Animal_Pooopoo
+7056  // Payroll_Of_Kafra
+7057  // Gallar_Horn
+7058  // Gullraifnir
+7063  // Soft_Feather
+7064  // Dragon_Fly_Wing
+7065  // Sea_Otter_Leather
+7066  // Ice_Piece
+7067  // Stone_Piece
+7068  // Burn_Tree
+7069  // Broken_Armor_Piece
+7070  // Broken_Shell
+7071  // Tatters_Clothes
+7072  // Rust_Suriken
+7073  // Jewel_Of_Prayer
+7074  // Iron_Glove
+7075  // Iron_Maiden
+7076  // Mystery_Wheel
+7077  // Silver_Fancy
+7078  // Anger_Of_Valkurye
+7079  // Feather_Of_Angel
+7080  // Foot_Step_Of_Cat
+7081  // Beard_Of_Women
+7082  // Root_Of_Stone
+7083  // Soul_Of_Fish
+7084  // Saliva_Of_Bird
+7085  // Tendon_Of_Bear
+7086  // Symbol_Of_Sun
+7087  // Breath_Of_Soul
+7088  // Crystal_Of_Snow
+7089  // Indication_Of_Tempest
+7090  // Slilince_Wave
+7091  // Rough_Billows
+7092  // Air_Stream
+7093  // Wheel
+7094  // Mystery_Piece
+7095  // Broken_Steel_Piece
+7096  // Cold_Magma
+7097  // Burning_Heart
+7098  // Live_Coal
+7099  // Old_Magic_Circle
+7100  // Sharp_Leaf
+7101  // Peco_Wing_Feather
+7102  // Hideous_Dream
+7103  // Unknown_Liquid_Bottle
+7104  // Fake_Angel_Wing
+7105  // Fake_Angel_Loop
+7106  // Goat's_Horn
+7107  // Gaoat's_Skin
+7108  // Boroken_Shiled_Piece
+7109  // Shine_Spear_Blade
+7110  // Vroken_Sword
+7111  // Smooth_Paper
+7112  // Fright_Paper_Blade
+7113  // Broken_Pharaoh_Symbol
+7114  // Tutankhamen's_Mask
+7115  // Harpy's_Feather
+7116  // Harpy's_Claw
+7117  // Rent_Spell_Book
+7118  // Rent_Scroll
+7119  // Spawns
+7120  // Burning_Horse_Shoe
+7121  // Honey_Jar
+7122  // Hot_Hair
+7123  // Dragon's_Skin
+7124  // Sand_Lump
+7125  // Scropion's_Nipper
+7126  // Large_Jellopy
+7127  // Alcol_Create_Book
+7128  // FireBottle_Create_Book
+7129  // Acid_Create_Book
+7130  // Plant_Create_Book
+7131  // Mine_Create_Book
+7132  // Coating_Create_Book
+7133  // Slim_Potion_Create_Book
+7134  // Medicine_Bowl
+7140  // Seed_Of_Life
+7141  // Yggdrasilberry_Dew
+7143  // Life_Force_Pot
+7144  // Normal_Potion_Book
+7147  // Jasmin
+7149  // Yellow_Plate
+7150  // Bamboo_Cut
+7151  // Oil_Paper
+7152  // Glossy_Hair
+7153  // Old_Japaness_Clothes
+7154  // Poison_Powder
+7155  // Poison_Toad's_Skin
+7156  // Broken_Shuriken
+7157  // Black_Mask
+7158  // Broken_Wine_Vessel
+7159  // Tengu's_Nose
+7160  // Lord's_Passable_Ticket
+7161  // Black_Bear's_Skin
+7162  // Cloud_Piece
+7163  // Sharp_Feeler
+7164  // Hard_Peach
+7165  // Limpid_Celestial_Robe
+7166  // Soft_Silk_Cloth
+7167  // Mystery_Iron_Bit
+7168  // Great_Wing
+7169  // Taegeuk_Plate
+7170  // Tuxedo
+7171  // Leopard_Skin
+7172  // Leopard_Talon
+7174  // Packing_Ribbon
+7175  // Packing_Paper
+7182  // Cacao
+7186  // Thin_Stem
+7187  // Festival_Mask
+7188  // Browny_Root
+7189  // Heart_Of_Tree
+7190  // Solid_Peeling
+7191  // Lamplight
+7192  // Blade_Of_Pinwheel
+7193  // Germinating_Sprout
+7194  // Soft_Leaf
+7195  // Air_Rifle
+7196  // Shoulder_Protection
+7197  // Tough_Vines
+7198  // Great_Leaf
+7200  // Flexible_String
+7201  // Log
+7202  // Beetle_Nipper
+7203  // Solid_Twig
+7204  // Gunpowder
+7205  // Piece_Of_Black_Cloth
+7206  // Black_Kitty_Doll
+7207  // Old_Manteau
+7208  // Rusty_Cleaver
+7209  // Dullahan's_Helm
+7210  // Dullahan_Armor
+7211  // Rojerta_Piece
+7212  // Hanging_Doll
+7213  // Needle_Pouch
+7214  // Bat_Cage
+7215  // Broken_Needle
+7216  // Red_Scarf
+7217  // Spool
+7218  // Rotten_Rope
+7219  // Striped_Socks
+7220  // Ectoplasm
+7221  // Tangled_Chain
+7222  // Tree_Knot
+7223  // Distorted_Portrait
+7225  // Pumpkin_Bucket
+7226  // Pill
+7262  // Fan
+7263  // Cat_Eyed_Stone
+7264  // Dried_Sand
+7265  // Dragon_Horn
+7266  // Dragon_Fang
+7267  // Tiger_Skin_Panties
+7268  // Little_Blacky_Ghost
+7269  // Bib
+7270  // Milk_Bottle
+7277  // Munak_Doll
+7286  // Chilli
+7289  // Olivine
+7290  // Phlogopite
+7291  // Agate
+7292  // Muscovite
+7293  // Rose_Quartz
+7294  // Turquoise
+7295  // Citrine
+7296  // Pyroxene
+7297  // Biotite
+7298  // Leaf_Clothes
+7299  // Bamboo_Basket
+7300  // Gemstone
+7301  // Sword_Accessory
+7303  // Bag_Of_Rice
+7312  // Jubilee
+7315  // Dark_Crystal_Fragment
+7316  // Long_Limb
+7317  // Screw
+7318  // Old_Pick
+7319  // Old_Steel_Plate
+7320  // Air_Pollutant
+7321  // Fragment_Of_Crystal
+7322  // Poisonous_Gas
+7323  // Battered_Kettle
+7325  // Tube
+7326  // Fluorescent_Liquid
+7327  // Headlamp
+7340  // Will_Of_Darkness
+7345  // Armlet_Of_Prisoner
+7352  // Transparent_Plate01
+7353  // Transparent_Plate02
+7354  // Transparent_Plate03
+7355  // Transparent_Plate04
+7356  // Piece_Of_Crest1
+7357  // Piece_Of_Crest2
+7358  // Piece_Of_Crest3
+7359  // Piece_Of_Crest4
+7419  // Embryo_HandBook
+7433  // Scroll
+7434  // Elemental_Potion_Book
+7435  // Golden_Bracelet
+7436  // Piece_Of_Memory_Green
+7437  // Piece_Of_Memory_Purple
+7438  // Piece_Of_Memory_Blue
+7439  // Piece_Of_Memory_Red
+7440  // Red_Feather
+7441  // Blue_Feather
+7442  // Cursed_Seal
+7443  // Tri_Headed_Dragon_Head
+7444  // Treasure_Box
+7445  // Dragonball_Green
+7446  // Dragonball_Blue
+7447  // Dragonball_Red
+7448  // Dragonball_Yellow
+7449  // Bloody_Page
+7450  // Piece_Of_Bone_Armor
+7451  // Scale_Of_Red_Dragon
+7452  // Yellow_Spice
+7453  // Sweet_Sauce
+7454  // Plain_Sauce
+7455  // Hot_Sauce
+7456  // Red_Spice
+7457  // Cooking_Oil
+7472  // Cookbook01
+7473  // Cookbook02
+7474  // Cookbook03
+7475  // Cookbook04
+7476  // Cookbook05
+7477  // Cookbook06
+7478  // Cookbook07
+7479  // Cookbook08
+7480  // Cookbook09
+7481  // Cookbook10
+7482  // Pot
+7507  // Sturdy_Iron_Piece
+7510  // Valhalla_Flower
+7511  // Rune_Of_Darkness
+7512  // Burnt_Parts
+7513  // Pocket_Watch
+7521  // Flame_Stone
+7522  // Ice_Stone
+7523  // Wind_Stone
+7524  // Shadow_Orb
+7561  // Ice_Heart
+7562  // Ice_Scale
+7563  // Bloody_Rune
+7564  // Rotten_Meat
+7565  // Sticky_Poison
+7566  // Will_Of_Darkness_
+7567  // Suspicious_Hat
+7568  // White_Mask
+7574  // Ice_Particle
+7751  // Old_White_Cloth
+7752  // Clattering_Skull
+7753  // Broken_Farming_Utensil
+7754  // Broken_Crown
+7830  // Goddess_Tear
+7831  // Valkyrie_Token
+7832  // Brynhild_Armor_Piece
+7833  // Hero_Remains
+7834  // Andvari_Ring
+7835  // Dusk_Glow
+7836  // Dawn_Essence
+7837  // Cold_Moonlight
+7838  // Hazy_Starlight
+7931  // Poison_Kit
+7932  // Poison_Herb_Nerium
+7933  // Poison_Herb_Rantana
+7934  // Poison_Herb_Makulata
+7935  // Poison_Herb_Seratum
+7936  // Poison_Herb_Scopolia
+7937  // Poison_Herb_Amoena
+7938  // Light_Granule
+7939  // Elder_Branch
+7940  // Special_Alloy_Trap
+11000  // Prontera_Book_01
+11001  // Adventure_Story01
+11002  // Great_Chef_Orleans01
+11003  // Legend_Of_Kafra01
+11004  // Mercenary_Rebellion
+11005  // Tyrant_Schmidt
+11006  // Blood_Flower01
+11007  // Blood_Flower02
+11008  // Barmund
+11009  // Adventure_Story02
+11020  // Japan_Book1
+11021  // Japan_Book2
+11022  // Mix_Cook_Book
+11023  // Increase_Stamina_Study
+11024  // Vital_Drink_CB
+//--- 2010 / 03 / 12

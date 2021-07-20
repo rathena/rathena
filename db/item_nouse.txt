@@ -1,0 +1,138 @@
+// Item Usage Restriction Configuration File
+// Defines if an item cannot be used under special circumstances.
+//
+// Structure of Database:
+// ItemID,Flag,Group ID Override
+//
+// Flag:
+//	1 = Cannot use item while sitting
+//	... [more to come]
+//
+// Group ID Override:
+//	Group ID necessary to override this setting.
+
+606,1,100	// Aloebera
+619,1,100	// Unripe_Apple
+620,1,100	// Orange_Juice
+621,1,100	// Bitter_Herb
+622,1,100	// Rainbow_Carrot
+623,1,100	// Earthworm_The_Dude
+624,1,100	// Rotten_Fish
+625,1,100	// Lusty_Iron
+626,1,100	// Monster_Juice
+627,1,100	// Sweet_Milk
+628,1,100	// Well_Dried_Bone
+629,1,100	// Singing_Flower
+630,1,100	// Dew_Laden_Moss
+631,1,100	// Deadly_Noxious_Herb
+632,1,100	// Fatty_Chubby_Earthworm
+633,1,100	// Baked_Yam
+634,1,100	// Tropical_Banana
+635,1,100	// Horror_Of_Tribe
+636,1,100	// No_Recipient
+637,1,100	// Old_Broom
+638,1,100	// Silver_Knife_Of_Chaste
+639,1,100	// Armlet_Of_Obedience
+640,1,100	// Shining_Stone
+641,1,100	// Contracts_In_Shadow
+642,1,100	// Book_Of_Devil
+659,1,100	// Heart_Of_Her
+660,1,100	// Prohibition_Red_Candle
+661,1,100	// Sway_Apron
+686,1,100	// Earth_Scroll_1_3
+687,1,100	// Earth_Scroll_1_5
+688,1,100	// Cold_Scroll_1_3
+689,1,100	// Cold_Scroll_1_5
+690,1,100	// Fire_Scroll_1_3
+691,1,100	// Fire_Scroll_1_5
+692,1,100	// Wind_Scroll_1_3
+693,1,100	// Wind_Scroll_1_5
+694,1,100	// Ghost_Scroll_1_3
+695,1,100	// Ghost_Scroll_1_5
+696,1,100	// Fire_Scroll_2_1
+697,1,100	// Fire_Scroll_2_5
+698,1,100	// Fire_Scroll_3_1
+699,1,100	// Fire_Scroll_3_5
+700,1,100	// Cold_Scroll_2_1
+11702,1,100	// Moon_Cookie
+12000,1,100	// Cold_Scroll_2_5
+12001,1,100	// Holy_Scroll_1_3
+12002,1,100	// Holy_Scroll_1_5
+12027,1,100	// Giggling_Box
+12028,1,100	// Box_Of_Thunder
+12029,1,100	// Gloomy_Box
+12030,1,100	// Box_Of_Grudge
+12031,1,100	// Sleepy_Box
+12032,1,100	// Box_Of_Storm
+12033,1,100	// Box_Of_Sunlight
+12034,1,100	// Painting_Box
+12215,1,100	// Blessing_10_Scroll
+12216,1,100	// Inc_Agi_10_Scroll
+12217,1,100	// Aspersio_5_Scroll
+12218,1,100	// Assumptio_5_Scroll
+12219,1,100	// Wind_Walk_10_Scroll
+12220,1,100	// Adrenaline_Scroll
+12225,1,100	// Sweet_Candy_Striper
+12235,1,100	// Strawberry_Choco
+12236,1,100	// Choco_Tart
+12237,1,100	// Choco_Lump
+12290,1,100	// Mysterious_Can
+12291,1,100	// Mysterious_PET_Bottle
+12310,1,100	// Spray_Of_Flowers
+12311,1,100	// Large_Spray_Of_Flowers
+12313,1,100	// Protection_Of_Angel
+12323,1,100	// N_Fly_Wing
+12324,1,100	// N_Butterfly_Wing
+12325,1,100	// N_Magnifier
+12340,1,100	// Mysterious_Rice_Powder
+12347,1,100	// Acorn_Jelly
+12350,1,100	// Angeling_Potion
+12358,1,100	// Fan_Of_Wind
+12359,1,100	// Very_Soft_Plant
+12360,1,100	// Very_Red_Juice
+12361,1,100	// Delicious_Shaved_Ice
+12362,1,100	// Kuloren
+12363,1,100	// Fit_Pipe
+12364,1,100	// Staff_Of_Leader
+12365,1,100	// Charming_Lotus
+12366,1,100	// Gril_Doll
+12367,1,100	// Luxury_Whisky_Bottle
+12368,1,100	// Splendid_Mirror
+12369,1,100	// Oilpalm_Coconut
+12370,1,100	// Gril's_Naivety
+12371,1,100	// Magical_Lithography
+12372,1,100	// Hell_Contract
+12373,1,100	// Boy's_Naivety
+12374,1,100	// Flaming_Ice
+12376,1,100	// Mysterious_Can2
+12377,1,100	// Mysterious_PET_Bottle2
+12388,1,100	// Runstone_Crush
+12389,1,100	// Runstone_Storm
+12390,1,100	// Runstone_Millennium
+12396,1,100	// Fools_Day_Box
+12397,1,100	// Fools_Day_Box2
+12415,1,100	// Siege_Teleport_Scroll2
+12473,1,100	// RWC_Parti_Box
+12474,1,100	// RWC_Final_Comp_Box
+12706,1,100	// Lucky_Cookie01
+12707,1,100	// Lucky_Cookie02
+12708,1,100	// Lucky_Cookie03
+12725,1,100	// Runstone_Nosiege
+12726,1,100	// Runstone_Rhydo
+12727,1,100	// Runstone_Verkana
+12728,1,100	// Runstone_Isia
+12729,1,100	// Runstone_Asir
+12730,1,100	// Runstone_Urj
+12731,1,100	// Runstone_Turisus
+12732,1,100	// Runstone_Pertz
+12733,1,100	// Runstone_Hagalas
+14521,1,100	// Repair_Scroll
+14529,1,100	// Greed_Scroll
+14532,1,100	// Battle_Manual25
+14587,1,100	// Repair_Scroll_
+14591,1,100	// Siege_Teleport_Scroll
+14592,1,100	// Job_Manual50
+14593,1,100	// Magic_Power_Scroll
+14594,1,100	// Quagmire_Scroll
+14599,1,100	// Greed_Scroll_C
+14606,1,100	// Job_Manual25
