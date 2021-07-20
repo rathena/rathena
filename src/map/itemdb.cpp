@@ -1214,12 +1214,15 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 g
 	std::shared_ptr<s_item_group_db> group = this->find(group_id);
 
 	if (group == nullptr) {
-		ShowError("get_random_entry: Invalid group id %hu\n", group_id);
+		ShowError("get_random_entry: Invalid group id %hu.\n", group_id);
 		return nullptr;
 	}
-
-	if (group->random.empty() || group->random.count(sub_group) == 0) {
-		ShowError("get_random_entry: No item entries for group id %hu and sub group %hu\n", group_id, sub_group);
+	if (group->random.empty()) {
+		ShowError("get_random_entry: No item entries for group id %hu.\n", group_id);
+		return nullptr;
+	}
+	if (group->random.count(sub_group) == 0) {
+		ShowError("get_random_entry: No item entries for group id %hu and sub group %hu.\n", group_id, sub_group);
 		return nullptr;
 	}
 
@@ -1262,7 +1265,7 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	uint16 get_amt = 0;
 
-	if (itemdb_isstackable(data->nameid) && data->GUID == 0)
+	if (itemdb_isstackable(data->nameid) && !data->GUID)
 		get_amt = data->amount;
 	else
 		get_amt = 1;
@@ -1709,7 +1712,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 					entry->GUID = guid;
 				} else {
 					if (!entry_exists)
-						entry->GUID = false;
+						entry->GUID = item->flag.guid;
 				}
 
 				if (this->nodeExists(listit, "Named")) {
