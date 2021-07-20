@@ -90,32 +90,32 @@
 //25131
 //23016
 //23080
-4671	//V_B_Celia_Card
-4672	//V_B_Chen_Card
-4673	//V_B_Alphoccio_Card
-4674	//V_B_Eremes_Card
-4675	//V_B_Magaleta_Card
-4676	//V_B_Shecil_Card
-4677	//V_B_Howard_Card
-4678	//V_B_Katrinn_Card
-4679	//V_B_Seyren_Card
-4680	//V_B_Randel_Card
-4681	//V_B_Flamel_Card
-4682	//V_B_Gertie_Card
-4683	//V_B_Trentini_Card
-4684	//V_Eremes_Card
-4685	//V_Magaleta_Card
-4686	//V_Katrinn_Card
-4687	//V_Shecil_Card
-4688	//V_Harword_Card
-4689	//V_Seyren_Card
-4690	//V_Randel_Card
-4691	//V_Flamel_Card
-4692	//V_Celia_Card
-4693	//V_Chen_Card
-4694	//V_Gertie_Card
-4695	//V_Trentini_Card
-4696	//V_Alphoccio_Card
+4671  // Sorcerer_Card
+4672  // Sura_Card
+4673  // Minstrel_Card
+4674  // GuillotineCross_Card
+4675  // Archbishop_Card
+4676  // Ranger_Card
+4677  // Mechanic_Card
+4678  // Warlock_Card
+4679  // RuneKnight_Card
+4680  // RoyalGuard_Card
+4681  // Genetic_Card
+4682  // ShadowChaser_Card
+4683  // Wanderer_Card
+4684  // Real_Eremes_Card
+4685  // Real_Magaleta_Card
+4686  // Real_Katrinn_Card
+4687  // Real_Shecil_Card
+4688  // Real_Harword_Card
+4689  // Real_Seyren_Card
+4690  // Real_Randel_Card
+4691  // Real_Flamel_Card
+4692  // Real_Ceila_Card
+4693  // Real_Chen_Card
+4694  // Real_Gertie_Card
+4695  // Real_Trentini_Card
+4696  // Real_Alphoccio_Card
 //--- 2015 / 11 19 - 부서진 마법석 추가
 6905	//Broken_Magic_Stone
 //--- 2015 / 11 / 30 - 카드 추가
@@ -349,7 +349,7 @@
 4228	//Sleeper_Card
 4229	//C_Tower_Manager_Card
 4230	//Shinobi_Card
-4231	//Increase_Soil_Card
+4231  // Increase_Soil_Card
 4232	//Wild_Ginseng_Card
 4233	//Baby_Leopard_Card
 4234	//Anolian_Card
@@ -369,7 +369,7 @@
 4248	//Ancient_Mummy_Card
 4249	//Ancient_Worm_Card
 4250	//Executioner_Card
-4251	//Elder_Card
+4251  // Elder_Card
 4252	//Alligator_Card
 4253	//Alice_Card
 4254	//Tirfing_Card
@@ -493,7 +493,7 @@
 4372	//Bacsojin_Card
 4373	//Chung_E_Card
 4374	//Apocalips_H_Card
-4375	//Orc_Baby_Card
+4375  // Orc_Baby_Card_Card
 4376	//Lady_Tanee_Card
 4377	//Green_Iguana_Card
 4378	//Acidus_Card
@@ -564,7 +564,7 @@
 4443	//Aqua_Elemental_Card
 4444	//Draco_Card
 4445	//Luciola_Vespa_Card
-4446	//Enhanced_Skeleton_Card
+4446  // P_Skeleton_Card
 4447	//Centipede_Card
 4448	//Cornus_Card
 4449	//Dark_Shadow_Card
@@ -729,22 +729,22 @@
 4608	//White_Knight_Card
 4609	//Khalitzburg_Knight_Card
 4610	//Sarah_Card
-4625	//Time_Holder_Card
+4625  // Timeholder_Card
 4626	//Big_Ben_Card
 4627	//Big_Bell_Card
 4628	//Neo_Punk_Card
 4629	//Arc_Elder_Card
-4630	//Nightmare_Timer_Keeper_Card
+4630  // Time_Keeper_Card
 4631	//Owl_Viscount_Card
 4632	//Owl_Marquees_Card
-4633	//Enhanced_Archer_Skeleton_Card
-4634	//Enhanced_Soldier_Skeleton_Card
-4635	//Enhanced_Amdarais_Card
+4633  // P_Archer_Skeleton_Card
+4634  // P_Soldier_Skeleton_Card
+4635  // P_Amdarais_Card
 4636	//Bijou_Card
-4637	//Immortal_Corps_Card
+4637  // Immotal_Corps_Card
 4638	//Watcher_Card
-4639	//Taffy_Card
-4640	//Frozen_Wolf_Card
+4639  // Tappy_Card
+4640  // Frozenwolf_Card
 4641	//Zombie_Guard_Card
 4642	//Min_Toad_Card
 4643	//Min_Vagabond_Wolf_Card
@@ -756,21 +756,21 @@
 4649	//Min_Phreeoni_Card
 4650	//Min_Orc_Hero_Card
 4651	//Min_Tao_Gunka_Card
-4652	//N_Amon_Ra_Card
-4653	//N_Arclouse_Card
-4654	//N_Mimic_Card
-4655	//N_Minorous_Card
-4656	//N_Mummy_Card
-4657	//N_Ancient_Mummy_Card
-4658	//N_Verit_Card
+4652  // Grave_Amon_Ra_Card
+4653  // Grave_Arclouse_Card
+4654  // Grave_Mimic_Card
+4655  // Grave_Minorous_Card
+4656  // Grave_Mummy_Card
+4657  // Grave_A_Mummy_Card
+4658  // Grave_Verit_Card
 //--- 2015 / 7 / 9 - 최종수정일
 11600	//Shining_Holy_Water
 22847	//Prontera_Medal
 22848	//Prison_Key
 22849	//Prontera_Time_Crystal
-6921	//Dehumidifiers
+6921  // Desiccant
 6922	//Sandpaper
-6924	//Red_Eye
+6924  // Red_Eyes
 6936	//Cold_Core
 6937	//Silicone_Shell
 6938	//Hedgehog_Picks

@@ -136,8 +136,8 @@
 1667,499,100	// TE_Woe_Staff
 1670,1,100	// RWC_Memory_Staff
 1681,467,100	// Short_Foxtail_Staff
-1687,467,100	// Beginner_Foxtail_Staff
-1699,499,100	// Paradise_Foxtail_Staff_I
+1687,467,100	// Beginner_FoxTail
+1699,499,100	// P_Foxtail1
 1703,507,100	// Bow__
 1728,507,100	// Balistar_C
 1729,507,100	// Bow_Of_Rudra_C
@@ -1046,7 +1046,7 @@
 6923,499,100	// Bright_Fire_Lights
 6925,499,100	// Letter_Of_Prisoner
 6926,499,100	// Rune-Midgard_History_Book
-6927,499,100	// Stone_That_Contained_Sea
+6927,499,100	// Filled_With_SeaStones
 6928,499,100	// Poring_Scourer
 6929,499,100	// Letter_With_Stamped_Seal
 6930,499,100	// Samples_New_Business_Items
@@ -1054,7 +1054,7 @@
 6932,499,100	// Rare_Book
 6933,499,100	// Banquet_Invitation_Letter
 6934,499,100	// Magnificent_Dish
-6935,499,100	// Advanced_Dish
+6935,499,100	// Luxurious_Dish
 6953,475,100	// Ramor_Refine_Ticket
 6954,499,100	// Piece_Of_Soul_Dog
 6955,499,100	// Piece_Of_Soul_Pig
@@ -3015,6 +3015,8 @@
 //15247,499,100	//
 //15250,499,100	//
 //15383,499,100	//
+15210,499,100	// Rental_SupperSwimsuit
+15247,499,100	// R_Hunting_Mail
 16002,507,100	// Stunner_C
 16004,499,100	// P_Mace1
 16005,499,100	// P_Mace2
@@ -4040,6 +4042,7 @@
 //19284,1,100	//
 //19310,499,100	//
 //19389,507,100	//
+19275,499,100	// Rental_Scuba_Mask
 19396,475,100	// Racing_Cap_SG
 19397,475,100	// Racing_Cap_SL
 //19404,499,100	//
@@ -4205,7 +4208,7 @@
 22546,475,100	// Slow_Potion
 22547,475,100	// Anti-Payne_Moment
 22548,475,100	// Wed_Cursed
-22549,467,100	// Poison_Bottle_
+22549,467,100	// Poison_Bottle_B
 22550,475,100	// Cookie_Bag_B
 22551,475,100	// Sesame_Pastry_B
 22552,475,100	// Honey_Pastry_B
@@ -4352,7 +4355,7 @@
 //23039,475,100	//
 //23040,475,100	//
 //23041,475,100	//
-23042,475,100	// S_Seed_Of_Yggdrasil
+23042,475,100	// Seed_Of_Yggdrasil_
 23043,475,100	// S_Seed_Of_Yggdrasil_Box
 23046,475,100	// S_Mystic_Powder
 23047,475,100	// S_Blessing_Tyr
