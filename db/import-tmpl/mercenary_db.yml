@@ -46,8 +46,8 @@
 #   Element                 Element. (Default: Neutral)
 #   ElementLevel            Level of element. (Default: 1)
 #   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
-#   AttackDelay             Attack speed. (Default: 0)
-#   AttackMotion            Attack animation speed. (Default: 0)
+#   AttackDelay             Attack speed. (Default: 4000)
+#   AttackMotion            Attack animation speed. (Default: 2000)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   Skills:                 List of mercenary skills. (Optional)
 #     - Name                Skill name.

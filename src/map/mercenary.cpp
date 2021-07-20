@@ -570,11 +570,6 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "Defense", def))
 			return 0;
 
-		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
-			this->invalidWarning(node["Defense"], "Invalid mercenary defense %d, capping...\n", def);
-			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
-		}
-
 		mercenary->status.def = static_cast<defType>(def);
 	} else {
 		if (!exists)
@@ -586,11 +581,6 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "MagicDefense", def))
 			return 0;
-
-		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
-			this->invalidWarning(node["MagicDefense"], "Invalid mercenary magic defense %d, capping...\n", def);
-			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
-		}
 
 		mercenary->status.mdef = static_cast<defType>(def);
 	} else {
@@ -821,10 +811,10 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		mercenary->status.adelay = cap_value(speed, battle_config.monster_max_aspd * 2, 4000);
+		mercenary->status.adelay = speed;
 	} else {
 		if (!exists)
-			mercenary->status.adelay = cap_value(0, battle_config.monster_max_aspd * 2, 4000);
+			mercenary->status.adelay = 4000;
 	}
 	
 	if (this->nodeExists(node, "AttackMotion")) {
@@ -833,10 +823,10 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		mercenary->status.amotion = cap_value(speed, battle_config.monster_max_aspd, 2000);
+		mercenary->status.amotion = speed;
 	} else {
 		if (!exists)
-			mercenary->status.amotion = cap_value(0, battle_config.monster_max_aspd, 2000);
+			mercenary->status.amotion = 2000;
 	}
 
 	if (this->nodeExists(node, "DamageMotion")) {
@@ -845,14 +835,13 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "DamageMotion", speed))
 			return 0;
 
-		if (battle_config.monster_damage_delay_rate != 100)
-			speed = speed * battle_config.monster_damage_delay_rate / 100;
-
 		mercenary->status.dmotion = speed;
 	} else {
 		if (!exists)
 			mercenary->status.dmotion = 0;
 	}
+
+	mercenary->status.aspd_rate = 1000;
 
 	if (this->nodeExists(node, "Skills")) {
 		const YAML::Node &skillsNode = node["Skills"];
@@ -880,6 +869,12 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asUInt16(skill, "MaxLevel", level))
 				return 0;
 
+			if (level == 0) {
+				if (mercenary->skill.erase(skill_id) == 0)
+					this->invalidWarning(skill["Name"], "Failed to remove %s, the skill doesn't exist for mercenary %hu.\n", skill_name.c_str(), id);
+				continue;
+			}
+
 			mercenary->skill[skill_id] = level;
 		}
 	}
@@ -888,22 +883,6 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		this->put(id, mercenary);
 
 	return true;
-}
-
-// copied from mob.cpp, required ?
-void MercenaryDatabase::loadingFinished() {
-	for (auto &data : *this) {
-		std::shared_ptr<s_mercenary_db> mercenary = data.second;
-
-		if (battle_config.view_range_rate != 100)
-			mercenary->range2 = cap_value(mercenary->range2, 1, mercenary->range2 * battle_config.view_range_rate / 100);
-		if (battle_config.chase_range_rate != 100)
-			mercenary->range3 = cap_value(mercenary->range3, mercenary->range2, mercenary->range3 * battle_config.chase_range_rate / 100);
-
-		mercenary->range3 += 2;
-		mercenary->status.adelay = max(mercenary->status.adelay, mercenary->status.amotion);
-		mercenary->status.aspd_rate = 1000;
-	}
 }
 
 /**

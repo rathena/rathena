@@ -6,7 +6,6 @@
 
 #include "../common/cbasetypes.hpp"
 
-#include "battle.hpp"	// battle_config
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
 
@@ -68,7 +67,6 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
-	void loadingFinished();
 };
 
 extern MercenaryDatabase mercenary_db;
