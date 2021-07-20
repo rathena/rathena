@@ -124,12 +124,12 @@ private:
 
 public:
 	AttributeDatabase() : YamlDatabase("ATTRIBUTE_DB", 1) {
-
+		this->clear();
 	}
 
 	void clear() { 
 		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
-	};
+	}
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 

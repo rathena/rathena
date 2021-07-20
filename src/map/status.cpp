@@ -16051,7 +16051,7 @@ int status_readdb( bool reload ){
 		size_fix_db.load();
 		refine_db.load();
 	}
-	elemental_attribute_db.reload();	// fill the table with clear
+	elemental_attribute_db.load();
 
 	return 0;
 }
