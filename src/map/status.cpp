@@ -15996,7 +15996,16 @@ uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
 
 AttributeDatabase elemental_attribute_db;
 
+/**
+ * Get attribute ratio
+ * @param atk_ele Attack element enum e_element
+ * @param def_ele Defense element enum e_element
+ * @param level Element level 1 ~ MAX_ELE_LEVEL
+ */
 int16 AttributeDatabase::getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele) {
+	if (!CHK_ELEMENT(atk_ele) || !CHK_ELEMENT(def_ele) || !CHK_ELEMENT_LEVEL(level))
+		return 100;
+
 	return this->attr_fix_table[level][atk_ele][def_ele];
 }
 
