@@ -203,7 +203,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 };
 
 struct spawn_info {
@@ -359,7 +359,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 };
 
 enum e_mob_skill_target {

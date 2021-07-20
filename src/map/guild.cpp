@@ -274,7 +274,7 @@ const std::string CastleDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/castle_db.yml";
 }
 
-uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 CastleDatabase::parseBodyNode(const ryml::NodeRef node) {
 	int32 castle_id;
 
 	if (!this->asInt32(node, "Id", castle_id))

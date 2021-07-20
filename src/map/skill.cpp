@@ -22747,7 +22747,7 @@ const std::string SkillArrowDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 SkillArrowDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 SkillArrowDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string source_name;
 
 	if (!this->asString(node, "Source", source_name))
@@ -22770,9 +22770,9 @@ uint64 SkillArrowDatabase::parseBodyNode(const YAML::Node &node) {
 		arrow->nameid = nameid;
 	}
 
-	const YAML::Node &MakeNode = node["Make"];
+	const auto MakeNode = node["Make"];
 
-	for (const auto &it : MakeNode) {
+	for (const auto &it : MakeNode.children()) {
 		std::string item_name;
 
 		if (!this->asString(it, "Item", item_name))

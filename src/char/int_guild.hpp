@@ -39,7 +39,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 	t_exp get_nextexp(uint16 level);
 	void loadingFinished();
 };

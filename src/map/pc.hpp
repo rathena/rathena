@@ -1130,7 +1130,7 @@ public:
 		statpoint_table.clear();
 	}
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 	void loadingFinished();
 
 	uint32 pc_gets_status_point(uint16 level);

@@ -5469,7 +5469,7 @@ const std::string MobSummonDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 MobSummonDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string group_name;
 
 	if (!this->asString(node, "Group", group_name))
@@ -5513,9 +5513,9 @@ uint64 MobSummonDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Summon")) {
-		const YAML::Node &MobNode = node["Summon"];
+		const auto MobNode = node["Summon"];
 
-		for (const YAML::Node &mobit : MobNode) {
+		for (const auto mobit : MobNode.children()) {
 			if (!this->nodesExist(mobit, { "Mob", "Rate" })) {
 				continue;
 			}
@@ -5571,7 +5571,7 @@ const std::string MobChatDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobChatDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 MobChatDatabase::parseBodyNode(const ryml::NodeRef node) {
 	uint16 id;
 
 	if (!this->asUInt16(node, "Id", id))
