@@ -3880,7 +3880,8 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	}
 	if (columns > 9) entry.isNamed = atoi(str[9]) > 0;
 
-	if (rand_group == 0 && prob > 0) {	// in this case, we add x2 entries to keep the previous system: x1 in subgroup 0 without rate and x1 in subgroup 1 with rate
+	// in this case, we add x2 entries to keep the previous system: x1 in subgroup 0 without rate (must) and x1 in subgroup 1 with rate (random)
+	if (rand_group == 0 && prob > 0) {
 		if (exists)
 			group->item[rand_group].push_back(entry);
 		else

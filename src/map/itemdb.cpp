@@ -1207,7 +1207,7 @@ std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_it
 /**
 * Return a random group entry from Item Group
 * @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @param sub_group: 0 is 'must' item group, random groups start from 1
 * @return Item group entry or NULL on fail
 */
 std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 group_id, uint8 sub_group) {
@@ -1232,7 +1232,7 @@ std::shared_ptr<s_item_group_entry> ItemGroupDatabase::get_random_entry(uint16 g
 /**
 * Return a random Item ID from Item Group
 * @param group_id
-* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @param sub_group: 0 is 'must' item group, random groups start from 1
 * @return Item ID or UNKNOWN_ITEM_ID on fail
 */
 t_itemid ItemGroupDatabase::get_random_item_id(uint16 group_id, uint8 sub_group) {
