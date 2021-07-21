@@ -378,14 +378,15 @@ int main (int argc, char **argv)
 #ifdef levent
 	struct sockaddr_in sin;
 
-#ifdef _WIN32
+#ifdef _IOCP
 	event_config* pConfig = event_config_new();
 	event_config_set_flag(pConfig, EVENT_BASE_FLAG_STARTUP_IOCP);
 	event_config_set_num_cpus_hint(pConfig, 4);
 	evthread_use_windows_threads();
-	base = event_base_new_with_config(pConfig);
+	gbase = event_base_new_with_config(pConfig);
 	event_config_free(pConfig);
 #else
+	evthread_use_windows_threads();
 	gbase = event_base_new();
 #endif
 

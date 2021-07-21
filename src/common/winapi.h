@@ -1,11 +1,11 @@
 #pragma once
 
 
-#define STRICT
-#define NTDDI_VERSION 	NTDDI_WIN2K
-#define _WIN32_WINNT  0x0500
-#define WINVER 0x0500
-#define _WIN32_IE 	0x0600
+//#define STRICT
+//#define NTDDI_VERSION 	NTDDI_WIN2K
+//#define _WIN32_WINNT  0x0500
+//#define WINVER 0x0500
+//#define _WIN32_IE 	0x0600
 #define WIN32_LEAN_AND_MEAN
 #define NOCOMM 
 #define NOKANJI

@@ -347,6 +347,6 @@
 /* Define to `int' if <sys/types.h> does not define. */
 #define EVENT__ssize_t SSIZE_T
 
-#define UINT32_MAX       0xffffffffui32
+//#define UINT32_MAX       0xffffffffui32
 
 #endif

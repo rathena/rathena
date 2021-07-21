@@ -9,8 +9,8 @@
 // use libevent (libevent.org) socket library (EPOLL in linux and IOCP in Windows)
 #define levent// temporary
 
-
 #ifdef levent
+#define _IOCP
 #include <event2/bufferevent.h>
 #include <event2/buffer.h>
 #include <event2/listener.h>
@@ -23,9 +23,6 @@
 #ifdef WIN32
 	#include "winapi.h"
 	typedef long in_addr_t;
-#ifdef levent
-	//extern CRITICAL_SECTION crit;
-#endif
 #else
 	#include <sys/types.h>
 	#include <sys/socket.h>
@@ -160,6 +157,7 @@ int RFIFOSKIP(int fd, size_t len);
 
 int do_sockets(int next);
 void do_close(int fd);
+void doclose(int fd);
 void socket_init(void);
 void socket_final(void);
 

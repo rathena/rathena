@@ -14,7 +14,7 @@
 #ifdef WIN32
 	#include "winapi.h"
 
-#ifdef levent
+#ifdef _IOCP
 CRITICAL_SECTION crit;
 #endif
 
@@ -287,6 +287,9 @@ void set_defaultparse(ParseFunc defaultparse)
  *--------------------------------------*/
 void set_nonblocking(int fd, unsigned long yes)
 {
+#ifdef levent
+	return;
+#endif
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s.
 	// The argp parameter is zero if nonblocking is to be disabled.
 	if( sIoctl(fd, FIONBIO, &yes) != 0 )
@@ -294,6 +297,11 @@ void set_nonblocking(int fd, unsigned long yes)
 }
 
 void setsocketopts(int fd,int delay_timeout){
+
+#ifdef levent
+	return;
+#endif
+
 	int yes = 1; // reuse fix
 
 #if !defined(WIN32)
@@ -348,8 +356,47 @@ void set_eof(int fd)
 		send_shortlist_add_fd(fd);
 #endif
 #endif
+		ShowStatus("set_eof fd:%d\n", fd);
+
 		session[fd]->flag.eof = 1;
 	}
+}
+
+int recv_to_fifo2(int fd)
+{
+	int len;
+
+	if (!session_isActive(fd))
+		return -1;
+
+	len = sRecv(fd, (char *)session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
+
+	if (len == SOCKET_ERROR)
+	{//An exception has occured
+		if (sErrno != S_EWOULDBLOCK) {
+			//ShowDebug("recv_to_fifo: %s, closing connection #%d\n", error_msg(), fd);
+			set_eof(fd);
+		}
+		return 0;
+	}
+
+	if (len == 0)
+	{//Normal connection end.
+		set_eof(fd);
+		return 0;
+	}
+
+	session[fd]->rdata_size += len;
+	session[fd]->rdata_tick = last_tick;
+#ifdef SHOW_SERVER_STATS
+	socket_data_i += len;
+	socket_data_qi += len;
+	if (!session[fd]->flag.server)
+	{
+		socket_data_ci += len;
+	}
+#endif
+	return 0;
 }
 
 int recv_to_fifo(int fd)
@@ -393,21 +440,28 @@ int recv_to_fifo(int fd)
 	return 0;
 }
 
-int send_from_fifo(int fd)
+int send_from_fifo2(int fd)
 {
 	int len;
 
-
-	if( !session_isValid(fd) )
-		return -1;
-
-#ifdef levent
-#ifdef _WIN32
+#ifdef _IOCP2
 	EnterCriticalSection(&crit);
 #endif
+	if (!session_isValid(fd))
+	{
+		ShowError("send_from_fifo - fd:%d !session_isValid\n", fd);
+#ifdef _IOCP2
+		LeaveCriticalSection(&crit);
+#endif	
+		return -1;
+	}
+
+#ifdef levent2
 	if (session[fd]->kill_tick > 0)
 	{
-#ifdef _WIN32
+		ShowError("send_from_fifo - fd:%d kill_tick > 0\n", fd);
+
+#ifdef _IOCP
 		LeaveCriticalSection(&crit);
 #endif		
 		return -1;
@@ -416,10 +470,97 @@ int send_from_fifo(int fd)
 
 	if (session[fd]->wdata_size == 0)
 	{
-#ifdef levent
-#ifdef _WIN32
+		ShowError("send_from_fifo - fd:%d wdata_size == 0\n", fd);
+#ifdef _IOCP2
 		LeaveCriticalSection(&crit);
 #endif
+		return 0; // nothing to send
+	}
+
+#ifdef levent2
+	len = bufferevent_write(session[fd]->bufev, (const char *)session[fd]->wdata, (int)session[fd]->wdata_size);
+	session[fd]->wdata_size = 0;
+
+	if (len == SOCKET_ERROR)
+	{//An exception has occured
+		ShowError("send_from_fifo - fd:%d SOCKET_ERROR\n", fd);
+
+		set_eof(fd);
+	}
+#else
+
+	len = sSend(fd, (const char *)session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
+
+	if (len == SOCKET_ERROR)
+	{//An exception has occured
+		if (sErrno != S_EWOULDBLOCK) {
+			//ShowDebug("send_from_fifo: %s, ending connection #%d\n", error_msg(), fd);
+#ifdef SHOW_SERVER_STATS
+			socket_data_qo -= session[fd]->wdata_size;
+#endif
+			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
+			set_eof(fd);
+		}
+		return 0;
+	}
+
+	if (len > 0)
+	{
+		// some data could not be transferred?
+		// shift unsent data to the beginning of the queue
+		if ((size_t)len < session[fd]->wdata_size)
+			memmove(session[fd]->wdata, session[fd]->wdata + len, session[fd]->wdata_size - len);
+
+		session[fd]->wdata_size -= len;
+#ifdef SHOW_SERVER_STATS
+		socket_data_o += len;
+		socket_data_qo -= len;
+		if (!session[fd]->flag.server)
+		{
+			socket_data_co += len;
+		}
+#endif
+	}
+#endif
+#ifdef _IOCP2
+	LeaveCriticalSection(&crit);
+#endif
+	return 0;
+}
+
+int send_from_fifo(int fd)
+{
+	int len;
+
+#ifdef _IOCP
+	EnterCriticalSection(&crit);
+#endif
+	if (!session_isValid(fd))
+	{
+		//ShowError("send_from_fifo - fd:%d !session_isValid\n", fd);
+#ifdef _IOCP
+		LeaveCriticalSection(&crit);
+#endif	
+		return -1;
+	}
+
+#ifdef levent
+	if (session[fd]->kill_tick > 0)
+	{
+		//ShowError("send_from_fifo - fd:%d kill_tick > 0\n", fd);
+
+#ifdef _IOCP
+		LeaveCriticalSection(&crit);
+#endif		
+		return -1;
+	}
+#endif
+
+	if (session[fd]->wdata_size == 0)
+	{
+		//ShowError("send_from_fifo - fd:%d wdata_size == 0\n", fd);
+#ifdef _IOCP
+		LeaveCriticalSection(&crit);
 #endif
 		return 0; // nothing to send
 	}
@@ -430,6 +571,8 @@ int send_from_fifo(int fd)
 
 	if (len == SOCKET_ERROR)
 	{//An exception has occured
+		//ShowError("send_from_fifo - fd:%d SOCKET_ERROR\n", fd);
+
 		set_eof(fd);
 	}
 #else
@@ -467,10 +610,8 @@ int send_from_fifo(int fd)
 #endif
 	}
 #endif
-#ifdef levent
-#ifdef _WIN32
+#ifdef _IOCP
 	LeaveCriticalSection(&crit);
-#endif
 #endif
 	return 0;
 }
@@ -618,7 +759,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		return -1;
 	}
 
-#ifdef _WIN32
+#ifdef _IOCP
 	//BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE | BEV_OPT_DEFER_CALLBACKS | BEV_OPT_UNLOCK_CALLBACKS
 	bev = bufferevent_socket_new(gbase, -1, BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE | BEV_OPT_DEFER_CALLBACKS | BEV_OPT_UNLOCK_CALLBACKS);
 #else
@@ -631,15 +772,18 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		return -1;
 	}
 
-
 	remote_address.sin_family = AF_INET;
 	remote_address.sin_addr.s_addr = htonl(ip);
 	remote_address.sin_port = htons(port);
 
 	ShowStatus("Connecting to %d.%d.%d.%d:%i\n", CONVIP(ip), port);
 
-	//result = sConnect(fd, (struct sockaddr *)(&remote_address), sizeof(struct sockaddr_in));
 	result = bufferevent_socket_connect(bev, (struct sockaddr *)&remote_address, sizeof(remote_address));
+
+	fd = bufferevent_getfd(bev);
+
+	ShowStatus("result:%d fd:%d\n", result, fd);
+
 
 	if (result == SOCKET_ERROR) {
 		ShowError("make_connection: connect failed (socket #%d, code %d)!\n", fd, sErrno);
@@ -647,7 +791,6 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		return -1;
 	}
 
-	fd = bufferevent_getfd(bev);
 
 	if (fd >= FD_SETSIZE)
 	{
@@ -663,10 +806,9 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	if (fd == 0)
 	{// reserved
 		ShowError("bufferevent_socket_new: Socket #0 is reserved - Please report this!!!\n");
-		sClose(fd);
+		//sClose(fd);
 		return -1;
 	}
-
 
 	if (fd_max <= fd) fd_max = fd + 1;
 
@@ -734,7 +876,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 					ShowError("make_connection: connection failed (socket #%d, timeout after %ds)!\n", fd, timeout);
 				}
 
-				do_close(fd);
+				doclose(fd);
 				return -1;
 			// If the select operation did not return an error
 			}else if( result != SOCKET_ERROR ){
@@ -749,7 +891,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 					ShowError("make_connection: connection failed (socket #%d, not writeable)!\n", fd);
 				}
 
-				do_close(fd);
+				doclose(fd);
 				return -1;
 			}
 			// The select operation failed
@@ -758,7 +900,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		if( !silent )
 			ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
 
-		do_close(fd);
+		doclose(fd);
 		return -1;
 	}
 	// Keep the socket in non-blocking mode, since we would set it to non-blocking here on unix. [Lemongrass]
@@ -775,12 +917,17 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	set_nonblocking(fd, 1);
 #endif
 
+
 	if (fd_max <= fd) fd_max = fd + 1;
 	sFD_SET(fd,&readfds);
-
-	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
+#ifdef levent
+	create_session(fd, recv_to_fifo2, send_from_fifo2, default_func_parse, 0);
+#else
+	create_session(fd, recv_to_fifo2, send_from_fifo2, default_func_parse);
+#endif
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
 #endif
+
 	return fd;
 }
 
@@ -1463,11 +1610,13 @@ void socket_final(void)
 		ShowError("socket_final: WinSock could not be cleaned up! %s\n", error_msg() );
 	}
 
-#ifdef _WIN32
+#ifdef _IOCP
 	DeleteCriticalSection(&crit);
 #endif
 #endif
 }
+
+
 
 /// Closes a socket.
 void do_close(int fd)
@@ -1488,6 +1637,20 @@ void do_close(int fd)
 	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if (session[fd]) delete_session(fd);
 #endif
+}
+
+
+void doclose(int fd)
+{
+	if (fd <= 0 || fd >= FD_SETSIZE)
+		return;// invalid
+
+	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
+
+	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
+	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
+	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
+	if (session[fd]) delete_session(fd);
 }
 
 /// Retrieve local ips in host byte order.
@@ -1583,18 +1746,20 @@ void socket_init(void)
 
 #ifdef WIN32
 #ifdef levent
+#ifdef _IOCP
 	InitializeCriticalSection(&crit);
+#endif
 #endif
 
 	{// Start up windows networking
 		WSADATA wsaData;
-		WORD wVersionRequested = MAKEWORD(2, 0);
+		WORD wVersionRequested = MAKEWORD(2, 2);
 		if( WSAStartup(wVersionRequested, &wsaData) != 0 )
 		{
 			ShowError("socket_init: WinSock not available!\n");
 			return;
 		}
-		if( LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 0 )
+		if( LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 2 )
 		{
 			ShowError("socket_init: WinSock version mismatch (2.0 or compatible required)!\n");
 			return;
@@ -1801,7 +1966,9 @@ void timercb(int fd, short event, void *arg)
 			{
 				delete_session(i);
 			}
-			else if (session[i]->rdata_tick && DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time)
+			else if (session[i]->flag.server != 1 && 
+				session[i]->rdata_tick && 
+				DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time)
 			{
 				ShowInfo("Session #%d timed out\n", i);
 				session[i]->rdata_tick = 0;
@@ -1814,27 +1981,30 @@ void timercb(int fd, short event, void *arg)
 
 void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 {
-	int fd = user_data;
-	int len, i;
+	intptr fd = user_data;
+	//int len, i;
 
-#ifdef _WIN32
+#ifdef _IOCP
 	EnterCriticalSection(&crit);
 #endif
 
 	if (events & BEV_EVENT_EOF)
 	{
+		ShowStatus("conn_eventcb - fd:%d BEV_EVENT_EOF\n", fd);
 		set_eof(fd);
 		session[fd]->func_parse(fd);
 		session[fd]->kill_tick = 1;
 	}
 	else if (events & BEV_EVENT_ERROR)
 	{
+		ShowError("conn_eventcb - fd:%d BEV_EVENT_ERROR\n", fd);
 		set_eof(fd);
 		session[fd]->func_parse(fd);
 		session[fd]->kill_tick = 1;
 	}
 	else if (events & BEV_EVENT_CONNECTED)
 	{
+		//ShowStatus("conn_eventcb - fd:%d BEV_EVENT_CONNECTED\n", fd);
 		session[fd]->func_parse(fd);
 		session[fd]->func_send(fd);
 
@@ -1844,7 +2014,7 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 		}
 	}
 
-#ifdef _WIN32
+#ifdef _IOCP
 	LeaveCriticalSection(&crit);
 #endif
 
@@ -1853,23 +2023,27 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 void conn_readcb(struct bufferevent *bev, void *ptr)
 {
 
-	int len, i;
-	int fd = ptr;
+	int len;// , i;
+	intptr fd = ptr;
 
+#ifdef _IOCP
+	EnterCriticalSection(&crit);
+#endif
 
 	if (!session_isValid(fd))
 	{
+		ShowError("conn_readcb - !session_isValid\n");
+#ifdef _IOCP
+		LeaveCriticalSection(&crit);
+#endif
 		return;
 	}
-
-#ifdef _WIN32
-	EnterCriticalSection(&crit);
-#endif
 
 	len = bufferevent_read(bev, (char *)session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd));
 
 	if (len == 0)
 	{
+		ShowError("conn_readcb - len == 0\n");
 		set_eof(fd);
 	}
 
@@ -1880,8 +2054,10 @@ void conn_readcb(struct bufferevent *bev, void *ptr)
 
 	if (session[fd]->kill_tick > 0)
 	{
-#ifdef _WIN32
-		EnterCriticalSection(&crit);
+		ShowError("conn_readcb - kill_tick > 0\n");
+
+#ifdef _IOCP
+		LeaveCriticalSection(&crit);
 #endif
 		return;
 	}
@@ -1897,7 +2073,7 @@ void conn_readcb(struct bufferevent *bev, void *ptr)
 
 	RFIFOFLUSH(fd);
 
-#ifdef _WIN32
+#ifdef _IOCP
 	LeaveCriticalSection(&crit);
 #endif
 }
@@ -1911,7 +2087,7 @@ void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, struct soc
 
 	struct sockaddr_in *client_address = sa;
 
-#ifdef _WIN32
+#ifdef _IOCP
 	bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE | BEV_OPT_DEFER_CALLBACKS | BEV_OPT_UNLOCK_CALLBACKS);
 #else
 	bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
