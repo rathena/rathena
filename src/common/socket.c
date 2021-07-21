@@ -248,7 +248,6 @@ int send_shortlist_count = 0;// how many fd's are in the shortlist
 uint32 send_shortlist_set[(FD_SETSIZE+31)/32];// to know if specific fd's are already in the shortlist
 #endif
 
-static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
 
 #ifndef MINICORE
 	int ip_rules = 1;
@@ -472,7 +471,7 @@ int connect_client(int listen_fd)
 {
 #ifdef levent
 	return 1;
-#endif
+#else
 
 	int fd;
 	struct sockaddr_in client_address;
@@ -515,6 +514,7 @@ int connect_client(int listen_fd)
 	session[fd]->client_addr = ntohl(client_address.sin_addr.s_addr);
 
 	return fd;
+#endif
 }
 
 int make_listen_bind(uint32 ip, uint16 port)
@@ -523,7 +523,8 @@ int make_listen_bind(uint32 ip, uint16 port)
 	_bind_ip = ip;
 	_bind_port = port;
 	return 1;
-#endif
+#else
+
 
 	struct sockaddr_in server_address;
 	int fd;
@@ -575,6 +576,7 @@ int make_listen_bind(uint32 ip, uint16 port)
 	session[fd]->rdata_tick = 0; // disable timeouts on this socket
 
 	return fd;
+#endif
 }
 
 int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
@@ -638,9 +640,8 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 
 	if (fd_max <= fd) fd_max = fd + 1;
 
-	create_session(fd, null_recv, send_from_fifo, default_func_parse);
+	create_session(fd, null_recv, send_from_fifo, default_func_parse, bev);
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
-	session[fd]->bufev = bev;
 	session[fd]->kill_tick = 0;
 
 	bufferevent_setcb(bev, conn_readcb, NULL, conn_eventcb, (void *)fd);
@@ -753,7 +754,11 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	return fd;
 }
 
-static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)
+int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse
+#ifdef levent
+	, struct bufferevent *bev
+#endif
+)
 {
 	CREATE(session[fd], struct socket_data, 1);
 	CREATE(session[fd]->rdata, unsigned char, RFIFO_SIZE);
@@ -764,6 +769,9 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 	session[fd]->func_send  = func_send;
 	session[fd]->func_parse = func_parse;
 	session[fd]->rdata_tick = last_tick;
+#ifdef levent
+	session[fd]->bufev = bev;
+#endif
 	return 0;
 }
 
@@ -1583,7 +1591,7 @@ void socket_init(void)
 		}
 	}
 #endif
-
+#ifndef levent
 	// Get initial local ips
 	naddr_ = socket_getips(addr_,16);
 
@@ -1609,6 +1617,7 @@ void socket_init(void)
 #endif
 
 	ShowInfo("Server supports up to '"CL_WHITE"%u"CL_RESET"' concurrent connections.\n", rlim_cur);
+#endif
 }
 
 
@@ -1837,7 +1846,7 @@ void conn_readcb(struct bufferevent *bev, void *ptr)
 }
 
 
-static void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, struct sockaddr *sa, int socklen, void *user_data)
+void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, struct sockaddr *sa, int socklen, void *user_data)
 {
 	struct event_base *base = user_data;
 	struct bufferevent *bev;
@@ -1888,14 +1897,13 @@ static void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, str
 
 	create_session(fd, null_recv, send_from_fifo, default_func_parse, bev);
 	session[fd]->client_addr = ntohl(client_address->sin_addr.s_addr);
-	//session[fd]->bufev = bev;
 
 	bufferevent_setcb(bev, conn_readcb, NULL, conn_eventcb, (void *)fd);
 	bufferevent_enable(bev, EV_WRITE);
 	bufferevent_enable(bev, EV_READ);
 }
 
-static void signal_cb(evutil_socket_t sig, short events, void *user_data)
+void signal_cb(evutil_socket_t sig, short events, void *user_data)
 {
 	struct event_base *base = user_data;
 	struct timeval delay = { 2, 0 };

@@ -8,12 +8,8 @@
 
 
 // use libevent (libevent.org) socket library (EPOLL in linux and IOCP in Windows)
-#define levent // temporary
+#define levent// temporary
 
-
-#ifdef WIN32
-#undef levent // support for windows using IOCP will be added later...
-#endif
 
 #ifdef levent
 #include <event2/bufferevent.h>
@@ -201,8 +197,8 @@ extern uint32 addr_[16];   // ip addresses of local host (host byte order)
 extern int naddr_;   // # of ip addresses
 
 #ifdef levent
-static void listener_cb(struct evconnlistener *, evutil_socket_t, struct sockaddr *, int socklen, void *);
-static void signal_cb(evutil_socket_t, short, void *);
+void listener_cb(struct evconnlistener *, evutil_socket_t, struct sockaddr *, int socklen, void *);
+void signal_cb(evutil_socket_t, short, void *);
 void timercb(int fd, short event, void *arg);
 
 
@@ -233,6 +229,18 @@ void send_shortlist_do_sends();
 #endif
 
 
+#ifdef levent
+int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse, struct bufferevent *bev);
+extern struct event_base *gbase;
+extern struct event *timeout;
+extern struct timeval tv;
+int null_recv(int fd);
+int null_send(int fd);
+int null_parse(int fd);
+extern ParseFunc default_func_parse;
+#else
+static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
+#endif
 
 #ifdef __cplusplus
 }
