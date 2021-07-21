@@ -345,6 +345,7 @@ int main (int argc, char **argv)
 	struct event_base *base;
 	struct evconnlistener *listener;
 	struct event *signal_event;
+
 #endif
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
@@ -377,7 +378,17 @@ int main (int argc, char **argv)
 #ifdef levent
 	struct sockaddr_in sin;
 
+#ifdef _WIN32
+	event_config* pConfig = event_config_new();
+	event_config_set_flag(pConfig, EVENT_BASE_FLAG_STARTUP_IOCP);
+	event_config_set_num_cpus_hint(pConfig, 4);
+	evthread_use_windows_threads();
+	base = event_base_new_with_config(pConfig);
+	event_config_free(pConfig);
+#else
 	gbase = event_base_new();
+#endif
+
 	base = gbase;
 
 	if (!base) {

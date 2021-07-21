@@ -4,7 +4,6 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
-#include "cbasetypes.h"
 
 
 // use libevent (libevent.org) socket library (EPOLL in linux and IOCP in Windows)
@@ -17,11 +16,16 @@
 #include <event2/listener.h>
 #include <event2/util.h>
 #include <event2/event.h>
+#include <event2/thread.h>
 #endif
+#include "cbasetypes.h"
 
 #ifdef WIN32
 	#include "winapi.h"
 	typedef long in_addr_t;
+#ifdef levent
+	//extern CRITICAL_SECTION crit;
+#endif
 #else
 	#include <sys/types.h>
 	#include <sys/socket.h>

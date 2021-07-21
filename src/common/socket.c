@@ -13,6 +13,11 @@
 
 #ifdef WIN32
 	#include "winapi.h"
+
+#ifdef levent
+CRITICAL_SECTION crit;
+#endif
+
 #else
 	#include <errno.h>
 #include <netinet/tcp.h>
@@ -392,16 +397,32 @@ int send_from_fifo(int fd)
 {
 	int len;
 
+
 	if( !session_isValid(fd) )
 		return -1;
 
 #ifdef levent
+#ifdef _WIN32
+	EnterCriticalSection(&crit);
+#endif
 	if (session[fd]->kill_tick > 0)
+	{
+#ifdef _WIN32
+		LeaveCriticalSection(&crit);
+#endif		
 		return -1;
+	}
 #endif
 
-	if( session[fd]->wdata_size == 0 )
+	if (session[fd]->wdata_size == 0)
+	{
+#ifdef levent
+#ifdef _WIN32
+		LeaveCriticalSection(&crit);
+#endif
+#endif
 		return 0; // nothing to send
+	}
 
 #ifdef levent
 	len = bufferevent_write(session[fd]->bufev, (const char *)session[fd]->wdata, (int)session[fd]->wdata_size);
@@ -446,7 +467,11 @@ int send_from_fifo(int fd)
 #endif
 	}
 #endif
-
+#ifdef levent
+#ifdef _WIN32
+	LeaveCriticalSection(&crit);
+#endif
+#endif
 	return 0;
 }
 
@@ -593,7 +618,12 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		return -1;
 	}
 
+#ifdef _WIN32
+	//BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE | BEV_OPT_DEFER_CALLBACKS | BEV_OPT_UNLOCK_CALLBACKS
+	bev = bufferevent_socket_new(gbase, -1, BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE | BEV_OPT_DEFER_CALLBACKS | BEV_OPT_UNLOCK_CALLBACKS);
+#else
 	bev = bufferevent_socket_new(gbase, -1, BEV_OPT_CLOSE_ON_FREE);
+#endif
 
 	if (!bev)
 	{
@@ -1432,6 +1462,10 @@ void socket_final(void)
 	if( WSACleanup() != 0 ){
 		ShowError("socket_final: WinSock could not be cleaned up! %s\n", error_msg() );
 	}
+
+#ifdef _WIN32
+	DeleteCriticalSection(&crit);
+#endif
 #endif
 }
 
@@ -1548,6 +1582,10 @@ void socket_init(void)
 	unsigned int rlim_cur = FD_SETSIZE;
 
 #ifdef WIN32
+#ifdef levent
+	InitializeCriticalSection(&crit);
+#endif
+
 	{// Start up windows networking
 		WSADATA wsaData;
 		WORD wVersionRequested = MAKEWORD(2, 0);
@@ -1779,6 +1817,9 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 	int fd = user_data;
 	int len, i;
 
+#ifdef _WIN32
+	EnterCriticalSection(&crit);
+#endif
 
 	if (events & BEV_EVENT_EOF)
 	{
@@ -1803,6 +1844,10 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 		}
 	}
 
+#ifdef _WIN32
+	LeaveCriticalSection(&crit);
+#endif
+
 }
 
 void conn_readcb(struct bufferevent *bev, void *ptr)
@@ -1817,6 +1862,10 @@ void conn_readcb(struct bufferevent *bev, void *ptr)
 		return;
 	}
 
+#ifdef _WIN32
+	EnterCriticalSection(&crit);
+#endif
+
 	len = bufferevent_read(bev, (char *)session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd));
 
 	if (len == 0)
@@ -1830,8 +1879,12 @@ void conn_readcb(struct bufferevent *bev, void *ptr)
 
 
 	if (session[fd]->kill_tick > 0)
+	{
+#ifdef _WIN32
+		EnterCriticalSection(&crit);
+#endif
 		return;
-
+	}
 
 	session[fd]->func_parse(fd);
 	session[fd]->func_send(fd);
@@ -1843,6 +1896,10 @@ void conn_readcb(struct bufferevent *bev, void *ptr)
 	}
 
 	RFIFOFLUSH(fd);
+
+#ifdef _WIN32
+	LeaveCriticalSection(&crit);
+#endif
 }
 
 
@@ -1854,8 +1911,11 @@ void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, struct soc
 
 	struct sockaddr_in *client_address = sa;
 
-
+#ifdef _WIN32
+	bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE | BEV_OPT_THREADSAFE | BEV_OPT_DEFER_CALLBACKS | BEV_OPT_UNLOCK_CALLBACKS);
+#else
 	bev = bufferevent_socket_new(base, fd, BEV_OPT_CLOSE_ON_FREE);
+#endif
 
 	if (!bev) {
 		fprintf(stderr, "Error constructing bufferevent!");
@@ -1907,9 +1967,7 @@ void signal_cb(evutil_socket_t sig, short events, void *user_data)
 {
 	struct event_base *base = user_data;
 	struct timeval delay = { 2, 0 };
-
 	ShowStatus("Caught an interrupt signal; exiting cleanly in two seconds.\n");
-
 	event_base_loopexit(base, &delay);
 }
 #endif
