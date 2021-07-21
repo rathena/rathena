@@ -7,9 +7,9 @@
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
-
+//2008_09_10a
 #ifndef PACKETVER
-	#define PACKETVER 20151104
+	#define PACKETVER 20101116//20100730//20151104
 #endif
 
 #ifndef PACKETVER_RE

@@ -1494,11 +1494,13 @@ int chrif_char_offline_nsd(uint32 account_id, uint32 char_id) {
  *-----------------------------------------*/
 int chrif_flush_fifo(void) {
 	chrif_check(-1);
-
+#ifdef levent
+	flush_fifos();
+#else
 	set_nonblocking(char_fd, 0);
 	flush_fifos();
 	set_nonblocking(char_fd, 1);
-
+#endif
 	return 0;
 }
 

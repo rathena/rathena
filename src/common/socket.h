@@ -157,16 +157,15 @@ int RFIFOSKIP(int fd, size_t len);
 
 int do_sockets(int next);
 void do_close(int fd);
-void doclose(int fd);
 void socket_init(void);
 void socket_final(void);
-
+void freecrit();
 extern void flush_fifo(int fd);
 extern void flush_fifos(void);
 extern void set_nonblocking(int fd, unsigned long yes);
 
 void set_defaultparse(ParseFunc defaultparse);
-
+void tryendsession(int flag);
 
 /// Server operation request
 enum chrif_req_op {

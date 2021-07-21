@@ -479,7 +479,6 @@ int main (int argc, char **argv)
 #endif
 
 	do_final();
-
 	timer_final();
 
 #ifdef levent
@@ -497,6 +496,17 @@ int main (int argc, char **argv)
 	ers_final();
 #endif
 
+#ifdef levent
+	if (listener)
+		evconnlistener_free(listener);
+
+	if (base)
+		event_base_free(base);
+
+	libevent_global_shutdown();
+	ShowStatus("Free libevent base.\n");
+#endif
+
 	malloc_final();
 
 #if defined(BUILDBOT)
@@ -504,18 +514,6 @@ int main (int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 #endif
-
-#ifdef levent
-	if (listener)
-	{
-		evconnlistener_free(listener);
-	}
-
-	if (base)
-	{
-		event_base_free(base);
-	}
-#endif
-
+	freecrit();
 	return 0;
 }

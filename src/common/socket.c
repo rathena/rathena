@@ -362,42 +362,6 @@ void set_eof(int fd)
 	}
 }
 
-int recv_to_fifo2(int fd)
-{
-	int len;
-
-	if (!session_isActive(fd))
-		return -1;
-
-	len = sRecv(fd, (char *)session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
-
-	if (len == SOCKET_ERROR)
-	{//An exception has occured
-		if (sErrno != S_EWOULDBLOCK) {
-			//ShowDebug("recv_to_fifo: %s, closing connection #%d\n", error_msg(), fd);
-			set_eof(fd);
-		}
-		return 0;
-	}
-
-	if (len == 0)
-	{//Normal connection end.
-		set_eof(fd);
-		return 0;
-	}
-
-	session[fd]->rdata_size += len;
-	session[fd]->rdata_tick = last_tick;
-#ifdef SHOW_SERVER_STATS
-	socket_data_i += len;
-	socket_data_qi += len;
-	if (!session[fd]->flag.server)
-	{
-		socket_data_ci += len;
-	}
-#endif
-	return 0;
-}
 
 int recv_to_fifo(int fd)
 {
@@ -440,93 +404,6 @@ int recv_to_fifo(int fd)
 	return 0;
 }
 
-int send_from_fifo2(int fd)
-{
-	int len;
-
-#ifdef _IOCP2
-	EnterCriticalSection(&crit);
-#endif
-	if (!session_isValid(fd))
-	{
-		ShowError("send_from_fifo - fd:%d !session_isValid\n", fd);
-#ifdef _IOCP2
-		LeaveCriticalSection(&crit);
-#endif	
-		return -1;
-	}
-
-#ifdef levent2
-	if (session[fd]->kill_tick > 0)
-	{
-		ShowError("send_from_fifo - fd:%d kill_tick > 0\n", fd);
-
-#ifdef _IOCP
-		LeaveCriticalSection(&crit);
-#endif		
-		return -1;
-	}
-#endif
-
-	if (session[fd]->wdata_size == 0)
-	{
-		ShowError("send_from_fifo - fd:%d wdata_size == 0\n", fd);
-#ifdef _IOCP2
-		LeaveCriticalSection(&crit);
-#endif
-		return 0; // nothing to send
-	}
-
-#ifdef levent2
-	len = bufferevent_write(session[fd]->bufev, (const char *)session[fd]->wdata, (int)session[fd]->wdata_size);
-	session[fd]->wdata_size = 0;
-
-	if (len == SOCKET_ERROR)
-	{//An exception has occured
-		ShowError("send_from_fifo - fd:%d SOCKET_ERROR\n", fd);
-
-		set_eof(fd);
-	}
-#else
-
-	len = sSend(fd, (const char *)session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
-
-	if (len == SOCKET_ERROR)
-	{//An exception has occured
-		if (sErrno != S_EWOULDBLOCK) {
-			//ShowDebug("send_from_fifo: %s, ending connection #%d\n", error_msg(), fd);
-#ifdef SHOW_SERVER_STATS
-			socket_data_qo -= session[fd]->wdata_size;
-#endif
-			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
-			set_eof(fd);
-		}
-		return 0;
-	}
-
-	if (len > 0)
-	{
-		// some data could not be transferred?
-		// shift unsent data to the beginning of the queue
-		if ((size_t)len < session[fd]->wdata_size)
-			memmove(session[fd]->wdata, session[fd]->wdata + len, session[fd]->wdata_size - len);
-
-		session[fd]->wdata_size -= len;
-#ifdef SHOW_SERVER_STATS
-		socket_data_o += len;
-		socket_data_qo -= len;
-		if (!session[fd]->flag.server)
-		{
-			socket_data_co += len;
-		}
-#endif
-	}
-#endif
-#ifdef _IOCP2
-	LeaveCriticalSection(&crit);
-#endif
-	return 0;
-}
 
 int send_from_fifo(int fd)
 {
@@ -920,11 +797,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 
 	if (fd_max <= fd) fd_max = fd + 1;
 	sFD_SET(fd,&readfds);
-#ifdef levent
-	create_session(fd, recv_to_fifo2, send_from_fifo2, default_func_parse, 0);
-#else
-	create_session(fd, recv_to_fifo2, send_from_fifo2, default_func_parse);
-#endif
+	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
 #endif
 
@@ -1551,6 +1424,7 @@ int socket_config_read(const char* cfgName)
 
 void socket_final(void)
 {
+//#ifndef levent
 	int i;
 #ifndef MINICORE
 	ConnectHistory* hist;
@@ -1569,7 +1443,7 @@ void socket_final(void)
 	if( access_deny )
 		aFree(access_deny);
 #endif
-
+//#endif
 	for( i = 1; i < fd_max; i++ )
 		if(session[i])
 			do_close(i);
@@ -1597,26 +1471,33 @@ void socket_final(void)
 	}
 #endif
 
-	// session[0]
-	aFree(session[0]->rdata);
-	aFree(session[0]->wdata);
-	aFree(session[0]->session_data);
-	aFree(session[0]);
-	session[0] = NULL;
+	if (session[0] != NULL)
+	{
+		if (session[0]->rdata)
+			aFree(session[0]->rdata);
+		if (session[0]->wdata)
+			aFree(session[0]->wdata);
+		if (session[0]->session_data)
+			aFree(session[0]->session_data);
+		if (session[0])
+			aFree(session[0]);
+		session[0] = NULL;
+	}
 
 #ifdef WIN32
 	// Shut down windows networking
 	if( WSACleanup() != 0 ){
 		ShowError("socket_final: WinSock could not be cleaned up! %s\n", error_msg() );
 	}
-
-#ifdef _IOCP
-	DeleteCriticalSection(&crit);
-#endif
 #endif
 }
 
-
+void freecrit()
+{
+#ifdef _IOCP
+	DeleteCriticalSection(&crit);
+#endif
+}
 
 /// Closes a socket.
 void do_close(int fd)
@@ -1624,33 +1505,23 @@ void do_close(int fd)
 	if( fd <= 0 ||fd >= FD_SETSIZE )
 		return;// invalid
 
-	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
-
 #ifdef levent
 	if (session[fd])
 	{
-		session[fd]->kill_tick = time(NULL) + 10;
+		session[fd]->kill_tick = time(NULL) + 1;
+		if (session[fd]->bufev != NULL)
+		{
+			bufferevent_disable(session[fd]->bufev, EV_WRITE || EV_READ);
+		}
 	}
 #else
+	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
+
 	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
 	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if (session[fd]) delete_session(fd);
 #endif
-}
-
-
-void doclose(int fd)
-{
-	if (fd <= 0 || fd >= FD_SETSIZE)
-		return;// invalid
-
-	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
-
-	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
-	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
-	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
-	if (session[fd]) delete_session(fd);
 }
 
 /// Retrieve local ips in host byte order.
@@ -1948,26 +1819,30 @@ void send_shortlist_do_sends()
 #ifdef levent
 void timercb(int fd, short event, void *arg)
 {
-	int next, i;
+	int next;
 	next = do_timer(gettick_nocache());
 
 	evutil_timerclear(&tv);
 	tv.tv_sec = next / 1000;
 	tv.tv_usec = next % 1000 * 1000;
 	event_add(timeout, &tv);
+	tryendsession(0);
+}
 
+void tryendsession(int flag)
+{
 	last_tick = time(NULL);
 
-	for (i = 1; i < fd_max; i += 1)
+	for (int i = 1; i < fd_max; i += 1)
 	{
 		if (session[i])
 		{
-			if (session[i]->kill_tick > 0 && last_tick > session[i]->kill_tick)
+			if (session[i]->kill_tick > 0 && (flag == 1 || last_tick > session[i]->kill_tick))
 			{
 				delete_session(i);
 			}
-			else if (session[i]->flag.server != 1 && 
-				session[i]->rdata_tick && 
+			else if (flag == 0 && session[i]->flag.server != 1 &&
+				session[i]->rdata_tick &&
 				DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time)
 			{
 				ShowInfo("Session #%d timed out\n", i);
