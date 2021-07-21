@@ -13436,8 +13436,9 @@ slabw01,255,63,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide04	4_
 slabw01,179,58,3	duplicate(Suspicious cabinet#hide01)	Suspicious desk#hide05	4_ENERGY_WHITE
 slabw01,180,57,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide05	4_M_ALCHE_A
 
-slabw01,143,100,3	duplicate(Suspicious cabinet#hide01)	Suspicious test_tube#hide06	4_ENERGY_WHITE
-slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Researcher inside a test#hide06	4_M_ALCHE_A
+slabw01,143,100,3	duplicate(Suspicious cabinet#hide01)	Suspicious test tube#hide06	4_ENERGY_WHITE
+slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide06	4_M_ALCHE_A
+// slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Researcher inside a test#hide06	4_M_ALCHE_A
 
 slabw01,247,34,3	duplicate(Suspicious cabinet#hide01)	Suspicious bookshelf#hide07	4_ENERGY_WHITE
 slabw01,247,34,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide07	4_M_ALCHE_A
