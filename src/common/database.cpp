@@ -7,6 +7,7 @@
 #include "showmsg.hpp"
 
 #include <iostream>
+#include <sstream>
 
 bool YamlDatabase::nodeExists( const ryml::NodeRef node, const std::string& name ){
 	return node.has_child(c4::to_csubstr(name));
@@ -316,7 +317,29 @@ std::string YamlDatabase::getCurrentFile(){
 	return this->currentFile;
 }
 
+struct YamlErrorHandler {
+	void on_error(const char* msg, size_t len, ryml::Location loc)
+	{
+		std::stringstream ss;
+		ss << loc.name << ":" << loc.line << ":" << loc.col << " (" << loc.offset << "B): ERROR: " << c4::csubstr(msg, len);
+		throw std::runtime_error(ss.str());
+	}
+
+	ryml::Callbacks callbacks()
+	{
+		return ryml::Callbacks(this, nullptr, nullptr, (c4::yml::pfn_error) s_error);
+	}
+
+	static void s_error(const char* msg, size_t msg_len, ryml::Location location, void* this_)
+	{
+		return ((YamlErrorHandler*)this_)->on_error(msg, msg_len, location);
+	}
+
+	YamlErrorHandler() {}
+};
+
+static YamlErrorHandler handler;
 void do_init_yaml_database()
 {
-
+	ryml::set_callbacks(handler.callbacks());
 }

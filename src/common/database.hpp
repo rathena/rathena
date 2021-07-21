@@ -7,8 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include <ryml/ryml_std.hpp>
-#include <ryml/ryml.hpp>
+#include <ryml_std.hpp>
+#include <ryml.hpp>
 
 #include "../config/core.hpp"
 

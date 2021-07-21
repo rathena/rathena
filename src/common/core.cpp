@@ -21,6 +21,7 @@
 #endif
 
 #include "cbasetypes.hpp"
+#include "database.hpp"
 #include "malloc.hpp"
 #include "mmo.hpp"
 #include "showmsg.hpp"
@@ -362,6 +363,7 @@ int main (int argc, char **argv)
 	display_title();
 	usercheck();
 
+	do_init_yaml_database();
 	Sql_Init();
 	db_init();
 	signals_init();
