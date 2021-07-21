@@ -1465,7 +1465,7 @@
 27104:27105,{ if (getequiprefinerycnt(EQI_GARMENT) >= 9) { bonus bMaxHP,2000; bonus bMaxSP,100; } else { bonus bMaxHP,1000; bonus bMaxSP,50; } }
 27105:28510,{ bonus bMatk,30; }
 27107:27108,{ bonus2 bSkillAtk,"WM_METALICSOUND",50; bonus2 bSkillAtk,"WM_REVERBERATION",50; }
-// 27107:27108:27109,{ autobonus "{ heal 2000,0; bonus2 bAddEle,Ele_Neutral,200; bonus2 bMagicAddEle,Ele_Neutral,200; }",20,6000,BF_WEAPON|BF_MAGIC,"{ active_transform 3073,6000; }"; /* fix me: mob 3073 not implemented */ }
+27107:27108:27109,{ autobonus "{ heal 2000,0; bonus2 bAddEle,Ele_Neutral,200; bonus2 bMagicAddEle,Ele_Neutral,200; }",20,6000,BF_WEAPON|BF_MAGIC,"{ active_transform 3073,6000; }"; }
 27110:27111,{ bonus2 bSubSize,Size_Small,20; }
 27111:27112,{ bonus2 bSubSize,Size_Medium,20; }
 27114:27115,{ bonus bMaxHPrate,(getequiprefinerycnt(EQI_ARMOR)/3); bonus bMaxSP,(5*(getequiprefinerycnt(EQI_HEAD_TOP)/2)); }

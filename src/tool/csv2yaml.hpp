@@ -84,6 +84,24 @@ struct s_randomsummon_group_csv2yaml {
 
 std::map<std::string, s_randomsummon_group_csv2yaml> summon_group;
 
+struct s_item_group_entry_csv2yaml {
+	std::string item_name;
+	uint16 duration,
+		amount;
+	uint32 rate;
+	bool isAnnounced,
+		GUID,
+		isNamed;
+	std::string bound;
+};
+
+struct s_item_group_db_csv2yaml {
+	std::string group_name;
+	std::map<uint16, std::vector<s_item_group_entry_csv2yaml>> item;
+};
+
+std::map<std::string, s_item_group_db_csv2yaml> item_group;
+
 static std::map<std::string, int> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
 	{ "SuperNovice", JOB_NOVICE },
@@ -426,5 +444,7 @@ static bool skill_parse_row_createarrowdb(char* fields[], int columns, int curre
 static bool pc_read_statsdb(const char* file);
 static bool guild_read_castledb(char* str[], int columns, int current);
 static bool exp_guild_parse_row(char* split[], int column, int current);
+static bool itemdb_read_group(char* fields[], int columns, int current);
+static bool itemdb_read_group_yaml(void);
 
 #endif /* CSV2YAML_HPP */
