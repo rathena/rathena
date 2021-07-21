@@ -356,8 +356,6 @@ void set_eof(int fd)
 		send_shortlist_add_fd(fd);
 #endif
 #endif
-		ShowStatus("set_eof fd:%d\n", fd);
-
 		session[fd]->flag.eof = 1;
 	}
 }
@@ -753,7 +751,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 					ShowError("make_connection: connection failed (socket #%d, timeout after %ds)!\n", fd, timeout);
 				}
 
-				doclose(fd);
+				do_close(fd);
 				return -1;
 			// If the select operation did not return an error
 			}else if( result != SOCKET_ERROR ){
@@ -768,7 +766,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 					ShowError("make_connection: connection failed (socket #%d, not writeable)!\n", fd);
 				}
 
-				doclose(fd);
+				do_close(fd);
 				return -1;
 			}
 			// The select operation failed
@@ -777,7 +775,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		if( !silent )
 			ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
 
-		doclose(fd);
+		do_close(fd);
 		return -1;
 	}
 	// Keep the socket in non-blocking mode, since we would set it to non-blocking here on unix. [Lemongrass]
@@ -1817,7 +1815,7 @@ void send_shortlist_do_sends()
 #endif
 
 #ifdef levent
-void timercb(int fd, short event, void *arg)
+void timercb(intptr fd, short event, void *arg)
 {
 	int next;
 	next = do_timer(gettick_nocache());
@@ -1857,7 +1855,6 @@ void tryendsession(int flag)
 void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 {
 	intptr fd = user_data;
-	//int len, i;
 
 #ifdef _IOCP
 	EnterCriticalSection(&crit);
@@ -1865,21 +1862,18 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 
 	if (events & BEV_EVENT_EOF)
 	{
-		ShowStatus("conn_eventcb - fd:%d BEV_EVENT_EOF\n", fd);
 		set_eof(fd);
 		session[fd]->func_parse(fd);
 		session[fd]->kill_tick = 1;
 	}
 	else if (events & BEV_EVENT_ERROR)
 	{
-		ShowError("conn_eventcb - fd:%d BEV_EVENT_ERROR\n", fd);
 		set_eof(fd);
 		session[fd]->func_parse(fd);
 		session[fd]->kill_tick = 1;
 	}
 	else if (events & BEV_EVENT_CONNECTED)
 	{
-		//ShowStatus("conn_eventcb - fd:%d BEV_EVENT_CONNECTED\n", fd);
 		session[fd]->func_parse(fd);
 		session[fd]->func_send(fd);
 

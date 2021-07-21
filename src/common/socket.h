@@ -200,7 +200,8 @@ extern int naddr_;   // # of ip addresses
 #ifdef levent
 void listener_cb(struct evconnlistener *, evutil_socket_t, struct sockaddr *, int socklen, void *);
 void signal_cb(evutil_socket_t, short, void *);
-void timercb(int fd, short event, void *arg);
+
+void timercb(intptr fd, short event, void *arg);
 
 
 void conn_readcb(struct bufferevent *, void *);
