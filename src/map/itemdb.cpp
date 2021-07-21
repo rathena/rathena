@@ -1552,7 +1552,7 @@ const std::string ItemGroupDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string group_name;
 
 	if (!this->asString(node, "Group", group_name))
@@ -1577,9 +1577,9 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "SubGroups")) {
-		const YAML::Node &subNode = node["SubGroups"];
+		const auto subNode = node["SubGroups"];
 
-		for (const YAML::Node &subit : subNode) {
+		for (const auto subit : subNode.children()) {
 			if (this->nodeExists(subit, "Clear")) {
 				uint16 id;
 
@@ -1612,9 +1612,9 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 				group->random[subgroup] = random;
 			}
 
-			const YAML::Node &listNode = subit["List"];
+			const auto listNode = subit["List"];
 
-			for (const YAML::Node &listit : listNode) {
+			for (const auto listit : listNode.children()) {
 				if (this->nodeExists(listit, "Clear")) {
 					std::string item_name;
 
