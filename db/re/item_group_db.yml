@@ -23139,3 +23139,149 @@ Body:
           - Item: Detale_Card
             Rate: 1
             Announced: true
+  - Group: XMAS_PACKAGE_14
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Event_Cake
+            Rate: 800
+            Amount: 10
+            UniqueId: true
+          - Item: White_Slim_Potion_B
+            Rate: 800
+            Amount: 5
+            UniqueId: true
+          - Item: White_Potion_B
+            Rate: 900
+            Amount: 5
+            UniqueId: true
+          - Item: Chocolate_Drink_B
+            Rate: 700
+            Amount: 3
+            UniqueId: true
+          - Item: Blue_Potion_B
+            Rate: 700
+            Amount: 3
+            UniqueId: true
+          - Item: Center_Potion_B
+            Rate: 800
+            Amount: 3
+            UniqueId: true
+          - Item: Berserk_Potion_B
+            Rate: 800
+            Amount: 3
+            UniqueId: true
+          - Item: Awakening_Potion_B
+            Rate: 800
+            Amount: 3
+            UniqueId: true
+          - Item: Yggdrasilberry
+            Rate: 294
+            Amount: 3
+            UniqueId: true
+          - Item: C_Polar_Bear_Cap
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Mini_Tree_J
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Cat_Santa_Hat
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Rudolph_Santa_Hat
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Santa_Hat_2
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_ShineSantaPoring
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: Str_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Agi_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Vit_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Int_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Dex_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Luk_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Old_Card_Album
+            Rate: 100
+            Amount: 1
+            UniqueId: true
+  - Group: EASTER_EGG
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Candy
+            Rate: 4
+            Amount: 5
+          - Item: Piece_Of_Cake
+            Rate: 4
+            Amount: 3
+          - Item: Jam_Pancake
+            Rate: 4
+            Amount: 2
+          - Item: Fruit_Of_Mastela
+            Rate: 3
+            Amount: 1
+          - Item: Mystery_Egg
+            Rate: 1
+            Amount: 1
+  - Group: PITAPAT_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Solo_Gift_Basket
+            Rate: 1000
+            Amount: 1
+          - Item: Couple_Event_Basket
+            Rate: 1000
+            Amount: 1
+          - Item: Strawberry_Choco
+            Rate: 2000
+            Amount: 5
+          - Item: Chocolate_Drink
+            Rate: 2000
+            Amount: 3
+          - Item: Candy_Striper
+            Rate: 2000
+            Amount: 5
+          - Item: Angeling_Potion
+            Rate: 1000
+            Amount: 3
+          - Item: Diamond_Ring
+            Rate: 300
+            Amount: 1
+            Announced: true
+          - Item: Witherless_Rose
+            Rate: 400
+            Amount: 1
+            Announced: true
+          - Item: Jewel_Ring
+            Rate: 300
+            Amount: 1
+            Announced: true
+

@@ -34068,19 +34068,6 @@ Body:
     Name: Cat Hand Ticket
     Type: Etc
     Buy: 10
-  - Id: 22870
-    AegisName: Xmas_Package_14
-    Name: Christmas Package
-    Type: Etc
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 22875
     AegisName: Sealed_Beelzebub_Card
     Name: Sealed Beelzebub Card
