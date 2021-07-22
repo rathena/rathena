@@ -60,6 +60,7 @@ typedef int socklen_t;
 // fd is the position in the array
 static SOCKET sock_arr[FD_SETSIZE];
 static int sock_arr_len = 0;
+bool isloopbreak = false;
 
 /// Returns the socket associated with the target fd.
 ///
@@ -355,7 +356,13 @@ void set_eof(int fd)
 		// Add this socket to the shortlist for eof handling.
 		send_shortlist_add_fd(fd);
 #endif
+#else
+		if (session[fd]->bufev != NULL)
+		{
+			bufferevent_disable(session[fd]->bufev, EV_WRITE || EV_READ);
+		}
 #endif
+
 		session[fd]->flag.eof = 1;
 	}
 }
@@ -829,22 +836,53 @@ static void delete_session(int fd)
 	{
 #ifdef levent
 		session[fd]->kill_tick = 0;
+
+		/*if (session[fd]->bufev)
+		{
+			struct evbuffer * evbuf = bufferevent_get_output(session[fd]->bufev);
+			size_t wlen = evbuffer_get_length(evbuf);
+			evbuf = bufferevent_get_input(session[fd]->bufev);
+			size_t rlen = evbuffer_get_length(evbuf);
+
+			ShowInfo("delete_session - read:%d write:%d (%d)\n", rlen, wlen, session[fd]->flag.eof);
+
+			if (wlen == 0)
+				bufferevent_disable(session[fd]->bufev, EV_WRITE);
+
+			if (rlen == 0)
+				bufferevent_disable(session[fd]->bufev, EV_READ);
+
+			if ((wlen + rlen) > 0)
+			{
+				session[fd]->kill_tick = time(NULL) + 1;
+				return;
+			}
+
+		}*/
+
 #endif
 #ifdef SHOW_SERVER_STATS
 		socket_data_qi -= session[fd]->rdata_size - session[fd]->rdata_pos;
 		socket_data_qo -= session[fd]->wdata_size;
 #endif
-		aFree(session[fd]->rdata);
-		aFree(session[fd]->wdata);
-		aFree(session[fd]->session_data);
-#ifdef levent
-		if (session[fd]->bufev)
+		if (session[fd] != NULL)
 		{
-			bufferevent_free(session[fd]->bufev);
-		}
+			if (session[fd]->rdata != NULL)
+				aFree(session[fd]->rdata);
+			if (session[fd]->wdata != NULL)
+				aFree(session[fd]->wdata);
+			if(session[fd]->session_data != NULL)
+				aFree(session[fd]->session_data);
+#ifdef levent
+			if (session[fd]->bufev)
+			{
+				bufferevent_free(session[fd]->bufev);
+				ShowInfo("delete_session - bufferevent_free:%d\n", fd);
+			}
 #endif
-		aFree(session[fd]);
-		session[fd] = NULL;
+			aFree(session[fd]);
+			session[fd] = NULL;
+		}
 	}
 }
 
@@ -1507,10 +1545,6 @@ void do_close(int fd)
 	if (session[fd])
 	{
 		session[fd]->kill_tick = time(NULL) + 1;
-		if (session[fd]->bufev != NULL)
-		{
-			bufferevent_disable(session[fd]->bufev, EV_WRITE || EV_READ);
-		}
 	}
 #else
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
@@ -1837,6 +1871,7 @@ void tryendsession(int flag)
 		{
 			if (session[i]->kill_tick > 0 && (flag == 1 || last_tick > session[i]->kill_tick))
 			{
+				ShowInfo("Session #%d kill_tick time out\n", i);
 				delete_session(i);
 			}
 			else if (flag == 0 && session[i]->flag.server != 1 &&
@@ -1862,15 +1897,19 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 
 	if (events & BEV_EVENT_EOF)
 	{
+		ShowInfo("conn_eventcb - BEV_EVENT_EOF (%d)\n", fd);
+
 		set_eof(fd);
 		session[fd]->func_parse(fd);
-		session[fd]->kill_tick = 1;
+		session[fd]->kill_tick = time(0) + 2;
 	}
 	else if (events & BEV_EVENT_ERROR)
 	{
+		ShowInfo("conn_eventcb - BEV_EVENT_ERROR (%d)\n", fd);
+
 		set_eof(fd);
 		session[fd]->func_parse(fd);
-		session[fd]->kill_tick = 1;
+		session[fd]->kill_tick =  time(0) + 2;
 	}
 	else if (events & BEV_EVENT_CONNECTED)
 	{
@@ -1887,6 +1926,22 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 	LeaveCriticalSection(&crit);
 #endif
 
+}
+
+void conn_writecb(struct bufferevent *bev, void *ptr)
+{
+#ifdef _IOCP
+	EnterCriticalSection(&crit);
+#endif
+
+	struct evbuffer * evbuf = bufferevent_get_output(bev);
+	size_t len = evbuffer_get_length(evbuf);
+	ShowStatus("conn_writecb - write buf len : %d\n", len);
+
+
+#ifdef _IOCP
+	LeaveCriticalSection(&crit);
+#endif
 }
 
 void conn_readcb(struct bufferevent *bev, void *ptr)
@@ -2010,9 +2065,13 @@ void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, struct soc
 
 void signal_cb(evutil_socket_t sig, short events, void *user_data)
 {
-	struct event_base *base = user_data;
-	struct timeval delay = { 2, 0 };
-	ShowStatus("Caught an interrupt signal; exiting cleanly in two seconds.\n");
-	event_base_loopexit(base, &delay);
+	if (isloopbreak == false)
+	{
+		isloopbreak = true;
+		struct event_base *base = user_data;
+		struct timeval delay = { 2, 0 };
+		ShowStatus("Caught an interrupt signal; exiting cleanly in two seconds.\n");
+		event_base_loopexit(base, &delay);
+	}
 }
 #endif

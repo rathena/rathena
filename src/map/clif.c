@@ -1803,6 +1803,8 @@ void clif_move(struct unit_data *ud)
  *------------------------------------------*/
 static int clif_delayquit(int tid, unsigned int tick, int id, intptr_t data)
 {
+	ShowInfo("clif_delayquit - %d\n", id);
+
 	struct map_session_data *sd = NULL;
 
 	//Remove player from map server
@@ -1815,16 +1817,24 @@ static int clif_delayquit(int tid, unsigned int tick, int id, intptr_t data)
  *
  *------------------------------------------*/
 void clif_quitsave(int fd,struct map_session_data *sd) {
+
 	if (!battle_config.prevent_logout ||
 		sd->canlog_tick == 0 ||
 		DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
+	{
 		map_quit(sd);
-	else if (sd->fd) {
+	}
+	else if (sd->fd) 
+	{
 		//Disassociate session from player (session is deleted after this function was called)
 		//And set a timer to make him quit later.
+#ifdef levent
+		map_quit(sd);
+#else
 		session[sd->fd]->session_data = NULL;
 		sd->fd = 0;
 		add_timer(gettick() + 10000, clif_delayquit, sd->bl.id, 0);
+#endif
 	}
 }
 
