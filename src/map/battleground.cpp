@@ -1348,6 +1348,8 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 		return;
 	}
 
+	pc_delete_bg_queue_timer(sd); // Cancel timer so player doesn't leave the queue.
+
 	int bg_id_team_1 = static_cast<int>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
 	std::shared_ptr<s_battleground_data> bgteam_1 = util::umap_find(bg_team_db, bg_id_team_1);
 
