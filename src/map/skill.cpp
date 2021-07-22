@@ -11483,6 +11483,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		}
 		break;
+#ifdef RENEWAL
+	case CG_HERMODE:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+#endif
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
@@ -12360,10 +12365,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 #endif
+#ifndef RENEWAL
 	case CG_HERMODE:
-#ifdef RENEWAL
-		skill_castend_song(src, skill_id, skill_lv, tick);
-#else
 		skill_clear_unitgroup(src);
 		if ((sg = skill_unitsetting(src,skill_id,skill_lv,x,y,0)))
 			sc_start4(src,src,SC_DANCING,100,
