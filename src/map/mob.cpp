@@ -4160,11 +4160,8 @@ static void item_dropratio_adjust(t_itemid nameid, int mob_id, int *rate_adjust)
 {
 	std::shared_ptr<s_mob_item_drop_ratio> item_ratio = mob_item_drop_ratio.find(nameid);
 	if( item_ratio) {
-		if( !item_ratio->mob_id.empty() ) { // only for listed mobs
-			if (util::vector_exists(item_ratio->mob_id, static_cast<uint16>(mob_id)))
-				*rate_adjust = item_ratio->drop_ratio;
-		}
-		else // for all mobs
+		// If it is empty it is applied to all monsters, if not it is only applied if the monster is in the vector
+		if( item_ratio->mob_id.empty() || util::vector_exists( item_ratio->mob_id, static_cast<uint16>( mob_id ) ) )
 			*rate_adjust = item_ratio->drop_ratio;
 	}
 }
@@ -5983,7 +5980,7 @@ uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
 					this->invalidWarning(mobit["Clear"], "Unknown mob %s, skipping.\n", mob_name.c_str());
 					continue;
 				}
-				uint16 mob_id = mob->vd.class_;
+				uint16 mob_id = mob->id;
 
 				if (!util::vector_exists(data->mob_id, mob_id)) {
 					this->invalidWarning(mobit["Clear"], "%s was not defined in the Mob List, skipping.\n", mob_name.c_str());
@@ -6005,8 +6002,8 @@ uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
 				this->invalidWarning(mobit["Mob"], "Unknown mob %s, skipping.\n", mob_name.c_str());
 				continue;
 			}
-			uint16 mob_id = mob->vd.class_;
-			
+
+			uint16 mob_id = mob->id;
 			
 			if (util::vector_exists(data->mob_id, mob_id))
 				continue;

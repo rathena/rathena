@@ -209,7 +209,7 @@ public:
 struct s_mob_item_drop_ratio {
 	t_itemid nameid;
 	uint16 drop_ratio;
-	std::vector<uint16> mob_id;
+	std::vector<uint16> mob_ids;
 };
 
 class MobItemRatioDatabase : public TypesafeYamlDatabase<t_itemid, s_mob_item_drop_ratio> {
