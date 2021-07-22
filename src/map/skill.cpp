@@ -11483,11 +11483,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		}
 		break;
-	default:
-		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skill_id);
+	default: {
+		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		map_freeblock_unlock();
 		return 1;
+		}
 	}
 
 	if (skill_id != SR_CURSEDCIRCLE) {
