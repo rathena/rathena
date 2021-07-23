@@ -59536,6 +59536,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,15;
@@ -69508,6 +69509,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,10;
@@ -93851,6 +93853,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bCritical,5;
@@ -110069,6 +110072,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,10;
@@ -122467,6 +122471,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,15;
@@ -134659,6 +134664,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 150
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"RA_ARROWSTORM",10;
@@ -134689,6 +134695,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 150
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",10;
@@ -134719,6 +134726,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 150
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
@@ -134783,6 +134791,7 @@ Body:
       Left_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       Override: 100
       NoDrop: true
@@ -134830,6 +134839,7 @@ Body:
       Left_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       Override: 100
       NoDrop: true
@@ -134875,6 +134885,7 @@ Body:
       Left_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Refineable: true
     Trade:
       Override: 100
       NoDrop: true
@@ -135034,6 +135045,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 180
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",10;
@@ -135067,6 +135079,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 180
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
@@ -135101,6 +135114,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 180
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
