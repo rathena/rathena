@@ -3965,20 +3965,18 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current) {
 
 	if (columns-2 > 0) {
 		body << YAML::Key << "List";
-		body << YAML::BeginSeq;
+		body << YAML::BeginMap;
 		for (int i = 0; i < columns-2; i++) {
 			uint16 mob_id = static_cast<uint16>(strtoul(str[i+2], nullptr, 10));
 			std::string* mob_name = util::umap_find( aegis_mobnames, mob_id );
 
 			if (mob_name == nullptr) {
-				ShowWarning( "pet_db mob_readdb_itemratio: Invalid monster with ID %hu (Item:%u Col:%d).\n", mob_id );
+				ShowWarning( "mob_readdb_itemratio: Invalid monster with ID %hu.\n", mob_id );
 				continue;
 			}
-			body << YAML::BeginMap;
-			body << YAML::Key << "Mob" << YAML::Value << *mob_name;
-			body << YAML::EndMap;
+			body << YAML::Key << *mob_name << YAML::Value << "true";
 		}
-		body << YAML::EndSeq;
+		body << YAML::EndMap;
 	}
 
 	body << YAML::EndMap;

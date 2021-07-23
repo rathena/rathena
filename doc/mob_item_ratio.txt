@@ -27,8 +27,8 @@ Jellopies from Porings will drop with 1x drop rate. Other monsters that drop Jel
 Body:
  - Item: Jellopy
    Ratio: 100
-  List:
-    - Mob: PORING
+   List:
+     PORING: true
 
 Notes:
 - Does not override item_drop_*_min/max settings.

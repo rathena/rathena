@@ -4161,7 +4161,7 @@ static void item_dropratio_adjust(t_itemid nameid, int mob_id, int *rate_adjust)
 	std::shared_ptr<s_mob_item_drop_ratio> item_ratio = mob_item_drop_ratio.find(nameid);
 	if( item_ratio) {
 		// If it is empty it is applied to all monsters, if not it is only applied if the monster is in the vector
-		if( item_ratio->mob_id.empty() || util::vector_exists( item_ratio->mob_id, static_cast<uint16>( mob_id ) ) )
+		if( item_ratio->mob_ids.empty() || util::vector_exists( item_ratio->mob_ids, static_cast<uint16>( mob_id ) ) )
 			*rate_adjust = item_ratio->drop_ratio;
 	}
 }
@@ -5932,13 +5932,13 @@ uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string item_name;
 
 	if (!this->asString(node, "Item", item_name))
-		return false;
+		return 0;
 
 	item_data *item = itemdb_search_aegisname(item_name.c_str());
 
 	if (item == nullptr) {
 		this->invalidWarning(node["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());
-		return false;
+		return 0;
 	}
 
 	t_itemid nameid = item->nameid;
@@ -5961,54 +5961,38 @@ uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "Ratio", ratio))
 			return 0;
 
+		if (ratio == 0) {
+			this->invalidWarning(node["Ratio"], "Unsupported Ratio 0 for Item %s, skipping.\n", item_name.c_str());
+			return 0;
+		}
 		data->drop_ratio = ratio;
 	}
 
 	if (this->nodeExists(node, "List")) {
 		const YAML::Node &MobNode = node["List"];
 
-		for (const YAML::Node &mobit : MobNode) {
-			if (this->nodeExists(mobit, "Clear")) {
-				std::string mob_name;
-
-				if (!this->asString(mobit, "Clear", mob_name))
-					continue;
-
-				std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
-
-				if (mob == nullptr) {
-					this->invalidWarning(mobit["Clear"], "Unknown mob %s, skipping.\n", mob_name.c_str());
-					continue;
-				}
-				uint16 mob_id = mob->id;
-
-				if (!util::vector_exists(data->mob_id, mob_id)) {
-					this->invalidWarning(mobit["Clear"], "%s was not defined in the Mob List, skipping.\n", mob_name.c_str());
-					continue;
-				}
-
-				util::vector_erase_if_exists(data->mob_id, mob_id);
-				continue;
-			}
-
-			std::string mob_name;
-
-			if (!this->asString(mobit, "Mob", mob_name))
-				continue;
+		for (const auto mobit : MobNode) {
+			std::string mob_name = mobit.first.as<std::string>();
 
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
 			if (mob == nullptr) {
-				this->invalidWarning(mobit["Mob"], "Unknown mob %s, skipping.\n", mob_name.c_str());
+				this->invalidWarning(node["List"], "Unknown mob %s, skipping.\n", mob_name.c_str());
+				continue;
+			}
+			uint16 mob_id = mob->id;
+
+			bool active;
+
+			if (!this->asBool(node["List"], mob_name, active))
+				return 0;
+
+			if (!active) {
+				util::vector_erase_if_exists(data->mob_ids, mob_id);
 				continue;
 			}
 
-			uint16 mob_id = mob->id;
-			
-			if (util::vector_exists(data->mob_id, mob_id))
-				continue;
-			
-			data->mob_id.push_back(mob_id);
+			data->mob_ids.push_back(mob_id);
 		}
 	}
 

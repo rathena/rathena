@@ -25,9 +25,7 @@
 ###########################################################################
 # - Item          AegisName of item to adjust.
 #   Ratio         Drop rate.
-#   List:         List of monster(s) affected. (Defaulted to all monsters)
-#     - Mob       Monster AegisName.
-#       Clear     Remove the Monster. Monster Aegis name required. (Optional)
+#   List:         List of monster(s) affected (format <Aegis monster name>: true/false). (Defaulted to all monsters)
 ###########################################################################
 
 Header:
