@@ -566,7 +566,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		mes "[Bel]";
 		mes "Prince Grantz has arrived.";
 		next;
-		cloakoffnpc "Kronecker G. Heine#ep16", getcharid(0);
+		cloakoffnpc "Kronecker G. Heine#ep162", getcharid(0);
 		mes "[Kronecker]";
 		mes "Hmm. The esteemed daughters of the Nerius family are here too.";
 		mes "First of all, " + strcharinfo(0) + " I have come to show my gratitude to you.";
@@ -629,9 +629,9 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		cutin "ep16_spica_nerius01.bmp",1;
 		mes "[Spica]";
 		mes "See you later. I will contact you.";
-		npctalk "I will be waiting.", "Kronecker G. Heine#ep16", bc_self;
+		npctalk "I will be waiting.", "Kronecker G. Heine#ep162", bc_self;
 		next;
-		cloakonnpc "Kronecker G. Heine#ep16", getcharid(0);
+		cloakonnpc "Kronecker G. Heine#ep162", getcharid(0);
 		mes "[Spica]";
 		mes "Skia?";
 		mes "Why don't you have a quiet conversation with me?";
@@ -13436,8 +13436,9 @@ slabw01,255,63,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide04	4_
 slabw01,179,58,3	duplicate(Suspicious cabinet#hide01)	Suspicious desk#hide05	4_ENERGY_WHITE
 slabw01,180,57,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide05	4_M_ALCHE_A
 
-slabw01,143,100,3	duplicate(Suspicious cabinet#hide01)	Suspicious test_tube#hide06	4_ENERGY_WHITE
-slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Researcher inside a test#hide06	4_M_ALCHE_A
+slabw01,143,100,3	duplicate(Suspicious cabinet#hide01)	Suspicious test tube#hide06	4_ENERGY_WHITE
+slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide06	4_M_ALCHE_A
+// slabw01,143,100,3	duplicate(Hiding researcher#hide01)	Researcher inside a test#hide06	4_M_ALCHE_A
 
 slabw01,247,34,3	duplicate(Suspicious cabinet#hide01)	Suspicious bookshelf#hide07	4_ENERGY_WHITE
 slabw01,247,34,3	duplicate(Hiding researcher#hide01)	Hiding researcher#hide07	4_M_ALCHE_A

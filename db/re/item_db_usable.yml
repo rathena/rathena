@@ -1118,7 +1118,7 @@ Body:
       BuyingStore: true
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-1-MOBG_Branch_Of_Dead_Tree,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_BRANCH_OF_DEAD_TREE,1,"";
   - Id: 605
     AegisName: Anodyne
     Name: Anodyne
@@ -2205,9 +2205,11 @@ Body:
       /*set pcroom,(gettimetick(2)+7200);*/
   - Id: 9510
     AegisName: Enchant_Stone_Box17
-    Name: Costume Enchant Stone Box17
-    Type: Cash
+    Name: Costume Enchant Stone Box 17
+    Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box17);
   - Id: 9514
@@ -3312,7 +3314,7 @@ Body:
     Weight: 30
     Script: |
       itemheal 45,0;
-      transform 1507,600000,SC_MTF_MHP,1000;
+      transform 1507,600000,SC_MTF_MHP,20;
       specialeffect2 EF_CLOAKING;
       showscript "Trans-Form-!! Bloody Murderer Fo-rm!!";
   - Id: 11593
@@ -3323,7 +3325,7 @@ Body:
     Weight: 30
     Script: |
       itemheal 45,0;
-      transform 1102,600000,SC_MTF_MSP,100;
+      transform 1102,600000,SC_MTF_MSP,20;
       specialeffect2 EF_CLOAKING;
       showscript "Trans-Form-!!! Bathory Fo-rm!!";
   - Id: 11594
@@ -3334,7 +3336,7 @@ Body:
     Weight: 30
     Script: |
       itemheal 45,0;
-      transform 1130,600000,SC_MTF_PUMPKIN,2000;
+      transform 1130,600000,SC_MTF_PUMPKIN,2000,100;
       specialeffect2 EF_CLOAKING;
       showscript "Trans-Form-!! Jack Fo-rm!!";
   - Id: 11595
@@ -3822,7 +3824,7 @@ Body:
     Flags:
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-1-MOBG_Red_Pouch_Of_Surprise,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_RED_POUCH_OF_SURPRISE,1,"";
   - Id: 12025
     AegisName: Egg_Boy
     Name: Dano Festival Egg
@@ -4686,7 +4688,7 @@ Body:
       BuyingStore: true
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-1-MOBG_Bloody_Dead_Branch,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_BLOODY_DEAD_BRANCH,1,"";
   - Id: 12104
     AegisName: Random_Quiver
     Name: Random Quiver
@@ -4758,7 +4760,7 @@ Body:
       BuyingStore: true
       DeadBranch: true
     Script: |
-      monster "this",-1,-1,"--ja--",-1-MOBG_Poring_Box,1,"";
+      monster "this",-1,-1,"--ja--",-1-MOBG_PORING_BOX,1,"";
   - Id: 12110
     AegisName: First_Aid_Kit
     Name: First Aid Kit
@@ -11572,7 +11574,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      transform 1002,1200000,SC_MTF_CRIDAMAGE,25;
+      transform 1002,1200000,SC_MTF_CRIDAMAGE,5;
       showscript "Traaaansformation-!! Poring form!!";
   - Id: 12664
     AegisName: Trans_Scroll_Golem
@@ -32332,9 +32334,8 @@ Body:
       sc_start SC_LIFEINSURANCE,3600000,0;
   - Id: 14505
     AegisName: Dun_1HR_Voucher
-    Name: Dungeon 1 Hour Ticket
+    Name: Sky Fortress Ticket
     Type: Usable
-    Buy: 20
     Trade:
       Override: 100
       NoDrop: true
@@ -32349,9 +32350,8 @@ Body:
       warp "dali02",117,69;
   - Id: 14506
     AegisName: Dun_Voucher
-    Name: Dungeon 1 Hour Ticket
+    Name: Sky Fortress Ticket
     Type: Usable
-    Buy: 20
     Trade:
       Override: 100
       NoDrop: true
@@ -34362,13 +34362,15 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 14629
-    AegisName: Costume_Enchantment_Stone_Box
-    Name: Costume Enchantment Stone Box
+    AegisName: Enchant_Stone_Box
+    Name: Costume Enchant Stone Box
     Type: Usable
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Script: |
-      getitem callfunc("F_Rand",6636,6637,6638,6639,6640,6641,6642,6643,6644,6645),1;
+      getgroupitem(IG_Enchant_Stone_Box);
   - Id: 14643
     AegisName: Violet_Scroll
     Name: Violet Scroll
@@ -34500,11 +34502,15 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 14681
-    AegisName: Costume_Enchantment_Stone_Box_II
-    Name: Costume Enchantment Stone Box II
-    Type: Cash
+    AegisName: Enchant_Stone_Box2
+    Name: Costume Enchant Stone Box 2
+    Type: Usable
     Buy: 10
     Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box2);
   - Id: 14682
     AegisName: Sealed_Beelzebub_Scroll
     Name: Sealed Beelzebub Scroll
@@ -34536,15 +34542,15 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 14695
-    AegisName: Enchant_Stone_Box_3
-    Name: Costume Enchant Stone Box III
-    Type: Cash
+    AegisName: Enchant_Stone_Box3
+    Name: Costume Enchant Stone Box 3
+    Type: Usable
+    Buy: 10
     Weight: 10
+    Flags:
+      Container: true
     Script: |
-      getitem rand(6790,6792),1;
-      getitem 4936,1;
-      getitem 4937,1;
-      getitem 4938,1;
+      getgroupitem(IG_Enchant_Stone_Box3);
   - Id: 14696
     AegisName: Sealed_Gloom_Under_Night_Gachapon
     Name: Sealed Gloom Under Night Gachapon
@@ -44022,7 +44028,24 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 14505,1;
+      rentitem 14506,3600;
+  - Id: 17570
+    AegisName: Dun_Voucher_Box2
+    Name: Sky Fortress Ticket 3 Hours Box
+    Type: Usable
+    Buy: 20
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      rentitem 14506,10800;
   - Id: 17572
     AegisName: Erzulie_Lucky_Scroll
     Name: Erzulie Lucky Egg
@@ -45014,11 +45037,31 @@ Body:
   - Id: 22611
     AegisName: Packing_Envelope
     Name: Packed Envelope
-    Type: Delayconsume
+    Type: Usable
     Buy: 10
     Weight: 10
     Script: |
-      /* TODO */
+      .@r = rand(1,10);
+      if (.@r == 1)
+         sc_start SC_PACKING_ENVELOPE1,30000,33; // +atk
+      else if (.@r == 2)
+         sc_start SC_PACKING_ENVELOPE2,30000,33; // +matk
+      else if (.@r == 3)
+         sc_start SC_PACKING_ENVELOPE3,30000,3; // +hp%
+      else if (.@r == 4)
+         sc_start SC_PACKING_ENVELOPE4,30000,3; // +sp%
+      else if (.@r == 5)
+         sc_start SC_PACKING_ENVELOPE5,30000,33; // +flee
+      else if (.@r == 6)
+         sc_start SC_PACKING_ENVELOPE6,30000,3; // +aspd
+      else if (.@r == 7)
+         sc_start SC_PACKING_ENVELOPE7,30000,33; // +def
+      else if (.@r == 8)
+         sc_start SC_PACKING_ENVELOPE8,30000,33; // +mdef
+      else if (.@r == 9)
+         sc_start SC_PACKING_ENVELOPE9,30000,33; // +crit
+      else
+         sc_start SC_PACKING_ENVELOPE10,30000,33; // +hit
   - Id: 22612
     AegisName: Decomposition_Potion
     Name: Corrupt Reagents
@@ -46299,13 +46342,13 @@ Body:
       /*getitem callfunc("F_Rand",4491,6228,6232,24196, Hasty Shadow Armor, 19882, 17474, 6635),1;*/
   - Id: 22826
     AegisName: Enchant_Stone_Box4
-    Name: Costume Enchantment Stone Box 4
+    Name: Costume Enchant Stone Box 4
     Type: Usable
-    Buy: 10
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
-      getitem callfunc("F_Rand",6636,6637,6638,6639,6640,6641,6642,6643,6644,6645,6740,6741,6742,6743,6744,6745,6790,6791,6792,6908),1;
+      getgroupitem(IG_Enchant_Stone_Box4);
   - Id: 22827
     AegisName: Shadow_Cube
     Name: Shadow Cube
@@ -46695,11 +46738,11 @@ Body:
       getitem 22869,10;
   - Id: 22868
     AegisName: Enchant_Stone_Box5
-    Name: Costume Enchantment Stone Box 5
+    Name: Costume Enchant Stone Box 5
     Type: Usable
-    Buy: 20
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box5);
   - Id: 22869
@@ -47001,19 +47044,19 @@ Body:
   - Id: 22905
     AegisName: Enchant_Stone_Box6
     Name: Costume Enchant Stone Box 6
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box6);
   - Id: 22953
     AegisName: Enchant_Stone_Box7
     Name: Costume Enchant Stone Box 7
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box7);
   - Id: 22979
@@ -47051,10 +47094,10 @@ Body:
   - Id: 23001
     AegisName: Enchant_Stone_Box8
     Name: Costume Enchant Stone Box 8
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box8);
   - Id: 23012
@@ -47185,11 +47228,11 @@ Body:
       /* fix me: unknown flag and specialeffect */
   - Id: 23058
     AegisName: Enchant_Stone_Box9
-    Name: Costume Enchantment Stone Box 9
+    Name: Costume Enchant Stone Box 9
     Type: Usable
-    Buy: 10
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box9);
   - Id: 23076
@@ -47233,10 +47276,10 @@ Body:
   - Id: 23086
     AegisName: Enchant_Stone_Box10
     Name: Costume Enchant Stone Box 10
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box10);
   - Id: 23087
@@ -47344,10 +47387,10 @@ Body:
   - Id: 23174
     AegisName: Enchant_Stone_Box11
     Name: Costume Enchant Stone Box 11
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box11);
   - Id: 23175
@@ -47728,10 +47771,10 @@ Body:
   - Id: 23299
     AegisName: Enchant_Stone_Box12
     Name: Costume Enchant Stone Box 12
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box12);
   - Id: 23307
@@ -47821,10 +47864,10 @@ Body:
   - Id: 23524
     AegisName: Enchant_Stone_Box13
     Name: Costume Enchant Stone Box 13
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box13);
   - Id: 23545
@@ -47851,10 +47894,10 @@ Body:
   - Id: 23629
     AegisName: Enchant_Stone_Box14
     Name: Costume Enchant Stone Box 14
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box14);
   - Id: 23665
@@ -47930,10 +47973,10 @@ Body:
   - Id: 23682
     AegisName: Enchant_Stone_Box15
     Name: Costume Enchant Stone Box 15
-    Type: Cash
-    Buy: 10
+    Type: Usable
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box15);
   - Id: 23706
@@ -47959,9 +48002,11 @@ Body:
       /*upgradeui 23720;*/
   - Id: 23770
     AegisName: Enchant_Stone_Box16
-    Name: Costume Enchant Stone Box16
-    Type: Cash
+    Name: Costume Enchant Stone Box 16
+    Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box16);
   - Id: 23776
@@ -48608,9 +48653,11 @@ Body:
       /*synthesisui 100011;*/
   - Id: 100019
     AegisName: Enchant_Stone_Box18
-    Name: Costume Enchant Stone Box18
-    Type: Cash
+    Name: Costume Enchant Stone Box 18
+    Type: Usable
     Weight: 10
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box18);
   - Id: 100023
@@ -48641,11 +48688,11 @@ Body:
       /*upgradeui 100044;*/
   - Id: 100052
     AegisName: Enchant_Stone_Box19
-    Name: Costume Enchantment Stone Box 19
+    Name: Costume Enchant Stone Box 19
     Type: Usable
-    Buy: 10
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box19);
   - Id: 100053
@@ -49028,11 +49075,11 @@ Body:
       /* upgradeui 100169; */
   - Id: 100202
     AegisName: Enchant_Stone_Box20
-    Name: Costume Enchantment Stone Box 20
+    Name: Costume Enchant Stone Box 20
     Type: Usable
-    Buy: 10
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box20);
   - Id: 100205
@@ -49240,11 +49287,11 @@ Body:
       /* synthesisui 100277; */
   - Id: 100314
     AegisName: Enchant_Stone_Box21
-    Name: Costume Enchantment Stone Box 21
+    Name: Costume Enchant Stone Box 21
     Type: Usable
-    Buy: 10
     Weight: 10
-    EquipLevelMin: 1
+    Flags:
+      Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box21);
   - Id: 100321
@@ -49904,6 +49951,15 @@ Body:
     Weight: 10
     Script: |
       /* upgradeui 100486; */
+  - Id: 100502
+    AegisName: Enchant_Stone_Box22
+    Name: Costume Enchant Stone Box 22
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      /* getgroupitem(IG_Enchant_Stone_Box22); */
   - Id: 100572
     AegisName: FullPeneShadow_Mix
     Name: Full Penetration Shadow Thump Box

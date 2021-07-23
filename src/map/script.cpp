@@ -1380,6 +1380,7 @@ const char* parse_simpleexpr(const char *p)
 			ShowWarning( "This constant was deprecated and could become unavailable anytime soon.\n" );
 			if (str_data[l].name)
 				ShowWarning( "Please use '%s' instead!\n", str_data[l].name );
+			disp_warning_message("parse_simpleexpr: deprecated constant", p);
 		}
 #endif
 
@@ -7850,11 +7851,10 @@ BUILDIN_FUNC(getnameditem)
  * groupranditem <group_num>{,<sub_group>};
  *------------------------------------------*/
 BUILDIN_FUNC(grouprandomitem) {
-	struct s_item_group_entry *entry = NULL;
 	int sub_group = 1;
 
 	FETCH(3, sub_group);
-	entry = itemdb_get_randgroupitem(script_getnum(st,2),sub_group);
+	std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(script_getnum(st,2),sub_group);
 	if (!entry) {
 		ShowError("buildin_grouprandomitem: Invalid item group with group_id '%d', sub_group '%d'.\n", script_getnum(st,2), sub_group);
 		script_pushint(st,UNKNOWN_ITEM_ID);
@@ -10489,26 +10489,39 @@ BUILDIN_FUNC(makepet)
  * Give player exp base,job * quest_exp_rate/100
  * getexp <base xp>,<job xp>{,<char_id>};
  **/
-BUILDIN_FUNC(getexp)
-{
-	TBL_PC* sd;
-	int base=0,job=0;
-	double bonus;
+BUILDIN_FUNC(getexp){
+	struct map_session_data* sd;
 
-	if (!script_charid2sd(4,sd))
+	if( !script_charid2sd( 4, sd ) ){
 		return SCRIPT_CMD_FAILURE;
+	}
 
-	base=script_getnum(st,2);
-	job =script_getnum(st,3);
-	if(base<0 || job<0)
-		return SCRIPT_CMD_SUCCESS;
+	int64 base = script_getnum64( st, 2 );
+
+	if( base < 0 ){
+		ShowError( "buildin_getexp: Called with negative base exp.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	int64 job = script_getnum64( st, 3 );
+
+	if( job < 0 ){
+		ShowError( "buildin_getexp: Called with negative job exp.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( base == 0 && job == 0 ){
+		ShowError( "buildin_getexp: Called with base and job exp 0.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	// bonus for npc-given exp
-	bonus = battle_config.quest_exp_rate / 100.;
+	double bonus = battle_config.quest_exp_rate / 100.;
+
 	if (base)
-		base = (int) cap_value(base * bonus, 0, INT_MAX);
+		base = (int64) cap_value(base * bonus, 0, MAX_EXP);
 	if (job)
-		job = (int) cap_value(job * bonus, 0, INT_MAX);
+		job = (int64) cap_value(job * bonus, 0, MAX_EXP);
 
 	pc_gainexp(sd, NULL, base, job, 1);
 #ifdef RENEWAL
@@ -10522,19 +10535,26 @@ BUILDIN_FUNC(getexp)
 /*==========================================
  * Gain guild exp [Celest]
  *------------------------------------------*/
-BUILDIN_FUNC(guildgetexp)
-{
-	TBL_PC* sd;
-	int exp;
+BUILDIN_FUNC(guildgetexp){
+	struct map_session_data* sd;
 
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
+	if( !script_rid2sd( sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	exp = script_getnum(st,2);
-	if(exp < 0)
-		return SCRIPT_CMD_SUCCESS;
-	if(sd && sd->status.guild_id > 0)
-		guild_getexp (sd, exp);
+	int64 exp = script_getnum64( st, 2 );
+
+	if( exp <= 0 ){
+		ShowError( "buildin_guildgetexp: Called with exp <= 0.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( sd->status.guild_id <= 0 ){
+		ShowError( "buildin_guildgetexp: Called for player %s (AID: %u, CID: %u) without a guild.\n", sd->status.name, sd->status.account_id, sd->status.char_id );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	guild_getexp( sd, exp );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13240,7 +13260,7 @@ BUILDIN_FUNC(flagemblem)
 BUILDIN_FUNC(getcastlename)
 {
 	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
-	struct guild_castle* gc = guild_mapname2gc(mapname);
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
 	const char* name = (gc) ? gc->castle_name : "";
 	script_pushstrcopy(st,name);
 	return SCRIPT_CMD_SUCCESS;
@@ -13250,7 +13270,7 @@ BUILDIN_FUNC(getcastledata)
 {
 	const char *mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	int index = script_getnum(st,3);
-	struct guild_castle *gc = guild_mapname2gc(mapname);
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
 
 	if (gc == NULL) {
 		script_pushint(st,0);
@@ -13294,7 +13314,7 @@ BUILDIN_FUNC(setcastledata)
 	const char *mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	int index = script_getnum(st,3);
 	int value = script_getnum(st,4);
-	struct guild_castle *gc = guild_mapname2gc(mapname);
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
 
 	if (gc == NULL) {
 		ShowWarning("buildin_setcastledata: guild castle for map '%s' not found\n", mapname);
@@ -13413,6 +13433,7 @@ BUILDIN_FUNC(successremovecards) {
 		item_tmp.attribute   = sd->inventory.u.items_inventory[i].attribute;
 		item_tmp.expire_time = sd->inventory.u.items_inventory[i].expire_time;
 		item_tmp.bound       = sd->inventory.u.items_inventory[i].bound;
+		item_tmp.enchantgrade = sd->inventory.u.items_inventory[i].enchantgrade;
 
 		for (int j = sd->inventory_data[i]->slots; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
@@ -13498,6 +13519,7 @@ BUILDIN_FUNC(failedremovecards) {
 			item_tmp.attribute   = sd->inventory.u.items_inventory[i].attribute;
 			item_tmp.expire_time = sd->inventory.u.items_inventory[i].expire_time;
 			item_tmp.bound       = sd->inventory.u.items_inventory[i].bound;
+			item_tmp.enchantgrade = sd->inventory.u.items_inventory[i].enchantgrade;
 
 			for (int j = sd->inventory_data[i]->slots; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
@@ -13895,7 +13917,7 @@ BUILDIN_FUNC(guardianinfo)
 	int id = script_getnum(st,3);
 	int type = script_getnum(st,4);
 
-	struct guild_castle* gc = guild_mapname2gc(mapname);
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
 	struct mob_data* gd;
 
 	if( gc == NULL || id < 0 || id >= MAX_GUARDIANS )
@@ -14224,6 +14246,7 @@ BUILDIN_FUNC(getinventorylist)
 			}
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_enchantgrade"), j),sd->inventory.u.items_inventory[i].enchantgrade);
 			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
 			{
 				sprintf(randopt_var, "@inventorylist_option_id%d",k+1);
@@ -21846,7 +21869,6 @@ BUILDIN_FUNC(getrandgroupitem) {
 	uint16 group, qty = 0;
 	uint8 sub_group = 1;
 	struct item item_tmp;
-	struct s_item_group_entry *entry = NULL;
 
 	if (!script_charid2sd(6, sd))
 		return SCRIPT_CMD_SUCCESS;
@@ -21862,7 +21884,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 	FETCH(4, sub_group);
 	FETCH(5, identify);
 
-	entry = itemdb_get_randgroupitem(group,sub_group);
+	std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(group,sub_group);
 	if (!entry)
 		return SCRIPT_CMD_FAILURE; //ensure valid itemid
 
@@ -21908,7 +21930,7 @@ BUILDIN_FUNC(getgroupitem) {
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_SUCCESS;
 	
-	if (itemdb_pc_get_itemgroup(group_id, (script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : false), sd)) {
+	if (itemdb_group.pc_get_itemgroup(group_id, (script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : false), sd)) {
 		ShowError("buildin_getgroupitem: Invalid group id '%d' specified.\n",group_id);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -23320,14 +23342,16 @@ BUILDIN_FUNC(minmax){
  **/
 BUILDIN_FUNC(getexp2) {
 	TBL_PC *sd = NULL;
-	int base_exp = script_getnum(st, 2);
-	int job_exp = script_getnum(st, 3);
+	int64 base_exp = script_getnum64(st, 2);
+	int64 job_exp = script_getnum64(st, 3);
 
 	if (!script_charid2sd(4, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if (base_exp == 0 && job_exp == 0)
-		return SCRIPT_CMD_SUCCESS;
+	if( base_exp == 0 && job_exp == 0 ){
+		ShowError( "buildin_getexp2: Called with base and job exp 0.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	if (base_exp > 0)
 		pc_gainexp(sd, NULL, base_exp, 0, 2);
@@ -25094,6 +25118,22 @@ BUILDIN_FUNC(refineui){
 #endif
 }
 
+BUILDIN_FUNC(getenchantgrade){
+	struct map_session_data *sd;
+
+	if( !script_rid2sd( sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( current_equip_item_index == -1 ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint( st, sd->inventory.u.items_inventory[current_equip_item_index].enchantgrade );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * mob_setidleevent( <monster game ID>, "<event label>" )
  *------------------------------------------*/
@@ -25807,6 +25847,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(rentalcountitem, "v?"),
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem2", "viiiiiii?"),
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem3", "viiiiiiirrr?"),
+
+	BUILDIN_DEF(getenchantgrade, ""),
 
 	BUILDIN_DEF(mob_setidleevent, "is"),
 #include "../custom/script_def.inc"
