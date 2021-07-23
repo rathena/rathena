@@ -4705,6 +4705,10 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY;
 			}
 			sd->status.skill[idx].lv = level;
+			if (level == 0)
+				clif_deleteskill(sd,skill_id);
+			else
+				clif_addskill(sd,skill_id);
 			break;
 
 		case ADDSKILL_TEMP_ADDLEVEL: //Add skill bonus on top of what you had.
