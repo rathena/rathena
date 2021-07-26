@@ -52,6 +52,7 @@ static int int_party_check_lv(struct party_data *p) {
 	}
 
 	if (p->party.exp && !party_check_exp_share(p)) {
+		//ShowInfo("Debug-1, party %d set to zero.\n", p->party.party_id);
 		p->party.exp = 0;
 		mapif_party_optionchanged(0, &p->party, 0, 0);
 		return 0;
@@ -102,6 +103,7 @@ static void int_party_calc_state(struct party_data *p)
 	}
 
 	if (p->party.exp && !party_check_exp_share(p)) {
+		//ShowInfo("Debug-2, party %d set to zero.\n", p->party.party_id);
 		p->party.exp = 0; //Set off even share.
 		mapif_party_optionchanged(0, &p->party, 0, 0);
 	}

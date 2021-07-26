@@ -142,6 +142,7 @@ int logchrif_parse_ackusercount(int fd, int id){
 		if( ch_server[id].users != users ){
 			ShowStatus("set users %s : %d\n", ch_server[id].name, users);
 			ch_server[id].users = users;
+			loginusers = users;
 		}
 	}
 	return 1;

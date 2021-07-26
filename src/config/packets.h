@@ -9,8 +9,10 @@
  **/
 //2008_09_10a
 #ifndef PACKETVER
-	#define PACKETVER 20101116//20100730//20151104
+	#define PACKETVER 20141022 //20131223 //20101116//20100730//20151104
 #endif
+
+#define NO_PACKET_OBFUSCATION
 
 #ifndef PACKETVER_RE
 	/// From this point on only kRO RE clients are supported
@@ -19,6 +21,7 @@
 	#endif
 #endif
 
+#ifndef NO_PACKET_OBFUSCATION
 #if PACKETVER >= 20110817
 	/// Comment to disable the official packet obfuscation support.
 	/// This requires PACKETVER 2011-08-17 or newer.
@@ -37,6 +40,7 @@
 	#if defined(PACKET_OBFUSCATION)
 		#error You enabled packet obfuscation for a version which is too old. Minimum supported client is 2011-08-17.
 	#endif
+#endif
 #endif
 
 #ifndef DUMP_UNKNOWN_PACKET

@@ -215,6 +215,14 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 	// start with processing
 	p = BUFVAL(tempbuf);
+
+#ifdef _GUI
+	showlog(p);
+	FREEBUF(tempbuf);
+	return 0; 
+#endif
+
+
 	while ((q = strchr(p, 0x1b)) != NULL)
 	{	// find the escape character
 		if( 0==WriteConsole(handle, p, (DWORD)(q-p), &written, 0) ) // write up to the escape
@@ -499,9 +507,17 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 			}// end while
 		}
 	}
+
+
 	if (*p)	// write the rest of the buffer
-		if( 0==WriteConsole(handle, p, (DWORD)strlen(p), &written, 0) )
+	{
+#ifdef _GUI
+		showlog(p);
+#else
+		if (0 == WriteConsole(handle, p, (DWORD)strlen(p), &written, 0))
 			WriteFile(handle, p, (DWORD)strlen(p), &written, 0);
+#endif
+	}
 	FREEBUF(tempbuf);
 	return 0;
 }
@@ -755,6 +771,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 			return 1;
 	}
 
+
 	if (flag == MSG_ERROR || flag == MSG_FATALERROR || flag == MSG_SQL)
 	{	//Send Errors to StdErr [Skotlex]
 		FPRINTF(STDERR, "%s ", prefix);
@@ -770,6 +787,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		va_end(apcopy);
 		FFLUSH(STDOUT);
 	}
+
 
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	if(strlen(DEBUGLOGPATH) > 0) {

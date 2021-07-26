@@ -2443,11 +2443,17 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 
+	//ShowInfo("Debug, TP 1.\n");
+
+
 	if(!(type&2) && //No exp
 		(!map[m].flag.pvp || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
 		(!md->master_id || !md->special_state.ai) && //Only player-summoned mobs do not give exp. [Skotlex]
 		(!map[m].flag.nobaseexp || !map[m].flag.nojobexp) //Gives Exp
 	) { //Experience calculation.
+
+		//ShowInfo("Debug, TP 2.\n");
+
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
 		int pnum = 0;
 		if (md->sc.data[SC_RICHMANKIM])
@@ -2528,18 +2534,28 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
+
+				//ShowInfo("Debug, TP 2-1 temp:%d.\n", tmpsd[i]->status.party_id);
+
 				int j;
 				for( j = 0; j < pnum && pt[j].id != temp; j++ ); //Locate party.
 
 				if( j == pnum ) { //Possibly add party.
 					pt[pnum].p = party_search(temp);
+
+					//if(pt[pnum].p)
+						//ShowInfo("Debug, TP 2-2 exp:%d.\n", pt[pnum].p->party.exp);
+
 					if(pt[pnum].p && pt[pnum].p->party.exp) {
+
+
 						pt[pnum].id = temp;
 						pt[pnum].base_exp = base_exp;
 						pt[pnum].job_exp = job_exp;
 						pt[pnum].zeny = zeny; // zeny share [Valaris]
 						pnum++;
 						flag = 0;
+
 					}
 				} else {	//Add to total
 					if (pt[j].base_exp > UINT_MAX - base_exp)
@@ -2580,6 +2596,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if( md->db->mexp )
 				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
+
+		//ShowInfo("Debug, TP 3 pnum:%d.\n", pnum);
 
 		for( i = 0; i < pnum; i++ ) //Party share.
 			party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);

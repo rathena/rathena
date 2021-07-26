@@ -813,6 +813,7 @@ int do_init(int argc, char** argv) {
 
 	// read login-server configuration
 	login_set_defaults();
+
 	logcnslif_get_options(argc,argv);
 
 	login_config_read(login_config.loginconf_name, true);

@@ -9,6 +9,14 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release GUI Common|Win32">
+      <Configuration>Release GUI Common</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release GUI Common|x64">
+      <Configuration>Release GUI Common</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -22,12 +30,14 @@
     <ClInclude Include="atomic.h" />
     <ClInclude Include="cbasetypes.h" />
     <ClInclude Include="cli.h" />
+    <ClInclude Include="clogproc.h" />
     <ClInclude Include="conf.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="db.h" />
     <ClInclude Include="des.h" />
     <ClInclude Include="ers.h" />
     <ClInclude Include="grfio.h" />
+    <ClInclude Include="gui.h" />
     <ClInclude Include="malloc.h" />
     <ClInclude Include="mapindex.h" />
     <ClInclude Include="md5calc.h" />
@@ -45,12 +55,14 @@
     <ClInclude Include="strlib.h" />
     <ClInclude Include="thread.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="TServerInfoDisplayer.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="winapi.h" />
     <ClInclude Include="yamlwrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cli.c" />
+    <ClCompile Include="clogproc.cpp" />
     <ClCompile Include="conf.c" />
     <ClCompile Include="core.cpp">
       <CompileAs>CompileAsCpp</CompileAs>
@@ -59,6 +71,7 @@
     <ClCompile Include="des.c" />
     <ClCompile Include="ers.c" />
     <ClCompile Include="grfio.c" />
+    <ClCompile Include="gui.cpp" />
     <ClCompile Include="malloc.c" />
     <ClCompile Include="mapindex.c" />
     <ClCompile Include="md5calc.c" />
@@ -74,6 +87,7 @@
     <ClCompile Include="strlib.c" />
     <ClCompile Include="thread.c" />
     <ClCompile Include="timer.c" />
+    <ClCompile Include="TServerInfoDisplayer.cpp" />
     <ClCompile Include="utils.c" />
     <ClCompile Include="yamlwrapper.cpp" />
   </ItemGroup>
@@ -102,7 +116,21 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
@@ -121,7 +149,13 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -139,7 +173,19 @@
     <IncludePath>..\..\3rdparty\libevent\include;$(IncludePath);</IncludePath>
     <LibraryPath>..\..\3rdparty\libevent;$(LibraryPath);</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|Win32'">
+    <OutDir>$(SolutionDir).vs\build\</OutDir>
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>..\..\3rdparty\libevent\include;$(IncludePath);</IncludePath>
+    <LibraryPath>..\..\3rdparty\libevent;$(LibraryPath);</LibraryPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir).vs\build\</OutDir>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\3rdparty\libevent\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;..\..\3rdparty\libevent</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|x64'">
     <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir).vs\build\</OutDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\..\3rdparty\libevent\include;</IncludePath>
@@ -189,7 +235,29 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>levent;$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies);</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_GUI;levent;$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
@@ -211,7 +279,29 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>levent;$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release GUI Common|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>levent;$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\zlib\include\;$(SolutionDir)3rdparty\mysql\include\;$(SolutionDir)3rdparty\mt19937ar\;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>

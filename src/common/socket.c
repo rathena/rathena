@@ -1418,6 +1418,10 @@ int socket_config_read(const char* cfgName)
 #ifndef MINICORE
 		else if (!strcmpi(w1, "enable_ip_rules")) {
 			ip_rules = config_switch(w2);
+			if(ip_rules)
+				ShowInfo("IP rules is enabled.\n");
+			else
+				ShowWarning("IP rules is disabled.\n");
 		} else if (!strcmpi(w1, "order")) {
 			if (!strcmpi(w2, "deny,allow"))
 				access_order = ACO_DENY_ALLOW;
@@ -1668,6 +1672,9 @@ void socket_init(void)
 			return;
 		}
 	}
+
+	socket_config_read(SOCKET_CONF_FILENAME);
+
 #elif defined(HAVE_SETRLIMIT) && !defined(CYGWIN)
 	// NOTE: getrlimit and setrlimit have bogus behaviour in cygwin.
 	//       "Number of fds is virtually unlimited in cygwin" (sys/param.h)

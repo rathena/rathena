@@ -1,6 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-
+#include "gui.h"
 #include "mmo.h"
 #include "cbasetypes.h"
 #include "showmsg.h"
@@ -23,7 +23,9 @@
 #include "winapi.h" // Console close event handling
 #include <direct.h> // _chdir
 #endif
-
+#ifdef _GUI
+#include "clogproc.h"
+#endif
 
 /// Called when a terminate signal is received.
 void (*shutdown_callback)(void) = NULL;
@@ -312,15 +314,145 @@ void usercheck(void)
 #endif
 }
 
+#ifdef _GUI
+void end_core();
+#endif
+
 #ifdef levent
 struct event_base *gbase;
 struct event *timeout;
 struct timeval tv;
+
+#ifdef _WIN32
+DWORD WINAPI start_libevent(LPVOID p)
+{
+	int fd, err = 0;
+	struct event_base *base;
+	struct evconnlistener *listener;
+
+#ifndef _GUI
+	struct event *signal_event;
+#endif
+
+	struct sockaddr_in sin;
+
+
+#ifdef _IOCP
+	event_config* pConfig = event_config_new();
+	event_config_set_flag(pConfig, EVENT_BASE_FLAG_STARTUP_IOCP);
+	event_config_set_num_cpus_hint(pConfig, 4);
+	evthread_use_windows_threads();
+	gbase = event_base_new_with_config(pConfig);
+	event_config_free(pConfig);
+#else
+	evthread_use_windows_threads();
+	gbase = event_base_new();
+#endif
+
+	base = gbase;
+
+	if (!base) {
+		ShowError("Could not initialize libevent!\n");
+	}
+	else
+	{
+
+		memset(&sin, 0, sizeof(sin));
+
+		sin.sin_family = AF_INET;
+		sin.sin_addr.s_addr = htonl(_bind_ip);
+		sin.sin_port = htons(_bind_port);
+
+		listener = evconnlistener_new_bind(base, listener_cb, base,
+			LEV_OPT_CLOSE_ON_FREE | LEV_OPT_REUSEABLE, -1,
+			(struct sockaddr*)&sin, sizeof(sin));
+
+		if (!listener) {
+			ShowError("Could not create a listener!\n");
+			err = 1;
+		}
+
+
+		if (listener)
+		{
+			fd = evconnlistener_get_fd(listener);
+		}
+
+		if (fd == -1)
+		{
+			ShowError("evconnlistener_new_bind: socket creation failed\n");
+			err = 1;
+		}
+
+		if (fd == 0)
+		{// reserved
+			ShowError("evconnlistener_new_bind: Socket #0 is reserved - Please report this!!!\n");
+			err = 1;
+		}
+
+		if (fd >= FD_SETSIZE)
+		{
+			err = 1;
+		}
+
+		if (err == 0)
+		{
+			create_session(fd, null_recv, null_send, default_func_parse, NULL);
+			session[fd]->client_addr = 0; // just listens
+			session[fd]->rdata_tick = 0; // disable timeouts on this socket
+			if (fd_max <= fd) fd_max = fd + 1;
+		}
+#ifndef _GUI
+		if (err == 0)
+		{
+			signal_event = evsignal_new(base, SIGINT, signal_cb, (void *)base);
+		}
+
+		if (err == 0)
+		{
+			if (!signal_event || event_add(signal_event, NULL)<0) {
+				ShowError("Could not create/add a signal event!\n");
+				err = 1;
+			}
+		}
+
+		timeout = event_new(base, -1, NULL, timercb, NULL);
+		evutil_timerclear(&tv);
+		tv.tv_sec = 1;
+		event_add(timeout, &tv);
+#endif
+		last_tick = time(NULL);
+
+		if (err == 0)
+		{
+			// libevent event loop
+			event_base_dispatch(base);
+		}
+
+		OutputDebugStringA("event_base_dispatch return");
+
+#ifndef _GUI
+		if (err == 0)
+		{
+			event_free(timeout);
+			event_free(signal_event);
+		}
+#endif
+		if (listener)
+			evconnlistener_free(listener);
+#ifdef _GUI
+		end_core();
+#endif
+	}
+	return 1;
+}
+#endif
 #endif
 
 /*======================================
  *	CORE : MAINROUTINE
  *--------------------------------------*/
+#ifndef _GUI
 int main (int argc, char **argv)
 {
 	{// initialize program arguments
@@ -340,12 +472,13 @@ int main (int argc, char **argv)
 		}
 	}
 
+#ifndef _WIN32
 #ifdef levent
 	int fd, err = 0;
 	struct event_base *base;
 	struct evconnlistener *listener;
 	struct event *signal_event;
-
+#endif
 #endif
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
@@ -364,6 +497,8 @@ int main (int argc, char **argv)
 	rathread_init();
 	mempool_init();
 	db_init();
+#endif
+
 	signals_init();
 
 #ifdef _WIN32
@@ -375,7 +510,9 @@ int main (int argc, char **argv)
 
 	do_init(argc,argv);
 
+
 #ifdef levent
+#ifndef _WIN32
 	struct sockaddr_in sin;
 
 #ifdef _IOCP
@@ -471,6 +608,21 @@ int main (int argc, char **argv)
 		}
 	}
 #else
+
+	DWORD	ThreadID;
+	HANDLE	g_IocpThreadHandle;
+
+	if ((g_IocpThreadHandle = (HANDLE)CreateThread(NULL, 0, start_libevent, (LPVOID)NULL,
+		0, &ThreadID)) == NULL)
+	{
+		return;
+	}
+
+	if (g_IocpThreadHandle)
+		CloseHandle(g_IocpThreadHandle);
+
+#endif
+#else
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
 		int next = do_timer(gettick_nocache());
@@ -478,15 +630,18 @@ int main (int argc, char **argv)
 	}
 #endif
 
+
 	do_final();
 	timer_final();
 
 #ifdef levent
+#ifndef _WIN32
 	if (err == 0)
 	{
 		event_free(timeout);
 		event_free(signal_event);
 	}
+#endif
 #endif
 
 	socket_final();
@@ -494,9 +649,9 @@ int main (int argc, char **argv)
 	mempool_final();
 	rathread_final();
 	ers_final();
-#endif
 
 #ifdef levent
+#ifndef _WIN32
 	if (listener)
 		evconnlistener_free(listener);
 
@@ -506,6 +661,7 @@ int main (int argc, char **argv)
 	libevent_global_shutdown();
 	ShowStatus("Free libevent base.\n");
 #endif
+#endif
 
 	malloc_final();
 
@@ -514,6 +670,76 @@ int main (int argc, char **argv)
 		exit(EXIT_FAILURE);
 	}
 #endif
+
+#ifdef levent
 	freecrit();
+#endif
+
 	return 0;
 }
+#endif
+
+#ifdef _GUI
+int loginusers = 0;
+void showlog(char *msg)
+{
+	LogAdd(HBLACK, msg);
+}
+
+void start_core()
+{
+	LogAdd(HBLUE, "Initializing ...");
+
+	set_server_type();
+	Sql_Init();
+	rathread_init();
+	mempool_init();
+	db_init();
+	cevents_init();
+	timer_init();
+	socket_init();
+	do_init(1, NULL);
+
+	LogAdd(HBLUE, "Done");
+
+	DWORD	ThreadID;
+	HANDLE	g_IocpThreadHandle;
+	if ((g_IocpThreadHandle = (HANDLE)CreateThread(NULL, 0, start_libevent, (LPVOID)NULL,
+		0, &ThreadID)) == NULL)
+	{
+		return;
+	}
+
+	if (g_IocpThreadHandle)
+		CloseHandle(g_IocpThreadHandle);
+
+	LogAdd(HBLUE, "Libevent started");
+
+}
+
+void end_core()
+{
+	do_final();
+	timer_final();
+	socket_final();
+	db_final();
+	mempool_final();
+	rathread_final();
+	ers_final();
+
+	if (gbase)
+		event_base_free(gbase);
+	libevent_global_shutdown();
+	malloc_final();
+	freecrit();
+	WaitForSingleObject(Event, 5000);
+	SendMessage(ghWnd, WM_DESTROY, 0, 0);
+}
+
+void end_libevent()
+{
+	struct timeval delay = { 2, 0 };
+	event_base_loopexit(gbase, &delay);
+	LogAdd(HBLUE, "Closing server ...");
+}
+#endif

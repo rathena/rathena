@@ -18,6 +18,59 @@ extern "C" {
 // \033[0m : reset color parameter
 // \033[1m : use bold for font
 
+#ifdef _GUI
+#define CL_RESET	""
+#define CL_CLS		""
+#define CL_CLL		""
+
+// font settings
+#define CL_BOLD		""
+#define CL_NORM		CL_RESET
+#define CL_NORMAL	CL_RESET
+#define CL_NONE		CL_RESET
+
+// foreground color and bold font (bright color on windows)
+#define CL_WHITE	""
+#define CL_GRAY		""
+#define CL_RED		""
+#define CL_GREEN	""
+#define CL_YELLOW	""
+#define CL_BLUE		""
+#define CL_MAGENTA	""
+#define CL_CYAN		""
+
+// background color
+#define CL_BG_BLACK		""
+#define CL_BG_RED		""
+#define CL_BG_GREEN		""
+#define CL_BG_YELLOW	""
+#define CL_BG_BLUE		""
+#define CL_BG_MAGENTA	""
+#define CL_BG_CYAN		""
+#define CL_BG_WHITE		""
+// foreground color and normal font (normal color on windows)
+#define CL_LT_BLACK		""
+#define CL_LT_RED		""
+#define CL_LT_GREEN		""
+#define CL_LT_YELLOW	""
+#define CL_LT_BLUE		""
+#define CL_LT_MAGENTA	""
+#define CL_LT_CYAN		""
+#define CL_LT_WHITE		""
+// foreground color and bold font (bright color on windows)
+#define CL_BT_BLACK		""
+#define CL_BT_RED		""
+#define CL_BT_GREEN		""
+#define CL_BT_YELLOW	""
+#define CL_BT_BLUE		""
+#define CL_BT_MAGENTA	""
+#define CL_BT_CYAN		""
+#define CL_BT_WHITE		""
+
+#define CL_WTBL			""	// white on blue
+#define CL_XXBL			""	// default on blue
+#define CL_PASS			""	// green on green
+#else
 #define CL_RESET	"\033[0m"
 #define CL_CLS		"\033[2J"
 #define CL_CLL		"\033[K"
@@ -27,6 +80,7 @@ extern "C" {
 #define CL_NORM		CL_RESET
 #define CL_NORMAL	CL_RESET
 #define CL_NONE		CL_RESET
+
 // foreground color and bold font (bright color on windows)
 #define CL_WHITE	"\033[1;37m"
 #define CL_GRAY		"\033[1;30m"
@@ -68,7 +122,7 @@ extern "C" {
 #define CL_WTBL			"\033[37;44m"	// white on blue
 #define CL_XXBL			"\033[0;44m"	// default on blue
 #define CL_PASS			"\033[0;32;42m"	// green on green
-
+#endif
 #define CL_SPACE		"           "	// space aquivalent of the print messages
 
 extern int stdout_with_ansisequence; //If the color ansi sequences are to be used. [flaviojs]

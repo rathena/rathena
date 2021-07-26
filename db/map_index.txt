@@ -642,8 +642,8 @@ ve_fild04
 ve_fild05
 ve_fild06
 ve_fild07
-poring_c01
-poring_c02
+//poring_c01
+//poring_c02
 que_ng
 nameless_i
 nameless_n

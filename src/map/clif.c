@@ -924,10 +924,14 @@ static int clif_setlevel_sub(int lv) {
 		lv = battle_config.max_lv;
 	}
 
+	//ShowInfo("clif_setlevel_sub, %d\n", lv);
+
 	return lv;
 }
 
 static int clif_setlevel(struct block_list* bl) {
+
+
 	int lv = status_get_lv(bl);
 	if( battle_config.client_limit_unit_lv&bl->type )
 		return clif_setlevel_sub(lv);

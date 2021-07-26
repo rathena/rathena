@@ -10,3 +10,6 @@
 // Use the base folder, not the data\ path.
 //-----------------------------------------
 //data_dir: C:\Program Files\Gravity\RO\
+grf:  C:\Games\ROPH\data.grf
+grf:  C:\Games\ROPH\sdata.grf
+grf:  C:\Games\ROPH\tdata.grf

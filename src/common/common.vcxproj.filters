@@ -98,6 +98,15 @@
     <ClInclude Include="yamlwrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clogproc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TServerInfoDisplayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cli.c">
@@ -170,6 +179,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="yamlwrapper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clogproc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TServerInfoDisplayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
