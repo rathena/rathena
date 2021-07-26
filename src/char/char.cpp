@@ -3256,3 +3256,9 @@ int do_init(int argc, char **argv)
 
 	return 0;
 }
+
+
+int proreload(int flag)
+{
+	return 0;
+}

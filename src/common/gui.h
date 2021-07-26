@@ -9,6 +9,7 @@ extern "C" {
 
 void start_core();
 void end_libevent();
+void timerproc();
 extern HANDLE Event;
 
 #ifdef __cplusplus

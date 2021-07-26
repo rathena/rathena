@@ -681,9 +681,15 @@ int main (int argc, char **argv)
 
 #ifdef _GUI
 int loginusers = 0;
-void showlog(char *msg)
+
+void showlog(char *msg, int flag)
 {
-	LogAdd(HBLACK, msg);
+	LogAdd(flag, msg);
+}
+
+void timerproc()
+{
+	timercb(0, 0, 0);
 }
 
 void start_core()

@@ -217,7 +217,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	p = BUFVAL(tempbuf);
 
 #ifdef _GUI
-	showlog(p);
+	showlog(p, 5);
 	FREEBUF(tempbuf);
 	return 0; 
 #endif
@@ -512,7 +512,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	if (*p)	// write the rest of the buffer
 	{
 #ifdef _GUI
-		showlog(p);
+		showlog(p, 5);
 #else
 		if (0 == WriteConsole(handle, p, (DWORD)strlen(p), &written, 0))
 			WriteFile(handle, p, (DWORD)strlen(p), &written, 0);

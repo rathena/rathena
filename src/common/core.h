@@ -45,7 +45,9 @@ extern void set_server_type(void);
 extern void do_abort(void);
 extern void do_final(void);
 extern int loginusers;
-extern void showlog(char *msg);
+extern void showlog(char *msg, int flag);
+extern void timercb(int fd, short event, void *arg);
+extern int proreload(int flag);
 
 /// The main loop continues until runflag is CORE_ST_STOP
 enum E_CORE_ST

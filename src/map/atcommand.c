@@ -38,7 +38,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-
+#include "resource.h"
 
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
@@ -3799,6 +3799,7 @@ ACMD_FUNC(partyrecall)
 
 	return 0;
 }
+
 
 /*==========================================
  *
@@ -10702,4 +10703,158 @@ void do_init_atcommand(void) {
 
 void do_final_atcommand(void) {
 	atcommand_db_clear();
+}
+
+
+
+/*==========================================
+*
+*------------------------------------------*/
+int proreload(int flag)
+{
+	int result = 1;
+	switch (flag)
+	{
+	case ID_OPTIONS_RELOADITEMDB:
+		itemdb_reload();
+		showlog("Item db reloaded.", 2);
+		break;
+	case ID_OPTIONS_RELOADMOBDB:
+		mob_reload();
+		read_petdb();
+		hom_reload();
+		mercenary_readdb();
+		mercenary_read_skilldb();
+		reload_elementaldb();
+		showlog("Mob db reloaded.", 2);
+		break;
+	case ID_OPTIONS_RELOADSKILLDB:
+		skill_reload();
+		hom_reload_skill();
+		reload_elemental_skilldb();
+		mercenary_read_skilldb();
+		showlog("Skill db reloaded.", 2);
+		break;
+	case ID_OPTIONS_RELOADATCOMMAND:
+	{
+		config_t run_test;
+		if (conf_read_file(&run_test, "conf/groups.conf")) {
+			showlog("AtCommand reload failed, error parsing conf/groups.conf!", 0);
+			break;
+		}
+		config_destroy(&run_test);
+		if (conf_read_file(&run_test, ATCOMMAND_CONF_FILENAME)) {
+			showlog("AtCommand reload failed, error parsing atcommand_athena.conf!", 0);
+			break;
+		}
+		config_destroy(&run_test);
+		atcommand_doload();
+		pc_groups_reload();
+		showlog("Skill db reloaded.", 2);
+	}
+	break;
+	case ID_OPTIONS_RELOADBATTLECONF:
+	{
+		struct Battle_Config prev_config;
+		memcpy(&prev_config, &battle_config, sizeof(prev_config));
+
+		battle_config_read(BATTLE_CONF_FILENAME);
+
+		if (prev_config.item_rate_mvp != battle_config.item_rate_mvp
+			|| prev_config.item_rate_common != battle_config.item_rate_common
+			|| prev_config.item_rate_common_boss != battle_config.item_rate_common_boss
+			|| prev_config.item_rate_common_mvp != battle_config.item_rate_common_mvp
+			|| prev_config.item_rate_card != battle_config.item_rate_card
+			|| prev_config.item_rate_card_boss != battle_config.item_rate_card_boss
+			|| prev_config.item_rate_card_mvp != battle_config.item_rate_card_mvp
+			|| prev_config.item_rate_equip != battle_config.item_rate_equip
+			|| prev_config.item_rate_equip_boss != battle_config.item_rate_equip_boss
+			|| prev_config.item_rate_equip_mvp != battle_config.item_rate_equip_mvp
+			|| prev_config.item_rate_heal != battle_config.item_rate_heal
+			|| prev_config.item_rate_heal_boss != battle_config.item_rate_heal_boss
+			|| prev_config.item_rate_heal_mvp != battle_config.item_rate_heal_mvp
+			|| prev_config.item_rate_use != battle_config.item_rate_use
+			|| prev_config.item_rate_use_boss != battle_config.item_rate_use_boss
+			|| prev_config.item_rate_use_mvp != battle_config.item_rate_use_mvp
+			|| prev_config.item_rate_treasure != battle_config.item_rate_treasure
+			|| prev_config.item_rate_adddrop != battle_config.item_rate_adddrop
+			|| prev_config.logarithmic_drops != battle_config.logarithmic_drops
+			|| prev_config.item_drop_common_min != battle_config.item_drop_common_min
+			|| prev_config.item_drop_common_max != battle_config.item_drop_common_max
+			|| prev_config.item_drop_card_min != battle_config.item_drop_card_min
+			|| prev_config.item_drop_card_max != battle_config.item_drop_card_max
+			|| prev_config.item_drop_equip_min != battle_config.item_drop_equip_min
+			|| prev_config.item_drop_equip_max != battle_config.item_drop_equip_max
+			|| prev_config.item_drop_mvp_min != battle_config.item_drop_mvp_min
+			|| prev_config.item_drop_mvp_max != battle_config.item_drop_mvp_max
+			|| prev_config.item_drop_heal_min != battle_config.item_drop_heal_min
+			|| prev_config.item_drop_heal_max != battle_config.item_drop_heal_max
+			|| prev_config.item_drop_use_min != battle_config.item_drop_use_min
+			|| prev_config.item_drop_use_max != battle_config.item_drop_use_max
+			|| prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min
+			|| prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
+			|| prev_config.base_exp_rate != battle_config.base_exp_rate
+			|| prev_config.job_exp_rate != battle_config.job_exp_rate
+			)
+		{	// Exp or Drop rates changed.
+			mob_reload(); //Needed as well so rate changes take effect.
+		}
+
+		showlog("Battle Conf reloaded.", 2);
+
+	}
+	break;
+	case ID_OPTIONS_RELOADSTATUSDB:
+		status_readdb();
+		showlog("Status db reloaded.", 2);
+		break;
+	case ID_OPTIONS_RELOADPCDB:
+		pc_readdb();
+		showlog("Pc db reloaded.", 2);
+		break;
+	case ID_OPTIONS_RELOADMOTD:
+		pc_read_motd();
+		showlog("Motd db reloaded.", 2);
+		break;
+	case ID_OPTIONS_RELOADSCRIPTS:
+	{
+		struct s_mapiterator* iter;
+		struct map_session_data* pl_sd;
+		iter = mapit_getallusers();
+		for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter))
+			pc_close_npc(pl_sd, 2);
+		mapit_free(iter);
+
+		flush_fifos();
+		map_reloadnpc(true); // reload config files seeking for npcs
+		script_reload();
+		npc_reload();
+		showlog("Scripts db reloaded.", 2);
+
+	}
+	break;
+	case ID_OPTIONS_RELOADMSGCONF:
+		map_msg_reload();
+		showlog("Msgconf reloaded.", 2);
+		break;
+
+	case ID_OPTIONS_RELOADQUESTDB:
+		do_reload_quest();
+		showlog("Quest db reloaded.", 2);
+		break;
+
+	case ID_OPTIONS_RELOADINSTANCE:
+		instance_reload();
+		showlog("Instance reloaded.", 2);
+		break;
+
+	case ID_OPTIONS_RELOADACHIEVEMENTDB:
+		achievement_db_reload();
+		showlog("Achievement db reloaded.", 2);
+		break;
+	default:
+		result = 0;
+	}
+
+	return result;
 }

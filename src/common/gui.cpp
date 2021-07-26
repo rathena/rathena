@@ -123,7 +123,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    loginit();
    SetTimer(hWnd, WM_LOG_PAINT, 2000, NULL);
-   SetTimer(hWnd, WM_QUEUE_MSG_PROC, 1000, NULL);
+   SetTimer(hWnd, WM_QUEUE_MSG_PROC, 500, NULL);
 
    start_core();
    Event = CreateEventA(0, TRUE, FALSE, 0);
@@ -165,6 +165,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				}
                 break;
             default:
+				if (SERVER_TYPE == ATHENA_SERVER_MAP && 
+					proreload(wmId) == 1)
+					break;
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
         }
@@ -180,6 +183,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			ReleaseDC(hWnd, hdc);
 			LogTextPaint(hWnd);
 			g_ServerInfoDisplayer.Run(hWnd);
+			break;
+		case WM_QUEUE_MSG_PROC:
+			timerproc();
 			break;
 		}
 		break;
