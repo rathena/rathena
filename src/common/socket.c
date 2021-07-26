@@ -1860,13 +1860,14 @@ void timercb(intptr fd, short event, void *arg)
 {
 	int next;
 	next = do_timer(gettick_nocache());
-#ifndef _GUI
+
 	evutil_timerclear(&tv);
 	tv.tv_sec = next / 1000;
 	tv.tv_usec = next % 1000 * 1000;
 	event_add(timeout, &tv);
-#endif
+#ifndef _GUI
 	tryendsession(0);
+#endif
 }
 
 void tryendsession(int flag)

@@ -415,12 +415,11 @@ DWORD WINAPI start_libevent(LPVOID p)
 				err = 1;
 			}
 		}
-
+#endif
 		timeout = event_new(base, -1, NULL, timercb, NULL);
 		evutil_timerclear(&tv);
 		tv.tv_sec = 1;
 		event_add(timeout, &tv);
-#endif
 		last_tick = time(NULL);
 
 		if (err == 0)
@@ -429,12 +428,11 @@ DWORD WINAPI start_libevent(LPVOID p)
 			event_base_dispatch(base);
 		}
 
-		OutputDebugStringA("event_base_dispatch return");
+		event_free(timeout);
 
 #ifndef _GUI
 		if (err == 0)
 		{
-			event_free(timeout);
 			event_free(signal_event);
 		}
 #endif
@@ -689,7 +687,7 @@ void showlog(char *msg, int flag)
 
 void timerproc()
 {
-	timercb(0, 0, 0);
+	tryendsession(0);
 }
 
 void start_core()
@@ -732,7 +730,7 @@ void end_core()
 	mempool_final();
 	rathread_final();
 	ers_final();
-
+	event_free(timeout);
 	if (gbase)
 		event_base_free(gbase);
 	libevent_global_shutdown();

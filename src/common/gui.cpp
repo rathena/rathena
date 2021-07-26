@@ -123,7 +123,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    loginit();
    SetTimer(hWnd, WM_LOG_PAINT, 2000, NULL);
-   SetTimer(hWnd, WM_QUEUE_MSG_PROC, 500, NULL);
+   SetTimer(hWnd, WM_QUEUE_MSG_PROC, 1000, NULL);
 
    start_core();
    Event = CreateEventA(0, TRUE, FALSE, 0);
