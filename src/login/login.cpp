@@ -780,6 +780,9 @@ void do_shutdown(void) {
 		flush_fifos();
 		runflag = CORE_ST_STOP;
 	}
+#ifdef levent
+	eventbreak();
+#endif
 }
 
 /**

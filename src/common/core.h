@@ -60,6 +60,7 @@ enum E_CORE_ST
 /// Called when a terminate signal is received. (Ctrl+C pressed)
 /// If NULL, runflag is set to CORE_ST_STOP instead.
 extern void (*shutdown_callback)(void);
+void eventbreak();
 
 #ifdef __cplusplus
 }

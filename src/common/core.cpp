@@ -329,13 +329,7 @@ DWORD WINAPI start_libevent(LPVOID p)
 	int fd, err = 0;
 	struct event_base *base;
 	struct evconnlistener *listener;
-
-#ifndef _GUI
-	struct event *signal_event;
-#endif
-
 	struct sockaddr_in sin;
-
 
 #ifdef _IOCP
 	event_config* pConfig = event_config_new();
@@ -353,10 +347,10 @@ DWORD WINAPI start_libevent(LPVOID p)
 
 	if (!base) {
 		ShowError("Could not initialize libevent!\n");
+		return 0;
 	}
 	else
 	{
-
 		memset(&sin, 0, sizeof(sin));
 
 		sin.sin_family = AF_INET;
@@ -369,71 +363,42 @@ DWORD WINAPI start_libevent(LPVOID p)
 
 		if (!listener) {
 			ShowError("Could not create a listener!\n");
-			err = 1;
+			return 0;
 		}
 
-
-		if (listener)
-		{
-			fd = evconnlistener_get_fd(listener);
-		}
+		fd = evconnlistener_get_fd(listener);
 
 		if (fd == -1)
 		{
 			ShowError("evconnlistener_new_bind: socket creation failed\n");
-			err = 1;
+			return 0;
 		}
 
 		if (fd == 0)
 		{// reserved
 			ShowError("evconnlistener_new_bind: Socket #0 is reserved - Please report this!!!\n");
-			err = 1;
+			return 0;
 		}
 
 		if (fd >= FD_SETSIZE)
 		{
-			err = 1;
+			ShowError("fd >= FD_SETSIZE, fd : %d\n", fd);
+			return 0;
 		}
 
-		if (err == 0)
-		{
-			create_session(fd, null_recv, null_send, default_func_parse, NULL);
-			session[fd]->client_addr = 0; // just listens
-			session[fd]->rdata_tick = 0; // disable timeouts on this socket
-			if (fd_max <= fd) fd_max = fd + 1;
-		}
-#ifndef _GUI
-		if (err == 0)
-		{
-			signal_event = evsignal_new(base, SIGINT, signal_cb, (void *)base);
-		}
+		create_session(fd, null_recv, null_send, default_func_parse, NULL);
+		session[fd]->client_addr = 0; // just listens
+		session[fd]->rdata_tick = 0; // disable timeouts on this socket
+		if (fd_max <= fd) fd_max = fd + 1;
 
-		if (err == 0)
-		{
-			if (!signal_event || event_add(signal_event, NULL)<0) {
-				ShowError("Could not create/add a signal event!\n");
-				err = 1;
-			}
-		}
-#endif
+
 		timeout = event_new(base, -1, NULL, timercb, NULL);
 		evutil_timerclear(&tv);
 		tv.tv_sec = 1;
 		event_add(timeout, &tv);
 		last_tick = time(NULL);
 
-		if (err == 0)
-		{
-			// libevent event loop
-			event_base_dispatch(base);
-		}
-
-#ifndef _GUI
-		if (err == 0)
-		{
-			event_free(signal_event);
-		}
-#endif
+		event_base_dispatch(base);
 		evconnlistener_free(listener);
 #ifdef _GUI
 		end_core();
@@ -507,103 +472,7 @@ int main (int argc, char **argv)
 
 
 #ifdef levent
-#ifndef _WIN32
-	struct sockaddr_in sin;
-
-#ifdef _IOCP
-	event_config* pConfig = event_config_new();
-	event_config_set_flag(pConfig, EVENT_BASE_FLAG_STARTUP_IOCP);
-	event_config_set_num_cpus_hint(pConfig, 4);
-	evthread_use_windows_threads();
-	gbase = event_base_new_with_config(pConfig);
-	event_config_free(pConfig);
-#else
-	evthread_use_windows_threads();
-	gbase = event_base_new();
-#endif
-
-	base = gbase;
-
-	if (!base) {
-		ShowError("Could not initialize libevent!\n");
-	}
-	else
-	{
-
-		memset(&sin, 0, sizeof(sin));
-
-		sin.sin_family = AF_INET;
-		sin.sin_addr.s_addr = htonl(_bind_ip);
-		sin.sin_port = htons(_bind_port);
-
-		listener = evconnlistener_new_bind(base, listener_cb, base,
-			LEV_OPT_CLOSE_ON_FREE | LEV_OPT_REUSEABLE, -1,
-			(struct sockaddr*)&sin, sizeof(sin));
-
-		if (!listener) {
-			ShowError("Could not create a listener!\n");
-			err = 1;
-		}
-
-
-		if (listener)
-		{
-			fd = evconnlistener_get_fd(listener);
-		}
-
-		if (fd == -1)
-		{
-			ShowError("evconnlistener_new_bind: socket creation failed\n");
-			err = 1;
-		}
-
-		if (fd == 0)
-		{// reserved
-			ShowError("evconnlistener_new_bind: Socket #0 is reserved - Please report this!!!\n");
-			err = 1;
-		}
-
-		if (fd >= FD_SETSIZE)
-		{
-			err = 1;
-		}
-
-		if (err == 0)
-		{
-			create_session(fd, null_recv, null_send, default_func_parse, NULL);
-			session[fd]->client_addr = 0; // just listens
-			session[fd]->rdata_tick = 0; // disable timeouts on this socket
-			if (fd_max <= fd) fd_max = fd + 1;
-		}
-
-		if (err == 0)
-		{
-			signal_event = evsignal_new(base, SIGINT, signal_cb, (void *)base);
-		}
-
-		if (err == 0)
-		{
-			if (!signal_event || event_add(signal_event, NULL)<0) {
-				ShowError("Could not create/add a signal event!\n");
-				err = 1;
-			}
-		}
-
-		timeout = event_new(base, -1, NULL, timercb, NULL);
-		evutil_timerclear(&tv);
-		tv.tv_sec = 1;
-		event_add(timeout, &tv);
-
-		last_tick = time(NULL);
-
-		if (err == 0)
-		{
-			// libevent event loop
-			event_base_dispatch(base);
-		}
-	}
-#else
-
+#ifdef _GUI
 	DWORD	ThreadID;
 	HANDLE	g_IocpThreadHandle;
 
@@ -615,7 +484,8 @@ int main (int argc, char **argv)
 
 	if (g_IocpThreadHandle)
 		CloseHandle(g_IocpThreadHandle);
-
+#else
+	start_libevent(0);
 #endif
 #else
 	// Main runtime cycle
@@ -625,18 +495,11 @@ int main (int argc, char **argv)
 	}
 #endif
 
-
 	do_final();
 	timer_final();
 
 #ifdef levent
-#ifndef _WIN32
-	if (err == 0)
-	{
-		event_free(timeout);
-		event_free(signal_event);
-	}
-#endif
+	event_free(timeout);
 #endif
 
 	socket_final();
@@ -646,16 +509,8 @@ int main (int argc, char **argv)
 	ers_final();
 
 #ifdef levent
-#ifndef _WIN32
-	if (listener)
-		evconnlistener_free(listener);
-
-	if (base)
-		event_base_free(base);
-
+	event_base_free(gbase);
 	libevent_global_shutdown();
-	ShowStatus("Free libevent base.\n");
-#endif
 #endif
 
 	malloc_final();
@@ -740,8 +595,7 @@ void end_core()
 void end_libevent()
 {
 	shutdown_callback();
-	struct timeval delay = { 2, 0 };
-	event_base_loopexit(gbase, &delay);
+	eventbreak();
 	LogAdd(HBLUE, "Closing server ...");
 }
 #endif

@@ -1,6 +1,7 @@
 #include "winapi.h"
 #include "LogToFile.h"
 
+#ifdef _GUI
 char OldLogFileName[260]={0};
 
 CLogToFile::~CLogToFile()
@@ -139,3 +140,4 @@ void CLogToFile::Output( LPSTR fmt, ...)
 		LeaveCriticalSection(&this->m_critLogToFile );
 	}
 }
+#endif

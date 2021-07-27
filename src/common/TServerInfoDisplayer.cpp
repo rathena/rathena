@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "core.h"
 
+#ifdef _GUI
 TServerInfoDisplayer g_ServerInfoDisplayer;
 int tQueue = 0;
 
@@ -84,3 +85,5 @@ void TServerInfoDisplayer::PaintAllInfo(HWND hWnd, int iTopLeftX, int iTopLeftY)
 	
 	ReleaseDC(hWnd, hDC);
 }
+
+#endif

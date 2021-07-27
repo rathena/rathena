@@ -2072,15 +2072,9 @@ void listener_cb(struct evconnlistener *listener, evutil_socket_t fd, struct soc
 	bufferevent_enable(bev, EV_READ);
 }
 
-void signal_cb(evutil_socket_t sig, short events, void *user_data)
+void eventbreak()
 {
-	if (isloopbreak == false)
-	{
-		isloopbreak = true;
-		struct event_base *base = user_data;
-		struct timeval delay = { 2, 0 };
-		ShowStatus("Caught an interrupt signal; exiting cleanly in two seconds.\n");
-		event_base_loopexit(base, &delay);
-	}
+	struct timeval delay = { 2, 0 };
+	event_base_loopexit(gbase, &delay);
 }
 #endif

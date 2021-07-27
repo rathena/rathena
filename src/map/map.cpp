@@ -4612,6 +4612,9 @@ void do_shutdown(void)
 		}
 		chrif_check_shutdown();
 	}
+#ifdef levent
+	eventbreak();
+#endif
 }
 
 int do_init(int argc, char *argv[])

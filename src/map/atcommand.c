@@ -10706,7 +10706,7 @@ void do_final_atcommand(void) {
 }
 
 
-
+#ifdef _GUI
 /*==========================================
 *
 *------------------------------------------*/
@@ -10858,3 +10858,4 @@ int proreload(int flag)
 
 	return result;
 }
+#endif
