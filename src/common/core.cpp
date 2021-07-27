@@ -739,6 +739,7 @@ void end_core()
 
 void end_libevent()
 {
+	shutdown_callback();
 	struct timeval delay = { 2, 0 };
 	event_base_loopexit(gbase, &delay);
 	LogAdd(HBLUE, "Closing server ...");
