@@ -130,28 +130,29 @@ void LogTextPaint(HWND hWnd)
 			SetTextColor(hdc, RGB(255, 0, 0) );	
 			break;
 		case MGREEN:
-			SetTextColor(hdc, RGB(0, 100, 0));
+			SetTextColor(hdc, RGB(51, 255, 51));
 			break;
 		case HBLUE:
-			SetTextColor(hdc, RGB(0, 0, 255));
+			SetTextColor(hdc, RGB(0, 255, 255));
 			break;
 		case MRED:
-			SetTextColor(hdc, RGB(155, 0, 0));
+			SetTextColor(hdc, RGB(200, 0, 0));
 			break;
 		case MBLUE:
-			SetTextColor(hdc, RGB(0, 0, 100));
+			SetTextColor(hdc, RGB(0, 100, 100));
 			break;
 		case UKN:
-			SetTextColor(hdc, RGB(210, 30, 150));
+			SetTextColor(hdc, RGB(255, 178, 102));
 			break;
 		case HBLACK:
-			SetTextColor(hdc, RGB(0, 0, 0));
+			SetTextColor(hdc, RGB(0xee, 0xee, 0xee));
 			break;
 		default:
-			SetTextColor(hdc, RGB(0, 0, 0));
+			SetTextColor(hdc, RGB(0xee, 0xee, 0xee));
 			break;
 		}
 
+		SetBkMode(hdc, TRANSPARENT);
 		SelectObject(hdc,hFont);
 
 		if (strlen(LogText[n])>1)
@@ -163,6 +164,8 @@ void LogTextPaint(HWND hWnd)
 		{
 			n=LOG_TEXT_LINE-1;
 		}
+		//SetBkMode(hdc, TRANSPARENT);
+
 	}
 	ReleaseDC(hWnd, hdc);
 }

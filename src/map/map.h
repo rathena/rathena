@@ -749,6 +749,7 @@ extern int map_num;
 extern int autosave_interval;
 extern int minsave_interval;
 extern unsigned char save_settings;
+extern int start_bound_points;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
 

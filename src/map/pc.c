@@ -1250,6 +1250,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	// Send friends list
 	clif_friendslist_send(sd);
 
+
 	if( !changing_mapservers ) {
 
 		if (battle_config.display_version == 1)
@@ -1357,6 +1358,23 @@ void pc_reg_received(struct map_session_data *sd)
 	uint8 i;
 
 	sd->vars_ok = true;
+
+
+	if (start_bound_points > 0)
+	{
+		if (pc_readaccountreg(sd, add_str("#isboundpointgiven")) != 1 && 
+			pc_readaccountreg(sd, add_str("#BOUNDPOINTS")) <= 0)
+		{
+			pc_setglobalreg(sd, add_str("#isboundpointgiven"), 1);
+			pc_setglobalreg(sd, add_str("#BOUNDPOINTS"), start_bound_points);
+			ShowInfo("%s's account received starting bound points of %d.", sd->status.name, start_bound_points);
+			char output[CHAT_SIZE_MAX];
+			memset(output, '\0', sizeof(output));
+			sprintf(output, "You received free %d #BOUNDPOINTS for your account, ", start_bound_points); // Your '%s' is now: %d
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], "you can use it in Bounded Item Dealer located at Prontera.", false, SELF);
+		}
+	}
 
 	sd->change_level_2nd = pc_readglobalreg(sd, add_str("jobchange_level"));
 	sd->change_level_3rd = pc_readglobalreg(sd, add_str("jobchange_level_3rd"));

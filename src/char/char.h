@@ -176,6 +176,7 @@ struct CharServ_Config {
 	int gm_allow_group;
 	int autosave_interval;
 	int start_zeny;
+	int start_zeny_b;
 	int guild_exp_rate;
 
 	char default_map[MAP_NAME_LENGTH];

@@ -1525,6 +1525,17 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 			item_tmp.nameid = nameid;
 			item_tmp.identify = 1;
 
+			if (nd->subtype == NPCTYPE_POINTSHOP)
+			{
+				item_tmp.bound = nd->u.shop.isbound;
+
+				ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == nameid || itemdb_viewid(nd->u.shop.shop_item[j].nameid) == nameid);
+				if (j == nd->u.shop.count || nd->u.shop.shop_item[j].value <= 0)
+					return ERROR_TYPE_ITEM_ID;
+
+				item_tmp.refine = nd->u.shop.shop_item[j].lvl;
+			}
+
 			if ((itemdb_search(nameid))->flag.guid)
 				get_amt = 1;
 
@@ -2589,7 +2600,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	char *p, point_str[32];
-	int m, is_discount = 0;
+	int m, is_discount = 0, is_bound = 0;
 	uint16 dir;
 	short x, y;
 	unsigned short nameid = 0;
@@ -2646,7 +2657,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 		}
 		case NPCTYPE_POINTSHOP: {
-			if (sscanf(p, ",%32[^,:]:%11d,",point_str,&is_discount) < 1) {
+			if (sscanf(p, ",%32[^,:]:%11d:%11d,",point_str,&is_discount,&is_bound) < 1) {
 				ShowError("npc_parse_shop: Invalid item cost definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 				return strchr(start,'\n'); // skip and continue
 			}
@@ -2682,7 +2693,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.shop.count = 0;
 	while ( p ) {
 		unsigned short nameid2, qty = 0;
-		int value;
+		int value, lvl = 0;
 		struct item_data* id;
 		bool skip = false;
 
@@ -2696,6 +2707,12 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 					skip = true;
 				}
 #endif
+				break;
+			case NPCTYPE_POINTSHOP:
+				if (sscanf(p, ",%6hu:%11d:%11d", &nameid2, &value, &lvl) != 3) {
+					ShowError("npc_parse_shop: Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer, start - buffer), w1, w2, w3, w4);
+					skip = true;
+				}
 				break;
 			default:
 				if (sscanf(p, ",%6hu:%11d", &nameid2, &value) != 2) {
@@ -2752,11 +2769,16 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 		nd->u.shop.shop_item[nd->u.shop.count].nameid = nameid2;
 		nd->u.shop.shop_item[nd->u.shop.count].value = value;
+		nd->u.shop.shop_item[nd->u.shop.count].lvl = 0;
+
 #if PACKETVER >= 20131223
 		nd->u.shop.shop_item[nd->u.shop.count].flag = 0;
 		if (type == NPCTYPE_MARKETSHOP)
 			nd->u.shop.shop_item[nd->u.shop.count].qty = qty;
 #endif
+		if (type == NPCTYPE_POINTSHOP)
+			nd->u.shop.shop_item[nd->u.shop.count].lvl = lvl;
+
 		nd->u.shop.count++;
 		p = strchr(p+1,',');
 	}
@@ -2766,9 +2788,13 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// continue
 	}
 
+	nd->u.shop.isbound = 0; // initially unbound
 	if (type != NPCTYPE_SHOP) {
 		if (type == NPCTYPE_ITEMSHOP) nd->u.shop.itemshop_nameid = nameid; // Item shop currency
-		else if (type == NPCTYPE_POINTSHOP) safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
+		else if (type == NPCTYPE_POINTSHOP) {
+			safestrncpy(nd->u.shop.pointshop_str, point_str, strlen(point_str) + 1); // Point shop currency
+			nd->u.shop.isbound = is_bound;
+		}
 		nd->u.shop.discount = is_discount;
 	}
 

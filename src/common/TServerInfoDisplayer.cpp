@@ -67,7 +67,7 @@ void TServerInfoDisplayer::PaintAllInfo(HWND hWnd, int iTopLeftX, int iTopLeftY)
 
 	SetBkMode(hDC, TRANSPARENT);
 
-	SetTextColor(hDC, RGB(0, 0, 0));
+	SetTextColor(hDC, RGB(0xFF, 0xFF, 0xFF));
 
 	switch (SERVER_TYPE)
 	{

@@ -86,7 +86,8 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hInstance      = hInstance;
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDR_MENU1));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(5+1);
+    //wcex.hbrBackground  = (HBRUSH)(5+1);
+	wcex.hbrBackground = (HBRUSH)(CreateSolidBrush(RGB(0x33, 0x33, 0x33))); /* Add The CreateSolidBrush Method Here and Use Whatever Color */
     wcex.lpszMenuName   = MAKEINTRESOURCE(IDR_MENU1);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON1));
@@ -113,7 +114,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    int x = (GetSystemMetrics(SM_CXSCREEN) / 2) - (w / 2);
    int y = (GetSystemMetrics(SM_CYSCREEN) / 2) - (h / 2);
 
-   HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+   HWND hWnd = CreateWindowA(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 	   x, y, w, h, NULL, NULL, hInstance, NULL);
 
    ghWnd = hWnd;
@@ -181,7 +182,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			RECT rect;
 			hdc = GetDC(hWnd);
 			GetClientRect(hWnd, &rect);
-			FillRect(hdc, &rect, (HBRUSH)GetStockObject(0));
+			FillRect(hdc, &rect, (HBRUSH)(CreateSolidBrush(RGB(0x33, 0x33, 0x33))));
 			ReleaseDC(hWnd, hdc);
 			LogTextPaint(hWnd);
 			g_ServerInfoDisplayer.Run(hWnd);

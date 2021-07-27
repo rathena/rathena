@@ -124,6 +124,7 @@ int map_port=0;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int minsave_interval = 100;
 unsigned char save_settings = CHARSAVE_ALL;
+int start_bound_points = 0;
 bool agit_flag = false;
 bool agit2_flag = false;
 bool agit3_flag = false;
@@ -3846,6 +3847,8 @@ int map_config_read(const char *cfgName)
 				minsave_interval = 1;
 		} else if (strcmpi(w1, "save_settings") == 0)
 			save_settings = cap_value(atoi(w2),CHARSAVE_NONE,CHARSAVE_ALL);
+		else if (strcmpi(w1, "start_bound_points") == 0)
+			start_bound_points = atoi(w2);
 		else if (strcmpi(w1, "motd_txt") == 0)
 			strcpy(motd_txt, w2);
 		else if (strcmpi(w1, "help_txt") == 0)

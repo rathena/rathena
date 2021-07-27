@@ -33,6 +33,7 @@ struct npc_item_list {
 	unsigned short qty; ///< Stock counter (Market shop)
 	uint8 flag; ///< 1: Item added by npcshopitem/npcshopadditem, force load! (Market shop)
 #endif
+	unsigned char lvl;
 };
 
 /// List of bought/sold item for NPC shops
@@ -83,6 +84,7 @@ struct npc_data {
 			unsigned short itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
+			bool isbound;
 		} shop;
 		struct {
 			short xs,ys; // OnTouch area radius

@@ -1880,14 +1880,14 @@ void tryendsession(int flag)
 		{
 			if (session[i]->kill_tick > 0 && (flag == 1 || last_tick > session[i]->kill_tick))
 			{
-				ShowInfo("Session #%d kill_tick time out\n", i);
+				//ShowInfo("Session #%d kill_tick time out\n", i);
 				delete_session(i);
 			}
 			else if (flag == 0 && session[i]->flag.server != 1 &&
 				session[i]->rdata_tick &&
 				DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time)
 			{
-				ShowInfo("Session #%d timed out\n", i);
+				//ShowInfo("Session #%d timed out\n", i);
 				session[i]->rdata_tick = 0;
 				set_eof(i);
 				session[i]->func_parse(i);
@@ -1906,7 +1906,7 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 
 	if (events & BEV_EVENT_EOF)
 	{
-		ShowInfo("conn_eventcb - BEV_EVENT_EOF (%d)\n", fd);
+		//ShowInfo("conn_eventcb - BEV_EVENT_EOF (%d)\n", fd);
 
 		set_eof(fd);
 		session[fd]->func_parse(fd);
@@ -1914,7 +1914,7 @@ void conn_eventcb(struct bufferevent *bev, short events, void *user_data)
 	}
 	else if (events & BEV_EVENT_ERROR)
 	{
-		ShowInfo("conn_eventcb - BEV_EVENT_ERROR (%d)\n", fd);
+		//ShowInfo("conn_eventcb - BEV_EVENT_ERROR (%d)\n", fd);
 
 		set_eof(fd);
 		session[fd]->func_parse(fd);
