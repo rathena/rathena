@@ -113,7 +113,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    int x = (GetSystemMetrics(SM_CXSCREEN) / 2) - (w / 2);
    int y = (GetSystemMetrics(SM_CYSCREEN) / 2) - (h / 2);
 
-   HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPED | WS_MINIMIZEBOX,
+   HWND hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 	   x, y, w, h, NULL, NULL, hInstance, NULL);
 
    ghWnd = hWnd;
@@ -164,7 +164,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				if (IDNO != MessageBox(hWnd, "Are you sure you want to exit?", szTitle, MB_YESNO | MB_DEFBUTTON2))
 				{
 					end_libevent();
-					//WaitForSingleObject(Event, 30000);
 				}
                 break;
             default:
@@ -200,8 +199,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             EndPaint(hWnd, &ps);
         }
         break;
+	case WM_CLOSE:
+		if (isdestroywnd == false)
+		{
+			if (IDNO != MessageBox(hWnd, "Are you sure you want to exit?", szTitle, MB_YESNO | MB_DEFBUTTON2))
+			{
+				isdestroywnd = true;
+				end_libevent();
+			}
+		}
+		break;
     case WM_DESTROY:
-        PostQuitMessage(0);
+		PostQuitMessage(0);
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
