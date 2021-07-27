@@ -1,8 +1,5 @@
-//
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#ifdef _GUI
 
 class TServerInfoDisplayer
 {
@@ -26,3 +23,4 @@ private:
 
 extern TServerInfoDisplayer g_ServerInfoDisplayer;
 extern int g_Queue[16];
+#endif

@@ -6,6 +6,8 @@
 #include "TServerInfoDisplayer.h"
 #include "clogproc.h"
 
+#ifdef _GUI
+
 #define MAX_LOADSTRING 100
 HWND ghWnd = NULL;
 bool isdestroywnd = false;
@@ -121,13 +123,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   loginit();
-   SetTimer(hWnd, WM_LOG_PAINT, 2000, NULL);
-   SetTimer(hWnd, WM_QUEUE_MSG_PROC, 1000, NULL);
-
-   start_core();
    Event = CreateEventA(0, TRUE, FALSE, 0);
 
+   set_server_type();
+   loginit();
+   start_core();
+
+   SetTimer(hWnd, WM_LOG_PAINT, 2000, NULL);
+   SetTimer(hWnd, WM_QUEUE_MSG_PROC, 1000, NULL);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -205,3 +208,5 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return 0;
 }
+
+#endif

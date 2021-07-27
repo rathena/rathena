@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef _GUI
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -14,4 +16,6 @@ extern HANDLE Event;
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif

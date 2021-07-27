@@ -511,12 +511,8 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 	if (*p)	// write the rest of the buffer
 	{
-#ifdef _GUI
-		showlog(p, 5);
-#else
 		if (0 == WriteConsole(handle, p, (DWORD)strlen(p), &written, 0))
 			WriteFile(handle, p, (DWORD)strlen(p), &written, 0);
-#endif
 	}
 	FREEBUF(tempbuf);
 	return 0;
@@ -680,7 +676,8 @@ char timestamp_format[20] = ""; //For displaying Timestamps
 int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 {
 	va_list apcopy;
-	char prefix[100];
+	char prefix[1024] = {0};
+	int color = 5;
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	FILE *fp;
 #endif
@@ -732,46 +729,66 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	    (flag == MSG_DEBUG && msg_silent&32)
 	)
 		return 0; //Do not print it.
-
+#ifndef _GUI
 	if (timestamp_format[0] && flag != MSG_NONE)
 	{	//Display time format. [Skotlex]
 		time_t t = time(NULL);
 		strftime(prefix, 80, timestamp_format, localtime(&t));
 	} else prefix[0]='\0';
-
+#endif
 	switch (flag) {
 		case MSG_NONE: // direct printf replacement
 			break;
 		case MSG_STATUS: //Bright Green (To inform about good things)
 			strcat(prefix,CL_GREEN"[Status]"CL_RESET":");
+			color = 4;
 			break;
 		case MSG_SQL: //Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database, as successes can as well just be anything else... [Skotlex]
 			strcat(prefix,CL_MAGENTA"[SQL]"CL_RESET":");
+			color = 3;
 			break;
 		case MSG_INFORMATION: //Bright White (Variable information)
 			strcat(prefix,CL_WHITE"[Info]"CL_RESET":");
+			color = 5;
 			break;
 		case MSG_NOTICE: //Bright White (Less than a warning)
 			strcat(prefix,CL_WHITE"[Notice]"CL_RESET":");
+			color = 6;
 			break;
 		case MSG_WARNING: //Bright Yellow
 			strcat(prefix,CL_YELLOW"[Warning]"CL_RESET":");
+			color = 2;
 			break;
 		case MSG_DEBUG: //Bright Cyan, important stuff!
 			strcat(prefix,CL_CYAN"[Debug]"CL_RESET":");
+			color = 2;
 			break;
 		case MSG_ERROR: //Bright Red  (Regular errors)
 			strcat(prefix,CL_RED"[Error]"CL_RESET":");
+			color = 2;
 			break;
 		case MSG_FATALERROR: //Bright Red (Fatal errors, abort(); if possible)
 			strcat(prefix,CL_RED"[Fatal Error]"CL_RESET":");
+			color = 2;
 			break;
 		default:
 			ShowError("In function _vShowMessage() -> Invalid flag passed.\n");
 			return 1;
 	}
 
-
+#ifdef _GUI
+	char sbuf[512] = { 0 };
+	int numwritten = 0;
+	va_copy(apcopy, ap);
+	numwritten = vsprintf(sbuf, string, ap);
+	va_end(apcopy);
+	if (numwritten < 512)
+	{
+		sbuf[numwritten - 1] = '\0';
+		strcat(prefix, sbuf);
+		showlog(prefix, color);
+	}
+#else
 	if (flag == MSG_ERROR || flag == MSG_FATALERROR || flag == MSG_SQL)
 	{	//Send Errors to StdErr [Skotlex]
 		FPRINTF(STDERR, "%s ", prefix);
@@ -787,7 +804,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		va_end(apcopy);
 		FFLUSH(STDOUT);
 	}
-
+#endif
 
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	if(strlen(DEBUGLOGPATH) > 0) {

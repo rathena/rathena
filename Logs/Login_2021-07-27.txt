@@ -1,0 +1,17 @@
+08:45:41  [2021-07-27 08:45:41] Initializing ...
+08:45:41  [2021-07-27 08:45:41] [Info]:IP rules is enabled.
+08:45:41  [2021-07-27 08:45:41] [Status]:Login server binding IP address : 127.0.0.1 -> 127.0.0.1
+08:45:41  [2021-07-27 08:45:41] [Info]:Finished reading conf/import/inter_conf.txt.
+08:45:41  [2021-07-27 08:45:41] [Info]:Finished reading conf/inter_athena.conf.
+08:45:41  [2021-07-27 08:45:41] [Info]:Finished reading conf/import/login_conf.txt.
+08:45:41  [2021-07-27 08:45:41] [Info]:Finished reading conf/login_athena.conf.
+08:45:41  [2021-07-27 08:45:41] [Info]:Done reading '23' messages in 'conf/msg_conf/login_msg.conf'.
+08:45:41  [2021-07-27 08:45:41] [Info]:Ipban connection made.
+08:45:41  [2021-07-27 08:45:41] [Status]:The login-server is ready (Server is listening on the port 6900).
+
+08:45:41  [2021-07-27 08:45:41] Done
+08:45:41  [2021-07-27 08:45:41] Libevent started
+08:45:50  [2021-07-27 08:45:50] Closing server ...
+08:45:52  [2021-07-27 08:45:52] [Status]:Terminating...
+08:45:52  [2021-07-27 08:45:52] [Status]:Finished.
+08:45:53  [2021-07-27 08:45:53] [Info]:Memory manager: No memory leaks found.

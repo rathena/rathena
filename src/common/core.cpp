@@ -428,16 +428,13 @@ DWORD WINAPI start_libevent(LPVOID p)
 			event_base_dispatch(base);
 		}
 
-		event_free(timeout);
-
 #ifndef _GUI
 		if (err == 0)
 		{
 			event_free(signal_event);
 		}
 #endif
-		if (listener)
-			evconnlistener_free(listener);
+		evconnlistener_free(listener);
 #ifdef _GUI
 		end_core();
 #endif
@@ -682,7 +679,8 @@ int loginusers = 0;
 
 void showlog(char *msg, int flag)
 {
-	LogAdd(flag, msg);
+	if(msg != NULL && strlen(msg) >= 4)
+		LogAdd(flag, msg);
 }
 
 void timerproc()
@@ -694,7 +692,7 @@ void start_core()
 {
 	LogAdd(HBLUE, "Initializing ...");
 
-	set_server_type();
+	//set_server_type();
 	Sql_Init();
 	rathread_init();
 	mempool_init();
@@ -731,8 +729,7 @@ void end_core()
 	rathread_final();
 	ers_final();
 	event_free(timeout);
-	if (gbase)
-		event_base_free(gbase);
+	event_base_free(gbase);
 	libevent_global_shutdown();
 	malloc_final();
 	freecrit();

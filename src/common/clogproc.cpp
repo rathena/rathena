@@ -1,13 +1,15 @@
 #include "winapi.h"
 #include "clogproc.h"
 #include <stdio.h>
-//#include "LogToFile.h"
+#include "LogToFile.h"
+#include "core.h"
+
+#ifdef _GUI
 
 #define LOG_TEXT_LINE 28
 #define LOG_TEXT_LENGTH 120
 
-//CLogToFile 	EDS_LOG( "Log", ".\\Logs", 1);
-
+CLogToFile 	gCLogToFile;
 
 char LogText[LOG_TEXT_LINE][LOG_TEXT_LENGTH];
 void LogTextAdd(BYTE type, char* msg, int len);
@@ -30,9 +32,42 @@ void loginit()
 
 	hFont = CreateFontA(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
 		CLIP_DEFAULT_PRECIS, ANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
+
+	switch (SERVER_TYPE)
+	{
+	case ATHENA_SERVER_LOGIN:
+		gCLogToFile.Init("Login", ".\\Logs", 1);
+		break;
+	case ATHENA_SERVER_CHAR:
+		gCLogToFile.Init("Char", ".\\Logs", 1);
+		break;
+	case ATHENA_SERVER_MAP:
+		gCLogToFile.Init("Map", ".\\Logs", 1);
+		break;
+	}
 }
 
-void LogAdd(BYTE Color, char* szLog, ...)
+void LogAdd(BYTE Color, char* szLog)
+{
+	char szBufferOut[550] = { 0 };
+
+	SYSTEMTIME tinfo;
+	GetLocalTime(&tinfo);
+
+	sprintf_s(szBufferOut, 549, "[%02d-%02d-%02d %02d:%02d:%02d] %s",
+		tinfo.wYear,
+		tinfo.wMonth,
+		tinfo.wDay,
+		tinfo.wHour,
+		tinfo.wMinute,
+		tinfo.wSecond,
+		szLog);
+
+	LogTextAdd(Color, szBufferOut, strlen(szBufferOut));
+	gCLogToFile.Output2(szBufferOut);
+}
+
+void LogAdd2(BYTE Color, char* szLog, ...)
 {
 	char szBuffer[512]="";
 	char szBufferOut[550]="";
@@ -41,30 +76,20 @@ void LogAdd(BYTE Color, char* szLog, ...)
 	va_start(pArguments, szLog);
 	vsprintf(szBuffer, szLog, pArguments);
 	va_end(pArguments);
+	SYSTEMTIME tinfo;
+	GetLocalTime(&tinfo);
 
+	sprintf_s(szBufferOut, 550, "[%02d-%02d-%02d %02d:%02d:%02d] %s",
+		tinfo.wYear,
+		tinfo.wMonth,
+		tinfo.wDay,
+		tinfo.wHour,
+		tinfo.wMinute,
+		tinfo.wSecond,
+		szBuffer);
 
-	if(Color != 6 && Color != 8)
-	{
-		SYSTEMTIME tinfo;
-		GetLocalTime(&tinfo);
-
-		sprintf_s(szBufferOut,550,"[%02d-%02d-%02d %02d:%02d:%02d] %s",
-			tinfo.wYear,
-			tinfo.wMonth,
-			tinfo.wDay,
-			tinfo.wHour,
-			tinfo.wMinute,
-			tinfo.wSecond,
-			szBuffer);
-		
-		LogTextAdd(Color, szBufferOut, strlen(szBufferOut));
-		//ex.logger(szBufferOut);
-		//EDS_LOG.Output(szBufferOut);
-	}
-	else
-	{
-		LogTextAdd(Color, szBuffer, strlen(szBufferOut));
-	}
+	LogTextAdd(Color, szBufferOut, strlen(szBufferOut));
+	gCLogToFile.Output2(szBufferOut);
 }
 
 void LogTextAdd(BYTE type, char* msg, int len)
@@ -151,3 +176,5 @@ void MsgBox(char *szlog, ...)
 	va_end(pArguments);
 	MessageBox(NULL, szBuffer, "error", MB_OK|MB_APPLMODAL);
 }
+
+#endif
