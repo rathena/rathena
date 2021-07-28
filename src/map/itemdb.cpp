@@ -1265,14 +1265,14 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	uint16 get_amt = 0;
 
-	if (itemdb_isstackable(data->nameid) && !data->GUID)
+	if (itemdb_isstackable(data->nameid) && data->isStacked)
 		get_amt = data->amount;
 	else
 		get_amt = 1;
 
 	tmp.amount = get_amt;
 
-	// Do loop for non-stackable item / stackable item with GUID
+	// Do loop for non-stackable item
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;
 		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
@@ -1713,6 +1713,18 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 				} else {
 					if (!entry_exists)
 						entry->GUID = item->flag.guid;
+				}
+
+				if (this->nodeExists(listit, "Stacked")) {
+					bool isStacked;
+
+					if (!this->asBool(listit, "Stacked", isStacked))
+						continue;
+
+					entry->isStacked = isStacked;
+				} else {
+					if (!entry_exists)
+						entry->isStacked = true;
 				}
 
 				if (this->nodeExists(listit, "Named")) {
