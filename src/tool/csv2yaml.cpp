@@ -2957,7 +2957,7 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		if (group != nullptr)
 			entries = group->slots[j];
 
-		std::shared_ptr<s_random_opt_group_entry> entry;
+		std::shared_ptr<s_random_opt_group_entry> entry = std::make_shared<s_random_opt_group_entry>();
 
 		entry->id = static_cast<uint16>(randid_tmp);
 		entry->min_value = (int16)strtoul(str[k + 1], nullptr, 10);
