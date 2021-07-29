@@ -433,6 +433,12 @@ void Sql_FreeResult(Sql* self)
 	}
 }
 
+/// Closes the handle
+void Sql_Close(Sql* self) {
+	if (self) {
+		mysql_close(&self->handle);
+	}
+}
 
 
 /// Shows debug information (last query).
@@ -456,6 +462,7 @@ void Sql_Free(Sql* self)
 		Sql_FreeResult(self);
 		StringBuf_Destroy(&self->buf);
 		if( self->keepalive != INVALID_TIMER ) delete_timer(self->keepalive, Sql_P_KeepaliveTimer);
+		Sql_Close(self);
 		aFree(self);
 	}
 }
