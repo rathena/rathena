@@ -2069,7 +2069,7 @@ int map_quit(struct map_session_data *sd) {
 		bg_team_leave(sd, true, true);
 
 	if (sd->bg_queue_id > 0)
-		bg_queue_leave(sd);
+		bg_queue_leave(sd, false);
 
 	if( sd->status.clan_id )
 		clan_member_left(sd);
