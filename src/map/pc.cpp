@@ -693,14 +693,13 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 
 	if (sd->soulball <= 0 || sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
 		sd->soulball = 0;
-		return 0;
+	}else{
+		sd->soulball -= cap_value(count, 0, sd->soulball);
+		if (sd->soulball == 0)
+			status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
+		else
+			sc->data[SC_SOULENERGY]->val1 = sd->soulball;
 	}
-
-	sd->soulball -= cap_value(count, 0, sd->soulball);
-	if (sd->soulball == 0)
-		status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
-	else
-		sc->data[SC_SOULENERGY]->val1 = sd->soulball;
 
 	if (!type)
 		clif_soulball(sd);
