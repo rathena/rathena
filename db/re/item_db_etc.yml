@@ -10458,7 +10458,7 @@ Body:
     Script: |
       bonus bMdef,-20;
       bonus2 bResEff,Eff_Freeze,(getrefine()>=15?6000:4000);
-      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,35,BF_MAGIC,0; 
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,35,BF_MAGIC,0;
   - Id: 4543
     AegisName: SLD_Garm_Card
     Name: Sealed Hatii Card

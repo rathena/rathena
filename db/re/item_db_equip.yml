@@ -47386,8 +47386,12 @@ Body:
     Script: |
       bonus bAllStats,3;
       bonus bAspdRate,10;
-      bonus2 bAddRace,RC_DemiHuman,5;
-      bonus2 bAddRace,RC_Player_Human,5;
+      bonus bFixedCast,-500;
+      bonus2 bAddRace,RC_DemiHuman,10;
+      bonus2 bMagicAddRace,RC_DemiHuman,10;
+      bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus bUnbreakableHelm;
   - Id: 5604
     AegisName: RTC_Second_Best
     Name: RTC Second Place
@@ -47412,8 +47416,12 @@ Body:
     Script: |
       bonus bAllStats,2;
       bonus bAspdRate,7;
-      bonus2 bAddRace,RC_DemiHuman,3;
-      bonus2 bAddRace,RC_Player_Human,3;
+      bonus bFixedCast,-300;
+      bonus2 bAddRace,RC_DemiHuman,5;
+      bonus2 bMagicAddRace,RC_DemiHuman,5;
+      bonus2 bAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus bUnbreakableHelm;
   - Id: 5605
     AegisName: RTC_Third_Best
     Name: RTC Third Place
@@ -47438,8 +47446,12 @@ Body:
     Script: |
       bonus bAllStats,1;
       bonus bAspdRate,5;
-      bonus2 bAddRace,RC_DemiHuman,1;
-      bonus2 bAddRace,RC_Player_Human,1;
+      bonus bFixedCast,-100;
+      bonus2 bAddRace,RC_DemiHuman,3;
+      bonus2 bMagicAddRace,RC_DemiHuman,3;
+      bonus2 bAddRace,RC_Player_Human,3;
+      bonus2 bMagicAddRace,RC_Player_Human,3;
+      bonus bUnbreakableHelm;
   - Id: 5606
     AegisName: Campume_Hat
     Name: Champune Hat
