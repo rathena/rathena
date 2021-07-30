@@ -23729,15 +23729,15 @@ Body:
         Time: 180000
     Cooldown:
       - Level: 1
-        Time: 540000
+        Time: 60000
       - Level: 2
-        Time: 480000
+        Time: 90000
       - Level: 3
-        Time: 420000
+        Time: 120000
       - Level: 4
-        Time: 360000
+        Time: 150000
       - Level: 5
-        Time: 300000
+        Time: 180000
     FixedCastTime: 1000
     Requires:
       SpCost:
