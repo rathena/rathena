@@ -111676,7 +111676,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",(7*readparam(bInt)/10);
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",(readparam(bInt)/10)*7;
       if (readparam(bInt)>=110)
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
       if (.@r>=7) {
@@ -111706,7 +111706,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
-      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",(7*readparam(bInt)/10);
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",(readparam(bInt)/10)*7;
       if (readparam(bInt)>=110)
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
       if (.@r>=7) {
@@ -111735,7 +111735,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"RL_R_TRIP",(7*readparam(bAgi)/10);
+      bonus2 bSkillAtk,"RL_R_TRIP",(readparam(bAgi)/10)*7;
       if (readparam(bAgi)>=110)
          bonus2 bSkillAtk,"RL_R_TRIP",30;
       if (.@r>=7) {
@@ -111765,7 +111765,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
-      bonus2 bSkillAtk,"RL_R_TRIP",(7*readparam(bAgi)/10);
+      bonus2 bSkillAtk,"RL_R_TRIP",(readparam(bAgi)/10)*7;
       if (readparam(bAgi)>=110)
          bonus2 bSkillAtk,"RL_R_TRIP",30;
       if (.@r>=7) {
@@ -111794,7 +111794,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"RL_D_TAIL",(7*readparam(bLuk)/10);
+      bonus2 bSkillAtk,"RL_D_TAIL",(readparam(bLuk)/10)*7;
       if (readparam(bLuk)>=110)
          bonus2 bSkillAtk,"RL_D_TAIL",30;
       if (.@r>=7) {
@@ -111824,7 +111824,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
-      bonus2 bSkillAtk,"RL_D_TAIL",(7*readparam(bLuk)/10);
+      bonus2 bSkillAtk,"RL_D_TAIL",(readparam(bLuk)/10)*7;
       if (readparam(bLuk)>=110)
          bonus2 bSkillAtk,"RL_D_TAIL",30;
       if (.@r>=7) {
@@ -111854,7 +111854,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bSplashRange,1;
-      bonus2 bSkillAtk,"RL_SLUGSHOT",(7*readparam(bStr)/10);
+      bonus2 bSkillAtk,"RL_SLUGSHOT",(readparam(bStr)/10)*7;
       if (readparam(bStr)>=110)
          bonus2 bSkillAtk,"RL_SLUGSHOT",30;
       if (.@r>=7) {
@@ -111884,7 +111884,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bSplashRange,1;
-      bonus2 bSkillAtk,"RL_SLUGSHOT",(7*readparam(bStr)/10);
+      bonus2 bSkillAtk,"RL_SLUGSHOT",(readparam(bStr)/10)*7;
       bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
       if (readparam(bStr)>=110)
          bonus2 bSkillAtk,"RL_SLUGSHOT",30;
@@ -116009,6 +116009,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+    Classes:
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116055,6 +116057,8 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
+    Classes:
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
