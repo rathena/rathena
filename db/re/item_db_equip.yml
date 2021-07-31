@@ -128787,21 +128787,6 @@ Body:
       bonus bAspdRate,7;
       bonus bVariableCastrate,-10;
       bonus bCritAtkRate,10;
-  - Id: 490022
-    AegisName: TrustRing
-    Name: Thunder Ring
-    Type: Armor
-    Weight: 300
-    Slots: 1
-    Locations:
-      Both_Accessory: true
-    EquipLevelMin: 100
-    Script: |
-      bonus2 bAddRace,RC_All,5;
-      bonus bMatkRate,5;
-      bonus2 bAddEle,Ele_Water,10;
-      bonus2 bMagicAddEle,Ele_Water,10;
-      bonus2 bSubEle,Ele_Water,5;
   - Id: 490020
     AegisName: Grace_Magic_Ring
     Name: Grace Magic Ring
@@ -128825,6 +128810,21 @@ Body:
       bonus bAspdRate,7;
       bonus bVariableCastrate,-10;
       bonus2 bMagicAddEle,Ele_All,10;
+  - Id: 490022
+    AegisName: TrustRing
+    Name: Thunder Ring
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddRace,RC_All,5;
+      bonus bMatkRate,5;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bMagicAddEle,Ele_Water,10;
+      bonus2 bSubEle,Ele_Water,5;
   - Id: 490024
     AegisName: Auto_B_R
     Name: Automatic Booster R
