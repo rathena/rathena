@@ -10338,9 +10338,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddClass,Class_All,(getrefine()>=15?8:5);
-      bonus5 bAutoSpell,"SA_DISPELL",1,1,BF_NORMAL,1;
       bonus bUnbreakableWeapon;
+      bonus2 bAddClass,Class_All,(getrefine()>=15?8:5);
+      bonus3 bAutoSpell,"SA_DISPELL",1,25;
   - Id: 4536
     AegisName: Sealed_Atroce_Card
     Name: Sealed Atroce Card
@@ -10456,9 +10456,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bResEff,Eff_Freeze,(getrefine()>=15?6000:4000);
-      bonus5 bAutoSpell,"SA_LANDPROTECTOR",1,1,BF_MAGIC,1;
       bonus bMdef,-20;
+      bonus2 bResEff,Eff_Freeze,(getrefine()>=15?6000:4000);
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,35,BF_MAGIC,0;
   - Id: 4543
     AegisName: SLD_Garm_Card
     Name: Sealed Hatii Card
@@ -34068,19 +34068,6 @@ Body:
     Name: Cat Hand Ticket
     Type: Etc
     Buy: 10
-  - Id: 22870
-    AegisName: Xmas_Package_14
-    Name: Christmas Package
-    Type: Etc
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 22875
     AegisName: Sealed_Beelzebub_Card
     Name: Sealed Beelzebub Card

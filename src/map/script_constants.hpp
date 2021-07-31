@@ -5227,6 +5227,9 @@
 	export_constant(IG_ENCHANT_STONE_BOX19);
 	export_constant(IG_ENCHANT_STONE_BOX20);
 	export_constant(IG_ENCHANT_STONE_BOX21);
+	export_constant(IG_XMAS_PACKAGE_14);
+	export_constant(IG_EASTER_EGG);
+	export_constant(IG_PITAPAT_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
