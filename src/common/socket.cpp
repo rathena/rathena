@@ -40,6 +40,10 @@
 	#endif
 #endif
 
+#ifdef SOCKET_LIBEVENT
+#include "libevent.hpp"
+#endif
+
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
 #include "mmo.hpp"
@@ -301,10 +305,12 @@ void set_defaultparse(ParseFunc defaultparse)
  *--------------------------------------*/
 void set_nonblocking(int fd, unsigned long yes)
 {
+#ifndef SOCKET_LIBEVENT // need to void  because chrif_flush_fifo will call this method upon shutdown
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s.
 	// The argp parameter is zero if nonblocking is to be disabled.
 	if( sIoctl(fd, FIONBIO, &yes) != 0 )
 		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (%s) - Please report this!!!\n", fd, error_msg());
+#endif
 }
 
 void setsocketopts(int fd,int delay_timeout){
@@ -405,17 +411,31 @@ int send_from_fifo(int fd)
 {
 	int len;
 
-	if( !session_isValid(fd) )
+	if (!session_isValid(fd))
 		return -1;
 
-	if( session[fd]->wdata_size == 0 )
+#ifdef SOCKET_LIBEVENT
+	if (session[fd]->le_close_tick > 0) {
+		return -1;
+	}
+#endif
+
+	if (session[fd]->wdata_size == 0)
 		return 0; // nothing to send
 
-	len = sSend(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
+#ifdef SOCKET_LIBEVENT
+	len = bufferevent_write(session[fd]->le_rdata, (const char*)session[fd]->wdata, (int)session[fd]->wdata_size);
+	session[fd]->wdata_size = 0;
 
-	if( len == SOCKET_ERROR )
+	if (len == SOCKET_ERROR){
+		set_eof(fd);
+	}
+#else
+	len = sSend(fd, (const char*)session[fd]->wdata, (int)session[fd]->wdata_size, MSG_NOSIGNAL);
+
+	if (len == SOCKET_ERROR)
 	{//An exception has occured
-		if( sErrno != S_EWOULDBLOCK ) {
+		if (sErrno != S_EWOULDBLOCK) {
 			//ShowDebug("send_from_fifo: %s, ending connection #%d\n", error_msg(), fd);
 #ifdef SHOW_SERVER_STATS
 			socket_data_qo -= session[fd]->wdata_size;
@@ -426,13 +446,13 @@ int send_from_fifo(int fd)
 		return 0;
 	}
 
-	if( len > 0 )
+	if (len > 0)
 	{
 		session[fd]->wdata_tick = last_tick;
 
 		// some data could not be transferred?
 		// shift unsent data to the beginning of the queue
-		if( (size_t)len < session[fd]->wdata_size )
+		if ((size_t)len < session[fd]->wdata_size)
 			memmove(session[fd]->wdata, session[fd]->wdata + len, session[fd]->wdata_size - len);
 
 		session[fd]->wdata_size -= len;
@@ -445,7 +465,7 @@ int send_from_fifo(int fd)
 		}
 #endif
 	}
-
+#endif
 	return 0;
 }
 
@@ -527,6 +547,12 @@ int connect_client(int listen_fd)
 
 int make_listen_bind(uint32 ip, uint16 port)
 {
+#ifdef SOCKET_LIBEVENT
+	le_bind_ip = ip;
+	le_bind_port = port;
+	return 1; // we will use libevent listen callback
+#endif
+
 	struct sockaddr_in server_address;
 	int fd;
 	int result;
@@ -594,7 +620,10 @@ int make_listen_bind(uint32 ip, uint16 port)
 	return fd;
 }
 
-int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
+int make_connection(uint32 ip, uint16 port, bool silent,int timeout) { //FIXME: Error C6262
+#ifdef SOCKET_LIBEVENT
+	return le_makeconnect(ip, port);
+#else
 	struct sockaddr_in remote_address;
 	int fd;
 	int result;
@@ -717,6 +746,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
 
 	return fd;
+#endif
 }
 
 static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)
@@ -738,13 +768,22 @@ static void delete_session(int fd)
 {
 	if( session_isValid(fd) )
 	{
+#ifdef SOCKET_LIBEVENT
+		session[fd]->le_close_tick = 0; // flag buffer event deleted
+#endif
 #ifdef SHOW_SERVER_STATS
 		socket_data_qi -= session[fd]->rdata_size - session[fd]->rdata_pos;
 		socket_data_qo -= session[fd]->wdata_size;
 #endif
-		aFree(session[fd]->rdata);
-		aFree(session[fd]->wdata);
-		aFree(session[fd]->session_data);
+		// need to make sure session data is not null when set to libevent backend
+		if (session[fd]->rdata)aFree(session[fd]->rdata);
+		if (session[fd]->wdata)aFree(session[fd]->wdata);
+		if (session[fd]->session_data)aFree(session[fd]->session_data);
+#ifdef SOCKET_LIBEVENT
+		if (session[fd]->le_rdata) {
+			bufferevent_free(session[fd]->le_rdata);
+		}
+#endif
 		aFree(session[fd]);
 		session[fd] = NULL;
 	}
@@ -887,8 +926,9 @@ int WFIFOSET(int fd, size_t len)
 	return 0;
 }
 
-int do_sockets(t_tick next)
+int do_sockets(t_tick next) // FIXME: Compiler Warning C6262
 {
+#ifndef SOCKET_LIBEVENT // to remove the warning, libevent don't need it anyway
 #ifndef SOCKET_EPOLL
 	fd_set rfd;
 	struct timeval timeout;
@@ -1050,7 +1090,7 @@ int do_sockets(t_tick next)
 		socket_data_o = socket_data_co = 0;
 	}
 #endif
-
+#endif
 	return 0;
 }
 
@@ -1393,6 +1433,25 @@ void socket_final(void)
 		if(session[i])
 			do_close(i);
 
+#ifdef SOCKET_LIBEVENT
+	int pending;
+	time_t now;
+	while (true){
+		pending = 0;
+		now = time(NULL);
+		for (i = 1; i < fd_max; i += 1){
+			if (session[i]){
+				pending += 1;
+				if (session[i]->le_close_tick > 0 && now > session[i]->le_close_tick){
+					delete_session(i);
+				}
+			}
+		}
+
+		if (pending == 0)
+			break;
+	}
+#endif // libevent did'nt use session 0
 	// session[0]
 	aFree(session[0]->rdata);
 	aFree(session[0]->wdata);
@@ -1423,7 +1482,14 @@ void do_close(int fd)
 {
 	if( fd <= 0 ||fd >= MAXCONN )
 		return;// invalid
-
+#ifdef SOCKET_LIBEVENT
+	if (session[fd]){
+		session[fd]->le_close_tick = time(NULL) + 1;
+		if (session[fd]->le_rdata != NULL){
+			bufferevent_disable(session[fd]->le_rdata, EV_WRITE || EV_READ);
+		}
+	}
+#else
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
 
 #ifndef SOCKET_EPOLL
@@ -1439,6 +1505,7 @@ void do_close(int fd)
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
 	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if (session[fd]) delete_session(fd);
+#endif
 }
 
 /// Retrieve local ips in host byte order.
@@ -1579,7 +1646,7 @@ void socket_init(void)
 
 	// Get initial local ips
 	naddr_ = socket_getips(addr_,16);
-
+#ifndef SOCKET_LIBEVENT
 #ifndef SOCKET_EPOLL
 	// Select based Event Dispatcher:
 	sFD_ZERO(&readfds);
@@ -1598,7 +1665,13 @@ void socket_init(void)
 
 	ShowInfo( "Server uses '" CL_WHITE "epoll" CL_RESET "' with up to " CL_WHITE "%d" CL_RESET " events per cycle as event dispatcher\n", epoll_maxevents );
 #endif
-
+#else
+#ifdef WIN32
+	ShowInfo("Server uses '" CL_WHITE "libevent IOCP" CL_RESET "' as event dispatcher\n");
+#else
+	ShowInfo("Server uses '" CL_WHITE "libevent EPOLL" CL_RESET "' as event dispatcher\n");
+#endif
+#endif
 #if defined(SEND_SHORTLIST)
 	memset(send_shortlist_set, 0, sizeof(send_shortlist_set));
 #endif
@@ -1607,11 +1680,9 @@ void socket_init(void)
 
 	// initialise last send-receive tick
 	last_tick = time(NULL);
-
 	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
 	create_session(0, null_recv, null_send, null_parse); //FIXME this is causing leak
-
 #ifndef MINICORE
 	// Delete old connection history every 5 minutes
 	memset(connect_history, 0, sizeof(connect_history));
@@ -1667,6 +1738,9 @@ uint16 ntows(uint16 netshort)
 // sending or eof handling.
 void send_shortlist_add_fd(int fd)
 {
+#ifdef SOCKET_LIBEVENT
+	send_from_fifo(fd);
+#else
 	int i;
 	int bit;
 
@@ -1689,6 +1763,7 @@ void send_shortlist_add_fd(int fd)
 	send_shortlist_set[i] |= 1<<bit;
 	// Add to the end of the shortlist array.
 	send_shortlist_array[send_shortlist_count++] = fd;
+#endif
 }
 
 // Do pending network sends and eof handling from the shortlist.
@@ -1737,5 +1812,17 @@ void send_shortlist_do_sends()
 				send_shortlist_add_fd(fd);
 		}
 	}
+}
+
+int le_create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse) {
+	return create_session(fd, func_recv, func_send, func_parse);
+}
+
+void le_delete_session(int fd) {
+	delete_session(fd);
+}
+
+int le_connect_check(uint32 ip) {
+	return connect_check(ip);
 }
 #endif

@@ -100,6 +100,11 @@ struct socket_data
 	time_t rdata_tick; // time of last recv (for detecting timeouts); zero when timeout is disabled
 	time_t wdata_tick; // time of last send (for detecting timeouts);
 
+#ifdef SOCKET_LIBEVENT
+	struct bufferevent* le_rdata;
+	time_t le_close_tick;;
+#endif
+
 	RecvFunc func_recv;
 	SendFunc func_send;
 	ParseFunc func_parse;

@@ -20,6 +20,10 @@
 #include <direct.h> // _chdir
 #endif
 
+#ifdef SOCKET_LIBEVENT
+#include "libevent.hpp"
+#endif
+
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
 #include "mmo.hpp"
@@ -94,6 +98,9 @@ static BOOL WINAPI console_handler(DWORD c_event) {
 			shutdown_callback();
 		else
 			runflag = CORE_ST_STOP;// auto-shutdown
+#ifdef SOCKET_LIBEVENT
+		le_eventstop();
+#endif
         break;
 	default:
 		return FALSE;
@@ -122,6 +129,9 @@ static void sig_proc(int sn) {
 			shutdown_callback();
 		else
 			runflag = CORE_ST_STOP;// auto-shutdown
+#ifdef SOCKET_LIBEVENT
+		le_eventstop();
+#endif
 		break;
 	case SIGSEGV:
 	case SIGFPE:
@@ -374,19 +384,26 @@ int main (int argc, char **argv)
 	socket_init();
 
 	do_init(argc,argv);
-
+#ifdef SOCKET_LIBEVENT
+	le_start();
+#else
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
 		t_tick next = do_timer(gettick_nocache());
 		do_sockets(next);
 	}
-
+#endif
 	do_final();
 
 	timer_final();
 	socket_final();
 	db_final();
 	ers_final();
+#endif
+#ifdef SOCKET_LIBEVENT
+	event_free(le_timeout);
+	event_base_free(le_base);
+	libevent_global_shutdown();
 #endif
 
 	malloc_final();
