@@ -47386,8 +47386,12 @@ Body:
     Script: |
       bonus bAllStats,3;
       bonus bAspdRate,10;
-      bonus2 bAddRace,RC_DemiHuman,5;
-      bonus2 bAddRace,RC_Player_Human,5;
+      bonus bFixedCast,-500;
+      bonus2 bAddRace,RC_DemiHuman,10;
+      bonus2 bMagicAddRace,RC_DemiHuman,10;
+      bonus2 bAddRace,RC_Player_Human,10;
+      bonus2 bMagicAddRace,RC_Player_Human,10;
+      bonus bUnbreakableHelm;
   - Id: 5604
     AegisName: RTC_Second_Best
     Name: RTC Second Place
@@ -47412,8 +47416,12 @@ Body:
     Script: |
       bonus bAllStats,2;
       bonus bAspdRate,7;
-      bonus2 bAddRace,RC_DemiHuman,3;
-      bonus2 bAddRace,RC_Player_Human,3;
+      bonus bFixedCast,-300;
+      bonus2 bAddRace,RC_DemiHuman,5;
+      bonus2 bMagicAddRace,RC_DemiHuman,5;
+      bonus2 bAddRace,RC_Player_Human,5;
+      bonus2 bMagicAddRace,RC_Player_Human,5;
+      bonus bUnbreakableHelm;
   - Id: 5605
     AegisName: RTC_Third_Best
     Name: RTC Third Place
@@ -47438,8 +47446,12 @@ Body:
     Script: |
       bonus bAllStats,1;
       bonus bAspdRate,5;
-      bonus2 bAddRace,RC_DemiHuman,1;
-      bonus2 bAddRace,RC_Player_Human,1;
+      bonus bFixedCast,-100;
+      bonus2 bAddRace,RC_DemiHuman,3;
+      bonus2 bMagicAddRace,RC_DemiHuman,3;
+      bonus2 bAddRace,RC_Player_Human,3;
+      bonus2 bMagicAddRace,RC_Player_Human,3;
+      bonus bUnbreakableHelm;
   - Id: 5606
     AegisName: Campume_Hat
     Name: Champune Hat
@@ -82199,6 +82211,8 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 676
     Trade:
@@ -128773,21 +128787,6 @@ Body:
       bonus bAspdRate,7;
       bonus bVariableCastrate,-10;
       bonus bCritAtkRate,10;
-  - Id: 490022
-    AegisName: TrustRing
-    Name: Thunder Ring
-    Type: Armor
-    Weight: 300
-    Slots: 1
-    Locations:
-      Both_Accessory: true
-    EquipLevelMin: 100
-    Script: |
-      bonus2 bAddRace,RC_All,5;
-      bonus bMatkRate,5;
-      bonus2 bAddEle,Ele_Water,10;
-      bonus2 bMagicAddEle,Ele_Water,10;
-      bonus2 bSubEle,Ele_Water,5;
   - Id: 490020
     AegisName: Grace_Magic_Ring
     Name: Grace Magic Ring
@@ -128811,6 +128810,21 @@ Body:
       bonus bAspdRate,7;
       bonus bVariableCastrate,-10;
       bonus2 bMagicAddEle,Ele_All,10;
+  - Id: 490022
+    AegisName: TrustRing
+    Name: Thunder Ring
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddRace,RC_All,5;
+      bonus bMatkRate,5;
+      bonus2 bAddEle,Ele_Water,10;
+      bonus2 bMagicAddEle,Ele_Water,10;
+      bonus2 bSubEle,Ele_Water,5;
   - Id: 490024
     AegisName: Auto_B_R
     Name: Automatic Booster R

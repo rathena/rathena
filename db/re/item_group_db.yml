@@ -1661,6 +1661,8 @@ Body:
             Rate: 12
           - Item: Empty_Bottle
             Rate: 12
+          - Item: Emperium
+            Rate: 12
           - Item: Yellow_Gemstone
             Rate: 12
           - Item: Red_Gemstone
@@ -1740,6 +1742,10 @@ Body:
           - Item: Monkey_Doll
             Rate: 12
           - Item: Raccoondog_Doll
+            Rate: 12
+          - Item: Oridecon_Stone
+            Rate: 12
+          - Item: Elunium_Stone
             Rate: 12
           - Item: Danggie
             Rate: 12
@@ -1875,6 +1881,8 @@ Body:
             Rate: 12
           - Item: Gold
             Rate: 12
+          - Item: Alchol
+            Rate: 12
           - Item: Detrimindexta
             Rate: 12
           - Item: Karvodailnirol
@@ -1898,6 +1906,10 @@ Body:
           - Item: White_Dyestuffs
             Rate: 12
           - Item: Black_Dyestuffs
+            Rate: 12
+          - Item: Oridecon
+            Rate: 12
+          - Item: Elunium
             Rate: 12
           - Item: Anvil
             Rate: 12
@@ -1986,6 +1998,8 @@ Body:
           - Item: Wild_Boar's_Mane
             Rate: 12
           - Item: Tiger's_Skin
+            Rate: 12
+          - Item: Tiger_Footskin
             Rate: 12
           - Item: Limb_Of_Mantis
             Rate: 12
@@ -2833,6 +2847,8 @@ Body:
             Rate: 3
           - Item: Ninja_Suit
             Rate: 3
+          - Item: Wedding_Dress
+            Rate: 3
           - Item: G_Strings
             Rate: 3
           - Item: Novice_Breast
@@ -2952,6 +2968,8 @@ Body:
           - Item: Gas_Mask
             Rate: 3
           - Item: Machoman_Glasses
+            Rate: 3
+          - Item: Puppy_Love
             Rate: 3
           - Item: Safety_Helmet
             Rate: 3
@@ -3200,6 +3218,8 @@ Body:
           - Item: Great_Wing
             Rate: 12
           - Item: Taegeuk_Plate
+            Rate: 12
+          - Item: Tuxedo
             Rate: 12
           - Item: Leopard_Skin
             Rate: 12
@@ -4150,6 +4170,8 @@ Body:
             Rate: 3
           - Item: Stainer_Card
             Rate: 3
+          - Item: Creamy_Card
+            Rate: 3
           - Item: Coco_Card
             Rate: 3
           - Item: Steel_Chonchon_Card
@@ -4162,6 +4184,8 @@ Body:
             Rate: 3
           - Item: Martin_Card
             Rate: 3
+          - Item: Ghostring_Card
+            Rate: 1
           - Item: Poison_Spore_Card
             Rate: 3
           - Item: Vadon_Card
@@ -4173,6 +4197,8 @@ Body:
           - Item: Elder_Wilow_Card
             Rate: 3
           - Item: Vitata_Card
+            Rate: 1
+          - Item: Angeling_Card
             Rate: 1
           - Item: Marina_Card
             Rate: 3
@@ -4316,6 +4342,8 @@ Body:
             Rate: 1
           - Item: Khalitzburg_Card
             Rate: 1
+          - Item: Joker_Card
+            Rate: 1
           - Item: Evil_Druid_Card
             Rate: 1
           - Item: Gargoyle_Card
@@ -4357,6 +4385,8 @@ Body:
           - Item: The_Paper_Card
             Rate: 1
           - Item: Demon_Pungus_Card
+            Rate: 1
+          - Item: Deviling_Card
             Rate: 1
           - Item: Poison_Toad_Card
             Rate: 1
@@ -4817,10 +4847,18 @@ Body:
           - Item: Centipede_Larva_Card
             Rate: 2
           - Item: Hilsrion_Card
+            Rate: 2
+          - Item: Duneirre_Card
+            Rate: 1
+          - Item: Lata_Card
             Rate: 1
           - Item: Ringco_Card
             Rate: 1
           - Item: Pillar_Card
+            Rate: 1
+          - Item: Hardrock_Mommos_Card
+            Rate: 1
+          - Item: Tendrilion_Card
             Rate: 1
           - Item: Aunoe_Card
             Rate: 1
@@ -4833,41 +4871,39 @@ Body:
           - Item: Pinguicula_Dark_Card
             Rate: 1
           - Item: Naga_Card
-            Rate: 3
+            Rate: 1
           - Item: Nepenthes_Card
-            Rate: 3
+            Rate: 1
           - Item: Egg_Of_Draco_Card
-            Rate: 3
+            Rate: 1
           - Item: Bradium_Goram_Card
-            Rate: 3
+            Rate: 1
           - Item: Ancient_Tree_Card
-            Rate: 3
+            Rate: 1
           - Item: Jakudam_Card
-            Rate: 3
+            Rate: 1
           - Item: Cobalt_Mineral_Card
-            Rate: 3
+            Rate: 1
           - Item: Pinguicula_Card
-            Rate: 3
+            Rate: 1
           - Item: Hell_Apocalips_Card
-            Rate: 3
+            Rate: 1
           - Item: Scaraba_Card
             Rate: 1
           - Item: Dolomedes_Card
             Rate: 1
-          - Item: Gold_Scaraba_Card
-            Rate: 1
           - Item: Miming_Card
             Rate: 1
           - Item: Little_Fatum_Card
-            Rate: 2
+            Rate: 1
           - Item: Parus_Card
             Rate: 1
           - Item: Angra_Mantis_Card
             Rate: 1
           - Item: Pom_Spider_Card
-            Rate: 2
+            Rate: 1
           - Item: Alnoldi_Card
-            Rate: 2
+            Rate: 1
           - Item: Comodo_Card
             Rate: 1
           - Item: Cendrawasih_Card
@@ -4875,23 +4911,89 @@ Body:
           - Item: Banaspaty_Card
             Rate: 1
           - Item: Butoijo_Card
-            Rate: 2
+            Rate: 1
           - Item: Sedora_Card
             Rate: 1
           - Item: Sropho_Card
             Rate: 1
           - Item: Pot_Dofle_Card
             Rate: 1
-          - Item: King_Dramoh_Card
-            Rate: 1
           - Item: Siorava_Card
             Rate: 1
           - Item: Red_Eruma_Card
-            Rate: 2
+            Rate: 1
           - Item: Wild_Rider_Card
             Rate: 1
           - Item: Mini_Octopus_Card
-            Rate: 2
+            Rate: 1
+          - Item: Alphoccio_Card
+            Rate: 1
+          - Item: Ceila_Card
+            Rate: 1
+          - Item: Chen_Card
+            Rate: 1
+          - Item: Flamel_Card
+            Rate: 1
+          - Item: Gertie_Card
+            Rate: 1
+          - Item: Randel_Card
+            Rate: 1
+          - Item: Trentini_Card
+            Rate: 1
+          - Item: Soheon_Card
+            Rate: 1
+          - Item: Elvira_Card
+            Rate: 1
+          - Item: Lora_Card
+            Rate: 1
+          - Item: Rudo_Card
+            Rate: 1
+          - Item: Bungisngis_Card
+            Rate: 1
+          - Item: Engkanto_Card
+            Rate: 1
+          - Item: Manananggal_Card
+            Rate: 1
+          - Item: Mangkukulam_Card
+            Rate: 1
+          - Item: Tikbalang_Card
+            Rate: 1
+          - Item: Tiyanak_Card
+            Rate: 1
+          - Item: Wakwak_Card
+            Rate: 1
+          - Item: Jejeling_Card
+            Rate: 1
+          - Item: Menblatt_Card
+            Rate: 1
+          - Item: Petal_Card
+            Rate: 1
+          - Item: Cenere_Card
+            Rate: 1
+          - Item: AntiqueBook_Card
+            Rate: 1
+          - Item: LichternB_Card
+            Rate: 1
+          - Item: LichternY_Card
+            Rate: 1
+          - Item: LichternR_Card
+            Rate: 1
+          - Item: LichternG_Card
+            Rate: 1
+          - Item: Big_Ben_Card
+            Rate: 1
+          - Item: Big_Bell_Card
+            Rate: 1
+          - Item: Neo_Punk_Card
+            Rate: 1
+          - Item: Arc_Elder_Card
+            Rate: 1
+          - Item: Time_Keeper_Card
+            Rate: 1
+          - Item: Owl_Viscount_Card
+            Rate: 1
+          - Item: Owl_Marquees_Card
+            Rate: 1
   - Group: CARDALBUM_ACC
     SubGroups:
       - SubGroup: 1
@@ -20949,6 +21051,8 @@ Body:
             Rate: 14
           - Item: Empty_Bottle
             Rate: 14
+          - Item: Emperium
+            Rate: 14
           - Item: Yellow_Gemstone
             Rate: 14
           - Item: Red_Gemstone
@@ -21028,6 +21132,10 @@ Body:
           - Item: Monkey_Doll
             Rate: 14
           - Item: Raccoondog_Doll
+            Rate: 14
+          - Item: Oridecon_Stone
+            Rate: 14
+          - Item: Elunium_Stone
             Rate: 14
           - Item: Danggie
             Rate: 14
@@ -21163,6 +21271,8 @@ Body:
             Rate: 14
           - Item: Gold
             Rate: 14
+          - Item: Alchol
+            Rate: 14
           - Item: Detrimindexta
             Rate: 14
           - Item: Karvodailnirol
@@ -21186,6 +21296,10 @@ Body:
           - Item: White_Dyestuffs
             Rate: 14
           - Item: Black_Dyestuffs
+            Rate: 14
+          - Item: Oridecon
+            Rate: 14
+          - Item: Elunium
             Rate: 14
           - Item: Anvil
             Rate: 14
@@ -21274,6 +21388,8 @@ Body:
           - Item: Wild_Boar's_Mane
             Rate: 14
           - Item: Tiger's_Skin
+            Rate: 14
+          - Item: Tiger_Footskin
             Rate: 14
           - Item: Limb_Of_Mantis
             Rate: 14
@@ -21409,6 +21525,8 @@ Body:
             Rate: 7
           - Item: Claymore
             Rate: 7
+          - Item: Chrome_Twohand_Sword
+            Rate: 1
           - Item: Knife_
             Rate: 7
           - Item: Cutter_
@@ -21481,6 +21599,8 @@ Body:
             Rate: 7
           - Item: Lance_
             Rate: 7
+          - Item: Imperial_Spear
+            Rate: 1
           - Item: Guisarme_
             Rate: 7
           - Item: Glaive_
@@ -21556,6 +21676,8 @@ Body:
           - Item: Survival_Rod2_
             Rate: 1
           - Item: Hypnotist's_Staff_
+            Rate: 1
+          - Item: Mental_Stick
             Rate: 1
           - Item: Bow_
             Rate: 7
@@ -21647,6 +21769,8 @@ Body:
             Rate: 1
           - Item: Combo_Battle_Glove
             Rate: 1
+          - Item: Sura_Rampage
+            Rate: 1
           - Item: Violin_
             Rate: 7
           - Item: Mandolin_
@@ -21670,6 +21794,8 @@ Body:
           - Item: Oriental_Lute
             Rate: 1
           - Item: Base_Guitar
+            Rate: 1
+          - Item: Green_Whistle
             Rate: 1
           - Item: Rope_
             Rate: 7
@@ -21703,6 +21829,10 @@ Body:
             Rate: 1
           - Item: Carrot_Whip
             Rate: 1
+          - Item: Stem_Whip
+            Rate: 1
+          - Item: Rosebine
+            Rate: 1
           - Item: Guard_
             Rate: 7
           - Item: Buckler_
@@ -21715,6 +21845,8 @@ Body:
             Rate: 7
           - Item: Novice_Guard
             Rate: 7
+          - Item: Imperial_Guard
+            Rate: 1
           - Item: Sunglasses
             Rate: 7
           - Item: Glasses
@@ -21775,6 +21907,10 @@ Body:
             Rate: 7
           - Item: Circlet_
             Rate: 7
+          - Item: Tiara
+            Rate: 1
+          - Item: Crown
+            Rate: 1
           - Item: Santa's_Hat
             Rate: 7
           - Item: One_Eyed_Glass
@@ -21808,6 +21944,8 @@ Body:
           - Item: Angelic_Chain
             Rate: 1
           - Item: Satanic_Chain
+            Rate: 1
+          - Item: Magestic_Goat
             Rate: 1
           - Item: Snowy_Horn
             Rate: 7
@@ -21917,6 +22055,8 @@ Body:
             Rate: 7
           - Item: Ninja_Suit
             Rate: 7
+          - Item: Wedding_Dress
+            Rate: 7
           - Item: G_Strings
             Rate: 7
           - Item: Novice_Breast
@@ -21939,6 +22079,10 @@ Body:
             Rate: 7
           - Item: Novice_Boots
             Rate: 7
+          - Item: Feral_Boots
+            Rate: 1
+          - Item: Dance_Shoes
+            Rate: 1
           - Item: Hood_
             Rate: 7
           - Item: Muffler_
@@ -21956,6 +22100,8 @@ Body:
           - Item: Pauldron
             Rate: 1
           - Item: Wing_Of_Eagle
+            Rate: 1
+          - Item: Feral_Tail
             Rate: 1
           - Item: Ring
             Rate: 7
@@ -22015,6 +22161,14 @@ Body:
             Rate: 1
           - Item: Hyper_Changer
             Rate: 1
+          - Item: Gold_Trickle
+            Rate: 1
+          - Item: El_Dicastes_Light
+            Rate: 1
+          - Item: Telekinetic_Orb
+            Rate: 1
+          - Item: Alchemy_Glove
+            Rate: 1
           - Item: Gemmed_Crown
             Rate: 1
           - Item: Joker_Jester
@@ -22025,6 +22179,8 @@ Body:
             Rate: 7
           - Item: Loard_Circlet
             Rate: 1
+          - Item: Puppy_Love
+            Rate: 7
           - Item: Safety_Helmet
             Rate: 7
           - Item: Indian_Hair_Piece
@@ -22037,6 +22193,8 @@ Body:
             Rate: 7
           - Item: Bone_Helm
             Rate: 1
+          - Item: Corsair
+            Rate: 1
           - Item: Panda_Cap
             Rate: 7
           - Item: Poring_Hat
@@ -22044,6 +22202,8 @@ Body:
           - Item: Fruit_Shell
             Rate: 7
           - Item: Spinx_Helm
+            Rate: 1
+          - Item: Assassin_Mask
             Rate: 1
           - Item: Novice_Egg_Cap
             Rate: 7
@@ -22272,6 +22432,8 @@ Body:
           - Item: Great_Wing
             Rate: 14
           - Item: Taegeuk_Plate
+            Rate: 14
+          - Item: Tuxedo
             Rate: 14
           - Item: Leopard_Skin
             Rate: 14
@@ -22535,6 +22697,10 @@ Body:
             Rate: 1
           - Item: Coward_
             Rate: 1
+          - Item: Black_Wing
+            Rate: 1
+          - Item: Ancient_Dagger
+            Rate: 1
           - Item: Long_Barrel
             Rate: 1
           - Item: Long_Barrel_
@@ -22562,6 +22728,12 @@ Body:
           - Item: Freezing_Sphere
             Rate: 1
           - Item: Huuma_Calm_Mind
+            Rate: 1
+          - Item: Chrome_Sword
+            Rate: 1
+          - Item: Red_Ether_Bag
+            Rate: 1
+          - Item: Mystic_Bow
             Rate: 1
   - Group: VIOLET_SCROLL
     SubGroups:
@@ -23139,3 +23311,149 @@ Body:
           - Item: Detale_Card
             Rate: 1
             Announced: true
+  - Group: XMAS_PACKAGE_14
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Event_Cake
+            Rate: 800
+            Amount: 10
+            UniqueId: true
+          - Item: White_Slim_Potion_B
+            Rate: 800
+            Amount: 5
+            UniqueId: true
+          - Item: White_Potion_B
+            Rate: 900
+            Amount: 5
+            UniqueId: true
+          - Item: Chocolate_Drink_B
+            Rate: 700
+            Amount: 3
+            UniqueId: true
+          - Item: Blue_Potion_B
+            Rate: 700
+            Amount: 3
+            UniqueId: true
+          - Item: Center_Potion_B
+            Rate: 800
+            Amount: 3
+            UniqueId: true
+          - Item: Berserk_Potion_B
+            Rate: 800
+            Amount: 3
+            UniqueId: true
+          - Item: Awakening_Potion_B
+            Rate: 800
+            Amount: 3
+            UniqueId: true
+          - Item: Yggdrasilberry
+            Rate: 294
+            Amount: 3
+            UniqueId: true
+          - Item: C_Polar_Bear_Cap
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Mini_Tree_J
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Cat_Santa_Hat
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Rudolph_Santa_Hat
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_Santa_Hat_2
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: C_ShineSantaPoring
+            Rate: 1
+            Amount: 1
+            UniqueId: true
+          - Item: Str_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Agi_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Vit_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Int_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Dex_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Luk_Dish07
+            Rate: 400
+            Amount: 1
+            UniqueId: true
+          - Item: Old_Card_Album
+            Rate: 100
+            Amount: 1
+            UniqueId: true
+  - Group: EASTER_EGG
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Candy
+            Rate: 4
+            Amount: 5
+          - Item: Piece_Of_Cake
+            Rate: 4
+            Amount: 3
+          - Item: Jam_Pancake
+            Rate: 4
+            Amount: 2
+          - Item: Fruit_Of_Mastela
+            Rate: 3
+            Amount: 1
+          - Item: Mystery_Egg
+            Rate: 1
+            Amount: 1
+  - Group: PITAPAT_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Solo_Gift_Basket
+            Rate: 1000
+            Amount: 1
+          - Item: Couple_Event_Basket
+            Rate: 1000
+            Amount: 1
+          - Item: Strawberry_Choco
+            Rate: 2000
+            Amount: 5
+          - Item: Chocolate_Drink
+            Rate: 2000
+            Amount: 3
+          - Item: Candy_Striper
+            Rate: 2000
+            Amount: 5
+          - Item: Angeling_Potion
+            Rate: 1000
+            Amount: 3
+          - Item: Diamond_Ring
+            Rate: 300
+            Amount: 1
+            Announced: true
+          - Item: Witherless_Rose
+            Rate: 400
+            Amount: 1
+            Announced: true
+          - Item: Jewel_Ring
+            Rate: 300
+            Amount: 1
+            Announced: true
+

@@ -598,7 +598,7 @@
 4627:4628,{ bonus2 bIgnoreDefRaceRate,RC_Formless,50; bonus2 bIgnoreDefRaceRate,RC_Demon,50;}
 4629:4630,{ bonus3 bAutoSpell,"NPC_WIDECURSE",2,2; bonus2 bSubEle,Ele_Neutral,5; }
 4631:4632,{ bonus5 bAutoSpell,"WZ_VERMILION",1,1,BF_WEAPON,0; }
-4635:4636,{ bonus2 bResEff,Eff_Burning,10000; }
+4635:4636,{ bonus2 bSubEle,Ele_Dark,100; bonus2 bSubEle,Ele_Undead,100; }
 4642:4646,{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; }
 4643:4646,{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; }
 4644:4646,{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; }
