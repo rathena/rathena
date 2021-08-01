@@ -29,7 +29,7 @@ The table below explains which fields are accessed in each.
 +===============+=================+====================+================+
 | Duration      |       no        |        no          |      YES       |
 +===============+=================+====================+================+
-| GUID          |       no        |        no          |      YES       |
+| UniqueId      |       no        |        no          |      YES       |
 +===============+=================+====================+================+
 | Bound         |       no        |        no          |      YES       |
 +===============+=================+====================+================+
@@ -151,10 +151,10 @@ Duration: Makes the item a rental item, which will be expire in the given amount
 
 ---------------------------------------
 
-GUID: Makes the given item(s) with Unique ID. Item will be stacked ONLY each group
+UniqueId: Makes the given item(s) with Unique ID. Item will be stacked ONLY each group
       when it obtained. Cannot be stacked with same item, even it's stackable item.
 	  Example, there is Box (just call it Apple_Box) that contains 3x Apples with
-	  GUID = 1. When Apples appear it will stack for each 3 even another 3x Apples
+	  UniqueId = 1. When Apples appear it will stack for each 3 even another 3x Apples
 	  are appeared by same box. So it will be filled in inventory as:
 	        3x Apples | 3x Apples | so on... | nx Apples (normal)
 

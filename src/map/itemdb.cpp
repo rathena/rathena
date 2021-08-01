@@ -1551,8 +1551,11 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string group_name_constant = "IG_" + group_name;
 	int64 constant;
 
-	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < IG_BLUEBOX || constant >= IG_MAX) {
-		this->invalidWarning(node["Group"], "Invalid group %s.\n", group_name.c_str());
+	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < IG_BLUEBOX) {
+		if (strncasecmp(group_name.c_str(), "IG_", 3) != 0)
+			this->invalidWarning(node["Group"], "Invalid group %s.\n", group_name.c_str());
+		else
+			this->invalidWarning(node["Group"], "Invalid group %s. Note that 'IG_' is automatically appended to the group name.\n", group_name.c_str());
 		return 0;
 	}
 
