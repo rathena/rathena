@@ -43,8 +43,41 @@ GroupID: See the "Item Group ID" section in 'src/map/itemdb.hpp' and the "item g
 
 ---------------------------------------
 
+Index: Unique number that can be used to add the same Item with different data in the list.
+
+---------------------------------------
+
 Item: Available item that will be obtained from this item group.
-        Requires the AegisName of the item.
+      Requires the AegisName of the item.
+	  This field is required in any case.
+
+---------------------------------------
+
+Example, we define a list of 3 elements in a subgroup:
+  - Group: MyItemGroup
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: Red_Potion
+            Amount: 1
+            Rate: 5
+          - Index: 1
+            Item: Red_Potion
+            Amount: 2
+            Rate: 1
+          - Index: 2
+            Item: Red_Potion
+            Amount: 2
+            Rate: 1
+
+On import, to change the amount of Red_Potion in Index 1:
+  - Group: MyItemGroup
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 1
+            Amount: 7
 
 ---------------------------------------
 
@@ -52,12 +85,14 @@ Rate: Probability to get the item. Not a percentage value!
 
 Examples:
   - Group: MyItemGroup
-    Contain:
+    SubGroups:
       - SubGroup: 1
         List:
-          - Item: Knife
+          - Index: 0
+            Item: Knife
             Rate: 5
-          - Item: Dagger
+          - Index: 1
+            Item: Dagger
             Rate: 1
 
 	- Knife has chance 5/6 (83.3%) to be obtained
@@ -74,22 +109,28 @@ SubGroup: Setting this to '0' makes the item always obtainable ("must" item).
 
 	Item Group:
       - Group: MyItemGroup
-        Contain:
+        SubGroups:
           - SubGroup: 0
             List:
-              - Item: Knife       # "must" item(s)
-              - Item: Dagger      # "must" item(s)
+              - Index: 0
+                Item: Knife       # "must" item(s)
+              - Index: 1
+                Item: Dagger      # "must" item(s)
           - SubGroup: 1
             List:
-              - Item: Stiletto    # random at SubGroup 1
+              - Index: 0
+                Item: Stiletto    # random at SubGroup 1
                 Rate: 5
-              - Item: Stiletto_   # random at SubGroup 1
+              - Index: 1
+                Item: Stiletto_   # random at SubGroup 1
                 Rate: 2
           - SubGroup: 2
             List:
-              - Item: Stiletto    # random at SubGroup 2
+              - Index: 0
+                Item: Stiletto    # random at SubGroup 2
                 Rate: 5
-              - Item: Dagger_     # random at SubGroup 2
+              - Index: 1
+                Item: Dagger_     # random at SubGroup 2
                 Rate: 4
 
 	Usages:

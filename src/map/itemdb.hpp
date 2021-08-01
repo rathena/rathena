@@ -2016,7 +2016,7 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
-	std::unordered_map<t_itemid, std::shared_ptr<s_item_group_entry>> data; /// item ID, s_item_group_entry
+	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
 
 	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup();
 };
@@ -2175,7 +2175,7 @@ extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 2, 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 3, 1) {
 
 	}
 
