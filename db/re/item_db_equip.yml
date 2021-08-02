@@ -5831,6 +5831,40 @@ Body:
       bonus2 bAddRace,RC_Player_Human,40;
       bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Freeze,1000;
+  - Id: 1320
+    AegisName: Diva_Axe
+    Name: Diva Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 1800
+    Attack: 180
+    MagicAttack: 110
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      SuperNovice: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 1321
     AegisName: Dofle_Axe_
     Name: Deflation Axe
@@ -5948,6 +5982,40 @@ Body:
     Script: |
       bonus bDex,2;
       bonus bLuk,2;
+  - Id: 1325
+    AegisName: Mirage_Axe
+    Name: Mirage Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 1800
+    Attack: 180
+    MagicAttack: 110
+    Range: 5
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      SuperNovice: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 1326
     AegisName: Illusion_War_Axe
     Name: Illusion War Axe
@@ -8440,6 +8508,34 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,(.@r<=15?pow(.@r,2):225);
       bonus bBaseAtk,((max(0,BaseLevel-70)/10)*5);
+  - Id: 1444
+    AegisName: Spear_of_Trust
+    Name: Thunder Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 2000
+    Attack: 140
+    Range: 3
+    Slots: 3
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Wind;
+      if (.@r>=7) {
+         .@val = 10;
+         if (.@r>=9)
+            .@val += 15;
+         bonus2 bAddEle,Ele_Water,.@val;
+         bonus2 bAddRace,RC_Fish,.@val;
+      }
   - Id: 1445
     AegisName: "[Rental]_Hunting_Spear"
     Name: "[Rental] Hunting Spear"
@@ -17309,6 +17405,64 @@ Body:
       bonus bAspd,1;
       bonus bAspdRate,getrefine();
       bonus2 bAddSize,Size_Medium,getrefine();
+  - Id: 1842
+    AegisName: Diva_Claw
+    Name: Diva Claw
+    Type: Weapon
+    Weight: 400
+    Attack: 140
+    MagicAttack: 100
+    Range: 1
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 1843
+    AegisName: Mirage_Claw
+    Name: Mirage Claw
+    Type: Weapon
+    Weight: 400
+    Attack: 140
+    MagicAttack: 100
+    Range: 5
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 1845
     AegisName: Probation_Knuckle
     Name: Trial Sura's Knuckle
@@ -18632,6 +18786,58 @@ Body:
          bonus bBaseAtk,(5*.@lvl);
       if (.@r>=9)
          bonus bAspd,1;
+  - Id: 1945
+    AegisName: Diva_Viollin
+    Name: Diva Viollin
+    Type: Weapon
+    SubType: Musical
+    Weight: 250
+    Attack: 180
+    MagicAttack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
+      if (.@r>=9)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+  - Id: 1946
+    AegisName: Mirage_Viollin
+    Name: Mirage Viollin
+    Type: Weapon
+    SubType: Musical
+    Weight: 250
+    Attack: 180
+    MagicAttack: 120
+    Range: 5
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
+      if (.@r>=9)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
   - Id: 1950
     AegisName: Rope
     Name: Rope
@@ -20585,6 +20791,68 @@ Body:
       if (BaseJob == JOB_WIZARD) {
          bonus bMatk,15;
       }
+  - Id: 2035
+    AegisName: Diva_Staff
+    Name: Diva Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2400
+    Attack: 120
+    MagicAttack: 270
+    Range: 1
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,2*.@r;
+      if (.@r>=7)
+         bonus bMatkRate,4;
+      if (.@r>=9)
+         bonus bMatkRate,4;
+  - Id: 2036
+    AegisName: Mirage_Staff
+    Name: Mirage Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Weight: 2400
+    Attack: 120
+    MagicAttack: 270
+    Range: 5
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,2*.@r;
+      if (.@r>=7)
+         bonus bMatkRate,4;
+      if (.@r>=9)
+         bonus bMatkRate,4;
   - Id: 2039
     AegisName: Wizardy_Staff_IL
     Name: Illusion Wizardry Staff
@@ -33051,10 +33319,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if (BaseLevel<80) {
-         bonus bMaxHP,400;
-         bonus bMaxSP,200;
-      }
+      bonus bInt,2;
+      bonus bMatkRate,3;
+      bonus bMaxHP,100;
   - Id: 2752
     AegisName: Praxinus_C
     Name: Praccsinos
@@ -57423,6 +57690,33 @@ Body:
       NoAuction: true
     Script: |
       bonus bBaseAtk,pow(getrefine(),2)*125/100;
+  - Id: 13130
+    AegisName: Gun_of_Trust
+    Name: Thunder Gun
+    Type: Weapon
+    SubType: Revolver
+    Weight: 1000
+    Attack: 60
+    Range: 7
+    Slots: 2
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Wind;
+      if (.@r>=7) {
+         .@val = 10;
+         if (.@r>=9)
+            .@val += 15;
+         bonus2 bAddEle,Ele_Water,.@val;
+         bonus2 bAddRace,RC_Fish,.@val;
+      }
   - Id: 13132
     AegisName: Toughen_Metal_Revolver
     Name: Enhanced Metal Revolver
@@ -57512,6 +57806,59 @@ Body:
          if (.@r >= 9) {
             bonus bAspd,1;
          }
+      }
+  - Id: 13140
+    AegisName: Diva_Handgun
+    Name: Diva Handgun
+    Type: Weapon
+    SubType: Revolver
+    Weight: 350
+    Attack: 70
+    Range: 7
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 13141
+    AegisName: Mirage_Handgun
+    Name: Mirage Handgun
+    Type: Weapon
+    SubType: Revolver
+    Weight: 350
+    Attack: 70
+    Range: 7
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
       }
   - Id: 13144
     AegisName: Rebeginer_RL_Gun
@@ -59391,6 +59738,62 @@ Body:
          .@bonus += 20;
       }
       bonus2 bSkillAtk,"KO_HUUMARANKA",.@bonus;
+  - Id: 13333
+    AegisName: Diva_Huuma
+    Name: Diva Huuma
+    Type: Weapon
+    SubType: Huuma
+    Weight: 1500
+    Attack: 150
+    MagicAttack: 160
+    Range: 3
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 13334
+    AegisName: Mirage_Huuma
+    Name: Mirage Huuma
+    Type: Weapon
+    SubType: Huuma
+    Weight: 1500
+    Attack: 150
+    MagicAttack: 160
+    Range: 5
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 13336
     AegisName: Probation_Huuma
     Name: Trial Ninja's Huuma Shuriken
@@ -61478,6 +61881,70 @@ Body:
       }
       if (.@hp) {
          bonus bMaxHP,.@hp;
+      }
+  - Id: 13466
+    AegisName: Diva_Blade
+    Name: Diva Blade
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1200
+    Attack: 150
+    MagicAttack: 130
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 13467
+    AegisName: Mirage_Blade
+    Name: Mirage Blade
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 1200
+    Attack: 150
+    MagicAttack: 130
+    Range: 5
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
       }
   - Id: 13469
     AegisName: Illusion_Immaterial_Sword
@@ -64917,6 +65384,40 @@ Body:
          bonus bHPrecovRate,100;
          bonus bSPrecovRate,100;
       }
+  - Id: 15187
+    AegisName: Diva_Robe
+    Name: Diva Robe
+    Type: Armor
+    Weight: 1000
+    Defense: 80
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus bHPrecovRate,10;
+      if (.@r>=9)
+         bonus bHPrecovRate,20;
+  - Id: 15188
+    AegisName: Mirage_Robe
+    Name: Mirage Robe
+    Type: Armor
+    Weight: 1000
+    Defense: 80
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus bSPrecovRate,10;
+      if (.@r>=9)
+         bonus bSPrecovRate,20;
   - Id: 15189
     AegisName: Einherial_Armor
     Name: Einherjar Armor
@@ -67470,6 +67971,43 @@ Body:
       NoAuction: true
     Script: |
       bonus bBaseAtk,pow(getrefine(),2)*125/100;
+  - Id: 16049
+    AegisName: Mace_of_Trust
+    Name: Thunder Hammer
+    Type: Weapon
+    SubType: Mace
+    Weight: 2000
+    Attack: 130
+    Range: 1
+    Slots: 3
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
+      Novice: true
+      Priest: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Wind;
+      bonus bUnbreakableWeapon;
+      if (.@r>=7) {
+         .@val = 10;
+         if (.@r>=9)
+            .@val += 15;
+         bonus2 bAddEle,Ele_Water,.@val;
+         bonus2 bAddRace,RC_Fish,.@val;
+      }
   - Id: 16051
     AegisName: Valkyrie_Hammer_
     Name: Valkyrie Hammer
@@ -67570,6 +68108,76 @@ Body:
       bonus2 bSkillAtk,"GN_CARTCANNON",10;
       bonus2 bSkillAtk,"SR_SKYNETBLOW",10;
       bonus bBaseAtk,7*(getrefine()+(min(BaseLevel,150)/10));
+  - Id: 16058
+    AegisName: Diva_Mace
+    Name: Diva Mace
+    Type: Weapon
+    SubType: Mace
+    Weight: 1500
+    Attack: 150
+    MagicAttack: 110
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Monk: true
+      Priest: true
+      SuperNovice: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 16059
+    AegisName: Mirage_Mace
+    Name: Mirage Mace
+    Type: Weapon
+    SubType: Mace
+    Weight: 1500
+    Attack: 150
+    MagicAttack: 110
+    Range: 5
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Monk: true
+      Priest: true
+      SuperNovice: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 16060
     AegisName: Bottle
     Name: Liquor Bottle
@@ -68796,6 +69404,36 @@ Body:
       NoAuction: true
     Script: |
       bonus bBaseAtk,pow(getrefine(),2)*125/100;
+  - Id: 18133
+    AegisName: Bow_of_Trust
+    Name: Thunder Bow
+    Type: Weapon
+    SubType: Bow
+    Weight: 1500
+    Attack: 120
+    Range: 5
+    Slots: 2
+    Jobs:
+      Archer: true
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+      Thief: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Wind;
+      if (.@r>=7) {
+         .@val = 10;
+         if (.@r>=9)
+            .@val += 15;
+         bonus2 bAddEle,Ele_Water,.@val;
+         bonus2 bAddRace,RC_Fish,.@val;
+      }
   - Id: 18137
     AegisName: Burning_Bow_
     Name: Burning Bow
@@ -68946,6 +69584,69 @@ Body:
          bonus2 bSkillAtk,"AC_DOUBLE",50;
       }
       bonus bLongAtkRate,.@bonus;
+  - Id: 18146
+    AegisName: Diva_Wing
+    Name: Diva Wing
+    Type: Weapon
+    SubType: Bow
+    Weight: 900
+    Attack: 160
+    MagicAttack: 170
+    Range: 5
+    Slots: 1
+    Jobs:
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 18147
+    AegisName: Mirage_Wing
+    Name: Mirage Wing
+    Type: Weapon
+    SubType: Bow
+    Weight: 900
+    Attack: 160
+    MagicAttack: 170
+    Range: 5
+    Slots: 1
+    Jobs:
+      BardDancer: true
+      Hunter: true
+      Rogue: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,2*getskilllv("AC_VULTURE");
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 18149
     AegisName: Balistar_IL
     Name: Illusion Ballista
@@ -91679,6 +92380,40 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     View: 18
+  - Id: 20827
+    AegisName: Diva_Manteau
+    Name: Diva Manteau
+    Type: Armor
+    Weight: 600
+    Defense: 15
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus bMaxHPrate,5;
+      if (.@r>=9)
+         bonus bMaxHPrate,10;
+  - Id: 20828
+    AegisName: Mirage_Manteau
+    Name: Mirage Manteau
+    Type: Armor
+    Weight: 600
+    Defense: 15
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus bMaxSPrate,5;
+      if (.@r>=9)
+         bonus bMaxSPrate,10;
   - Id: 20830
     AegisName: Wings_of_Seraph
     Name: Wings of Seraph
@@ -93563,6 +94298,66 @@ Body:
       bonus bAspdRate,2*.@r;
       bonus bMatk,3*.@r;
       bonus bBaseAtk,(8*.@r)+7*(min(BaseLevel,150)/10);
+  - Id: 21026
+    AegisName: Diva_Claymore
+    Name: Diva Claymore
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 3400
+    Attack: 280
+    MagicAttack: 230
+    Range: 1
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 21027
+    AegisName: Mirage_Claymore
+    Name: Mirage Claymore
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 3400
+    Attack: 280
+    MagicAttack: 230
+    Range: 5
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 21030
     AegisName: Probation_TH_Sword
     Name: Trial Rune Knight's Two-Handed Sword
@@ -95523,20 +96318,8 @@ Body:
     Weight: 600
     Defense: 25
     Jobs:
-      Alchemist: true
-      Assassin: true
-      BardDancer: true
-      Blacksmith: true
-      Crusader: true
-      Hunter: true
-      Knight: true
-      Monk: true
-      Priest: true
-      Rogue: true
-      Sage: true
-      Wizard: true
-    Classes:
-      All_Third: true
+      KagerouOboro: true
+      Rebellion: true
     Locations:
       Shoes: true
     EquipLevelMin: 99
@@ -95928,6 +96711,40 @@ Body:
       bonus bHPrecovRate,40;
       bonus bSPrecovRate,20;
       bonus bUseSPrate,-5;
+  - Id: 22127
+    AegisName: Diva_Shoes
+    Name: Diva Shoes
+    Type: Armor
+    Weight: 600
+    Defense: 10
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus bMaxHP,1000;
+      if (.@r>=9)
+         bonus bMaxHP,2000;
+  - Id: 22128
+    AegisName: Mirage_Shoes
+    Name: Mirage Shoes
+    Type: Armor
+    Weight: 600
+    Defense: 10
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+        bonus bMaxSP,100;
+      if (.@r>=9)
+         bonus bMaxSP,200;
   - Id: 22131
     AegisName: Cowboy_Boots
     Name: Spurred Boots
@@ -107953,6 +108770,66 @@ Body:
       bonus bBaseAtk,9*.@r+8*(min(BaseLevel,150)/10);
       bonus2 bSkillAtk,"RK_HUNDREDSPEAR",10*.@r;
       bonus2 bSkillAtk,"LG_OVERBRAND",10*.@r;
+  - Id: 26004
+    AegisName: Diva_Lance
+    Name: Diva Lance
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 3500
+    Attack: 200
+    MagicAttack: 230
+    Range: 3
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 26005
+    AegisName: Mirage_Lance
+    Name: Mirage Lance
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 3500
+    Attack: 200
+    MagicAttack: 230
+    Range: 5
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 26007
     AegisName: Spectral_Spear_IL
     Name: Illusion Spectral Spear
@@ -108100,6 +108977,68 @@ Body:
       bonus bDex,5;
       bonus bInt,5;
       bonus bLongAtkRate,7;
+  - Id: 26105
+    AegisName: Diva_Wand
+    Name: Diva Wand
+    Type: Weapon
+    SubType: Staff
+    Weight: 300
+    Attack: 60
+    MagicAttack: 180
+    Range: 1
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,2*.@r;
+      if (.@r>=7)
+         bonus bMatkRate,4;
+      if (.@r>=9)
+         bonus bMatkRate,4;
+  - Id: 26106
+    AegisName: Mirage_Wand
+    Name: Mirage Wand
+    Type: Weapon
+    SubType: Staff
+    Weight: 300
+    Attack: 60
+    MagicAttack: 180
+    Range: 5
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,2*.@r;
+      if (.@r>=7)
+         bonus bMatkRate,4;
+      if (.@r>=9)
+         bonus bMatkRate,4;
   - Id: 26107
     AegisName: Staff_Of_Elder
     Name: Elder Staff
@@ -108420,6 +109359,69 @@ Body:
          .@val = 5;
       bonus2 bMagicAtkEle,Ele_Water,.@val;
       bonus2 bMagicAtkEle,Ele_Holy,.@val;
+  - Id: 26143
+    AegisName: Diva_Foxtail
+    Name: Diva Foxtail
+    Type: Weapon
+    SubType: Staff
+    Weight: 400
+    Attack: 150
+    MagicAttack: 180
+    Range: 1
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,2*.@r;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+         bonus bMatkRate,4;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+         bonus bMatkRate,4;
+      }
+  - Id: 26144
+    AegisName: Mirage_Foxtail
+    Name: Mirage Foxtail
+    Type: Weapon
+    SubType: Staff
+    Weight: 400
+    Attack: 150
+    MagicAttack: 180
+    Range: 5
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (getskilllv("SU_SOULATTACK") == 1) {
+        bonus bBaseAtk,20;
+      }
+      bonus bHealPower,2*.@r;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+         bonus bMatkRate,4;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+         bonus bMatkRate,4;
+      }
   - Id: 26151
     AegisName: Rutilus_Stick_OS
     Name: Rutilus Stick-OS
@@ -108877,6 +109879,58 @@ Body:
          bonus bBaseAtk,(5*.@lvl);
       if (.@r>=9)
          bonus bAspd,1;
+  - Id: 26201
+    AegisName: Diva_Blade_Whip
+    Name: Diva Blade Whip
+    Type: Weapon
+    SubType: Whip
+    Weight: 500
+    Attack: 150
+    MagicAttack: 120
+    Range: 2
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
+      if (.@r>=9)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+  - Id: 26202
+    AegisName: Mirage_Blade_Whip
+    Name: Mirage Blade Whip
+    Type: Weapon
+    SubType: Whip
+    Weight: 500
+    Attack: 150
+    MagicAttack: 120
+    Range: 5
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
+      if (.@r>=9)
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
   - Id: 26212
     AegisName: Heart_Whip
     Name: Heart Whip
@@ -109247,6 +110301,64 @@ Body:
       bonus bCritAtkRate,2*.@r;
       bonus bAspdRate,2*.@r;
       bonus bBaseAtk,7*(.@r+(min(BaseLevel,150)/10));
+  - Id: 28018
+    AegisName: Diva_Katar
+    Name: Diva Katar
+    Type: Weapon
+    SubType: Katar
+    Weight: 2800
+    Attack: 150
+    MagicAttack: 250
+    Range: 1
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28019
+    AegisName: Mirage_Katar
+    Name: Mirage Katar
+    Type: Weapon
+    SubType: Katar
+    Weight: 2800
+    Attack: 150
+    MagicAttack: 250
+    Range: 5
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 28022
     AegisName: Infiltrator_IL
     Name: Illusion Infiltrator
@@ -109894,6 +111006,70 @@ Body:
       } else if (.@r>=7) {
          bonus bCritAtkRate,5;
       }
+  - Id: 28117
+    AegisName: Diva_Twohand_Axe
+    Name: Diva Twohand Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Weight: 4000
+    Attack: 320
+    MagicAttack: 200
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28118
+    AegisName: Mirage_Twohand_Axe
+    Name: Mirage Twohand Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Weight: 4000
+    Attack: 320
+    MagicAttack: 200
+    Range: 5
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 28120
     AegisName: Probation_TH_Axe
     Name: Trial Mechanic's Two-Handed Axe
@@ -110480,6 +111656,244 @@ Body:
          if (.@r >= 9) {
             bonus2 bSkillCooldown,"RL_H_MINE",-1000;
          }
+      }
+  - Id: 28227
+    AegisName: Diva_Rifle
+    Name: Diva Rifle
+    Type: Weapon
+    SubType: Rifle
+    Weight: 850
+    Attack: 170
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",(readparam(bInt)/10)*7;
+      if (readparam(bInt)>=110)
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28228
+    AegisName: Mirage_Rifle
+    Name: Mirage Rifle
+    Type: Weapon
+    SubType: Rifle
+    Weight: 850
+    Attack: 170
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",(readparam(bInt)/10)*7;
+      if (readparam(bInt)>=110)
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28229
+    AegisName: Diva_Gatling_Gun
+    Name: Diva Gatling Gun
+    Type: Weapon
+    SubType: Gatling
+    Weight: 2500
+    Attack: 120
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RL_R_TRIP",(readparam(bAgi)/10)*7;
+      if (readparam(bAgi)>=110)
+         bonus2 bSkillAtk,"RL_R_TRIP",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28230
+    AegisName: Mirage_Gatling_Gun
+    Name: Mirage Gatling Gun
+    Type: Weapon
+    SubType: Gatling
+    Weight: 2500
+    Attack: 120
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
+      bonus2 bSkillAtk,"RL_R_TRIP",(readparam(bAgi)/10)*7;
+      if (readparam(bAgi)>=110)
+         bonus2 bSkillAtk,"RL_R_TRIP",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28231
+    AegisName: Diva_Launcher
+    Name: Diva Launcher
+    Type: Weapon
+    SubType: Grenade
+    Weight: 1400
+    Attack: 210
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RL_D_TAIL",(readparam(bLuk)/10)*7;
+      if (readparam(bLuk)>=110)
+         bonus2 bSkillAtk,"RL_D_TAIL",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28232
+    AegisName: Mirage_Launcher
+    Name: Mirage Launcher
+    Type: Weapon
+    SubType: Grenade
+    Weight: 1400
+    Attack: 210
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
+      bonus2 bSkillAtk,"RL_D_TAIL",(readparam(bLuk)/10)*7;
+      if (readparam(bLuk)>=110)
+         bonus2 bSkillAtk,"RL_D_TAIL",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28233
+    AegisName: Diva_Shotgun
+    Name: Diva Shotgun
+    Type: Weapon
+    SubType: Shotgun
+    Weight: 3000
+    Attack: 180
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bSplashRange,1;
+      bonus2 bSkillAtk,"RL_SLUGSHOT",(readparam(bStr)/10)*7;
+      if (readparam(bStr)>=110)
+         bonus2 bSkillAtk,"RL_SLUGSHOT",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28234
+    AegisName: Mirage_Shotgun
+    Name: Mirage Shotgun
+    Type: Weapon
+    SubType: Shotgun
+    Weight: 3000
+    Attack: 180
+    Range: 9
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bSplashRange,1;
+      bonus2 bSkillAtk,"RL_SLUGSHOT",(readparam(bStr)/10)*7;
+      bonus bBaseAtk,2*getskilllv("GS_SNAKEEYE");
+      if (readparam(bStr)>=110)
+         bonus2 bSkillAtk,"RL_SLUGSHOT",30;
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
       }
   - Id: 28240
     AegisName: Calf_Kingcobra
@@ -113610,6 +115024,64 @@ Body:
       bonus2 bSkillAtk,"MG_COLDBOLT",.@bonus;
       bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",.@bonus;
       bonus2 bSkillAtk,"WZ_EARTHSPIKE",.@bonus;
+  - Id: 28609
+    AegisName: Diva_Book
+    Name: Diva Book
+    Type: Weapon
+    SubType: Book
+    Weight: 800
+    Attack: 120
+    MagicAttack: 140
+    Range: 1
+    Slots: 1
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bHealPower,2*.@r;
+      if (.@r>=7)
+         bonus bMatkRate,4;
+      if (.@r>=9)
+         bonus bMatkRate,4;
+  - Id: 28610
+    AegisName: Mirage_Book
+    Name: Mirage Book
+    Type: Weapon
+    SubType: Book
+    Weight: 800
+    Attack: 120
+    MagicAttack: 140
+    Range: 5
+    Slots: 1
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bHealPower,2*.@r;
+      if (.@r>=7)
+         bonus bMatkRate,4;
+      if (.@r>=9)
+         bonus bMatkRate,4;
   - Id: 28612
     AegisName: Book_Of_The_Apo_IL
     Name: Illusion Apocalypse
@@ -114256,6 +115728,51 @@ Body:
     Script: |
       bonus bBaseAtk,pow(min(getrefine(),15),2);
       bonus bMatk,pow(min(getrefine(),15),2)/2;
+  - Id: 28708
+    AegisName: Dagger_of_Trust
+    Name: Thunder Sword
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1000
+    Attack: 150
+    Range: 1
+    Slots: 3
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAtkEle,Ele_Wind;
+      if (.@r>=7) {
+         .@val = 10;
+         if (.@r>=9)
+            .@val += 15;
+         bonus2 bAddEle,Ele_Water,.@val;
+         bonus2 bAddRace,RC_Fish,.@val;
+      }
   - Id: 28714
     AegisName: Toughen_Metal_Dagger
     Name: Enhanced Metal Dagger
@@ -114459,6 +115976,102 @@ Body:
          bonus bLongAtkRate,5;
       } else if (.@r>=7) {
          bonus bLongAtkRate,2;
+      }
+  - Id: 28722
+    AegisName: Diva_Dagger
+    Name: Diva Dagger
+    Type: Weapon
+    SubType: Dagger
+    Weight: 600
+    Attack: 120
+    MagicAttack: 120
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 28723
+    AegisName: Mirage_Dagger
+    Name: Mirage Dagger
+    Type: Weapon
+    SubType: Dagger
+    Weight: 600
+    Attack: 120
+    MagicAttack: 120
+    Range: 5
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      SuperNovice: true
+      Swordman: true
+      Thief: true
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
       }
   - Id: 28725
     AegisName: Moonlight_Sword_IL
@@ -121427,6 +123040,66 @@ Body:
     Locations:
       Costume_Head_Low: true
     View: 2070
+  - Id: 32001
+    AegisName: Diva_Spear
+    Name: Diva Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 1800
+    Attack: 150
+    MagicAttack: 110
+    Range: 3
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+  - Id: 32002
+    AegisName: Mirage_Spear
+    Name: Mirage Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 1800
+    Attack: 150
+    MagicAttack: 110
+    Range: 5
+    Slots: 1
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 150
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=7) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
+      if (.@r>=9) {
+         bonus bBaseAtk,30;
+         bonus bHit,5;
+      }
   - Id: 32004
     AegisName: Probation_Lance
     Name: Trial Royal Guard's Lance
@@ -129588,16 +131261,14 @@ Body:
       bonus bUnbreakableWeapon;
       bonus bShortAtkRate,3*(.@r/2);
       bonus bCritical,2*(.@r/3);
-      if (.@r>=7) {
+      if (.@r>=7)
          bonus bAspdRate,20;
-      }
       if (.@r>=9) {
          bonus2 bAddSize,Size_Small,25;
          bonus2 bAddSize,Size_Large,25;
       }
-      if (.@r>=11) {
-         skill "SM_SWORD",getskilllv("MS_BOWLINGBASH");
-      }
+      if (.@r>=11)
+         skill "KN_BOWLINGBASH",getskilllv("SM_SWORD");
   - Id: 500008
     AegisName: Ep172_1h_Sword2
     Name: Invidia Bundle

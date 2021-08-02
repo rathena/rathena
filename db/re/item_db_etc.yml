@@ -10531,9 +10531,9 @@ Body:
       if (BaseJob == Job_Rogue) {
          bonus bMatkRate,10;
          bonus2 bAddClass,Class_All,10;
-         bonus bMaxHPrate,getrefine()/2;
       }
-      /* Adds a chance of inflicting Confuse on target when using Body Paint skill. */
+      bonus bMaxHPrate,getrefine()/2;
+      bonus3 bAddEffOnSkill,"SC_BODYPAINT",Eff_Stun,1000;
   - Id: 4548
     AegisName: Upd_Salamander_Card
     Name: Enhanced Salamander Card
@@ -11358,9 +11358,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_SHORT,0;
   - Id: 4604
     AegisName: CorruptionRootH_Card
     Name: Realized Corruption Root Card
@@ -11374,9 +11374,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,30;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_SHORT,0;
   - Id: 4605
     AegisName: UndeadKnightM_Card
     Name: Agony Of Royal Knight Card
@@ -38275,6 +38275,30 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;
+  - Id: 27031
+    AegisName: Labyrinth_Bapho_Card
+    Name: Labyrinth Baphomet Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+  - Id: 27032
+    AegisName: Labyrinth_Dra_Card
+    Name: Labyrinth Dracula Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddClass,Class_All,10;
   - Id: 27081
     AegisName: AngerMoonlight_Card
     Name: Angry Moonlight Flower Card
