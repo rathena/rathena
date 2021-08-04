@@ -143,7 +143,7 @@ to move away from their specified spawn region.
 
 Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which
-identifies monster record in 'mob_db.txt' database of monsters. If the mob name
+identifies monster record in 'mob_db.yml' database of monsters. If the mob name
 is given as "--ja--", the 'japanese name' field from the monster database is
 used, (which, in rAthena, actually contains an English name) if it's "--en--",
 it's the 'english name' from the monster database (which contains an uppercase
@@ -2935,7 +2935,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_id5[]        - fifth array of random option IDs
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
-@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
+@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_db.yml, bound, and rental restrictions).
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -3064,7 +3064,7 @@ Examples
 *mergeitem2({"<item name>"{,<char_id>}});
 
 Merge all stackable items that separated by GUID flags
-(either by flag 4 item_flag.txt or GUID  in item_group).
+(UniqueId in item_db or in item_group).
 If no item ID/name given, all possible items in player's inventory will be merged.
 
 ---------------------------------------
@@ -3414,7 +3414,7 @@ of his/her guild, or, if a guild ID is specified, of that guild.
 *getcastlename("<map name>")
 
 This function returns the name of the castle when given the map name for that
-castle. The data is read from 'db/castle_db.txt'.
+castle. The data is read from 'db/castle_db.yml'.
 
 ---------------------------------------
 
@@ -5132,7 +5132,7 @@ Example:
 *groupranditem <group id>{,<sub_group>};
 
 Returns the item_id of a random item picked from the group specified. The
-different groups and their group number are specified in 'db/(pre-)re/item_group_db.txt'.
+different groups and their group number are specified in 'db/(pre-)re/item_group_db.yml'.
 
 When used in conjunction with other functions, you can get a random item. For
 example, for a random pet lure:
@@ -5150,7 +5150,7 @@ More info, see doc/item_group.txt.
 
 Similar to the above example, this command allows players to obtain the specified
 quantity of a random item from the group "<group id>". The different groups and
-their group number are specified in db/(pre-)re/item_group_db.txt
+their group number are specified in db/(pre-)re/item_group_db.yml
 
 If 'quantity' is not defined or 0, it will uses defined amount from Item Group list.
 
@@ -6473,7 +6473,7 @@ command, simply use 1 for type. Any other number won't be recognized.
 *strmobinfo(<type>,<monster id>);
 
 This function will return information about a monster record in the database, as
-per 'db/(pre-)re/mob_db.txt'. Type is the kind of information returned. Valid types are:
+per 'db/(pre-)re/mob_db.yml'. Type is the kind of information returned. Valid types are:
 It will return 0 if there is no such monster (or the type value is invalid),
 or an empty string if you requested the monster's name.
 
@@ -8054,7 +8054,7 @@ For the position, the x and y are given in the UnitSkillUsePos.
 CastCancel from skill_db.yml is the default value of <cancel>.
 
 If <Line_ID> is defined (positive number, default 0) the monster will say the message from 'Line_ID'
-in mob_chat_db.txt when casting the skill.
+in mob_chat_db.yml when casting the skill.
 
 ---------------------------------------
 

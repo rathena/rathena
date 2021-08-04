@@ -3651,11 +3651,11 @@ struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 	return fr;
 }
 
-// Display message from mob_chat_db.txt
-bool mob_chat_display_message (struct mob_data *md, short msg_id) {
-	struct mob_chat *mc = mob_chat(msg_id);
+// Display message from mob_chat_db.yml
+bool mob_chat_display_message (struct mob_data *md, uint16 msg_id) {
+	std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(msg_id);
 
-	if (mc) {
+	if (mc != nullptr) {
 		std::string name = md->name, output;
 		std::size_t unique = name.find("#");
 
