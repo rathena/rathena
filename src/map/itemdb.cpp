@@ -1043,8 +1043,19 @@ void ItemDatabase::loadingFinished(){
 
 	// Build the name lookup maps
 	for( const auto& entry : *this ){
-		this->nameToItemDataMap[entry.second->ename] = entry.second;
-		this->aegisNameToItemDataMap[entry.second->name] = entry.second;
+		// Create a copy
+		std::string ename = entry.second->ename;
+		// Convert it to lower
+		std::transform( ename.begin(), ename.end(), ename.begin(), std::tolower );
+
+		this->nameToItemDataMap[ename] = entry.second;
+
+		// Create a copy
+		std::string aegisname = entry.second->name;
+		// Convert it to lower
+		std::transform( aegisname.begin(), aegisname.end(), aegisname.begin(), std::tolower );
+
+		this->aegisNameToItemDataMap[aegisname] = entry.second;
 	}
 }
 
@@ -1081,29 +1092,27 @@ e_sex ItemDatabase::defaultGender( const YAML::Node &node, std::shared_ptr<item_
 }
 
 std::shared_ptr<item_data> ItemDatabase::searchname( const char* name ){
-	auto result = this->aegisNameToItemDataMap.find( name );
+	// Create a copy
+	std::string lowername = name;
+	// Convert it to lower
+	std::transform( lowername.begin(), lowername.end(), lowername.begin(), std::tolower );
 
-	if( result != this->aegisNameToItemDataMap.end() ){
-		return result->second;
-	}
-
-	return nullptr;
+	return util::umap_find( this->aegisNameToItemDataMap, lowername );
 }
 
 std::shared_ptr<item_data> ItemDatabase::search_aegisname( const char *name ){
-	auto result = this->aegisNameToItemDataMap.find( name );
+	// Create a copy
+	std::string lowername = name;
+	// Convert it to lower
+	std::transform( lowername.begin(), lowername.end(), lowername.begin(), std::tolower );
 
-	if( result != this->aegisNameToItemDataMap.end() ){
-		return result->second;
+	std::shared_ptr<item_data> result = util::umap_find( this->aegisNameToItemDataMap, lowername );
+
+	if( result != nullptr ){
+		return result;
 	}
 
-	result = this->nameToItemDataMap.find( name );
-
-	if( result != this->nameToItemDataMap.end() ){
-		return result->second;
-	}
-
-	return nullptr;
+	return util::umap_find( this->nameToItemDataMap, lowername );
 }
 
 ItemDatabase item_db;
