@@ -1033,10 +1033,15 @@ public:
 
 	}
 
-	void clear() override;
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
+	void clear() override{
+		TypesafeCachedYamlDatabase::clear();
+
+		this->nameToItemDataMap.clear();
+		this->aegisNameToItemDataMap.clear();
+	}
 
 	// Additional
 	std::shared_ptr<item_data> searchname( const char* name );

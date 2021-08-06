@@ -1048,13 +1048,6 @@ void ItemDatabase::loadingFinished(){
 	}
 }
 
-void ItemDatabase::clear(){
-	TypesafeCachedYamlDatabase::clear();
-
-	this->nameToItemDataMap.clear();
-	this->aegisNameToItemDataMap.clear();
-}
-
 /**
  * Applies gender restrictions according to settings.
  * @param node: YAML node containing the entry.
