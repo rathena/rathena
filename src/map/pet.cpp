@@ -75,7 +75,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["TameItem"], "Taming item %s does not exist.\n", item_name.c_str() );
@@ -96,7 +96,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["EggItem"], "Egg item %s does not exist.\n", item_name.c_str() );
@@ -113,7 +113,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["EquipItem"], "Equip item %s does not exist.\n", item_name.c_str() );
@@ -134,7 +134,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if( item == nullptr ){
 			this->invalidWarning( node["FoodItem"], "Food item %s does not exist.\n", item_name.c_str() );
@@ -441,7 +441,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 					return 0;
 				}
 
-				struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if( item == nullptr ){
 					this->invalidWarning( requirementNode["Item"], "Evolution requirement item %s does not exist.\n", item_name.c_str() );

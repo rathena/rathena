@@ -1023,6 +1023,9 @@ extern RandomOptionGroupDatabase random_option_group;
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
 private:
+	std::unordered_map<std::string, std::shared_ptr<item_data>> nameToItemDataMap;
+	std::unordered_map<std::string, std::shared_ptr<item_data>> aegisNameToItemDataMap;
+
 	e_sex defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id );
 
 public:
@@ -1030,9 +1033,14 @@ public:
 
 	}
 
+	void clear() override;
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
+
+	// Additional
+	std::shared_ptr<item_data> searchname( const char* name );
+	std::shared_ptr<item_data> search_aegisname( const char *name );
 };
 
 extern ItemDatabase item_db;
@@ -1057,8 +1065,6 @@ public:
 
 extern ItemGroupDatabase itemdb_group;
 
-struct item_data* itemdb_searchname(const char *name);
-struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(t_itemid nameid);
 struct item_data* itemdb_exists(t_itemid nameid);

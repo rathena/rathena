@@ -14508,7 +14508,6 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	int mob_id = 0;
-	struct item_data *id = NULL;
 	StringBuf command;
 	char *str;
 //#if PACKETVER >= 20131218
@@ -14533,12 +14532,14 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	std::shared_ptr<item_data> id = item_db.searchname( str );
+
 	// Item
-	if( (id = itemdb_searchname(str)) ) {
+	if( id ){
 		StringBuf_Init(&command);
-		if( !itemdb_isstackable2(id) ) //Nonstackable
+		if( !itemdb_isstackable2( id.get() ) ){ //Nonstackable
 			StringBuf_Printf(&command, "%citem2 %u 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
-		else {
+		}else{
 			if (id->flag.guid)
 				StringBuf_Printf(&command, "%citem %u 1", atcommand_symbol, id->nameid);
 			else
@@ -20892,7 +20893,6 @@ void clif_sale_search_reply( struct map_session_data* sd, struct cash_item_data*
 void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
 	char item_name[ITEM_NAME_LENGTH];
-	struct item_data *id = NULL;
 
 	nullpo_retv(sd);
 
@@ -20906,7 +20906,7 @@ void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 
 	safestrncpy( item_name, RFIFOCP(fd, 8), min(RFIFOW(fd, 2) - 7, ITEM_NAME_LENGTH) );
 
-	id = itemdb_searchname(item_name);
+	std::shared_ptr<item_data> id = item_db.searchname( item_name );
 
 	if( id ){
 		int i;

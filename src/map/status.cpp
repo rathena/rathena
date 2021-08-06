@@ -292,7 +292,7 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 									return 0;
 								}
 
-								struct item_data* id = itemdb_search_aegisname( item_name.c_str() );
+								std::shared_ptr<item_data> id = item_db.search_aegisname( item_name.c_str() );
 
 								if( id == nullptr ){
 									this->invalidWarning( chanceNode["Material"], "Unknown refine material %s, skipping.\n", item_name.c_str() );
