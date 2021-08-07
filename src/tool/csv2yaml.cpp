@@ -3880,16 +3880,6 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	}
 	if (columns > 9) entry.isNamed = atoi(str[9]) > 0;
 
-	// displays a message if the item already exists as the item name should be unique in the SubGroup
-	if (exists && group->item.count(rand_group) > 0) {
-		for (const auto &it : group->item[rand_group]) {
-			if (it.item_name == item_name) {
-				ShowWarning( "itemdb_read_group: Duplicate item %s in SubGroup %hu, Group '%s'.\n", item_name.c_str(), rand_group, str[0] );
-				break;
-			}
-		}
-	}
-
 	// in this case, we add x2 entries to keep the previous system: x1 in subgroup 0 without rate (must) and x1 in subgroup 1 with rate (random)
 	if (rand_group == 0 && prob > 0) {
 		if (exists)
