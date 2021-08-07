@@ -5961,10 +5961,6 @@ uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "Ratio", ratio))
 			return 0;
 
-		if (ratio == 0) {
-			this->invalidWarning(node["Ratio"], "Unsupported Ratio 0 for Item %s, skipping.\n", item_name.c_str());
-			return 0;
-		}
 		data->drop_ratio = ratio;
 	}
 
@@ -6028,6 +6024,13 @@ static void mob_drop_ratio_adjust(void){
 
 			// Adjust the rate if there is an entry in mob_item_ratio
 			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
+
+			// remove the item if the rate of item_dropratio_adjust is 0
+			if (rate_adjust == 0) {
+				mob->mvpitem[j].nameid = 0;
+				mob->mvpitem[j].rate = 0;
+				continue;
+			}
 
 			// Adjust rate with given algorithms
 			rate = mob_drop_adjust( rate, rate_adjust, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max );
@@ -6125,6 +6128,14 @@ static void mob_drop_ratio_adjust(void){
 			}
 
 			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
+
+			// remove the item if the rate of item_dropratio_adjust is 0
+			if (rate_adjust == 0) {
+				mob->dropitem[j].nameid = 0;
+				mob->dropitem[j].rate = 0;
+				continue;
+			}
+
 			rate = mob_drop_adjust( rate, rate_adjust, ratemin, ratemax );
 
 			// calculate and store Max available drop chance of the item

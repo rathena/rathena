@@ -23,6 +23,11 @@ Body:
  - Item: Jellopy
    Ratio: 1000
 
+Removes Jellopies from monsters drop
+Body:
+ - Item: Jellopy
+   Ratio: 0
+
 Jellopies from Porings will drop with 1x drop rate. Other monsters that drop Jellopies are unaffected (use global drop rate).
 Body:
  - Item: Jellopy
