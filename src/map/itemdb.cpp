@@ -1046,14 +1046,14 @@ void ItemDatabase::loadingFinished(){
 		// Create a copy
 		std::string ename = entry.second->ename;
 		// Convert it to lower
-		std::transform( ename.begin(), ename.end(), ename.begin(), std::tolower );
+		util::tolower( ename );
 
 		this->nameToItemDataMap[ename] = entry.second;
 
 		// Create a copy
 		std::string aegisname = entry.second->name;
 		// Convert it to lower
-		std::transform( aegisname.begin(), aegisname.end(), aegisname.begin(), std::tolower );
+		util::tolower( aegisname );
 
 		this->aegisNameToItemDataMap[aegisname] = entry.second;
 	}

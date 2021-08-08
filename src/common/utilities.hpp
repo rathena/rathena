@@ -258,6 +258,10 @@ namespace rathena {
 				return result;
 			}
 		}
+
+		template <typename T> void tolower( T& string ){
+			std::transform( string.begin(), string.end(), string.begin(), ::tolower );
+		}
 	}
 }
 
