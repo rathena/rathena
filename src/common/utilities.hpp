@@ -5,6 +5,7 @@
 #define UTILILITIES_HPP
 
 #include <algorithm>
+#include <locale>
 #include <map>
 #include <memory>
 #include <string>

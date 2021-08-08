@@ -1095,7 +1095,7 @@ std::shared_ptr<item_data> ItemDatabase::searchname( const char* name ){
 	// Create a copy
 	std::string lowername = name;
 	// Convert it to lower
-	std::transform( lowername.begin(), lowername.end(), lowername.begin(), std::tolower );
+	util::tolower( lowername );
 
 	return util::umap_find( this->aegisNameToItemDataMap, lowername );
 }
@@ -1104,7 +1104,7 @@ std::shared_ptr<item_data> ItemDatabase::search_aegisname( const char *name ){
 	// Create a copy
 	std::string lowername = name;
 	// Convert it to lower
-	std::transform( lowername.begin(), lowername.end(), lowername.begin(), std::tolower );
+	util::tolower( lowername );
 
 	std::shared_ptr<item_data> result = util::umap_find( this->aegisNameToItemDataMap, lowername );
 
