@@ -1950,10 +1950,6 @@ const std::string ComboDatabase::getDefaultLocation() {
 }
 
 uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
-	if (!this->nodeExists(node, "Combo") && !this->nodeExists(node, "Combos") || !this->nodeExists(node, "Script") && !this->nodeExists(node, "Clear")) {
-		return 0;
-	}
-
 	std::vector<std::vector<t_itemid>> items_list;
 
 	if (this->nodeExists(node, "Combos")) {
@@ -1964,13 +1960,24 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 		}
 	}
-	else {
+	else if (this->nodeExists(node, "Combo")) {
 		if (!this->parseComboNode("Combo", node, items_list))
 			return 0;
 	}
 
-	script_code *script = nullptr;
+	if (items_list.size() == 0) {
+		this->invalidWarning(node, "Empty combo, skipping.\n");
+		return 0;
+	}
+
 	bool clear = false;
+
+	if (this->nodeExists(node, "Clear")) {
+		if (!this->asBool(node, "Clear", clear))
+			return 0;
+	}
+
+	script_code *script = nullptr;
 
 	if (this->nodeExists(node, "Script")) {
 		std::string script_string;
@@ -1979,14 +1986,6 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		script = parse_script(script_string.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
-	} else {
-		if (!this->asBool(node, "Clear", clear))
-			return 0;
-	}
-
-	if (items_list.size() == 0) {
-		this->invalidWarning(node, "Empty combo, skipping.\n");
-		return 0;
 	}
 
 	uint64 count = 0;
@@ -2012,10 +2011,7 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 			continue;
 		}
 
-		if (script == nullptr)
-			return 0;
-
-		uint16 id = 0;
+		uint16 id = 0;	// entry id combo starts from 1
 
 		// find the id when the combo exists
 		for (const auto &it : *this) {
@@ -2032,20 +2028,21 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 			combo = std::make_shared<s_item_combo>();
 
 			combo->nameid.insert(combo->nameid.begin(), itemsit.begin(), itemsit.end());
-			combo->id = ++this->combo_num;	// start from 1
+			combo->id = ++this->combo_num;
+			combo->script = script;
+
+			this->put( combo->id, combo );
 		}
 		else {
-			script_free_code(combo->script);
+			if (this->nodeExists(node, "Script")) {
+				script_free_code(combo->script);
+				combo->script = script;
+			}
 		}
-
-		combo->script = script;
-
-		if (!exists)
-			this->put( combo->id, combo );
 
 		count++;
 	}
-	
+
 	return count;
 }
 
