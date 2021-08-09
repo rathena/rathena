@@ -32,6 +32,7 @@
 #          Duration            Makes the item a rental item which will expire within the given amount in minutes. Not intended for use with stackable items. (Default: 0)
 #          Announced           If player obtains this item it will be broadcasted to the server. (Default: false)
 #          UniqueId            Makes the given item(s) have a Unique ID. (Default: UniqueId from item_db)
+#          Stacked             Whether stackable items are given stacked or not. (Default: true)
 #          Named               Inscribes the item with the obtainer's name. (Default: false)
 #          Bound               Binds the obtained item. (Default: None)
 #          Clear               Remove the given item. (Optional)
@@ -890,6 +891,7 @@ Body:
           - Item: Aquarius_Diadem_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: ARCHER_CARD_BOX
     SubGroups:
       - SubGroup: 0
@@ -948,6 +950,7 @@ Body:
           - Item: Aries_Scroll_
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: ASGARD_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -4028,6 +4031,7 @@ Body:
           - Item: Capricon_Di_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: CAPRI_CROWN_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -4084,6 +4088,7 @@ Body:
           - Item: Capri_Crown_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: CARACAS_RING_BOX
     SubGroups:
       - SubGroup: 0
@@ -5852,9 +5857,7 @@ Body:
           - Item: Malang_Sp_Can
             Rate: 800
           - Item: Egrade_Coin
-            Rate: 50
-          - Item: Egrade_Coin
-            Rate: 150
+            Rate: 200
       - SubGroup: 3
         List:
           - Item: Malang_Sp_Can
@@ -6704,7 +6707,7 @@ Body:
             Rate: 156
           - Item: LexAeternaStone_Middle
             Rate: 156
-          - Item: BlueAuraEffect_Middle
+          - Item: ShadowEffect_Middle
             Rate: 156
           - Item: ATKStone_Middle
             Rate: 234
@@ -8195,6 +8198,7 @@ Body:
           - Item: Energetic_Pisces_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: ENERGETIC_PISCES_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -9185,6 +9189,7 @@ Body:
           - Item: Gemi_Crown_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: GEMI_DIADEM_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -9225,6 +9230,7 @@ Body:
           - Item: Gemi_Diadem_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: GEMSTONE
     SubGroups:
       - SubGroup: 1
@@ -12497,6 +12503,7 @@ Body:
           - Item: Lovely_Aquarius_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: LOVELY_AQUARIUS_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -15619,6 +15626,7 @@ Body:
           - Item: Pisces_Diadem_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: PISCES_DIADEM_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -16373,9 +16381,6 @@ Body:
           - Item: Blacksmith_Blessing
             Rate: 580
             Amount: 4
-          - Item: Blacksmith_Blessing
-            Rate: 1500
-            Amount: 2
           - Item: Unbreak_Weap_Box
             Rate: 2500
           - Item: Unbreak_Def_Box
@@ -16438,6 +16443,7 @@ Body:
           - Item: Sagittarius_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: SAGITTAR_DIADEM_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -16489,6 +16495,7 @@ Body:
           - Item: Sagittar_Diadem_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: SAHKKAT_BOX
     SubGroups:
       - SubGroup: 0
@@ -19249,6 +19256,7 @@ Body:
           - Item: Taurus_Crown_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: TAURUS_DIADEM_SCROLL
     SubGroups:
       - SubGroup: 1
@@ -19293,6 +19301,7 @@ Body:
           - Item: Taurus_Diadem_Scroll
             Amount: 10
             UniqueId: true
+            Stacked: false
   - Group: TCG_CARD_SCROLL
     SubGroups:
       - SubGroup: 0
@@ -20276,8 +20285,6 @@ Body:
             Amount: 10
           - Item: Golden_Treasure_Box
             Amount: 11
-          - Item: Red_Booster
-            Amount: 10
           - Item: Sealed_Pharaoh_Scroll
   - Group: UNLIMITED_BOX_II_10
     SubGroups:

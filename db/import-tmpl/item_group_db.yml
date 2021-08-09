@@ -32,6 +32,7 @@
 #          Duration            Makes the item a rental item which will expire within the given amount in minutes. Not intended for use with stackable items. (Default: 0)
 #          Announced           If player obtains this item it will be broadcasted to the server. (Default: false)
 #          UniqueId            Makes the given item(s) have a Unique ID. (Default: UniqueId from item_db)
+#          Stacked             Whether stackable items are given stacked or not. (Default: true)
 #          Named               Inscribes the item with the obtainer's name. (Default: false)
 #          Bound               Binds the obtained item. (Default: None)
 #          Clear               Remove the given item. (Optional)
