@@ -115845,6 +115845,8 @@ Body:
       StarGladiator: true
     Classes:
       All_Third: true
+    Locations:
+      Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 165
     Refineable: true
