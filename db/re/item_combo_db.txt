@@ -2421,3 +2421,72 @@
 490022:16049,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
 490022:18133,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
 490022:28708,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
+1331:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1331:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1331:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+13343:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13343:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13343:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+13492:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13492:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13492:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+16087:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+16087:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+16087:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+18177:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+18177:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+18177:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+1861:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1861:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1861:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+2053:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+2053:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+2053:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+21046:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+21046:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+21046:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+26021:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26021:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26021:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+26149:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26149:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26149:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+26150:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26150:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26150:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28037:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28037:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28037:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28135:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28135:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28135:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28249:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28249:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28249:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28250:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28250:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28250:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28251:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28251:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28251:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28252:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28252:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28252:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28627:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28627:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28627:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28753:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28753:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28753:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32017:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32017:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32017:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32105:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32105:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32105:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32106:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32106:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32106:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32300:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32300:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32300:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }

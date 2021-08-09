@@ -10641,7 +10641,7 @@ Body:
     AegisName: Fenrir_Card
     Name: Fenrir Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Head_Low: true
@@ -10657,7 +10657,7 @@ Body:
     AegisName: Fenrir_Card_
     Name: Weakened Fenrir Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Head_Low: true
@@ -11466,7 +11466,7 @@ Body:
     AegisName: Sarah_Card
     Name: Sarah Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Armor: true
@@ -11479,7 +11479,7 @@ Body:
     AegisName: Timeholder_Card
     Name: Time Holder Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11493,7 +11493,7 @@ Body:
     AegisName: Big_Ben_Card
     Name: Big Ben Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11507,7 +11507,7 @@ Body:
     AegisName: Big_Bell_Card
     Name: Big Bell Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11521,7 +11521,7 @@ Body:
     AegisName: Neo_Punk_Card
     Name: Neo Punk Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Left_Hand: true
@@ -11535,7 +11535,7 @@ Body:
     AegisName: Arc_Elder_Card
     Name: Arc Elder Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Garment: true
@@ -11549,7 +11549,7 @@ Body:
     AegisName: Time_Keeper_Card
     Name: Nightmare Timer Keeper Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Shoes: true
@@ -11562,7 +11562,7 @@ Body:
     AegisName: Owl_Viscount_Card
     Name: Owl Viscount Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Both_Accessory: true
@@ -11575,7 +11575,7 @@ Body:
     AegisName: Owl_Marquees_Card
     Name: Owl Marquees Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Both_Accessory: true
