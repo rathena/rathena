@@ -131893,7 +131893,7 @@ Body:
     AegisName: Boost_Sword
     Name: Booster Sword
     Type: Weapon
-    SubType: Dagger
+    SubType: 1hSword
     Attack: 160
     Range: 1
     Slots: 2
@@ -131920,7 +131920,7 @@ Body:
     AegisName: Light_Blade
     Name: Light Blade
     Type: Weapon
-    SubType: Dagger
+    SubType: 1hSword
     Weight: 1000
     Attack: 130
     MagicAttack: 170
@@ -131954,7 +131954,7 @@ Body:
     AegisName: Slate_Sword
     Name: Slate Sword
     Type: Weapon
-    SubType: Dagger
+    SubType: 1hSword
     Weight: 1000
     Attack: 190
     Range: 1
@@ -132764,7 +132764,7 @@ Body:
     AegisName: Boost_Axe
     Name: Booster Axe
     Type: Weapon
-    SubType: 2hSpear
+    SubType: 1hAxe
     Attack: 200
     Range: 1
     Slots: 2
@@ -132858,7 +132858,7 @@ Body:
     AegisName: Boost_Spear
     Name: Booster Spear
     Type: Weapon
-    SubType: 2hSword
+    SubType: 1hSpear
     Attack: 160
     MagicAttack: 160
     Range: 3
@@ -132895,7 +132895,7 @@ Body:
     AegisName: Ep172_1h_Spear
     Name: Gluttony Stick
     Type: Weapon
-    SubType: 2hSpear
+    SubType: 1hSpear
     Weight: 2000
     Attack: 190
     MagicAttack: 200
@@ -132927,7 +132927,7 @@ Body:
     AegisName: BC_B_Spear
     Name: Vanishing Cannon Booster Spear
     Type: Weapon
-    SubType: 2hSpear
+    SubType: 1hSpear
     Attack: 200
     Range: 3
     Jobs:
@@ -133011,7 +133011,7 @@ Body:
     AegisName: Adulter_F_G_Spear
     Name: Adulter Fides Guardian Spear
     Type: Weapon
-    SubType: 2hSpear
+    SubType: 1hSpear
     Weight: 1800
     Attack: 220
     Range: 3
@@ -133045,7 +133045,7 @@ Body:
     AegisName: Gelerdria_IL
     Name: Illusion Gelerdria
     Type: Weapon
-    SubType: 2hSpear
+    SubType: 1hSpear
     Weight: 2000
     Attack: 170
     Range: 3
@@ -135214,7 +135214,7 @@ Body:
     AegisName: Boost_Mace
     Name: Booster Mace
     Type: Weapon
-    SubType: 2hAxe
+    SubType: Mace
     Attack: 160
     MagicAttack: 160
     Range: 1
@@ -135249,7 +135249,7 @@ Body:
     AegisName: Meteor_Striker
     Name: Meteor Striker
     Type: Weapon
-    SubType: 2hAxe
+    SubType: Mace
     Weight: 3000
     Attack: 300
     Range: 1
@@ -135659,7 +135659,7 @@ Body:
     AegisName: Boost_TH_Sword
     Name: Booster Two-handed Sword
     Type: Weapon
-    SubType: 1hSword
+    SubType: 2hSword
     Attack: 250
     Range: 1
     Slots: 2
@@ -135688,7 +135688,7 @@ Body:
     AegisName: Dragonic_Slayer
     Name: Dragonic Slayer
     Type: Weapon
-    SubType: 1hSword
+    SubType: 2hSword
     Weight: 1000
     Attack: 180
     Range: 1
@@ -136553,7 +136553,7 @@ Body:
     AegisName: Boost_Staff
     Name: Booster Staff
     Type: Weapon
-    SubType: Staff
+    SubType: 2hStaff
     Attack: 100
     MagicAttack: 200
     Range: 1
@@ -136586,7 +136586,7 @@ Body:
     AegisName: Blue_Crystal_Staff
     Name: Blue Crystal Staff
     Type: Weapon
-    SubType: Staff
+    SubType: 2hStaff
     Weight: 800
     Attack: 100
     MagicAttack: 200
@@ -136617,7 +136617,7 @@ Body:
     AegisName: Ep172_Bh_Staff
     Name: Pride Stone
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 2000
     Attack: 180
     MagicAttack: 320
@@ -136655,7 +136655,7 @@ Body:
     AegisName: CS_B_Staff
     Name: Crimson Strain Booster Staff
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Attack: 150
     Range: 1
     Jobs:
@@ -136706,7 +136706,7 @@ Body:
     AegisName: CJ_B_Staff
     Name: Chain Jack Booster Staff
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Attack: 150
     Range: 1
     Jobs:
@@ -136794,7 +136794,7 @@ Body:
     AegisName: Up_Blue_Crystal_Staff
     Name: Patent Blue Crystal Staff
     Type: Weapon
-    SubType: Staff
+    SubType: 2hStaff
     Weight: 1000
     Attack: 100
     MagicAttack: 235
@@ -136831,7 +136831,7 @@ Body:
     AegisName: Adulter_F_T_Staff
     Name: Adulter Fides Two-Handed Staff
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 2000
     Attack: 200
     MagicAttack: 340
@@ -136867,7 +136867,7 @@ Body:
     AegisName: Adulter_F_Rod
     Name: Adulter Fides Rod
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 1900
     Attack: 200
     MagicAttack: 340
