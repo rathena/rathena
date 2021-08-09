@@ -7,7 +7,6 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
-#include <locale>
 #include <map>
 #include <unordered_map>
 #include <vector>
@@ -378,7 +377,7 @@ static bool isMultiLevel(int arr[]) {
  * @return Converted string
  */
 std::string name2Upper(std::string name) {
-	std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+	util::tolower( name );
 	name[0] = toupper(name[0]);
 
 	for (size_t i = 0; i < name.size(); i++) {
