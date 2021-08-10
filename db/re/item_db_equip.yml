@@ -112446,7 +112446,7 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus2 bSubRace,RC_Player_Human,30;
-      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",(7*readparam(bInt)/10);
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7*(readparam(bInt)/10);
       if (readparam(bInt)>=110) {
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",30;
       }
@@ -112478,7 +112478,7 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus2 bSubRace,RC_Player_Human,30;
-      bonus2 bSkillAtk,"RL_R_TRIP",(7*readparam(bAgi)/10);
+      bonus2 bSkillAtk,"RL_R_TRIP",7*(readparam(bAgi)/10);
       if (readparam(bAgi)>=110) {
          bonus2 bSkillAtk,"RL_R_TRIP",30;
       }
@@ -112511,7 +112511,7 @@ Body:
       bonus bUnbreakableWeapon;
       bonus bSplashRange,1;
       bonus2 bSubRace,RC_Player_Human,30;
-      bonus2 bSkillAtk,"RL_SLUGSHOT",(7*readparam(bStr)/10);
+      bonus2 bSkillAtk,"RL_SLUGSHOT",7*(readparam(bStr)/10);
       if (readparam(bStr)>=110) {
          bonus2 bSkillAtk,"RL_SLUGSHOT",30;
       }
@@ -112543,7 +112543,7 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus2 bSubRace,RC_Player_Human,30;
-      bonus2 bSkillAtk,"RL_D_TAIL",(7*readparam(bLuk)/10);
+      bonus2 bSkillAtk,"RL_D_TAIL",7*(readparam(bLuk)/10);
       if (readparam(bLuk)>=110) {
          bonus2 bSkillAtk,"RL_D_TAIL",30;
       }
