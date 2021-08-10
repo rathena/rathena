@@ -48858,6 +48858,7 @@ Body:
       Head_Top: true
     EquipLevelMin: 70
     View: 600
+    Refineable: true
     Script: |
       bonus bSPGainValue,2;
       bonus bMagicSPGainValue,2;
@@ -56669,6 +56670,7 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 60
+    Refineable: true
     Script: |
       bonus bAtkEle,Ele_Fire;
       bonus bAgi,2;
@@ -57951,6 +57953,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       bonus bAspdRate,10;
       if (getrefine()>=7) {
@@ -59961,6 +59964,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       bonus bUnbreakableWeapon;
       bonus bVariableCastrate,-10;
@@ -60082,6 +60086,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,15;
@@ -64497,6 +64502,7 @@ Body:
     Locations:
       Armor: true
     EquipLevelMin: 50
+    Refineable: true
     Script: |
       if (getrefine()>5) {
          .@r = getrefine()-5;
@@ -69928,6 +69934,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       bonus bLongAtkRate,5;
       if (getrefine()>=7) {
@@ -69961,6 +69968,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       bonus bLongAtkRate,5;
       if (getrefine()>=7) {
@@ -70421,6 +70429,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,15;
@@ -70449,6 +70458,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,15;
@@ -75160,6 +75170,7 @@ Body:
     Locations:
       Head_Top: true
     View: 908
+    Refineable: true
     Script: |
       bonus bInt,1;
       bonus bVit,2;
@@ -79184,6 +79195,7 @@ Body:
       Head_Top: true
     EquipLevelMin: 100
     View: 1552
+    Refineable: true
     Script: |
       .@bonus = (getrefine() >= 7 ? 12 : 10);
       bonus2 bSubRace,RC_DemiHuman,.@bonus;
@@ -80193,6 +80205,7 @@ Body:
       Head_Top: true
     EquipLevelMin: 120
     View: 4
+    Refineable: true
     Script: |
       bonus bMatkRate,1;
       bonus bMatk,(2*getrefine());
@@ -94620,6 +94633,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       bonus bAspdRate,10;
       if (getrefine()>=7) {
@@ -94769,6 +94783,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,10*(.@r/2);
@@ -94924,6 +94939,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,5;
@@ -109119,6 +109135,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       bonus bAspdRate,10;
       if (getrefine()>=7) {
@@ -110800,6 +110817,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       bonus bAspdRate,10;
       if (getrefine()>=7) {
@@ -110929,6 +110947,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,10*(.@r/2);
@@ -111015,6 +111034,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,10;
@@ -111047,6 +111067,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,5;
@@ -111598,6 +111619,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
@@ -111690,6 +111712,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus2 bSubSize,Size_Medium,10;
@@ -116792,6 +116815,7 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 120
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bCritical,90;
@@ -124939,6 +124963,7 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 170
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bLongAtkRate,15;
@@ -127164,6 +127189,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,50;
@@ -129961,6 +129987,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bBaseAtk,100+10*(.@r/2);
@@ -129985,6 +130012,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bMatk,100+10*(.@r/2);
@@ -130477,6 +130505,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bMaxSP,200+20*(.@r/2);
@@ -130501,6 +130530,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bMaxSP,200+20*(.@r/2);
@@ -130926,6 +130956,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bMaxHP,1000+100*(.@r/2);
@@ -130950,6 +130981,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Refineable: true
     Script: |
       .@r = getrefine();
       bonus bMaxHP,1000+100*(.@r/2);
