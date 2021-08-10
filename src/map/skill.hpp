@@ -27,10 +27,8 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_PRODUCE_DB	281 /// Max Produce DB
+#define MAX_SKILL_PRODUCE_DB	282 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
-#define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
-#define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
@@ -53,6 +51,7 @@ enum e_skill_nk : uint8 {
 	NK_IGNOREFLEE,
 	NK_IGNOREDEFCARD,
 	NK_CRITICAL,
+	NK_IGNORELONGCARD,
 	NK_MAX,
 };
 
@@ -432,10 +431,20 @@ extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 /// Creating database arrow
 struct s_skill_arrow_db {
 	t_itemid nameid; /// Material ID
-	t_itemid cre_id[MAX_ARROW_RESULT]; /// Arrow created
-	uint16 cre_amount[MAX_ARROW_RESULT]; /// Amount of each arrow created
+	std::unordered_map<t_itemid, uint16> created; /// Arrow created
 };
-extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
+
+class SkillArrowDatabase : public TypesafeYamlDatabase<t_itemid, s_skill_arrow_db> {
+public:
+	SkillArrowDatabase() : TypesafeYamlDatabase("CREATE_ARROW_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern SkillArrowDatabase skill_arrow_db;
 
 /// Abracadabra database
 struct s_skill_abra_db {
@@ -511,6 +520,7 @@ bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk);
 bool skill_get_inf2_(uint16 skill_id, std::vector<e_skill_inf2> inf2);
 #define skill_get_unit_flag(skill_id, unit) skill_get_unit_flag_(skill_id, { unit })
 bool skill_get_unit_flag_(uint16 skill_id, std::vector<e_skill_unit_flag> unit);
+int skill_get_unit_range(uint16 skill_id, uint16 skill_lv);
 // Accessor for skill requirements
 int skill_get_hp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_mhp( uint16 skill_id ,uint16 skill_lv );

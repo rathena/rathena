@@ -88,6 +88,14 @@ typedef uint32 t_itemid;
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
 
+#ifdef RENEWAL
+	#define MAX_WEAPON_LEVEL 5
+	#define MAX_ARMOR_LEVEL 2
+#else
+	#define MAX_WEAPON_LEVEL 4
+	#define MAX_ARMOR_LEVEL 1
+#endif
+
 // for produce
 #define MIN_ATTRIBUTE 0
 #define MAX_ATTRIBUTE 4
@@ -150,6 +158,9 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAIL_MAX_ITEM 5
 #define MAIL_PAGE_SIZE 7
 #endif
+#ifndef MAIL_ITERATION_SIZE
+	#define MAIL_ITERATION_SIZE 100
+#endif
 
 //Mercenary System
 #define MC_SKILLBASE 8201
@@ -193,16 +204,16 @@ enum e_mode {
 	MD_LOOTER				= 0x0000002,
 	MD_AGGRESSIVE			= 0x0000004,
 	MD_ASSIST				= 0x0000008,
-	MD_CASTSENSOR_IDLE		= 0x0000010,
-	MD_NORANDOM_WALK		= 0x0000020,
-	MD_NOCAST_SKILL			= 0x0000040,
+	MD_CASTSENSORIDLE		= 0x0000010,
+	MD_NORANDOMWALK			= 0x0000020,
+	MD_NOCAST				= 0x0000040,
 	MD_CANATTACK			= 0x0000080,
 	//FREE					= 0x0000100,
-	MD_CASTSENSOR_CHASE		= 0x0000200,
+	MD_CASTSENSORCHASE		= 0x0000200,
 	MD_CHANGECHASE			= 0x0000400,
 	MD_ANGRY				= 0x0000800,
-	MD_CHANGETARGET_MELEE	= 0x0001000,
-	MD_CHANGETARGET_CHASE	= 0x0002000,
+	MD_CHANGETARGETMELEE	= 0x0001000,
+	MD_CHANGETARGETCHASE	= 0x0002000,
 	MD_TARGETWEAK			= 0x0004000,
 	MD_RANDOMTARGET			= 0x0008000,
 	MD_IGNOREMELEE			= 0x0010000,
@@ -210,13 +221,13 @@ enum e_mode {
 	MD_IGNORERANGED			= 0x0040000,
 	MD_MVP					= 0x0080000,
 	MD_IGNOREMISC			= 0x0100000,
-	MD_KNOCKBACK_IMMUNE		= 0x0200000,
-	MD_TELEPORT_BLOCK		= 0x0400000,
+	MD_KNOCKBACKIMMUNE		= 0x0200000,
+	MD_TELEPORTBLOCK		= 0x0400000,
 	//FREE					= 0x0800000,
-	MD_FIXED_ITEMDROP		= 0x1000000,
+	MD_FIXEDITEMDROP		= 0x1000000,
 	MD_DETECTOR				= 0x2000000,
-	MD_STATUS_IMMUNE		= 0x4000000,
-	MD_SKILL_IMMUNE			= 0x8000000,
+	MD_STATUSIMMUNE			= 0x4000000,
+	MD_SKILLIMMUNE			= 0x8000000,
 };
 
 #define MD_MASK 0x000FFFF
@@ -238,12 +249,6 @@ struct quest {
 	e_quest_state state;             ///< Current quest state
 };
 
-struct s_item_randomoption {
-	short id;
-	short value;
-	char param;
-};
-
 /// Achievement log entry
 struct achievement {
 	int achievement_id;                    ///< Achievement ID
@@ -252,6 +257,17 @@ struct achievement {
 	time_t rewarded;                       ///< Received reward?
 	int score;                             ///< Amount of points achievement is worth
 };
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( push, 1 )
+#endif
+
+struct s_item_randomoption {
+	short id;
+	short value;
+	char param;
+} __attribute__((packed));
 
 struct item {
 	int id;
@@ -268,7 +284,12 @@ struct item {
 	uint64 unique_id;
 	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
-};
+} __attribute__((packed));
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( pop )
+#endif
 
 //Equip position constants
 enum equip_pos : uint32 {
@@ -435,7 +456,7 @@ struct s_homunculus {	//[orn]
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
 	short skillpts;
 	short level;
-	unsigned int exp;
+	t_exp exp;
 	short rename_flag;
 	short vaporize; //albator
 	int str;
@@ -702,7 +723,7 @@ struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
-	char castle_event[EVENT_NAME_LENGTH];
+	char castle_event[NPC_NAME_LENGTH];
 	int guild_id;
 	int economy;
 	int defense;
@@ -1078,7 +1099,9 @@ struct clan{
 	#ifndef ENABLE_SC_SAVING
 	#warning "Cart won't be able to be saved for relog"
 	#endif
-#if PACKETVER >= 20150826
+#if PACKETVER >= 20191106
+	#define MAX_CARTS 13		// used for another new cart design
+#elif PACKETVER >= 20150826
 	#define MAX_CARTS 12		// used for 3 new cart design
 #else
 	#define MAX_CARTS 9

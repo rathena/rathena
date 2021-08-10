@@ -4,7 +4,9 @@
 #ifndef HOMUNCULUS_HPP
 #define HOMUNCULUS_HPP
 
+#include <string>
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
@@ -19,6 +21,22 @@
 #else
 	#define APPLY_HOMUN_LEVEL_STATWEIGHT()
 #endif
+
+struct s_homun_exp_db {
+	uint16 level;
+	t_exp exp;
+};
+
+class HomExpDatabase : public TypesafeYamlDatabase<uint16, s_homun_exp_db> {
+public:
+	HomExpDatabase() : TypesafeYamlDatabase("HOMUN_EXP_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	t_exp get_nextexp(uint16 level);
+};
 
 struct h_stats {
 	unsigned int HP, SP;
@@ -65,7 +83,7 @@ struct homun_data {
 	int masterteleport_timer;
 	struct map_session_data *master; //pointer back to its master
 	int hungry_timer;	//[orn]
-	unsigned int exp_next;
+	t_exp exp_next;
 	std::vector<uint16> blockskill;	// [orn]
 };
 
@@ -153,7 +171,7 @@ void hom_skillup(struct homun_data *hd,uint16 skill_id);
 void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve);
 short hom_checkskill(struct homun_data *hd,uint16 skill_id);
 uint8 hom_skill_get_min_level(int class_, uint16 skill_id);
-void hom_gainexp(struct homun_data *hd,int exp);
+void hom_gainexp(struct homun_data *hd,t_exp exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
 int hom_mutate(struct homun_data *hd,int homun_id);

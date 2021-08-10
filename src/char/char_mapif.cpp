@@ -29,7 +29,7 @@ int chmapif_sendall(unsigned char *buf, unsigned int len){
 	c = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
 		int fd;
-		if ((fd = map_server[i].fd) > 0) {
+		if (session_isValid(fd = map_server[i].fd)) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -53,7 +53,7 @@ int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
 	c = 0;
 	for(i = 0; i < ARRAYLENGTH(map_server); i++) {
 		int fd;
-		if ((fd = map_server[i].fd) > 0 && fd != sfd) {
+		if (session_isValid(fd = map_server[i].fd) && fd != sfd) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -72,7 +72,7 @@ int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
  * @return : the number of map-serv the packet was sent to (O|1)
  */
 int chmapif_send(int fd, unsigned char *buf, unsigned int len){
-	if (fd >= 0) {
+	if (session_isValid(fd)) {
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(map_server), i, fd == map_server[i].fd );
 		if( i < ARRAYLENGTH(map_server) )
@@ -122,7 +122,7 @@ int chmapif_send_fame_list(int fd){
 	// add total packet length
 	WBUFW(buf, 2) = len;
 
-	if (fd != -1)
+	if (session_isValid(fd))
 		chmapif_send(fd, buf, len);
 	else
 		chmapif_sendall(buf, len);
@@ -162,24 +162,26 @@ void chmapif_sendall_playercount(int users){
  * Send some misc info to new map-server.
  * - Server name for whisper name
  * - Default map
- * HZ 0x2afb <size>.W <status>.B <name>.24B <mapname>.11B <map_x>.W <map_y>.W
+ * HZ 0x2afb <size>.W <status>.B <whisper name>.24B <mapname>.11B <map_x>.W <map_y>.W <server name>.24B
  * @param fd
  **/
 void chmapif_send_misc(int fd) {
 	uint16 offs = 5;
-	unsigned char buf[45];
+	unsigned char buf[45+NAME_LENGTH];
 
 	memset(buf, '\0', sizeof(buf));
 	WBUFW(buf, 0) = 0x2afb;
 	// 0 succes, 1:failure
 	WBUFB(buf, 4) = 0;
 	// Send name for wisp to player
-	memcpy(WBUFP(buf, 5), charserv_config.wisp_server_name, NAME_LENGTH);
+	safestrncpy( WBUFCP( buf, 5 ), charserv_config.wisp_server_name, NAME_LENGTH );
 	// Default map
-	memcpy(WBUFP(buf, (offs+=NAME_LENGTH)), charserv_config.default_map, MAP_NAME_LENGTH); // 29
+	safestrncpy( WBUFCP( buf, ( offs += NAME_LENGTH ) ), charserv_config.default_map, MAP_NAME_LENGTH ); // 29
 	WBUFW(buf, (offs+=MAP_NAME_LENGTH)) = charserv_config.default_map_x; // 41
 	WBUFW(buf, (offs+=2)) = charserv_config.default_map_y; // 43
 	offs+=2;
+	safestrncpy( WBUFCP( buf, offs ), charserv_config.server_name, sizeof( charserv_config.server_name ) ); // 45
+	offs += NAME_LENGTH;
 
 	// Length
 	WBUFW(buf, 2) = offs;
@@ -212,7 +214,7 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
 
 	// Transmitting the maps of the other map-servers to the new map-server
 	for (x = 0; x < ARRAYLENGTH(map_server); x++) {
-		if (map_server[x].fd > 0 && x != map_id) {
+		if (session_isValid(map_server[x].fd) && x != map_id) {
 			uint16 i, j;
 
 			WFIFOHEAD(fd,10 +4*map_server[x].map.size());
