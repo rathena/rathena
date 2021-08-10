@@ -1627,6 +1627,7 @@
 	export_constant(SC_PACKING_ENVELOPE8);
 	export_constant(SC_PACKING_ENVELOPE9);
 	export_constant(SC_PACKING_ENVELOPE10);
+	export_constant(SC_SOULATTACK);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
