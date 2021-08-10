@@ -14,6 +14,7 @@
 //= 1.0.1 Converted item constants to IDs and added hair coupon. [Kisuka]
 //= 2.0.0 Converted from Hercules Script to rAthena Script. [Capuche]
 //= 2.0.1 Add new Intro Renewal based on Hercules [Jenkijo]
+//= 2.0.2 Updated few npcs to match new Izlude Academy map. [mundussan]
 //==============================================================================
 
 //== Starting Point  (iz_int) =================================
@@ -5492,11 +5493,11 @@ iz_ac01_b,89,103,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#01_b	4_
 iz_ac01_c,89,103,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#01_c	4_F_KAFRA1
 iz_ac01_d,89,103,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#01_d	4_F_KAFRA1
 
-iz_ac02,101,176,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02	4_F_KAFRA1
-iz_ac02_a,101,176,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_a	4_F_KAFRA1
-iz_ac02_b,101,176,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_b	4_F_KAFRA1
-iz_ac02_c,101,176,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_c	4_F_KAFRA1
-iz_ac02_d,101,176,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_d	4_F_KAFRA1
+iz_ac02,204,115,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02	4_F_KAFRA1
+iz_ac02_a,204,115,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_a	4_F_KAFRA1
+iz_ac02_b,204,115,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_b	4_F_KAFRA1
+iz_ac02_c,204,115,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_c	4_F_KAFRA1
+iz_ac02_d,204,115,5	duplicate(Kafra Guide Trainer#ac)	Kafra Guide Trainer#02_d	4_F_KAFRA1
 
 // =============================================================================
 // = Miscellaneous NPCS
@@ -6634,71 +6635,71 @@ iz_ac01_b,103,89,3	duplicate(ac_board)	[Great Hall]#ac_b	2_BULLETIN_BOARD
 iz_ac01_c,103,89,3	duplicate(ac_board)	[Great Hall]#ac_c	2_BULLETIN_BOARD
 iz_ac01_d,103,89,3	duplicate(ac_board)	[Great Hall]#ac_d	2_BULLETIN_BOARD
 
-iz_ac02,98,170,5	duplicate(ac_board)	[Merchant Classroom]#2	2_BULLETIN_BOARD
-iz_ac02_a,98,170,5	duplicate(ac_board)	[Merchant Classroom]#2_a	2_BULLETIN_BOARD
-iz_ac02_b,98,170,5	duplicate(ac_board)	[Merchant Classroom]#2_b	2_BULLETIN_BOARD
-iz_ac02_c,98,170,5	duplicate(ac_board)	[Merchant Classroom]#2_c	2_BULLETIN_BOARD
-iz_ac02_d,98,170,5	duplicate(ac_board)	[Merchant Classroom]#2_d	2_BULLETIN_BOARD
+iz_ac02,202,110,5	duplicate(ac_board)	[Merchant Classroom]#2	2_BULLETIN_BOARD
+iz_ac02_a,202,110,5	duplicate(ac_board)	[Merchant Classroom]#2_a	2_BULLETIN_BOARD
+iz_ac02_b,202,110,5	duplicate(ac_board)	[Merchant Classroom]#2_b	2_BULLETIN_BOARD
+iz_ac02_c,202,110,5	duplicate(ac_board)	[Merchant Classroom]#2_c	2_BULLETIN_BOARD
+iz_ac02_d,202,110,5	duplicate(ac_board)	[Merchant Classroom]#2_d	2_BULLETIN_BOARD
 
-iz_ac02,109,170,3	duplicate(ac_board)	[Acolyte Classroom]#2	2_BULLETIN_BOARD
-iz_ac02_a,109,170,3	duplicate(ac_board)	[Acolyte Classroom]#2_a	2_BULLETIN_BOARD
-iz_ac02_b,109,170,3	duplicate(ac_board)	[Acolyte Classroom]#2_b	2_BULLETIN_BOARD
-iz_ac02_c,109,170,3	duplicate(ac_board)	[Acolyte Classroom]#2_c	2_BULLETIN_BOARD
-iz_ac02_d,109,170,3	duplicate(ac_board)	[Acolyte Classroom]#2_d	2_BULLETIN_BOARD
+iz_ac02,213,110,3	duplicate(ac_board)	[Acolyte Classroom]#2	2_BULLETIN_BOARD
+iz_ac02_a,213,110,3	duplicate(ac_board)	[Acolyte Classroom]#2_a	2_BULLETIN_BOARD
+iz_ac02_b,213,110,3	duplicate(ac_board)	[Acolyte Classroom]#2_b	2_BULLETIN_BOARD
+iz_ac02_c,213,110,3	duplicate(ac_board)	[Acolyte Classroom]#2_c	2_BULLETIN_BOARD
+iz_ac02_d,213,110,3	duplicate(ac_board)	[Acolyte Classroom]#2_d	2_BULLETIN_BOARD
 
-iz_ac02,98,140,5	duplicate(ac_board)	[Thief Classroom]#ac	2_BULLETIN_BOARD
-iz_ac02_a,98,140,5	duplicate(ac_board)	[Thief Classroom]#ac_a	2_BULLETIN_BOARD
-iz_ac02_b,98,140,5	duplicate(ac_board)	[Thief Classroom]#ac_b	2_BULLETIN_BOARD
-iz_ac02_c,98,140,5	duplicate(ac_board)	[Thief Classroom]#ac_c	2_BULLETIN_BOARD
-iz_ac02_d,98,140,5	duplicate(ac_board)	[Thief Classroom]#ac_d	2_BULLETIN_BOARD
+iz_ac02,202,94,5	duplicate(ac_board)	[Thief Classroom]#ac	2_BULLETIN_BOARD
+iz_ac02_a,202,94,5	duplicate(ac_board)	[Thief Classroom]#ac_a	2_BULLETIN_BOARD
+iz_ac02_b,202,94,5	duplicate(ac_board)	[Thief Classroom]#ac_b	2_BULLETIN_BOARD
+iz_ac02_c,202,94,5	duplicate(ac_board)	[Thief Classroom]#ac_c	2_BULLETIN_BOARD
+iz_ac02_d,202,94,5	duplicate(ac_board)	[Thief Classroom]#ac_d	2_BULLETIN_BOARD
 
-iz_ac02,109,140,3	duplicate(ac_board)	[Ninja Classroom]#ac	2_BULLETIN_BOARD
-iz_ac02_a,109,140,3	duplicate(ac_board)	[Ninja Classroom]#ac_a	2_BULLETIN_BOARD
-iz_ac02_b,109,140,3	duplicate(ac_board)	[Ninja Classroom]#ac_b	2_BULLETIN_BOARD
-iz_ac02_c,109,140,3	duplicate(ac_board)	[Ninja Classroom]#ac_c	2_BULLETIN_BOARD
-iz_ac02_d,109,140,3	duplicate(ac_board)	[Ninja Classroom]#ac_d	2_BULLETIN_BOARD
+iz_ac02,213,94,3	duplicate(ac_board)	[Ninja Classroom]#ac	2_BULLETIN_BOARD
+iz_ac02_a,213,94,3	duplicate(ac_board)	[Ninja Classroom]#ac_a	2_BULLETIN_BOARD
+iz_ac02_b,213,94,3	duplicate(ac_board)	[Ninja Classroom]#ac_b	2_BULLETIN_BOARD
+iz_ac02_c,213,94,3	duplicate(ac_board)	[Ninja Classroom]#ac_c	2_BULLETIN_BOARD
+iz_ac02_d,213,94,3	duplicate(ac_board)	[Ninja Classroom]#ac_d	2_BULLETIN_BOARD
 
-iz_ac02,98,110,5	duplicate(ac_board)	[Archer Classroom]#ac	2_BULLETIN_BOARD
-iz_ac02_a,98,110,5	duplicate(ac_board)	[Archer Classroom]#ac_a	2_BULLETIN_BOARD
-iz_ac02_b,98,110,5	duplicate(ac_board)	[Archer Classroom]#ac_b	2_BULLETIN_BOARD
-iz_ac02_c,98,110,5	duplicate(ac_board)	[Archer Classroom]#ac_c	2_BULLETIN_BOARD
-iz_ac02_d,98,110,5	duplicate(ac_board)	[Archer Classroom]#ac_d	2_BULLETIN_BOARD
+iz_ac02,202,78,5	duplicate(ac_board)	[Archer Classroom]#ac	2_BULLETIN_BOARD
+iz_ac02_a,202,78,5	duplicate(ac_board)	[Archer Classroom]#ac_a	2_BULLETIN_BOARD
+iz_ac02_b,202,78,5	duplicate(ac_board)	[Archer Classroom]#ac_b	2_BULLETIN_BOARD
+iz_ac02_c,202,78,5	duplicate(ac_board)	[Archer Classroom]#ac_c	2_BULLETIN_BOARD
+iz_ac02_d,202,78,5	duplicate(ac_board)	[Archer Classroom]#ac_d	2_BULLETIN_BOARD
 
-iz_ac02,109,110,3	duplicate(ac_board)	[Mage Classroom]#ac	2_BULLETIN_BOARD
-iz_ac02_a,109,110,3	duplicate(ac_board)	[Mage Classroom]#ac_a	2_BULLETIN_BOARD
-iz_ac02_b,109,110,3	duplicate(ac_board)	[Mage Classroom]#ac_b	2_BULLETIN_BOARD
-iz_ac02_c,109,110,3	duplicate(ac_board)	[Mage Classroom]#ac_c	2_BULLETIN_BOARD
-iz_ac02_d,109,110,3	duplicate(ac_board)	[Mage Classroom]#ac_d	2_BULLETIN_BOARD
+iz_ac02,213,78,3	duplicate(ac_board)	[Mage Classroom]#ac	2_BULLETIN_BOARD
+iz_ac02_a,213,78,3	duplicate(ac_board)	[Mage Classroom]#ac_a	2_BULLETIN_BOARD
+iz_ac02_b,213,78,3	duplicate(ac_board)	[Mage Classroom]#ac_b	2_BULLETIN_BOARD
+iz_ac02_c,213,78,3	duplicate(ac_board)	[Mage Classroom]#ac_c	2_BULLETIN_BOARD
+iz_ac02_d,213,78,3	duplicate(ac_board)	[Mage Classroom]#ac_d	2_BULLETIN_BOARD
 
-iz_ac02,98,80,5	duplicate(ac_board)	[Taekwon Classroom]#2	2_BULLETIN_BOARD
-iz_ac02_a,98,80,5	duplicate(ac_board)	[Taekwon Classroom]#2_a	2_BULLETIN_BOARD
-iz_ac02_b,98,80,5	duplicate(ac_board)	[Taekwon Classroom]#2_b	2_BULLETIN_BOARD
-iz_ac02_c,98,80,5	duplicate(ac_board)	[Taekwon Classroom]#2_c	2_BULLETIN_BOARD
-iz_ac02_d,98,80,5	duplicate(ac_board)	[Taekwon Classroom]#2_d	2_BULLETIN_BOARD
+iz_ac02,202,62,5	duplicate(ac_board)	[Taekwon Classroom]#2	2_BULLETIN_BOARD
+iz_ac02_a,202,62,5	duplicate(ac_board)	[Taekwon Classroom]#2_a	2_BULLETIN_BOARD
+iz_ac02_b,202,62,5	duplicate(ac_board)	[Taekwon Classroom]#2_b	2_BULLETIN_BOARD
+iz_ac02_c,202,62,5	duplicate(ac_board)	[Taekwon Classroom]#2_c	2_BULLETIN_BOARD
+iz_ac02_d,202,62,5	duplicate(ac_board)	[Taekwon Classroom]#2_d	2_BULLETIN_BOARD
 
-iz_ac02,109,80,3	duplicate(ac_board)	[Gunslinger Classroom]#0	2_BULLETIN_BOARD
-iz_ac02_a,109,80,3	duplicate(ac_board)	[Gunslinger Classroom]#a	2_BULLETIN_BOARD
-iz_ac02_b,109,80,3	duplicate(ac_board)	[Gunslinger Classroom]#b	2_BULLETIN_BOARD
-iz_ac02_c,109,80,3	duplicate(ac_board)	[Gunslinger Classroom]#c	2_BULLETIN_BOARD
-iz_ac02_d,109,80,3	duplicate(ac_board)	[Gunslinger Classroom]#d	2_BULLETIN_BOARD
+iz_ac02,213,62,3	duplicate(ac_board)	[Gunslinger Classroom]#0	2_BULLETIN_BOARD
+iz_ac02_a,213,62,3	duplicate(ac_board)	[Gunslinger Classroom]#a	2_BULLETIN_BOARD
+iz_ac02_b,213,62,3	duplicate(ac_board)	[Gunslinger Classroom]#b	2_BULLETIN_BOARD
+iz_ac02_c,213,62,3	duplicate(ac_board)	[Gunslinger Classroom]#c	2_BULLETIN_BOARD
+iz_ac02_d,213,62,3	duplicate(ac_board)	[Gunslinger Classroom]#d	2_BULLETIN_BOARD
 
-iz_ac02,98,50,5	duplicate(ac_board)	[Swordman Classroom]#2	2_BULLETIN_BOARD
-iz_ac02_a,98,50,5	duplicate(ac_board)	[Swordman Classroom]#2_a	2_BULLETIN_BOARD
-iz_ac02_b,98,50,5	duplicate(ac_board)	[Swordman Classroom]#2_b	2_BULLETIN_BOARD
-iz_ac02_c,98,50,5	duplicate(ac_board)	[Swordman Classroom]#2_c	2_BULLETIN_BOARD
-iz_ac02_d,98,50,5	duplicate(ac_board)	[Swordman Classroom]#2_d	2_BULLETIN_BOARD
+iz_ac02,202,46,5	duplicate(ac_board)	[Swordman Classroom]#2	2_BULLETIN_BOARD
+iz_ac02_a,202,46,5	duplicate(ac_board)	[Swordman Classroom]#2_a	2_BULLETIN_BOARD
+iz_ac02_b,202,46,5	duplicate(ac_board)	[Swordman Classroom]#2_b	2_BULLETIN_BOARD
+iz_ac02_c,202,46,5	duplicate(ac_board)	[Swordman Classroom]#2_c	2_BULLETIN_BOARD
+iz_ac02_d,202,46,5	duplicate(ac_board)	[Swordman Classroom]#2_d	2_BULLETIN_BOARD
 
-iz_ac02,109,50,3	duplicate(ac_board)	[Lounge]#ac	2_BULLETIN_BOARD
-iz_ac02_a,109,50,3	duplicate(ac_board)	[Lounge]#ac_a	2_BULLETIN_BOARD
-iz_ac02_b,109,50,3	duplicate(ac_board)	[Lounge]#ac_b	2_BULLETIN_BOARD
-iz_ac02_c,109,50,3	duplicate(ac_board)	[Lounge]#ac_c	2_BULLETIN_BOARD
-iz_ac02_d,109,50,3	duplicate(ac_board)	[Lounge]#ac_d	2_BULLETIN_BOARD
+iz_ac02,213,46,3	duplicate(ac_board)	[Lounge]#ac	2_BULLETIN_BOARD
+iz_ac02_a,213,46,3	duplicate(ac_board)	[Lounge]#ac_a	2_BULLETIN_BOARD
+iz_ac02_b,213,46,3	duplicate(ac_board)	[Lounge]#ac_b	2_BULLETIN_BOARD
+iz_ac02_c,213,46,3	duplicate(ac_board)	[Lounge]#ac_c	2_BULLETIN_BOARD
+iz_ac02_d,213,46,3	duplicate(ac_board)	[Lounge]#ac_d	2_BULLETIN_BOARD
 
-iz_ac02,107,180,3	duplicate(ac_board)	[Principal's Office]#a	2_BULLETIN_BOARD
-iz_ac02_a,107,180,3	duplicate(ac_board)	[Principal's Office]#aa	2_BULLETIN_BOARD
-iz_ac02_b,107,180,3	duplicate(ac_board)	[Principal's Office]#ab	2_BULLETIN_BOARD
-iz_ac02_c,107,180,3	duplicate(ac_board)	[Principal's Office]#ac	2_BULLETIN_BOARD
-iz_ac02_d,107,180,3	duplicate(ac_board)	[Principal's Office]#ad	2_BULLETIN_BOARD
+iz_ac02,211,118,3	duplicate(ac_board)	[Principal's Office]#a	2_BULLETIN_BOARD
+iz_ac02_a,211,118,3	duplicate(ac_board)	[Principal's Office]#aa	2_BULLETIN_BOARD
+iz_ac02_b,211,118,3	duplicate(ac_board)	[Principal's Office]#ab	2_BULLETIN_BOARD
+iz_ac02_c,211,118,3	duplicate(ac_board)	[Principal's Office]#ac	2_BULLETIN_BOARD
+iz_ac02_d,211,118,3	duplicate(ac_board)	[Principal's Office]#ad	2_BULLETIN_BOARD
 
 
 // =============================================================================

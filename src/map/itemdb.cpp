@@ -1301,14 +1301,14 @@ static void itemdb_pc_get_itemgroup_sub(map_session_data *sd, bool identify, std
 
 	uint16 get_amt = 0;
 
-	if (itemdb_isstackable(data->nameid) && !data->GUID)
+	if (itemdb_isstackable(data->nameid) && data->isStacked)
 		get_amt = data->amount;
 	else
 		get_amt = 1;
 
 	tmp.amount = get_amt;
 
-	// Do loop for non-stackable item / stackable item with GUID
+	// Do loop for non-stackable item
 	for (uint16 i = 0; i < data->amount; i += get_amt) {
 		char flag = 0;
 		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
@@ -1587,8 +1587,11 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string group_name_constant = "IG_" + group_name;
 	int64 constant;
 
-	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < IG_BLUEBOX || constant >= IG_MAX) {
-		this->invalidWarning(node["Group"], "Invalid group %s.\n", group_name.c_str());
+	if (!script_get_constant(group_name_constant.c_str(), &constant) || constant < IG_BLUEBOX) {
+		if (strncasecmp(group_name.c_str(), "IG_", 3) != 0)
+			this->invalidWarning(node["Group"], "Invalid group %s.\n", group_name.c_str());
+		else
+			this->invalidWarning(node["Group"], "Invalid group %s. Note that 'IG_' is automatically appended to the group name.\n", group_name.c_str());
 		return 0;
 	}
 
@@ -1749,6 +1752,18 @@ uint64 ItemGroupDatabase::parseBodyNode(const YAML::Node &node) {
 				} else {
 					if (!entry_exists)
 						entry->GUID = item->flag.guid;
+				}
+
+				if (this->nodeExists(listit, "Stacked")) {
+					bool isStacked;
+
+					if (!this->asBool(listit, "Stacked", isStacked))
+						continue;
+
+					entry->isStacked = isStacked;
+				} else {
+					if (!entry_exists)
+						entry->isStacked = true;
 				}
 
 				if (this->nodeExists(listit, "Named")) {
