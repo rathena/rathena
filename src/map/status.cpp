@@ -1661,6 +1661,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_SPRITEMABLE] = EFST_SPRITEMABLE;
 	StatusIconChangeTable[SC_DORAM_BUF_01] = EFST_DORAM_BUF_01;
 	StatusIconChangeTable[SC_DORAM_BUF_02] = EFST_DORAM_BUF_02;
+	StatusIconChangeTable[SC_SOULATTACK] = EFST_SOULATTACK;
 
 	// Item Reuse Limits
 	StatusIconChangeTable[SC_REUSE_REFRESH] = EFST_REUSE_REFRESH;
@@ -1994,6 +1995,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_MISTY_FROST]     = BL_PC;
 	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
 	StatusDisplayType[SC_MADOGEAR]        = BL_PC;
+	StatusDisplayType[SC_SOULATTACK]      = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -5067,8 +5069,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		clif_skillinfoblock(sd);
 
 	// If the skill is learned, the status is infinite.
-	if( (skill = pc_checkskill(sd,SU_SPRITEMABLE)) > 0 && !sd->sc.data[SC_SPRITEMABLE] )
+	if (pc_checkskill(sd, SU_SPRITEMABLE) > 0 && !sd->sc.data[SC_SPRITEMABLE])
 		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
+	if (pc_checkskill(sd, SU_SOULATTACK) > 0 && !sd->sc.data[SC_SOULATTACK])
+		sc_start(&sd->bl, &sd->bl, SC_SOULATTACK, 100, 1, INFINITE_TICK);
 
 	calculating = 0;
 
@@ -10606,6 +10610,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SPRITEMABLE:
 		case SC_CLAN_INFO:
 		case SC_DAILYSENDMAILCNT:
+		case SC_SOULATTACK:
 			tick = INFINITE_TICK;
 			break;
 
@@ -13293,6 +13298,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_PACKING_ENVELOPE8:
 			case SC_PACKING_ENVELOPE9:
 			case SC_PACKING_ENVELOPE10:
+			case SC_SOULATTACK:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -15441,6 +15447,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_EP16_2_BUFF_SC:
 			case SC_EP16_2_BUFF_AC:
 			case SC_HOMUN_TIME:
+			case SC_SOULATTACK:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:
