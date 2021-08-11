@@ -15943,58 +15943,70 @@ static bool status_readdb_status_disabled(char **str, int columns, int current)
 	return true;
 }
 
+const std::string AttributeDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/attr_fix.yml";
+}
+
 /**
- * Read attribute fix database for attack calculations
- * Function stores information in the attr_fix_table
- * @return True
+ * Reads and parses an entry from the attr_fix.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
  */
-static bool status_readdb_attrfix(const char *basedir,bool silent)
-{
-	FILE *fp;
-	char line[512], path[512];
-	int entries = 0;
+uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
+	uint16 level;
 
+	if (!this->asUInt16(node, "Level", level))
+		return 0;
 
-	sprintf(path, "%s/attr_fix.txt", basedir);
-	fp = fopen(path,"r");
-	if (fp == NULL) {
-		if (silent==0)
-			ShowError("Can't read %s\n", path);
-		return 1;
+	if (!CHK_ELEMENT_LEVEL(level)) {
+		this->invalidWarning(node["Level"], "Invalid element level %hu.\n", level);
+		return 0;
 	}
-	while (fgets(line, sizeof(line), fp)) {
-		int lv, i, j;
-		if (line[0] == '/' && line[1] == '/')
+
+	for (const auto &itatk : um_eleid2elename) {
+		if (!this->nodeExists(node, itatk.first))
 			continue;
 
-		lv = atoi(line);
-		if (!CHK_ELEMENT_LEVEL(lv))
-			continue;
+		const YAML::Node &eleNode = node[itatk.first];
 
-		for (i = 0; i < ELE_ALL;) {
-			char *p;
-			if (!fgets(line, sizeof(line), fp))
-				break;
-			if (line[0]=='/' && line[1]=='/')
+		for (const auto &itdef : um_eleid2elename) {
+			if (!this->nodeExists(eleNode, itdef.first))
 				continue;
 
-			for (j = 0, p = line; j < ELE_ALL && p; j++) {
-				while (*p == 32) //skipping space (32=' ')
-					p++;
-                                //TODO seem unsafe to continue without check
-				attr_fix_table[lv-1][i][j] = atoi(p);
-				p = strchr(p,',');
-				if(p)
-					*p++=0;
+			int16 val;
+
+			if (!this->asInt16(eleNode, itdef.first, val))
+				return 0;
+
+			if (val < -100) {
+				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to -100.\n", itdef.first.c_str(), val, -100, 200);
+				val = -100;
+			}
+			else if (val > 200) {
+				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to 200.\n", itdef.first.c_str(), val, -100, 200);
+				val = 200;
 			}
 
-			i++;
+			this->attr_fix_table[level-1][itatk.second][itdef.second] = val;
 		}
-		entries++;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path);
-	return true;
+
+	return 1;
+}
+
+AttributeDatabase elemental_attribute_db;
+
+/**
+ * Get attribute ratio
+ * @param atk_ele Attack element enum e_element
+ * @param def_ele Defense element enum e_element
+ * @param level Element level 1 ~ MAX_ELE_LEVEL
+ */
+int16 AttributeDatabase::getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele) {
+	if (!CHK_ELEMENT(atk_ele) || !CHK_ELEMENT(def_ele) || !CHK_ELEMENT_LEVEL(level))
+		return 100;
+
+	return this->attr_fix_table[level][atk_ele][def_ele];
 }
 
 /**
@@ -16002,13 +16014,13 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
  * sv_readdb reads the file, outputting the information line-by-line to
  * previous functions above, separating information by delimiter
  * DBs being read:
- *	attr_fix.txt: Attribute adjustment table for attacks
+ *	attr_fix.yml: Attribute adjustment table for attacks
  *	size_fix.yml: Size adjustment table for weapons
  *	refine.yml: Refining data table
  * @return 0
  */
 int status_readdb( bool reload ){
-	int i, j, k;
+	int i;
 	const char* dbsubpath[] = {
 		"",
 		"/" DBIMPORT,
@@ -16017,12 +16029,6 @@ int status_readdb( bool reload ){
 
 	// Initialize databases to default
 	memset(SCDisabled, 0, sizeof(SCDisabled));
-
-	// attr_fix.txt
-	for(i=0;i<MAX_ELE_LEVEL;i++)
-		for(j=0;j<ELE_ALL;j++)
-			for(k=0;k<ELE_ALL;k++)
-				attr_fix_table[i][j][k]=100;
 
 	// read databases
 	// path,filename,separator,mincol,maxcol,maxrow,func_parsor
@@ -16041,7 +16047,6 @@ int status_readdb( bool reload ){
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i > 0);
 
 		aFree(dbsubpath1);
@@ -16055,6 +16060,7 @@ int status_readdb( bool reload ){
 		size_fix_db.load();
 		refine_db.load();
 	}
+	elemental_attribute_db.load();
 
 	return 0;
 }
