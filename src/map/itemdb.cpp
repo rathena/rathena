@@ -1925,7 +1925,7 @@ bool ComboDatabase::parseComboNode(std::string nodeName, YAML::Node node, std::v
 	for (const auto &it : node[nodeName]) {
 		std::string item_name = it.as<std::string>();
 
-		item_data *item = itemdb_search_aegisname(item_name.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
 
 		if (item == nullptr) {
 			this->invalidWarning(node[nodeName], "Invalid item %s, skipping.\n", item_name.c_str());
