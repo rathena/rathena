@@ -408,6 +408,12 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("MOB_ITEM_RATIO_DB", 1, root_paths, "mob_item_ratio", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, false);
+	})) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -3939,5 +3945,41 @@ static bool itemdb_read_group_yaml(void) {
 		body << YAML::EndSeq;
 		body << YAML::EndMap;
 	}
+	return true;
+}
+
+// Copied and adjusted from mob.cpp
+static bool mob_readdb_itemratio(char* str[], int columns, int current) {
+	t_itemid nameid = strtoul(str[0], nullptr, 10);
+
+	std::string *item_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (!item_name) {
+		ShowWarning("mob_readdb_itemratio: Invalid item id %u.\n", nameid);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Item" << YAML::Value << *item_name;
+	body << YAML::Key << "Ratio" << YAML::Value << strtoul(str[1], nullptr, 10);
+
+	if (columns-2 > 0) {
+		body << YAML::Key << "List";
+		body << YAML::BeginMap;
+		for (int i = 0; i < columns-2; i++) {
+			uint16 mob_id = static_cast<uint16>(strtoul(str[i+2], nullptr, 10));
+			std::string* mob_name = util::umap_find( aegis_mobnames, mob_id );
+
+			if (mob_name == nullptr) {
+				ShowWarning( "mob_readdb_itemratio: Invalid monster with ID %hu.\n", mob_id );
+				continue;
+			}
+			body << YAML::Key << *mob_name << YAML::Value << "true";
+		}
+		body << YAML::EndMap;
+	}
+
+	body << YAML::EndMap;
+
 	return true;
 }
