@@ -414,6 +414,18 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("ATTRIBUTE_DB", 1, { path_db_mode }, "attr_fix", [](const std::string &path, const std::string &name_ext) -> bool {
+		return status_readdb_attrfix((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	if (!process("ATTRIBUTE_DB", 1, { path_db_import }, "attr_fix", [](const std::string &path, const std::string &name_ext) -> bool {
+		return status_readdb_attrfix((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -3981,5 +3993,70 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current) {
 
 	body << YAML::EndMap;
 
+	return true;
+}
+
+// Copied and adjusted from status.cpp
+static bool status_readdb_attrfix(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return false;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	int lv, i, j;
+	std::string constant;
+
+	while (fgets(line, sizeof(line), fp)) {
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		lv = strtoul(line, nullptr, 10);
+		if (!CHK_ELEMENT_LEVEL(lv))
+			continue;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Level" << YAML::Value << (count+1);
+
+		for (i = 0; i < ELE_ALL; ) {
+			char *p;
+			if (!fgets(line, sizeof(line), fp))
+				break;
+			if (line[0] == '/' && line[1] == '/')
+				continue;
+
+			constant = constant_lookup(i, "Ele_");
+			constant.erase(0, 4);
+			body << YAML::Key << name2Upper(constant);
+			body << YAML::BeginMap;
+
+			for (j = 0, p = line; j < ELE_ALL && p; j++) {
+				while (*p == 32) //skipping space (32=' ')
+					p++;
+
+				constant = constant_lookup(j, "Ele_");
+				constant.erase(0, 4);
+				body << YAML::Key << name2Upper(constant) << YAML::Value << atoi(p);
+	
+				p = strchr(p, ',');
+				if (p)
+					*p++=0;
+			}
+			body << YAML::EndMap;
+
+			i++;
+		}
+		body << YAML::EndMap;
+
+		count++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
 	return true;
 }
