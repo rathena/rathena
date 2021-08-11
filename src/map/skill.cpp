@@ -1629,7 +1629,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case CR_ACIDDEMONSTRATION:
-		if (!dstmd)	{
+		if (!dstmd) {
 			skill_break_equip(src,bl, EQP_WEAPON|EQP_ARMOR, 100*skill_lv, BCT_ENEMY);
 		}
 	case GN_FIRE_EXPANSION_ACID:
