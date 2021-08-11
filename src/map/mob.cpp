@@ -5934,7 +5934,7 @@ uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asString(node, "Item", item_name))
 		return 0;
 
-	item_data *item = itemdb_search_aegisname(item_name.c_str());
+	std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
 
 	if (item == nullptr) {
 		this->invalidWarning(node["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());
