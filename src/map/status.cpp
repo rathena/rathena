@@ -15954,7 +15954,7 @@ const std::string AttributeDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef node) {
 	uint16 level;
 
 	if (!this->asUInt16(node, "Level", level))
@@ -15969,7 +15969,7 @@ uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->nodeExists(node, itatk.first))
 			continue;
 
-		const YAML::Node &eleNode = node[itatk.first];
+		const auto eleNode = node[itatk.first];
 
 		for (const auto &itdef : um_eleid2elename) {
 			if (!this->nodeExists(eleNode, itdef.first))

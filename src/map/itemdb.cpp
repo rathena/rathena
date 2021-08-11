@@ -1021,11 +1021,8 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef node) {
 			item->unequip_script = nullptr;
 	}
 
-	if (!exists) {
+	if (!exists)
 		this->put(nameid, item);
-		this->nameToItemDataMap[item->ename] = item;
-		this->aegisNameToItemDataMap[item->name] = item;
-	}
 
 	return 1;
 }
@@ -1186,32 +1183,6 @@ int16 ItemGroupDatabase::item_exists_pc(map_session_data *sd, uint16 group_id)
 	}
 
 	return -1;
-}
-
-/*==========================================
- * Return item data from item name. (lookup)
- * @param str Item Name
- * @param aegis_only
- * @return item data
- *------------------------------------------*/
-static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
-{
-	// Absolute priority to Aegis code name.
-	auto aegisNameResult = item_db.aegisNameToItemDataMap.find(str);
-	if (aegisNameResult != item_db.aegisNameToItemDataMap.end()) {
-		return aegisNameResult->second.get();
-	}
-
-	// If only Aegis name is allowed, continue with the next entry
-	if (!aegis_only) {
-		//Second priority to Client displayed name.
-		auto nameResult = item_db.nameToItemDataMap.find(str);
-		if (nameResult != item_db.nameToItemDataMap.end()) {
-			return nameResult->second.get();
-		}
-	}
-
-	return nullptr;
 }
 
 /*==========================================

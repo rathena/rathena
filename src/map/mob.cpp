@@ -5936,7 +5936,7 @@ const std::string MobItemRatioDatabase::getDefaultLocation() {
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
-uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 MobItemRatioDatabase::parseBodyNode(const ryml::NodeRef node) {
 	std::string item_name;
 
 	if (!this->asString(node, "Item", item_name))
@@ -5973,10 +5973,11 @@ uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "List")) {
-		const YAML::Node &MobNode = node["List"];
+		const auto MobNode = node["List"];
 
-		for (const auto mobit : MobNode) {
-			std::string mob_name = mobit.first.as<std::string>();
+		for (const auto mobit : MobNode.children()) {
+			std::string mob_name;
+			c4::from_chars(mobit.key(), &mob_name);
 
 			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
 
