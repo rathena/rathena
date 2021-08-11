@@ -287,27 +287,6 @@ Body:
     Duration2: 10000
     Cooldown: 2000
     Requires:
-      HpCost:
-        - Level: 1
-          Amount: 20
-        - Level: 2
-          Amount: 20
-        - Level: 3
-          Amount: 19
-        - Level: 4
-          Amount: 19
-        - Level: 5
-          Amount: 18
-        - Level: 6
-          Amount: 18
-        - Level: 7
-          Amount: 17
-        - Level: 8
-          Amount: 17
-        - Level: 9
-          Amount: 16
-        - Level: 10
-          Amount: 16
       SpCost: 30
   - Id: 8
     Name: SM_ENDURE
@@ -23729,15 +23708,15 @@ Body:
         Time: 180000
     Cooldown:
       - Level: 1
-        Time: 540000
+        Time: 60000
       - Level: 2
-        Time: 480000
+        Time: 90000
       - Level: 3
-        Time: 420000
+        Time: 120000
       - Level: 4
-        Time: 360000
+        Time: 150000
       - Level: 5
-        Time: 300000
+        Time: 180000
     FixedCastTime: 1000
     Requires:
       SpCost:

@@ -853,7 +853,7 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,181,9,191,45,"Aliza",1737,10,.@label$;
 		areamonster .@map$,181,9,191,45,"Zealotus",1200,5,.@label$;
 		areamonster .@map$,181,9,191,45,"Alice",1275,5,.@label$;
-		areamonster .@map$,181,9,191,45,"Green Maiden",1631,10,.@label$;
+		areamonster .@map$,181,9,191,45,"Green Maiden",1519,10,.@label$;
 		break;
 	case 74:
 		areamonster .@map$,267,9,277,45,"Dimik",1671,6,.@label$;

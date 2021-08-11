@@ -10338,9 +10338,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddClass,Class_All,(getrefine()>=15?8:5);
-      bonus5 bAutoSpell,"SA_DISPELL",1,1,BF_NORMAL,1;
       bonus bUnbreakableWeapon;
+      bonus2 bAddClass,Class_All,(getrefine()>=15?8:5);
+      bonus3 bAutoSpell,"SA_DISPELL",1,25;
   - Id: 4536
     AegisName: Sealed_Atroce_Card
     Name: Sealed Atroce Card
@@ -10456,9 +10456,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bResEff,Eff_Freeze,(getrefine()>=15?6000:4000);
-      bonus5 bAutoSpell,"SA_LANDPROTECTOR",1,1,BF_MAGIC,1;
       bonus bMdef,-20;
+      bonus2 bResEff,Eff_Freeze,(getrefine()>=15?6000:4000);
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,35,BF_MAGIC,0;
   - Id: 4543
     AegisName: SLD_Garm_Card
     Name: Sealed Hatii Card
@@ -10531,9 +10531,9 @@ Body:
       if (BaseJob == Job_Rogue) {
          bonus bMatkRate,10;
          bonus2 bAddClass,Class_All,10;
-         bonus bMaxHPrate,getrefine()/2;
       }
-      /* Adds a chance of inflicting Confuse on target when using Body Paint skill. */
+      bonus bMaxHPrate,getrefine()/2;
+      bonus3 bAddEffOnSkill,"SC_BODYPAINT",Eff_Stun,1000;
   - Id: 4548
     AegisName: Upd_Salamander_Card
     Name: Enhanced Salamander Card
@@ -10641,7 +10641,7 @@ Body:
     AegisName: Fenrir_Card
     Name: Fenrir Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Head_Low: true
@@ -10657,7 +10657,7 @@ Body:
     AegisName: Fenrir_Card_
     Name: Weakened Fenrir Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Head_Low: true
@@ -11358,9 +11358,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_SHORT,0;
   - Id: 4604
     AegisName: CorruptionRootH_Card
     Name: Realized Corruption Root Card
@@ -11374,9 +11374,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,30;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_SHORT,0;
   - Id: 4605
     AegisName: UndeadKnightM_Card
     Name: Agony Of Royal Knight Card
@@ -11466,7 +11466,7 @@ Body:
     AegisName: Sarah_Card
     Name: Sarah Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Armor: true
@@ -11479,7 +11479,7 @@ Body:
     AegisName: Timeholder_Card
     Name: Time Holder Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11493,7 +11493,7 @@ Body:
     AegisName: Big_Ben_Card
     Name: Big Ben Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11507,7 +11507,7 @@ Body:
     AegisName: Big_Bell_Card
     Name: Big Bell Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11521,7 +11521,7 @@ Body:
     AegisName: Neo_Punk_Card
     Name: Neo Punk Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Left_Hand: true
@@ -11535,7 +11535,7 @@ Body:
     AegisName: Arc_Elder_Card
     Name: Arc Elder Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Garment: true
@@ -11549,7 +11549,7 @@ Body:
     AegisName: Time_Keeper_Card
     Name: Nightmare Timer Keeper Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Shoes: true
@@ -11562,7 +11562,7 @@ Body:
     AegisName: Owl_Viscount_Card
     Name: Owl Viscount Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Both_Accessory: true
@@ -11575,7 +11575,7 @@ Body:
     AegisName: Owl_Marquees_Card
     Name: Owl Marquees Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Both_Accessory: true
@@ -34068,19 +34068,6 @@ Body:
     Name: Cat Hand Ticket
     Type: Etc
     Buy: 10
-  - Id: 22870
-    AegisName: Xmas_Package_14
-    Name: Christmas Package
-    Type: Etc
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 22875
     AegisName: Sealed_Beelzebub_Card
     Name: Sealed Beelzebub Card
@@ -38288,6 +38275,30 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;
+  - Id: 27031
+    AegisName: Labyrinth_Bapho_Card
+    Name: Labyrinth Baphomet Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+  - Id: 27032
+    AegisName: Labyrinth_Dra_Card
+    Name: Labyrinth Dracula Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddClass,Class_All,10;
   - Id: 27081
     AegisName: AngerMoonlight_Card
     Name: Angry Moonlight Flower Card

@@ -1627,6 +1627,7 @@
 	export_constant(SC_PACKING_ENVELOPE8);
 	export_constant(SC_PACKING_ENVELOPE9);
 	export_constant(SC_PACKING_ENVELOPE10);
+	export_constant(SC_SOULATTACK);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -5227,6 +5228,9 @@
 	export_constant(IG_ENCHANT_STONE_BOX19);
 	export_constant(IG_ENCHANT_STONE_BOX20);
 	export_constant(IG_ENCHANT_STONE_BOX21);
+	export_constant(IG_XMAS_PACKAGE_14);
+	export_constant(IG_EASTER_EGG);
+	export_constant(IG_PITAPAT_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

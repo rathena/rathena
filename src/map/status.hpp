@@ -10,6 +10,8 @@
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
+#include "map.hpp"
+
 enum e_race2 : uint8;
 struct block_list;
 struct mob_data;
@@ -115,6 +117,26 @@ public:
 };
 
 extern SizeFixDatabase size_fix_db;
+
+class AttributeDatabase : public YamlDatabase {
+private:
+	int16 attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
+
+public:
+	AttributeDatabase() : YamlDatabase("ATTRIBUTE_DB", 1) {
+		this->clear();
+	}
+
+	void clear() { 
+		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
+	}
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+
+	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);
+};
+
+extern AttributeDatabase elemental_attribute_db;
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {
@@ -998,6 +1020,8 @@ enum sc_type : int16 {
 	SC_PACKING_ENVELOPE8,
 	SC_PACKING_ENVELOPE9,
 	SC_PACKING_ENVELOPE10,
+
+	SC_SOULATTACK,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

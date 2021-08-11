@@ -22353,7 +22353,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 				if (!this->asString(it, "Item", item_name))
 					continue;
 
-				struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if (item == nullptr) {
 					this->invalidWarning(itemNode["Item"], "Requires ItemCost Item %s does not exist.\n", item_name.c_str());
@@ -22378,7 +22378,7 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef node) {
 				std::string item_name;
 				c4::from_chars(it.key(), &item_name);
 
-				struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if (item == nullptr) {
 					this->invalidWarning(equipNode, "Requires Equipment %s does not exist.\n", item_name.c_str());
@@ -22597,7 +22597,7 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const ryml::NodeRef node) {
 		if (!this->asString(node, "Book", book_name))
 			return 0;
 
-		struct item_data *item = itemdb_search_aegisname(book_name.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( book_name.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(node["Book"], "Book item %s does not exist.\n", book_name.c_str());
@@ -22753,7 +22753,7 @@ uint64 SkillArrowDatabase::parseBodyNode(const ryml::NodeRef node) {
 	if (!this->asString(node, "Source", source_name))
 		return 0;
 
-	struct item_data *item = itemdb_search_aegisname(source_name.c_str());
+	std::shared_ptr<item_data> item = item_db.search_aegisname( source_name.c_str() );
 
 	if (item == nullptr) {
 		this->invalidWarning(node["Source"], "Item %s does not exist.\n", source_name.c_str());
@@ -22778,7 +22778,7 @@ uint64 SkillArrowDatabase::parseBodyNode(const ryml::NodeRef node) {
 		if (!this->asString(it, "Item", item_name))
 			return 0;
 
-		struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(it["Item"], "Item %s does not exist.\n", item_name.c_str());
