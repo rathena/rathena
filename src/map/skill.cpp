@@ -5224,12 +5224,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_unitsetting(src, skill_id, skill_lv, bl->x, bl->y, 0);
 		break;
 
-	case WL_COMET:
-	case NPC_COMET:
-		if(!map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR)) // Nothing should happen if the target is on Land Protector
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-		
 	case SM_MAGNUM:
 	case MS_MAGNUM:
 		if( flag&1 ) {
@@ -12283,10 +12277,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 #endif
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
+	case NPC_COMET:
 	case NPC_ICEMINE:
 	case NPC_FLAMECROSS:
 	case NPC_HELLBURNING:
 	case NPC_REVERBERATION:
+	case WL_COMET:
 	case RA_ELECTRICSHOCKER:
 	case RA_CLUSTERBOMB:
 	case RA_MAGENTATRAP:
@@ -12660,16 +12656,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			i = skill_get_splash(skill_id, skill_lv);
 			map_foreachinallarea(skill_area_sub, src->m, x - i, y - i, x + i, y + i, BL_CHAR, src, ALL_RESURRECTION, 1, tick, flag|BCT_NOENEMY|1,skill_castend_nodamage_id);
 		}
-		break;
-
-	case WL_COMET:
-	case NPC_COMET:
-		if( sc ) {
-			sc->comet_x = x;
-			sc->comet_y = y;
-		}
-		i = skill_get_splash(skill_id,skill_lv);
-		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_ANIMATION|1,skill_castend_damage_id);
 		break;
 
 	case WL_EARTHSTRAIN:
@@ -13479,6 +13465,13 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		val3 = sc->data[SC_POISONINGWEAPON]->val1;
 		limit = skill_get_time(skill_id, skill_lv);
 		break;
+	case NPC_COMET:
+	case WL_COMET:
+		if (sc) {
+			sc->comet_x = x;
+			sc->comet_y = y;
+		}
+		break;
 	case GD_LEADERSHIP:
 	case GD_GLORYWOUNDS:
 	case GD_SOULCOLD:
@@ -14207,6 +14200,10 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					if (rnd()%100 < unit->val1)
 						skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
+				case WL_COMET:
+					if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
+						break; // Nothing should happen if the target is on Land Protector
+					// Fall through
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			}
