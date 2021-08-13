@@ -100,13 +100,6 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			constant = IT_ETC;
 		}
 
-		if (constant == IT_DELAYCONSUME) { // Items that are consumed only after target confirmation
-			constant = IT_USABLE;
-			item->flag.delay_consume |= DELAYCONSUME_TEMP;
-		} else {
-			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
-		}
-
 		item->type = static_cast<item_types>(constant);
 	} else {
 		if (!exists)
@@ -146,8 +139,6 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->subtype = 0;
 	}
 
-	// When a particular price is not given, we should base it off the other one
-	// (it is important to make a distinction between 'no price' and 0z)
 	if (this->nodeExists(node, "Buy")) {
 		uint32 buy;
 
@@ -155,17 +146,10 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		item->value_buy = buy;
+		item->value_sell = 0;
 	} else {
 		if (!exists) {
-			if (this->nodeExists(node, "Sell")) {
-				uint32 sell;
-
-				if (!this->asUInt32(node, "Sell", sell))
-					return 0;
-
-				item->value_buy = sell * 2;
-			} else
-				item->value_buy = 0;
+			item->value_buy = 0;
 		}
 	}
 
@@ -176,14 +160,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		item->value_sell = sell;
+		item->value_buy = 0;
 	} else {
-		if (!exists)
-			item->value_sell = item->value_buy / 2;
-	}
-
-	if (item->value_buy / 124. < item->value_sell / 75.) {
-		this->invalidWarning(node, "Buying/Selling [%d/%d] price of %s (%hu) allows Zeny making exploit through buying/selling at discounted/overcharged prices! Defaulting Sell to 1 Zeny.\n", item->value_buy, item->value_sell, item->name.c_str(), nameid);
-		item->value_sell = 1;
+		if (!exists) {
+			item->value_sell = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "Weight")) {
@@ -1022,6 +1003,29 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 }
 
 void ItemDatabase::loadingFinished(){
+	for (auto &tmp_item : item_db) {
+		std::shared_ptr<item_data> item = tmp_item.second;
+
+		// Items that are consumed only after target confirmation
+		if (item->type == IT_DELAYCONSUME) {
+			item->type = IT_USABLE;
+			item->flag.delay_consume |= DELAYCONSUME_TEMP;
+		} else {
+			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
+		}
+
+		// When a particular price is not given, we should base it off the other one
+		if (item->value_buy == 0 && item->value_sell > 0)
+			item->value_buy = item->value_sell * 2;
+		else if (item->value_buy > 0 && item->value_sell == 0)
+			item->value_sell = item->value_buy / 2;
+
+		if (item->value_buy / 124. < item->value_sell / 75.) {
+			ShowWarning("Buying/Selling [%d/%d] price of %s (%u) allows Zeny making exploit through buying/selling at discounted/overcharged prices! Defaulting Sell to 1 Zeny.\n", item->value_buy, item->value_sell, item->name.c_str(), item->nameid);
+			item->value_sell = 1;
+		}
+	}
+
 	if( !this->exists( ITEMID_DUMMY ) ){
 		// Create dummy item
 		std::shared_ptr<item_data> dummy_item = std::make_shared<item_data>();
