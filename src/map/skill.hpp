@@ -24,7 +24,7 @@ enum e_battle_check_target : uint32;
 struct map_session_data;
 struct homun_data;
 struct skill_unit;
-struct skill_unit_group;
+struct s_skill_unit_group;
 struct status_change_entry;
 
 #define MAX_SKILL_PRODUCE_DB	282 /// Max Produce DB
@@ -341,9 +341,8 @@ struct skill_timerskill {
 	int flag;
 };
 
-#define MAX_SKILLUNITGROUP 25 /// Maximum skill unit group (for same skill each source)
 /// Skill unit group
-struct skill_unit_group {
+struct s_skill_unit_group {
 	int src_id; /// Caster ID/RID, if player is account_id
 	int party_id; /// Party ID
 	int guild_id; /// Guild ID
@@ -375,7 +374,7 @@ struct skill_unit_group {
 /// Skill unit
 struct skill_unit {
 	struct block_list bl;
-	struct skill_unit_group *group; /// Skill group reference
+	std::shared_ptr<s_skill_unit_group> group; /// Skill group reference
 	t_tick limit;
 	int val1, val2;
 	short range;
@@ -557,12 +556,12 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
 int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // Skills unit
-struct skill_unit_group *skill_id2group(int group_id);
-struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag);
-struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2, bool hidden);
+std::shared_ptr<s_skill_unit_group> skill_id2group(int group_id);
+std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag);
+struct skill_unit *skill_initunit (std::shared_ptr<s_skill_unit_group> group, int idx, int x, int y, int val1, int val2, bool hidden);
 int skill_delunit(struct skill_unit *unit);
-struct skill_unit_group *skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, t_tick limit, int interval);
-int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int line, const char* func);
+std::shared_ptr<s_skill_unit_group> skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, t_tick limit, int interval);
+int skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char* file, int line, const char* func);
 #define skill_delunitgroup(group) skill_delunitgroup_(group,__FILE__,__LINE__,__func__)
 void skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
@@ -592,7 +591,7 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
 int skill_unit_move(struct block_list *bl,t_tick tick,int flag);
-void skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
+void skill_unit_move_unit_group( std::shared_ptr<s_skill_unit_group> group, int16 m,int16 dx,int16 dy);
 void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 
 int skill_sit(struct map_session_data *sd, bool sitting);
