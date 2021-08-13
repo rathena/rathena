@@ -65883,6 +65883,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@val = 7;
       bonus bBaseAtk,15;
       if (.@r > 1) {
@@ -97794,6 +97795,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bStr,1;
   - Id: 24001
     AegisName: T1_Shadow_Weapon
@@ -97804,6 +97806,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bDex,1;
   - Id: 24002
     AegisName: T1_Shadow_Shield
@@ -97814,6 +97819,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bLuk,1;
   - Id: 24003
     AegisName: T1_Shadow_Shoes
@@ -97824,6 +97830,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bAgi,1;
   - Id: 24004
     AegisName: T1_Shadow_R_Accessory
@@ -97834,6 +97841,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bVit,1;
   - Id: 24005
     AegisName: T1_Shadow_L_Accessory
@@ -97844,6 +97852,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bInt,1;
   - Id: 24006
     AegisName: T2_Shadow_Armor
@@ -97854,6 +97863,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bStr,2;
   - Id: 24007
     AegisName: T2_Shadow_Weapon
@@ -97864,6 +97874,9 @@ Body:
     EquipLevelMin: 30
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bDex,2;
   - Id: 24008
     AegisName: T2_Shadow_Shield
@@ -97874,6 +97887,7 @@ Body:
     EquipLevelMin: 60
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bLuk,2;
   - Id: 24009
     AegisName: T2_Shadow_Shoes
@@ -97884,6 +97898,7 @@ Body:
     EquipLevelMin: 90
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bAgi,2;
   - Id: 24010
     AegisName: T2_Shadow_R_Accessory
@@ -97894,6 +97909,7 @@ Body:
     EquipLevelMin: 120
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bVit,2;
   - Id: 24011
     AegisName: T2_Shadow_L_Accessory
@@ -97904,6 +97920,7 @@ Body:
     EquipLevelMin: 150
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bInt,2;
   - Id: 24012
     AegisName: S_Promotion_Weapon
@@ -97914,6 +97931,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bDex,1;
   - Id: 24013
     AegisName: S_Promotion_Armor
@@ -97924,6 +97944,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bLuk,1;
   - Id: 24014
     AegisName: S_Promotion_Shoes
@@ -97934,6 +97955,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bAgi,1;
   - Id: 24015
     AegisName: S_Promotion_Shield
@@ -97944,6 +97966,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bVit,1;
   - Id: 24016
     AegisName: S_Promotion_Earring
@@ -97954,6 +97977,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bInt,1;
   - Id: 24017
     AegisName: S_Promotion_Pendant
@@ -97964,6 +97988,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bStr,1;
   - Id: 24018
     AegisName: S_Physical_Earring
@@ -98105,6 +98130,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus2 bSubEle,Ele_Neutral,1;
   - Id: 24028
     AegisName: S_Hard_Armor
@@ -98893,6 +98919,7 @@ Body:
     Script: |
       bonus2 bSubSize,Size_Large,2;
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r>=7) {
          bonus2 bSubSize,Size_Large,1;
       }
@@ -98910,6 +98937,7 @@ Body:
     Script: |
       bonus2 bSubSize,Size_Medium,2;
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r>=7) {
          bonus2 bSubSize,Size_Medium,1;
       }
@@ -98927,6 +98955,7 @@ Body:
     Script: |
       bonus2 bSubSize,Size_Small,2;
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r>=7) {
          bonus2 bSubSize,Size_Small,1;
       }
@@ -98944,6 +98973,8 @@ Body:
     Script: |
       bonus2 bAddSize,Size_Large,2;
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       if (.@r>=7) {
          bonus2 bAddSize,Size_Large,1;
       }
@@ -98961,6 +98992,8 @@ Body:
     Script: |
       bonus2 bAddSize,Size_Medium,2;
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       if (.@r>=7) {
          bonus2 bAddSize,Size_Medium,1;
       }
@@ -98978,6 +99011,8 @@ Body:
     Script: |
       bonus2 bAddSize,Size_Small,2;
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       if (.@r>=7) {
          bonus2 bAddSize,Size_Small,1;
       }
@@ -98993,8 +99028,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bSPrecovRate,5;
-      if (getrefine()>=7)
+      if (.@r>=7)
          bonus bSPrecovRate,5;
   - Id: 24079
     AegisName: S_Spiritual_Earring
@@ -99005,8 +99043,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMaxSP,50;
-      if (getrefine()>=7)
+      if (.@r>=7)
          bonus bMaxSPrate,1;
   - Id: 24080
     AegisName: S_Spiritual_Pendent
@@ -99017,7 +99057,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMaxSPrate,(getrefine()>=7?2:1);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bMaxSPrate,(.@r>=7?2:1);
   - Id: 24081
     AegisName: S_Malicious_Armor
     Name: Malicious Shas Shadow Armor
@@ -99071,7 +99113,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bCritical,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bCritical,5+(.@r/2);
   - Id: 24085
     AegisName: S_Gemstone_Shoes
     Name: Gemstone Shadow Shoes
@@ -99081,7 +99125,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bFlee,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bFlee,5+(.@r/2);
   - Id: 24086
     AegisName: S_Gemstone_Shield
     Name: Gemstone Shadow Shield
@@ -99091,7 +99137,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bDef,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bDef,5+(.@r/2);
   - Id: 24087
     AegisName: S_Gemstone_Weapon
     Name: Gemstone Shadow Weapon
@@ -99101,7 +99149,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bHit,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus bHit,5+(.@r/2);
   - Id: 24088
     AegisName: S_Gemstone_Earring
     Name: Gemstone Shadow Earring
@@ -99111,7 +99162,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMatk,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bMatk,5+(.@r/2);
   - Id: 24089
     AegisName: S_Gemstone_Pendent
     Name: Gemstone Shadow Pendant
@@ -99121,7 +99174,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bBaseAtk,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bBaseAtk,5+(.@r/2);
   - Id: 24090
     AegisName: S_Stability_Shield
     Name: Stability Shadow Shield
@@ -99151,8 +99206,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Stone,getrefine();
+      bonus2 bResEff,Eff_Stone,.@r;
   - Id: 24092
     AegisName: S_Plasterer's_Shoes
     Name: Harrods Plaster Shadow Shoes
@@ -99162,8 +99219,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Stone,getrefine();
+      bonus2 bResEff,Eff_Stone,.@r;
   - Id: 24093
     AegisName: S_Insomniac_Armor
     Name: Insomnia Shadow Armor
@@ -99173,8 +99232,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Sleep,getrefine();
+      bonus2 bResEff,Eff_Sleep,.@r;
   - Id: 24094
     AegisName: S_Insomniac_Shoes
     Name: Insomnia Shadow Shoes
@@ -99184,8 +99245,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Sleep,getrefine();
+      bonus2 bResEff,Eff_Sleep,.@r;
   - Id: 24095
     AegisName: S_Peerless_Armor
     Name: Peerless Shadow Armor
@@ -99195,8 +99258,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Silence,getrefine();
+      bonus2 bResEff,Eff_Silence,.@r;
   - Id: 24096
     AegisName: S_Peerless_Shoes
     Name: Peerless Shadow Shoes
@@ -99206,8 +99271,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Silence,getrefine();
+      bonus2 bResEff,Eff_Silence,.@r;
   - Id: 24097
     AegisName: S_Adurate_Armor
     Name: Andre Shadow Armor
@@ -99217,8 +99284,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Blind,getrefine();
+      bonus2 bResEff,Eff_Blind,.@r;
   - Id: 24098
     AegisName: S_Adurate_Shoes
     Name: Andre Shadow Shoes
@@ -99228,8 +99297,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Blind,getrefine();
+      bonus2 bResEff,Eff_Blind,.@r;
   - Id: 24099
     AegisName: Unfreez_Weapon_S
     Name: Unfreezing Shadow Weapon
@@ -99283,8 +99354,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Bleeding,getrefine();
+      bonus2 bResEff,Eff_Bleeding,.@r;
   - Id: 24103
     AegisName: Vitality_Pendant_S
     Name: Vitality Shadow Pendant
@@ -99295,8 +99368,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Bleeding,getrefine();
+      bonus2 bResEff,Eff_Bleeding,.@r;
   - Id: 24104
     AegisName: S_Neutral_Weapon
     Name: Neutral Shadow Weapon
@@ -99306,8 +99381,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Stun,getrefine()/2;
+      bonus2 bResEff,Eff_Stun,.@r/2;
   - Id: 24105
     AegisName: S_Neutral_Earring
     Name: Neutral Shadow Earring
@@ -99317,8 +99395,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Stun,getrefine();
+      bonus2 bResEff,Eff_Stun,.@r;
   - Id: 24106
     AegisName: S_Neutral_Pendent
     Name: Neutral Shadow Pendant
@@ -99328,8 +99408,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Stun,getrefine();
+      bonus2 bResEff,Eff_Stun,.@r;
   - Id: 24107
     AegisName: S_Curse_Lift_Earring
     Name: Frozen Curse Shadow Earring
@@ -99339,8 +99421,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Curse,getrefine();
+      bonus2 bResEff,Eff_Curse,.@r;
   - Id: 24108
     AegisName: S_Curse_Lift_Pendent
     Name: Frozen Curse Shadow Pendant
@@ -99350,8 +99434,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Curse,getrefine();
+      bonus2 bResEff,Eff_Curse,.@r;
   - Id: 24109
     AegisName: S_Caster_earring
     Name: Caster Shadow Earrings
@@ -99361,7 +99447,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bVariableCastrate,-1-((getrefine()>=7)?1:0);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bVariableCastrate,-1-((.@r>=7)?1:0);
   - Id: 24110
     AegisName: S_Caster_Weapon
     Name: Caster Shadow Weapon
@@ -99372,6 +99460,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bVariableCastrate,-1-((.@r>=7)?1:0)-((.@r>=9)?2:0);
   - Id: 24111
     AegisName: S_Spell_Flow_Shoes
@@ -99428,8 +99518,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(.@r*10);
   - Id: 24115
     AegisName: S_Greed_Shoes
     Name: Grid Shadow Shoes
@@ -99439,8 +99531,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(.@r*10);
   - Id: 24116
     AegisName: S_Greed_Shield
     Name: Grid Shadow Shield
@@ -99450,8 +99544,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(.@r*10);
   - Id: 24117
     AegisName: S_Greed_Weapon
     Name: Grid Shadow Weapon
@@ -99461,8 +99557,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(.@r*10);
   - Id: 24118
     AegisName: S_Greed_Earring
     Name: Grid Shadow Earring
@@ -99472,8 +99571,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(.@r*10);
   - Id: 24119
     AegisName: S_Greed_Pendant
     Name: Grid Shadow Pendant
@@ -99483,8 +99584,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "BS_GREED",1;
-      bonus2 bSkillUseSP,"BS_GREED",-100+(getrefine()*10);
+      bonus2 bSkillUseSP,"BS_GREED",-100+(.@r*10);
   - Id: 24120
     AegisName: S_Heal_Armor
     Name: Heal Shadow Armor
@@ -99494,8 +99597,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_HEAL",1;
-      bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_HEAL",-50+(.@r*5);
   - Id: 24121
     AegisName: S_Heal_Shoes
     Name: Heal Shadow Shoes
@@ -99505,8 +99610,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_HEAL",1;
-      bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_HEAL",-50+(.@r*5);
   - Id: 24122
     AegisName: S_Heal_Shield
     Name: Heal Shadow Shield
@@ -99516,8 +99623,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_HEAL",1;
-      bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_HEAL",-50+(.@r*5);
   - Id: 24123
     AegisName: S_Heal_Weapon
     Name: Heal Shadow Weapon
@@ -99527,8 +99636,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       skill "AL_HEAL",1;
-      bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_HEAL",-50+(.@r*5);
   - Id: 24124
     AegisName: S_Heal_Earring
     Name: Heal Shadow Earring
@@ -99538,8 +99650,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_HEAL",1;
-      bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_HEAL",-50+(.@r*5);
   - Id: 24125
     AegisName: S_Heal_Pendant
     Name: Heal Shadow Pendant
@@ -99549,8 +99663,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_HEAL",1;
-      bonus2 bSkillUseSP,"AL_HEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_HEAL",-50+(.@r*5);
   - Id: 24126
     AegisName: S_Hiding_Armor
     Name: Hiding Shadow Armor
@@ -99560,8 +99676,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_HIDING",1;
-      bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_HIDING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_HIDING;
   - Id: 24127
@@ -99573,8 +99691,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_HIDING",1;
-      bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_HIDING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_HIDING;
   - Id: 24128
@@ -99586,8 +99706,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_HIDING",1;
-      bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_HIDING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_HIDING;
   - Id: 24129
@@ -99599,8 +99721,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       skill "TF_HIDING",1;
-      bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_HIDING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_HIDING;
   - Id: 24130
@@ -99612,8 +99737,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_HIDING",1;
-      bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_HIDING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_HIDING;
   - Id: 24131
@@ -99625,8 +99752,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_HIDING",1;
-      bonus2 bSkillUseSP,"TF_HIDING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_HIDING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_HIDING;
   - Id: 24132
@@ -99638,8 +99767,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AS_CLOAKING",1;
-      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_CLOAKING;
   - Id: 24133
@@ -99651,8 +99782,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AS_CLOAKING",1;
-      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_CLOAKING;
   - Id: 24134
@@ -99664,8 +99797,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AS_CLOAKING",1;
-      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_CLOAKING;
   - Id: 24135
@@ -99677,8 +99812,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       skill "AS_CLOAKING",1;
-      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_CLOAKING;
   - Id: 24136
@@ -99690,8 +99828,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AS_CLOAKING",1;
-      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_CLOAKING;
   - Id: 24137
@@ -99703,8 +99843,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AS_CLOAKING",1;
-      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AS_CLOAKING",-50+(.@r*5);
     UnEquipScript: |
       sc_end SC_CLOAKING;
   - Id: 24138
@@ -99716,8 +99858,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_TELEPORT",1;
-      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(.@r*5);
   - Id: 24139
     AegisName: S_Teleport_Shoes
     Name: Teleport Shadow Shoes
@@ -99727,8 +99871,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_TELEPORT",1;
-      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(.@r*5);
   - Id: 24140
     AegisName: S_Teleport_Shield
     Name: Teleport Shadow Shield
@@ -99738,8 +99884,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_TELEPORT",1;
-      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(.@r*5);
   - Id: 24141
     AegisName: S_Teleport_Weapon
     Name: Teleport Shadow Weapon
@@ -99749,8 +99897,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       skill "AL_TELEPORT",1;
-      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(.@r*5);
   - Id: 24142
     AegisName: S_Teleport_Earring
     Name: Teleport Shadow Earring
@@ -99760,8 +99911,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_TELEPORT",1;
-      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(.@r*5);
   - Id: 24143
     AegisName: S_Teleport_Pendant
     Name: Teleport Shadow Pendant
@@ -99771,8 +99924,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "AL_TELEPORT",1;
-      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"AL_TELEPORT",-50+(.@r*5);
   - Id: 24144
     AegisName: S_Steal_Armor
     Name: Steal Shadow Armor
@@ -99782,8 +99937,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_STEAL",1;
-      bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_STEAL",-50+(.@r*5);
   - Id: 24145
     AegisName: S_Steal_Shoes
     Name: Steal Shadow Shoes
@@ -99793,8 +99950,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_STEAL",1;
-      bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_STEAL",-50+(.@r*5);
   - Id: 24146
     AegisName: S_Steal_Shield
     Name: Steal Shadow Shield
@@ -99804,8 +99963,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_STEAL",1;
-      bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_STEAL",-50+(.@r*5);
   - Id: 24147
     AegisName: S_Steal_Weapon
     Name: Steal Shadow Weapon
@@ -99815,8 +99976,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       skill "TF_STEAL",1;
-      bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_STEAL",-50+(.@r*5);
   - Id: 24148
     AegisName: S_Steal_Earring
     Name: Steal Shadow Earring
@@ -99826,8 +99990,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_STEAL",1;
-      bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_STEAL",-50+(.@r*5);
   - Id: 24149
     AegisName: S_Steal_Pendant
     Name: Steal Shadow Pendant
@@ -99837,8 +100003,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       skill "TF_STEAL",1;
-      bonus2 bSkillUseSP,"TF_STEAL",-50+(getrefine()*5);
+      bonus2 bSkillUseSP,"TF_STEAL",-50+(.@r*5);
   - Id: 24150
     AegisName: S_Infinity_Earring
     Name: Infinity Shadow Earring
@@ -99849,6 +100017,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSubSize,Size_All,1+((.@r >= 9) ? 2 : (.@r >= 7) ? 1 : 0);
   - Id: 24151
     AegisName: S_Infinity_Pendant
@@ -99860,6 +100029,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSubSize,Size_All,1+((.@r >= 9) ? 2 : (.@r >= 7) ? 1 : 0);
   - Id: 24152
     AegisName: S_Solid_Weapon
@@ -99870,7 +100040,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bBaseAtk,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMatk,.@r;
+      bonus bBaseAtk,.@r+5+(.@r/2);
   - Id: 24153
     AegisName: S_Solid_Earring
     Name: Solid Shadow Earring
@@ -99880,7 +100052,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bHit,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bHit,5+(.@r/2);
   - Id: 24154
     AegisName: S_Immortal_Armor
     Name: Solid Shadow Armor
@@ -99890,7 +100064,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bDef,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bDef,5+(.@r/2);
   - Id: 24155
     AegisName: S_Immortal_Pendant
     Name: Solid Shadow Pendant
@@ -99900,7 +100076,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMdef,(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bMdef,(.@r/2);
   - Id: 24156
     AegisName: S_Executioner_Weapon
     Name: Demi-Human Shadow Weapon
@@ -100064,7 +100242,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24169
     AegisName: S_Tempest_Pendent
     Name: Tempest Pendant Shadow
@@ -100074,7 +100254,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24170
     AegisName: S_M_Executioner_Weapon
     Name: Magic Demi-Human Shadow Weapon
@@ -100084,7 +100266,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5+(.@r/2);
   - Id: 24171
     AegisName: S_M_Exorcist_Weapon
     Name: Magic Exorcist Shadow Weapon
@@ -100094,7 +100279,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Demon,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Demon,5+(.@r/2);
   - Id: 24172
     AegisName: S_M_Hunting_Weapon
     Name: Magic Hunting Shadow Weapon
@@ -100104,8 +100292,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Brute,5+(getrefine()/2);
-      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Brute,5+(.@r/2);
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,5+(.@r/2);
   - Id: 24173
     AegisName: S_M_Insect_Net_Weapon
     Name: Magic Insect Shadow Weapon
@@ -100115,7 +100306,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Insect,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Insect,5+(.@r/2);
   - Id: 24174
     AegisName: S_M_Fishing_Weapon
     Name: Magic Fishing Shadow Weapon
@@ -100125,7 +100319,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Fish,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Fish,5+(.@r/2);
   - Id: 24175
     AegisName: S_M_Dragon_K_Weapon
     Name: Magic Dragon Killer Shadow Weapon
@@ -100135,7 +100332,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Dragon,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Dragon,5+(.@r/2);
   - Id: 24176
     AegisName: S_M_Corrupt_Weapon
     Name: Magic Angelus Shadow Weapon
@@ -100145,7 +100345,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Angel,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Angel,5+(.@r/2);
   - Id: 24177
     AegisName: S_M_Vibration_Weapon
     Name: Magic Formless Shadow Weapon
@@ -100155,7 +100358,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Formless,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Formless,5+(.@r/2);
   - Id: 24178
     AegisName: S_M_Holy_Water_Weapon
     Name: Magic Holy Water Shadow Weapon
@@ -100165,7 +100371,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Undead,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Undead,5+(.@r/2);
   - Id: 24179
     AegisName: S_M_Scissors_Weapon
     Name: Magic Caesars Shadow Weapon
@@ -100175,7 +100384,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefRaceRate,RC_Plant,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefRaceRate,RC_Plant,5+(.@r/2);
   - Id: 24180
     AegisName: S_Bearers_Armor
     Name: Bearer's Shadow Armor
@@ -100185,7 +100397,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMdef,1+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bMdef,1+(.@r/2);
   - Id: 24181
     AegisName: S_Bearers_Shoes
     Name: Bearer's Shadow Shoes
@@ -100195,7 +100409,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMaxSP,50+(5*(getrefine()/2));
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bMaxSP,50+(5*(.@r/2));
   - Id: 24182
     AegisName: S_Bearers_Shield
     Name: Bearer's Shadow Shield
@@ -100205,7 +100421,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bDef,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bDef,5+(.@r/2);
   - Id: 24183
     AegisName: S_Bearers_Weapon
     Name: Bearer's Shadow Weapon
@@ -100215,7 +100433,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMaxHP,100+(10*(getrefine()/2));
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus bMaxHP,100+(10*(.@r/2));
   - Id: 24184
     AegisName: S_Bearers_Earring
     Name: Bearer's Shadow Earring
@@ -100225,7 +100446,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMatk,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bMatk,5+(.@r/2);
   - Id: 24185
     AegisName: S_Bearers_Pendent
     Name: Bearer's Shadow Pendant
@@ -100235,7 +100458,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bBaseAtk,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bBaseAtk,5+(.@r/2);
   - Id: 24186
     AegisName: S_Basis_Armor
     Name: Basis Shadow Armor
@@ -100375,7 +100600,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bFlee,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bFlee,5+(.@r/2);
   - Id: 24197
     AegisName: S_Hasty_Armor
     Name: Hasty Shadow Armor
@@ -100385,7 +100612,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bFlee,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bFlee,5+(.@r/2);
   - Id: 24198
     AegisName: S_Basis_Shield
     Name: Basis Shadow Shield
@@ -100537,7 +100766,9 @@ Body:
     EquipLevelMax: 175
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,(getrefine()/4);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,(.@r/4);
   - Id: 24209
     AegisName: S_Expert_Shield
     Name: Expert Shadow Shield
@@ -100548,7 +100779,9 @@ Body:
     EquipLevelMax: 175
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,(getrefine()/4);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,(.@r/4);
   - Id: 24210
     AegisName: S_Beginner_Shoes
     Name: Beginner Shadow Shoes
@@ -100559,7 +100792,9 @@ Body:
     EquipLevelMax: 49
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,getrefine();
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,.@r;
   - Id: 24211
     AegisName: S_Beginner_Shield
     Name: Beginner Shadow Shield
@@ -100570,7 +100805,9 @@ Body:
     EquipLevelMax: 49
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,getrefine();
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,.@r;
   - Id: 24212
     AegisName: S_Rookie_Shoes
     Name: Rookie Shadow Shoes
@@ -100581,7 +100818,9 @@ Body:
     EquipLevelMax: 99
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,(.@r/2);
   - Id: 24213
     AegisName: S_Rookie_Shield
     Name: Rookie Shadow Shield
@@ -100592,7 +100831,9 @@ Body:
     EquipLevelMax: 99
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,(.@r/2);
   - Id: 24214
     AegisName: S_Advanced_Shoes
     Name: Advanced Shadow Shoes
@@ -100603,7 +100844,9 @@ Body:
     EquipLevelMax: 149
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,(getrefine()/3);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,(.@r/3);
   - Id: 24215
     AegisName: S_Advanced_Shield
     Name: Advanced Shadow Shield
@@ -100614,7 +100857,9 @@ Body:
     EquipLevelMax: 149
     Refineable: true
     Script: |
-      bonus2 bExpAddRace,RC_All,(getrefine()/3);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bExpAddRace,RC_All,(.@r/3);
   - Id: 24216
     AegisName: S_Attack_Armor
     Name: Attack Shadow Armor
@@ -100626,6 +100871,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       autobonus "{ bonus bBaseAtk,("+.@r+"*5); }",(.@r*2)+10,3000,BF_NORMAL;
   - Id: 24217
     AegisName: S_Blitz_Earring
@@ -100638,6 +100884,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bHit,(.@r/2)+5;
       if (.@r>=7) {
          bonus bAspd,1;
@@ -100653,7 +100900,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bAtk2,(.@r/2)+5;
+      bonus bMaxHP,.@r*10;
+      bonus bBaseAtk,(.@r/2)+5;
       if (.@r>=7) {
          bonus bAspd,1;
       }
@@ -100668,6 +100916,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r>=2)
          autobonus "{ bonus3 bAutoSpell,\"MG_COLDBOLT\",("+.@r+"/2),1000; }",(.@r*2)+100,100,BF_SHORT;
   - Id: 24220
@@ -100681,6 +100930,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r>=2)
          autobonus "{ bonus3 bAutoSpell,\"MG_FIREBOLT\",("+.@r+"/2),1000; }",(.@r*2)+100,100,BF_SHORT;
   - Id: 24221
@@ -100694,6 +100944,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r>=2)
          autobonus "{ bonus3 bAutoSpell,\"MG_LIGHTNINGBOLT\",("+.@r+"/2),1000; }",(.@r*2)+100,100,BF_SHORT;
   - Id: 24222
@@ -100707,6 +100958,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r>=2)
          autobonus "{ bonus3 bAutoSpell,\"WZ_EARTHSPIKE\",("+.@r+"/2),1000; }",(.@r*2)+100,100,BF_SHORT;
   - Id: 24223
@@ -100734,8 +100986,10 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      bonus bAtk2,10;
-      bonus2 bAddClass,Class_All,(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r+10;
+      bonus bMatk,.@r;
+      bonus2 bAddClass,Class_All,(.@r/2);
   - Id: 24224
     AegisName: S_Force_Weapon
     Name: Force Shadow Weapon
@@ -100747,6 +101001,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bAddClass,Class_All,(.@r<7)?1:((.@r<9)?2:3);
   - Id: 24225
     AegisName: S_Force_Earring
@@ -100759,7 +101015,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bAtk2,(5+.@r);
+      bonus bMaxHP,.@r*10;
+      bonus bBaseAtk,(5+.@r);
       if (.@r>=7)
          bonus bMaxHPrate,1;
       if (.@r>=9)
@@ -100775,6 +101032,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bBaseAtk,(5+.@r);
       if (.@r>=7)
          bonus bMaxSPrate,1;
@@ -100805,8 +101063,10 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
       bonus bMatk,10;
-      bonus bMatkRate,(getrefine()/2);
+      bonus bMatkRate,(.@r/2);
   - Id: 24228
     AegisName: S_Spirit_Weapon
     Name: Soul Shadow Weapon
@@ -100818,6 +101078,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bMatkRate,(.@r<7)?1:((.@r<9)?2:3);
   - Id: 24229
     AegisName: S_Spirit_Earring
@@ -100830,6 +101092,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,(5+.@r);
       if (.@r>=7)
          bonus bMaxHPrate,1;
@@ -100846,6 +101109,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,(5+.@r);
       if (.@r>=7)
          bonus bMaxHPrate,1;
@@ -100861,6 +101125,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bFlee,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
@@ -100878,6 +101143,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bCritical,5+.@r/2;
       if (.@r>=7) {
          bonus bAspd,1;
@@ -100909,6 +101175,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@rate = (.@r<7)?1:((.@r<9)?2:4);
       bonus2 bAddSize,Size_Large,.@rate;
       bonus2 bMagicAddSize,Size_Large,.@rate;
@@ -100922,6 +101189,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@rate = (.@r<7)?1:((.@r<9)?2:4);
       bonus2 bAddSize,Size_Large,.@rate;
       bonus2 bMagicAddSize,Size_Large,.@rate;
@@ -100935,6 +101203,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@rate = (.@r<7)?1:((.@r<9)?2:4);
       bonus2 bAddSize,Size_Medium,.@rate;
       bonus2 bMagicAddSize,Size_Medium,.@rate;
@@ -100948,6 +101217,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@rate = (.@r<7)?1:((.@r<9)?2:4);
       bonus2 bAddSize,Size_Medium,.@rate;
       bonus2 bMagicAddSize,Size_Medium,.@rate;
@@ -100961,6 +101231,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@rate = (.@r<7)?1:((.@r<9)?2:4);
       bonus2 bAddSize,Size_Small,.@rate;
       bonus2 bMagicAddSize,Size_Small,.@rate;
@@ -100974,6 +101245,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@rate = (.@r<7)?1:((.@r<9)?2:4);
       bonus2 bAddSize,Size_Small,.@rate;
       bonus2 bMagicAddSize,Size_Small,.@rate;
@@ -100986,8 +101258,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,5;
-      bonus bUseSPrate,-1-(getrefine()/2);
+      bonus bUseSPrate,-1-(.@r/2);
   - Id: 24241
     AegisName: S_Caster_Shield
     Name: Caster Shadow Shield
@@ -100997,8 +101271,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,5;
-      bonus bUseSPrate,-1-(getrefine()/2);
+      bonus bUseSPrate,-1-(.@r/2);
   - Id: 24242
     AegisName: S_Caster_Armor
     Name: Caster Shadow Armor
@@ -101008,8 +101284,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,5;
-      bonus bUseSPrate,-1-(getrefine()/2);
+      bonus bUseSPrate,-1-(.@r/2);
   - Id: 24243
     AegisName: S_Reload_Shoes
     Name: Reload Shadow Shoes
@@ -101020,6 +101298,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3);
   - Id: 24244
     AegisName: S_Reload_Shield
@@ -101031,6 +101310,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3);
   - Id: 24245
     AegisName: S_Reload_Armor
@@ -101042,6 +101322,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3);
   - Id: 24246
     AegisName: S_Swordman_earring
@@ -102288,8 +102569,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       .@val = 1;
-      if (getrefine() >= 7) {
+      if (.@r >= 7) {
          .@val += 1;
       }
       bonus bFlee,5;
@@ -102304,8 +102587,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bBaseAtk,5;
-      if (getrefine() >= 7) {
+      if (.@r >= 7) {
          .@val = 3;
       }
       else {
@@ -102321,7 +102606,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      if (getrefine() >= 7) {
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      if (.@r >= 7) {
          .@val = 3;
       }
       else {
@@ -102338,7 +102625,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMatkRate,1 + (getrefine() >= 7);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bMatkRate,1 + (.@r >= 7);
       bonus bUseSPrate,-1;
   - Id: 24324
     AegisName: S_Spiritual_Weapon_II
@@ -102349,8 +102638,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bSPrecovRate,5;
-      bonus2 bAddClass,Class_All,1 + (getrefine() >= 7);
+      bonus2 bAddClass,Class_All,1 + (.@r >= 7);
   - Id: 24325
     AegisName: S_Malicious_Armor_II
     Name: Malicious Shadow Armor II
@@ -102360,8 +102652,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bMaxHP,100;
-      bonus2 bAddClass,Class_All,1 + (getrefine() >= 7);
+      .@r = getrefine();
+      bonus bMaxHP,100+.@r*10;
+      bonus2 bAddClass,Class_All,1 + (.@r >= 7);
   - Id: 24326
     AegisName: S_Sigrun_Armor
     Name: Sigrun Shadow Armor
@@ -102374,6 +102667,7 @@ Body:
       .@r = getrefine();
       bonus bLuk,1;
       bonus bHit,.@r;
+      bonus bMaxHP,.@r*10;
       if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Soul_Linker)) {
          bonus bBaseAtk,15;
       } else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) {
@@ -102394,6 +102688,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bVit,1;
       bonus bDef,5*.@r;
       if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Soul_Linker)) {
@@ -102417,6 +102712,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMatk,.@r;
       bonus bBaseAtk,5+.@r;
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@r/2;
   - Id: 24329
@@ -102429,6 +102725,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
       bonus bMatk,5+.@r;
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@r/2;
   - Id: 24330
@@ -102440,9 +102737,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bInt,3;
       bonus bSPrecovRate,20;
-      bonus bVariableCastrate,-getrefine()/2;
+      bonus bVariableCastrate,-.@r/2;
   - Id: 24331
     AegisName: S_Reload_Armor_II
     Name: Reload Shadow Armor II
@@ -102452,9 +102751,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bHPrecovRate,20;
       bonus bVit,3;
-      bonus bDelayrate,-(getrefine()/3);
+      bonus bDelayrate,-(.@r/3);
   - Id: 24332
     AegisName: S_Critical_Shield
     Name: Critical Shadow Shield
@@ -102465,6 +102766,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bCritical,5+.@r/2;
       if (.@r >= 9) {
          bonus bCritAtkRate,2;
@@ -102481,6 +102783,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bFlee,5+.@r/2;
       if (.@r >= 9) {
          bonus bCritical,4;
@@ -102497,6 +102800,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r > 1) {
          .@val = .@r/2;
          bonus3 bAutoSpell,"MG_COLDBOLT",.@val,(5+.@r);
@@ -102514,8 +102818,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bHit,5;
-      if (getrefine() >= 7) {
+      if (.@r >= 7) {
          bonus bUseSPrate,-3;
       }
       else {
@@ -102530,8 +102837,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,5;
-      if (getrefine() >= 7) {
+      if (.@r >= 7) {
          bonus bUseSPrate,-3;
       }
       else {
@@ -102546,8 +102855,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMDef,1;
-      if (getrefine() >= 7) {
+      if (.@r >= 7) {
          bonus bMaxHPrate,3;
       }
       else {
@@ -102562,8 +102873,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMaxSP,50;
-      if (getrefine() >= 7) {
+      if (.@r >= 7) {
          bonus bMaxHPrate,3;
       }
       else {
@@ -102578,7 +102891,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bAllStats,getrefine();
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bAllStats,.@r;
   - Id: 24340
     AegisName: S_Almighty_Pendant
     Name: Almighty Shadow Pendant
@@ -102588,7 +102903,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bAllStats,getrefine();
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bAllStats,.@r;
   - Id: 24341
     AegisName: S_All_Race_Shoes
     Name: All Race Shadow Shoes
@@ -102599,6 +102916,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          .@val = 5;
       } else if (.@r >= 7) {
@@ -102619,6 +102937,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          .@val = 3;
       } else if (.@r >= 7) {
@@ -102638,6 +102957,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bAspdRate,5+.@r/2;
       if (.@r >= 7) {
          bonus bAspd,1;
@@ -102655,6 +102976,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,25+5*(.@r/2);
       if (.@r >= 7) {
          bonus bAspd,1;
@@ -102671,7 +102993,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24346
     AegisName: S_Tempest_Shoes
     Name: Tempest Shadow Shoes
@@ -102681,7 +103005,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24347
     AegisName: S_Magic_Executioner_Holy_Water_Armor
     Name: Magic Executioner Holy Water Shadow Armor
@@ -102691,7 +103017,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Undead,.@val;
   - Id: 24348
@@ -102703,7 +103031,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreMdefRaceRate,RC_Demon,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Angel,.@val;
   - Id: 24349
@@ -102715,7 +103045,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreMdefRaceRate,RC_Formless,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Dragon,.@val;
   - Id: 24350
@@ -102727,7 +103059,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreMdefRaceRate,RC_Plant,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Brute,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,.@val;
@@ -102740,7 +103074,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreMdefRaceRate,RC_Fish,.@val;
       bonus2 bIgnoreMdefRaceRate,RC_Insect,.@val;
   - Id: 24352
@@ -102752,8 +103088,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Stone,100*getrefine();
+      bonus2 bResEff,Eff_Stone,100*.@r;
   - Id: 24353
     AegisName: S_Insomniac_Shoes_II
     Name: Insomniac Shadow Shoes II
@@ -102763,8 +103101,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Sleep,100*getrefine();
+      bonus2 bResEff,Eff_Sleep,100*.@r;
   - Id: 24354
     AegisName: S_Peerless_Armor_II
     Name: Peerless Shadow Armor II
@@ -102774,8 +103114,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Silence,100*getrefine();
+      bonus2 bResEff,Eff_Silence,100*.@r;
   - Id: 24355
     AegisName: S_Adulate_Shoes_II
     Name: Adulate Shadow Shoes II
@@ -102785,8 +103127,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Blind,100*getrefine();
+      bonus2 bResEff,Eff_Blind,100*.@r;
   - Id: 24356
     AegisName: S_Unfreezing_Weapon_II
     Name: Unfreezing Shadow Weapon II
@@ -102796,8 +103140,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Freeze,100*getrefine();
+      bonus2 bResEff,Eff_Freeze,100*.@r;
   - Id: 24357
     AegisName: S_Vitality_Earring_II
     Name: Vitality Shadow Earring II
@@ -102807,8 +103154,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Bleeding,100*getrefine();
+      bonus2 bResEff,Eff_Bleeding,100*.@r;
   - Id: 24358
     AegisName: S_Neutral_Weapon_II
     Name: Neutral Shadow Weapon II
@@ -102818,8 +103167,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Stun,100*(getrefine()/2);
+      bonus2 bResEff,Eff_Stun,100*(.@r/2);
   - Id: 24359
     AegisName: S_Uncursed_Pendant_II
     Name: Uncursed Shadow Pendant II
@@ -102829,8 +103181,10 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,1;
-      bonus2 bResEff,Eff_Curse,100*getrefine();
+      bonus2 bResEff,Eff_Curse,100*.@r;
   - Id: 24360
     AegisName: S_Tension_Weapon
     Name: Tension Shadow Weapon
@@ -102923,6 +103277,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,10;
       if (.@r >= 7) {
          .@val = 3;
@@ -102941,6 +103296,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,10;
       if (.@r >= 7) {
          .@val = 3;
@@ -102959,6 +103315,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          .@val = 50;
       } else if (.@r >= 7) {
@@ -102978,6 +103335,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          .@val = 50;
       } else if (.@r >= 7) {
@@ -102997,6 +103355,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       if (.@r >= 9) {
          .@val = 7;
       } else if (.@r >= 7) {
@@ -103016,6 +103376,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          .@val = 3;
       } else if (.@r >= 7) {
@@ -103035,6 +103396,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          .@val = 3;
       } else if (.@r >= 7) {
@@ -103053,7 +103415,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreDefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24374
     AegisName: S_Penetration_Shield
     Name: Penetration Shadow Shield
@@ -103063,7 +103427,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreDefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreDefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24375
     AegisName: S_Executioner_Holy_Water_Armor
     Name: Executioner Holy Water Shadow Armor
@@ -103073,7 +103439,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Undead,.@val;
   - Id: 24376
@@ -103085,7 +103453,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreDefRaceRate,RC_Demon,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Angel,.@val;
   - Id: 24377
@@ -103097,7 +103467,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreDefRaceRate,RC_Formless,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Dragon,.@val;
   - Id: 24378
@@ -103109,7 +103481,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreDefRaceRate,RC_Plant,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Brute,.@val;
   - Id: 24379
@@ -103121,7 +103495,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = 5 + (getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      .@val = 5 + (.@r/2);
       bonus2 bIgnoreDefRaceRate,RC_Fish,.@val;
       bonus2 bIgnoreDefRaceRate,RC_Insect,.@val;
   - Id: 24380
@@ -103214,6 +103590,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       .@val = .@r/3;
       if (.@val) {
          bonus2 bAddSize,Size_All,.@val;
@@ -103241,6 +103619,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bInt,2;
   - Id: 24388
     AegisName: S_Beginner's_Shield
@@ -103260,6 +103639,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bVit,2;
   - Id: 24389
     AegisName: S_Beginner's_Shoes
@@ -103279,6 +103659,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bAgi,2;
   - Id: 24390
     AegisName: S_Beginner's_Weapon
@@ -103298,6 +103679,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bStr,2;
   - Id: 24391
     AegisName: S_Beginner's_Earring
@@ -103317,6 +103701,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bDex,2;
   - Id: 24392
     AegisName: S_Beginner's_Pendant
@@ -103336,6 +103721,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bLuk,2;
   - Id: 24393
     AegisName: S_Physical_Shoes
@@ -103347,6 +103733,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          bonus bAspdRate,8;
       } else if (.@r >= 7) {
@@ -103365,7 +103752,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bMaxHP,200;
+      bonus bMaxHP,.@r*10+200;
       if (.@r >= 9) {
          bonus bMaxHPrate,5;
       } else if (.@r >= 7) {
@@ -103381,6 +103768,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bBaseAtk,20;
       if (.@r >= 9) {
          bonus2 bAddClass,Class_All,5;
@@ -103397,6 +103785,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       if (.@r >= 9) {
          bonus bVariableCastrate,-8;
       } else if (.@r >= 7) {
@@ -103415,6 +103804,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMaxSP,100;
       if (.@r >= 9) {
          bonus bMaxSPrate,5;
@@ -103431,6 +103821,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bMatk,20;
       if (.@r >= 9) {
          bonus bMatkRate,5;
@@ -103446,7 +103837,9 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus bDef,50+20*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus bDef,50+20*(.@r/2);
   - Id: 24400
     AegisName: S_Hard_Champion_Shoes
     Name: Hard Champion Shadow Shoes
@@ -103456,11 +103849,11 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@val = getrefine()/2;
-      bonus bMaxHP,200;
+      .@r = getrefine()/2;
+      bonus bMaxHP,.@r*10+200;
       bonus bMaxSP,100;
-      bonus bMaxHPrate,.@val;
-      bonus bMaxSPrate,.@val;
+      bonus bMaxHPrate,.@r;
+      bonus bMaxSPrate,.@r;
   - Id: 24401
     AegisName: S_Kingbird_Ancient_Armor
     Name: Kingbird Ancient Shadow Armor
@@ -103471,6 +103864,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bBaseAtk,15;
       bonus bLongAtkRate,.@r/2;
       if (.@r >= 7) {
@@ -103654,6 +104048,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSkillAtk,"SJ_NEWMOONKICK",20;
       bonus2 bSkillAtk,"SJ_FULLMOONKICK",.@r*3;
   - Id: 24413
@@ -103671,6 +104066,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSkillCooldown,"SJ_DOCUMENT",-3000*(1+.@r/2);
   - Id: 24414
     AegisName: S_Soul_Reaper_Armor
@@ -103687,6 +104083,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSkillAtk,"SP_SWHOO",20;
       bonus2 bSkillAtk,"SP_SPA",.@r*3;
   - Id: 24415
@@ -103704,6 +104101,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSkillCooldown,"SP_SOULREAPER",-3000-1000*(.@r/2);
   - Id: 24416
     AegisName: S_Temporal_Transcendent_Weapon
@@ -103723,6 +104121,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bCritAtkRate,7;
   - Id: 24417
     AegisName: S_Temporal_Transcendent_Armor
@@ -103742,6 +104143,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bAspd,1;
   - Id: 24418
     AegisName: S_Temporal_Transcendent_Shield
@@ -103761,6 +104163,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bVariableCastrate,-10;
   - Id: 24419
     AegisName: S_Temporal_Transcendent_Shoes
@@ -103780,6 +104183,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bAspdRate,7;
   - Id: 24420
     AegisName: S_Temporal_Transcendent_Earring
@@ -103799,6 +104203,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bMatk,15;
   - Id: 24421
     AegisName: S_Temporal_Transcendent_Pendant
@@ -103818,6 +104223,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
+      bonus bMaxHP,getrefine()*10;
       bonus bBaseAtk,15;
   - Id: 24423
     AegisName: S_Tempest_Weapon
@@ -103827,7 +104233,10 @@ Body:
       Shadow_Weapon: true
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24424
     AegisName: S_Tempest_Armor
     Name: Tempest Shadow Armor
@@ -103836,7 +104245,9 @@ Body:
       Shadow_Armor: true
     Refineable: true
     Script: |
-      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(.@r/2);
   - Id: 24425
     AegisName: S_Perfect_Size_Weapon
     Name: Perfect Size Shadow Weapon
@@ -103848,6 +104259,8 @@ Body:
       bonus2 bAddSize,Size_All,2;
       bonus2 bMagicAddSize,Size_All,2;
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bBaseAtk,.@r*3;
       if (.@r >= 7) {
          bonus2 bAddSize,Size_All,2;
@@ -103868,6 +104281,7 @@ Body:
       bonus2 bSubSize,Size_All,2;
       /*bonus2 bMagicSubSize,Size_All,2;*/
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bDef,.@r*10;
       if (.@r >= 7) {
          bonus2 bSubSize,Size_All,2;
@@ -103886,6 +104300,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreMdefRaceRate,RC_Demon,5+.@r/2;
       bonus2 bIgnoreMdefRaceRate,RC_Angel,5+.@r/2;
   - Id: 24428
@@ -103897,6 +104313,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreMdefRaceRate,RC_Formless,5+.@r/2;
       bonus2 bIgnoreMdefRaceRate,RC_Dragon,5+.@r/2;
   - Id: 24429
@@ -103908,6 +104326,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreMdefRaceRate,RC_Brute,5+.@r/2;
       bonus2 bIgnoreMdefRaceRate,RC_Plant,5+.@r/2;
   - Id: 24430
@@ -103919,6 +104339,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreMdefRaceRate,RC_Fish,5+.@r/2;
       bonus2 bIgnoreMdefRaceRate,RC_Insect,5+.@r/2;
   - Id: 24431
@@ -103930,6 +104352,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,5+.@r/2;
       bonus2 bIgnoreMdefRaceRate,RC_Undead,5+.@r/2;
   - Id: 24432
@@ -103941,6 +104365,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreDefClassRate,Class_Normal,5+.@r/2;
   - Id: 24433
     AegisName: S_Penetration_Armor
@@ -103951,6 +104377,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bIgnoreDefClassRate,Class_Normal,5+.@r/2;
   - Id: 24434
     AegisName: S_Exe_Ho_Weapon
@@ -103961,6 +104388,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5+.@r/2;
       bonus2 bIgnoreDefRaceRate,RC_Undead,5+.@r/2;
   - Id: 24435
@@ -103972,6 +104401,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreDefRaceRate,RC_Fish,5+.@r/2;
       bonus2 bIgnoreDefRaceRate,RC_Insect,5+.@r/2;
   - Id: 24436
@@ -103983,6 +104414,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreDefRaceRate,RC_Brute,5+.@r/2;
       bonus2 bIgnoreDefRaceRate,RC_Plant,5+.@r/2;
   - Id: 24437
@@ -103994,6 +104427,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreDefRaceRate,RC_Formless,5+.@r/2;
       bonus2 bIgnoreDefRaceRate,RC_Dragon,5+.@r/2;
   - Id: 24438
@@ -104005,6 +104440,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bIgnoreDefRaceRate,RC_Demon,5+.@r/2;
       bonus2 bIgnoreDefRaceRate,RC_Angel,5+.@r/2;
   - Id: 24439
@@ -104017,6 +104454,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus2 bAddClass,Class_All,1+.@r/2;
       bonus bMatkRate,1+.@r/2;
       if (.@r >= 7) {
@@ -104038,7 +104477,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RK_SONICWAVE",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RK_SONICWAVE",5+2*(.@r/2);
   - Id: 24441
     AegisName: S_Sonic_Shield
     Name: Sonic Shadow Shield    # !todo check english name
@@ -104053,6 +104494,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24442
     AegisName: S_Sonic_Shoes
@@ -104067,7 +104509,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"RK_SONICWAVE",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"RK_SONICWAVE",2+(.@r/2);
   - Id: 24443
     AegisName: S_Ignition_Weapon
     Name: Ignition Shadow Weapon
@@ -104082,6 +104526,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus3 bAutoSpell,"RK_IGNITIONBREAK",max(3,getskilllv("RK_IGNITIONBREAK")),10+(.@r>=7?10:0)+(.@r>=9?20:0);
   - Id: 24444
     AegisName: S_Ignition_Pendant
@@ -104096,7 +104542,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RK_IGNITIONBREAK",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RK_IGNITIONBREAK",5+2*(.@r/2);
   - Id: 24445
     AegisName: S_Ignition_Earing
     Name: Ignition Shadow Earring
@@ -104110,7 +104558,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-200-100*(getrefine()/3);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-200-100*(.@r/3);
   - Id: 24446
     AegisName: S_W_Breath_Armor
     Name: Cold Breath Shadow Armor
@@ -104124,7 +104574,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5+2*(.@r/2);
   - Id: 24447
     AegisName: S_W_Breath_Shield
     Name: Cold Breath Shadow Shield
@@ -104139,6 +104591,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24448
     AegisName: S_W_Breath_Shoes
@@ -104153,7 +104606,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"RK_DRAGONBREATH_WATER",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"RK_DRAGONBREATH_WATER",2+(.@r/2);
   - Id: 24449
     AegisName: S_F_Breath_Weapon
     Name: Fire Breath Shadow Weapon
@@ -104168,6 +104623,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24450
     AegisName: S_F_Breath_Pendant
@@ -104182,7 +104639,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RK_DRAGONBREATH",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",5+2*(.@r/2);
   - Id: 24451
     AegisName: S_F_Breath_Earing
     Name: Fire Breath Shadow Earring
@@ -104196,7 +104655,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"RK_DRAGONBREATH",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"RK_DRAGONBREATH",2+(.@r/2);
   - Id: 24452
     AegisName: S_Cluster_Armor
     Name: Cluster Shadow Armor
@@ -104210,7 +104671,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+2*(.@r/2);
   - Id: 24453
     AegisName: S_Cluster_Shield
     Name: Cluster Shadow Shield
@@ -104225,6 +104688,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bSkillAtk,"RA_CLUSTERBOMB",3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24454
     AegisName: S_Cluster_Shoes
@@ -104239,7 +104703,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+3*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RA_CLUSTERBOMB",5+3*(.@r/2);
   - Id: 24455
     AegisName: S_Aimed_Weapon
     Name: Aimed Shadow Weapon
@@ -104254,6 +104720,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24456
     AegisName: S_Aimed_Pendant
@@ -104268,7 +104736,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RA_AIMEDBOLT",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",5+2*(.@r/2);
   - Id: 24457
     AegisName: S_Aimed_Earing
     Name: Aimed Shadow Earring
@@ -104282,7 +104752,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bAddSize,Size_All,3+2*(getrefine()/3);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bAddSize,Size_All,3+2*(.@r/3);
   - Id: 24458
     AegisName: S_Arrow_Armor
     Name: Arrow Shadow Armor
@@ -104296,7 +104768,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"RA_ARROWSTORM",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"RA_ARROWSTORM",5+2*(.@r/2);
   - Id: 24459
     AegisName: S_Arrow_Shield
     Name: Arrow Shadow Shield
@@ -104311,6 +104785,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24460
     AegisName: S_Arrow_Shoes
@@ -104325,7 +104800,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"RA_ARROWSTORM",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"RA_ARROWSTORM",2+(.@r/2);
   - Id: 24461
     AegisName: S_Shooting_Weapon
     Name: Shooting Shadow Weapon
@@ -104340,6 +104817,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24462
     AegisName: S_Shooting_Pendant
@@ -104354,7 +104833,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"SN_SHARPSHOOTING",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",5+2*(.@r/2);
   - Id: 24463
     AegisName: S_Shooting_Earing
     Name: Shooting Shadow Earring
@@ -104368,7 +104849,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"SN_SHARPSHOOTING",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"SN_SHARPSHOOTING",2+(.@r/2);
   - Id: 24464
     AegisName: S_Tornado_Armor
     Name: Tornado Shadow Armor
@@ -104382,7 +104865,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"NC_AXETORNADO",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"NC_AXETORNADO",5+2*(.@r/2);
   - Id: 24465
     AegisName: S_Tornado_Shield
     Name: Tornado Shadow Shield
@@ -104397,6 +104882,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus2 bAddSize,Size_All,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24466
     AegisName: S_Tornado_Shoes
@@ -104411,7 +104897,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"NC_AXETORNADO",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"NC_AXETORNADO",2+(.@r/2);
   - Id: 24467
     AegisName: S_Boomerang_Weapon
     Name: Boomerang Shadow Weapon
@@ -104426,6 +104914,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24468
     AegisName: S_Boomerang_Pendant
@@ -104440,7 +104930,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"NC_AXEBOOMERANG",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",5+2*(.@r/2);
   - Id: 24469
     AegisName: S_Boomerang_Earing
     Name: Boomerang Shadow Earring
@@ -104454,7 +104946,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-100-100*(getrefine()/4);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-100-100*(.@r/4);
   - Id: 24470
     AegisName: S_Vulcan_Armor
     Name: Vulcan Shadow Armor
@@ -104468,7 +104962,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"NC_VULCANARM",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"NC_VULCANARM",5+2*(.@r/2);
   - Id: 24471
     AegisName: S_Vulcan_Shield
     Name: Vulcan Shadow Shield
@@ -104483,6 +104979,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bMaxHP,.@r*10;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24472
     AegisName: S_Vulcan_Shoes
@@ -104497,7 +104994,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"NC_VULCANARM",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"NC_VULCANARM",2+(.@r/2);
   - Id: 24473
     AegisName: S_Arms_Weapon
     Name: Arm Shadow Weapon    # !todo check english name
@@ -104512,6 +105011,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
+      bonus bBaseAtk,.@r;
+      bonus bMatk,.@r;
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24474
     AegisName: S_Arms_Pendant
@@ -104526,7 +105027,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"NC_ARMSCANNON",5+2*(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",5+2*(.@r/2);
   - Id: 24475
     AegisName: S_Arms_Earing
     Name: Arm Shadow Earring
@@ -104540,7 +105043,9 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillUseSPrate,"NC_ARMSCANNON",2+(getrefine()/2);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillUseSPrate,"NC_ARMSCANNON",2+(.@r/2);
   - Id: 24476
     AegisName: S_Rampage_Armor
     Name: Rampage Shadow Armor
@@ -108381,7 +108886,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bMaxHP,100;
+      bonus bMaxHP,100+getrefine()*10;
       bonus bVariableCastrate,-5;
   - Id: 24689
     AegisName: S_1Para_Armor
@@ -108401,7 +108906,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bHit,5;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24690
     AegisName: S_1Para_Shoes
     Name: Paradise Shadow Shoes
@@ -108420,7 +108925,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bAspdRate,5;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24691
     AegisName: S_1Para_Earing
     Name: Paradise Shadow Earring
@@ -108439,7 +108944,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bMatk,5;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24692
     AegisName: S_1Para_Pendant
     Name: Paradise Shadow Pendant
@@ -108458,7 +108963,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bBaseAtk,5;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24693
     AegisName: S_2Para_Shield
     Name: Advanced Paradise Shadow Shield
@@ -108477,7 +108982,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bMaxHP,100;
+      bonus bMaxHP,100+.@r*10;
       bonus bVariableCastrate,5;
   - Id: 24694
     AegisName: S_2Para_Armor
@@ -108498,7 +109003,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bHit,15;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24695
     AegisName: S_2Para_Shoes
     Name: Advanced Paradise Shadow Shoes
@@ -108518,7 +109023,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bAspdRate,7;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24696
     AegisName: S_2Para_Earing
     Name: Advanced Paradise Shadow Earring
@@ -108538,7 +109043,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bMatk,15;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24697
     AegisName: S_2Para_Pendant
     Name: Advanced Paradise Shadow Pendant
@@ -108558,7 +109063,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bBaseAtk,15;
-      bonus bMaxHP,100;
+      bonus bMaxHP,.@r*10+100;
   - Id: 24698
     AegisName: S_2Para_RK_Weapon
     Name: Rune Knight Advanced Paradise Shadow Weapon
