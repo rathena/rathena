@@ -45,3 +45,7 @@ Body:
     Value: 4
   - Name: JUMPINGCLAN
     Value: 5
+
+Footer:
+  Imports:
+  - Path: db/import/const.yml
