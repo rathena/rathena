@@ -94650,7 +94650,7 @@ Body:
     Range: 1
     Slots: 2
     Locations:
-      Left_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -130645,6 +130645,7 @@ Body:
     Locations:
       Left_Hand: true
     Refineable: true
+    View: 1
   - Id: 460017
     AegisName: Guard_IL
     Name: Illusion Guard
@@ -130656,6 +130657,7 @@ Body:
       Left_Hand: true
     EquipLevelMin: 120
     Refineable: true
+    View: 1
     Script: |
       bonus bAspd,2;
       bonus bPerfectHitAddRate,3*(min(getrefine(),12)/2);
@@ -130670,6 +130672,7 @@ Body:
       Left_Hand: true
     EquipLevelMin: 120
     Refineable: true
+    View: 1
     Script: |
       bonus bVariableCastrate,-7;
       bonus bDelayrate,-(min(getrefine(),12)/2);
@@ -133316,7 +133319,7 @@ Body:
     Classes:
       All_Third: true
     Locations:
-      Both_Hand: true
+      Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -133412,7 +133415,7 @@ Body:
     Classes:
       All_Third: true
     Locations:
-      Both_Hand: true
+      Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -135767,7 +135770,7 @@ Body:
     Classes:
       All_Third: true
     Locations:
-      Left_Hand: true
+      Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -135802,7 +135805,7 @@ Body:
     Classes:
       All_Third: true
     Locations:
-      Both_Hand: true
+      Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -136047,7 +136050,7 @@ Body:
     Classes:
       All_Third: true
     Locations:
-      Both_Hand: true
+      Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 150
     Refineable: true
@@ -137106,7 +137109,7 @@ Body:
     Classes:
       All_Third: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
@@ -137140,7 +137143,7 @@ Body:
     Classes:
       All_Third: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Refineable: true
