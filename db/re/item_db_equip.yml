@@ -94999,7 +94999,7 @@ Body:
       Costume_Head_Mid: true
       Costume_Head_Low: true
   - Id: 21205
-    AegisName: aegis_21205
+    AegisName: Nut_Cracker
     Name: Nut Cracker    # !todo check english name
     Type: Armor
     View: 1991
@@ -95008,7 +95008,7 @@ Body:
       Head_Mid: true
       Head_Low: true
   - Id: 21206
-    AegisName: aegis_21206
+    AegisName: C_Nut_Cracker
     Name: Costume Nutcracker    # !todo check english name
     Type: Armor
     View: 1991
@@ -124114,7 +124114,7 @@ Body:
     Locations:
       Costume_Head_Top: true
   - Id: 31938
-    AegisName: aegis_31938
+    AegisName: C_L_Knitting_Low_Twin
     Name: Costume Loose Knitting Twin
     Type: Armor
     View: 2007
@@ -124128,7 +124128,7 @@ Body:
     Locations:
       Costume_Head_Top: true
   - Id: 31944
-    AegisName: aegis_31944
+    AegisName: C_Elegant_Wave
     Name: Costume Elegant Wave
     Type: Armor
     View: 2011
