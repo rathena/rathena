@@ -2063,8 +2063,8 @@ int guild_break(struct map_session_data *sd,char *name) {
 		int count = 0;
 		std::shared_ptr<s_skill_unit_group> group[4];
 
-		for(i = 0; i < ud->skillunit.size() && ud->skillunit[i]; i++) {
-			switch(ud->skillunit[i]->skill_id) {
+		for (const auto su : ud->skillunit) {
+			switch (su->skill_id) {
 				case GD_LEADERSHIP:
 				case GD_GLORYWOUNDS:
 				case GD_SOULCOLD:

@@ -487,10 +487,11 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 		return false;
 	}
 	if (type&battle_config.land_skill_limit && (maxcount = skill_get_maxcount(skill_id, skill_lv)) > 0) {
-		for (int i = 0; i < ud->skillunit.size() && ud->skillunit[i] && maxcount; i++) {
-			if (ud->skillunit[i]->skill_id == skill_id)
+		for (const auto su : sd->ud.skillunit) {
+			if (su->skill_id == skill_id)
 				maxcount--;
 		}
+
 		if (maxcount == 0) {
 			if (sd && display_failure)
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
@@ -12783,16 +12784,15 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 	case GN_FIRE_EXPANSION: {
-		int i_su;
 		struct unit_data *ud = unit_bl2ud(src);
 
 		if( !ud ) break;
 
-		for(i_su = 0; i_su < ud->skillunit.size() && ud->skillunit[i_su]; i_su++) {
-			skill_unit *su = ud->skillunit[i_su]->unit;
-			std::shared_ptr<s_skill_unit_group> sg = ud->skillunit[i_su]->unit->group;
+		for (const auto itsu : ud->skillunit) {
+			skill_unit *su = itsu->unit;
+			std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
 
-			if (ud->skillunit[i_su]->skill_id == GN_DEMONIC_FIRE && distance_xy(x, y, su->bl.x, su->bl.y) < 4) {
+			if (itsu->skill_id == GN_DEMONIC_FIRE && distance_xy(x, y, su->bl.x, su->bl.y) < 4) {
 				switch (skill_lv) {
 					case 1: {
 							// TODO:
@@ -13018,11 +13018,12 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 			p[3] = &sd->status.memo_point[2];
 
 			if((maxcount = skill_get_maxcount(skill_id, sd->menuskill_val)) > 0) {
-				for(i=0;i<sd->ud.skillunit.size() && sd->ud.skillunit[i] && maxcount;i++) {
-					if(sd->ud.skillunit[i]->skill_id == skill_id)
+				for (const auto su : sd->ud.skillunit) {
+					if (su->skill_id == skill_id)
 						maxcount--;
 				}
-				if(!maxcount) {
+
+				if (maxcount == 0) {
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 					skill_failed(sd);
 					return 0;
@@ -17868,7 +17869,7 @@ int skill_clear_group(struct block_list *bl, int flag)
 {
 	struct unit_data *ud = NULL;
 	std::vector<std::shared_ptr<s_skill_unit_group>> group;
-	int i, count = 0;
+	int count = 0;
 
 	nullpo_ret(bl);
 
@@ -17876,8 +17877,8 @@ int skill_clear_group(struct block_list *bl, int flag)
 		return 0;
 
 	// All groups to be deleted are first stored on an array since the array elements shift around when you delete them. [Skotlex]
-	for (i = 0; i < ud->skillunit.size() && ud->skillunit[i]; i++) {
-		switch (ud->skillunit[i]->skill_id) {
+	for (const auto su : ud->skillunit) {
+		switch (su->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
 			case SA_VIOLENTGALE:
@@ -17888,25 +17889,25 @@ int skill_clear_group(struct block_list *bl, int flag)
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
 				if (flag&1)
-					group[count++] = ud->skillunit[i];
+					group[count++] = su;
 				break;
 			case SO_CLOUD_KILL:
 			case NPC_CLOUD_KILL:
 				if( flag&4 )
-					group[count++] = ud->skillunit[i];
+					group[count++] = su;
 				break;
 			case SO_WARMER:
 				if( flag&8 )
-					group[count++] = ud->skillunit[i];
+					group[count++] = su;
 				break;
 			default:
-				if (flag&2 && skill_get_inf2(ud->skillunit[i]->skill_id, INF2_ISTRAP))
-					group[count++] = ud->skillunit[i];
+				if (flag&2 && skill_get_inf2(su->skill_id, INF2_ISTRAP))
+					group[count++] = su;
 				break;
 		}
 
 	}
-	for (i = 0; i < count; i++)
+	for (int i = 0; i < count; i++)
 		skill_delunitgroup(group[i]);
 	return count;
 }
@@ -17925,8 +17926,8 @@ std::shared_ptr<s_skill_unit_group> skill_locate_element_field(struct block_list
 	if (ud == nullptr)
 		return nullptr;
 
-	for (int i = 0; i < ud->skillunit.size() && ud->skillunit[i]; i++) {
-		switch (ud->skillunit[i]->skill_id) {
+	for (const auto su : ud->skillunit) {
+		switch (su->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
 			case SA_VIOLENTGALE:
@@ -17938,7 +17939,7 @@ std::shared_ptr<s_skill_unit_group> skill_locate_element_field(struct block_list
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
-				return ud->skillunit[i];
+				return su;
 		}
 	}
 	return nullptr;
