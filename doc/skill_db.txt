@@ -86,7 +86,6 @@ IgnoreLandProtector			- Ignore SA_LANDPROTECTOR.
 AllowWhenHidden				- Usable while hiding.
 AllowWhenPerforming			- Usable while in dancing state.
 TargetEmperium				- Damages/targets Emperium.
-IgnoreStasis				- Ignore SC_STASIS.
 IgnoreKagehumi				- Ignore KG_KAGEHUMI.
 AlterRangeVulture			- Skill range affected by AC_VULTURE.
 AlterRangeSnakeEye			- Skill range affected by GS_SNAKEEYE.
