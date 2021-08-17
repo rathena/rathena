@@ -3651,7 +3651,7 @@ in percent.
     if (rand(100) > getscrate(Eff_Blind, 50)) goto BlindHimNow;
 
 You can see the full list of available effect types you can possibly inflict in
-'db/const.yml' under 'Eff_'.
+'src/map/script_constants.hpp' under 'Eff_'.
 
 ---------------------------------------
 
