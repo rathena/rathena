@@ -21454,7 +21454,7 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
 				return 1;
 			break;
 		case SC_STASIS:
-			if (bl->type == BL_PC && !skill_get_inf2(skill_id, INF2_IGNORESTASIS))
+			if (skill_get_inf2_(skill_id, { INF2_ISSONG, INF2_ISENSEMBLE, INF2_ISCHORUS }) || skill_get_type(skill_id) == BF_MAGIC)
 				return 1; // Can't do it.
 			break;
 		case SC_KAGEHUMI:
