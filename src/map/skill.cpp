@@ -14200,6 +14200,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					if (rnd()%100 < unit->val1)
 						skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
+				case NPC_COMET:
 				case WL_COMET:
 					if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
 						break; // Nothing should happen if the target is on Land Protector
