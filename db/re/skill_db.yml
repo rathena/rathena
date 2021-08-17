@@ -9986,7 +9986,7 @@ Body:
     TargetType: Attack
     Range: 9
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 3
     Element: Holy
     CastTime: 1000
     AfterCastActDelay:
