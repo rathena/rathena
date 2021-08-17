@@ -13623,12 +13623,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				if(sce->val2) { // Erase associated land skill
 					std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val2);
 
-					if( group == nullptr ) {
-						ShowDebug("status_change_end: SC_DANCING is missing skill unit group (val1=%d, val2=%d, val3=%d, val4=%d, timer=%d, tid=%d, char_id=%d, map=%s, x=%d, y=%d). Please report this!\n",
-							sce->val1, sce->val2, sce->val3, sce->val4, sce->timer, tid,
-							sd ? sd->status.char_id : 0,
-							mapindex_id2name(map_id2index(bl->m)), bl->x, bl->y);
-					}
 					sce->val2 = 0;
 					skill_delunitgroup(group);
 				}

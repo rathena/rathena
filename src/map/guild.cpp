@@ -2060,24 +2060,27 @@ int guild_break(struct map_session_data *sd,char *name) {
 
 	/* Regardless of char server allowing it, we clear the guild master's auras */
 	if ((ud = unit_bl2ud(&sd->bl))) {
-		int count = 0;
-		std::shared_ptr<s_skill_unit_group> group[4];
+		std::vector<std::shared_ptr<s_skill_unit_group>> group;
 
-		for (const auto su : ud->skillunit) {
+		for (const auto su : ud->skillunits) {
 			switch (su->skill_id) {
 				case GD_LEADERSHIP:
 				case GD_GLORYWOUNDS:
 				case GD_SOULCOLD:
 				case GD_HAWKEYES:
-					if(count == 4)
-						ShowWarning("guild_break: '%s' got more than 4 guild aura instances! (%d)\n",sd->status.name,ud->skillunit[i]->skill_id);
-					else
-						group[count++] = ud->skillunit[i];
+					group.push_back(su);
 					break;
 			}
 		}
-		for (i = 0; i < count; i++)
-			skill_delunitgroup(group[i]);
+
+		if (!group.empty()) {
+			auto it = group.begin();
+
+			while (it != group.end()) {
+				skill_delunitgroup(*it);
+				++it;
+			}
+		}
 	}
 
 #ifdef BOUND_ITEMS

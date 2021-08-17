@@ -224,10 +224,9 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 		map_freeblock(&cd->bl);
 
 		skill_unit *unit = map_find_skill_unit_oncell(&sd->bl, sd->bl.x, sd->bl.y, AL_WARP, nullptr, 0);
-		std::shared_ptr<s_skill_unit_group> group = (unit != nullptr) ? unit->group : nullptr;
 
-		if (group != nullptr)
-			ext_skill_unit_onplace(unit, &sd->bl, group->tick);
+		if (unit != nullptr && unit->group != nullptr)
+			ext_skill_unit_onplace(unit, &sd->bl, unit->group->tick);
 
 		return 1;
 	}

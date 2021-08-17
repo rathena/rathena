@@ -487,10 +487,7 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 		return false;
 	}
 	if (type&battle_config.land_skill_limit && (maxcount = skill_get_maxcount(skill_id, skill_lv)) > 0) {
-		for (const auto su : sd->ud.skillunit) {
-			if (su->skill_id == skill_id)
-				maxcount--;
-		}
+		unit_skillunit_maxcount(&sd->ud, skill_id, &maxcount);
 
 		if (maxcount == 0) {
 			if (sd && display_failure)
@@ -4445,7 +4442,7 @@ int skill_cleartimerskill (struct block_list *src)
 	return 1;
 }
 static int skill_active_reverberation(struct block_list *bl, va_list ap) {
-	skill_unit *su = (TBL_SKILL*)bl;
+	skill_unit *su = (skill_unit*)bl;
 
 	nullpo_ret(su);
 
@@ -12788,7 +12785,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 		if( !ud ) break;
 
-		for (const auto itsu : ud->skillunit) {
+		for (const auto itsu : ud->skillunits) {
 			skill_unit *su = itsu->unit;
 			std::shared_ptr<s_skill_unit_group> sg = itsu->unit->group;
 
@@ -13018,10 +13015,7 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 			p[3] = &sd->status.memo_point[2];
 
 			if((maxcount = skill_get_maxcount(skill_id, sd->menuskill_val)) > 0) {
-				for (const auto su : sd->ud.skillunit) {
-					if (su->skill_id == skill_id)
-						maxcount--;
-				}
+				unit_skillunit_maxcount(&sd->ud, skill_id, &maxcount);
 
 				if (maxcount == 0) {
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -13130,7 +13124,8 @@ int skill_dance_overlap(struct skill_unit* unit, int flag)
 static bool skill_dance_switch(struct skill_unit* unit, int flag)
 {
 	static int prevflag = 1;  // by default the backup is empty
-	static std::shared_ptr<s_skill_unit_group> backup, group;
+	static s_skill_unit_group backup;
+	std::shared_ptr<s_skill_unit_group> group;
 
 	if( unit == nullptr || (group = unit->group) == nullptr )
 		return false;
@@ -13152,12 +13147,12 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
 		uint16 skill_id = unit->val2&(1 << UF_SONG) ? BA_DISSONANCE : DC_UGLYDANCE;
 
 		// backup
-		backup->skill_id    = group->skill_id;
-		backup->skill_lv    = group->skill_lv;
-		backup->unit_id     = group->unit_id;
-		backup->target_flag = group->target_flag;
-		backup->bl_flag     = group->bl_flag;
-		backup->interval    = group->interval;
+		backup.skill_id    = group->skill_id;
+		backup.skill_lv    = group->skill_lv;
+		backup.unit_id     = group->unit_id;
+		backup.target_flag = group->target_flag;
+		backup.bl_flag     = group->bl_flag;
+		backup.interval    = group->interval;
 
 		// replace
 		group->skill_id    = skill_id;
@@ -13167,12 +13162,12 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
 		group->bl_flag     = skill_get_unit_bl_target(skill_id);
 		group->interval    = skill_get_unit_interval(skill_id);
 	} else { //Restore
-		group->skill_id    = backup->skill_id;
-		group->skill_lv    = backup->skill_lv;
-		group->unit_id     = backup->unit_id;
-		group->target_flag = backup->target_flag;
-		group->bl_flag     = backup->bl_flag;
-		group->interval    = backup->interval;
+		group->skill_id    = backup.skill_id;
+		group->skill_lv    = backup.skill_lv;
+		group->unit_id     = backup.unit_id;
+		group->target_flag = backup.target_flag;
+		group->bl_flag     = backup.bl_flag;
+		group->interval    = backup.interval;
 	}
 
 	return true;
@@ -17867,17 +17862,17 @@ int skill_attack_area(struct block_list *bl, va_list ap)
  */
 int skill_clear_group(struct block_list *bl, int flag)
 {
-	struct unit_data *ud = NULL;
-	std::vector<std::shared_ptr<s_skill_unit_group>> group;
-	int count = 0;
+	unit_data *ud;
 
 	nullpo_ret(bl);
 
 	if (!(ud = unit_bl2ud(bl)))
 		return 0;
 
-	// All groups to be deleted are first stored on an array since the array elements shift around when you delete them. [Skotlex]
-	for (const auto su : ud->skillunit) {
+	std::vector<std::shared_ptr<s_skill_unit_group>> group;
+
+	// All groups to be deleted are first stored in a vector since the vector elements shift around when you delete them. [Skotlex]
+	for (const auto su : ud->skillunits) {
 		switch (su->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
@@ -17889,27 +17884,35 @@ int skill_clear_group(struct block_list *bl, int flag)
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
 				if (flag&1)
-					group[count++] = su;
+					group.push_back(su);
 				break;
 			case SO_CLOUD_KILL:
 			case NPC_CLOUD_KILL:
 				if( flag&4 )
-					group[count++] = su;
+					group.push_back(su);
 				break;
 			case SO_WARMER:
 				if( flag&8 )
-					group[count++] = su;
+					group.push_back(su);
 				break;
 			default:
 				if (flag&2 && skill_get_inf2(su->skill_id, INF2_ISTRAP))
-					group[count++] = su;
+					group.push_back(su);
 				break;
 		}
 
 	}
-	for (int i = 0; i < count; i++)
-		skill_delunitgroup(group[i]);
-	return count;
+
+	if (!group.empty()) {
+		auto it = group.begin();
+
+		while (it != group.end()) {
+			skill_delunitgroup(*it);
+			++it;
+		}
+	}
+
+	return static_cast<int>(group.size());
 }
 
 /**
@@ -17926,7 +17929,7 @@ std::shared_ptr<s_skill_unit_group> skill_locate_element_field(struct block_list
 	if (ud == nullptr)
 		return nullptr;
 
-	for (const auto su : ud->skillunit) {
+	for (const auto su : ud->skillunits) {
 		switch (su->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
@@ -18806,7 +18809,7 @@ std::shared_ptr<s_skill_unit_group> skill_initunitgroup(struct block_list* src, 
 	group->tick       = gettick();
 	group->valstr     = nullptr;
 
-	ud->skillunit.push_back(group);
+	ud->skillunits.push_back(group);
 
 	// Stores this new group
 	skillunit_group_db.insert({ group->group_id, group });
@@ -18961,7 +18964,9 @@ int skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char* f
 	}
 
 	link_group_id = group->link_group_id;
-	skillunit_group_db.erase(group->group_id);
+
+	if (skillunit_group_db.erase(group->group_id) != 1)
+		ShowError("skill_delunitgroup: Group not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
 
 	if(link_group_id) {
 		std::shared_ptr<s_skill_unit_group> group_cur = skill_id2group(link_group_id);
@@ -18984,11 +18989,15 @@ void skill_clear_unitgroup(struct block_list *src)
 	nullpo_retv(src);
 	nullpo_retv((ud = unit_bl2ud(src)));
 
-	if (ud->skillunit.empty())
+	if (ud->skillunits.empty())
 		return;
 
-	for (const auto sg : ud->skillunit)
-		skill_delunitgroup(sg);
+	auto it = ud->skillunits.begin();
+
+	while (it != ud->skillunits.end()) {
+		skill_delunitgroup(*it);
+		++it;
+	}
 }
 
 /**

@@ -341,6 +341,17 @@ struct skill_timerskill {
 	int flag;
 };
 
+/// Skill unit
+struct skill_unit {
+	struct block_list bl;
+	std::shared_ptr<s_skill_unit_group> group; /// Skill group reference
+	t_tick limit;
+	int val1, val2;
+	short range;
+	unsigned alive : 1;
+	unsigned hidden : 1;
+};
+
 /// Skill unit group
 struct s_skill_unit_group {
 	int src_id; /// Caster ID/RID, if player is account_id
@@ -369,17 +380,10 @@ struct s_skill_unit_group {
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
 		unsigned guildaura : 1; // Guild Aura
 	} state;
-};
 
-/// Skill unit
-struct skill_unit {
-	struct block_list bl;
-	std::shared_ptr<s_skill_unit_group> group; /// Skill group reference
-	t_tick limit;
-	int val1, val2;
-	short range;
-	unsigned alive : 1;
-	unsigned hidden : 1;
+	~s_skill_unit_group() {
+		map_freeblock(&this->unit->bl); // schedules deallocation of whole array (HACK)
+	}
 };
 
 #define MAX_SKILLUNITGROUPTICKSET 25
