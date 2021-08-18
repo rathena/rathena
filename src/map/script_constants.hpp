@@ -7824,7 +7824,6 @@
 	export_constant(INF2_ALLOWWHENHIDDEN);
 	export_constant(INF2_ALLOWWHENPERFORMING);
 	export_constant(INF2_TARGETEMPERIUM);
-	export_constant(INF2_IGNORESTASIS);
 	export_constant(INF2_IGNOREKAGEHUMI);
 	export_constant(INF2_ALTERRANGEVULTURE);
 	export_constant(INF2_ALTERRANGESNAKEEYE);
