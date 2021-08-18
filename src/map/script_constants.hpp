@@ -7649,6 +7649,8 @@
 	export_constant(HAT_EF_BLACK_THUNDER_DARK);
 	export_constant(HAT_EF_C_RELEASED_GROUND);
 	export_constant(HAT_EF_C_SAMBA_CARNIVAL);
+	export_constant(HAT_EF_POISON_MASTER);
+	export_constant(HAT_EF_C_SWIRLING_FLAME);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
