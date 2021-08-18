@@ -42,8 +42,8 @@ Header:
 
 Footer:
   Imports:
-  - Path: db/pre-re/job_basehpsp_db.yml
+  - Path: db/pre-re/job_basehpspap.yml
     Mode: Prerenewal
-  - Path: db/re/job_basehpsp_db.yml
+  - Path: db/re/job_basehpspap.yml
     Mode: Renewal
-  - Path: db/import/job_basehpsp_db.yml
+  - Path: db/import/job_basehpspap.yml

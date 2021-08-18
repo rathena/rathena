@@ -12172,7 +12172,7 @@ static unsigned int pc_calc_basesp(uint16 level, uint16 job_id) {
 #endif
 
 const std::string JobDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/job_db.yml";
+	return std::string(db_path) + "/job_stats.yml";
 }
 
 /**
@@ -12364,7 +12364,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 }
 
 const std::string JobExpDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/job_exp_db.yml";
+	return std::string(db_path) + "/job_exp.yml";
 }
 
 /**
@@ -12393,7 +12393,7 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(constant));
 
 			if (job == nullptr) {
-				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_db.yml.\n", job_name.c_str());
+				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_stats.yml.\n", job_name.c_str());
 				continue;
 			}
 
@@ -12482,11 +12482,11 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 JobExpDatabase job_exp_db;
 
 const std::string JobBaseHPSPAPDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/job_basehpsp_db.yml";
+	return std::string(db_path) + "/job_basehpspap.yml";
 }
 
 /**
- * Reads and parses an entry from the job_basehpsp_db.
+ * Reads and parses an entry from the job_basehpspap_db.
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
@@ -12511,7 +12511,7 @@ uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(constant));
 
 			if (job == nullptr) {
-				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_db.yml.\n", job_name.c_str());
+				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_stats.yml.\n", job_name.c_str());
 				continue;
 			}
 
@@ -12695,7 +12695,7 @@ void PlayerStatPointDatabase::loadingFinished() {
 
 /*==========================================
  * pc DB reading.
- * job_db.yml		- Job values
+ * job_stats.yml	- Job values
  * skill_tree.txt	- skill tree for every class
  * attr_fix.txt		- elemental adjustment table
  *------------------------------------------*/
