@@ -2916,12 +2916,10 @@ void unit_dataset(struct block_list *bl)
  * @param skill_id: Skill to search for
  * @param maxcount: Maximum amount of placeable units
  */
-void unit_skillunit_maxcount(unit_data *ud, uint16 skill_id, int *maxcount) {
-	nullpo_retv(ud);
-
-	for (const auto su : ud->skillunits) {
-		if (maxcount > 0 && su->skill_id == skill_id)
-			maxcount--;
+void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount) {
+	for (const auto su : ud.skillunits) {
+		if (su->skill_id == skill_id && --maxcount == 0 )
+			break;
 	}
 }
 

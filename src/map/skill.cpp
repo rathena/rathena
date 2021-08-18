@@ -487,7 +487,7 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 		return false;
 	}
 	if (type&battle_config.land_skill_limit && (maxcount = skill_get_maxcount(skill_id, skill_lv)) > 0) {
-		unit_skillunit_maxcount(&sd->ud, skill_id, &maxcount);
+		unit_skillunit_maxcount(sd->ud, skill_id, maxcount);
 
 		if (maxcount == 0) {
 			if (sd && display_failure)
@@ -13015,7 +13015,7 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 			p[3] = &sd->status.memo_point[2];
 
 			if((maxcount = skill_get_maxcount(skill_id, sd->menuskill_val)) > 0) {
-				unit_skillunit_maxcount(&sd->ud, skill_id, &maxcount);
+				unit_skillunit_maxcount(sd->ud, skill_id, maxcount);
 
 				if (maxcount == 0) {
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);

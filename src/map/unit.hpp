@@ -156,7 +156,7 @@ int unit_set_target(struct unit_data* ud, int target_id);
 
 // unit_data
 void unit_dataset(struct block_list *bl);
-void unit_skillunit_maxcount(unit_data *ud, uint16 skill_id, int *maxcount);
+void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount);
 
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);

@@ -8040,7 +8040,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					if( BL_PC&battle_config.land_skill_limit &&
 						(maxcount = skill_get_maxcount(r_skill, r_lv)) > 0
 					  ) {
-						unit_skillunit_maxcount(&sd->ud, r_skill, &maxcount);
+						unit_skillunit_maxcount(sd->ud, r_skill, maxcount);
 
 						if( maxcount == 0 )
 							type = -1;
