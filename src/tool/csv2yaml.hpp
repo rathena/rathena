@@ -15,6 +15,7 @@
 #define MAX_MAP_PER_INSTANCE 255
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
+#define MAX_ITEMRATIO_MOBS 10
 
 // Database to memory maps
 struct s_skill_unit_csv : s_skill_db {
@@ -83,6 +84,24 @@ struct s_randomsummon_group_csv2yaml {
 };
 
 std::map<std::string, s_randomsummon_group_csv2yaml> summon_group;
+
+struct s_item_group_entry_csv2yaml {
+	std::string item_name;
+	uint16 duration,
+		amount;
+	uint32 rate;
+	bool isAnnounced,
+		GUID,
+		isNamed;
+	std::string bound;
+};
+
+struct s_item_group_db_csv2yaml {
+	std::string group_name;
+	std::map<uint16, std::vector<s_item_group_entry_csv2yaml>> item;
+};
+
+std::map<std::string, s_item_group_db_csv2yaml> item_group;
 
 struct s_mob_drop_csv : s_mob_drop {
 	std::string group_string;
@@ -443,6 +462,12 @@ static bool mob_readdb_group(char* str[], int columns, int current);
 static bool mob_readdb_group_yaml(void);
 static bool skill_parse_row_createarrowdb(char* fields[], int columns, int current);
 static bool pc_read_statsdb(const char* file);
+static bool guild_read_castledb(char* str[], int columns, int current);
+static bool exp_guild_parse_row(char* split[], int column, int current);
+static bool itemdb_read_group(char* fields[], int columns, int current);
+static bool itemdb_read_group_yaml(void);
+static bool mob_readdb_itemratio(char* fields[], int columns, int current);
+static bool status_readdb_attrfix(const char* file);
 static bool mob_readdb_race2(char *fields[], int columns, int current);
 static bool mob_readdb_drop(char *str[], int columns, int current);
 static bool mob_readdb_sub(char *fields[], int columns, int current);

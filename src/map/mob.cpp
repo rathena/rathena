@@ -73,14 +73,7 @@ const t_tick MOB_MAX_DELAY = 24 * 3600 * 1000;
 // holds Monster Spawn informations
 std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
-//Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
-#define MAX_ITEMRATIO_MOBS 10
-struct s_mob_item_drop_ratio {
-	t_itemid nameid;
-	int drop_ratio;
-	unsigned short mob_id[MAX_ITEMRATIO_MOBS];
-};
-static DBMap *mob_item_drop_ratio;
+MobItemRatioDatabase mob_item_drop_ratio;
 
 /// Mob skill struct for temporary storage
 struct s_mob_skill_db {
@@ -527,7 +520,7 @@ int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 		return entry->mob_id;
 	}
 
-	if (mob_db.find( summon->default_mob_id ) == nullptr) {
+	if (!mob_db.exists( summon->default_mob_id )) {
 		ShowError("mob_get_random_id: Default monster is not defined for type %d.\n", type);
 		return 0;
 	}
@@ -686,7 +679,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 
 		if (mob_id == MOBID_EMPERIUM)
 		{
-			struct guild_castle* gc = guild_mapindex2gc(map_getmapdata(m)->index);
+			std::shared_ptr<guild_castle> gc = castle_db.mapindex2gc(map_getmapdata(m)->index);
 			struct guild* g = (gc) ? guild_search(gc->guild_id) : nullptr;
 			if (gc)
 			{
@@ -827,7 +820,6 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	struct mob_data *md=nullptr;
 	struct spawn_data data;
 	struct guild *g=nullptr;
-	struct guild_castle *gc;
 	int16 m;
 	memset(&data, 0, sizeof(struct spawn_data)); //fixme
 	data.num = 1;
@@ -871,8 +863,8 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	if (!mob_parse_dataset(&data))
 		return 0;
 
-	gc=guild_mapname2gc(mapname);
-	if (gc == NULL)
+	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
+	if (gc == nullptr)
 	{
 		ShowError("mob_spawn_guardian: No castle set at map %s\n", mapname);
 		return 0;
@@ -2841,7 +2833,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if (sd == mvp_sd && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rnd()%10000) {
 			struct s_mob_drop mobdrop;
 			memset(&mobdrop, 0, sizeof(struct s_mob_drop));
-			mobdrop.nameid = itemdb_searchrandomid(IG_FINDINGORE,1);
+			mobdrop.nameid = itemdb_group.get_random_item_id(IG_FINDINGORE,1);
 			ditem = mob_setdropitem(&mobdrop, 1, md->mob_id);
 			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10, homkillonly || merckillonly);
 		}
@@ -2871,7 +2863,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 					if (rnd()%10000 >= drop_rate)
 						continue;
-					dropid = (it.nameid > 0) ? it.nameid : itemdb_searchrandomid(it.group,1);
+					dropid = (it.nameid > 0) ? it.nameid : itemdb_group.get_random_item_id(it.group,1);
 					memset(&mobdrop, 0, sizeof(struct s_mob_drop));
 					mobdrop.nameid = dropid;
 
@@ -4159,22 +4151,17 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
 
 /**
  * Check if global item drop rate is overriden for given item
- * in db/mob_item_ratio.txt
+ * in db/mob_item_ratio.yml
  * @param nameid ID of the item
  * @param mob_id ID of the monster
  * @param rate_adjust pointer to store ratio if found
  */
 static void item_dropratio_adjust(t_itemid nameid, int mob_id, int *rate_adjust)
 {
-	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)uidb_get(mob_item_drop_ratio, nameid);
+	std::shared_ptr<s_mob_item_drop_ratio> item_ratio = mob_item_drop_ratio.find(nameid);
 	if( item_ratio) {
-		if( item_ratio->mob_id[0] ) { // only for listed mobs
-			int i;
-			ARR_FIND(0, MAX_ITEMRATIO_MOBS, i, item_ratio->mob_id[i] == mob_id);
-			if( i < MAX_ITEMRATIO_MOBS ) // found
-				*rate_adjust = item_ratio->drop_ratio;
-		}
-		else // for all mobs
+		// If it is empty it is applied to all monsters, if not it is only applied if the monster is in the vector
+		if( item_ratio->mob_ids.empty() || util::vector_exists( item_ratio->mob_ids, static_cast<uint16>( mob_id ) ) )
 			*rate_adjust = item_ratio->drop_ratio;
 	}
 }
@@ -4219,7 +4206,7 @@ bool MobDatabase::parseDropNode(std::string nodeName, YAML::Node node, uint8 max
 		if (!this->asString(dropit, "Item", item_name))
 			return false;
 
-		item_data *item = itemdb_search_aegisname(item_name.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(dropit["Item"], "Monster %s item %s does not exist, skipping.\n", nodeName.c_str(), item_name.c_str());
@@ -4713,7 +4700,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		mob->status.adelay = cap_value(speed, battle_config.monster_max_aspd * 2, 4000);
 	} else {
 		if (!exists)
-			mob->status.adelay = 0;
+			mob->status.adelay = cap_value(0, battle_config.monster_max_aspd * 2, 4000);
 	}
 	
 	if (this->nodeExists(node, "AttackMotion")) {
@@ -4725,7 +4712,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		mob->status.amotion = cap_value(speed, battle_config.monster_max_aspd, 2000);
 	} else {
 		if (!exists)
-			mob->status.amotion = 0;
+			mob->status.amotion = cap_value(0, battle_config.monster_max_aspd, 2000);
 	}
 
 	if (this->nodeExists(node, "DamageMotion")) {
@@ -5297,7 +5284,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Weapon", weapon))
 			return 0;
 
-		struct item_data *item = itemdb_search_aegisname(weapon.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( weapon.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(node["Weapon"], "Weapon %s is not a valid item.\n", weapon.c_str());
@@ -5318,7 +5305,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Shield", shield))
 			return 0;
 
-		struct item_data *item = itemdb_search_aegisname(shield.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( shield.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(node["Shield"], "Shield %s is not a valid item.\n", shield.c_str());
@@ -5339,9 +5326,9 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "HeadTop", head))
 			return 0;
 
-		struct item_data *item;
+		std::shared_ptr<item_data> item = item_db.search_aegisname( head.c_str() );
 
-		if ((item = itemdb_search_aegisname(head.c_str())) == nullptr) {
+		if (item == nullptr) {
 			this->invalidWarning(node["HeadTop"], "HeadTop %s is not a valid item.\n", head.c_str());
 			return 0;
 		}
@@ -5360,7 +5347,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "HeadMid", head))
 			return 0;
 
-		struct item_data *item = itemdb_search_aegisname(head.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( head.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(node["HeadMid"], "HeadMid %s is not a valid item.\n", head.c_str());
@@ -5381,7 +5368,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "HeadLow", head))
 			return 0;
 
-		struct item_data *item = itemdb_search_aegisname(head.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( head.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(node["HeadLow"], "HeadLow %s is not a valid item.\n", head.c_str());
@@ -5404,7 +5391,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "PetEquip", equipment))
 			return 0;
 
-		struct item_data *item = itemdb_search_aegisname(equipment.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname( equipment.c_str() );
 
 		if (item == nullptr) {
 			this->invalidWarning(node["PetEquip"], "PetEquip %s is not a valid item.\n", equipment.c_str());
@@ -5932,51 +5919,83 @@ static int mob_read_sqlskilldb(void)
 	return 0;
 }
 
-/**
- * Read mob_item_ratio.txt
- */
-static bool mob_readdb_itemratio(char* str[], int columns, int current)
-{
-	t_itemid nameid;
-	int ratio, i;
-	struct s_mob_item_drop_ratio *item_ratio;
-	nameid = strtoul(str[0], nullptr, 10);
-
-	if (itemdb_exists(nameid) == NULL) {
-		ShowWarning("mob_readdb_itemratio: Invalid item id %u.\n", nameid);
-		return false;
-	}
-
-	ratio = atoi(str[1]);
-
-	if (!(item_ratio = (struct s_mob_item_drop_ratio *)uidb_get(mob_item_drop_ratio,nameid)))
-		CREATE(item_ratio, struct s_mob_item_drop_ratio, 1);
-
-	item_ratio->drop_ratio = ratio;
-	memset(item_ratio->mob_id, 0, sizeof(item_ratio->mob_id));
-	for (i = 0; i < columns-2; i++) {
-		uint16 mob_id = atoi(str[i+2]);
-		if (mob_db.find(mob_id) == nullptr)
-			ShowError("mob_readdb_itemratio: Invalid monster with ID %hu (Item:%u Col:%d).\n", mob_id, nameid, columns);
-		else
-			item_ratio->mob_id[i] = atoi(str[i+2]);
-	}
-
-	if (!item_ratio->nameid) {
-		item_ratio->nameid = nameid;
-		uidb_put(mob_item_drop_ratio, nameid, item_ratio);
-	}
-
-	return true;
+const std::string MobItemRatioDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/mob_item_ratio.yml";
 }
 
 /**
- * Free drop ratio data
- **/
-static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
-	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)db_data2ptr(data);
-	aFree(item_ratio);
-	return 0;
+ * Reads and parses an entry from the mob_item_ratio.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MobItemRatioDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string item_name;
+
+	if (!this->asString(node, "Item", item_name))
+		return 0;
+
+	std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+	if (item == nullptr) {
+		this->invalidWarning(node["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());
+		return 0;
+	}
+
+	t_itemid nameid = item->nameid;
+
+	std::shared_ptr<s_mob_item_drop_ratio> data = this->find(nameid);
+	bool exists = data != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Ratio" })) {
+			return 0;
+		}
+
+		data = std::make_shared<s_mob_item_drop_ratio>();
+		data->nameid = nameid;
+	}
+	
+	if (this->nodeExists(node, "Ratio")) {
+		uint16 ratio;
+
+		if (!this->asUInt16(node, "Ratio", ratio))
+			return 0;
+
+		data->drop_ratio = ratio;
+	}
+
+	if (this->nodeExists(node, "List")) {
+		const YAML::Node &MobNode = node["List"];
+
+		for (const auto mobit : MobNode) {
+			std::string mob_name = mobit.first.as<std::string>();
+
+			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
+
+			if (mob == nullptr) {
+				this->invalidWarning(node["List"], "Unknown mob %s, skipping.\n", mob_name.c_str());
+				continue;
+			}
+			uint16 mob_id = mob->id;
+
+			bool active;
+
+			if (!this->asBool(node["List"], mob_name, active))
+				return 0;
+
+			if (!active) {
+				util::vector_erase_if_exists(data->mob_ids, mob_id);
+				continue;
+			}
+
+			data->mob_ids.push_back(mob_id);
+		}
+	}
+
+	if (!exists)
+		this->put(nameid, data);
+
+	return 1;
 }
 
 /**
@@ -6005,6 +6024,13 @@ static void mob_drop_ratio_adjust(void){
 
 			// Adjust the rate if there is an entry in mob_item_ratio
 			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
+
+			// remove the item if the rate of item_dropratio_adjust is 0
+			if (rate_adjust == 0) {
+				mob->mvpitem[j].nameid = 0;
+				mob->mvpitem[j].rate = 0;
+				continue;
+			}
 
 			// Adjust rate with given algorithms
 			rate = mob_drop_adjust( rate, rate_adjust, battle_config.item_drop_mvp_min, battle_config.item_drop_mvp_max );
@@ -6102,6 +6128,14 @@ static void mob_drop_ratio_adjust(void){
 			}
 
 			item_dropratio_adjust( nameid, mob_id, &rate_adjust );
+
+			// remove the item if the rate of item_dropratio_adjust is 0
+			if (rate_adjust == 0) {
+				mob->dropitem[j].nameid = 0;
+				mob->dropitem[j].rate = 0;
+				continue;
+			}
+
 			rate = mob_drop_adjust( rate, rate_adjust, ratemin, ratemax );
 
 			// calculate and store Max available drop chance of the item
@@ -6134,7 +6168,7 @@ static void mob_drop_ratio_adjust(void){
 	}
 
 	// Now that we are done we can delete the stored item ratios
-	mob_item_drop_ratio->clear( mob_item_drop_ratio, mob_item_drop_ratio_free );
+	mob_item_drop_ratio.clear();
 }
 
 /**
@@ -6240,12 +6274,12 @@ static void mob_load(void)
 		else
 			mob_readskilldb(dbsubpath2, silent);
 
-		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, silent);
 
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
 
+	mob_item_drop_ratio.load();
 	mob_avail_db.load();
 	mob_summon_db.load();
 
@@ -6263,7 +6297,6 @@ void mob_db_load(bool is_reload){
 		item_drop_ers = ers_new(sizeof(struct item_drop),"mob.cpp::item_drop_ers",ERS_OPT_CLEAN);
 		item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.cpp::item_drop_list_ers",ERS_OPT_NONE);
 	}
-	mob_item_drop_ratio = uidb_alloc(DB_OPT_BASE);
 	mob_load();
 }
 
@@ -6412,7 +6445,7 @@ void do_final_mob(bool is_reload){
 	mob_chat_db.clear();
 	mob_skill_db.clear();
 
-	mob_item_drop_ratio->destroy(mob_item_drop_ratio,mob_item_drop_ratio_free);
+	mob_item_drop_ratio.clear();
 	mob_summon_db.clear();
 	if( !is_reload ) {
 		ers_destroy(item_drop_ers);

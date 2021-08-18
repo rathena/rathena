@@ -375,7 +375,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(dropNode, "Item", item_name))
 					return 0;
 
-				struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if (!item) {
 					this->invalidWarning(dropNode["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());

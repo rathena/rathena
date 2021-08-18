@@ -1230,9 +1230,10 @@ void bg_queue_clear(std::shared_ptr<s_battleground_queue> queue, bool ended)
  * Sub function for leaving a Battleground queue
  * @param sd: Player leaving
  * @param members: List of players in queue data
+ * @param apply_sc: Apply the SC_ENTRY_QUEUE_APPLY_DELAY status on queue leave (default: true)
  * @return True on success or false otherwise
  */
-static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_session_data *> &members)
+static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_session_data *> &members, bool apply_sc)
 {
 	if (!sd)
 		return false;
@@ -1243,7 +1244,8 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 		if (*list_it == sd) {
 			members.erase(list_it);
 
-			sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_APPLY_DELAY, 100, 1, 60000);
+			if (apply_sc)
+				sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_APPLY_DELAY, 100, 1, 60000);
 			sd->bg_queue_id = 0;
 			pc_delete_bg_queue_timer(sd);
 			return true;
@@ -1258,9 +1260,10 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 /**
  * Leave a Battleground queue
  * @param sd: Player data
+ * @param apply_sc: Apply the SC_ENTRY_QUEUE_APPLY_DELAY status on queue leave (default: true)
  * @return True on success or false otherwise
  */
-bool bg_queue_leave(struct map_session_data *sd)
+bool bg_queue_leave(struct map_session_data *sd, bool apply_sc)
 {
 	if (!sd || sd->bg_queue_id == 0)
 		return false;
@@ -1269,7 +1272,7 @@ bool bg_queue_leave(struct map_session_data *sd)
 
 	for (auto &queue : bg_queues) {
 		if (sd->bg_queue_id == queue->queue_id) {
-			if (!bg_queue_leave_sub(sd, queue->teama_members) && !bg_queue_leave_sub(sd, queue->teamb_members)) {
+			if (!bg_queue_leave_sub(sd, queue->teama_members, apply_sc) && !bg_queue_leave_sub(sd, queue->teamb_members, apply_sc)) {
 				ShowError("bg_queue_leave: Couldn't find player %s in battlegrounds queue.\n", sd->status.name);
 				return false;
 			} else {
@@ -1347,6 +1350,8 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 		clif_bg_queue_entry_init(sd);
 		return;
 	}
+
+	pc_delete_bg_queue_timer(sd); // Cancel timer so player doesn't leave the queue.
 
 	int bg_id_team_1 = static_cast<int>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
 	std::shared_ptr<s_battleground_data> bgteam_1 = util::umap_find(bg_team_db, bg_id_team_1);

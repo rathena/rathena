@@ -693,14 +693,13 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 
 	if (sd->soulball <= 0 || sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
 		sd->soulball = 0;
-		return 0;
+	}else{
+		sd->soulball -= cap_value(count, 0, sd->soulball);
+		if (sd->soulball == 0)
+			status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
+		else
+			sc->data[SC_SOULENERGY]->val1 = sd->soulball;
 	}
-
-	sd->soulball -= cap_value(count, 0, sd->soulball);
-	if (sd->soulball == 0)
-		status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
-	else
-		sc->data[SC_SOULENERGY]->val1 = sd->soulball;
 
 	if (!type)
 		clif_soulball(sd);
@@ -2718,7 +2717,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
 		ShowWarning("pc_bonus_item_drop: Invalid item id %u\n",nameid);
 		return;
 	}
-	if (group && !itemdb_group_exists(group)) {
+	if (group && !itemdb_group.exists(group)) {
 		ShowWarning("pc_bonus_item_drop: Invalid Item Group %hu\n",group);
 		return;
 	}
@@ -2891,7 +2890,7 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
 
 	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
-	status_calc_pc(sd,SCO_NONE);
+	status_calc_pc(sd,SCO_FORCE);
 }
 
 /**
@@ -2912,7 +2911,7 @@ TIMER_FUNC(pc_endautobonus){
 		}
 	}
 	
-	status_calc_pc(sd,SCO_NONE);
+	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
 
@@ -4131,7 +4130,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_ADD_ITEMGROUP_HEAL_RATE: // bonus2 bAddItemGroupHealRate,ig,n;
 		if (sd->state.lr_flag == 2)
 			break;
-		if (!type2 || !itemdb_group_exists(type2)) {
+		if (!type2 || !itemdb_group.exists(type2)) {
 			ShowWarning("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE: Invalid item group with id %d\n", type2);
 			break;
 		}
@@ -5425,7 +5424,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false;
 	//Prevent mass item usage. [Skotlex]
 	if( DIFF_TICK(sd->canuseitem_tick,gettick()) > 0 ||
-		(itemdb_group_item_exists(IG_CASH_FOOD, nameid) && DIFF_TICK(sd->canusecashfood_tick,gettick()) > 0)
+		(itemdb_group.item_exists(IG_CASH_FOOD, nameid) && DIFF_TICK(sd->canusecashfood_tick,gettick()) > 0)
 	)
 		return false;
 
@@ -5511,7 +5510,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 	}
 
-	if( itemdb_group_item_exists(IG_MERCENARY, nameid) && sd->md != NULL )
+	if( itemdb_group.item_exists(IG_MERCENARY, nameid) && sd->md != NULL )
 		return false; // Mercenary Scrolls
 
 	if( item->flag.group || item->type == IT_CASH) {	//safe check type cash disappear when overweight [Napster]
@@ -5664,7 +5663,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	//Update item use time.
 	sd->canuseitem_tick = tick + battle_config.item_use_interval;
-	if( itemdb_group_item_exists(IG_CASH_FOOD, nameid) )
+	if( itemdb_group.item_exists(IG_CASH_FOOD, nameid) )
 		sd->canusecashfood_tick = tick + battle_config.cashfood_use_interval;
 
 	run_script(script,0,sd->bl.id,fake_nd->bl.id);
@@ -6214,7 +6213,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	if( sd->status.guild_id > 0 && mapdata->flag[MF_GVG_CASTLE] )
 	{	// Increased guild castle regen [Valaris]
-		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);
+		std::shared_ptr<guild_castle> gc = castle_db.mapindex2gc(sd->mapindex);
 		if(gc && gc->guild_id == sd->status.guild_id)
 			sd->regen.state.gc = 1;
 	}
@@ -8186,6 +8185,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 		if (sd->sc.data[SC_SPRITEMABLE] && pc_checkskill(sd, SU_SPRITEMABLE))
 			status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
+		if (sd->sc.data[SC_SOULATTACK] && pc_checkskill(sd, SU_SOULATTACK))
+			status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
 	}
 
 	for (const auto &skill : skill_db) {
@@ -8849,7 +8850,7 @@ bool pc_revive_item(struct map_session_data *sd) {
 	if (sd->sc.data[SC_HELLPOWER]) // Cannot resurrect while under the effect of SC_HELLPOWER.
 		return false;
 
-	int16 item_position = itemdb_group_item_exists_pc(sd, IG_TOKEN_OF_SIEGFRIED);
+	int16 item_position = itemdb_group.item_exists_pc(sd, IG_TOKEN_OF_SIEGFRIED);
 	uint8 hp = 100, sp = 100;
 
 	if (item_position < 0) {
@@ -9656,6 +9657,8 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 	if (sd->sc.data[SC_SPRITEMABLE] && !pc_checkskill(sd, SU_SPRITEMABLE))
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
+	if (sd->sc.data[SC_SOULATTACK] && !pc_checkskill(sd, SU_SOULATTACK))
+		status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
 
 	if(sd->status.manner < 0)
 		clif_changestatus(sd,SP_MANNER,sd->status.manner);
@@ -10958,7 +10961,7 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 
 	if (flag & 1 || status_calc) {
 		pc_checkallowskill(sd);
-		status_calc_pc(sd, SCO_NONE);
+		status_calc_pc(sd, SCO_FORCE);
 	}
 
 	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
@@ -11087,8 +11090,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 				break;
 			}
 		}
-		if (!sd->sc.data[SC_SEVENWIND] || sd->sc.data[SC_ASPERSIO]) //Check for seven wind (but not level seven!)
-			skill_enchant_elemental_end(&sd->bl, SC_NONE);
+
+		skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
 	}
@@ -12697,7 +12700,7 @@ void PlayerStatPointDatabase::loadingFinished() {
  * pc DB reading.
  * job_stats.yml	- Job values
  * skill_tree.txt	- skill tree for every class
- * attr_fix.txt		- elemental adjustment table
+ * attr_fix.yml		- elemental adjustment table
  *------------------------------------------*/
 void pc_readdb(void) {
 	int i, s = 1;
@@ -13545,18 +13548,12 @@ short pc_get_itemgroup_bonus(struct map_session_data* sd, t_itemid nameid) {
 	short bonus = 0;
 
 	for (const auto &it : sd->itemgrouphealrate) {
-		uint16 group_id = it.id, i;
-		struct s_item_group_db *group = NULL;
-
-		if (!group_id || !(group = itemdb_group_exists(group_id)))
+		uint16 group_id = it.id;
+		if (group_id == 0)
 			continue;
-		
-		for (i = 0; i < group->random[0].data_qty; i++) {
-			if (group->random[0].data[i].nameid == nameid) {
-				bonus += it.val;
-				break;
-			}
-		}
+
+		if (itemdb_group.item_exists(group_id, nameid))
+			bonus += it.val;
 	}
 	return bonus;
 }
