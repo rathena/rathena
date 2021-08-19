@@ -36039,6 +36039,20 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25310
+    AegisName: DF_Token_Of_Siegfried
+    Name: [Scroll] Token of Siegfried
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25311
     AegisName: Piece_of_Black_Horn
     Name: Piece of Black Horn
