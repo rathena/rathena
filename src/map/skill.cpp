@@ -487,7 +487,7 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 		return false;
 	}
 	if (type&battle_config.land_skill_limit && (maxcount = skill_get_maxcount(skill_id, skill_lv)) > 0) {
-		unit_skillunit_maxcount(sd->ud, skill_id, maxcount);
+		unit_skillunit_maxcount(*ud, skill_id, maxcount);
 
 		if (maxcount == 0) {
 			if (sd && display_failure)
@@ -17862,17 +17862,16 @@ int skill_attack_area(struct block_list *bl, va_list ap)
  */
 int skill_clear_group(struct block_list *bl, int flag)
 {
-	unit_data *ud;
-
 	nullpo_ret(bl);
 
-	if (!(ud = unit_bl2ud(bl)))
+	unit_data *ud = unit_bl2ud(bl);
+
+	if (ud == nullptr)
 		return 0;
 
-	std::vector<std::shared_ptr<s_skill_unit_group>> group;
+	size_t count = 0;
 
-	// All groups to be deleted are first stored in a vector since the vector elements shift around when you delete them. [Skotlex]
-	for (const auto su : ud->skillunits) {
+	for (const auto &su : ud->skillunits) {
 		switch (su->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
@@ -17883,36 +17882,35 @@ int skill_clear_group(struct block_list *bl, int flag)
 			case SC_CHAOSPANIC:
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
-				if (flag&1)
-					group.push_back(su);
+				if (flag & 1) {
+					skill_delunitgroup(su);
+					count++;
+				}
 				break;
 			case SO_CLOUD_KILL:
 			case NPC_CLOUD_KILL:
-				if( flag&4 )
-					group.push_back(su);
+				if (flag & 4) {
+					skill_delunitgroup(su);
+					count++;
+				}
 				break;
 			case SO_WARMER:
-				if( flag&8 )
-					group.push_back(su);
+				if (flag & 8) {
+					skill_delunitgroup(su);
+					count++;
+				}
 				break;
 			default:
-				if (flag&2 && skill_get_inf2(su->skill_id, INF2_ISTRAP))
-					group.push_back(su);
+				if (flag & 2 && skill_get_inf2(su->skill_id, INF2_ISTRAP)) {
+					skill_delunitgroup(su);
+					count++;
+				}
 				break;
 		}
 
 	}
 
-	if (!group.empty()) {
-		auto it = group.begin();
-
-		while (it != group.end()) {
-			skill_delunitgroup(*it);
-			++it;
-		}
-	}
-
-	return static_cast<int>(group.size());
+	return static_cast<int>(count);
 }
 
 /**
@@ -18778,12 +18776,13 @@ static int skill_get_new_group_id(void)
  */
 std::shared_ptr<s_skill_unit_group> skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, t_tick limit, int interval)
 {
+	nullpo_retr(nullptr, src);
+
 	unit_data *ud = unit_bl2ud(src);
 
-	nullpo_retr(nullptr, src);
 	nullpo_retr(nullptr, ud);
 
-	if (skill_id == 0 && skill_lv == 0)
+	if (skill_id == 0 || skill_lv == 0)
 		return 0;
 
 	auto group = std::make_shared<s_skill_unit_group>();
@@ -18984,19 +18983,14 @@ int skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char* f
  */
 void skill_clear_unitgroup(struct block_list *src)
 {
-	struct unit_data *ud;
-
 	nullpo_retv(src);
-	nullpo_retv((ud = unit_bl2ud(src)));
 
-	if (ud->skillunits.empty())
-		return;
+	unit_data *ud = unit_bl2ud(src);
 
-	auto it = ud->skillunits.begin();
+	nullpo_retv(ud);
 
-	while (it != ud->skillunits.end()) {
+	for (auto it = ud->skillunits.begin(); it != ud->skillunits.end(); it++) {
 		skill_delunitgroup(*it);
-		++it;
 	}
 }
 

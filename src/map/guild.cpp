@@ -2073,13 +2073,8 @@ int guild_break(struct map_session_data *sd,char *name) {
 			}
 		}
 
-		if (!group.empty()) {
-			auto it = group.begin();
-
-			while (it != group.end()) {
-				skill_delunitgroup(*it);
-				++it;
-			}
+		for (auto it = group.begin(); it != group.end(); it++) {
+			skill_delunitgroup(*it);
 		}
 	}
 

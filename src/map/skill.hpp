@@ -348,8 +348,8 @@ struct skill_unit {
 	t_tick limit;
 	int val1, val2;
 	short range;
-	unsigned alive : 1;
-	unsigned hidden : 1;
+	bool alive;
+	bool hidden;
 };
 
 /// Skill unit group
@@ -382,7 +382,8 @@ struct s_skill_unit_group {
 	} state;
 
 	~s_skill_unit_group() {
-		map_freeblock(&this->unit->bl); // schedules deallocation of whole array (HACK)
+		if (this->unit)
+			map_freeblock(&this->unit->bl); // schedules deallocation of whole array (HACK)
 	}
 };
 

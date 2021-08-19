@@ -13624,7 +13624,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val2);
 
 					sce->val2 = 0;
-					skill_delunitgroup(group);
+					if (group)
+						skill_delunitgroup(group);
 				}
 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
