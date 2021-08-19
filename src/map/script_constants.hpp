@@ -7635,6 +7635,22 @@
 	export_constant(HAT_EF_99LV_SOUL_R_GRAY);
 	export_constant(HAT_EF_160LV_SOUL_R_GRAY);
 	export_constant(HAT_EF_GEARWHEEL);
+	export_constant(HAT_EF_GIFT_OF_SNOW);
+	export_constant(HAT_EF_SNOW_POWDER);
+	export_constant(HAT_EF_FALLING_SNOW);
+	export_constant(HAT_EF_C_PHIGASIA_SCARF_EXE);
+	export_constant(HAT_EF_C_KYEL_HYRE_ULTI_TW);
+	export_constant(HAT_EF_C_MASTER);
+	export_constant(HAT_EF_C_TIME_ACCESSORY);
+	export_constant(HAT_EF_C_HELM_OF_RA);
+	export_constant(HAT_EF_C_2021RTC_HEADSET_TW);
+	export_constant(HAT_EF_C_MOONSTAR_ACCESSORY);
+	export_constant(HAT_EF_BLACK_THUNDER);
+	export_constant(HAT_EF_BLACK_THUNDER_DARK);
+	export_constant(HAT_EF_C_RELEASED_GROUND);
+	export_constant(HAT_EF_C_SAMBA_CARNIVAL);
+	export_constant(HAT_EF_POISON_MASTER);
+	export_constant(HAT_EF_C_SWIRLING_FLAME);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -7824,7 +7840,6 @@
 	export_constant(INF2_ALLOWWHENHIDDEN);
 	export_constant(INF2_ALLOWWHENPERFORMING);
 	export_constant(INF2_TARGETEMPERIUM);
-	export_constant(INF2_IGNORESTASIS);
 	export_constant(INF2_IGNOREKAGEHUMI);
 	export_constant(INF2_ALTERRANGEVULTURE);
 	export_constant(INF2_ALTERRANGESNAKEEYE);

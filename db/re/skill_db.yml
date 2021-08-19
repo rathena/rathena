@@ -2575,8 +2575,6 @@ Body:
     TargetType: Support
     DamageFlags:
       NoDamage: true
-    Flags:
-      IgnoreStasis: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -8239,7 +8237,6 @@ Body:
       NoTargetSelf: true
       PartyOnly: true
       GuildOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 9
     Hit: Single
@@ -9986,7 +9983,7 @@ Body:
     TargetType: Attack
     Range: 9
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 3
     Element: Holy
     CastTime: 1000
     AfterCastActDelay:
@@ -20266,7 +20263,6 @@ Body:
       NoDamage: true
     Flags:
       PartyOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 11
     Hit: Single
@@ -28312,7 +28308,6 @@ Body:
     Type: Weapon
     TargetType: Attack
     Flags:
-      IgnoreStasis: true
       TargetHidden: true
     Range: -9
     Hit: Single
