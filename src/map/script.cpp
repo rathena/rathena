@@ -5744,10 +5744,16 @@ BUILDIN_FUNC(warpparty)
 	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
 		 : ( strcmp(str,"SavePoint")==0 ) ? 2
 		 : ( strcmp(str,"Leader")==0 ) ? 3
-		 : 4;
+		 : ( strcmp(str,"RandomAll")==0 ) ? 4
+		 : 5;
 
 	switch (type)
 	{
+		case 2:
+			//"SavePoint" uses save point of the currently attached player
+			if ( !script_rid2sd(sd) )
+				return SCRIPT_CMD_SUCCESS;
+			break;
 		case 3:
 			for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
 			if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
@@ -5758,17 +5764,33 @@ BUILDIN_FUNC(warpparty)
 			x = pl_sd->bl.x;
 			y = pl_sd->bl.y;
 			break;
-		case 4:
+		case 4: {
+			if ( !script_rid2sd(sd) )
+				return SCRIPT_CMD_SUCCESS;
+
+			mapindex = sd->mapindex;
+			m = map_mapindex2mapid(mapindex);
+
+			struct map_data *mapdata = map_getmapdata(m);
+
+			if ( mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
+				return SCRIPT_CMD_FAILURE;
+
+			i = 0;
+			do {
+				x = rnd()%(mapdata->xs - 2) + 1;
+				y = rnd()%(mapdata->ys - 2) + 1;
+			} while ((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
+
+			if (i >= 1000)
+				return SCRIPT_CMD_FAILURE;
+			} break;
+		case 5:
 			mapindex = mapindex_name2id(str);
 			if (!mapindex) {// Invalid map
 				return SCRIPT_CMD_FAILURE;
 			}
 			m = map_mapindex2mapid(mapindex);
-			break;
-		case 2:
-			//"SavePoint" uses save point of the currently attached player
-			if ( !script_rid2sd(sd) )
-				return SCRIPT_CMD_SUCCESS;
 			break;
 	}
 
@@ -5800,7 +5822,8 @@ BUILDIN_FUNC(warpparty)
 		case 3: // Leader
 			if (p->party.member[i].leader)
 				continue;
-		case 4: // m,x,y
+		case 4: // RandomAll
+		case 5: // m,x,y
 			if (rx || ry) {
 				int x1 = x + rx, y1 = y + ry,
 					x0 = x - rx, y0 = y - ry;
