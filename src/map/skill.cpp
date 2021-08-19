@@ -17871,8 +17871,8 @@ int skill_clear_group(struct block_list *bl, int flag)
 
 	size_t count = 0;
 
-	for (const auto &su : ud->skillunits) {
-		switch (su->skill_id) {
+	for (auto it = ud->skillunits.begin(); it != ud->skillunits.end(); it++) {
+		switch ((*it)->skill_id) {
 			case SA_DELUGE:
 			case SA_VOLCANO:
 			case SA_VIOLENTGALE:
@@ -17883,31 +17883,30 @@ int skill_clear_group(struct block_list *bl, int flag)
 			case MH_POISON_MIST:
 			case MH_LAVA_SLIDE:
 				if (flag & 1) {
-					skill_delunitgroup(su);
+					skill_delunitgroup(*it);
 					count++;
 				}
 				break;
 			case SO_CLOUD_KILL:
 			case NPC_CLOUD_KILL:
 				if (flag & 4) {
-					skill_delunitgroup(su);
+					skill_delunitgroup(*it);
 					count++;
 				}
 				break;
 			case SO_WARMER:
 				if (flag & 8) {
-					skill_delunitgroup(su);
+					skill_delunitgroup(*it);
 					count++;
 				}
 				break;
 			default:
-				if (flag & 2 && skill_get_inf2(su->skill_id, INF2_ISTRAP)) {
-					skill_delunitgroup(su);
+				if (flag & 2 && skill_get_inf2((*it)->skill_id, INF2_ISTRAP)) {
+					skill_delunitgroup(*it);
 					count++;
 				}
 				break;
 		}
-
 	}
 
 	return static_cast<int>(count);
