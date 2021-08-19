@@ -132258,6 +132258,13 @@ Body:
     Locations:
       Costume_Garment: true
     View: 98
+  - Id: 480097
+    AegisName: C_Snow_Powder
+    Name: "Costume: Snow Powder"
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    View: 100
   - Id: 480120
     AegisName: aegis_480120
     Name: Guardian Soul
@@ -132286,13 +132293,6 @@ Body:
          bonus2 bSubEle,Ele_Wind,(.@r>=12?5:3)*((readparam(bInt)+readparam(bDex))/18);
          bonus2 bSubEle,Ele_Earth,(.@r>=12?5:3)*((readparam(bInt)+readparam(bDex))/18);
       }
-  - Id: 480097
-    AegisName: C_Snow_Powder
-    Name: "Costume: Snow Powder"
-    Type: Armor
-    Locations:
-      Costume_Garment: true
-    View: 100
   - Id: 490004
     AegisName: Attacker_Booster_Ring
     Name: Attacker Booster Ring
