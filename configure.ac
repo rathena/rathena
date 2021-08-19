@@ -294,29 +294,6 @@ AC_ARG_ENABLE(
     [enable_lto="yes"]
 )
 
-#
-# Build web service?
-#
-AC_ARG_ENABLE(
-	[web-service],
-	AC_HELP_STRING(
-		[--disable-web-service],
-		[
-			Disable the web service
-		]
-	),
-	[
-		case $enableval in
-			"no");;
-			"yes");;
-			*) AC_MSG_ERROR([[invalid argument --disable-web-service=$enableval... stopping]]);;
-		esac
-
-		enable_web_service="$enableval"
-	],
-	[enable_web_service="yes"]
-)
-
 
 #
 # Optionally set the maximum number of network connections
@@ -1338,19 +1315,6 @@ AC_SUBST([PCRE_LIBS])
 AC_SUBST([PCRE_CFLAGS])
 
 #
-# web server (optional)
-#
-if test "$enable_web_service" = "no" ; then
-	AC_MSG_NOTICE([ignoring web service (optional)])
-	WANTS_WEBSERVICE="no"
-else
-	AC_MSG_NOTICE([enabling web service])
-	WANTS_WEBSERVICE="yes"
-fi
-
-AC_SUBST([WANTS_WEBSERVICE])
-
-#
 # Host specific stuff
 #
 AC_MSG_CHECKING([host OS])
@@ -1404,7 +1368,7 @@ AC_MSG_NOTICE([CFLAGS_AR= $CFLAGS_AR])
 AC_MSG_NOTICE([LDFLAGS= $LDFLAGS])
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])
 #AC_MSG_NOTICE([EXTRA_WARN= $EXTRA_WARN])
-AC_MSG_NOTICE([output name =  $output_login, $output_char, $output_map])
+AC_MSG_NOTICE([output name =  $output_login, $output_char, $output_map, $output_web])
 
 ###############################################################################
 AC_OUTPUT

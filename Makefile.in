@@ -4,7 +4,7 @@ HAVE_MYSQL=@HAVE_MYSQL@
 OMAP=@OMAP@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=server tools
-	SERVER_DEPENDS=common login char map import
+	SERVER_DEPENDS=common login char map web import
 	COMMON_DEPENDS=libconfig yaml-cpp
 	LOGIN_DEPENDS=libconfig common
 	CHAR_DEPENDS=libconfig common yaml-cpp

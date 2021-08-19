@@ -626,7 +626,6 @@ LIBOBJS
 CXXFLAG_CLEARS
 CFLAGS_AR
 DLLEXT
-WANTS_WEBSERVICE
 PCRE_CFLAGS
 PCRE_LIBS
 PCRE_VERSION
@@ -711,7 +710,6 @@ enable_rdtsc
 enable_profiler
 enable_64bit
 enable_lto
-enable_web_service
 with_maxconn
 with_outputlogin
 with_outputchar
@@ -1378,7 +1376,6 @@ Optional Features:
   --disable-64bit         Enforce 32bit output on x86_64 systems.
   --enable-lto            Enables or Disables Linktime Code Optimization (LTO
                           is enabled by default)
-  --disable-web-service   Disable the web service
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -3479,26 +3476,6 @@ if test "${enable_lto+set}" = set; then :
 
 else
   enable_lto="yes"
-
-fi
-
-
-#
-# Build web service?
-#
-# Check whether --enable-web-service was given.
-if test "${enable_web_service+set}" = set; then :
-  enableval=$enable_web_service;
-		case $enableval in
-			"no");;
-			"yes");;
-			*) as_fn_error $? "invalid argument --disable-web-service=$enableval... stopping" "$LINENO" 5;;
-		esac
-
-		enable_web_service="$enableval"
-
-else
-  enable_web_service="yes"
 
 fi
 
@@ -7087,21 +7064,6 @@ fi
 
 
 #
-# web server (optional)
-#
-if test "$enable_web_service" = "no" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: ignoring web service (optional)" >&5
-$as_echo "$as_me: ignoring web service (optional)" >&6;}
-	WANTS_WEBSERVICE="no"
-else
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: enabling web service" >&5
-$as_echo "$as_me: enabling web service" >&6;}
-	WANTS_WEBSERVICE="yes"
-fi
-
-
-
-#
 # Host specific stuff
 #
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking host OS" >&5
@@ -7165,8 +7127,8 @@ $as_echo "$as_me: CFLAGS_AR= $CFLAGS_AR" >&6;}
 $as_echo "$as_me: LDFLAGS= $LDFLAGS" >&6;}
 #AC_MSG_NOTICE([PROD_WARN= $PROD_WARN])
 #AC_MSG_NOTICE([EXTRA_WARN= $EXTRA_WARN])
-{ $as_echo "$as_me:${as_lineno-$LINENO}: output name =  $output_login, $output_char, $output_map" >&5
-$as_echo "$as_me: output name =  $output_login, $output_char, $output_map" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: output name =  $output_login, $output_char, $output_map, $output_web" >&5
+$as_echo "$as_me: output name =  $output_login, $output_char, $output_map, $output_web" >&6;}
 
 ###############################################################################
 cat >confcache <<\_ACEOF

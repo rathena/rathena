@@ -24,20 +24,13 @@ WEB_DIR_OBJ = $(WEB_OBJ:%=obj/%)
 WEB_H = $(shell ls *.hpp)
 
 
-WANTS_WEBSERVICE=@WANTS_WEBSERVICE@
-ifeq ($(WANTS_WEBSERVICE),yes)
+SERVER_DEPENDS=web-server
+
+HAVE_MYSQL=@HAVE_MYSQL@
+ifeq ($(HAVE_MYSQL),yes)
 	SERVER_DEPENDS=web-server
 else
-	SERVER_DEPENDS=skip
-endif
-
-ifeq ($(SERVER_DEPENDS),web-server)
-	HAVE_MYSQL=@HAVE_MYSQL@
-	ifeq ($(HAVE_MYSQL),yes)
-		SERVER_DEPENDS=web-server
-	else
-		SERVER_DEPENDS=needs_mysql
-	endif
+	SERVER_DEPENDS=needs_mysql
 endif
 
 ALL_DEPENDS=server
@@ -67,10 +60,6 @@ help:
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
-
-skip:
-	@echo "Skipping web-service build, not requested"
-	@exit 0
 
 # object directories
 

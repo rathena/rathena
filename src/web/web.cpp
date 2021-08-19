@@ -306,11 +306,12 @@ int web_sql_close(void)
  *  dealloc..., function called at exit of the login-serv
  */
 void do_final(void) {
-
 	ShowStatus("Terminating...\n");
+#ifdef WEB_SERVER_ENABLE
 	http_server->stop();
 	svr_thr.join();
 	web_sql_close();
+#endif
 	do_final_msg();
 	ShowStatus("Finished.\n");
 }
@@ -334,9 +335,10 @@ void do_shutdown(void) {
  *  current signal catch : SIGSEGV, SIGFPE
  */
 void do_abort(void) {
+#ifdef WEB_SERVER_ENABLE
 	http_server->stop();
 	svr_thr.join();
-
+#endif
 }
 
 /*======================================================
@@ -381,8 +383,12 @@ void logger(const Request & req, const Response & res) {
 
 
 int do_init(int argc, char** argv) {
-	INTER_CONF_NAME="conf/inter_athena.conf";
 	runflag = WEBSERVER_ST_STARTING;
+#ifndef WEB_SERVER_ENABLE
+	ShowStatus("The web-server is " CL_GREEN "idling" CL_RESET " (PACKETVER too old to use).\n\n");
+	return 0;
+#else
+	INTER_CONF_NAME="conf/inter_athena.conf";
 
 	safestrncpy(console_log_filepath, "./log/web-msg_log.log", sizeof(console_log_filepath));
 
@@ -432,4 +438,5 @@ int do_init(int argc, char** argv) {
 
 	ShowStatus("The web-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", web_config.web_port);
 	return 0;
+#endif
 }

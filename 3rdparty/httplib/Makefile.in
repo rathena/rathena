@@ -6,13 +6,7 @@ HTTPLIB_AR = obj/httplib.a
 
 CXXFLAG =-std=c++11
 
-WANTS_WEBSERVICE=@WANTS_WEBSERVICE@
-ifeq ($(WANTS_WEBSERVICE),yes)
-	HTTPLIB_DEPENDS=httplib
-else
-	HTTPLIB_DEPENDS=skip
-endif
-
+HTTPLIB_DEPENDS=httplib
 
 @SET_MAKE@
 
@@ -33,10 +27,6 @@ help:
 	@echo "'help'      - outputs this message"
 
 #####################################################################
-
-skip:
-	@echo "Skipping web-service build, not requested"
-	@exit 0
 
 obj:
 	@echo "	MKDIR	obj"
