@@ -7646,7 +7646,7 @@ std::vector<std::vector<uint8>>& JobDatabase::get_jobBonus(uint16 job_id) {
 }
 
 /// Returns the value of the specified stat.
-uint16 pc_getstat(struct map_session_data* sd, int type)
+int pc_getstat(map_session_data *sd, int type)
 {
 	nullpo_retr(-1, sd);
 
