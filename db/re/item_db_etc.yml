@@ -36041,7 +36041,7 @@ Body:
       NoAuction: true
   - Id: 25310
     AegisName: DF_Token_Of_Siegfried
-    Name: [Scroll] Token of Siegfried
+    Name: "[Scroll] Token of Siegfried"
     Type: Etc
     Weight: 10
     Trade:
