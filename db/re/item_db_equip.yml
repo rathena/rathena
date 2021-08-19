@@ -4453,8 +4453,8 @@ Body:
       bonus bIgnoreDefRace,RC_DemiHuman;
       bonus bIgnoreDefRace,RC_Player_Human;
       bonus bFlee,-(readparam(bAgi)+BaseLevel);
-      bonus bHPrecovRate,-100;
-      bonus bSPrecovRate,-100;
+      bonus bNoRegen,1;
+      bonus bNoRegen,2;
   - Id: 1266
     AegisName: Infiltrator_
     Name: Infiltrator
