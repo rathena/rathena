@@ -2274,7 +2274,7 @@ Body:
       /* upgradeui 9785; */
   - Id: 9894
     AegisName: aegis_9894
-    Name: [Scroll] Adrenaline Lv.5 Scroll
+    Name: "[Scroll] Adrenaline Lv.5 Scroll"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -2298,7 +2298,7 @@ Body:
       }
   - Id: 9895
     AegisName: aegis_9895
-    Name: [Scroll] Abrasive
+    Name: "[Scroll] Abrasive"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -2319,7 +2319,7 @@ Body:
       sc_start SC_INCCRI,300000,30;
   - Id: 9896
     AegisName: aegis_9896
-    Name: [Scroll] Power Booster
+    Name: "[Scroll] Power Booster"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -2339,7 +2339,7 @@ Body:
       bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus2 bAddClass,Class_All,1; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
   - Id: 9909
     AegisName: aegis_9909
-    Name: [Scroll] Ex Def Potion
+    Name: "[Scroll] Ex Def Potion"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35124,7 +35124,7 @@ Body:
       getgroupitem(IG_July_Lucky_Scroll);
   - Id: 14841
     AegisName: DF_Songpyun
-    Name: [Scroll] Korean Rice Cake
+    Name: "[Scroll] Korean Rice Cake"
     Type: Healing
     Buy: 2
     Weight: 10
@@ -35144,7 +35144,7 @@ Body:
       percentheal 10,0;
   - Id: 14843
     AegisName: DF_Insurance
-    Name: [Scroll] Life Insurance
+    Name: "[Scroll] Life Insurance"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35164,7 +35164,7 @@ Body:
       sc_start SC_LIFEINSURANCE,1800000,0;
   - Id: 14844
     AegisName: DF_Kafra_Card
-    Name: [Scroll] Kafra Card
+    Name: "[Scroll] Kafra Card"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35184,7 +35184,7 @@ Body:
       callfunc "F_CashStore";
   - Id: 14845
     AegisName: DF_Blessing_10_Scroll
-    Name: [Scroll] Blessing Lv.10 Scroll
+    Name: "[Scroll] Blessing Lv.10 Scroll"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35205,7 +35205,7 @@ Body:
       sc_start SC_BLESSING,240000,10;
   - Id: 14846
     AegisName: DF_Inc_Agi_10_Scroll
-    Name: [Scroll] Increase Agility Lv.10 Scroll
+    Name: "[Scroll] Increase Agility Lv.10 Scroll"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35229,7 +35229,7 @@ Body:
       }
   - Id: 14847
     AegisName: DF_Small_Life_Potion
-    Name: [Scroll] Small Life Potion
+    Name: "[Scroll] Small Life Potion"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35250,7 +35250,7 @@ Body:
       sc_start2 SC_S_LIFEPOTION,600000,-5,5;
   - Id: 14849
     AegisName: DF_Vit_Dish10
-    Name: [Scroll] Vit Dish10
+    Name: "[Scroll] Vit Dish10"
     Type: Usable
     Weight: 10
     NoUse:
@@ -35269,7 +35269,7 @@ Body:
       sc_start SC_VITFOOD,1800000,10;
   - Id: 14850
     AegisName: DF_Luk_Dish10
-    Name: [Scroll] Luk Dish10
+    Name: "[Scroll] Luk Dish10"
     Type: Usable
     Weight: 10
     NoUse:
@@ -35288,7 +35288,7 @@ Body:
       sc_start SC_LUKFOOD,1800000,10;
   - Id: 14851
     AegisName: DF_Dex_Dish10
-    Name: [Scroll] Dex Dish10
+    Name: "[Scroll] Dex Dish10"
     Type: Usable
     Weight: 10
     NoUse:
@@ -35307,7 +35307,7 @@ Body:
       sc_start SC_DEXFOOD,1800000,10;
   - Id: 14852
     AegisName: DF_Int_Dish10
-    Name: [Scroll] Int Dish10
+    Name: "[Scroll] Int Dish10"
     Type: Usable
     Weight: 10
     NoUse:
@@ -35326,7 +35326,7 @@ Body:
       sc_start SC_INTFOOD,1800000,10;
   - Id: 14853
     AegisName: DF_Agi_Dish10
-    Name: [Scroll] Agi Dish10
+    Name: "[Scroll] Agi Dish10"
     Type: Usable
     Weight: 10
     NoUse:
@@ -35345,7 +35345,7 @@ Body:
       sc_start SC_AGIFOOD,1800000,10;
   - Id: 14854
     AegisName: DF_Str_Dish10
-    Name: [Scroll] Str Dish10
+    Name: "[Scroll] Str Dish10"
     Type: Usable
     Weight: 10
     NoUse:
@@ -35364,7 +35364,7 @@ Body:
       sc_start SC_STRFOOD,1800000,10;
   - Id: 14861
     AegisName: DF_GhostringS
-    Name: [Scroll] Ghostring Scroll
+    Name: "[Scroll] Ghostring Scroll"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35384,7 +35384,7 @@ Body:
       sc_start2 SC_ITEMSCRIPT,60000,4047,EFST_ARMOR_PROPERTY;
   - Id: 14862
     AegisName: DF_Tyr's_Blessing
-    Name: [Scroll] Tyr's Blessing
+    Name: "[Scroll] Tyr's Blessing"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35407,7 +35407,7 @@ Body:
       sc_start SC_MATKPOTION,300000,20;
   - Id: 14866
     AegisName: DF_Holy_Armor_S
-    Name: [Scroll] Holy Armor Scroll
+    Name: "[Scroll] Holy Armor Scroll"
     Type: Usable
     Buy: 2
     Weight: 10
@@ -35428,7 +35428,7 @@ Body:
       sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Holy,1,0;
   - Id: 14869
     AegisName: DF_Red_Booster
-    Name: [Scroll] Red Booster
+    Name: "[Scroll] Red Booster"
     Type: Delayconsume
     Buy: 2
     Weight: 10
@@ -35450,7 +35450,7 @@ Body:
       showscript "Oh My GOODNESS!!! I FEEL AWESOMELY STRONG!!! WOWOW";
   - Id: 14886
     AegisName: UltimateCook_S
-    Name: [Scroll] Ultimate Cook
+    Name: "[Scroll] Ultimate Cook"
     Type: Usable
     Weight: 10
     NoUse:
@@ -48357,7 +48357,7 @@ Body:
       announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
   - Id: 23388
     AegisName: CookingBox10
-    Name: [Scroll] Food Box
+    Name: "[Scroll] Food Box"
     Type: Usable
     Weight: 10
     Flags:
