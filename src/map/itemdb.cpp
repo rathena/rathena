@@ -25,6 +25,7 @@
 using namespace rathena;
 
 
+ComboDatabase itemdb_combo;
 ItemGroupDatabase itemdb_group;
 
 struct s_roulette_db rd;
@@ -1977,17 +1978,6 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 	}
 
-	script_code *script = nullptr;
-
-	if (this->nodeExists(node, "Script")) {
-		std::string script_string;
-
-		if (!this->asString(node, "Script", script_string))
-			return 0;
-
-		script = parse_script(script_string.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
-	}
-
 	uint64 count = 0;
 	std::shared_ptr<s_item_combo> combo;
 
@@ -2029,16 +2019,27 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 
 			combo->nameid.insert(combo->nameid.begin(), itemsit.begin(), itemsit.end());
 			combo->id = ++this->combo_num;
-			combo->script = script;
-
-			this->put( combo->id, combo );
 		}
-		else {
-			if (this->nodeExists(node, "Script")) {
+
+		if (this->nodeExists(node, "Script")) {
+			std::string script_string;
+
+			if (!this->asString(node, "Script", script_string))
+				return 0;
+
+			if (exists) {
 				script_free_code(combo->script);
-				combo->script = script;
+				combo->script = nullptr;
+			}
+			combo->script = parse_script(script_string.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		} else {
+			if (!exists) {
+				combo->script = nullptr;
 			}
 		}
+	
+		if (!exists)
+			this->put( combo->id, combo );
 
 		count++;
 	}
@@ -2055,8 +2056,6 @@ void ComboDatabase::loadingFinished() {
 		}
 	}
 }
-
-ComboDatabase itemdb_combo;
 
 /**
  * Process Roulette items
