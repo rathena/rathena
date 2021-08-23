@@ -16939,9 +16939,6 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		case SO_EARTH_INSIGNIA:
 			req.itemid[0] = skill->require.itemid[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
 			req.amount[0] = skill->require.amount[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
-		case WZ_FIREPILLAR: // no gems required at level 1-5 [celest]
-			if (skill_id == WZ_FIREPILLAR && skill_lv < 6)
-				break;
 			level_dependent = true;
 
 		/* Normal skill requirements and gemstone checks */
@@ -22447,6 +22444,20 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 				if (!this->asInt32(it, "Amount", amount))
 					continue;
+
+				if (this->nodeExists(it, "Level")) {
+					uint16 cost_level;
+
+					if (!this->asUInt16(it, "Level", cost_level))
+						continue;
+
+					if (cost_level < 1 || cost_level > skill->max) {
+						this->invalidWarning(it["Level"], "Requires ItemCost Level %d is not within %s's level range of 1~%d.\n", cost_level, skill->name, skill->max);
+						return 0;
+					}
+
+					count = cost_level - 1;
+				}
 
 				skill->require.itemid[count] = item->nameid;
 				skill->require.amount[count] = amount;

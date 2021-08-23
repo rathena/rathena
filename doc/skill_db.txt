@@ -729,6 +729,29 @@ Sequence Map Form
 
 ItemCost: Item required to cast.
 
+Levels 1 - 5 have no item cost but levels 6 - 10 require a Blue Gemstone.
+  ItemCost:
+    - Item: Blue_Gemstone
+      Amount: 1
+	  Level: 6
+    - Item: Blue_Gemstone
+      Amount: 1
+	  Level: 7
+    - Item: Blue_Gemstone
+      Amount: 1
+	  Level: 8
+    - Item: Blue_Gemstone
+      Amount: 1
+	  Level: 9
+    - Item: Blue_Gemstone
+      Amount: 1
+	  Level: 10
+
+# All levels require a Blue Gemstone.
+  ItemCost:
+    - Item: Blue_Gemstone
+      Amount: 1
+
 ------------------
 
 Equipment: Equipped item required to cast.
