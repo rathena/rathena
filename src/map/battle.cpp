@@ -468,7 +468,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	if( target && target->type == BL_SKILL ) {
 		if( atk_elem == ELE_FIRE && battle_getcurrentskill(target) == GN_WALLOFTHORN ) {
 			struct skill_unit *su = (struct skill_unit*)target;
-			struct skill_unit_group *sg;
+			std::shared_ptr<s_skill_unit_group> sg;
 			struct block_list *src2;
 
 			if( !su || !su->alive || (sg = su->group) == NULL || !sg || sg->val3 == -1 ||
@@ -1133,7 +1133,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	// ATK_BLOCK Type
 	if ((sce = sc->data[SC_SAFETYWALL]) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
-		skill_unit_group *group = skill_id2group(sce->val3);
+		std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val3);
 
 		if (group) {
 			d->dmg_lv = ATK_BLOCK;
@@ -8032,11 +8032,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					if( BL_PC&battle_config.land_skill_limit &&
 						(maxcount = skill_get_maxcount(r_skill, r_lv)) > 0
 					  ) {
-						int v;
-						for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
-							if(sd->ud.skillunit[v]->skill_id == r_skill)
-								maxcount--;
-						}
+						unit_skillunit_maxcount(sd->ud, r_skill, maxcount);
+
 						if( maxcount == 0 )
 							type = -1;
 					}
