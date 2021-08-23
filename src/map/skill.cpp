@@ -2274,15 +2274,14 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		return 0;
 
 	for (auto &it : sd->autospell3) {
-		int skill, skill_lv, type;
-
 		if (it.flag != skill_id)
 			continue;
 
 		if (it.lock)
 			continue;  // autospell already being executed
 
-		skill = it.id;
+		int skill = it.id;
+
 		sd->state.autocast = 1; //set this to bypass sd->canskill_tick check
 
 		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) ) {
@@ -2297,14 +2296,19 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		if( rnd()%1000 >= it.rate )
 			continue;
 
-		skill_lv = it.lv ? it.lv : 1;
-		if( skill < 0 ) {
+		if( skill < 0 ) { // Negative value used for selecting target as self
 			tbl = &sd->bl;
 			skill *= -1;
-			skill_lv = 1 + rnd()%(-skill_lv); //random skill_lv
 		}
 		else
 			tbl = bl;
+
+		int skill_lv = it.lv ? it.lv : 1;
+
+		if (skill_lv < 0) // Negative value used as random level casted
+			skill_lv = 1 + rnd() % (-skill_lv); //random skill_lv
+
+		int type;
 
 		if ((type = skill_get_casttype(skill)) == CAST_GROUND) {
 			if (!skill_pos_maxcount_check(&sd->bl, tbl->x, tbl->y, skill_id, skill_lv, BL_PC, false))

@@ -2527,7 +2527,7 @@ int pc_disguise(struct map_session_data *sd, int class_)
  * @param flag: Battle flag
  * @param card_id: Used to prevent card stacking
  */
-static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short lv, short rate, short flag, unsigned short card_id)
+static void pc_bonus_autospell(std::vector<s_autospell> &spell, int id, int lv, short rate, short flag, t_itemid card_id)
 {
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
@@ -2580,7 +2580,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
  * @param rate: Success chance
  * @param card_id: Used to prevent card stacking
  */
-static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
+static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, int src_skill, int id, int lv, short rate, t_itemid card_id)
 {
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
