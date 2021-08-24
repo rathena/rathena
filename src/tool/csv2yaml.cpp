@@ -2241,6 +2241,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 							cost_level += 5; // Levels 1-5 have no cost
 						case NC_SHAPESHIFT:
 						case NC_REPAIR:
+							if (skill_id == NC_SHAPESHIFT || skill_id == NC_REPAIR && cost_level >= 5)
+								break; // Don't add level 5 label as it exceeds the max level of these skills
 						case GN_FIRE_EXPANSION:
 						case SO_SUMMON_AGNI:
 						case SO_SUMMON_AQUA:

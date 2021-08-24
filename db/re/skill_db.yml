@@ -21501,7 +21501,6 @@ Body:
           Level: 4
         - Item: Magic_Gear_Fuel
           Amount: 2
-          Level: 5
       Equipment:
         Shape_Shifter: true
   - Id: 2269

@@ -16929,6 +16929,7 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		case NC_REPAIR: // NOTE: Repair_Kit must be last in the ItemCost list depending on the skill's max level
 			req.itemid[1] = skill->require.itemid[skill->max];
 			req.amount[1] = skill->require.amount[skill->max];
+			// Fall through
 
 		/* Normal skill requirements and gemstone checks */
 		default:
@@ -16988,12 +16989,8 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 					}
 				}
 				// Check requirement for Magic Gear Fuel
-				if (req.itemid[i] == ITEMID_MAGIC_GEAR_FUEL) {
-					if (sd->special_state.no_mado_fuel)
-					{
-						req.itemid[i] = req.amount[i] = 0;
-					}
-				}
+				if (req.itemid[i] == ITEMID_MAGIC_GEAR_FUEL && sd->special_state.no_mado_fuel)
+					req.itemid[i] = req.amount[i] = 0;
 			}
 			break;
 	}
