@@ -6704,7 +6704,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ITEMBOOST,1800000,100;
+      sc_start SC_ITEMBOOST,1800000,200;
   - Id: 12265
     AegisName: Comp_Insurance
     Name: Life Insurrance
