@@ -2234,14 +2234,13 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 					body << YAML::Key << "Item" << YAML::Value << *item_name;
 					body << YAML::Key << "Amount" << YAML::Value << it_req->second.amount[i];
 
-					uint16 cost_level = i;
-
 					switch (skill_id) { // List of level dependent item costs
 						case WZ_FIREPILLAR:
-							cost_level += 5; // Levels 1-5 have no cost
+							if (i < 6)
+								break; // Levels 1-5 have no cost
 						case NC_SHAPESHIFT:
 						case NC_REPAIR:
-							if (skill_id == NC_SHAPESHIFT || skill_id == NC_REPAIR && cost_level >= 5)
+							if (skill_id == NC_SHAPESHIFT || skill_id == NC_REPAIR && i >= 5)
 								break; // Don't add level 5 label as it exceeds the max level of these skills
 						case GN_FIRE_EXPANSION:
 						case SO_SUMMON_AGNI:
@@ -2253,7 +2252,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 						case SO_WIND_INSIGNIA:
 						case SO_EARTH_INSIGNIA:
 						case KO_MAKIBISHI:
-							body << YAML::Key << "Level" << YAML::Value << cost_level;
+							body << YAML::Key << "Level" << YAML::Value << i;
 					}
 
 					body << YAML::EndMap;
