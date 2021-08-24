@@ -2499,7 +2499,6 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 		if (src->type == BL_PC) { // Player specific drop rate adjustments
 			struct map_session_data *sd = map_id2sd(src->id);
 			int drop_rate_bonus = 100;
-			int drop_rate_base = drop_rate;
 
 			if (battle_config.pk_mode && (int)(mob->lv - sd->status.base_level) >= 20) // pk_mode increase drops if 20 level difference [Valaris]
 				drop_rate = (int)(drop_rate * 1.25);
@@ -2517,7 +2516,7 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 
 			if (pc_isvip(sd)) { // Increase item drop rate for VIP.
 				// Unsure how the VIP and other bonuses should stack, this is additive.
-				drop_rate_bonus += (int)(0.5 + drop_rate_base * battle_config.vip_drop_increase / 100.);
+				drop_rate_bonus += (int)(0.5 + drop_rate * battle_config.vip_drop_increase / 100.);
 				cap = battle_config.drop_rate_cap_vip;
 			} else
 				cap = battle_config.drop_rate_cap;
@@ -2525,7 +2524,7 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 			drop_rate = drop_rate_bonus;
 
 			// Now rig the drop rate to never be over 90% unless it is originally >90%.
-			if ((drop_rate_base < cap) && (drop_rate_bonus > cap)) {
+			if ((base_rate < cap) && (drop_rate_bonus > cap)) {
 				drop_rate = cap;
 			}
 		}
