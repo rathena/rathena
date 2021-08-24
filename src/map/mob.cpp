@@ -2497,7 +2497,7 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 			drop_rate += (int)(0.5 + drop_rate * status_get_luk(src) * battle_config.drops_by_luk2 / 10000.);
 
 		if (src->type == BL_PC) { // Player specific drop rate adjustments
-			struct map_session_data *sd = map_id2sd(src->id);
+			struct map_session_data *sd = (struct map_session_data*)src;
 			int drop_rate_bonus = 100;
 
 			// In PK mode players get an additional drop chance bonus of 25% if there is a 20 level difference
@@ -2512,33 +2512,32 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 			if (sd->sc.data[SC_ITEMBOOST])
 				drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
 
-			drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
-
 			int cap;
 
 			if (pc_isvip(sd)) { // Increase item drop rate for VIP.
 				// Unsure how the VIP and other bonuses should stack, this is additive.
-				drop_rate_bonus += (int)(0.5 + drop_rate * battle_config.vip_drop_increase / 100.);
+				drop_rate_bonus += battle_config.vip_drop_increase;
 				cap = battle_config.drop_rate_cap_vip;
 			} else
 				cap = battle_config.drop_rate_cap;
 
-			drop_rate = drop_rate_bonus;
+			drop_rate = (int)( 0.5 + drop_rate * drop_rate_bonus / 100. );
 
-			// Now rig the drop rate to never be over 90% unless it is originally >90%.
-			if ((base_rate < cap) && (drop_rate_bonus > cap)) {
+			// Now limit the drop rate to never be exceed the cap (default: 90%), unless it is originally above it already.
+			if( drop_rate > cap && base_rate < cap ){
 				drop_rate = cap;
 			}
 		}
 	}
-
-	drop_rate = min(drop_rate, 10000); // Cap it to 100%
 
 #ifdef RENEWAL_DROP
 	if (drop_modifier != 100) {
 		drop_rate = apply_rate(drop_rate, drop_modifier);
 	}
 #endif
+
+	// Cap it to 100%
+	drop_rate = min( drop_rate, 10000 );
 
 	// If the monster's drop rate can become 0
 	if( battle_config.drop_rate0item ){
