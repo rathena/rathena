@@ -16814,7 +16814,6 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 	struct status_data *status;
 	struct status_change *sc;
 	int i,hp_rate,sp_rate, sp_skill_rate_bonus = 100;
-	bool level_dependent = false;
 
 	memset(&req,0,sizeof(req));
 
@@ -16921,25 +16920,15 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 	req.status = skill->require.status;
 	req.eqItem = skill->require.eqItem;
 
+	// Level dependence flag is determined based on the ItemCost Level label
+	bool level_dependent = skill->require.itemid_level_dependent;
+
 	switch( skill_id ) {
 		/* Skill level-dependent checks */
 		case NC_SHAPESHIFT: // NOTE: Magic_Gear_Fuel must be last in the ItemCost list depending on the skill's max level
 		case NC_REPAIR: // NOTE: Repair_Kit must be last in the ItemCost list depending on the skill's max level
 			req.itemid[1] = skill->require.itemid[skill->max];
 			req.amount[1] = skill->require.amount[skill->max];
-		case KO_MAKIBISHI:
-		case GN_FIRE_EXPANSION:
-		case SO_SUMMON_AGNI:
-		case SO_SUMMON_AQUA:
-		case SO_SUMMON_VENTUS:
-		case SO_SUMMON_TERA:
-		case SO_WATER_INSIGNIA:
-		case SO_FIRE_INSIGNIA:
-		case SO_WIND_INSIGNIA:
-		case SO_EARTH_INSIGNIA:
-			req.itemid[0] = skill->require.itemid[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
-			req.amount[0] = skill->require.amount[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
-			level_dependent = true;
 
 		/* Normal skill requirements and gemstone checks */
 		default:
@@ -22457,6 +22446,9 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 					}
 
 					count = cost_level - 1;
+
+					if (!skill->require.itemid_level_dependent)
+						skill->require.itemid_level_dependent = true;
 				}
 
 				skill->require.itemid[count] = item->nameid;
