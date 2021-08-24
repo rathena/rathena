@@ -1361,6 +1361,11 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl,SC_STUN,(2*skill_lv+10),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
+	case AS_GRIMTOOTH:
+		if (dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE))
+			sc_start(src,bl,SC_QUAGMIRE,100,0,skill_get_time2(skill_id,skill_lv));
+		break;
+
 	case WZ_FIREPILLAR:
 		unit_set_walkdelay(bl, tick, skill_get_time2(skill_id, skill_lv), 1);
 		break;
