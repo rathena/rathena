@@ -2500,8 +2500,10 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 			struct map_session_data *sd = map_id2sd(src->id);
 			int drop_rate_bonus = 100;
 
-			if (battle_config.pk_mode && (int)(mob->lv - sd->status.base_level) >= 20) // pk_mode increase drops if 20 level difference [Valaris]
-				drop_rate = (int)(drop_rate * 1.25);
+			// In PK mode players get an additional drop chance bonus of 25% if there is a 20 level difference
+			if( battle_config.pk_mode && (int)(mob->lv - sd->status.base_level) >= 20 ){
+				drop_rate_bonus += 25;
+			}
 
 			// Add class and race specific bonuses
 			drop_rate_bonus += sd->indexed_bonus.dropaddclass[mob->status.class_] + sd->indexed_bonus.dropaddclass[CLASS_ALL];
@@ -2535,10 +2537,16 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 #ifdef RENEWAL_DROP
 	if (drop_modifier != 100) {
 		drop_rate = apply_rate(drop_rate, drop_modifier);
-		if ((drop_rate < 1) && (!battle_config.drop_rate0item))
-			drop_rate = 1;
 	}
 #endif
+
+	// If the monster's drop rate can become 0
+	if( battle_config.drop_rate0item ){
+		drop_rate = max( drop_rate, 0 );
+	}else{
+		// If not - cap to 0.01% drop rate - as on official servers
+		drop_rate = max( drop_rate, 1 );
+	}
 
 	return drop_rate;
 }
