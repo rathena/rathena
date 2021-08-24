@@ -2531,9 +2531,7 @@ int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int b
 	}
 
 #ifdef RENEWAL_DROP
-	if (drop_modifier != 100) {
-		drop_rate = apply_rate(drop_rate, drop_modifier);
-	}
+	drop_rate = apply_rate( drop_rate, drop_modifier );
 #endif
 
 	// Cap it to 100%
@@ -2829,15 +2827,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				continue;
 			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
 				continue;
-			drop_rate = md->db->dropitem[i].rate;
-
-			if (drop_rate <= 0) {
-				if (battle_config.drop_rate0item)
-					continue;
-				drop_rate = 1;
-			}
 			
-			drop_rate = mob_getdroprate(src, md->db, drop_rate, drop_modifier);
+			drop_rate = mob_getdroprate(src, md->db, md->db->dropitem[i].rate, drop_modifier);
 
 			// attempt to drop the item
 			if (rnd() % 10000 >= drop_rate)
