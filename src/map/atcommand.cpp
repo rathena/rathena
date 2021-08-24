@@ -7473,13 +7473,10 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, msg_txt(sd,1245)); //  Drops:
 		strcpy(atcmd_output, " ");
 		unsigned int j = 0;
+		int drop_modifier = 100;
 #ifdef RENEWAL_DROP
-		int drop_modifier;
-
 		if( battle_config.atcommand_mobinfo_type ){
 			drop_modifier = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
-		}else{
-			drop_modifier = 100;
 		}
 #endif
 
