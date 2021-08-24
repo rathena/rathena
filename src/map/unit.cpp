@@ -2911,6 +2911,19 @@ void unit_dataset(struct block_list *bl)
 }
 
 /**
+ * Returns the remaining max amount of skill units per object for a specific skill
+ * @param ud: Unit data
+ * @param skill_id: Skill to search for
+ * @param maxcount: Maximum amount of placeable units
+ */
+void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount) {
+	for (const auto su : ud.skillunits) {
+		if (su->skill_id == skill_id && --maxcount == 0 )
+			break;
+	}
+}
+
+/**
  * Gets the number of units attacking another unit
  * @param bl: Object to check amount of targets
  * @return number of targets or 0
