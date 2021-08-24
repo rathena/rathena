@@ -4,7 +4,9 @@
 #ifndef INT_GUILD_HPP
 #define INT_GUILD_HPP
 
+#include <string>
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 
 enum e_guild_action : uint32 {
 	GS_BASIC = 0x0001,
@@ -25,8 +27,25 @@ enum e_guild_action : uint32 {
 struct guild;
 struct guild_castle;
 
+struct s_guild_exp_db {
+	uint16 level;
+	t_exp exp;
+};
+
+class GuildExpDatabase : public TypesafeYamlDatabase<uint16, s_guild_exp_db> {
+public:
+	GuildExpDatabase() : TypesafeYamlDatabase("GUILD_EXP_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	t_exp get_nextexp(uint16 level);
+	void loadingFinished();
+};
+
 int inter_guild_parse_frommap(int fd);
-int inter_guild_sql_init(void);
+void inter_guild_sql_init(void);
 void inter_guild_sql_final(void);
 int inter_guild_leave(int guild_id,uint32 account_id,uint32 char_id);
 int mapif_parse_BreakGuild(int fd,int guild_id);

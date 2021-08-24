@@ -109,9 +109,9 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 		clif_dispchat(cd,0);
 
 		if (status_isdead(&sd->bl))
-			achievement_update_objective(sd, AG_CHAT_DYING, 1, 1);
+			achievement_update_objective(sd, AG_CHATTING_DYING, 1, 1);
 		else
-			achievement_update_objective(sd, AG_CHAT_CREATE, 1, 1);
+			achievement_update_objective(sd, AG_CHATTING_CREATE, 1, 1);
 	} else
 		clif_createchat(sd,1);
 
@@ -173,7 +173,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 	clif_dispchat(cd, 0); //Reported number of changes to the people around
 
 	if (cd->owner->type == BL_PC)
-		achievement_update_objective(map_id2sd(cd->owner->id), AG_CHAT_COUNT, 1, cd->users);
+		achievement_update_objective(map_id2sd(cd->owner->id), AG_CHATTING_COUNT, 1, cd->users);
 
 	chat_triggerevent(cd); //Event
 
@@ -217,20 +217,16 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 		cd->usersd[i] = cd->usersd[i+1];
 
 	if( cd->users == 0 && cd->owner->type == BL_PC ) { // Delete empty chatroom
-		struct skill_unit* unit;
-		struct skill_unit_group* group;
-
 		clif_clearchat(cd, 0);
 		db_destroy(cd->kick_list);
 		map_deliddb(&cd->bl);
 		map_delblock(&cd->bl);
 		map_freeblock(&cd->bl);
 
-		unit = map_find_skill_unit_oncell(&sd->bl, sd->bl.x, sd->bl.y, AL_WARP, NULL, 0);
-		group = (unit != NULL) ? unit->group : NULL;
+		skill_unit *unit = map_find_skill_unit_oncell(&sd->bl, sd->bl.x, sd->bl.y, AL_WARP, nullptr, 0);
 
-		if (group != NULL)
-			ext_skill_unit_onplace(unit, &sd->bl, group->tick);
+		if (unit != nullptr && unit->group != nullptr)
+			ext_skill_unit_onplace(unit, &sd->bl, unit->group->tick);
 
 		return 1;
 	}

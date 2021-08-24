@@ -95,7 +95,7 @@ struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
  * @param pet_name
  * @return 
  */
-int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
+int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip,short intimate,short hungry,char rename_flag,char incubate,const char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1152,16 +1152,22 @@ int intif_guild_emblem_version(int guild_id, int emblem_id)
  * @param num Number of castles, size of castle_ids array.
  * @param castle_ids Pointer to array of castle IDs.
  */
-int intif_guild_castle_dataload(int num, int *castle_ids)
-{
-	if (CheckForCharServer())
-		return 0;
-	WFIFOHEAD(inter_fd, 4 + num * sizeof(int));
+bool intif_guild_castle_dataload( const std::vector<int32>& castle_ids ){
+	if( CheckForCharServer() ){
+		return false;
+	}
+
+	uint16 size = (uint16)( 4 + castle_ids.size() * sizeof( int32 ) );
+
+	WFIFOHEAD( inter_fd, size );
 	WFIFOW(inter_fd, 0) = 0x3040;
-	WFIFOW(inter_fd, 2) = 4 + num * sizeof(int);
-	memcpy(WFIFOP(inter_fd, 4), castle_ids, num * sizeof(int));
-	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
-	return 1;
+	WFIFOW( inter_fd, 2 ) = size;
+	for( size_t i = 0; i < castle_ids.size(); i++ ){
+		WFIFOL( inter_fd, 4 + i * sizeof( int32 ) ) = castle_ids[i];
+	}
+	WFIFOSET( inter_fd, size );
+
+	return true;
 }
 
 /**
@@ -3489,6 +3495,10 @@ static bool intif_parse_StorageReceived(int fd)
 #endif
 			//Set here because we need the inventory data for weapon sprite parsing.
 			status_set_viewdata(&sd->bl, sd->status.class_);
+			// Set headgear data here, otherwise this is done in loadEndAck
+			if( sd->state.autotrade ){
+				pc_set_costume_view(sd);
+			}
 			pc_load_combo(sd);
 			status_calc_pc(sd, (enum e_status_calc_opt)(SCO_FIRST|SCO_FORCE));
 			status_calc_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS)); // Refresh weight data
@@ -3536,9 +3546,28 @@ static void intif_parse_StorageSaved(int fd)
 				//ShowInfo("Inventory has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				break;
 			case TABLE_STORAGE: //storage
-				//ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
-				if (RFIFOB(fd, 8))
-					storage_premiumStorage_saved(map_id2sd(RFIFOL(fd, 2)));
+				{
+					struct map_session_data *sd = map_id2sd( RFIFOL( fd, 2 ) );
+					struct s_storage* stor = nullptr;
+
+					if( RFIFOB( fd, 8 ) ){
+						// ShowInfo("Storage %d has been saved (AID: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 8) );
+
+						if( sd ){
+							stor = &sd->premiumStorage;
+						}
+					}else{
+						// ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
+
+						if( sd ){
+							stor = &sd->storage;
+						}
+					}
+
+					if( stor ){
+						stor->dirty = false;
+					}
+				}
 				break;
 			case TABLE_CART: // cart
 				//ShowInfo("Cart has been saved (AID: %d).\n", RFIFOL(fd, 2));
@@ -3562,21 +3591,24 @@ static void intif_parse_StorageSaved(int fd)
  * Receive storage information
  **/
 void intif_parse_StorageInfo_recv(int fd) {
-	int i, size = sizeof(struct s_storage_table), count = (RFIFOW(fd, 2) - 4) / size;
+	int size = sizeof(struct s_storage_table), count = (RFIFOW(fd, 2) - 4) / size;
 
-	storage_count = 0;
-	if (storage_db)
-		aFree(storage_db);
-	storage_db = NULL;
+	storage_db.clear();
 
-	for (i = 0; i < count; i++) {
-		RECREATE(storage_db, struct s_storage_table, storage_count+1);
-		memcpy(&storage_db[storage_count], RFIFOP(fd, 4 + size * i), size);
-		storage_count++;
+	for( int i = 0; i < count; i++ ){
+		struct s_storage_table* ptr = (struct s_storage_table*)RFIFOP( fd, 4 + size * i );
+		std::shared_ptr<struct s_storage_table> storage = std::make_shared<struct s_storage_table>();
+
+		safestrncpy( storage->name, ptr->name, sizeof( storage->name ) );
+		safestrncpy( storage->table, ptr->table, sizeof( storage->table ) );
+		storage->max_num = ptr->max_num;
+		storage->id = ptr->id;
+
+		storage_db[storage->id] = storage;
 	}
 
 	if (battle_config.etc_log)
-		ShowInfo("Received '" CL_WHITE "%d" CL_RESET "' storage info from inter-server.\n", storage_count);
+		ShowInfo("Received '" CL_WHITE PRIdPTR CL_RESET "' storage info from inter-server.\n", storage_db.size());
 }
 
 /**
