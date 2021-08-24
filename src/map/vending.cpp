@@ -465,9 +465,26 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			}
 		}
 
-		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine, it->enchantgrade ) ) { // result set full
+		// Check if the result set is full
+		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
 			return false;
 		}
+
+		std::shared_ptr<s_search_store_info_item> ssitem = std::make_shared<s_search_store_info_item>();
+
+		ssitem->store_id = sd->vender_id;
+		ssitem->account_id = sd->status.account_id;
+		safestrncpy( ssitem->store_name, sd->message, sizeof( ssitem->store_name ) );
+		ssitem->nameid = it->nameid;
+		ssitem->amount = sd->vending[i].amount;
+		ssitem->price = sd->vending[i].value;
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			ssitem->card[j] = it->card[j];
+		}
+		ssitem->refine = it->refine;
+		ssitem->enchantgrade = it->enchantgrade;
+
+		s->search_sd->searchstore.items.push_back( ssitem );
 	}
 
 	return true;
