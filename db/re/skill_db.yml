@@ -4990,6 +4990,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Duration2: 1000
     Requires:
       SpCost: 3
       Weapon:
