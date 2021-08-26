@@ -17328,6 +17328,8 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 	if (time < 0)
 		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
 
+	status_change* sc = status_get_sc(bl);
+
 	// Delay reductions
 	switch (skill_id) {	//Monk combo skills have their delay reduced by agi/dex.
 		case MO_TRIPLEATTACK:
@@ -17368,8 +17370,6 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 			}
 	}
 
-	status_change *sc = status_get_sc(bl);
-
 	if (sc && sc->count) {
 		if (sc->data[SC_SPIRIT]) {
 			switch (skill_id) {
@@ -17397,7 +17397,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 	}
 
 	if (!(delaynodex&4) && bl->type == BL_PC) {
-		map_session_data *sd = BL_CAST(BL_PC, bl);
+		map_session_data* sd = (map_session_data*)bl;
 
 		if (sd->delayrate != 100) // bonus bDelayRate
 			time += time * sd->delayrate / 100;
