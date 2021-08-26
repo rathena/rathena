@@ -17099,7 +17099,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 				reduce_cast_rate += sc->data[SC_POEMBRAGI]->val2;
 			// Foresight halves the cast time, it does not stack additively
 			if (sc->data[SC_MEMORIZE]) {
-				if ((sd && pc_checkskill(sd, skill_id) > 0) || !sd) { // Foresight only decreases cast times from learned skills, not skills granted by items
+				if (!sd || pc_checkskill(sd, skill_id) > 0) { // Foresight only decreases cast times from learned skills, not skills granted by items
 					if(!(flag&2))
 						time -= time * 50 / 100;
 					// Foresight counter gets reduced even if the skill is not affected by it
@@ -17251,7 +17251,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 #endif
 		}
 		if (sc->data[SC_MEMORIZE]) {
-			if ((sd && pc_checkskill(sd, skill_id) > 0) || !sd) { // Foresight only decreases cast times from learned skills, not skills granted by items
+			if (!sd || pc_checkskill(sd, skill_id) > 0) { // Foresight only decreases cast times from learned skills, not skills granted by items
 				reduce_cast_rate += 50;
 				if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
 					status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
@@ -17324,7 +17324,6 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 
 	int delaynodex = skill_get_delaynodex(skill_id);
 	int time = skill_get_delay(skill_id, skill_lv);
-	status_change *sc = status_get_sc(bl);
 
 	if (time < 0)
 		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
@@ -17369,6 +17368,8 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 			}
 	}
 
+	status_change *sc = status_get_sc(bl);
+
 	if (sc && sc->count) {
 		if (sc->data[SC_SPIRIT]) {
 			switch (skill_id) {
@@ -17395,18 +17396,16 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		}
 	}
 
-	if (!(delaynodex&4)) {
+	if (!(delaynodex&4) && bl->type == BL_PC) {
 		map_session_data *sd = BL_CAST(BL_PC, bl);
 
-		if (sd) {
-			if (sd->delayrate != 100) // bonus bDelayRate
-				time += time * sd->delayrate / 100;
+		if (sd->delayrate != 100) // bonus bDelayRate
+			time += time * sd->delayrate / 100;
 
-			for (auto &it : sd->skilldelay) { // bonus2 bSkillDelay
-				if (it.id == skill_id) {
-					time += it.val;
-					break;
-				}
+		for (auto &it : sd->skilldelay) { // bonus2 bSkillDelay
+			if (it.id == skill_id) {
+				time += it.val;
+				break;
 			}
 		}
 	}
