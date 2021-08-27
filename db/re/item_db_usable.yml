@@ -6029,7 +6029,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ITEMBOOST,1800000,200;
+      sc_start SC_ITEMBOOST,1800000,100;
   - Id: 12211
     AegisName: Kafra_Card
     Name: Kafra Card
@@ -8696,7 +8696,7 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_ITEMBOOST,900000,300;
+      sc_start SC_ITEMBOOST,900000,200;
   - Id: 12413
     AegisName: PCBang_Coupon_Box2
     Name: PC Cafe Coupon Box
@@ -45103,7 +45103,7 @@ Body:
       NoAuction: true
     Script: |
       sc_start SC_EXPBOOST,8640000,50;
-      sc_start SC_ITEMBOOST,8640000,200;
+      sc_start SC_ITEMBOOST,8640000,100;
   - Id: 22617
     AegisName: Clear_Box_S
     Name: Clear Box S

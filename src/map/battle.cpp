@@ -8886,6 +8886,8 @@ static const struct _battle_data {
 	{ "mob_max_skilllvl",                   &battle_config.mob_max_skilllvl,                MAX_MOBSKILL_LEVEL, 1, MAX_MOBSKILL_LEVEL, },
 	{ "retaliate_to_master",                &battle_config.retaliate_to_master,             1,      0,      1,              },
 	{ "rare_drop_announce",                 &battle_config.rare_drop_announce,              0,      0,      10000,          },
+	{ "drop_rate_cap",                      &battle_config.drop_rate_cap,                   9000,   0,      10000,          },
+	{ "drop_rate_cap_vip",                  &battle_config.drop_rate_cap_vip,               9000,   0,      10000,          },
 	{ "duel_allow_pvp",                     &battle_config.duel_allow_pvp,                  0,      0,      1,              },
 	{ "duel_allow_gvg",                     &battle_config.duel_allow_gvg,                  0,      0,      1,              },
 	{ "duel_allow_teleport",                &battle_config.duel_allow_teleport,             0,      0,      1,              },
