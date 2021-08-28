@@ -449,5 +449,6 @@ static bool itemdb_read_group(char* fields[], int columns, int current);
 static bool itemdb_read_group_yaml(void);
 static bool mob_readdb_itemratio(char* fields[], int columns, int current);
 static bool status_readdb_attrfix(const char* file);
+static bool read_constdb(char* fields[], int columns, int current);
 
 #endif /* CSV2YAML_HPP */

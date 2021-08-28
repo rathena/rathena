@@ -3651,7 +3651,7 @@ in percent.
     if (rand(100) > getscrate(Eff_Blind, 50)) goto BlindHimNow;
 
 You can see the full list of available effect types you can possibly inflict in
-'db/const.txt' under 'Eff_'.
+'src/map/script_constants.hpp' under 'Eff_'.
 
 ---------------------------------------
 
@@ -10381,7 +10381,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 
-ID - ID of random option. See db/const.txt for constants.
+ID - ID of random option. See db/item_randomopt_db.yml for constants.
 Value - Value of random option
 Param - Parameter of random option
 

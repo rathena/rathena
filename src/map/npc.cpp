@@ -2674,7 +2674,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
  */
 int npc_parseview(const char* w4, const char* start, const char* buffer, const char* filepath) {
 	int i = 0;
-	char viewid[1024];	// Max size of name from const.txt, see read_constdb.
+	char viewid[1024];	// Max size of name from const.yml, see ConstantDatabase::parseBodyNode.
 
 	// Extract view ID / constant
 	while (w4[i] != '\0') {
