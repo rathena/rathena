@@ -379,11 +379,11 @@ OnTouch:
 	donpcevent "Bush"+.@i+"Timer::OnEnable";
 	close;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	donpcevent "Bush"+charat(strnpcinfo(2),9)+"Timer::OnDisable";
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -430,14 +430,14 @@ OnTouch:
 -	script	#mora_fairy	-1,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	stopnpctimer;
 	end;
 OnTimer5000:
@@ -485,15 +485,15 @@ spl_fild02,186,260,6	duplicate(#mora_fairy)	Fairy#cmd63	439
 -	script	#mora_bush_timer	-1,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
 	stopnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnTimer1000:
 	donpcevent "Bush#ep14_1_bs"+charat(strnpcinfo(0),4)+"::OnDisable";
@@ -4171,11 +4171,11 @@ OnFullon:
 	}
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	end;
 OnReset:

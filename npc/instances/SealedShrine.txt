@@ -891,7 +891,7 @@ OnInstanceInit:
 			specialeffect2 EF_HOLYHIT;
 			getitem 6001,1; //Essence_Of_Fire
 			mes "The symbol of inheritor shines. Then a small crystal falls into my hand from the torch.";
-			disablenpc instance_npcname(strnpcinfo(0));
+			disablenpc();
 			close;
 		}
 		else if (('ins_baphomet == 3) && (countitem(6001) > 10)) {
@@ -914,7 +914,7 @@ OnInstanceInit:
 	}
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 1@cata,267,210,0	duplicate(Bobbing Torch#SS)	Bobbing Torch#1	844
@@ -1093,7 +1093,7 @@ OnTouch_:
 	}
 	if (.@seal_check == 2) erasequest 3041;
 	specialeffect EF_LEXDIVINA;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	set .@map$, instance_mapname("2@cata");
 	if (strnpcinfo(2) == "0") areamobuseskill .@map$,79,81,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	else if (strnpcinfo(2) == "2") areamobuseskill .@map$,123,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
@@ -1110,7 +1110,7 @@ OnTouch_:
 	close;
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 2@cata,79,81,0	duplicate(Magical Seal#SS)	Magical Seal#0	844

@@ -11647,40 +11647,38 @@ BUILDIN_FUNC(getareadropitem)
  *------------------------------------------*/
 BUILDIN_FUNC(enablenpc)
 {
-	const char *str = script_getstr(st,2);
-	if (npc_enable(str,1))
-		return SCRIPT_CMD_SUCCESS;
+	npc_data* nd = nullptr;
+	int flag = 0;
+	int char_id = script_hasdata(st, 3) ? script_getnum(st, 3) : 0;
+	const char* command = script_getfuncname(st);
 
-	return SCRIPT_CMD_FAILURE;
-}
+	if (script_hasdata(st, 2))
+		nd = npc_name2id(script_getstr(st,2));
+	else
+		nd = map_id2nd(st->oid);
 
-/*==========================================
- *------------------------------------------*/
-BUILDIN_FUNC(disablenpc)
-{
-	const char *str = script_getstr(st,2);
-	if (npc_enable(str,0))
-		return SCRIPT_CMD_SUCCESS;
+	if (!strcmp(command,"enablenpc"))
+		flag = 1;
+	else if (!strcmp(command,"disablenpc"))
+		flag = 0;
+	else if (!strcmp(command,"hideoffnpc"))
+		flag = 2;
+	else if (!strcmp(command,"hideonnpc"))
+		flag = 4;
+	else if (!strcmp(command,"cloakoffnpc"))
+		flag = 8;
+	else if (!strcmp(command,"cloakonnpc"))
+		flag = 16;
 
-	return SCRIPT_CMD_FAILURE;
-}
+	if (!nd) {
+		if (script_hasdata(st, 2))
+			ShowError("buildin_%s: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&11) ? "show" : "hide", command, script_getstr(st,2), flag);
+		else
+			ShowError("buildin_%s: Attempted to %s a non-existing NPC (flag=%d).\n", (flag&11) ? "show" : "hide", command, flag);
+		return SCRIPT_CMD_FAILURE;
+	}
 
-/*==========================================
- *------------------------------------------*/
-BUILDIN_FUNC(hideoffnpc)
-{
-	const char *str = script_getstr(st,2);
-	if (npc_enable(str,2))
-		return SCRIPT_CMD_SUCCESS;
-
-	return SCRIPT_CMD_FAILURE;
-}
-/*==========================================
- *------------------------------------------*/
-BUILDIN_FUNC(hideonnpc)
-{
-	const char *str = script_getstr(st,2);
-	if (npc_enable(str,4))
+	if (npc_enable_target(nd, char_id, flag))
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -25038,28 +25036,20 @@ BUILDIN_FUNC(convertpcinfo) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(cloakoffnpc)
-{
-	if (npc_enable_target(script_getstr(st, 2), script_hasdata(st, 3) ? script_getnum(st, 3) : 0, 8))
-		return SCRIPT_CMD_SUCCESS;
-
-	return SCRIPT_CMD_FAILURE;
-}
-
-BUILDIN_FUNC(cloakonnpc)
-{
-	if (npc_enable_target(script_getstr(st, 2), script_hasdata(st, 3) ? script_getnum(st, 3) : 0, 16))
-		return SCRIPT_CMD_SUCCESS;
-
-	return SCRIPT_CMD_FAILURE;
-}
-
 BUILDIN_FUNC(isnpccloaked)
 {
-	struct npc_data *nd = npc_name2id(script_getstr(st, 2));
+	npc_data *nd;
+
+	if (script_hasdata(st, 2))
+		nd = npc_name2id(script_getstr(st, 2));
+	else
+		nd = map_id2nd(st->oid);
 
 	if (!nd) {
-		ShowError("buildin_isnpccloaked: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		if (script_hasdata(st, 2))
+			ShowError("buildin_isnpccloaked: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		else
+			ShowError("buildin_isnpccloaked: non-existing NPC.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -25330,10 +25320,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(getunits, "getmapunits", "is?"),
 	BUILDIN_DEF2(getunits, "getareaunits", "isiiii?"),
 	BUILDIN_DEF(getareadropitem,"siiiiv"),
-	BUILDIN_DEF(enablenpc,"s"),
-	BUILDIN_DEF(disablenpc,"s"),
-	BUILDIN_DEF(hideoffnpc,"s"),
-	BUILDIN_DEF(hideonnpc,"s"),
+	BUILDIN_DEF(enablenpc,"?"),
+	BUILDIN_DEF2(enablenpc, "disablenpc", "?"),
+	BUILDIN_DEF2(enablenpc, "hideoffnpc", "?"),
+	BUILDIN_DEF2(enablenpc, "hideonnpc", "?"),
+	BUILDIN_DEF2(enablenpc, "cloakoffnpc", "??"),
+	BUILDIN_DEF2(enablenpc, "cloakonnpc", "??"),
 	BUILDIN_DEF(sc_start,"iii???"),
 	BUILDIN_DEF2(sc_start,"sc_start2","iiii???"),
 	BUILDIN_DEF2(sc_start,"sc_start4","iiiiii???"),
@@ -25794,9 +25786,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getvariableofinstance,"ri"),
 	BUILDIN_DEF(convertpcinfo,"vi"),
-	BUILDIN_DEF(cloakoffnpc, "s?"),
-	BUILDIN_DEF(cloakonnpc, "s?"),
-	BUILDIN_DEF(isnpccloaked, "s?"),
+	BUILDIN_DEF(isnpccloaked, "??"),
 
 	BUILDIN_DEF(rentalcountitem, "v?"),
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem2", "viiiiiii?"),
