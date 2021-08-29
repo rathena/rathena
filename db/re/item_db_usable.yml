@@ -48409,6 +48409,16 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box13);
+  - Id: 23538
+    AegisName: BloodyKnight_Shield_Box
+    Name: Cursed Knight's Shield Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 28942,1;
+      getitem 23545,1;
   - Id: 23545
     AegisName: Silver_Statue
     Name: Silver Statue

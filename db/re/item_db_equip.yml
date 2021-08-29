@@ -66868,6 +66868,13 @@ Body:
     Locations:
       Costume_Head_Top: true
     View: 2087
+  - Id: 15888
+    AegisName: aegis_15888
+    Name: Costume Dragon Claw Helm
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    View: 1018
   - Id: 16000
     AegisName: Erde
     Name: Erde
@@ -127328,6 +127335,13 @@ Body:
     Locations:
       Costume_Head_Mid: true
     View: 2055
+  - Id: 410061
+    AegisName: C_Deviruchi_Apron
+    Name: Costume Deviruchi Apron
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    View: 2095
   - Id: 420003
     AegisName: CD_In_MouthK
     Name: CD in Mouth
@@ -127450,6 +127464,13 @@ Body:
       Head_Low: true
     Script: |
       bonus bShortAtkRate,5;
+  - Id: 420053
+    AegisName: C_Shadow_Devil
+    Name: Costume Shadow Devil
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    View: 2096
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
@@ -132265,6 +132286,13 @@ Body:
     Locations:
       Costume_Garment: true
     View: 100
+  - Id: 480107
+    AegisName: C_Kings_Twin_Sword
+    Name: Costume Kings Twin Sword
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    View: 104
   - Id: 480120
     AegisName: aegis_480120
     Name: Guardian Soul
