@@ -2352,51 +2352,39 @@ void script_set_constant_(const char* name, int64 value, const char* constant_na
 	}
 }
 
-static bool read_constdb_sub( char* fields[], int columns, int current ){
-	char name[1024], val[1024];
-	int type = 0;
-
-	if( columns > 1 ){
-		if( sscanf(fields[0], "%1023[A-Za-z0-9/_]", name) != 1 ||
-			sscanf(fields[1], "%1023[A-Za-z0-9/_]", val) != 1 || 
-			( columns >= 2 && sscanf(fields[2], "%11d", &type) != 1 ) ){
-			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current);
-			return false;
-		}
-	}else{
-		if( sscanf(fields[0], "%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d", name, val, &type) < 2 ){
-			ShowWarning( "Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current );
-			return false;
-		}
-	}
-
-	script_set_constant(name, (int)strtol(val, NULL, 0), (type != 0), false);
-
-	return true;
+const std::string ConstantDatabase::getDefaultLocation(){
+	return std::string(db_path) + "/const.yml";
 }
 
-/*==========================================
- * Reading constant databases
- * const.txt
- *------------------------------------------*/
-static void read_constdb(void){
-	const char* dbsubpath[] = {
-		"",
-		"/" DBIMPORT,
-	};
+uint64 ConstantDatabase::parseBodyNode( const YAML::Node& node ) {
+	std::string constant_name;
 
-	for( int i = 0; i < ARRAYLENGTH(dbsubpath); i++ ){
-		int n2 = strlen(db_path) + strlen(dbsubpath[i]) + 1;
-		char* dbsubpath2 = (char*)aMalloc(n2 + 1);
-		bool silent = i > 0;
+	if (!this->asString( node, "Name", constant_name ))
+		return 0;
 
-		safesnprintf(dbsubpath2, n2, "%s%s", db_path, dbsubpath[i]);
+	char name[1024];
 
-		sv_readdb(dbsubpath2, "const.txt", ',', 1, 3, -1, &read_constdb_sub, silent);
-
-		aFree(dbsubpath2);
+	if (sscanf(constant_name.c_str(), "%1023[A-Za-z0-9/_]", name) != 1) {
+		this->invalidWarning( node["Name"], "Invalid constant definition \"%s\", skipping.\n", constant_name.c_str() );
+		return 0;
 	}
+
+	int64 val;
+
+	if (!this->asInt64( node, "Value", val ))
+		return 0;
+
+	bool type = false;
+
+	if (this->nodeExists(node, "Parameter") && !this->asBool( node, "Parameter", type ))
+		return 0;
+
+	script_set_constant(name, val, type, false);
+
+	return 1;
 }
+
+ConstantDatabase constant_db;
 
 /**
  * Sets source-end constants for NPC scripts to access.
@@ -4844,7 +4832,7 @@ void do_init_script(void) {
 
 	mapreg_init();
 	add_buildin_func();
-	read_constdb();
+	constant_db.load();
 	script_hardcoded_constants();
 }
 
@@ -19481,7 +19469,7 @@ BUILDIN_FUNC(openauction)
 ///
 /// checkcell("<map name>",<x>,<y>,<type>) -> <bool>
 ///
-/// @see cell_chk* constants in const.txt for the types
+/// @see cell_chk* constants in src/map/script_constants.hpp for the types
 BUILDIN_FUNC(checkcell)
 {
 	int16 m = map_mapname2mapid(script_getstr(st,2));
@@ -19498,7 +19486,7 @@ BUILDIN_FUNC(checkcell)
 ///
 /// setcell "<map name>",<x1>,<y1>,<x2>,<y2>,<type>,<flag>;
 ///
-/// @see cell_* constants in const.txt for the types
+/// @see cell_* constants in src/map/script_constants.hpp for the types
 BUILDIN_FUNC(setcell)
 {
 	int16 m = map_mapname2mapid(script_getstr(st,2));

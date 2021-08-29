@@ -2471,6 +2471,83 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 #endif
 }
 
+/**
+ * Get modified drop rate
+ * @param src: Source object
+ * @param mob: Monster data
+ * @param base_rate: Base drop rate
+ * @param drop_modifier: RENEWAL_DROP level modifier
+ * @return Modified drop rate
+ */
+int mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int base_rate, int drop_modifier)
+{
+	int drop_rate = base_rate;
+
+	if (battle_config.mob_size_influence) { // Change drops depending on monsters size [Valaris]
+		if (mob->status.size == SZ_MEDIUM && drop_rate >= 2)
+			drop_rate /= 2; // SZ_MEDIUM actually is small size modification... this is not a bug!
+		else if (mob->status.size == SZ_BIG)
+			drop_rate *= 2;
+	}
+
+	if (src) {
+		if (battle_config.drops_by_luk) // Drops affected by luk as a fixed increase [Valaris]
+			drop_rate += status_get_luk(src) * battle_config.drops_by_luk / 100;
+		if (battle_config.drops_by_luk2) // Drops affected by luk as a % increase [Skotlex]
+			drop_rate += (int)(0.5 + drop_rate * status_get_luk(src) * battle_config.drops_by_luk2 / 10000.);
+
+		if (src->type == BL_PC) { // Player specific drop rate adjustments
+			struct map_session_data *sd = (struct map_session_data*)src;
+			int drop_rate_bonus = 100;
+
+			// In PK mode players get an additional drop chance bonus of 25% if there is a 20 level difference
+			if( battle_config.pk_mode && (int)(mob->lv - sd->status.base_level) >= 20 ){
+				drop_rate_bonus += 25;
+			}
+
+			// Add class and race specific bonuses
+			drop_rate_bonus += sd->indexed_bonus.dropaddclass[mob->status.class_] + sd->indexed_bonus.dropaddclass[CLASS_ALL];
+			drop_rate_bonus += sd->indexed_bonus.dropaddrace[mob->status.race] + sd->indexed_bonus.dropaddrace[RC_ALL];
+
+			if (sd->sc.data[SC_ITEMBOOST])
+				drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
+
+			int cap;
+
+			if (pc_isvip(sd)) { // Increase item drop rate for VIP.
+				// Unsure how the VIP and other bonuses should stack, this is additive.
+				drop_rate_bonus += battle_config.vip_drop_increase;
+				cap = battle_config.drop_rate_cap_vip;
+			} else
+				cap = battle_config.drop_rate_cap;
+
+			drop_rate = (int)( 0.5 + drop_rate * drop_rate_bonus / 100. );
+
+			// Now limit the drop rate to never be exceed the cap (default: 90%), unless it is originally above it already.
+			if( drop_rate > cap && base_rate < cap ){
+				drop_rate = cap;
+			}
+		}
+	}
+
+#ifdef RENEWAL_DROP
+	drop_rate = apply_rate( drop_rate, drop_modifier );
+#endif
+
+	// Cap it to 100%
+	drop_rate = min( drop_rate, 10000 );
+
+	// If the monster's drop rate can become 0
+	if( battle_config.drop_rate0item ){
+		drop_rate = max( drop_rate, 0 );
+	}else{
+		// If not - cap to 0.01% drop rate - as on official servers
+		drop_rate = max( drop_rate, 1 );
+	}
+
+	return drop_rate;
+}
+
 /*==========================================
  * Signals death of mob.
  * type&1 -> no drops, type&2 -> no exp
@@ -2732,9 +2809,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_drop_list *dlist = ers_alloc(item_drop_list_ers, struct item_drop_list);
 		struct item_drop *ditem;
 		struct item_data* it = NULL;
-		int drop_rate;
+		int drop_rate, drop_modifier = 100;
+
 #ifdef RENEWAL_DROP
-		int drop_modifier = pc_level_penalty_mod( mvp_sd != nullptr ? mvp_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
+		drop_modifier = pc_level_penalty_mod( mvp_sd != nullptr ? mvp_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
 #endif
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
@@ -2749,63 +2827,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				continue;
 			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
 				continue;
-			drop_rate = md->db->dropitem[i].rate;
-			if (drop_rate <= 0) {
-				if (battle_config.drop_rate0item)
-					continue;
-				drop_rate = 1;
-			}
+			
+			drop_rate = mob_getdroprate(src, md->db, md->db->dropitem[i].rate, drop_modifier);
 
-			// change drops depending on monsters size [Valaris]
-			if (battle_config.mob_size_influence) {
-				if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)
-					drop_rate /= 2;
-				else if( md->special_state.size == SZ_BIG)
-					drop_rate *= 2;
-			}
-
-			if (src) {
-				//Drops affected by luk as a fixed increase [Valaris]
-				if (battle_config.drops_by_luk)
-					drop_rate += status_get_luk(src)*battle_config.drops_by_luk/100;
-				//Drops affected by luk as a % increase [Skotlex]
-				if (battle_config.drops_by_luk2)
-					drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.);
-			}
-
-			// Player specific drop rate adjustments
-			if( sd ){
-				int drop_rate_bonus = 0;
-
-				// pk_mode increase drops if 20 level difference [Valaris]
-				if( battle_config.pk_mode && (int)(md->level - sd->status.base_level) >= 20 )
-					drop_rate = (int)(drop_rate*1.25);
-
-				// Add class and race specific bonuses
-				drop_rate_bonus += sd->indexed_bonus.dropaddclass[md->status.class_] + sd->indexed_bonus.dropaddclass[CLASS_ALL];
-				drop_rate_bonus += sd->indexed_bonus.dropaddrace[md->status.race] + sd->indexed_bonus.dropaddrace[RC_ALL];
-
-				// Increase drop rate if user has SC_ITEMBOOST
-				if (sd->sc.data[SC_ITEMBOOST])
-					drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
-
-				drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
-				// Now rig the drop rate to never be over 90% unless it is originally >90%.
-				drop_rate = i32max(drop_rate, cap_value(drop_rate_bonus, 0, 9000));
-
-				if (pc_isvip(sd)) { // Increase item drop rate for VIP.
-					drop_rate += (int)(0.5 + drop_rate * battle_config.vip_drop_increase / 100.);
-					drop_rate = min(drop_rate,10000); //cap it to 100%
-				}
-			}
-
-#ifdef RENEWAL_DROP
-			if( drop_modifier != 100 ) {
-				drop_rate = apply_rate(drop_rate, drop_modifier);
-				if( drop_rate < 1 )
-					drop_rate = 1;
-			}
-#endif
 			// attempt to drop the item
 			if (rnd() % 10000 >= drop_rate)
 				continue;
@@ -2818,7 +2842,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			ditem = mob_setdropitem(&md->db->dropitem[i], 1, md->mob_id);
 
 			//A Rare Drop Global Announce by Lupus
-			if( mvp_sd && drop_rate <= battle_config.rare_drop_announce ) {
+			if( mvp_sd && md->db->dropitem[i].rate <= battle_config.rare_drop_announce ) {
 				char message[128];
 				sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"

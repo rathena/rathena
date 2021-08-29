@@ -4904,7 +4904,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ITEMBOOST,1800000,200;
+      sc_start SC_ITEMBOOST,1800000,100;
   - Id: 12211
     AegisName: Kafra_Card
     Name: Kafra Card
@@ -5562,7 +5562,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ITEMBOOST,1800000,200;
+      sc_start SC_ITEMBOOST,1800000,100;
   - Id: 12265
     AegisName: Comp_Insurance
     Name: Life Insurrance
@@ -7557,7 +7557,7 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_ITEMBOOST,900000,300;
+      sc_start SC_ITEMBOOST,900000,200;
   - Id: 12413
     AegisName: PCBang_Coupon_Box2
     Name: PCBang Coupon Box2
