@@ -1917,10 +1917,16 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	return true;
 }
 
-bool ComboDatabase::parseComboNode(std::string nodeName, YAML::Node node, std::vector<std::vector<t_itemid>> &items_list) {
+bool ComboDatabase::parseComboNode(const YAML::Node &node, const std::string &nodeName, std::vector<std::vector<t_itemid>> &items_list) {
 	if (!this->nodesExist(node, { nodeName })) {
 		return 0;
 	}
+
+	if (!node[nodeName].IsSequence()) {
+		this->invalidWarning(node[nodeName], "%s should be a sequence.\n", nodeName.c_str());
+		return 0;
+	}
+
 	std::vector<t_itemid> items = {};
 
 	for (const auto &it : node[nodeName]) {
@@ -1950,6 +1956,11 @@ const std::string ComboDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_combo_db.yml";
 }
 
+/**
+ * Reads and parses an entry from the item_combo_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
 uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 	std::vector<std::vector<t_itemid>> items_list;
 
@@ -1957,12 +1968,12 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 		const YAML::Node &ComboNode = node["Combos"];
 
 		for (const auto &Comboit : ComboNode) {
-			if (!this->parseComboNode("Combo", Comboit, items_list))
+			if (!this->parseComboNode(Comboit, "Combo", items_list))
 				return 0;
 		}
 	}
 	else if (this->nodeExists(node, "Combo")) {
-		if (!this->parseComboNode("Combo", node, items_list))
+		if (!this->parseComboNode(node, "Combo", items_list))
 			return 0;
 	}
 
@@ -2022,22 +2033,22 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(node, "Script")) {
-			std::string script_string;
+			std::string script;
 
-			if (!this->asString(node, "Script", script_string))
+			if (!this->asString(node, "Script", script))
 				return 0;
 
 			if (exists) {
 				script_free_code(combo->script);
 				combo->script = nullptr;
 			}
-			combo->script = parse_script(script_string.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			combo->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 		} else {
 			if (!exists) {
 				combo->script = nullptr;
 			}
 		}
-	
+
 		if (!exists)
 			this->put( combo->id, combo );
 

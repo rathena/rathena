@@ -848,7 +848,7 @@ public:
 	void loadingFinished();
 
 	// Additional
-	bool parseComboNode(std::string nodeName, YAML::Node node, std::vector<std::vector<t_itemid>> &items_list);
+	bool parseComboNode(const YAML::Node &node, const std::string &nodeName, std::vector<std::vector<t_itemid>> &items_list);
 };
 
 extern ComboDatabase itemdb_combo;
