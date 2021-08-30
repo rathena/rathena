@@ -2973,6 +2973,8 @@ unsigned int script_array_highest_key(struct script_state *st, struct map_sessio
 int script_free_array_db(DBKey key, DBData *data, va_list ap)
 {
 	struct script_array *sa = static_cast<script_array *>(db_data2ptr(data));
+	if ( sa == nullptr ) { // non-existent array, nothing to empty
+		return SCRIPT_CMD_SUCCESS;
 	aFree(sa->members);
 	ers_free(array_ers, sa);
 	return SCRIPT_CMD_SUCCESS;
