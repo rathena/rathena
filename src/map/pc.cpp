@@ -2527,6 +2527,8 @@ int pc_disguise(struct map_session_data *sd, int class_)
  * @param battle_flag: Battle flag
  * @param card_id: Used to prevent card stacking
  * @param flag: Flags used for extra arguments
+ *              &1: forces the skill to be casted on self, rather than on the target of skill
+ *              &2: random skill level in [1..lv] is chosen
  */
 static void pc_bonus_autospell(std::vector<s_autospell> &spell, uint16 id, uint16 lv, short rate, short battle_flag, t_itemid card_id, uint8 flag)
 {
@@ -2581,6 +2583,9 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, uint16 id, uint1
  * @param lv: Skill level
  * @param rate: Success chance
  * @param card_id: Used to prevent card stacking
+ * @param flag: Flags used for extra arguments
+ *              &1: forces the skill to be casted on self, rather than on the target of skill
+ *              &2: random skill level in [1..lv] is chosen
  */
 static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, uint16 src_skill, uint16 id, uint16 lv, short rate, t_itemid card_id, uint8 flag)
 {
@@ -4537,12 +4542,12 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 	switch(type){
 	case SP_AUTOSPELL: // bonus4 bAutoSpell,sk,y,n,i;
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, type2, type3, type4, 0, current_equip_card_id, (val & 1) ? 1 : 0 | (val & 2) ? 2 : 0);
+			pc_bonus_autospell(sd->autospell, type2, type3, type4, 0, current_equip_card_id, val);
 		break;
 
 	case SP_AUTOSPELL_WHENHIT: // bonus4 bAutoSpellWhenHit,sk,y,n,i;
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, type2, type3, type4, BF_NORMAL|BF_SKILL, current_equip_card_id, (val & 1) ? 1 : 0 | (val & 2) ? 2 : 0);
+			pc_bonus_autospell(sd->autospell2, type2, type3, type4, BF_NORMAL|BF_SKILL, current_equip_card_id, val);
 		break;
 
 	case SP_AUTOSPELL_ONSKILL: // bonus4 bAutoSpellOnSkill,sk,x,y,n;
@@ -4620,17 +4625,17 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 	switch(type){
 	case SP_AUTOSPELL: // bonus5 bAutoSpell,sk,y,n,bf,i;
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, type2, type3, type4, type5, current_equip_card_id, ((val & 1) ? 1 : 0) | ((val & 2) ? 2 : 0));
+			pc_bonus_autospell(sd->autospell, type2, type3, type4, type5, current_equip_card_id, val);
 		break;
 
 	case SP_AUTOSPELL_WHENHIT: // bonus5 bAutoSpellWhenHit,sk,y,n,bf,i;
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, type2, type3, type4, type5, current_equip_card_id, ((val & 1) ? 1 : 0) | ((val & 2) ? 2 : 0));
+			pc_bonus_autospell(sd->autospell2, type2, type3, type4, type5, current_equip_card_id, val);
 		break;
 
 	case SP_AUTOSPELL_ONSKILL: // bonus5 bAutoSpellOnSkill,sk,x,y,n,i;
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell_onskill(sd->autospell3, type2, type3, type4, type5, current_equip_card_id, ((val & 1) ? 1 : 0) | ((val & 2) ? 2 : 0));
+			pc_bonus_autospell_onskill(sd->autospell3, type2, type3, type4, type5, current_equip_card_id, val);
 		break;
  
 	case SP_ADDEFF_ONSKILL: // bonus5 bAddEffOnSkill,sk,eff,n,y,t;
