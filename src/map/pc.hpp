@@ -194,9 +194,10 @@ struct weapon_data {
 
 /// AutoSpell bonus struct
 struct s_autospell {
-	int id, lv;
-	short rate, flag;
+	uint16 id, lv, trigger_skill;
+	short rate, battle_flag;
 	t_itemid card_id;
+	uint8 flag;
 	bool lock;  // bAutoSpellOnSkill: blocks autospell from triggering again, while being executed
 };
 
