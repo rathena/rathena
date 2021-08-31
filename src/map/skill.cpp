@@ -2274,13 +2274,13 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		return 0;
 
 	for (auto &it : sd->autospell3) {
-		if (it.flag != skill_id)
+		if (it.trigger_skill != skill_id)
 			continue;
 
 		if (it.lock)
 			continue;  // autospell already being executed
 
-		int skill = it.id;
+		uint16 skill = it.id;
 
 		sd->state.autocast = 1; //set this to bypass sd->canskill_tick check
 
@@ -2291,7 +2291,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 
 		sd->state.autocast = 0;
 
-		if( skill >= 0 && bl == NULL )
+		if( skill > 0 && bl == nullptr )
 			continue; // No target
 		if( rnd()%1000 >= it.rate )
 			continue;
