@@ -7906,7 +7906,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bLuk,.@r-5;
-      bonus bCritical,.@r;
+      bonus bCritical,min(.@r,10);
   - Id: 4374
     AegisName: Apocalips_H_Card
     Name: Vesper Card
@@ -36039,6 +36039,20 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25310
+    AegisName: DF_Token_Of_Siegfried
+    Name: "[Scroll] Token of Siegfried"
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 25311
     AegisName: Piece_of_Black_Horn
     Name: Piece of Black Horn
@@ -45804,6 +45818,21 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,20;
       bonus2 bMagicAtkEle,Ele_Undead,20;
       bonus2 bMagicAtkEle,Ele_Dark,20;
+  - Id: 300209
+    AegisName: aegis_300209
+    Name: Sealed Nightmare Amon Ra Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = (getrefine()>14?37:25);
+      bonus2 bMagicAddRace,RC_Demon,.@r;
+      bonus2 bMagicAddRace,RC_Undead,.@r;
+      bonus2 bMagicAddEle,Ele_Dark,.@r;
+      bonus2 bMagicAddEle,Ele_Undead,.@r;
   - Id: 300211
     AegisName: EP18_Ash_Toad_Card
     Name: Ash Toad Card

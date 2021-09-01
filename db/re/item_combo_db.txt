@@ -2492,3 +2492,23 @@
 32300:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
 32300:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
 32300:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+2965:18797,{ bonus bAllStats,1; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus3 bAutoSpellWhenHit,"WZ_VERMILION",5,5; bonus2 bAddRace,RC_All,5; bonus bVariableCastrate,-10; }
+2965:18798,{ bonus bAllStats,1; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus3 bAutoSpellWhenHit,"WZ_VERMILION",5,5; bonus2 bAddRace,RC_All,5; bonus bVariableCastrate,-10; }
+5891:2269,{ bonus bAllStats,1; }
+5891:2270,{ bonus bAllStats,1; }
+18906:4077,{ bonus bHealPower,2; bonus bVariableCastrate,-15; }
+18912:2254,{ bonus2 bExpAddClass,Class_All,5; }
+19221:20866,{ bonus bAllStats,1; }
+22105:2655,{ bonus bBaseAtk,50; bonus2 bAddDefMonster,1196,20; bonus2 bAddDefMonster,1197,20; }
+22105:28388,{ bonus bBaseAtk,50; bonus2 bAddDefMonster,1196,20; bonus2 bAddDefMonster,1197,20; }
+22105:15040,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bBaseAtk,5+.@r; }
+22105:2913,{ bonus bBaseAtk,getequiprefinerycnt(EQI_SHOES); }
+28388:16053,{ .@time = 5000 + max(getequiprefinerycnt(EQI_SHOES)-4,0)*1000; autobonus "{ bonus2 bIgnoreDefRaceRate,RC_All,100; }",5,.@time,BF_NORMAL; }
+28388:2913,{ bonus bBaseAtk,10; }
+28388:2408,{ bonus bBaseAtk,50; bonus2 bAddDefMonster,1196,20; bonus2 bAddDefMonster,1197,20; }
+400043:2589,{ .@head = getequiprefinerycnt(EQI_HEAD_TOP); .@garment = getequiprefinerycnt(EQI_GARMENT); if (.@head >= 10 && .@garment >= 10) bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+(.@head+.@garment); bonus2 bSubRace,RC_All,3; bonus2 bSubRace,RC_Angel,-3; }
+450131:2589,{ if (getequiprefinerycnt(EQI_GARMENT) >= 9) { bonus2 bSubRace,RC_All,3; bonus2 bSubRace,RC_Angel,-3; } }
+450131:400043,{ bonus bVit,2; bonus bMaxHPrate,10; }
+490033:2589,{ if (getequiprefinerycnt(EQI_GARMENT) >= 9) { bonus2 bResEff,Eff_Stone,4000; bonus2 bResEff,Eff_Curse,4000; } }
+490033:400043,{ if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9) bonus bVariableCastrate,-5; }
+490033:450131,{ if (getequiprefinerycnt(EQI_ARMOR) >= 9) bonus bMaxHPrate,8; }
