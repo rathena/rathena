@@ -2690,7 +2690,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bLuk,1;
-      bonus bCriticalRate,1;
+      bonus bCritical,1;
       bonus bFlee2,1;
   - Id: 4007
     AegisName: Pecopeco_Egg_Card
@@ -3004,7 +3004,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,15;
-      bonus bCriticalRate,1;
+      bonus bCritical,1;
   - Id: 4030
     AegisName: Mandragora_Card
     Name: Mandragora Card
@@ -3779,7 +3779,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bCriticalRate,9;
+      bonus bCritical,9;
   - Id: 4087
     AegisName: Giearth_Card
     Name: Giearth Card
@@ -3853,7 +3853,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,1;
-      bonus bCriticalRate,4;
+      bonus bCritical,4;
   - Id: 4092
     AegisName: Skel_Worker_Card
     Name: Skeleton Worker Card
@@ -4387,7 +4387,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bAgi,3;
-      bonus bCriticalRate,1;
+      bonus bCritical,1;
   - Id: 4130
     AegisName: Scorpion_King_Card
     Name: Scorpion King Card
@@ -7906,7 +7906,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bLuk,.@r-5;
-      bonus bCriticalRate,min(.@r,10);
+      bonus bCritical,min(.@r,10);
   - Id: 4374
     AegisName: Apocalips_H_Card
     Name: Vesper Card

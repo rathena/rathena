@@ -68253,7 +68253,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    EquipLevelMin: 150
+    EquipLevelMin: 130
     Refineable: true
     Script: |
       bonus bAtkEle,Ele_Fire;
@@ -74274,6 +74274,8 @@ Body:
     View: 868
     Script: |
       .@r = getrefine();
+      bonus bUnbreakableHelm;
+      bonus bMdef,5;
       if (.@r>=7)
          bonus bLongAtkRate,10;
       else if (.@r>=5)
@@ -77089,11 +77091,11 @@ Body:
       bonus bInt,1;
       bonus bDex,1;
       if (readparam(bInt) >= 120)
-         bonus bMatk,10;
+         bonus bMatkRate,10;
       else if (readparam(bInt) >= 99)
-         bonus bMatk,7;
+         bonus bMatkRate,7;
       else
-         bonus bMatk,5;
+         bonus bMatkRate,5;
       if (getpetinfo(PETINFO_ID) == 9023) {
          if (getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_LOYAL)
             bonus bDelayRate,-5;
@@ -77807,7 +77809,6 @@ Body:
     Locations:
       Head_Top: true
     EquipLevelMin: 1
-    Refineable: true
     View: 1103
     Script: |
       bonus2 bExpAddRace,RC_Demon,5;
@@ -78011,6 +78012,7 @@ Body:
     EquipLevelMin: 70
     Refineable: true
     Script: |
+      bonus bMdef,2;
       bonus bMaxHPrate,5;
       bonus bMatkRate,1;
       bonus2 bAddEle,Ele_Poison,2;
@@ -91944,6 +91946,7 @@ Body:
       bonus2 bSubEle,Ele_Wind,10;
       bonus2 bSubEle,Ele_Earth,-10;
       bonus bLongAtkDef,5+getrefine();
+      bonus bUnbreakableGarment;
   - Id: 20735
     AegisName: Manteau_Of_Flame_Heart
     Name: Manteau of Flame Heart
@@ -91959,6 +91962,7 @@ Body:
       bonus2 bSubEle,Ele_Fire,10;
       bonus2 bSubEle,Ele_Water,-10;
       bonus bShortWeaponDamageReturn,10+(getrefine()*2);
+      bonus bUnbreakableGarment;
   - Id: 20737
     AegisName: C_Kirin_Wing
     Name: Costume Kirin Wing
@@ -132310,16 +132314,20 @@ Body:
       bonus2 bSubRace,RC_Player_Human,5;
       bonus2 bSubRace,RC_Player_Doram,5;
       if (.@r>=7) {
-         bonus bDelayRate,-((readparam(bLuk)+readparam(bStr))/18);
-         bonus2 bSubEle,Ele_Holy,(.@r>=12?5:3)*((readparam(bLuk)+readparam(bStr))/18);
-         bonus2 bSubEle,Ele_Dark,(.@r>=12?5:3)*((readparam(bLuk)+readparam(bStr))/18);
-         bonus bAspdRate,((readparam(bAgi)+readparam(bVit))/18);
-         bonus bMaxHPrate,(.@r>=12?.@r:0)+((readparam(bAgi)+readparam(bVit))/18);
-         bonus2 bSubEle,Ele_Fire,(.@r>=12?5:3)*((readparam(bAgi)+readparam(bVit))/18);
-         bonus2 bSubEle,Ele_Water,(.@r>=12?5:3)*((readparam(bAgi)+readparam(bVit))/18);
-         bonus bVariableCastrate,-((readparam(bInt)+readparam(bDex))/18);
-         bonus2 bSubEle,Ele_Wind,(.@r>=12?5:3)*((readparam(bInt)+readparam(bDex))/18);
-         bonus2 bSubEle,Ele_Earth,(.@r>=12?5:3)*((readparam(bInt)+readparam(bDex))/18);
+         .@a = (readparam(bLuk)+readparam(bStr))/18;
+         .@b = (readparam(bAgi)+readparam(bVit))/18;
+         .@c = (readparam(bInt)+readparam(bDex))/18;
+         .@bonus = (.@r>=12 ? 5 : 3);
+         bonus bDelayRate,-.@a;
+         bonus2 bSubEle,Ele_Holy,.@bonus*.@a;
+         bonus2 bSubEle,Ele_Dark,.@bonus*.@a;
+         bonus bAspdRate,.@b;
+         bonus bMaxHPrate,(.@r>=12?2:1)*.@b;
+         bonus2 bSubEle,Ele_Fire,.@bonus*.@b;
+         bonus2 bSubEle,Ele_Water,.@bonus*.@b;
+         bonus bVariableCastrate,-.@c;
+         bonus2 bSubEle,Ele_Wind,.@bonus*.@c;
+         bonus2 bSubEle,Ele_Earth,.@bonus*.@c;
       }
   - Id: 490004
     AegisName: Attacker_Booster_Ring

@@ -2275,7 +2275,7 @@ Body:
   - Id: 9894
     AegisName: aegis_9894
     Name: "[Scroll] Adrenaline Lv.5 Scroll"
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     NoUse:
@@ -2291,11 +2291,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@type = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
-      if (.@type == W_1HAXE || .@type == W_2HAXE || .@type == W_MACE) {
-         skilleffect "BS_ADRENALINE",0;
-         sc_start SC_ADRENALINE,150000,5;
-      }
+      itemskill "BS_ADRENALINE",5;
   - Id: 9895
     AegisName: aegis_9895
     Name: "[Scroll] Abrasive"
@@ -6116,7 +6112,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ITEMBOOST,1800000,100;
+      sc_start SC_ITEMBOOST,1800000,200;
   - Id: 12211
     AegisName: Kafra_Card
     Name: Kafra Card
@@ -8783,7 +8779,7 @@ Body:
     Buy: 2
     Weight: 10
     Script: |
-      sc_start SC_ITEMBOOST,900000,200;
+      sc_start SC_ITEMBOOST,900000,300;
   - Id: 12413
     AegisName: PCBang_Coupon_Box2
     Name: PC Cafe Coupon Box
@@ -35185,7 +35181,7 @@ Body:
   - Id: 14845
     AegisName: DF_Blessing_10_Scroll
     Name: "[Scroll] Blessing Lv.10 Scroll"
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     NoUse:
@@ -35201,12 +35197,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      skilleffect "AL_BLESSING",0;
-      sc_start SC_BLESSING,240000,10;
+      itemskill "AL_BLESSING",10;
   - Id: 14846
     AegisName: DF_Inc_Agi_10_Scroll
     Name: "[Scroll] Increase Agility Lv.10 Scroll"
-    Type: Usable
+    Type: Delayconsume
     Buy: 2
     Weight: 10
     NoUse:
@@ -35222,11 +35217,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if (Hp>15) {
-         skilleffect "AL_INCAGI",0;
-         sc_start SC_INCREASEAGI,240000,10;
-         heal -15,0;
-      }
+      itemskill "AL_INCAGI",10;
   - Id: 14847
     AegisName: DF_Small_Life_Potion
     Name: "[Scroll] Small Life Potion"
@@ -45535,7 +45526,7 @@ Body:
       NoAuction: true
     Script: |
       sc_start SC_EXPBOOST,8640000,50;
-      sc_start SC_ITEMBOOST,8640000,100;
+      sc_start SC_ITEMBOOST,8640000,200;
   - Id: 22617
     AegisName: Clear_Box_S
     Name: Clear Box S
