@@ -9953,7 +9953,6 @@ Body:
     FixedCastTime: 700
     CastTimeFlags:
       IgnoreDex: true
-      IgnoreStatus: true
     Requires:
       SpCost:
         - Level: 1
