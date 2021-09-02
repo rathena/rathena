@@ -4242,7 +4242,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VAL
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29460,'RuneknightStone_Top_','Lord Knight Stone (Top)','Card','bonus bBaseAtk,2*getskilllv("KN_SPEARMASTERY");');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29461,'RuneknightStone_Middle_','Lord Knight Stone (Middle)','Card','bonus2 bSkillAtk,"LK_SPIRALPIERCE",15;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29462,'RuneknightStone_Bottom_','Lord Knight Stone (Bottom)','Card','bonus bAspdRate,getskilllv("KN_CAVALIERMASTERY");');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29463,'RuneknightStone_Robe_','Rune Knight Stone (Garment)','Card','bonus2 bSkillAtk,"RK_DRAGONBREATH",10;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29463,'RuneknightStone_Robe_','Rune Knight Stone (Garment)','Card','bonus2 bSkillAtk,"RK_DRAGONBREATH",10;\nbonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29464,'GeneticStone_Top_','Creator Stone (Top)','Card','bonus bBaseAtk,2*getskilllv("AM_LEARNINGPOTION");');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29465,'GeneticStone_Middle_','Creator Stone (Middle)','Card','bonus bHealPower,2*getskilllv("AM_POTIONPITCHER");');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (29466,'GeneticStone_Bottom_','Creator Stone (Bottom)','Card','bonus2 bSkillAtk,"AM_ACIDTERROR",20;');
