@@ -2272,6 +2272,89 @@ Body:
     Weight: 10
     Script: |
       /* upgradeui 9785; */
+  - Id: 9894
+    AegisName: aegis_9894
+    Name: "[Scroll] Adrenaline Lv.5 Scroll"
+    Type: Delayconsume
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemskill "BS_ADRENALINE",5;
+  - Id: 9895
+    AegisName: aegis_9895
+    Name: "[Scroll] Abrasive"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_MAGICALATTHIT;
+      sc_start SC_INCCRI,300000,30;
+  - Id: 9896
+    AegisName: aegis_9896
+    Name: "[Scroll] Power Booster"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus2 bAddClass,Class_All,1; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1;
+  - Id: 9909
+    AegisName: aegis_9909
+    Name: "[Scroll] Ex Def Potion"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_GUARD;
+      sc_start SC_DEF_RATE,1800000,3;
+      sc_start SC_MDEF_RATE,1800000,3;
   - Id: 9933
     AegisName: True_Hunting_9Refine
     Name: Troi Hunting 9 Refinement Package
@@ -35035,6 +35118,346 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_July_Lucky_Scroll);
+  - Id: 14841
+    AegisName: DF_Songpyun
+    Name: "[Scroll] Korean Rice Cake"
+    Type: Healing
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      percentheal 10,0;
+  - Id: 14843
+    AegisName: DF_Insurance
+    Name: "[Scroll] Life Insurance"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_LIFEINSURANCE,1800000,0;
+  - Id: 14844
+    AegisName: DF_Kafra_Card
+    Name: "[Scroll] Kafra Card"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      callfunc "F_CashStore";
+  - Id: 14845
+    AegisName: DF_Blessing_10_Scroll
+    Name: "[Scroll] Blessing Lv.10 Scroll"
+    Type: Delayconsume
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemskill "AL_BLESSING",10;
+  - Id: 14846
+    AegisName: DF_Inc_Agi_10_Scroll
+    Name: "[Scroll] Increase Agility Lv.10 Scroll"
+    Type: Delayconsume
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemskill "AL_INCAGI",10;
+  - Id: 14847
+    AegisName: DF_Small_Life_Potion
+    Name: "[Scroll] Small Life Potion"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HEAL3;
+      sc_start2 SC_S_LIFEPOTION,600000,-5,5;
+  - Id: 14849
+    AegisName: DF_Vit_Dish10
+    Name: "[Scroll] Vit Dish10"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_VITFOOD,1800000,10;
+  - Id: 14850
+    AegisName: DF_Luk_Dish10
+    Name: "[Scroll] Luk Dish10"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_LUKFOOD,1800000,10;
+  - Id: 14851
+    AegisName: DF_Dex_Dish10
+    Name: "[Scroll] Dex Dish10"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_DEXFOOD,1800000,10;
+  - Id: 14852
+    AegisName: DF_Int_Dish10
+    Name: "[Scroll] Int Dish10"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_INTFOOD,1800000,10;
+  - Id: 14853
+    AegisName: DF_Agi_Dish10
+    Name: "[Scroll] Agi Dish10"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_AGIFOOD,1800000,10;
+  - Id: 14854
+    AegisName: DF_Str_Dish10
+    Name: "[Scroll] Str Dish10"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_STRFOOD,1800000,10;
+  - Id: 14861
+    AegisName: DF_GhostringS
+    Name: "[Scroll] Ghostring Scroll"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start2 SC_ITEMSCRIPT,60000,4047,EFST_ARMOR_PROPERTY;
+  - Id: 14862
+    AegisName: DF_Tyr's_Blessing
+    Name: "[Scroll] Tyr's Blessing"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_FLEEFOOD,300000,30;
+      sc_start SC_HITFOOD,300000,30;
+      sc_start SC_ATKPOTION,300000,20;
+      sc_start SC_MATKPOTION,300000,20;
+  - Id: 14866
+    AegisName: DF_Holy_Armor_S
+    Name: "[Scroll] Holy Armor Scroll"
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_BENEDICTIO;
+      sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Holy,1,0;
+  - Id: 14869
+    AegisName: DF_Red_Booster
+    Name: "[Scroll] Red Booster"
+    Type: Delayconsume
+    Buy: 2
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      itemskill "AC_CONCENTRATION",max(getskilllv("AC_CONCENTRATION"),3);
+      specialeffect2 EF_POTION_BERSERK;
+      showscript "Oh My GOODNESS!!! I FEEL AWESOMELY STRONG!!! WOWOW";
+  - Id: 14886
+    AegisName: UltimateCook_S
+    Name: "[Scroll] Ultimate Cook"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_2011RWC_SCROLL,1800000,10;
   - Id: 16131
     AegisName: Lady_Tanee_Doll_Box
     Name: Lady Tanee Doll Box
@@ -47150,6 +47573,14 @@ Body:
     Weight: 1
     Script: |
       callfunc("F_Cursed_Fragment");
+  - Id: 23033
+    AegisName: Invisible_Box
+    Name: Invisible Box
+    Type: Usable
+    Flags:
+      Container: true
+    Script: |
+      getitem callfunc("F_Rand",19602,19603,19604,20506),1;
   - Id: 23038
     AegisName: S_Slim_White_Box
     Name: "[Sale] Slim White Potion Box"
@@ -47402,6 +47833,25 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23154;*/
+  - Id: 23168
+    AegisName: Mini_Fan_Box
+    Name: Mini Fan Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 23170,1;
+      getitem callfunc("F_Rand",28439,28440),1;
+  - Id: 23169
+    AegisName: Alchemist_Box
+    Name: Alchemist box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem callfunc("F_Rand",7135,7136,7137,7138,7139),1;
   - Id: 23170
     AegisName: Fan_Modification_Kit
     Name: Fan Modification Kit
@@ -47442,6 +47892,16 @@ Body:
       NoAuction: true
     Script: |
       callfunc "F_CashStore";
+  - Id: 23178
+    AegisName: Kafra_Box
+    Name: Kafra Box
+    Type: Usable
+    Weight: 510
+    Flags:
+      Container: true
+    Script: |
+      getitem 23175,1;
+      getitem callfunc("F_Rand",15186,19168),1;
   - Id: 23187
     AegisName: Sap_Jelly
     Name: Sap Liquid
@@ -47745,6 +48205,36 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23281;*/
+  - Id: 23285
+    AegisName: Candy_Box_Melee
+    Name: Candy Bag Backpack (Physical)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 23289,1;
+      getitem 20842,1;
+  - Id: 23286
+    AegisName: Candy_Box_Range
+    Name: Candy Bag Backpack (Range)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 23290,1;
+      getitem 20843,1;
+  - Id: 23287
+    AegisName: Candy_Box_Magic
+    Name: Candy Bag Backpack (Magical)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 23291,1;
+      getitem 20844,1;
   - Id: 23288
     AegisName: Compressed_Wing_Of_Fly
     Name: Compressed Fly Wing
@@ -47856,6 +48346,21 @@ Body:
     Script: |
       input .@megaphone$;
       announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
+  - Id: 23388
+    AegisName: CookingBox10
+    Name: "[Scroll] Food Box"
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      .@r = rand(1,3);
+      if (.@r == 1)
+         getitem callfunc("F_Rand",14849,14850,14851,14852,14853,14854),10;
+      else if (.@r == 2)
+         getitem 14841,50;
+      else
+         getitem 14886,2;
   - Id: 23436
     AegisName: Shadow_Refine_Hammer
     Name: Shadow Refine Hammer
@@ -47895,6 +48400,16 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Enchant_Stone_Box13);
+  - Id: 23538
+    AegisName: BloodyKnight_Shield_Box
+    Name: Cursed Knight's Shield Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 28942,1;
+      getitem 23545,1;
   - Id: 23545
     AegisName: Silver_Statue
     Name: Silver Statue
@@ -48622,6 +49137,15 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23926;*/
+  - Id: 23952
+    AegisName: Sillit_Pong_Box
+    Name: Sillit Pong Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem 6443,1;
   - Id: 23967
     AegisName: EnchantStone_Recipe_9m
     Name: Enchant Stone Recipe 9m
@@ -48821,6 +49345,15 @@ Body:
       NoConsume: true
     Script: |
       itemskill "WL_READING_SB_READING",10;
+  - Id: 100083
+    AegisName: BackSignon_Box_TW
+    Name: Korean Style Apple Hair Box (Middle)
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem callfunc("F_Rand",31754,31755,31756,31757,31758,31759,31760,31761),1;
   - Id: 100125
     AegisName: Metal_7_Ticket
     Name: Metal Weapon +7 Refinement Ticket
@@ -50062,6 +50595,15 @@ Body:
       BuyingStore: true
     Script: |
       /* synthesisui 100621; */
+  - Id: 100623
+    AegisName: Shadow_Mix_Recipe_TH
+    Name: Lapine Box (Shadow)
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      /* synthesisui 100623; */
   - Id: 100626
     AegisName: GrayWolf_7_Ticket
     Name: Gray Wolf +7 Refinement Box
@@ -50224,6 +50766,24 @@ Body:
     Weight: 10
     Script: |
       /* upgradeui 100745; */
+  - Id: 100880
+    AegisName: aegis_100880
+    Name: Piercing Shadow Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem callfunc("F_Rand",24157,24163,24164,24156,24160,24159,24165,24161,24162,24158),1;
+  - Id: 100908
+    AegisName: aegis_100908
+    Name: Magic Piercing Shadow Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getitem callfunc("F_Rand",24177,24171,24178,24170,24174,24173,24179,24175,24176,24172),1;
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion

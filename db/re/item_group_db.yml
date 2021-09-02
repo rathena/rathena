@@ -19560,6 +19560,8 @@ Body:
             Rate: 1
           - Item: Token_Of_Siegfried
             Rate: 1
+          - Item: DF_Token_Of_Siegfried
+            Rate: 1
   - Group: TRESURE_BOX_WOE
     SubGroups:
       - SubGroup: 1
