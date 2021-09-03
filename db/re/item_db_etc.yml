@@ -42952,6 +42952,7 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"RK_DRAGONBREATH",10;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
   - Id: 29464
     AegisName: GeneticStone_Top_
     Name: Creator Stone (Top)
