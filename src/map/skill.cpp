@@ -17400,7 +17400,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		map_session_data* sd = (map_session_data*)bl;
 
 		if (sd->delayrate != 100) // bonus bDelayRate
-			time += time * sd->delayrate / 100;
+			time = time * sd->delayrate / 100;
 
 		for (auto &it : sd->skilldelay) { // bonus2 bSkillDelay
 			if (it.id == skill_id) {
