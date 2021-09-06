@@ -5466,7 +5466,6 @@ Body:
     Script: |
       bonus bDex,2;
       bonus bLuk,2;
-      bonus bUnbreakableWeapon;
   - Id: 1307
     AegisName: Windhawk
     Name: Windhawk
@@ -5494,7 +5493,6 @@ Body:
     Script: |
       bonus bAtkEle,Ele_Wind;
       bonus bAspdRate,5;
-      bonus bUnbreakableWeapon;
   - Id: 1308
     AegisName: Golden_Axe
     Name: Golden Axe
@@ -5687,7 +5685,7 @@ Body:
       bonus bStr,2;
   - Id: 1314
     AegisName: F_Tomahawk_C
-    Name: Tomahawk
+    Name: Rental Tomahawk
     Type: Weapon
     SubType: 2hAxe
     Buy: 2
@@ -5708,7 +5706,7 @@ Body:
       skill "ITM_TOMAHAWK",1;
   - Id: 1315
     AegisName: F_Right_Epsilon_C
-    Name: Light Epsilon
+    Name: Right Epsilon
     Type: Weapon
     SubType: 2hAxe
     Buy: 1
@@ -5730,6 +5728,7 @@ Body:
       bonus bStr,10;
       bonus2 bAddRace,RC_Demon,3;
       skill "AL_HEAL",3;
+      bonus bSpeedRate,25;
   - Id: 1316
     AegisName: Adventure_Axe
     Name: Adventure Axe
@@ -5784,9 +5783,9 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Rogue: true
       Swordman: true
       Thief: true
+      SuperNovice: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -5883,9 +5882,9 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Rogue: true
       Swordman: true
       Thief: true
+      SuperNovice: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -5895,7 +5894,7 @@ Body:
       skill "ITM_TOMAHAWK",1;
   - Id: 1322
     AegisName: Ru_Blue_Axe
-    Name: Blue Axe
+    Name: Ru Blue Axe
     Type: Weapon
     SubType: 1hAxe
     Buy: 10
