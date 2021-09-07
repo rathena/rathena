@@ -127,6 +127,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 		const std::string to = path + "/" + (rename.size() > 0 ? rename : name) + ".yml";
 
 		if( fileExists( from ) ){
+#ifndef CONVERT_ALL
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
@@ -136,6 +137,9 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 					continue;
 				}
 			}
+#else
+			ShowMessage( "Found the file \"%s\", which requires migration to yml.\n", from.c_str() );
+#endif
 
 			ShowNotice("Conversion process has begun.\n");
 
