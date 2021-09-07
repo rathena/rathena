@@ -2167,9 +2167,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	if( sd && !status_isdead(bl) && !sd->autospell.empty() )
 	{
 		for (const auto &it : sd->autospell) {
-			if (!(((it.flag)&attack_type)&BF_WEAPONMASK &&
-				  ((it.flag)&attack_type)&BF_RANGEMASK &&
-				  ((it.flag)&attack_type)&BF_SKILLMASK))
+			if (!(((it.battle_flag)&attack_type)&BF_WEAPONMASK &&
+				  ((it.battle_flag)&attack_type)&BF_RANGEMASK &&
+				  ((it.battle_flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
 			skill = it.id;
@@ -2486,9 +2486,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		!(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)))
 	{
 		for (const auto &it : dstsd->autospell2) {
-			if (!(((it.flag)&attack_type)&BF_WEAPONMASK &&
-				  ((it.flag)&attack_type)&BF_RANGEMASK &&
-				  ((it.flag)&attack_type)&BF_SKILLMASK))
+			if (!(((it.battle_flag)&attack_type)&BF_WEAPONMASK &&
+				  ((it.battle_flag)&attack_type)&BF_RANGEMASK &&
+				  ((it.battle_flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
 			uint16 autospl_skill_id = it.id, autospl_skill_lv = it.lv ? it.lv : 1;
