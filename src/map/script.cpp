@@ -8445,7 +8445,7 @@ BUILDIN_FUNC(delitemidx) {
 
 	if (!script_charid2sd(4, sd)) {
 		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	idx = script_getnum(st, 2);
