@@ -8450,7 +8450,7 @@ BUILDIN_FUNC(delitemidx) {
 	}
 
 	idx = script_getnum(st, 2);
-	if (idx < 0 || idx >= sd->inventory.max_amount) {
+	if (idx < 0 || idx >= MAX_INVENTORY) {
 		ShowWarning("buildin_delitemidx: Index (%d) should be from 0-%d.\n", idx, sd->inventory.max_amount - 1);
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
