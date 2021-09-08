@@ -8441,7 +8441,6 @@ BUILDIN_FUNC(delitem2)
 /// delitemidx <index>{,<amount>{,<char id>}};
 BUILDIN_FUNC(delitemidx) {
 	struct map_session_data* sd;
-	int amount = 0;
 
 	if (!script_charid2sd(4, sd)) {
 		script_pushint(st, false);
