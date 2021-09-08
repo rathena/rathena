@@ -8452,7 +8452,7 @@ BUILDIN_FUNC(delitemidx) {
 	if (idx < 0 || idx >= MAX_INVENTORY) {
 		ShowWarning("buildin_delitemidx: Index %d is out of the range 0-%d.\n", idx, MAX_INVENTORY - 1);
 		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (sd->inventory_data[idx] == nullptr) {
