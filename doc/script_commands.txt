@@ -5009,6 +5009,9 @@ an item at the given index, that index can remain empty until the player relogs,
 should recall 'getinventorylist()' again. If you try to delete an item at an invalid index, the
 script will terminate with an error.
 
+This command returns true on success and false if the item at the given index could not be deleted or if
+not enough items were available at the given index.
+
 Example:
 
 	// This will remove all Red Potions from player's inventory
