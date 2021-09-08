@@ -8455,8 +8455,8 @@ BUILDIN_FUNC(delitemidx) {
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (!(id = itemdb_exists(sd->inventory.u.items_inventory[idx].nameid))) {
-		ShowWarning("buildin_delitemidx: Deleting invalid Item ID (%d).\n", sd->inventory.u.items_inventory[idx].nameid);
+	if (sd->inventory_data[idx] == nullptr) {
+		ShowWarning("buildin_delitemidx: No item can be deleted from index %d of player %s (AID: %u, CID: %u).\n", idx, sd->status.name, sd->status.account_id, sd->status.char_id);
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
