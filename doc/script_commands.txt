@@ -5524,6 +5524,8 @@ Example:
 This will open a character's Mail window on the client connected to the
 invoking character.
 
+This command is not supported for PACKETVER 20150513 or newer.
+
 	mes "Close this window to open your mail inbox.";
 	close2;
 	openmail;
