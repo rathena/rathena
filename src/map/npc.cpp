@@ -262,7 +262,7 @@ bool npc_enable_target(npc_data* nd, uint32 char_id, int flag)
 		map_session_data *sd = map_charid2sd(char_id);
 	
 		if (!sd) {
-			ShowError("npc_enable: Attempted to %s a NPC on an invalid target %d.\n", (flag & 8) ? "show" : "hide", char_id);
+			ShowError("npc_enable: Attempted to %s a NPC '%s' on an invalid target %d.\n", (flag & 8) ? "show" : "hide", nd->name, char_id);
 			return false;
 		}
 

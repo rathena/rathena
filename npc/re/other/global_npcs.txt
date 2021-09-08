@@ -16,17 +16,3 @@ OnInit:
 	cloakonnpc();
 	end;
 }
-
--	script	dummy_disabled_instance_npc	-1,{
-	end;
-OnInstanceInit:
-	disablenpc();
-	end;
-}
-
--	script	dummy_cloaked_instance_npc	-1,{
-	end;
-OnInstanceInit:
-	cloakonnpc();
-	end;
-}
