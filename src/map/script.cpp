@@ -11647,7 +11647,7 @@ BUILDIN_FUNC(getareadropitem)
  *------------------------------------------*/
 BUILDIN_FUNC(enablenpc)
 {
-	npc_data* nd = nullptr;
+	npc_data* nd;
 	int flag = 0;
 	int char_id = script_hasdata(st, 3) ? script_getnum(st, 3) : 0;
 	const char* command = script_getfuncname(st);
