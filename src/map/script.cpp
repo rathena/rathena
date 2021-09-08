@@ -8469,7 +8469,7 @@ BUILDIN_FUNC(delitemidx) {
 	if (amount > 0)
 		script_pushint(st, pc_delitem(sd, idx, amount, 0, 0, LOG_TYPE_SCRIPT) == 0);
 	else
-		script_pushint(st, 0);
+		script_pushint(st, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
