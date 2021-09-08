@@ -8460,7 +8460,7 @@ BUILDIN_FUNC(delitemidx) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-int amount;
+	int amount;
 	if (script_hasdata(st, 3))
 		amount = script_getnum(st, 3);
 	else
