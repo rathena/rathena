@@ -5005,8 +5005,8 @@ This command will remove an item at the given inventory index.
 If <amount> is not specified, this will remove all of the items at the specified index.
 
 The only way to get the inventory index is by using 'getinventorylist()'. After deleting
-an item at the given index, that index can remain empty until the player relogs, so you
-should recall 'getinventorylist()' again. If you try to delete an item at an invalid index, the
+an item at the given index, that index can remain empty until the player relogs, requiring
+'getinventorylist()' to be called again. If an item is deleted with an invalid index, the
 script will terminate with an error.
 
 This command returns true on success and false if the item at the given index could not be deleted or if
