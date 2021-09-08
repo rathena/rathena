@@ -4416,7 +4416,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		{
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
 			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !skill_get_inf2(type2, INF2_NOTARGETSELF));
-			pc_bonus_autospell(sd->autospell, type2, type3, val, 0, current_equip_card_id, target ? 1 : 0);
+			pc_bonus_autospell(sd->autospell, type2, type3, val, 0, current_equip_card_id, target ? 0 : 1);
 		}
 		break;
 	case SP_AUTOSPELL_WHENHIT: // bonus3 bAutoSpellWhenHit,sk,y,n;
@@ -4424,7 +4424,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		{
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
 			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !skill_get_inf2(type2, INF2_NOTARGETSELF));
-			pc_bonus_autospell(sd->autospell2, type2, type3, val, BF_NORMAL|BF_SKILL, current_equip_card_id, target ? 1 : 0);
+			pc_bonus_autospell(sd->autospell2, type2, type3, val, BF_NORMAL|BF_SKILL, current_equip_card_id, target ? 0 : 1);
 		}
 		break;
 	case SP_ADD_MONSTER_DROP_ITEMGROUP: // bonus3 bAddMonsterDropItemGroup,ig,r,n;
@@ -4556,7 +4556,7 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 			int target = skill_get_inf(type3); //Support or Self (non-auto-target) skills should pick self.
 			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !skill_get_inf2(type3, INF2_NOTARGETSELF));
 
-			pc_bonus_autospell_onskill(sd->autospell3, type2, type3, type4, val, current_equip_card_id, target ? 1 : 0);
+			pc_bonus_autospell_onskill(sd->autospell3, type2, type3, type4, val, current_equip_card_id, target ? 0 : 1);
 		}
 		break;
 
