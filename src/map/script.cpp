@@ -8457,7 +8457,7 @@ BUILDIN_FUNC(delitemidx) {
 
 	if (sd->inventory_data[idx] == nullptr) {
 		ShowWarning("buildin_delitemidx: No item can be deleted from index %d of player %s (AID: %u, CID: %u).\n", idx, sd->status.name, sd->status.account_id, sd->status.char_id);
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
