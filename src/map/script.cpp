@@ -8467,7 +8467,7 @@ BUILDIN_FUNC(delitemidx) {
 		amount = sd->inventory.u.items_inventory[idx].amount;
 
 	if (amount > 0)
-		script_pushint(st, (pc_delitem(sd, idx, amount, 0, 0, LOG_TYPE_SCRIPT) == 0 ? 1 : 0));
+		script_pushint(st, pc_delitem(sd, idx, amount, 0, 0, LOG_TYPE_SCRIPT) == 0);
 	else
 		script_pushint(st, 0);
 
