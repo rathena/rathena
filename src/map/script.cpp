@@ -8444,7 +8444,7 @@ BUILDIN_FUNC(delitemidx) {
 	int idx = -1, amount = 0;
 
 	if (!script_charid2sd(4, sd)) {
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
