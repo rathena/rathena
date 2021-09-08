@@ -8462,7 +8462,7 @@ BUILDIN_FUNC(delitemidx) {
 	}
 
 	if (script_hasdata(st, 3))
-		amount = min(script_getnum(st, 3), sd->inventory.u.items_inventory[idx].amount);
+		amount = script_getnum(st, 3);
 	else
 		amount = sd->inventory.u.items_inventory[idx].amount;
 
