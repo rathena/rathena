@@ -8451,7 +8451,7 @@ BUILDIN_FUNC(delitemidx) {
 	int idx = script_getnum(st, 2);
 	if (idx < 0 || idx >= MAX_INVENTORY) {
 		ShowWarning("buildin_delitemidx: Index %d is out of the range 0-%d.\n", idx, MAX_INVENTORY - 1);
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
