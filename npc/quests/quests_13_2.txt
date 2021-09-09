@@ -50,6 +50,7 @@
 //= 2.7a Added Izlude RE coordinates. [Euphy]
 //= 2.8 Added GM management function. [Euphy]
 //= 2.9 Added custom weight check. Fixes issue #910. [Jeybla]
+//= 2.9a Added custom inventory check. To overcome failure to get gems. [Mazvi]
 //============================================================ 
 
 // Cat Paw Addition :: cat_enhance
@@ -4482,7 +4483,7 @@ function	script	jewel_13_2	{
 	}
 	else if (ep13_2_rhea == 5) {
 		getinventorylist;
-		if ( @inventorylist_count > 98 ) { //Need this check to solve the bug that failed to get the item.
+		if ( @inventorylist_count > 98 ) { //Need this check to solve/prevent the bug that failed to get the item.
 		mes "Your inventory slot is full. Please free up your inventory.";
 		close;
 		}
