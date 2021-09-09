@@ -4481,6 +4481,11 @@ function	script	jewel_13_2	{
 		close;
 	}
 	else if (ep13_2_rhea == 5) {
+		getinventorylist;
+		if ( @inventorylist_count > 98 ) { //Need this check to solve the bug that failed to get the item.
+		mes "Your inventory slot is full. Please free up your inventory.";
+		close;
+		}
 		.@num = getarg(1);
 		if (checkquest(8240+.@num) == -1) {
 			mes "- Under a round pile of earth, -";
