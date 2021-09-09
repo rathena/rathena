@@ -597,12 +597,12 @@ function	script	F_mal_missing	{
 		disablenpc instance_npcname("Culvert Entrance#"+.@i$);
 		disablenpc instance_npcname("Missing, the Cleaner#"+.@i$+"o");
 		donpcevent instance_npcname("Monster Hole#"+.@i$)+"::OnClear";
-		disablenpc instance_npcname(strnpcinfo(0));
+		disablenpc();
 		close;
 	}
 	close;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 
@@ -712,13 +712,13 @@ OnClear:
 1@pump,36,111,4	script	#Culvert_n1	844,14,14,{ //temporary workaround for ALL_SAMEMAP
 	progressbar "0xFFFF00",10;
 	stopnpctimer;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	set .@map$, instance_mapname("1@pump");
 	set .@index, atoi(charat(strnpcinfo(2),9));
@@ -758,7 +758,7 @@ OnClear:
 OnTimer49500:	//OnTimer50000 clashes with the timer in "Missing, the Cleaner#h".
 	donpcevent instance_npcname("Missing, the Cleaner#n")+"::OnAddSeaweed";
 	donpcevent instance_npcname(strnpcinfo(0))+"::OnClear";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnTouch:
 	specialeffect EF_MAPPILLAR2;
@@ -773,10 +773,10 @@ OnTouch:
 1@pump,1,1,4	script	Boss Creation#n	-1,{
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	initnpctimer;
 	end;
 OnTimer100:
@@ -875,7 +875,7 @@ OnMyMobDead:
 	mes "If Tomas closes this down, we will lose our jobs!";
 	close;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 
@@ -972,13 +972,13 @@ OnTimer425000:
 2@pump,53,114,4	script	#Culvert_h1	844,14,14,{ //temporary workaround for ALL_SAMEMAP
 	progressbar "0xFFFF00",15;
 	stopnpctimer;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	set .@map$, instance_mapname("2@pump");
 	set .@index, atoi(substr(strnpcinfo(2),9,getstrlen(strnpcinfo(2))-1));
@@ -1012,7 +1012,7 @@ OnClear:
 OnTimer39500:	//OnTimer40000 clashes with the timer in "Missing, the Cleaner#h".
 	donpcevent instance_npcname("Missing, the Cleaner#h")+"::OnAddSeaweed";
 	donpcevent instance_npcname(strnpcinfo(0))+"::OnClear";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnTouch:
 	specialeffect EF_MAPPILLAR2;

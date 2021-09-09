@@ -1714,7 +1714,7 @@ lhz_dun_n,75,121,0	script	#Alphoccio_Basil_A1	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
 	specialeffect EF_BAT2;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	end;
 OnTimer1000:
@@ -1974,7 +1974,7 @@ OnTimer1000:
 	end;
 OnTimer40000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 
