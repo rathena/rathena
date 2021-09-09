@@ -6600,8 +6600,8 @@ Examples:
 
 ---------------------------------------
 
-*disablenpc "<NPC object name>";
-*enablenpc "<NPC object name>";
+*disablenpc {"<NPC object name>"};
+*enablenpc {"<NPC object name>"};
 
 These two commands will disable and enable, respectively, an NPC object
 specified by name. The disabled NPC will disappear from sight and will no longer
@@ -6618,8 +6618,8 @@ copies, and then disable all except one.
 
 ---------------------------------------
 
-*hideonnpc "<NPC object name>";
-*hideoffnpc "<NPC object name>";
+*hideonnpc {"<NPC object name>"};
+*hideoffnpc {"<NPC object name>"};
 
 These commands will make the NPC object specified display as hidden/visible,
 even though not actually disabled per se. Hidden as in thief Hide skill, but
@@ -6639,8 +6639,8 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
-*cloakonnpc "<NPC object name>"{,<character ID>};
-*cloakoffnpc "<NPC object name>"{,<character ID>};
+*cloakonnpc {"<NPC object name>"{,<character ID>}};
+*cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
 These commands will make the NPC object specified display as cloaked/uncloaked,
 even though not actually disabled.
@@ -6653,7 +6653,7 @@ If no <character ID> is specified it will display to the area.
 
 ---------------------------------------
 
-*isnpccloaked "<NPC object name>"{,<character ID>};
+*isnpccloaked {"<NPC object name>"{,<character ID>}};
 
 Returns true if the NPC has been cloaked to the attached player or given
 <character ID>, false otherwise. This works in association with cloakonnpc

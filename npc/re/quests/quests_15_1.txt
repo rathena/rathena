@@ -3315,7 +3315,7 @@ verus03,127,36,4	script	???#EP15_1D_01	4_CRACK,{
 		}
 		close2;
 		initnpctimer;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	}
 	end;
 
@@ -3326,7 +3326,7 @@ OnTimer120000:
 	if (rand(1,2) != 1)
 		end;
 OnTimer150000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -3559,7 +3559,7 @@ verus04,187,219,4	script	Thicket#EP15_1D_01	4_CREEPER,{
 			mes "Gathered the herb.";
 		}
 		close2;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		initnpctimer;
 	}
 	end;
@@ -3571,7 +3571,7 @@ OnTimer240000:
 	if (rand(1,2) != 1)
 		end;
 OnTimer300000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -3914,13 +3914,13 @@ verus03,127,145,0	script	Machine Remnant#atnd01	4_ENERGY_RED,3,3,{
 		getitem 6756,1;// Condensed_Energy
 		mes "Collected Condensed Energy!";
 		initnpctimer;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	}
 	close;
 
 OnTimer30000:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnTouch_:

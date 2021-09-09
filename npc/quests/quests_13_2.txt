@@ -427,7 +427,7 @@ man_fild02,132,47,4	duplicate(Cat Paw Agent#spl)	Cat Paw Agent#man	421
 		else if (.@rhea_ran == 17) getitem 6080,1; //Manuk_Coin
 		else getitem 6048,1; //Unidentified_Mineral
 		initnpctimer;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		end;
 	}
 	else {
@@ -438,7 +438,7 @@ man_fild02,132,47,4	duplicate(Cat Paw Agent#spl)	Cat Paw Agent#man	421
 	end;
 
 OnTimer120000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -3282,23 +3282,23 @@ mid_camp,192,239,4	script	Wanted Sign#ep13_2ect01	857,{
 	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
 		mes "We just got fresh eggs from the dragon nest.";
 		getitem 6093,1; //Egg_Of_Draco
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		initnpctimer;
 		close;
 	}
 	end;
 
 OnTimer420000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -3317,23 +3317,23 @@ nyd_dun02,68,256,0	script	Dragon Egg#ep13_degg_1	463,{
 	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
 		mes "We just got fresh eggs from the dragon nest.";
 		getitem 6093,1; //Egg_Of_Draco
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		initnpctimer;
 		close;
 	}
 	end;
 
 OnTimer240000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 nyd_dun02,68,256,0	duplicate(Dragon Egg#ep13_degg_1)	Dragon Egg#ep13_degg11	463
@@ -3348,23 +3348,23 @@ nyd_dun02,201,166,0	script	Dragon Egg#ep13_degg_2	463,{
 	if ((ep13_2_dayegg == 1) && (countitem(6093) < 10)) {
 		mes "We just got fresh eggs from the dragon nest.";
 		getitem 6093,1; //Egg_Of_Draco
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		initnpctimer;
 		close;
 	}
 	end;
 
 OnTimer120000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 nyd_dun02,201,166,0	duplicate(Dragon Egg#ep13_degg_2)	Dragon Egg#ep13_degg16	463
@@ -4907,7 +4907,7 @@ mjolnir_12,220,37,0	duplicate(mjo_no_find)	#mj12_find_3	-1,5,5
 					else getitem 6077,2; //Rough_Mineral
 					close2;
 					donpcevent strnpcinfo(0)+"_t::OnEnable";
-					disablenpc strnpcinfo(0);
+					disablenpc();
 					end;
 				}
 			case 2:
@@ -4923,7 +4923,7 @@ mjolnir_12,220,37,0	duplicate(mjo_no_find)	#mj12_find_3	-1,5,5
 	end;
 
 OnInit:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnTouch_:
@@ -5257,7 +5257,7 @@ OnTouch_:
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
 					else getitem 6077,1; //Rough_Mineral
 					donpcevent strnpcinfo(0)+"_t::OnEnable";
-					disablenpc strnpcinfo(0);
+					disablenpc();
 					close;
 				}
 			case 2:
@@ -5273,7 +5273,7 @@ OnTouch_:
 	end;
 
 OnInit:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnTouch_:
@@ -5390,7 +5390,7 @@ OnTouch_:
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
 					else getitem 6077,1; //Rough_Mineral
 					donpcevent strnpcinfo(0)+"_t::OnEnable";
-					disablenpc strnpcinfo(0);
+					disablenpc();
 					close;
 				}
 			case 2:
@@ -5406,7 +5406,7 @@ OnTouch_:
 	end;
 
 OnInit:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnTouch_:
@@ -6974,7 +6974,7 @@ OnTouch_:
 
 -	script	ep13_warp_s_0	-1,{
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 OnTimer2000:
 OnTimer4000:
@@ -6988,18 +6988,18 @@ OnTimer8000:
 
 OnTimer10000:
 	specialeffect EF_STEAL;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnDisable:
 	specialeffect EF_WIND;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
 -	script	ep13_warp_s_1	-1,{
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 OnTimer2000:
 OnTimer4000:
@@ -7014,18 +7014,18 @@ OnTimer10000:
 
 OnTimer12000:
 	specialeffect EF_STEAL;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnDisable:
 	specialeffect EF_WIND;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
 -	script	ep13_warp_s_2	-1,{
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 OnTimer2000:
 OnTimer4000:
@@ -7041,12 +7041,12 @@ OnTimer12000:
 
 OnTimer15000:
 	specialeffect EF_STEAL;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnDisable:
 	specialeffect EF_WIND;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 

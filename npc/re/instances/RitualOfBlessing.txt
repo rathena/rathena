@@ -712,7 +712,7 @@ OnInstanceInit:
 2@mir,96,83,0	script	dummy_npc_rituel_disabled	-1,{
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	end;
 }
 2@mir,88,74,3	duplicate(dummy_npc_rituel_disabled)	Ian Walther#ian02	1_M_JOBTESTER
