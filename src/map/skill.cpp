@@ -17406,7 +17406,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 
 		for (auto &it : sd->skilldelay) { // bonus2 bSkillDelay
 			if (it.id == skill_id) {
-				delay += it.val;
+				time += it.val;
 				break;
 			}
 		}
