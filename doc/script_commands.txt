@@ -2903,6 +2903,7 @@ invoking character has in their inventory, including all the data needed to
 recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]                - array of item ids.
+@inventorylist_idx[]               - array of item inventory index.
 @inventorylist_amount[]            - their corresponding item amounts.
 @inventorylist_equip[]             - on which position the item is equipped (see EQP_* constants)
                                      It will contain 0 if the item is not equipped.
@@ -4994,6 +4995,30 @@ See 'getitem2' for an explanation of the expanded parameters.
 <RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
+
+---------------------------------------
+
+*delitemidx <index>{,<amount>{,<char id>}}
+
+This command will remove an item at the given inventory index.
+
+If <amount> is not specified, this will remove all of the items at the specified index.
+
+The only way to get the inventory index is by using 'getinventorylist()'. After deleting
+an item at the given index, that index can remain empty until the player relogs, requiring
+'getinventorylist()' to be called again. If an item is deleted with an invalid index, the
+script will terminate with an error.
+
+This command returns true on success and false if the item at the given index could not be deleted or if
+not enough items were available at the given index.
+
+Example:
+
+	// This will remove all Red Potions from player's inventory
+	getinventorylist();
+	for (.@i = 0; .@i < @inventorylist_count; ++.@i)
+		if (@inventorylist_id[.@i] == 501)
+			delitemidx @inventorylist_idx[.@i];
 
 ---------------------------------------
 
