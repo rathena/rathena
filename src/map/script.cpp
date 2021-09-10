@@ -11706,6 +11706,10 @@ BUILDIN_FUNC(enablenpc)
 		flag = NPCVIEW_CLOAKOFF;
 	else if (!strcmp(command,"cloakonnpc"))
 		flag = NPCVIEW_CLOAKON;
+	else{
+		ShowError( "buildin_enablenpc: Undefined command \"%s\".\n", command );
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	if (!nd) {
 		if (script_hasdata(st, 2))
