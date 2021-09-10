@@ -36,7 +36,7 @@ using namespace rathena;
 #define WEB_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[WEB_MAX_MSG];	/// Web Server messages_conf
 
-struct Web_Config web_config;
+struct Web_Config web_config {};
 std::shared_ptr<httplib::Server> http_server;
 
 int login_server_port = 3306;
@@ -126,7 +126,8 @@ bool web_config_read(const char* cfgName, bool normal) {
 			msg_silent = atoi(w2);
 			if (msg_silent) /* only bother if we have actually this enabled */
 				ShowInfo("Console Silent Setting: %d\n", msg_silent);
-		} else if (!strcmpi(w1, "console_msg_log"))
+		}
+		else if (!strcmpi(w1, "console_msg_log"))
 			console_msg_log = atoi(w2);
 		else if (!strcmpi(w1, "console_log_filepath"))
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
@@ -134,6 +135,10 @@ bool web_config_read(const char* cfgName, bool normal) {
 			web_config.print_req_res = config_switch(w2);
 		else if (!strcmpi(w1, "import"))
 			web_config_read(w2, normal);
+		else if (!strcmpi(w1, "emblem_transparency_limit"))
+			web_config.emblem_transparency_limit = atoi(w2);
+		else if (!strcmpi(w1, "allow_gifs"))
+			web_config.allow_gifs = config_switch(w2) == 1;
 	}
 	fclose(fp);
 	ShowInfo("Finished reading %s.\n", cfgName);

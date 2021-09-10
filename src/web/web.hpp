@@ -27,6 +27,8 @@ struct Web_Config {
 
 	char webconf_name[256];						/// name of main config file
 	char msgconf_name[256];							/// name of msg_conf config file
+	int emblem_transparency_limit;                  // Emblem transparency limit
+	bool allow_gifs;
 };
 
 

@@ -8,6 +8,7 @@
 #include <ostream>
 
 #include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
 
 #include "auth.hpp"
 #include "http.hpp"
@@ -159,6 +160,7 @@ HANDLER_FUNC(emblem_upload) {
 	auto imgtype_str = req.get_file_value("ImgType").content;
 	auto imgtype = imgtype_str.c_str();
 	auto img = req.get_file_value("Img").content;
+	auto img_cstr = img.c_str();
 	
 	if (imgtype_str != "BMP" && imgtype_str != "GIF") {
 		ShowError("Invalid image type %s, rejecting!\n", imgtype);
@@ -173,6 +175,58 @@ HANDLER_FUNC(emblem_upload) {
 		res.status = 400;
 		res.set_content("Error", "text/plain");
 		return;
+	}
+
+	if (imgtype_str == "GIF") {
+		if (!web_config.allow_gifs) {
+			ShowDebug("Client sent GIF image but GIF image support is disabled.\n");
+			res.status = 400;
+			res.set_content("Error", "text/plain");
+			return;
+		}
+		if (img.substr(0, 3) != "GIF") {
+			ShowDebug("Server received ImgType GIF but received file does not start with \"GIF\" magic header.\n");
+			res.status = 400;
+			res.set_content("Error", "text/plain");
+			return;
+		}
+	}
+	else if (imgtype_str == "BMP") {
+		if (length < 14) {
+			ShowDebug("File size is too short\n");
+			res.status = 400;
+			res.set_content("Error", "text/plain");
+			return;
+		}
+		if (img.substr(0, 2) != "BM") {
+			ShowDebug("Server received ImgType BMP but received file does not start with \"BM\" magic header.\n");
+			res.status = 400;
+			res.set_content("Error", "text/plain");
+			return;
+		}
+		if (RBUFL(img_cstr, 2) != length) {
+			ShowDebug("Bitmap size doesn't match size in file header.\n");
+			res.status = 400;
+			res.set_content("Error", "text/plain");
+			return;
+		}
+
+		if (web_config.emblem_transparency_limit < 100) {
+			uint32 offset = RBUFL(img_cstr, 0x0A);
+			int i, transcount = 1, tmp[3];
+			for (i = offset; i < length - 1; i++) {
+				int j = i % 3;
+				tmp[j] = RBUFL(img_cstr, i);
+				if (j == 2 && (tmp[0] == 0xFFFF00FF) && (tmp[1] == 0xFFFF00) && (tmp[2] == 0xFF00FFFF)) //if pixel is transparent
+					transcount++;
+			}
+			if (((transcount * 300) / (length - offset)) > web_config.emblem_transparency_limit) {
+				ShowDebug("Bitmap transparency check failed.\n");
+				res.status = 400;
+				res.set_content("Error", "text/plain");
+				return;
+			}
+		}
 	}
 
 	SQLLock sl(WEB_SQL_LOCK);
