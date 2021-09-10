@@ -244,14 +244,14 @@ int do_init( int argc, char** argv ){
 	}
 
 	skill_txt_data( path_db_mode, path_db );
-	if (!process("SKILL_DB", 1, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 2, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return 0;
 	}
 
 	skill_txt_data( path_db_import, path_db_import );
-	if (!process("SKILL_DB", 1, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 2, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return 0;
@@ -2010,6 +2010,28 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 					body << YAML::Key << "Item" << YAML::Value << *item_name;
 					body << YAML::Key << "Amount" << YAML::Value << it_req->second.amount[i];
+
+					switch (skill_id) { // List of level dependent item costs
+						case WZ_FIREPILLAR:
+							if (i < 6)
+								break; // Levels 1-5 have no cost
+						case NC_SHAPESHIFT:
+						case NC_REPAIR:
+							if (skill_id == NC_SHAPESHIFT || skill_id == NC_REPAIR && i >= 5)
+								break; // Don't add level 5 label as it exceeds the max level of these skills
+						case GN_FIRE_EXPANSION:
+						case SO_SUMMON_AGNI:
+						case SO_SUMMON_AQUA:
+						case SO_SUMMON_VENTUS:
+						case SO_SUMMON_TERA:
+						case SO_WATER_INSIGNIA:
+						case SO_FIRE_INSIGNIA:
+						case SO_WIND_INSIGNIA:
+						case SO_EARTH_INSIGNIA:
+						case KO_MAKIBISHI:
+							body << YAML::Key << "Level" << YAML::Value << i;
+					}
+
 					body << YAML::EndMap;
 				}
 			}
