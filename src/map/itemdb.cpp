@@ -416,18 +416,46 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (lv > MAX_WEAPON_LEVEL) {
 			this->invalidWarning(node["WeaponLevel"], "Invalid weapon level %d, defaulting to 0.\n", lv);
-			lv = REFINE_TYPE_ARMOR;
+			lv = 0;
 		}
 
 		if (item->type != IT_WEAPON) {
 			this->invalidWarning(node["WeaponLevel"], "Item type is not a weapon, defaulting to 0.\n");
-			lv = REFINE_TYPE_ARMOR;
+			lv = 0;
 		}
 
-		item->wlv = lv;
+		item->weapon_level = lv;
 	} else {
 		if (!exists)
-			item->wlv = REFINE_TYPE_ARMOR;
+			item->weapon_level = 0;
+	}
+
+	if( this->nodeExists( node, "ArmorLevel" ) ){
+		uint16 level;
+
+		if( !this->asUInt16( node, "ArmorLevel", level ) ){
+			return 0;
+		}
+
+		if( level > MAX_ARMOR_LEVEL ){
+			this->invalidWarning( node["ArmorLevel"], "Invalid armor level %d, defaulting to 0.\n", level );
+			level = 0;
+		}
+
+		if( item->type != IT_ARMOR ){
+			this->invalidWarning( node["ArmorLevel"], "Item type is not an armor, defaulting to 0.\n" );
+			level = 0;
+		}
+
+		item->armor_level = level;
+	}else{
+		if( !exists ){
+			if( item->type == IT_ARMOR ){
+				item->armor_level = 1;
+			}else{
+				item->armor_level = 0;
+			}
+		}
 	}
 
 	if (this->nodeExists(node, "EquipLevelMin")) {
