@@ -8186,6 +8186,7 @@ void clif_pet_food( struct map_session_data *sd, int foodid,int fail ){
 
 /// Send pet auto feed info.
 void clif_pet_autofeed_status(struct map_session_data* sd) {
+#if PACKETVER >= 20141008
 	nullpo_retv(sd);
 
 	if (battle_config.pet_autofeed_always) {
@@ -8203,6 +8204,7 @@ void clif_pet_autofeed_status(struct map_session_data* sd) {
 			clif_configuration(sd, CONFIG_PET_AUTOFEED, true);
 		}
 	}
+#endif
 }
 
 /// Presents a list of skills that can be auto-spelled (ZC_AUTOSPELLLIST).
@@ -10772,9 +10774,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
-#if PACKETVER >= 20141008
 		clif_pet_autofeed_status(sd);
-#endif
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
 			// Always send ON or OFF
