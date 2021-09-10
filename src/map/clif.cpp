@@ -8185,11 +8185,11 @@ void clif_pet_food( struct map_session_data *sd, int foodid,int fail ){
 }
 
 /// Send pet auto feed info.
-void clif_pet_autofeed_status(struct map_session_data* sd) {
+void clif_pet_autofeed_status(struct map_session_data* sd, bool force) {
 #if PACKETVER >= 20141008
 	nullpo_retv(sd);
 
-	if (battle_config.pet_autofeed_always) {
+	if (force || battle_config.pet_autofeed_always) {
 		// Always send ON or OFF
 		if (sd->pd && battle_config.feature_pet_autofeed) {
 			clif_configuration(sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed);
@@ -10774,7 +10774,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
-		clif_pet_autofeed_status(sd);
+		clif_pet_autofeed_status(sd,false);
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
 			// Always send ON or OFF
