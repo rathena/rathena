@@ -4484,8 +4484,8 @@ function	script	jewel_13_2	{
 	else if (ep13_2_rhea == 5) {
 		//Custom Weight Check
 		if (!checkweight(7575,2)) {
-		mes "Sorry, your inventory is full!";
-		close;
+		    mes "Sorry, your inventory is full!";
+		    close;
 		}
 		.@num = getarg(1);
 		if (checkquest(8240+.@num) == -1) {
