@@ -1115,6 +1115,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 #endif
 		clif_pet_equip_area(sd->pd);
 		clif_send_petstatus(sd);
+		clif_pet_autofeed_status(sd,true);
 	}
 
 	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
