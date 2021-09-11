@@ -2690,8 +2690,13 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 
 		// Check if constant exists and get its value.
 		if(!script_get_constant(viewid, &val_tmp)) {
-			ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
-			val = JT_INVISIBLE;
+			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(viewid);
+			if (mob != nullptr)
+				val = static_cast<int>(mob->vd.class_);
+			else {
+				ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
+				val = JT_INVISIBLE;
+			}
 		} else
 			val = static_cast<int>(val_tmp);
 	}
