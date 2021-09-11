@@ -4747,7 +4747,7 @@ ACMD_FUNC(shownpc)
 	npc_data* nd = npc_name2id(NPCname);
 
 	if (nd) {
-		npc_enable(nd, 1);
+		npc_enable(*nd, NPCVIEW_ENABLE);
 		clif_displaymessage(fd, msg_txt(sd,110)); // Npc Enabled.
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,111)); // This NPC doesn't exist.
@@ -4779,7 +4779,7 @@ ACMD_FUNC(hidenpc)
 		return -1;
 	}
 
-	npc_enable(nd, 0);
+	npc_enable(*nd, NPCVIEW_DISABLE);
 	clif_displaymessage(fd, msg_txt(sd,112)); // Npc Disabled.
 	return 0;
 }
