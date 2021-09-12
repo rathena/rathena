@@ -17509,7 +17509,15 @@ void skill_identify(struct map_session_data *sd, int idx)
  *------------------------------------------*/
 void skill_weaponrefine(struct map_session_data *sd, int idx)
 {
-	static const t_itemid material[MAX_WEAPON_LEVEL] = { ITEMID_PHRACON, ITEMID_EMVERETARCON, ITEMID_ORIDECON, ITEMID_ORIDECON, 0 };
+	static const t_itemid material[MAX_WEAPON_LEVEL] = {
+		ITEMID_PHRACON,
+		ITEMID_EMVERETARCON,
+		ITEMID_ORIDECON,
+		ITEMID_ORIDECON,
+#ifdef RENEWAL
+		0
+#endif
+	};
 
 	nullpo_retv(sd);
 

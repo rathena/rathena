@@ -6921,7 +6921,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 			TBL_PC *sd = (TBL_PC*)bl;
 			short index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
 
-			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
+			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON && sd->inventory_data[index]->weapon_level == 4)
 				watk += sc->data[SC_NIBELUNGEN]->val2;
 		}
 	}
