@@ -71,7 +71,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	}
 	mes "[Holink]";
 	.@refineitemid = getequipid(.@part); // save id of the item
-	.@itemtype = getiteminfo( .@refineitemid );
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 // Holink has different hardcoded prices

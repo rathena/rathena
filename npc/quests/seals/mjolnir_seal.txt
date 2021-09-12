@@ -1965,7 +1965,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close;
 				}
 				.@equip_id = getequipid(.@part);
-				.@itemtype = getiteminfo( .@equip_id );
+				.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
 				.@equip_refine = getequiprefinerycnt(.@part);
 				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 				if (.@equip_refine >= 10) {
@@ -2190,7 +2190,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					close;
 				}
 				.@equip_id = getequipid(.@part);
-				.@itemtype = getiteminfo( .@equip_id );
+				.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
 				.@equip_refine = getequiprefinerycnt(.@part);
 				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 				if (.@equip_refine >= 10) {

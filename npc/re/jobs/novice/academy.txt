@@ -12818,7 +12818,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	.@itemtype = getiteminfo( .@refineitemid );
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 
 	if (.@refinerycnt >= 10) {
 		mes "[Refining Machine Wagjak]";
