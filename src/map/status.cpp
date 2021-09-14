@@ -8891,6 +8891,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 					ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
 				else
 					ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
+				ShowDebug( "Source (NPC): %s is located in: %s\n", nd->name, nd->path );
 			}
 			break;
 		}
