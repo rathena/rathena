@@ -8410,7 +8410,6 @@ ACMD_FUNC(mapflag) {
 		if( mapflag != MF_INVALID ){
 			std::vector<e_mapflag> disabled_mf = { MF_NOSAVE,
 												MF_PVP_NIGHTMAREDROP,
-												MF_RESTRICTED,
 												MF_NOCOMMAND,
 												MF_BEXP,
 												MF_JEXP,
@@ -8418,8 +8417,8 @@ ACMD_FUNC(mapflag) {
 												MF_SKILL_DAMAGE,
 												MF_SKILL_DURATION };
 
-			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
-				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
+			if (mapflag == MF_RESTRICTED || (flag > 0 && util::vector_exists(disabled_mf, mapflag))) {
+				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be changed as it requires unique values.", flag_name);
 				clif_displaymessage(sd->fd,atcmd_output);
 			} else {
 				map_setmapflag(sd->bl.m, mapflag, flag != 0);
