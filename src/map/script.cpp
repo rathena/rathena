@@ -11685,7 +11685,7 @@ BUILDIN_FUNC(getareadropitem)
 BUILDIN_FUNC(enablenpc)
 {
 	npc_data* nd;
-	int flag = 0;
+	e_npcv_status flag = NPCVIEW_DISABLE;
 	int char_id = script_hasdata(st, 3) ? script_getnum(st, 3) : 0;
 	const char* command = script_getfuncname(st);
 
@@ -11695,27 +11695,31 @@ BUILDIN_FUNC(enablenpc)
 		nd = map_id2nd(st->oid);
 
 	if (!strcmp(command,"enablenpc"))
-		flag = 1;
+		flag = NPCVIEW_ENABLE;
 	else if (!strcmp(command,"disablenpc"))
-		flag = 0;
+		flag = NPCVIEW_DISABLE;
 	else if (!strcmp(command,"hideoffnpc"))
-		flag = 2;
+		flag = NPCVIEW_HIDEOFF;
 	else if (!strcmp(command,"hideonnpc"))
-		flag = 4;
+		flag = NPCVIEW_HIDEON;
 	else if (!strcmp(command,"cloakoffnpc"))
-		flag = 8;
+		flag = NPCVIEW_CLOAKOFF;
 	else if (!strcmp(command,"cloakonnpc"))
-		flag = 16;
-
-	if (!nd) {
-		if (script_hasdata(st, 2))
-			ShowError("buildin_%s: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&11) ? "show" : "hide", command, script_getstr(st,2), flag);
-		else
-			ShowError("buildin_%s: Attempted to %s a non-existing NPC (flag=%d).\n", (flag&11) ? "show" : "hide", command, flag);
+		flag = NPCVIEW_CLOAKON;
+	else{
+		ShowError( "buildin_enablenpc: Undefined command \"%s\".\n", command );
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (npc_enable_target(nd, char_id, flag))
+	if (!nd) {
+		if (script_hasdata(st, 2))
+			ShowError("buildin_%s: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag & NPCVIEW_VISIBLE) ? "show" : "hide", command, script_getstr(st,2), flag);
+		else
+			ShowError("buildin_%s: Attempted to %s a non-existing NPC (flag=%d).\n", (flag & NPCVIEW_VISIBLE) ? "show" : "hide", command, flag);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (npc_enable_target(*nd, char_id, flag))
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -18939,6 +18943,13 @@ BUILDIN_FUNC(unitwalk)
 	}
 
 	ud = unit_bl2ud(bl);
+
+	if (bl->type == BL_NPC) {
+		if (!((TBL_NPC*)bl)->status.hp)
+			status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
+		else
+			status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
+	}
 
 	if (!strcmp(cmd,"unitwalk")) {
 		int x = script_getnum(st,3);
