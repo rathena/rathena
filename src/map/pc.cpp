@@ -10804,7 +10804,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	return true;
 }
 
-void pc_deleteautobonus( struct map_session_data& sd, std::vector<s_autobonus>& bonus, int position ){
+static void pc_deleteautobonus( std::vector<s_autobonus>& bonus, int position ){
 	std::vector<s_autobonus>::iterator it = bonus.begin();
 
 	while( it != bonus.end() ){
@@ -10845,9 +10845,9 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 	int i, iflag;
 	bool status_calc = false;
 
-	pc_deleteautobonus( *sd, sd->autobonus, sd->inventory.u.items_inventory[n].equip );
-	pc_deleteautobonus( *sd, sd->autobonus2, sd->inventory.u.items_inventory[n].equip );
-	pc_deleteautobonus( *sd, sd->autobonus3, sd->inventory.u.items_inventory[n].equip );
+	pc_deleteautobonus( sd->autobonus, sd->inventory.u.items_inventory[n].equip );
+	pc_deleteautobonus( sd->autobonus2, sd->inventory.u.items_inventory[n].equip );
+	pc_deleteautobonus( sd->autobonus3, sd->inventory.u.items_inventory[n].equip );
 
 	sd->inventory.u.items_inventory[n].equip = 0;
 	if (!(flag & 4))
