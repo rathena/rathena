@@ -8418,7 +8418,7 @@ ACMD_FUNC(mapflag) {
 												MF_SKILL_DAMAGE,
 												MF_SKILL_DURATION };
 
-			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
+			if (flag > 0 && util::vector_exists(disabled_mf, mapflag)) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
 				clif_displaymessage(sd->fd,atcmd_output);
 			} else {
