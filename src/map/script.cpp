@@ -5722,7 +5722,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct party_data* p;
-	int type, mapindex = 0, m = -1, i, rx = 0, ry = 0;
+	int type, ret, mapindex = 0, m = -1, i, rx = 0, ry = 0;
 
 	const char* str = script_getstr(st,2);
 	int x = script_getnum(st,3);
@@ -5774,7 +5774,7 @@ BUILDIN_FUNC(warpparty)
 			struct map_data *mapdata = map_getmapdata(m);
 
 			if ( mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
-				return SCRIPT_CMD_FAILURE;
+				return SCRIPT_CMD_SUCCESS;
 
 			i = 0;
 			do {
@@ -5782,8 +5782,10 @@ BUILDIN_FUNC(warpparty)
 				y = rnd()%(mapdata->ys - 2) + 1;
 			} while ((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
 
-			if (i >= 1000)
+			if (i >= 1000) {
+				ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
 				return SCRIPT_CMD_FAILURE;
+			}
 			} break;
 		case 5:
 			mapindex = mapindex_name2id(str);
@@ -5809,15 +5811,15 @@ BUILDIN_FUNC(warpparty)
 		{
 		case 0: // Random
 			if(!map_getmapflag(pl_sd->bl.m, MF_NOWARP))
-				pc_randomwarp(pl_sd,CLR_TELEPORT);
+				ret = pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
 		case 1: // SavePointAll
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
+				ret = pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 2: // SavePoint
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+				ret = pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // Leader
 			if (p->party.member[i].leader)
@@ -5836,8 +5838,13 @@ BUILDIN_FUNC(warpparty)
 			}
 
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
-				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
+				ret = pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
+		}
+
+		if( ret ) {
+			ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", pl_sd->status.name, str, x, y);
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
