@@ -4691,6 +4691,12 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 	}
 	if (name == "") {
 		safesnprintf(nd->exname, ARRAYLENGTH(nd->exname), "dup_%d", nd->bl.id);
+		//Making sure the generated name is not used for another npc.
+		int i = 0;
+		while (npc_name2id(nd->exname) != nullptr) {
+			++i;
+			snprintf(nd->exname, ARRAYLENGTH(nd->exname), "%d_%d_%d_%d", i, nd->bl.m, nd->bl.x, nd->bl.y);
+		}
 	}
 	else {
 		strcpy(nd->exname, name);
