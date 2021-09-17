@@ -5752,7 +5752,7 @@ BUILDIN_FUNC(warpparty)
 		case 2:
 			//"SavePoint" uses save point of the currently attached player
 			if ( !script_rid2sd(sd) )
-				return SCRIPT_CMD_SUCCESS;
+				return SCRIPT_CMD_FAILURE;
 			break;
 		case 3:
 			for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
@@ -5766,7 +5766,7 @@ BUILDIN_FUNC(warpparty)
 			break;
 		case 4: {
 			if ( !script_rid2sd(sd) )
-				return SCRIPT_CMD_SUCCESS;
+				return SCRIPT_CMD_FAILURE;
 
 			mapindex = sd->mapindex;
 			m = map_mapindex2mapid(mapindex);
