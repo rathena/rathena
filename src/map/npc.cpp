@@ -254,88 +254,81 @@ static int npc_cloaked_sub(struct block_list *bl, va_list ap)
 /*==========================================
  * Disable / Enable NPC
  *------------------------------------------*/
-bool npc_enable_target(const char* name, uint32 char_id, int flag)
+bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 {
-	struct npc_data* nd = npc_name2id(name);
-
-	if (!nd) {
-		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&11) ? "show" : "hide", name, flag);
-		return false;
-	}
-
-	if (char_id > 0 && (flag & 24)) {
+	if (char_id > 0 && (flag & NPCVIEW_CLOAK)) {
 		map_session_data *sd = map_charid2sd(char_id);
 	
 		if (!sd) {
-			ShowError("npc_enable: Attempted to %s a NPC '%s' on an invalid target %d.\n", (flag & 8) ? "show" : "hide", name, char_id);
+			ShowError("npc_enable: Attempted to %s a NPC '%s' on an invalid target %d.\n", (flag & NPCVIEW_VISIBLE) ? "show" : "hide", nd.name, char_id);
 			return false;
 		}
 
-		unsigned int option = nd->sc.option;
-		if (flag&8)
-			nd->sc.option &= ~OPTION_CLOAK;
+		unsigned int option = nd.sc.option;
+		if (flag & NPCVIEW_CLOAKOFF)
+			nd.sc.option &= ~OPTION_CLOAK;
 		else
-			nd->sc.option |= OPTION_CLOAK;
+			nd.sc.option |= OPTION_CLOAK;
 
-		auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id);
+		auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd.bl.id);
 	
-		if (it == sd->cloaked_npc.end() && option != nd->sc.option)
-			sd->cloaked_npc.push_back(nd->bl.id);
-		else if (it != sd->cloaked_npc.end() && option == nd->sc.option)
+		if (it == sd->cloaked_npc.end() && option != nd.sc.option)
+			sd->cloaked_npc.push_back(nd.bl.id);
+		else if (it != sd->cloaked_npc.end() && option == nd.sc.option)
 			sd->cloaked_npc.erase(it);
 	
-		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)
-			clif_changeoption_target(&nd->bl, &sd->bl);
+		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG)
+			clif_changeoption_target(&nd.bl, &sd->bl);
 		else {
-			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
-				clif_clearunit_single(nd->bl.id, CLR_OUTSIGHT, sd->fd);
+			if (nd.sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+				clif_clearunit_single(nd.bl.id, CLR_OUTSIGHT, sd->fd);
 			else
-				clif_spawn(&nd->bl);
+				clif_spawn(&nd.bl);
 		}
-		nd->sc.option = option;
+		nd.sc.option = option;
 	}
 	else {
-		if (flag&1) {
-			nd->sc.option &= ~OPTION_INVISIBLE;
-			clif_spawn(&nd->bl);
+		if (flag & NPCVIEW_ENABLE) {
+			nd.sc.option &= ~OPTION_INVISIBLE;
+			clif_spawn(&nd.bl);
 		}
-		else if (flag&2)
-			nd->sc.option &= ~OPTION_HIDE;
-		else if (flag&4)
-			nd->sc.option |= OPTION_HIDE;
-		else if (flag&8)
-			nd->sc.option &= ~OPTION_CLOAK;
-		else if (flag&16)
-			nd->sc.option |= OPTION_CLOAK;
+		else if (flag & NPCVIEW_HIDEOFF)
+			nd.sc.option &= ~OPTION_HIDE;
+		else if (flag & NPCVIEW_HIDEON)
+			nd.sc.option |= OPTION_HIDE;
+		else if (flag & NPCVIEW_CLOAKOFF)
+			nd.sc.option &= ~OPTION_CLOAK;
+		else if (flag & NPCVIEW_CLOAKON)
+			nd.sc.option |= OPTION_CLOAK;
 		else {	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
-			nd->sc.option |= OPTION_INVISIBLE;
-			clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+			nd.sc.option |= OPTION_INVISIBLE;
+			clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
 		}
-		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)	//Client won't display option changes for these classes [Toms]
-			clif_changeoption(&nd->bl);
+		if (nd.class_ != JT_WARPNPC && nd.class_ != JT_GUILD_FLAG)	//Client won't display option changes for these classes [Toms]
+			clif_changeoption(&nd.bl);
 		else {
-			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
-				clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+			if (nd.sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+				clif_clearunit_area(&nd.bl,CLR_OUTSIGHT);
 			else
-				clif_spawn(&nd->bl);
+				clif_spawn(&nd.bl);
 		}
-		map_foreachinmap(npc_cloaked_sub, nd->bl.m, BL_PC, nd->bl.id);	// Because npc option has been updated we remove the npc id from sd->cloaked_npc
+		map_foreachinmap(npc_cloaked_sub, nd.bl.m, BL_PC, nd.bl.id);	// Because npc option has been updated we remove the npc id from sd->cloaked_npc
 	}
 
-	if (flag&11) {	// check if player standing on a OnTouchArea
+	if (flag & NPCVIEW_VISIBLE) {	// check if player standing on a OnTouchArea
 		int xs = -1, ys = -1;
-		switch (nd->subtype) {
+		switch (nd.subtype) {
 		case NPCTYPE_SCRIPT:
-			xs = nd->u.scr.xs;
-			ys = nd->u.scr.ys;
+			xs = nd.u.scr.xs;
+			ys = nd.u.scr.ys;
 			break;
 		case NPCTYPE_WARP:
-			xs = nd->u.warp.xs;
-			ys = nd->u.warp.ys;
+			xs = nd.u.warp.xs;
+			ys = nd.u.warp.ys;
 			break;
 		}
 		if (xs > -1 && ys > -1)
-			map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-xs, nd->bl.y-ys, nd->bl.x+xs, nd->bl.y+ys, BL_PC, nd );
+			map_foreachinallarea( npc_enable_sub, nd.bl.m, nd.bl.x-xs, nd.bl.y-ys, nd.bl.x+xs, nd.bl.y+ys, BL_PC, &nd );
 	}
 
 	return true;
@@ -2135,6 +2128,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	int key_refine = 0;
 	int key_attribute = 0;
 	int key_identify = 0;
+	int key_enchantgrade = 0;
 	int key_card[MAX_SLOTS];
 	int key_option_id[MAX_ITEM_RDM_OPT], key_option_val[MAX_ITEM_RDM_OPT], key_option_param[MAX_ITEM_RDM_OPT];
 
@@ -2144,6 +2138,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	script_cleararray_pc( sd, "@sold_refine" );
 	script_cleararray_pc( sd, "@sold_attribute" );
 	script_cleararray_pc( sd, "@sold_identify" );
+	script_cleararray_pc( sd, "@sold_enchantgrade" );
 
 	for( j = 0; j < MAX_SLOTS; j++ )
 	{// clear each of the card slot entries
@@ -2176,6 +2171,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 			script_setarray_pc( sd, "@sold_refine", i, sd->inventory.u.items_inventory[idx].refine, &key_refine );
 			script_setarray_pc( sd, "@sold_attribute", i, sd->inventory.u.items_inventory[idx].attribute, &key_attribute );
 			script_setarray_pc( sd, "@sold_identify", i, sd->inventory.u.items_inventory[idx].identify, &key_identify );
+			script_setarray_pc( sd, "@sold_enchantgrade", i, sd->inventory.u.items_inventory[idx].enchantgrade, &key_enchantgrade );
 
 			for( j = 0; j < MAX_SLOTS; j++ )
 			{// store each of the cards from the equipment in the array
@@ -2671,7 +2667,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
  */
 int npc_parseview(const char* w4, const char* start, const char* buffer, const char* filepath) {
 	int i = 0;
-	char viewid[1024];	// Max size of name from const.txt, see read_constdb.
+	char viewid[1024];	// Max size of name from const.yml, see ConstantDatabase::parseBodyNode.
 
 	// Extract view ID / constant
 	while (w4[i] != '\0') {
@@ -2692,8 +2688,13 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 
 		// Check if constant exists and get its value.
 		if(!script_get_constant(viewid, &val_tmp)) {
-			ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
-			val = JT_INVISIBLE;
+			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(viewid);
+			if (mob != nullptr)
+				val = static_cast<int>(mob->vd.class_);
+			else {
+				ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
+				val = JT_INVISIBLE;
+			}
 		} else
 			val = static_cast<int>(val_tmp);
 	}

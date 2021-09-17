@@ -292,7 +292,7 @@ uint64 RefineDatabase::parseBodyNode( const YAML::Node& node ){
 									return 0;
 								}
 
-								struct item_data* id = itemdb_search_aegisname( item_name.c_str() );
+								std::shared_ptr<item_data> id = item_db.search_aegisname( item_name.c_str() );
 
 								if( id == nullptr ){
 									this->invalidWarning( chanceNode["Material"], "Unknown refine material %s, skipping.\n", item_name.c_str() );
@@ -1661,6 +1661,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_SPRITEMABLE] = EFST_SPRITEMABLE;
 	StatusIconChangeTable[SC_DORAM_BUF_01] = EFST_DORAM_BUF_01;
 	StatusIconChangeTable[SC_DORAM_BUF_02] = EFST_DORAM_BUF_02;
+	StatusIconChangeTable[SC_SOULATTACK] = EFST_SOULATTACK;
 
 	// Item Reuse Limits
 	StatusIconChangeTable[SC_REUSE_REFRESH] = EFST_REUSE_REFRESH;
@@ -1741,6 +1742,18 @@ void initChangeTables(void)
 #else
 	StatusIconChangeTable[SC_MADOGEAR] = EFST_RIDING;
 #endif
+
+	// ep15
+	StatusIconChangeTable[SC_PACKING_ENVELOPE1] = EFST_PACKING_ENVELOPE1;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE2] = EFST_PACKING_ENVELOPE2;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE3] = EFST_PACKING_ENVELOPE3;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE4] = EFST_PACKING_ENVELOPE4;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE5] = EFST_PACKING_ENVELOPE5;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE6] = EFST_PACKING_ENVELOPE6;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE7] = EFST_PACKING_ENVELOPE7;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE8] = EFST_PACKING_ENVELOPE8;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE9] = EFST_PACKING_ENVELOPE9;
+	StatusIconChangeTable[SC_PACKING_ENVELOPE10] = EFST_PACKING_ENVELOPE10;
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
@@ -1929,6 +1942,17 @@ void initChangeTables(void)
 
 	StatusChangeFlagTable[SC_MADOGEAR] |= SCB_SPEED;
 
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE1] |= SCB_WATK;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE2] |= SCB_MATK;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE3] |= SCB_MAXHP;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE4] |= SCB_MAXSP;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE5] |= SCB_FLEE;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE6] |= SCB_ASPD;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE7] |= SCB_DEF;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE8] |= SCB_MDEF;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE9] |= SCB_CRI;
+	StatusChangeFlagTable[SC_PACKING_ENVELOPE10] |= SCB_HIT;
+
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
 	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;
@@ -1971,6 +1995,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_MISTY_FROST]     = BL_PC;
 	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
 	StatusDisplayType[SC_MADOGEAR]        = BL_PC;
+	StatusDisplayType[SC_SOULATTACK]      = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -2331,7 +2356,8 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			}
 #ifndef RENEWAL
 			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF) {
-				struct skill_unit_group* sg = skill_id2group(sce->val4);
+				std::shared_ptr<s_skill_unit_group> sg = skill_id2group(sce->val4);
+
 				if (sg) {
 					skill_delunitgroup(sg);
 					sce->val4 = 0;
@@ -3493,11 +3519,10 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 	status_calc_misc(&md->bl, status, md->level);
 
 	if(flag&4) { // Strengthen Guardians - custom value +10% / lv
-		struct guild_castle *gc;
 		struct map_data *mapdata = map_getmapdata(md->bl.m);
+		std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapdata->name);
 
-		gc=guild_mapname2gc(mapdata->name);
-		if (!gc)
+		if (gc == nullptr)
 			ShowError("status_calc_mob: No castle set at map %s\n", mapdata->name);
 		else if(gc->castle_id < 24 || md->mob_id == MOBID_EMPERIUM) {
 #ifdef RENEWAL
@@ -3779,6 +3804,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus -= sc->data[SC__WEAKNESS]->val2;
 			if(sc->data[SC_EQC])
 				bonus -= sc->data[SC_EQC]->val3;
+			if(sc->data[SC_PACKING_ENVELOPE3])
+				bonus += sc->data[SC_PACKING_ENVELOPE3]->val1;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -3911,6 +3938,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_LUXANIMA]->val3;
 			if (sc->data[SC_MTF_MSP])
 				bonus += sc->data[SC_MTF_MSP]->val1;
+			if(sc->data[SC_PACKING_ENVELOPE4])
+				bonus += sc->data[SC_PACKING_ENVELOPE4]->val1;
 
 			//Decreasing
 			if (sc->data[SC_MELODYOFSINK])
@@ -4360,7 +4389,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if(sd->inventory_data[index]) { // Arrows
 			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
-			if( !itemdb_group_item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
+			if( !itemdb_group.item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			sd->state.lr_flag = 0;
 			if (!calculating) // Abort, run_script retriggered status_calc_pc. [Skotlex]
@@ -5041,8 +5070,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		clif_skillinfoblock(sd);
 
 	// If the skill is learned, the status is infinite.
-	if( (skill = pc_checkskill(sd,SU_SPRITEMABLE)) > 0 && !sd->sc.data[SC_SPRITEMABLE] )
+	if (pc_checkskill(sd, SU_SPRITEMABLE) > 0 && !sd->sc.data[SC_SPRITEMABLE])
 		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
+	if (pc_checkskill(sd, SU_SOULATTACK) > 0 && !sd->sc.data[SC_SOULATTACK])
+		sc_start(&sd->bl, &sd->bl, SC_SOULATTACK, 100, 1, INFINITE_TICK);
 
 	calculating = 0;
 
@@ -5868,13 +5899,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	if(flag&SCB_MODE) {
 		status->mode = status_calc_mode(bl, sc, b_status->mode);
 
-		if (status->class_ != CLASS_BATTLEFIELD && status_has_mode(status, MD_STATUSIMMUNE|MD_SKILLIMMUNE))
+		if (status_has_mode(status, MD_STATUSIMMUNE|MD_SKILLIMMUNE))
 			status->class_ = CLASS_BATTLEFIELD;
-		else if (status->class_ != CLASS_BOSS && status_has_mode(status, MD_STATUSIMMUNE|MD_KNOCKBACKIMMUNE|MD_DETECTOR))
+		else if (status_has_mode(status, MD_STATUSIMMUNE|MD_KNOCKBACKIMMUNE|MD_DETECTOR))
 			status->class_ = CLASS_BOSS;
-		else if (status->class_ != CLASS_GUARDIAN && status_has_mode(status, MD_STATUSIMMUNE))
+		else if (status_has_mode(status, MD_STATUSIMMUNE))
 			status->class_ = CLASS_GUARDIAN;
-		else if (status->class_ != CLASS_NORMAL)
+		else
 			status->class_ = CLASS_NORMAL;
 
 		// Since mode changed, reset their state.
@@ -6955,6 +6986,8 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += watk * sc->data[SC_SUNSTANCE]->val2 / 100;
 	if (sc->data[SC_SOULFALCON])
 		watk += sc->data[SC_SOULFALCON]->val2;
+	if (sc->data[SC_PACKING_ENVELOPE1])
+		watk += sc->data[SC_PACKING_ENVELOPE1]->val1;
 
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
@@ -7018,6 +7051,8 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 		matk += sc->data[SC__AUTOSHADOWSPELL]->val4 * 5;
 	if (sc->data[SC_INSPIRATION])
 		matk += sc->data[SC_INSPIRATION]->val2;
+	if (sc->data[SC_PACKING_ENVELOPE2])
+		matk += sc->data[SC_PACKING_ENVELOPE2]->val1;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
@@ -7139,6 +7174,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
 	if (sc->data[SC_MTF_HITFLEE])
 		critical += sc->data[SC_MTF_HITFLEE]->val1;
+	if (sc->data[SC_PACKING_ENVELOPE9])
+		critical += sc->data[SC_PACKING_ENVELOPE9]->val1 * 10;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
@@ -7207,6 +7244,8 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit += sc->data[SC_SOULFALCON]->val3;
 	if (sc->data[SC_SATURDAYNIGHTFEVER])
 		hit -= 50 + 50 * sc->data[SC_SATURDAYNIGHTFEVER]->val1;
+	if (sc->data[SC_PACKING_ENVELOPE10])
+		hit += sc->data[SC_PACKING_ENVELOPE10]->val1;
 
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
@@ -7319,6 +7358,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	//	flee -= (flee * sc->data[SC_C_MARKER]->val3) / 100;
 	if (sc->data[SC_GROOMING])
 		flee += sc->data[SC_GROOMING]->val2;
+	if (sc->data[SC_PACKING_ENVELOPE5])
+		flee += sc->data[SC_PACKING_ENVELOPE5]->val1;
 
 	return (short)cap_value(flee,1,SHRT_MAX);
 }
@@ -7445,6 +7486,8 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def += sc->data[SC_SOULGOLEM]->val2;
 	if (sc->data[SC_STONE_WALL])
 		def += sc->data[SC_STONE_WALL]->val2;
+	if( sc->data[SC_PACKING_ENVELOPE7] )
+		def += sc->data[SC_PACKING_ENVELOPE7]->val1;
 
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -7573,6 +7616,8 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef += sc->data[SC_SOULGOLEM]->val3;
 	if (sc->data[SC_STONE_WALL])
 		mdef += sc->data[SC_STONE_WALL]->val3;
+	if (sc->data[SC_PACKING_ENVELOPE8])
+		mdef += sc->data[SC_PACKING_ENVELOPE8]->val1;
 
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
@@ -7994,6 +8039,8 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
 		aspd -= sc->data[SC_HEAT_BARREL]->val1 * 10;
 	if (sc->data[SC_EP16_2_BUFF_SS])
 		aspd -= 100; // +10 ASPD
+	if (sc->data[SC_PACKING_ENVELOPE6])
+		aspd -= sc->data[SC_PACKING_ENVELOPE6]->val1 * 10;
 
 	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
 }
@@ -8839,10 +8886,12 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				nd->vd.class_ = class_;
 				nd->vd.hair_style = cap_value(nd->vd.hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 			} else {
+				ShowError("status_set_viewdata (NPC): Invalid view data %d\n", class_);
 				if (bl->m >= 0)
 					ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
 				else
 					ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
+				ShowDebug( "Source (NPC): %s is located in: %s\n", nd->name, nd->path );
 			}
 			break;
 		}
@@ -8930,6 +8979,12 @@ static int status_get_sc_interval(enum sc_type type)
 		case SC_BLEEDING:
 		case SC_TOXIN:
 			return 10000;
+		case SC_HELLS_PLANT:
+			return 333;
+		case SC_SHIELDSPELL_HP:
+			return 3000;
+		case SC_SHIELDSPELL_SP:
+			return 5000;
 		default:
 			break;
 	}
@@ -10558,6 +10613,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SPRITEMABLE:
 		case SC_CLAN_INFO:
 		case SC_DAILYSENDMAILCNT:
+		case SC_SOULATTACK:
 			tick = INFINITE_TICK;
 			break;
 
@@ -11757,8 +11813,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 3000;
 			break;
 		case SC_HELLS_PLANT:
-			tick_time = 333;
-			val4 = tick / tick_time;
+			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_SWINGDANCE:
 			val3 = 3 * val1 + val2; // Walk speed and aspd reduction.
@@ -11864,13 +11920,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_SHIELDSPELL_HP:
 			val2 = 3; // 3% HP every 3 seconds
-			tick_time = 3000;
-			val4 = tick / tick_time;
+			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_SHIELDSPELL_SP:
 			val2 = 3; // 3% SP every 5 seconds
-			tick_time = 5000;
-			val4 = tick / tick_time;
+			tick_time = status_get_sc_interval(type);
+			val4 = tick - tick_time; // Remaining time
 			break;
 		case SC_SHIELDSPELL_ATK:
 			val2 = 150; // WATK/MATK bonus
@@ -13235,6 +13291,17 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_SOULENERGY:
 			case SC_MADOGEAR:
 			case SC_HOMUN_TIME:
+			case SC_PACKING_ENVELOPE1:
+			case SC_PACKING_ENVELOPE2:
+			case SC_PACKING_ENVELOPE3:
+			case SC_PACKING_ENVELOPE4:
+			case SC_PACKING_ENVELOPE5:
+			case SC_PACKING_ENVELOPE6:
+			case SC_PACKING_ENVELOPE7:
+			case SC_PACKING_ENVELOPE8:
+			case SC_PACKING_ENVELOPE9:
+			case SC_PACKING_ENVELOPE10:
+			case SC_SOULATTACK:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13358,7 +13425,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			return 0;
 		if (type == SC_SPIDERWEB) {
 			//Delete the unit group first to expire found in the status change
-			struct skill_unit_group *group = NULL, *group2 = NULL;
+			std::shared_ptr<s_skill_unit_group> group, group2;
 			t_tick tick = gettick();
 			int pos = 1;
 			if (sce->val2)
@@ -13556,16 +13623,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				}
 
 				if(sce->val2) { // Erase associated land skill
-					struct skill_unit_group *group;
-					group = skill_id2group(sce->val2);
-					if( group == NULL ) {
-						ShowDebug("status_change_end: SC_DANCING is missing skill unit group (val1=%d, val2=%d, val3=%d, val4=%d, timer=%d, tid=%d, char_id=%d, map=%s, x=%d, y=%d). Please report this!\n",
-							sce->val1, sce->val2, sce->val3, sce->val4, sce->timer, tid,
-							sd ? sd->status.char_id : 0,
-							mapindex_id2name(map_id2index(bl->m)), bl->x, bl->y);
-					}
+					std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val2);
+
 					sce->val2 = 0;
-					skill_delunitgroup(group);
+					if (group)
+						skill_delunitgroup(group);
 				}
 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
@@ -13648,7 +13710,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_GOSPEL:
 			if (sce->val3) { // Clear the group.
-				struct skill_unit_group* group = skill_id2group(sce->val3);
+				std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val3);
+
 				sce->val3 = 0;
 				if (group)
 					skill_delunitgroup(group);
@@ -13661,7 +13724,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_BASILICA: // Clear the skill area. [Skotlex]
 				if (sce->val3 && sce->val4 == bl->id) {
-					struct skill_unit_group* group = skill_id2group(sce->val3);
+					std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val3);
+
 					sce->val3 = 0;
 					if (group)
 						skill_delunitgroup(group);
@@ -13675,7 +13739,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC__MANHOLE:
 		case SC_BANDING:
 			if (sce->val4) { // Clear the group.
-				struct skill_unit_group* group = skill_id2group(sce->val4);
+				std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val4);
+
 				sce->val4 = 0;
 				if( group ) // Might have been cleared before status ended, e.g. land protector
 					skill_delunitgroup(group);
@@ -13761,7 +13826,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_NEUTRALBARRIER_MASTER:
 		case SC_STEALTHFIELD_MASTER:
 			if( sce->val2 ) {
-				struct skill_unit_group* group = skill_id2group(sce->val2);
+				std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val2);
+
 				sce->val2 = 0;
 				if( group ) // Might have been cleared before status ended, e.g. land protector
 					skill_delunitgroup(group);
@@ -14718,10 +14784,8 @@ TIMER_FUNC(status_change_timer){
 		}
 
 	case SC_HELLS_PLANT:
-		if (--(sce->val4) > 0) {
-			skill_castend_damage_id(bl, bl, GN_HELLS_PLANT_ATK, sce->val1, tick, 0);
-			sc_timer_next(333 + tick);
-			return 0;
+		if( sce->val4 >= 0 ){
+			skill_castend_damage_id( bl, bl, GN_HELLS_PLANT_ATK, sce->val1, tick, 0 );
 		}
 		break;
 
@@ -14839,20 +14903,14 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_SHIELDSPELL_HP:
-		if (sce->val4 >= 0) {
-			if (status->hp < status->max_hp)
-				status_heal(bl, status->max_hp * sce->val2 / 100, 0, 1);
-			sc_timer_next(3000 + tick);
-			return 0;
+		if( sce->val4 >= 0 && status->hp < status->max_hp ){
+			status_heal( bl, status->max_hp * sce->val2 / 100, 0, 1 );
 		}
 		break;
 
 	case SC_SHIELDSPELL_SP:
-		if (sce->val4 >= 0) {
-			if (status->sp < status->max_sp)
-				status_heal(bl, 0, status->max_sp * sce->val2 / 100, 1);
-			sc_timer_next(5000 + tick);
-			return 0;
+		if( sce->val4 >= 0 && status->sp < status->max_sp ){
+			status_heal( bl, 0, status->max_sp * sce->val2 / 100, 1 );
 		}
 		break;
 
@@ -15391,6 +15449,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_EP16_2_BUFF_SC:
 			case SC_EP16_2_BUFF_AC:
 			case SC_HOMUN_TIME:
+			case SC_SOULATTACK:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:
@@ -15886,58 +15945,70 @@ static bool status_readdb_status_disabled(char **str, int columns, int current)
 	return true;
 }
 
+const std::string AttributeDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/attr_fix.yml";
+}
+
 /**
- * Read attribute fix database for attack calculations
- * Function stores information in the attr_fix_table
- * @return True
+ * Reads and parses an entry from the attr_fix.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
  */
-static bool status_readdb_attrfix(const char *basedir,bool silent)
-{
-	FILE *fp;
-	char line[512], path[512];
-	int entries = 0;
+uint64 AttributeDatabase::parseBodyNode(const YAML::Node &node) {
+	uint16 level;
 
+	if (!this->asUInt16(node, "Level", level))
+		return 0;
 
-	sprintf(path, "%s/attr_fix.txt", basedir);
-	fp = fopen(path,"r");
-	if (fp == NULL) {
-		if (silent==0)
-			ShowError("Can't read %s\n", path);
-		return 1;
+	if (!CHK_ELEMENT_LEVEL(level)) {
+		this->invalidWarning(node["Level"], "Invalid element level %hu.\n", level);
+		return 0;
 	}
-	while (fgets(line, sizeof(line), fp)) {
-		int lv, i, j;
-		if (line[0] == '/' && line[1] == '/')
+
+	for (const auto &itatk : um_eleid2elename) {
+		if (!this->nodeExists(node, itatk.first))
 			continue;
 
-		lv = atoi(line);
-		if (!CHK_ELEMENT_LEVEL(lv))
-			continue;
+		const YAML::Node &eleNode = node[itatk.first];
 
-		for (i = 0; i < ELE_ALL;) {
-			char *p;
-			if (!fgets(line, sizeof(line), fp))
-				break;
-			if (line[0]=='/' && line[1]=='/')
+		for (const auto &itdef : um_eleid2elename) {
+			if (!this->nodeExists(eleNode, itdef.first))
 				continue;
 
-			for (j = 0, p = line; j < ELE_ALL && p; j++) {
-				while (*p == 32) //skipping space (32=' ')
-					p++;
-                                //TODO seem unsafe to continue without check
-				attr_fix_table[lv-1][i][j] = atoi(p);
-				p = strchr(p,',');
-				if(p)
-					*p++=0;
+			int16 val;
+
+			if (!this->asInt16(eleNode, itdef.first, val))
+				return 0;
+
+			if (val < -100) {
+				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to -100.\n", itdef.first.c_str(), val, -100, 200);
+				val = -100;
+			}
+			else if (val > 200) {
+				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to 200.\n", itdef.first.c_str(), val, -100, 200);
+				val = 200;
 			}
 
-			i++;
+			this->attr_fix_table[level-1][itatk.second][itdef.second] = val;
 		}
-		entries++;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path);
-	return true;
+
+	return 1;
+}
+
+AttributeDatabase elemental_attribute_db;
+
+/**
+ * Get attribute ratio
+ * @param atk_ele Attack element enum e_element
+ * @param def_ele Defense element enum e_element
+ * @param level Element level 1 ~ MAX_ELE_LEVEL
+ */
+int16 AttributeDatabase::getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele) {
+	if (!CHK_ELEMENT(atk_ele) || !CHK_ELEMENT(def_ele) || !CHK_ELEMENT_LEVEL(level+1))
+		return 100;
+
+	return this->attr_fix_table[level][atk_ele][def_ele];
 }
 
 /**
@@ -15945,13 +16016,13 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
  * sv_readdb reads the file, outputting the information line-by-line to
  * previous functions above, separating information by delimiter
  * DBs being read:
- *	attr_fix.txt: Attribute adjustment table for attacks
+ *	attr_fix.yml: Attribute adjustment table for attacks
  *	size_fix.yml: Size adjustment table for weapons
  *	refine.yml: Refining data table
  * @return 0
  */
 int status_readdb( bool reload ){
-	int i, j, k;
+	int i;
 	const char* dbsubpath[] = {
 		"",
 		"/" DBIMPORT,
@@ -15960,12 +16031,6 @@ int status_readdb( bool reload ){
 
 	// Initialize databases to default
 	memset(SCDisabled, 0, sizeof(SCDisabled));
-
-	// attr_fix.txt
-	for(i=0;i<MAX_ELE_LEVEL;i++)
-		for(j=0;j<ELE_ALL;j++)
-			for(k=0;k<ELE_ALL;k++)
-				attr_fix_table[i][j][k]=100;
 
 	// read databases
 	// path,filename,separator,mincol,maxcol,maxrow,func_parsor
@@ -15984,7 +16049,6 @@ int status_readdb( bool reload ){
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i > 0);
 
 		aFree(dbsubpath1);
@@ -15998,6 +16062,7 @@ int status_readdb( bool reload ){
 		size_fix_db.load();
 		refine_db.load();
 	}
+	elemental_attribute_db.load();
 
 	return 0;
 }

@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <stdarg.h>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -342,6 +343,19 @@ enum e_element : int8{
 	ELE_WEAPON,
 	ELE_ENDOWED,
 	ELE_RANDOM,
+};
+
+static std::unordered_map<std::string, e_element> um_eleid2elename {
+	{ "Neutral", ELE_NEUTRAL },
+	{ "Water", ELE_WATER },
+	{ "Earth", ELE_EARTH },
+	{ "Fire", ELE_FIRE },
+	{ "Wind", ELE_WIND },
+	{ "Poison", ELE_POISON },
+	{ "Holy", ELE_HOLY },
+	{ "Dark", ELE_DARK },
+	{ "Ghost", ELE_GHOST },
+	{ "Undead", ELE_UNDEAD },
 };
 
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
@@ -780,6 +794,8 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
+
+extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;

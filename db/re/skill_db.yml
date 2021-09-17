@@ -112,6 +112,7 @@
 #     ItemCost:               Item required to cast. (Default: 0)
 #       - Item                Item name.
 #         Amount              Item amount.
+#         Level               Skill level. Makes the skill item check become level dependent if supplied. (Default: applies to all levels)
 #     Equipment:              Equipped item required to cast. (Default: nullptr)
 #   Unit:                     Skill unit values. (Optional)
 #     Id                      Skill unit ID.
@@ -129,7 +130,7 @@
 
 Header:
   Type: SKILL_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Id: 1
@@ -287,27 +288,6 @@ Body:
     Duration2: 10000
     Cooldown: 2000
     Requires:
-      HpCost:
-        - Level: 1
-          Amount: 20
-        - Level: 2
-          Amount: 20
-        - Level: 3
-          Amount: 19
-        - Level: 4
-          Amount: 19
-        - Level: 5
-          Amount: 18
-        - Level: 6
-          Amount: 18
-        - Level: 7
-          Amount: 17
-        - Level: 8
-          Amount: 17
-        - Level: 9
-          Amount: 16
-        - Level: 10
-          Amount: 16
       SpCost: 30
   - Id: 8
     Name: SM_ENDURE
@@ -2596,8 +2576,6 @@ Body:
     TargetType: Support
     DamageFlags:
       NoDamage: true
-    Flags:
-      IgnoreStasis: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -3018,6 +2996,22 @@ Body:
         Time: 48
     Requires:
       SpCost: 75
+      ItemCost:
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 6
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 7
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 8
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 9
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 10
     Unit:
       Id: Firepillar_Waiting
       AlternateId: Firepillar_Active
@@ -5013,6 +5007,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Duration2: 1000
     Requires:
       SpCost: 3
       Weapon:
@@ -8260,7 +8255,6 @@ Body:
       NoTargetSelf: true
       PartyOnly: true
       GuildOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 9
     Hit: Single
@@ -9976,7 +9970,6 @@ Body:
     FixedCastTime: 700
     CastTimeFlags:
       IgnoreDex: true
-      IgnoreStatus: true
     Requires:
       SpCost:
         - Level: 1
@@ -10007,7 +10000,7 @@ Body:
     TargetType: Attack
     Range: 9
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 3
     Element: Holy
     CastTime: 1000
     AfterCastActDelay:
@@ -20287,7 +20280,6 @@ Body:
       NoDamage: true
     Flags:
       PartyOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 11
     Hit: Single
@@ -21582,12 +21574,16 @@ Body:
       ItemCost:
         - Item: Scarlet_Pts
           Amount: 3
+          Level: 1
         - Item: Lime_Green_Pts
           Amount: 3
+          Level: 2
         - Item: Yellow_Wish_Pts
           Amount: 3
+          Level: 3
         - Item: Indigo_Pts
           Amount: 3
+          Level: 4
         - Item: Magic_Gear_Fuel
           Amount: 2
       Equipment:
@@ -23537,7 +23533,7 @@ Body:
         Time: 5500
     AfterCastActDelay: 2000
     Duration1: 10000
-    Cooldown: 3500
+    Cooldown: 2000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -23729,15 +23725,15 @@ Body:
         Time: 180000
     Cooldown:
       - Level: 1
-        Time: 540000
+        Time: 60000
       - Level: 2
-        Time: 480000
+        Time: 90000
       - Level: 3
-        Time: 420000
+        Time: 120000
       - Level: 4
-        Time: 360000
+        Time: 150000
       - Level: 5
-        Time: 300000
+        Time: 180000
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -26996,10 +26992,13 @@ Body:
       ItemCost:
         - Item: Boody_Red
           Amount: 3
+          Level: 1
         - Item: Boody_Red
           Amount: 6
+          Level: 2
         - Item: Flame_Heart
           Amount: 1
+          Level: 3
   - Id: 2458
     Name: SO_SUMMON_AQUA
     Description: Summon Water Spirit Aqua
@@ -27038,10 +27037,13 @@ Body:
       ItemCost:
         - Item: Crystal_Blue
           Amount: 3
+          Level: 1
         - Item: Crystal_Blue
           Amount: 6
+          Level: 2
         - Item: Mistic_Frozen
           Amount: 1
+          Level: 3
   - Id: 2459
     Name: SO_SUMMON_VENTUS
     Description: Summon Wind Spirit Ventus
@@ -27080,10 +27082,13 @@ Body:
       ItemCost:
         - Item: Wind_Of_Verdure
           Amount: 3
+          Level: 1
         - Item: Wind_Of_Verdure
           Amount: 6
+          Level: 2
         - Item: Rough_Wind
           Amount: 1
+          Level: 3
   - Id: 2460
     Name: SO_SUMMON_TERA
     Description: Summon Earth Spirit Tera
@@ -27122,10 +27127,13 @@ Body:
       ItemCost:
         - Item: Yellow_Live
           Amount: 3
+          Level: 1
         - Item: Yellow_Live
           Amount: 6
+          Level: 2
         - Item: Great_Nature
           Amount: 1
+          Level: 3
   - Id: 2461
     Name: SO_EL_ACTION
     Description: Elemental Action
@@ -27209,10 +27217,13 @@ Body:
       ItemCost:
         - Item: Scarlet_Pts
           Amount: 1
+          Level: 1
         - Item: Scarlet_Pts
           Amount: 2
+          Level: 2
         - Item: Scarlet_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Fire_Insignia
       Layout: 1
@@ -27249,10 +27260,13 @@ Body:
       ItemCost:
         - Item: Indigo_Pts
           Amount: 1
+          Level: 1
         - Item: Indigo_Pts
           Amount: 2
+          Level: 2
         - Item: Indigo_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Water_Insignia
       Layout: 1
@@ -27289,10 +27303,13 @@ Body:
       ItemCost:
         - Item: Yellow_Wish_Pts
           Amount: 1
+          Level: 1
         - Item: Yellow_Wish_Pts
           Amount: 2
+          Level: 2
         - Item: Yellow_Wish_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Wind_Insignia
       Layout: 1
@@ -27329,10 +27346,13 @@ Body:
       ItemCost:
         - Item: Lime_Green_Pts
           Amount: 1
+          Level: 1
         - Item: Lime_Green_Pts
           Amount: 2
+          Level: 2
         - Item: Lime_Green_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Earth_Insignia
       Layout: 1
@@ -27896,14 +27916,19 @@ Body:
       ItemCost:
         - Item: Oil_Bottle
           Amount: 1
+          Level: 1
         - Item: Explosive_Powder
           Amount: 1
+          Level: 2
         - Item: Smoke_Powder
           Amount: 1
+          Level: 3
         - Item: Tear_Gas
           Amount: 1
+          Level: 4
         - Item: Acid_Bottle
           Amount: 1
+          Level: 5
   - Id: 2487
     Name: GN_FIRE_EXPANSION_SMOKE_POWDER
     Description: Fire Expansion Smoke Powder
@@ -27942,9 +27967,15 @@ Body:
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
     MaxLevel: 10
-    Type: Weapon
+    Type: Misc
     TargetType: Attack
-    Range: 9
+    DamageFlags:
+      IgnoreDefense: true
+      IgnoreFlee: true
+    Flags:
+      IgnoreBgReduction: true
+      IgnoreGvgReduction: true
+    Range: 11
     Hit: Multi_Hit
     HitCount:
       - Level: 1
@@ -28327,7 +28358,6 @@ Body:
     Type: Weapon
     TargetType: Attack
     Flags:
-      IgnoreStasis: true
       TargetHidden: true
     Range: -9
     Hit: Single
@@ -30761,14 +30791,19 @@ Body:
       ItemCost:
         - Item: Makibishi
           Amount: 3
+          Level: 1
         - Item: Makibishi
           Amount: 4
+          Level: 2
         - Item: Makibishi
           Amount: 5
+          Level: 3
         - Item: Makibishi
           Amount: 6
+          Level: 4
         - Item: Makibishi
           Amount: 7
+          Level: 5
     Unit:
       Id: Makibishi
       Interval: 5000

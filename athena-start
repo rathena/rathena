@@ -10,7 +10,7 @@ LOG_DIR="./log"
 print_start() {
 	#    more << EOF
 	echo "rAthena is starting..."
-	echo "            (c) 2017 rAthena Project"
+	echo "            (c) 2021 rAthena Project"
 	echo ""
 	echo ""
 	echo "checking..."

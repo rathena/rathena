@@ -86,7 +86,6 @@ IgnoreLandProtector			- Ignore SA_LANDPROTECTOR.
 AllowWhenHidden				- Usable while hiding.
 AllowWhenPerforming			- Usable while in dancing state.
 TargetEmperium				- Damages/targets Emperium.
-IgnoreStasis				- Ignore SC_STASIS.
 IgnoreKagehumi				- Ignore KG_KAGEHUMI.
 AlterRangeVulture			- Skill range affected by AC_VULTURE.
 AlterRangeSnakeEye			- Skill range affected by GS_SNAKEEYE.
@@ -728,7 +727,30 @@ Sequence Map Form
 
 ------------------
 
-ItemCost: Item required to cast.
+ItemCost: Item required to cast. If the Level is supplied, then the ItemCost becomes skill level dependent.
+
+Levels 1 - 5 have no item cost but levels 6 - 10 require a Blue Gemstone.
+  ItemCost:
+    - Item: Blue_Gemstone
+      Amount: 1
+      Level: 6
+    - Item: Blue_Gemstone
+      Amount: 1
+      Level: 7
+    - Item: Blue_Gemstone
+      Amount: 1
+      Level: 8
+    - Item: Blue_Gemstone
+      Amount: 1
+      Level: 9
+    - Item: Blue_Gemstone
+      Amount: 1
+      Level: 10
+
+# All levels require a Blue Gemstone.
+  ItemCost:
+    - Item: Blue_Gemstone
+      Amount: 1
 
 ------------------
 

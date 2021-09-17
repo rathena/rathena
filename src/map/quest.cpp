@@ -128,7 +128,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 				}
 
-				mob_id = mob->vd.class_;
+				mob_id = mob->id;
 
 				it = std::find_if(quest->objectives.begin(), quest->objectives.end(), [&](std::shared_ptr<s_quest_objective> const &v) {
 					return (*v).mob_id == mob_id;
@@ -338,7 +338,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					continue;
 				}
 
-				mob_id = mob->vd.class_;
+				mob_id = mob->id;
 			}
 
 			//std::shared_ptr<s_quest_dropitem> target = util::vector_find(quest->dropitem, mob_id);
@@ -375,7 +375,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(dropNode, "Item", item_name))
 					return 0;
 
-				struct item_data *item = itemdb_search_aegisname(item_name.c_str());
+				std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
 
 				if (!item) {
 					this->invalidWarning(dropNode["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());
