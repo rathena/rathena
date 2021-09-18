@@ -4325,7 +4325,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			}
 #ifdef RENEWAL
 			if (sd->bonus.weapon_atk_rate)
-				wa->atk = wa->atk * sd->bonus.weapon_atk_rate / 100;
+				wa->atk += wa->atk * sd->bonus.weapon_atk_rate / 100;
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
 			// Renewal magic attack refine bonus
