@@ -450,11 +450,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		item->armor_level = level;
 	}else{
 		if( !exists ){
-			if( item->type == IT_ARMOR ){
-				item->armor_level = 1;
-			}else{
-				item->armor_level = 0;
-			}
+			item->armor_level = 0;
 		}
 	}
 

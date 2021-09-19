@@ -172,7 +172,7 @@ Body:
         Rate: 20
         StealProtected: true
 #  - Id: 1003
-#    AegisName: TESTEGG
+#    AegisName: THIEF_BUG_AGG
 #    Name: Test Egg
 #    Level: 2
 #    Hp: 100000
@@ -999,7 +999,7 @@ Body:
 #        Rate: 1
 #        StealProtected: true
 #  - Id: 1022
-#    AegisName: WEREWOLF
+#    AegisName: WERE_WOLF
 #    Name: Werewolf
 #    Level: 80
 #    Hp: 28600
@@ -8744,6 +8744,8 @@ Body:
       - Item: Whisper_Boss_Card
         Rate: 1
         StealProtected: true
+#  - Id: 1187
+#    AegisName: SWITCH
   - Id: 1188
     AegisName: BON_GUN
     Name: Bongun
@@ -10157,6 +10159,10 @@ Body:
       - Item: Penomena_Card
         Rate: 1
         StealProtected: true
+#  - Id: 1217
+#    AegisName: ORC_WARRIOR
+#  - Id: 1218
+#    AegisName: PECO_EGG
   - Id: 1219
     AegisName: KNIGHT_OF_ABYSS
     Name: Abysmal Knight
@@ -54133,6 +54139,8 @@ Body:
     Modes:
       NoRandomWalk: true
       TeleportBlock: true
+#  - Id: 2414
+#    AegisName: RUNAWAY_BOOK
   - Id: 2415
     AegisName: L_SEYREN
     Name: Knight Seyren
@@ -76492,14 +76500,6 @@ Body:
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-#  - Id: 3065
-#    AegisName: E_ICE_MINE
-#  - Id: 3066
-#    AegisName: SNAKE_NEWYEAR
-#  - Id: 3067
-#    AegisName: E_ORC_WOMAN
-#  - Id: 3068
-#    AegisName: E_PYTHON_SKIN
 #  - Id: 3062
 #    AegisName: GIANT_DEVIRUCHI
 #    Name: Giant Deviruchi
@@ -76578,6 +76578,14 @@ Body:
 #    ElementLevel: 1
 #    Modes:
 #      Detector: true
+#  - Id: 3065
+#    AegisName: E_ICE_MINE
+#  - Id: 3066
+#    AegisName: SNAKE_NEWYEAR
+#  - Id: 3067
+#    AegisName: E_ORC_WOMAN
+#  - Id: 3068
+#    AegisName: E_PYTHON_SKIN
   - Id: 3069
     AegisName: PERE1
     Name: Ferre
@@ -81658,7 +81666,7 @@ Body:
 #  - Id: 3278
 #    AegisName: MH_DIMIK_4
 #  - Id: 3279
-#    AegisName: MH_DIMIK_2
+#    AegisName: MH_DIMIK_1
 #  - Id: 3280
 #    AegisName: MH_DIMIK_3
 #  - Id: 3281
@@ -81710,7 +81718,7 @@ Body:
 #  - Id: 3304
 #    AegisName: PAD_MUSPELHEIM
 #  - Id: 3305
-#    AegisName: PAD_ZAEROG
+#    AegisName: PAD_ZEROG
 #  - Id: 3306
 #    AegisName: PAD_TAMADORA
 #  - Id: 3307
@@ -87664,6 +87672,30 @@ Body:
 #    AegisName: AB_MOB_206
 #  - Id: 20760
 #    AegisName: AB_MOB_207
+#  - Id: 20761
+#    AegisName: IRO_WORLD_EATER
+#  - Id: 20762
+#    AegisName: IRO_LIEF
+#  - Id: 20763
+#    AegisName: IRO_SKOLL
+#  - Id: 20764
+#    AegisName: IRO_MOON_SLAYER
+#  - Id: 20765
+#    AegisName: IRO_ATROCE
+#  - Id: 20766
+#    AegisName: IRO_ATROCE_H
+#  - Id: 20767
+#    AegisName: IRO_FROST_WOLF
+#  - Id: 20768
+#    AegisName: IRO_FROST_GIANT
+#  - Id: 20769
+#    AegisName: IRO_VALKYRIE
+#  - Id: 20770
+#    AegisName: IRO_DRAUGR
+#  - Id: 20771
+#    AegisName: IRO_FROST_WOLF2
+#  - Id: 20772
+#    AegisName: IRO_LIEF_H
 #  - Id: 20773
 #    AegisName: EMPATHIZER
 #  - Id: 20774
@@ -87883,17 +87915,17 @@ Body:
 #  - Id: 20885
 #    AegisName: G_ILL_PHEN
 #  - Id: 20886
-#    AegisName: MD_Airboat_Tree
+#    AegisName: MD_AIRBOAT_TREE
 #  - Id: 20887
-#    AegisName: MD_Airboat_Poring
+#    AegisName: MD_AIRBOAT_PORING
 #  - Id: 20888
-#    AegisName: MD_Airboat_Worm
+#    AegisName: MD_AIRBOAT_WORM
 #  - Id: 20889
-#    AegisName: MD_Airboat_LEECH
+#    AegisName: MD_AIRBOAT_LEECH
 #  - Id: 20890
-#    AegisName: MD_Airboat_Mos
+#    AegisName: MD_AIRBOAT_MOS
 #  - Id: 20891
-#    AegisName: MD_Airboat_Boss
+#    AegisName: MD_AIRBOAT_BOSS
 #  - Id: 20892
 #    AegisName: MD_SAKRAY
 #  - Id: 20893
@@ -88236,11 +88268,11 @@ Body:
 #  - Id: 21060
 #    AegisName: G_VENEDI
 #  - Id: 21061
-#    AegisName: MD_Airboat_Boss2
+#    AegisName: MD_AIRBOAT_BOSS2
 #  - Id: 21062
-#    AegisName: MD_Airboat_Boss3
+#    AegisName: MD_AIRBOAT_BOSS3
 #  - Id: 21063
-#    AegisName: MD_Airboat_Boss4
+#    AegisName: MD_AIRBOAT_BOSS4
 #  - Id: 21064
 #    AegisName: S_DUMMY_100_SMALL
 #  - Id: 21065
@@ -88697,6 +88729,72 @@ Body:
 #    AegisName: KIEL_D_01_2
 #  - Id: 21291
 #    AegisName: CAPOO_COLLABO_TW
+#  - Id: 21292
+#    AegisName: EP18_ARMED_VILLAGER01
+#  - Id: 21293
+#    AegisName: EP18_ARMED_VILLAGER02
+#  - Id: 21294
+#    AegisName: EP18_ARMED_VILLAGER03
+#  - Id: 21295
+#    AegisName: EP18_ASH_TOAD
+#  - Id: 21296
+#    AegisName: EP18_RAKEHAND
+#  - Id: 21297
+#    AegisName: EP18_SPARK
+#  - Id: 21298
+#    AegisName: EP18_HOT_MOLAR
+#  - Id: 21299
+#    AegisName: EP18_VOLCARING
+#  - Id: 21300
+#    AegisName: EP18_LAVA_TOAD
+#  - Id: 21301
+#    AegisName: EP18_BURNING_FANG
+#  - Id: 21302
+#    AegisName: EP18_ASHHOPPER
+#  - Id: 21303
+#    AegisName: EP18_ASHRING
+#  - Id: 21304
+#    AegisName: EP18_GREY_WOLF
+#  - Id: 21305
+#    AegisName: EP18_TUMBLE_RING
+#  - Id: 21306
+#    AegisName: EP18_FIREWIND_KITE
+#  - Id: 21307
+#    AegisName: EP18_PHANTOM_WOLF
+#  - Id: 21308
+#    AegisName: EP18_MD_HEARTHUNTER_A
+#  - Id: 21309
+#    AegisName: EP18_MD_THOR_GUARD
+#  - Id: 21310
+#    AegisName: EP18_MD_GUARD_A
+#  - Id: 21311
+#    AegisName: EP18_MD_GUARD_B
+#  - Id: 21312
+#    AegisName: EP18_MD_HEARTHUNTER_R
+#  - Id: 21313
+#    AegisName: EP18_MD_HEARTHUNTER_F
+#  - Id: 21314
+#    AegisName: EP18_MD_SCHULANG
+#  - Id: 21315
+#    AegisName: EP18_MD_DEMI_FREYJA
+#  - Id: 21316
+#    AegisName: EP18_MD_SCHULANG_R
+#  - Id: 21317
+#    AegisName: EP18_MD_DEMI_FREYJA_R
+#  - Id: 21318
+#    AegisName: EP18_MD_SANARE_R
+#  - Id: 21319
+#    AegisName: EP18_MD_HEARTHUNTER_R2
+#  - Id: 21320
+#    AegisName: EP18_NPC_MARAM
+#  - Id: 21321
+#    AegisName: EP18_NPC_MIRIAM
+#  - Id: 21322
+#    AegisName: EP18_NPC_SUAD
+#  - Id: 21323
+#    AegisName: EP18_GREY_GOAT
+#  - Id: 21324
+#    AegisName: EP18_GREY_WOLF_BABY
 #  - Id: 21325
 #    AegisName: MD_T_MASTERING
 #  - Id: 21326
@@ -88767,6 +88865,10 @@ Body:
 #    AegisName: MD_T_BEELZEBUB
 #  - Id: 21359
 #    AegisName: MD_T_BEELZEBUB_
+#  - Id: 21360
+#    AegisName: EP18_MD_SCHULANG_L
+#  - Id: 21361
+#    AegisName: EP18_MD_DEMI_FREYJA_L
 #  - Id: 21362
 #    AegisName: SEASON_MOB_001
 #  - Id: 21363
@@ -88797,9 +88899,261 @@ Body:
 #    AegisName: SEASON_MOB_014
 #  - Id: 21376
 #    AegisName: SEASON_MOB_015
+#  - Id: 21377
+#    AegisName: EP18_MD_SANARE_L
+#  - Id: 21378
+#    AegisName: EP18_MD_HEARTHUNTER_L
+#  - Id: 21379
+#    AegisName: G_EP18_LAVA_TOAD
+#  - Id: 21380
+#    AegisName: G_EP18_HOT_MOLAR
+#  - Id: 21381
+#    AegisName: G_EP18_VOLCARING
 #  - Id: 21382
 #    AegisName: E_CHEAP_RAT
-#  - Id: 21999
+#  - Id: 21383
+#    AegisName: E_MAJORUROS_TW
+#  - Id: 21384
+#    AegisName: E_SWEETS_DROPS
+#  - Id: 21385
+#    AegisName: ANDRE_LARVA
+#  - Id: 21386
+#    AegisName: ILL_ANDRE
+#  - Id: 21387
+#    AegisName: ILL_SOLDIER_ANDR
+#  - Id: 21388
+#    AegisName: ILL_ANDRE_LARVA
+#  - Id: 21389
+#    AegisName: ILL_DENIRO
+#  - Id: 21390
+#    AegisName: ILL_PIERE
+#  - Id: 21391
+#    AegisName: ILL_ANT_EGG
+#  - Id: 21392
+#    AegisName: ILL_GIEARTH
+#  - Id: 21393
+#    AegisName: ILL_FARMILIAR
+#  - Id: 21394
+#    AegisName: ILL_VITATA
+#  - Id: 21395
+#    AegisName: ILL_MAYA
+#  - Id: 21396
+#    AegisName: SEASON_MOB_016
+#  - Id: 21397
+#    AegisName: SEASON_MOB_017
+#  - Id: 21398
+#    AegisName: SEASON_MOB_018
+#  - Id: 21399
+#    AegisName: SEASON_MOB_019
+#  - Id: 21400
+#    AegisName: SEASON_MOB_020
+#  - Id: 21401
+#    AegisName: SEASON_MOB_021
+#  - Id: 21402
+#    AegisName: SEASON_MOB_022
+#  - Id: 21403
+#    AegisName: SEASON_MOB_023
+#  - Id: 21404
+#    AegisName: SEASON_MOB_024
+#  - Id: 21405
+#    AegisName: SEASON_MOB_025
+#  - Id: 21406
+#    AegisName: SEASON_MOB_026
+#  - Id: 21407
+#    AegisName: SEASON_MOB_027
+#  - Id: 21408
+#    AegisName: SEASON_MOB_028
+#  - Id: 21409
+#    AegisName: SEASON_MOB_029
+#  - Id: 21410
+#    AegisName: SEASON_MOB_030
+#  - Id: 21411
+#    AegisName: SEASON_MOB_031
+#  - Id: 21412
+#    AegisName: SEASON_MOB_032
+#  - Id: 21413
+#    AegisName: SEASON_MOB_033
+#  - Id: 21414
+#    AegisName: SEASON_MOB_034
+#  - Id: 21415
+#    AegisName: SEASON_MOB_035
+#  - Id: 21416
+#    AegisName: SEASON_MOB_036
+#  - Id: 21417
+#    AegisName: SEASON_MOB_037
+#  - Id: 21418
+#    AegisName: SEASON_MOB_038
+#  - Id: 21419
+#    AegisName: SEASON_MOB_039
+#  - Id: 21420
+#    AegisName: SEASON_MOB_040
+#  - Id: 21421
+#    AegisName: SEASON_MOB_041
+#  - Id: 21422
+#    AegisName: SEASON_MOB_042
+#  - Id: 21423
+#    AegisName: SEASON_MOB_043
+#  - Id: 21424
+#    AegisName: SEASON_MOB_044
+#  - Id: 21425
+#    AegisName: SEASON_MOB_045
+#  - Id: 21426
+#    AegisName: SEASON_MOB_046
+#  - Id: 21427
+#    AegisName: SEASON_MOB_047
+#  - Id: 21428
+#    AegisName: SEASON_MOB_048
+#  - Id: 21429
+#    AegisName: SEASON_MOB_049
+#  - Id: 21430
+#    AegisName: SEASON_MOB_050
+#  - Id: 21431
+#    AegisName: G_ILL_ANDRE
+#  - Id: 21432
+#    AegisName: G_ILL_DENIRO
+#  - Id: 21433
+#    AegisName: G_ILL_PIERE
+#  - Id: 21435
+#    AegisName: G_ILL_VITATA
+#  - Id: 21436
+#    AegisName: PURIKU_CHA_TH
+#  - Id: 21437
+#    AegisName: E_ALICE_TW
+#  - Id: 21438
+#    AegisName: E_FARMILIAR_TW
+#  - Id: 21450
+#    AegisName: SEASON_MOB_051
+#  - Id: 21451
+#    AegisName: SEASON_MOB_052
+#  - Id: 21452
+#    AegisName: SEASON_MOB_053
+#  - Id: 21453
+#    AegisName: SEASON_MOB_054
+#  - Id: 21454
+#    AegisName: SEASON_MOB_055
+#  - Id: 21455
+#    AegisName: SEASON_MOB_056
+#  - Id: 21456
+#    AegisName: SEASON_MOB_057
+#  - Id: 21457
+#    AegisName: SEASON_MOB_058
+#  - Id: 21458
+#    AegisName: SEASON_MOB_059
+#  - Id: 21459
+#    AegisName: SEASON_MOB_060
+#  - Id: 21460
+#    AegisName: SEASON_MOB_061
+#  - Id: 21461
+#    AegisName: SEASON_MOB_062
+#  - Id: 21462
+#    AegisName: SEASON_MOB_063
+#  - Id: 21463
+#    AegisName: SEASON_MOB_064
+#  - Id: 21464
+#    AegisName: SEASON_MOB_065
+#  - Id: 21465
+#    AegisName: SEASON_MOB_066
+#  - Id: 21466
+#    AegisName: SEASON_MOB_067
+#  - Id: 21467
+#    AegisName: SEASON_MOB_068
+#  - Id: 21468
+#    AegisName: SEASON_MOB_069
+#  - Id: 21469
+#    AegisName: SEASON_MOB_070
+#  - Id: 21470
+#    AegisName: SEASON_MOB_071
+#  - Id: 21471
+#    AegisName: SEASON_MOB_072
+#  - Id: 21472
+#    AegisName: SEASON_MOB_073
+#  - Id: 21473
+#    AegisName: SEASON_MOB_074
+#  - Id: 21474
+#    AegisName: SEASON_MOB_075
+#  - Id: 21475
+#    AegisName: SEASON_MOB_076
+#  - Id: 21476
+#    AegisName: SEASON_MOB_077
+#  - Id: 21477
+#    AegisName: SEASON_MOB_078
+#  - Id: 21478
+#    AegisName: SEASON_MOB_079
+#  - Id: 21479
+#    AegisName: SEASON_MOB_080
+#  - Id: 21480
+#    AegisName: SEASON_MOB_081
+#  - Id: 21481
+#    AegisName: SEASON_MOB_082
+#  - Id: 21482
+#    AegisName: SEASON_MOB_083
+#  - Id: 21483
+#    AegisName: SEASON_MOB_084
+#  - Id: 21484
+#    AegisName: SEASON_MOB_085
+#  - Id: 21485
+#    AegisName: SEASON_MOB_086
+#  - Id: 21486
+#    AegisName: SEASON_MOB_087
+#  - Id: 21487
+#    AegisName: SEASON_MOB_088
+#  - Id: 21488
+#    AegisName: SEASON_MOB_089
+#  - Id: 21489
+#    AegisName: SEASON_MOB_090
+#  - Id: 21490
+#    AegisName: SEASON_MOB_091
+#  - Id: 21491
+#    AegisName: SEASON_MOB_092
+#  - Id: 21492
+#    AegisName: SEASON_MOB_093
+#  - Id: 21493
+#    AegisName: SEASON_MOB_094
+#  - Id: 21494
+#    AegisName: SEASON_MOB_095
+#  - Id: 21495
+#    AegisName: SEASON_MOB_096
+#  - Id: 21496
+#    AegisName: SEASON_MOB_097
+#  - Id: 21497
+#    AegisName: SEASON_MOB_098
+#  - Id: 21498
+#    AegisName: SEASON_MOB_099
+#  - Id: 21499
+#    AegisName: SEASON_MOB_100
+#  - Id: 21500
+#    AegisName: EDDGA2
+#  - Id: 21501
+#    AegisName: WILD_ROSE2
+#  - Id: 21502
+#    AegisName: BAPHOMET2
+#  - Id: 21503
+#    AegisName: SEASON_MOB_101
+#  - Id: 21504
+#    AegisName: SEASON_MOB_102
+#  - Id: 21505
+#    AegisName: SEASON_MOB_103
+#  - Id: 21506
+#    AegisName: SEASON_MOB_104
+#  - Id: 21507
+#    AegisName: SEASON_MOB_105
+#  - Id: 21508
+#    AegisName: SEASON_MOB_106
+#  - Id: 21546
+#    AegisName: MD_COMMON
+#  - Id: 21547
+#    AegisName: M_INCREASE_SOIL
+#  - Id: 21580
+#    AegisName: G_BIJOU
+#  - Id: 22328
+#    AegisName: DESERT_WOLF_RAC
+#  - Id: 22329
+#    AegisName: ANOPHELES_RAC_MO
+#  - Id: 22330
+#    AegisName: GREMLIN_RAC
+#  - Id: 22331
+#    AegisName: BEHOLDER_RAC
+#  - Id: 31999
 #    AegisName: HUNTING_GID_DEFAULT
 #  - Id: 32000
 #    AegisName: MONSTER_2ND_END

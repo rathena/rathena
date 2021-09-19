@@ -777,7 +777,7 @@ OnTouch_:
 	getmapxy .@map$,.@x,.@y, BL_NPC;
 	specialeffect EF_VENOMDUST;
 	monster .@map$,.@x,.@y,"Maggot",2467,.@mobs;
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	end;
 }
 1@gl_k,233,123,4	duplicate(A dead man#1)	A dead man#2	4_M_DIEMAN,5,5
@@ -1076,7 +1076,7 @@ OnTimer69000:
 2@gl_k,118,141,0	script	#ogh_2-1	HIDDEN_WARP_NPC,20,20,{
 	end;
 OnTouch_:
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	.@hidden_name$ = strnpcinfo(2);
 	.@event_type = atoi( charat(.@hidden_name$,4) );
 	if (.@event_type == 2)
@@ -1092,11 +1092,11 @@ OnTouch_:
 	initnpctimer;
 	end;
 OnTimer30000:
-	enablenpc instance_npcname( strnpcinfo(0) );
+	enablenpc();
 	stopnpctimer;
 	end;
 OnStop:
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	stopnpctimer;
 	end;
 }
@@ -1253,7 +1253,7 @@ OnTouch_:
 2@gl_k,143,260,4	script	Decomposed body#1	4_M_DIEMAN,5,5,{
 	end;
 OnTouch_:
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	.@i = rand(1,10);
 	if (.@i == 1) .@mobs = 3;
 	else if (.@i == 2) .@mobs = 4;
@@ -1266,7 +1266,7 @@ OnTouch_:
 	initnpctimer;
 	end;
 OnTimer45000:
-	enablenpc instance_npcname( strnpcinfo(0) );
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -1570,7 +1570,7 @@ OnTouch:
 	end;
 OnEvent:
 	initnpctimer;
-	enablenpc instance_npcname( strnpcinfo(0) );
+	enablenpc();
 	.@num = atoi( replacestr(strnpcinfo(2), "Buff", "") );
 	if (.@num == 1)
 		npctalk "Varmundt's Ghost: Amdarais may use a strong magic shield! Stay close to me and I'll protect you!";
@@ -1583,7 +1583,7 @@ OnEvent:
 	end;
 OnTimer10000:
 	stopnpctimer;
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	end;
 }
 2@gl_k,165,247,3	duplicate(Varmundt's Ghost#Buff1)	Varmundt's Ghost#Buff2	4_M_BARMUND,2,2
@@ -1710,7 +1710,7 @@ OnTimer10000:
 		makeitem 6608,1,"this",129,138;
 		break;
 	}
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	end;
 }
 1@gl_k,159,136,3	duplicate(Strange crack#2)	Strange crack#3	CLEAR_NPC

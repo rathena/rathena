@@ -949,7 +949,7 @@ OnTouch:
 	mes "- Dreary warp -";
 	mes "- is brought up -";
 	mes "- shining in black -";
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	enablenpc instance_npcname("Activated Warp#" + strnpcinfo(2));
 	close;
 }
@@ -1132,7 +1132,7 @@ OnTouch:
 	sleep2 3000;
 	if (is_party_leader() == false)
 		end;
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	mes "- In that treasure box, -";
 	.@r = rand(100);
 	if (.@r < 32) {
@@ -1948,11 +1948,11 @@ OnEvent:
 	specialeffect EF_GUMGANG4;
 	progressbar_npc "000000",4;
 	specialeffect EF_NPC_EARTHQUAKE;
-	cloakoffnpc instance_npcname( strnpcinfo(0) );
+	cloakoffnpc();
 	initnpctimer;
 	end;
 OnTimer1000:
-	cloakonnpc instance_npcname( strnpcinfo(0) );
+	cloakonnpc();
 	end;
 OnTimer2000:
 	stopnpctimer;

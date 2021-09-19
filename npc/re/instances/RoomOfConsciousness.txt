@@ -408,7 +408,7 @@ OnTimer16500:
 	donpcevent instance_npcname("eq#mir3") + "::OnStart";
 OnStop:
 	stopnpctimer;
-	disablenpc instance_npcname( strnpcinfo(0) );
+	disablenpc();
 	disablenpc instance_npcname( "Iris#" + strnpcinfo(2) );
 	'touch_mob = 0;
 	'random_letter$ = "";

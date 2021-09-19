@@ -2688,11 +2688,11 @@ OnTouch:
 
 -	script	Baehideun#main	-1,{
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	.@c = charat(strnpcinfo(0),9);
 	if (checkre(0)) {
 		switch (.@c) {
@@ -2720,7 +2720,7 @@ OnTimer300000:
 OnDisable:
 	$@mos1_edq = 0;
 	stopnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnMyMobDead:
@@ -7162,14 +7162,14 @@ OnTimer300000:
 
 OnEnable:
 	initnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnTimer120000:
 OnDisable:
 	stopnpctimer;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 mosk_dun01,50,256,3	duplicate(mos_rus#main)	Gray Wolf#rus05	4_RUS_DWOLF
@@ -8271,13 +8271,13 @@ mosk_fild02,157,233,0	script	Shepherdess#rus10	1_F_04,{
 
 OnDisable:
 	initnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnTimer60000:
 OnEnable:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 mosk_fild02,151,188,0	duplicate(PTree#rusmain)	Pointed Tree#rus11	HIDDEN_NPC
@@ -10027,7 +10027,7 @@ OnTouch_:
 				specialeffect EF_TELEPORTATION2;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
-				disablenpc strnpcinfo(0);
+				disablenpc();
 				enablenpc "Cow#rus3"+ .@other_npc[0];
 				next;
 			} else {
@@ -10037,7 +10037,7 @@ OnTouch_:
 				emotion ET_THINK;
 				next;
 				mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
-				disablenpc strnpcinfo(0);
+				disablenpc();
 				if (rand(2))
 					enablenpc "Cow#rus3"+ .@other_npc[0];
 				else
@@ -10049,7 +10049,7 @@ OnTouch_:
 			mes "Akkkk?! Eh!? The s-spell...";
 			next;
 			mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
-			disablenpc strnpcinfo(0);
+			disablenpc();
 			if (rand(2))
 				enablenpc "Cow#rus3"+ .@other_npc[0];
 			else

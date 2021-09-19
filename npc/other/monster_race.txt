@@ -208,7 +208,7 @@ OnInit:
 -	script	Runner_main	-1,{
 OnEnable:
 	emotion ET_SURPRISE;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	getmapxy(.@m$,.@x,.@y,BL_NPC);
 	setarray .@mob[1], 1725,1726,1727,1728,1730,1729;
 	.@n = atoi( strnpcinfo(2) );
@@ -216,7 +216,7 @@ OnEnable:
 	end;
 
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	killmonster "p_track01",strnpcinfo(0)+"::OnMyMobDead";
 	end;
 
@@ -243,7 +243,7 @@ OnTouchNPC:
 	
 OnInit:
 	if (strnpcinfo(2) != "" )
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	end;
 }
 p_track01,30,38,0	duplicate(Runner_main)	Runner No. 1#1	-1,1,0
@@ -783,7 +783,7 @@ OnTouchNPC:
 	end;
 	
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -799,7 +799,7 @@ OnTouchNPC:
 	end;
 	
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -814,7 +814,7 @@ OnTouchNPC:
 	end;
 	
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -829,7 +829,7 @@ OnTouchNPC:
 	end;
 	
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -1690,7 +1690,7 @@ function	MN	{
 }
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	setarray .@n[1], 1725,1726,1727,1728,1730,1729;
 	getmapxy(.@m$,.@x,.@y,BL_NPC);
 	.@i = MN;
@@ -1728,7 +1728,7 @@ OnDisable:
 
 OnInit:
 	if ( strnpcinfo(2) != "main" )
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	end;
 }
 p_track02,30,38,0	duplicate(mob1#main)	#poring1	139,0,0
@@ -1822,7 +1822,7 @@ OnDisable:
 	}
 	
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
