@@ -240,6 +240,8 @@ struct s_autobonus {
 	char *bonus_script, *other_script;
 	int active;
 	unsigned int pos;
+
+	~s_autobonus();
 };
 
 /// Timed bonus 'bonus_script' struct [Cydh]
