@@ -2772,8 +2772,17 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill)
-{
+bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill){
+	// Check if the same bonus already exists
+	for( std::vector<s_autobonus>::iterator it = bonus.begin(); it != bonus.end(); it++ ){
+		s_autobonus& autobonus = *it;
+
+		// Compare based on position and bonus script
+		if( autobonus.pos == pos && strcmp( script, autobonus.bonus_script ) == 0 ){
+			return false;
+		}
+	}
+
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);
 		return false;
@@ -2789,15 +2798,6 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 				flag |= BF_SKILL; //These two would never trigger without BF_SKILL
 			if (flag&BF_WEAPON)
 				flag |= BF_NORMAL | BF_SKILL;
-		}
-	}
-
-	for( std::vector<s_autobonus>::iterator it = bonus.begin(); it != bonus.end(); it++ ){
-		s_autobonus& autobonus = *it;
-
-		// Check if the same bonus already exists
-		if( autobonus.pos == pos && strcmp( script, autobonus.bonus_script ) == 0 ){
-			return false;
 		}
 	}
 
