@@ -19571,7 +19571,7 @@ Body:
     Unit:
       Id: Poisonsmoke
       Layout: 2
-      Interval: 1000
+      Interval: 2000
       Target: Enemy
       Flag:
         NoOverlap: true
