@@ -127285,7 +127285,6 @@ Body:
     Defense: 10
     Locations:
       Head_Top: true
-    WeaponLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -131508,7 +131507,6 @@ Body:
     Defense: 50
     Locations:
       Armor: true
-    WeaponLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -132061,7 +132059,6 @@ Body:
     Defense: 14
     Locations:
       Shoes: true
-    WeaponLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -132688,7 +132685,6 @@ Body:
     Defense: 14
     Locations:
       Garment: true
-    WeaponLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -133766,6 +133762,8 @@ Body:
     AegisName: L_60Lv_Necklace
     Name: Advanced Paradise Necklace
     Type: Armor
+    Locations:
+      Right_Accessory: true
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -135005,7 +135003,8 @@ Body:
   - Id: 510038
     AegisName: 3Para_Dagger_SC
     Name: Paradise Shadow Chaser Dagger
-    Type: Healing
+    Type: Weapon
+    SubType: Dagger
     Attack: 180
     Jobs:
       All: true
@@ -137202,6 +137201,8 @@ Body:
     MagicAttack: 160
     Jobs:
       Priest: true
+    Locations:
+      Right_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -137215,7 +137216,7 @@ Body:
       NoAuction: true
     Script: |
       bonus bMatkRate,3;
-      if (BaseLevel>=60) {
+      if (BaseLevel>=60)
          bonus bVariableCastrate,-10;
       if (BaseLevel>=75)
          bonus2 bSkillAtk,"PR_MAGNUS",10;
@@ -138315,6 +138316,7 @@ Body:
     Attack: 160
     Jobs:
       BardDancer: true
+    Gender: Male
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -138346,6 +138348,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+    Gender: Male
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -138384,6 +138387,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+    Gender: Male
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -138764,6 +138768,7 @@ Body:
     Attack: 160
     Jobs:
       BardDancer: true
+    Gender: Female
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -138795,6 +138800,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+    Gender: Female
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -138833,6 +138839,7 @@ Body:
       BardDancer: true
     Classes:
       All_Third: true
+    Gender: Female
     Locations:
       Right_Hand: true
     WeaponLevel: 4
