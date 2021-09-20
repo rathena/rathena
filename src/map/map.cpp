@@ -4745,13 +4745,23 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_RESTRICTED:
-			nullpo_retr(false, args);
+			if (!status) {
+				if (args == nullptr) {
+					mapdata->zone = 0;
+				} else {
+					mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
+				}
 
-			mapdata->flag[mapflag] = status;
-			if (!status)
-				mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
-			else
+				// Don't completely disable the mapflag's status if other zones are active
+				if (mapdata->zone == 0) {
+					mapdata->flag[mapflag] = status;
+				}
+			} else {
+				nullpo_retr(false, args);
+
 				mapdata->zone |= (1 << (args->flag_val + 1)) << 3;
+				mapdata->flag[mapflag] = status;
+			}
 			break;
 		case MF_NOCOMMAND:
 			if (status) {

@@ -1248,11 +1248,11 @@ OnTimer5000:
 	end;
 
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	callfunc "F_Tower_Monster",
 		atoi(replacestr(strnpcinfo(0),"FGate102tower","")) + 1,
 		strnpcinfo(4),

@@ -685,16 +685,16 @@ OnTimer23910:
 	else
 		donpcevent instance_npcname("Torch#"+.@id[0]+"-"+(.@id[1]+1))+"::OnEnable";
 	initnpctimer;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnInstanceInit:
 	if (strnpcinfo(0) != "Torch#2-1" && strnpcinfo(0) != "Torch#3-1")
-		disablenpc instance_npcname(strnpcinfo(0));
+		disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	end;
 
 OnTimer100:

@@ -2903,6 +2903,7 @@ invoking character has in their inventory, including all the data needed to
 recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]                - array of item ids.
+@inventorylist_idx[]               - array of item inventory index.
 @inventorylist_amount[]            - their corresponding item amounts.
 @inventorylist_equip[]             - on which position the item is equipped (see EQP_* constants)
                                      It will contain 0 if the item is not equipped.
@@ -4997,6 +4998,30 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
+*delitemidx <index>{,<amount>{,<char id>}}
+
+This command will remove an item at the given inventory index.
+
+If <amount> is not specified, this will remove all of the items at the specified index.
+
+The only way to get the inventory index is by using 'getinventorylist()'. After deleting
+an item at the given index, that index can remain empty until the player relogs, requiring
+'getinventorylist()' to be called again. If an item is deleted with an invalid index, the
+script will terminate with an error.
+
+This command returns true on success and false if the item at the given index could not be deleted or if
+not enough items were available at the given index.
+
+Example:
+
+	// This will remove all Red Potions from player's inventory
+	getinventorylist();
+	for (.@i = 0; .@i < @inventorylist_count; ++.@i)
+		if (@inventorylist_id[.@i] == 501)
+			delitemidx @inventorylist_idx[.@i];
+
+---------------------------------------
+
 *cartdelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
@@ -5523,6 +5548,8 @@ Example:
 
 This will open a character's Mail window on the client connected to the
 invoking character.
+
+This command is not supported for PACKETVER 20150513 or newer.
 
 	mes "Close this window to open your mail inbox.";
 	close2;
@@ -6573,8 +6600,8 @@ Examples:
 
 ---------------------------------------
 
-*disablenpc "<NPC object name>";
-*enablenpc "<NPC object name>";
+*disablenpc {"<NPC object name>"};
+*enablenpc {"<NPC object name>"};
 
 These two commands will disable and enable, respectively, an NPC object
 specified by name. The disabled NPC will disappear from sight and will no longer
@@ -6591,8 +6618,8 @@ copies, and then disable all except one.
 
 ---------------------------------------
 
-*hideonnpc "<NPC object name>";
-*hideoffnpc "<NPC object name>";
+*hideonnpc {"<NPC object name>"};
+*hideoffnpc {"<NPC object name>"};
 
 These commands will make the NPC object specified display as hidden/visible,
 even though not actually disabled per se. Hidden as in thief Hide skill, but
@@ -6612,8 +6639,8 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
-*cloakonnpc "<NPC object name>"{,<character ID>};
-*cloakoffnpc "<NPC object name>"{,<character ID>};
+*cloakonnpc {"<NPC object name>"{,<character ID>}};
+*cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
 These commands will make the NPC object specified display as cloaked/uncloaked,
 even though not actually disabled.
@@ -6626,7 +6653,7 @@ If no <character ID> is specified it will display to the area.
 
 ---------------------------------------
 
-*isnpccloaked "<NPC object name>"{,<character ID>};
+*isnpccloaked {"<NPC object name>"{,<character ID>}};
 
 Returns true if the NPC has been cloaked to the attached player or given
 <character ID>, false otherwise. This works in association with cloakonnpc

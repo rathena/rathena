@@ -1605,11 +1605,11 @@ dew_fild01,259,48,4	script	Poby#dew_drink	538,{
 	donpcevent strnpcinfo(0)+"::OnDisable";
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	end;
 OnTimer60000:
