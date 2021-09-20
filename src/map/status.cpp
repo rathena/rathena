@@ -4271,9 +4271,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	memset(&sd->bonus, 0, sizeof(sd->bonus));
 
 	// Autobonus
-	pc_delautobonus(sd, sd->autobonus, true);
-	pc_delautobonus(sd, sd->autobonus2, true);
-	pc_delautobonus(sd, sd->autobonus3, true);
+	pc_delautobonus(*sd, sd->autobonus, true);
+	pc_delautobonus(*sd, sd->autobonus2, true);
+	pc_delautobonus(*sd, sd->autobonus3, true);
 
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {

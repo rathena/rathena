@@ -2789,11 +2789,11 @@ s_autobonus::~s_autobonus(){
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill){
+bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill){
 	// Check if the same bonus already exists
-	for( s_autobonus& autobonus : bonus ){
+	for( std::shared_ptr<s_autobonus> autobonus : bonus ){
 		// Compare based on position and bonus script
-		if( autobonus.pos == pos && strcmp( script, autobonus.bonus_script ) == 0 ){
+		if( autobonus->pos == pos && strcmp( script, autobonus->bonus_script ) == 0 ){
 			return false;
 		}
 	}
@@ -2816,18 +2816,18 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 		}
 	}
 
-	struct s_autobonus entry = {};
+	std::shared_ptr<s_autobonus> entry = std::make_shared<s_autobonus>();
 
 	if (rate < -10000 || rate > 10000)
 		ShowWarning("pc_addautobonus: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
 
-	entry.rate = cap_value(rate, -10000, 10000);
-	entry.duration = dur;
-	entry.active = INVALID_TIMER;
-	entry.atk_type = flag;
-	entry.pos = pos;
-	entry.bonus_script = aStrdup(script);
-	entry.other_script = (other_script ? aStrdup(other_script) : NULL);
+	entry->rate = cap_value(rate, -10000, 10000);
+	entry->duration = dur;
+	entry->active = INVALID_TIMER;
+	entry->atk_type = flag;
+	entry->pos = pos;
+	entry->bonus_script = aStrdup(script);
+	entry->other_script = (other_script ? aStrdup(other_script) : NULL);
 
 	bonus.push_back(entry);
 
@@ -2840,26 +2840,23 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
  * @param bonus: Autobonus array
  * @param restore: Run script on clearing or not
  */
-void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore)
-{
-	nullpo_retv(sd);
-
-	std::vector<s_autobonus>::iterator it = bonus.begin();
+void pc_delautobonus(struct map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> &bonus, bool restore){
+	std::vector<std::shared_ptr<s_autobonus>>::iterator it = bonus.begin();
 
 	while( it != bonus.end() ){
-		s_autobonus b = *it;
+		std::shared_ptr<s_autobonus> b = *it;
 
-		if( b.active != INVALID_TIMER && restore && b.bonus_script != nullptr ){
+		if( b->active != INVALID_TIMER && restore && b->bonus_script != nullptr ){
 			unsigned int equip_pos_idx = 0;
 
 			// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
 			for (uint8 j = 0; j < EQI_MAX; j++) {
-				if (sd->equip_index[j] >= 0)
-					equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
+				if (sd.equip_index[j] >= 0)
+					equip_pos_idx |= sd.inventory.u.items_inventory[sd.equip_index[j]].equip;
 			}
 
-			if( ( equip_pos_idx&b.pos ) == b.pos ){
-				script_run_autobonus(b.bonus_script, sd, b.pos);
+			if( ( equip_pos_idx&b->pos ) == b->pos ){
+				script_run_autobonus(b->bonus_script, &sd, b->pos);
 			}else{
 				// Not all required items equipped anymore
 				restore = false;
@@ -2880,11 +2877,8 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
  * @param sd: Player data
  * @param autobonus: Autobonus to run
  */
-void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus)
+void pc_exeautobonus(struct map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus)
 {
-	nullpo_retv(sd);
-	nullpo_retv(autobonus);
-
 	if (autobonus->active != INVALID_TIMER)
 		delete_timer(autobonus->active, pc_endautobonus);
 
@@ -2894,15 +2888,15 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
 		unsigned int equip_pos_idx = 0;
 		//Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
 		for(j = 0; j < EQI_MAX; j++) {
-			if(sd->equip_index[j] >= 0)
-				equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
+			if(sd.equip_index[j] >= 0)
+				equip_pos_idx |= sd.inventory.u.items_inventory[sd.equip_index[j]].equip;
 		}
 		if((equip_pos_idx&autobonus->pos) == autobonus->pos)
-			script_run_autobonus(autobonus->other_script,sd,autobonus->pos);
+			script_run_autobonus(autobonus->other_script,&sd,autobonus->pos);
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
-	status_calc_pc(sd,SCO_FORCE);
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd.bl.id, (intptr_t)bonus);
+	status_calc_pc(&sd,SCO_FORCE);
 }
 
 /**
@@ -2910,14 +2904,14 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
  */
 TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
-	std::vector<s_autobonus> *bonus = (std::vector<s_autobonus> *)data;
+	std::vector<std::shared_ptr<s_autobonus>> *bonus = (std::vector<std::shared_ptr<s_autobonus>> *)data;
 
 	nullpo_ret(sd);
 	nullpo_ret(bonus);
 
-	for( struct s_autobonus& autobonus : *bonus ){
-		if( autobonus.active == tid ){
-			autobonus.active = INVALID_TIMER;
+	for( std::shared_ptr<s_autobonus> autobonus : *bonus ){
+		if( autobonus->active == tid ){
+			autobonus->active = INVALID_TIMER;
 			break;
 		}
 	}
@@ -10800,13 +10794,13 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	return true;
 }
 
-static void pc_deleteautobonus( std::vector<s_autobonus>& bonus, int position ){
-	std::vector<s_autobonus>::iterator it = bonus.begin();
+static void pc_deleteautobonus( std::vector<std::shared_ptr<s_autobonus>>& bonus, int position ){
+	std::vector<std::shared_ptr<s_autobonus>>::iterator it = bonus.begin();
 
 	while( it != bonus.end() ){
-		s_autobonus b = *it;
+		std::shared_ptr<s_autobonus> b = *it;
 
-		if( ( b.pos & position ) != b.pos ){
+		if( ( b->pos & position ) != b->pos ){
 			it++;
 			continue;
 		}

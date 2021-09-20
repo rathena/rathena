@@ -2246,13 +2246,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	if( sd && !sd->autobonus.empty() )
 	{
 		for(auto &it : sd->autobonus) {
-			if (rnd()%1000 >= it.rate)
+			if (rnd()%1000 >= it->rate)
 				continue;
-			if (!(((it.atk_type)&attack_type)&BF_WEAPONMASK &&
-				  ((it.atk_type)&attack_type)&BF_RANGEMASK &&
-				  ((it.atk_type)&attack_type)&BF_SKILLMASK))
+			if (!(((it->atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((it->atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((it->atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			pc_exeautobonus(sd, &sd->autobonus, &it);
+			pc_exeautobonus(*sd, &sd->autobonus, it);
 		}
 	}
 
@@ -2330,11 +2330,11 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 
 	if( sd && !sd->autobonus3.empty() ) {
 		for (auto &it : sd->autobonus3) {
-			if (rnd()%1000 >= it.rate)
+			if (rnd()%1000 >= it->rate)
 				continue;
-			if (it.atk_type != skill_id)
+			if (it->atk_type != skill_id)
 				continue;
-			pc_exeautobonus(sd, &sd->autobonus3, &it);
+			pc_exeautobonus(*sd, &sd->autobonus3, it);
 		}
 	}
 
@@ -2552,13 +2552,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	//Autobonus when attacked
 	if( dstsd && !status_isdead(bl) && !dstsd->autobonus2.empty() && !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)) ) {
 		for (auto &it : dstsd->autobonus2) {
-			if (rnd()%1000 >= it.rate)
+			if (rnd()%1000 >= it->rate)
 				continue;
-			if (!(((it.atk_type)&attack_type)&BF_WEAPONMASK &&
-				  ((it.atk_type)&attack_type)&BF_RANGEMASK &&
-				  ((it.atk_type)&attack_type)&BF_SKILLMASK))
+			if (!(((it->atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((it->atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((it->atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			pc_exeautobonus(dstsd, &dstsd->autobonus2, &it);
+			pc_exeautobonus(*dstsd, &dstsd->autobonus2, it);
 		}
 	}
 
