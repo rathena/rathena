@@ -9636,9 +9636,6 @@ BUILDIN_FUNC(autobonus)
 	else
 		pos = sd->inventory.u.items_inventory[current_equip_item_index].equip;
 
-	if((sd->state.autobonus&pos) == pos)
-		return SCRIPT_CMD_SUCCESS;
-
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
 	bonus_script = script_getstr(st,2);
@@ -9676,9 +9673,6 @@ BUILDIN_FUNC(autobonus2)
 	else
 		pos = sd->inventory.u.items_inventory[current_equip_item_index].equip;
 
-	if((sd->state.autobonus&pos) == pos)
-		return SCRIPT_CMD_SUCCESS;
-
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
 	bonus_script = script_getstr(st,2);
@@ -9715,9 +9709,6 @@ BUILDIN_FUNC(autobonus3)
 		pos = current_equip_combo_pos;
 	else
 		pos = sd->inventory.u.items_inventory[current_equip_item_index].equip;
-
-	if((sd->state.autobonus&pos) == pos)
-		return SCRIPT_CMD_SUCCESS;
 
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);

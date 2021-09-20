@@ -240,6 +240,8 @@ struct s_autobonus {
 	char *bonus_script, *other_script;
 	int active;
 	unsigned int pos;
+
+	~s_autobonus();
 };
 
 /// Timed bonus 'bonus_script' struct [Cydh]
@@ -323,7 +325,6 @@ struct map_session_data {
 		t_itemid autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
 		unsigned short autoloottype;
 		unsigned int autolooting : 1; //performance-saver, autolooting state for @alootid
-		unsigned int autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
 		unsigned int gmaster_flag : 1;
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
