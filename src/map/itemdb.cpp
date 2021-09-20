@@ -1045,7 +1045,7 @@ void ItemDatabase::loadingFinished(){
 			}
 
 			if( item->armor_level != 0 ){
-				ShowWarning( "Item %s is a weapon, but does not have an armor level. Defaulting to 0.\n", item->name.c_str() );
+				ShowWarning( "Item %s is a weapon, but has an armor level. Defaulting to 0.\n", item->name.c_str() );
 				item->armor_level = 0;
 			}
 		}else if( item->type == IT_ARMOR ){
@@ -1055,17 +1055,17 @@ void ItemDatabase::loadingFinished(){
 			}
 
 			if( item->weapon_level != 0 ){
-				ShowWarning( "Item %s is a weapon, but does not have an armor level. Defaulting to 0.\n", item->name.c_str() );
+				ShowWarning( "Item %s is an armor, but has a weapon level. Defaulting to 0.\n", item->name.c_str() );
 				item->weapon_level = 0;
 			}
 		}else{
 			if( item->weapon_level != 0 ){
-				ShowWarning( "Item %s is not a weapon, but does have a weapon level. Defaulting to 0.\n", item->name.c_str() );
+				ShowWarning( "Item %s is not a weapon, but has a weapon level. Defaulting to 0.\n", item->name.c_str() );
 				item->weapon_level = 0;
 			}
 
 			if( item->armor_level != 0 ){
-				ShowWarning( "Item %s is not an armor, but does have an armor level. Defaulting to 0.\n", item->name.c_str() );
+				ShowWarning( "Item %s is not an armor, but has an armor level. Defaulting to 0.\n", item->name.c_str() );
 				item->armor_level = 0;
 			}
 		}
