@@ -11952,7 +11952,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       /* Unofficial chance */
-      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,10;
+      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,30;
   - Id: 4657
     AegisName: Grave_A_Mummy_Card
     Name: Nightmare Ancient Mummy Card

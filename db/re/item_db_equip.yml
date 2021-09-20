@@ -10834,8 +10834,8 @@ Body:
     Refineable: true
     Script: |
       bonus bCritical,40;
-      bonus bDefRate,-67;
-      bonus bDef2Rate,-67;
+      bonus bDefRate,-66;
+      bonus bDef2Rate,-66;
   - Id: 1539
     AegisName: Golden_Mace_
     Name: Golden Mace
@@ -11108,9 +11108,7 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      StarGladiator: true
       Swordman: true
-      Taekwon: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
