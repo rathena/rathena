@@ -24260,7 +24260,7 @@ BUILDIN_FUNC(duplicate)
 		nd = dup_npc(dnd, script_getstr(st, 3));
 	}
 	else {
-		nd = dup_npc(dnd, NULL);
+		nd = dup_npc(dnd, nullptr);
 	}
 
 	script_pushstr(st, aStrdup(nd->exname));
