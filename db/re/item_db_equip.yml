@@ -132004,6 +132004,87 @@ Body:
             }
          }
       }
+  - Id: 400142
+    AegisName: Thanos_Helm2_LT
+    Name: Thanos' Shooter Helmet-LT    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 190
+    Refineable: true
+    View: 2090
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5*(.@r/3);
+      if (.@r>=7) {
+         bonus bAspdRate,15;
+         if (.@r>=9) {
+            bonus bLongAtkRate,15;
+            if (.@r>=11) {
+               bonus bFixedCast,-200;
+               bonus2 bAddEle,Ele_All,15;
+            }
+         }
+      }
+      /* todo bonus by grade */
+  - Id: 400145
+    AegisName: Thanos_Helm3_LT
+    Name: Thanos' Magic Helmet-LT    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 190
+    Refineable: true
+    View: 2102
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5*(.@r/3);
+      if (.@r>=7) {
+         bonus bVariableCastrate,-15;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_All,15;
+            if (.@r>=11) {
+               bonus bFixedCast,-200;
+               bonus2 bMagicAddEle,Ele_All,15;
+            }
+         }
+      }
+      /* todo bonus by grade */
+  - Id: 400151
+    AegisName: Thanos_Helm4_LT
+    Name: Thanos' Champion Helmet-LT    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 190
+    Refineable: true
+    View: 2104
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5*(.@r/3);
+      if (.@r>=7) {
+         bonus bAspdRate,15;
+         if (.@r>=9) {
+            bonus bShortAtkRate,15;
+            if (.@r>=11) {
+               bonus bFixedCast,-200;
+               bonus2 bAddEle,Ele_All,15;
+            }
+         }
+      }
+      /* todo bonus by grade */
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -132274,6 +132355,20 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2096
+  - Id: 420066
+    AegisName: SurviveOrb_K_LT
+    Name: Survive Orb-LT
+    Type: Armor
+    Weight: 300
+    Defense: 2
+    Locations:
+      Head_Low: true
+    ArmorLevel: 2
+    EquipLevelMin: 150
+    View: 1488
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,7;
+      bonus bVariableCastrate,-3;
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
