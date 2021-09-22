@@ -4689,7 +4689,7 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 	else {
 		map_addiddb(&nd->bl);
 	}
-	if (name == NULL) {
+	if (name == nullptr) {
 		safesnprintf(nd->exname, ARRAYLENGTH(nd->exname), "dup_%d", nd->bl.id);
 		//Making sure the generated name is not used for another npc.
 		int i = 0;
