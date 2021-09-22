@@ -24250,7 +24250,7 @@ BUILDIN_FUNC(duplicate)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	npc_data* nd = nullptr;
+	npc_data* nd;
 
 	if (script_hasdata(st, 3)) {
 		if (npc_name2id(script_getstr(st, 3)) != nullptr) {
