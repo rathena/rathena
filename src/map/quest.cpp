@@ -729,7 +729,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 					objective_check++;
 				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == md->status.def_ele)
 					objective_check++;
-				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn_timer != INVALID_TIMER))
+				if (qi->objectives[j]->mapid < 0 || (qi->objectives[j]->mapid == sd->bl.m && md->spawn != nullptr))
 					objective_check++;
 			}
 
