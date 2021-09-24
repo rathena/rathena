@@ -8755,7 +8755,7 @@ Body:
     Name: Hydra Ball
     Type: Usable
     Script: |
-      pet 2081;
+      collection 2081;
   - Id: 12409
     AegisName: Pork_Belly_H
     Name: 1st Class Pork Belly
@@ -12823,6 +12823,8 @@ Body:
     AegisName: Empty_Potion_Bottle
     Name: Empty Potion Bottle
     Type: Usable
+    Script: |
+      collection 1878;
   - Id: 12775
     AegisName: Ancient_Spirit_Agimat
     Name: Greater Agimat of Ancient Spirit
@@ -45423,6 +45425,54 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_EASTER_EGG);
+  - Id: 22589
+    AegisName: Savage_Ora
+    Name: Savage Trap
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      collection 1166;
+  - Id: 22590
+    AegisName: Grand_Peco_Ora
+    Name: Grand Peco Trap
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      collection 1369;
+  - Id: 22591
+    AegisName: Dest_Wolf_Ora
+    Name: Dest Wolf Trap
+    Type: Usable
+    Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      collection 1106;
   - Id: 22592
     AegisName: Happy_Call_Box
     Name: Happy Call Box
@@ -47268,7 +47318,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      /*Used to catch a Lost Sheep*/
+      collection 3453;
   - Id: 22882
     AegisName: Choco_Tteokguk
     Name: Chocolate Rice Cake Soup
@@ -47539,6 +47589,12 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_DORAM_BUF_02, 180000, 0;
+  - Id: 22995 #Removed from kRo
+    AegisName: Explosion_Proof_Equip
+    Name: Explosion Proof Equip
+    Type: Usable
+    Script: |
+      collection 1904;
   - Id: 23001
     AegisName: Enchant_Stone_Box8
     Name: Costume Enchant Stone Box 8
@@ -47573,6 +47629,12 @@ Body:
     Weight: 1
     Script: |
       callfunc("F_Cursed_Fragment");
+  - Id: 23028
+    AegisName: Capture_Rope
+    Name: Capture Rope
+    Type: Usable
+    Script: |
+      collection 3509;
   - Id: 23033
     AegisName: Invisible_Box
     Name: Invisible Box
@@ -48368,6 +48430,12 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23436;*/
+  - Id: 23446
+    AegisName: Savage_Trap
+    Name: Savage Trap
+    Type: Usable
+    Script: |
+      collection 3955;
   - Id: 23474
     AegisName: InfinityShadow_Mix
     Name: InfinityShadow Mix

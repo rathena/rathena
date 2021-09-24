@@ -7533,7 +7533,7 @@ Body:
     Name: Leaf Cat Ball
     Type: Usable
     Script: |
-      pet 2081;
+      collection 2081;
   - Id: 12409
     AegisName: Pork_Belly_H
     Name: 1st Class Pork Belly

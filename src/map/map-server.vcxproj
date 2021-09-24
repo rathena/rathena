@@ -178,6 +178,7 @@
     <ClInclude Include="clif_obfuscation.hpp" />
     <ClInclude Include="clif_packetdb.hpp" />
     <ClInclude Include="clif_shuffle.hpp" />
+    <ClInclude Include="collection.hpp" />
     <ClInclude Include="date.hpp" />
     <ClInclude Include="duel.hpp" />
     <ClInclude Include="elemental.hpp" />
@@ -223,6 +224,7 @@
     <ClCompile Include="chrif.cpp" />
     <ClCompile Include="clan.cpp" />
     <ClCompile Include="clif.cpp" />
+    <ClCompile Include="collection.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="duel.cpp" />
     <ClCompile Include="elemental.cpp" />
@@ -301,6 +303,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\battleground_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\battleground_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\castle_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\castle_db.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\collection_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\collection_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\const.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\const.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\create_arrow_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\create_arrow_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\elemental_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\elemental_db.txt')" />

@@ -23465,4 +23465,93 @@ Body:
             Rate: 300
             Amount: 1
             Announced: true
-
+  - Group: COLLECTION_E_HYDRA
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Mystic_Leaf_Cat_Ball
+            Rate: 100
+          - Item: Green_Herb
+            Rate: 5
+          - Item: Jellopy
+            Rate: 1
+  - Group: COLLECTION_E_SHINING_PLANT
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Magic_Potion_Bottle
+            Rate: 100
+          - Item: Green_Herb
+            Rate: 5
+          - Item: White_Herb
+            Rate: 1
+  - Group: COLLECTION_LOST_LAMB
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Captured_Sheep
+            Rate: 100
+          - Item: Jellopy
+            Rate: 1
+          - Item: Green_Herb
+            Rate: 1
+  - Group: COLLECTION_SAVAGE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Savage_Box
+            Rate: 50
+          - Item: Animal's_Skin
+            Rate: 10
+          - Item: Animal_Blood
+            Rate: 1
+  - Group: COLLECTION_GRAND_PECO
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Grand_Peco_Box
+            Rate: 50
+          - Item: Orange
+            Rate: 7
+          - Item: Peco_Wing_Feather
+            Rate: 3
+  - Group: COLLECTION_DESERT_WOLF
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Desert_Wolf_Box
+            Rate: 50
+          - Item: Claw_Of_Desert_Wolf
+            Rate: 7
+          - Item: Wolf_Blood
+            Rate: 3
+  - Group: COLLECTION_BOMBPORING
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Ice_Bomb
+            Rate: 100
+          - Item: Jellopy
+            Rate: 1
+          - Item: Jellopy
+            Rate: 1
+  - Group: COLLECTION_MOON_RABBIT
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Captured_MRabbit
+            Rate: 100
+          - Item: MRabbit_Hair
+            Rate: 50
+          - Item: MRabbit_SHair
+            Rate: 10
+  - Group: COLLECTION_E_SAVAGE
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Captured_Savage
+            Rate: 50
+          - Item: Green_Herb
+            Rate: 5
+          - Item: Jellopy
+            Rate: 1

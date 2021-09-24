@@ -1,0 +1,71 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Renewal Collection Database
+###########################################################################
+#
+# Collection Settings
+#
+###########################################################################
+# - Mob                      Monster that can be used
+#   ConsumeItem              Consume Item.
+#   CaptureRate              Capture success rate. (10000 = 100%). Default: 100%
+#   RewardItemGroup          Item group reward if monster catched.
+###########################################################################
+
+Header:
+  Type: COLLECTION_DB
+  Version: 1
+
+Body:
+  - Mob: E_HYDRA
+    ConsumeItem: Leaf_Cat_Ball
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_E_HYDRA
+  - Mob: E_SHINING_PLANT
+    ConsumeItem: Empty_Potion_Bottle
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_E_SHINING_PLANT
+  - Mob: LOST_LAMB
+    ConsumeItem: Binding_Rope
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_LOST_LAMB
+  - Mob: SAVAGE
+    ConsumeItem: Savage_Ora
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_SAVAGE
+  - Mob: GRAND_PECO
+    ConsumeItem: Grand_Peco_Ora
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_GRAND_PECO
+  - Mob: DESERT_WOLF
+    ConsumeItem: Dest_Wolf_Ora
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_DESERT_WOLF
+  - Mob: BOMBPORING
+    ConsumeItem: Explosion_Proof_Equip
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_BOMBPORING
+  - Mob: MOON_RABBIT
+    ConsumeItem: Capture_Rope
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_MOON_RABBIT
+  - Mob: E_SAVAGE
+    ConsumeItem: Savage_Trap
+    CaptureRate: 10000
+    RewardItemGroup: COLLECTION_E_SAVAGE

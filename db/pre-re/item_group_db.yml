@@ -7430,3 +7430,13 @@ Body:
             Rate: 1
           - Item: Gold_Tiara_
             Rate: 1
+  - Group: COLLECTION_E_HYDRA
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Mystic_Leaf_Cat_Ball
+            Rate: 100
+          - Item: Green_Herb
+            Rate: 5
+          - Item: Jellopy
+            Rate: 1

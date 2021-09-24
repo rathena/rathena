@@ -34,6 +34,7 @@
 #include "chrif.hpp"
 #include "clan.hpp"
 #include "clif.hpp"
+#include "collection.hpp"
 #include "elemental.hpp"
 #include "guild.hpp"
 #include "homunculus.hpp"
@@ -8205,6 +8206,43 @@ void clif_pet_autofeed_status(struct map_session_data* sd, bool force) {
 		}
 	}
 #endif
+}
+
+/// Initiates the monster catch process (ZC_START_COLLECTION).
+/// 08b4
+void clif_catch_collection_process(struct map_session_data* sd)
+{
+	int fd;
+
+	nullpo_retv(sd);
+
+	fd = sd->fd;
+	WFIFOHEAD(fd, packet_len(0x8b4));
+	WFIFOW(fd, 0) = 0x8b4;
+	WFIFOSET(fd, packet_len(0x8b4));
+}
+
+/// Attempt to catch a collection (CZ_TRYCOLLECTION).
+/// 0x08b5 <id>.L
+void clif_parse_CatchCollection(int fd, struct map_session_data* sd) {
+	collection_catch_process2(sd, RFIFOL(fd, packet_db[RFIFOW(fd, 0)].pos[0]));
+}
+
+/// Displays the result of a monster catch attempt (ZC_TRYCOLLECTION).
+/// 08b6 <result>.B
+///     0 = failure
+///     1 = success
+void clif_collection_roulette(struct map_session_data* sd, int data)
+{
+	int fd;
+
+	nullpo_retv(sd);
+
+	fd = sd->fd;
+	WFIFOHEAD(fd, packet_len(0x08b6));
+	WFIFOW(fd, 0) = 0x08b6;
+	WFIFOB(fd, 2) = data;
+	WFIFOSET(fd, packet_len(0x08b6));
 }
 
 /// Presents a list of skills that can be auto-spelled (ZC_AUTOSPELLLIST).

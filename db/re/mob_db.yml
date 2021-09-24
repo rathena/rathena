@@ -82463,8 +82463,43 @@ Body:
       - Item: Zombie_Guard_Card
         Rate: 1
         StealProtected: true
-#  - Id: 3453
-#    AegisName: LOST_LAMB
+  - Id: 3453
+    AegisName: LOST_LAMB
+    Name: Lost Lumb
+    JapaneseName: Lost Lumb
+    Level: 30
+    Hp: 10
+    BaseExp: 0
+    JobExp: 0
+    Attack: 31
+    Attack2: 20
+    Defense: 36
+    MagicDefense: 17
+    Str: 17
+    Agi: 26
+    Vit: 20
+    Int: 18
+    Dex: 36
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 672
+    AttackMotion: 1672
+    DamageMotion: 480
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+    Drops:
+      - Item: Lamb_Horns
+        Rate: 100
   - Id: 3454
     AegisName: HEART_HUNTER_N
     Name: Suspicious Intruder
@@ -83921,8 +83956,40 @@ Body:
     AttackMotion: 672
     DamageMotion: 480
     Ai: 02
-#  - Id: 3509
-#    AegisName: MOON_RABBIT
+  - Id: 3509
+    AegisName: MOON_RABBIT
+    Name: Moon Rabbit
+    JapaneseName: Moon Rabbit
+    Level: 1
+    Hp: 17
+    BaseExp: 0
+    JobExp: 0
+    Attack: 19
+    Attack2: 24
+    Defense: 18
+    MagicDefense: 0
+    Str: 10
+    Agi: 3
+    Vit: 3
+    Int: 0
+    Dex: 8
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1456
+    AttackMotion: 456
+    DamageMotion: 336
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
 #  - Id: 3510
 #    AegisName: POPE_MD_E_GUARD
 #  - Id: 3511
@@ -86076,8 +86143,40 @@ Body:
 #    AegisName: ORC_HERO_MJ
 #  - Id: 3954
 #    AegisName: ORC_LORD_MJ
-#  - Id: 3955
-#    AegisName: E_SAVAGE
+  - Id: 3955
+    AegisName: E_SAVAGE
+    Name: Savage
+    JapaneseName: Savage
+    Level: 10
+    Hp: 10
+    BaseExp: 0
+    JobExp: 0
+    Attack: 11
+    Attack2: 12
+    Defense: 10
+    MagicDefense: 10
+    Str: 1
+    Agi: 1
+    Vit: 1
+    Int: 1
+    Dex: 1
+    Luk: 1
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Brute
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1960
+    AttackMotion: 960
+    DamageMotion: 384
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
 #  - Id: 3956
 #    AegisName: E_ELDER_WILOW
 #  - Id: 3957

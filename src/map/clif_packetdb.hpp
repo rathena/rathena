@@ -1807,6 +1807,14 @@
 	ack_packet(ZC_WEAR_EQUIP_ACK,0x08d0,9,2,4,6,8);
 #endif
 
+	// 2011-01-25aRagexe
+#if PACKETVER >= 20110125
+// new packets
+	packet(0x08b4, 2); // ZC_START_COLLECTION
+	parseable_packet(0x08b5, 6, clif_parse_CatchCollection, 2);
+	packet(0x08b6, 3); // ZC_TRYCOLLECTION
+#endif
+
 // 2011-10-05aRagexeRE
 #if PACKETVER >= 20111005
 	parseable_packet(0x0364,5,clif_parse_WalkToXY,2);
