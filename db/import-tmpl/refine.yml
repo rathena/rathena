@@ -79,41 +79,61 @@ Header:
 #            Chances:
 #              - Type: Normal
 #                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
 #          - Level: 12
 #            Chances:
 #              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
 #                Rate: 2000
 #          - Level: 13
 #            Chances:
 #              - Type: Normal
 #                Rate: 1600
+#              - Type: HD
+#                Rate: 1600
 #          - Level: 14
 #            Chances:
 #              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
 #                Rate: 1600
 #          - Level: 15
 #            Chances:
 #              - Type: Normal
 #                Rate: 1500
+#              - Type: HD
+#                Rate: 1500
 #          - Level: 16
 #            Chances:
 #              - Type: Normal
+#                Rate: 1500
+#              - Type: HD
 #                Rate: 1500
 #          - Level: 17
 #            Chances:
 #              - Type: Normal
 #                Rate: 1400
+#              - Type: HD
+#                Rate: 1400
 #          - Level: 18
 #            Chances:
 #              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
 #                Rate: 1400
 #          - Level: 19
 #            Chances:
 #              - Type: Normal
 #                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
 #          - Level: 20
 #            Chances:
 #              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
 #                Rate: 1000
 #  - Group: Weapon
 #    Levels:
@@ -135,33 +155,49 @@ Header:
 #            Chances:
 #              - Type: Normal
 #                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
 #          - Level: 12
 #            Chances:
 #              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
 #                Rate: 4000
 #          - Level: 13
 #            Chances:
 #              - Type: Normal
 #                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
 #          - Level: 14
 #            Chances:
 #              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
 #                Rate: 3500
 #          - Level: 15
 #            Chances:
 #              - Type: Normal
 #                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
 #          - Level: 16
 #            Chances:
 #              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
 #                Rate: 3000
 #          - Level: 17
 #            Chances:
 #              - Type: Normal
 #                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
 #          - Level: 18
 #            Chances:
 #              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
 #                Rate: 2000
 #      - Level: 2
 #        RefineLevels:
@@ -185,33 +221,49 @@ Header:
 #            Chances:
 #              - Type: Normal
 #                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
 #          - Level: 12
 #            Chances:
 #              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
 #                Rate: 4000
 #          - Level: 13
 #            Chances:
 #              - Type: Normal
 #                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
 #          - Level: 14
 #            Chances:
 #              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
 #                Rate: 3500
 #          - Level: 15
 #            Chances:
 #              - Type: Normal
 #                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
 #          - Level: 16
 #            Chances:
 #              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
 #                Rate: 3000
 #          - Level: 17
 #            Chances:
 #              - Type: Normal
 #                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
 #          - Level: 18
 #            Chances:
 #              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
 #                Rate: 2000
 #      - Level: 3
 #        RefineLevels:
@@ -239,33 +291,49 @@ Header:
 #            Chances:
 #              - Type: Normal
 #                Rate: 4000
+#              - Type: HD
+#                Rate: 4000
 #          - Level: 12
 #            Chances:
 #              - Type: Normal
+#                Rate: 4000
+#              - Type: HD
 #                Rate: 4000
 #          - Level: 13
 #            Chances:
 #              - Type: Normal
 #                Rate: 3500
+#              - Type: HD
+#                Rate: 3500
 #          - Level: 14
 #            Chances:
 #              - Type: Normal
+#                Rate: 3500
+#              - Type: HD
 #                Rate: 3500
 #          - Level: 15
 #            Chances:
 #              - Type: Normal
 #                Rate: 3000
+#              - Type: HD
+#                Rate: 3000
 #          - Level: 16
 #            Chances:
 #              - Type: Normal
+#                Rate: 3000
+#              - Type: HD
 #                Rate: 3000
 #          - Level: 17
 #            Chances:
 #              - Type: Normal
 #                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
 #          - Level: 18
 #            Chances:
 #              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
 #                Rate: 2000
 #      - Level: 4
 #        RefineLevels:
@@ -297,41 +365,61 @@ Header:
 #            Chances:
 #              - Type: Normal
 #                Rate: 2000
+#              - Type: HD
+#                Rate: 2000
 #          - Level: 12
 #            Chances:
 #              - Type: Normal
+#                Rate: 2000
+#              - Type: HD
 #                Rate: 2000
 #          - Level: 13
 #            Chances:
 #              - Type: Normal
 #                Rate: 1600
+#              - Type: HD
+#                Rate: 1600
 #          - Level: 14
 #            Chances:
 #              - Type: Normal
+#                Rate: 1600
+#              - Type: HD
 #                Rate: 1600
 #          - Level: 15
 #            Chances:
 #              - Type: Normal
 #                Rate: 1500
+#              - Type: HD
+#                Rate: 1500
 #          - Level: 16
 #            Chances:
 #              - Type: Normal
+#                Rate: 1500
+#              - Type: HD
 #                Rate: 1500
 #          - Level: 17
 #            Chances:
 #              - Type: Normal
 #                Rate: 1400
+#              - Type: HD
+#                Rate: 1400
 #          - Level: 18
 #            Chances:
 #              - Type: Normal
+#                Rate: 1400
+#              - Type: HD
 #                Rate: 1400
 #          - Level: 19
 #            Chances:
 #              - Type: Normal
 #                Rate: 1000
+#              - Type: HD
+#                Rate: 1000
 #          - Level: 20
 #            Chances:
 #              - Type: Normal
+#                Rate: 1000
+#              - Type: HD
 #                Rate: 1000
 #  - Group: Shadow_Armor
 #    Levels:
