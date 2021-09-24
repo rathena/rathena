@@ -4271,9 +4271,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	memset(&sd->bonus, 0, sizeof(sd->bonus));
 
 	// Autobonus
-	pc_delautobonus(sd, sd->autobonus, true);
-	pc_delautobonus(sd, sd->autobonus2, true);
-	pc_delautobonus(sd, sd->autobonus3, true);
+	pc_delautobonus(*sd, sd->autobonus, true);
+	pc_delautobonus(*sd, sd->autobonus2, true);
+	pc_delautobonus(*sd, sd->autobonus3, true);
 
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
@@ -9479,7 +9479,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	struct status_change_entry* sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag, calc_flag, undead_flag, val_flag = 0, tick_time = 0;
+	int calc_flag, undead_flag, val_flag = 0, tick_time = 0;
 	bool sc_isnew = true;
 
 	nullpo_ret(bl);
@@ -9766,21 +9766,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 0; // Brandish Spear/Bowling Bash effet. Do not take weapon off.
 		else if (sd && !(flag&SCSTART_LOADED)) { // Apply sc anyway if loading saved sc_data
 			short i;
-			opt_flag = 0; // Reuse to check success condition.
+			uint8 successFlag = 0;
 			if(sd->bonus.unstripable_equip&EQP_WEAPON)
 				return 0;
 			i = sd->equip_index[EQI_HAND_L];
 			if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
-				opt_flag|=1;
+				successFlag|=1;
 				pc_unequipitem(sd,i,3); // Left-hand weapon
 			}
 
 			i = sd->equip_index[EQI_HAND_R];
 			if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
-				opt_flag|=2;
+				successFlag|=2;
 				pc_unequipitem(sd,i,3);
 			}
-			if (!opt_flag) return 0;
+			if (!successFlag) return 0;
 		}
 		if (tick == 1) return 1; // Minimal duration: Only strip without causing the SC
 	break;
@@ -12812,7 +12812,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Set option as needed.
-	opt_flag = 1;
+	uint16 opt_flag = OCF_SEND_OPTION;
 	switch(type) {
 		// OPT1
 		case SC_STONE: 
@@ -12842,92 +12842,92 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CONCENTRATION:
 		case SC_MERC_QUICKEN:
 			sc->opt3 |= OPT3_QUICKEN;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_MAXOVERTHRUST:
 		case SC_OVERTHRUST:
 		case SC_SWOO:	// Why does it shares the same opt as Overthrust? Perhaps we'll never know...
 			sc->opt3 |= OPT3_OVERTHRUST;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_ENERGYCOAT:
 		case SC_SKE:
 			sc->opt3 |= OPT3_ENERGYCOAT;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_INCATKRATE:
 			// Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
 			if (bl->type != BL_MOB) {
-				opt_flag = 0;
+				opt_flag = OCF_NONE;
 				break;
 			}
 		case SC_EXPLOSIONSPIRITS:
 			sc->opt3 |= OPT3_EXPLOSIONSPIRITS;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_STEELBODY:
 		case SC_SKA:
 			sc->opt3 |= OPT3_STEELBODY;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_BLADESTOP:
 			sc->opt3 |= OPT3_BLADESTOP;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_AURABLADE:
 			sc->opt3 |= OPT3_AURABLADE;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_BERSERK:
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			sc->opt3 |= OPT3_BERSERK;
 			break;
 // 		case ???: // doesn't seem to do anything
 // 			sc->opt3 |= OPT3_LIGHTBLADE;
-// 			opt_flag = 0;
+// 			opt_flag = OCF_NONE;
 // 			break;
 		case SC_DANCING:
 			if ((val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 |= OPT3_MOONLIT;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2:
 			sc->opt3 |= OPT3_MARIONETTE;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_ASSUMPTIO:
 			sc->opt3 |= OPT3_ASSUMPTIO;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_WARM: // SG skills [Komurka]
 			sc->opt3 |= OPT3_WARM;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_KAITE:
 			sc->opt3 |= OPT3_KAITE;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_BUNSINJYUTSU:
 			sc->opt3 |= OPT3_BUNSIN;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_SPIRIT:
 			sc->opt3 |= OPT3_SOULLINK;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		case SC_CHANGEUNDEAD:
 			sc->opt3 |= OPT3_UNDEAD;
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 // 		case ???: // from DA_CONTRACT (looks like biolab mobs aura)
 // 			sc->opt3 |= OPT3_CONTRACT;
-// 			opt_flag = 0;
+// 			opt_flag = OCF_NONE;
 // 			break;
 		// OPTION
 		case SC_HIDING:
 			sc->option |= OPTION_HIDE;
-			opt_flag = 2;
+			opt_flag = OCF_ONTOUCH;
 			break;
 		case SC_CLOAKING:
 		case SC_CLOAKINGEXCEED:
@@ -12937,15 +12937,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CAMOUFLAGE:
 		case SC_STEALTHFIELD:
 		case SC__SHADOWFORM:
-			opt_flag = 2;
+			opt_flag = OCF_ONTOUCH;
 			break;
 		case SC_CHASEWALK:
 			sc->option |= OPTION_CHASEWALK|OPTION_CLOAK;
-			opt_flag = 2;
+			opt_flag = OCF_ONTOUCH;
 			break;
 		case SC__FEINTBOMB:
 			sc->option |= OPTION_INVISIBLE;
-			opt_flag |= 2|4;
+			opt_flag |= OCF_ONTOUCH|OCF_UNIT_MOVE;
 			break;
 		case SC_SIGHT:
 			sc->option |= OPTION_SIGHT;
@@ -12955,27 +12955,27 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WEDDING:
 			sc->option |= OPTION_WEDDING;
-			opt_flag |= 0x4;
+			opt_flag |= OCF_SEND_LOOK;
 			break;
 		case SC_XMAS:
 			sc->option |= OPTION_XMAS;
-			opt_flag |= 0x4;
+			opt_flag |= OCF_SEND_LOOK;
 			break;
 		case SC_SUMMER:
 			sc->option |= OPTION_SUMMER;
-			opt_flag |= 0x4;
+			opt_flag |= OCF_SEND_LOOK;
 			break;
 		case SC_HANBOK:
 			sc->option |= OPTION_HANBOK;
-			opt_flag |= 0x4;
+			opt_flag |= OCF_SEND_LOOK;
 			break;
 		case SC_OKTOBERFEST:
 			sc->option |= OPTION_OKTOBERFEST;
-			opt_flag |= 0x4;
+			opt_flag |= OCF_SEND_LOOK;
 			break;
 		case SC_DRESSUP:
 			sc->option |= OPTION_SUMMER2;
-			opt_flag |= 0x4;
+			opt_flag |= OCF_SEND_LOOK;
 			break;
 		case SC_ORCISH:
 			sc->option |= OPTION_ORCISH;
@@ -12984,13 +12984,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			sc->option |= OPTION_FLYING;
 			break;
 		default:
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 	}
 
 	// On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
 	if(opt_flag) {
 		clif_changeoption(bl);
-		if(sd && (opt_flag&0x4)) {
+		if(sd && (opt_flag&OCF_SEND_LOOK)) {
 			clif_changelook(bl,LOOK_BASE,vd->class_);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
@@ -13149,7 +13149,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	if( opt_flag&2 && sd && !sd->npc_ontouch_.empty() )
+	if( opt_flag&OCF_ONTOUCH && sd && !sd->npc_ontouch_.empty() )
 		npc_touchnext_areanpc(sd,false); // Run OnTouch_ on next char in range
 
 	return 1;
@@ -13403,7 +13403,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	struct status_change_entry *sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag = 0;
 	enum scb_flag calc_flag = SCB_NONE;
 
 	nullpo_ret(bl);
@@ -14001,7 +14000,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 	}
 
-	opt_flag = 1;
+	uint16 opt_flag = OCF_SEND_OPTION;
 	switch(type) {
 	case SC_STONE:
 	case SC_FREEZE:
@@ -14009,7 +14008,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_SLEEP:
 	case SC_BURNING:
 	case SC_WHITEIMPRISON:
-		sc->opt1 = 0;
+		sc->opt1 = OCF_NONE;
 		break;
 
 	case SC_POISON:
@@ -14027,7 +14026,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	case SC_HIDING:
 		sc->option &= ~OPTION_HIDE;
-		opt_flag |= 2|4; // Check for warp trigger + AoE trigger
+		opt_flag |= OCF_ONTOUCH|OCF_UNIT_MOVE; // Check for warp trigger + AoE trigger
 		break;
 	case SC_CLOAKING:
 	case SC_CLOAKINGEXCEED:
@@ -14037,42 +14036,42 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_CAMOUFLAGE:
 	case SC_STEALTHFIELD:
 	case SC__SHADOWFORM:
-		opt_flag |= 2;
+		opt_flag |= OCF_ONTOUCH;
 		break;
 	case SC_CHASEWALK:
 		sc->option &= ~(OPTION_CHASEWALK|OPTION_CLOAK);
-		opt_flag |= 2;
+		opt_flag |= OCF_ONTOUCH;
 		break;
 	case SC__FEINTBOMB:
 		sc->option &= ~OPTION_INVISIBLE;
-		opt_flag |= 2|4;
+		opt_flag |= OCF_ONTOUCH|OCF_UNIT_MOVE;
 		break;
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
 		break;
 	case SC_WEDDING:
 		sc->option &= ~OPTION_WEDDING;
-		opt_flag |= 0x4;
+		opt_flag |= OCF_SEND_LOOK;
 		break;
 	case SC_XMAS:
 		sc->option &= ~OPTION_XMAS;
-		opt_flag |= 0x4;
+		opt_flag |= OCF_SEND_LOOK;
 		break;
 	case SC_SUMMER:
 		sc->option &= ~OPTION_SUMMER;
-		opt_flag |= 0x4;
+		opt_flag |= OCF_SEND_LOOK;
 		break;
 	case SC_HANBOK:
 		sc->option &= ~OPTION_HANBOK;
-		opt_flag |= 0x4;
+		opt_flag |= OCF_SEND_LOOK;
 		break;
 	case SC_OKTOBERFEST:
 		sc->option &= ~OPTION_OKTOBERFEST;
-		opt_flag |= 0x4;
+		opt_flag |= OCF_SEND_LOOK;
 		break;
 	case SC_DRESSUP:
 		sc->option &= ~OPTION_SUMMER2;
-		opt_flag |= 0x4;
+		opt_flag |= OCF_SEND_LOOK;
 		break;
 	case SC_ORCISH:
 		sc->option &= ~OPTION_ORCISH;
@@ -14090,95 +14089,95 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_CONCENTRATION:
 	case SC_MERC_QUICKEN:
 		sc->opt3 &= ~OPT3_QUICKEN;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_OVERTHRUST:
 	case SC_MAXOVERTHRUST:
 	case SC_SWOO:
 		sc->opt3 &= ~OPT3_OVERTHRUST;
 		if( type == SC_SWOO )
-			opt_flag = 8;
+			opt_flag = OCF_NON_PLAYER;
 		else
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 		break;
 	case SC_ENERGYCOAT:
 	case SC_SKE:
 		sc->opt3 &= ~OPT3_ENERGYCOAT;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_INCATKRATE: // Simulated Explosion spirits effect.
 		if (bl->type != BL_MOB) {
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 			break;
 		}
 	case SC_EXPLOSIONSPIRITS:
 		sc->opt3 &= ~OPT3_EXPLOSIONSPIRITS;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_STEELBODY:
 	case SC_SKA:
 		sc->opt3 &= ~OPT3_STEELBODY;
 		if (type == SC_SKA)
-			opt_flag = 8;
+			opt_flag = OCF_NON_PLAYER;
 		else
-			opt_flag = 0;
+			opt_flag = OCF_NONE;
 		break;
 	case SC_BLADESTOP:
 		sc->opt3 &= ~OPT3_BLADESTOP;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_AURABLADE:
 		sc->opt3 &= ~OPT3_AURABLADE;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_BERSERK:
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		sc->opt3 &= ~OPT3_BERSERK;
 		break;
 // 	case ???: // doesn't seem to do anything
 // 		sc->opt3 &= ~OPT3_LIGHTBLADE;
-// 		opt_flag = 0;
+// 		opt_flag = OCF_NONE;
 // 		break;
 	case SC_DANCING:
 		if ((sce->val1&0xFFFF) == CG_MOONLIT)
 			sc->opt3 &= ~OPT3_MOONLIT;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_MARIONETTE:
 	case SC_MARIONETTE2:
 		sc->opt3 &= ~OPT3_MARIONETTE;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_ASSUMPTIO:
 		sc->opt3 &= ~OPT3_ASSUMPTIO;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_WARM: // SG skills [Komurka]
 		sc->opt3 &= ~OPT3_WARM;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_KAITE:
 		sc->opt3 &= ~OPT3_KAITE;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_BUNSINJYUTSU:
 		sc->opt3 &= ~OPT3_BUNSIN;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_SPIRIT:
 		sc->opt3 &= ~OPT3_SOULLINK;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 	case SC_CHANGEUNDEAD:
 		sc->opt3 &= ~OPT3_UNDEAD;
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 		break;
 // 	case ???: // from DA_CONTRACT (looks like biolab mobs aura)
 // 		sc->opt3 &= ~OPT3_CONTRACT;
-// 		opt_flag = 0;
+// 		opt_flag = OCF_NONE;
 // 		break;
 	default:
-		opt_flag = 0;
+		opt_flag = OCF_NONE;
 	}
 
 	if (calc_flag&SCB_DYE) { // Restore DYE color
@@ -14204,11 +14203,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
-	if( opt_flag&8 ) // bugreport:681
+	if( opt_flag&OCF_NON_PLAYER ) // bugreport:681
 		clif_changeoption2(bl);
 	else if(opt_flag) {
 		clif_changeoption(bl);
-		if (sd && (opt_flag&0x4)) {
+		if (sd && (opt_flag&OCF_SEND_LOOK)) {
 			clif_changelook(bl,LOOK_BASE,sd->vd.class_);
 			clif_get_weapon_view(sd,&sd->vd.weapon,&sd->vd.shield);
 			clif_changelook(bl,LOOK_WEAPON,sd->vd.weapon);
@@ -14227,10 +14226,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			status_calc_bl(bl, calc_flag);
 	}
 
-	if(opt_flag&4) // Out of hiding, invoke on place.
+	if(opt_flag&OCF_UNIT_MOVE) // Out of hiding, invoke on place.
 		skill_unit_move(bl,gettick(),1);
 
-	if(opt_flag&2 && sd && !sd->state.warping && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+	if(opt_flag&OCF_ONTOUCH && sd && !sd->state.warping && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_area_allnpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	ers_free(sc_data_ers, sce);

@@ -2441,6 +2441,15 @@ enum e_option {
 	OPTION_COSTUME	= OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER|OPTION_HANBOK|OPTION_OKTOBERFEST|OPTION_SUMMER2,
 };
 
+enum e_option_change_flag : uint16 {
+	OCF_NONE					= 0x0,
+	OCF_SEND_OPTION				= 0x1,
+	OCF_ONTOUCH					= 0x2,
+	OCF_UNIT_MOVE				= 0x4,
+	OCF_NON_PLAYER				= 0x8,
+	OCF_SEND_LOOK				= 0x10,
+};
+
 ///Defines for the manner system [Skotlex]
 enum manner_flags
 {
