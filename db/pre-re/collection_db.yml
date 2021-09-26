@@ -22,8 +22,8 @@
 # Collection Settings
 #
 ###########################################################################
-# - Mob                      Monster that can be used
-#   ConsumeItem              Consume Item.
+# - ConsumeItem              Consume Item.
+#   Target                   Monsters that can be used
 #   CaptureRate              Capture success rate. (10000 = 100%). Default: 100%
 #   RewardItemGroup          Item group reward if monster catched.
 ###########################################################################
@@ -33,7 +33,8 @@ Header:
   Version: 1
 
 Body:
-  - Mob: E_HYDRA
-    ConsumeItem: Leaf_Cat_Ball
-    CaptureRate: 10000
+  - ConsumeItem: Leaf_Cat_Ball
+    Target:
+      E_CRAMP: true
+      E_HYDRA: true
     RewardItemGroup: COLLECTION_E_HYDRA

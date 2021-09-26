@@ -22,8 +22,8 @@
 # Collection Settings
 #
 ###########################################################################
-# - Mob                      Monster that can be used
-#   ConsumeItem              Consume Item.
+# - ConsumeItem              Consume Item.
+#   Target                   Monsters that can be used
 #   CaptureRate              Capture success rate. (10000 = 100%). Default: 100%
 #   RewardItemGroup          Item group reward if monster catched.
 ###########################################################################
@@ -33,39 +33,40 @@ Header:
   Version: 1
 
 Body:
-  - Mob: E_HYDRA
-    ConsumeItem: Leaf_Cat_Ball
-    CaptureRate: 10000
+  - ConsumeItem: Leaf_Cat_Ball
+    Target:
+      E_CRAMP: true
+      E_HYDRA: true
     RewardItemGroup: COLLECTION_E_HYDRA
-  - Mob: E_SHINING_PLANT
-    ConsumeItem: Empty_Potion_Bottle
-    CaptureRate: 10000
+  - ConsumeItem: Empty_Potion_Bottle
+    Target:
+      E_SHINING_PLANT: true
     RewardItemGroup: COLLECTION_E_SHINING_PLANT
-  - Mob: LOST_LAMB
-    ConsumeItem: Binding_Rope
-    CaptureRate: 10000
+  - ConsumeItem: Binding_Rope
+    Target:
+      LOST_LAMB: true
     RewardItemGroup: COLLECTION_LOST_LAMB
-  - Mob: SAVAGE
-    ConsumeItem: Savage_Ora
-    CaptureRate: 10000
+  - ConsumeItem: Savage_Ora
+    Target:
+      SAVAGE: true
     RewardItemGroup: COLLECTION_SAVAGE
-  - Mob: GRAND_PECO
-    ConsumeItem: Grand_Peco_Ora
-    CaptureRate: 10000
+  - ConsumeItem: Grand_Peco_Ora
+    Target:
+      GRAND_PECO: true
     RewardItemGroup: COLLECTION_GRAND_PECO
-  - Mob: DESERT_WOLF
-    ConsumeItem: Dest_Wolf_Ora
-    CaptureRate: 10000
+  - ConsumeItem: Dest_Wolf_Ora
+    Target:
+      DESERT_WOLF: true
     RewardItemGroup: COLLECTION_DESERT_WOLF
-  - Mob: BOMBPORING
-    ConsumeItem: Explosion_Proof_Equip
-    CaptureRate: 10000
+  - ConsumeItem: Explosion_Proof_Equip
+    Target:
+      BOMBPORING: true
     RewardItemGroup: COLLECTION_BOMBPORING
-  - Mob: MOON_RABBIT
-    ConsumeItem: Capture_Rope
-    CaptureRate: 10000
+  - ConsumeItem: Capture_Rope
+    Target:
+      MOON_RABBIT: true
     RewardItemGroup: COLLECTION_MOON_RABBIT
-  - Mob: E_SAVAGE
-    ConsumeItem: Savage_Trap
-    CaptureRate: 10000
+  - ConsumeItem: Savage_Trap
+    Target:
+      E_SAVAGE: true
     RewardItemGroup: COLLECTION_E_SAVAGE

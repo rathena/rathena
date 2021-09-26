@@ -8755,7 +8755,7 @@ Body:
     Name: Hydra Ball
     Type: Usable
     Script: |
-      collection 2081;
+      collection "Leaf_Cat_Ball";
   - Id: 12409
     AegisName: Pork_Belly_H
     Name: 1st Class Pork Belly
@@ -12824,7 +12824,7 @@ Body:
     Name: Empty Potion Bottle
     Type: Usable
     Script: |
-      collection 1878;
+      collection "Empty_Potion_Bottle";
   - Id: 12775
     AegisName: Ancient_Spirit_Agimat
     Name: Greater Agimat of Ancient Spirit
@@ -45440,7 +45440,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      collection 1166;
+      collection "Savage_Ora";
   - Id: 22590
     AegisName: Grand_Peco_Ora
     Name: Grand Peco Trap
@@ -45456,7 +45456,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      collection 1369;
+      collection "Grand_Peco_Ora";
   - Id: 22591
     AegisName: Dest_Wolf_Ora
     Name: Dest Wolf Trap
@@ -45472,7 +45472,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      collection 1106;
+      collection "Dest_Wolf_Ora";
   - Id: 22592
     AegisName: Happy_Call_Box
     Name: Happy Call Box
@@ -47318,7 +47318,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      collection 3453;
+      collection "Binding_Rope";
   - Id: 22882
     AegisName: Choco_Tteokguk
     Name: Chocolate Rice Cake Soup
@@ -47594,7 +47594,7 @@ Body:
     Name: Explosion Proof Equip
     Type: Usable
     Script: |
-      collection 1904;
+      collection "Explosion_Proof_Equip";
   - Id: 23001
     AegisName: Enchant_Stone_Box8
     Name: Costume Enchant Stone Box 8
@@ -47634,7 +47634,7 @@ Body:
     Name: Capture Rope
     Type: Usable
     Script: |
-      collection 3509;
+      collection "Capture_Rope";
   - Id: 23033
     AegisName: Invisible_Box
     Name: Invisible Box
@@ -48435,7 +48435,7 @@ Body:
     Name: Savage Trap
     Type: Usable
     Script: |
-      collection 3955;
+      collection "Savage_Trap";
   - Id: 23474
     AegisName: InfinityShadow_Mix
     Name: InfinityShadow Mix

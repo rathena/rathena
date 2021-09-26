@@ -12003,15 +12003,19 @@ BUILDIN_FUNC(catchpet)
  *------------------------------------------*/
 BUILDIN_FUNC(catchcollection)
 {
-	int target_id;
+	std::shared_ptr<item_data> i_data;
+
+	if (script_isstring(st, 2))
+		i_data = item_db.search_aegisname(script_getstr(st, 2));
+	else
+		i_data = item_db.find(script_getnum(st, 2));
+
 	TBL_PC* sd;
 
 	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_SUCCESS;
 
-	target_id = script_getnum(st, 2);
-
-	collection_catch_process1(sd, target_id);
+	collection_catch_process1(sd, i_data->nameid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25403,8 +25407,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(birthpet,"bpet",""),
 	BUILDIN_DEF(catchpet,"i"),
 	BUILDIN_DEF(birthpet,""),
-	BUILDIN_DEF2(catchcollection, "collection", "i"),
-	BUILDIN_DEF(catchcollection,"i"),
+	BUILDIN_DEF2(catchcollection, "collection", "v"),
+	BUILDIN_DEF(catchcollection,"v"),
 	BUILDIN_DEF(resetlvl,"i?"),
 	BUILDIN_DEF(resetstatus,"?"),
 	BUILDIN_DEF(resetskill,"?"),

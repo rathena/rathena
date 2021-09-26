@@ -13,15 +13,13 @@
 #include "mob.hpp"
 #include "pc.hpp"
 #include "script.hpp"
-#include "status.hpp"
-#include "unit.hpp"
 
 #include <unordered_map>
 
 /// Collection DB
 struct s_collection_db {
-	uint16 class_; ///< Monster ID
 	t_itemid ConsumeID; ///< Consume ID
+	std::vector<uint32> MobID;
 	uint16 CaptureRate; ///< Capture success rate 10000 = 100%
 	uint16 GroupID;
 };
@@ -48,8 +46,8 @@ public:
 extern CollectionDatabase collection_db;
 
 std::shared_ptr<s_collection_db> collection_db_search(int key, enum e_collection_itemtype type);
-int collection_catch_process1(struct map_session_data *sd,int target_id);
-int collection_catch_process2(struct map_session_data *sd,int target_id);
+int collection_catch_process1(struct map_session_data *sd, t_itemid item_id);
+int collection_catch_process2(struct map_session_data *sd, uint32 target_id);
 
 void do_init_collection(void);
 void do_final_collection(void);

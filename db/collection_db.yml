@@ -22,9 +22,9 @@
 # Collection Settings
 #
 ###########################################################################
-# - Mob                      Monster that can be used
-#   ConsumeItem              Consume Item.
-#   CaptureRate              Capture success rate. (10000 = 100%).
+# - ConsumeItem              Consume Item.
+#   Target                   Monsters that can be used
+#   CaptureRate              Capture success rate. (10000 = 100%). Default: 100%
 #   RewardItemGroup          Item group reward if monster catched.
 ###########################################################################
 

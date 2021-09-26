@@ -565,6 +565,7 @@ struct map_session_data {
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
 	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
+	t_itemid catch_collection_class;
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];

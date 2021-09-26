@@ -8212,20 +8212,20 @@ void clif_pet_autofeed_status(struct map_session_data* sd, bool force) {
 /// 08b4
 void clif_catch_collection_process(struct map_session_data* sd)
 {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	WFIFOHEAD(fd, packet_len(0x8b4));
-	WFIFOW(fd, 0) = 0x8b4;
-	WFIFOSET(fd, packet_len(0x8b4));
+	struct PACKET_ZC_START_COLLECTION p;
+
+	p.packetType = 0x08b4;
+
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Attempt to catch a collection (CZ_TRYCOLLECTION).
 /// 0x08b5 <id>.L
 void clif_parse_CatchCollection(int fd, struct map_session_data* sd) {
-	collection_catch_process2(sd, RFIFOL(fd, packet_db[RFIFOW(fd, 0)].pos[0]));
+	const struct PACKET_CZ_TRYCOLLECTION* p = (struct PACKET_CZ_TRYCOLLECTION*)RFIFOP(fd, 0);
+	collection_catch_process2(sd, p->targetId);
 }
 
 /// Displays the result of a monster catch attempt (ZC_TRYCOLLECTION).
@@ -8234,15 +8234,14 @@ void clif_parse_CatchCollection(int fd, struct map_session_data* sd) {
 ///     1 = success
 void clif_collection_roulette(struct map_session_data* sd, int data)
 {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	WFIFOHEAD(fd, packet_len(0x08b6));
-	WFIFOW(fd, 0) = 0x08b6;
-	WFIFOB(fd, 2) = data;
-	WFIFOSET(fd, packet_len(0x08b6));
+	struct PACKET_ZC_TRYCOLLECTION p;
+
+	p.packetType = 0x08b6;
+	p.result = data;
+
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Presents a list of skills that can be auto-spelled (ZC_AUTOSPELLLIST).

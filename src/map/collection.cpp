@@ -21,7 +21,6 @@
 #include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
-#include "achievement.hpp"
 #include "battle.hpp"
 #include "chrif.hpp"
 #include "clif.hpp"
@@ -29,8 +28,6 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "mob.hpp"
-#include "npc.hpp"
-#include "pc.hpp"
 
 using namespace rathena;
 
@@ -39,64 +36,70 @@ const std::string CollectionDatabase::getDefaultLocation(){
 }
 
 uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
-	std::string mob_name;
+	std::string item_name;
 
-	if( !this->asString( node, "Mob", mob_name ) ){
+	if (!this->asString(node, "ConsumeItem", item_name))
+		return 0;
+
+	std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+	if (item == nullptr) {
+		this->invalidWarning(node["Collection"], "Item %s does not exist and cannot be used.\n", item_name.c_str());
 		return 0;
 	}
 
-	std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname( mob_name.c_str() );
-
-	if( mob == nullptr ){
-		this->invalidWarning( node["Mob"], "Mob %s does not exist and cannot be used as a collection.\n", mob_name.c_str() );
-		return 0;
-	}
-
-	uint16 mob_id = mob->id;
-
-	std::shared_ptr<s_collection_db> collection = this->find( mob_id );
+	std::shared_ptr<s_collection_db> collection = this->find(item->nameid);
 	bool exists = collection != nullptr;
 
-	if( !exists ){
+	if (!exists) {
 		// Check mandatory nodes
-		if( !this->nodesExist( node, { "ConsumeItem", "RewardItemGroup" } ) ){
+		if (!this->nodesExist(node, { "ConsumeItem", "Target", "RewardItemGroup" })) {
 			return 0;
 		}
 
 		collection = std::make_shared<s_collection_db>();
-		collection->class_ = mob_id;
+		collection->ConsumeID = item->nameid;
 	}
 
-	if( this->nodeExists( node, "ConsumeItem" ) ){
-		std::string item_name;
+	if (this->nodeExists(node, "Target")) {
+		const YAML::Node& monsterNode = node["Target"];
 
-		if( !this->asString( node, "ConsumeItem", item_name ) ){
-			return 0;
+		for (const auto& target : monsterNode) {
+			std::string mob_name = target.first.as<std::string>(); 
+			std::shared_ptr<s_mob_db> mob = mobdb_search_aegisname(mob_name.c_str());
+
+			if (mob == nullptr) {
+				this->invalidWarning(node["Mob"], "Mob %s does not exist and cannot be used as a pet.\n", mob_name.c_str());
+				return 0;
+			}
+
+			uint32 mob_id = mob->id;
+
+			bool active;
+
+			if (!this->asBool(monsterNode, mob_name, active))
+				return 0;
+
+			if (active)
+				collection->MobID.push_back(mob_id);
+			else
+				util::vector_erase_if_exists(collection->MobID, mob_id);
 		}
-
-		std::shared_ptr<item_data> item = item_db.search_aegisname( item_name.c_str() );
-
-		if( item == nullptr ){
-			this->invalidWarning( node["ConsumeItem"], "Consume item %s does not exist.\n", item_name.c_str() );
-			return 0;
-		}
-
-		collection->ConsumeID = item->nameid;
 	} else {
 		if (!exists) {
-			collection->ConsumeID = 0;
+			collection->MobID = {};
 		}
 	}
 
-	if( this->nodeExists( node, "CaptureRate" ) ){
+	if (this->nodeExists(node, "CaptureRate")) {
 		uint16 rate;
 
-		if( !this->asUInt16( node, "CaptureRate", rate ) ){
+		if (!this->asUInt16(node, "CaptureRate", rate)) {
 			return 0;
 		}
 
-		if( rate > 10000 ){
-			this->invalidWarning( node["CaptureRate"], "CaptureRate %hu exceeds maximum of 10000. Capping...\n", rate );
+		if (rate > 10000) {
+			this->invalidWarning(node["CaptureRate"], "CaptureRate %hu exceeds maximum of 10000. Capping...\n", rate);
 			rate = 10000;
 		}
 
@@ -107,7 +110,7 @@ uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 	}
 
-	if( this->nodeExists( node, "RewardItemGroup" ) ){
+	if (this->nodeExists(node, "RewardItemGroup")) {
 		std::string group_name;
 
 		if (!this->asString(node, "RewardItemGroup", group_name)) {
@@ -133,7 +136,7 @@ uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if (!exists) {
-		this->put(mob_id, collection);
+		this->put(item->nameid, collection);
 	}
 	return 1;
 }
@@ -175,11 +178,11 @@ std::shared_ptr<s_collection_db> collection_db_search( int key, enum e_collectio
  * @param target_class : monster ID of monster to catch
  * @return 0
  */
-int collection_catch_process1(struct map_session_data *sd,int target_id)
+int collection_catch_process1(struct map_session_data *sd, t_itemid item_id)
 {
 	nullpo_ret(sd);
 
-	sd->catch_target_class = target_id;
+	sd->catch_collection_class = item_id;
 	clif_catch_collection_process(sd);
 
 	return 0;
@@ -191,38 +194,48 @@ int collection_catch_process1(struct map_session_data *sd,int target_id)
  * @param target_id : monster ID of monster to catch
  * @return 0:success, 1:failure
  */
-int collection_catch_process2(struct map_session_data* sd, int target_id)
+int collection_catch_process2(struct map_session_data* sd, uint32 target_id)
 {
 	struct mob_data* md;
 	int collection_catch_rate = 0;
 
 	nullpo_retr(1, sd);
 
+	std::shared_ptr<s_collection_db> collection = collection_db.find(sd->catch_collection_class);
+
 	md = (struct mob_data*)map_id2bl(target_id);
 
-	if (!md || md->bl.type != BL_MOB || md->bl.prev == NULL) { // Invalid inputs/state, abort capture.
+	if (!md || md->bl.type != BL_MOB || md->bl.prev == NULL) {	// Invalid inputs/state, abort capture
 		clif_collection_roulette(sd, 0);
-		sd->catch_target_class = COLLECTION_CATCH_FAIL;
+		sd->catch_collection_class = COLLECTION_CATCH_FAIL;
 		sd->itemid = 0;
 		sd->itemindex = -1;
 		return 1;
 	}
 
-	std::shared_ptr<s_collection_db> collection = collection_db.find(md->mob_id);
+	// Monster ID not in array
+	if (!collection) {
+		clif_emotion(&md->bl, ET_ANGER);
+		clif_collection_roulette(sd, 0);
+		sd->catch_collection_class = COLLECTION_CATCH_FAIL;
+		return 1;
+	}
+
 	// If the target is a valid monster, we have a few exceptions
 	if (collection) {
-		if (sd->catch_target_class == COLLECTION_CATCH_UNIVERSAL && !status_has_mode(&md->status, MD_STATUSIMMUNE)) {
-			sd->catch_target_class = md->mob_id;
+		if (sd->catch_collection_class == COLLECTION_CATCH_UNIVERSAL && !status_has_mode(&md->status, MD_STATUSIMMUNE)) {
+			sd->catch_collection_class = md->mob_id;
 		}
-		else if (sd->catch_target_class == COLLECTION_CATCH_UNIVERSAL_ITEM && sd->itemid == collection->ConsumeID) {
-			sd->catch_target_class = md->mob_id;
+		else if (sd->catch_collection_class == COLLECTION_CATCH_UNIVERSAL_ITEM && sd->itemid == collection->ConsumeID) {
+			sd->catch_collection_class = md->mob_id;
 		}
 	}
 
-	if (sd->catch_target_class != md->mob_id || !collection) {
+	// Monster ID not in array
+	if (std::find(collection->MobID.begin(), collection->MobID.end(), md->mob_id) == collection->MobID.end()) {
 		clif_emotion(&md->bl, ET_ANGER);
 		clif_collection_roulette(sd, 0);
-		sd->catch_target_class = COLLECTION_CATCH_FAIL;
+		sd->catch_collection_class = COLLECTION_CATCH_FAIL;
 		return 1;
 	}
 
@@ -239,7 +252,7 @@ int collection_catch_process2(struct map_session_data* sd, int target_id)
 		itemdb_group.pc_get_itemgroup(collection->GroupID, 1, sd);
 	} else {
 		clif_collection_roulette(sd,0);
-		sd->catch_target_class = COLLECTION_CATCH_FAIL;
+		sd->catch_collection_class = COLLECTION_CATCH_FAIL;
 	}
 
 	return 0;
