@@ -113097,6 +113097,8 @@ Body:
     Attack: 200
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113122,6 +113124,8 @@ Body:
     Attack: 300
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113147,6 +113151,8 @@ Body:
     Attack: 200
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113170,6 +113176,8 @@ Body:
     Attack: 350
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
