@@ -57912,6 +57912,8 @@ Body:
     Attack: 150
     Range: 7
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
