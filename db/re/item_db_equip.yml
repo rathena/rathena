@@ -57611,6 +57611,9 @@ Body:
     Attack: 100
     Range: 7
     Slots: 2
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -57634,6 +57637,9 @@ Body:
     Attack: 150
     Range: 9
     Slots: 1
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -57794,6 +57800,9 @@ Body:
     Attack: 95
     Range: 7
     Slots: 1
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113707,6 +113716,8 @@ Body:
     Attack: 250
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
