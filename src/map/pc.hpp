@@ -240,6 +240,8 @@ struct s_autobonus {
 	char *bonus_script, *other_script;
 	int active;
 	unsigned int pos;
+
+	~s_autobonus();
 };
 
 /// Timed bonus 'bonus_script' struct [Cydh]
@@ -323,7 +325,6 @@ struct map_session_data {
 		t_itemid autolootid[AUTOLOOTITEM_SIZE]; // [Zephyrus]
 		unsigned short autoloottype;
 		unsigned int autolooting : 1; //performance-saver, autolooting state for @alootid
-		unsigned int autobonus; //flag to indicate if an autobonus is activated. [Inkfish]
 		unsigned int gmaster_flag : 1;
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
@@ -491,7 +492,7 @@ struct map_session_data {
 	std::vector<s_addele2> subele2;
 	std::vector<s_vanish_bonus> sp_vanish, hp_vanish;
 	std::vector<s_addrace2> subrace3;
-	std::vector<s_autobonus> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
+	std::vector<std::shared_ptr<s_autobonus>> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
 
 	// zeroed structures start here
 	struct s_regen {
@@ -1239,10 +1240,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 void pc_updateweightstatus(struct map_session_data *sd);
 
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 atk_type, const char *o_script, unsigned int pos, bool onskill);
-void pc_exeautobonus(struct map_session_data* sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus);
+bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, short rate, unsigned int dur, uint16 atk_type, const char *o_script, unsigned int pos, bool onskill);
+void pc_exeautobonus(struct map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus);
 TIMER_FUNC(pc_endautobonus);
-void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore);
+void pc_delautobonus(struct map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> &bonus, bool restore);
 
 void pc_bonus(struct map_session_data *sd, int type, int val);
 void pc_bonus2(struct map_session_data *sd, int type, int type2, int val);

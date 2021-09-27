@@ -876,6 +876,7 @@ void clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int typ
 #define clif_pet_performance(pd, param) clif_send_petdata(NULL, pd, 4, param)
 void clif_pet_emotion(struct pet_data *pd,int param);
 void clif_pet_food(struct map_session_data *sd,int foodid,int fail);
+void clif_pet_autofeed_status(struct map_session_data* sd, bool force);
 
 //friends list
 int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);

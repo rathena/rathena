@@ -34,8 +34,6 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 
-int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
-
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
 
@@ -405,20 +403,6 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 }
 
 /**
- * Get attribute ratio
- * @param atk_elem Attack element enum e_element
- * @param def_type Defense element enum e_element
- * @param def_lv Element level 1 ~ MAX_ELE_LEVEL
- */
-int battle_attr_ratio(int atk_elem, int def_type, int def_lv)
-{
-	if (!CHK_ELEMENT(atk_elem) || !CHK_ELEMENT(def_type) || !CHK_ELEMENT_LEVEL(def_lv))
-		return 100;
-
-	return attr_fix_table[def_lv-1][atk_elem][def_type];
-}
-
-/**
  * Does attribute fix modifiers.
  * Added passing of the chars so that the status changes can affect it. [Skotlex]
  * Note: Passing src/target == NULL is perfectly valid, it skips SC_ checks.
@@ -447,7 +431,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		return damage;
 	}
 
-	ratio = attr_fix_table[def_lv-1][atk_elem][def_type];
+	ratio = elemental_attribute_db.getAttribute(def_lv-1, atk_elem, def_type);
 	if (sc && sc->count) { //increase dmg by src status
 		switch(atk_elem){
 			case ELE_FIRE:
@@ -484,7 +468,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	if( target && target->type == BL_SKILL ) {
 		if( atk_elem == ELE_FIRE && battle_getcurrentskill(target) == GN_WALLOFTHORN ) {
 			struct skill_unit *su = (struct skill_unit*)target;
-			struct skill_unit_group *sg;
+			std::shared_ptr<s_skill_unit_group> sg;
 			struct block_list *src2;
 
 			if( !su || !su->alive || (sg = su->group) == NULL || !sg || sg->val3 == -1 ||
@@ -1149,7 +1133,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 
 	// ATK_BLOCK Type
 	if ((sce = sc->data[SC_SAFETYWALL]) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
-		skill_unit_group *group = skill_id2group(sce->val3);
+		std::shared_ptr<s_skill_unit_group> group = skill_id2group(sce->val3);
 
 		if (group) {
 			d->dmg_lv = ATK_BLOCK;
@@ -5789,7 +5773,11 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 					wd.flag |= BF_LONG;
 		}
 	} else {
-		wd.flag |= is_skill_using_arrow(src, skill_id)?BF_LONG:BF_SHORT;
+		bool is_long = false;
+
+		if (is_skill_using_arrow(src, skill_id) || (sc && sc->data[SC_SOULATTACK]))
+			is_long = true;
+		wd.flag |= is_long ? BF_LONG : BF_SHORT;
 	}
 
 	return wd;
@@ -5959,22 +5947,22 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				wd.weaponAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.weaponAtk2, 3, wd.flag);
 				wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.equipAtk2, 3, wd.flag);
 			}
+		}
 
-			//Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
-			if (tsd) {
-				std::bitset<NK_MAX> ignoreele_nk = nk;
+		//Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
+		if (tsd && skill_id != NJ_ISSEN && skill_id != GN_FIRE_EXPANSION_ACID) { // These skills will do a card fix later
+			std::bitset<NK_MAX> ignoreele_nk = nk;
 
-				ignoreele_nk.set(NK_IGNOREELEMENT);
-				wd.statusAtk += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.statusAtk, 0, wd.flag);
-				wd.weaponAtk += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.weaponAtk, 0, wd.flag);
-				wd.equipAtk += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.equipAtk, 0, wd.flag);
-				wd.masteryAtk += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.masteryAtk, 0, wd.flag);
-				if (is_attack_left_handed(src, skill_id)) {
-					wd.statusAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.statusAtk2, 1, wd.flag);
-					wd.weaponAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.weaponAtk2, 1, wd.flag);
-					wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.equipAtk2, 1, wd.flag);
-					wd.masteryAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.masteryAtk2, 1, wd.flag);
-				}
+			ignoreele_nk.set(NK_IGNOREELEMENT);
+			wd.statusAtk += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.statusAtk, 0, wd.flag);
+			wd.weaponAtk += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.weaponAtk, 0, wd.flag);
+			wd.equipAtk += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.equipAtk, 0, wd.flag);
+			wd.masteryAtk += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.masteryAtk, 0, wd.flag);
+			if (is_attack_left_handed(src, skill_id)) {
+				wd.statusAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.statusAtk2, 1, wd.flag);
+				wd.weaponAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.weaponAtk2, 1, wd.flag);
+				wd.equipAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.equipAtk2, 1, wd.flag);
+				wd.masteryAtk2 += battle_calc_cardfix(BF_WEAPON, src, target, ignoreele_nk, right_element, left_element, wd.masteryAtk2, 1, wd.flag);
 			}
 		}
 
@@ -5983,7 +5971,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk + bonus_damage;
-			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2 + bonus_damage;
+			if (is_attack_left_handed(src, skill_id))
+				wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2 + bonus_damage;
 			if (wd.flag & BF_SHORT)
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.short_attack_atk_rate);
 			if(wd.flag&BF_LONG && (skill_id != RA_WUGBITE && skill_id != RA_WUGSTRIKE)) //Long damage rate addition doesn't use weapon + equip attack
@@ -6116,22 +6105,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 	}
 
+#ifndef RENEWAL
 	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
-#ifdef RENEWAL
-		switch(skill_id) {
-			case NJ_ISSEN:
-			case GN_FIRE_EXPANSION_ACID:
-				break; //These skills will do a card fix later
-			default:
-#endif
-				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage, 0, wd.flag);
-				if(is_attack_left_handed(src, skill_id))
-					wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 1, wd.flag);
-#ifdef RENEWAL
-				break;
-		}
-#endif
+		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage, 0, wd.flag);
+		if(is_attack_left_handed(src, skill_id))
+			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 1, wd.flag);
 	}
+#endif
 
 	// only do 1 dmg to plant, no need to calculate rest
 	if(infdef){
@@ -8052,11 +8032,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					if( BL_PC&battle_config.land_skill_limit &&
 						(maxcount = skill_get_maxcount(r_skill, r_lv)) > 0
 					  ) {
-						int v;
-						for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
-							if(sd->ud.skillunit[v]->skill_id == r_skill)
-								maxcount--;
-						}
+						unit_skillunit_maxcount(sd->ud, r_skill, maxcount);
+
 						if( maxcount == 0 )
 							type = -1;
 					}
@@ -8909,6 +8886,8 @@ static const struct _battle_data {
 	{ "mob_max_skilllvl",                   &battle_config.mob_max_skilllvl,                MAX_MOBSKILL_LEVEL, 1, MAX_MOBSKILL_LEVEL, },
 	{ "retaliate_to_master",                &battle_config.retaliate_to_master,             1,      0,      1,              },
 	{ "rare_drop_announce",                 &battle_config.rare_drop_announce,              0,      0,      10000,          },
+	{ "drop_rate_cap",                      &battle_config.drop_rate_cap,                   9000,   0,      10000,          },
+	{ "drop_rate_cap_vip",                  &battle_config.drop_rate_cap_vip,               9000,   0,      10000,          },
 	{ "duel_allow_pvp",                     &battle_config.duel_allow_pvp,                  0,      0,      1,              },
 	{ "duel_allow_gvg",                     &battle_config.duel_allow_gvg,                  0,      0,      1,              },
 	{ "duel_allow_teleport",                &battle_config.duel_allow_teleport,             0,      0,      1,              },

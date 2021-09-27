@@ -6001,7 +6001,7 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 	WBUFW(buf,18)= status->def_ele;
 	for(i=0;i<9;i++)
 //		The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
-		WBUFB(buf,20+i)= (unsigned char)((fix=battle_attr_ratio(i+1,status->def_ele, status->ele_lv))<0?0:fix);
+		WBUFB(buf,20+i)= (unsigned char)((fix=elemental_attribute_db.getAttribute(status->ele_lv, i+1, status->def_ele))<0?0:fix);
 
 	clif_send(buf,packet_len(0x18c),&sd->bl,sd->status.party_id>0?PARTY_SAMEMAP:SELF);
 }
@@ -8184,6 +8184,28 @@ void clif_pet_food( struct map_session_data *sd, int foodid,int fail ){
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
+/// Send pet auto feed info.
+void clif_pet_autofeed_status(struct map_session_data* sd, bool force) {
+#if PACKETVER >= 20141008
+	nullpo_retv(sd);
+
+	if (force || battle_config.pet_autofeed_always) {
+		// Always send ON or OFF
+		if (sd->pd && battle_config.feature_pet_autofeed) {
+			clif_configuration(sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed);
+		}
+		else {
+			clif_configuration(sd, CONFIG_PET_AUTOFEED, false);
+		}
+	}
+	else {
+		// Only send when enabled
+		if (sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed) {
+			clif_configuration(sd, CONFIG_PET_AUTOFEED, true);
+		}
+	}
+#endif
+}
 
 /// Presents a list of skills that can be auto-spelled (ZC_AUTOSPELLLIST).
 /// 01cd { <skill id>.L }*7
@@ -10752,21 +10774,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
-#if PACKETVER >= 20141008
-		if( battle_config.pet_autofeed_always ){
-			// Always send ON or OFF
-			if( sd->pd && battle_config.feature_pet_autofeed ){
-				clif_configuration( sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed );
-			}else{
-				clif_configuration( sd, CONFIG_PET_AUTOFEED, false );
-			}
-		}else{
-			// Only send when enabled
-			if( sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed ){
-				clif_configuration( sd, CONFIG_PET_AUTOFEED, true );
-			}
-		}
-#endif
+		clif_pet_autofeed_status(sd,false);
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
 			// Always send ON or OFF
@@ -14508,7 +14516,6 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	int mob_id = 0;
-	struct item_data *id = NULL;
 	StringBuf command;
 	char *str;
 //#if PACKETVER >= 20131218
@@ -14533,12 +14540,14 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	std::shared_ptr<item_data> id = item_db.searchname( str );
+
 	// Item
-	if( (id = itemdb_searchname(str)) ) {
+	if( id ){
 		StringBuf_Init(&command);
-		if( !itemdb_isstackable2(id) ) //Nonstackable
+		if( !itemdb_isstackable2( id.get() ) ){ //Nonstackable
 			StringBuf_Printf(&command, "%citem2 %u 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
-		else {
+		}else{
 			if (id->flag.guid)
 				StringBuf_Printf(&command, "%citem %u 1", atcommand_symbol, id->nameid);
 			else
@@ -18879,7 +18888,7 @@ void clif_search_store_info_ack( struct map_session_data* sd ){
 	}
 
 	unsigned int start = sd->searchstore.pages * SEARCHSTORE_RESULTS_PER_PAGE ;
-	unsigned int end   = umin( sd->searchstore.count, start + SEARCHSTORE_RESULTS_PER_PAGE );
+	unsigned int end   = umin( sd->searchstore.items.size(), start + SEARCHSTORE_RESULTS_PER_PAGE );
 	int len = sizeof( struct PACKET_ZC_SEARCH_STORE_INFO_ACK ) + ( end - start ) * sizeof( struct PACKET_ZC_SEARCH_STORE_INFO_ACK_sub );
 
 	WFIFOHEAD( fd, len );
@@ -18893,7 +18902,7 @@ void clif_search_store_info_ack( struct map_session_data* sd ){
 	p->usesCount = (uint8)umin( sd->searchstore.uses, UINT8_MAX );
 
 	for( int i = 0; i < end - start; i++ ) {
-		struct s_search_store_info_item* ssitem = &sd->searchstore.items[start + i];
+		std::shared_ptr<s_search_store_info_item> ssitem = sd->searchstore.items[start + i];
 
 		p->items[i].storeId = ssitem->store_id;
 		p->items[i].AID = ssitem->account_id;
@@ -18905,10 +18914,11 @@ void clif_search_store_info_ack( struct map_session_data* sd ){
 		p->items[i].refine = ssitem->refine;
 
 		// make-up an item for clif_addcards
-		struct item it;
+		struct item it = {};
 
-		memset( &it, 0, sizeof( it ) );
-		memcpy( &it.card, &ssitem->card, sizeof( it.card ) );
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			it.card[j] = ssitem->card[j];
+		}
 		it.nameid = ssitem->nameid;
 		it.amount = ssitem->amount;
 
@@ -20693,7 +20703,7 @@ void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum 
 
 	nullpo_retv( tsd );
 
-	if( tsd->hatEffects.empty() ){
+	if( tsd->hatEffects.empty() || map_getmapdata(tbl->m)->flag[MF_NOCOSTUME] ){
 		return;
 	}
 
@@ -20892,7 +20902,6 @@ void clif_sale_search_reply( struct map_session_data* sd, struct cash_item_data*
 void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
 	char item_name[ITEM_NAME_LENGTH];
-	struct item_data *id = NULL;
 
 	nullpo_retv(sd);
 
@@ -20906,7 +20915,7 @@ void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 
 	safestrncpy( item_name, RFIFOCP(fd, 8), min(RFIFOW(fd, 2) - 7, ITEM_NAME_LENGTH) );
 
-	id = itemdb_searchname(item_name);
+	std::shared_ptr<item_data> id = item_db.searchname( item_name );
 
 	if( id ){
 		int i;

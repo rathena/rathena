@@ -86,6 +86,7 @@
 1649:2198,{ .@r_2198 = getequiprefinerycnt(EQI_HAND_L); .@r_1649 = getequiprefinerycnt(EQI_HAND_R); if (.@r_2198 >= 9) { bonus bMatk,15 * .@r_1649; if (.@r_1649 >= 10) { bonus bMatk,50; bonus bVariableCastrate,-10; } } }
 1657:2471:2569:15029,{ bonus bHealPower,25; bonus2 bSkillUseSP,"AL_HEAL",-20; bonus2 bSkillCooldown,"AB_SECRAMENT",-2000; bonus2 bSkillCooldown,"AB_LAUDAAGNUS",-2000; bonus2 bSkillCooldown,"AB_LAUDARAMUS",-2000; }
 1659:5920,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillUseSP,"AL_HEAL",6*.@r; bonus2 bSkillUseSP,"AB_CHEAL",10*.@r; bonus2 bSkillUseSP,"AB_HIGHNESSHEAL",14*.@r; }
+1666:18542,{ bonus bHealPower,getequiprefinerycnt(EQI_HAND_R); }
 1660:2471:2569:15029,{ bonus bHealPower,45; bonus2 bSkillUseSP,"AL_HEAL",-50; bonus3 bAutoSpellWhenHit,"AB_SILENTIUM",1,100; bonus2 bSkillCooldown,"AB_CLEARANCE",-3000; bonus2 bSkillCooldown,"AB_LAUDAAGNUS",-3000; bonus2 bSkillCooldown,"AB_LAUDARAMUS",-3000; }
 1668:15089,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bDelayrate,-10-min(.@r,10); }
 1670:2968,{ bonus bMatk,getequiprefinerycnt(EQI_HAND_R)*5; }
@@ -598,7 +599,7 @@
 4627:4628,{ bonus2 bIgnoreDefRaceRate,RC_Formless,50; bonus2 bIgnoreDefRaceRate,RC_Demon,50;}
 4629:4630,{ bonus3 bAutoSpell,"NPC_WIDECURSE",2,2; bonus2 bSubEle,Ele_Neutral,5; }
 4631:4632,{ bonus5 bAutoSpell,"WZ_VERMILION",1,1,BF_WEAPON,0; }
-4635:4636,{ bonus2 bResEff,Eff_Burning,10000; }
+4635:4636,{ bonus2 bSubEle,Ele_Dark,100; bonus2 bSubEle,Ele_Undead,100; }
 4642:4646,{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; }
 4643:4646,{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; }
 4644:4646,{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; }
@@ -1074,7 +1075,7 @@
 19397:29584,{ bonus2 bSkillAtk,"SP_SWHOO",40; bonus2 bSkillAtk,"SL_SMA",40; bonus2 bSkillAtk,"SP_SPA",40; bonus2 bSkillCooldown,"SP_SOULREAPER",-10000; }
 19428:20948:32238:32239,{ bonus bInt,5; bonus bMaxSPrate,10; bonus bDef,100; bonus2 bMagicAtkEle,Ele_Water,10; bonus2 bMagicAtkEle,Ele_Earth,10; bonus2 bMagicAtkEle,Ele_Neutral,10; .@head = getequiprefinerycnt(EQI_HEAD_TOP); .@garment = getequiprefinerycnt(EQI_GARMENT); if (.@head >= 7 && .@garment >= 7) { .@matk = 40; } if ((.@head + .@garment) >= 18) { .@matk += 40; bonus2 bMagicAtkEle,Ele_Ghost,15; bonus2 bMagicAtkEle,Ele_Wind,15; bonus2 bMagicAtkEle,Ele_Holy,15; if ((.@head + .@garment) >= 22) { bonus bMatkRate,10; bonus2 bIgnoreMdefRaceRate,RC_Formless,50; bonus2 bIgnoreMdefRaceRate,RC_Demon,50; bonus2 bIgnoreMdefRaceRate,RC_Brute,50; bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,50; } } bonus bMatk,.@matk; }
 20135:20136,{ bonus bAllStats,12; }
-2053:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddClass,Class_All,15; bonus2 bMagicAddClass,Class_All,15; }
+2053:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
 2053:27301,{ bonus2 bAddClass,Class_All,10; bonus bAspdRate,10; }
 20701:2165,{ .@a = getequiprefinerycnt(EQI_GARMENT); .@b = getequiprefinerycnt(EQI_HAND_L); bonus2 bAddEle,Ele_Earth,.@b; bonus2 bSubRace,RC_Fish,.@a; }
 20714:28320,{ .@val = min(12,getequiprefinerycnt(EQI_GARMENT)); bonus2 bAddRace,RC_DemiHuman,.@val; bonus2 bAddRace,RC_Player_Human,.@val; }
@@ -1804,6 +1805,15 @@
 310188:310189,{ bonus2 bAddClass,Class_All,5; bonus bCritAtkRate,15; }
 310188:310190,{ bonus2 bSkillAtk,"GC_COUNTERSLASH",20; }
 310188:310191,{ bonus bDelayrate,-5; }
+310257:310258,{ bonus2 bSkillAtk,"RK_SONICWAVE",20; }
+310257:310259,{ bonus2 bSkillAtk,"RK_IGNITIONBREAK",10; }
+310257:310260,{ bonus2 bSkillAtk,"RK_HUNDREDSPEAR",30; }
+310261:310262,{ bonus2 bSkillCooldown,"GN_CART_TORNADO",-700; }
+310261:310263,{ bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20; }
+310261:310264,{ bonus bFixedCast,-100*(getskilllv("CR_ACIDDEMONSTRATION")/2); }
+310265:310266,{ bonus2 bSkillAtk,"WM_REVERBERATION",10; }
+310265:310267,{ bonus2 bSkillUseSPrate,"WM_REVERBERATION",20; bonus2 bSkillUseSPrate,"WM_METALICSOUND",20; }
+310265:310268,{ bonus2 bSkillAtk,"WM_METALICSOUND",20; }
 500001:450001:470000:480000:490004,{ bonus bAspd,2; bonus2 bAddSize,Size_All,10; bonus2 bSkillAtk,"GN_CART_TORNADO",min(BaseLevel,180)/15; autobonus3 "{ bonus2 bSkillAtk,\"GN_CART_TORNADO\",20; }",1000,60000,"GN_CARTBOOST"; }
 500001:450004:470003:480003:490007,{ bonus bMaxHPrate,10; bonus bVariableCastrate,-10; bonus2 bSkillAtk,"GN_CARTCANNON",min(BaseLevel,180)/15; autobonus3 "{ bonus2 bSkillAtk,\"GN_CARTCANNON\",20; }",1000,60000,"GN_CARTBOOST"; }
 510001:450002:470001:480001:490005,{ bonus bMatk,20; bonus2 bMagicAddSize,Size_All,10; bonus2 bSkillAtk,"WZ_METEORSTORM",min(BaseLevel,180)/15*2; autobonus3 "{ bonus2 bSkillAtk,\"WZ_METEORSTORM\",35; }",1000,60000,"ST_PRESERVE"; }
@@ -1861,13 +1871,6 @@
 29590:4876,{ bonus2 bMagicAtkEle,Ele_All,15; }
 29591:4878,{ bonus bDelayrate,-10; }
 29592:4880,{ bonus bAspd,2; }
-310257:29460,{ bonus2 bSkillAtk,"RK_SONICWAVE",20; }
-310257:29461,{ bonus2 bSkillAtk,"RK_IGNITIONBREAK",10; }
-310257:29462,{ bonus2 bSkillAtk,"RK_HUNDREDSPEAR",30; }
-310261:29464,{ bonus2 bSkillCooldown,"GN_CART_TORNADO",-700; }
-310261:29465,{ bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20; }
-310261:29466,{ bonus bFixedCast,-100*(getskilllv("CR_ACIDDEMONSTRATION")/2); }
-310265:2235,{ bonus2 bSkillAtk,"WM_REVERBERATION",10; }
 310325:310326:310330,{ bonus bLongAtkRate,6; }
 310327:310328:310329,{ bonus bShortAtkRate,6; }
 24477:24293,{ .@sum = getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@sum; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-40-.@sum; }
@@ -2366,3 +2369,146 @@
 2598:2158,{ bonus2 bSubRace,RC_DemiHuman,getequiprefinerycnt(EQI_GARMENT); bonus2 bAddEle,Ele_Undead,getequiprefinerycnt(EQI_HAND_L); }
 18541:1745,{ if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus2 bVariableCastrate,"SN_SHARPSHOOTING",-50; }
 1688:490022,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
+27031:1320,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:1842,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:1945,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:2035,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:13140,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:13333,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:13466,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:16058,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:18146,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:21026,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:26004,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:26105,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:26143,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:26201,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28018,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28117,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28227,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28229,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28231,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28233,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28609,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:28722,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+27031:32001,{ bonus2 bAddClass,Class_All,10; bonus bSplashRange,1; }
+15187:20827:22127,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; }
+27032:1325,{ bonus2 bSPDrainRate,100,5; }
+27032:1843,{ bonus2 bSPDrainRate,100,5; }
+27032:1946,{ bonus2 bSPDrainRate,100,5; }
+27032:2036,{ bonus2 bSPDrainRate,100,5; }
+27032:13141,{ bonus2 bSPDrainRate,100,5; }
+27032:13334,{ bonus2 bSPDrainRate,100,5; }
+27032:13467,{ bonus2 bSPDrainRate,100,5; }
+27032:16059,{ bonus2 bSPDrainRate,100,5; }
+27032:18147,{ bonus2 bSPDrainRate,100,5; }
+27032:21027,{ bonus2 bSPDrainRate,100,5; }
+27032:26005,{ bonus2 bSPDrainRate,100,5; }
+27032:26106,{ bonus2 bSPDrainRate,100,5; }
+27032:26144,{ bonus2 bSPDrainRate,100,5; }
+27032:26202,{ bonus2 bSPDrainRate,100,5; }
+27032:28019,{ bonus2 bSPDrainRate,100,5; }
+27032:28118,{ bonus2 bSPDrainRate,100,5; }
+27032:28228,{ bonus2 bSPDrainRate,100,5; }
+27032:28230,{ bonus2 bSPDrainRate,100,5; }
+27032:28232,{ bonus2 bSPDrainRate,100,5; }
+27032:28234,{ bonus2 bSPDrainRate,100,5; }
+27032:28610,{ bonus2 bSPDrainRate,100,5; }
+27032:28723,{ bonus2 bSPDrainRate,100,5; }
+27032:32002,{ bonus2 bSPDrainRate,100,5; }
+15188:20828:22128,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; }
+1750:18133,{ bonus2 bAddRace,RC_Fish,15; bonus2 bAddEle,Ele_Water,15; }
+490022:1444,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
+490022:13130,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
+490022:16049,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
+490022:18133,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
+490022:28708,{ bonus2 bAddRace,RC_Fish,20; bonus2 bAddEle,Ele_Water,20; bonus2 bMagicAddRace,RC_Fish,20; bonus2 bMagicAddEle,Ele_Water,20; }
+1331:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1331:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1331:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+13343:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13343:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13343:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+13492:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13492:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+13492:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+16087:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+16087:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+16087:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+18177:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+18177:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+18177:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+1861:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1861:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+1861:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+2053:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+2053:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+2053:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+21046:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+21046:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+21046:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+26021:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26021:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26021:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+26149:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26149:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26149:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+26150:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26150:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+26150:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28037:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28037:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28037:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28135:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28135:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28135:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28249:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28249:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28249:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28250:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28250:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28250:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28251:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28251:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28251:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28252:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28252:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28252:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28627:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28627:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28627:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+28753:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28753:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+28753:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32017:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32017:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32017:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32105:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32105:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32105:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32106:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32106:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32106:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+32300:19451,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32300:19452,{ bonus2 bSubRace,RC_Player_Human,3; bonus2 bAddEle,Ele_All,15; bonus2 bMagicAddEle,Ele_All,15; }
+32300:27301,{ bonus bAspdRate,10; bonus2 bAddRace,RC_All,10; }
+2965:18797,{ bonus bAllStats,1; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus3 bAutoSpellWhenHit,"WZ_VERMILION",5,5; bonus2 bAddRace,RC_All,5; bonus bVariableCastrate,-10; }
+2965:18798,{ bonus bAllStats,1; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus3 bAutoSpellWhenHit,"WZ_VERMILION",5,5; bonus2 bAddRace,RC_All,5; bonus bVariableCastrate,-10; }
+5891:2269,{ bonus bAllStats,1; }
+5891:2270,{ bonus bAllStats,1; }
+18906:4077,{ bonus bHealPower,2; bonus bVariableCastrate,-15; }
+18912:2254,{ bonus2 bExpAddClass,Class_All,5; }
+19221:20866,{ bonus bAllStats,1; }
+22105:2655,{ bonus bBaseAtk,50; bonus2 bAddDefMonster,1196,20; bonus2 bAddDefMonster,1197,20; }
+22105:28388,{ bonus bBaseAtk,50; bonus2 bAddDefMonster,1196,20; bonus2 bAddDefMonster,1197,20; }
+22105:15040,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bBaseAtk,5+.@r; }
+22105:2913,{ bonus bBaseAtk,getequiprefinerycnt(EQI_SHOES); }
+28388:16053,{ .@time = 5000 + max(getequiprefinerycnt(EQI_SHOES)-4,0)*1000; autobonus "{ bonus2 bIgnoreDefRaceRate,RC_All,100; }",5,.@time,BF_NORMAL; }
+28388:2913,{ bonus bBaseAtk,10; }
+28388:2408,{ bonus bBaseAtk,50; bonus2 bAddDefMonster,1196,20; bonus2 bAddDefMonster,1197,20; }
+400043:2589,{ .@head = getequiprefinerycnt(EQI_HEAD_TOP); .@garment = getequiprefinerycnt(EQI_GARMENT); if (.@head >= 10 && .@garment >= 10) bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",5,10+(.@head+.@garment); bonus2 bSubRace,RC_All,3; bonus2 bSubRace,RC_Angel,-3; }
+450131:2589,{ if (getequiprefinerycnt(EQI_GARMENT) >= 9) { bonus2 bSubRace,RC_All,3; bonus2 bSubRace,RC_Angel,-3; } }
+450131:400043,{ bonus bVit,2; bonus bMaxHPrate,10; }
+490033:2589,{ if (getequiprefinerycnt(EQI_GARMENT) >= 9) { bonus2 bResEff,Eff_Stone,4000; bonus2 bResEff,Eff_Curse,4000; } }
+490033:400043,{ if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9) bonus bVariableCastrate,-5; }
+490033:450131,{ if (getequiprefinerycnt(EQI_ARMOR) >= 9) bonus bMaxHPrate,8; }

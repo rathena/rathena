@@ -11372,7 +11372,7 @@ ecl_tdun02,99,63,5	script	Rosi#No.1	4_F_HUWOMAN,1,1,{
 	end;
 OnInit:
 	if (strnpcinfo(2) != "No.1")
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	end;
 OnTouch:
 	mes "[Rosi]";
@@ -11429,7 +11429,7 @@ ecl_tdun01,11,62,5	script	Euncheong#No.1	4_M_HUBOY,1,1,{
 	end;
 OnInit:
 	if (strnpcinfo(2) != "No.1")
-		disablenpc strnpcinfo(0);
+		disablenpc();
 	end;
 OnTouch:
 	mes "[Euncheong]";

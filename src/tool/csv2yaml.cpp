@@ -127,6 +127,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 		const std::string to = path + "/" + (rename.size() > 0 ? rename : name) + ".yml";
 
 		if( fileExists( from ) ){
+#ifndef CONVERT_ALL
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
@@ -136,6 +137,9 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 					continue;
 				}
 			}
+#else
+			ShowMessage( "Found the file \"%s\", which requires migration to yml.\n", from.c_str() );
+#endif
 
 			ShowNotice("Conversion process has begun.\n");
 
@@ -244,14 +248,14 @@ int do_init( int argc, char** argv ){
 	}
 
 	skill_txt_data( path_db_mode, path_db );
-	if (!process("SKILL_DB", 1, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 2, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return 0;
 	}
 
 	skill_txt_data( path_db_import, path_db_import );
-	if (!process("SKILL_DB", 1, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("SKILL_DB", 2, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return 0;
@@ -408,6 +412,30 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("MOB_ITEM_RATIO_DB", 1, root_paths, "mob_item_ratio", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("ATTRIBUTE_DB", 1, { path_db_mode }, "attr_fix", [](const std::string &path, const std::string &name_ext) -> bool {
+		return status_readdb_attrfix((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	if (!process("ATTRIBUTE_DB", 1, { path_db_import }, "attr_fix", [](const std::string &path, const std::string &name_ext) -> bool {
+		return status_readdb_attrfix((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+
+	if (!process("CONSTANT_DB", 1, root_paths, "const", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 3, -1, &read_constdb, false);
+	})) {
+		return 0;
+	}
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -1298,8 +1326,6 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::Key << "AllowWhenPerforming" << YAML::Value << "true";
 		if (inf3_val & 0x10)
 			body << YAML::Key << "TargetEmperium" << YAML::Value << "true";
-		if (inf3_val & 0x20)
-			body << YAML::Key << "IgnoreStasis" << YAML::Value << "true";
 		if (inf3_val & 0x40)
 			body << YAML::Key << "IgnoreKagehumi" << YAML::Value << "true";
 		if (inf3_val & 0x80)
@@ -1988,6 +2014,28 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 					body << YAML::Key << "Item" << YAML::Value << *item_name;
 					body << YAML::Key << "Amount" << YAML::Value << it_req->second.amount[i];
+
+					switch (skill_id) { // List of level dependent item costs
+						case WZ_FIREPILLAR:
+							if (i < 6)
+								break; // Levels 1-5 have no cost
+						case NC_SHAPESHIFT:
+						case NC_REPAIR:
+							if (skill_id == NC_SHAPESHIFT || skill_id == NC_REPAIR && i >= 5)
+								break; // Don't add level 5 label as it exceeds the max level of these skills
+						case GN_FIRE_EXPANSION:
+						case SO_SUMMON_AGNI:
+						case SO_SUMMON_AQUA:
+						case SO_SUMMON_VENTUS:
+						case SO_SUMMON_TERA:
+						case SO_WATER_INSIGNIA:
+						case SO_FIRE_INSIGNIA:
+						case SO_WIND_INSIGNIA:
+						case SO_EARTH_INSIGNIA:
+						case KO_MAKIBISHI:
+							body << YAML::Key << "Level" << YAML::Value << i;
+					}
+
 					body << YAML::EndMap;
 				}
 			}
@@ -2957,7 +3005,7 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		if (group != nullptr)
 			entries = group->slots[j];
 
-		std::shared_ptr<s_random_opt_group_entry> entry;
+		std::shared_ptr<s_random_opt_group_entry> entry = std::make_shared<s_random_opt_group_entry>();
 
 		entry->id = static_cast<uint16>(randid_tmp);
 		entry->min_value = (int16)strtoul(str[k + 1], nullptr, 10);
@@ -3939,5 +3987,135 @@ static bool itemdb_read_group_yaml(void) {
 		body << YAML::EndSeq;
 		body << YAML::EndMap;
 	}
+	return true;
+}
+
+// Copied and adjusted from mob.cpp
+static bool mob_readdb_itemratio(char* str[], int columns, int current) {
+	t_itemid nameid = strtoul(str[0], nullptr, 10);
+
+	std::string *item_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (!item_name) {
+		ShowWarning("mob_readdb_itemratio: Invalid item id %u.\n", nameid);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Item" << YAML::Value << *item_name;
+	body << YAML::Key << "Ratio" << YAML::Value << strtoul(str[1], nullptr, 10);
+
+	if (columns-2 > 0) {
+		body << YAML::Key << "List";
+		body << YAML::BeginMap;
+		for (int i = 0; i < columns-2; i++) {
+			uint16 mob_id = static_cast<uint16>(strtoul(str[i+2], nullptr, 10));
+			std::string* mob_name = util::umap_find( aegis_mobnames, mob_id );
+
+			if (mob_name == nullptr) {
+				ShowWarning( "mob_readdb_itemratio: Invalid monster with ID %hu.\n", mob_id );
+				continue;
+			}
+			body << YAML::Key << *mob_name << YAML::Value << "true";
+		}
+		body << YAML::EndMap;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from status.cpp
+static bool status_readdb_attrfix(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return false;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	int lv, i, j;
+	std::string constant;
+
+	while (fgets(line, sizeof(line), fp)) {
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		lv = strtoul(line, nullptr, 10);
+		if (!CHK_ELEMENT_LEVEL(lv))
+			continue;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Level" << YAML::Value << (count+1);
+
+		for (i = 0; i < ELE_ALL; ) {
+			char *p;
+			if (!fgets(line, sizeof(line), fp))
+				break;
+			if (line[0] == '/' && line[1] == '/')
+				continue;
+
+			constant = constant_lookup(i, "Ele_");
+			constant.erase(0, 4);
+			body << YAML::Key << name2Upper(constant);
+			body << YAML::BeginMap;
+
+			for (j = 0, p = line; j < ELE_ALL && p; j++) {
+				while (*p == 32) //skipping space (32=' ')
+					p++;
+
+				constant = constant_lookup(j, "Ele_");
+				constant.erase(0, 4);
+				body << YAML::Key << name2Upper(constant) << YAML::Value << atoi(p);
+	
+				p = strchr(p, ',');
+				if (p)
+					*p++=0;
+			}
+			body << YAML::EndMap;
+
+			i++;
+		}
+		body << YAML::EndMap;
+
+		count++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+	return true;
+}
+
+// Copied and adjusted from script.cpp
+static bool read_constdb(char* fields[], int columns, int current) {
+	char name[1024], val[1024];
+	int type = 0;
+
+	if( columns > 1 ){
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_]", name) != 1 ||
+			sscanf(fields[1], "%1023[A-Za-z0-9/_]", val) != 1 || 
+			( columns >= 2 && sscanf(fields[2], "%11d", &type) != 1 ) ){
+			ShowWarning("Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current);
+			return false;
+		}
+	}else{
+		if( sscanf(fields[0], "%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d", name, val, &type) < 2 ){
+			ShowWarning( "Skipping line '" CL_WHITE "%d" CL_RESET "', invalid constant definition\n", current );
+			return false;
+		}
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Name" << YAML::Value << name;
+	body << YAML::Key << "Value" << YAML::Value << val;
+	if (type != 0)
+		body << YAML::Key << "Parameter" << YAML::Value << "true";
+	body << YAML::EndMap;
+
 	return true;
 }

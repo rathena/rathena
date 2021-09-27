@@ -693,14 +693,13 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 
 	if (sd->soulball <= 0 || sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
 		sd->soulball = 0;
-		return 0;
+	}else{
+		sd->soulball -= cap_value(count, 0, sd->soulball);
+		if (sd->soulball == 0)
+			status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
+		else
+			sc->data[SC_SOULENERGY]->val1 = sd->soulball;
 	}
-
-	sd->soulball -= cap_value(count, 0, sd->soulball);
-	if (sd->soulball == 0)
-		status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
-	else
-		sc->data[SC_SOULENERGY]->val1 = sd->soulball;
 
 	if (!type)
 		clif_soulball(sd);
@@ -2761,6 +2760,23 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
 	drop.push_back(entry);
 }
 
+s_autobonus::~s_autobonus(){
+	if( this->active != INVALID_TIMER ){
+		delete_timer( this->active, pc_endautobonus );
+		this->active = INVALID_TIMER;
+	}
+
+	if( this->bonus_script != nullptr ){
+		aFree( this->bonus_script );
+		this->bonus_script = nullptr;
+	}
+
+	if( this->other_script != nullptr ){
+		aFree( this->other_script );
+		this->other_script = nullptr;
+	}
+}
+
 /**
  * Add autobonus to player when attacking/attacked
  * @param bonus: Bonus array
@@ -2773,8 +2789,15 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_itemid nameid, u
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill)
-{
+bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill){
+	// Check if the same bonus already exists
+	for( std::shared_ptr<s_autobonus> autobonus : bonus ){
+		// Compare based on position and bonus script
+		if( autobonus->pos == pos && strcmp( script, autobonus->bonus_script ) == 0 ){
+			return false;
+		}
+	}
+
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);
 		return false;
@@ -2793,18 +2816,18 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 		}
 	}
 
-	struct s_autobonus entry = {};
+	std::shared_ptr<s_autobonus> entry = std::make_shared<s_autobonus>();
 
 	if (rate < -10000 || rate > 10000)
 		ShowWarning("pc_addautobonus: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
 
-	entry.rate = cap_value(rate, -10000, 10000);
-	entry.duration = dur;
-	entry.active = INVALID_TIMER;
-	entry.atk_type = flag;
-	entry.pos = pos;
-	entry.bonus_script = aStrdup(script);
-	entry.other_script = (other_script ? aStrdup(other_script) : NULL);
+	entry->rate = cap_value(rate, -10000, 10000);
+	entry->duration = dur;
+	entry->active = INVALID_TIMER;
+	entry->atk_type = flag;
+	entry->pos = pos;
+	entry->bonus_script = aStrdup(script);
+	entry->other_script = (other_script ? aStrdup(other_script) : NULL);
 
 	bonus.push_back(entry);
 
@@ -2817,43 +2840,33 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
  * @param bonus: Autobonus array
  * @param restore: Run script on clearing or not
  */
-void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore)
-{
-	nullpo_retv(sd);
-
-	std::vector<s_autobonus>::iterator it = bonus.begin();
+void pc_delautobonus(struct map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> &bonus, bool restore){
+	std::vector<std::shared_ptr<s_autobonus>>::iterator it = bonus.begin();
 
 	while( it != bonus.end() ){
-		s_autobonus b = *it;
+		std::shared_ptr<s_autobonus> b = *it;
 
-		if (b.active != INVALID_TIMER) {
-			if (restore && (sd->state.autobonus&b.pos) == b.pos) {
-				if (b.bonus_script) {
-					unsigned int equip_pos_idx = 0;
+		if( b->active != INVALID_TIMER && restore && b->bonus_script != nullptr ){
+			unsigned int equip_pos_idx = 0;
 
-					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
-					for (uint8 j = 0; j < EQI_MAX; j++) {
-						if (sd->equip_index[j] >= 0)
-							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
-					}
+			// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
+			for (uint8 j = 0; j < EQI_MAX; j++) {
+				if (sd.equip_index[j] >= 0)
+					equip_pos_idx |= sd.inventory.u.items_inventory[sd.equip_index[j]].equip;
+			}
 
-					if ((equip_pos_idx&b.pos) == b.pos)
-						script_run_autobonus(b.bonus_script, sd, b.pos);
-				}
-
-				it++;
-
-				continue;
-			} else { // Logout / Unequipped an item with an activated bonus
-				delete_timer(b.active, pc_endautobonus);
-				b.active = INVALID_TIMER;
+			if( ( equip_pos_idx&b->pos ) == b->pos ){
+				script_run_autobonus(b->bonus_script, &sd, b->pos);
+			}else{
+				// Not all required items equipped anymore
+				restore = false;
 			}
 		}
 
-		if (b.bonus_script)
-			aFree(b.bonus_script);
-		if (b.other_script)
-			aFree(b.other_script);
+		if( restore ){
+			it++;
+			continue;
+		}
 
 		it = bonus.erase(it);
 	}
@@ -2864,11 +2877,8 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
  * @param sd: Player data
  * @param autobonus: Autobonus to run
  */
-void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus)
+void pc_exeautobonus(struct map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus)
 {
-	nullpo_retv(sd);
-	nullpo_retv(autobonus);
-
 	if (autobonus->active != INVALID_TIMER)
 		delete_timer(autobonus->active, pc_endautobonus);
 
@@ -2878,16 +2888,15 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
 		unsigned int equip_pos_idx = 0;
 		//Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
 		for(j = 0; j < EQI_MAX; j++) {
-			if(sd->equip_index[j] >= 0)
-				equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
+			if(sd.equip_index[j] >= 0)
+				equip_pos_idx |= sd.inventory.u.items_inventory[sd.equip_index[j]].equip;
 		}
 		if((equip_pos_idx&autobonus->pos) == autobonus->pos)
-			script_run_autobonus(autobonus->other_script,sd,autobonus->pos);
+			script_run_autobonus(autobonus->other_script,&sd,autobonus->pos);
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
-	sd->state.autobonus |= autobonus->pos;
-	status_calc_pc(sd,SCO_NONE);
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd.bl.id, (intptr_t)bonus);
+	status_calc_pc(&sd,SCO_FORCE);
 }
 
 /**
@@ -2895,20 +2904,19 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
  */
 TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
-	std::vector<s_autobonus> *bonus = (std::vector<s_autobonus> *)data;
+	std::vector<std::shared_ptr<s_autobonus>> *bonus = (std::vector<std::shared_ptr<s_autobonus>> *)data;
 
 	nullpo_ret(sd);
 	nullpo_ret(bonus);
 
-	for( struct s_autobonus& autobonus : *bonus ){
-		if( autobonus.active == tid ){
-			autobonus.active = INVALID_TIMER;
-			sd->state.autobonus &= ~autobonus.pos;
+	for( std::shared_ptr<s_autobonus> autobonus : *bonus ){
+		if( autobonus->active == tid ){
+			autobonus->active = INVALID_TIMER;
 			break;
 		}
 	}
 	
-	status_calc_pc(sd,SCO_NONE);
+	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
 
@@ -7228,7 +7236,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 void pc_baselevelchanged(struct map_session_data *sd) {
 	uint8 i;
 	for( i = 0; i < EQI_MAX; i++ ) {
-		if( sd->equip_index[i] >= 0 ) {
+		if( sd->equip_index[i] >= 0 && sd->inventory_data[sd->equip_index[i]] ) {
 			if( sd->inventory_data[ sd->equip_index[i] ]->elvmax && sd->status.base_level > (unsigned int)sd->inventory_data[ sd->equip_index[i] ]->elvmax )
 				pc_unequipitem(sd, sd->equip_index[i], 3);
 		}
@@ -8080,6 +8088,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 
 		if (sd->sc.data[SC_SPRITEMABLE] && pc_checkskill(sd, SU_SPRITEMABLE))
 			status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
+		if (sd->sc.data[SC_SOULATTACK] && pc_checkskill(sd, SU_SOULATTACK))
+			status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
 	}
 
 	for (const auto &skill : skill_db) {
@@ -9526,6 +9536,8 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 	if (sd->sc.data[SC_SPRITEMABLE] && !pc_checkskill(sd, SU_SPRITEMABLE))
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
+	if (sd->sc.data[SC_SOULATTACK] && !pc_checkskill(sd, SU_SOULATTACK))
+		status_change_end(&sd->bl, SC_SOULATTACK, INVALID_TIMER);
 
 	if(sd->status.manner < 0)
 		clif_changestatus(sd,SP_MANNER,sd->status.manner);
@@ -10782,6 +10794,21 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	return true;
 }
 
+static void pc_deleteautobonus( std::vector<std::shared_ptr<s_autobonus>>& bonus, int position ){
+	std::vector<std::shared_ptr<s_autobonus>>::iterator it = bonus.begin();
+
+	while( it != bonus.end() ){
+		std::shared_ptr<s_autobonus> b = *it;
+
+		if( ( b->pos & position ) != b->pos ){
+			it++;
+			continue;
+		}
+
+		it = bonus.erase( it );
+	}
+}
+
 /**
  * Recalculate player status on unequip
  * @param sd: Player data
@@ -10793,8 +10820,9 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 	int i, iflag;
 	bool status_calc = false;
 
-	if (sd->state.autobonus&sd->inventory.u.items_inventory[n].equip)
-		sd->state.autobonus &= ~sd->inventory.u.items_inventory[n].equip; //Check for activated autobonus [Inkfish]
+	pc_deleteautobonus( sd->autobonus, sd->inventory.u.items_inventory[n].equip );
+	pc_deleteautobonus( sd->autobonus2, sd->inventory.u.items_inventory[n].equip );
+	pc_deleteautobonus( sd->autobonus3, sd->inventory.u.items_inventory[n].equip );
 
 	sd->inventory.u.items_inventory[n].equip = 0;
 	if (!(flag & 4))
@@ -10828,7 +10856,7 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 
 	if (flag & 1 || status_calc) {
 		pc_checkallowskill(sd);
-		status_calc_pc(sd, SCO_NONE);
+		status_calc_pc(sd, SCO_FORCE);
 	}
 
 	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
@@ -10957,8 +10985,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 				break;
 			}
 		}
-		if (!sd->sc.data[SC_SEVENWIND] || sd->sc.data[SC_ASPERSIO]) //Check for seven wind (but not level seven!)
-			skill_enchant_elemental_end(&sd->bl, SC_NONE);
+
+		skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
 	}
@@ -12384,7 +12412,7 @@ void PlayerStatPointDatabase::loadingFinished() {
  * pc DB reading.
  * job_exp.txt		- required experience values
  * skill_tree.txt	- skill tree for every class
- * attr_fix.txt		- elemental adjustment table
+ * attr_fix.yml		- elemental adjustment table
  * job_db1.txt		- job,weight,hp_factor,hp_multiplicator,sp_factor,aspds/lvl
  * job_db2.txt		- job,stats bonuses/lvl
  * job_maxhpsp_db.txt	- strtlvl,maxlvl,job,type,values/lvl (values=hp|sp)

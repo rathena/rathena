@@ -111,7 +111,7 @@ Header:
 #    Weight: 10
 #    AliasName: Foolishness_Of_Blind
 #  - Id: 7951
-#    AegisName: Token_Bag
+#    AegisName: Gold_Tulip
 #    Name: Token Bag
 #    Type: Etc
 #    Sell: 10
@@ -357,7 +357,7 @@ Header:
 #    Weight: 10
 #    AliasName: Silver_Coin
 #  - Id: 12715
-#    AegisName: Black_Treasure_Chest
+#    AegisName: Black_Treasure_Box
 #    Name: Black Treasure Chest
 #    Type: Usable
 #    Weight: 200
@@ -368,7 +368,7 @@ Header:
 # iRO Valentine's Day Event 2009
 #=============================================================
 #  - Id: 5817
-#    AegisName: Valentine's_Emblem
+#    AegisName: Valentine_Pledge
 #    Name: Valentine's Emblem
 #    Type: Armor
 #    Buy: 10
@@ -438,11 +438,11 @@ Header:
 #    Script: |
 #      bonus bMdef,5; bonus2 bAddMonsterDropItem,12192,2500;
 #  - Id: 6298
-#    AegisName: Crushed_Pumpkin
+#    AegisName: Pumpkin_Head_Crushed
 #    Name: Crushed Pumpkin
 #    Type: Etc
 #  - Id: 6299
-#    AegisName: Worn_Fabric
+#    AegisName: Worn_Cloth_Piece
 #    Name: Worn Fabric
 #    Type: Etc
 

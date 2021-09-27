@@ -8432,7 +8432,7 @@ mid_camp,88,100,55	script	Cat Paw Mining Agent	876,{
 		else if (.@rhea_ran == 16) getitem 993,1; //Yellow_Live
 		else getitem 6048,1; //Unidentified_Mineral
 		initnpctimer;
-		disablenpc strnpcinfo(0);
+		disablenpc();
 		end;
 	}
 	else {
@@ -8443,7 +8443,7 @@ mid_camp,88,100,55	script	Cat Paw Mining Agent	876,{
 	end;
 
 OnTimer120000:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 }
@@ -13696,11 +13696,11 @@ OnTimer11000:
 
 OnInit:
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 

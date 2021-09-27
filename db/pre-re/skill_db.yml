@@ -112,6 +112,7 @@
 #     ItemCost:               Item required to cast. (Default: 0)
 #       - Item                Item name.
 #         Amount              Item amount.
+#         Level               Skill level. Makes the skill item check become level dependent if supplied. (Default: applies to all levels)
 #     Equipment:              Equipped item required to cast. (Default: nullptr)
 #   Unit:                     Skill unit values. (Optional)
 #     Id                      Skill unit ID.
@@ -129,7 +130,7 @@
 
 Header:
   Type: SKILL_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Id: 1
@@ -2538,8 +2539,6 @@ Body:
     TargetType: Support
     DamageFlags:
       NoDamage: true
-    Flags:
-      IgnoreStasis: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -2935,6 +2934,22 @@ Body:
         Time: 2400
     Requires:
       SpCost: 75
+      ItemCost:
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 6
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 7
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 8
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 9
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 10
     Unit:
       Id: Firepillar_Waiting
       AlternateId: Firepillar_Active
@@ -4748,6 +4763,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Duration2: 1000
     Requires:
       SpCost: 3
       Weapon:
@@ -7848,7 +7864,6 @@ Body:
       NoTargetSelf: true
       PartyOnly: true
       GuildOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 9
     Hit: Single
@@ -9662,7 +9677,6 @@ Body:
     Duration1: 30000
     CastTimeFlags:
       IgnoreDex: true
-      IgnoreStatus: true
       IgnoreItemBonus: true
     Requires:
       SpCost:
@@ -19545,7 +19559,6 @@ Body:
       NoDamage: true
     Flags:
       PartyOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 11
     Hit: Single
@@ -20866,12 +20879,16 @@ Body:
       ItemCost:
         - Item: Scarlet_Pts
           Amount: 3
+          Level: 1
         - Item: Lime_Green_Pts
           Amount: 3
+          Level: 2
         - Item: Yellow_Wish_Pts
           Amount: 3
+          Level: 3
         - Item: Indigo_Pts
           Amount: 3
+          Level: 4
         - Item: Magic_Gear_Fuel
           Amount: 2
       Equipment:
@@ -26363,10 +26380,13 @@ Body:
       ItemCost:
         - Item: Boody_Red
           Amount: 3
+          Level: 1
         - Item: Boody_Red
           Amount: 6
+          Level: 2
         - Item: Flame_Heart
           Amount: 1
+          Level: 3
   - Id: 2458
     Name: SO_SUMMON_AQUA
     Description: Summon Water Spirit Aqua
@@ -26404,10 +26424,13 @@ Body:
       ItemCost:
         - Item: Crystal_Blue
           Amount: 3
+          Level: 1
         - Item: Crystal_Blue
           Amount: 6
+          Level: 2
         - Item: Mistic_Frozen
           Amount: 1
+          Level: 3
   - Id: 2459
     Name: SO_SUMMON_VENTUS
     Description: Summon Wind Spirit Ventus
@@ -26445,10 +26468,13 @@ Body:
       ItemCost:
         - Item: Wind_Of_Verdure
           Amount: 3
+          Level: 1
         - Item: Wind_Of_Verdure
           Amount: 6
+          Level: 2
         - Item: Rough_Wind
           Amount: 1
+          Level: 3
   - Id: 2460
     Name: SO_SUMMON_TERA
     Description: Summon Earth Spirit Tera
@@ -26486,10 +26512,13 @@ Body:
       ItemCost:
         - Item: Yellow_Live
           Amount: 3
+          Level: 1
         - Item: Yellow_Live
           Amount: 6
+          Level: 2
         - Item: Great_Nature
           Amount: 1
+          Level: 3
   - Id: 2461
     Name: SO_EL_ACTION
     Description: Elemental Action
@@ -26571,10 +26600,13 @@ Body:
       ItemCost:
         - Item: Scarlet_Pts
           Amount: 1
+          Level: 1
         - Item: Scarlet_Pts
           Amount: 2
+          Level: 2
         - Item: Scarlet_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Fire_Insignia
       Layout: 1
@@ -26610,10 +26642,13 @@ Body:
       ItemCost:
         - Item: Indigo_Pts
           Amount: 1
+          Level: 1
         - Item: Indigo_Pts
           Amount: 2
+          Level: 2
         - Item: Indigo_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Water_Insignia
       Layout: 1
@@ -26649,10 +26684,13 @@ Body:
       ItemCost:
         - Item: Yellow_Wish_Pts
           Amount: 1
+          Level: 1
         - Item: Yellow_Wish_Pts
           Amount: 2
+          Level: 2
         - Item: Yellow_Wish_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Wind_Insignia
       Layout: 1
@@ -26688,10 +26726,13 @@ Body:
       ItemCost:
         - Item: Lime_Green_Pts
           Amount: 1
+          Level: 1
         - Item: Lime_Green_Pts
           Amount: 2
+          Level: 2
         - Item: Lime_Green_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Earth_Insignia
       Layout: 1
@@ -27230,14 +27271,19 @@ Body:
       ItemCost:
         - Item: Oil_Bottle
           Amount: 1
+          Level: 1
         - Item: Explosive_Powder
           Amount: 1
+          Level: 2
         - Item: Smoke_Powder
           Amount: 1
+          Level: 3
         - Item: Tear_Gas
           Amount: 1
+          Level: 4
         - Item: Acid_Bottle
           Amount: 1
+          Level: 5
   - Id: 2487
     Name: GN_FIRE_EXPANSION_SMOKE_POWDER
     Description: Fire Expansion Smoke Powder
@@ -27690,7 +27736,6 @@ Body:
     Type: Weapon
     TargetType: Attack
     Flags:
-      IgnoreStasis: true
       TargetHidden: true
     Range: -9
     Hit: Single
@@ -28943,14 +28988,19 @@ Body:
       ItemCost:
         - Item: Makibishi
           Amount: 3
+          Level: 1
         - Item: Makibishi
           Amount: 4
+          Level: 2
         - Item: Makibishi
           Amount: 5
+          Level: 3
         - Item: Makibishi
           Amount: 6
+          Level: 4
         - Item: Makibishi
           Amount: 7
+          Level: 5
     Unit:
       Id: Makibishi
       Range: 1
