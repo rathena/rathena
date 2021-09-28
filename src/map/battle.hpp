@@ -657,6 +657,7 @@ struct Battle_Config
 	int summoner_size;
 	int homunculus_autofeed_always;
 	int feature_attendance;
+	int feature_attendance_close;
 	int feature_privateairship;
 	int rental_transaction;
 	int min_shop_buy;
