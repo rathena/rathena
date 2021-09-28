@@ -3369,9 +3369,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			pc_delinvincibletimer(sd);
 
-			pc_delautobonus(sd, sd->autobonus, false);
-			pc_delautobonus(sd, sd->autobonus2, false);
-			pc_delautobonus(sd, sd->autobonus3, false);
+			pc_delautobonus(*sd, sd->autobonus, false);
+			pc_delautobonus(*sd, sd->autobonus2, false);
+			pc_delautobonus(*sd, sd->autobonus3, false);
 
 			if( sd->followtimer != INVALID_TIMER )
 				pc_stop_following(sd);

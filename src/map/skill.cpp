@@ -2246,13 +2246,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	if( sd && !sd->autobonus.empty() )
 	{
 		for(auto &it : sd->autobonus) {
-			if (rnd()%1000 >= it.rate)
+			if (rnd()%1000 >= it->rate)
 				continue;
-			if (!(((it.atk_type)&attack_type)&BF_WEAPONMASK &&
-				  ((it.atk_type)&attack_type)&BF_RANGEMASK &&
-				  ((it.atk_type)&attack_type)&BF_SKILLMASK))
+			if (!(((it->atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((it->atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((it->atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			pc_exeautobonus(sd, &sd->autobonus, &it);
+			pc_exeautobonus(*sd, &sd->autobonus, it);
 		}
 	}
 
@@ -2330,11 +2330,11 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 
 	if( sd && !sd->autobonus3.empty() ) {
 		for (auto &it : sd->autobonus3) {
-			if (rnd()%1000 >= it.rate)
+			if (rnd()%1000 >= it->rate)
 				continue;
-			if (it.atk_type != skill_id)
+			if (it->atk_type != skill_id)
 				continue;
-			pc_exeautobonus(sd, &sd->autobonus3, &it);
+			pc_exeautobonus(*sd, &sd->autobonus3, it);
 		}
 	}
 
@@ -2552,13 +2552,13 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	//Autobonus when attacked
 	if( dstsd && !status_isdead(bl) && !dstsd->autobonus2.empty() && !(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)) ) {
 		for (auto &it : dstsd->autobonus2) {
-			if (rnd()%1000 >= it.rate)
+			if (rnd()%1000 >= it->rate)
 				continue;
-			if (!(((it.atk_type)&attack_type)&BF_WEAPONMASK &&
-				  ((it.atk_type)&attack_type)&BF_RANGEMASK &&
-				  ((it.atk_type)&attack_type)&BF_SKILLMASK))
+			if (!(((it->atk_type)&attack_type)&BF_WEAPONMASK &&
+				  ((it->atk_type)&attack_type)&BF_RANGEMASK &&
+				  ((it->atk_type)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
-			pc_exeautobonus(dstsd, &dstsd->autobonus2, &it);
+			pc_exeautobonus(*dstsd, &dstsd->autobonus2, it);
 		}
 	}
 
@@ -17308,7 +17308,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		return battle_config.min_skill_delay_limit;
 
 	int delaynodex = skill_get_delaynodex(skill_id);
-	int time = skill_get_delay(skill_id, skill_lv);
+	double time = skill_get_delay(skill_id, skill_lv);
 
 	if (time < 0)
 		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
@@ -17370,22 +17370,24 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		}
 	}
 
+	int delay = 0;
+
 	if (!(delaynodex&2)) {
 		if (sc && sc->count) {
 			if (sc->data[SC_POEMBRAGI])
-				time -= time * sc->data[SC_POEMBRAGI]->val3 / 100;
+				delay += sc->data[SC_POEMBRAGI]->val3;
 			if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && skill_get_type(skill_id) == BF_MAGIC && skill_get_ele(skill_id, skill_lv) == ELE_WIND)
-				time /= 2; // After Delay of Wind element spells reduced by 50%.
+				delay += 50; // After Delay of Wind element spells reduced by 50%.
 			if (sc->data[SC_MAGICMUSHROOM] && sc->data[SC_MAGICMUSHROOM]->val3 == 0)
-				time -= time * sc->data[SC_MAGICMUSHROOM]->val2 / 100;
+				delay += sc->data[SC_MAGICMUSHROOM]->val2;
 		}
 	}
 
 	if (!(delaynodex&4) && bl->type == BL_PC) {
 		map_session_data* sd = (map_session_data*)bl;
 
-		if (sd->delayrate != 100) // bonus bDelayRate
-			time += time * sd->delayrate / 100;
+		if (sd->bonus.delayrate != 0) // bonus bDelayRate
+			delay += sd->bonus.delayrate;
 
 		for (auto &it : sd->skilldelay) { // bonus2 bSkillDelay
 			if (it.id == skill_id) {
@@ -17395,12 +17397,15 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		}
 	}
 
+	if (delay != 0)
+		time = time * (1 - (float)min(delay, 100) / 100);
+
 	if (battle_config.delay_rate != 100)
 		time = time * battle_config.delay_rate / 100;
 
-	//ShowInfo("Delay delayfix = %d\n",time);
+	//ShowInfo("Delay delayfix = %f\n",time);
 
-	return max(time,0);
+	return max((int)time,0);
 }
 
 

@@ -5,8 +5,8 @@
 DROP TABLE IF EXISTS `item_db2_re`;
 CREATE TABLE `item_db2_re` (
   `id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name_aegis` varchar(50) NOT NULL DEFAULT '',
-  `name_english` varchar(100) NOT NULL DEFAULT '',
+  `name_aegis` varchar(50) DEFAULT NULL,
+  `name_english` varchar(100) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
   `subtype` varchar(20) DEFAULT NULL,
   `price_buy` mediumint(8) unsigned DEFAULT NULL,
