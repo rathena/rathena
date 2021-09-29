@@ -19,7 +19,7 @@
 /// Collection DB
 struct s_collection_db {
 	t_itemid ConsumeID; ///< Consume ID
-	std::vector<uint32> MobID;
+	std::vector<uint16> MobID;
 	uint16 CaptureRate; ///< Capture success rate 10000 = 100%
 	uint16 GroupID;
 };
