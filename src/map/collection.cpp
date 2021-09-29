@@ -152,27 +152,6 @@ bool CollectionDatabase::reload(){
 CollectionDatabase collection_db;
 
 /**
- * Search monster collection database for given value and type.
- * @param key : value to search for
- * @param type : collection type to search for (Catch)
- * @return Collection DB pointer on success, NULL on failure
- */
-std::shared_ptr<s_collection_db> collection_db_search( int key, enum e_collection_itemtype type ){
-	for( auto &pair : collection_db ){
-		std::shared_ptr<s_collection_db> collection = pair.second;
-
-		switch(type) {
-			case COLLECTION_CATCH:		if(collection->ConsumeID == key) return collection; break;
-			default:
-				ShowError( "collection_db_search: Unsupported type %d\n", type );
-				return nullptr;
-		}
-	}
-
-	return nullptr;
-}
-
-/**
  * Display the success/failure roulette wheel when trying to catch monster.
  * @param sd : player requesting
  * @param target_class : monster ID of monster to catch
