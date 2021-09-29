@@ -32,7 +32,7 @@ enum e_collection_catch : uint16 {
 	COLLECTION_CATCH_UNIVERSAL_ITEM = 2,
 };
 
-class CollectionDatabase : public TypesafeYamlDatabase<uint16,s_collection_db>{
+class CollectionDatabase : public TypesafeYamlDatabase<t_itemid,s_collection_db>{
 public:
 	CollectionDatabase() : TypesafeYamlDatabase( "COLLECTION_DB", 1 ){
 
@@ -43,7 +43,6 @@ public:
 	bool reload();
 };
 
-extern CollectionDatabase collection_db;
 
 std::shared_ptr<s_collection_db> collection_db_search(int key, enum e_collection_itemtype type);
 int collection_catch_process1(struct map_session_data *sd, t_itemid item_id);
