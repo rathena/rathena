@@ -53,7 +53,7 @@ uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if (!exists) {
 		// Check mandatory nodes
-		if (!this->nodesExist(node, { "ConsumeItem", "Target", "RewardItemGroup" })) {
+		if (!this->nodesExist(node, { "Target", "RewardItemGroup" })) {
 			return 0;
 		}
 
@@ -84,10 +84,6 @@ uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
 				collection->MobID.push_back(mob_id);
 			else
 				util::vector_erase_if_exists(collection->MobID, mob_id);
-		}
-	} else {
-		if (!exists) {
-			collection->MobID = {};
 		}
 	}
 
@@ -129,10 +125,6 @@ uint64 CollectionDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		collection->GroupID = static_cast<uint16>(constant);
-	} else {
-		if (!exists) {
-			collection->GroupID = 0;
-		}
 	}
 
 	if (!exists) {
@@ -175,14 +167,11 @@ int collection_catch_process1(struct map_session_data *sd, t_itemid item_id)
  */
 int collection_catch_process2(struct map_session_data* sd, uint32 target_id)
 {
-	struct mob_data* md;
-	int collection_catch_rate = 0;
-
 	nullpo_retr(1, sd);
 
 	std::shared_ptr<s_collection_db> collection = collection_db.find(sd->catch_collection_class);
 
-	md = (struct mob_data*)map_id2bl(target_id);
+	struct mob_data* md = (struct mob_data*)map_id2bl(target_id);
 
 	if (!md || md->bl.type != BL_MOB || md->bl.prev == NULL) {	// Invalid inputs/state, abort capture
 		clif_collection_roulette(sd, 0);
@@ -219,7 +208,7 @@ int collection_catch_process2(struct map_session_data* sd, uint32 target_id)
 	}
 
 	// Is it should use the same formula as monster catch rate?
-	collection_catch_rate = (collection->CaptureRate+ (sd->status.base_level - md->level)*30 + sd->battle_status.luk*20)*(200 - get_percentage(md->status.hp, md->status.max_hp))/100;
+	int collection_catch_rate = (collection->CaptureRate+ (sd->status.base_level - md->level)*30 + sd->battle_status.luk*20)*(200 - get_percentage(md->status.hp, md->status.max_hp))/100;
 
 	if(collection_catch_rate < 1)
 		collection_catch_rate = 1;
