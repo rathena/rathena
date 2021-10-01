@@ -10989,6 +10989,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
 	}
 
 	// On armor change
