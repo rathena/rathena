@@ -1042,6 +1042,12 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
 					if (dmg_ori > hp)
 						dmg_new = dmg_ori - hp;
 				}
+				if (sd->bonus.absorb_dmg_maxhp2) {
+					int hp = sd->bonus.absorb_dmg_maxhp2 * status_get_max_hp(bl) / 100;
+					if (dmg_ori > hp) {
+						dmg_new = hp;
+					}
+				}
 			}
 			break;
 	}

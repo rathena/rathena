@@ -3758,6 +3758,9 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_ABSORB_DMG_MAXHP: // bonus bAbsorbDmgMaxHP,n;
 			sd->bonus.absorb_dmg_maxhp = max(sd->bonus.absorb_dmg_maxhp, val);
 			break;
+		case SP_ABSORB_DMG_MAXHP2:
+			sd->bonus.absorb_dmg_maxhp2 = max(sd->bonus.absorb_dmg_maxhp2, val);
+			break;
 		case SP_CRITICAL_RANGEATK: // bonus bCriticalLong,n;
 			if (sd->state.lr_flag != 2)
 				sd->bonus.critical_rangeatk += val*10;
