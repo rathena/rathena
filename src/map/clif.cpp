@@ -873,7 +873,7 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 	p.count = fitem->item.amount;
 #if defined(PACKETVER_ZERO) || PACKETVER >= 20180418
 	if( canShowEffect ){
-		uint8 dropEffect = itemdb_dropeffect(fitem->item.nameid);
+		uint8 dropEffect = itemdb_dropeffect( fitem->item.nameid );
 
 		if( dropEffect > 0 ){
 			p.showdropeffect = 1;
@@ -889,15 +889,22 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 
 			if (optionCount > 0) {
 				p.showdropeffect = 1;
-				p.dropeffectmode = (optionCount == 1 ? DROPEFFECT_BLUE_PILLAR : optionCount == 2 ? DROPEFFECT_YELLOW_PILLAR : optionCount >= 3 ? DROPEFFECT_PURPLE_PILLAR : DROPEFFECT_NONE) - 1;
+				if (optionCount == 1)
+					p.showdropeffect = DROPEFFECT_BLUE_PILLAR - 1;
+				else if (optionCount == 2)
+					p.showdropeffect = DROPEFFECT_YELLOW_PILLAR - 1;
+				else if (optionCount >= 3 && optionCount <= MAX_ITEM_RDM_OPT)
+					p.showdropeffect = DROPEFFECT_PURPLE_PILLAR - 1;
+				else
+					p.showdropeffect = DROPEFFECT_NONE;
 			} else {
 				p.showdropeffect = 0;
-				p.dropeffectmode = 0;
+				p.dropeffectmode = DROPEFFECT_NONE;
 			}
 		}
 	}else{
 		p.showdropeffect = 0;
-		p.dropeffectmode = 0;
+		p.dropeffectmode = DROPEFFECT_NONE;
 	}
 #endif
 	clif_send( &p, sizeof(p), &fitem->bl, AREA );
