@@ -17870,7 +17870,7 @@ int skill_clear_group(block_list *bl, uint8 flag)
 		return 0;
 
 	size_t count = 0;
-	bool deleted;
+	bool deleted = false;
 
 	// The after loop statement might look stupid, but this prevents iteration problems, if an entry was deleted
 	for (auto it = ud->skillunits.begin(); it != ud->skillunits.end(); (deleted ? it = ud->skillunits.begin() : it++), deleted = false) {
