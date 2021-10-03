@@ -102,7 +102,13 @@ enum e_inventory_type{
 	INVTYPE_INVENTORY = 0,
 	INVTYPE_CART = 1,
 	INVTYPE_STORAGE = 2,
-	INVTYPE_GUILD_STORAGE = 3,
+	INVTYPE_GUILD_STORAGE = 3
+};
+
+enum e_siege_teleport_result {
+	SIEGE_TP_SUCCESS = 0,
+	SIEGE_TP_NOT_ENOUGH_ZENY = 1,
+	SIEGE_TP_INVALID_MODE = 2
 };
 
 /** Converts item type to display it on client if necessary.
@@ -3206,6 +3212,125 @@ void clif_guild_xy_remove(struct map_session_data *sd)
 	WBUFW(buf,6)=-1;
 	WBUFW(buf,8)=-1;
 	clif_send(buf,packet_len(0x1eb),&sd->bl,GUILD_SAMEMAP_WOS);
+}
+
+void clif_guild_castle_list(struct map_session_data* sd)
+{
+#if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
+	nullpo_retv(sd);
+
+	struct guild* g = sd->guild;
+	if (g == NULL)
+		return;
+
+	int castle_count = guild_checkcastles(g);
+
+	if (castle_count > 0) {
+		int len = sizeof(struct PACKET_ZC_GUILD_CASTLE_LIST) + castle_count;
+		struct PACKET_ZC_GUILD_CASTLE_LIST* p = (struct PACKET_ZC_GUILD_CASTLE_LIST*)packet_buffer;
+		p->packetType = HEADER_ZC_GUILD_CASTLE_LIST;
+		p->packetLength = len;
+
+		int i = 0;
+		for (const auto& gc : castle_db) {
+			if (gc.second->guild_id == g->guild_id) {
+				p->castle_list[i] = gc.second->castle_id;
+				++i;
+			}
+		}
+
+		clif_send(p, len, &sd->bl, SELF);
+	}
+#endif
+}
+
+void clif_guild_castleinfo(struct map_session_data* sd, int castle_id, int economy, int defense)
+{
+#if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
+
+	nullpo_retv(sd);
+
+	struct PACKET_ZC_CASTLE_INFO p;
+	p.packetType = HEADER_ZC_CASTLE_INFO;
+	p.castle_id = castle_id;
+	p.economy = economy;
+	p.defense = defense;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
+#endif
+}
+
+static void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_siege_teleport_result result)
+{
+#if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
+
+	nullpo_retv(sd);
+
+	struct PACKET_ZC_CASTLE_TELEPORT_RESPONSE p;
+	p.packetType = HEADER_ZC_CASTLE_TELEPORT_RESPONSE;
+	p.result = (int16)result;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
+#endif
+}
+
+static void clif_parse_guild_castle_info_request(int fd, struct map_session_data* sd)
+{
+#if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
+	const struct PACKET_CZ_CASTLE_INFO_REQUEST* p = (struct PACKET_CZ_CASTLE_INFO_REQUEST*)RFIFOP(fd, 0);
+	struct guild* g = sd->guild;
+
+	if (g == NULL)
+		return;
+
+	std::shared_ptr<guild_castle> gc = castle_db.find(p->castle_id);
+	if (gc == NULL)
+		return;
+	if (gc->guild_id != g->guild_id)
+		return;
+	clif_guild_castleinfo(sd, gc->castle_id, gc->economy, gc->defense);
+#endif
+}
+
+void clif_parse_guild_castle_teleport_request(int fd, struct map_session_data* sd)
+{
+#if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
+	const struct PACKET_CZ_CASTLE_TELEPORT_REQUEST* p = (struct PACKET_CZ_CASTLE_TELEPORT_REQUEST*)RFIFOP(fd, 0);
+	struct guild* g = sd->guild;
+
+	if (g == NULL)
+		return;
+
+	std::shared_ptr<guild_castle> gc = castle_db.find(p->castle_id);
+
+	if (gc == NULL)
+		return;
+	if (gc->enable_client_warp == false)
+		return;
+	if (gc->guild_id != g->guild_id)
+		return;
+
+	if (map_getmapflag(sd->bl.m, MF_GVG_CASTLE))
+		return;
+
+	int zeny = gc->zeny;
+	if (gc->siege_type == SIEGE_TYPE_FE && agit_flag) {
+		zeny = gc->zeny_siege;
+	}
+	else if (gc->siege_type == SIEGE_TYPE_SE && agit2_flag) {
+		zeny = gc->zeny_siege;
+	}
+	else if (gc->siege_type == SIEGE_TYPE_TE) {
+		clif_guild_castle_teleport_res(sd, SIEGE_TP_INVALID_MODE);
+		return;
+	}
+
+	if (sd->status.zeny < zeny) {
+		clif_guild_castle_teleport_res(sd, SIEGE_TP_NOT_ENOUGH_ZENY);
+		return;
+	}
+	sd->status.zeny -= zeny;
+	clif_updatestatus(sd, SP_ZENY);
+	pc_setpos(sd, gc->mapindex, gc->warp_x, gc->warp_y, CLR_OUTSIGHT);
+#endif
 }
 
 /*==========================================
@@ -13870,6 +13995,7 @@ void clif_parse_GuildRequestInfo(int fd, struct map_session_data *sd)
 	case 0:	// Basic Information Guild, hostile alliance information
 		clif_guild_basicinfo(sd);
 		clif_guild_allianceinfo(sd);
+		clif_guild_castle_list(sd);
 		break;
 	case 1:	// Members list, list job title
 		clif_guild_positionnamelist(sd);

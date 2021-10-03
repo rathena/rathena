@@ -4224,6 +4224,12 @@
 	export_constant(QMARK_GREEN);
 	export_constant(QMARK_PURPLE);
 
+	/* Types of Siege (WoE) */
+	export_constant(SIEGE_TYPE_FE);
+	export_constant(SIEGE_TYPE_SE);
+	export_constant(SIEGE_TYPE_TE);
+	export_constant(SIEGE_TYPE_MAX);
+
 	/* font weight types */
 	export_constant(FW_DONTCARE);
 	export_constant(FW_THIN);

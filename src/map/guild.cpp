@@ -330,6 +330,77 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
+	if (this->nodeExists(node, "SiegeType")) {
+		std::string siege_type;
+
+		if (!this->asString(node, "SiegeType", siege_type))
+			return 0;
+
+		std::string type_constant = "SIEGE_TYPE_" + siege_type;
+		int64 constant;
+
+		if (!script_get_constant(type_constant.c_str(), &constant)) {
+			this->invalidWarning(node["SiegeType"], "SiegeType %s doesn't exist, skipping.\n", type_constant.c_str());
+			return 0;
+		}
+
+		gc->siege_type = static_cast<e_siege_type>(constant);
+	}
+
+	if (this->nodeExists(node, "EnableClientWarp")) {
+		bool enable_client_warp;
+
+		if (!this->asBool(node, "EnableClientWarp", enable_client_warp))
+			return 0;
+
+		gc->enable_client_warp = enable_client_warp;
+	}
+	else {
+		if (!exists)
+			gc->enable_client_warp = true;
+	}
+
+	if (this->nodeExists(node, "WarpX")) {
+		uint16 warp_x;
+
+		if (!this->asUInt16(node, "WarpX", warp_x))
+			gc->warp_x = 0;
+
+		gc->warp_x = warp_x;
+	}
+
+	if (this->nodeExists(node, "WarpY")) {
+		uint16 warp_y;
+
+		if (!this->asUInt16(node, "WarpY", warp_y))
+			gc->warp_y = 0;
+
+		gc->warp_y = warp_y;
+	}
+
+	if (this->nodeExists(node, "WarpCost")) {
+		uint16 zeny;
+
+		if (!this->asUInt16(node, "WarpCost", zeny))
+			gc->zeny = 100;
+
+		gc->zeny = zeny;
+	} else {
+		gc->zeny = 100;
+	}
+
+	if (this->nodeExists(node, "WarpCostSiege")) {
+		uint16 zeny_siege;
+
+		if (!this->asUInt16(node, "WarpCostSiege", zeny_siege))
+			gc->zeny_siege = 100000;
+
+		gc->zeny_siege = zeny_siege;
+	}
+	else {
+		gc->zeny_siege = 100000;
+	}
+
 	if (!exists)
 		this->put(castle_id, gc);
 
