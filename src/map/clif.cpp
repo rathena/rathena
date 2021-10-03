@@ -105,12 +105,6 @@ enum e_inventory_type{
 	INVTYPE_GUILD_STORAGE = 3
 };
 
-enum e_siege_teleport_result {
-	SIEGE_TP_SUCCESS = 0,
-	SIEGE_TP_NOT_ENOUGH_ZENY = 1,
-	SIEGE_TP_INVALID_MODE = 2
-};
-
 /** Converts item type to display it on client if necessary.
 * @param nameid: Item ID
 * @return item type. For IT_PETEGG will be displayed as IT_ARMOR. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR

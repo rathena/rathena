@@ -578,6 +578,12 @@ enum e_memorial_dungeon_command : uint16 {
 	COMMAND_MEMORIALDUNGEON_DESTROY_FORCE = 0x3,
 };
 
+enum e_siege_teleport_result : uint8 {
+	SIEGE_TP_SUCCESS = 0,
+	SIEGE_TP_NOT_ENOUGH_ZENY = 1,
+	SIEGE_TP_INVALID_MODE = 2
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
