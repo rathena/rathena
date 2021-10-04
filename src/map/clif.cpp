@@ -890,11 +890,11 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 			if (optionCount > 0) {
 				p.showdropeffect = 1;
 				if (optionCount == 1)
-					p.showdropeffect = DROPEFFECT_BLUE_PILLAR - 1;
+					p.dropeffectmode = DROPEFFECT_BLUE_PILLAR - 1;
 				else if (optionCount == 2)
-					p.showdropeffect = DROPEFFECT_YELLOW_PILLAR - 1;
+					p.dropeffectmode = DROPEFFECT_YELLOW_PILLAR - 1;
 				else
-					p.showdropeffect = DROPEFFECT_PURPLE_PILLAR - 1;
+					p.dropeffectmode = DROPEFFECT_PURPLE_PILLAR - 1;
 			} else {
 				p.showdropeffect = 0;
 				p.dropeffectmode = DROPEFFECT_NONE;
