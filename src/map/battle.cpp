@@ -634,7 +634,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int rh_ele, int lh_ele, int64 damage, int left, int flag){
 	struct map_session_data *sd, ///< Attacker session data if BL_PC
 		*tsd; ///< Target session data if BL_PC
-	short cardfix = 1000;
+	int cardfix = 1000;
 	int s_class, ///< Attacker class
 		t_class; ///< Target class
 	std::vector<e_race2> s_race2, /// Attacker Race2
