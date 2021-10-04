@@ -348,7 +348,7 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 	else {
 		if (!exists)
-			gc->enable_client_warp = SIEGE_TYPE_TE;
+			gc->siege_type = SIEGE_TYPE_TE;
 	}
 
 
