@@ -28,8 +28,8 @@
 #   Npc               NPC unique name to invoke ::OnGuildBreak on, when a occupied castle is abandoned during guild break.
 #   SiegeType         Siege type.
 #   EnableClientWarp  Toggle client teleport feature. (Default: true)
-#   WarpX             X position of warp request
-#   WarpY             Y position of warp request
+#   WarpX             X position of warp request. (Default: 0)
+#   WarpY             Y position of warp request. (Default: 0)
 #   WarpCost          The zeny cost using the client warp. (Default: 100)
 #   WarpCostSiege     The zeny cost using the client warp during WoE. (Default: 100000)
 ###########################################################################

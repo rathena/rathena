@@ -375,6 +375,10 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 
 		gc->warp_x = warp_x;
 	}
+	else {
+		if (!exists)
+			gc->warp_x = 0;
+	}
 
 	if (this->nodeExists(node, "WarpY")) {
 		uint16 warp_y;
@@ -385,6 +389,10 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		gc->warp_y = warp_y;
+	}
+	else {
+		if (!exists)
+			gc->warp_y = 0;
 	}
 
 	if (this->nodeExists(node, "WarpCost")) {
