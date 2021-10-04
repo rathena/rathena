@@ -2513,6 +2513,6 @@
 490033:400043,{ if (getequiprefinerycnt(EQI_HEAD_TOP) >= 9) bonus bVariableCastrate,-5; }
 490033:450131,{ if (getequiprefinerycnt(EQI_ARMOR) >= 9) bonus bMaxHPrate,8; }
 490122:490123,{ bonus bFixedCast,-200; if (BaseLevel >= 30) { bonus2 bAddClass,Class_All,1; bonus bAspdRate,2; } if (BaseLevel >= 45) { bonus2 bAddClass,Class_All,1; bonus bAspdRate,3; } if (BaseLevel >= 85) { bonus2 bAddClass,Class_All,1; bonus bAspdRate,5; } }
-490124:490125,{ bonus bFixedCast,-200; if (BaseLevel >= 30) { bonus bMatkRate,1; bonus bVariableCastrate,-2; } if (BaseLevel >= 45) { bonus bMatkRate,1; bonus bVariableCastrate,-3; } if (85 >= 120) { bonus bMatkRate,1; bonus bVariableCastrate,-5; } }
+490124:490125,{ bonus bFixedCast,-200; if (BaseLevel >= 30) { bonus bMatkRate,1; bonus bVariableCastrate,-2; } if (BaseLevel >= 45) { bonus bMatkRate,1; bonus bVariableCastrate,-3; } if (BaseLevel >= 85) { bonus bMatkRate,1; bonus bVariableCastrate,-5; } }
 490126:490127,{ bonus bFixedCast,-200; bonus bAspdRate,10; if (BaseLevel >= 105) { bonus2 bAddClass,Class_All,2; } if (BaseLevel >= 110) { bonus bShortAtkRate,5; bonus bLongAtkRate,5; } if (BaseLevel >= 120) { bonus bCritAtkRate,5; } }
 490128:490129,{ bonus bFixedCast,-200; bonus bVariableCastrate,-10; if (BaseLevel >= 105) { bonus bMatkRate,2; } if (BaseLevel >= 110) { bonus2 bMagicAtkEle,Ele_All,5; } if (BaseLevel >= 120) { bonus2 bMagicAddEle,Ele_All,5; } }
