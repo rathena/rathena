@@ -132046,7 +132046,7 @@ Body:
          bonus bLongAtkRate,4;
       }
       if (BaseLevel>=85)
-         bonus bFixedCastrate,-300;
+         bonus bFixedCast,-300;
   - Id: 470068
     AegisName: 1Para_Boots_B
     Name: Paradise Shoes
@@ -132080,6 +132080,7 @@ Body:
     Defense: 14
     Locations:
       Shoes: true
+    EquipLevelMin: 100
     Trade:
       Override: 100
       NoDrop: true
@@ -132093,9 +132094,9 @@ Body:
       bonus bShortAtkRate,10;
       bonus bLongAtkRate,10;
       bonus bFixedCast,-300;
+      .@l = BaseLevel;
       bonus bMaxHP,50*(min(.@l,150)/10);
       bonus bMaxSP,20*(min(.@l,150)/10);
-      .@l = BaseLevel;
       if (.@l>=105)
          bonus bCritical,15;
       if (.@l>=110)
@@ -132174,7 +132175,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bMagicAtkEle,Ele_All,10;
-      bonus bFixedCastrate,-300;
+      bonus bFixedCast,-300;
       bonus bMaxHP,40*(min(BaseLevel,150)/10);
       bonus bMaxSP,30*(min(BaseLevel,150)/10);
       if (BaseLevel>=105)
@@ -133738,7 +133739,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddClass,Class_All,2;
+      bonus2 bAddClass,Class_All,3;
       bonus bNoCastCancel;
   - Id: 490127
     AegisName: L_60Lv_Gloves
@@ -134288,6 +134289,7 @@ Body:
     Type: Weapon
     SubType: 1hSword
     Attack: 100
+    Range: 1
     Jobs:
       Alchemist: true
       Assassin: true
@@ -134325,6 +134327,7 @@ Body:
     SubType: 1hSword
     Attack: 160
     MagicAttack: 160
+    Range: 1
     Jobs:
       Crusader: true
     Locations:
@@ -134354,6 +134357,7 @@ Body:
     Type: Weapon
     SubType: 1hSword
     Attack: 160
+    Range: 1
     Jobs:
       Alchemist: true
     Locations:
@@ -134383,6 +134387,7 @@ Body:
     Type: Weapon
     SubType: 1hSword
     Attack: 160
+    Range: 1
     Jobs:
       Novice: true
       SuperNovice: true
@@ -134413,6 +134418,7 @@ Body:
     Type: Weapon
     SubType: 1hSword
     Attack: 160
+    Range: 1
     Jobs:
       Crusader: true
     Classes:
@@ -134442,7 +134448,7 @@ Body:
          bonus2 bSkillAtk,"PA_PRESSURE",25;
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",25;
          if (.@l>=110) {
-            bonus2 bMagicAddClass,Class_All,15;
+            bonus2 bMagicAddSize,Size_All,15;
             bonus2 bMagicAtkEle,Ele_Neutral,15;
             bonus2 bMagicAtkEle,Ele_Holy,15;
             if (.@l>=115) {
@@ -134457,6 +134463,7 @@ Body:
     Type: Weapon
     SubType: 1hSword
     Attack: 180
+    Range: 1
     Jobs:
       Alchemist: true
     Classes:
@@ -134480,11 +134487,11 @@ Body:
       bonus bShortAtkRate,2*.@a;
       bonus2 bAddClass,Class_ALL,5*.@a;
       if (.@l>=105) {
-         bonus bDelayrate,5;
+         bonus bDelayrate,-5;
          bonus2 bSkillAtk,"GN_HELLS_PLANT",25;
          bonus2 bSkillAtk,"GN_CART_TORNADO",25;
          if (.@l>=110) {
-            bonus bDelayrate,10;
+            bonus bDelayrate,-10;
             bonus2 bAddSize,Size_ALL,15;
             if (.@l>=115) {
                bonus2 bSkillAtk,"GN_HELLS_PLANT",15;
@@ -134913,6 +134920,7 @@ Body:
     Type: Weapon
     SubType: Dagger
     Attack: 100
+    Range: 1
     Jobs:
       Alchemist: true
       Archer: true
@@ -134969,6 +134977,7 @@ Body:
     Type: Weapon
     SubType: Dagger
     Attack: 160
+    Range: 1
     Jobs:
       Rogue: true
     Locations:
@@ -134998,6 +135007,7 @@ Body:
     Type: Weapon
     SubType: Dagger
     Attack: 160
+    Range: 1
     Jobs:
       SoulLinker: true
     Locations:
@@ -135027,15 +135037,11 @@ Body:
     Type: Weapon
     SubType: Dagger
     Attack: 180
+    Range: 1
     Jobs:
-      All: true
-      Rogue: false
+      Rogue: true
     Classes:
-      Normal: true
-      Upper: true
-      Baby: true
-      Third: true
-      Third_Upper: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -135058,6 +135064,7 @@ Body:
       bonus2 bAddClass,Class_ALL,3;
       if (.@l>=105) {
          bonus2 bSkillAtk,"SC_FATALMENACE",25;
+         bonus bAspd,1;
          if (.@l>=110) {
             bonus bShortAtkRate,15;
             bonus2 bAddSize,Size_ALL,15;
@@ -135075,14 +135082,9 @@ Body:
     Type: Weapon
     SubType: Dagger
     Attack: 180
+    Range: 1
     Jobs:
       SuperNovice: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
-      Third: true
-      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -135214,6 +135216,7 @@ Body:
     Type: Weapon
     SubType: 1hAxe
     Attack: 100
+    Range: 1
     Jobs:
       Alchemist: true
       Blacksmith: true
@@ -135245,6 +135248,7 @@ Body:
     Type: Weapon
     SubType: 1hAxe
     Attack: 160
+    Range: 1
     Jobs:
       Blacksmith: true
     Locations:
@@ -135274,13 +135278,11 @@ Body:
     Type: Weapon
     SubType: 1hAxe
     Attack: 250
+    Range: 1
     Jobs:
-      Alchemist: true
       Blacksmith: true
-      Merchant: true
     Classes:
-      Upper: true
-      Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -135544,6 +135546,7 @@ Body:
     Type: Weapon
     SubType: 1hSpear
     Attack: 160
+    Range: 3
     Jobs:
       Crusader: true
     Locations:
@@ -135573,6 +135576,7 @@ Body:
     Type: Weapon
     SubType: 1hSpear
     Attack: 180
+    Range: 3
     Jobs:
       Crusader: true
     Classes:
@@ -136036,7 +136040,9 @@ Body:
     Name: Paradise Sage Magic Book
     Type: Weapon
     SubType: Book
-    Attack: 160
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
     Jobs:
       Sage: true
     Locations:
@@ -136067,6 +136073,7 @@ Body:
     SubType: Book
     Attack: 100
     MagicAttack: 160
+    Range: 1
     Jobs:
       Sage: true
     Locations:
@@ -136100,6 +136107,7 @@ Body:
     Type: Weapon
     SubType: Book
     Attack: 160
+    Range: 1
     Jobs:
       StarGladiator: true
     Locations:
@@ -136133,6 +136141,7 @@ Body:
     Type: Weapon
     SubType: Book
     Attack: 160
+    Range: 1
     Jobs:
       StarGladiator: true
     Locations:
@@ -136162,10 +136171,11 @@ Body:
       }
   - Id: 540031
     AegisName: 3Para_Book1_SO
-    Name: Paradise Sorceror Magic Book
+    Name: Paradise Sorcerer Magic Book
     Type: Weapon
     SubType: Book
     Attack: 150
+    Range: 1
     Jobs:
       Sage: true
     Classes:
@@ -136214,10 +136224,11 @@ Body:
       }
   - Id: 540032
     AegisName: 3Para_Book2_SO
-    Name: Paradise Sorceror Spell Book
+    Name: Paradise Sorcerer Spell Book
     Type: Weapon
     SubType: Book
-    Attack: 180
+    Attack: 150
+    Range: 1
     Jobs:
       Sage: true
     Classes:
@@ -136272,6 +136283,7 @@ Body:
     Type: Weapon
     SubType: Book
     Attack: 180
+    Range: 1
     Jobs:
       StarGladiator: true
     Classes:
@@ -136299,7 +136311,7 @@ Body:
          bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
          bonus2 bSkillAtk,"SJ_SOLARBURST",25;
          if (.@l>=110) {
-            bonus2 bAddClass,Class_ALL,10;
+            bonus bShortAtkRate,10;
             bonus2 bAddSize,Size_ALL,15;
             if (.@l>=115) {
                bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
@@ -136313,6 +136325,7 @@ Body:
     Type: Weapon
     SubType: Book
     Attack: 180
+    Range: 1
     Jobs:
       StarGladiator: true
     Classes:
@@ -136340,7 +136353,7 @@ Body:
          bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
          bonus2 bSkillAtk,"SJ_SOLARBURST",25;
          if (.@l>=110) {
-            bonus2 bAddClass,Class_ALL,10;
+            bonus bShortAtkRate,10;
             bonus2 bAddSize,Size_ALL,15;
             if (.@l>=115) {
                bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
@@ -137063,6 +137076,15 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 60
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -137091,36 +137113,9 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 100
+    Range: 1
     Jobs:
-      All: true
-      Acolyte: false
-      Alchemist: false
-      Archer: false
-      Assassin: false
-      BardDancer: false
-      Blacksmith: false
-      Crusader: false
-      Gunslinger: false
-      Hunter: false
-      KagerouOboro: false
-      Knight: false
-      Mage: false
-      Merchant: false
-      Monk: false
-      Ninja: false
-      Novice: false
-      Priest: false
-      Rebellion: false
-      Rogue: false
-      Sage: false
-      SoulLinker: false
-      StarGladiator: false
-      Summoner: false
-      SuperNovice: false
-      Swordman: false
-      Taekwon: false
-      Thief: false
-      Wizard: false
+      Summoner: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -137156,6 +137151,7 @@ Body:
     SubType: Staff
     Attack: 100
     MagicAttack: 160
+    Range: 1
     Jobs:
       Wizard: true
     Locations:
@@ -137190,6 +137186,7 @@ Body:
     SubType: Staff
     Attack: 100
     MagicAttack: 160
+    Range: 1
     Jobs:
       Wizard: true
     Locations:
@@ -137220,6 +137217,7 @@ Body:
     SubType: Staff
     Attack: 100
     MagicAttack: 160
+    Range: 1
     Jobs:
       Priest: true
     Locations:
@@ -137250,6 +137248,7 @@ Body:
     SubType: Staff
     Attack: 100
     MagicAttack: 160
+    Range: 1
     Jobs:
       SoulLinker: true
     Locations:
@@ -137279,6 +137278,7 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 160
+    Range: 1
     Jobs:
       Summoner: true
     Locations:
@@ -137309,6 +137309,7 @@ Body:
     SubType: Staff
     Attack: 100
     MagicAttack: 160
+    Range: 1
     Jobs:
       Summoner: true
     Locations:
@@ -137339,6 +137340,7 @@ Body:
     SubType: Staff
     Attack: 100
     MagicAttack: 160
+    Range: 1
     Jobs:
       Novice: true
       SuperNovice: true
@@ -137375,6 +137377,7 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 150
+    Range: 1
     Jobs:
       Priest: true
     Classes:
@@ -137415,38 +137418,9 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 300
+    Range: 1
     Jobs:
-      All: true
-      Acolyte: false
-      Alchemist: false
-      Archer: false
-      Assassin: false
-      BardDancer: false
-      Blacksmith: false
-      Crusader: false
-      Gunslinger: false
-      Hunter: false
-      KagerouOboro: false
-      Knight: false
-      Mage: false
-      Merchant: false
-      Monk: false
-      Ninja: false
-      Novice: false
-      Priest: false
-      Rebellion: false
-      Rogue: false
-      Sage: false
-      SoulLinker: false
-      StarGladiator: false
-      Summoner: false
-      SuperNovice: false
-      Swordman: false
-      Taekwon: false
-      Thief: false
-      Wizard: false
-    Classes:
-      All_Third: true
+      Summoner: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -137485,10 +137459,9 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 150
+    Range: 1
     Jobs:
-      Priest: true
-    Classes:
-      All_Third: true
+      Summoner: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -137510,13 +137483,15 @@ Body:
       bonus bUnbreakableWeapon;
       bonus bVariableCastrate,-2*.@a;
       if (.@l>=105) {
-         bonus bAspdRate,10;
-         bonus2 bSkillAtk,"SU_PICKYPECK",25;
-         bonus2 bSkillAtk,"SU_SVG_SPIRIT",25;
+         bonus2 bSkillCooldown,"SU_CN_METEOR",-1500;
+         bonus2 bSkillAtk,"SU_CN_METEOR",25;
          if (.@l>=110) {
-            bonus2 bSkillCooldown,"SU_CN_METEOR",-1500;
-            bonus2 bSkillAtk,"SU_SV_STEMSPEAR",25;
-            bonus2 bSkillAtk,"SU_CN_METEOR",25;
+            bonus2 bMagicAddSize,Size_All,15;
+            bonus2 bMagicAtkEle,Ele_Ghost,10;
+            bonus2 bMagicAtkEle,Ele_Fire,10;
+            bonus2 bMagicAtkEle,Ele_Earth,10;
+            bonus2 bMagicAtkEle,Ele_Water,10;
+            bonus2 bMagicAtkEle,Ele_Wind,10;
             if (.@l>=115) {
                bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15;
                bonus2 bSkillAtk,"SU_CN_METEOR",15;
@@ -137529,6 +137504,8 @@ Body:
     Type: Weapon
     SubType: Staff
     Attack: 100
+    Range: 1
+    Slots: 1
     Jobs:
       SuperNovice: true
     Locations:
@@ -137902,6 +137879,7 @@ Body:
     Type: Weapon
     SubType: Knuckle
     Attack: 160
+    Range: 1
     Jobs:
       Monk: true
     Locations:
@@ -137931,6 +137909,7 @@ Body:
     Type: Weapon
     SubType: Knuckle
     Attack: 160
+    Range: 1
     Jobs:
       Monk: true
     Locations:
@@ -137958,7 +137937,9 @@ Body:
     AegisName: 3Para_Knuckle_SR
     Name: Paradise Sura Knuckle
     Type: Weapon
+    SubType: Knuckle
     Attack: 180
+    Range: 1
     Jobs:
       Monk: true
     Classes:
@@ -137997,7 +137978,9 @@ Body:
     AegisName: 3Para_Claw_SR
     Name: Paradise Sura Claw
     Type: Weapon
+    SubType: Knuckle
     Attack: 180
+    Range: 1
     Jobs:
       Monk: true
     Classes:
@@ -138335,6 +138318,7 @@ Body:
     Type: Weapon
     SubType: Musical
     Attack: 160
+    Range: 1
     Jobs:
       BardDancer: true
     Gender: Male
@@ -138365,6 +138349,7 @@ Body:
     Type: Weapon
     SubType: Musical
     Attack: 180
+    Range: 1
     Jobs:
       BardDancer: true
     Classes:
@@ -138404,6 +138389,7 @@ Body:
     SubType: Musical
     Attack: 150
     MagicAttack: 180
+    Range: 1
     Jobs:
       BardDancer: true
     Classes:
@@ -138787,6 +138773,7 @@ Body:
     Type: Weapon
     SubType: Whip
     Attack: 160
+    Range: 2
     Jobs:
       BardDancer: true
     Gender: Female
@@ -138817,6 +138804,7 @@ Body:
     Type: Weapon
     SubType: Whip
     Attack: 180
+    Range: 2
     Jobs:
       BardDancer: true
     Classes:
@@ -138856,6 +138844,7 @@ Body:
     SubType: Whip
     Attack: 150
     MagicAttack: 180
+    Range: 2
     Jobs:
       BardDancer: true
     Classes:
@@ -139362,6 +139351,7 @@ Body:
     Type: Weapon
     SubType: Mace
     Attack: 100
+    Range: 1
     Jobs:
       Alchemist: true
       Blacksmith: true
@@ -139398,6 +139388,7 @@ Body:
     Type: Weapon
     SubType: Mace
     Attack: 160
+    Range: 1
     Jobs:
       Alchemist: true
     Locations:
@@ -139427,6 +139418,7 @@ Body:
     Type: Weapon
     SubType: Mace
     Attack: 160
+    Range: 1
     Jobs:
       Priest: true
     Locations:
@@ -139447,15 +139439,16 @@ Body:
       if (BaseLevel>=60)
          bonus bAspdRate,10;
       if (BaseLevel>=75)
-         bonus bCriticalRate,5;
+         bonus bCritAtkRate,5;
       if (BaseLevel>=90)
-         bonus bCriticalRate,10;
+         bonus bCritAtkRate,10;
   - Id: 590028
     AegisName: 3Para_Mace_GN
     Name: Paradise Genetic Mace
     Type: Weapon
     SubType: Mace
     Attack: 180
+    Range: 1
     Jobs:
       Alchemist: true
     Classes:
@@ -139495,6 +139488,7 @@ Body:
     SubType: Mace
     Attack: 180
     MagicAttack: 180
+    Range: 1
     Jobs:
       Priest: true
     Classes:
@@ -139524,8 +139518,8 @@ Body:
          bonus2 bSkillAtk,"AB_JUDEX",25;
          bonus2 bSkillAtk,"AB_DUPLELIGHT",25;
          if (BaseLevel>=110) {
-            bonus2 bMagicAtkEle,Ele_Neutral,15;
-            bonus2 bMagicAtkEle,Ele_Holy,15;
+            bonus2 bMagicAtkEle,Ele_Neutral,20;
+            bonus2 bMagicAtkEle,Ele_Holy,20;
             bonus2 bAddSize,Size_All,15;
             bonus2 bMagicAddSize,Size_ALL,15;
             if (BaseLevel>=115) {
@@ -139812,10 +139806,11 @@ Body:
     Type: Weapon
     SubType: 2hSword
     Attack: 180
+    Range: 1
     Jobs:
       Knight: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -139841,6 +139836,7 @@ Body:
     Type: Weapon
     SubType: 2hSword
     Attack: 200
+    Range: 1
     Jobs:
       Knight: true
     Classes:
@@ -139863,7 +139859,7 @@ Body:
       bonus bCritical,15;
       bonus bAspdRate,1*.@a;
       if (BaseLevel>=105) {
-         bonus bCriticalRate,10;
+         bonus bCritAtkRate,10;
          bonus2 bSkillAtk,"RK_IGNITIONBREAK",25;
          bonus2 bSkillAtk,"RK_SONICWAVE",25;
          if (BaseLevel>=110) {
@@ -140182,12 +140178,12 @@ Body:
     Name: Paradise Assassin Chakram
     Type: Weapon
     SubType: Katar
-    Attack: 160
-    MagicAttack: 160
+    Attack: 180
+    Range: 1
     Jobs:
       Assassin: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -140204,19 +140200,20 @@ Body:
       if (BaseLevel>=60)
          bonus bAspdRate,10;
       if (BaseLevel>=75)
-         bonus bCriticalRate,5;
+         bonus bCritAtkRate,5;
       if (BaseLevel>=90)
-         bonus bCriticalRate,10;
+         bonus bCritAtkRate,10;
   - Id: 610025
     AegisName: 2Para_Katar2_AS
     Name: Paradise Assassin Katar
     Type: Weapon
     SubType: Katar
     Attack: 180
+    Range: 1
     Jobs:
       Assassin: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -140242,6 +140239,7 @@ Body:
     Type: Weapon
     SubType: Katar
     Attack: 200
+    Range: 1
     Jobs:
       Assassin: true
     Classes:
@@ -140282,12 +140280,13 @@ Body:
     Type: Weapon
     SubType: Katar
     Attack: 200
+    Range: 1
     Jobs:
       Assassin: true
     Classes:
       All_Third: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
     Trade:
@@ -140479,11 +140478,12 @@ Body:
     Type: Weapon
     SubType: 2hAxe
     Attack: 180
+    Range: 1
     Jobs:
       Blacksmith: true
       Crusader: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -140496,19 +140496,20 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bCritical,15;
+      bonus bCritical,10;
       if (BaseLevel>=60)
          bonus bShortAtkRate,10;
       if (BaseLevel>=75)
-         bonus bCriticalRate,5;
+         bonus bCritAtkRate,5;
       if (BaseLevel>=90)
-         bonus bCriticalRate,10;
+         bonus bCritAtkRate,10;
   - Id: 620012
     AegisName: 3Para_T_Axe_NC
     Name: Paradise Mechanic Two-Handed Axe
     Type: Weapon
     SubType: 2hAxe
     Attack: 250
+    Range: 1
     Jobs:
       Blacksmith: true
     Classes:
@@ -140735,10 +140736,11 @@ Body:
     Type: Weapon
     SubType: 2hSpear
     Attack: 180
+    Range: 3
     Jobs:
       Knight: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -140764,6 +140766,7 @@ Body:
     Type: Weapon
     SubType: 2hSpear
     Attack: 200
+    Range: 3
     Jobs:
       Knight: true
     Classes:
@@ -141157,6 +141160,7 @@ Body:
     SubType: 2hStaff
     Attack: 150
     MagicAttack: 200
+    Range: 1
     Jobs:
       Wizard: true
     Classes:
@@ -141201,6 +141205,7 @@ Body:
     SubType: 2hStaff
     Attack: 150
     MagicAttack: 200
+    Range: 1
     Jobs:
       Wizard: true
     Classes:
@@ -141245,6 +141250,7 @@ Body:
     SubType: 2hStaff
     Attack: 150
     MagicAttack: 200
+    Range: 1
     Jobs:
       SoulLinker: true
     Classes:
@@ -141287,6 +141293,7 @@ Body:
     SubType: 2hStaff
     Attack: 150
     MagicAttack: 200
+    Range: 1
     Jobs:
       SoulLinker: true
     Classes:
@@ -141310,13 +141317,13 @@ Body:
       bonus bMatkRate,5;
       bonus bVariableCastrate,-1*.@a;
       if (BaseLevel>=105) {
-         bonus2 bMagicAtkEle,Ele_Dark,10;
-         bonus2 bSkillAtk,"SP_SOULEXPLOSION",25;
+         bonus2 bMagicAtkEle,Ele_Dark,15;
+         bonus2 bSkillAtk,"SP_CURSEEXPLOSION",25;
          if (BaseLevel>=110) {
-            bonus2 bSkillCooldown,"SP_SOULEXPLOSION",-2000;
+            bonus2 bSkillCooldown,"SP_SOULCURSE",-2000;
             bonus2 bMagicAddSize,Size_ALL,15;
             if (BaseLevel>=115)
-               bonus2 bSkillAtk,"SP_SOULEXPLOSION",15;
+               bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15;
          }
       }
   - Id: 650003
@@ -141466,10 +141473,11 @@ Body:
     SubType: Huuma
     Attack: 100
     MagicAttack: 180
+    Range: 1
     Jobs:
       Ninja: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -141502,10 +141510,11 @@ Body:
     SubType: Huuma
     Attack: 100
     MagicAttack: 180
+    Range: 1
     Jobs:
       Ninja: true
     Locations:
-      Right_Hand: true
+      Both_Hand: true
     WeaponLevel: 3
     EquipLevelMin: 45
     Trade:
@@ -141532,6 +141541,7 @@ Body:
     SubType: Huuma
     Attack: 150
     MagicAttack: 200
+    Range: 1
     Jobs:
       KagerouOboro: true
     Locations:
@@ -141575,6 +141585,7 @@ Body:
     Type: Weapon
     SubType: Huuma
     Attack: 200
+    Range: 1
     Jobs:
       KagerouOboro: true
     Locations:
@@ -142180,6 +142191,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 100
+    Range: 5
     Jobs:
       Archer: true
     Locations:
@@ -142208,6 +142220,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 180
+    Range: 5
     Jobs:
       Rogue: true
     Locations:
@@ -142237,6 +142250,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 180
+    Range: 5
     Jobs:
       Hunter: true
     Locations:
@@ -142266,6 +142280,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 180
+    Range: 5
     Jobs:
       Hunter: true
     Locations:
@@ -142295,6 +142310,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 180
+    Range: 5
     Jobs:
       BardDancer: true
     Locations:
@@ -142324,6 +142340,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 200
+    Range: 5
     Jobs:
       Rogue: true
     Classes:
@@ -142353,8 +142370,8 @@ Body:
             bonus bDelayrate,-10;
             bonus2 bAddSize,Size_All,15;
             if (BaseLevel>=115) {
-               bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
-               bonus2 bSkillAtk,"SC_FEINTBOMB",15;
+               bonus2 bSkillAtk,"SC_TRIANGLESHOT",25;
+               bonus2 bSkillAtk,"SC_FEINTBOMB",25;
             }
          }
       }
@@ -142364,6 +142381,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 200
+    Range: 5
     Jobs:
       Hunter: true
     Classes:
@@ -142401,6 +142419,7 @@ Body:
     Type: Weapon
     SubType: Bow
     Attack: 200
+    Range: 5
     Jobs:
       Hunter: true
     Classes:
@@ -142528,6 +142547,7 @@ Body:
     Type: Weapon
     SubType: Revolver
     Attack: 60
+    Range: 7
     Jobs:
       Gunslinger: true
     Locations:
@@ -142556,6 +142576,7 @@ Body:
     Type: Weapon
     SubType: Revolver
     Attack: 180
+    Range: 7
     Jobs:
       Gunslinger: true
     Locations:
@@ -142585,6 +142606,7 @@ Body:
     Type: Weapon
     SubType: Revolver
     Attack: 200
+    Range: 7
     Jobs:
       Rebellion: true
     Locations:
@@ -142722,6 +142744,7 @@ Body:
     Type: Weapon
     SubType: Rifle
     Attack: 180
+    Range: 9
     Jobs:
       Gunslinger: true
     Locations:
@@ -142974,6 +142997,7 @@ Body:
     Type: Weapon
     SubType: Gatling
     Attack: 200
+    Range: 9
     Jobs:
       Rebellion: true
     Locations:

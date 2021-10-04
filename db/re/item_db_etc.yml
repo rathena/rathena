@@ -9540,7 +9540,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@rate = ((getrefine()>14)?7:5);
-      .@duration = ((getrefine()>14)?10000:15000);
+      .@duration = ((getrefine()>14)?10000:5000);
       bonus bMaxHPrate,.@rate;
       bonus bMaxSPrate,.@rate;
       bonus2 bHPRegenRate,50,.@duration;
