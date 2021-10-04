@@ -5466,7 +5466,6 @@ Body:
     Script: |
       bonus bDex,2;
       bonus bLuk,2;
-      bonus bUnbreakableWeapon;
   - Id: 1307
     AegisName: Windhawk
     Name: Windhawk
@@ -5494,7 +5493,6 @@ Body:
     Script: |
       bonus bAtkEle,Ele_Wind;
       bonus bAspdRate,5;
-      bonus bUnbreakableWeapon;
   - Id: 1308
     AegisName: Golden_Axe
     Name: Golden Axe
@@ -5687,7 +5685,7 @@ Body:
       bonus bStr,2;
   - Id: 1314
     AegisName: F_Tomahawk_C
-    Name: Tomahawk
+    Name: Rental Tomahawk
     Type: Weapon
     SubType: 2hAxe
     Buy: 2
@@ -5708,7 +5706,7 @@ Body:
       skill "ITM_TOMAHAWK",1;
   - Id: 1315
     AegisName: F_Right_Epsilon_C
-    Name: Light Epsilon
+    Name: Right Epsilon
     Type: Weapon
     SubType: 2hAxe
     Buy: 1
@@ -5730,6 +5728,7 @@ Body:
       bonus bStr,10;
       bonus2 bAddRace,RC_Demon,3;
       skill "AL_HEAL",3;
+      bonus bSpeedRate,25;
   - Id: 1316
     AegisName: Adventure_Axe
     Name: Adventure Axe
@@ -5784,9 +5783,9 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Rogue: true
       Swordman: true
       Thief: true
+      SuperNovice: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -5883,9 +5882,9 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Rogue: true
       Swordman: true
       Thief: true
+      SuperNovice: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -5895,7 +5894,7 @@ Body:
       skill "ITM_TOMAHAWK",1;
   - Id: 1322
     AegisName: Ru_Blue_Axe
-    Name: Blue Axe
+    Name: Ru Blue Axe
     Type: Weapon
     SubType: 1hAxe
     Buy: 10
@@ -10835,8 +10834,8 @@ Body:
     Refineable: true
     Script: |
       bonus bCritical,40;
-      bonus bDefRate,-67;
-      bonus bDef2Rate,-67;
+      bonus bDefRate,-66;
+      bonus bDef2Rate,-66;
   - Id: 1539
     AegisName: Golden_Mace_
     Name: Golden Mace
@@ -11109,9 +11108,7 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      StarGladiator: true
       Swordman: true
-      Taekwon: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -57614,6 +57611,9 @@ Body:
     Attack: 100
     Range: 7
     Slots: 2
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -57637,6 +57637,9 @@ Body:
     Attack: 150
     Range: 9
     Slots: 1
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -57797,6 +57800,9 @@ Body:
     Attack: 95
     Range: 7
     Slots: 1
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -57915,6 +57921,8 @@ Body:
     Attack: 150
     Range: 7
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113100,6 +113108,8 @@ Body:
     Attack: 200
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113125,6 +113135,8 @@ Body:
     Attack: 300
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113150,6 +113162,8 @@ Body:
     Attack: 200
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113173,6 +113187,8 @@ Body:
     Attack: 350
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -113700,6 +113716,8 @@ Body:
     Attack: 250
     Range: 9
     Slots: 2
+    Jobs:
+      Rebellion: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -127229,6 +127247,99 @@ Body:
             }
          }
       }
+  - Id: 400137
+    AegisName: 1Para_Cap_A
+    Name: Paradise Cap
+    Type: Armor
+    Defense: 5
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@val = 2*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30)
+         .@val += 5;
+      if (BaseLevel>=45)
+         .@val += 10;
+      if (BaseLevel>=85)
+         .@val += 15;
+      bonus bBaseAtk,5+.@val;
+  - Id: 400138
+    AegisName: 1Para_Cap_B
+    Name: Paradise Hat
+    Type: Armor
+    Defense: 3
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@val = 2*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30)
+         .@val += 5;
+      if (BaseLevel>=45)
+         .@val += 10;
+      if (BaseLevel>=85)
+         .@val += 15;
+      bonus bMatk,5+.@val;
+  - Id: 400139
+    AegisName: 2Para_Cap_A
+    Name: Advanced Paradise Luxury Cap
+    Type: Armor
+    Defense: 10
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bBaseAtk,60;
+      bonus2 bHPDrainRate,50,2;
+      bonus2 bSPDrainRate,20,2;
+  - Id: 400140
+    AegisName: 2Para_Cap_B
+    Name: Advanced Paradise Hat
+    Type: Armor
+    Defense: 7
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,60;
+      autobonus "{ bonus2 bHPRegenRate,350,1000; bonus2 bSPRegenRate,80,1000; }",1,4000,BF_MAGIC,"{ specialeffect2 EF_HEAL; }";
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -131344,6 +131455,133 @@ Body:
             }
          }
       }
+  - Id: 450183
+    AegisName: 1Para_Armor_A
+    Name: Paradise Suit
+    Type: Armor
+    Defense: 30
+    Locations:
+      Armor: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@hp = 30*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30) {
+         .@hp += 80;
+         .@sp = 20;
+      }
+      if (BaseLevel>=45) {
+         .@hp += 150;
+         .@sp += 30;
+      }
+      if (BaseLevel>=85) {
+         .@hp += 250;
+         .@sp += 50;
+      }
+      bonus bMaxHP,150+.@hp;
+      bonus bMaxSP,20+.@sp;
+  - Id: 450184
+    AegisName: 1Para_Armor_B
+    Name: Paradise Robe
+    Type: Armor
+    Defense: 20
+    Locations:
+      Armor: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@hp = 20*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30) {
+         .@hp += 60;
+         .@sp = 30;
+      }
+      if (BaseLevel>=45) {
+         .@hp += 100;
+         .@sp += 50;
+      }
+      if (BaseLevel>=85) {
+         .@hp += 150;
+         .@sp += 70;
+      }
+      bonus bMaxHP,100+.@hp;
+      bonus bMaxSP,50+.@sp;
+  - Id: 450185
+    AegisName: L_60Lv_Dress
+    Name: Paradise Luxury Suit
+    Type: Armor
+    Defense: 50
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,1500;
+      bonus bMaxSP,150;
+      bonus bDelayrate,-5;
+      bonus bBaseAtk,5*(min(.@l,150)/10);
+      .@l = BaseLevel;
+      if (.@l>=105)
+         bonus2 bAddClass,Class_ALL,3;
+      if (.@l>=110)
+         bonus bDelayrate,-5;
+      if (.@l>=120)
+         bonus bMaxHPrate,3;
+      if (.@l>=130)
+         bonus bBaseAtk,40;
+  - Id: 450186
+    AegisName: L_60Lv_Robe
+    Name: Advanced Paradise Robe
+    Type: Armor
+    Defense: 35
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,1000;
+      bonus bMaxSP,250;
+      bonus bDelayrate,5;
+      bonus bMatk,5*(min(BaseLevel,150)/10);
+      if (BaseLevel>=105)
+         bonus bMatkRate,3;
+      if (BaseLevel>=110)
+         bonus bDelayrate,5;
+      if (BaseLevel>=120)
+         bonus bMaxHPrate,3;
+      if (BaseLevel>=130)
+         bonus bMatk,40;
   - Id: 460012
     AegisName: aegis_460012
     Name: Reinforced Shield
@@ -131778,6 +132016,95 @@ Body:
             }
          }
       }
+  - Id: 470067
+    AegisName: 1Para_Boots_A
+    Name: Paradise Boots
+    Type: Armor
+    Defense: 8
+    Locations:
+      Shoes: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bShortAtkRate,3;
+      bonus bLongAtkRate,3;
+      bonus bCritical,1*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30) {
+         bonus bShortAtkRate,3;
+         bonus bLongAtkRate,3;
+      }
+      if (BaseLevel>=45) {
+         bonus bShortAtkRate,4;
+         bonus bLongAtkRate,4;
+      }
+      if (BaseLevel>=85)
+         bonus bFixedCast,-300;
+  - Id: 470068
+    AegisName: 1Para_Boots_B
+    Name: Paradise Shoes
+    Type: Armor
+    Defense: 4
+    Locations:
+      Shoes: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+      bonus bMatk,2*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30)
+         bonus2 bMagicAtkEle,Ele_All,3;
+      if (BaseLevel>=45)
+         bonus2 bMagicAtkEle,Ele_All,4;
+      if (BaseLevel>=85)
+         bonus bFixedCastrate,-300;
+  - Id: 470069
+    AegisName: L_60Lv_Sandal
+    Name: Paradise Luxury Boots
+    Type: Armor
+    Defense: 14
+    Locations:
+      Shoes: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkRate,10;
+      bonus bFixedCast,-300;
+      .@l = BaseLevel;
+      bonus bMaxHP,50*(min(.@l,150)/10);
+      bonus bMaxSP,20*(min(.@l,150)/10);
+      if (.@l>=105)
+         bonus bCritical,15;
+      if (.@l>=110)
+         bonus bCritAtkRate,5;
+      if (.@l>=120)
+         bonus bCritAtkRate,5;
+      if (.@l>=130)
+         bonus2 bAddClass,Class_ALL,5;
   - Id: 470070
     AegisName: Egirnion_Shoes
     Name: Aegirnion Shoes
@@ -131829,6 +132156,36 @@ Body:
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_All,7;
       }
+  - Id: 470093
+    AegisName: L_60Lv_Shoes
+    Name: Advanced Paradise Shoes
+    Type: Armor
+    Defense: 10
+    Locations:
+      Shoes: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus bFixedCast,-300;
+      bonus bMaxHP,40*(min(BaseLevel,150)/10);
+      bonus bMaxSP,30*(min(BaseLevel,150)/10);
+      if (BaseLevel>=105)
+         bonus bVariableCastrate,10;
+      if (BaseLevel>=110)
+         bonus2 bMagicAddEle,Ele_All,5;
+      if (BaseLevel>=120)
+         bonus2 bMagicAddEle,Ele_All,5;
+      if (BaseLevel>=130)
+         bonus bMatkRate,5;
   - Id: 480000
     AegisName: Attacker_Booster_Manteau_
     Name: Attacker Booster Manteau
@@ -132290,6 +132647,120 @@ Body:
     Locations:
       Costume_Garment: true
     View: 100
+  - Id: 480103
+    AegisName: 1Para_Manteau_A
+    Name: Paradise Manteau
+    Type: Armor
+    Defense: 8
+    Locations:
+      Garment: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,20;
+      bonus bHit,15;
+      bonus bHit,1*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30)
+         bonus bAspdRate,5;
+      if (BaseLevel>=45)
+         bonus bAspdRate,5;
+      if (BaseLevel>=85)
+         bonus bAspd,1;
+  - Id: 480104
+    AegisName: 1Para_Manteau_B
+    Name: Paradise Muffler
+    Type: Armor
+    Defense: 4
+    Locations:
+      Garment: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,20;
+      bonus bFlee,20;
+      bonus bFlee,1*(min(BaseLevel,100)/5);
+      if (BaseLevel>=30)
+         bonus bVariableCastrate,-5;
+      if (BaseLevel>=45)
+         bonus bVariableCastrate,-5;
+      if (BaseLevel>=85)
+         bonus bVariableCastrate,-5;
+  - Id: 480105
+    AegisName: L_60Lv_Cape
+    Name: Advanced Paradise Manteau
+    Type: Armor
+    Defense: 14
+    Locations:
+      Garment: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      bonus2 bSubEle,Ele_Neutral,20;
+      bonus bAspdRate,10;
+      bonus bHit,35;
+      bonus bVariableCastrate,-1*(min(.@l,150)/10);
+      if (.@l >= 105)
+         bonus bAspdRate,5;
+      if (.@l >= 110)
+         bonus bVariableCastrate,-5;
+      if (.@l >= 120)
+         bonus bDelayrate,-5;
+      if (.@l >=130)
+         bonus bDelayrate,-5;
+  - Id: 480106
+    AegisName: L_60Lv_Muffler
+    Name: Advanced Paradise Muffler
+    Type: Armor
+    Defense: 10
+    Locations:
+      Garment: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,20;
+      bonus bFlee,40;
+      bonus bVariableCastrate,-15;
+      bonus bAspdRate,1*(min(BaseLevel,150)/10);
+      if (BaseLevel>=105)
+         bonus bAspdRate,5;
+      if (BaseLevel>=110)
+         bonus bVariableCastrate,-5;
+      if (BaseLevel>=120)
+         bonus bDelayrate,-5;
+      if (BaseLevel>=130)
+         bonus bDelayrate,-5;
   - Id: 480107
     AegisName: C_Kings_Twin_Sword
     Name: Costume Kings Twin Sword
@@ -133175,6 +133646,160 @@ Body:
     EquipLevelMin: 130
     Script: |
       bonus bDelayrate,-3;
+  - Id: 490122
+    AegisName: 1Para_Acc_L_A
+    Name: Paradise Ring
+    Type: Armor
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,2;
+      bonus bNoCastCancel;
+  - Id: 490123
+    AegisName: 1Para_Acc_R_A
+    Name: Paradise Gloves
+    Type: Armor
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,10;
+      skill "AL_HEAL",1;
+  - Id: 490124
+    AegisName: 1Para_Acc_L_B
+    Name: Paradise Magic Ring
+    Type: Armor
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,2;
+      bonus bNoCastCancel;
+  - Id: 490125
+    AegisName: 1Para_Acc_R_B
+    Name: Paradise Necklace
+    Type: Armor
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      skill "AL_HEAL",1;
+      bonus bVariableCastrate,-10;
+  - Id: 490126
+    AegisName: L_60Lv_Aring
+    Name: Advanced Paradise Ring
+    Type: Armor
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      bonus bNoCastCancel;
+  - Id: 490127
+    AegisName: L_60Lv_Gloves
+    Name: Advanced Paradise Gloves
+    Type: Armor
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,10;
+      skill "AL_HEAL",1;
+      bonus bVariableCastrate,-5;
+  - Id: 490128
+    AegisName: L_60Lv_Mring
+    Name: Advanced Paradise Magic Ring
+    Type: Armor
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      bonus bNoCastCancel;
+  - Id: 490129
+    AegisName: L_60Lv_Necklace
+    Name: Advanced Paradise Necklace
+    Type: Armor
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      skill "AL_HEAL",1;
+      bonus bVariableCastrate,-10;
+      bonus bAspdRate,5;
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon
@@ -133658,6 +134283,222 @@ Body:
             }
          }
       }
+  - Id: 500032
+    AegisName: 1Para_Sword
+    Name: Paradise Sword
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 100
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Rogue: true
+      Swordman: true
+      Thief: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      if (BaseLevel>=20)
+         bonus bBaseAtk,15;
+      if (BaseLevel>=30)
+         bonus bBaseAtk,20;
+      if (BaseLevel>=45)
+         bonus bBaseAtk,25;
+  - Id: 500033
+    AegisName: 2Para_Sword_CR
+    Name: Paradise Crusader Sword
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 160
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Crusader: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"CR_GRANDCROSS",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"CR_GRANDCROSS",15;
+  - Id: 500034
+    AegisName: 2Para_Sword_AM
+    Name: Paradise Alchemist Sword
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 160
+    Range: 1
+    Jobs:
+      Alchemist: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bShortAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"MC_CARTREVOLUTION",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"MC_CARTREVOLUTION",15;
+  - Id: 500035
+    AegisName: 2Para_Sword_NV
+    Name: Paradise Super Novice Sword
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 160
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bShortAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"SM_BASH",20;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"SM_BASH",20;
+  - Id: 500036
+    AegisName: 3Para_Sword_LG
+    Name: Paradise Royal Guard Sword
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 160
+    Range: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("CR_TRUST");
+      bonus bMatk,180;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-1*.@a;
+      if (.@l>=105) {
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         bonus2 bSkillAtk,"PA_PRESSURE",25;
+         bonus2 bSkillAtk,"LG_RAYOFGENESIS",25;
+         if (.@l>=110) {
+            bonus2 bMagicAddSize,Size_All,15;
+            bonus2 bMagicAtkEle,Ele_Neutral,15;
+            bonus2 bMagicAtkEle,Ele_Holy,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"PA_PRESSURE",15;
+               bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
+            }
+         }
+      }
+  - Id: 500037
+    AegisName: 3Para_Sword_GN
+    Name: Paradise Genetic Sword
+    Type: Weapon
+    SubType: 1hSword
+    Attack: 180
+    Range: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("GN_TRAINING_SWORD");
+      bonus bShortAtkRate,2*.@a;
+      bonus2 bAddClass,Class_ALL,5*.@a;
+      if (.@l>=105) {
+         bonus bDelayrate,-5;
+         bonus2 bSkillAtk,"GN_HELLS_PLANT",25;
+         bonus2 bSkillAtk,"GN_CART_TORNADO",25;
+         if (.@l>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"GN_HELLS_PLANT",15;
+               bonus2 bSkillAtk,"GN_CART_TORNADO",15;
+            }
+         }
+      }
   - Id: 510001
     AegisName: Boost_Dagger
     Name: Booster Dagger
@@ -134073,6 +134914,208 @@ Body:
             }
          }
       }
+  - Id: 510035
+    AegisName: 1Para_Dagger
+    Name: Paradise Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 100
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Archer: true
+      Assassin: true
+      BardDancer: true
+      Blacksmith: true
+      Crusader: true
+      Hunter: true
+      KagerouOboro: true
+      Knight: true
+      Mage: true
+      Merchant: true
+      Ninja: true
+      Novice: true
+      Rogue: true
+      Sage: true
+      SoulLinker: true
+      StarGladiator: true
+      SuperNovice: true
+      Swordman: true
+      Taekwon: true
+      Thief: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,100;
+      if (BaseLevel>=20) {
+         bonus bBaseAtk,15;
+         bonus bMatk,15;
+         if (BaseLevel>=30) {
+            bonus bBaseAtk,20;
+            bonus bMatk,20;
+            if (BaseLevel>=45) {
+               bonus bBaseAtk,25;
+               bonus bMatk,25;
+            }
+         }
+      }
+  - Id: 510036
+    AegisName: 2Para_Dagger_RG
+    Name: Paradise Rogue Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 160
+    Range: 1
+    Jobs:
+      Rogue: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,10;
+      if (BaseLevel>=60)
+         bonus2 bSkillAtk,"RG_BACKSTAP",20;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"RG_RAID",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"RG_RAID",15;
+  - Id: 510037
+    AegisName: 2Para_Dagger_SL
+    Name: Paradise Soul Linker Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 160
+    Range: 1
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bCritical,15;
+      if (BaseLevel>=60)
+         bonus bCritical,30;
+      if (BaseLevel>=75)
+         bonus bCriticalRate,5;
+      if (BaseLevel>=90)
+         bonus bCriticalRate,10;
+  - Id: 510038
+    AegisName: 3Para_Dagger_SC
+    Name: Paradise Shadow Chaser Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 180
+    Range: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("RG_PLAGIARISM");
+      bonus bMatk,180;
+      bonus bMatkRate,3;
+      bonus bDelayrate,-1*.@a;
+      bonus2 bAddClass,Class_ALL,3;
+      if (.@l>=105) {
+         bonus2 bSkillAtk,"SC_FATALMENACE",25;
+         bonus bAspd,1;
+         if (.@l>=110) {
+            bonus bShortAtkRate,15;
+            bonus2 bAddSize,Size_ALL,15;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"SC_FATALMENACE",15;
+               bonus2 bMagicAtkEle,Ele_Neutral,15;
+               bonus2 bMagicAtkEle,Ele_Fire,15;
+            }
+         }
+      }
+  - Id: 510039
+    AegisName: 3Para_Dagger_NV
+    Name: Paradise Super Novice Dagger
+    Type: Weapon
+    SubType: Dagger
+    Attack: 180
+    Range: 1
+    Jobs:
+      SuperNovice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("SM_SWORD");
+      bonus bShortAtkRate,1*.@a;
+      bonus2 bAddClass,Class_ALL,5;
+      if (.@l>=105) {
+         bonus bAspdRate,10;
+         bonus2 bSkillAtk,"RG_RAID",25;
+         bonus2 bSkillAtk,"RG_BACKSTAP",25;
+         if (.@l>=110) {
+            bonus bShortAtkRate,15;
+            bonus2 bAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"RG_RAID",15;
+               bonus2 bSkillAtk,"RG_BACKSTAP",15;
+            }
+         }
+      }
   - Id: 520000
     AegisName: Boost_Axe
     Name: Booster Axe
@@ -134164,6 +135207,113 @@ Body:
                if (.@r>=12) {
                   bonus bLongAtkRate,15;
                }
+            }
+         }
+      }
+  - Id: 520010
+    AegisName: 1Para_Axe
+    Name: Paradise Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 100
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Merchant: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      if (BaseLevel>=20)
+         bonus bBaseAtk,15;
+      if (BaseLevel>=30)
+         bonus bBaseAtk,20;
+      if (BaseLevel>=45)
+         bonus bBaseAtk,25;
+  - Id: 520011
+    AegisName: 2Para_Axe_BS
+    Name: Paradise Blacksmith Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 160
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bShortAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"MC_CARTREVOLUTION",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"MC_CARTREVOLUTION",15;
+  - Id: 520012
+    AegisName: 3Para_Axe_NC
+    Name: Paradise Mechanic Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 250
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("NC_MADOLICENCE");
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,2*.@a;
+      bonus2 bAddClass,Class_ALL,5;
+      if (.@l>=105) {
+         bonus bVariableCastrate,-10;
+         bonus2 bSkillAtk,"NC_VULCANARM",25;
+         bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",25;
+         bonus2 bSkillAtk,"NC_ARMSCANNON",25;
+         if (.@l>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"NC_VULCANARM",15;
+               bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
+               bonus2 bSkillAtk,"NC_ARMSCANNON",15;
             }
          }
       }
@@ -134387,6 +135537,81 @@ Body:
             if (.@r>=11) {
                bonus2 bSkillAtk,"LG_BANISHINGPOINT",20;
                bonus2 bSkillAtk,"LG_CANNONSPEAR",20;
+            }
+         }
+      }
+  - Id: 530017
+    AegisName: 2Para_Spear_CR
+    Name: Paradise Crusader Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 160
+    Range: 3
+    Jobs:
+      Crusader: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"CR_HOLYCROSS",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"CR_HOLYCROSS",15;
+  - Id: 530018
+    AegisName: 3Para_Spear_LG
+    Name: Paradise Royal Guard Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Attack: 180
+    Range: 3
+    Jobs:
+      Crusader: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("CR_SPEARQUICKEN");
+      bonus bAspdRate,1*.@a;
+      bonus2 bAddClass,Class_ALL,5;
+      if (.@l>=105) {
+         bonus bAspd,1;
+         bonus2 bSkillAtk,"LG_BANISHINGPOINT",25;
+         bonus2 bSkillAtk,"LG_CANNONSPEAR",25;
+         bonus2 bSkillAtk,"LG_OVERBRAND",25;
+         if (.@l>=110) {
+            bonus bShortAtkRate,15;
+            bonus bLongAtkRate,15;
+            bonus2 bAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
+               bonus2 bSkillAtk,"LG_CANNONSPEAR",15;
+               bonus2 bSkillAtk,"LG_OVERBRAND",15;
             }
          }
       }
@@ -134807,6 +136032,332 @@ Body:
                if (.@r>=12) {
                   bonus bShortAtkRate,15;
                }
+            }
+         }
+      }
+  - Id: 540027
+    AegisName: 2Para_Book1_SA
+    Name: Paradise Sage Magic Book
+    Type: Weapon
+    SubType: Book
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Sage: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"WZ_HEAVENDRIVE",15;
+  - Id: 540028
+    AegisName: 2Para_Book2_SA
+    Name: Paradise Sage Spellbook
+    Type: Weapon
+    SubType: Book
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Sage: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75) {
+         bonus2 bSkillAtk,"MG_FIREBOLT",20;
+         bonus2 bSkillAtk,"MG_COLDBOLT",20;
+      }
+      if (BaseLevel>=90) {
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20;
+         bonus2 bSkillAtk,"WZ_EARTHSPIKE",20;
+      }
+  - Id: 540029
+    AegisName: 2Para_Book1_SG
+    Name: Paradise Taekwon Martial Arts Book
+    Type: Weapon
+    SubType: Book
+    Attack: 160
+    Range: 1
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bShortAtkRate,10;
+      if (BaseLevel>=75) {
+         bonus2 bSkillAtk,"TK_STORMKICK",10;
+         bonus2 bSkillAtk,"TK_TURNKICK",10;
+      }
+      if (BaseLevel>=90) {
+         bonus2 bSkillAtk,"TK_STORMKICK",15;
+         bonus2 bSkillAtk,"TK_TURNKICK",15;
+      }
+  - Id: 540030
+    AegisName: 2Para_Book2_SG
+    Name: Paradise Taekwon Power Book
+    Type: Weapon
+    SubType: Book
+    Attack: 160
+    Range: 1
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bShortAtkRate,10;
+      if (BaseLevel>=75) {
+         bonus2 bSkillAtk,"TK_DOWNKICK",10;
+         bonus2 bSkillAtk,"TK_COUNTER",10;
+      }
+      if (BaseLevel>=90) {
+         bonus2 bSkillAtk,"TK_DOWNKICK",15;
+         bonus2 bSkillAtk,"TK_COUNTER",15;
+      }
+  - Id: 540031
+    AegisName: 3Para_Book1_SO
+    Name: Paradise Sorcerer Magic Book
+    Type: Weapon
+    SubType: Book
+    Attack: 150
+    Range: 1
+    Jobs:
+      Sage: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("SA_LANDPROTECTOR");
+      bonus bMatk,180;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-2*.@a;
+      if (.@l>=105) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",25;
+         bonus2 bSkillAtk,"SO_DIAMONDDUST",25;
+         bonus2 bSkillAtk,"SO_EARTHGRAVE",25;
+         bonus2 bSkillAtk,"SO_VARETYR_SPEAR",25;
+         if (.@l>=110) {
+            bonus2 bMagicAtkEle,Ele_Water,15;
+            bonus2 bMagicAtkEle,Ele_Wind,15;
+            bonus2 bMagicAtkEle,Ele_Earth,15;
+            bonus2 bMagicAtkEle,Ele_Neutral,15;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
+               bonus2 bSkillAtk,"SO_DIAMONDDUST",15;
+               bonus2 bSkillAtk,"SO_EARTHGRAVE",15;
+               bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15;
+            }
+         }
+      }
+  - Id: 540032
+    AegisName: 3Para_Book2_SO
+    Name: Paradise Sorcerer Spell Book
+    Type: Weapon
+    SubType: Book
+    Attack: 150
+    Range: 1
+    Jobs:
+      Sage: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("SA_AUTOSPELL");
+      bonus bMatk,180;
+      bonus bMatkRate,5;
+      bonus bAspdRate,1*.@a;
+      if (.@l>=105) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bSkillAtk,"MG_FIREBOLT",25;
+         bonus2 bSkillAtk,"MG_COLDBOLT",25;
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",25;
+         bonus2 bSkillAtk,"WZ_EARTHSPIKE",25;
+         bonus2 bSkillAtk,"WZ_HEAVENDRIVE",25;
+         if (.@l>=110) {
+            bonus2 bMagicAtkEle,Ele_Water,15;
+            bonus2 bMagicAtkEle,Ele_Wind,15;
+            bonus2 bMagicAtkEle,Ele_Earth,15;
+            bonus2 bMagicAtkEle,Ele_Fire,15;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"MG_FIREBOLT",15;
+               bonus2 bSkillAtk,"MG_COLDBOLT",15;
+               bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",15;
+               bonus2 bSkillAtk,"WZ_EARTHSPIKE",15;
+               bonus2 bSkillAtk,"WZ_HEAVENDRIVE",15;
+            }
+         }
+      }
+  - Id: 540033
+    AegisName: 3Para_Book1_SJ
+    Name: Paradise Star Emperor Book of the Sun
+    Type: Weapon
+    SubType: Book
+    Attack: 180
+    Range: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("TK_HPTIME");
+      bonus bShortAtkRate,1*.@a;
+      bonus2 bAddClass,Class_ALL,5;
+      if (.@l>=105) {
+         bonus2 bAddClass,Class_ALL,10;
+         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
+         bonus2 bSkillAtk,"SJ_SOLARBURST",25;
+         if (.@l>=110) {
+            bonus bShortAtkRate,10;
+            bonus2 bAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
+               bonus2 bSkillAtk,"SJ_SOLARBURST",15;
+            }
+         }
+      }
+  - Id: 540034
+    AegisName: 3Para_Book2_SJ
+    Name: Paradise Star Emperor Book of the Moon
+    Type: Weapon
+    SubType: Book
+    Attack: 180
+    Range: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("TK_HPTIME");
+      bonus bShortAtkRate,1*.@a;
+      bonus2 bAddClass,Class_ALL,5;
+      if (.@l>=105) {
+         bonus2 bAddClass,Class_ALL,10;
+         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
+         bonus2 bSkillAtk,"SJ_SOLARBURST",25;
+         if (.@l>=110) {
+            bonus bShortAtkRate,10;
+            bonus2 bAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
+               bonus2 bSkillAtk,"SJ_SOLARBURST",15;
             }
          }
       }
@@ -135519,6 +137070,489 @@ Body:
             }
          }
       }
+  - Id: 550032
+    AegisName: 1Para_Rod
+    Name: Paradise Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 60
+    Range: 1
+    Jobs:
+      Acolyte: true
+      Mage: true
+      Monk: true
+      Priest: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bMatk,100;
+      if (BaseLevel>=20)
+         bonus bMatk,15;
+      if (BaseLevel>=30)
+         bonus bMatk,20;
+      if (BaseLevel>=45)
+         bonus bMatk,25;
+  - Id: 550033
+    AegisName: 1Para_Foxtail
+    Name: Paradise Foxtail
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bUnbreakableWeapon;
+      bonus bMatk,100;
+      if (BaseLevel>=20) {
+         bonus bBaseAtk,15;
+         bonus bMatk,15;
+         if (BaseLevel>=30) {
+            bonus bBaseAtk,20;
+            bonus bMatk,20;
+            if (BaseLevel>=45) {
+               bonus bBaseAtk,25;
+               bonus bMatk,25;
+            }
+         }
+      }
+  - Id: 550034
+    AegisName: 2Para_Staff_WZ
+    Name: Paradise Wizard Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75) {
+         bonus2 bSkillAtk,"WZ_STORMGUST",20;
+         bonus2 bSkillAtk,"WZ_METEOR",20;
+      }
+      if (BaseLevel>=90) {
+         bonus2 bSkillAtk,"WZ_VERMILION",10;
+         bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10;
+      }
+  - Id: 550035
+    AegisName: 2Para_Wand_WZ
+    Name: Paradise Wizard Wand
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"WZ_JUPITEL",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"WZ_JUPITEL",15;
+  - Id: 550036
+    AegisName: 2Para_Rod_PR
+    Name: Paradise Priest Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"PR_MAGNUS",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"PR_MAGNUS",15;
+  - Id: 550037
+    AegisName: 2Para_Rod_SL
+    Name: Paradise Soul Linker Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"SL_SMA",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"SL_SMA",15;
+  - Id: 550038
+    AegisName: 2Para_Foxtail1_SU
+    Name: Paradise Doram Foxtail
+    Type: Weapon
+    SubType: Staff
+    Attack: 160
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"SU_PICKYPECK",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"SU_PICKYPECK",15;
+  - Id: 550039
+    AegisName: 2Para_Foxtail2_SU
+    Name: Paradise Doram Foxtail Model
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"SU_CN_METEOR",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"SU_CN_METEOR",15;
+  - Id: 550040
+    AegisName: 2Para_Rod_NV
+    Name: Paradise Super Novice Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    MagicAttack: 160
+    Range: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75) {
+         bonus2 bSkillAtk,"MG_FIREBOLT",20;
+         bonus2 bSkillAtk,"MG_COLDBOLT",20;
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20;
+      }
+      if (BaseLevel>=90) {
+         bonus2 bSkillAtk,"MG_FIREBOLT",20;
+         bonus2 bSkillAtk,"MG_COLDBOLT",20;
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20;
+      }
+  - Id: 550041
+    AegisName: 3Para_Rod_AB
+    Name: Paradise Arch Bishop Staff
+    Type: Weapon
+    SubType: Staff
+    Attack: 150
+    Range: 1
+    Jobs:
+      Priest: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("HP_MEDITATIO");
+      bonus bMatk,180;
+      bonus bMatkRate,5;
+      bonus bUnbreakableWeapon;
+      bonus bVariableCastrate,-1*.@a;
+      if (.@l>=105) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         bonus2 bSkillAtk,"AB_ADORAMUS",25;
+         if (.@l>=110) {
+            bonus2 bMagicAtkEle,Ele_Holy,15;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (.@l>=115)
+               bonus2 bSkillAtk,"AB_ADORAMUS",15;
+         }
+      }
+  - Id: 550042
+    AegisName: 3Para_Foxtail1_SU
+    Name: Paradise Summoner Foxtail
+    Type: Weapon
+    SubType: Staff
+    Attack: 300
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("SU_PICKYPECK");
+      bonus2 bAddClass,Class_ALL,5;
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,2*.@a;
+      if (.@l>=105) {
+         bonus bAspdRate,10;
+         bonus2 bSkillAtk,"SU_PICKYPECK",25;
+         bonus2 bSkillAtk,"SU_SVG_SPIRIT",25;
+         if (.@l>=110) {
+            bonus bLongAtkRate,10;
+            bonus2 bAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"SU_PICKYPECK",15;
+               bonus2 bSkillAtk,"SU_SVG_SPIRIT",15;
+            }
+         }
+      }
+  - Id: 550043
+    AegisName: 3Para_Foxtail2_SU
+    Name: Paradise Summoner Foxtail Model
+    Type: Weapon
+    SubType: Staff
+    Attack: 150
+    Range: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("SU_SV_STEMSPEAR");
+      bonus bMatk,300;
+      bonus bMatkRate,5;
+      bonus bUnbreakableWeapon;
+      bonus bVariableCastrate,-2*.@a;
+      if (.@l>=105) {
+         bonus2 bSkillCooldown,"SU_CN_METEOR",-1500;
+         bonus2 bSkillAtk,"SU_CN_METEOR",25;
+         if (.@l>=110) {
+            bonus2 bMagicAddSize,Size_All,15;
+            bonus2 bMagicAtkEle,Ele_Ghost,10;
+            bonus2 bMagicAtkEle,Ele_Fire,10;
+            bonus2 bMagicAtkEle,Ele_Earth,10;
+            bonus2 bMagicAtkEle,Ele_Water,10;
+            bonus2 bMagicAtkEle,Ele_Wind,10;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15;
+               bonus2 bSkillAtk,"SU_CN_METEOR",15;
+            }
+         }
+      }
+  - Id: 550044
+    AegisName: 3Para_Wand_NV
+    Name: Paradise Super Novice Wand
+    Type: Weapon
+    SubType: Staff
+    Attack: 100
+    Range: 1
+    Slots: 1
+    Jobs:
+      SuperNovice: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@l = BaseLevel;
+      .@a = getskilllv("MG_SRECOVERY");
+      bonus bMatk,180;
+      bonus bMatkRate,5;
+      bonus bUnbreakableWeapon;
+      bonus bVariableCastrate,-1*.@a;
+      if (.@l>=105) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bSkillAtk,"MG_FIREBOLT",25;
+         bonus2 bSkillAtk,"MG_COLDBOLT",25;
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",25;
+         bonus2 bSkillAtk,"MG_FIREBALL",25;
+         bonus2 bSkillAtk,"WZ_HEAVENDRIVE",25;
+         if (.@l>=110) {
+            bonus2 bMagicAtkEle,Ele_Water,10;
+            bonus2 bMagicAtkEle,Ele_Wind,10;
+            bonus2 bMagicAtkEle,Ele_Earth,10;
+            bonus2 bMagicAtkEle,Ele_Fire,10;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (.@l>=115) {
+               bonus2 bSkillAtk,"MG_FIREBOLT",15;
+               bonus2 bSkillAtk,"MG_COLDBOLT",15;
+               bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",15;
+               bonus2 bSkillAtk,"MG_FIREBALL",15;
+               bonus2 bSkillAtk,"WZ_HEAVENDRIVE",15;
+            }
+         }
+      }
   - Id: 560000
     AegisName: Boost_Knuckles
     Name: Booster Knuckles
@@ -135839,6 +137873,148 @@ Body:
             }
          }
       }
+  - Id: 560022
+    AegisName: 2Para_Knuckle_MO
+    Name: Paradise Monk Knuckles
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 160
+    Range: 1
+    Jobs:
+      Monk: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"MO_CHAINCOMBO",20;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"MO_COMBOFINISH",20;
+  - Id: 560023
+    AegisName: 2Para_Claw_MO
+    Name: Paradise Monk Claws
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 160
+    Range: 1
+    Jobs:
+      Monk: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"MO_FINGEROFFENSIVE",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"MO_FINGEROFFENSIVE",15;
+  - Id: 560024
+    AegisName: 3Para_Knuckle_SR
+    Name: Paradise Sura Knuckle
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 180
+    Range: 1
+    Jobs:
+      Monk: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("MO_CHAINCOMBO");
+      bonus2 bAddClass,Class_All,5;
+      bonus bMaxHPrate,2*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"SR_TIGERCANNON",-1000;
+         bonus2 bSkillAtk,"SR_FALLENEMPIRE",25;
+         bonus2 bSkillAtk,"SR_TIGERCANNON",25;
+         if (BaseLevel>=110) {
+            bonus bShortAtkRate,15;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"SR_FALLENEMPIRE",15;
+               bonus2 bSkillAtk,"SR_TIGERCANNON",15;
+            }
+         }
+      }
+  - Id: 560025
+    AegisName: 3Para_Claw_SR
+    Name: Paradise Sura Claw
+    Type: Weapon
+    SubType: Knuckle
+    Attack: 180
+    Range: 1
+    Jobs:
+      Monk: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("MO_CALLSPIRITS");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,2*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
+         bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",25;
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
+               bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
+            }
+         }
+      }
   - Id: 570000
     AegisName: Boost_Guitar
     Name: Booster Guitar
@@ -136133,6 +138309,119 @@ Body:
                if (.@r>=12) {
                   bonus2 bMagicAtkEle,Ele_Neutral,15;
                }
+            }
+         }
+      }
+  - Id: 570021
+    AegisName: 2Para_Violin_BA
+    Name: Paradise Bard Violin
+    Type: Weapon
+    SubType: Musical
+    Attack: 160
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"BA_MUSICALSTRIKE",15;
+  - Id: 570022
+    AegisName: 3Para_Violin_MI
+    Name: Paradise Minstrel Violin
+    Type: Weapon
+    SubType: Musical
+    Attack: 180
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("BA_MUSICALLESSON");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",25;
+         if (BaseLevel>=110) {
+            bonus bLongAtkRate,15;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115)
+               bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+         }
+      }
+  - Id: 570023
+    AegisName: 3Para_Harp_MI
+    Name: Paradise Minstrel Harp
+    Type: Weapon
+    SubType: Musical
+    Attack: 150
+    MagicAttack: 180
+    Range: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("BA_MUSICALLESSON");
+      bonus bMatkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-2000;
+         bonus2 bSkillAtk,"WM_METALICSOUND",25;
+         bonus2 bSkillAtk,"WM_REVERBERATION",25;
+         if (BaseLevel>=110) {
+            bonus2 bSkillFixedCast,"WM_REVERBERATION",-500;
+            bonus2 bMagicAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"WM_METALICSOUND",15;
+               bonus2 bSkillAtk,"WM_REVERBERATION",15;
             }
          }
       }
@@ -136475,6 +138764,119 @@ Body:
                if (.@r>=12) {
                   bonus2 bMagicAtkEle,Ele_Neutral,15;
                }
+            }
+         }
+      }
+  - Id: 580021
+    AegisName: 2Para_Rope_DC
+    Name: Paradise Dancer Rope
+    Type: Weapon
+    SubType: Whip
+    Attack: 160
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+        bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"DC_THROWARROW",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"DC_THROWARROW",15;
+  - Id: 580022
+    AegisName: 3Para_Whip_WA
+    Name: Paradise Wanderer Whip
+    Type: Weapon
+    SubType: Whip
+    Attack: 180
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("DC_DANCINGLESSON");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",25;
+         if (BaseLevel>=110) {
+            bonus bLongAtkRate,15;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115)
+               bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+         }
+      }
+  - Id: 580023
+    AegisName: 3Para_Rope_WA
+    Name: Paradise Wanderer Rope
+    Type: Weapon
+    SubType: Whip
+    Attack: 150
+    MagicAttack: 180
+    Range: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("DC_DANCINGLESSON");
+      bonus bMatkRate,5;
+      bonus2 bMagicAtkEle,Ele_All,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-2000;
+         bonus2 bSkillAtk,"WM_METALICSOUND",25;
+         bonus2 bSkillAtk,"WM_REVERBERATION",25;
+         if (BaseLevel>=110) {
+            bonus2 bSkillFixedCast,"WM_REVERBERATION",-500;
+            bonus2 bMagicAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"WM_METALICSOUND",15;
+               bonus2 bSkillAtk,"WM_REVERBERATION",15;
             }
          }
       }
@@ -136943,6 +139345,190 @@ Body:
             }
          }
       }
+  - Id: 590025
+    AegisName: 1Para_Mace
+    Name: Paradise Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 100
+    Range: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+      Acolyte: true
+      Priest: true
+      Monk: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      if (BaseLevel>=20)
+        bonus bBaseAtk,15;
+      if (BaseLevel>=30)
+         bonus bBaseAtk,20;
+      if (BaseLevel>=45)
+         bonus bBaseAtk,25;
+  - Id: 590026
+    AegisName: 2Para_Mace_AM
+    Name: Paradise Alchemist Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 160
+    Range: 1
+    Jobs:
+      Alchemist: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"AM_ACIDTERROR",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"AM_ACIDTERROR",15;
+  - Id: 590027
+    AegisName: 2Para_Mace_PR
+    Name: Paradise Priest Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 160
+    Range: 1
+    Jobs:
+      Priest: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bCritical,10;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75)
+         bonus bCritAtkRate,5;
+      if (BaseLevel>=90)
+         bonus bCritAtkRate,10;
+  - Id: 590028
+    AegisName: 3Para_Mace_GN
+    Name: Paradise Genetic Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 180
+    Range: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("AM_LEARNINGPOTION");
+      bonus bUnbreakableWeapon;
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus bVariableCastrate,-10;
+         bonus2 bSkillAtk,"GN_CARTCANNON",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115)
+               bonus2 bSkillAtk,"GN_CARTCANNON",15;
+         }
+      }
+  - Id: 590029
+    AegisName: 3Para_Mace_AB
+    Name: Paradise Arch Bishop Mace
+    Type: Weapon
+    SubType: Mace
+    Attack: 180
+    MagicAttack: 180
+    Range: 1
+    Jobs:
+      Priest: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("HP_MEDITATIO");
+      bonus bMatkRate,3;
+      bonus bCritical,15;
+      bonus bAspdRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus bVariableCastrate,-10;
+         bonus bDelayrate,-10;
+         bonus2 bSkillAtk,"PR_MAGNUS",25;
+         bonus2 bSkillAtk,"AB_JUDEX",25;
+         bonus2 bSkillAtk,"AB_DUPLELIGHT",25;
+         if (BaseLevel>=110) {
+            bonus2 bMagicAtkEle,Ele_Neutral,20;
+            bonus2 bMagicAtkEle,Ele_Holy,20;
+            bonus2 bAddSize,Size_All,15;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"PR_MAGNUS",15;
+               bonus2 bSkillAtk,"AB_JUDEX",15;
+               bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+            }
+         }
+      }
   - Id: 600000
     AegisName: IDTest_bothhand
     Name: IDTest bothhand
@@ -137211,6 +139797,77 @@ Body:
                if (.@r>=12) {
                   bonus bShortAtkRate,15;
                }
+            }
+         }
+      }
+  - Id: 600020
+    AegisName: 2Para_T_Sword_KN
+    Name: Paradise Knight Two-Handed Sword
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 180
+    Range: 1
+    Jobs:
+      Knight: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bCritical,10;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"KN_BOWLINGBASH",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"KN_BOWLINGBASH",15;
+  - Id: 600021
+    AegisName: 3Para_T_Sword_RK
+    Name: Paradise Rune Knight Two-Handed Sword
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 200
+    Range: 1
+    Jobs:
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("KN_TWOHANDQUICKEN");
+      bonus bCritical,15;
+      bonus bAspdRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus bCritAtkRate,10;
+         bonus2 bSkillAtk,"RK_IGNITIONBREAK",25;
+         bonus2 bSkillAtk,"RK_SONICWAVE",25;
+         if (BaseLevel>=110) {
+            bonus bCritical,15;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"RK_IGNITIONBREAK",15;
+               bonus2 bSkillAtk,"RK_SONICWAVE",15;
             }
          }
       }
@@ -137516,6 +140173,145 @@ Body:
             }
          }
       }
+  - Id: 610024
+    AegisName: 2Para_Katar1_AS
+    Name: Paradise Assassin Chakram
+    Type: Weapon
+    SubType: Katar
+    Attack: 180
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bCritical,5;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75)
+         bonus bCritAtkRate,5;
+      if (BaseLevel>=90)
+         bonus bCritAtkRate,10;
+  - Id: 610025
+    AegisName: 2Para_Katar2_AS
+    Name: Paradise Assassin Katar
+    Type: Weapon
+    SubType: Katar
+    Attack: 180
+    Range: 1
+    Jobs:
+      Assassin: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bHit,15;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"AS_SONICBLOW",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"AS_SONICBLOW",15;
+  - Id: 610026
+    AegisName: 3Para_Katar1_GC
+    Name: Paradise Guillotine Cross Chakram
+    Type: Weapon
+    SubType: Katar
+    Attack: 200
+    Range: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("AS_KATAR");
+      bonus bCritical,10;
+      bonus bShortAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus bDelayrate,-5;
+         bonus2 bSkillAtk,"GC_CROSSIMPACT",25;
+         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
+               bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
+            }
+         }
+      }
+  - Id: 610027
+    AegisName: 3Para_Katar2_GC
+    Name: Paradise Guillotine Cross Katar
+    Type: Weapon
+    SubType: Katar
+    Attack: 200
+    Range: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("AS_KATAR");
+      bonus2 bAddClass,Class_All,5;
+      bonus bDelayrate,-1*.@a;
+      if (BaseLevel>=105) {
+         bonus bShortAtkRate,10;
+         bonus2 bSkillAtk,"GC_COUNTERSLASH",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115)
+               bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
+         }
+      }
   - Id: 610028
     AegisName: CA_B_Katar
     Name: Counter Assault Booster Qatar    # !todo check english name
@@ -137676,6 +140472,78 @@ Body:
          }
       }
       bonus bVariableCastrate,-5;
+  - Id: 620011
+    AegisName: 2Para_T_Axe_BS
+    Name: Paradise Blacksmith Two-Handed Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Attack: 180
+    Range: 1
+    Jobs:
+      Blacksmith: true
+      Crusader: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bCritical,10;
+      if (BaseLevel>=60)
+         bonus bShortAtkRate,10;
+      if (BaseLevel>=75)
+         bonus bCritAtkRate,5;
+      if (BaseLevel>=90)
+         bonus bCritAtkRate,10;
+  - Id: 620012
+    AegisName: 3Para_T_Axe_NC
+    Name: Paradise Mechanic Two-Handed Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Attack: 250
+    Range: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("BS_WEAPONRESEARCH");
+      bonus2 bAddClass,Class_All,5;
+      bonus bShortAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
+         bonus2 bSkillAtk,"NC_AXETORNADO",25;
+         bonus2 bSkillAtk,"NC_POWERSWING",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"NC_AXETORNADO",15;
+               bonus2 bSkillAtk,"NC_POWERSWING",15;
+            }
+         }
+      }
   - Id: 630003
     AegisName: Ep172_Bh_Spear
     Name: Luxuria Pierce
@@ -137859,6 +140727,79 @@ Body:
                if (.@r>=12) {
                   bonus bLongAtkRate,15;
                }
+            }
+         }
+      }
+  - Id: 630014
+    AegisName: 2Para_Lance_KN
+    Name: Paradise Knight Lance
+    Type: Weapon
+    SubType: 2hSpear
+    Attack: 180
+    Range: 3
+    Jobs:
+      Knight: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus2 bSkillAtk,"KN_PIERCE",20;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"KN_BRANDISHSPEAR",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"KN_BRANDISHSPEAR",15;
+  - Id: 630015
+    AegisName: 3Para_Lance_RK
+    Name: Paradise Rune Knight Lance
+    Type: Weapon
+    SubType: 2hSpear
+    Attack: 200
+    Range: 3
+    Jobs:
+      Knight: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("RK_DRAGONTRAINING");
+      bonus2 bAddClass,Class_All,5;
+      bonus bDelayrate,-3*.@a;
+      if (BaseLevel>=105) {
+         bonus bVariableCastrate,-10;
+         bonus2 bSkillAtk,"RK_DRAGONBREATH",25;
+         bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",25;
+         bonus2 bSkillAtk,"RK_HUNDREDSPEAR",25;
+         if (BaseLevel>=110) {
+            bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-2000;
+            bonus bLongAtkRate,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"RK_DRAGONBREATH",15;
+               bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15;
+               bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
             }
          }
       }
@@ -138212,6 +141153,179 @@ Body:
             }
          }
       }
+  - Id: 640023
+    AegisName: 3Para_Staff_WL
+    Name: Paradise Warlock Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 150
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("HW_MAGICPOWER");
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bSkillAtk,"WL_CRIMSONROCK",25;
+         bonus2 bSkillAtk,"WL_EARTHSTRAIN",25;
+         if (BaseLevel>=110) {
+            bonus2 bMagicAtkEle,Ele_Earth,15;
+            bonus2 bMagicAtkEle,Ele_Fire,15;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
+               bonus2 bSkillAtk,"WL_EARTHSTRAIN",15;
+            }
+         }
+      }
+  - Id: 640024
+    AegisName: 3Para_Wand_WL
+    Name: Paradise Warlock Wand
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 150
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("HW_MAGICPOWER");
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+         bonus2 bSkillAtk,"WL_CHAINLIGHTNING",25;
+         bonus2 bSkillAtk,"WL_SOULEXPANSION",25;
+         if (BaseLevel>=110) {
+            bonus2 bMagicAtkEle,Ele_Wind,15;
+            bonus2 bMagicAtkEle,Ele_Ghost,15;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+               bonus2 bSkillAtk,"WL_SOULEXPANSION",15;
+            }
+         }
+      }
+  - Id: 640025
+    AegisName: 3Para_Staff_SP
+    Name: Paradise Soul Reaper Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 150
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("TK_SPTIME");
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bMagicAtkEle,Ele_All,10;
+         bonus2 bSkillAtk,"SP_SPA",25;
+         bonus2 bSkillAtk,"SP_SWHOO",25;
+         if (BaseLevel>=110) {
+            bonus bVariableCastrate,-10;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"SP_SPA",15;
+               bonus2 bSkillAtk,"SP_SWHOO",15;
+            }
+         }
+      }
+  - Id: 640026
+    AegisName: 3Para_Rod_SP
+    Name: Paradise Soul Reaper Soulstick
+    Type: Weapon
+    SubType: 2hStaff
+    Attack: 150
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("TK_SPTIME");
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bMagicAtkEle,Ele_Dark,15;
+         bonus2 bSkillAtk,"SP_CURSEEXPLOSION",25;
+         if (BaseLevel>=110) {
+            bonus2 bSkillCooldown,"SP_SOULCURSE",-2000;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (BaseLevel>=115)
+               bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15;
+         }
+      }
   - Id: 650003
     AegisName: Ep172_Bh_Huuma
     Name: Wrath Wheel
@@ -138349,6 +141463,158 @@ Body:
                if (.@r>=12) {
                   bonus bLongAtkRate,15;
                }
+            }
+         }
+      }
+  - Id: 650010
+    AegisName: 2Para_Humma1_NJ
+    Name: Paradise Ninja Punishment Shuriken
+    Type: Weapon
+    SubType: Huuma
+    Attack: 100
+    MagicAttack: 180
+    Range: 1
+    Jobs:
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatkRate,3;
+      if (BaseLevel>=60)
+         bonus bVariableCastrate,-10;
+      if (BaseLevel>=75) {
+         bonus2 bSkillAtk,"NJ_KOUENKA",20;
+         bonus2 bSkillAtk,"NJ_HYOUSENSOU",20;
+         bonus2 bSkillAtk,"NJ_HUUJIN",20;
+      }
+      if (BaseLevel>=90) {
+         bonus2 bSkillAtk,"NJ_BAKUENRYU",20;
+         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",20;
+         bonus2 bSkillAtk,"NJ_KAMAITACHI",20;
+      }
+  - Id: 650011
+    AegisName: 2Para_Humma2_NJ
+    Name: Paradise Ninja Crucifixion Shuriken
+    Type: Weapon
+    SubType: Huuma
+    Attack: 100
+    MagicAttack: 180
+    Range: 1
+    Jobs:
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"NJ_KUNAI",20;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"NJ_HUUMA",20;
+  - Id: 650012
+    AegisName: 3Para_Humma1_KO
+    Name: Paradise Kagerou&Oboro Fuuma Shuriken
+    Type: Weapon
+    SubType: Huuma
+    Attack: 150
+    MagicAttack: 200
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("NJ_NINPOU");
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,5;
+      bonus bVariableCastrate,-1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bSkillAtk,"NJ_KOUENKA",25;
+         bonus2 bSkillAtk,"NJ_HYOUSENSOU",25;
+         bonus2 bSkillAtk,"NJ_HUUJIN",25;
+         if (BaseLevel>=110) {
+            bonus bVariableCastrate,-10;
+            bonus2 bMagicAddSize,Size_ALL,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"NJ_KOUENKA",15;
+               bonus2 bSkillAtk,"NJ_HYOUSENSOU",15;
+               bonus2 bSkillAtk,"NJ_HUUJIN",15;
+            }
+         }
+      }
+  - Id: 650013
+    AegisName: 3Para_Humma2_KO
+    Name: Paradise Kagerou&Oboro Cross Fuuma Shuriken
+    Type: Weapon
+    SubType: Huuma
+    Attack: 200
+    Range: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("NJ_TOBIDOUGU");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000;
+         bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25;
+         bonus2 bSkillAtk,"KO_HUUMARANKA",25;
+         if (BaseLevel>=110) {
+            bonus2 bSkillCooldown,"KO_HUUMARANKA",-2000;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15;
+               bonus2 bSkillAtk,"KO_HUUMARANKA",15;
             }
          }
       }
@@ -138919,6 +142185,275 @@ Body:
             }
          }
       }
+  - Id: 700036
+    AegisName: 1Para_Bow
+    Name: Paradise Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 100
+    Range: 5
+    Jobs:
+      Archer: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      if (BaseLevel>=20)
+        bonus bBaseAtk,15;
+      if (BaseLevel>=30)
+         bonus bBaseAtk,20;
+      if (BaseLevel>=45)
+         bonus bBaseAtk,25;
+  - Id: 700037
+    AegisName: 2Para_Bow_RG
+    Name: Paradise Rogue Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 180
+    Range: 5
+    Jobs:
+      Rogue: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"AC_DOUBLE",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"AC_DOUBLE",15;
+  - Id: 700038
+    AegisName: 2Para_Bow1_HT
+    Name: Paradise Hunter Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 180
+    Range: 5
+    Jobs:
+      Hunter: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"AC_SHOWER",20;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"AC_DOUBLE",20;
+  - Id: 700039
+    AegisName: 2Para_Bow2_HT
+    Name: Paradise Hunter Crossbow
+    Type: Weapon
+    SubType: Bow
+    Attack: 180
+    Range: 5
+    Jobs:
+      Hunter: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"HT_BLITZBEAT",15;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"HT_BLITZBEAT",10;
+  - Id: 700040
+    AegisName: 2Para_Bow_BD
+    Name: Paradise Bard&Dancer Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 180
+    Range: 5
+    Jobs:
+      BardDancer: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"AC_SHOWER",20;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"AC_DOUBLE",20;
+  - Id: 700041
+    AegisName: 3Para_Bow_SC
+    Name: Paradise Shadow Chaser Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 200
+    Range: 5
+    Jobs:
+      Rogue: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("AC_VULTURE");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus bVariableCastrate,-10;
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",25;
+         bonus2 bSkillAtk,"SC_FEINTBOMB",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"SC_TRIANGLESHOT",25;
+               bonus2 bSkillAtk,"SC_FEINTBOMB",25;
+            }
+         }
+      }
+  - Id: 700042
+    AegisName: 3Para_Bow1_RA
+    Name: Paradise Ranger Bow
+    Type: Weapon
+    SubType: Bow
+    Attack: 200
+    Range: 5
+    Jobs:
+      Hunter: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("AC_OWL");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"RA_ARROWSTORM",-700;
+         bonus2 bSkillAtk,"RA_ARROWSTORM",25;
+         if (BaseLevel>=110) {
+            bonus bLongAtkRate,15;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115)
+               bonus2 bSkillAtk,"RA_ARROWSTORM",15;
+         }
+      }
+  - Id: 700043
+    AegisName: 3Para_Bow2_RA
+    Name: Paradise Ranger Crossbow
+    Type: Weapon
+    SubType: Bow
+    Attack: 200
+    Range: 5
+    Jobs:
+      Hunter: true
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("AC_VULTURE");
+      bonus2 bAddClass,Class_All,5;
+      bonus bAspdRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"RA_AIMEDBOLT",-1000;
+         bonus2 bSkillAtk,"SN_SHARPSHOOTING",25;
+         bonus2 bSkillAtk,"RA_AIMEDBOLT",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"SN_SHARPSHOOTING",15;
+               bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
+            }
+         }
+      }
   - Id: 800000
     AegisName: IDTest_gun
     Name: IDTest gun
@@ -139003,6 +142538,104 @@ Body:
                if (.@r>=12) {
                   bonus bLongAtkRate,15;
                }
+            }
+         }
+      }
+  - Id: 800004
+    AegisName: 1Para_Revolver
+    Name: Paradise Revolver
+    Type: Weapon
+    SubType: Revolver
+    Attack: 60
+    Range: 7
+    Jobs:
+      Gunslinger: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 2
+    EquipLevelMin: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      if (BaseLevel>=20)
+        bonus bBaseAtk,15;
+      if (BaseLevel>=30)
+         bonus bBaseAtk,20;
+      if (BaseLevel>=45)
+         bonus bBaseAtk,25;
+  - Id: 800005
+    AegisName: 2Para_Revolver_GS
+    Name: Paradise Gunslinger Revolver
+    Type: Weapon
+    SubType: Revolver
+    Attack: 180
+    Range: 7
+    Jobs:
+      Gunslinger: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bAspdRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"GS_RAPIDSHOWER",20;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"GS_DESPERADO",20;
+  - Id: 800006
+    AegisName: 3Para_Revolver_RL
+    Name: Paradise Rebellion Revolver
+    Type: Weapon
+    SubType: Revolver
+    Attack: 200
+    Range: 7
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("GS_CHAINACTION");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus bLongAtkRate,10;
+         bonus2 bSkillAtk,"GS_DESPERADO",25;
+         bonus2 bSkillAtk,"RL_FIREDANCE",25;
+         if (BaseLevel>=110) {
+            bonus bDelayrate,-10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"GS_DESPERADO",15;
+               bonus2 bSkillAtk,"RL_FIREDANCE",15;
             }
          }
       }
@@ -139105,6 +142738,36 @@ Body:
             }
          }
       }
+  - Id: 810003
+    AegisName: 2Para_Rifle_GS
+    Name: Paradise Gunslinger Rifle
+    Type: Weapon
+    SubType: Rifle
+    Attack: 180
+    Range: 9
+    Jobs:
+      Gunslinger: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 3
+    EquipLevelMin: 45
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      if (BaseLevel>=60)
+         bonus bLongAtkRate,10;
+      if (BaseLevel>=75)
+         bonus2 bSkillAtk,"GS_TRACKING",10;
+      if (BaseLevel>=90)
+         bonus2 bSkillAtk,"GS_TRACKING",15;
   - Id: 820000
     AegisName: Ep172_1h_Shotgun
     Name: Lust Shatter
@@ -139325,6 +142988,45 @@ Body:
                if (.@r>=12) {
                   bonus bLongAtkRate,15;
                }
+            }
+         }
+      }
+  - Id: 830004
+    AegisName: 3Para_Gatling_RL
+    Name: Paradise Rebellion Gatling Gun
+    Type: Weapon
+    SubType: Gatling
+    Attack: 200
+    Range: 9
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@a = getskilllv("GS_SINGLEACTION");
+      bonus2 bAddClass,Class_All,5;
+      bonus bLongAtkRate,1*.@a;
+      if (BaseLevel>=105) {
+         bonus2 bSkillCooldown,"RL_FIRE_RAIN",-1000;
+         bonus2 bSkillAtk,"RL_FIRE_RAIN",25;
+         bonus2 bSkillAtk,"RL_R_TRIP",25;
+         if (BaseLevel>=110) {
+            bonus bLongAtkRate,10;
+            bonus2 bAddSize,Size_All,15;
+            if (BaseLevel>=115) {
+               bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
+               bonus2 bSkillAtk,"RL_R_TRIP",15;
             }
          }
       }

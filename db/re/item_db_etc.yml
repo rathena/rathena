@@ -6300,7 +6300,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bIgnoreDefClass,Class_Normal;
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       bonus2 bHPLossRate,666,10000;
     UnEquipScript: |
       if ((Hp<=999) && !getmapflag(strcharinfo(3),mf_pvp) && !getmapflag(strcharinfo(3),mf_pvp_noparty) && !getmapflag(strcharinfo(3),mf_pvp_noguild)) {
@@ -9540,10 +9540,11 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@rate = ((getrefine()>14)?7:5);
+      .@duration = ((getrefine()>14)?10000:5000);
       bonus bMaxHPrate,.@rate;
       bonus bMaxSPrate,.@rate;
-      bonus2 bHPRegenRate,50,10000;
-      bonus2 bSPRegenRate,10,10000;
+      bonus2 bHPRegenRate,50,.@duration;
+      bonus2 bSPRegenRate,10,.@duration;
   - Id: 4483
     AegisName: Sealed_Dracula_Card
     Name: Sealed Dracula Card
@@ -9618,7 +9619,7 @@ Body:
       bonus bBaseAtk,(JobLevel/20);
       bonus bCritical,(JobLevel/20);
       bonus bHit,(JobLevel/20);
-      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",5,1;
+      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",2,1;
   - Id: 4488
     AegisName: Sealed_D_Lord_Card
     Name: Sealed Dark Lord Card
@@ -9793,7 +9794,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bIgnoreDefClass,Class_Normal;
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       if (getrefine()>14)
          bonus2 bHPLossRate,777,8000;
       else
@@ -9845,7 +9846,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bBreakWeaponRate,(.@r>14?800:500);
-      bonus bBreakArmorRate,(.@r>14?600:500);
+      bonus bBreakArmorRate,(.@r>14?600:400);
   - Id: 4503
     AegisName: Sealed_Apocalips_H_Card
     Name: Sealed Vesper Card
@@ -9980,7 +9981,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAddEff,Eff_Silence,500,ATF_MAGIC;
+      bonus3 bAddEff,Eff_Silence,1000,ATF_MAGIC;
   - Id: 4512
     AegisName: Parus_Card
     Name: Parus Card
@@ -10087,7 +10088,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAddEff,Eff_Burning,500,ATF_TARGET;
+      bonus3 bAddEff,Eff_Burning,300,ATF_TARGET;
   - Id: 4519
     AegisName: Butoijo_Card
     Name: Butoijo Card
@@ -10171,9 +10172,8 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,2;
-      if (BaseClass == Job_Swordman) {
-         bonus bStr,2+(getrefine()/3);
-      }
+      if (BaseClass == Job_Swordman)
+         bonus bStr,getrefine()/3;
   - Id: 4525
     AegisName: Kraken_Card
     Name: Kraken Card
@@ -10269,9 +10269,8 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bLuk,2;
-      if (BaseClass == Job_Merchant) {
-         bonus bLuk,2+(getrefine()/3);
-      }
+      if (BaseClass == Job_Merchant)
+         bonus bLuk,getrefine()/3;
   - Id: 4531
     AegisName: Red_Eruma_Card
     Name: Red Eruma Card
@@ -11031,7 +11030,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      autobonus "{ bonus bAgi,44; heal 0,-40; }",500,3000,0,"{ sc_start SC_SPEEDUP1,3000,50; }";
+      autobonus2 "{ bonus bAgi,44; bonus bNoWalkDelay; heal 0,-40; }",50,3000,0,"{ sc_start SC_SPEEDUP1,3000,50; }";
   - Id: 4582
     AegisName: Bungisngis_Card
     Name: Bungisngis Card
@@ -11953,7 +11952,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       /* Unofficial chance */
-      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,10;
+      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,30;
   - Id: 4657
     AegisName: Grave_A_Mummy_Card
     Name: Nightmare Ancient Mummy Card
