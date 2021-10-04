@@ -3214,7 +3214,7 @@ void clif_guild_castle_list(struct map_session_data* sd)
 	nullpo_retv(sd);
 
 	struct guild* g = sd->guild;
-	if (g == NULL)
+	if (g == nullptr)
 		return;
 
 	int castle_count = guild_checkcastles(g);
@@ -3272,11 +3272,11 @@ static void clif_parse_guild_castle_info_request(int fd, struct map_session_data
 	const struct PACKET_CZ_CASTLE_INFO_REQUEST* p = (struct PACKET_CZ_CASTLE_INFO_REQUEST*)RFIFOP(fd, 0);
 	struct guild* g = sd->guild;
 
-	if (g == NULL)
+	if (g == nullptr)
 		return;
 
 	std::shared_ptr<guild_castle> gc = castle_db.find(p->castle_id);
-	if (gc == NULL)
+	if (gc == nullptr)
 		return;
 	if (gc->guild_id != g->guild_id)
 		return;
@@ -3290,12 +3290,12 @@ void clif_parse_guild_castle_teleport_request(int fd, struct map_session_data* s
 	const struct PACKET_CZ_CASTLE_TELEPORT_REQUEST* p = (struct PACKET_CZ_CASTLE_TELEPORT_REQUEST*)RFIFOP(fd, 0);
 	struct guild* g = sd->guild;
 
-	if (g == NULL)
+	if (g == nullptr)
 		return;
 
 	std::shared_ptr<guild_castle> gc = castle_db.find(p->castle_id);
 
-	if (gc == NULL)
+	if (gc == nullptr)
 		return;
 	if (gc->enable_client_warp == false)
 		return;
@@ -3306,10 +3306,7 @@ void clif_parse_guild_castle_teleport_request(int fd, struct map_session_data* s
 		return;
 
 	int zeny = gc->zeny;
-	if (gc->siege_type == SIEGE_TYPE_FE && agit_flag) {
-		zeny = gc->zeny_siege;
-	}
-	else if (gc->siege_type == SIEGE_TYPE_SE && agit2_flag) {
+	if ((gc->siege_type == SIEGE_TYPE_FE && agit_flag) || (gc->siege_type == SIEGE_TYPE_SE && agit2_flag)) {
 		zeny = gc->zeny_siege;
 	}
 	else if (gc->siege_type == SIEGE_TYPE_TE) {

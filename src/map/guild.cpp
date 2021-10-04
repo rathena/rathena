@@ -363,8 +363,10 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "WarpX")) {
 		uint16 warp_x;
 
-		if (!this->asUInt16(node, "WarpX", warp_x))
+		if (!this->asUInt16(node, "WarpX", warp_x)) {
+			this->invalidWarning(node["WarpX"], "Invalid WarpX %hu, defaulting to 0.\n", warp_x);
 			gc->warp_x = 0;
+		}
 
 		gc->warp_x = warp_x;
 	}
@@ -372,33 +374,41 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "WarpY")) {
 		uint16 warp_y;
 
-		if (!this->asUInt16(node, "WarpY", warp_y))
+		if (!this->asUInt16(node, "WarpY", warp_y)) {
+			this->invalidWarning(node["WarpY"], "Invalid WarpY %hu, defaulting to 0.\n", warp_y);
 			gc->warp_y = 0;
+		}
 
 		gc->warp_y = warp_y;
 	}
 
 	if (this->nodeExists(node, "WarpCost")) {
-		uint16 zeny;
+		uint32 zeny;
 
-		if (!this->asUInt16(node, "WarpCost", zeny))
+		if (!this->asUInt32(node, "WarpCost", zeny)) {
+			this->invalidWarning(node["WarpCost"], "Invalid WarpCost %u, defaulting to 100.\n", zeny);
 			gc->zeny = 100;
+		}
 
 		gc->zeny = zeny;
 	} else {
-		gc->zeny = 100;
+		if (!exists)
+			gc->zeny = 100;
 	}
 
 	if (this->nodeExists(node, "WarpCostSiege")) {
-		uint16 zeny_siege;
+		uint32 zeny_siege;
 
-		if (!this->asUInt16(node, "WarpCostSiege", zeny_siege))
+		if (!this->asUInt16(node, "WarpCostSiege", zeny_siege)) {
+			this->invalidWarning(node["WarpCostSiege"], "Invalid WarpCostSiege %u, defaulting to 100000.\n", zeny_siege);
 			gc->zeny_siege = 100000;
+		}
 
 		gc->zeny_siege = zeny_siege;
 	}
 	else {
-		gc->zeny_siege = 100000;
+		if (!exists)
+			gc->zeny_siege = 100000;
 	}
 
 	if (!exists)
