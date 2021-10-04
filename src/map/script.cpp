@@ -19212,7 +19212,7 @@ BUILDIN_FUNC(unitskilluseid)
 			}
 			TBL_MOB* md = map_id2md(bl->id);
 			if (md)
-				mob_chat_display_message(md, static_cast<uint16>(msg_id));
+				mob_chat_display_message(*md, static_cast<uint16>(msg_id));
 		}
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
@@ -19266,7 +19266,7 @@ BUILDIN_FUNC(unitskillusepos)
 			}
 			TBL_MOB* md = map_id2md(bl->id);
 			if (md)
-				mob_chat_display_message(md, static_cast<uint16>(msg_id));
+				mob_chat_display_message(*md, static_cast<uint16>(msg_id));
 		}
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
@@ -25188,6 +25188,9 @@ BUILDIN_FUNC(mob_setidleevent){
 	}
 
 	struct mob_data* md = (struct mob_data*)bl;
+	if (md == nullptr)
+		return SCRIPT_CMD_FAILURE;
+
 	const char* idle_event = script_getstr( st, 3 );
 
 	check_event( st, idle_event );

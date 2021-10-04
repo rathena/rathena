@@ -3669,18 +3669,18 @@ struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 }
 
 // Display message from mob_chat_db.yml
-bool mob_chat_display_message (struct mob_data *md, uint16 msg_id) {
+bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
 	std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(msg_id);
 
 	if (mc != nullptr) {
-		std::string name = md->name, output;
+		std::string name = md.name, output;
 		std::size_t unique = name.find("#");
 
 		if (unique != std::string::npos)
 			name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
 		output = name + " : " + mc->msg;
 
-		clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
+		clif_messagecolor(&md.bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
 		return true;
 	}
 	return false;
@@ -3885,7 +3885,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 		}
 		//Skill used. Post-setups...
 		if ( ms[i]->msg_id ){ //Display color message [SnakeDrak]
-			mob_chat_display_message(md, ms[i]->msg_id);
+			mob_chat_display_message(*md, ms[i]->msg_id);
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
 			for (j = 0; j < ms.size(); j++)

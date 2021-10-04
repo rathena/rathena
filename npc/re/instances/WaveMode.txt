@@ -4,9 +4,10 @@
 //= [Walkthrough Conversion]
 //= Wave Mode Forest and Sky Instances
 //- Officially monsters can use their skills
-//  (NPC_SUMMONSLAVE, at least). NPC_EMOTION and
-//  NPC_EMOTION_ON have been blocked since it disrupts the
-//  walk system of the instance on rAthena.
+//    (NPC_SUMMONSLAVE, at least). NPC_EMOTION and
+//    NPC_EMOTION_ON have been blocked since it disrupts the
+//    walk system of the instance on rAthena.
+//- Note: The instance is currently disabled on KRO.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
