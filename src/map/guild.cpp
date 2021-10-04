@@ -346,6 +346,11 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 
 		gc->siege_type = static_cast<e_siege_type>(constant);
 	}
+	else {
+		if (!exists)
+			gc->enable_client_warp = SIEGE_TYPE_TE;
+	}
+
 
 	if (this->nodeExists(node, "EnableClientWarp")) {
 		bool enable_client_warp;
