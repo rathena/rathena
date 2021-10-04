@@ -404,7 +404,7 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "WarpCostSiege")) {
 		uint32 zeny_siege;
 
-		if (!this->asUInt16(node, "WarpCostSiege", zeny_siege)) {
+		if (!this->asUInt32(node, "WarpCostSiege", zeny_siege)) {
 			this->invalidWarning(node["WarpCostSiege"], "Invalid WarpCostSiege %u, defaulting to 100000.\n", zeny_siege);
 			gc->zeny_siege = 100000;
 		}
