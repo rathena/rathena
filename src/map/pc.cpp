@@ -4116,7 +4116,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_ADD_ITEM_HEAL_RATE: // bonus2 bAddItemHealRate,iid,n;
 		if(sd->state.lr_flag == 2)
 			break;
-		if (!itemdb_exists(type2)) {
+		if( !item_db.exists( type2 ) ){
 			ShowWarning("pc_bonus2: SP_ADD_ITEM_HEAL_RATE Invalid item with id %d\n", type2);
 			break;
 		}
@@ -4382,7 +4382,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		if( !itemdb_exists( type2 ) ){
+		if( !item_db.exists( type2 ) ){
 			ShowWarning( "pc_bonus2: SP_ADD_ITEM_SPHEAL_RATE Invalid item with id %d\n", type2 );
 			break;
 		}
