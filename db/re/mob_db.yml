@@ -45822,6 +45822,7 @@ Body:
         StealProtected: true
   - Id: 2166
     AegisName: I_HORN_SCARABA_EGG
+#   Name: Gold One-Horn Scaraba Egg
     Name: Gold One-Horn Scaraba E
     Level: 125
     Hp: 126000
@@ -45857,6 +45858,7 @@ Body:
         Rate: 5
   - Id: 2167
     AegisName: I_HORN_SCARABA2_EGG
+#   Name: Gold Two-Horn Scaraba Egg
     Name: Gold Two-Horn Scaraba Eg
     Level: 126
     Hp: 132000
@@ -52899,6 +52901,7 @@ Body:
       Detector: true
   - Id: 2360
     AegisName: N_ANCIENT_MUMMY
+#   Name: Ancient Mummy (Nightmare)
     Name: Ancient Mummy (Nightmare
     JapaneseName: Nightmare Ancient Mummy
     Level: 141
@@ -56128,6 +56131,7 @@ Body:
         Rate: 500
   - Id: 2466
     AegisName: MG_GHOUL
+#   Name: Grand Chamberlain in pain
     Name: Grand Chamberlain in pai
     Level: 132
     Hp: 208100
@@ -56299,6 +56303,7 @@ Body:
   - Id: 2470
     AegisName: MG_KNIGHT_OF_ABYSS
     Name: Corrupted Abysmal Knight
+#   JapaneseName: Corrupted Knight of Abyss
     JapaneseName: Corrupted Knight of Abys
     Level: 142
     Hp: 225789
@@ -56427,6 +56432,7 @@ Body:
         Rate: 100
   - Id: 2473
     AegisName: MG_M_UNDEAD_KNIGHT
+#   Name: 1st Commander of Destruction
     Name: 1st Commander of Destruc
     Level: 145
     Hp: 950033
@@ -56473,6 +56479,7 @@ Body:
         StealProtected: true
   - Id: 2474
     AegisName: MG_F_UNDEAD_KNIGHT
+#   Name: 2nd Commander of Destruction
     Name: 2nd Commander of Destruc
     Level: 145
     Hp: 848011
@@ -60728,6 +60735,7 @@ Body:
         StealProtected: true
   - Id: 2648
     AegisName: C3_SOLDIER_SKELETON
+#   Name: Soldier Skeleton Ringleader
     Name: Soldier Skeleton Ringlea
     Level: 34
     Hp: 4020
@@ -61534,6 +61542,7 @@ Body:
         StealProtected: true
   - Id: 2665
     AegisName: C5_SHELTER
+#   Name: Elusive Mistress of Shelter
     Name: Elusive Mistress of Shel
     Level: 125
     Hp: 135000
@@ -62372,6 +62381,7 @@ Body:
         StealProtected: true
   - Id: 2683
     AegisName: C3_RICE_CAKE_BOY
+#   Name: Dumpling Child Ringleader
     Name: Dumpling Child Ringleade
     Level: 60
     Hp: 10490
@@ -62417,6 +62427,7 @@ Body:
         StealProtected: true
   - Id: 2684
     AegisName: C4_RETRIBUTION
+#   Name: Furious Baroness of Retribution
     Name: Furious Baroness of Retr
     Level: 121
     Hp: 110760
@@ -62515,6 +62526,7 @@ Body:
         StealProtected: true
   - Id: 2686
     AegisName: C1_RETRIBUTION
+#   Name: Swift Baroness of Retribution
     Name: Swift Baroness of Retrib
     Level: 121
     Hp: 110760
@@ -62799,6 +62811,7 @@ Body:
         StealProtected: true
   - Id: 2692
     AegisName: C3_RAWREL
+#   Name: Laurell Weinder Ringleader
     Name: Laurell Weinder Ringlead
     Level: 133
     Hp: 201410
@@ -64375,6 +64388,7 @@ Body:
         StealProtected: true
   - Id: 2726
     AegisName: C3_OBSERVATION
+#   Name: Dame of Sentinel Ringleader
     Name: Dame of Sentinel Ringlea
     Level: 127
     Hp: 172690
@@ -64675,6 +64689,7 @@ Body:
         StealProtected: true
   - Id: 2733
     AegisName: C5_NG_WRAITH_DEAD
+#   Name: Elusive Wraith Dead (Nightmare)
     Name: Elusive Wraith Dead (Nig
     Level: 110
     Hp: 77895
@@ -65086,6 +65101,7 @@ Body:
         StealProtected: true
   - Id: 2742
     AegisName: C4_MOROCC_1
+#   Name: Furious Incarnation of Morocc
     Name: Furious Incarnation of M
     Level: 132
     Hp: 319500
@@ -65131,6 +65147,7 @@ Body:
         Rate: 50
   - Id: 2743
     AegisName: C5_MOROCC_1
+#   Name: Elusive Incarnation of Morocc
     Name: Elusive Incarnation of M
     Level: 132
     Hp: 319500
@@ -65176,6 +65193,7 @@ Body:
         Rate: 50
   - Id: 2744
     AegisName: C1_MOROCC_1
+#   Name: Swift Incarnation of Morocc
     Name: Swift Incarnation of Mor
     Level: 132
     Hp: 319500
@@ -66611,6 +66629,7 @@ Body:
         StealProtected: true
   - Id: 2775
     AegisName: C2_LIVE_PEACH_TREE
+#   Name: Solid Enchanted Peach Tree
     Name: Solid Enchanted Peach Tr
     Level: 92
     Hp: 87770
@@ -68549,6 +68568,7 @@ Body:
         StealProtected: true
   - Id: 2817
     AegisName: C4_GLD_KOBOLD_2
+#   Name: Furious Dark Hammer Kobold
     Name: Furious Dark Hammer Kobo
     Level: 142
     Hp: 906700
@@ -68593,6 +68613,7 @@ Body:
         Rate: 10
   - Id: 2818
     AegisName: C5_GLD_KOBOLD_2
+#   Name: Elusive Dark Hammer Kobold
     Name: Elusive Dark Hammer Kobo
     Level: 142
     Hp: 906700
@@ -70304,6 +70325,7 @@ Body:
         StealProtected: true
   - Id: 2855
     AegisName: C3_DESERT_WOLF_B
+#   Name: Baby Desert Wolf Ringleader
     Name: Baby Desert Wolf Ringlea
     Level: 14
     Hp: 700
@@ -74719,6 +74741,7 @@ Body:
         StealProtected: true
   - Id: 2988
     AegisName: XM_ANTONIO
+#   Name: Wicked Vice Plant Manager
     Name: Wicked Vice Plant Manage
     Level: 149
     Hp: 44
@@ -76286,6 +76309,7 @@ Body:
       IgnoreRanged: true
   - Id: 3039
     AegisName: B_MOROCC_1
+#   Name: Blazing Morocc Reincarnation
     Name: Blazing Morocc Reincarna
     Level: 149
     Hp: 8000000
@@ -76318,6 +76342,7 @@ Body:
       CanMove: true
   - Id: 3040
     AegisName: B_MOROCC_2
+#   Name: Distorted Morocc Reincarnation
     Name: Distorted Morocc Reincar
     Level: 149
     Hp: 6400000
@@ -76350,6 +76375,7 @@ Body:
       CanMove: true
   - Id: 3041
     AegisName: B_MOROCC_4
+#   Name: Freezing Morocc Reincarnation
     Name: Freezing Morocc Reincarn
     Level: 149
     Hp: 7700000
@@ -82909,6 +82935,7 @@ Body:
         RandomOptionGroup: AS_WEAPON_2
   - Id: 3481
     AegisName: AS_EVIL_SHADOW1
+#   Name: Immortal Nightmare Shadow
     Name: Immortal Nightmare Shado
     Level: 160
     Hp: 423330

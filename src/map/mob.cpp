@@ -4305,8 +4305,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (name.length() > NAME_LENGTH) {
-			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, skipping.\n", name.c_str(), NAME_LENGTH - 1);
-			return 0;
+			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
 		name.resize(NAME_LENGTH);
@@ -4320,8 +4319,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (name.length() > NAME_LENGTH) {
-			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, skipping.\n", name.c_str(), NAME_LENGTH - 1);
-			return 0;
+			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
 		name.resize(NAME_LENGTH);
@@ -4335,8 +4333,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (name.length() > NAME_LENGTH) {
-			this->invalidWarning(node["JapaneseName"], "JapaneseName \"%s\" exceeds maximum of %d characters, skipping.\n", name.c_str(), NAME_LENGTH - 1);
-			return 0;
+			this->invalidWarning(node["JapaneseName"], "JapaneseName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
 		name.resize(NAME_LENGTH);
