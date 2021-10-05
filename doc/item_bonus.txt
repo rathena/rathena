@@ -187,13 +187,16 @@ bonus bNoMiscDamage,n;  		Adds n% reduction to received misc damage
 
 Healing
 -------
-bonus bHealPower,n;      			Increases heal amount of all heal skills by n%
-bonus bHealPower2,n;     			Increases heal amount if you are healed by any skills by n%
-bonus2 bSkillHeal,sk,n;  			Increases heal amount of skill sk by n%
-bonus2 bSkillHeal2,sk,n; 			Increases heal amount if you are healed by skill sk by n%
-bonus bAddItemHealRate,n;			Increases HP recovered by n% for healing items
-bonus2 bAddItemHealRate,iid,n;		Increases HP recovered by n% for item iid
-bonus2 bAddItemGroupHealRate,ig,n;	Increases HP recovered by n% for items of item group ig
+bonus bHealPower,n;						Increases heal amount of all heal skills by n%
+bonus bHealPower2,n;					Increases heal amount if you are healed by any skills by n%
+bonus2 bSkillHeal,sk,n;					Increases heal amount of skill sk by n%
+bonus2 bSkillHeal2,sk,n;				Increases heal amount if you are healed by skill sk by n%
+bonus bAddItemHealRate,n;				Increases HP recovered by n% for healing items
+bonus2 bAddItemHealRate,iid,n;			Increases HP recovered by n% for item iid
+bonus2 bAddItemGroupHealRate,ig,n;		Increases HP recovered by n% for items of item group ig
+bonus bAddItemSPHealRate,n;				Increases SP recovered by n% for healing items
+bonus2 bAddItemSPHealRate,iid,n;		Increases SP recovered by n% for item iid
+bonus2 bAddItemGroupSPHealRate,ig,n;	Increases SP recovered by n% for items of item group ig
 
 Cast time/delay
 ---------------

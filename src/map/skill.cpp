@@ -8240,8 +8240,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					}
 				}
 
-				if ((bonus = pc_get_itemgroup_bonus_group(sd, IG_POTION))) {
+				if ((bonus = pc_get_itemgroup_bonus_group(sd, IG_POTION, sd->itemgrouphealrate))) {
 					hp += hp * bonus / 100;
+				}
+
+				if( ( bonus = pc_get_itemgroup_bonus_group( sd, IG_POTION, sd->itemgroupsphealrate ) ) ){
 					sp += sp * bonus / 100;
 				}
 
