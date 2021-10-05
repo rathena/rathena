@@ -52952,6 +52952,7 @@ Body:
         StealProtected: true
   - Id: 2361
     AegisName: G_N_ANCIENT_MUMMY
+#   Name: Ancient Mummy (Nightmare)
     Name: Ancient Mummy (Nightmare
     JapaneseName: Nightmare Ancient Mummy
     Level: 141
@@ -61213,6 +61214,7 @@ Body:
         StealProtected: true
   - Id: 2658
     AegisName: C3_SKELETON_GENERAL
+#   Name: Skeleton General Ringleader
     Name: Skeleton General Ringlea
     Level: 139
     Hp: 900650
@@ -62477,6 +62479,7 @@ Body:
         StealProtected: true
   - Id: 2685
     AegisName: C5_RETRIBUTION
+#   Name: Elusive Baroness of Retribution
     Name: Elusive Baroness of Retr
     Level: 121
     Hp: 110760
@@ -64732,6 +64735,7 @@ Body:
         Rate: 50
   - Id: 2734
     AegisName: C1_NG_WANDER_MAN
+#   Name: Furious Wanderer (Nightmare)
     Name: Furious Wanderer (Nightm
     Level: 151
     Hp: 653410
