@@ -241,9 +241,10 @@ static bool upgrade_item_db(std::string file, const uint32 source_version) {
 
 		// TODO: this currently converts all scripts using Literal syntax to normal double quote strings
 		body << input;
+		entries++;
 	}
 
-	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
