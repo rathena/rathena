@@ -1087,7 +1087,7 @@ OnTouch_:
 	if (.@seal_check == 0 || .@seal_check == 1) {
 		specialeffect2 EF_SILENCEATTACK;
 		percentheal -50,0;
-		sc_start Eff_Stone,30000,0;
+		sc_start SC_Stone,30000,0;
 		mes "Your SP has not recovered yet. You lost your SP on the altar, but it seems the power of the seal has returned.";
 		close;
 	}
@@ -1101,7 +1101,7 @@ OnTouch_:
 	else if (strnpcinfo(2) == "8") areamobuseskill .@map$,35,21,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	else if (strnpcinfo(2) == "10") areamobuseskill .@map$,35,109,10,1929,"NPC_INVINCIBLEOFF",1,0,0,ET_HELP,0;
 	percentheal -50,0;
-	sc_start Eff_Stone,20000,0;
+	sc_start SC_Stone,20000,0;
 	setquest 3041;
 	mapannounce .@map$, "The seal activated by putting magical power into the altar.",bc_map,"0x87ceeb";
 	mes "I can feel the power of the altar came back by adding magical power.";
