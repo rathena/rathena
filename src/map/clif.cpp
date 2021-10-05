@@ -878,7 +878,7 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 		if( dropEffect > 0 ){
 			p.showdropeffect = 1;
 			p.dropeffectmode = dropEffect - 1;
-		}else{
+		}else if (battle_config.rndopt_drop_pillar != 0){
 			uint8 optionCount = 0;
 
 			for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; i++) {
@@ -899,6 +899,9 @@ void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 				p.showdropeffect = 0;
 				p.dropeffectmode = DROPEFFECT_NONE;
 			}
+		} else {
+			p.showdropeffect = 0;
+			p.dropeffectmode = DROPEFFECT_NONE;
 		}
 	}else{
 		p.showdropeffect = 0;
