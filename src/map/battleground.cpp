@@ -267,6 +267,11 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(location, "StartEvent", map_entry.bgcallscript))
 					return 0;
 
+				if (map_entry.bgcallscript.length() > EVENT_NAME_LENGTH) {
+					this->invalidWarning(location["StartEvent"], "StartEvent \"%s\" exceeds maximum of %d characters, skipping.\n", map_entry.bgcallscript.c_str(), EVENT_NAME_LENGTH - 1);
+					return 0;
+				}
+
 				map_entry.bgcallscript.resize(EVENT_NAME_LENGTH);
 
 				if (map_entry.bgcallscript.find("::On") == std::string::npos) {

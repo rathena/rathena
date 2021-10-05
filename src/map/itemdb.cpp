@@ -65,6 +65,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AegisName", name))
 			return 0;
 
+		if (name.length() > ITEM_NAME_LENGTH) {
+			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, skipping.\n", name.c_str(), ITEM_NAME_LENGTH - 1);
+			return 0;
+		}
+
 		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
 
 		if (id != nullptr && id->nameid != nameid) {
@@ -97,6 +102,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asString(node, "Name", name))
 			return 0;
+
+		if (name.length() > ITEM_NAME_LENGTH) {
+			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, skipping.\n", name.c_str(), ITEM_NAME_LENGTH - 1);
+			return 0;
+		}
 
 		if( exists ){
 			// Create a copy
