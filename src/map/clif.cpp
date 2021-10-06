@@ -3314,12 +3314,10 @@ void clif_parse_guild_castle_teleport_request(int fd, struct map_session_data* s
 		return;
 	}
 
-	if (sd->status.zeny < zeny) {
+	if (zeny && pc_payzeny(sd, zeny, LOG_TYPE_OTHER, NULL)) {
 		clif_guild_castle_teleport_res(sd, SIEGE_TP_NOT_ENOUGH_ZENY);
 		return;
 	}
-	sd->status.zeny -= zeny;
-	clif_updatestatus(sd, SP_ZENY);
 	pc_setpos(sd, gc->mapindex, gc->warp_x, gc->warp_y, CLR_OUTSIGHT);
 #endif
 }
