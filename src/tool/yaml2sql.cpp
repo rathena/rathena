@@ -51,6 +51,8 @@
 
 using namespace rathena;
 
+#define CONVERT_ALL
+
 #ifndef WIN32
 int getch( void ){
     struct termios oldattr, newattr;

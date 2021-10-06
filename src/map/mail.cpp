@@ -396,9 +396,14 @@ bool mail_invalid_operation(struct map_session_data *sd)
 		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
 		return true;
 	}
-#endif
+#else
+	if( map_getmapflag( sd->bl.m, MF_NORODEX ) ){
+		clif_displaymessage( sd->fd, msg_txt( sd, 796 ) ); // You cannot use RODEX on this map.
+		return true;
+	}
 
 	return false;
+#endif
 }
 
 /**
