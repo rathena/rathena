@@ -2259,8 +2259,8 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 		if (!(flag&1) || (flag&2)) { //Normal attacks
 			atkmin = status->dex;
 
-			if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]])
-				atkmin = atkmin*(80 + sd->inventory_data[sd->equip_index[type]]->wlv*20)/100;
+			if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]] && sd->inventory_data[sd->equip_index[type]]->type == IT_WEAPON)
+				atkmin = atkmin*(80 + sd->inventory_data[sd->equip_index[type]]->weapon_level*20)/100;
 
 			if (atkmin > atkmax)
 				atkmin = atkmax;
@@ -3816,7 +3816,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 
 					if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
 						skillratio += -100 + sd->inventory_data[index]->weight / 10 + sd->inventory_data[index]->atk +
-							100 * sd->inventory_data[index]->wlv * (sd->inventory.u.items_inventory[index].refine + 6);
+							100 * sd->inventory_data[index]->weapon_level * (sd->inventory.u.items_inventory[index].refine + 6);
 				}
 				status_change_end(src,SC_CRUSHSTRIKE,INVALID_TIMER);
 				skill_break_equip(src,src,EQP_WEAPON,2000,BCT_SELF);

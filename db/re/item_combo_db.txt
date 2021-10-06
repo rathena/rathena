@@ -2516,3 +2516,13 @@
 490124:490125,{ bonus bFixedCast,-200; if (BaseLevel >= 30) { bonus bMatkRate,1; bonus bVariableCastrate,-2; } if (BaseLevel >= 45) { bonus bMatkRate,1; bonus bVariableCastrate,-3; } if (BaseLevel >= 85) { bonus bMatkRate,1; bonus bVariableCastrate,-5; } }
 490126:490127,{ bonus bFixedCast,-200; bonus bAspdRate,10; if (BaseLevel >= 105) { bonus2 bAddClass,Class_All,2; } if (BaseLevel >= 110) { bonus bShortAtkRate,5; bonus bLongAtkRate,5; } if (BaseLevel >= 120) { bonus bCritAtkRate,5; } }
 490128:490129,{ bonus bFixedCast,-200; bonus bVariableCastrate,-10; if (BaseLevel >= 105) { bonus bMatkRate,2; } if (BaseLevel >= 110) { bonus2 bMagicAtkEle,Ele_All,5; } if (BaseLevel >= 120) { bonus2 bMagicAddEle,Ele_All,5; } }
+// 400142:500024,{ bonus2 bAddSize,Size_All,15; bonus2 bSkillAtk,"GN_CARTCANNON",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400142:570016,{ bonus bLongAtkRate,15; bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400142:580016,{ bonus bLongAtkRate,15; bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400142:700029,{ bonus2 bAddRace,RC_All,15; bonus2 bSkillAtk,"SN_SHARPSHOOTING",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400145:510030,{ bonus2 bMagicAtkEle,Ele_All,15; bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400145:550023,{ bonus2 bMagicAddRace,RC_All,15; bonus2 bSkillAtk,"SO_VARETYR_SPEAR",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400145:640017,{ bonus2 bMagicAddSize,Size_All,15; bonus2 bSkillAtk,"WL_CRIMSONROCK",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400151:560017,{ bonus bMaxHPrate,15; bonus2 bSkillAtk,"SR_TIGERCANNON",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400151:590020,{ bonus2 bAddSize,Size_All,15; bonus2 bMagicAddSize,Size_All,15; bonus2 bSkillAtk,"AB_DUPLELIGHT",12*(getequiprefinerycnt(EQI_HAND_R)/2); }
+// 400151:610019,{ bonus bDelayrate,-15; bonus2 bSkillAtk,"GC_ROLLINGCUTTER",12*(getequiprefinerycnt(EQI_HAND_R)/2); }

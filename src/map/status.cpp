@@ -417,13 +417,12 @@ std::shared_ptr<s_refine_level_info> RefineDatabase::findCurrentLevelInfo( const
 bool RefineDatabase::calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level ){
 	if( data.type == IT_WEAPON ){
 		refine_type = REFINE_TYPE_WEAPON;
-		level = data.wlv;
+		level = data.weapon_level;
 
 		return true;
 	}else if( data.type == IT_ARMOR ){
 		refine_type = REFINE_TYPE_ARMOR;
-		// TODO: implement when armor level is supported
-		level = 1;
+		level = data.armor_level;
 
 		return true;
 	}else if( data.type == IT_SHADOWGEAR ){
@@ -4304,7 +4303,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
 
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
-			int wlv = sd->inventory_data[index]->wlv;
+			int wlv = sd->inventory_data[index]->weapon_level;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
 
@@ -6919,7 +6918,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 			TBL_PC *sd = (TBL_PC*)bl;
 			short index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
 
-			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
+			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON && sd->inventory_data[index]->weapon_level == 4)
 				watk += sc->data[SC_NIBELUNGEN]->val2;
 		}
 	}
@@ -11907,7 +11906,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				short index = sd->equip_index[EQI_HAND_R];
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
-					val2 += 15 * sd->status.job_level + sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->wlv * status_get_lv(bl) / 100;
+					val2 += 15 * sd->status.job_level + sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->weapon_level * status_get_lv(bl) / 100;
 			} else // Monster
 				val2 += 750;
 			break;

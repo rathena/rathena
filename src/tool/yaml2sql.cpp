@@ -607,6 +607,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 
 		if (appendEntry(input["WeaponLevel"], value))
 			column.append("`weapon_level`,");
+		if (appendEntry(input["ArmorLevel"], value))
+			column.append("`armor_level`,");
 		if (appendEntry(input["EquipLevelMin"], value))
 			column.append("`equip_level_min`,");
 		if (appendEntry(input["EquipLevelMax"], value))

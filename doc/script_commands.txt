@@ -2782,43 +2782,63 @@ this is +10:
 
 ---------------------------------------
 
-*getequipweaponlv(<equipment slot>{,<char_id>})
+*getequipweaponlv({<equipment slot>{,<char_id>}})
 
 This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see
 'getequipid'.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
-a weapon level. You can, however, probably, use this field for other equippable
-custom items as a flag or something.
+a weapon level.
 
 If no item is equipped in this slot, or if it doesn't have a weapon level
 according to the database, 0 will be returned.
 
 Examples:
 
-// Right hand can only contain a weapon.
     switch (getequipweaponlv(EQI_HAND_R)) {
       case 1: mes "You are holding a lvl 1 weapon."; break;
       case 2: mes "You are holding a lvl 2 weapon."; break;
       case 3: mes "You are holding a lvl 3 weapon."; break;
       case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+      case 5: mes "You are holding a lvl 5 weapon."; break;
+      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
       default: mes "Seems you don't have a weapon on."; break;
     }
 
-// Left hand can hold either a weapon or shield.
-    if (getequipid(EQI_HAND_R) == 0) {
+    if (getequipid(EQI_HAND_L) == 0) {
         mes "Seems you have nothing equipped here.";
         close;
     }
     switch (getequipweaponlv(EQI_HAND_L)) {
-      case 0: mes "You are holding a shield, so it doesn't have a level."; break;
+      case 0: mes "You are not holding a weapon, so it doesn't have a level."; break;
       case 1: mes "You are holding a lvl 1 weapon."; break;
       case 2: mes "You are holding a lvl 2 weapon."; break;
       case 3: mes "You are holding a lvl 3 weapon."; break;
       case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+      case 5: mes "You are holding a lvl 5 weapon."; break;
+      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
+    }
+
+---------------------------------------
+
+*getequiparmorlv({<equipment slot>{,<char_id>}})
+
+This function returns the armor level for the item equipped in the specified
+equipment slot on the invoking character. For a list of equipment slots see
+'getequipid'.
+
+If no item is equipped in this slot, or if it doesn't have an armor level
+according to the database, 0 will be returned.
+
+    if (getequipid(EQI_ARMOR) == 0) {
+        mes "Seems you have nothing equipped here.";
+        close;
+    }
+    switch (getequiparmorlv(EQI_ARMOR)) {
+      case 1: mes "You are wearing a lvl 1 armor."; break;
+      case 2: mes "You are wearing a lvl 2 armor."; break;
+      case 3: mes "You are wearing a lvl 3 armor, hm, must be a custom design..."; break;
     }
 
 ---------------------------------------
@@ -3031,7 +3051,8 @@ Valid types are:
 	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
 	ITEMINFO_ID             (17)   -  item ID
 	ITEMINFO_AEGISNAME      (18)   -  aegis item name
-	
+	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
+
 See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------
@@ -8677,8 +8698,8 @@ Valid types are:
 	ITEMINFO_SELL            (1)   -  Sell Price
 	ITEMINFO_TYPE            (2)   -  Type
 	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		                        if = 0, then monsters don't drop it at all (rare or a quest item)
-		                        if = 10000, then this item is sold in NPC shops only
+	                                  if = 0, then monsters don't drop it at all (rare or a quest item)
+	                                  if = 10000, then this item is sold in NPC shops only
 	ITEMINFO_GENDER          (4)   -  Gender
 	ITEMINFO_LOCATIONS       (5)   -  Location(s)
 	ITEMINFO_WEIGHT          (6)   -  Weight
@@ -8692,6 +8713,7 @@ Valid types are:
 	ITEMINFO_ALIASNAME      (14)   -  AliasName
 	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
 	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
+	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
 
 Example:
 	setiteminfo 7049,ITEMINFO_WEIGHT,9990; // Stone now weighs 999.0
