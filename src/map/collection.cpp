@@ -220,8 +220,9 @@ int collection_catch_process2(struct map_session_data* sd, uint32 target_id)
 		itemdb_group.pc_get_itemgroup(collection->GroupID, 1, sd);
 	} else {
 		clif_collection_roulette(sd,0);
-		sd->catch_collection_class = COLLECTION_CATCH_FAIL;
 	}
+
+	sd->catch_collection_class = COLLECTION_CATCH_FAIL;
 
 	return 0;
 }
