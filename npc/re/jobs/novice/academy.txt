@@ -12818,6 +12818,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 
 	if (.@refinerycnt >= 10) {
 		mes "[Refining Machine Wagjak]";
@@ -12876,28 +12877,42 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 //	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 
-	switch(getequipweaponlv(.@part)) {
-	default:
-	case 0: // Armor
-		.@price = 20000;
+	if( .@itemtype == IT_ARMOR ){
+		.@equip_lv = getequiparmorlv( .@part );
 		.@type$ = "Armor";
-		break;
-	case 1: // Level 1 Weapon
-		.@price = 1000;
-		.@type$ = "Level 1 weapon";
-		break;
-	case 2: // Level 2 Weapon
-		.@price = 2000;
-		.@type$ = "Level 2 weapon";
-		break;
-	case 3: // Level 3 Weapon
-		.@price = 10000;
-		.@type$ = "Level 3 weapon";
-		break;
-	case 4: // Level 4 Weapon
-		.@price = 20000;
-		.@type$ = "Level 4 weapon";
-		break;
+
+		switch( .@equip_lv ){
+			case 1:
+				.@price = 20000;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else if( .@itemtype == IT_WEAPON ){
+		.@equip_lv = getequipweaponlv( .@part );
+		.@type$ = "Level " + .@equip_lv + " Weapon";
+
+		switch( .@equip_lv ){
+			case 1:
+				.@price = 1000;
+				break;
+			case 2:
+				set .@price,2000;
+				break;
+			case 3:
+				set .@price,10000;
+				break;
+			case 4:
+				set .@price,20000;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else{
+		// TODO:
+		close;
 	}
 
 	mes "[Refining Machine Wagjak]";

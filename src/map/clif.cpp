@@ -6985,32 +6985,28 @@ void clif_item_damaged(struct map_session_data* sd, unsigned short position)
 void clif_item_refine_list( struct map_session_data *sd ){
 	nullpo_retv( sd );
 
-	int fd = sd->fd;
+	struct PACKET_ZC_NOTIFY_WEAPONITEMLIST *p = (struct PACKET_ZC_NOTIFY_WEAPONITEMLIST *)packet_buffer;
 
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST ) + sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub ) * MAX_INVENTORY );
-	struct PACKET_ZC_NOTIFY_WEAPONITEMLIST *p = (struct PACKET_ZC_NOTIFY_WEAPONITEMLIST *)WFIFOP( fd, 0 );
-	p->packetType = 0x221;
+	p->packetType = HEADER_ZC_NOTIFY_WEAPONITEMLIST;
 
 	uint16 skill_lv = pc_checkskill( sd, WS_WEAPONREFINE );
 
-	int refine_item[5];
+	int refine_item[MAX_WEAPON_LEVEL];
 
 	refine_item[0] = -1;
 	refine_item[1] = pc_search_inventory( sd, ITEMID_PHRACON );
 	refine_item[2] = pc_search_inventory( sd, ITEMID_EMVERETARCON );
 	refine_item[3] = refine_item[4] = pc_search_inventory( sd, ITEMID_ORIDECON );
+#ifdef RENEWAL
+	refine_item[5] = -1;
+#endif
 
 	int count = 0;
 	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		uint16 wlv;
-
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].refine < skill_lv &&
-			sd->inventory.u.items_inventory[i].identify && ( wlv = itemdb_wlv(sd->inventory.u.items_inventory[i].nameid ) ) >= 1 &&
-			refine_item[wlv] != -1 && !( sd->inventory.u.items_inventory[i].equip & EQP_ARMS ) ){
+			sd->inventory_data[i] != nullptr && sd->inventory_data[i]->type == IT_WEAPON &&
+			sd->inventory.u.items_inventory[i].identify && sd->inventory_data[i]->weapon_level >= 1 &&
+			refine_item[sd->inventory_data[i]->weapon_level] != -1 && !( sd->inventory.u.items_inventory[i].equip & EQP_ARMS ) ){
 
 			p->items[count].index = client_index( i );
 			p->items[count].itemId = client_nameid( sd->inventory.u.items_inventory[i].nameid );
@@ -7021,7 +7017,8 @@ void clif_item_refine_list( struct map_session_data *sd ){
 	}
 
 	p->packetLength = sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST ) + sizeof( struct PACKET_ZC_NOTIFY_WEAPONITEMLIST_sub ) * count;
-	WFIFOSET( fd, p->packetLength );
+
+	clif_send( p, p->packetLength, &sd->bl, SELF );
 
 	if( count > 0 ){
 		sd->menuskill_id = WS_WEAPONREFINE;
@@ -21993,11 +21990,15 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 
 	// Try to refine the item
 	if( cost->chance >= ( rnd() % 10000 ) ){
+		log_pick_pc( sd, LOG_TYPE_OTHER, -1, item );
 		// Success
 		item->refine = cap_value( item->refine + 1, 0, MAX_REFINE );
+		log_pick_pc( sd, LOG_TYPE_OTHER, 1, item );
 		clif_misceffect( &sd->bl, 3 );
 		clif_refine( fd, 0, index, item->refine );
-		achievement_update_objective( sd, AG_ENCHANT_SUCCESS, 2, id->wlv, item->refine );
+		if( id->type == IT_WEAPON ){
+			achievement_update_objective( sd, AG_ENCHANT_SUCCESS, 2, id->weapon_level, item->refine );
+		}
 		clif_refineui_info( sd, index );
 	}else{
 		// Failure

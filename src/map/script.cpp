@@ -9185,21 +9185,28 @@ BUILDIN_FUNC(getequiprefinerycnt)
  * return (npc)
  *	x : weapon level
  *	0 : false
- * getequipweaponlv(<equipment slot>{,<char_id>})
+ * getequipweaponlv({<equipment slot>{,<char_id>}})
  *------------------------------------------*/
 BUILDIN_FUNC(getequipweaponlv)
 {
-	int i = -1, num;
-	TBL_PC *sd;
+	int num;
 
-	num = script_getnum(st, 2);
+	if( script_hasdata( st, 2 ) ){
+		num = script_getnum(st, 2);
+	}else{
+		num = EQI_COMPOUND_ON;
+	}
+
+	struct map_session_data* sd;
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num == -1){
+	int i = -1;
+
+	if( num == EQI_COMPOUND_ON ){
 		if( current_equip_item_index == -1 ){
 			script_pushint(st, 0);
 			return SCRIPT_CMD_FAILURE;
@@ -9208,10 +9215,53 @@ BUILDIN_FUNC(getequipweaponlv)
 		i = current_equip_item_index;
 	}else if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
-	if (i >= 0 && sd->inventory_data[i])
-		script_pushint(st, sd->inventory_data[i]->wlv);
-	else
-		script_pushint(st, 0);
+	if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON ){
+		script_pushint( st, sd->inventory_data[i]->weapon_level );
+	}else{
+		script_pushint( st, 0 );
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(getequiparmorlv){
+	int num;
+
+	if( script_hasdata( st, 2 ) ){
+		num = script_getnum(st, 2);
+	}else{
+		num = EQI_COMPOUND_ON;
+	}
+
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int i = -1;
+
+	if( num == EQI_COMPOUND_ON ){
+		if( current_equip_item_index == -1 ){
+			script_pushint( st, 0 );
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		i = current_equip_item_index;
+	}else if( equip_index_check( num ) ){
+		i = pc_checkequip( sd, equip_bitmask[num] );
+	}else{
+		ShowError( "buildin_getequiparmorlv: unsupported equip index %d.\n", num );
+		script_pushint( st, 0 );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR ){
+		script_pushint( st, sd->inventory_data[i]->armor_level );
+	}else{
+		script_pushint( st, 0 );
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -9308,12 +9358,15 @@ BUILDIN_FUNC(successrefitem) {
 		clif_additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,3);
-		achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
+		if( sd->inventory_data[i]->type == IT_WEAPON ){
+			achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->weapon_level, sd->inventory.u.items_inventory[i].refine);
+		}
 		if (sd->inventory.u.items_inventory[i].refine == battle_config.blacksmith_fame_refine_threshold &&
 			sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
-			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]))
+			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]) &&
+			sd->inventory_data[i]->type == IT_WEAPON )
 		{ // Fame point system [DracoRPG]
-			switch (sd->inventory_data[i]->wlv){
+			switch( sd->inventory_data[i]->weapon_level ){
 				case 1:
 					pc_addfame(sd, battle_config.fame_refine_lv1); // Success to refine to +10 a lv1 weapon you forged = +1 fame point
 					break;
@@ -14064,7 +14117,20 @@ BUILDIN_FUNC(getiteminfo)
 			}
 			break;
 		case ITEMINFO_EQUIPLEVELMIN: script_pushint(st, i_data->elv); break;
-		case ITEMINFO_WEAPONLEVEL: script_pushint(st, i_data->wlv); break;
+		case ITEMINFO_WEAPONLEVEL:
+			if( i_data->type == IT_WEAPON ){
+				script_pushint( st, i_data->weapon_level );
+			}else{
+				script_pushint( st, 0 );
+			}
+			break;
+		case ITEMINFO_ARMORLEVEL:
+			if( i_data->type == IT_ARMOR ){
+				script_pushint( st, i_data->armor_level );
+			}else{
+				script_pushint( st, 0 );
+			}
+			break;
 		case ITEMINFO_ALIASNAME: script_pushint(st, i_data->view_id); break;
 		case ITEMINFO_EQUIPLEVELMAX: script_pushint(st, i_data->elvmax); break;
 		case ITEMINFO_MAGICATTACK: {
@@ -14123,7 +14189,36 @@ BUILDIN_FUNC(setiteminfo)
 			}
 			break;
 		case ITEMINFO_EQUIPLEVELMIN: i_data->elv = static_cast<uint16>(value); break;
-		case ITEMINFO_WEAPONLEVEL: i_data->wlv = static_cast<uint16>(value); break;
+		case ITEMINFO_WEAPONLEVEL:
+			if( i_data->type == IT_WEAPON ){
+				if( value > MAX_WEAPON_LEVEL ){
+					ShowError( "buildin_setiteminfo: weapon level %d is above maximum %d.\n", value, MAX_WEAPON_LEVEL );
+					script_pushint( st, -1 );
+					return SCRIPT_CMD_FAILURE;
+				}
+
+				i_data->weapon_level = static_cast<uint16>(value);
+				break;
+			}else{
+				ShowError( "buildin_setiteminfo: Can not set a weapon level for %d.\n", i_data->nameid );
+				script_pushint( st, -1 );
+				return SCRIPT_CMD_FAILURE;
+			}
+		case ITEMINFO_ARMORLEVEL:
+			if( i_data->type == IT_ARMOR ){
+				if( value > MAX_ARMOR_LEVEL ){
+					ShowError( "buildin_setiteminfo: armor level %d is above maximum %d.\n", value, MAX_ARMOR_LEVEL );
+					script_pushint( st, -1 );
+					return SCRIPT_CMD_FAILURE;
+				}
+
+				i_data->armor_level = static_cast<uint16>(value);
+				break;
+			}else{
+				ShowError( "buildin_setiteminfo: Can not set an armor level for %d.\n", i_data->nameid );
+				script_pushint( st, -1 );
+				return SCRIPT_CMD_FAILURE;
+			}
 		case ITEMINFO_ALIASNAME: i_data->view_id = static_cast<t_itemid>(value); break;
 		case ITEMINFO_EQUIPLEVELMAX: i_data->elvmax = static_cast<uint16>(value); break;
 		case ITEMINFO_MAGICATTACK: {
@@ -25289,7 +25384,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequipisequiped,"i?"),
 	BUILDIN_DEF(getequipisenableref,"i?"),
 	BUILDIN_DEF(getequiprefinerycnt,"i?"),
-	BUILDIN_DEF(getequipweaponlv,"i?"),
+	BUILDIN_DEF(getequipweaponlv,"??"),
+	BUILDIN_DEF(getequiparmorlv, "??"),
 	BUILDIN_DEF(getequippercentrefinery,"i?"),
 	BUILDIN_DEF(successrefitem,"i??"),
 	BUILDIN_DEF(failedrefitem,"i?"),

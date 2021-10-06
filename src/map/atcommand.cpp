@@ -2362,7 +2362,9 @@ ACMD_FUNC(refine)
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);
 			clif_misceffect(&sd->bl, 3);
-			achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
+			if( sd->inventory_data[i]->type == IT_WEAPON ){
+				achievement_update_objective(sd, AG_ENCHANT_SUCCESS, 2, sd->inventory_data[i]->weapon_level, sd->inventory.u.items_inventory[i].refine);
+			}
 			count++;
 		}
 	}
