@@ -109944,7 +109944,8 @@ Body:
       bonus bMatk,10;
   - Id: 24709
     AegisName: S_2Para_WM_Weapon
-    Name: Minstrel & Wanderer Advanced Paradise Shadow Weapon
+#   Name: Minstrel & Wanderer Advanced Paradise Shadow Weapon
+    Name: Minstrel & Wanderer Adva
     Type: Shadowgear
     Jobs:
       BardDancer: true
