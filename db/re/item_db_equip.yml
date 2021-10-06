@@ -132030,6 +132030,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -132056,6 +132057,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -132082,6 +132084,7 @@ Body:
     Defense: 10
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -132103,6 +132106,7 @@ Body:
     Defense: 7
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -136494,6 +136498,7 @@ Body:
     Defense: 30
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -136527,6 +136532,7 @@ Body:
     Defense: 20
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -136560,6 +136566,7 @@ Body:
     Defense: 50
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -136591,6 +136598,7 @@ Body:
     Defense: 35
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -137074,6 +137082,7 @@ Body:
     Defense: 8
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -137105,6 +137114,7 @@ Body:
     Defense: 4
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -137131,6 +137141,7 @@ Body:
     Defense: 14
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -137217,6 +137228,7 @@ Body:
     Defense: 10
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -137732,6 +137744,7 @@ Body:
     Defense: 8
     Locations:
       Garment: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -137758,6 +137771,7 @@ Body:
     Defense: 4
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -137785,6 +137799,7 @@ Body:
     Defense: 14
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -137816,6 +137831,7 @@ Body:
     Defense: 10
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -138792,6 +138808,7 @@ Body:
     Type: Armor
     Locations:
       Left_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -138811,6 +138828,7 @@ Body:
     Type: Armor
     Locations:
       Right_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -138830,6 +138848,7 @@ Body:
     Type: Armor
     Locations:
       Left_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -138849,6 +138868,7 @@ Body:
     Type: Armor
     Locations:
       Right_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Trade:
       Override: 100
@@ -138868,6 +138888,7 @@ Body:
     Type: Armor
     Locations:
       Left_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -138887,6 +138908,7 @@ Body:
     Type: Armor
     Locations:
       Right_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -138907,6 +138929,7 @@ Body:
     Type: Armor
     Locations:
       Left_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
@@ -138926,6 +138949,7 @@ Body:
     Type: Armor
     Locations:
       Right_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Trade:
       Override: 100
