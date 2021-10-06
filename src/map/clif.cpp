@@ -102,7 +102,7 @@ enum e_inventory_type{
 	INVTYPE_INVENTORY = 0,
 	INVTYPE_CART = 1,
 	INVTYPE_STORAGE = 2,
-	INVTYPE_GUILD_STORAGE = 3
+	INVTYPE_GUILD_STORAGE = 3,
 };
 
 /** Converts item type to display it on client if necessary.
@@ -3302,7 +3302,9 @@ void clif_parse_guild_castle_teleport_request(int fd, struct map_session_data* s
 	if (gc->guild_id != g->guild_id)
 		return;
 
-	if (map_getmapflag(sd->bl.m, MF_GVG_CASTLE))
+	if (map_getmapflag(sd->bl.m, MF_GVG_CASTLE) 
+		|| map_getmapflag(sd->bl.m, MF_NOTELEPORT)
+		|| map_getmapflag(sd->bl.m, MF_NOWARP))
 		return;
 
 	int zeny = gc->zeny;
