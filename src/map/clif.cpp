@@ -16840,44 +16840,40 @@ void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
 void clif_cashshop_list( struct map_session_data* sd ){
 	nullpo_retv( sd );
 
-	int fd = sd->fd;
+	for( const auto& pair : cash_shop_db ){
+		std::shared_ptr<s_cash_item_tab> tab = pair.second;
 
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	for( int tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_MAX; tab++ ){
 		// Skip empty tabs, the client only expects filled ones
-		if( cash_shop_items[tab].count == 0 ){
+		if( tab->items.empty() ){
 			continue;
 		}
 
-		int len = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM ) + ( cash_shop_items[tab].count * sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub ) );
-		WFIFOHEAD( fd, len );
-		struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *p = (struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *)WFIFOP( fd, 0 );
+		struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *p = (struct PACKET_ZC_ACK_SCHEDULER_CASHITEM *)packet_buffer;
 
-		p->packetType = 0x8ca;
-		p->packetLength = len;
-		p->count = cash_shop_items[tab].count;
-		p->tabNum = tab;
+		p->packetType = HEADER_ZC_ACK_SCHEDULER_CASHITEM;
+		p->count = 0;
+		p->tabNum = tab->tab;
 
-		for( int i = 0; i < cash_shop_items[tab].count; i++ ){
-			p->items[i].itemId = client_nameid( cash_shop_items[tab].item[i]->nameid );
-			p->items[i].price = cash_shop_items[tab].item[i]->price;
+		for( std::shared_ptr<s_cash_item> item : tab->items ){
+			p->items[p->count].itemId = client_nameid( item->nameid );
+			p->items[p->count].price = item->price;
 #ifdef ENABLE_CASHSHOP_PREVIEW_PATCH
-			struct item_data* id = itemdb_search( cash_shop_items[tab].item[i]->nameid );
+			struct item_data* id = itemdb_search( item->nameid );
 
 			if( id == nullptr ){
-				p->items[i].location = 0;
-				p->items[i].viewSprite = 0;
+				p->items[p->count].location = 0;
+				p->items[p->count].viewSprite = 0;
 			}else{
-				p->items[i].location = pc_equippoint_sub( sd, id );
-				p->items[i].viewSprite = id->look;
+				p->items[p->count].location = pc_equippoint_sub( sd, id );
+				p->items[p->count].viewSprite = id->look;
 			}
 #endif
+			p->count++;
 		}
 
-		WFIFOSET( fd, len );
+		p->packetLength = sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM ) + p->count * sizeof( struct PACKET_ZC_ACK_SCHEDULER_CASHITEM_sub );
+
+		clif_send( p, p->packetLength, &sd->bl, SELF );
 	}
 }
 
@@ -20920,7 +20916,7 @@ void clif_parse_sale_close(int fd, struct map_session_data* sd) {
 
 /// Reply to a item search request for item sale administration.
 /// 09ad <result>.W <item id>.W <price>.L (ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO)
-void clif_sale_search_reply( struct map_session_data* sd, struct cash_item_data* item ){
+void clif_sale_search_reply( struct map_session_data* sd, std::shared_ptr<s_cash_item> item ){
 #if PACKETVER_SUPPORTS_SALES
 	struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO p;
 
@@ -20960,19 +20956,13 @@ void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 
 	std::shared_ptr<item_data> id = item_db.searchname( item_name );
 
-	if( id ){
-		int i;
-
-		for( i = 0; i < cash_shop_items[CASHSHOP_TAB_SALE].count; i++ ){
-			if( cash_shop_items[CASHSHOP_TAB_SALE].item[i]->nameid == id->nameid ){
-				clif_sale_search_reply( sd, cash_shop_items[CASHSHOP_TAB_SALE].item[i] );
-				return;
-			}
-		}
+	// not found
+	if( id == nullptr ){
+		clif_sale_search_reply( sd, nullptr );
+		return;
 	}
 
-	// not found
-	clif_sale_search_reply( sd, NULL );
+	clif_sale_search_reply( sd, cash_shop_db.findItemInTab( CASHSHOP_TAB_SALE, id->nameid ) );
 #endif
 }
 

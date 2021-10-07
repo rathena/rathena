@@ -35,6 +35,7 @@
 #include "atcommand.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
+#include "cashshop.hpp"
 #include "channel.hpp"
 #include "chat.hpp"
 #include "chrif.hpp"

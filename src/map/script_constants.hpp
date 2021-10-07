@@ -8198,6 +8198,19 @@
 	export_constant(REFINE_TYPE_SHADOW_ARMOR);
 	export_constant(REFINE_TYPE_SHADOW_WEAPON);
 
+	/* cash shop tabs */
+	export_constant(CASHSHOP_TAB_NEW);
+	export_constant(CASHSHOP_TAB_POPULAR);
+	export_constant(CASHSHOP_TAB_LIMITED);
+	export_constant(CASHSHOP_TAB_RENTAL);
+	export_constant(CASHSHOP_TAB_PERPETUITY);
+	export_constant(CASHSHOP_TAB_BUFF);
+	export_constant(CASHSHOP_TAB_RECOVERY);
+	export_constant(CASHSHOP_TAB_ETC);
+#if PACKETVER_SUPPORTS_SALES
+	export_constant(CASHSHOP_TAB_SALE);
+#endif
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
