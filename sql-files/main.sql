@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `bonus_script` (
   `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
   `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   `icon` SMALLINT(3) NOT NULL DEFAULT '-1',
-  PRIMARY KEY (`char_id`, `type`)
+  KEY `char_id` (`char_id`)
 ) ENGINE=InnoDB;
 
 --
