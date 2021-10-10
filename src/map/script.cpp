@@ -17714,7 +17714,8 @@ BUILDIN_FUNC(getmonsterinfo)
 		case MOB_JOBEXP:	script_pushint(st,mob->job_exp); break;
 		case MOB_ATK1:		script_pushint(st,mob->status.rhw.atk); break;
 		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
-		case MOB_DEF:		script_pushint(st,mob->status.def); break;
+		case MOB_MATK:		script_pushint(st,mob->status.rhw.matk); break;
+		case MOB_DEF:		script_pushint(st, mob->status.def); break;
 		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
 		case MOB_STR:		script_pushint(st,mob->status.str); break;
 		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
@@ -18516,6 +18517,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_ATKMAX: md->base_status->rhw.atk2 = (unsigned short)value; calc_status = true; break;
 			case UMOB_MATKMIN: md->base_status->matk_min = (unsigned short)value; calc_status = true; break;
 			case UMOB_MATKMAX: md->base_status->matk_max = (unsigned short)value; calc_status = true; break;
+			case UMOB_MATK: md->base_status->rhw.matk = (unsigned short)value; calc_status = true; break;
 			case UMOB_DEF: md->base_status->def = (defType)value; calc_status = true; break;
 			case UMOB_MDEF: md->base_status->mdef = (defType)value; calc_status = true; break;
 			case UMOB_HIT: md->base_status->hit = (short)value; calc_status = true; break;
