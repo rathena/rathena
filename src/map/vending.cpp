@@ -227,7 +227,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		// vending item
 		pc_additem(sd, &vsd->cart.u.items_cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
-		z += ((double)vsd->vending[i].value * (double)amount);
+		z += ((double)vsd->vending[vend_list[i]].value * (double)amount);
 
 		if( vsd->vending[vend_list[i]].amount ) {
 			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_table, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->cart.u.items_cart[idx].id ) != SQL_SUCCESS ) {
