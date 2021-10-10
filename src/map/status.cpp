@@ -4251,6 +4251,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->skilldelay.clear();
 	sd->sp_vanish.clear();
 	sd->hp_vanish.clear();
+	sd->itemsphealrate.clear();
+	sd->itemgroupsphealrate.clear();
 
 	// Zero up structures...
 	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)
@@ -4320,6 +4322,15 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			wa->atk += sd->inventory_data[index]->atk;
 			if( info != nullptr ){
 				wa->atk2 += info->bonus / 100;
+
+#ifdef RENEWAL
+				// TODO: additional grade bonus
+
+				if( wlv == 5 ){
+					// TODO: P.ATK += sd->inventory.u.items_inventory[index].refine * 2;
+					// TODO: S.MATK += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
 			}
 #ifdef RENEWAL
 			if (sd->bonus.weapon_atk_rate)
@@ -4329,6 +4340,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			// Renewal magic attack refine bonus
 			if( info != nullptr && sd->weapontype1 != W_BOW ){
 				wa->matk += info->bonus / 100;
+
+				// TODO: additional grade bonus
 			}
 #endif
 			// Overrefine bonus.
@@ -4362,6 +4375,13 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
 			if( info != nullptr ){
 				refinedef += info->bonus;
+
+#ifdef RENEWAL
+				if( sd->inventory_data[index]->armor_level == 2 ){
+					// TODO: RES += sd->inventory.u.items_inventory[index].refine * 2;
+					// TODO: MRES += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
 			}
 
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
