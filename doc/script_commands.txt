@@ -2955,6 +2955,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
 @inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
+@inventorylist_favorite            - Returns if an item is favorite or not
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to

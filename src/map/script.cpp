@@ -14381,6 +14381,7 @@ BUILDIN_FUNC(getinventorylist)
 				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].param);
 			}
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_tradable"), j),pc_can_trade_item(sd, i));
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_favorite"), j),sd->inventory.u.items_inventory[i].favorite);
 			j++;
 		}
 	}
