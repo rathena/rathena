@@ -69,7 +69,7 @@
 		close;
 	}
 	.@equip_id = getequipid(.@part);
-	.@itemtype = getiteminfo( .@equip_id );
+	.@itemtype = getiteminfo( .@equip_id, ITEMINFO_TYPE );
 	.@equip_refine = getequiprefinerycnt(.@part);
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 
