@@ -28,7 +28,7 @@ prontera,138,183,7	script	Clan Helper	703,{
 prt_in,33,114,5	script	Raffam Oranpere	10058,{
 	cutin "laperm01.bmp", 2;
 	mes "[Raffam Oranpere]";
-	mes "Hi! I'm Raffam, master of the ^3131FFSword Clan^000000 in the Rune-Midgard Kingdom.";
+	mes "Hi! I'm Raffam, master of the ^3131FFSword Clan^000000 in the Rune-Midgarts Kingdom.";
 	next;
 	switch( select( "Clan Information:Join.:Leave." ) ){
 		case 1:

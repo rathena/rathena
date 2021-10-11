@@ -21,8 +21,8 @@
 //=     castle 1, 4 and 5 entrances are questionable, and will be updated
 //=     as I get more information.
 //= 2.4b Corrected Warp points for Juno castles 1, 4 and 5. [L0ne_W0lf]
-//= 2.5 Updated Schwaltzvalt warps and added Arunafeltz. [L0ne_W0lf]
-//= 2.6 Fixed warp position between Juno and Schwaltzvalt Realm. [Gepard]
+//= 2.5 Updated Schwarzwald warps and added Arunafeltz. [L0ne_W0lf]
+//= 2.6 Fixed warp position between Juno and Schwarzwald Realm. [Gepard]
 //= 2.7 Updated WoE:FE warps. [Masao]
 //= 2.8 Prontera castle map changed in ep16.1 [Capuche]
 //============================================================
@@ -399,11 +399,11 @@ aldeg_cas05,156,231,0	warp	aldeg-5-15_aldeg-5-16	1,1,aldeg_cas05,18,88
 aldeg_cas05,14,88,0	warp	aldeg-5-16_aldeg-5-15	1,1,aldeg_cas05,156,227
 
 // Episode 12: WoE:SE
-// Schwaltzvalt Guild Castles Map Connection
+// Schwarzwald Guild Castles Map Connection
 yuno,13,126,0	warp	schg001	1,1,sch_gld,351,89
 sch_gld,354,89,0	warp	schg002	1,1,yuno,16,126
 
-// Schwaltzvalt Castle Maps
+// Schwarzwald Castle Maps
 schg_cas01,119,4,0	warp	schg101	1,1,sch_gld,293,100
 sch_gld,293,90,0	warp	schg102	1,1,schg_cas01,119,8
 schg_cas01,275,240,0	warp	schg103	1,1,schg_cas01,120,7

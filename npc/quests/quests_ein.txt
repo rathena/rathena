@@ -31,7 +31,7 @@
 //= 1.5 Fixed double levelup bug [Lupus]
 //= 1.5.1 Fixed exploit [KarLaeda]
 //= 1.5.2 Updated Shino Quest to leave no grabage vars [Lupus]
-//= 1.5.3 Fixed some typos regarding Schwartzvalt Trilogy [SinSloth]
+//= 1.5.3 Fixed some typos regarding Schwarzwald Trilogy [SinSloth]
 //= 1.6 Updated Laboratory Entrance regarding Heart Fragment quest. [SinSloth]
 //= 1.7 Changed the laboratory entrance checking to prevent players
 //= from being stuck in the quest. [SinSloth]
@@ -888,7 +888,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 				mes "and this is my forge~! I am";
 				mes "the most elegant Blacksmith";
 				mes "and the best chef here in the";
-				mes "Schwaltzvalt Republic~";
+				mes "Schwarzwald Republic~";
 				next;
 				mes "[Uwe]";
 				mes "Cooking is probably one";
@@ -1008,7 +1008,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 					mes "Well, not just anyone can";
 					mes "bake delicious cakes, even";
 					mes "if they had the best oven in";
-					mes "in the Schwaltzvalt Republic.";
+					mes "in the Schwarzwald Republic.";
 					mes "And a child with all the tools";
 					mes "couldn't put a sword together.";
 					next;
@@ -3028,7 +3028,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 				mes "and this is my forge~! I am";
 				mes "the most elegant Blacksmith";
 				mes "and the best chef here in the";
-				mes "Schwaltzvalt Republic~";
+				mes "Schwarzwald Republic~";
 				next;
 				mes "[Uwe]";
 				mes "So, how can";
@@ -5758,7 +5758,7 @@ OnTouch_:
 				break;
 			case 7:
 				set .@word1$,"I'm the King of All Weirdos! Now you know of my true power. Obey~!";
-				set .@word2$,"0uNflAPPaBLe LoVaBLe SeCreTs AnD BoWLiNg aGaINST tHe KarMA of YoUtH";
+				set .@word2$,"uNflAPPaBLe LoVaBLe SeCreTs AnD BoWLiNg aGaINST tHe KarMA of YoUtH";
 				mes "^3CBCBC"+.@word1$+"^000000";
 				next;
 				input .@input1$;

@@ -308,7 +308,7 @@ in_sphinx2	mapflag	nomemo
 in_sphinx3	mapflag	nomemo
 in_sphinx4	mapflag	nomemo
 in_sphinx5	mapflag	nomemo
-// Louyang Dun --------------
+// Luoyang Dun --------------
 lou_dun03	mapflag	nomemo
 lou_dun02	mapflag	nomemo
 lou_dun01	mapflag	nomemo
@@ -345,7 +345,7 @@ prt_sewb1	mapflag	nomemo
 prt_sewb2	mapflag	nomemo
 prt_sewb3	mapflag	nomemo
 prt_sewb4	mapflag	nomemo
-// Gonryun Dun ---------------
+// Kunlun Dun ---------------
 gon_dun01	mapflag	nomemo
 gon_dun02	mapflag	nomemo
 gon_dun03	mapflag	nomemo

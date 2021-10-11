@@ -8,7 +8,7 @@
 //= rAthena Project
 //===== Description: ========================================= 
 //= [Official Conversion]
-//= Traders for Morroc Solution and Payon Solution, used in
+//= Traders for Morocc Solution and Payon Solution, used in
 //= the Sage skill quests and the Pre-Renewal Mage job quest.
 //===== Additional Comments: ================================= 
 //= 1.0 Split from Pre-Renewal Mage job quest. [Zopokx]

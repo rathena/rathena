@@ -175,7 +175,7 @@ L_QUEST:
 	mes "Actually it is knowledge of the Umbalian people. They are connected to this world of Midgard in some special way, we just can't confirm it yet. There is a theory that they may be like the elves and protect the ancient tree of Yggdrasil.";
 	next;
 	mes "[Fabius]";
-	mes "And I, a great wise man of Yuno, will teach you their language!";
+	mes "And I, a great wise man of Juno, will teach you their language!";
 	next;
 	mes "^0000FF Learned the language of Umbalians! ^000000";
 	set umb_lang,2;

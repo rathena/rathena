@@ -38,7 +38,7 @@ enum e_searchstore_effecttype
 };
 
 /// Type for shop search function
-typedef bool (*searchstore_search_t)(struct map_session_data* sd, unsigned short nameid);
+typedef bool (*searchstore_search_t)(struct map_session_data* sd, t_itemid nameid);
 typedef bool (*searchstore_searchall_t)(struct map_session_data* sd, const struct s_search_store_search* s);
 
 /**
@@ -138,7 +138,7 @@ bool searchstore_open(struct map_session_data* sd, unsigned int uses, unsigned s
  * @param cardlist : list with stored cards (cards attached to items)
  * @param card_count : amount of items in cardlist
  */
-void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const unsigned short* itemlist, unsigned int item_count, const unsigned short* cardlist, unsigned int card_count)
+void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count)
 {
 	unsigned int i;
 	struct map_session_data* pl_sd;
@@ -172,15 +172,15 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 
 	// validate lists
 	for( i = 0; i < item_count; i++ ) {
-		if( !itemdb_exists(itemlist[i]) ) {
-			ShowWarning("searchstore_query: Client resolved item %hu is not known.\n", itemlist[i]);
+		if( !itemdb_exists(itemlist[i].itemId) ) {
+			ShowWarning("searchstore_query: Client resolved item %u is not known.\n", itemlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}
 	}
 	for( i = 0; i < card_count; i++ ) {
-		if( !itemdb_exists(cardlist[i]) ) {
-			ShowWarning("searchstore_query: Client resolved card %hu is not known.\n", cardlist[i]);
+		if( !itemdb_exists(cardlist[i].itemId) ) {
+			ShowWarning("searchstore_query: Client resolved card %u is not known.\n", cardlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}
@@ -195,9 +195,6 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 
 	// drop previous results
 	searchstore_clear(sd);
-
-	// allocate max. amount of results
-	sd->searchstore.items = (struct s_search_store_info_item*)aMalloc(sizeof(struct s_search_store_info_item)*battle_config.searchstore_maxresults);
 
 	// search
 	s.search_sd  = sd;
@@ -221,10 +218,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 
 	dbi_destroy(iter);
 
-	if( sd->searchstore.count ) {
-		// reclaim unused memory
-		sd->searchstore.items = (struct s_search_store_info_item*)aRealloc(sd->searchstore.items, sizeof(struct s_search_store_info_item)*sd->searchstore.count);
-
+	if( !sd->searchstore.items.empty() ) {
 		// present results
 		clif_search_store_info_ack(sd);
 
@@ -249,7 +243,7 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
  */
 bool searchstore_querynext(struct map_session_data* sd)
 {
-	if( sd->searchstore.count && ( sd->searchstore.count-1 )/SEARCHSTORE_RESULTS_PER_PAGE < sd->searchstore.pages )
+	if( !sd->searchstore.items.empty() && ( sd->searchstore.items.size()-1 )/SEARCHSTORE_RESULTS_PER_PAGE > sd->searchstore.pages )
 		return true;
 
 	return false;
@@ -261,7 +255,7 @@ bool searchstore_querynext(struct map_session_data* sd)
  */
 void searchstore_next(struct map_session_data* sd)
 {
-	if( !battle_config.feature_search_stores || !sd->searchstore.open || sd->searchstore.count <= sd->searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE ) // nothing (more) to display
+	if( !battle_config.feature_search_stores || !sd->searchstore.open || sd->searchstore.items.size() <= sd->searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE ) // nothing (more) to display
 		return;
 
 	// present results
@@ -279,12 +273,7 @@ void searchstore_clear(struct map_session_data* sd)
 {
 	searchstore_clearremote(sd);
 
-	if( sd->searchstore.items ) { // release results
-		aFree(sd->searchstore.items);
-		sd->searchstore.items = NULL;
-	}
-
-	sd->searchstore.count = 0;
+	sd->searchstore.items.clear();
 	sd->searchstore.pages = 0;
 }
 
@@ -309,20 +298,20 @@ void searchstore_close(struct map_session_data* sd)
  * @param store_id : store ID created by client
  * @param nameid : item being searched
  */
-void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, unsigned short nameid)
+void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, t_itemid nameid)
 {
 	unsigned int i;
 	struct map_session_data* pl_sd;
 	searchstore_search_t store_search;
 
-	if( !battle_config.feature_search_stores || !sd->searchstore.open || !sd->searchstore.count )
+	if( !battle_config.feature_search_stores || !sd->searchstore.open || sd->searchstore.items.empty() )
 		return;
 
 	searchstore_clearremote(sd);
 
-	ARR_FIND( 0, sd->searchstore.count, i,  sd->searchstore.items[i].store_id == store_id && sd->searchstore.items[i].account_id == account_id && sd->searchstore.items[i].nameid == nameid );
-	if( i == sd->searchstore.count ) { // no such result, crafted
-		ShowWarning("searchstore_click: Received request with item %hu of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd->bl.id, sd->status.char_id);
+	ARR_FIND( 0, sd->searchstore.items.size(), i, sd->searchstore.items[i]->store_id == store_id && sd->searchstore.items[i]->account_id == account_id && sd->searchstore.items[i]->nameid == nameid );
+	if( i == sd->searchstore.items.size() ) { // no such result, crafted
+		ShowWarning("searchstore_click: Received request with item %u of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd->bl.id, sd->status.char_id);
 		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
@@ -376,7 +365,7 @@ void searchstore_click(struct map_session_data* sd, uint32 account_id, int store
  */
 bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id)
 {
-	return (bool)( sd->searchstore.open && sd->searchstore.count && sd->searchstore.remote_id == account_id );
+	return (bool)( sd->searchstore.open && !sd->searchstore.items.empty() && sd->searchstore.remote_id == account_id );
 }
 
 /**
@@ -386,36 +375,4 @@ bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id)
 void searchstore_clearremote(struct map_session_data* sd)
 {
 	sd->searchstore.remote_id = 0;
-}
-
-/**
- * Receives results from a store-specific callback.
- * @param sd : player requesting
- * @param store_id : store ID generated by the client
- * @param account_id : account ID of owner's shop
- * @param store_name : name of store
- * @param nameid : item being searched
- * @param amount : count of item
- * @param price : zeny price of item
- * @param card : card in the item
- * @param refine : refine of the item
- */
-bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine)
-{
-	struct s_search_store_info_item* ssitem;
-
-	if( sd->searchstore.count >= (unsigned int)battle_config.searchstore_maxresults ) // no more
-		return false;
-
-	ssitem = &sd->searchstore.items[sd->searchstore.count++];
-	ssitem->store_id = store_id;
-	ssitem->account_id = account_id;
-	safestrncpy(ssitem->store_name, store_name, sizeof(ssitem->store_name));
-	ssitem->nameid = nameid;
-	ssitem->amount = amount;
-	ssitem->price = price;
-	memcpy(ssitem->card, card, sizeof(ssitem->card));
-	ssitem->refine = refine;
-
-	return true;
 }

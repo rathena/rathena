@@ -69,7 +69,7 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 		close;
 	}
 	@mal_equip_id = getequipid(EQI_HAND_R);
-	.@equip_type = getiteminfo(@mal_equip_id,11);
+	.@equip_type = getiteminfo(@mal_equip_id, ITEMINFO_VIEW);
 
 	// callsub L_Socket,<cost multiplier>,<4-x enchants possible>;
 	switch(.@equip_type) {	//  Check weapon type first to speed up the checks.
@@ -675,7 +675,7 @@ L_Socket:
 		delequip EQI_HAND_R;
 
 		// GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
-		for ( .@i = getiteminfo(.@equip_id,10); .@i < MAX_SLOTS; .@i++ ) {
+		for ( .@i = getiteminfo(.@equip_id, ITEMINFO_SLOT); .@i < MAX_SLOTS; .@i++ ) {
 			if (callfunc("F_IsCharm",.@equip_card[.@i]) == true)
 				.@equip_card[.@i] = 0;// Armor Enchant System
 		}

@@ -703,7 +703,7 @@ job_duncer,95,93,4	script	Bijou#da	101,{
 			mes "4. Which town has";
 			mes "the most Dancers?";
 			next;
-			if (select("Al De Baran:Juno:Morroc:Comodo") == 4)
+			if (select("Al De Baran:Juno:Morocc:Comodo") == 4)
 				set .@da_score,.@da_score+10;
 			mes "[Bijou]";
 			mes "5. Of the following,";

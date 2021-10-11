@@ -21,7 +21,7 @@ arug_dun01,0,0	monster	Fanat	1797,17
 arug_dun01,0,0	monster	Aunoe	1796,17
 
 //==================================================
-// schg_dun01 - Schwartzvald Guild Dungeon
+// schg_dun01 - Schwarzwald Guild Dungeon
 //==================================================
 schg_dun01,0,0	monster	Hell Apocalypse	1978,20
 schg_dun01,0,0	monster	Zakudam	1979,20

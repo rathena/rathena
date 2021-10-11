@@ -14,7 +14,7 @@
 //= 2.1 Fixes Issue #1482, where Rebellion jobs cannot use this npc. [Limestone]
 //============================================================
 
-alberta,118,157,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
+que_ng,187,149,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
 	mes "[Kenny]";
 	if (BaseClass == Job_Gunslinger) {
 		mes "Welcome to my Magazine Shop.";
@@ -125,4 +125,4 @@ S_Casing:
 	close;
 }
 
-izlude,171,127,3	duplicate(mdk)	Magazine Dealer Kenny#iz	83
+izlude,171,127,3	duplicate(mdk)	Magazine Dealer Kenny#iz	4_M_01

@@ -74,6 +74,16 @@
 // overflows, which is approximately every ~49 days.
 //#define DEPRECATED_WINDOWS_SUPPORT
 
+// Uncomment to enable compilation for unsupported compilers
+// Note:
+// Compilation might work on these compilers, but they might not fully follow newer C++ rules and
+// cause unexpected behavior.
+// Do NOT create any issues or ask for help with these compilers.
+//#define DEPRECATED_COMPILER_SUPPORT
+
+/// Uncomment for use with Nemo patch ExtendCashShopPreview
+//#define ENABLE_CASHSHOP_PREVIEW_PATCH
+
 /**
  * No settings past this point
  **/

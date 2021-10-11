@@ -64,6 +64,6 @@ geffen,115,107,5	script	Lord Kaho's Servant	61,{
 	set Zeny, Zeny-5000000;
 	mes "Wow! You are brave indeed!";
 	getitem 5013,1;
-	mes "Enjoy being God of Rune-Midgard!";
+	mes "Enjoy being God of Midgard!";
 	close;
 }

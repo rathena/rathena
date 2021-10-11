@@ -51,10 +51,10 @@ void auction_save(struct auction_data *auction)
 		return;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `seller_id` = '%d', `seller_name` = ?, `buyer_id` = '%d', `buyer_name` = ?, `price` = '%d', `buynow` = '%d', `hours` = '%d', `timestamp` = '%lu', `nameid` = '%hu', `item_name` = ?, `type` = '%d', `refine` = '%d', `attribute` = '%d'",
-		schema_config.auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
+	StringBuf_Printf(&buf, "UPDATE `%s` SET `seller_id` = '%d', `seller_name` = ?, `buyer_id` = '%d', `buyer_name` = ?, `price` = '%d', `buynow` = '%d', `hours` = '%d', `timestamp` = '%lu', `nameid` = '%u', `item_name` = ?, `type` = '%d', `refine` = '%d', `attribute` = '%d', `enchantgrade` ='%d'",
+		schema_config.auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute, auction->item.enchantgrade);
 	for( j = 0; j < MAX_SLOTS; j++ )
-		StringBuf_Printf(&buf, ", `card%d` = '%hu'", j, auction->item.card[j]);
+		StringBuf_Printf(&buf, ", `card%d` = '%u'", j, auction->item.card[j]);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
 		StringBuf_Printf(&buf, ", `option_id%d` = '%d'", j, auction->item.option[j].id);
 		StringBuf_Printf(&buf, ", `option_val%d` = '%d'", j, auction->item.option[j].value);
@@ -88,7 +88,7 @@ unsigned int auction_create(struct auction_data *auction)
 	auction->timestamp = time(NULL) + (auction->hours * 3600);
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`", schema_config.auction_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`,`enchantgrade`", schema_config.auction_db);
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
@@ -96,10 +96,10 @@ unsigned int auction_create(struct auction_data *auction)
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%hu',?,'%d','%d','%d','%" PRIu64 "'",
-		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute, auction->item.unique_id);
+	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%u',?,'%d','%d','%d','%" PRIu64 "','%d'",
+		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute, auction->item.unique_id, auction->item.enchantgrade);
 	for( j = 0; j < MAX_SLOTS; j++ )	
-		StringBuf_Printf(&buf, ",'%hu'", auction->item.card[j]);
+		StringBuf_Printf(&buf, ",'%u'", auction->item.card[j]);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].id);
 		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].value);
@@ -196,7 +196,7 @@ void inter_auctions_fromsql(void)
 
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `auction_id`,`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,"
-		"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`");
+		"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`unique_id`,`enchantgrade`");
 	for( i = 0; i < MAX_SLOTS; i++ )
 		StringBuf_Printf(&buf, ",`card%d`", i);
 	for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
@@ -227,13 +227,14 @@ void inter_auctions_fromsql(void)
 		Sql_GetData(sql_handle, 8, &data, NULL); auction->timestamp = atoi(data);
 
 		item = &auction->item;
-		Sql_GetData(sql_handle, 9, &data, NULL); item->nameid = atoi(data);
+		Sql_GetData(sql_handle, 9, &data, NULL); item->nameid = strtoul(data, nullptr, 10);
 		Sql_GetData(sql_handle,10, &data, NULL); safestrncpy(auction->item_name, data, ITEM_NAME_LENGTH);
 		Sql_GetData(sql_handle,11, &data, NULL); auction->type = atoi(data);
 
 		Sql_GetData(sql_handle,12, &data, NULL); item->refine = atoi(data);
 		Sql_GetData(sql_handle,13, &data, NULL); item->attribute = atoi(data);
 		Sql_GetData(sql_handle,14, &data, NULL); item->unique_id = strtoull(data, NULL, 10);
+		Sql_GetData(sql_handle,15, &data, NULL); item->enchantgrade = atoi(data);
 
 		item->identify = 1;
 		item->amount = 1;
@@ -241,16 +242,16 @@ void inter_auctions_fromsql(void)
 
 		for( i = 0; i < MAX_SLOTS; i++ )
 		{
-			Sql_GetData(sql_handle, 15 + i, &data, NULL);
-			item->card[i] = atoi(data);
+			Sql_GetData(sql_handle, 16 + i, &data, NULL);
+			item->card[i] = strtoul(data, nullptr, 10);
 		}
 
 		for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
-			Sql_GetData(sql_handle, 15 + MAX_SLOTS + i*3, &data, NULL);
-			item->option[i].id = atoi(data);
 			Sql_GetData(sql_handle, 16 + MAX_SLOTS + i*3, &data, NULL);
-			item->option[i].value = atoi(data);
+			item->option[i].id = atoi(data);
 			Sql_GetData(sql_handle, 17 + MAX_SLOTS + i*3, &data, NULL);
+			item->option[i].value = atoi(data);
+			Sql_GetData(sql_handle, 18 + MAX_SLOTS + i*3, &data, NULL);
 			item->option[i].param = atoi(data);
 		}
 

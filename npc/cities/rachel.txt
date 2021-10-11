@@ -217,7 +217,7 @@ rachel,76,77,3	script	Rachel Priest	927,{
 
 ra_fild12,45,230,3	script	Airship Guide#Fild	934,{
 	mes "[Airship Guide]";
-	mes "The Schwaltzvalt Republic's";
+	mes "The Schwarzwald Republic's";
 	mes "international Airship service";
 	mes "for Arunafeltz can only be";
 	mes "accessed in Rachel. Please";

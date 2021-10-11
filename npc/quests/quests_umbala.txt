@@ -44,12 +44,12 @@
 um_in,39,122,5	script	Utan Chief	784,{
 	if (event_umbala == 0) {
 		mes "[Karkatan]";
-		mes "Huh huh, a Rune-Midgardian.";
+		mes "Huh huh, a Rune-Midgartsian.";
 		mes "I guess this is your first";
 		mes "visit to my village, isn't it?";
 		next;
 		mes "[Karkatan]";
-		mes "Everyone from Rune-Midgard";
+		mes "Everyone from Rune-Midgarts";
 		mes "that I've met had the same";
 		mes "same expression on their";
 		mes "face as you do right now";
@@ -78,7 +78,7 @@ um_in,39,122,5	script	Utan Chief	784,{
 		next;
 		mes "[Karkatan]";
 		mes "Anyhow, I learned many things";
-		mes "about Rune-Midgardian culture";
+		mes "about Rune-Midgartsian culture";
 		mes "and language.";
 		next;
 		mes "[Karkatan]";
@@ -120,7 +120,7 @@ um_in,39,122,5	script	Utan Chief	784,{
 		next;
 		mes "[Karkatan]";
 		mes "There are still some villagers";
-		mes "who are very naive about Rune-Midgardians.";
+		mes "who are very naive about Rune-Midgartsians.";
 		mes "Usually, they fear encounters";
 		mes "with your people and will";
 		mes "hide themselves.";
@@ -305,7 +305,7 @@ um_in,39,122,5	script	Utan Chief	784,{
 			mes "[Karkatan]";
 			mes "Hmmmm....";
 			mes "It would be good to have a mask";
-			mes "that was made in Rune-Midgard...";
+			mes "that was made in Rune-Midgarts...";
 			next;
 			mes "[Karkatan]";
 			mes "I wish to have ^3377FF1 Mr. Smile^000000.";
@@ -323,7 +323,7 @@ um_in,39,122,5	script	Utan Chief	784,{
 				mes "always wished that I could have";
 				mes "this mask! This is truly an";
 				mes "honor! Thank you, adventurer";
-				mes "from Rune-Midgard.";
+				mes "from Rune-Midgarts.";
 				next;
 				mes "[Karkatan]";
 				mes "I will tell Puchuchartan that I";
@@ -388,14 +388,14 @@ um_in,44,71,2	script	Utan Shaman	782,{
 	case 3:
 		mes "[Puchuchartan]";
 		mes "I did not expect that even";
-		mes "more of you Rune-Midgardians";
+		mes "more of you Rune-Midgartsians";
 		mes "would find my village. I am";
 		mes "afraid that Mother Earth may";
 		mes "be caused suffering because";
 		mes "of this...";
 		next;
 		mes "[Puchuchartan]";
-		mes "You Rune-Midgardians are a very";
+		mes "You Rune-Midgartsians are a very";
 		mes "evil tribe...always accomplishing";
 		mes "your goals whether the means are";
 		mes "foul or fair, never hesitating to";
@@ -408,7 +408,7 @@ um_in,44,71,2	script	Utan Shaman	782,{
 		mes "will affect our future...";
 		next;
 		mes "[Puchuchartan]";
-		mes "No one from Rune-Midgard has ";
+		mes "No one from Rune-Midgarts has ";
 		mes "visited me without some purpose";
 		mes "and I do not think that you";
 		mes "are an exception.";
@@ -473,7 +473,7 @@ um_in,44,71,2	script	Utan Shaman	782,{
 	}
 	next;
 	mes "[Puchuchartan]";
-	mes "Rune-Midgardian who has asked for";
+	mes "Rune-Midgartsian who has asked for";
 	mes "my help...Although I am not sure";
 	mes "if you really need my power, I";
 	mes "will try to provide my assistance.";
@@ -1003,7 +1003,7 @@ um_in,139,48,5	script	Phrenetan	783,{
 		close;
 	}
 	if (um_wind <= 3 && (MISC_QUEST & 32768) == 0) {
-		if (um_wind) set um_wind,1;
+		if (um_wind == 0) set um_wind,1;
 		emotion ET_FRET;
 		mes "[Phrenetan]";
 		mes "Umbaumbah wooga wooga";

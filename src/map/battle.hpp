@@ -4,11 +4,14 @@
 #ifndef BATTLE_HPP
 #define BATTLE_HPP
 
+#include <bitset>
+
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
 #include "../config/core.hpp"
 
 #include "map.hpp" //ELE_MAX
+#include "skill.hpp"
 
 //fwd declaration
 struct map_session_data;
@@ -29,6 +32,7 @@ enum damage_lv : uint8 {
 
 /// Flag of the final calculation
 enum e_battle_flag : uint16 {
+	BF_NONE		= 0x0000, /// None
 	BF_WEAPON	= 0x0001, /// Weapon attack
 	BF_MAGIC	= 0x0002, /// Magic attack
 	BF_MISC		= 0x0004, /// Misc attack
@@ -61,6 +65,8 @@ enum e_battle_check_target : uint32 {
 	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
 	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members
 	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY,			///< Except enemy
+	BCT_ALLY		= BCT_PARTY|BCT_GUILD,
+	BCT_FRIEND		= BCT_NOENEMY,
 };
 
 /// Damage structure
@@ -81,9 +87,6 @@ struct Damage {
 	bool isspdamage; /// Display blue damage numbers in clif_damage
 };
 
-//(Used in read pc.cpp) attribute table (battle_attr_fix)
-extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
-
 // Damage Calculation
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int flag);
@@ -92,9 +95,8 @@ int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, i
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
 
-int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
-int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, int nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
+int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
 
 // Final calculation Damage
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv);
@@ -342,6 +344,8 @@ struct Battle_Config
 
 	int prevent_logout;	// Added by RoVeRT
 	int prevent_logout_trigger;
+	int land_protector_behavior;
+	int npc_emotion_behavior;
 
 	int alchemist_summon_reward;	// [Valaris]
 	int drops_by_luk;
@@ -419,8 +423,6 @@ struct Battle_Config
 	int display_hallucination;	// [Skotlex]
 	int use_statpoint_table;	// [Skotlex]
 
-	int ignore_items_gender; //[Lupus]
-
 	int berserk_cancels_buffs; // [Aru]
 	int debuff_on_logout; // Removes a few "official" negative Scs on logout. [Skotlex]
 	int mob_ai; //Configures various mob_ai settings to make them smarter or dumber(official). [Skotlex]
@@ -438,6 +440,8 @@ struct Battle_Config
 	int character_size; // if riders have size=2, and baby class riders size=1 [Lupus]
 	int mob_max_skilllvl; // Max possible skill level [Lupus]
 	int rare_drop_announce; // chance <= to show rare drops global announces
+	int drop_rate_cap;  // Drop rate can't be raised above this amount by drop bonus items
+	int drop_rate_cap_vip;
 
 	int retaliate_to_master;	//Whether when a mob is attacked by another mob, it will retaliate versus the mob or the mob's master. [Skotlex]
 
@@ -521,6 +525,7 @@ struct Battle_Config
 	int max_extended_parameter;
 	int max_summoner_parameter;
 	int max_third_aspd;
+	int max_summoner_aspd;
 	int vcast_stat_scale;
 
 	int mvp_tomb_enabled;
@@ -614,10 +619,10 @@ struct Battle_Config
 	int mob_eye_range_bonus; //Vulture's Eye and Snake's Eye range bonus
 	int mob_stuck_warning; //Show warning if a monster is stuck too long
 	int skill_eightpath_algorithm; //Official path algorithm
+	int skill_eightpath_same_cell;
 	int death_penalty_maxlv;
 	int exp_cost_redemptio;
 	int exp_cost_redemptio_limit;
-	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
@@ -638,7 +643,6 @@ struct Battle_Config
 	int guild_alliance_onlygm;
 	int feature_achievement;
 	int allow_bound_sell;
-	int event_refine_chance;
 	int autoloot_adjust;
 	int feature_petevolution;
 	int feature_pet_autofeed;
@@ -649,7 +653,8 @@ struct Battle_Config
 	int switch_remove_edp;
 	int feature_homunculus_autofeed;
 	int feature_homunculus_autofeed_rate;
-	int summoner_trait;
+	int summoner_race;
+	int summoner_size;
 	int homunculus_autofeed_always;
 	int feature_attendance;
 	int feature_privateairship;
@@ -658,6 +663,33 @@ struct Battle_Config
 	int min_shop_sell;
 	int feature_equipswitch;
 	int pet_walk_speed;
+	int blacksmith_fame_refine_threshold;
+	int mob_nopc_idleskill_rate;
+	int mob_nopc_move_rate;
+	int boss_nopc_idleskill_rate;
+	int boss_nopc_move_rate;
+	int hom_idle_no_share;
+	int idletime_hom_option;
+	int devotion_standup_fix;
+	int feature_bgqueue;
+	int bgqueue_nowarp_mapflag;
+	int homunculus_exp_gain;
+	int rental_item_novalue;
+	int ping_timer_interval;
+	int ping_time;
+	int show_skill_scale;
+	int achievement_mob_share;
+	int slave_stick_with_master;
+	int at_logout_event;
+	int homunculus_starving_rate;
+	int homunculus_starving_delay;
+	int drop_connection_on_quit;
+	int mob_spawn_variance;
+	int mercenary_autoloot;
+	int mer_idle_no_share;
+	int idletime_mer_option;
+	int feature_refineui;
+	int rndopt_drop_pillar;
 
 #include "../custom/battle_config_struct.inc"
 };

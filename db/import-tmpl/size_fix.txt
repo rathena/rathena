@@ -1,7 +1,0 @@
-// Size Fix Tables
-// Contains size fixes for weapon damage.
-//
-// Struture of Database:
-// Columns - Weapon type
-// Rows    - Target size
-

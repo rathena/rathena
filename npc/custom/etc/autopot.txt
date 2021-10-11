@@ -68,7 +68,7 @@ L_Start:
 		message strcharinfo(0), "'" + getitemname(.@potion) + "' is black listed and cannot be used.";
 		end;
 	}
-	if (BaseLevel < getiteminfo(.@potion,12)) {
+	if (BaseLevel < getiteminfo(.@potion, ITEMINFO_EQUIPLEVELMIN)) {
 		message strcharinfo(0), "Your base level is too low to use '" + getitemname(.@potion) + "'.";
 		end;
 	}
@@ -116,9 +116,9 @@ OnCommand:
 		if(.@command$[1] == "list"){
 			getinventorylist;
 			for(.@i = 0;.@i < @inventorylist_count;.@i++){
-				if (getiteminfo(@inventorylist_id[.@i],2) == IT_HEALING) {
+				if (getiteminfo(@inventorylist_id[.@i], ITEMINFO_TYPE) == IT_HEALING) {
 					.@items[.@count] = @inventorylist_id[.@i];
-					.@menu$ = .@menu$ + sprintf("~ ^0055FF%s^000000 (%dx)" + (inarray(.blackList[0],@inventorylist_id[.@i]) != -1? " ^364022Black Listed^000000":"") + (BaseLevel < getiteminfo(@inventorylist_id[.@i],12)? " ^E82C0CNeed Higher Level^000000":"") + ":", getitemname(@inventorylist_id[.@i]), countitem(@inventorylist_id[.@i]));
+					.@menu$ = .@menu$ + sprintf("~ ^0055FF%s^000000 (%dx)" + (inarray(.blackList[0],@inventorylist_id[.@i]) != -1? " ^364022Black Listed^000000":"") + (BaseLevel < getiteminfo(@inventorylist_id[.@i], ITEMINFO_EQUIPLEVELMIN)? " ^E82C0CNeed Higher Level^000000":"") + ":", getitemname(@inventorylist_id[.@i]), countitem(@inventorylist_id[.@i]));
 					.@count++;
 				}
 			}

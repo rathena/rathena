@@ -535,7 +535,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 					mes "Now, your first assignment";
 					mes "is to learn ^3131FFLevel 3 Owl's Eye^000000!";
 					if (checkre(0))
-						mes "From Morroc, if you travel south, you can fight Condors for your training.";
+						mes "From Morocc, if you travel south, you can fight Condors for your training.";
 					else
 						mes "From Prontera, if you travel south, south and then west, you can fight Condors for your training.";
 					next;
@@ -549,7 +549,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 						mes "[Reidin Corse]";
 						if (checkre(0)) {
 							mes "I'll send you to";
-							mes "Morroc for now,";
+							mes "Morocc for now,";
 							mes "so don't forget the";
 							mes "directions I gave you.";
 							mes "Travel ^3131FFsouth^000000.";
@@ -577,7 +577,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 							mes "Okay...!";
 							mes "Off you go!";
 							if (checkre(0)) {
-								mes "To Morroc!";
+								mes "To Morocc!";
 								close2;
 								warp "morocc",156,46;
 							} else {
@@ -1344,7 +1344,7 @@ pay_arche,84,139,3	script	Seisner	4_F_JOB_HUNTER,{
 				mes "he can't stop its flight or change his target. That's why Archers need to be level headed and really careful in battle.";
 				next;
 				mes "[Seisner]";
-				mes "Someday, I'd like to become a great Archer and use my skills for the good of Rune-Midgard.";
+				mes "Someday, I'd like to become a great Archer and use my skills for the good of Rune-Midgarts.";
 				close;
 			}
 		}
@@ -1669,7 +1669,7 @@ prontera,126,335,5	script	Arthail	1_M_BARD,{
 		next;
 		mes "[Arthail]";
 		mes "^3131FFEmperium^000000...";
-		mes "There are a lot of ambitious people in Morroc that want one of those. Even in my hometown of Payon,";
+		mes "There are a lot of ambitious people in Morocc that want one of those. Even in my hometown of Payon,";
 		mes "there are people clamoring to obtain one...";
 		next;
 		mes "[Arthail]";

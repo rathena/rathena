@@ -385,7 +385,7 @@ comodo,273,137,4	script	Traveler#head	702,{
 		else {
 			mes "[Isac Mari]";
 			mes "Grief for Greed...";
-			mes "There's a tale of an honest Merchant that lived in Morroc long ago who had a quarrel with a bad guild.";
+			mes "There's a tale of an honest Merchant that lived in Morocc long ago who had a quarrel with a bad guild.";
 			next;
 			mes "[Isac Mari]";
 			mes "Because the honest Merchant was not cheating people by his prices, his street stall was attacked by the bad guild and all his goods were taken.";
@@ -2101,11 +2101,11 @@ aldebaran,44,53,4	script	Meteurengut#cmd	64,{
 			mes "that artifact, and its secrets";
 			mes "are as well guarded as that of";
 			mes "the Slate of Muriniel. However,";
-			mes "I do know that a man in Morroc can create the Book of the Lamb...";
+			mes "I do know that a man in Morocc can create the Book of the Lamb...";
 			next;
 			mes "[Meteurengut]";
 			mes "If that man is still in";
-			mes "Morroc, then he will probably";
+			mes "Morocc, then he will probably";
 			mes "recognize the subtle emanation";
 			mes "of the Awakening Stone and the";
 			mes "Slate of Muriniel from you. Best of luck to you, adventurer...";
@@ -2131,7 +2131,7 @@ aldebaran,44,53,4	script	Meteurengut#cmd	64,{
 		mes "[Meteurengut]";
 		mes "All I can tell you is that";
 		mes "there should be a man in";
-		mes "Morroc that can create it";
+		mes "Morocc that can create it";
 		mes "for you. A man like that can";
 		mes "sense the Slate of Muriniel,";
 		mes "so he may call out to you...";
@@ -2461,7 +2461,7 @@ comodo,232,87,4	script	Won#cmd	106,{
 		mes "The first Sage that you";
 		mes "must visit is ^3355FFSage Yklah^000000";
 		mes "in the city of ^3355FFJuno^000000 in the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Your quest to obtain a";
 		mes "doomed sword isn't over yet...";
 		break;
@@ -2477,7 +2477,7 @@ comodo,232,87,4	script	Won#cmd	106,{
 		mes "The first Sage that you";
 		mes "must visit is ^3355FFSage Yklah^000000";
 		mes "in the city of ^3355FFJuno^000000 in the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Your quest to obtain a";
 		mes "doomed sword isn't over yet...";
 		break;
