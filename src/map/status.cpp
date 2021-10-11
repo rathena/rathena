@@ -417,13 +417,12 @@ std::shared_ptr<s_refine_level_info> RefineDatabase::findCurrentLevelInfo( const
 bool RefineDatabase::calculate_refine_info( const struct item_data& data, e_refine_type& refine_type, uint16& level ){
 	if( data.type == IT_WEAPON ){
 		refine_type = REFINE_TYPE_WEAPON;
-		level = data.wlv;
+		level = data.weapon_level;
 
 		return true;
 	}else if( data.type == IT_ARMOR ){
 		refine_type = REFINE_TYPE_ARMOR;
-		// TODO: implement when armor level is supported
-		level = 1;
+		level = data.armor_level;
 
 		return true;
 	}else if( data.type == IT_SHADOWGEAR ){
@@ -4169,7 +4168,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->hprate = 100;
 	sd->sprate = 100;
 	sd->castrate = 100;
-	sd->delayrate = 100;
 	sd->dsprate = 100;
 	sd->hprecov_rate = 100;
 	sd->sprecov_rate = 100;
@@ -4253,6 +4251,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->skilldelay.clear();
 	sd->sp_vanish.clear();
 	sd->hp_vanish.clear();
+	sd->itemsphealrate.clear();
+	sd->itemgroupsphealrate.clear();
 
 	// Zero up structures...
 	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)
@@ -4305,7 +4305,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
 
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
-			int wlv = sd->inventory_data[index]->wlv;
+			int wlv = sd->inventory_data[index]->weapon_level;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
 
@@ -4322,6 +4322,15 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			wa->atk += sd->inventory_data[index]->atk;
 			if( info != nullptr ){
 				wa->atk2 += info->bonus / 100;
+
+#ifdef RENEWAL
+				// TODO: additional grade bonus
+
+				if( wlv == 5 ){
+					// TODO: P.ATK += sd->inventory.u.items_inventory[index].refine * 2;
+					// TODO: S.MATK += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
 			}
 #ifdef RENEWAL
 			if (sd->bonus.weapon_atk_rate)
@@ -4331,6 +4340,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			// Renewal magic attack refine bonus
 			if( info != nullptr && sd->weapontype1 != W_BOW ){
 				wa->matk += info->bonus / 100;
+
+				// TODO: additional grade bonus
 			}
 #endif
 			// Overrefine bonus.
@@ -4364,6 +4375,13 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
 			if( info != nullptr ){
 				refinedef += info->bonus;
+
+#ifdef RENEWAL
+				if( sd->inventory_data[index]->armor_level == 2 ){
+					// TODO: RES += sd->inventory.u.items_inventory[index].refine * 2;
+					// TODO: MRES += sd->inventory.u.items_inventory[index].refine * 2;
+				}
+#endif
 			}
 
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
@@ -4888,8 +4906,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->dsprate = 0;
 	if(sd->castrate < 0)
 		sd->castrate = 0;
-	if(sd->delayrate < 0)
-		sd->delayrate = 0;
 	if(sd->hprecov_rate < 0)
 		sd->hprecov_rate = 0;
 	if(sd->sprecov_rate < 0)
@@ -6922,7 +6938,7 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 			TBL_PC *sd = (TBL_PC*)bl;
 			short index = sd->equip_index[sd->state.lr_flag?EQI_HAND_L:EQI_HAND_R];
 
-			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->wlv == 4)
+			if(index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON && sd->inventory_data[index]->weapon_level == 4)
 				watk += sc->data[SC_NIBELUNGEN]->val2;
 		}
 	}
@@ -11910,7 +11926,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				short index = sd->equip_index[EQI_HAND_R];
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
-					val2 += 15 * sd->status.job_level + sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->wlv * status_get_lv(bl) / 100;
+					val2 += 15 * sd->status.job_level + sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->weapon_level * status_get_lv(bl) / 100;
 			} else // Monster
 				val2 += 750;
 			break;

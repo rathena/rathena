@@ -4,6 +4,7 @@
 #include "yamlupgrade.hpp"
 
 static bool upgrade_achievement_db(std::string file, const uint32 source_version);
+static bool upgrade_item_db(std::string file, const uint32 source_version);
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -105,6 +106,12 @@ int do_init(int argc, char** argv) {
 	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext, uint32 source_version) -> bool {
 		return upgrade_achievement_db(path + name_ext, source_version);
 	})) {
+		return 0;
+	}
+
+	if (!process("ITEM_DB", 2, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, uint32 source_version) -> bool {
+		return upgrade_item_db(path + name_ext, source_version);
+		})) {
 		return 0;
 	}
 
@@ -216,6 +223,28 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 	}
 
 	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+
+	return true;
+}
+
+static bool upgrade_item_db(std::string file, const uint32 source_version) {
+	size_t entries = 0;
+
+	for( auto &input : inNode["Body"] ){
+		// If under version 2
+		if( source_version < 2 ){
+			// Add armor level to all equipments
+			if( input["Type"].IsDefined() && input["Type"].as<std::string>() == "Armor" ){
+				input["ArmorLevel"] = 1;
+			}
+		}
+
+		// TODO: this currently converts all scripts using Literal syntax to normal double quote strings
+		body << input;
+		entries++;
+	}
+
+	ShowStatus("Done converting/upgrading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }

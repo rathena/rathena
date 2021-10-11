@@ -478,6 +478,8 @@
 	export_constant(MF_PRIVATEAIRSHIP_SOURCE);
 	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
 	export_constant(MF_SKILL_DURATION);
+	export_constant(MF_NOCASHSHOP);
+	export_constant(MF_NORODEX);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -763,6 +765,8 @@
 	export_constant2("bCritDefRate",SP_CRIT_DEF_RATE);
 	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
 	export_constant2("bReduceDamageReturn",SP_REDUCE_DAMAGE_RETURN);
+	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
+	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);

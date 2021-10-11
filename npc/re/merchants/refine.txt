@@ -108,18 +108,22 @@ function	script	refinenew	{
 	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 	.@safe = 10;
-
-	if (getequipweaponlv(.@part) >= 1 && getequipweaponlv(.@part) <= 4) {
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
+	
+	if( .@itemtype == IT_WEAPON ){
 		.@article$ = "a";
 		.@type$ = "weapon";
-	} else {
+	}else if( .@itemtype == IT_ARMOR ){
 		.@article$ = "an";
 		.@type$ = "armor";
+	}else{
+		// TODO:
+		close;
 	}
-	
+
 	mes "["+ .@npc_name$ +"]";
 	mes "Hmm " + .@article$ + " " + .@type$ + ", is that ok?";
-	mes "If you want to refine this armor,";
+	mes "If you want to refine this " + .@type$ + ",";
 	mes "I will need 1 ^003366" + getitemname(.@material) + "^000000 and " + callfunc("F_InsertComma",.@price) + " zeny.";
 	mes "Are you sure you want to continue?";
 	next;
@@ -131,7 +135,7 @@ function	script	refinenew	{
 	if (getarg(1) != 1) {
 		if (getequippercentrefinery(.@part) < 100) {
 			mes "["+ .@npc_name$ +"]";
-			mes "This "+.@type$+" already has been refined serveral times.";
+			mes "This "+.@type$+" already has been refined several times.";
 			mes "It could be destroyed if I try again.";
 			mes "It won't break for sure, but there is has a small chance.";
 			next;
@@ -455,31 +459,44 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
-	
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 	mes "[Clink]";
-	switch(getequipweaponlv(.@part)) {
-	default:
-	case 0: // Armor
-		.@type$ = "armor";
-		mes "Hmm, an armor refine? Someone like you?";
-		break;
-	case 1: // Level 1 Weapon
-		.@type$ = "weapon";
-		mes "A level 1 weapon?";
-		mes "Urr... Annoying... Okay, let's try...";
-		break;
-	case 2: // Level 2 Weapon
-		.@type$ = "weapon";
-		mes "A level 2 weapon?";
-		break;
-	case 3: // Level 3 Weapon
-		.@type$ = "weapon";
-		mes "Woot!! A level 3 weapon? Impressive~";
-		break;
-	case 4: // Level 4 Weapon
-		.@type$ = "weapon";
-		mes "Wow!... A level 4 weapon~!!";
-		break;
+	if( .@itemtype == IT_ARMOR ){
+		switch( getequiparmorlv( .@part ) ){
+			case 1: // Armor
+				.@type$ = "armor";
+				mes "Hmm, an armor refine? Someone like you?";
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else if( .@itemtype == IT_WEAPON ){
+		switch( getequipweaponlv( .@part ) ){
+			case 1: // Level 1 Weapon
+				.@type$ = "weapon";
+				mes "A level 1 weapon?";
+				mes "Urr... Annoying... Okay, let's try...";
+				break;
+			case 2: // Level 2 Weapon
+				.@type$ = "weapon";
+				mes "A level 2 weapon?";
+				break;
+			case 3: // Level 3 Weapon
+				.@type$ = "weapon";
+				mes "Woot!! A level 3 weapon? Impressive~";
+				break;
+			case 4: // Level 4 Weapon
+				.@type$ = "weapon";
+				mes "Wow!... A level 4 weapon~!!";
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else{
+		// TODO:
+		close;
 	}
 	mes "You need ^ff9999"+getitemname(.@material)+"^000000 and ^ff9999"+.@price+"^000000 Zeny. Do you have them?";
 	next;
