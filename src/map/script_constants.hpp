@@ -8200,13 +8200,13 @@
 
 	/* cash shop tabs */
 	export_constant(CASHSHOP_TAB_NEW);
-	export_constant(CASHSHOP_TAB_POPULAR);
+	export_constant2("CASHSHOP_TAB_HOT",CASHSHOP_TAB_POPULAR);
 	export_constant(CASHSHOP_TAB_LIMITED);
 	export_constant(CASHSHOP_TAB_RENTAL);
-	export_constant(CASHSHOP_TAB_PERPETUITY);
-	export_constant(CASHSHOP_TAB_BUFF);
-	export_constant(CASHSHOP_TAB_RECOVERY);
-	export_constant(CASHSHOP_TAB_ETC);
+	export_constant2("CASHSHOP_TAB_PERMANENT",CASHSHOP_TAB_PERPETUITY);
+	export_constant2("CASHSHOP_TAB_SCROLLS",CASHSHOP_TAB_BUFF);
+	export_constant2("CASHSHOP_TAB_CONSUMABLES",CASHSHOP_TAB_RECOVERY);
+	export_constant2("CASHSHOP_TAB_OTHER",CASHSHOP_TAB_ETC);
 #if PACKETVER_SUPPORTS_SALES
 	export_constant(CASHSHOP_TAB_SALE);
 #endif
