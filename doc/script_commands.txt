@@ -3610,6 +3610,12 @@ $@MobDrop_item[] is a global temporary number array which contains the
 $@MobDrop_rate[] is a global temporary number array which contains the
                  drop percentages of each item. (1 = .01%)
 
+$@MobDrop_nosteal[] is a global temporary number array which contains the
+                 StealProtected flag of each item. (default 0)
+
+$@MobDrop_randomopt[] is a global temporary number array which contains the
+                 random option group ID of each item. (default 0)
+
 $@MobDrop_count is the number of item drops found.
 
 Be sure to use $@MobDrop_count to go through the arrays, and not
@@ -6601,8 +6607,8 @@ summon "--ja--",-1;
 
 ---------------------------------------
 
-*addmonsterdrop <monster id>,<item id>,<rate>;
-*addmonsterdrop "<monster name>",<item id>,<rate>;
+*addmonsterdrop <monster id>,<item id>,<rate>,{<steal protected>,{<random option group id>}};
+*addmonsterdrop "<monster name>",<item id>,<rate>,{<steal protected>,{<random option group id>}};
 *delmonsterdrop <monster id>,<item id>;
 *delmonsterdrop "<monster name>",<item id>;
 
@@ -6612,9 +6618,16 @@ when the mob database reloads or the server shuts down. They return 1 upon succe
 If the monster already drops the specified item, its drop rate will be updated with
 the given rate (100 = 1%).
 
+If <steal protected> is 1 the item will be protected from TF_STEAL (default 0).
+<random option group id> binds the item with the given random option group Id (default 0).
+The Id must be valid, like defined in db/[pre-]re/item_randomopt_group.yml
+
 Examples:
 	// Makes Owl Baron drop Honey at an 80% rate.
 	addmonsterdrop 1295,518,8000;
+
+	// Makes Owl Baron drop Knife_ at an 80% rate, protected from TF_STEAL and with random option group Id 5.
+	addmonsterdrop 1295,1202,8000,1,5;
 
 	// Deletes Executioner's Mitten from Rybio.
 	delmonsterdrop 1201,7017;
