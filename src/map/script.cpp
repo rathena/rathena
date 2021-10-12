@@ -5826,19 +5826,20 @@ BUILDIN_FUNC(warpparty)
 				continue;
 		case 4: // RandomAll
 		case 5: // m,x,y
-			if (rx || ry) {
-				int x1 = x + rx, y1 = y + ry,
-					x0 = x - rx, y0 = y - ry;
-				uint8 attempts = 10;
+			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
+				if (rx || ry) {
+					int x1 = x + rx, y1 = y + ry,
+						x0 = x - rx, y0 = y - ry;
+					uint8 attempts = 10;
 
-				do {
-					x = x0 + rnd()%(x1 - x0 + 1);
-					y = y0 + rnd()%(y1 - y0 + 1);
-				} while ((--attempts) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
+					do {
+						x = x0 + rnd()%(x1 - x0 + 1);
+						y = y0 + rnd()%(y1 - y0 + 1);
+					} while ((--attempts) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
+				}
+
+				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
 			}
-
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
-				ret = pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
 
