@@ -1,0 +1,381 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Homunculus Experience Database
+###########################################################################
+#
+# Homunculus Experience Settings
+#
+###########################################################################
+# - Level   Level required.
+#   Exp     Experience required for the next level.
+###########################################################################
+
+Header:
+  Type: HOMUN_EXP_DB
+  Version: 1
+
+Body:
+  - Level: 1
+    Exp: 50
+  - Level: 2
+    Exp: 110
+  - Level: 3
+    Exp: 180
+  - Level: 4
+    Exp: 260
+  - Level: 5
+    Exp: 350
+  - Level: 6
+    Exp: 630
+  - Level: 7
+    Exp: 950
+  - Level: 8
+    Exp: 1310
+  - Level: 9
+    Exp: 1710
+  - Level: 10
+    Exp: 2150
+  - Level: 11
+    Exp: 3180
+  - Level: 12
+    Exp: 4300
+  - Level: 13
+    Exp: 5510
+  - Level: 14
+    Exp: 6810
+  - Level: 15
+    Exp: 8200
+  - Level: 16
+    Exp: 10800
+  - Level: 17
+    Exp: 13560
+  - Level: 18
+    Exp: 16480
+  - Level: 19
+    Exp: 19560
+  - Level: 20
+    Exp: 22800
+  - Level: 21
+    Exp: 28090
+  - Level: 22
+    Exp: 33630
+  - Level: 23
+    Exp: 39420
+  - Level: 24
+    Exp: 45460
+  - Level: 25
+    Exp: 51750
+  - Level: 26
+    Exp: 61150
+  - Level: 27
+    Exp: 70910
+  - Level: 28
+    Exp: 81030
+  - Level: 29
+    Exp: 91510
+  - Level: 30
+    Exp: 102350
+  - Level: 31
+    Exp: 117580
+  - Level: 32
+    Exp: 133300
+  - Level: 33
+    Exp: 149510
+  - Level: 34
+    Exp: 166210
+  - Level: 35
+    Exp: 183400
+  - Level: 36
+    Exp: 206480
+  - Level: 37
+    Exp: 230200
+  - Level: 38
+    Exp: 254560
+  - Level: 39
+    Exp: 279560
+  - Level: 40
+    Exp: 305200
+  - Level: 41
+    Exp: 338450
+  - Level: 42
+    Exp: 372510
+  - Level: 43
+    Exp: 407380
+  - Level: 44
+    Exp: 443060
+  - Level: 45
+    Exp: 479550
+  - Level: 46
+    Exp: 525590
+  - Level: 47
+    Exp: 572630
+  - Level: 48
+    Exp: 620670
+  - Level: 49
+    Exp: 669710
+  - Level: 50
+    Exp: 719750
+  - Level: 51
+    Exp: 781500
+  - Level: 52
+    Exp: 844460
+  - Level: 53
+    Exp: 908630
+  - Level: 54
+    Exp: 974010
+  - Level: 55
+    Exp: 1040600
+  - Level: 56
+    Exp: 1121280
+  - Level: 57
+    Exp: 1203400
+  - Level: 58
+    Exp: 1286960
+  - Level: 59
+    Exp: 1371960
+  - Level: 60
+    Exp: 1458400
+  - Level: 61
+    Exp: 1561530
+  - Level: 62
+    Exp: 1666350
+  - Level: 63
+    Exp: 1772860
+  - Level: 64
+    Exp: 1881060
+  - Level: 65
+    Exp: 1990950
+  - Level: 66
+    Exp: 2120350
+  - Level: 67
+    Exp: 2251710
+  - Level: 68
+    Exp: 2385030
+  - Level: 69
+    Exp: 2520310
+  - Level: 70
+    Exp: 2657550
+  - Level: 71
+    Exp: 2817340
+  - Level: 72
+    Exp: 2979380
+  - Level: 73
+    Exp: 3143670
+  - Level: 74
+    Exp: 3310210
+  - Level: 75
+    Exp: 3479000
+  - Level: 76
+    Exp: 3673600
+  - Level: 77
+    Exp: 3870760
+  - Level: 78
+    Exp: 4070480
+  - Level: 79
+    Exp: 4272760
+  - Level: 80
+    Exp: 4477600
+  - Level: 81
+    Exp: 4711730
+  - Level: 82
+    Exp: 4948750
+  - Level: 83
+    Exp: 5188660
+  - Level: 84
+    Exp: 5431460
+  - Level: 85
+    Exp: 5677150
+  - Level: 86
+    Exp: 5955830
+  - Level: 87
+    Exp: 6237750
+  - Level: 88
+    Exp: 6522910
+  - Level: 89
+    Exp: 6811310
+  - Level: 90
+    Exp: 7102950
+  - Level: 91
+    Exp: 7431500
+  - Level: 92
+    Exp: 7763660
+  - Level: 93
+    Exp: 8099430
+  - Level: 94
+    Exp: 8438810
+  - Level: 95
+    Exp: 8781800
+  - Level: 96
+    Exp: 9165840
+  - Level: 97
+    Exp: 9553880
+  - Level: 98
+    Exp: 9945920
+  - Level: 99
+    Exp: 10350000
+  - Level: 100
+    Exp: 10462000
+  - Level: 101
+    Exp: 10580000
+  - Level: 102
+    Exp: 10700000
+  - Level: 103
+    Exp: 10826000
+  - Level: 104
+    Exp: 10980000
+  - Level: 105
+    Exp: 11150000
+  - Level: 106
+    Exp: 11334000
+  - Level: 107
+    Exp: 11520000
+  - Level: 108
+    Exp: 11712000
+  - Level: 109
+    Exp: 11906000
+  - Level: 110
+    Exp: 12108000
+  - Level: 111
+    Exp: 12317000
+  - Level: 112
+    Exp: 12530000
+  - Level: 113
+    Exp: 12745000
+  - Level: 114
+    Exp: 12968000
+  - Level: 115
+    Exp: 13193000
+  - Level: 116
+    Exp: 13420000
+  - Level: 117
+    Exp: 13653000
+  - Level: 118
+    Exp: 13890000
+  - Level: 119
+    Exp: 14130000
+  - Level: 120
+    Exp: 14374200
+  - Level: 121
+    Exp: 14620000
+  - Level: 122
+    Exp: 14870000
+  - Level: 123
+    Exp: 15123200
+  - Level: 124
+    Exp: 15378000
+  - Level: 125
+    Exp: 15638000
+  - Level: 126
+    Exp: 15900000
+  - Level: 127
+    Exp: 16164000
+  - Level: 128
+    Exp: 16430000
+  - Level: 129
+    Exp: 16698000
+  - Level: 130
+    Exp: 16970000
+  - Level: 131
+    Exp: 17245000
+  - Level: 132
+    Exp: 17523000
+  - Level: 133
+    Exp: 17804000
+  - Level: 134
+    Exp: 18090000
+  - Level: 135
+    Exp: 18380000
+  - Level: 136
+    Exp: 18675000
+  - Level: 137
+    Exp: 18974000
+  - Level: 138
+    Exp: 19280000
+  - Level: 139
+    Exp: 19588000
+  - Level: 140
+    Exp: 19900000
+  - Level: 141
+    Exp: 20215000
+  - Level: 142
+    Exp: 20534000
+  - Level: 143
+    Exp: 20854200
+  - Level: 144
+    Exp: 21180000
+  - Level: 145
+    Exp: 21509500
+  - Level: 146
+    Exp: 21847000
+  - Level: 147
+    Exp: 22197000
+  - Level: 148
+    Exp: 22558000
+  - Level: 149
+    Exp: 22930000
+  - Level: 150
+    Exp: 23320000
+  - Level: 151
+    Exp: 24500000
+  - Level: 152
+    Exp: 25750000
+  - Level: 153
+    Exp: 26750000
+  - Level: 154
+    Exp: 28000000
+  - Level: 155
+    Exp: 29000000
+  - Level: 156
+    Exp: 30250000
+  - Level: 157
+    Exp: 31250000
+  - Level: 158
+    Exp: 32500000
+  - Level: 159
+    Exp: 33500000
+  - Level: 160
+    Exp: 34750000
+  - Level: 161
+    Exp: 36250000
+  - Level: 162
+    Exp: 38050000
+  - Level: 163
+    Exp: 40210000
+  - Level: 164
+    Exp: 42800000
+  - Level: 165
+    Exp: 47982500
+  - Level: 166
+    Exp: 50572500
+  - Level: 167
+    Exp: 53680000
+  - Level: 168
+    Exp: 57410000
+  - Level: 169
+    Exp: 61887500
+  - Level: 170
+    Exp: 70842500
+  - Level: 171
+    Exp: 75320000
+  - Level: 172
+    Exp: 80692500
+  - Level: 173
+    Exp: 87140000
+  - Level: 174
+    Exp: 94875000

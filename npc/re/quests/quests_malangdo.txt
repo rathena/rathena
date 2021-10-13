@@ -1383,11 +1383,11 @@ mal_in02,140,94,0	script	Bob#mal	553,{
 	mes "- not enough supporters yet. -";
 	close;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
 	set .off,0;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 malangdo,114,157,0	duplicate(Crack#mal0)	Crack#mal1	550
@@ -1404,15 +1404,15 @@ malangdo,162,183,0	duplicate(Crack#mal0)	Crack#mal10	550
 -	script	Crackt0#mal	-1,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
 	stopnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnTimer1000:
 	donpcevent "Crack#mal"+substr(strnpcinfo(1),6,getstrlen(strnpcinfo(1))-1)+"::OnDisable";
@@ -1921,11 +1921,11 @@ mal_in01,116,168,0	script	Dry Machine#mal	563,{
 	mes "- But it's just sand... -";
 	close;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
 	set .off,0;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 malangdo,221,139,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#1	557
@@ -1941,15 +1941,15 @@ malangdo,242,175,0	duplicate(Suspicious Sand Pile#0)	Suspicious Sand Pile#10	557
 
 -	script	Water Sand0#mal	-1,{
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
 	stopnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnTimer1000:
 	donpcevent "Suspicious Sand Pile#"+substr(strnpcinfo(1),10,getstrlen(strnpcinfo(1))-1)+"::OnDisable";

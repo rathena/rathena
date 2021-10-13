@@ -5,6 +5,7 @@
 #define UTILILITIES_HPP
 
 #include <algorithm>
+#include <locale>
 #include <map>
 #include <memory>
 #include <string>
@@ -257,6 +258,10 @@ namespace rathena {
 			}else{
 				return result;
 			}
+		}
+
+		template <typename T> void tolower( T& string ){
+			std::transform( string.begin(), string.end(), string.begin(), ::tolower );
 		}
 	}
 }

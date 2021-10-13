@@ -79,23 +79,37 @@ prontera,184,177,6	script	Refine Master	851,{
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	switch(getequipweaponlv(.@part)) {
-	default:
-	case 0:
-		setarray .@tickets[0],6457,6235,6234,6233,6232,6239;
-		setarray .@levels[0],5,6,7,8,9,11;
-		set .@type$,"Armor";
-		set .@check,.@bArmorUp;
-		break;
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-		setarray .@tickets[0],6456,6231,6230,6229,6228,6238;
-		setarray .@levels[0],5,6,7,8,9,11;
-		set .@type$,"Weapon";
-		set .@check,.@bWeaponUp;
-		break;
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
+	if( .@itemtype == IT_WEAPON ){
+		switch( getequipweaponlv( .@part ) ){
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+				setarray .@tickets[0],6456,6231,6230,6229,6228,6238;
+				setarray .@levels[0],5,6,7,8,9,11;
+				set .@type$,"Weapon";
+				set .@check,.@bWeaponUp;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else if( .@itemtype == IT_ARMOR ){
+		switch( getequiparmorlv( .@part ) ){
+			case 1:
+				setarray .@tickets[0],6457,6235,6234,6233,6232,6239;
+				setarray .@levels[0],5,6,7,8,9,11;
+				set .@type$,"Armor";
+				set .@check,.@bArmorUp;
+				break;
+			default:
+				// TODO:
+				close;
+		}
+	}else{
+		// TODO:
+		close;
 	}
 	if (!.@check) {
 		emotion ET_THINK;

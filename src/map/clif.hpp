@@ -886,6 +886,7 @@ void clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int typ
 #define clif_pet_performance(pd, param) clif_send_petdata(NULL, pd, 4, param)
 void clif_pet_emotion(struct pet_data *pd,int param);
 void clif_pet_food(struct map_session_data *sd,int foodid,int fail);
+void clif_pet_autofeed_status(struct map_session_data* sd, bool force);
 
 //friends list
 int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);
@@ -1086,6 +1087,9 @@ void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, en
 void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_open(struct map_session_data* sd);
+
+// Refine UI
+void clif_refineui_open( struct map_session_data* sd );
 
 /**
  * Color Table
