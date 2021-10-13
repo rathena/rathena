@@ -59,7 +59,7 @@ uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
 		taxdata->total.clear();
 
 		for (const auto &taxNode : node["InTotal"]) {
-			if (this->nodesExist(taxNode, { "MinimalValue", "Tax" }))
+			if (!this->nodesExist(taxNode, { "MinimalValue", "Tax" }))
 				continue;
 
 			s_tax_entry entry = {};
@@ -85,7 +85,7 @@ uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
 		taxdata->each.clear();
 
 		for (const auto &taxNode : node["EachEntry"]) {
-			if (this->nodesExist(taxNode, { "MinimalValue", "Tax" }))
+			if (!this->nodesExist(taxNode, { "MinimalValue", "Tax" }))
 				continue;
 
 			s_tax_entry entry = { 0 };
