@@ -79,7 +79,7 @@ prontera,184,177,6	script	Refine Master	851,{
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
-	.@itemtype = getiteminfo( .@refineitemid );
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 	if( .@itemtype == IT_WEAPON ){
 		switch( getequipweaponlv( .@part ) ){
 			case 1:
@@ -106,6 +106,7 @@ prontera,184,177,6	script	Refine Master	851,{
 			default:
 				// TODO:
 				close;
+		}
 	}else{
 		// TODO:
 		close;
