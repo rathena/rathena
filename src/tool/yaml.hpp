@@ -7,7 +7,6 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
-#include <locale>
 #include <map>
 #include <unordered_map>
 #include <vector>
@@ -288,7 +287,7 @@ int skill_split_atoi(char *str, int *val) {
 }
 
 /**
- * Split string to int by constant value (const.txt) or atoi()
+ * Split string to int by constant value (const.yml) or atoi()
  * @param *str: String input
  * @param *val: Temporary storage
  * @param *delim: Delimiter (for multiple value support)
@@ -378,7 +377,7 @@ static bool isMultiLevel(int arr[]) {
  * @return Converted string
  */
 std::string name2Upper(std::string name) {
-	std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+	util::tolower( name );
 	name[0] = toupper(name[0]);
 
 	for (size_t i = 0; i < name.size(); i++) {

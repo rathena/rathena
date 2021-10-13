@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <stdarg.h>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -344,6 +345,19 @@ enum e_element : int8{
 	ELE_RANDOM,
 };
 
+static std::unordered_map<std::string, e_element> um_eleid2elename {
+	{ "Neutral", ELE_NEUTRAL },
+	{ "Water", ELE_WATER },
+	{ "Earth", ELE_EARTH },
+	{ "Fire", ELE_FIRE },
+	{ "Wind", ELE_WIND },
+	{ "Poison", ELE_POISON },
+	{ "Holy", ELE_HOLY },
+	{ "Dark", ELE_DARK },
+	{ "Ghost", ELE_GHOST },
+	{ "Undead", ELE_UNDEAD },
+};
+
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
 
 /**
@@ -501,7 +515,7 @@ enum _sp {
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2092
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
-	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN // 2098-2099
+	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
 };
 
 enum _look {
@@ -595,6 +609,8 @@ enum e_mapflag : int16 {
 	MF_PRIVATEAIRSHIP_SOURCE,
 	MF_PRIVATEAIRSHIP_DESTINATION,
 	MF_SKILL_DURATION,
+	MF_NOCASHSHOP,
+	MF_NORODEX,
 	MF_MAX
 };
 
@@ -780,6 +796,8 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
+
+extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;

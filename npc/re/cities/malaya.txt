@@ -150,10 +150,10 @@ OnInit:
 		donpcevent "Unidentified Creature#"+.@npc$[.@i]+"::"+((.@i == .@rand)?"OnEnable":"OnDisable");
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnBingx2:
 	switch(atoi(strnpcinfo(2))) {
@@ -196,10 +196,10 @@ ma_scene01,195,92,4	duplicate(Unidentified Creature#i)	Unidentified Creature#09	
 -	script	Unidentified Creature#j	-1,{
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnBingx2:
 	switch(atoi(strnpcinfo(2))) {

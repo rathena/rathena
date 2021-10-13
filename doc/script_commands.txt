@@ -2782,43 +2782,63 @@ this is +10:
 
 ---------------------------------------
 
-*getequipweaponlv(<equipment slot>{,<char_id>})
+*getequipweaponlv({<equipment slot>{,<char_id>}})
 
 This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see
 'getequipid'.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
-a weapon level. You can, however, probably, use this field for other equippable
-custom items as a flag or something.
+a weapon level.
 
 If no item is equipped in this slot, or if it doesn't have a weapon level
 according to the database, 0 will be returned.
 
 Examples:
 
-// Right hand can only contain a weapon.
     switch (getequipweaponlv(EQI_HAND_R)) {
       case 1: mes "You are holding a lvl 1 weapon."; break;
       case 2: mes "You are holding a lvl 2 weapon."; break;
       case 3: mes "You are holding a lvl 3 weapon."; break;
       case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+      case 5: mes "You are holding a lvl 5 weapon."; break;
+      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
       default: mes "Seems you don't have a weapon on."; break;
     }
 
-// Left hand can hold either a weapon or shield.
-    if (getequipid(EQI_HAND_R) == 0) {
+    if (getequipid(EQI_HAND_L) == 0) {
         mes "Seems you have nothing equipped here.";
         close;
     }
     switch (getequipweaponlv(EQI_HAND_L)) {
-      case 0: mes "You are holding a shield, so it doesn't have a level."; break;
+      case 0: mes "You are not holding a weapon, so it doesn't have a level."; break;
       case 1: mes "You are holding a lvl 1 weapon."; break;
       case 2: mes "You are holding a lvl 2 weapon."; break;
       case 3: mes "You are holding a lvl 3 weapon."; break;
       case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+      case 5: mes "You are holding a lvl 5 weapon."; break;
+      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
+    }
+
+---------------------------------------
+
+*getequiparmorlv({<equipment slot>{,<char_id>}})
+
+This function returns the armor level for the item equipped in the specified
+equipment slot on the invoking character. For a list of equipment slots see
+'getequipid'.
+
+If no item is equipped in this slot, or if it doesn't have an armor level
+according to the database, 0 will be returned.
+
+    if (getequipid(EQI_ARMOR) == 0) {
+        mes "Seems you have nothing equipped here.";
+        close;
+    }
+    switch (getequiparmorlv(EQI_ARMOR)) {
+      case 1: mes "You are wearing a lvl 1 armor."; break;
+      case 2: mes "You are wearing a lvl 2 armor."; break;
+      case 3: mes "You are wearing a lvl 3 armor, hm, must be a custom design..."; break;
     }
 
 ---------------------------------------
@@ -2903,6 +2923,7 @@ invoking character has in their inventory, including all the data needed to
 recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]                - array of item ids.
+@inventorylist_idx[]               - array of item inventory index.
 @inventorylist_amount[]            - their corresponding item amounts.
 @inventorylist_equip[]             - on which position the item is equipped (see EQP_* constants)
                                      It will contain 0 if the item is not equipped.
@@ -2916,6 +2937,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
                                      craftsman.
 @inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
 @inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
+@inventorylist_enchantgrade[]      - the enchantgrade of the items
 @inventorylist_count               - the number of items in these lists.
 @inventorylist_option_id1[]        - first array of random option IDs
 @inventorylist_option_value1[]     - first array of random option values
@@ -2933,6 +2955,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
 @inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
+@inventorylist_favorite            - Returns if an item is favorite or not
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -3029,7 +3052,8 @@ Valid types are:
 	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
 	ITEMINFO_ID             (17)   -  item ID
 	ITEMINFO_AEGISNAME      (18)   -  aegis item name
-	
+	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
+
 See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------
@@ -3078,6 +3102,15 @@ Returns false otherwise.
 Returns the count of unidentified items in the player inventory.
 If <type> is true the command will identify all the unidentified items as well (default).
 If <type> is false the command only returns the count of unidentified items.
+
+---------------------------------------
+
+*getenchantgrade()
+
+This function will return the enchantgrade of the equipment from which the
+function is called.
+
+This function is intended for use in item scripts.
 
 ---------------------------------------
 //
@@ -3641,7 +3674,7 @@ in percent.
     if (rand(100) > getscrate(Eff_Blind, 50)) goto BlindHimNow;
 
 You can see the full list of available effect types you can possibly inflict in
-'db/const.txt' under 'Eff_'.
+'src/map/script_constants.hpp' under 'Eff_'.
 
 ---------------------------------------
 
@@ -4987,6 +5020,30 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
+*delitemidx <index>{,<amount>{,<char id>}}
+
+This command will remove an item at the given inventory index.
+
+If <amount> is not specified, this will remove all of the items at the specified index.
+
+The only way to get the inventory index is by using 'getinventorylist()'. After deleting
+an item at the given index, that index can remain empty until the player relogs, requiring
+'getinventorylist()' to be called again. If an item is deleted with an invalid index, the
+script will terminate with an error.
+
+This command returns true on success and false if the item at the given index could not be deleted or if
+not enough items were available at the given index.
+
+Example:
+
+	// This will remove all Red Potions from player's inventory
+	getinventorylist();
+	for (.@i = 0; .@i < @inventorylist_count; ++.@i)
+		if (@inventorylist_id[.@i] == 501)
+			delitemidx @inventorylist_idx[.@i];
+
+---------------------------------------
+
 *cartdelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
@@ -5513,6 +5570,8 @@ Example:
 
 This will open a character's Mail window on the client connected to the
 invoking character.
+
+This command is not supported for PACKETVER 20150513 or newer.
 
 	mes "Close this window to open your mail inbox.";
 	close2;
@@ -6563,8 +6622,8 @@ Examples:
 
 ---------------------------------------
 
-*disablenpc "<NPC object name>";
-*enablenpc "<NPC object name>";
+*disablenpc {"<NPC object name>"};
+*enablenpc {"<NPC object name>"};
 
 These two commands will disable and enable, respectively, an NPC object
 specified by name. The disabled NPC will disappear from sight and will no longer
@@ -6581,8 +6640,8 @@ copies, and then disable all except one.
 
 ---------------------------------------
 
-*hideonnpc "<NPC object name>";
-*hideoffnpc "<NPC object name>";
+*hideonnpc {"<NPC object name>"};
+*hideoffnpc {"<NPC object name>"};
 
 These commands will make the NPC object specified display as hidden/visible,
 even though not actually disabled per se. Hidden as in thief Hide skill, but
@@ -6602,8 +6661,8 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
  
-*cloakonnpc "<NPC object name>"{,<character ID>};
-*cloakoffnpc "<NPC object name>"{,<character ID>};
+*cloakonnpc {"<NPC object name>"{,<character ID>}};
+*cloakoffnpc {"<NPC object name>"{,<character ID>}};
 
 These commands will make the NPC object specified display as cloaked/uncloaked,
 even though not actually disabled.
@@ -6616,7 +6675,7 @@ If no <character ID> is specified it will display to the area.
 
 ---------------------------------------
 
-*isnpccloaked "<NPC object name>"{,<character ID>};
+*isnpccloaked {"<NPC object name>"{,<character ID>}};
 
 Returns true if the NPC has been cloaked to the attached player or given
 <character ID>, false otherwise. This works in association with cloakonnpc
@@ -7059,6 +7118,7 @@ The label "OnSellItem" sets the following arrays:
 	@sold_refine        - refine count
 	@sold_attribute     - if the item is broken (1) or not (0)
 	@sold_identify      - if the item is identified (1) or not (0)
+	@sold_enchantgrade  - enchantgrade
 	@sold_card1         - card slot 1
 	@sold_card2         - card slot 2
 	@sold_card3         - card slot 3
@@ -8639,8 +8699,8 @@ Valid types are:
 	ITEMINFO_SELL            (1)   -  Sell Price
 	ITEMINFO_TYPE            (2)   -  Type
 	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		                        if = 0, then monsters don't drop it at all (rare or a quest item)
-		                        if = 10000, then this item is sold in NPC shops only
+	                                  if = 0, then monsters don't drop it at all (rare or a quest item)
+	                                  if = 10000, then this item is sold in NPC shops only
 	ITEMINFO_GENDER          (4)   -  Gender
 	ITEMINFO_LOCATIONS       (5)   -  Location(s)
 	ITEMINFO_WEIGHT          (6)   -  Weight
@@ -8654,6 +8714,7 @@ Valid types are:
 	ITEMINFO_ALIASNAME      (14)   -  AliasName
 	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
 	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
+	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
 
 Example:
 	setiteminfo 7049,ITEMINFO_WEIGHT,9990; // Stone now weighs 999.0
@@ -9961,6 +10022,12 @@ current invoking character.
 
 ---------------------------------------
 
+*addhomintimacy <amount>{,<char_id>};
+
+Increase or decrease a homunculus' intimacy value by the given <amount>. 100000 is full loyalty.
+
+---------------------------------------
+
 ==========================
 |12.- Mercenary commands.|
 ==========================
@@ -10364,7 +10431,7 @@ See 'getequipid' for a full list of valid equipment slots.
 
 index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 
-ID - ID of random option. See db/const.txt for constants.
+ID - ID of random option. See db/item_randomopt_db.yml for constants.
 Value - Value of random option
 Param - Parameter of random option
 

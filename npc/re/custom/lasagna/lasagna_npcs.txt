@@ -2463,44 +2463,53 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	mes "Yota often makes quality amulets, but he still needs more polishing.";
 	mes "If he pays attention to details, his amulets will be even greater. But he just doesn't care.";
 	next;
-	.@s = (select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1) * 4;
-
-	setarray .@item_data[0],
-		28413, 30,	// Basic Saurel Charm [1]
-		28414, 90,	// Fair Saurel Charm [1]
-		28416, 30,	// Basic Leaf Charm [1]
-		28417, 90,	// Fair Leaf Charm [1]
-		28419, 30,	// Basic Bunny Charm [1]
-		28420, 90;	// Fair Bunny Charm [1]
-
-	if ((countitem(.@item_data[.@s]) - isequippedcnt(.@item_data[.@s]))  > 0)
-		.@index = .@s;
-	else if ((countitem(.@item_data[.@s+2]) - isequippedcnt(.@item_data[.@s+2])) > 0)
-		.@index = .@s + 2;
-	else {
+	.@s = select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1;
+	setarray .@ids[0], 28413,28416,28419;
+	.@start_ID = .@ids[.@s];
+	if ((countitem(.@start_ID) - isequippedcnt(.@start_ID))  > 0) {	// basic amulet to upgrade
+		.@your_charm_ID = .@start_ID;
+		.@next_charm_ID = .@start_ID + 1;
+		.@needCoin = 30;
+	}
+	else if ((countitem(.@start_ID+1) - isequippedcnt(.@start_ID+1))  > 0) {	// intermediate
+		.@your_charm_ID = .@start_ID + 1;
+		.@next_charm_ID = .@start_ID + 2;
+		.@needCoin = 90;
+	}
+	else if ((countitem(.@start_ID+2) - isequippedcnt(.@start_ID+2))  > 0) {	// player have some "perfect" amulet in inventory
+		mes "[Goma Chara]";
+		mes "This amulet is already perfect!";
+		close;
+	}
+	if (.@your_charm_ID < 1) {
 		mes "[Goma Chara]";
 		mes "Show me your amulet, will you? I can't seem to find it in your inventory.";
 		close;
 	}
 	mes "[Goma Chara]";
-	mes "Let me. Hmm... " + getitemname(.@item_data[.@index]) + ", it is.";
+	mes "Let me. Hmm... " + getitemname(.@your_charm_ID) + ", it is.";
 	mes "...I knew this was going to happen again. Worse, this one must require a lot more time to polish!";
 	next;
 	mes "[Goma Chara]";
-	mes "Hey, if you give me " + .@item_data[.@index+1] + "<ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
-	mes "<ITEM>This should produce the <INFO>" + (.@item_data[.@index]+1) + "</INFO></ITEM> function, I guess. How do you like it?";
+	mes "Hey, if you give me " + .@needCoin + "<ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
+	mes "<ITEM>This should produce the <INFO>" + .@next_charm_ID + "</INFO></ITEM> function, I guess. How do you like it?";
 	next;
 	if (select( "Upgrade", "Cancel" ) == 2) {
 		mes "[Goma Chara]";
 		mes "As you please.";
 		close;
 	}
+	if (countitem(25142) < .@needCoin) {
+		mes "[Goma Chara]";
+		mes "Insufficient materials, can not be repaired free.";
+		close;
+	}
 	mes "[Goma Chara]";
 	mes "The inside of this amulet seems pretty tough.";
 	mes "But my dexterity is tougher. Tada! Put my brother's amulet to good use.";
-	delitem 25142, .@item_data[.@index+1];// Doram token
-	delitem .@item_data[.@index],1;
-	getitem (.@item_data[.@index] + 1),1;
+	delitem 25142, .@needCoin;// Doram token
+	delitem .@your_charm_ID,1;
+	getitem .@next_charm_ID,1;
 	close;
 }
 
@@ -3311,7 +3320,7 @@ lasagna,222,187,3	script	Chef#dorcon	4_CAT_CHEF,{
 				if (isbegin_quest(14592) > 0)
 					erasequest 14592;
 				for ( .@i = 0; .@i < .@j; .@i++ )
-					erasequest .@quest_left[.@j];
+					erasequest .@quest_left[.@i];
 				close;
 			}
 		}

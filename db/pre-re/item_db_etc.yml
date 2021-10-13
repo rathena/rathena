@@ -39,7 +39,8 @@
 #   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Locations               Equipment's placement. (Default: None)
-#   WeaponLevel             Weapon level. (Default: 0)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
 #   EquipLevelMin           Minimum required level to equip. (Default: 0)
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
@@ -84,7 +85,7 @@
 
 Header:
   Type: ITEM_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Id: 670
@@ -5529,11 +5530,11 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddDamageClass,1285,-50;
-      bonus2 bAddDamageClass,1286,-50;
-      bonus2 bAddDamageClass,1287,-50;
-      bonus2 bAddDamageClass,1899,-50;
-      bonus2 bAddDamageClass,1900,-50;  
+      bonus2 bAddDefMonster,1285,-50;
+      bonus2 bAddDefMonster,1286,-50;
+      bonus2 bAddDefMonster,1287,-50;
+      bonus2 bAddDefMonster,1899,-50;
+      bonus2 bAddDefMonster,1900,-50;
   - Id: 4232
     AegisName: Wild_Ginseng_Card
     Name: Hermit Plant Card

@@ -379,6 +379,8 @@
 139,970,22,228,1,7127,0,713,1,7033,5,905,5,1092,1
 //-- Embryo <-- AM_PHARMACY & Potion Creation Guide & 1 Seed of Life, 1 Morning Dew of Yggdrasil, 1 Glass Tube
 140,7142,22,228,1,7144,0,7140,1,7141,1,7143,1
+//-- Homunculus Supplement <-- AM_BIOETHICS & Potion Creation Guide & 1 Seed of Life, 1 Yellow Herb, 1 Empty Bottle
+141,100371,22,228,1,7144,0,7140,1,508,1,713,1
 //----------------------------------------------
 
 //==============================================
@@ -387,63 +389,63 @@
 //===== Elemental Converters === ItemLV=23 =====
 
 //-- Fire Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Scorpion Tail
-141,12114,23,1007,1,7433,1,904,3
+142,12114,23,1007,1,7433,1,904,3
 //-- Water Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Snail's Shell
-142,12115,23,1007,1,7433,1,946,3
+143,12115,23,1007,1,7433,1,946,3
 //-- Earth Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Horn
-143,12116,23,1007,1,7433,1,947,3
+144,12116,23,1007,1,7433,1,947,3
 //-- Wind Elemental Converter <-- SA_CREATECON & 1 Blank Scroll, 3 Rainbow Shell
-144,12117,23,1007,1,7433,1,1013,3
+145,12117,23,1007,1,7433,1,1013,3
 
 //==============================================
 
 //===== Ancilla And Runes === ItemLV=24 ========
 //---- Ancilla ---------------------------------
 //-- Ancilla <-- AB_ANCILLA & 1 Blue Gemstone
-145,12333,24,2039,1,717,1
+146,12333,24,2039,1,717,1
 
 //---- Rune Stones -----------------------------
 //-- Runstone Nosiege <-- RK_RUNEMASTERY Lv8, 1 Broken Armor Piece, 1 Old Magic Circle, 1 Light Granule, 1 Elder Branch
-146,12725,24,2010,8,7069,1,7099,1,7938,1,7939,1
+147,12725,24,2010,8,7069,1,7099,1,7938,1,7939,1
 //-- Runstone Rhydo <-- RK_RUNEMASTERY Lv7, 1 Red Gemstone, 1 Light Granule, 1 Elder Branch
-147,12726,24,2010,7,716,1,7938,1,7939,1
+148,12726,24,2010,7,716,1,7938,1,7939,1
 //-- Runstone Verkana <-- RK_RUNEMASTERY Lv9, 1 Dullahan Armor, 1 Elder Branch
-148,12727,24,2010,9,7210,1,7939,1
+149,12727,24,2010,9,7210,1,7939,1
 //-- Runstone Isia <-- RK_RUNEMASTERY Lv2, 1 Burning Heart, 1 Elder Branch
-149,12728,24,2010,2,7097,1,7939,1
+150,12728,24,2010,2,7097,1,7939,1
 //-- Runstone Asir <-- RK_RUNEMASTERY Lv5, 1 Ogre Tooth, 1 Light Granule, 1 Elder Branch
-150,12729,24,2010,5,7002,1,7938,1,7939,1
+151,12729,24,2010,5,7002,1,7938,1,7939,1
 //-- Runstone Urj <-- RK_RUNEMASTERY Lv6, 1 Honey, 1 Slender Snake, 1 Elder Branch
-151,12730,24,2010,6,518,1,1048,1,7939,1
+152,12730,24,2010,6,518,1,1048,1,7939,1
 //-- Runstone Turisus <-- RK_RUNEMASTERY Lv1, 1 Cobold Hair, 1 Claw Of Desert Wolf, 1 Elder Branch
-152,12731,24,2010,1,1034,1,7030,1,7939,1
+153,12731,24,2010,1,1034,1,7030,1,7939,1
 //-- Runstone Pertz <-- RK_RUNEMASTERY Lv3, 1 Dragon Canine, 1 Tangled Chain, 1 Light Granule, 1 Elder Branch
-153,12732,24,2010,3,1035,1,7221,1,7938,1,7939,1
+154,12732,24,2010,3,1035,1,7221,1,7938,1,7939,1
 //-- Runstone Hagalas <-- RK_RUNEMASTERY Lv4, 1 Round Shell, 1 Dragon's Skin, 1 Elder Branch
-154,12733,24,2010,4,1096,1,7123,1,7939,1
+155,12733,24,2010,4,1096,1,7123,1,7939,1
 //-- Runstone Lux Anima <-- RK_RUNEMASTERY Lv10, 3 Gold, 3 Light Granule
-155,22540,24,2010,10,969,3,7938,3
+156,22540,24,2010,10,969,3,7938,3
 //==============================================
 
 //===== Guillotine Cross Poisons === ItemLv=25 =
 //-- Guillotine Antidote <-- GC_RESEARCHNEWPOISON Lv5, 1 White Herb, 1 Blue Herb, 2 Green Herb
-156,6128,25,2024,5,509,1,510,1,511,2
+157,6128,25,2024,5,509,1,510,1,511,2
 //-- Poison Paralysis <-- GC_RESEARCHNEWPOISON Lv1, 1 Medicine Bowl, 20 Poison Toad's Skin, 1 Poison Kit, 1 Poison Herb Amoena
-157,12717,25,2024,1,7134,1,7155,20,7931,1,7937,1
+158,12717,25,2024,1,7134,1,7155,20,7931,1,7937,1
 //-- Poison Leech <-- GC_RESEARCHNEWPOISON Lv4, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Nerium, 1 Poison Herb Scopolia
-158,12718,25,2024,4,7134,1,7931,1,7932,1,7936,1
+159,12718,25,2024,4,7134,1,7931,1,7932,1,7936,1
 //-- Poison Oblivion <-- GC_RESEARCHNEWPOISON Lv9, 1 Izidor, 10 Heart Of Mermaid, 1 Medicine Bowl, 1 Poison Kit
-159,12719,25,2024,9,709,1,950,10,7134,1,7931,1
+160,12719,25,2024,9,709,1,950,10,7134,1,7931,1
 //-- Poison Contamination <-- GC_RESEARCHNEWPOISON Lv3, 25 Decayed Nail, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Seratum
-160,12720,25,2024,3,957,25,7134,1,7931,1,7935,1
+161,12720,25,2024,3,957,25,7134,1,7931,1,7935,1
 //-- Poison Numb <-- GC_RESEARCHNEWPOISON Lv8, 1 Medicine Bowl, 10 Sticky Poison, 1 Poison Kit, 1 Poison Herb Nerium
-161,12721,25,2024,8,7134,1,7565,10,7931,1,7932,1
+162,12721,25,2024,8,7134,1,7565,10,7931,1,7932,1
 //-- Poison Fever <-- GC_RESEARCHNEWPOISON Lv2, 20 Anolian Skin, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Rantana
-162,12722,25,2024,2,7003,20,7134,1,7931,1,7933,1
+163,12722,25,2024,2,7003,20,7134,1,7931,1,7933,1
 //-- Poison Laughing <-- GC_RESEARCHNEWPOISON Lv7, 10 Poison Spore, 1 Medicine Bowl, 1 Poison Kit, 1 Poison Herb Makulata
-163,12723,25,2024,7,7033,10,7134,1,7931,1,7934,1
+164,12723,25,2024,7,7033,10,7134,1,7931,1,7934,1
 //-- Poison Fatigue <-- GC_RESEARCHNEWPOISON Lv6, 1 Izidor, 1 Medicine Bowl, 10 Sticky Poison, 1 Poison Kit
-164,12724,25,2024,6,709,1,7134,1,7565,10,7931,1
+165,12724,25,2024,6,709,1,7134,1,7565,10,7931,1
 //==============================================
 
 //==============================================
@@ -451,244 +453,244 @@
 //==============================================
 //----- Change Material ---- ItemLV=26 ---------
 //-- Sacred Masque <-- GN_CHANGEMATERIAL Lv1, 45 Grasshopper's Leg, 35 Yoyo Tail
-165,1045,26,2494,1,940,45,942,35
+166,1045,26,2494,1,940,45,942,35
 //-- Long Hair <-- GN_CHANGEMATERIAL Lv1, 40 Pencil Case, 5 Tiger's Skin
-166,1020,26,2494,1,738,40,1029,5
+167,1020,26,2494,1,738,40,1029,5
 //-- Phracon <-- GN_CHANGEMATERIAL Lv1, 45 Spawn, 40 Glass Bead
-167,1010,26,2494,1,908,45,746,40
+168,1010,26,2494,1,908,45,746,40
 //-- Lantern <-- GN_CHANGEMATERIAL Lv1, 10 Solid Shell, 20 Blossom Of Maneater
-168,1041,26,2494,1,943,10,1032,20
+169,1041,26,2494,1,943,10,1032,20
 //-- Acorn <-- GN_CHANGEMATERIAL Lv1, 30 Cactus Needle, 10 Snail's Shell
-169,1026,26,2494,1,952,30,946,10
+170,1026,26,2494,1,952,30,946,10
 //-- Frozen Heart <-- GN_CHANGEMATERIAL Lv1, 25 Raccoondog Doll, 35 Moth Dust
-170,1008,26,2494,1,754,25,1057,35
+171,1008,26,2494,1,754,25,1057,35
 //-- Horrendous Mouth <-- GN_CHANGEMATERIAL Lv1, 45 Stem, 45 Dragon Scale
-171,958,26,2494,1,905,45,1036,45
+172,958,26,2494,1,905,45,1036,45
 //-- Detrimindexta <-- GN_CHANGEMATERIAL Lv1, 40 Chrysalis, 10 Flesh Of Clam
-172,971,26,2494,1,915,40,966,10
+173,971,26,2494,1,915,40,966,10
 //-- Detonator <-- GN_CHANGEMATERIAL Lv1, 45 Nose Ring, 25 Feather Of Birds
-173,1051,26,2494,1,941,45,916,25
+174,1051,26,2494,1,941,45,916,25
 //-- Tweezer <-- GN_CHANGEMATERIAL Lv1, 40 Worm Peelings, 5 Monkey Doll
-174,1046,26,2494,1,955,40,753,5
+175,1046,26,2494,1,955,40,753,5
 //-- Petite DiablOfs Horn <-- GN_CHANGEMATERIAL Lv1, 5 Stone Heart, 10 Resin
-175,1038,26,2494,1,953,5,907,10
+176,1038,26,2494,1,953,5,907,10
 //-- Root Of Maneater <-- GN_CHANGEMATERIAL Lv1, 25 Talon, 20 Tooth Of 
-176,1033,26,2494,1,917,25,1044,20
+177,1033,26,2494,1,917,25,1044,20
 //-- Conch <-- GN_CHANGEMATERIAL Lv1, 5 Gill, 25 Immortal Heart
-177,961,26,2494,1,956,5,929,25
+178,961,26,2494,1,956,5,929,25
 //-- Rotten Scale <-- GN_CHANGEMATERIAL Lv1, 20 Shell, 50 Thin N' Long Tongue
-178,959,26,2494,1,935,20,1015,50
+179,959,26,2494,1,935,20,1015,50
 //-- Elder Pixie's Beard <-- GN_CHANGEMATERIAL Lv1, 35 Bee Sting, 45 Petite DiablOfs Wing
-179,1040,26,2494,1,939,35,1039,45
+180,1040,26,2494,1,939,35,1039,45
 //-- Lizard Scruff <-- GN_CHANGEMATERIAL Lv1, 20 Scale Of Snakes, 15 Karvodailnirol
-180,1012,26,2494,1,926,20,972,15
+181,1012,26,2494,1,926,20,972,15
 //-- Emveretarcon <-- GN_CHANGEMATERIAL Lv1, 5 Heart Of Mermaid, 40 Grasshopper Doll
-181,1011,26,2494,1,950,5,752,40
+182,1011,26,2494,1,950,5,752,40
 //-- Chinese Ink <-- GN_CHANGEMATERIAL Lv1, 20 Bear's Foot, 25 Black Ladle
-182,1024,26,2494,1,948,20,737,25
+183,1024,26,2494,1,948,20,737,25
 //-- Spiderweb <-- GN_CHANGEMATERIAL Lv1, 50 Fin, 35 Slender Snake
-183,1025,26,2494,1,951,50,1048,35
+184,1025,26,2494,1,951,50,1048,35
 //-- Reins <-- GN_CHANGEMATERIAL Lv1, 30 Chonchon Doll, 50 Stuffed Doll
-184,1064,26,2494,1,742,30,740,50
+185,1064,26,2494,1,742,30,740,50
 //-- Wooden Block <-- GN_CHANGEMATERIAL Lv1, 10 Rotten Bandage, 10 Single Cell
-185,1019,26,2494,1,930,10,1052,10
+186,1019,26,2494,1,930,10,1052,10
 //-- Tentacle <-- GN_CHANGEMATERIAL Lv1, 40 Decayed Nail, 5 Wild Boar's Mane
-186,962,26,2494,1,957,40,1028,5
+187,962,26,2494,1,957,40,1028,5
 //-- Mixture <-- GN_CHANGEMATERIAL Lv1, 15 Posionous Canine, 30 Powder Of Butterfly
-187,974,26,2494,1,937,15,924,30
+188,974,26,2494,1,937,15,924,30
 //-- Colorful Shell <-- GN_CHANGEMATERIAL Lv1, 50 Horn, 45 Zargon
-188,1013,26,2494,1,947,50,912,45
+189,1013,26,2494,1,947,50,912,45
 //-- Wing Of Moth <-- GN_CHANGEMATERIAL Lv1, 20 Frozen Rose, 30 Reptile Tongue
-189,1058,26,2494,1,749,20,903,30
+190,1058,26,2494,1,749,20,903,30
 //-- Nipper <-- GN_CHANGEMATERIAL Lv1, 25 Sticky Mucus, 40 Earthworm Peeling
-190,960,26,2494,1,938,25,1055,40
+191,960,26,2494,1,938,25,1055,40
 //-- Turtle Shell <-- GN_CHANGEMATERIAL Lv1, 5 Fluff, 40 Poring Doll
-191,967,26,2494,1,914,5,741,40
+192,967,26,2494,1,914,5,741,40
 //-- Nail Of Orc <-- GN_CHANGEMATERIAL Lv1, 50 Raccoon Leaf, 10 Garlet
-192,1043,26,2494,1,945,50,910,10
+193,1043,26,2494,1,945,50,910,10
 //-- Dragon Canine <-- GN_CHANGEMATERIAL Lv1, 50 Osiris Doll, 35 Sticky Webfoot
-193,1035,26,2494,1,751,50,918,35
+194,1035,26,2494,1,751,50,918,35
 //-- Skirt Of Virgin <-- GN_CHANGEMATERIAL Lv1, 30 Scales Shell, 35 Head Of Medusa
-194,1049,26,2494,1,936,30,1047,35
+195,1049,26,2494,1,936,30,1047,35
 //-- Dragon Train <-- GN_CHANGEMATERIAL Lv1, 25 Tooth Of Bat, 35 Sharpened Cuspid
-195,1037,26,2494,1,913,25,1063,35
+196,1037,26,2494,1,913,25,1063,35
 //-- Dokkaebi Horn <-- GN_CHANGEMATERIAL Lv1, 15 Shining Scales, 25 Lip Of Ancient Fish
-196,1021,26,2494,1,954,15,1054,25
+197,1021,26,2494,1,954,15,1054,25
 //-- Grit <-- GN_CHANGEMATERIAL Lv1, 35 Crystal Mirror, 50 Limb Of Mantis
-197,1056,26,2494,1,747,35,1031,50
+198,1056,26,2494,1,747,35,1031,50
 //-- Sharp Scale <-- GN_CHANGEMATERIAL Lv1, 10 Horseshoe, 20 Clam Shell
-198,963,26,2494,1,944,10,965,20
+199,963,26,2494,1,944,10,965,20
 //-- Short Leg <-- GN_CHANGEMATERIAL Lv1, 20 Claw Of Wolves, 45 Scell
-199,1042,26,2494,1,920,20,911,45
+200,1042,26,2494,1,920,20,911,45
 //-- Starsand Of Witch <-- GN_CHANGEMATERIAL Lv1, 10 Insect Feeler, 15 Blue Porcelain
-200,1061,26,2494,1,928,10,735,15
+201,1061,26,2494,1,928,10,735,15
 //-- Fox Tail <-- GN_CHANGEMATERIAL Lv1, 10 Animal's Skin, 15 Rouge
-201,1022,26,2494,1,919,10,739,15
+202,1022,26,2494,1,919,10,739,15
 //-- Cobold Hair <-- GN_CHANGEMATERIAL Lv1, 45 Jellopy, 20 Wedding Bouquet
-202,1034,26,2494,1,909,45,745,20
+203,1034,26,2494,1,909,45,745,20
 //-- Jaws Of Ant <-- GN_CHANGEMATERIAL Lv1, 20 Spore Doll, 20 Witherless Rose
-203,1014,26,2494,1,743,20,748,20
+204,1014,26,2494,1,743,20,748,20
 //-- Voucher Of Orcish Hero <-- GN_CHANGEMATERIAL Lv1, 5 Tree Root, 45 Nail Of Mole
-204,968,26,2494,1,902,5,1018,45
+205,968,26,2494,1,902,5,1018,45
 //-- Sacred Marks <-- GN_CHANGEMATERIAL Lv1, 10 Scorpion's Tail, 30 Pumpkin Head
-205,1009,26,2494,1,904,10,1062,30
+206,1009,26,2494,1,904,10,1062,30
 //-- Alchol <-- GN_CHANGEMATERIAL Lv1, 50 Orcish Voucher, 40 Skel Bone
-206,970,26,2494,1,931,50,932,40
+207,970,26,2494,1,931,50,932,40
 //-- Crap Shell <-- GN_CHANGEMATERIAL Lv1, 50 Baphomet Doll, 30 Fish Tail
-207,964,26,2494,1,750,50,1023,30
+208,964,26,2494,1,750,50,1023,30
 //-- Tendon <-- GN_CHANGEMATERIAL Lv1, 25 Orcish Cuspid, 5 Feather
-208,1050,26,2494,1,922,25,949,5
+209,1050,26,2494,1,922,25,949,5
 //-- Tiger Footskin <-- GN_CHANGEMATERIAL Lv1, 5 Pointed Scale, 20 White Platter
-209,1030,26,2494,1,906,5,736,20
+210,1030,26,2494,1,906,5,736,20
 //-- Hinalle <-- GN_CHANGEMATERIAL Lv1, 45 Bunch Of Flowers, 40 Moustache Of Mole
-210,703,26,2494,1,744,45,1017,40
+211,703,26,2494,1,744,45,1017,40
 //-- Counteragent <-- GN_CHANGEMATERIAL Lv1, 15 Evil Horn, 30 Mementos
-211,973,26,2494,1,923,15,934,30
+212,973,26,2494,1,923,15,934,30
 //-- Tooth Of Ancient Fish <-- GN_CHANGEMATERIAL Lv1, 35 Bill Of Birds, 30 Transparent Cloth
-212,1053,26,2494,1,925,35,1059,30
+213,1053,26,2494,1,925,35,1059,30
 //-- Rat Tail <-- GN_CHANGEMATERIAL Lv1, 35 Mushroom Spore, 40 Golden Hair
-213,1016,26,2494,1,921,35,1060,40
+214,1016,26,2494,1,921,35,1060,40
 //-- Coal <-- GN_CHANGEMATERIAL Lv1, 1 Guard
-214,1003,26,2494,1,2101,1
+215,1003,26,2494,1,2101,1
 //-- Steel <-- GN_CHANGEMATERIAL Lv1, 1 Tsurugi
-215,999,26,2494,1,1119,1
+216,999,26,2494,1,1119,1
 //-- Cigar <-- GN_CHANGEMATERIAL Lv1, 1 Orcish Axe
-216,2267,26,2494,1,1304,1
+217,2267,26,2494,1,1304,1
 //-- Bone Wand <-- GN_CHANGEMATERIAL Lv1, 100 Clattering Skull, 100 Broken Farming Utensil
-217,1615,26,2494,1,7752,100,7753,100
+218,1615,26,2494,1,7752,100,7753,100
 //-- Cigar <-- GN_CHANGEMATERIAL Lv1, 1 Orcish Axe, 100 Orcish Voucher
-218,2267,26,2494,1,1304,1,931,100
+219,2267,26,2494,1,1304,1,931,100
 //-- Starsand Of Witch <-- GN_CHANGEMATERIAL Lv1, 100 Moth Dust, 100 Scell
-219,1061,26,2494,1,1057,100,911,100
+220,1061,26,2494,1,1057,100,911,100
 //-- Soft Feather <-- GN_CHANGEMATERIAL Lv1, 30 Feather, 30 Feather Of Birds
-220,7063,26,2494,1,949,30,916,30
+221,7063,26,2494,1,949,30,916,30
 //-- Wind Of Verdure <-- GN_CHANGEMATERIAL Lv1, 100 Ice Piece
-221,992,26,2494,1,7066,100
+222,992,26,2494,1,7066,100
 //-- Crystal Blue <-- GN_CHANGEMATERIAL Lv1, 100 Claw Of Wolves
-222,991,26,2494,1,920,100
+223,991,26,2494,1,920,100
 //-- Soft Silk Cloth <-- GN_CHANGEMATERIAL Lv1, 10 Transparent Cloth
-223,7166,26,2494,1,1059,10
+224,7166,26,2494,1,1059,10
 //-- Transparent Cloth <-- GN_CHANGEMATERIAL Lv1, 2 Soft Silk Cloth
-224,1059,26,2494,1,7166,2
+225,1059,26,2494,1,7166,2
 //-- Boost500 To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Boost500, 10 Flexible String
-225,13269,26,2494,1,1093,10,12417,10,7200,10
+226,13269,26,2494,1,1093,10,12417,10,7200,10
 //-- Full SwingK To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Full SwingK, 10 Flexible String
-226,13270,26,2494,1,1093,10,12418,10,7200,10
+227,13270,26,2494,1,1093,10,12418,10,7200,10
 //-- Mana Plus To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Mana Plus, 10 Flexible String
-227,13271,26,2494,1,1093,10,12419,10,7200,10
+228,13271,26,2494,1,1093,10,12419,10,7200,10
 //-- Cure Free To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Cure Free, 10 Flexible String
-228,13272,26,2494,1,1093,10,12475,10,7200,10
+229,13272,26,2494,1,1093,10,12475,10,7200,10
 //-- Stamina Up M To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Stamina Up M, 10 Flexible String
-229,13273,26,2494,1,1093,10,12420,10,7200,10
+230,13273,26,2494,1,1093,10,12420,10,7200,10
 //-- Digestive F To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Empty Potion, 10 Digestive F, 10 Flexible String
-230,13274,26,2494,1,1093,10,12421,10,7200,10
+231,13274,26,2494,1,1093,10,12421,10,7200,10
 //-- HP Inc PotS To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 HP Increase PotionS
-231,13275,26,2494,1,6297,10,12422,10
+232,13275,26,2494,1,6297,10,12422,10
 //-- HP Inc PotM To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 HP Increase PotionM
-232,13276,26,2494,1,6297,10,12423,10
+233,13276,26,2494,1,6297,10,12423,10
 //-- HP Inc PotL To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 HP Increase PotionL
-233,13277,26,2494,1,6297,10,12424,10
+234,13277,26,2494,1,6297,10,12424,10
 //-- SP Inc PotS To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 SP Increase PotionS
-234,13278,26,2494,1,6297,10,12425,10
+235,13278,26,2494,1,6297,10,12425,10
 //-- SP Inc PotM To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 SP Increase PotionM
-235,13279,26,2494,1,6297,10,12426,10
+236,13279,26,2494,1,6297,10,12426,10
 //-- SP Inc PotL To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 SP Increase PotionL
-236,13280,26,2494,1,6297,10,12427,10
+237,13280,26,2494,1,6297,10,12427,10
 //-- En White PotZ To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 Enrich White PotionZ
-237,13281,26,2494,1,6297,10,12428,10
+238,13281,26,2494,1,6297,10,12428,10
 //-- Vitata500 To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 Vitata500
-238,13282,26,2494,1,6297,10,12436,10
+239,13282,26,2494,1,6297,10,12436,10
 //-- En Cel Juice To Throw <-- GN_CHANGEMATERIAL Lv1, 10 Bottle To Throw, 10 Enrich Celermine Juice
-239,13283,26,2494,1,6297,10,12437,10
+240,13283,26,2494,1,6297,10,12437,10
 //==============================================
 
 //---- Mix Cooking --- ItemLV=27 ---------------
 //-- Savage BBQ <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 1 Savage Meat, 1 Cooking Skewer, 1 Black Charcoal
-240,12429,27,2495,1,11022,0,6248,1,6249,1,6250,1,6251,1
+241,12429,27,2495,1,11022,0,6248,1,6249,1,6250,1,6251,1
 //-- Wug Blood Cocktail <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 3 Wolf Blood, 2 Cold Ice
-241,12430,27,2495,1,11022,0,6248,1,6252,3,6253,2
+242,12430,27,2495,1,11022,0,6248,1,6252,3,6253,2
 //-- Minor Brisket <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 2 Beef Head Meat, 1 Large Cookpot
-242,12431,27,2495,1,11022,0,6248,1,6254,2,6255,1
+243,12431,27,2495,1,11022,0,6248,1,6254,2,6255,1
 //-- Siroma Icetea <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 3 Ice Fragment, 2 Ice Crystal, 1 Comodo Tropic Fruit
-243,12432,27,2495,1,11022,0,6248,1,6256,3,6257,2,6258,1
+244,12432,27,2495,1,11022,0,6248,1,6256,3,6257,2,6258,1
 //-- Drocera Herb Stew <-- GN_MIX_COOKING Lv1, Mix Cook Book, 3 Red Herb, 3 White Herb, 3 Blue Herb, 1 Melange Pot, 1 Large Cookpot, 1 Drocera Tentacle
-244,12433,27,2495,1,11022,0,507,3,509,3,510,3,6248,1,6255,1,6259,3
+245,12433,27,2495,1,11022,0,507,3,509,3,510,3,6248,1,6255,1,6259,3
 //-- Petti Tail Noodle <-- GN_MIX_COOKING Lv1, Mix Cook Book, 1 Melange Pot, 2 Petti Tail, 1 Fine Noodle, 1 Cool Gravy
-245,12434,27,2495,1,11022,0,6248,1,6260,2,6261,1,6262,1
+246,12434,27,2495,1,11022,0,6248,1,6260,2,6261,1,6262,1
 
 //---- Create Bomb --- ItemLV=28 ---------------
 //-- Apple Bomb <-- GN_MAKEBOMB Lv1, Apple Bomb CB, 1 Apple, 1 Scell, 1 Detonator, 1 Gun Powder
-//246,13260,28,2496,1,6279,0,512,1,911,1,1051,1,6244,1
+//247,13260,28,2496,1,6279,0,512,1,911,1,1051,1,6244,1
 //-- Coconut Bomb <-- GN_MAKEBOMB Lv1, Coconut Bomb CB, 1 Detonator, 1 Coconut Fruit, 2 Gun Powder
-//247,13261,28,2496,1,6281,0,1051,1,6263,1,6244,2
+//248,13261,28,2496,1,6281,0,1051,1,6263,1,6244,2
 //-- Melon Bomb <-- GN_MAKEBOMB Lv1, Melon Bomb CB, 1 Sticky Mucus, 1 Detonator, 2 Gun Powder, 1 Melon
-//248,13262,28,2496,1,6282,0,938,1,1051,1,6244,2,6264,1
+//249,13262,28,2496,1,6282,0,938,1,1051,1,6244,2,6264,1
 //-- Pineapple Bomb <-- GN_MAKEBOMB Lv1, Pinepple Bomb CB, 1 Cactus Needle, 1 Detonator, 3 Gun Powder, 1 Pineapple
-//249,13263,28,2496,1,6280,0,952,1,1051,1,6244,3,6265,1
+//250,13263,28,2496,1,6280,0,952,1,1051,1,6244,3,6265,1
 //-- Banana Bomb <-- GN_MAKEBOMB Lv1, Banana Bomb CB, 1 Banana, 1 Detonator, 4 Gun Powder, 1 Mould Powder
-//250,13264,28,2496,1,6283,0,513,1,1051,1,6244,4,7001,1
+//251,13264,28,2496,1,6283,0,513,1,1051,1,6244,4,7001,1
 
 //---- Special Pharmacy --- ItemLV=29 ----------
 //-- Seed Of Horny Plant <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Prickly Fruit
-251,6210,29,2497,1,6284,0,576,10
+252,6210,29,2497,1,6284,0,576,10
 //-- Bloodsuck Plant Seed <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Root Of Maneater
-252,6211,29,2497,1,6284,0,1033,10
+253,6211,29,2497,1,6284,0,1033,10
 //-- Bomb Mushroom Spore <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Mushroom Spore, 2 Gun Powder, 5 Poison Spore
-253,6212,29,2497,1,6284,0,921,10,6244,2,7033,5
+254,6212,29,2497,1,6284,0,921,10,6244,2,7033,5
 //-- HP Increase Potion (Small) <-- GN_S_PHARMACY Lv1, Increase Stamina Study, 10 White Herb, 5 Monster's Feed, 10 Empty Bottle, 1 Hot Sauce
-254,12422,29,2497,1,11023,0,509,10,528,5,713,10,7455,1
+255,12422,29,2497,1,11023,0,509,10,528,5,713,10,7455,1
 //-- HP Increase Potion (Medium) <-- GN_S_PHARMACY Lv1, Increase Stamina Study, 10 Yellow Herb, 10 White Herb, 10 Empty Bottle, 1 Hot Sauce
-255,12423,29,2497,1,11023,0,508,10,509,10,713,10,7455,1
+256,12423,29,2497,1,11023,0,508,10,509,10,713,10,7455,1
 //-- HP Increase Potion (Large) <-- GN_S_PHARMACY Lv1, Increase Stamina Study, 15 White Herb, 3 Fruit Of Mastela, 1 Holy Water, 10 Empty Bottle, 1 Hot Sauce
-256,12424,29,2497,1,11023,0,509,15,522,3,523,1,713,10,7455,1
+257,12424,29,2497,1,11023,0,509,15,522,3,523,1,713,10,7455,1
 //-- SP Increase Potion (Small) <-- GN_S_PHARMACY Lv1, Vital Drink CB, 10 Grape, 10 Lemon, 10 Empty Bottle, 1 Sweet Sauce
-257,12425,29,2497,1,11024,0,514,10,568,10,713,10,7453,1
+258,12425,29,2497,1,11024,0,514,10,568,10,713,10,7453,1
 //-- SP Increase Potion (Medium) <-- GN_S_PHARMACY Lv1, Vital Drink CB, 10 Blue Herb, 10 Honey, 10 Empty Bottle, 1 Sweet Sauce
-258,12426,29,2497,1,11024,0,510,10,518,10,713,10,7453,1
+259,12426,29,2497,1,11024,0,510,10,518,10,713,10,7453,1
 //-- SP Increase Potion (Large) <-- GN_S_PHARMACY Lv1, Vital Drink CB, 15 Blue Herb, 10 Royal Jelly, 10 Empty Bottle, 1 Sweet Sauce
-259,12427,29,2497,1,11024,0,510,15,526,10,713,10,7453,1
+260,12427,29,2497,1,11024,0,510,15,526,10,713,10,7453,1
 //-- Enrich White Potion Z <-- GN_S_PHARMACY Lv1, Quality Potion Book, 20 White Potion, 10 White Herb, 1 Alchol, 10 Empty Cylinder
-260,12428,29,2497,1,6285,0,504,20,509,10,970,1,1092,10
+261,12428,29,2497,1,6285,0,504,20,509,10,970,1,1092,10
 //-- Vitata 500 <-- GN_S_PHARMACY Lv1, Quality Potion Book, 10 Blue Herb, 10 Grape, 10 Honey, 10 Empty Cylinder
-261,12436,29,2497,1,6285,0,510,10,514,10,518,10,1092,10
+262,12436,29,2497,1,6285,0,510,10,514,10,518,10,1092,10
 //-- Enrich Celermine Juice <-- GN_S_PHARMACY Lv1, Quality Potion Book, 5 Center Potion, 5 Awakening Potion, 10 Empty Cylinder, 5 Hot Sauce
-262,12437,29,2497,1,6285,0,645,5,656,5,1092,10,7455,5
+263,12437,29,2497,1,6285,0,645,5,656,5,1092,10,7455,5
 //-- Cure Free <-- GN_S_PHARMACY Lv1, Quality Potion Book, 20 Green Herb, 1 Fruit Of Mastela, 5 Panacea, 1 Leaf Of Yggdrasil, 10 Empty Cylinder
-263,12475,29,2497,1,6285,0,511,20,522,1,525,5,610,1,1092,10
+264,12475,29,2497,1,6285,0,511,20,522,1,525,5,610,1,1092,10
 //-- Golden X <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Yggdrasilberry, 5 Gold
-264,100231,29,2497,1,1092,10,607,10,969,5
+265,100231,29,2497,1,1092,10,607,10,969,5
 //-- Red Herb Activator <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 45 Red Herb, 5 Yggdrasil Seed
-265,100232,29,2497,1,1092,10,507,45,608,5
+266,100232,29,2497,1,1092,10,507,45,608,5
 //-- Blue Herb Activator <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 15 Blue Herb, 5 Yggdrasil Seed
-266,100233,29,2497,1,1092,10,510,15,608,5
+267,100233,29,2497,1,1092,10,510,15,608,5
 //-- Concentrated Red Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 5 Empty Potion Bottle, 15 Red Syrup
-267,1100003,29,2497,1,1092,10,1093,5,11621,15
+268,1100003,29,2497,1,1092,10,1093,5,11621,15
 //-- Concentrated Blue Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 5 Empty Potion Bottle, 15 Blue Syrup
-268,1100004,29,2497,1,1092,10,1093,5,11624,15
+269,1100004,29,2497,1,1092,10,1093,5,11624,15
 //-- Concentrated Golden Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 5 Empty Potion Bottle, 10 White Syrup, 10 Yellow Syrup
-269,1100005,29,2497,1,1092,10,1093,5,11623,10,11622,10
+270,1100005,29,2497,1,1092,10,1093,5,11623,10,11622,10
 //===============================================
 
 //--------------------LEVEL 30-----------
 // Novice Red Potion (569) <-- 2 Red Herbs, 1 Apple
-270,569,30,0,0,11058,0,507,2,512,1
+271,569,30,0,0,11058,0,507,2,512,1
 // Novice Magnifier (12325) <-- 3 Fine-grained Trunk, 1 Jellopy
-271,12325,30,0,0,11058,0,1066,3,909,1
+272,12325,30,0,0,11058,0,1066,3,909,1
 // Novice Fly Wing (12323) <-- 2 Fluffs, 2 Feathers, 2 Jellopies
-272,12323,30,0,0,11058,0,914,2,949,2,909,2
+273,12323,30,0,0,11058,0,914,2,949,2,909,2
 // Novice Cutter (13040) <-- 10 Shells, 10 Worm Peelings, 1 Phracon
-273,13040,30,0,0,11058,0,935,10,955,10,1010,1
+274,13040,30,0,0,11058,0,935,10,955,10,1010,1
 // Little Unripe Apple (12846) <-- 1 Apple, 1 Green Herb
-274,12846,30,0,0,11058,0,512,1,511,1
+275,12846,30,0,0,11058,0,512,1,511,1
 // Four Leaf Clover (706) <-- 200 Clovers, 200 Sticky Mucus
-275,706,30,0,0,11058,0,705,200,938,200
+276,706,30,0,0,11058,0,705,200,938,200
 // Banana Juice (532) <-- 1 Banana, 1 Milk
-276,532,30,0,0,11058,0,513,1,519,1
+277,532,30,0,0,11058,0,513,1,519,1
 // Apple Juice (531) <-- 1 Apple, 1 Milk
-277,531,30,0,0,11058,0,512,1,519,1
+278,531,30,0,0,11058,0,512,1,519,1
 // Carrot Juice (534) <-- 1 Carrot, 1 Milk
-278,534,30,0,0,11058,0,515,1,519,1
+279,534,30,0,0,11058,0,515,1,519,1
 // Grape Juice (533) <-- 1 Grape, 1 Milk
-279,533,30,0,0,11058,0,514,1,519,1
+280,533,30,0,0,11058,0,514,1,519,1
 // Unripe Apple (619) <-- 10 Sticky Mucus, 20 Green Herbs, 10 Apples
-280,619,30,0,0,11058,0,938,10,511,20,512,10
+281,619,30,0,0,11058,0,938,10,511,20,512,10
