@@ -2910,7 +2910,7 @@ field from the item database.
 
 *getequipcardcnt(<equipment slot>)
 
-This function will return the number of items/cards that have been compounded onto a
+This function will return the number of cards that have been compounded onto a
 specific equipped item for the invoking character. See 'getequipid' for a list
 of possible equipment slots.
 
@@ -4034,7 +4034,7 @@ The renewal feature to check is determined by the number <type>.
 *isequipped(<id>{,<id>{,..}})
 
 This function will return 1 if the invoking character has all of the item
-IDs given equipped (if item/card IDs are passed, then it checks if the item/card are
+IDs given equipped (if item/card IDs are passed, then it checks if the items/cards are
 inserted into slots in the equipment they are currently wearing). Theoretically
 there is no limit to the number of items that may be tested for at the same time.
 If even one of the items given is not equipped, 0 will be returned.
@@ -4060,7 +4060,7 @@ Example:
 
 ---------------------------------------
 
-*checkequipedcard(<id>)
+*checkequipedcard(<item id>)
 
 This function will return 1 if the item/card specified by its item ID number is
 inserted into any equipment they have in their inventory, currently equipped or
