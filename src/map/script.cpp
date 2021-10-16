@@ -10180,10 +10180,10 @@ BUILDIN_FUNC(skill_plagiarism)
 {
 	TBL_PC *sd;
 	uint16 skill_id = script_getnum(st, 2);
-	int level = script_getnum(st, 3);
+	uint16 skill_lv = script_getnum(st, 3);
 
 	if (script_rid2sd(sd))
-		script_pushint(st, pc_skill_plagiarism(sd, skill_id, level));
+		script_pushint(st, pc_skill_plagiarism(sd, skill_id, skill_lv));
 
 	return SCRIPT_CMD_SUCCESS;
 }

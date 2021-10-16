@@ -5084,18 +5084,18 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 	return true;
 }
 
-bool pc_skill_plagiarism(struct map_session_data *sd, uint16 skill_id, int lv)
+bool pc_skill_plagiarism(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv)
 {
-	if (sd != NULL) {
-		int idx = 0;
+	if (sd != nullptr) {
+		uint16 idx = 0;
 
 		int type = skill_isCopyable(sd, skill_id);
 		skill_id = skill_dummy2skill_id(skill_id);
-		lv = cap_value(lv, 1, skill_get_max(skill_id));
+		skill_lv = cap_value(skill_lv, 1, skill_get_max(skill_id));
 
 		//Use skill index, avoiding out-of-bound array [Cydh]
 		if (!(idx = skill_get_index(skill_id))) {
-			ShowWarning("pc_skill_plagiarism: invalild skill idx %d for skill %d.\n", idx, skill_id);
+			ShowWarning("pc_skill_plagiarism: invalid skill idx %d for skill %d.\n", idx, skill_id);
 			return false;
 		}
 
@@ -5104,38 +5104,40 @@ bool pc_skill_plagiarism(struct map_session_data *sd, uint16 skill_id, int lv)
 
 			sd->cloneskill_idx = idx;
 			pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), skill_id);
-			pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), lv);
+			pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), skill_lv);
 		}
 		else if (type == 2) {
 			pc_skill_plagiarism_reset(sd, type);
 
 			sd->reproduceskill_idx = idx;
 			pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), skill_id);
-			pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), lv);
+			pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), skill_lv);
 		}
 
-		if (idx > 0) {
-			sd->status.skill[idx].id = skill_id;
-			sd->status.skill[idx].lv = lv;
-			sd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
-			clif_addskill(sd, skill_id);
-		}
+		sd->status.skill[idx].id = skill_id;
+		sd->status.skill[idx].lv = skill_lv;
+		sd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
+		clif_addskill(sd, skill_id);
 	}
 
 	return true;
 }
 
-bool pc_skill_plagiarism_reset(struct map_session_data *sd, int8 type)
+bool pc_skill_plagiarism_reset(struct map_session_data *sd, uint8 type)
 {
-	if (sd != NULL) {
-		int idx = 0;
+	if (sd != nullptr) {
+		uint16 idx = 0;
 		if (type == 1) 
 			idx = sd->cloneskill_idx;
 		else if (type == 2)
 			idx = sd->reproduceskill_idx;
+		else {
+			ShowError("pc_skill_plagiarism_reset: Unknown type %d.\n", type);
+			return false;
+		}
 
-		if (idx > 0 && sd->status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
-			int skill_id = sd->status.skill[idx].id;
+		if (sd->status.skill[idx].flag == SKILL_FLAG_PLAGIARIZED) {
+			uint16 skill_id = sd->status.skill[idx].id;
 			sd->status.skill[idx].id = 0;
 			sd->status.skill[idx].lv = 0;
 			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;

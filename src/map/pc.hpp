@@ -1370,8 +1370,8 @@ enum e_addskill_type {
 };
 
 bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
-bool pc_skill_plagiarism(struct map_session_data *sd, uint16 skill_id, int level);
-bool pc_skill_plagiarism_reset(struct map_session_data *sd, int8 type);
+bool pc_skill_plagiarism(struct map_session_data *sd, uint16 skill_id, uint16 level);
+bool pc_skill_plagiarism_reset(struct map_session_data *sd, uint8 type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
