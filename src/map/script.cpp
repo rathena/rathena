@@ -17619,9 +17619,9 @@ BUILDIN_FUNC(addmonsterdrop)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int32 c = -1;
+	uint16 c = 0;
 
-	for (int32 i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+	for (uint16 i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 		if (mob->dropitem[i].nameid > 0) {
 			if (mob->dropitem[i].nameid == item_id) { // If it equals item_id we update that drop
 				c = i;
@@ -17629,10 +17629,10 @@ BUILDIN_FUNC(addmonsterdrop)
 			}
 			continue;
 		}
-		if (c == -1) // Accept first available slot only
+		if (c == 0) // Accept first available slot only
 			c = i;
 	}
-	if (c == -1) { // No place to put the new drop
+	if (c == 0) { // No place to put the new drop
 		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
