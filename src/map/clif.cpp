@@ -3208,6 +3208,9 @@ void clif_guild_xy_remove(struct map_session_data *sd)
 	clif_send(buf,packet_len(0x1eb),&sd->bl,GUILD_SAMEMAP_WOS);
 }
 
+/*==========================================
+ * Load castle list for guild UI. [Asheraf] / [Balfear]
+ *------------------------------------------*/
 void clif_guild_castle_list(struct map_session_data* sd)
 {
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
@@ -3238,6 +3241,9 @@ void clif_guild_castle_list(struct map_session_data* sd)
 #endif
 }
 
+/*==========================================
+ * Send castle info Economy/Defence. [Asheraf] / [Balfear]
+ *------------------------------------------*/
 void clif_guild_castleinfo(struct map_session_data* sd, int castle_id, int economy, int defense)
 {
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
@@ -3253,6 +3259,9 @@ void clif_guild_castleinfo(struct map_session_data* sd, int castle_id, int econo
 #endif
 }
 
+/*==========================================
+ * Show teleport request result. [Asheraf] / [Balfear]
+ *------------------------------------------*/
 static void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_siege_teleport_result result)
 {
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
@@ -3266,6 +3275,9 @@ static void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_s
 #endif
 }
 
+/*==========================================
+ * Request castle info. [Asheraf] / [Balfear]
+ *------------------------------------------*/
 static void clif_parse_guild_castle_info_request(int fd, struct map_session_data* sd)
 {
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
@@ -3284,6 +3296,9 @@ static void clif_parse_guild_castle_info_request(int fd, struct map_session_data
 #endif
 }
 
+/*==========================================
+ * Teleport to castle. [Asheraf] / [Balfear]
+ *------------------------------------------*/
 void clif_parse_guild_castle_teleport_request(int fd, struct map_session_data* sd)
 {
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
@@ -3308,10 +3323,10 @@ void clif_parse_guild_castle_teleport_request(int fd, struct map_session_data* s
 		return;
 
 	int zeny = gc->zeny;
-	if ((gc->siege_type == SIEGE_TYPE_FE && agit_flag) || (gc->siege_type == SIEGE_TYPE_SE && agit2_flag)) {
+
+	if (map_getmapflag(map_mapindex2mapid(gc->mapindex), MF_GVG_CASTLE) && ((agit_flag == true && gc->castle_id <= 20) || (agit2_flag == true && gc->castle_id > 20)))
 		zeny = gc->zeny_siege;
-	}
-	else if (gc->siege_type == SIEGE_TYPE_TE) {
+	else if (map_getmapflag(gc->mapindex, MF_GVG_TE_CASTLE)) {
 		clif_guild_castle_teleport_res(sd, SIEGE_TP_INVALID_MODE);
 		return;
 	}

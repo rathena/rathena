@@ -330,28 +330,6 @@ uint64 CastleDatabase::parseBodyNode(const YAML::Node &node) {
 		safestrncpy(gc->castle_event, npc_name.c_str(), sizeof(gc->castle_event));
 	}
 
-	if (this->nodeExists(node, "SiegeType")) {
-		std::string siege_type;
-
-		if (!this->asString(node, "SiegeType", siege_type))
-			return 0;
-
-		std::string type_constant = "SIEGE_TYPE_" + siege_type;
-		int64 constant;
-
-		if (!script_get_constant(type_constant.c_str(), &constant)) {
-			this->invalidWarning(node["SiegeType"], "SiegeType %s doesn't exist, skipping.\n", type_constant.c_str());
-			return 0;
-		}
-
-		gc->siege_type = static_cast<e_siege_type>(constant);
-	}
-	else {
-		if (!exists)
-			gc->siege_type = SIEGE_TYPE_TE;
-	}
-
-
 	if (this->nodeExists(node, "EnableClientWarp")) {
 		bool enable_client_warp;
 

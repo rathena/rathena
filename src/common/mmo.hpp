@@ -724,7 +724,6 @@ struct guild_castle {
 	int mapindex;
 	char castle_name[NAME_LENGTH];
 	char castle_event[NPC_NAME_LENGTH];
-	uint8 siege_type;
 	bool enable_client_warp;
 	uint16 warp_x;
 	uint16 warp_y;

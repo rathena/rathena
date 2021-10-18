@@ -411,16 +411,6 @@ enum e_questinfo_markcolor : uint8 {
 	QMARK_MAX
 };
 
-/**
- * Types of Siege (WoE)
- */
-enum e_siege_type {
-	SIEGE_TYPE_FE,
-	SIEGE_TYPE_SE,
-	SIEGE_TYPE_TE,
-	SIEGE_TYPE_MAX
-};
-
 #ifndef WIN32
 	// These are declared in wingdi.h
 	/* Font Weights */
