@@ -6105,13 +6105,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 	}
 
-#ifndef RENEWAL
-	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
+#ifdef RENEWAL
+	// In renewal only do it for non player attacks
+	if( tsd && !sd ){
+#else
+	if( tsd ){
+#endif
+		// Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
 		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage, 0, wd.flag);
 		if(is_attack_left_handed(src, skill_id))
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 1, wd.flag);
 	}
-#endif
 
 	// only do 1 dmg to plant, no need to calculate rest
 	if(infdef){
