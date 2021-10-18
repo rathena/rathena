@@ -3262,7 +3262,7 @@ void clif_guild_castleinfo(struct map_session_data* sd, int castle_id, int econo
 /*==========================================
  * Show teleport request result. [Asheraf] / [Balfear]
  *------------------------------------------*/
-static void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_siege_teleport_result result)
+void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_siege_teleport_result result)
 {
 #if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190717 || PACKETVER_ZERO_NUM >= 20190814
 
@@ -3278,7 +3278,7 @@ static void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_s
 /*==========================================
  * Request castle info. [Asheraf] / [Balfear]
  *------------------------------------------*/
-static void clif_parse_guild_castle_info_request(int fd, struct map_session_data* sd)
+void clif_parse_guild_castle_info_request(int fd, struct map_session_data* sd)
 {
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190522 || PACKETVER_ZERO_NUM >= 20190515
 	const struct PACKET_CZ_CASTLE_INFO_REQUEST* p = (struct PACKET_CZ_CASTLE_INFO_REQUEST*)RFIFOP(fd, 0);
