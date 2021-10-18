@@ -9602,6 +9602,49 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 	}
 }
 
+void clif_specialeffect_remove(struct block_list* bl, int type, enum send_target target)
+{
+#if PACKETVER >= 20181002
+	nullpo_retv( bl );
+
+	struct PACKET_ZC_REMOVE_EFFECT p;
+
+	p.packetType = HEADER_ZC_REMOVE_EFFECT;
+	p.aid = bl->id;
+	p.effectId = type;
+
+	clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl, target );
+
+	if( disguised(bl) )
+	{
+		p.aid = disguised_bl_id( bl->id );
+		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl, SELF );
+	}
+#endif
+}
+
+void clif_specialeffect_remove_single(struct block_list* bl, int type, struct block_list* target)
+{
+#if PACKETVER >= 20181002
+	nullpo_retv( bl );
+	nullpo_retv( target );
+
+	struct PACKET_ZC_REMOVE_EFFECT p;
+
+	p.packetType = HEADER_ZC_REMOVE_EFFECT;
+	p.aid = bl->id;
+	p.effectId = type;
+
+	clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), target, SELF );
+
+	if( disguised(bl) )
+	{
+		p.aid = disguised_bl_id( bl->id );
+		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), target, SELF );
+	}
+#endif
+}
+
 /// Monster/NPC color chat [SnakeDrak] (ZC_NPC_CHAT).
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
 void clif_messagecolor_target(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type, struct map_session_data *sd) {
