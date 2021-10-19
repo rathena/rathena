@@ -9602,45 +9602,24 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 	}
 }
 
-void clif_specialeffect_remove(struct block_list* bl, int type, enum send_target target)
+void clif_specialeffect_remove(struct block_list* bl_src, int effect, enum send_target e_target, struct block_list* bl_target)
 {
 #if PACKETVER >= 20181002
-	nullpo_retv( bl );
+	nullpo_retv( bl_src );
+	nullpo_retv( bl_target );
 
 	struct PACKET_ZC_REMOVE_EFFECT p = {};
 
 	p.packetType = HEADER_ZC_REMOVE_EFFECT;
-	p.aid = bl->id;
-	p.effectId = type;
+	p.aid = bl_src->id;
+	p.effectId = effect;
 
-	clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl, target );
+	clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl_target, e_target );
 
-	if( disguised(bl) )
+	if( disguised(bl_src) )
 	{
-		p.aid = disguised_bl_id( bl->id );
-		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl, SELF );
-	}
-#endif
-}
-
-void clif_specialeffect_remove_single(struct block_list* bl, int type, struct block_list* target)
-{
-#if PACKETVER >= 20181002
-	nullpo_retv( bl );
-	nullpo_retv( target );
-
-	struct PACKET_ZC_REMOVE_EFFECT p;
-
-	p.packetType = HEADER_ZC_REMOVE_EFFECT;
-	p.aid = bl->id;
-	p.effectId = type;
-
-	clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), target, SELF );
-
-	if( disguised(bl) )
-	{
-		p.aid = disguised_bl_id( bl->id );
-		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), target, SELF );
+		p.aid = disguised_bl_id( bl_src->id );
+		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl_target, SELF );
 	}
 #endif
 }

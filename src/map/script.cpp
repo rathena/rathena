@@ -14954,66 +14954,63 @@ BUILDIN_FUNC(specialeffect2)
 
 BUILDIN_FUNC(removespecialeffect)
 {
-	int type = script_getnum(st, 2);
+	const char* command = script_getfuncname(st);
 
-	if (type <= EF_NONE || type >= EF_MAX) {
-		ShowError("buildin_removespecialeffect: unsupported effect id %d.\n", type);
+#if PACKETVER < 20181002
+	ShowError("buildin_%s: This command is not supported for PACKETVER older than 2018-10-02.\n", command);
+
+	return SCRIPT_CMD_FAILURE;
+#endif
+
+	int effect = script_getnum(st, 2);
+
+	if (effect <= EF_NONE || effect >= EF_MAX) {
+		ShowError("buildin_%s: unsupported effect id %d.\n", command, effect);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	send_target target = script_hasdata(st, 3) ? static_cast<send_target>(script_getnum(st, 3)) : AREA;
+	send_target e_target = script_hasdata(st, 3) ? static_cast<send_target>(script_getnum(st, 3)) : AREA;
 
-	struct block_list *bl = nullptr;
-
-	if (!script_hasdata(st, 4))
-		bl = map_id2bl(st->oid);
-	else {
-		struct npc_data *nd = npc_name2id(script_getstr(st, 4));
-		if (nd == nullptr) {
-			ShowError("buildin_removespecialeffect: can't find npc %s.\n", script_getstr(st, 4));
-			return SCRIPT_CMD_FAILURE;
-		}
-		bl = &nd->bl;
-	}
-
-	if (bl == nullptr) {
-		ShowError("buildin_removespecialeffect: unknown target.\n");
-		return SCRIPT_CMD_FAILURE;
-	}
-	if (target != SELF) {
-		clif_specialeffect_remove(bl, type, target);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
+	struct block_list *bl_src;
+	struct block_list *bl_target;
 	struct map_session_data *sd;
 
-	if (!script_rid2sd(sd))
-		return SCRIPT_CMD_FAILURE;
+	switch( strcmp(command, "removespecialeffect") ) {
+	case 0:
+		if (!script_hasdata(st, 4)) {
+			bl_src = map_id2bl(st->oid);
 
-	clif_specialeffect_remove_single(bl, type, &sd->bl);
-	return SCRIPT_CMD_SUCCESS;
-}
+			if (bl_src == nullptr) {
+				ShowError("buildin_%s: npc not attached.\n", command);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+		else {
+			struct npc_data *nd = npc_name2id(script_getstr(st, 4));
+			if (nd == nullptr) {
+				ShowError("buildin_%s: unknown npc %s.\n", command, script_getstr(st, 4));
+				return SCRIPT_CMD_FAILURE;
+			}
+			bl_src = &nd->bl;
+		}
 
-BUILDIN_FUNC(removespecialeffect2)
-{
-	TBL_PC *sd;
+		if (e_target != SELF)
+			bl_target = bl_src;
+		else {
+			if (!script_rid2sd(sd))
+				return SCRIPT_CMD_FAILURE;
+			bl_target = &sd->bl;
+		}
+		break;
+	default:
+		if (!script_nick2sd(4, sd))
+			return SCRIPT_CMD_FAILURE;
 
-	if (!script_nick2sd(4, sd))
-		return SCRIPT_CMD_FAILURE;
-
-	int type = script_getnum(st, 2);
-
-	if (type <= EF_NONE || type >= EF_MAX) {
-		ShowError("buildin_removespecialeffect2: unsupported effect id %d.\n", type);
-		return SCRIPT_CMD_FAILURE;
+		bl_src = bl_target = &sd->bl;
+		break;
 	}
 
-	send_target target = script_hasdata(st, 3) ? static_cast<send_target>(script_getnum(st, 3)) : AREA;
-
-	if (target != SELF)
-		clif_specialeffect_remove(&sd->bl, type, target);
-	else
-		clif_specialeffect_remove_single(&sd->bl, type, &sd->bl);
+	clif_specialeffect_remove(bl_src, effect, e_target, bl_target);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25625,7 +25622,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
 	BUILDIN_DEF(removespecialeffect,"i??"),
-	BUILDIN_DEF(removespecialeffect2,"i??"),
+	BUILDIN_DEF2(removespecialeffect,"removespecialeffect2","i??"),
 	BUILDIN_DEF(nude,"?"), // nude command [Valaris]
 	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
