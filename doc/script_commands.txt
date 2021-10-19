@@ -3611,7 +3611,7 @@ $@MobDrop_rate[] is a global temporary number array which contains the
                  drop percentages of each item. (1 = .01%)
 
 $@MobDrop_nosteal[] is a global temporary number array which contains the
-                 StealProtected flag of each item. (default 0)
+                 StealProtected flag of each item. (default false)
 
 $@MobDrop_randomopt[] is a global temporary number array which contains the
                  random option group ID of each item. (default 0)
@@ -6618,7 +6618,7 @@ when the mob database reloads or the server shuts down. They return 1 upon succe
 If the monster already drops the specified item, its drop rate will be updated with
 the given rate (100 = 1%).
 
-If <steal protected> is 1 the item will be protected from TF_STEAL (default 0).
+If <steal protected> is true the item will be protected from TF_STEAL (default false).
 <random option group id> binds the item with the given random option group Id (default 0).
 The Id must be valid, like defined in db/[pre-]re/item_randomopt_group.yml
 
@@ -6627,7 +6627,7 @@ Examples:
 	addmonsterdrop 1295,518,8000;
 
 	// Makes Owl Baron drop Knife_ at an 80% rate, protected from TF_STEAL and with random option group Id 5.
-	addmonsterdrop 1295,1202,8000,1,5;
+	addmonsterdrop 1295,1202,8000,true,5;
 
 	// Deletes Executioner's Mitten from Rybio.
 	delmonsterdrop 1201,7017;
