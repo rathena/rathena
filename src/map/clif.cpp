@@ -9619,7 +9619,7 @@ void clif_specialeffect_remove(struct block_list* bl_src, int effect, enum send_
 	if( disguised(bl_src) )
 	{
 		p.aid = disguised_bl_id( bl_src->id );
-		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl_target, SELF );
+		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl_src, SELF );
 	}
 #endif
 }
