@@ -2184,7 +2184,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			uint16 autospl_skill_lv = it.lv ? it.lv : 1;
 
 			if (it.flag & 2)
-				autospl_skill_lv = 1 + rnd() % autospl_skill_lv;
+				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
 
 			rate = (!sd->state.arrow_atk) ? it.rate : it.rate / 2;
 
@@ -2300,12 +2300,12 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		uint16 skill_lv = it.lv ? it.lv : 1;
 
 		if (it.flag & 2)
-			skill_lv = 1 + rnd() % skill_lv; //random skill_lv
+			skill_lv = rnd_value( 1, skill_lv ); //random skill_lv
 
 		e_cast_type type = skill_get_casttype(skill);
 
 		if (type == CAST_GROUND && !skill_pos_maxcount_check(&sd->bl, tbl->x, tbl->y, skill_id, skill_lv, BL_PC, false))
-				continue;
+			continue;
 
 		if (battle_config.autospell_check_range &&
 			!battle_check_range(bl, tbl, skill_get_range2(&sd->bl, skill, skill_lv, true)))
@@ -2494,7 +2494,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			uint16 autospl_skill_id = it.id, autospl_skill_lv = it.lv ? it.lv : 1;
 
 			if (it.flag & 2)
-				autospl_skill_lv = 1 + rnd() % autospl_skill_lv;
+				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
 
 			int autospl_rate = it.rate;
 
