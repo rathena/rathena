@@ -9607,7 +9607,7 @@ void clif_specialeffect_remove(struct block_list* bl, int type, enum send_target
 #if PACKETVER >= 20181002
 	nullpo_retv( bl );
 
-	struct PACKET_ZC_REMOVE_EFFECT p;
+	struct PACKET_ZC_REMOVE_EFFECT p = {};
 
 	p.packetType = HEADER_ZC_REMOVE_EFFECT;
 	p.aid = bl->id;

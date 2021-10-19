@@ -14968,7 +14968,7 @@ BUILDIN_FUNC(removespecialeffect)
 	if (!script_hasdata(st, 4))
 		bl = map_id2bl(st->oid);
 	else {
-		TBL_NPC *nd = npc_name2id(script_getstr(st, 4));
+		struct npc_data *nd = npc_name2id(script_getstr(st, 4));
 		if (nd == nullptr) {
 			ShowError("buildin_removespecialeffect: can't find npc %s.\n", script_getstr(st, 4));
 			return SCRIPT_CMD_FAILURE;
@@ -14985,7 +14985,7 @@ BUILDIN_FUNC(removespecialeffect)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	TBL_PC *sd;
+	struct map_session_data *sd;
 
 	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
