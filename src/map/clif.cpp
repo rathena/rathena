@@ -364,7 +364,15 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 // There is one exception and this is if they are walking.
 // Since walking NPCs are not supported on official servers, the client does not know how to handle it.
 #if PACKETVER >= 20170726
-				   return ( pcdb_checkid(status_get_viewdata(bl)->class_) && walking ) ? 0x0 : 0x6; //NPC_EVT_TYPE
+		if( walking ){
+			if( pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+				return 0x0; // PC_TYPE
+			}else if( mobdb_checkid( status_get_viewdata( bl )->class_ ) ){
+				return 0x5; // NPC_MOB_TYPE
+			}
+		}
+
+		return 0x6; //NPC_EVT_TYPE
 #else
 				   return pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x6; //NPC_EVT_TYPE
 #endif
