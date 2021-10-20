@@ -17590,11 +17590,11 @@ BUILDIN_FUNC(setitemscript)
  * Add or Update a mob drop temporarily [Akinari]
  * Original Idea By: [Lupus]
  *
- * addmonsterdrop <mob_id or name>,<item_id>,<rate>;
+ * addmonsterdrop <mob_id or name>,<item_id>,<rate>,{<steal protected>,{<random option group id>}};
  *
  * If given an item the mob already drops, the rate
- * is updated to the new rate.  Rate cannot exceed 10000
- * Returns 1 if succeeded (added/updated a mob drop)
+ * is updated to the new rate. Rate range is 1-10000.
+ * Returns true if succeeded (added/updated a mob drop) false otherwise.
  *-------------------------------------------------------*/
 BUILDIN_FUNC(addmonsterdrop)
 {
@@ -17605,17 +17605,29 @@ BUILDIN_FUNC(addmonsterdrop)
 	else
 		mob = mob_db.find(script_getnum(st, 2));
 
+	if (mob == nullptr) {
+		if (script_isstring(st, 2))
+			ShowError("addmonsterdrop: bad mob name given %s\n", script_getstr(st, 2));
+		else
+			ShowError("addmonsterdrop: bad mob id given %d\n", script_getnum(st, 2));
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	t_itemid item_id = script_getnum(st, 3);
-	int rate = script_getnum(st, 4);
 	item_data *itm = itemdb_exists(item_id);
 
 	if (itm == nullptr) {
 		ShowError("addmonsterdrop: Nonexistant item %u requested.\n", item_id);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (mob == nullptr) {
-		ShowError("addmonsterdrop: bad mob id given %d\n", script_getnum(st, 2));
+	int rate = script_getnum(st, 4);
+
+	if (rate < 1 || rate > 10000) {
+		ShowError("addmonsterdrop: Invalid rate %d (min 1, max 10000).\n", rate);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17633,15 +17645,15 @@ BUILDIN_FUNC(addmonsterdrop)
 			c = i;
 	}
 	if (c == 0) { // No place to put the new drop
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	int steal = 0;
+	int steal_protected = 0;
 	int group = 0;
 
 	if (script_hasdata(st,5))
-		steal = script_getnum(st, 5);
+		steal_protected = script_getnum(st, 5);
 	if (script_hasdata(st,6)) {
 		group = script_getnum(st, 6);
 
@@ -17657,12 +17669,12 @@ BUILDIN_FUNC(addmonsterdrop)
 
 	// Fill in the slot with the item and rate
 	mob->dropitem[c].nameid = item_id;
-	mob->dropitem[c].rate = (rate > 10000) ? 10000 : rate;
-	mob->dropitem[c].steal_protected = steal > 0;
+	mob->dropitem[c].rate = rate;
+	mob->dropitem[c].steal_protected = steal_protected > 0;
 	mob->dropitem[c].randomopt_group = group;
 	mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 
-	script_pushint(st, 1);
+	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
 
 }

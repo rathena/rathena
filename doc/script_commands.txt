@@ -6613,7 +6613,7 @@ summon "--ja--",-1;
 *delmonsterdrop "<monster name>",<item id>;
 
 These commands will temporarily add or delete a monster drop, which will be reset
-when the mob database reloads or the server shuts down. They return 1 upon success.
+when the mob database reloads or the server shuts down. They return true upon success, false otherwise.
 
 If the monster already drops the specified item, its drop rate will be updated with
 the given rate (100 = 1%).
