@@ -17659,10 +17659,12 @@ BUILDIN_FUNC(addmonsterdrop)
 
 		if (!random_option_group.exists(group)) {
 			ShowError("buildin_addmonsterdrop: Unknown random option group %d.\n", group);
+			script_pushint(st, false);
 			return SCRIPT_CMD_FAILURE;
 		}
 		if (itm->type != IT_WEAPON && itm->type != IT_ARMOR && itm->type != IT_SHADOWGEAR) {
 			ShowError("buildin_addmonsterdrop: Random option group can't be used with this type of item (item Id: %d).\n", item_id);
+			script_pushint(st, false);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
