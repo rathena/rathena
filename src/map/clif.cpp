@@ -368,7 +368,7 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 			if( pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
 				return 0x0; // PC_TYPE
 			}else if( mobdb_checkid( status_get_viewdata( bl )->class_ ) ){
-				return 0x5; // NPC_MOB_TYPE
+				return 0xC; // New walking NPC type
 			}
 		}
 
