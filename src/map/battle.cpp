@@ -2382,10 +2382,10 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 			break;
 #ifdef RENEWAL
 		case KN_BRANDISHSPEAR:
-		case SR_RAMPAGEBLASTER:
-			// Renewal changes to ranged physical damage
-			return BF_LONG;
+		// Renewal changes to ranged physical damage
 #endif
+		case SR_RAMPAGEBLASTER:
+			return BF_LONG;
 		case NJ_KIRIKAGE:
 			// Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT:
