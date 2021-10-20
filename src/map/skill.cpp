@@ -2333,6 +2333,8 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 
 	if( sd && !sd->autobonus3.empty() ) {
 		for (auto &it : sd->autobonus3) {
+			if (it == nullptr)
+				continue;
 			if (rnd()%1000 >= it->rate)
 				continue;
 			if (it->atk_type != skill_id)
