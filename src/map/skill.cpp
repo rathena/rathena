@@ -2168,17 +2168,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	// Autospell when attacking
 	if( sd && !status_isdead(bl) && !sd->autospell.empty() )
 	{
-		struct block_list *tbl;
-		struct unit_data *ud;
-		int autospl_skill_lv, type;
-
 		for (const auto &it : sd->autospell) {
-			if (!(((it.flag)&attack_type)&BF_WEAPONMASK &&
-				  ((it.flag)&attack_type)&BF_RANGEMASK &&
-				  ((it.flag)&attack_type)&BF_SKILLMASK))
+			if (!(((it.battle_flag)&attack_type)&BF_WEAPONMASK &&
+				  ((it.battle_flag)&attack_type)&BF_RANGEMASK &&
+				  ((it.battle_flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
-			skill = (it.id > 0) ? it.id : -it.id;
+			skill = it.id;
 
 			sd->state.autocast = 1;
 			if ( skill_isNotOk(skill, sd) ) {
@@ -2187,17 +2183,20 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			}
 			sd->state.autocast = 0;
 
-			autospl_skill_lv = it.lv?it.lv:1;
-			if (autospl_skill_lv < 0) autospl_skill_lv = 1+rnd()%(-autospl_skill_lv);
+			uint16 autospl_skill_lv = it.lv ? it.lv : 1;
+
+			if (it.flag & 2)
+				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
 
 			rate = (!sd->state.arrow_atk) ? it.rate : it.rate / 2;
 
 			if (rnd()%1000 >= rate)
 				continue;
 
-			tbl = (it.id < 0) ? src : bl;
+			block_list *tbl = (it.flag & 1) ? bl : src;
+			e_cast_type type = skill_get_casttype(skill);
 
-			if ((type = skill_get_casttype(skill)) == CAST_GROUND) {
+			if (type == CAST_GROUND) {
 				if (!skill_pos_maxcount_check(src, tbl->x, tbl->y, skill, autospl_skill_lv, BL_PC, false))
 					continue;
 			}
@@ -2229,14 +2228,17 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					break;
 			}
 			sd->state.autocast = 0;
+
 			//Set canact delay. [Skotlex]
-			ud = unit_bl2ud(src);
+			unit_data *ud = unit_bl2ud(src);
+
 			if (ud) {
-				rate = skill_delayfix(src, skill, autospl_skill_lv);
-				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0){
-					ud->canact_tick = i64max(tick + rate, ud->canact_tick);
+				int delay = skill_delayfix(src, skill, autospl_skill_lv);
+
+				if (DIFF_TICK(ud->canact_tick, tick + delay) < 0){
+					ud->canact_tick = i64max(tick + delay, ud->canact_tick);
 					if ( battle_config.display_status_timers && sd )
-						clif_status_change(src, EFST_POSTDELAY, 1, rate, 0, 0, 0);
+						clif_status_change(src, EFST_POSTDELAY, 1, delay, 0, 0, 0);
 				}
 			}
 		}
@@ -2270,48 +2272,43 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 }
 
 int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint16 skill_id, t_tick tick) {
-	struct block_list *tbl;
-
-	if( sd == NULL || !skill_id )
+	if( sd == nullptr || !skill_id )
 		return 0;
 
 	for (auto &it : sd->autospell3) {
-		int skill, skill_lv, type;
-
-		if (it.flag != skill_id)
+		if (it.trigger_skill != skill_id)
 			continue;
 
 		if (it.lock)
 			continue;  // autospell already being executed
 
-		skill = it.id;
+		uint16 skill = it.id;
+
 		sd->state.autocast = 1; //set this to bypass sd->canskill_tick check
 
-		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) ) {
+		if( skill_isNotOk(skill, sd) ) {
 			sd->state.autocast = 0;
 			continue;
 		}
 
 		sd->state.autocast = 0;
 
-		if( skill >= 0 && bl == NULL )
+		if( skill > 0 && bl == nullptr )
 			continue; // No target
 		if( rnd()%1000 >= it.rate )
 			continue;
 
-		skill_lv = it.lv ? it.lv : 1;
-		if( skill < 0 ) {
-			tbl = &sd->bl;
-			skill *= -1;
-			skill_lv = 1 + rnd()%(-skill_lv); //random skill_lv
-		}
-		else
-			tbl = bl;
+		block_list *tbl = (it.flag & 1) ? &sd->bl : bl;
+		uint16 skill_lv = it.lv ? it.lv : 1;
 
-		if ((type = skill_get_casttype(skill)) == CAST_GROUND) {
-			if (!skill_pos_maxcount_check(&sd->bl, tbl->x, tbl->y, skill_id, skill_lv, BL_PC, false))
-				continue;
-		}
+		if (it.flag & 2)
+			skill_lv = rnd_value( 1, skill_lv ); //random skill_lv
+
+		e_cast_type type = skill_get_casttype(skill);
+
+		if (type == CAST_GROUND && !skill_pos_maxcount_check(&sd->bl, tbl->x, tbl->y, skill_id, skill_lv, BL_PC, false))
+			continue;
+
 		if (battle_config.autospell_check_range &&
 			!battle_check_range(bl, tbl, skill_get_range2(&sd->bl, skill, skill_lv, true)))
 			continue;
@@ -2320,9 +2317,15 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		it.lock = true;
 		skill_consume_requirement(sd,skill,skill_lv,1);
 		switch( type ) {
-			case CAST_GROUND:   skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skill_lv, tick, 0); break;
-			case CAST_NODAMAGE: skill_castend_nodamage_id(&sd->bl, tbl, skill, skill_lv, tick, 0); break;
-			case CAST_DAMAGE:   skill_castend_damage_id(&sd->bl, tbl, skill, skill_lv, tick, 0); break;
+			case CAST_GROUND:
+				skill_castend_pos2(&sd->bl, tbl->x, tbl->y, skill, skill_lv, tick, 0);
+				break;
+			case CAST_NODAMAGE:
+				skill_castend_nodamage_id(&sd->bl, tbl, skill, skill_lv, tick, 0);
+				break;
+			case CAST_DAMAGE:
+				skill_castend_damage_id(&sd->bl, tbl, skill, skill_lv, tick, 0);
+				break;
 		}
 		it.lock = false;
 		sd->state.autocast = 0;
@@ -2484,21 +2487,19 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	if(dstsd && !status_isdead(bl) && !dstsd->autospell2.empty() &&
 		!(skill_id && skill_get_nk(skill_id, NK_NODAMAGE)))
 	{
-		struct block_list *tbl;
-		struct unit_data *ud;
-		int autospl_skill_id, autospl_skill_lv, autospl_rate, type;
-
 		for (const auto &it : dstsd->autospell2) {
-			if (!(((it.flag)&attack_type)&BF_WEAPONMASK &&
-				  ((it.flag)&attack_type)&BF_RANGEMASK &&
-				  ((it.flag)&attack_type)&BF_SKILLMASK))
+			if (!(((it.battle_flag)&attack_type)&BF_WEAPONMASK &&
+				  ((it.battle_flag)&attack_type)&BF_RANGEMASK &&
+				  ((it.battle_flag)&attack_type)&BF_SKILLMASK))
 				continue; // one or more trigger conditions were not fulfilled
 
-			autospl_skill_id = (it.id > 0) ? it.id : -it.id;
-			autospl_skill_lv = it.lv ? it.lv : 1;
-			if (autospl_skill_lv < 0) autospl_skill_lv = 1+rnd()%(-autospl_skill_lv);
+			uint16 autospl_skill_id = it.id, autospl_skill_lv = it.lv ? it.lv : 1;
 
-			autospl_rate = it.rate;
+			if (it.flag & 2)
+				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
+
+			int autospl_rate = it.rate;
+
 			//Physical range attacks only trigger autospells half of the time
 			if ((attack_type&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG))
 				 autospl_rate>>=1;
@@ -2513,11 +2514,11 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (rnd()%1000 >= autospl_rate)
 				continue;
 
-			tbl = (it.id < 0) ? bl : src;
-			if ((type = skill_get_casttype(autospl_skill_id)) == CAST_GROUND) {
-				if (!skill_pos_maxcount_check(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, BL_PC, false))
+			block_list *tbl = (it.flag & 1) ? src : bl;
+			e_cast_type type = skill_get_casttype(autospl_skill_id);
+
+			if (type == CAST_GROUND && !skill_pos_maxcount_check(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, BL_PC, false))
 					continue;
-			}
 
 			if (!battle_check_range(bl, tbl, skill_get_range2(src, autospl_skill_id, autospl_skill_lv, true)) && battle_config.autospell_check_range)
 				continue;
@@ -2536,14 +2537,17 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					break;
 			}
 			dstsd->state.autocast = 0;
+
 			//Set canact delay. [Skotlex]
-			ud = unit_bl2ud(bl);
+			unit_data *ud = unit_bl2ud(bl);
+
 			if (ud) {
-				autospl_rate = skill_delayfix(bl, autospl_skill_id, autospl_skill_lv);
-				if (DIFF_TICK(ud->canact_tick, tick + autospl_rate) < 0){
-					ud->canact_tick = i64max(tick + autospl_rate, ud->canact_tick);
+				int delay = skill_delayfix(bl, autospl_skill_id, autospl_skill_lv);
+
+				if (DIFF_TICK(ud->canact_tick, tick + delay) < 0){
+					ud->canact_tick = i64max(tick + delay, ud->canact_tick);
 					if ( battle_config.display_status_timers && dstsd )
-						clif_status_change(bl, EFST_POSTDELAY, 1, autospl_rate, 0, 0, 0);
+						clif_status_change(bl, EFST_POSTDELAY, 1, delay, 0, 0, 0);
 				}
 			}
 		}
