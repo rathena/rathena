@@ -4893,10 +4893,10 @@ void MobDatabase::loadingFinished() {
 		}
 
 		if (battle_config.view_range_rate != 100)
-			mob->range2 = cap_value(mob->range2, 1, mob->range2 * battle_config.view_range_rate / 100);
+			mob->range2 = max(1, mob->range2 * battle_config.view_range_rate / 100);
 
 		if (battle_config.chase_range_rate != 100)
-			mob->range3 = cap_value(mob->range3, mob->range2, mob->range3 * battle_config.chase_range_rate / 100);
+			mob->range3 = max(mob->range2, mob->range3 * battle_config.chase_range_rate / 100);
 
 		// Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
 		mob->range3 += 2;
