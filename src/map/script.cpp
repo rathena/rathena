@@ -7881,13 +7881,13 @@ BUILDIN_FUNC(makeitem) {
 	struct item item_tmp;
 	bool canShowEffect = false;
 
-	if (script_isstring(st, 2)) {
+	if( script_isstring(st, 2) ){
 		const char *name = script_getstr(st, 2);
 		std::shared_ptr<item_data> item_data = item_db.searchname( name );
 
-		if (item_data)
+		if( item_data )
 			nameid = item_data->nameid;
-		else {
+		else{
 			ShowError( "buildin_makeitem: Unknown item %s\n", name );
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -7895,13 +7895,14 @@ BUILDIN_FUNC(makeitem) {
 	else {
 		int32 val = script_getnum( st, 2 );
 
-		if (val < 0) {
+		if( val < 0 ){
 			flag = 1;
 			nameid = (t_itemid)( -1 * val );
-		} else
+		}else{
 			nameid = (t_itemid)val;
+		}
 
-		if (!itemdb_exists(nameid)) {
+		if( !itemdb_exists( nameid ) ){
 			ShowError( "buildin_makeitem: Unknown item id %u\n", nameid );
 			return SCRIPT_CMD_FAILURE;
 		}
