@@ -2311,9 +2311,9 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		rootNode["WeaponLevel"] << str[index];
 	if (!str[++index].empty())
-		node["ArmorLevel"] << str[index];
+		rootNode["ArmorLevel"] << str[index];
 	if (!str[++index].empty())
-		node["EquipLevelMin"] << str[index];
+		rootNode["EquipLevelMin"] << str[index];
 	if (!str[++index].empty())
 		rootNode["EquipLevelMax"] << str[index];
 	if (!str[++index].empty())

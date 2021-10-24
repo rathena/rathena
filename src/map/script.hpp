@@ -4,6 +4,9 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#include <ryml_std.hpp>
+#include <ryml.hpp>
+
 #include "../common/database.hpp"
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -2068,7 +2071,7 @@ public:
 
 	void clear() { }
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const ryml::NodeRef node);
 };
 
 /**
