@@ -15969,7 +15969,7 @@ uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef node) {
 		if (!this->nodeExists(node, itatk.first))
 			continue;
 
-		const auto eleNode = node[itatk.first];
+		const auto eleNode = node[c4::to_csubstr(itatk.first)];
 
 		for (const auto &itdef : um_eleid2elename) {
 			if (!this->nodeExists(eleNode, itdef.first))
@@ -15981,11 +15981,11 @@ uint64 AttributeDatabase::parseBodyNode(const ryml::NodeRef node) {
 				return 0;
 
 			if (val < -100) {
-				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to -100.\n", itdef.first.c_str(), val, -100, 200);
+				this->invalidWarning(eleNode[c4::to_csubstr(itdef.first)], "%s %h is out of range %d~%d. Setting to -100.\n", itdef.first.c_str(), val, -100, 200);
 				val = -100;
 			}
 			else if (val > 200) {
-				this->invalidWarning(eleNode[itdef.first], "%s %h is out of range %d~%d. Setting to 200.\n", itdef.first.c_str(), val, -100, 200);
+				this->invalidWarning(eleNode[c4::to_csubstr(itdef.first)], "%s %h is out of range %d~%d. Setting to 200.\n", itdef.first.c_str(), val, -100, 200);
 				val = 200;
 			}
 
