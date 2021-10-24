@@ -19749,17 +19749,22 @@ BUILDIN_FUNC(mercenary_delete)
 	struct map_session_data *sd;
 	int type = 0;
 
-	if( !script_charid2sd(2, sd) || sd->md == NULL )
-		return SCRIPT_CMD_SUCCESS;
+	if( !script_charid2sd(2, sd) )
+		return SCRIPT_CMD_FAILURE;
+
+	if( sd->md == nullptr ) {
+		ShowWarning("buildin_mercenary_delete: Tried to delete a non existant mercenary from player '%s' (AID: %u, CID: %u)\n", sd->status.name, sd->status.account_id, sd->status.char_id);
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	if( script_hasdata(st, 3) ) {
 		type = script_getnum(st, 3);
 		if( type < 0 || type > 3 ) {
-			ShowWarning("script: buildin_mercenary_delete: invalid type value of %d, default to 0.\n", type);
-			type = 0;
+			ShowWarning("buildin_mercenary_delete: invalid type value of %d.\n", type);
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
-
+	
 	mercenary_delete(sd->md, type);
 
 	return SCRIPT_CMD_SUCCESS;
