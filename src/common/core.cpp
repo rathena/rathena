@@ -6,6 +6,7 @@
 #include "../config/core.hpp"
 
 #ifndef MINICORE
+#include "database.hpp"
 #include "ers.hpp"
 #include "socket.hpp"
 #include "timer.hpp"
@@ -21,7 +22,6 @@
 #endif
 
 #include "cbasetypes.hpp"
-#include "database.hpp"
 #include "malloc.hpp"
 #include "mmo.hpp"
 #include "showmsg.hpp"
