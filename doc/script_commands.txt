@@ -10042,6 +10042,18 @@ This command is typically used in item scripts of mercenary scrolls.
 
 ---------------------------------------
 
+*mercenary_delete {<char id>{,<reply>}};
+
+This command remove mercenary from a player.
+The parameter 'reply' can be one or the following value:
+
+	0 - Mercenary soldier's duty hour is over, faith increased by 1. (default)
+	1 - Your mercenary soldier has been killed, faith decreased by 1.
+	2 - Your mercenary soldier has been fired.
+	3 - Your mercenary soldier has ran away.
+
+---------------------------------------
+
 *mercenary_heal <hp>,<sp>;
 
 This command works like 'heal', but affects the mercenary of the

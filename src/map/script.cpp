@@ -19744,6 +19744,27 @@ BUILDIN_FUNC(mercenary_create)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(mercenary_delete)
+{
+	struct map_session_data *sd;
+	int type = 0;
+
+	if( !script_charid2sd(2, sd) || sd->md == NULL )
+		return SCRIPT_CMD_SUCCESS;
+
+	if( script_hasdata(st, 3) ) {
+		type = script_getnum(st, 3);
+		if( type < 0 || type > 3 ) {
+			ShowWarning("script: buildin_mercenary_delete: invalid type value of %d, default to 0.\n", type);
+			type = 0;
+		}
+	}
+
+	mercenary_delete(sd->md, type);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(mercenary_heal)
 {
 	struct map_session_data *sd;
@@ -25723,6 +25744,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),
 	BUILDIN_DEF(mercenary_create,"ii"),
+	BUILDIN_DEF(mercenary_delete,"??"),
 	BUILDIN_DEF(mercenary_heal,"ii"),
 	BUILDIN_DEF(mercenary_sc_start,"iii"),
 	BUILDIN_DEF(mercenary_get_calls,"i"),
