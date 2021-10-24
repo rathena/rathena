@@ -478,6 +478,7 @@ Header:
 #    Gender: Male
 #    Locations:
 #      Armor: true
+#    ArmorLevel: 1
 #    Refineable: true
 #    EquipScript: |
 #      sc_start SC_WEDDING,INFINITE_TICK,0;
