@@ -5,8 +5,8 @@
 DROP TABLE IF EXISTS `item_db2`;
 CREATE TABLE `item_db2` (
   `id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name_aegis` varchar(50) NOT NULL DEFAULT '',
-  `name_english` varchar(100) NOT NULL DEFAULT '',
+  `name_aegis` varchar(50) DEFAULT NULL,
+  `name_english` varchar(100) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
   `subtype` varchar(20) DEFAULT NULL,
   `price_buy` mediumint(8) unsigned DEFAULT NULL,
@@ -69,6 +69,7 @@ CREATE TABLE `item_db2` (
   `location_shadow_right_accessory` tinyint(1) unsigned DEFAULT NULL,
   `location_shadow_left_accessory` tinyint(1) unsigned DEFAULT NULL,
   `weapon_level` tinyint(1) unsigned DEFAULT NULL,
+  `armor_level` tinyint(1) unsigned DEFAULT NULL,
   `equip_level_min` tinyint(3) unsigned DEFAULT NULL,
   `equip_level_max` tinyint(3) unsigned DEFAULT NULL,
   `refineable` tinyint(1) unsigned DEFAULT NULL,
@@ -113,7 +114,7 @@ CREATE TABLE `item_db2` (
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_sell`,`weight`,`alias_name`) VALUES (1998,'Jeramiah\'s_Jur','Jeramiah\'s Jur','Etc',10,10,'Jur');
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_sell`,`weight`,`alias_name`) VALUES (1999,'Zed\'s_Staff','Zed\'s Staff','Etc',10,10,'Staff_Of_Soul');
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_sell`,`weight`,`alias_name`) VALUES (7950,'THG_Membership','THG Membership','Etc',10,10,'Foolishness_Of_Blind');
-REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_sell`,`weight`,`alias_name`) VALUES (7951,'Token_Bag','Token Bag','Etc',10,10,'Leather_Bag_Of_Infinity');
+REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_sell`,`weight`,`alias_name`) VALUES (7951,'Gold_Tulip','Token Bag','Etc',10,10,'Leather_Bag_Of_Infinity');
 
 # Official Event Items that had their Effects removed after the event was completed
 #=============================================================
@@ -149,8 +150,8 @@ REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`alias
 # iRO Valentine's Day Event 2009
 #=============================================================
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`alias_name`) VALUES (7916,'Silver_Coin_','Silver Coin','Etc',10,'Silver_Coin');
-REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`alias_name`,`script`) VALUES (12715,'Black_Treasure_Chest','Black Treasure Chest','Usable',200,'Treasure_Box_','callfunc "F_08stpattyseventbox";');
-REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`defense`,`location_right_accessory`,`location_left_accessory`,`script`) VALUES (5817,'Valentine\'s_Emblem','Valentine\'s Emblem','Armor',10,3,true,true,'bonus bAtkRate,3; bonus bMatkRate,3; bonus bAllStats,2; bonus bFlee,10; bonus bAspd,1; bonus bMdef,3; bonus2 bSkillAtk,"AL_HEAL",10; bonus2 bSkillHeal,"AL_HEAL",10; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bAddItemGroupHealRate,IG_Potion,10;');
+REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`alias_name`,`script`) VALUES (12715,'Black_Treasure_Box','Black Treasure Chest','Usable',200,'Treasure_Box_','callfunc "F_08stpattyseventbox";');
+REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`defense`,`location_right_accessory`,`location_left_accessory`,`script`) VALUES (5817,'Valentine_Pledge','Valentine\'s Emblem','Armor',10,3,true,true,'bonus bAtkRate,3; bonus bMatkRate,3; bonus bAllStats,2; bonus bFlee,10; bonus bAspd,1; bonus bMdef,3; bonus2 bSkillAtk,"AL_HEAL",10; bonus2 bSkillHeal,"AL_HEAL",10; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bAddItemGroupHealRate,IG_Potion,10;');
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`) VALUES (7946,'Gold_Ring_Of_Valentine','Gold Ring Of Valentine','Etc',10);
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`) VALUES (7947,'Silver_Ring_Of_Valentine','Silver Ring Of Valentine','Etc',10);
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`) VALUES (7948,'Box','Box','Etc',10,10);
@@ -162,8 +163,8 @@ REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`sc
 # iRO Halloween Event 2009
 #=============================================================
 REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`defense`,`location_head_top`,`refineable`,`view`,`script`) VALUES (5668,'Weird_Pumpkin_Hat','Weird Pumpkin Hat','Armor',20,5,true,true,206,'bonus bMdef,5; bonus2 bAddMonsterDropItem,12192,2500;');
-REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`) VALUES (6298,'Crushed_Pumpkin','Crushed Pumpkin','Etc');
-REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`) VALUES (6299,'Worn_Fabric','Worn Fabric','Etc');
+REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`) VALUES (6298,'Pumpkin_Head_Crushed','Crushed Pumpkin','Etc');
+REPLACE INTO `item_db2` (`id`,`name_aegis`,`name_english`,`type`) VALUES (6299,'Worn_Cloth_Piece','Worn Fabric','Etc');
 
 # Old Tuxedo and Wedding Dress, will display the outfit when worn.
 #=============================================================

@@ -39,7 +39,8 @@
 #   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Locations               Equipment's placement. (Default: None)
-#   WeaponLevel             Weapon level. (Default: 0)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
 #   EquipLevelMin           Minimum required level to equip. (Default: 0)
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
@@ -84,7 +85,7 @@
 
 Header:
   Type: ITEM_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Id: 1101
@@ -14509,6 +14510,7 @@ Body:
     Defense: 3
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 1
   - Id: 2102
@@ -14521,6 +14523,7 @@ Body:
     Slots: 1
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 1
   - Id: 2103
@@ -14546,6 +14549,7 @@ Body:
       Thief: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 2
   - Id: 2104
@@ -14572,6 +14576,7 @@ Body:
       Thief: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 2
   - Id: 2105
@@ -14587,6 +14592,7 @@ Body:
       Swordman: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 3
   - Id: 2106
@@ -14603,6 +14609,7 @@ Body:
       Swordman: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 3
   - Id: 2107
@@ -14619,6 +14626,7 @@ Body:
       Swordman: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 4
     Script: |
@@ -14638,6 +14646,7 @@ Body:
       Swordman: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 4
     Script: |
@@ -14656,6 +14665,7 @@ Body:
       Wizard: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 5
     Script: |
@@ -14672,6 +14682,7 @@ Body:
       Crusader: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 68
     View: 4
     Script: |
@@ -14688,6 +14699,7 @@ Body:
       Crusader: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 83
     Refineable: true
     View: 4
@@ -14708,6 +14720,7 @@ Body:
       SuperNovice: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     View: 1
   - Id: 2113
     AegisName: Novice_Shield
@@ -14722,6 +14735,7 @@ Body:
       SuperNovice: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 3
@@ -14747,6 +14761,7 @@ Body:
       SuperNovice: false
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 2
@@ -14766,6 +14781,7 @@ Body:
       SuperNovice: false
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 4
@@ -14788,6 +14804,7 @@ Body:
       SuperNovice: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 1
@@ -14804,6 +14821,7 @@ Body:
       Ninja: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 1
@@ -14819,6 +14837,7 @@ Body:
       Ninja: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 1
@@ -14833,6 +14852,7 @@ Body:
       Ninja: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 1
@@ -14850,6 +14870,7 @@ Body:
       Ninja: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 1
@@ -14870,6 +14891,7 @@ Body:
       Wizard: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     Refineable: true
     View: 5
     Script: |
@@ -14890,6 +14912,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 68
     Refineable: true
     View: 4
@@ -14915,6 +14938,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 4
@@ -14937,6 +14961,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 2
@@ -14964,6 +14989,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 4
@@ -14990,6 +15016,7 @@ Body:
       SuperNovice: false
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 2
@@ -15003,6 +15030,7 @@ Body:
     Defense: 10
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     View: 4
     Trade:
       Override: 100
@@ -15027,6 +15055,7 @@ Body:
       Crusader: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 83
     Refineable: true
     View: 4
@@ -15047,6 +15076,7 @@ Body:
       Priest: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 5
@@ -15066,6 +15096,7 @@ Body:
       Crusader: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     View: 4
@@ -15089,6 +15120,7 @@ Body:
       Wizard: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 5
@@ -15104,6 +15136,7 @@ Body:
     Defense: 9
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     View: 2
     Trade:
       Override: 100
@@ -15137,6 +15170,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 4
@@ -15171,6 +15205,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 2
@@ -15191,6 +15226,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 2
@@ -15201,6 +15237,7 @@ Body:
     Defense: 5
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     View: 2
     Script: |
       bonus bAgi,2;
@@ -15220,6 +15257,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 95
     View: 4
     Script: |
@@ -15255,6 +15293,7 @@ Body:
       Upper: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 3
@@ -15280,6 +15319,7 @@ Body:
       Third_Baby: true
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     View: 1
   - Id: 2199
@@ -15291,6 +15331,7 @@ Body:
     Defense: 100
     Locations:
       Left_Hand: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     Script: |
@@ -15315,6 +15356,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 12
     Script: |
       bonus2 bResEff,Eff_Blind,500;
@@ -15327,6 +15369,7 @@ Body:
     Slots: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 12
     Script: |
       bonus2 bResEff,Eff_Blind,500;
@@ -15338,6 +15381,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 3
   - Id: 2204
     AegisName: Glasses_
@@ -15348,6 +15392,7 @@ Body:
     Slots: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 3
   - Id: 2205
     AegisName: Diver's_Goggles
@@ -15357,6 +15402,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 10
   - Id: 2206
     AegisName: Wedding_Veil
@@ -15366,6 +15412,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 44
     Script: |
@@ -15378,6 +15425,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 4
     Script: |
       bonus2 bSubRace,RC_Plant,10;
@@ -15390,6 +15438,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 17
     Script: |
@@ -15404,6 +15453,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 17
     Script: |
@@ -15417,6 +15467,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 9
   - Id: 2211
     AegisName: Bandana
@@ -15427,6 +15478,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 6
   - Id: 2212
@@ -15437,6 +15489,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 13
   - Id: 2213
     AegisName: Cat_Hairband
@@ -15447,6 +15500,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 2
   - Id: 2214
@@ -15458,6 +15512,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 15
     Script: |
@@ -15471,6 +15526,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 5
   - Id: 2216
@@ -15486,6 +15542,7 @@ Body:
       Priest: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 11
   - Id: 2217
@@ -15502,6 +15559,7 @@ Body:
       Priest: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 11
   - Id: 2218
@@ -15512,6 +15570,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 8
     Script: |
       bonus2 bResEff,Eff_Silence,1000;
@@ -15523,6 +15582,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 8
     Script: |
       bonus2 bResEff,Eff_Silence,1000;
@@ -15535,6 +15595,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 16
   - Id: 2221
@@ -15547,6 +15608,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 16
   - Id: 2222
@@ -15562,6 +15624,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 7
   - Id: 2223
@@ -15578,6 +15641,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 7
   - Id: 2224
@@ -15603,6 +15667,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 1
   - Id: 2225
@@ -15629,6 +15694,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 1
   - Id: 2226
@@ -15653,6 +15719,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 14
   - Id: 2227
@@ -15678,6 +15745,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 14
   - Id: 2228
@@ -15693,6 +15761,7 @@ Body:
       Swordman: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 40
   - Id: 2229
@@ -15709,6 +15778,7 @@ Body:
       Swordman: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 40
   - Id: 2230
@@ -15730,6 +15800,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,3;
@@ -15753,6 +15824,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,3;
@@ -15773,6 +15845,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 18
     Script: |
@@ -15795,6 +15868,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 18
     Script: |
@@ -15812,6 +15886,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 19
@@ -15830,6 +15905,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 45
@@ -15844,6 +15920,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 20
     Script: |
@@ -15857,6 +15934,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 21
   - Id: 2239
     AegisName: One_Eyed_Glass
@@ -15866,6 +15944,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 23
   - Id: 2240
     AegisName: Beard
@@ -15875,6 +15954,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 24
   - Id: 2241
     AegisName: Granpa_Beard
@@ -15884,6 +15964,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 25
   - Id: 2242
     AegisName: Luxury_Sunglasses
@@ -15894,6 +15975,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 26
     Script: |
       bonus2 bResEff,Eff_Blind,1000;
@@ -15906,6 +15988,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 27
     Script: |
       bonus2 bResEff,Eff_Blind,1500;
@@ -15922,6 +16005,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 28
     Script: |
@@ -15939,6 +16023,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 29
   - Id: 2246
@@ -15954,6 +16039,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 30
@@ -15972,6 +16058,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 31
   - Id: 2248
@@ -15987,6 +16074,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 32
   - Id: 2249
@@ -16002,6 +16090,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 33
     Script: |
@@ -16019,6 +16108,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 34
     Script: |
       bonus bMaxSP,20;
@@ -16035,6 +16125,7 @@ Body:
       Priest: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 35
     Script: |
@@ -16053,6 +16144,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 36
     Script: |
@@ -16066,6 +16158,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 37
     Script: |
       bonus2 bSubRace,RC_Insect,10;
@@ -16082,6 +16175,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 38
     Script: |
@@ -16102,6 +16196,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 39
     Script: |
@@ -16126,6 +16221,7 @@ Body:
       Taekwon: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 41
     Script: |
@@ -16139,6 +16235,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 42
   - Id: 2258
@@ -16165,6 +16262,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 43
@@ -16177,6 +16275,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 46
   - Id: 2260
@@ -16192,6 +16291,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 47
   - Id: 2261
     AegisName: Prontera_Army_Cap
@@ -16212,6 +16312,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 48
   - Id: 2262
@@ -16222,6 +16323,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 49
   - Id: 2263
     AegisName: Gangster_Patch
@@ -16235,6 +16337,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 50
   - Id: 2264
     AegisName: Munak_Turban
@@ -16247,6 +16350,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 51
     Script: |
       bonus2 bSubRace,RC_Undead,10;
@@ -16258,6 +16362,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 52
     Script: |
       bonus2 bResEff,Eff_Silence,1500;
@@ -16274,6 +16379,7 @@ Body:
       Swordman: true
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 53
   - Id: 2267
@@ -16288,6 +16394,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 54
     Script: |
       bonus2 bSubRace,RC_Insect,3;
@@ -16303,6 +16410,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 55
     Script: |
       bonus2 bSubRace,RC_Insect,3;
@@ -16318,6 +16426,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 56
     Script: |
       bonus2 bSubRace,RC_Plant,3;
@@ -16333,6 +16442,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 57
     Script: |
       bonus2 bSubRace,RC_Plant,3;
@@ -16349,6 +16459,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 58
   - Id: 2272
     AegisName: Stop_Post
@@ -16359,6 +16470,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 59
   - Id: 2273
@@ -16374,6 +16486,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 60
     Script: |
@@ -16390,6 +16503,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 61
     Script: |
@@ -16404,6 +16518,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 62
   - Id: 2276
@@ -16415,6 +16530,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 63
   - Id: 2277
     AegisName: Nurse_Cap
@@ -16429,6 +16545,7 @@ Body:
       Priest: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 64
     Script: |
@@ -16443,6 +16560,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 65
   - Id: 2279
     AegisName: Bomb_Wick
@@ -16453,6 +16571,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 66
   - Id: 2280
     AegisName: Sahkkat
@@ -16463,6 +16582,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 67
     Script: |
@@ -16481,6 +16601,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 68
   - Id: 2282
     AegisName: Spirit_Chain
@@ -16490,6 +16611,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 69
     Script: |
       bonus2 bSubEle,Ele_Holy,15;
@@ -16502,6 +16624,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 70
     Script: |
@@ -16519,6 +16642,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 71
   - Id: 2285
@@ -16533,6 +16657,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 72
@@ -16550,6 +16675,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 73
   - Id: 2287
@@ -16565,6 +16691,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 74
     Script: |
@@ -16583,6 +16710,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 75
   - Id: 2289
     AegisName: Poo_Poo_Hat
@@ -16592,6 +16720,7 @@ Body:
     Weight: 700
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 76
     Script: |
       bonus2 bSubRace,RC_DemiHuman,10;
@@ -16605,6 +16734,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 77
   - Id: 2291
     AegisName: Masquerade
@@ -16618,6 +16748,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 78
     Script: |
       bonus2 bAddRace,RC_DemiHuman,3;
@@ -16636,6 +16767,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 79
     Script: |
@@ -16649,6 +16781,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 80
   - Id: 2294
     AegisName: Star_Dust
@@ -16659,6 +16792,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 81
   - Id: 2295
@@ -16673,6 +16807,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 82
     Script: |
       bonus2 bResEff,Eff_Blind,10000;
@@ -16689,6 +16824,7 @@ Body:
       Hunter: true
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 83
     Script: |
@@ -16707,6 +16843,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 84
   - Id: 2298
     AegisName: Green_Feeler
@@ -16717,6 +16854,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 85
   - Id: 2299
     AegisName: Viking_Helm
@@ -16737,6 +16875,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 86
   - Id: 2301
@@ -16748,6 +16887,7 @@ Body:
     Defense: 1
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2302
     AegisName: Cotton_Shirt_
@@ -16759,6 +16899,7 @@ Body:
     Slots: 1
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2303
     AegisName: Leather_Jacket
@@ -16769,6 +16910,7 @@ Body:
     Defense: 2
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2304
     AegisName: Leather_Jacket_
@@ -16780,6 +16922,7 @@ Body:
     Slots: 1
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2305
     AegisName: Adventure_Suit
@@ -16790,6 +16933,7 @@ Body:
     Defense: 3
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2306
     AegisName: Adventurere's_Suit_
@@ -16801,6 +16945,7 @@ Body:
     Slots: 1
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2307
     AegisName: Mantle
@@ -16815,6 +16960,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2308
     AegisName: Mantle_
@@ -16830,6 +16976,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2309
     AegisName: Coat
@@ -16844,6 +16991,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2310
     AegisName: Coat_
@@ -16859,6 +17007,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2311
     AegisName: Mink_Coat
@@ -16874,6 +17023,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
   - Id: 2312
@@ -16895,6 +17045,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2313
     AegisName: Padded_Armor_
@@ -16916,6 +17067,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2314
     AegisName: Chain_Mail
@@ -16936,6 +17088,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2315
     AegisName: Chain_Mail_
@@ -16957,6 +17110,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2316
     AegisName: Plate_Armor
@@ -16971,6 +17125,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
   - Id: 2317
@@ -16987,6 +17142,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
   - Id: 2318
@@ -17003,6 +17159,7 @@ Body:
       Merchant: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -17022,6 +17179,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     Script: |
@@ -17041,6 +17199,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2321
     AegisName: Silk_Robe
@@ -17065,6 +17224,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,10;
@@ -17092,6 +17252,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,10;
@@ -17108,6 +17269,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2324
     AegisName: Scapulare_
@@ -17123,6 +17285,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2325
     AegisName: Saint_Robe
@@ -17140,6 +17303,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,5;
@@ -17160,6 +17324,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,5;
@@ -17176,6 +17341,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     Script: |
@@ -17198,6 +17364,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2329
     AegisName: Wooden_Mail_
@@ -17216,6 +17383,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2330
     AegisName: Tights
@@ -17230,6 +17398,7 @@ Body:
       Hunter: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17248,6 +17417,7 @@ Body:
       Hunter: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17266,6 +17436,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2333
     AegisName: Silver_Robe_
@@ -17282,6 +17453,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2334
     AegisName: Mage_Coat
@@ -17297,6 +17469,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     Script: |
@@ -17316,6 +17489,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bAgi,1;
@@ -17334,6 +17508,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bAgi,1;
@@ -17351,6 +17526,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     Script: |
@@ -17368,6 +17544,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,15;
@@ -17380,6 +17557,7 @@ Body:
     Defense: 4
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2340
     AegisName: Novice_Breast
@@ -17394,6 +17572,7 @@ Body:
       SuperNovice: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
   - Id: 2341
@@ -17407,6 +17586,7 @@ Body:
       Crusader: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
   - Id: 2342
@@ -17421,6 +17601,7 @@ Body:
       Crusader: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
   - Id: 2343
@@ -17436,6 +17617,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     Script: |
@@ -17457,6 +17639,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17475,6 +17658,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17495,6 +17679,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17513,6 +17698,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17533,6 +17719,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17551,6 +17738,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17571,6 +17759,7 @@ Body:
       Swordman: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17589,6 +17778,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     Script: |
@@ -17605,6 +17795,7 @@ Body:
       SuperNovice: true
     Locations:
       Armor: true
+    ArmorLevel: 1
   - Id: 2353
     AegisName: Odin's_Blessing
     Name: Odin's Blessing
@@ -17619,6 +17810,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
   - Id: 2354
@@ -17634,6 +17826,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 54
     Refineable: true
     Script: |
@@ -17652,6 +17845,7 @@ Body:
       SuperNovice: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     Script: |
@@ -17669,6 +17863,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -17689,6 +17884,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     Script: |
@@ -17707,6 +17903,7 @@ Body:
     Defense: 5
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -17730,6 +17927,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     Script: |
@@ -17749,6 +17947,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     Script: |
@@ -17773,6 +17972,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -17794,6 +17994,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -17815,6 +18016,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -17837,6 +18039,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     Script: |
@@ -17852,6 +18055,7 @@ Body:
     Defense: 4
     Locations:
       Armor: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -17874,6 +18078,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -17895,6 +18100,7 @@ Body:
     Defense: 15
     Locations:
       Armor: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -17919,6 +18125,7 @@ Body:
     Slots: 1
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2372
     AegisName: Mage_Coat_
@@ -17935,6 +18142,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     Script: |
@@ -17954,6 +18162,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     Script: |
@@ -17982,6 +18191,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -18011,6 +18221,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -18037,6 +18248,7 @@ Body:
       Taekwon: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -18065,6 +18277,7 @@ Body:
       Merchant: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -18094,6 +18307,7 @@ Body:
       Thief: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -18123,6 +18337,7 @@ Body:
       Wizard: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -18151,6 +18366,7 @@ Body:
       Priest: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -18179,6 +18395,7 @@ Body:
       Hunter: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -18205,6 +18422,7 @@ Body:
       Gunslinger: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -18229,6 +18447,7 @@ Body:
     Defense: 10
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 94
     Script: |
       bonus bMdef,10;
@@ -18246,6 +18465,7 @@ Body:
     Defense: 10
     Locations:
       Armor: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -18275,6 +18495,7 @@ Body:
     Defense: 12
     Locations:
       Armor: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -18320,6 +18541,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -18357,6 +18579,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -18378,6 +18601,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -18411,6 +18635,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -18432,6 +18657,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     Script: |
@@ -18453,6 +18679,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 82
     Refineable: true
     Script: |
@@ -18466,6 +18693,7 @@ Body:
     Defense: 10
     Locations:
       Armor: true
+    ArmorLevel: 1
     Script: |
       bonus bStr,2;
       bonus bVit,2;
@@ -18480,6 +18708,7 @@ Body:
     Slots: 1
     Locations:
       Armor: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -18500,6 +18729,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 81
     Refineable: true
     Trade:
@@ -18526,6 +18756,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 61
     Refineable: true
     Trade:
@@ -18551,6 +18782,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Trade:
       Override: 100
@@ -18576,6 +18808,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2398
     AegisName: Sniping_Suit_M
@@ -18591,6 +18824,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     Trade:
@@ -18622,6 +18856,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,3;
@@ -18634,6 +18869,7 @@ Body:
     Defense: 1
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2402
     AegisName: Sandals_
@@ -18645,6 +18881,7 @@ Body:
     Slots: 1
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2403
     AegisName: Shoes
@@ -18659,6 +18896,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2404
     AegisName: Shoes_
@@ -18674,6 +18912,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2405
     AegisName: Boots
@@ -18700,6 +18939,7 @@ Body:
       Thief: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2406
     AegisName: Boots_
@@ -18727,6 +18967,7 @@ Body:
       Thief: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2407
     AegisName: Chrystal_Pumps
@@ -18740,6 +18981,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,10;
@@ -18753,6 +18995,7 @@ Body:
     Defense: 3
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2409
     AegisName: Spiky_Heel
@@ -18767,6 +19010,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,5;
@@ -18779,6 +19023,7 @@ Body:
     Defense: 5
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 94
     Script: |
       bonus bMdef,10;
@@ -18798,6 +19043,7 @@ Body:
       Knight: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
   - Id: 2412
@@ -18813,6 +19059,7 @@ Body:
       Knight: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
   - Id: 2413
@@ -18828,6 +19075,7 @@ Body:
       Swordman: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 30
   - Id: 2414
     AegisName: Novice_Boots
@@ -18841,6 +19089,7 @@ Body:
       SuperNovice: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
   - Id: 2415
     AegisName: Slipper
     Name: Bunny Slipper
@@ -18855,6 +19104,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     Script: |
@@ -18873,6 +19123,7 @@ Body:
       SuperNovice: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     Script: |
@@ -18890,6 +19141,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     Script: |
@@ -18908,6 +19160,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     Script: |
@@ -18926,6 +19179,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 54
     Refineable: true
     Script: |
@@ -18945,6 +19199,7 @@ Body:
       SuperNovice: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 25
     Refineable: true
     Script: |
@@ -18964,6 +19219,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     Script: |
@@ -18990,6 +19246,7 @@ Body:
       Wizard: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     Script: |
@@ -19009,6 +19266,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 85
     Refineable: true
     Script: |
@@ -19031,6 +19289,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -19050,6 +19309,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -19070,6 +19330,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     Script: |
@@ -19087,6 +19348,7 @@ Body:
     Defense: 4
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -19109,6 +19371,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Script: |
       bonus2 bSubRace,RC_DemiHuman,5;
       bonus2 bSubRace,RC_Player_Human,5;
@@ -19133,6 +19396,7 @@ Body:
       Thief: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Trade:
       Override: 100
@@ -19151,6 +19415,7 @@ Body:
     Defense: 5
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Trade:
       Override: 100
@@ -19169,6 +19434,7 @@ Body:
     Defense: 10
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -19195,6 +19461,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMdef,5;
@@ -19225,6 +19492,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bMaxHP,(BaseLevel*10);
@@ -19244,6 +19512,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -19272,6 +19541,7 @@ Body:
       Thief: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -19307,6 +19577,7 @@ Body:
       Wizard: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -19333,6 +19604,7 @@ Body:
       Gunslinger: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -19356,6 +19628,7 @@ Body:
     Weight: 300
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -19377,6 +19650,7 @@ Body:
     Defense: 9
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -19419,6 +19693,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -19432,6 +19707,7 @@ Body:
     Weight: 200
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bStr,1;
@@ -19445,6 +19721,7 @@ Body:
     Defense: 7
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Script: |
       bonus bLuk,2;
       bonus bHPrecovRate,10;
@@ -19459,6 +19736,7 @@ Body:
     Weight: 250
     Locations:
       Shoes: true
+    ArmorLevel: 1
   - Id: 2444
     AegisName: Krieger_Shoes1
     Name: Glorious Shoes
@@ -19470,6 +19748,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 81
     Refineable: true
     Trade:
@@ -19497,6 +19776,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 61
     Refineable: true
     Trade:
@@ -19522,6 +19802,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Trade:
       Override: 100
@@ -19546,6 +19827,7 @@ Body:
       SuperNovice: false
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2448
     AegisName: Air_Boss
@@ -19555,6 +19837,7 @@ Body:
     Defense: 2
     Locations:
       Shoes: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bAgi,1;
@@ -19573,6 +19856,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 85
     Refineable: true
     Trade:
@@ -19603,6 +19887,7 @@ Body:
       Upper: true
     Locations:
       Shoes: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     Script: |
@@ -19621,6 +19906,7 @@ Body:
     Defense: 1
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2502
     AegisName: Hood_
@@ -19632,6 +19918,7 @@ Body:
     Slots: 1
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2503
     AegisName: Muffler
@@ -19646,6 +19933,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2504
     AegisName: Muffler_
@@ -19661,6 +19949,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2505
     AegisName: Manteau
@@ -19683,6 +19972,7 @@ Body:
       Thief: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2506
     AegisName: Manteau_
@@ -19706,6 +19996,7 @@ Body:
       Thief: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2507
     AegisName: Cape_Of_Ancient_Lord
@@ -19720,6 +20011,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     Script: |
@@ -19737,6 +20029,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bUnbreakableGarment;
@@ -19754,6 +20047,7 @@ Body:
       Wizard: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     Script: |
@@ -19771,6 +20065,7 @@ Body:
       SuperNovice: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     Script: |
       bonus2 bSubEle,Ele_Neutral,20;
   - Id: 2511
@@ -19786,6 +20081,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     Script: |
@@ -19808,6 +20104,7 @@ Body:
       SuperNovice: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     Script: |
@@ -19826,6 +20123,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
   - Id: 2514
@@ -19848,6 +20146,7 @@ Body:
       Thief: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
   - Id: 2515
@@ -19865,6 +20164,7 @@ Body:
       Wizard: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 85
     Refineable: true
   - Id: 2516
@@ -19880,6 +20180,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     Script: |
@@ -19898,6 +20199,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     Script: |
@@ -19915,6 +20217,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 33
     Refineable: true
     Script: |
@@ -19933,6 +20236,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 61
     Refineable: true
     Script: |
@@ -19951,6 +20255,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 54
     Refineable: true
     Script: |
@@ -19970,6 +20275,7 @@ Body:
       SuperNovice: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     Script: |
@@ -19983,6 +20289,7 @@ Body:
     Defense: 2
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     Script: |
@@ -19997,6 +20304,7 @@ Body:
     Slots: 1
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     Script: |
@@ -20016,6 +20324,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     Script: |
@@ -20038,6 +20347,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     Script: |
@@ -20051,6 +20361,7 @@ Body:
     Defense: 4
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
   - Id: 2527
@@ -20069,6 +20380,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 48
     Refineable: true
     Script: |
@@ -20089,6 +20401,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -20108,6 +20421,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -20128,6 +20442,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Script: |
@@ -20154,6 +20469,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -20180,6 +20496,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -20197,6 +20514,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     Script: |
       bonus2 bSubRace,RC_DemiHuman,15;
       bonus2 bSubRace,RC_Player_Human,15;
@@ -20208,6 +20526,7 @@ Body:
     Defense: 10
     Locations:
       Garment: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -20233,6 +20552,7 @@ Body:
       Wizard: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     Script: |
       bonus bVit,10;
       bonus bMdef,10;
@@ -20250,6 +20570,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     Script: |
@@ -20283,6 +20604,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus2 bSubEle,Ele_Neutral,5;
@@ -20311,6 +20633,7 @@ Body:
       Thief: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -20346,6 +20669,7 @@ Body:
       Wizard: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -20372,6 +20696,7 @@ Body:
       Gunslinger: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     Trade:
@@ -20396,6 +20721,7 @@ Body:
     Defense: 5
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 94
     Script: |
       bonus bMdef,5;
@@ -20428,6 +20754,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -20443,6 +20770,7 @@ Body:
     Defense: 9
     Locations:
       Garment: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -20484,6 +20812,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus2 bSubEle,Ele_Water,5;
@@ -20506,6 +20835,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Script: |
@@ -20520,6 +20850,7 @@ Body:
     Slots: 1
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bStr,1;
@@ -20532,6 +20863,7 @@ Body:
     Defense: 8
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bDex,2;
@@ -20551,6 +20883,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 95
     Script: |
       bonus2 bSubRace,RC_DemiHuman,10;
@@ -20571,6 +20904,7 @@ Body:
       SuperNovice: false
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 81
     Refineable: true
     Trade:
@@ -20594,6 +20928,7 @@ Body:
     Weight: 200
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
   - Id: 2551
     AegisName: Rider_Insignia_M
@@ -20611,6 +20946,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     Trade:
@@ -20646,6 +20982,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     Trade:
@@ -20676,6 +21013,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     Refineable: true
     Script: |
       bonus bAgi,1;
@@ -20696,6 +21034,7 @@ Body:
       Upper: true
     Locations:
       Garment: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Refineable: true
     Script: |
@@ -20724,6 +21063,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus bStr,2;
@@ -20739,6 +21079,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus bInt,2;
@@ -20754,6 +21095,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus bVit,2;
@@ -20769,6 +21111,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus bDex,2;
@@ -20784,6 +21127,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus bAgi,2;
@@ -20796,6 +21140,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bMaxSP,10;
   - Id: 2608
@@ -20810,6 +21155,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus bMdef,5;
@@ -20822,6 +21168,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2610
     AegisName: Gold_Ring
     Name: Gold Ring
@@ -20830,6 +21177,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2611
     AegisName: Silver_Ring
     Name: Silver Ring
@@ -20838,6 +21186,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2612
     AegisName: Flower_Ring
     Name: Flower Ring
@@ -20846,6 +21195,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2613
     AegisName: Diamond_Ring
     Name: Diamond Ring
@@ -20854,6 +21204,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2614
     AegisName: An_Eye_Of_Dullahan
     Name: Eye of Dullahan
@@ -20866,6 +21217,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Script: |
       bonus2 bResEff,Eff_Poison,10000;
@@ -20884,6 +21236,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Script: |
       bonus bMdef,3;
@@ -20899,6 +21252,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Script: |
       bonus bCritical,5;
@@ -20915,6 +21269,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 35
     Script: |
       bonus bInt,1;
@@ -20931,6 +21286,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 35
     Script: |
       bonus bAgi,1;
@@ -20946,6 +21302,7 @@ Body:
       Hunter: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Script: |
       bonus bLongAtkRate,3;
@@ -20962,6 +21319,7 @@ Body:
       Thief: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Script: |
       if (readparam(bStr)>=90) {
@@ -20985,6 +21343,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bStr,1;
@@ -21001,6 +21360,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bInt,1;
@@ -21017,6 +21377,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bVit,1;
@@ -21033,6 +21394,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bDex,1;
@@ -21049,6 +21411,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bAgi,1;
@@ -21065,6 +21428,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bMdef,3;
@@ -21078,6 +21442,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 25
   - Id: 2628
     AegisName: Novice_Armlet
@@ -21091,6 +21456,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
   - Id: 2629
     AegisName: Magingiorde
@@ -21101,6 +21467,7 @@ Body:
     Defense: 2
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 94
     Script: |
       bonus bStr,40;
@@ -21114,6 +21481,7 @@ Body:
     Defense: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 94
     Script: |
       bonus bStr,6;
@@ -21130,6 +21498,7 @@ Body:
     Weight: 10
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
   - Id: 2634
     AegisName: Bridegroom_Ring
@@ -21138,6 +21507,7 @@ Body:
     Gender: Male
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -21159,6 +21529,7 @@ Body:
     Gender: Female
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -21181,6 +21552,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bLuk,1;
   - Id: 2637
@@ -21191,6 +21563,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bLuk,1;
   - Id: 2638
@@ -21201,6 +21574,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bStr,1;
       bonus bLuk,1;
@@ -21212,6 +21586,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bInt,1;
       bonus bAgi,1;
@@ -21228,6 +21603,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bStr,1;
       bonus bInt,1;
@@ -21246,6 +21622,7 @@ Body:
       Merchant: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Script: |
       bonus bStr,2;
@@ -21256,6 +21633,7 @@ Body:
     Buy: 20
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -21274,6 +21652,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2644
     AegisName: The_Sign_
     Name: The Sign
@@ -21281,6 +21660,7 @@ Body:
     Buy: 2
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -21307,6 +21687,7 @@ Body:
       Thief: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Script: |
       bonus bMdef,2;
@@ -21318,6 +21699,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bAllStats,3;
   - Id: 2647
@@ -21329,6 +21711,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -21353,6 +21736,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 33
     Script: |
       bonus bInt,1;
@@ -21369,6 +21753,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 33
     Script: |
       bonus bInt,1;
@@ -21385,6 +21770,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 61
     Script: |
       bonus bBaseAtk,5;
@@ -21401,6 +21787,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 61
     Script: |
       bonus bStr,2;
@@ -21413,6 +21800,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Script: |
       bonus bCritical,6;
@@ -21425,6 +21813,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
   - Id: 2654
     AegisName: Shinobi's_Sash
@@ -21440,6 +21829,7 @@ Body:
       Thief: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Script: |
       bonus bStr,1;
@@ -21457,6 +21847,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
   - Id: 2656
     AegisName: Hyper_Changer
@@ -21477,6 +21868,7 @@ Body:
       Thief: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bMaxHP,50;
@@ -21488,6 +21880,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
   - Id: 2658
     AegisName: Nile_Rose_
@@ -21498,6 +21891,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bMaxHP,10;
   - Id: 2659
@@ -21526,6 +21920,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bMdef,3;
@@ -21557,6 +21952,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bMdef,3;
@@ -21588,6 +21984,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bMdef,3;
@@ -21619,6 +22016,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bMdef,3;
@@ -21632,6 +22030,7 @@ Body:
     Weight: 900
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Script: |
       bonus bHit,15;
@@ -21648,6 +22047,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Script: |
       bonus bDex,2;
@@ -21664,6 +22064,7 @@ Body:
       Priest: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Script: |
       bonus bMdef,1;
@@ -21677,6 +22078,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bStr,2;
@@ -21693,6 +22095,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Script: |
       bonus bHit,5;
@@ -21705,6 +22108,7 @@ Body:
     Weight: 500
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -21724,6 +22128,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bMaxSP,10;
   - Id: 2670
@@ -21735,6 +22140,7 @@ Body:
     Defense: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Trade:
       Override: 100
@@ -21760,6 +22166,7 @@ Body:
       Hunter: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Script: |
       bonus bLongAtkRate,3;
@@ -21775,6 +22182,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2673
     AegisName: Shining_Ring
     Name: Warrior's Shining Ring
@@ -21786,6 +22194,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 48
     Trade:
       Override: 100
@@ -21807,6 +22216,7 @@ Body:
     Buy: 20
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -21825,6 +22235,7 @@ Body:
     Weight: 10
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bAllStats,3;
@@ -21836,6 +22247,7 @@ Body:
     Weight: 300
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -21857,6 +22269,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bInt,2;
       bonus bDex,1;
@@ -21885,6 +22298,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bStr,2;
       bonus bVit,1;
@@ -21921,6 +22335,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bAgi,2;
       bonus bVit,1;
@@ -21938,6 +22353,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bAllStats,1;
       bonus3 bAutoSpell,"WZ_ESTIMATION",1,80;
@@ -21956,6 +22372,7 @@ Body:
     Weight: 1000
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bAllStats,3;
   - Id: 2682
@@ -21971,6 +22388,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus2 bSubEle,Ele_Water,5;
@@ -21987,6 +22405,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus2 bSubEle,Ele_Fire,5;
@@ -22003,6 +22422,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus2 bSubEle,Ele_Wind,5;
@@ -22019,6 +22439,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Script: |
       bonus2 bSubEle,Ele_Earth,5;
@@ -22034,6 +22455,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 73
     Trade:
@@ -22060,6 +22482,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 56
     Trade:
@@ -22085,6 +22508,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22109,6 +22533,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22133,6 +22558,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22157,6 +22583,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22181,6 +22608,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22205,6 +22633,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22229,6 +22658,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22255,6 +22685,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22280,6 +22711,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22307,6 +22739,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22334,6 +22767,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22361,6 +22795,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -22390,6 +22825,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 60
   - Id: 2701
     AegisName: Orleans_Glove
@@ -22406,6 +22842,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bDex,2;
@@ -22425,6 +22862,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bAgi,2;
@@ -22443,6 +22881,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Script: |
       bonus bDelayRate,-5;
@@ -22456,6 +22895,7 @@ Body:
     Defense: 4
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -22475,6 +22915,7 @@ Body:
     Defense: 4
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -22491,6 +22932,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2707
     AegisName: Gusli
     Name: GUSLI
@@ -22499,6 +22941,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2708
     AegisName: Chinese_Handicraft
     Name: Chinese Handicraft
@@ -22506,6 +22949,7 @@ Body:
     Weight: 50
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -22524,6 +22968,7 @@ Body:
     Buy: 2
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bAtkRate,5;
       bonus bMatkRate,5;
@@ -22538,6 +22983,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bBaseAtk,30;
   - Id: 2711
@@ -22547,6 +22993,7 @@ Body:
     Buy: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bInt,2;
       bonus bDex,2;
@@ -22557,6 +23004,7 @@ Body:
     Weight: 300
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Script: |
       bonus bVit,3;
@@ -22568,6 +23016,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -22586,6 +23035,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2715
     AegisName: Skul_Ring_
     Name: Skull Ring
@@ -22595,6 +23045,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus2 bSubRace,RC_Undead,1;
   - Id: 2716
@@ -22610,6 +23061,7 @@ Body:
       Wizard: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Script: |
       bonus bMaxSP,20;
@@ -22626,6 +23078,7 @@ Body:
       Wizard: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
   - Id: 2718
     AegisName: Lunatic_Brooch
@@ -22640,6 +23093,7 @@ Body:
       Hunter: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 65
   - Id: 2719
     AegisName: Iron_Wrist
@@ -22657,6 +23111,7 @@ Body:
       Swordman: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Script: |
       bonus2 bSkillAtk,"SM_BASH",6;
@@ -22674,6 +23129,7 @@ Body:
       Swordman: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Trade:
       Override: 100
@@ -22704,6 +23160,7 @@ Body:
       Thief: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Trade:
       Override: 100
@@ -22733,6 +23190,7 @@ Body:
       Priest: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Trade:
       Override: 100
@@ -22762,6 +23220,7 @@ Body:
       Wizard: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Trade:
       Override: 100
@@ -22790,6 +23249,7 @@ Body:
       Hunter: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Trade:
       Override: 100
@@ -22819,6 +23279,7 @@ Body:
       Merchant: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Trade:
       Override: 100
@@ -22848,6 +23309,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Script: |
       bonus bMaxSP,50;
@@ -22864,6 +23326,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Script: |
       bonus bMaxSP,50;
@@ -22881,6 +23344,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Script: |
       bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,30;
@@ -22912,6 +23376,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bMaxHP,100;
       bonus bMaxSP,100;
@@ -22931,6 +23396,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Trade:
       Override: 100
@@ -22956,6 +23422,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Trade:
       Override: 100
@@ -22981,6 +23448,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Trade:
       Override: 100
@@ -23002,6 +23470,7 @@ Body:
       Gunslinger: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Trade:
       Override: 100
@@ -23028,6 +23497,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23047,6 +23517,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23068,6 +23539,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Script: |
       bonus bDex,3;
@@ -23085,6 +23557,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Script: |
       bonus bVit,3;
@@ -23095,6 +23568,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23114,6 +23588,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23133,6 +23608,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23153,6 +23629,7 @@ Body:
     Buy: 20
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23194,6 +23671,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Script: |
       bonus bInt,2;
@@ -23227,6 +23705,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Script: |
       bonus bCastrate,-10;
@@ -23257,6 +23736,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Script: |
       bonus bMdef,2;
@@ -23274,6 +23754,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Script: |
       bonus bAgi,3;
@@ -23290,6 +23771,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Script: |
       bonus bDex,3;
@@ -23307,6 +23789,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 84
     Script: |
       bonus bMdef,3;
@@ -23343,6 +23826,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
       bonus bMdef,2;
@@ -23355,6 +23839,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23375,6 +23860,7 @@ Body:
     Buy: 2
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23395,6 +23881,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23414,6 +23901,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23433,6 +23921,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23452,6 +23941,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23471,6 +23961,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23490,6 +23981,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23509,6 +24001,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23528,6 +24021,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23547,6 +24041,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23566,6 +24061,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23591,6 +24087,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 95
     Script: |
       bonus bAtkRate,5;
@@ -23606,6 +24103,7 @@ Body:
     Weight: 250
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2765
     AegisName: Novice_Figure
     Name: Novice Figure
@@ -23613,6 +24111,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bMaxHP,70;
       if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice)
@@ -23623,6 +24122,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bVit,1;
       if (Class == Job_Swordman)
@@ -23633,6 +24133,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bInt,1;
       if (Class == Job_Acolyte)
@@ -23643,6 +24144,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bInt,1;
       if (Class == Job_Mage)
@@ -23653,6 +24155,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bDex,1;
       if (Class == Job_Archer)
@@ -23663,6 +24166,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bAgi,1;
       if (Class == Job_Thief)
@@ -23673,6 +24177,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bStr,1;
       if (Class == Job_Merchant)
@@ -23688,6 +24193,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 81
     Trade:
       Override: 100
@@ -23718,6 +24224,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 61
     Trade:
       Override: 100
@@ -23741,6 +24248,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23760,6 +24268,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
   - Id: 2776
     AegisName: Cool_Towel
     Name: Adventurer's Trusty Towel
@@ -23768,6 +24277,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipScript: |
       sc_start SC_SUMMER,INFINITE_TICK,0;
     UnEquipScript: |
@@ -23781,6 +24291,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Trade:
       Override: 100
@@ -23796,6 +24307,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Trade:
       Override: 100
@@ -23812,6 +24324,7 @@ Body:
     Defense: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Trade:
       Override: 100
@@ -23829,6 +24342,7 @@ Body:
     Defense: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Trade:
       Override: 100
@@ -23845,6 +24359,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -23861,6 +24376,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -23882,6 +24398,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Script: |
       bonus bCritical,2;
@@ -23894,6 +24411,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       skill "ALL_WEWISH",1;
@@ -23912,6 +24430,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     Trade:
       Override: 100
@@ -23933,6 +24452,7 @@ Body:
     Weight: 100
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bInt,2;
       bonus bDex,1;
@@ -23951,6 +24471,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Script: |
       bonus2 bSubEle,Ele_Water,5;
@@ -23971,6 +24492,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Script: |
       bonus bMatkRate,2;
@@ -23991,6 +24513,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Script: |
       bonus2 bAddClass,Class_All,2;
@@ -24011,6 +24534,7 @@ Body:
       Upper: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Script: |
       bonus bFlee,4;
@@ -24025,6 +24549,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bHit,3;
@@ -24039,6 +24564,7 @@ Body:
       Swordman: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Trade:
       Override: 100
@@ -24062,6 +24588,7 @@ Body:
       SuperNovice: false
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Trade:
       Override: 100
@@ -24089,6 +24616,7 @@ Body:
       Wizard: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Trade:
       Override: 100
@@ -24116,6 +24644,7 @@ Body:
       Wizard: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Trade:
       Override: 100
@@ -24141,6 +24670,7 @@ Body:
       Priest: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Trade:
       Override: 100
@@ -24164,6 +24694,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Script: |
       bonus bMdef,1;
   - Id: 2800
@@ -24177,6 +24708,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bAgi,2;
@@ -24191,6 +24723,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bAgi,1;
@@ -24205,6 +24738,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
   - Id: 2803
     AegisName: Shape_Shifter
@@ -24217,6 +24751,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bInt,3;
@@ -24231,6 +24766,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bDex,1;
@@ -24245,6 +24781,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bDex,1;
@@ -24260,6 +24797,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bDex,1;
@@ -24274,6 +24812,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
   - Id: 2808
     AegisName: Camouflage_Generator
@@ -24286,6 +24825,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bAgi,3;
@@ -24300,6 +24840,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bDex,1;
@@ -24314,6 +24855,7 @@ Body:
       Blacksmith: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 99
     Script: |
       bonus bDex,1;
@@ -24327,6 +24869,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -24352,6 +24895,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -24379,6 +24923,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -24404,6 +24949,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -24428,6 +24974,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -24454,6 +25001,7 @@ Body:
       SuperNovice: true
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Trade:
       Override: 100
@@ -24483,6 +25031,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 87
@@ -24507,6 +25056,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     View: 88
@@ -24527,6 +25077,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 89
     Script: |
@@ -24544,6 +25095,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 90
     Script: |
       bonus2 bResEff,Eff_Poison,2000;
@@ -24561,6 +25113,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 91
     Script: |
       bonus2 bResEff,Eff_Poison,3000;
@@ -24577,6 +25130,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 92
   - Id: 5007
     AegisName: Loard_Circlet
@@ -24591,6 +25145,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 93
@@ -24612,6 +25167,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 94
   - Id: 5009
     AegisName: Safety_Helmet
@@ -24626,6 +25182,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 95
     Script: |
@@ -24640,6 +25197,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 96
   - Id: 5011
@@ -24651,6 +25209,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 97
   - Id: 5012
@@ -24666,6 +25225,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 98
   - Id: 5013
@@ -24677,6 +25237,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 99
     Script: |
@@ -24699,6 +25260,7 @@ Body:
       Swordman: true
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     View: 100
   - Id: 5015
@@ -24710,6 +25272,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 101
   - Id: 5016
     AegisName: Boy's_Cap
@@ -24724,6 +25287,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 102
   - Id: 5017
@@ -24742,6 +25306,7 @@ Body:
       Swordman: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 103
@@ -24760,6 +25325,7 @@ Body:
       Hunter: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 104
     Script: |
@@ -24777,6 +25343,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 105
     Script: |
@@ -24790,6 +25357,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 106
     Script: |
@@ -24807,6 +25375,7 @@ Body:
       Merchant: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 38
     Refineable: true
     View: 107
@@ -24838,6 +25407,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 138
     Script: |
@@ -24855,6 +25425,7 @@ Body:
       Merchant: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 108
   - Id: 5024
@@ -24866,6 +25437,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 109
   - Id: 5025
@@ -24892,6 +25464,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 74
     Refineable: true
     View: 110
@@ -24912,6 +25485,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 111
@@ -24931,6 +25505,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 112
     Script: |
@@ -24944,6 +25519,7 @@ Body:
     Weight: 150
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 113
   - Id: 5029
@@ -24959,6 +25535,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 114
@@ -24975,6 +25552,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 115
@@ -25000,6 +25578,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 116
@@ -25018,6 +25597,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 117
   - Id: 5033
@@ -25033,6 +25613,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 118
@@ -25048,6 +25629,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 119
   - Id: 5035
@@ -25063,6 +25645,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 38
     Refineable: true
     View: 120
@@ -25079,6 +25662,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 121
@@ -25091,6 +25675,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 5
     View: 122
   - Id: 5038
@@ -25106,6 +25691,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 64
     Refineable: true
     View: 123
@@ -25121,6 +25707,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 19
     View: 124
   - Id: 5040
@@ -25131,6 +25718,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 125
   - Id: 5041
     AegisName: Heart_Hair_Pin
@@ -25140,6 +25728,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 126
   - Id: 5042
@@ -25154,6 +25743,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 14
     Refineable: true
     View: 127
@@ -25170,6 +25760,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     View: 128
   - Id: 5044
@@ -25181,6 +25772,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 129
@@ -25203,6 +25795,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 130
@@ -25221,6 +25814,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 139
   - Id: 5047
     AegisName: Fashion_Sunglass
@@ -25234,6 +25828,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 131
   - Id: 5048
@@ -25244,6 +25839,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 132
   - Id: 5049
@@ -25255,6 +25851,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 133
   - Id: 5050
     AegisName: Mystery_Fruit_Shell
@@ -25265,6 +25862,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 134
   - Id: 5051
@@ -25275,6 +25873,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 135
   - Id: 5052
     AegisName: Blue_Hair_Band
@@ -25285,6 +25884,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 136
   - Id: 5053
@@ -25301,6 +25901,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     View: 137
     Script: |
@@ -25316,6 +25917,7 @@ Body:
       Priest: true
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 180
   - Id: 5055
@@ -25330,6 +25932,7 @@ Body:
       SuperNovice: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 101
   - Id: 5056
     AegisName: Love_Berry
@@ -25339,6 +25942,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 140
   - Id: 5057
     AegisName: Ear_Of_Black_Cat
@@ -25349,6 +25953,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 141
@@ -25365,6 +25970,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 142
     Script: |
@@ -25379,6 +25985,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 143
@@ -25391,6 +25998,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 144
     Script: |
@@ -25404,6 +26012,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 145
   - Id: 5062
@@ -25415,6 +26024,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 146
@@ -25433,6 +26043,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 147
   - Id: 5064
@@ -25444,6 +26055,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 148
   - Id: 5065
@@ -25455,6 +26067,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 149
@@ -25473,6 +26086,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 150
@@ -25492,6 +26106,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 151
     Script: |
@@ -25505,6 +26120,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 152
     Script: |
@@ -25522,6 +26138,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 153
     Script: |
@@ -25540,6 +26157,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 154
     Script: |
@@ -25557,6 +26175,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 155
     Script: |
@@ -25574,6 +26193,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 156
@@ -25593,6 +26213,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 157
     Script: |
@@ -25606,6 +26227,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 158
     Script: |
@@ -25619,6 +26241,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 159
   - Id: 5076
@@ -25630,6 +26253,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 160
     Script: |
@@ -25643,6 +26267,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 161
   - Id: 5078
@@ -25654,6 +26279,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 162
@@ -25668,6 +26294,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 163
   - Id: 5080
@@ -25679,6 +26306,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 164
@@ -25694,6 +26322,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 165
@@ -25710,6 +26339,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 166
   - Id: 5083
@@ -25721,6 +26351,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 167
@@ -25739,6 +26370,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 168
     Script: |
@@ -25752,6 +26384,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     View: 169
   - Id: 5086
@@ -25768,6 +26401,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 170
     Script: |
       bonus2 bResEff,Eff_Blind,5000;
@@ -25781,6 +26415,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 171
   - Id: 5088
     AegisName: Goblin_Mask_02
@@ -25792,6 +26427,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 172
   - Id: 5089
     AegisName: Goblin_Mask_03
@@ -25803,6 +26439,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 173
   - Id: 5090
     AegisName: Goblin_Mask_04
@@ -25814,6 +26451,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 174
   - Id: 5091
     AegisName: Big_Golden_Bell
@@ -25829,6 +26467,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 35
     Refineable: true
     View: 175
@@ -25845,6 +26484,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 176
@@ -25862,6 +26502,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 177
@@ -25881,6 +26522,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 178
@@ -25898,6 +26540,7 @@ Body:
       Priest: true
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 180
   - Id: 5097
@@ -25907,6 +26550,7 @@ Body:
     Weight: 400
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 144
   - Id: 5098
@@ -25919,6 +26563,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 181
     Trade:
@@ -25938,6 +26583,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 182
     Script: |
@@ -25953,6 +26599,7 @@ Body:
     Weight: 800
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 183
@@ -25973,6 +26620,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 184
   - Id: 5102
     AegisName: Round_Eyes
@@ -25982,6 +26630,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 185
   - Id: 5103
     AegisName: Sunflower_Hairpin
@@ -25996,6 +26645,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 186
     Trade:
@@ -26018,6 +26668,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 187
     Script: |
       bonus2 bResEff,Eff_Blind,10000;
@@ -26031,6 +26682,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 24
     Refineable: true
     View: 109
@@ -26047,6 +26699,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 144
     Script: |
@@ -26059,6 +26712,7 @@ Body:
     Weight: 50
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 188
   - Id: 5108
     AegisName: Detective_Hat
@@ -26070,6 +26724,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 189
   - Id: 5109
@@ -26081,6 +26736,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 190
   - Id: 5110
@@ -26091,6 +26747,7 @@ Body:
     Weight: 50
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 191
   - Id: 5111
     AegisName: Galapago_Cap
@@ -26101,6 +26758,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 192
@@ -26118,6 +26776,7 @@ Body:
       SuperNovice: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 193
@@ -26131,6 +26790,7 @@ Body:
     Weight: 50
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 194
   - Id: 5114
     AegisName: Fedora
@@ -26141,6 +26801,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 195
   - Id: 5115
@@ -26152,6 +26813,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 196
     Script: |
@@ -26165,6 +26827,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 197
     Script: |
@@ -26177,6 +26840,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 198
     Script: |
@@ -26190,6 +26854,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 199
   - Id: 5119
@@ -26205,6 +26870,7 @@ Body:
       SuperNovice: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 193
@@ -26220,6 +26886,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 195
   - Id: 5121
@@ -26236,6 +26903,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 200
@@ -26257,6 +26925,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 250
@@ -26276,6 +26945,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 254
@@ -26295,6 +26965,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     Refineable: true
     View: 251
@@ -26315,6 +26986,7 @@ Body:
       SuperNovice: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 255
@@ -26333,6 +27005,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 33
     Refineable: true
     View: 256
@@ -26351,6 +27024,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 61
     Refineable: true
     View: 257
@@ -26370,6 +27044,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 54
     Refineable: true
     View: 258
@@ -26385,6 +27060,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 201
     Script: |
@@ -26415,6 +27091,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 202
@@ -26436,6 +27113,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 203
@@ -26451,6 +27129,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 204
     Trade:
       Override: 100
@@ -26475,6 +27154,7 @@ Body:
       Priest: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 205
     Trade:
       Override: 100
@@ -26492,6 +27172,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 206
     Script: |
@@ -26507,6 +27188,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     View: 207
     Script: |
@@ -26520,6 +27202,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 20
   - Id: 5137
@@ -26535,6 +27218,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 208
     Script: |
@@ -26556,6 +27240,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 209
@@ -26571,6 +27256,7 @@ Body:
     Weight: 200
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     View: 210
     Script: |
@@ -26587,6 +27273,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 211
@@ -26606,6 +27293,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 212
@@ -26628,6 +27316,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 213
@@ -26651,6 +27340,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 214
@@ -26665,6 +27355,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 16
     Script: |
@@ -26677,6 +27368,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 89
   - Id: 5146
@@ -26686,6 +27378,7 @@ Body:
     Weight: 500
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 215
     Script: |
@@ -26701,6 +27394,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 216
   - Id: 5148
@@ -26710,6 +27404,7 @@ Body:
     Weight: 500
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 217
     Script: |
@@ -26721,6 +27416,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 218
     Script: |
@@ -26734,6 +27430,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 219
     Script: |
       bonus bSpeedRate,25;
@@ -26748,6 +27445,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 220
     Script: |
@@ -26764,6 +27462,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 221
@@ -26779,6 +27478,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 222
     Script: |
@@ -26792,6 +27492,7 @@ Body:
     Defense: 3
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 12
     Trade:
       Override: 100
@@ -26810,6 +27511,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 25
     Trade:
       Override: 100
@@ -26830,6 +27532,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 8
     Trade:
       Override: 100
@@ -26862,6 +27565,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 86
   - Id: 5158
@@ -26878,6 +27582,7 @@ Body:
       Priest: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 35
     Script: |
@@ -26896,6 +27601,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 30
@@ -26920,6 +27626,7 @@ Body:
       Taekwon: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 41
     Script: |
@@ -26949,6 +27656,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 43
@@ -26969,6 +27677,7 @@ Body:
       Swordman: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 103
@@ -26988,6 +27697,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 105
     Script: |
@@ -27006,6 +27716,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 19
@@ -27025,6 +27736,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 45
@@ -27045,6 +27757,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 65
     View: 137
     Script: |
@@ -27061,6 +27774,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 51
     Script: |
       bonus2 bSubRace,RC_Undead,10;
@@ -27076,6 +27790,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 139
   - Id: 5169
     AegisName: Bride_Mask
@@ -27088,6 +27803,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 223
@@ -27109,6 +27825,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 224
     Script: |
@@ -27131,6 +27848,7 @@ Body:
       Upper: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 225
     Script: |
@@ -27143,6 +27861,7 @@ Body:
     Weight: 700
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 226
     Script: |
       bonus2 bSubRace,RC_DemiHuman,10;
@@ -27157,6 +27876,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     View: 227
@@ -27175,6 +27895,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     View: 228
@@ -27191,6 +27912,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 229
     Script: |
       bonus2 bResEff,Eff_Curse,500;
@@ -27206,6 +27928,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 230
     Script: |
@@ -27224,6 +27947,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 231
@@ -27241,6 +27965,7 @@ Body:
     Weight: 150
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 113
     Script: |
@@ -27252,6 +27977,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 232
     Script: |
@@ -27265,6 +27991,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 217
     Script: |
@@ -27290,6 +28017,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 233
@@ -27304,6 +28032,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 234
     Script: |
@@ -27318,6 +28047,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 235
@@ -27338,6 +28068,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 236
@@ -27353,6 +28084,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 237
@@ -27369,6 +28101,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 238
     Script: |
@@ -27383,6 +28116,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 239
@@ -27400,6 +28134,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 240
@@ -27414,6 +28149,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 241
     Script: |
@@ -27429,6 +28165,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 216
   - Id: 5191
@@ -27441,6 +28178,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 242
     Script: |
@@ -27456,6 +28194,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 243
     Script: |
@@ -27470,6 +28209,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 244
     Script: |
@@ -27484,6 +28224,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 245
     Script: |
@@ -27498,6 +28239,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 246
     Script: |
@@ -27512,6 +28254,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 247
     Script: |
@@ -27526,6 +28269,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 248
     Script: |
@@ -27539,6 +28283,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 249
     Script: |
@@ -27552,6 +28297,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 216
   - Id: 5200
@@ -27562,6 +28308,7 @@ Body:
     Weight: 300
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 252
   - Id: 5201
@@ -27573,6 +28320,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 144
     Trade:
@@ -27593,6 +28341,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 206
     Script: |
@@ -27607,6 +28356,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 253
     Script: |
       bonus bSpeedRate,25;
@@ -27618,6 +28368,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 49
     Script: |
       bonus2 bResEff,Eff_Blind,3000;
@@ -27632,6 +28383,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 261
     Script: |
@@ -27649,6 +28401,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 259
     Trade:
       Override: 100
@@ -27665,6 +28418,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 260
     Script: |
       bonus bLuk,1;
@@ -27683,6 +28437,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 262
@@ -27699,6 +28454,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 263
   - Id: 5210
@@ -27710,6 +28466,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 264
@@ -27732,6 +28489,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 265
@@ -27756,6 +28514,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 266
@@ -27773,6 +28532,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 267
@@ -27788,6 +28548,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 268
@@ -27807,6 +28568,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 38
     Trade:
@@ -27832,6 +28594,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 39
     Trade:
@@ -27862,6 +28625,7 @@ Body:
       Taekwon: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 41
     Trade:
@@ -27880,6 +28644,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 15
     Trade:
@@ -27902,6 +28667,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 142
     Trade:
@@ -27924,6 +28690,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 55
     Trade:
       Override: 100
@@ -27943,6 +28710,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     View: 169
     Trade:
@@ -27961,6 +28729,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 149
@@ -27986,6 +28755,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 35
     Refineable: true
     View: 175
@@ -28010,6 +28780,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 178
@@ -28032,6 +28803,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 269
@@ -28052,6 +28824,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 270
     Trade:
@@ -28077,6 +28850,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 64
     Refineable: true
     View: 271
@@ -28105,6 +28879,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 64
     Refineable: true
     View: 272
@@ -28133,6 +28908,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 64
     Refineable: true
     View: 273
@@ -28161,6 +28937,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 274
     Trade:
@@ -28188,6 +28965,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 275
     Trade:
@@ -28215,6 +28993,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 276
     Trade:
@@ -28242,6 +29021,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 277
     Trade:
@@ -28269,6 +29049,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 278
     Trade:
@@ -28292,6 +29073,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 279
     Trade:
@@ -28314,6 +29096,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 280
     Trade:
@@ -28336,6 +29119,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 281
     Trade:
@@ -28363,6 +29147,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 282
     Trade:
@@ -28391,6 +29176,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 283
     Trade:
@@ -28419,6 +29205,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 284
     Trade:
@@ -28447,6 +29234,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 285
     Trade:
@@ -28475,6 +29263,7 @@ Body:
       Wizard: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 286
     Trade:
@@ -28500,6 +29289,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 287
     Trade:
@@ -28518,6 +29308,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 288
     Script: |
       bonus2 bResEff,Eff_Blind,10000;
@@ -28530,6 +29321,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 289
     Script: |
       bonus2 bResEff,Eff_Blind,500;
@@ -28542,6 +29334,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 290
     Script: |
@@ -28558,6 +29351,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 291
     Script: |
@@ -28574,6 +29368,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 292
     Script: |
       bonus2 bResEff,Eff_Blind,10000;
@@ -28586,6 +29381,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 293
     Script: |
       bonus2 bResEff,Eff_Blind,10000;
@@ -28597,6 +29393,7 @@ Body:
     Weight: 10
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 294
   - Id: 5251
     AegisName: Round_Ears
@@ -28606,6 +29403,7 @@ Body:
     Weight: 10
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 295
   - Id: 5252
     AegisName: Drooping_Nine_Tail
@@ -28616,6 +29414,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 296
@@ -28633,6 +29432,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 297
@@ -28650,6 +29450,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 298
@@ -28669,6 +29470,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     View: 299
     Script: |
@@ -28684,6 +29486,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 300
@@ -28708,6 +29511,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 301
@@ -28729,6 +29533,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 302
@@ -28744,6 +29549,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 215
     Script: |
@@ -28759,6 +29565,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 217
     Script: |
@@ -28774,6 +29581,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 218
     Script: |
@@ -28793,6 +29601,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 232
     Script: |
@@ -28815,6 +29624,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 303
@@ -28838,6 +29648,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 304
     Script: |
@@ -28854,6 +29665,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 72
     Trade:
@@ -28876,6 +29688,7 @@ Body:
     Defense: 9
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 15
     Trade:
@@ -28900,6 +29713,7 @@ Body:
     Defense: 10
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 67
     Trade:
       Override: 100
@@ -28925,6 +29739,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 93
     Trade:
@@ -28951,6 +29766,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 264
@@ -28969,6 +29785,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 241
     Script: |
@@ -28984,6 +29801,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 221
     Script: |
@@ -28999,6 +29817,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     View: 253
     Script: |
       bonus3 bAutoSpell,"SM_PROVOKE",5,50;
@@ -29012,6 +29831,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 305
     Script: |
@@ -29030,6 +29850,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 306
     Script: |
@@ -29048,6 +29869,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 307
     Script: |
@@ -29066,6 +29888,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 308
     Script: |
@@ -29087,6 +29910,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 309
@@ -29112,6 +29936,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 310
@@ -29136,6 +29961,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 142
     Script: |
       bonus bMdef,15;
@@ -29148,6 +29974,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 41
     Script: |
       bonus bStr,1;
@@ -29163,6 +29990,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 123
     Script: |
       bonus bStr,1;
@@ -29176,6 +30004,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 216
   - Id: 5283
@@ -29187,6 +30016,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     View: 311
     Trade:
@@ -29211,6 +30041,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 312
     Trade:
@@ -29233,6 +30064,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 313
     Trade:
@@ -29250,6 +30082,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 314
     Trade:
@@ -29271,6 +30104,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 315
     Trade:
@@ -29288,6 +30122,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 316
     Trade:
       Override: 100
@@ -29304,6 +30139,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 317
     Trade:
@@ -29326,6 +30162,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 249
     Script: |
@@ -29340,6 +30177,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 318
@@ -29360,6 +30198,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 319
@@ -29378,6 +30217,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 320
     Trade:
       Override: 100
@@ -29396,6 +30236,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 321
     Trade:
       Override: 100
@@ -29415,6 +30256,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 138
     Trade:
       Override: 100
@@ -29436,6 +30278,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 296
     Script: |
@@ -29451,6 +30294,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 301
     Script: |
@@ -29467,6 +30311,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 307
     Script: |
@@ -29485,6 +30330,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 303
     Script: |
       bonus3 bAutoSpell,"DC_SCREAM",1,50;
@@ -29501,6 +30347,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 322
@@ -29518,6 +30365,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 323
   - Id: 5302
@@ -29528,6 +30376,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 324
@@ -29540,6 +30389,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 325
     Script: |
@@ -29557,6 +30407,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 326
@@ -29576,6 +30427,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 327
     Trade:
       Override: 100
@@ -29600,6 +30452,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 328
     Trade:
       Override: 100
@@ -29623,6 +30476,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 329
     Trade:
@@ -29643,6 +30497,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 330
     Trade:
@@ -29663,6 +30518,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 331
     Script: |
@@ -29677,6 +30533,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 332
     Trade:
@@ -29699,6 +30556,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 333
     Trade:
@@ -29728,6 +30586,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 334
     Trade:
@@ -29750,6 +30609,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 335
     Trade:
@@ -29771,6 +30631,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 336
     Trade:
@@ -29790,6 +30651,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 35
     View: 337
     Trade:
@@ -29808,6 +30670,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 338
@@ -29822,6 +30685,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 339
@@ -29835,6 +30699,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 340
     Trade:
@@ -29860,6 +30725,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 341
@@ -29878,6 +30744,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 261
     Trade:
@@ -29901,6 +30768,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 342
   - Id: 5322
@@ -29912,6 +30780,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 24
     Refineable: true
     View: 343
@@ -29935,6 +30804,7 @@ Body:
     Defense: 10
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 165
     Trade:
       Override: 100
@@ -29956,6 +30826,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 344
@@ -29976,6 +30847,7 @@ Body:
     Defense: 2
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     View: 345
     Script: |
@@ -29990,6 +30862,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 78
     Script: |
       bonus2 bAddRace,RC_DemiHuman,7;
@@ -30007,6 +30880,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 178
     Script: |
       bonus bStr,5;
@@ -30019,6 +30893,7 @@ Body:
     Defense: 2
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 152
     Script: |
       bonus bStr,1;
@@ -30030,6 +30905,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 187
     Script: |
       bonus2 bResEff,Eff_Blind,10000;
@@ -30046,6 +30922,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 142
     Script: |
       bonus bMdef,15;
@@ -30063,6 +30940,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 105
     Script: |
       bonus bVit,3;
@@ -30075,6 +30953,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     View: 346
     Script: |
@@ -30087,6 +30966,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 347
@@ -30110,6 +30990,7 @@ Body:
     Weight: 700
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 38
     View: 348
     Script: |
@@ -30123,6 +31004,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 349
     Script: |
       bonus bLuk,1;
@@ -30134,6 +31016,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 350
@@ -30149,6 +31032,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 351
@@ -30164,6 +31048,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 352
@@ -30184,6 +31069,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 353
@@ -30205,6 +31091,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 354
     Script: |
@@ -30220,6 +31107,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 355
     Script: |
@@ -30235,6 +31123,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 356
     Script: |
@@ -30250,6 +31139,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 357
     Script: |
@@ -30266,6 +31156,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 358
     Script: |
@@ -30281,6 +31172,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 359
     Script: |
@@ -30297,6 +31189,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 360
@@ -30324,6 +31217,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 98
   - Id: 5348
@@ -30340,6 +31234,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 28
     Script: |
@@ -30358,6 +31253,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 102
   - Id: 5350
@@ -30374,6 +31270,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 74
     Script: |
@@ -30388,6 +31285,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 37
     Script: |
       bonus2 bSubRace,RC_Insect,10;
@@ -30404,6 +31302,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 38
     Refineable: true
     View: 361
@@ -30438,6 +31337,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 138
     Script: |
@@ -30451,6 +31351,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 362
     Script: |
       bonus bCastrate,-5;
@@ -30462,6 +31363,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 363
     Script: |
       bonus bCastrate,-5;
@@ -30474,6 +31376,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 206
     Trade:
@@ -30493,6 +31396,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 365
     Trade:
       Override: 100
@@ -30515,6 +31419,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 366
     Trade:
@@ -30536,6 +31441,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     View: 367
@@ -30557,6 +31463,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 368
@@ -30579,6 +31486,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 369
     Trade:
@@ -30598,6 +31506,7 @@ Body:
     Weight: 200
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 370
     Trade:
@@ -30627,6 +31536,7 @@ Body:
       Thief: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 371
@@ -30644,6 +31554,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     View: 372
@@ -30661,6 +31572,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 373
     Script: |
@@ -30675,6 +31587,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 374
     Script: |
@@ -30691,6 +31604,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     View: 375
     Trade:
@@ -30710,6 +31624,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 38
     Trade:
@@ -30732,6 +31647,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 39
     Trade:
@@ -30754,6 +31670,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 376
     Script: |
@@ -30768,6 +31685,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 377
     Trade:
@@ -30787,6 +31705,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 378
     Trade:
@@ -30811,6 +31730,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 379
     Trade:
@@ -30830,6 +31750,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 380
     Trade:
@@ -30852,6 +31773,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 381
     Trade:
@@ -30872,6 +31794,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 382
     Trade:
@@ -30890,6 +31813,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 383
     Trade:
       Override: 100
@@ -30907,6 +31831,7 @@ Body:
     Weight: 300
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 384
     Trade:
@@ -30926,6 +31851,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 385
@@ -30941,6 +31867,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 386
     Trade:
@@ -30960,6 +31887,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 387
     Trade:
       Override: 100
@@ -30980,6 +31908,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 388
     Trade:
@@ -31006,6 +31935,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 389
@@ -31030,6 +31960,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 390
@@ -31046,6 +31977,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 391
@@ -31068,6 +32000,7 @@ Body:
     Defense: 7
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 228
     Trade:
@@ -31088,6 +32021,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 392
@@ -31108,6 +32042,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 393
@@ -31127,6 +32062,7 @@ Body:
     Weight: 200
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 394
     Trade:
@@ -31146,6 +32082,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 395
     Script: |
@@ -31157,6 +32094,7 @@ Body:
     Buy: 20
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 188
     Trade:
       Override: 100
@@ -31181,6 +32119,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 396
     Script: |
@@ -31194,6 +32133,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 397
     Script: |
       bonus bMaxSPrate, 7;
@@ -31204,6 +32144,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -31224,6 +32165,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 398
@@ -31245,6 +32187,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 399
     Script: |
@@ -31258,6 +32201,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 400
     Trade:
       Override: 100
@@ -31286,6 +32230,7 @@ Body:
       Upper: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 85
     Refineable: true
     View: 401
@@ -31321,6 +32266,7 @@ Body:
       Upper: true
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 85
     View: 402
     Script: |
@@ -31336,6 +32282,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 403
     Script: |
       bonus bLuk,1;
@@ -31348,6 +32295,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 404
     Trade:
@@ -31368,6 +32316,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 405
     Trade:
@@ -31386,6 +32335,7 @@ Body:
     Weight: 200
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 406
     Trade:
@@ -31406,6 +32356,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     Refineable: true
     View: 407
@@ -31424,6 +32375,7 @@ Body:
     Weight: 200
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     View: 408
     Trade:
@@ -31441,6 +32393,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 409
     Trade:
@@ -31463,6 +32416,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 410
     Trade:
@@ -31482,6 +32436,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 6
     Script: |
       bonus bInt,2;
@@ -31497,6 +32452,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 411
     Script: |
@@ -31514,6 +32470,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     View: 412
     Script: |
       bonus bMaxHP,100;
@@ -31529,6 +32486,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 413
     Script: |
@@ -31542,6 +32500,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 414
     Script: |
       bonus bUnbreakableHelm, 0;
@@ -31554,6 +32513,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 415
     Script: |
       bonus2 bSubEle,Ele_Wind, 10;
@@ -31566,6 +32526,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 416
     Script: |
       bonus2 bSubEle,Ele_Fire,10;
@@ -31579,6 +32540,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 417
@@ -31603,6 +32565,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 18
     Refineable: true
     View: 418
@@ -31620,6 +32583,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 419
     Script: |
       bonus bInt,1;
@@ -31635,6 +32599,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 420
     Script: |
@@ -31649,6 +32614,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 57
     Script: |
       bonus bVit,1;
@@ -31666,6 +32632,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 421
     Trade:
@@ -31695,6 +32662,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 422
     Trade:
@@ -31721,6 +32689,7 @@ Body:
     Weight: 70
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 423
     Script: |
@@ -31735,6 +32704,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 424
     Trade:
       Override: 100
@@ -31755,6 +32725,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 425
   - Id: 5425
@@ -31767,6 +32738,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 426
   - Id: 5426
@@ -31779,6 +32751,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 427
     Script: |
@@ -31793,6 +32766,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 428
     Script: |
@@ -31806,6 +32780,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 429
     Trade:
@@ -31830,6 +32805,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 430
     Trade:
@@ -31848,6 +32824,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 431
     Trade:
       Override: 100
@@ -31865,6 +32842,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 432
@@ -31879,6 +32857,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 433
     Script: |
@@ -31892,6 +32871,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 434
   - Id: 5435
@@ -31904,6 +32884,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 40
     Refineable: true
     View: 436
@@ -31924,6 +32905,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 437
     Script: |
@@ -31939,6 +32921,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 438
     Script: |
@@ -31958,6 +32941,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 439
     Script: |
       bonus bMaxSP,20;
@@ -31974,6 +32958,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 440
     Script: |
       bonus bMaxSP,20;
@@ -31990,6 +32975,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 441
     Script: |
       bonus bMaxSP,20;
@@ -32006,6 +32992,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 442
     Script: |
       bonus bMaxSP,20;
@@ -32019,6 +33006,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 443
@@ -32036,6 +33024,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 444
@@ -32050,6 +33039,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 445
     Script: |
@@ -32062,6 +33052,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 446
     Script: |
       bonus bMaxSP,5;
@@ -32074,6 +33065,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 447
     Script: |
@@ -32088,6 +33080,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 448
@@ -32105,6 +33098,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 449
   - Id: 5449
@@ -32117,6 +33111,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 450
   - Id: 5450
@@ -32131,6 +33126,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 451
@@ -32153,6 +33149,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 452
     Trade:
@@ -32179,6 +33176,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 453
     Trade:
@@ -32204,6 +33202,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 454
     Trade:
@@ -32230,6 +33229,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 234
     Script: |
@@ -32247,6 +33247,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 238
     Script: |
@@ -32262,6 +33263,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 315
     Script: |
@@ -32278,6 +33280,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 455
@@ -32303,6 +33306,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 456
     Script: |
@@ -32316,6 +33320,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 249
     Script: |
@@ -32330,6 +33335,7 @@ Body:
     Defense: 7
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     View: 457
@@ -32356,6 +33362,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 458
@@ -32380,6 +33387,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     View: 459
     Trade:
@@ -32404,6 +33412,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 90
     View: 460
     Trade:
@@ -32425,6 +33434,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 461
     Trade:
       Override: 100
@@ -32449,6 +33459,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 473
@@ -32471,6 +33482,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 474
@@ -32485,6 +33497,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 475
     Trade:
@@ -32506,6 +33519,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 476
@@ -32526,6 +33540,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 477
@@ -32546,6 +33561,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 478
@@ -32567,6 +33583,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     View: 479
@@ -32586,6 +33603,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 480
     Trade:
@@ -32607,6 +33625,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     Refineable: true
     View: 483
@@ -32626,6 +33645,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 395
     Script: |
@@ -32639,6 +33659,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 417
     Script: |
@@ -32652,6 +33673,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 390
     Script: |
@@ -32665,6 +33687,7 @@ Body:
     Weight: 100
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 484
     Script: |
@@ -32677,6 +33700,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 485
     Trade:
@@ -32701,6 +33725,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 486
     Trade:
@@ -32724,6 +33749,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 102
     Trade:
       Override: 100
@@ -32750,6 +33776,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 254
     Trade:
       Override: 100
@@ -32776,6 +33803,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Top: true
+    ArmorLevel: 1
     View: 137
     Trade:
       Override: 100
@@ -32799,6 +33827,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 493
@@ -32821,6 +33850,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     View: 494
     Trade:
@@ -32846,6 +33876,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 495
@@ -32872,6 +33903,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 490
@@ -32891,6 +33923,7 @@ Body:
     Weight: 600
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 487
     Trade:
       Override: 100
@@ -32907,6 +33940,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 488
@@ -32926,6 +33960,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     View: 496
     Trade:
@@ -32947,6 +33982,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 491
@@ -32967,6 +34003,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 497
     Trade:
@@ -32992,6 +34029,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 489
@@ -33011,6 +34049,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 492
@@ -33031,6 +34070,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 501
     Script: |
@@ -33044,6 +34084,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 502
     Script: |
@@ -33058,6 +34099,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 503
     Trade:
@@ -33080,6 +34122,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 504
     Trade:
@@ -33102,6 +34145,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 507
     Script: |
@@ -33120,6 +34164,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 508
@@ -33139,6 +34184,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 509
@@ -33159,6 +34205,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 510
@@ -33179,6 +34226,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 511
@@ -33199,6 +34247,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 512
@@ -33222,6 +34271,7 @@ Body:
       Upper: true
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 23
     Script: |
@@ -33238,6 +34288,7 @@ Body:
       Hunter: true
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 23
     Script: |
@@ -33251,6 +34302,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 513
@@ -33268,6 +34320,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 514
@@ -33287,6 +34340,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 515
@@ -33299,6 +34353,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 194
     Trade:
       Override: 100
@@ -33322,6 +34377,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 516
   - Id: 5523
@@ -33334,6 +34390,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 517
     Script: |
@@ -33348,6 +34405,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 518
     Script: |
@@ -33362,6 +34420,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 519
     Script: |
@@ -33376,6 +34435,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 520
     Trade:
@@ -33397,6 +34457,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 521
@@ -33424,6 +34485,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 522
     Trade:
@@ -33446,6 +34508,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 523
@@ -33470,6 +34533,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 524
@@ -33488,6 +34552,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 525
     Script: |
@@ -33503,6 +34568,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     Refineable: true
     View: 327
     Trade:
@@ -33522,6 +34588,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     View: 261
@@ -33535,6 +34602,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 529
     Script: |
@@ -33554,6 +34622,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 526
     Trade:
@@ -33578,6 +34647,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     View: 527
     Trade:
@@ -33598,6 +34668,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     View: 528
     Trade:
@@ -33619,6 +34690,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 25
     Refineable: true
     View: 530
@@ -33639,6 +34711,7 @@ Body:
     Defense: 8
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     View: 18
     Script: |
@@ -33654,6 +34727,7 @@ Body:
     Defense: 8
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     View: 18
     Script: |
@@ -33669,6 +34743,7 @@ Body:
     Defense: 8
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     View: 18
     Script: |
@@ -33684,6 +34759,7 @@ Body:
     Defense: 8
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     View: 18
     Script: |
@@ -33698,6 +34774,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 240
@@ -33721,6 +34798,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 531
@@ -33745,6 +34823,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 532
@@ -33770,6 +34849,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 533
     Trade:
@@ -33791,6 +34871,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 534
@@ -33810,6 +34891,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 535
@@ -33835,6 +34917,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 536
@@ -33858,6 +34941,7 @@ Body:
     Defense: 8
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 93
     Script: |
       bonus bStr,3;
@@ -33870,6 +34954,7 @@ Body:
     Defense: 7
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 15
     Script: |
       bonus bMdef,4;
@@ -33884,6 +34969,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 538
@@ -33904,6 +34990,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 539
     Trade:
@@ -33925,6 +35012,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 55
     Refineable: true
     View: 540
@@ -33945,6 +35033,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 541
@@ -33965,6 +35054,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 542
@@ -33977,6 +35067,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 543
   - Id: 5560
@@ -33988,6 +35079,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 75
     Refineable: true
     View: 322
@@ -34010,6 +35102,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 497
     Script: |
@@ -34028,6 +35121,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 45
     View: 489
     Script: |
@@ -34045,6 +35139,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 85
     Refineable: true
     View: 544
@@ -34064,6 +35159,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 545
     Trade:
@@ -34087,6 +35183,7 @@ Body:
     Locations:
       Head_Low: true
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 546
     Trade:
@@ -34112,6 +35209,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 548
@@ -34135,6 +35233,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 549
     Script: |
@@ -34148,6 +35247,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 550
@@ -34173,6 +35273,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 551
@@ -34201,6 +35302,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 553
@@ -34216,6 +35318,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 554
   - Id: 5574
@@ -34226,6 +35329,7 @@ Body:
     Weight: 100
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     View: 555
     Trade:
@@ -34246,6 +35350,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 556
   - Id: 5577
@@ -34258,6 +35363,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     Refineable: true
     View: 479
@@ -34276,6 +35382,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 236
     Script: |
@@ -34291,6 +35398,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 558
@@ -34310,6 +35418,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 560
@@ -34335,6 +35444,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 561
@@ -34358,6 +35468,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 12
     Refineable: true
     View: 465
@@ -34378,6 +35489,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 562
@@ -34401,6 +35513,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 564
@@ -34414,6 +35527,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 563
@@ -34425,6 +35539,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 563
@@ -34446,6 +35561,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 417
   - Id: 5592
@@ -34457,6 +35573,7 @@ Body:
     Defense: 2
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 80
     View: 568
     Script: |
@@ -34481,6 +35598,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 549
@@ -34493,6 +35611,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 569
   - Id: 5596
@@ -34503,6 +35622,7 @@ Body:
     Defense: 2
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 571
     Trade:
@@ -34525,6 +35645,7 @@ Body:
     Defense: 2
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 572
     Trade:
@@ -34548,6 +35669,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 575
@@ -34563,6 +35685,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 577
@@ -34586,6 +35709,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 578
@@ -34609,6 +35733,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 579
@@ -34633,6 +35758,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 586
@@ -34646,6 +35772,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 587
@@ -34666,6 +35793,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 589
@@ -34680,6 +35808,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 590
@@ -34694,6 +35823,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 591
@@ -34708,6 +35838,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 595
     Script: |
@@ -34723,6 +35854,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 596
@@ -34747,6 +35879,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 597
@@ -34765,6 +35898,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 598
@@ -34781,6 +35915,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 206
@@ -34804,6 +35939,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 600
   - Id: 5681
@@ -34815,6 +35951,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 244
     Script: |
@@ -34829,6 +35966,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 610
@@ -34850,6 +35988,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 41
@@ -34862,6 +36001,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 88
@@ -34874,6 +36014,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 48
@@ -34886,6 +36027,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 104
@@ -34898,6 +36040,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 86
@@ -34911,6 +36054,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 613
@@ -34932,6 +36076,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 542
@@ -34947,6 +36092,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 539
@@ -34962,6 +36108,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 616
@@ -34991,6 +36138,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 101
@@ -35012,6 +36160,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 619
@@ -35027,6 +36176,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 349
@@ -35047,6 +36197,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 109
@@ -35062,6 +36213,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 653
   - Id: 5781
@@ -35073,6 +36225,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 659
   - Id: 5786
     AegisName: Ancient_Elven_Ear
@@ -35083,6 +36236,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 665
     Trade:
@@ -35105,6 +36259,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 661
   - Id: 5792
@@ -35116,6 +36271,7 @@ Body:
     Defense: 3
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 669
@@ -35127,6 +36283,7 @@ Body:
     Defense: 2
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 575
     Script: |
@@ -35140,6 +36297,7 @@ Body:
     Defense: 1
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 661
   - Id: 5796
@@ -35148,6 +36306,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 369
     Trade:
@@ -35166,6 +36325,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 369
     Trade:
@@ -35184,6 +36344,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 369
     Trade:
@@ -35202,6 +36363,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 369
     Trade:
@@ -35222,6 +36384,7 @@ Body:
     Weight: 50
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 125
     Script: |
       bonus2 bSubRace,RC_DemiHuman,3;
@@ -35235,6 +36398,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 167
     Script: |
@@ -35256,6 +36420,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 215
   - Id: 5803
@@ -35267,6 +36432,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 5
     Script: |
@@ -35279,6 +36445,7 @@ Body:
     Weight: 100
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     View: 13
   - Id: 5805
     AegisName: Victorious_Coronet
@@ -35288,6 +36455,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 43
     Trade:
@@ -35311,6 +36479,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 67
     Trade:
       Override: 100
@@ -35334,6 +36503,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 104
@@ -35364,6 +36534,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 364
     Script: |
@@ -35378,6 +36549,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 216
     Script: |
       bonus bAllStats,5;
@@ -35394,6 +36566,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 98
     Script: |
@@ -35409,6 +36582,7 @@ Body:
     Defense: 5
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     View: 25
   - Id: 5812
     AegisName: Hat_Of_Expert
@@ -35417,6 +36591,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 16
     Trade:
@@ -35438,6 +36613,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 475
     Script: |
@@ -35453,6 +36629,7 @@ Body:
     Weight: 500
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 411
     Script: |
@@ -35466,6 +36643,7 @@ Body:
     Defense: 3
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -35486,6 +36664,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 505
     Trade:
@@ -35507,6 +36686,7 @@ Body:
     Defense: 6
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 506
     Trade:
@@ -35530,6 +36710,7 @@ Body:
     Defense: 2
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 499
     Trade:
@@ -35553,6 +36734,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 500
     Trade:
@@ -35581,6 +36763,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     Refineable: true
     View: 265
@@ -35591,6 +36774,7 @@ Body:
     Defense: 10
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     View: 225
     Script: |
       bonus bStr,2;
@@ -35607,6 +36791,7 @@ Body:
     Defense: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 423
@@ -35617,6 +36802,7 @@ Body:
     Weight: 50
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bAllStats,1;
@@ -35627,6 +36813,7 @@ Body:
     Type: Armor
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Script: |
       bonus bAllStats,3;
@@ -35639,6 +36826,7 @@ Body:
     Defense: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 572
     Script: |
@@ -35652,6 +36840,7 @@ Body:
     Locations:
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 60
     View: 138
   - Id: 5856
@@ -35664,6 +36853,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 671
@@ -35690,6 +36880,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 672
@@ -35716,6 +36907,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 673
@@ -35742,6 +36934,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 674
@@ -39790,6 +40983,7 @@ Body:
       Upper: true
     Locations:
       Armor: true
+    ArmorLevel: 1
     EquipLevelMin: 85
     Refineable: true
     Script: |
@@ -39811,6 +41005,7 @@ Body:
       SuperNovice: false
     Locations:
       Armor: true
+    ArmorLevel: 1
     Trade:
       Override: 100
       NoDrop: true
@@ -40053,6 +41248,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 369
     Trade:
@@ -40071,6 +41267,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 369
     Trade:
@@ -40089,6 +41286,7 @@ Body:
     Type: Armor
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 369
     Trade:
@@ -40110,6 +41308,7 @@ Body:
     Defense: 2
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 562
     Script: |
@@ -40126,6 +41325,7 @@ Body:
     Slots: 1
     Locations:
       Head_Low: true
+    ArmorLevel: 1
     EquipLevelMin: 30
     View: 675
     Script: |
@@ -40142,6 +41342,7 @@ Body:
       Head_Low: true
       Head_Mid: true
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
     View: 676
@@ -40158,6 +41359,7 @@ Body:
       SuperNovice: false
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     View: 73
   - Id: 18539
@@ -40170,6 +41372,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 10
     Refineable: true
     View: 713
@@ -40191,6 +41394,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 50
     Refineable: true
     View: 757
@@ -40205,6 +41409,7 @@ Body:
     Defense: 4
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 70
     Refineable: true
     View: 758
@@ -40220,6 +41425,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 759
     Script: |
@@ -40242,6 +41448,7 @@ Body:
     Defense: 5
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 761
     Script: |
@@ -40268,6 +41475,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 770
     Script: |
@@ -40285,6 +41493,7 @@ Body:
     Slots: 1
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 771
     Script: |
@@ -40301,6 +41510,7 @@ Body:
     Defense: 2
     Locations:
       Head_Mid: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 779
@@ -40313,6 +41523,7 @@ Body:
     Defense: 10
     Locations:
       Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 20
     Refineable: true
     View: 717
@@ -40329,6 +41540,7 @@ Body:
     Locations:
       Costume_Head_Mid: true
       Costume_Head_Low: true
+    ArmorLevel: 1
     View: 65
     Script: |
       bonus bStr,2;
@@ -40340,6 +41552,7 @@ Body:
     Locations:
       Costume_Head_Top: true
       Costume_Head_Low: true
+    ArmorLevel: 1
     View: 137
   - Id: 19504
     AegisName: T_Sunglasses
@@ -40347,6 +41560,7 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Mid: true
+    ArmorLevel: 1
     View: 12
   - Id: 19505
     AegisName: T_Cigarette
@@ -40354,6 +41568,7 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Low: true
+    ArmorLevel: 1
     View: 54
   - Id: 19506
     AegisName: T_Valkyrie_Feather_Band
@@ -40361,6 +41576,7 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Top: true
+    ArmorLevel: 1
     Refineable: true
     View: 300
   - Id: 19507
@@ -40369,5 +41585,6 @@ Body:
     Type: Armor
     Locations:
       Costume_Head_Top: true
+    ArmorLevel: 1
     EquipLevelMin: 1
     View: 654

@@ -379,11 +379,11 @@ OnTouch:
 	donpcevent "Bush"+.@i+"Timer::OnEnable";
 	close;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	donpcevent "Bush"+charat(strnpcinfo(2),9)+"Timer::OnDisable";
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 
@@ -430,14 +430,14 @@ OnTouch:
 -	script	#mora_fairy	-1,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	stopnpctimer;
 	end;
 OnTimer5000:
@@ -485,15 +485,15 @@ spl_fild02,186,260,6	duplicate(#mora_fairy)	Fairy#cmd63	439
 -	script	#mora_bush_timer	-1,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
 	stopnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnTimer1000:
 	donpcevent "Bush#ep14_1_bs"+charat(strnpcinfo(0),4)+"::OnDisable";
@@ -4171,11 +4171,11 @@ OnFullon:
 	}
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	stopnpctimer;
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	initnpctimer;
 	end;
 OnReset:
@@ -4531,10 +4531,10 @@ mora,115,98,8	script	Hotcha#pa0829	509,{
 			mes "Yes, I see you've completed the task. It has been confirmed as completed.";
 			erasequest .@i;
 			specialeffect2 EF_STEAL;
-			if (BaseLevel > 99)
-				getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
-			else
-				getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
+			if (BaseLevel > 99 && JobLevel < 50)
+				getexp 0, (JobLevel * JobLevel * (110/100) * 50);	// note 110/100 is from the original file
+			else if (BaseLevel < 100 && JobLevel < 70)
+				getexp 0, (JobLevel * JobLevel * (110/100) * 10);
 			getitem 6380,3; //Mora_Coin
 			close;
 		}

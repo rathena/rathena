@@ -1523,13 +1523,15 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 }
 
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
-	struct skill_unit_group* group = NULL;
-	sc_type type = status_skill2sc(skill_id);
 	if( !(battle_config.guild_aura&(is_agit_start()?2:1)) &&
 			!(battle_config.guild_aura&(map_flag_gvg2(sd->bl.m)?8:4)) )
 		return;
 	if( !skill_lv )
 		return;
+
+	std::shared_ptr<s_skill_unit_group> group;
+	sc_type type = status_skill2sc(skill_id);
+
 	if( sd->sc.data[type] && (group = skill_id2group(sd->sc.data[type]->val4)) ) {
 		skill_delunitgroup(group);
 		status_change_end(&sd->bl,type,INVALID_TIMER);
@@ -2058,24 +2060,22 @@ int guild_break(struct map_session_data *sd,char *name) {
 
 	/* Regardless of char server allowing it, we clear the guild master's auras */
 	if ((ud = unit_bl2ud(&sd->bl))) {
-		int count = 0;
-		struct skill_unit_group *group[4];
+		std::vector<std::shared_ptr<s_skill_unit_group>> group;
 
-		for(i = 0; i < MAX_SKILLUNITGROUP && ud->skillunit[i]; i++) {
-			switch(ud->skillunit[i]->skill_id) {
+		for (const auto su : ud->skillunits) {
+			switch (su->skill_id) {
 				case GD_LEADERSHIP:
 				case GD_GLORYWOUNDS:
 				case GD_SOULCOLD:
 				case GD_HAWKEYES:
-					if(count == 4)
-						ShowWarning("guild_break: '%s' got more than 4 guild aura instances! (%d)\n",sd->status.name,ud->skillunit[i]->skill_id);
-					else
-						group[count++] = ud->skillunit[i];
+					group.push_back(su);
 					break;
 			}
 		}
-		for (i = 0; i < count; i++)
-			skill_delunitgroup(group[i]);
+
+		for (auto it = group.begin(); it != group.end(); it++) {
+			skill_delunitgroup(*it);
+		}
 	}
 
 #ifdef BOUND_ITEMS
