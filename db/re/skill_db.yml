@@ -17056,6 +17056,32 @@ Body:
       - Level: 10
         Area: 5
     CastCancel: true
+  - Id: 729
+    Name: NPC_CHEAL
+    Description: NPC Coluceo Heal
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 9
+      - Level: 5
+        Area: 11
   - Id: 739
     Name: NPC_CLOUD_KILL
     Description: Cloud Kill
