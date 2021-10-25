@@ -5774,7 +5774,7 @@ BUILDIN_FUNC(warpparty)
 			struct map_data *mapdata = map_getmapdata(m);
 
 			if ( mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
-				return SCRIPT_CMD_SUCCESS;
+				return SCRIPT_CMD_FAILURE;
 
 			i = 0;
 			do {
@@ -5825,17 +5825,27 @@ BUILDIN_FUNC(warpparty)
 			if (p->party.member[i].leader)
 				continue;
 		case 4: // RandomAll
+			if (pl_sd == sd) {
+				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
+				break;
+			}
 		case 5: // m,x,y
 			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
 				if (rx || ry) {
 					int x1 = x + rx, y1 = y + ry,
-						x0 = x - rx, y0 = y - ry;
+						x0 = x - rx, y0 = y - ry,
+						nx, ny;
 					uint8 attempts = 10;
 
 					do {
-						x = x0 + rnd()%(x1 - x0 + 1);
-						y = y0 + rnd()%(y1 - y0 + 1);
-					} while ((--attempts) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
+						nx = x0 + rnd()%(x1 - x0 + 1);
+						ny = y0 + rnd()%(y1 - y0 + 1);
+					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
+
+					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
+						x = nx;
+						y = ny;
+					}
 				}
 
 				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
@@ -5845,7 +5855,10 @@ BUILDIN_FUNC(warpparty)
 
 		if( ret ) {
 			ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", pl_sd->status.name, str, x, y);
-			return SCRIPT_CMD_FAILURE;
+			if ( type > 3 && (rx || ry) )
+				continue;
+			else
+				return SCRIPT_CMD_FAILURE;
 		}
 	}
 
