@@ -77981,116 +77981,120 @@ Body:
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
-#  - Id: 3087
-#    AegisName: M_NYDHOG
-#    Name: M Nydhog
-#    Level: 160
-#    Hp: 215000
-#    JobExp: 1
-#    Attack: 1835
-#    Attack2: 444
-#    Defense: 15
-#    MagicDefense: 89
-#    Str: 76
-#    Agi: 66
-#    Vit: 90
-#    Int: 55
-#    Dex: 189
-#    Luk: 22
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 175
-#    AttackDelay: 800
-#    AttackMotion: 750
-#    DamageMotion: 300
-#  - Id: 3088
-#    AegisName: MM_BRINARANEA_BABY
-#    Name: Mm Brinaranea Baby
-#    Level: 155
-#    Hp: 155600
-#    JobExp: 1
-#    Attack: 1
-#    Attack2: 1
-#    Defense: 80
-#    MagicDefense: 200
-#    Str: 16
-#    Agi: 26
-#    Vit: 30
-#    Int: 115
-#    Dex: 79
-#    Luk: 5
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 300
-#    AttackDelay: 1000
-#    AttackMotion: 1000
-#    DamageMotion: 1000
-#  - Id: 3089
-#    AegisName: MM_LOCO_KASA
-#    Name: Mm Loco Kasa
-#    Level: 155
-#    Hp: 185000
-#    Attack: 3266
-#    Attack2: 666
-#    Defense: 30
-#    MagicDefense: 30
-#    Str: 88
-#    Agi: 44
-#    Vit: 88
-#    Int: 21
-#    Dex: 95
-#    Luk: 44
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1500
-#    AttackMotion: 600
-#    DamageMotion: 500
-#    Modes:
-#      Detector: true
-#  - Id: 3090
-#    AegisName: MM_LOCO_SALAMANDER
-#    Name: Mm Loco Salamander
-#    Level: 155
-#    Hp: 217650
-#    Attack: 2678
-#    Attack2: 1257
-#    Defense: 121
-#    MagicDefense: 36
-#    Str: 60
-#    Agi: 103
-#    Vit: 45
-#    Int: 35
-#    Dex: 172
-#    Luk: 15
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 2
-#    WalkSpeed: 200
-#    AttackDelay: 1000
-#    AttackMotion: 500
-#    DamageMotion: 600
-#    Modes:
-#      Detector: true
+  - Id: 3087
+    AegisName: M_NYDHOG
+    Name: Guardian's Alter Ego
+    Level: 160
+    Hp: 215000
+    JobExp: 1
+    Attack: 1835
+    Attack2: 444
+    Defense: 15
+    MagicDefense: 89
+    Str: 76
+    Agi: 66
+    Vit: 90
+    Int: 55
+    Dex: 189
+    Luk: 22
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 175
+    AttackDelay: 800
+    AttackMotion: 750
+    DamageMotion: 300
+  - Id: 3088
+    AegisName: MM_BRINARANEA_BABY
+    Name: Frost Spider
+    Level: 155
+    Hp: 155600
+    JobExp: 1
+    Attack: 1
+    Attack2: 1
+    Defense: 80
+    MagicDefense: 200
+    Str: 16
+    Agi: 26
+    Vit: 30
+    Int: 115
+    Dex: 79
+    Luk: 5
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1000
+    AttackMotion: 1000
+    DamageMotion: 1000
+    Ai: 04
+    Modes:
+      Detector: true
+  - Id: 3089
+    AegisName: MM_LOCO_KASA
+    Name: Frenzied Kasa
+    Level: 155
+    Hp: 185000
+    Attack: 3266
+    Attack2: 666
+    Defense: 30
+    MagicDefense: 30
+    Str: 88
+    Agi: 44
+    Vit: 88
+    Int: 21
+    Dex: 95
+    Luk: 44
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1500
+    AttackMotion: 600
+    DamageMotion: 500
+    Ai: 21
+    Class: Boss
+  - Id: 3090
+    AegisName: MM_LOCO_SALAMANDER
+    Name: Mad Salamander
+    JapaneseName: Loco Salamander
+    Level: 155
+    Hp: 217650
+    Attack: 2678
+    Attack2: 1257
+    Defense: 121
+    MagicDefense: 36
+    Str: 60
+    Agi: 103
+    Vit: 45
+    Int: 35
+    Dex: 172
+    Luk: 15
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 600
+    Ai: 21
+    Class: Boss
   - Id: 3091
     AegisName: MM_BRINARANEA
     Name: Brinaranea
@@ -78117,6 +78121,7 @@ Body:
     AttackDelay: 1020
     AttackMotion: 500
     DamageMotion: 768
+    Ai: 10
     Class: Boss
     Drops:
       - Item: Brinaranea_Card
@@ -78148,6 +78153,7 @@ Body:
     AttackDelay: 608
     AttackMotion: 408
     DamageMotion: 336
+    Ai: 10
     Class: Boss
     Drops:
       - Item: Muspellskoll_Card
@@ -78228,42 +78234,44 @@ Body:
 #      IgnoreMisc: true
 #      IgnoreRanged: true
 #      Detector: true
-#  - Id: 3096
-#    AegisName: MM_MOROCC_KID
-#    Name: Mm Morocc Kid
-#    Level: 175
-#    Hp: 80000000
-#    Attack: 4980
-#    Attack2: 209
-#    Defense: 158
-#    MagicDefense: 134
-#    Str: 90
-#    Agi: 122
-#    Vit: 7
-#    Int: 87
-#    Dex: 287
-#    Luk: 36
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Demon
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 200
-#    AttackDelay: 1000
-#    AttackMotion: 460
-#    DamageMotion: 350
-#    Class: Boss
-#    Modes:
-#      Mvp: true
-#    Drops:
-#      - Item: M_Morocc_Card
-#        Rate: 1
-#        StealProtected: true
+  - Id: 3096
+    AegisName: MM_MOROCC_KID
+    Name: Demigod
+    Level: 175
+    Hp: 80000000
+    Attack: 4980
+    Attack2: 209
+    Defense: 158
+    MagicDefense: 134
+    Str: 90
+    Agi: 122
+    Vit: 7
+    Int: 87
+    Dex: 287
+    Luk: 36
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Demon
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 460
+    DamageMotion: 350
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+    Drops:
+      - Item: M_Morocc_Card
+        Rate: 1
+        StealProtected: true
   - Id: 3097
     AegisName: MM_MOROCC_ADT
-    Name: Despair God Morocc
+    Name: Despair God Morroc
     Level: 175
     Hp: 120000000
     Attack: 5523
@@ -78287,69 +78295,74 @@ Body:
     AttackDelay: 750
     AttackMotion: 510
     DamageMotion: 500
+    Ai: 10
     Class: Boss
     Drops:
       - Item: M_Morocc_Card
         Rate: 1
         StealProtected: true
-#  - Id: 3098
-#    AegisName: MM_MOROCC_ORIGIN
-#    Name: Mm Morocc Origin
-#    Level: 160
-#    Hp: 3258000
-#    Attack: 6177
-#    Attack2: 40
-#    Defense: 351
-#    MagicDefense: 212
-#    Str: 195
-#    Agi: 35
-#    Vit: 5
-#    Int: 36
-#    Dex: 355
-#    Luk: 7
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 4
-#    WalkSpeed: 350
-#    AttackDelay: 2000
-#    AttackMotion: 750
-#    DamageMotion: 750
-#    Class: Boss
-#    Modes:
-#      Mvp: true
-#  - Id: 3099
-#    AegisName: MM_MOROCC_REST
-#    Name: Mm Morocc Rest
-#    Level: 160
-#    Hp: 1450000
-#    Attack: 2963
-#    Attack2: 67
-#    Defense: 112
-#    MagicDefense: 98
-#    Str: 110
-#    Agi: 98
-#    Vit: 13
-#    Int: 48
-#    Dex: 271
-#    Luk: 9
-#    AttackRange: 3
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Demon
-#    Element: Dark
-#    ElementLevel: 4
-#    WalkSpeed: 200
-#    AttackDelay: 500
-#    AttackMotion: 510
-#    DamageMotion: 350
-#    Class: Boss
-#    Modes:
-#      Mvp: true
+  - Id: 3098
+    AegisName: MM_MOROCC_ORIGIN
+    Name: Morroc of the Genesis
+    Level: 160
+    Hp: 3258000
+    Attack: 6177
+    Attack2: 40
+    Defense: 351
+    MagicDefense: 212
+    Str: 195
+    Agi: 35
+    Vit: 5
+    Int: 36
+    Dex: 355
+    Luk: 7
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 350
+    AttackDelay: 2000
+    AttackMotion: 750
+    DamageMotion: 750
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+  - Id: 3099
+    AegisName: MM_MOROCC_REST
+    Name: Morroc of the Sabbath
+    Level: 160
+    Hp: 1450000
+    Attack: 2963
+    Attack2: 67
+    Defense: 112
+    MagicDefense: 98
+    Str: 110
+    Agi: 98
+    Vit: 13
+    Int: 48
+    Dex: 271
+    Luk: 9
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 500
+    AttackMotion: 510
+    DamageMotion: 350
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
 #  - Id: 3100
 #    AegisName: MM_MANA_BLACK
 #    Name: Mm Mana Black
@@ -78376,7 +78389,7 @@ Body:
 #      IgnoreRanged: true
   - Id: 3101
     AegisName: MM_MANA_WHITE
-    Name: Mana White
+    Name: Mana of White
     Level: 1
     Hp: 30
     Attack: 1
@@ -78470,68 +78483,76 @@ Body:
 #      IgnoreMelee: true
 #      IgnoreMisc: true
 #      IgnoreRanged: true
-#  - Id: 3105
-#    AegisName: MM_GB_MOROCC_1
-#    Name: Mm Gb Morocc 1
-#    Level: 149
-#    Hp: 5000000
-#    Attack: 1901
-#    Attack2: 145
-#    Defense: 199
-#    MagicDefense: 35
-#    Str: 126
-#    Agi: 91
-#    Vit: 63
-#    Int: 61
-#    Dex: 114
-#    Luk: 37
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Large
-#    Race: Angel
-#    Element: Fire
-#    ElementLevel: 2
-#    WalkSpeed: 110
-#    AttackDelay: 576
-#    AttackMotion: 480
-#    DamageMotion: 432
-#    Class: Boss
-#    Drops:
-#      - Item: Demon_God's_Apostle_Ahat_Card
-#        Rate: 1
-#        StealProtected: true
-#  - Id: 3106
-#    AegisName: MM_GB_MOROCC_4
-#    Name: Mm Gb Morocc 4
-#    Level: 149
-#    Hp: 5000000
-#    Attack: 1235
-#    Attack2: 599
-#    Defense: 109
-#    MagicDefense: 54
-#    Str: 114
-#    Agi: 88
-#    Vit: 62
-#    Int: 97
-#    Dex: 164
-#    Luk: 43
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demon
-#    Element: Ghost
-#    ElementLevel: 3
-#    WalkSpeed: 150
-#    AttackDelay: 1536
-#    AttackMotion: 648
-#    DamageMotion: 300
-#    Class: Boss
-#    Drops:
-#      - Item: Demon_God's_Apostle_Shnaim_Card
-#        Rate: 1
-#        StealProtected: true
+  - Id: 3105
+    AegisName: MM_GB_MOROCC_1
+    Name: Demon God's Apostle Aha
+    Level: 149
+    Hp: 5000000
+    Attack: 1901
+    Attack2: 145
+    Defense: 199
+    MagicDefense: 35
+    Str: 126
+    Agi: 91
+    Vit: 63
+    Int: 61
+    Dex: 114
+    Luk: 37
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Angel
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 110
+    AttackDelay: 576
+    AttackMotion: 480
+    DamageMotion: 432
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+    Drops:
+      - Item: Demon_God's_Apostle_Ahat_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 3106
+    AegisName: MM_GB_MOROCC_4
+    Name: Demon God's Apostle Shn
+    Level: 149
+    Hp: 5000000
+    Attack: 1235
+    Attack2: 599
+    Defense: 109
+    MagicDefense: 54
+    Str: 114
+    Agi: 88
+    Vit: 62
+    Int: 97
+    Dex: 164
+    Luk: 43
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Ghost
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 1536
+    AttackMotion: 648
+    DamageMotion: 300
+    Ai: 10
+    Class: Boss
+    Modes:
+      CanMove: true
+      Mvp: true
+    Drops:
+      - Item: Demon_God's_Apostle_Shnaim_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 3107
 #    AegisName: E_EASTER_BUNNY
 #    Name: Easter Bunny
