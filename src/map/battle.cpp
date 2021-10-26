@@ -6809,6 +6809,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 1000 + 200 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
+					case NPC_STORMGUST2:
+						skillratio += 200 * skill_lv;
+						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.

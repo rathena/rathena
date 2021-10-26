@@ -1041,6 +1041,7 @@ void initChangeTables(void)
 	add_sc( NPC_MILLENNIUMSHIELD	, SC_MILLENNIUMSHIELD		  );
 	set_sc( NPC_COMET			, SC_BURNING		, EFST_BURNT		, SCB_MDEF );
 	set_sc_with_vfx( NPC_MAXPAIN	,	 SC_MAXPAIN	, EFST_MAXPAIN	, SCB_NONE );
+	add_sc( NPC_STORMGUST2		, SC_FREEZE		);
 	add_sc( NPC_JACKFROST        , SC_FREEZE		  );
 	add_sc( NPC_ELECTRICWALK	, SC_PROPERTYWALK		);
 	add_sc( NPC_FIREWALK		, SC_PROPERTYWALK		);
@@ -2901,7 +2902,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		if(!skill_id && tsc->data[SC_TRICKDEAD])
 			return false;
-		if((skill_id == WZ_STORMGUST || skill_id == WZ_FROSTNOVA || skill_id == NJ_HYOUSYOURAKU)
+		if((skill_id == WZ_STORMGUST || skill_id == WZ_FROSTNOVA || skill_id == NJ_HYOUSYOURAKU || skill_id == NPC_STORMGUST2)
 			&& tsc->data[SC_FREEZE])
 			return false;
 		if(skill_id == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || (tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)))
