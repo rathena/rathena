@@ -16702,6 +16702,19 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+  - Id: 707
+    Name: NPC_MILLENNIUMSHIELD
+    Description: Millenium Shield 2
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 1   # (skillinfolist.lua)
+    Hit: Single
+    HitCount: 1
+    Duration1: 900000   # skill duration (unknown value)
   - Id: 708
     Name: NPC_COMET
     Description: Comet 2
