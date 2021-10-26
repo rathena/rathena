@@ -547,7 +547,7 @@ OnEnable:
 	specialeffect EF_MAPPILLAR;
 	end;
 OnTouch_:
-	if (checkquest(7601,HUNTING) == -1 && isbegin_quest(7602) == 0)
+	if (isbegin_quest(7601) == 0 && isbegin_quest(7602) == 0)
 		setquest 7601;
 	warp 'map_eom$,61,88;
 	end;
@@ -1399,7 +1399,7 @@ OnMobDead:
 }
 
 1@eom,154,119,0	script	Flowing Lava#lavapond01	CLEAR_NPC,{	// todo, custom text
-	if (countitem("Frost_Crystal") < 1)
+	if (countitem(22566) < 1)
 		end;
 	mes "It can be used to block the flow of lava using a Frost Crystal.";
 	next;
@@ -1426,7 +1426,7 @@ OnTimer120000:
 }
 
 1@eom,182,129,0	script	Flowing Lava#lavapond02	CLEAR_NPC,{	// todo, custom text
-	if (countitem("Frost_Crystal") < 1)
+	if (countitem(22566) < 1)
 		end;
 	mes "It can be used to block the flow of lava using a Frost Crystal.";
 	next;

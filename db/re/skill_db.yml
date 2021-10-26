@@ -16898,13 +16898,12 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
-      DisableNearNpc: true
+      ShowScale: true
     Range: 1
     Hit: Single
     HitCount: 1
     SplashArea: 7
     Duration2: 10000
-    FixedCastTime: -1
   - Id: 722
     Name: NPC_WIDESUCK
     Description: Wide Suck
@@ -16916,14 +16915,11 @@ Body:
       IgnoreFlee: true
     Flags:
       IsNpc: true
-      DisableNearNpc: true
     Range: 1
     Hit: Single
     HitCount: 1
-    Element: Dark
     SplashArea: 13
     Duration1: 3000
-    FixedCastTime: -1
   - Id: 724
     Name: NPC_FIRESTORM
     Description: Fire Storm
@@ -16935,7 +16931,6 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
-      DisableNearNpc: true
     Range: 1
     Hit: Multi_Hit
     HitCount:
@@ -16949,7 +16944,6 @@ Body:
     SplashArea: 3
     Knockback: 3
     Duration1: 10000
-    FixedCastTime: -1
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2

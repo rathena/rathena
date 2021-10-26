@@ -14254,7 +14254,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 						if (heal > 0) {
 							clif_skill_nodamage(ss,bl,sg->skill_id,sg->skill_lv,1);
-							clif_skill_nodamage(NULL,ss,AL_HEAL,heal,1);
+							clif_skill_nodamage(nullptr,ss,AL_HEAL,heal,1);
 							status_heal(ss,heal,0,0);
 						}
 					}
