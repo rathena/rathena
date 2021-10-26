@@ -1548,7 +1548,7 @@ OnTouch_:
 1@eom,98,123,5	script	Strange Young Man#mocadt01	3097,5,5,{	// MM_MOROCC_ADT
 	end;
 OnTouch_:
-	if ('step == 8 && is_party_leader() && checkquest(7593,HUNTING) == 1 && isbegin_quest(7604) == 1) {
+	if ('step == 8 && is_party_leader()) {
 		'step = 9;
 		initnpctimer;
 	}
