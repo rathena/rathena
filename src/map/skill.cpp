@@ -2196,7 +2196,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (rnd()%1000 >= rate)
 				continue;
 
-			block_list *tbl = (it.flag & 1) ? bl : src;
+			block_list *tbl = (it.flag & 1) ? src : bl;
 			e_cast_type type = skill_get_casttype(skill);
 
 			if (type == CAST_GROUND) {
@@ -2523,7 +2523,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (rnd()%1000 >= autospl_rate)
 				continue;
 
-			block_list *tbl = (it.flag & 1) ? src : bl;
+			block_list *tbl = (it.flag & 1) ? bl : src;
 			e_cast_type type = skill_get_casttype(autospl_skill_id);
 
 			if (type == CAST_GROUND && !skill_pos_maxcount_check(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, BL_PC, false))
