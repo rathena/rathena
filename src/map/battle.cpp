@@ -4420,6 +4420,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			else
 				skillratio += 900;
 			break;
+		case NPC_DRAGONBREATH:
+			if (skill_lv > 5)
+				skillratio += 500 + 500 * (skill_lv - 5);
+			else
+				skillratio += 500 + 500 * skill_lv;
+			break;
 		case RA_ARROWSTORM:
 			if (sc && sc->data[SC_FEARBREEZE])
 				skillratio += -100 + 200 + 250 * skill_lv;

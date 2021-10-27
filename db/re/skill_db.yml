@@ -17108,6 +17108,44 @@ Body:
         Area: 9
       - Level: 5
         Area: 11
+  - Id: 731
+    Name: NPC_DRAGONBREATH
+    Description: NPC Dragon Breath
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 3
+    Hit: Single
+    HitCount: 1
+    Element:
+      - Level: 1
+        Element: Fire
+      - Level: 2
+        Element: Fire
+      - Level: 3
+        Element: Fire
+      - Level: 4
+        Element: Fire
+      - Level: 5
+        Element: Fire
+      - Level: 6
+        Element: Water
+      - Level: 7
+        Element: Water
+      - Level: 8
+        Element: Water
+      - Level: 9
+        Element: Water
+      - Level: 10
+        Element: Water
+    SplashArea: 4
+    Duration1: 10000
   - Id: 739
     Name: NPC_CLOUD_KILL
     Description: Cloud Kill
