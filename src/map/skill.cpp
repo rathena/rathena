@@ -858,6 +858,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 			}
 			return false;
 		case AL_TELEPORT:
+		case NPC_FATALMENACE:
 		case SC_DIMENSIONDOOR:
 		case ALL_ODINS_RECALL:
 		case WE_CALLALLFAMILY:
@@ -3763,6 +3764,11 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			rate = rate + (status_get_lv(src) - status_get_lv(bl));
 			if(rnd()%100 < rate)
 				skill_addtimerskill(src,tick + 800,bl->id,0,0,skill_id,skill_lv,0,flag);
+		} else if( skill_id == NPC_FATALMENACE ) {
+			int16 x = skill_area_temp[4], y = skill_area_temp[5];
+
+			map_search_freecell(nullptr, bl->m, &x, &y, 2, 2, 1);
+			skill_addtimerskill(bl,tick + 800,bl->id,x,y,skill_id,skill_lv,0,flag);
 		}
 	}
 
@@ -4180,7 +4186,7 @@ static TIMER_FUNC(skill_timerskill){
 			break; // Source not on Map
 		if(skl->target_id) {
 			target = map_id2bl(skl->target_id);
-			if( ( skl->skill_id == RG_INTIMIDATE ) && (!target || target->prev == NULL || !check_distance_bl(src,target,AREA_SIZE)) )
+			if( ( skl->skill_id == RG_INTIMIDATE || skl->skill_id == NPC_FATALMENACE ) && (!target || target->prev == NULL || !check_distance_bl(src,target,AREA_SIZE)) )
 				target = src; //Required since it has to warp.
 
 			if (skl->skill_id == SR_SKYNETBLOW) {
@@ -4330,6 +4336,9 @@ static TIMER_FUNC(skill_timerskill){
 					break;
 				case NPC_REVERBERATION_ATK:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag|SD_LEVEL|SD_ANIMATION);
+					break;
+				case NPC_FATALMENACE:
+					unit_warp(src, -1, skl->x, skl->y, CLR_TELEPORT);
 					break;
 				case SR_WINDMILL:
 					if( target->type == BL_PC ) {
@@ -5953,6 +5962,22 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,DMG_SINGLE);
 		}
 		break;
+	
+	case NPC_FATALMENACE:
+		if( flag&1 )
+			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		else {
+			short x, y;
+			map_search_freecell(src, 0, &x, &y, -1, -1, 0);
+			// Destination area
+			skill_area_temp[4] = x;
+			skill_area_temp[5] = y;
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+			skill_addtimerskill(src,tick + 800,src->id,x,y,skill_id,skill_lv,0,flag); // To teleport Self
+			clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,DMG_SINGLE);
+		}
+		break;
+	
 	case LG_PINPOINTATTACK:
 		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 1, 1))
 			clif_blown(src);

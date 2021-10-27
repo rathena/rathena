@@ -17171,6 +17171,30 @@ Body:
         Element: Water
     SplashArea: 4
     Duration1: 10000
+  - Id: 732
+    Name: NPC_FATALMENACE
+    Description: Fatal Menace
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
   - Id: 738
     Name: NPC_VENOMIMPRESS
     Description: NPC Venom Impress
