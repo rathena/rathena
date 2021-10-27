@@ -17195,6 +17195,48 @@ Body:
         Area: 4
       - Level: 5
         Area: 5
+  - Id: 736
+    Name: NPC_PSYCHIC_WAVE
+    Description: Psychic Wave
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 3200
+    Unit:
+      Id: Psychic_Wave
+      Range:
+        - Level: 1
+          Size: 3
+        - Level: 2
+          Size: 4
+        - Level: 3
+          Size: 5
+        - Level: 4
+          Size: 5
+        - Level: 5
+          Size: 5
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 5
+        - Level: 8
+          Size: 5
+        - Level: 9
+          Size: 5
+        - Level: 10
+          Size: 5
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
   - Id: 738
     Name: NPC_VENOMIMPRESS
     Description: NPC Venom Impress
