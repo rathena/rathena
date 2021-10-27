@@ -17061,40 +17061,27 @@ Body:
   - Id: 728
     Name: NPC_ARROWSTORM
     Description: NPC Arrow Storm
-    MaxLevel: 10
+    MaxLevel: 5
     Type: Weapon
     TargetType: Attack
     DamageFlags:
       Splash: true
     Flags:
       IsNpc: true
-      AlterRangeVulture: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -3
-    Element: Weapon
     SplashArea:
       - Level: 1
         Area: 3
       - Level: 2
-        Area: 3
-      - Level: 3
-        Area: 3
-      - Level: 4
-        Area: 3
-      - Level: 5
-        Area: 3
-      - Level: 6
-        Area: 4
-      - Level: 7
-        Area: 4
-      - Level: 8
-        Area: 4
-      - Level: 9
-        Area: 4
-      - Level: 10
         Area: 5
-    CastCancel: true
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 13
   - Id: 729
     Name: NPC_CHEAL
     Description: NPC Coluceo Heal
