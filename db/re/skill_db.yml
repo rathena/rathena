@@ -133,32 +133,6 @@ Header:
   Version: 2
 
 Body:
-  - Id: 723
-    Name: NPC_STORMGUST2
-    Description: Storm Gust 2
-    MaxLevel: 3
-    Type: Magic
-    TargetType: Ground
-    Flags:
-      IsNpc: true
-      ShowScale: true
-    Range: 9
-    Hit: Single
-    HitCount: 1
-    Element: Water
-    Knockback: 2
-    Duration1: 4500
-    Duration2: 30000
-    Unit:
-      Id: Dummyskill
-      Layout: 5
-      Range: 1
-      Interval: 450
-      Target: Enemy
-      Flag:
-        NoOverlap: true
-        PathCheck: true
-        
   - Id: 1
     Name: NV_BASIC
     Description: Basic Skill
@@ -16959,6 +16933,31 @@ Body:
     HitCount: 1
     SplashArea: 13
     Duration1: 3000
+  - Id: 723
+    Name: NPC_STORMGUST2
+    Description: Storm Gust 2
+    MaxLevel: 3
+    Type: Magic
+    TargetType: Ground
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    Knockback: 2
+    Duration1: 4500
+    Duration2: 30000
+    Unit:
+      Id: Dummyskill
+      Layout: 5
+      Range: 1
+      Interval: 450
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
   - Id: 724
     Name: NPC_FIRESTORM
     Description: Fire Storm
@@ -17146,6 +17145,37 @@ Body:
         Element: Water
     SplashArea: 4
     Duration1: 10000
+  - Id: 738
+    Name: NPC_VENOMIMPRESS
+    Description: NPC Venom Impress
+    MaxLevel: 5
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 2
+      - Level: 2
+        Size: 3
+      - Level: 3
+        Size: 4
+      - Level: 4
+        Size: 5
+      - Level: 5
+        Size: 6
+    Hit: Single
+    HitCount: 1
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 20000
+      - Level: 3
+        Time: 30000
+      - Level: 4
+        Time: 40000
+      - Level: 5
+        Time: 50000
   - Id: 739
     Name: NPC_CLOUD_KILL
     Description: Cloud Kill
