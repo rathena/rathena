@@ -17107,6 +17107,32 @@ Body:
         Area: 9
       - Level: 5
         Area: 11
+  - Id: 730
+    Name: NPC_SR_CURSEDCIRCLE
+    Description: Cursed Circle
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
+    Duration1: 7000
   - Id: 731
     Name: NPC_DRAGONBREATH
     Description: NPC Dragon Breath
