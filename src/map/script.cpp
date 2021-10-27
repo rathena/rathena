@@ -10768,6 +10768,8 @@ BUILDIN_FUNC(getmobdrops)
 
 		mapreg_setreg(reference_uid(add_str("$@MobDrop_item"), j), mob->dropitem[i].nameid);
 		mapreg_setreg(reference_uid(add_str("$@MobDrop_rate"), j), mob->dropitem[i].rate);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_nosteal"), j), mob->dropitem[i].steal_protected);
+		mapreg_setreg(reference_uid(add_str("$@MobDrop_randomopt"), j), mob->dropitem[i].randomopt_group);
 
 		j++;
 	}
@@ -17605,54 +17607,93 @@ BUILDIN_FUNC(setitemscript)
  * Add or Update a mob drop temporarily [Akinari]
  * Original Idea By: [Lupus]
  *
- * addmonsterdrop <mob_id or name>,<item_id>,<rate>;
+ * addmonsterdrop <mob_id or name>,<item_id>,<rate>,{<steal protected>,{<random option group id>}};
  *
  * If given an item the mob already drops, the rate
- * is updated to the new rate.  Rate cannot exceed 10000
- * Returns 1 if succeeded (added/updated a mob drop)
+ * is updated to the new rate. Rate range is 1-10000.
+ * Returns true if succeeded (added/updated a mob drop) false otherwise.
  *-------------------------------------------------------*/
 BUILDIN_FUNC(addmonsterdrop)
 {
 	std::shared_ptr<s_mob_db> mob;
-	int rate;
 
-	if(script_isstring(st, 2))
-		mob = mob_db.find(mobdb_searchname(script_getstr(st,2)));
+	if (script_isstring(st, 2))
+		mob = mob_db.find(mobdb_searchname(script_getstr(st, 2)));
 	else
-		mob = mob_db.find(script_getnum(st,2));
+		mob = mob_db.find(script_getnum(st, 2));
 
-	t_itemid item_id=script_getnum(st,3);
-	rate=script_getnum(st,4);
-
-	if(!itemdb_exists(item_id)){
-		ShowError("addmonsterdrop: Nonexistant item %u requested.\n", item_id );
+	if (mob == nullptr) {
+		if (script_isstring(st, 2))
+			ShowError("addmonsterdrop: bad mob name given %s\n", script_getstr(st, 2));
+		else
+			ShowError("addmonsterdrop: bad mob id given %d\n", script_getnum(st, 2));
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if(mob) { //We got a valid monster, check for available drop slot
-		unsigned char i, c = 0;
-		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-			if(mob->dropitem[i].nameid) {
-				if(mob->dropitem[i].nameid == item_id) { //If it equals item_id we update that drop
-					c = i;
-					break;
-				}
-				continue;
-			}
-			if(!c) //Accept first available slot only
+	t_itemid item_id = script_getnum(st, 3);
+	item_data *itm = itemdb_exists(item_id);
+
+	if (itm == nullptr) {
+		ShowError("addmonsterdrop: Nonexistant item %u requested.\n", item_id);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int rate = script_getnum(st, 4);
+
+	if (rate < 1 || rate > 10000) {
+		ShowError("addmonsterdrop: Invalid rate %d (min 1, max 10000).\n", rate);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint16 c = 0;
+
+	for (uint16 i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
+		if (mob->dropitem[i].nameid > 0) {
+			if (mob->dropitem[i].nameid == item_id) { // If it equals item_id we update that drop
 				c = i;
+				break;
+			}
+			continue;
 		}
-		if(c) { //Fill in the slot with the item and rate
-			mob->dropitem[c].nameid = item_id;
-			mob->dropitem[c].rate = (rate > 10000)?10000:rate;
-			mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
-			script_pushint(st,1);
-		} else //No place to put the new drop
-			script_pushint(st,0);
-	} else {
-		ShowWarning("addmonsterdrop: bad mob id given %d\n",script_getnum(st,2));
-		return SCRIPT_CMD_FAILURE;
+		if (c == 0) // Accept first available slot only
+			c = i;
 	}
+	if (c == 0) { // No place to put the new drop
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	int steal_protected = 0;
+	int group = 0;
+
+	if (script_hasdata(st,5))
+		steal_protected = script_getnum(st, 5);
+	if (script_hasdata(st,6)) {
+		group = script_getnum(st, 6);
+
+		if (!random_option_group.exists(group)) {
+			ShowError("buildin_addmonsterdrop: Unknown random option group %d.\n", group);
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (itm->type != IT_WEAPON && itm->type != IT_ARMOR && itm->type != IT_SHADOWGEAR) {
+			ShowError("buildin_addmonsterdrop: Random option group can't be used with this type of item (item Id: %d).\n", item_id);
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	// Fill in the slot with the item and rate
+	mob->dropitem[c].nameid = item_id;
+	mob->dropitem[c].rate = rate;
+	mob->dropitem[c].steal_protected = steal_protected > 0;
+	mob->dropitem[c].randomopt_group = group;
+	mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
+
+	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
 
 }
@@ -17676,7 +17717,7 @@ BUILDIN_FUNC(delmonsterdrop)
 
 	t_itemid item_id=script_getnum(st,3);
 
-	if(!itemdb_exists(item_id)){
+	if(!item_db.exists(item_id)){
 		ShowError("delmonsterdrop: Nonexistant item %u requested.\n", item_id );
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17687,6 +17728,8 @@ BUILDIN_FUNC(delmonsterdrop)
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].rate = 0;
+				mob->dropitem[i].steal_protected = false;
+				mob->dropitem[i].randomopt_group = 0;
 				mob_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
@@ -25749,7 +25792,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(disguise,"i?"), //disguise player. Lupus
 	BUILDIN_DEF(undisguise,"?"), //undisguise player. Lupus
 	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
-	BUILDIN_DEF(addmonsterdrop,"vii"), //Akinari [Lupus]
+	BUILDIN_DEF(addmonsterdrop,"vii??"), //Akinari [Lupus]
 	BUILDIN_DEF(delmonsterdrop,"vi"), //Akinari [Lupus]
 	BUILDIN_DEF(axtoi,"s"),
 	BUILDIN_DEF(query_sql,"s*"),
