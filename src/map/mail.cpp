@@ -184,10 +184,12 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 
 			// Check if it exceeds the total weight
 			if( battle_config.mail_attachment_weight ){
-				for( j = 0; j < i; j++ ){
+				// Sum up all items to get the current total weight
+				for( j = 0; j < MAIL_MAX_ITEM; j++ ){
 					total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
 				}
 
+				// Add the newly added weight to the current total
 				total += amount * sd->inventory_data[idx]->weight / 10;
 
 				if( total > battle_config.mail_attachment_weight ){
@@ -207,10 +209,12 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 
 			// Check if it exceeds the total weight
 			if( battle_config.mail_attachment_weight ){
+				// Only need to sum up all entries until the new entry
 				for( j = 0; j < i; j++ ){
 					total += sd->mail.item[j].amount * ( sd->inventory_data[sd->mail.item[j].index]->weight / 10 );
 				}
 
+				// Add the newly added weight to the current total
 				total += amount * sd->inventory_data[idx]->weight / 10;
 
 				if( total > battle_config.mail_attachment_weight ){
