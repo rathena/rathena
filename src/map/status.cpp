@@ -1050,6 +1050,8 @@ void initChangeTables(void)
 	set_sc( NPC_WIDEWEB           , SC_WIDEWEB           , EFST_WIDEWEB               , SCB_FLEE );
 	set_sc_with_vfx( NPC_FIRESTORM, SC_BURNT             , EFST_BURNT                 , SCB_NONE );
 	add_sc( NPC_SR_CURSEDCIRCLE	, SC_CURSEDCIRCLE_TARGET		);
+	add_sc( NPC_MAGMA_ERUPTION	, SC_STUN			);
+	// add_sc( NPC_MAGMA_ERUPTION_DOTDAMAGE, SC_BURNING	);	// No data. Hidden status ?
 
 	set_sc( CASH_BLESSING		, SC_BLESSING		, EFST_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI		, SC_INCREASEAGI	, EFST_INC_AGI, SCB_AGI|SCB_SPEED );

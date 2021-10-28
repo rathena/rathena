@@ -7223,6 +7223,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case NC_MAGMA_ERUPTION_DOTDAMAGE: // 'Eruption' damage
 			md.damage = 800 + 200 * skill_lv;
 			break;
+		case NPC_MAGMA_ERUPTION_DOTDAMAGE:
+			md.damage = 1000 * skill_lv;
+			break;
 		case GN_THORNS_TRAP:
 			md.damage = 100 + 200 * skill_lv + status_get_int(src);
 			break;

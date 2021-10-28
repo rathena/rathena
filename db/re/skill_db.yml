@@ -17195,6 +17195,46 @@ Body:
         Area: 4
       - Level: 5
         Area: 5
+  - Id: 733
+    Name: NPC_MAGMA_ERUPTION
+    Description: NPC Magma Eruption
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea: 3
+    ActiveInstance: 3
+    Duration1: 3000
+    Unit:
+      Id: Magma_Eruption
+      Range: 3
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 734
+    Name: NPC_MAGMA_ERUPTION_DOTDAMAGE
+    Description: NPC Magma Eruption Dot Damage
+    MaxLevel: 5
+    Type: Misc
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+      IgnoreDefCard: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
   - Id: 736
     Name: NPC_PSYCHIC_WAVE
     Description: Psychic Wave

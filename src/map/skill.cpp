@@ -1907,6 +1907,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case MH_XENO_SLASHER:
 		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
 		break;
+	case NPC_MAGMA_ERUPTION:
 	case NC_MAGMA_ERUPTION: // Stun effect from 'slam'
 		sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
@@ -4412,6 +4413,7 @@ static TIMER_FUNC(skill_timerskill){
 						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
 					}
 					break;
+				case NPC_MAGMA_ERUPTION:
 				case NC_MAGMA_ERUPTION:
 					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
 					break;
@@ -4819,6 +4821,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NC_PILEBUNKER:
 	case NC_AXEBOOMERANG:
 	case NC_POWERSWING:
+	case NPC_MAGMA_ERUPTION:
 	case NC_MAGMA_ERUPTION:
 	case GC_WEAPONCRUSH:
 	case GC_VENOMPRESSURE:
@@ -13017,6 +13020,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 
+	case NPC_MAGMA_ERUPTION:
 	case NC_MAGMA_ERUPTION:
 		// 1st, AoE 'slam' damage
 		i = skill_get_splash(skill_id, skill_lv);
@@ -14931,6 +14935,10 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 
 		case UNT_MAGMA_ERUPTION:
 			skill_attack(skill_get_type(NC_MAGMA_ERUPTION_DOTDAMAGE), ss, &unit->bl, bl, NC_MAGMA_ERUPTION_DOTDAMAGE, sg->skill_lv, tick, 0);
+			if (sg->skill_id == NC_MAGMA_ERUPTION)
+				skill_attack(skill_get_type(NC_MAGMA_ERUPTION_DOTDAMAGE), ss, &unit->bl, bl, NC_MAGMA_ERUPTION_DOTDAMAGE, sg->skill_lv, tick, 0);
+			else
+				skill_attack(skill_get_type(NPC_MAGMA_ERUPTION_DOTDAMAGE), ss, &unit->bl, bl, NPC_MAGMA_ERUPTION_DOTDAMAGE, sg->skill_lv, tick, 0);
 			break;
 	}
 
