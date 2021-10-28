@@ -17235,6 +17235,42 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+  - Id: 735
+    Name: NPC_MANDRAGORA
+    Description: NPC Howling of Mandragora
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 6
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 8
+      - Level: 5
+        Area: 9
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 15000
+      - Level: 3
+        Time: 20000
+      - Level: 4
+        Time: 25000
+      - Level: 5
+        Time: 30000
   - Id: 736
     Name: NPC_PSYCHIC_WAVE
     Description: Psychic Wave

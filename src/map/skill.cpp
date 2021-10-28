@@ -11009,9 +11009,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
+	case NPC_MANDRAGORA:
 	case GN_MANDRAGORA:
 		if( flag&1 ) {
-			int rate = 25 + (10 * skill_lv) - (tstatus->vit + tstatus->luk) / 5;
+			int rate;
+			if (skill_id == NPC_MANDRAGORA)
+				rate = (20 * skill_lv) - (tstatus->vit + tstatus->luk) / 5;
+			else
+				rate = 25 + (10 * skill_lv) - (tstatus->vit + tstatus->luk) / 5;
 
 			if (rate < 10)
 				rate = 10;
