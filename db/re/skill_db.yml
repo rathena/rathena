@@ -17277,6 +17277,43 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+  - Id: 737
+    Name: NPC_RAYOFGENESIS
+    Description: NPC Ray of Genesis
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Holy
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 8
+      - Level: 5
+        Area: 11
+      - Level: 6
+        Area: 11
+      - Level: 7
+        Area: 13
+      - Level: 8
+        Area: 13
+      - Level: 9
+        Area: 13
+      - Level: 10
+        Area: 13
+    Duration1: 10000
   - Id: 738
     Name: NPC_VENOMIMPRESS
     Description: NPC Venom Impress

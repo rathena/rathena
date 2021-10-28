@@ -6665,6 +6665,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 70 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
+					case NPC_RAYOFGENESIS:
+						skillratio += -100 + 200 * skill_lv;
+						break;
 					case WM_METALICSOUND:
 						skillratio += -100 + 120 * skill_lv + 60 * ((sd) ? pc_checkskill(sd, WM_LESSON) : 1);
 						if (tsc && tsc->data[SC_SLEEP])

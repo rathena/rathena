@@ -1795,6 +1795,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if ( battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON )
 			sc_start(src,bl, SC_BLIND, 50, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
+	case NPC_RAYOFGENESIS:
+		if (skill_lv < 8)
+			sc_start(src,bl, SC_BLIND, 50, skill_lv, skill_get_time(skill_id,skill_lv));
+		else
+			sc_start(src,bl, SC_BLIND, 100, skill_lv, skill_get_time(skill_id,skill_lv));
+		break;
 	case LG_HESPERUSLIT:
 		if( pc_checkskill(sd,LG_PINPOINTATTACK) > 0 && sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 5 )
 			skill_castend_damage_id(src,bl,LG_PINPOINTATTACK,rnd_value(1, pc_checkskill(sd,LG_PINPOINTATTACK)),tick,0);
@@ -5130,6 +5136,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case LG_OVERBRAND:
 	case LG_MOONSLASHER:
 	case LG_RAYOFGENESIS:
+	case NPC_RAYOFGENESIS:
 	case LG_EARTHDRIVE:
 	case SR_RAMPAGEBLASTER:
 	case SR_SKYNETBLOW:
@@ -7544,6 +7551,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_HOWLINGOFLION:
 	case LG_CANNONSPEAR:
 	case LG_OVERBRAND:
+	case NPC_RAYOFGENESIS:
 	case LG_RAYOFGENESIS:
 	case KO_HAPPOKUNAI:
 	case RL_FIREDANCE:
