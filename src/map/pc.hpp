@@ -192,6 +192,13 @@ struct weapon_data {
 	std::vector<s_addrace2> addrace3;
 };
 
+enum e_autospell_flags{
+	AUTOSPELL_FORCE_SELF = 0x0,
+	AUTOSPELL_FORCE_TARGET = 0x1,
+	AUTOSPELL_FORCE_RANDOM_LEVEL = 0x2,
+	AUTOSPELL_FORCE_ALL = 0x3
+};
+
 /// AutoSpell bonus struct
 struct s_autospell {
 	uint16 id, lv, trigger_skill;
