@@ -16946,7 +16946,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    Knockback: 2
     Duration1: 4500
     Duration2: 30000
     Unit:
