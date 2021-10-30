@@ -14,12 +14,12 @@ services:
             MYSQL_DATABASE: ragnarok
             MYSQL_USER: ragnarok
             MYSQL_PASSWORD: ragnarok
-    server:
+    
+    login:
         image: "rathena:local"
-        container_name: "rathena"
+        container_name: "rathena-login"
+        command: ./login-server
         ports:
-            - "5121:5121" # map server
-            - "6121:6121" # char server
             - "6900:6900" # login server
         volumes:
             - "../..:/rathena" # mount git repo directory inside container
@@ -34,6 +34,46 @@ services:
             dockerfile: Dockerfile
         depends_on:
             - db
+
+    char:
+        image: "rathena:local"
+        container_name: "rathena-char"
+        command: ./char-server
+        ports:
+            - "6121:6121" # char server
+        volumes:
+            - "../..:/rathena" # mount git repo directory inside container
+            - "./asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt" # load db connection
+            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   #localdev login-char relation
+            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     #localdev char-map relation
+        init: true # helps with signal forwarding and process reaping
+        tty: true
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - login
+
+    map:
+        image: "rathena:local"
+        container_name: "rathena-map"
+        command: ./map-server
+        ports:
+            - "5121:5121" # map server
+        volumes:
+            - "../..:/rathena" # mount git repo directory inside container
+            - "./asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt" # load db connection
+            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   #localdev login-char relation
+            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     #localdev char-map relation
+        init: true # helps with signal forwarding and process reaping
+        tty: true
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - char
 
 volumes:
     rathenadb:
