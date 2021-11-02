@@ -480,6 +480,7 @@ enum unitdata_mobtypes {
 	UMOB_ROBE,
 	UMOB_BODY2,
 	UMOB_GROUP_ID,
+	UMOB_IGNORE_CELL_STACK_LIMIT,
 };
 
 enum unitdata_homuntypes {

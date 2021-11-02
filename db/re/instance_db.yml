@@ -198,18 +198,18 @@ Body:
       Map: 1@glast
       X: 367
       Y: 304
-#  - Id: 22
-#    Name: Wave Mode - Forest
-#    Enter:
-#      Map: 1@def01
-#      X: 50
-#      Y: 21
-#  - Id: 23
-#    Name: Wave Mode - Sky
-#    Enter:
-#      Map: 1@def02
-#      X: 29
-#      Y: 35
+  - Id: 22
+    Name: Wave Mode - Forest
+    Enter:
+      Map: 1@def01
+      X: 50
+      Y: 21
+  - Id: 23
+    Name: Wave Mode - Sky
+    Enter:
+      Map: 1@def02
+      X: 29
+      Y: 35
   - Id: 24
     Name: Nightmarish Jitterbug
     Enter:
@@ -231,12 +231,12 @@ Body:
       Map: 1@rev
       X: 26
       Y: 181
-#  - Id: 27
-#    Name: Temple of the Demon God
-#    Enter:
-#      Map: 1@eom
-#      X: 101
-#      Y: 16
+  - Id: 27
+    Name: Temple of the Demon God
+    Enter:
+      Map: 1@eom
+      X: 101
+      Y: 16
   - Id: 28
     Name: Central Laboratory
     Enter:

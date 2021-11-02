@@ -1516,6 +1516,10 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 		//Because it is not unset when the mob finishes walking.
 		md->state.skillstate = MSS_IDLE;
 	case MSS_IDLE:
+		if( md->ud.walktimer == INVALID_TIMER && md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0 ){
+			md->idle_event[0] = 0;
+			break;
+		}
 		// Idle skill.
 		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
 			break;
@@ -1543,7 +1547,8 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 		md->ud.target_to = 0;
 		unit_set_target(&md->ud, 0);
 	}
-	if (battle_config.official_cell_stack_limit > 0
+	
+	if (!md->ud.state.ignore_cell_stack_limit && battle_config.official_cell_stack_limit > 0
 		&& (md->min_chase == md->db->range3 || battle_config.mob_ai & 0x8)
 		&& map_count_oncell(md->bl.m, md->bl.x, md->bl.y, BL_CHAR | BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 		unit_walktoxy(&md->bl, md->bl.x, md->bl.y, 8);
@@ -2045,6 +2050,15 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		return 0;
 	}
 
+	if (md->ud.walktimer == INVALID_TIMER) {
+		// Because it is not unset when the mob finishes walking.
+		md->state.skillstate = MSS_IDLE;
+		if (md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0) {
+			md->idle_event[0] = 0;
+			return 0;
+		}
+	}
+
 	if( DIFF_TICK(md->next_walktime,tick) < 0 && status_has_mode(&md->status,MD_CANMOVE) && unit_can_move(&md->bl) )
 	{
 		// Move probability for mobs away from players
@@ -2056,9 +2070,6 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	}
 	else if( md->ud.walktimer == INVALID_TIMER )
 	{
-		//Because it is not unset when the mob finishes walking.
-		md->state.skillstate = MSS_IDLE;
-
 		// Probability for mobs far from players from doing their IDLE skill.
 		// In Aegis, this is 100% for mobs that have been activated by players and none otherwise.
 		if( mob_is_spotted(md) &&
@@ -3657,6 +3668,24 @@ struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 	return fr;
 }
 
+// Display message from mob_chat_db.yml
+bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
+	std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(msg_id);
+
+	if (mc != nullptr) {
+		std::string name = md.name, output;
+		std::size_t unique = name.find("#");
+
+		if (unique != std::string::npos)
+			name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
+		output = name + " : " + mc->msg;
+
+		clif_messagecolor(&md.bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
+		return true;
+	}
+	return false;
+}
+
 /*==========================================
  * Skill use judging
  *------------------------------------------*/
@@ -3856,18 +3885,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 		}
 		//Skill used. Post-setups...
 		if ( ms[i]->msg_id ){ //Display color message [SnakeDrak]
-			std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(ms[i]->msg_id);
-
-			if (mc) {
-				std::string name = md->name, output;
-				std::size_t unique = name.find("#");
-
-				if (unique != std::string::npos)
-					name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
-				output = name + " : " + mc->msg;
-
-				clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
-			}
+			mob_chat_display_message(*md, ms[i]->msg_id);
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
 			for (j = 0; j < ms.size(); j++)
@@ -4446,7 +4464,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			mob->status.rhw.atk2 = 0;
 #endif
 	}
-	
+
 	if (this->nodeExists(node, "Defense")) {
 		uint16 def;
 
@@ -4463,7 +4481,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			mob->status.def = 0;
 	}
-	
+
 	if (this->nodeExists(node, "MagicDefense")) {
 		uint16 def;
 
@@ -4480,7 +4498,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			mob->status.mdef = 0;
 	}
-	
+
 	if (this->nodeExists(node, "Str")) {
 		uint16 stat;
 
@@ -4552,7 +4570,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			mob->status.luk = 1;
 	}
-	
+
 	if (this->nodeExists(node, "AttackRange")) {
 		uint16 range;
 
@@ -4893,10 +4911,10 @@ void MobDatabase::loadingFinished() {
 		}
 
 		if (battle_config.view_range_rate != 100)
-			mob->range2 = cap_value(mob->range2, 1, mob->range2 * battle_config.view_range_rate / 100);
+			mob->range2 = max(1, mob->range2 * battle_config.view_range_rate / 100);
 
 		if (battle_config.chase_range_rate != 100)
-			mob->range3 = cap_value(mob->range3, mob->range2, mob->range3 * battle_config.chase_range_rate / 100);
+			mob->range3 = max(mob->range2, mob->range3 * battle_config.chase_range_rate / 100);
 
 		// Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
 		mob->range3 += 2;
