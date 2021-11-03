@@ -8205,6 +8205,12 @@
 	export_constant(REFINE_TYPE_SHADOW_ARMOR);
 	export_constant(REFINE_TYPE_SHADOW_WEAPON);
 
+	/* autospell flags */
+	export_constant(AUTOSPELL_FORCE_SELF);
+	export_constant(AUTOSPELL_FORCE_TARGET);
+	export_constant(AUTOSPELL_FORCE_RANDOM_LEVEL);
+	export_constant(AUTOSPELL_FORCE_ALL);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

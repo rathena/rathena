@@ -2188,7 +2188,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 			uint16 autospl_skill_lv = it.lv ? it.lv : 1;
 
-			if (it.flag & 2)
+			if (it.flag & AUTOSPELL_FORCE_RANDOM_LEVEL)
 				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
 
 			rate = (!sd->state.arrow_atk) ? it.rate : it.rate / 2;
@@ -2196,7 +2196,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (rnd()%1000 >= rate)
 				continue;
 
-			block_list *tbl = (it.flag & 1) ? src : bl;
+			block_list *tbl = (it.flag & AUTOSPELL_FORCE_TARGET) ? bl : src;
 			e_cast_type type = skill_get_casttype(skill);
 
 			if (type == CAST_GROUND) {
@@ -2300,15 +2300,19 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 
 		sd->state.autocast = 0;
 
-		if( skill > 0 && bl == nullptr )
+		// DANGER DANGER: here force target actually means use yourself as target!
+		block_list *tbl = (it.flag & AUTOSPELL_FORCE_TARGET) ? &sd->bl : bl;
+
+		if( tbl == nullptr ){
 			continue; // No target
+		}
+
 		if( rnd()%1000 >= it.rate )
 			continue;
 
-		block_list *tbl = (it.flag & 1) ? &sd->bl : bl;
 		uint16 skill_lv = it.lv ? it.lv : 1;
 
-		if (it.flag & 2)
+		if (it.flag & AUTOSPELL_FORCE_RANDOM_LEVEL)
 			skill_lv = rnd_value( 1, skill_lv ); //random skill_lv
 
 		e_cast_type type = skill_get_casttype(skill);
@@ -2504,7 +2508,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 			uint16 autospl_skill_id = it.id, autospl_skill_lv = it.lv ? it.lv : 1;
 
-			if (it.flag & 2)
+			if (it.flag & AUTOSPELL_FORCE_RANDOM_LEVEL)
 				autospl_skill_lv = rnd_value( 1, autospl_skill_lv );
 
 			int autospl_rate = it.rate;
@@ -2523,7 +2527,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (rnd()%1000 >= autospl_rate)
 				continue;
 
-			block_list *tbl = (it.flag & 1) ? bl : src;
+			block_list *tbl = (it.flag & AUTOSPELL_FORCE_TARGET) ? bl : src;
 			e_cast_type type = skill_get_casttype(autospl_skill_id);
 
 			if (type == CAST_GROUND && !skill_pos_maxcount_check(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, BL_PC, false))
