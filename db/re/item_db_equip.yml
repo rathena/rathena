@@ -84532,7 +84532,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,10;
       bonus2 bSubRace,RC_Player_Doram,10;
       if (getrefine()>=9)
-         skill ""BS_GREED"",1;
+         skill "BS_GREED",1;
   - Id: 19436
     AegisName: VesperHeadGear
     Name: Vesper Headgear
@@ -96697,7 +96697,7 @@ Body:
          bonus2 bSkillAtk,"RA_AIMEDBOLT",5;
       if (getskilllv("SN_SHARPSHOOTING") == 5)
          bonus2 bSkillAtk,"SN_SHARPSHOOTING",60;
-      if (getskilllv(""HT_BLITZBEAT"") == 5)
+      if (getskilllv("HT_BLITZBEAT") == 5)
          bonus2 bSkillAtk,"HT_BLITZBEAT",15;
       if (Class == Job_Ranger) {
          bonus bMaxHPrate,5;
@@ -101914,12 +101914,12 @@ Body:
                bonus bDelayrate,-3;
          }
          if (.@luk>=100) {
-            if (.@luk>=120)
+            if (.@luk>=120) {
                bonus bCritical,7;
                bonus bFlee2,1;
-            else {
-               bonus bCritical,5;
             }
+            else
+               bonus bCritical,5;
          }
       }
   - Id: 22168
