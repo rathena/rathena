@@ -2533,7 +2533,7 @@
 15362:4123,{ bonus3 bAddEffWhenHit,Eff_Stun,5000,ATF_MAGIC; bonus3 bAddEffWhenHit,Eff_Freeze,5000,ATF_MAGIC; bonus3 bAddEffWhenHit,Eff_Stone,5000,ATF_MAGIC; }
 15362:4381,{ bonus bDelayrate,-5; bonus bAspd,1; }
 15367:4141,{ .@r = min(14,getequiprefinerycnt(EQI_ARMOR)); bonus bMaxHPrate,3*(.@r/2); }
-15367:4363,{ .@r = getrefine(); if (.@r>=10) { bonus bMaxHPrate,(min(14,.@r)-5,2); } }
+15367:4363,{ .@r = getrefine(); if (.@r>=10) { bonus bMaxHPrate,min(14,.@r)-5; } }
 15367:20905:22167,{ .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT) + getequiprefinerycnt(EQI_SHOES); bonus bAllStats,3; bonus bMaxHPrate,15; bonus2 bSubSize,Size_Medium,5; if (.@r>=45) { bonus2 bResEff,Eff_Freeze,10000; } }
 15367:400075,{ bonus bHealPower,20; autobonus2 "{ bonus bDef,1000; bonus2 bSPLossRate,50,1000; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_MAGNUMBREAK; }"; }
 15367:20905:22167:32219:400075,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP) + getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT) + getequiprefinerycnt(EQI_SHOES); if (BaseClass == Job_Arch_Bishop && .@r>=48) { skill "MG_ENERGYCOAT",1; } }
