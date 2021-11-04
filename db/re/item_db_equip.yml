@@ -130710,6 +130710,7 @@ Body:
     Slots: 1
     Locations:
       Both_Accessory: true
+    ArmorLevel: 1
     EquipLevelMin: 100
     Script: |
       bonus bAllStats,1;
