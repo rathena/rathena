@@ -4788,7 +4788,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       bonus bHPGainValue,100;
   - Id: 4159
     AegisName: Nine_Tail_Card
@@ -10579,8 +10579,9 @@ Body:
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",50;
-         bonus bCriticalLong,25+10*(getequiprefinerycnt(EQI_HAND_R)/4);
+         bonus bCriticalLong,25+(getequiprefinerycnt(EQI_HAND_R)/4);
          bonus bHit,5;
+         bonus bCritical,5;
          bonus3 bAutoSpell,"HT_PHANTASMIC",1,100;
       }
   - Id: 4552
@@ -10992,13 +10993,11 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE) {
-         bonus bBaseAtk,20;
-         bonus bCritical,10;
-      }
       .@r = getrefine();
-      bonus bBaseAtk,.@r;
-      bonus bCritical,.@r;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE) {
+         bonus bBaseAtk,20+.@r;
+         bonus bCritical,10+.@r;
+      }
   - Id: 4580
     AegisName: Kades_Card
     Name: Dark Guardian Kades Card
@@ -43402,7 +43401,7 @@ Body:
     Name: Modification Orb(Fatal Flash)
     Type: Card
     Script: |
-      autobonus "{ bonus bAgi,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,1,300000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
+      autobonus "{ bonus bAgi,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29552
     AegisName: Improve_Orb_L_LUK
     Name: Modification Orb(Lucky Strike)

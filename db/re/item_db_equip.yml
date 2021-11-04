@@ -73945,6 +73945,7 @@ Body:
       NoDrop: true
     Script: |
       bonus bMdef,5;
+      bonus bAllStats,1;
       .@r = getrefine();
       bonus2 bAddClass,Class_Boss,(.@r>5?.@r+5:10);
       bonus2 bMagicAddClass,Class_Boss,(.@r>5?.@r+5:10);
@@ -79060,7 +79061,7 @@ Body:
       bonus2 bAddItemHealRate,553,700;
   - Id: 18906
     AegisName: Holy_Rosario
-    Name: Holy Rosario
+    Name: Ichthys's Rosary
     Type: Armor
     Weight: 300
     Locations:
