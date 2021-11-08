@@ -33923,6 +33923,91 @@ Body:
     Locations:
       Ammo: true
     EquipLevelMin: 99
+  - Id: 18005
+    AegisName: Ice_Cannon_Ball
+    Name: Ice Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Water;
+  - Id: 18006
+    AegisName: Lightning_Cannon_Ball
+    Name: Lightning Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Wind;
+  - Id: 18007
+    AegisName: Stone_Cannon_Ball
+    Name: Stone Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Earth;
+  - Id: 18008
+    AegisName: Flare_Cannon_Ball
+    Name: Fire Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Fire;
+  - Id: 18009
+    AegisName: Poisoning_Cannon_Ball
+    Name: Poison Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Poison;
   - Id: 22519
     AegisName: Pc_Stop
     Name: Stops Buff
