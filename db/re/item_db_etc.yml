@@ -53421,3 +53421,96 @@ Body:
     AegisName: Sanctuary_Sudarium
     Name: Sabbatical Handkerchief
     Type: Etc
+  - Id: 1000563
+    AegisName: Soa_Charm
+    Name: Soa Charm
+    Type: Etc
+    Weight: 1
+  - Id: 1000564
+    AegisName: Nw_Grenade
+    Name: Nw Grenade
+    Type: Etc
+    Weight: 1
+  - Id: 1000565
+    AegisName: SS_Charm
+    Name: SS Charm
+    Type: Etc
+    Weight: 1
+  - Id: 1000566
+    AegisName: SS_Charm_F
+    Name: SS Charm F
+    Type: Etc
+    Weight: 1
+  - Id: 1000567
+    AegisName: SS_Charm_W
+    Name: SS Charm W
+    Type: Etc
+    Weight: 1
+  - Id: 1000568
+    AegisName: SS_Charm_G
+    Name: SS Charm G
+    Type: Etc
+    Weight: 1
+  - Id: 1000569
+    AegisName: SS_Charm_L
+    Name: SS Charm L
+    Type: Etc
+    Weight: 1
+  - Id: 1220001
+    AegisName: Kunai
+    Name: Kunai
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+  - Id: 1220002
+    AegisName: Kunai_Of_Nothing
+    Name: Kunai Of Nothing
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Neutral;
+  - Id: 1220003
+    AegisName: Kunai_Of_Shadow
+    Name: Kunai Of Shadow
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Dark;
+  - Id: 1220004
+    AegisName: Kunai_Of_Hamaya
+    Name: Kunai Of Hamaya
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Holy;

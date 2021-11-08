@@ -5267,3 +5267,14 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`) VALUES (1000
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`) VALUES (1000501,'Purificatory_Holy_O','Holy Oil of Purification','Etc');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`) VALUES (1000502,'Purificatory_Holy_W','Holy Water of Purification','Etc');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`) VALUES (1000503,'Sanctuary_Sudarium','Sabbatical Handkerchief','Etc');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`) VALUES (1000563,'Soa_Charm','Soa Charm','Etc',1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`) VALUES (1000564,'Nw_Grenade','Nw Grenade','Etc',1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`) VALUES (1000565,'SS_Charm','SS Charm','Etc',1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`) VALUES (1000566,'SS_Charm_F','SS Charm F','Etc',1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`) VALUES (1000567,'SS_Charm_W','SS Charm W','Etc',1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`) VALUES (1000568,'SS_Charm_G','SS Charm G','Etc',1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`) VALUES (1000569,'SS_Charm_L','SS Charm L','Etc',1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`subtype`,`weight`,`attack`,`job_kagerouoboro`,`job_ninja`,`location_ammo`,`equip_level_min`) VALUES (1220001,'Kunai','Kunai','Ammo','Kunai',1,30,true,true,true,1);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`subtype`,`weight`,`attack`,`job_kagerouoboro`,`job_ninja`,`location_ammo`,`equip_level_min`,`script`) VALUES (1220002,'Kunai_Of_Nothing','Kunai Of Nothing','Ammo','Kunai',1,30,true,true,true,1,'bonus bAtkEle,Ele_Neutral;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`subtype`,`weight`,`attack`,`job_kagerouoboro`,`job_ninja`,`location_ammo`,`equip_level_min`,`script`) VALUES (1220003,'Kunai_Of_Shadow','Kunai Of Shadow','Ammo','Kunai',1,30,true,true,true,1,'bonus bAtkEle,Ele_Dark;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`subtype`,`weight`,`attack`,`job_kagerouoboro`,`job_ninja`,`location_ammo`,`equip_level_min`,`script`) VALUES (1220004,'Kunai_Of_Hamaya','Kunai Of Hamaya','Ammo','Kunai',1,30,true,true,true,1,'bonus bAtkEle,Ele_Holy;');
