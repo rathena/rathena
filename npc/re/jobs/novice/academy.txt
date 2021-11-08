@@ -8897,7 +8897,8 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 					mes "It should be very easy to find.";
 					cutin "", 255;
 					nov_3_swordman = 4;
-					erasequest 1230;
+					if (isbegin_quest(1230))
+						erasequest 1230;
 					close;
 				}
 			}
@@ -9025,7 +9026,8 @@ iz_ac02,60,51,5	script	Swordman Trainer#ac	4_M_SWORDMAN,{
 						mes "It should be very easy to find.";
 						cutin "", 255;
 						nov_3_swordman = 4;
-						erasequest 1230;
+						if (isbegin_quest(1230))
+							erasequest 1230;
 						close;
 					}
 				case 3:

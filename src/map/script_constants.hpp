@@ -1632,6 +1632,9 @@
 	export_constant(SC_PACKING_ENVELOPE9);
 	export_constant(SC_PACKING_ENVELOPE10);
 	export_constant(SC_SOULATTACK);
+	export_constant(SC_WIDEWEB);
+	export_constant(SC_BURNT);
+	export_constant(SC_CHILL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3847,6 +3850,7 @@
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
 	export_constant(AI_GUILD);
+	export_constant(AI_WAVEMODE);
 
 	/* battle flags */
 	export_constant(BF_NONE);
@@ -4380,6 +4384,7 @@
 	export_constant(UMOB_ROBE);
 	export_constant(UMOB_BODY2);
 	export_constant(UMOB_GROUP_ID);
+	export_constant(UMOB_IGNORE_CELL_STACK_LIMIT);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -8199,6 +8204,12 @@
 	export_constant(REFINE_TYPE_WEAPON);
 	export_constant(REFINE_TYPE_SHADOW_ARMOR);
 	export_constant(REFINE_TYPE_SHADOW_WEAPON);
+
+	/* autospell flags */
+	export_constant(AUTOSPELL_FORCE_SELF);
+	export_constant(AUTOSPELL_FORCE_TARGET);
+	export_constant(AUTOSPELL_FORCE_RANDOM_LEVEL);
+	export_constant(AUTOSPELL_FORCE_ALL);
 
 	#undef export_constant
 	#undef export_constant2

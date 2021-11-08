@@ -364,7 +364,7 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 // There is one exception and this is if they are walking.
 // Since walking NPCs are not supported on official servers, the client does not know how to handle it.
 #if PACKETVER >= 20170726
-				   return ( pcdb_checkid(status_get_viewdata(bl)->class_) && walking ) ? 0x0 : 0x6; //NPC_EVT_TYPE
+					return ( pcdb_checkid(status_get_viewdata(bl)->class_) && walking ) ? 0x0 : 0xC; // New walking NPC type
 #else
 				   return pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x6; //NPC_EVT_TYPE
 #endif
@@ -6993,12 +6993,11 @@ void clif_item_refine_list( struct map_session_data *sd ){
 
 	int refine_item[MAX_WEAPON_LEVEL];
 
-	refine_item[0] = -1;
-	refine_item[1] = pc_search_inventory( sd, ITEMID_PHRACON );
-	refine_item[2] = pc_search_inventory( sd, ITEMID_EMVERETARCON );
-	refine_item[3] = refine_item[4] = pc_search_inventory( sd, ITEMID_ORIDECON );
+	refine_item[0] = pc_search_inventory( sd, ITEMID_PHRACON );
+	refine_item[1] = pc_search_inventory( sd, ITEMID_EMVERETARCON );
+	refine_item[2] = refine_item[3] = pc_search_inventory( sd, ITEMID_ORIDECON );
 #ifdef RENEWAL
-	refine_item[5] = -1;
+	refine_item[4] = -1;
 #endif
 
 	int count = 0;
@@ -7006,7 +7005,7 @@ void clif_item_refine_list( struct map_session_data *sd ){
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].refine < skill_lv &&
 			sd->inventory_data[i] != nullptr && sd->inventory_data[i]->type == IT_WEAPON &&
 			sd->inventory.u.items_inventory[i].identify && sd->inventory_data[i]->weapon_level >= 1 &&
-			refine_item[sd->inventory_data[i]->weapon_level] != -1 && !( sd->inventory.u.items_inventory[i].equip & EQP_ARMS ) ){
+			refine_item[sd->inventory_data[i]->weapon_level - 1] != -1 && !( sd->inventory.u.items_inventory[i].equip & EQP_ARMS ) ){
 
 			p->items[count].index = client_index( i );
 			p->items[count].itemId = client_nameid( sd->inventory.u.items_inventory[i].nameid );

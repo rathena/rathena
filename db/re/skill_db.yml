@@ -16888,6 +16888,62 @@ Body:
         Time: 27500
       - Level: 5
         Time: 32500
+  - Id: 721
+    Name: NPC_WIDEWEB
+    Description: Wide Web
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea: 7
+    Duration2: 10000
+  - Id: 722
+    Name: NPC_WIDESUCK
+    Description: Wide Suck
+    MaxLevel: 1
+    Type: Misc
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea: 13
+    Duration1: 3000
+  - Id: 724
+    Name: NPC_FIRESTORM
+    Description: Fire Storm
+    MaxLevel: 3
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 3
+      - Level: 3
+        Count: 5
+    Element: Fire
+    SplashArea: 3
+    Knockback: 3
+    Duration1: 10000
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2

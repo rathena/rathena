@@ -2328,6 +2328,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		node["WeaponLevel"] = std::stoi(str[index]);
 	if (!str[++index].empty())
+		node["ArmorLevel"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		node["EquipLevelMin"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["EquipLevelMax"] = std::stoi(str[index]);
@@ -2459,7 +2461,7 @@ static int itemdb_read_sqldb(void) {
 			"`class_all`,`class_normal`,`class_upper`,`class_baby`,`gender`,"
 			"`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,"
 			"`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,"
-			"`weapon_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
+			"`weapon_level`,`armor_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
 			"`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,"
 			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
 			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"

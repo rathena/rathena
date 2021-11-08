@@ -508,6 +508,21 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)(damage * 50 / 100);
 #endif
+				if( tsc->data[SC_WIDEWEB] ) {
+#ifdef RENEWAL
+					ratio += 100;
+#else
+					damage *= 2;
+#endif
+					status_change_end(target,SC_WIDEWEB,INVALID_TIMER);
+				}
+				if( tsc->data[SC_BURNT] ) {
+#ifdef RENEWAL
+					ratio += 400;
+#else
+					damage += (int64)(damage * 400 / 100);
+#endif
+				}
 				break;
 			case ELE_HOLY:
 				if (tsc->data[SC_ORATIO])
@@ -1481,6 +1496,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage <<= 1;
 		if (sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT) {
 			int bonus = sc->data[SC_DARKCROW]->val2;
+		if( sc->data[SC_BURNT] && status_get_element(src) == ELE_FIRE )
+			damage += damage * 666 / 100; //Custom value
 
 			if (status_get_class_(bl) == CLASS_BOSS)
 				bonus /= 2;
@@ -2382,9 +2399,10 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 			break;
 #ifdef RENEWAL
 		case KN_BRANDISHSPEAR:
-			// Renewal changes to ranged physical damage
-			return BF_LONG;
+		// Renewal changes to ranged physical damage
 #endif
+		case SR_RAMPAGEBLASTER:
+			return BF_LONG;
 		case NJ_KIRIKAGE:
 			// Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT:
@@ -3752,7 +3770,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				wd->div_++;
 			break;
 		case SR_RIDEINLIGHTNING:
-			wd->div_ = (sd ? max(1, sd->spiritball_old) : 1);
+			wd->div_ = (sd ? max(1, skill_lv) : 1);
 			break;
 		case RL_QD_SHOT:
 			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->data[SC_C_MARKER] ? 2 : 0);
@@ -6105,13 +6123,17 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #endif
 	}
 
-#ifndef RENEWAL
-	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
+#ifdef RENEWAL
+	// In renewal only do it for non player attacks
+	if( tsd && !sd ){
+#else
+	if( tsd ){
+#endif
+		// Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
 		wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage, 0, wd.flag);
 		if(is_attack_left_handed(src, skill_id))
 			wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, nk, right_element, left_element, wd.damage2, 1, wd.flag);
 	}
-#endif
 
 	// only do 1 dmg to plant, no need to calculate rest
 	if(infdef){
@@ -6764,6 +6786,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						i = cap_value(i, 1, 4);
 						skillratio = 2500 + ((skill_lv - i + 1) * 500);
 						break;
+					case NPC_FIRESTORM:
+						skillratio += 200;
+						break;
 					case NPC_HELLBURNING:
 						skillratio += 900;
 						break;
@@ -7196,6 +7221,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = ssc->data[SC_MAXPAIN]->val2;
 			else
 				md.damage = 0;
+			break;
+		case NPC_WIDESUCK:
+			md.damage = tstatus->max_hp * 15 / 100;
 			break;
 		case SU_SV_ROOTTWIST_ATK:
 			md.damage = 100;
@@ -8419,9 +8447,9 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			{ //Normal mobs
 				if(
 					( target->type == BL_MOB && t_bl->type == BL_PC && ( ((TBL_MOB*)target)->special_state.ai != AI_ZANZOU && ((TBL_MOB*)target)->special_state.ai != AI_ATTACK ) ) ||
-					( t_bl->type == BL_MOB && !((TBL_MOB*)t_bl)->special_state.ai )
+					( t_bl->type == BL_MOB && (((TBL_MOB*)t_bl)->special_state.ai == AI_NONE || ((TBL_MOB*)t_bl)->special_state.ai == AI_WAVEMODE ))
 				  )
-					state |= BCT_PARTY; //Normal mobs with no ai are friends.
+					state |= BCT_PARTY; //Normal mobs with no ai or with AI_WAVEMODE are friends.
 				else
 					state |= BCT_ENEMY; //However, all else are enemies.
 			}
