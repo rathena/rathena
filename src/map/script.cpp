@@ -14161,6 +14161,8 @@ BUILDIN_FUNC(getiteminfo)
 		}
 		case ITEMINFO_ID: script_pushint(st, i_data->nameid); break;
 		case ITEMINFO_AEGISNAME: script_pushstrcopy(st, i_data->name.c_str()); break;
+		case ITEMINFO_ATKELE: script_pushint(st, i_data->atk_ele); break;
+		case ITEMINFO_INDESTRUCTIBLE: script_pushint(st, i_data->flag.indestructible); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -14247,6 +14249,17 @@ BUILDIN_FUNC(setiteminfo)
 #endif
 			break;
 		}
+		case ITEMINFO_ATKELE:
+			if (!CHK_ELEMENT(value)) {
+				ShowError( "buildin_setiteminfo: Invalid element %d.\n", value );
+				script_pushint( st, -1 );
+				return SCRIPT_CMD_FAILURE;
+			}
+			i_data->atk_ele = static_cast<e_element>(value);
+			break;
+		case ITEMINFO_INDESTRUCTIBLE:
+			i_data->flag.indestructible = value > 0;
+			break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -19415,7 +19428,7 @@ BUILDIN_FUNC(unitskilluseid)
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
-	bool cancel = ( script_hasdata(st,7) ? script_getnum(st,7) > 0 : skill_get_castcancel(skill_id) );
+	int cancel = ( script_hasdata(st,7) ? script_getnum(st,7) > 0 : skill_get_castcancel(skill_id) );
 	int msg_id = (script_hasdata(st, 8) ? script_getnum(st, 8) : 0);
 
 	if(script_rid2bl(2,bl)){
@@ -19469,7 +19482,7 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
-	bool cancel = ( script_hasdata(st,8) ? script_getnum(st,8) > 0 : skill_get_castcancel(skill_id) );
+	int cancel = ( script_hasdata(st,8) ? script_getnum(st,8) > 0 : skill_get_castcancel(skill_id) );
 	int msg_id = (script_hasdata(st, 9) ? script_getnum(st, 9) : 0);
 
 	if(script_rid2bl(2,bl)){

@@ -384,6 +384,24 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 #endif
 		if (appendEntry(input["Defense"], value))
 			column.append("`defense`,");
+		if (appendEntry(input["MagicDefense"], value))
+			column.append("`magic_defense`,");
+		if (appendEntry(input["Str"], value))
+			column.append("`str`,");
+		if (appendEntry(input["Agi"], value))
+			column.append("`agi`,");
+		if (appendEntry(input["Vit"], value))
+			column.append("`vit`,");
+		if (appendEntry(input["Int"], value))
+			column.append("`int`,");
+		if (appendEntry(input["Dex"], value))
+			column.append("`dex`,");
+		if (appendEntry(input["Luk"], value))
+			column.append("`luk`,");
+		if (appendEntry(input["MaxHp"], value))
+			column.append("`max_hp`,");
+		if (appendEntry(input["MaxSp"], value))
+			column.append("`max_sp`,");
 		if (appendEntry(input["Range"], value))
 			column.append("`range`,");
 		if (appendEntry(input["Slots"], value))
@@ -609,6 +627,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 
 		if (appendEntry(input["WeaponLevel"], value))
 			column.append("`weapon_level`,");
+		if (appendEntry(input["WeaponElement"], value, true))
+			column.append("`weapon_element`,");
 		if (appendEntry(input["ArmorLevel"], value))
 			column.append("`armor_level`,");
 		if (appendEntry(input["EquipLevelMin"], value))
@@ -617,6 +637,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column.append("`equip_level_max`,");
 		if (appendEntry(input["Refineable"], value))
 			column.append("`refineable`,");
+		if (appendEntry(input["Indestructible"], value))
+			column.append("`indestructible`,");
 		if (appendEntry(input["View"], value))
 			column.append("`view`,");
 		if (appendEntry(input["AliasName"], value, true))

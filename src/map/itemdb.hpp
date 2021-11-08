@@ -883,11 +883,15 @@ struct item_data
 	uint32 weight;
 	uint32 atk;
 	uint32 def;
+	uint32 mdef;
+	uint16 str,agi,vit,int_,dex,luk;
+	uint32 max_hp, max_sp;
 	uint16 range;
 	uint16 slots;
 	uint32 look;
 	uint16 elv;
 	uint16 weapon_level;
+	uint8 atk_ele;
 	uint16 armor_level;
 	t_itemid view_id;
 	uint16 elvmax; ///< Maximum level for this item
@@ -910,6 +914,7 @@ struct item_data
 		unsigned available : 1;
 		uint32 no_equip;
 		unsigned no_refine : 1;	// [celest]
+		unsigned indestructible : 1;
 		unsigned delay_consume;	// [Skotlex]
 		struct {
 			bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;

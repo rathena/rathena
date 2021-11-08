@@ -2652,6 +2652,8 @@ int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned sh
 			short j = sd->equip_index[i];
 			if (j < 0 || sd->inventory.u.items_inventory[j].attribute == 1 || !sd->inventory_data[j])
 				continue;
+			if (sd->inventory_data[j]->flag.indestructible)
+				continue;
 
 			switch(i) {
 				case EQI_HEAD_TOP: //Upper Head
