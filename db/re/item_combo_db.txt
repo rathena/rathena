@@ -2556,7 +2556,7 @@
 21053:4142,{ .@r = getequiprefinerycnt(EQI_HAND_R); skill "PR_LEXAETERNA",1; if (BaseLevel >= 100) { bonus bAspdRate,5*.@r; bonus2 bAddRace,RC_All,10*.@r; } else if (BaseLevel <= 99) { bonus bAspdRate,2*.@r; bonus2 bAddRace,RC_All,4*.@r; } }
 22167:32219,{ bonus bMaxHPrate,8; bonus bMaxSPrate,8; bonus bDelayrate,-5; }
 22167:400075,{ bonus bFlee2,10; bonus bFixedCast,-500; }
-22191:4131,{ .@r = getequiprefinerycnt(EQI_SHOES); .@r_shoes = min(10,getequiprefinerycnt(EQI_SHOES)); skill "AL_HEAL",10; if (BaseLevel >= 100) { bonus bMdef,5*.@r_shoes;         bonus bMatk,15*.@r; } else if (BaseLevel <= 99) { bonus bMdef,3*.@r_shoes; bonus bMatk,5*.@r; } }
+22191:4131,{ .@r = getequiprefinerycnt(EQI_SHOES); .@r_shoes = min(10,getequiprefinerycnt(EQI_SHOES)); skill "AL_HEAL",10; if (BaseLevel >= 100) { bonus bMdef,5*.@r_shoes; bonus bMatk,15*.@r; } else if (BaseLevel <= 99) { bonus bMdef,3*.@r_shoes; bonus bMatk,5*.@r; } }
 22212:4145,{ .@r = getrefine(); skill "PR_MAGNUS",10; bonus2 bMagicAddRace,RC_Undead,30; bonus2 bMagicAddRace,RC_Demon,30; bonus2 bMagicAddEle,Ele_Dark,30; bonus2 bMagicAddEle,Ele_Undead,30; if (BaseLevel >= 100) { bonus bMatk,15*.@r; bonus bVariableCastrate,-7*.@r; } else if (BaseLevel <= 99) { bonus bMatk,5*.@r; bonus bVariableCastrate,-2*.@r; } }
 32219:4363,{ bonus bDefEle,Ele_Ghost; bonus5 bAutoSpellWhenHit,"HP_ASSUMPTIO",5,-50,BF_WEAPON|BF_MAGIC,0; bonus2 bAddClass,Class_Boss,20; bonus2 bMagicAddClass,Class_Boss,20; }
 32219:400075,{ bonus bAllStats,3; bonus bDelayrate,-7; }
