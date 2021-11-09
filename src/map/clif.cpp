@@ -21650,17 +21650,17 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 #endif
 }
 
-void clif_parse_StartUseSkillToId(int fd, struct map_session_data *sd) {
+void clif_parse_StartUseSkillToId( int fd, struct map_session_data *sd ){
 #if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010
-	const struct PACKET_CZ_START_USE_SKILL *p = (struct PACKET_CZ_START_USE_SKILL *)RFIFOP(fd, 0);
+	const struct PACKET_CZ_START_USE_SKILL *p = (struct PACKET_CZ_START_USE_SKILL *)RFIFOP( fd, 0 );
 
 	// Only rolling cutter is supported for now
-	if (p->skillId != GC_ROLLINGCUTTER) {
+	if ( p->skillId != GC_ROLLINGCUTTER ) {
 		return;
 	}
 
 	// Already running - cant happen on officials, since only one skill is supported
-	if (sd->skill_keep_using.skill_id != 0) {
+	if( sd->skill_keep_using.skill_id != 0 ) {
 		return;
 	}
 
@@ -21669,27 +21669,27 @@ void clif_parse_StartUseSkillToId(int fd, struct map_session_data *sd) {
 	sd->skill_keep_using.level = p->skillLv;
 	sd->skill_keep_using.target = p->targetId;
 
-	clif_parse_skill_toid(sd, sd->skill_keep_using.skill_id, sd->skill_keep_using.level, sd->skill_keep_using.target);
+	clif_parse_skill_toid( sd, sd->skill_keep_using.skill_id, sd->skill_keep_using.level, sd->skill_keep_using.target );
 #endif
 }
 
-void clif_parse_StopUseSkillToId(int fd, struct map_session_data *sd) {
+void clif_parse_StopUseSkillToId( int fd, struct map_session_data *sd ){
 #if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010
 	const struct PACKET_CZ_STOP_USE_SKILL *p = (struct PACKET_CZ_STOP_USE_SKILL *)RFIFOP(fd, 0);
 
 	// Not running
-	if (sd->skill_keep_using.skill_id == 0) {
+	if( sd->skill_keep_using.skill_id == 0 ){
 		return;
 	}
 
 #if 0
 	// Hack
-	if (p->skillId != sd->skill_keep_using.skill_id) {
+	if( p->skillId != sd->skill_keep_using.skill_id ){
 		return;
 	}
 #endif
 
-	if (sd->skill_keep_using.tid != INVALID_TIMER) {
+	if( sd->skill_keep_using.tid != INVALID_TIMER ){
 		delete_timer(sd->skill_keep_using.tid, skill_keep_using);
 		sd->skill_keep_using.tid = INVALID_TIMER;
 	}
@@ -21699,13 +21699,13 @@ void clif_parse_StopUseSkillToId(int fd, struct map_session_data *sd) {
 #endif
 }
 
-void clif_ping(struct map_session_data *sd) {
+void clif_ping( struct map_session_data *sd ){
 #if PACKETVER_MAIN_NUM >= 20190213 || PACKETVER_RE_NUM >= 20190213 || PACKETVER_ZERO_NUM >= 20190130
 	nullpo_retv(sd);
 
 	int fd = sd->fd;
 
-	if (!session_isActive(fd)) {
+	if( !session_isActive(fd) ){
 		return;
 	}
 
@@ -21717,26 +21717,26 @@ void clif_ping(struct map_session_data *sd) {
 #endif
 }
 
-int clif_ping_timer_sub(struct map_session_data *sd, va_list ap) {
+int clif_ping_timer_sub( struct map_session_data *sd, va_list ap ){
 	nullpo_ret(sd);
 
 	int fd = sd->fd;
 
-	if (!session_isActive(fd)) {
+	if( !session_isActive(fd) ){
 		return 0;
 	}
 
 	t_tick tick = va_arg(ap, t_tick);
 
-	if (session[fd]->wdata_tick + battle_config.ping_time < tick) {
+	if( session[fd]->wdata_tick + battle_config.ping_time < tick ){
 		clif_ping(sd);
 	}
 
 	return 0;
 }
 
-TIMER_FUNC(clif_ping_timer) {
-	map_foreachpc(clif_ping_timer_sub, gettick());
+TIMER_FUNC( clif_ping_timer ){
+	map_foreachpc( clif_ping_timer_sub, gettick() );
 
 	return 0;
 }
