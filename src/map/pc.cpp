@@ -2170,7 +2170,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 						uint16 sk_need_idx = skill_get_index(sk_need_id);
 
 						if (sk_need_idx > 0) {
-							short sk_need = sk_need_id;
+							uint16 sk_need = sk_need_id;
 
 							if (sd->status.skill[sk_need_idx].id == 0 || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_PLAGIARIZED)
 								sk_need = 0; //Not learned.

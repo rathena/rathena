@@ -28,8 +28,8 @@
 #     - Name              Skill name.
 #       MaxLevel          Max level of the skill. Set to 0 to remove the skill.
 #       Exclude           Whether the skill is excluded from being inherited. (Default: false)
-#       BaseLevel         Base level minimum required to unlock the skill. (Default: 0)
-#       JobLevel          Job level minimum required to unlock the skill. (Default: 0)
+#       BaseLevel         Minimum base level required to unlock the skill. (Default: 0)
+#       JobLevel          Minimum job level required to unlock the skill. (Default: 0)
 #       Requires:         List of skills required to unlock the skill. (Default: null)
 #         - Name          Skill name.
 #           Level         Skill level required. Set to 0 to remove the skill.
