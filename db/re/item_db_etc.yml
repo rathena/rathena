@@ -46869,9 +46869,9 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatkRate,5;
-      if (.@r=>7)
+      if (.@r>=7)
          bonus2 bMagicAddRace,RC_Demon,10;
-      if (.@r=>9)
+      if (.@r>=9)
          bonus2 bMagicAddRace,RC_Demon,7;
   - Id: 300293
     AegisName: aegis_300293
@@ -46909,11 +46909,11 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatkRate,5;
-      if (.@r=>7) {
+      if (.@r>=7) {
          bonus2 bMagicAddRace,RC_Brute,10;
          bonus2 bMagicAddRace,RC_Player_Doram,10;
       }
-      if (.@r=>9) {
+      if (.@r>=9) {
          bonus2 bMagicAddRace,RC_Brute,7;
          bonus2 bMagicAddRace,RC_Player_Doram,7;
       }
@@ -46929,9 +46929,9 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bMatkRate,5;
-      if (.@r=>7)
+      if (.@r>=7)
          bonus2 bMagicAddRace,RC_Insect,10;
-      if (.@r=>9)
+      if (.@r>=9)
          bonus2 bMagicAddRace,RC_Insect,7;
   - Id: 300297
     AegisName: aegis_300297
