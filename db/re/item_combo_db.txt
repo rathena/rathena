@@ -2567,3 +2567,5 @@
 400006:4256,{ bonus bAspdRate,3; bonus bDelayrate,-3; }
 400006:4066:4135:4143:4255:4256,{ skill "CR_DEFENDER",4; bonus bDefRatioAtkClass,Class_All; }
 450142:4135,{.@r = getequiprefinerycnt(EQI_ARMOR); bonus bNoWalkDelay; bonus2 bResEff,Eff_Freeze,10000; if (BaseLevel >= 100) { bonus2 bAddEle,Ele_Dark,10*.@r; } else if (BaseLevel <= 99) { bonus2 bAddEle,Ele_Dark,3*.@r; } }
+300308:27331,{ bonus bMatkRate,3; }
+300310:27333,{ bonus2 bAddRace,RC_All,3; }

@@ -46857,6 +46857,142 @@ Body:
       bonus bMatkRate,10;
       bonus2 bMagicAddRace,RC_Fish,50;
       bonus2 bMagicAddRace,RC_Insect,50;
+  - Id: 300292
+    AegisName: aegis_300292
+    Name: Extra Joker Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r=>7)
+         bonus2 bMagicAddRace,RC_Demon,10;
+      if (.@r=>9)
+         bonus2 bMagicAddRace,RC_Demon,7;
+  - Id: 300293
+    AegisName: aegis_300293
+    Name: Erzsebet Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Poison,3*getrefine();
+  - Id: 300294
+    AegisName: aegis_300294
+    Name: Jennifer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,20;
+      bonus2 bMagicAtkEle,Ele_Undead,20;
+  - Id: 300295
+    AegisName: aegis_300295
+    Name: Orc General Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r=>7) {
+         bonus2 bMagicAddRace,RC_Brute,10;
+         bonus2 bMagicAddRace,RC_Player_Doram,10;
+      }
+      if (.@r=>9) {
+         bonus2 bMagicAddRace,RC_Brute,7;
+         bonus2 bMagicAddRace,RC_Player_Doram,7;
+      }
+  - Id: 300296
+    AegisName: aegis_300296
+    Name: Sieglouse Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r=>7)
+         bonus2 bMagicAddRace,RC_Insect,10;
+      if (.@r=>9)
+         bonus2 bMagicAddRace,RC_Insect,7;
+  - Id: 300297
+    AegisName: aegis_300297
+    Name: Goblin King Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Brute,35;
+      bonus2 bAddRace,RC_Player_Doram,35;
+      bonus2 bSubRace,RC_Brute,-10;
+      bonus2 bSubRace,RC_Player_Doram,-10;
+  - Id: 300307
+    AegisName: aegis_300307
+    Name: Meyer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+  - Id: 300308
+    AegisName: aegis_300308
+    Name: Meyer Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Refineable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bUseSPrate,10;
+      bonus2 bMagicAtkEle,Ele_All,4*(getrefine()/3);
+  - Id: 300309
+    AegisName: aegis_300309
+    Name: Helmut Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+  - Id: 300310
+    AegisName: aegis_300310
+    Name: Helmut Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bUseSPrate,10;
+      bonus2 bAddRace,RC_All,4*(.@r/3);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
