@@ -16924,6 +16924,9 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 						}
 						break;
 					}
+				} else {
+					req.itemid[i] = skill->require.itemid[i];
+					req.amount[i] = skill->require.amount[i];	
 				}
 
 				// Check requirement for gemstone.
