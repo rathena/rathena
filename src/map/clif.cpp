@@ -3223,7 +3223,7 @@ void clif_guild_castle_list(struct map_session_data* sd)
 	int castle_count = guild_checkcastles(g);
 
 	if (castle_count > 0) {
-		int len = sizeof(struct PACKET_ZC_GUILD_CASTLE_LIST) + castle_count;
+		int16 len = (int16)( sizeof(struct PACKET_ZC_GUILD_CASTLE_LIST) + castle_count * sizeof(int8) );
 		struct PACKET_ZC_GUILD_CASTLE_LIST* p = (struct PACKET_ZC_GUILD_CASTLE_LIST*)packet_buffer;
 		p->packetType = HEADER_ZC_GUILD_CASTLE_LIST;
 		p->packetLength = len;
@@ -3236,7 +3236,7 @@ void clif_guild_castle_list(struct map_session_data* sd)
 			}
 		}
 
-		clif_send(p, len, &sd->bl, SELF);
+		clif_send(p, p->packetLength, &sd->bl, SELF);
 	}
 #endif
 }
@@ -3250,7 +3250,7 @@ void clif_guild_castleinfo(struct map_session_data* sd, int castle_id, int econo
 
 	nullpo_retv(sd);
 
-	struct PACKET_ZC_CASTLE_INFO p;
+	struct PACKET_ZC_CASTLE_INFO p = {};
 	p.packetType = HEADER_ZC_CASTLE_INFO;
 	p.castle_id = castle_id;
 	p.economy = economy;
@@ -3268,7 +3268,7 @@ void clif_guild_castle_teleport_res(struct map_session_data* sd, enum e_siege_te
 
 	nullpo_retv(sd);
 
-	struct PACKET_ZC_CASTLE_TELEPORT_RESPONSE p;
+	struct PACKET_ZC_CASTLE_TELEPORT_RESPONSE p = {};
 	p.packetType = HEADER_ZC_CASTLE_TELEPORT_RESPONSE;
 	p.result = (int16)result;
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
