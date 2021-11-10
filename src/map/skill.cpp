@@ -14246,9 +14246,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 					break;
 				case NPC_COMET:
 				case WL_COMET:
-					if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
-						break; // Nothing should happen if the target is on Land Protector
-					// Fall through
+					if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) == 0)// Nothing should happen if the target is on Land Protector
+						skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+					break;
 				case NPC_WIDESUCK: {
 						int heal = (int)skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 
