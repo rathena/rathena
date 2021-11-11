@@ -4788,7 +4788,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       bonus bHPGainValue,100;
   - Id: 4159
     AegisName: Nine_Tail_Card
@@ -10579,8 +10579,9 @@ Body:
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",50;
-         bonus bCriticalLong,25+10*(getequiprefinerycnt(EQI_HAND_R)/4);
+         bonus bCriticalLong,20+(getequiprefinerycnt(EQI_HAND_R)/4);
          bonus bHit,5;
+         bonus bCritical,5;
          bonus3 bAutoSpell,"HT_PHANTASMIC",1,100;
       }
   - Id: 4552
@@ -10993,12 +10994,10 @@ Body:
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE) {
-         bonus bBaseAtk,20;
-         bonus bCritical,10;
+         .@r = getrefine();
+         bonus bBaseAtk,20+.@r;
+         bonus bCritical,10+.@r;
       }
-      .@r = getrefine();
-      bonus bBaseAtk,.@r;
-      bonus bCritical,.@r;
   - Id: 4580
     AegisName: Kades_Card
     Name: Dark Guardian Kades Card
@@ -33924,6 +33923,91 @@ Body:
     Locations:
       Ammo: true
     EquipLevelMin: 99
+  - Id: 18005
+    AegisName: Ice_Cannon_Ball
+    Name: Ice Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Water;
+  - Id: 18006
+    AegisName: Lightning_Cannon_Ball
+    Name: Lightning Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Wind;
+  - Id: 18007
+    AegisName: Stone_Cannon_Ball
+    Name: Stone Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Earth;
+  - Id: 18008
+    AegisName: Flare_Cannon_Ball
+    Name: Fire Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Fire;
+  - Id: 18009
+    AegisName: Poisoning_Cannon_Ball
+    Name: Poison Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Poison;
   - Id: 22519
     AegisName: Pc_Stop
     Name: Stops Buff
@@ -43402,7 +43486,7 @@ Body:
     Name: Modification Orb(Fatal Flash)
     Type: Card
     Script: |
-      autobonus "{ bonus bAgi,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,1,300000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
+      autobonus "{ bonus bAgi,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29552
     AegisName: Improve_Orb_L_LUK
     Name: Modification Orb(Lucky Strike)
@@ -46773,6 +46857,142 @@ Body:
       bonus bMatkRate,10;
       bonus2 bMagicAddRace,RC_Fish,50;
       bonus2 bMagicAddRace,RC_Insect,50;
+  - Id: 300292
+    AegisName: aegis_300292
+    Name: Extra Joker Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7)
+         bonus2 bMagicAddRace,RC_Demon,10;
+      if (.@r>=9)
+         bonus2 bMagicAddRace,RC_Demon,7;
+  - Id: 300293
+    AegisName: aegis_300293
+    Name: Erzsebet Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Poison,3*getrefine();
+  - Id: 300294
+    AegisName: aegis_300294
+    Name: Jennifer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,20;
+      bonus2 bMagicAtkEle,Ele_Undead,20;
+  - Id: 300295
+    AegisName: aegis_300295
+    Name: Orc General Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Brute,10;
+         bonus2 bMagicAddRace,RC_Player_Doram,10;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAddRace,RC_Brute,7;
+         bonus2 bMagicAddRace,RC_Player_Doram,7;
+      }
+  - Id: 300296
+    AegisName: aegis_300296
+    Name: Sieglouse Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7)
+         bonus2 bMagicAddRace,RC_Insect,10;
+      if (.@r>=9)
+         bonus2 bMagicAddRace,RC_Insect,7;
+  - Id: 300297
+    AegisName: aegis_300297
+    Name: Goblin King Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Brute,35;
+      bonus2 bAddRace,RC_Player_Doram,35;
+      bonus2 bSubRace,RC_Brute,-10;
+      bonus2 bSubRace,RC_Player_Doram,-10;
+  - Id: 300307
+    AegisName: aegis_300307
+    Name: Meyer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+  - Id: 300308
+    AegisName: aegis_300308
+    Name: Meyer Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Refineable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bUseSPrate,10;
+      bonus2 bMagicAtkEle,Ele_All,4*(getrefine()/3);
+  - Id: 300309
+    AegisName: aegis_300309
+    Name: Helmut Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+  - Id: 300310
+    AegisName: aegis_300310
+    Name: Helmut Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bUseSPrate,10;
+      bonus bShortAtkRate,4*(.@r/3);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -53337,3 +53557,96 @@ Body:
     AegisName: Sanctuary_Sudarium
     Name: Sabbatical Handkerchief
     Type: Etc
+  - Id: 1000563
+    AegisName: Soa_Charm
+    Name: Soa Charm
+    Type: Etc
+    Weight: 1
+  - Id: 1000564
+    AegisName: Nw_Grenade
+    Name: Nw Grenade
+    Type: Etc
+    Weight: 1
+  - Id: 1000565
+    AegisName: SS_Charm
+    Name: SS Charm
+    Type: Etc
+    Weight: 1
+  - Id: 1000566
+    AegisName: SS_Charm_F
+    Name: SS Charm F
+    Type: Etc
+    Weight: 1
+  - Id: 1000567
+    AegisName: SS_Charm_W
+    Name: SS Charm W
+    Type: Etc
+    Weight: 1
+  - Id: 1000568
+    AegisName: SS_Charm_G
+    Name: SS Charm G
+    Type: Etc
+    Weight: 1
+  - Id: 1000569
+    AegisName: SS_Charm_L
+    Name: SS Charm L
+    Type: Etc
+    Weight: 1
+  - Id: 1220001
+    AegisName: Kunai
+    Name: Kunai
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+  - Id: 1220002
+    AegisName: Kunai_Of_Nothing
+    Name: Kunai Of Nothing
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Neutral;
+  - Id: 1220003
+    AegisName: Kunai_Of_Shadow
+    Name: Kunai Of Shadow
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Dark;
+  - Id: 1220004
+    AegisName: Kunai_Of_Hamaya
+    Name: Kunai Of Hamaya
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Holy;
