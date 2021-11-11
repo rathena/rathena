@@ -96701,10 +96701,11 @@ Body:
          bonus2 bSkillAtk,"HT_BLITZBEAT",15;
       if (Class == Job_Ranger) {
          bonus bMaxHPrate,5;
-         bonus bLongAtkDef,-20;
-         bonus bLongAtkDef,-15;
-         if (.@r>=7)
+         bonus bLongAtkDef,20;
+         if (.@r>=7) {
+            bonus bLongAtkDef,15;
             bonus bMaxHPrate,5;
+         }
       }
       if (.@r>=7) {
          bonus bAspdRate,3;
@@ -131552,7 +131553,7 @@ Body:
       bonus bUnbreakableHelm;
       bonus bAllStats,1;
       bonus bMdef,10;
-      bonus bMaxHPrate,3*(.@r/3);
+      bonus bMaxHPrate,3*(.@r/4);
       bonus2 bSubRace,RC_All,4*(.@r/4);
   - Id: 400011
     AegisName: Officer_Cap
@@ -131948,9 +131949,9 @@ Body:
       if (.@r>=9)
          bonus2 bSubEle,Ele_All,5;
       if (.@r>=10)
-         bonus2 bSubEle,Ele_All,5;
+         bonus2 bSubClass,Class_All,5;
       if (.@r>=11)
-         bonus2 bSubRace,RC_All,5;
+         bonus2 bSubSize,Size_All,5;
       if (.@r>=12)
          bonus2 bSubRace,RC_All,5;
   - Id: 400076

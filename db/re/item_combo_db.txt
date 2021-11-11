@@ -2533,7 +2533,7 @@
 15362:4123,{ bonus3 bAddEffWhenHit,Eff_Stun,5000,ATF_MAGIC; bonus3 bAddEffWhenHit,Eff_Freeze,5000,ATF_MAGIC; bonus3 bAddEffWhenHit,Eff_Stone,5000,ATF_MAGIC; }
 15362:4381,{ bonus bDelayrate,-5; bonus bAspd,1; }
 15367:4141,{ .@r = min(14,getequiprefinerycnt(EQI_ARMOR)); bonus bMaxHPrate,3*(.@r/2); }
-15367:4363,{ .@r = getrefine(); if (.@r>=10) { bonus bMaxHPrate,min(14,.@r)-5; } }
+15367:4363,{ .@r = getrefine(); if (.@r>=10) { .@r = min(14,.@r)-5; bonus bMaxHPrate,pow(.@r,2); } }
 15367:20905:22167,{ .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT) + getequiprefinerycnt(EQI_SHOES); bonus bAllStats,3; bonus bMaxHPrate,15; bonus2 bSubSize,Size_Medium,5; if (.@r>=45) { bonus2 bResEff,Eff_Freeze,10000; } }
 15367:400075,{ bonus bHealPower,20; autobonus2 "{ bonus bDef,1000; bonus2 bSPLossRate,50,1000; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_MAGNUMBREAK; }"; }
 15367:20905:22167:32219:400075,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP) + getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT) + getequiprefinerycnt(EQI_SHOES); if (BaseClass == Job_Arch_Bishop && .@r>=48) { skill "MG_ENERGYCOAT",1; } }
@@ -2545,9 +2545,9 @@
 19436:32246,{ bonus bVariableCastrate,-20; }
 19443:4143,{ if (BaseLevel >= 100) { bonus bBaseAtk,30*(readparam(bVit)/10); bonus bMatk,30*(readparam(bVit)/10); bonus bVit,3*(readparam(bLuk)/10); bonus bLuk,3*(readparam(bLuk)/10); } else if (BaseLevel <= 99) { bonus bBaseAtk,10*(readparam(bVit)/10); bonus bMatk,10*(readparam(bVit)/10); bonus bVit,readparam(bLuk)/10; bonus bLuk,readparam(bLuk)/10; } }
 19444:4143,{ if (BaseLevel >= 100) { bonus bBaseAtk,30*(readparam(bVit)/10); bonus bMatk,30*(readparam(bVit)/10); bonus bVit,3*(readparam(bLuk)/10); bonus bLuk,3*(readparam(bLuk)/10); } else if (BaseLevel <= 99) { bonus bBaseAtk,10*(readparam(bVit)/10); bonus bMatk,10*(readparam(bVit)/10); bonus bVit,readparam(bLuk)/10; bonus bLuk,readparam(bLuk)/10; } }
-20816:4045,{ bonus bLongAtkDef,-35; }
-20816:28910,{ bonus bLongAtkDef,-35; }
-20905:22167,{ bonus bAllStats,1; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus2 bSubRace,RC_All,10; bonus2 bSubRace,RC_Player_Doram,-10; bonus2 bSubRace,RC_Player_Human,-10; }
+20816:4045,{ bonus bLongAtkDef,35; }
+20816:28910,{ bonus bLongAtkDef,35; }
+20905:22167,{ bonus bAllStats,1; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus2 bSubRace,RC_All,10; }
 20905:400075,{ bonus bLongAtkDef,15; bonus2 bSubEle,Ele_All,5; }
 20973:4071,{ bonus2 bSubEle,Ele_Undead,45; }
 20973:4108,{ bonus2 bSubEle,Ele_Poison,45; }

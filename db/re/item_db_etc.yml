@@ -10579,7 +10579,7 @@ Body:
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",50;
-         bonus bCriticalLong,25+(getequiprefinerycnt(EQI_HAND_R)/4);
+         bonus bCriticalLong,20+(getequiprefinerycnt(EQI_HAND_R)/4);
          bonus bHit,5;
          bonus bCritical,5;
          bonus3 bAutoSpell,"HT_PHANTASMIC",1,100;
@@ -10993,8 +10993,8 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      .@r = getrefine();
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE) {
+         .@r = getrefine();
          bonus bBaseAtk,20+.@r;
          bonus bCritical,10+.@r;
       }
@@ -46991,7 +46991,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUseSPrate,10;
-      bonus2 bAddRace,RC_All,4*(.@r/3);
+      bonus bShortAtkRate,4*(.@r/3);
       bonus bLongAtkRate,4*(.@r/3);
   - Id: 310000
     AegisName: Ranger_Top2
