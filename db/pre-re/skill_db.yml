@@ -16307,6 +16307,14 @@ Body:
     MaxLevel: 1
     Flags:
       ShowScale: true
+  - Id: 713
+    Name: NPC_DANCINGBLADE
+    Description: Dancing Blade
+    MaxLevel: 1
+  - Id: 714
+    Name: NPC_DANCINGBLADE_ATK
+    Description: Dancing Blade Attack
+    MaxLevel: 1
   - Id: 716
     Name: NPC_MAXPAIN
     Description: Max Pain

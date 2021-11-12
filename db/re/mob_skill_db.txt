@@ -11010,7 +11010,7 @@
 // 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,30,,,,,,,42
 // 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,20,,,,,,,42
 // 2942,Evil Fanatics@NPC_INVINCIBLE,attack,685,1,10000,0,20000,yes,self,myhpltmaxrate,10,,,,,,,42
-// 2942,Evil Fanatics@NPC_DANCINGBLADE,attack,713,1,1000,0,15000,yes,self,always,0,,,,,,,
+2942,Evil Fanatics@NPC_DANCINGBLADE,attack,713,1,1000,0,15000,yes,self,always,0,,,,,,,
 // 2942,Evil Fanatics@NPC_PULSESTRIKE2,attack,712,1,800,0,15000,yes,self,always,0,,,,,,,
 // 2942,Evil Fanatics@NPC_DARKPIERCING,attack,715,1,2500,0,60000,yes,self,always,0,,,,,,,
 2943,Icemine@NPC_INVISIBLE,idle,353,1,10000,0,300000,no,self,always,0,,,,,,,
@@ -11755,7 +11755,7 @@
 3231,V_ALPHOCCIO@NPC_SLOWCAST,attack,672,1,200,800,30000,no,self,always,,,,,,,36,
 3231,V_ALPHOCCIO@NPC_REVERBERATION,attack,725,3,100,0,10000,yes,target,always,,,,,,,,
 3231,V_ALPHOCCIO@NPC_SUMMONSLAVE,attack,196,1,50,0,600000,yes,self,slavele,0,2234,,,,,,
-// 3231,V_ALPHOCCIO@NPC_DANCINGBLADE,attack,713,1,100,0,10000,yes,target,always,,,,,,,,
+3231,V_ALPHOCCIO@NPC_DANCINGBLADE,attack,713,1,100,0,10000,yes,target,always,,,,,,,,
 3232,V_TRENTINI@AL_TELEPORT,idle,26,1,1000,0,0,yes,self,rudeattacked,,,,,,,,
 3232,V_TRENTINI@AL_TELEPORT,walk,26,1,500,0,10000,yes,self,rudeattacked,,,,,,,,
 // 3232,V_TRENTINI@NPC_UGLYDANCE,attack,2541,5,100,1000,100000,no,self,always,,,,,,,,

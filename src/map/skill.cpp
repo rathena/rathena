@@ -452,6 +452,10 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 			return SU_LUNATICCARROTBEAT;
 		case NPC_REVERBERATION_ATK:
 			return NPC_REVERBERATION;
+		case NPC_MAGMA_ERUPTION_DOTDAMAGE:
+			return NPC_MAGMA_ERUPTION;
+		case NPC_DANCINGBLADE_ATK:
+			return NPC_DANCINGBLADE;
 	}
 	return skill_id;
 }
@@ -4222,6 +4226,7 @@ static TIMER_FUNC(skill_timerskill){
 					case SR_DRAGONCOMBO:
 					case SR_FALLENEMPIRE:
 					case SR_TIGERCANNON:
+					case NPC_DANCINGBLADE_ATK:
 						if (src->type != BL_PC)
 							continue;
 						break; // Exceptions
@@ -4296,6 +4301,15 @@ static TIMER_FUNC(skill_timerskill){
 								sc->data[SC_SPIRIT]->val3 == skl->skill_id)
 								sc->data[SC_SPIRIT]->val3 = 0; //Clear bounced spell check.
 						}
+					}
+					break;
+				case NPC_DANCINGBLADE_ATK:
+					skill_attack(BF_WEAPON,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					if (skl->type < 4) {
+						struct block_list *nbl = NULL;
+
+						nbl = battle_getenemyarea(src, target->x, target->y, 5, splash_target(src), src->id);
+						skill_addtimerskill(src, tick + 650, (nbl?nbl:target)->id, skl->x, 0, NPC_DANCINGBLADE_ATK, skl->skill_lv, skl->type + 1, 0);
 					}
 					break;
 				case WL_CHAINLIGHTNING_ATK: {
@@ -10158,6 +10172,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			map_foreachinallrange(skill_area_sub,src,skill_get_splash(skill_id, skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,(mapdata_flag_vs(mapdata)?BCT_ALL:BCT_ENEMY|BCT_SELF)|flag|1,skill_castend_nodamage_id);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		}
+		break;
+
+	case NPC_DANCINGBLADE:
+		skill_addtimerskill(src, tick + status_get_amotion(src), bl->id, 0, 0, NPC_DANCINGBLADE_ATK, skill_lv, 0, 0);
 		break;
 
 	case WL_CHAINLIGHTNING:

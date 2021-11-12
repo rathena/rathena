@@ -16789,6 +16789,34 @@ Body:
         NoOverlap: true
         PathCheck: true
         RemovedByFireRain: true
+  - Id: 713
+    Name: NPC_DANCINGBLADE
+    Description: Dancing Blade
+    MaxLevel: 1
+    Type: None
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 10
+    Hit: Single
+    HitCount: 1
+    CastTime: 3500
+    AfterCastActDelay: 3000
+    Duration1: 100
+    FixedCastTime: 1000
+  - Id: 714
+    Name: NPC_DANCINGBLADE_ATK
+    Description: Dancing Blade Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: 10
+    Hit: Single
+    HitCount: 1
   - Id: 715
     Name: NPC_DARKPIERCING
     Description: Dark Piercing
