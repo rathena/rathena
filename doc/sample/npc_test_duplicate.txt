@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20180831
+//= 20211112
 //===== Description: ========================================= 
 //= An example of how duplicate NPCs are handled:
 //=  NPC variables are shared between all duplicates.
@@ -13,19 +13,119 @@
 //============================================================
 
 prontera,150,175,4	script	Duplicate Test Script	909,{
-	mes "Hi.";
+	mes "Hi.";mes "" + .test++;
 	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
 	close;
 
 OnInit:
-	getmapxy(.map$, .x, .y, 1);
+	getmapxy(.map$, .x, .y, BL_NPC);
 	end;
 
 OnTouch:
-	getmapxy(.map$, .x, .y, 1);
+	getmapxy(.map$, .x, .y, BL_NPC);
 	emotion ET_SCISSOR;
 	end;
 }
 
 prontera,155,175,4	duplicate(Duplicate Test Script)	Duplicate Test2	909,2,2
 prontera,160,175,4	duplicate(Duplicate Test Script)	Duplicate Test3	909,3,3
+
+
+prontera,150,168,4	script	Duplicate Command Test	909,{
+	mes "Would you like to create a new npc ?";
+	.@original_npc$ = "my_test_npc";
+	switch(.@s = select("Provide No info:Witn Name:With Name and Map:With Name, Map and look:With Name, Map, look and dir:cancel")){
+		clear;
+		case 1:
+		case 2:
+			if(.@s == 2){
+				mes "Input Npc Duplicate Name";
+				input .@name$;
+				.@new_npc$ = duplicate(.@original_npc$,.@name$);
+			}else{
+				.@new_npc$ = duplicate(.@original_npc$);
+			}
+			getmapxy(.@m$,.@x,.@y,BL_NPC,.@original_npc$);
+			if(!$@y) $@y = .@y;
+			$@y -= 2;
+			if(!(.@id = getnpcid(0,.@new_npc$))){
+				mes "Something went wrong!";
+				mes "The new npc is not found!";
+				end;
+			}
+			unitwarp(.@id,.@m$,.@x,$@y);
+			//if(.@s != 2) setnpcdisplay(.@new_npc$, "my test npc", 445);
+			mes "The npc is moved to " + .@m$ + "," + .@x + "," + $@y;
+			mes "Done";
+			end;
+		case 3:
+		case 4:
+		case 5:
+			mes "Input Npc Duplicate Name";
+			input .@name$;
+			clear;
+			mes "Input Map Name";
+			mes "recommended 'prontera'";
+			input .@map$;
+			clear;
+			mes "Input x";
+			mes "recommended '155'";
+			input .@x,0;
+			clear;
+			mes "Input y";
+			mes "recommended '168'";
+			input .@y,0;
+			clear;
+			switch(.@s){
+				case 3:
+					duplicate(.@original_npc$,.@name$,.@map$,.@x,.@y);
+					break;
+				case 4:
+					mes "Input look";
+					mes "recommended '445'";
+					input .@look,0;
+					duplicate(.@original_npc$,.@name$,.@map$,.@x,.@y,.@look);
+					break;
+				case 5:
+					mes "Input look";
+					mes "recommended '445'";
+					input .@look,0;
+					clear;
+					mes "Input dir";
+					mes "between 0 and 7";
+					input .@dir,0,7;
+					duplicate(.@original_npc$,.@name$,.@map$,.@x,.@y,.@look,.@dir);
+					break;
+			}
+			mes "Done";
+			close;
+	}
+end;
+OnInit:
+	duplicate("my_test_npc","duuup_oninit","prontera",155,160,443,2);
+end;
+}
+
+prontera,150,165,0	script	test npc::my_test_npc	444,{
+mes "" + .test++;
+	getmapxy(.map$, .x, .y, BL_NPC);
+	mes "Hi.";
+	mes "My Unique Name is: " + strnpcinfo(3);
+	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
+	mes "OnInit " + .ONINIT_TEST;
+	close;
+
+//OnTimer10000:
+//	announce("My name is " + strnpcinfo(3),0);
+//	setnpctimer(0);
+//	end;
+
+OnInit:
+	$@OnInit_test++;
+	debugmes $@OnInit_test + "";
+	
+	.ONINIT_TEST = $@OnInit_test;
+	//initnpctimer;
+	
+	end;
+}

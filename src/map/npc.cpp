@@ -4623,9 +4623,9 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 	return vector.size();
 }
 
-struct npc_data* dup_npc(npc_data* dnd, const char* name)
+struct npc_data* dup_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m, int16 x, int16 y, int class_,uint8 dir)
 {
-	npc_data* nd = npc_create_npc(dnd->bl.m, dnd->bl.x, dnd->bl.y);
+	npc_data* nd = npc_create_npc(m, x, y);
 
 	nd->src_id = dnd->src_id ? dnd->src_id : dnd->bl.id;
 	nd->class_ = dnd->class_;
@@ -4676,12 +4676,12 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 		map_addnpc(nd->bl.m, nd);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
-		nd->ud.dir = dnd->ud.dir;
+		nd->ud.dir = dir;
 		npc_setcells(nd);
 		if (map_addblock(&nd->bl))
 			return nd;
 		if (nd->class_ != JT_FAKENPC) {
-			status_set_viewdata(&nd->bl, nd->class_);
+			status_set_viewdata(&nd->bl, class_);
 			if (map_getmapdata(nd->bl.m)->users)
 				clif_spawn(&nd->bl);
 		}
@@ -4689,30 +4689,39 @@ struct npc_data* dup_npc(npc_data* dnd, const char* name)
 	else {
 		map_addiddb(&nd->bl);
 	}
-	if (name == nullptr) {
-		safesnprintf(nd->exname, ARRAYLENGTH(nd->exname), "dup_%d", nd->bl.id);
-		//Making sure the generated name is not used for another npc.
-		int i = 0;
-		while (npc_name2id(nd->exname) != nullptr) {
-			++i;
-			snprintf(nd->exname, ARRAYLENGTH(nd->exname), "%d_%d_%d_%d", i, nd->bl.m, nd->bl.x, nd->bl.y);
-		}
+
+	safesnprintf(nd->exname, ARRAYLENGTH(nd->exname), "dup_%d", nd->bl.id);
+	//Making sure the generated name is not used for another npc.
+	int i = 0;
+	while (npc_name2id(nd->exname) != nullptr) {
+		++i;
+		snprintf(nd->exname, ARRAYLENGTH(nd->exname), "%d_%d_%d_%d", i, nd->bl.m, nd->bl.x, nd->bl.y);
+	}
+
+	if (strlen(name) != 0) {
+		strcpy(nd->name, name);
 	}
 	else {
-		strcpy(nd->exname, name);
+		strcpy(nd->name, dnd->name);
 	}
+
 	strdb_put(npcname_db, nd->exname, nd);
 
 	if (nd->subtype != NPCTYPE_SCRIPT)
 		return nd;
+	nd->u.scr.timerid = INVALID_TIMER;
 
 	for (int i = 0; i < nd->u.scr.label_list_num; i++) {
 		if (npc_event_export(nd, i)) {
 			ShowWarning("npc_parse_duplicate : duplicate event %s::%s \n", nd->exname, nd->u.scr.label_list[i].name);
 		}
 		npc_timerevent_export(nd, i);
+		//if(strcasecmp(nd->u.scr.label_list[i].name, script_config.init_event_name) == 0) {
+		//	char evname[EVENT_NAME_LENGTH];
+		//	safesnprintf(evname, EVENT_NAME_LENGTH, "%s::%s", nd->exname, nd->u.scr.label_list[i].name);
+		//	npc_event_do(evname);
+		//}
 	}
-	nd->u.scr.timerid = INVALID_TIMER;
 	return nd;
 }
 

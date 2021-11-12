@@ -24238,8 +24238,8 @@ BUILDIN_FUNC(unloadnpc) {
 
 /**
  * Duplicate a NPC.
- * Return the duplicate name on success.
- * duplicate(<"NPC name">{,<"Duplicate NPC name">});
+ * Return the duplicate Unique name on success.
+ * duplicate "<NPC name>"{,"<Duplicate NPC name>"{,"<map>",<x>,<y>{,<sprite>{,<dir>}}}};
  */
 BUILDIN_FUNC(duplicate)
 {
@@ -24250,19 +24250,40 @@ BUILDIN_FUNC(duplicate)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	npc_data* nd;
+	char name[NPC_NAME_LENGTH + 1];
+	memset(&name[0], 0, sizeof(name));
+	int16 m = dnd->bl.m;
+	int16 x = dnd->bl.x;
+	int16 y = dnd->bl.y;
+	int class_ = dnd->class_;
+	uint8 dir = dnd->ud.dir;
 
 	if (script_hasdata(st, 3)) {
 		if (npc_name2id(script_getstr(st, 3)) != nullptr) {
 			ShowError("buildin_duplicate: NPC name '%s' is already in use!\n", script_getstr(st, 3));
 			return SCRIPT_CMD_FAILURE;
 		}
-		nd = dup_npc(dnd, script_getstr(st, 3));
+		strcpy(name, script_getstr(st, 3));
 	}
-	else {
-		nd = dup_npc(dnd, nullptr);
+	if (script_hasdata(st, 4)) {
+		if (!script_hasdata(st, 5) || !script_hasdata(st, 6)) {
+			ShowError("buildin_duplicate: NPC map is provided but x and y are missing!\n");
+			return SCRIPT_CMD_FAILURE;
+		}
+		if ((m = map_mapname2mapid(script_getstr(st, 4))) < 0) {
+			ShowError("buildin_duplicate: NPC map '%s' in not found!\n", script_getstr(st, 4));
+			return SCRIPT_CMD_FAILURE;
+		}
+		x = script_getnum(st, 5);
+		y = script_getnum(st, 6);
 	}
-
+	if (script_hasdata(st, 7)) {
+		class_ = script_getnum(st, 7);
+	}
+	if (script_hasdata(st, 8)) {
+		dir = script_getnum(st, 8);
+	}
+	npc_data* nd = dup_npc(dnd, name, m, x, y, class_,dir);
 	script_pushstr(st, aStrdup(nd->exname));
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -25819,7 +25840,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(jobcanentermap,"s?"),
 	BUILDIN_DEF(openstorage2,"ii?"),
 	BUILDIN_DEF(unloadnpc, "s"),
-	BUILDIN_DEF(duplicate, "s?"),
+	BUILDIN_DEF(duplicate, "s??????"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),
