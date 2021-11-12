@@ -488,8 +488,7 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (name.size() > NAME_LENGTH) {
-			this->invalidWarning(node["AegisName"], "%s's size exceeds %d, skipping.\n", name.c_str(), NAME_LENGTH);
-			return 0;
+			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
 		safestrncpy(mercenary->sprite, name.c_str(), sizeof(mercenary->sprite));
@@ -501,6 +500,11 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
+		if (name.size() > NAME_LENGTH) {
+			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
+		}
+
+		name.resize(NAME_LENGTH);
 		safestrncpy(mercenary->name, name.c_str(), sizeof(mercenary->name));
 	}
 
@@ -509,6 +513,11 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "Level", level))
 			return 0;
+
+		if (level > MAX_LEVEL) {
+			this->invalidWarning(node["Level"], "Level %d exceeds MAX_LEVEL, capping to %d.\n", level, MAX_LEVEL);
+			level = MAX_LEVEL;
+		}
 
 		mercenary->lv = level;
 	} else {
@@ -706,12 +715,12 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(size_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Size"], "Unknown mercenary size %s, defaulting to Size_Small.\n", size.c_str());
+			this->invalidWarning(node["Size"], "Unknown mercenary size %s, defaulting to Small.\n", size.c_str());
 			constant = SZ_SMALL;
 		}
 
 		if (constant < SZ_SMALL || constant > SZ_BIG) {
-			this->invalidWarning(node["Size"], "Invalid mercenary size %s, defaulting to Size_Small.\n", size.c_str());
+			this->invalidWarning(node["Size"], "Invalid mercenary size %s, defaulting to Small.\n", size.c_str());
 			constant = SZ_SMALL;
 		}
 
@@ -731,12 +740,12 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(race_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Race"], "Unknown mercenary race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			this->invalidWarning(node["Race"], "Unknown mercenary race %s, defaulting to Formless.\n", race.c_str());
 			constant = RC_FORMLESS;
 		}
 
 		if (!CHK_RACE(constant)) {
-			this->invalidWarning(node["Race"], "Invalid mercenary race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			this->invalidWarning(node["Race"], "Invalid mercenary race %s, defaulting to Formless.\n", race.c_str());
 			constant = RC_FORMLESS;
 		}
 
@@ -756,12 +765,12 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(ele_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Element"], "Unknown mercenary element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			this->invalidWarning(node["Element"], "Unknown mercenary element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
 		if (!CHK_ELEMENT(constant)) {
-			this->invalidWarning(node["Element"], "Invalid mercenary element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			this->invalidWarning(node["Element"], "Invalid mercenary element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
@@ -811,7 +820,7 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		mercenary->status.adelay = speed;
+		mercenary->status.adelay = cap_value(speed, 0, 4000);
 	} else {
 		if (!exists)
 			mercenary->status.adelay = 4000;
@@ -823,7 +832,7 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		mercenary->status.amotion = speed;
+		mercenary->status.amotion = cap_value(speed, 0, 2000);
 	} else {
 		if (!exists)
 			mercenary->status.amotion = 2000;
