@@ -4322,7 +4322,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AegisName", name))
 			return 0;
 
-		if (name.length() > NAME_LENGTH) {
+		if (name.size() > NAME_LENGTH) {
 			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
@@ -4336,7 +4336,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
-		if (name.length() > NAME_LENGTH) {
+		if (name.size() > NAME_LENGTH) {
 			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
@@ -4350,7 +4350,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "JapaneseName", name))
 			return 0;
 
-		if (name.length() > NAME_LENGTH) {
+		if (name.size() > NAME_LENGTH) {
 			this->invalidWarning(node["JapaneseName"], "JapaneseName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
@@ -4366,6 +4366,11 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "Level", level))
 			return 0;
+
+		if (level > MAX_LEVEL) {
+			this->invalidWarning(node["Level"], "Level %d exceeds MAX_LEVEL, capping to %d.\n", level, MAX_LEVEL);
+			level = MAX_LEVEL;
+		}
 
 		mob->lv = level;
 	} else {
@@ -4617,12 +4622,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(size_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Size"], "Unknown monster size %s, defaulting to Size_Small.\n", size.c_str());
+			this->invalidWarning(node["Size"], "Unknown monster size %s, defaulting to Small.\n", size.c_str());
 			constant = SZ_SMALL;
 		}
 
 		if (constant < SZ_SMALL || constant > SZ_BIG) {
-			this->invalidWarning(node["Size"], "Invalid monster size %s, defaulting to Size_Small.\n", size.c_str());
+			this->invalidWarning(node["Size"], "Invalid monster size %s, defaulting to Small.\n", size.c_str());
 			constant = SZ_SMALL;
 		}
 
@@ -4642,12 +4647,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(race_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Race"], "Unknown monster race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			this->invalidWarning(node["Race"], "Unknown monster race %s, defaulting to Formless.\n", race.c_str());
 			constant = RC_FORMLESS;
 		}
 
 		if (!CHK_RACE(constant)) {
-			this->invalidWarning(node["Race"], "Invalid monster race %s, defaulting to RC_FORMLESS.\n", race.c_str());
+			this->invalidWarning(node["Race"], "Invalid monster race %s, defaulting to Formless.\n", race.c_str());
 			constant = RC_FORMLESS;
 		}
 
@@ -4696,12 +4701,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(ele_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Element"], "Unknown monster element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			this->invalidWarning(node["Element"], "Unknown monster element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
 		if (!CHK_ELEMENT(constant)) {
-			this->invalidWarning(node["Element"], "Invalid monster element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
+			this->invalidWarning(node["Element"], "Invalid monster element %s, defaulting to Neutral.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
@@ -4806,12 +4811,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(ai_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Ai"], "Unknown monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
+			this->invalidWarning(node["Ai"], "Unknown monster AI %s, defaulting to 06.\n", ai.c_str());
 			constant = MONSTER_TYPE_06;
 		}
 
 		if (constant < MD_NONE || constant > MD_MASK) {
-			this->invalidWarning(node["Ai"], "Invalid monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
+			this->invalidWarning(node["Ai"], "Invalid monster AI %s, defaulting to 06.\n", ai.c_str());
 			constant = MONSTER_TYPE_06;
 		}
 
@@ -4831,12 +4836,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(class_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Class"], "Unknown monster class %s, defaulting to CLASS_NORMAL.\n", class_.c_str());
+			this->invalidWarning(node["Class"], "Unknown monster class %s, defaulting to Normal.\n", class_.c_str());
 			constant = CLASS_NORMAL;
 		}
 
 		if (constant < CLASS_NORMAL || constant > CLASS_EVENT) {
-			this->invalidWarning(node["Class"], "Invalid monster class %s, defaulting to CLASS_NORMAL.\n", class_.c_str());
+			this->invalidWarning(node["Class"], "Invalid monster class %s, defaulting to Normal.\n", class_.c_str());
 			constant = CLASS_NORMAL;
 		}
 
