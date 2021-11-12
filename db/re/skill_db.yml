@@ -16789,6 +16789,26 @@ Body:
         NoOverlap: true
         PathCheck: true
         RemovedByFireRain: true
+  - Id: 712
+    Name: NPC_PULSESTRIKE2
+    Description: Pulse Strike 2
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      TargetTrap: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Dark
+    SplashArea: 5
+    Knockback: 3
+    Duration1: 1000
   - Id: 713
     Name: NPC_DANCINGBLADE
     Description: Dancing Blade

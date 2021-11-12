@@ -6808,6 +6808,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NPC_HELLBURNING:
 						skillratio += 900;
 						break;
+					case NPC_PULSESTRIKE2:
+						skillratio += 100;
+						break;
 					case SP_CURSEEXPLOSION:
 						if (tsc && tsc->data[SC_SOULCURSE])
 							skillratio += 1400 + 200 * skill_lv;

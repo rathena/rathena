@@ -4407,6 +4407,9 @@ static TIMER_FUNC(skill_timerskill){
 						}
 					}
 					break;
+				case NPC_PULSESTRIKE2:
+					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
+					break;
 				default:
 					skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
@@ -5124,6 +5127,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case ASC_METEORASSAULT:
 	case GS_SPREADATTACK:
 	case NPC_PULSESTRIKE:
+	case NPC_PULSESTRIKE2:
 	case NPC_HELLJUDGEMENT:
 	case NPC_VAMPIRE_GIFT:
 	case NPC_MAXPAIN_ATK:
@@ -11632,6 +11636,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		}
 		break;
+
+	case NPC_PULSESTRIKE2:
+		for (int i = 0; i < 3; i++)
+			skill_addtimerskill(src, tick + i * skill_get_time(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
+		break;
+
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skill_id);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);

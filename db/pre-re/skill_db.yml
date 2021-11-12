@@ -16307,6 +16307,10 @@ Body:
     MaxLevel: 1
     Flags:
       ShowScale: true
+  - Id: 712
+    Name: NPC_PULSESTRIKE2
+    Description: Pulse Strike 2
+    MaxLevel: 1
   - Id: 713
     Name: NPC_DANCINGBLADE
     Description: Dancing Blade
