@@ -9978,7 +9978,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else {
 			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_MOB,
 				src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
-			// clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		}
 		break;
 
