@@ -9823,7 +9823,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 					safestrncpy(packet.name, ((TBL_NPC *)bl)->name, NAME_LENGTH);
 					break;
 				case BL_ELEM:
-					safestrncpy(packet.name, ((TBL_ELEM *)bl)->db->name, NAME_LENGTH);
+					safestrncpy(packet.name, ((TBL_ELEM *)bl)->db->name.c_str(), NAME_LENGTH);
 					break;
 			}
 

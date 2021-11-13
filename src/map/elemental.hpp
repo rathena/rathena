@@ -48,7 +48,7 @@ struct s_elemental_skill {
 
 struct s_elemental_db {
 	int32 class_;
-	char sprite[NAME_LENGTH], name[NAME_LENGTH];
+	std::string sprite, name;
 	uint16 lv;
 	uint16 range2, range3;
 	status_data status;

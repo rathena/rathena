@@ -770,7 +770,12 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AegisName", name))
 			return 0;
 
-		safestrncpy(elemental->sprite, name.c_str(), sizeof(elemental->sprite));
+		if (name.size() > NAME_LENGTH) {
+			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
+		}
+
+		name.resize(NAME_LENGTH);
+		elemental->sprite = name;
 	}
 
 	if (this->nodeExists(node, "Name")) {
@@ -779,7 +784,13 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
-		safestrncpy(elemental->name, name.c_str(), sizeof(elemental->name));
+
+		if (name.size() > NAME_LENGTH) {
+			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
+		}
+
+		name.resize(NAME_LENGTH);
+		elemental->name = name;
 	}
 
 	if (this->nodeExists(node, "Level")) {
