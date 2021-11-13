@@ -120,11 +120,10 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 }
 
 t_tick elemental_get_lifetime(struct s_elemental_data *ed) {
-	const struct TimerData * td;
 	if( ed == NULL || ed->summon_timer == INVALID_TIMER )
 		return 0;
 
-	td = get_timer(ed->summon_timer);
+	const struct TimerData * td = get_timer(ed->summon_timer);
 	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
@@ -148,10 +147,12 @@ int elemental_save(struct s_elemental_data *ed) {
 
 static TIMER_FUNC(elemental_summon_end){
 	struct map_session_data *sd;
-	struct s_elemental_data *ed;
 
 	if( (sd = map_id2sd(id)) == NULL )
 		return 1;
+
+	struct s_elemental_data *ed;
+
 	if( (ed = sd->ed) == NULL )
 		return 1;
 
@@ -174,11 +175,9 @@ void elemental_summon_stop(struct s_elemental_data *ed) {
 }
 
 int elemental_delete(struct s_elemental_data *ed) {
-	struct map_session_data *sd;
-
 	nullpo_ret(ed);
 
-	sd = ed->master;
+	struct map_session_data *sd = ed->master;
 	ed->elemental.life_time = 0;
 
 	elemental_clean_effect(ed);
@@ -208,7 +207,6 @@ void elemental_summon_init(struct s_elemental_data *ed) {
  */
 int elemental_data_received(struct s_elemental *ele, bool flag) {
 	struct map_session_data *sd;
-	struct s_elemental_data *ed;
 
 	if( (sd = map_charid2sd(ele->char_id)) == NULL )
 		return 0;
@@ -219,6 +217,8 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		sd->status.ele_id = 0;
 		return 0;
 	}
+
+	struct s_elemental_data *ed;
 
 	if( !sd->ed ) {	// Initialize it after first summon.
 		sd->ed = ed = (struct s_elemental_data*)aCalloc(1,sizeof(struct s_elemental_data));
@@ -267,12 +267,10 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 }
 
 int elemental_clean_single_effect(struct s_elemental_data *ed, uint16 skill_id) {
-	struct block_list *bl;
-	sc_type type = status_skill2sc(skill_id);
-
 	nullpo_ret(ed);
 
-	bl = battle_get_master(&ed->bl);
+	sc_type type = status_skill2sc(skill_id);
+	struct block_list *bl = battle_get_master(&ed->bl);
 
 	if( type ) {
 		switch( type ) {
@@ -314,9 +312,9 @@ int elemental_clean_single_effect(struct s_elemental_data *ed, uint16 skill_id) 
 }
 
 int elemental_clean_effect(struct s_elemental_data *ed) {
-	struct map_session_data *sd;
-
 	nullpo_ret(ed);
+
+	struct map_session_data *sd;
 
 	// Elemental side
 	status_change_end(&ed->bl, SC_TROPIC, INVALID_TIMER);
@@ -488,8 +486,6 @@ int elemental_change_mode_ack(struct s_elemental_data *ed, e_elemental_skillmode
  * Change elemental mode.
  *-------------------------------------------------------------*/
 int elemental_change_mode(struct s_elemental_data *ed, enum e_mode mode) {
-	e_elemental_skillmode skill_mode;
-
 	nullpo_ret(ed);
 
 	// Remove target
@@ -499,6 +495,7 @@ int elemental_change_mode(struct s_elemental_data *ed, enum e_mode mode) {
 	if(ed->elemental.mode != mode ) elemental_clean_effect(ed);
 
 	ed->battle_status.mode = ed->elemental.mode = mode;
+	e_elemental_skillmode skill_mode;
 
 	// Normalize elemental mode to elemental skill mode.
 	if( mode == EL_MODE_AGGRESSIVE ) skill_mode = EL_SKILLMODE_AGGRESSIVE;	// Aggressive spirit mode -> Aggressive spirit skill.
@@ -574,11 +571,10 @@ int elemental_set_target( struct map_session_data *sd, struct block_list *bl ) {
 }
 
 static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap) {
+	nullpo_ret(bl);
+
 	struct s_elemental_data *ed;
 	struct block_list **target;
-	int dist;
-
-	nullpo_ret(bl);
 
 	ed = va_arg(ap,struct s_elemental_data *);
 	target = va_arg(ap,struct block_list**);
@@ -589,6 +585,8 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 
 	if( battle_check_target(&ed->bl,bl,BCT_ENEMY) <= 0 )
 		return 0;
+
+	int dist;
 
 	switch( bl->type ) {
 		case BL_PC:
@@ -610,10 +608,6 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 }
 
 static int elemental_ai_sub_timer(struct s_elemental_data *ed, struct map_session_data *sd, t_tick tick) {
-	struct block_list *target = NULL;
-	int master_dist, view_range;
-	enum e_mode mode;
-
 	nullpo_ret(ed);
 	nullpo_ret(sd);
 
@@ -658,12 +652,14 @@ static int elemental_ai_sub_timer(struct s_elemental_data *ed, struct map_sessio
 	if(ed->ud.walkpath.path_pos < ed->ud.walkpath.path_len && ed->ud.target == sd->bl.id)
 		return 0; //No thinking until be near the master.
 
+	int master_dist, view_range;
+
 	if( ed->sc.count && ed->sc.data[SC_BLIND] )
 		view_range = 3;
 	else
 		view_range = ed->db->range2;
 
-	mode = status_get_mode(&ed->bl);
+	enum e_mode mode = status_get_mode(&ed->bl);
 
 	master_dist = distance_bl(&sd->bl, &ed->bl);
 	if( master_dist > AREA_SIZE ) {	// Master out of vision range.
@@ -684,6 +680,8 @@ static int elemental_ai_sub_timer(struct s_elemental_data *ed, struct map_sessio
 		   && unit_walktoxy(&ed->bl, x, y, 0) )
 			return 0;
 	}
+
+	struct block_list *target = NULL;
 
 	if( mode == EL_MODE_AGGRESSIVE ) {
 		target = map_id2bl(ed->ud.target);
