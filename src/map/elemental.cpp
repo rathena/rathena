@@ -872,6 +872,11 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "Defense", def))
 			return 0;
 
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["Defense"], "Invalid defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
+
 		elemental->status.def = static_cast<defType>(def);
 	} else {
 		if (!exists)
@@ -883,6 +888,11 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "MagicDefense", def))
 			return 0;
+
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["MagicDefense"], "Invalid magic defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
 
 		elemental->status.mdef = static_cast<defType>(def);
 	} else {
