@@ -65,7 +65,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	case BL_PET: return &((struct pet_data*)bl)->ud;
 	case BL_NPC: return &((struct npc_data*)bl)->ud;
 	case BL_HOM: return &((struct homun_data*)bl)->ud;
-	case BL_MER: return &((struct mercenary_data*)bl)->ud;
+	case BL_MER: return &((struct s_mercenary_data*)bl)->ud;
 	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
 	default : return NULL;
 	}
@@ -3207,7 +3207,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;
 		}
 		case BL_MER: {
-			struct mercenary_data *md = (struct mercenary_data *)bl;
+			struct s_mercenary_data *md = (struct s_mercenary_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick;
 
@@ -3548,7 +3548,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_MER: {
-			struct mercenary_data *md = (TBL_MER*)bl;
+			struct s_mercenary_data *md = (TBL_MER*)bl;
 			struct map_session_data *sd = md->master;
 
 			if( mercenary_get_lifetime(md) > 0 )

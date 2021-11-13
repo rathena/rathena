@@ -30,7 +30,7 @@ enum MERID {
 
 struct s_mercenary_db {
 	int32 class_;
-	char sprite[NAME_LENGTH], name[NAME_LENGTH];
+	std::string sprite, name;
 	uint16 lv;
 	uint16 range2, range3;
 	status_data status;
@@ -38,7 +38,7 @@ struct s_mercenary_db {
 	std::unordered_map<uint16, uint16> skill;
 };
 
-struct mercenary_data {
+struct s_mercenary_data {
 	struct block_list bl;
 	struct unit_data ud;
 	struct view_data *vd;
@@ -73,23 +73,23 @@ extern MercenaryDatabase mercenary_db;
 
 bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime);
 bool mercenary_recv_data(struct s_mercenary *merc, bool flag);
-void mercenary_save(struct mercenary_data *md);
+void mercenary_save(struct s_mercenary_data *md);
 
-void mercenary_heal(struct mercenary_data *md, int hp, int sp);
-bool mercenary_dead(struct mercenary_data *md);
+void mercenary_heal(struct s_mercenary_data *md, int hp, int sp);
+bool mercenary_dead(struct s_mercenary_data *md);
 
-int mercenary_delete(struct mercenary_data *md, int reply);
-void mercenary_contract_stop(struct mercenary_data *md);
+int mercenary_delete(struct s_mercenary_data *md, int reply);
+void mercenary_contract_stop(struct s_mercenary_data *md);
 
-t_tick mercenary_get_lifetime(struct mercenary_data *md);
-enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md);
-int mercenary_get_faith(struct mercenary_data *md);
-void mercenary_set_faith(struct mercenary_data *md, int value);
-int mercenary_get_calls(struct mercenary_data *md);
-void mercenary_set_calls(struct mercenary_data *md, int value);
-void mercenary_kills(struct mercenary_data *md);
+t_tick mercenary_get_lifetime(struct s_mercenary_data *md);
+enum e_MercGuildType mercenary_get_guild(struct s_mercenary_data *md);
+int mercenary_get_faith(struct s_mercenary_data *md);
+void mercenary_set_faith(struct s_mercenary_data *md, int value);
+int mercenary_get_calls(struct s_mercenary_data *md);
+void mercenary_set_calls(struct s_mercenary_data *md, int value);
+void mercenary_kills(struct s_mercenary_data *md);
 
-uint16 mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
+uint16 mercenary_checkskill(struct s_mercenary_data *md, uint16 skill_id);
 
 void do_init_mercenary(void);
 void do_final_mercenary(void);

@@ -54,16 +54,16 @@ struct view_data *mercenary_get_viewdata( uint16 class_ ){
 * @return false if failed, true otherwise
 **/
 bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime) {
-	struct s_mercenary merc;
 	nullpo_retr(false,sd);
 
 	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(class_);
 
-	if( !db ){
+	if (db == nullptr) {
+		ShowError("mercenary_create: Unknown mercenary class %d.\n", class_);
 		return false;
 	}
 
-	memset(&merc,0,sizeof(struct s_mercenary));
+	struct s_mercenary merc = {};
 
 	merc.char_id = sd->status.char_id;
 	merc.class_ = class_;
@@ -82,12 +82,11 @@ bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int l
 * @param md The Mercenary
 * @return The Lifetime
 **/
-t_tick mercenary_get_lifetime(struct mercenary_data *md) {
-	const struct TimerData * td;
+t_tick mercenary_get_lifetime(struct s_mercenary_data *md) {
 	if( md == NULL || md->contract_timer == INVALID_TIMER )
 		return 0;
 
-	td = get_timer(md->contract_timer);
+	const struct TimerData *td = get_timer(md->contract_timer);
 	return (td != NULL) ? DIFF_TICK(td->tick, gettick()) : 0;
 }
 
@@ -96,13 +95,11 @@ t_tick mercenary_get_lifetime(struct mercenary_data *md) {
 * @param md Mercenary
 * @return enum e_MercGuildType
 **/
-enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md){
-	uint16 class_;
-
+enum e_MercGuildType mercenary_get_guild(struct s_mercenary_data *md){
 	if( md == NULL || md->db == NULL )
 		return NONE_MERC_GUILD;
 
-	class_ = md->db->class_;
+	uint16 class_ = md->db->class_;
 
 	if( class_ >= MERID_MER_ARCHER01 && class_ <= MERID_MER_ARCHER10 )
 		return ARCH_MERC_GUILD;
@@ -119,14 +116,13 @@ enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md){
 * @param md Mercenary
 * @return the Faith value
 **/
-int mercenary_get_faith(struct mercenary_data *md) {
+int mercenary_get_faith(struct s_mercenary_data *md) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return 0;
 
-	guild = mercenary_get_guild(md);
+	enum e_MercGuildType guild = mercenary_get_guild(md);
 
 	switch( guild ){
 		case ARCH_MERC_GUILD:
@@ -146,15 +142,14 @@ int mercenary_get_faith(struct mercenary_data *md) {
 * @param md The Mercenary
 * @param value Faith Value
 **/
-void mercenary_set_faith(struct mercenary_data *md, int value) {
+void mercenary_set_faith(struct s_mercenary_data *md, int value) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
-	int *faith;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return;
 
-	guild = mercenary_get_guild(md);
+	enum e_MercGuildType guild = mercenary_get_guild(md);
+	int *faith;
 
 	switch( guild ){
 		case ARCH_MERC_GUILD:
@@ -180,14 +175,13 @@ void mercenary_set_faith(struct mercenary_data *md, int value) {
 * @param md Mercenary
 * @return Number of calls
 **/
-int mercenary_get_calls(struct mercenary_data *md) {
+int mercenary_get_calls(struct s_mercenary_data *md) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return 0;
 
-	guild = mercenary_get_guild(md);
+	enum e_MercGuildType guild = mercenary_get_guild(md);
 
 	switch( guild ){
 		case ARCH_MERC_GUILD:
@@ -207,15 +201,14 @@ int mercenary_get_calls(struct mercenary_data *md) {
 * @param md Mercenary
 * @param value
 **/
-void mercenary_set_calls(struct mercenary_data *md, int value) {
+void mercenary_set_calls(struct s_mercenary_data *md, int value) {
 	struct map_session_data *sd;
-	enum e_MercGuildType guild;
-	int *calls;
 
 	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
 		return;
 
-	guild = mercenary_get_guild(md);
+	enum e_MercGuildType guild = mercenary_get_guild(md);
+	int *calls;
 
 	switch( guild ){
 		case ARCH_MERC_GUILD:
@@ -239,7 +232,7 @@ void mercenary_set_calls(struct mercenary_data *md, int value) {
 * Save Mercenary data
 * @param md Mercenary
 **/
-void mercenary_save(struct mercenary_data *md) {
+void mercenary_save(struct s_mercenary_data *md) {
 	md->mercenary.hp = md->battle_status.hp;
 	md->mercenary.sp = md->battle_status.sp;
 	md->mercenary.life_time = mercenary_get_lifetime(md);
@@ -252,7 +245,7 @@ void mercenary_save(struct mercenary_data *md) {
 **/
 static TIMER_FUNC(merc_contract_end){
 	struct map_session_data *sd;
-	struct mercenary_data *md;
+	struct s_mercenary_data *md;
 
 	if( (sd = map_id2sd(id)) == NULL )
 		return 1;
@@ -276,7 +269,7 @@ static TIMER_FUNC(merc_contract_end){
 * @param md Mercenary
 * @param reply
 **/
-int mercenary_delete(struct mercenary_data *md, int reply) {
+int mercenary_delete(struct s_mercenary_data *md, int reply) {
 	struct map_session_data *sd = md->master;
 	md->mercenary.life_time = 0;
 
@@ -305,7 +298,7 @@ int mercenary_delete(struct mercenary_data *md, int reply) {
 * Stop contract of Mercenary
 * @param md Mercenary
 **/
-void mercenary_contract_stop(struct mercenary_data *md) {
+void mercenary_contract_stop(struct s_mercenary_data *md) {
 	nullpo_retv(md);
 	if( md->contract_timer != INVALID_TIMER )
 		delete_timer(md->contract_timer, merc_contract_end);
@@ -316,7 +309,7 @@ void mercenary_contract_stop(struct mercenary_data *md) {
 * Init contract of Mercenary
 * @param md Mercenary
 **/
-void merc_contract_init(struct mercenary_data *md) {
+void merc_contract_init(struct s_mercenary_data *md) {
 	if( md->contract_timer == INVALID_TIMER )
 		md->contract_timer = add_timer(gettick() + md->mercenary.life_time, merc_contract_end, md->master->bl.id, 0);
 
@@ -332,19 +325,21 @@ void merc_contract_init(struct mercenary_data *md) {
 bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 {
 	struct map_session_data *sd;
-	struct mercenary_data *md;
-
-	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(merc->class_);
 
 	if( (sd = map_charid2sd(merc->char_id)) == NULL )
 		return false;
+
+	std::shared_ptr<s_mercenary_db> db = mercenary_db.find(merc->class_);
+
 	if( !flag || !db ){ // Not created - loaded - DB info
 		sd->status.mer_id = 0;
 		return false;
 	}
 
+	struct s_mercenary_data *md;
+
 	if( !sd->md ) {
-		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
+		sd->md = md = (struct s_mercenary_data*)aCalloc(1,sizeof(struct s_mercenary_data));
 		md->bl.type = BL_MER;
 		md->bl.id = npc_get_new_npc_id();
 		md->devotion_flag = 0;
@@ -395,7 +390,7 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 * @param hp HP amount
 * @param sp SP amount
 **/
-void mercenary_heal(struct mercenary_data *md, int hp, int sp) {
+void mercenary_heal(struct s_mercenary_data *md, int hp, int sp) {
 	if (md->master == NULL)
 		return;
 	if( hp )
@@ -409,7 +404,7 @@ void mercenary_heal(struct mercenary_data *md, int hp, int sp) {
  * @param md: Mercenary
  * @return false for status_damage
  */
-bool mercenary_dead(struct mercenary_data *md) {
+bool mercenary_dead(struct s_mercenary_data *md) {
 	mercenary_delete(md, 1);
 	return false;
 }
@@ -418,18 +413,17 @@ bool mercenary_dead(struct mercenary_data *md) {
 * Gives bonus to Mercenary
 * @param md Mercenary
 **/
-void mercenary_killbonus(struct mercenary_data *md) {
-	const enum sc_type scs[] = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
-	uint8 index = rnd() % ARRAYLENGTH(scs);
+void mercenary_killbonus(struct s_mercenary_data *md) {
+	std::vector<sc_type> scs = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
 
-	sc_start(&md->bl,&md->bl, scs[index], 100, rnd() % 5, 600000);
+	sc_start(&md->bl,&md->bl, util::vector_random(scs), 100, rnd() % 5, 600000);
 }
 
 /**
 * Mercenary does kill
 * @param md Mercenary
 **/
-void mercenary_kills(struct mercenary_data *md){
+void mercenary_kills(struct s_mercenary_data *md){
 	if(md->mercenary.kill_count <= (INT_MAX-1)) //safe cap to INT_MAX
 		md->mercenary.kill_count++;
 
@@ -449,7 +443,7 @@ void mercenary_kills(struct mercenary_data *md){
 * @param skill_id The skill
 * @return Skill Level or 0 if Mercenary doesn't have the skill
 **/
-uint16 mercenary_checkskill(struct mercenary_data *md, uint16 skill_id) {
+uint16 mercenary_checkskill(struct s_mercenary_data *md, uint16 skill_id) {
 	if (!md || !md->db || md->db->skill.count(skill_id) == 0)
 		return 0;
 	return md->db->skill[skill_id];
@@ -491,7 +485,8 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), NAME_LENGTH - 1);
 		}
 
-		safestrncpy(mercenary->sprite, name.c_str(), sizeof(mercenary->sprite));
+		name.resize(NAME_LENGTH);
+		mercenary->sprite = name;
 	}
 
 	if (this->nodeExists(node, "Name")) {
@@ -505,7 +500,7 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		name.resize(NAME_LENGTH);
-		safestrncpy(mercenary->name, name.c_str(), sizeof(mercenary->name));
+		mercenary->name = name;
 	}
 
 	if (this->nodeExists(node, "Level")) {
@@ -579,6 +574,11 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "Defense", def))
 			return 0;
 
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["Defense"], "Invalid defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
+
 		mercenary->status.def = static_cast<defType>(def);
 	} else {
 		if (!exists)
@@ -590,6 +590,11 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "MagicDefense", def))
 			return 0;
+
+		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
+			this->invalidWarning(node["MagicDefense"], "Invalid magic defense %d, capping...\n", def);
+			def = cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX);
+		}
 
 		mercenary->status.mdef = static_cast<defType>(def);
 	} else {

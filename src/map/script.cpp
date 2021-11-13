@@ -15363,7 +15363,7 @@ BUILDIN_FUNC(getmercinfo)
 {
 	int type;
 	struct map_session_data* sd;
-	struct mercenary_data* md;
+	struct s_mercenary_data* md;
 
 	if( !script_charid2sd(3,sd) ){
 		script_pushnil(st);
@@ -15385,7 +15385,7 @@ BUILDIN_FUNC(getmercinfo)
 	{
 		case 0: script_pushint(st,md->mercenary.mercenary_id); break;
 		case 1: script_pushint(st,md->mercenary.class_); break;
-		case 2: script_pushstrcopy(st,md->db->name); break;
+		case 2: script_pushstrcopy(st,md->db->name.c_str()); break;
 		case 3: script_pushint(st,mercenary_get_faith(md)); break;
 		case 4: script_pushint(st,mercenary_get_calls(md)); break;
 		case 5: script_pushint(st,md->mercenary.kill_count); break;
@@ -17995,7 +17995,7 @@ BUILDIN_FUNC(rid2name)
 			case BL_NPC: script_pushstrcopy(st,((TBL_NPC*)bl)->exname); break;
 			case BL_PET: script_pushstrcopy(st,((TBL_PET*)bl)->pet.name); break;
 			case BL_HOM: script_pushstrcopy(st,((TBL_HOM*)bl)->homunculus.name); break;
-			case BL_MER: script_pushstrcopy(st,((TBL_MER*)bl)->db->name); break;
+			case BL_MER: script_pushstrcopy(st,((TBL_MER*)bl)->db->name.c_str()); break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
 				script_pushconststr(st,"");
