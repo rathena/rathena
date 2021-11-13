@@ -569,9 +569,9 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Defense")) {
-		uint16 def;
+		int32 def;
 
-		if (!this->asUInt16(node, "Defense", def))
+		if (!this->asInt32(node, "Defense", def))
 			return 0;
 
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
@@ -586,9 +586,9 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 	
 	if (this->nodeExists(node, "MagicDefense")) {
-		uint16 def;
+		int32 def;
 
-		if (!this->asUInt16(node, "MagicDefense", def))
+		if (!this->asInt32(node, "MagicDefense", def))
 			return 0;
 
 		if (def < DEFTYPE_MIN || def > DEFTYPE_MAX) {
