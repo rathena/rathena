@@ -49355,6 +49355,150 @@ Body:
       Container: true
     Script: |
       getitem callfunc("F_Rand",31754,31755,31756,31757,31758,31759,31760,31761),1;
+  - Id: 101107
+    AegisName: Cannon_Box_Ice
+    Name: Cannon Box Ice
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 18005,500;
+  - Id: 101108
+    AegisName: Cannon_Box_Lightning
+    Name: Cannon Box Lightning
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 18006,500;
+  - Id: 101109
+    AegisName: Cannon_Box_Stone
+    Name: Cannon Box Stone
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 18007,500;
+  - Id: 101110
+    AegisName: Cannon_Box_Flare
+    Name: Cannon Box Fire
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 18008,500;
+  - Id: 101111
+    AegisName: Cannon_Box_Poisoning
+    Name: Cannon Box Poison
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 18009,500;
+  - Id: 101112
+    AegisName: Kunai_Scroll
+    Name: Kunai Scroll
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1220001,500;
+  - Id: 101113
+    AegisName: Kunai_Scroll_Nothing
+    Name: Kunai Scroll Nothing
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1220002,500;
+  - Id: 101114
+    AegisName: Kunai_Scroll_Shadow
+    Name: Kunai Scroll Shadow
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1220003,500;
+  - Id: 101115
+    AegisName: Kunai_Scroll_Hamaya
+    Name: Kunai Scroll Hamaya
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1220004,500;
+  - Id: 101116
+    AegisName: Nw_Grenade_Box
+    Name: Nw Grenade Box
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1000564,500;
+  - Id: 101117
+    AegisName: Soa_Charm_Bundle
+    Name: Soa Charm Bundle
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1000563,500;
+  - Id: 101118
+    AegisName: SS_Charm_Box
+    Name: SS Charm Box
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1000565,500;
+  - Id: 101119
+    AegisName: SS_Charm_F_Box
+    Name: SS Charm F Box
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1000566,500;
+  - Id: 101120
+    AegisName: SS_Charm_W_Box
+    Name: SS Charm W Box
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1000567,500;
+  - Id: 101121
+    AegisName: SS_Charm_G_Box
+    Name: SS Charm G Box
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1000568,500;
+  - Id: 101122
+    AegisName: SS_Charm_L_Box
+    Name: SS Charm L Box
+    Type: Usable
+    Weight: 250
+    Flags:
+      Container: true
+    Script: |
+      getitem 1000569,500;
   - Id: 100125
     AegisName: Metal_7_Ticket
     Name: Metal Weapon +7 Refinement Ticket
