@@ -4368,7 +4368,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (level > MAX_LEVEL) {
-			this->invalidWarning(node["Level"], "Level %d exceeds MAX_LEVEL, capping to %d.\n", level, MAX_LEVEL);
+			this->invalidWarning(node["Level"], "Level %hu exceeds MAX_LEVEL, capping to %hu.\n", level, MAX_LEVEL);
 			level = MAX_LEVEL;
 		}
 
