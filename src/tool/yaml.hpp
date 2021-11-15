@@ -289,7 +289,7 @@ int skill_split_atoi(char *str, int *val, int max = MAX_SKILL_LEVEL) {
 }
 
 /**
- * Split string to int by constant value (const.txt) or atoi()
+ * Split string to int by constant value (const.yml) or atoi()
  * @param *str: String input
  * @param *val: Temporary storage
  * @param *delim: Delimiter (for multiple value support)

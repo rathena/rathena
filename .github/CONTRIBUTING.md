@@ -166,7 +166,7 @@ Local Development Environment
 -----------------------------
 
 Developers can get up and running quickly with a Dockerized development environment that installs all dependencies needed to run and develop on rAthena.
-See tools/docker/README.md for details
+See [Docker documentation](https://github.com/rathena/rathena/blob/master/tools/docker/README.md) for details
 
 
 Become a Team Member

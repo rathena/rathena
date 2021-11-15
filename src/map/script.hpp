@@ -4,6 +4,7 @@
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
 
+#include "../common/database.hpp"
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp"
@@ -479,6 +480,7 @@ enum unitdata_mobtypes {
 	UMOB_ROBE,
 	UMOB_BODY2,
 	UMOB_GROUP_ID,
+	UMOB_IGNORE_CELL_STACK_LIMIT,
 };
 
 enum unitdata_homuntypes {
@@ -2055,7 +2057,19 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_EQUIPLEVELMAX,
 	ITEMINFO_MAGICATTACK,
 	ITEMINFO_ID,
-	ITEMINFO_AEGISNAME	// 18
+	ITEMINFO_AEGISNAME,	// 18
+	ITEMINFO_ARMORLEVEL,
+};
+
+class ConstantDatabase : public YamlDatabase {
+public:
+	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
+
+	}
+
+	void clear() { }
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
 };
 
 /**

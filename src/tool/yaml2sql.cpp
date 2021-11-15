@@ -139,9 +139,11 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 		const std::string to = "sql-files/" + to_table + ".sql";
 
 		if( fileExists( from ) ){
+#ifndef CONVERT_ALL
 			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
+#endif
 
 			inNode.reset();
 
@@ -156,11 +158,13 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if (!inNode["Body"].IsDefined())
 				continue;
 
+#ifndef CONVERT_ALL
 			if (fileExists(to)) {
 				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
 					continue;
 				}
 			}
+#endif
 
 			out.open(to);
 
@@ -603,6 +607,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 
 		if (appendEntry(input["WeaponLevel"], value))
 			column.append("`weapon_level`,");
+		if (appendEntry(input["ArmorLevel"], value))
+			column.append("`armor_level`,");
 		if (appendEntry(input["EquipLevelMin"], value))
 			column.append("`equip_level_min`,");
 		if (appendEntry(input["EquipLevelMax"], value))

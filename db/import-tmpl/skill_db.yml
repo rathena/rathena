@@ -112,6 +112,7 @@
 #     ItemCost:               Item required to cast. (Default: 0)
 #       - Item                Item name.
 #         Amount              Item amount.
+#         Level               Skill level. Makes the skill item check become level dependent if supplied. (Default: applies to all levels)
 #     Equipment:              Equipped item required to cast. (Default: nullptr)
 #   Unit:                     Skill unit values. (Optional)
 #     Id                      Skill unit ID.
@@ -129,4 +130,4 @@
 
 Header:
   Type: SKILL_DB
-  Version: 1
+  Version: 2

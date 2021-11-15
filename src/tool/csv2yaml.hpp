@@ -468,6 +468,7 @@ static bool itemdb_read_group(char* fields[], int columns, int current);
 static bool itemdb_read_group_yaml(void);
 static bool mob_readdb_itemratio(char* fields[], int columns, int current);
 static bool status_readdb_attrfix(const char* file);
+static bool read_constdb(char* fields[], int columns, int current);
 static bool mob_readdb_race2(char *fields[], int columns, int current);
 static bool mob_readdb_drop(char *str[], int columns, int current);
 static bool mob_readdb_sub(char *fields[], int columns, int current);

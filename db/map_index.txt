@@ -1127,6 +1127,22 @@ sp_rudus4
 tra_fild
 verus02_a
 verus02_b
+1@adv
+1@advs
+1@ch_u
+1@nyr
+1@oz
+1@tcamp
+2@nyr
+ant_d02_i
+gw_fild01
+gw_fild02
+oz_dun01
+oz_dun02
+que_thr
+tur_d04ia
+tur_d04ib
+wolfvill
 
 //======================================================================================
 // - Other/Extra maps -

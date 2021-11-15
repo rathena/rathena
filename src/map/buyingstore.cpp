@@ -568,10 +568,26 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 			;
 		}
 
-		if( !searchstore_result(s->search_sd, sd->buyer_id, sd->status.account_id, sd->message, it->nameid, it->amount, it->price, buyingstore_blankslots, 0, 0) )
-		{// result set full
+		// Check if the result set is full
+		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
 			return false;
 		}
+
+		std::shared_ptr<s_search_store_info_item> ssitem = std::make_shared<s_search_store_info_item>();
+
+		ssitem->store_id = sd->buyer_id;
+		ssitem->account_id = sd->status.account_id;
+		safestrncpy( ssitem->store_name, sd->message, sizeof( ssitem->store_name ) );
+		ssitem->nameid = it->nameid;
+		ssitem->amount = it->amount;
+		ssitem->price = it->price;
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			ssitem->card[j] = 0;
+		}
+		ssitem->refine = 0;
+		ssitem->enchantgrade = 0;
+
+		s->search_sd->searchstore.items.push_back( ssitem );
 	}
 
 	return true;

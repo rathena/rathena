@@ -65,6 +65,10 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AegisName", name))
 			return 0;
 
+		if (name.length() > ITEM_NAME_LENGTH) {
+			this->invalidWarning(node["AegisName"], "AegisName \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), ITEM_NAME_LENGTH - 1);
+		}
+
 		std::shared_ptr<item_data> id = item_db.search_aegisname( name.c_str() );
 
 		if (id != nullptr && id->nameid != nameid) {
@@ -72,8 +76,24 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
+		if( exists ){
+			// Create a copy
+			std::string aegisname = item->name;
+			// Convert it to lower
+			util::tolower( aegisname );
+			// Remove old AEGIS name from lookup
+			this->aegisNameToItemDataMap.erase( aegisname );
+		}
+
 		item->name.resize(ITEM_NAME_LENGTH);
 		item->name = name.c_str();
+
+		// Create a copy
+		std::string aegisname = name;
+		// Convert it to lower
+		util::tolower( aegisname );
+
+		this->aegisNameToItemDataMap[aegisname] = item;
 	}
 
 	if (this->nodeExists(node, "Name")) {
@@ -82,8 +102,28 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
+		if (name.length() > ITEM_NAME_LENGTH) {
+			this->invalidWarning(node["Name"], "Name \"%s\" exceeds maximum of %d characters, capping...\n", name.c_str(), ITEM_NAME_LENGTH - 1);
+		}
+
+		if( exists ){
+			// Create a copy
+			std::string ename = item->ename;
+			// Convert it to lower
+			util::tolower( ename );
+			// Remove old name from lookup
+			this->nameToItemDataMap.erase( ename );
+		}
+
 		item->ename.resize(ITEM_NAME_LENGTH);
 		item->ename = name.c_str();
+
+		// Create a copy
+		std::string ename = name;
+		// Convert it to lower
+		util::tolower( ename );
+
+		this->nameToItemDataMap[ename] = item;
 	}
 
 	if (this->nodeExists(node, "Type")) {
@@ -416,18 +456,42 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (lv > MAX_WEAPON_LEVEL) {
 			this->invalidWarning(node["WeaponLevel"], "Invalid weapon level %d, defaulting to 0.\n", lv);
-			lv = REFINE_TYPE_ARMOR;
+			lv = 0;
 		}
 
 		if (item->type != IT_WEAPON) {
 			this->invalidWarning(node["WeaponLevel"], "Item type is not a weapon, defaulting to 0.\n");
-			lv = REFINE_TYPE_ARMOR;
+			lv = 0;
 		}
 
-		item->wlv = lv;
+		item->weapon_level = lv;
 	} else {
 		if (!exists)
-			item->wlv = REFINE_TYPE_ARMOR;
+			item->weapon_level = 0;
+	}
+
+	if( this->nodeExists( node, "ArmorLevel" ) ){
+		uint16 level;
+
+		if( !this->asUInt16( node, "ArmorLevel", level ) ){
+			return 0;
+		}
+
+		if( level > MAX_ARMOR_LEVEL ){
+			this->invalidWarning( node["ArmorLevel"], "Invalid armor level %d, defaulting to 0.\n", level );
+			level = 0;
+		}
+
+		if( item->type != IT_ARMOR ){
+			this->invalidWarning( node["ArmorLevel"], "Item type is not an armor, defaulting to 0.\n" );
+			level = 0;
+		}
+
+		item->armor_level = level;
+	}else{
+		if( !exists ){
+			item->armor_level = 0;
+		}
 	}
 
 	if (this->nodeExists(node, "EquipLevelMin")) {
@@ -1014,6 +1078,38 @@ void ItemDatabase::loadingFinished(){
 			item->flag.delay_consume &= ~DELAYCONSUME_TEMP; // Remove delayed consumption flag if switching types
 		}
 
+		if( item->type == IT_WEAPON ){
+			if( item->weapon_level == 0 ){
+				ShowWarning( "Item %s is a weapon, but does not have a weapon level. Consider adding it. Defaulting to 1.\n", item->name.c_str() );
+				item->weapon_level = 1;
+			}
+
+			if( item->armor_level != 0 ){
+				ShowWarning( "Item %s is a weapon, but has an armor level. Defaulting to 0.\n", item->name.c_str() );
+				item->armor_level = 0;
+			}
+		}else if( item->type == IT_ARMOR ){
+			if( item->armor_level == 0 ){
+				ShowWarning( "Item %s is an armor, but does not have an armor level. Consider adding it. Defaulting to 1.\n", item->name.c_str() );
+				item->armor_level = 1;
+			}
+
+			if( item->weapon_level != 0 ){
+				ShowWarning( "Item %s is an armor, but has a weapon level. Defaulting to 0.\n", item->name.c_str() );
+				item->weapon_level = 0;
+			}
+		}else{
+			if( item->weapon_level != 0 ){
+				ShowWarning( "Item %s is not a weapon, but has a weapon level. Defaulting to 0.\n", item->name.c_str() );
+				item->weapon_level = 0;
+			}
+
+			if( item->armor_level != 0 ){
+				ShowWarning( "Item %s is not an armor, but has an armor level. Defaulting to 0.\n", item->name.c_str() );
+				item->armor_level = 0;
+			}
+		}
+
 		// When a particular price is not given, we should base it off the other one
 		if (item->value_buy == 0 && item->value_sell > 0)
 			item->value_buy = item->value_sell * 2;
@@ -1039,27 +1135,6 @@ void ItemDatabase::loadingFinished(){
 		dummy_item->view_id = UNKNOWN_ITEM_ID;
 
 		item_db.put( ITEMID_DUMMY, dummy_item );
-	}
-
-	// Prepare the container size to not allocate often
-	this->nameToItemDataMap.reserve( this->size() );
-	this->aegisNameToItemDataMap.reserve( this->size() );
-
-	// Build the name lookup maps
-	for( const auto& entry : *this ){
-		// Create a copy
-		std::string ename = entry.second->ename;
-		// Convert it to lower
-		util::tolower( ename );
-
-		this->nameToItemDataMap[ename] = entry.second;
-
-		// Create a copy
-		std::string aegisname = entry.second->name;
-		// Convert it to lower
-		util::tolower( aegisname );
-
-		this->aegisNameToItemDataMap[aegisname] = entry.second;
 	}
 }
 
@@ -1095,7 +1170,7 @@ e_sex ItemDatabase::defaultGender( const YAML::Node &node, std::shared_ptr<item_
 	return static_cast<e_sex>( id->sex );
 }
 
-std::shared_ptr<item_data> ItemDatabase::searchname( const char* name ){
+std::shared_ptr<item_data> ItemDatabase::search_aegisname( const char* name ){
 	// Create a copy
 	std::string lowername = name;
 	// Convert it to lower
@@ -1104,7 +1179,7 @@ std::shared_ptr<item_data> ItemDatabase::searchname( const char* name ){
 	return util::umap_find( this->aegisNameToItemDataMap, lowername );
 }
 
-std::shared_ptr<item_data> ItemDatabase::search_aegisname( const char *name ){
+std::shared_ptr<item_data> ItemDatabase::searchname( const char *name ){
 	// Create a copy
 	std::string lowername = name;
 	// Convert it to lower
@@ -2110,9 +2185,12 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	int32 index = -1;
 
 	node["Id"] = std::stoul(str[++index], nullptr, 10);
-	node["AegisName"] = str[++index];
-	node["Name"] = str[++index];
-	node["Type"] = str[++index];
+	if (!str[++index].empty())
+		node["AegisName"] = str[index];
+	if (!str[++index].empty())
+		node["Name"] = str[index];
+	if (!str[++index].empty())
+		node["Type"] = str[index];
 	if (!str[++index].empty())
 		node["SubType"] = str[index];
 	if (!str[++index].empty())
@@ -2248,6 +2326,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		node["WeaponLevel"] = std::stoi(str[index]);
 	if (!str[++index].empty())
+		node["ArmorLevel"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		node["EquipLevelMin"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["EquipLevelMax"] = std::stoi(str[index]);
@@ -2379,7 +2459,7 @@ static int itemdb_read_sqldb(void) {
 			"`class_all`,`class_normal`,`class_upper`,`class_baby`,`gender`,"
 			"`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,"
 			"`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,"
-			"`weapon_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
+			"`weapon_level`,`armor_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
 			"`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,"
 			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
 			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"

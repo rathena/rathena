@@ -440,6 +440,8 @@ struct Battle_Config
 	int character_size; // if riders have size=2, and baby class riders size=1 [Lupus]
 	int mob_max_skilllvl; // Max possible skill level [Lupus]
 	int rare_drop_announce; // chance <= to show rare drops global announces
+	int drop_rate_cap;  // Drop rate can't be raised above this amount by drop bonus items
+	int drop_rate_cap_vip;
 
 	int retaliate_to_master;	//Whether when a mob is attacked by another mob, it will retaliate versus the mob or the mob's master. [Skotlex]
 
@@ -687,6 +689,7 @@ struct Battle_Config
 	int mer_idle_no_share;
 	int idletime_mer_option;
 	int feature_refineui;
+	int rndopt_drop_pillar;
 
 #include "../custom/battle_config_struct.inc"
 };
