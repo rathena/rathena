@@ -115,8 +115,6 @@ struct s_job_param {
 	int32 str, agi, vit, int_, dex, luk;
 };
 
-int32 exp_group = 0, hpsp_group = 0;
-
 std::unordered_map<int, std::vector<int>> job_db2;
 std::unordered_map<int, std::vector<int64>> job_hp, job_sp;
 std::unordered_map<int, s_job_param> job_param;

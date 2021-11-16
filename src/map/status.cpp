@@ -3715,7 +3715,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
 			if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
-#ifndef HP_SP_AP_TABLES
+#ifndef HP_SP_TABLES
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 				bonus += 2000; // Supernovice lvl99 hp bonus.
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 150)
@@ -4606,27 +4606,23 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 // ----- STATS CALCULATION -----
 
 	// Job bonuses
-	std::vector<std::vector<uint8>> job_bonus = job_db.get_jobBonus(pc_mapid2jobid(sd->class_, sd->status.sex));
+	std::shared_ptr<s_job_info> job_info = job_db.find( pc_mapid2jobid( sd->class_, sd->status.sex ) );
 
-	if (!job_bonus.empty()) {
-		for (i = 0; i < sd->status.job_level && i < MAX_LEVEL; i++) {
-			for (const auto &stat : job_bonus[i]) {
-				switch (stat) {
-					case PARAM_STR: base_status->str++; break;
-					case PARAM_AGI: base_status->agi++; break;
-					case PARAM_VIT: base_status->vit++; break;
-					case PARAM_INT: base_status->int_++; break;
-					case PARAM_DEX: base_status->dex++; break;
-					case PARAM_LUK: base_status->luk++; break;
-					case PARAM_POW: base_status->pow++; break;
-					case PARAM_STA: base_status->sta++; break;
-					case PARAM_WIS: base_status->wis++; break;
-					case PARAM_SPL: base_status->spl++; break;
-					case PARAM_CON: base_status->con++; break;
-					case PARAM_CRT: base_status->crt++; break;
-				}
-			}
-		}
+	if( job_info != nullptr ){
+		const auto& bonus = job_info->job_bonus[sd->status.job_level];
+
+		base_status->str += bonus[PARAM_STR];
+		base_status->agi += bonus[PARAM_AGI];
+		base_status->vit += bonus[PARAM_VIT];
+		base_status->int_ += bonus[PARAM_INT];
+		base_status->dex += bonus[PARAM_DEX];
+		base_status->luk += bonus[PARAM_LUK];
+		base_status->pow += bonus[PARAM_POW];
+		base_status->sta += bonus[PARAM_STA];
+		base_status->wis += bonus[PARAM_WIS];
+		base_status->spl += bonus[PARAM_SPL];
+		base_status->con += bonus[PARAM_CON];
+		base_status->crt += bonus[PARAM_CRT];
 	}
 
 	// If a Super Novice has never died and is at least joblv 70, he gets all stats +10

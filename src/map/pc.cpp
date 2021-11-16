@@ -7690,17 +7690,6 @@ int32 JobDatabase::get_maxWeight(uint16 job_id) {
 	return job ? job->max_weight_base : 0;
 }
 
-/**
- * Returns job stat bonus for this character's class.
- * @param job_id: Player's job
- * @return Job Bonus array
- */
-std::vector<std::vector<uint8>>& JobDatabase::get_jobBonus(uint16 job_id) {
-	std::shared_ptr<s_job_info> job = job_db.find(job_id);
-
-	return job ? job->job_bonus : std::vector<std::vector<uint8>> (0);
-}
-
 /// Returns the value of the specified stat.
 int pc_getstat(map_session_data *sd, int type)
 {
@@ -12203,7 +12192,6 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	return true;
 }
 
-#ifndef HP_SP_AP_TABLES
 /**
  * Calculates base hp of player. Reference: http://irowiki.org/wiki/Max_HP
  * @param level: Base level of player
@@ -12257,7 +12245,6 @@ static unsigned int pc_calc_basesp(uint16 level, uint16 job_id) {
 
 	return (unsigned int)base_sp;
 }
-#endif
 
 const std::string JobDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/job_stats.yml";
@@ -12269,220 +12256,185 @@ const std::string JobDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
-	std::string job_name;
-
-	if (!this->asString(node, "Job", job_name))
-		return 0;
-
-	std::string job_name_constant = "JOB_" + job_name;
-	int64 job_id;
-
-	if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
-		this->invalidWarning(node["Job"], "Job %s does not exist.\n", job_name.c_str());
-		return 0;
-	}
-
-	std::shared_ptr<s_job_info> job = this->find(static_cast<uint16>(job_id));
-	bool exists = job != nullptr;
-
-	if (!exists)
-		job = std::make_shared<s_job_info>();
-
-	if (this->nodeExists(node, "MaxWeight")) {
-		uint32 weight;
-
-		if (!this->asUInt32(node, "MaxWeight", weight))
-			return 0;
-
-		job->max_weight_base = weight;
-	} else {
-		if (!exists)
-			job->max_weight_base = 20000;
-	}
-
-	if (this->nodeExists(node, "HPFactor")) {
-		uint32 hp;
-
-		if (!this->asUInt32(node, "HPFactor", hp))
-			return 0;
-
-		job->hp_factor = hp;
-	} else {
-		if (!exists)
-			job->hp_factor = 20000;
-	}
-
-	if (this->nodeExists(node, "HPMultiplicator")) {
-		uint32 hp;
-
-		if (!this->asUInt32(node, "HPMultiplicator", hp))
-			return 0;
-
-		job->hp_multiplicator = hp;
-	} else {
-		if (!exists)
-			job->hp_multiplicator = 500;
-	}
-
-	if (this->nodeExists(node, "SPFactor")) {
-		uint32 sp;
-
-		if (!this->asUInt32(node, "SPFactor", sp))
-			return 0;
-
-		job->sp_factor = sp;
-	} else {
-		if (!exists)
-			job->sp_factor = 100;
-	}
-
-	if (this->nodeExists(node, "BaseASPD")) {
-		const YAML::Node &aspdNode = node["BaseASPD"];
-		uint8 max = MAX_WEAPON_TYPE +
-#ifdef RENEWAL // Renewal adds an extra column for shields
-			1;
-#else
-			0;
-#endif
-
-		if (!exists) {
-			job->aspd_base.resize(max);
-			std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
-		}
-
-		for (const auto &aspdit : aspdNode) {
-			std::string weapon = aspdit.first.as<std::string>(), weapon_constant = "W_" + weapon;
-			int64 constant;
-
-			if (!script_get_constant(weapon_constant.c_str(), &constant) || constant < W_FIST || constant > max) {
-				this->invalidWarning(aspdNode["BaseASPD"], "Invalid weapon type %s specified for %s, skipping.\n", weapon.c_str(), job_name.c_str());
-				continue;
-			}
-
-			int16 aspd;
-
-			if (!this->asInt16(aspdNode, weapon.c_str(), aspd))
-				return 0;
-
-			job->aspd_base[static_cast<int16>(constant)] = aspd;
-		}
-	}
-
-	if (this->nodeExists(node, "BonusStats")) {
-		const YAML::Node &bonusNode = node["BonusStats"];
-		job->job_bonus.resize(MAX_LEVEL);
-
-		for (const YAML::Node &levelNode : bonusNode) {
-			uint16 level;
-
-			if (!this->asUInt16(levelNode, "Level", level))
-				return 0;
-
-			if (level > MAX_LEVEL) {
-				this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
-				return 0;
-			}
-
-			std::vector<std::string> stats = { "Str", "Agi", "Vit", "Int", "Dex", "Luk", "Pow", "Sta", "Wis", "Spl", "Con", "Crt" };
-
-			for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
-				if (this->nodeExists(levelNode, stats[idx])) {
-					bool active;
-
-					if (!this->asBool(levelNode, stats[idx], active))
-						return 0;
-
-					if (active)
-						job->job_bonus[level - 1].push_back(idx);
-					else
-						util::vector_erase_if_exists(job->job_bonus[level - 1], idx);
-				}
-			}
-		}
-	}
-
-	if (this->nodeExists(node, "MaxStats")) {
-		const YAML::Node &statNode = node["MaxStats"];
-
-		for (const auto &statit : statNode) {
-			std::string stat = statit.first.as<std::string>(), stat_constant = "PARAM_" + stat;
-			int64 constant;
-
-			if (!script_get_constant(stat_constant.c_str(), &constant) || constant < PARAM_STR || constant >= PARAM_MAX) {
-				this->invalidWarning(statNode["Bonus"], "Invalid max stat %s specified for %s, skipping.\n", stat.c_str(), job_name.c_str());
-				continue;
-			}
-
-			int16 max;
-
-			if (!this->asInt16(statNode, stat.c_str(), max))
-				return 0;
-
-			if (constant == PARAM_STR)
-				job->max_param.str = max;
-			else if (constant == PARAM_AGI)
-				job->max_param.agi = max;
-			else if (constant == PARAM_VIT)
-				job->max_param.vit = max;
-			else if (constant == PARAM_INT)
-				job->max_param.int_ = max;
-			else if (constant == PARAM_DEX)
-				job->max_param.dex = max;
-			else if (constant == PARAM_LUK)
-				job->max_param.luk = max;
-			else if (constant == PARAM_POW)
-				job->max_param.pow = max;
-			else if (constant == PARAM_STA)
-				job->max_param.sta = max;
-			else if (constant == PARAM_WIS)
-				job->max_param.wis = max;
-			else if (constant == PARAM_SPL)
-				job->max_param.spl = max;
-			else if (constant == PARAM_CON)
-				job->max_param.con = max;
-			else if (constant == PARAM_CRT)
-				job->max_param.crt = max;
-		}
-	}
-
-	if (!exists)
-		this->put(static_cast<uint16>(job_id), job);
-
-	return 1;
-}
-
-const std::string JobExpDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/job_exp.yml";
-}
-
-/**
-* Reads and parses an entry from the job_exp_db.
-* @param node: YAML node containing the entry.
-* @return count of successfully parsed rows
-*/
-uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
-	//int exp_group;
-
-	//if (!this->asInt32(node, "ExpGroup", exp_group))
-	//	return 0;
-
 	if (this->nodeExists(node, "Jobs")) {
 		const YAML::Node &jobsNode = node["Jobs"];
 
 		for (const auto &jobit : jobsNode) {
 			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
-			int64 constant;
+			int64 job_id;
 
-			if (!script_get_constant(job_name_constant.c_str(), &constant)) {
+			if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
 				this->invalidWarning(node["Job"], "Job %s does not exist.\n", job_name.c_str());
 				return 0;
 			}
 
-			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(constant));
+			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(job_id));
+			bool exists = job != nullptr;
 
-			if (job == nullptr) {
-				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_stats.yml.\n", job_name.c_str());
-				continue;
+			if (!exists)
+				job = std::make_shared<s_job_info>();
+
+			if (this->nodeExists(node, "MaxWeight")) {
+				uint32 weight;
+
+				if (!this->asUInt32(node, "MaxWeight", weight))
+					return 0;
+
+				job->max_weight_base = weight;
+			} else {
+				if (!exists)
+					job->max_weight_base = 20000;
+			}
+
+			if (this->nodeExists(node, "HPFactor")) {
+				uint32 hp;
+
+				if (!this->asUInt32(node, "HPFactor", hp))
+					return 0;
+
+				job->hp_factor = hp;
+			} else {
+				if (!exists)
+					job->hp_factor = 20000;
+			}
+
+			if (this->nodeExists(node, "HPMultiplicator")) {
+				uint32 hp;
+
+				if (!this->asUInt32(node, "HPMultiplicator", hp))
+					return 0;
+
+				job->hp_multiplicator = hp;
+			} else {
+				if (!exists)
+					job->hp_multiplicator = 500;
+			}
+
+			if (this->nodeExists(node, "SPFactor")) {
+				uint32 sp;
+
+				if (!this->asUInt32(node, "SPFactor", sp))
+					return 0;
+
+				job->sp_factor = sp;
+			} else {
+				if (!exists)
+					job->sp_factor = 100;
+			}
+
+			if (this->nodeExists(node, "BaseASPD")) {
+				const YAML::Node &aspdNode = node["BaseASPD"];
+				uint8 max = MAX_WEAPON_TYPE;
+
+#ifdef RENEWAL // Renewal adds an extra column for shields
+				max += 1;
+#endif
+
+				if (!exists) {
+					job->aspd_base.resize(max);
+					std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
+				}
+
+				for (const auto &aspdit : aspdNode) {
+					std::string weapon = aspdit.first.as<std::string>(), weapon_constant = "W_" + weapon;
+					int64 constant;
+
+					if (!script_get_constant(weapon_constant.c_str(), &constant)) {
+						this->invalidWarning(aspdNode["BaseASPD"], "Unknown weapon type %s specified for %s, skipping.\n", weapon.c_str(), job_name.c_str());
+						continue;
+					}
+
+					if (constant < W_FIST || constant > max) {
+						this->invalidWarning(aspdNode["BaseASPD"], "Invalid weapon type %s specified for %s, skipping.\n", weapon.c_str(), job_name.c_str());
+						continue;
+					}
+
+					int16 aspd;
+
+					if (!this->asInt16(aspdNode, weapon.c_str(), aspd))
+						return 0;
+
+					job->aspd_base[static_cast<int16>(constant)] = aspd;
+				}
+			}
+
+			if (this->nodeExists(node, "BonusStats")) {
+				const YAML::Node &bonusNode = node["BonusStats"];
+				job->job_bonus.resize(MAX_LEVEL);
+
+				for (const YAML::Node &levelNode : bonusNode) {
+					uint16 level;
+
+					if (!this->asUInt16(levelNode, "Level", level))
+						return 0;
+
+					if (level > MAX_LEVEL) {
+						this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+					const char *stats[PARAM_MAX] = { "Str", "Agi", "Vit", "Int", "Dex", "Luk", "Pow", "Sta", "Wis", "Spl", "Con", "Crt" };
+
+					for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
+						if (this->nodeExists(levelNode, stats[idx])) {
+							int16 change;
+
+							if (!this->asInt16(levelNode, stats[idx], change))
+								return 0;
+
+							job->job_bonus[level - 1][idx] = change;
+						}
+					}
+				}
+			}
+
+			if (this->nodeExists(node, "MaxStats")) {
+				const YAML::Node &statNode = node["MaxStats"];
+
+				for (const auto &statit : statNode) {
+					std::string stat = statit.first.as<std::string>(), stat_constant = "PARAM_" + stat;
+					int64 constant;
+
+					if (!script_get_constant(stat_constant.c_str(), &constant)) {
+						this->invalidWarning(statNode["Bonus"], "Unknown max stat %s specified for %s, skipping.\n", stat.c_str(), job_name.c_str());
+						continue;
+					}
+
+					if (constant < PARAM_STR || constant >= PARAM_MAX) {
+						this->invalidWarning(statNode["Bonus"], "Invalid max stat %s specified for %s, skipping.\n", stat.c_str(), job_name.c_str());
+						continue;
+					}
+
+					uint16 max;
+
+					if (!this->asUInt16(statNode, stat.c_str(), max))
+						return 0;
+
+					if (constant == PARAM_STR)
+						job->max_param.str = max;
+					else if (constant == PARAM_AGI)
+						job->max_param.agi = max;
+					else if (constant == PARAM_VIT)
+						job->max_param.vit = max;
+					else if (constant == PARAM_INT)
+						job->max_param.int_ = max;
+					else if (constant == PARAM_DEX)
+						job->max_param.dex = max;
+					else if (constant == PARAM_LUK)
+						job->max_param.luk = max;
+					else if (constant == PARAM_POW)
+						job->max_param.pow = max;
+					else if (constant == PARAM_STA)
+						job->max_param.sta = max;
+					else if (constant == PARAM_WIS)
+						job->max_param.wis = max;
+					else if (constant == PARAM_SPL)
+						job->max_param.spl = max;
+					else if (constant == PARAM_CON)
+						job->max_param.con = max;
+					else if (constant == PARAM_CRT)
+						job->max_param.crt = max;
+				}
 			}
 
 			if (this->nodeExists(node, "MaxBaseLevel")) {
@@ -12497,8 +12449,10 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				job->max_base_level = level;
-			} else
-				job->max_base_level = MAX_LEVEL;
+			} else {
+				if (!exists)
+					job->max_base_level = MAX_LEVEL;
+			}
 
 			if (this->nodeExists(node, "BaseExp")) {
 				for (const YAML::Node &bexpNode : node["BaseExp"]) {
@@ -12536,8 +12490,10 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 
 				job->max_job_level = level;
 				job->job_bonus.resize(level);
-			} else
-				job->max_job_level = MAX_LEVEL;
+			} else {
+				if (!exists)
+					job->max_job_level = MAX_LEVEL;
+			}
 
 			if (this->nodeExists(node, "JobExp")) {
 				for (const YAML::Node &jexpNode : node["JobExp"]) {
@@ -12561,48 +12517,8 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 					}
 				}
 			}
-		}
-	}
 
-	return 1;
-}
-
-JobExpDatabase job_exp_db;
-
-const std::string JobBaseHPSPAPDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/job_basehpspap.yml";
-}
-
-/**
- * Reads and parses an entry from the job_basehpspap_db.
- * @param node: YAML node containing the entry.
- * @return count of successfully parsed rows
- */
-uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
-	//int base_group;
-
-	//if (!this->asInt32(node, "BaseGroup", base_group))
-	//	return 0;
-
-	if (this->nodeExists(node, "Jobs")) {
-		const YAML::Node &jobsNode = node["Jobs"];
-
-		for (const auto &jobit : jobsNode) {
-			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
-			int64 constant;
-
-			if (!script_get_constant(job_name_constant.c_str(), &constant)) {
-				this->invalidWarning(node["Job"], "Job %s does not exist.\n", job_name.c_str());
-				return 0;
-			}
-
-			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(constant));
-
-			if (job == nullptr) {
-				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_stats.yml.\n", job_name.c_str());
-				continue;
-			}
-
+#ifdef HP_SP_TABLES
 			if (this->nodeExists(node, "BaseHp")) {
 				job->base_hp.resize(job->max_base_level, 1);
 
@@ -12617,7 +12533,6 @@ uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-#ifdef HP_SP_AP_TABLES
 					if (this->nodeExists(bhpNode, "Hp")) {
 						uint32 points;
 
@@ -12626,7 +12541,6 @@ uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 
 						job->base_hp[level - 1] = points;
 					}
-#endif
 				}
 			}
 
@@ -12644,7 +12558,6 @@ uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-#ifdef HP_SP_AP_TABLES
 					if (this->nodeExists(bspNode, "Sp")) {
 						uint32 points;
 
@@ -12653,7 +12566,6 @@ uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 
 						job->base_sp[level - 1] = points;
 					}
-#endif
 				}
 			}
 
@@ -12671,7 +12583,6 @@ uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-#ifdef HP_SP_AP_TABLES
 					if (this->nodeExists(bapNode, "Ap")) {
 						uint32 points;
 
@@ -12680,16 +12591,67 @@ uint64 JobBaseHPSPAPDatabase::parseBodyNode(const YAML::Node &node) {
 
 						job->base_ap[level - 1] = points;
 					}
-#endif
 				}
 			}
+#endif
+
+			if (!exists)
+				this->put(static_cast<uint16>(job_id), job);
 		}
 	}
 
 	return 1;
 }
 
-JobBaseHPSPAPDatabase job_basehpspap_db;
+void JobDatabase::loadingFinished() {
+	// Checking if all class have their data
+	for (auto &jobIt : *this) {
+		uint16 job_id = jobIt.first;
+
+		if (!pcdb_checkid(job_id))
+			continue;
+		if (job_id == JOB_WEDDING || job_id == JOB_XMAS || job_id == JOB_SUMMER || job_id == JOB_HANBOK || job_id == JOB_OKTOBERFEST || job_id == JOB_SUMMER2)
+			continue; // Classes that do not need exp tables.
+
+		std::shared_ptr<s_job_info> job = jobIt.second;
+		uint16 maxBaseLv = job->max_base_level, maxJobLv = job->max_job_level;
+
+		if (!maxBaseLv)
+			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(job_id), job_id);
+		if (!maxJobLv)
+			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(job_id), job_id);
+
+		// Init and checking the empty value of Base HP/SP [Cydh]
+		if (job->base_hp.size() == 0)
+			job->base_hp.resize(maxBaseLv);
+		for (uint16 j = 0; j < maxBaseLv; j++) {
+			if (job->base_hp[j] == 0)
+				job->base_hp[j] = pc_calc_basehp(j + 1, job_id);
+		}
+		if (job->base_sp.size() == 0)
+			job->base_sp.resize(maxJobLv);
+		for (uint16 j = 0; j < maxJobLv; j++) {
+			if (job->base_sp[j] == 0)
+				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
+		}
+
+		// Resize for the maximum job level
+		job->job_bonus.resize(maxJobLv);
+
+		for (uint16 parameter = PARAM_STR; parameter < PARAM_MAX; parameter++) {
+			// Store total
+			int16 current = 0;
+
+			for (uint16 job_level = 0; job_level < maxJobLv; job_level++) {
+				// Add the bonus from this job level
+				current += job->job_bonus[job_level][parameter];
+
+				// Set the new total on this job level
+				job->job_bonus[job_level][parameter] = current;
+			}
+		}
+	}
+}
 
 /**
  * Read job_noenter_map.txt
@@ -12804,8 +12766,6 @@ void pc_readdb(void) {
 
 	statpoint_db.clear();
 	job_db.load();
-	job_exp_db.load();
-	job_basehpspap_db.load();
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
@@ -12833,40 +12793,6 @@ void pc_readdb(void) {
 	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 1);
 
 	statpoint_db.load();
-
-	//Checking if all class have their data
-	for (auto &jobIt : job_db) {
-		uint16 job_id = jobIt.first;
-
-		if (!pcdb_checkid(job_id))
-			continue;
-		if (job_id == JOB_WEDDING || job_id == JOB_XMAS || job_id == JOB_SUMMER || job_id == JOB_HANBOK || job_id == JOB_OKTOBERFEST || job_id == JOB_SUMMER2)
-			continue; //Classes that do not need exp tables.
-
-		std::shared_ptr<s_job_info> job = jobIt.second;
-		uint16 maxBaseLv = job->max_base_level, maxJobLv = job->max_job_level;
-
-		if (!maxBaseLv)
-			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(job_id), job_id);
-		if (!maxJobLv)
-			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(job_id), job_id);
-
-#ifndef HP_SP_AP_TABLES
-		//Init and checking the empty value of Base HP/SP [Cydh]
-		if (job->base_hp.size() == 0)
-			job->base_hp.resize(maxBaseLv);
-		for (uint16 j = 0; j < maxBaseLv; j++) {
-			if (job->base_hp[j] == 0)
-				job->base_hp[j] = pc_calc_basehp(j + 1, job_id);
-		}
-		if (job->base_sp.size() == 0)
-			job->base_sp.resize(maxJobLv);
-		for (uint16 j = 0; j < maxJobLv; j++) {
-			if (job->base_sp[j] == 0)
-				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
-		}
-#endif
-	}
 }
 
 // Read MOTD on startup. [Valaris]

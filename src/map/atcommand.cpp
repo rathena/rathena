@@ -2752,7 +2752,7 @@ ACMD_FUNC(stat_all)
 		value = SHRT_MAX;
 	} else {
 		if (pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT)) {
-			for (i = PARAM_STR; i < PARAM_MAX; i++)
+			for (i = PARAM_STR; i < PARAM_POW; i++)
 				max_status[i] = SHRT_MAX;
 		} else {
 			for (i = PARAM_STR; i < PARAM_POW; i++)
@@ -2802,9 +2802,8 @@ ACMD_FUNC(trait_all) {
 	nullpo_retr(-1, sd);
 
 #ifndef RENEWAL
-	return -1;
-#endif
-#if PACKETVER_MAIN_NUM < 20200916 || PACKETVER_RE_NUM < 20200724
+	sprintf(atcmd_output, msg_txt(sd, 154), command); // %s failed.
+	clif_displaymessage(fd, atcmd_output);
 	return -1;
 #endif
 
@@ -10300,8 +10299,8 @@ ACMD_FUNC(clonestat) {
 			clonestat_check(crt, PARAM_CRT);
 
 			for (i = PARAM_POW; i < PARAM_MAX; i++) {
-				clif_updatestatus(sd, SP_POW + i);
-				clif_updatestatus(sd, SP_UPOW + i);
+				clif_updatestatus(sd, SP_POW + i - PARAM_POW);
+				clif_updatestatus(sd, SP_UPOW + i - PARAM_POW);
 			}
 
 		}

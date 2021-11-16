@@ -440,15 +440,15 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("JOB_EXP", 1, root_paths, "job_exp", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 1, root_paths, "job_exp", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 1000 + 3, CLASS_COUNT * 2, &pc_readdb_job_exp, false);
 	}, "job_exp")) {
 		return 0;
 	}
 
-	if (!process("JOB_BASEHPSPAP", 1, root_paths, "job_basehpsp_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("JOB_STATS", 1, root_paths, "job_basehpsp_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 4, 4 + 500, CLASS_COUNT * 2, &pc_readdb_job_basehpsp, false);
-	}, "job_basehpspap")) {
+	}, "job_basepoints")) {
 		return 0;
 	}
 
@@ -4207,8 +4207,6 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current) {
 	int level = atoi(fields[0]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[1], jobs, CLASS_COUNT), type = atoi(fields[2]);
 
 	body << YAML::BeginMap;
-	body << YAML::Key << "ExpGroup" << YAML::Value << ++exp_group;
-
 	body << YAML::Key << "Jobs";
 	body << YAML::BeginMap;
 	for (int i = 0; i < job_count; i++) {
@@ -4247,8 +4245,6 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current) {
 	int type = atoi(fields[3]), jobs[CLASS_COUNT], job_count = skill_split_atoi(fields[2], jobs, CLASS_COUNT);
 
 	body << YAML::BeginMap;
-	body << YAML::Key << "BaseGroup" << YAML::Value << ++hpsp_group;
-
 	body << YAML::Key << "Jobs";
 	body << YAML::BeginMap;
 	for (int i = 0; i < job_count; i++)
@@ -4308,7 +4304,10 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 		return true;
 
 	body << YAML::BeginMap;
-	body << YAML::Key << "Job" << YAML::Value << name2Upper(constant_lookup(job_id, "JOB_") + 4);
+	body << YAML::Key << "Jobs";
+	body << YAML::BeginMap;
+	body << YAML::Key << name2Upper(constant_lookup(job_id, "JOB_") + 4) << YAML::Value << "true";
+	body << YAML::EndMap;
 	if (atoi(fields[1]) != 20000)
 		body << YAML::Key << "MaxWeight" << YAML::Value << atoi(fields[1]);
 	if (atoi(fields[2]) != 0)
@@ -4354,7 +4353,7 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 			if (bonus != nullptr) {
 				body << YAML::BeginMap;
 				body << YAML::Key << "Level" << YAML::Value << i;
-				body << YAML::Key << name2Upper(bonus + 6) << YAML::Value << "true";
+				body << YAML::Key << name2Upper(bonus + 6) << YAML::Value << "1";
 				body << YAML::EndMap;
 			}
 		}

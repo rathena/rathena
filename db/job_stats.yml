@@ -22,7 +22,8 @@
 # Job Settings
 #
 ###########################################################################
-# - Job                      Job ID.
+# - Jobs:                    List of jobs associated to group.
+#     Job                    Job ID.
 #   MaxWeight                Base maximum weight. (Default: 20000)
 #   HPFactor                 Base HP factor. (Default: 20000)
 #   HPMultiplicator          Base HP rate numerator. (Default: 500)
@@ -31,18 +32,18 @@
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats/traits.
 #     - Level                Job level.
-#       Str                  If stength is increased.
-#       Agi                  If agility is increased.
-#       Vit                  If vitality is increased.
-#       Int                  If intelligence is increased.
-#       Dex                  If dexterity is increased.
-#       Luk                  If luck is increased.
-#       Pow                  If power is increased.
-#       Sta                  If stamina is increased.
-#       Wis                  If wisdom is increased.
-#       Spl                  If spell is increased.
-#       Con                  If concentration is increased.
-#       Crt                  If creative is increased.
+#       Str                  Stength increase amount. (Default: 0)
+#       Agi                  Agility increase amount. (Default: 0)
+#       Vit                  Vitality increase amount. (Default: 0)
+#       Int                  Intelligence increase amount. (Default: 0)
+#       Dex                  Dexterity increase amount. (Default: 0)
+#       Luk                  Luck increase amount. (Default: 0)
+#       Pow                  Power increase amount. (Default: 0)
+#       Sta                  Stamina increase amount. (Default: 0)
+#       Wis                  Wisdom increase amount. (Default: 0)
+#       Spl                  Spell increase amount. (Default: 0)
+#       Con                  Concentration increase amount. (Default: 0)
+#       Crt                  Creative increase amount. (Default: 0)
 #   MaxStats:                Maximum stats/traits applicable. (Default: battle_config::max_*_parameter)
 #     Str                    Strength.
 #     Agi                    Agility.
@@ -56,6 +57,23 @@
 #     Spl                    Spell.
 #     Con                    Concentration.
 #     Crt                    Creative.
+#   MaxBaseLevel             Maximum base level. (Default: MAX_LEVEL)
+#   BaseExp:                 Base experience per level.
+#     - Level                Base level.
+#       Exp                  Base experience.
+#   MaxJobLevel              Maximum job level. (Default: MAX_LEVEL)
+#   JobExp:                  Job experience per level.
+#     - Level                Job level.
+#       Exp                  Job experience.
+#   BaseHp:                  Base HP per base level.
+#     - Level                Base level.
+#       Hp                   Base HP.
+#   BaseSp:                  Base SP per base level.
+#     - Level                Base level.
+#       Sp                   Base SP.
+#   BaseAp:                  Base AP per base level.
+#     - Level                Base level.
+#       Ap                   Base AP.
 ###########################################################################
 
 Header:
@@ -64,8 +82,23 @@ Header:
 
 Footer:
   Imports:
+  # Import base information first
   - Path: db/pre-re/job_stats.yml
     Mode: Prerenewal
   - Path: db/re/job_stats.yml
     Mode: Renewal
   - Path: db/import/job_stats.yml
+
+  # Next, populate with experience information
+  - Path: db/pre-re/job_exp.yml
+    Mode: Prerenewal
+  - Path: db/re/job_exp.yml
+    Mode: Renewal
+  - Path: db/import/job_exp.yml
+
+  # Finally, populate HP/SP/AP information
+  - Path: db/pre-re/job_basepoints.yml
+    Mode: Prerenewal
+  - Path: db/re/job_basepoints.yml
+    Mode: Renewal
+  - Path: db/import/job_basepoints.yml

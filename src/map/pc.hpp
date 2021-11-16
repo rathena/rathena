@@ -964,7 +964,7 @@ public:
 struct s_job_info {
 	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
 	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
-	std::vector<std::vector<uint8>> job_bonus;
+	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
 	uint16 max_base_level, max_job_level;
@@ -986,6 +986,7 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node &node);
+	void loadingFinished();
 
 	// Extras
 	uint32 get_maxBaseLv(uint16 job_id);
@@ -995,32 +996,9 @@ public:
 	uint32 get_baseHp(uint16 job_id, uint32 level);
 	uint32 get_baseSp(uint16 job_id, uint32 level);
 	int32 get_maxWeight(uint16 job_id);
-	std::vector<std::vector<uint8>>& get_jobBonus(uint16 job_id);
 };
 
 extern JobDatabase job_db;
-
-class JobExpDatabase : public YamlDatabase {
-public:
-	JobExpDatabase() : YamlDatabase("JOB_EXP", 1) {
-
-	}
-
-	void clear() { };
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
-};
-
-class JobBaseHPSPAPDatabase : public YamlDatabase {
-public:
-	JobBaseHPSPAPDatabase() : YamlDatabase("JOB_BASEHPSPAP", 1) {
-
-	}
-
-	void clear() { };
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
-};
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L

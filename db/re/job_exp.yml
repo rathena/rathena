@@ -15,33 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-###########################################################################
-# Job Experience Group Database
-###########################################################################
-#
-# Job Experience Group Settings
-#
-###########################################################################
-# - ExpGroup                 Experience group ID.
-#   Jobs:                    Jobs associate to experience group.
-#     Job                    Job associated to experience group.
-#   MaxBaseLevel             Maximum base level. (Default: MAX_LEVEL)
-#   BaseExp:                 Base experience per level.
-#     - Level                Base level.
-#       Exp                  Base experience.
-#   MaxJobLevel              Maximum job level. (Default: MAX_LEVEL)
-#   JobExp:                  Job experience per level.
-#     - Level                Job level.
-#       Exp                  Job experience.
-###########################################################################
-
 Header:
-  Type: JOB_EXP
+  Type: JOB_STATS
   Version: 1
 
 Body:
-  - ExpGroup: 1
-    Jobs:
+  - Jobs:
       Novice: true
       Swordman: true
       Mage: true
@@ -303,8 +282,7 @@ Body:
         Exp: 4000000
       - Level: 99
         Exp: 99999999
-  - ExpGroup: 2
-    Jobs:
+  - Jobs:
       Novice_High: true
       Swordman_High: true
       Mage_High: true
@@ -527,8 +505,7 @@ Body:
         Exp: 6800000
       - Level: 99
         Exp: 99999999
-  - ExpGroup: 3
-    Jobs:
+  - Jobs:
       Super_Novice_E: true
       Super_Baby_E: true
       Kagerou: true
@@ -947,8 +924,7 @@ Body:
         Exp: 6900363572
       - Level: 200
         Exp: 99999999
-  - ExpGroup: 4
-    Jobs:
+  - Jobs:
       Rune_Knight: true
       Warlock: true
       Ranger: true
@@ -1402,8 +1378,7 @@ Body:
         Exp: 6900363572
       - Level: 200
         Exp: 99999999
-  - ExpGroup: 5
-    Jobs:
+  - Jobs:
       Summoner: true
       Baby_Summoner: true
     MaxBaseLevel: 200
@@ -1808,8 +1783,7 @@ Body:
         Exp: 6819252442
       - Level: 200
         Exp: 99999999
-  - ExpGroup: 6
-    Jobs:
+  - Jobs:
       Novice: true
       Baby: true
     MaxJobLevel: 10
@@ -1834,8 +1808,7 @@ Body:
         Exp: 500
       - Level: 10
         Exp: 999999999
-  - ExpGroup: 7
-    Jobs:
+  - Jobs:
       Swordman: true
       Mage: true
       Archer: true
@@ -1953,8 +1926,7 @@ Body:
         Exp: 97180
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 8
-    Jobs:
+  - Jobs:
       Knight: true
       Priest: true
       Wizard: true
@@ -2091,8 +2063,7 @@ Body:
         Exp: 345400
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 9
-    Jobs:
+  - Jobs:
       Gunslinger: true
       Ninja: true
       Baby_Ninja: true
@@ -2239,8 +2210,7 @@ Body:
         Exp: 308000
       - Level: 70
         Exp: 999999999
-  - ExpGroup: 10
-    Jobs:
+  - Jobs:
       Star_Gladiator: true
       Star_Gladiator2: true
       Baby_Star_Gladiator: true
@@ -2347,8 +2317,7 @@ Body:
         Exp: 690800
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 11
-    Jobs:
+  - Jobs:
       Novice_High: true
     MaxJobLevel: 10
     JobExp:
@@ -2372,8 +2341,7 @@ Body:
         Exp: 425
       - Level: 10
         Exp: 999999999
-  - ExpGroup: 12
-    Jobs:
+  - Jobs:
       Swordman_High: true
       Mage_High: true
       Archer_High: true
@@ -2482,8 +2450,7 @@ Body:
         Exp: 118120
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 13
-    Jobs:
+  - Jobs:
       Lord_Knight: true
       High_Priest: true
       High_Wizard: true
@@ -2641,8 +2608,7 @@ Body:
         Exp: 3105953
       - Level: 70
         Exp: 999999
-  - ExpGroup: 14
-    Jobs:
+  - Jobs:
       Rune_Knight: true
       Warlock: true
       Ranger: true
@@ -2848,8 +2814,7 @@ Body:
         Exp: 924220092
       - Level: 70
         Exp: 999999999
-  - ExpGroup: 15
-    Jobs:
+  - Jobs:
       Super_Novice_E: true
       Super_Baby_E: true
     MaxJobLevel: 50
@@ -2954,8 +2919,7 @@ Body:
         Exp: 119077000
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 16
-    Jobs:
+  - Jobs:
       Super_Novice: true
       Super_Baby: true
     MaxJobLevel: 99
@@ -3158,8 +3122,7 @@ Body:
         Exp: 1080120
       - Level: 99
         Exp: 999999999
-  - ExpGroup: 17
-    Jobs:
+  - Jobs:
       Summoner: true
       Baby_Summoner: true
     MaxJobLevel: 60

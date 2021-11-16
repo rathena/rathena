@@ -16,15 +16,47 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Job Experience Group Database
+# Job Database
 ###########################################################################
 #
-# Job Experience Group Settings
+# Job Settings
 #
 ###########################################################################
-# - ExpGroup                 Experience group ID.
-#   Jobs:                    Jobs associate to experience group.
-#     Job                    Job associated to experience group.
+# - Jobs:                    List of jobs associated to group.
+#     Job                    Job name.
+#   MaxWeight                Base maximum weight. (Default: 20000)
+#   HPFactor                 Base HP factor. (Default: 20000)
+#   HPMultiplicator          Base HP rate numerator. (Default: 500)
+#   SPFactor                 Base SP factor. (Default: 100)
+#   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
+#     Weapon                 Weapon type with associated ASPD.
+#   BonusStats:              Job level bonus stats/traits.
+#     - Level                Job level.
+#       Str                  Stength increase amount. (Default: 0)
+#       Agi                  Agility increase amount. (Default: 0)
+#       Vit                  Vitality increase amount. (Default: 0)
+#       Int                  Intelligence increase amount. (Default: 0)
+#       Dex                  Dexterity increase amount. (Default: 0)
+#       Luk                  Luck increase amount. (Default: 0)
+#       Pow                  Power increase amount. (Default: 0)
+#       Sta                  Stamina increase amount. (Default: 0)
+#       Wis                  Wisdom increase amount. (Default: 0)
+#       Spl                  Spell increase amount. (Default: 0)
+#       Con                  Concentration increase amount. (Default: 0)
+#       Crt                  Creative increase amount. (Default: 0)
+#   MaxStats:                Maximum stats/traits applicable. (Default: battle_config::max_*_parameter)
+#     Str                    Strength.
+#     Agi                    Agility.
+#     Vit                    Vitality.
+#     Int                    Intelligence.
+#     Dex                    Dexterity.
+#     Luk                    Luck.
+#     Pow                    Power.
+#     Sta                    Stamina.
+#     Wis                    Wisdom.
+#     Spl                    Spell.
+#     Con                    Concentration.
+#     Crt                    Creative.
 #   MaxBaseLevel             Maximum base level. (Default: MAX_LEVEL)
 #   BaseExp:                 Base experience per level.
 #     - Level                Base level.
@@ -33,15 +65,23 @@
 #   JobExp:                  Job experience per level.
 #     - Level                Job level.
 #       Exp                  Job experience.
+#   BaseHp:                  Base HP per base level.
+#     - Level                Base level.
+#       Hp                   Base HP.
+#   BaseSp:                  Base SP per base level.
+#     - Level                Base level.
+#       Sp                   Base SP.
+#   BaseAp:                  Base AP per base level.
+#     - Level                Base level.
+#       Ap                   Base AP.
 ###########################################################################
 
 Header:
-  Type: JOB_EXP
+  Type: JOB_STATS
   Version: 1
 
 Body:
-  - ExpGroup: 1
-    Jobs:
+  - Jobs:
       Novice: true
       Swordman: true
       Mage: true
@@ -297,8 +337,7 @@ Body:
         Exp: 99999998
       - Level: 99
         Exp: 99999999
-  - ExpGroup: 2
-    Jobs:
+  - Jobs:
       Novice_High: true
       Swordman_High: true
       Mage_High: true
@@ -521,8 +560,7 @@ Body:
         Exp: 343210000
       - Level: 99
         Exp: 99999999
-  - ExpGroup: 3
-    Jobs:
+  - Jobs:
       Novice: true
       Baby: true
     MaxJobLevel: 10
@@ -547,8 +585,7 @@ Body:
         Exp: 340
       - Level: 10
         Exp: 999999999
-  - ExpGroup: 4
-    Jobs:
+  - Jobs:
       Swordman: true
       Mage: true
       Archer: true
@@ -665,8 +702,7 @@ Body:
         Exp: 509596
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 5
-    Jobs:
+  - Jobs:
       Knight: true
       Priest: true
       Wizard: true
@@ -802,8 +838,7 @@ Body:
         Exp: 2083386
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 6
-    Jobs:
+  - Jobs:
       Novice_High: true
     MaxJobLevel: 10
     JobExp:
@@ -827,8 +862,7 @@ Body:
         Exp: 374
       - Level: 10
         Exp: 999999999
-  - ExpGroup: 7
-    Jobs:
+  - Jobs:
       Swordman_High: true
       Mage_High: true
       Archer_High: true
@@ -937,8 +971,7 @@ Body:
         Exp: 1273990
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 8
-    Jobs:
+  - Jobs:
       Lord_Knight: true
       High_Priest: true
       High_Wizard: true
@@ -1096,8 +1129,7 @@ Body:
         Exp: 213852071
       - Level: 70
         Exp: 999999999
-  - ExpGroup: 9
-    Jobs:
+  - Jobs:
       Gunslinger: true
       Ninja: true
     MaxJobLevel: 70
@@ -1242,8 +1274,7 @@ Body:
         Exp: 5395117
       - Level: 70
         Exp: 999999999
-  - ExpGroup: 10
-    Jobs:
+  - Jobs:
       Star_Gladiator: true
       Star_Gladiator2: true
     MaxJobLevel: 50
@@ -1348,8 +1379,7 @@ Body:
         Exp: 5166772
       - Level: 50
         Exp: 999999999
-  - ExpGroup: 11
-    Jobs:
+  - Jobs:
       Supernovice: true
       Super_Baby: true
     MaxJobLevel: 99
@@ -1552,3 +1582,453 @@ Body:
         Exp: 1462092
       - Level: 99
         Exp: 999999999
+  - Jobs:
+      Rune_Knight: true
+      Warlock: true
+      Ranger: true
+      Arch_Bishop: true
+      Mechanic: true
+      Guillotine_Cross: true
+      Rune_Knight_T: true
+      Warlock_T: true
+      Ranger_T: true
+      Arch_Bishop_T: true
+      Mechanic_T: true
+      Guillotine_Cross_T: true
+      Royal_Guard: true
+      Sorcerer: true
+      Minstrel: true
+      Wanderer: true
+      Sura: true
+      Genetic: true
+      Shadow_Chaser: true
+      Royal_Guard_T: true
+      Sorcerer_T: true
+      Minstrel_T: true
+      Wanderer_T: true
+      Sura_T: true
+      Genetic_T: true
+      Shadow_Chaser_T: true
+      Rune_Knight2: true
+      Rune_Knight_T2: true
+      Royal_Guard2: true
+      Royal_Guard_T2: true
+      Ranger2: true
+      Ranger_T2: true
+      Mechanic2: true
+      Mechanic_T2: true
+      Baby_Rune_Knight: true
+      Baby_Warlock: true
+      Baby_Ranger: true
+      Baby_Arch_Bishop: true
+      Baby_Mechanic: true
+      Baby_Guillotine_Cross: true
+      Baby_Royal_Guard: true
+      Baby_Sorcerer: true
+      Baby_Minstrel: true
+      Baby_Wanderer: true
+      Baby_Sura: true
+      Baby_Genetic: true
+      Baby_Shadow_Chaser: true
+      Baby_Rune_Knight2: true
+      Baby_Royal_Guard2: true
+      Baby_Ranger2: true
+      Baby_Mechanic2: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+      Kagerou: true
+      Oboro: true
+      Rebellion: true
+      Summoner: true
+      Baby_Summoner: true
+      Baby_Ninja: true
+      Baby_Kagerou: true
+      Baby_Oboro: true
+      Baby_Taekwon: true
+      Baby_Star_Gladiator: true
+      Baby_Soul_Linker: true
+      Baby_Gunslinger: true
+      Baby_Rebellion: true
+      Baby_Star_Gladiator2: true
+      Star_Emperor: true
+      Soul_Reaper: true
+      Baby_Star_Emperor: true
+      Baby_Soul_Reaper: true
+      Star_Emperor2: true
+      Baby_Star_Emperor2: true
+    MaxBaseLevel: 99
+    BaseExp:
+      - Level: 1
+        Exp: 10
+      - Level: 2
+        Exp: 18
+      - Level: 3
+        Exp: 28
+      - Level: 4
+        Exp: 40
+      - Level: 5
+        Exp: 85
+      - Level: 6
+        Exp: 123
+      - Level: 7
+        Exp: 168
+      - Level: 8
+        Exp: 220
+      - Level: 9
+        Exp: 278
+      - Level: 10
+        Exp: 400
+      - Level: 11
+        Exp: 481
+      - Level: 12
+        Exp: 613
+      - Level: 13
+        Exp: 731
+      - Level: 14
+        Exp: 875
+      - Level: 15
+        Exp: 1038
+      - Level: 16
+        Exp: 1213
+      - Level: 17
+        Exp: 1400
+      - Level: 18
+        Exp: 1575
+      - Level: 19
+        Exp: 1775
+      - Level: 20
+        Exp: 2268
+      - Level: 21
+        Exp: 2604
+      - Level: 22
+        Exp: 2786
+      - Level: 23
+        Exp: 3136
+      - Level: 24
+        Exp: 3506
+      - Level: 25
+        Exp: 4130
+      - Level: 26
+        Exp: 4796
+      - Level: 27
+        Exp: 5508
+      - Level: 28
+        Exp: 6264
+      - Level: 29
+        Exp: 9645
+      - Level: 30
+        Exp: 12392
+      - Level: 31
+        Exp: 14220
+      - Level: 32
+        Exp: 16159
+      - Level: 33
+        Exp: 18209
+      - Level: 34
+        Exp: 21649
+      - Level: 35
+        Exp: 24451
+      - Level: 36
+        Exp: 27401
+      - Level: 37
+        Exp: 30499
+      - Level: 38
+        Exp: 33748
+      - Level: 39
+        Exp: 47342
+      - Level: 40
+        Exp: 58160
+      - Level: 41
+        Exp: 64711
+      - Level: 42
+        Exp: 71573
+      - Level: 43
+        Exp: 78749
+      - Level: 44
+        Exp: 90144
+      - Level: 45
+        Exp: 99312
+      - Level: 46
+        Exp: 108870
+      - Level: 47
+        Exp: 118816
+      - Level: 48
+        Exp: 129154
+      - Level: 49
+        Exp: 174196
+      - Level: 50
+        Exp: 213220
+      - Level: 51
+        Exp: 238080
+      - Level: 52
+        Exp: 264150
+      - Level: 53
+        Exp: 291427
+      - Level: 54
+        Exp: 329640
+      - Level: 55
+        Exp: 363155
+      - Level: 56
+        Exp: 398116
+      - Level: 57
+        Exp: 434526
+      - Level: 58
+        Exp: 472381
+      - Level: 59
+        Exp: 610848
+      - Level: 60
+        Exp: 731828
+      - Level: 61
+        Exp: 806448
+      - Level: 62
+        Exp: 884232
+      - Level: 63
+        Exp: 965180
+      - Level: 64
+        Exp: 1073896
+      - Level: 65
+        Exp: 1170382
+      - Level: 66
+        Exp: 1270556
+      - Level: 67
+        Exp: 1374422
+      - Level: 68
+        Exp: 1481976
+      - Level: 69
+        Exp: 1850800
+      - Level: 70
+        Exp: 3389616
+      - Level: 71
+        Exp: 3666333
+      - Level: 72
+        Exp: 3953534
+      - Level: 73
+        Exp: 4251217
+      - Level: 74
+        Exp: 4559382
+      - Level: 75
+        Exp: 5129260
+      - Level: 76
+        Exp: 5488173
+      - Level: 77
+        Exp: 5859059
+      - Level: 78
+        Exp: 6241919
+      - Level: 79
+        Exp: 7374168
+      - Level: 80
+        Exp: 9570662
+      - Level: 81
+        Exp: 10458427
+      - Level: 82
+        Exp: 11380262
+      - Level: 83
+        Exp: 12336168
+      - Level: 84
+        Exp: 13326144
+      - Level: 85
+        Exp: 14994907
+      - Level: 86
+        Exp: 16130400
+      - Level: 87
+        Exp: 17304206
+      - Level: 88
+        Exp: 18516326
+      - Level: 89
+        Exp: 19766760
+      - Level: 90
+        Exp: 29216160
+      - Level: 91
+        Exp: 34949880
+      - Level: 92
+        Exp: 40930560
+      - Level: 93
+        Exp: 55017900
+      - Level: 94
+        Exp: 71510400
+      - Level: 95
+        Exp: 106974000
+      - Level: 96
+        Exp: 146061000
+      - Level: 97
+        Exp: 174405000
+      - Level: 98
+        Exp: 343210000
+      - Level: 99
+        Exp: 99999999
+  - Jobs:
+      Rune_Knight: true
+      Warlock: true
+      Ranger: true
+      Arch_Bishop: true
+      Mechanic: true
+      Guillotine_Cross: true
+      Rune_Knight_T: true
+      Warlock_T: true
+      Ranger_T: true
+      Arch_Bishop_T: true
+      Mechanic_T: true
+      Guillotine_Cross_T: true
+      Royal_Guard: true
+      Sorcerer: true
+      Minstrel: true
+      Wanderer: true
+      Sura: true
+      Genetic: true
+      Shadow_Chaser: true
+      Royal_Guard_T: true
+      Sorcerer_T: true
+      Minstrel_T: true
+      Wanderer_T: true
+      Sura_T: true
+      Genetic_T: true
+      Shadow_Chaser_T: true
+      Rune_Knight2: true
+      Rune_Knight_T2: true
+      Royal_Guard2: true
+      Royal_Guard_T2: true
+      Ranger2: true
+      Ranger_T2: true
+      Mechanic2: true
+      Mechanic_T2: true
+      Baby_Rune_Knight: true
+      Baby_Warlock: true
+      Baby_Ranger: true
+      Baby_Arch_Bishop: true
+      Baby_Mechanic: true
+      Baby_Guillotine_Cross: true
+      Baby_Royal_Guard: true
+      Baby_Sorcerer: true
+      Baby_Minstrel: true
+      Baby_Wanderer: true
+      Baby_Sura: true
+      Baby_Genetic: true
+      Baby_Shadow_Chaser: true
+      Baby_Rune_Knight2: true
+      Baby_Royal_Guard2: true
+      Baby_Ranger2: true
+      Baby_Mechanic2: true
+      Super_Novice_E: true
+      Super_Baby_E: true
+      Kagerou: true
+      Oboro: true
+      Rebellion: true
+      Summoner: true
+      Baby_Summoner: true
+      Baby_Ninja: true
+      Baby_Kagerou: true
+      Baby_Oboro: true
+      Baby_Taekwon: true
+      Baby_Star_Gladiator: true
+      Baby_Soul_Linker: true
+      Baby_Gunslinger: true
+      Baby_Rebellion: true
+      Baby_Star_Gladiator2: true
+      Star_Emperor: true
+      Soul_Reaper: true
+      Baby_Star_Emperor: true
+      Baby_Soul_Reaper: true
+      Star_Emperor2: true
+      Baby_Star_Emperor2: true
+    MaxJobLevel: 50
+    JobExp:
+      - Level: 1
+        Exp: 288
+      - Level: 2
+        Exp: 368
+      - Level: 3
+        Exp: 568
+      - Level: 4
+        Exp: 696
+      - Level: 5
+        Exp: 1206
+      - Level: 6
+        Exp: 1774
+      - Level: 7
+        Exp: 2192
+      - Level: 8
+        Exp: 3196
+      - Level: 9
+        Exp: 5080
+      - Level: 10
+        Exp: 7352
+      - Level: 11
+        Exp: 8580
+      - Level: 12
+        Exp: 9892
+      - Level: 13
+        Exp: 13358
+      - Level: 14
+        Exp: 18984
+      - Level: 15
+        Exp: 31925
+      - Level: 16
+        Exp: 35860
+      - Level: 17
+        Exp: 40013
+      - Level: 18
+        Exp: 51605
+      - Level: 19
+        Exp: 68585
+      - Level: 20
+        Exp: 87770
+      - Level: 21
+        Exp: 96443
+      - Level: 22
+        Exp: 105515
+      - Level: 23
+        Exp: 131770
+      - Level: 24
+        Exp: 167428
+      - Level: 25
+        Exp: 206720
+      - Level: 26
+        Exp: 223860
+      - Level: 27
+        Exp: 241673
+      - Level: 28
+        Exp: 294553
+      - Level: 29
+        Exp: 362303
+      - Level: 30
+        Exp: 479053
+      - Level: 31
+        Exp: 513362
+      - Level: 32
+        Exp: 548856
+      - Level: 33
+        Exp: 656197
+      - Level: 34
+        Exp: 787507
+      - Level: 35
+        Exp: 927154
+      - Level: 36
+        Exp: 985696
+      - Level: 37
+        Exp: 1046034
+      - Level: 38
+        Exp: 1231134
+      - Level: 39
+        Exp: 1449220
+      - Level: 40
+        Exp: 1678177
+      - Level: 41
+        Exp: 1773024
+      - Level: 42
+        Exp: 2182221
+      - Level: 43
+        Exp: 2534978
+      - Level: 44
+        Exp: 3043585
+      - Level: 45
+        Exp: 3782865
+      - Level: 46
+        Exp: 4461912
+      - Level: 47
+        Exp: 4672971
+      - Level: 48
+        Exp: 5971896
+      - Level: 49
+        Exp: 6250158
+      - Level: 50
+        Exp: 6875174
