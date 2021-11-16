@@ -4348,7 +4348,13 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 		body << YAML::BeginSeq;
 
 		for (int i = 1; i <= jlvl->second; i++) {
-			const char *bonus = constant_lookup(job_bonus->second[i - 1], "PARAM_");
+			auto value = job_bonus->second[i - 1];
+
+			if( value == 0 ){
+				continue;
+			}
+
+			const char *bonus = constant_lookup( value - 1, "PARAM_" );
 
 			if (bonus != nullptr) {
 				body << YAML::BeginMap;

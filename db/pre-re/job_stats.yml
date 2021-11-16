@@ -93,26 +93,18 @@ Body:
       Staff: 650
       2hStaff: 650
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Pow: 1
-      - Level: 3
         Luk: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Vit: 1
-      - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Agi: 1
-      - Level: 9
+      - Level: 3
         Dex: 1
-      - Level: 10
+      - Level: 5
+        Agi: 1
+      - Level: 6
+        Vit: 1
+      - Level: 8
         Str: 1
+      - Level: 9
+        Int: 1
   - Jobs:
       Swordman: true
     MaxWeight: 28000
@@ -130,106 +122,42 @@ Body:
       Mace: 650
       2hMace: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Agi: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
         Str: 1
       - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Vit: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Agi: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
         Str: 1
       - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
         Vit: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
+      - Level: 22
+        Dex: 1
+      - Level: 26
+        Luk: 1
+      - Level: 30
         Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
+      - Level: 33
         Str: 1
       - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
+        Dex: 1
       - Level: 38
-        Int: 1
-      - Level: 39
-        Str: 1
+        Vit: 1
       - Level: 40
-        Agi: 1
-      - Level: 41
         Str: 1
       - Level: 42
-        Int: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Pow: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
         Vit: 1
-      - Level: 47
+      - Level: 44
+        Luk: 1
+      - Level: 46
         Agi: 1
-      - Level: 48
+      - Level: 47
         Str: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Agi: 1
+        Str: 1
   - Jobs:
       Mage: true
     MaxWeight: 22000
@@ -241,106 +169,42 @@ Body:
       Staff: 700
       2hStaff: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Dex: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Int: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Dex: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Int: 1
       - Level: 18
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Agi: 1
       - Level: 22
-        Dex: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Int: 1
       - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
+        Agi: 1
       - Level: 30
-        Pow: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
         Luk: 1
-      - Level: 37
-        Str: 1
+      - Level: 33
+        Int: 1
+      - Level: 36
+        Dex: 1
       - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
+        Int: 1
       - Level: 40
-        Vit: 1
-      - Level: 41
-        Str: 1
+        Agi: 1
       - Level: 42
-        Pow: 1
-      - Level: 43
-        Str: 1
+        Luk: 1
       - Level: 44
-        Dex: 1
-      - Level: 45
-        Str: 1
+        Int: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Vit: 1
-      - Level: 48
-        Str: 1
+        Agi: 1
       - Level: 49
-        Pow: 1
+        Luk: 1
       - Level: 50
-        Dex: 1
+        Int: 1
   - Jobs:
       Archer: true
     MaxWeight: 26000
@@ -351,106 +215,42 @@ Body:
       Dagger: 600
       Bow: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Luk: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Dex: 1
       - Level: 6
-        Agi: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
         Str: 1
       - Level: 10
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Int: 1
       - Level: 14
-        Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Dex: 1
       - Level: 18
-        Luk: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Dex: 1
       - Level: 22
-        Pow: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Luk: 1
       - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Luk: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Agi: 1
-      - Level: 39
+      - Level: 30
+        Dex: 1
+      - Level: 33
+        Agi: 1
+      - Level: 36
+        Dex: 1
+      - Level: 38
         Str: 1
       - Level: 40
-        Agi: 1
-      - Level: 41
         Str: 1
       - Level: 42
-        Luk: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Pow: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
         Dex: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Vit: 1
-      - Level: 50
+      - Level: 44
         Luk: 1
+      - Level: 46
+        Vit: 1
+      - Level: 47
+        Int: 1
+      - Level: 49
+        Agi: 1
+      - Level: 50
+        Dex: 1
   - Jobs:
       Acolyte: true
     MaxWeight: 24000
@@ -463,106 +263,42 @@ Body:
       Staff: 600
       2hStaff: 600
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Pow: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
         Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Pow: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
+      - Level: 6
         Vit: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
+      - Level: 10
+        Int: 1
+      - Level: 14
+        Dex: 1
+      - Level: 18
+        Luk: 1
+      - Level: 22
         Agi: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
+      - Level: 26
         Str: 1
       - Level: 30
-        Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Pow: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
         Vit: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
+      - Level: 33
+        Int: 1
+      - Level: 36
+        Dex: 1
+      - Level: 38
+        Luk: 1
+      - Level: 40
         Agi: 1
-      - Level: 43
+      - Level: 42
         Str: 1
       - Level: 44
-        Int: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Luk: 1
-      - Level: 48
-        Str: 1
+        Dex: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Pow: 1
+        Luk: 1
   - Jobs:
       Merchant: true
     MaxWeight: 28000
@@ -577,106 +313,42 @@ Body:
       Mace: 700
       2hMace: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Int: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Vit: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Agi: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
         Str: 1
       - Level: 14
-        Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Dex: 1
       - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Vit: 1
       - Level: 22
-        Agi: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Str: 1
       - Level: 26
-        Dex: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
         Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
+      - Level: 30
         Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Pow: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Luk: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
+      - Level: 33
         Agi: 1
-      - Level: 41
+      - Level: 36
+        Luk: 1
+      - Level: 38
+        Dex: 1
+      - Level: 40
         Str: 1
       - Level: 42
-        Luk: 1
-      - Level: 43
-        Str: 1
+        Dex: 1
       - Level: 44
-        Agi: 1
-      - Level: 45
         Str: 1
       - Level: 46
-        Pow: 1
-      - Level: 47
-        Int: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Agi: 1
-      - Level: 50
         Luk: 1
+      - Level: 47
+        Vit: 1
+      - Level: 49
+        Str: 1
+      - Level: 50
+        Dex: 1
   - Jobs:
       Thief: true
     MaxWeight: 24000
@@ -689,106 +361,42 @@ Body:
       1hAxe: 800
       Bow: 800
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
         Agi: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
+      - Level: 6
         Str: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Int: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
         Dex: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+      - Level: 14
+        Vit: 1
+      - Level: 18
+        Int: 1
       - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Dex: 1
       - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
+        Luk: 1
       - Level: 30
-        Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
         Str: 1
       - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Agi: 1
-      - Level: 39
+      - Level: 36
+        Agi: 1
+      - Level: 38
         Str: 1
       - Level: 40
-        Pow: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
         Luk: 1
-      - Level: 43
-        Str: 1
+      - Level: 42
+        Dex: 1
       - Level: 44
-        Int: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Pow: 1
+        Luk: 1
       - Level: 47
-        Agi: 1
-      - Level: 48
         Str: 1
       - Level: 49
-        Luk: 1
+        Dex: 1
       - Level: 50
-        Vit: 1
+        Agi: 1
   - Jobs:
       Knight: true
     MaxWeight: 28000
@@ -807,105 +415,65 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Int: 1
-      - Level: 2
-        Str: 1
-      - Level: 3
-        Int: 1
-      - Level: 4
-        Agi: 1
-      - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Int: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Agi: 1
-      - Level: 11
-        Luk: 1
-      - Level: 12
-        Int: 1
-      - Level: 13
         Vit: 1
-      - Level: 14
+      - Level: 3
+        Vit: 1
+      - Level: 4
         Str: 1
-      - Level: 15
+      - Level: 5
+        Luk: 1
+      - Level: 8
+        Vit: 1
+      - Level: 10
+        Str: 1
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
         Agi: 1
-      - Level: 16
+      - Level: 15
         Str: 1
       - Level: 17
-        Int: 1
+        Vit: 1
       - Level: 18
-        Int: 1
+        Vit: 1
       - Level: 19
-        Luk: 1
+        Dex: 1
       - Level: 20
-        Pow: 1
+        Luk: 1
       - Level: 21
-        Agi: 1
-      - Level: 22
         Str: 1
       - Level: 23
-        Int: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
+        Vit: 1
       - Level: 27
-        Agi: 1
+        Str: 1
       - Level: 28
-        Pow: 1
-      - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
         Luk: 1
-      - Level: 32
-        Str: 1
+      - Level: 29
+        Vit: 1
+      - Level: 31
+        Dex: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Int: 1
-      - Level: 37
-        Pow: 1
-      - Level: 38
         Vit: 1
-      - Level: 39
-        Str: 1
+      - Level: 37
+        Luk: 1
+      - Level: 38
+        Agi: 1
       - Level: 40
-        Luk: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
+        Dex: 1
       - Level: 43
-        Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Agi: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Luk: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
         Str: 1
+      - Level: 47
+        Str: 1
+      - Level: 48
+        Dex: 1
+      - Level: 49
+        Dex: 1
   - Jobs:
       Priest: true
     MaxWeight: 26000
@@ -920,105 +488,65 @@ Body:
       2hStaff: 600
     BonusStats:
       - Level: 1
-        Pow: 1
-      - Level: 2
-        Str: 1
+        Luk: 1
       - Level: 3
-        Pow: 1
+        Luk: 1
       - Level: 4
-        Agi: 1
-      - Level: 5
         Str: 1
       - Level: 6
-        Vit: 1
-      - Level: 7
-        Int: 1
-      - Level: 8
-        Dex: 1
-      - Level: 9
-        Dex: 1
-      - Level: 10
-        Pow: 1
-      - Level: 11
         Agi: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
+      - Level: 7
+        Vit: 1
+      - Level: 8
+        Int: 1
+      - Level: 9
+        Int: 1
+      - Level: 10
+        Luk: 1
+      - Level: 11
         Str: 1
       - Level: 14
-        Int: 1
-      - Level: 15
-        Str: 1
+        Vit: 1
       - Level: 16
-        Luk: 1
+        Dex: 1
       - Level: 17
-        Agi: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Luk: 1
-      - Level: 21
-        Pow: 1
-      - Level: 22
         Dex: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
+      - Level: 21
         Luk: 1
-      - Level: 26
-        Str: 1
+      - Level: 22
+        Int: 1
+      - Level: 25
+        Dex: 1
       - Level: 27
-        Agi: 1
-      - Level: 28
         Str: 1
       - Level: 29
-        Vit: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Pow: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Int: 1
-      - Level: 35
         Agi: 1
+      - Level: 31
+        Luk: 1
+      - Level: 32
+        Dex: 1
+      - Level: 34
+        Vit: 1
+      - Level: 35
+        Str: 1
       - Level: 36
-        Int: 1
+        Vit: 1
       - Level: 37
-        Vit: 1
-      - Level: 38
-        Str: 1
+        Agi: 1
       - Level: 39
-        Pow: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Str: 1
+        Luk: 1
       - Level: 42
-        Dex: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
         Int: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
+      - Level: 43
+        Int: 1
+      - Level: 45
         Vit: 1
-      - Level: 49
-        Str: 1
+      - Level: 48
+        Agi: 1
       - Level: 50
-        Pow: 1
+        Luk: 1
   - Jobs:
       Wizard: true
     MaxWeight: 24000
@@ -1031,105 +559,65 @@ Body:
       2hStaff: 625
     BonusStats:
       - Level: 1
-        Dex: 1
-      - Level: 2
-        Luk: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Dex: 1
-      - Level: 5
-        Luk: 1
-      - Level: 6
-        Vit: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Dex: 1
-      - Level: 10
-        Vit: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Agi: 1
-      - Level: 13
-        Luk: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Pow: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Dex: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Dex: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Luk: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Dex: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Dex: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Vit: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Pow: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Int: 1
-      - Level: 39
+      - Level: 2
+        Dex: 1
+      - Level: 4
+        Int: 1
+      - Level: 5
+        Dex: 1
+      - Level: 6
+        Agi: 1
+      - Level: 9
+        Int: 1
+      - Level: 10
+        Agi: 1
+      - Level: 12
+        Str: 1
+      - Level: 13
+        Dex: 1
+      - Level: 15
         Luk: 1
+      - Level: 18
+        Int: 1
+      - Level: 22
+        Int: 1
+      - Level: 24
+        Agi: 1
+      - Level: 26
+        Dex: 1
+      - Level: 29
+        Int: 1
+      - Level: 31
+        Int: 1
+      - Level: 32
+        Dex: 1
+      - Level: 33
+        Int: 1
+      - Level: 34
+        Agi: 1
+      - Level: 36
+        Luk: 1
+      - Level: 38
+        Vit: 1
+      - Level: 39
+        Dex: 1
       - Level: 40
-        Dex: 1
+        Int: 1
       - Level: 41
-        Vit: 1
-      - Level: 42
-        Str: 1
+        Agi: 1
       - Level: 43
-        Vit: 1
-      - Level: 44
-        Str: 1
+        Agi: 1
       - Level: 45
-        Dex: 1
+        Int: 1
       - Level: 46
-        Vit: 1
+        Agi: 1
       - Level: 47
-        Vit: 1
+        Agi: 1
       - Level: 48
-        Dex: 1
-      - Level: 49
-        Str: 1
+        Int: 1
       - Level: 50
-        Dex: 1
+        Int: 1
   - Jobs:
       Blacksmith: true
     MaxWeight: 30000
@@ -1145,105 +633,65 @@ Body:
       2hMace: 675
     BonusStats:
       - Level: 1
-        Luk: 1
-      - Level: 2
-        Str: 1
+        Dex: 1
       - Level: 3
-        Agi: 1
+        Str: 1
       - Level: 4
-        Luk: 1
+        Dex: 1
       - Level: 5
-        Luk: 1
-      - Level: 6
-        Str: 1
+        Dex: 1
       - Level: 7
-        Int: 1
+        Vit: 1
       - Level: 8
-        Agi: 1
+        Str: 1
       - Level: 9
-        Luk: 1
-      - Level: 10
-        Str: 1
+        Dex: 1
       - Level: 11
-        Pow: 1
-      - Level: 12
         Luk: 1
+      - Level: 12
+        Dex: 1
       - Level: 13
-        Int: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
+        Vit: 1
       - Level: 16
-        Agi: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
         Str: 1
       - Level: 19
-        Luk: 1
-      - Level: 20
-        Int: 1
-      - Level: 21
         Dex: 1
-      - Level: 22
-        Str: 1
+      - Level: 20
+        Vit: 1
+      - Level: 21
+        Int: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Str: 1
       - Level: 26
-        Luk: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Luk: 1
-      - Level: 29
-        Vit: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Agi: 1
-      - Level: 32
-        Int: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
         Dex: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Int: 1
-      - Level: 38
-        Vit: 1
-      - Level: 39
-        Luk: 1
-      - Level: 40
-        Luk: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
+      - Level: 28
+        Dex: 1
+      - Level: 29
         Agi: 1
-      - Level: 45
+      - Level: 31
+        Str: 1
+      - Level: 32
+        Vit: 1
+      - Level: 34
+        Int: 1
+      - Level: 36
+        Dex: 1
+      - Level: 37
+        Vit: 1
+      - Level: 38
+        Agi: 1
+      - Level: 39
+        Dex: 1
+      - Level: 40
+        Dex: 1
+      - Level: 44
         Str: 1
       - Level: 46
-        Pow: 1
-      - Level: 47
         Luk: 1
-      - Level: 48
-        Str: 1
+      - Level: 47
+        Dex: 1
       - Level: 49
-        Int: 1
-      - Level: 50
-        Str: 1
+        Vit: 1
   - Jobs:
       Hunter: true
     MaxWeight: 27000
@@ -1255,105 +703,65 @@ Body:
       Bow: 600
     BonusStats:
       - Level: 1
-        Luk: 1
-      - Level: 2
-        Str: 1
-      - Level: 3
         Dex: 1
+      - Level: 3
+        Int: 1
       - Level: 4
-        Luk: 1
+        Dex: 1
       - Level: 5
-        Pow: 1
+        Luk: 1
       - Level: 6
-        Agi: 1
-      - Level: 7
         Str: 1
       - Level: 8
-        Luk: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Agi: 1
+        Str: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Vit: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Luk: 1
-      - Level: 15
-        Pow: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Vit: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Luk: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Int: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Luk: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Pow: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Vit: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Luk: 1
-      - Level: 34
-        Dex: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Luk: 1
-      - Level: 39
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Dex: 1
-      - Level: 42
-        Pow: 1
-      - Level: 43
-        Luk: 1
-      - Level: 44
         Agi: 1
-      - Level: 45
+      - Level: 14
+        Dex: 1
+      - Level: 15
+        Luk: 1
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Agi: 1
+      - Level: 20
+        Agi: 1
+      - Level: 21
+        Dex: 1
+      - Level: 23
+        Vit: 1
+      - Level: 27
+        Dex: 1
+      - Level: 29
+        Luk: 1
+      - Level: 31
+        Agi: 1
+      - Level: 33
+        Dex: 1
+      - Level: 34
+        Int: 1
+      - Level: 38
+        Dex: 1
+      - Level: 39
+        Agi: 1
+      - Level: 41
+        Int: 1
+      - Level: 42
+        Luk: 1
+      - Level: 43
+        Dex: 1
+      - Level: 44
         Str: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Vit: 1
-      - Level: 48
-        Str: 1
+        Agi: 1
       - Level: 49
-        Luk: 1
-      - Level: 50
-        Str: 1
+        Dex: 1
   - Jobs:
       Assassin: true
     MaxWeight: 24000
@@ -1367,105 +775,65 @@ Body:
       Katar: 500
     BonusStats:
       - Level: 1
-        Vit: 1
-      - Level: 2
-        Vit: 1
-      - Level: 3
-        Vit: 1
-      - Level: 4
-        Dex: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Int: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
         Agi: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
+      - Level: 2
+        Agi: 1
+      - Level: 3
+        Agi: 1
+      - Level: 4
+        Int: 1
+      - Level: 6
+        Vit: 1
+      - Level: 8
+        Vit: 1
+      - Level: 9
+        Dex: 1
+      - Level: 11
         Str: 1
       - Level: 14
-        Dex: 1
+        Int: 1
       - Level: 15
-        Vit: 1
-      - Level: 16
-        Vit: 1
-      - Level: 17
-        Vit: 1
-      - Level: 18
-        Vit: 1
-      - Level: 19
-        Vit: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Vit: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Luk: 1
-      - Level: 25
         Agi: 1
-      - Level: 26
+      - Level: 16
+        Agi: 1
+      - Level: 17
+        Agi: 1
+      - Level: 18
+        Agi: 1
+      - Level: 19
+        Agi: 1
+      - Level: 20
+        Agi: 1
+      - Level: 21
+        Agi: 1
+      - Level: 24
+        Dex: 1
+      - Level: 25
         Str: 1
       - Level: 27
-        Agi: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
         Str: 1
       - Level: 30
-        Luk: 1
+        Dex: 1
       - Level: 31
-        Luk: 1
+        Dex: 1
       - Level: 32
-        Agi: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
         Str: 1
       - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
+        Int: 1
       - Level: 40
-        Luk: 1
-      - Level: 41
-        Luk: 1
-      - Level: 42
         Dex: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Str: 1
+      - Level: 41
+        Dex: 1
+      - Level: 42
+        Int: 1
       - Level: 45
-        Agi: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
         Str: 1
+      - Level: 46
+        Dex: 1
       - Level: 48
-        Agi: 1
-      - Level: 49
         Str: 1
       - Level: 50
-        Luk: 1
+        Dex: 1
   - Jobs:
       Knight2: true
     MaxWeight: 28000
@@ -1484,105 +852,65 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Int: 1
-      - Level: 2
-        Str: 1
-      - Level: 3
-        Int: 1
-      - Level: 4
-        Agi: 1
-      - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Int: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Agi: 1
-      - Level: 11
-        Luk: 1
-      - Level: 12
-        Int: 1
-      - Level: 13
         Vit: 1
-      - Level: 14
+      - Level: 3
+        Vit: 1
+      - Level: 4
         Str: 1
-      - Level: 15
+      - Level: 5
+        Luk: 1
+      - Level: 8
+        Vit: 1
+      - Level: 10
+        Str: 1
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
         Agi: 1
-      - Level: 16
+      - Level: 15
         Str: 1
       - Level: 17
-        Int: 1
+        Vit: 1
       - Level: 18
-        Int: 1
+        Vit: 1
       - Level: 19
-        Luk: 1
+        Dex: 1
       - Level: 20
-        Pow: 1
+        Luk: 1
       - Level: 21
-        Agi: 1
-      - Level: 22
         Str: 1
       - Level: 23
-        Int: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
+        Vit: 1
       - Level: 27
-        Agi: 1
+        Str: 1
       - Level: 28
-        Pow: 1
-      - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
         Luk: 1
-      - Level: 32
-        Str: 1
+      - Level: 29
+        Vit: 1
+      - Level: 31
+        Dex: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Int: 1
-      - Level: 37
-        Pow: 1
-      - Level: 38
         Vit: 1
-      - Level: 39
-        Str: 1
+      - Level: 37
+        Luk: 1
+      - Level: 38
+        Agi: 1
       - Level: 40
-        Luk: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
+        Dex: 1
       - Level: 43
-        Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Agi: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Luk: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
         Str: 1
+      - Level: 47
+        Str: 1
+      - Level: 48
+        Dex: 1
+      - Level: 49
+        Dex: 1
   - Jobs:
       Crusader: true
     MaxWeight: 28000
@@ -1602,105 +930,65 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Pow: 1
+        Luk: 1
       - Level: 2
-        Pow: 1
+        Luk: 1
       - Level: 3
-        Pow: 1
+        Luk: 1
       - Level: 4
-        Pow: 1
+        Luk: 1
       - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
+        Luk: 1
       - Level: 7
-        Agi: 1
-      - Level: 8
         Str: 1
       - Level: 9
-        Dex: 1
-      - Level: 10
-        Str: 1
+        Int: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Int: 1
-      - Level: 13
-        Str: 1
+        Vit: 1
       - Level: 14
-        Luk: 1
+        Dex: 1
       - Level: 15
-        Int: 1
-      - Level: 16
-        Str: 1
+        Vit: 1
       - Level: 17
-        Agi: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Dex: 1
-      - Level: 21
-        Dex: 1
-      - Level: 22
         Int: 1
+      - Level: 21
+        Int: 1
+      - Level: 22
+        Vit: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
         Str: 1
       - Level: 25
-        Agi: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
         Str: 1
       - Level: 28
-        Luk: 1
-      - Level: 29
-        Str: 1
+        Dex: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
         Agi: 1
-      - Level: 33
+      - Level: 32
         Str: 1
       - Level: 34
-        Luk: 1
+        Dex: 1
       - Level: 35
-        Dex: 1
+        Int: 1
       - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Dex: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
         Agi: 1
-      - Level: 49
+      - Level: 38
+        Int: 1
+      - Level: 40
+        Vit: 1
+      - Level: 41
+        Vit: 1
+      - Level: 44
+        Int: 1
+      - Level: 46
+        Vit: 1
+      - Level: 48
         Str: 1
       - Level: 50
-        Int: 1
+        Vit: 1
   - Jobs:
       Monk: true
     MaxWeight: 26000
@@ -1716,105 +1004,65 @@ Body:
       2hStaff: 575
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Agi: 1
-      - Level: 3
         Str: 1
       - Level: 4
-        Luk: 1
+        Dex: 1
       - Level: 5
-        Vit: 1
-      - Level: 6
-        Str: 1
+        Agi: 1
       - Level: 7
-        Int: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
         Vit: 1
-      - Level: 11
-        Str: 1
+      - Level: 10
+        Agi: 1
       - Level: 12
-        Agi: 1
+        Str: 1
       - Level: 13
-        Agi: 1
-      - Level: 14
         Str: 1
       - Level: 15
-        Pow: 1
-      - Level: 16
-        Dex: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Int: 1
-      - Level: 21
-        Vit: 1
-      - Level: 22
         Luk: 1
-      - Level: 23
-        Vit: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
+      - Level: 16
         Int: 1
+      - Level: 18
+        Agi: 1
+      - Level: 20
+        Vit: 1
+      - Level: 21
+        Agi: 1
+      - Level: 22
+        Dex: 1
+      - Level: 23
+        Agi: 1
+      - Level: 25
+        Vit: 1
       - Level: 26
-        Agi: 1
-      - Level: 27
-        Agi: 1
-      - Level: 28
         Str: 1
-      - Level: 29
+      - Level: 27
         Str: 1
       - Level: 30
-        Luk: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Pow: 1
-      - Level: 33
-        Int: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Vit: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Pow: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
+      - Level: 32
         Luk: 1
-      - Level: 44
+      - Level: 33
         Vit: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
+      - Level: 35
+        Agi: 1
+      - Level: 38
         Int: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
+      - Level: 40
+        Luk: 1
+      - Level: 41
+        Vit: 1
+      - Level: 43
+        Dex: 1
+      - Level: 44
+        Agi: 1
+      - Level: 46
+        Vit: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Agi: 1
+        Str: 1
   - Jobs:
       Sage: true
     MaxWeight: 24000
@@ -1828,105 +1076,65 @@ Body:
       2hStaff: 625
     BonusStats:
       - Level: 1
-        Dex: 1
-      - Level: 2
-        Str: 1
+        Int: 1
       - Level: 3
-        Vit: 1
-      - Level: 4
-        Int: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Vit: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Dex: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Int: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Vit: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Dex: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Pow: 1
-      - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Luk: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Vit: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Dex: 1
-      - Level: 25
-        Luk: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Luk: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Dex: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Pow: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Dex: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Luk: 1
-      - Level: 40
-        Pow: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
         Agi: 1
-      - Level: 43
+      - Level: 4
+        Vit: 1
+      - Level: 6
+        Agi: 1
+      - Level: 8
+        Int: 1
+      - Level: 11
+        Vit: 1
+      - Level: 13
+        Agi: 1
+      - Level: 15
+        Int: 1
+      - Level: 17
+        Luk: 1
+      - Level: 18
+        Vit: 1
+      - Level: 20
+        Dex: 1
+      - Level: 22
+        Agi: 1
+      - Level: 24
+        Int: 1
+      - Level: 25
+        Dex: 1
+      - Level: 27
+        Dex: 1
+      - Level: 30
+        Int: 1
+      - Level: 32
+        Dex: 1
+      - Level: 33
+        Agi: 1
+      - Level: 35
+        Luk: 1
+      - Level: 37
+        Int: 1
+      - Level: 38
+        Int: 1
+      - Level: 39
+        Dex: 1
+      - Level: 40
+        Luk: 1
+      - Level: 42
         Str: 1
       - Level: 44
-        Agi: 1
+        Str: 1
       - Level: 45
-        Dex: 1
+        Int: 1
       - Level: 46
-        Agi: 1
+        Str: 1
       - Level: 47
-        Agi: 1
+        Str: 1
       - Level: 48
-        Agi: 1
-      - Level: 49
         Str: 1
       - Level: 50
-        Dex: 1
+        Int: 1
   - Jobs:
       Rogue: true
     MaxWeight: 24000
@@ -1939,105 +1147,65 @@ Body:
       Bow: 650
     BonusStats:
       - Level: 1
-        Vit: 1
+        Agi: 1
       - Level: 2
-        Int: 1
+        Vit: 1
       - Level: 3
-        Luk: 1
-      - Level: 4
-        Str: 1
+        Dex: 1
       - Level: 5
-        Agi: 1
+        Str: 1
       - Level: 6
-        Int: 1
+        Vit: 1
       - Level: 7
-        Vit: 1
-      - Level: 8
-        Str: 1
+        Agi: 1
       - Level: 9
-        Int: 1
-      - Level: 10
-        Str: 1
+        Vit: 1
       - Level: 11
-        Luk: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Int: 1
+        Vit: 1
       - Level: 15
-        Int: 1
+        Vit: 1
       - Level: 16
-        Vit: 1
-      - Level: 17
-        Str: 1
+        Agi: 1
       - Level: 18
-        Luk: 1
-      - Level: 19
-        Str: 1
+        Dex: 1
       - Level: 20
-        Luk: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Str: 1
+        Dex: 1
       - Level: 23
-        Vit: 1
-      - Level: 24
-        Str: 1
+        Agi: 1
       - Level: 25
-        Agi: 1
+        Str: 1
       - Level: 26
-        Int: 1
+        Vit: 1
       - Level: 27
-        Agi: 1
-      - Level: 28
         Str: 1
       - Level: 29
-        Vit: 1
-      - Level: 30
         Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
+      - Level: 30
         Str: 1
       - Level: 33
-        Luk: 1
+        Dex: 1
       - Level: 34
-        Luk: 1
-      - Level: 35
-        Str: 1
+        Dex: 1
       - Level: 36
-        Agi: 1
-      - Level: 37
         Str: 1
       - Level: 38
-        Dex: 1
+        Int: 1
       - Level: 39
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
         Agi: 1
+      - Level: 42
+        Str: 1
       - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
+        Int: 1
       - Level: 45
-        Vit: 1
-      - Level: 46
-        Str: 1
+        Agi: 1
       - Level: 47
-        Dex: 1
+        Int: 1
       - Level: 48
-        Dex: 1
-      - Level: 49
-        Str: 1
+        Int: 1
       - Level: 50
-        Luk: 1
+        Dex: 1
   - Jobs:
       Alchemist: true
     MaxWeight: 30000
@@ -2053,105 +1221,65 @@ Body:
       2hMace: 650
     BonusStats:
       - Level: 1
-        Dex: 1
+        Int: 1
       - Level: 2
-        Luk: 1
+        Dex: 1
       - Level: 3
-        Luk: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Dex: 1
       - Level: 6
-        Agi: 1
-      - Level: 7
         Str: 1
       - Level: 8
-        Luk: 1
-      - Level: 9
         Dex: 1
-      - Level: 10
-        Str: 1
+      - Level: 9
+        Int: 1
       - Level: 11
-        Vit: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Luk: 1
-      - Level: 14
-        Vit: 1
-      - Level: 15
         Agi: 1
-      - Level: 16
+      - Level: 13
+        Dex: 1
+      - Level: 14
+        Agi: 1
+      - Level: 15
         Str: 1
       - Level: 17
-        Dex: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Luk: 1
-      - Level: 20
         Int: 1
+      - Level: 19
+        Dex: 1
+      - Level: 20
+        Vit: 1
       - Level: 21
-        Luk: 1
-      - Level: 22
-        Str: 1
+        Dex: 1
       - Level: 23
-        Dex: 1
+        Int: 1
       - Level: 24
-        Dex: 1
+        Int: 1
       - Level: 25
-        Luk: 1
+        Dex: 1
       - Level: 26
-        Agi: 1
-      - Level: 27
         Str: 1
       - Level: 28
-        Luk: 1
-      - Level: 29
         Dex: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
+      - Level: 29
         Int: 1
+      - Level: 31
+        Vit: 1
       - Level: 32
-        Luk: 1
-      - Level: 33
-        Str: 1
+        Dex: 1
       - Level: 34
-        Agi: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Int: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
         Vit: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
+      - Level: 38
+        Int: 1
+      - Level: 40
         Agi: 1
-      - Level: 44
+      - Level: 43
         Str: 1
       - Level: 45
-        Vit: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
+        Agi: 1
       - Level: 49
-        Vit: 1
+        Agi: 1
       - Level: 50
-        Vit: 1
+        Agi: 1
   - Jobs:
       Bard: true
     MaxWeight: 27000
@@ -2165,105 +1293,65 @@ Body:
       Musical: 575
     BonusStats:
       - Level: 1
-        Luk: 1
+        Dex: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
         Agi: 1
-      - Level: 4
+      - Level: 3
         Str: 1
       - Level: 5
-        Dex: 1
-      - Level: 6
-        Pow: 1
-      - Level: 7
-        Luk: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Pow: 1
-      - Level: 10
-        Vit: 1
-      - Level: 11
-        Vit: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Dex: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Luk: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
         Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
+      - Level: 6
         Luk: 1
-      - Level: 20
-        Pow: 1
-      - Level: 21
+      - Level: 7
         Dex: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
+      - Level: 9
+        Luk: 1
+      - Level: 10
         Agi: 1
-      - Level: 29
+      - Level: 11
+        Agi: 1
+      - Level: 13
+        Int: 1
+      - Level: 15
+        Dex: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Dex: 1
+      - Level: 20
+        Luk: 1
+      - Level: 21
+        Int: 1
+      - Level: 24
+        Agi: 1
+      - Level: 28
         Str: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
+        Agi: 1
       - Level: 32
-        Luk: 1
+        Dex: 1
       - Level: 33
-        Int: 1
-      - Level: 34
-        Str: 1
+        Vit: 1
       - Level: 35
-        Vit: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
+        Agi: 1
       - Level: 38
-        Luk: 1
-      - Level: 39
-        Str: 1
+        Dex: 1
       - Level: 40
-        Dex: 1
-      - Level: 41
-        Pow: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
         Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
+      - Level: 41
         Luk: 1
-      - Level: 47
-        Dex: 1
-      - Level: 48
+      - Level: 43
         Vit: 1
-      - Level: 49
-        Str: 1
+      - Level: 46
+        Dex: 1
+      - Level: 47
+        Int: 1
+      - Level: 48
+        Agi: 1
       - Level: 50
-        Luk: 1
+        Dex: 1
   - Jobs:
       Dancer: true
     MaxWeight: 27000
@@ -2277,105 +1365,65 @@ Body:
       Whip: 575
     BonusStats:
       - Level: 1
-        Pow: 1
+        Luk: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
         Agi: 1
-      - Level: 4
+      - Level: 3
         Str: 1
       - Level: 5
-        Dex: 1
-      - Level: 6
-        Luk: 1
-      - Level: 7
-        Pow: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Vit: 1
-      - Level: 11
-        Vit: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Dex: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Pow: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
         Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Pow: 1
-      - Level: 20
-        Luk: 1
-      - Level: 21
+      - Level: 6
         Dex: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
+      - Level: 7
+        Luk: 1
+      - Level: 9
+        Dex: 1
+      - Level: 10
         Agi: 1
-      - Level: 29
+      - Level: 11
+        Agi: 1
+      - Level: 13
+        Int: 1
+      - Level: 15
+        Luk: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Luk: 1
+      - Level: 20
+        Dex: 1
+      - Level: 21
+        Int: 1
+      - Level: 24
+        Agi: 1
+      - Level: 28
         Str: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
+        Agi: 1
       - Level: 32
-        Pow: 1
-      - Level: 33
-        Int: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Vit: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Pow: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Dex: 1
-      - Level: 41
         Luk: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Pow: 1
-      - Level: 47
-        Dex: 1
-      - Level: 48
+      - Level: 33
         Vit: 1
-      - Level: 49
-        Str: 1
+      - Level: 35
+        Agi: 1
+      - Level: 38
+        Luk: 1
+      - Level: 40
+        Int: 1
+      - Level: 41
+        Dex: 1
+      - Level: 43
+        Vit: 1
+      - Level: 46
+        Luk: 1
+      - Level: 47
+        Int: 1
+      - Level: 48
+        Agi: 1
       - Level: 50
-        Pow: 1
+        Luk: 1
   - Jobs:
       Crusader2: true
     MaxWeight: 28000
@@ -2395,105 +1443,65 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Pow: 1
+        Luk: 1
       - Level: 2
-        Pow: 1
+        Luk: 1
       - Level: 3
-        Pow: 1
+        Luk: 1
       - Level: 4
-        Pow: 1
+        Luk: 1
       - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
+        Luk: 1
       - Level: 7
-        Agi: 1
-      - Level: 8
         Str: 1
       - Level: 9
-        Dex: 1
-      - Level: 10
-        Str: 1
+        Int: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Int: 1
-      - Level: 13
-        Str: 1
+        Vit: 1
       - Level: 14
-        Luk: 1
+        Dex: 1
       - Level: 15
-        Int: 1
-      - Level: 16
-        Str: 1
+        Vit: 1
       - Level: 17
-        Agi: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Dex: 1
-      - Level: 21
-        Dex: 1
-      - Level: 22
         Int: 1
+      - Level: 21
+        Int: 1
+      - Level: 22
+        Vit: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
         Str: 1
       - Level: 25
-        Agi: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
         Str: 1
       - Level: 28
-        Luk: 1
-      - Level: 29
-        Str: 1
+        Dex: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
         Agi: 1
-      - Level: 33
+      - Level: 32
         Str: 1
       - Level: 34
-        Luk: 1
+        Dex: 1
       - Level: 35
-        Dex: 1
+        Int: 1
       - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Dex: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
         Agi: 1
-      - Level: 49
+      - Level: 38
+        Int: 1
+      - Level: 40
+        Vit: 1
+      - Level: 41
+        Vit: 1
+      - Level: 44
+        Int: 1
+      - Level: 46
+        Vit: 1
+      - Level: 48
         Str: 1
       - Level: 50
-        Int: 1
+        Vit: 1
   - Jobs:
       Supernovice: true
     BaseASPD:
@@ -2507,203 +1515,65 @@ Body:
       2hStaff: 650
     BonusStats:
       - Level: 1
-        Agi: 1
-      - Level: 2
         Str: 1
       - Level: 3
-        Vit: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Int: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Dex: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Pow: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
         Agi: 1
-      - Level: 14
+      - Level: 5
+        Vit: 1
+      - Level: 7
+        Int: 1
+      - Level: 9
+        Dex: 1
+      - Level: 11
+        Luk: 1
+      - Level: 13
         Str: 1
       - Level: 15
-        Vit: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Dex: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Luk: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Pow: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Agi: 1
-      - Level: 26
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Int: 1
+      - Level: 21
+        Dex: 1
+      - Level: 23
+        Luk: 1
+      - Level: 25
         Str: 1
       - Level: 27
-        Vit: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Dex: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Luk: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Pow: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
         Agi: 1
-      - Level: 38
+      - Level: 29
+        Vit: 1
+      - Level: 31
+        Int: 1
+      - Level: 33
+        Dex: 1
+      - Level: 35
+        Luk: 1
+      - Level: 37
         Str: 1
       - Level: 39
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Luk: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Pow: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
         Agi: 1
-      - Level: 50
-        Str: 1
-      - Level: 51
+      - Level: 41
+        Vit: 1
+      - Level: 43
+        Int: 1
+      - Level: 45
+        Dex: 1
+      - Level: 47
+        Luk: 1
+      - Level: 49
         Str: 1
       - Level: 52
-        Vit: 1
-      - Level: 53
-        Str: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Str: 1
+        Agi: 1
       - Level: 56
-        Int: 1
-      - Level: 57
-        Str: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
-        Str: 1
+        Vit: 1
       - Level: 60
-        Dex: 1
-      - Level: 61
-        Str: 1
-      - Level: 62
-        Str: 1
-      - Level: 63
-        Str: 1
+        Int: 1
       - Level: 64
-        Luk: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Str: 1
+        Dex: 1
       - Level: 68
-        Pow: 1
-      - Level: 69
-        Str: 1
-      - Level: 70
-        Str: 1
-      - Level: 71
-        Str: 1
-      - Level: 72
-        Str: 1
-      - Level: 73
-        Str: 1
-      - Level: 74
-        Str: 1
-      - Level: 75
-        Str: 1
-      - Level: 76
-        Str: 1
-      - Level: 77
-        Str: 1
-      - Level: 78
-        Str: 1
-      - Level: 79
-        Str: 1
-      - Level: 80
-        Str: 1
-      - Level: 81
-        Str: 1
-      - Level: 82
-        Str: 1
-      - Level: 83
-        Str: 1
-      - Level: 84
-        Str: 1
-      - Level: 85
-        Str: 1
-      - Level: 86
-        Str: 1
-      - Level: 87
-        Str: 1
-      - Level: 88
-        Str: 1
-      - Level: 89
-        Str: 1
-      - Level: 90
-        Str: 1
-      - Level: 91
-        Str: 1
-      - Level: 92
-        Str: 1
-      - Level: 93
-        Str: 1
-      - Level: 94
-        Str: 1
-      - Level: 95
-        Str: 1
-      - Level: 96
-        Str: 1
-      - Level: 97
-        Str: 1
-      - Level: 98
-        Str: 1
-      - Level: 99
-        Str: 1
+        Luk: 1
   - Jobs:
       Gunslinger: true
     MaxWeight: 28000
@@ -2719,144 +1589,52 @@ Body:
       Grenade: 1500
     BonusStats:
       - Level: 1
-        Luk: 1
+        Dex: 1
       - Level: 2
-        Pow: 1
-      - Level: 3
-        Str: 1
+        Luk: 1
       - Level: 4
-        Pow: 1
-      - Level: 5
-        Str: 1
+        Luk: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Str: 1
+        Dex: 1
       - Level: 11
-        Luk: 1
+        Dex: 1
       - Level: 12
-        Pow: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
+        Luk: 1
       - Level: 17
-        Luk: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
+        Dex: 1
       - Level: 21
-        Pow: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Luk: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Str: 1
+      - Level: 25
+        Dex: 1
       - Level: 31
-        Pow: 1
+        Luk: 1
       - Level: 32
-        Agi: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
         Str: 1
       - Level: 35
-        Luk: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Str: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Str: 1
+        Dex: 1
       - Level: 41
-        Agi: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
         Str: 1
       - Level: 45
-        Luk: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Str: 1
+        Dex: 1
       - Level: 50
-        Agi: 1
+        Str: 1
       - Level: 51
-        Pow: 1
+        Luk: 1
       - Level: 52
-        Dex: 1
-      - Level: 53
-        Str: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Luk: 1
-      - Level: 56
-        Str: 1
-      - Level: 57
-        Str: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
-        Vit: 1
-      - Level: 60
         Int: 1
-      - Level: 61
+      - Level: 55
         Dex: 1
-      - Level: 62
-        Luk: 1
-      - Level: 63
-        Pow: 1
-      - Level: 64
+      - Level: 59
         Agi: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
-        Str: 1
-      - Level: 69
-        Str: 1
-      - Level: 70
+      - Level: 60
+        Vit: 1
+      - Level: 61
+        Int: 1
+      - Level: 62
+        Dex: 1
+      - Level: 63
+        Luk: 1
+      - Level: 64
         Str: 1
   - Jobs:
       Ninja: true
@@ -2870,145 +1648,55 @@ Body:
       Huuma: 750
     BonusStats:
       - Level: 1
-        Vit: 1
-      - Level: 2
-        Vit: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Luk: 1
-      - Level: 11
-        Vit: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Dex: 1
-      - Level: 21
-        Vit: 1
-      - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Dex: 1
-      - Level: 30
-        Pow: 1
-      - Level: 31
-        Vit: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Str: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Pow: 1
-      - Level: 41
-        Vit: 1
-      - Level: 42
-        Dex: 1
-      - Level: 43
-        Luk: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Dex: 1
-      - Level: 51
-        Vit: 1
-      - Level: 52
-        Pow: 1
-      - Level: 53
-        Luk: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Str: 1
-      - Level: 56
-        Str: 1
-      - Level: 57
-        Str: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
         Agi: 1
-      - Level: 60
-        Int: 1
-      - Level: 61
-        Vit: 1
-      - Level: 62
+      - Level: 2
+        Agi: 1
+      - Level: 10
         Dex: 1
-      - Level: 63
+      - Level: 11
+        Agi: 1
+      - Level: 20
+        Int: 1
+      - Level: 21
+        Agi: 1
+      - Level: 22
+        Dex: 1
+      - Level: 29
+        Int: 1
+      - Level: 30
         Luk: 1
+      - Level: 31
+        Agi: 1
+      - Level: 32
+        Dex: 1
+      - Level: 40
+        Luk: 1
+      - Level: 41
+        Agi: 1
+      - Level: 42
+        Int: 1
+      - Level: 43
+        Dex: 1
+      - Level: 50
+        Int: 1
+      - Level: 51
+        Agi: 1
+      - Level: 52
+        Luk: 1
+      - Level: 53
+        Dex: 1
+      - Level: 59
+        Str: 1
+      - Level: 60
+        Vit: 1
+      - Level: 61
+        Agi: 1
+      - Level: 62
+        Int: 1
+      - Level: 63
+        Dex: 1
       - Level: 64
-        Pow: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
-        Str: 1
-      - Level: 69
-        Str: 1
-      - Level: 70
-        Str: 1
+        Luk: 1
   - Jobs:
       Novice_High: true
     BaseASPD:
@@ -3021,26 +1709,18 @@ Body:
       Staff: 650
       2hStaff: 650
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Pow: 1
-      - Level: 3
         Luk: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Vit: 1
-      - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Agi: 1
-      - Level: 9
+      - Level: 3
         Dex: 1
-      - Level: 10
+      - Level: 5
+        Agi: 1
+      - Level: 6
+        Vit: 1
+      - Level: 8
         Str: 1
+      - Level: 9
+        Int: 1
   - Jobs:
       Swordman_High: true
     MaxWeight: 28000
@@ -3058,106 +1738,42 @@ Body:
       Mace: 650
       2hMace: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Agi: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
         Str: 1
       - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Vit: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Agi: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
         Str: 1
       - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
         Vit: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
+      - Level: 22
+        Dex: 1
+      - Level: 26
+        Luk: 1
+      - Level: 30
         Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
+      - Level: 33
         Str: 1
       - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
+        Dex: 1
       - Level: 38
-        Int: 1
-      - Level: 39
-        Str: 1
+        Vit: 1
       - Level: 40
-        Agi: 1
-      - Level: 41
         Str: 1
       - Level: 42
-        Int: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Pow: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
         Vit: 1
-      - Level: 47
+      - Level: 44
+        Luk: 1
+      - Level: 46
         Agi: 1
-      - Level: 48
+      - Level: 47
         Str: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Agi: 1
+        Str: 1
   - Jobs:
       Mage_High: true
     MaxWeight: 22000
@@ -3169,106 +1785,42 @@ Body:
       Staff: 700
       2hStaff: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Dex: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Int: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Dex: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Int: 1
       - Level: 18
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Agi: 1
       - Level: 22
-        Dex: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Int: 1
       - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
+        Agi: 1
       - Level: 30
-        Pow: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
         Luk: 1
-      - Level: 37
-        Str: 1
+      - Level: 33
+        Int: 1
+      - Level: 36
+        Dex: 1
       - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
+        Int: 1
       - Level: 40
-        Vit: 1
-      - Level: 41
-        Str: 1
+        Agi: 1
       - Level: 42
-        Pow: 1
-      - Level: 43
-        Str: 1
+        Luk: 1
       - Level: 44
-        Dex: 1
-      - Level: 45
-        Str: 1
+        Int: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Vit: 1
-      - Level: 48
-        Str: 1
+        Agi: 1
       - Level: 49
-        Pow: 1
+        Luk: 1
       - Level: 50
-        Dex: 1
+        Int: 1
   - Jobs:
       Archer_High: true
     MaxWeight: 26000
@@ -3279,106 +1831,42 @@ Body:
       Dagger: 600
       Bow: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Luk: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Dex: 1
       - Level: 6
-        Agi: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
         Str: 1
       - Level: 10
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Int: 1
       - Level: 14
-        Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Dex: 1
       - Level: 18
-        Luk: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Dex: 1
       - Level: 22
-        Pow: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Luk: 1
       - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Luk: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Agi: 1
-      - Level: 39
+      - Level: 30
+        Dex: 1
+      - Level: 33
+        Agi: 1
+      - Level: 36
+        Dex: 1
+      - Level: 38
         Str: 1
       - Level: 40
-        Agi: 1
-      - Level: 41
         Str: 1
       - Level: 42
-        Luk: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Pow: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
         Dex: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Vit: 1
-      - Level: 50
+      - Level: 44
         Luk: 1
+      - Level: 46
+        Vit: 1
+      - Level: 47
+        Int: 1
+      - Level: 49
+        Agi: 1
+      - Level: 50
+        Dex: 1
   - Jobs:
       Acolyte_High: true
     MaxWeight: 24000
@@ -3391,106 +1879,42 @@ Body:
       Staff: 600
       2hStaff: 600
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Pow: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
         Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Pow: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
+      - Level: 6
         Vit: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
+      - Level: 10
+        Int: 1
+      - Level: 14
+        Dex: 1
+      - Level: 18
+        Luk: 1
+      - Level: 22
         Agi: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
+      - Level: 26
         Str: 1
       - Level: 30
-        Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Pow: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
         Vit: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
+      - Level: 33
+        Int: 1
+      - Level: 36
+        Dex: 1
+      - Level: 38
+        Luk: 1
+      - Level: 40
         Agi: 1
-      - Level: 43
+      - Level: 42
         Str: 1
       - Level: 44
-        Int: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Luk: 1
-      - Level: 48
-        Str: 1
+        Dex: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Pow: 1
+        Luk: 1
   - Jobs:
       Merchant_High: true
     MaxWeight: 28000
@@ -3505,106 +1929,42 @@ Body:
       Mace: 700
       2hMace: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Int: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Vit: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Agi: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
         Str: 1
       - Level: 14
-        Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Dex: 1
       - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Vit: 1
       - Level: 22
-        Agi: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Str: 1
       - Level: 26
-        Dex: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
         Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
+      - Level: 30
         Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Pow: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Luk: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
+      - Level: 33
         Agi: 1
-      - Level: 41
+      - Level: 36
+        Luk: 1
+      - Level: 38
+        Dex: 1
+      - Level: 40
         Str: 1
       - Level: 42
-        Luk: 1
-      - Level: 43
-        Str: 1
+        Dex: 1
       - Level: 44
-        Agi: 1
-      - Level: 45
         Str: 1
       - Level: 46
-        Pow: 1
-      - Level: 47
-        Int: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Agi: 1
-      - Level: 50
         Luk: 1
+      - Level: 47
+        Vit: 1
+      - Level: 49
+        Str: 1
+      - Level: 50
+        Dex: 1
   - Jobs:
       Thief_High: true
     MaxWeight: 24000
@@ -3617,106 +1977,42 @@ Body:
       1hAxe: 800
       Bow: 800
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
         Agi: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
+      - Level: 6
         Str: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Int: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
         Dex: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+      - Level: 14
+        Vit: 1
+      - Level: 18
+        Int: 1
       - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Dex: 1
       - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
+        Luk: 1
       - Level: 30
-        Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
         Str: 1
       - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Agi: 1
-      - Level: 39
+      - Level: 36
+        Agi: 1
+      - Level: 38
         Str: 1
       - Level: 40
-        Pow: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
         Luk: 1
-      - Level: 43
-        Str: 1
+      - Level: 42
+        Dex: 1
       - Level: 44
-        Int: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Pow: 1
+        Luk: 1
       - Level: 47
-        Agi: 1
-      - Level: 48
         Str: 1
       - Level: 49
-        Luk: 1
+        Dex: 1
       - Level: 50
-        Vit: 1
+        Agi: 1
   - Jobs:
       Lord_Knight: true
     MaxWeight: 28000
@@ -3735,145 +2031,95 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Vit: 1
+        Agi: 1
       - Level: 3
-        Pow: 1
-      - Level: 4
         Luk: 1
+      - Level: 4
+        Dex: 1
       - Level: 5
-        Int: 1
+        Vit: 1
       - Level: 6
-        Agi: 1
+        Str: 1
       - Level: 7
-        Agi: 1
+        Str: 1
       - Level: 8
-        Agi: 1
-      - Level: 9
         Str: 1
       - Level: 10
-        Vit: 1
-      - Level: 11
-        Luk: 1
-      - Level: 12
-        Int: 1
-      - Level: 13
-        Dex: 1
-      - Level: 14
-        Vit: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
-        Vit: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Agi: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
+        Int: 1
+      - Level: 14
+        Agi: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Agi: 1
+      - Level: 19
         Str: 1
       - Level: 22
-        Int: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
+        Vit: 1
       - Level: 25
-        Agi: 1
-      - Level: 26
         Str: 1
       - Level: 27
-        Pow: 1
+        Luk: 1
       - Level: 28
-        Luk: 1
+        Dex: 1
       - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
+        Vit: 1
       - Level: 31
-        Luk: 1
-      - Level: 32
-        Str: 1
+        Dex: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Luk: 1
+        Dex: 1
       - Level: 37
-        Vit: 1
-      - Level: 38
-        Pow: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
         Agi: 1
-      - Level: 42
+      - Level: 38
+        Luk: 1
+      - Level: 40
+        Vit: 1
+      - Level: 41
         Str: 1
       - Level: 43
-        Int: 1
+        Vit: 1
       - Level: 44
-        Luk: 1
-      - Level: 45
-        Str: 1
+        Dex: 1
       - Level: 46
-        Agi: 1
+        Str: 1
       - Level: 47
-        Agi: 1
-      - Level: 48
         Str: 1
       - Level: 49
-        Luk: 1
-      - Level: 50
-        Str: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
-        Agi: 1
-      - Level: 53
-        Vit: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Str: 1
-      - Level: 56
-        Agi: 1
-      - Level: 57
-        Agi: 1
-      - Level: 58
-        Int: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
-        Vit: 1
-      - Level: 61
-        Str: 1
-      - Level: 62
-        Luk: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Agi: 1
-      - Level: 65
-        Vit: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
         Dex: 1
-      - Level: 68
-        Int: 1
-      - Level: 69
+      - Level: 52
         Str: 1
-      - Level: 70
+      - Level: 53
         Agi: 1
+      - Level: 56
+        Str: 1
+      - Level: 57
+        Str: 1
+      - Level: 58
+        Vit: 1
+      - Level: 60
+        Agi: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Str: 1
+      - Level: 65
+        Agi: 1
+      - Level: 67
+        Int: 1
+      - Level: 68
+        Vit: 1
+      - Level: 70
+        Str: 1
   - Jobs:
       High_Priest: true
     MaxWeight: 26000
@@ -3888,145 +2134,95 @@ Body:
       2hStaff: 600
     BonusStats:
       - Level: 1
-        Dex: 1
-      - Level: 2
-        Str: 1
-      - Level: 3
-        Vit: 1
-      - Level: 4
         Int: 1
-      - Level: 5
+      - Level: 3
         Agi: 1
-      - Level: 6
+      - Level: 4
+        Vit: 1
+      - Level: 5
         Str: 1
       - Level: 7
-        Dex: 1
+        Int: 1
       - Level: 8
-        Vit: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Str: 1
+        Agi: 1
       - Level: 11
-        Dex: 1
+        Int: 1
       - Level: 12
-        Agi: 1
+        Str: 1
       - Level: 13
-        Luk: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
+        Dex: 1
       - Level: 16
-        Luk: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Str: 1
+        Dex: 1
       - Level: 19
-        Vit: 1
+        Agi: 1
       - Level: 20
-        Dex: 1
+        Int: 1
       - Level: 21
-        Agi: 1
+        Str: 1
       - Level: 22
-        Int: 1
-      - Level: 23
-        Dex: 1
-      - Level: 24
-        Dex: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Luk: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Luk: 1
-      - Level: 29
         Vit: 1
-      - Level: 30
+      - Level: 23
         Int: 1
-      - Level: 31
+      - Level: 24
+        Int: 1
+      - Level: 26
+        Dex: 1
+      - Level: 28
+        Dex: 1
+      - Level: 29
         Agi: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
+      - Level: 30
+        Vit: 1
+      - Level: 31
         Str: 1
       - Level: 34
-        Dex: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
+        Int: 1
       - Level: 37
-        Luk: 1
+        Dex: 1
       - Level: 38
-        Agi: 1
-      - Level: 39
         Str: 1
       - Level: 40
-        Pow: 1
-      - Level: 41
-        Str: 1
+        Luk: 1
       - Level: 42
-        Vit: 1
+        Agi: 1
       - Level: 43
-        Luk: 1
-      - Level: 44
-        Str: 1
+        Dex: 1
       - Level: 45
-        Agi: 1
+        Str: 1
       - Level: 46
-        Luk: 1
+        Dex: 1
       - Level: 47
-        Dex: 1
-      - Level: 48
-        Str: 1
+        Int: 1
       - Level: 49
-        Pow: 1
+        Luk: 1
       - Level: 50
-        Int: 1
+        Vit: 1
       - Level: 51
-        Int: 1
-      - Level: 52
-        Str: 1
-      - Level: 53
-        Str: 1
-      - Level: 54
-        Str: 1
+        Vit: 1
       - Level: 55
-        Vit: 1
-      - Level: 56
-        Luk: 1
-      - Level: 57
-        Dex: 1
-      - Level: 58
-        Int: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
         Agi: 1
-      - Level: 61
+      - Level: 56
         Dex: 1
-      - Level: 62
-        Luk: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
-        Vit: 1
-      - Level: 66
-        Dex: 1
-      - Level: 67
+      - Level: 57
         Int: 1
-      - Level: 68
+      - Level: 58
         Vit: 1
-      - Level: 69
+      - Level: 60
         Str: 1
-      - Level: 70
+      - Level: 61
+        Int: 1
+      - Level: 62
         Dex: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Int: 1
+      - Level: 67
+        Vit: 1
+      - Level: 68
+        Agi: 1
+      - Level: 70
+        Int: 1
   - Jobs:
       High_Wizard: true
     MaxWeight: 24000
@@ -4039,145 +2235,95 @@ Body:
       2hStaff: 625
     BonusStats:
       - Level: 1
-        Dex: 1
-      - Level: 2
-        Luk: 1
-      - Level: 3
         Int: 1
-      - Level: 4
-        Str: 1
+      - Level: 2
+        Dex: 1
+      - Level: 3
+        Vit: 1
       - Level: 5
-        Dex: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Str: 1
+        Int: 1
       - Level: 8
-        Vit: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Pow: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Dex: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Luk: 1
-      - Level: 18
-        Vit: 1
-      - Level: 19
-        Dex: 1
-      - Level: 20
         Agi: 1
-      - Level: 21
+      - Level: 9
+        Dex: 1
+      - Level: 10
+        Int: 1
+      - Level: 12
+        Luk: 1
+      - Level: 14
+        Int: 1
+      - Level: 17
+        Dex: 1
+      - Level: 18
+        Agi: 1
+      - Level: 19
+        Int: 1
+      - Level: 20
         Str: 1
       - Level: 22
-        Luk: 1
+        Dex: 1
       - Level: 23
-        Luk: 1
+        Dex: 1
       - Level: 24
-        Dex: 1
-      - Level: 25
-        Str: 1
+        Int: 1
       - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
+        Agi: 1
       - Level: 28
-        Dex: 1
+        Int: 1
       - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
+        Vit: 1
       - Level: 31
-        Luk: 1
+        Dex: 1
       - Level: 32
-        Dex: 1
-      - Level: 33
-        Str: 1
+        Int: 1
       - Level: 34
-        Vit: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
+        Agi: 1
       - Level: 37
-        Dex: 1
+        Int: 1
       - Level: 38
-        Dex: 1
+        Int: 1
       - Level: 39
-        Dex: 1
+        Int: 1
       - Level: 40
-        Agi: 1
+        Str: 1
       - Level: 41
-        Pow: 1
-      - Level: 42
-        Str: 1
+        Luk: 1
       - Level: 43
-        Luk: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
+        Dex: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Int: 1
-      - Level: 48
-        Str: 1
+        Vit: 1
       - Level: 49
-        Dex: 1
+        Int: 1
       - Level: 50
-        Vit: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
-        Str: 1
-      - Level: 53
-        Int: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Dex: 1
-      - Level: 56
-        Vit: 1
-      - Level: 57
-        Pow: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
-        Dex: 1
-      - Level: 60
         Agi: 1
-      - Level: 61
-        Luk: 1
-      - Level: 62
-        Dex: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
+      - Level: 53
         Vit: 1
-      - Level: 66
+      - Level: 55
         Int: 1
-      - Level: 67
+      - Level: 56
+        Agi: 1
+      - Level: 57
         Luk: 1
-      - Level: 68
+      - Level: 59
+        Int: 1
+      - Level: 60
         Str: 1
-      - Level: 69
-        Vit: 1
-      - Level: 70
+      - Level: 61
         Dex: 1
+      - Level: 62
+        Int: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Vit: 1
+      - Level: 67
+        Dex: 1
+      - Level: 69
+        Agi: 1
+      - Level: 70
+        Int: 1
   - Jobs:
       Whitesmith: true
     MaxWeight: 30000
@@ -4193,145 +2339,95 @@ Body:
       2hMace: 675
     BonusStats:
       - Level: 1
-        Luk: 1
+        Dex: 1
       - Level: 2
-        Agi: 1
+        Str: 1
       - Level: 3
-        Agi: 1
+        Str: 1
       - Level: 4
-        Dex: 1
-      - Level: 5
-        Str: 1
+        Int: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Vit: 1
-      - Level: 8
-        Pow: 1
-      - Level: 9
-        Int: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Luk: 1
-      - Level: 13
-        Int: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
         Dex: 1
-      - Level: 16
-        Pow: 1
-      - Level: 17
+      - Level: 7
         Agi: 1
-      - Level: 18
+      - Level: 8
+        Luk: 1
+      - Level: 9
+        Vit: 1
+      - Level: 12
+        Dex: 1
+      - Level: 13
+        Vit: 1
+      - Level: 15
+        Int: 1
+      - Level: 16
+        Luk: 1
+      - Level: 17
         Str: 1
       - Level: 19
-        Vit: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Dex: 1
-      - Level: 23
-        Luk: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
         Agi: 1
-      - Level: 27
+      - Level: 20
+        Agi: 1
+      - Level: 22
+        Int: 1
+      - Level: 23
+        Dex: 1
+      - Level: 26
         Str: 1
       - Level: 28
-        Pow: 1
+        Luk: 1
       - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
+        Vit: 1
       - Level: 31
-        Vit: 1
+        Agi: 1
       - Level: 32
-        Luk: 1
+        Dex: 1
       - Level: 33
-        Agi: 1
+        Str: 1
       - Level: 34
-        Dex: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Luk: 1
-      - Level: 39
-        Pow: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Luk: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Pow: 1
-      - Level: 45
-        Pow: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Luk: 1
-      - Level: 48
         Int: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Dex: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
+      - Level: 36
         Agi: 1
-      - Level: 53
-        Str: 1
-      - Level: 54
+      - Level: 38
+        Dex: 1
+      - Level: 39
+        Luk: 1
+      - Level: 41
+        Dex: 1
+      - Level: 44
+        Luk: 1
+      - Level: 45
+        Luk: 1
+      - Level: 47
+        Dex: 1
+      - Level: 48
+        Vit: 1
+      - Level: 50
+        Int: 1
+      - Level: 52
         Str: 1
       - Level: 55
-        Luk: 1
-      - Level: 56
-        Luk: 1
-      - Level: 57
-        Str: 1
-      - Level: 58
-        Vit: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
-        Int: 1
-      - Level: 61
         Dex: 1
-      - Level: 62
-        Luk: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
+      - Level: 56
+        Dex: 1
+      - Level: 58
+        Agi: 1
+      - Level: 60
         Vit: 1
-      - Level: 65
+      - Level: 61
         Int: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Agi: 1
+      - Level: 65
+        Vit: 1
       - Level: 66
-        Pow: 1
-      - Level: 67
-        Pow: 1
-      - Level: 68
-        Str: 1
-      - Level: 69
-        Str: 1
-      - Level: 70
         Luk: 1
+      - Level: 67
+        Luk: 1
+      - Level: 70
+        Dex: 1
   - Jobs:
       Sniper: true
     MaxWeight: 27000
@@ -4343,145 +2439,95 @@ Body:
       Bow: 600
     BonusStats:
       - Level: 1
-        Luk: 1
-      - Level: 2
-        Vit: 1
-      - Level: 3
-        Luk: 1
-      - Level: 4
-        Luk: 1
-      - Level: 5
         Dex: 1
-      - Level: 6
-        Vit: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
+      - Level: 2
         Agi: 1
-      - Level: 9
+      - Level: 3
+        Dex: 1
+      - Level: 4
+        Dex: 1
+      - Level: 5
+        Int: 1
+      - Level: 6
+        Agi: 1
+      - Level: 8
         Str: 1
       - Level: 10
-        Vit: 1
+        Agi: 1
       - Level: 11
-        Vit: 1
+        Agi: 1
       - Level: 12
-        Int: 1
-      - Level: 13
-        Str: 1
+        Vit: 1
       - Level: 14
-        Pow: 1
-      - Level: 15
-        Str: 1
+        Luk: 1
       - Level: 16
-        Luk: 1
+        Dex: 1
       - Level: 17
-        Luk: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Str: 1
+        Dex: 1
       - Level: 20
-        Dex: 1
+        Int: 1
       - Level: 21
-        Vit: 1
+        Agi: 1
       - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
+        Dex: 1
       - Level: 24
-        Agi: 1
+        Str: 1
       - Level: 25
-        Pow: 1
+        Luk: 1
       - Level: 26
-        Luk: 1
-      - Level: 27
-        Str: 1
+        Dex: 1
       - Level: 28
-        Vit: 1
-      - Level: 29
-        Str: 1
+        Agi: 1
       - Level: 30
-        Luk: 1
+        Dex: 1
       - Level: 31
-        Pow: 1
+        Luk: 1
       - Level: 32
-        Int: 1
+        Vit: 1
       - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
+        Agi: 1
       - Level: 35
-        Luk: 1
+        Dex: 1
       - Level: 36
-        Pow: 1
-      - Level: 37
-        Str: 1
+        Luk: 1
       - Level: 38
-        Vit: 1
-      - Level: 39
-        Str: 1
+        Agi: 1
       - Level: 40
-        Luk: 1
-      - Level: 41
-        Str: 1
+        Dex: 1
       - Level: 42
-        Dex: 1
-      - Level: 43
-        Vit: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Agi: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Vit: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Pow: 1
-      - Level: 51
-        Luk: 1
-      - Level: 52
-        Str: 1
-      - Level: 53
-        Str: 1
-      - Level: 54
-        Dex: 1
-      - Level: 55
         Int: 1
-      - Level: 56
-        Str: 1
-      - Level: 57
-        Pow: 1
-      - Level: 58
-        Vit: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
-        Luk: 1
-      - Level: 61
+      - Level: 43
         Agi: 1
-      - Level: 62
-        Pow: 1
-      - Level: 63
+      - Level: 45
         Str: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
+      - Level: 46
         Dex: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
-        Str: 1
-      - Level: 69
+      - Level: 48
+        Agi: 1
+      - Level: 50
         Luk: 1
+      - Level: 51
+        Dex: 1
+      - Level: 54
+        Int: 1
+      - Level: 55
+        Vit: 1
+      - Level: 57
+        Luk: 1
+      - Level: 58
+        Agi: 1
+      - Level: 60
+        Dex: 1
+      - Level: 61
+        Str: 1
+      - Level: 62
+        Luk: 1
+      - Level: 65
+        Int: 1
+      - Level: 69
+        Dex: 1
       - Level: 70
-        Pow: 1
+        Luk: 1
   - Jobs:
       Assassin_Cross: true
     MaxWeight: 24000
@@ -4495,145 +2541,95 @@ Body:
       Katar: 500
     BonusStats:
       - Level: 1
-        Vit: 1
+        Agi: 1
       - Level: 2
-        Agi: 1
+        Str: 1
       - Level: 3
-        Pow: 1
-      - Level: 4
-        Vit: 1
-      - Level: 5
-        Vit: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Agi: 1
-      - Level: 8
-        Pow: 1
-      - Level: 9
-        Int: 1
-      - Level: 10
         Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
+      - Level: 4
         Agi: 1
-      - Level: 13
+      - Level: 5
+        Agi: 1
+      - Level: 7
         Str: 1
-      - Level: 14
+      - Level: 8
+        Luk: 1
+      - Level: 9
+        Vit: 1
+      - Level: 10
+        Dex: 1
+      - Level: 12
         Str: 1
       - Level: 15
-        Vit: 1
-      - Level: 16
-        Pow: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Pow: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
         Agi: 1
-      - Level: 22
+      - Level: 16
+        Luk: 1
+      - Level: 18
+        Luk: 1
+      - Level: 20
+        Agi: 1
+      - Level: 21
         Str: 1
       - Level: 23
-        Luk: 1
+        Dex: 1
       - Level: 24
-        Vit: 1
-      - Level: 25
-        Vit: 1
-      - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
         Agi: 1
-      - Level: 30
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Luk: 1
+      - Level: 29
         Str: 1
       - Level: 31
-        Vit: 1
+        Agi: 1
       - Level: 32
-        Vit: 1
+        Agi: 1
       - Level: 33
-        Vit: 1
+        Agi: 1
       - Level: 34
-        Pow: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
+        Luk: 1
       - Level: 37
-        Luk: 1
+        Dex: 1
       - Level: 38
-        Agi: 1
+        Str: 1
       - Level: 39
-        Luk: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Str: 1
+        Dex: 1
       - Level: 42
-        Vit: 1
+        Agi: 1
       - Level: 43
-        Luk: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
+        Dex: 1
       - Level: 46
-        Vit: 1
+        Agi: 1
       - Level: 47
-        Int: 1
-      - Level: 48
-        Pow: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Agi: 1
-      - Level: 51
         Vit: 1
-      - Level: 52
-        Str: 1
-      - Level: 53
+      - Level: 48
         Luk: 1
-      - Level: 54
+      - Level: 50
+        Str: 1
+      - Level: 51
         Agi: 1
-      - Level: 55
+      - Level: 53
+        Dex: 1
+      - Level: 54
         Str: 1
       - Level: 56
-        Vit: 1
-      - Level: 57
-        Luk: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
-        Str: 1
-      - Level: 61
-        Luk: 1
-      - Level: 62
-        Vit: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Luk: 1
-      - Level: 65
-        Pow: 1
-      - Level: 66
         Agi: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
+      - Level: 57
+        Dex: 1
+      - Level: 61
+        Dex: 1
+      - Level: 62
+        Agi: 1
+      - Level: 64
+        Dex: 1
+      - Level: 65
+        Luk: 1
+      - Level: 66
         Str: 1
       - Level: 69
-        Int: 1
+        Vit: 1
       - Level: 70
-        Luk: 1
+        Dex: 1
   - Jobs:
       Lord_Knight2: true
     MaxWeight: 28000
@@ -4652,145 +2648,95 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Vit: 1
+        Agi: 1
       - Level: 3
-        Pow: 1
-      - Level: 4
         Luk: 1
+      - Level: 4
+        Dex: 1
       - Level: 5
-        Int: 1
+        Vit: 1
       - Level: 6
-        Agi: 1
+        Str: 1
       - Level: 7
-        Agi: 1
+        Str: 1
       - Level: 8
-        Agi: 1
-      - Level: 9
         Str: 1
       - Level: 10
-        Vit: 1
-      - Level: 11
-        Luk: 1
-      - Level: 12
-        Int: 1
-      - Level: 13
-        Dex: 1
-      - Level: 14
-        Vit: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
-        Vit: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Agi: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
+        Int: 1
+      - Level: 14
+        Agi: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Agi: 1
+      - Level: 19
         Str: 1
       - Level: 22
-        Int: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
+        Vit: 1
       - Level: 25
-        Agi: 1
-      - Level: 26
         Str: 1
       - Level: 27
-        Pow: 1
+        Luk: 1
       - Level: 28
-        Luk: 1
+        Dex: 1
       - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
+        Vit: 1
       - Level: 31
-        Luk: 1
-      - Level: 32
-        Str: 1
+        Dex: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Luk: 1
+        Dex: 1
       - Level: 37
-        Vit: 1
-      - Level: 38
-        Pow: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
         Agi: 1
-      - Level: 42
+      - Level: 38
+        Luk: 1
+      - Level: 40
+        Vit: 1
+      - Level: 41
         Str: 1
       - Level: 43
-        Int: 1
+        Vit: 1
       - Level: 44
-        Luk: 1
-      - Level: 45
-        Str: 1
+        Dex: 1
       - Level: 46
-        Agi: 1
+        Str: 1
       - Level: 47
-        Agi: 1
-      - Level: 48
         Str: 1
       - Level: 49
-        Luk: 1
-      - Level: 50
-        Str: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
-        Agi: 1
-      - Level: 53
-        Vit: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Str: 1
-      - Level: 56
-        Agi: 1
-      - Level: 57
-        Agi: 1
-      - Level: 58
-        Int: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
-        Vit: 1
-      - Level: 61
-        Str: 1
-      - Level: 62
-        Luk: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Agi: 1
-      - Level: 65
-        Vit: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
         Dex: 1
-      - Level: 68
-        Int: 1
-      - Level: 69
+      - Level: 52
         Str: 1
-      - Level: 70
+      - Level: 53
         Agi: 1
+      - Level: 56
+        Str: 1
+      - Level: 57
+        Str: 1
+      - Level: 58
+        Vit: 1
+      - Level: 60
+        Agi: 1
+      - Level: 62
+        Dex: 1
+      - Level: 64
+        Str: 1
+      - Level: 65
+        Agi: 1
+      - Level: 67
+        Int: 1
+      - Level: 68
+        Vit: 1
+      - Level: 70
+        Str: 1
   - Jobs:
       Paladin: true
     MaxWeight: 28000
@@ -4810,145 +2756,95 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Int: 1
+        Vit: 1
       - Level: 2
-        Agi: 1
+        Str: 1
       - Level: 3
-        Vit: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Luk: 1
-      - Level: 7
-        Dex: 1
-      - Level: 8
-        Vit: 1
-      - Level: 9
-        Int: 1
-      - Level: 10
         Agi: 1
-      - Level: 11
+      - Level: 6
+        Dex: 1
+      - Level: 7
+        Int: 1
+      - Level: 8
+        Agi: 1
+      - Level: 9
+        Vit: 1
+      - Level: 10
         Str: 1
       - Level: 12
-        Luk: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
         Dex: 1
-      - Level: 15
+      - Level: 14
         Int: 1
-      - Level: 16
+      - Level: 15
         Vit: 1
-      - Level: 17
-        Luk: 1
-      - Level: 18
+      - Level: 16
         Agi: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
+      - Level: 17
+        Dex: 1
+      - Level: 18
         Str: 1
       - Level: 21
-        Int: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Luk: 1
-      - Level: 24
         Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
+      - Level: 23
+        Dex: 1
+      - Level: 24
         Agi: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
+      - Level: 26
         Str: 1
       - Level: 29
-        Dex: 1
-      - Level: 30
         Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
+      - Level: 30
+        Vit: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Luk: 1
+        Dex: 1
       - Level: 37
-        Vit: 1
-      - Level: 38
-        Str: 1
-      - Level: 39
-        Pow: 1
-      - Level: 40
         Agi: 1
-      - Level: 41
+      - Level: 39
+        Luk: 1
+      - Level: 40
         Str: 1
       - Level: 42
-        Int: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Luk: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Agi: 1
-      - Level: 49
-        Int: 1
-      - Level: 50
-        Str: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
         Vit: 1
-      - Level: 53
+      - Level: 43
         Int: 1
-      - Level: 54
+      - Level: 45
         Dex: 1
-      - Level: 55
+      - Level: 48
+        Str: 1
+      - Level: 49
+        Vit: 1
+      - Level: 52
         Agi: 1
-      - Level: 56
+      - Level: 53
+        Vit: 1
+      - Level: 54
+        Int: 1
+      - Level: 55
         Str: 1
       - Level: 57
-        Luk: 1
-      - Level: 58
-        Str: 1
+        Dex: 1
       - Level: 59
-        Pow: 1
-      - Level: 60
-        Vit: 1
-      - Level: 61
-        Dex: 1
-      - Level: 62
-        Str: 1
-      - Level: 63
-        Int: 1
-      - Level: 64
-        Agi: 1
-      - Level: 65
-        Dex: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Pow: 1
-      - Level: 68
         Luk: 1
-      - Level: 69
+      - Level: 60
+        Agi: 1
+      - Level: 61
         Int: 1
-      - Level: 70
+      - Level: 63
         Vit: 1
+      - Level: 64
+        Str: 1
+      - Level: 65
+        Int: 1
+      - Level: 67
+        Luk: 1
+      - Level: 68
+        Dex: 1
+      - Level: 69
+        Vit: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Champion: true
     MaxWeight: 26000
@@ -4964,145 +2860,95 @@ Body:
       2hStaff: 575
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Dex: 1
-      - Level: 3
         Int: 1
-      - Level: 4
+      - Level: 3
         Vit: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
+      - Level: 4
         Agi: 1
-      - Level: 10
+      - Level: 6
+        Dex: 1
+      - Level: 9
         Str: 1
       - Level: 11
-        Dex: 1
-      - Level: 12
-        Vit: 1
-      - Level: 13
-        Pow: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
         Int: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
+      - Level: 12
         Agi: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
+      - Level: 13
+        Luk: 1
+      - Level: 15
+        Vit: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
         Str: 1
       - Level: 20
-        Vit: 1
-      - Level: 21
-        Vit: 1
-      - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Int: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
         Agi: 1
-      - Level: 28
+      - Level: 21
+        Agi: 1
+      - Level: 22
+        Dex: 1
+      - Level: 24
+        Vit: 1
+      - Level: 27
         Str: 1
       - Level: 29
-        Vit: 1
+        Agi: 1
       - Level: 30
-        Luk: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
+        Dex: 1
       - Level: 33
-        Dex: 1
+        Int: 1
       - Level: 34
-        Pow: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
+        Luk: 1
       - Level: 37
-        Agi: 1
+        Str: 1
       - Level: 38
-        Luk: 1
-      - Level: 39
-        Int: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Int: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Luk: 1
-      - Level: 45
-        Vit: 1
-      - Level: 46
-        Pow: 1
-      - Level: 47
         Dex: 1
-      - Level: 48
+      - Level: 39
+        Vit: 1
+      - Level: 42
+        Vit: 1
+      - Level: 44
+        Dex: 1
+      - Level: 45
         Agi: 1
-      - Level: 49
+      - Level: 46
+        Luk: 1
+      - Level: 47
+        Int: 1
+      - Level: 48
         Str: 1
       - Level: 50
-        Luk: 1
-      - Level: 51
-        Str: 1
+        Dex: 1
       - Level: 52
-        Vit: 1
+        Agi: 1
       - Level: 53
-        Luk: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Str: 1
+        Dex: 1
       - Level: 56
-        Dex: 1
-      - Level: 57
-        Str: 1
+        Int: 1
       - Level: 58
-        Int: 1
+        Vit: 1
       - Level: 59
-        Agi: 1
+        Str: 1
       - Level: 60
-        Luk: 1
-      - Level: 61
-        Str: 1
+        Dex: 1
       - Level: 62
-        Vit: 1
-      - Level: 63
-        Str: 1
+        Agi: 1
       - Level: 64
-        Dex: 1
-      - Level: 65
-        Agi: 1
-      - Level: 66
-        Agi: 1
-      - Level: 67
-        Luk: 1
-      - Level: 68
         Int: 1
-      - Level: 69
+      - Level: 65
+        Str: 1
+      - Level: 66
+        Str: 1
+      - Level: 67
         Dex: 1
-      - Level: 70
+      - Level: 68
         Vit: 1
+      - Level: 69
+        Int: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Professor: true
     MaxWeight: 24000
@@ -5116,145 +2962,95 @@ Body:
       2hStaff: 625
     BonusStats:
       - Level: 1
-        Dex: 1
+        Int: 1
       - Level: 2
-        Dex: 1
+        Int: 1
       - Level: 3
-        Vit: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
         Agi: 1
-      - Level: 6
+      - Level: 5
         Str: 1
       - Level: 7
-        Int: 1
-      - Level: 8
-        Luk: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Dex: 1
-      - Level: 12
         Vit: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
+      - Level: 8
         Dex: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
+      - Level: 11
+        Int: 1
+      - Level: 12
         Agi: 1
-      - Level: 19
+      - Level: 14
+        Int: 1
+      - Level: 16
+        Dex: 1
+      - Level: 18
         Str: 1
       - Level: 20
-        Luk: 1
-      - Level: 21
-        Pow: 1
-      - Level: 22
         Dex: 1
-      - Level: 23
-        Vit: 1
-      - Level: 24
-        Int: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
+      - Level: 21
         Luk: 1
-      - Level: 27
+      - Level: 22
+        Int: 1
+      - Level: 23
         Agi: 1
-      - Level: 28
+      - Level: 24
+        Vit: 1
+      - Level: 26
+        Dex: 1
+      - Level: 27
         Str: 1
       - Level: 29
-        Luk: 1
+        Dex: 1
       - Level: 30
-        Dex: 1
-      - Level: 31
-        Str: 1
+        Int: 1
       - Level: 32
-        Vit: 1
-      - Level: 33
-        Str: 1
+        Agi: 1
       - Level: 34
-        Luk: 1
-      - Level: 35
-        Str: 1
+        Dex: 1
       - Level: 36
-        Agi: 1
+        Str: 1
       - Level: 37
-        Luk: 1
+        Dex: 1
       - Level: 38
-        Dex: 1
+        Int: 1
       - Level: 39
-        Int: 1
-      - Level: 40
-        Str: 1
+        Vit: 1
       - Level: 41
-        Dex: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Vit: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Agi: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Dex: 1
-      - Level: 50
-        Vit: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
-        Luk: 1
-      - Level: 53
-        Str: 1
-      - Level: 54
-        Vit: 1
-      - Level: 55
-        Luk: 1
-      - Level: 56
-        Agi: 1
-      - Level: 57
-        Dex: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
-        Vit: 1
-      - Level: 61
-        Str: 1
-      - Level: 62
-        Luk: 1
-      - Level: 63
         Int: 1
-      - Level: 64
-        Dex: 1
-      - Level: 65
+      - Level: 43
+        Agi: 1
+      - Level: 45
         Str: 1
-      - Level: 66
-        Pow: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
+      - Level: 46
         Dex: 1
-      - Level: 69
+      - Level: 49
+        Int: 1
+      - Level: 50
+        Agi: 1
+      - Level: 52
+        Dex: 1
+      - Level: 54
+        Agi: 1
+      - Level: 55
+        Dex: 1
+      - Level: 56
+        Str: 1
+      - Level: 57
+        Int: 1
+      - Level: 60
+        Agi: 1
+      - Level: 62
+        Dex: 1
+      - Level: 63
         Vit: 1
+      - Level: 64
+        Int: 1
+      - Level: 66
+        Luk: 1
+      - Level: 68
+        Int: 1
+      - Level: 69
+        Agi: 1
       - Level: 70
-        Dex: 1
+        Int: 1
   - Jobs:
       Stalker: true
     MaxWeight: 24000
@@ -5267,145 +3063,95 @@ Body:
       Bow: 650
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
-        Str: 1
+        Agi: 1
       - Level: 4
-        Pow: 1
+        Luk: 1
       - Level: 5
-        Dex: 1
+        Int: 1
       - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
+        Vit: 1
       - Level: 9
-        Vit: 1
+        Agi: 1
       - Level: 10
-        Luk: 1
+        Dex: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Vit: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Int: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
-        Luk: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Pow: 1
-      - Level: 21
-        Vit: 1
-      - Level: 22
         Agi: 1
-      - Level: 23
+      - Level: 15
+        Vit: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Dex: 1
+      - Level: 20
+        Luk: 1
+      - Level: 21
+        Agi: 1
+      - Level: 22
         Str: 1
       - Level: 24
-        Pow: 1
-      - Level: 25
-        Str: 1
+        Luk: 1
       - Level: 26
-        Luk: 1
+        Dex: 1
       - Level: 27
-        Vit: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Luk: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Pow: 1
-      - Level: 32
         Agi: 1
-      - Level: 33
+      - Level: 29
+        Dex: 1
+      - Level: 31
+        Luk: 1
+      - Level: 32
         Str: 1
       - Level: 34
-        Vit: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
+        Agi: 1
       - Level: 37
-        Luk: 1
-      - Level: 38
-        Luk: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Vit: 1
-      - Level: 42
-        Int: 1
-      - Level: 43
-        Agi: 1
-      - Level: 44
         Dex: 1
-      - Level: 45
-        Vit: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
+      - Level: 38
+        Dex: 1
+      - Level: 41
         Agi: 1
-      - Level: 48
+      - Level: 42
+        Vit: 1
+      - Level: 43
+        Str: 1
+      - Level: 44
+        Int: 1
+      - Level: 45
+        Agi: 1
+      - Level: 47
         Str: 1
       - Level: 49
-        Luk: 1
+        Dex: 1
       - Level: 50
-        Pow: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
         Luk: 1
+      - Level: 52
+        Dex: 1
       - Level: 53
-        Agi: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
         Str: 1
       - Level: 56
-        Luk: 1
-      - Level: 57
         Dex: 1
-      - Level: 58
-        Vit: 1
-      - Level: 59
-        Pow: 1
-      - Level: 60
-        Luk: 1
-      - Level: 61
-        Str: 1
-      - Level: 62
-        Agi: 1
-      - Level: 63
+      - Level: 57
         Int: 1
-      - Level: 64
-        Vit: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Luk: 1
-      - Level: 67
+      - Level: 58
         Agi: 1
-      - Level: 68
+      - Level: 59
+        Luk: 1
+      - Level: 60
+        Dex: 1
+      - Level: 62
         Str: 1
-      - Level: 69
+      - Level: 63
+        Vit: 1
+      - Level: 64
+        Agi: 1
+      - Level: 66
+        Dex: 1
+      - Level: 67
         Str: 1
       - Level: 70
-        Vit: 1
+        Agi: 1
   - Jobs:
       Creator: true
     MaxWeight: 30000
@@ -5421,145 +3167,95 @@ Body:
       2hMace: 650
     BonusStats:
       - Level: 1
-        Luk: 1
-      - Level: 2
-        Str: 1
+        Dex: 1
       - Level: 3
-        Pow: 1
-      - Level: 4
-        Str: 1
+        Luk: 1
       - Level: 5
-        Vit: 1
+        Agi: 1
       - Level: 6
-        Agi: 1
+        Str: 1
       - Level: 7
-        Dex: 1
-      - Level: 8
-        Pow: 1
-      - Level: 9
         Int: 1
+      - Level: 8
+        Luk: 1
+      - Level: 9
+        Vit: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
+        Dex: 1
       - Level: 13
-        Dex: 1
-      - Level: 14
-        Str: 1
+        Int: 1
       - Level: 15
-        Luk: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Dex: 1
       - Level: 18
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Pow: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Dex: 1
-      - Level: 23
-        Luk: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Pow: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Vit: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Dex: 1
-      - Level: 31
         Agi: 1
-      - Level: 32
+      - Level: 20
+        Luk: 1
+      - Level: 22
+        Int: 1
+      - Level: 23
+        Dex: 1
+      - Level: 25
+        Luk: 1
+      - Level: 27
+        Agi: 1
+      - Level: 30
+        Int: 1
+      - Level: 31
         Str: 1
       - Level: 33
-        Int: 1
+        Vit: 1
       - Level: 34
-        Pow: 1
+        Luk: 1
       - Level: 35
-        Luk: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
+        Dex: 1
       - Level: 38
-        Vit: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Str: 1
+        Agi: 1
       - Level: 41
-        Luk: 1
+        Dex: 1
       - Level: 42
-        Luk: 1
+        Dex: 1
       - Level: 43
-        Luk: 1
-      - Level: 44
-        Str: 1
+        Dex: 1
       - Level: 45
-        Pow: 1
+        Luk: 1
       - Level: 46
-        Dex: 1
-      - Level: 47
-        Luk: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
-        Str: 1
-      - Level: 51
-        Pow: 1
-      - Level: 52
-        Pow: 1
-      - Level: 53
-        Agi: 1
-      - Level: 54
-        Vit: 1
-      - Level: 55
-        Str: 1
-      - Level: 56
-        Luk: 1
-      - Level: 57
-        Luk: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
-        Dex: 1
-      - Level: 60
-        Pow: 1
-      - Level: 61
         Int: 1
-      - Level: 62
-        Str: 1
-      - Level: 63
-        Luk: 1
-      - Level: 64
-        Pow: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Agi: 1
-      - Level: 67
-        Vit: 1
-      - Level: 68
+      - Level: 47
         Dex: 1
-      - Level: 69
-        Pow: 1
-      - Level: 70
+      - Level: 49
+        Dex: 1
+      - Level: 51
         Luk: 1
+      - Level: 52
+        Luk: 1
+      - Level: 53
+        Str: 1
+      - Level: 54
+        Agi: 1
+      - Level: 56
+        Dex: 1
+      - Level: 57
+        Dex: 1
+      - Level: 59
+        Int: 1
+      - Level: 60
+        Luk: 1
+      - Level: 61
+        Vit: 1
+      - Level: 63
+        Dex: 1
+      - Level: 64
+        Luk: 1
+      - Level: 66
+        Str: 1
+      - Level: 67
+        Agi: 1
+      - Level: 68
+        Int: 1
+      - Level: 69
+        Luk: 1
+      - Level: 70
+        Dex: 1
   - Jobs:
       Clown: true
     MaxWeight: 27000
@@ -5573,145 +3269,95 @@ Body:
       Musical: 575
     BonusStats:
       - Level: 1
-        Vit: 1
-      - Level: 2
-        Luk: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Vit: 1
-      - Level: 5
         Agi: 1
-      - Level: 6
+      - Level: 2
+        Dex: 1
+      - Level: 4
+        Agi: 1
+      - Level: 5
         Str: 1
       - Level: 7
-        Luk: 1
-      - Level: 8
         Dex: 1
-      - Level: 9
-        Vit: 1
-      - Level: 10
-        Agi: 1
-      - Level: 11
-        Pow: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Vit: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Luk: 1
-      - Level: 16
+      - Level: 8
         Int: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Pow: 1
-      - Level: 19
+      - Level: 9
         Agi: 1
-      - Level: 20
+      - Level: 10
+        Str: 1
+      - Level: 11
+        Luk: 1
+      - Level: 13
+        Agi: 1
+      - Level: 15
+        Dex: 1
+      - Level: 16
+        Vit: 1
+      - Level: 18
+        Luk: 1
+      - Level: 19
         Str: 1
       - Level: 21
-        Dex: 1
-      - Level: 22
-        Str: 1
+        Int: 1
       - Level: 23
-        Luk: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
         Dex: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Luk: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Vit: 1
-      - Level: 33
+      - Level: 24
         Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
+      - Level: 26
+        Luk: 1
+      - Level: 28
+        Int: 1
+      - Level: 30
+        Dex: 1
+      - Level: 32
+        Agi: 1
+      - Level: 33
         Str: 1
       - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Str: 1
-      - Level: 39
-        Luk: 1
-      - Level: 40
-        Luk: 1
-      - Level: 41
-        Dex: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Luk: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
         Agi: 1
-      - Level: 46
+      - Level: 39
+        Dex: 1
+      - Level: 40
+        Dex: 1
+      - Level: 41
+        Int: 1
+      - Level: 43
+        Dex: 1
+      - Level: 45
         Str: 1
       - Level: 47
-        Pow: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Vit: 1
-      - Level: 50
         Luk: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
-        Str: 1
-      - Level: 53
-        Vit: 1
-      - Level: 54
+      - Level: 49
         Agi: 1
-      - Level: 55
+      - Level: 50
+        Dex: 1
+      - Level: 53
+        Agi: 1
+      - Level: 54
         Str: 1
       - Level: 56
-        Luk: 1
-      - Level: 57
-        Luk: 1
-      - Level: 58
-        Vit: 1
-      - Level: 59
-        Int: 1
-      - Level: 60
-        Str: 1
-      - Level: 61
-        Luk: 1
-      - Level: 62
-        Agi: 1
-      - Level: 63
-        Luk: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
-        Vit: 1
-      - Level: 66
-        Luk: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
-        Vit: 1
-      - Level: 69
         Dex: 1
-      - Level: 70
+      - Level: 57
+        Dex: 1
+      - Level: 58
         Agi: 1
+      - Level: 59
+        Vit: 1
+      - Level: 61
+        Dex: 1
+      - Level: 62
+        Str: 1
+      - Level: 63
+        Dex: 1
+      - Level: 65
+        Agi: 1
+      - Level: 66
+        Dex: 1
+      - Level: 68
+        Agi: 1
+      - Level: 69
+        Int: 1
+      - Level: 70
+        Str: 1
   - Jobs:
       Gypsy: true
     MaxWeight: 27000
@@ -5725,145 +3371,95 @@ Body:
       Whip: 575
     BonusStats:
       - Level: 1
-        Luk: 1
+        Dex: 1
       - Level: 2
-        Agi: 1
-      - Level: 3
         Str: 1
       - Level: 4
-        Vit: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
         Agi: 1
-      - Level: 7
+      - Level: 6
         Str: 1
       - Level: 8
-        Dex: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Vit: 1
-      - Level: 12
-        Vit: 1
-      - Level: 13
-        Vit: 1
-      - Level: 14
-        Luk: 1
-      - Level: 15
-        Luk: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
         Int: 1
-      - Level: 18
-        Luk: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
+      - Level: 9
+        Dex: 1
+      - Level: 11
         Agi: 1
-      - Level: 21
+      - Level: 12
+        Agi: 1
+      - Level: 13
+        Agi: 1
+      - Level: 14
+        Dex: 1
+      - Level: 15
+        Dex: 1
+      - Level: 17
+        Vit: 1
+      - Level: 18
+        Dex: 1
+      - Level: 20
         Str: 1
       - Level: 22
-        Luk: 1
-      - Level: 23
-        Luk: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Vit: 1
-      - Level: 26
         Dex: 1
-      - Level: 27
-        Pow: 1
-      - Level: 28
-        Luk: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Vit: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Luk: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
+      - Level: 23
+        Dex: 1
+      - Level: 25
         Agi: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
+      - Level: 26
+        Int: 1
+      - Level: 27
+        Luk: 1
+      - Level: 28
+        Dex: 1
+      - Level: 31
+        Agi: 1
+      - Level: 33
+        Dex: 1
+      - Level: 35
         Str: 1
       - Level: 38
-        Vit: 1
-      - Level: 39
-        Dex: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Luk: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Luk: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Luk: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Vit: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
         Agi: 1
-      - Level: 51
+      - Level: 39
+        Int: 1
+      - Level: 41
+        Dex: 1
+      - Level: 43
+        Dex: 1
+      - Level: 45
+        Dex: 1
+      - Level: 47
+        Agi: 1
+      - Level: 49
+        Dex: 1
+      - Level: 50
         Str: 1
       - Level: 52
-        Vit: 1
-      - Level: 53
-        Dex: 1
-      - Level: 54
-        Int: 1
-      - Level: 55
-        Str: 1
-      - Level: 56
-        Str: 1
-      - Level: 57
-        Vit: 1
-      - Level: 58
-        Luk: 1
-      - Level: 59
-        Str: 1
-      - Level: 60
-        Dex: 1
-      - Level: 61
-        Vit: 1
-      - Level: 62
-        Vit: 1
-      - Level: 63
-        Pow: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
-        Luk: 1
-      - Level: 66
         Agi: 1
-      - Level: 67
+      - Level: 53
+        Int: 1
+      - Level: 54
         Vit: 1
-      - Level: 68
-        Str: 1
-      - Level: 69
+      - Level: 57
+        Agi: 1
+      - Level: 58
+        Dex: 1
+      - Level: 60
+        Int: 1
+      - Level: 61
+        Agi: 1
+      - Level: 62
+        Agi: 1
+      - Level: 63
         Luk: 1
+      - Level: 65
+        Dex: 1
+      - Level: 66
+        Str: 1
+      - Level: 67
+        Agi: 1
+      - Level: 69
+        Dex: 1
       - Level: 70
-        Vit: 1
+        Agi: 1
   - Jobs:
       Paladin2: true
     MaxWeight: 28000
@@ -5883,145 +3479,95 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Int: 1
+        Vit: 1
       - Level: 2
-        Agi: 1
+        Str: 1
       - Level: 3
-        Vit: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Luk: 1
-      - Level: 7
-        Dex: 1
-      - Level: 8
-        Vit: 1
-      - Level: 9
-        Int: 1
-      - Level: 10
         Agi: 1
-      - Level: 11
+      - Level: 6
+        Dex: 1
+      - Level: 7
+        Int: 1
+      - Level: 8
+        Agi: 1
+      - Level: 9
+        Vit: 1
+      - Level: 10
         Str: 1
       - Level: 12
-        Luk: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
         Dex: 1
-      - Level: 15
+      - Level: 14
         Int: 1
-      - Level: 16
+      - Level: 15
         Vit: 1
-      - Level: 17
-        Luk: 1
-      - Level: 18
+      - Level: 16
         Agi: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
+      - Level: 17
+        Dex: 1
+      - Level: 18
         Str: 1
       - Level: 21
-        Int: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Luk: 1
-      - Level: 24
         Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
+      - Level: 23
+        Dex: 1
+      - Level: 24
         Agi: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
+      - Level: 26
         Str: 1
       - Level: 29
-        Dex: 1
-      - Level: 30
         Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
+      - Level: 30
+        Vit: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Luk: 1
+        Dex: 1
       - Level: 37
-        Vit: 1
-      - Level: 38
-        Str: 1
-      - Level: 39
-        Pow: 1
-      - Level: 40
         Agi: 1
-      - Level: 41
+      - Level: 39
+        Luk: 1
+      - Level: 40
         Str: 1
       - Level: 42
-        Int: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Luk: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Agi: 1
-      - Level: 49
-        Int: 1
-      - Level: 50
-        Str: 1
-      - Level: 51
-        Str: 1
-      - Level: 52
         Vit: 1
-      - Level: 53
+      - Level: 43
         Int: 1
-      - Level: 54
+      - Level: 45
         Dex: 1
-      - Level: 55
+      - Level: 48
+        Str: 1
+      - Level: 49
+        Vit: 1
+      - Level: 52
         Agi: 1
-      - Level: 56
+      - Level: 53
+        Vit: 1
+      - Level: 54
+        Int: 1
+      - Level: 55
         Str: 1
       - Level: 57
-        Luk: 1
-      - Level: 58
-        Str: 1
+        Dex: 1
       - Level: 59
-        Pow: 1
-      - Level: 60
-        Vit: 1
-      - Level: 61
-        Dex: 1
-      - Level: 62
-        Str: 1
-      - Level: 63
-        Int: 1
-      - Level: 64
-        Agi: 1
-      - Level: 65
-        Dex: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Pow: 1
-      - Level: 68
         Luk: 1
-      - Level: 69
+      - Level: 60
+        Agi: 1
+      - Level: 61
         Int: 1
-      - Level: 70
+      - Level: 63
         Vit: 1
+      - Level: 64
+        Str: 1
+      - Level: 65
+        Int: 1
+      - Level: 67
+        Luk: 1
+      - Level: 68
+        Dex: 1
+      - Level: 69
+        Vit: 1
+      - Level: 70
+        Agi: 1
   - Jobs:
       Baby: true
     BaseASPD:
@@ -6050,106 +3596,42 @@ Body:
       Mace: 650
       2hMace: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Agi: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
         Str: 1
       - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Vit: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Agi: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
         Str: 1
       - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
         Vit: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
+      - Level: 22
+        Dex: 1
+      - Level: 26
+        Luk: 1
+      - Level: 30
         Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
+      - Level: 33
         Str: 1
       - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
+        Dex: 1
       - Level: 38
-        Int: 1
-      - Level: 39
-        Str: 1
+        Vit: 1
       - Level: 40
-        Agi: 1
-      - Level: 41
         Str: 1
       - Level: 42
-        Int: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Pow: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
         Vit: 1
-      - Level: 47
+      - Level: 44
+        Luk: 1
+      - Level: 46
         Agi: 1
-      - Level: 48
+      - Level: 47
         Str: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Agi: 1
+        Str: 1
   - Jobs:
       Baby_Mage: true
     MaxWeight: 22000
@@ -6161,106 +3643,42 @@ Body:
       Staff: 700
       2hStaff: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Dex: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Int: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Dex: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Int: 1
       - Level: 18
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Agi: 1
       - Level: 22
-        Dex: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Int: 1
       - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
+        Agi: 1
       - Level: 30
-        Pow: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
         Luk: 1
-      - Level: 37
-        Str: 1
+      - Level: 33
+        Int: 1
+      - Level: 36
+        Dex: 1
       - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
+        Int: 1
       - Level: 40
-        Vit: 1
-      - Level: 41
-        Str: 1
+        Agi: 1
       - Level: 42
-        Pow: 1
-      - Level: 43
-        Str: 1
+        Luk: 1
       - Level: 44
-        Dex: 1
-      - Level: 45
-        Str: 1
+        Int: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Vit: 1
-      - Level: 48
-        Str: 1
+        Agi: 1
       - Level: 49
-        Pow: 1
+        Luk: 1
       - Level: 50
-        Dex: 1
+        Int: 1
   - Jobs:
       Baby_Archer: true
     MaxWeight: 26000
@@ -6271,106 +3689,42 @@ Body:
       Dagger: 600
       Bow: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Luk: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Dex: 1
       - Level: 6
-        Agi: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
         Str: 1
       - Level: 10
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Int: 1
       - Level: 14
-        Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Dex: 1
       - Level: 18
-        Luk: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Dex: 1
       - Level: 22
-        Pow: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Luk: 1
       - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Luk: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Agi: 1
-      - Level: 39
+      - Level: 30
+        Dex: 1
+      - Level: 33
+        Agi: 1
+      - Level: 36
+        Dex: 1
+      - Level: 38
         Str: 1
       - Level: 40
-        Agi: 1
-      - Level: 41
         Str: 1
       - Level: 42
-        Luk: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Pow: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
         Dex: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Vit: 1
-      - Level: 50
+      - Level: 44
         Luk: 1
+      - Level: 46
+        Vit: 1
+      - Level: 47
+        Int: 1
+      - Level: 49
+        Agi: 1
+      - Level: 50
+        Dex: 1
   - Jobs:
       Baby_Acolyte: true
     MaxWeight: 24000
@@ -6383,106 +3737,42 @@ Body:
       Staff: 600
       2hStaff: 600
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Pow: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
         Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Pow: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
+      - Level: 6
         Vit: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
+      - Level: 10
+        Int: 1
+      - Level: 14
+        Dex: 1
+      - Level: 18
+        Luk: 1
+      - Level: 22
         Agi: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
+      - Level: 26
         Str: 1
       - Level: 30
-        Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Pow: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
         Vit: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
+      - Level: 33
+        Int: 1
+      - Level: 36
+        Dex: 1
+      - Level: 38
+        Luk: 1
+      - Level: 40
         Agi: 1
-      - Level: 43
+      - Level: 42
         Str: 1
       - Level: 44
-        Int: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Luk: 1
-      - Level: 48
-        Str: 1
+        Dex: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Pow: 1
+        Luk: 1
   - Jobs:
       Baby_Merchant: true
     MaxWeight: 28000
@@ -6497,106 +3787,42 @@ Body:
       Mace: 700
       2hMace: 700
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Int: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Vit: 1
       - Level: 6
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Agi: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
         Str: 1
       - Level: 14
-        Luk: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
+        Dex: 1
       - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+        Vit: 1
       - Level: 22
-        Agi: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Str: 1
       - Level: 26
-        Dex: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
         Int: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Pow: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Luk: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Agi: 1
-      - Level: 41
+      - Level: 30
         Vit: 1
-      - Level: 42
+      - Level: 36
         Luk: 1
-      - Level: 43
+      - Level: 38
+        Dex: 1
+      - Level: 40
         Str: 1
-      - Level: 44
+      - Level: 41
         Agi: 1
-      - Level: 45
+      - Level: 42
+        Dex: 1
+      - Level: 44
         Str: 1
       - Level: 46
-        Pow: 1
-      - Level: 47
-        Int: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Agi: 1
-      - Level: 50
         Luk: 1
+      - Level: 47
+        Vit: 1
+      - Level: 49
+        Str: 1
+      - Level: 50
+        Dex: 1
   - Jobs:
       Baby_Thief: true
     MaxWeight: 24000
@@ -6609,106 +3835,42 @@ Body:
       1hAxe: 800
       Bow: 800
     BonusStats:
-      - Level: 1
-        Str: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
         Agi: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
+      - Level: 6
         Str: 1
       - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Int: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
         Dex: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
+      - Level: 14
+        Vit: 1
+      - Level: 18
+        Int: 1
       - Level: 22
-        Luk: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
+        Dex: 1
       - Level: 26
-        Pow: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
+        Luk: 1
       - Level: 30
-        Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
         Str: 1
       - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
         Agi: 1
-      - Level: 37
+      - Level: 36
         Str: 1
       - Level: 38
-        Vit: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Pow: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Luk: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Int: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Pow: 1
-      - Level: 47
         Agi: 1
-      - Level: 48
+      - Level: 40
+        Luk: 1
+      - Level: 42
+        Dex: 1
+      - Level: 44
+        Vit: 1
+      - Level: 46
+        Luk: 1
+      - Level: 47
         Str: 1
       - Level: 49
-        Luk: 1
+        Dex: 1
       - Level: 50
-        Vit: 1
+        Agi: 1
   - Jobs:
       Baby_Knight: true
     MaxWeight: 28000
@@ -6727,105 +3889,65 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Int: 1
-      - Level: 2
-        Str: 1
-      - Level: 3
-        Int: 1
-      - Level: 4
-        Agi: 1
-      - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Int: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Agi: 1
-      - Level: 11
-        Luk: 1
-      - Level: 12
-        Int: 1
-      - Level: 13
         Vit: 1
-      - Level: 14
+      - Level: 3
+        Vit: 1
+      - Level: 4
         Str: 1
-      - Level: 15
+      - Level: 5
+        Luk: 1
+      - Level: 8
+        Vit: 1
+      - Level: 10
+        Str: 1
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
         Agi: 1
-      - Level: 16
+      - Level: 15
         Str: 1
       - Level: 17
-        Int: 1
+        Vit: 1
       - Level: 18
-        Int: 1
+        Vit: 1
       - Level: 19
-        Luk: 1
+        Dex: 1
       - Level: 20
-        Pow: 1
+        Luk: 1
       - Level: 21
-        Agi: 1
-      - Level: 22
         Str: 1
       - Level: 23
-        Int: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
+        Vit: 1
       - Level: 27
-        Agi: 1
+        Str: 1
       - Level: 28
-        Pow: 1
-      - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
         Luk: 1
-      - Level: 32
-        Str: 1
+      - Level: 29
+        Vit: 1
+      - Level: 31
+        Dex: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Int: 1
-      - Level: 37
-        Pow: 1
-      - Level: 38
         Vit: 1
-      - Level: 39
-        Str: 1
+      - Level: 37
+        Luk: 1
+      - Level: 38
+        Agi: 1
       - Level: 40
-        Luk: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
+        Dex: 1
       - Level: 43
-        Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Agi: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Luk: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
         Str: 1
+      - Level: 47
+        Str: 1
+      - Level: 48
+        Dex: 1
+      - Level: 49
+        Dex: 1
   - Jobs:
       Baby_Priest: true
     MaxWeight: 26000
@@ -6840,105 +3962,65 @@ Body:
       2hStaff: 600
     BonusStats:
       - Level: 1
-        Pow: 1
-      - Level: 2
-        Str: 1
+        Luk: 1
       - Level: 3
-        Pow: 1
+        Luk: 1
       - Level: 4
-        Agi: 1
-      - Level: 5
         Str: 1
       - Level: 6
-        Vit: 1
-      - Level: 7
-        Int: 1
-      - Level: 8
-        Dex: 1
-      - Level: 9
-        Dex: 1
-      - Level: 10
-        Pow: 1
-      - Level: 11
         Agi: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
+      - Level: 7
+        Vit: 1
+      - Level: 8
+        Int: 1
+      - Level: 9
+        Int: 1
+      - Level: 10
+        Luk: 1
+      - Level: 11
         Str: 1
       - Level: 14
-        Int: 1
+        Vit: 1
       - Level: 15
-        Luk: 1
-      - Level: 16
-        Str: 1
+        Dex: 1
       - Level: 17
-        Agi: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Luk: 1
-      - Level: 21
-        Pow: 1
-      - Level: 22
         Dex: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
+      - Level: 21
         Luk: 1
-      - Level: 26
-        Str: 1
+      - Level: 22
+        Int: 1
+      - Level: 25
+        Dex: 1
       - Level: 27
-        Agi: 1
-      - Level: 28
         Str: 1
       - Level: 29
-        Vit: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Pow: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Int: 1
-      - Level: 35
         Agi: 1
+      - Level: 31
+        Luk: 1
+      - Level: 32
+        Dex: 1
+      - Level: 34
+        Vit: 1
+      - Level: 35
+        Str: 1
       - Level: 36
-        Int: 1
+        Vit: 1
       - Level: 37
-        Vit: 1
-      - Level: 38
-        Str: 1
+        Agi: 1
       - Level: 39
-        Pow: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Str: 1
+        Luk: 1
       - Level: 42
-        Dex: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
         Int: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
+      - Level: 43
+        Int: 1
+      - Level: 45
         Vit: 1
-      - Level: 49
-        Str: 1
+      - Level: 48
+        Agi: 1
       - Level: 50
-        Pow: 1
+        Luk: 1
   - Jobs:
       Baby_Wizard: true
     MaxWeight: 24000
@@ -6951,105 +4033,65 @@ Body:
       2hStaff: 625
     BonusStats:
       - Level: 1
-        Dex: 1
-      - Level: 2
-        Luk: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Dex: 1
-      - Level: 5
-        Luk: 1
-      - Level: 6
-        Vit: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Dex: 1
-      - Level: 10
-        Vit: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Agi: 1
-      - Level: 13
-        Luk: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Pow: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Dex: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Dex: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Luk: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Dex: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Dex: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Vit: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Pow: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Int: 1
-      - Level: 39
+      - Level: 2
+        Dex: 1
+      - Level: 4
+        Int: 1
+      - Level: 5
+        Dex: 1
+      - Level: 6
+        Agi: 1
+      - Level: 9
+        Int: 1
+      - Level: 10
+        Agi: 1
+      - Level: 12
+        Str: 1
+      - Level: 13
+        Dex: 1
+      - Level: 15
         Luk: 1
+      - Level: 18
+        Int: 1
+      - Level: 22
+        Int: 1
+      - Level: 24
+        Agi: 1
+      - Level: 26
+        Dex: 1
+      - Level: 29
+        Int: 1
+      - Level: 31
+        Int: 1
+      - Level: 32
+        Dex: 1
+      - Level: 33
+        Int: 1
+      - Level: 34
+        Agi: 1
+      - Level: 36
+        Luk: 1
+      - Level: 38
+        Vit: 1
+      - Level: 39
+        Dex: 1
       - Level: 40
-        Dex: 1
+        Int: 1
       - Level: 41
-        Vit: 1
-      - Level: 42
-        Str: 1
+        Agi: 1
       - Level: 43
-        Vit: 1
-      - Level: 44
-        Str: 1
+        Agi: 1
       - Level: 45
-        Dex: 1
+        Int: 1
       - Level: 46
-        Vit: 1
+        Agi: 1
       - Level: 47
-        Vit: 1
+        Agi: 1
       - Level: 48
-        Dex: 1
-      - Level: 49
-        Str: 1
+        Int: 1
       - Level: 50
-        Dex: 1
+        Int: 1
   - Jobs:
       Baby_Blacksmith: true
     MaxWeight: 30000
@@ -7065,105 +4107,65 @@ Body:
       2hMace: 675
     BonusStats:
       - Level: 1
-        Luk: 1
-      - Level: 2
-        Str: 1
+        Dex: 1
       - Level: 3
-        Agi: 1
-      - Level: 4
-        Luk: 1
-      - Level: 5
-        Luk: 1
-      - Level: 6
         Str: 1
+      - Level: 4
+        Dex: 1
+      - Level: 5
+        Dex: 1
       - Level: 7
-        Int: 1
+        Vit: 1
       - Level: 8
-        Agi: 1
-      - Level: 9
         Str: 1
       - Level: 10
-        Luk: 1
+        Dex: 1
       - Level: 11
-        Pow: 1
-      - Level: 12
         Luk: 1
+      - Level: 12
+        Dex: 1
       - Level: 13
-        Int: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
+        Vit: 1
       - Level: 16
-        Agi: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
         Str: 1
       - Level: 19
-        Luk: 1
-      - Level: 20
-        Int: 1
-      - Level: 21
         Dex: 1
-      - Level: 22
-        Str: 1
+      - Level: 20
+        Vit: 1
+      - Level: 21
+        Int: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Str: 1
       - Level: 26
-        Luk: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Luk: 1
-      - Level: 29
-        Vit: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Agi: 1
-      - Level: 32
-        Int: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
         Dex: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Int: 1
-      - Level: 38
-        Vit: 1
-      - Level: 39
-        Luk: 1
-      - Level: 40
-        Luk: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
+      - Level: 28
+        Dex: 1
+      - Level: 29
         Agi: 1
-      - Level: 45
+      - Level: 31
+        Str: 1
+      - Level: 32
+        Vit: 1
+      - Level: 34
+        Int: 1
+      - Level: 36
+        Dex: 1
+      - Level: 37
+        Vit: 1
+      - Level: 38
+        Agi: 1
+      - Level: 39
+        Dex: 1
+      - Level: 40
+        Dex: 1
+      - Level: 44
         Str: 1
       - Level: 46
-        Pow: 1
-      - Level: 47
         Luk: 1
-      - Level: 48
-        Str: 1
+      - Level: 47
+        Dex: 1
       - Level: 49
-        Int: 1
-      - Level: 50
-        Str: 1
+        Vit: 1
   - Jobs:
       Baby_Hunter: true
     MaxWeight: 27000
@@ -7175,105 +4177,65 @@ Body:
       Bow: 600
     BonusStats:
       - Level: 1
-        Luk: 1
-      - Level: 2
-        Str: 1
-      - Level: 3
         Dex: 1
+      - Level: 3
+        Int: 1
       - Level: 4
-        Luk: 1
+        Dex: 1
       - Level: 5
-        Agi: 1
-      - Level: 6
         Str: 1
       - Level: 7
-        Pow: 1
+        Luk: 1
       - Level: 8
-        Luk: 1
-      - Level: 9
-        Str: 1
+        Dex: 1
       - Level: 10
-        Agi: 1
+        Str: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Vit: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Luk: 1
-      - Level: 15
-        Pow: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Vit: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Luk: 1
-      - Level: 22
-        Int: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Luk: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Pow: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Vit: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Luk: 1
-      - Level: 34
-        Dex: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Luk: 1
-      - Level: 39
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Dex: 1
-      - Level: 42
-        Pow: 1
-      - Level: 43
-        Luk: 1
-      - Level: 44
         Agi: 1
-      - Level: 45
+      - Level: 14
+        Dex: 1
+      - Level: 15
+        Luk: 1
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Agi: 1
+      - Level: 20
+        Agi: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Vit: 1
+      - Level: 27
+        Dex: 1
+      - Level: 29
+        Luk: 1
+      - Level: 31
+        Agi: 1
+      - Level: 33
+        Dex: 1
+      - Level: 34
+        Int: 1
+      - Level: 38
+        Dex: 1
+      - Level: 39
+        Agi: 1
+      - Level: 41
+        Int: 1
+      - Level: 42
+        Luk: 1
+      - Level: 43
+        Dex: 1
+      - Level: 44
         Str: 1
       - Level: 46
-        Dex: 1
+        Int: 1
       - Level: 47
-        Vit: 1
-      - Level: 48
-        Str: 1
+        Agi: 1
       - Level: 49
-        Luk: 1
-      - Level: 50
-        Str: 1
+        Dex: 1
   - Jobs:
       Baby_Assassin: true
     MaxWeight: 24000
@@ -7287,105 +4249,65 @@ Body:
       Katar: 500
     BonusStats:
       - Level: 1
-        Vit: 1
-      - Level: 2
-        Vit: 1
-      - Level: 3
-        Vit: 1
-      - Level: 4
-        Dex: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Int: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Int: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
         Agi: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
+      - Level: 2
+        Agi: 1
+      - Level: 3
+        Agi: 1
+      - Level: 4
+        Int: 1
+      - Level: 6
+        Vit: 1
+      - Level: 8
+        Vit: 1
+      - Level: 9
+        Dex: 1
+      - Level: 11
         Str: 1
       - Level: 14
-        Dex: 1
+        Int: 1
       - Level: 15
-        Vit: 1
-      - Level: 16
-        Vit: 1
-      - Level: 17
-        Vit: 1
-      - Level: 18
-        Vit: 1
-      - Level: 19
-        Vit: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Vit: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Luk: 1
-      - Level: 25
         Agi: 1
-      - Level: 26
+      - Level: 16
+        Agi: 1
+      - Level: 17
+        Agi: 1
+      - Level: 18
+        Agi: 1
+      - Level: 19
+        Agi: 1
+      - Level: 20
+        Agi: 1
+      - Level: 21
+        Agi: 1
+      - Level: 24
+        Dex: 1
+      - Level: 25
         Str: 1
       - Level: 27
-        Agi: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
         Str: 1
       - Level: 30
-        Luk: 1
+        Dex: 1
       - Level: 31
-        Luk: 1
+        Dex: 1
       - Level: 32
-        Agi: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
         Str: 1
       - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
+        Int: 1
       - Level: 40
-        Luk: 1
-      - Level: 41
-        Luk: 1
-      - Level: 42
         Dex: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Str: 1
+      - Level: 41
+        Dex: 1
+      - Level: 42
+        Int: 1
       - Level: 45
-        Agi: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
         Str: 1
+      - Level: 46
+        Dex: 1
       - Level: 48
-        Agi: 1
-      - Level: 49
         Str: 1
       - Level: 50
-        Luk: 1
+        Dex: 1
   - Jobs:
       Baby_Knight2: true
     MaxWeight: 28000
@@ -7404,105 +4326,65 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Int: 1
-      - Level: 2
-        Str: 1
-      - Level: 3
-        Int: 1
-      - Level: 4
-        Agi: 1
-      - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Int: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Agi: 1
-      - Level: 11
-        Luk: 1
-      - Level: 12
-        Int: 1
-      - Level: 13
         Vit: 1
-      - Level: 14
+      - Level: 3
+        Vit: 1
+      - Level: 4
         Str: 1
-      - Level: 15
+      - Level: 5
+        Luk: 1
+      - Level: 8
+        Vit: 1
+      - Level: 10
+        Str: 1
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
         Agi: 1
-      - Level: 16
+      - Level: 15
         Str: 1
       - Level: 17
-        Int: 1
+        Vit: 1
       - Level: 18
-        Int: 1
+        Vit: 1
       - Level: 19
-        Luk: 1
+        Dex: 1
       - Level: 20
-        Pow: 1
+        Luk: 1
       - Level: 21
-        Agi: 1
-      - Level: 22
         Str: 1
       - Level: 23
-        Int: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
+        Vit: 1
       - Level: 27
-        Agi: 1
+        Str: 1
       - Level: 28
-        Pow: 1
-      - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
         Luk: 1
-      - Level: 32
-        Str: 1
+      - Level: 29
+        Vit: 1
+      - Level: 31
+        Dex: 1
       - Level: 33
-        Agi: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Int: 1
-      - Level: 37
-        Pow: 1
-      - Level: 38
         Vit: 1
-      - Level: 39
-        Str: 1
+      - Level: 37
+        Luk: 1
+      - Level: 38
+        Agi: 1
       - Level: 40
-        Luk: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
+        Dex: 1
       - Level: 43
-        Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
+        Vit: 1
       - Level: 46
-        Agi: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Luk: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
         Str: 1
+      - Level: 47
+        Str: 1
+      - Level: 48
+        Dex: 1
+      - Level: 49
+        Dex: 1
   - Jobs:
       Baby_Crusader: true
     MaxWeight: 28000
@@ -7522,105 +4404,65 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Pow: 1
+        Luk: 1
       - Level: 2
-        Pow: 1
+        Luk: 1
       - Level: 3
-        Pow: 1
+        Luk: 1
       - Level: 4
-        Pow: 1
+        Luk: 1
       - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
+        Luk: 1
       - Level: 7
-        Agi: 1
-      - Level: 8
         Str: 1
       - Level: 9
-        Dex: 1
-      - Level: 10
-        Str: 1
+        Int: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Int: 1
-      - Level: 13
-        Str: 1
+        Vit: 1
       - Level: 14
-        Luk: 1
+        Dex: 1
       - Level: 15
-        Int: 1
-      - Level: 16
-        Str: 1
+        Vit: 1
       - Level: 17
-        Agi: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Dex: 1
-      - Level: 21
-        Dex: 1
-      - Level: 22
         Int: 1
+      - Level: 21
+        Int: 1
+      - Level: 22
+        Vit: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
         Str: 1
       - Level: 25
-        Agi: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
         Str: 1
       - Level: 28
-        Luk: 1
-      - Level: 29
-        Str: 1
+        Dex: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
         Agi: 1
-      - Level: 33
+      - Level: 32
         Str: 1
       - Level: 34
-        Luk: 1
+        Dex: 1
       - Level: 35
-        Dex: 1
+        Int: 1
       - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Dex: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
         Agi: 1
-      - Level: 49
+      - Level: 38
+        Int: 1
+      - Level: 40
+        Vit: 1
+      - Level: 41
+        Vit: 1
+      - Level: 44
+        Int: 1
+      - Level: 46
+        Vit: 1
+      - Level: 48
         Str: 1
       - Level: 50
-        Int: 1
+        Vit: 1
   - Jobs:
       Baby_Monk: true
     MaxWeight: 26000
@@ -7636,105 +4478,65 @@ Body:
       2hStaff: 575
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Agi: 1
-      - Level: 3
         Str: 1
       - Level: 4
-        Luk: 1
+        Dex: 1
       - Level: 5
-        Vit: 1
-      - Level: 6
-        Str: 1
+        Agi: 1
       - Level: 7
-        Int: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
         Vit: 1
-      - Level: 11
-        Str: 1
+      - Level: 10
+        Agi: 1
       - Level: 12
-        Agi: 1
+        Str: 1
       - Level: 13
-        Agi: 1
-      - Level: 14
         Str: 1
       - Level: 15
-        Pow: 1
-      - Level: 16
-        Dex: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Int: 1
-      - Level: 21
-        Vit: 1
-      - Level: 22
         Luk: 1
-      - Level: 23
-        Vit: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
+      - Level: 16
         Int: 1
+      - Level: 18
+        Agi: 1
+      - Level: 20
+        Vit: 1
+      - Level: 21
+        Agi: 1
+      - Level: 22
+        Dex: 1
+      - Level: 23
+        Agi: 1
+      - Level: 25
+        Vit: 1
       - Level: 26
-        Agi: 1
-      - Level: 27
-        Agi: 1
-      - Level: 28
         Str: 1
-      - Level: 29
+      - Level: 27
         Str: 1
       - Level: 30
-        Luk: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Pow: 1
-      - Level: 33
-        Int: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Vit: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
         Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Pow: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
+      - Level: 32
         Luk: 1
-      - Level: 44
+      - Level: 33
         Vit: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
+      - Level: 35
+        Agi: 1
+      - Level: 38
         Int: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
+      - Level: 40
+        Luk: 1
+      - Level: 41
+        Vit: 1
+      - Level: 43
+        Dex: 1
+      - Level: 44
+        Agi: 1
+      - Level: 46
+        Vit: 1
       - Level: 49
-        Agi: 1
+        Str: 1
       - Level: 50
-        Agi: 1
+        Str: 1
   - Jobs:
       Baby_Sage: true
     MaxWeight: 24000
@@ -7748,105 +4550,65 @@ Body:
       2hStaff: 625
     BonusStats:
       - Level: 1
-        Dex: 1
-      - Level: 2
-        Str: 1
+        Int: 1
       - Level: 3
-        Vit: 1
-      - Level: 4
-        Int: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Vit: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Dex: 1
-      - Level: 9
-        Str: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Int: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Vit: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Dex: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Pow: 1
-      - Level: 18
-        Int: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Luk: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Vit: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Dex: 1
-      - Level: 25
-        Luk: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Luk: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Dex: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Vit: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Pow: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Dex: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Luk: 1
-      - Level: 40
-        Pow: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
         Agi: 1
-      - Level: 43
+      - Level: 4
+        Vit: 1
+      - Level: 6
+        Agi: 1
+      - Level: 8
+        Int: 1
+      - Level: 11
+        Vit: 1
+      - Level: 13
+        Agi: 1
+      - Level: 15
+        Int: 1
+      - Level: 17
+        Luk: 1
+      - Level: 18
+        Vit: 1
+      - Level: 20
+        Dex: 1
+      - Level: 22
+        Agi: 1
+      - Level: 24
+        Int: 1
+      - Level: 25
+        Dex: 1
+      - Level: 27
+        Dex: 1
+      - Level: 30
+        Int: 1
+      - Level: 32
+        Dex: 1
+      - Level: 33
+        Agi: 1
+      - Level: 35
+        Luk: 1
+      - Level: 37
+        Int: 1
+      - Level: 38
+        Int: 1
+      - Level: 39
+        Dex: 1
+      - Level: 40
+        Luk: 1
+      - Level: 42
         Str: 1
       - Level: 44
-        Agi: 1
+        Str: 1
       - Level: 45
-        Dex: 1
+        Int: 1
       - Level: 46
-        Agi: 1
+        Str: 1
       - Level: 47
-        Agi: 1
+        Str: 1
       - Level: 48
-        Agi: 1
-      - Level: 49
         Str: 1
       - Level: 50
-        Dex: 1
+        Int: 1
   - Jobs:
       Baby_Rogue: true
     MaxWeight: 24000
@@ -7859,105 +4621,65 @@ Body:
       Bow: 650
     BonusStats:
       - Level: 1
-        Vit: 1
+        Agi: 1
       - Level: 2
-        Int: 1
+        Vit: 1
       - Level: 3
-        Luk: 1
-      - Level: 4
-        Str: 1
+        Dex: 1
       - Level: 5
-        Agi: 1
+        Str: 1
       - Level: 6
-        Int: 1
+        Vit: 1
       - Level: 7
-        Vit: 1
-      - Level: 8
-        Str: 1
+        Agi: 1
       - Level: 9
-        Int: 1
-      - Level: 10
-        Str: 1
+        Vit: 1
       - Level: 11
-        Luk: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
+        Dex: 1
       - Level: 14
-        Int: 1
+        Vit: 1
       - Level: 15
-        Int: 1
+        Vit: 1
       - Level: 16
-        Vit: 1
-      - Level: 17
-        Str: 1
+        Agi: 1
       - Level: 18
-        Luk: 1
-      - Level: 19
-        Str: 1
+        Dex: 1
       - Level: 20
-        Luk: 1
-      - Level: 21
-        Str: 1
-      - Level: 22
-        Str: 1
+        Dex: 1
       - Level: 23
-        Vit: 1
-      - Level: 24
-        Str: 1
+        Agi: 1
       - Level: 25
-        Agi: 1
+        Str: 1
       - Level: 26
-        Int: 1
+        Vit: 1
       - Level: 27
-        Agi: 1
-      - Level: 28
         Str: 1
       - Level: 29
-        Vit: 1
-      - Level: 30
         Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
+      - Level: 30
         Str: 1
       - Level: 33
-        Luk: 1
+        Dex: 1
       - Level: 34
-        Luk: 1
-      - Level: 35
-        Str: 1
+        Dex: 1
       - Level: 36
-        Agi: 1
-      - Level: 37
         Str: 1
       - Level: 38
-        Dex: 1
+        Int: 1
       - Level: 39
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
         Agi: 1
+      - Level: 42
+        Str: 1
       - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
+        Int: 1
       - Level: 45
-        Vit: 1
-      - Level: 46
-        Str: 1
+        Agi: 1
       - Level: 47
-        Dex: 1
+        Int: 1
       - Level: 48
-        Dex: 1
-      - Level: 49
-        Str: 1
+        Int: 1
       - Level: 50
-        Luk: 1
+        Dex: 1
   - Jobs:
       Baby_Alchemist: true
     MaxWeight: 30000
@@ -7973,105 +4695,65 @@ Body:
       2hMace: 650
     BonusStats:
       - Level: 1
-        Dex: 1
+        Int: 1
       - Level: 2
-        Luk: 1
+        Dex: 1
       - Level: 3
-        Luk: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Str: 1
+        Dex: 1
       - Level: 6
-        Agi: 1
-      - Level: 7
         Str: 1
       - Level: 8
-        Luk: 1
-      - Level: 9
         Dex: 1
-      - Level: 10
-        Str: 1
+      - Level: 9
+        Int: 1
       - Level: 11
-        Vit: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Luk: 1
-      - Level: 14
-        Vit: 1
-      - Level: 15
         Agi: 1
-      - Level: 16
+      - Level: 13
+        Dex: 1
+      - Level: 14
+        Agi: 1
+      - Level: 15
         Str: 1
       - Level: 17
-        Dex: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Luk: 1
-      - Level: 20
         Int: 1
+      - Level: 19
+        Dex: 1
+      - Level: 20
+        Vit: 1
       - Level: 21
-        Luk: 1
-      - Level: 22
-        Str: 1
+        Dex: 1
       - Level: 23
-        Dex: 1
+        Int: 1
       - Level: 24
-        Dex: 1
+        Int: 1
       - Level: 25
-        Luk: 1
+        Dex: 1
       - Level: 26
-        Agi: 1
-      - Level: 27
         Str: 1
       - Level: 28
-        Luk: 1
-      - Level: 29
         Dex: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
+      - Level: 29
         Int: 1
+      - Level: 31
+        Vit: 1
       - Level: 32
-        Luk: 1
-      - Level: 33
-        Str: 1
+        Dex: 1
       - Level: 34
-        Agi: 1
-      - Level: 35
         Str: 1
       - Level: 36
-        Int: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
         Vit: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
+      - Level: 38
+        Int: 1
+      - Level: 40
         Agi: 1
-      - Level: 44
+      - Level: 43
         Str: 1
       - Level: 45
-        Vit: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
+        Agi: 1
       - Level: 49
-        Vit: 1
+        Agi: 1
       - Level: 50
-        Vit: 1
+        Agi: 1
   - Jobs:
       Baby_Bard: true
     MaxWeight: 27000
@@ -8085,105 +4767,65 @@ Body:
       Musical: 575
     BonusStats:
       - Level: 1
-        Luk: 1
+        Dex: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
         Agi: 1
-      - Level: 4
+      - Level: 3
         Str: 1
       - Level: 5
-        Dex: 1
-      - Level: 6
-        Pow: 1
-      - Level: 7
-        Luk: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Pow: 1
-      - Level: 10
-        Vit: 1
-      - Level: 11
-        Vit: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Dex: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Luk: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
         Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
+      - Level: 6
         Luk: 1
-      - Level: 20
-        Pow: 1
-      - Level: 21
+      - Level: 7
         Dex: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
+      - Level: 9
+        Luk: 1
+      - Level: 10
         Agi: 1
-      - Level: 29
+      - Level: 11
+        Agi: 1
+      - Level: 13
+        Int: 1
+      - Level: 15
+        Dex: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Dex: 1
+      - Level: 20
+        Luk: 1
+      - Level: 21
+        Int: 1
+      - Level: 24
+        Agi: 1
+      - Level: 28
         Str: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
+        Agi: 1
       - Level: 32
-        Luk: 1
+        Dex: 1
       - Level: 33
-        Int: 1
-      - Level: 34
-        Str: 1
+        Vit: 1
       - Level: 35
-        Vit: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
+        Agi: 1
       - Level: 38
-        Luk: 1
-      - Level: 39
-        Str: 1
+        Dex: 1
       - Level: 40
-        Dex: 1
-      - Level: 41
-        Pow: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
         Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
+      - Level: 41
         Luk: 1
-      - Level: 47
-        Dex: 1
-      - Level: 48
+      - Level: 43
         Vit: 1
-      - Level: 49
-        Str: 1
+      - Level: 46
+        Dex: 1
+      - Level: 47
+        Int: 1
+      - Level: 48
+        Agi: 1
       - Level: 50
-        Luk: 1
+        Dex: 1
   - Jobs:
       Baby_Dancer: true
     MaxWeight: 27000
@@ -8197,105 +4839,65 @@ Body:
       Whip: 575
     BonusStats:
       - Level: 1
-        Pow: 1
+        Luk: 1
       - Level: 2
-        Vit: 1
-      - Level: 3
         Agi: 1
-      - Level: 4
+      - Level: 3
         Str: 1
       - Level: 5
-        Dex: 1
-      - Level: 6
-        Luk: 1
-      - Level: 7
-        Pow: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Vit: 1
-      - Level: 11
-        Vit: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Dex: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Pow: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
         Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Pow: 1
-      - Level: 20
-        Luk: 1
-      - Level: 21
+      - Level: 6
         Dex: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
+      - Level: 7
+        Luk: 1
+      - Level: 9
+        Dex: 1
+      - Level: 10
         Agi: 1
-      - Level: 29
+      - Level: 11
+        Agi: 1
+      - Level: 13
+        Int: 1
+      - Level: 15
+        Luk: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Luk: 1
+      - Level: 20
+        Dex: 1
+      - Level: 21
+        Int: 1
+      - Level: 24
+        Agi: 1
+      - Level: 28
         Str: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
+        Agi: 1
       - Level: 32
-        Pow: 1
-      - Level: 33
-        Int: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Vit: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Pow: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Dex: 1
-      - Level: 41
         Luk: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Int: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Pow: 1
-      - Level: 47
-        Dex: 1
-      - Level: 48
+      - Level: 33
         Vit: 1
-      - Level: 49
-        Str: 1
+      - Level: 35
+        Agi: 1
+      - Level: 38
+        Luk: 1
+      - Level: 40
+        Int: 1
+      - Level: 41
+        Dex: 1
+      - Level: 43
+        Vit: 1
+      - Level: 46
+        Luk: 1
+      - Level: 47
+        Int: 1
+      - Level: 48
+        Agi: 1
       - Level: 50
-        Pow: 1
+        Luk: 1
   - Jobs:
       Baby_Crusader2: true
     MaxWeight: 28000
@@ -8315,105 +4917,63 @@ Body:
       2hMace: 700
     BonusStats:
       - Level: 1
-        Pow: 1
+        Luk: 1
       - Level: 2
-        Pow: 1
+        Luk: 1
       - Level: 3
-        Pow: 1
+        Luk: 1
       - Level: 4
-        Pow: 1
+        Luk: 1
       - Level: 5
-        Pow: 1
-      - Level: 6
-        Str: 1
+        Luk: 1
       - Level: 7
-        Agi: 1
-      - Level: 8
         Str: 1
       - Level: 9
-        Dex: 1
-      - Level: 10
-        Str: 1
+        Int: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Int: 1
-      - Level: 13
-        Str: 1
+        Vit: 1
       - Level: 14
-        Luk: 1
+        Dex: 1
       - Level: 15
-        Int: 1
-      - Level: 16
-        Str: 1
+        Vit: 1
       - Level: 17
-        Agi: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Dex: 1
-      - Level: 21
-        Dex: 1
-      - Level: 22
         Int: 1
+      - Level: 21
+        Int: 1
+      - Level: 22
+        Vit: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
         Str: 1
       - Level: 25
-        Agi: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
         Str: 1
       - Level: 28
-        Luk: 1
-      - Level: 29
-        Str: 1
+        Dex: 1
       - Level: 30
-        Vit: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
         Agi: 1
-      - Level: 33
+      - Level: 32
         Str: 1
       - Level: 34
-        Luk: 1
-      - Level: 35
-        Str: 1
+        Dex: 1
       - Level: 36
-        Vit: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Dex: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
         Agi: 1
-      - Level: 49
+      - Level: 38
+        Int: 1
+      - Level: 40
+        Vit: 1
+      - Level: 41
+        Vit: 1
+      - Level: 44
+        Int: 1
+      - Level: 46
+        Vit: 1
+      - Level: 48
         Str: 1
       - Level: 50
-        Int: 1
+        Vit: 1
   - Jobs:
       Super_Baby: true
     BaseASPD:
@@ -8427,203 +4987,65 @@ Body:
       2hStaff: 650
     BonusStats:
       - Level: 1
-        Agi: 1
-      - Level: 2
         Str: 1
       - Level: 3
-        Vit: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Int: 1
-      - Level: 6
-        Str: 1
-      - Level: 7
-        Dex: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Pow: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
         Agi: 1
-      - Level: 14
+      - Level: 5
+        Vit: 1
+      - Level: 7
+        Int: 1
+      - Level: 9
+        Dex: 1
+      - Level: 11
+        Luk: 1
+      - Level: 13
         Str: 1
       - Level: 15
-        Vit: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Int: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Dex: 1
-      - Level: 20
-        Str: 1
-      - Level: 21
-        Luk: 1
-      - Level: 22
-        Str: 1
-      - Level: 23
-        Pow: 1
-      - Level: 24
-        Str: 1
-      - Level: 25
         Agi: 1
-      - Level: 26
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Int: 1
+      - Level: 21
+        Dex: 1
+      - Level: 23
+        Luk: 1
+      - Level: 25
         Str: 1
       - Level: 27
-        Vit: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Int: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Dex: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Luk: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Pow: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
         Agi: 1
-      - Level: 38
+      - Level: 29
+        Vit: 1
+      - Level: 31
+        Int: 1
+      - Level: 33
+        Dex: 1
+      - Level: 35
+        Luk: 1
+      - Level: 37
         Str: 1
       - Level: 39
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Luk: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Pow: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
         Agi: 1
-      - Level: 50
-        Str: 1
-      - Level: 51
+      - Level: 41
+        Vit: 1
+      - Level: 43
+        Int: 1
+      - Level: 45
+        Dex: 1
+      - Level: 47
+        Luk: 1
+      - Level: 49
         Str: 1
       - Level: 52
-        Vit: 1
-      - Level: 53
-        Str: 1
-      - Level: 54
-        Str: 1
-      - Level: 55
-        Str: 1
+        Agi: 1
       - Level: 56
-        Int: 1
-      - Level: 57
-        Str: 1
-      - Level: 58
-        Str: 1
-      - Level: 59
-        Str: 1
+        Vit: 1
       - Level: 60
-        Dex: 1
-      - Level: 61
-        Str: 1
-      - Level: 62
-        Str: 1
-      - Level: 63
-        Str: 1
+        Int: 1
       - Level: 64
-        Luk: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Str: 1
+        Dex: 1
       - Level: 68
-        Pow: 1
-      - Level: 69
-        Str: 1
-      - Level: 70
-        Str: 1
-      - Level: 71
-        Str: 1
-      - Level: 72
-        Str: 1
-      - Level: 73
-        Str: 1
-      - Level: 74
-        Str: 1
-      - Level: 75
-        Str: 1
-      - Level: 76
-        Str: 1
-      - Level: 77
-        Str: 1
-      - Level: 78
-        Str: 1
-      - Level: 79
-        Str: 1
-      - Level: 80
-        Str: 1
-      - Level: 81
-        Str: 1
-      - Level: 82
-        Str: 1
-      - Level: 83
-        Str: 1
-      - Level: 84
-        Str: 1
-      - Level: 85
-        Str: 1
-      - Level: 86
-        Str: 1
-      - Level: 87
-        Str: 1
-      - Level: 88
-        Str: 1
-      - Level: 89
-        Str: 1
-      - Level: 90
-        Str: 1
-      - Level: 91
-        Str: 1
-      - Level: 92
-        Str: 1
-      - Level: 93
-        Str: 1
-      - Level: 94
-        Str: 1
-      - Level: 95
-        Str: 1
-      - Level: 96
-        Str: 1
-      - Level: 97
-        Str: 1
-      - Level: 98
-        Str: 1
-      - Level: 99
-        Str: 1
+        Luk: 1
   - Jobs:
       Taekwon: true
     MaxWeight: 28000
@@ -8633,105 +5055,41 @@ Body:
       Fist: 400
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Agi: 1
+        Str: 1
       - Level: 3
-        Agi: 1
+        Str: 1
       - Level: 4
-        Agi: 1
+        Str: 1
       - Level: 5
-        Agi: 1
+        Str: 1
       - Level: 6
-        Agi: 1
-      - Level: 7
-        Str: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
         Str: 1
       - Level: 10
-        Luk: 1
+        Dex: 1
       - Level: 11
-        Luk: 1
+        Dex: 1
       - Level: 12
-        Luk: 1
+        Dex: 1
       - Level: 13
-        Luk: 1
+        Dex: 1
       - Level: 14
-        Luk: 1
+        Dex: 1
       - Level: 15
-        Luk: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Str: 1
+        Dex: 1
       - Level: 20
-        Vit: 1
+        Agi: 1
       - Level: 21
-        Vit: 1
+        Agi: 1
       - Level: 22
-        Vit: 1
+        Agi: 1
       - Level: 23
-        Vit: 1
+        Agi: 1
       - Level: 24
-        Vit: 1
+        Agi: 1
       - Level: 25
-        Vit: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Str: 1
-      - Level: 39
-        Str: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Str: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Str: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Str: 1
+        Agi: 1
   - Jobs:
       Star_Gladiator: true
     MaxWeight: 28000
@@ -8743,105 +5101,65 @@ Body:
       Book: 500
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Agi: 1
+        Str: 1
       - Level: 3
-        Agi: 1
+        Str: 1
       - Level: 4
-        Agi: 1
+        Str: 1
       - Level: 5
-        Agi: 1
+        Str: 1
       - Level: 6
-        Agi: 1
+        Str: 1
       - Level: 7
-        Agi: 1
+        Str: 1
       - Level: 8
-        Agi: 1
+        Str: 1
       - Level: 9
-        Agi: 1
+        Str: 1
       - Level: 10
-        Agi: 1
+        Str: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Agi: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Luk: 1
+        Dex: 1
       - Level: 21
-        Luk: 1
+        Dex: 1
       - Level: 22
-        Luk: 1
+        Dex: 1
       - Level: 23
-        Luk: 1
+        Dex: 1
       - Level: 24
-        Luk: 1
+        Dex: 1
       - Level: 25
-        Luk: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Str: 1
+        Dex: 1
       - Level: 39
-        Vit: 1
+        Agi: 1
       - Level: 40
-        Vit: 1
+        Agi: 1
       - Level: 41
-        Vit: 1
+        Agi: 1
       - Level: 42
-        Vit: 1
+        Agi: 1
       - Level: 43
-        Vit: 1
+        Agi: 1
       - Level: 44
-        Vit: 1
+        Agi: 1
       - Level: 45
-        Vit: 1
+        Agi: 1
       - Level: 46
-        Vit: 1
+        Agi: 1
       - Level: 47
-        Vit: 1
+        Agi: 1
       - Level: 48
-        Vit: 1
+        Agi: 1
       - Level: 49
-        Vit: 1
+        Agi: 1
       - Level: 50
-        Vit: 1
+        Agi: 1
   - Jobs:
       Star_Gladiator2: true
     MaxWeight: 28000
@@ -8853,105 +5171,65 @@ Body:
       Book: 500
     BonusStats:
       - Level: 1
-        Agi: 1
+        Str: 1
       - Level: 2
-        Agi: 1
+        Str: 1
       - Level: 3
-        Agi: 1
+        Str: 1
       - Level: 4
-        Agi: 1
+        Str: 1
       - Level: 5
-        Agi: 1
+        Str: 1
       - Level: 6
-        Agi: 1
+        Str: 1
       - Level: 7
-        Agi: 1
+        Str: 1
       - Level: 8
-        Agi: 1
+        Str: 1
       - Level: 9
-        Agi: 1
+        Str: 1
       - Level: 10
-        Agi: 1
+        Str: 1
       - Level: 11
-        Agi: 1
+        Str: 1
       - Level: 12
-        Agi: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
         Str: 1
       - Level: 20
-        Luk: 1
+        Dex: 1
       - Level: 21
-        Luk: 1
+        Dex: 1
       - Level: 22
-        Luk: 1
+        Dex: 1
       - Level: 23
-        Luk: 1
+        Dex: 1
       - Level: 24
-        Luk: 1
+        Dex: 1
       - Level: 25
-        Luk: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Str: 1
+        Dex: 1
       - Level: 39
-        Vit: 1
+        Agi: 1
       - Level: 40
-        Vit: 1
+        Agi: 1
       - Level: 41
-        Vit: 1
+        Agi: 1
       - Level: 42
-        Vit: 1
+        Agi: 1
       - Level: 43
-        Vit: 1
+        Agi: 1
       - Level: 44
-        Vit: 1
+        Agi: 1
       - Level: 45
-        Vit: 1
+        Agi: 1
       - Level: 46
-        Vit: 1
+        Agi: 1
       - Level: 47
-        Vit: 1
+        Agi: 1
       - Level: 48
-        Vit: 1
+        Agi: 1
       - Level: 49
-        Vit: 1
+        Agi: 1
       - Level: 50
-        Vit: 1
+        Agi: 1
   - Jobs:
       Soul_Linker: true
     MaxWeight: 24000
@@ -8964,102 +5242,62 @@ Body:
       2hStaff: 625
     BonusStats:
       - Level: 1
-        Dex: 1
+        Int: 1
       - Level: 2
-        Dex: 1
+        Int: 1
       - Level: 3
-        Dex: 1
+        Int: 1
       - Level: 4
-        Dex: 1
+        Int: 1
       - Level: 5
-        Dex: 1
+        Int: 1
       - Level: 6
-        Dex: 1
+        Int: 1
       - Level: 7
-        Dex: 1
+        Int: 1
       - Level: 8
-        Dex: 1
+        Int: 1
       - Level: 9
-        Dex: 1
+        Int: 1
       - Level: 10
-        Dex: 1
+        Int: 1
       - Level: 11
-        Dex: 1
+        Int: 1
       - Level: 12
-        Dex: 1
-      - Level: 13
-        Str: 1
-      - Level: 14
-        Str: 1
-      - Level: 15
-        Str: 1
-      - Level: 16
-        Str: 1
-      - Level: 17
-        Str: 1
-      - Level: 18
-        Str: 1
-      - Level: 19
-        Str: 1
+        Int: 1
       - Level: 20
-        Int: 1
+        Vit: 1
       - Level: 21
-        Int: 1
+        Vit: 1
       - Level: 22
-        Int: 1
+        Vit: 1
       - Level: 23
-        Int: 1
+        Vit: 1
       - Level: 24
-        Int: 1
+        Vit: 1
       - Level: 25
-        Int: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Str: 1
-      - Level: 29
-        Str: 1
-      - Level: 30
-        Str: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Str: 1
-      - Level: 33
-        Str: 1
-      - Level: 34
-        Str: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Str: 1
-      - Level: 37
-        Str: 1
-      - Level: 38
-        Str: 1
+        Vit: 1
       - Level: 39
-        Luk: 1
+        Dex: 1
       - Level: 40
-        Luk: 1
+        Dex: 1
       - Level: 41
-        Luk: 1
+        Dex: 1
       - Level: 42
-        Luk: 1
+        Dex: 1
       - Level: 43
-        Luk: 1
+        Dex: 1
       - Level: 44
-        Luk: 1
+        Dex: 1
       - Level: 45
-        Luk: 1
+        Dex: 1
       - Level: 46
-        Luk: 1
+        Dex: 1
       - Level: 47
-        Luk: 1
+        Dex: 1
       - Level: 48
-        Luk: 1
+        Dex: 1
       - Level: 49
-        Luk: 1
+        Dex: 1
       - Level: 50
-        Luk: 1
+        Dex: 1
