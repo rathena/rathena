@@ -2767,13 +2767,13 @@ ACMD_FUNC(stat_all)
 
 		if (value > 0 && status[i] + value >= max_status[i])
 			new_value = max_status[i];
-		else if (value < 0 && status[i] <= -value)
+		else if (value < 0 && abs(value) >= status[i])
 			new_value = 1;
 		else
 			new_value = status[i] + value;
 
 		if (new_value != status[i]) {
-			status[i] = new_value;
+			pc_setstat( sd, SP_STR + i, new_value );
 			clif_updatestatus(sd, SP_STR + i);
 			clif_updatestatus(sd, SP_USTR + i);
 			count++;
@@ -2839,13 +2839,13 @@ ACMD_FUNC(trait_all) {
 
 		if (value > 0 && status[i] + value >= max_status[i])
 			new_value = max_status[i];
-		else if (value < 0 && status[i] <= -value)
-			new_value = 1;
+		else if (value < 0 && abs(value) >= status[i])
+			new_value = 0;
 		else
 			new_value = status[i] + value;
 
 		if (new_value != status[i]) {
-			status[i] = new_value;
+			pc_setstat( sd, SP_POW + i, new_value );
 			clif_updatestatus(sd, SP_POW + i - PARAM_POW);
 			clif_updatestatus(sd, SP_UPOW + i - PARAM_POW);
 			count++;
