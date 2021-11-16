@@ -385,7 +385,7 @@ struct map_session_data {
 		unsigned int no_walk_delay : 1;
 	} special_state;
 	uint32 login_id1, login_id2;
-	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
+	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
 	int group_id, group_pos, group_level;
 	unsigned int permissions;/* group permissions */
 	int count_rewarp; //count how many time we being rewarped
@@ -1221,7 +1221,7 @@ TIMER_FUNC(pc_global_expiration_timer);
 void pc_expire_check(struct map_session_data *sd);
 
 void pc_calc_skilltree(struct map_session_data *sd);
-int pc_calc_skilltree_normalize_job(struct map_session_data *sd);
+uint64 pc_calc_skilltree_normalize_job(struct map_session_data *sd);
 void pc_clean_skilltree(struct map_session_data *sd);
 
 #define pc_checkoverhp(sd) ((sd)->battle_status.hp == (sd)->battle_status.max_hp)
@@ -1407,8 +1407,8 @@ bool pc_setstand(struct map_session_data *sd, bool force);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
 bool pc_can_attack(struct map_session_data *sd, int target_id);
 
-int pc_jobid2mapid(unsigned short b_class);	// Skotlex
-int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
+uint64 pc_jobid2mapid(unsigned short b_class);	// Skotlex
+int pc_mapid2jobid(uint64 class_, int sex);	// Skotlex
 
 const char * job_name(int class_);
 

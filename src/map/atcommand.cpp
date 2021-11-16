@@ -6059,7 +6059,7 @@ ACMD_FUNC(skilltree)
 {
 	struct map_session_data *pl_sd = NULL;
 	uint16 skill_id;
-	int meets, i, j, c=0;
+	int meets, j, c=0;
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
 
@@ -6076,8 +6076,7 @@ ACMD_FUNC(skilltree)
 		return -1;
 	}
 
-	i = pc_calc_skilltree_normalize_job(pl_sd);
-	c = pc_mapid2jobid(i, pl_sd->status.sex);
+	c = pc_mapid2jobid( pc_calc_skilltree_normalize_job( pl_sd ), pl_sd->status.sex );
 
 	sprintf(atcmd_output, msg_txt(sd,1168), job_name(c), pc_checkskill(pl_sd, NV_BASIC)); // Player is using %s skill tree (%d basic points).
 	clif_displaymessage(fd, atcmd_output);

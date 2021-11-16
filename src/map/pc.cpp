@@ -725,7 +725,7 @@ void pc_addfame(struct map_session_data *sd,int count)
 		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
 		case MAPID_TAEKWON:		ranktype = RANK_TAEKWON; break;
 		default:
-			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd->class_), sd->class_ );
+			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd->status.class_), sd->status.class_ );
 			return;
 	}
 
@@ -1561,7 +1561,6 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
  *------------------------------------------*/
 bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers)
 {
-	int i;
 	t_tick tick = gettick();
 	uint32 ip = session[sd->fd]->client_addr;
 
@@ -1579,13 +1578,13 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	}
 
 	//Set the map-server used job id. [Skotlex]
-	i = pc_jobid2mapid(sd->status.class_);
-	if (i == -1) { //Invalid class?
+	uint64 class_ = pc_jobid2mapid(sd->status.class_);
+	if (class_ == -1) { //Invalid class?
 		ShowError("pc_authok: Invalid class %d for player %s (%d:%d). Class was changed to novice.\n", sd->status.class_, sd->status.name, sd->status.account_id, sd->status.char_id);
 		sd->status.class_ = JOB_NOVICE;
 		sd->class_ = MAPID_NOVICE;
 	} else
-		sd->class_ = i;
+		sd->class_ = class_;
 
 	// Checks and fixes to character status data, that are required
 	// in case of configuration change or stuff, which cannot be
@@ -1628,7 +1627,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->cansendmail_tick = tick;
 	sd->idletime = last_tick;
 
-	for(i = 0; i < MAX_SPIRITBALL; i++)
+	for(int i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
 
 	if (battle_config.item_auto_get)
@@ -1669,12 +1668,12 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->delayed_damage = 0;
 
 	// Event Timers
-	for( i = 0; i < MAX_EVENTTIMER; i++ )
+	for( int i = 0; i < MAX_EVENTTIMER; i++ )
 		sd->eventtimer[i] = INVALID_TIMER;
 	// Rental Timer
 	sd->rental_timer = INVALID_TIMER;
 
-	for( i = 0; i < 3; i++ )
+	for( int i = 0; i < 3; i++ )
 		sd->hate_mob[i] = -1;
 
 	sd->quest_log = NULL;
@@ -1693,8 +1692,9 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->vars_received = 0x0;
 
 	//warp player
-	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != SETPOS_OK) {
-		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
+	enum e_setpos setpos_result = pc_setpos( sd, sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT );
+	if( setpos_result != SETPOS_OK ){
+		ShowError( "Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, setpos_result );
 
 		// try warping to a default map instead (church graveyard)
 		if (pc_setpos(sd, mapindex_name2id(MAP_PRONTERA), 273, 354, CLR_OUTSIGHT) != SETPOS_OK) {
@@ -1725,7 +1725,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 			pc_show_version(sd);
 
 		// Message of the Day [Valaris]
-		for(i=0; i < MOTD_LINE_SIZE && motd_text[i][0]; i++) {
+		for(int i=0; i < MOTD_LINE_SIZE && motd_text[i][0]; i++) {
 			if (battle_config.motd_type)
 				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], motd_text[i], false, SELF);
 			else
@@ -2074,7 +2074,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	int job = pc_calc_skilltree_normalize_job(sd);
+	uint64 job = pc_calc_skilltree_normalize_job(sd);
 	int class_ = pc_mapid2jobid(job, sd->status.sex);
 
 	if( class_ == -1 )
@@ -2261,16 +2261,14 @@ void pc_calc_skilltree(struct map_session_data *sd)
 //Checks if you can learn a new skill after having leveled up a skill.
 static void pc_check_skilltree(struct map_session_data *sd)
 {
-	int i, flag = 0;
-	int c = 0;
+	int flag = 0;
 
 	if (battle_config.skillfree)
 		return; //Function serves no purpose if this is set
 
-	i = pc_calc_skilltree_normalize_job(sd);
-	c = pc_mapid2jobid(i, sd->status.sex);
+	int c = pc_mapid2jobid( pc_calc_skilltree_normalize_job( sd ), sd->status.sex );
 	if (c == -1) { //Unable to normalize job??
-		ShowError("pc_check_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", i, sd->status.name, sd->status.account_id, sd->status.char_id);
+		ShowError("pc_check_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", sd->status.class_, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return;
 	}
 	c = pc_class2idx(c);
@@ -2279,16 +2277,15 @@ static void pc_check_skilltree(struct map_session_data *sd)
 		uint16 skid = 0;
 
 		flag = 0;
-		for (i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++ ) {
+		for (int i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++ ) {
 			uint16 sk_idx = skill_get_index(skid);
 			bool fail = false;
-			uint8 j = 0;
 
 			if (sd->status.skill[sk_idx].id) //Already learned
 				continue;
 
 			// Checking required skills
-			for (j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
+			for (uint8 j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
 				uint16 sk_need_id = skill_tree[c][i].need[j].skill_id;
 				uint16 sk_need_idx = 0;
 
@@ -2347,10 +2344,10 @@ void pc_clean_skilltree(struct map_session_data *sd)
 	}
 }
 
-int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
+uint64 pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 {
 	int skill_point, novice_skills;
-	int c = sd->class_;
+	uint64 c = sd->class_;
 
 	if (!battle_config.skillup_limit || pc_has_permission(sd, PC_PERM_ALL_SKILL))
 		return c;
@@ -6591,7 +6588,7 @@ bool pc_checkequip2(struct map_session_data *sd, t_itemid nameid, int min, int m
  * Convert's from the client's lame Job ID system
  * to the map server's 'makes sense' system. [Skotlex]
  *------------------------------------------*/
-int pc_jobid2mapid(unsigned short b_class)
+uint64 pc_jobid2mapid(unsigned short b_class)
 {
 	switch(b_class)
 	{
@@ -6751,7 +6748,7 @@ int pc_jobid2mapid(unsigned short b_class)
 }
 
 //Reverts the map-style class id to the client-style one.
-int pc_mapid2jobid(unsigned short class_, int sex)
+int pc_mapid2jobid(uint64 class_, int sex)
 {
 	switch(class_) {
 	//Novice And 1-1 Jobs
@@ -9532,7 +9529,6 @@ static int jobchange_killclone(struct block_list *bl, va_list ap)
 bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 {
 	int i, fame_flag = 0;
-	int b_class;
 
 	nullpo_retr(false,sd);
 
@@ -9540,7 +9536,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		return false;
 
 	//Normalize job.
-	b_class = pc_jobid2mapid(job);
+	uint64 b_class = pc_jobid2mapid(job);
 	if (b_class == -1)
 		return false;
 	switch (upper) {
@@ -12628,7 +12624,7 @@ void JobDatabase::loadingFinished() {
 			}
 		}
 
-		int class_ = pc_jobid2mapid( job_id );
+		uint64 class_ = pc_jobid2mapid( job_id );
 
 		// Set normal status limits
 		uint16 max = battle_config.max_parameter;
