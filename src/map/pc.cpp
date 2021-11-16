@@ -12627,6 +12627,79 @@ void JobDatabase::loadingFinished() {
 				job->job_bonus[job_level][parameter] = current;
 			}
 		}
+
+		int class_ = pc_jobid2mapid( job_id );
+
+		// Set normal status limits
+		uint16 max = battle_config.max_parameter;
+
+		do{
+			// Always check babies first
+			if( class_ & JOBL_BABY ){
+				if( class_ & JOBL_THIRD ){
+					max = battle_config.max_baby_third_parameter;
+					break;
+				}else{
+					max = battle_config.max_baby_parameter;
+					break;
+				}
+			}
+
+			// Summoner
+			if( ( class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+				max = battle_config.max_summoner_parameter;
+				break;
+			}
+
+			// Extended classes
+			if( ( class_ & MAPID_UPPERMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_UPPERMASK ) == MAPID_REBELLION ){
+				max = battle_config.max_extended_parameter;
+				break;
+			}
+
+			if( class_ & JOBL_FOURTH ){
+				// Add battle config limit
+			}
+
+			// 3rd class
+			if( class_ & JOBL_THIRD ){
+				// Transcendent
+				if( class_ & JOBL_UPPER ){
+					max = battle_config.max_third_trans_parameter;
+					break;
+				}else{
+					max = battle_config.max_third_parameter;
+					break;
+				}
+			}
+
+			// Transcendent
+			if( class_ & JOBL_UPPER ){
+				max = battle_config.max_trans_parameter;
+				break;
+			}
+		}while( false );
+
+		for( uint16 parameter = PARAM_STR; parameter < PARAM_POW; parameter++ ){
+			// If it is not explicitly set in the database file
+			if( job->max_param[parameter] == 0 ){
+				job->max_param[parameter] = max;
+			}
+		}
+
+		// Set trait status limit
+		max = 0;
+
+		if( class_ & JOBL_FOURTH ){
+			// Add battle config limit
+		}
+
+		for( uint16 parameter = PARAM_POW; parameter < PARAM_MAX; parameter++ ){
+			// If it is not explicitly set in the database file
+			if( job->max_param[parameter] == 0 ){
+				job->max_param[parameter] = max;
+			}
+		}
 	}
 }
 
@@ -13447,51 +13520,13 @@ void pc_cell_basilica(struct map_session_data *sd) {
 uint16 pc_maxparameter(struct map_session_data *sd, e_params param) {
 	nullpo_retr(0, sd);
 
-	int class_ = sd->class_;
-	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(class_,sd->status.sex));
+	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(sd->class_,sd->status.sex));
 
-	if (job && param < PARAM_MAX) {
-		uint16 max_param = job->max_param[param];
-
-		if (max_param > 0)
-			return max_param;
+	if( job == nullptr || param == PARAM_MAX ){
+		return 0;
 	}
 
-	// Always check babies first
-	if( class_ & JOBL_BABY ){
-		if( class_ & JOBL_THIRD ){
-			return battle_config.max_baby_third_parameter;
-		}else{
-			return battle_config.max_baby_parameter;
-		}
-	}
-
-	// Summoner
-	if( ( class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
-		return battle_config.max_summoner_parameter;
-	}
-
-	// Extended classes
-	if( ( class_ & MAPID_UPPERMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_UPPERMASK ) == MAPID_REBELLION ){
-		return battle_config.max_extended_parameter;
-	}
-
-	// 3rd class
-	if( class_ & JOBL_THIRD ){
-		// Transcendent
-		if( class_ & JOBL_UPPER ){
-			return battle_config.max_third_trans_parameter;
-		}else{
-			return battle_config.max_third_parameter;
-		}
-	}
-
-	// Transcendent
-	if( class_ & JOBL_UPPER ){
-		return battle_config.max_trans_parameter;
-	}
-
-	return battle_config.max_parameter;
+	return job->max_param[param];
 }
 
 /**
