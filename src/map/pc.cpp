@@ -12654,7 +12654,7 @@ void JobDatabase::loadingFinished() {
 			}
 
 			if( class_ & JOBL_FOURTH ){
-				// Add battle config limit
+				max = battle_config.max_fourth_parameter;
 			}
 
 			// 3rd class
@@ -12684,10 +12684,10 @@ void JobDatabase::loadingFinished() {
 		}
 
 		// Set trait status limit
-		max = 0;
-
 		if( class_ & JOBL_FOURTH ){
-			// Add battle config limit
+			max = battle_config.max_fourth_trait;
+		}else{
+			max = 0;
 		}
 
 		for( uint16 parameter = PARAM_POW; parameter < PARAM_MAX; parameter++ ){
