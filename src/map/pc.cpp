@@ -12434,7 +12434,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(bexpNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level < 1 || level > MAX_LEVEL) {
 						this->invalidWarning(bexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12445,7 +12445,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 						if (!this->asUInt64(bexpNode, "Exp", exp))
 							return 0;
 
-						job->base_exp[level] = exp;
+						job->base_exp[level - 1] = exp;
 					}
 				}
 			}
@@ -12475,7 +12475,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(jexpNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level < 1 || level > MAX_LEVEL) {
 						this->invalidWarning(jexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12486,7 +12486,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 						if (!this->asUInt64(jexpNode, "Exp", exp))
 							return 0;
 
-						job->job_exp[level] = exp;
+						job->job_exp[level - 1] = exp;
 					}
 				}
 			}
