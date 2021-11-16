@@ -2658,7 +2658,7 @@ ACMD_FUNC(param)
 
 	uint8 i, stat;
 	int value = 0;
-	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk", "pow", "sta", "wis", "spl", "con", "crt" };
+	const char* param[PARAM_MAX] = { "str", "agi", "vit", "int", "dex", "luk", "pow", "sta", "wis", "spl", "con", "crt" };
 	uint16 new_value, status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
