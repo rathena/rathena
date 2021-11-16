@@ -2656,10 +2656,9 @@ ACMD_FUNC(param)
 {
 	nullpo_retr(-1, sd);
 
-	uint8 i, stat;
+	uint8 stat;
 	int value = 0;
-	const char* param[PARAM_MAX] = { "str", "agi", "vit", "int", "dex", "luk", "pow", "sta", "wis", "spl", "con", "crt" };
-	uint16 new_value, status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
+	uint16 new_value, status, max_status;
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
@@ -2668,47 +2667,43 @@ ACMD_FUNC(param)
 		return -1;
 	}
 
-	ARR_FIND( 0, ARRAYLENGTH(param), stat, strcmpi(command + 1, param[stat]) == 0 );
+	ARR_FIND( 0, ARRAYLENGTH(parameter_names), stat, strcmpi(command + 1, parameter_names[stat]) == 0 );
 
-	if( stat == ARRAYLENGTH(param)) { // normally impossible...
+	if( stat == ARRAYLENGTH(parameter_names)) { // normally impossible...
 		clif_displaymessage(fd, msg_txt(sd,1013)); // Please enter a valid value (usage: @str/@agi/@vit/@int/@dex/@luk <+/-adjustment>).
 		return -1;
 	}
 
-	for (i = PARAM_STR; i < PARAM_POW; i++)
-		status[i] = pc_getstat(sd, SP_STR + i);
-	if (sd->class_ & JOBL_FOURTH) {
-		for (i = PARAM_POW; i < PARAM_MAX; i++)
-			status[i] = pc_getstat(sd, SP_POW + i - PARAM_POW);
+	if( stat < PARAM_POW ){
+		status = pc_getstat( sd, SP_STR + stat - PARAM_STR );
+	}else{
+		if( !( sd->class_ & JOBL_FOURTH ) ){
+			clif_displaymessage(fd, msg_txt(sd, 797)); // This command is unavailable to non - 4th class.
+			return -1;
+		}
+
+		status = pc_getstat( sd, SP_POW + stat - PARAM_POW );
 	}
 
-	if (pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT)) {
-		for (i = PARAM_STR; i < PARAM_MAX; i++) {
-			if (i >= PARAM_POW && !(sd->class_ & JOBL_FOURTH))
-				continue;
-			max_status[i] = SHRT_MAX;
-		}
-	} else {
-		for (i = PARAM_STR; i < PARAM_POW; i++)
-			max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
-		if (sd->class_ & JOBL_FOURTH) {
-			for (i = PARAM_POW; i < PARAM_MAX; i++)
-				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
-		}
+	if( pc_has_permission( sd, PC_PERM_BYPASS_MAX_STAT ) ){
+		max_status = SHRT_MAX;
+	}else{
+		max_status = pc_maxparameter( sd, static_cast<e_params>( stat ) );
 	}
 
-	if(value > 0  && status[stat] + value >= max_status[stat])
-		new_value = max_status[stat];
-	else if( value < 0 && abs( value ) >= status[stat] ){
+	if( value > 0  && status + value >= max_status ){
+		new_value = max_status;
+	}else if( value < 0 && abs( value ) >= status ){
 		if( stat < PARAM_POW ){
 			new_value = 1;
 		}else{
 			new_value = 0;
 		}
-	}else
-		new_value = status[stat] + value;
+	}else{
+		new_value = status + value;
+	}
 
-	if (new_value != status[stat]) {
+	if( new_value != status ){
 		if (stat < PARAM_POW) {
 			pc_setstat( sd, SP_STR + stat - PARAM_STR, new_value );
 			clif_updatestatus(sd, SP_STR + stat);
@@ -2808,8 +2803,10 @@ ACMD_FUNC(trait_all) {
 	return -1;
 #endif
 
-	if (!(sd->class_ & JOBL_FOURTH))
+	if( !( sd->class_ & JOBL_FOURTH ) ){
+		clif_displaymessage(fd, msg_txt(sd, 797)); // This command is unavailable to non - 4th class.
 		return -1;
+	}
 
 	int value = 0;
 	uint8 i;

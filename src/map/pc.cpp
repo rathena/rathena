@@ -12369,13 +12369,11 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-					const char *stats[PARAM_MAX] = { "Str", "Agi", "Vit", "Int", "Dex", "Luk", "Pow", "Sta", "Wis", "Spl", "Con", "Crt" };
-
 					for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
-						if (this->nodeExists(levelNode, stats[idx])) {
+						if (this->nodeExists(levelNode, parameter_names[idx])) {
 							int16 change;
 
-							if (!this->asInt16(levelNode, stats[idx], change))
+							if (!this->asInt16(levelNode, parameter_names[idx], change))
 								return 0;
 
 							job->job_bonus[level - 1][idx] = change;

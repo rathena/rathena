@@ -154,6 +154,21 @@ enum e_params {
 	PARAM_MAX
 };
 
+static const char* parameter_names[PARAM_MAX] = {
+	"Str",
+	"Agi",
+	"Vit",
+	"Int",
+	"Dex",
+	"Luk",
+	"Pow",
+	"Sta",
+	"Wis",
+	"Spl",
+	"Con",
+	"Crt"
+};
+
 extern unsigned int equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
