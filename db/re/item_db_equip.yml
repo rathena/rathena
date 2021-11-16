@@ -5253,7 +5253,7 @@ Body:
       bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30;
   - Id: 1298
     AegisName: Shiver_Katar_K
-    Name: Katar Of Horror
+    Name: Shiver Katar
     Type: Weapon
     SubType: Katar
     Buy: 60000
@@ -36641,7 +36641,7 @@ Body:
       bonus bFlee2,3;
   - Id: 2892
     AegisName: Assassin_Handcuffs
-    Name: Assassin's Glove
+    Name: Assassin Handcuffs
     Type: Armor
     Buy: 56000
     Weight: 400
@@ -52498,7 +52498,7 @@ Body:
       bonus bMaxSP,20;
   - Id: 5782
     AegisName: Hoplite_Helmet
-    Name: Hoplite Helmet
+    Name: Legionaire Helm
     Type: Armor
     Buy: 20
     Weight: 700
@@ -54647,6 +54647,25 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Dragon,5;
       bonus2 bSubRace,RC_Dragon,5;
+  - Id: 5932
+    AegisName: Heaven_Cage
+    Name: Birdcage in Paradise
+    Type: Armor
+    View: 1286
+    Weight: 800
+    Defense: 6
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 40
+    Refineable: true
+    Script: |
+      bonus bLuk,5;
+      bonus bCritical,5;
+      bonus bFlee2,5;
+      if (BaseClass == Job_Ranger)
+         bonus2 bSkillAtk,"HT_BLITZBEAT",5*getrefine();
   - Id: 5933
     AegisName: Crow_Tengu_Mask
     Name: Crow Tengu Mask
@@ -54669,6 +54688,19 @@ Body:
          bonus2 bAddSize,Size_All,2;
          bonus bLongAtkRate,3;
       }
+  - Id: 5934
+    AegisName: Happy_Balloon_J
+    Name: Happy Balloon
+    Type: Armor
+    View: 1289
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    Script: |
+      bonus bMdef,5;
+      bonus2 bAddMonsterDropItem,12355,30;
   - Id: 5936
     AegisName: 8_Type_PurgatorialWing
     Name: 8Way Wings of Purgatory
@@ -66732,6 +66764,19 @@ Body:
       .@r = getrefine()/2;
       bonus bDex,.@r;
       bonus bInt,.@r;
+  - Id: 15136
+    AegisName: Tatenasi_Armor
+    Name: Old Tatenasi Armor
+    Type: Armor
+    Weight: 600
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bMaxHP,100;
   - Id: 15138
     AegisName: Egir_Armor_K
     Name: Aegir Armor
@@ -68177,6 +68222,62 @@ Body:
       bonus bMdef,5*(.@r/4);
       if (.@r>=12)
          bonus3 bAutoSpellWhenHit,"AL_PNEUMA",1,50;
+  - Id: 15363
+    AegisName: Mars_Armor_TW
+    Name: Mars Armor
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Jobs:
+      Assassin: true
+      Rogue: true
+    Classes:
+      All_Third: true
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r =  getrefine();
+      autobonus3 "{ bonus bAspd,2; }",1000,10000,"TF_BACKSLIDING","{ specialeffect2 EF_HASTEUP; }";
+      bonus bDex,3*(.@r/4);
+      bonus bMaxHPrate,3*(.@r/4);
+      bonus2 bIgnoreDefRaceRate,RC_DemiHuman,15;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,15;
+      bonus2 bIgnoreDefRaceRate,RC_Brute,15;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,15;
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",2*(getskilllv("AC_DOUBLE"));
+      if (.@r>=12)
+         bonus2 bSkillCooldown,"GC_DARKCROW",-5000;
+  - Id: 15365
+    AegisName: Vinus_Armor_TW
+    Name: Venus Armor
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+    Classes:
+      All_Third: true
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("AL_HEAL");
+      bonus bMaxHPrate,.@lvl;
+      bonus bLongAtkDef,@lvl;
+      bonus bInt,2*(.@r/4);
+      bonus bMdef,7*(.@r/4);
+      if (.@r>=12) {
+         bonus2 bSkillCooldown,"AB_CLEARANCE",-5000;
+         bonus2 bSkillCooldown,"AB_SILENTIUM",-5000;
+         bonus2 bSkillCooldown,"SR_CRESCENTELBOW",-3000;
+      }
   - Id: 15367
     AegisName: Astraea_Armor
     Name: Asteria's Armor
@@ -78708,7 +78809,7 @@ Body:
       bonus4 bAutoSpellWhenHit,"AL_BLESSING",10,50,0;
   - Id: 18874
     AegisName: One_Eyed_Glass_
-    Name: Cyclops Glasses
+    Name: Monocle
     Type: Armor
     Buy: 10
     Weight: 100
@@ -80195,6 +80296,22 @@ Body:
       bonus2 bAddItemHealRate,11596,150;
     EquipScript: |
       sc_end SC_SpeedUp0;
+  - Id: 18992
+    AegisName: New_Year_Hairpin
+    Name: New Year Hairpin
+    Type: Armor
+    View: 1155
+    Buy: 20
+    Weight: 180
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 15
+    Refineable: true
+    Script: |
+      bonus bHit,5;
+      bonus bFlee2,3;
   - Id: 18997
     AegisName: Riot_Chip
     Name: Runaway Chip
@@ -80478,7 +80595,7 @@ Body:
       }
   - Id: 19048
     AegisName: Elemental_Clothe
-    Name: Elemental Clothes
+    Name: Elemental Tights
     Type: Armor
     Weight: 500
     Defense: 45
@@ -83778,6 +83895,34 @@ Body:
     Script: |
       bonus bAllStats,1;
       bonus MaxHp,200;
+  - Id: 19311
+    AegisName: Greater_Dracul_Horn
+    Name: Greater Dracule Horn
+    Type: Armor
+    View: 1695
+    Weight: 800
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableHelm;
+      bonus bMaxHPrate,10;
+      bonus2 bAddClass,Class_All,6;
+      bonus2 bHPDrainRate,30,10;
+      skill "MC_LOUD",1;
+      if (.@r>=9) {
+         bonus2 bAddClass,Class_All,10;
+         bonus2 bHPDrainRate,30,30;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddClass,Class_All,5;
+         bonus2 bHPDrainRate,30,15;
+      }
   - Id: 19326
     AegisName: Book_of_Soyga
     Name: Book of Soyga
@@ -100707,6 +100852,34 @@ Body:
       .@r = getrefine();
       bonus bMaxHPrate,.@r;
       bonus bMaxSPrate,.@r;
+  - Id: 22070
+    AegisName: Applause_Sandal
+    Name: Old Applause Sandals
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bMaxSP,50;
+  - Id: 22071
+    AegisName: Applause_Sandal_
+    Name: Applause Sandal
+    Type: Armor
+    Weight: 200
+    Defense: 7
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bMdef,10;
+      bonus bDelayrate,-2*(getrefine()/2);
   - Id: 22072
     AegisName: Hikingboots
     Name: Hikingboots
@@ -130705,7 +130878,7 @@ Body:
       bonus bMatkRate,5;
   - Id: 32219
     AegisName: Astraea_Ring
-    Name: Asteria Ring
+    Name: Asteria's Ring
     Type: Armor
     Weight: 100
     Slots: 1
@@ -138020,6 +138193,55 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-7;
       }
+  - Id: 480025
+    AegisName: Owl_Baron_Mantle
+    Name: Owl Baron Cloak
+    Type: Armor
+    Weight: 100
+    Defense: 5
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bInt,2;
+      bonus bMdef,5;
+      bonus bAspdRate,10;
+      bonus bBaseAtk,6*.@r;
+      bonus bMatk,6*.@r;
+      if (.@r>=10) {
+         skill "PR_LEXAETERNA",1;
+         autobonus2 "{ bonus bAspdRate,40; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
+      }
+      else if (.@r>=9)
+         autobonus2 "{ bonus bAspdRate,20; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
+      else if (.@r>=7)
+         autobonus2 "{ bonus bAspdRate,10; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
+  - Id: 480053
+    AegisName: Behemoth_Muffler
+    Name: Behemoth Muffler
+    Type: Armor
+    Weight: 200
+    Defense: 18
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5;
+      bonus bAspdRate,.@r;
+      bonus2 bAddEle,Ele_Earth,15+.@r;
+      bonus2 bMagicAddEle,Ele_Earth,15+.@r;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      if (.@r>=10)
+         bonus2 bSubEle,Ele_Earth,100;
   - Id: 480054
     AegisName: Morrigane's_Manteau_IL
     Name: Illusion Morrigane's Manteau

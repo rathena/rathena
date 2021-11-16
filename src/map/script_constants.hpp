@@ -5250,6 +5250,7 @@
 	export_constant(IG_XMAS_PACKAGE_14);
 	export_constant(IG_EASTER_EGG);
 	export_constant(IG_PITAPAT_BOX);
+	export_constant(IG_HAPPY_BOX_J);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
