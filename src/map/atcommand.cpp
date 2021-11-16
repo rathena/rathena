@@ -2686,30 +2686,35 @@ ACMD_FUNC(param)
 		for (i = PARAM_STR; i < PARAM_MAX; i++) {
 			if (i >= PARAM_POW && !(sd->class_ & JOBL_FOURTH))
 				continue;
-			status[i] = SHRT_MAX;
+			max_status[i] = SHRT_MAX;
 		}
 	} else {
 		for (i = PARAM_STR; i < PARAM_POW; i++)
-			status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
+			max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
 		if (sd->class_ & JOBL_FOURTH) {
 			for (i = PARAM_POW; i < PARAM_MAX; i++)
-				status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
+				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
 		}
 	}
 
 	if(value > 0  && status[stat] + value >= max_status[stat])
 		new_value = max_status[stat];
-	else if(value < 0 && status[stat] <= -value)
-		new_value = 1;
-	else
+	else if( value < 0 && abs( value ) >= status[stat] ){
+		if( stat < PARAM_POW ){
+			new_value = 1;
+		}else{
+			new_value = 0;
+		}
+	}else
 		new_value = status[stat] + value;
 
 	if (new_value != status[stat]) {
-		status[stat] = new_value;
 		if (stat < PARAM_POW) {
+			pc_setstat( sd, SP_STR + stat - PARAM_STR, new_value );
 			clif_updatestatus(sd, SP_STR + stat);
 			clif_updatestatus(sd, SP_USTR + stat);
 		} else {
+			pc_setstat( sd, SP_POW + stat - PARAM_POW, new_value );
 			clif_updatestatus(sd, SP_POW + stat - PARAM_POW);
 			clif_updatestatus(sd, SP_UPOW + stat - PARAM_POW);
 		}

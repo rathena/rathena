@@ -7712,7 +7712,7 @@ int pc_getstat(map_session_data *sd, int type)
 
 /// Sets the specified stat to the specified value.
 /// Returns the new value.
-static int pc_setstat(struct map_session_data* sd, int type, int val)
+int pc_setstat(struct map_session_data* sd, int type, int val)
 {
 	nullpo_retr(-1, sd);
 

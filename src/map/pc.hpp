@@ -1320,6 +1320,7 @@ int pc_maxparameterincrease(struct map_session_data*,int);
 bool pc_statusup(struct map_session_data*,int,int);
 int pc_statusup2(struct map_session_data*,int,int);
 int pc_getstat(map_session_data *sd, int type);
+int pc_setstat(struct map_session_data* sd, int type, int val);
 void pc_skillup(struct map_session_data*,uint16 skill_id);
 int pc_allskillup(struct map_session_data*);
 int pc_resetlvl(struct map_session_data*,int type);
