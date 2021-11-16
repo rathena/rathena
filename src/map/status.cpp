@@ -4609,7 +4609,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	std::shared_ptr<s_job_info> job_info = job_db.find( pc_mapid2jobid( sd->class_, sd->status.sex ) );
 
 	if( job_info != nullptr ){
-		const auto& bonus = job_info->job_bonus[sd->status.job_level];
+		const auto& bonus = job_info->job_bonus[sd->status.job_level-1];
 
 		base_status->str += bonus[PARAM_STR];
 		base_status->agi += bonus[PARAM_AGI];
