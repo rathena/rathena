@@ -478,7 +478,22 @@ enum useskill_fail_cause : uint8_t
 	USESKILL_FAIL_THERE_ARE_NPC_AROUND = 83,
 	USESKILL_FAIL_NEED_MORE_BULLET = 84,
 	USESKILL_FAIL_COINS = 85,
-
+	USESKILL_FAIL_UNKNOWN_1,
+	USESKILL_FAIL_UNKNOWN_2,
+	USESKILL_FAIL_UNKNOWN_3,
+	USESKILL_FAIL_UNKNOWN_4,
+	USESKILL_FAIL_UNKNOWN_5,
+	USESKILL_FAIL_UNKNOWN_6,
+	USESKILL_FAIL_UNKNOWN_7,
+	USESKILL_FAIL_UNKNOWN_8,
+	USESKILL_FAIL_UNKNOWN_9,
+	USESKILL_FAIL_UNKNOWN_10,
+	USESKILL_FAIL_UNKNOWN_11,
+	USESKILL_FAIL_UNKNOWN_12,
+	USESKILL_FAIL_UNKNOWN_13,
+	USESKILL_FAIL_UNKNOWN_14,
+	USESKILL_FAIL_AP_INSUFFICIENT,
+	USESKILL_FAIL_UNKNOWN_16,
 	USESKILL_FAIL_MAX
 };
 
@@ -719,10 +734,14 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 void clif_skill_delunit(struct skill_unit *unit);
 void clif_skillunit_update(struct block_list* bl);
 
+void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv);
+
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);
 void clif_spiritball( struct block_list *bl, struct block_list* target = nullptr, enum send_target send_target = AREA );
 void clif_soulball( struct map_session_data *sd, struct block_list* target = nullptr, enum send_target send_target = AREA );
+void clif_servantball(struct block_list *bl);
+void clif_abyssball(struct block_list *bl);
 void clif_combo_delay(struct block_list *bl,t_tick wait);
 void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);

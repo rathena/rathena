@@ -1,0 +1,27 @@
+// Skill Distance-to-NPC Database
+// Prevents skills from being used near NPC types using INF2_NO_NEARNPC.
+//
+// Structure of Database:
+// SkillName,AdditionalRange{,NPC Type}
+//
+// AdditionalRange:
+//	Number of cells from an NPC where the skill can be cast.
+//	If zero, this will read the splash range value from skill_db;
+//	if that is also zero, range+layout's range from skill_unit_db will be used.
+//
+// NPC Type (bitmask):
+//	1 = warp portal, 2 = shop NPC, 4 = normal NPC script, 8 = tomb
+//
+// Examples:
+// MG_SAFETYWALL,2
+//	Safety Wall can't be placed within 2 ground cells of an NPC.
+//	(MG_SAFETYWALL doesn't have splash, layout range, and range value,
+//	so we must add the 'additional_range', or it will be pointless.)
+//
+// GS_DESPERADO,2
+//	Desperado can't be casted if the caster is standing within 5 cells of an NPC.
+//	(Why? GS_DESPERADO has 3 cells of splash range +2 'additional_range' here.)
+//
+// SC_CHAOSPANIC,0,1
+//	Chaos Panic can't be placed within 2 ground cells of a warp portal.
+//	(Because SC_CHAOSPANIC doesn't have splash range, it uses layout range.)

@@ -90,24 +90,33 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 
 	//per individual bonuses
 	switch(db->class_){
-	case ELEMENTALID_AGNI_S:	case ELEMENTALID_AGNI_M:
-	case ELEMENTALID_AGNI_L: //ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
+	case ELEMENTALID_AGNI_S:
+	case ELEMENTALID_AGNI_M:
+	case ELEMENTALID_AGNI_L:
+	case ELEMENTALID_ARDOR://ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
 		ele.atk += i * 20;
 		ele.atk2 += i * 20;
 		ele.hit += i * 10;
 		break;
-	case ELEMENTALID_AQUA_S:	case ELEMENTALID_AQUA_M:
-	case ELEMENTALID_AQUA_L: //MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
+	case ELEMENTALID_AQUA_S:
+	case ELEMENTALID_AQUA_M:
+	case ELEMENTALID_AQUA_L:
+	case ELEMENTALID_DILUVIO://MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
 		ele.mdef += i * 10;
 		ele.matk += i * 20;
 		break;
-	case ELEMENTALID_VENTUS_S:	case ELEMENTALID_VENTUS_M:
-	case ELEMENTALID_VENTUS_L: //FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
+	case ELEMENTALID_VENTUS_S:
+	case ELEMENTALID_VENTUS_M:
+	case ELEMENTALID_VENTUS_L:
+	case ELEMENTALID_PROCELLA://FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
 		ele.flee += i * 20;
 		ele.matk += i * 10;
 		break;
-	case ELEMENTALID_TERA_S:	case ELEMENTALID_TERA_M:
-	case ELEMENTALID_TERA_L: //DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
+	case ELEMENTALID_TERA_S:
+	case ELEMENTALID_TERA_M:
+	case ELEMENTALID_TERA_L:
+	case ELEMENTALID_TERREMOTUS:
+	case ELEMENTALID_SERPENS://DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
 		ele.def += i * 25;
 		ele.atk += i * 5;
 		ele.atk2 += i * 5;
@@ -120,6 +129,17 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 		ele.atk += 25 * i;
 		ele.atk2 += 25 * i;
 		ele.matk += 25 * i;
+	}
+
+	if ((i = pc_checkskill(sd, EM_ELEMENTAL_SPIRIT_M)) > 0 && db->class_ >= ELEMENTALID_DILUVIO && db->class_ <= ELEMENTALID_SERPENS) {
+		ele.hp = ele.max_hp += 10000 + 3000 * i;
+		ele.sp = ele.max_sp += 100 * i;
+		ele.atk += 100 + 20 * i;
+		ele.atk2 += 100 + 20 * i;
+		ele.matk += 20 * i;
+		ele.def += 20 * i;
+		ele.mdef += 4 * i;
+		ele.flee += 10 * i;
 	}
 
 	ele.life_time = lifetime;
@@ -310,6 +330,16 @@ int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id) {
 			case SC_UPHEAVAL_OPTION:
 			case SC_CIRCLE_OF_FIRE_OPTION:
 			case SC_TIDAL_WEAPON_OPTION:
+			case SC_FLAMETECHNIC_OPTION:
+			case SC_FLAMEARMOR_OPTION:
+			case SC_COLD_FORCE_OPTION:
+			case SC_CRYSTAL_ARMOR_OPTION:
+			case SC_GRACE_BREEZE_OPTION:
+			case SC_EYES_OF_STORM_OPTION:
+			case SC_EARTH_CARE_OPTION:
+			case SC_STRONG_PROTECTION_OPTION:
+			case SC_DEEP_POISONING_OPTION:
+			case SC_POISON_SHIELD_OPTION:
 				if( bl ) status_change_end(bl,type,INVALID_TIMER);	// Master
 				status_change_end(&ed->bl,static_cast<sc_type>(type-1),INVALID_TIMER);	// Elemental Spirit
 				break;
@@ -352,6 +382,16 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	status_change_end(&ed->bl, SC_UPHEAVAL, INVALID_TIMER);
 	status_change_end(&ed->bl, SC_CIRCLE_OF_FIRE, INVALID_TIMER);
 	status_change_end(&ed->bl, SC_TIDAL_WEAPON, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_FLAMETECHNIC, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_FLAMEARMOR, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_COLD_FORCE, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_CRYSTAL_ARMOR, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_GRACE_BREEZE, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_EYES_OF_STORM, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_EARTH_CARE, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_STRONG_PROTECTION, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_DEEP_POISONING, INVALID_TIMER);
+	status_change_end(&ed->bl, SC_POISON_SHIELD, INVALID_TIMER);
 
 	if( (sd = ed->master) == NULL )
 		return 0;
@@ -381,6 +421,16 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	status_change_end(&sd->bl, SC_UPHEAVAL_OPTION, INVALID_TIMER);
 	status_change_end(&sd->bl, SC_CIRCLE_OF_FIRE_OPTION, INVALID_TIMER);
 	status_change_end(&sd->bl, SC_TIDAL_WEAPON_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_FLAMETECHNIC_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_FLAMEARMOR_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_COLD_FORCE_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_CRYSTAL_ARMOR_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_GRACE_BREEZE_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_EYES_OF_STORM_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_EARTH_CARE_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_STRONG_PROTECTION_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_DEEP_POISONING_OPTION, INVALID_TIMER);
+	status_change_end(&sd->bl, SC_POISON_SHIELD_OPTION, INVALID_TIMER);
 
 	return 1;
 }
@@ -446,7 +496,7 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick ti
 				(status_get_hp(&ed->bl) < req.hp || status_get_sp(&ed->bl) < req.sp) )
 				return 1;
 			else
-				status_zap(&ed->bl, req.hp, req.sp);
+				status_zap(&ed->bl, req.hp, req.sp, 0);
 		}
 	}
 
@@ -661,7 +711,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 			return 0;
 		}
 
-		status_zap(&sd->bl,0,sp);
+		status_zap(&sd->bl,0,sp,0);
 		ed->last_spdrain_time = tick;
 	}
 

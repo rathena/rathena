@@ -1,0 +1,72 @@
+// Skill Unit Database
+//
+// Structure of Database:
+// Skill ID,Unit ID,Unit ID 2,Layout,Range,Interval,Target,Flag
+//
+// layout = -1:special, 0:1*1, 1:3*3, 2:5*5, up to 5:11*11
+// target = friend (party +guildmates +neutral players) / party / guild
+//          ally (party +guildmates) / all / sameguild (guild but no allies) / enemy
+// flag 0x00001(UF_DEFNOTENEMY)		If 'defunit_not_enemy' is set, the target is changed to 'friend'
+//      0x00002(UF_NOREITERATION)	Spell cannot be stacked
+//      0x00004(UF_NOFOOTSET)		Spell cannot be cast near/on targets
+//      0x00008(UF_NOOVERLAP)		Spell effects do not overlap
+//      0x00010(UF_PATHCHECK)		Only cells with a shootable path will be placed
+//      0x00020(UF_NOPC)		Spell cannot affect players.
+//      0x00040(UF_NOMOB)		Spell cannot affect mobs.
+//      0x00080(UF_SKILL)		Spell CAN affect skills.
+//      0x00100(UF_DANCE)		Dance skill
+//      0x00200(UF_ENSEMBLE)		Ensemble skill
+//      0x00400(UF_SONG)		Song skill
+//      0x00800(UF_DUALMODE)		Spell has effects both at an interval and when you step in/out
+//      0x01000(UF_NOKNOCKBACK)		Cannot be knocked back (only unit that can be damaged)
+//      0x02000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
+//      0x04000(UF_CRAZYWEED_IMMUNE)	Immune to GN_CRAZYWEED removal
+//      0x08000(UF_REM_FIRERAIN)	Removed if be overlapped by RL_FIRE_RAIN
+//      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
+//      0x20000(UF_HIDDEN_TRAP) 	Hidden trap, see 'traps_setting' skill config to enable this flag
+// 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
+//
+// Notes:
+//    0x89,0x8a,0x8b without indication
+//
+//    u1   u2 lay  r intr target  flag
+//
+
+5216,0x10a,   ,  0, 6:7:8:9:10,500,enemy, 0x018	//AG_RAIN_OF_CRYSTAL
+5217,0x10b,   ,  0, 4:4:5:5:6,300,enemy, 0x018	//AG_MYSTERY_ILLUSION
+5218,0x10e,   ,  0, 3:3:4:4:4,300,enemy, 0x018	//AG_VIOLENT_QUAKE
+5219,0x86,    ,  0, 3,300,enemy, 0x010	//AG_VIOLENT_QUAKE_ATK
+
+5221,0x10d,   ,  0, 2:2:3:3:4,400,enemy, 0x018	//AG_STRANTUM_TREMOR
+5222,0x10f,   ,  0, 3:3:4:4:4,300,enemy, 0x018	//AG_ALL_BLOOM
+5223,0x86,    ,  0, 3,300,enemy, 0x010	//AG_ALL_BLOOM_ATK
+5224,0x86,    ,  0, 3:3:4:4:4,1000,enemy, 0x010	//AG_ALL_BLOOM_ATK2
+
+5227,0x110,   ,  0, 2:2:3:3:4,300,enemy, 0x018	//AG_TORNADO_STORM
+
+5229,0x111,   ,  0, 1:2:3:4:5,500,enemy, 0x018	//AG_FLORAL_FLARE_ROAD
+5230,0x112,   ,  0, 2:2:2:3:3:3:4:4:4:5,300,enemy, 0x018	//AG_ASTRAL_STRIKE
+
+5267,0x113,   ,  0, 1:1:1:2:2:2:3:3:3:4,300,enemy, 0x018	//IG_CROSS_RAIN
+
+5279,0x114,   ,  0, 2:2:2:3:3:3:4:4:4:5,3000,enemy, 0x018	//CD_PNEUMATICUS_PROCELLA
+
+5319,0x86,    ,  0, 4,1000,enemy, 0x010	//ABC_ABYSS_STRIKE
+
+5321,0x115,   ,  0, 3,700,enemy, 0x018	//ABC_ABYSS_SQUARE - I think this is the correct interval?
+
+5331,0x5174,  ,  0, 1,3000,enemy, 0x018	//WH_DEEPBLINDTRAP
+5332,0x5175,  ,  0, 1,3000,enemy, 0x018	//WH_SOLIDTRAP
+5333,0x5176,  ,  0, 1,3000,enemy, 0x018	//WH_SWIFTTRAP
+5335,0x5177,  ,  0, 1,3000,enemy, 0x018	//WH_FLAMETRAP
+
+5340,0x116,   ,  0, 0,500,enemy, 0x018	//BO_ACIDIFIED_ZONE_WATER
+5341,0x117,   ,  0, 0,500,enemy, 0x018	//BO_ACIDIFIED_ZONE_GROUND
+5342,0x118,   ,  0, 0,500,enemy, 0x018	//BO_ACIDIFIED_ZONE_WIND
+5343,0x119,   ,  0, 0,500,enemy, 0x018	//BO_ACIDIFIED_ZONE_FIRE
+
+5369,0x86,    ,  0, 4,1000,enemy, 0x010	//EM_DIAMOND_STORM
+5370,0x11a,   ,  0, 4,500,enemy, 0x018	//EM_LIGHTNING_LAND
+5371,0x11b,   ,  0, 4,500,enemy, 0x018	//EM_VENOM_SWAMP
+5372,0x11c,   ,  0, 4,500,enemy, 0x018	//EM_CONFLAGRATION
+5373,0x86,    ,  0, 4,1000,enemy, 0x010	//EM_TERRA_DRIVE

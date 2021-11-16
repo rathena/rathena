@@ -372,6 +372,9 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
 	case BL_MER:   return 0x9; //NPC_MERSOL_TYPE
 	case BL_ELEM:  return 0xa; //NPC_ELEMENTAL_TYPE
+	case BL_UNKNOWN:  return 0xb; //NPC_UNKNOWN_TYPE - Unconfirmed - Can be attacked.
+	case BL_ABR:      return 0xd; //NPC_ABR_TYPE
+	case BL_BIONIC:   return 0xe; //NPC_BIONIC_TYPE
 	default:       return 0x1; //NPC_TYPE
 	}
 }
@@ -1511,6 +1514,24 @@ void clif_class_change_target(struct block_list *bl,int class_,int type, enum se
 	}
 }
 
+static void clif_servantball_single(int fd, struct map_session_data *sd)
+{
+	WFIFOHEAD(fd, packet_len(0x1e1));
+	WFIFOW(fd, 0) = 0x1d0;
+	WFIFOL(fd, 2) = sd->bl.id;
+	WFIFOW(fd, 6) = sd->servantball;
+	WFIFOSET(fd, packet_len(0x1e1));
+}
+
+static void clif_abyssball_single(int fd, struct map_session_data *sd)
+{
+	WFIFOHEAD(fd, packet_len(0x1e1));
+	WFIFOW(fd, 0) = 0x1d0;
+	WFIFOL(fd, 2) = sd->bl.id;
+	WFIFOW(fd, 6) = sd->abyssball;
+	WFIFOSET(fd, packet_len(0x1e1));
+}
+
 /// Notifies the client of an object's Millenium Shields.
 static void clif_millenniumshield_single(int fd, map_session_data *sd)
 {
@@ -1649,6 +1670,10 @@ int clif_spawn( struct block_list *bl, bool walking ){
 				clif_millenniumshield(&sd->bl, sd->sc.data[SC_MILLENNIUMSHIELD]->val2);
 			if (sd->soulball > 0)
 				clif_soulball(sd);
+			if (sd->servantball > 0)
+				clif_servantball(&sd->bl);
+			if (sd->abyssball > 0)
+				clif_abyssball(&sd->bl);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
@@ -3337,6 +3362,9 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_STATUSPOINT:
 		WFIFOL(fd,4)=sd->status.status_point;
 		break;
+	case SP_TRAITPOINT:
+		WFIFOL(fd, 4) = sd->status.trait_point;
+		break;
 	case SP_SKILLPOINT:
 		WFIFOL(fd,4)=sd->status.skill_point;
 		break;
@@ -3355,6 +3383,9 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_MAXSP:
 		WFIFOL(fd,4)=sd->battle_status.max_sp;
 		break;
+	case SP_MAXAP:
+		WFIFOL(fd, 4) = sd->battle_status.max_ap;
+		break;
 	case SP_HP:
 		// On officials the HP never go below 1, even if you die [Lemongrass]
 		// On officials the HP Novice class never go below 50%, even if you die [Napster]
@@ -3362,6 +3393,9 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_SP:
 		WFIFOL(fd,4)=sd->battle_status.sp;
+		break;
+	case SP_AP:
+		WFIFOL(fd, 4) = sd->battle_status.ap;
 		break;
 	case SP_ASPD:
 		WFIFOL(fd,4)=sd->battle_status.amotion;
@@ -3401,6 +3435,24 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_MATK2:
 		WFIFOL(fd,4)=pc_leftside_matk(sd);
+		break;
+	case SP_PATK:
+		WFIFOL(fd, 4) = sd->battle_status.patk;
+		break;
+	case SP_SMATK:
+		WFIFOL(fd, 4) = sd->battle_status.smatk;
+		break;
+	case SP_RES:
+		WFIFOL(fd, 4) = sd->battle_status.res;
+		break;
+	case SP_MRES:
+		WFIFOL(fd, 4) = sd->battle_status.mres;
+		break;
+	case SP_HPLUS:
+		WFIFOL(fd, 4) = sd->battle_status.hplus;
+		break;
+	case SP_CRATE:
+		WFIFOL(fd, 4) = sd->battle_status.crate;
 		break;
 
 	case SP_ZENY:
@@ -3460,6 +3512,16 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOB(fd,4)=pc_need_status_point(sd,type-SP_USTR+SP_STR,1);
 		len=5;
 		break;
+	case SP_UPOW:
+	case SP_USTA:
+	case SP_UWIS:
+	case SP_USPL:
+	case SP_UCON:
+	case SP_UCRT:
+		WFIFOW(fd, 0) = 0xbe;
+		WFIFOB(fd, 4) = pc_need_trait_point(sd,type-SP_UPOW+SP_POW, 1);
+		len = 5;
+		break;
 
 	/**
 	 * Tells the client how far it is allowed to attack (weapon range)
@@ -3511,6 +3573,48 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,6)=sd->status.luk;
 		WFIFOL(fd,10)=sd->battle_status.luk - sd->status.luk;
 		len=14;
+		break;
+	case SP_POW:
+		WFIFOW(fd, 0) = 0x141;
+		WFIFOL(fd, 2) = type;
+		WFIFOL(fd, 6) = sd->status.pow;
+		WFIFOL(fd, 10) = sd->battle_status.pow - sd->status.pow;
+		len = 14;
+		break;
+	case SP_STA:
+		WFIFOW(fd, 0) = 0x141;
+		WFIFOL(fd, 2) = type;
+		WFIFOL(fd, 6) = sd->status.sta;
+		WFIFOL(fd, 10) = sd->battle_status.sta - sd->status.sta;
+		len = 14;
+		break;
+	case SP_WIS:
+		WFIFOW(fd, 0) = 0x141;
+		WFIFOL(fd, 2) = type;
+		WFIFOL(fd, 6) = sd->status.wis;
+		WFIFOL(fd, 10) = sd->battle_status.wis - sd->status.wis;
+		len = 14;
+		break;
+	case SP_SPL:
+		WFIFOW(fd, 0) = 0x141;
+		WFIFOL(fd, 2) = type;
+		WFIFOL(fd, 6) = sd->status.spl;
+		WFIFOL(fd, 10) = sd->battle_status.spl - sd->status.spl;
+		len = 14;
+		break;
+	case SP_CON:
+		WFIFOW(fd, 0) = 0x141;
+		WFIFOL(fd, 2) = type;
+		WFIFOL(fd, 6) = sd->status.con;
+		WFIFOL(fd, 10) = sd->battle_status.con - sd->status.con;
+		len = 14;
+		break;
+	case SP_CRT:
+		WFIFOW(fd, 0) = 0x141;
+		WFIFOL(fd, 2) = type;
+		WFIFOL(fd, 6) = sd->status.crt;
+		WFIFOL(fd, 10) = sd->battle_status.crt - sd->status.crt;
+		len = 14;
 		break;
 
 	case SP_CARTINFO:
@@ -3768,6 +3872,7 @@ void clif_refreshlook(struct block_list *bl, int id, int type, int val, enum sen
 ///     <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B <atk>.W <atk2>.W
 ///     <matk min>.W <matk max>.W <def>.W <def2>.W <mdef>.W <mdef2>.W <hit>.W
 ///     <flee>.W <flee2>.W <crit>.W <aspd>.W <aspd2>.W
+/// Note: Need to find ZC_STATUS2 to support trait stats/sub-stats and trait stat points. [Rytech]
 void clif_initialstatus(struct map_session_data *sd) {
 	int fd, mdef2;
 	unsigned char *buf;
@@ -3824,6 +3929,31 @@ void clif_initialstatus(struct map_session_data *sd) {
 
 	clif_updatestatus(sd, SP_ATTACKRANGE);
 	clif_updatestatus(sd, SP_ASPD);
+
+	// Hack to get the display for trait status points
+	// and trait point requirement's to work until I
+	// can find the new packet. [Rytech]
+	clif_updatestatus(sd, SP_POW);
+	clif_updatestatus(sd, SP_STA);
+	clif_updatestatus(sd, SP_WIS);
+	clif_updatestatus(sd, SP_SPL);
+	clif_updatestatus(sd, SP_CON);
+	clif_updatestatus(sd, SP_CRT);
+	clif_updatestatus(sd, SP_PATK);
+	clif_updatestatus(sd, SP_SMATK);
+	clif_updatestatus(sd, SP_RES);
+	clif_updatestatus(sd, SP_MRES);
+	clif_updatestatus(sd, SP_HPLUS);
+	clif_updatestatus(sd, SP_CRATE);
+	clif_updatestatus(sd, SP_TRAITPOINT);
+	clif_updatestatus(sd, SP_AP);
+	clif_updatestatus(sd, SP_MAXAP);
+	clif_updatestatus(sd, SP_UPOW);
+	clif_updatestatus(sd, SP_USTA);
+	clif_updatestatus(sd, SP_UWIS);
+	clif_updatestatus(sd, SP_USPL);
+	clif_updatestatus(sd, SP_UCON);
+	clif_updatestatus(sd, SP_UCRT);
 }
 
 
@@ -3916,7 +4046,7 @@ void clif_arrow_create_list( struct map_session_data *sd ){
 /// Notifies the client, about the result of an status change request (ZC_STATUS_CHANGE_ACK).
 /// 00bc <status id>.W <result>.B <value>.B
 /// status id:
-///     SP_STR ~ SP_LUK
+///     SP_STR ~ SP_LUK and SP_POW ~ SP_CRT
 /// result:
 ///     0 = failure
 ///     1 = success
@@ -4732,6 +4862,10 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		clif_spiritcharm_single(sd->fd, dstsd);
 	if (dstsd->soulball > 0)
 		clif_soulball( dstsd, &sd->bl, SELF );
+	if (dstsd->servantball > 0)
+		clif_servantball_single(sd->fd, dstsd);
+	if (dstsd->abyssball > 0)
+		clif_abyssball_single(sd->fd, dstsd);
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
@@ -5209,6 +5343,25 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 		clif_changemapcell(fd, unit->bl.m, unit->bl.x, unit->bl.y, 5, SELF);
 }
 
+/// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
+void clif_skill_unit_test(struct block_list *bl, short x, short y, int unit_id, short range, short skill_lv) {
+	unsigned char buf[128];
+
+	nullpo_retv(bl);
+
+	WBUFW(buf, 0) = 0x09ca;
+	WBUFW(buf, 2) = packet_len(0x09ca);
+	WBUFL(buf, 4) = 1000;
+	WBUFL(buf, 8) = 2000;
+	WBUFW(buf, 12) = x;
+	WBUFW(buf, 14) = y;
+	WBUFL(buf, 16) = unit_id;
+	WBUFB(buf, 20) = (unsigned char)range;
+	WBUFB(buf, 21) = 1;
+	WBUFB(buf, 22) = (unsigned char)skill_lv;
+
+	clif_send(buf, packet_len(0x09ca), bl, AREA);
+}
 
 /*==========================================
  * Server tells client to remove unit of id 'unit->bl.id'
@@ -6084,6 +6237,8 @@ void clif_skill_produce_mix_list( struct map_session_data *sd, int skill_id, int
 ///     4 = GN_MIX_COOKING
 ///     5 = GN_MAKEBOMB
 ///     6 = GN_S_PHARMACY
+///     7 = MT_M_MACHINE - Unconfirmed
+///     8 = BO_BIONIC_PHARMACY - Unconfirmed
 void clif_cooking_list( struct map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type ){
 	nullpo_retv( sd );
 
@@ -8356,6 +8511,31 @@ void clif_spiritball( struct block_list *bl, struct block_list* target, enum sen
 	clif_send( &p, sizeof( p ), target == nullptr ? bl : target, send_target );
 }
 
+void clif_servantball(struct block_list *bl) {
+	unsigned char buf[16];
+	TBL_PC *sd = BL_CAST(BL_PC, bl);
+
+	nullpo_retv(bl);
+
+	WBUFW(buf, 0) = 0x1d0;
+	WBUFL(buf, 2) = bl->id;
+	WBUFW(buf, 6) = 0; //init to 0
+	WBUFW(buf, 6) = sd->servantball;
+	clif_send(buf, packet_len(0x1d0), bl, AREA);
+}
+
+void clif_abyssball(struct block_list *bl) {
+	unsigned char buf[16];
+	TBL_PC *sd = BL_CAST(BL_PC, bl);
+
+	nullpo_retv(bl);
+
+	WBUFW(buf, 0) = 0x1d0;
+	WBUFL(buf, 2) = bl->id;
+	WBUFW(buf, 6) = 0; //init to 0
+	WBUFW(buf, 6) = sd->abyssball;
+	clif_send(buf, packet_len(0x1d0), bl, AREA);
+}
 
 /// Notifies clients in area of a character's combo delay (ZC_COMBODELAY).
 /// 01d2 <account id>.L <delay>.L
@@ -9680,6 +9860,12 @@ void clif_refresh(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_INT);
 	clif_updatestatus(sd,SP_DEX);
 	clif_updatestatus(sd,SP_LUK);
+	clif_updatestatus(sd,SP_POW);
+	clif_updatestatus(sd,SP_STA);
+	clif_updatestatus(sd,SP_WIS);
+	clif_updatestatus(sd,SP_SPL);
+	clif_updatestatus(sd,SP_CON);
+	clif_updatestatus(sd,SP_CRT);
 	if (sd->spiritball)
 		clif_spiritball( &sd->bl, &sd->bl, SELF );
 	if (sd->sc.data[SC_MILLENNIUMSHIELD])
@@ -9688,6 +9874,10 @@ void clif_refresh(struct map_session_data *sd)
 		clif_spiritcharm_single(sd->fd, sd);
 	if (sd->soulball)
 		clif_soulball( sd, &sd->bl, SELF );
+	if (sd->servantball)
+		clif_servantball_single(sd->fd, sd);
+	if (sd->abyssball)
+		clif_abyssball_single(sd->fd, sd);
 	if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if (sd->vd.body_style)
@@ -10776,6 +10966,12 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_updatestatus(sd,SP_INT);
 		clif_updatestatus(sd,SP_DEX);
 		clif_updatestatus(sd,SP_LUK);
+		clif_updatestatus(sd,SP_POW);
+		clif_updatestatus(sd,SP_STA);
+		clif_updatestatus(sd,SP_WIS);
+		clif_updatestatus(sd,SP_SPL);
+		clif_updatestatus(sd,SP_CON);
+		clif_updatestatus(sd,SP_CRT);
 
 		// abort currently running script
 		sd->state.using_fake_npc = 0;
@@ -10852,6 +11048,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			mapdata->hpmeter_visible++;
 			sd->state.hpmeter_visible = 1;
 		}
+
+		if (battle_config.loose_ap_on_map == 1 && 
+			(mapdata->flag[MF_PVP] || mapdata_flag_gvg2_no_te(mapdata) || mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2_te(mapdata)))
+			status_percent_damage(0, &sd->bl, 0, 0, 100, 0);
 
 		status_change_clear_onChangeMap(&sd->bl, &sd->sc);
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
@@ -11174,6 +11374,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 	if (sd->sc.data[SC_CLOAKING])
 		skill_check_cloaking(&sd->bl, sd->sc.data[SC_CLOAKING]);
 	status_change_end(&sd->bl, SC_ROLLINGCUTTER, INVALID_TIMER); // If you move, you lose your counters. [malufett]
+	status_change_end(&sd->bl, SC_CRESCIVEBOLT, INVALID_TIMER);
 
 	pc_delinvincibletimer(sd);
 
@@ -12454,6 +12655,25 @@ void clif_parse_StatusUp(int fd,struct map_session_data *sd)
 }
 
 
+/// Request to increase trait status (CZ_TRAIT_STATUS_CHANGE).
+/// 0b24 <status id>.W <amount>.W???
+/// status id:
+///     SP_POW ~ SP_CON
+/// amount:
+///     Old clients always send 1 for this, even when using /pow+ and the like.
+///     Newer clients (2013-12-23 and newer) send the correct amount.
+void clif_parse_TraitStatusUp(int fd, struct map_session_data *sd)
+{
+	int increase_amount = RFIFOW(fd, packet_db[RFIFOW(fd, 0)].pos[1]);
+
+	if (increase_amount < 0) {
+		ShowDebug("clif_parse_TraitStatusUp: Negative 'increase' value sent by client! (fd: %d, value: %d)\n",
+			fd, increase_amount);
+	}
+	pc_traitstatusup(sd, RFIFOW(fd, packet_db[RFIFOW(fd, 0)].pos[0]), increase_amount);
+}
+
+
 /// Request to increase level of a skill (CZ_UPGRADE_SKILLLEVEL).
 /// 0112 <skill id>.W
 void clif_parse_SkillUp(int fd,struct map_session_data *sd)
@@ -12913,6 +13133,8 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd){
 ///     4 = GN_MIX_COOKING
 ///     5 = GN_MAKEBOMB
 ///     6 = GN_S_PHARMACY
+///     7 = MT_M_MACHINE - Unconfirmed
+///     8 = BO_BIONIC_PHARMACY - Unconfirmed
 void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 	const struct PACKET_CZ_REQ_MAKINGITEM *p = (struct PACKET_CZ_REQ_MAKINGITEM *)RFIFOP( fd, 0 );
 
@@ -14411,7 +14633,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			}
 			safesnprintf(command,sizeof(command),"/kick %s (%d)", status_get_name(target), status_get_class(target));
 			log_atcommand(sd, command);
-			status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
+			status_percent_damage(&sd->bl, target, 100, 0, 0, true); // can invalidate 'target'
 		}
 		break;
 
@@ -15349,6 +15571,7 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 ///      <itemdefPower>.W <plusdefPower>.W <mdefPower>.W <plusmdefPower>.W
 ///      <hitSuccessValue>.W <avoidSuccessValue>.W <plusAvoidSuccessValue>.W
 ///      <criticalSuccessValue>.W <ASPD>.W <plusASPD>.W
+/// Note: Is there a ZC_ACK_STATUS_GM2 that supports trait stats/sub-stats??? [Rytech]
 void clif_check(int fd, struct map_session_data* pl_sd)
 {
 	WFIFOHEAD(fd,packet_len(0x214));

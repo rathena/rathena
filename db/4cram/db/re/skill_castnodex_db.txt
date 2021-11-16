@@ -1,0 +1,15 @@
+// <Skill id>,<Cast>,<Delay (optional)>
+//
+// Cast:  0 - everything affects the skill's cast time
+//        1 - skill's cast time is not affected by dex
+//        2 - skill's cast time is not affected by statuses (Suffragium, etc)
+//        4 - skill's cast time is not affected by item bonuses (equip, cards)
+//
+// Delay: 0 - everything affects the skill's delay
+//        1 - skill's delay is not affected by dex
+//        2 - skill's delay is not affected by Magic Strings / Bragi
+//        4 - skill's delay is not affected by item bonuses (equip, cards)
+//
+// Note: Values are bit fields, add them up to combine their effects.
+// Note: Delay setting '1' only makes sense when delay_dependon_dex is enabled.
+// Example: 46,1,1 = Double Strafe's cast time and delay is not affected by dex.

@@ -694,3 +694,41 @@
 280,533,30,0,0,11058,0,514,1,519,1
 // Unripe Apple (619) <-- 10 Sticky Mucus, 20 Green Herbs, 10 Apples
 281,619,30,0,0,11058,0,938,10,511,20,512,10
+
+//===== Manufacture Machine === ItemLV=31 ======
+// Device Capsule (1000289) <-- MT_M_MACHINE Lvl, Device Creation Guide, 5 Mini Furnace, 5 Oridecon Hammer, 50 Magic Gear Fuel
+282,1000289,31,5297,1,1000352,0,612,5,615,5,6146,50
+// Auto Battle Capsule (1000290) <-- MT_M_MACHINE Lvl, Device Creation Guide, 5 Mini Furnace, 5 Oridecon Hammer, 75 Magic Gear Fuel
+283,1000290,31,5297,1,1000352,0,612,5,615,5,6146,75
+//==============================================
+
+//===== Bionic Pharmacy === ItemLV=32 ==========
+// Flame Acid Bottle (1000276) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Bloody Red
+284,1000276,32,5336,1,1000275,1,7135,5,7136,5,990,2
+// Earth Acid Bottle (1000277) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Yellow Live
+285,1000277,32,5336,1,1000275,1,7135,5,7136,5,993,2
+// Gale Acid Bottle (1000278) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Wind of Verdure
+286,1000278,32,5336,1,1000275,1,7135,5,7136,5,992,2
+// Icicle Acid Bottle (1000279) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Fire Bottle, 5 Acid Bottle, 2 Crystal Blue
+287,1000279,32,5336,1,1000275,1,7135,5,7136,5,991,2
+// High Coating Bottle (1000280) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 5 Empty Bottle, 10 Coating Bottle
+288,1000280,32,5336,1,1000275,1,713,5,7139,10
+// High Plant Bottle (1000281) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 2 Seed Of Thorny Plant, 2 Bloodsuck Plant Seed, 5 Mandragora Flowerpot, 10 Plant Bottle
+289,1000281,32,5336,1,1000275,1,6210,2,6211,2,6217,5,7137,10
+// Eye Cleaner (100516) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 5 Holy Water, 3 White Herb, 3 Green Herb
+290,100516,32,5336,1,1000275,1,713,10,523,5,509,3,511,3
+// Ear Cleaner (100517) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 5 Holy Water, 2 Blue Herb, 3 Green Herb
+291,100517,32,5336,1,1000275,1,713,10,523,5,510,2,511,3
+// Tonics (100518) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 5 Holy Water, 2 Yggdrasilberry, 3 Royal Jelly
+292,100518,32,5336,1,1000275,1,713,10,523,5,607,2,526,3
+// Mini Extinguisher (100519) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 5 Holy Water, 5 Crystal Blue, 3 Iron
+293,100519,32,5336,1,1000275,1,713,10,523,5,991,5,998,3
+// Water Of Lucky (100520) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 5 Holy Water, 10 Clover, 3 Green Herb
+294,100520,32,5336,1,1000275,1,713,10,523,5,705,10,511,3
+// Strong Antidote (100521) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 5 Holy Water, 3 Poison Bottle, 10 Green Herb
+295,100521,32,5336,1,1000275,1,713,10,523,5,678,3,511,10
+// High Energy Chocolate (100522) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 3 Cacao, 3 Royal Jelly, 5 Yggdrasil Seed
+296,100522,32,5336,1,1000275,1,713,10,7182,3,526,3,608,5
+// Refined Holy Water (100523) <-- BO_BIONIC_PHARMACY Lvl, 1 Beaker, 10 Empty Bottle, 10 Holy Water, 3 Royal Jelly
+297,100523,32,5336,1,1000275,1,713,10,523,10,526,3
+//==============================================

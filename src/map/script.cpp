@@ -5675,7 +5675,7 @@ static int buildin_areapercentheal_sub(struct block_list *bl,va_list ap)
 	int hp, sp;
 	hp = va_arg(ap, int);
 	sp = va_arg(ap, int);
-	pc_percentheal((TBL_PC *)bl,hp,sp);
+	pc_percentheal((TBL_PC *)bl,hp,sp,0);
 	return 0;
 }
 
@@ -5893,7 +5893,7 @@ BUILDIN_FUNC(heal)
 
 	hp=script_getnum(st,2);
 	sp=script_getnum(st,3);
-	status_heal(&sd->bl, hp, sp, 1);
+	status_heal(&sd->bl, hp, sp, 0, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5917,7 +5917,7 @@ BUILDIN_FUNC(itemheal)
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_SUCCESS;
 
-	pc_itemheal(sd,sd->itemid,hp,sp);
+	pc_itemheal(sd,sd->itemid,hp,sp,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -5954,7 +5954,7 @@ BUILDIN_FUNC(percentheal)
 	if (sd->sc.data[SC_BITESCAR])
 		hp = 0;
 
-	pc_percentheal(sd,hp,sp);
+	pc_percentheal(sd,hp,sp,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -9579,6 +9579,43 @@ BUILDIN_FUNC(statusup2)
 		return SCRIPT_CMD_FAILURE;
 
 	pc_statusup2(sd,type,val);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+* traitstatusup <stat>{,<char_id>};
+**/
+BUILDIN_FUNC(traitstatusup)
+{
+	int type;
+	TBL_PC *sd;
+
+	type = script_getnum(st, 2);
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	pc_traitstatusup(sd, type, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+* traitstatusup2 <stat>,<amount>{,<char_id>};
+**/
+BUILDIN_FUNC(traitstatusup2)
+{
+	int type, val;
+	TBL_PC *sd;
+
+	type = script_getnum(st, 2);
+	val = script_getnum(st, 3);
+
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	pc_traitstatusup2(sd, type, val);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -15074,11 +15111,11 @@ BUILDIN_FUNC(dispbottom)
 int recovery_sub(struct map_session_data* sd, int revive)
 {
 	if(revive&(1|4) && pc_isdead(sd)) {
-		status_revive(&sd->bl, 100, 100);
+		status_revive(&sd->bl, 100, 100, 0);
 		clif_displaymessage(sd->fd,msg_txt(sd,16)); // You've been revived!
 		clif_specialeffect(&sd->bl, EF_RESURRECTION, AREA);
 	} else if(revive&(1|2) && !pc_isdead(sd)) {
-		status_percent_heal(&sd->bl, 100, 100);
+		status_percent_heal(&sd->bl, 100, 100, 0);
 		clif_displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -17776,6 +17813,8 @@ BUILDIN_FUNC(getmonsterinfo)
 		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
 		case MOB_DEF:		script_pushint(st,mob->status.def); break;
 		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
+		case MOB_RES:		script_pushint(st, mob->status.res); break;
+		case MOB_MRES:		script_pushint(st, mob->status.mres); break;
 		case MOB_STR:		script_pushint(st,mob->status.str); break;
 		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
 		case MOB_VIT:		script_pushint(st,mob->status.vit); break;
@@ -18201,6 +18240,8 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
 			getunitdata_sub(UMOB_GROUP_ID, md->ud.group_id);
 			getunitdata_sub(UMOB_IGNORE_CELL_STACK_LIMIT, md->ud.state.ignore_cell_stack_limit);
+			getunitdata_sub(UMOB_RES, md->status.res);
+			getunitdata_sub(UMOB_MRES, md->status.mres);
 			break;
 
 		case BL_HOM:
@@ -18606,6 +18647,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
 			case UMOB_GROUP_ID: md->ud.group_id = value; unit_refresh(bl); break;
 			case UMOB_IGNORE_CELL_STACK_LIMIT: md->ud.state.ignore_cell_stack_limit = value > 0; break;
+			case UMOB_RES: md->base_status->res = (short)value; calc_status = true; break;
+			case UMOB_MRES: md->base_status->mres = (short)value; calc_status = true; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -19863,7 +19906,7 @@ BUILDIN_FUNC(mercenary_heal)
 	hp = script_getnum(st,2);
 	sp = script_getnum(st,3);
 
-	status_heal(&sd->md->bl, hp, sp, 0);
+	status_heal(&sd->md->bl, hp, sp, 0, 0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23797,6 +23840,22 @@ BUILDIN_FUNC(needed_status_point) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Returns the number of trait stat points needed to change the specified trait stat by val.
+/// If val is negative, returns the number of trait stat points that would be needed to
+/// raise the specified trait stat from (current value - val) to current value.
+/// *needed_trait_point(<type>,<val>{,<char id>});
+BUILDIN_FUNC(needed_trait_point) {
+	struct map_session_data *sd;
+	int type, val;
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+	type = script_getnum(st, 2);
+	val = script_getnum(st, 3);
+
+	script_pushint(st, pc_need_trait_point(sd, type, val));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * jobcanentermap("<mapname>"{,<JobID>});
  * Check if (player with) JobID can enter the map.
@@ -25525,6 +25584,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(downrefitem,"i??"),
 	BUILDIN_DEF(statusup,"i?"),
 	BUILDIN_DEF(statusup2,"ii?"),
+	BUILDIN_DEF(traitstatusup,"i?"),
+	BUILDIN_DEF(traitstatusup2,"ii?"),
 	BUILDIN_DEF(bonus,"i?"),
 	BUILDIN_DEF2(bonus,"bonus2","ivi"),
 	BUILDIN_DEF2(bonus,"bonus3","ivii"),
@@ -26005,6 +26066,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
+	BUILDIN_DEF(needed_trait_point, "ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
 	BUILDIN_DEF(openstorage2,"ii?"),
 	BUILDIN_DEF(unloadnpc, "s"),

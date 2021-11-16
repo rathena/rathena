@@ -122,7 +122,7 @@ static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
 #ifndef MAP_MAX_MSG
-	#define MAP_MAX_MSG 1550
+	#define MAP_MAX_MSG 2030
 #endif
 
 struct map_data map[MAX_MAP_PER_SERVER];
@@ -2112,6 +2112,8 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SV_ROOTTWIST, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_GUARD_STANCE, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ATTACK_STANCE, INVALID_TIMER);
 		// Remove visuals effect from headgear
 		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
 		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
@@ -2135,6 +2137,7 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_H_MINE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_ANTI_M_BLAST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_B_TRAP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SHADOW_STRIP, INVALID_TIMER);
 		}
 		if (battle_config.debuff_on_logout&2) { //Remove positive buffs
 			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);

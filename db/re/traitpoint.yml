@@ -1,0 +1,533 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Traitpoint Database
+###########################################################################
+#
+# Traitpoint Settings
+#
+###########################################################################
+# - Level             BaseLevel required.
+#   Points            Total trait points given from BaseLevel 1 to 'Level'.
+###########################################################################
+
+Header:
+  Type: TRAITPOINT_DB
+  Version: 1
+
+Body:
+  - Level: 1
+    Points: 0
+  - Level: 2
+    Points: 0
+  - Level: 3
+    Points: 0
+  - Level: 4
+    Points: 0
+  - Level: 5
+    Points: 0
+  - Level: 6
+    Points: 0
+  - Level: 7
+    Points: 0
+  - Level: 8
+    Points: 0
+  - Level: 9
+    Points: 0
+  - Level: 10
+    Points: 0
+  - Level: 11
+    Points: 0
+  - Level: 12
+    Points: 0
+  - Level: 13
+    Points: 0
+  - Level: 14
+    Points: 0
+  - Level: 15
+    Points: 0
+  - Level: 16
+    Points: 0
+  - Level: 17
+    Points: 0
+  - Level: 18
+    Points: 0
+  - Level: 19
+    Points: 0
+  - Level: 20
+    Points: 0
+  - Level: 21
+    Points: 0
+  - Level: 22
+    Points: 0
+  - Level: 23
+    Points: 0
+  - Level: 24
+    Points: 0
+  - Level: 25
+    Points: 0
+  - Level: 26
+    Points: 0
+  - Level: 27
+    Points: 0
+  - Level: 28
+    Points: 0
+  - Level: 29
+    Points: 0
+  - Level: 30
+    Points: 0
+  - Level: 31
+    Points: 0
+  - Level: 32
+    Points: 0
+  - Level: 33
+    Points: 0
+  - Level: 34
+    Points: 0
+  - Level: 35
+    Points: 0
+  - Level: 36
+    Points: 0
+  - Level: 37
+    Points: 0
+  - Level: 38
+    Points: 0
+  - Level: 39
+    Points: 0
+  - Level: 40
+    Points: 0
+  - Level: 41
+    Points: 0
+  - Level: 42
+    Points: 0
+  - Level: 43
+    Points: 0
+  - Level: 44
+    Points: 0
+  - Level: 45
+    Points: 0
+  - Level: 46
+    Points: 0
+  - Level: 47
+    Points: 0
+  - Level: 48
+    Points: 0
+  - Level: 49
+    Points: 0
+  - Level: 50
+    Points: 0
+  - Level: 51
+    Points: 0
+  - Level: 52
+    Points: 0
+  - Level: 53
+    Points: 0
+  - Level: 54
+    Points: 0
+  - Level: 55
+    Points: 0
+  - Level: 56
+    Points: 0
+  - Level: 57
+    Points: 0
+  - Level: 58
+    Points: 0
+  - Level: 59
+    Points: 0
+  - Level: 60
+    Points: 0
+  - Level: 61
+    Points: 0
+  - Level: 62
+    Points: 0
+  - Level: 63
+    Points: 0
+  - Level: 64
+    Points: 0
+  - Level: 65
+    Points: 0
+  - Level: 66
+    Points: 0
+  - Level: 67
+    Points: 0
+  - Level: 68
+    Points: 0
+  - Level: 69
+    Points: 0
+  - Level: 70
+    Points: 0
+  - Level: 71
+    Points: 0
+  - Level: 72
+    Points: 0
+  - Level: 73
+    Points: 0
+  - Level: 74
+    Points: 0
+  - Level: 75
+    Points: 0
+  - Level: 76
+    Points: 0
+  - Level: 77
+    Points: 0
+  - Level: 78
+    Points: 0
+  - Level: 79
+    Points: 0
+  - Level: 80
+    Points: 0
+  - Level: 81
+    Points: 0
+  - Level: 82
+    Points: 0
+  - Level: 83
+    Points: 0
+  - Level: 84
+    Points: 0
+  - Level: 85
+    Points: 0
+  - Level: 86
+    Points: 0
+  - Level: 87
+    Points: 0
+  - Level: 88
+    Points: 0
+  - Level: 89
+    Points: 0
+  - Level: 90
+    Points: 0
+  - Level: 91
+    Points: 0
+  - Level: 92
+    Points: 0
+  - Level: 93
+    Points: 0
+  - Level: 94
+    Points: 0
+  - Level: 95
+    Points: 0
+  - Level: 96
+    Points: 0
+  - Level: 97
+    Points: 0
+  - Level: 98
+    Points: 0
+  - Level: 99
+    Points: 0
+  - Level: 100
+    Points: 0
+  - Level: 101
+    Points: 0
+  - Level: 102
+    Points: 0
+  - Level: 103
+    Points: 0
+  - Level: 104
+    Points: 0
+  - Level: 105
+    Points: 0
+  - Level: 106
+    Points: 0
+  - Level: 107
+    Points: 0
+  - Level: 108
+    Points: 0
+  - Level: 109
+    Points: 0
+  - Level: 110
+    Points: 0
+  - Level: 111
+    Points: 0
+  - Level: 112
+    Points: 0
+  - Level: 113
+    Points: 0
+  - Level: 114
+    Points: 0
+  - Level: 115
+    Points: 0
+  - Level: 116
+    Points: 0
+  - Level: 117
+    Points: 0
+  - Level: 118
+    Points: 0
+  - Level: 119
+    Points: 0
+  - Level: 120
+    Points: 0
+  - Level: 121
+    Points: 0
+  - Level: 122
+    Points: 0
+  - Level: 123
+    Points: 0
+  - Level: 124
+    Points: 0
+  - Level: 125
+    Points: 0
+  - Level: 126
+    Points: 0
+  - Level: 127
+    Points: 0
+  - Level: 128
+    Points: 0
+  - Level: 129
+    Points: 0
+  - Level: 130
+    Points: 0
+  - Level: 131
+    Points: 0
+  - Level: 132
+    Points: 0
+  - Level: 133
+    Points: 0
+  - Level: 134
+    Points: 0
+  - Level: 135
+    Points: 0
+  - Level: 136
+    Points: 0
+  - Level: 137
+    Points: 0
+  - Level: 138
+    Points: 0
+  - Level: 139
+    Points: 0
+  - Level: 140
+    Points: 0
+  - Level: 141
+    Points: 0
+  - Level: 142
+    Points: 0
+  - Level: 143
+    Points: 0
+  - Level: 144
+    Points: 0
+  - Level: 145
+    Points: 0
+  - Level: 146
+    Points: 0
+  - Level: 147
+    Points: 0
+  - Level: 148
+    Points: 0
+  - Level: 149
+    Points: 0
+  - Level: 150
+    Points: 0
+  - Level: 151
+    Points: 0
+  - Level: 152
+    Points: 0
+  - Level: 153
+    Points: 0
+  - Level: 154
+    Points: 0
+  - Level: 155
+    Points: 0
+  - Level: 156
+    Points: 0
+  - Level: 157
+    Points: 0
+  - Level: 158
+    Points: 0
+  - Level: 159
+    Points: 0
+  - Level: 160
+    Points: 0
+  - Level: 161
+    Points: 0
+  - Level: 162
+    Points: 0
+  - Level: 163
+    Points: 0
+  - Level: 164
+    Points: 0
+  - Level: 165
+    Points: 0
+  - Level: 166
+    Points: 0
+  - Level: 167
+    Points: 0
+  - Level: 168
+    Points: 0
+  - Level: 169
+    Points: 0
+  - Level: 170
+    Points: 0
+  - Level: 171
+    Points: 0
+  - Level: 172
+    Points: 0
+  - Level: 173
+    Points: 0
+  - Level: 174
+    Points: 0
+  - Level: 175
+    Points: 0
+  - Level: 176
+    Points: 0
+  - Level: 177
+    Points: 0
+  - Level: 178
+    Points: 0
+  - Level: 179
+    Points: 0
+  - Level: 180
+    Points: 0
+  - Level: 181
+    Points: 0
+  - Level: 182
+    Points: 0
+  - Level: 183
+    Points: 0
+  - Level: 184
+    Points: 0
+  - Level: 185
+    Points: 0
+  - Level: 186
+    Points: 0
+  - Level: 187
+    Points: 0
+  - Level: 188
+    Points: 0
+  - Level: 189
+    Points: 0
+  - Level: 190
+    Points: 0
+  - Level: 191
+    Points: 0
+  - Level: 192
+    Points: 0
+  - Level: 193
+    Points: 0
+  - Level: 194
+    Points: 0
+  - Level: 195
+    Points: 0
+  - Level: 196
+    Points: 0
+  - Level: 197
+    Points: 0
+  - Level: 198
+    Points: 0
+  - Level: 199
+    Points: 0
+  - Level: 200
+    Points: 0
+  - Level: 201
+    Points: 3
+  - Level: 202
+    Points: 6
+  - Level: 203
+    Points: 9
+  - Level: 204
+    Points: 12
+  - Level: 205
+    Points: 19
+  - Level: 206
+    Points: 22
+  - Level: 207
+    Points: 25
+  - Level: 208
+    Points: 28
+  - Level: 209
+    Points: 31
+  - Level: 210
+    Points: 38
+  - Level: 211
+    Points: 41
+  - Level: 212
+    Points: 44
+  - Level: 213
+    Points: 47
+  - Level: 214
+    Points: 50
+  - Level: 215
+    Points: 57
+  - Level: 216
+    Points: 60
+  - Level: 217
+    Points: 63
+  - Level: 218
+    Points: 66
+  - Level: 219
+    Points: 69
+  - Level: 220
+    Points: 76
+  - Level: 221
+    Points: 79
+  - Level: 222
+    Points: 82
+  - Level: 223
+    Points: 85
+  - Level: 224
+    Points: 88
+  - Level: 225
+    Points: 95
+  - Level: 226
+    Points: 98
+  - Level: 227
+    Points: 101
+  - Level: 228
+    Points: 104
+  - Level: 229
+    Points: 107
+  - Level: 230
+    Points: 114
+  - Level: 231
+    Points: 117
+  - Level: 232
+    Points: 120
+  - Level: 233
+    Points: 123
+  - Level: 234
+    Points: 126
+  - Level: 235
+    Points: 133
+  - Level: 236
+    Points: 136
+  - Level: 237
+    Points: 139
+  - Level: 238
+    Points: 142
+  - Level: 239
+    Points: 145
+  - Level: 240
+    Points: 152
+  - Level: 241
+    Points: 155
+  - Level: 242
+    Points: 158
+  - Level: 243
+    Points: 161
+  - Level: 244
+    Points: 164
+  - Level: 245
+    Points: 171
+  - Level: 246
+    Points: 174
+  - Level: 247
+    Points: 177
+  - Level: 248
+    Points: 180
+  - Level: 249
+    Points: 183
+  - Level: 250
+    Points: 190

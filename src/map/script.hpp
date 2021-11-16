@@ -356,6 +356,8 @@ enum monsterinfo_types {
 	MOB_ATK2,
 	MOB_DEF,
 	MOB_MDEF,
+	MOB_RES,
+	MOB_MRES,
 	MOB_STR,
 	MOB_AGI,
 	MOB_VIT,
@@ -481,6 +483,8 @@ enum unitdata_mobtypes {
 	UMOB_BODY2,
 	UMOB_GROUP_ID,
 	UMOB_IGNORE_CELL_STACK_LIMIT,
+	UMOB_RES,
+	UMOB_MRES,
 };
 
 enum unitdata_homuntypes {

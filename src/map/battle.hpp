@@ -693,6 +693,19 @@ struct Battle_Config
 	int feature_refineui;
 	int rndopt_drop_pillar;
 
+	// 4th Jobs Stuff
+	int trait_points_job_change;
+	int use_traitpoint_table;
+	int max_trait_parameter;
+	int max_res_mres_reduction;
+	int max_ap;
+	int ap_rate;
+	int restart_ap_rate;
+	int loose_ap_on_death;
+	int loose_ap_on_map;
+	int keep_ap_on_logout;
+	int a_machine_level_difference;
+
 #include "../custom/battle_config_struct.inc"
 };
 

@@ -1000,10 +1000,10 @@ int chrif_changedsex(int fd) {
 			return 0; //Do nothing? Likely safe.
 		sd->status.sex = !sd->status.sex;
 
-		// reset skill of some job
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
+		// Reset skills of gender split jobs.
+		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) {
 			int i;
-			// remove specifical skills of Bard classes
+			// Remove Bard class exclusive skills.
 			for(i = BA_MUSICALLESSON; i <= BA_APPLEIDUN; i++) {
 				uint16 sk_idx = skill_get_index(i);
 				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
@@ -1012,7 +1012,7 @@ int chrif_changedsex(int fd) {
 					sd->status.skill[sk_idx].lv = 0;
 				}
 			}
-			// remove specifical skills of Dancer classes
+			// Remove Dancer class exclusive skills.
 			for(i = DC_DANCINGLESSON; i <= DC_SERVICEFORYOU; i++) {
 				uint16 sk_idx = skill_get_index(i);
 				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
@@ -1021,13 +1021,49 @@ int chrif_changedsex(int fd) {
 					sd->status.skill[sk_idx].lv = 0;
 				}
 			}
+			// Remove Minstrel class exclusive skills.
+			for (i = MI_RUSH_WINDMILL; i <= MI_HARMONIZE; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
+				}
+			}
+			// Remove Wanderer class exclusive skills.
+			for (i = WA_SWING_DANCE; i <= WA_MOONLIT_SERENADE; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
+				}
+			}
+			// Remove Kagerou class exclusive skills.
+			for (i = KG_KAGEHUMI; i <= KG_KAGEMUSYA; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
+				}
+			}
+			// Remove Oboro class exclusive skills.
+			for (i = OB_ZANGETSU; i <= OB_AKAITSUKI; i++) {
+				uint16 sk_idx = skill_get_index(i);
+				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
+					sd->status.skill_point += sd->status.skill[sk_idx].lv;
+					sd->status.skill[sk_idx].id = 0;
+					sd->status.skill[sk_idx].lv = 0;
+				}
+			}
 			clif_updatestatus(sd, SP_SKILLPOINT);
-			// change job if necessary
-			if (sd->status.sex) //Changed from Dancer
+			// Change to other gender version of the job if needed.
+			if (sd->status.sex)// Changed from female version of job.
 				sd->status.class_ -= 1;
-			else	//Changed from Bard
+			else// Changed from male version of job.
 				sd->status.class_ += 1;
-			//sd->class_ needs not be updated as both Dancer/Bard are the same.
+			//sd->class_ Does not need to be updated as both versions of the job are the same.
 		}
 		// save character
 		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters

@@ -525,6 +525,27 @@ Sequence Map Form
 
 ------------------
 
+ApCost: AP required to cast.
+
+Can be defined in scalar form or sequence map form:
+Scalar Form
+  ApCost: 10
+
+Sequence Map Form
+  ApCost:
+    - Level: 1
+      Amount: 10
+    - Level: 2
+      Amount: 20
+    - Level: 3
+      Amount: 30
+    - Level: 4
+      Amount: 40
+    - Level: 5
+      Amount: 50
+
+------------------
+
 HpRateCost: HP rate required to cast. If positive, uses current HP, else uses Max HP.
 
 Can be defined in scalar form or sequence map form:
@@ -554,6 +575,27 @@ Scalar Form
 
 Sequence Map Form
   SpRateCost:
+    - Level: 1
+      Amount: 10
+    - Level: 2
+      Amount: 20
+    - Level: 3
+      Amount: 30
+    - Level: 4
+      Amount: 40
+    - Level: 5
+      Amount: 50
+
+------------------
+
+ApRateCost: AP rate required to cast. If positive, uses current AP, else uses Max AP.
+
+Can be defined in scalar form or sequence map form:
+Scalar Form
+  ApRateCost: 10
+
+Sequence Map Form
+  ApRateCost:
     - Level: 1
       Amount: 10
     - Level: 2
@@ -751,6 +793,27 @@ Levels 1 - 5 have no item cost but levels 6 - 10 require a Blue Gemstone.
   ItemCost:
     - Item: Blue_Gemstone
       Amount: 1
+
+------------------
+
+GiveAp: AP given on successful casting.
+
+Can be defined in scalar form or sequence map form:
+Scalar Form
+  GiveAp: 10
+
+Sequence Map Form
+  GiveAp:
+    - Level: 1
+      Amount: 10
+    - Level: 2
+      Amount: 20
+    - Level: 3
+      Amount: 30
+    - Level: 4
+      Amount: 40
+    - Level: 5
+      Amount: 50
 
 ------------------
 

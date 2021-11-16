@@ -414,6 +414,8 @@ void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int
 		class_ = (sex == SEX_MALE ? JOB_KAGEROU : JOB_OBORO);
 	else if (class_ == JOB_BABY_KAGEROU || class_ == JOB_BABY_OBORO)
 		class_ = (sex == SEX_MALE ? JOB_BABY_KAGEROU : JOB_BABY_OBORO);
+	else if (class_ == JOB_TROUBADOUR || class_ == JOB_TROUVERE)
+		class_ = (sex == SEX_MALE ? JOB_TROUBADOUR : JOB_TROUVERE);
 
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
 		Sql_ShowDebug(sql_handle);
