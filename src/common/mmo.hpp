@@ -103,8 +103,6 @@ typedef uint32 t_itemid;
 #define MIN_STAR 0
 #define MAX_STAR 3
 
-#define MAX_STATUS_TYPE 5
-
 const t_itemid WEDDING_RING_M = 2634;
 const t_itemid WEDDING_RING_F = 2635;
 

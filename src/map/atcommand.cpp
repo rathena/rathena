@@ -2658,11 +2658,7 @@ ACMD_FUNC(param)
 
 	uint8 i, stat;
 	int value = 0;
-	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk"
-#ifdef RENEWAL
-		, "pow", "sta", "wis", "spl", "con", "crt"
-#endif
-	};
+	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk", "pow", "sta", "wis", "spl", "con", "crt" };
 	uint16 new_value, status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -2674,7 +2670,7 @@ ACMD_FUNC(param)
 
 	ARR_FIND( 0, ARRAYLENGTH(param), stat, strcmpi(command + 1, param[stat]) == 0 );
 
-	if( stat == ARRAYLENGTH(param) || stat > MAX_STATUS_TYPE) { // normally impossible...
+	if( stat == ARRAYLENGTH(param)) { // normally impossible...
 		clif_displaymessage(fd, msg_txt(sd,1013)); // Please enter a valid value (usage: @str/@agi/@vit/@int/@dex/@luk <+/-adjustment>).
 		return -1;
 	}
