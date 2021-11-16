@@ -2683,7 +2683,7 @@ ACMD_FUNC(param)
 		status[i] = pc_getstat(sd, SP_STR + i);
 	if (sd->class_ & JOBL_FOURTH) {
 		for (i = PARAM_POW; i < PARAM_MAX; i++)
-			status[i] = pc_getstat(sd, SP_POW + i - PARAM_LUK);
+			status[i] = pc_getstat(sd, SP_POW + i - PARAM_POW);
 	}
 
 	if (pc_has_permission(sd, PC_PERM_BYPASS_MAX_STAT)) {
@@ -2714,8 +2714,8 @@ ACMD_FUNC(param)
 			clif_updatestatus(sd, SP_STR + stat);
 			clif_updatestatus(sd, SP_USTR + stat);
 		} else {
-			clif_updatestatus(sd, SP_POW + stat);
-			clif_updatestatus(sd, SP_UPOW + stat);
+			clif_updatestatus(sd, SP_POW + stat - PARAM_POW);
+			clif_updatestatus(sd, SP_UPOW + stat - PARAM_POW);
 		}
 		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,42)); // Stat changed.
@@ -2815,7 +2815,7 @@ ACMD_FUNC(trait_all) {
 	uint16 status[PARAM_MAX] = {}, max_status[PARAM_MAX] = {};
 
 	for (i = PARAM_POW; i < PARAM_MAX; i++)
-		status[i] = pc_getstat(sd, SP_POW + i - PARAM_LUK);
+		status[i] = pc_getstat(sd, SP_POW + i - PARAM_POW);
 
 	if (!message || !*message || sscanf(message, "%11d", &value) < 1 || value == 0) {
 		for (i = PARAM_POW; i < PARAM_MAX; i++)
