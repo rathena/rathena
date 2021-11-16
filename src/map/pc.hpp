@@ -968,10 +968,7 @@ struct s_job_info {
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
 	uint16 max_base_level, max_job_level;
-	struct s_params {
-		uint16 str, agi, vit, int_, dex, luk,
-			pow, sta, wis, spl, con, crt;
-	} max_param;
+	uint16 max_param[PARAM_MAX];
 	struct s_job_noenter_map {
 		uint32 zone;
 		uint8 group_lv;

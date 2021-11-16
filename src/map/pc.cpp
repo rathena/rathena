@@ -12410,30 +12410,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(statNode, stat.c_str(), max))
 						return 0;
 
-					if (constant == PARAM_STR)
-						job->max_param.str = max;
-					else if (constant == PARAM_AGI)
-						job->max_param.agi = max;
-					else if (constant == PARAM_VIT)
-						job->max_param.vit = max;
-					else if (constant == PARAM_INT)
-						job->max_param.int_ = max;
-					else if (constant == PARAM_DEX)
-						job->max_param.dex = max;
-					else if (constant == PARAM_LUK)
-						job->max_param.luk = max;
-					else if (constant == PARAM_POW)
-						job->max_param.pow = max;
-					else if (constant == PARAM_STA)
-						job->max_param.sta = max;
-					else if (constant == PARAM_WIS)
-						job->max_param.wis = max;
-					else if (constant == PARAM_SPL)
-						job->max_param.spl = max;
-					else if (constant == PARAM_CON)
-						job->max_param.con = max;
-					else if (constant == PARAM_CRT)
-						job->max_param.crt = max;
+					job->max_param[constant] = max;
 				}
 			}
 
@@ -13473,23 +13450,8 @@ uint16 pc_maxparameter(struct map_session_data *sd, e_params param) {
 	int class_ = sd->class_;
 	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(class_,sd->status.sex));
 
-	if (job && param) {
-		uint16 max_param = 0;
-
-		switch (param) {
-			case PARAM_STR: max_param = job->max_param.str; break;
-			case PARAM_AGI: max_param = job->max_param.agi; break;
-			case PARAM_VIT: max_param = job->max_param.vit; break;
-			case PARAM_INT: max_param = job->max_param.int_; break;
-			case PARAM_DEX: max_param = job->max_param.dex; break;
-			case PARAM_LUK: max_param = job->max_param.luk; break;
-			case PARAM_POW: max_param = job->max_param.pow; break;
-			case PARAM_STA: max_param = job->max_param.sta; break;
-			case PARAM_WIS: max_param = job->max_param.wis; break;
-			case PARAM_SPL: max_param = job->max_param.spl; break;
-			case PARAM_CON: max_param = job->max_param.con; break;
-			case PARAM_CRT: max_param = job->max_param.crt; break;
-		}
+	if (job && param < PARAM_MAX) {
+		uint16 max_param = job->max_param[param];
 
 		if (max_param > 0)
 			return max_param;
