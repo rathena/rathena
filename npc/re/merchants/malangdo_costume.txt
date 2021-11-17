@@ -3,14 +3,17 @@
 //===== Description: =========================================
 //= [Official Conversion]
 //= Costumes exchange/enchant NPCs in Malangdo.
-//= The database of the following box are left empty 
-//= until high items ID are supported:
-//=   Enchant_Stone_Box19
-//=   Enchant_Stone_Box20
-//=   Enchant_Stone_Box21
+//=
+//= Note:
+//=   Although new enchant boxes are already exchanged,
+//=   their enchants are currently not supported.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Corrected exchange costumes for enchant box 4-21 [Everade]
 //============================================================
+
+// Missing 4th slot enchanter
+//mal_in01,24,121,x	script	Gregio Grumani#x	x,{
 
 // Costume exchange
 mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
@@ -64,31 +67,19 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	// ===================================================================
 	.@box_list[1] = 22868;		// Enchant_Stone_Box5
 	setarray .@item_list_1[0],
-		19601,		// Drooping_Aliot
 		19643,		// C_Whikebain_Ears
-		19787,		// C_Devoted_Eyes
-		19836,		// C_L_Magestic_Goat
-		19912,		// C_Cat_Eye
-		19928,		// C_Gothic_Heart_Wing
-		19930,		// C_Angel_Mini_Silk_Hat
-		19668,		// C_Wind_Milestone
-		20070,		// C_Alpaca_Hood
-		20115,		// C_Under_Rim_Glasses
 		20130,		// C_Whisper_Tall_Hat
 		20132,		// C_Subject_Aura
 		20133,		// C_Poring_Mascot_Costume
 		20199,		// C_Evil_Marcher_Hat
 		20200,		// C_Rabbit_Head_Dress
+		20201,		// C_Banshee_Master_Kiss
 		20202,		// C_Deviruchi_Balloon
-		20217,		// C_Arabian_Veil
-		20224,		// C_Red_Tailed_Ribbon
 		20230,		// C_Mask_Of_Bankrupt
 		20231,		// C_Snowman_Hat
 		20232,		// C_Celines_Ribbon
 		20233,		// C_Gold_Angel_Sculpture
-		20263,		// C_Hat_Of_Drowsy_Cat
-		20761,		// C_Wing_Of_Happiness
-		20798;		// GrimReaper_Protection
+		20761;		// C_Wing_Of_Happiness
 	// ===================================================================
 	// =================== Costume Enchant Stone Box 6 ===================
 	// ===================================================================
@@ -118,22 +109,12 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	// ===================================================================
 	.@box_list[4] = 23001;		// Enchant_Stone_Box8
 	setarray .@item_list_4[0],
+		5979,		// C_Angel_Fluttering
 		19158,		// C_Gemini_Eyes
 		19816,		// C_Pecopeco_Cap
-		19925,		// C_One_Eyed_Glasses
-		20071,		// C_Worg_In_Mouth
-		20125,		// C_Mini_Glasses
-		20201,		// C_Banshee_Master_Kiss
-		20204,		// C_Hunting_Cap
-		20235,		// C_Frozen_Land_Rose
-		20253,		// C_Droopy_Alice_Doll
-		20254,		// C_Ribbon_Yellow
-		20258,		// C_Blue_Head_Dress
-		20264,		// C_Blood_Sucker
-		20266,		// C_Secret_Zipper
-		20270,		// C_Gryphon_Wing_Ears
 		20315,		// C_Analyze_Eye
 		20318,		// C_Charleston_Antenna
+		20325,		// C_Little_Aquarium
 		20340,		// C_Straight_Pony_BL
 		20341,		// C_Cowlick_BL
 		20342,		// C_Loose_Wave_Twin_BL
@@ -161,38 +142,23 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 		20370,		// C_Loose_Wave_Twin_WH
 		20396,		// C_Woodie_Hat
 		20448,		// C_Cons_Of_Water
-		20457,		// C_Feather_Fluttering
 		20487,		// C_Floral_Waltz
 		20489,		// C_Pope_Crown
 		20504,		// C_Cupid_Wing_Pink
 		20299,		// C_Face_Crusher
-		19598,		// C_Wondering_Wolf_Helm
 		20300;		// C_Hill_Wind_Mask
 	// ===================================================================
 	// =================== Costume Enchant Stone Box 9 ===================
 	// ===================================================================
 	.@box_list[5] = 23058;		// Enchant_Stone_Box9
 	setarray .@item_list_5[0],
-		18744,		// C_World_Star
-		19600,		// Drooping_Kiehl
-		19760,		// C_Rainbow_Veil
 		19761,		// C_White_Lily
-		19978,		// C_Silver_Exclamation
-		19979,		// C_Golden_Question
 		20172,		// C_Pumpkin_Head
-		20180,		// C_Westren_Grace
-		20278,		// C_Man_Medal
-		20325,		// C_Little_Aquarium
-		20344,		// C_Happy_Balloon_J
 		20398,		// C_Niflheim_Bunny_Hat
 		20399,		// C_Crow_Tengu_Mask
 		20404,		// C_Blessing_Of_Angels
 		20405,		// C_Eremes_Scarf
-		20447,		// C_Small_Poring_Band
-		31331,		// C_Chung_E_Shinyon_Cap
-		31372,		// C_Binit_Doll_Hat
-		31430,		// C_Seppl_Hat_TW
-		31431;	// C_Curupira_Hat_TW
+		20447;		// C_Small_Poring_Band
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 10 ===================
 	// ====================================================================
@@ -216,18 +182,11 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	.@box_list[7] = 23174;		// Enchant_Stone_Box11
 	setarray .@item_list_7[0],
 		5909,		// C_Valkyrie_Circlet
-		5979,		// C_Angel_Fluttering
-		19745,		// C_Holy_Marching_Hat_J
-		19825,		// C_Vicious_Stop_Bandage
-		20149,		// C_Hexagon_Spectacles
 		20381,		// C_Steampunk_Hat
-		20383,		// C_Magicdecoy_Doll
-		20483,		// C_Butterfly_Barrettes
-		20490,		// C_Full_Bloom_Hp_Blue
 		20499,		// C_Cat_Ear_Hat
 		20509,		// C_Wings_of_Uriel
+		20510,		// C_SwordWing
 		31029,		// C_Pig_Nose
-		31032,		// C_Tare_Luwmin
 		31040,		// C_Magical_Feather
 		31055,		// C_Poring_Soap_Pipe
 		31057,		// C_Eremes_Scarf_Black
@@ -259,20 +218,12 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 		31120,		// C_Vampire_Familiar
 		31123,		// C_Ghostring_Tall_Hat
 		31125,		// C_QueenAnzRevenge
-		31118,		// C_Assassin_Skull_Mask
-		31370,		// C_Straight_Long_YLK
-		31376,		// C_Jirant_Circlet
-		31391,		// C_Floating_Stone_Of_Int
-		31418,		// C_Leek_In_Mouth
-		20508,		// C_Poster_Girl_Hat
-		20530,		// C_Wings_of_Gabriel
-		19555;		// C_Crescent_Helm
+		31118;		// C_Assassin_Skull_Mask
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 12 ===================
 	// ====================================================================
 	.@box_list[8] = 23299;		// Enchant_Stone_Box12
 	setarray .@item_list_8[0],
-		20156,		// C_Fan_In_Mouth
 		20195,		// C_Scratching_Cat
 		20449,		// C_White_Black_Temp
 		20511,		// C_Blue_Fairy_Wing
@@ -284,28 +235,20 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 		31162,		// C_Shaving_Foam
 		31165,		// C_Piggyback
 		31186,		// C_Black_Cat
-		31300,		// C_Warm_Cat_Muffler
-		31327;		// C_Stretched_Nose_M
-		// 31627;		// C_L_Magesic2_TW
+		31300;		// C_Warm_Cat_Muffler
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 13 ===================
 	// ====================================================================
 	.@box_list[9] = 23524;		// Enchant_Stone_Box13
 	setarray .@item_list_9[0],
 		20488,		// C_Pope_Ribbon
-		20495,		// C_Quati_Hat_J
 		31031,		// C_Tare_Pope_Casual
 		31033,		// C_BelieversCap
-		31122,		// C_Bloody_Stop_Bandage
 		31164,		// C_Brown_Stall
 		31166,		// C_Teddy_Bear_Hood
 		31168,		// C_Mouton_Life_BL
 		31178,		// C_Flame_Muffler
-		31294,		// C_Jirant_Circlet_Red
-		31397,		// C_Pope_Sitting_Head
-		31545,		// C_Eremes_Scarf_BU
-		// 31626,		// C_FluffyWing_TW
-		31628;		// C_Bogy_Cap_TW
+		31397;		// C_Pope_Sitting_Head
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 14 ===================
 	// ====================================================================
@@ -315,31 +258,20 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 		19289,		// C_Moon_Eyepatch
 		19291,		// C_Shiba_Inu
 		19294,		// C_CatEars_Cyber_HeadP_R
-		19763,		// C_Leaf_Cat_Hat
-		20376,		// C_Memories_Of_Lovers
-		20493,		// C_Wing_Headphone
-		20498,		// C_Elephant_Hat
 		20516,		// C_Wings_of_Michael
 		31180,		// C_Shura_King_Pledge
 		31329,		// C_Alice_Wig
-		31332,		// Khalitzburg_KN_Helm_BL
-		31414,		// C_Cancer_Diadem
-		31504;		// C_Starving_Fish_Hat
+		31332;		// Khalitzburg_KN_Helm_BL
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 15 ===================
 	// ====================================================================
 	.@box_list[11] = 23682;		// Enchant_Stone_Box15
 	setarray .@item_list_11[0],
-		19723,		// C_Sacred_Torch_Coronet
-		19953,		// C_Parade_Cap
 		19959,		// C_Drooping_Argiope
 		19960,		// C_Chain_Puppet
 		19992,		// C_Chilly_Breath
-		20179,		// C_Monkey_On_Fur_Hat
-		20510,		// C_SwordWing
 		20515,		// C_Magic_Circle
 		20517,		// C_GiantCatBag_TW
-		31152,		// C_Piamette_BowTie_Red
 		31314,		// C_Ghost_Holiday
 		31396,		// C_Sorcerer_Hood
 		31398,		// C_Blinking_Thin_Eyes
@@ -350,14 +282,11 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 		31452,		// C_White_Cat
 		31460,		// C_Blessing_Sky_Lantern
 		31463,		// C_Flying_Drone
-		31498,		// C_Elephangel_TH
-		// 31722,		// C_Sedora_Hat
-		31412;		// C_Virgo_Crown
+		31498;		// C_Elephangel_TH
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 16 ===================
 	// ====================================================================
-	// Note: The reward is 'Costume Enchant Stone Box 16' on items description but Enchant_Stone_Box21 in the file
-	.@box_list[12] = 100314;		// Enchant_Stone_Box21
+	.@box_list[12] = 23770;		// Enchant_Stone_Box16
 	setarray .@item_list_12[0],
 		20033,		// C_Buddhist_Priest_Crown
 		20098,		// C_Vampire_Hairband
@@ -377,7 +306,7 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 17 ===================
 	// ====================================================================
-	.@box_list[13] = 100314;		// Enchant_Stone_Box21
+	.@box_list[13] = 9510;		// Enchant_Stone_Box17
 	setarray .@item_list_13[0],
 		19990,		// C_Snow_Rabbit_Knit_Hat
 		20175,		// C_Diabolic_Headphone
@@ -392,7 +321,7 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	// ====================================================================
 	// =================== Costume Enchant Stone Box 18 ===================
 	// ====================================================================
-	.@box_list[14] = 100314;		// Enchant_Stone_Box21
+	.@box_list[14] = 100019;		// Enchant_Stone_Box18
 	setarray .@item_list_14[0],
 		20257,		// C_Black_Rabbit_Bonnet
 		20486,		// C_Twin_Margaret
@@ -449,9 +378,37 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	// ====================================================================
 	.@box_list[17] = 100314;		// Enchant_Stone_Box21
 	setarray .@item_list_17[0],
+		19802,		// C_Drooping_Nine_Tail
+		20153,		// C_Monochrome_Cap
+		20379,		// C_PocketWatch_Hair_Orna
+		20451,		// C_Sky_Of_Memory
+		20589,		// C_Gimmick_One_Feather
 		20592,		// C_Santa_Backpack
+		20593,		// C_Ice_Wing
+		20598,		// C_GiantCatBag_JP_BL
+		20599,		// C_Sakura_Wing
+		31176,		// C_Looking
+		31179,		// C_Wolf_Masquerade
+		31404,		// C_Poring_Traffic_Light
+		31497,		// C_Flowery_Vision_TH
 		31509,		// C_Fawn_Ear
 		31559,		// C_Royalguard_Necklace
+		31566,		// C_Stall_Of_Dominions
+		31601,		// C_Under_Rim_Glasses_Bu
+		31716,		// C_Blinking_Eyes_RD
+		31815,		// C_Angola_Intention
+		31849,		// C_Runaway_Accelerator
+		31848,		// C_Rose_Gothic_Bonnet
+		31906,		// C_PGstone_Knit_Hat_PK
+		31911,		// C_LittleGarden
+		31916,		// C_Frill_Collar
+		31923,		// C_Baby_Polar_Bear
+		31930,		// C_Mike_Stand
+		31931,		// C_Half_Rim_Glasses
+		31934,		// C_Blink_Eyes_Sakura
+		400073,		// C_Romance_Rose_TW
+		400074,		// C_Disapear_Time_TW
+		410005,		// C_Magic_Heir_TW
 		440002;		// C_Happy_Cat_TW
 
 	while(1) {
@@ -595,8 +552,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19590:	// C_Twin_Ribbon_J
 		case 19592:	// C_Hibiscus_J
 		case 19599:	// C_Imp_Hat
-		case 19600:	// Drooping_Kiehl
-		case 19601:	// Drooping_Aliot
 		case 19602:	// C_Invisible_Cap
 		case 19608:	// C_Chick_Hat
 		case 19613:	// C_Valkyrie_Feather_Band
@@ -621,7 +576,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19659:	// C_Gray_Fur_Hat
 		case 19665:	// C_Poring_Cake_Cap
 		case 19667:	// C_Helm_Of_Dragoon
-		case 19668:	// C_Wind_Milestone
 		case 19677:	// C_Soulless_Wing
 		case 19682:	// C_Santa_Poring_Hat
 		case 19684:	// C_Happy_Wig
@@ -632,7 +586,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19715:	// C_Scarf
 		case 19719:	// C_Coronet
 		case 19721:	// C_Darkness_Helm
-		case 19723:	// C_Sacred_Torch_Coronet
 		case 19728:	// C_Tare_Zonda
 		case 19729:	// C_Neko_Mimi_Kafra
 		case 19731:	// C_Satanic_Chain
@@ -640,12 +593,10 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19737:	// C_Corsair_K
 		case 19738:	// C_Detective_Hat_K
 		case 19739:	// C_Sleeping_Kitty_Cat
-		case 19745:	// C_Holy_Marching_Hat_J
 		case 19750:	// C_Saint_Frill_Ribbon
 		case 19758:	// C_King_Frog_Hat
 		case 19761:	// C_White_Lily
 		case 19762:	// C_Happy_Peace_Proof
-		case 19763:	// C_Leaf_Cat_Hat
 		case 19771:	// C_Butterfly_Hairpin
 		case 19782:	// C_Drooping_Kitty
 		case 19784:	// C_Morrigane's_Helm
@@ -660,14 +611,12 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19807:	// C_Majestic_Helmet
 		case 19818:	// C_Droop_Morocc_Minion
 		case 19824:	// C_Evil_Druid_Hat
-		case 19825:	// C_Vicious_Stop_Bandage
 		case 19827:	// C_Amistr_Cap
 		case 19828:	// C_Fedora
 		case 19829:	// C_Straw_Hat
 		case 19831:	// C_Filir_Hat
 		case 19833:	// C_Fillet
 		case 19835:	// C_Lif_Doll_Hat
-		case 19836:	// C_L_Magestic_Goat
 		case 19839:	// C_Vanilmirth_Hat
 		case 19842:	// C_Puppy_Hat
 		case 19843:	// C_Cat_Hairband
@@ -691,7 +640,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19883:	// C_Piamette_Hood
 		case 19884:	// C_Vanargandr_Helm
 		case 19913:	// C_Poo_Poo_Hat
-		case 19930:	// C_Angel_Mini_Silk_Hat
 		case 19931:	// C_Lazy_Raccoon
 		case 19932:	// C_Cap_Of_Concentration
 		case 19934:	// C_10Gallon_Hat_Of_Flame
@@ -700,11 +648,8 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19937:	// C_Silk_Hat_Of_Earth
 		case 19939:	// C_Antler
 		case 19941:	// C_Ear_Mufs
-		case 19953:	// C_Parade_Cap
 		case 19955:	// C_Mini_Tree_J
 		case 19977:	// C_Golden_Exclamation
-		case 19978:	// C_Silver_Exclamation
-		case 19979:	// C_Golden_Question
 		case 19980:	// C_Silver_Question
 		case 19983:	// C_Flower_Hairpin
 		case 19984:	// C_Winter_Hat
@@ -716,7 +661,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 20057:	// C_Feather_Bonnet
 		case 20063:	// C_Yellow_Brain_Hat
 		case 20064:	// Blue_Brain_Hat
-		case 20070:	// C_Alpaca_Hood
 		case 20073:	// C_Hair_Band
 		case 20074:	// C_Biretta
 		case 20090:	// C_Egg_Shell
@@ -740,8 +684,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 20160:	// C_Fried_Egg
 		case 20161:	// C_Prontera_Army_Cap
 		case 20175:	// C_Diabolic_Headphone
-		case 20179:	// C_Monkey_On_Fur_Hat
-		case 20180:	// C_Westren_Grace
 		case 20181:	// C_Mistic_Rose
 		case 20182:	// C_Mottled_Egg_Shell
 		case 20184:	// C_Party_Hat
@@ -750,12 +692,10 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 20199:	// C_Evil_Marcher_Hat
 		case 20200:	// C_Rabbit_Head_Dress
 		case 20203:	// C_Bandana
-		case 20204:	// C_Hunting_Cap
 		case 20205:	// C_Fancy_Flower
 		case 20207:	// C_Stripe_Band
 		case 20208:	// C_Necktie
 		case 20214:	// C_Evil_Marcher_Hat_J
-		case 20224:	// C_Red_Tailed_Ribbon
 		case 20225:	// C_Pumpkin_Hat
 		case 20226:	// C_Hair_Brush
 		case 20231:	// C_Snowman_Hat
@@ -766,20 +706,14 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 20248:	// C_Black_Strong_Hair
 		case 20249:	// C_Red_Strong_Hair
 		case 20250:	// C_White_Strong_Hair
-		case 20253:	// C_Droopy_Alice_Doll
-		case 20254:	// C_Ribbon_Yellow
-		case 20258:	// C_Blue_Head_Dress
 		case 20262:	// C_Fox_Ears_Bell_Ribbon
-		case 20263:	// C_Hat_Of_Drowsy_Cat
 		case 20266:	// C_Secret_Zipper
 		case 20269:	// C_White_Fox_Ear_Ribbon
 		case 20271:	// C_Sunflower
 		case 20272:	// C_Snowy_Horn
 		case 20273:	// C_Soft_Sheep_Hat
 		case 20277:	// C_Balloon_Hat
-		case 20278:	// C_Man_Medal
 		case 20283:	// C_Over_Protector
-		case 20383:	// C_Magicdecoy_Doll
 		case 20433:	// C_Louise_Red_Hat
 		case 20447:	// C_Small_Poring_Band
 		case 20452:	// C_berry_Prince_Crown
@@ -787,16 +721,10 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 20463:	// C_Two_Tone_Beret
 		case 20464:	// C_Monochrome_RibbonHat
 		case 20467:	// C_Elemental_Crown
-		case 20483:	// C_Butterfly_Barrettes
 		case 20489:	// C_Pope_Crown
-		case 20490:	// C_Full_Bloom_Hp_Blue
 		case 20491:	// C_Laser_Of_Eagle
-		case 20495:	// C_Quati_Hat_J
-		case 20498:	// C_Elephant_Hat
-		case 20508:	// C_Poster_Girl_Hat
 		case 31027:	// C_Pretty_Bear
 		case 31031:	// C_Tare_Pope_Casual
-		case 31032:	// C_Tare_Luwmin
 		case 31040:	// C_Magical_Feather
 		case 31062:	// C_Eleanor_Wig
 		case 31123:	// C_Ghostring_Tall_Hat
@@ -814,26 +742,17 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 31204:	// C_Drooping_White_Kitty
 		case 31249:	// C_Rabbit_Hopping
 		case 31252:	// C_Cat_Ear_Hat_White
-		case 31294:	// C_Jirant_Circlet_Red
 		case 31314:	// C_Ghost_Holiday
 		case 31318:	// C_Gerhard_Von_Devi
 		case 31329:	// C_Alice_Wig
-		case 31331:	// C_Chung_E_Shinyon_Cap
 		case 31332:	// Khalitzburg_KN_Helm_BL
-		case 31370:	// C_Straight_Long_YLK
-		case 31372:	// C_Binit_Doll_Hat
 		case 31582:	// C_Jirant_Circlet
 		case 31382:	// C_Cat_Ears_Punkish
 		case 31385:	// C_Gothic_Pumpkin_Head
 		case 31396:	// C_Sorcerer_Hood
-		case 31397:	// C_Pope_Sitting_Head
 		case 31405:	// C_Eleanor_Wig_YL
 		case 31406:	// C_Nydhog_Wig_WH
 		case 31407:	// C_Alice_Wig_PK
-		case 31412:	// C_Virgo_Crown
-		case 31414:	// C_Cancer_Diadem
-		case 31430:	// C_Seppl_Hat_TW
-		case 31431:	// C_Curupira_Hat_TW
 		case 31433:	// C_Astro_Circle
 		case 31439:	// C_Fluffy_Heart_Earmuffs
 		case 31440:	// C_Snow_Bear_Food
@@ -844,7 +763,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 31475:	// C_Black_Fox_Ear_Ribbon
 		case 31481:	// C_CatCoffeeCup_TW
 		case 31489:	// C_Bouquet_Hat
-		case 31504:	// C_Starving_Fish_Hat
 		case 31509:	// C_Fawn_Ear
 		case 31529:	// C_Happy_Rabbit_Ribbon
 		case 31546:	// C_Clock_Casket_RD
@@ -853,25 +771,17 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 31573:	// C_Mecha_Cat_Ears
 		case 31598:	// C_Forest_Guide
 		case 31624:	// C_HeartOfCat_TW
-		case 31628:	// C_Bogy_Cap_TW
 			// top + mid
-		case 19555:	// C_Crescent_Helm
 		case 19574:	// C_Lord_of_Death
 		case 19578:	// C_Goggle
-		case 19598:	// C_Wondering_Wolf_Helm
 		case 19612:	// C_Headset_OST
 		case 19710:	// C_Wings_Of_Victory
-		case 19760:	// C_Rainbow_Veil
 		case 19775:	// C_Marvelous_Wig
 		case 19823:	// C_White_Cat_Hood
 		case 19864:	// C_Afro_Wig
-		case 19928:	// C_Gothic_Heart_Wing
 		case 20402:	// C_Holy_Klobuk
-		case 20493:	// C_Wing_Headphone
 		case 31205:	// C_L_Orc_Hero_Helm
 		case 31415:	// C_Wanderer_Sakkat
-			// top + low
-		case 20217:	// C_Arabian_Veil
 			// top + mid + low
 		case 19556:	// C_Kabuki_Mask
 		case 19746:	// C_Cap_Of_Blindness
@@ -893,7 +803,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		switch(.@equip_id) {
 			// mid
 		case 18742:	// C_MoonStar_Accessory
-		case 18744:	// C_World_Star
 		case 19291:	// C_Shiba_Inu
 		case 19509:	// Butterfly_Wing_Ear
 		case 19510:	// Nut_On_Head
@@ -909,7 +818,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19752:	// C_Shelter_Wing_Ears
 		case 19755:	// C_YinYang_Earring
 		case 19781:	// C_Ear_Of_Angel's_Wing_
-		case 19787:	// C_Devoted_Eyes
 		case 19826:	// C_Ice_Wing_Ear
 		case 19830:	// C_Sunglasses
 		case 19846:	// C_Opera_Ghost_Mask
@@ -919,31 +827,23 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 19887:	// C_One_Eyed_Glass
 		case 19888:	// C_Glasses
 		case 19889:	// C_Pair_Of_Red_Ribbon
-		case 19912:	// C_Cat_Eye
-		case 19925:	// C_One_Eyed_Glasses
 		case 19954:	// C_3D_Glasses
 		case 19989:	// C_Mouton_Life
-		case 20115:	// C_Under_Rim_Glasses
-		case 20125:	// C_Mini_Glasses
 		case 20145:	// C_Robo_Eye
 		case 20146:	// C_Angel_Spirit
 		case 20147:	// C_Bell_Pigeon
-		case 20149:	// C_Hexagon_Spectacles
 		case 20215:	// C_Black_Devil_Mask
 		case 20221:	// C_Eyes_Of_Ifrit
 		case 20255:	// C_Love_Cheek
-		case 20270:	// C_Gryphon_Wing_Ears
 		case 20295:	// C_Poring_Sunglasses_J
 		case 20298:	// C_Happy_Lunatic_Ear
 		case 20318:	// C_Charleston_Antenna
 		case 20319:	// C_Crimson_Booster
 		case 20325:	// C_Little_Aquarium
-		case 20376:	// C_Memories_Of_Lovers
 		case 20399:	// C_Crow_Tengu_Mask
 		case 20404:	// C_Blessing_Of_Angels
 		case 20430:	// C_Morocc_Kid_Servant
 		case 31047:	// C_First_Love_Cheek
-		case 31122:	// C_Bloody_Stop_Bandage
 		case 31167:	// C_Lunatic_Ear_Black
 		case 31168:	// C_Mouton_Life_BL
 		case 31183:	// C_Fallen_Angel_Blessing
@@ -951,8 +851,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 31299:	// C_White_Rabbit
 		case 31302:	// C_Black_Magenta_Ribbon
 		case 31308:	// C_Protect_Feathers
-		case 31327:	// C_Stretched_Nose_M
-		case 31391:	// C_Floating_Stone_Of_Int
 		case 31398:	// C_Blinking_Thin_Eyes
 		case 31437:	// C_Baby_Penguin
 		case 31452:	// C_White_Cat
@@ -1017,19 +915,14 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 20071:	// C_Worg_In_Mouth
 		case 20091:	// C_Smoking_Pipe
 		case 20132:	// C_Subject_Aura
-		case 20156:	// C_Fan_In_Mouth
 		case 20169:	// C_Long_Tongue
-		case 20201:	// C_Banshee_Master_Kiss
 		case 20202:	// C_Deviruchi_Balloon
 		case 20223:	// C_Centimental_Leaf
-		case 20235:	// C_Frozen_Land_Rose
 		case 20239:	// C_Large_Ribbon_Muffler
 		case 20240:	// C_Gift_Of_Snow
-		case 20264:	// C_Blood_Sucker
 		case 20305:	// C_NettyHeart_BalloonGum
 		case 20340:	// C_Straight_Pony_BL
 		case 20342:	// C_Loose_Wave_Twin_BL
-		case 20344:	// C_Happy_Balloon_J
 		case 20357:	// C_Straight_Pony_YL
 		case 20358:	// C_Straight_Pony_GN
 		case 20359:	// C_Straight_Pony_PP
@@ -1051,7 +944,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 20448:	// C_Cons_Of_Water
 		case 20462:	// C_Cat_Ears_Cape
 		case 20497:	// C_Umbala_Spirit
-		case 20798:	// GrimReaper_Protection
 		case 31029:	// C_Pig_Nose
 		case 31045:	// C_Blue_Rear_Ribbon
 		case 31057:	// C_Eremes_Scarf_Black
@@ -1071,7 +963,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 31084:	// C_Long_Pony_WH
 		case 31085:	// C_Long_Pony_OM
 		case 31086:	// C_Long_Pony_PP
-		case 31152:	// C_Piamette_BowTie_Red
 		case 31178:	// C_Flame_Muffler
 		case 31189:	// C_Cat_Ears_Cape_Red
 		case 31210:	// C_Side_Pigtail_BU
@@ -1100,7 +991,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 31393:	// C_Vajra
 		case 31395:	// C_Book_Of_Magic
 		case 31404:	// C_Poring_Traffic_Light
-		case 31418:	// C_Leek_In_Mouth
 		case 31432:	// C_Luwmin_Ice
 		case 31438:	// C_Fluffy_Angel_Cape
 		case 31450:	// C_Lolita_Two_Side_Up
@@ -1112,7 +1002,6 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		case 31493:	// C_Volume_Low_Twin_WH
 		case 31498:	// C_Elephangel_TH
 		case 31533:	// C_Warm_Cat_Muffler_BL
-		case 31545:	// C_Eremes_Scarf_BU
 		case 31572:	// C_Mobile_Pursuit_System
 		case 31586:	// C_Poporing_Muffler
 		case 31611:	// C_Dark_Snake_Lord_Stall
