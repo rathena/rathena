@@ -7653,30 +7653,6 @@ t_exp pc_nextjobexp(struct map_session_data *sd){
 }
 
 /**
- * Returns base HP for this character's class.
- * @param job_id: Player's class
- * @param level: Player's level
- * @return Base HP
- */
-uint32 JobDatabase::get_baseHp(uint16 job_id, uint32 level) {
-	std::shared_ptr<s_job_info> job = job_db.find(job_id);
-
-	return job ? job->base_hp[level] : 0;
-}
-
-/**
- * Returns base SP for this character's class.
- * @param job_id: Player's class
- * @param level: Player's level
- * @return Base SP
- */
-uint32 JobDatabase::get_baseSp(uint16 job_id, uint32 level) {
-	std::shared_ptr<s_job_info> job = job_db.find(job_id);
-
-	return job ? job->base_sp[level] : 0;
-}
-
-/**
  * Returns max weight base for this character's class.
  * @param job_id: Player's class
  * @return Max weight base

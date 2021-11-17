@@ -1005,8 +1005,6 @@ public:
 	uint32 get_maxJobLv(uint16 job_id);
 	t_exp get_baseExp(uint16 job_id, uint32 level);
 	t_exp get_jobExp(uint16 job_id, uint32 level);
-	uint32 get_baseHp(uint16 job_id, uint32 level);
-	uint32 get_baseSp(uint16 job_id, uint32 level);
 	int32 get_maxWeight(uint16 job_id);
 };
 
