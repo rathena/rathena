@@ -12629,6 +12629,7 @@ void JobDatabase::loadingFinished() {
 
 			if( class_ & JOBL_FOURTH ){
 				max = battle_config.max_fourth_parameter;
+				break;
 			}
 
 			// 3rd class
