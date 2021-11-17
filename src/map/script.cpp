@@ -14975,8 +14975,7 @@ BUILDIN_FUNC(removespecialeffect)
 	struct block_list *bl_target;
 	struct map_session_data *sd;
 
-	switch( strcmp(command, "removespecialeffect") ) {
-	case 0:
+	if( strcmp(command, "removespecialeffect") == 0 ) {
 		if (!script_hasdata(st, 4)) {
 			bl_src = map_id2bl(st->oid);
 
@@ -15001,13 +15000,11 @@ BUILDIN_FUNC(removespecialeffect)
 				return SCRIPT_CMD_FAILURE;
 			bl_target = &sd->bl;
 		}
-		break;
-	default:
+	}else{
 		if (!script_nick2sd(4, sd))
 			return SCRIPT_CMD_FAILURE;
 
 		bl_src = bl_target = &sd->bl;
-		break;
 	}
 
 	clif_specialeffect_remove(bl_src, effect, e_target, bl_target);
