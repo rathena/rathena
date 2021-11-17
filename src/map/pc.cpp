@@ -12414,7 +12414,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					}
 
 					if (this->nodeExists(bexpNode, "Exp")) {
-						uint64 exp;
+						t_exp exp;
 
 						if (!this->asUInt64(bexpNode, "Exp", exp))
 							return 0;
@@ -12455,7 +12455,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					}
 
 					if (this->nodeExists(jexpNode, "Exp")) {
-						uint64 exp;
+						t_exp exp;
 
 						if (!this->asUInt64(jexpNode, "Exp", exp))
 							return 0;
