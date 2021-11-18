@@ -318,12 +318,8 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_noequip.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_noequip.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_group.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_group.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_basehpsp_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_basehpsp_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_db1.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_db1.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_db2.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_db2.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_exp.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_exp.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_noenter_map.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_noenter_map.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_param_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_param_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_stats.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_stats.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\level_penalty.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\level_penalty.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\magicmushroom_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\magicmushroom_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_cache.dat" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_cache.dat')" />

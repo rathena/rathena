@@ -2654,6 +2654,8 @@ struct status_data {
 		class_; /// see enum e_classAE
 
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
+
+	uint16 pow, sta, wis, spl, con, crt;
 };
 
 ///Additional regen data that only players have.

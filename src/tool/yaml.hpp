@@ -80,7 +80,8 @@ std::unordered_map<const char *, int64> constants;
 
 // Implement the function instead of including the original version by linking
 void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
-	constants[name] = value;
+	if (!deprecated)
+		constants[name] = value;
 }
 
 const char *constant_lookup(int32 value, const char *prefix) {
@@ -262,13 +263,14 @@ void finalizeBody(void) {
 /**
  * Split the string with ':' as separator and put each value for a skilllv
  * @param str: String to split
- * @param val: Array of MAX_SKILL_LEVEL to put value into
- * @return 0:error, x:number of value assign (should be MAX_SKILL_LEVEL)
+ * @param val: Array to store value into
+ * @param max: Max array size (Default: MAX_SKILL_LEVEL)
+ * @return 0:error, x:number of value assign (max value)
  */
-int skill_split_atoi(char *str, int *val) {
+int skill_split_atoi(char *str, int *val, int max = MAX_SKILL_LEVEL) {
 	int i;
 
-	for (i = 0; i < MAX_SKILL_LEVEL; i++) {
+	for (i = 0; i < max; i++) {
 		if (!str)
 			break;
 		val[i] = atoi(str);
