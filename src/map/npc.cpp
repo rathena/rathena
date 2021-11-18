@@ -4625,104 +4625,42 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type){
 
 struct npc_data* dup_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m, int16 x, int16 y, int class_,uint8 dir)
 {
-	npc_data* nd = npc_create_npc(m, x, y);
+	static char w1[128], w2[128], w3[128], w4[128];
+	const char* stat_buf = "- call from duplicate subsystem -\n";
+	char unique_name[NPC_NAME_LENGTH + 1];
 
-	nd->src_id = dnd->src_id ? dnd->src_id : dnd->bl.id;
-	nd->class_ = dnd->class_;
-	nd->speed = dnd->speed;
-	nd->bl.type = dnd->bl.type;
-	nd->subtype = dnd->subtype;
+	snprintf(w1, sizeof(w1), "%s,%d,%d,%d", map_getmapdata(m)->name, x, y, dir);
+	snprintf(w2, sizeof(w2), "duplicate(%s)", dnd->exname);
 
-	switch (nd->subtype) {
-
-	case NPCTYPE_SCRIPT:
-		++npc_script;
-		nd->u.scr.xs = dnd->u.scr.xs;
-		nd->u.scr.ys = dnd->u.scr.ys;
-		nd->u.scr.script = dnd->u.scr.script;
-		nd->u.scr.label_list = dnd->u.scr.label_list;
-		nd->u.scr.label_list_num = dnd->u.scr.label_list_num;
-		break;
-
-	case NPCTYPE_SHOP:
-	case NPCTYPE_CASHSHOP:
-	case NPCTYPE_ITEMSHOP:
-	case NPCTYPE_POINTSHOP:
-	case NPCTYPE_MARKETSHOP:
-		++npc_shop;
-		safestrncpy(nd->u.shop.pointshop_str, dnd->u.shop.pointshop_str, strlen(dnd->u.shop.pointshop_str));
-		nd->u.shop.itemshop_nameid = dnd->u.shop.itemshop_nameid;
-		nd->u.shop.shop_item = dnd->u.shop.shop_item;
-		nd->u.shop.count = dnd->u.shop.count;
-		nd->u.shop.discount = dnd->u.shop.discount;
-		break;
-
-	case NPCTYPE_WARP:
-		++npc_warp;
-		if (!battle_config.warp_point_debug)
-			nd->class_ = JT_WARPNPC;
-		else
-			nd->class_ = JT_GUILD_FLAG;
-		nd->u.warp.xs = dnd->u.warp.xs;
-		nd->u.warp.ys = dnd->u.warp.ys;
-		nd->u.warp.mapindex = dnd->u.warp.mapindex;
-		nd->u.warp.x = dnd->u.warp.x;
-		nd->u.warp.y = dnd->u.warp.y;
-		nd->trigger_on_hidden = dnd->trigger_on_hidden;
-		break;
+	if (strlen(name) == 0) {
+		strcpy(name, dnd->name);
 	}
 
-	if (nd->bl.m >= 0) {
-		map_addnpc(nd->bl.m, nd);
-		status_change_init(&nd->bl);
-		unit_dataset(&nd->bl);
-		nd->ud.dir = dir;
-		npc_setcells(nd);
-		if (map_addblock(&nd->bl))
-			return nd;
-		if (nd->class_ != JT_FAKENPC) {
-			status_set_viewdata(&nd->bl, class_);
-			if (map_getmapdata(nd->bl.m)->users)
-				clif_spawn(&nd->bl);
-		}
-	}
-	else {
-		map_addiddb(&nd->bl);
-	}
-
-	safesnprintf(nd->exname, ARRAYLENGTH(nd->exname), "dup_%d", nd->bl.id);
 	//Making sure the generated name is not used for another npc.
 	int i = 0;
-	while (npc_name2id(nd->exname) != nullptr) {
+	snprintf(unique_name, ARRAYLENGTH(unique_name), "%d_%d_%d_%d", i, m, x, y);
+	while (npc_name2id(unique_name) != nullptr) {
 		++i;
-		snprintf(nd->exname, ARRAYLENGTH(nd->exname), "%d_%d_%d_%d", i, nd->bl.m, nd->bl.x, nd->bl.y);
+		snprintf(unique_name, ARRAYLENGTH(unique_name), "%d_%d_%d_%d", i, m, x, y);
 	}
 
-	if (strlen(name) != 0) {
-		strcpy(nd->name, name);
-	}
-	else {
-		strcpy(nd->name, dnd->name);
+	snprintf(w3, sizeof(w3), "%s::%s", name, unique_name);
+
+	if (dnd->u.scr.xs >= 0 && dnd->u.scr.ys >= 0)
+		snprintf(w4, sizeof(w4), "%d,%d,%d", class_, dnd->u.scr.xs, dnd->u.scr.ys); // Touch Area
+	else
+		snprintf(w4, sizeof(w4), "%d", class_);
+
+	npc_parse_duplicate(w1, w2, w3, w4, stat_buf, stat_buf, "DUPLICATE");//DUPLICATE means nothing for now.
+
+	//run OnInit Events
+	char evname[EVENT_NAME_LENGTH];
+	safesnprintf(evname, EVENT_NAME_LENGTH, "%s::%s", unique_name, script_config.init_event_name);
+	if ((struct event_data*)strdb_get(ev_db, evname)) {
+		npc_event_do(evname);
 	}
 
-	strdb_put(npcname_db, nd->exname, nd);
-
-	if (nd->subtype != NPCTYPE_SCRIPT)
-		return nd;
-	nd->u.scr.timerid = INVALID_TIMER;
-
-	for (int i = 0; i < nd->u.scr.label_list_num; i++) {
-		if (npc_event_export(nd, i)) {
-			ShowWarning("npc_parse_duplicate : duplicate event %s::%s \n", nd->exname, nd->u.scr.label_list[i].name);
-		}
-		npc_timerevent_export(nd, i);
-		//if(strcasecmp(nd->u.scr.label_list[i].name, script_config.init_event_name) == 0) {
-		//	char evname[EVENT_NAME_LENGTH];
-		//	safesnprintf(evname, EVENT_NAME_LENGTH, "%s::%s", nd->exname, nd->u.scr.label_list[i].name);
-		//	npc_event_do(evname);
-		//}
-	}
-	return nd;
+	return npc_name2id(unique_name);
 }
 
 const char *npc_get_script_event_name(int npce_index)
