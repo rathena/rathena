@@ -2629,3 +2629,58 @@
 400048:4805,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
 400048:4850,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
 //490098:29371,{ if ((eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus2 bSkillUseSP,"WL_CRIMSONROCK",50; bonus2 bSkillCooldown,"WL_CRIMSONROCK",-2000; } }
+300192:300193,{ bonus bDelayrate,-10; bonus bPAtk,3; bonus bSmatk,3; }
+310658:29154,{ bonus bFixedCast,-300; }
+310659:29358,{ bonus bFixedCast,-500; }
+310660:310325,{ bonus bLongAtkRate,2; }
+310660:310326,{ bonus bLongAtkRate,2; }
+310660:310330,{ bonus bLongAtkRate,2; }
+310661:310327,{ bonus bShortAtkRate,2; }
+310661:310328,{ bonus bShortAtkRate,2; }
+310661:310329,{ bonus bShortAtkRate,2; }
+310664:310665:310666,{ bonus2 bMagicAtkEle,Ele_All,6; }
+310667:310664,{ bonus2 bMagicAtkEle,Ele_All,2; }
+310667:310665,{ bonus2 bMagicAtkEle,Ele_All,2; }
+310667:310666,{ bonus2 bMagicAtkEle,Ele_All,2; }
+310881:29463,{ bonus bVariableCastrate,-10; }
+310881:310257,{ bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15; }
+310882:29463,{ bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; bonus2 bSkillAtk,"RK_DRAGONBREATH",15; }
+310882:310257,{ bonus2 bSkillAtk,"RK_SONICWAVE",15; }
+310883:29463,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; }
+310883:310257,{ bonus2 bSkillAtk,"RK_IGNITIONBREAK",15; }
+310884:29471,{ bonus2 bSkillAtk,"WL_SOULEXPANSION",15; }
+310884:310180,{ bonus2 bSkillAtk,"WL_JACKFROST",15; }
+310885:29471,{ bonus2 bSkillAtk,"WL_CRIMSONROCK",15; }
+310885:310180,{ bonus2 bSkillAtk,"WL_JACKFROST",15; }
+310886:29471,{ bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15; }
+310886:310180,{ bonus2 bSkillAtk,"WL_COMET",15; }
+310887:29520,{ bonus2 bSkillAtk,"LG_CANNONSPEAR",15; }
+310887:310184,{ bonus2 bSkillUseSPrate,"LG_RAYOFGENESIS",15; }
+310888:29520,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",15; }
+310888:310184,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",15; }
+310889:29520,{ bonus2 bSkillAtk,"LG_CANNONSPEAR",15; }
+310889:310184,{ bonus2 bMagicAddSize,Size_All,15; }
+310914:310908,{ bonus bShortAtkRate,15; }
+310915:310909,{ bonus bCritAtkRate,30; }
+310916:310910,{ bonus bLongAtkRate,15; }
+310917:310911,{ bonus2 bMagicAtkEle,Ele_All,15; }
+310918:310912,{ bonus bDelayrate,-10; bonus bMaxHPrate,10; }
+310919:310913,{ bonus bCritical,15; bonus2 bAddClass,Class_All,15; }
+311005:29488,{ bonus2 bSPDrainRate,20,1; }
+311005:310265,{ bonus2 bSkillAtk,"WM_METALICSOUND",15; }
+311006:29488,{ bonus2 bAddSize,Size_All,15; }
+311006:310265,{ bonus2 bMagicAtkEle,Ele_All,15; }
+311007:29488,{ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; }
+311007:310265,{ bonus2 bSkillAtk,"WM_REVERBERATION",15; }
+311008:29467,{ bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",15; }
+311008:310261,{ bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",15; }
+311009:29467,{ bonus2 bSkillAtk,"GN_CARTCANNON",15; }
+311009:310261,{ bonus2 bSkillAtk,"GN_CART_TORNADO",15; }
+311010:29467,{ bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",15; }
+311010:310261,{ bonus2 bSkillAtk,"GN_CART_TORNADO",15; }
+311011:29435,{ bonus2 bSkillCooldown,"SO_CLOUD_KILL",-2000; }
+311011:29614,{ bonus2 bSkillAtk,"SO_EARTHGRAVE",15; }
+311012:29435,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15; }
+311012:29614,{ bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15; }
+311013:29435,{ bonus2 bSkillAtk,"SO_POISON_BUSTER",15; }
+311013:29614,{ bonus2 bSkillAtk,"SO_DIAMONDDUST",15; }
