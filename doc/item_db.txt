@@ -158,6 +158,7 @@ Third_Baby  - Third-Baby classes.
 All_Upper   - All Transcedent classes
 All_Baby    - All baby classes
 All_Third   - Applies to all Third classes.
+Fourth      - Fourth classes.
 
 ---------------------------------------
 
