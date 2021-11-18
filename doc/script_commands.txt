@@ -5987,6 +5987,22 @@ behavior of the command.
 
 ---------------------------------------
 
+*removespecialeffect <effect number>{,<send_target>{,"<NPC Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect', but use for remove effect with <effect number>
+from invoking NPC.
+
+---------------------------------------
+
+*removespecialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect2', but use for remove effect with <effect number>
+from invoking character.
+
+---------------------------------------
+
 *statusup <stat>{,<char_id>};
 
 This command will change a specified stat of the invoking character up by one
