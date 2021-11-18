@@ -520,6 +520,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				value.append(",");
 				column.append("`class_third_baby`,");
 			}
+			if (appendEntry(classes["Fourth"], value))
+				column.append("`class_fourth`,");
 #endif
 		}
 

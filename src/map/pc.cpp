@@ -1430,6 +1430,9 @@ static bool pc_isItemClass (struct map_session_data *sd, struct item_data* item)
 		//third-baby classes
 		if (item->class_upper&ITEMJ_THIRD_BABY && sd->class_&JOBL_THIRD && sd->class_&JOBL_BABY)
 			break;
+		//fourth classes
+		if (item->class_upper&ITEMJ_FOURTH && sd->class_&JOBL_FOURTH)
+			break;
 #endif
 		return false;
 	}
