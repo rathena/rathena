@@ -4271,6 +4271,10 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current) {
 	if ((job_id >= JOB_RUNE_KNIGHT && job_id <= JOB_BABY_MECHANIC2) || job_id == JOB_KAGEROU || job_id == JOB_OBORO || job_id == JOB_REBELLION || job_id == JOB_BABY_KAGEROU || job_id == JOB_BABY_OBORO || job_id == JOB_BABY_REBELLION)
 		j = 98;
 
+	// Gunslinger and Rebellion share SP fields by default, so use Rebellion's level instead of Gunslinger
+	if (type == 1 && job_count == 2 && jobs[0] == JOB_GUNSLINGER && jobs[1] == JOB_REBELLION)
+		endlvl = exp_base_level.find(JOB_REBELLION)->second;
+
 	if (type == 0) { // HP
 		for (; j < endlvl; j++) {
 			if (atoi(fields[j + 4])) {
