@@ -23465,4 +23465,70 @@ Body:
             Rate: 300
             Amount: 1
             Announced: true
+  - Group: HAPPY_BOX_J
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: High_Weapon_Box
+            Rate: 1
+          - Item: C_Afro_Wig_Red
+            Rate: 1
+          - Item: Happy_Pierrot_Mask
+            Rate: 1
+          - Item: Old_Violet_Box
+            Rate: 3
+          - Item: Emperium
+            Rate: 4
+          - Item: Karvodailnirol
+            Rate: 5
+          - Item: Savage_Meat
+            Rate: 5
+          - Item: Gun_Powder
+            Rate: 10
+          - Item: Beef_Head_Meat
+            Rate: 10
+          - Item: Petti_Tail
+            Rate: 10
+          - Item: Drocera_Tentacle
+            Rate: 15
+          - Item: Fire_Bottle
+            Rate: 15
+          - Item: Coating_Bottle
+            Rate: 15
+          - Item: Witherless_Rose
+            Rate: 20
+          - Item: Alchol
+            Rate: 20
+          - Item: Cold_Ice
+            Rate: 20
+          - Item: Ice_Crystal
+            Rate: 20
+          - Item: Frozen_Rose
+            Rate: 30
+          - Item: Wolf_Blood
+            Rate: 30
+          - Item: Ice_Fragment
+            Rate: 30
+          - Item: Acid_Bottle
+            Rate: 30
+          - Item: Gift_Box
+            Rate: 35
+          - Item: MenEater_Plant_Bottle
+            Rate: 40
+          - Item: Str_Dish06
+            Rate: 40
+          - Item: Vit_Dish06
+            Rate: 40
+          - Item: Agi_Dish06
+            Rate: 40
+          - Item: Royal_Jelly
+            Rate: 80
+          - Item: Int_Dish03
+            Rate: 100
+          - Item: Dex_Dish03
+            Rate: 100
+          - Item: Luk_Dish03
+            Rate: 100
+          - Item: Honey
+            Rate: 130
 
