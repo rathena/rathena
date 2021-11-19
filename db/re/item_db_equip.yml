@@ -68247,9 +68247,10 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Player_Human,15;
       bonus2 bIgnoreDefRaceRate,RC_Brute,15;
       bonus2 bIgnoreDefRaceRate,RC_Player_Doram,15;
-      bonus2 bSkillAtk,"SC_TRIANGLESHOT",2*(getskilllv("AC_DOUBLE"));
-      if (.@r>=12)
+      if (.@r>=12) {
          bonus2 bSkillCooldown,"GC_DARKCROW",-5000;
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",2*(getskilllv("AC_DOUBLE"));
+      }
   - Id: 15365
     AegisName: Vinus_Armor_TW
     Name: Venus Armor
@@ -68270,7 +68271,7 @@ Body:
       .@r = getrefine();
       .@lvl = getskilllv("AL_HEAL");
       bonus bMaxHPrate,.@lvl;
-      bonus bLongAtkDef,@lvl;
+      bonus bLongAtkDef,.@lvl;
       bonus bInt,2*(.@r/4);
       bonus bMdef,7*(.@r/4);
       if (.@r>=12) {
@@ -100879,7 +100880,7 @@ Body:
     Refineable: true
     Script: |
       bonus bMdef,10;
-      bonus bDelayrate,-2*(getrefine()/2);
+      bonus bDelayrate,-2*getrefine();
   - Id: 22072
     AegisName: Hikingboots
     Name: Hikingboots

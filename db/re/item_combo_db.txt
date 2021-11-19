@@ -2575,12 +2575,12 @@
 5932:1737,{ .@r = getequiprefinerycnt(EQI_HAND_R); if (BaseClass == Job_Ranger) { bonus2 bSkillAtk,"HT_BLITZBEAT",5*.@r; } }
 5932:18129,{ .@r = getequiprefinerycnt(EQI_HAND_R); if (BaseClass == Job_Ranger) { bonus2 bSkillAtk,"HT_BLITZBEAT",5*.@r; } }
 5934:4206,{ if (readparam(bLUK)>=77) { bonus2 bAddMonsterDropItem,22839,30; } /*Unknow Rate*/ }
-15136:4191,{ .@r = getrefine(); if (.@r==5) { bonus bDefEle,Ele_Earth; } if (.@r==6) { bonus bDefEle,Ele_Water; } if (.@r==7) { bonus bDefEle,Ele_Wind; } if (.@r==8) { bonus bDefEle,Ele_Fire; } if (.@r==9) { bonus bDefEle,Ele_Dark; } if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
-15136:4220,{ .@r = getrefine(); if (.@r==5) { bonus bDefEle,Ele_Earth; } if (.@r==6) { bonus bDefEle,Ele_Water; } if (.@r==7) { bonus bDefEle,Ele_Wind; } if (.@r==8) { bonus bDefEle,Ele_Fire; } if (.@r==9) { bonus bDefEle,Ele_Dark; } if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
-15136:4233,{ .@r = getrefine(); if (.@r==5) { bonus bDefEle,Ele_Earth; } if (.@r==6) { bonus bDefEle,Ele_Water; } if (.@r==7) { bonus bDefEle,Ele_Wind; } if (.@r==8) { bonus bDefEle,Ele_Fire; } if (.@r==9) { bonus bDefEle,Ele_Dark; } if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
-15136:4234,{ .@r = getrefine(); if (.@r==5) { bonus bDefEle,Ele_Earth; } if (.@r==6) { bonus bDefEle,Ele_Water; } if (.@r==7) { bonus bDefEle,Ele_Wind; } if (.@r==8) { bonus bDefEle,Ele_Fire; } if (.@r==9) { bonus bDefEle,Ele_Dark; } if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
-15136:4280,{ .@r = getrefine(); if (.@r==5) { bonus bDefEle,Ele_Earth; } if (.@r==6) { bonus bDefEle,Ele_Water; } if (.@r==7) { bonus bDefEle,Ele_Wind; } if (.@r==8) { bonus bDefEle,Ele_Fire; } if (.@r==9) { bonus bDefEle,Ele_Dark; } if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
-15136:4322,{ .@r = getrefine(); if (.@r==5) { bonus bDefEle,Ele_Earth; } if (.@r==6) { bonus bDefEle,Ele_Water; } if (.@r==7) { bonus bDefEle,Ele_Wind; } if (.@r==8) { bonus bDefEle,Ele_Fire; } if (.@r==9) { bonus bDefEle,Ele_Dark; } if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
+15136:4191,{ .@r = getequiprefinerycnt(EQI_ARMOR); if (.@r==5) { bonus bDefEle,Ele_Earth; } else if (.@r==6) { bonus bDefEle,Ele_Water; } else if (.@r==7) { bonus bDefEle,Ele_Wind; } else if (.@r==8) { bonus bDefEle,Ele_Fire; } else if (.@r==9) { bonus bDefEle,Ele_Dark; } else if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
+15136:4220,{ .@r = getequiprefinerycnt(EQI_ARMOR); if (.@r==5) { bonus bDefEle,Ele_Earth; } else if (.@r==6) { bonus bDefEle,Ele_Water; } else if (.@r==7) { bonus bDefEle,Ele_Wind; } else if (.@r==8) { bonus bDefEle,Ele_Fire; } else if (.@r==9) { bonus bDefEle,Ele_Dark; } else if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
+15136:4233,{ .@r = getequiprefinerycnt(EQI_ARMOR); if (.@r==5) { bonus bDefEle,Ele_Earth; } else if (.@r==6) { bonus bDefEle,Ele_Water; } else if (.@r==7) { bonus bDefEle,Ele_Wind; } else if (.@r==8) { bonus bDefEle,Ele_Fire; } else if (.@r==9) { bonus bDefEle,Ele_Dark; } else if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
+15136:4234,{ .@r = getequiprefinerycnt(EQI_ARMOR); if (.@r==5) { bonus bDefEle,Ele_Earth; } else if (.@r==6) { bonus bDefEle,Ele_Water; } else if (.@r==7) { bonus bDefEle,Ele_Wind; } else if (.@r==8) { bonus bDefEle,Ele_Fire; } else if (.@r==9) { bonus bDefEle,Ele_Dark; } else if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
+15136:4280,{ .@r = getequiprefinerycnt(EQI_ARMOR); if (.@r==5) { bonus bDefEle,Ele_Earth; } else if (.@r==6) { bonus bDefEle,Ele_Water; } else if (.@r==7) { bonus bDefEle,Ele_Wind; } else if (.@r==8) { bonus bDefEle,Ele_Fire; } else if (.@r==9) { bonus bDefEle,Ele_Dark; } else if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
+15136:4322,{ .@r = getequiprefinerycnt(EQI_ARMOR); if (.@r==5) { bonus bDefEle,Ele_Earth; } else if (.@r==6) { bonus bDefEle,Ele_Water; } else if (.@r==7) { bonus bDefEle,Ele_Wind; } else if (.@r==8) { bonus bDefEle,Ele_Fire; } else if (.@r==9) { bonus bDefEle,Ele_Dark; } else if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
 15136:4371,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus2 bSkillAtk,"PA_SHIELDCHAIN",5*(.@r/2); bonus2 bSkillAtk,"CR_DEVOTION",5*(.@r/2); }
 15136:4382,{ .@r = getrefine(); if (.@r==5) { bonus bDefEle,Ele_Earth; } if (.@r==6) { bonus bDefEle,Ele_Water; } if (.@r==7) { bonus bDefEle,Ele_Wind; } if (.@r==8) { bonus bDefEle,Ele_Fire; } if (.@r==9) { bonus bDefEle,Ele_Dark; } if (.@r>=10) { bonus bDefEle,Ele_Holy; } }
 15363:4303,{ bonus bBaseAtk,30; bonus bFlee,20; }
@@ -2590,7 +2590,7 @@
 18992:4230,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,.@r; }
 18992:4252,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bHPrecovRate,4*.@r; bonus bSPrecovRate,4*.@r; }
 18992:4327,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bVariableCastrate,-2*.@r; bonus2 bSkillAtk,"MG_FIREWALL",5*.@r; }
-19311:4115,{ .@r = getrefine(); bonus2 bHPDrainRate,-30,10; if (.@r>=9) { bonus2 bHPDrainRate,-30,30; } else if (.@r>=7) { bonus2 bHPDrainRate,-30,15; } }
+19311:4115,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus2 bHPDrainRate,-30,10; if (.@r>=9) { bonus2 bHPDrainRate,-30,30; } else if (.@r>=7) { bonus2 bHPDrainRate,-30,15; } }
 22070:4165,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bHPGainValue,30; bonus bSPGainValue,3; bonus bBaseAtk,10*(.@r/3); bonus bMatk,10*(.@r/3); }
 22070:4167,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bHPGainValue,30; bonus bSPGainValue,3; bonus bBaseAtk,10*(.@r/3); bonus bMatk,10*(.@r/3); }
 22070:4180,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bHPGainValue,30; bonus bSPGainValue,3; bonus bBaseAtk,10*(.@r/3); bonus bMatk,10*(.@r/3); }
@@ -2601,11 +2601,11 @@
 22070:4308,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bHPGainValue,30; bonus bSPGainValue,3; bonus bBaseAtk,10*(.@r/3); bonus bMatk,10*(.@r/3); }
 22070:4316,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bHPGainValue,30; bonus bSPGainValue,3; bonus bBaseAtk,10*(.@r/3); bonus bMatk,10*(.@r/3); }
 22070:4329,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bHPGainValue,30; bonus bSPGainValue,3; bonus bBaseAtk,10*(.@r/3); bonus bMatk,10*(.@r/3); }
-22071:2234,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10+(.@r/2); bonus bMatkRate,(.@r/2); }
-22071:2235,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10+(.@r/2); bonus2 bAddRace,RC_All,(.@r/2); }
+22071:2234,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10-(.@r/2); bonus bMatkRate,(.@r/2); }
+22071:2235,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10-(.@r/2); bonus2 bAddRace,RC_All,(.@r/2); }
 22071:4236,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10; bonus3 bAutoSpellWhenHit,"PR_KYRIE",10,-(30+70*(readparam(bInt)>=99)); bonus bAllStats,3*(.@r); /*TODO: Cancel auto spell bonus is not implemented in rAthena yet.*/}
-22071:5164,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10+(.@r/2); bonus bMatkRate,(.@r/2); }
-22071:5165,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10+(.@r/2); bonus2 bAddRace,RC_All,(.@r/2); }
+22071:5164,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10-(.@r/2); bonus bMatkRate,(.@r/2); }
+22071:5165,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bVariableCastrate,-10-(.@r/2); bonus2 bAddRace,RC_All,(.@r/2); }
 27002:4149,{ bonus2 bAddMonsterDropItem,664,30; bonus2 bAddMonsterDropItem,665,30; bonus2 bAddMonsterDropItem,666,30; bonus2 bAddMonsterDropItem,667,30; /*Unknow Rate*/ }
 27002:4187,{ bonus2 bAddMonsterDropItem,664,30; bonus2 bAddMonsterDropItem,665,30; bonus2 bAddMonsterDropItem,666,30; bonus2 bAddMonsterDropItem,667,30; /*Unknow Rate*/ }
 27002:4190,{ bonus2 bAddMonsterDropItem,664,30; bonus2 bAddMonsterDropItem,665,30; bonus2 bAddMonsterDropItem,666,30; bonus2 bAddMonsterDropItem,667,30; /*Unknow Rate*/ }
