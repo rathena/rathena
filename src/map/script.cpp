@@ -24258,13 +24258,9 @@ BUILDIN_FUNC(duplicate)
 	int class_ = dnd->class_;
 	uint8 dir = dnd->ud.dir;
 
-	if (script_hasdata(st, 3)) {
-		if (npc_name2id(script_getstr(st, 3)) != nullptr) {
-			ShowError("buildin_duplicate: NPC name '%s' is already in use!\n", script_getstr(st, 3));
-			return SCRIPT_CMD_FAILURE;
-		}
+	if (script_hasdata(st, 3))
 		strcpy(name, script_getstr(st, 3));
-	}
+
 	if (script_hasdata(st, 4)) {
 		if (!script_hasdata(st, 5) || !script_hasdata(st, 6)) {
 			ShowError("buildin_duplicate: NPC map is provided but x and y are missing!\n");
