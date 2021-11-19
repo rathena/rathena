@@ -4627,7 +4627,7 @@ struct npc_data* dup_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m,
 {
 	static char w1[128], w2[128], w3[128], w4[128];
 	const char* stat_buf = "- call from duplicate subsystem -\n";
-	char unique_name[NPC_NAME_LENGTH + 1];
+	char exname[NPC_NAME_LENGTH + 1];
 
 	snprintf(w1, sizeof(w1), "%s,%d,%d,%d", map_getmapdata(m)->name, x, y, dir);
 	snprintf(w2, sizeof(w2), "duplicate(%s)", dnd->exname);
@@ -4638,13 +4638,13 @@ struct npc_data* dup_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m,
 
 	//Making sure the generated name is not used for another npc.
 	int i = 0;
-	snprintf(unique_name, ARRAYLENGTH(unique_name), "%d_%d_%d_%d", i, m, x, y);
-	while (npc_name2id(unique_name) != nullptr) {
+	snprintf(exname, ARRAYLENGTH(exname), "%d_%d_%d_%d", i, m, x, y);
+	while (npc_name2id(exname) != nullptr) {
 		++i;
-		snprintf(unique_name, ARRAYLENGTH(unique_name), "%d_%d_%d_%d", i, m, x, y);
+		snprintf(exname, ARRAYLENGTH(exname), "%d_%d_%d_%d", i, m, x, y);
 	}
 
-	snprintf(w3, sizeof(w3), "%s::%s", name, unique_name);
+	snprintf(w3, sizeof(w3), "%s::%s", name, exname);
 
 	if (dnd->u.scr.xs >= 0 && dnd->u.scr.ys >= 0)
 		snprintf(w4, sizeof(w4), "%d,%d,%d", class_, dnd->u.scr.xs, dnd->u.scr.ys); // Touch Area
@@ -4655,12 +4655,12 @@ struct npc_data* dup_npc(npc_data* dnd, char name[NPC_NAME_LENGTH + 1], int16 m,
 
 	//run OnInit Events
 	char evname[EVENT_NAME_LENGTH];
-	safesnprintf(evname, EVENT_NAME_LENGTH, "%s::%s", unique_name, script_config.init_event_name);
+	safesnprintf(evname, EVENT_NAME_LENGTH, "%s::%s", exname, script_config.init_event_name);
 	if ((struct event_data*)strdb_get(ev_db, evname)) {
 		npc_event_do(evname);
 	}
 
-	return npc_name2id(unique_name);
+	return npc_name2id(exname);
 }
 
 const char *npc_get_script_event_name(int npce_index)
