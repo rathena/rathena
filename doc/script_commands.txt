@@ -6646,6 +6646,10 @@ provided it will generate a new name, if map,x,y,sprite,dir is not provided , it
 the values of the original npc.
 The duplicate NPC Unique name is returned on success.
 
+NOTE:
+	Duplicates will always have the same npc variables as the original npc
+	Editing a npc variable in a duplicate or the original npc will change it for the others.
+
 ---------------------------------------
 
 *cloakonnpc {"<NPC object name>"{,<character ID>}};
