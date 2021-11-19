@@ -98,6 +98,24 @@ bonus bAllStats,n; 			STR + n, AGI + n, VIT + n, INT + n, DEX + n, LUK + n
 bonus bAgiVit,n;   			AGI + n, VIT + n
 bonus bAgiDexStr,n;			STR + n, AGI + n, DEX + n
 
+Trait Stats
+-----------
+bonus bPow,n;      			POW + n
+bonus bSta,n;      			STA + n
+bonus bWis,n;      			WIS + n
+bonus bSpl,n;      			SPL + n
+bonus bCon,n;      			CON + n
+bonus bCrt,n;      			CRT + n
+
+Sub-Trait Stats
+---------------
+bonus bPatk,n;      		Power Attack (P.ATK) + n
+bonus bSmatk,n;      		Spell Magic Attack (S.MATK) + n
+bonus bHplus,n;      		Heal Plus (H.PLUS) + n
+bonus bCrate,n;      		Critical Rate (C.RATE) + n
+bonus bRes,n;      			Physical Resistance (RES) + n
+bonus bMres,n;      		Magic Resistance (MRES)  + n
+
 HP/SP
 -----
 bonus bMaxHP,n;    			MaxHP + n
