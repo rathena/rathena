@@ -13,11 +13,12 @@
 //============================================================
 
 prontera,150,175,4	script	Duplicate Test Script	909,{
-	mes "Hi.";mes "" + .test++;
+	mes "Hi.";
 	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
 	close;
 
 OnInit:
+	debugmes "222I am " + strnpcinfo(3);
 	getmapxy(.map$, .x, .y, BL_NPC);
 	end;
 
@@ -30,10 +31,10 @@ OnTouch:
 prontera,155,175,4	duplicate(Duplicate Test Script)	Duplicate Test2	909,2,2
 prontera,160,175,4	duplicate(Duplicate Test Script)	Duplicate Test3	909,3,3
 
-
+//duplicate command script
 prontera,150,168,4	script	Duplicate Command Test	909,{
 	mes "Would you like to create a new npc ?";
-	.@original_npc$ = "my_test_npc";
+	.@original_npc$ = "original_npc_unique_name";
 	switch(.@s = select("Provide No info:Witn Name:With Name and Map:With Name, Map and look:With Name, Map, look and dir:cancel")){
 		clear;
 		case 1:
@@ -54,7 +55,6 @@ prontera,150,168,4	script	Duplicate Command Test	909,{
 				end;
 			}
 			unitwarp(.@id,.@m$,.@x,$@y);
-			//if(.@s != 2) setnpcdisplay(.@new_npc$, "my test npc", 445);
 			mes "The npc is moved to " + .@m$ + "," + .@x + "," + $@y;
 			mes "Done";
 			end;
@@ -99,33 +99,18 @@ prontera,150,168,4	script	Duplicate Command Test	909,{
 			}
 			mes "Done";
 			close;
+			default:
+				mes "Ok, see you next time!";
+				close;
 	}
-end;
-OnInit:
-	duplicate("my_test_npc","duuup_oninit","prontera",155,160,443,2);
 end;
 }
 
-prontera,150,165,0	script	test npc::my_test_npc	444,{
-mes "" + .test++;
+prontera,150,165,0	script	test npc::original_npc_unique_name	444,{
 	getmapxy(.map$, .x, .y, BL_NPC);
 	mes "Hi.";
 	mes "My Unique Name is: " + strnpcinfo(3);
 	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
-	mes "OnInit " + .ONINIT_TEST;
 	close;
-
-//OnTimer10000:
-//	announce("My name is " + strnpcinfo(3),0);
-//	setnpctimer(0);
-//	end;
-
-OnInit:
-	$@OnInit_test++;
-	debugmes $@OnInit_test + "";
-	
-	.ONINIT_TEST = $@OnInit_test;
-	//initnpctimer;
-	
 	end;
 }
