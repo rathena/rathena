@@ -51749,15 +51749,15 @@ Body:
     Name: Spring Energy(3Lv)
     Type: Card
   - Id: 310671
-    AegisName: Spring_Warmth_1
+    AegisName: aegis_310671
     Name: Warmth of Spring(1Lv)
     Type: Card
   - Id: 310672
-    AegisName: Spring_Warmth_2
+    AegisName: aegis_310672
     Name: Warmth of Spring(2Lv)
     Type: Card
   - Id: 310673
-    AegisName: Spring_Warmth_3
+    AegisName: aegis_310673
     Name: Warmth of Spring(3Lv)
     Type: Card
   - Id: 310674
@@ -51765,216 +51765,456 @@ Body:
     Name: Star Cluster of Power Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bPow)/15);
-      bonus bShortAtkRate,.@val;
-      bonus bBaseAtk,5*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bShortAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bPow)/15);
+      .@g = getenchantgrade();
+      bonus bShortAtkRate,.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bShortAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bShortAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bShortAtkRate,.@param;
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bShortAtkRate,.@param;
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
       }
   - Id: 310675
     AegisName: Star_Cluster_Of_Pow2
     Name: Star Cluster of Power Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bPow)/15);
-      bonus bShortAtkRate,.@val;
-      bonus bBaseAtk,7*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bShortAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bPow)/15);
+      .@g = getenchantgrade();
+      bonus bShortAtkRate,.@param;
+      bonus bBaseAtk,7*.@param;
+      if (.@g>=1) {
+         bonus bShortAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bShortAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bShortAtkRate,.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bShortAtkRate,2*.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310676
     AegisName: Star_Cluster_Of_Pow3
     Name: Star Cluster of Power Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bPow)/15);
-      bonus bShortAtkRate,2*(readparam(bPow)/15);
-      bonus bBaseAtk,15*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bShortAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bPow)/15);
+      .@g = getenchantgrade();
+      bonus bShortAtkRate,2*.@param;
+      bonus bBaseAtk,15*.@param;
+      if (.@g>=1) {
+         bonus bShortAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bShortAtkRate,.@param;
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bShortAtkRate,2*.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bShortAtkRate,3*.@param;
+                  bonus bPAtk,3*.@param;
+               }
+            }
+         }
       }
   - Id: 310677
     AegisName: Star_Cluster_Of_Sta1
     Name: Star Cluster of Stamina Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bSta)/15);
-      bonus bMaxHPrate,.@val;
-      bonus bRes,.@val;
-      if (getenchantgrade() > 0) {
-         bonus bMaxHPrate,.@val;
-         bonus bRes,.@val;
+      .@param = (readparam(bSta)/15);
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,.@param;
+      bonus bRes,.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310678
     AegisName: Star_Cluster_Of_Sta2
     Name: Star Cluster of Stamina Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bSta)/15);
-      bonus bMaxHPrate,2*.@val;
-      bonus bRes,2*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bMaxHPrate,.@val;
-         bonus bRes,.@val;
+      .@param = (readparam(bSta)/15);
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,2*.@param;
+      bonus bRes,2*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,2*.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,2*.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310679
     AegisName: Star_Cluster_Of_Sta3
     Name: Star Cluster of Stamina Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bSta)/15);
-      bonus bMaxHPrate,3*.@val;
-      bonus bRes,4*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bMaxHPrate,.@val;
-         bonus bRes,.@val;
+      .@param = (readparam(bSta)/15);
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,3*.@param;
+      bonus bRes,4*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,2*.@param;
+            bonus bRes,2*.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,2*.@param;
+               bonus bRes,2*.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,3*.@param;
+                  bonus bRes,3*.@param;
+               }
+            }
+         }
       }
   - Id: 310680
     AegisName: Star_Cluster_Of_Con1
     Name: Star Cluster of Concentration Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bCon)/15);
-      bonus bLongAtkRate,.@val;
-      bonus bBaseAtk,5*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bLongAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bCon)/15);
+      .@g = getenchantgrade();
+      bonus bLongAtkRate,.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bLongAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bLongAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bLongAtkRate,.@param;
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bLongAtkRate,.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310681
     AegisName: Star_Cluster_Of_Con2
     Name: Star Cluster of Concentration Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bCon)/15);
-      bonus bLongAtkRate,2*.@val;
-      bonus bBaseAtk,7*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bLongAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bCon)/15);
+      .@g = getenchantgrade();
+      bonus bLongAtkRate,2*.@param;
+      bonus bBaseAtk,7*.@param;
+      if (.@g>=1) {
+         bonus bLongAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bLongAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bLongAtkRate,.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bLongAtkRate,2*.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310682
     AegisName: Star_Cluster_Of_Con3
     Name: Star Cluster of Concentration Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bCon)/15);
-      bonus bLongAtkRate,2*.@val;
-      bonus bBaseAtk,15*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bLongAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bCon)/15);
+      .@g = getenchantgrade();
+      bonus bLongAtkRate,2*.@param;
+      bonus bBaseAtk,15*.@param;
+      if (.@g>=1) {
+         bonus bLongAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bLongAtkRate,2*.@param;
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bLongAtkRate,2*.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bLongAtkRate,3*.@param;
+                  bonus bPAtk,3*.@param;
+               }
+            }
+         }
       }
   - Id: 310683
     AegisName: Star_Cluster_Of_Crt1
     Name: Star Cluster of Creative Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bCrt)/15);
-      bonus bCritAtkRate,.@val;
-      bonus bBaseAtk,5*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bCritAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bCrt)/15);
+      .@g = getenchantgrade();
+      bonus bCritAtkRate,.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bCritAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bCritAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bCritAtkRate,.@param;
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bCritAtkRate,.@param;
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
       }
   - Id: 310684
     AegisName: Star_Cluster_Of_Crt2
     Name: Star Cluster of Creative Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bCrt)/15);
-      bonus bCritAtkRate,2*.@val;
-      bonus bBaseAtk,7*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bCritAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bCrt)/15);
+      .@g = getenchantgrade();
+      bonus bCritAtkRate,2*.@param;
+      bonus bBaseAtk,7*.@param;
+      if (.@g>=1) {
+         bonus bCritAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bCritAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bCritAtkRate,.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bCritAtkRate,2*.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310685
     AegisName: Star_Cluster_Of_Crt3
     Name: Star Cluster of Creative Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bCrt)/15);
-      bonus bCritAtkRate,3*.@val;
-      bonus bBaseAtk,15*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bCritAtkRate,.@val;
-         bonus bPAtk,.@val;
+      .@param = (readparam(bCrt)/15);
+      .@g = getenchantgrade();
+      bonus bCritAtkRate,3*.@param;
+      bonus bBaseAtk,15*.@param;
+      if (.@g>=1) {
+         bonus bCritAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bCritAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bCritAtkRate,2*.@param;
+               bonus bPAtk,3*.@param;
+               if (.@g>=4) {
+                  bonus bCritAtkRate,3*.@param;
+                  bonus bCrate,.@param;
+               }
+            }
+         }
       }
   - Id: 310686
     AegisName: Star_Cluster_Of_Spl1
     Name: Star Cluster of Spell Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bSpl)/15);
-      bonus2 bMagicAtkEle,Ele_All,.@val;
-      bonus bMatk,5*.@val;
-      if (getenchantgrade() > 0) {
-         bonus2 bMagicAtkEle,Ele_All,.@val;
-         bonus bSmatk,.@val;
+      .@param = (readparam(bSpl)/15);
+      .@g = getenchantgrade();
+      bonus2 bMagicAtkEle,Ele_All,.@param;
+      bonus bMatk,5*.@param;
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_All,.@param;
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,.@param;
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus2 bMagicAtkEle,Ele_All,.@param;
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus2 bMagicAtkEle,Ele_All,.@param;
+                  bonus bSmatk,.@param;
+               }
+            }
+         }
       }
   - Id: 310687
     AegisName: Star_Cluster_Of_Spl2
     Name: Star Cluster of Spell Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bSpl)/15);
-      bonus2 bMagicAtkEle,Ele_All,2*.@val;
-      bonus bMatk,7*.@val;
-      if (getenchantgrade() > 0) {
-         bonus2 bMagicAtkEle,Ele_All,.@val;
-         bonus bSmatk,.@val;
+      .@param = (readparam(bSpl)/15);
+      .@g = getenchantgrade();
+      bonus2 bMagicAtkEle,Ele_All,2*.@param;
+      bonus bMatk,7*.@param;
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_All,.@param;
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,.@param;
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus2 bMagicAtkEle,Ele_All,2*.@param;
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus2 bMagicAtkEle,Ele_All,2*.@param;
+                  bonus bSmatk,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310688
     AegisName: Star_Cluster_Of_Spl3
     Name: Star Cluster of Spell Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bSpl)/15);
-      bonus2 bMagicAtkEle,Ele_All,3*.@val;
-      bonus bMatk,15*.@val;
-      if (getenchantgrade() > 0) {
-         bonus2 bMagicAtkEle,Ele_All,.@val;
-         bonus bSmatk,.@val;
+      .@param = (readparam(bSpl)/15);
+      .@g = getenchantgrade();
+      bonus2 bMagicAtkEle,Ele_All,3*.@param;
+      bonus bMatk,15*.@param;
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_All,.@param;
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,.@param;
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus2 bMagicAtkEle,Ele_All,2*.@param;
+               bonus bSmatk,2*.@param;
+               if (.@g>=4) {
+                  bonus2 bMagicAtkEle,Ele_All,3*.@param;
+                  bonus bSmatk,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310689
     AegisName: Star_Cluster_Of_Wis1
     Name: Star Cluster of Wisdom Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bWis)/15);
-      bonus bMaxSPrate,.@val;
-      bonus bHealPower,.@val;
-      if (getenchantgrade() > 0) {
-         bonus bMaxSPrate,.@val;
-         bonus bHealPower,.@val;
+      .@param = (readparam(bWis)/15);
+      .@g = getenchantgrade();
+      bonus bMaxSPrate,.@param;
+      bonus bHealPower,.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bSPrecovRate,.@param;
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bSPrecovRate,2*.@param;
+               bonus bMaxSPrate,.@param;
+               bonus bHealPower,2*.@param;
+               if (.@g>=4) {
+                  bonus bHplus,.@param;
+                  bonus bMaxSPrate,.@param;
+               }
+            }
+         }
       }
   - Id: 310690
     AegisName: Star_Cluster_Of_Wis2
     Name: Star Cluster of Wisdom Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bWis)/15);
-      bonus bMaxSPrate,.@val;
-      bonus bHealPower,3*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bMaxSPrate,.@val;
-         bonus bHealPower,2*.@val;
+      .@param = (readparam(bWis)/15);
+      .@g = getenchantgrade();
+      bonus bMaxSPrate,.@param;
+      bonus bHealPower,3*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,2*.@param;
+         if (.@g>=2) {
+            bonus bSPrecovRate,.@param;
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bSPrecovRate,2*.@param;
+               bonus bHplus,.@param;
+               bonus bMaxSPrate,.@param;
+               if (.@g>=4) {
+                  bonus bHplus,2*.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310691
     AegisName: Star_Cluster_Of_Wis3
     Name: Star Cluster of Wisdom Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bWis)/15);
-      bonus bMaxSPrate,2*.@val;
-      bonus bHealPower,5*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bMaxSPrate,.@val;
-         bonus bHealPower,2*.@val;
+      .@param = (readparam(bWis)/15);
+      .@g = getenchantgrade();
+      bonus bMaxSPrate,2*.@param;
+      bonus bHealPower,5*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,2*.@param;
+         if (.@g>=2) {
+            bonus bSPrecovRate,2*.@param;
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bSPrecovRate,3*.@param;
+               bonus bHplus,2*.@param;
+               bonus bMaxSPrate,2*.@param;
+               if (.@g>=4) {
+                  bonus bHplus,3*.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310692
     AegisName: Star_Of_Mettle1
@@ -52846,28 +53086,43 @@ Body:
     Name: Power of Varmundt Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bPow)/20);
+      .@param = (readparam(bPow)/20);
+      .@g = getenchantgrade();
       bonus bPow,1;
-      bonus bPAtk,.@val;
-      bonus bBaseAtk,3*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bPAtk,.@val;
+      bonus bPAtk,.@param;
+      bonus bBaseAtk,3*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
       }
   - Id: 310921
     AegisName: Barmund_Pow2
     Name: Power of Varmundt Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bPow)/20);
+      .@param = (readparam(bPow)/20);
+      .@g = getenchantgrade();
       bonus bPow,2;
-      bonus bPAtk,2*.@val;
-      bonus bBaseAtk,4*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 4) {
-            bonus bPAtk,.@val*2;
-         }
-         else {
-            bonus bPAtk,.@val;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,4*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310922
@@ -52875,40 +53130,65 @@ Body:
     Name: Power of Varmundt Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bPow)/20);
+      .@param = (readparam(bPow)/20);
+      .@g = getenchantgrade();
       bonus bPow,3;
-      bonus bPAtk,3*.@val;
-      bonus bBaseAtk,5*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bPAtk,.@val;
+      bonus bPAtk,3*.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310923
     AegisName: Barmund_Spl1
     Name: Spell of Varmundt Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bSpl)/20);
+      .@param = (readparam(bSpl)/20);
+      .@g = getenchantgrade();
       bonus bSpl,1;
-      bonus bSmatk,.@val;
-      bonus bMatk,3*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bSmatk,.@val;
+      bonus bSmatk,.@param;
+      bonus bMatk,3*.@param;
+      if (.@g>=1) {
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus bSmatk,.@param;
+               }
+            }
+         }
       }
   - Id: 310924
     AegisName: Barmund_Spl2
     Name: Spell of Varmundt Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bSpl)/20);
+      .@param = (readparam(bSpl)/20);
+      .@g = getenchantgrade();
       bonus bSpl,2;
-      bonus bSmatk,2*.@val;
-      bonus bMatk,4*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 4) {
-            bonus bSmatk,.@val*2;
-         }
-         else {
-            bonus bSmatk,.@val;
+      bonus bSmatk,2*.@param;
+      bonus bMatk,4*.@param;
+      if (.@g>=1) {
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus bSmatk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310925
@@ -52916,16 +53196,21 @@ Body:
     Name: Spell of Varmundt Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bSpl)/20);
+      .@param = (readparam(bSpl)/20);
+      .@g = getenchantgrade();
       bonus bSpl,3;
-      bonus bSmatk,3*.@val;
-      bonus bMatk,5*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 1) {
-            bonus bSmatk,.@val;
-         }
-         else {
-            bonus bSmatk,.@val*2;
+      bonus bSmatk,3*.@param;
+      bonus bMatk,5*.@param;
+      if (.@g>=1) {
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus bSmatk,2*.@param;
+            if (.@g>=3) {
+               bonus bSmatk,2*.@param;
+               if (.@g>=4) {
+                  bonus bSmatk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310926
@@ -52933,28 +53218,43 @@ Body:
     Name: Concentration of Varmundt Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bCon)/20);
+      .@param = (readparam(bCon)/20);
+      .@g = getenchantgrade();
       bonus bCon,1;
-      bonus bPAtk,.@val;
-      bonus bBaseAtk,3*.@val;
-      if (getenchantgrade() > 0) {
-         bonus bPAtk,.@val;
+      bonus bPAtk,.@param;
+      bonus bBaseAtk,3*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
       }
   - Id: 310927
     AegisName: Barmund_Con2
     Name: Concentration of Varmundt Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bCon)/20);
+      .@param = (readparam(bCon)/20);
+      .@g = getenchantgrade();
       bonus bCon,2;
-      bonus bPAtk,2*.@val;
-      bonus bBaseAtk,4*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 4) {
-            bonus bPAtk,.@val*2;
-         }
-         else {
-            bonus bPAtk,.@val;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,4*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310928
@@ -52962,16 +53262,21 @@ Body:
     Name: Concentration of Varmundt Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bCon)/20);
+      .@param = (readparam(bCon)/20);
+      .@g = getenchantgrade();
       bonus bCon,3;
-      bonus bPAtk,3*.@val;
-      bonus bBaseAtk,5*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 1) {
-            bonus bPAtk,.@val;
-         }
-         else {
-            bonus bPAtk,.@val*2;
+      bonus bPAtk,3*.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310929
@@ -52979,17 +53284,22 @@ Body:
     Name: Creative of Varmundt Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bCrt)/20);
+      .@param = (readparam(bCrt)/20);
+      .@g = getenchantgrade();
       bonus bCrt,1;
-      bonus bCritAtkRate,3*.@val;
-      bonus bPAtk,.@val;
-      bonus bBaseAtk,3*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 4) {
-            bonus bPAtk,.@val*2;
-         }
-         else {
-            bonus bPAtk,.@val;
+      bonus bCritAtkRate,3*.@param;
+      bonus bPAtk,.@param;
+      bonus bBaseAtk,3*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310930
@@ -52997,17 +53307,22 @@ Body:
     Name: Creative of Varmundt Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bCrt)/20);
+      .@param = (readparam(bCrt)/20);
+      .@g = getenchantgrade();
       bonus bCrt,2;
-      bonus bCritAtkRate,4*.@val;
-      bonus bPAtk,2*.@val;
-      bonus bBaseAtk,4*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 4) {
-            bonus bPAtk,.@val*2;
-         }
-         else {
-            bonus bPAtk,.@val;
+      bonus bCritAtkRate,4*.@param;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,4*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310932
@@ -53015,17 +53330,22 @@ Body:
     Name: Creative of Varmundt Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bCrt)/20);
+      .@param = (readparam(bCrt)/20);
+      .@g = getenchantgrade();
       bonus bCrt,3;
-      bonus bCritAtkRate,5*.@val;
-      bonus bPAtk,2*.@val;
-      bonus bBaseAtk,5*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 4) {
-            bonus bPAtk,.@val*2;
-         }
-         else {
-            bonus bPAtk,.@val;
+      bonus bCritAtkRate,5*.@param;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
          }
       }
   - Id: 310933
@@ -53033,119 +53353,156 @@ Body:
     Name: Wisdom of Varmundt Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bWis)/20);
+      .@param = (readparam(bWis)/20);
+      .@g = getenchantgrade();
       bonus bWis,1;
-      bonus bMaxSPrate,.@val;
-      bonus bHealPower,.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() > 2) {
-            bonus bHealPower,.@val*2;
+      bonus bMaxSPrate,.@param;
+      bonus bHealPower,.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,.@param;
+            if (.@g>=3) {
+               bonus bMaxSPrate,.@param;
+               bonus bHealPower,2*.@param;
+               if (.@g>=4) {
+                  bonus bMaxSPrate,.@param;
+                  bonus bHealPower,2*.@param;
+               }
+            }
          }
-         else {
-            bonus bHealPower,.@val;
-         }
-         bonus bMaxSPrate,.@val;
       }
   - Id: 310934
     AegisName: Barmund_Wis2
     Name: Wisdom of Varmundt Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bWis)/20);
+      .@param = (readparam(bWis)/20);
       .@g = getenchantgrade();
       bonus bWis,2;
-      bonus bMaxSPrate,2*.@val;
-      bonus bHealPower,2*.@val;
-      if (.@g == 1) {
-         bonus bHealPower,.@val;
-         bonus bMaxSPrate,.@val;
-      }
-      else if (.@g == 2 || .@g == 3) {
-         bonus bHealPower,.@val*2;
-         bonus bMaxSPrate,.@val;
-      }
-      else if (.@g == 4) {
-         bonus bHplus,.@val;
-         bonus bMaxSPrate,2*.@val;
+      bonus bMaxSPrate,2*.@param;
+      bonus bHealPower,2*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bMaxSPrate,.@param;
+               bonus bHealPower,2*.@param;
+               if (.@g>=4) {
+                  bonus bHplus,.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310935
     AegisName: Barmund_Wis3
     Name: Wisdom of Varmundt Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bWis)/20);
+      .@param = (readparam(bWis)/20);
       .@g = getenchantgrade();
       bonus bWis,3;
-      bonus bMaxSPrate,3*.@val;
-      bonus bHealPower,3*.@val;
-      if (.@g == 1) {
-         bonus bHealPower,.@val;
-         bonus bMaxSPrate,.@val;
-      }
-      else if (.@g == 2) {
-         bonus bHealPower,.@val*2;
-         bonus bMaxSPrate,.@val;
-      }
-      else if (.@g == 3) {
-         bonus bHplus,.@val;
-         bonus bMaxSPrate,.@val;
-      }
-      else if (.@g == 4) {
-         bonus bHplus,2*.@val;
-         bonus bMaxSPrate,2*.@val;
+      bonus bMaxSPrate,3*.@param;
+      bonus bHealPower,3*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bHplus,.@param;
+               bonus bMaxSPrate,.@param;
+               if (.@g>=4) {
+                  bonus bHplus,2*.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310936
     AegisName: Barmund_Sta1
     Name: Stamina of Varmundt Lv1
     Type: Card
     Script: |
-      .@val = (readparam(bSta)/20);
+      .@param = (readparam(bSta)/20);
+      .@g = getenchantgrade();
       bonus bSta,1;
-      bonus bMaxHP,250*.@val;
-      bonus bRes,.@val;
-      if (getenchantgrade() > 0) {
-         bonus bRes,.@val;
-         bonus bMaxHPrate,.@val;
+      bonus bMaxHP,250*.@param;
+      bonus bRes,.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,.@param;
+                  bonus bRes,.@param;
+               }
+            }
+         }
       }
   - Id: 310937
     AegisName: Barmund_Sta2
     Name: Stamina of Varmundt Lv2
     Type: Card
     Script: |
-      .@val = (readparam(bSta)/20);
+      .@param = (readparam(bSta)/20);
+      .@g = getenchantgrade();
       bonus bSta,2;
-      bonus bMaxHP,400*.@val;
-      bonus bRes,2*.@val;
-      if (getenchantgrade() > 0) {
-         if (getenchantgrade() == 4) {
-            bonus bRes,.@val*2;
+      bonus bMaxHP,400*.@param;
+      bonus bRes,2*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
          }
-         else {
-            bonus bRes,.@val;
-         }
-         bonus bMaxHPrate,.@val;
       }
   - Id: 310938
     AegisName: Barmund_Sta3
     Name: Stamina of Varmundt Lv3
     Type: Card
     Script: |
-      .@val = (readparam(bSta)/20);
+      .@param = (readparam(bSta)/20);
       .@g = getenchantgrade();
       bonus bSta,3;
-      bonus bMaxHP,600*.@val;
-      bonus bRes,3*.@val;
-      if (.@g == 1 || .@g == 2) {
-         bonus bRes,.@val;
-         bonus bMaxHPrate,.@val;
-      }
-      else if (.@g == 3) {
-         bonus bRes,.@val;
-         bonus bMaxHPrate,2*.@val;
-      }
-      else if (.@g == 4) {
-         bonus bRes,2*.@val;
-         bonus bMaxHPrate,2*.@val;
+      bonus bMaxHP,600*.@param;
+      bonus bRes,3*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,2*.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,2*.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
+         }
       }
   - Id: 310982
     AegisName: PATK_1Lv
@@ -53347,7 +53704,7 @@ Body:
     Script: |
       bonus bDelayrate,-5;
   - Id: 311015
-    AegisName: Barmund_Crt
+    AegisName: aegis_311015
     Name: Creative Stone (Dual)    # !todo check english name
     Type: Card
     Script: |
@@ -53483,8 +53840,9 @@ Body:
     Name: Fine Tuning Device (Frozen Crimson)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"AG_FROZEN_SLASH",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",25+5*.@g;
+      bonus2 bSkillAtk,"AG_FROZEN_SLASH",25+5*.@g;
   - Id: 311038
     AegisName: Gear_AG2
     Name: Fine Tuning Device (Crystal Impact)    # !todo check english name
@@ -53508,8 +53866,9 @@ Body:
     Name: Fine Tuning Device (Configuration)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"EM_CONFLAGRATION",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",25+5*.@g;
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",25+5*.@g;
   - Id: 311042
     AegisName: Gear_EM2
     Name: Fine Tuning Device (Varetir Spear)    # !todo check english name
@@ -53533,8 +53892,9 @@ Body:
     Name: Fine Tuning Device (Judgment Faith)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"IQ_SECOND_FAITH",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"IQ_SECOND_FAITH",25+5*.@g;
+      bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",25+5*.@g;
   - Id: 311046
     AegisName: Gear_IQ2
     Name: Precision Tuning Device (Give Up Purification)    # !todo check english name
@@ -53590,20 +53950,36 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",25+5*getenchantgrade();
+  - Id: 311055
+    AegisName: Gear_NW1
+    Name: Fine Tuning Device (Magazine Bullet)    # !todo check english name
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",25+5*.@g;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25+5*.@g;
+  - Id: 311056
+    AegisName: Gear_NW2
+    Name: Fine Tuning Device (Vigilant Wild)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NW_WILD_FIRE",25+5*getenchantgrade();
   - Id: 311057
     AegisName: Gear_HN1
     Name: Fine Tuning Device (Double Bowling Bash)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",25+5*.@g;
+      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",25+5*.@g;
   - Id: 311058
     AegisName: Gear_HN2
     Name: Fine Tuning Device (Spiral Pierce Max)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",25+5*.@g;
+      bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",25+5*.@g;
   - Id: 311059
     AegisName: Gear_SS1
     Name: Fine Tuning Device (Shadow Dance)    # !todo check english name
@@ -53621,8 +53997,9 @@ Body:
     Name: Fine Tuning Device (Rhythm Rose)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",25+5*.@g;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",25+5*.@g;
   - Id: 311062
     AegisName: Gear_TR2
     Name: Fine Tuning Device (Severe Rainstorm)    # !todo check english name
@@ -53634,15 +54011,17 @@ Body:
     Name: Precision Tuning Device (Four Bride)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",25+5*.@g;
+      bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",25+5*.@g;
   - Id: 311064
     AegisName: Gear_SH2
     Name: Precision Tuning Device (Yeongdo Department)    # !todo check english name
     Type: Card
     Script: |
-      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",25+5*getenchantgrade();
-      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",25+5*getenchantgrade();
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",25+5*.@g;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",25+5*.@g;
   - Id: 311076
     AegisName: POW_1Lv
     Name: POW Lv1
