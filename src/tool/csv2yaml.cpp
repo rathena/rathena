@@ -4162,8 +4162,11 @@ static bool read_constdb(char* fields[], int columns, int current) {
 static bool pc_readdb_job2(char* fields[], int columns, int current) {
 	std::vector<int> stats;
 
+	stats.resize(MAX_LEVEL);
+	std::fill(stats.begin(), stats.end(), 0); // Fill with 0 so we don't produce arbitrary stats
+
 	for (int i = 1; i < columns; i++)
-		stats.insert(stats.begin() + i - 1, atoi(fields[i]));
+		stats[i - 1] = atoi(fields[i]);
 
 	job_db2.insert({ atoi(fields[0]), stats });
 	return true;
@@ -4258,22 +4261,26 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current) {
 	body << YAML::BeginSeq;
 
 	int j = 0, job_id = jobs[0], endlvl = 0;
-	auto it_level = exp_base_level.find(job_id);
 
-	if (it_level != exp_base_level.end())
-		endlvl = it_level->second;
-	else {
-		ShowError("pc_readdb_job_basehpsp: The job_exp database needs to be imported into memory before converting the job_basehpsp_db database.\n");
-		return false;
+	// Find the highest level in the group of jobs
+	for (int i = 0; i < job_count; i++) {
+		auto it_level = exp_base_level.find(jobs[i]);
+		int tmplvl;
+
+		if (it_level != exp_base_level.end())
+			tmplvl = it_level->second;
+		else {
+			ShowError("pc_readdb_job_basehpsp: The job_exp database needs to be imported into memory before converting the job_basehpsp_db database.\n");
+			return false;
+		}
+
+		if (endlvl < tmplvl)
+			endlvl = tmplvl;
 	}
 
 	// These jobs don't have values less than level 99
-	if ((job_id >= JOB_RUNE_KNIGHT && job_id <= JOB_BABY_MECHANIC2) || job_id == JOB_KAGEROU || job_id == JOB_OBORO || job_id == JOB_REBELLION || job_id == JOB_BABY_KAGEROU || job_id == JOB_BABY_OBORO || job_id == JOB_BABY_REBELLION)
+	if ((job_id >= JOB_RUNE_KNIGHT && job_id <= JOB_BABY_MECHANIC2) || job_id == JOB_KAGEROU || job_id == JOB_OBORO || job_id == JOB_REBELLION || job_id == JOB_BABY_KAGEROU || job_id == JOB_BABY_OBORO || job_id == JOB_BABY_REBELLION || job_id >= JOB_STAR_EMPEROR)
 		j = 98;
-
-	// Gunslinger and Rebellion share SP fields by default, so use Rebellion's level instead of Gunslinger
-	if (type == 1 && job_count == 2 && jobs[0] == JOB_GUNSLINGER && jobs[1] == JOB_REBELLION)
-		endlvl = exp_base_level.find(JOB_REBELLION)->second;
 
 	if (type == 0) { // HP
 		for (; j < endlvl; j++) {

@@ -12333,34 +12333,6 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 			}
 
-			if (this->nodeExists(node, "BonusStats")) {
-				const YAML::Node &bonusNode = node["BonusStats"];
-				job->job_bonus.resize(MAX_LEVEL);
-
-				for (const YAML::Node &levelNode : bonusNode) {
-					uint16 level;
-
-					if (!this->asUInt16(levelNode, "Level", level))
-						return 0;
-
-					if (level > MAX_LEVEL) {
-						this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
-						return 0;
-					}
-
-					for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
-						if (this->nodeExists(levelNode, parameter_names[idx])) {
-							int16 change;
-
-							if (!this->asInt16(levelNode, parameter_names[idx], change))
-								return 0;
-
-							job->job_bonus[level - 1][idx] = change;
-						}
-					}
-				}
-			}
-
 			if (this->nodeExists(node, "MaxStats")) {
 				const YAML::Node &statNode = node["MaxStats"];
 
@@ -12393,7 +12365,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asUInt16(node, "MaxBaseLevel", level))
 					return 0;
 
-				if (level > MAX_LEVEL) {
+				if (level == 0 || level > MAX_LEVEL) {
 					this->invalidWarning(node["MaxBaseLevel"], "MaxBaseLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
 					level = MAX_LEVEL;
 				}
@@ -12411,7 +12383,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(bexpNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12433,7 +12408,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asUInt16(node, "MaxJobLevel", level))
 					return 0;
 
-				if (level > MAX_LEVEL) {
+				if (level == 0 || level > MAX_LEVEL) {
 					this->invalidWarning(node["MaxJobLevel"], "MaxJobLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
 					level = MAX_LEVEL;
 				}
@@ -12452,7 +12427,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(jexpNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > job->max_job_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(jexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12468,9 +12446,38 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 			}
 
+			if (this->nodeExists(node, "BonusStats")) {
+				const YAML::Node &bonusNode = node["BonusStats"];
+				job->job_bonus.resize(job->max_job_level);
+
+				for (const YAML::Node &levelNode : bonusNode) {
+					uint16 level;
+
+					if (!this->asUInt16(levelNode, "Level", level))
+						return 0;
+
+					if (level == 0 || level > MAX_LEVEL) {
+						this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+					for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
+						if (this->nodeExists(levelNode, parameter_names[idx])) {
+							int16 change;
+
+							if (!this->asInt16(levelNode, parameter_names[idx], change))
+								return 0;
+
+							job->job_bonus[level - 1][idx] = change;
+						}
+					}
+				}
+			}
+
 #ifdef HP_SP_TABLES
 			if (this->nodeExists(node, "BaseHp")) {
-				job->base_hp.resize(job->max_base_level, 1);
+				job->base_hp.resize(job->max_base_level);
+				std::fill(job->base_hp.begin(), job->base_hp.end(), 0);
 
 				for (const YAML::Node &bhpNode : node["BaseHp"]) {
 					uint16 level;
@@ -12478,7 +12485,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(bhpNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bhpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12495,7 +12505,8 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseSp")) {
-				job->base_sp.resize(job->max_base_level, 1);
+				job->base_sp.resize(job->max_base_level);
+				std::fill(job->base_sp.begin(), job->base_sp.end(), 0);
 
 				for (const YAML::Node &bspNode : node["BaseSp"]) {
 					uint16 level;
@@ -12503,7 +12514,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(bspNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bspNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12520,7 +12534,8 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseAp")) {
-				job->base_ap.resize(job->max_base_level, 1);
+				job->base_ap.resize(job->max_base_level);
+				std::fill(job->base_ap.begin(), job->base_ap.end(), 0);
 
 				for (const YAML::Node &bapNode : node["BaseAp"]) {
 					uint16 level;
@@ -12528,7 +12543,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(bapNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bapNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12572,21 +12590,22 @@ void JobDatabase::loadingFinished() {
 			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(job_id), job_id);
 
 		// Init and checking the empty value of Base HP/SP [Cydh]
-		if (job->base_hp.size() == 0)
+		if (job->base_hp.empty())
 			job->base_hp.resize(maxBaseLv);
 		for (uint16 j = 0; j < maxBaseLv; j++) {
 			if (job->base_hp[j] == 0)
 				job->base_hp[j] = pc_calc_basehp(j + 1, job_id);
 		}
-		if (job->base_sp.size() == 0)
-			job->base_sp.resize(maxJobLv);
-		for (uint16 j = 0; j < maxJobLv; j++) {
+		if (job->base_sp.empty())
+			job->base_sp.resize(maxBaseLv);
+		for (uint16 j = 0; j < maxBaseLv; j++) {
 			if (job->base_sp[j] == 0)
 				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
 		}
 
 		// Resize for the maximum job level
-		job->job_bonus.resize(maxJobLv);
+		if (job->job_bonus.size() != maxJobLv)
+			job->job_bonus.resize(maxJobLv);
 
 		for (uint16 parameter = PARAM_STR; parameter < PARAM_MAX; parameter++) {
 			// Store total
