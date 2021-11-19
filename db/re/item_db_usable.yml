@@ -46855,6 +46855,15 @@ Body:
     EquipLevelMin: 1
     Script: |
       getgroupitem(IG_Something_Candy_Holder);
+  - Id: 22839
+    AegisName: Happy_Box_J
+    Name: Happy Box
+    Type: Usable
+    Buy: 10
+    Weight: 200
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Happy_Box_J);
   - Id: 22842
     AegisName: Sealed_Dracula_Scroll_II
     Name: Sealed Dracula Scroll II

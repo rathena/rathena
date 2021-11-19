@@ -7822,7 +7822,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bHPDrainRate,50,20;
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
   - Id: 4368
     AegisName: Shecil_Card
     Name: Cecil Damon Card
@@ -9674,7 +9674,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       bonus2 bHPDrainRate,50,((getrefine()>14)?15:10);
   - Id: 4492
     AegisName: Sealed_Orc_Hero_Card
@@ -38160,6 +38160,24 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 27002
+    AegisName: XM_Mystcase_Card_J
+    Name: Horror of Xmas Giftcase Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddMonsterDropItem,664,30;
+      bonus2 bAddMonsterDropItem,665,30;
+      bonus2 bAddMonsterDropItem,666,30;
+      bonus2 bAddMonsterDropItem,667,30;
+      /*Unknow Rate*/
   - Id: 27012
     AegisName: Kick_Step_Card
     Name: Kick Step Card
