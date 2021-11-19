@@ -3038,9 +3038,22 @@ std::string createItemLink(struct s_item_link *data)
 		itemstr += "&" + base62_encode(id->look);
 	}
 
+#if PACKETVER < 20200101
+	std::string card_sep = "(";
+	std::string optid_sep = "*";
+	std::string optpar_sep = "+";
+	std::string optval_sep = ",";
+#else
+	// I don't know since when the client change the separators
+	std::string card_sep = ")";
+	std::string optid_sep = "+";
+	std::string optpar_sep = ",";
+	std::string optval_sep = "-";
+#endif
+
 	if (data->flag.cards) {
 		for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-			itemstr += "(0" + ((data->item.card[i] != 0) ? base62_encode(data->item.card[i]) : "0");
+			itemstr += card_sep + "0" + ((data->item.card[i] != 0) ? base62_encode(data->item.card[i]) : "0");
 		}
 	}
 
@@ -3048,11 +3061,11 @@ std::string createItemLink(struct s_item_link *data)
 	if (data->flag.options) {
 		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
 			// Option ID
-			itemstr += "*0" + ((data->item.option[i].id != 0) ? base62_encode(data->item.option[i].id) : "0");
+			itemstr += optid_sep + "0" + ((data->item.option[i].id != 0) ? base62_encode(data->item.option[i].id) : "0");
 			// Param
-			itemstr += "+0" + ((data->item.option[i].param != 0) ? base62_encode(data->item.option[i].param) : "0");
+			itemstr += optpar_sep + "0" + ((data->item.option[i].param != 0) ? base62_encode(data->item.option[i].param) : "0");
 			// Value
-			itemstr += ",0" + ((data->item.option[i].value != 0) ? base62_encode(data->item.option[i].value) : "0");
+			itemstr += optval_sep + "0" + ((data->item.option[i].value != 0) ? base62_encode(data->item.option[i].value) : "0");
 		}
 	}
 #endif
