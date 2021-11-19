@@ -18,7 +18,6 @@ prontera,150,175,4	script	Duplicate Test Script	909,{
 	close;
 
 OnInit:
-	debugmes "222I am " + strnpcinfo(3);
 	getmapxy(.map$, .x, .y, BL_NPC);
 	end;
 
