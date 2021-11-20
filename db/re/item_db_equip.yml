@@ -79684,6 +79684,20 @@ Body:
             if (.@r >= 9)
                bonus bCritical,5;
       }
+  - Id: 18962
+    AegisName: Panda_Balloon
+    Name: Panda Balloon
+    Type: Armor
+    Weight: 200
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1115
+    Script: |
+      bonus bAllStats,1;
+      bonus bAspd,1;
+      bonus bUnbreakableHelm;
   - Id: 18968
     AegisName: Jinn_Marin_Balloon
     Name: Demon Blue Poring Bubble
@@ -94996,6 +95010,30 @@ Body:
       hateffect(HAT_EF_C_POPPING_PORING_AURA,true);
     UnEquipScript: |
       hateffect(HAT_EF_C_POPPING_PORING_AURA,false);
+  - Id: 20556
+    AegisName: C_99LV_ShadowC_Black
+    Name: Costume Aura of Night
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_ShadowC_Black,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_ShadowC_Black,false);
+  - Id: 20567
+    AegisName: C_160LV_ShadowC_Black
+    Name: Costume Aura of Darkness
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_160LV_ShadowC_Black,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_ShadowC_Black,false);
   - Id: 20570
     AegisName: C_HeartChocoBag
     Name: Costume HeartChocoBag
@@ -98680,6 +98718,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 92
+  - Id: 20989
+    AegisName: C_Mainspring_Screw
+    Name: Costume Mainspring Screw
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 93
   - Id: 20990
     AegisName: C_Rotating_Gears
     Name: "Costume: Rotating Gears"
@@ -132947,6 +132993,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2095
+  - Id: 410095
+    AegisName: C_White_Cat_On_Shoulder
+    Name: Costume White Cat on Shoulder
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2151
   - Id: 420003
     AegisName: CD_In_MouthK
     Name: CD in Mouth
@@ -133083,6 +133137,14 @@ Body:
     ArmorLevel: 1
     Script: |
       bonus bShortAtkRate,5;
+  - Id: 420033
+    AegisName: aegis_420033
+    Name: Costume Airy Twin Tails (White)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2028
   - Id: 420053
     AegisName: C_Shadow_Devil
     Name: Costume Shadow Devil
@@ -133105,6 +133167,14 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bVariableCastrate,-3;
+  - Id: 420079
+    AegisName: aegis_420079
+    Name: Costume Inner Color Long
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2155
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
