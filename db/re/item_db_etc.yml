@@ -51737,27 +51737,27 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,4;
   - Id: 310668
-    AegisName: aegis_310668
+    AegisName: Spring_Energy_1
     Name: Spring Energy(1Lv)
     Type: Card
   - Id: 310669
-    AegisName: aegis_310669
+    AegisName: Spring_Energy_2
     Name: Spring Energy(2Lv)
     Type: Card
   - Id: 310670
-    AegisName: aegis_310670
+    AegisName: Spring_Energy_3
     Name: Spring Energy(3Lv)
     Type: Card
   - Id: 310671
-    AegisName: aegis_310671
+    AegisName: Spring_Warmth_1
     Name: Warmth of Spring(1Lv)
     Type: Card
   - Id: 310672
-    AegisName: aegis_310672
+    AegisName: Spring_Warmth_2
     Name: Warmth of Spring(2Lv)
     Type: Card
   - Id: 310673
-    AegisName: aegis_310673
+    AegisName: Spring_Warmth_3
     Name: Warmth of Spring(3Lv)
     Type: Card
   - Id: 310674
@@ -53711,133 +53711,133 @@ Body:
       bonus bCrt,5;
   - Id: 311016
     AegisName: Gear_ATK
-    Name: Clockwork (ATK)    # !todo check english name
+    Name: Clockwork (Atk)
     Type: Card
     Script: |
       bonus2 bAddClass,Class_All,15+5*getenchantgrade();
   - Id: 311017
     AegisName: Gear_MATK
-    Name: Clockwork (MATK)    # !todo check english name
+    Name: Clockwork (Matk)
     Type: Card
     Script: |
       bonus bMatkRate,15+5*getenchantgrade();
   - Id: 311018
     AegisName: Gear_ASPD
-    Name: Clockwork (delay after attack)    # !todo check english name
+    Name: Clockwork (Delay After Attack)
     Type: Card
     Script: |
       bonus bAspdRate,15+5*getenchantgrade();
   - Id: 311019
     AegisName: Gear_CAST
-    Name: Clockwork (variable casting)    # !todo check english name
+    Name: Clockwork (Variable Casting)
     Type: Card
     Script: |
       bonus bVariableCastrate,-15-5*getenchantgrade();
   - Id: 311020
     AegisName: Gear_SKILL
-    Name: Clockwork (delay after skill)    # !todo check english name
+    Name: Clockwork (Delay After Skill)
     Type: Card
     Script: |
       bonus bDelayrate,-10-5*getenchantgrade();
   - Id: 311021
     AegisName: Gear_POW
-    Name: Clockwork (POW)    # !todo check english name
+    Name: Clockwork (POW)
     Type: Card
     Script: |
       bonus bPow,3+getenchantgrade();
   - Id: 311022
     AegisName: Gear_SPL
-    Name: Clockwork (SPL)    # !todo check english name
+    Name: Clockwork (SPL)
     Type: Card
     Script: |
       bonus bSpl,3+getenchantgrade();
   - Id: 311023
     AegisName: Gear_STA
-    Name: Clockwork (STA)    # !todo check english name
+    Name: Clockwork (STA)
     Type: Card
     Script: |
       bonus bSta,3+getenchantgrade();
   - Id: 311024
     AegisName: Gear_WIS
-    Name: Clockwork (WIS)    # !todo check english name
+    Name: Clockwork (WIS)
     Type: Card
     Script: |
       bonus bWis,3+getenchantgrade();
   - Id: 311025
     AegisName: Gear_CRT
-    Name: Clockwork (CRT)    # !todo check english name
+    Name: Clockwork (CRT)
     Type: Card
     Script: |
       bonus bCrt,3+getenchantgrade();
   - Id: 311026
     AegisName: Gear_CON
-    Name: Clockwork (CON)    # !todo check english name
+    Name: Clockwork (CON)
     Type: Card
     Script: |
       bonus bCon,3+getenchantgrade();
   - Id: 311027
     AegisName: Gear_PATK
-    Name: Clockwork (P.ATK)    # !todo check english name
+    Name: Clockwork (P.Atk)
     Type: Card
     Script: |
       bonus bPAtk,3+getenchantgrade();
   - Id: 311028
     AegisName: Gear_SMATK
-    Name: Clockwork (S.MATK)    # !todo check english name
+    Name: Clockwork (S.Matk)
     Type: Card
     Script: |
       bonus bSmatk,3+getenchantgrade();
   - Id: 311029
     AegisName: Gear_DN1
-    Name: Fine Tuning Device (Storm Slash)    # !todo check english name
+    Name: Precision Tuning Device (Storm Slash)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"DK_STORMSLASH",25+5*getenchantgrade();
   - Id: 311030
     AegisName: Gear_DN2
-    Name: Fine Tuning Device (Hack and Slasher)    # !todo check english name
+    Name: Precision Tuning Device (Hack and Slasher)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"DK_HACKANDSLASHER",25+5*getenchantgrade();
   - Id: 311031
     AegisName: Gear_MT1
-    Name: Fine tuner (ax stomp)    # !todo check english name
+    Name: Precision Tuning Device (Axe Stomp)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"MT_AXE_STOMP",25+5*getenchantgrade();
   - Id: 311032
     AegisName: Gear_MT2
-    Name: Fine Tuning Device (Ax Tornado)    # !todo check english name
+    Name: Precision Tuning Device (Axe Tornado)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"NC_AXETORNADO",35+5*getenchantgrade();
   - Id: 311033
     AegisName: Gear_BO1
-    Name: Fine tuner (acidified zone)    # !todo check english name
+    Name: Precision Tuning Device (Acidified Zone)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",25+5*getenchantgrade();
   - Id: 311034
     AegisName: Gear_BO2
-    Name: Fine Tuning Device (Cart Tornado)    # !todo check english name
+    Name: Precision Tuning Device (Cart Tornado)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"GN_CART_TORNADO",35+5*getenchantgrade();
   - Id: 311035
     AegisName: Gear_SHC1
-    Name: Fine Tuning Device (Impact Crater)    # !todo check english name
+    Name: Precision Tuning Device (Impact Crater)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SHC_IMPACT_CRATER",25+5*getenchantgrade();
   - Id: 311036
     AegisName: Gear_SHC2
-    Name: Fine Tuning Device (Savage Impact)    # !todo check english name
+    Name: Precision Tuning Device (Savage Impact)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",35+5*getenchantgrade();
   - Id: 311037
     AegisName: Gear_AG1
-    Name: Fine Tuning Device (Frozen Crimson)    # !todo check english name
+    Name: Precision Tuning Device (Frozen Crimson)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -53845,25 +53845,25 @@ Body:
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",25+5*.@g;
   - Id: 311038
     AegisName: Gear_AG2
-    Name: Fine Tuning Device (Crystal Impact)    # !todo check english name
+    Name: Precision Tuning Device (Crystal Impact)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",25+5*getenchantgrade();
   - Id: 311039
     AegisName: Gear_ABC1
-    Name: Fine Tuning Device (Abyss Square)    # !todo check english name
+    Name: Precision Tuning Device (Abyss Square)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",25+5*getenchantgrade();
   - Id: 311040
     AegisName: Gear_ABC2
-    Name: Fine Tuning Device (From the Abyss)    # !todo check english name
+    Name: Precision Tuning Device (From the Abyss)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",25+5*getenchantgrade();
   - Id: 311041
     AegisName: Gear_EM1
-    Name: Fine Tuning Device (Configuration)    # !todo check english name
+    Name: Precision Tuning Device (Conflagration Land)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -53871,25 +53871,25 @@ Body:
       bonus2 bSkillAtk,"EM_LIGHTNING_LAND",25+5*.@g;
   - Id: 311042
     AegisName: Gear_EM2
-    Name: Fine Tuning Device (Varetir Spear)    # !todo check english name
+    Name: Precision Tuning Device (Varetyr Spear)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",35+5*getenchantgrade();
   - Id: 311043
     AegisName: Gear_WH1
-    Name: Fine Tuning Device (Gail Storm)    # !todo check english name
+    Name: Precision Tuning Device (Gale Storm)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"WH_GALESTORM",25+5*getenchantgrade();
   - Id: 311044
     AegisName: Gear_WH2
-    Name: Fine Tuning Device (Arrow Storm)    # !todo check english name
+    Name: Precision Tuning Device (Arrow Storm)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"RA_ARROWSTORM",35+5*getenchantgrade();
   - Id: 311045
     AegisName: Gear_IQ1
-    Name: Fine Tuning Device (Judgment Faith)    # !todo check english name
+    Name: Precision Tuning Device (Judge Faith)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -53897,62 +53897,64 @@ Body:
       bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",25+5*.@g;
   - Id: 311046
     AegisName: Gear_IQ2
-    Name: Precision Tuning Device (Give Up Purification)    # !todo check english name
+    Name: Precision Tuning Device (Consecration Punish)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"IQ_THIRD_PUNISH",35+5*getenchantgrade();
       bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",35+5*getenchantgrade();
   - Id: 311047
     AegisName: Gear_IG1
-    Name: Fine Tuning Device (Shield Shooting)    # !todo check english name
+    Name: Precision Tuning Device (Shield Shooting)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",25+5*getenchantgrade();
   - Id: 311048
     AegisName: Gear_IG2
-    Name: Fine Tuning Device (Shield Chain)    # !todo check english name
+    Name: Precision Tuning Device (Rapid Smiting)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",35+5*getenchantgrade();
   - Id: 311049
     AegisName: Gear_CD1
-    Name: Fine tuner (flaman)    # !todo check english name
+    Name: Precision Tuning Device (Flamen)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"CD_FRAMEN",25+5*getenchantgrade();
   - Id: 311050
     AegisName: Gear_CD2
-    Name: Fine Tuning Device (Arbitrium)    # !todo check english name
+    Name: Precision Tuning Device (Arbitrium)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",25+5*getenchantgrade();
   - Id: 311051
     AegisName: Gear_SKE1
-    Name: Precision Tuning Device (Taecheon Ilyang)    # !todo check english name
+    Name: Precision Tuning Device (Noon Blast)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SKE_NOON_BLAST",25+5*getenchantgrade();
   - Id: 311052
     AegisName: Gear_SKE2
-    Name: Precision Tuning Device (Cheonji Ilyang)    # !todo check english name
+    Name: Precision Tuning Device (Rising Sun)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SKE_RISING_SUN",25+5*getenchantgrade();
   - Id: 311053
     AegisName: Gear_SOA1
-    Name: Precision Tuning Device (Four Bride)    # !todo check english name
+    # Name: Precision Tuning Device (Talisman of Four Bearing God)
+    Name: Precision Tuning Device (Talisman of Four Bearing
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",25+5*getenchantgrade();
   - Id: 311054
     AegisName: Gear_SOA2
-    Name: Precision Tuning Device (Yeongdobu)    # !todo check english name
+    # Name: Precision Tuning Device (Talisman of Soul Stealing)
+    Name: Precision Tuning Device (Talisman of Soul Stealin
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",25+5*getenchantgrade();
   - Id: 311055
     AegisName: Gear_NW1
-    Name: Fine Tuning Device (Magazine Bullet)    # !todo check english name
+    Name: Precision Tuning Device (Magazine Bullet)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -53960,13 +53962,13 @@ Body:
       bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25+5*.@g;
   - Id: 311056
     AegisName: Gear_NW2
-    Name: Fine Tuning Device (Vigilant Wild)    # !todo check english name
+    Name: Precision Tuning Device (Vigilante Wild)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"NW_WILD_FIRE",25+5*getenchantgrade();
   - Id: 311057
     AegisName: Gear_HN1
-    Name: Fine Tuning Device (Double Bowling Bash)    # !todo check english name
+    Name: Precision Tuning Device (Double Bowling Blow)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -53974,7 +53976,7 @@ Body:
       bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",25+5*.@g;
   - Id: 311058
     AegisName: Gear_HN2
-    Name: Fine Tuning Device (Spiral Pierce Max)    # !todo check english name
+    Name: Precision Tuning Device (Meteor Strike)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -53982,19 +53984,19 @@ Body:
       bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",25+5*.@g;
   - Id: 311059
     AegisName: Gear_SS1
-    Name: Fine Tuning Device (Shadow Dance)    # !todo check english name
+    Name: Precision Tuning Device (Shadow Dance)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SS_KAGENOMAI",25+5*getenchantgrade();
   - Id: 311060
     AegisName: Gear_SS2
-    Name: Precision Tuning Device (Armjeon Cannon)    # !todo check english name
+    Name: Precision Tuning Device (Darkening Cannon)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SS_ANTENPOU",25+5*getenchantgrade();
   - Id: 311061
     AegisName: Gear_TR1
-    Name: Fine Tuning Device (Rhythm Rose)    # !todo check english name
+    Name: Precision Tuning Device (Rose Rhythm)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -54002,13 +54004,13 @@ Body:
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",25+5*.@g;
   - Id: 311062
     AegisName: Gear_TR2
-    Name: Fine Tuning Device (Severe Rainstorm)    # !todo check english name
+    Name: Precision Tuning Device (Severe Rainstorm)
     Type: Card
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",35+5*getenchantgrade();
   - Id: 311063
     AegisName: Gear_SH1
-    Name: Precision Tuning Device (Four Bride)    # !todo check english name
+    Name: Precision Tuning Device (Chulho Strike)
     Type: Card
     Script: |
       .@g = getenchantgrade();
@@ -54016,7 +54018,7 @@ Body:
       bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",25+5*.@g;
   - Id: 311064
     AegisName: Gear_SH2
-    Name: Precision Tuning Device (Yeongdo Department)    # !todo check english name
+    Name: Precision Tuning Device (Hyunrok Breeze)
     Type: Card
     Script: |
       .@g = getenchantgrade();
