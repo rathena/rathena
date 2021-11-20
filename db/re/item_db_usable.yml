@@ -50979,6 +50979,13 @@ Body:
       Container: true
     Script: |
       getitem callfunc("F_Rand",24177,24171,24178,24170,24174,24173,24179,24175,24176,24172),1;
+  - Id: 101126
+    AegisName: aegis_101126
+    Name: "[Scroll] Halloween Candy"
+    Type: Healing
+    Weight: 10
+    Script: |
+      percentheal 30,30;
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion
