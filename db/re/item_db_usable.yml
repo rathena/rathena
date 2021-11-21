@@ -46762,6 +46762,22 @@ Body:
       Override: 100
     Script: |
       callfunc "F_CashStore";
+  - Id: 22819
+    AegisName: G_Almighty
+    Name: Citizen Oda's Miracle Elixr
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",3600;
+      sc_start SC_SPEEDUP0,600000,25;
   - Id: 22822
     AegisName: Summer_Vacation_Costumes
     Name: Summer Vacation Costumes

@@ -84714,6 +84714,27 @@ Body:
          bonus bVariableCastrate,-10;
       if (.@r>=9)
          bonus bVariableCastrate,-10;
+  - Id: 19437
+    AegisName: LittleGarden
+    Name: Little Garden
+    Type: Armor
+    View: 1830
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bBaseAtk,40;
+      bonus bCritAtkRate,5;
+      if (readparam(bLuk)>=90) {
+         bonus bBaseAtk,60;
+         bonus bCritAtkRate,10;
+      }
+      if (readparam(bLuk)>=125) {
+         bonus bBaseAtk,80;
+         bonus bCritAtkRate,20;
+      }
   - Id: 19439
     AegisName: Subject_Aura
     Name: Vicious Mind Aura
@@ -96182,6 +96203,28 @@ Body:
     Script: |
       bonus bFlee,getrefine() * 2;
       bonus bFlee2,8 + (BaseLevel > 129 ? 2 : 0);
+  - Id: 20774
+    AegisName: Cutoff_Manteau
+    Name: King of Void's Garment
+    Type: Armor
+    Weight: 500
+    Defense: 16
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Classes:
+      All_Upper: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus bMdef,2;
+      bonus bMatkRate,1;
+      bonus bMaxHPrate,5;
+      bonus2 bAddEle,Ele_Neutral,2;
   - Id: 20778
     AegisName: RedLotus_Stole
     Name: Red Lotus Stole
@@ -131965,6 +132008,32 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
+  - Id: 400048
+    AegisName: Gift_of_Panagia
+    Name: Gift of Panagia
+    Type: Armor
+    View: 1948
+    Weight: 200
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVit,5;
+      bonus bInt,5;
+      bonus bHealPower,10;
+      bonus2 bResEff,Eff_Stun,5000;
+      if (.@r>=7) {
+         bonus bDelayrate,-20;
+         bonus bHealPower,10;
+      }
+      if (.@r>=9)
+         bonus bHealPower,20;
+      if (.@r>=10)
+         bonus bUseSPrate,-20;
   - Id: 400049
     AegisName: aegis_400049
     Name: Stripe Hat
@@ -132107,6 +132176,49 @@ Body:
          bonus2 bMagicAddSize,Size_Small,15;
          bonus2 bMagicAddSize,Size_Medium,15;
       }
+  - Id: 400060
+    AegisName: Freyja_Crown_J
+    Name: Shiny Kitty Crown
+    Type: Armor
+    View: 328
+    Weight: 1000
+    Defense: 18
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bDelayrate,-10;
+      bonus2 bSkillAtk,"SU_CN_METEOR",10;
+      bonus2 bSkillAtk,"SU_SV_STEMSPEAR",10;
+      bonus bHPGainValue,30*.@r;
+      bonus bSPGainValue,3*.@r;
+      bonus bAspdRate,3*getskilllv("SU_CHATTERING");
+      if (getskilllv("SU_SPIRITOFLAND") == 1) {
+         bonus2 bVariableCastrate,"SU_CN_METEOR",-4*(getskilllv("SU_CN_POWDERING")+getskilllv("SU_CN_METEOR")+getskilllv("SU_NYANGGRASS")+getskilllv("SU_SV_STEMSPEAR")+getskilllv("SU_SV_ROOTTWIST"));
+         bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-4*(getskilllv("SU_CN_POWDERING")+getskilllv("SU_CN_METEOR")+getskilllv("SU_NYANGGRASS")+getskilllv("SU_SV_STEMSPEAR")+getskilllv("SU_SV_ROOTTWIST"));
+      }
+      if (getskilllv("SU_NYANGGRASS") == 5)
+         bonus bDelayrate,-20;
+      if (getskilllv("SU_MEOWMEOW") == 5)
+         bonus2 bMagicAddClass,Class_Boss,25;
+      if (.@r>=7) {
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSkillAtk,"SU_CN_METEOR",15;
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15;
+      }
+      if (.@r>=9) {
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSkillAtk,"SU_CN_METEOR",25;
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",25;
+      }
+      if (.@r>=10)
+         autobonus "{ bonus bUseSPrate,-100; }",20,20000,BF_MAGIC;
   - Id: 400061
     AegisName: aegis_400061
     Name: Sagittarius Celestial Coronet
@@ -138428,6 +138540,43 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 82
+  - Id: 480077
+    AegisName: aegis_480077
+    Name: Lava Manteau
+    Type: Armor
+    Weight: 300
+    Defense: 25
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5;
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      bonus2 bAddSize,Size_All,5;
+      bonus2 bSubClass,Class_Boss,5;
+      bonus2 bSkillAtk,"NC_AXETORNADO",20*getskilllv("NC_AXEBOOMERANG");
+      bonus2 bSkillAtk,"NC_POWERSWING",20*getskilllv("NC_AXEBOOMERANG");
+      if (getskilllv("NC_MAGICDECOY") == 5)
+         bonus bPerfectHitAddRate,50;
+      if (getskilllv("NC_MAGMA_ERUPTION") == 5) {
+         bonus2 bSubEle,Ele_Fire,50;
+         bonus2 bSubEle,Ele_Earth,50;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,3;
+         bonus bMaxSPrate,3;
+         bonus bAspdRate,5;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         bonus bAspdRate,5;
+      }
   - Id: 480083
     AegisName: Egirnion_Manteau
     Name: Aegirnion Manteau
@@ -139452,6 +139601,39 @@ Body:
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
       bonus bBaseAtk,30;
+  - Id: 490098
+    AegisName: aegis_490098
+    Name: Ring of Pazuzu
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bInt,7;
+      bonus bMdef,15;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"WZ_VERMILION",(BaseLevel*6);
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",(BaseLevel/3);
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",(BaseLevel/3);
+      if (getskilllv("WL_CHAINLIGHTNING") == 5) {
+         bonus2 bSkillUseSP,"WL_CHAINLIGHTNING",35;
+         bonus2 bSkillCooldown,"WL_CHAINLIGHTNING",-500;
+      }
+      if (getskilllv("WL_DRAINLIFE") == 5) {
+         bonus bVariableCastrate,-15;
+         bonus bMagicHPGainValue,100;
+         bonus bMagicSPGainValue,10;
+      }
+      if (getskilllv("WL_RADIUS") == 3) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
+         bonus bDelayrate,-30;
   - Id: 490099
     AegisName: Thanatos_Pendant
     Name: Thanatos' Necklace    # !todo check english name
