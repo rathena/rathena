@@ -17509,9 +17509,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17592,9 +17590,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17688,9 +17684,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -20956,9 +20950,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -67981,9 +67973,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -68002,9 +67992,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -70553,9 +70541,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -70612,9 +70598,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -72030,9 +72014,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72066,9 +72048,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72127,9 +72107,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72161,9 +72139,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72384,9 +72360,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72425,9 +72399,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -99280,9 +99252,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -99316,9 +99286,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -99466,9 +99434,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -110039,9 +110005,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110055,9 +110019,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110080,9 +110042,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110096,9 +110056,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110121,9 +110079,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110137,9 +110093,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110153,9 +110107,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110169,9 +110121,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110194,9 +110144,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110210,9 +110158,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110235,9 +110181,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110251,9 +110195,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110267,9 +110209,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110283,9 +110223,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110311,9 +110249,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110327,9 +110263,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110352,9 +110286,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110368,9 +110300,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110384,9 +110314,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110400,9 +110328,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110425,9 +110351,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110441,9 +110365,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110466,9 +110388,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110482,9 +110402,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110498,9 +110416,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110514,9 +110430,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110539,9 +110453,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110555,9 +110467,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110580,9 +110490,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110596,9 +110504,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110612,9 +110518,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110628,9 +110532,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110653,9 +110555,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110669,9 +110569,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110694,9 +110592,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110710,9 +110606,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110726,9 +110620,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110742,9 +110634,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110767,9 +110657,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110783,9 +110671,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110808,9 +110694,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110824,9 +110708,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110840,9 +110722,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110856,9 +110736,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110881,9 +110759,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110897,9 +110773,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110922,9 +110796,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110938,9 +110810,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110954,9 +110824,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110970,9 +110838,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110995,9 +110861,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111011,9 +110875,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111028,9 +110890,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111044,9 +110904,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111062,9 +110920,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111078,9 +110934,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111103,9 +110957,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111119,9 +110971,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111144,9 +110994,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111160,9 +111008,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111176,9 +111022,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111192,9 +111036,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111217,9 +111059,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111233,9 +111073,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111258,9 +111096,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111274,9 +111110,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111290,9 +111124,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111306,9 +111138,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111331,9 +111161,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111347,9 +111175,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111372,9 +111198,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111388,9 +111212,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111404,9 +111226,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111420,9 +111240,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111445,9 +111263,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111461,9 +111277,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111486,9 +111300,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111502,9 +111314,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111518,9 +111328,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111534,9 +111342,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111559,9 +111365,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111575,9 +111379,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111600,9 +111402,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111616,9 +111416,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111632,9 +111430,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111648,9 +111444,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111673,9 +111467,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111689,9 +111481,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111714,9 +111504,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111730,9 +111518,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111746,9 +111532,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111762,9 +111546,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111787,9 +111569,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111803,9 +111583,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111828,9 +111606,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111844,9 +111620,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111860,9 +111634,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111876,9 +111648,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111901,9 +111671,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111918,9 +111686,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111943,9 +111709,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111959,9 +111723,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111975,9 +111737,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111992,9 +111752,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112017,9 +111775,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112033,9 +111789,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112058,9 +111812,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112074,9 +111826,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112185,9 +111935,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112210,9 +111958,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112235,9 +111981,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112260,9 +112004,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112285,9 +112027,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112310,9 +112050,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112335,9 +112073,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112360,9 +112096,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112385,9 +112119,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112410,9 +112142,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112435,9 +112165,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112460,9 +112188,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114610,9 +114336,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -115002,9 +114726,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -115366,9 +115088,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116257,9 +115977,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -116292,9 +116010,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -116422,9 +116138,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -116953,9 +116667,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -117094,9 +116806,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -121326,9 +121036,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -121362,9 +121070,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -121397,9 +121103,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -121656,9 +121360,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122366,9 +122068,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122402,9 +122102,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122586,9 +122284,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -130171,9 +129867,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -130389,9 +130083,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -132155,9 +131847,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132186,9 +131876,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132221,9 +131909,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132255,9 +131941,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132310,9 +131994,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132341,9 +132023,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132388,9 +132068,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132419,9 +132097,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132454,9 +132130,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132489,9 +132163,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132520,9 +132192,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132554,9 +132224,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -139913,9 +139581,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -139962,9 +139628,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -140529,9 +140193,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -140578,9 +140240,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141251,9 +140911,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141603,9 +141261,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142424,9 +142080,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142483,9 +142137,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143507,9 +143159,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143554,9 +143204,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144058,9 +143706,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -144513,9 +144159,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -144923,9 +144567,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144971,9 +144613,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145019,9 +144659,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145398,9 +145036,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -145582,9 +145218,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -145922,9 +145556,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -146223,9 +145855,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -146510,9 +146140,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -146770,9 +146398,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -146821,9 +146447,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147487,9 +147111,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147691,9 +147313,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147739,9 +147359,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147785,9 +147403,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147833,9 +147449,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
