@@ -98479,8 +98479,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98513,8 +98511,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98547,8 +98543,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98581,8 +98575,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98615,8 +98607,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98649,8 +98639,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
