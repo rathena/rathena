@@ -2628,3 +2628,4 @@
 400048:4803,{ bonus bDelayrate,-10; bonus bHealPower,20; }
 400048:4805,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
 400048:4850,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
+//490098:29371,{ if ((eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus2 bSkillUseSP,"WL_CRIMSONROCK",50; bonus2 bSkillCooldown,"WL_CRIMSONROCK",-2000; } }

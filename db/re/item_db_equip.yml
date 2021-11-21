@@ -132186,8 +132186,9 @@ Body:
       bonus bSPGainValue,3*.@r;
       bonus bAspdRate,3*getskilllv("SU_CHATTERING");
       if (getskilllv("SU_SPIRITOFLAND") == 1) {
-         bonus2 bVariableCastrate,"SU_CN_METEOR",-4*(getskilllv("SU_CN_POWDERING")+getskilllv("SU_CN_METEOR")+getskilllv("SU_NYANGGRASS")+getskilllv("SU_SV_STEMSPEAR")+getskilllv("SU_SV_ROOTTWIST"));
-         bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-4*(getskilllv("SU_CN_POWDERING")+getskilllv("SU_CN_METEOR")+getskilllv("SU_NYANGGRASS")+getskilllv("SU_SV_STEMSPEAR")+getskilllv("SU_SV_ROOTTWIST"));
+         .@val = -4*(getskilllv("SU_CN_POWDERING")+getskilllv("SU_CN_METEOR")+getskilllv("SU_NYANGGRASS")+getskilllv("SU_SV_STEMSPEAR")+getskilllv("SU_SV_ROOTTWIST"));
+         bonus2 bVariableCastrate,"SU_CN_METEOR",.@val;
+         bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",.@val;
       }
       if (getskilllv("SU_NYANGGRASS") == 5)
          bonus bDelayrate,-20;
