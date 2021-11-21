@@ -1400,8 +1400,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case NPC_STORMGUST2:
-		if (skill_lv < 3)
-			sc_start(src,bl,SC_FREEZE,10-((skill_lv-1)*(skill_lv+1)),skill_lv,skill_get_time2(skill_id,skill_lv));	// 10;7;3 % chance
+		if (skill_lv == 1)
+			sc_start(src,bl,SC_FREEZE,10,skill_lv,skill_get_time2(skill_id,skill_lv));
+		else if (skill_lv == 2)
+			sc_start(src,bl,SC_FREEZE,7,skill_lv,skill_get_time2(skill_id,skill_lv));
 		else
 			sc_start(src,bl,SC_FREEZE,3,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -11639,7 +11641,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case NPC_PULSESTRIKE2:
 		for (int i = 0; i < 3; i++)
-			skill_addtimerskill(src, tick + i * skill_get_time(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
+			skill_addtimerskill(src, tick + (t_tick)skill_get_time(skill_id, skill_lv) * i, bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
 		break;
 
 	default:
