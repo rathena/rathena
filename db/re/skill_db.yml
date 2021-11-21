@@ -16702,6 +16702,19 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+  - Id: 707
+    Name: NPC_MILLENNIUMSHIELD
+    Description: Millenium Shield 2
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 1   # (skillinfolist.lua)
+    Hit: Single
+    HitCount: 1
+    Duration1: 900000   # skill duration (unknown value)
   - Id: 708
     Name: NPC_COMET
     Description: Comet 2
@@ -16776,6 +16789,54 @@ Body:
         NoOverlap: true
         PathCheck: true
         RemovedByFireRain: true
+  - Id: 712
+    Name: NPC_PULSESTRIKE2
+    Description: Pulse Strike 2
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      TargetTrap: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Dark
+    SplashArea: 5
+    Knockback: 3
+    Duration1: 1000
+  - Id: 713
+    Name: NPC_DANCINGBLADE
+    Description: Dancing Blade
+    MaxLevel: 1
+    Type: None
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 10
+    Hit: Single
+    HitCount: 1
+    CastTime: 3500
+    AfterCastActDelay: 3000
+    Duration1: 100
+    FixedCastTime: 1000
+  - Id: 714
+    Name: NPC_DANCINGBLADE_ATK
+    Description: Dancing Blade Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: 10
+    Hit: Single
+    HitCount: 1
   - Id: 715
     Name: NPC_DARKPIERCING
     Description: Dark Piercing
@@ -16920,6 +16981,30 @@ Body:
     HitCount: 1
     SplashArea: 13
     Duration1: 3000
+  - Id: 723
+    Name: NPC_STORMGUST2
+    Description: Storm Gust 2
+    MaxLevel: 3
+    Type: Magic
+    TargetType: Ground
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    Duration1: 4500
+    Duration2: 30000
+    Unit:
+      Id: Dummyskill
+      Layout: 5
+      Range: 1
+      Interval: 450
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
   - Id: 724
     Name: NPC_FIRESTORM
     Description: Fire Storm
@@ -17022,40 +17107,327 @@ Body:
   - Id: 728
     Name: NPC_ARROWSTORM
     Description: NPC Arrow Storm
-    MaxLevel: 10
+    MaxLevel: 5
     Type: Weapon
     TargetType: Attack
     DamageFlags:
       Splash: true
     Flags:
       IsNpc: true
-      AlterRangeVulture: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -3
-    Element: Weapon
     SplashArea:
       - Level: 1
         Area: 3
       - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 13
+  - Id: 729
+    Name: NPC_CHEAL
+    Description: NPC Coluceo Heal
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    SplashArea:
+      - Level: 1
         Area: 3
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 9
+      - Level: 5
+        Area: 11
+  - Id: 730
+    Name: NPC_SR_CURSEDCIRCLE
+    Description: Cursed Circle
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
       - Level: 3
         Area: 3
       - Level: 4
-        Area: 3
+        Area: 4
       - Level: 5
-        Area: 3
-      - Level: 6
-        Area: 4
-      - Level: 7
-        Area: 4
-      - Level: 8
-        Area: 4
-      - Level: 9
-        Area: 4
-      - Level: 10
         Area: 5
-    CastCancel: true
+    Duration1: 7000
+  - Id: 731
+    Name: NPC_DRAGONBREATH
+    Description: NPC Dragon Breath
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 3
+    Hit: Single
+    HitCount: 1
+    Element:
+      - Level: 1
+        Element: Fire
+      - Level: 2
+        Element: Fire
+      - Level: 3
+        Element: Fire
+      - Level: 4
+        Element: Fire
+      - Level: 5
+        Element: Fire
+      - Level: 6
+        Element: Water
+      - Level: 7
+        Element: Water
+      - Level: 8
+        Element: Water
+      - Level: 9
+        Element: Water
+      - Level: 10
+        Element: Water
+    SplashArea: 4
+    Duration1: 10000
+  - Id: 732
+    Name: NPC_FATALMENACE
+    Description: Fatal Menace
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
+  - Id: 733
+    Name: NPC_MAGMA_ERUPTION
+    Description: NPC Magma Eruption
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea: 3
+    ActiveInstance: 3
+    Duration1: 3000
+    Unit:
+      Id: Magma_Eruption
+      Range: 3
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 734
+    Name: NPC_MAGMA_ERUPTION_DOTDAMAGE
+    Description: NPC Magma Eruption Dot Damage
+    MaxLevel: 5
+    Type: Misc
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+      IgnoreDefCard: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+  - Id: 735
+    Name: NPC_MANDRAGORA
+    Description: NPC Howling of Mandragora
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 6
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 8
+      - Level: 5
+        Area: 9
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 15000
+      - Level: 3
+        Time: 20000
+      - Level: 4
+        Time: 25000
+      - Level: 5
+        Time: 30000
+  - Id: 736
+    Name: NPC_PSYCHIC_WAVE
+    Description: Psychic Wave
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 3200
+    Unit:
+      Id: Psychic_Wave
+      Range:
+        - Level: 1
+          Size: 3
+        - Level: 2
+          Size: 4
+        - Level: 3
+          Size: 5
+        - Level: 4
+          Size: 5
+        - Level: 5
+          Size: 5
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 5
+        - Level: 8
+          Size: 5
+        - Level: 9
+          Size: 5
+        - Level: 10
+          Size: 5
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 737
+    Name: NPC_RAYOFGENESIS
+    Description: NPC Ray of Genesis
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Holy
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 8
+      - Level: 5
+        Area: 11
+      - Level: 6
+        Area: 11
+      - Level: 7
+        Area: 13
+      - Level: 8
+        Area: 13
+      - Level: 9
+        Area: 13
+      - Level: 10
+        Area: 13
+    Duration1: 10000
+  - Id: 738
+    Name: NPC_VENOMIMPRESS
+    Description: NPC Venom Impress
+    MaxLevel: 5
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 2
+      - Level: 2
+        Size: 3
+      - Level: 3
+        Size: 4
+      - Level: 4
+        Size: 5
+      - Level: 5
+        Size: 6
+    Hit: Single
+    HitCount: 1
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 20000
+      - Level: 3
+        Time: 30000
+      - Level: 4
+        Time: 40000
+      - Level: 5
+        Time: 50000
   - Id: 739
     Name: NPC_CLOUD_KILL
     Description: Cloud Kill
