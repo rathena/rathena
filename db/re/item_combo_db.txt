@@ -2620,3 +2620,12 @@
 480025:4250,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSubSize,Size_Large,5; if (.@r>=8) { bonus2 bAddSize,Size_Large,25; bonus2 bMagicAddSize,Size_Large,25; } }
 480025:4254,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSubSize,Size_Medium,5; if (.@r>=8) { bonus2 bAddSize,Size_Medium,25; bonus2 bMagicAddSize,Size_Medium,25; } }
 480053:4211,{ bonus bMdef,5; bonus bMaxHPrate,10; bonus2 bSubEle,Ele_Neutral,20; }
+20799:18137:1752,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSkillAtk,"RA_ARROWSTORM",(5*.@r); bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",(5*.@r); if(getequiprefinerycnt(EQI_HAND_R)>=10) { bonus bAspd,1; } }
+20799:18138:1754,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSkillAtk,"RA_ARROWSTORM",(5*.@r); bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",(5*.@r); if(getequiprefinerycnt(EQI_HAND_R)>=10) { bonus bAspd,1; } }
+20799:18140:1755,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSkillAtk,"RA_ARROWSTORM",(5*.@r); bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",(5*.@r); if(getequiprefinerycnt(EQI_HAND_R)>=10) { bonus bAspd,1; } }
+20799:18139:1756,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSkillAtk,"RA_ARROWSTORM",(5*.@r); bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",(5*.@r); if(getequiprefinerycnt(EQI_HAND_R)>=10) { bonus bAspd,1; } }
+400048:4804,{ bonus bUseSPrate,-10; bonus bHealPower,10; }
+400048:4803,{ bonus bDelayrate,-10; bonus bHealPower,20; }
+400048:4805,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
+400048:4850,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
+//490098:29371,{ if ((eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus2 bSkillUseSP,"WL_CRIMSONROCK",50; bonus2 bSkillCooldown,"WL_CRIMSONROCK",-2000; } }
