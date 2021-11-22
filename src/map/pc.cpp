@@ -12246,8 +12246,24 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(job_id));
 			bool exists = job != nullptr;
 
-			if (!exists)
+			if (!exists) {
 				job = std::make_shared<s_job_info>();
+
+				job->job_bonus.resize(MAX_LEVEL);
+				for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
+					for (uint16 lv = 0; lv < MAX_LEVEL; lv++)
+						job->job_bonus[lv][idx] = 0;
+				}
+
+				job->base_hp.resize(MAX_LEVEL);
+				std::fill(job->base_hp.begin(), job->base_hp.end(), 0);
+
+				job->base_sp.resize(MAX_LEVEL);
+				std::fill(job->base_sp.begin(), job->base_sp.end(), 0);
+
+				job->base_ap.resize(MAX_LEVEL);
+				std::fill(job->base_ap.begin(), job->base_ap.end(), 0);
+			}
 
 			if (this->nodeExists(node, "MaxWeight")) {
 				uint32 weight;
@@ -12414,7 +12430,6 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				job->max_job_level = level;
-				job->job_bonus.resize(level);
 			} else {
 				if (!exists)
 					job->max_job_level = MAX_LEVEL;
@@ -12448,7 +12463,6 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (this->nodeExists(node, "BonusStats")) {
 				const YAML::Node &bonusNode = node["BonusStats"];
-				job->job_bonus.resize(job->max_job_level);
 
 				for (const YAML::Node &levelNode : bonusNode) {
 					uint16 level;
@@ -12476,11 +12490,6 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 #ifdef HP_SP_TABLES
 			if (this->nodeExists(node, "BaseHp")) {
-				if (!exists) {
-					job->base_hp.resize(job->max_base_level);
-					std::fill(job->base_hp.begin(), job->base_hp.end(), 0);
-				}
-
 				for (const YAML::Node &bhpNode : node["BaseHp"]) {
 					uint16 level;
 
@@ -12507,11 +12516,6 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseSp")) {
-				if (!exists) {
-					job->base_sp.resize(job->max_base_level);
-					std::fill(job->base_sp.begin(), job->base_sp.end(), 0);
-				}
-
 				for (const YAML::Node &bspNode : node["BaseSp"]) {
 					uint16 level;
 
@@ -12538,11 +12542,6 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseAp")) {
-				if (!exists) {
-					job->base_ap.resize(job->max_base_level);
-					std::fill(job->base_ap.begin(), job->base_ap.end(), 0);
-				}
-
 				for (const YAML::Node &bapNode : node["BaseAp"]) {
 					uint16 level;
 
@@ -12609,9 +12608,17 @@ void JobDatabase::loadingFinished() {
 				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
 		}
 
-		// Resize for the maximum job level
-		if (job->job_bonus.size() != maxJobLv)
-			job->job_bonus.resize(maxJobLv);
+		// Resize to the maximum base level
+		if (job->base_hp.size() > maxBaseLv)
+			job->base_hp.erase(job->base_hp.begin() + maxBaseLv, job->base_hp.end());
+		if (job->base_sp.size() > maxBaseLv)
+			job->base_sp.erase(job->base_sp.begin() + maxBaseLv, job->base_sp.end());
+		if (job->base_ap.size() > maxBaseLv)
+			job->base_ap.erase(job->base_ap.begin() + maxBaseLv, job->base_ap.end());
+
+		// Resize to the maximum job level
+		if (job->job_bonus.size() > maxJobLv)
+			job->job_bonus.erase(job->job_bonus.begin() + maxJobLv, job->job_bonus.end());
 
 		for (uint16 parameter = PARAM_STR; parameter < PARAM_MAX; parameter++) {
 			// Store total
