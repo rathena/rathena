@@ -12476,8 +12476,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 #ifdef HP_SP_TABLES
 			if (this->nodeExists(node, "BaseHp")) {
-				job->base_hp.resize(job->max_base_level);
-				std::fill(job->base_hp.begin(), job->base_hp.end(), 0);
+				if (!exists) {
+					job->base_hp.resize(job->max_base_level);
+					std::fill(job->base_hp.begin(), job->base_hp.end(), 0);
+				}
 
 				for (const YAML::Node &bhpNode : node["BaseHp"]) {
 					uint16 level;
@@ -12505,8 +12507,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseSp")) {
-				job->base_sp.resize(job->max_base_level);
-				std::fill(job->base_sp.begin(), job->base_sp.end(), 0);
+				if (!exists) {
+					job->base_sp.resize(job->max_base_level);
+					std::fill(job->base_sp.begin(), job->base_sp.end(), 0);
+				}
 
 				for (const YAML::Node &bspNode : node["BaseSp"]) {
 					uint16 level;
@@ -12534,8 +12538,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseAp")) {
-				job->base_ap.resize(job->max_base_level);
-				std::fill(job->base_ap.begin(), job->base_ap.end(), 0);
+				if (!exists) {
+					job->base_ap.resize(job->max_base_level);
+					std::fill(job->base_ap.begin(), job->base_ap.end(), 0);
+				}
 
 				for (const YAML::Node &bapNode : node["BaseAp"]) {
 					uint16 level;
