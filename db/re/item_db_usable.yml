@@ -50914,28 +50914,28 @@ Body:
       /* synthesisui 100691; */
   - Id: 100699
     AegisName: Twins_Box_IL
-    Name: Twins Smelt Box    # !todo check english name
+    Name: Twins Refinement Box
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100699; */
   - Id: 100700
     AegisName: S_Twins_Box_IL
-    Name: Special Twins Smelting Box    # !todo check english name
+    Name: Special Twins Refinement Box
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100700; */
   - Id: 100710
     AegisName: EXP_Overclocker
-    Name: EXP Advisor Retrofit    # !todo check english name
+    Name: EXP Overclocker
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100710; */
   - Id: 100722
     AegisName: Booster_RandomOpt_P
-    Name: Booster Modification Stone (Physical)    # !todo check english name
+    Name: Booster Modification Stone(Physical)
     Type: DelayConsume
     Trade:
       Override: 100
@@ -50950,7 +50950,7 @@ Body:
       /* upgradeui 100722; */
   - Id: 100723
     AegisName: Booster_RandomOpt_M
-    Name: Booster Modification Stone (Magical)    # !todo check english name
+    Name: Booster Modification Stone(Magical)
     Type: DelayConsume
     Trade:
       Override: 100
@@ -50965,14 +50965,14 @@ Body:
       /* upgradeui 100723; */
   - Id: 100744
     AegisName: Costama_Egg69
-    Name: Hero's Weapon Modification (Physical)    # !todo check english name
+    Name: Hero's Weapon Modifier(Physical)
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100744; */
   - Id: 100745
     AegisName: Hero_LT_Refine_Magic
-    Name: Hero's Weapon Modification Device (Magical)    # !todo check english name
+    Name: Hero's Weapon Modifier(Magical)
     Type: DelayConsume
     Weight: 10
     Script: |
