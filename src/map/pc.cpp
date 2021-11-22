@@ -12250,10 +12250,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				job = std::make_shared<s_job_info>();
 
 				job->job_bonus.resize(MAX_LEVEL);
-				for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
-					for (uint16 lv = 0; lv < MAX_LEVEL; lv++)
-						job->job_bonus[lv][idx] = 0;
-				}
+				std::fill(job->job_bonus.begin(), job->job_bonus.end(), std::array<uint16, PARAM_MAX> { 0 });
 
 				job->base_hp.resize(MAX_LEVEL);
 				std::fill(job->base_hp.begin(), job->base_hp.end(), 0);
@@ -12609,15 +12606,15 @@ void JobDatabase::loadingFinished() {
 		}
 
 		// Resize to the maximum base level
-		if (job->base_hp.size() > maxBaseLv)
+		if (job->base_hp.capacity() > maxBaseLv)
 			job->base_hp.erase(job->base_hp.begin() + maxBaseLv, job->base_hp.end());
-		if (job->base_sp.size() > maxBaseLv)
+		if (job->base_sp.capacity() > maxBaseLv)
 			job->base_sp.erase(job->base_sp.begin() + maxBaseLv, job->base_sp.end());
-		if (job->base_ap.size() > maxBaseLv)
+		if (job->base_ap.capacity() > maxBaseLv)
 			job->base_ap.erase(job->base_ap.begin() + maxBaseLv, job->base_ap.end());
 
 		// Resize to the maximum job level
-		if (job->job_bonus.size() > maxJobLv)
+		if (job->job_bonus.capacity() > maxJobLv)
 			job->job_bonus.erase(job->job_bonus.begin() + maxJobLv, job->job_bonus.end());
 
 		for (uint16 parameter = PARAM_STR; parameter < PARAM_MAX; parameter++) {
