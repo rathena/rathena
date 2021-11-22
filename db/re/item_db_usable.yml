@@ -2266,6 +2266,13 @@ Body:
     Weight: 1
     Script: |
       /*upgradeui 9551;*/
+  - Id: 9553
+    AegisName: C_CatPaw_7Day_Box_
+    Name: Endless Cat Hand Ticket 7day Box
+    Type: Usable
+    Weight: 10
+    Script: |
+      rentitem 22998,604800;
   - Id: 9785
     AegisName: Frozen_Box_IL
     Name: Frozen Refine Box
@@ -12954,7 +12961,7 @@ Body:
     Weight: 150
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      bonus_script "{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",60,0,0,EFST_GM_BATTLE;
+      bonus_script "{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }",600,0,0,EFST_GM_BATTLE;
       /* showscript */
   - Id: 12792
     AegisName: P_Combat_Pill
@@ -12964,7 +12971,7 @@ Body:
     Weight: 150
     Script: |
       specialeffect2 EF_POTION_BERSERK;
-      bonus_script "{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }",60,0,0,EFST_GM_BATTLE;
+      bonus_script "{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,-5; bonus bMaxSPrate,-5; }",600,0,0,EFST_GM_BATTLE;
   - Id: 12793
     AegisName: Combat_Pill_Box10
     Name: Combat Pill Box10
@@ -46745,6 +46752,32 @@ Body:
       NoAuction: true
     Script: |
       getitem callfunc("F_Rand",24180,24181,24182,24183,24184,24185),1;
+  - Id: 22814
+    AegisName: CatPaw_Ticket
+    Name: Cat Hand Ticket
+    Type: Usable
+    Buy: 2
+    Weight: 10
+    Trade:
+      Override: 100
+    Script: |
+      callfunc "F_CashStore";
+  - Id: 22819
+    AegisName: G_Almighty
+    Name: Citizen Oda's Miracle Elixr
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",3600;
+      sc_start SC_SPEEDUP0,600000,25;
   - Id: 22822
     AegisName: Summer_Vacation_Costumes
     Name: Summer Vacation Costumes
@@ -47549,6 +47582,14 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_DORAM_BUF_02, 180000, 0;
+  - Id: 22998
+    AegisName: C_CatPaw_Ticket
+    Name: Endless Cat Hand Ticket
+    Type: Delayconsume
+    Trade:
+      Override: 100
+    Script: |
+      callfunc "F_CashStore";
   - Id: 23001
     AegisName: Enchant_Stone_Box8
     Name: Costume Enchant Stone Box 8
@@ -47775,6 +47816,15 @@ Body:
     Weight: 10
     Script: |
       /*upgradeui 23100;*/
+  - Id: 23115
+    AegisName: Class_Shadow_Cube
+    Name: Class Shadow Cube
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_CLASS_SHADOW_CUBE);
   - Id: 23123
     AegisName: Bullet_Case_Flare
     Name: Flare Bullet Cartridge
@@ -49364,6 +49414,13 @@ Body:
       Container: true
     Script: |
       getitem callfunc("F_Rand",31754,31755,31756,31757,31758,31759,31760,31761),1;
+  - Id: 101097
+    AegisName: aegis_101097
+    Name: "[Scroll] Unlimited Drink"
+    Type: Usable
+    Weight: 10
+    Script: |
+      bonus_script "{ bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bCritAtkRate,5; bonus bLongAtkRate,5; bonus2 bMagicAddEle,Ele_All,5; bonus bNoCastCancel;}",1800;
   - Id: 101107
     AegisName: Cannon_Box_Ice
     Name: Cannon Box Ice
@@ -50857,28 +50914,28 @@ Body:
       /* synthesisui 100691; */
   - Id: 100699
     AegisName: Twins_Box_IL
-    Name: Twins Smelt Box    # !todo check english name
+    Name: Twins Refinement Box
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100699; */
   - Id: 100700
     AegisName: S_Twins_Box_IL
-    Name: Special Twins Smelting Box    # !todo check english name
+    Name: Special Twins Refinement Box
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100700; */
   - Id: 100710
     AegisName: EXP_Overclocker
-    Name: EXP Advisor Retrofit    # !todo check english name
+    Name: EXP Overclocker
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100710; */
   - Id: 100722
     AegisName: Booster_RandomOpt_P
-    Name: Booster Modification Stone (Physical)    # !todo check english name
+    Name: Booster Modification Stone(Physical)
     Type: DelayConsume
     Trade:
       Override: 100
@@ -50893,7 +50950,7 @@ Body:
       /* upgradeui 100722; */
   - Id: 100723
     AegisName: Booster_RandomOpt_M
-    Name: Booster Modification Stone (Magical)    # !todo check english name
+    Name: Booster Modification Stone(Magical)
     Type: DelayConsume
     Trade:
       Override: 100
@@ -50908,14 +50965,14 @@ Body:
       /* upgradeui 100723; */
   - Id: 100744
     AegisName: Costama_Egg69
-    Name: Hero's Weapon Modification (Physical)    # !todo check english name
+    Name: Hero's Weapon Modifier(Physical)
     Type: DelayConsume
     Weight: 10
     Script: |
       /* upgradeui 100744; */
   - Id: 100745
     AegisName: Hero_LT_Refine_Magic
-    Name: Hero's Weapon Modification Device (Magical)    # !todo check english name
+    Name: Hero's Weapon Modifier(Magical)
     Type: DelayConsume
     Weight: 10
     Script: |
@@ -50938,6 +50995,13 @@ Body:
       Container: true
     Script: |
       getitem callfunc("F_Rand",24177,24171,24178,24170,24174,24173,24179,24175,24176,24172),1;
+  - Id: 101126
+    AegisName: aegis_101126
+    Name: "[Scroll] Halloween Candy"
+    Type: Healing
+    Weight: 10
+    Script: |
+      percentheal 30,30;
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion

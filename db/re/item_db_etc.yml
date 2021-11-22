@@ -13735,7 +13735,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,5;
   - Id: 4850
     AegisName: Heal_Amount3
-    Name: Heal Amount2
+    Name: Archbishop2Lv
     Type: Card
     Buy: 20
     Script: |
@@ -13743,7 +13743,7 @@ Body:
       bonus bUseSPrate,5;
   - Id: 4851
     AegisName: Heal_Amount4
-    Name: Heal Amount3
+    Name: Archbishop3Lv
     Type: Card
     Buy: 20
     Script: |
@@ -13751,7 +13751,7 @@ Body:
       bonus bUseSPrate,10;
   - Id: 4852
     AegisName: Heal_Amount5
-    Name: Heal Amount4
+    Name: Archbishop4Lv
     Type: Card
     Buy: 20
     Script: |
@@ -23961,7 +23961,7 @@ Body:
     Weight: 100
   - Id: 7000
     AegisName: Evt_Cos_Coin
-    Name: Event Stone Coin    # !todo check english name
+    Name: Event Stone Coin
     Type: Etc
   - Id: 7001
     AegisName: Mould_Powder
@@ -38141,7 +38141,7 @@ Body:
       BuyingStore: true
   - Id: 25898
     AegisName: Siroods_Fish_Rod
-    Name: Searud's Fishing Rod    # !todo check english name
+    Name: Searud's Fishing Rod
     Type: Etc
     Trade:
       Override: 100
@@ -52573,7 +52573,7 @@ Body:
       NoAuction: true
   - Id: 1000235
     AegisName: aegis_1000235
-    Name: Great Hunter's Mark    # !todo check english name
+    Name: Elite Hunter Token
     Type: Etc
   - Id: 1000243
     AegisName: Sin_Shard_A
