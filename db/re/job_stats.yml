@@ -8535,24 +8535,6 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
-      - Level: 59
-        Str: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
-        Str: 1
-      - Level: 69
-        Str: 1
-      - Level: 70
-        Str: 1
   - Jobs:
       Oboro: true
     MaxWeight: 26000
@@ -8634,20 +8616,6 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
-      - Level: 59
-        Str: 1
-      - Level: 63
-        Agi: 1
-      - Level: 64
-        Agi: 1
-      - Level: 65
-        Agi: 1
-      - Level: 66
-        Int: 1
-      - Level: 68
-        Vit: 1
-      - Level: 70
-        Vit: 1
   - Jobs:
       Rebellion: true
     MaxWeight: 28000
@@ -8812,8 +8780,6 @@ Body:
         Agi: 1
       - Level: 50
         Dex: 1
-      - Level: 59
-        Str: 1
   - Jobs:
       Baby_Summoner: true
     HpFactor: 100
@@ -8892,8 +8858,6 @@ Body:
         Agi: 1
       - Level: 50
         Dex: 1
-      - Level: 59
-        Str: 1
   - Jobs:
       Baby_Ninja: true
     MaxWeight: 26000
@@ -9036,18 +9000,6 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
-      - Level: 59
-        Str: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
-        Str: 1
-      - Level: 69
-        Agi: 1
-      - Level: 70
-        Agi: 1
   - Jobs:
       Baby_Oboro: true
     MaxWeight: 26000
@@ -9129,20 +9081,6 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
-      - Level: 59
-        Str: 1
-      - Level: 63
-        Str: 1
-      - Level: 64
-        Str: 1
-      - Level: 65
-        Str: 1
-      - Level: 66
-        Str: 1
-      - Level: 67
-        Str: 1
-      - Level: 68
-        Str: 1
   - Jobs:
       Baby_Taekwon: true
     MaxWeight: 28000
@@ -9915,108 +9853,3 @@ Body:
         Int: 1
       - Level: 59
         Int: 1
-    MaxWeight: 28000
-    HpFactor: 90
-    HpMultiplicator: 650
-    SpFactor: 470
-    BaseASPD:
-      Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
-      Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
-      Shield: 6
-    BonusStats:
-      - Level: 1
-        Str: 1
-      - Level: 2
-        Dex: 1
-      - Level: 5
-        Agi: 1
-      - Level: 7
-        Int: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Luk: 1
-      - Level: 11
-        Dex: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Agi: 1
-      - Level: 15
-        Int: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Dex: 1
-      - Level: 21
-        Agi: 1
-      - Level: 23
-        Str: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Int: 1
-      - Level: 27
-        Dex: 1
-      - Level: 29
-        Agi: 1
-      - Level: 30
-        Dex: 1
-      - Level: 31
-        Str: 1
-      - Level: 34
-        Dex: 1
-      - Level: 35
-        Agi: 1
-      - Level: 36
-        Luk: 1
-      - Level: 37
-        Vit: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 41
-        Agi: 1
-      - Level: 42
-        Vit: 1
-      - Level: 43
-        Str: 1
-      - Level: 45
-        Dex: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Str: 1
-      - Level: 50
-        Dex: 1
-      - Level: 56
-        Str: 1
-      - Level: 59
-        Agi: 1
