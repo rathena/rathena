@@ -25289,6 +25289,62 @@ BUILDIN_FUNC(getvariableofinstance)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Sets the value of an instance variable.
+///
+/// setinstancevar(<variable>,<value>,<instance ID>)
+BUILDIN_FUNC(setinstancevar)
+{
+	const char *command = script_getfuncname(st);
+	struct script_data* data = script_getdata(st, 2);
+
+	if (!data_isreference(data)) {
+		ShowError("buildin_%s: %s is not a variable.\n", command, script_getstr(st, 2));
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	const char* name = reference_getname(data);
+
+	if (*name != '\'') {
+		ShowError("buildin_%s: Invalid scope. %s is not an instance variable.\n", command, name);
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int instance_id = script_getnum(st, 4);
+
+	if (instance_id <= 0) {
+		ShowError("buildin_%s: Invalid instance ID %d.\n", command, instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
+
+	if (im->state != INSTANCE_BUSY) {
+		ShowError("buildin_%s: Unknown instance ID %d.\n", command, instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushcopy(st, 2);
+
+	struct map_session_data* sd = nullptr;
+
+	if( is_string_variable(name) )
+		set_reg_str( st, sd, reference_getuid(data), name, script_getstr( st, 3 ), &im->regs );
+	else
+		set_reg_num( st, sd, reference_getuid(data), name, script_getnum64( st, 3 ), &im->regs );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*
   convertpcinfo(<char_id>,<type>)
   convertpcinfo(<account_id>,<type>)
@@ -26133,6 +26189,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getenchantgrade, ""),
 
 	BUILDIN_DEF(mob_setidleevent, "is"),
+
+	BUILDIN_DEF(setinstancevar,"rvi"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

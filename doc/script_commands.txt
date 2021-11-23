@@ -9432,6 +9432,19 @@ Examples:
 
 ---------------------------------------
 
+*setinstancevar(<variable>,<value>,<instance id>);
+
+This command will set an instance variable to the value that the expression results in.
+See 'set' command for more information.
+
+Returns the variable reference.
+
+Examples:
+	// This will set the 'var variable of the specific instance ID to 9.
+	setinstancevar('var, 9, instance_id(IM_GUILD));
+
+---------------------------------------
+
 =========================
 |8.- Quest Log commands.|
 =========================
