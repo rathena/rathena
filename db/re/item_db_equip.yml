@@ -81335,52 +81335,6 @@ Body:
       bonus bMaxSP,100;
       bonus2 bSPDrainRate,30,3+(.@r/3);
       bonus2 bHPDrainRate,10,1+(.@r/4);
-  - Id: 19221
-    AegisName: Golden_Angel_Band_TH
-    Name: Golden Angel Hairband
-    Type: Armor
-    Weight: 10
-    Defense: 10
-    Locations:
-      Head_Top: true
-    ArmorLevel: 1
-    EquipLevelMin: 1
-    Refineable: true
-    View: 1104
-    Script: |
-      .@r = getrefine();
-      if (readparam(bStr) >= 70) {
-         bonus bBaseAtk,5;
-         if (.@r >= 7)
-            bonus bBaseAtk,10;
-         }
-         if (readparam(bInt) >= 70) {
-            bonus bMatk,5;
-            if (.@r >= 7)
-               bonus bMatk,10;
-         }
-         if (readparam(bVit) >= 70) {
-            bonus bMaxHPrate,2;
-            bonus bMaxSPrate,2;
-            if (.@r >= 7)
-               bonus bMaxHPrate,2;
-               bonus bMaxSPrate,2;
-         }
-         if (readparam(bAgi) >= 70) {
-            bonus bAspdRate,2;
-            if (.@r >= 7)
-               bonus bAspdRate,3;
-         }
-         if (readparam(bDex) >= 70) {
-            bonus bLongAtkRate,2;
-            if (.@r >= 7)
-               bonus bLongAtkRate,3;
-         }
-         if (readparam(bLuk) >= 70) {
-            bonus bCritAtkRate,2;
-            if (.@r >= 7)
-               bonus bCritAtkRate,3;
-      }
   - Id: 19125
     AegisName: Cylinder_Hairband
     Name: Cylinder Hairband
@@ -83146,6 +83100,52 @@ Body:
       NoAuction: true
     Script: |
       bonus bMaxSP,50;
+  - Id: 19221
+    AegisName: Golden_Angel_Band_TH
+    Name: Golden Angel Hairband
+    Type: Armor
+    Weight: 10
+    Defense: 10
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 1104
+    Script: |
+      .@r = getrefine();
+      if (readparam(bStr) >= 70) {
+         bonus bBaseAtk,5;
+         if (.@r >= 7)
+            bonus bBaseAtk,10;
+         }
+         if (readparam(bInt) >= 70) {
+            bonus bMatk,5;
+            if (.@r >= 7)
+               bonus bMatk,10;
+         }
+         if (readparam(bVit) >= 70) {
+            bonus bMaxHPrate,2;
+            bonus bMaxSPrate,2;
+            if (.@r >= 7)
+               bonus bMaxHPrate,2;
+               bonus bMaxSPrate,2;
+         }
+         if (readparam(bAgi) >= 70) {
+            bonus bAspdRate,2;
+            if (.@r >= 7)
+               bonus bAspdRate,3;
+         }
+         if (readparam(bDex) >= 70) {
+            bonus bLongAtkRate,2;
+            if (.@r >= 7)
+               bonus bLongAtkRate,3;
+         }
+         if (readparam(bLuk) >= 70) {
+            bonus bCritAtkRate,2;
+            if (.@r >= 7)
+               bonus bCritAtkRate,3;
+      }
   - Id: 19223
     AegisName: Cap_IL
     Name: Illusion Cap
