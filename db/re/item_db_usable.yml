@@ -2268,7 +2268,7 @@ Body:
       /*upgradeui 9551;*/
   - Id: 9553
     AegisName: C_CatPaw_7Day_Box_
-    Name: Endless Cat Hand Ticket 7day Box
+    Name: Infinite Cat Hand Ticket 7 Days Box
     Type: Usable
     Weight: 10
     Script: |
@@ -46764,7 +46764,7 @@ Body:
       callfunc "F_CashStore";
   - Id: 22819
     AegisName: G_Almighty
-    Name: Citizen Oda's Miracle Elixr
+    Name: True Almighty
     Type: Usable
     Weight: 10
     Trade:
@@ -47584,7 +47584,7 @@ Body:
       sc_start SC_DORAM_BUF_02, 180000, 0;
   - Id: 22998
     AegisName: C_CatPaw_Ticket
-    Name: Endless Cat Hand Ticket
+    Name: Infinite Cat Hand Ticket
     Type: Delayconsume
     Trade:
       Override: 100

@@ -42885,6 +42885,13 @@ Body:
     Script: |
       skill "TF_DOUBLE",3;
       bonus bDoubleRate,15;
+  - Id: 29371
+    AegisName: Release_Of_Magic
+    Name: Release of Truth
+    Type: Card
+    Script: |
+      autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000 }";
+      /*Unknow Rate*/
   - Id: 29380
     AegisName: ATK5
     Name: ATK +5
@@ -42977,6 +42984,13 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
+  - Id: 29436
+    AegisName: Dynast
+    Name: Supreme King
+    Type: Card
+    Script: |
+      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000 }";
+      /*Unknow Rate*/
   - Id: 29438
     AegisName: Z-Knockback
     Name: Z-Knockback
@@ -43181,6 +43195,13 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+  - Id: 29509
+    AegisName: Hero
+    Name: The Hero
+    Type: Card
+    Script: |
+      autobonus "{ bonus bFlee2,100; bonus2 bAddClass,Class_Boss,100; }",50,10000,BF_WEAPON;
+      /*Unknow Rate*/
   - Id: 29513
     AegisName: HighpriestStone_Top_
     Name: High Priest Stone (Upper)
@@ -47115,6 +47136,13 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"AB_JUDEX",15;
+  - Id: 310012
+    AegisName: DesireOfDeath
+    Name: Doom Desire
+    Type: Card
+    Script: |
+      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }";
+      /*Unknow Rate*/
   - Id: 310076
     AegisName: Cassock_Str
     Name: STR Blessing
@@ -51670,6 +51698,13 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
+  - Id: 310655
+    AegisName: aegis_310655
+    Name: The Creation
+    Type: Card
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bMagicAddSize,Size_All,15;
   - Id: 310654
     AegisName: aegis_310654
     Name: ASPD+1(Dual)
