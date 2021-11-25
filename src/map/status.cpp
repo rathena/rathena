@@ -5258,10 +5258,10 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt)
  * @param opt: Whether it is first calc or not (0 on status change)
  * @return 0
  */
-int status_calc_elemental_(struct s_elemental_data *ed, enum e_status_calc_opt opt)
+int status_calc_elemental_(s_elemental_data *ed, e_status_calc_opt opt)
 {
 	struct status_data *status = &ed->base_status;
-	struct s_elemental *ele = &ed->elemental;
+	s_elemental *ele = &ed->elemental;
 	struct map_session_data *sd = ed->master;
 
 	if( !sd )
@@ -8946,7 +8946,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		break;
 	case BL_ELEM:
 		{
-			struct s_elemental_data *ed = (struct s_elemental_data*)bl;
+			s_elemental_data *ed = (s_elemental_data*)bl;
 			if (vd)
 				ed->vd = vd;
 			else
