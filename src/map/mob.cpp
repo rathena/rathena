@@ -2390,7 +2390,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 		case BL_ELEM:
 		{
-			struct elemental_data *ele = (TBL_ELEM*)src;
+			s_elemental_data *ele = (TBL_ELEM*)src;
 			if( ele->master )
 				char_id = ele->master->status.char_id;
 			if( damage )

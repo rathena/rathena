@@ -9845,7 +9845,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 					safestrncpy(packet.name, ((TBL_NPC *)bl)->name, NAME_LENGTH);
 					break;
 				case BL_ELEM:
-					safestrncpy(packet.name, ((TBL_ELEM *)bl)->db->name, NAME_LENGTH);
+					safestrncpy(packet.name, ((TBL_ELEM *)bl)->db->name.c_str(), NAME_LENGTH);
 					break;
 			}
 
@@ -18552,7 +18552,7 @@ void clif_parse_ItemListWindowSelected(int fd, struct map_session_data* sd) {
  * Elemental System
  *==========================================*/
 void clif_elemental_updatestatus(struct map_session_data *sd, int type) {
-	struct elemental_data *ed;
+	s_elemental_data *ed;
 	struct status_data *status;
 	int fd;
 
@@ -18583,7 +18583,7 @@ void clif_elemental_updatestatus(struct map_session_data *sd, int type) {
 
 void clif_elemental_info(struct map_session_data *sd) {
 	int fd;
-	struct elemental_data *ed;
+	s_elemental_data *ed;
 	struct status_data *status;
 
 	if( !clif_session_isValid(sd) || (ed = sd->ed) == NULL )
