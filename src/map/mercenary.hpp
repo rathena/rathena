@@ -19,7 +19,7 @@ enum e_MercGuildType {
 	SWORD_MERC_GUILD,
 };
 
-enum MERID {
+enum e_MERID {
 	MERID_MER_ARCHER01 = 6017,
 	MERID_MER_ARCHER10 = 6026,
 	MERID_MER_LANCER01,
@@ -39,19 +39,19 @@ struct s_mercenary_db {
 };
 
 struct s_mercenary_data {
-	struct block_list bl;
-	struct unit_data ud;
-	struct view_data *vd;
-	struct status_data base_status, battle_status;
-	struct status_change sc;
-	struct regen_data regen;
+	block_list bl;
+	unit_data ud;
+	view_data *vd;
+	status_data base_status, battle_status;
+	status_change sc;
+	regen_data regen;
 
 	std::shared_ptr<s_mercenary_db> db;
-	struct s_mercenary mercenary;
+	s_mercenary mercenary;
 	std::vector<uint16> blockskill;
 
 	int masterteleport_timer;
-	struct map_session_data *master;
+	map_session_data *master;
 	int contract_timer;
 
 	unsigned devotion_flag : 1;
@@ -71,25 +71,25 @@ public:
 
 extern MercenaryDatabase mercenary_db;
 
-bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime);
-bool mercenary_recv_data(struct s_mercenary *merc, bool flag);
-void mercenary_save(struct s_mercenary_data *md);
+bool mercenary_create(map_session_data *sd, uint16 class_, unsigned int lifetime);
+bool mercenary_recv_data(s_mercenary *merc, bool flag);
+void mercenary_save(s_mercenary_data *md);
 
-void mercenary_heal(struct s_mercenary_data *md, int hp, int sp);
-bool mercenary_dead(struct s_mercenary_data *md);
+void mercenary_heal(s_mercenary_data *md, int hp, int sp);
+bool mercenary_dead(s_mercenary_data *md);
 
-int mercenary_delete(struct s_mercenary_data *md, int reply);
-void mercenary_contract_stop(struct s_mercenary_data *md);
+int mercenary_delete(s_mercenary_data *md, int reply);
+void mercenary_contract_stop(s_mercenary_data *md);
 
-t_tick mercenary_get_lifetime(struct s_mercenary_data *md);
-enum e_MercGuildType mercenary_get_guild(struct s_mercenary_data *md);
-int mercenary_get_faith(struct s_mercenary_data *md);
-void mercenary_set_faith(struct s_mercenary_data *md, int value);
-int mercenary_get_calls(struct s_mercenary_data *md);
-void mercenary_set_calls(struct s_mercenary_data *md, int value);
-void mercenary_kills(struct s_mercenary_data *md);
+t_tick mercenary_get_lifetime(s_mercenary_data *md);
+e_MercGuildType mercenary_get_guild(s_mercenary_data *md);
+int mercenary_get_faith(s_mercenary_data *md);
+void mercenary_set_faith(s_mercenary_data *md, int value);
+int mercenary_get_calls(s_mercenary_data *md);
+void mercenary_set_calls(s_mercenary_data *md, int value);
+void mercenary_kills(s_mercenary_data *md);
 
-uint16 mercenary_checkskill(struct s_mercenary_data *md, uint16 skill_id);
+uint16 mercenary_checkskill(s_mercenary_data *md, uint16 skill_id);
 
 void do_init_mercenary(void);
 void do_final_mercenary(void);

@@ -1068,7 +1068,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
  * @param md: Mercenary who casted
  * @return true: Skill cannot be used, false: otherwise
  */
-bool skill_isNotOk_mercenary(uint16 skill_id, struct s_mercenary_data *md)
+bool skill_isNotOk_mercenary(uint16 skill_id, s_mercenary_data *md)
 {
 	nullpo_retr(1, md);
 
@@ -6511,7 +6511,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	struct map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
 	struct homun_data *hd;
-	struct s_mercenary_data *mer;
+	s_mercenary_data *mer;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *tsc;
 	struct status_change_entry *tsce;
@@ -21127,7 +21127,7 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 }
 
 TIMER_FUNC(skill_blockmerc_end){
-	struct s_mercenary_data *md = (TBL_MER*)map_id2bl(id);
+	s_mercenary_data *md = (TBL_MER*)map_id2bl(id);
 
 	if (md) {
 		auto skill = util::vector_get(md->blockskill, (uint16)data);
@@ -21139,7 +21139,7 @@ TIMER_FUNC(skill_blockmerc_end){
 	return 1;
 }
 
-int skill_blockmerc_start(struct s_mercenary_data *md, uint16 skill_id, int tick)
+int skill_blockmerc_start(s_mercenary_data *md, uint16 skill_id, int tick)
 {
 	nullpo_retr(-1, md);
 

@@ -5140,10 +5140,10 @@ int status_calc_pc_( struct map_session_data* sd, enum e_status_calc_opt opt ){
  * @param opt: Whether it is first calc or not (0 on level up or status)
  * @return 0
  */
-int status_calc_mercenary_(struct s_mercenary_data *md, enum e_status_calc_opt opt)
+int status_calc_mercenary_(s_mercenary_data *md, enum e_status_calc_opt opt)
 {
 	struct status_data *status = &md->base_status;
-	struct s_mercenary *merc = &md->mercenary;
+	s_mercenary *merc = &md->mercenary;
 
 	if (opt&SCO_FIRST) {
 		memcpy(status, &md->db->status, sizeof(struct status_data));
@@ -8943,7 +8943,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		break;
 	case BL_MER:
 		{
-			struct s_mercenary_data *md = (struct s_mercenary_data*)bl;
+			s_mercenary_data *md = (s_mercenary_data*)bl;
 			if (vd)
 				md->vd = vd;
 			else
