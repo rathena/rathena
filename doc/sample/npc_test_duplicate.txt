@@ -106,7 +106,7 @@ end;
 }
 
 prontera,150,165,0	script	test npc::original_npc_unique_name	444,{
-	getmapxy(.map$, .x, .y, BL_NPC);
+	getmapxy(.@map$, .@x, .@y, BL_NPC);
 	mes "Hi.";
 	mes "My Unique Name is: " + strnpcinfo(3);
 	mes "My coords are "+ .map$ +", "+ .x +"/" +.y ;
