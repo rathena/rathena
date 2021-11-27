@@ -59,7 +59,9 @@ int login_fd; // login server file descriptor socket
 
 //early declaration
 bool login_check_password(const char* md5key, int passwdenc, const char* passwd, const char* refpass, uint8 passwd_type);
-bool login_update_password(const char * passwd, struct mmo_account *acc);
+int login_update_password(const char * passwd, struct mmo_account *acc);
+void login_set_defaults();
+int login_lan_config_read(const char *lancfgName);
 
 ///Accessors
 AccountDB* login_get_accounts_db(void){
@@ -355,7 +357,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	}
 
 	// at this point, update password in db if needed
-	if (!login_update_password(sd->passwd, &acc)) {
+	if (login_update_password(sd->passwd, &acc) < 0) {
 		ShowNotice("Failed to run bcrypt, see above error for details\n");
 		// TODO: should we fail here?
 	}
@@ -472,7 +474,7 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 		return BCrypt::validatePassword(md5pwd, refpass);
 	}
 	if(passwdenc == 0){
-		if (strlen(refpass) > 25) { // not MD5 password
+		if (strlen(refpass) != 32) { // not MD5 password
 			return 0 == strcmp(passwd, refpass);
 		}
 		// md5 password
@@ -493,22 +495,55 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
  * Assume password is already validated as correct
  * @param passwd: raw passwd
  * @param acc: the account to update
- * @return true if password is updated at end of function
+ * @return 1 if updated, 0 if already updated, -1 if error
  */
-bool login_update_password(const char * passwd, struct mmo_account *acc) {
+int login_update_password(const char * passwd, struct mmo_account *acc) {
 	if (acc->passwd_type == 1) { // already done
-		return true;
+		return 0;
 	}
 	try {
 		// not hashed correctly (just bcrypt), update acc with new hash
+		auto dbpasslen = strlen(acc->pass);
+		bool was_md5 = (dbpasslen == 32); // MD5 is 32 chars
 		safestrncpy(acc->pass, BCrypt::generateHash(passwd).c_str(), sizeof(acc->pass));
-		acc->passwd_type = 1;
+		acc->passwd_type = was_md5 ? 2 : 1;
 	} catch (const std::exception& e) {
 		ShowDebug("%s\n", e.what());
-		return false;
+		return -1;
 	}
 	ShowInfo("Encrypted password for %s\n", acc->userid);
-	return true;
+	return 1;
+}
+
+/**
+ * Update all passwords.
+ * Stop the login server after this is done.
+ */
+void login_update_all_passwords() {
+
+	login_set_defaults();
+
+	login_config_read(login_config.loginconf_name, true);
+	msg_config_read(login_config.msgconf_name);
+	login_lan_config_read(login_config.lanconf_name);
+
+	accounts->init(accounts);
+	auto it = accounts->iterator(accounts);
+	struct mmo_account acc;
+	int counter = 0;
+	while (it->next(it, &acc)) {
+		if (login_update_password(acc.pass, &acc) == 1) {
+			counter++;
+			accounts->save(accounts, &acc);
+		}
+	}
+	ShowInfo("Encrypted %d passwords\n", counter);
+	it->destroy(it);
+	accounts->destroy(accounts);
+	accounts = NULL;
+	accounts = account_db_sql(); // needs to be initialized for to gracefully exit
+
+	runflag = CORE_ST_STOP;
 }
 
 int login_get_usercount( int users ){

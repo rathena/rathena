@@ -240,4 +240,6 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer);
 
 int login_get_usercount( int users );
 
+void login_update_all_passwords();
+
 #endif /* LOGIN_HPP */

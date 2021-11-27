@@ -64,6 +64,8 @@ int logcnslif_get_options(int argc, char ** argv) {
 				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
 			} else if (strcmp(arg, "msg-config") == 0) {
 				if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
+			} else if (strcmp(arg, "encrypt-passwords") == 0) {
+				login_update_all_passwords();
 			} else {
 				ShowError("Unknown option '%s'.\n", argv[i]);
 				exit(EXIT_FAILURE);
@@ -121,17 +123,12 @@ int cnslif_parse(const char* buf){
 		}
 		if( strcmpi("create",type) == 0 )
 		{
-			char username[NAME_LENGTH], password[NAME_LENGTH], md5password[32+1], sex; //23+1 plaintext 32+1 md5
-			bool md5 = 0;
+			char username[NAME_LENGTH], password[NAME_LENGTH], sex; //23+1 plaintext
 			if( sscanf(command, "%23s %23s %c", username, password, &sex) < 3 || strnlen(username, sizeof(username)) < 4 || strnlen(password, sizeof(password)) < 1 ){
 				ShowWarning("Console: Invalid parameters for '%s'. Usage: %s <username> <password> <sex:F/M>\n", type, type);
 				return 0;
 			}
-			if( login_config.use_md5_passwds ){
-				MD5_String(password,md5password);
-				md5 = 1;
-			}
-			if( login_mmo_auth_new(username,(md5?md5password:password), TOUPPER(sex), "0.0.0.0") != -1 ){
+			if( login_mmo_auth_new(username,password, TOUPPER(sex), "0.0.0.0") != -1 ){
 				ShowError("Console: Account creation failed.\n");
 				return 0;
 			}
