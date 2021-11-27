@@ -569,14 +569,14 @@ OnNaviGenerate:
 
 	// fields
 	naviregisterwarp("Warper > Amatsu Field", "ama_fild01", 190, 197);
-	naviregisterwarp("Warper > Ayothoa Field", "ayo_fild01", 173, 134);
+	naviregisterwarp("Warper > Ayothoya Field", "ayo_fild01", 173, 134);
 
 	if (checkre(0)) {
 		naviregisterwarp("Warper > Bifrost Field", "bif_fild02", 193, 220);
 	}
 
 	if (!.OnlyFirstFld) {
-		naviregisterwarp("Warper > Ayothoa Field", "ayo_fild02", 212, 150);
+		naviregisterwarp("Warper > Ayothoya Field", "ayo_fild02", 212, 150);
 		
 		if (checkre(0)) {
 			naviregisterwarp("Warper > Bifrost Field", "bif_fild02", 220, 187);

@@ -306,7 +306,7 @@ struct Script_Config script_config = {
 	// Instance related
 	"OnInstanceInit", //instance_init_event_name (is executed right after instance creation)
 	"OnInstanceDestroy", //instance_destroy_event_name (is executed right before instance destruction)
-	"OnNaviGenerate", //navi_generate_name (is executed right before navi genertion)
+	"OnNaviGenerate", //navi_generate_name (is executed right before navi generation)
 };
 
 static jmp_buf     error_jump;
