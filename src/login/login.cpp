@@ -472,7 +472,13 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 		return BCrypt::validatePassword(md5pwd, refpass);
 	}
 	if(passwdenc == 0){
-		return (0==strcmp(passwd, refpass));
+		if (strlen(refpass) > 25) { // not MD5 password
+			return 0 == strcmp(passwd, refpass);
+		}
+		// md5 password
+		char md5pwd[PASSWD_LENGTH];
+		MD5_String(passwd, md5pwd);
+		return (0 == strcmp(md5pwd, refpass));
 	}
 	else {
 		// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>
