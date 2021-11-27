@@ -22,7 +22,7 @@ AccountDB* account_db_sql(void);
 struct mmo_account {
 	uint32 account_id;
 	char userid[NAME_LENGTH];
-	char pass[32+1];        // 23+1 for plaintext, 32+1 for md5-ed passwords
+	char pass[72+1];        // 23+1 for plaintext, 32+1 for md5-ed passwords, 72+1 for bcrypt passwords
 	char sex;               // gender (M/F/S)
 	char email[40];         // e-mail (by default: a@a.com)
 	unsigned int group_id;  // player group id
@@ -37,6 +37,7 @@ struct mmo_account {
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
 	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; // web authentication token (randomized on each login)
+	uint8 passwd_type; // 0 = unknown, 1 = bcrypt, 2 = md5+bcrypt
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;

@@ -334,8 +334,6 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		{
 			ShowStatus("Request for connection of %s (ip: %s)\n", sd->userid, ip);
 			safestrncpy(sd->passwd, password, PASSWD_LENGTH);
-			if( login_config.use_md5_passwds )
-				MD5_String(sd->passwd, sd->passwd);
 			sd->passwdenc = 0;
 		}
 		else
