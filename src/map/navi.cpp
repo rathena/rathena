@@ -20,6 +20,8 @@
 #include "path.hpp"
 
 
+std::string filePrefix = "generated/clientside/data/luafiles514/lua files/navigation/";
+
 #define SET_OPEN 0
 #define SET_CLOSED 1
 
@@ -277,6 +279,19 @@ bool navi_path_search(struct navi_walkpath_data *wpd, const struct navi_pos *fro
 	return true;
 }
 
+bool fileExists(const std::string& path) {
+	std::ifstream in;
+	in.open(path);
+
+	if (in.is_open()) {
+		in.close();
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 void write_header(std::ostream &os, std::string name) {
 	os << name << " = {\n";
 }
@@ -375,10 +390,10 @@ void write_spawn(std::ostream &os, const struct map_data * m, const std::shared_
 }
 
 void write_object_lists() {
-	std::ofstream mob_file = std::ofstream("./navi_mob_krpri.lub");
-	std::ofstream links_file = std::ofstream("./navi_link_krpri.lub");
-	std::ofstream npc_file = std::ofstream("./navi_npc_krpri.lub");
-	std::ofstream map_file = std::ofstream("./navi_map_krpri.lub");
+	auto mob_file = std::ofstream(filePrefix + "./navi_mob_krpri.lub");
+	auto links_file = std::ofstream(filePrefix + "./navi_link_krpri.lub");
+	auto npc_file = std::ofstream(filePrefix + "./navi_npc_krpri.lub");
+	auto map_file = std::ofstream(filePrefix + "./navi_map_krpri.lub");
 
 	int warp_count = 0;
 	int npc_count = 0;
@@ -490,7 +505,7 @@ void write_npc_distance(std::ostream &os, const struct npc_data * nd, const stru
 }
 
 void write_npc_distances() {
-	std::ofstream dist_npc_file = std::ofstream("./navi_npcdistance_krpri.lub");
+	auto dist_npc_file = std::ofstream(filePrefix + "./navi_npcdistance_krpri.lub");
 
 	write_header(dist_npc_file, "Navi_NpcDistance");
 
@@ -558,7 +573,7 @@ void write_map_distance(std::ostream &os, const struct navi_link * warp1, const 
 }
 
 void write_map_distances() {
-	std::ofstream dist_map_file = std::ofstream("./navi_linkdistance_krpri.lub");
+	auto dist_map_file = std::ofstream(filePrefix + "./navi_linkdistance_krpri.lub");
 	write_header(dist_map_file, "Navi_Distance");
 
 	for (int mapid = 0; mapid < map_num; mapid++) {
@@ -578,6 +593,12 @@ void create_lists() {
 	BHEAP_INIT(g_open_set);
 
 	auto starttime = std::chrono::system_clock::now();
+
+	if (!fileExists(filePrefix)) {
+		ShowError("File directory %s does not exist.\n", filePrefix.c_str());
+		ShowInfo("Create the directory and rerun map-server");
+		exit(1);
+	}
 
 	npc_event_runall(script_config.navi_generate_name);
 
