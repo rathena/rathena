@@ -46,6 +46,10 @@ Thumbs.db
 /yaml2sql
 /yamlupgrade
 
+# /3rdparty/libbcrypt/
+/3rdparty/libbcrypt/Makefile
+/3rdparty/libbcrypt/obj
+
 # /3rdparty/libconfig/
 /3rdparty/libconfig/Makefile
 /3rdparty/libconfig/*.o

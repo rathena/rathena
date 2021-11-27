@@ -7,6 +7,11 @@ LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
+LIBBCRYPT_H = $(shell ls ../../3rdparty/libbcrypt/include/bcrypt/*.h)
+LIBCONFIG_AR = ../../3rdparty/libbcrypt/obj/libbcrypt.a
+LIBCONFIG_INCLUDE = -I../../3rdparty/libbcrypt/include
+
+
 LOGIN_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 LOGIN_DIR_OBJ = $(LOGIN_OBJ:%=obj/%)
 LOGIN_H = $(shell ls *.hpp)
@@ -65,7 +70,7 @@ login-server: obj $(LOGIN_DIR_OBJ) $(COMMON_AR) $(RAPIDYAML_AR)
 
 # login object files
 
-obj/%.o: %.cpp $(LOGIN_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
+obj/%.o: %.cpp $(LOGIN_H) $(COMMON_H) $(LIBCONFIG_H) $(LIBBCRYPT_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"
 	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) -DWITH_SQL @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 

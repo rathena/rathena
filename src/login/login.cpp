@@ -9,6 +9,8 @@
 #include <string>
 #include <unordered_map>
 
+#include <bcrypt/BCrypt.hpp>
+
 #include "../common/cli.hpp"
 #include "../common/core.hpp"
 #include "../common/malloc.hpp"
