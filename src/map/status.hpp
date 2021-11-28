@@ -2634,7 +2634,7 @@ struct status_data {
 		matk_min, matk_max,
 		speed,
 		amotion, adelay, dmotion;
-	enum e_mode mode;
+	int mode;
 	short
 		hit, flee, cri, flee2,
 		def2, mdef2,

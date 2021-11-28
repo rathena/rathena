@@ -167,10 +167,6 @@ const t_itemid WEDDING_RING_F = 2635;
 //Elemental System
 #define MAX_ELEMENTALSKILL 42
 #define EL_SKILLBASE 8401
-#define MAX_ELESKILLTREE 3
-#define MAX_ELEMENTAL_CLASS 12
-#define EL_CLASS_BASE 2114
-#define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
 
 //Achievement System
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
@@ -488,7 +484,7 @@ struct s_elemental {
 	int elemental_id;
 	uint32 char_id;
 	short class_;
-	enum e_mode mode;
+	int mode;
 	int hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
 	t_tick life_time;

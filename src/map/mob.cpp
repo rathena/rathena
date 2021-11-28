@@ -1194,7 +1194,7 @@ int mob_spawn (struct mob_data *md)
 /*==========================================
  * Determines if the mob can change target. [Skotlex]
  *------------------------------------------*/
-static int mob_can_changetarget(struct mob_data* md, struct block_list* target, enum e_mode mode)
+static int mob_can_changetarget(struct mob_data* md, struct block_list* target, int mode)
 {
 	// Special feature that makes monsters always attack the person that provoked them
 	if(battle_config.mob_ai&0x800 && md->state.provoke_flag)
@@ -1683,7 +1683,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 {
 	struct block_list *tbl = nullptr, *abl = nullptr;
-	enum e_mode mode;
+	int mode;
 	int view_range, can_move;
 
 	if(md->bl.prev == nullptr || md->status.hp == 0)
