@@ -2714,3 +2714,21 @@
 490143:310655,{ bonus bAllStats,10; bonus bDelayrate,-30; }
 490145:29509,{ bonus bNoSizeFix; bonus2 bSkillCooldown,"RA_AIMEDBOLT",-250; }
 490146:29436,{ if (BaseJob == Job_Genetic) { bonus bNoWalkDelay; autobonus3 "{ bonus bPerfectHitAddRate,100; }",50,3000,"GN_CART_TORNADO"; }/*Unknow Rate*/ }
+28505:4920,{ bonus bVariableCastrate,-5; }
+28505:4921,{ bonus bVariableCastrate,-5; }
+28505:4922,{ bonus bVariableCastrate,-5; }
+28505:4908,{ bonus2 bAddRace,RC_All,5; }
+28505:4909,{ bonus2 bAddRace,RC_All,5; }
+28505:4910,{ bonus2 bAddRace,RC_All,5; }
+28505:4911,{ bonus bMatkRate,5; }
+28505:4912,{ bonus bMatkRate,5; }
+28505:4913,{ bonus bMatkRate,5; }
+28505:4923,{ bonus bCritAtkRate,5; }
+28505:4924,{ bonus bCritAtkRate,5; }
+28505:4925,{ bonus bCritAtkRate,5; }
+28505:4914,{ bonus bAspdRate,5; }
+28505:4915,{ bonus bAspdRate,5; }
+28505:4916,{ bonus bAspdRate,5; }
+28505:4917,{ bonus bMaxHPrate,5; }
+28505:4918,{ bonus bMaxHPrate,5; }
+28505:4919,{ bonus bMaxHPrate,5; }
