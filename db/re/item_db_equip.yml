@@ -120642,6 +120642,8 @@ Body:
     Buy: 20
     Weight: 500
     Slots: 1
+    Locations:
+      Both_Accessory: true
     ArmorLevel: 1
     EquipLevelMin: 100
     Script: |
