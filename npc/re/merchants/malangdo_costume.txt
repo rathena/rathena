@@ -1056,7 +1056,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	switch(.@slot) {
 	case 0:
-		if (!(.@location & 1024)) {	// Upper Enchants
+		if (!(.@location & EQP_COSTUME_HEAD_TOP)) {
 			mes "[Aver De Dosh]";
 			mes "The costume can't be enhanced at this location.";	// custom
 			close;
