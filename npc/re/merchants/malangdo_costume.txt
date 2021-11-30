@@ -1322,7 +1322,7 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	if (.@equip_id == -1) {
 		mes "[Lace La Zard]";
 		mes "Put the garment on your shoulder.";
-		mes "I need to have a look at it before i can tell if it's worth to be upgraded..";
+		mes "I need to have a look at it before I can tell if it's worth to be upgraded..";
 		close;
 	}
 
