@@ -1114,7 +1114,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 			1000305, 310266;	// WanderMinsStone_Top2	WandMinst_Top2
 		break;
 	case 1:
-		if (!(.@location & 2048)) {	// Middle Enchants
+		if (!(.@location & EQP_COSTUME_HEAD_MID)) {
 			mes "[Aver De Dosh]";
 			mes "The costume can't be enhanced at this location.";	// custom
 			close;
