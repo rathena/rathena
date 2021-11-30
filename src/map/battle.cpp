@@ -2260,6 +2260,8 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 	sd = BL_CAST(BL_PC, src);
 
 	if (!sd) { //Mobs/Pets
+		if (sc != NULL && sc->data[SC_CHANGE] != NULL)
+			return status->matk_max; // [Aegis] simply uses raw max matk for base damage when Mental Charge active
 		if(flag&4) {
 			atkmin = status->matk_min;
 			atkmax = status->matk_max;
