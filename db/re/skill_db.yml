@@ -112,6 +112,7 @@
 #     ItemCost:               Item required to cast. (Default: 0)
 #       - Item                Item name.
 #         Amount              Item amount.
+#         Level               Skill level. Makes the skill item check become level dependent if supplied. (Default: applies to all levels)
 #     Equipment:              Equipped item required to cast. (Default: nullptr)
 #   Unit:                     Skill unit values. (Optional)
 #     Id                      Skill unit ID.
@@ -129,7 +130,7 @@
 
 Header:
   Type: SKILL_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Id: 1
@@ -287,27 +288,6 @@ Body:
     Duration2: 10000
     Cooldown: 2000
     Requires:
-      HpCost:
-        - Level: 1
-          Amount: 20
-        - Level: 2
-          Amount: 20
-        - Level: 3
-          Amount: 19
-        - Level: 4
-          Amount: 19
-        - Level: 5
-          Amount: 18
-        - Level: 6
-          Amount: 18
-        - Level: 7
-          Amount: 17
-        - Level: 8
-          Amount: 17
-        - Level: 9
-          Amount: 16
-        - Level: 10
-          Amount: 16
       SpCost: 30
   - Id: 8
     Name: SM_ENDURE
@@ -2596,8 +2576,6 @@ Body:
     TargetType: Support
     DamageFlags:
       NoDamage: true
-    Flags:
-      IgnoreStasis: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -3018,6 +2996,22 @@ Body:
         Time: 48
     Requires:
       SpCost: 75
+      ItemCost:
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 6
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 7
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 8
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 9
+        - Item: Blue_Gemstone
+          Amount: 1
+          Level: 10
     Unit:
       Id: Firepillar_Waiting
       AlternateId: Firepillar_Active
@@ -5013,6 +5007,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Duration2: 1000
     Requires:
       SpCost: 3
       Weapon:
@@ -8260,7 +8255,6 @@ Body:
       NoTargetSelf: true
       PartyOnly: true
       GuildOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 9
     Hit: Single
@@ -9976,7 +9970,6 @@ Body:
     FixedCastTime: 700
     CastTimeFlags:
       IgnoreDex: true
-      IgnoreStatus: true
     Requires:
       SpCost:
         - Level: 1
@@ -10007,7 +10000,7 @@ Body:
     TargetType: Attack
     Range: 9
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: 3
     Element: Holy
     CastTime: 1000
     AfterCastActDelay:
@@ -16709,6 +16702,19 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+  - Id: 707
+    Name: NPC_MILLENNIUMSHIELD
+    Description: Millenium Shield 2
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 1   # (skillinfolist.lua)
+    Hit: Single
+    HitCount: 1
+    Duration1: 900000   # skill duration (unknown value)
   - Id: 708
     Name: NPC_COMET
     Description: Comet 2
@@ -16783,6 +16789,54 @@ Body:
         NoOverlap: true
         PathCheck: true
         RemovedByFireRain: true
+  - Id: 712
+    Name: NPC_PULSESTRIKE2
+    Description: Pulse Strike 2
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      TargetTrap: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Dark
+    SplashArea: 5
+    Knockback: 3
+    Duration1: 1000
+  - Id: 713
+    Name: NPC_DANCINGBLADE
+    Description: Dancing Blade
+    MaxLevel: 1
+    Type: None
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Range: 10
+    Hit: Single
+    HitCount: 1
+    CastTime: 3500
+    AfterCastActDelay: 3000
+    Duration1: 100
+    FixedCastTime: 1000
+  - Id: 714
+    Name: NPC_DANCINGBLADE_ATK
+    Description: Dancing Blade Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range: 10
+    Hit: Single
+    HitCount: 1
   - Id: 715
     Name: NPC_DARKPIERCING
     Description: Dark Piercing
@@ -16895,6 +16949,86 @@ Body:
         Time: 27500
       - Level: 5
         Time: 32500
+  - Id: 721
+    Name: NPC_WIDEWEB
+    Description: Wide Web
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea: 7
+    Duration2: 10000
+  - Id: 722
+    Name: NPC_WIDESUCK
+    Description: Wide Suck
+    MaxLevel: 1
+    Type: Misc
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea: 13
+    Duration1: 3000
+  - Id: 723
+    Name: NPC_STORMGUST2
+    Description: Storm Gust 2
+    MaxLevel: 3
+    Type: Magic
+    TargetType: Ground
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    Duration1: 4500
+    Duration2: 30000
+    Unit:
+      Id: Dummyskill
+      Layout: 5
+      Range: 1
+      Interval: 450
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 724
+    Name: NPC_FIRESTORM
+    Description: Fire Storm
+    MaxLevel: 3
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 3
+      - Level: 3
+        Count: 5
+    Element: Fire
+    SplashArea: 3
+    Knockback: 3
+    Duration1: 10000
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2
@@ -16973,40 +17107,327 @@ Body:
   - Id: 728
     Name: NPC_ARROWSTORM
     Description: NPC Arrow Storm
-    MaxLevel: 10
+    MaxLevel: 5
     Type: Weapon
     TargetType: Attack
     DamageFlags:
       Splash: true
     Flags:
       IsNpc: true
-      AlterRangeVulture: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -3
-    Element: Weapon
     SplashArea:
       - Level: 1
         Area: 3
       - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 11
+      - Level: 5
+        Area: 13
+  - Id: 729
+    Name: NPC_CHEAL
+    Description: NPC Coluceo Heal
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    SplashArea:
+      - Level: 1
         Area: 3
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 9
+      - Level: 5
+        Area: 11
+  - Id: 730
+    Name: NPC_SR_CURSEDCIRCLE
+    Description: Cursed Circle
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
       - Level: 3
         Area: 3
       - Level: 4
-        Area: 3
+        Area: 4
       - Level: 5
-        Area: 3
-      - Level: 6
-        Area: 4
-      - Level: 7
-        Area: 4
-      - Level: 8
-        Area: 4
-      - Level: 9
-        Area: 4
-      - Level: 10
         Area: 5
-    CastCancel: true
+    Duration1: 7000
+  - Id: 731
+    Name: NPC_DRAGONBREATH
+    Description: NPC Dragon Breath
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+      IgnoreFlee: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 3
+    Hit: Single
+    HitCount: 1
+    Element:
+      - Level: 1
+        Element: Fire
+      - Level: 2
+        Element: Fire
+      - Level: 3
+        Element: Fire
+      - Level: 4
+        Element: Fire
+      - Level: 5
+        Element: Fire
+      - Level: 6
+        Element: Water
+      - Level: 7
+        Element: Water
+      - Level: 8
+        Element: Water
+      - Level: 9
+        Element: Water
+      - Level: 10
+        Element: Water
+    SplashArea: 4
+    Duration1: 10000
+  - Id: 732
+    Name: NPC_FATALMENACE
+    Description: Fatal Menace
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
+  - Id: 733
+    Name: NPC_MAGMA_ERUPTION
+    Description: NPC Magma Eruption
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea: 3
+    ActiveInstance: 3
+    Duration1: 3000
+    Unit:
+      Id: Magma_Eruption
+      Range: 3
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 734
+    Name: NPC_MAGMA_ERUPTION_DOTDAMAGE
+    Description: NPC Magma Eruption Dot Damage
+    MaxLevel: 5
+    Type: Misc
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+      IgnoreDefCard: true
+    Flags:
+      IsNpc: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+  - Id: 735
+    Name: NPC_MANDRAGORA
+    Description: NPC Howling of Mandragora
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 6
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 8
+      - Level: 5
+        Area: 9
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 15000
+      - Level: 3
+        Time: 20000
+      - Level: 4
+        Time: 25000
+      - Level: 5
+        Time: 30000
+  - Id: 736
+    Name: NPC_PSYCHIC_WAVE
+    Description: Psychic Wave
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 3200
+    Unit:
+      Id: Psychic_Wave
+      Range:
+        - Level: 1
+          Size: 3
+        - Level: 2
+          Size: 4
+        - Level: 3
+          Size: 5
+        - Level: 4
+          Size: 5
+        - Level: 5
+          Size: 5
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 5
+        - Level: 8
+          Size: 5
+        - Level: 9
+          Size: 5
+        - Level: 10
+          Size: 5
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 737
+    Name: NPC_RAYOFGENESIS
+    Description: NPC Ray of Genesis
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      IsNpc: true
+      ShowScale: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Holy
+    SplashArea:
+      - Level: 1
+        Area: 5
+      - Level: 2
+        Area: 5
+      - Level: 3
+        Area: 8
+      - Level: 4
+        Area: 8
+      - Level: 5
+        Area: 11
+      - Level: 6
+        Area: 11
+      - Level: 7
+        Area: 13
+      - Level: 8
+        Area: 13
+      - Level: 9
+        Area: 13
+      - Level: 10
+        Area: 13
+    Duration1: 10000
+  - Id: 738
+    Name: NPC_VENOMIMPRESS
+    Description: NPC Venom Impress
+    MaxLevel: 5
+    TargetType: Attack
+    Flags:
+      IsNpc: true
+    Range:
+      - Level: 1
+        Size: 2
+      - Level: 2
+        Size: 3
+      - Level: 3
+        Size: 4
+      - Level: 4
+        Size: 5
+      - Level: 5
+        Size: 6
+    Hit: Single
+    HitCount: 1
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 20000
+      - Level: 3
+        Time: 30000
+      - Level: 4
+        Time: 40000
+      - Level: 5
+        Time: 50000
   - Id: 739
     Name: NPC_CLOUD_KILL
     Description: Cloud Kill
@@ -20287,7 +20708,6 @@ Body:
       NoDamage: true
     Flags:
       PartyOnly: true
-      IgnoreStasis: true
       TargetHidden: true
     Range: 11
     Hit: Single
@@ -21582,12 +22002,16 @@ Body:
       ItemCost:
         - Item: Scarlet_Pts
           Amount: 3
+          Level: 1
         - Item: Lime_Green_Pts
           Amount: 3
+          Level: 2
         - Item: Yellow_Wish_Pts
           Amount: 3
+          Level: 3
         - Item: Indigo_Pts
           Amount: 3
+          Level: 4
         - Item: Magic_Gear_Fuel
           Amount: 2
       Equipment:
@@ -23537,7 +23961,7 @@ Body:
         Time: 5500
     AfterCastActDelay: 2000
     Duration1: 10000
-    Cooldown: 3500
+    Cooldown: 2000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -23729,15 +24153,15 @@ Body:
         Time: 180000
     Cooldown:
       - Level: 1
-        Time: 540000
+        Time: 60000
       - Level: 2
-        Time: 480000
+        Time: 90000
       - Level: 3
-        Time: 420000
+        Time: 120000
       - Level: 4
-        Time: 360000
+        Time: 150000
       - Level: 5
-        Time: 300000
+        Time: 180000
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -26996,10 +27420,13 @@ Body:
       ItemCost:
         - Item: Boody_Red
           Amount: 3
+          Level: 1
         - Item: Boody_Red
           Amount: 6
+          Level: 2
         - Item: Flame_Heart
           Amount: 1
+          Level: 3
   - Id: 2458
     Name: SO_SUMMON_AQUA
     Description: Summon Water Spirit Aqua
@@ -27038,10 +27465,13 @@ Body:
       ItemCost:
         - Item: Crystal_Blue
           Amount: 3
+          Level: 1
         - Item: Crystal_Blue
           Amount: 6
+          Level: 2
         - Item: Mistic_Frozen
           Amount: 1
+          Level: 3
   - Id: 2459
     Name: SO_SUMMON_VENTUS
     Description: Summon Wind Spirit Ventus
@@ -27080,10 +27510,13 @@ Body:
       ItemCost:
         - Item: Wind_Of_Verdure
           Amount: 3
+          Level: 1
         - Item: Wind_Of_Verdure
           Amount: 6
+          Level: 2
         - Item: Rough_Wind
           Amount: 1
+          Level: 3
   - Id: 2460
     Name: SO_SUMMON_TERA
     Description: Summon Earth Spirit Tera
@@ -27122,10 +27555,13 @@ Body:
       ItemCost:
         - Item: Yellow_Live
           Amount: 3
+          Level: 1
         - Item: Yellow_Live
           Amount: 6
+          Level: 2
         - Item: Great_Nature
           Amount: 1
+          Level: 3
   - Id: 2461
     Name: SO_EL_ACTION
     Description: Elemental Action
@@ -27209,10 +27645,13 @@ Body:
       ItemCost:
         - Item: Scarlet_Pts
           Amount: 1
+          Level: 1
         - Item: Scarlet_Pts
           Amount: 2
+          Level: 2
         - Item: Scarlet_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Fire_Insignia
       Layout: 1
@@ -27249,10 +27688,13 @@ Body:
       ItemCost:
         - Item: Indigo_Pts
           Amount: 1
+          Level: 1
         - Item: Indigo_Pts
           Amount: 2
+          Level: 2
         - Item: Indigo_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Water_Insignia
       Layout: 1
@@ -27289,10 +27731,13 @@ Body:
       ItemCost:
         - Item: Yellow_Wish_Pts
           Amount: 1
+          Level: 1
         - Item: Yellow_Wish_Pts
           Amount: 2
+          Level: 2
         - Item: Yellow_Wish_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Wind_Insignia
       Layout: 1
@@ -27329,10 +27774,13 @@ Body:
       ItemCost:
         - Item: Lime_Green_Pts
           Amount: 1
+          Level: 1
         - Item: Lime_Green_Pts
           Amount: 2
+          Level: 2
         - Item: Lime_Green_Pts
           Amount: 3
+          Level: 3
     Unit:
       Id: Earth_Insignia
       Layout: 1
@@ -27896,14 +28344,19 @@ Body:
       ItemCost:
         - Item: Oil_Bottle
           Amount: 1
+          Level: 1
         - Item: Explosive_Powder
           Amount: 1
+          Level: 2
         - Item: Smoke_Powder
           Amount: 1
+          Level: 3
         - Item: Tear_Gas
           Amount: 1
+          Level: 4
         - Item: Acid_Bottle
           Amount: 1
+          Level: 5
   - Id: 2487
     Name: GN_FIRE_EXPANSION_SMOKE_POWDER
     Description: Fire Expansion Smoke Powder
@@ -27942,9 +28395,15 @@ Body:
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
     MaxLevel: 10
-    Type: Weapon
+    Type: Misc
     TargetType: Attack
-    Range: 9
+    DamageFlags:
+      IgnoreDefense: true
+      IgnoreFlee: true
+    Flags:
+      IgnoreBgReduction: true
+      IgnoreGvgReduction: true
+    Range: 11
     Hit: Multi_Hit
     HitCount:
       - Level: 1
@@ -28327,7 +28786,6 @@ Body:
     Type: Weapon
     TargetType: Attack
     Flags:
-      IgnoreStasis: true
       TargetHidden: true
     Range: -9
     Hit: Single
@@ -30761,14 +31219,19 @@ Body:
       ItemCost:
         - Item: Makibishi
           Amount: 3
+          Level: 1
         - Item: Makibishi
           Amount: 4
+          Level: 2
         - Item: Makibishi
           Amount: 5
+          Level: 3
         - Item: Makibishi
           Amount: 6
+          Level: 4
         - Item: Makibishi
           Amount: 7
+          Level: 5
     Unit:
       Id: Makibishi
       Interval: 5000

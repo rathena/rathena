@@ -66,7 +66,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	case BL_NPC: return &((struct npc_data*)bl)->ud;
 	case BL_HOM: return &((struct homun_data*)bl)->ud;
 	case BL_MER: return &((struct mercenary_data*)bl)->ud;
-	case BL_ELEM: return &((struct elemental_data*)bl)->ud;
+	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
 	default : return NULL;
 	}
 }
@@ -628,7 +628,8 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		ud->to_x = bl->x;
 		ud->to_y = bl->y;
 
-		if(battle_config.official_cell_stack_limit > 0
+		if (!ud->state.ignore_cell_stack_limit
+			&& battle_config.official_cell_stack_limit > 0
 			&& map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 			//Walked on occupied cell, call unit_walktoxy again
 			if(ud->steptimer != INVALID_TIMER) {
@@ -2911,6 +2912,19 @@ void unit_dataset(struct block_list *bl)
 }
 
 /**
+ * Returns the remaining max amount of skill units per object for a specific skill
+ * @param ud: Unit data
+ * @param skill_id: Skill to search for
+ * @param maxcount: Maximum amount of placeable units
+ */
+void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount) {
+	for (const auto su : ud.skillunits) {
+		if (su->skill_id == skill_id && --maxcount == 0 )
+			break;
+	}
+}
+
+/**
  * Gets the number of units attacking another unit
  * @param bl: Object to check amount of targets
  * @return number of targets or 0
@@ -3208,7 +3222,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;
 		}
 		case BL_ELEM: {
-			struct elemental_data *ed = (struct elemental_data *)bl;
+			s_elemental_data *ed = (s_elemental_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick;
 
@@ -3356,9 +3370,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			pc_delinvincibletimer(sd);
 
-			pc_delautobonus(sd, sd->autobonus, false);
-			pc_delautobonus(sd, sd->autobonus2, false);
-			pc_delautobonus(sd, sd->autobonus3, false);
+			pc_delautobonus(*sd, sd->autobonus, false);
+			pc_delautobonus(*sd, sd->autobonus2, false);
+			pc_delautobonus(*sd, sd->autobonus3, false);
 
 			if( sd->followtimer != INVALID_TIMER )
 				pc_stop_following(sd);
@@ -3463,7 +3477,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 
 			if( md->guardian_data ) {
-				struct guild_castle* gc = md->guardian_data->castle;
+				std::shared_ptr<guild_castle> gc = md->guardian_data->castle;
 
 				if( md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
 					gc->guardian[md->guardian_data->number].id = 0;
@@ -3557,7 +3571,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_ELEM: {
-			struct elemental_data *ed = (TBL_ELEM*)bl;
+			s_elemental_data *ed = (TBL_ELEM*)bl;
 			struct map_session_data *sd = ed->master;
 
 			if( elemental_get_lifetime(ed) > 0 )
