@@ -815,14 +815,14 @@ OnTimer300000:
 yuno,146,168,0	script	Karian#cmd2	486,{
 	end;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	stopnpctimer;
 	end;
 OnTimer100000:

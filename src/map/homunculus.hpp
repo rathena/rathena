@@ -4,7 +4,9 @@
 #ifndef HOMUNCULUS_HPP
 #define HOMUNCULUS_HPP
 
+#include <string>
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
@@ -19,6 +21,22 @@
 #else
 	#define APPLY_HOMUN_LEVEL_STATWEIGHT()
 #endif
+
+struct s_homun_exp_db {
+	uint16 level;
+	t_exp exp;
+};
+
+class HomExpDatabase : public TypesafeYamlDatabase<uint16, s_homun_exp_db> {
+public:
+	HomExpDatabase() : TypesafeYamlDatabase("HOMUN_EXP_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	t_exp get_nextexp(uint16 level);
+};
 
 struct h_stats {
 	unsigned int HP, SP;

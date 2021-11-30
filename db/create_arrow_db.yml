@@ -1,0 +1,749 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Arrow Crafting Database
+###########################################################################
+#
+# Arrow Crafting Settings
+#
+###########################################################################
+# - Source              AegisName of the item that is consumed.
+#   Make:               List of item(s) received by the player.
+#     - Item            AegisName of the item received.
+#       Amount          Amount of Item received. (Use 0 to remove the Item on import)
+###########################################################################
+
+Header:
+  Type: CREATE_ARROW_DB
+  Version: 1
+
+Body:
+  - Source: Old_Blue_Box
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 50
+      - Item: Sleep_Arrow
+        Amount: 50
+  - Source: Branch_Of_Dead_Tree
+    Make:
+      - Item: Silence_Arrow
+        Amount: 40
+  - Source: Amulet
+    Make:
+      - Item: Curse_Arrow
+        Amount: 40
+  - Source: Empty_Bottle
+    Make:
+      - Item: Iron_Arrow
+        Amount: 2
+  - Source: Emperium
+    Make:
+      - Item: Immatrial_Arrow
+        Amount: 600
+      - Item: Oridecon_Arrow
+        Amount: 600
+      - Item: Silence_Arrow
+        Amount: 600
+  - Source: Yellow_Gemstone
+    Make:
+      - Item: Sleep_Arrow
+        Amount: 1
+      - Item: Stone_Arrow
+        Amount: 30
+  - Source: Red_Gemstone
+    Make:
+      - Item: Curse_Arrow
+        Amount: 1
+      - Item: Poison_Arrow
+        Amount: 1
+      - Item: Rusty_Arrow
+        Amount: 10
+  - Source: Blue_Gemstone
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 30
+      - Item: Freezing_Arrow
+        Amount: 1
+  - Source: Cardinal_Jewel_
+    Make:
+      - Item: Curse_Arrow
+        Amount: 50
+      - Item: Sleep_Arrow
+        Amount: 10
+  - Source: Crystal_Jewel___
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 50
+  - Source: Oridecon_Stone
+    Make:
+      - Item: Oridecon_Arrow
+        Amount: 50
+  - Source: Elunium_Stone
+    Make:
+      - Item: Steel_Arrow
+        Amount: 200
+      - Item: Stun_Arrow
+        Amount: 5
+  - Source: Tree_Root
+    Make:
+      - Item: Arrow
+        Amount: 7
+  - Source: Scorpion's_Tail
+    Make:
+      - Item: Rusty_Arrow
+        Amount: 3
+  - Source: Jellopy
+    Make:
+      - Item: Arrow
+        Amount: 4
+  - Source: Garlet
+    Make:
+      - Item: Iron_Arrow
+        Amount: 12
+  - Source: Scell
+    Make:
+      - Item: Steel_Arrow
+        Amount: 8
+  - Source: Zargon
+    Make:
+      - Item: Silver_Arrow
+        Amount: 50
+  - Source: Tooth_Of_Bat
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 1
+  - Source: Claw_Of_Wolves
+    Make:
+      - Item: Iron_Arrow
+        Amount: 15
+  - Source: Orcish_Cuspid
+    Make:
+      - Item: Iron_Arrow
+        Amount: 30
+      - Item: Steel_Arrow
+        Amount: 5
+      - Item: Stone_Arrow
+        Amount: 10
+  - Source: Evil_Horn
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 20
+      - Item: Flash_Arrow
+        Amount: 10
+      - Item: Stun_Arrow
+        Amount: 5
+  - Source: Posionous_Canine
+    Make:
+      - Item: Poison_Arrow
+        Amount: 1
+  - Source: Bee_Sting
+    Make:
+      - Item: Rusty_Arrow
+        Amount: 1
+  - Source: Horn
+    Make:
+      - Item: Iron_Arrow
+        Amount: 35
+  - Source: Cactus_Needle
+    Make:
+      - Item: Arrow
+        Amount: 50
+  - Source: Gill
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 150
+      - Item: Iron_Arrow
+        Amount: 80
+  - Source: Decayed_Nail
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 1
+      - Item: Rusty_Arrow
+        Amount: 1
+  - Source: Horrendous_Mouth
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 5
+  - Source: Rotten_Scale
+    Make:
+      - Item: Poison_Arrow
+        Amount: 1
+  - Source: Voucher_Of_Orcish_Hero
+    Make:
+      - Item: Oridecon_Arrow
+        Amount: 1
+      - Item: Stun_Arrow
+        Amount: 5
+  - Source: Gold
+    Make:
+      - Item: Flash_Arrow
+        Amount: 50
+      - Item: Oridecon_Arrow
+        Amount: 50
+  - Source: Oridecon
+    Make:
+      - Item: Oridecon_Arrow
+        Amount: 250
+  - Source: Elunium
+    Make:
+      - Item: Steel_Arrow
+        Amount: 1000
+      - Item: Stun_Arrow
+        Amount: 50
+  - Source: Boody_Red
+    Make:
+      - Item: Fire_Arrow
+        Amount: 600
+  - Source: Crystal_Blue
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 150
+  - Source: Wind_Of_Verdure
+    Make:
+      - Item: Arrow_Of_Wind
+        Amount: 150
+  - Source: Yellow_Live
+    Make:
+      - Item: Stone_Arrow
+        Amount: 150
+  - Source: Flame_Heart
+    Make:
+      - Item: Fire_Arrow
+        Amount: 1800
+      - Item: Silence_Arrow
+        Amount: 5
+  - Source: Mistic_Frozen
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 450
+      - Item: Freezing_Arrow
+        Amount: 5
+  - Source: Rough_Wind
+    Make:
+      - Item: Arrow_Of_Wind
+        Amount: 450
+      - Item: Sleep_Arrow
+        Amount: 5
+  - Source: Great_Nature
+    Make:
+      - Item: Flash_Arrow
+        Amount: 5
+      - Item: Stone_Arrow
+        Amount: 450
+  - Source: Iron
+    Make:
+      - Item: Iron_Arrow
+        Amount: 100
+  - Source: Steel
+    Make:
+      - Item: Steel_Arrow
+        Amount: 100
+  - Source: Star_Crumb
+    Make:
+      - Item: Flash_Arrow
+        Amount: 30
+  - Source: Sparkling_Dust
+    Make:
+      - Item: Flash_Arrow
+        Amount: 10
+  - Source: Iron_Ore
+    Make:
+      - Item: Iron_Arrow
+        Amount: 50
+  - Source: Coal
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 8
+  - Source: Phracon
+    Make:
+      - Item: Iron_Arrow
+        Amount: 50
+  - Source: Emveretarcon
+    Make:
+      - Item: Iron_Arrow
+        Amount: 200
+      - Item: Silver_Arrow
+        Amount: 40
+  - Source: Nail_Of_Mole
+    Make:
+      - Item: Iron_Arrow
+        Amount: 50
+      - Item: Stone_Arrow
+        Amount: 60
+  - Source: Wooden_Block
+    Make:
+      - Item: Arrow
+        Amount: 40
+  - Source: Dokkaebi_Horn
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 2
+      - Item: Iron_Arrow
+        Amount: 40
+  - Source: Porcupine_Spike
+    Make:
+      - Item: Arrow
+        Amount: 70
+      - Item: Stone_Arrow
+        Amount: 30
+  - Source: Limb_Of_Mantis
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 1
+  - Source: Dragon_Canine
+    Make:
+      - Item: Iron_Arrow
+        Amount: 50
+      - Item: Oridecon_Arrow
+        Amount: 1
+  - Source: Petite_DiablOfs_Horn
+    Make:
+      - Item: Curse_Arrow
+        Amount: 2
+      - Item: Iron_Arrow
+        Amount: 50
+  - Source: Lantern
+    Make:
+      - Item: Iron_Arrow
+        Amount: 80
+  - Source: Nail_Of_Orc
+    Make:
+      - Item: Steel_Arrow
+        Amount: 10
+  - Source: Tooth_Of_
+    Make:
+      - Item: Rusty_Arrow
+        Amount: 5
+  - Source: Tooth_Of_Ancient_Fish
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 300
+      - Item: Steel_Arrow
+        Amount: 20
+  - Source: Sharpened_Cuspid
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 2
+      - Item: Silver_Arrow
+        Amount: 40
+  - Source: Reins
+    Make:
+      - Item: Iron_Arrow
+        Amount: 100
+      - Item: Steel_Arrow
+        Amount: 50
+  - Source: Tree_Of_Archer_1
+    Make:
+      - Item: Arrow
+        Amount: 20
+  - Source: Tree_Of_Archer_2
+    Make:
+      - Item: Arrow
+        Amount: 20
+  - Source: Tree_Of_Archer_3
+    Make:
+      - Item: Arrow
+        Amount: 20
+  - Source: Needle_Of_Alarm
+    Make:
+      - Item: Arrow
+        Amount: 100
+      - Item: Sleep_Arrow
+        Amount: 5
+  - Source: Manacles
+    Make:
+      - Item: Steel_Arrow
+        Amount: 50
+  - Source: Snowy_Horn
+    Make:
+      - Item: Silver_Arrow
+        Amount: 1000
+  - Source: Phantom_Of_Opera
+    Make:
+      - Item: Silence_Arrow
+        Amount: 40
+      - Item: Steel_Arrow
+        Amount: 200
+  - Source: Mr_Scream
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 200
+      - Item: Steel_Arrow
+        Amount: 300
+  - Source: Welding_Mask
+    Make:
+      - Item: Steel_Arrow
+        Amount: 200
+      - Item: Stun_Arrow
+        Amount: 40
+  - Source: Glittering_Clothes
+    Make:
+      - Item: Flash_Arrow
+        Amount: 1000
+  - Source: Wooden_Mail
+    Make:
+      - Item: Arrow
+        Amount: 700
+      - Item: Iron_Arrow
+        Amount: 500
+  - Source: Wooden_Mail_
+    Make:
+      - Item: Arrow
+        Amount: 1000
+      - Item: Iron_Arrow
+        Amount: 700
+  - Source: Silver_Robe
+    Make:
+      - Item: Silver_Arrow
+        Amount: 700
+  - Source: Silver_Robe_
+    Make:
+      - Item: Immatrial_Arrow
+        Amount: 10
+      - Item: Silver_Arrow
+        Amount: 1000
+  - Source: Cuffs
+    Make:
+      - Item: Iron_Arrow
+        Amount: 700
+      - Item: Steel_Arrow
+        Amount: 50
+  - Source: Matyr's_Flea_Guard
+    Make:
+      - Item: Arrow_Of_Wind
+        Amount: 150
+      - Item: Incisive_Arrow
+        Amount: 10
+      - Item: Steel_Arrow
+        Amount: 100
+  - Source: Fin_Helm
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 600
+      - Item: Steel_Arrow
+        Amount: 200
+  - Source: Ogre_Tooth
+    Make:
+      - Item: Rusty_Arrow
+        Amount: 5
+      - Item: Steel_Arrow
+        Amount: 30
+  - Source: Stiff_Horn
+    Make:
+      - Item: Stun_Arrow
+        Amount: 2
+  - Source: Tail_Of_Steel_Scorpion
+    Make:
+      - Item: Poison_Arrow
+        Amount: 1
+      - Item: Steel_Arrow
+        Amount: 250
+  - Source: Young_Twig
+    Make:
+      - Item: Silence_Arrow
+        Amount: 1000
+  - Source: Loki's_Whispers
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 1000
+  - Source: Mother's_Nightmare
+    Make:
+      - Item: Curse_Arrow
+        Amount: 1000
+  - Source: Foolishness_Of_Blind
+    Make:
+      - Item: Flash_Arrow
+        Amount: 200
+  - Source: Old_Hilt
+    Make:
+      - Item: Oridecon_Arrow
+        Amount: 1000
+  - Source: Blade_Lost_In_Darkness
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 200
+      - Item: Incisive_Arrow
+        Amount: 600
+  - Source: Bloody_Edge
+    Make:
+      - Item: Curse_Arrow
+        Amount: 200
+      - Item: Incisive_Arrow
+        Amount: 600
+  - Source: Lucifer's_Lament
+    Make:
+      - Item: Silence_Arrow
+        Amount: 400
+      - Item: Sleep_Arrow
+        Amount: 800
+      - Item: Stun_Arrow
+        Amount: 800
+  - Source: Key_Of_Clock_Tower
+    Make:
+      - Item: Oridecon_Arrow
+        Amount: 50
+  - Source: Underground_Key
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 100
+  - Source: Matchstick
+    Make:
+      - Item: Fire_Arrow
+        Amount: 3000
+  - Source: Fang_Of_Garm
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 300
+  - Source: Ice_Piece
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 100
+  - Source: Stone_Piece
+    Make:
+      - Item: Stone_Arrow
+        Amount: 50
+      - Item: Stun_Arrow
+        Amount: 30
+  - Source: Burn_Tree
+    Make:
+      - Item: Fire_Arrow
+        Amount: 250
+  - Source: Broken_Armor_Piece
+    Make:
+      - Item: Steel_Arrow
+        Amount: 150
+  - Source: Burning_Heart
+    Make:
+      - Item: Fire_Arrow
+        Amount: 150
+  - Source: Live_Coal
+    Make:
+      - Item: Fire_Arrow
+        Amount: 100
+  - Source: Sharp_Leaf
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 30
+  - Source: Boroken_Shiled_Piece
+    Make:
+      - Item: Immatrial_Arrow
+        Amount: 300
+      - Item: Oridecon_Arrow
+        Amount: 100
+      - Item: Steel_Arrow
+        Amount: 100
+  - Source: Shine_Spear_Blade
+    Make:
+      - Item: Oridecon_Arrow
+        Amount: 100
+  - Source: Burning_Horse_Shoe
+    Make:
+      - Item: Steel_Arrow
+        Amount: 100
+  - Source: Dragon's_Skin
+    Make:
+      - Item: Curse_Arrow
+        Amount: 50
+      - Item: Silence_Arrow
+        Amount: 50
+      - Item: Steel_Arrow
+        Amount: 10
+  - Source: Bamboo_Cut
+    Make:
+      - Item: Arrow
+        Amount: 100
+  - Source: Poison_Toad's_Skin
+    Make:
+      - Item: Poison_Arrow
+        Amount: 20
+  - Source: Sharp_Feeler
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 20
+  - Source: Hard_Peach
+    Make:
+      - Item: Stun_Arrow
+        Amount: 30
+  - Source: Leopard_Talon
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 10
+  - Source: Dullahan_Armor
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 150
+  - Source: Tangled_Chain
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 50
+      - Item: Steel_Arrow
+        Amount: 50
+  - Source: Cat_Eyed_Stone
+    Make:
+      - Item: Arrow_Of_Wind
+        Amount: 200
+  - Source: Dark_Crystal_Fragment
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 50
+      - Item: Curse_Arrow
+        Amount: 30
+  - Source: Long_Limb
+    Make:
+      - Item: Incisive_Arrow
+        Amount: 10
+      - Item: Poison_Arrow
+        Amount: 50
+  - Source: Old_Pick
+    Make:
+      - Item: Rusty_Arrow
+        Amount: 100
+      - Item: Steel_Arrow
+        Amount: 50
+  - Source: Old_Steel_Plate
+    Make:
+      - Item: Rusty_Arrow
+        Amount: 100
+      - Item: Steel_Arrow
+        Amount: 100
+  - Source: Fragment_Of_Crystal
+    Make:
+      - Item: Flash_Arrow
+        Amount: 10
+      - Item: Sleep_Arrow
+        Amount: 30
+  - Source: Battered_Kettle
+    Make:
+      - Item: Steel_Arrow
+        Amount: 50
+  - Source: Will_Of_Darkness
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 50
+      - Item: Curse_Arrow
+        Amount: 30
+      - Item: Poison_Arrow
+        Amount: 30
+  - Source: Golden_Bracelet
+    Make:
+      - Item: Holy_Arrow
+        Amount: 300
+      - Item: Silver_Arrow
+        Amount: 200
+  - Source: Cursed_Seal
+    Make:
+      - Item: Curse_Arrow
+        Amount: 50
+      - Item: Silence_Arrow
+        Amount: 50
+  - Source: Dragonball_Green
+    Make:
+      - Item: Poison_Arrow
+        Amount: 80
+      - Item: Stone_Arrow
+        Amount: 100
+  - Source: Dragonball_Blue
+    Make:
+      - Item: Arrow_Of_Wind
+        Amount: 50
+      - Item: Crystal_Arrow
+        Amount: 50
+      - Item: Freezing_Arrow
+        Amount: 80
+  - Source: Dragonball_Red
+    Make:
+      - Item: Fire_Arrow
+        Amount: 100
+      - Item: Flash_Arrow
+        Amount: 80
+  - Source: Dragonball_Yellow
+    Make:
+      - Item: Immatrial_Arrow
+        Amount: 50
+      - Item: Silver_Arrow
+        Amount: 50
+      - Item: Sleep_Arrow
+        Amount: 80
+  - Source: Piece_Of_Bone_Armor
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 200
+      - Item: Immatrial_Arrow
+        Amount: 500
+      - Item: Oridecon_Arrow
+        Amount: 100
+  - Source: Scale_Of_Red_Dragon
+    Make:
+      - Item: Fire_Arrow
+        Amount: 300
+      - Item: Stun_Arrow
+        Amount: 300
+  - Source: Valhalla_Flower
+    Make:
+      - Item: Holy_Arrow
+        Amount: 600
+      - Item: Immatrial_Arrow
+        Amount: 600
+      - Item: Incisive_Arrow
+        Amount: 600
+  - Source: Rune_Of_Darkness
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 300
+      - Item: Flash_Arrow
+        Amount: 150
+  - Source: Ice_Heart
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 50
+      - Item: Freezing_Arrow
+        Amount: 50
+  - Source: Ice_Scale
+    Make:
+      - Item: Crystal_Arrow
+        Amount: 150
+      - Item: Freezing_Arrow
+        Amount: 400
+      - Item: Silence_Arrow
+        Amount: 200
+  - Source: Will_Of_Darkness_
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 100
+      - Item: Curse_Arrow
+        Amount: 200
+      - Item: Poison_Arrow
+        Amount: 200
+  - Source: Clattering_Skull
+    Make:
+      - Item: Arrow_Of_Shadow
+        Amount: 50
+      - Item: Curse_Arrow
+        Amount: 50
+  - Source: Broken_Farming_Utensil
+    Make:
+      - Item: Curse_Arrow
+        Amount: 20
+      - Item: Iron_Arrow
+        Amount: 10
+      - Item: Rusty_Arrow
+        Amount: 50
+
+Footer:
+  Imports:
+  - Path: db/import/create_arrow_db.yml

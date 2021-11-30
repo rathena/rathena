@@ -227,7 +227,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		// vending item
 		pc_additem(sd, &vsd->cart.u.items_cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
-		z += ((double)vsd->vending[i].value * (double)amount);
+		z += ((double)vsd->vending[vend_list[i]].value * (double)amount);
 
 		if( vsd->vending[vend_list[i]].amount ) {
 			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_table, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->cart.u.items_cart[idx].id ) != SQL_SUCCESS ) {
@@ -465,9 +465,26 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			}
 		}
 
-		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine, it->enchantgrade ) ) { // result set full
+		// Check if the result set is full
+		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
 			return false;
 		}
+
+		std::shared_ptr<s_search_store_info_item> ssitem = std::make_shared<s_search_store_info_item>();
+
+		ssitem->store_id = sd->vender_id;
+		ssitem->account_id = sd->status.account_id;
+		safestrncpy( ssitem->store_name, sd->message, sizeof( ssitem->store_name ) );
+		ssitem->nameid = it->nameid;
+		ssitem->amount = sd->vending[i].amount;
+		ssitem->price = sd->vending[i].value;
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			ssitem->card[j] = it->card[j];
+		}
+		ssitem->refine = it->refine;
+		ssitem->enchantgrade = it->enchantgrade;
+
+		s->search_sd->searchstore.items.push_back( ssitem );
 	}
 
 	return true;

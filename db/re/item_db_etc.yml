@@ -39,7 +39,8 @@
 #   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Locations               Equipment's placement. (Default: None)
-#   WeaponLevel             Weapon level. (Default: 0)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
 #   EquipLevelMin           Minimum required level to equip. (Default: 0)
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
@@ -84,7 +85,7 @@
 
 Header:
   Type: ITEM_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Id: 670
@@ -4787,7 +4788,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       bonus bHPGainValue,100;
   - Id: 4159
     AegisName: Nine_Tail_Card
@@ -6300,7 +6301,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bIgnoreDefClass,Class_Normal;
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       bonus2 bHPLossRate,666,10000;
     UnEquipScript: |
       if ((Hp<=999) && !getmapflag(strcharinfo(3),mf_pvp) && !getmapflag(strcharinfo(3),mf_pvp_noparty) && !getmapflag(strcharinfo(3),mf_pvp_noguild)) {
@@ -7821,7 +7822,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bHPDrainRate,50,20;
-      bonus bHPrecovRate,-10;
+      bonus bNoRegen,1;
   - Id: 4368
     AegisName: Shecil_Card
     Name: Cecil Damon Card
@@ -7906,7 +7907,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bLuk,.@r-5;
-      bonus bCritical,.@r;
+      bonus bCritical,min(.@r,10);
   - Id: 4374
     AegisName: Apocalips_H_Card
     Name: Vesper Card
@@ -9540,10 +9541,11 @@ Body:
       DropEffect: CLIENT
     Script: |
       .@rate = ((getrefine()>14)?7:5);
+      .@duration = ((getrefine()>14)?10000:5000);
       bonus bMaxHPrate,.@rate;
       bonus bMaxSPrate,.@rate;
-      bonus2 bHPRegenRate,50,10000;
-      bonus2 bSPRegenRate,10,10000;
+      bonus2 bHPRegenRate,50,.@duration;
+      bonus2 bSPRegenRate,10,.@duration;
   - Id: 4483
     AegisName: Sealed_Dracula_Card
     Name: Sealed Dracula Card
@@ -9618,7 +9620,7 @@ Body:
       bonus bBaseAtk,(JobLevel/20);
       bonus bCritical,(JobLevel/20);
       bonus bHit,(JobLevel/20);
-      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",5,1;
+      bonus3 bAutoSpellWhenHit,"NPC_EARTHQUAKE",2,1;
   - Id: 4488
     AegisName: Sealed_D_Lord_Card
     Name: Sealed Dark Lord Card
@@ -9672,7 +9674,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       bonus2 bHPDrainRate,50,((getrefine()>14)?15:10);
   - Id: 4492
     AegisName: Sealed_Orc_Hero_Card
@@ -9793,7 +9795,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bIgnoreDefClass,Class_Normal;
-      bonus bHPrecovRate,-100;
+      bonus bNoRegen,1;
       if (getrefine()>14)
          bonus2 bHPLossRate,777,8000;
       else
@@ -9845,7 +9847,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bBreakWeaponRate,(.@r>14?800:500);
-      bonus bBreakArmorRate,(.@r>14?600:500);
+      bonus bBreakArmorRate,(.@r>14?600:400);
   - Id: 4503
     AegisName: Sealed_Apocalips_H_Card
     Name: Sealed Vesper Card
@@ -9980,7 +9982,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAddEff,Eff_Silence,500,ATF_MAGIC;
+      bonus3 bAddEff,Eff_Silence,1000,ATF_MAGIC;
   - Id: 4512
     AegisName: Parus_Card
     Name: Parus Card
@@ -10087,7 +10089,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAddEff,Eff_Burning,500,ATF_TARGET;
+      bonus3 bAddEff,Eff_Burning,300,ATF_TARGET;
   - Id: 4519
     AegisName: Butoijo_Card
     Name: Butoijo Card
@@ -10171,9 +10173,8 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,2;
-      if (BaseClass == Job_Swordman) {
-         bonus bStr,2+(getrefine()/3);
-      }
+      if (BaseClass == Job_Swordman)
+         bonus bStr,getrefine()/3;
   - Id: 4525
     AegisName: Kraken_Card
     Name: Kraken Card
@@ -10269,9 +10270,8 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bLuk,2;
-      if (BaseClass == Job_Merchant) {
-         bonus bLuk,2+(getrefine()/3);
-      }
+      if (BaseClass == Job_Merchant)
+         bonus bLuk,getrefine()/3;
   - Id: 4531
     AegisName: Red_Eruma_Card
     Name: Red Eruma Card
@@ -10338,9 +10338,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddClass,Class_All,(getrefine()>=15?8:5);
-      bonus5 bAutoSpell,"SA_DISPELL",1,1,BF_NORMAL,1;
       bonus bUnbreakableWeapon;
+      bonus2 bAddClass,Class_All,(getrefine()>=15?8:5);
+      bonus3 bAutoSpell,"SA_DISPELL",1,25;
   - Id: 4536
     AegisName: Sealed_Atroce_Card
     Name: Sealed Atroce Card
@@ -10456,9 +10456,9 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bResEff,Eff_Freeze,(getrefine()>=15?6000:4000);
-      bonus5 bAutoSpell,"SA_LANDPROTECTOR",1,1,BF_MAGIC,1;
       bonus bMdef,-20;
+      bonus2 bResEff,Eff_Freeze,(getrefine()>=15?6000:4000);
+      bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",1,35,BF_MAGIC,0;
   - Id: 4543
     AegisName: SLD_Garm_Card
     Name: Sealed Hatii Card
@@ -10531,9 +10531,9 @@ Body:
       if (BaseJob == Job_Rogue) {
          bonus bMatkRate,10;
          bonus2 bAddClass,Class_All,10;
-         bonus bMaxHPrate,getrefine()/2;
       }
-      /* Adds a chance of inflicting Confuse on target when using Body Paint skill. */
+      bonus bMaxHPrate,getrefine()/2;
+      bonus3 bAddEffOnSkill,"SC_BODYPAINT",Eff_Stun,1000;
   - Id: 4548
     AegisName: Upd_Salamander_Card
     Name: Enhanced Salamander Card
@@ -10579,8 +10579,9 @@ Body:
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_BOW) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",50;
-         bonus bCriticalLong,25+10*(getequiprefinerycnt(EQI_HAND_R)/4);
+         bonus bCriticalLong,20+(getequiprefinerycnt(EQI_HAND_R)/4);
          bonus bHit,5;
+         bonus bCritical,5;
          bonus3 bAutoSpell,"HT_PHANTASMIC",1,100;
       }
   - Id: 4552
@@ -10641,7 +10642,7 @@ Body:
     AegisName: Fenrir_Card
     Name: Fenrir Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Head_Low: true
@@ -10657,7 +10658,7 @@ Body:
     AegisName: Fenrir_Card_
     Name: Weakened Fenrir Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Head_Low: true
@@ -10993,12 +10994,10 @@ Body:
       DropEffect: CLIENT
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW) == W_MACE) {
-         bonus bBaseAtk,20;
-         bonus bCritical,10;
+         .@r = getrefine();
+         bonus bBaseAtk,20+.@r;
+         bonus bCritical,10+.@r;
       }
-      .@r = getrefine();
-      bonus bBaseAtk,.@r;
-      bonus bCritical,.@r;
   - Id: 4580
     AegisName: Kades_Card
     Name: Dark Guardian Kades Card
@@ -11031,7 +11030,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      autobonus "{ bonus bAgi,44; heal 0,-40; }",500,3000,0,"{ sc_start SC_SPEEDUP1,3000,50; }";
+      autobonus2 "{ bonus bAgi,44; bonus bNoWalkDelay; heal 0,-40; }",50,3000,0,"{ sc_start SC_SPEEDUP1,3000,50; }";
   - Id: 4582
     AegisName: Bungisngis_Card
     Name: Bungisngis Card
@@ -11358,9 +11357,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,20;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",1,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",1,50,BF_SHORT,0;
   - Id: 4604
     AegisName: CorruptionRootH_Card
     Name: Realized Corruption Root Card
@@ -11374,9 +11373,9 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,30;
-      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_WEAPON,0;
-      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_WEAPON,0;
+      bonus5 bAutoSpell,"NPC_WIDESTONE",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDESLEEP",2,50,BF_SHORT,0;
+      bonus5 bAutoSpell,"NPC_WIDECURSE",2,50,BF_SHORT,0;
   - Id: 4605
     AegisName: UndeadKnightM_Card
     Name: Agony Of Royal Knight Card
@@ -11466,7 +11465,7 @@ Body:
     AegisName: Sarah_Card
     Name: Sarah Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Armor: true
@@ -11479,7 +11478,7 @@ Body:
     AegisName: Timeholder_Card
     Name: Time Holder Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11493,7 +11492,7 @@ Body:
     AegisName: Big_Ben_Card
     Name: Big Ben Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11507,7 +11506,7 @@ Body:
     AegisName: Big_Bell_Card
     Name: Big Bell Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Right_Hand: true
@@ -11521,7 +11520,7 @@ Body:
     AegisName: Neo_Punk_Card
     Name: Neo Punk Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Left_Hand: true
@@ -11535,7 +11534,7 @@ Body:
     AegisName: Arc_Elder_Card
     Name: Arc Elder Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Garment: true
@@ -11549,7 +11548,7 @@ Body:
     AegisName: Time_Keeper_Card
     Name: Nightmare Timer Keeper Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Shoes: true
@@ -11562,7 +11561,7 @@ Body:
     AegisName: Owl_Viscount_Card
     Name: Owl Viscount Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Both_Accessory: true
@@ -11575,7 +11574,7 @@ Body:
     AegisName: Owl_Marquees_Card
     Name: Owl Marquees Card
     Type: Card
-    Buy: 10
+    Buy: 20
     Weight: 10
     Locations:
       Both_Accessory: true
@@ -11953,7 +11952,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       /* Unofficial chance */
-      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,10;
+      bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,30;
   - Id: 4657
     AegisName: Grave_A_Mummy_Card
     Name: Nightmare Ancient Mummy Card
@@ -12426,7 +12425,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"GC_CROSSIMPACT",20+.@b;
   - Id: 4685
@@ -12443,7 +12442,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"AB_ADORAMUS",20+.@b;
   - Id: 4686
@@ -12460,7 +12459,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"WL_CRIMSONROCK",20+.@b;
   - Id: 4687
@@ -12477,7 +12476,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"RA_CLUSTERBOMB",20+.@b;
   - Id: 4688
@@ -12494,7 +12493,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"NC_AXETORNADO",20+.@b;
   - Id: 4689
@@ -12511,7 +12510,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"RK_IGNITIONBREAK",20+.@b;
   - Id: 4690
@@ -12528,7 +12527,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"LG_EARTHDRIVE",20+.@b;
   - Id: 4691
@@ -12545,7 +12544,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"GN_CART_TORNADO",20+.@b;
   - Id: 4692
@@ -12562,7 +12561,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"SO_VARETYR_SPEAR",20+.@b;
   - Id: 4693
@@ -12579,7 +12578,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",20+.@b;
   - Id: 4694
@@ -12596,7 +12595,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"SC_FEINTBOMB",20+.@b;
   - Id: 4695
@@ -12613,7 +12612,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20+.@b;
   - Id: 4696
@@ -12630,7 +12629,7 @@ Body:
     Script: |
       if (getrefine() > 9)
          .@b += 20;
-      if (getequipweaponlv(-1) == 4)
+      if (getequipweaponlv() == 4)
          .@b += 20;
       bonus2 bSkillAtk,"WM_REVERBERATION",20+.@b;
   - Id: 4697
@@ -13736,7 +13735,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,5;
   - Id: 4850
     AegisName: Heal_Amount3
-    Name: Heal Amount2
+    Name: Archbishop2Lv
     Type: Card
     Buy: 20
     Script: |
@@ -13744,7 +13743,7 @@ Body:
       bonus bUseSPrate,5;
   - Id: 4851
     AegisName: Heal_Amount4
-    Name: Heal Amount3
+    Name: Archbishop3Lv
     Type: Card
     Buy: 20
     Script: |
@@ -13752,7 +13751,7 @@ Body:
       bonus bUseSPrate,10;
   - Id: 4852
     AegisName: Heal_Amount5
-    Name: Heal Amount4
+    Name: Archbishop4Lv
     Type: Card
     Buy: 20
     Script: |
@@ -14943,7 +14942,7 @@ Body:
       if (getrefine()>=7)
          bonus2 bSPRegenRate,5,5000;
       else
-         bonus2 bHPRegenRate,3,5000;
+         bonus2 bSPRegenRate,3,5000;
   - Id: 4980
     AegisName: Reactor_Cure_201
     Name: Recovery Reactor 201
@@ -23962,7 +23961,7 @@ Body:
     Weight: 100
   - Id: 7000
     AegisName: Evt_Cos_Coin
-    Name: Event Stone Coin    # !todo check english name
+    Name: Event Stone Coin
     Type: Etc
   - Id: 7001
     AegisName: Mould_Powder
@@ -33924,6 +33923,91 @@ Body:
     Locations:
       Ammo: true
     EquipLevelMin: 99
+  - Id: 18005
+    AegisName: Ice_Cannon_Ball
+    Name: Ice Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Water;
+  - Id: 18006
+    AegisName: Lightning_Cannon_Ball
+    Name: Lightning Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Wind;
+  - Id: 18007
+    AegisName: Stone_Cannon_Ball
+    Name: Stone Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Earth;
+  - Id: 18008
+    AegisName: Flare_Cannon_Ball
+    Name: Fire Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Fire;
+  - Id: 18009
+    AegisName: Poisoning_Cannon_Ball
+    Name: Poison Cannon Ball
+    Type: Ammo
+    SubType: Cannonball
+    Weight: 1
+    Attack: 120
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+    Classes:
+      All_Third: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 99
+    Script: |
+      bonus bAtkEle,Ele_Poison;
   - Id: 22519
     AegisName: Pc_Stop
     Name: Stops Buff
@@ -34068,19 +34152,6 @@ Body:
     Name: Cat Hand Ticket
     Type: Etc
     Buy: 10
-  - Id: 22870
-    AegisName: Xmas_Package_14
-    Name: Christmas Package
-    Type: Etc
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 22875
     AegisName: Sealed_Beelzebub_Card
     Name: Sealed Beelzebub Card
@@ -36049,6 +36120,20 @@ Body:
       NoTrade: true
       NoCart: true
       NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25310
+    AegisName: DF_Token_Of_Siegfried
+    Name: "[Scroll] Token of Siegfried"
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -38056,7 +38141,7 @@ Body:
       BuyingStore: true
   - Id: 25898
     AegisName: Siroods_Fish_Rod
-    Name: Searud's Fishing Rod    # !todo check english name
+    Name: Searud's Fishing Rod
     Type: Etc
     Trade:
       Override: 100
@@ -38075,6 +38160,24 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 27002
+    AegisName: XM_Mystcase_Card_J
+    Name: Horror of Xmas Giftcase Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddMonsterDropItem,664,30;
+      bonus2 bAddMonsterDropItem,665,30;
+      bonus2 bAddMonsterDropItem,666,30;
+      bonus2 bAddMonsterDropItem,667,30;
+      /*Unknow Rate*/
   - Id: 27012
     AegisName: Kick_Step_Card
     Name: Kick Step Card
@@ -38288,6 +38391,30 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC;
+  - Id: 27031
+    AegisName: Labyrinth_Bapho_Card
+    Name: Labyrinth Baphomet Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+  - Id: 27032
+    AegisName: Labyrinth_Dra_Card
+    Name: Labyrinth Dracula Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddClass,Class_All,10;
   - Id: 27081
     AegisName: AngerMoonlight_Card
     Name: Angry Moonlight Flower Card
@@ -42927,6 +43054,7 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"RK_DRAGONBREATH",10;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
   - Id: 29464
     AegisName: GeneticStone_Top_
     Name: Creator Stone (Top)
@@ -43376,7 +43504,7 @@ Body:
     Name: Modification Orb(Fatal Flash)
     Type: Card
     Script: |
-      autobonus "{ bonus bAgi,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,1,300000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
+      autobonus "{ bonus bAgi,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",30,10000,BF_NORMAL,"{ specialeffect2 EF_POTION_BERSERK; }";
   - Id: 29552
     AegisName: Improve_Orb_L_LUK
     Name: Modification Orb(Lucky Strike)
@@ -45793,6 +45921,53 @@ Body:
       bonus2 bMagicAtkEle,Ele_Neutral,20;
       bonus2 bMagicAtkEle,Ele_Undead,20;
       bonus2 bMagicAtkEle,Ele_Dark,20;
+  - Id: 300192
+    AegisName: MD_Sakray_Card
+    Name: Sakray Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bDelayrate,-5;
+      bonus bPAtk,1;
+      bonus bSmatk,1;
+  - Id: 300193
+    AegisName: MD_Tiara_Card
+    Name: Tiara Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bDelayrate,-5;
+      bonus bPAtk,1;
+      bonus bSmatk,1;
+  - Id: 300209
+    AegisName: aegis_300209
+    Name: Sealed Nightmare Amon Ra Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = (getrefine()>14?37:25);
+      bonus2 bMagicAddRace,RC_Demon,.@r;
+      bonus2 bMagicAddRace,RC_Undead,.@r;
+      bonus2 bMagicAddEle,Ele_Dark,.@r;
+      bonus2 bMagicAddEle,Ele_Undead,.@r;
   - Id: 300211
     AegisName: EP18_Ash_Toad_Card
     Name: Ash Toad Card
@@ -46732,6 +46907,142 @@ Body:
       bonus bMatkRate,10;
       bonus2 bMagicAddRace,RC_Fish,50;
       bonus2 bMagicAddRace,RC_Insect,50;
+  - Id: 300292
+    AegisName: aegis_300292
+    Name: Extra Joker Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7)
+         bonus2 bMagicAddRace,RC_Demon,10;
+      if (.@r>=9)
+         bonus2 bMagicAddRace,RC_Demon,7;
+  - Id: 300293
+    AegisName: aegis_300293
+    Name: Erzsebet Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Poison,3*getrefine();
+  - Id: 300294
+    AegisName: aegis_300294
+    Name: Jennifer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Both_Accessory: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Poison,20;
+      bonus2 bMagicAtkEle,Ele_Undead,20;
+  - Id: 300295
+    AegisName: aegis_300295
+    Name: Orc General Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Brute,10;
+         bonus2 bMagicAddRace,RC_Player_Doram,10;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAddRace,RC_Brute,7;
+         bonus2 bMagicAddRace,RC_Player_Doram,7;
+      }
+  - Id: 300296
+    AegisName: aegis_300296
+    Name: Sieglouse Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7)
+         bonus2 bMagicAddRace,RC_Insect,10;
+      if (.@r>=9)
+         bonus2 bMagicAddRace,RC_Insect,7;
+  - Id: 300297
+    AegisName: aegis_300297
+    Name: Goblin King Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bAddRace,RC_Brute,35;
+      bonus2 bAddRace,RC_Player_Doram,35;
+      bonus2 bSubRace,RC_Brute,-10;
+      bonus2 bSubRace,RC_Player_Doram,-10;
+  - Id: 300307
+    AegisName: aegis_300307
+    Name: Meyer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+  - Id: 300308
+    AegisName: aegis_300308
+    Name: Meyer Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Refineable: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bUseSPrate,10;
+      bonus2 bMagicAtkEle,Ele_All,4*(getrefine()/3);
+  - Id: 300309
+    AegisName: aegis_300309
+    Name: Helmut Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+  - Id: 300310
+    AegisName: aegis_300310
+    Name: Helmut Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bUseSPrate,10;
+      bonus bShortAtkRate,4*(.@r/3);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -51359,6 +51670,2456 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
+  - Id: 310654
+    AegisName: aegis_310654
+    Name: ASPD+1(Dual)
+    Type: Card
+    Script: |
+      bonus bAspd,1;
+  - Id: 310658
+    AegisName: aegis_310658
+    Name: Minor Casting Reduction(Dual)
+    Type: Card
+    Script: |
+      bonus bFixedCast,-100;
+  - Id: 310659
+    AegisName: aegis_310659
+    Name: Variable Casting Time Reduction(Dual)
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-5;
+  - Id: 310660
+    AegisName: aegis_310660
+    Name: Ranged Stone(Dual)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,4;
+  - Id: 310661
+    AegisName: aegis_310661
+    Name: Melee Stone(Dual)
+    Type: Card
+    Script: |
+      bonus bShortAtkRate,4;
+  - Id: 310662
+    AegisName: aegis_310662
+    Name: HP Absorbtion(Dual)
+    Type: Card
+    Script: |
+      bonus2 bHPDrainRate,10,1;
+  - Id: 310663
+    AegisName: aegis_310663
+    Name: SP Absorbtion(Dual)
+    Type: Card
+    Script: |
+      bonus2 bSPDrainRate,10,1;
+  - Id: 310664
+    AegisName: aegis_310664
+    Name: Magic Power Stone(Upper)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 310665
+    AegisName: aegis_310665
+    Name: Magic Power Stone(Mid)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 310666
+    AegisName: aegis_310666
+    Name: Magic Power Stone(Lower)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 310667
+    AegisName: aegis_310667
+    Name: Magic Power Stone(Dual)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,4;
+  - Id: 310668
+    AegisName: Spring_Energy_1
+    Name: Spring Energy(1Lv)
+    Type: Card
+  - Id: 310669
+    AegisName: Spring_Energy_2
+    Name: Spring Energy(2Lv)
+    Type: Card
+  - Id: 310670
+    AegisName: Spring_Energy_3
+    Name: Spring Energy(3Lv)
+    Type: Card
+  - Id: 310671
+    AegisName: Spring_Warmth_1
+    Name: Warmth of Spring(1Lv)
+    Type: Card
+  - Id: 310672
+    AegisName: Spring_Warmth_2
+    Name: Warmth of Spring(2Lv)
+    Type: Card
+  - Id: 310673
+    AegisName: Spring_Warmth_3
+    Name: Warmth of Spring(3Lv)
+    Type: Card
+  - Id: 310674
+    AegisName: Star_Cluster_Of_Pow1
+    Name: Star Cluster of Power Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bPow)/15);
+      .@g = getenchantgrade();
+      bonus bShortAtkRate,.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bShortAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bShortAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bShortAtkRate,.@param;
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bShortAtkRate,.@param;
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310675
+    AegisName: Star_Cluster_Of_Pow2
+    Name: Star Cluster of Power Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bPow)/15);
+      .@g = getenchantgrade();
+      bonus bShortAtkRate,.@param;
+      bonus bBaseAtk,7*.@param;
+      if (.@g>=1) {
+         bonus bShortAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bShortAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bShortAtkRate,.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bShortAtkRate,2*.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310676
+    AegisName: Star_Cluster_Of_Pow3
+    Name: Star Cluster of Power Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bPow)/15);
+      .@g = getenchantgrade();
+      bonus bShortAtkRate,2*.@param;
+      bonus bBaseAtk,15*.@param;
+      if (.@g>=1) {
+         bonus bShortAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bShortAtkRate,.@param;
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bShortAtkRate,2*.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bShortAtkRate,3*.@param;
+                  bonus bPAtk,3*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310677
+    AegisName: Star_Cluster_Of_Sta1
+    Name: Star Cluster of Stamina Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bSta)/15);
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,.@param;
+      bonus bRes,.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310678
+    AegisName: Star_Cluster_Of_Sta2
+    Name: Star Cluster of Stamina Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bSta)/15);
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,2*.@param;
+      bonus bRes,2*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,2*.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,2*.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310679
+    AegisName: Star_Cluster_Of_Sta3
+    Name: Star Cluster of Stamina Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bSta)/15);
+      .@g = getenchantgrade();
+      bonus bMaxHPrate,3*.@param;
+      bonus bRes,4*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,2*.@param;
+            bonus bRes,2*.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,2*.@param;
+               bonus bRes,2*.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,3*.@param;
+                  bonus bRes,3*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310680
+    AegisName: Star_Cluster_Of_Con1
+    Name: Star Cluster of Concentration Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bCon)/15);
+      .@g = getenchantgrade();
+      bonus bLongAtkRate,.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bLongAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bLongAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bLongAtkRate,.@param;
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bLongAtkRate,.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310681
+    AegisName: Star_Cluster_Of_Con2
+    Name: Star Cluster of Concentration Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bCon)/15);
+      .@g = getenchantgrade();
+      bonus bLongAtkRate,2*.@param;
+      bonus bBaseAtk,7*.@param;
+      if (.@g>=1) {
+         bonus bLongAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bLongAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bLongAtkRate,.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bLongAtkRate,2*.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310682
+    AegisName: Star_Cluster_Of_Con3
+    Name: Star Cluster of Concentration Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bCon)/15);
+      .@g = getenchantgrade();
+      bonus bLongAtkRate,2*.@param;
+      bonus bBaseAtk,15*.@param;
+      if (.@g>=1) {
+         bonus bLongAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bLongAtkRate,2*.@param;
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bLongAtkRate,2*.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bLongAtkRate,3*.@param;
+                  bonus bPAtk,3*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310683
+    AegisName: Star_Cluster_Of_Crt1
+    Name: Star Cluster of Creative Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bCrt)/15);
+      .@g = getenchantgrade();
+      bonus bCritAtkRate,.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bCritAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bCritAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bCritAtkRate,.@param;
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bCritAtkRate,.@param;
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310684
+    AegisName: Star_Cluster_Of_Crt2
+    Name: Star Cluster of Creative Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bCrt)/15);
+      .@g = getenchantgrade();
+      bonus bCritAtkRate,2*.@param;
+      bonus bBaseAtk,7*.@param;
+      if (.@g>=1) {
+         bonus bCritAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bCritAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bCritAtkRate,.@param;
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bCritAtkRate,2*.@param;
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310685
+    AegisName: Star_Cluster_Of_Crt3
+    Name: Star Cluster of Creative Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bCrt)/15);
+      .@g = getenchantgrade();
+      bonus bCritAtkRate,3*.@param;
+      bonus bBaseAtk,15*.@param;
+      if (.@g>=1) {
+         bonus bCritAtkRate,.@param;
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bCritAtkRate,.@param;
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bCritAtkRate,2*.@param;
+               bonus bPAtk,3*.@param;
+               if (.@g>=4) {
+                  bonus bCritAtkRate,3*.@param;
+                  bonus bCrate,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310686
+    AegisName: Star_Cluster_Of_Spl1
+    Name: Star Cluster of Spell Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bSpl)/15);
+      .@g = getenchantgrade();
+      bonus2 bMagicAtkEle,Ele_All,.@param;
+      bonus bMatk,5*.@param;
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_All,.@param;
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,.@param;
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus2 bMagicAtkEle,Ele_All,.@param;
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus2 bMagicAtkEle,Ele_All,.@param;
+                  bonus bSmatk,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310687
+    AegisName: Star_Cluster_Of_Spl2
+    Name: Star Cluster of Spell Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bSpl)/15);
+      .@g = getenchantgrade();
+      bonus2 bMagicAtkEle,Ele_All,2*.@param;
+      bonus bMatk,7*.@param;
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_All,.@param;
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,.@param;
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus2 bMagicAtkEle,Ele_All,2*.@param;
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus2 bMagicAtkEle,Ele_All,2*.@param;
+                  bonus bSmatk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310688
+    AegisName: Star_Cluster_Of_Spl3
+    Name: Star Cluster of Spell Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bSpl)/15);
+      .@g = getenchantgrade();
+      bonus2 bMagicAtkEle,Ele_All,3*.@param;
+      bonus bMatk,15*.@param;
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_All,.@param;
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,.@param;
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus2 bMagicAtkEle,Ele_All,2*.@param;
+               bonus bSmatk,2*.@param;
+               if (.@g>=4) {
+                  bonus2 bMagicAtkEle,Ele_All,3*.@param;
+                  bonus bSmatk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310689
+    AegisName: Star_Cluster_Of_Wis1
+    Name: Star Cluster of Wisdom Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bWis)/15);
+      .@g = getenchantgrade();
+      bonus bMaxSPrate,.@param;
+      bonus bHealPower,.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bSPrecovRate,.@param;
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bSPrecovRate,2*.@param;
+               bonus bMaxSPrate,.@param;
+               bonus bHealPower,2*.@param;
+               if (.@g>=4) {
+                  bonus bHplus,.@param;
+                  bonus bMaxSPrate,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310690
+    AegisName: Star_Cluster_Of_Wis2
+    Name: Star Cluster of Wisdom Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bWis)/15);
+      .@g = getenchantgrade();
+      bonus bMaxSPrate,.@param;
+      bonus bHealPower,3*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,2*.@param;
+         if (.@g>=2) {
+            bonus bSPrecovRate,.@param;
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bSPrecovRate,2*.@param;
+               bonus bHplus,.@param;
+               bonus bMaxSPrate,.@param;
+               if (.@g>=4) {
+                  bonus bHplus,2*.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310691
+    AegisName: Star_Cluster_Of_Wis3
+    Name: Star Cluster of Wisdom Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bWis)/15);
+      .@g = getenchantgrade();
+      bonus bMaxSPrate,2*.@param;
+      bonus bHealPower,5*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,2*.@param;
+         if (.@g>=2) {
+            bonus bSPrecovRate,2*.@param;
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bSPrecovRate,3*.@param;
+               bonus bHplus,2*.@param;
+               bonus bMaxSPrate,2*.@param;
+               if (.@g>=4) {
+                  bonus bHplus,3*.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310692
+    AegisName: Star_Of_Mettle1
+    Name: Star of Mettle Lv1
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      bonus bHit,10;
+  - Id: 310693
+    AegisName: Star_Of_Mettle2
+    Name: Star of Mettle Lv2
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,5;
+      bonus bHit,15;
+  - Id: 310694
+    AegisName: Star_Of_Mettle3
+    Name: Star of Mettle Lv3
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,7;
+      bonus bHit,20;
+      bonus bPAtk,1;
+  - Id: 310695
+    AegisName: Star_Of_Mettle4
+    Name: Star of Mettle Lv4
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+      bonus bHit,25;
+      bonus bPAtk,2;
+  - Id: 310696
+    AegisName: Star_Of_Mettle5
+    Name: Star of Mettle Lv5
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,15;
+      bonus bHit,30;
+      bonus bPAtk,4;
+  - Id: 310697
+    AegisName: Star_Of_MasterArcher1
+    Name: Star of Master Archer Lv1
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,2;
+      bonus2 bAddClass,Class_All,2;
+  - Id: 310698
+    AegisName: Star_Of_MasterArcher2
+    Name: Star of Master Archer Lv2
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,3;
+      bonus2 bAddClass,Class_All,3;
+  - Id: 310699
+    AegisName: Star_Of_MasterArcher3
+    Name: Star of Master Archer Lv3
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,5;
+      bonus2 bAddClass,Class_All,5;
+      bonus bPAtk,1;
+  - Id: 310700
+    AegisName: Star_Of_MasterArcher4
+    Name: Star of Master Archer Lv4
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,7;
+      bonus2 bAddClass,Class_All,6;
+      bonus bPAtk,2;
+  - Id: 310701
+    AegisName: Star_Of_MasterArcher5
+    Name: Star of Master Archer Lv5
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus2 bAddClass,Class_All,7;
+      bonus bPAtk,4;
+  - Id: 310702
+    AegisName: Star_Of_Sharp1
+    Name: Star of Sharp Lv1
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,2;
+      bonus bCritical,2;
+  - Id: 310703
+    AegisName: Star_Of_Sharp2
+    Name: Star of Sharp Lv2
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,3;
+      bonus bCritical,3;
+  - Id: 310704
+    AegisName: Star_Of_Sharp3
+    Name: Star of Sharp Lv3
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,5;
+      bonus bCritical,5;
+      bonus bPAtk,1;
+  - Id: 310705
+    AegisName: Star_Of_Sharp4
+    Name: Star of Sharp Lv4
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,10;
+      bonus bCritical,6;
+      bonus bPAtk,2;
+  - Id: 310706
+    AegisName: Star_Of_Sharp5
+    Name: Star of Sharp Lv5
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,15;
+      bonus bCritical,8;
+      bonus bCrate,1;
+      bonus bPAtk,2;
+  - Id: 310707
+    AegisName: Star_Of_Spell1
+    Name: Star of Spell Lv1
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bMatk,5;
+  - Id: 310708
+    AegisName: Star_Of_Spell2
+    Name: Star of Spell Lv2
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bMatk,7;
+  - Id: 310709
+    AegisName: Star_Of_Spell3
+    Name: Star of Spell Lv3
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-7;
+      bonus bMatk,11;
+      bonus bSmatk,1;
+  - Id: 310710
+    AegisName: Star_Of_Spell4
+    Name: Star of Spell Lv4
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-10;
+      bonus bMatk,17;
+      bonus bSmatk,2;
+  - Id: 310711
+    AegisName: Star_Of_Spell5
+    Name: Star of Spell Lv5
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-15;
+      bonus bMatk,25;
+      bonus bSmatk,4;
+  - Id: 310712
+    AegisName: Star_Of_Speed1
+    Name: Star of Speed Lv1
+    Type: Card
+    Script: |
+      bonus bFlee,5;
+      bonus bAspdRate,5;
+  - Id: 310713
+    AegisName: Star_Of_Speed2
+    Name: Star of Speed Lv2
+    Type: Card
+    Script: |
+      bonus bFlee,10;
+      bonus bAspdRate,7;
+  - Id: 310714
+    AegisName: Star_Of_Speed3
+    Name: Star of Speed Lv3
+    Type: Card
+    Script: |
+      bonus bFlee,15;
+      bonus bAspdRate,7;
+  - Id: 310715
+    AegisName: Star_Of_Speed4
+    Name: Star of Speed Lv4
+    Type: Card
+    Script: |
+      bonus bFlee,20;
+      bonus bAspdRate,10;
+      bonus bAspd,1;
+  - Id: 310716
+    AegisName: Star_Of_Speed5
+    Name: Star of Speed Lv5
+    Type: Card
+    Script: |
+      bonus bFlee,30;
+      bonus bAspdRate,15;
+      bonus bAspd,2;
+  - Id: 310717
+    AegisName: Star_Of_Vital1
+    Name: Star of Vital Lv1
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,2;
+      bonus bRes,1;
+      bonus bMres,1;
+  - Id: 310718
+    AegisName: Star_Of_Vital2
+    Name: Star of Vital Lv2
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,3;
+      bonus bRes,2;
+      bonus bMres,2;
+  - Id: 310719
+    AegisName: Star_Of_Vital3
+    Name: Star of Vital Lv3
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bRes,4;
+      bonus bMres,4;
+  - Id: 310720
+    AegisName: Star_Of_Vital4
+    Name: Star of Vital Lv4
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,7;
+      bonus bRes,6;
+      bonus bMres,6;
+  - Id: 310721
+    AegisName: Star_Of_Vital5
+    Name: Star of Vital Lv5
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bRes,10;
+      bonus bMres,10;
+  - Id: 310722
+    AegisName: Star_Of_Spirit1
+    Name: Star of Spirit Lv1
+    Type: Card
+    Script: |
+      bonus bHealPower,5;
+      bonus bMaxSPrate,3;
+      bonus bSPrecovRate,10;
+  - Id: 310723
+    AegisName: Star_Of_Spirit2
+    Name: Star of Spirit Lv2
+    Type: Card
+    Script: |
+      bonus bHealPower,7;
+      bonus bMaxSPrate,5;
+      bonus bSPrecovRate,15;
+  - Id: 310724
+    AegisName: Star_Of_Spirit3
+    Name: Star of Spirit Lv3
+    Type: Card
+    Script: |
+      bonus bHealPower,10;
+      bonus bMaxSPrate,5;
+      bonus bHplus,1;
+      bonus bSPrecovRate,15;
+  - Id: 310725
+    AegisName: Star_Of_Spirit4
+    Name: Star of Spirit Lv4
+    Type: Card
+    Script: |
+      bonus bHealPower,10;
+      bonus bMaxSPrate,7;
+      bonus bHplus,3;
+      bonus bSPrecovRate,15;
+  - Id: 310726
+    AegisName: Star_Of_Spirit5
+    Name: Star of Spirit Lv5
+    Type: Card
+    Script: |
+      bonus bHealPower,15;
+      bonus bMaxSPrate,10;
+      bonus bHplus,5;
+      bonus bSPrecovRate,20;
+  - Id: 310727
+    AegisName: Nebula_Of_FS1
+    Name: Nebula of Fighting Spirit Lv1
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,10;
+      if (.@r>=9) {
+         bonus bBaseAtk,10;
+         if (.@r>=11) {
+            bonus bBaseAtk,15;
+         }
+      }
+  - Id: 310728
+    AegisName: Nebula_Of_FS2
+    Name: Nebula of Fighting Spirit Lv2
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15;
+      if (.@r>=9) {
+         bonus bBaseAtk,15;
+         if (.@r>=11) {
+            bonus bBaseAtk,30;
+         }
+      }
+  - Id: 310729
+    AegisName: Nebula_Of_FS3
+    Name: Nebula of Fighting Spirit Lv3
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,20;
+      if (.@r>=9) {
+         bonus bBaseAtk,20;
+         if (.@r>=11) {
+            bonus bBaseAtk,40;
+         }
+      }
+  - Id: 310730
+    AegisName: Nebula_Of_EA1
+    Name: Nebula of Expert Archer Lv1
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,3;
+      if (.@r>=9) {
+         bonus bLongAtkRate,3;
+         if (.@r>=11) {
+            bonus bLongAtkRate,4;
+         }
+      }
+  - Id: 310731
+    AegisName: Nebula_Of_EA2
+    Name: Nebula of Expert Archer Lv2
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,5;
+      if (.@r>=9) {
+         bonus bLongAtkRate,5;
+         if (.@r>=11) {
+            bonus bLongAtkRate,7;
+         }
+      }
+  - Id: 310732
+    AegisName: Nebula_Of_EA3
+    Name: Nebula of Expert Archer Lv3
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,7;
+      if (.@r>=9) {
+         bonus bLongAtkRate,7;
+         if (.@r>=11) {
+            bonus bLongAtkRate,15;
+         }
+      }
+  - Id: 310733
+    AegisName: Nebula_Of_SH1
+    Name: Nebula of Sharp Lv1
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,5;
+      if (.@r>=9) {
+         bonus bCritAtkRate,5;
+         if (.@r>=11) {
+            bonus bCritAtkRate,7;
+         }
+      }
+  - Id: 310734
+    AegisName: Nebula_Of_SH2
+    Name: Nebula of Sharp Lv2
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,7;
+      if (.@r>=9) {
+         bonus bCritAtkRate,7;
+         if (.@r>=11) {
+            bonus bCritAtkRate,12;
+         }
+      }
+  - Id: 310735
+    AegisName: Nebula_Of_SH3
+    Name: Nebula of Sharp Lv3
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,10;
+      if (.@r>=9) {
+         bonus bCritAtkRate,10;
+         if (.@r>=11) {
+            bonus bCritAtkRate,15;
+         }
+      }
+  - Id: 310736
+    AegisName: Nebula_Of_SP1
+    Name: Nebula of Spell Lv1
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,10;
+      if (.@r>=9) {
+         bonus bMatk,10;
+         if (.@r>=11) {
+            bonus bMatk,15;
+         }
+      }
+  - Id: 310737
+    AegisName: Nebula_Of_SP2
+    Name: Nebula of Spell Lv2
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15;
+      if (.@r>=9) {
+         bonus bMatk,15;
+         if (.@r>=11) {
+            bonus bMatk,30;
+         }
+      }
+  - Id: 310738
+    AegisName: Nebula_Of_SP3
+    Name: Nebula of Spell Lv3
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20;
+      if (.@r>=9) {
+         bonus bMatk,20;
+         if (.@r>=11) {
+            bonus bMatk,40;
+         }
+      }
+  - Id: 310739
+    AegisName: Nebula_Of_HL1
+    Name: Nebula of Healing Lv1
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,3;
+      bonus bHealPower,5;
+      if (.@r>=9) {
+         bonus bMaxSPrate,2;
+         bonus bHealPower,3;
+         if (.@r>=11) {
+            bonus bMaxSPrate,3;
+            bonus bHealPower,5;
+         }
+      }
+  - Id: 310740
+    AegisName: Nebula_Of_HL2
+    Name: Nebula of Healing Lv2
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,5;
+      bonus bHealPower,7;
+      if (.@r>=9) {
+         bonus bMaxSPrate,3;
+         bonus bHealPower,5;
+         if (.@r>=11) {
+            bonus bMaxSPrate,5;
+            bonus bHealPower,7;
+         }
+      }
+  - Id: 310741
+    AegisName: Nebula_Of_HL3
+    Name: Nebula of Healing Lv3
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,5;
+      bonus bHealPower,10;
+      if (.@r>=9) {
+         bonus bMaxSPrate,4;
+         bonus bHealPower,7;
+         if (.@r>=11) {
+            bonus bMaxSPrate,7;
+            bonus bHealPower,10;
+         }
+      }
+  - Id: 310742
+    AegisName: Nebula_Of_HP1
+    Name: Nebula of Health Lv1
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,3;
+      bonus bDef,25;
+      if (.@r>=9) {
+         bonus bMaxHPrate,3;
+         bonus bDef,15;
+         if (.@r>=11) {
+            bonus bMaxHPrate,5;
+            bonus bDef,25;
+         }
+      }
+  - Id: 310743
+    AegisName: Nebula_Of_HP2
+    Name: Nebula of Health Lv2
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bDef,30;
+      if (.@r>=9) {
+         bonus bMaxHPrate,4;
+         bonus bDef,20;
+         if (.@r>=11) {
+            bonus bMaxHPrate,6;
+            bonus bDef,30;
+         }
+      }
+  - Id: 310744
+    AegisName: Nebula_Of_HP3
+    Name: Nebula of Health Lv3
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,7;
+      bonus bDef,45;
+      if (.@r>=9) {
+         bonus bMaxHPrate,5;
+         bonus bDef,30;
+         if (.@r>=11) {
+            bonus bMaxHPrate,8;
+            bonus bDef,45;
+         }
+      }
+  - Id: 310844
+    AegisName: Summer_Hot_Lv1
+    Name: Summer Heat(Lv1)
+    Type: Card
+  - Id: 310845
+    AegisName: Summer_Hot_Lv2
+    Name: Summer Heat(Lv2)
+    Type: Card
+  - Id: 310846
+    AegisName: Summer_Hot_Lv3
+    Name: Summer Heat(Lv3)
+    Type: Card
+  - Id: 310847
+    AegisName: Summer_Cool_Lv1
+    Name: Summer Coolness(Lv1)
+    Type: Card
+  - Id: 310848
+    AegisName: Summer_Cool_Lv2
+    Name: Summer Coolness(Lv2)
+    Type: Card
+  - Id: 310849
+    AegisName: Summer_Cool_Lv3
+    Name: Summer Coolness(Lv3)
+    Type: Card
+  - Id: 310851
+    AegisName: Mad_Bunny_Enchant_1_1
+    Name: Delay after skill 1Lv
+    Type: Card
+    Script: |
+      bonus bDelayrate,-1;
+  - Id: 310852
+    AegisName: Mad_Bunny_Enchant_1_2
+    Name: Delay after skill 2Lv
+    Type: Card
+    Script: |
+      bonus bDelayrate,-3;
+  - Id: 310853
+    AegisName: Mad_Bunny_Enchant_1_3
+    Name: Delay after skill 3Lv
+    Type: Card
+    Script: |
+      bonus bDelayrate,-5;
+  - Id: 310854
+    AegisName: Mad_Bunny_Enchant_2_1
+    Name: Attack speed 1Lv
+    Type: Card
+    Script: |
+      bonus bAspdRate,5;
+  - Id: 310855
+    AegisName: Mad_Bunny_Enchant_2_2
+    Name: Attack speed 2Lv
+    Type: Card
+    Script: |
+      bonus bAspdRate,7;
+  - Id: 310856
+    AegisName: Mad_Bunny_Enchant_2_3
+    Name: Attack speed 3Lv
+    Type: Card
+    Script: |
+      bonus bAspdRate,10;
+      bonus bAspd,1;
+  - Id: 310857
+    AegisName: Mad_Bunny_Enchant_3_1
+    Name: Variable casting (physical) 1Lv
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bBaseAtk,3;
+  - Id: 310858
+    AegisName: Mad_Bunny_Enchant_3_2
+    Name: Variable casting (physical) 2Lv
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-7;
+      bonus bBaseAtk,5;
+  - Id: 310859
+    AegisName: Mad_Bunny_Enchant_3_3
+    Name: Variable casting (physical) 3Lv
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-10;
+      bonus bPAtk,1;
+  - Id: 310860
+    AegisName: Mad_Bunny_Enchant_3_4
+    Name: Variable casting (magical) 3Lv
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-10;
+      bonus bSmatk,1;
+  - Id: 310861
+    AegisName: Mad_Bunny_Enchant_4_1
+    Name: Defense 1Lv
+    Type: Card
+    Script: |
+      bonus bDef,100;
+  - Id: 310862
+    AegisName: Mad_Bunny_Enchant_4_2
+    Name: Defense 2Lv
+    Type: Card
+    Script: |
+      bonus bDef,150;
+  - Id: 310863
+    AegisName: Mad_Bunny_Enchant_4_3
+    Name: Defense 3Lv
+    Type: Card
+    Script: |
+      bonus2 bSubEle,Ele_All,5;
+      bonus bDef,200;
+  - Id: 310864
+    AegisName: Mad_Bunny_Enchant_5_1
+    Name: Physical 1Lv
+    Type: Card
+    Script: |
+      bonus bShortAtkRate,1;
+  - Id: 310865
+    AegisName: Mad_Bunny_Enchant_5_2
+    Name: Physical 2Lv
+    Type: Card
+    Script: |
+      bonus bShortAtkRate,3;
+  - Id: 310866
+    AegisName: Mad_Bunny_Enchant_5_3
+    Name: Physical 3Lv
+    Type: Card
+    Script: |
+      bonus bShortAtkRate,5;
+  - Id: 310867
+    AegisName: Mad_Bunny_Enchant_6_1
+    Name: Long ranged 1Lv
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,1;
+  - Id: 310868
+    AegisName: Mad_Bunny_Enchant_6_2
+    Name: Long ranged 2Lv
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,3;
+  - Id: 310869
+    AegisName: Mad_Bunny_Enchant_6_3
+    Name: Long ranged 3Lv
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,5;
+  - Id: 310870
+    AegisName: Mad_Bunny_Enchant_7_1
+    Name: Magical 1Lv
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,1;
+  - Id: 310871
+    AegisName: Mad_Bunny_Enchant_7_2
+    Name: Magical 2Lv
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,3;
+  - Id: 310872
+    AegisName: Mad_Bunny_Enchant_7_3
+    Name: Magical 3Lv
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 310873
+    AegisName: Mad_Bunny_Enchant_8_1
+    Name: Vital 1Lv
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,3;
+  - Id: 310874
+    AegisName: Mad_Bunny_Enchant_8_2
+    Name: Vital 2Lv
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,5;
+  - Id: 310875
+    AegisName: Mad_Bunny_Enchant_8_3
+    Name: Vital 3Lv
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,7;
+  - Id: 310876
+    AegisName: Mad_Bunny_Enchant_9_1
+    Name: Mental 1Lv
+    Type: Card
+    Script: |
+      bonus bMaxSPrate,3;
+  - Id: 310877
+    AegisName: Mad_Bunny_Enchant_9_2
+    Name: Mental 2Lv
+    Type: Card
+    Script: |
+      bonus bMaxSPrate,5;
+  - Id: 310878
+    AegisName: Mad_Bunny_Enchant_9_3
+    Name: Mental 3Lv
+    Type: Card
+    Script: |
+      bonus bMaxSPrate,7;
+  - Id: 310879
+    AegisName: Mad_Bunny_Enchant_3_5
+    Name: Variable casting (magical) 2Lv
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-7;
+      bonus bMatk,5;
+  - Id: 310880
+    AegisName: Mad_Bunny_Enchant_3_6
+    Name: Variable casting (magical) 1Lv
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bMatk,3;
+  - Id: 310881
+    AegisName: aegis_310881
+    Name: Rune Knight Stone(Upper)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,2*getskilllv("RK_DRAGONTRAINING");
+  - Id: 310882
+    AegisName: aegis_310882
+    Name: Rune Knight Stone(Mid)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,(getskilllv("RK_RUNEMASTERY")/2);
+      bonus bShortAtkRate,(getskilllv("RK_RUNEMASTERY")/2);
+  - Id: 310883
+    AegisName: aegis_310883
+    Name: Rune Knight Stone(Lower)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RK_WINDCUTTER",5*getskilllv("RK_ENCHANTBLADE");
+  - Id: 310884
+    AegisName: aegis_310884
+    Name: Warlock Stone(Upper)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2*getskilllv("WL_SOULEXPANSION");
+  - Id: 310885
+    AegisName: aegis_310885
+    Name: Warlock Stone(Mid)
+    Type: Card
+    Script: |
+      bonus bFixedCast,-100*getskilllv("WL_COMET");
+  - Id: 310886
+    AegisName: aegis_310886
+    Name: Warlock Stone(Lower)
+    Type: Card
+    Script: |
+      bonus bDelayrate,-getskilllv("WL_CHAINLIGHTNING");
+  - Id: 310887
+    AegisName: aegis_310887
+    Name: Royal Guard Stone(Upper)
+    Type: Card
+    Script: |
+      bonus bFixedCast,-100*getskilllv("LG_INSPIRATION");
+  - Id: 310888
+    AegisName: aegis_310888
+    Name: Royal Guard Stone(Mid)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("LG_PIETY");
+      bonus2 bMagicAtkEle,Ele_All,2*getskilllv("LG_PIETY");
+  - Id: 310889
+    AegisName: aegis_310889
+    Name: Royal Guard Stone(Lower)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"LG_OVERBRAND",5*getskilllv("LG_MOONSLASHER");
+  - Id: 310908
+    AegisName: HeroBoots_STR
+    Name: Valor of Fighter
+    Type: Card
+    Script: |
+      autobonus "{ bonus bStr,100; bonus bShortAtkRate,10; }",5,10000,BF_WEAPON;
+  - Id: 310909
+    AegisName: HeroBoots_LUK
+    Name: Sharpness of Swordsman
+    Type: Card
+    Script: |
+      autobonus "{ bonus bLuk,100; bonus bCritAtkRate,20; }",5,10000,BF_WEAPON;
+  - Id: 310910
+    AegisName: HeroBoots_DEX
+    Name: Will of Sharpshooter
+    Type: Card
+    Script: |
+      autobonus "{ bonus bDex,100; bonus bLongAtkRate,10; }",5,10000,BF_WEAPON;
+  - Id: 310911
+    AegisName: HeroBoots_INT
+    Name: Knowledge of Wise Man
+    Type: Card
+    Script: |
+      autobonus "{ bonus bInt,100; bonus2 bMagicAtkEle,Ele_All,10; }",5,10000,BF_MAGIC;
+  - Id: 310912
+    AegisName: HeroBoots_VIT
+    Name: Vigor of Warlord
+    Type: Card
+    Script: |
+      autobonus2 "{ bonus bVit,100; bonus bMaxSPrate,10; }",5,10000,BF_WEAPON|BF_MAGIC;
+  - Id: 310913
+    AegisName: HeroBoots_AGI
+    Name: Nimbleness of Assassin
+    Type: Card
+    Script: |
+      autobonus "{ bonus bAgi,100; bonus2 bAddClass,Class_All,10; }",5,10000,BF_WEAPON;
+  - Id: 310914
+    AegisName: HeroInsignia_STR
+    Name: Strength
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,10;
+  - Id: 310915
+    AegisName: HeroInsignia_LUK
+    Name: Luck
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,7;
+  - Id: 310916
+    AegisName: HeroInsignia_DEX
+    Name: Dexterity
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,7;
+  - Id: 310917
+    AegisName: HeroInsignia_INT
+    Name: Intelligence
+    Type: Card
+    Script: |
+      bonus bMatkRate,10;
+  - Id: 310918
+    AegisName: HeroInsignia_VIT
+    Name: Vitality
+    Type: Card
+    Script: |
+      bonus bMaxHPRate,10;
+  - Id: 310919
+    AegisName: HeroInsignia_AGI
+    Name: Agility
+    Type: Card
+    Script: |
+      bonus bAspd,2;
+  - Id: 310920
+    AegisName: Barmund_Pow1
+    Name: Power of Varmundt Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bPow)/20);
+      .@g = getenchantgrade();
+      bonus bPow,1;
+      bonus bPAtk,.@param;
+      bonus bBaseAtk,3*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310921
+    AegisName: Barmund_Pow2
+    Name: Power of Varmundt Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bPow)/20);
+      .@g = getenchantgrade();
+      bonus bPow,2;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,4*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310922
+    AegisName: Barmund_Pow3
+    Name: Power of Varmundt Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bPow)/20);
+      .@g = getenchantgrade();
+      bonus bPow,3;
+      bonus bPAtk,3*.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310923
+    AegisName: Barmund_Spl1
+    Name: Spell of Varmundt Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bSpl)/20);
+      .@g = getenchantgrade();
+      bonus bSpl,1;
+      bonus bSmatk,.@param;
+      bonus bMatk,3*.@param;
+      if (.@g>=1) {
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus bSmatk,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310924
+    AegisName: Barmund_Spl2
+    Name: Spell of Varmundt Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bSpl)/20);
+      .@g = getenchantgrade();
+      bonus bSpl,2;
+      bonus bSmatk,2*.@param;
+      bonus bMatk,4*.@param;
+      if (.@g>=1) {
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus bSmatk,.@param;
+            if (.@g>=3) {
+               bonus bSmatk,.@param;
+               if (.@g>=4) {
+                  bonus bSmatk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310925
+    AegisName: Barmund_Spl3
+    Name: Spell of Varmundt Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bSpl)/20);
+      .@g = getenchantgrade();
+      bonus bSpl,3;
+      bonus bSmatk,3*.@param;
+      bonus bMatk,5*.@param;
+      if (.@g>=1) {
+         bonus bSmatk,.@param;
+         if (.@g>=2) {
+            bonus bSmatk,2*.@param;
+            if (.@g>=3) {
+               bonus bSmatk,2*.@param;
+               if (.@g>=4) {
+                  bonus bSmatk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310926
+    AegisName: Barmund_Con1
+    Name: Concentration of Varmundt Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bCon)/20);
+      .@g = getenchantgrade();
+      bonus bCon,1;
+      bonus bPAtk,.@param;
+      bonus bBaseAtk,3*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310927
+    AegisName: Barmund_Con2
+    Name: Concentration of Varmundt Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bCon)/20);
+      .@g = getenchantgrade();
+      bonus bCon,2;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,4*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310928
+    AegisName: Barmund_Con3
+    Name: Concentration of Varmundt Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bCon)/20);
+      .@g = getenchantgrade();
+      bonus bCon,3;
+      bonus bPAtk,3*.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,2*.@param;
+            if (.@g>=3) {
+               bonus bPAtk,2*.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310929
+    AegisName: Barmund_Crt1
+    Name: Creative of Varmundt Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bCrt)/20);
+      .@g = getenchantgrade();
+      bonus bCrt,1;
+      bonus bCritAtkRate,3*.@param;
+      bonus bPAtk,.@param;
+      bonus bBaseAtk,3*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310930
+    AegisName: Barmund_Crt2
+    Name: Creative of Varmundt Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bCrt)/20);
+      .@g = getenchantgrade();
+      bonus bCrt,2;
+      bonus bCritAtkRate,4*.@param;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,4*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310932
+    AegisName: Barmund_Crt3
+    Name: Creative of Varmundt Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bCrt)/20);
+      .@g = getenchantgrade();
+      bonus bCrt,3;
+      bonus bCritAtkRate,5*.@param;
+      bonus bPAtk,2*.@param;
+      bonus bBaseAtk,5*.@param;
+      if (.@g>=1) {
+         bonus bPAtk,.@param;
+         if (.@g>=2) {
+            bonus bPAtk,.@param;
+            if (.@g>=3) {
+               bonus bPAtk,.@param;
+               if (.@g>=4) {
+                  bonus bPAtk,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310933
+    AegisName: Barmund_Wis1
+    Name: Wisdom of Varmundt Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bWis)/20);
+      .@g = getenchantgrade();
+      bonus bWis,1;
+      bonus bMaxSPrate,.@param;
+      bonus bHealPower,.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,.@param;
+            if (.@g>=3) {
+               bonus bMaxSPrate,.@param;
+               bonus bHealPower,2*.@param;
+               if (.@g>=4) {
+                  bonus bMaxSPrate,.@param;
+                  bonus bHealPower,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310934
+    AegisName: Barmund_Wis2
+    Name: Wisdom of Varmundt Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bWis)/20);
+      .@g = getenchantgrade();
+      bonus bWis,2;
+      bonus bMaxSPrate,2*.@param;
+      bonus bHealPower,2*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bMaxSPrate,.@param;
+               bonus bHealPower,2*.@param;
+               if (.@g>=4) {
+                  bonus bHplus,.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310935
+    AegisName: Barmund_Wis3
+    Name: Wisdom of Varmundt Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bWis)/20);
+      .@g = getenchantgrade();
+      bonus bWis,3;
+      bonus bMaxSPrate,3*.@param;
+      bonus bHealPower,3*.@param;
+      if (.@g>=1) {
+         bonus bMaxSPrate,.@param;
+         bonus bHealPower,.@param;
+         if (.@g>=2) {
+            bonus bMaxSPrate,.@param;
+            bonus bHealPower,2*.@param;
+            if (.@g>=3) {
+               bonus bHplus,.@param;
+               bonus bMaxSPrate,.@param;
+               if (.@g>=4) {
+                  bonus bHplus,2*.@param;
+                  bonus bMaxSPrate,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310936
+    AegisName: Barmund_Sta1
+    Name: Stamina of Varmundt Lv1
+    Type: Card
+    Script: |
+      .@param = (readparam(bSta)/20);
+      .@g = getenchantgrade();
+      bonus bSta,1;
+      bonus bMaxHP,250*.@param;
+      bonus bRes,.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,.@param;
+                  bonus bRes,.@param;
+               }
+            }
+         }
+      }
+  - Id: 310937
+    AegisName: Barmund_Sta2
+    Name: Stamina of Varmundt Lv2
+    Type: Card
+    Script: |
+      .@param = (readparam(bSta)/20);
+      .@g = getenchantgrade();
+      bonus bSta,2;
+      bonus bMaxHP,400*.@param;
+      bonus bRes,2*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310938
+    AegisName: Barmund_Sta3
+    Name: Stamina of Varmundt Lv3
+    Type: Card
+    Script: |
+      .@param = (readparam(bSta)/20);
+      .@g = getenchantgrade();
+      bonus bSta,3;
+      bonus bMaxHP,600*.@param;
+      bonus bRes,3*.@param;
+      if (.@g>=1) {
+         bonus bMaxHPrate,.@param;
+         bonus bRes,.@param;
+         if (.@g>=2) {
+            bonus bMaxHPrate,.@param;
+            bonus bRes,.@param;
+            if (.@g>=3) {
+               bonus bMaxHPrate,.@param;
+               bonus bRes,2*.@param;
+               if (.@g>=4) {
+                  bonus bMaxHPrate,2*.@param;
+                  bonus bRes,2*.@param;
+               }
+            }
+         }
+      }
+  - Id: 310982
+    AegisName: PATK_1Lv
+    Name: P.ATK 1Lv
+    Type: Card
+    Script: |
+      bonus bPAtk,1;
+  - Id: 310983
+    AegisName: PATK_2Lv
+    Name: P.ATK 2Lv
+    Type: Card
+    Script: |
+      bonus bPAtk,2;
+  - Id: 310984
+    AegisName: SMATK_1Lv
+    Name: S.MATK 1Lv
+    Type: Card
+    Script: |
+      bonus bSmatk,1;
+  - Id: 310985
+    AegisName: SMATK_2Lv
+    Name: S.MATK 2Lv
+    Type: Card
+    Script: |
+      bonus bSmatk,2;
+  - Id: 310986
+    AegisName: ATK_1Lv
+    Name: ATK 1Lv
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+  - Id: 310987
+    AegisName: ATK_2Lv
+    Name: ATK 2Lv
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,5;
+  - Id: 310988
+    AegisName: MATK_1Lv
+    Name: MATK 1Lv
+    Type: Card
+    Script: |
+      bonus bMatkRate,3;
+  - Id: 310989
+    AegisName: MATK_2Lv
+    Name: MATK 2Lv
+    Type: Card
+    Script: |
+      bonus bMatkRate,5;
+  - Id: 310990
+    AegisName: MHP_1Lv
+    Name: MHP 1Lv
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,3;
+  - Id: 310991
+    AegisName: MHP_2Lv
+    Name: MHP 2Lv
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,5;
+  - Id: 310992
+    AegisName: MSP_1Lv
+    Name: MSP 1Lv
+    Type: Card
+    Script: |
+      bonus bMaxSPrate,3;
+  - Id: 310993
+    AegisName: MSP_2Lv
+    Name: MSP 2Lv
+    Type: Card
+    Script: |
+      bonus bMaxSPrate,5;
+  - Id: 310994
+    AegisName: Bless_Nothing
+    Name: Blessing of Formless
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Formless,5;
+  - Id: 310995
+    AegisName: Bless_Undead
+    Name: Blessing of Undead
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Undead,5;
+  - Id: 310996
+    AegisName: Bless_Animal
+    Name: Blessing of Brute
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Brute,5;
+  - Id: 310997
+    AegisName: Bless_Plant
+    Name: Blessing of Plant
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Plant,5;
+  - Id: 310998
+    AegisName: Bless_Insect
+    Name: Blessing of Insect
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Insect,5;
+  - Id: 310999
+    AegisName: Bless_Fish
+    Name: Blessing of Fish
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Fish,5;
+  - Id: 311000
+    AegisName: Bless_Demon
+    Name: Blessing of Demon
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Demon,5;
+  - Id: 311001
+    AegisName: Bless_Human
+    Name: Blessing of Demihuman
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_DemiHuman,5;
+  - Id: 311002
+    AegisName: Bless_Angel
+    Name: Blessing of Angel
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Angel,5;
+  - Id: 311003
+    AegisName: Bless_Dragon
+    Name: Blessing of Dragon
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_Dragon,5;
+  - Id: 311004
+    AegisName: Bless_All
+    Name: Blessing of Rune Midgarts
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_All,5;
+  - Id: 311005
+    AegisName: aegis_311005
+    Name: Wondermins Stone (top)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-getskilllv("WM_LESSON");
+  - Id: 311006
+    AegisName: aegis_311006
+    Name: Wondermin's Stone (Discontinued)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-(100*getskilllv("WM_SIRCLEOFNATURE"));
+      bonus2 bSkillCooldown,"WM_METALICSOUND",-(100*getskilllv("WM_SIRCLEOFNATURE"));
+  - Id: 311007
+    AegisName: aegis_311007
+    Name: Wondermin's Stone (bottom)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bFixedCast,-100*getskilllv("WM_FRIGG_SONG");
+  - Id: 311008
+    AegisName: aegis_311008
+    Name: Generic Stone (top)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("GN_CARTCANNON");
+  - Id: 311009
+    AegisName: aegis_311009
+    Name: Generic Stone (Discontinued)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-2*getskilllv("GN_REMODELING_CART");
+  - Id: 311010
+    AegisName: aegis_311010
+    Name: Generic Stone (Bottom)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bFixedCast,-100*getskilllv("GN_TRAINING_SWORD");
+  - Id: 311011
+    AegisName: aegis_311011
+    Name: Sorcerer Stone (top)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bFixedCast,-100*getskilllv("SO_STRIKING");
+  - Id: 311012
+    AegisName: aegis_311012
+    Name: Sorcerer Stone (Discontinued)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-2*getskilllv("SO_DIAMONDDUST");
+  - Id: 311013
+    AegisName: aegis_311013
+    Name: Sorcerer Stone (bottom)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2*getskilllv("SO_EARTHGRAVE");
+  - Id: 311014
+    AegisName: aegis_311014
+    Name: Reload Stone (Dual)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bDelayrate,-5;
+  - Id: 311015
+    AegisName: aegis_311015
+    Name: Creative Stone (Dual)    # !todo check english name
+    Type: Card
+    Script: |
+      bonus bCrt,5;
+  - Id: 311016
+    AegisName: Gear_ATK
+    Name: Clockwork (Atk)
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,15+5*getenchantgrade();
+  - Id: 311017
+    AegisName: Gear_MATK
+    Name: Clockwork (Matk)
+    Type: Card
+    Script: |
+      bonus bMatkRate,15+5*getenchantgrade();
+  - Id: 311018
+    AegisName: Gear_ASPD
+    Name: Clockwork (Delay After Attack)
+    Type: Card
+    Script: |
+      bonus bAspdRate,15+5*getenchantgrade();
+  - Id: 311019
+    AegisName: Gear_CAST
+    Name: Clockwork (Variable Casting)
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-15-5*getenchantgrade();
+  - Id: 311020
+    AegisName: Gear_SKILL
+    Name: Clockwork (Delay After Skill)
+    Type: Card
+    Script: |
+      bonus bDelayrate,-10-5*getenchantgrade();
+  - Id: 311021
+    AegisName: Gear_POW
+    Name: Clockwork (POW)
+    Type: Card
+    Script: |
+      bonus bPow,3+getenchantgrade();
+  - Id: 311022
+    AegisName: Gear_SPL
+    Name: Clockwork (SPL)
+    Type: Card
+    Script: |
+      bonus bSpl,3+getenchantgrade();
+  - Id: 311023
+    AegisName: Gear_STA
+    Name: Clockwork (STA)
+    Type: Card
+    Script: |
+      bonus bSta,3+getenchantgrade();
+  - Id: 311024
+    AegisName: Gear_WIS
+    Name: Clockwork (WIS)
+    Type: Card
+    Script: |
+      bonus bWis,3+getenchantgrade();
+  - Id: 311025
+    AegisName: Gear_CRT
+    Name: Clockwork (CRT)
+    Type: Card
+    Script: |
+      bonus bCrt,3+getenchantgrade();
+  - Id: 311026
+    AegisName: Gear_CON
+    Name: Clockwork (CON)
+    Type: Card
+    Script: |
+      bonus bCon,3+getenchantgrade();
+  - Id: 311027
+    AegisName: Gear_PATK
+    Name: Clockwork (P.Atk)
+    Type: Card
+    Script: |
+      bonus bPAtk,3+getenchantgrade();
+  - Id: 311028
+    AegisName: Gear_SMATK
+    Name: Clockwork (S.Matk)
+    Type: Card
+    Script: |
+      bonus bSmatk,3+getenchantgrade();
+  - Id: 311029
+    AegisName: Gear_DN1
+    Name: Precision Tuning Device (Storm Slash)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"DK_STORMSLASH",25+5*getenchantgrade();
+  - Id: 311030
+    AegisName: Gear_DN2
+    Name: Precision Tuning Device (Hack and Slasher)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"DK_HACKANDSLASHER",25+5*getenchantgrade();
+  - Id: 311031
+    AegisName: Gear_MT1
+    Name: Precision Tuning Device (Axe Stomp)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"MT_AXE_STOMP",25+5*getenchantgrade();
+  - Id: 311032
+    AegisName: Gear_MT2
+    Name: Precision Tuning Device (Axe Tornado)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NC_AXETORNADO",35+5*getenchantgrade();
+  - Id: 311033
+    AegisName: Gear_BO1
+    Name: Precision Tuning Device (Acidified Zone)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",25+5*getenchantgrade();
+  - Id: 311034
+    AegisName: Gear_BO2
+    Name: Precision Tuning Device (Cart Tornado)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"GN_CART_TORNADO",35+5*getenchantgrade();
+  - Id: 311035
+    AegisName: Gear_SHC1
+    Name: Precision Tuning Device (Impact Crater)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",25+5*getenchantgrade();
+  - Id: 311036
+    AegisName: Gear_SHC2
+    Name: Precision Tuning Device (Savage Impact)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SHC_SAVAGE_IMPACT",35+5*getenchantgrade();
+  - Id: 311037
+    AegisName: Gear_AG1
+    Name: Precision Tuning Device (Frozen Crimson)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",25+5*.@g;
+      bonus2 bSkillAtk,"AG_FROZEN_SLASH",25+5*.@g;
+  - Id: 311038
+    AegisName: Gear_AG2
+    Name: Precision Tuning Device (Crystal Impact)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AG_CRYSTAL_IMPACT_ATK",25+5*getenchantgrade();
+  - Id: 311039
+    AegisName: Gear_ABC1
+    Name: Precision Tuning Device (Abyss Square)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",25+5*getenchantgrade();
+  - Id: 311040
+    AegisName: Gear_ABC2
+    Name: Precision Tuning Device (From the Abyss)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"ABC_FROM_THE_ABYSS",25+5*getenchantgrade();
+  - Id: 311041
+    AegisName: Gear_EM1
+    Name: Precision Tuning Device (Conflagration Land)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",25+5*.@g;
+      bonus2 bSkillAtk,"EM_LIGHTNING_LAND",25+5*.@g;
+  - Id: 311042
+    AegisName: Gear_EM2
+    Name: Precision Tuning Device (Varetyr Spear)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",35+5*getenchantgrade();
+  - Id: 311043
+    AegisName: Gear_WH1
+    Name: Precision Tuning Device (Gale Storm)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WH_GALESTORM",25+5*getenchantgrade();
+  - Id: 311044
+    AegisName: Gear_WH2
+    Name: Precision Tuning Device (Arrow Storm)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RA_ARROWSTORM",35+5*getenchantgrade();
+  - Id: 311045
+    AegisName: Gear_IQ1
+    Name: Precision Tuning Device (Judge Faith)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"IQ_SECOND_FAITH",25+5*.@g;
+      bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",25+5*.@g;
+  - Id: 311046
+    AegisName: Gear_IQ2
+    Name: Precision Tuning Device (Consecration Punish)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"IQ_THIRD_PUNISH",35+5*getenchantgrade();
+      bonus2 bSkillAtk,"IQ_THIRD_CONSECRATION",35+5*getenchantgrade();
+  - Id: 311047
+    AegisName: Gear_IG1
+    Name: Precision Tuning Device (Shield Shooting)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",25+5*getenchantgrade();
+  - Id: 311048
+    AegisName: Gear_IG2
+    Name: Precision Tuning Device (Rapid Smiting)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",35+5*getenchantgrade();
+  - Id: 311049
+    AegisName: Gear_CD1
+    Name: Precision Tuning Device (Flamen)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"CD_FRAMEN",25+5*getenchantgrade();
+  - Id: 311050
+    AegisName: Gear_CD2
+    Name: Precision Tuning Device (Arbitrium)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",25+5*getenchantgrade();
+  - Id: 311051
+    AegisName: Gear_SKE1
+    Name: Precision Tuning Device (Noon Blast)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SKE_NOON_BLAST",25+5*getenchantgrade();
+  - Id: 311052
+    AegisName: Gear_SKE2
+    Name: Precision Tuning Device (Rising Sun)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SKE_RISING_SUN",25+5*getenchantgrade();
+  - Id: 311053
+    AegisName: Gear_SOA1
+    # Name: Precision Tuning Device (Talisman of Four Bearing God)
+    Name: Precision Tuning Device (Talisman of Four Bearing
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_FOUR_BEARING_GOD",25+5*getenchantgrade();
+  - Id: 311054
+    AegisName: Gear_SOA2
+    # Name: Precision Tuning Device (Talisman of Soul Stealing)
+    Name: Precision Tuning Device (Talisman of Soul Stealin
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SOA_TALISMAN_OF_SOUL_STEALING",25+5*getenchantgrade();
+  - Id: 311055
+    AegisName: Gear_NW1
+    Name: Precision Tuning Device (Magazine Bullet)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"NW_ONLY_ONE_BULLET",25+5*.@g;
+      bonus2 bSkillAtk,"NW_MAGAZINE_FOR_ONE",25+5*.@g;
+  - Id: 311056
+    AegisName: Gear_NW2
+    Name: Precision Tuning Device (Vigilante Wild)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NW_WILD_FIRE",25+5*getenchantgrade();
+  - Id: 311057
+    AegisName: Gear_HN1
+    Name: Precision Tuning Device (Double Bowling Blow)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"HN_MEGA_SONIC_BLOW",25+5*.@g;
+      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",25+5*.@g;
+  - Id: 311058
+    AegisName: Gear_HN2
+    Name: Precision Tuning Device (Meteor Strike)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",25+5*.@g;
+      bonus2 bSkillAtk,"HN_METEOR_STORM_BUSTER",25+5*.@g;
+  - Id: 311059
+    AegisName: Gear_SS1
+    Name: Precision Tuning Device (Shadow Dance)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SS_KAGENOMAI",25+5*getenchantgrade();
+  - Id: 311060
+    AegisName: Gear_SS2
+    Name: Precision Tuning Device (Darkening Cannon)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SS_ANTENPOU",25+5*getenchantgrade();
+  - Id: 311061
+    AegisName: Gear_TR1
+    Name: Precision Tuning Device (Rose Rhythm)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",25+5*.@g;
+      bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",25+5*.@g;
+  - Id: 311062
+    AegisName: Gear_TR2
+    Name: Precision Tuning Device (Severe Rainstorm)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",35+5*getenchantgrade();
+  - Id: 311063
+    AegisName: Gear_SH1
+    Name: Precision Tuning Device (Chulho Strike)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SH_HOGOGONG_STRIKE",25+5*.@g;
+      bonus2 bSkillAtk,"SH_HOWLING_OF_CHUL_HO",25+5*.@g;
+  - Id: 311064
+    AegisName: Gear_SH2
+    Name: Precision Tuning Device (Hyunrok Breeze)
+    Type: Card
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bSkillAtk,"SH_HYUN_ROKS_BREEZE",25+5*.@g;
+      bonus2 bSkillAtk,"SH_HYUN_ROK_CANNON",25+5*.@g;
+  - Id: 311076
+    AegisName: POW_1Lv
+    Name: POW Lv1
+    Type: Card
+    Script: |
+      bonus bPow,1;
+  - Id: 311077
+    AegisName: POW_2Lv
+    Name: POW Lv2
+    Type: Card
+    Script: |
+      bonus bPow,2;
+  - Id: 311078
+    AegisName: WIS_1Lv
+    Name: WIS Lv1
+    Type: Card
+    Script: |
+      bonus bWis,1;
+  - Id: 311079
+    AegisName: WIS_2Lv
+    Name: WIS Lv2
+    Type: Card
+    Script: |
+      bonus bWis,2;
+  - Id: 311080
+    AegisName: SPL_1Lv
+    Name: SPL Lv1
+    Type: Card
+    Script: |
+      bonus bSpl,1;
+  - Id: 311081
+    AegisName: SPL_2Lv
+    Name: SPL Lv2
+    Type: Card
+    Script: |
+      bonus bSpl,2;
+  - Id: 311082
+    AegisName: STA_1Lv
+    Name: STA Lv1
+    Type: Card
+    Script: |
+      bonus bSta,1;
+  - Id: 311083
+    AegisName: STA_2Lv
+    Name: STA Lv2
+    Type: Card
+    Script: |
+      bonus bSta,2;
+  - Id: 311084
+    AegisName: CRT_1Lv
+    Name: CRT Lv1
+    Type: Card
+    Script: |
+      bonus bCrt,1;
+  - Id: 311085
+    AegisName: CRT_2Lv
+    Name: CRT Lv2
+    Type: Card
+    Script: |
+      bonus bCrt,2;
+  - Id: 311086
+    AegisName: CON_1Lv
+    Name: CON Lv1
+    Type: Card
+    Script: |
+      bonus bCon,1;
+  - Id: 311087
+    AegisName: CON_2Lv
+    Name: CON Lv2
+    Type: Card
+    Script: |
+      bonus bCon,2;
+  - Id: 311088
+    AegisName: CRATE_Lv1
+    Name: C.RATE Lv1
+    Type: Card
+    Script: |
+      bonus bCrate,1;
+  - Id: 311089
+    AegisName: CRATE_Lv2
+    Name: C.RATE Lv2
+    Type: Card
+    Script: |
+      bonus bCrate,2;
+  - Id: 311090
+    AegisName: HPLUS_Lv1
+    Name: H.PLUS Lv1
+    Type: Card
+    Script: |
+      bonus bHplus,1;
+  - Id: 311091
+    AegisName: HPLUS_Lv2
+    Name: H.PLUS Lv2
+    Type: Card
+    Script: |
+      bonus bHplus,2;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -52294,7 +55055,7 @@ Body:
       NoAuction: true
   - Id: 1000235
     AegisName: aegis_1000235
-    Name: Great Hunter's Mark    # !todo check english name
+    Name: Elite Hunter Token
     Type: Etc
   - Id: 1000243
     AegisName: Sin_Shard_A
@@ -53296,3 +56057,96 @@ Body:
     AegisName: Sanctuary_Sudarium
     Name: Sabbatical Handkerchief
     Type: Etc
+  - Id: 1000563
+    AegisName: Soa_Charm
+    Name: Soa Charm
+    Type: Etc
+    Weight: 1
+  - Id: 1000564
+    AegisName: Nw_Grenade
+    Name: Nw Grenade
+    Type: Etc
+    Weight: 1
+  - Id: 1000565
+    AegisName: SS_Charm
+    Name: SS Charm
+    Type: Etc
+    Weight: 1
+  - Id: 1000566
+    AegisName: SS_Charm_F
+    Name: SS Charm F
+    Type: Etc
+    Weight: 1
+  - Id: 1000567
+    AegisName: SS_Charm_W
+    Name: SS Charm W
+    Type: Etc
+    Weight: 1
+  - Id: 1000568
+    AegisName: SS_Charm_G
+    Name: SS Charm G
+    Type: Etc
+    Weight: 1
+  - Id: 1000569
+    AegisName: SS_Charm_L
+    Name: SS Charm L
+    Type: Etc
+    Weight: 1
+  - Id: 1220001
+    AegisName: Kunai
+    Name: Kunai
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+  - Id: 1220002
+    AegisName: Kunai_Of_Nothing
+    Name: Kunai Of Nothing
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Neutral;
+  - Id: 1220003
+    AegisName: Kunai_Of_Shadow
+    Name: Kunai Of Shadow
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Dark;
+  - Id: 1220004
+    AegisName: Kunai_Of_Hamaya
+    Name: Kunai Of Hamaya
+    Type: Ammo
+    SubType: Kunai
+    Weight: 1
+    Attack: 30
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Ammo: true
+    EquipLevelMin: 1
+    Script: |
+      bonus bAtkEle,Ele_Holy;

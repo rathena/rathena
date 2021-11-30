@@ -85,6 +85,7 @@
 	}
 
 	.@refineitemid = getequipid(.@part); // save id of the item
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
@@ -113,8 +114,7 @@
 			mes "With the Blacksmith Blessing, the equipment won't vanish if the refine fails!";
 			next;
 			mes "[Blacksmith Mighty Hammer]";
-			.@weapon_lvl = getequipweaponlv(.@part);
-			if (.@weapon_lvl < 1 || .@weapon_lvl > 4)
+			if ( .@itemtype != IT_WEAPON )
 				mes "For +" + getequiprefinerycnt(.@part) + " equipment, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment from vanishing. Do you want use it to refine?";
 			else
 				mes "For +" + getequiprefinerycnt(.@part) + " weapon, refine with^316AC5 " + .@blacksmith_blessing_count + " unit(s) Blacksmith Blessing^000000 can prevent the equipment from vanishing. Do you want use it to refine?";
@@ -161,7 +161,7 @@
 		next;
 		emotion ET_BEST;
 		mes "[Blacksmith Mighty Hammer]";
-		mes "The sound refreshes my mind everytime I hear it.";
+		mes "The sound refreshes my mind every time I hear it.";
 		mes "Here, have it. Refine succeeded flawlessly!";
 		close;
 	}
@@ -253,7 +253,7 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 	.@refine_count = getequiprefinerycnt(.@part);
 	if (.@refine_count < 10) {
 		mes "[Basta]";
-		mes "Haven't I told you? I only refine equipments that are +10 and above.";
+		mes "Haven't I told you? I only refine equipment that are +10 and above.";
 		close;
 	}
 	else if (.@refine_count == 10)
@@ -266,13 +266,13 @@ lhz_in02,280,19,3	duplicate(MightyHammer)	Mighty Hammer#lhz	4_M_DWARF
 		close;
 	}
 	.@refineitemid = getequipid(.@part); // save id of the item
+	.@itemtype = getiteminfo( .@refineitemid, ITEMINFO_TYPE );
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
 	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
 
-	.@weapon_lvl = getequipweaponlv(.@part);
-	if (.@weapon_lvl < 1 || .@weapon_lvl > 4)
+	if ( .@itemtype != IT_WEAPON )
 		.@type$ = "armor";
 	else
 		.@type$ = "weapon";
