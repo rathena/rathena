@@ -1478,7 +1478,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 #ifdef RENEWAL
 		if (skill_break_equip(src,bl, EQP_ARMOR, (1000 * skill_lv + 500) - 1000, BCT_ENEMY))
 #else
-		if (skill_break_equip(src,bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY) && dstsd != null)
+		if (skill_break_equip(src,bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY) && dstsd != NULL)
 #endif
 			clif_emotion(bl,ET_HUK);
 		break;
@@ -1487,7 +1487,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 #ifdef RENEWAL
 		skill_break_equip(src,bl, EQP_WEAPON, 300 * skill_lv, BCT_ENEMY);
 #else
-		if(dstsd != null)
+		if(dstsd != NULL)
 			skill_break_equip(src,bl, EQP_WEAPON, 100*skill_lv, BCT_ENEMY);
 #endif
 		break;
@@ -1642,7 +1642,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case CR_ACIDDEMONSTRATION:
-		if (dstsd != null) {
+		if (dstsd != NULL) {
 			skill_break_equip(src,bl, EQP_WEAPON|EQP_ARMOR, 100*skill_lv, BCT_ENEMY);
 		}
 	case GN_FIRE_EXPANSION_ACID:
