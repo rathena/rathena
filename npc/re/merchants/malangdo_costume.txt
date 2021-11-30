@@ -512,7 +512,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	if (.@eq_top == -1 && .@eq_mid == -1 && .@eq_low == -1) {
 		mes "[Aver De Dosh]";
-		mes "You must wear the costume you want to enhance.";
+		mes "You must wear the costume you want to enchant.";
 		mes "Then, I will be able to help you out.";
 		close;
 	}
@@ -1305,7 +1305,7 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	next;
 	if (select( "Apply enchant.", "End Conversation." ) == 2) {
 		mes "[Lace La Zard]";
-		mes "Yes? You want to look more?";
+		mes "Yes? Do you want to keep looking?";
 		close;
 	}
 	if (checkweight(1119,3) == 0) {
@@ -1407,7 +1407,7 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	.@s = (select(.@menu$) - 1) * 3;
 	if (.@s == .@size) {
 		mes "[Lace La Zard]";
-		mes "Yes? You want to look more?";
+		mes "Yes? Do you want to keep looking?";
 		close;
 	}
 	.@id = atoi(.@data$[.@s]);
@@ -1424,7 +1424,7 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	next;
 	if (select( "Yes.", "No." ) == 2) {
 		mes "[Lace La Zard]";
-		mes "Yes? You want to look more?";
+		mes "Yes? Do you want to keep looking?";
 		close;
 	}
 
