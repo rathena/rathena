@@ -395,6 +395,9 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	int y = bl->y;
 
 	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
+	if (!(dir >= DIR_NORTH && dir < DIR_MAX)) // SC_WINKCHARM mobs always have DIR_CENTER direction, which has -1 value. To avoid dump values in dirx / diry array we need to return 0. [Tydus1]
+		return 0;
+
 	ud->dir = dir;
 
 	int dx = dirx[dir];
