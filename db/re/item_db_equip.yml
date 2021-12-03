@@ -83396,9 +83396,10 @@ Body:
       if (readparam(bVit) >= 70) {
          bonus bMaxHPrate,2;
          bonus bMaxSPrate,2;
-         if (.@r >= 7)
+         if (.@r >= 7) {
             bonus bMaxHPrate,2;
             bonus bMaxSPrate,2;
+         }
       }
       if (readparam(bAgi) >= 70) {
          bonus bAspdRate,2;
@@ -97665,9 +97666,10 @@ Body:
       if (readparam(bVit) >= 90) {
          bonus bMaxHPrate,5;
          bonus bMaxSPrate,5;
-         if (.@r >= 9)
+         if (.@r >= 9) {
             bonus bMaxHPrate,5;
             bonus bMaxSPrate,5;
+         }
       }
       if (readparam(bAgi) >= 90) {
          bonus bAspd,1;
@@ -97999,9 +98001,10 @@ Body:
       if (readparam(bVit) >= 90) {
          bonus bMaxHPrate,5;
          bonus bMaxSPrate,5;
-         if (.@r >= 9)
+         if (.@r >= 9) {
             bonus bMaxHPrate,5;
             bonus bMaxSPrate,5;
+         }
       }
       if (readparam(bAgi) >= 90) {
          bonus bAspd,1;
@@ -138818,8 +138821,8 @@ Body:
       .@r = getrefine();
       bonus2 bSubClass,Class_Normal,5;
       bonus2 bSubClass,Class_Boss,5;
-      bonus2 bAddRace,RC_All,.@r;
-      bonus bDelayrate,.@r;
+      bonus2 bAddRace,RC_All,.@r*2;
+      bonus bDelayrate,-.@r;
       if (.@r>=6) {
          bonus bAspdRate,10;
          bonus bPerfectHitAddRate,25;
@@ -140220,8 +140223,8 @@ Body:
       .@lvll = getskilllv("SR_GENTLETOUCH_CHANGE");
       bonus bAgi,7+(4*.@lvll);
       bonus bFlee,10*.@lvll;
-      bonus bMaxHPrate,.@lvl;
-      bonus bMaxSPrate,.@lvl;
+      bonus bMaxHPrate,.@lvl*2;
+      bonus bMaxSPrate,.@lvl*2;
       bonus2 bAddRace,RC_All,10;
       bonus2 bSkillAtk,"SR_SKYNETBLOW",2*BaseLevel;
       if (getskilllv("SR_KNUCKLEARROW") == 10)

@@ -34478,7 +34478,9 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      itemskill "AL_TELEPORT",1;
+      if (getmapflag(strcharinfo(3), mf_noteleport) == 0) {
+         warp strcharinfo(3),0,0;
+      }
   - Id: 14663
     AegisName: Scroll_Sealed_Dark_Lord
     Name: Scroll Sealed Dark Lord

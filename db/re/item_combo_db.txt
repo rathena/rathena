@@ -2697,23 +2697,23 @@
 480114:19379,{ bonus bLongAtkRate,25; bonus bSPDrainValue,5; }
 480114:29509,{ bonus bWeaponAtkRate,30; bonus bPerfectHitAddRate,25; }
 480114:470048,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bAllStats,10*(.@r/3); }
-490029:29371,{ if (BaseClass == Job_Warlock) { bonus bNoGemStone; } }
-490038:29371,{ if (BaseClass == Job_Sorcerer) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490029:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus bNoGemStone; } }
+490038:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
 490076:29509,{ bonus bDelayrate,-15; bonus bLongAtkRate,25; }
 490076:29436,{ bonus bAspdRate,15; bonus bPerfectHitAddRate,35; }
 490076:29371,{ bonus2 bMagicAtkEle,Ele_Wind,50; bonus2 bMagicAtkEle,Ele_Holy,50; bonus2 bMagicAtkEle,Ele_Neutral,50; bonus bFixedCastrate,-70; }
-490079:29371,{ if (BaseClass == Job_Warlock) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490079:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
 490083:29371,{ autobonus "{ bonus4 bAutoSpellOnSkill,\"LG_RAYOFGENESIS\",\"AB_HIGHNESSHEAL\",3,1000; }",50,3000,BF_MAGIC; /*Unknow Rate*/ }
-490102:29371,{ if (BaseClass == Job_Soul_Reaper) { skill "MG_FIREWALL",10; bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490102:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_SOUL_LINKER) { skill "MG_FIREWALL",10; bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
 490110:29436,{ bonus2 bSkillUseSP,"SR_RAMPAGEBLASTER",130; bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-500; }
-490118:29371,{ if (BaseClass == Job_Arch_Bishop) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490118:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_PRIEST) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
 490119:310655,{ bonus bAllStats,10; bonus bAspdRate,10; }
-490130:29509,{ if (BaseJob == Job_Sura) { bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200; autobonus3 "{ bonus bFlee2,100; }",50,3000,"SR_SKYNETBLOW"; } /*Unknow Rate*/ }
-490141:29371,{ if (BaseClass == Job_Minstrel || BaseClass == Job_Wanderer) { bonus2 bSkillCooldown,"WM_METALICSOUND",-200; } }
+490130:29509,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_MONK) { bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200; autobonus3 "{ bonus bFlee2,100; }",50,3000,"SR_SKYNETBLOW"; } /*Unknow Rate*/ }
+490141:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_BARD || eaclass()&EAJL_THIRD && BaseJob == JOB_DANCER) { bonus2 bSkillCooldown,"WM_METALICSOUND",-200; } }
 490142:310655,{ bonus bAllStats,10; bonus bDelayrate,-30; }
 490143:310655,{ bonus bAllStats,10; bonus bDelayrate,-30; }
 490145:29509,{ bonus bNoSizeFix; bonus2 bSkillCooldown,"RA_AIMEDBOLT",-250; }
-490146:29436,{ if (BaseJob == Job_Genetic) { bonus bNoWalkDelay; autobonus3 "{ bonus bPerfectHitAddRate,100; }",50,3000,"GN_CART_TORNADO"; }/*Unknow Rate*/ }
+490146:29436,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_ALCHEMIST) { bonus bNoWalkDelay; autobonus3 "{ bonus bPerfectHitAddRate,100; }",50,3000,"GN_CART_TORNADO"; }/*Unknow Rate*/ }
 28505:4920,{ bonus bVariableCastrate,-5; }
 28505:4921,{ bonus bVariableCastrate,-5; }
 28505:4922,{ bonus bVariableCastrate,-5; }
