@@ -99051,11 +99051,11 @@ Body:
          bonus bNoKnockback;
       }
       if (.@r>=8) {
-         skill "MG_ENERGYCOAT",1;
          if (getskilllv("MG_ENERGYCOAT") == 1) {
             bonus bDef,300;
             bonus bMdef,15;
          }
+         skill "MG_ENERGYCOAT",1;
       }
     UnEquipScript: |
       sc_end SC_ENERGYCOAT;
