@@ -1,0 +1,42 @@
+
+LIBBCRYPT_OBJ =  $(shell find * -type f -name "*.c" | sed -e "s/\.c/\.o/g")
+LIBBCRYPT_DIR_OBJ = $(LIBBCRYPT_OBJ:%=obj/%)
+LIBBCRYPT_H =  $(shell find * -type f -name "*.h")
+LIBBCRYPT_AR = obj/libbcrypt.a
+
+CXXFLAG =-std=c++11
+INC=-Iinclude/bcrypt
+
+@SET_MAKE@
+
+#####################################################################
+.PHONY : all clean help libbcrypt
+
+all: libbcrypt
+
+clean:
+	@echo "	CLEAN	libbcrypt"
+	@rm -rf obj *.o
+
+help:
+	@echo "possible targets are 'all' 'clean' 'help'"
+	@echo "'libbcrypt' - build $(LIBBCRYPT_AR)
+	@echo "'all'       - builds $(LIBBCRYPT_DIR_OBJ)"
+	@echo "'clean'     - deletes $(LIBBCRYPT_DIR_OBJ)"
+	@echo "'help'      - outputs this message"
+
+#####################################################################
+
+obj:
+	@echo "	MKDIR	obj"
+	@mkdir -p obj/src
+	
+obj/%.o: %.c  $(LIBBCRYPT_H)
+	@echo "	CXX	$<"
+	@@CXX@ $(CXXFLAG) @CFLAGS_AR@ @CPPFLAGS@ -g $(INC) -c $(OUTPUT_OPTION) $<
+
+libbcrypt: obj $(LIBBCRYPT_DIR_OBJ) $(LIBBCRYPT_AR)
+
+$(LIBBCRYPT_AR): $(LIBBCRYPT_DIR_OBJ)
+	@echo "	AR	$@"
+	@@AR@ rcs obj/libbcrypt.a $(LIBBCRYPT_DIR_OBJ)
