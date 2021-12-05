@@ -18908,7 +18908,7 @@ BUILDIN_FUNC(setunitdata)
 					ShowWarning("buildin_setunitdata: Error in finding target for BL_ELEM!\n");
 					return SCRIPT_CMD_FAILURE;
 				}
-				elemental_change_mode(ed, static_cast<e_mode>(EL_MODE_AGGRESSIVE));
+				elemental_change_mode(ed, EL_MODE_AGGRESSIVE);
 				unit_attack(&ed->bl, target->id, 1);
 				break;
 			}

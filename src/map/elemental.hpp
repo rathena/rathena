@@ -96,7 +96,7 @@ int elemental_data_received(s_elemental *ele, bool flag);
 int elemental_save(s_elemental_data *ed);
 
 int elemental_change_mode_ack(s_elemental_data *ed, e_elemental_skillmode skill_mode);
-int elemental_change_mode(s_elemental_data *ed, e_mode mode);
+int elemental_change_mode(s_elemental_data *ed, int mode);
 
 void elemental_heal(s_elemental_data *ed, int hp, int sp);
 int elemental_dead(s_elemental_data *ed);
