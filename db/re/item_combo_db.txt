@@ -2628,7 +2628,7 @@
 400048:4803,{ bonus bDelayrate,-10; bonus bHealPower,20; }
 400048:4805,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
 400048:4850,{ bonus bVariableCastrate,-10; bonus bHealPower,5; }
-//490098:29371,{ if ((eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus2 bSkillUseSP,"WL_CRIMSONROCK",50; bonus2 bSkillCooldown,"WL_CRIMSONROCK",-2000; } }
+490098:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus2 bSkillUseSP,"WL_CRIMSONROCK",50; bonus2 bSkillCooldown,"WL_CRIMSONROCK",-2000; } }
 300192:300193,{ bonus bDelayrate,-10; bonus bPAtk,3; bonus bSmatk,3; }
 310658:29154,{ bonus bFixedCast,-300; }
 310659:29358,{ bonus bFixedCast,-500; }
@@ -2684,3 +2684,51 @@
 311012:29614,{ bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15; }
 311013:29435,{ bonus2 bSkillAtk,"SO_POISON_BUSTER",15; }
 311013:29614,{ bonus2 bSkillAtk,"SO_DIAMONDDUST",15; }
+20991:19272,{ bonus bMaxHPrate,50; bonus bSpeedAddRate,25; }
+20991:27087,{ bonus bInt,40; bonus bIntravision; if (BaseJob == Job_Warlock) { bonus2 bSkillAtk,"WZ_SIGHTRASHER",6*BaseLevel; bonus4 bAutoSpellOnSkill,"WZ_SIGHTRASHER","MG_SIGHT",1,1000; } /*Unknow Rate*/ }
+310012:310655,{ autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }"; /*Unknow Rate*/ }
+310012:490076,{ bonus bAgi,40; bonus bNoSizeFix; }
+310655:29371,{ autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000 }"; /*Unknow Rate*/ }
+310655:29509,{ autobonus "{ bonus bFlee2,100; bonus2 bAddClass,Class_Boss,100; }",50,10000,BF_WEAPON; /*Unknow Rate*/ }
+450165:19379,{ bonus bAllStats,15; }
+450165:470048,{ bonus bNoSizeFix; }
+450165:480114,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus bMaxHPrate,20*(.@r/3); bonus bLongAtkRate,5*(.@r/3); }
+470048:19379,{ bonus bLongAtkRate,25; }
+480114:19379,{ bonus bLongAtkRate,25; bonus bSPDrainValue,5; }
+480114:29509,{ bonus bWeaponAtkRate,30; bonus bPerfectHitAddRate,25; }
+480114:470048,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bAllStats,10*(.@r/3); }
+490029:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus bNoGemStone; } }
+490038:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490076:29509,{ bonus bDelayrate,-15; bonus bLongAtkRate,25; }
+490076:29436,{ bonus bAspdRate,15; bonus bPerfectHitAddRate,35; }
+490076:29371,{ bonus2 bMagicAtkEle,Ele_Wind,50; bonus2 bMagicAtkEle,Ele_Holy,50; bonus2 bMagicAtkEle,Ele_Neutral,50; bonus bFixedCastrate,-70; }
+490079:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490083:29371,{ autobonus "{ bonus4 bAutoSpellOnSkill,\"LG_RAYOFGENESIS\",\"AB_HIGHNESSHEAL\",3,1000; }",50,3000,BF_MAGIC; /*Unknow Rate*/ }
+490102:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_SOUL_LINKER) { skill "MG_FIREWALL",10; bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490110:29436,{ bonus2 bSkillUseSP,"SR_RAMPAGEBLASTER",130; bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-500; }
+490118:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_PRIEST) { bonus2 bIgnoreMdefRaceRate,RC_All,100; } }
+490119:310655,{ bonus bAllStats,10; bonus bAspdRate,10; }
+490130:29509,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_MONK) { bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200; autobonus3 "{ bonus bFlee2,100; }",50,3000,"SR_SKYNETBLOW"; } /*Unknow Rate*/ }
+490141:29371,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_BARD || eaclass()&EAJL_THIRD && BaseJob == JOB_DANCER) { bonus2 bSkillCooldown,"WM_METALICSOUND",-200; } }
+490142:310655,{ bonus bAllStats,10; bonus bDelayrate,-30; }
+490143:310655,{ bonus bAllStats,10; bonus bDelayrate,-30; }
+490145:29509,{ bonus bNoSizeFix; bonus2 bSkillCooldown,"RA_AIMEDBOLT",-250; }
+490146:29436,{ if (eaclass()&EAJL_THIRD && BaseJob == JOB_ALCHEMIST) { bonus bNoWalkDelay; autobonus3 "{ bonus bPerfectHitAddRate,100; }",50,3000,"GN_CART_TORNADO"; }/*Unknow Rate*/ }
+28505:4920,{ bonus bVariableCastrate,-5; }
+28505:4921,{ bonus bVariableCastrate,-5; }
+28505:4922,{ bonus bVariableCastrate,-5; }
+28505:4908,{ bonus2 bAddRace,RC_All,5; }
+28505:4909,{ bonus2 bAddRace,RC_All,5; }
+28505:4910,{ bonus2 bAddRace,RC_All,5; }
+28505:4911,{ bonus bMatkRate,5; }
+28505:4912,{ bonus bMatkRate,5; }
+28505:4913,{ bonus bMatkRate,5; }
+28505:4923,{ bonus bCritAtkRate,5; }
+28505:4924,{ bonus bCritAtkRate,5; }
+28505:4925,{ bonus bCritAtkRate,5; }
+28505:4914,{ bonus bAspdRate,5; }
+28505:4915,{ bonus bAspdRate,5; }
+28505:4916,{ bonus bAspdRate,5; }
+28505:4917,{ bonus bMaxHPrate,5; }
+28505:4918,{ bonus bMaxHPrate,5; }
+28505:4919,{ bonus bMaxHPrate,5; }

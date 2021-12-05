@@ -2268,7 +2268,7 @@ Body:
       /*upgradeui 9551;*/
   - Id: 9553
     AegisName: C_CatPaw_7Day_Box_
-    Name: Endless Cat Hand Ticket 7day Box
+    Name: Infinite Cat Hand Ticket 7 Days Box
     Type: Usable
     Weight: 10
     Script: |
@@ -34471,6 +34471,16 @@ Body:
       Container: true
     Script: |
       getgroupitem(IG_Violet_Scroll);
+  - Id: 14645
+    AegisName: Wing_Of_Baalzebub
+    Name: Beelzebub Wing
+    Type: Delayconsume
+    Flags:
+      BuyingStore: true
+    Script: |
+      if (getmapflag(strcharinfo(3), mf_noteleport) == 0) {
+         warp strcharinfo(3),0,0;
+      }
   - Id: 14663
     AegisName: Scroll_Sealed_Dark_Lord
     Name: Scroll Sealed Dark Lord
@@ -42527,6 +42537,24 @@ Body:
       NoAuction: true
     Script: |
       /*TODO*/
+  - Id: 17289
+    AegisName: Wing_Of_Baalzebub_Box
+    Name: Beelzebub Wing Box
+    Type: Usable
+    Weight: 10
+    Flags:
+      UniqueId: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      rentitem 14645,2592000;
   - Id: 17292
     AegisName: Shadow_Box
     Name: Shadow Box
@@ -46764,7 +46792,7 @@ Body:
       callfunc "F_CashStore";
   - Id: 22819
     AegisName: G_Almighty
-    Name: Citizen Oda's Miracle Elixr
+    Name: True Almighty
     Type: Usable
     Weight: 10
     Trade:
@@ -47584,7 +47612,7 @@ Body:
       sc_start SC_DORAM_BUF_02, 180000, 0;
   - Id: 22998
     AegisName: C_CatPaw_Ticket
-    Name: Endless Cat Hand Ticket
+    Name: Infinite Cat Hand Ticket
     Type: Delayconsume
     Trade:
       Override: 100
@@ -48179,6 +48207,24 @@ Body:
     Script: |
       getitem(2959,1);
       getitem(18756,1);
+  - Id: 23254
+    AegisName: Valkyrie_Bundle_A
+    Name: Valkyrie Bundle A
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 1420,1;
+      getitem 2115,1;
   - Id: 23255
     AegisName: Kardui_Bundle_A
     Name: Kardui Bundle A
@@ -48205,6 +48251,26 @@ Body:
     Buy: 10
     Script: |
       pet 1041;
+  - Id: 23265
+    AegisName: Sprint_Bundle_A
+    Name: Sprint Bundle A
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2387,1;
+      getitem 2440,1;
+      getitem 2744,1;
+      getitem 2935,1;
   - Id: 23266
     AegisName: Etran_Bundle_A
     Name: Etran Bundle A
@@ -48343,6 +48409,25 @@ Body:
     Script: |
         getitem(1646,1);
         getitem(22104,1);
+  - Id: 23295
+    AegisName: Lian_Bundle_B
+    Name: Lian Bundle A
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2195,1;
+      getitem 20753,1;
+      getitem 22069,1;
   - Id: 23299
     AegisName: Enchant_Stone_Box12
     Name: Costume Enchant Stone Box 12
