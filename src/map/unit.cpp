@@ -139,8 +139,14 @@ int unit_walktoxy_sub(struct block_list *bl)
 		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
-	if( i > 0)
+	if( i > 0 ){
+		if( ud->walktimer != INVALID_TIMER ){
+			delete_timer( ud->walktimer, unit_walktoxy_timer );
+			ud->walktimer = INVALID_TIMER;
+		}
 		ud->walktimer = add_timer(gettick()+i,unit_walktoxy_timer,bl->id,i);
+	}
+
 	return 1;
 }
 
@@ -388,13 +394,12 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
-	if (ud->walkpath.path[ud->walkpath.path_pos] < DIR_NORTH || ud->walkpath.path[ud->walkpath.path_pos] >= DIR_MAX) // SC_WINKCHARM mobs always have DIR_CENTER direction, which has -1 value. To avoid dump values in dirx / diry array we need to return 0. [Tydus1]
-		return 0;
-
-	int x = bl->x;
-	int y = bl->y;
-
 	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
+
+	if( dir <= DIR_CENTER || dir >= DIR_MAX ){
+		return 0;
+	}
+
 	ud->dir = dir;
 
 	int dx = dirx[dir];
@@ -419,6 +424,9 @@ static TIMER_FUNC(unit_walktoxy_timer)
 			break;
 		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
 	}
+
+	int x = bl->x;
+	int y = bl->y;
 
 	//Monsters will walk into an icewall from the west and south if they already started walking
 	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
