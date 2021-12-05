@@ -36782,9 +36782,29 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25505
+    AegisName: Jokers_Wild
+    Name: Jokers Wild    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 25506
+    AegisName: Cute_Broom
+    Name: Cute broom    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 25507
+    AegisName: Showy_Coral_Reef
+    Name: Colorful coral    # !todo check english name
+    Type: Etc
+    Weight: 10
   - Id: 25508
     AegisName: Token_of_OrcGeneral
     Name: Orc Warlord Token
+    Type: Etc
+    Weight: 10
+  - Id: 25509
+    AegisName: Shining_Round_Shell
+    Name: Glowing Roundshell    # !todo check english name
     Type: Etc
     Weight: 10
   - Id: 25511
@@ -42885,6 +42905,13 @@ Body:
     Script: |
       skill "TF_DOUBLE",3;
       bonus bDoubleRate,15;
+  - Id: 29371
+    AegisName: Release_Of_Magic
+    Name: Release of Truth
+    Type: Card
+    Script: |
+      autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000 }";
+      /*Unknow Rate*/
   - Id: 29380
     AegisName: ATK5
     Name: ATK +5
@@ -42977,6 +43004,13 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
+  - Id: 29436
+    AegisName: Dynast
+    Name: Supreme King
+    Type: Card
+    Script: |
+      autobonus "{ bonus bStr,200; }",50,5000,BF_WEAPON,"{ active_transform 2221,5000 }";
+      /*Unknow Rate*/
   - Id: 29438
     AegisName: Z-Knockback
     Name: Z-Knockback
@@ -43181,6 +43215,13 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+  - Id: 29509
+    AegisName: Hero
+    Name: The Hero
+    Type: Card
+    Script: |
+      autobonus "{ bonus bFlee2,100; bonus2 bAddClass,Class_Boss,100; }",50,10000,BF_WEAPON;
+      /*Unknow Rate*/
   - Id: 29513
     AegisName: HighpriestStone_Top_
     Name: High Priest Stone (Upper)
@@ -47115,6 +47156,13 @@ Body:
     Type: Card
     Script: |
       bonus2 bSkillAtk,"AB_JUDEX",15;
+  - Id: 310012
+    AegisName: DesireOfDeath
+    Name: Doom Desire
+    Type: Card
+    Script: |
+      autobonus "{ bonus bFlee,150; bonus bDelayrate,-100; }",50,10000,BF_WEAPON,"{ active_transform 1635,10000 }";
+      /*Unknow Rate*/
   - Id: 310076
     AegisName: Cassock_Str
     Name: STR Blessing
@@ -51670,6 +51718,13 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bLongAtkRate,7;
       bonus bShortAtkRate,7;
+  - Id: 310655
+    AegisName: aegis_310655
+    Name: The Creation
+    Type: Card
+    Script: |
+      bonus2 bAddSize,Size_All,15;
+      bonus2 bMagicAddSize,Size_All,15;
   - Id: 310654
     AegisName: aegis_310654
     Name: ASPD+1(Dual)
@@ -56057,6 +56112,141 @@ Body:
     AegisName: Sanctuary_Sudarium
     Name: Sabbatical Handkerchief
     Type: Etc
+  - Id: 1000504
+    AegisName: aegis_1000504
+    Name: Dry Sand
+    Type: Etc
+  - Id: 1000505
+    AegisName: aegis_1000505
+    Name: Opaque Liquid
+    Type: Etc
+  - Id: 1000506
+    AegisName: Shell_Of_Cognition
+    Name: Shell of Awareness
+    Type: Etc
+  - Id: 1000510
+    AegisName: IL_Twins_Feeler
+    Name: Ant Antennae
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000511
+    AegisName: IL_Twins_Leg
+    Name: Ant Legs
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000512
+    AegisName: IL_Twins_Jaw
+    Name: Ant's Jaw
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000513
+    AegisName: IL_Twins_Acid
+    Name: Dangerous Acid
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000514
+    AegisName: IL_Twins_Hat
+    Name: Gaia's Worn Hat
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000515
+    AegisName: IL_Twins_Shovel
+    Name: Small Shovel
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000516
+    AegisName: IL_Twins_Fang
+    Name: Bat Jawbone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000517
+    AegisName: IL_Twins_Fur
+    Name: Bat Fur
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000518
+    AegisName: IL_Twins_Crown
+    Name: Maya's Crown
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1000520
+    AegisName: ASPDStone_Robe_D
+    Name: ASPD Stone(Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000521
+    AegisName: MinorCastStone_Robe_D
+    Name: Minor Casting Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000522
+    AegisName: CastStone_Robe_D
+    Name: Variable Casting Stone(Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000523
+    AegisName: Range_Stone_Robe_D
+    Name: Range Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000524
+    AegisName: Melee_Stone_Robe_D
+    Name: Melee Stone(Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000525
+    AegisName: SPdrainStone_Robe_D
+    Name: SP Absorption Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000526
+    AegisName: HPdrainStone_Robe_D
+    Name: HP Absorbtion Stone(Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000527
+    AegisName: Magic_Stone_Robe_D
+    Name: Magic Power Stone(Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000528
+    AegisName: Magic_Stone_Top
+    Name: Magic Power Stone(Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000529
+    AegisName: Magic_Stone_Middle
+    Name: Magic Power Stone(Mid)
+    Type: Etc
+    Weight: 100
+  - Id: 1000530
+    AegisName: Magic_Stone_Bottom
+    Name: Magic Power Stone(Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000552
+    AegisName: Evil_Water
+    Name: Evil Water
+    Type: Etc
+    Weight: 10
   - Id: 1000563
     AegisName: Soa_Charm
     Name: Soa Charm
@@ -56092,6 +56282,238 @@ Body:
     Name: SS Charm L
     Type: Etc
     Weight: 1
+  - Id: 1000570
+    AegisName: Noodle_Fes_Ticket
+    Name: Noodle Festival Development Fund Certificate
+    Type: Etc
+  - Id: 1000571
+    AegisName: E_Star_Button
+    Name: Is it a star button?!
+    Type: Etc
+  - Id: 1000609
+    AegisName: Mad_Bunny_Ticket
+    Name: Mad Bunny-LT Enchantment Ticket
+    Type: Etc
+  - Id: 1000610
+    AegisName: RuneknightStone_Top3
+    Name: Rune Knight Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000611
+    AegisName: RuneknightStone_Middle3
+    Name: Rune Knight Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000612
+    AegisName: RuneknightStone_Bottom3
+    Name: Rune Knight Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000613
+    AegisName: WarlockStone_Top3
+    Name: Warlock Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000614
+    AegisName: WarlockStone_Middle3
+    Name: Warlock Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000615
+    AegisName: WarlockStone_Bottom3
+    Name: Warlock Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000616
+    AegisName: RoyalguardStone_Top3
+    Name: Royal Guard (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000617
+    AegisName: RoyalguardStone_Middle3
+    Name: Royal Guard Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000618
+    AegisName: RoyalguardStone_Bottom3
+    Name: Royal Guard Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000635
+    AegisName: 19th_Anniv_Invitation
+    Name: 19th Anniversary Thank You Letter
+    Type: Etc
+  - Id: 1000636
+    AegisName: Plain_Barmund_Rune
+    Name: Meadow Rune Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+  - Id: 1000637
+    AegisName: Flame_Barmund_Rune
+    Name: Fire Rune Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+  - Id: 1000638
+    AegisName: Ice_Barmund_Rune
+    Name: Ice Rune Fragments    # !todo check english name
+    Type: Etc
+    Weight: 1
+  - Id: 1000639
+    AegisName: Death_Barmund_Rune
+    Name: Death Rune Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+  - Id: 1000640
+    AegisName: Plain_Barmund_Rune2
+    Name: Meadow Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1000641
+    AegisName: Flame_Barmund_Rune2
+    Name: Fire Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1000642
+    AegisName: Ice_Barmund_Rune2
+    Name: Ice Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1000643
+    AegisName: Death_Barmund_Rune2
+    Name: Death Rune    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1000645
+    AegisName: Hero_Enchant_Ticket
+    Name: Hero's Enchantment Ticket
+    Type: Etc
+  - Id: 1000657
+    AegisName: Evt_Soul_Skein
+    Name: Soul's Thread    # !todo check english name
+    Type: Etc
+  - Id: 1000666
+    AegisName: WanderMinsStone_Top3
+    Name: Wander Mins Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000667
+    AegisName: WanderMinsStone_Middle3
+    Name: Wander Mins Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000668
+    AegisName: WanderMinsStone_Bottom3
+    Name: Wander Mins Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000669
+    AegisName: GeneticStone_Top3
+    Name: Genetic Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000670
+    AegisName: GeneticStone_Middle3
+    Name: Genetic Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000671
+    AegisName: GeneticStone_Bottom3
+    Name: Genetic Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000672
+    AegisName: SorcererStone_Top3
+    Name: Sorcerer Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000673
+    AegisName: SorcererStone_Middle3
+    Name: Sorcerer Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000674
+    AegisName: SorcererStone_Bottom3
+    Name: Sorcerer Stone (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000675
+    AegisName: ReloadStone_Robe_D
+    Name: Reload Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000676
+    AegisName: CrtStone_Robe_D
+    Name: Creative Stone (Dual)
+    Type: Etc
+    Weight: 100
+  - Id: 1000680
+    AegisName: ClockTower_Lead
+    Name: Lead    # !todo check english name
+    Type: Etc
+  - Id: 1000681
+    AegisName: ClockTower_Gear
+    Name: Cog wheel    # !todo check english name
+    Type: Etc
+  - Id: 1000682
+    AegisName: aegis_1000682
+    Name: Tuner    # !todo check english name
+    Type: Etc
+  - Id: 1000684
+    AegisName: aegis_1000684
+    Name: Second-level job change guide map    # !todo check english name
+    Type: Etc
+  - Id: 1000685
+    AegisName: Conse_F_Humma
+    Name: Fides Fuma Shuriken Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1000686
+    AegisName: Conse_F_C_Humma
+    Name: Fidesz cross wind shuriken blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1000687
+    AegisName: Conse_F_Revolver
+    Name: Fideth Revolver Drawing    # !todo check english name
+    Type: Etc
+  - Id: 1000688
+    AegisName: Conse_F_Shotgun
+    Name: Fideth Shotgun Drawings    # !todo check english name
+    Type: Etc
+  - Id: 1000689
+    AegisName: Conse_F_Rifle
+    Name: Fideth Rifle Drawing    # !todo check english name
+    Type: Etc
+  - Id: 1000690
+    AegisName: Conse_F_Gatling
+    Name: Fidesz Gatlinggun Drawings    # !todo check english name
+    Type: Etc
+  - Id: 1000691
+    AegisName: Conse_F_Launcher
+    Name: Fidesgrenade Launcher Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1000692
+    AegisName: Conse_F_Moon_B
+    Name: Fides Moonbook Drawing    # !todo check english name
+    Type: Etc
+  - Id: 1000693
+    AegisName: Conse_F_Star_B
+    Name: Fideth Stardust Book Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1000694
+    AegisName: Conse_F_S_Stick
+    Name: Fideth Soulstick Drawing    # !todo check english name
+    Type: Etc
+  - Id: 1000695
+    AegisName: Conse_F_D_Wand
+    Name: Fideth Dark Wand Blueprint    # !todo check english name
+    Type: Etc
+  - Id: 1000696
+    AegisName: Conse_F_F_Wand
+    Name: Fideth Foxtail Wand Drawing    # !todo check english name
+    Type: Etc
+  - Id: 1000697
+    AegisName: Conse_F_F_model
+    Name: Fideth Foxtail Model Drawing    # !todo check english name
+    Type: Etc
   - Id: 1220001
     AegisName: Kunai
     Name: Kunai
