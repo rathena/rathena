@@ -444,9 +444,10 @@ void mercenary_kills(s_mercenary_data *md){
 * @return Skill Level or 0 if Mercenary doesn't have the skill
 **/
 uint16 mercenary_checkskill(s_mercenary_data *md, uint16 skill_id) {
-	if (!md || !md->db || md->db->skill.count(skill_id) == 0)
+	if (!md || !md->db)
 		return 0;
-	return *util::umap_find(md->db->skill, skill_id);
+	auto skill_level = util::umap_find(md->db->skill, skill_id);
+	return skill_level ? *skill_level : 0;
 }
 
 const std::string MercenaryDatabase::getDefaultLocation() {
