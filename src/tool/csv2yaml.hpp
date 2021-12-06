@@ -128,6 +128,13 @@ struct s_elemental_skill_csv {
 
 std::unordered_map<uint16, std::vector<s_elemental_skill_csv>> elemental_skill_tree;
 
+struct s_mercenary_skill_csv {
+	std::string skill_name;
+	uint16 max_lv;
+};
+
+std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
+
 static std::map<std::string, int> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
 	{ "SuperNovice", JOB_NOVICE },
@@ -486,5 +493,7 @@ static bool pc_readdb_job_basehpsp(char *fields[], int columns, int current);
 static bool pc_readdb_job1(char *fields[], int columns, int current);
 static bool read_elemental_skilldb(char* str[], int columns, int current);
 static bool read_elementaldb(char* str[], int columns, int current);
+static bool mercenary_read_skilldb(char* str[], int columns, int current);
+static bool mercenary_readdb(char* str[], int columns, int current);
 
 #endif /* CSV2YAML_HPP */

@@ -1087,7 +1087,7 @@ struct map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
-struct mercenary_data* map_id2mc(int id);
+struct s_mercenary_data* map_id2mc(int id);
 struct pet_data* map_id2pd(int id);
 struct s_elemental_data* map_id2ed(int id);
 struct chat_data* map_id2cd(int id);
@@ -1195,7 +1195,7 @@ typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
-typedef struct mercenary_data   TBL_MER;
+typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
