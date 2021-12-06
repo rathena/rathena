@@ -446,7 +446,7 @@ void mercenary_kills(s_mercenary_data *md){
 uint16 mercenary_checkskill(s_mercenary_data *md, uint16 skill_id) {
 	if (!md || !md->db || md->db->skill.count(skill_id) == 0)
 		return 0;
-	return md->db->skill[skill_id];
+	return *util::umap_find(md->db->skill, skill_id);
 }
 
 const std::string MercenaryDatabase::getDefaultLocation() {
@@ -905,7 +905,7 @@ uint64 MercenaryDatabase::parseBodyNode(const YAML::Node &node) {
 void do_init_mercenary(void){
 	mercenary_db.load();
 
-	//add_timer_func_list(mercenary_contract, "mercenary_contract");
+	add_timer_func_list(merc_contract_end, "merc_contract_end");
 }
 
 /**
