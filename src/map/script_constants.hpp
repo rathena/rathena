@@ -4180,6 +4180,10 @@
 	export_constant(AMMO_THROWWEAPON);
 	export_constant(MAX_AMMO_TYPE);
 
+	/* card subtypes */
+	export_constant(CARD_NORMAL);
+	export_constant(CARD_ENCHANT);
+
 	/* monsterinfo types */
 	export_constant(MOB_NAME);
 	export_constant(MOB_LV);
