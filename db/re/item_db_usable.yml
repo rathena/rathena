@@ -35476,6 +35476,25 @@ Body:
       NoAuction: true
     Script: |
       sc_start SC_2011RWC_SCROLL,1800000,10;
+  - Id: 14887
+    AegisName: EF_UltimateCook
+    Name: "[Not For Sale] Ultimate Cook"
+    Type: Usable
+    Weight: 10
+    NoUse:
+      Override: 100
+      Sitting: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_2011RWC_SCROLL,1800000,10;
   - Id: 16131
     AegisName: Lady_Tanee_Doll_Box
     Name: Lady Tanee Doll Box
@@ -48063,6 +48082,66 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Agust_Lucky_Scroll);
+  - Id: 23221
+    AegisName: EF_DEX_Biscuit_Stick
+    Name: "[Not For Sale] DEX Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+    Script: |
+      sc_start SC_FOOD_DEX_CASH,1800000,15;
+      sc_start SC_HITFOOD,600000,rand(11,33);
+  - Id: 23222
+    AegisName: EF_LUK_Biscuit_Stick
+    Name: "[Not For Sale] LUK Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+    Script: |
+      sc_start SC_FOOD_LUK_CASH,1800000,15;
+      sc_start SC_CRIFOOD,600000,rand(11,33);
+  - Id: 23223
+    AegisName: EF_STR_Biscuit_Stick
+    Name: "[Not For Sale] STR Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+    Script: |
+      sc_start SC_FOOD_STR_CASH,1800000,15;
+      sc_start SC_ATKPOTION,600000,rand(11,111);
+  - Id: 23224
+    AegisName: EF_VIT_Biscuit_Stick
+    Name: "[Not For Sale] VIT Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+    Script: |
+      sc_start SC_FOOD_VIT_CASH,1800000,15;
+      bonus_script "{ bonus bHPRecovRate,rand(11,33); }",1800,1;
+  - Id: 23225
+    AegisName: EF_AGI_Biscuit_Stick
+    Name: "[Not For Sale] AGI Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+    Script: |
+      sc_start SC_FOOD_AGI_CASH,1800000,15;
+      sc_start SC_FLEEFOOD,600000,rand(11,33);
+  - Id: 23226
+    AegisName: EF_INT_Biscuit_Stick
+    Name: "[Not For Sale] INT Biscuit Stick"
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+    Script: |
+      sc_start SC_FOOD_INT_CASH,1800000,15;
+      sc_start SC_MATKPOTION,600000,rand(11,111);
   - Id: 23228
     AegisName: HazyMooncake
     Name: Hazy Mooncake
@@ -49275,6 +49354,23 @@ Body:
     Weight: 10
     Script: |
       /*synthesisui 23894;*/
+  - Id: 23899
+    AegisName: Comp_Almighty
+    Name: "[Not For Sale] Almighty"
+    Type: Usable
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",3600;
+      sc_start SC_SPEEDUP0,600000,25;
   - Id: 23926
     AegisName: Shadow_9_Refine_Hammer
     Name: Shadow 9 Refine Hammer
