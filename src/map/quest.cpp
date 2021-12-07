@@ -729,7 +729,7 @@ void quest_update_objective(struct map_session_data *sd, struct mob_data* md)
 				else if (qi->objectives[j]->mapid >= 0) {
 					struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-					if (mapdata->instance_id && map_getmapdata(mapdata->instance_src_map)->m == qi->objectives[j]->mapid)
+					if (mapdata->instance_id && mapdata->instance_src_map == qi->objectives[j]->mapid)
 						objective_check++;
 				}
 			}
