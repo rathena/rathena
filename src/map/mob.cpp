@@ -2351,7 +2351,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 		case BL_MER:
 		{
-			struct mercenary_data *mer = (TBL_MER*)src;
+			s_mercenary_data *mer = (TBL_MER*)src;
 			if( mer->master )
 				char_id = mer->master->status.char_id;
 			if( damage )

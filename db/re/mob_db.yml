@@ -40946,32 +40946,32 @@ Body:
     Drops:
       - Item: Gold_Tulip
         Rate: 10000
-#  - Id: 2034
-#    AegisName: M_DESERT_WOLF_B
-#    Name: Baby Desert Wolf
-#    Level: 9
-#    Hp: 164
-#    Sp: 15
-#    Attack: 500
-#    Attack2: 600
-#    Agi: 9
-#    Vit: 9
-#    Int: 5
-#    Dex: 40
-#    Luk: 40
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Small
-#    Race: Brute
-#    Element: Fire
-#    ElementLevel: 1
-#    WalkSpeed: 100
-#    AttackDelay: 1600
-#    AttackMotion: 900
-#    DamageMotion: 240
-#    Modes:
-#      NoRandomWalk: true
+  - Id: 2034
+    AegisName: M_DESERT_WOLF_B
+    Name: Baby Desert Wolf
+    Level: 9
+    Hp: 164
+    Sp: 15
+    Attack: 500
+    Attack2: 600
+    Agi: 9
+    Vit: 9
+    Int: 5
+    Dex: 40
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Brute
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 1600
+    AttackMotion: 900
+    DamageMotion: 240
+    Modes:
+      NoRandomWalk: true
   - Id: 2035
     AegisName: NIHILITY_ZEM
     Name: Nihility Zem
@@ -41026,60 +41026,60 @@ Body:
       - Item: Broken_Horn_Pipe
         Rate: 2500
         StealProtected: true
-#  - Id: 2037
-#    AegisName: VALKYRIE_A
-#    Name: Valkyrie Randgris
-#    Level: 90
-#    Hp: 5500
-#    Sp: 15
-#    Attack: 10
-#    Attack2: 160
-#    Defense: 16
-#    MagicDefense: 20
-#    Agi: 20
-#    Vit: 40
-#    Dex: 20
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Angel
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 576
-#    AttackMotion: 576
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2038
-#    AegisName: VALKYRIE_B
-#    Name: Valkyrie Randgris
-#    Level: 90
-#    Hp: 10500
-#    Sp: 15
-#    Attack: 300
-#    Attack2: 450
-#    Defense: 16
-#    MagicDefense: 40
-#    Agi: 20
-#    Vit: 80
-#    Dex: 80
-#    Luk: 20
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Angel
-#    Element: Holy
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 576
-#    AttackMotion: 576
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
+  - Id: 2037
+    AegisName: VALKYRIE_A
+    Name: Valkyrie Randgris
+    Level: 90
+    Hp: 5500
+    Sp: 15
+    Attack: 10
+    Attack2: 160
+    Defense: 16
+    MagicDefense: 20
+    Agi: 20
+    Vit: 40
+    Dex: 20
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    Modes:
+      NoRandomWalk: true
+  - Id: 2038
+    AegisName: VALKYRIE_B
+    Name: Valkyrie Randgris
+    Level: 90
+    Hp: 10500
+    Sp: 15
+    Attack: 300
+    Attack2: 450
+    Defense: 16
+    MagicDefense: 40
+    Agi: 20
+    Vit: 80
+    Dex: 80
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+    Modes:
+      NoRandomWalk: true
   - Id: 2039
     AegisName: EXECUTIONER_R
     Name: Executioner
@@ -41661,91 +41661,91 @@ Body:
     AttackMotion: 500
     DamageMotion: 1000
     Ai: 09
-#  - Id: 2058
-#    AegisName: M_MIMIC
-#    Name: Mimic
-#    Level: 51
-#    Hp: 6120
-#    Sp: 182
-#    Attack: 800
-#    Attack2: 950
-#    Defense: 10
-#    MagicDefense: 40
-#    Str: 44
-#    Agi: 121
-#    Int: 60
-#    Dex: 75
-#    Luk: 110
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Formless
-#    Element: Neutral
-#    ElementLevel: 3
-#    WalkSpeed: 100
-#    AttackDelay: 972
-#    AttackMotion: 500
-#    DamageMotion: 288
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2059
-#    AegisName: M_DISGUISE
-#    Name: Disguise
-#    Level: 55
-#    Hp: 7543
-#    Sp: 180
-#    Attack: 526
-#    Attack2: 693
-#    Defense: 18
-#    MagicDefense: 29
-#    Agi: 72
-#    Vit: 45
-#    Int: 35
-#    Dex: 48
-#    Luk: 65
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demon
-#    Element: Earth
-#    ElementLevel: 4
-#    WalkSpeed: 147
-#    AttackDelay: 516
-#    AttackMotion: 768
-#    DamageMotion: 384
-#    Modes:
-#      NoRandomWalk: true
-#  - Id: 2060
-#    AegisName: M_ALICE
-#    Name: Alice
-#    Level: 62
-#    Hp: 10000
-#    Sp: 221
-#    Attack: 700
-#    Attack2: 850
-#    Defense: 5
-#    MagicDefense: 5
-#    Str: 64
-#    Agi: 64
-#    Vit: 42
-#    Int: 85
-#    Dex: 100
-#    Luk: 130
-#    AttackRange: 1
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 3
-#    WalkSpeed: 200
-#    AttackDelay: 502
-#    AttackMotion: 1999
-#    DamageMotion: 480
-#    Modes:
-#      NoRandomWalk: true
+  - Id: 2058
+    AegisName: M_MIMIC
+    Name: Mimic
+    Level: 51
+    Hp: 6120
+    Sp: 182
+    Attack: 800
+    Attack2: 950
+    Defense: 10
+    MagicDefense: 40
+    Str: 44
+    Agi: 121
+    Int: 60
+    Dex: 75
+    Luk: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 972
+    AttackMotion: 500
+    DamageMotion: 288
+    Modes:
+      NoRandomWalk: true
+  - Id: 2059
+    AegisName: M_DISGUISE
+    Name: Disguise
+    Level: 55
+    Hp: 7543
+    Sp: 180
+    Attack: 526
+    Attack2: 693
+    Defense: 18
+    MagicDefense: 29
+    Agi: 72
+    Vit: 45
+    Int: 35
+    Dex: 48
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 147
+    AttackDelay: 516
+    AttackMotion: 768
+    DamageMotion: 384
+    Modes:
+      NoRandomWalk: true
+  - Id: 2060
+    AegisName: M_ALICE
+    Name: Alice
+    Level: 62
+    Hp: 10000
+    Sp: 221
+    Attack: 700
+    Attack2: 850
+    Defense: 5
+    MagicDefense: 5
+    Str: 64
+    Agi: 64
+    Vit: 42
+    Int: 85
+    Dex: 100
+    Luk: 130
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 502
+    AttackMotion: 1999
+    DamageMotion: 480
+    Modes:
+      NoRandomWalk: true
 #  - Id: 2061
 #    AegisName: E_STAPO
 #    Name: Stapo
@@ -74745,34 +74745,34 @@ Body:
       - Item: Halloween_Coin
         Rate: 10000
         StealProtected: true
-#  - Id: 2937
-#    AegisName: M_LOKI
-#    Name: M Loki
-#    Level: 145
-#    Hp: 1215600
-#    BaseExp: 1
-#    JobExp: 1
-#    Attack: 1835
-#    Attack2: 444
-#    Defense: 15
-#    MagicDefense: 89
-#    Str: 76
-#    Agi: 66
-#    Vit: 90
-#    Int: 55
-#    Dex: 189
-#    Luk: 22
-#    AttackRange: 2
-#    SkillRange: 10
-#    ChaseRange: 12
-#    Size: Medium
-#    Race: Demihuman
-#    Element: Neutral
-#    ElementLevel: 1
-#    WalkSpeed: 175
-#    AttackDelay: 800
-#    AttackMotion: 750
-#    DamageMotion: 300
+  - Id: 2937
+    AegisName: M_LOKI
+    Name: M Loki
+    Level: 145
+    Hp: 1215600
+    BaseExp: 1
+    JobExp: 1
+    Attack: 1835
+    Attack2: 444
+    Defense: 15
+    MagicDefense: 89
+    Str: 76
+    Agi: 66
+    Vit: 90
+    Int: 55
+    Dex: 189
+    Luk: 22
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 175
+    AttackDelay: 800
+    AttackMotion: 750
+    DamageMotion: 300
   - Id: 2938
     AegisName: MM_MAGIC_SEAL
     Name: Magic Seal

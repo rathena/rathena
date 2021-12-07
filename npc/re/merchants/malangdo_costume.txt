@@ -10,10 +10,27 @@
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //= 1.1 Corrected exchange costumes for enchant box 4-21 [Everade]
+//= 1.2 Added support for more than 120 missing enchants [Everade]
 //============================================================
 
 // Missing 4th slot enchanter
-//mal_in01,24,121,x	script	Gregio Grumani#x	x,{
+//mal_in01,24,121,x	script	Gregio Grumani#eventhat	x,{
+
+// These 4th slot Enchants are included in Enchant Stone Box 4-21
+//ID		Loc
+//25058, , 	Upper
+//25059, , 	Middle
+//25136, , 	Middle
+//25137, , 	Lower
+//25138, , 	Middle
+//25176, , 	Middle
+//25177, , 	Middle
+//25178, , 	Middle
+//25224, , 	Middle
+//25225, , 	Middle
+//25226, , 	Lower
+//25205, , 	Lower
+
 
 // Costume exchange
 mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
@@ -423,7 +440,7 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 				if (countitem(.@id) < 1)
 					continue;
 				mes "[Designer Heidam]";
-				mes "I see that you have a ^3131FF" + getitemname(.@id) + "^000000. Do you want to exchange this with a costume enchantment box?";
+				mes "I see that you have a ^3131FF" + getitemname(.@id) + "^000000. Do you want to exchange this for a costume enchantment box?";
 				next;
 				switch( select( "Exchange", "Look for something else", "Stop Exchanging" ) ) {
 				case 1:
@@ -470,10 +487,10 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	mes "We take various costume items.";
 	next;
 	mes "[Aver De Dosh]";
-	mes "If you want cool styling for your costume Hat, please come to me 'Aver De Dosh'!";
-	mes "Don't forget to bring ^ff0000your own costume Hat and costume stones^000000~";
+	mes "If you want cool styling for your costume, please come to me 'Aver De Dosh'!";
+	mes "Don't forget to bring ^ff0000your own costume and costume stones^000000~";
 	next;
-	if (select( "Apply ability.", "End Conversation." ) == 2) {
+	if (select( "Apply enchant.", "End Conversation." ) == 2) {
 		mes "[Aver De Dosh]";
 		mes "Please check our other upgrading services~";
 		close;
@@ -482,11 +499,11 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		mes "[Aver De Dosh]";
 		mes "Kiaaaaach!!!";
 		mes "I hate bulging bags!";
-		mes "No matter how cool your hat looks, that fat bag of yours is a fashion terror you know!";
+		mes "No matter how cool your costume looks, that fat bag of yours is a fashion terror you know!";
 		next;
 		mes "[Aver De Dosh]";
 		mes "It seems you have too many items on you.";
-		mes "Come back after clearing some inventory spaces.";
+		mes "Come back after clearing some inventory space.";
 		close;
 	}
 	.@eq_top = getequipid(EQI_COSTUME_HEAD_TOP);
@@ -495,7 +512,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	if (.@eq_top == -1 && .@eq_mid == -1 && .@eq_low == -1) {
 		mes "[Aver De Dosh]";
-		mes "You must wear item you want to add ability.";
+		mes "You must wear the costume you want to enchant.";
 		mes "Then, I will be able to help you out.";
 		close;
 	}
@@ -794,7 +811,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		default:
 			mes "[Aver De Dosh]";
 			mes "Well...";
-			mes "This hat is currently not available for upgrade.";
+			mes "This costume is currently not available for an upgrade.";
 			close;
 		}
 		break;
@@ -888,7 +905,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		default:
 			mes "[Aver De Dosh]";
 			mes "Well...";
-			mes "This hat is currently not available for upgrade.";
+			mes "This costume is currently not available for an upgrade.";
 			close;
 		}
 		break;
@@ -1012,7 +1029,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		default:
 			mes "[Aver De Dosh]";
 			mes "Well...";
-			mes "This hat is currently not available for upgrade.";
+			mes "This costume is currently not available for an upgrade.";
 			close;
 		}
 		break;
@@ -1039,7 +1056,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	switch(.@slot) {
 	case 0:
-		if (!(.@location & 1024)) {
+		if (!(.@location & EQP_COSTUME_HEAD_TOP)) {
 			mes "[Aver De Dosh]";
 			mes "The costume can't be enhanced at this location.";	// custom
 			close;
@@ -1065,10 +1082,39 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 			25069, 29053,	// ReloadStone_Top	Skill_Delay1_Top
 			25171, 29159,	// EXPStone_Top	EXP2TOP
 			25172, 29156,	// CastingStone_Top	Casting_Top
-			25304, 29359;	// Critical_Stone_Top	Fatal_Top
+			25304, 29359,	// Critical_Stone_Top	Fatal_Top
+			25409, 29423,	// SuraStone_Top	SuraStone_Top_
+			25413, 29428,	// RangerStone_Top	RangerStone_Top_
+			25417, 29432,	// SorcererStone_Top	SorcererStone_Top_
+			25445, 29460,	// RuneknightStone_Top	RuneknightStone_Top_
+			25450, 29464,	// GeneticStone_Top	GeneticStone_Top_
+			25453, 29468,	// WarlockStone_Top	WarlockStone_Top_
+			25490, 29477,	// ShadowchaserStone_Top	ShadowchaserStone_Top_
+			25494, 29481,	// MechanicStone_Top	MechanicStone_Top_
+			25498, 29485,	// WanderMinstrelStone_Top	WanderMinstrelStone_Top_
+			25706, 29513,	// HighpriestStone_Top	HighpriestStone_Top_
+			25710, 29517,	// PaladinStone_Top	PaladinStone_Top_
+			25714, 29521,	// AssacrossStone_Top	AssacrossStone_Top_
+			25800, 29613,	// SuraStone_Top2	SuraStone_Top2_
+			25804, 29617,	// SorcererStone_Top2	SorcererStone_Top2_
+			25808, 29621,	// ShadowchaserStone_Top2	ShadowchaserStone_Top2_
+			25843, 29651,	// SoulLinkerStone_Top	SoulLinkerStone_Top_
+			25846, 29655,	// StarGladiatorStone_Top	StarGladiatorStone_Top_
+			25850, 29659,	// NinjaStone_Top	NinjaStone_Top_
+			25855, 29664,	// GunslingerStone_Top	GunslingerStone_Top_
+			25859, 29668,	// DoramStone_Top	DoramStone_Top_
+			1000008, 310000,	// RangerStone_II_Top	Ranger_Top2
+			1000012, 310004,	// MechanicStone_II_Top	Mechanic_Top2
+			1000016, 310008,	// HighpriestStone_II_Top	Highpriest_Top2
+			1000214, 310181,	// WarlockStone_Top2	Warlock_Top2
+			1000218, 310187,	// RoyalGuardStone_Top2	RoyalGuard_Top2
+			1000222, 310191,	// GuillotineCrossStone_Top2	GuillotineCross_Top2
+			1000297, 310258,	// RuneknightStone_Top2	Runeknight_Top2
+			1000301, 310262,	// GeneticStone_Top2	Genetic_Top2
+			1000305, 310266;	// WanderMinsStone_Top2	WandMinst_Top2
 		break;
 	case 1:
-		if (!(.@location & 2048)) {
+		if (!(.@location & EQP_COSTUME_HEAD_MID)) {
 			mes "[Aver De Dosh]";
 			mes "The costume can't be enhanced at this location.";	// custom
 			close;
@@ -1098,10 +1144,39 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 			25070, 29054,	// ReloadStone_Middle	Skill_Delay1_Middle
 			25141, 29145,	// EXPStone_Middle	EXP2MIDDLE
 			25173, 29157,	// CastingStone_Middle	Casting_Middle
-			25175, 29155;	// LexAeternaStone_Middle	LexAeterna
+			25175, 29155,	// LexAeternaStone_Middle	LexAeterna
+			25410, 29424,	// SuraStone_Middle	SuraStone_Middle_
+			25414, 29429,	// RangerStone_Middle	RangerStone_Middle_
+			25418, 29433,	// SorcererStone_Middle	SorcererStone_Middle_
+			25446, 29461,	// RuneknightStone_Middle	RuneknightStone_Middle_
+			25451, 29465,	// GeneticStone_Middle	GeneticStone_Middle_
+			25454, 29469,	// WarlockStone_Middle	WarlockStone_Middle_
+			25491, 29478,	// ShadowchaseStone_Middle	ShadowchaseStone_Middle_
+			25495, 29482,	// MechanicStone_Middle	MechanicStone_Middle_
+			25499, 29486,	// WanderMinstrelStone_Middle	WanderMinstrelStone_Middle_
+			25707, 29514,	// HighpriestStone_Middle	HighpriestStone_Middle_
+			25711, 29518,	// PaladinStone_Middle	PaladinStone_Middle_
+			25715, 29522,	// AssacrossStone_Middle	AssacrossStone_Middle_
+			25799, 29612,	// SuraStone_Middle2	SuraStone_Middle2_
+			25803, 29616,	// SorcererStone_Middle2	SorcererStone_Middle2_
+			25807, 29620,	// ShadowchasStone_Middle2	ShadowchasStone_Middle2_
+			25844, 29652,	// SoulLinkerStone_Middle	SoulLinkerStone_Middle_
+			25847, 29656,	// StarGladiatorStone_Middle	StarGladiatorStone_Middle_
+			25851, 29660,	// NinjaStone_Middle	NinjaStone_Middle_
+			25856, 29665,	// GunslingerStone_Middle	GunslingerStone_Middle_
+			25860, 29669,	// DoramStone_Middle	DoramStone_Middle_
+			1000009, 310001,	// RangerStone_II_Middle	Ranger_Middle2
+			1000013, 310005,	// MechanicStone_II_Middle	Mechanic_Middle2
+			1000017, 310009,	// HighpriestStone_II_Middle	Highpriest_Middle2
+			1000215, 310182,	// WarlockStone_Middle2	Warlock_Middle2
+			1000219, 310186,	// RoyalGuardStone_Middle2	RoyalGuard_Middle2
+			1000223, 310190,	// GuillotineCrossStone_Middle2	GuillotineCross_Middle2
+			1000298, 310259,	// RuneknightStone_Middle2	Runeknight_Middle2
+			1000302, 310263,	// GeneticStone_Middle2	Genetic_Middle2
+			1000306, 310267;	// WanderMinsStone_Middle2	WandMinst_Mid2
 		break;
 	case 2:
-		if (!(.@location & 4096)) {
+		if (!(.@location & EQP_COSTUME_HEAD_LOW)) {
 			mes "[Aver De Dosh]";
 			mes "The costume can't be enhanced at this location.";	// custom
 			close;
@@ -1134,7 +1209,36 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 			25227, 29227,	// Heal_Stone	Heal
 			25228, 29229,	// Teleport_Stone	Teleport
 			25229, 29228,	// Steal_Stone	Steal
-			25305, 29360;	// Critical_Stone_Bottom	Fatal_Bottom
+			25305, 29360,	// Critical_Stone_Bottom	Fatal_Bottom
+			25411, 29425,	// SuraStone_Bottom	SuraStone_Bottom_
+			25415, 29430,	// RangerStone_Bottom	RangerStone_Bottom_
+			25419, 29434,	// SorcererStone_Bottom	SorcererStone_Bottom_
+			25447, 29462,	// RuneknightStone_Bottom	RuneknightStone_Bottom_
+			25452, 29466,	// GeneticStone_Bottom	GeneticStone_Bottom_
+			25455, 29470,	// WarlockStone_Bottom	WarlockStone_Bottom_
+			25492, 29479,	// ShadowchaseStone_Bottom	ShadowchaseStone_Bottom_
+			25496, 29483,	// MechanicStone_Bottom	MechanicStone_Bottom_
+			25500, 29487,	// WanderMinstrelStone_Bottom	WanderMinstrelStone_Bottom_
+			25708, 29515,	// HighpriestStone_Bottom	HighpriestStone_Bottom_
+			25712, 29519,	// PaladinStone_Bottom	PaladinStone_Bottom_
+			25716, 29523,	// AssacrossStone_Bottom	AssacrossStone_Bottom_
+			25798, 29611,	// SuraStone_Bottom2	SuraStone_Bottom2_
+			25802, 29615,	// SorcererStone_Bottom2	SorcererStone_Bottom2_
+			25806, 29619,	// ShadowchasStone_Bottom2	ShadowchasStone_Bottom2_
+			25845, 29653,	// SoulLinkerStone_Bottom	SoulLinkerStone_Bottom_
+			25848, 29657,	// StarGladiatorStone_Bottom	StarGladiatorStone_Bottom_
+			25852, 29661,	// NinjaStone_Bottom	NinjaStone_Bottom_
+			25857, 29666,	// GunslingerStone_Bottom	GunslingerStone_Bottom_
+			25861, 29670,	// DoramStone_Bottom	DoramStone_Bottom_
+			1000010, 310002,	// RangerStone_II_Bottom	Ranger_Bottom2
+			1000014, 310006,	// MechanicStone_II_Bottom	Mechanic_Bottom2
+			1000018, 310010,	// HighpriestStone_II_Bottom	Highpriest_Bottom2
+			1000216, 310183,	// WarlockStone_Bottom2	Warlock_Bottom2
+			1000220, 310185,	// RoyalGuardStone_Bottom2	RoyalGuard_Bottom2
+			1000224, 310189,	// GuillotineCrossStone_Bottom2	GuillotineCross_Bottom2
+			1000299, 310260,	// RuneknightStone_Bottom2	Runeknight_Bottom2
+			1000303, 310264,	// GeneticStone_Bottom2	Genetic_Bottom2
+			1000307, 310268;	// WanderMinsStone_Bottom2	WandMinst_Bot2
 		break;
 	default:
 		mes "[Aver De Dosh]";
@@ -1150,14 +1254,13 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	if (getequipid(.@part) < 0 || countitem(.@stone) < 1) {
 		mes "[Aver De Dosh]";
-		mes "Hmm? Think you are lack of ingredients.";
-		mes "You must have both costume item and ability stone for this upgrading work.";
+		mes "Hmm? You are lacking components.";
+		mes "You must have both, the costume and an enchant stone for this upgrade.";
 		close;
 	}
 	mes "^FF0000   !!! Caution !!!^000000";
-	mes "^FF0000This upgrade can be failed.^000000";
-	mes "^FF0000If the item already has extra ability,^000000";
-	mes "^FF0000we will reset item's ability.^000000";
+	mes "^ff0000This upgrade can fail.^000000";
+	mes "^ff0000If the item already has an enchant, it will be reset and only the costume will be returned.^000000";
 	mes "^FF0000Are you sure about upgrading this item?^000000";
 	next;
 	if (select( "Yes.", "No." ) == 2) {
@@ -1180,8 +1283,8 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	}
 	else {
 		mes "[Aver De Dosh]";
-		mes "History is known for its failure...";
-		mes "History of Fashion also is...";
+		mes "History is known for failure...";
+		mes "Just like the history of fashion...";
 		mes "Sorry...to disappoint you..~ LoL.";
 		.@card[.@slot] = 0;
 	}
@@ -1200,18 +1303,18 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	mes "Bring your ^ff0000Costume Garment^000000 and ^ff0000Garment Stone^000000, I will complete the perfect upgrade for you.!";
 	mes "I found this formula while working on my own humble body upgrading!";
 	next;
-	if (select( "Apply ability.", "End Conversation." ) == 2) {
+	if (select( "Apply enchant.", "End Conversation." ) == 2) {
 		mes "[Lace La Zard]";
-		mes "Yes? Your want to look more?";
+		mes "Yes? Do you want to keep looking?";
 		close;
 	}
 	if (checkweight(1119,3) == 0) {
 		mes "[Lace La Zard]";
-		mes "Well... Your shoulder doesn't look possilbe for any more upgrade...!";
-		mes "Don't be cruel to your shoulder!";
+		mes "Well... Your heavy shoulder doesn't seem capable for an upgrade...!";
+		mes "Don't be so cruel to your shoulder!";
 		next;
 		mes "It seems you have too many items on you.";
-		mes "Come back after clearing some inventory spaces.";
+		mes "Come back after clearing some inventory space.";
 		close;
 	}
 	.@part = EQI_COSTUME_GARMENT;
@@ -1219,7 +1322,7 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	if (.@equip_id == -1) {
 		mes "[Lace La Zard]";
 		mes "Put the garment on your shoulder.";
-		mes "I need to have a look at it to check for upgrading posibility..";
+		mes "I need to have a look at it before I can tell if it's worth to be upgraded..";
 		close;
 	}
 
@@ -1252,20 +1355,48 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
 
 	mes "[Lace La Zard]";
-	mes "Wow ^0000FF" + getitemname(.@equip_id) + "^000000!!! You got some sense there, aren't you?";
+	mes "Wow a ^0000FF" + getitemname(.@equip_id) + "^000000!!! You got some taste right there, don't you?";
 	mes "Great!! I'm fully ready for this upgrade!!";
 	next;
 	setarray .@data$[0],
-		6908, 4807, "ASPD+1 only",	// ASPDStone_Robe	Atk_Speed1
-		6963, 4992, "Absorption 1% of damage dealt to enemy into HP with 1% chance",	// HPdrainStone_Robe	HPdrain1
-		6964, 4993, "Absorption 1% of damage dealt to enemy into SP with 1% chance";	// SPdrainStone_Robe	SPdrain1
-		// unknown text
-		// 25067, 29056, "",	// CastingStone_Robe	FixedCasting05
-		// 25170, 29154, "",	// MinorCastingStone_Robe	FixedCasting03
-		// 25302, 29362, "",	// DoubleAttack_Stone	DoubleAttack
-		// 25303, 29361, "",	// Critical_Stone_Robe	Fatal_Robe
-		// 25306, 29358, "";	// CastStone_Robe	Casting_Robe
-
+		6908, 4807, "ASPD +1",	// ASPDStone_Robe	Atk_Speed1
+		6963, 4992, "1% chance to absorb 1% physical damage into HP.",	// HPdrainStone_Robe	HPdrain1
+		6964, 4993, "1% chance to absorb 1% physical damage into SP.",	// SPdrainStone_Robe	SPdrain1
+		25067, 29056, "Decreases Fixed Casting Time of all skills by 0.5 seconds.",	// CastingStone_Robe	FixedCasting05
+		25170, 29154, "Decreases Fixed Casting Time of all skills by 0.3 seconds.",	// MinorCastingStone_Robe	FixedCasting03
+		25302, 29362, "Enables the use of Level 3 Double Attack.",	// DoubleAttack_Stone	DoubleAttack
+		25303, 29361, "Increases Critical Damage by 20%.",	// Critical_Stone_Robe	Fatal_Robe
+		25306, 29358, "Decreases Variable Casting Time by 10%.",	// CastStone_Robe	Casting_Robe
+		25412, 29426, "Increases damage of Rampage Blaster by 15%.",	// SuraStone_Robe	SuraStone_Robe_
+		25416, 29431, "Increases damage of Arrow Storm by 10%.",	// RangerStone_Robe	RangerStone_Robe_
+		25420, 29435, "Increases damage of Psychic Wave by 10%.",	// SorcererStone_Robe	SorcererStone_Robe_
+		25448, 29463, "Increases damage of Dragon Breath - Water by 10%.",	// RuneknightStone_Robe	RuneknightStone_Robe_
+		25449, 29467, "Increases damage of Cart Cannon by 10%.",	// GeneticStone_Robe	GeneticStone_Robe_
+		25456, 29471, "Increases damage of Crimson Rock by 10%.",	// WarlockStone_Robe	WarlockStone_Robe_
+		25493, 29480, "Increases damage of Triangle Shot by 15%.",	// ShadowchaserStone_Robe	ShadowchaserStone_Robe_
+		25497, 29484, "Increases damage of Axe Tornado by 15%.",	// MechanicStone_Robe	MechanicStone_Robe_
+		25501, 29488, "Increases damage of Severe Rainstorm by 15%.",	// WanderMinstrelStone_Robe	WanderMinstrelStone_Robe_
+		25709, 29516, "Increases damage of Adoramus by 15%.",	// ArchbishopStone_Robe	ArchbishopStone_Robe_
+		25713, 29520, "Increases damage of Banishing Point by 15%.",	// RoyalguardStone_Robe	RoyalguardStone_Robe_
+		25717, 29524, "Increases damage of Rolling Cutter by 15%.",	// GuillcrossStone_Robe	GuillcrossStone_Robe_
+		25797, 29427, "Increases damage of Knuckle Arrow by 15%.",	// SuraStone_Robe2	SuraStone_Robe2_
+		25801, 29614, "Increases damage of Diamond Dust by 15%.",	// SorcererStone_Robe2	SorcererStone_Robe2_
+		25805, 29618, "Increases damage of Fatal Menace by 15%.",	// ShadowchaserStone_Robe2	ShadowchaserStone_Robe2_
+		25842, 29654, "Increases damage of Eswhoo by 20%.",	// SoulReaperStone_Robe	SoulReaperStone_Robe_
+		25849, 29658, "Increases damage of Falling Star, Solar Burst and Full Moon Kick by 20%.",	// StarEmperorStone_Garment	StarEmperorStone_Garment_
+		25853, 29662, "Increases damage of Swirling Petal by 25%.",	// KagerouStone_Robe	KagerouStone_Robe_
+		25854, 29663, "Increases damage of Flaming Petals by 20%.",	// OboroStone_Robe	OboroStone_Robe_
+		25858, 29667, "Increases damage of Hammer of God and Round Trip by 20%.",	// GunslingerStone_Robe	GunslingerStone_Robe_
+		25862, 29671, "Increases damage of Picky Peck and Catnip Meteor by 20%.",	// DoramStone_Robe	DoramStone_Robe_
+		1000011, 310003, "Increases damage of Aimed Bolt by 15%.",	// RangerStone_II_Garment	Ranger_Robe2
+		1000015, 310007, "Increases damage of Arms Cannon by 15%.",	// MechanicStone_II_Garment	Mechanic_Robe2
+		1000019, 310011, "Increases damage of Judex by 15%.",	// ArchbishopStone_II_Garment	Archbishop_Robe2
+		1000213, 310180, "Increases damage of Comet by 15%.",	// WarlockStone_Robe2	Warlock_Robe2
+		1000217, 310184, "Increases damage of Ray of Genesis by 15%.",	// RoyalGuardStone_Robe2	RoyalGuard_Robe2
+		1000221, 310188, "Increases Critical Damage by 15%. Enables Double Attack Level 3 if you have learned Katar Mastery Level 10",	// GuillotineCrossStone_Robe2	GuillotineCross_Robe2
+		1000296, 310257, "Increases damage of Ignition Break by 15%.",	// RuneknightStone_Robe2	Runeknight_Robe2
+		1000300, 310261, "Increases damage of Crazy Weed by 20%.",	// GeneticStone_Robe2	Genetic_Robe2
+		1000304, 310265, "Increases damage of Reverberation by 15%.";	// WanderMinsStone_Robe2	WandMinst_Robe2
 	.@size = getarraysize(.@data$);
 	for ( .@i = 0; .@i < .@size; .@i += 3 ) {
 		.@id = atoi(.@data$[.@i]);
@@ -1276,24 +1407,24 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	.@s = (select(.@menu$) - 1) * 3;
 	if (.@s == .@size) {
 		mes "[Lace La Zard]";
-		mes "Yes? Your want to look more?";
+		mes "Yes? Do you want to keep looking?";
 		close;
 	}
 	.@id = atoi(.@data$[.@s]);
 	.@enchant = atoi(.@data$[.@s+1]);
 	if (getequipid(.@part) < 0 || countitem(.@id) < 1) {
 		mes "[Lace La Zard]";
-		mes "You must have both costume item and ability stone for this upgrading work.";
+		mes "You must have both, the costume and an enchant stone for this upgrade.";
 		close;
 	}
 	mes "^FF0000   !!! Caution !!!^000000";
-	mes "^ff0000This upgrade can be failed.^000000";
-	mes "^ff0000If the item already has extra ability, we will reset item's ability and give " + .@data$[.@s+2] + ".^000000";
+	mes "^ff0000This upgrade can fail.^000000";
+	mes "^ff0000If the item already has an enchant, it will be reset and only the " + .@data$[.@s+2] + " will be returned.^000000";
 	mes "^ff0000Are you sure about upgrading this item?^000000";
 	next;
 	if (select( "Yes.", "No." ) == 2) {
 		mes "[Lace La Zard]";
-		mes "Yes? Your want to look more?";
+		mes "Yes? Do you want to keep looking?";
 		close;
 	}
 
@@ -1306,13 +1437,13 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	if (rand(100) < 50) {
 		mes "[Lace La Zard]";
 		mes "Beautiful!!";
-		mes "Did I really made this myself!!!!";
+		mes "Did I really made this myself?!!!";
 		.@card[0] = .@enchant;
 	}
 	else {
 		mes "[Lace La Zard]";
 		mes "Oh no!";
-		mes "Crash!!!!! I cannot show this failure to the World!!!";
+		mes "Crash!!!!! I cannot show this failure to the world!!!";
 		.@card[0] = 0;
 	}
 	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];

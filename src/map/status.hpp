@@ -17,7 +17,7 @@ struct block_list;
 struct mob_data;
 struct pet_data;
 struct homun_data;
-struct mercenary_data;
+struct s_mercenary_data;
 struct s_elemental_data;
 struct npc_data;
 struct status_change;
@@ -2881,7 +2881,7 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
 void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
 int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
 int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt);
-int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt);
+int status_calc_mercenary_(s_mercenary_data *md, e_status_calc_opt opt);
 int status_calc_elemental_(s_elemental_data *ed, e_status_calc_opt opt);
 int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt);
 

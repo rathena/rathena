@@ -4036,14 +4036,12 @@ ACMD_FUNC(reload) {
 		mob_reload();
 		pet_db.reload();
 		hom_reload();
-		mercenary_readdb();
-		mercenary_read_skilldb();
+		mercenary_db.reload();
 		elemental_db.reload();
 		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
 	} else if (strstr(command, "skilldb") || strncmp(message, "skilldb", 4) == 0) {
 		skill_reload();
 		hom_reload_skill();
-		mercenary_read_skilldb();
 		clif_displaymessage(fd, msg_txt(sd,99)); // Skill database has been reloaded.
 	} else if (strstr(command, "atcommand") || strncmp(message, "atcommand", 4) == 0) {
 		config_t run_test;

@@ -5140,10 +5140,10 @@ int status_calc_pc_( struct map_session_data* sd, enum e_status_calc_opt opt ){
  * @param opt: Whether it is first calc or not (0 on level up or status)
  * @return 0
  */
-int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt)
+int status_calc_mercenary_(s_mercenary_data *md, enum e_status_calc_opt opt)
 {
 	struct status_data *status = &md->base_status;
-	struct s_mercenary *merc = &md->mercenary;
+	s_mercenary *merc = &md->mercenary;
 
 	if (opt&SCO_FIRST) {
 		memcpy(status, &md->db->status, sizeof(struct status_data));
@@ -8453,7 +8453,7 @@ const char* status_get_name(struct block_list *bl)
 		case BL_MOB:	return ((TBL_MOB*)bl)->name;
 		case BL_PET:	return ((TBL_PET*)bl)->pet.name;
 		case BL_HOM:	return ((TBL_HOM*)bl)->homunculus.name;
-		//case BL_MER: // They only have database names which are global, not specific to GID.
+		case BL_MER:	return ((TBL_MER *)bl)->db->name.c_str();	// They only have database names which are global, not specific to GID.
 		case BL_NPC:	return ((TBL_NPC*)bl)->name;
 		case BL_ELEM:	return ((TBL_ELEM *)bl)->db->name.c_str(); // They only have database names which are global, not specific to GID.
 	}
@@ -8813,7 +8813,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		vd = npc_get_viewdata(class_);
 	else if (homdb_checkid(class_))
 		vd = hom_get_viewdata(class_);
-	else if (mercenary_db(class_))
+	else if (mercenary_db.exists(class_))
 		vd = mercenary_get_viewdata(class_);
 	else if (elemental_db.exists(class_))
 		vd = elemental_get_viewdata(class_);
@@ -8943,7 +8943,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		break;
 	case BL_MER:
 		{
-			struct mercenary_data *md = (struct mercenary_data*)bl;
+			s_mercenary_data *md = (s_mercenary_data*)bl;
 			if (vd)
 				md->vd = vd;
 			else

@@ -130,6 +130,14 @@ static void elemental_skill_txt_data(const std::string& modePath, const std::str
 		sv_readdb(fixedPath.c_str(), "elemental_skill_db.txt", ',', 4, 4, -1, read_elemental_skilldb, false);
 }
 
+// Mercenary's Skill Database data to memory
+static void mercenary_skill_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	mercenary_skill_tree.clear();
+
+	if (fileExists(fixedPath + "/mercenary_skill_db.txt"))
+		sv_readdb(fixedPath.c_str(), "mercenary_skill_db.txt", ',', 3, 3, -1, mercenary_read_skilldb, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -489,6 +497,12 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	mercenary_skill_txt_data(path_db_mode, path_db);
+	if (!process("MERCENARY_DB", 1, root_paths, "mercenary_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 26, 26, -1, &mercenary_readdb, false);
+	})) {
+		return 0;
+	}
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -4528,3 +4542,111 @@ static bool read_elementaldb(char* str[], int columns, int current) {
 	return true;
 }
 
+
+// mercenary_db.yml function
+//---------------------------
+static bool mercenary_read_skilldb(char* str[], int columns, int current) {
+	uint16 skill_id = atoi(str[1]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("mercenary_read_skilldb: Invalid skill '%hu'.\n", skill_id);
+		return false;
+	}
+
+	s_mercenary_skill_csv entry = {};
+
+	entry.skill_name = *skill_name;
+	entry.max_lv = atoi(str[2]);
+
+	uint16 class_ = atoi(str[0]);
+
+	if (util::umap_find(mercenary_skill_tree, class_))
+		mercenary_skill_tree[class_].push_back(entry);
+	else {
+		mercenary_skill_tree[class_] = std::vector<s_mercenary_skill_csv>();
+		mercenary_skill_tree[class_].push_back(entry);
+	}
+
+	return true;
+}
+
+// Copied and adjusted from mercenary.cpp
+static bool mercenary_readdb(char* str[], int columns, int current) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << str[0];
+	body << YAML::Key << "AegisName" << YAML::Value << str[1];
+	body << YAML::Key << "Name" << YAML::Value << str[2];
+	if (atoi(str[3]) != 1)
+		body << YAML::Key << "Level" << YAML::Value << str[3];
+	if (atoi(str[4]) != 1)
+		body << YAML::Key << "Hp" << YAML::Value << str[4];
+	if (atoi(str[5]) != 1)
+		body << YAML::Key << "Sp" << YAML::Value << str[5];
+	if (atoi(str[7]) != 0)
+		body << YAML::Key << "Attack" << YAML::Value << str[7];
+	if (atoi(str[8]) != 0)
+		body << YAML::Key << "Attack2" << YAML::Value << str[8];
+	if (atoi(str[9]) != 0)
+		body << YAML::Key << "Defense" << YAML::Value << str[9];
+	if (atoi(str[10]) != 0)
+		body << YAML::Key << "MagicDefense" << YAML::Value << str[10];
+	if (atoi(str[11]) != 1)
+		body << YAML::Key << "Str" << YAML::Value << str[11];
+	if (atoi(str[12]) != 1)
+		body << YAML::Key << "Agi" << YAML::Value << str[12];
+	if (atoi(str[13]) != 1)
+		body << YAML::Key << "Vit" << YAML::Value << str[13];
+	if (atoi(str[14]) != 1)
+		body << YAML::Key << "Int" << YAML::Value << str[14];
+	if (atoi(str[15]) != 1)
+		body << YAML::Key << "Dex" << YAML::Value << str[15];
+	if (atoi(str[16]) != 1)
+		body << YAML::Key << "Luk" << YAML::Value << str[16];
+	if (atoi(str[6]) != 0)
+		body << YAML::Key << "AttackRange" << YAML::Value << str[6];
+	if (atoi(str[17]) != 0)
+		body << YAML::Key << "SkillRange" << YAML::Value << str[17];
+	if (atoi(str[18]) != 0)
+		body << YAML::Key << "ChaseRange" << YAML::Value << str[18];
+	if (atoi(str[19]) != 0)
+		body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
+	if (atoi(str[20]) != 0)
+		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
+
+	int ele = strtol(str[21], nullptr, 10);
+	if (atoi(str[21]) != 0)
+		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+	if (atoi(str[21]) != 1)
+		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+
+	if (atoi(str[22]) != 0)
+		body << YAML::Key << "WalkSpeed" << YAML::Value << cap_value(std::stoi(str[22]), MIN_WALK_SPEED, MAX_WALK_SPEED);
+	if (atoi(str[23]) != 0)
+		body << YAML::Key << "AttackDelay" << YAML::Value << str[23];
+	if (atoi(str[24]) != 0)
+		body << YAML::Key << "AttackMotion" << YAML::Value << str[24];
+	if (atoi(str[25]) != 0)
+		body << YAML::Key << "DamageMotion" << YAML::Value << str[25];
+
+	for (const auto &skillit : mercenary_skill_tree) {
+		if (skillit.first != atoi(str[0]))
+			continue;
+
+		body << YAML::Key << "Skills";
+		body << YAML::BeginSeq;
+
+		for (const auto &it : skillit.second) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Name" << YAML::Value << it.skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << it.max_lv;
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
