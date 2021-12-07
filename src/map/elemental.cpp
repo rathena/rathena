@@ -485,7 +485,7 @@ int elemental_change_mode_ack(s_elemental_data *ed, e_elemental_skillmode skill_
 /*===============================================================
  * Change elemental mode.
  *-------------------------------------------------------------*/
-int elemental_change_mode(s_elemental_data *ed, e_mode mode) {
+int elemental_change_mode(s_elemental_data *ed, int mode) {
 	nullpo_ret(ed);
 
 	// Remove target
@@ -659,7 +659,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 	else
 		view_range = ed->db->range2;
 
-	e_mode mode = status_get_mode(&ed->bl);
+	int mode = status_get_mode(&ed->bl);
 
 	master_dist = distance_bl(&sd->bl, &ed->bl);
 	if( master_dist > AREA_SIZE ) {	// Master out of vision range.

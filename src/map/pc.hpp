@@ -660,7 +660,7 @@ struct map_session_data {
 
 	struct pet_data *pd;
 	struct homun_data *hd;	// [blackhole89]
-	struct mercenary_data *md;
+	s_mercenary_data *md;
 	s_elemental_data *ed;
 
 	struct s_hate_mob {

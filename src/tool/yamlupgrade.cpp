@@ -230,7 +230,7 @@ static bool upgrade_achievement_db(std::string file, const uint32 source_version
 static bool upgrade_item_db(std::string file, const uint32 source_version) {
 	size_t entries = 0;
 
-	for( auto &input : inNode["Body"] ){
+	for( auto input : inNode["Body"] ){
 		// If under version 2
 		if( source_version < 2 ){
 			// Add armor level to all equipments

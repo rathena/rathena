@@ -95,7 +95,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
 static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp);
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
-static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode);
+static int status_calc_mode(struct block_list *bl, struct status_change *sc, int mode);
 #ifdef RENEWAL
 static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int);
 #endif
@@ -5140,10 +5140,10 @@ int status_calc_pc_( struct map_session_data* sd, enum e_status_calc_opt opt ){
  * @param opt: Whether it is first calc or not (0 on level up or status)
  * @return 0
  */
-int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt)
+int status_calc_mercenary_(s_mercenary_data *md, enum e_status_calc_opt opt)
 {
 	struct status_data *status = &md->base_status;
-	struct s_mercenary *merc = &md->mercenary;
+	s_mercenary *merc = &md->mercenary;
 
 	if (opt&SCO_FIRST) {
 		memcpy(status, &md->db->status, sizeof(struct status_data));
@@ -8397,19 +8397,19 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
  * @param mode: Original mode
  * @return mode with cap_value(mode, 0, INT_MAX)
  */
-static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode)
+static int status_calc_mode(struct block_list *bl, struct status_change *sc, int mode)
 {
 	if(!sc || !sc->count)
-		return cap_value(mode, MD_NONE, static_cast<e_mode>(INT_MAX));
+		return cap_value(mode, MD_NONE,INT_MAX);
 	if(sc->data[SC_MODECHANGE]) {
 		if (sc->data[SC_MODECHANGE]->val2)
-			mode = static_cast<e_mode>((mode&~MD_MASK)|sc->data[SC_MODECHANGE]->val2); // Set mode
+			mode = (mode&~MD_MASK)|sc->data[SC_MODECHANGE]->val2; // Set mode
 		if (sc->data[SC_MODECHANGE]->val3)
-			mode = static_cast<e_mode>(mode|sc->data[SC_MODECHANGE]->val3); // Add mode
+			mode = mode|sc->data[SC_MODECHANGE]->val3; // Add mode
 		if (sc->data[SC_MODECHANGE]->val4)
-			mode = static_cast<e_mode>(mode&~sc->data[SC_MODECHANGE]->val4); // Del mode
+			mode = mode&~sc->data[SC_MODECHANGE]->val4; // Del mode
 	}
-	return cap_value(mode, MD_NONE, static_cast<e_mode>(INT_MAX));
+	return cap_value(mode, MD_NONE, INT_MAX);
 }
 
 /**
@@ -8453,7 +8453,7 @@ const char* status_get_name(struct block_list *bl)
 		case BL_MOB:	return ((TBL_MOB*)bl)->name;
 		case BL_PET:	return ((TBL_PET*)bl)->pet.name;
 		case BL_HOM:	return ((TBL_HOM*)bl)->homunculus.name;
-		//case BL_MER: // They only have database names which are global, not specific to GID.
+		case BL_MER:	return ((TBL_MER *)bl)->db->name.c_str();	// They only have database names which are global, not specific to GID.
 		case BL_NPC:	return ((TBL_NPC*)bl)->name;
 		case BL_ELEM:	return ((TBL_ELEM *)bl)->db->name.c_str(); // They only have database names which are global, not specific to GID.
 	}
@@ -8813,7 +8813,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		vd = npc_get_viewdata(class_);
 	else if (homdb_checkid(class_))
 		vd = hom_get_viewdata(class_);
-	else if (mercenary_db(class_))
+	else if (mercenary_db.exists(class_))
 		vd = mercenary_get_viewdata(class_);
 	else if (elemental_db.exists(class_))
 		vd = elemental_get_viewdata(class_);
@@ -8943,7 +8943,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		break;
 	case BL_MER:
 		{
-			struct mercenary_data *md = (struct mercenary_data*)bl;
+			s_mercenary_data *md = (s_mercenary_data*)bl;
 			if (vd)
 				md->vd = vd;
 			else
@@ -9778,7 +9778,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
  	break;
 	case SC_MODECHANGE:
 	{
-		enum e_mode mode;
+		int mode;
 		struct status_data *bstatus = status_get_base_status(bl);
 		if (!bstatus) return 0;
 		if (sc->data[type]) { // Pile up with previous values.
@@ -9786,9 +9786,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 |= sc->data[type]->val3;
 			val4 |= sc->data[type]->val4;
 		}
-		mode = val2 ? static_cast<e_mode>((val2&~MD_MASK)|val2) : bstatus->mode; // Base mode
-		if (val4) mode = static_cast<e_mode>(mode&~val4); // Del mode
-		if (val3) mode = static_cast<e_mode>(mode|val3); // Add mode
+		mode = val2 ? ((val2&~MD_MASK)|val2) : bstatus->mode; // Base mode
+		if (val4) mode = (mode&~val4); // Del mode
+		if (val3) mode = (mode|val3); // Add mode
 		if (mode == bstatus->mode) { // No change.
 			if (sc->data[type]) // Abort previous status
 				return status_change_end(bl, type, INVALID_TIMER);
@@ -14982,7 +14982,7 @@ TIMER_FUNC(status_change_timer){
 		if( !status_charge(bl,0,sce->val2) ) {
 			struct block_list *s_bl = battle_get_master(bl);
 			if (bl->type == BL_ELEM)
-				elemental_change_mode(BL_CAST(BL_ELEM, bl), static_cast<e_mode>(MAX_ELESKILLTREE));
+				elemental_change_mode(BL_CAST(BL_ELEM, bl), EL_MODE_PASSIVE);
 			if( s_bl )
 				status_change_end(s_bl,static_cast<sc_type>(type+1),INVALID_TIMER);
 			status_change_end(bl,type,INVALID_TIMER);

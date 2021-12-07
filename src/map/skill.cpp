@@ -1068,7 +1068,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
  * @param md: Mercenary who casted
  * @return true: Skill cannot be used, false: otherwise
  */
-bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md)
+bool skill_isNotOk_mercenary(uint16 skill_id, s_mercenary_data *md)
 {
 	nullpo_retr(1, md);
 
@@ -6511,7 +6511,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	struct map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
 	struct homun_data *hd;
-	struct mercenary_data *mer;
+	s_mercenary_data *mer;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *tsc;
 	struct status_change_entry *tsce;
@@ -10966,7 +10966,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SO_EL_CONTROL:
 		if( sd ) {
-			enum e_mode mode = EL_MODE_PASSIVE;	// Standard mode.
+			int mode;
 
 			if( !sd->ed )	break;
 
@@ -10975,8 +10975,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 			switch( skill_lv ) {// Select mode bassed on skill level used.
-				case 2: mode = static_cast<e_mode>(EL_MODE_ASSIST); break;
-				case 3: mode = static_cast<e_mode>(EL_MODE_AGGRESSIVE); break;
+				case 1: mode = EL_MODE_PASSIVE;	// Standard mode.
+				case 2: mode = EL_MODE_ASSIST; break;
+				case 3: mode = EL_MODE_AGGRESSIVE; break;
 			}
 			if( !elemental_change_mode(sd->ed,mode) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -17078,7 +17079,7 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 					else {
 						if( sd->special_state.no_gemstone || (sc && sc->data[SC_INTOABYSS]) )
 						{	// All gem skills except Hocus Pocus and Ganbantein can cast for free with Mistress card -helvetica
-							if( skill_id != SA_ABRACADABRA )
+							if (skill_id != SA_ABRACADABRA && skill_id != HW_GANBANTEIN)
 		 						req.itemid[i] = req.amount[i] = 0;
 							else if( --req.amount[i] < 1 )
 								req.amount[i] = 1; // Hocus Pocus always use at least 1 gem
@@ -21127,7 +21128,7 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 }
 
 TIMER_FUNC(skill_blockmerc_end){
-	struct mercenary_data *md = (TBL_MER*)map_id2bl(id);
+	s_mercenary_data *md = (TBL_MER*)map_id2bl(id);
 
 	if (md) {
 		auto skill = util::vector_get(md->blockskill, (uint16)data);
@@ -21139,7 +21140,7 @@ TIMER_FUNC(skill_blockmerc_end){
 	return 1;
 }
 
-int skill_blockmerc_start(struct mercenary_data *md, uint16 skill_id, int tick)
+int skill_blockmerc_start(s_mercenary_data *md, uint16 skill_id, int tick)
 {
 	nullpo_retr(-1, md);
 
