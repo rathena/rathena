@@ -5722,7 +5722,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct party_data* p;
-	int type, ret, mapindex = 0, m = -1, i, rx = 0, ry = 0;
+	int type, mapindex = 0, m = -1, i, rx = 0, ry = 0;
 
 	const char* str = script_getstr(st,2);
 	int x = script_getnum(st,3);
@@ -5796,6 +5796,9 @@ BUILDIN_FUNC(warpparty)
 			break;
 	}
 
+	int ret;
+	map_data *mapdata = map_getmapdata(pl_sd->bl.m);
+
 	for (i = 0; i < MAX_PARTY; i++)
 	{
 		if( !(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id )
@@ -5810,15 +5813,15 @@ BUILDIN_FUNC(warpparty)
 		switch( type )
 		{
 		case 0: // Random
-			if(!map_getmapflag(pl_sd->bl.m, MF_NOWARP))
+			if (!mapdata->flag[MF_NOWARP])
 				ret = pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
 		case 1: // SavePointAll
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
+			if (!mapdata->[MF_NORETURN])
 				ret = pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 2: // SavePoint
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
+			if (!mapdata->flag[MF_NORETURN])
 				ret = pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // Leader
@@ -5830,7 +5833,7 @@ BUILDIN_FUNC(warpparty)
 				break;
 			}
 		case 5: // m,x,y
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
+			if (!mapdata->flag[MF_NORETURN]) && !mapdata->flag[MF_NOWARP]) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
 				if (rx || ry) {
 					int x1 = x + rx, y1 = y + ry,
 						x0 = x - rx, y0 = y - ry,
