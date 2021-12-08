@@ -2445,8 +2445,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		if(src->type == BL_HOM){
 			TBL_HOM *hd = (TBL_HOM*)src;
 			hd->homunculus.intimacy = (skill_id == HFLI_SBR44) ? 200 : 100; // hom_intimacy_grade2intimacy(HOMGRADE_HATE_WITH_PASSION)
-			if (hd->master)
-				clif_send_homdata(hd->master,SP_INTIMATE,hd->homunculus.intimacy/100);
+			if (sd && hd->master)
+				clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);
 		}
 		break;
 	case CR_GRANDCROSS:
