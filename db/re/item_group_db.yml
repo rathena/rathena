@@ -23715,4 +23715,48 @@ Body:
             Rate: 235
           - Item: S_Archer_earring
             Rate: 235
+  - Group: SEALED_SCROLL
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Item: Guarantee_Weapon_9Up
+            Rate: 13
+          - Item: Guarantee_Armor_9Up
+            Rate: 13
+          - Item: Sealed_Card
+            Rate: 13
+          - Item: Gold
+            Rate: 63
+          - Item: Guarantee_Weapon_7Up
+            Rate: 125
+          - Item: Guarantee_Armor_7Up
+            Rate: 125
+          - Item: C_Wing_Of_Fly_5Day_Box
+            Rate: 125
+          - Item: S_Expert_Shoes
+            Rate: 138
+          - Item: S_Expert_Shield
+            Rate: 138
+          - Item: S_Beginner_Shoes
+            Rate: 500
+          - Item: S_Beginner_Shield
+            Rate: 500
+          - Item: S_Rookie_Shoes
+            Rate: 500
+          - Item: S_Rookie_Shield
+            Rate: 500
+          - Item: S_Advanced_Shoes
+            Rate: 500
+          - Item: S_Advanced_Shield
+            Rate: 500
+          - Item: Treasure_Box
+            Rate: 1247
+          - Item: Enchant_Book
+            Rate: 1250
+          - Item: Costume_Exchange
+            Rate: 1250
+          - Item: Poison_Bottle_Box2
+            Rate: 1250
+          - Item: C_Wing_Of_Fly_1Day_Box
+            Rate: 1250
 

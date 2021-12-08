@@ -42751,7 +42751,7 @@ Body:
     Script: |
       rentitem 15023,86400;
   - Id: 17314
-    AegisName: Infinite_Giant_Fly_Wing_Box
+    AegisName: C_Wing_Of_Fly_1Day_Box
     Name: Infinite Giant Fly Wing Box
     Type: Cash
     Buy: 10
@@ -43647,7 +43647,7 @@ Body:
     Script: |
       getgroupitem(IG_Support_Package_III_10);
   - Id: 17474
-    AegisName: Infinite_Giant_Fly_Wing_Box_V
+    AegisName: C_Wing_Of_Fly_5Day_Box
     Name: Infinite Giant Fly Wing Box V
     Type: Cash
     Buy: 10
@@ -43662,7 +43662,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      rentitem 12212,86400;
+      rentitem 12212,432000;
   - Id: 17475
     AegisName: Limited_Gym_Membership_Card_Box_10
     Name: (Limited)Gym Membership Card Box(10)
@@ -46872,7 +46872,7 @@ Body:
     Script: |
       /*No Info*/
   - Id: 22828
-    AegisName: Sealed_Album_Scroll
+    AegisName: Sealed_Scroll
     Name: Sealed Album Scroll
     Type: Usable
     Buy: 10
@@ -46888,9 +46888,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem callfunc("F_Rand",22829,6232,6228,24208,24209,17474/*,Enchanted Letter*/),1;
+      getgroupitem(IG_SEALED_SCROLL);
   - Id: 22829
-    AegisName: Sealed_Card_Album
+    AegisName: Sealed_Card
     Name: Sealed Card Album
     Type: Usable
     Buy: 10
