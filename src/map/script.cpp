@@ -5804,7 +5804,7 @@ BUILDIN_FUNC(warpparty)
 		if( !(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id )
 			continue;
 
-		if( str2 && strcmp(str2, map_getmapdata(pl_sd->bl.m)->name) != 0 )
+		if( str2 && strcmp(str2, mapdata->name) != 0 )
 			continue;
 
 		if( pc_isdead(pl_sd) )
@@ -5817,7 +5817,7 @@ BUILDIN_FUNC(warpparty)
 				ret = pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
 		case 1: // SavePointAll
-			if (!mapdata->[MF_NORETURN])
+			if (!mapdata->flag[MF_NORETURN])
 				ret = pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 2: // SavePoint
@@ -5833,7 +5833,7 @@ BUILDIN_FUNC(warpparty)
 				break;
 			}
 		case 5: // m,x,y
-			if (!mapdata->flag[MF_NORETURN]) && !mapdata->flag[MF_NOWARP]) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
+			if (!mapdata->flag[MF_NORETURN] && !mapdata->flag[MF_NOWARP] && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
 				if (rx || ry) {
 					int x1 = x + rx, y1 = y + ry,
 						x0 = x - rx, y0 = y - ry,
