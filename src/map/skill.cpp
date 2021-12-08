@@ -10975,7 +10975,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 			switch( skill_lv ) {// Select mode bassed on skill level used.
-				case 1: mode = EL_MODE_PASSIVE;	// Standard mode.
+				case 1: mode = EL_MODE_PASSIVE; break; // Standard mode.
 				case 2: mode = EL_MODE_ASSIST; break;
 				case 3: mode = EL_MODE_AGGRESSIVE; break;
 			}
@@ -10993,12 +10993,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( !sd->ed )
 				break;
 			switch(sd->ed->db->class_) {
-				case 2115:case 2124:
-				case 2118:case 2121:
+				case ELEMENTALID_AGNI_M: case ELEMENTALID_AQUA_M:
+				case ELEMENTALID_VENTUS_M: case ELEMENTALID_TERA_M:
 					duration = 6000;
 					break;
-				case 2116:case 2119:
-				case 2122:case 2125:
+				case ELEMENTALID_AGNI_L: case ELEMENTALID_AQUA_L:
+				case ELEMENTALID_VENTUS_L: case ELEMENTALID_TERA_L:
 					duration = 9000;
 					break;
 			}
