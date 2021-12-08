@@ -104,6 +104,42 @@ Defense: Armor's defense.
 
 ---------------------------------------
 
+MagicDefense: Magic Armor's defense.
+
+---------------------------------------
+
+Str: Strength bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
+Agi: Agility bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
+Vit: Vitality bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
+Int: Intelligence bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
+Dex: Dexterity bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
+Luk: Luck bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
+MaxHp: Maximum HP bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
+MaxSp: Maximum SP bonus given by the equipment. This field is working for Armor, Weapon, and ShadowGear Type.
+
+---------------------------------------
+
 Range: Weapon's attack range.
 
 ---------------------------------------
@@ -203,6 +239,10 @@ WeaponLevel: Weapon level. Used for refinement.
 
 ---------------------------------------
 
+WeaponElement: Element of Weapon/ammo item Type. The field can't be used with others Type of item. The element level is 1.
+
+---------------------------------------
+
 EquipLevelMin: Base level required to be able to equip.
 
 ---------------------------------------
@@ -212,6 +252,10 @@ EquipLevelMax: Only able to equip if base level is lower than this.
 ---------------------------------------
 
 Refineable: Defines if the item can be refined.
+
+---------------------------------------
+
+Indestructible: Defines if the equipment can not be broken.
 
 ---------------------------------------
 

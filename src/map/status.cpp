@@ -4303,7 +4303,17 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if (!sd->inventory_data[index])
 			continue;
 
-		base_status->def += sd->inventory_data[index]->def;
+		// Equipments bonus
+		pc_bonus(sd, SP_DEF1, sd->inventory_data[index]->def);
+		pc_bonus(sd, SP_MDEF1, sd->inventory_data[index]->mdef);
+		pc_bonus(sd, SP_STR, sd->inventory_data[index]->str);
+		pc_bonus(sd, SP_AGI, sd->inventory_data[index]->agi);
+		pc_bonus(sd, SP_VIT, sd->inventory_data[index]->vit);
+		pc_bonus(sd, SP_INT, sd->inventory_data[index]->int_);
+		pc_bonus(sd, SP_DEX, sd->inventory_data[index]->dex);
+		pc_bonus(sd, SP_LUK, sd->inventory_data[index]->luk);
+		pc_bonus(sd, SP_MAXHP, sd->inventory_data[index]->max_hp);
+		pc_bonus(sd, SP_MAXSP, sd->inventory_data[index]->max_sp);
 
 		// Items may be equipped, their effects however are nullified.
 		if (opt&SCO_FIRST && sd->inventory_data[index]->equip_script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT)
@@ -4320,6 +4330,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		std::shared_ptr<s_refine_level_info> info = refine_db.findCurrentLevelInfo( *sd->inventory_data[index], sd->inventory.u.items_inventory[index] );
 
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
+			if (sd->inventory_data[index]->atk_ele != ELE_NEUTRAL)
+				pc_bonus(sd, SP_ATKELE, sd->inventory_data[index]->atk_ele);
+
 			int wlv = sd->inventory_data[index]->weapon_level;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
@@ -4422,8 +4435,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if(sd->inventory_data[index]) { // Arrows
 			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
-			if( !itemdb_group.item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
+			if( !itemdb_group.item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) { // Don't run scripts on throwable items
+				pc_bonus(sd, SP_ATKELE, sd->inventory_data[index]->atk_ele);
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
+			}
 			sd->state.lr_flag = 0;
 			if (!calculating) // Abort, run_script retriggered status_calc_pc. [Skotlex]
 				return 1;

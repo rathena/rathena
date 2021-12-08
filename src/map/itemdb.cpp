@@ -262,6 +262,119 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->def = 0;
 	}
 
+	if (this->nodeExists(node, "MagicDefense")) {
+		uint32 mdef;
+
+		if (!this->asUInt32(node, "MagicDefense", mdef))
+			return 0;
+
+		if (mdef > DEFTYPE_MAX) {
+			this->invalidWarning(node["MagicDefense"], "Item defense %d exceeds DEFTYPE_MAX (%d), capping to DEFTYPE_MAX.\n", mdef, DEFTYPE_MAX);
+			mdef = DEFTYPE_MAX;
+		}
+
+		item->mdef = mdef;
+	} else {
+		if (!exists)
+			item->mdef = 0;
+	}
+
+	if (this->nodeExists(node, "Str")) {
+		uint16 str;
+
+		if (!this->asUInt16(node, "Str", str))
+			return 0;
+
+		item->str = str;
+	} else {
+		if (!exists)
+			item->str = 0;
+	}
+
+	if (this->nodeExists(node, "Agi")) {
+		uint16 agi;
+
+		if (!this->asUInt16(node, "Agi", agi))
+			return 0;
+
+		item->agi = agi;
+	} else {
+		if (!exists)
+			item->agi = 0;
+	}
+
+	if (this->nodeExists(node, "Vit")) {
+		uint16 vit;
+
+		if (!this->asUInt16(node, "Vit", vit))
+			return 0;
+
+		item->vit = vit;
+	} else {
+		if (!exists)
+			item->vit = 0;
+	}
+
+	if (this->nodeExists(node, "Int")) {
+		uint16 int_;
+
+		if (!this->asUInt16(node, "Int", int_))
+			return 0;
+
+		item->int_ = int_;
+	} else {
+		if (!exists)
+			item->int_ = 0;
+	}
+
+	if (this->nodeExists(node, "Dex")) {
+		uint16 dex;
+
+		if (!this->asUInt16(node, "Dex", dex))
+			return 0;
+
+		item->dex = dex;
+	} else {
+		if (!exists)
+			item->dex = 0;
+	}
+
+	if (this->nodeExists(node, "Luk")) {
+		uint16 luk;
+
+		if (!this->asUInt16(node, "Luk", luk))
+			return 0;
+
+		item->luk = luk;
+	} else {
+		if (!exists)
+			item->luk = 0;
+	}
+
+	if (this->nodeExists(node, "MaxHp")) {
+		uint32 max_hp;
+
+		if (!this->asUInt32(node, "MaxHp", max_hp))
+			return 0;
+
+		item->max_hp = max_hp;
+	} else {
+		if (!exists)
+			item->max_hp = 0;
+	}
+
+	if (this->nodeExists(node, "MaxSp")) {
+		uint32 max_sp;
+
+		if (!this->asUInt32(node, "MaxSp", max_sp))
+			return 0;
+
+		item->max_sp = max_sp;
+	} else {
+		if (!exists)
+			item->max_sp = 0;
+	}
+
 	if (this->nodeExists(node, "Range")) {
 		uint16 range;
 
@@ -470,6 +583,30 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->weapon_level = 0;
 	}
 
+	if (this->nodeExists(node, "WeaponElement")) {
+		std::string ele;
+
+		if (!this->asString(node, "WeaponElement", ele))
+			return 0;
+
+		std::string ele_constant = "ELE_" + ele;
+		int64 constant;
+
+		if (item->type != IT_WEAPON && item->type != IT_AMMO) {
+			this->invalidWarning(node["WeaponElement"], "Item type is not a weapon/ammo.\n");
+			constant = ELE_NEUTRAL;
+		}
+		else if (!script_get_constant(ele_constant.c_str(), &constant) || !CHK_ELEMENT(constant)) {
+			this->invalidWarning(node["WeaponElement"], "Unknown weapon element %s, defaulting to NEUTRAL.\n", ele.c_str());
+			constant = ELE_NEUTRAL;
+		}
+
+		item->atk_ele = static_cast<e_element>(constant);
+	} else {
+		if (!exists)
+			item->atk_ele = ELE_NEUTRAL;
+	}
+
 	if( this->nodeExists( node, "ArmorLevel" ) ){
 		uint16 level;
 
@@ -543,6 +680,18 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	} else {
 		if (!exists)
 			item->flag.no_refine = true;
+	}
+ 
+	if (this->nodeExists(node, "Indestructible")) {
+		bool indestructible;
+
+		if (!this->asBool(node, "Indestructible", indestructible))
+			return 0;
+
+		item->flag.indestructible = indestructible;
+	} else {
+		if (!exists)
+			item->flag.indestructible = false;
 	}
 
 	if (this->nodeExists(node, "View")) {
@@ -2204,6 +2353,24 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		node["Defense"] = std::stoi(str[index]);
 	if (!str[++index].empty())
+		node["MagicDefense"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Str"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Agi"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Vit"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Int"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Dex"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Luk"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["MaxHp"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["MaxSp"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		node["Range"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["Slots"] = std::stoi(str[index]);
@@ -2325,6 +2492,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 
 	if (!str[++index].empty())
 		node["WeaponLevel"] = std::stoi(str[index]);
+	if (!str[++index].empty() && strcmp(str[index].c_str(), "Neutral") != 0)
+		node["WeaponElement"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["ArmorLevel"] = std::stoi(str[index]);
 	if (!str[++index].empty())
@@ -2333,6 +2502,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		node["EquipLevelMax"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["Refineable"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		node["Indestructible"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		node["View"] = std::stoi(str[index]);
 	if (!str[++index].empty())
@@ -2455,13 +2626,13 @@ static int itemdb_read_sqldb(void) {
 
 	for( uint8 fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
 		// retrieve all rows from the item database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`type`,`subtype`,`price_buy`,`price_sell`,`weight`,`attack`,`defense`,`range`,`slots`,"
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`type`,`subtype`,`price_buy`,`price_sell`,`weight`,`attack`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`max_sp`,`range`,`slots`,"
 			"`job_all`,`job_acolyte`,`job_alchemist`,`job_archer`,`job_assassin`,`job_barddancer`,`job_blacksmith`,`job_crusader`,`job_gunslinger`,`job_hunter`,`job_knight`,`job_mage`,`job_merchant`,"
 			"`job_monk`,`job_ninja`,`job_novice`,`job_priest`,`job_rogue`,`job_sage`,`job_soullinker`,`job_stargladiator`,`job_supernovice`,`job_swordman`,`job_taekwon`,`job_thief`,`job_wizard`,"
 			"`class_all`,`class_normal`,`class_upper`,`class_baby`,`gender`,"
 			"`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,"
 			"`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,"
-			"`weapon_level`,`armor_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
+			"`weapon_level`,`weapon_element`,`armor_level`,`equip_level_min`,`equip_level_max`,`refineable`,`indestructible`,`view`,`alias_name`,"
 			"`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,"
 			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
 			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"
