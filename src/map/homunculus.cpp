@@ -346,12 +346,10 @@ int hom_delete(struct homun_data *hd, int emote)
 void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
 	nullpo_retv(hd);
 
-	int32 c = hom_class2index(hd->homunculus.prev_class);
+	auto homun = homunculus_db.find(hd->homunculus.prev_class);
 
 	/* load previous homunculus form skills first. */
-	if (hd->homunculus.prev_class != 0 && c >= 0) {
-		auto homun = homunculus_db.find(c);
-
+	if (hd->homunculus.prev_class != 0 && homun != nullptr) {
 		for (const auto &skit : homun->skill_tree) {
 			uint16 skill_id = skit.id;
 			short idx = hom_skill_get_index(skill_id);
@@ -378,12 +376,11 @@ void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve) {
 		}
 	}
 
-	if ((c = hom_class2index(hd->homunculus.class_)) < 0)
+	auto homun_current = homunculus_db.find(hd->homunculus.class_);
+	if (homun_current == nullptr)
 		return;
 
-	auto homun = homunculus_db.find(c);
-
-	for (const auto &skit : homun->skill_tree) {
+	for (const auto &skit : homun_current->skill_tree) {
 		uint16 skill_id = skit.id;
 		short idx = hom_skill_get_index(skill_id);
 
@@ -1541,7 +1538,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "Status")) {
 		const YAML::Node &status = node["Status"];
 
-		if (!this->nodesExist(status, { "Race", "Element", "Size", "Hp", "Sp", "Str", "Agi", "Vit", "Int", "Dex", "Luk" }))
+		if (!exists && !this->nodesExist(status, { "Race", "Element", "Size", "Hp", "Sp", "Str", "Agi", "Vit", "Int", "Dex", "Luk" }))
 			return 0;
 
 		if (this->nodeExists(status, "Race")) {
@@ -1579,7 +1576,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(status, "Size")) {
-			const YAML::Node &sizeNode = node["Size"];
+			const YAML::Node &sizeNode = status["Size"];
 			std::vector<std::string> size_list = { "Base", "Evolution" };
 
 			for (const auto &sizeit : size_list) {
