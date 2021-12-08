@@ -4707,7 +4707,7 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 		body << YAML::Key << "EvolutionClass" << YAML::Value << name2Upper(constant_lookup(atoi(str[1]), "MER_") + 4);
 	body << YAML::Key << "Name" << YAML::Value << str[2];
 	if (atoi(str[3]) != ITEMID_PET_FOOD)
-		body << YAML::Key << "Food" << YAML::Value << name2Upper(*util::umap_find(aegis_itemnames, (uint16)atoi(str[3])));
+		body << YAML::Key << "Food" << YAML::Value << name2Upper(*util::umap_find(aegis_itemnames, (t_itemid)atoi(str[3])));
 	if (atoi(str[4]) != 60000)
 		body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[4]);
 	if (atoi(str[9]) != 700)

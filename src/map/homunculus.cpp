@@ -1513,14 +1513,14 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Food", food))
 			return 0;
 
-		item_data *item = itemdb_search_aegisname(food.c_str());
+		std::shared_ptr<item_data> item = item_db.search_aegisname(food.c_str());
 
-		if (item == nullptr) {
+		if (item != nullptr)
+			hom->foodID = item->nameid;
+		else {
 			this->invalidWarning(node["Food"], "Invalid homunculus Food %s, defaulting to Pet_Food.\n", food.c_str());
-			item->nameid = ITEMID_PET_FOOD;
+			hom->foodID = ITEMID_PET_FOOD;
 		}
-
-		hom->foodID = item->nameid;
 	} else {
 		if (!exists)
 			hom->foodID = ITEMID_PET_FOOD;
