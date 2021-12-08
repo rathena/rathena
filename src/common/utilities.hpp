@@ -5,6 +5,7 @@
 #define UTILILITIES_HPP
 
 #include <algorithm>
+#include <locale>
 #include <map>
 #include <memory>
 #include <string>
@@ -13,6 +14,10 @@
 
 #include "cbasetypes.hpp"
 #include "random.hpp"
+
+#ifndef __has_builtin
+	#define __has_builtin(x) 0
+#endif
 
 // Class used to perform time measurement
 class cScopeTimer {
@@ -125,7 +130,7 @@ namespace rathena {
 		}
 
 		/**
-		 * Get a random value from the given map
+		 * Get a random value from the given unordered map
 		 * @param map: Unordered Map to search through
 		 * @return A random value by reference
 		*/
@@ -135,6 +140,19 @@ namespace rathena {
 			std::advance( it, rnd_value( 0, map.size() - 1 ) );
 
 			return it->second;
+		}
+
+		/**
+		 * Get a random value from the given vector
+		 * @param vec: Vector to search through
+		 * @return A random value by reference
+		*/
+		template <typename K> K &vector_random(std::vector<K> &vec) {
+			auto it = vec.begin();
+
+			std::advance(it, rnd_value(0, vec.size() - 1));
+
+			return *it;
 		}
 
 		/**
@@ -153,7 +171,7 @@ namespace rathena {
 		 * @param value: Value wanted
 		 * @return True on success or false on failure
 		 */
-		template <typename K, typename V> bool vector_exists(std::vector<K> &vec, V value) {
+		template <typename K, typename V> bool vector_exists(const std::vector<K> &vec, V value) {
 			auto it = std::find(vec.begin(), vec.end(), value);
 
 			if (it != vec.end())
@@ -175,9 +193,76 @@ namespace rathena {
 				vector.erase(vector.begin() + index);
 		}
 
-		bool safe_addition( int64 a, int64 b, int64& result );
+		/**
+		 * Determine if a value exists in the vector and then erase it
+		 * @param vector: Vector to erase value from
+		 * @param value: Value to remove
+		 */
+		template <typename K, typename V> void vector_erase_if_exists(std::vector<K> &vector, V value) {
+			auto it = std::find(vector.begin(), vector.end(), value);
+
+			if (it != vector.end()) {
+				if (vector.size() == 1) {
+					vector.clear();
+					vector.shrink_to_fit();
+				} else
+					vector.erase(it);
+			}
+		}
+
+#if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
+		template <typename T> bool safe_addition(T a, T b, T &result) {
+			return __builtin_add_overflow(a, b, &result);
+		}
+#else
+		template <typename T> bool safe_addition( T a, T b, T& result ){
+			bool overflow = false;
+
+			if( std::numeric_limits<T>::is_signed ){
+				if( b < 0 ){
+					if( a < ( (std::numeric_limits<T>::min)() - b ) ){
+						overflow = true;
+					}
+				}else{
+					if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+						overflow = true;
+					}
+				}
+			}else{
+				if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+					overflow = true;
+				}
+			}
+
+			result = a + b;
+
+			return overflow;
+		}
+#endif
+
 		bool safe_substraction( int64 a, int64 b, int64& result );
 		bool safe_multiplication( int64 a, int64 b, int64& result );
+
+		/**
+		 * Safely add values without overflowing.
+		 * @param a: Holder of value to increment
+		 * @param b: Increment by
+		 * @param cap: Cap value
+		 * @return Result of a + b
+		 */
+		template <typename T> T safe_addition_cap( T a, T b, T cap ){
+			T result;
+
+			if( rathena::util::safe_addition( a, b, result ) ){
+				return cap;
+			}else{
+				return result;
+			}
+		}
+
+		template <typename T> void tolower( T& string ){
+			std::transform( string.begin(), string.end(), string.begin(), ::tolower );
+		}
 	}
 }
 

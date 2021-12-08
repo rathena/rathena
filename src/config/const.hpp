@@ -4,6 +4,8 @@
 #ifndef CONFIG_CONST_H
 #define CONFIG_CONST_H
 
+#include "../common/cbasetypes.hpp"
+
 /**
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
@@ -53,6 +55,25 @@
 	#define DEFTYPE_MAX CHAR_MAX
 #endif
 
+/**
+ * EXP definition type
+ */
+typedef uint64 t_exp;
+
+/// Max Base and Job EXP for players
+#if PACKETVER >= 20170830
+	const t_exp MAX_EXP = INT64_MAX;
+#else
+	const t_exp MAX_EXP = INT32_MAX;
+#endif
+
+/// Max EXP for guilds
+const t_exp MAX_GUILD_EXP = INT32_MAX;
+/// Max Base EXP for player on Max Base Level
+const t_exp MAX_LEVEL_BASE_EXP = 99999999;
+/// Max Job EXP for player on Max Job Level
+const t_exp MAX_LEVEL_JOB_EXP = 999999999;
+
 /* pointer size fix which fixes several gcc warnings */
 #ifdef __64BIT__
 	#define __64BPRTSIZE(y) (intptr)y
@@ -72,14 +93,14 @@
 /* Renewal's dmg level modifier, used as a macro for a easy way to turn off. */
 #ifdef RENEWAL_LVDMG
 	#define RE_LVL_DMOD(val) \
-		if( status_get_lv(src) > 100 && val > 0 ) \
+		if( status_get_lv(src) > 99 && val > 0 ) \
 			skillratio = skillratio * status_get_lv(src) / val;
 	#define RE_LVL_MDMOD(val) \
-		if( status_get_lv(src) > 100 && val > 0) \
+		if( status_get_lv(src) > 99 && val > 0) \
 			md.damage = md.damage * status_get_lv(src) / val;
 	/* ranger traps special */
 	#define RE_LVL_TMDMOD() \
-		if( status_get_lv(src) > 100 ) \
+		if( status_get_lv(src) > 99 ) \
 			md.damage = md.damage * 150 / 100 + md.damage * status_get_lv(src) / 100;
 #else
 	#define RE_LVL_DMOD(val)

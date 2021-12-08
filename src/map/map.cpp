@@ -93,9 +93,11 @@ char guild_storage_log_table[32] = "guild_storage_log";
 char log_db_ip[64] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "ragnarok";
+char log_db_pw[32] = "";
 char log_db_db[32] = "log";
 Sql* logmysql_handle;
+
+uint32 start_status_points = 48;
 
 // DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
@@ -336,6 +338,9 @@ int map_addblock(struct block_list* bl)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if (mapdata->cell == nullptr) // Player warped to a freed map. Stop them!
+		return 1;
+
 	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 	{
 		ShowError("map_addblock: out-of-bounds coordinates (\"%s\",%d,%d), map is %dx%d\n", mapdata->name, x, y, mapdata->xs, mapdata->ys);
@@ -504,7 +509,9 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 				if (sc->data[SC_PROPERTYWALK]
 					&& sc->data[SC_PROPERTYWALK]->val3 < skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2)
 					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_ELECTRICWALK,NULL,0) == NULL
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,NPC_ELECTRICWALK,NULL,0) == NULL
 					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_FIREWALK,NULL,0) == NULL
+					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,NPC_FIREWALK,NULL,0) == NULL
 					&& skill_unitsetting(bl,sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2,x0, y0,0)) {
 						sc->data[SC_PROPERTYWALK]->val3++;
 				}
@@ -1420,7 +1427,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;
@@ -1456,7 +1463,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;
@@ -1832,6 +1839,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param third_charid : 3rd player that could loot the item (3rd charid that could loot for third_get_charid duration)
  * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
  * @param mob_id: Monster ID if dropped by monster
+ * @param canShowEffect: enable pillar effect on the dropped item (if set in the database)
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
@@ -1841,7 +1849,7 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 
 	nullpo_ret(item);
 
-	if (!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid)&1))
+	if (!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid).trade))
 		return 0; //can't be dropped
 
 	if (!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
@@ -2061,8 +2069,8 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->bg_id)
 		bg_team_leave(sd, true, true);
 
-	if (sd->bg_queue != nullptr)
-		bg_queue_leave(sd);
+	if (sd->bg_queue_id > 0)
+		bg_queue_leave(sd, false);
 
 	if( sd->status.clan_id )
 		clan_member_left(sd);
@@ -2086,6 +2094,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_EMERGENCY_MOVE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
 		if(sd->sc.data[SC_PROVOKE] && sd->sc.data[SC_PROVOKE]->timer == INVALID_TIMER)
 			status_change_end(&sd->bl, SC_PROVOKE, INVALID_TIMER); //Infinite provoke ends on logout
@@ -2146,6 +2155,10 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULGOLEM, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULSHADOW, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFALCON, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFAIRY, INVALID_TIMER);
 		}
 	}
 
@@ -2165,12 +2178,12 @@ int map_quit(struct map_session_data *sd) {
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if( mapdata->instance_id )
+	if( mapdata->instance_id > 0 )
 		instance_delusers(mapdata->instance_id);
 
 	unit_remove_map_pc(sd,CLR_RESPAWN);
 
-	if( mapdata->instance_id ) { // Avoid map conflicts and warnings on next login
+	if( mapdata->instance_id > 0 ) { // Avoid map conflicts and warnings on next login
 		int16 m;
 		struct point *pt;
 		if( mapdata->save.map )
@@ -2226,7 +2239,7 @@ struct homun_data* map_id2hd(int id){
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct mercenary_data* map_id2mc(int id){
+struct s_mercenary_data* map_id2mc(int id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
@@ -2236,7 +2249,7 @@ struct pet_data* map_id2pd(int id){
 	return BL_CAST(BL_PET, bl);
 }
 
-struct elemental_data* map_id2ed(int id) {
+struct s_elemental_data* map_id2ed(int id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }
@@ -2659,7 +2672,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 	}
 	// npcs with trigger area are grouped
 	// 0 < npc_num_warp < npc_num_area < npc_num
-	if (xs < 0 && ys < 0)
+	if (xs < 0 || ys < 0)
 		mapdata->npc[ mapdata->npc_num ] = nd;
 	else {
 		switch (nd->subtype) {
@@ -2688,18 +2701,16 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(const char *name, unsigned short instance_id)
+int map_addinstancemap(int src_m, int instance_id)
 {
-	int16 src_m = map_mapname2mapid(name);
-	char iname[MAP_NAME_LENGTH];
-	size_t num_cell, size;
-
 	if(src_m < 0)
 		return -1;
 
+	const char *name = map_mapid2mapname(src_m);
+
 	if(strlen(name) > 20) {
 		// against buffer overflow
-		ShowError("map_addisntancemap: can't add long map name \"%s\"\n", name);
+		ShowError("map_addinstancemap: Map name \"%s\" is too long.\n", name);
 		return -2;
 	}
 
@@ -2722,17 +2733,9 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	struct map_data *src_map = map_getmapdata(src_m);
 	struct map_data *dst_map = map_getmapdata(dst_m);
 
-	strcpy(iname, name);
-
 	// Alter the name
-	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
-	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
-		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-		snprintf(dst_map->name, sizeof(dst_map->name),"%hu#%s", instance_id, iname);
-	} else
-		snprintf(dst_map->name, sizeof(dst_map->name),"%.3hu%s", instance_id, iname);
-	dst_map->name[MAP_NAME_LENGTH-1] = '\0';
+	instance_generate_mapname(src_m, instance_id, dst_map->name);
 
 	dst_map->m = dst_m;
 	dst_map->instance_id = instance_id;
@@ -2750,21 +2753,23 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	dst_map->npc_num_warp = 0;
 
 	// Reallocate cells
-	num_cell = dst_map->xs * dst_map->ys;
+	size_t num_cell = dst_map->xs * dst_map->ys;
+
 	CREATE( dst_map->cell, struct mapcell, num_cell );
 	memcpy( dst_map->cell, src_map->cell, num_cell * sizeof(struct mapcell) );
 
-	size = dst_map->bxs * dst_map->bys * sizeof(struct block_list*);
+	size_t size = dst_map->bxs * dst_map->bys * sizeof(struct block_list*);
+
 	dst_map->block = (struct block_list **)aCalloc(1,size);
 	dst_map->block_mob = (struct block_list **)aCalloc(1,size);
 
 	dst_map->index = mapindex_addmap(-1, dst_map->name);
-	dst_map->channel = NULL;
+	dst_map->channel = nullptr;
 	dst_map->mob_delete_timer = INVALID_TIMER;
 
 	map_data_copy(dst_map, src_map);
 
-	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, name, src_map->m);
+	ShowInfo("[Instance] Created map '%s' (%d) from '%s' (%d).\n", dst_map->name, dst_map->m, name, src_map->m);
 
 	map_addmap2db(dst_map);
 
@@ -2823,7 +2828,7 @@ int map_delinstancemap(int m)
 {
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if(m < 0 || !mapdata->instance_id)
+	if(m < 0 || mapdata->instance_id <= 0)
 		return 0;
 
 	// Kick everyone out
@@ -2839,22 +2844,24 @@ int map_delinstancemap(int m)
 	// Free memory
 	if (mapdata->cell)
 		aFree(mapdata->cell);
-	mapdata->cell = NULL;
+	mapdata->cell = nullptr;
 	if (mapdata->block)
 		aFree(mapdata->block);
-	mapdata->block = NULL;
+	mapdata->block = nullptr;
 	if (mapdata->block_mob)
 		aFree(mapdata->block_mob);
-	mapdata->block_mob = NULL;
+	mapdata->block_mob = nullptr;
 
 	map_free_questinfo(mapdata);
 	mapdata->damage_adjust = {};
 	mapdata->flag.clear();
 	mapdata->skill_damage.clear();
+	mapdata->instance_id = 0;
 
 	mapindex_removemap(mapdata->index);
 	map_removemapdb(mapdata);
 
+	mapdata->index = 0;
 	memset(&mapdata->name, '\0', sizeof(map[0].name)); // just remove the name
 	return 1;
 }
@@ -2921,7 +2928,7 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	if( !battle_config.mob_remove_damaged && md->status.hp < md->status.max_hp )
 		return 0;
 	// is a mvp
-	if( md->db->mexp > 0 )
+	if( md->get_bosstype() == BOSSTYPE_MVP )
 		return 0;
 
 	unit_free(&md->bl,CLR_OUTSIGHT);
@@ -2966,7 +2973,7 @@ void map_removemobs(int16 m)
 		return; //Mobs are already scheduled for removal
 
 	// Don't remove mobs on instance map
-	if (mapdata->instance_id)
+	if (mapdata->instance_id > 0)
 		return;
 
 	mapdata->mob_delete_timer = add_timer(gettick()+battle_config.mob_remove_delay, map_removemobs_timer, m, 0);
@@ -2985,17 +2992,15 @@ const char* map_mapid2mapname(int m)
 	if (!mapdata)
 		return "";
 
-	if (mapdata->instance_id) { // Instance map check
-		struct instance_data *im = &instance_data[mapdata->instance_id];
+	if (mapdata->instance_id > 0) { // Instance map check
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, map[m].instance_id);
 
-		if (!im) // This shouldn't happen but if it does give them the map we intended to give
+		if (!idata) // This shouldn't happen but if it does give them the map we intended to give
 			return mapdata->name;
 		else {
-			uint8 i;
-
-			for (i = 0; i < im->cnt_map; i++) { // Loop to find the src map we want
-				if (im->map[i]->m == m)
-					return map[im->map[i]->src_m].name;
+			for (const auto &it : idata->map) { // Loop to find the src map we want
+				if (it.m == m)
+					return map_getmapdata(it.src_m)->name;
 			}
 		}
 	}
@@ -3646,6 +3651,7 @@ void map_flags_init(void){
 
 		mapdata->flag.clear();
 		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
+		mapdata->drop_list.clear();
 		args.flag_val = 100;
 
 		// additional mapflag data
@@ -3686,10 +3692,6 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
 	dst_map->zone = src_map->zone;
-
-	// Mimic questinfo
-	if (!src_map->qi_data.empty())
-		src_map->qi_data = dst_map->qi_data;
 }
 
 /**
@@ -4252,6 +4254,9 @@ int inter_config_read(const char *cfgName)
 		if(strcmpi(w1,"log_db_db")==0)
 			safestrncpy(log_db_db, w2, sizeof(log_db_db));
 		else
+		if(strcmpi(w1,"start_status_points")==0)
+			start_status_points=atoi(w2);
+		else
 		if( mapreg_config_read(w1,w2) )
 			continue;
 		//support the import command, just like any other config
@@ -4338,29 +4343,27 @@ int log_sql_init(void)
 
 void map_remove_questinfo(int m, struct npc_data *nd) {
 	struct map_data *mapdata = map_getmapdata(m);
-	struct s_questinfo *qi;
 
 	nullpo_retv(nd);
 	nullpo_retv(mapdata);
 
-	for (int i = 0; i < mapdata->qi_data.size(); i++) {
-		qi = &mapdata->qi_data[i];
-		if (qi && qi->nd == nd) {
-			script_free_code(qi->condition);
-			mapdata->qi_data.erase(mapdata->qi_data.begin() + i);
-		}
-	}
+	util::vector_erase_if_exists(mapdata->qi_npc, nd->bl.id);
+	nd->qi_data.clear();
 }
 
 static void map_free_questinfo(struct map_data *mapdata) {
 	nullpo_retv(mapdata);
 
-	for (const auto &it : mapdata->qi_data) {
-		if (it.condition)
-			script_free_code(it.condition);
+	for (const auto &it : mapdata->qi_npc) {
+		struct npc_data *nd = map_id2nd(it);
+
+		if (!nd || nd->qi_data.empty())
+			continue;
+
+		nd->qi_data.clear();
 	}
 
-	mapdata->qi_data.clear();
+	mapdata->qi_npc.clear();
 }
 
 /**
@@ -4426,25 +4429,19 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * Add new skill damage adjustment entry for a map
  * @param m: Map data
  * @param skill_id: Skill ID
- * @param pc: Rate to PC
- * @param mobs: Rate to Monster
- * @param boss: Rate to Boss-monster
- * @param other: Rate to Other target
- * @param caster: Caster type
+ * @param args: Mapflag arguments
  */
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	struct s_skill_damage entry = {};
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args) {
+	nullpo_retv(m);
+	nullpo_retv(args);
 
-	for (int i = 0; i < SKILLDMG_MAX; i++)
-		entry.rate[i] = rate[i];
-	entry.caster = caster;
-
-	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) {
-		m->skill_damage[skill_id] = entry;
+	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) { // Entry exists
+		args->skill_damage.caster |= m->skill_damage[skill_id].caster;
+		m->skill_damage[skill_id] = args->skill_damage;
 		return;
 	}
 
-	m->skill_damage.insert({ skill_id, entry });
+	m->skill_damage.insert({ skill_id, args->skill_damage }); // Add new entry
 }
 
 /**
@@ -4454,6 +4451,8 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
  * @param per: Skill duration adjustment value in percent
  */
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	nullpo_retv(mapd);
+
 	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
 		mapd->skill_duration[skill_id] += per;
 	else // Update previous entry
@@ -4747,13 +4746,23 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_RESTRICTED:
-			nullpo_retr(false, args);
+			if (!status) {
+				if (args == nullptr) {
+					mapdata->zone = 0;
+				} else {
+					mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
+				}
 
-			mapdata->flag[mapflag] = status;
-			if (!status)
-				mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
-			else
+				// Don't completely disable the mapflag's status if other zones are active
+				if (mapdata->zone == 0) {
+					mapdata->flag[mapflag] = status;
+				}
+			} else {
+				nullpo_retr(false, args);
+
 				mapdata->zone |= (1 << (args->flag_val + 1)) << 3;
+				mapdata->flag[mapflag] = status;
+			}
 			break;
 		case MF_NOCOMMAND:
 			if (status) {
@@ -4824,13 +4833,13 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				nullpo_retr(false, args);
 
 				if (!args->flag_val) { // Signifies if it's a single skill or global damage adjustment
-					if (!args->skill_damage.caster) {
+					if (args->skill_damage.caster == 0) {
 						ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", mapdata->name);
 						return false;
 					}
 
-					mapdata->damage_adjust.caster = args->skill_damage.caster;
-					for (int i = 0; i < SKILLDMG_MAX; i++)
+					mapdata->damage_adjust.caster |= args->skill_damage.caster;
+					for (int i = SKILLDMG_PC; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
 				}
 			}
@@ -4874,6 +4883,10 @@ void do_final(void){
 	for( struct map_session_data* sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 		map_quit(sd);
 	mapit_free(iter);
+
+	for (int i = 0; i < map_num; i++) {
+		map_free_questinfo(map_getmapdata(i));
+	}
 
 	/* prepares npcs for a faster shutdown process */
 	do_clear_npc();
@@ -4938,7 +4951,6 @@ void do_final(void){
 			for (int j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (mapdata->moblist[j]) aFree(mapdata->moblist[j]);
 		}
-		map_free_questinfo(mapdata);
 		mapdata->damage_adjust = {};
 	}
 

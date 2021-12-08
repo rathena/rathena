@@ -1,12 +1,6 @@
 //===== rAthena Script =======================================
 //= Mapflag: Guild versus Guild mode.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Players can attack other guilds, and will have their guild
 //= icons shown. WoE damage reductions will also take place.
 //= gvg: Turns on GvG mode.
@@ -14,9 +8,10 @@
 //= gvg_dungeon: Describes dungeon maps for WoE.
 //= gvg_te: Turns on GvG mode for WoE:TE.
 //= gvg_te_castle: Describes castle maps for WoE:TE.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added GVG TE Castles. [Cydh]
+//= 1.2 Disable costumes in GvG castles. [Aleos]
 //============================================================
 
 // Guild Dungeons =========
@@ -38,3 +33,15 @@ te_aldecas2	mapflag	gvg_te_castle
 te_aldecas3	mapflag	gvg_te_castle
 te_aldecas4	mapflag	gvg_te_castle
 te_aldecas5	mapflag	gvg_te_castle
+
+// Disable Costumes =======
+te_prtcas01	mapflag	nocostume
+te_prtcas02	mapflag	nocostume
+te_prtcas03	mapflag	nocostume
+te_prtcas04	mapflag	nocostume
+te_prtcas05	mapflag	nocostume
+te_aldecas1	mapflag	nocostume
+te_aldecas2	mapflag	nocostume
+te_aldecas3	mapflag	nocostume
+te_aldecas4	mapflag	nocostume
+te_aldecas5	mapflag	nocostume

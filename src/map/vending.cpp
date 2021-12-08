@@ -94,7 +94,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 
 	sd->vended_id = vsd->vender_id;  // register vending uid
 
-	clif_vendinglist(sd, id, vsd->vending);
+	clif_vendinglist( sd, vsd );
 }
 
 /**
@@ -227,7 +227,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		// vending item
 		pc_additem(sd, &vsd->cart.u.items_cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
-		z += ((double)vsd->vending[i].value * (double)amount);
+		z += ((double)vsd->vending[vend_list[i]].value * (double)amount);
 
 		if( vsd->vending[vend_list[i]].amount ) {
 			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_table, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->cart.u.items_cart[idx].id ) != SQL_SUCCESS ) {
@@ -350,8 +350,11 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		i++; // item successfully added
 	}
 
-	if( i != j )
-		clif_displaymessage (sd->fd, msg_txt(sd,266)); //"Some of your items cannot be vended and were removed from the shop."
+	if (i != j) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
+		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
+		return 5;
+	}
 
 	if( i == 0 ) { // no valid item found
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
@@ -398,7 +401,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
  * @param nameid : item id
  * @return 0:not selling it, 1: yes
  */
-bool vending_search(struct map_session_data* sd, unsigned short nameid)
+bool vending_search(struct map_session_data* sd, t_itemid nameid)
 {
 	int i;
 
@@ -406,7 +409,7 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
 		return false;
 	}
 
-	ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == (short)nameid );
+	ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == nameid );
 	if( i == sd->vend_num ) { // not found
 		return false;
 	}
@@ -430,7 +433,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 		return true;
 
 	for( idx = 0; idx < s->item_count; idx++ ) {
-		ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == s->itemlist[idx] );
+		ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == s->itemlist[idx].itemId );
 		if( i == sd->vend_num ) { // not found
 			continue;
 		}
@@ -448,10 +451,10 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			if( itemdb_isspecial(it->card[0]) ) { // something, that is not a carded
 				continue;
 			}
-			slot = itemdb_slot(it->nameid);
+			slot = itemdb_slots(it->nameid);
 
 			for( c = 0; c < slot && it->card[c]; c ++ ) {
-				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx] == it->card[c] );
+				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx].itemId == it->card[c] );
 				if( cidx != s->card_count ) { // found
 					break;
 				}
@@ -462,9 +465,26 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			}
 		}
 
-		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine) ) { // result set full
+		// Check if the result set is full
+		if( s->search_sd->searchstore.items.size() >= (unsigned int)battle_config.searchstore_maxresults ){
 			return false;
 		}
+
+		std::shared_ptr<s_search_store_info_item> ssitem = std::make_shared<s_search_store_info_item>();
+
+		ssitem->store_id = sd->vender_id;
+		ssitem->account_id = sd->status.account_id;
+		safestrncpy( ssitem->store_name, sd->message, sizeof( ssitem->store_name ) );
+		ssitem->nameid = it->nameid;
+		ssitem->amount = sd->vending[i].amount;
+		ssitem->price = sd->vending[i].value;
+		for( int j = 0; j < MAX_SLOTS; j++ ){
+			ssitem->card[j] = it->card[j];
+		}
+		ssitem->refine = it->refine;
+		ssitem->enchantgrade = it->enchantgrade;
+
+		s->search_sd->searchstore.items.push_back( ssitem );
 	}
 
 	return true;

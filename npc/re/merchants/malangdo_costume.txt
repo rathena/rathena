@@ -1,0 +1,1451 @@
+//===== rAthena Script =======================================
+//= Costumes NPCs.
+//===== Description: =========================================
+//= [Official Conversion]
+//= Costumes exchange/enchant NPCs in Malangdo.
+//=
+//= Note:
+//=   Although new enchant boxes are already exchanged,
+//=   their enchants are currently not supported.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//= 1.1 Corrected exchange costumes for enchant box 4-21 [Everade]
+//= 1.2 Added support for more than 120 missing enchants [Everade]
+//============================================================
+
+// Missing 4th slot enchanter
+//mal_in01,24,121,x	script	Gregio Grumani#eventhat	x,{
+
+// These 4th slot Enchants are included in Enchant Stone Box 4-21
+//ID		Loc
+//25058, , 	Upper
+//25059, , 	Middle
+//25136, , 	Middle
+//25137, , 	Lower
+//25138, , 	Middle
+//25176, , 	Middle
+//25177, , 	Middle
+//25178, , 	Middle
+//25224, , 	Middle
+//25225, , 	Middle
+//25226, , 	Lower
+//25205, , 	Lower
+
+
+// Costume exchange
+mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
+	if (checkweight(1301,1) == 0) {
+		mes "- Please stop here!! -";
+		mes "- You have carried too much items, -";
+		mes "- Therefore unable receive any item again, -";
+		mes "- Please reduce your weight, -";
+		mes "- And come back again later! -";
+		close;
+	}
+	disable_items;
+	mes "[Designer Heidam]";
+	mes "I am Designer Heidam, who has all kinds of cool costumes in the World.";
+	mes "If you have any Kitcoins with you, come look for Designer Heidam!";
+	next;
+	if (select( "Exchange costume for random enchant box", "Continue conversation" ) == 2) {
+		mes "[Designer Heidam]";
+		mes "Though I look out of shape right now, I used to be a well known fashion model and designer!";
+		next;
+		mes "[Designer Heidam]";
+		mes "Don't pity me! I am well aware of my looks, but I like who I am inside.";
+		close;
+	}
+	mes "[" + strcharinfo(0) + "]";
+	mes "This item is useless to me! Do you have anything else?";
+	next;
+	mes "[Designer Heidam]";
+	mes "Oh, then I can exchange it for a box of costume enchantment items.";
+	next;
+	mes "- Rummaging -";
+	next;
+	// ===================================================================
+	// =================== Costume Enchant Stone Box 4 ===================
+	// ===================================================================
+	.@box_list[0] = 22826;		// Enchant_Stone_Box4
+	setarray .@item_list_0[0],
+		19608,		// C_Chick_Hat
+		19654,		// C_J_Captain_Hat
+		19712,		// C_Little_Angel_Doll
+		19721,		// C_Darkness_Helm
+		19823,		// C_White_Cat_Hood
+		19876,		// C_Rabbit_Ear_Hat
+		20036,		// C_Sword_Master_Crown
+		20145,		// C_Robo_Eye
+		20146,		// C_Angel_Spirit
+		20147,		// C_Bell_Pigeon
+		20746;		// C_Rudra_Wing
+	// ===================================================================
+	// =================== Costume Enchant Stone Box 5 ===================
+	// ===================================================================
+	.@box_list[1] = 22868;		// Enchant_Stone_Box5
+	setarray .@item_list_1[0],
+		19643,		// C_Whikebain_Ears
+		20130,		// C_Whisper_Tall_Hat
+		20132,		// C_Subject_Aura
+		20133,		// C_Poring_Mascot_Costume
+		20199,		// C_Evil_Marcher_Hat
+		20200,		// C_Rabbit_Head_Dress
+		20201,		// C_Banshee_Master_Kiss
+		20202,		// C_Deviruchi_Balloon
+		20230,		// C_Mask_Of_Bankrupt
+		20231,		// C_Snowman_Hat
+		20232,		// C_Celines_Ribbon
+		20233,		// C_Gold_Angel_Sculpture
+		20761;		// C_Wing_Of_Happiness
+	// ===================================================================
+	// =================== Costume Enchant Stone Box 6 ===================
+	// ===================================================================
+	.@box_list[2] = 22905;		// Enchant_Stone_Box6
+	setarray .@item_list_2[0],
+		19954,		// C_3D_Glasses
+		20071,		// C_Worg_In_Mouth
+		20239,		// C_Large_Ribbon_Muffler
+		20242,		// C_Snownow_Hat
+		20273,		// C_Soft_Sheep_Hat
+		20762;		// C_GreatDevilWing
+	// ===================================================================
+	// =================== Costume Enchant Stone Box 7 ===================
+	// ===================================================================
+	.@box_list[3] = 22953;		// Enchant_Stone_Box7
+	setarray .@item_list_3[0],
+		18740,		// C_Hair_Of_The_Strong
+		19815,		// C_Lolita_Ten_Gallon_Hat
+		20255,		// C_Love_Cheek
+		20266,		// C_Secret_Zipper
+		20268,		// C_Sleep_Eclipse_Family
+		20286,		// C_Under_Rim_Glasses_Red
+		20329,		// C_Tare_HSchool_Doll_Hat
+		20330;		// C_Sombrero
+	// ===================================================================
+	// =================== Costume Enchant Stone Box 8 ===================
+	// ===================================================================
+	.@box_list[4] = 23001;		// Enchant_Stone_Box8
+	setarray .@item_list_4[0],
+		5979,		// C_Angel_Fluttering
+		19158,		// C_Gemini_Eyes
+		19816,		// C_Pecopeco_Cap
+		20315,		// C_Analyze_Eye
+		20318,		// C_Charleston_Antenna
+		20325,		// C_Little_Aquarium
+		20340,		// C_Straight_Pony_BL
+		20341,		// C_Cowlick_BL
+		20342,		// C_Loose_Wave_Twin_BL
+		20349,		// C_FlyingGalapago
+		20350,		// C_Cowlick_YL
+		20351,		// C_Cowlick_GN
+		20352,		// C_Cowlick_PP
+		20353,		// C_Cowlick_RD
+		20354,		// C_Cowlick_OM
+		20355,		// C_Cowlick_BU
+		20356,		// C_Cowlick_WH
+		20357,		// C_Straight_Pony_YL
+		20358,		// C_Straight_Pony_GN
+		20359,		// C_Straight_Pony_PP
+		20360,		// C_Straight_Pony_RD
+		20361,		// C_Straight_Pony_OM
+		20362,		// C_Straight_Pony_BU
+		20363,		// C_Straight_Pony_WH
+		20364,		// C_Loose_Wave_Twin_YL
+		20365,		// C_Loose_Wave_Twin_GN
+		20366,		// C_Loose_Wave_Twin_PP
+		20367,		// C_Loose_Wave_Twin_RD
+		20368,		// C_Loose_Wave_Twin_OM
+		20369,		// C_Loose_Wave_Twin_BU
+		20370,		// C_Loose_Wave_Twin_WH
+		20396,		// C_Woodie_Hat
+		20448,		// C_Cons_Of_Water
+		20487,		// C_Floral_Waltz
+		20489,		// C_Pope_Crown
+		20504,		// C_Cupid_Wing_Pink
+		20299,		// C_Face_Crusher
+		20300;		// C_Hill_Wind_Mask
+	// ===================================================================
+	// =================== Costume Enchant Stone Box 9 ===================
+	// ===================================================================
+	.@box_list[5] = 23058;		// Enchant_Stone_Box9
+	setarray .@item_list_5[0],
+		19761,		// C_White_Lily
+		20172,		// C_Pumpkin_Head
+		20398,		// C_Niflheim_Bunny_Hat
+		20399,		// C_Crow_Tengu_Mask
+		20404,		// C_Blessing_Of_Angels
+		20405,		// C_Eremes_Scarf
+		20447;		// C_Small_Poring_Band
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 10 ===================
+	// ====================================================================
+	.@box_list[6] = 23086;		// Enchant_Stone_Box10
+	setarray .@item_list_6[0],
+		20430,		// C_Morocc_Kid_Servant
+		20432,		// C_Khalitzburg_KN_Helm
+		20433,		// C_Louise_Red_Hat
+		20440,		// C_Tone_Of_Gold
+		20458,		// C_Wild_Poring_Rider
+		20459,		// C_Valhalla_Idol
+		20464,		// C_Monochrome_RibbonHat
+		20491,		// C_Laser_Of_Eagle
+		20502,		// C_Devil_Wing
+		20507,		// C_Poring_Bag
+		31087,		// C_Dwarf_Beard
+		31088;		// C_Mad_Hatter
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 11 ===================
+	// ====================================================================
+	.@box_list[7] = 23174;		// Enchant_Stone_Box11
+	setarray .@item_list_7[0],
+		5909,		// C_Valkyrie_Circlet
+		20381,		// C_Steampunk_Hat
+		20499,		// C_Cat_Ear_Hat
+		20509,		// C_Wings_of_Uriel
+		20510,		// C_SwordWing
+		31029,		// C_Pig_Nose
+		31040,		// C_Magical_Feather
+		31055,		// C_Poring_Soap_Pipe
+		31057,		// C_Eremes_Scarf_Black
+		31062,		// C_Eleanor_Wig
+		31063,		// C_Hair_Bun_BU
+		31064,		// C_Hair_Bun_RD
+		31065,		// C_Hair_Bun_YL
+		31066,		// C_Hair_Bun_GN
+		31067,		// C_Hair_Bun_BL
+		31068,		// C_Hair_Bun_WH
+		31069,		// C_Hair_Bun_OM
+		31070,		// C_Hair_Bun_PP
+		31071,		// C_Roll_Twin_BU
+		31072,		// C_Roll_Twin_RD
+		31073,		// C_Roll_Twin_YL
+		31074,		// C_Roll_Twin_GN
+		31075,		// C_Roll_Twin_BL
+		31076,		// C_Roll_Twin_WH
+		31077,		// C_Roll_Twin_OM
+		31078,		// C_Roll_Twin_PP
+		31079,		// C_Long_Pony_BU
+		31080,		// C_Long_Pony_RD
+		31081,		// C_Long_Pony_YL
+		31082,		// C_Long_Pony_GN
+		31083,		// C_Long_Pony_BL
+		31084,		// C_Long_Pony_WH
+		31085,		// C_Long_Pony_OM
+		31086,		// C_Long_Pony_PP
+		31120,		// C_Vampire_Familiar
+		31123,		// C_Ghostring_Tall_Hat
+		31125,		// C_QueenAnzRevenge
+		31118;		// C_Assassin_Skull_Mask
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 12 ===================
+	// ====================================================================
+	.@box_list[8] = 23299;		// Enchant_Stone_Box12
+	setarray .@item_list_8[0],
+		20195,		// C_Scratching_Cat
+		20449,		// C_White_Black_Temp
+		20511,		// C_Blue_Fairy_Wing
+		20514,		// C_Thanatos_Sword
+		20765,		// C_Archangel_Wing
+		31134,		// C_Happy_Parrot_J
+		31136,		// C_Clock_Casket
+		31160,		// C_RuneHelm
+		31162,		// C_Shaving_Foam
+		31165,		// C_Piggyback
+		31186,		// C_Black_Cat
+		31300;		// C_Warm_Cat_Muffler
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 13 ===================
+	// ====================================================================
+	.@box_list[9] = 23524;		// Enchant_Stone_Box13
+	setarray .@item_list_9[0],
+		20488,		// C_Pope_Ribbon
+		31031,		// C_Tare_Pope_Casual
+		31033,		// C_BelieversCap
+		31164,		// C_Brown_Stall
+		31166,		// C_Teddy_Bear_Hood
+		31168,		// C_Mouton_Life_BL
+		31178,		// C_Flame_Muffler
+		31397;		// C_Pope_Sitting_Head
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 14 ===================
+	// ====================================================================
+	.@box_list[10] = 23629;		// Enchant_Stone_Box14
+	setarray .@item_list_10[0],
+		31415,		// C_Wanderer_Sakkat
+		19289,		// C_Moon_Eyepatch
+		19291,		// C_Shiba_Inu
+		19294,		// C_CatEars_Cyber_HeadP_R
+		20516,		// C_Wings_of_Michael
+		31180,		// C_Shura_King_Pledge
+		31329,		// C_Alice_Wig
+		31332;		// Khalitzburg_KN_Helm_BL
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 15 ===================
+	// ====================================================================
+	.@box_list[11] = 23682;		// Enchant_Stone_Box15
+	setarray .@item_list_11[0],
+		19959,		// C_Drooping_Argiope
+		19960,		// C_Chain_Puppet
+		19992,		// C_Chilly_Breath
+		20515,		// C_Magic_Circle
+		20517,		// C_GiantCatBag_TW
+		31314,		// C_Ghost_Holiday
+		31396,		// C_Sorcerer_Hood
+		31398,		// C_Blinking_Thin_Eyes
+		31432,		// C_Luwmin_Ice
+		31433,		// C_Astro_Circle
+		31437,		// C_Baby_Penguin
+		31439,		// C_Fluffy_Heart_Earmuffs
+		31452,		// C_White_Cat
+		31460,		// C_Blessing_Sky_Lantern
+		31463,		// C_Flying_Drone
+		31498;		// C_Elephangel_TH
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 16 ===================
+	// ====================================================================
+	.@box_list[12] = 23770;		// Enchant_Stone_Box16
+	setarray .@item_list_12[0],
+		20033,		// C_Buddhist_Priest_Crown
+		20098,		// C_Vampire_Hairband
+		20171,		// C_Sepia_Cap
+		20174,		// C_Halloween_Hat_Orange
+		20395,		// C_BlackWitchHat
+		20482,		// C_Heaven_Cage
+		20533,		// C_PinkButterfly_Wing_T
+		20535,		// C_Digital_Space
+		20543,		// C_Halloween_Poring_Bag
+		31139,		// C_White_Rabbit_Ear
+		31249,		// C_Rabbit_Hopping
+		31489,		// C_Bouquet_Hat
+		31490,		// C_Poring_Muffler
+		31529,		// C_Happy_Rabbit_Ribbon
+		31606;		// C_Autumn_Headband
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 17 ===================
+	// ====================================================================
+	.@box_list[13] = 9510;		// Enchant_Stone_Box17
+	setarray .@item_list_13[0],
+		19990,		// C_Snow_Rabbit_Knit_Hat
+		20175,		// C_Diabolic_Headphone
+		20546,		// C_Backside_Ribbon_Bell
+		20764,		// C_Fallen_Angel_Wing
+		31440,		// C_Snow_Bear_Food
+		31565,		// C_Princess_Ribbon_Crown
+		31586,		// C_Poporing_Muffler
+		31616,		// C_Sleep_Sheep_TW
+		31625,		// C_Protect_Cloth
+		31693;		// C_LunaticMuffler
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 18 ===================
+	// ====================================================================
+	.@box_list[14] = 100019;		// Enchant_Stone_Box18
+	setarray .@item_list_14[0],
+		20257,		// C_Black_Rabbit_Bonnet
+		20486,		// C_Twin_Margaret
+		20570,		// C_HeartChocoBag
+		20572,		// C_WingOfHeart
+		31382,		// C_Cat_Ears_Punkish
+		31481,		// C_CatCoffeeCup_TW
+		31624,		// C_HeartOfCat_TW
+		31699;		// C_Smiling_Eyes
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 19 ===================
+	// ====================================================================
+	.@box_list[15] = 100052;		// Enchant_Stone_Box19
+	setarray .@item_list_15[0],
+		20022,		// C_Love_Piece
+		20519,		// C_Full_BloomCherry_Tree
+		20576,		// C_Cat_Fork
+		31027,		// C_Pretty_Bear
+		31483,		// C_CatEarRibbon_TW
+		31512,		// C_Panda_Rabbit
+		31569,		// C_OpenAir_Headset
+		31572,		// C_Mobile_Pursuit_System
+		31573,		// C_Mecha_Cat_Ears
+		31574,		// C_Cyber_Income
+		31600,		// C_Kishu_Inu
+		31614,		// C_Fox
+		31698,		// C_Pigtail_Red_Hood
+		31765,		// C_Garnet_Tiara
+		31766,		// C_Peony_Hair_Ornament
+		440000;		// C_SharkHead
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 20 ===================
+	// ====================================================================
+	.@box_list[16] = 100202;		// Enchant_Stone_Box20
+	setarray .@item_list_16[0],
+		20582,		// C_T_Bear_Bag
+		20584,		// C_Big_Foxtail
+		20588,		// C_Nifl_Bloom
+		31479,		// C_ManyStars_TW
+		31568,		// C_Floating_Ball_TW
+		31611,		// C_Dark_Snake_Lord_Stall
+		31671,		// Costume_Twin_Cannon
+		31673,		// C_Picnic_Basket
+		31688,		// C_Poring_On_Shoulder
+		31735,		// Costume_Yawata_Seal
+		31787,		// C_SavageB_On_Shoulder
+		31798,		// C_Baby_Panda
+		31799,		// C_Pretty_Bear_WH
+		31832,		// C_Bicolor_Cat_Witch_Hat
+		31884,		// C_Magic_Helm
+		400020;		// C_BeachBall
+	// ====================================================================
+	// =================== Costume Enchant Stone Box 21 ===================
+	// ====================================================================
+	.@box_list[17] = 100314;		// Enchant_Stone_Box21
+	setarray .@item_list_17[0],
+		19802,		// C_Drooping_Nine_Tail
+		20153,		// C_Monochrome_Cap
+		20379,		// C_PocketWatch_Hair_Orna
+		20451,		// C_Sky_Of_Memory
+		20589,		// C_Gimmick_One_Feather
+		20592,		// C_Santa_Backpack
+		20593,		// C_Ice_Wing
+		20598,		// C_GiantCatBag_JP_BL
+		20599,		// C_Sakura_Wing
+		31176,		// C_Looking
+		31179,		// C_Wolf_Masquerade
+		31404,		// C_Poring_Traffic_Light
+		31497,		// C_Flowery_Vision_TH
+		31509,		// C_Fawn_Ear
+		31559,		// C_Royalguard_Necklace
+		31566,		// C_Stall_Of_Dominions
+		31601,		// C_Under_Rim_Glasses_Bu
+		31716,		// C_Blinking_Eyes_RD
+		31815,		// C_Angola_Intention
+		31849,		// C_Runaway_Accelerator
+		31848,		// C_Rose_Gothic_Bonnet
+		31906,		// C_PGstone_Knit_Hat_PK
+		31911,		// C_LittleGarden
+		31916,		// C_Frill_Collar
+		31923,		// C_Baby_Polar_Bear
+		31930,		// C_Mike_Stand
+		31931,		// C_Half_Rim_Glasses
+		31934,		// C_Blink_Eyes_Sakura
+		400073,		// C_Romance_Rose_TW
+		400074,		// C_Disapear_Time_TW
+		410005,		// C_Magic_Heir_TW
+		440002;		// C_Happy_Cat_TW
+
+	while(1) {
+		for ( .@i = 0; .@i < 18; ++.@i ) {
+			if (getiteminfo(.@box_list[.@i], ITEMINFO_TYPE) == -1)	// temporary check
+				continue;
+			.@size = getarraysize( getd(".@item_list_" + .@i) );
+			for ( .@h = 0; .@h < .@size; ++.@h ) {
+				.@id = getd( ".@item_list_" + .@i + "[" + .@h + "]" );
+				if (getiteminfo(.@id, ITEMINFO_TYPE) == -1)	// temporary check
+					continue;
+				if (countitem(.@id) < 1)
+					continue;
+				mes "[Designer Heidam]";
+				mes "I see that you have a ^3131FF" + getitemname(.@id) + "^000000. Do you want to exchange this for a costume enchantment box?";
+				next;
+				switch( select( "Exchange", "Look for something else", "Stop Exchanging" ) ) {
+				case 1:
+					mes "[Designer Heidam]";
+					if (countitem(.@id) < 1)
+						mes "Oh~ Something suddenly disappeared...";
+					else {
+						mes "Exchange Completed.";
+						delitem .@id, 1;
+						getitem .@box_list[.@i], 1;
+					}
+					mes "Let me check you for another item to exchange...";
+					next;
+					break;
+				case 2:
+					break;
+				case 3:
+					mes "[Designer Heidam]";
+					mes "Meow? Where are you going?";
+					close;
+				}
+			}
+		}
+		mes "[Designer Heidam]";
+		mes "Guess that is all.";
+		next;
+		if (select( "Look more", "Quit" ) == 2) {
+			mes "[Designer Heidam]";
+			mes "Bye~";
+			close;
+		}
+	}
+}
+
+malangdo,115,154,3	script	Fashion Stone#stone	4_BULLETIN_BOARD2,{ end; }
+
+// Costume enchant (top, mid, low)
+mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
+	disable_items;
+	mes "[Aver De Dosh]";
+	mes "Welcome to Fashion Stone!!";
+	next;
+	mes "[Aver De Dosh]";
+	mes "We take various costume items.";
+	next;
+	mes "[Aver De Dosh]";
+	mes "If you want cool styling for your costume, please come to me 'Aver De Dosh'!";
+	mes "Don't forget to bring ^ff0000your own costume and costume stones^000000~";
+	next;
+	if (select( "Apply enchant.", "End Conversation." ) == 2) {
+		mes "[Aver De Dosh]";
+		mes "Please check our other upgrading services~";
+		close;
+	}
+	if (checkweight(1119,3) == 0) {
+		mes "[Aver De Dosh]";
+		mes "Kiaaaaach!!!";
+		mes "I hate bulging bags!";
+		mes "No matter how cool your costume looks, that fat bag of yours is a fashion terror you know!";
+		next;
+		mes "[Aver De Dosh]";
+		mes "It seems you have too many items on you.";
+		mes "Come back after clearing some inventory space.";
+		close;
+	}
+	.@eq_top = getequipid(EQI_COSTUME_HEAD_TOP);
+	.@eq_mid = getequipid(EQI_COSTUME_HEAD_MID);
+	.@eq_low = getequipid(EQI_COSTUME_HEAD_LOW);
+
+	if (.@eq_top == -1 && .@eq_mid == -1 && .@eq_low == -1) {
+		mes "[Aver De Dosh]";
+		mes "You must wear the costume you want to enchant.";
+		mes "Then, I will be able to help you out.";
+		close;
+	}
+	if (.@eq_top > -1) {
+		.@part = EQI_COSTUME_HEAD_TOP;
+		.@equip_id = .@eq_top;
+	}
+	else if (.@eq_mid > -1) {
+		.@part = EQI_COSTUME_HEAD_MID;
+		.@equip_id = .@eq_mid;
+	}
+	else if (.@eq_low > -1) {
+		.@part = EQI_COSTUME_HEAD_LOW;
+		.@equip_id = .@eq_low;
+	}
+
+	switch(.@part) {
+	case EQI_COSTUME_HEAD_TOP:
+		switch(.@equip_id) {
+			// top
+		case 18740:	// C_Hair_Of_The_Strong
+		case 18741:	// C_Will_O_Wisp
+		case 19294:	// C_CatEars_Cyber_HeadP_R
+		case 19507:	// Fine_Sun
+		case 19515:	// Yellow_Hat
+		case 19516:	// Singing_Bird
+		case 19517:	// Cocks_Comb
+		case 19518:	// Rainbow
+		case 19519:	// Lightning_Cloud
+		case 19520:	// Rain_Cloud
+		case 19521:	// Charlie_Hat
+		case 19522:	// Mini_Crown1
+		case 19523:	// Donation_Ribbon
+		case 19524:	// C_Green_Feeler
+		case 19525:	// C_Jack_A_Dandy
+		case 19526:	// C_Helm
+		case 19527:	// C_Sharp_Gear
+		case 19529:	// C_Angelic_Chain
+		case 19537:	// C_Gryphon_Hat
+		case 19543:	// Oliver_Wolf_Hood
+		case 19544:	// C_Tare_Neko_Cru
+		case 19545:	// C_Boys_Cap
+		case 19546:	// C_Valkyrie_Helm
+		case 19547:	// C_Deviruchi_Cap
+		case 19548:	// C_Frog_Cap
+		case 19549:	// C_Magestic_Goat
+		case 19573:	// C_Heart_Wing_Hairband
+		case 19575:	// C_Rising_Black_Dragon
+		case 19576:	// C_Tare_Pope
+		case 19577:	// 10th_Anni_Poring_Hat
+		case 19585:	// C_Feather_Beret
+		case 19586:	// C_Pink_Bunny_Band_J
+		case 19587:	// C_King_Poring_Hat
+		case 19590:	// C_Twin_Ribbon_J
+		case 19592:	// C_Hibiscus_J
+		case 19599:	// C_Imp_Hat
+		case 19602:	// C_Invisible_Cap
+		case 19608:	// C_Chick_Hat
+		case 19613:	// C_Valkyrie_Feather_Band
+		case 19618:	// C_Mask_Of_Fox
+		case 19625:	// C_Bunny_Band
+		case 19629:	// C_Tiara
+		case 19630:	// C_Crown
+		case 19632:	// C_Hat
+		case 19633:	// C_Flower_Hairband
+		case 19635:	// C_Mini_Propeller
+		case 19637:	// C_Nurse_Cap
+		case 19639:	// C_Sahkkat
+		case 19643:	// C_Whikebain_Ears
+		case 19646:	// C_Ramen_Hat
+		case 19647:	// C_Red_Deviruchi_Cap
+		case 19650:	// C_Rainbow_Feather_Deco
+		case 19653:	// C_Marcher_Hat
+		case 19654:	// C_J_Captain_Hat
+		case 19655:	// C_Tiraya_Bonnet
+		case 19656:	// C_Minstrel_Hat
+		case 19657:	// C_Captain_Hat
+		case 19659:	// C_Gray_Fur_Hat
+		case 19665:	// C_Poring_Cake_Cap
+		case 19667:	// C_Helm_Of_Dragoon
+		case 19677:	// C_Soulless_Wing
+		case 19682:	// C_Santa_Poring_Hat
+		case 19684:	// C_Happy_Wig
+		case 19694:	// C_Vane_Hairpin
+		case 19702:	// C_Santa_Hat_1
+		case 19706:	// C_Red_Dress_Hat
+		case 19712:	// C_Little_Angel_Doll
+		case 19715:	// C_Scarf
+		case 19719:	// C_Coronet
+		case 19721:	// C_Darkness_Helm
+		case 19728:	// C_Tare_Zonda
+		case 19729:	// C_Neko_Mimi_Kafra
+		case 19731:	// C_Satanic_Chain
+		case 19733:	// C_Panda_Cap
+		case 19737:	// C_Corsair_K
+		case 19738:	// C_Detective_Hat_K
+		case 19739:	// C_Sleeping_Kitty_Cat
+		case 19750:	// C_Saint_Frill_Ribbon
+		case 19758:	// C_King_Frog_Hat
+		case 19761:	// C_White_Lily
+		case 19762:	// C_Happy_Peace_Proof
+		case 19771:	// C_Butterfly_Hairpin
+		case 19782:	// C_Drooping_Kitty
+		case 19784:	// C_Morrigane's_Helm
+		case 19786:	// C_Mistress_Crown
+		case 19789:	// C_Sweet_Gents
+		case 19790:	// C_Wedding_Veil
+		case 19795:	// C_Lord_Circlet
+		case 19796:	// C_Bone_Helm
+		case 19797:	// C_Apple_Of_Archer
+		case 19799:	// C_Golden_Gear
+		case 19800:	// C_Carnation_Hairband
+		case 19807:	// C_Majestic_Helmet
+		case 19818:	// C_Droop_Morocc_Minion
+		case 19824:	// C_Evil_Druid_Hat
+		case 19827:	// C_Amistr_Cap
+		case 19828:	// C_Fedora
+		case 19829:	// C_Straw_Hat
+		case 19831:	// C_Filir_Hat
+		case 19833:	// C_Fillet
+		case 19835:	// C_Lif_Doll_Hat
+		case 19839:	// C_Vanilmirth_Hat
+		case 19842:	// C_Puppy_Hat
+		case 19843:	// C_Cat_Hairband
+		case 19844:	// C_Turban
+		case 19845:	// C_Hair_Protector
+		case 19847:	// C_Big_Sis_Ribbon
+		case 19848:	// C_Angeling_Hat
+		case 19851:	// C_Brown_Bear_Cap
+		case 19852:	// C_Galapago_Cap
+		case 19858:	// C_Leaf_Headgear
+		case 19859:	// C_Flying_Angel
+		case 19860:	// C_Cryptura_Hair_Cap
+		case 19861:	// C_Heart_Hair_Pin
+		case 19862:	// C_Horn_Of_Succubus
+		case 19863:	// C_Inccubus_Horn
+		case 19865:	// C_Joker_Jester
+		case 19866:	// C_Blue_Pajamas_Hat
+		case 19874:	// C_Carnival_Circlet
+		case 19876:	// C_Rabbit_Ear_Hat
+		case 19878:	// C_Drooping_Bunny
+		case 19883:	// C_Piamette_Hood
+		case 19884:	// C_Vanargandr_Helm
+		case 19913:	// C_Poo_Poo_Hat
+		case 19931:	// C_Lazy_Raccoon
+		case 19932:	// C_Cap_Of_Concentration
+		case 19934:	// C_10Gallon_Hat_Of_Flame
+		case 19935:	// C_Hunting_Cap_Of_Gust
+		case 19936:	// C_Knit_Cap_Of_Water
+		case 19937:	// C_Silk_Hat_Of_Earth
+		case 19939:	// C_Antler
+		case 19941:	// C_Ear_Mufs
+		case 19955:	// C_Mini_Tree_J
+		case 19977:	// C_Golden_Exclamation
+		case 19980:	// C_Silver_Question
+		case 19983:	// C_Flower_Hairpin
+		case 19984:	// C_Winter_Hat
+		case 20017:	// C_Marionette_Doll
+		case 20036:	// C_Sword_Master_Crown
+		case 20046:	// C_Decoration_bluerose
+		case 20049:	// C_Plaster
+		case 20050:	// C_Ph.D_Hat
+		case 20057:	// C_Feather_Bonnet
+		case 20063:	// C_Yellow_Brain_Hat
+		case 20064:	// Blue_Brain_Hat
+		case 20073:	// C_Hair_Band
+		case 20074:	// C_Biretta
+		case 20090:	// C_Egg_Shell
+		case 20092:	// C_Sales_Signboard
+		case 20093:	// C_Star_Sparkling
+		case 20094:	// C_Fillet_Green
+		case 20095:	// C_Fillet_Red
+		case 20096:	// C_Fillet_Blue
+		case 20097:	// C_Fillet_White
+		case 20114:	// C_Funeral_Costume
+		case 20118:	// C_Hat_Of_Cake
+		case 20119:	// C_Fur_Hat
+		case 20120:	// C_Antenna
+		case 20121:	// C_Lotus_Flower_Hat
+		case 20130:	// C_Whisper_Tall_Hat
+		case 20133:	// C_Poring_Mascot_Costume
+		case 20151:	// C_Poison_Spore_Hat
+		case 20157:	// C_Fish_On_Head
+		case 20158:	// C_Circlet
+		case 20159:	// C_Blue_Hair_Band
+		case 20160:	// C_Fried_Egg
+		case 20161:	// C_Prontera_Army_Cap
+		case 20175:	// C_Diabolic_Headphone
+		case 20181:	// C_Mistic_Rose
+		case 20182:	// C_Mottled_Egg_Shell
+		case 20184:	// C_Party_Hat
+		case 20186:	// C_Magni_Cap
+		case 20197:	// C_Amistr_Beret
+		case 20199:	// C_Evil_Marcher_Hat
+		case 20200:	// C_Rabbit_Head_Dress
+		case 20203:	// C_Bandana
+		case 20205:	// C_Fancy_Flower
+		case 20207:	// C_Stripe_Band
+		case 20208:	// C_Necktie
+		case 20214:	// C_Evil_Marcher_Hat_J
+		case 20225:	// C_Pumpkin_Hat
+		case 20226:	// C_Hair_Brush
+		case 20231:	// C_Snowman_Hat
+		case 20232:	// C_Celines_Ribbon
+		case 20233:	// C_Gold_Angel_Sculpture
+		case 20238:	// C_Blue_Drooping_Kitty
+		case 20242:	// C_Snownow_Hat
+		case 20248:	// C_Black_Strong_Hair
+		case 20249:	// C_Red_Strong_Hair
+		case 20250:	// C_White_Strong_Hair
+		case 20262:	// C_Fox_Ears_Bell_Ribbon
+		case 20266:	// C_Secret_Zipper
+		case 20269:	// C_White_Fox_Ear_Ribbon
+		case 20271:	// C_Sunflower
+		case 20272:	// C_Snowy_Horn
+		case 20273:	// C_Soft_Sheep_Hat
+		case 20277:	// C_Balloon_Hat
+		case 20283:	// C_Over_Protector
+		case 20433:	// C_Louise_Red_Hat
+		case 20447:	// C_Small_Poring_Band
+		case 20452:	// C_berry_Prince_Crown
+		case 20458:	// C_Wild_Poring_Rider
+		case 20463:	// C_Two_Tone_Beret
+		case 20464:	// C_Monochrome_RibbonHat
+		case 20467:	// C_Elemental_Crown
+		case 20489:	// C_Pope_Crown
+		case 20491:	// C_Laser_Of_Eagle
+		case 31027:	// C_Pretty_Bear
+		case 31031:	// C_Tare_Pope_Casual
+		case 31040:	// C_Magical_Feather
+		case 31062:	// C_Eleanor_Wig
+		case 31123:	// C_Ghostring_Tall_Hat
+		case 31125:	// C_QueenAnzRevenge
+		case 31137:	// C_Blue_Rose_Ornament
+		case 31139:	// C_White_Rabbit_Ear
+		case 31147:	// C_Tare_Domovoi
+		case 31149:	// C_Nydhog_Wig
+		case 31151:	// C_Chasher_Ear
+		case 31158:	// C_Squirrel_Ear_Hat
+		case 31176:	// C_Looking
+		case 31177:	// C_Tail_Hat
+		case 31180:	// C_Shura_King_Pledge
+		case 31200:	// C_Wrapping_Ribbon
+		case 31204:	// C_Drooping_White_Kitty
+		case 31249:	// C_Rabbit_Hopping
+		case 31252:	// C_Cat_Ear_Hat_White
+		case 31314:	// C_Ghost_Holiday
+		case 31318:	// C_Gerhard_Von_Devi
+		case 31329:	// C_Alice_Wig
+		case 31332:	// Khalitzburg_KN_Helm_BL
+		case 31582:	// C_Jirant_Circlet
+		case 31382:	// C_Cat_Ears_Punkish
+		case 31385:	// C_Gothic_Pumpkin_Head
+		case 31396:	// C_Sorcerer_Hood
+		case 31405:	// C_Eleanor_Wig_YL
+		case 31406:	// C_Nydhog_Wig_WH
+		case 31407:	// C_Alice_Wig_PK
+		case 31433:	// C_Astro_Circle
+		case 31439:	// C_Fluffy_Heart_Earmuffs
+		case 31440:	// C_Snow_Bear_Food
+		case 31451:	// C_Blue_Frill_Ribbon
+		case 31456:	// C_Baby_Leopard_Cat
+		case 20227:	// C_Husky_Hat
+		case 31474:	// C_Straight_Long_BL
+		case 31475:	// C_Black_Fox_Ear_Ribbon
+		case 31481:	// C_CatCoffeeCup_TW
+		case 31489:	// C_Bouquet_Hat
+		case 31509:	// C_Fawn_Ear
+		case 31529:	// C_Happy_Rabbit_Ribbon
+		case 31546:	// C_Clock_Casket_RD
+		case 31564:	// C_Variant_Veil
+		case 31565:	// C_Princess_Ribbon_Crown
+		case 31573:	// C_Mecha_Cat_Ears
+		case 31598:	// C_Forest_Guide
+		case 31624:	// C_HeartOfCat_TW
+			// top + mid
+		case 19574:	// C_Lord_of_Death
+		case 19578:	// C_Goggle
+		case 19612:	// C_Headset_OST
+		case 19710:	// C_Wings_Of_Victory
+		case 19775:	// C_Marvelous_Wig
+		case 19823:	// C_White_Cat_Hood
+		case 19864:	// C_Afro_Wig
+		case 20402:	// C_Holy_Klobuk
+		case 31205:	// C_L_Orc_Hero_Helm
+		case 31415:	// C_Wanderer_Sakkat
+			// top + mid + low
+		case 19556:	// C_Kabuki_Mask
+		case 19746:	// C_Cap_Of_Blindness
+		case 19821:	// C_Hyegun_Hat
+		case 19849:	// C_Munak_Turban
+		case 19850:	// C_Bongun_Hat
+		case 20481:	// C_Mask_of_Ifrit
+		case 31409:	// C_Barrel_Helm
+			break;
+		default:
+			mes "[Aver De Dosh]";
+			mes "Well...";
+			mes "This costume is currently not available for an upgrade.";
+			close;
+		}
+		break;
+
+	case EQI_COSTUME_HEAD_MID:
+		switch(.@equip_id) {
+			// mid
+		case 18742:	// C_MoonStar_Accessory
+		case 19291:	// C_Shiba_Inu
+		case 19509:	// Butterfly_Wing_Ear
+		case 19510:	// Nut_On_Head
+		case 19511:	// Heart_Eye_Patch1
+		case 19512:	// Heart_Eye_Patch2
+		case 19550:	// C_Blush
+		case 19551:	// C_Elven_Ears
+		case 19603:	// C_Invisible_Sunglasses
+		case 19621:	// C_Ear_Of_Devils_Wing
+		case 19624:	// C_Round_Eyes
+		case 19734:	// C_Binoculars
+		case 19735:	// C_Fin_Helm
+		case 19752:	// C_Shelter_Wing_Ears
+		case 19755:	// C_YinYang_Earring
+		case 19781:	// C_Ear_Of_Angel's_Wing_
+		case 19826:	// C_Ice_Wing_Ear
+		case 19830:	// C_Sunglasses
+		case 19846:	// C_Opera_Ghost_Mask
+		case 19871:	// C_Music_Decoration
+		case 19885:	// C_Blinker
+		case 19886:	// C_Luxury_Sunglasses
+		case 19887:	// C_One_Eyed_Glass
+		case 19888:	// C_Glasses
+		case 19889:	// C_Pair_Of_Red_Ribbon
+		case 19954:	// C_3D_Glasses
+		case 19989:	// C_Mouton_Life
+		case 20145:	// C_Robo_Eye
+		case 20146:	// C_Angel_Spirit
+		case 20147:	// C_Bell_Pigeon
+		case 20215:	// C_Black_Devil_Mask
+		case 20221:	// C_Eyes_Of_Ifrit
+		case 20255:	// C_Love_Cheek
+		case 20295:	// C_Poring_Sunglasses_J
+		case 20298:	// C_Happy_Lunatic_Ear
+		case 20318:	// C_Charleston_Antenna
+		case 20319:	// C_Crimson_Booster
+		case 20325:	// C_Little_Aquarium
+		case 20399:	// C_Crow_Tengu_Mask
+		case 20404:	// C_Blessing_Of_Angels
+		case 20430:	// C_Morocc_Kid_Servant
+		case 31047:	// C_First_Love_Cheek
+		case 31167:	// C_Lunatic_Ear_Black
+		case 31168:	// C_Mouton_Life_BL
+		case 31183:	// C_Fallen_Angel_Blessing
+		case 31186:	// C_Black_Cat
+		case 31299:	// C_White_Rabbit
+		case 31302:	// C_Black_Magenta_Ribbon
+		case 31308:	// C_Protect_Feathers
+		case 31398:	// C_Blinking_Thin_Eyes
+		case 31437:	// C_Baby_Penguin
+		case 31452:	// C_White_Cat
+		case 31463:	// C_Flying_Drone
+		case 31472:	// C_Fairy_Feathers
+		case 31483:	// C_CatEarRibbon_TW
+		case 31488:	// C_Mvp
+		case 31512:	// C_Panda_Rabbit
+		case 31567:	// C_Sheep_Horn
+		case 31568:	// C_Floating_Ball_TW
+		case 31574:	// C_Cyber_Income
+		case 31600:	// C_Kishu_Inu
+		case 31614:	// C_Fox
+		case 31673:	// C_Picnic_Basket
+		case 31688:	// C_Poring_On_Shoulder
+		case 31699:	// C_Smiling_Eyes
+			// mid + low
+		case 19554:	// C_Hahoe_Mask
+		case 19563:	// C_Dragon_Arhat_Mask
+		case 19564:	// C_Tiger_Arhat_Mask
+		case 19638:	// C_Mr_Smile
+		case 19732:	// C_Goblin_Mask_04
+		case 19736:	// C_Gas_Mask
+		case 19791:	// C_Alarm_Mask
+		case 19792:	// C_Goblin_Mask_01
+		case 19793:	// C_Goblin_Mask_02
+		case 19794:	// C_Goblin_Mask_03
+		case 19882:	// C_Flowerpot_Mask
+		case 20166:	// C_Hockey_Mask
+		case 20195:	// C_Scratching_Cat
+		case 20230:	// C_Mask_Of_Bankrupt
+		case 20299:	// C_Face_Crusher
+		case 31505:	// C_Falcon_Mask
+			break;
+		default:
+			mes "[Aver De Dosh]";
+			mes "Well...";
+			mes "This costume is currently not available for an upgrade.";
+			close;
+		}
+		break;
+
+	case EQI_COSTUME_HEAD_LOW:
+		switch(.@equip_id) {
+		case 19513:	// Chicken_Beak
+		case 19514:	// Charlie_Beard
+		case 19528:	// C_Iron_Cane
+		case 19552:	// C_Centimental_Flower
+		case 19553:	// C_Assassin_Mask_
+		case 19566:	// C_Samurai_Mask
+		case 19604:	// C_Invisible_Mask
+		case 19606:	// C_Ninja_Scroll
+		case 19634:	// C_Flu_Mask
+		case 19636:	// C_Pierrot_Nose
+		case 19672:	// C_Poring_Letter
+		case 19783:	// C_Granpa_Beard
+		case 19785:	// C_Well_Baked_Toast
+		case 19798:	// C_Angry_Mouth
+		case 19902:	// C_Cigar
+		case 20034:	// C_Jack_Castle_Bat
+		case 20054:	// C_Baby_Pacifier
+		case 20071:	// C_Worg_In_Mouth
+		case 20091:	// C_Smoking_Pipe
+		case 20132:	// C_Subject_Aura
+		case 20169:	// C_Long_Tongue
+		case 20202:	// C_Deviruchi_Balloon
+		case 20223:	// C_Centimental_Leaf
+		case 20239:	// C_Large_Ribbon_Muffler
+		case 20240:	// C_Gift_Of_Snow
+		case 20305:	// C_NettyHeart_BalloonGum
+		case 20340:	// C_Straight_Pony_BL
+		case 20342:	// C_Loose_Wave_Twin_BL
+		case 20357:	// C_Straight_Pony_YL
+		case 20358:	// C_Straight_Pony_GN
+		case 20359:	// C_Straight_Pony_PP
+		case 20360:	// C_Straight_Pony_RD
+		case 20361:	// C_Straight_Pony_OM
+		case 20362:	// C_Straight_Pony_BU
+		case 20363:	// C_Straight_Pony_WH
+		case 20364:	// C_Loose_Wave_Twin_YL
+		case 20365:	// C_Loose_Wave_Twin_GN
+		case 20366:	// C_Loose_Wave_Twin_PP
+		case 20367:	// C_Loose_Wave_Twin_RD
+		case 20368:	// C_Loose_Wave_Twin_OM
+		case 20369:	// C_Loose_Wave_Twin_BU
+		case 20370:	// C_Loose_Wave_Twin_WH
+		case 20405:	// C_Eremes_Scarf
+		case 20407:	// C_Subject_Aura_Red
+		case 20429:	// C_Piamette_BowTie
+		case 20440:	// C_Tone_Of_Gold
+		case 20448:	// C_Cons_Of_Water
+		case 20462:	// C_Cat_Ears_Cape
+		case 20497:	// C_Umbala_Spirit
+		case 31029:	// C_Pig_Nose
+		case 31045:	// C_Blue_Rear_Ribbon
+		case 31057:	// C_Eremes_Scarf_Black
+		case 31063:	// C_Hair_Bun_BU
+		case 31064:	// C_Hair_Bun_RD
+		case 31065:	// C_Hair_Bun_YL
+		case 31066:	// C_Hair_Bun_GN
+		case 31067:	// C_Hair_Bun_BL
+		case 31068:	// C_Hair_Bun_WH
+		case 31069:	// C_Hair_Bun_OM
+		case 31070:	// C_Hair_Bun_PP
+		case 31079:	// C_Long_Pony_BU
+		case 31080:	// C_Long_Pony_RD
+		case 31081:	// C_Long_Pony_YL
+		case 31082:	// C_Long_Pony_GN
+		case 31083:	// C_Long_Pony_BL
+		case 31084:	// C_Long_Pony_WH
+		case 31085:	// C_Long_Pony_OM
+		case 31086:	// C_Long_Pony_PP
+		case 31178:	// C_Flame_Muffler
+		case 31189:	// C_Cat_Ears_Cape_Red
+		case 31210:	// C_Side_Pigtail_BU
+		case 31211:	// C_Side_Pigtail_RD
+		case 31212:	// C_Side_Pigtail_YL
+		case 31213:	// C_Side_Pigtail_GN
+		case 31214:	// C_Side_Pigtail_BL
+		case 31215:	// C_Side_Pigtail_WH
+		case 31216:	// C_Side_Pigtail_OM
+		case 31217:	// C_Side_Pigtail_PP
+		case 31226:	// C_Long_Twin_BU
+		case 31227:	// C_Long_Twin_RD
+		case 31228:	// C_Long_Twin_YL
+		case 31229:	// C_Long_Twin_GN
+		case 31230:	// C_Long_Twin_BL
+		case 31231:	// C_Long_Twin_WH
+		case 31232:	// C_Long_Twin_OM
+		case 31233:	// C_Long_Twin_PP
+		case 31251:	// C_Cat_Mouth
+		case 31296:	// C_Strawberry_In_Mouth
+		case 31300:	// C_Warm_Cat_Muffler
+		case 31315:	// C_Stall_Of_Angel
+		case 31330:	// C_Fallen_Angel_Valletta
+		case 31381:	// C_Diabolic_Lapel
+		case 31383:	// C_Volume_Low_Twin
+		case 31393:	// C_Vajra
+		case 31395:	// C_Book_Of_Magic
+		case 31404:	// C_Poring_Traffic_Light
+		case 31432:	// C_Luwmin_Ice
+		case 31438:	// C_Fluffy_Angel_Cape
+		case 31450:	// C_Lolita_Two_Side_Up
+		case 31453:	// C_L_RibbonMuff_Black
+		case 31460:	// C_Blessing_Sky_Lantern
+		case 31473:	// C_Tipsy
+		case 31490:	// C_Poring_Muffler
+		case 31492:	// C_Cat_Ears_Cape_Brown
+		case 31493:	// C_Volume_Low_Twin_WH
+		case 31498:	// C_Elephangel_TH
+		case 31533:	// C_Warm_Cat_Muffler_BL
+		case 31572:	// C_Mobile_Pursuit_System
+		case 31586:	// C_Poporing_Muffler
+		case 31611:	// C_Dark_Snake_Lord_Stall
+		case 31616:	// C_Sleep_Sheep_TW
+		case 31625:	// C_Protect_Cloth
+		case 31698:	// C_Pigtail_Red_Hood
+			break;
+		default:
+			mes "[Aver De Dosh]";
+			mes "Well...";
+			mes "This costume is currently not available for an upgrade.";
+			close;
+		}
+		break;
+
+	default:
+		mes "An unknown error has occurred.";
+		close;
+	}
+
+	.@location = getiteminfo(.@equip_id, ITEMINFO_LOCATIONS);
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
+
+	mes "[Aver De Dosh]";
+	mes "Wow~ This ^0000FF" + getitemname(.@equip_id) + "^000000!!! looks great on you!!";
+	mes "What kind of stone do you want to use for the upgrade?";
+	next;
+	if (.@part == EQI_COSTUME_HEAD_TOP)
+		.@slot = select( "Upper", "Middle", "Lower", "Cancel" ) - 1;	// the slot enchanted changes according to the location
+	else if (.@part == EQI_COSTUME_HEAD_MID)
+		.@slot = select( "", "Middle", "Lower", "Cancel" ) - 1;
+	else if (.@part == EQI_COSTUME_HEAD_LOW)
+		.@slot = 2;
+
+	switch(.@slot) {
+	case 0:
+		if (!(.@location & EQP_COSTUME_HEAD_TOP)) {
+			mes "[Aver De Dosh]";
+			mes "The costume can't be enhanced at this location.";	// custom
+			close;
+		}
+		setarray .@stone_id[0],
+			6636, 4700,	// STRStone_Top	Strength1
+			6637, 4710,	// INTStone_Top	Inteligence1
+			6638, 4730,	// AGIStone_Top	Agility1
+			6639, 4720,	// DEXStone_Top	Dexterity1
+			6640, 4740,	// VITStone_Top	Vitality1
+			6641, 4750,	// LUKStone_Top	Luck1
+			6716, 4926,	// Cri_Stone	Critical1
+			6740, 4930,	// HealStone_Top	HEAL2
+			6741, 4805,	// HealStone2_Top	Heal_Amount2
+			6790, 4936,	// BigStone_Top	ATK_BIG1
+			6791, 4937,	// MediumStone_Top	ATK_MEDIUM1
+			6792, 4938,	// SmallStone_Top	ATK_SMALL1
+			6943, 29028,	// ATKStone_Top	Atk1p_Top
+			6944, 29030,	// MATKStone_Top	Matk1p_Top
+			6999, 29013,	// HPdrainStone_Top	HPdrain3
+			25000, 29032,	// SPdrainStone_Top	SPdrain1_Top
+			25068, 4807,	// ASPDStone_Top	Atk_Speed1
+			25069, 29053,	// ReloadStone_Top	Skill_Delay1_Top
+			25171, 29159,	// EXPStone_Top	EXP2TOP
+			25172, 29156,	// CastingStone_Top	Casting_Top
+			25304, 29359,	// Critical_Stone_Top	Fatal_Top
+			25409, 29423,	// SuraStone_Top	SuraStone_Top_
+			25413, 29428,	// RangerStone_Top	RangerStone_Top_
+			25417, 29432,	// SorcererStone_Top	SorcererStone_Top_
+			25445, 29460,	// RuneknightStone_Top	RuneknightStone_Top_
+			25450, 29464,	// GeneticStone_Top	GeneticStone_Top_
+			25453, 29468,	// WarlockStone_Top	WarlockStone_Top_
+			25490, 29477,	// ShadowchaserStone_Top	ShadowchaserStone_Top_
+			25494, 29481,	// MechanicStone_Top	MechanicStone_Top_
+			25498, 29485,	// WanderMinstrelStone_Top	WanderMinstrelStone_Top_
+			25706, 29513,	// HighpriestStone_Top	HighpriestStone_Top_
+			25710, 29517,	// PaladinStone_Top	PaladinStone_Top_
+			25714, 29521,	// AssacrossStone_Top	AssacrossStone_Top_
+			25800, 29613,	// SuraStone_Top2	SuraStone_Top2_
+			25804, 29617,	// SorcererStone_Top2	SorcererStone_Top2_
+			25808, 29621,	// ShadowchaserStone_Top2	ShadowchaserStone_Top2_
+			25843, 29651,	// SoulLinkerStone_Top	SoulLinkerStone_Top_
+			25846, 29655,	// StarGladiatorStone_Top	StarGladiatorStone_Top_
+			25850, 29659,	// NinjaStone_Top	NinjaStone_Top_
+			25855, 29664,	// GunslingerStone_Top	GunslingerStone_Top_
+			25859, 29668,	// DoramStone_Top	DoramStone_Top_
+			1000008, 310000,	// RangerStone_II_Top	Ranger_Top2
+			1000012, 310004,	// MechanicStone_II_Top	Mechanic_Top2
+			1000016, 310008,	// HighpriestStone_II_Top	Highpriest_Top2
+			1000214, 310181,	// WarlockStone_Top2	Warlock_Top2
+			1000218, 310187,	// RoyalGuardStone_Top2	RoyalGuard_Top2
+			1000222, 310191,	// GuillotineCrossStone_Top2	GuillotineCross_Top2
+			1000297, 310258,	// RuneknightStone_Top2	Runeknight_Top2
+			1000301, 310262,	// GeneticStone_Top2	Genetic_Top2
+			1000305, 310266;	// WanderMinsStone_Top2	WandMinst_Top2
+		break;
+	case 1:
+		if (!(.@location & EQP_COSTUME_HEAD_MID)) {
+			mes "[Aver De Dosh]";
+			mes "The costume can't be enhanced at this location.";	// custom
+			close;
+		}
+		setarray .@stone_id[0],
+			6642, 4882,	// ATKStone_Middle	Atk1p
+			6643, 4883,	// MATKStone_Middle	Matk1p
+			6717, 4927,	// MaxHP_Stone	HP50
+			6742, 4931,	// HealStone_Middle	HEALHP1
+			6743, 4861,	// HPStone_Middle	MHP1
+			6744, 4929,	// SPStone_Middle	MSP1
+			6945, 4700,	// STRStone_Middle	Strength1
+			6946, 4710,	// INTStone_Middle	Inteligence1
+			6947, 4730,	// AGIStone_Middle	Agility1
+			6948, 4720,	// DEXStone_Middle	Dexterity1
+			6949, 4740,	// VITStone_Middle	Vitality1
+			6950, 4750,	// LUKStone_Middle	Luck1
+			25001, 29026,	// DEFStone_Middle	Def20
+			25002, 29024,	// ChangeLUK_Middle	LUK3STR
+			25003, 29014,	// ChangeSTR_Middle	STR3INT
+			25004, 29022,	// ChangeAGI_Middle	AGI3LUK
+			25005, 29016,	// ChangeINT_Middle	INT3DEX
+			25006, 29020,	// ChangeVIT_Middle	VIT3AGI
+			25007, 29018,	// ChangeDEX_Middle	DEX3VIT
+			25060, 29047,	// Critical_Stone	Fatal0
+			25061, 29048,	// Range_Stone	Expert_Archer0
+			25070, 29054,	// ReloadStone_Middle	Skill_Delay1_Middle
+			25141, 29145,	// EXPStone_Middle	EXP2MIDDLE
+			25173, 29157,	// CastingStone_Middle	Casting_Middle
+			25175, 29155,	// LexAeternaStone_Middle	LexAeterna
+			25410, 29424,	// SuraStone_Middle	SuraStone_Middle_
+			25414, 29429,	// RangerStone_Middle	RangerStone_Middle_
+			25418, 29433,	// SorcererStone_Middle	SorcererStone_Middle_
+			25446, 29461,	// RuneknightStone_Middle	RuneknightStone_Middle_
+			25451, 29465,	// GeneticStone_Middle	GeneticStone_Middle_
+			25454, 29469,	// WarlockStone_Middle	WarlockStone_Middle_
+			25491, 29478,	// ShadowchaseStone_Middle	ShadowchaseStone_Middle_
+			25495, 29482,	// MechanicStone_Middle	MechanicStone_Middle_
+			25499, 29486,	// WanderMinstrelStone_Middle	WanderMinstrelStone_Middle_
+			25707, 29514,	// HighpriestStone_Middle	HighpriestStone_Middle_
+			25711, 29518,	// PaladinStone_Middle	PaladinStone_Middle_
+			25715, 29522,	// AssacrossStone_Middle	AssacrossStone_Middle_
+			25799, 29612,	// SuraStone_Middle2	SuraStone_Middle2_
+			25803, 29616,	// SorcererStone_Middle2	SorcererStone_Middle2_
+			25807, 29620,	// ShadowchasStone_Middle2	ShadowchasStone_Middle2_
+			25844, 29652,	// SoulLinkerStone_Middle	SoulLinkerStone_Middle_
+			25847, 29656,	// StarGladiatorStone_Middle	StarGladiatorStone_Middle_
+			25851, 29660,	// NinjaStone_Middle	NinjaStone_Middle_
+			25856, 29665,	// GunslingerStone_Middle	GunslingerStone_Middle_
+			25860, 29669,	// DoramStone_Middle	DoramStone_Middle_
+			1000009, 310001,	// RangerStone_II_Middle	Ranger_Middle2
+			1000013, 310005,	// MechanicStone_II_Middle	Mechanic_Middle2
+			1000017, 310009,	// HighpriestStone_II_Middle	Highpriest_Middle2
+			1000215, 310182,	// WarlockStone_Middle2	Warlock_Middle2
+			1000219, 310186,	// RoyalGuardStone_Middle2	RoyalGuard_Middle2
+			1000223, 310190,	// GuillotineCrossStone_Middle2	GuillotineCross_Middle2
+			1000298, 310259,	// RuneknightStone_Middle2	Runeknight_Middle2
+			1000302, 310263,	// GeneticStone_Middle2	Genetic_Middle2
+			1000306, 310267;	// WanderMinsStone_Middle2	WandMinst_Mid2
+		break;
+	case 2:
+		if (!(.@location & EQP_COSTUME_HEAD_LOW)) {
+			mes "[Aver De Dosh]";
+			mes "The costume can't be enhanced at this location.";	// custom
+			close;
+		}
+		setarray .@stone_id[0],
+			6644, 4884,	// HITStone_Bottom	HIT1
+			6645, 4859,	// FLEEStone_Bottom	Evasion1
+			6718, 4928,	// MaxSP_Stone	SP10
+			6745, 4932,	// HealStone_Bottom	HEALSP1
+			6951, 4861,	// HPStone_Bottom	MHP1
+			25008, 29021,	// ChangeVIT_Bottom	VIT3LUK
+			25009, 29023,	// ChangeAGI_Bottom	AGI3STR
+			25010, 29019,	// ChangeDEX_Bottom	DEX3AGI
+			25011, 29025,	// ChangeLUK_Bottom	LUK3INT
+			25012, 29015,	// ChangeSTR_Bottom	STR3DEX
+			25013, 29017,	// ChangeINT_Bottom	INT3VIT
+			25014, 29033,	// MDEFStone_Bottom	Mdef4_Bottom
+			25015, 29027,	// EXPStone_Bottom	EXP2
+			25016, 29029,	// ATKStone_Bottom	Atk1p_Bottom
+			25017, 29031,	// MATKStone_Bottom	Matk1p_Bottom
+			25062, 29046,	// Greed_Stone	Greed
+			25063, 29049,	// MaxHP2_Stone	HP100_
+			25064, 29050,	// MaxSP2_Stone	SP50_
+			25065, 29051,	// Detoxify_Stone	Detoxify
+			25066, 29052,	// Recovery_Stone	Recovery
+			25071, 29055,	// ReloadStone_Bottom	Skill_Delay1_Bottom
+			25072, 29057,	// Kyrie_Stone	Kyrie
+			25139, 29146,	// Identify_Stone	Identify
+			25174, 29158,	// CastingStone_Bottom	Casting_Bottom
+			25227, 29227,	// Heal_Stone	Heal
+			25228, 29229,	// Teleport_Stone	Teleport
+			25229, 29228,	// Steal_Stone	Steal
+			25305, 29360,	// Critical_Stone_Bottom	Fatal_Bottom
+			25411, 29425,	// SuraStone_Bottom	SuraStone_Bottom_
+			25415, 29430,	// RangerStone_Bottom	RangerStone_Bottom_
+			25419, 29434,	// SorcererStone_Bottom	SorcererStone_Bottom_
+			25447, 29462,	// RuneknightStone_Bottom	RuneknightStone_Bottom_
+			25452, 29466,	// GeneticStone_Bottom	GeneticStone_Bottom_
+			25455, 29470,	// WarlockStone_Bottom	WarlockStone_Bottom_
+			25492, 29479,	// ShadowchaseStone_Bottom	ShadowchaseStone_Bottom_
+			25496, 29483,	// MechanicStone_Bottom	MechanicStone_Bottom_
+			25500, 29487,	// WanderMinstrelStone_Bottom	WanderMinstrelStone_Bottom_
+			25708, 29515,	// HighpriestStone_Bottom	HighpriestStone_Bottom_
+			25712, 29519,	// PaladinStone_Bottom	PaladinStone_Bottom_
+			25716, 29523,	// AssacrossStone_Bottom	AssacrossStone_Bottom_
+			25798, 29611,	// SuraStone_Bottom2	SuraStone_Bottom2_
+			25802, 29615,	// SorcererStone_Bottom2	SorcererStone_Bottom2_
+			25806, 29619,	// ShadowchasStone_Bottom2	ShadowchasStone_Bottom2_
+			25845, 29653,	// SoulLinkerStone_Bottom	SoulLinkerStone_Bottom_
+			25848, 29657,	// StarGladiatorStone_Bottom	StarGladiatorStone_Bottom_
+			25852, 29661,	// NinjaStone_Bottom	NinjaStone_Bottom_
+			25857, 29666,	// GunslingerStone_Bottom	GunslingerStone_Bottom_
+			25861, 29670,	// DoramStone_Bottom	DoramStone_Bottom_
+			1000010, 310002,	// RangerStone_II_Bottom	Ranger_Bottom2
+			1000014, 310006,	// MechanicStone_II_Bottom	Mechanic_Bottom2
+			1000018, 310010,	// HighpriestStone_II_Bottom	Highpriest_Bottom2
+			1000216, 310183,	// WarlockStone_Bottom2	Warlock_Bottom2
+			1000220, 310185,	// RoyalGuardStone_Bottom2	RoyalGuard_Bottom2
+			1000224, 310189,	// GuillotineCrossStone_Bottom2	GuillotineCross_Bottom2
+			1000299, 310260,	// RuneknightStone_Bottom2	Runeknight_Bottom2
+			1000303, 310264,	// GeneticStone_Bottom2	Genetic_Bottom2
+			1000307, 310268;	// WanderMinsStone_Bottom2	WandMinst_Bot2
+		break;
+	default:
+		mes "[Aver De Dosh]";
+		mes "Please check our other upgrading services~";
+		close;
+	}
+	.@size = getarraysize(.@stone_id);
+	for ( .@i = 0; .@i < .@size; .@i += 2 )
+		.@menu$ += sprintf( "%d. %s [%d] left:", (.@i/2)+1, getitemname(.@stone_id[.@i]), countitem(.@stone_id[.@i]) );
+	.@s = (select(.@menu$) - 1) * 2;
+	.@stone = .@stone_id[.@s];
+	.@enchant = .@stone_id[.@s+1];
+
+	if (getequipid(.@part) < 0 || countitem(.@stone) < 1) {
+		mes "[Aver De Dosh]";
+		mes "Hmm? You are lacking components.";
+		mes "You must have both, the costume and an enchant stone for this upgrade.";
+		close;
+	}
+	mes "^FF0000   !!! Caution !!!^000000";
+	mes "^ff0000This upgrade can fail.^000000";
+	mes "^ff0000If the item already has an enchant, it will be reset and only the costume will be returned.^000000";
+	mes "^FF0000Are you sure about upgrading this item?^000000";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Aver De Dosh]";
+		mes "Please check our other upgrading services~";
+		close;
+	}
+	delitem .@stone, 1;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
+	delequip .@part;
+	if (rand(1,100) < 51) {
+		mes "[Aver De Dosh]";
+		mes "Wow... Elegance!!";
+		mes "This is perfect... Wow!";
+		.@card[.@slot] = .@enchant;
+	}
+	else {
+		mes "[Aver De Dosh]";
+		mes "History is known for failure...";
+		mes "Just like the history of fashion...";
+		mes "Sorry...to disappoint you..~ LoL.";
+		.@card[.@slot] = 0;
+	}
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	close;
+}
+
+// Costume enchant (garment)
+mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
+	disable_items;
+	mes "[Lace La Zard]";
+	mes "Welcome to Fashion Stone!!";
+	mes "My name is Lace La Zard who will make your 'Power Shoulder' dream come true.";
+	next;
+	mes "[Lace La Zard]";
+	mes "Bring your ^ff0000Costume Garment^000000 and ^ff0000Garment Stone^000000, I will complete the perfect upgrade for you.!";
+	mes "I found this formula while working on my own humble body upgrading!";
+	next;
+	if (select( "Apply enchant.", "End Conversation." ) == 2) {
+		mes "[Lace La Zard]";
+		mes "Yes? Do you want to keep looking?";
+		close;
+	}
+	if (checkweight(1119,3) == 0) {
+		mes "[Lace La Zard]";
+		mes "Well... Your heavy shoulder doesn't seem capable for an upgrade...!";
+		mes "Don't be so cruel to your shoulder!";
+		next;
+		mes "It seems you have too many items on you.";
+		mes "Come back after clearing some inventory space.";
+		close;
+	}
+	.@part = EQI_COSTUME_GARMENT;
+	.@equip_id = getequipid(.@part);
+	if (.@equip_id == -1) {
+		mes "[Lace La Zard]";
+		mes "Put the garment on your shoulder.";
+		mes "I need to have a look at it before I can tell if it's worth to be upgraded..";
+		close;
+	}
+
+	// costume garment list allowed (incomplete)
+	switch(.@equip_id) {
+	case 20502:	// C_Devil_Wing
+	case 20504:	// C_Cupid_Wing_Pink
+	case 20505:	// C_Cupid_Wing_Skyblue
+	case 20506:	// C_Invisible_Manteau
+	case 20507:	// C_Poring_Bag
+	case 20509:	// C_Wings_of_Uriel
+	case 20510:	// C_SwordWing
+	case 20511:	// C_Blue_Fairy_Wing
+	case 20727:	// Brilliant_Golden_Wings
+	case 20737:	// C_Kirin_Wing
+	case 20746:	// C_Rudra_Wing
+	case 20761:	// C_Wing_Of_Happiness
+	case 20762:	// C_GreatDevilWing
+	case 20763:	// C_Amistr_Bag
+	case 20764:	// C_Fallen_Angel_Wing
+	case 20765:	// C_Archangel_Wing
+		break;
+	default:
+		mes "[Lace La Zard]";
+		mes "I need to have a look at it to check for upgrading posibility..";// custom
+		close;
+	}
+
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
+
+	mes "[Lace La Zard]";
+	mes "Wow a ^0000FF" + getitemname(.@equip_id) + "^000000!!! You got some taste right there, don't you?";
+	mes "Great!! I'm fully ready for this upgrade!!";
+	next;
+	setarray .@data$[0],
+		6908, 4807, "ASPD +1",	// ASPDStone_Robe	Atk_Speed1
+		6963, 4992, "1% chance to absorb 1% physical damage into HP.",	// HPdrainStone_Robe	HPdrain1
+		6964, 4993, "1% chance to absorb 1% physical damage into SP.",	// SPdrainStone_Robe	SPdrain1
+		25067, 29056, "Decreases Fixed Casting Time of all skills by 0.5 seconds.",	// CastingStone_Robe	FixedCasting05
+		25170, 29154, "Decreases Fixed Casting Time of all skills by 0.3 seconds.",	// MinorCastingStone_Robe	FixedCasting03
+		25302, 29362, "Enables the use of Level 3 Double Attack.",	// DoubleAttack_Stone	DoubleAttack
+		25303, 29361, "Increases Critical Damage by 20%.",	// Critical_Stone_Robe	Fatal_Robe
+		25306, 29358, "Decreases Variable Casting Time by 10%.",	// CastStone_Robe	Casting_Robe
+		25412, 29426, "Increases damage of Rampage Blaster by 15%.",	// SuraStone_Robe	SuraStone_Robe_
+		25416, 29431, "Increases damage of Arrow Storm by 10%.",	// RangerStone_Robe	RangerStone_Robe_
+		25420, 29435, "Increases damage of Psychic Wave by 10%.",	// SorcererStone_Robe	SorcererStone_Robe_
+		25448, 29463, "Increases damage of Dragon Breath - Water by 10%.",	// RuneknightStone_Robe	RuneknightStone_Robe_
+		25449, 29467, "Increases damage of Cart Cannon by 10%.",	// GeneticStone_Robe	GeneticStone_Robe_
+		25456, 29471, "Increases damage of Crimson Rock by 10%.",	// WarlockStone_Robe	WarlockStone_Robe_
+		25493, 29480, "Increases damage of Triangle Shot by 15%.",	// ShadowchaserStone_Robe	ShadowchaserStone_Robe_
+		25497, 29484, "Increases damage of Axe Tornado by 15%.",	// MechanicStone_Robe	MechanicStone_Robe_
+		25501, 29488, "Increases damage of Severe Rainstorm by 15%.",	// WanderMinstrelStone_Robe	WanderMinstrelStone_Robe_
+		25709, 29516, "Increases damage of Adoramus by 15%.",	// ArchbishopStone_Robe	ArchbishopStone_Robe_
+		25713, 29520, "Increases damage of Banishing Point by 15%.",	// RoyalguardStone_Robe	RoyalguardStone_Robe_
+		25717, 29524, "Increases damage of Rolling Cutter by 15%.",	// GuillcrossStone_Robe	GuillcrossStone_Robe_
+		25797, 29427, "Increases damage of Knuckle Arrow by 15%.",	// SuraStone_Robe2	SuraStone_Robe2_
+		25801, 29614, "Increases damage of Diamond Dust by 15%.",	// SorcererStone_Robe2	SorcererStone_Robe2_
+		25805, 29618, "Increases damage of Fatal Menace by 15%.",	// ShadowchaserStone_Robe2	ShadowchaserStone_Robe2_
+		25842, 29654, "Increases damage of Eswhoo by 20%.",	// SoulReaperStone_Robe	SoulReaperStone_Robe_
+		25849, 29658, "Increases damage of Falling Star, Solar Burst and Full Moon Kick by 20%.",	// StarEmperorStone_Garment	StarEmperorStone_Garment_
+		25853, 29662, "Increases damage of Swirling Petal by 25%.",	// KagerouStone_Robe	KagerouStone_Robe_
+		25854, 29663, "Increases damage of Flaming Petals by 20%.",	// OboroStone_Robe	OboroStone_Robe_
+		25858, 29667, "Increases damage of Hammer of God and Round Trip by 20%.",	// GunslingerStone_Robe	GunslingerStone_Robe_
+		25862, 29671, "Increases damage of Picky Peck and Catnip Meteor by 20%.",	// DoramStone_Robe	DoramStone_Robe_
+		1000011, 310003, "Increases damage of Aimed Bolt by 15%.",	// RangerStone_II_Garment	Ranger_Robe2
+		1000015, 310007, "Increases damage of Arms Cannon by 15%.",	// MechanicStone_II_Garment	Mechanic_Robe2
+		1000019, 310011, "Increases damage of Judex by 15%.",	// ArchbishopStone_II_Garment	Archbishop_Robe2
+		1000213, 310180, "Increases damage of Comet by 15%.",	// WarlockStone_Robe2	Warlock_Robe2
+		1000217, 310184, "Increases damage of Ray of Genesis by 15%.",	// RoyalGuardStone_Robe2	RoyalGuard_Robe2
+		1000221, 310188, "Increases Critical Damage by 15%. Enables Double Attack Level 3 if you have learned Katar Mastery Level 10",	// GuillotineCrossStone_Robe2	GuillotineCross_Robe2
+		1000296, 310257, "Increases damage of Ignition Break by 15%.",	// RuneknightStone_Robe2	Runeknight_Robe2
+		1000300, 310261, "Increases damage of Crazy Weed by 20%.",	// GeneticStone_Robe2	Genetic_Robe2
+		1000304, 310265, "Increases damage of Reverberation by 15%.";	// WanderMinsStone_Robe2	WandMinst_Robe2
+	.@size = getarraysize(.@data$);
+	for ( .@i = 0; .@i < .@size; .@i += 3 ) {
+		.@id = atoi(.@data$[.@i]);
+		.@menu$ += sprintf( "%d. %s (%d) left:", (.@j+1), getitemname(.@id), countitem(.@id) );
+		.@j++;
+	}
+	.@menu$ += "End Conversation.";
+	.@s = (select(.@menu$) - 1) * 3;
+	if (.@s == .@size) {
+		mes "[Lace La Zard]";
+		mes "Yes? Do you want to keep looking?";
+		close;
+	}
+	.@id = atoi(.@data$[.@s]);
+	.@enchant = atoi(.@data$[.@s+1]);
+	if (getequipid(.@part) < 0 || countitem(.@id) < 1) {
+		mes "[Lace La Zard]";
+		mes "You must have both, the costume and an enchant stone for this upgrade.";
+		close;
+	}
+	mes "^FF0000   !!! Caution !!!^000000";
+	mes "^ff0000This upgrade can fail.^000000";
+	mes "^ff0000If the item already has an enchant, it will be reset and only the " + .@data$[.@s+2] + " will be returned.^000000";
+	mes "^ff0000Are you sure about upgrading this item?^000000";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Lace La Zard]";
+		mes "Yes? Do you want to keep looking?";
+		close;
+	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
+	delitem .@id, 1;
+	delequip .@part;
+	if (rand(100) < 50) {
+		mes "[Lace La Zard]";
+		mes "Beautiful!!";
+		mes "Did I really made this myself?!!!";
+		.@card[0] = .@enchant;
+	}
+	else {
+		mes "[Lace La Zard]";
+		mes "Oh no!";
+		mes "Crash!!!!! I cannot show this failure to the world!!!";
+		.@card[0] = 0;
+	}
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	close;
+}

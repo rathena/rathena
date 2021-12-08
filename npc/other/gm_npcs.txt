@@ -91,6 +91,7 @@ List of GM Management NPCs (incomplete)
 - Horror Toy Factory (RE)
 - Faceworm's Nest (RE)
 - Central Laboratory (RE)
+- Morse's Cave (RE)
 
 [ Job-related ]
 ----- 3rd Class (RE) -----

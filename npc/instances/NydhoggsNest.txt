@@ -2004,11 +2004,11 @@ OnEnable:
 
 2@nyd,115,278,0	script	nyd_2f_red	-1,5,5,{
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp1")+"::OnEnable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp2")+"::OnEnable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp3")+"::OnEnable";
@@ -2020,7 +2020,7 @@ OnDisable:
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp1")+"::OnDisable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp2")+"::OnDisable";
 	donpcevent instance_npcname(strnpcinfo(0)+"_warp3")+"::OnDisable";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnTouch:
@@ -2042,18 +2042,18 @@ OnTouch:
 	end;
 
 OnTimer10000:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	stopnpctimer;
 	end;
 }
 
 2@nyd,6,6,0	script	nyd_2f_red_c	-1,{
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	initnpctimer;
 	set .@map$, instance_mapname("2@nyd");
 	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
@@ -2105,7 +2105,7 @@ OnDisable:
 	stopnpctimer;
 	killmonster instance_mapname("2@nyd"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead"; //custom
 	donpcevent instance_npcname(substr(strnpcinfo(0),0,getstrlen(strnpcinfo(0))-3))+"::OnDisable";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnTimer180000:
@@ -2118,11 +2118,11 @@ OnTimer180000:
 2@nyd,130,298,0	script	nyd_2f_red_warp1	-1,6,6,{
 OnInstanceInit:
 OnDisable:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	end;
 
 OnTouch:

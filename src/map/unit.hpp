@@ -23,7 +23,7 @@ struct unit_data {
 	struct block_list *bl; ///link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
 	struct walkpath_data walkpath;
 	struct skill_timerskill *skilltimerskill[MAX_SKILLTIMERSKILL];
-	struct skill_unit_group *skillunit[MAX_SKILLUNITGROUP];
+	std::vector<std::shared_ptr<s_skill_unit_group>> skillunits;
 	struct skill_unit_group_tickset skillunittick[MAX_SKILLUNITGROUPTICKSET];
 	short attacktarget_lv;
 	short to_x, to_y;
@@ -57,23 +57,23 @@ struct unit_data {
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
 		unsigned blockedskill : 1;
+		unsigned ignore_cell_stack_limit : 1;
 	} state;
 	char walk_done_event[EVENT_NAME_LENGTH];
+	char title[NAME_LENGTH];
+	int32 group_id;
 };
 
 struct view_data {
-#ifdef __64BIT__
-	unsigned int class_; //why arch dependant ??? make no sense imo [lighta]
-#else
-	unsigned short class_;
-#endif
-unsigned short
+	uint16 class_;
+	t_itemid
 		weapon,
 		shield, //Or left-hand weapon.
 		robe,
 		head_top,
 		head_mid,
-		head_bottom,
+		head_bottom;
+	uint16
 		hair_style,
 		hair_color,
 		cloth_color,
@@ -119,7 +119,7 @@ int unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
 int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
 
-int unit_escape(struct block_list *bl, struct block_list *target, short dist);
+int unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
 
 // Instant unit changes
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
@@ -157,11 +157,12 @@ int unit_set_target(struct unit_data* ud, int target_id);
 
 // unit_data
 void unit_dataset(struct block_list *bl);
+void unit_skillunit_maxcount(unit_data& ud, uint16 skill_id, int& maxcount);
 
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype);
-void unit_refresh(struct block_list *bl);
+void unit_refresh(struct block_list *bl, bool walking = false);
 void unit_free_pc(struct map_session_data *sd);
 #define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);
