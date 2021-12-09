@@ -103192,7 +103192,7 @@ Body:
       bonus bMatk,50;
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
-      if (.@r.=9) {
+      if (.@r>=9) {
          bonus bBaseAtk,50;
          bonus bMatk,50;
          bonus bMaxHPrate,10;
