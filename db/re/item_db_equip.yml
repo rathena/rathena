@@ -103174,6 +103174,30 @@ Body:
     Script: |
       bonus bMatk,15;
       bonus bBaseAtk,15;
+  - Id: 22234
+    AegisName: FrontiaBoots
+    Name: Frontier Boots
+    Type: Armor
+    Weight: 500
+    Defense: 5
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      if (.@r.=9) {
+         bonus bBaseAtk,50;
+         bonus bMatk,50;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
   - Id: 22238
     AegisName: Great_Hero_Boots
     Name: Great Hero Boots
