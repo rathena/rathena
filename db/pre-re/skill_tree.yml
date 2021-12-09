@@ -1532,18 +1532,6 @@ Body:
       Novice: true
       Swordman: true
       Crusader: true
-  - Job: Wedding
-    Tree:
-      - Name: NV_BASIC
-        MaxLevel: 9
-      - Name: WE_MALE
-        MaxLevel: 1
-      - Name: WE_FEMALE
-        MaxLevel: 1
-      - Name: WE_CALLPARTNER
-        MaxLevel: 1
-      - Name: WE_CALLBABY
-        MaxLevel: 1
   - Job: Supernovice
     Inherit:
       Novice: true
