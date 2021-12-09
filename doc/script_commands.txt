@@ -3055,6 +3055,7 @@ Valid types are:
 	ITEMINFO_ID             (17)   -  item ID
 	ITEMINFO_AEGISNAME      (18)   -  aegis item name
 	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
+	ITEMINFO_SUBTYPE        (20)   -  Subtype
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 

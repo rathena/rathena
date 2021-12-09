@@ -913,6 +913,12 @@ enum e_ammo_type : uint8 {
 	MAX_AMMO_TYPE
 };
 
+enum e_card_type : uint8 {
+	CARD_NORMAL = 0,
+	CARD_ENCHANT,
+	MAX_CARD_TYPE
+};
+
 enum idletime_option {
 	IDLE_WALK          = 0x0001,
 	IDLE_USESKILLTOID  = 0x0002,
