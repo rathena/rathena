@@ -133,6 +133,38 @@ enum npc_timeout_type {
 	NPCT_WAIT  = 2,
 };
 
+/// Enum of Player's Parameter
+enum e_params {
+	PARAM_STR = 0,
+	PARAM_AGI,
+	PARAM_VIT,
+	PARAM_INT,
+	PARAM_DEX,
+	PARAM_LUK,
+	PARAM_POW,
+	PARAM_STA,
+	PARAM_WIS,
+	PARAM_SPL,
+	PARAM_CON,
+	PARAM_CRT,
+	PARAM_MAX
+};
+
+static const char* parameter_names[PARAM_MAX] = {
+	"Str",
+	"Agi",
+	"Vit",
+	"Int",
+	"Dex",
+	"Luk",
+	"Pow",
+	"Sta",
+	"Wis",
+	"Spl",
+	"Con",
+	"Crt"
+};
+
 extern unsigned int equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
@@ -364,7 +396,7 @@ struct map_session_data {
 		unsigned int no_walk_delay : 1;
 	} special_state;
 	uint32 login_id1, login_id2;
-	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
+	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
 	int group_id, group_pos, group_level;
 	unsigned int permissions;/* group permissions */
 	int count_rewarp; //count how many time we being rewarped
@@ -446,7 +478,7 @@ struct map_session_data {
 
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	struct s_indexed_bonus {
-		int param_bonus[6], param_equip[6]; //Stores card/equipment bonuses.
+		int param_bonus[PARAM_MAX], param_equip[PARAM_MAX]; //Stores card/equipment bonuses.
 		int subele[ELE_MAX];
 		int subele_script[ELE_MAX];
 		int subdefele[ELE_MAX];
@@ -624,8 +656,8 @@ struct map_session_data {
 
 	struct pet_data *pd;
 	struct homun_data *hd;	// [blackhole89]
-	struct mercenary_data *md;
-	struct elemental_data *ed;
+	s_mercenary_data *md;
+	s_elemental_data *ed;
 
 	struct s_hate_mob {
 		int  m; //-1 - none, other: map index corresponding to map name.
@@ -642,8 +674,8 @@ struct map_session_data {
 	int eventtimer[MAX_EVENTTIMER];
 	unsigned short eventcount; // [celest]
 
-	unsigned char change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
-	unsigned char change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
+	uint16 change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
+	uint16 change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
@@ -858,6 +890,7 @@ enum weapon_type : uint8 {
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
 	MAX_WEAPON_TYPE_ALL,
+	W_SHIELD = MAX_WEAPON_TYPE,
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
@@ -874,6 +907,12 @@ enum e_ammo_type : uint8 {
 	AMMO_CANNONBALL,
 	AMMO_THROWWEAPON,
 	MAX_AMMO_TYPE
+};
+
+enum e_card_type : uint8 {
+	CARD_NORMAL = 0,
+	CARD_ENCHANT,
+	MAX_CARD_TYPE
 };
 
 enum idletime_option {
@@ -940,26 +979,38 @@ public:
 };
 
 struct s_job_info {
-	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
-	int hp_factor, hp_multiplicator, sp_factor;
-	int max_weight_base;
-	char job_bonus[MAX_LEVEL];
-#ifdef RENEWAL_ASPD
-	int aspd_base[MAX_WEAPON_TYPE+1];
-#else
-	int aspd_base[MAX_WEAPON_TYPE];	//[blackhole89]
-#endif
-	t_exp exp_table[2][MAX_LEVEL];
-	uint32 max_level[2];
-	struct s_params {
-		uint16 str, agi, vit, int_, dex, luk;
-	} max_param;
+	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
+	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
+	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
+	std::vector<int16> aspd_base;
+	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
+	uint16 max_base_level, max_job_level;
+	uint16 max_param[PARAM_MAX];
 	struct s_job_noenter_map {
 		uint32 zone;
 		uint8 group_lv;
 	} noenter_map;
 };
-extern struct s_job_info job_info[CLASS_COUNT];
+
+class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
+public:
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+	void loadingFinished();
+
+	// Extras
+	uint32 get_maxBaseLv(uint16 job_id);
+	uint32 get_maxJobLv(uint16 job_id);
+	t_exp get_baseExp(uint16 job_id, uint32 level);
+	t_exp get_jobExp(uint16 job_id, uint32 level);
+	int32 get_maxWeight(uint16 job_id);
+};
+
+extern JobDatabase job_db;
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
@@ -1018,17 +1069,7 @@ static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block 
 	return sd == NULL || (sd->state.workinprogress&progress) == progress;
 }
 
-/// Enum of Player's Parameter
-enum e_params {
-	PARAM_STR = 0,
-	PARAM_AGI,
-	PARAM_VIT,
-	PARAM_INT,
-	PARAM_DEX,
-	PARAM_LUK,
-	PARAM_MAX
-};
-short pc_maxparameter(struct map_session_data *sd, enum e_params param);
+uint16 pc_maxparameter(struct map_session_data *sd, e_params param);
 short pc_maxaspd(struct map_session_data *sd);
 
 /**
@@ -1154,7 +1195,6 @@ enum e_summoner_power_type {
 };
 
 void pc_set_reg_load(bool val);
-int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
@@ -1196,7 +1236,7 @@ TIMER_FUNC(pc_global_expiration_timer);
 void pc_expire_check(struct map_session_data *sd);
 
 void pc_calc_skilltree(struct map_session_data *sd);
-int pc_calc_skilltree_normalize_job(struct map_session_data *sd);
+uint64 pc_calc_skilltree_normalize_job(struct map_session_data *sd);
 void pc_clean_skilltree(struct map_session_data *sd);
 
 #define pc_checkoverhp(sd) ((sd)->battle_status.hp == (sd)->battle_status.max_hp)
@@ -1294,6 +1334,8 @@ int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);
 bool pc_statusup(struct map_session_data*,int,int);
 int pc_statusup2(struct map_session_data*,int,int);
+int pc_getstat(map_session_data *sd, int type);
+int pc_setstat(struct map_session_data* sd, int type, int val);
 void pc_skillup(struct map_session_data*,uint16 skill_id);
 int pc_allskillup(struct map_session_data*);
 int pc_resetlvl(struct map_session_data*,int type);
@@ -1381,14 +1423,14 @@ bool pc_setstand(struct map_session_data *sd, bool force);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
 bool pc_can_attack(struct map_session_data *sd, int target_id);
 
-int pc_jobid2mapid(unsigned short b_class);	// Skotlex
-int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
+uint64 pc_jobid2mapid(unsigned short b_class);	// Skotlex
+int pc_mapid2jobid(uint64 class_, int sex);	// Skotlex
 
 const char * job_name(int class_);
 
 struct s_skill_tree_entry {
 	uint16 skill_id, max_lv;
-	uint16 baselv, joblv;
+	uint32 baselv, joblv;
 	std::unordered_map<uint16, uint16> need;	/// skill_id, skill_lv
 	bool exclude_inherit;	// exclude the skill from inherit when loading the table
 };

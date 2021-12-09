@@ -14164,6 +14164,7 @@ BUILDIN_FUNC(getiteminfo)
 		}
 		case ITEMINFO_ID: script_pushint(st, i_data->nameid); break;
 		case ITEMINFO_AEGISNAME: script_pushstrcopy(st, i_data->name.c_str()); break;
+		case ITEMINFO_SUBTYPE: script_pushint(st, i_data->subtype); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -14250,6 +14251,7 @@ BUILDIN_FUNC(setiteminfo)
 #endif
 			break;
 		}
+		case ITEMINFO_SUBTYPE: i_data->subtype = static_cast<uint8>(value); break;
 		default:
 			script_pushint(st, -1);
 			break;
@@ -14973,6 +14975,65 @@ BUILDIN_FUNC(specialeffect2)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(removespecialeffect)
+{
+	const char* command = script_getfuncname(st);
+
+#if PACKETVER < 20181002
+	ShowError("buildin_%s: This command is not supported for PACKETVER older than 2018-10-02.\n", command);
+
+	return SCRIPT_CMD_FAILURE;
+#endif
+
+	int effect = script_getnum(st, 2);
+
+	if (effect <= EF_NONE || effect >= EF_MAX) {
+		ShowError("buildin_%s: unsupported effect id %d.\n", command, effect);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	send_target e_target = script_hasdata(st, 3) ? static_cast<send_target>(script_getnum(st, 3)) : AREA;
+
+	struct block_list *bl_src;
+	struct block_list *bl_target;
+	struct map_session_data *sd;
+
+	if( strcmp(command, "removespecialeffect") == 0 ) {
+		if (!script_hasdata(st, 4)) {
+			bl_src = map_id2bl(st->oid);
+
+			if (bl_src == nullptr) {
+				ShowError("buildin_%s: npc not attached.\n", command);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+		else {
+			struct npc_data *nd = npc_name2id(script_getstr(st, 4));
+			if (nd == nullptr) {
+				ShowError("buildin_%s: unknown npc %s.\n", command, script_getstr(st, 4));
+				return SCRIPT_CMD_FAILURE;
+			}
+			bl_src = &nd->bl;
+		}
+
+		if (e_target != SELF)
+			bl_target = bl_src;
+		else {
+			if (!script_rid2sd(sd))
+				return SCRIPT_CMD_FAILURE;
+			bl_target = &sd->bl;
+		}
+	}else{
+		if (!script_nick2sd(4, sd))
+			return SCRIPT_CMD_FAILURE;
+
+		bl_src = bl_target = &sd->bl;
+	}
+
+	clif_specialeffect_remove(bl_src, effect, e_target, bl_target);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /**
  * nude({<char_id>});
  * @author [Valaris]
@@ -15307,7 +15368,7 @@ BUILDIN_FUNC(getmercinfo)
 {
 	int type;
 	struct map_session_data* sd;
-	struct mercenary_data* md;
+	s_mercenary_data* md;
 
 	if( !script_charid2sd(3,sd) ){
 		script_pushnil(st);
@@ -15329,7 +15390,7 @@ BUILDIN_FUNC(getmercinfo)
 	{
 		case 0: script_pushint(st,md->mercenary.mercenary_id); break;
 		case 1: script_pushint(st,md->mercenary.class_); break;
-		case 2: script_pushstrcopy(st,md->db->name); break;
+		case 2: script_pushstrcopy(st,md->db->name.c_str()); break;
 		case 3: script_pushint(st,mercenary_get_faith(md)); break;
 		case 4: script_pushint(st,mercenary_get_calls(md)); break;
 		case 5: script_pushint(st,md->mercenary.kill_count); break;
@@ -17939,7 +18000,7 @@ BUILDIN_FUNC(rid2name)
 			case BL_NPC: script_pushstrcopy(st,((TBL_NPC*)bl)->exname); break;
 			case BL_PET: script_pushstrcopy(st,((TBL_PET*)bl)->pet.name); break;
 			case BL_HOM: script_pushstrcopy(st,((TBL_HOM*)bl)->homunculus.name); break;
-			case BL_MER: script_pushstrcopy(st,((TBL_MER*)bl)->db->name); break;
+			case BL_MER: script_pushstrcopy(st,((TBL_MER*)bl)->db->name.c_str()); break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
 				script_pushconststr(st,"");
@@ -18852,7 +18913,7 @@ BUILDIN_FUNC(setunitdata)
 					ShowWarning("buildin_setunitdata: Error in finding target for BL_ELEM!\n");
 					return SCRIPT_CMD_FAILURE;
 				}
-				elemental_change_mode(ed, static_cast<e_mode>(EL_MODE_AGGRESSIVE));
+				elemental_change_mode(ed, EL_MODE_AGGRESSIVE);
 				unit_attack(&ed->bl, target->id, 1);
 				break;
 			}
@@ -19821,7 +19882,7 @@ BUILDIN_FUNC(mercenary_create)
 
 	class_ = script_getnum(st,2);
 
-	if( !mercenary_db(class_) )
+	if( !mercenary_db.exists(class_) )
 		return SCRIPT_CMD_SUCCESS;
 
 	contract_time = script_getnum(st,3);
@@ -25698,6 +25759,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcskilleffect,"viii"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
+	BUILDIN_DEF(removespecialeffect,"i??"),
+	BUILDIN_DEF2(removespecialeffect,"removespecialeffect2","i??"),
 	BUILDIN_DEF(nude,"?"), // nude command [Valaris]
 	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]

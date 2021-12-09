@@ -17,8 +17,8 @@ struct block_list;
 struct mob_data;
 struct pet_data;
 struct homun_data;
-struct mercenary_data;
-struct elemental_data;
+struct s_mercenary_data;
+struct s_elemental_data;
 struct npc_data;
 struct status_change;
 
@@ -2634,7 +2634,7 @@ struct status_data {
 		matk_min, matk_max,
 		speed,
 		amotion, adelay, dmotion;
-	enum e_mode mode;
+	int mode;
 	short
 		hit, flee, cri, flee2,
 		def2, mdef2,
@@ -2654,6 +2654,8 @@ struct status_data {
 		class_; /// see enum e_classAE
 
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
+
+	uint16 pow, sta, wis, spl, con, crt;
 };
 
 ///Additional regen data that only players have.
@@ -2879,8 +2881,8 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
 void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
 int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
 int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt);
-int status_calc_mercenary_(struct mercenary_data *md, enum e_status_calc_opt opt);
-int status_calc_elemental_(struct elemental_data *ed, enum e_status_calc_opt opt);
+int status_calc_mercenary_(s_mercenary_data *md, e_status_calc_opt opt);
+int status_calc_elemental_(s_elemental_data *ed, e_status_calc_opt opt);
 int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt);
 
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);

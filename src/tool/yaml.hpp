@@ -42,6 +42,7 @@
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
 #include "../map/instance.hpp"
+#include "../map/elemental.hpp"
 #include "../map/mercenary.hpp"
 #include "../map/mob.hpp"
 #include "../map/npc.hpp"
@@ -263,13 +264,14 @@ void finalizeBody(void) {
 /**
  * Split the string with ':' as separator and put each value for a skilllv
  * @param str: String to split
- * @param val: Array of MAX_SKILL_LEVEL to put value into
- * @return 0:error, x:number of value assign (should be MAX_SKILL_LEVEL)
+ * @param val: Array to store value into
+ * @param max: Max array size (Default: MAX_SKILL_LEVEL)
+ * @return 0:error, x:number of value assign (max value)
  */
-int skill_split_atoi(char *str, int *val) {
+int skill_split_atoi(char *str, int *val, int max = MAX_SKILL_LEVEL) {
 	int i;
 
-	for (i = 0; i < MAX_SKILL_LEVEL; i++) {
+	for (i = 0; i < max; i++) {
 		if (!str)
 			break;
 		val[i] = atoi(str);

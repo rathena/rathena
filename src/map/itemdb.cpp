@@ -172,6 +172,16 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			item->subtype = static_cast<e_ammo_type>(constant);
+		} else if (item->type == IT_CARD) {
+			std::string type_constant = "CARD_" + type;
+			int64 constant;
+
+			if (!script_get_constant(type_constant.c_str(), &constant) || constant < CARD_NORMAL || constant >= MAX_CARD_TYPE) {
+				this->invalidWarning(node["SubType"], "Invalid card type %s, defaulting to CARD_NORMAL.\n", type.c_str());
+				item->subtype = CARD_NORMAL;
+			}
+
+			item->subtype = static_cast<e_card_type>(constant);
 		} else
 			this->invalidWarning(node["SubType"], "Item sub type is not supported for this item type.\n");
 	} else {
@@ -367,7 +377,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(className_constant.c_str(), &constant)) {
-				this->invalidWarning(classNode[className], "Invalid class upper %s, defaulting to All.\n", className.c_str());
+				this->invalidWarning(classNode[className], "Invalid class %s, defaulting to All.\n", className.c_str());
 				item->class_upper |= ITEMJ_ALL;
 				break;
 			}
@@ -2429,6 +2439,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		classes["Third_Baby"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
+		classes["Fourth"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
 		jobs["KagerouOboro"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		jobs["Rebellion"] = std::stoi(str[index]) ? "true" : "false";
@@ -2464,7 +2476,7 @@ static int itemdb_read_sqldb(void) {
 			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
 			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"
 #ifdef RENEWAL
-			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
+			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`class_fourth`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
 #endif
 			" FROM `%s`", item_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);

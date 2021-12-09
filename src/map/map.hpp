@@ -69,6 +69,7 @@ void map_msg_reload(void);
 #define JOBL_UPPER 0x1000 //4096
 #define JOBL_BABY 0x2000  //8192
 #define JOBL_THIRD 0x4000 //16384
+#define JOBL_FOURTH 0x8000 //32768
 
 //for filtering and quick checking.
 #define MAPID_BASEMASK 0x00ff
@@ -220,6 +221,20 @@ enum e_mapid : uint64{
 	MAPID_BABY_GENETIC,
 	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
+//4-1 Jobs
+	MAPID_DRAGON_KNIGHT = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_KNIGHT,
+	MAPID_ARCH_MAGE,
+	MAPID_WINDHAWK,
+	MAPID_CARDINAL,
+	MAPID_MEISTER,
+	MAPID_SHADOW_CROSS,
+//4-2 Jobs
+	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_CRUSADER,
+	MAPID_ELEMENTAL_MASTER,
+	MAPID_TROUBADOURTROUVERE,
+	MAPID_INQUISITOR,
+	MAPID_BIOLO,
+	MAPID_ABYSS_CHASER,
 // Additional constants
 	MAPID_ALL = UINT64_MAX
 };
@@ -462,6 +477,12 @@ enum _sp {
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
+
+	// 4th jobs
+	SP_POW=219, SP_STA, SP_WIS, SP_SPL, SP_CON, SP_CRT,	// 219-224
+	SP_PATK, SP_SMATK, SP_RES, SP_MRES, SP_HPLUS, SP_CRATE,	// 225-230
+	SP_TRAITPOINT, SP_AP, SP_MAXAP,	// 231-233
+	SP_UPOW=247, SP_USTA, SP_UWIS, SP_USPL, SP_UCON, SP_UCRT,	// 247-252
 
 	// original 1000-
 	SP_ATTACKRANGE=1000,	SP_ATKELE,SP_DEFELE,	// 1000-1002
@@ -1066,9 +1087,9 @@ struct map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
-struct mercenary_data* map_id2mc(int id);
+struct s_mercenary_data* map_id2mc(int id);
 struct pet_data* map_id2pd(int id);
-struct elemental_data* map_id2ed(int id);
+struct s_elemental_data* map_id2ed(int id);
 struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
@@ -1174,8 +1195,8 @@ typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
-typedef struct mercenary_data   TBL_MER;
-typedef struct elemental_data	TBL_ELEM;
+typedef struct s_mercenary_data   TBL_MER;
+typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )

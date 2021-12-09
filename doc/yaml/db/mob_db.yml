@@ -24,7 +24,7 @@
 #   Vit                     Vitality which affects defense. (Default: 1)
 #   Int                     Intelligence which affects magic attack. (Default: 1)
 #   Dex                     Dexterity which affects hit rate. (Default: 1)
-#   Luk                     Luck which affects perfect dodge/lucky flee/lerfect flee/lucky dodge rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
 #   AttackRange             Attack range. (Default: 0)
 #   SkillRange              Skill cast range. (Default: 0)
 #   ChaseRange              Chase range. (Default: 0)
