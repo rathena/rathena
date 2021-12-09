@@ -7284,6 +7284,7 @@ Body:
         Hp: 17680
   - Jobs:
       Gunslinger: true
+      Baby_Gunslinger: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -7485,6 +7486,7 @@ Body:
         Hp: 4500
   - Jobs:
       Rebellion: true
+      Baby_Rebellion: true
     BaseHp:
       - Level: 99
         Hp: 4938
@@ -7692,6 +7694,7 @@ Body:
         Hp: 19417
   - Jobs:
       Ninja: true
+      Baby_Ninja: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -7893,6 +7896,7 @@ Body:
         Hp: 4250
   - Jobs:
       Kagerou: true
+      Baby_Kagerou: true
     BaseHp:
       - Level: 99
         Hp: 4250
@@ -8100,6 +8104,7 @@ Body:
         Hp: 15205
   - Jobs:
       Oboro: true
+      Baby_Oboro: true
     BaseHp:
       - Level: 99
         Hp: 4250
@@ -8307,6 +8312,7 @@ Body:
         Hp: 14905
   - Jobs:
       Taekwon: true
+      Baby_Taekwon: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -8509,6 +8515,8 @@ Body:
   - Jobs:
       Star_Gladiator: true
       Star_Gladiator2: true
+      Baby_Star_Gladiator: true
+      Baby_Star_Gladiator2: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -8710,6 +8718,7 @@ Body:
         Hp: 4500
   - Jobs:
       Soul_Linker: true
+      Baby_Soul_Linker: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -16871,6 +16880,8 @@ Body:
   - Jobs:
       Gunslinger: true
       Rebellion: true
+      Baby_Gunslinger: true
+      Baby_Rebellion: true
     BaseSp:
       - Level: 1
         Sp: 12
@@ -17274,6 +17285,7 @@ Body:
         Sp: 1062
   - Jobs:
       Ninja: true
+      Baby_Ninja: true
     BaseSp:
       - Level: 1
         Sp: 14
@@ -17475,6 +17487,7 @@ Body:
         Sp: 522
   - Jobs:
       Kagerou: true
+      Baby_Kagerou: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -17682,6 +17695,7 @@ Body:
         Sp: 1330
   - Jobs:
       Oboro: true
+      Baby_Oboro: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -17889,6 +17903,7 @@ Body:
         Sp: 1420
   - Jobs:
       Taekwon: true
+      Baby_Taekwon: true
     BaseSp:
       - Level: 1
         Sp: 12
@@ -18091,6 +18106,8 @@ Body:
   - Jobs:
       Star_Gladiator: true
       Star_Gladiator2: true
+      Baby_Star_Gladiator: true
+      Baby_Star_Gladiator2: true
     BaseSp:
       - Level: 1
         Sp: 14
@@ -18292,6 +18309,7 @@ Body:
         Sp: 500
   - Jobs:
       Soul_Linker: true
+      Baby_Soul_Linker: true
     BaseSp:
       - Level: 1
         Sp: 19
