@@ -2736,3 +2736,11 @@
 2455:2559:5544:15007,{ bonus bBaseAtk,20; bonus bMatk,20; bonus bAspdRate,10; }
 2166:1631,{ bonus2 bSkillAtk,"PR_MAGNUS",20; bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",1,20; }
 2193:2374,{ bonus bDelayrate,-10; }
+470036:1326,{ bonus2 bAddClass,Class_Boss,70; bonus2 bSubClass,Class_Boss,15; }
+470037:1326,{ bonus2 bAddClass,Class_Boss,70; bonus2 bSubClass,Class_Boss,15; }
+480064:1752,{ bonus2 bSubEle,Ele_Fire,75; }
+480064:1754,{ bonus2 bSubEle,Ele_Water,75; }
+480064:1755,{ bonus2 bSubEle,Ele_Wind,75; }
+480064:1756,{ bonus2 bSubEle,Ele_Earth,75; }
+480064:18123,{ if (getskilllv("WM_GLOOMYDAY") == 5) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",2000; }
+480064:450092,{ if (getskilllv("WM_GLOOMYDAY") == 5) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",2000; }
