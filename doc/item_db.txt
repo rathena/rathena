@@ -78,6 +78,10 @@ Kunai
 CannonBall
 ThrowWeapon
 
+For cards, the types are:
+Normal (default)
+Enchant
+
 ---------------------------------------
 
 Buy: Default buying price. When not specified, becomes double the sell price.

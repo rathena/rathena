@@ -1998,8 +1998,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 			for (int i = 1; i < MAX_AMMO_TYPE; i++) {
 				if (temp & 1 << i) {
-					constant = constant_lookup(i, "A_");
-					constant.erase(0, 2);
+					constant = constant_lookup(i, "AMMO_");
+					constant.erase(0, 5);
 					body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
 					temp ^= 1 << i;
 				}

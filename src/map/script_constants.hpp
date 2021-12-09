@@ -4180,6 +4180,10 @@
 	export_constant(AMMO_THROWWEAPON);
 	export_constant(MAX_AMMO_TYPE);
 
+	/* card subtypes */
+	export_constant(CARD_NORMAL);
+	export_constant(CARD_ENCHANT);
+
 	/* monsterinfo types */
 	export_constant(MOB_NAME);
 	export_constant(MOB_LV);
@@ -8218,6 +8222,7 @@
 	export_constant(ITEMINFO_MAGICATTACK);
 	export_constant(ITEMINFO_ID);
 	export_constant(ITEMINFO_AEGISNAME);
+	export_constant(ITEMINFO_SUBTYPE);
 
 	/* refine types */
 	export_constant(REFINE_TYPE_ARMOR);
