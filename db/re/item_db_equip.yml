@@ -114695,6 +114695,366 @@ Body:
     Script: |
       bonus bBaseAtk,10;
       bonus bMatk,10;
+  - Id: 24722
+    AegisName: S_AutoSpell_Shield
+    Name: Auto Spell Shadow Shield
+    Type: ShadowGear
+    MagicAttack: 15
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2);
+      if (.@r==9)
+         bonus3 bAutoSpell,"MG_NAPALMBEAT",7,70;
+      else if (.@r>9)
+         bonus3 bAutoSpell,"MG_NAPALMBEAT",10,100;
+  - Id: 24723
+    AegisName: S_AutoSpell_Armor
+    Name: Auto Spell Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHit,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bPerfectHitRate,5;
+      }
+  - Id: 24724
+    AegisName: S_AutoSpell_Shoes
+    Name: Auto Spell Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bFlee,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+      }
+  - Id: 24725
+    AegisName: S_AutoSpell_Weapon
+    Name: Auto Spell Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15+(.@r/2);
+      if (.@r==9)
+         bonus3 bAutoSpell,"SM_BASH",7,70;
+      else if (.@r>9)
+         bonus3 bAutoSpell,"SM_BASH",10,100;
+  - Id: 24726
+    AegisName: S_AutoSpell_Pendant
+    Name: Auto Spell Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHit,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bPerfectHitRate,5;
+      }
+  - Id: 24727
+    AegisName: S_AutoSpell_Earring
+    Name: Auto Spell Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bFlee,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+      }
+  - Id: 24728
+    AegisName: S_M_AutoSpell_Armor
+    Name: Major Auto Spell Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus3 bAutoSpell,"WL_FROSTMISTY",max(getskilllv("WL_FROSTMISTY"),3),70;
+         }
+      }
+  - Id: 24729
+    AegisName: S_M_AutoSpell_Shoes
+    Name: Major Auto Spell Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=10) {
+         bonus bAspdRate,3;
+      }
+  - Id: 24730
+    AegisName: S_M_AutoSpell_Earring
+    Name: Major Auto Spell Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus5 bAutoSpell,"SC_FATALMENACE",max(getskilllv("SC_FATALMENACE"),7),70,BF_SHORT|BF_NORMAL,1;
+         }
+      }
+  - Id: 24731
+    AegisName: S_M_AutoSpell_Pendant
+    Name: Major Auto Spell Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=10) {
+         bonus bAspdRate,3;
+      }
+  - Id: 24732
+    AegisName: S_Hasty_Shield
+    Name: Hasty Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,1+(.@r/2);
+      bonus2 bAddClass,Class_All,1+(.@r/2);
+      if (.@r>=7) {
+         bonus bDef,15;
+         bonus bFlee,15;
+         if (.@r>=10) {
+            bonus bSpeedRate,25;
+         }
+      }
+  - Id: 24733
+    AegisName: S_Infinity_Shield
+    Name: Infinity Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,(.@r/3);
+      bonus2 bMagicAddSize,Size_All,(.@r/3);
+      bonus2 bSubSize,Size_All,(.@r/3);
+      bonus2 bMagicSubSize,Size_All,(.@r/3);
+      if (.@r==10)
+         bonus bNoSizeFix;
+  - Id: 24734
+    AegisName: S_Durable_Weapon
+    Name: Durable Weapon Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2;
+      bonus bShortAtkRate,2;
+      bonus2 bAddClass,Class_All,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus bLongAtkRate,7;
+            bonus bShortAtkRate,7;
+         }
+      }
+  - Id: 24735
+    AegisName: S_Durable_Shield
+    Name: Durable Shield Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2;
+      bonus bShortAtkRate,2;
+      bonus2 bAddClass,Class_All,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus bLongAtkRate,7;
+            bonus bShortAtkRate,7;
+         }
+      }
+  - Id: 24736
+    AegisName: S_Clever_Weapon
+    Name: Clever Weapon Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2;
+      bonus bMatkRate,(.@r/2);
+      if (.@r>=9) {
+         bonus bVariableCastrate,-5;
+         if (.@r>=10) {
+            bonus2 bMagicAtkEle,Ele_All,7;
+         }
+      }
+  - Id: 24737
+    AegisName: S_Clever_Shield
+    Name: Clever Shield Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2;
+      bonus bMatkRate,(.@r/2);
+      if (.@r>=9) {
+         bonus bVariableCastrate,-5;
+         if (.@r>=10) {
+            bonus2 bMagicAtkEle,Ele_All,7;
+         }
+      }
+  - Id: 24738
+    AegisName: S_CriticalHit_Weapon
+    Name: Critical Hit Weapon Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,7;
+      bonus bBaseAtk,15;
+      bonus bCritAtkRate,(.@r/2);
+      if (.@r>=7) {
+         bonus bCritical,7;
+      }
+  - Id: 24739
+    AegisName: S_SU_Weapon
+    Name: Summoner Booster Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24740
+    AegisName: S_SJ_Weapon
+    Name: Star Emperor Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24741
+    AegisName: S_KO_Weapon
+    Name: Kagerou & Oboro Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24742
+    AegisName: S_RL_Weapon
+    Name: Rebellion Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Rebellion: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24743
+    AegisName: S_SP_Weapon
+    Name: Soul Reaper Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24744
+    AegisName: S_NV_Weapon
+    Name: Super Novice Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+      bonus bMaxHP,1500;
+      bonus bMaxSP,300;
+  - Id: 24745
+    AegisName: S_KingbirdAnc_Weapon
+    Name: Kingbird Ancient Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15;
+      bonus bHit,15;
+      bonus bLongAtkRate,(.@r/2);
+      if (.@r>=7) {
+         bonus bHit,15;
+      }
   - Id: 26001
     AegisName: Toughen_Metal_Lance
     Name: Enhanced Metal Lance
