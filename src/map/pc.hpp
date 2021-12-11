@@ -1449,6 +1449,9 @@ public:
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
+
+	// Additional
+	std::shared_ptr<s_skill_tree_entry> get_skill_data(int class_, uint16 skill_id);
 };
 
 extern SkillTreeDatabase skill_tree_db;

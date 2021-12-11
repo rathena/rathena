@@ -12101,6 +12101,17 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 	return i;
 }
 
+
+std::shared_ptr<s_skill_tree_entry> SkillTreeDatabase::get_skill_data(int class_, uint16 skill_id) {
+	std::shared_ptr<s_skill_tree> tree = this->find(class_);
+	std::shared_ptr<s_skill_tree_entry> entry = nullptr;
+
+	if (tree != nullptr)
+		entry = util::umap_find(tree->skills, skill_id);
+
+	return entry;
+}
+
 const std::string SkillTreeDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/skill_tree.yml";
 }
@@ -12342,13 +12353,13 @@ void SkillTreeDatabase::loadingFinished() {
 				std::shared_ptr<s_skill_tree_entry> skill = skill_tree->skills[it.first];
 
 				if (skill->baselv > baselv_max) {
-					ShowWarning("SkillTreeDatabase: Skill %hu's base level requirement %hu exceeds job %s's max base level %d. Capping skill base level.\n",
-						skill->skill_id, skill->baselv, job_name(data.first), baselv_max);
+					ShowWarning("SkillTreeDatabase: Skill %s (%hu)'s base level requirement %hu exceeds job %s's max base level %d. Capping skill base level.\n",
+						skill_get_name(skill->skill_id), skill->skill_id, skill->baselv, job_name(data.first), baselv_max);
 					skill->baselv = baselv_max;
 				}
 				if (skill->joblv > joblv_max) {
-					ShowWarning("SkillTreeDatabase: Skill %hu's job level requirement %hu exceeds job %s's max job level %d. Capping skill job level.\n",
-						skill->skill_id, skill->joblv, job_name(data.first), joblv_max);
+					ShowWarning("SkillTreeDatabase: Skill %s (%hu)'s job level requirement %hu exceeds job %s's max job level %d. Capping skill job level.\n",
+						skill_get_name(skill->skill_id), skill->skill_id, skill->joblv, job_name(data.first), joblv_max);
 					skill->joblv = joblv_max;
 				}
 			}

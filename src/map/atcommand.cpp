@@ -6078,23 +6078,20 @@ ACMD_FUNC(skilltree)
 	sprintf(atcmd_output, msg_txt(sd,1168), job_name(c), pc_checkskill(pl_sd, NV_BASIC)); // Player is using %s skill tree (%d basic points).
 	clif_displaymessage(fd, atcmd_output);
 
-	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(c);
+	auto entry = skill_tree_db.get_skill_data(c, skill_id);
 
-	if (tree == nullptr || tree->skills.empty() || tree->skills.count(skill_id) == 0) {
+	if (entry == nullptr) {
 		clif_displaymessage(fd, msg_txt(sd,1169)); // The player cannot use that skill.
 		return 0;
 	}
 
-	std::shared_ptr<s_skill_tree_entry> entry = tree->skills[c];
 	bool meets = true;
 
-	if (entry != nullptr && !entry->need.empty()) {
-		for (const auto &it : entry->need) {
-			if (pc_checkskill(sd, it.first) < it.second) {
-				sprintf(atcmd_output, msg_txt(sd,1170), it.second, skill_get_desc(it.first)); // Player requires level %d of skill %s.
-				clif_displaymessage(fd, atcmd_output);
-				meets = false;
-			}
+	for (const auto &it : entry->need) {
+		if (pc_checkskill(sd, it.first) < it.second) {
+			sprintf(atcmd_output, msg_txt(sd,1170), it.second, skill_get_desc(it.first)); // Player requires level %d of skill %s.
+			clif_displaymessage(fd, atcmd_output);
+			meets = false;
 		}
 	}
 
