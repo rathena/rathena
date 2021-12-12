@@ -12104,12 +12104,11 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 
 std::shared_ptr<s_skill_tree_entry> SkillTreeDatabase::get_skill_data(int class_, uint16 skill_id) {
 	std::shared_ptr<s_skill_tree> tree = this->find(class_);
-	std::shared_ptr<s_skill_tree_entry> entry = nullptr;
 
 	if (tree != nullptr)
-		entry = util::umap_find(tree->skills, skill_id);
+		return util::umap_find(tree->skills, skill_id);
 
-	return entry;
+	return nullptr;
 }
 
 const std::string SkillTreeDatabase::getDefaultLocation() {
