@@ -315,7 +315,7 @@ prontera,147,59,3	script	Goldberg#pron	878,{
 			mes "I'm sorry. But you don't have the RWC Initialization coupon. Can you check your inventory?";
 			close;
 		}
-		if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) == CARD_NORMAL) {
+		if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) != CARD_ENCHANT) {
 			mes "[Goldberg]";
 			mes "Hm... this equipment is clean. I cannot initialize it if there's nothing! Check it again.";
 			close;
