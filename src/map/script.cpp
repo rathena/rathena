@@ -11954,12 +11954,14 @@ BUILDIN_FUNC(sc_end_class)
 
 	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(class_);
 
-	for (const auto &it : tree->skills) {
-		skill_id = it.first;
-		enum sc_type sc = status_skill2sc(skill_id);
+	if( tree != nullptr ){
+		for (const auto &it : tree->skills) {
+			skill_id = it.first;
+			enum sc_type sc = status_skill2sc(skill_id);
 
-		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-			status_change_end(&sd->bl, sc, INVALID_TIMER);
+			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+				status_change_end(&sd->bl, sc, INVALID_TIMER);
+		}
 	}
 
 	return SCRIPT_CMD_SUCCESS;

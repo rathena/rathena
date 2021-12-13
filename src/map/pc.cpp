@@ -2149,15 +2149,13 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(job_id);
 
 	do {
-		uint16 skid = 0;
-
 		flag = 0;
 		if (tree == nullptr || tree->skills.empty())
 			break;
 
 		for (const auto &skillsit : tree->skills) {
 			bool fail = false;
-			skid = skillsit.first;
+			uint16 skid = skillsit.first;
 			uint16 sk_idx = skill_get_index(skid);
 
 			if (sd->status.skill[sk_idx].id)
@@ -2293,11 +2291,10 @@ static void pc_check_skilltree(struct map_session_data *sd)
 		return;
 
 	do {
-		uint16 skid = 0;
 		flag = 0;
 
 		for (const auto &skillsit : tree->skills) {
-			skid = skillsit.first;
+			uint16 skid = skillsit.first;
 			uint16 sk_idx = skill_get_index(skid);
 			bool fail = false;
 
@@ -12212,7 +12209,7 @@ uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
 			uint16 skill_lv_max = skill_get_max(skill_id);
 
 			if (max_lv > skill_lv_max) {
-				this->invalidWarning(it["MaxLevel"], "Skill %s's level %hu exceeds job %s's max level %hu. Capping skill level.\n", skill_name.c_str(), max_lv, job_name.c_str(), skill_lv_max);
+				this->invalidWarning(it["MaxLevel"], "Skill %s's level %hu exceeds the skill's max level %hu. Capping skill level.\n", skill_name.c_str(), max_lv, skill_lv_max);
 				max_lv = skill_lv_max;
 			}
 
@@ -12287,6 +12284,13 @@ uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
 					if (lv_req > MAX_SKILL_LEVEL) {
 						this->invalidWarning(Requiresit["Level"], "Level exceeds the maximum skill level of %d, skipping.\n", MAX_SKILL_LEVEL);
 						return 0;
+					}
+
+					uint16 lv_req_max = skill_get_max(skill_id_req);
+
+					if (lv_req > lv_req_max) {
+						this->invalidWarning(it["MaxLevel"], "Required skill %s's level %hu exceeds the skill's max level %hu. Capping skill level.\n", skill_name.c_str(), lv_req, lv_req_max);
+						lv_req = lv_req_max;
 					}
 					
 					if (lv_req == 0) {
@@ -12376,21 +12380,18 @@ void SkillTreeDatabase::loadingFinished() {
 	}
 
 	// remove skills with max_lv = 0
-	std::unordered_map<uint16, std::vector<uint16>> max_lv_zero;
-
 	for (const auto &job : *this) {
 		if (job.second->skills.empty())
 			continue;
-		for (const auto &skill : job.second->skills) {
-			if (skill.second->max_lv == 0)
-				max_lv_zero[job.first].push_back(skill.first);
-		}
-	}
 
-	for (const auto &job : max_lv_zero) {
-		for (const auto &skill : job.second) {
-			std::shared_ptr<s_skill_tree> tree = this->find(job.first);
-			tree->skills.erase(skill);
+		auto it = job.second->skills.begin();
+
+		while( it != job.second->skills.end() ){
+			if( it->second->max_lv == 0 ){
+				it = job.second->skills.erase( it );
+			}else{
+				it++;
+			}
 		}
 	}
 }
