@@ -5712,6 +5712,15 @@ BUILDIN_FUNC(areapercentheal)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+enum e_warpparty_target{
+	WARPPARTY_RANDOM = 0,
+	WARPPARTY_SAVEPOINTALL,
+	WARPPARTY_SAVEPOINT,
+	WARPPARTY_LEADER,
+	WARPPARTY_RANDOMALL,
+	WARPPARTY_RANDOMALLAREA
+};
+
 /*==========================================
  * Warpparty - [Fredzilla] [Paradox924X]
  * Syntax: warpparty "to_mapname",x,y,Party_ID,{<"from_mapname">,<range x>,<range y>};
@@ -5722,7 +5731,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct party_data* p;
-	int type, mapindex = 0, m = -1, i, rx = 0, ry = 0;
+	int mapindex = 0, m = -1, i, rx = 0, ry = 0;
 
 	const char* str = script_getstr(st,2);
 	int x = script_getnum(st,3);
@@ -5740,21 +5749,21 @@ BUILDIN_FUNC(warpparty)
 	if(!p)
 		return SCRIPT_CMD_SUCCESS;
 
-	type = ( strcmp(str,"Random")==0 ) ? 0
-	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
-		 : ( strcmp(str,"SavePoint")==0 ) ? 2
-		 : ( strcmp(str,"Leader")==0 ) ? 3
-		 : ( strcmp(str,"RandomAll")==0 ) ? 4
-		 : 5;
+	enum e_warpparty_target type = ( strcmp(str,"Random")==0 ) ? WARPPARTY_RANDOM
+	     : ( strcmp(str,"SavePointAll")==0 ) ? WARPPARTY_SAVEPOINTALL
+		 : ( strcmp(str,"SavePoint")==0 ) ? WARPPARTY_SAVEPOINT
+		 : ( strcmp(str,"Leader")==0 ) ? WARPPARTY_LEADER
+		 : ( strcmp(str,"RandomAll")==0 ) ? WARPPARTY_RANDOMALL
+		 : WARPPARTY_RANDOMALLAREA;
 
 	switch (type)
 	{
-		case 2:
+		case WARPPARTY_SAVEPOINT:
 			//"SavePoint" uses save point of the currently attached player
 			if ( !script_rid2sd(sd) )
 				return SCRIPT_CMD_FAILURE;
 			break;
-		case 3:
+		case WARPPARTY_LEADER:
 			for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
 			if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
 				return SCRIPT_CMD_FAILURE;
@@ -5764,7 +5773,7 @@ BUILDIN_FUNC(warpparty)
 			x = pl_sd->bl.x;
 			y = pl_sd->bl.y;
 			break;
-		case 4: {
+		case WARPPARTY_RANDOMALL: {
 			if ( !script_rid2sd(sd) )
 				return SCRIPT_CMD_FAILURE;
 
@@ -5773,7 +5782,7 @@ BUILDIN_FUNC(warpparty)
 
 			struct map_data *mapdata = map_getmapdata(m);
 
-			if ( mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
+			if ( mapdata == nullptr || mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
 				return SCRIPT_CMD_FAILURE;
 
 			i = 0;
@@ -5787,16 +5796,20 @@ BUILDIN_FUNC(warpparty)
 				return SCRIPT_CMD_FAILURE;
 			}
 			} break;
-		case 5:
+		case WARPPARTY_RANDOMALLAREA: {
 			mapindex = mapindex_name2id(str);
 			if (!mapindex) {// Invalid map
 				return SCRIPT_CMD_FAILURE;
 			}
 			m = map_mapindex2mapid(mapindex);
-			break;
+
+			struct map_data *mapdata = map_getmapdata(m);
+
+			if ( mapdata == nullptr || mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
+				return SCRIPT_CMD_FAILURE;
+			} break;
 	}
 
-	int ret;
 	map_data *mapdata = map_getmapdata(pl_sd->bl.m);
 
 	for (i = 0; i < MAX_PARTY; i++)
@@ -5810,30 +5823,33 @@ BUILDIN_FUNC(warpparty)
 		if( pc_isdead(pl_sd) )
 			continue;
 
+		enum e_setpos ret = SETPOS_OK;
+
 		switch( type )
 		{
-		case 0: // Random
+		case WARPPARTY_RANDOM:
 			if (!mapdata->flag[MF_NOWARP])
 				ret = pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
-		case 1: // SavePointAll
+		case WARPPARTY_SAVEPOINTALL:
 			if (!mapdata->flag[MF_NORETURN])
 				ret = pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
-		case 2: // SavePoint
+		case WARPPARTY_SAVEPOINT:
 			if (!mapdata->flag[MF_NORETURN])
 				ret = pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
-		case 3: // Leader
+		case WARPPARTY_LEADER:
 			if (p->party.member[i].leader)
 				continue;
-		case 4: // RandomAll
+		case WARPPARTY_RANDOMALL:
 			if (pl_sd == sd) {
 				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
 				break;
 			}
-		case 5: // m,x,y
-			if (!mapdata->flag[MF_NORETURN] && !mapdata->flag[MF_NOWARP] && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
+			// Fall through
+		case WARPPARTY_RANDOMALLAREA:
+			if (pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
 				if (rx || ry) {
 					int x1 = x + rx, y1 = y + ry,
 						x0 = x - rx, y0 = y - ry,
@@ -5856,9 +5872,9 @@ BUILDIN_FUNC(warpparty)
 		break;
 		}
 
-		if( ret ) {
+		if( ret != SETPOS_OK ) {
 			ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", pl_sd->status.name, str, x, y);
-			if ( type > 3 && (rx || ry) )
+			if ( ( type == WARPPARTY_RANDOMALL || type == WARPPARTY_RANDOMALLAREA ) && (rx || ry) )
 				continue;
 			else
 				return SCRIPT_CMD_FAILURE;
