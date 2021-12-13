@@ -6058,8 +6058,6 @@ ACMD_FUNC(skilltree)
 {
 	struct map_session_data *pl_sd = NULL;
 	uint16 skill_id;
-	int meets, j, c=0;
-	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -6075,33 +6073,29 @@ ACMD_FUNC(skilltree)
 		return -1;
 	}
 
-	c = pc_mapid2jobid( pc_calc_skilltree_normalize_job( pl_sd ), pl_sd->status.sex );
+	int c = pc_mapid2jobid( pc_calc_skilltree_normalize_job( pl_sd ), pl_sd->status.sex );
 
 	sprintf(atcmd_output, msg_txt(sd,1168), job_name(c), pc_checkskill(pl_sd, NV_BASIC)); // Player is using %s skill tree (%d basic points).
 	clif_displaymessage(fd, atcmd_output);
 
-	c = pc_class2idx(c);
+	auto entry = skill_tree_db.get_skill_data(c, skill_id);
 
-	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].skill_id == 0 || skill_tree[c][j].skill_id == skill_id );
-	if( j == MAX_SKILL_TREE || skill_tree[c][j].skill_id == 0 )
-	{
+	if (entry == nullptr) {
 		clif_displaymessage(fd, msg_txt(sd,1169)); // The player cannot use that skill.
 		return 0;
 	}
 
-	ent = &skill_tree[c][j];
+	bool meets = true;
 
-	meets = 1;
-	for(j=0;j<MAX_PC_SKILL_REQUIRE;j++)
-	{
-		if( ent->need[j].skill_id && pc_checkskill(sd,ent->need[j].skill_id) < ent->need[j].skill_lv)
-		{
-			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].skill_lv, skill_get_desc(ent->need[j].skill_id)); // Player requires level %d of skill %s.
+	for (const auto &it : entry->need) {
+		if (pc_checkskill(sd, it.first) < it.second) {
+			sprintf(atcmd_output, msg_txt(sd,1170), it.second, skill_get_desc(it.first)); // Player requires level %d of skill %s.
 			clif_displaymessage(fd, atcmd_output);
-			meets = 0;
+			meets = false;
 		}
 	}
-	if (meets == 1) {
+
+	if (meets) {
 		clif_displaymessage(fd, msg_txt(sd,1171)); // The player meets all the requirements for that skill.
 	}
 
