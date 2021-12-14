@@ -149,10 +149,12 @@ struct s_mercenary_skill_csv {
 std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
 
 struct s_mob_skill_csv {
-	std::string state_name, skill_name, cond1_name, cond2_name, target_name, emotion;
+	std::string skill_name, state_name, cond1_name, cond2_name, target_name, emotion;
 	uint16 skill_lv, permillage, msg_id;
 	int32 casttime, delay;
-	std::unordered_map<uint16, std::string> val;
+	std::string mob_ai;
+	int32 cond3;	// another condition value for MYHPINRATE and FRIENDHPINRATE
+	std::unordered_map<int, std::string> val;
 	bool cancel;
 };
 
@@ -220,18 +222,42 @@ static std::unordered_map<std::string, equip_pos> um_equipnames {
 };
 
 static std::unordered_map<std::string, std::string> um_mob_skill_cond2 {
-	{	"anybad",		"-1"				},
+	{	"anybad",		"SC_ANYBAD"		},
 	{	"stone",		"SC_STONE"		},
 	{	"freeze",		"SC_FREEZE"		},
-	{	"stun",			"SC_STUN"			},
+	{	"stun",			"SC_STUN"		},
 	{	"sleep",		"SC_SLEEP"		},
 	{	"poison",		"SC_POISON"		},
 	{	"curse",		"SC_CURSE"		},
-	{	"silence",		"SC_SILENCE"		},
+	{	"silence",		"SC_SILENCE"	},
 	{	"confusion",	"SC_CONFUSION"	},
 	{	"blind",		"SC_BLIND"		},
 	{	"hiding",		"SC_HIDING"		},
 	{	"sight",		"SC_SIGHT"		},
+};
+
+static std::unordered_map<int, std::string> um_mob_mode2ai {	// mode, AI
+	{ 0x0081, "01" },
+	{ 0x0083, "02" },
+	{ 0x1089, "03" },
+	{ 0x3885, "04" },
+	{ 0x2085, "05" },
+	{ 0x0000, "06" },
+	{ 0x108B, "07" },
+	{ 0x7085, "08" },
+	{ 0x3095, "09" },
+	{ 0x0084, "10" },
+	{ 0x0084, "11" },
+	{ 0x2085, "12" },
+	{ 0x308D, "13" },
+	{ 0x0091, "17" },
+	{ 0x3095, "19" },
+	{ 0x3295, "20" },
+	{ 0x3695, "21" },
+	{ 0x00A1, "24" },
+	{ 0x0001, "25" },
+	{ 0xB695, "26" },
+	{ 0x8084, "27" },
 };
 
 // Initialize Random Option constants

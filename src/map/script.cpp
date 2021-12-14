@@ -13260,8 +13260,8 @@ BUILDIN_FUNC(emotion)
 	struct block_list *bl = NULL;
 	int type = script_getnum(st,2);
 
-	if (type < ET_SURPRISE || type >= ET_MAX) {
-		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, ET_SURPRISE, (ET_MAX-1));
+	if (type <= ET_NONE || type >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", type, (ET_NONE+1), (ET_MAX-1));
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19495,8 +19495,8 @@ BUILDIN_FUNC(unitemote)
 
 	emotion = script_getnum(st,3);
 
-	if (emotion < ET_SURPRISE || emotion >= ET_MAX) {
-		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, ET_SURPRISE, (ET_MAX-1));
+	if (emotion <= ET_NONE || emotion >= ET_MAX) {
+		ShowWarning("buildin_emotion: Unknown emotion %d (min=%d, max=%d).\n", emotion, (ET_NONE+1), (ET_MAX-1));
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -21629,7 +21629,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	uint16 skill_id	= va_arg(ap,int);
 	uint16 skill_lv	= va_arg(ap,int);
 	int casttime	= va_arg(ap,int);
-	int cancel		= va_arg(ap,int);
+	bool cancel		= va_arg(ap,int);
 	int emotion		= va_arg(ap,int);
 	int target		= va_arg(ap,int);
 
@@ -21665,20 +21665,21 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 BUILDIN_FUNC(areamobuseskill)
 {
-	struct block_list center;
-	int16 m;
-	int range,mobid,skill_id,skill_lv,casttime,emotion,target,cancel;
+	int16 m = map_mapname2mapid(script_getstr(st,2));
 
-	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 ) {
+	if (m < 0) {
 		ShowError("areamobuseskill: invalid map name.\n");
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+	block_list center;
+	int skill_id;
+	
 	center.m = m;
 	center.x = script_getnum(st,3);
 	center.y = script_getnum(st,4);
-	range = script_getnum(st,5);
-	mobid = script_getnum(st,6);
+	int range = script_getnum(st,5);
+	int mobid = script_getnum(st,6);
 	if (script_isstring(st, 7)) {
 		const char *name = script_getstr(st, 7);
 
@@ -21694,13 +21695,16 @@ BUILDIN_FUNC(areamobuseskill)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
-	if( (skill_lv = script_getnum(st,8)) > battle_config.mob_max_skilllvl )
+
+	int skill_lv = script_getnum(st,8);
+
+	if (skill_lv > battle_config.mob_max_skilllvl)
 		skill_lv = battle_config.mob_max_skilllvl;
 
-	casttime = script_getnum(st,9);
-	cancel = script_getnum(st,10);
-	emotion = script_getnum(st,11);
-	target = script_getnum(st,12);
+	int casttime = script_getnum(st,9);
+	bool cancel = script_getnum(st,10);
+	int emotion = script_getnum(st,11);
+	int target = script_getnum(st,12);
 
 	map_foreachinallrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
 	return SCRIPT_CMD_SUCCESS;
@@ -22469,9 +22473,9 @@ BUILDIN_FUNC(npcskill)
 		status_calc_npc(nd, SCO_NONE);
 
 	if (skill_get_inf(skill_id)&INF_GROUND_SKILL)
-		unit_skilluse_pos2(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level,0,0);
+		unit_skilluse_pos2(&nd->bl, sd->bl.x, sd->bl.y, skill_id, skill_level,0,false);
 	else
-		unit_skilluse_id2(&nd->bl, sd->bl.id, skill_id, skill_level,0,0);
+		unit_skilluse_id2(&nd->bl, sd->bl.id, skill_id, skill_level,0,false);
 
 	return SCRIPT_CMD_SUCCESS;
 }

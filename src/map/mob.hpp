@@ -185,15 +185,60 @@ enum e_aegis_monsterclass : int8 {
 	CLASS_MAX,
 };
 
+enum e_mob_skill_target {
+	MST_TARGET	=	0,
+	MST_RANDOM,	//Random Target!
+	MST_SELF,
+	MST_FRIEND,
+	MST_MASTER,
+	MST_AROUND5,
+	MST_AROUND6,
+	MST_AROUND7,
+	MST_AROUND8,
+	MST_AROUND1,
+	MST_AROUND2,
+	MST_AROUND3,
+	MST_AROUND4,
+	MST_AROUND	=	MST_AROUND4,
+};
+
+enum e_mob_skill_condition {
+	MSC_ALWAYS	=	0x0000,
+	MSC_MYHPLTMAXRATE,
+	MSC_MYHPINRATE,
+	MSC_FRIENDHPLTMAXRATE,
+	MSC_FRIENDHPINRATE,
+	MSC_MYSTATUSON,
+	MSC_MYSTATUSOFF,
+	MSC_FRIENDSTATUSON,
+	MSC_FRIENDSTATUSOFF,
+	MSC_ATTACKPCGT,
+	MSC_ATTACKPCGE,
+	MSC_SLAVELT,
+	MSC_SLAVELE,
+	MSC_CLOSEDATTACKED,
+	MSC_LONGRANGEATTACKED,
+	MSC_AFTERSKILL,
+	MSC_SKILLUSED,
+	MSC_CASTTARGETED,
+	MSC_RUDEATTACKED,
+	MSC_MASTERHPLTMAXRATE,
+	MSC_MASTERATTACKED,
+	MSC_ALCHEMIST,
+	MSC_SPAWN,
+};
+
 struct s_mob_skill {
 	e_MobSkillState state;
 	uint16 skill_id,skill_lv;
 	short permillage;
 	int casttime,delay;
 	bool cancel;
-	short cond1,cond2;
-	short target;
-	int val[5];
+	e_mob_skill_target target;
+	int cond1;
+	uint16 cond2, cond3;
+	int mob_mode;
+	int val[6];
 	short emotion;
 	unsigned short msg_id;
 };
@@ -403,49 +448,6 @@ public:
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef node) override;
-};
-
-enum e_mob_skill_target {
-	MST_TARGET	=	0,
-	MST_RANDOM,	//Random Target!
-	MST_SELF,
-	MST_FRIEND,
-	MST_MASTER,
-	MST_AROUND5,
-	MST_AROUND6,
-	MST_AROUND7,
-	MST_AROUND8,
-	MST_AROUND1,
-	MST_AROUND2,
-	MST_AROUND3,
-	MST_AROUND4,
-	MST_AROUND	=	MST_AROUND4,
-};
-
-enum e_mob_skill_condition {
-	MSC_ALWAYS	=	0x0000,
-	MSC_MYHPLTMAXRATE,
-	MSC_MYHPINRATE,
-	MSC_FRIENDHPLTMAXRATE,
-	MSC_FRIENDHPINRATE,
-	MSC_MYSTATUSON,
-	MSC_MYSTATUSOFF,
-	MSC_FRIENDSTATUSON,
-	MSC_FRIENDSTATUSOFF,
-	MSC_ATTACKPCGT,
-	MSC_ATTACKPCGE,
-	MSC_SLAVELT,
-	MSC_SLAVELE,
-	MSC_CLOSEDATTACKED,
-	MSC_LONGRANGEATTACKED,
-	MSC_AFTERSKILL,
-	MSC_SKILLUSED,
-	MSC_CASTTARGETED,
-	MSC_RUDEATTACKED,
-	MSC_MASTERHPLTMAXRATE,
-	MSC_MASTERATTACKED,
-	MSC_ALCHEMIST,
-	MSC_SPAWN,
 };
 
 // The data structures for storing delayed item drops

@@ -8,52 +8,158 @@
 //= Reference for monster skills Database.
 //============================================================
 
-RATE: the chance of the skill being casted when the condition is fulfilled (10000 = 100%).
-DELAY: the time (in milliseconds) before attempting to recast the same skill.
+---------------------------------------
 
-STATE:
-any (except dead) / idle (in standby) / walk (in movement) / dead (on killed) /
-loot /attack / angry (like attack, except player has not attacked mob yet) /
-chase (following target, after being attacked) / follow (following target,
-without being attacked) / anytarget (attack+angry+chase+follow)
+Mob: The Aegis name of the monster (SpriteName).
 
-TARGET:
-target (current target) / self / friend / master / randomtarget (any enemy within skill's range)
+Note: if the following name are provided, the skills will be treated as 'global':
+ALL_BOSS		Added for all boss types.
+ALL_NORMAL		Added for all normal types.
+ALL				Added for all mobs.
 
-The following are for ground-skills, a random target tile is selected from the specified area:
-    around1 (3x3 area around self) / around2 (5x5 area around self) /
-    around3 (7x7 area around self) / around4 (9x9 area around self) /
-    around5 (3x3 area around target) / around6 (5x5 area around target) /
-    around7 (7x7 area around target) / around8 (9x9 area around target) /
-    around = around4
+---------------------------------------
 
-CONDITION:
-always			Unconditional (no condition value).
-onspawn			When mob spawns/respawns (no condition value).
-myhpltmaxrate		When mob's HP drops to the specified %.
-myhpinrate		When mob's HP is in a certain % range (condition value = lower bound, val1 = upper bound).
-mystatuson		If mob has the specified abnormality in status.
-mystatusoff		If mob has ended the specified abnormality in status.
-friendhpltmaxrate	When mob's friend's HP drops to the specified %.
-friendhpinrate		When mob's friend's HP is in a certain % range (condition value = lower bound, val1 = upper bound).
-friendstatuson		If friend has the specified abnormality in status.
-friendstatusoff		If friend has ended the specified abnormality in status.
-attackpcgt		When attack PCs become greater than specified number.
-attackpcge		When attack PCs become greater than or equal to the specified number.
-slavelt			When number of slaves is less than the original specified number.
-slavele			When number of slaves is less than or equal to the original specified number.
-closedattacked		When close range melee attacked (no condition value).
-longrangeattacked	When long range attacked, ex. bows, guns, ranged skills (no condition value).
-skillused		When the specified skill is used on the mob.
-afterskill		After mob casts the specified skill.
-casttargeted		When a target is in cast range (no condition value).
-rudeattacked		When mob is rude attacked (no condition value).
+Skills: List of Skills casted by the monster. The max number of skills a monster can hold is limited by MAX_MOBSKILL (50 by default).
+(starting here the definitions below are the one defined in Skills).
 
-Status abnormalities specified through the statuson/statusoff system:
-    anybad (any type of state change) / stone / freeze / stun / sleep /
-    poison / curse / silence / confusion / blind / hiding / sight (unhidden)
+---------------------------------------
 
-Note: if a negative MobID is provided, the skill will be treated as 'global':
--1: added for all boss types.
--2: added for all normal types.
--3: added for all mobs.
+Index: Unique Index in the list to edit the skill in import. Range 0-65535.
+
+---------------------------------------
+
+Name: Skill Aegis name the monster will cast.
+
+---------------------------------------
+
+Level: The monster will cast the skill at the given Level.
+
+---------------------------------------
+
+State: State of the monster to cast the skill. Valids input are :
+
+ANY (except dead)
+IDLE (in standby)
+WALK (in movement)
+DEAD (on killed)
+LOOT
+ATTACK
+ANGRY (like ATTACK, except player has not attacked mob yet)
+CHASE (following target, after being attacked)
+FOLLOW (following target, without being attacked)
+ANYTARGET (ATTACK+ANGRY+CHASE+FOLLOW)
+
+---------------------------------------
+
+CastRate: The chance of the skill being casted when the condition is fulfilled (from 1-10000, 10000 = 100%). 
+
+---------------------------------------
+
+CastTime: Time in millisecond to cast the skill.
+
+---------------------------------------
+
+CastDelay: The time (in milliseconds) before attempting to recast the same skill.
+
+---------------------------------------
+
+CastCancel: Whether the skill can be canceled when the monster is hit. (true/false)
+
+---------------------------------------
+
+Target: Target of the skill. Valids input are :
+
+TARGET			(current target)
+SELF
+FRIEND
+MASTER
+RANDOMTARGET	(any enemy within skill's range)
+
+(The following are for ground-skills, a random target tile is selected from the specified area)
+AROUND1			(3x3 area around self)
+AROUND2			(5x5 area around self)
+AROUND3			(7x7 area around self)
+AROUND4			(9x9 area around self)
+AROUND5			(3x3 area around target)
+AROUND6			(5x5 area around target)
+AROUND7			(7x7 area around target)
+AROUND8			(9x9 area around target)
+AROUND			= AROUND4
+
+---------------------------------------
+
+Condition: Type of condition. Valids input are :
+
+ALWAYS				(no condition value)			Unconditional.
+ONSPAWN				(no condition value)			When mob spawns/respawns.
+SPAWN = ONSPAWN
+MYHPLTMAXRATE		(ConditionValue1)				When mob's HP drops to the specified %.
+MYHPINRATE			(ConditionValue1 = lower bound
+					ConditionValue2 = upper bound)	When mob's HP is in a certain % range (ConditionValue1 = lower bound, ConditionValue2 = upper bound).
+MYSTATUSON			(ConditionValue1)				If mob has the specified abnormality in status.
+MYSTATUSOFF			(ConditionValue1)				If mob has ended the specified abnormality in status.
+FRIENDHPLTMAXRATE	(ConditionValue1)				When mob's friend's HP drops to the specified %.
+FRIENDHPINRATE		(ConditionValue1 = lower bound
+					ConditionValue2 = upper bound)	When mob's friend's HP is in a certain % range (ConditionValue1 = lower bound, ConditionValue2 = upper bound).
+FRIENDSTATUSON		(ConditionValue1)				If friend has the specified abnormality in status.
+FRIENDSTATUSOFF		(ConditionValue1)				If friend has ended the specified abnormality in status.
+ATTACKPCGT			(ConditionValue1)				When attack PCs become greater than specified number.
+ATTACKPCGE			(ConditionValue1)				When attack PCs become greater than or equal to the specified number.
+SLAVELT				(ConditionValue1)				When number of slaves is less than the original specified number.
+SLAVELE				(ConditionValue1)				When number of slaves is less than or equal to the original specified number.
+CLOSEDATTACKED		(no condition value)			When close range melee attacked.
+LONGRANGEATTACKED	(no condition value)			When long range attacked, ex. bows, guns, ranged skills.
+SKILLUSED			(ConditionValue1)				When the specified skill is used on the mob.
+AFTERSKILL			(ConditionValue1)				After mob casts the specified skill.
+CASTTARGETED		(no condition value)			When a target is in cast range.
+RUDEATTACKED		(no condition value)			When mob is rude attacked.
+
+---------------------------------------
+
+ConditionValue1: Values required to certain conditions.
+
+Status abnormalities accepted through MYSTATUSON / MYSTATUSOFF / FRIENDSTATUSON / FRIENDSTATUSOFF for ConditionValue1:
+SC_ANYBAD (any type of state change)
+SC_STONE
+SC_FREEZE
+SC_STUN
+SC_SLEEP
+SC_POISON
+SC_CURSE
+SC_SILENCE
+SC_CONFUSION
+SC_BLIND
+SC_HIDING
+SC_SIGHT (unhidden)
+
+When the condition are SKILLUSED or AFTERSKILL, ConditionValue1 requires an Aegis skill name.
+ConditionValue1 requires a number for all other conditions.
+
+---------------------------------------
+
+ConditionValue2: Number required for MYHPINRATE and FRIENDHPINRATE conditions.
+
+---------------------------------------
+
+Ai: Change the monster mode using the given Aegis monster type AI. This field is currently only supported for NPC_EMOTION and NPC_EMOTION_ON skills.
+
+---------------------------------------
+
+Summon: List of monsters to summon, currently required for NPC_METAMORPHOSIS, NPC_SUMMONSLAVE, NPC_SUMMONMONSTER and NPC_DEATHSUMMON skills.
+    - Index            Unique Index in the list to edit the monster in import. Range 0-6.
+      Mob              Monster AegisName.
+      Clear            True to remove the given monster at this index. (Optional)
+
+---------------------------------------
+
+Emotion: Emotion displayed on the monster after the cast. See the constants starting to "ET_" in script_constant.hpp
+
+---------------------------------------
+
+Chat: Chat ID to display the associated sentence defined in mob_chat_db.yml
+
+---------------------------------------
+
+Clear: True to remove the skill.
+
+---------------------------------------

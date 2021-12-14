@@ -184,7 +184,7 @@ int skill_get_walkdelay( uint16 skill_id ,uint16 skill_lv )        { skill_get_l
 int skill_get_time( uint16 skill_id ,uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time); }
 int skill_get_time2( uint16 skill_id ,uint16 skill_lv )            { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->upkeep_time2); }
 int skill_get_castdef( uint16 skill_id )                           { skill_get(skill_id, skill_db.find(skill_id)->cast_def_rate); }
-int skill_get_castcancel( uint16 skill_id )                        { skill_get(skill_id, skill_db.find(skill_id)->castcancel); }
+bool skill_get_castcancel( uint16 skill_id )                       { return (skill_check(skill_id) && skill_db.find(skill_id)->castcancel); }
 int skill_get_maxcount( uint16 skill_id ,uint16 skill_lv )         { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->maxcount); }
 int skill_get_blewcount( uint16 skill_id ,uint16 skill_lv )        { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->blewcount); }
 int skill_get_castnodex( uint16 skill_id )                         { skill_get(skill_id, skill_db.find(skill_id)->castnodex); }
@@ -9507,28 +9507,42 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_EMOTION_ON:
-	case NPC_EMOTION:
-		//val[0] is the emotion to use.
 		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
-		//val[1] 'sets' the mode
-		//val[2] adds to the current mode
-		//val[3] removes from the current mode
-		//val[4] if set, asks to delete the previous mode change.
 		if(md && md->skill_idx >= 0 && tsc)
 		{
-			clif_emotion(bl, md->db->skill[md->skill_idx]->val[0]);
-			if(md->db->skill[md->skill_idx]->val[4] && tsce)
+			int mode_passive = (md->db->skill[md->skill_idx]->mob_mode & MD_AGGRESSIVE) ? 0 : MD_AGGRESSIVE;	// Remove aggressive mode when the new mob type is passive.
+
+			if (md->db->skill[md->skill_idx]->mob_mode > -1)
+				sc_start4(src,src, type, 100, skill_lv,
+					0,	// 'sets' the mode
+					md->db->skill[md->skill_idx]->mob_mode,	// adds to the current mode
+					mode_passive,	// removes from the current mode
+					skill_get_time(skill_id, skill_lv));
+
+			//Reset aggressive state depending on resulting mode
+			if (!battle_config.npc_emotion_behavior)
+				md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
+		}
+		break;
+
+	case NPC_EMOTION:
+		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
+		if(md && md->skill_idx >= 0 && tsc)
+		{
+			std::shared_ptr<s_mob_skill> skilltmp = md->db->skill[md->skill_idx];
+
+			if (skilltmp->mob_mode > -1 && skilltmp->mob_mode == md->db->status.mode && tsce)	// asks to delete the previous mode change
 				status_change_end(bl, type, INVALID_TIMER);
 
 			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
-			if(!battle_config.npc_emotion_behavior && skill_id == NPC_EMOTION && md->db->skill[md->skill_idx]->val[1])
+			if (!battle_config.npc_emotion_behavior && skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode)
 				mob_unlocktarget(md,tick);
 
-			if(md->db->skill[md->skill_idx]->val[1] || md->db->skill[md->skill_idx]->val[2])
+			if (skilltmp->mob_mode > -1 && skilltmp->mob_mode != md->db->status.mode)
 				sc_start4(src,src, type, 100, skill_lv,
-					md->db->skill[md->skill_idx]->val[1],
-					md->db->skill[md->skill_idx]->val[2],
-					md->db->skill[md->skill_idx]->val[3],
+					skilltmp->mob_mode,	// 'sets' the mode
+					0,	// adds to the current mode
+					0,	// removes from the current mode
 					skill_get_time(skill_id, skill_lv));
 
 			//Reset aggressive state depending on resulting mode
