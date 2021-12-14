@@ -21537,7 +21537,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6697
-    AegisName: Costumes_Exchange_Coupons
+    AegisName: Costume_Exchange
     Name: Costumes Exchange Coupons
     Type: Etc
     Buy: 10

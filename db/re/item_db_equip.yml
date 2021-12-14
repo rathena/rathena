@@ -21587,8 +21587,6 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_All,20;
       bonus2 bSubEle,Ele_Neutral,-20;
-      bonus2 bSubEle,Ele_Holy,-20;
-      bonus2 bSubEle,Ele_Dark,-20;
   - Id: 2114
     AegisName: Stone_Buckler
     Name: Stone Buckler
@@ -22055,7 +22053,7 @@ Body:
          autobonus2 "{ bonus bShortWeaponDamageReturn,("+.@r+"*3); }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
       else {
-         autobonus2 "{ bonus bShortWeaponDamageReturn,("+.@r+"*3); }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
+         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
   - Id: 2135
     AegisName: Shadow_Guard
@@ -22128,9 +22126,8 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Water,20;
       bonus2 bSubEle,Ele_Fire,20;
-      bonus2 bSubEle,Ele_Dark,20;
-      bonus2 bSubEle,Ele_Undead,20;
-      bonus bMdef,5;
+      bonus2 bSubRace,RC_DemiHuman,30;
+      bonus bMaxHPrate,5;
   - Id: 2138
     AegisName: Bradium_Shield
     Name: Bradium Shield
@@ -22433,7 +22430,6 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bSubRace,RC_DemiHuman,25;
-      bonus2 bSubRace,RC_Player_Human,25;
       bonus2 bSubRace,RC_Demon,25;
       bonus bMaxHP,400;
   - Id: 2153
@@ -22536,9 +22532,8 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Undead,5;
-      bonus2 bMagicSubDefEle,Ele_Undead,5;
-      bonus2 bSubRace,RC_DemiHuman,5;
+      bonus2 bSubRace,RC_DemiHuman,-5;
+      bonus2 bSubEle,Ele_Undead,5;
   - Id: 2159
     AegisName: Sharel_Shield
     Name: Sharel Shield
@@ -22554,9 +22549,8 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Fire,5;
-      bonus2 bMagicSubDefEle,Ele_Fire,5;
-      bonus2 bSubRace,RC_Demon,5;
+      bonus2 bSubEle,Ele_Fire,5;
+      bonus2 bSubRace,RC_Demon,-5;
   - Id: 2160
     AegisName: Giant_Shield
     Name: Giant Shield
@@ -22610,7 +22604,7 @@ Body:
     AegisName: Bible_Of_Promise2
     Name: Bible of Promise(2nd Vol.)
     Type: Armor
-    Buy: 20
+    Buy: 56000
     Weight: 500
     Defense: 20
     Slots: 1
@@ -22643,9 +22637,9 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Water,5;
-      bonus2 bMagicSubDefEle,Ele_Water,5;
+      bonus2 bSubEle,Ele_Water,5;
       bonus2 bSubRace,RC_Brute,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
   - Id: 2164
     AegisName: Sombre_Shield
     Name: Sombre Shield
@@ -22661,8 +22655,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Dark,5;
-      bonus2 bMagicSubDefEle,Ele_Dark,5;
+      bonus2 bSubEle,Ele_Dark,5;
       bonus2 bSubRace,RC_Undead,-5;
   - Id: 2165
     AegisName: Sol_Shield
@@ -22718,8 +22711,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Poison,5;
-      bonus2 bMagicSubDefEle,Ele_Poison,5;
+      bonus2 bSubEle,Ele_Poison,5;
       bonus2 bSubRace,RC_Plant,-5;
   - Id: 2168
     AegisName: Immuned_Shield
@@ -22853,8 +22845,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Holy,5;
-      bonus2 bMagicSubDefEle,Ele_Holy,5;
+      bonus2 bSubEle,Ele_Holy,5;
       bonus2 bSubRace,RC_Dragon,-5;
   - Id: 2175
     AegisName: Esprit_Shield
@@ -22871,8 +22862,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Ghost,5;
-      bonus2 bMagicSubDefEle,Ele_Ghost,5;
+      bonus2 bSubEle,Ele_Ghost,5;
       bonus2 bSubRace,RC_Angel,-5;
   - Id: 2176
     AegisName: Dark_Book
@@ -22891,7 +22881,12 @@ Body:
     Script: |
       bonus bMdef,5;
       .@r = getrefine();
-      bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",1,(.@r<=6)?(10):((.@r<=8)?(20):(30));
+      if (.@r>=9)
+         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",3,30;
+      else if (.@r>=7)
+         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",2,20;
+      else
+         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",1,10;
   - Id: 2177
     AegisName: Shield_Of_Death
     Name: Shield Of Death
@@ -23051,7 +23046,7 @@ Body:
       bonus2 bSubRace,RC_All,30;
       bonus bUnbreakableShield;
       /*todo instead of autobonus2 bonus4 bAutoSpellWhenHit,"ALL_RAY_OF_PROTECTION",1,50,0;*/
-      autobonus2 "{ sc_end SC_STUN; sc_end SC_SLEEP; sc_end SC_CURSE; sc_end SC_STONE; sc_end SC_POISON; sc_end SC_BLIND; sc_end SC_SILENCE; sc_end SC_BLEEDING; sc_end SC_CONFUSION; sc_end SC_FREEZE; bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Curse,10000; bonus2 bResEff,Eff_Stone,10000; bonus2 bResEff,Eff_Poison,10000; bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Silence,10000; bonus2 bResEff,Eff_Bleeding,10000; bonus2 bResEff,Eff_Confusion,10000; bonus2 bResEff,Eff_Freeze,10000; }",1,50000,BF_SHORT;
+      autobonus2 "{ sc_end SC_STUN; sc_end SC_SLEEP; sc_end SC_CURSE; sc_end SC_STONE; sc_end SC_POISON; sc_end SC_BLIND; sc_end SC_SILENCE; sc_end SC_BLEEDING; sc_end SC_CONFUSION; sc_end SC_FREEZE; bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Curse,10000; bonus2 bResEff,Eff_Stone,10000; bonus2 bResEff,Eff_Poison,10000; bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Silence,10000; bonus2 bResEff,Eff_Bleeding,10000; bonus2 bResEff,Eff_Confusion,10000; bonus2 bResEff,Eff_Freeze,10000; }",50,60000,BF_SHORT;
   - Id: 2183
     AegisName: Impr_Angel's_Safeguard
     Name: Advanced Angelic Guard
@@ -23138,8 +23133,7 @@ Body:
       bonus bDex,2;
       .@r = getrefine();
       bonus bCritical,3+((.@r >= 7) ? 2 : 0);
-      if (.@r >= 9)
-         bonus bMatk,5;
+      bonus bMatk,5+((.@r >= 9) ? 5 : 0);
   - Id: 2187
     AegisName: Shield_Of_Gray
     Name: Shield of Gray
@@ -23237,14 +23231,7 @@ Body:
     Refineable: true
     View: 2
     Script: |
-      bonus2 bSubEle,Ele_Neutral,10;
-      bonus2 bSubEle,Ele_Fire,10;
-      bonus2 bSubEle,Ele_Water,10;
-      bonus2 bSubEle,Ele_Wind,10;
-      bonus2 bSubEle,Ele_Earth,10;
-      bonus2 bSubEle,Ele_Dark,10;
-      bonus2 bSubEle,Ele_Holy,10;
-      bonus2 bSubEle,Ele_Ghost,10;
+      bonus2 bSubEle,Ele_All,10;
       bonus bMaxHP,500;
       bonus bMaxSP,50;
       if (getrefine()>=14)
@@ -23265,6 +23252,40 @@ Body:
     Script: |
       bonus bInt,2;
       bonus bMatk,(readparam(bInt) >= 120 ? 30 : 5);
+  - Id: 2192
+    AegisName: Rose_Of_Eden
+    Name: Rose of Eden
+    Type: Armor
+    View: 3
+    Weight: 300
+    Defense: 70
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus bHealPower,10;
+  - Id: 2193
+    AegisName: Fallen_Angel_Shield
+    Name: Fallen Angel Shield
+    Type: Armor
+    View: 4
+    Weight: 500
+    Defense: 100
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 60
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r >=7)
+         autobonus2 "{ .@r = getrefine(); bonus bDelayrate,-10-(5*(.@r-6)); }",50,5000,BF_MAGIC;
+      else
+         autobonus2 "{ bonus bDelayrate,-10; }",50,5000,BF_MAGIC;
   - Id: 2194
     AegisName: Rouban_Shield
     Name: Levain Shield
@@ -23314,6 +23335,25 @@ Body:
     Script: |
       bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",6,150,BF_MAGIC,0;
       bonus bUnbreakableShield;
+  - Id: 2197
+    AegisName: Iron_Shield
+    Name: Iron Shield
+    Type: Armor
+    View: 4
+    Weight: 2800
+    Defense: 80
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    Script: |
+      bonus bUnbreakableShield;
+      if (getrefine()>=8) {
+         bonus bAspdRate,-3;
+         bonus bNoKnockback;
+      }
   - Id: 2198
     AegisName: Lapine_Shield
     Name: Lapine Shield
@@ -23360,10 +23400,11 @@ Body:
       skill "ECL_SEQUOIADUST",1;
       bonus bMaxHPrate,200;
       bonus bNoKnockback;
-      bonus bDelayrate,-20;
+      bonus bDelayrate,-100;
       bonus bSpeedRate,25;
       bonus bIntravision;
       bonus bNoWalkDelay;
+      bonus bNoGemStone;
   - Id: 2201
     AegisName: Sunglasses
     Name: Sunglasses
@@ -54861,6 +54902,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
+    view: 1347
     Script: |
       .@r = getrefine();
       bonus bInt,3;
@@ -65693,7 +65735,7 @@ Body:
       bonus bMaxSPrate,-30;
   - Id: 15055
     AegisName: Tenebris_Latitantes
-    Name: Armor of Nothingness
+    Name: Tenebris Latitantes
     Type: Armor
     Buy: 10000
     Weight: 1500
@@ -79502,7 +79544,7 @@ Body:
     Name: Bear Balloon
     Type: Armor
     View: 1038
-    Weight: 50
+    Weight: 200
     Defense: 5
     Locations:
       Head_Low: true
@@ -85887,6 +85929,35 @@ Body:
       bonus bAllStats,10;
       /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,30;
       bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,30;*/
+  - Id: 19498
+    AegisName: CitrusRibbon
+    Name: Citrus Ribbon
+    Type: Armor
+    View: 1900
+    Weight: 500
+    Defense: 5
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bMdef,3;
+      bonus bPerfectHitAddRate,20;
+      bonus2 bAddClass,Class_Boss,7;
+  - Id: 19499
+    AegisName: FortunetellinSealed
+    Name: Fortunetelling Sealed
+    Type: Armor
+    View: 1901
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Script: |
+      .@a = (readparam(bInt)+readparam(bDex))/50;
+      bonus bAspdRate,2*.@a;
+      bonus2 bMagicAddSize,Size_All,4*.@a;
   - Id: 19500
     AegisName: T_Mr_Smile
     Name: T Mr Smile
@@ -95860,7 +95931,7 @@ Body:
          bonus bAgi,(.@r-5)*2;
       }
   - Id: 20716
-    AegisName: Spirit_Manteau
+    AegisName: Esprit_Manteau
     Name: Spirit Manteau
     Type: Armor
     Buy: 20
@@ -100966,7 +101037,7 @@ Body:
       bonus2 bExpAddRace,RC_Plant,5+getrefine();
   - Id: 22051
     AegisName: Ramor_Shoes
-    Name: L'Amour Shoes
+    Name: Ramor Shoes
     Type: Armor
     Buy: 20
     Weight: 250
@@ -100998,7 +101069,7 @@ Body:
       bonus2 bExpAddRace,RC_Undead,5+getrefine();
   - Id: 22055
     AegisName: Sharel_Shoes
-    Name: Charel Shoes
+    Name: Sharel Shoes
     Type: Armor
     Buy: 20
     Weight: 250
@@ -101016,7 +101087,7 @@ Body:
       bonus bMaxSPrate,.@r;
   - Id: 22057
     AegisName: Flow_Shoes
-    Name: Flower Shoes
+    Name: Flow Shoes
     Type: Armor
     Buy: 20
     Weight: 250
@@ -101161,7 +101232,7 @@ Body:
       bonus bMaxHPrate,.@r;
       bonus bMaxSPrate,.@r;
   - Id: 22066
-    AegisName: Spirit_Shoes
+    AegisName: Esprit_Shoes
     Name: Spirit Shoes
     Type: Armor
     Buy: 10
@@ -103104,6 +103175,30 @@ Body:
     Script: |
       bonus bMatk,15;
       bonus bBaseAtk,15;
+  - Id: 22234
+    AegisName: FrontiaBoots
+    Name: Frontier Boots
+    Type: Armor
+    Weight: 500
+    Defense: 5
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      if (.@r>=9) {
+         bonus bBaseAtk,50;
+         bonus bMatk,50;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
   - Id: 22238
     AegisName: Great_Hero_Boots
     Name: Great Hero Boots
@@ -138193,6 +138288,77 @@ Body:
          bonus2 bMagicAtkEle,Ele_Water,10;
          bonus2 bMagicAtkEle,Ele_Wind,10;
       }
+  - Id: 470036
+    AegisName: Military_Boots_IL
+    Name: Illusion Military Boots
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("NC_AXEBOOMERANG");
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      skill "SM_MAGNUM",3;
+      bonus2 bSkillAtk,"NC_AXETORNADO",30*.@lvl;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",20*.@lvl;
+      bonus bIgnoreDefRace,20*getskilllv("NC_MAGMA_ERUPTION");
+      if (getskilllv("NC_MAGICDECOY") == 5) {
+         bonus bAspdRate,10;
+         bonus bMaxHP,150*BaseLevel;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bBaseAtk,50;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bBaseAtk,50;
+      }
+  - Id: 470037
+    AegisName: Military_Boots_IL_
+    Name: Illusion Military Boots
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("NC_AXEBOOMERANG");
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      skill "SM_MAGNUM",3;
+      bonus2 bSkillAtk,"NC_AXETORNADO",30*.@lvl;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",20*.@lvl;
+      bonus bIgnoreDefRace,20*getskilllv("NC_MAGMA_ERUPTION");
+      if (getskilllv("NC_MAGICDECOY") == 5) {
+         bonus bAspdRate,10;
+         bonus bMaxHP,150*BaseLevel;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bBaseAtk,50;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bBaseAtk,50;
+      }
   - Id: 470048
     AegisName: Striking_Shoes
     Name: Striking Shoes
@@ -138916,6 +139082,43 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-5;
       }
+  - Id: 480064
+    AegisName: Storm_Muffler
+    Name: Storm Muffler
+    Type: Armor
+    Defense: 12
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("WM_FRIGG_SONG");
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus bLongAtkRate,2+(4*.@lvl);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",2*.@lvl;
+      if (.@r>=5) {
+         bonus bMaxHPrate,3;
+         bonus bMaxSPrate,3;
+         bonus bLongAtkRate,3;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         bonus bLongAtkRate,5;
+      }
+      if (getskilllv("WM_UNLIMITED_HUMMING_VOICE") == 5) {
+         bonus bPerfectHitAddRate,20;
+         bonus bSPDrainValue,2;
+      }
+      if (getskilllv("WM_GLOOMYDAY") == 5) {
+         bonus bDelayrate,-10;
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+      }
   - Id: 480069
     AegisName: C_Wing_Of_Angel_Move
     Name: Costume Heavenly Angel Wings
@@ -139293,6 +139496,31 @@ Body:
       bonus bVariableCastrate,-10;
       bonus bMaxHPrate,3;
       bonus bLongAtkRate,2;
+  - Id: 490013
+    AegisName: Devil_Ring
+    Name: Devil Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bSkillCooldown,"SR_ASSIMILATEPOWER",-3000;
+      if (getskilllv("SR_EARTHSHAKER") == 5) {
+         bonus2 bSkillUseSP,"SR_HOWLINGOFLION",35;
+         bonus2 bSkillUseSP,"SR_KNUCKLEARROW",4;
+      }
+      if (getskilllv("SR_RAMPAGEBLASTER") == 5) {
+         bonus2 bSkillAtk,"SR_HOWLINGOFLION",30;
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",100;
+      }
+      if (getskilllv("SR_RIDEINLIGHTNING") == 5) {
+         bonus bAspdRate,10;
+         bonus bPerfectHitAddRate,15;
+      }
   - Id: 490014
     AegisName: Noblesse_Attack_Ring
     Name: Noblesse Attack Ring

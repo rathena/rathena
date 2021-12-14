@@ -5326,6 +5326,7 @@
 	export_constant(IG_PITAPAT_BOX);
 	export_constant(IG_HAPPY_BOX_J);
 	export_constant(IG_CLASS_SHADOW_CUBE);
+	export_constant(IG_SEALED_SCROLL);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
