@@ -5796,26 +5796,21 @@ BUILDIN_FUNC(warpparty)
 				return SCRIPT_CMD_FAILURE;
 			}
 			} break;
-		case WARPPARTY_RANDOMALLAREA: {
+		case WARPPARTY_RANDOMALLAREA:
 			mapindex = mapindex_name2id(str);
 			if (!mapindex) {// Invalid map
 				return SCRIPT_CMD_FAILURE;
 			}
 			m = map_mapindex2mapid(mapindex);
-
-			struct map_data *mapdata = map_getmapdata(m);
-
-			if ( mapdata == nullptr || mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
-				return SCRIPT_CMD_FAILURE;
-			} break;
+			break;
 	}
-
-	map_data *mapdata = map_getmapdata(pl_sd->bl.m);
 
 	for (i = 0; i < MAX_PARTY; i++)
 	{
 		if( !(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id )
 			continue;
+
+		map_data* mapdata = map_getmapdata(pl_sd->bl.m);
 
 		if( str2 && strcmp(str2, mapdata->name) != 0 )
 			continue;
@@ -5823,13 +5818,13 @@ BUILDIN_FUNC(warpparty)
 		if( pc_isdead(pl_sd) )
 			continue;
 
-		enum e_setpos ret = SETPOS_OK;
+		e_setpos ret = SETPOS_OK;
 
 		switch( type )
 		{
 		case WARPPARTY_RANDOM:
 			if (!mapdata->flag[MF_NOWARP])
-				ret = pc_randomwarp(pl_sd,CLR_TELEPORT);
+				ret = (e_setpos)pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
 		case WARPPARTY_SAVEPOINTALL:
 			if (!mapdata->flag[MF_NORETURN])
@@ -5842,6 +5837,7 @@ BUILDIN_FUNC(warpparty)
 		case WARPPARTY_LEADER:
 			if (p->party.member[i].leader)
 				continue;
+			// Fall through
 		case WARPPARTY_RANDOMALL:
 			if (pl_sd == sd) {
 				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
@@ -5849,7 +5845,7 @@ BUILDIN_FUNC(warpparty)
 			}
 			// Fall through
 		case WARPPARTY_RANDOMALLAREA:
-			if (pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)) {
+			if(!mapdata->flag[MF_NORETURN] && !mapdata->flag[MF_NOWARP] && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)){
 				if (rx || ry) {
 					int x1 = x + rx, y1 = y + ry,
 						x0 = x - rx, y0 = y - ry,
