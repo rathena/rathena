@@ -1,0 +1,50 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Skill Database
+###########################################################################
+#
+# Monster Skill Settings
+#
+###########################################################################
+# - Mob                     Monster AegisName.
+#   Skills:                 List of Skills casted by the monster.
+#    - Id                   Unique Index in the list.
+#      Name                 Skill name.
+#      Level                Skill Level.
+#      State                State of the monster to cast the skill (Default: attack).
+#      Rate                 Rate to cast the skill (from 1-10000).
+#      CastTime             Time in millisecond to cast the skill.
+#      Delay                Delay in millisecond to recast the skill.
+#      Cancelable           True whether the skill is cancelable or not (false).
+#      Target               Target of the skill.
+#      Condition:           Condition to cast the skill.
+#         Type              Type of condition.
+#         Value             Value of the condition.
+#      Val0                 Val0.
+#      Val1                 Val1.
+#      Val2                 Val2.
+#      Val3                 Val3.
+#      Val4                 Val4.
+#      Emotion              Emotion displayed on the monster after (? while casting) the cast.
+#      Chat                 Chat ID to display the associated sentence.
+###########################################################################
+
+Header:
+  Type: MOB_SKILL_DB
+  Version: 1

@@ -148,6 +148,16 @@ struct s_mercenary_skill_csv {
 
 std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
 
+struct s_mob_skill_csv {
+	std::string state_name, skill_name, cond1_name, cond2_name, target_name, emotion;
+	uint16 skill_lv, permillage, msg_id;
+	int32 casttime, delay;
+	std::unordered_map<uint16, std::string> val;
+	bool cancel;
+};
+
+std::unordered_map<std::string, std::vector<s_mob_skill_csv>> mob_skill_db;
+
 static std::map<std::string, int> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
 	{ "SuperNovice", JOB_NOVICE },
@@ -207,6 +217,21 @@ static std::unordered_map<std::string, equip_pos> um_equipnames {
 	{ "Shadow_Shoes", EQP_SHADOW_SHOES },
 	{ "Shadow_Right_Accessory", EQP_SHADOW_ACC_R },
 	{ "Shadow_Left_Accessory", EQP_SHADOW_ACC_L },
+};
+
+static std::unordered_map<std::string, std::string> um_mob_skill_cond2 {
+	{	"anybad",		"-1"				},
+	{	"stone",		"SC_STONE"		},
+	{	"freeze",		"SC_FREEZE"		},
+	{	"stun",			"SC_STUN"			},
+	{	"sleep",		"SC_SLEEP"		},
+	{	"poison",		"SC_POISON"		},
+	{	"curse",		"SC_CURSE"		},
+	{	"silence",		"SC_SILENCE"		},
+	{	"confusion",	"SC_CONFUSION"	},
+	{	"blind",		"SC_BLIND"		},
+	{	"hiding",		"SC_HIDING"		},
+	{	"sight",		"SC_SIGHT"		},
 };
 
 // Initialize Random Option constants
@@ -511,5 +536,7 @@ static bool mercenary_readdb(char* str[], int columns, int current);
 static bool pc_readdb_skilltree(char* str[], int columns, int current);
 static bool pc_readdb_skilltree_yaml(void);
 static bool itemdb_read_combos(const char* file);
+static bool mob_parse_row_mobskilldb(char* str[], int columns, int current);
+static bool mob_parse_row_mobskilldb_yaml(void);
 
 #endif /* CSV2YAML_HPP */

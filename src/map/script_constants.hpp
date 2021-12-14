@@ -8908,6 +8908,73 @@
 	export_constant(SCF_REMOVEONUNEQUIPWEAPON);
 	export_constant(SCF_REMOVEONUNEQUIPARMOR);
 
+	/* mob skill state */
+	export_constant(MSS_ANY);
+	export_constant(MSS_IDLE);
+	export_constant(MSS_WALK);
+	export_constant(MSS_LOOT);
+	export_constant(MSS_DEAD);
+	export_constant2("MSS_ATTACK",MSS_BERSERK);
+	export_constant(MSS_ANGRY);
+	export_constant2("MSS_CHASE",MSS_RUSH);
+	export_constant(MSS_FOLLOW);
+	export_constant(MSS_ANYTARGET);
+
+	/* enum e_mob_skill_target */
+	export_constant(MST_TARGET);
+	export_constant2("MST_RANDOMTARGET",MST_RANDOM);
+	export_constant(MST_SELF);
+	export_constant(MST_FRIEND);
+	export_constant(MST_MASTER);
+	export_constant(MST_AROUND5);
+	export_constant(MST_AROUND6);
+	export_constant(MST_AROUND7);
+	export_constant(MST_AROUND8);
+	export_constant(MST_AROUND1);
+	export_constant(MST_AROUND2);
+	export_constant(MST_AROUND3);
+	export_constant(MST_AROUND4);
+	export_constant(MST_AROUND);
+	
+	/* enum e_mob_skill_condition */
+	export_constant(MSC_ALWAYS);
+	export_constant(MSC_MYHPLTMAXRATE);
+	export_constant(MSC_MYHPINRATE);
+	export_constant(MSC_FRIENDHPLTMAXRATE);
+	export_constant(MSC_FRIENDHPINRATE);
+	export_constant(MSC_MYSTATUSON);
+	export_constant(MSC_MYSTATUSOFF);
+	export_constant(MSC_FRIENDSTATUSON);
+	export_constant(MSC_FRIENDSTATUSOFF);
+	export_constant(MSC_ATTACKPCGT);
+	export_constant(MSC_ATTACKPCGE);
+	export_constant(MSC_SLAVELT);
+	export_constant(MSC_SLAVELE);
+	export_constant(MSC_CLOSEDATTACKED);
+	export_constant(MSC_LONGRANGEATTACKED);
+	export_constant(MSC_SKILLUSED);
+	export_constant(MSC_AFTERSKILL);
+	export_constant(MSC_CASTTARGETED);
+	export_constant(MSC_RUDEATTACKED);
+	export_constant(MSC_MASTERHPLTMAXRATE);
+	export_constant(MSC_MASTERATTACKED);
+	export_constant(MSC_ALCHEMIST);
+	export_constant2("MSC_ONSPAWN",MSC_SPAWN);
+
+	/* cond2 */
+	export_constant2("SC_ANYBAD",-1);
+	// {	"stone",		SC_STONE		},
+	// {	"freeze",		SC_FREEZE		},
+	// {	"stun",			SC_STUN			},
+	// {	"sleep",		SC_SLEEP		},
+	// {	"poison",		SC_POISON		},
+	// {	"curse",		SC_CURSE		},
+	// {	"silence",		SC_SILENCE		},
+	// {	"confusion",	SC_CONFUSION	},
+	// {	"blind",		SC_BLIND		},
+	// {	"hiding",		SC_HIDING		},
+	// {	"sight",		SC_SIGHT		},
+		
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

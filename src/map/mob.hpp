@@ -85,7 +85,7 @@ enum MOBID {
 };
 
 ///Mob skill states.
-enum MobSkillState {
+enum e_MobSkillState {
 	MSS_ANY = -1,
 	MSS_IDLE,
 	MSS_WALK,
@@ -186,16 +186,34 @@ enum e_aegis_monsterclass : int8 {
 };
 
 struct s_mob_skill {
-	enum MobSkillState state;
+	e_MobSkillState state;
 	uint16 skill_id,skill_lv;
 	short permillage;
 	int casttime,delay;
-	short cancel;
+	bool cancel;
 	short cond1,cond2;
 	short target;
 	int val[5];
 	short emotion;
 	unsigned short msg_id;
+};
+
+/// Mob skill struct for temporary storage
+struct s_mob_skill_db {
+	int32 mob_id; ///< Monster ID. -1 boss types, -2 normal types, -3 all monsters
+	uint16 index_num;	/// index for unordered_map
+	std::unordered_map<uint16, std::shared_ptr<s_mob_skill>> skills; ///< index, Skills
+};
+
+class MobSkillDatabase : public TypesafeYamlDatabase<int32, s_mob_skill_db> {
+public:
+	MobSkillDatabase() : TypesafeYamlDatabase("MOB_SKILL_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+	void loadingFinished();
 };
 
 struct s_mob_chat {
@@ -307,7 +325,7 @@ struct mob_data {
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
 		unsigned int copy_master_mode : 1; ///< Whether the spawned monster should copy the master's mode.
-		enum MobSkillState skillstate;
+		e_MobSkillState skillstate;
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest

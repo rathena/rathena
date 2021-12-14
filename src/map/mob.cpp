@@ -75,19 +75,12 @@ std::unordered_map<uint16, std::vector<spawn_info>> mob_spawn_data;
 
 MobItemRatioDatabase mob_item_drop_ratio;
 
-/// Mob skill struct for temporary storage
-struct s_mob_skill_db {
-	int32 mob_id; ///< Monster ID. -1 boss types, -2 normal types, -3 all monsters
-	std::vector<std::shared_ptr<s_mob_skill>> skill; ///< Skills
-};
-
-std::unordered_map<int32, std::shared_ptr<s_mob_skill_db>> mob_skill_db; /// Monster skill temporary db. s_mob_skill_db -> mobid
-
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
-MobSummonDatabase mob_summon_db;
 MobChatDatabase mob_chat_db;
+MobSkillDatabase mob_skill_db;
+MobSummonDatabase mob_summon_db;
 
 /*==========================================
  * Local prototype declaration   (only required thing)
@@ -5671,269 +5664,464 @@ uint64 MobChatDatabase::parseBodyNode(const ryml::NodeRef node) {
 	return 1;
 }
 
-/*==========================================
- * processes one mob_skill_db entry
- *------------------------------------------*/
-static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
-{
-	static const struct {
-		char str[32];
-		enum MobSkillState id;
-	} state[] = {
-		{	"any",		MSS_ANY		}, //All states except Dead
-		{	"idle",		MSS_IDLE	},
-		{	"walk",		MSS_WALK	},
-		{	"loot",		MSS_LOOT	},
-		{	"dead",		MSS_DEAD	},
-		{	"attack",	MSS_BERSERK	}, //Retaliating attack
-		{	"angry",	MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
-		{	"chase",	MSS_RUSH	}, //Chase escaping target
-		{	"follow",	MSS_FOLLOW	}, //Preemptive chase (aggressive mobs)
-		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
-	};
-	static const struct {
-		char str[32];
-		int id;
-	} cond1[] = {
-		// enum e_mob_skill_condition
-		{ "always",            MSC_ALWAYS            },
-		{ "myhpltmaxrate",     MSC_MYHPLTMAXRATE     },
-		{ "myhpinrate",        MSC_MYHPINRATE        },
-		{ "friendhpltmaxrate", MSC_FRIENDHPLTMAXRATE },
-		{ "friendhpinrate",    MSC_FRIENDHPINRATE    },
-		{ "mystatuson",        MSC_MYSTATUSON        },
-		{ "mystatusoff",       MSC_MYSTATUSOFF       },
-		{ "friendstatuson",    MSC_FRIENDSTATUSON    },
-		{ "friendstatusoff",   MSC_FRIENDSTATUSOFF   },
-		{ "attackpcgt",        MSC_ATTACKPCGT        },
-		{ "attackpcge",        MSC_ATTACKPCGE        },
-		{ "slavelt",           MSC_SLAVELT           },
-		{ "slavele",           MSC_SLAVELE           },
-		{ "closedattacked",    MSC_CLOSEDATTACKED    },
-		{ "longrangeattacked", MSC_LONGRANGEATTACKED },
-		{ "skillused",         MSC_SKILLUSED         },
-		{ "afterskill",        MSC_AFTERSKILL        },
-		{ "casttargeted",      MSC_CASTTARGETED      },
-		{ "rudeattacked",      MSC_RUDEATTACKED      },
-		{ "masterhpltmaxrate", MSC_MASTERHPLTMAXRATE },
-		{ "masterattacked",    MSC_MASTERATTACKED    },
-		{ "alchemist",         MSC_ALCHEMIST         },
-		{ "onspawn",           MSC_SPAWN             },
-	}, cond2[] ={
-		{	"anybad",		-1				},
-		{	"stone",		SC_STONE		},
-		{	"freeze",		SC_FREEZE		},
-		{	"stun",			SC_STUN			},
-		{	"sleep",		SC_SLEEP		},
-		{	"poison",		SC_POISON		},
-		{	"curse",		SC_CURSE		},
-		{	"silence",		SC_SILENCE		},
-		{	"confusion",	SC_CONFUSION	},
-		{	"blind",		SC_BLIND		},
-		{	"hiding",		SC_HIDING		},
-		{	"sight",		SC_SIGHT		},
-	}, target[] = {
-		// enum e_mob_skill_target
-		{	"target",	MST_TARGET	},
-		{	"randomtarget",	MST_RANDOM	},
-		{	"self",		MST_SELF	},
-		{	"friend",	MST_FRIEND	},
-		{	"master",	MST_MASTER	},
-		{	"around5",	MST_AROUND5	},
-		{	"around6",	MST_AROUND6	},
-		{	"around7",	MST_AROUND7	},
-		{	"around8",	MST_AROUND8	},
-		{	"around1",	MST_AROUND1	},
-		{	"around2",	MST_AROUND2	},
-		{	"around3",	MST_AROUND3	},
-		{	"around4",	MST_AROUND4	},
-		{	"around",	MST_AROUND	},
-	};
-	static int last_mob_id = 0;  // ensures that only one error message per mob id is printed
-	int mob_id;
-	int j, tmp;
+const std::string MobSkillDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/mob_skill_db.yml";
+}
 
-	mob_id = atoi(str[0]);
+/**
+ * Reads and parses an entry from the mob_skill_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MobSkillDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string mob_name;
 
-	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+	if (!this->asString( node, "Mob", mob_name ))
+		return 0;
 
-	if (mob_id > 0 && mob == nullptr)
-	{
-		if (mob_id != last_mob_id) {
-			ShowError("mob_parse_row_mobskilldb: Non existant Mob id %d\n", mob_id);
-			last_mob_id = mob_id;
-		}
-		return false;
-	}
-	else if (mob_id == 0)
-		return false;
+	int32 mob_id;
+	std::shared_ptr<s_mob_db> mob = nullptr;
 
-	// Looking for existing entry
-	std::shared_ptr<s_mob_skill_db> skill = util::umap_find(mob_skill_db, mob_id);
-
-	if (skill == nullptr)
-		skill = std::make_shared<s_mob_skill_db>();
-
-	if( strcmp(str[1],"clear") == 0 && skill->mob_id != 0 ) {
-		mob_skill_db.erase(skill->mob_id);
-		ShowInfo("Cleared skill for mob id '%d'\n", mob_id);
-		return true;
-	}
-
-	if (skill->skill.size() >= MAX_MOBSKILL) {
-		if (mob_id != last_mob_id) {
-			ShowError("mob_parse_row_mobskilldb: Too many skills for monster %d[%s]\n", mob_id, mob->sprite.c_str());
-			last_mob_id = mob_id;
-		}
-		return false;
-	}
-
-	std::shared_ptr<s_mob_skill> ms = std::make_shared<s_mob_skill>();
-
-	//State
-	ARR_FIND( 0, ARRAYLENGTH(state), j, strcmp(str[2],state[j].str) == 0 );
-	if( j < ARRAYLENGTH(state) )
-		ms->state = state[j].id;
+	if (mob_name == "ALL")	// special behaviour
+		mob_id = -3;
+	else if (mob_name == "ALL_NORMAL")
+		mob_id = -2;
+	else if (mob_name == "ALL_BOSS")
+		mob_id = -1;
 	else {
-		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %d\n", str[2], current);
-		return false;
-	}
+		mob = mobdb_search_aegisname( mob_name.c_str() );
 
-	//Skill ID
-	j = atoi(str[3]);
-	if (j <= 0 || j > MAX_SKILL_ID || !skill_get_index(j)) //fixed Lupus
-	{
-		if (mob_id < 0)
-			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for all mobs\n", j);
-		else
-			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob->sprite.c_str());
-		return false;
-	}
-	ms->skill_id = j;
-
-	//Skill lvl
-	j = atoi(str[4]) <= 0 ? 1 : atoi(str[4]);
-	ms->skill_lv = j > battle_config.mob_max_skilllvl ? battle_config.mob_max_skilllvl : j; //we strip max skill level
-
-	//Apply battle_config modifiers to rate (permillage) and delay [Skotlex]
-	tmp = atoi(str[5]);
-	if (battle_config.mob_skill_rate != 100)
-		tmp = tmp*battle_config.mob_skill_rate/100;
-	if (tmp > 10000)
-		ms->permillage = 10000;
-	else if (!tmp && battle_config.mob_skill_rate)
-		ms->permillage = 1;
-	else
-		ms->permillage = tmp;
-	ms->casttime = atoi(str[6]);
-	ms->delay = atoi(str[7]);
-	if (battle_config.mob_skill_delay != 100)
-		ms->delay = ms->delay*battle_config.mob_skill_delay/100;
-	if (ms->delay < 0 || ms->delay > MOB_MAX_DELAY) //time overflow?
-		ms->delay = MOB_MAX_DELAY;
-	ms->cancel = atoi(str[8]);
-	if( strcmp(str[8],"yes")==0 )
-		ms->cancel=1;
-
-	//Target
-	ARR_FIND( 0, ARRAYLENGTH(target), j, strcmp(str[9],target[j].str) == 0 );
-	if( j < ARRAYLENGTH(target) )
-		ms->target = target[j].id;
-	else {
-		ShowWarning("mob_parse_row_mobskilldb: Unrecognized target %s for %d\n", str[9], mob_id);
-		ms->target = MST_TARGET;
-	}
-
-	//Check that the target condition is right for the skill type. [Skotlex]
-	if (skill_get_casttype(ms->skill_id) == CAST_GROUND)
-	{	//Ground skill.
-		if (ms->target > MST_AROUND)
-		{
-			ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target for ground skill %d (%s) for %s.\n",
-				ms->skill_id, skill_get_name(ms->skill_id),
-				mob_id < 0 ? "all mobs" : mob->sprite.c_str());
-			ms->target = MST_TARGET;
+		if (mob == nullptr) {
+			this->invalidWarning(node["Mob"], "Mob %s does not exist.\n", mob_name.c_str());
+			return 0;
 		}
-	} else if (ms->target > MST_MASTER) {
-		ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target 'around' for non-ground skill %d (%s) for %s.\n",
-			ms->skill_id, skill_get_name(ms->skill_id),
-			mob_id < 0 ? "all mobs" : mob->sprite.c_str());
-		ms->target = MST_TARGET;
+
+		mob_id = static_cast<int32>(mob->vd.class_);
 	}
 
-	//Cond1
-	ARR_FIND( 0, ARRAYLENGTH(cond1), j, strcmp(str[10],cond1[j].str) == 0 );
-	if( j < ARRAYLENGTH(cond1) )
-		ms->cond1 = cond1[j].id;
-	else {
-		ShowWarning("mob_parse_row_mobskilldb: Unrecognized condition 1 %s for %d\n", str[10], mob_id);
-		ms->cond1 = -1;
+	std::shared_ptr<s_mob_skill_db> mob_skill = this->find(mob_id);
+	bool exists = mob_skill != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Skills" }))
+			return 0;
+
+		mob_skill = std::make_shared<s_mob_skill_db>();
+		mob_skill->mob_id = mob_id;
 	}
 
-	//Cond2
-	// numeric value
-	ms->cond2 = atoi(str[11]);
-	// or special constant
-	ARR_FIND( 0, ARRAYLENGTH(cond2), j, strcmp(str[11],cond2[j].str) == 0 );
-	if( j < ARRAYLENGTH(cond2) )
-		ms->cond2 = cond2[j].id;
+	if (this->nodeExists(node, "Skills")) {
+		for (const YAML::Node &it : node["Skills"]) {
+			uint16 id;
 
-	ms->val[0] = (int)strtol(str[12],NULL,0);
-	ms->val[1] = (int)strtol(str[13],NULL,0);
-	ms->val[2] = (int)strtol(str[14],NULL,0);
-	ms->val[3] = (int)strtol(str[15],NULL,0);
-	ms->val[4] = (int)strtol(str[16],NULL,0);
+			if (this->nodeExists(it, "Clear")) {
+				if (!this->asUInt16(it, "Clear", id))
+					return 0;
 
-	if(ms->skill_id == NPC_EMOTION && mob_id > 0 &&
-		ms->val[1] == mob->status.mode)
-	{
-		ms->val[1] = 0;
-		ms->val[4] = 1; //request to return mode to normal.
-	}
-	if(ms->skill_id == NPC_EMOTION_ON && mob_id > 0 && ms->val[1])
-	{	//Adds a mode to the mob.
-		//Remove aggressive mode when the new mob type is passive.
-		if (!(ms->val[1]&MD_AGGRESSIVE))
-			ms->val[3] |= MD_AGGRESSIVE;
-		ms->val[2] |= ms->val[1]; //Add the new mode.
-		ms->val[1] = 0; //Do not "set" it.
-	}
+				if (mob_skill->skills.erase(id) == 0)
+					this->invalidWarning(it["Clear"], "Failed to remove non-existing Id %hu for mob %s.\n", id, mob_name.c_str());
 
-	if(*str[17])
-		ms->emotion = atoi(str[17]);
-	else
-		ms->emotion = -1;
+				continue;
+			}
 
-	if (*str[18]) {
-		uint16 id = static_cast<uint16>(strtol(str[18], nullptr, 10));
-		if (mob_chat_db.find(id) != nullptr)
-			ms->msg_id = id;
-		else {
-			ms->msg_id = 0;
-			ShowWarning("mob_parse_row_mobskilldb: Unknown chat ID %s for monster %d.\n", str[18], mob_id);
+			if (!this->asUInt16(it, "Id", id))
+				return 0;
+
+			std::shared_ptr<s_mob_skill> skill = util::umap_find(mob_skill->skills, id);
+			bool skill_exists = skill != nullptr;
+
+			if (!skill_exists) {
+				if (!this->nodesExist(it, { "Name", "Level" }))
+					return 0;
+
+				if (mob_skill->skills.size() >= MAX_MOBSKILL) {
+					this->invalidWarning(it["Id"], "Too many skills for monster %d[%s] (max: %d).\n", mob_id, mob_name.c_str(), MAX_MOBSKILL);
+					return 0;
+				}
+				skill = std::make_shared<s_mob_skill>();
+			}
+
+			if (this->nodeExists(it, "Name")) {
+				std::string skill_name;
+
+				if (!this->asString(it, "Name", skill_name))
+					return 0;
+
+				uint16 skill_id = skill_name2id(skill_name.c_str());
+
+				if (skill_id == 0) {
+					this->invalidWarning(it["Name"], "Invalid skill name \"%s\", skipping.\n", skill_name.c_str());
+					return 0;
+				}
+
+				skill->skill_id = skill_id;
+			}
+
+			if (this->nodeExists(it, "Level")) {
+				uint16 level;
+
+				if (!this->asUInt16(it, "Level", level))
+					return 0;
+
+				skill->skill_lv = cap_value(level, 1, battle_config.mob_max_skilllvl); //we strip max skill level
+			}
+
+			if (this->nodeExists(it, "SkillState")) {
+				std::string state_name;
+
+				if (!this->asString(it, "SkillState", state_name))
+					return 0;
+
+				std::string state_constant = "MSS_" + state_name;
+				int64 constant;
+
+				if (!script_get_constant(state_constant.c_str(), &constant) || constant < MSS_ANY || constant > MSS_ANYTARGET) {
+					this->invalidWarning(it["SkillState"], "Invalid SkillState %s. Note: \"MSS_\" is appended before the name, MobSkillDatabase is checking the constant \"%s\".\n", state_name.c_str(), state_constant.c_str());
+					return 0;
+				}
+				skill->state = static_cast<e_MobSkillState>(constant);
+			} else {
+				if (!skill_exists)
+					skill->state = MSS_BERSERK;
+			}
+
+			if (this->nodeExists(it, "Cast")) {
+				const YAML::Node &castNode = it["Cast"];
+
+				if (this->nodeExists(castNode, "Rate")) {
+					int16 rate;
+
+					if (!this->asInt16(castNode, "Rate", rate))
+						return 0;
+
+					skill->permillage = rate;
+				} else {
+					if (!skill_exists)	// note: default by number of occurences
+						skill->permillage = 10000;
+				}
+
+				if (this->nodeExists(castNode, "Time")) {
+					int32 time;
+
+					if (!this->asInt32(castNode, "Time", time))
+						return 0;
+
+					skill->casttime = time;
+				} else {
+					if (!skill_exists)
+						skill->casttime = 0;
+				}
+
+				if (this->nodeExists(castNode, "Delay")) {
+					int32 delay;
+
+					if (!this->asInt32(castNode, "Delay", delay))
+						return 0;
+
+					skill->delay = delay;
+				} else {
+					if (!skill_exists)
+						skill->delay = 5000;
+				}
+
+				if (this->nodeExists(castNode, "Cancelable")) {
+					bool cancel;
+
+					if (!this->asBool(castNode, "Cancelable", cancel))
+						return 0;
+
+					skill->cancel = cancel;
+				} else {
+					if (!skill_exists)
+						skill->cancel = true;
+				}
+			} else {
+				if (!skill_exists) {
+					skill->permillage = 10000;
+					skill->casttime = 0;
+					skill->delay = 5000;
+					skill->cancel = true;
+				}
+			}
+
+			if (this->nodeExists(it, "SkillTarget")) {
+				std::string target_name;
+
+				if (!this->asString(it, "SkillTarget", target_name))
+					return 0;
+
+				std::string target_constant = "MST_" + target_name;
+				int64 constant;
+
+				if (!script_get_constant(target_constant.c_str(), &constant) || constant < MST_TARGET || constant > MST_AROUND) {
+					this->invalidWarning(it["SkillTarget"], "Unrecognized SkillTarget %s. Don't forget that \"MST_\" is appended before the name: MobSkillDatabase is checking if the constant \"%s\" exists.\n", target_name.c_str(), target_constant.c_str());
+					return 0;
+				}
+				skill->target = static_cast<int16>(constant);
+			} else {
+				if (!skill_exists)
+					skill->target = MST_TARGET;
+			}
+
+			if (this->nodeExists(it, "Condition")) {
+				const YAML::Node &condNode = it["Condition"];
+
+				if (this->nodeExists(it, "Cond1")) {
+					std::string condition_name;
+
+					if (!this->asString(it, "Cond1", condition_name))
+						return 0;
+
+					std::string condition_constant = "MSC_" + condition_name;
+					int64 constant;
+
+					if (!script_get_constant(condition_constant.c_str(), &constant) || constant < MSC_ALWAYS || constant > MSC_SPAWN) {
+						this->invalidWarning(it["Cond1"], "Unknown Cond1 %s. Don't forget that \"MSC_\" is appended before the name: MobSkillDatabase is checking if the constant \"%s\" exists.\n", condition_name.c_str(), condition_constant.c_str());
+						return 0;
+					}
+					skill->cond1 = static_cast<int16>(constant);	// todo eventually change short to enum ?
+					
+				} else {
+					if (!skill_exists)
+						skill->cond1 = MSC_ALWAYS;
+				}
+
+				// Status and Value fill the same variable
+				if (this->nodeExists(it, "Cond2String")) {	// todo string constant 0 to remove the value on import
+					std::string status_name;
+
+					if (!this->asString(it, "Cond2String", status_name))
+						return 0;
+
+					int64 constant;
+
+					if (!script_get_constant(status_name.c_str(), &constant)) {	// todo sc_ range
+						this->invalidWarning(it["Cond2String"], "Unknown Cond2String %s.\n", status_name.c_str());
+						return 0;
+					}
+					skill->cond2 = static_cast<int16>(constant);	// todo eventually change short to enum ?
+				} else {
+					if (!skill_exists)
+						skill->cond2 = 0;
+				}
+
+				if (this->nodeExists(it, "Cond2Value")) {
+					uint16 value;
+
+					if (!this->asUInt16(it, "Cond2Value", value))
+						return 0;
+
+					skill->cond2 = static_cast<int16>(value);
+				} else {
+					if (!skill_exists)
+						skill->cond2 = 0;
+				}
+
+				for (int i = 0; i < 5; ++i) {	// todo the max number of slaves should be at least 6, Val6 is missing
+					std::string val_name = "Val" + std::to_string(i);
+
+					if (this->nodeExists(it, val_name)) {
+						int32 val;
+
+						if (!this->asInt32(it, val_name, val))
+							return 0;
+
+						skill->val[i] = val;
+					} else {
+						if (!skill_exists)
+							skill->val[i] = 0;
+					}
+				}
+			} else {
+				if (!skill_exists) {
+					skill->cond1 = MSC_ALWAYS;
+					skill->cond2 = 0;
+					skill->val[0] = 0;
+					skill->val[1] = 0;
+					skill->val[2] = 0;
+					skill->val[3] = 0;
+					skill->val[4] = 0;
+				}
+			}
+
+			if (this->nodeExists(it, "Emotion")) {	// todo emotion constant -1 to remove the emotion on import
+				std::string emotion_name;
+
+				if (!this->asString(it, "Emotion", emotion_name))
+					return 0;
+
+				int64 constant;
+
+				if (!script_get_constant(emotion_name.c_str(), &constant) || constant < ET_SURPRISE || constant >= ET_MAX) {
+					this->invalidWarning(it["Emotion"], "Unknown Emotion %s.\n", emotion_name.c_str());
+					return 0;
+				}
+				skill->emotion = static_cast<int16>(constant);
+			} else {
+				if (!skill_exists)
+					skill->emotion = -1;
+			}
+
+			if (this->nodeExists(it, "Chat")) {
+				uint16 msg_id;
+
+				if (!this->asUInt16(it, "Chat", msg_id))
+					return 0;
+
+				if (mob_chat_db.find(msg_id) == nullptr) {
+					this->invalidWarning(it["Chat"], "Unknown chat ID %hu.\n", msg_id);
+					msg_id = 0;
+				}
+
+				skill->msg_id = msg_id;
+			} else {
+				if (!skill_exists)
+					skill->msg_id = 0;
+			}
+
+			if (!skill_exists) {
+				mob_skill->skills.insert({ mob_skill->index_num, skill });
+				mob_skill->index_num++;
+			}
 		}
 	}
-	else
-		ms->msg_id = 0;
 
-	skill->skill.push_back(ms);
+	if (!exists)
+		this->put(mob_id, mob_skill);
 
-	if (!skill->mob_id) { // Insert new entry
-		skill->mob_id = mob_id;
-		mob_skill_db.insert({ mob_id, skill });
-	}
 	return true;
 }
 
-/*==========================================
- * mob_skill_db.txt reading
- *------------------------------------------*/
-static void mob_readskilldb(const char* basedir, bool silent) {
-	if( battle_config.mob_skill_rate == 0 ) {
-		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
-		return;
+void MobSkillDatabase::loadingFinished() {
+	for (auto &mobdata : *this) {
+		int32 mob_id = mobdata.first;
+		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
+		std::string sprite;
+		if (mob == nullptr)
+			sprite = "all mobs";
+		else {
+			sprite = mob->sprite;
+		}
+
+		for (auto &skills : mobdata.second->skills) {
+			auto skill = skills.second;
+
+			// Apply battle_config modifiers to rate (permillage) and delay [Skotlex]
+			if (battle_config.mob_skill_rate != 100)
+				skill->permillage = skill->permillage * battle_config.mob_skill_rate / 100;
+			if (skill->permillage > 10000)
+				skill->permillage = 10000;
+			else if (skill->permillage == 0 && battle_config.mob_skill_rate)
+				skill->permillage = 1;
+
+			if (battle_config.mob_skill_delay != 100)
+				skill->delay = skill->delay * battle_config.mob_skill_delay / 100;
+			if (skill->delay < 0 || skill->delay > MOB_MAX_DELAY) // time overflow?
+				skill->delay = MOB_MAX_DELAY;
+
+			// Check that the target condition is right for the skill type. [Skotlex]
+			if (skill_get_casttype(skill->skill_id) == CAST_GROUND) {
+				if (skill->target > MST_AROUND) {
+					ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s.\n", skill->skill_id, skill_get_name(skill->skill_id), sprite.c_str());
+					skill->target = MST_TARGET;
+				}
+			}
+			else if (skill->target > MST_MASTER) {
+				ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s) for %s.\n", skill->skill_id, skill_get_name(skill->skill_id), sprite.c_str());
+				skill->target = MST_TARGET;
+			}
+
+			if (skill->skill_id == NPC_EMOTION && mob != nullptr && skill->val[1] == mob->status.mode) {
+				skill->val[1] = 0;
+				skill->val[4] = 1; // request to return mode to normal.
+			}
+			if (skill->skill_id == NPC_EMOTION_ON && mob_id > 0 && skill->val[1]) {	// Adds a mode to the mob.
+				// Remove aggressive mode when the new mob type is passive.
+				if (!(skill->val[1]&MD_AGGRESSIVE))
+					skill->val[3] |= MD_AGGRESSIVE;
+				skill->val[2] |= skill->val[1]; //Add the new mode.
+				skill->val[1] = 0; //Do not "set" it.
+			}
+		}
 	}
-	sv_readdb(basedir, "mob_skill_db.txt", ',', 19, 19, -1, &mob_parse_row_mobskilldb, silent);
+}
+
+/**
+ * Convert SQL data to YAML Node
+ * @param str: Array of parsed SQL data
+ * @return True on success or false otherwise
+ */
+static bool mob_read_sqlskilldb_sub(std::vector<std::string> str) {
+	YAML::Node node;
+	int32 index = -1;
+
+	int32 mob_id = std::stoul(str[++index]);
+
+	if (mob_id == -3)
+		node["Mob"] = "ALL";
+	else if (mob_id == -2)
+		node["Mob"] = "ALL_NORMAL";
+	else if (mob_id == -1)
+		node["Mob"] = "ALL_BOSS";
+	else {
+		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
+		if (mob == nullptr) {
+			ShowWarning("Mob %d does not exist.\n", mob_id);
+			return 0;
+		}
+
+		node["Mob"] = mob->sprite;
+	}
+
+	++index;	// skip info
+
+	YAML::Node skills;
+
+	skills["State"] = str[++index];
+	uint16 skill_id = static_cast<uint16>(std::stoul(str[++index]));
+
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+	if (skill == nullptr) {
+		ShowWarning("Invalid skill id %hu, skipping.\n", skill_id);
+		return 0;
+	}
+
+	skills["Name"] = skill->name;
+	skills["Level"] = std::stoi(str[++index]);
+
+	YAML::Node cast;
+	cast["Rate"] = std::stoi(str[++index]);
+	cast["Time"] = std::stoi(str[++index]);
+	cast["Delay"] = std::stoi(str[++index]);
+	cast["Cancelable"] = str[++index];
+
+	cast["Cast"] = cast;
+
+	skills["Target"] = str[++index];
+
+	YAML::Node Condition;
+	Condition["Cond1"] = str[++index];
+	std::string cond2 = str[++index];
+	if (atoi(cond2.c_str()) > 0)
+		Condition["Cond2Value"] = str[++index];
+	else
+		Condition["Cond2String"] = str[++index];
+	Condition["Val0"] = str[++index];
+	Condition["Val1"] = str[++index];
+	Condition["Val2"] = str[++index];
+	Condition["Val3"] = str[++index];
+	Condition["Val4"] = str[++index];
+
+	skills["Condition"] = Condition;
+
+	skills["Emotion"] = str[++index];
+	skills["Chat"] = std::stoi(str[++index]);
+
+	node["Skills"] = skills;
+
+	return mob_skill_db.parseBodyNode(node) > 0;
 }
 
 /**
@@ -5948,13 +6136,8 @@ static int mob_read_sqlskilldb(void)
 		mob_skill2_table };
 	int fi;
 
-	if( battle_config.mob_skill_rate == 0 ) {
-		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
-		return 0;
-	}
-
 	for( fi = 0; fi < ARRAYLENGTH(mob_skill_db_name); ++fi ) {
-		uint32 lines = 0, count = 0;
+		uint32 count = 0;
 
 		// retrieve all rows from the mob skill database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_skill_db_name[fi]) ) {
@@ -5962,21 +6145,23 @@ static int mob_read_sqlskilldb(void)
 			continue;
 		}
 
+		uint32 total_columns = Sql_NumColumns(mmysql_handle);
+
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
-			// wrap the result into a TXT-compatible format
-			char* str[19];
-			char dummy[255] = "";
-			int i;
-			++lines;
-			for( i = 0; i < 19; ++i )
-			{
-				Sql_GetData(mmysql_handle, i, &str[i], NULL);
-				if( str[i] == NULL ) 
-					str[i] = dummy; // get rid of NULL columns
+			std::vector<std::string> data = {};
+
+			for (uint32 i = 0; i < total_columns; i++) {
+				char *str;
+
+				Sql_GetData(mmysql_handle, i, &str, nullptr);
+				if (str == nullptr)
+					data.push_back("");
+				else
+					data.push_back(str);
 			}
 
-			if (!mob_parse_row_mobskilldb(str, 19, count))
+			if (!mob_read_sqlskilldb_sub(data))
 				continue;
 
 			count++;
@@ -6248,60 +6433,53 @@ static void mob_drop_ratio_adjust(void){
  * @param mob Monster DB entry
  * @param skill Monster skill entries
  **/
-static void mob_skill_db_set_single_sub(std::shared_ptr<s_mob_db> mob, struct s_mob_skill_db *skill) {
-	nullpo_retv(skill);
+static void mob_skill_db_set_single(std::shared_ptr<s_mob_db> mob, std::shared_ptr<s_mob_skill_db> mob_skill) {
+	nullpo_retv(mob_skill);
 
 	if (mob == nullptr)
 		return;
+	if (mob_skill->skills.empty())
+		return;
 
-	size_t i = 0;
-
-	for (i = 0; mob->skill.size() < MAX_MOBSKILL && i < skill->skill.size(); i++) {
-		mob->skill.push_back(skill->skill[i]);
-	}
-
-	if (i < skill->skill.size())
-		ShowWarning("Monster '%s' (%d, src:%d) reaches max skill limit %d. Ignores '%zu' skills left.\n", mob->sprite.c_str(), mob->id, skill->mob_id, MAX_MOBSKILL, skill->skill.size() - i);
-}
-
-/**
- * Check the skill & monster id before put the skills
- * @param skill
- **/
-static void mob_skill_db_set_single(struct s_mob_skill_db *skill) {
-	nullpo_retv(skill);
-
-	// Specific monster
-	if (skill->mob_id >= 0) {
-		std::shared_ptr<s_mob_db> mob = mob_db.find(skill->mob_id);
-
-		if (mob != nullptr)
-			mob_skill_db_set_single_sub(mob, skill);
-	}
-	// Global skill
-	else {
-		uint16 id = skill->mob_id;
-		id *= -1;
-		for( auto &pair : mob_db ){
-			if ( mob_is_clone(pair.first) ){
-				continue;
-			}
-			if (   (!(id&1) && status_has_mode(&pair.second->status,MD_STATUSIMMUNE)) // Bosses
-				|| (!(id&2) && !status_has_mode(&pair.second->status,MD_STATUSIMMUNE)) // Normal monsters
-				)
-				continue;
-			mob_skill_db_set_single_sub(pair.second, skill);
+	for (const auto &it : mob_skill->skills) {
+		if (mob->skill.size() >= MAX_MOBSKILL) {
+			ShowWarning("Monster '%s' (%d, src:%d) reaches max skill limit %d..\n", mob->sprite.c_str(), mob->vd.class_, mob_skill->mob_id, MAX_MOBSKILL);
+			break;
 		}
+		mob->skill.push_back(it.second);
 	}
-	
 }
 
 /**
  * Set monster skills
  **/
 static void mob_skill_db_set(void) {
-	for (auto skill : mob_skill_db) {
-		mob_skill_db_set_single(skill.second.get());
+	for (const auto &mob_skill : mob_skill_db) {
+		std::shared_ptr<s_mob_skill_db> skill = mob_skill.second;
+		nullpo_retv(skill);
+
+		// Specific monster
+		if (skill->mob_id >= 0) {
+			std::shared_ptr<s_mob_db> mob = mob_db.find(skill->mob_id);
+
+			if (mob != nullptr)
+				mob_skill_db_set_single(mob, skill);
+		}
+		// Global skill
+		else {
+			uint16 id = skill->mob_id;
+			id *= -1;
+			for( auto &pair : mob_db ){
+				if ( mob_is_clone(pair.first) ){
+					continue;
+				}
+				if (   (!(id&1) && status_has_mode(&pair.second->status,MD_STATUSIMMUNE)) // Bosses
+					|| (!(id&2) && !status_has_mode(&pair.second->status,MD_STATUSIMMUNE)) // Normal monsters
+					)
+					continue;
+				mob_skill_db_set_single(pair.second, skill);
+			}
+		}
 	}
 
 	//ShowStatus("Set skills to '%d' monsters.\n", db_size(mob_skill_db));
@@ -6341,10 +6519,6 @@ static void mob_load(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		if( db_use_sqldbs && i == 0 )
-			mob_read_sqlskilldb();
-		else
-			mob_readskilldb(dbsubpath2, silent);
 
 
 		aFree(dbsubpath1);
@@ -6356,6 +6530,14 @@ static void mob_load(void)
 	mob_summon_db.load();
 
 	mob_drop_ratio_adjust();
+
+	if (battle_config.mob_skill_rate == 0)
+		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
+	else if (db_use_sqldbs)
+		mob_read_sqlskilldb();
+	else
+		mob_skill_db.load();
+
 	mob_skill_db_set();
 }
 

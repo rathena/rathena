@@ -1,0 +1,35 @@
+###########################################################################
+# Monster Skill Database
+###########################################################################
+#
+# Monster Skill Settings
+#
+###########################################################################
+# - Mob                     Monster AegisName.
+#   Skills:                 List of Skills casted by the monster.
+#    - Id                   Unique Index in the list to edit the skill in import.
+#      Name                 Skill AegisName.
+#      Level                Skill Level.
+#      State                State of the monster to cast the skill (Default: ATTACK).
+#      Cast:                About the skill Cast.
+#        Rate               Rate to cast the skill (from 1-10000) (Default: 10000).
+#        Time               Time in millisecond to cast the skill (Default: 0).
+#        Delay              Delay in millisecond to recast the skill (Default: 5000).
+#        Cancelable         Whether the skill is cancelable (true) or not (false) (Default: true).
+#      Target               Target of the skill (Default: Target).
+#      Condition:
+#        Cond1              Type of condition (Default: Always).
+#        Cond2Sring         String value (no value by default).
+#        Cond2Value         Integer value (default 0).
+#        Val0               Special value 0 according to Condition/Name (default 0).
+#        Val1               Special value 1 according to Condition/Name (default 0).
+#        Val2               Special value 2 according to Condition/Name (default 0).
+#        Val3               Special value 3 according to Condition/Name (default 0).
+#        Val4               Special value 4 according to Condition/Name (default 0).
+#      Emotion              Emotion displayed on the monster after (? while casting) the cast (no emotion by default).
+#      Chat                 Chat ID to display the associated sentence defined in mob_chat_db.yml (default 0).
+###########################################################################
+#
+# Read doc/mob_skill_db.txt for more information.
+#
+###########################################################################
