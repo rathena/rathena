@@ -482,7 +482,7 @@ nothing  - A permanent variable attached to the character, the default variable
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
            instance type. Can be accessed from inside the instance or by calling
-           'getvariableofinstance'.
+           'getinstancevar'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -9419,17 +9419,30 @@ Examples:
 
 ---------------------------------------
 
-*getvariableofinstance(<variable>,<instance id>);
+*getinstancevar(<variable>,<instance id>);
 
 Returns a reference to an instance variable (' prefix) of the specific instance ID.
 This can only be used to get ' variables.
 
 Examples:
 	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
-	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+	set .@s, getinstancevar('var, instance_id(IM_PARTY));
 
 	// This will set the 'var variable of the specific instance ID to 1.
-	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
+	set getinstancevar('var, instance_id(IM_GUILD)), 1;
+
+---------------------------------------
+
+*setinstancevar(<variable>,<value>,<instance id>);
+
+This command will set an instance variable to the value that the expression results in.
+See 'set' command for more information.
+
+Returns the variable reference.
+
+Examples:
+	// This will set the 'var variable of the specific instance ID to 9.
+	setinstancevar('var, 9, instance_id(IM_GUILD));
 
 ---------------------------------------
 

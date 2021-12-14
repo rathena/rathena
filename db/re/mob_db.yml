@@ -90113,6 +90113,28 @@ Body:
 #    AegisName: E_ALICE_TW
 #  - Id: 21438
 #    AegisName: E_FARMILIAR_TW
+#  - Id: 21439
+#    AegisName: MD_OTARGET
+#  - Id: 21440
+#    AegisName: MD_XTARGET
+#  - Id: 21441
+#    AegisName: MD_HLGR_HEARTHUNTER
+#  - Id: 21442
+#    AegisName: MD_HLGR_BELLARE
+#  - Id: 21443
+#    AegisName: MD_HLGR_SANARE
+#  - Id: 21444
+#    AegisName: MD_NINJA_GHOST
+#  - Id: 21445
+#    AegisName: MD_HAPPY_CLOUD
+#  - Id: 21446
+#    AegisName: MD_MR_SEO
+#  - Id: 21447
+#    AegisName: MD_SOL
+#  - Id: 21448
+#    AegisName: MD_HO
+#  - Id: 21449
+#    AegisName: MD_SANGOON
 #  - Id: 21450
 #    AegisName: SEASON_MOB_051
 #  - Id: 21451
@@ -90235,8 +90257,74 @@ Body:
 #    AegisName: MD_COMMON
 #  - Id: 21547
 #    AegisName: M_INCREASE_SOIL
+#  - Id: 21548
+#    AegisName: ECO_CORNUS
+#  - Id: 21549
+#    AegisName: ECO_PINGUICULA
+#  - Id: 21550
+#    AegisName: ECO_HUNTER_FLY
+#  - Id: 21551
+#    AegisName: ECO_ROCKER
+#  - Id: 21552
+#    AegisName: ECO_SAVAGE
+#  - Id: 21553
+#    AegisName: ECO_FLORA
+#  - Id: 21554
+#    AegisName: ECO_HILL_WIND
+#  - Id: 21555
+#    AegisName: ECO_MISTRESS
+#  - Id: 21556
+#    AegisName: ECO_EXPLOSION
+#  - Id: 21557
+#    AegisName: ECO_DELETER
+#  - Id: 21558
+#    AegisName: ECO_JAKK
+#  - Id: 21559
+#    AegisName: ECO_LAVA_GOLEM
+#  - Id: 21560
+#    AegisName: ECO_MAJORUROS
+#  - Id: 21561
+#    AegisName: ECO_HYDRO
+#  - Id: 21562
+#    AegisName: ECO_ACIDUS
+#  - Id: 21563
+#    AegisName: ECO_DETALE
+#  - Id: 21564
+#    AegisName: ECO_ICE_TITAN
+#  - Id: 21565
+#    AegisName: ECO_SIROMA
+#  - Id: 21566
+#    AegisName: ECO_SNOWIER
+#  - Id: 21567
+#    AegisName: ECO_CENTIPEDE
+#  - Id: 21568
+#    AegisName: ECO_AQUA_ELEMENTAL
+#  - Id: 21569
+#    AegisName: ECO_ANGELGOLT
+#  - Id: 21570
+#    AegisName: ECO_RHYNCHO
+#  - Id: 21571
+#    AegisName: ECO_KTULLANUX
+#  - Id: 21572
+#    AegisName: ECO_ANCIENT_MUMMY
+#  - Id: 21573
+#    AegisName: ECO_LUDE
+#  - Id: 21574
+#    AegisName: ECO_RAGGED_ZOMBIE
+#  - Id: 21575
+#    AegisName: ECO_WRAITH
+#  - Id: 21576
+#    AegisName: ECO_FLAME_SKULL
+#  - Id: 21577
+#    AegisName: ECO_BANSHEE
+#  - Id: 21578
+#    AegisName: ECO_KNIGHT_OF_ABYSS
+#  - Id: 21579
+#    AegisName: ECO_LORD_OF_DEATH
 #  - Id: 21580
 #    AegisName: G_BIJOU
+#  - Id: 21587
+#    AegisName: NPC_EDDGA
 #  - Id: 22328
 #    AegisName: DESERT_WOLF_RAC
 #  - Id: 22329
@@ -90245,6 +90333,48 @@ Body:
 #    AegisName: GREMLIN_RAC
 #  - Id: 22331
 #    AegisName: BEHOLDER_RAC
+#  - Id: 22332
+#    AegisName: MQ_KIND_OF_BEETLE
+#  - Id: 22333
+#    AegisName: MQ_FRILLDORA
+#  - Id: 22334
+#    AegisName: MQ_SAND_MAN
+#  - Id: 22335
+#    AegisName: MQ_SAKRAY
+#  - Id: 22336
+#    AegisName: MQ_CRAB
+#  - Id: 22337
+#    AegisName: MQ_SHELLFISH
+#  - Id: 22338
+#    AegisName: MQ_GALAPAGO
+#  - Id: 22339
+#    AegisName: MQ_FUR_SEAL
+#  - Id: 22340
+#    AegisName: MQ_SEE_OTTER
+#  - Id: 22341
+#    AegisName: MQ_PIERE
+#  - Id: 22342
+#    AegisName: MQ_ANDRE
+#  - Id: 22343
+#    AegisName: MQ_DENIRO
+#  - Id: 22344
+#    AegisName: MQ_GOLEM
+#  - Id: 22345
+#    AegisName: MQ_DUSTINESS
+#  - Id: 22346
+#    AegisName: MQ_MANTIS
+#  - Id: 22347
+#    AegisName: MQ_GEOGRAPHER
+#  - Id: 22348
+#    AegisName: MQ_SCORPION_KING
+#  - Id: 22349
+#    AegisName: MQ_KIND_OF_BEETLE1
+#  - Id: 22350
+#    AegisName: MQ_KIND_OF_BEETLE2
+#  - Id: 22351
+#    AegisName: MQ_KIND_OF_BEETLE3
+#  - Id: 22352
+#    AegisName: MQ_KIND_OF_BEETLE4
 #  - Id: 31999
 #    AegisName: HUNTING_GID_DEFAULT
 #  - Id: 32000
