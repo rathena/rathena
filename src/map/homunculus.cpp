@@ -331,7 +331,7 @@ int hom_delete(struct homun_data *hd, int emote)
 	if (!sd)
 		return unit_free(&hd->bl,CLR_DEAD);
 
-	if (emote >= 0)
+	if (emote > ET_NONE && emote < ET_MAX)
 		clif_emotion(&sd->bl, emote);
 
 	//This makes it be deleted right away.
@@ -865,7 +865,7 @@ void hom_menu(struct map_session_data *sd, int type)
 			hom_food(sd, sd->hd);
 			break;
 		case 2:
-			hom_delete(sd->hd, -1);
+			hom_delete(sd->hd, ET_NONE);
 			break;
 		default:
 			ShowError("hom_menu : unknown menu choice : %d\n", type);

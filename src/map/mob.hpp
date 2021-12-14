@@ -49,6 +49,9 @@ const t_tick MIN_RANDOMWALKTIME = 4000;
  * Added definitions for WoE:SE objects and other [L0ne_W0lf], [aleos]
  */
 enum MOBID {
+	MOBID_ALL				= -3,
+	MOBID_NORMAL			= -2,
+	MOBID_BOSS				= -1,
 	MOBID_PORING			= 1002,
 	MOBID_RED_PLANT			= 1078,
 	MOBID_BLUE_PLANT,
@@ -87,7 +90,7 @@ enum MOBID {
 };
 
 ///Mob skill states.
-enum MobSkillState {
+enum e_MobSkillState {
 	MSS_ANY = -1,
 	MSS_IDLE,
 	MSS_WALK,
@@ -187,17 +190,81 @@ enum e_aegis_monsterclass : int8 {
 	CLASS_MAX,
 };
 
+enum e_mob_skill_target {
+	MST_TARGET = 0,
+	MST_RANDOM,	//Random Target!
+	MST_SELF,
+	MST_FRIEND,
+	MST_MASTER,
+	MST_AROUND5,
+	MST_AROUND6,
+	MST_AROUND7,
+	MST_AROUND8,
+	MST_AROUND1,
+	MST_AROUND2,
+	MST_AROUND3,
+	MST_AROUND4,
+	MST_AROUND	=	MST_AROUND4,
+};
+
+enum e_mob_skill_condition {
+	MSC_ALWAYS = 0,
+	MSC_MYHPLTMAXRATE,
+	MSC_MYHPINRATE,
+	MSC_FRIENDHPLTMAXRATE,
+	MSC_FRIENDHPINRATE,
+	MSC_MYSTATUSON,
+	MSC_MYSTATUSOFF,
+	MSC_FRIENDSTATUSON,
+	MSC_FRIENDSTATUSOFF,
+	MSC_ATTACKPCGT,
+	MSC_ATTACKPCGE,
+	MSC_SLAVELT,
+	MSC_SLAVELE,
+	MSC_CLOSEDATTACKED,
+	MSC_LONGRANGEATTACKED,
+	MSC_AFTERSKILL,
+	MSC_SKILLUSED,
+	MSC_CASTTARGETED,
+	MSC_RUDEATTACKED,
+	MSC_MASTERHPLTMAXRATE,
+	MSC_MASTERATTACKED,
+	MSC_ALCHEMIST,
+	MSC_SPAWN,
+	MSC_MOBNEARBYGT,
+	MSC_MAX,
+};
+
 struct s_mob_skill {
-	enum MobSkillState state;
+	e_MobSkillState state;
 	uint16 skill_id,skill_lv;
 	short permillage;
 	int casttime,delay;
-	short cancel;
-	short cond1,cond2;
-	short target;
-	int val[5];
+	bool cancel;
+	e_mob_skill_target target;
+	short cond1, cond2, cond3;
+	int mob_mode;
+	std::unordered_map<uint16, int> summons;	// index, mob ID
 	short emotion;
 	unsigned short msg_id;
+};
+
+/// Mob skill struct for temporary storage
+struct s_mob_skill_db {
+	int32 mob_id; ///< Monster ID. MOBID_BOSS boss types, MOBID_NORMAL normal types, MOBID_ALL all monsters
+	uint16 index_num;	/// index for unordered_map
+	std::unordered_map<uint16, std::shared_ptr<s_mob_skill>> skills; ///< index, Skills
+};
+
+class MobSkillDatabase : public TypesafeYamlDatabase<int32, s_mob_skill_db> {
+public:
+	MobSkillDatabase() : TypesafeYamlDatabase("MOB_SKILL_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	void loadingFinished() override;
 };
 
 struct s_mob_chat {
@@ -309,7 +376,7 @@ struct mob_data {
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
 		unsigned int copy_master_mode : 1; ///< Whether the spawned monster should copy the master's mode.
-		enum MobSkillState skillstate;
+		e_MobSkillState skillstate;
 		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
 		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest
@@ -389,50 +456,6 @@ public:
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 };
 
-enum e_mob_skill_target {
-	MST_TARGET	=	0,
-	MST_RANDOM,	//Random Target!
-	MST_SELF,
-	MST_FRIEND,
-	MST_MASTER,
-	MST_AROUND5,
-	MST_AROUND6,
-	MST_AROUND7,
-	MST_AROUND8,
-	MST_AROUND1,
-	MST_AROUND2,
-	MST_AROUND3,
-	MST_AROUND4,
-	MST_AROUND	=	MST_AROUND4,
-};
-
-enum e_mob_skill_condition {
-	MSC_ALWAYS	=	0x0000,
-	MSC_MYHPLTMAXRATE,
-	MSC_MYHPINRATE,
-	MSC_FRIENDHPLTMAXRATE,
-	MSC_FRIENDHPINRATE,
-	MSC_MYSTATUSON,
-	MSC_MYSTATUSOFF,
-	MSC_FRIENDSTATUSON,
-	MSC_FRIENDSTATUSOFF,
-	MSC_ATTACKPCGT,
-	MSC_ATTACKPCGE,
-	MSC_SLAVELT,
-	MSC_SLAVELE,
-	MSC_CLOSEDATTACKED,
-	MSC_LONGRANGEATTACKED,
-	MSC_AFTERSKILL,
-	MSC_SKILLUSED,
-	MSC_CASTTARGETED,
-	MSC_RUDEATTACKED,
-	MSC_MASTERHPLTMAXRATE,
-	MSC_MASTERATTACKED,
-	MSC_ALCHEMIST,
-	MSC_SPAWN,
-	MSC_MOBNEARBYGT,
-};
-
 // The data structures for storing delayed item drops
 struct item_drop {
 	struct item item_data;
@@ -493,7 +516,7 @@ void do_final_mob(bool is_reload);
 TIMER_FUNC(mob_timer_delete);
 int mob_deleteslave(struct mob_data *md);
 
-int mob_random_class (int *value, size_t count);
+int mob_random_class (std::unordered_map<uint16, int> summons);
 int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv);
 int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
@@ -502,7 +525,7 @@ int mob_linksearch(struct block_list *bl,va_list ap);
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
 int mobskill_use(struct mob_data *md,t_tick tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
-int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
+int mob_summonslave(mob_data *md2, std::unordered_map<uint16, int> summons, int amount, uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
 
