@@ -32,7 +32,6 @@ enum e_log_pick_type : uint32;
 enum sc_type : int16;
 
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
-#define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
@@ -59,9 +58,6 @@ enum sc_type : int16;
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 #define ACHIEVEMENTLEVEL "AchievementLevel"
 
-//Update this max as necessary. 55 is the value needed for Super Baby currently
-//Raised to 105 since Expanded Super Baby needs it.
-#define MAX_SKILL_TREE 105
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
@@ -1432,14 +1428,33 @@ int pc_mapid2jobid(uint64 class_, int sex);	// Skotlex
 
 const char * job_name(int class_);
 
-struct skill_tree_entry {
-	uint16 skill_id, skill_lv;
+struct s_skill_tree_entry {
+	uint16 skill_id, max_lv;
 	uint32 baselv, joblv;
-	struct {
-		uint16 skill_id, skill_lv;
-	} need[MAX_PC_SKILL_REQUIRE];
-}; // Celest
-extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
+	std::unordered_map<uint16, uint16> need;	/// skill_id, skill_lv
+	bool exclude_inherit;	// exclude the skill from inherit when loading the table
+};
+
+struct s_skill_tree {
+	std::vector<uint16> inherit_job;
+	std::unordered_map<uint16, std::shared_ptr<s_skill_tree_entry>> skills;	/// skill_id, entry
+};
+
+class SkillTreeDatabase : public TypesafeYamlDatabase<uint16, s_skill_tree> {
+public:
+	SkillTreeDatabase() : TypesafeYamlDatabase("SKILL_TREE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	void loadingFinished();
+
+	// Additional
+	std::shared_ptr<s_skill_tree_entry> get_skill_data(int class_, uint16 skill_id);
+};
+
+extern SkillTreeDatabase skill_tree_db;
 
 struct sg_data {
 	short anger_id;
