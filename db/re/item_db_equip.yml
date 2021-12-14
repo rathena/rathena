@@ -22881,10 +22881,10 @@ Body:
     Script: |
       bonus bMdef,5;
       .@r = getrefine();
-      if (.@r>=7)
-         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",2,20;
-      else if (.@r>=9)
+      if (.@r>=9)
          bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",3,30;
+      else if (.@r>=7)
+         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",2,20;
       else
          bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",1,10;
   - Id: 2177
@@ -23283,9 +23283,9 @@ Body:
     Script: |
       .@r = getrefine();
       if (.@r >=7)
-         autobonus "{ bonus bDelayrate,-10-(5*(.@r-6)); }",50,5000,BF_MAGIC;
+         autobonus2 "{ .@r = getrefine(); bonus bDelayrate,-10-(5*(.@r-6)); }",50,5000,BF_MAGIC;
       else
-         autobonus "{ bonus bDelayrate,-10; }",50,5000,BF_MAGIC;
+         autobonus2 "{ bonus bDelayrate,-10; }",50,5000,BF_MAGIC;
   - Id: 2194
     AegisName: Rouban_Shield
     Name: Levain Shield
@@ -23350,9 +23350,10 @@ Body:
     Refineable: true
     Script: |
       bonus bUnbreakableShield;
-      bonus bAspdRate,-3;
-      if (getrefine()>=8)
+      if (getrefine()>=8) {
+         bonus bAspdRate,-3;
          bonus bNoKnockback;
+      }
   - Id: 2198
     AegisName: Lapine_Shield
     Name: Lapine Shield
@@ -138313,8 +138314,8 @@ Body:
          bonus bMaxHP,150*BaseLevel;
       }
       if (.@r>=5) {
-         bonus bMaxHPrate,3;
-         bonus bMaxSPrate,3;
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
          bonus bBaseAtk,50;
       }
       if (.@r>=7) {
@@ -138349,8 +138350,8 @@ Body:
          bonus bMaxHP,150*BaseLevel;
       }
       if (.@r>=5) {
-         bonus bMaxHPrate,3;
-         bonus bMaxSPrate,3;
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
          bonus bBaseAtk,50;
       }
       if (.@r>=7) {

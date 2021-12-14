@@ -2743,7 +2743,7 @@
 24744:24584:24585:24586:24587:24588,{ bonus2 bMagicAtkEle,Ele_All,15; bonus2 bIgnoreDefRaceRate,RC_All,70; bonus2 bIgnoreMdefRaceRate,RC_All,70; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-70; bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-70; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-70; bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-70; bonus bShortAtkRate,15; bonus bDelayrate,-15; bonus bVariableCastrate,-10; bonus2 bSkillAtk,"RK_IGNITIONBREAK",15; bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15; }
 2114:15001:5122,{ bonus bStr,2; bonus bDef,5; bonus bMdef,5; if(BaseClass==Job_Swordman) bonus bDef,6; }
 2114:15001:5124,{ bonus bDef,2-getequiprefinerycnt(EQI_HAND_L)-getequiprefinerycnt(EQI_HEAD_TOP); bonus bMdef,5+getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_HEAD_TOP); }
-2455:2559:5544:15007,{ bonus bBaseAtk,20; bonus bMatk,20; bonus bAspdRate,10; }
+// Confirm: Hidden bonus 2455:2559:5544:15007,{ bonus bBaseAtk,20; bonus bMatk,20; bonus bAspdRate,10; }
 2166:1631,{ bonus2 bSkillAtk,"PR_MAGNUS",20; bonus3 bAutoSpellWhenHit,"PR_TURNUNDEAD",1,20; }
 2193:2374,{ bonus bDelayrate,-10; }
 470036:1326,{ bonus2 bAddClass,Class_Boss,70; bonus2 bSubClass,Class_Boss,15; }
