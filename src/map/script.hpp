@@ -480,6 +480,7 @@ enum unitdata_mobtypes {
 	UMOB_ROBE,
 	UMOB_BODY2,
 	UMOB_GROUP_ID,
+	UMOB_IGNORE_CELL_STACK_LIMIT,
 };
 
 enum unitdata_homuntypes {
@@ -2056,7 +2057,9 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_EQUIPLEVELMAX,
 	ITEMINFO_MAGICATTACK,
 	ITEMINFO_ID,
-	ITEMINFO_AEGISNAME	// 18
+	ITEMINFO_AEGISNAME,	// 18
+	ITEMINFO_ARMORLEVEL,
+	ITEMINFO_SUBTYPE,
 };
 
 class ConstantDatabase : public YamlDatabase {

@@ -524,6 +524,8 @@ struct Battle_Config
 	int max_third_trans_parameter;
 	int max_extended_parameter;
 	int max_summoner_parameter;
+	int max_fourth_parameter;
+	int max_fourth_trait;
 	int max_third_aspd;
 	int max_summoner_aspd;
 	int vcast_stat_scale;
@@ -689,6 +691,7 @@ struct Battle_Config
 	int mer_idle_no_share;
 	int idletime_mer_option;
 	int feature_refineui;
+	int rndopt_drop_pillar;
 
 #include "../custom/battle_config_struct.inc"
 };

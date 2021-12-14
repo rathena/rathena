@@ -107,11 +107,13 @@ Body:
   - Id: 37
     Dialog: Is there anyone waiting for you outside of here?  Throw them all away, you are mine now...
   - Id: 38
-    Dialog: Discard your life and stay confined here.  You will yearn for freedom in captivity !!
+    Dialog: Discard your life and stay confined here. You will yearn for freedom in captivity !!
   - Id: 39
     Dialog: How much will the outside world change if you stay here in solitude for one thousand years?
   - Id: 40
     Dialog: Yes! Yearn for your freedom from this confined place, your captivity here will be permanent !!
+  - Id: 41
+    Dialog: Arrival!
 
 Footer:
   Imports:

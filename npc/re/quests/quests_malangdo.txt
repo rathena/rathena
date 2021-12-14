@@ -10678,7 +10678,7 @@ mal_in01,15,16,3	script	Fallen Angel#mal	403,{
 			mes "I can't do it if you can't pay!";
 			close;
 		}
-		if (callfunc("F_IsCharm",.@equip_card[3]) == false) {
+		if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) != CARD_ENCHANT) {
 			mes "[Fallen Angel]";
 			mes "This equipment has not been enchanted, please check it again!";
 			close;

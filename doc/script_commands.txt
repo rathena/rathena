@@ -143,7 +143,7 @@ to move away from their specified spawn region.
 
 Monster name is the name the monsters will have on screen, and has no relation
 whatsoever to their names anywhere else. It's the mob id that counts, which
-identifies monster record in 'mob_db.txt' database of monsters. If the mob name
+identifies monster record in 'mob_db.yml' database of monsters. If the mob name
 is given as "--ja--", the 'japanese name' field from the monster database is
 used, (which, in rAthena, actually contains an English name) if it's "--en--",
 it's the 'english name' from the monster database (which contains an uppercase
@@ -168,6 +168,7 @@ player who triggers the script must be within 'trigger' range for the event to
 work.
 
 There are two optional fields for monster size and AI.
+Natural enemies for AI monsters are normal monsters.
 
 <mob size> can be:
 	Size_Small	(0)
@@ -182,6 +183,7 @@ There are two optional fields for monster size and AI.
 	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
 	AI_LEGION	(5)		(Sera skill)
 	AI_FAW		(6)		(Mechanic skill)
+	AI_WAVEMODE	(7)		Normal monsters will ignore attack from AI_WAVEMODE monsters
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
@@ -246,7 +248,7 @@ it's facing 5.)
 Sprite ID is the sprite number or constant used to display this particular NPC.
 You may also use a monster's ID instead to display a monster sprite for this NPC.
 It is possible to use a job sprite as well, but you must first define it as a
-monster sprite in 'mob_avail.txt', a full description on how to do this is not
+monster sprite in 'mob_avail.yml', a full description on how to do this is not
 in the scope of this manual.
 A '-1' Sprite ID will make the NPC invisible (and unclickable).
 A '111' Sprite ID will make an NPC which does not have a sprite, but is still
@@ -480,7 +482,7 @@ nothing  - A permanent variable attached to the character, the default variable
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
            instance type. Can be accessed from inside the instance or by calling
-           'getvariableofinstance'.
+           'getinstancevar'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -2782,43 +2784,63 @@ this is +10:
 
 ---------------------------------------
 
-*getequipweaponlv(<equipment slot>{,<char_id>})
+*getequipweaponlv({<equipment slot>{,<char_id>}})
 
 This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see
 'getequipid'.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
-a weapon level. You can, however, probably, use this field for other equippable
-custom items as a flag or something.
+a weapon level.
 
 If no item is equipped in this slot, or if it doesn't have a weapon level
 according to the database, 0 will be returned.
 
 Examples:
 
-// Right hand can only contain a weapon.
     switch (getequipweaponlv(EQI_HAND_R)) {
       case 1: mes "You are holding a lvl 1 weapon."; break;
       case 2: mes "You are holding a lvl 2 weapon."; break;
       case 3: mes "You are holding a lvl 3 weapon."; break;
       case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+      case 5: mes "You are holding a lvl 5 weapon."; break;
+      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
       default: mes "Seems you don't have a weapon on."; break;
     }
 
-// Left hand can hold either a weapon or shield.
-    if (getequipid(EQI_HAND_R) == 0) {
+    if (getequipid(EQI_HAND_L) == 0) {
         mes "Seems you have nothing equipped here.";
         close;
     }
     switch (getequipweaponlv(EQI_HAND_L)) {
-      case 0: mes "You are holding a shield, so it doesn't have a level."; break;
+      case 0: mes "You are not holding a weapon, so it doesn't have a level."; break;
       case 1: mes "You are holding a lvl 1 weapon."; break;
       case 2: mes "You are holding a lvl 2 weapon."; break;
       case 3: mes "You are holding a lvl 3 weapon."; break;
       case 4: mes "You are holding a lvl 4 weapon."; break;
-      case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design..."; break;
+      case 5: mes "You are holding a lvl 5 weapon."; break;
+      case 6: mes "You are holding a lvl 6 weapon, hm, must be a custom design..."; break;
+    }
+
+---------------------------------------
+
+*getequiparmorlv({<equipment slot>{,<char_id>}})
+
+This function returns the armor level for the item equipped in the specified
+equipment slot on the invoking character. For a list of equipment slots see
+'getequipid'.
+
+If no item is equipped in this slot, or if it doesn't have an armor level
+according to the database, 0 will be returned.
+
+    if (getequipid(EQI_ARMOR) == 0) {
+        mes "Seems you have nothing equipped here.";
+        close;
+    }
+    switch (getequiparmorlv(EQI_ARMOR)) {
+      case 1: mes "You are wearing a lvl 1 armor."; break;
+      case 2: mes "You are wearing a lvl 2 armor."; break;
+      case 3: mes "You are wearing a lvl 3 armor, hm, must be a custom design..."; break;
     }
 
 ---------------------------------------
@@ -2934,7 +2956,8 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_id5[]        - fifth array of random option IDs
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
-@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
+@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_db.yml, bound, and rental restrictions).
+@inventorylist_favorite            - Returns if an item is favorite or not
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -3031,7 +3054,9 @@ Valid types are:
 	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
 	ITEMINFO_ID             (17)   -  item ID
 	ITEMINFO_AEGISNAME      (18)   -  aegis item name
-	
+	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
+	ITEMINFO_SUBTYPE        (20)   -  Subtype
+
 See the sample in 'doc/sample/getiteminfo.txt'.
 
 ---------------------------------------
@@ -3063,7 +3088,7 @@ Examples
 *mergeitem2({"<item name>"{,<char_id>}});
 
 Merge all stackable items that separated by GUID flags
-(either by flag 4 item_flag.txt or GUID  in item_group).
+(UniqueId in item_db or in item_group).
 If no item ID/name given, all possible items in player's inventory will be merged.
 
 ---------------------------------------
@@ -3413,7 +3438,7 @@ of his/her guild, or, if a guild ID is specified, of that guild.
 *getcastlename("<map name>")
 
 This function returns the name of the castle when given the map name for that
-castle. The data is read from 'db/castle_db.txt'.
+castle. The data is read from 'db/castle_db.yml'.
 
 ---------------------------------------
 
@@ -3588,6 +3613,12 @@ $@MobDrop_item[] is a global temporary number array which contains the
 
 $@MobDrop_rate[] is a global temporary number array which contains the
                  drop percentages of each item. (1 = .01%)
+
+$@MobDrop_nosteal[] is a global temporary number array which contains the
+                 StealProtected flag of each item. (default false)
+
+$@MobDrop_randomopt[] is a global temporary number array which contains the
+                 random option group ID of each item. (default 0)
 
 $@MobDrop_count is the number of item drops found.
 
@@ -4759,7 +4790,7 @@ eggs, and may hatch from either, although, I'm not sure what kind of a mess will
 this really cause.
 
 'getitem3' is advance version of 'getitem2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4801,7 +4832,7 @@ some cases cannot be traded or stored.
 For a list of bound types see 'getitembound'.
 
 'getitembound3' is advance version of 'getitembound2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4867,7 +4898,7 @@ in <time> seconds and be automatically deleted. See 'rentitem' for further detai
 See 'getitem2' for an explanation of the expanded parameters.
 
 'rentitem3' is advance version of 'rentitem2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4880,8 +4911,8 @@ Example to get Crimson Weapon with Ghost property:
 
 ---------------------------------------
 
-*makeitem <item id>,<amount>,"<map name>",<X>,<Y>;
-*makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
+*makeitem <item id>,<amount>,"<map name>",<X>,<Y>{,<canShowEffect>};
+*makeitem "<item name>",<amount>,"<map name>",<X>,<Y>{,<canShowEffect>};
 
 This command will create an item on the specified cell of a map.
 
@@ -4892,13 +4923,14 @@ given amount, not multiple stacks of 1.
 Like 'getitem', it also accepts an 'english name' field from the database and creates
 Apples if the name isn't found.
 If the map name is given as "this", the map the invoking character is on will be used.
+If <canShowEffect> flag is set to true, it will show a pillar effect on the ground when dropped, depending on the item database's DropEffect flag.
 
 ---------------------------------------
 
-*makeitem2 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
-*makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
-*makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
-*makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
+*makeitem2 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<canShowEffect>};
+*makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<canShowEffect>};
+*makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
+*makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<canShowEffect>};
 
 This command will create an item on the specified cell of a map. See 'makeitem' for
 further details.
@@ -4906,7 +4938,7 @@ further details.
 See 'getitem2' for an explanation of the expanded parameters.
 
 'makeitem3' is advance version of 'makeitem2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4992,7 +5024,7 @@ This command will remove a specified amount of items from the invoking/target ch
 See 'getitem2' for an explanation of the expanded parameters.
 
 'delitem3' is advance version of 'delitem2' that also use Item Random Option as criteria.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -5086,7 +5118,7 @@ other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
 
 'countitem3' is advance version of 'countitem2' that also use Item Random Option as criteria.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -5127,7 +5159,7 @@ other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
 
 'rentalcountitem3' is advance version of 'rentalcountitem2' that also use Item Random Option as criteria.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -5155,7 +5187,7 @@ Example:
 *groupranditem <group id>{,<sub_group>};
 
 Returns the item_id of a random item picked from the group specified. The
-different groups and their group number are specified in 'db/(pre-)re/item_group_db.txt'.
+different groups and their group number are specified in 'db/(pre-)re/item_group_db.yml'.
 
 When used in conjunction with other functions, you can get a random item. For
 example, for a random pet lure:
@@ -5173,7 +5205,7 @@ More info, see doc/item_group.txt.
 
 Similar to the above example, this command allows players to obtain the specified
 quantity of a random item from the group "<group id>". The different groups and
-their group number are specified in db/(pre-)re/item_group_db.txt
+their group number are specified in db/(pre-)re/item_group_db.yml
 
 If 'quantity' is not defined or 0, it will uses defined amount from Item Group list.
 
@@ -5956,6 +5988,22 @@ behavior of the command.
 
 ---------------------------------------
 
+*removespecialeffect <effect number>{,<send_target>{,"<NPC Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect', but use for remove effect with <effect number>
+from invoking NPC.
+
+---------------------------------------
+
+*removespecialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect2', but use for remove effect with <effect number>
+from invoking character.
+
+---------------------------------------
+
 *statusup <stat>{,<char_id>};
 
 This command will change a specified stat of the invoking character up by one
@@ -6394,6 +6442,7 @@ The variable 'killedgid' is set to the ID (unique mob game ID) of the monster ki
 	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
 	AI_LEGION	(5)		(Sera skill)
 	AI_FAW		(6)		(Mechanic skill)
+	AI_WAVEMODE	(7)		Normal monsters will ignore attack from AI_WAVEMODE monsters
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
@@ -6497,7 +6546,7 @@ command, simply use 1 for type. Any other number won't be recognized.
 *strmobinfo(<type>,<monster id>);
 
 This function will return information about a monster record in the database, as
-per 'db/(pre-)re/mob_db.txt'. Type is the kind of information returned. Valid types are:
+per 'db/(pre-)re/mob_db.yml'. Type is the kind of information returned. Valid types are:
 It will return 0 if there is no such monster (or the type value is invalid),
 or an empty string if you requested the monster's name.
 
@@ -6580,23 +6629,46 @@ summon "--ja--",-1;
 
 ---------------------------------------
 
-*addmonsterdrop <monster id>,<item id>,<rate>;
-*addmonsterdrop "<monster name>",<item id>,<rate>;
+*addmonsterdrop <monster id>,<item id>,<rate>,{<steal protected>,{<random option group id>}};
+*addmonsterdrop "<monster name>",<item id>,<rate>,{<steal protected>,{<random option group id>}};
 *delmonsterdrop <monster id>,<item id>;
 *delmonsterdrop "<monster name>",<item id>;
 
 These commands will temporarily add or delete a monster drop, which will be reset
-when the mob database reloads or the server shuts down. They return 1 upon success.
+when the mob database reloads or the server shuts down. They return true upon success, false otherwise.
 
 If the monster already drops the specified item, its drop rate will be updated with
 the given rate (100 = 1%).
+
+If <steal protected> is true the item will be protected from TF_STEAL (default false).
+<random option group id> binds the item with the given random option group Id (default 0).
+The Id must be valid, like defined in db/[pre-]re/item_randomopt_group.yml
 
 Examples:
 	// Makes Owl Baron drop Honey at an 80% rate.
 	addmonsterdrop 1295,518,8000;
 
+	// Makes Owl Baron drop Knife_ at an 80% rate, protected from TF_STEAL and with random option group Id 5.
+	addmonsterdrop 1295,1202,8000,true,5;
+
 	// Deletes Executioner's Mitten from Rybio.
 	delmonsterdrop 1201,7017;
+
+---------------------------------------
+
+*mob_setidleevent <GID>,<event>;
+
+This command will attach an event label to the monster with the given <GID> which will execute
+when the <GID> is idle.
+
+Example:
+	monster "prontera",0,0,"Quest Poring",1002,1;
+	mob_setidleevent $@mobid[0], "NPC NAME::OnIdle";
+	end;
+
+OnIdle:
+	mobchat getattachedrid(),0,0x00FF00,"I'm IDLE!";
+	end;
 
 ---------------------------------------
 
@@ -7613,7 +7685,7 @@ unnerving.
 Only a few NPC sprites have walking animations, and those that do, do not get
 the animation invoked when moving the NPC, due to the problem in the NPC walking
 code, which looks a bit silly. You might have better success by defining a job-
-sprite based sprite id in 'db/mob_avail.txt' with this.
+sprite based sprite id in 'db/mob_avail.yml' with this.
 
 ---------------------------------------
 
@@ -8045,10 +8117,10 @@ flag: Specify target
 
 ---------------------------------------
 
-*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>};
-*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>};
-*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>};
-*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>};
+*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>};
+*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>,<cancel>,<Line_ID>};
+*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>};
+*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>,<cancel>,<Line_ID>};
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
@@ -8057,6 +8129,12 @@ Skill ID is the ID of the skill, skill level is the level of the skill.
 Cast time is the amount of seconds to add or remove from the skill. Use a positive value to
 add and negative value to subtract. Using 0 or no value will use the default skill cast time.
 For the position, the x and y are given in the UnitSkillUsePos.
+
+<cancel> defines if the cast can be interrupted when hit (true/false).
+CastCancel from skill_db.yml is the default value of <cancel>.
+
+If <Line_ID> is defined (positive number, default 0) the monster will say the message from 'Line_ID'
+in mob_chat_db.yml when casting the skill.
 
 ---------------------------------------
 
@@ -8185,6 +8263,7 @@ Parameters (indexes) for monsters are:
 	UMOB_ROBE
 	UMOB_BODY2
 	UMOB_GROUP_ID
+	UMOB_IGNORE_CELL_STACK_LIMIT
 
 -----
 
@@ -8677,8 +8756,8 @@ Valid types are:
 	ITEMINFO_SELL            (1)   -  Sell Price
 	ITEMINFO_TYPE            (2)   -  Type
 	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		                        if = 0, then monsters don't drop it at all (rare or a quest item)
-		                        if = 10000, then this item is sold in NPC shops only
+	                                  if = 0, then monsters don't drop it at all (rare or a quest item)
+	                                  if = 10000, then this item is sold in NPC shops only
 	ITEMINFO_GENDER          (4)   -  Gender
 	ITEMINFO_LOCATIONS       (5)   -  Location(s)
 	ITEMINFO_WEIGHT          (6)   -  Weight
@@ -8692,6 +8771,7 @@ Valid types are:
 	ITEMINFO_ALIASNAME      (14)   -  AliasName
 	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
 	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
+	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
 
 Example:
 	setiteminfo 7049,ITEMINFO_WEIGHT,9990; // Stone now weighs 999.0
@@ -9339,17 +9419,30 @@ Examples:
 
 ---------------------------------------
 
-*getvariableofinstance(<variable>,<instance id>);
+*getinstancevar(<variable>,<instance id>);
 
 Returns a reference to an instance variable (' prefix) of the specific instance ID.
 This can only be used to get ' variables.
 
 Examples:
 	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
-	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+	set .@s, getinstancevar('var, instance_id(IM_PARTY));
 
 	// This will set the 'var variable of the specific instance ID to 1.
-	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
+	set getinstancevar('var, instance_id(IM_GUILD)), 1;
+
+---------------------------------------
+
+*setinstancevar(<variable>,<value>,<instance id>);
+
+This command will set an instance variable to the value that the expression results in.
+See 'set' command for more information.
+
+Returns the variable reference.
+
+Examples:
+	// This will set the 'var variable of the specific instance ID to 9.
+	setinstancevar('var, 9, instance_id(IM_GUILD));
 
 ---------------------------------------
 
@@ -10016,6 +10109,18 @@ This command summons a mercenary for a given time (in milliseconds). For a
 list of all available classes, see 'db/mercenary_db.txt'.
 
 This command is typically used in item scripts of mercenary scrolls.
+
+---------------------------------------
+
+*mercenary_delete {<char id>{,<reply>}};
+
+This command removes the mercenary from a player.
+The parameter 'reply' can be one of the following values:
+
+	0 - Mercenary soldier's duty hour is over, faith increased by 1. (default)
+	1 - Your mercenary soldier has been killed, faith decreased by 1.
+	2 - Your mercenary soldier has been fired.
+	3 - Your mercenary soldier has ran away.
 
 ---------------------------------------
 

@@ -478,6 +478,8 @@
 	export_constant(MF_PRIVATEAIRSHIP_SOURCE);
 	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
 	export_constant(MF_SKILL_DURATION);
+	export_constant(MF_NOCASHSHOP);
+	export_constant(MF_NORODEX);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -513,6 +515,7 @@
 	export_parameter("StatusPoint",SP_STATUSPOINT);
 	export_parameter("BaseLevel",SP_BASELEVEL);
 	export_parameter("SkillPoint",SP_SKILLPOINT);
+	export_parameter("TraitPoint",SP_TRAITPOINT);
 	export_parameter("Class",SP_CLASS);
 	export_parameter("Upper",SP_UPPER);
 	export_parameter("Zeny",SP_ZENY);
@@ -530,6 +533,8 @@
 	export_parameter("MaxHp",SP_MAXHP);
 	export_parameter("Sp",SP_SP);
 	export_parameter("MaxSp",SP_MAXSP);
+	export_parameter("Ap",SP_AP);
+	export_parameter("MaxAp",SP_MAXAP);
 	export_parameter("BaseJob",SP_BASEJOB);
 	export_parameter("BaseClass",SP_BASECLASS);
 	export_parameter("killerrid",SP_KILLERRID);
@@ -557,6 +562,12 @@
 	export_constant2("bInt",SP_INT);
 	export_constant2("bDex",SP_DEX);
 	export_constant2("bLuk",SP_LUK);
+	export_constant2("bPow",SP_POW);
+	export_constant2("bSta",SP_STA);
+	export_constant2("bWis",SP_WIS);
+	export_constant2("bSpl",SP_SPL);
+	export_constant2("bCon",SP_CON);
+	export_constant2("bCrt",SP_CRT);
 	export_constant2("bAtk",SP_ATK1);
 	export_constant2("bAtk2",SP_ATK2);
 	export_constant2("bDef",SP_DEF1);
@@ -570,6 +581,13 @@
 	export_constant2("bAspd",SP_ASPD);
 	export_constant2("bFame",SP_FAME);
 	export_constant2("bUnbreakable",SP_UNBREAKABLE);
+
+	export_constant2("bPatk",SP_PATK);
+	export_constant2("bSmatk",SP_SMATK);
+	export_constant2("bHplus",SP_HPLUS);
+	export_constant2("bCrate",SP_CRATE);
+	export_constant2("bRes",SP_RES);
+	export_constant2("bMres",SP_MRES);
 
 	export_constant2("bAtkRange",SP_ATTACKRANGE);
 	export_constant2("bAtkEle",SP_ATKELE);
@@ -764,6 +782,8 @@
 	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
 	export_constant2("bReduceDamageReturn",SP_REDUCE_DAMAGE_RETURN);
 	export_constant2("bAbsorbDmgMaxHP2", SP_ABSORB_DMG_MAXHP2);
+	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
+	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
@@ -1629,6 +1649,9 @@
 	export_constant(SC_PACKING_ENVELOPE9);
 	export_constant(SC_PACKING_ENVELOPE10);
 	export_constant(SC_SOULATTACK);
+	export_constant(SC_WIDEWEB);
+	export_constant(SC_BURNT);
+	export_constant(SC_CHILL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3723,6 +3746,58 @@
 	export_constant(EFST_TOXIN_OF_MANDARA);
 	export_constant(EFST_GOLDENE_TONE);
 	export_constant(EFST_TEMPERING);
+	export_constant(EFST_NW_P_F_I);
+	export_constant(EFST_INTENSIVE_AIM);
+	export_constant(EFST_INTENSIVE_AIM_COUNT);
+	export_constant(EFST_GRENADE_FRAGMENT_1);
+	export_constant(EFST_GRENADE_FRAGMENT_2);
+	export_constant(EFST_GRENADE_FRAGMENT_3);
+	export_constant(EFST_GRENADE_FRAGMENT_4);
+	export_constant(EFST_GRENADE_FRAGMENT_5);
+	export_constant(EFST_GRENADE_FRAGMENT_6);
+	export_constant(EFST_AUTO_FIRING_LAUNCHEREFST);
+	export_constant(EFST_HIDDEN_CARD);
+	export_constant(EFST_NW_GRENADE_MASTERY);
+	export_constant(EFST_TALISMAN_OF_PROTECTION);
+	export_constant(EFST_TALISMAN_OF_WARRIOR);
+	export_constant(EFST_TALISMAN_OF_MAGICIAN);
+	export_constant(EFST_TALISMAN_OF_FIVE_ELEMENTS);
+	export_constant(EFST_T_FIRST_GOD);
+	export_constant(EFST_T_SECOND_GOD);
+	export_constant(EFST_T_THIRD_GOD);
+	export_constant(EFST_T_FOURTH_GOD);
+	export_constant(EFST_T_FIVETH_GOD);
+	export_constant(EFST_HEAVEN_AND_EARTH);
+	export_constant(EFST_HOGOGONG);
+	export_constant(EFST_MARINE_FESTIVAL);
+	export_constant(EFST_SANDY_FESTIVAL);
+	export_constant(EFST_KI_SUL_RAMPAGE);
+	export_constant(EFST_COLORS_OF_HYUN_ROK_1);
+	export_constant(EFST_COLORS_OF_HYUN_ROK_2);
+	export_constant(EFST_COLORS_OF_HYUN_ROK_3);
+	export_constant(EFST_COLORS_OF_HYUN_ROK_4);
+	export_constant(EFST_COLORS_OF_HYUN_ROK_5);
+	export_constant(EFST_COLORS_OF_HYUN_ROK_6);
+	export_constant(EFST_COLORS_OF_HYUN_ROK_BUFF);
+	export_constant(EFST_TEMPORARY_COMMUNION);
+	export_constant(EFST_BLESSING_OF_M_CREATURES);
+	export_constant(EFST_BLESSING_OF_M_C_DEBUFF);
+	export_constant(EFST_SHIELDCHAINRUSH);
+	export_constant(EFST_MISTYFROST);
+	export_constant(EFST_GROUNDGRAVITY);
+	export_constant(EFST_BREAKINGLIMIT);
+	export_constant(EFST_RULEBREAK);
+	export_constant(EFST_RISING_SUN);
+	export_constant(EFST_NOON_SUN);
+	export_constant(EFST_SUNSET_SUN);
+	export_constant(EFST_RISING_MOON);
+	export_constant(EFST_MIDNIGHT_MOON);
+	export_constant(EFST_DAWN_MOON);
+	export_constant(EFST_STAR_BURST);
+	export_constant(EFST_SKY_ENCHANT);
+	export_constant(EFST_SHADOW_CLOCK);
+	export_constant(EFST_SHINKIROU_CALL);
+	export_constant(EFST_NIGHTMARE);
 	export_constant(EFST_NOODLE_FES_1);
 	export_constant(EFST_NOODLE_FES_2);
 	export_constant(EFST_NOODLE_FES_3);
@@ -3730,6 +3805,7 @@
 	export_constant(EFST_NOODLE_FES_5);
 	export_constant(EFST_RUSH_QUAKE1);
 	export_constant(EFST_RUSH_QUAKE2);
+	export_constant(EFST_SBUNSHIN);
 /// @APIHOOK_END
 /// Do not modify code above this, since it will be automatically generated by the API again
 	export_constant(EFST_MAX);
@@ -3844,6 +3920,7 @@
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
 	export_constant(AI_GUILD);
+	export_constant(AI_WAVEMODE);
 
 	/* battle flags */
 	export_constant(BF_NONE);
@@ -4132,6 +4209,7 @@
 	export_constant(W_DOUBLE_DA);
 	export_constant(W_DOUBLE_SA);
 	export_constant(MAX_WEAPON_TYPE_ALL);
+	export_constant(W_SHIELD);
 
 	/* ammunition types */
 	/* Send deprecation notice and temporarily replace with new constant value. */
@@ -4155,6 +4233,10 @@
 	export_constant(AMMO_CANNONBALL);
 	export_constant(AMMO_THROWWEAPON);
 	export_constant(MAX_AMMO_TYPE);
+
+	/* card subtypes */
+	export_constant(CARD_NORMAL);
+	export_constant(CARD_ENCHANT);
 
 	/* monsterinfo types */
 	export_constant(MOB_NAME);
@@ -4377,6 +4459,7 @@
 	export_constant(UMOB_ROBE);
 	export_constant(UMOB_BODY2);
 	export_constant(UMOB_GROUP_ID);
+	export_constant(UMOB_IGNORE_CELL_STACK_LIMIT);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -5242,6 +5325,8 @@
 	export_constant(IG_XMAS_PACKAGE_14);
 	export_constant(IG_EASTER_EGG);
 	export_constant(IG_PITAPAT_BOX);
+	export_constant(IG_HAPPY_BOX_J);
+	export_constant(IG_CLASS_SHADOW_CUBE);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -6425,6 +6510,15 @@
 	export_constant_npc(JT_4_POINT_YELLOW);
 	export_constant_npc(JT_4_POINT_BLACK);
 	export_constant_npc(JT_4_POINT_WHITE);
+	export_constant_npc(JT_4_EXJOB_GERHOLD);
+	export_constant_npc(JT_4_EXJOB_NINJA);
+	export_constant_npc(JT_4_EXJOB_MASTER_J);
+	export_constant_npc(JT_4_EXJOB_MR_SEO);
+	export_constant_npc(JT_4_EXJOB_HAPPY_CLOUD);
+	export_constant_npc(JT_4_EXJOB_STAR);
+	export_constant_npc(JT_4_EXJOB_CHUL_HO);
+	export_constant_npc(JT_4_EXJOB_KI_SUL);
+	export_constant_npc(JT_4_EXJOB_HYUN_ROK);
 	export_constant_npc(JT_1_JOURNEY_STONE_D);
 	export_constant_npc(JT_1_JOURNEY_STONE_F);
 	export_constant_npc(JT_ROZ_MQ_SIGRUN);
@@ -6434,6 +6528,44 @@
 	export_constant_npc(JT_ROZ_MQ_SAHARIO);
 	export_constant_npc(JT_ROZ_MQ_SUPIGEL);
 	export_constant_npc(JT_ROZ_MQ_DEADSOLDIER);
+	export_constant_npc(JT_1_RAGFES_01);
+	export_constant_npc(JT_1_RAGFES_01_M);
+	export_constant_npc(JT_4_RAGFES_02);
+	export_constant_npc(JT_4_RAGFES_02_M);
+	export_constant_npc(JT_4_RAGFES_03);
+	export_constant_npc(JT_4_RAGFES_03_M);
+	export_constant_npc(JT_4_RAGFES_04);
+	export_constant_npc(JT_4_RAGFES_04_M);
+	export_constant_npc(JT_4_RAGFES_05);
+	export_constant_npc(JT_4_RAGFES_05_M);
+	export_constant_npc(JT_4_RAGFES_06);
+	export_constant_npc(JT_4_RAGFES_06_M);
+	export_constant_npc(JT_4_RAGFES_07);
+	export_constant_npc(JT_4_RAGFES_07_M);
+	export_constant_npc(JT_4_RAGFES_08);
+	export_constant_npc(JT_4_RAGFES_08_M);
+	export_constant_npc(JT_4_RAGFES_09);
+	export_constant_npc(JT_4_RAGFES_09_M);
+	export_constant_npc(JT_4_RAGFES_10);
+	export_constant_npc(JT_4_RAGFES_10_M);
+	export_constant_npc(JT_4_RAGFES_11);
+	export_constant_npc(JT_4_RAGFES_11_M);
+	export_constant_npc(JT_4_RAGFES_12);
+	export_constant_npc(JT_4_RAGFES_12_M);
+	export_constant_npc(JT_4_RAGFES_13);
+	export_constant_npc(JT_4_RAGFES_13_M);
+	export_constant_npc(JT_4_RAGFES_14);
+	export_constant_npc(JT_4_RAGFES_14_M);
+	export_constant_npc(JT_4_RAGFES_15);
+	export_constant_npc(JT_4_RAGFES_15_M);
+	export_constant_npc(JT_4_RAGFES_16);
+	export_constant_npc(JT_4_RAGFES_16_M);
+	export_constant_npc(JT_4_EXJOB_NINJA2);
+	export_constant_npc(JT_ROZ_MQ_LUCIAN);
+	export_constant_npc(JT_ROZ_MQ_BRITIA);
+	export_constant_npc(JT_ROZ_MQ_ASSASIN01);
+	export_constant_npc(JT_STRANGE_B_SMITH1);
+	export_constant_npc(JT_STRONGER_B_SMTIH);
 	export_constant_npc(JT_NEW_NPC_3RD_END);
 	#undef export_constant_npc
 
@@ -8147,6 +8279,7 @@
 	export_constant(ITEMJ_ALL_UPPER);
 	export_constant(ITEMJ_ALL_BABY);
 	export_constant(ITEMJ_ALL_THIRD);
+	export_constant(ITEMJ_FOURTH);
 
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
@@ -8190,12 +8323,38 @@
 	export_constant(ITEMINFO_MAGICATTACK);
 	export_constant(ITEMINFO_ID);
 	export_constant(ITEMINFO_AEGISNAME);
+	export_constant(ITEMINFO_SUBTYPE);
 
 	/* refine types */
 	export_constant(REFINE_TYPE_ARMOR);
 	export_constant(REFINE_TYPE_WEAPON);
 	export_constant(REFINE_TYPE_SHADOW_ARMOR);
 	export_constant(REFINE_TYPE_SHADOW_WEAPON);
+
+	/* autospell flags */
+	export_constant(AUTOSPELL_FORCE_SELF);
+	export_constant(AUTOSPELL_FORCE_TARGET);
+	export_constant(AUTOSPELL_FORCE_RANDOM_LEVEL);
+	export_constant(AUTOSPELL_FORCE_ALL);
+
+	/* stats */
+	export_constant(PARAM_STR);
+	export_constant(PARAM_AGI);
+	export_constant(PARAM_VIT);
+	export_constant(PARAM_INT);
+	export_constant(PARAM_DEX);
+	export_constant(PARAM_LUK);
+	export_constant(PARAM_POW);
+	export_constant(PARAM_STA);
+	export_constant(PARAM_WIS);
+	export_constant(PARAM_SPL);
+	export_constant(PARAM_CON);
+	export_constant(PARAM_CRT);
+
+	/* Elemental Skill Mode */
+	export_constant(EL_SKILLMODE_PASSIVE);
+	export_constant(EL_SKILLMODE_ASSIST);
+	export_constant(EL_SKILLMODE_AGGRESSIVE);
 
 	#undef export_constant
 	#undef export_constant2

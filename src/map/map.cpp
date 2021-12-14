@@ -1839,6 +1839,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param third_charid : 3rd player that could loot the item (3rd charid that could loot for third_get_charid duration)
  * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
  * @param mob_id: Monster ID if dropped by monster
+ * @param canShowEffect: enable pillar effect on the dropped item (if set in the database)
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
@@ -2238,7 +2239,7 @@ struct homun_data* map_id2hd(int id){
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct mercenary_data* map_id2mc(int id){
+struct s_mercenary_data* map_id2mc(int id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
@@ -2248,7 +2249,7 @@ struct pet_data* map_id2pd(int id){
 	return BL_CAST(BL_PET, bl);
 }
 
-struct elemental_data* map_id2ed(int id) {
+struct s_elemental_data* map_id2ed(int id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }

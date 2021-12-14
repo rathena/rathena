@@ -227,6 +227,7 @@ enum e_item_job : uint16
 	ITEMJ_THIRD       = 0x08,
 	ITEMJ_THIRD_UPPER = 0x10,
 	ITEMJ_THIRD_BABY  = 0x20,
+	ITEMJ_FOURTH      = 0x40,
 	ITEMJ_MAX         = 0xFF,
 
 	ITEMJ_ALL_UPPER = ITEMJ_UPPER | ITEMJ_THIRD_UPPER,
@@ -234,7 +235,7 @@ enum e_item_job : uint16
 	ITEMJ_ALL_THIRD = ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY,
 
 #ifdef RENEWAL
-	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY | ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY,
+	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY | ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY | ITEMJ_FOURTH,
 #else
 	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY,
 #endif
@@ -759,6 +760,8 @@ enum e_random_item_group {
 	IG_XMAS_PACKAGE_14,
 	IG_EASTER_EGG,
 	IG_PITAPAT_BOX,
+	IG_HAPPY_BOX_J,
+	IG_CLASS_SHADOW_CUBE,
 
 	IG_MAX,
 };
@@ -885,7 +888,8 @@ struct item_data
 	uint16 slots;
 	uint32 look;
 	uint16 elv;
-	uint16 wlv;
+	uint16 weapon_level;
+	uint16 armor_level;
 	t_itemid view_id;
 	uint16 elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
@@ -1030,7 +1034,7 @@ private:
 	e_sex defaultGender( const YAML::Node &node, std::shared_ptr<item_data> id );
 
 public:
-	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 1) {
+	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 2, 1) {
 
 	}
 
@@ -1085,7 +1089,7 @@ struct item_data* itemdb_exists(t_itemid nameid);
 #define itemdb_equip(n) itemdb_search(n)->equip
 #define itemdb_usescript(n) itemdb_search(n)->script
 #define itemdb_equipscript(n) itemdb_search(n)->script
-#define itemdb_wlv(n) itemdb_search(n)->wlv
+#define itemdb_wlv(n) itemdb_search(n)->weapon_level
 #define itemdb_range(n) itemdb_search(n)->range
 #define itemdb_slots(n) itemdb_search(n)->slots
 #define itemdb_available(n) (itemdb_search(n)->flag.available)

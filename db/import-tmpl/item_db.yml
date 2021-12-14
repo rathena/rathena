@@ -26,7 +26,7 @@
 #   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
 #   Name                    Name in English for displaying as output.
 #   Type                    Item type. (Default: Etc)
-#   SubType                 Weapon or Ammo type. (Default: 0)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
 #   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
 #   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
 #   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
@@ -39,7 +39,8 @@
 #   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Locations               Equipment's placement. (Default: None)
-#   WeaponLevel             Weapon level. (Default: 0)
+#   WeaponLevel             Weapon level. (Default: 1 for Weapons)
+#   ArmorLevel              Armor level. (Default: 1 for Armors)
 #   EquipLevelMin           Minimum required level to equip. (Default: 0)
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
@@ -84,7 +85,7 @@
 
 Header:
   Type: ITEM_DB
-  Version: 1
+  Version: 2
 
 #Body:
 # THQ Quest Items
@@ -477,6 +478,7 @@ Header:
 #    Gender: Male
 #    Locations:
 #      Armor: true
+#    ArmorLevel: 1
 #    Refineable: true
 #    EquipScript: |
 #      sc_start SC_WEDDING,INFINITE_TICK,0;

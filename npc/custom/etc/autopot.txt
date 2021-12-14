@@ -60,7 +60,7 @@ L_Start:
 
 	if (getd("@autopot_" + .@type$ + "_Min")   < 1  || getd("@autopot_" + .@type$ + "_Min") > 100)  setd "@autopot_" + .@type$ + "_Min",90;
 	if (@autopot_delay < 50 || @autopot_delay > 1000) @autopot_delay = .MinDelay;
-	if (getiteminfo(.@potion,2) != IT_HEALING) {
+	if (getiteminfo(.@potion, ITEMINFO_TYPE) != IT_HEALING) {
 		dispbottom getitemname(.@potion) + " is not a healing item.";
 		end;
 	}
