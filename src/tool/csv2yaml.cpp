@@ -4752,7 +4752,9 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current) {
 static bool pc_readdb_skilltree_yaml(void) {
 	for (const auto &it : skill_tree) {
 		body << YAML::BeginMap;
-		body << YAML::Key << "Job" << YAML::Value << constant_lookup(it.first, "JOB_");
+		std::string job = constant_lookup(it.first, "JOB_");
+		job.erase( 0, 4 );
+		body << YAML::Key << "Job" << YAML::Value << name2Upper( job );
 		body << YAML::Key << "Tree";
 		body << YAML::BeginSeq;
 		for (const auto &subit : it.second) {
