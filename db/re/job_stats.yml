@@ -9853,3 +9853,2799 @@ Body:
         Int: 1
       - Level: 59
         Int: 1
+  - Jobs:
+      Dragon_Knight: true
+      Dragon_Knight2: true
+    MaxWeight: 35000
+    HpFactor: 150
+    SpFactor: 300
+    BaseASPD:
+      Fist: 40
+      Dagger: 50
+      1hSword: 52
+      2hSword: 55
+      1hSpear: 60
+      2hSpear: 58
+      1hAxe: 48
+      2hAxe: 52
+      Mace: 45
+      2hMace: 52
+      Shield: 5
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Pow: 1
+      - Level: 2
+        Dex: 1
+        Spl: 1
+      - Level: 3
+        Agi: 1
+        Crt: 1
+      - Level: 4
+        Dex: 1
+      - Level: 5
+        Agi: 1
+        Vit: 1
+        Con: 1
+      - Level: 7
+        Luk: 1
+        Spl: 1
+      - Level: 8
+        Int: 1
+        Sta: 1
+      - Level: 9
+        Str: 1
+        Crt: 1
+      - Level: 10
+        Dex: 1
+      - Level: 11
+        Int: 1
+        Con: 1
+      - Level: 12
+        Agi: 1
+      - Level: 14
+        Vit: 1
+        Luk: 1
+      - Level: 16
+        Str: 1
+        Pow: 1
+      - Level: 17
+        Dex: 1
+      - Level: 18
+        Int: 1
+        Con: 1
+      - Level: 19
+        Agi: 1
+        Vit: 1
+      - Level: 20
+        Spl: 1
+      - Level: 21
+        Luk: 1
+      - Level: 22
+        Sta: 1
+      - Level: 23
+        Agi: 1
+        Dex: 1
+      - Level: 24
+        Str: 1
+        Spl: 1
+      - Level: 25
+        Vit: 1
+        Crt: 1
+      - Level: 26
+        Int: 1
+        Pow: 1
+      - Level: 27
+        Dex: 1
+      - Level: 28
+        Luk: 1
+      - Level: 29
+        Pow: 1
+        Con: 1
+      - Level: 30
+        Str: 1
+      - Level: 31
+        Int: 1
+        Luk: 1
+      - Level: 32
+        Vit: 1
+        Wis: 1
+      - Level: 33
+        Agi: 1
+      - Level: 34
+        Crt: 1
+      - Level: 35
+        Dex: 1
+        Con: 1
+      - Level: 36
+        Str: 1
+        Pow: 1
+      - Level: 37
+        Int: 1
+        Sta: 1
+      - Level: 38
+        Agi: 1
+      - Level: 39
+        Spl: 1
+      - Level: 40
+        Luk: 1
+        Sta: 1
+      - Level: 42
+        Vit: 1
+        Crt: 1
+      - Level: 43
+        Int: 1
+        Pow: 1
+      - Level: 44
+        Dex: 1
+        Wis: 1
+      - Level: 45
+        Sta: 1
+      - Level: 46
+        Pow: 1
+        Con: 1
+      - Level: 47
+        Int: 1
+        Wis: 1
+      - Level: 49
+        Agi: 1
+        Crt: 1
+      - Level: 50
+        Vit: 1
+        Pow: 1
+  - Jobs:
+      Meister: true
+      Meister2: true
+    MaxWeight: 38000
+    HpFactor: 90
+    SpFactor: 400
+    BaseASPD:
+      Fist: 40
+      Dagger: 60
+      1hSword: 65
+      1hAxe: 45
+      2hAxe: 48
+      Mace: 48
+      2hMace: 50
+      Shield: 6
+    BonusStats:
+      - Level: 1
+        Str: 1
+      - Level: 2
+        Str: 1
+        Dex: 1
+      - Level: 3
+        Str: 1
+        Vit: 1
+      - Level: 4
+        Vit: 1
+        Int: 1
+      - Level: 5
+        Int: 1
+        Luk: 1
+      - Level: 6
+        Str: 1
+        Pow: 1
+      - Level: 7
+        Str: 1
+      - Level: 8
+        Vit: 1
+      - Level: 9
+        Str: 1
+        Luk: 1
+      - Level: 10
+        Str: 1
+        Sta: 1
+      - Level: 11
+        Vit: 1
+      - Level: 12
+        Str: 1
+        Pow: 1
+      - Level: 13
+        Int: 1
+      - Level: 14
+        Agi: 1
+      - Level: 15
+        Agi: 1
+        Luk: 1
+      - Level: 16
+        Str: 1
+      - Level: 17
+        Agi: 1
+        Vit: 1
+      - Level: 18
+        Vit: 1
+      - Level: 19
+        Vit: 1
+        Int: 1
+      - Level: 20
+        Str: 1
+      - Level: 21
+        Int: 1
+        Dex: 1
+      - Level: 22
+        Vit: 1
+      - Level: 23
+        Int: 1
+      - Level: 24
+        Agi: 1
+        Dex: 1
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Dex: 1
+        Sta: 1
+      - Level: 27
+        Dex: 1
+      - Level: 28
+        Agi: 1
+        Luk: 1
+      - Level: 29
+        Luk: 1
+        Crt: 1
+      - Level: 30
+        Pow: 1
+      - Level: 31
+        Wis: 1
+        Crt: 1
+      - Level: 32
+        Crt: 1
+      - Level: 33
+        Sta: 1
+        Con: 1
+      - Level: 34
+        Pow: 1
+        Crt: 1
+      - Level: 35
+        Sta: 1
+      - Level: 36
+        Luk: 1
+        Crt: 1
+      - Level: 37
+        Wis: 1
+      - Level: 38
+        Pow: 1
+        Wis: 1
+      - Level: 39
+        Sta: 1
+      - Level: 40
+        Con: 1
+      - Level: 41
+        Sta: 1
+      - Level: 42
+        Con: 1
+      - Level: 43
+        Vit: 1
+        Sta: 1
+      - Level: 44
+        Vit: 1
+        Crt: 1
+      - Level: 45
+        Con: 1
+      - Level: 46
+        Con: 1
+      - Level: 47
+        Pow: 1
+        Crt: 1
+      - Level: 48
+        Sta: 1
+        Con: 1
+      - Level: 49
+        Sta: 1
+      - Level: 50
+        Pow: 1
+        Wis: 1
+  - Jobs:
+      Shadow_Cross: true
+    MaxWeight: 32000
+    HpFactor: 110
+    SpFactor: 400
+    BaseASPD:
+      Fist: 40
+      Dagger: 42
+      1hSword: 65
+      1hAxe: 80
+      Katar: 42
+      Rifle: 95
+      Gatling: 120
+      Shotgun: 90
+      Grenade: 100
+      Huuma: 110
+      Shield: 9
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Agi: 1
+      - Level: 2
+        Str: 1
+        Agi: 1
+      - Level: 3
+        Agi: 1
+        Dex: 1
+      - Level: 4
+        Str: 1
+        Luk: 1
+      - Level: 5
+        Pow: 1
+      - Level: 6
+        Agi: 1
+        Int: 1
+      - Level: 7
+        Str: 1
+        Vit: 1
+      - Level: 8
+        Dex: 1
+        Pow: 1
+      - Level: 9
+        Int: 1
+        Luk: 1
+      - Level: 10
+        Sta: 1
+      - Level: 11
+        Agi: 1
+        Dex: 1
+      - Level: 12
+        Pow: 1
+      - Level: 13
+        Agi: 1
+        Vit: 1
+      - Level: 14
+        Vit: 1
+      - Level: 15
+        Str: 1
+        Agi: 1
+      - Level: 16
+        Pow: 1
+      - Level: 17
+        Str: 1
+        Int: 1
+      - Level: 18
+        Pow: 1
+      - Level: 19
+        Agi: 1
+      - Level: 20
+        Dex: 1
+        Sta: 1
+      - Level: 21
+        Vit: 1
+        Dex: 1
+      - Level: 22
+        Int: 1
+      - Level: 23
+        Vit: 1
+        Dex: 1
+      - Level: 24
+        Dex: 1
+        Con: 1
+      - Level: 25
+        Str: 1
+        Dex: 1
+      - Level: 26
+        Dex: 1
+      - Level: 27
+        Str: 1
+        Agi: 1
+      - Level: 28
+        Luk: 1
+      - Level: 29
+        Agi: 1
+      - Level: 30
+        Int: 1
+        Luk: 1
+      - Level: 31
+        Pow: 1
+      - Level: 32
+        Con: 1
+      - Level: 33
+        Pow: 1
+      - Level: 34
+        Sta: 1
+      - Level: 35
+        Con: 1
+        Crt: 1
+      - Level: 36
+        Agi: 1
+      - Level: 37
+        Pow: 1
+        Con: 1
+      - Level: 38
+        Crt: 1
+      - Level: 39
+        Sta: 1
+        Wis: 1
+      - Level: 40
+        Pow: 1
+        Sta: 1
+      - Level: 41
+        Wis: 1
+      - Level: 42
+        Pow: 1
+      - Level: 43
+        Vit: 1
+      - Level: 44
+        Sta: 1
+      - Level: 45
+        Sta: 1
+        Wis: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Con: 1
+      - Level: 48
+        Crt: 1
+      - Level: 49
+        Wis: 1
+        Con: 1
+      - Level: 50
+        Pow: 1
+        Crt: 1
+  - Jobs:
+      Arch_Mage: true
+    MaxWeight: 30000
+    HpFactor: 55
+    SpFactor: 900
+    BaseASPD:
+      Fist: 45
+      Dagger: 52
+      1hSword: 60
+      Staff: 50
+      2hStaff: 56
+      Shield: 5
+    BonusStats:
+      - Level: 1
+        Int: 1
+        Spl: 1
+      - Level: 2
+        Dex: 1
+      - Level: 3
+        Wis: 1
+      - Level: 4
+        Vit: 1
+        Spl: 1
+      - Level: 5
+        Vit: 1
+        Int: 1
+      - Level: 6
+        Luk: 1
+      - Level: 7
+        Wis: 1
+        Con: 1
+      - Level: 8
+        Agi: 1
+      - Level: 9
+        Str: 1
+        Agi: 1
+      - Level: 10
+        Wis: 1
+      - Level: 11
+        Int: 1
+      - Level: 12
+        Vit: 1
+        Int: 1
+      - Level: 13
+        Agi: 1
+        Spl: 1
+      - Level: 14
+        Sta: 1
+        Con: 1
+      - Level: 15
+        Luk: 1
+      - Level: 16
+        Agi: 1
+        Int: 1
+      - Level: 17
+        Sta: 1
+      - Level: 18
+        Int: 1
+        Dex: 1
+      - Level: 19
+        Dex: 1
+      - Level: 20
+        Vit: 1
+        Int: 1
+      - Level: 21
+        Luk: 1
+        Spl: 1
+      - Level: 22
+        Con: 1
+      - Level: 23
+        Agi: 1
+        Sta: 1
+      - Level: 24
+        Dex: 1
+      - Level: 25
+        Int: 1
+        Dex: 1
+      - Level: 26
+        Int: 1
+        Spl: 1
+      - Level: 27
+        Con: 1
+      - Level: 28
+        Agi: 1
+      - Level: 29
+        Luk: 1
+        Spl: 1
+      - Level: 30
+        Crt: 1
+      - Level: 31
+        Agi: 1
+        Dex: 1
+      - Level: 32
+        Dex: 1
+      - Level: 33
+        Con: 1
+      - Level: 34
+        Int: 1
+        Con: 1
+      - Level: 35
+        Int: 1
+      - Level: 36
+        Spl: 1
+      - Level: 37
+        Vit: 1
+        Spl: 1
+      - Level: 38
+        Agi: 1
+        Int: 1
+      - Level: 39
+        Dex: 1
+      - Level: 40
+        Vit: 1
+      - Level: 41
+        Vit: 1
+        Sta: 1
+      - Level: 42
+        Con: 1
+      - Level: 43
+        Vit: 1
+        Spl: 1
+      - Level: 44
+        Int: 1
+        Sta: 1
+      - Level: 45
+        Wis: 1
+      - Level: 46
+        Int: 1
+        Spl: 1
+      - Level: 47
+        Spl: 1
+      - Level: 48
+        Sta: 1
+        Wis: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Sta: 1
+        Wis: 1
+  - Jobs:
+      Cardinal: true
+    MaxWeight: 30000
+    HpFactor: 75
+    SpFactor: 800
+    BaseASPD:
+      Fist: 45
+      Mace: 45
+      2hMace: 45
+      Staff: 60
+      Knuckle: 50
+      Book: 44
+      2hStaff: 55
+      Shield: 5
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Int: 1
+      - Level: 2
+        Spl: 1
+      - Level: 3
+        Int: 1
+        Sta: 1
+      - Level: 4
+        Dex: 1
+        Spl: 1
+      - Level: 5
+        Agi: 1
+      - Level: 6
+        Agi: 1
+        Sta: 1
+      - Level: 7
+        Luk: 1
+      - Level: 8
+        Int: 1
+        Spl: 1
+      - Level: 9
+        Vit: 1
+      - Level: 10
+        Vit: 1
+      - Level: 11
+        Int: 1
+        Pow: 1
+      - Level: 12
+        Int: 1
+      - Level: 13
+        Dex: 1
+      - Level: 14
+        Dex: 1
+        Pow: 1
+      - Level: 15
+        Str: 1
+      - Level: 16
+        Agi: 1
+        Dex: 1
+      - Level: 17
+        Vit: 1
+        Luk: 1
+      - Level: 18
+        Str: 1
+        Int: 1
+      - Level: 19
+        Agi: 1
+        Dex: 1
+      - Level: 20
+        Vit: 1
+        Int: 1
+      - Level: 21
+        Str: 1
+      - Level: 22
+        Int: 1
+      - Level: 23
+        Dex: 1
+      - Level: 24
+        Str: 1
+        Pow: 1
+      - Level: 25
+        Sta: 1
+      - Level: 26
+        Agi: 1
+        Wis: 1
+      - Level: 27
+        Dex: 1
+        Wis: 1
+      - Level: 28
+        Int: 1
+      - Level: 29
+        Vit: 1
+      - Level: 30
+        Int: 1
+        Crt: 1
+      - Level: 31
+        Agi: 1
+      - Level: 32
+        Agi: 1
+        Crt: 1
+      - Level: 33
+        Int: 1
+      - Level: 34
+        Vit: 1
+        Luk: 1
+      - Level: 35
+        Spl: 1
+      - Level: 36
+        Int: 1
+        Con: 1
+      - Level: 37
+        Vit: 1
+      - Level: 38
+        Con: 1
+      - Level: 39
+        Str: 1
+        Spl: 1
+      - Level: 40
+        Con: 1
+      - Level: 41
+        Luk: 1
+      - Level: 42
+        Pow: 1
+      - Level: 43
+        Pow: 1
+        Spl: 1
+      - Level: 44
+        Wis: 1
+      - Level: 45
+        Con: 1
+        Crt: 1
+      - Level: 46
+        Pow: 1
+        Crt: 1
+      - Level: 47
+        Wis: 1
+        Spl: 1
+      - Level: 48
+        Sta: 1
+      - Level: 49
+        Pow: 1
+        Crt: 1
+      - Level: 50
+        Spl: 1
+        Crt: 1
+  - Jobs:
+      Windhawk: true
+      Windhawk2: true
+    MaxWeight: 32000
+    HpFactor: 85
+    SpFactor: 400
+    BaseASPD:
+      Fist: 40
+      Dagger: 50
+      Bow: 49
+      Shield: 8
+    BonusStats:
+      - Level: 1
+        Dex: 1
+      - Level: 2
+        Vit: 1
+      - Level: 3
+        Agi: 1
+        Con: 1
+      - Level: 4
+        Int: 1
+      - Level: 5
+        Agi: 1
+        Pow: 1
+      - Level: 6
+        Vit: 1
+      - Level: 7
+        Con: 1
+      - Level: 8
+        Dex: 1
+        Spl: 1
+      - Level: 9
+        Vit: 1
+        Wis: 1
+      - Level: 10
+        Agi: 1
+      - Level: 11
+        Vit: 1
+        Con: 1
+      - Level: 12
+        Agi: 1
+      - Level: 13
+        Agi: 1
+        Pow: 1
+      - Level: 14
+        Luk: 1
+        Con: 1
+      - Level: 15
+        Dex: 1
+        Spl: 1
+      - Level: 16
+        Int: 1
+        Sta: 1
+      - Level: 17
+        Crt: 1
+      - Level: 18
+        Luk: 1
+        Con: 1
+      - Level: 19
+        Agi: 1
+      - Level: 20
+        Vit: 1
+      - Level: 21
+        Int: 1
+        Wis: 1
+      - Level: 22
+        Dex: 1
+      - Level: 23
+        Str: 1
+        Sta: 1
+      - Level: 24
+        Pow: 1
+      - Level: 25
+        Vit: 1
+      - Level: 26
+        Agi: 1
+        Int: 1
+      - Level: 27
+        Luk: 1
+      - Level: 28
+        Con: 1
+      - Level: 29
+        Dex: 1
+        Con: 1
+      - Level: 30
+        Sta: 1
+      - Level: 31
+        Luk: 1
+        Crt: 1
+      - Level: 32
+        Spl: 1
+      - Level: 33
+        Agi: 1
+        Wis: 1
+      - Level: 34
+        Int: 1
+        Pow: 1
+      - Level: 35
+        Vit: 1
+      - Level: 36
+        Dex: 1
+        Wis: 1
+      - Level: 37
+        Int: 1
+      - Level: 38
+        Agi: 1
+        Int: 1
+      - Level: 39
+        Agi: 1
+      - Level: 40
+        Pow: 1
+        Crt: 1
+      - Level: 41
+        Agi: 1
+        Spl: 1
+      - Level: 42
+        Pow: 1
+        Sta: 1
+      - Level: 43
+        Dex: 1
+      - Level: 44
+        Wis: 1
+        Con: 1
+      - Level: 45
+        Str: 1
+        Int: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Agi: 1
+        Pow: 1
+      - Level: 48
+        Int: 1
+      - Level: 49
+        Vit: 1
+      - Level: 50
+        Dex: 1
+        Con: 1
+  - Jobs:
+      Imperial_Guard: true
+      Imperial_Guard2: true
+    MaxWeight: 35000
+    HpFactor: 110
+    HpMultiplicator: 700
+    SpFactor: 400
+    BaseASPD:
+      Fist: 40
+      Dagger: 47
+      1hSword: 45
+      2hSword: 53
+      1hSpear: 50
+      2hSpear: 50
+      1hAxe: 48
+      2hAxe: 52
+      Mace: 44
+      2hMace: 50
+      Shield: 5
+    BonusStats:
+      - Level: 1
+        Pow: 1
+      - Level: 2
+        Str: 1
+        Int: 1
+      - Level: 3
+        Vit: 1
+        Dex: 1
+      - Level: 4
+        Dex: 1
+        Spl: 1
+      - Level: 5
+        Str: 1
+        Vit: 1
+      - Level: 6
+        Vit: 1
+        Dex: 1
+      - Level: 7
+        Str: 1
+        Spl: 1
+      - Level: 8
+        Dex: 1
+      - Level: 9
+        Str: 1
+        Spl: 1
+      - Level: 10
+        Int: 1
+        Con: 1
+      - Level: 11
+        Luk: 1
+      - Level: 12
+        Agi: 1
+      - Level: 13
+        Luk: 1
+        Pow: 1
+      - Level: 14
+        Agi: 1
+        Int: 1
+      - Level: 15
+        Int: 1
+      - Level: 16
+        Vit: 1
+        Pow: 1
+      - Level: 17
+        Str: 1
+        Int: 1
+      - Level: 18
+        Vit: 1
+      - Level: 19
+        Str: 1
+        Int: 1
+      - Level: 20
+        Int: 1
+        Dex: 1
+      - Level: 21
+        Int: 1
+      - Level: 22
+        Str: 1
+        Vit: 1
+      - Level: 23
+        Sta: 1
+      - Level: 24
+        Vit: 1
+      - Level: 25
+        Int: 1
+      - Level: 26
+        Str: 1
+        Int: 1
+      - Level: 27
+        Pow: 1
+      - Level: 28
+        Dex: 1
+      - Level: 29
+        Vit: 1
+      - Level: 30
+        Pow: 1
+      - Level: 31
+        Str: 1
+        Luk: 1
+      - Level: 32
+        Dex: 1
+        Spl: 1
+      - Level: 33
+        Dex: 1
+        Spl: 1
+      - Level: 34
+        Sta: 1
+      - Level: 35
+        Vit: 1
+        Sta: 1
+      - Level: 36
+        Spl: 1
+      - Level: 37
+        Dex: 1
+        Wis: 1
+      - Level: 38
+        Agi: 1
+        Wis: 1
+      - Level: 39
+        Sta: 1
+      - Level: 40
+        Wis: 1
+      - Level: 41
+        Sta: 1
+        Crt: 1
+      - Level: 42
+        Wis: 1
+        Con: 1
+      - Level: 43
+        Crt: 1
+      - Level: 44
+        Sta: 1
+      - Level: 45
+        Spl: 1
+      - Level: 46
+        Wis: 1
+      - Level: 47
+        Crt: 1
+      - Level: 48
+        Sta: 1
+        Con: 1
+      - Level: 49
+        Sta: 1
+      - Level: 50
+        Pow: 1
+        Sta: 1
+  - Jobs:
+      Biolo: true
+    MaxWeight: 32000
+    HpFactor: 90
+    SpFactor: 900
+    BaseASPD:
+      Fist: 40
+      Dagger: 50
+      1hSword: 44
+      1hAxe: 48
+      2hAxe: 51
+      Mace: 44
+      2hMace: 48
+      Shield: 4
+    BonusStats:
+      - Level: 1
+        Int: 1
+      - Level: 2
+        Int: 1
+        Crt: 1
+      - Level: 3
+        Dex: 1
+      - Level: 4
+        Sta: 1
+        Spl: 1
+      - Level: 5
+        Vit: 1
+      - Level: 6
+        Spl: 1
+        Con: 1
+      - Level: 7
+        Dex: 1
+      - Level: 8
+        Vit: 1
+        Int: 1
+      - Level: 9
+        Agi: 1
+      - Level: 10
+        Wis: 1
+      - Level: 11
+        Vit: 1
+        Con: 1
+      - Level: 12
+        Crt: 1
+      - Level: 13
+        Int: 1
+      - Level: 14
+        Dex: 1
+      - Level: 15
+        Spl: 1
+        Crt: 1
+      - Level: 16
+        Vit: 1
+      - Level: 17
+        Luk: 1
+      - Level: 18
+        Str: 1
+        Pow: 1
+      - Level: 19
+        Vit: 1
+        Con: 1
+      - Level: 20
+        Dex: 1
+      - Level: 21
+        Agi: 1
+        Pow: 1
+      - Level: 22
+        Con: 1
+      - Level: 23
+        Sta: 1
+      - Level: 24
+        Int: 1
+        Crt: 1
+      - Level: 25
+        Vit: 1
+        Pow: 1
+      - Level: 26
+        Vit: 1
+      - Level: 27
+        Pow: 1
+        Wis: 1
+      - Level: 28
+        Crt: 1
+      - Level: 29
+        Dex: 1
+        Crt: 1
+      - Level: 30
+        Agi: 1
+      - Level: 31
+        Con: 1
+      - Level: 32
+        Luk: 1
+        Crt: 1
+      - Level: 33
+        Pow: 1
+      - Level: 34
+        Spl: 1
+      - Level: 35
+        Str: 1
+        Int: 1
+      - Level: 36
+        Str: 1
+        Int: 1
+      - Level: 37
+        Int: 1
+        Dex: 1
+      - Level: 38
+        Pow: 1
+      - Level: 39
+        Wis: 1
+        Crt: 1
+      - Level: 40
+        Agi: 1
+        Dex: 1
+      - Level: 41
+        Str: 1
+        Agi: 1
+      - Level: 42
+        Vit: 1
+        Int: 1
+      - Level: 43
+        Luk: 1
+        Wis: 1
+      - Level: 44
+        Dex: 1
+        Crt: 1
+      - Level: 45
+        Int: 1
+      - Level: 46
+        Int: 1
+      - Level: 47
+        Con: 1
+      - Level: 48
+        Agi: 1
+        Int: 1
+      - Level: 49
+        Luk: 1
+        Sta: 1
+      - Level: 50
+        Str: 1
+        Crt: 1
+  - Jobs:
+      Abyss_Chaser: true
+    MaxWeight: 28000
+    HpFactor: 85
+    SpFactor: 400
+    BaseASPD:
+      Fist: 40
+      Dagger: 43
+      1hSword: 47
+      Bow: 47
+      Shield: 4
+    BonusStats:
+      - Level: 1
+        Luk: 1
+        Pow: 1
+      - Level: 2
+        Str: 1
+        Spl: 1
+      - Level: 3
+        Dex: 1
+      - Level: 4
+        Luk: 1
+      - Level: 5
+        Str: 1
+        Int: 1
+      - Level: 6
+        Int: 1
+      - Level: 7
+        Luk: 1
+        Pow: 1
+      - Level: 8
+        Agi: 1
+        Sta: 1
+      - Level: 9
+        Dex: 1
+        Con: 1
+      - Level: 10
+        Vit: 1
+        Int: 1
+      - Level: 11
+        Vit: 1
+        Con: 1
+      - Level: 12
+        Str: 1
+      - Level: 13
+        Str: 1
+        Int: 1
+      - Level: 14
+        Luk: 1
+      - Level: 15
+        Spl: 1
+      - Level: 16
+        Dex: 1
+        Crt: 1
+      - Level: 17
+        Agi: 1
+        Wis: 1
+      - Level: 18
+        Vit: 1
+      - Level: 19
+        Int: 1
+        Wis: 1
+      - Level: 20
+        Vit: 1
+        Sta: 1
+      - Level: 21
+        Str: 1
+        Int: 1
+      - Level: 22
+        Vit: 1
+        Dex: 1
+      - Level: 23
+        Agi: 1
+        Sta: 1
+      - Level: 24
+        Luk: 1
+      - Level: 25
+        Agi: 1
+        Vit: 1
+      - Level: 26
+        Luk: 1
+      - Level: 27
+        Str: 1
+        Agi: 1
+      - Level: 28
+        Agi: 1
+      - Level: 29
+        Agi: 1
+        Vit: 1
+      - Level: 30
+        Dex: 1
+      - Level: 31
+        Str: 1
+        Agi: 1
+      - Level: 32
+        Str: 1
+      - Level: 33
+        Vit: 1
+      - Level: 34
+        Pow: 1
+        Wis: 1
+      - Level: 35
+        Spl: 1
+      - Level: 36
+        Pow: 1
+      - Level: 37
+        Sta: 1
+        Con: 1
+      - Level: 38
+        Dex: 1
+      - Level: 39
+        Crt: 1
+      - Level: 40
+        Crt: 1
+      - Level: 41
+        Agi: 1
+        Sta: 1
+      - Level: 42
+        Pow: 1
+      - Level: 43
+        Crt: 1
+      - Level: 44
+        Pow: 1
+      - Level: 45
+        Spl: 1
+        Crt: 1
+      - Level: 46
+        Spl: 1
+      - Level: 47
+        Wis: 1
+      - Level: 48
+        Spl: 1
+        Con: 1
+      - Level: 49
+        Sta: 1
+      - Level: 50
+        Pow: 1
+        Spl: 1
+  - Jobs:
+      Elemental_Master: true
+    MaxWeight: 30000
+    HpFactor: 75
+    SpFactor: 900
+    BaseASPD:
+      Fist: 40
+      Dagger: 50
+      1hSword: 50
+      Staff: 45
+      Book: 45
+      2hStaff: 55
+      Shield: 5
+    BonusStats:
+      - Level: 1
+        Int: 1
+        Spl: 1
+      - Level: 2
+        Int: 1
+        Dex: 1
+      - Level: 3
+        Vit: 1
+        Dex: 1
+      - Level: 4
+        Str: 1
+        Vit: 1
+      - Level: 5
+        Int: 1
+        Spl: 1
+      - Level: 6
+        Int: 1
+        Pow: 1
+      - Level: 7
+        Agi: 1
+        Spl: 1
+      - Level: 8
+        Int: 1
+      - Level: 9
+        Str: 1
+        Con: 1
+      - Level: 10
+        Dex: 1
+        Crt: 1
+      - Level: 11
+        Int: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
+        Dex: 1
+      - Level: 14
+        Vit: 1
+        Int: 1
+      - Level: 15
+        Int: 1
+        Pow: 1
+      - Level: 16
+        Vit: 1
+      - Level: 17
+        Luk: 1
+      - Level: 18
+        Int: 1
+        Pow: 1
+      - Level: 19
+        Dex: 1
+        Luk: 1
+      - Level: 20
+        Agi: 1
+        Luk: 1
+      - Level: 21
+        Agi: 1
+        Int: 1
+      - Level: 22
+        Dex: 1
+        Wis: 1
+      - Level: 23
+        Vit: 1
+      - Level: 24
+        Str: 1
+        Dex: 1
+      - Level: 25
+        Luk: 1
+        Sta: 1
+      - Level: 26
+        Con: 1
+      - Level: 27
+        Vit: 1
+        Sta: 1
+      - Level: 28
+        Int: 1
+      - Level: 29
+        Vit: 1
+      - Level: 30
+        Dex: 1
+        Luk: 1
+      - Level: 31
+        Agi: 1
+        Int: 1
+      - Level: 32
+        Spl: 1
+      - Level: 33
+        Int: 1
+      - Level: 34
+        Dex: 1
+      - Level: 35
+        Str: 1
+      - Level: 36
+        Spl: 1
+      - Level: 37
+        Con: 1
+      - Level: 38
+        Crt: 1
+      - Level: 39
+        Con: 1
+        Crt: 1
+      - Level: 40
+        Con: 1
+      - Level: 41
+        Wis: 1
+        Spl: 1
+      - Level: 42
+        Spl: 1
+      - Level: 43
+        Wis: 1
+      - Level: 44
+        Sta: 1
+      - Level: 45
+        Sta: 1
+        Wis: 1
+      - Level: 46
+        Wis: 1
+      - Level: 47
+        Sta: 1
+        Spl: 1
+      - Level: 48
+        Spl: 1
+      - Level: 49
+        Sta: 1
+      - Level: 50
+        Wis: 1
+        Spl: 1
+  - Jobs:
+      Inquisitor: true
+    MaxWeight: 30000
+    HpFactor: 90
+    HpMultiplicator: 650
+    SpFactor: 400
+    BaseASPD:
+      Fist: 38
+      Mace: 43
+      2hMace: 45
+      Staff: 48
+      Knuckle: 39
+      2hStaff: 50
+      Shield: 5
+    BonusStats:
+      - Level: 1
+        Agi: 1
+        Dex: 1
+      - Level: 2
+        Str: 1
+        Dex: 1
+      - Level: 3
+        Int: 1
+        Pow: 1
+      - Level: 4
+        Str: 2
+      - Level: 5
+        Str: 1
+        Pow: 1
+      - Level: 6
+        Str: 1
+      - Level: 7
+        Dex: 1
+        Pow: 1
+      - Level: 8
+        Agi: 1
+        Int: 1
+      - Level: 9
+        Str: 1
+        Dex: 1
+      - Level: 10
+        Agi: 1
+      - Level: 11
+        Dex: 1
+        Sta: 1
+      - Level: 12
+        Agi: 1
+        Vit: 1
+      - Level: 13
+        Wis: 1
+      - Level: 14
+        Agi: 1
+        Vit: 1
+      - Level: 15
+        Int: 1
+        Luk: 1
+      - Level: 16
+        Str: 1
+        Sta: 1
+      - Level: 17
+        Vit: 1
+        Int: 1
+      - Level: 18
+        Str: 1
+        Int: 1
+      - Level: 19
+        Vit: 1
+        Dex: 1
+      - Level: 20
+        Vit: 1
+        Dex: 1
+      - Level: 21
+        Agi: 1
+      - Level: 22
+        Str: 1
+        Agi: 1
+      - Level: 23
+        Agi: 1
+      - Level: 24
+        Dex: 1
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Str: 1
+      - Level: 27
+        Crt: 1
+      - Level: 28
+        Con: 1
+      - Level: 29
+        Crt: 1
+      - Level: 30
+        Int: 1
+        Pow: 1
+      - Level: 31
+        Pow: 1
+      - Level: 32
+        Wis: 1
+        Crt: 1
+      - Level: 33
+        Spl: 1
+      - Level: 34
+        Spl: 1
+      - Level: 35
+        Pow: 1
+      - Level: 36
+        Sta: 1
+      - Level: 37
+        Con: 1
+      - Level: 38
+        Con: 1
+      - Level: 39
+        Crt: 1
+      - Level: 40
+        Con: 1
+      - Level: 41
+        Spl: 1
+      - Level: 42
+        Int: 1
+        Crt: 1
+      - Level: 43
+        Agi: 1
+        Pow: 1
+      - Level: 44
+        Con: 1
+      - Level: 45
+        Int: 1
+        Sta: 1
+      - Level: 46
+        Sta: 1
+      - Level: 47
+        Vit: 1
+        Wis: 1
+      - Level: 48
+        Crt: 1
+      - Level: 49
+        Pow: 1
+        Sta: 1
+      - Level: 50
+        Pow: 1
+        Wis: 1
+  - Jobs:
+      Troubadour: true
+    MaxWeight: 32000
+    HpFactor: 75
+    HpMultiplicator: 300
+    SpFactor: 400
+    BaseASPD:
+      Fist: 40
+      Dagger: 52
+      Bow: 49
+      Musical: 44
+      Shield: 7
+    BonusStats:
+      - Level: 1
+        Int: 1
+      - Level: 2
+        Str: 1
+        Sta: 1
+      - Level: 3
+        Vit: 1
+        Int: 1
+      - Level: 4
+        Dex: 1
+        Con: 1
+      - Level: 5
+        Agi: 1
+        Dex: 1
+      - Level: 6
+        Spl: 1
+      - Level: 7
+        Int: 1
+        Pow: 1
+      - Level: 8
+        Int: 1
+        Con: 1
+      - Level: 9
+        Wis: 1
+      - Level: 10
+        Agi: 1
+        Vit: 1
+      - Level: 11
+        Vit: 2
+      - Level: 12
+        Luk: 1
+        Sta: 1
+      - Level: 13
+        Con: 1
+      - Level: 14
+        Dex: 1
+        Crt: 1
+      - Level: 15
+        Dex: 1
+      - Level: 16
+        Spl: 1
+      - Level: 17
+        Sta: 1
+      - Level: 18
+        Str: 1
+      - Level: 19
+        Str: 1
+        Con: 1
+      - Level: 20
+        Con: 1
+      - Level: 21
+        Pow: 1
+      - Level: 22
+        Int: 1
+      - Level: 23
+        Wis: 1
+      - Level: 24
+        Str: 1
+        Pow: 1
+      - Level: 25
+        Spl: 1
+      - Level: 26
+        Agi: 1
+      - Level: 27
+        Agi: 1
+        Sta: 1
+      - Level: 28
+        Str: 1
+        Wis: 1
+      - Level: 29
+        Sta: 1
+      - Level: 30
+        Luk: 1
+        Crt: 1
+      - Level: 31
+        Agi: 1
+      - Level: 32
+        Int: 1
+      - Level: 33
+        Dex: 1
+        Con: 1
+      - Level: 34
+        Vit: 1
+      - Level: 35
+        Pow: 1
+      - Level: 36
+        Dex: 1
+        Crt: 1
+      - Level: 37
+        Wis: 1
+        Con: 1
+      - Level: 38
+        Agi: 1
+        Crt: 1
+      - Level: 39
+        Agi: 1
+      - Level: 40
+        Int: 1
+        Dex: 1
+      - Level: 41
+        Vit: 1
+        Int: 1
+      - Level: 42
+        Spl: 1
+      - Level: 43
+        Pow: 1
+        Con: 1
+      - Level: 44
+        Str: 1
+        Dex: 1
+      - Level: 45
+        Vit: 1
+        Luk: 1
+      - Level: 46
+        Str: 1
+      - Level: 47
+        Dex: 1
+        Sta: 1
+      - Level: 48
+        Spl: 1
+      - Level: 49
+        Int: 1
+        Con: 1
+      - Level: 50
+        Dex: 1
+  - Jobs:
+      Trouvere: true
+    MaxWeight: 32000
+    HpFactor: 75
+    HpMultiplicator: 300
+    SpFactor: 400
+    BaseASPD:
+      Fist: 40
+      Dagger: 52
+      Bow: 49
+      Whip: 44
+      Shield: 7
+    BonusStats:
+      - Level: 1
+        Dex: 1
+      - Level: 2
+        Int: 1
+        Sta: 1
+      - Level: 3
+        Int: 1
+      - Level: 4
+        Agi: 1
+        Con: 1
+      - Level: 5
+        Str: 1
+        Vit: 1
+      - Level: 6
+        Spl: 1
+      - Level: 7
+        Agi: 1
+        Pow: 1
+      - Level: 8
+        Dex: 1
+        Con: 1
+      - Level: 9
+        Int: 1
+        Wis: 1
+      - Level: 10
+        Str: 1
+        Agi: 1
+      - Level: 11
+        Vit: 1
+        Dex: 1
+      - Level: 12
+        Sta: 1
+      - Level: 13
+        Vit: 1
+        Con: 1
+      - Level: 14
+        Vit: 1
+        Crt: 1
+      - Level: 15
+        Str: 1
+      - Level: 16
+        Spl: 1
+      - Level: 17
+        Dex: 1
+        Sta: 1
+      - Level: 18
+        Agi: 1
+        Vit: 1
+      - Level: 19
+        Con: 1
+      - Level: 20
+        Con: 1
+      - Level: 21
+        Int: 1
+        Pow: 1
+      - Level: 22
+        Vit: 1
+      - Level: 23
+        Dex: 1
+        Wis: 1
+      - Level: 24
+        Pow: 1
+      - Level: 25
+        Str: 1
+        Spl: 1
+      - Level: 26
+        Str: 1
+        Luk: 1
+      - Level: 27
+        Str: 1
+        Sta: 1
+      - Level: 28
+        Wis: 1
+      - Level: 29
+        Sta: 1
+      - Level: 30
+        Dex: 1
+        Crt: 1
+      - Level: 31
+        Agi: 1
+      - Level: 32
+        Int: 1
+      - Level: 33
+        Luk: 1
+        Con: 1
+      - Level: 34
+        Int: 1
+      - Level: 35
+        Pow: 1
+      - Level: 36
+        Int: 1
+        Crt: 1
+      - Level: 37
+        Wis: 1
+        Con: 1
+      - Level: 38
+        Int: 1
+        Crt: 1
+      - Level: 39
+        Int: 1
+        Luk: 1
+      - Level: 40
+        Str: 1
+        Agi: 1
+      - Level: 41
+        Dex: 1
+      - Level: 42
+        Spl: 1
+      - Level: 43
+        Pow: 1
+        Con: 1
+      - Level: 44
+        Dex: 1
+      - Level: 45
+        Agi: 1
+      - Level: 46
+        Agi: 1
+      - Level: 47
+        Sta: 1
+      - Level: 48
+        Spl: 1
+      - Level: 49
+        Int: 1
+        Con: 1
+      - Level: 50
+        Agi: 1
+  - Jobs:
+      Sky_Emperor: true
+    MaxWeight: 42000
+    HpFactor: 90
+    HpMultiplicator: 650
+    SpFactor: 635
+    BaseASPD:
+      Fist: 40
+      Dagger: 50
+      1hSword: 50
+      2hSword: 50
+      1hSpear: 50
+      2hSpear: 50
+      1hAxe: 50
+      2hAxe: 50
+      Mace: 50
+      2hMace: 50
+      Staff: 50
+      Bow: 50
+      Knuckle: 50
+      Musical: 50
+      Whip: 50
+      Book: 50
+      Katar: 50
+      Revolver: 50
+      Rifle: 50
+      Gatling: 50
+      Shotgun: 50
+      Grenade: 50
+      Huuma: 50
+      2hStaff: 50
+      Shield: 6
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Dex: 1
+        Sta: 1
+      - Level: 2
+        Str: 1
+        Pow: 1
+        Sta: 1
+      - Level: 3
+        Agi: 1
+        Int: 1
+        Dex: -1
+      - Level: 4
+        Str: 1
+        Agi: 1
+        Dex: 2
+        Sta: 1
+      - Level: 5
+        Str: 1
+        Int: 1
+        Pow: 1
+        Sta: 1
+      - Level: 6
+        Str: 1
+        Sta: 1
+      - Level: 7
+        Str: 1
+        Dex: 1
+        Sta: 1
+      - Level: 8
+        Dex: 1
+        Crt: 1
+      - Level: 9
+        Agi: 1
+        Vit: 1
+      - Level: 10
+        Dex: 1
+      - Level: 11
+        Vit: 1
+        Int: 1
+      - Level: 12
+        Str: 1
+        Luk: 1
+        Sta: 1
+      - Level: 13
+        Str: 1
+        Vit: 1
+        Sta: 1
+      - Level: 14
+        Crt: 1
+      - Level: 15
+        Wis: 1
+      - Level: 16
+        Str: 1
+        Sta: 1
+      - Level: 17
+        Str: 1
+        Agi: 1
+        Sta: 1
+      - Level: 19
+        Pow: 1
+      - Level: 20
+        Str: 1
+        Sta: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Agi: 1
+      - Level: 23
+        Agi: 1
+      - Level: 24
+        Str: 1
+        Dex: 1
+        Sta: 1
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Dex: 1
+        Luk: 1
+      - Level: 27
+        Con: 1
+      - Level: 28
+        Agi: 1
+        Pow: 1
+      - Level: 29
+        Vit: 1
+        Dex: 1
+      - Level: 30
+        Luk: 1
+        Con: 1
+      - Level: 31
+        Agi: 1
+        Vit: 1
+      - Level: 32
+        Agi: 1
+      - Level: 33
+        Vit: 1
+      - Level: 34
+        Pow: 1
+      - Level: 35
+        Con: 1
+      - Level: 36
+        Pow: 1
+      - Level: 37
+        Con: 1
+      - Level: 38
+        Crt: 1
+      - Level: 40
+        Pow: 1
+      - Level: 41
+        Pow: 1
+      - Level: 42
+        Crt: 1
+      - Level: 44
+        Pow: 1
+      - Level: 45
+        Crt: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Pow: 1
+        Wis: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Pow: 1
+        Crt: 1
+  - Jobs:
+      Soul_Ascetic: true
+    MaxWeight: 42000
+    HpFactor: 75
+    HpMultiplicator: 850
+    SpFactor: 860
+    BaseASPD:
+      Fist: 50
+      Dagger: 50
+      Staff: 53
+      2hStaff: 55
+      Shield: 8
+    BonusStats:
+      - Level: 1
+        Vit: 1
+        Int: 1
+      - Level: 2
+        Int: 1
+        Dex: 1
+      - Level: 3
+        Agi: 1
+        Spl: 1
+      - Level: 4
+        Int: 1
+        Dex: 1
+      - Level: 5
+        Int: 1
+        Dex: 1
+      - Level: 6
+        Dex: 1
+        Spl: 1
+      - Level: 7
+        Int: 1
+        Dex: 1
+      - Level: 8
+        Vit: 1
+        Dex: 1
+      - Level: 9
+        Int: 1
+        Spl: 1
+      - Level: 10
+        Vit: 1
+        Dex: 1
+      - Level: 11
+        Agi: 1
+        Int: 1
+      - Level: 12
+        Int: 1
+        Dex: 1
+      - Level: 13
+        Wis: 1
+        Con: 1
+      - Level: 14
+        Int: 1
+        Luk: 1
+      - Level: 15
+        Vit: 1
+        Int: 1
+      - Level: 16
+        Vit: 1
+        Crt: 1
+      - Level: 17
+        Dex: 1
+      - Level: 18
+        Con: 1
+      - Level: 19
+        Wis: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Dex: 1
+        Spl: 1
+      - Level: 23
+        Int: 1
+        Luk: 1
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Spl: 1
+      - Level: 27
+        Str: 1
+        Sta: 1
+      - Level: 28
+        Agi: 1
+        Vit: 1
+      - Level: 29
+        Str: 1
+        Agi: 1
+        Sta: 1
+      - Level: 30
+        Spl: 1
+      - Level: 31
+        Wis: 1
+      - Level: 32
+        Agi: 1
+        Dex: 1
+      - Level: 33
+        Con: 1
+      - Level: 34
+        Agi: 1
+      - Level: 35
+        Vit: 1
+        Dex: 1
+      - Level: 36
+        Str: 1
+        Sta: 1
+      - Level: 37
+        Spl: 1
+      - Level: 40
+        Crt: 1
+      - Level: 43
+        Wis: 1
+        Con: 1
+      - Level: 44
+        Wis: 1
+        Spl: 1
+      - Level: 45
+        Spl: 1
+      - Level: 46
+        Con: 1
+      - Level: 47
+        Spl: 1
+      - Level: 48
+        Crt: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Wis: 1
+        Spl: 1
+  - Jobs:
+      Shinkiro: true
+    MaxWeight: 45000
+    HpFactor: 98
+    SpFactor: 540
+    BaseASPD:
+      Fist: 40
+      Dagger: 45
+      Huuma: 50
+      Shield: 3
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Dex: 1
+        Sta: 1
+      - Level: 2
+        Str: 1
+        Pow: 1
+        Sta: 1
+      - Level: 3
+        Agi: 1
+        Int: 1
+        Dex: -1
+      - Level: 4
+        Str: 1
+        Agi: 1
+        Dex: 2
+        Sta: 1
+      - Level: 5
+        Str: 1
+        Int: 1
+        Pow: 1
+        Sta: 1
+      - Level: 6
+        Str: 1
+        Sta: 1
+      - Level: 7
+        Str: 1
+        Dex: 1
+        Sta: 1
+      - Level: 8
+        Dex: 1
+        Crt: 1
+      - Level: 9
+        Agi: 1
+        Vit: 1
+      - Level: 10
+        Dex: 1
+      - Level: 11
+        Vit: 1
+        Int: 1
+      - Level: 12
+        Str: 1
+        Luk: 1
+        Sta: 1
+      - Level: 13
+        Str: 1
+        Vit: 1
+        Sta: 1
+      - Level: 14
+        Crt: 1
+      - Level: 15
+        Wis: 1
+      - Level: 16
+        Str: 1
+        Sta: 1
+      - Level: 17
+        Str: 1
+        Agi: 1
+        Sta: 1
+      - Level: 19
+        Pow: 1
+      - Level: 20
+        Str: 1
+        Sta: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Agi: 1
+      - Level: 23
+        Agi: 1
+      - Level: 24
+        Str: 1
+        Dex: 1
+        Sta: 1
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Dex: 1
+        Luk: 1
+      - Level: 27
+        Con: 1
+      - Level: 28
+        Agi: 1
+        Pow: 1
+      - Level: 29
+        Vit: 1
+        Dex: 1
+      - Level: 30
+        Luk: 1
+        Con: 1
+      - Level: 31
+        Agi: 1
+        Vit: 1
+      - Level: 32
+        Agi: 1
+      - Level: 33
+        Vit: 1
+      - Level: 34
+        Pow: 1
+      - Level: 35
+        Con: 1
+      - Level: 36
+        Pow: 1
+      - Level: 37
+        Con: 1
+      - Level: 38
+        Crt: 1
+      - Level: 40
+        Pow: 1
+      - Level: 41
+        Pow: 1
+      - Level: 42
+        Crt: 1
+      - Level: 44
+        Pow: 1
+      - Level: 45
+        Crt: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Pow: 1
+        Wis: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Pow: 1
+        Crt: 1
+  - Jobs:
+      Shiranui: true
+    MaxWeight: 45000
+    HpFactor: 98
+    SpFactor: 540
+    BaseASPD:
+      Fist: 40
+      Dagger: 45
+      Huuma: 50
+      Shield: 3
+    BonusStats:
+      - Level: 1
+        Vit: 1
+        Int: 1
+      - Level: 2
+        Int: 1
+        Dex: 1
+      - Level: 3
+        Agi: 1
+        Spl: 1
+      - Level: 4
+        Int: 1
+        Dex: 1
+      - Level: 5
+        Int: 1
+        Dex: 1
+      - Level: 6
+        Dex: 1
+        Spl: 1
+      - Level: 7
+        Int: 1
+        Dex: 1
+      - Level: 8
+        Vit: 1
+        Dex: 1
+      - Level: 9
+        Int: 1
+        Spl: 1
+      - Level: 10
+        Vit: 1
+        Dex: 1
+      - Level: 11
+        Agi: 1
+        Int: 1
+      - Level: 12
+        Int: 1
+        Dex: 1
+      - Level: 13
+        Wis: 1
+        Con: 1
+      - Level: 14
+        Int: 1
+        Luk: 1
+      - Level: 15
+        Vit: 1
+        Int: 1
+      - Level: 16
+        Vit: 1
+        Crt: 1
+      - Level: 17
+        Dex: 1
+      - Level: 18
+        Con: 1
+      - Level: 19
+        Wis: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Dex: 1
+        Spl: 1
+      - Level: 23
+        Int: 1
+        Luk: 1
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Spl: 1
+      - Level: 27
+        Str: 1
+        Sta: 1
+      - Level: 28
+        Agi: 1
+        Vit: 1
+      - Level: 29
+        Str: 1
+        Agi: 1
+        Sta: 1
+      - Level: 30
+        Spl: 1
+      - Level: 31
+        Wis: 1
+      - Level: 32
+        Agi: 1
+        Dex: 1
+      - Level: 33
+        Con: 1
+      - Level: 34
+        Agi: 1
+      - Level: 35
+        Vit: 1
+        Dex: 1
+      - Level: 36
+        Str: 1
+        Sta: 1
+      - Level: 37
+        Spl: 1
+      - Level: 40
+        Crt: 1
+      - Level: 43
+        Wis: 1
+        Con: 1
+      - Level: 44
+        Wis: 1
+        Spl: 1
+      - Level: 45
+        Spl: 1
+      - Level: 46
+        Con: 1
+      - Level: 47
+        Spl: 1
+      - Level: 48
+        Crt: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Wis: 1
+        Spl: 1
+  - Jobs:
+      Night_Watch: true
+    MaxWeight: 48000
+    HpFactor: 75
+    HpMultiplicator: 1800
+    SpFactor: 800
+    BaseASPD:
+      Fist: 54
+      Revolver: 49
+      Rifle: 59
+      Gatling: 54
+      Shotgun: 94
+      Grenade: 104
+      Shield: 6
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Sta: 1
+      - Level: 2
+        Str: 1
+        Agi: 1
+        Sta: 1
+      - Level: 3
+        Vit: 1
+        Luk: 1
+      - Level: 4
+        Int: 1
+        Luk: 1
+      - Level: 5
+        Vit: 1
+        Int: 1
+      - Level: 6
+        Vit: 1
+        Dex: 1
+      - Level: 7
+        Dex: 1
+        Pow: 1
+      - Level: 8
+        Agi: 1
+      - Level: 9
+        Luk: 1
+      - Level: 10
+        Luk: 1
+        Wis: 1
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Agi: 1
+        Dex: 1
+      - Level: 13
+        Agi: 1
+        Luk: 1
+      - Level: 14
+        Int: 1
+        Dex: 1
+      - Level: 15
+        Luk: 1
+      - Level: 16
+        Vit: 1
+        Int: 1
+      - Level: 17
+        Int: 1
+      - Level: 18
+        Dex: 1
+      - Level: 19
+        Int: 1
+        Dex: 1
+      - Level: 20
+        Agi: 1
+        Vit: 1
+      - Level: 21
+        Dex: 1
+        Pow: 1
+      - Level: 22
+        Dex: 1
+        Wis: 1
+      - Level: 23
+        Agi: 1
+        Pow: 1
+      - Level: 24
+        Agi: 1
+      - Level: 25
+        Agi: 1
+        Luk: 1
+      - Level: 26
+        Int: 1
+        Con: 1
+      - Level: 27
+        Dex: 1
+        Crt: 1
+      - Level: 28
+        Con: 1
+      - Level: 29
+        Vit: 1
+      - Level: 30
+        Str: 1
+        Int: 1
+        Sta: 1
+      - Level: 31
+        Dex: 1
+        Con: 1
+      - Level: 32
+        Pow: 1
+      - Level: 33
+        Crt: 1
+      - Level: 34
+        Crt: 1
+      - Level: 35
+        Pow: 1
+      - Level: 36
+        Con: 1
+        Crt: 1
+      - Level: 38
+        Wis: 1
+        Con: 1
+      - Level: 40
+        Pow: 1
+      - Level: 41
+        Con: 1
+      - Level: 43
+        Crt: 1
+      - Level: 44
+        Pow: 1
+      - Level: 45
+        Con: 1
+      - Level: 46
+        Pow: 1
+      - Level: 47
+        Con: 1
+      - Level: 48
+        Wis: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Pow: 1
+  - Jobs:
+      Hyper_Novice: true
+    MaxWeight: 40000
+    HpFactor: 55
+    HpMultiplicator: 900
+    SpFactor: 600
+    BaseASPD:
+      Fist: 40
+      Dagger: 55
+      1hSword: 57
+      1hAxe: 50
+      Mace: 50
+      2hMace: 55
+      Staff: 65
+      2hStaff: 65
+      Shield: 10
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Agi: 1
+        Sta: 1
+      - Level: 2
+        Int: 1
+        Dex: 1
+      - Level: 3
+        Vit: 1
+      - Level: 4
+        Luk: 1
+      - Level: 5
+        Str: 1
+        Agi: 1
+        Pow: 1
+        Sta: 1
+      - Level: 6
+        Int: 1
+        Dex: 1
+        Spl: 1
+      - Level: 7
+        Vit: 1
+      - Level: 8
+        Luk: 1
+        Con: 1
+      - Level: 9
+        Dex: 1
+      - Level: 10
+        Agi: 1
+      - Level: 12
+        Vit: 1
+      - Level: 13
+        Int: 1
+        Luk: 1
+        Wis: 1
+      - Level: 14
+        Int: 1
+      - Level: 15
+        Str: 1
+        Sta: 1
+      - Level: 16
+        Crt: 1
+      - Level: 17
+        Str: 1
+        Vit: 1
+        Sta: 1
+        Con: 1
+      - Level: 18
+        Str: 1
+        Sta: 1
+      - Level: 19
+        Int: 1
+        Spl: 1
+      - Level: 20
+        Str: 1
+        Pow: 1
+        Sta: 1
+      - Level: 21
+        Crt: 1
+      - Level: 22
+        Int: 1
+        Spl: 1
+      - Level: 23
+        Int: 1
+      - Level: 24
+        Pow: 1
+      - Level: 25
+        Str: 1
+        Sta: 1
+      - Level: 26
+        Agi: 1
+      - Level: 27
+        Con: 1
+      - Level: 28
+        Dex: 1
+      - Level: 29
+        Vit: 1
+      - Level: 30
+        Pow: 1
+        Spl: 1
+      - Level: 31
+        Vit: 1
+      - Level: 32
+        Wis: 1
+      - Level: 33
+        Pow: 1
+        Spl: 1
+      - Level: 35
+        Str: 1
+        Int: 1
+        Sta: 1
+      - Level: 36
+        Con: 1
+      - Level: 37
+        Luk: 1
+      - Level: 38
+        Crt: 1
+      - Level: 39
+        Wis: 1
+        Spl: 1
+      - Level: 40
+        Pow: 1
+        Con: 1
+      - Level: 41
+        Str: 1
+        Sta: 1
+      - Level: 42
+        Int: 1
+      - Level: 43
+        Pow: 1
+      - Level: 44
+        Luk: 1
+      - Level: 45
+        Wis: 1
+        Spl: 1
+      - Level: 46
+        Luk: 1
+      - Level: 47
+        Con: 1
+      - Level: 48
+        Str: 1
+        Int: 1
+        Sta: 1
+      - Level: 49
+        Pow: 1
+        Spl: 1
+      - Level: 50
+        Agi: 1
+        Dex: 1
+  - Jobs:
+      Spirit_Handler: true
+    MaxWeight: 42000
+    HpFactor: 80
+    HpMultiplicator: 1150
+    SpFactor: 730
+    BaseASPD:
+      Fist: 40
+      Staff: 60
+      Shield: 7
+    BonusStats:
+      - Level: 1
+        Dex: 1
+      - Level: 2
+        Int: 1
+        Dex: 1
+      - Level: 3
+        Int: 1
+        Crt: 1
+      - Level: 4
+        Str: 1
+        Sta: 1
+      - Level: 5
+        Vit: 1
+        Dex: 1
+      - Level: 6
+        Dex: 1
+      - Level: 7
+        Agi: 1
+      - Level: 8
+        Int: 1
+        Luk: 1
+      - Level: 9
+        Agi: 1
+        Spl: 1
+      - Level: 10
+        Str: 1
+        Pow: 1
+        Sta: 1
+      - Level: 11
+        Dex: 1
+        Crt: 1
+      - Level: 12
+        Vit: 1
+        Con: 1
+      - Level: 13
+        Agi: 1
+      - Level: 14
+        Dex: 1
+      - Level: 15
+        Int: 1
+        Spl: 1
+      - Level: 16
+        Dex: 1
+      - Level: 17
+        Int: 1
+      - Level: 18
+        Dex: 1
+        Wis: 1
+      - Level: 19
+        Agi: 1
+      - Level: 20
+        Agi: 1
+        Pow: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Vit: 1
+        Spl: 1
+      - Level: 23
+        Str: 1
+        Sta: 1
+      - Level: 24
+        Int: 1
+        Con: 1
+      - Level: 25
+        Int: 1
+        Crt: 1
+      - Level: 26
+        Vit: 1
+      - Level: 27
+        Luk: 1
+        Wis: 1
+      - Level: 28
+        Luk: 1
+      - Level: 29
+        Dex: 1
+      - Level: 30
+        Int: 1
+        Spl: 1
+      - Level: 31
+        Str: 1
+        Sta: 1
+      - Level: 32
+        Dex: 1
+        Con: 1
+      - Level: 33
+        Agi: 1
+        Pow: 1
+      - Level: 34
+        Vit: 1
+      - Level: 35
+        Dex: 1
+      - Level: 36
+        Str: 1
+        Sta: 1
+      - Level: 37
+        Int: 1
+      - Level: 38
+        Luk: 1
+        Spl: 1
+      - Level: 39
+        Pow: 1
+        Con: 1
+      - Level: 40
+        Luk: 1
+      - Level: 41
+        Pow: 1
+      - Level: 42
+        Wis: 1
+        Spl: 1
+      - Level: 43
+        Agi: 1
+      - Level: 44
+        Pow: 1
+      - Level: 45
+        Spl: 1
+        Con: 1
+      - Level: 47
+        Wis: 1
+        Con: 1
+      - Level: 49
+        Crt: 1
+      - Level: 50
+        Pow: 1

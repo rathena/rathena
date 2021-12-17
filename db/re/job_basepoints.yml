@@ -289,6 +289,7 @@ Body:
       Super_Baby: true
       Super_Novice_E: true
       Super_Baby_E: true
+      Hyper_Novice: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -2121,6 +2122,8 @@ Body:
       Rune_Knight_T2: true
       Baby_Rune_Knight: true
       Baby_Rune_Knight2: true
+      Dragon_Knight: true
+      Dragon_Knight2: true
     BaseHp:
       - Level: 99
         Hp: 8100
@@ -2533,6 +2536,7 @@ Body:
       Arch_Bishop: true
       Arch_Bishop_T: true
       Baby_Arch_Bishop: true
+      Cardinal: true
     BaseHp:
       - Level: 99
         Hp: 4300
@@ -2945,6 +2949,7 @@ Body:
       Warlock: true
       Warlock_T: true
       Baby_Warlock: true
+      Arch_Mage: true
     BaseHp:
       - Level: 99
         Hp: 3200
@@ -3360,6 +3365,8 @@ Body:
       Mechanic_T2: true
       Baby_Mechanic: true
       Baby_Mechanic2: true
+      Meister: true
+      Meister2: true
     BaseHp:
       - Level: 99
         Hp: 5807
@@ -3775,6 +3782,8 @@ Body:
       Ranger_T2: true
       Baby_Ranger: true
       Baby_Ranger2: true
+      Windhawk: true
+      Windhawk2: true
     BaseHp:
       - Level: 99
         Hp: 4800
@@ -4187,6 +4196,7 @@ Body:
       Guillotine_Cross: true
       Guillotine_Cross_T: true
       Baby_Guillotine_Cross: true
+      Shadow_Cross: true
     BaseHp:
       - Level: 99
         Hp: 6050
@@ -4605,6 +4615,8 @@ Body:
       Royal_Guard_T2: true
       Baby_Royal_Guard: true
       Baby_Royal_Guard2: true
+      Imperial_Guard: true
+      Imperial_Guard2: true
     BaseHp:
       - Level: 99
         Hp: 6050
@@ -5017,6 +5029,7 @@ Body:
       Sura: true
       Sura_T: true
       Baby_Sura: true
+      Inquisitor: true
     BaseHp:
       - Level: 99
         Hp: 5050
@@ -5429,6 +5442,7 @@ Body:
       Sorcerer: true
       Sorcerer_T: true
       Baby_Sorcerer: true
+      Elemental_Master: true
     BaseHp:
       - Level: 99
         Hp: 4080
@@ -5841,6 +5855,7 @@ Body:
       Shadow_Chaser: true
       Shadow_Chaser_T: true
       Baby_Shadow_Chaser: true
+      Abyss_Chaser: true
     BaseHp:
       - Level: 99
         Hp: 6050
@@ -6253,6 +6268,7 @@ Body:
       Genetic: true
       Genetic_T: true
       Baby_Genetic: true
+      Biolo: true
     BaseHp:
       - Level: 99
         Hp: 4730
@@ -6665,6 +6681,7 @@ Body:
       Minstrel: true
       Minstrel_T: true
       Baby_Minstrel: true
+      Troubadour: true
     BaseHp:
       - Level: 99
         Hp: 4800
@@ -7077,6 +7094,7 @@ Body:
       Wanderer: true
       Wanderer_T: true
       Baby_Wanderer: true
+      Trouvere: true
     BaseHp:
       - Level: 99
         Hp: 4800
@@ -7487,6 +7505,7 @@ Body:
   - Jobs:
       Rebellion: true
       Baby_Rebellion: true
+      Night_Watch: true
     BaseHp:
       - Level: 99
         Hp: 4938
@@ -7897,6 +7916,7 @@ Body:
   - Jobs:
       Kagerou: true
       Baby_Kagerou: true
+      Shinkiro: true
     BaseHp:
       - Level: 99
         Hp: 4250
@@ -8105,6 +8125,7 @@ Body:
   - Jobs:
       Oboro: true
       Baby_Oboro: true
+      Shiranui: true
     BaseHp:
       - Level: 99
         Hp: 4250
@@ -9524,6 +9545,7 @@ Body:
   - Jobs:
       Summoner: true
       Baby_Summoner: true
+      Spirit_Handler: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -9884,6 +9906,7 @@ Body:
       Super_Baby: true
       Super_Novice_E: true
       Super_Baby_E: true
+      Hyper_Novice: true
     BaseSp:
       - Level: 1
         Sp: 11
@@ -11716,6 +11739,8 @@ Body:
       Rune_Knight_T2: true
       Baby_Rune_Knight: true
       Baby_Rune_Knight2: true
+      Dragon_Knight: true
+      Dragon_Knight2: true
     BaseSp:
       - Level: 99
         Sp: 300
@@ -12128,6 +12153,7 @@ Body:
       Arch_Bishop: true
       Arch_Bishop_T: true
       Baby_Arch_Bishop: true
+      Cardinal: true
     BaseSp:
       - Level: 99
         Sp: 800
@@ -12540,6 +12566,7 @@ Body:
       Warlock: true
       Warlock_T: true
       Baby_Warlock: true
+      Arch_Mage: true
     BaseSp:
       - Level: 99
         Sp: 900
@@ -12955,6 +12982,8 @@ Body:
       Mechanic_T2: true
       Baby_Mechanic: true
       Baby_Mechanic2: true
+      Meister: true
+      Meister2: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -13370,6 +13399,8 @@ Body:
       Ranger_T2: true
       Baby_Ranger: true
       Baby_Ranger2: true
+      Windhawk: true
+      Windhawk2: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -13782,6 +13813,7 @@ Body:
       Guillotine_Cross: true
       Guillotine_Cross_T: true
       Baby_Guillotine_Cross: true
+      Shadow_Cross: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -14200,6 +14232,8 @@ Body:
       Royal_Guard_T2: true
       Baby_Royal_Guard: true
       Baby_Royal_Guard2: true
+      Imperial_Guard: true
+      Imperial_Guard2: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -14612,6 +14646,7 @@ Body:
       Sura: true
       Sura_T: true
       Baby_Sura: true
+      Inquisitor: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -15024,6 +15059,7 @@ Body:
       Sorcerer: true
       Sorcerer_T: true
       Baby_Sorcerer: true
+      Elemental_Master: true
     BaseSp:
       - Level: 99
         Sp: 900
@@ -15436,6 +15472,7 @@ Body:
       Shadow_Chaser: true
       Shadow_Chaser_T: true
       Baby_Shadow_Chaser: true
+      Abyss_Chaser: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -15848,6 +15885,7 @@ Body:
       Genetic: true
       Genetic_T: true
       Baby_Genetic: true
+      Biolo: true
     BaseSp:
       - Level: 99
         Sp: 900
@@ -16260,6 +16298,7 @@ Body:
       Minstrel: true
       Minstrel_T: true
       Baby_Minstrel: true
+      Troubadour: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -16672,6 +16711,7 @@ Body:
       Wanderer: true
       Wanderer_T: true
       Baby_Wanderer: true
+      Trouvere: true
     BaseSp:
       - Level: 99
         Sp: 400
@@ -16882,6 +16922,7 @@ Body:
       Rebellion: true
       Baby_Gunslinger: true
       Baby_Rebellion: true
+      Night_Watch: true
     BaseSp:
       - Level: 1
         Sp: 12
@@ -17488,6 +17529,7 @@ Body:
   - Jobs:
       Kagerou: true
       Baby_Kagerou: true
+      Shinkiro: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -17696,6 +17738,7 @@ Body:
   - Jobs:
       Oboro: true
       Baby_Oboro: true
+      Shiranui: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -19115,6 +19158,7 @@ Body:
   - Jobs:
       Summoner: true
       Baby_Summoner: true
+      Spirit_Handler: true
     BaseSp:
       - Level: 1
         Sp: 8
@@ -19472,6 +19516,7 @@ Body:
       Baby_Star_Emperor: true
       Star_Emperor2: true
       Baby_Star_Emperor2: true
+      Sky_Emperor: true
     BaseHp:
       - Level: 99
         Hp: 4300
@@ -19631,6 +19676,7 @@ Body:
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
+      Soul_Ascetic: true
     BaseHp:
       - Level: 99
         Hp: 4300
@@ -19792,6 +19838,7 @@ Body:
       Baby_Star_Emperor: true
       Star_Emperor2: true
       Baby_Star_Emperor2: true
+      Sky_Emperor: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -19951,6 +19998,7 @@ Body:
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
+      Soul_Ascetic: true
     BaseSp:
       - Level: 99
         Sp: 900
