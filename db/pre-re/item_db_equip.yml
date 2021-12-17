@@ -41129,7 +41129,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    # EquipLevelMin: 130
+    EquipLevelMin: 130
     Refineable: true
     Script: |
       bonus bAspdRate,getrefine()/2;
@@ -41147,7 +41147,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    # EquipLevelMin: 130
+    EquipLevelMin: 130
     Refineable: true
     Script: |
       bonus bBaseAtk,getrefine()*5;
@@ -41166,7 +41166,7 @@ Body:
     Locations:
       Right_Hand: true
     WeaponLevel: 4
-    # EquipLevelMin: 130
+    EquipLevelMin: 130
     Refineable: true
     Script: |
       bonus bUseSPrate,getrefine()*-1;
