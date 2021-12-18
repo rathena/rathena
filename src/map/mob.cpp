@@ -458,7 +458,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->mob_id = data->id;
 	md->state.boss = data->state.boss;
 	md->db = mob_db.find(md->mob_id);
-	if (data->level > 0 && data->level <= MAX_LEVEL)
+	if (data->level > 0)
 		md->level = data->level;
 	memcpy(md->name, data->name, NAME_LENGTH);
 	if (data->state.ai)
@@ -4376,11 +4376,6 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "Level", level))
 			return 0;
-
-		if (level > MAX_LEVEL) {
-			this->invalidWarning(node["Level"], "Level %hu exceeds MAX_LEVEL, capping to %hu.\n", level, MAX_LEVEL);
-			level = MAX_LEVEL;
-		}
 
 		mob->lv = level;
 	} else {
