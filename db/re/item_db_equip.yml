@@ -7400,8 +7400,6 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Classes:
-      Upper: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -30475,10 +30473,6 @@ Body:
       Novice: true
       SuperNovice: true
       Thief: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -50805,10 +50799,6 @@ Body:
     Buy: 250000
     Weight: 500
     Defense: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -50838,10 +50828,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Low: true
     ArmorLevel: 1
@@ -50855,10 +50841,6 @@ Body:
     Buy: 20
     Weight: 100
     Defense: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Mid: true
     ArmorLevel: 1
@@ -50969,10 +50951,6 @@ Body:
     Buy: 20
     Weight: 200
     Defense: 2
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51106,10 +51084,6 @@ Body:
     Buy: 20
     Weight: 200
     Slots: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51139,10 +51113,6 @@ Body:
     Buy: 20
     Weight: 100
     Defense: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -58360,10 +58330,6 @@ Body:
     Jobs:
       KagerouOboro: true
       Ninja: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -58940,10 +58906,6 @@ Body:
     Jobs:
       KagerouOboro: true
       Ninja: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -115517,10 +115479,6 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
