@@ -335,19 +335,28 @@ const char* job_name(int class_) {
 		case JOB_INQUISITOR:
 		case JOB_TROUBADOUR:
 		case JOB_TROUVERE:
-			return msg_txt(122 - JOB_DRAGON_KNIGHT + class_);
+			return msg_txt( 122 - JOB_DRAGON_KNIGHT + class_ );
 
 		case JOB_WINDHAWK2:
-			return msg_txt(127);
+			return msg_txt( 127 );
 
 		case JOB_MEISTER2:
-			return msg_txt(123);
+			return msg_txt( 123 );
 
 		case JOB_DRAGON_KNIGHT2:
-			return msg_txt(122);
+			return msg_txt( 122 );
 
 		case JOB_IMPERIAL_GUARD2:
-			return msg_txt(128);
+			return msg_txt( 128 );
+
+		case JOB_SKY_EMPEROR:
+		case JOB_SOUL_ASCETIC:
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:
+		case JOB_NIGHT_WATCH:
+		case JOB_HYPER_NOVICE:
+		case JOB_SPIRIT_HANDLER:
+			return msg_txt( 143 - JOB_SKY_EMPEROR + class_ );
 
 		default:
 			return msg_txt(199);

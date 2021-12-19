@@ -71,8 +71,8 @@ static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 PlayerStatPointDatabase statpoint_db;
 PlayerTraitPointDatabase traitpoint_db;
 
-// h-files are for declarations, not for implementations... [Shinomori]
-struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
+SkillTreeDatabase skill_tree_db;
+
 // timer for night.day implementation
 int day_timer_tid = INVALID_TIMER;
 int night_timer_tid = INVALID_TIMER;
@@ -1538,6 +1538,9 @@ static bool pc_isItemClass (struct map_session_data *sd, struct item_data* item)
 		//third-baby classes
 		if (item->class_upper&ITEMJ_THIRD_BABY && sd->class_&JOBL_THIRD && sd->class_&JOBL_BABY)
 			break;
+		//fourth classes
+		if (item->class_upper&ITEMJ_FOURTH && sd->class_&JOBL_FOURTH)
+			break;
 #endif
 		// 4th Jobs - For equips exclusive to any 4th job classes only.
 		if (item->class_upper&ITEMJ_FOURTH && sd->class_&JOBL_FOURTH)
@@ -2196,6 +2199,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		ShowError( "pc_calc_skilltree: Unable to normalize job %s(%d) for character %s (%d:%d)\n", job_name( sd->status.class_ ), sd->status.class_, sd->status.name, sd->status.account_id, sd->status.char_id );
 		return;
 	}
+	uint16 job_id = class_;
 	class_ = pc_class2idx(class_);
 
 	for (const auto &skill : skill_db) {
@@ -2236,19 +2240,18 @@ void pc_calc_skilltree(struct map_session_data *sd)
 
 	// Removes Taekwon Ranker skill bonus
 	if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
-		uint16 c_ = pc_class2idx(JOB_TAEKWON);
-
-		for (uint16 i = 0; i < MAX_SKILL_TREE; i++) {
-			uint16 sk_id = skill_tree[c_][i].skill_id;
-			uint16 sk_idx = 0;
-
-			if (!sk_id || !(sk_idx = skill_get_index(skill_tree[c_][i].skill_id)))
-				continue;
-
-			if (sd->status.skill[sk_idx].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[sk_idx].flag != SKILL_FLAG_PERM_GRANTED) {
-				if (sk_id == NV_BASIC || sk_id == NV_FIRSTAID || sk_id == WE_CALLBABY)
+		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(JOB_TAEKWON);
+	
+		if (tree != nullptr && !tree->skills.empty()) {
+			for (const auto &it : tree->skills) {
+				uint16 sk_idx = skill_get_index(it.first);
+				if (sk_idx == 0)
 					continue;
-				sd->status.skill[sk_idx].id = 0;
+				if (sd->status.skill[sk_idx].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[sk_idx].flag != SKILL_FLAG_PERM_GRANTED) {
+					if (it.first == NV_BASIC || it.first == NV_FIRSTAID || it.first == WE_CALLBABY)
+						continue;
+					sd->status.skill[sk_idx].id = 0;
+				}
 			}
 		}
 	}
@@ -2257,13 +2260,16 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	pc_grant_allskills(sd, false);
 
 	int flag;
+	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(job_id);
 
 	do {
-		uint16 skid = 0;
-
 		flag = 0;
-		for (uint16 i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[class_][i].skill_id) > 0; i++) {
+		if (tree == nullptr || tree->skills.empty())
+			break;
+
+		for (const auto &skillsit : tree->skills) {
 			bool fail = false;
+			uint16 skid = skillsit.first;
 			uint16 sk_idx = skill_get_index(skid);
 
 			if (sd->status.skill[sk_idx].id)
@@ -2271,39 +2277,43 @@ void pc_calc_skilltree(struct map_session_data *sd)
 
 			if (!battle_config.skillfree) {
 				// Checking required skills
-				for(uint8 j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
-					uint16 sk_need_id = skill_tree[class_][i].need[j].skill_id;
-					uint16 sk_need_idx = 0;
+				std::shared_ptr<s_skill_tree_entry> entry = skillsit.second;
 
-					if (sk_need_id && (sk_need_idx = skill_get_index(sk_need_id))) {
-						short sk_need = sk_need_id;
+				if (entry != nullptr && !entry->need.empty()) {
+					for (const auto &it : entry->need) {
+						uint16 sk_need_id = it.first;
+						uint16 sk_need_idx = skill_get_index(sk_need_id);
 
-						if (sd->status.skill[sk_need_idx].id == 0 || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_PLAGIARIZED)
-							sk_need = 0; //Not learned.
-						else if (sd->status.skill[sk_need_idx].flag >= SKILL_FLAG_REPLACED_LV_0) //Real learned level
-							sk_need = sd->status.skill[sk_need_idx].flag - SKILL_FLAG_REPLACED_LV_0;
-						else
-							sk_need = pc_checkskill(sd,sk_need_id);
+						if (sk_need_idx > 0) {
+							uint16 sk_need = sk_need_id;
 
-						if (sk_need < skill_tree[class_][i].need[j].skill_lv) {
-							fail = true;
-							break;
+							if (sd->status.skill[sk_need_idx].id == 0 || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_PLAGIARIZED)
+								sk_need = 0; //Not learned.
+							else if (sd->status.skill[sk_need_idx].flag >= SKILL_FLAG_REPLACED_LV_0) //Real learned level
+								sk_need = sd->status.skill[sk_need_idx].flag - SKILL_FLAG_REPLACED_LV_0;
+							else
+								sk_need = pc_checkskill(sd,sk_need_id);
+
+							if (sk_need < it.second) {
+								fail = true;
+								break;
+							}
 						}
 					}
 				}
 
-				if (sd->status.base_level < skill_tree[class_][i].baselv) { //We need to get the actual class in this case
+				if (sd->status.base_level < entry->baselv) { //We need to get the actual class in this case
 					int c_ = pc_mapid2jobid(sd->class_, sd->status.sex);
 
 					c_ = pc_class2idx(c_);
-					if (class_ == c_ || (class_ != c_ && sd->status.base_level < skill_tree[class_][i].baselv))
+					if (class_ == c_ || (class_ != c_ && sd->status.base_level < entry->baselv))
 						fail = true; // base level requirement wasn't satisfied
 				}
-				if (sd->status.job_level < skill_tree[class_][i].joblv) { //We need to get the actual class in this case
+				if (sd->status.job_level < entry->joblv) { //We need to get the actual class in this case
 					int c_ = pc_mapid2jobid(sd->class_, sd->status.sex);
 
 					c_ = pc_class2idx(c_);
-					if (class_ == c_ || (class_ != c_ && sd->status.job_level < skill_tree[class_][i].joblv))
+					if (class_ == c_ || (class_ != c_ && sd->status.job_level < entry->joblv))
 						fail = true; // job level requirement wasn't satisfied
 				}
 			}
@@ -2338,20 +2348,25 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		- (c > 0) to avoid grant Novice Skill Tree in case of Skill Reset (need more logic)
 		- (sd->status.skill_point == 0) to wait until all skill points are assigned to avoid problems with Job Change quest. */
 
-		for( uint16 i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[class_][i].skill_id) > 0; i++ ) {
-			uint16 sk_idx = skill_get_index(skid);
+		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(job_id);
 
-			if (sk_idx == 0)
-				continue;
+		if (tree != nullptr && !tree->skills.empty()) {
+			for (const auto &it : tree->skills) {
+				skid = it.first;
+				uint16 sk_idx = skill_get_index(skid);
 
-			if( skill_get_inf2_(skid, { INF2_ISQUEST, INF2_ISWEDDING }) )
-				continue; //Do not include Quest/Wedding skills.
-			if( sd->status.skill[sk_idx].id == 0 ) {
-				sd->status.skill[sk_idx].id = skid;
-				sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY; // So it is not saved, and tagged as a "bonus" skill.
-			} else if( skid != NV_BASIC )
-				sd->status.skill[sk_idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[sk_idx].lv; // Remember original level
-			sd->status.skill[sk_idx].lv = skill_tree_get_max(skid, sd->status.class_);
+				if (sk_idx == 0)
+					continue;
+
+				if( skill_get_inf2_(skid, { INF2_ISQUEST, INF2_ISWEDDING }) )
+					continue; //Do not include Quest/Wedding skills.
+				if( sd->status.skill[sk_idx].id == 0 ) {
+					sd->status.skill[sk_idx].id = skid;
+					sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY; // So it is not saved, and tagged as a "bonus" skill.
+				} else if( skid != NV_BASIC )
+					sd->status.skill[sk_idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[sk_idx].lv; // Remember original level
+				sd->status.skill[sk_idx].lv = skill_tree_get_max(skid, sd->status.class_);
+			}
 		}
 	}
 
@@ -2385,13 +2400,15 @@ static void pc_check_skilltree(struct map_session_data *sd)
 		ShowError("pc_check_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", sd->status.class_, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return;
 	}
-	c = pc_class2idx(c);
+	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(c);
+	if (tree == nullptr || tree->skills.empty())
+		return;
 
 	do {
-		uint16 skid = 0;
-
 		flag = 0;
-		for (int i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++ ) {
+
+		for (const auto &skillsit : tree->skills) {
+			uint16 skid = skillsit.first;
 			uint16 sk_idx = skill_get_index(skid);
 			bool fail = false;
 
@@ -2399,30 +2416,34 @@ static void pc_check_skilltree(struct map_session_data *sd)
 				continue;
 
 			// Checking required skills
-			for (uint8 j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
-				uint16 sk_need_id = skill_tree[c][i].need[j].skill_id;
-				uint16 sk_need_idx = 0;
+			std::shared_ptr<s_skill_tree_entry> entry = skillsit.second;
 
-				if (sk_need_id && (sk_need_idx = skill_get_index(sk_need_id))) {
-					short sk_need = sk_need_id;
+			if (entry != nullptr && !entry->need.empty()) {
+				for (const auto &it : entry->need) {
+					uint16 sk_need_id = it.first;
+					uint16 sk_need_idx = skill_get_index(sk_need_id);
 
-					if (sd->status.skill[sk_need_idx].id == 0 || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_PLAGIARIZED)
-						sk_need = 0; //Not learned.
-					else if (sd->status.skill[sk_need_idx].flag >= SKILL_FLAG_REPLACED_LV_0) //Real lerned level
-						sk_need = sd->status.skill[sk_need_idx].flag - SKILL_FLAG_REPLACED_LV_0;
-					else
-						sk_need = pc_checkskill(sd,sk_need_id);
+					if (sk_need_id > 0) {
+						short sk_need = sk_need_id;
 
-					if (sk_need < skill_tree[c][i].need[j].skill_lv) {
-						fail = true;
-						break;
+						if (sd->status.skill[sk_need_idx].id == 0 || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_TEMPORARY || sd->status.skill[sk_need_idx].flag == SKILL_FLAG_PLAGIARIZED)
+							sk_need = 0; //Not learned.
+						else if (sd->status.skill[sk_need_idx].flag >= SKILL_FLAG_REPLACED_LV_0) //Real lerned level
+							sk_need = sd->status.skill[sk_need_idx].flag - SKILL_FLAG_REPLACED_LV_0;
+						else
+							sk_need = pc_checkskill(sd,sk_need_id);
+
+						if (sk_need < it.second) {
+							fail = true;
+							break;
+						}
 					}
 				}
 			}
 
 			if( fail )
 				continue;
-			if (sd->status.base_level < skill_tree[c][i].baselv || sd->status.job_level < skill_tree[c][i].joblv)
+			if (sd->status.base_level < entry->baselv || sd->status.job_level < entry->joblv)
 				continue;
 
 			std::shared_ptr<s_skill_db> skill = skill_db.find(skid);
@@ -6970,6 +6991,28 @@ uint64 pc_jobid2mapid(unsigned short b_class)
 		case JOB_ABYSS_CHASER:          return MAPID_ABYSS_CHASER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
+		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
+	//4-1 Jobs
+		case JOB_HYPER_NOVICE:          return MAPID_HYPER_NOVICE;
+		case JOB_DRAGON_KNIGHT:         return MAPID_DRAGON_KNIGHT;
+		case JOB_ARCH_MAGE:             return MAPID_ARCH_MAGE;
+		case JOB_WINDHAWK:              return MAPID_WINDHAWK;
+		case JOB_CARDINAL:              return MAPID_CARDINAL;
+		case JOB_MEISTER:               return MAPID_MEISTER;
+		case JOB_SHADOW_CROSS:          return MAPID_SHADOW_CROSS;
+		case JOB_SKY_EMPEROR:           return MAPID_SKY_EMPEROR;
+		case JOB_NIGHT_WATCH:           return MAPID_NIGHT_WATCH;
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:              return MAPID_SHINKIRO_SHIRANUI;
+	//4-2 Jobs
+		case JOB_IMPERIAL_GUARD:        return MAPID_IMPERIAL_GUARD;
+		case JOB_ELEMENTAL_MASTER:      return MAPID_ELEMENTAL_MASTER;
+		case JOB_INQUISITOR:            return MAPID_INQUISITOR;
+		case JOB_TROUBADOUR:
+		case JOB_TROUVERE:              return MAPID_TROUBADOURTROUVERE;
+		case JOB_BIOLO:                 return MAPID_BIOLO;
+		case JOB_ABYSS_CHASER:          return MAPID_ABYSS_CHASER;
+	//Unknown
 		default:
 			return -1;
 	}
@@ -7135,6 +7178,22 @@ int pc_mapid2jobid(uint64 class_, int sex)
 		case MAPID_ABYSS_CHASER:          return JOB_ABYSS_CHASER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
+		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
+	//4-1 Jobs
+		case MAPID_DRAGON_KNIGHT:         return JOB_DRAGON_KNIGHT;
+		case MAPID_ARCH_MAGE:             return JOB_ARCH_MAGE;
+		case MAPID_WINDHAWK:              return JOB_WINDHAWK;
+		case MAPID_CARDINAL:              return JOB_CARDINAL;
+		case MAPID_MEISTER:               return JOB_MEISTER;
+		case MAPID_SHADOW_CROSS:          return JOB_SHADOW_CROSS;
+	//4-2 Jobs
+		case MAPID_IMPERIAL_GUARD:        return JOB_IMPERIAL_GUARD;
+		case MAPID_ELEMENTAL_MASTER:      return JOB_ELEMENTAL_MASTER;
+		case MAPID_INQUISITOR:            return JOB_INQUISITOR;
+		case MAPID_TROUBADOURTROUVERE:    return sex?JOB_TROUBADOUR:JOB_TROUVERE;
+		case MAPID_BIOLO:                 return JOB_BIOLO;
+		case MAPID_ABYSS_CHASER:          return JOB_ABYSS_CHASER;
+	//Unknown
 		default:
 			return -1;
 	}
@@ -7407,19 +7466,28 @@ const char* job_name(int class_)
 	case JOB_INQUISITOR:
 	case JOB_TROUBADOUR:
 	case JOB_TROUVERE:
-		return msg_txt(NULL, 2001 - JOB_DRAGON_KNIGHT + class_);
+		return msg_txt( nullptr, 800 - JOB_DRAGON_KNIGHT + class_ );
 
 	case JOB_WINDHAWK2:
-		return msg_txt(NULL, 2006);
+		return msg_txt( nullptr, 805);
 
 	case JOB_MEISTER2:
-		return msg_txt(NULL, 2002);
+		return msg_txt( nullptr, 801 );
 
 	case JOB_DRAGON_KNIGHT2:
-		return msg_txt(NULL, 2001);
+		return msg_txt( nullptr, 800 );
 
 	case JOB_IMPERIAL_GUARD2:
-		return msg_txt(NULL, 2007);
+		return msg_txt( nullptr, 806 );
+
+	case JOB_SKY_EMPEROR:
+	case JOB_SOUL_ASCETIC:
+	case JOB_SHINKIRO:
+	case JOB_SHIRANUI:
+	case JOB_NIGHT_WATCH:
+	case JOB_HYPER_NOVICE:
+	case JOB_SPIRIT_HANDLER:
+		return msg_txt( nullptr, 813 - JOB_SKY_EMPEROR + class_ );
 
 	default:
 		return msg_txt(NULL,655);
@@ -8428,23 +8496,28 @@ int pc_allskillup(struct map_session_data *sd)
 
 	if (!pc_grant_allskills(sd, true)) {
 		uint16 sk_id;
-		for (i = 0; i < MAX_SKILL_TREE && (sk_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0;i++){
-			uint16 sk_idx = skill_get_index(sk_id);
+		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
 
-			if (sk_id == 0 || sk_idx == 0)
-				continue;
+		if (tree != nullptr && !tree->skills.empty()) {
+			for (const auto &skillsit : tree->skills) {
+				sk_id = skillsit.first;
+				uint16 sk_idx = skill_get_index(sk_id);
 
-			std::shared_ptr<s_skill_db> skill = skill_db.find(sk_id);
+				if (sk_idx == 0)
+					continue;
 
-			if (
-				(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
-				((skill->inf2[INF2_ISWEDDING] || skill->inf2[INF2_ISSPIRIT])) ||
-				sk_id == SG_DEVIL
-			)
-				continue; //Cannot be learned normally.
+				std::shared_ptr<s_skill_db> skill = skill_db.find(sk_id);
 
-			sd->status.skill[sk_idx].id = sk_id;
-			sd->status.skill[sk_idx].lv = skill_tree_get_max(sk_id, sd->status.class_);	// celest
+				if (
+					(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
+					((skill->inf2[INF2_ISWEDDING] || skill->inf2[INF2_ISSPIRIT])) ||
+					sk_id == SG_DEVIL
+				)
+					continue; //Cannot be learned normally.
+
+				sd->status.skill[sk_idx].id = sk_id;
+				sd->status.skill[sk_idx].lv = skill_tree_get_max(sk_id, sd->status.class_);	// celest
+			}
 		}
 	}
 	status_calc_pc(sd,SCO_NONE);
@@ -10173,13 +10246,15 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
-		const int class_ = pc_class2idx(sd->status.class_);
-		uint16 skill_id;
-		for(i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[class_][i].skill_id) > 0; i++) {
-			//Remove status specific to your current tree skills.
-			enum sc_type sc = status_skill2sc(skill_id);
-			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-				status_change_end(&sd->bl, sc, INVALID_TIMER);
+		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
+
+		if (tree != nullptr && !tree->skills.empty()) {
+			for (const auto &skillsit : tree->skills) {
+				//Remove status specific to your current tree skills.
+				enum sc_type sc = status_skill2sc(skillsit.first);
+				if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+					status_change_end(&sd->bl, sc, INVALID_TIMER);
+			}
 		}
 	}
 
@@ -11732,6 +11807,9 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
+#ifdef RENEWAL
+		status_change_end(&sd->bl, SC_MAXOVERTHRUST, INVALID_TIMER);
+#endif
 	}
 
 	// On armor change
@@ -12659,101 +12737,302 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 	return i;
 }
 
-/*==========================================
- * sub DB reading.
- * Function used to read skill_tree.txt
- *------------------------------------------*/
-static bool pc_readdb_skilltree(char* fields[], int columns, int current)
-{
-	uint32 baselv, joblv, baselv_max, joblv_max;
-	uint16 skill_id, skill_lv, skill_lv_max;
-	int idx, class_;
-	unsigned int i, offset, skill_idx;
 
-	class_  = atoi(fields[0]);
-	skill_id = (uint16)atoi(fields[1]);
-	skill_lv = (uint16)atoi(fields[2]);
+std::shared_ptr<s_skill_tree_entry> SkillTreeDatabase::get_skill_data(int class_, uint16 skill_id) {
+	std::shared_ptr<s_skill_tree> tree = this->find(class_);
 
-	if (columns == 5 + MAX_PC_SKILL_REQUIRE * 2) { // Base/Job level requirement extra columns
-		baselv = (uint32)atoi(fields[3]);
-		joblv = (uint32)atoi(fields[4]);
-		offset = 5;
-	}
-	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
-		baselv = joblv = 0;
-		offset = 3;
-	}
-	else {
-		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
-		return false;
-	}
+	if (tree != nullptr)
+		return util::umap_find(tree->skills, skill_id);
 
-	if(!pcdb_checkid(class_))
-	{
-		ShowWarning("pc_readdb_skilltree: Invalid job class %d specified.\n", class_);
-		return false;
-	}
-	idx = pc_class2idx(class_);
+	return nullptr;
+}
 
-	if (!skill_get_index(skill_id)) {
-		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree.\n", skill_id, class_);
-		return false;
-	}
-	if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level.\n", skill_id, skill_lv, class_, skill_lv_max);
-		skill_lv = skill_lv_max;
-	}
-	if (baselv > (baselv_max = job_db.get_maxBaseLv(class_))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's base level requirement %d exceeds job %d's max base level %d. Capping skill base level.\n", skill_id, baselv, class_, baselv_max);
-		baselv = baselv_max;
-	}
-	if (joblv > (joblv_max = job_db.get_maxJobLv(class_))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's job level requirement %d exceeds job %d's max job level %d. Capping skill job level.\n", skill_id, joblv, class_, joblv_max);
-		joblv = joblv_max;
-	}
+const std::string SkillTreeDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/skill_tree.yml";
+}
 
-	//This is to avoid adding two lines for the same skill. [Skotlex]
-	ARR_FIND( 0, MAX_SKILL_TREE, skill_idx, skill_tree[idx][skill_idx].skill_id == 0 || skill_tree[idx][skill_idx].skill_id == skill_id );
-	if( skill_idx == MAX_SKILL_TREE )
-	{
-		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree. Maximum number of skills per job has been reached.\n", skill_id, class_);
-		return false;
+/**
+ * Reads and parses an entry from the skill_tree.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 SkillTreeDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string job_name;
+
+	if (!this->asString(node, "Job", job_name))
+		return 0;
+
+	int64 constant;
+	std::string job_name_constant = "JOB_" + job_name;
+
+	if (!script_get_constant(job_name_constant.c_str(), &constant) || !pcdb_checkid(constant)) {
+		this->invalidWarning(node["Job"], "Invalid job %s.\n", job_name.c_str());
+		return 0;
 	}
-	else if(skill_tree[idx][skill_idx].skill_id)
-	{
-		ShowNotice("pc_readdb_skilltree: Overwriting skill %hu for job %d.\n", skill_id, class_);
-	}
+	uint16 job_id = static_cast<uint16>(constant);
 
-	skill_tree[idx][skill_idx].skill_id = skill_id;
-	skill_tree[idx][skill_idx].skill_lv = skill_lv;
-	skill_tree[idx][skill_idx].baselv	= baselv;
-	skill_tree[idx][skill_idx].joblv	= joblv;
+	std::shared_ptr<s_skill_tree> tree = this->find(job_id);
+	bool exists = tree != nullptr;
 
-	for(i = 0; i < MAX_PC_SKILL_REQUIRE; i++)
-	{
-		skill_id = (uint16)atoi(fields[i * 2 + offset]);
-		skill_lv = (uint16)atoi(fields[i * 2 + offset + 1]);
+	if (!exists)
+		tree = std::make_shared<s_skill_tree>();
 
-		if (skill_id == 0) {
-			if (skill_tree[idx][skill_idx].need[i].skill_id > 0) { // Remove pre-requisite
-				skill_tree[idx][skill_idx].need[i].skill_id = 0;
-				skill_tree[idx][skill_idx].need[i].skill_lv = 0;
+	if (this->nodeExists(node, "Inherit")) {
+		const YAML::Node &InheritNode = node["Inherit"];
+
+		for (const auto &Inheritit : InheritNode) {
+			std::string inheritname = Inheritit.first.as<std::string>();
+			std::string inheritname_constant = "JOB_" + inheritname;
+
+			if (!script_get_constant(inheritname_constant.c_str(), &constant) || !pcdb_checkid(constant)) {
+				this->invalidWarning(InheritNode[inheritname], "Invalid job %s.\n", inheritname.c_str());
+				return 0;
 			}
-			continue;
-		}
-		if (skill_id > MAX_SKILL_ID || !skill_get_index(skill_id)) {
-			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", skill_id, class_);
-			return false;
-		}
-		if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-			ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level.\n", skill_id, skill_lv, class_, skill_lv_max);
-			skill_lv = skill_lv_max;
-		}
 
-		skill_tree[idx][skill_idx].need[i].skill_id = skill_id;
-		skill_tree[idx][skill_idx].need[i].skill_lv = skill_lv;
+			bool active;
+
+			if (!this->asBool(InheritNode, inheritname, active))
+				return 0;
+
+			uint16 inherit_job = static_cast<uint16>(constant);
+
+			if (!active) {
+				if (exists)
+					util::vector_erase_if_exists(tree->inherit_job, inherit_job);
+			}
+			else {
+				if (!util::vector_exists(tree->inherit_job, inherit_job))
+					tree->inherit_job.push_back(inherit_job);
+			}
+		}
 	}
+
+	if (this->nodeExists(node, "Tree")) {
+		for (const auto &it : node["Tree"]) {
+			std::string skill_name;
+
+			if (!this->asString(it, "Name", skill_name))
+				return 0;
+
+			uint16 skill_id = skill_name2id(skill_name.c_str());
+
+			if (skill_id == 0) {
+				this->invalidWarning(it["Name"], "Invalid skill name \"%s\".\n", skill_name.c_str());
+				return 0;
+			}
+			if (!skill_get_index(skill_id)) {
+				this->invalidWarning(it["Name"], "Unable to load skill %s into job %hu's tree.\n", skill_name.c_str(), job_id);
+				return 0;
+			}
+
+			std::shared_ptr<s_skill_tree_entry> entry;
+			bool skill_exists = tree->skills.count(skill_id) > 0;
+				
+			if (skill_exists)
+				entry = tree->skills[skill_id];
+			else
+				entry = std::make_shared<s_skill_tree_entry>();
+
+			entry->skill_id = skill_id;
+
+			uint16 max_lv;
+
+			if (!this->asUInt16(it, "MaxLevel", max_lv))
+				return 0;
+
+			if (max_lv > MAX_SKILL_LEVEL) {
+				this->invalidWarning(it["MaxLevel"], "MaxLevel exceeds the maximum skill level of %d, skipping.\n", MAX_SKILL_LEVEL);
+				return 0;
+			}
+
+			uint16 skill_lv_max = skill_get_max(skill_id);
+
+			if (max_lv > skill_lv_max) {
+				this->invalidWarning(it["MaxLevel"], "Skill %s's level %hu exceeds the skill's max level %hu. Capping skill level.\n", skill_name.c_str(), max_lv, skill_lv_max);
+				max_lv = skill_lv_max;
+			}
+
+			// if (max_lv == 0) {	// skill lvl 0 removed on loadingFinished (because of inherit)
+				// if (!skill_exists || entry->skill_id.erase(skill_id) == 0)
+					// this->invalidWarning(it["Name"], "Failed to erase %s, the skill doesn't exist in for job %s, skipping.\n", skill_name.c_str(), job_name.c_str());
+				// continue;
+			// }
+
+			entry->max_lv = max_lv;
+
+			if (this->nodeExists(it, "BaseLevel")) {
+				uint32 baselv;
+
+				if (!this->asUInt32(it, "BaseLevel", baselv))
+					return 0;
+
+				uint32 baselv_max = job_db.get_maxBaseLv(job_id);
+
+				if (baselv > baselv_max) {
+					this->invalidWarning(it["BaseLevel"], "Skill %hu's base level requirement %hu exceeds job %s's max base level %d. Capping skill base level.\n",
+						skill_id, baselv, job_name.c_str(), baselv_max);
+					baselv = baselv_max;
+				}
+				entry->baselv = baselv;
+			} else {
+				if (!skill_exists)
+					entry->baselv = 0;
+			}
+
+			if (this->nodeExists(it, "JobLevel")) {
+				uint32 joblv;
+
+				if (!this->asUInt32(it, "JobLevel", joblv))
+					return 0;
+
+				uint32 joblv_max = job_db.get_maxJobLv(job_id);
+
+				if (joblv > joblv_max) {
+					this->invalidWarning(it["JobLevel"], "Skill %hu's job level requirement %hu exceeds job %s's max job level %d. Capping skill job level.\n",
+						skill_id, joblv, job_name.c_str(), joblv_max);
+					joblv = joblv_max;
+				}
+				entry->joblv = joblv;
+			} else {
+				if (!skill_exists)
+					entry->joblv = 0;
+			}
+
+			if (this->nodeExists(it, "Requires")) {
+				for (const auto &Requiresit : it["Requires"]) {
+					if (!this->nodesExist(Requiresit, { "Name" }))
+						return 0;
+
+					std::string skill_name_req;
+
+					if (!this->asString(Requiresit, "Name", skill_name_req))
+						return 0;
+
+					uint16 skill_id_req = skill_name2id(skill_name_req.c_str());
+
+					if (skill_id_req == 0) {
+						this->invalidWarning(Requiresit["Name"], "Invalid skill name \"%s\".\n", skill_name_req.c_str());
+						return 0;
+					}
+
+					uint16 lv_req;
+
+					if (!this->asUInt16(Requiresit, "Level", lv_req))
+						return 0;
+
+					if (lv_req > MAX_SKILL_LEVEL) {
+						this->invalidWarning(Requiresit["Level"], "Level exceeds the maximum skill level of %d, skipping.\n", MAX_SKILL_LEVEL);
+						return 0;
+					}
+
+					uint16 lv_req_max = skill_get_max(skill_id_req);
+
+					if (lv_req > lv_req_max) {
+						this->invalidWarning(it["MaxLevel"], "Required skill %s's level %hu exceeds the skill's max level %hu. Capping skill level.\n", skill_name.c_str(), lv_req, lv_req_max);
+						lv_req = lv_req_max;
+					}
+					
+					if (lv_req == 0) {
+						if (entry->need.erase(skill_id_req) == 0)
+							this->invalidWarning(Requiresit["Name"], "Failed to erase %s, the skill doesn't exist in for job %s, skipping.\n", skill_name_req.c_str(), job_name.c_str());
+						continue;
+					}
+
+					entry->need[skill_id_req] = lv_req;
+				}
+			}
+
+			if (this->nodeExists(it, "Exclude")) {
+				bool exclude;
+
+				if (!this->asBool(it, "Exclude", exclude))
+					return 0;
+
+				entry->exclude_inherit = exclude;
+			} else {
+				if (!skill_exists)
+					entry->exclude_inherit = false;
+			}
+
+			if (!skill_exists)
+				tree->skills.insert({ skill_id, entry });
+		}
+	}
+
+	if (!exists)
+		this->put(job_id, tree);
+
 	return true;
+}
+
+void SkillTreeDatabase::loadingFinished() {
+	std::unordered_map<uint16, std::shared_ptr<s_skill_tree>> job_tree;	// get the data from skill_tree_db before populate it
+
+	for (auto &data : *this) {
+		if (data.second->inherit_job.empty())
+			continue;
+
+		std::shared_ptr<s_skill_tree> skill_tree = std::make_shared<s_skill_tree>();
+
+		uint32 baselv_max = job_db.get_maxBaseLv(data.first);
+		uint32 joblv_max = job_db.get_maxJobLv(data.first);
+
+		for (const auto &inherit_job : data.second->inherit_job) {
+			std::shared_ptr<s_skill_tree> tree = this->find(inherit_job);
+			if (tree == nullptr || tree->skills.empty())
+				continue;
+
+			for (const auto &it : tree->skills) {
+				if (it.second->exclude_inherit)
+					continue;
+				if (data.second->skills.count(it.first) > 0)	// skill already in the skill tree
+					continue;
+
+				if (skill_tree->skills.count(it.first) > 0)	// replaced by the last inheritance
+					skill_tree->skills[it.first] = it.second;
+				else
+					skill_tree->skills.insert({ it.first, it.second });
+				std::shared_ptr<s_skill_tree_entry> skill = skill_tree->skills[it.first];
+
+				if (skill->baselv > baselv_max) {
+					ShowWarning("SkillTreeDatabase: Skill %s (%hu)'s base level requirement %hu exceeds job %s's max base level %d. Capping skill base level.\n",
+						skill_get_name(skill->skill_id), skill->skill_id, skill->baselv, job_name(data.first), baselv_max);
+					skill->baselv = baselv_max;
+				}
+				if (skill->joblv > joblv_max) {
+					ShowWarning("SkillTreeDatabase: Skill %s (%hu)'s job level requirement %hu exceeds job %s's max job level %d. Capping skill job level.\n",
+						skill_get_name(skill->skill_id), skill->skill_id, skill->joblv, job_name(data.first), joblv_max);
+					skill->joblv = joblv_max;
+				}
+			}
+		}
+		if (skill_tree != nullptr && !skill_tree->skills.empty())
+			job_tree.insert({ data.first, skill_tree });
+	}
+
+	if (!job_tree.empty()) {
+		for (auto &data : *this) {
+			if (job_tree.count(data.first) == 0)
+				continue;
+			data.second->skills.insert(job_tree[data.first]->skills.begin(), job_tree[data.first]->skills.end());
+		}
+	}
+
+	// remove skills with max_lv = 0
+	for (const auto &job : *this) {
+		if (job.second->skills.empty())
+			continue;
+
+		auto it = job.second->skills.begin();
+
+		while( it != job.second->skills.end() ){
+			if( it->second->max_lv == 0 ){
+				it = job.second->skills.erase( it );
+			}else{
+				it++;
+			}
+		}
+	}
 }
 
 /**
@@ -12835,8 +13114,21 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(job_id));
 			bool exists = job != nullptr;
 
-			if (!exists)
+			if (!exists) {
 				job = std::make_shared<s_job_info>();
+
+				job->job_bonus.resize(MAX_LEVEL);
+				std::fill(job->job_bonus.begin(), job->job_bonus.end(), std::array<uint16, PARAM_MAX> { 0 });
+
+				job->base_hp.resize(MAX_LEVEL);
+				std::fill(job->base_hp.begin(), job->base_hp.end(), 0);
+
+				job->base_sp.resize(MAX_LEVEL);
+				std::fill(job->base_sp.begin(), job->base_sp.end(), 0);
+
+				job->base_ap.resize(MAX_LEVEL);
+				std::fill(job->base_ap.begin(), job->base_ap.end(), 0);
+			}
 
 			if (this->nodeExists(node, "MaxWeight")) {
 				uint32 weight;
@@ -12922,34 +13214,6 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 			}
 
-			if (this->nodeExists(node, "BonusStats")) {
-				const YAML::Node &bonusNode = node["BonusStats"];
-				job->job_bonus.resize(MAX_LEVEL);
-
-				for (const YAML::Node &levelNode : bonusNode) {
-					uint16 level;
-
-					if (!this->asUInt16(levelNode, "Level", level))
-						return 0;
-
-					if (level > MAX_LEVEL) {
-						this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
-						return 0;
-					}
-
-					for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
-						if (this->nodeExists(levelNode, parameter_names[idx])) {
-							int16 change;
-
-							if (!this->asInt16(levelNode, parameter_names[idx], change))
-								return 0;
-
-							job->job_bonus[level - 1][idx] = change;
-						}
-					}
-				}
-			}
-
 			if (this->nodeExists(node, "MaxStats")) {
 				const YAML::Node &statNode = node["MaxStats"];
 
@@ -12982,7 +13246,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asUInt16(node, "MaxBaseLevel", level))
 					return 0;
 
-				if (level > MAX_LEVEL) {
+				if (level == 0 || level > MAX_LEVEL) {
 					this->invalidWarning(node["MaxBaseLevel"], "MaxBaseLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
 					level = MAX_LEVEL;
 				}
@@ -13000,7 +13264,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(bexpNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -13022,13 +13289,12 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asUInt16(node, "MaxJobLevel", level))
 					return 0;
 
-				if (level > MAX_LEVEL) {
+				if (level == 0 || level > MAX_LEVEL) {
 					this->invalidWarning(node["MaxJobLevel"], "MaxJobLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
 					level = MAX_LEVEL;
 				}
 
 				job->max_job_level = level;
-				job->job_bonus.resize(level);
 			} else {
 				if (!exists)
 					job->max_job_level = MAX_LEVEL;
@@ -13041,7 +13307,10 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asUInt16(jexpNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > job->max_job_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(jexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -13057,17 +13326,45 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 			}
 
+			if (this->nodeExists(node, "BonusStats")) {
+				const YAML::Node &bonusNode = node["BonusStats"];
+
+				for (const YAML::Node &levelNode : bonusNode) {
+					uint16 level;
+
+					if (!this->asUInt16(levelNode, "Level", level))
+						return 0;
+
+					if (level == 0 || level > MAX_LEVEL) {
+						this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+					for (uint8 idx = PARAM_STR; idx < PARAM_MAX; idx++) {
+						if (this->nodeExists(levelNode, parameter_names[idx])) {
+							int16 change;
+
+							if (!this->asInt16(levelNode, parameter_names[idx], change))
+								return 0;
+
+							job->job_bonus[level - 1][idx] = change;
+						}
+					}
+				}
+			}
+
 #ifdef HP_SP_TABLES
 			if (this->nodeExists(node, "BaseHp")) {
-				job->base_hp.resize(job->max_base_level, 1);
-
 				for (const YAML::Node &bhpNode : node["BaseHp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bhpNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bhpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -13084,15 +13381,16 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseSp")) {
-				job->base_sp.resize(job->max_base_level, 1);
-
 				for (const YAML::Node &bspNode : node["BaseSp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bspNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bspNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -13109,15 +13407,16 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (this->nodeExists(node, "BaseAp")) {
-				job->base_ap.resize(job->max_base_level, 1);
-
 				for (const YAML::Node &bapNode : node["BaseAp"]) {
 					uint16 level;
 
 					if (!this->asUInt16(bapNode, "Level", level))
 						return 0;
 
-					if (level > MAX_LEVEL) {
+					if (level > job->max_base_level)
+						continue;
+
+					if (level == 0 || level > MAX_LEVEL) {
 						this->invalidWarning(bapNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -13161,21 +13460,30 @@ void JobDatabase::loadingFinished() {
 			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(job_id), job_id);
 
 		// Init and checking the empty value of Base HP/SP [Cydh]
-		if (job->base_hp.size() == 0)
+		if (job->base_hp.empty())
 			job->base_hp.resize(maxBaseLv);
 		for (uint16 j = 0; j < maxBaseLv; j++) {
 			if (job->base_hp[j] == 0)
 				job->base_hp[j] = pc_calc_basehp(j + 1, job_id);
 		}
-		if (job->base_sp.size() == 0)
-			job->base_sp.resize(maxJobLv);
-		for (uint16 j = 0; j < maxJobLv; j++) {
+		if (job->base_sp.empty())
+			job->base_sp.resize(maxBaseLv);
+		for (uint16 j = 0; j < maxBaseLv; j++) {
 			if (job->base_sp[j] == 0)
 				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
 		}
 
-		// Resize for the maximum job level
-		job->job_bonus.resize(maxJobLv);
+		// Resize to the maximum base level
+		if (job->base_hp.capacity() > maxBaseLv)
+			job->base_hp.erase(job->base_hp.begin() + maxBaseLv, job->base_hp.end());
+		if (job->base_sp.capacity() > maxBaseLv)
+			job->base_sp.erase(job->base_sp.begin() + maxBaseLv, job->base_sp.end());
+		if (job->base_ap.capacity() > maxBaseLv)
+			job->base_ap.erase(job->base_ap.begin() + maxBaseLv, job->base_ap.end());
+
+		// Resize to the maximum job level
+		if (job->job_bonus.capacity() > maxJobLv)
+			job->job_bonus.erase(job->job_bonus.begin() + maxJobLv, job->job_bonus.end());
 
 		for (uint16 parameter = PARAM_STR; parameter < PARAM_MAX; parameter++) {
 			// Store total
@@ -13472,9 +13780,7 @@ void pc_readdb(void) {
 	}
 
 	// Reset and read skilltree - needs to be read after pc_readdb_job_exp to get max base and job levels
-	memset(skill_tree, 0, sizeof(skill_tree));
-	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 0);
-	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 1);
+	skill_tree_db.reload();
 
 	statpoint_db.load();
 	traitpoint_db.load();

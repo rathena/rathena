@@ -122,6 +122,30 @@ static void job_txt_data(const std::string &modePath, const std::string &fixedPa
 		sv_readdb(modePath.c_str(), "job_param_db.txt", ',', 2, PARAM_MAX + 1, CLASS_COUNT, &pc_readdb_job_param, false);
 }
 
+// Elemental Summons Skill Database data to memory
+static void elemental_skill_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	elemental_skill_tree.clear();
+
+	if (fileExists(fixedPath + "/elemental_skill_db.txt"))
+		sv_readdb(fixedPath.c_str(), "elemental_skill_db.txt", ',', 4, 4, -1, read_elemental_skilldb, false);
+}
+
+// Mercenary's Skill Database data to memory
+static void mercenary_skill_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	mercenary_skill_tree.clear();
+
+	if (fileExists(fixedPath + "/mercenary_skill_db.txt"))
+		sv_readdb(fixedPath.c_str(), "mercenary_skill_db.txt", ',', 3, 3, -1, mercenary_read_skilldb, false);
+}
+
+// Skill tree database data to memory
+static void skilltree_txt_data(const std::string &modePath, const std::string &fixedPath) {
+	skill_tree.clear();
+
+	if (fileExists(modePath + "/skill_tree.txt"))
+		sv_readdb(modePath.c_str(), "skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, pc_readdb_skilltree, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -471,6 +495,34 @@ int do_init( int argc, char** argv ){
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5 + MAX_WEAPON_TYPE, 5 + MAX_WEAPON_TYPE, CLASS_COUNT, &pc_readdb_job1, false);
 #endif
 	}, "job_stats")) {
+		return 0;
+	}
+
+	elemental_skill_txt_data(path_db_mode, path_db);
+	if (!process("ELEMENTAL_DB", 1, root_paths, "elemental_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 26, 26, -1, &read_elementaldb, false);
+	})) {
+		return 0;
+	}
+
+	mercenary_skill_txt_data(path_db_mode, path_db);
+	if (!process("MERCENARY_DB", 1, root_paths, "mercenary_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 26, 26, -1, &mercenary_readdb, false);
+	})) {
+		return 0;
+	}
+
+	skilltree_txt_data(path_db_mode, path_db);
+	if (!process("SKILL_TREE_DB", 1, { path_db_mode }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_readdb_skilltree_yaml();
+	})) {
+		return 0;
+	}
+
+	skilltree_txt_data(path_db_import, path_db_import);
+	if (!process("SKILL_TREE_DB", 1, { path_db_import }, "skill_tree", [](const std::string &path, const std::string &name_ext) -> bool {
+		return pc_readdb_skilltree_yaml();
+	})) {
 		return 0;
 	}
 
@@ -1969,8 +2021,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 			for (int i = 1; i < MAX_AMMO_TYPE; i++) {
 				if (temp & 1 << i) {
-					constant = constant_lookup(i, "A_");
-					constant.erase(0, 2);
+					constant = constant_lookup(i, "AMMO_");
+					constant.erase(0, 5);
 					body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
 					temp ^= 1 << i;
 				}
@@ -4162,8 +4214,11 @@ static bool read_constdb(char* fields[], int columns, int current) {
 static bool pc_readdb_job2(char* fields[], int columns, int current) {
 	std::vector<int> stats;
 
+	stats.resize(MAX_LEVEL);
+	std::fill(stats.begin(), stats.end(), 0); // Fill with 0 so we don't produce arbitrary stats
+
 	for (int i = 1; i < columns; i++)
-		stats.insert(stats.begin() + i - 1, atoi(fields[i]));
+		stats[i - 1] = atoi(fields[i]);
 
 	job_db2.insert({ atoi(fields[0]), stats });
 	return true;
@@ -4258,17 +4313,25 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current) {
 	body << YAML::BeginSeq;
 
 	int j = 0, job_id = jobs[0], endlvl = 0;
-	auto it_level = exp_base_level.find(job_id);
 
-	if (it_level != exp_base_level.end())
-		endlvl = it_level->second;
-	else {
-		ShowError("pc_readdb_job_basehpsp: The job_exp database needs to be imported into memory before converting the job_basehpsp_db database.\n");
-		return false;
+	// Find the highest level in the group of jobs
+	for (int i = 0; i < job_count; i++) {
+		auto it_level = exp_base_level.find(jobs[i]);
+		int tmplvl;
+
+		if (it_level != exp_base_level.end())
+			tmplvl = it_level->second;
+		else {
+			ShowError("pc_readdb_job_basehpsp: The job_exp database needs to be imported into memory before converting the job_basehpsp_db database.\n");
+			return false;
+		}
+
+		if (endlvl < tmplvl)
+			endlvl = tmplvl;
 	}
 
 	// These jobs don't have values less than level 99
-	if ((job_id >= JOB_RUNE_KNIGHT && job_id <= JOB_BABY_MECHANIC2) || job_id == JOB_KAGEROU || job_id == JOB_OBORO || job_id == JOB_REBELLION || job_id == JOB_BABY_KAGEROU || job_id == JOB_BABY_OBORO || job_id == JOB_BABY_REBELLION)
+	if ((job_id >= JOB_RUNE_KNIGHT && job_id <= JOB_BABY_MECHANIC2) || job_id == JOB_KAGEROU || job_id == JOB_OBORO || job_id == JOB_REBELLION || job_id == JOB_BABY_KAGEROU || job_id == JOB_BABY_OBORO || job_id == JOB_BABY_REBELLION || job_id >= JOB_STAR_EMPEROR)
 		j = 98;
 
 	if (type == 0) { // HP
@@ -4390,5 +4453,333 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 	}
 	body << YAML::EndMap;
 
+	return true;
+}
+
+// elemental_db.yml function
+//---------------------------
+static bool read_elemental_skilldb(char* str[], int columns, int current) {
+	uint16 skill_id = atoi(str[1]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("read_elemental_skilldb: Invalid skill '%hu'.\n", skill_id);
+		return false;
+	}
+
+	uint16 skillmode = atoi(str[3]);
+
+	std::string constant = constant_lookup(skillmode, "EL_SKILLMODE_");
+	constant.erase(0, 13);
+	std::string mode_name = name2Upper(constant);
+
+	s_elemental_skill_csv entry = {};
+
+	entry.skill_name = *skill_name;
+	entry.lv = atoi(str[2]);
+	entry.mode_name = mode_name;
+
+	uint16 class_ = atoi(str[0]);
+
+	if (util::umap_find(elemental_skill_tree, class_))
+		elemental_skill_tree[class_].push_back(entry);
+	else {
+		elemental_skill_tree[class_] = std::vector<s_elemental_skill_csv>();
+		elemental_skill_tree[class_].push_back(entry);
+	}
+
+	return true;
+}
+
+// Copied and adjusted from elemental.cpp
+static bool read_elementaldb(char* str[], int columns, int current) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << str[0];
+	body << YAML::Key << "AegisName" << YAML::Value << str[1];
+	body << YAML::Key << "Name" << YAML::Value << str[2];
+	body << YAML::Key << "Level" << YAML::Value << str[3];
+	if (atoi(str[4]) != 0)
+		body << YAML::Key << "Hp" << YAML::Value << str[4];
+	if (atoi(str[5]) != 1)
+		body << YAML::Key << "Sp" << YAML::Value << str[5];
+	if (atoi(str[7]) != 0)
+		body << YAML::Key << "Attack" << YAML::Value << str[7];
+	if (atoi(str[8]) != 0)
+		body << YAML::Key << "Attack2" << YAML::Value << str[8];
+	if (atoi(str[9]) != 0)
+		body << YAML::Key << "Defense" << YAML::Value << str[9];
+	if (atoi(str[10]) != 0)
+		body << YAML::Key << "MagicDefense" << YAML::Value << str[10];
+	if (atoi(str[11]) != 0)
+		body << YAML::Key << "Str" << YAML::Value << str[11];
+	if (atoi(str[12]) != 0)
+		body << YAML::Key << "Agi" << YAML::Value << str[12];
+	if (atoi(str[13]) != 0)
+		body << YAML::Key << "Vit" << YAML::Value << str[13];
+	if (atoi(str[14]) != 0)
+		body << YAML::Key << "Int" << YAML::Value << str[14];
+	if (atoi(str[15]) != 0)
+		body << YAML::Key << "Dex" << YAML::Value << str[15];
+	if (atoi(str[16]) != 0)
+		body << YAML::Key << "Luk" << YAML::Value << str[16];
+	if (atoi(str[6]) != 1)
+		body << YAML::Key << "AttackRange" << YAML::Value << str[6];
+	if (atoi(str[17]) != 5)
+		body << YAML::Key << "SkillRange" << YAML::Value << str[17];
+	if (atoi(str[18]) != 12)
+		body << YAML::Key << "ChaseRange" << YAML::Value << str[18];
+	body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
+	if (atoi(str[20]) != 0)
+		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
+
+	int ele = strtol(str[21], nullptr, 10);
+	body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+	body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+
+	if (atoi(str[22]) != 200)
+		body << YAML::Key << "WalkSpeed" << YAML::Value << str[22];
+	if (atoi(str[23]) != 504)
+		body << YAML::Key << "AttackDelay" << YAML::Value << str[23];
+	if (atoi(str[24]) != 1020)
+		body << YAML::Key << "AttackMotion" << YAML::Value << str[24];
+	if (atoi(str[25]) != 360)
+		body << YAML::Key << "DamageMotion" << YAML::Value << str[25];
+
+	auto list = elemental_skill_tree.find( atoi(str[0]) );
+	if (list != elemental_skill_tree.end()) {
+		body << YAML::Key << "Mode";
+			body << YAML::BeginMap;
+		for (const auto &it : list->second) {
+			body << YAML::Key << it.mode_name;
+			body << YAML::BeginMap;
+			body << YAML::Key << "Skill" << YAML::Value << it.skill_name;
+			if (it.lv != 1)
+				body << YAML::Key << "Level" << YAML::Value << it.lv;
+			body << YAML::EndMap;
+		}
+			body << YAML::EndMap;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+
+// mercenary_db.yml function
+//---------------------------
+static bool mercenary_read_skilldb(char* str[], int columns, int current) {
+	uint16 skill_id = atoi(str[1]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("mercenary_read_skilldb: Invalid skill '%hu'.\n", skill_id);
+		return false;
+	}
+
+	s_mercenary_skill_csv entry = {};
+
+	entry.skill_name = *skill_name;
+	entry.max_lv = atoi(str[2]);
+
+	uint16 class_ = atoi(str[0]);
+
+	if (util::umap_find(mercenary_skill_tree, class_))
+		mercenary_skill_tree[class_].push_back(entry);
+	else {
+		mercenary_skill_tree[class_] = std::vector<s_mercenary_skill_csv>();
+		mercenary_skill_tree[class_].push_back(entry);
+	}
+
+	return true;
+}
+
+// Copied and adjusted from mercenary.cpp
+static bool mercenary_readdb(char* str[], int columns, int current) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << str[0];
+	body << YAML::Key << "AegisName" << YAML::Value << str[1];
+	body << YAML::Key << "Name" << YAML::Value << str[2];
+	if (atoi(str[3]) != 1)
+		body << YAML::Key << "Level" << YAML::Value << str[3];
+	if (atoi(str[4]) != 1)
+		body << YAML::Key << "Hp" << YAML::Value << str[4];
+	if (atoi(str[5]) != 1)
+		body << YAML::Key << "Sp" << YAML::Value << str[5];
+	if (atoi(str[7]) != 0)
+		body << YAML::Key << "Attack" << YAML::Value << str[7];
+	if (atoi(str[8]) != 0)
+		body << YAML::Key << "Attack2" << YAML::Value << str[8];
+	if (atoi(str[9]) != 0)
+		body << YAML::Key << "Defense" << YAML::Value << str[9];
+	if (atoi(str[10]) != 0)
+		body << YAML::Key << "MagicDefense" << YAML::Value << str[10];
+	if (atoi(str[11]) != 1)
+		body << YAML::Key << "Str" << YAML::Value << str[11];
+	if (atoi(str[12]) != 1)
+		body << YAML::Key << "Agi" << YAML::Value << str[12];
+	if (atoi(str[13]) != 1)
+		body << YAML::Key << "Vit" << YAML::Value << str[13];
+	if (atoi(str[14]) != 1)
+		body << YAML::Key << "Int" << YAML::Value << str[14];
+	if (atoi(str[15]) != 1)
+		body << YAML::Key << "Dex" << YAML::Value << str[15];
+	if (atoi(str[16]) != 1)
+		body << YAML::Key << "Luk" << YAML::Value << str[16];
+	if (atoi(str[6]) != 0)
+		body << YAML::Key << "AttackRange" << YAML::Value << str[6];
+	if (atoi(str[17]) != 0)
+		body << YAML::Key << "SkillRange" << YAML::Value << str[17];
+	if (atoi(str[18]) != 0)
+		body << YAML::Key << "ChaseRange" << YAML::Value << str[18];
+	if (atoi(str[19]) != 0)
+		body << YAML::Key << "Size" << YAML::Value << constant_lookup(strtol(str[19], nullptr, 10), "Size_") + 5;
+	if (atoi(str[20]) != 0)
+		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[20]), "RC_") + 3);
+
+	int ele = strtol(str[21], nullptr, 10);
+	if (atoi(str[21]) != 0)
+		body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(ele % 20, "ELE_") + 4);
+	if (atoi(str[21]) != 1)
+		body << YAML::Key << "ElementLevel" << YAML::Value << floor(ele / 20.);
+
+	if (atoi(str[22]) != 0)
+		body << YAML::Key << "WalkSpeed" << YAML::Value << cap_value(std::stoi(str[22]), MIN_WALK_SPEED, MAX_WALK_SPEED);
+	if (atoi(str[23]) != 0)
+		body << YAML::Key << "AttackDelay" << YAML::Value << str[23];
+	if (atoi(str[24]) != 0)
+		body << YAML::Key << "AttackMotion" << YAML::Value << str[24];
+	if (atoi(str[25]) != 0)
+		body << YAML::Key << "DamageMotion" << YAML::Value << str[25];
+
+	for (const auto &skillit : mercenary_skill_tree) {
+		if (skillit.first != atoi(str[0]))
+			continue;
+
+		body << YAML::Key << "Skills";
+		body << YAML::BeginSeq;
+
+		for (const auto &it : skillit.second) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Name" << YAML::Value << it.skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << it.max_lv;
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from pc.cpp
+static bool pc_readdb_skilltree(char* fields[], int columns, int current) {
+	uint16 baselv, joblv, offset;
+	uint16 class_  = (uint16)atoi(fields[0]);
+	uint16 skill_id = (uint16)atoi(fields[1]);
+
+	if (columns == 5 + MAX_PC_SKILL_REQUIRE * 2) { // Base/Job level requirement extra columns
+		baselv = (uint16)atoi(fields[3]);
+		joblv = (uint16)atoi(fields[4]);
+		offset = 5;
+	}
+	else if (columns == 3 + MAX_PC_SKILL_REQUIRE * 2) {
+		baselv = joblv = 0;
+		offset = 3;
+	}
+	else {
+		ShowWarning("pc_readdb_skilltree: Invalid number of colums in skill %hu of job %d's tree.\n", skill_id, class_);
+		return false;
+	}
+
+	const char* constant = constant_lookup(class_, "JOB_");
+	if (constant == nullptr) {
+		ShowWarning("pc_readdb_skilltree: Invalid job class %d specified.\n", class_);
+		return false;
+	}
+	std::string job_name(constant);
+
+	std::string* skill_name = util::umap_find( aegis_skillnames, skill_id );
+
+	if( skill_name == nullptr ){
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree.\n", skill_id, class_);
+		return false;
+	}
+
+	uint16 skill_lv = (uint16)atoi(fields[2]);
+
+	std::vector<s_skill_tree_entry_csv> *job = util::map_find(skill_tree, class_);
+	bool exists = job != nullptr;
+
+	s_skill_tree_entry_csv entry;
+
+	entry.skill_name = *skill_name;
+	entry.skill_id = skill_id;
+	entry.skill_lv = skill_lv;
+	entry.baselv = baselv;
+	entry.joblv = joblv;
+
+	for (uint16 i = 0; i < MAX_PC_SKILL_REQUIRE; i++) {
+		uint16 req_skill_id = (uint16)atoi(fields[i * 2 + offset]);
+		skill_lv = (uint16)atoi(fields[i * 2 + offset + 1]);
+
+		if (req_skill_id == 0)
+			continue;
+
+		skill_name = util::umap_find( aegis_skillnames, req_skill_id );
+
+		if( skill_name == nullptr ){
+			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", req_skill_id, class_);
+			return false;
+		}
+		entry.need.insert({ *skill_name, skill_lv });
+	}
+
+	if (exists)
+		job->push_back(entry);
+	else {
+		std::vector<s_skill_tree_entry_csv> tree;
+
+		tree.push_back(entry);
+		skill_tree.insert({ class_, tree });
+	}
+
+	return true;
+}
+
+static bool pc_readdb_skilltree_yaml(void) {
+	for (const auto &it : skill_tree) {
+		body << YAML::BeginMap;
+		std::string job = constant_lookup(it.first, "JOB_");
+		job.erase( 0, 4 );
+		body << YAML::Key << "Job" << YAML::Value << name2Upper( job );
+		body << YAML::Key << "Tree";
+		body << YAML::BeginSeq;
+		for (const auto &subit : it.second) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Name" << YAML::Value << subit.skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << subit.skill_lv;
+			if (!subit.need.empty()) {
+				body << YAML::Key << "Requires";
+				body << YAML::BeginSeq;
+				for (const auto &terit : subit.need) {
+					body << YAML::BeginMap;
+					body << YAML::Key << "Name" << YAML::Value << terit.first;
+					body << YAML::Key << "Level" << YAML::Value << terit.second;
+					body << YAML::EndMap;
+				}
+				body << YAML::EndSeq;
+			}
+			if (subit.baselv > 0)
+				body << YAML::Key << "BaseLevel" << YAML::Value << subit.baselv;
+			if (subit.joblv > 0)
+				body << YAML::Key << "JobLevel" << YAML::Value << subit.joblv;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
 	return true;
 }

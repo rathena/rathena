@@ -167,10 +167,6 @@ const t_itemid WEDDING_RING_F = 2635;
 //Elemental System
 #define MAX_ELEMENTALSKILL 57
 #define EL_SKILLBASE 8401
-#define MAX_ELESKILLTREE 3
-#define MAX_ELEMENTAL_CLASS 17
-#define EL_CLASS_BASE 2114// Only used for EL_CLASS_MAX.
-#define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)// Not used by anything, making it and EL_CLASS_BASE useless.
 
 //Automated Battle Robot System
 #define ABR_SKILLBASE 8601
@@ -492,7 +488,7 @@ struct s_elemental {
 	int elemental_id;
 	uint32 char_id;
 	short class_;
-	enum e_mode mode;
+	int mode;
 	int hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
 	t_tick life_time;
@@ -1021,6 +1017,14 @@ enum e_job {
 	JOB_MEISTER2,
 	JOB_DRAGON_KNIGHT2,
 	JOB_IMPERIAL_GUARD2,
+
+	JOB_SKY_EMPEROR = 4302,
+	JOB_SOUL_ASCETIC,
+	JOB_SHINKIRO,
+	JOB_SHIRANUI,
+	JOB_NIGHT_WATCH,
+	JOB_HYPER_NOVICE,
+	JOB_SPIRIT_HANDLER,
 
 	JOB_MAX,
 };

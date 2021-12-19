@@ -2063,6 +2063,7 @@ enum e_iteminfo : uint8 {
 	ITEMINFO_ID,
 	ITEMINFO_AEGISNAME,	// 18
 	ITEMINFO_ARMORLEVEL,
+	ITEMINFO_SUBTYPE,
 };
 
 class ConstantDatabase : public YamlDatabase {

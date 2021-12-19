@@ -26,7 +26,7 @@
 #   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
 #   Name                    Name in English for displaying as output.
 #   Type                    Item type. (Default: Etc)
-#   SubType                 Weapon or Ammo type. (Default: 0)
+#   SubType                 Weapon, Ammo or Card type. (Default: 0)
 #   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
 #   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
 #   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
@@ -5253,7 +5253,7 @@ Body:
       bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30;
   - Id: 1298
     AegisName: Shiver_Katar_K
-    Name: Katar Of Horror
+    Name: Shiver Katar
     Type: Weapon
     SubType: Katar
     Buy: 60000
@@ -17509,9 +17509,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17592,9 +17590,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17688,9 +17684,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -20956,9 +20950,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -21595,8 +21587,6 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_All,20;
       bonus2 bSubEle,Ele_Neutral,-20;
-      bonus2 bSubEle,Ele_Holy,-20;
-      bonus2 bSubEle,Ele_Dark,-20;
   - Id: 2114
     AegisName: Stone_Buckler
     Name: Stone Buckler
@@ -22063,7 +22053,7 @@ Body:
          autobonus2 "{ bonus bShortWeaponDamageReturn,("+.@r+"*3); }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
       else {
-         autobonus2 "{ bonus bShortWeaponDamageReturn,("+.@r+"*3); }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
+         autobonus2 "{ bonus bShortWeaponDamageReturn,30; }",10,5000+(.@r/2*1000),BF_WEAPON,"{ specialeffect2 EF_GUARD; }";
       }
   - Id: 2135
     AegisName: Shadow_Guard
@@ -22136,9 +22126,8 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Water,20;
       bonus2 bSubEle,Ele_Fire,20;
-      bonus2 bSubEle,Ele_Dark,20;
-      bonus2 bSubEle,Ele_Undead,20;
-      bonus bMdef,5;
+      bonus2 bSubRace,RC_DemiHuman,30;
+      bonus bMaxHPrate,5;
   - Id: 2138
     AegisName: Bradium_Shield
     Name: Bradium Shield
@@ -22441,7 +22430,6 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bSubRace,RC_DemiHuman,25;
-      bonus2 bSubRace,RC_Player_Human,25;
       bonus2 bSubRace,RC_Demon,25;
       bonus bMaxHP,400;
   - Id: 2153
@@ -22544,9 +22532,8 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Undead,5;
-      bonus2 bMagicSubDefEle,Ele_Undead,5;
-      bonus2 bSubRace,RC_DemiHuman,5;
+      bonus2 bSubRace,RC_DemiHuman,-5;
+      bonus2 bSubEle,Ele_Undead,5;
   - Id: 2159
     AegisName: Sharel_Shield
     Name: Sharel Shield
@@ -22562,9 +22549,8 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Fire,5;
-      bonus2 bMagicSubDefEle,Ele_Fire,5;
-      bonus2 bSubRace,RC_Demon,5;
+      bonus2 bSubEle,Ele_Fire,5;
+      bonus2 bSubRace,RC_Demon,-5;
   - Id: 2160
     AegisName: Giant_Shield
     Name: Giant Shield
@@ -22618,7 +22604,7 @@ Body:
     AegisName: Bible_Of_Promise2
     Name: Bible of Promise(2nd Vol.)
     Type: Armor
-    Buy: 20
+    Buy: 56000
     Weight: 500
     Defense: 20
     Slots: 1
@@ -22651,9 +22637,9 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Water,5;
-      bonus2 bMagicSubDefEle,Ele_Water,5;
+      bonus2 bSubEle,Ele_Water,5;
       bonus2 bSubRace,RC_Brute,-5;
+      bonus2 bSubRace,RC_Player_Doram,-5;
   - Id: 2164
     AegisName: Sombre_Shield
     Name: Sombre Shield
@@ -22669,8 +22655,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Dark,5;
-      bonus2 bMagicSubDefEle,Ele_Dark,5;
+      bonus2 bSubEle,Ele_Dark,5;
       bonus2 bSubRace,RC_Undead,-5;
   - Id: 2165
     AegisName: Sol_Shield
@@ -22726,8 +22711,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Poison,5;
-      bonus2 bMagicSubDefEle,Ele_Poison,5;
+      bonus2 bSubEle,Ele_Poison,5;
       bonus2 bSubRace,RC_Plant,-5;
   - Id: 2168
     AegisName: Immuned_Shield
@@ -22861,8 +22845,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Holy,5;
-      bonus2 bMagicSubDefEle,Ele_Holy,5;
+      bonus2 bSubEle,Ele_Holy,5;
       bonus2 bSubRace,RC_Dragon,-5;
   - Id: 2175
     AegisName: Esprit_Shield
@@ -22879,8 +22862,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Ghost,5;
-      bonus2 bMagicSubDefEle,Ele_Ghost,5;
+      bonus2 bSubEle,Ele_Ghost,5;
       bonus2 bSubRace,RC_Angel,-5;
   - Id: 2176
     AegisName: Dark_Book
@@ -22899,7 +22881,12 @@ Body:
     Script: |
       bonus bMdef,5;
       .@r = getrefine();
-      bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",1,(.@r<=6)?(10):((.@r<=8)?(20):(30));
+      if (.@r>=9)
+         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",3,30;
+      else if (.@r>=7)
+         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",2,20;
+      else
+         bonus3 bAutoSpellWhenHit,"NPC_DRAGONFEAR",1,10;
   - Id: 2177
     AegisName: Shield_Of_Death
     Name: Shield Of Death
@@ -23059,7 +23046,7 @@ Body:
       bonus2 bSubRace,RC_All,30;
       bonus bUnbreakableShield;
       /*todo instead of autobonus2 bonus4 bAutoSpellWhenHit,"ALL_RAY_OF_PROTECTION",1,50,0;*/
-      autobonus2 "{ sc_end SC_STUN; sc_end SC_SLEEP; sc_end SC_CURSE; sc_end SC_STONE; sc_end SC_POISON; sc_end SC_BLIND; sc_end SC_SILENCE; sc_end SC_BLEEDING; sc_end SC_CONFUSION; sc_end SC_FREEZE; bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Curse,10000; bonus2 bResEff,Eff_Stone,10000; bonus2 bResEff,Eff_Poison,10000; bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Silence,10000; bonus2 bResEff,Eff_Bleeding,10000; bonus2 bResEff,Eff_Confusion,10000; bonus2 bResEff,Eff_Freeze,10000; }",1,50000,BF_SHORT;
+      autobonus2 "{ sc_end SC_STUN; sc_end SC_SLEEP; sc_end SC_CURSE; sc_end SC_STONE; sc_end SC_POISON; sc_end SC_BLIND; sc_end SC_SILENCE; sc_end SC_BLEEDING; sc_end SC_CONFUSION; sc_end SC_FREEZE; bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Curse,10000; bonus2 bResEff,Eff_Stone,10000; bonus2 bResEff,Eff_Poison,10000; bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Silence,10000; bonus2 bResEff,Eff_Bleeding,10000; bonus2 bResEff,Eff_Confusion,10000; bonus2 bResEff,Eff_Freeze,10000; }",50,60000,BF_SHORT;
   - Id: 2183
     AegisName: Impr_Angel's_Safeguard
     Name: Advanced Angelic Guard
@@ -23146,8 +23133,7 @@ Body:
       bonus bDex,2;
       .@r = getrefine();
       bonus bCritical,3+((.@r >= 7) ? 2 : 0);
-      if (.@r >= 9)
-         bonus bMatk,5;
+      bonus bMatk,5+((.@r >= 9) ? 5 : 0);
   - Id: 2187
     AegisName: Shield_Of_Gray
     Name: Shield of Gray
@@ -23245,14 +23231,7 @@ Body:
     Refineable: true
     View: 2
     Script: |
-      bonus2 bSubEle,Ele_Neutral,10;
-      bonus2 bSubEle,Ele_Fire,10;
-      bonus2 bSubEle,Ele_Water,10;
-      bonus2 bSubEle,Ele_Wind,10;
-      bonus2 bSubEle,Ele_Earth,10;
-      bonus2 bSubEle,Ele_Dark,10;
-      bonus2 bSubEle,Ele_Holy,10;
-      bonus2 bSubEle,Ele_Ghost,10;
+      bonus2 bSubEle,Ele_All,10;
       bonus bMaxHP,500;
       bonus bMaxSP,50;
       if (getrefine()>=14)
@@ -23273,6 +23252,40 @@ Body:
     Script: |
       bonus bInt,2;
       bonus bMatk,(readparam(bInt) >= 120 ? 30 : 5);
+  - Id: 2192
+    AegisName: Rose_Of_Eden
+    Name: Rose of Eden
+    Type: Armor
+    View: 3
+    Weight: 300
+    Defense: 70
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus bHealPower,10;
+  - Id: 2193
+    AegisName: Fallen_Angel_Shield
+    Name: Fallen Angel Shield
+    Type: Armor
+    View: 4
+    Weight: 500
+    Defense: 100
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 60
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r >=7)
+         autobonus2 "{ .@r = getrefine(); bonus bDelayrate,-10-(5*(.@r-6)); }",50,5000,BF_MAGIC;
+      else
+         autobonus2 "{ bonus bDelayrate,-10; }",50,5000,BF_MAGIC;
   - Id: 2194
     AegisName: Rouban_Shield
     Name: Levain Shield
@@ -23322,6 +23335,25 @@ Body:
     Script: |
       bonus5 bAutoSpellWhenHit,"NPC_MAGICMIRROR",6,150,BF_MAGIC,0;
       bonus bUnbreakableShield;
+  - Id: 2197
+    AegisName: Iron_Shield
+    Name: Iron Shield
+    Type: Armor
+    View: 4
+    Weight: 2800
+    Defense: 80
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Refineable: true
+    Script: |
+      bonus bUnbreakableShield;
+      if (getrefine()>=8) {
+         bonus bAspdRate,-3;
+         bonus bNoKnockback;
+      }
   - Id: 2198
     AegisName: Lapine_Shield
     Name: Lapine Shield
@@ -23368,10 +23400,11 @@ Body:
       skill "ECL_SEQUOIADUST",1;
       bonus bMaxHPrate,200;
       bonus bNoKnockback;
-      bonus bDelayrate,-20;
+      bonus bDelayrate,-100;
       bonus bSpeedRate,25;
       bonus bIntravision;
       bonus bNoWalkDelay;
+      bonus bNoGemStone;
   - Id: 2201
     AegisName: Sunglasses
     Name: Sunglasses
@@ -36641,7 +36674,7 @@ Body:
       bonus bFlee2,3;
   - Id: 2892
     AegisName: Assassin_Handcuffs
-    Name: Assassin's Glove
+    Name: Assassin Handcuffs
     Type: Armor
     Buy: 56000
     Weight: 400
@@ -52498,7 +52531,7 @@ Body:
       bonus bMaxSP,20;
   - Id: 5782
     AegisName: Hoplite_Helmet
-    Name: Hoplite Helmet
+    Name: Legionaire Helm
     Type: Armor
     Buy: 20
     Weight: 700
@@ -54000,28 +54033,8 @@ Body:
          bonus bDex,5;
       }
   - Id: 5882
-    AegisName: Red_Wizardry_Hat_C
-    Name: Red Mage Hat C
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Defense: 1
-    Jobs:
-      Mage: true
-      Sage: true
-      SoulLinker: true
-      Wizard: true
-    Locations:
-      Head_Top: true
-    ArmorLevel: 1
-    Refineable: true
-    View: 282
-    Script: |
-      bonus bInt,2;
-      bonus bMaxSP,150;
-  - Id: 5883
     AegisName: White_Wizardry_Hat_C
-    Name: Gray Mage Hat C
+    Name: White Mage Hat C
     Type: Armor
     Buy: 20
     Weight: 300
@@ -54039,9 +54052,9 @@ Body:
     Script: |
       bonus bInt,2;
       bonus bMaxSP,150;
-  - Id: 5884
+  - Id: 5883
     AegisName: Gray_Wizardry_Hat_C
-    Name: Brown Mage Hat C
+    Name: Gray Mage Hat C
     Type: Armor
     Buy: 20
     Weight: 300
@@ -54059,7 +54072,7 @@ Body:
     Script: |
       bonus bInt,2;
       bonus bMaxSP,150;
-  - Id: 5885
+  - Id: 5884
     AegisName: Blue_Wizardry_Hat_C
     Name: Blue Mage Hat C
     Type: Armor
@@ -54076,6 +54089,26 @@ Body:
     ArmorLevel: 1
     Refineable: true
     View: 285
+    Script: |
+      bonus bInt,2;
+      bonus bMaxSP,150;
+  - Id: 5885
+    AegisName: Red_Wizardry_Hat_C
+    Name: Red Mage Hat C
+    Type: Armor
+    Buy: 20
+    Weight: 300
+    Defense: 1
+    Jobs:
+      Mage: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    Refineable: true
+    View: 282
     Script: |
       bonus bInt,2;
       bonus bMaxSP,150;
@@ -54517,7 +54550,7 @@ Body:
     AegisName: Roundly_Woolly_Hat
     Name: Costume Angel Veil
     Type: Armor
-    View: 1168
+    View: 1379
     Buy: 20
     Weight: 300
     Defense: 10
@@ -54647,6 +54680,25 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Dragon,5;
       bonus2 bSubRace,RC_Dragon,5;
+  - Id: 5932
+    AegisName: Heaven_Cage
+    Name: Birdcage in Paradise
+    Type: Armor
+    View: 1286
+    Weight: 800
+    Defense: 6
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 40
+    Refineable: true
+    Script: |
+      bonus bLuk,5;
+      bonus bCritical,5;
+      bonus bFlee2,5;
+      if (BaseClass == Job_Ranger)
+         bonus2 bSkillAtk,"HT_BLITZBEAT",5*getrefine();
   - Id: 5933
     AegisName: Crow_Tengu_Mask
     Name: Crow Tengu Mask
@@ -54669,6 +54721,19 @@ Body:
          bonus2 bAddSize,Size_All,2;
          bonus bLongAtkRate,3;
       }
+  - Id: 5934
+    AegisName: Happy_Balloon_J
+    Name: Happy Balloon
+    Type: Armor
+    View: 1289
+    Weight: 100
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    Script: |
+      bonus bMdef,5;
+      bonus2 bAddMonsterDropItem,12355,30;
   - Id: 5936
     AegisName: 8_Type_PurgatorialWing
     Name: 8Way Wings of Purgatory
@@ -54824,6 +54889,30 @@ Body:
          bonus2 bSubRace,RC_Formless,10;
       else if (.@r>=5)
          bonus2 bSubRace,RC_Formless,5;
+  - Id: 5963
+    AegisName: Wing_Headphone
+    Name: Wing Headphone
+    Type: Armor
+    Weight: 10
+    Defense: 24
+    Slots: 1
+    Locations:
+      Head_Mid: true
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    view: 1347
+    Script: |
+      .@r = getrefine();
+      bonus bInt,3;
+      bonus bMatkRate,.@r;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",30;
+         bonus2 bSkillUseSP,"WM_REVERBERATION",18;
+      }
+      if (.@r>=10)
+         bonus2 bSkillCooldown,"WM_REVERBERATION",-2000;
   - Id: 5965
     AegisName: _Riot_Chip
     Name: Riot Chip
@@ -65646,7 +65735,7 @@ Body:
       bonus bMaxSPrate,-30;
   - Id: 15055
     AegisName: Tenebris_Latitantes
-    Name: Armor of Nothingness
+    Name: Tenebris Latitantes
     Type: Armor
     Buy: 10000
     Weight: 1500
@@ -66548,6 +66637,34 @@ Body:
          bonus2 bSubSize,Size_Small,5;
          bonus2 bSubSize,Size_Medium,5;
       }
+  - Id: 15112
+    AegisName: Military_Mail
+    Name: Military Mail
+    Type: Armor
+    Weight: 500
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddRace,RC_DemiHuman,3;
+      bonus2 bAddRace,RC_Player_Human,3;
+      bonus2 bAddRace,RC_Player_Doram,3;
+      bonus2 bMagicAddRace,RC_DemiHuman,3;
+      bonus2 bMagicAddRace,RC_Player_Human,3;
+      bonus2 bMagicAddRace,RC_Player_Doram,3;
+      if (.@r>5) {
+         bonus2 bAddRace,RC_DemiHuman,.@r-5;
+         bonus2 bAddRace,RC_Player_Human,.@r-5;
+         bonus2 bAddRace,RC_Player_Doram,.@r-5;
+         bonus2 bMagicAddRace,RC_DemiHuman,.@r-5;
+         bonus2 bMagicAddRace,RC_Player_Human,.@r-5;
+         bonus2 bMagicAddRace,RC_Player_Doram,.@r-5;
+      }
   - Id: 15116
     AegisName: Airship_Armor
     Name: Airship's Armor
@@ -66617,6 +66734,26 @@ Body:
     Refineable: true
     Script: |
       autobonus "{ bonus bMatk,getrefine()*8; }",3,10000,BF_MAGIC,"{ specialeffect2 EF_STEAL; }";
+  - Id: 15122
+    AegisName: Botany_Mail
+    Name: Botany Mail
+    Type: Armor
+    Weight: 500
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddRace,RC_Plant,3;
+      bonus2 bMagicAddRace,RC_Plant,3;
+      if (.@r>5) {
+         bonus2 bAddRace,RC_Plant,.@r-5;
+         bonus2 bMagicAddRace,RC_Plant,.@r-5;
+      }
   - Id: 15123
     AegisName: Whikebain_Suit
     Name: Whikebain Suit
@@ -66638,6 +66775,26 @@ Body:
       bonus bCritAtkRate,(.@r>=7)?(6):((.@r>=5)?(4):(0));
       bonus3 bAutoSpell,"DC_WINKCHARM",1,10;
       /* Confirm: Success rate */
+  - Id: 15124
+    AegisName: Father_Mail
+    Name: Holy Father Mail
+    Type: Armor
+    Weight: 500
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddRace,RC_Demon,3;
+      bonus2 bMagicAddRace,RC_Demon,3;
+      if (.@r>5) {
+         bonus2 bAddRace,RC_Demon,.@r-5;
+         bonus2 bMagicAddRace,RC_Demon,.@r-5;
+      }
   - Id: 15125
     AegisName: Male_Poring_Egg
     Name: Female Diver's Suit
@@ -66732,6 +66889,71 @@ Body:
       .@r = getrefine()/2;
       bonus bDex,.@r;
       bonus bInt,.@r;
+  - Id: 15130
+    AegisName: Dragon_Mail
+    Name: Dragon Mail
+    Type: Armor
+    Weight: 500
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddRace,RC_Dragon,3;
+      bonus2 bMagicAddRace,RC_Dragon,3;
+      if (.@r>5) {
+         bonus2 bAddRace,RC_Dragon,.@r-5;
+         bonus2 bMagicAddRace,RC_Dragon,.@r-5;
+      }
+  - Id: 15134
+    AegisName: Vicious_Cloth
+    Name: Vicious Clothes
+    Type: Armor
+    Weight: 1200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5+.@r;
+      bonus2 bSubRace,RC_Angel,5+.@r;
+  - Id: 15135
+    AegisName: Dragon_Cloth
+    Name: Dragon Clothes
+    Type: Armor
+    Weight: 1200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5+.@r;
+      bonus2 bSubRace,RC_Dragon,5+.@r;
+  - Id: 15136
+    AegisName: Tatenasi_Armor
+    Name: Old Tatenasi Armor
+    Type: Armor
+    Weight: 600
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bMaxHP,100;
   - Id: 15138
     AegisName: Egir_Armor_K
     Name: Aegir Armor
@@ -66749,6 +66971,39 @@ Body:
       bonus bMaxHP,500;
       bonus bMaxSP,50;
       bonus bUnbreakableArmor;
+  - Id: 15139
+    AegisName: Shepherd_Cloth
+    Name: Shepherd Clothes
+    Type: Armor
+    Weight: 1200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5+.@r;
+      bonus2 bSubRace,RC_Brute,5+.@r;
+      bonus2 bSubRace,RC_Player_Doram,5+.@r;
+  - Id: 15140
+    AegisName: Natural_Cloth
+    Name: Natural Clothes
+    Type: Armor
+    Weight: 1200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5+.@r;
+      bonus2 bSubRace,RC_Formless,5+.@r;
   - Id: 15141
     AegisName: Rift_Ancient_Armor
     Name: Rift Ancient Armor
@@ -66774,6 +67029,22 @@ Body:
       .@r = getrefine();
       bonus bMaxHP,(.@r >= 9 ? 1500 : .@r >= 7 ? 900 : 500);
       bonus bMaxSP,-100;
+  - Id: 15142
+    AegisName: Orca_Cloth
+    Name: Orca Clothes
+    Type: Armor
+    Weight: 1200
+    Defense: 30
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5+.@r;
+      bonus2 bSubRace,RC_Fish,5+.@r;
   - Id: 15143
     AegisName: Vermin_Cloth
     Name: Vermin Cloth
@@ -67936,9 +68207,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67957,9 +68226,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -68177,6 +68444,63 @@ Body:
       bonus bMdef,5*(.@r/4);
       if (.@r>=12)
          bonus3 bAutoSpellWhenHit,"AL_PNEUMA",1,50;
+  - Id: 15363
+    AegisName: Mars_Armor_TW
+    Name: Mars Armor
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Jobs:
+      Assassin: true
+      Rogue: true
+    Classes:
+      All_Third: true
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r =  getrefine();
+      autobonus3 "{ bonus bAspd,2; }",1000,10000,"TF_BACKSLIDING","{ specialeffect2 EF_HASTEUP; }";
+      bonus bDex,3*(.@r/4);
+      bonus bMaxHPrate,3*(.@r/4);
+      bonus2 bIgnoreDefRaceRate,RC_DemiHuman,15;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,15;
+      bonus2 bIgnoreDefRaceRate,RC_Brute,15;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,15;
+      if (.@r>=12) {
+         bonus2 bSkillCooldown,"GC_DARKCROW",-5000;
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",2*(getskilllv("AC_DOUBLE"));
+      }
+  - Id: 15365
+    AegisName: Vinus_Armor_TW
+    Name: Venus Armor
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Jobs:
+      Monk: true
+      Priest: true
+    Classes:
+      All_Third: true
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("AL_HEAL");
+      bonus bMaxHPrate,.@lvl;
+      bonus bLongAtkDef,.@lvl;
+      bonus bInt,2*(.@r/4);
+      bonus bMdef,7*(.@r/4);
+      if (.@r>=12) {
+         bonus2 bSkillCooldown,"AB_CLEARANCE",-5000;
+         bonus2 bSkillCooldown,"AB_SILENTIUM",-5000;
+         bonus2 bSkillCooldown,"SR_CRESCENTELBOW",-3000;
+      }
   - Id: 15367
     AegisName: Astraea_Armor
     Name: Asteria's Armor
@@ -68788,6 +69112,25 @@ Body:
     Script: |
       bonus bMaxHP,300;
       bonus bMaxSP,100;
+  - Id: 15407
+    AegisName: WhiteknightArmor
+    Name: Whiteknight Armor
+    Type: Armor
+    Weight: 400
+    Defense: 40
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_Player_Human,1;
+      bonus2 bSubRace,RC_Player_Doram,1;
+      bonus bDelayrate,-5-(min(10,.@r)*2);
+      if (.@r>=12)
+         bonus bNoWalkDelay;
   - Id: 15417
     AegisName: Armor_of_Purple_Thread
     Name: Armor of Purple Thread
@@ -70451,9 +70794,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -70510,9 +70851,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -71928,9 +72267,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -71964,9 +72301,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72025,9 +72360,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72059,9 +72392,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72094,6 +72425,7 @@ Body:
     Jobs:
       Hunter: true
       Rogue: true
+      BardDancer: true
     Classes:
       All_Third: true
     Locations:
@@ -72282,9 +72614,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72323,9 +72653,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -77709,6 +78037,19 @@ Body:
       bonus bLuk,1;
       bonus bMdef,3;
       bonus2 bSubRace,RC_Demon,3;
+  - Id: 18799
+    AegisName: Nero_Mask
+    Name: Nero Mask
+    Type: Armor
+    View: 917
+    Buy: 20
+    Weight: 200
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Water,4;
   - Id: 18803
     AegisName: Rose_Cascade
     Name: Rose Cascade
@@ -78536,6 +78877,22 @@ Body:
     Script: |
       bonus bHealPower,15;
       bonus bUseSPrate,15;
+  - Id: 18862
+    AegisName: Armor_Chiu_J
+    Name: Chiu Armor
+    Type: Armor
+    Buy: 20
+    Weight: 500
+    Defense: 55
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus bMdef,5;
+      bonus bDefEle,Ele_Dark;
   - Id: 18863
     AegisName: Exorcist_Robe
     Name: Exorcist Robe
@@ -78708,7 +79065,7 @@ Body:
       bonus4 bAutoSpellWhenHit,"AL_BLESSING",10,50,0;
   - Id: 18874
     AegisName: One_Eyed_Glass_
-    Name: Cyclops Glasses
+    Name: Monocle
     Type: Armor
     Buy: 10
     Weight: 100
@@ -79182,6 +79539,21 @@ Body:
     Script: |
       bonus bAllStats,1;
       bonus3 bAutoSpellWhenHit,"AL_RUWACH",1,1;
+  - Id: 18916
+    AegisName: Bear_Balloon
+    Name: Bear Balloon
+    Type: Armor
+    View: 1038
+    Weight: 200
+    Defense: 5
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      bonus bStr,1;
+      bonus bLuk,1;
+      bonus bMaxHP,50;
   - Id: 18917
     AegisName: LoveLove_Balloon
     Name: LoveLove Balloon
@@ -79582,6 +79954,20 @@ Body:
             if (.@r >= 9)
                bonus bCritical,5;
       }
+  - Id: 18962
+    AegisName: Panda_Balloon
+    Name: Panda Balloon
+    Type: Armor
+    Weight: 200
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1115
+    Script: |
+      bonus bAllStats,1;
+      bonus bAspd,1;
+      bonus bUnbreakableHelm;
   - Id: 18968
     AegisName: Jinn_Marin_Balloon
     Name: Demon Blue Poring Bubble
@@ -80195,6 +80581,22 @@ Body:
       bonus2 bAddItemHealRate,11596,150;
     EquipScript: |
       sc_end SC_SpeedUp0;
+  - Id: 18992
+    AegisName: New_Year_Hairpin
+    Name: New Year Hairpin
+    Type: Armor
+    View: 1155
+    Buy: 20
+    Weight: 180
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 15
+    Refineable: true
+    Script: |
+      bonus bHit,5;
+      bonus bFlee2,3;
   - Id: 18997
     AegisName: Riot_Chip
     Name: Runaway Chip
@@ -80227,6 +80629,19 @@ Body:
       bonus bDex,2;
       bonus bMaxHP,200;
       bonus bMaxSP,50;
+  - Id: 19010
+    AegisName: Baby_Dragon_Hat
+    Name: Baby Dragon Hat
+    Type: Armor
+    View: 525
+    Weight: 1000
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 10
+    Script: |
+      bonus2 bSubRace,RC_Dragon,-10;
+      bonus2 bExpAddRace,RC_Dragon,5;
   - Id: 19011
     AegisName: Little_Devil_S_Horn
     Name: Little Devil's Horn
@@ -80478,7 +80893,7 @@ Body:
       }
   - Id: 19048
     AegisName: Elemental_Clothe
-    Name: Elemental Clothes
+    Name: Elemental Tights
     Type: Armor
     Weight: 500
     Defense: 45
@@ -81231,52 +81646,6 @@ Body:
       bonus bMaxSP,100;
       bonus2 bSPDrainRate,30,3+(.@r/3);
       bonus2 bHPDrainRate,10,1+(.@r/4);
-  - Id: 19221
-    AegisName: Golden_Angel_Band_TH
-    Name: Golden Angel Hairband
-    Type: Armor
-    Weight: 10
-    Defense: 10
-    Locations:
-      Head_Top: true
-    ArmorLevel: 1
-    EquipLevelMin: 1
-    Refineable: true
-    View: 1104
-    Script: |
-      .@r = getrefine();
-      if (readparam(bStr) >= 70) {
-         bonus bBaseAtk,5;
-         if (.@r >= 7)
-            bonus bBaseAtk,10;
-         }
-         if (readparam(bInt) >= 70) {
-            bonus bMatk,5;
-            if (.@r >= 7)
-               bonus bMatk,10;
-         }
-         if (readparam(bVit) >= 70) {
-            bonus bMaxHPrate,2;
-            bonus bMaxSPrate,2;
-            if (.@r >= 7)
-               bonus bMaxHPrate,2;
-               bonus bMaxSPrate,2;
-         }
-         if (readparam(bAgi) >= 70) {
-            bonus bAspdRate,2;
-            if (.@r >= 7)
-               bonus bAspdRate,3;
-         }
-         if (readparam(bDex) >= 70) {
-            bonus bLongAtkRate,2;
-            if (.@r >= 7)
-               bonus bLongAtkRate,3;
-         }
-         if (readparam(bLuk) >= 70) {
-            bonus bCritAtkRate,2;
-            if (.@r >= 7)
-               bonus bCritAtkRate,3;
-      }
   - Id: 19125
     AegisName: Cylinder_Hairband
     Name: Cylinder Hairband
@@ -83042,6 +83411,53 @@ Body:
       NoAuction: true
     Script: |
       bonus bMaxSP,50;
+  - Id: 19221
+    AegisName: Golden_Angel_Band_TH
+    Name: Golden Angel Hairband
+    Type: Armor
+    Weight: 10
+    Defense: 10
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    View: 1104
+    Script: |
+      .@r = getrefine();
+      if (readparam(bStr) >= 70) {
+         bonus bBaseAtk,5;
+         if (.@r >= 7)
+            bonus bBaseAtk,10;
+      }
+      if (readparam(bInt) >= 70) {
+         bonus bMatk,5;
+         if (.@r >= 7)
+            bonus bMatk,10;
+      }
+      if (readparam(bVit) >= 70) {
+         bonus bMaxHPrate,2;
+         bonus bMaxSPrate,2;
+         if (.@r >= 7) {
+            bonus bMaxHPrate,2;
+            bonus bMaxSPrate,2;
+         }
+      }
+      if (readparam(bAgi) >= 70) {
+         bonus bAspdRate,2;
+         if (.@r >= 7)
+            bonus bAspdRate,3;
+      }
+      if (readparam(bDex) >= 70) {
+         bonus bLongAtkRate,2;
+         if (.@r >= 7)
+            bonus bLongAtkRate,3;
+      }
+      if (readparam(bLuk) >= 70) {
+         bonus bCritAtkRate,2;
+         if (.@r >= 7)
+            bonus bCritAtkRate,3;
+      }
   - Id: 19223
     AegisName: Cap_IL
     Name: Illusion Cap
@@ -83778,6 +84194,34 @@ Body:
     Script: |
       bonus bAllStats,1;
       bonus MaxHp,200;
+  - Id: 19311
+    AegisName: Greater_Dracul_Horn
+    Name: Greater Dracule Horn
+    Type: Armor
+    View: 1695
+    Weight: 800
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableHelm;
+      bonus bMaxHPrate,10;
+      bonus2 bAddClass,Class_All,6;
+      bonus2 bHPDrainRate,30,10;
+      skill "MC_LOUD",1;
+      if (.@r>=9) {
+         bonus2 bAddClass,Class_All,10;
+         bonus2 bHPDrainRate,30,30;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddClass,Class_All,5;
+         bonus2 bHPDrainRate,30,15;
+      }
   - Id: 19326
     AegisName: Book_of_Soyga
     Name: Book of Soyga
@@ -84554,6 +84998,27 @@ Body:
          bonus bVariableCastrate,-10;
       if (.@r>=9)
          bonus bVariableCastrate,-10;
+  - Id: 19437
+    AegisName: LittleGarden
+    Name: Little Garden
+    Type: Armor
+    View: 1830
+    Weight: 100
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bBaseAtk,40;
+      bonus bCritAtkRate,5;
+      if (readparam(bLuk)>=90) {
+         bonus bBaseAtk,60;
+         bonus bCritAtkRate,10;
+      }
+      if (readparam(bLuk)>=125) {
+         bonus bBaseAtk,80;
+         bonus bCritAtkRate,20;
+      }
   - Id: 19439
     AegisName: Subject_Aura
     Name: Vicious Mind Aura
@@ -84733,7 +85198,7 @@ Body:
       bonus2 bMagicAddRace2,RC2_ILLUSION_VAMPIRE,.@bonus;*/
   - Id: 19464
     AegisName: C_Melon_Cap
-    Name: Costume melon bread hat    # !todo check english name
+    Name: Costume Melon Bread Hat
     Type: Armor
     View: 1878
     Locations:
@@ -84804,7 +85269,7 @@ Body:
       bonus2 bSkillAtk,"AB_ADORAMUS",.@dmg;
   - Id: 19472
     AegisName: C_S_Circlet_Of_Time
-    Name: Circlet of Costume Time    # !todo check english name
+    Name: Costume Temporal Circlet
     Type: Armor
     View: 1891
     Locations:
@@ -85464,6 +85929,35 @@ Body:
       bonus bAllStats,10;
       /*bonus2 bAddRace2,RC2_TEMPLE_DEMON,30;
       bonus2 bMagicAddRace2,RC2_TEMPLE_DEMON,30;*/
+  - Id: 19498
+    AegisName: CitrusRibbon
+    Name: Citrus Ribbon
+    Type: Armor
+    View: 1900
+    Weight: 500
+    Defense: 5
+    Locations:
+      Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 90
+    Script: |
+      bonus bMdef,3;
+      bonus bPerfectHitAddRate,20;
+      bonus2 bAddClass,Class_Boss,7;
+  - Id: 19499
+    AegisName: FortunetellinSealed
+    Name: Fortunetelling Sealed
+    Type: Armor
+    View: 1901
+    Weight: 300
+    Locations:
+      Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Script: |
+      .@a = (readparam(bInt)+readparam(bDex))/50;
+      bonus bAspdRate,2*.@a;
+      bonus2 bMagicAddSize,Size_All,4*.@a;
   - Id: 19500
     AegisName: T_Mr_Smile
     Name: T Mr Smile
@@ -89353,6 +89847,15 @@ Body:
     ArmorLevel: 1
     Refineable: true
     View: 1098
+  - Id: 19911
+    AegisName: C_Triangular_Roof_Hat
+    Name: Costume Triangle roof hat
+    Type: Armor
+    View: 1099
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
   - Id: 19912
     AegisName: C_Cat_Eye
     Name: "Costume: Cat eye"
@@ -89458,6 +89961,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 807
+  - Id: 19927
+    AegisName: C_Gray_Drooping_Kitty
+    Name: Costume Drooping Gray Kitty
+    Type: Armor
+    View: 275
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
   - Id: 19928
     AegisName: C_Gothic_Heart_Wing
     Name: Costume Gothic Heart Wing
@@ -94802,7 +95314,7 @@ Body:
       hateffect(HAT_EF_MAGICCIRCLERAINBOW,false);
   - Id: 20541
     AegisName: C_AngelRibbonWing_TW
-    Name: Costume angel ribbon wings    # !todo check english name
+    Name: Costume Angel's Ribboned Wings
     Type: Armor
     View: 42
     Locations:
@@ -94850,6 +95362,30 @@ Body:
       hateffect(HAT_EF_C_POPPING_PORING_AURA,true);
     UnEquipScript: |
       hateffect(HAT_EF_C_POPPING_PORING_AURA,false);
+  - Id: 20556
+    AegisName: C_99LV_ShadowC_Black
+    Name: Costume Aura of Night
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_99LV_ShadowC_Black,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_99LV_ShadowC_Black,false);
+  - Id: 20567
+    AegisName: C_160LV_ShadowC_Black
+    Name: Costume Aura of Darkness
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_160LV_ShadowC_Black,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_ShadowC_Black,false);
   - Id: 20570
     AegisName: C_HeartChocoBag
     Name: Costume HeartChocoBag
@@ -94908,7 +95444,7 @@ Body:
     View: 53
   - Id: 20577
     AegisName: C_Balloon_Wing
-    Name: Costume inflatable wings    # !todo check english name
+    Name: Costume Ballon Wings
     Type: Armor
     View: 54
     Jobs:
@@ -94919,7 +95455,7 @@ Body:
     ArmorLevel: 1
   - Id: 20578
     AegisName: C_Wings_Of_Raguel
-    Name: Costume raguel's wings    # !todo check english name
+    Name: Costume Raguel's Wings
     Type: Armor
     View: 56
     Locations:
@@ -94927,7 +95463,7 @@ Body:
     ArmorLevel: 1
   - Id: 20579
     AegisName: C_Wings_Of_Raphael
-    Name: Costume Raphael's Wings    # !todo check english name
+    Name: Costume Raphael's Wings
     Type: Armor
     View: 57
     Jobs:
@@ -95014,7 +95550,7 @@ Body:
     ArmorLevel: 1
   - Id: 20595
     AegisName: C_School_Bag_RD_E
-    Name: Costume beginners red backpack    # !todo check english name
+    Name: Costume Novice Red Backpack
     Type: Armor
     View: 51
     Locations:
@@ -95066,7 +95602,7 @@ Body:
       bonus bUnbreakableHelm;
   - Id: 20603
     AegisName: C_P_Ulysses_Feather
-    Name: Costume Big Purple Swallowtail Butterfly Wings    # !todo check english name
+    Name: Costume Ulysses Wings
     Type: Armor
     View: 85
     Locations:
@@ -95082,7 +95618,7 @@ Body:
     View: 86
   - Id: 20605
     AegisName: C_Leaf_Umbrella
-    Name: Costume leaf umbrella    # !todo check english name
+    Name: Costume Leaf Umbrella
     Type: Armor
     View: 87
     Locations:
@@ -95395,7 +95931,7 @@ Body:
          bonus bAgi,(.@r-5)*2;
       }
   - Id: 20716
-    AegisName: Spirit_Manteau
+    AegisName: Esprit_Manteau
     Name: Spirit Manteau
     Type: Armor
     Buy: 20
@@ -95998,6 +96534,28 @@ Body:
     Script: |
       bonus bFlee,getrefine() * 2;
       bonus bFlee2,8 + (BaseLevel > 129 ? 2 : 0);
+  - Id: 20774
+    AegisName: Cutoff_Manteau
+    Name: King of Void's Garment
+    Type: Armor
+    Weight: 500
+    Defense: 16
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Classes:
+      All_Upper: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 70
+    Refineable: true
+    Script: |
+      bonus bMdef,2;
+      bonus bMatkRate,1;
+      bonus bMaxHPrate,5;
+      bonus2 bAddEle,Ele_Neutral,2;
   - Id: 20778
     AegisName: RedLotus_Stole
     Name: Red Lotus Stole
@@ -97170,33 +97728,34 @@ Body:
          bonus bBaseAtk,15;
          if (.@r >= 9)
             bonus bBaseAtk,15;
-         }
-         if (readparam(bInt) >= 90) {
+      }
+      if (readparam(bInt) >= 90) {
+         bonus bMatk,15;
+         if (.@r >= 9)
             bonus bMatk,15;
-            if (.@r >= 9)
-               bonus bMatk,15;
-         }
-         if (readparam(bVit) >= 90) {
+      }
+      if (readparam(bVit) >= 90) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         if (.@r >= 9) {
             bonus bMaxHPrate,5;
             bonus bMaxSPrate,5;
-            if (.@r >= 9)
-               bonus bMaxHPrate,5;
-               bonus bMaxSPrate,5;
          }
-         if (readparam(bAgi) >= 90) {
+      }
+      if (readparam(bAgi) >= 90) {
+         bonus bAspd,1;
+         if (.@r >= 9)
             bonus bAspd,1;
-            if (.@r >= 9)
-               bonus bAspd,1;
-         }
-         if (readparam(bDex) >= 90) {
+      }
+      if (readparam(bDex) >= 90) {
+         bonus bLongAtkRate,5;
+         if (.@r >= 9)
             bonus bLongAtkRate,5;
-            if (.@r >= 9)
-               bonus bLongAtkRate,5;
-         }
-         if (readparam(bLuk) >= 90) {
+      }
+      if (readparam(bLuk) >= 90) {
+         bonus bCritAtkRate,5;
+         if (.@r >= 9)
             bonus bCritAtkRate,5;
-            if (.@r >= 9)
-               bonus bCritAtkRate,5;
       }
   - Id: 20842
     AegisName: Bag_Of_Antonio_P
@@ -97504,33 +98063,34 @@ Body:
          bonus bBaseAtk,15;
          if (.@r >= 9)
             bonus bBaseAtk,15;
-         }
-         if (readparam(bInt) >= 90) {
+      }
+      if (readparam(bInt) >= 90) {
+         bonus bMatk,15;
+         if (.@r >= 9)
             bonus bMatk,15;
-            if (.@r >= 9)
-               bonus bMatk,15;
-         }
-         if (readparam(bVit) >= 90) {
+      }
+      if (readparam(bVit) >= 90) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         if (.@r >= 9) {
             bonus bMaxHPrate,5;
             bonus bMaxSPrate,5;
-            if (.@r >= 9)
-               bonus bMaxHPrate,5;
-               bonus bMaxSPrate,5;
          }
-         if (readparam(bAgi) >= 90) {
+      }
+      if (readparam(bAgi) >= 90) {
+         bonus bAspd,1;
+         if (.@r >= 9)
             bonus bAspd,1;
-            if (.@r >= 9)
-               bonus bAspd,1;
-         }
-         if (readparam(bDex) >= 90) {
+      }
+      if (readparam(bDex) >= 90) {
+         bonus bLongAtkRate,5;
+         if (.@r >= 9)
             bonus bLongAtkRate,5;
-            if (.@r >= 9)
-               bonus bLongAtkRate,5;
-         }
-         if (readparam(bLuk) >= 90) {
+      }
+      if (readparam(bLuk) >= 90) {
+         bonus bCritAtkRate,5;
+         if (.@r >= 9)
             bonus bCritAtkRate,5;
-            if (.@r >= 9)
-               bonus bCritAtkRate,5;
       }
   - Id: 20902
     AegisName: True_Hunting_Manteau
@@ -98252,8 +98812,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98286,8 +98844,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98320,8 +98876,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98354,8 +98908,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98388,8 +98940,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98422,8 +98972,6 @@ Body:
     Weight: 400
     Defense: 38
     Slots: 1
-    Classes:
-      All_Third: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98534,6 +99082,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 92
+  - Id: 20989
+    AegisName: C_Mainspring_Screw
+    Name: Costume Mainspring Screw
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 93
   - Id: 20990
     AegisName: C_Rotating_Gears
     Name: "Costume: Rotating Gears"
@@ -98541,6 +99097,39 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 20991
+    AegisName: aegis_20991
+    Name: Fairy of Eden
+    Type: Armor
+    Weight: 400
+    Defense: 40
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubClass,Class_Normal,5;
+      bonus2 bSubClass,Class_Boss,5;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus bAspdRate,.@r;
+      bonus bMatkRate,2*.@r;
+      if (.@r>=6) {
+         bonus bAllStats,10;
+         bonus bNoKnockback;
+      }
+      if (.@r>=8) {
+         if (getskilllv("MG_ENERGYCOAT") == 1) {
+            bonus bDef,300;
+            bonus bMdef,15;
+         }
+         skill "MG_ENERGYCOAT",1;
+      }
+    UnEquipScript: |
+      sc_end SC_ENERGYCOAT;
   - Id: 21000
     AegisName: Upg_Twohand_Sword
     Name: Upg Two-Handed Sword
@@ -99134,9 +99723,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -99170,9 +99757,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -99320,9 +99905,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -99576,7 +100159,7 @@ Body:
     ArmorLevel: 1
   - Id: 21205
     AegisName: Nut_Cracker
-    Name: Nut Cracker    # !todo check english name
+    Name: Nut Cracker
     Type: Armor
     View: 1991
     Weight: 100
@@ -99586,7 +100169,7 @@ Body:
     ArmorLevel: 1
   - Id: 21206
     AegisName: C_Nut_Cracker
-    Name: Costume Nutcracker    # !todo check english name
+    Name: Costume Nut Cracker
     Type: Armor
     View: 1991
     Locations:
@@ -100454,7 +101037,7 @@ Body:
       bonus2 bExpAddRace,RC_Plant,5+getrefine();
   - Id: 22051
     AegisName: Ramor_Shoes
-    Name: L'Amour Shoes
+    Name: Ramor Shoes
     Type: Armor
     Buy: 20
     Weight: 250
@@ -100486,7 +101069,7 @@ Body:
       bonus2 bExpAddRace,RC_Undead,5+getrefine();
   - Id: 22055
     AegisName: Sharel_Shoes
-    Name: Charel Shoes
+    Name: Sharel Shoes
     Type: Armor
     Buy: 20
     Weight: 250
@@ -100504,7 +101087,7 @@ Body:
       bonus bMaxSPrate,.@r;
   - Id: 22057
     AegisName: Flow_Shoes
-    Name: Flower Shoes
+    Name: Flow Shoes
     Type: Armor
     Buy: 20
     Weight: 250
@@ -100649,7 +101232,7 @@ Body:
       bonus bMaxHPrate,.@r;
       bonus bMaxSPrate,.@r;
   - Id: 22066
-    AegisName: Spirit_Shoes
+    AegisName: Esprit_Shoes
     Name: Spirit Shoes
     Type: Armor
     Buy: 10
@@ -100707,6 +101290,34 @@ Body:
       .@r = getrefine();
       bonus bMaxHPrate,.@r;
       bonus bMaxSPrate,.@r;
+  - Id: 22070
+    AegisName: Applause_Sandal
+    Name: Old Applause Sandals
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      bonus bMaxSP,50;
+  - Id: 22071
+    AegisName: Applause_Sandal_
+    Name: Applause Sandal
+    Type: Armor
+    Weight: 200
+    Defense: 7
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bMdef,10;
+      bonus bDelayrate,-2*getrefine();
   - Id: 22072
     AegisName: Hikingboots
     Name: Hikingboots
@@ -102564,6 +103175,30 @@ Body:
     Script: |
       bonus bMatk,15;
       bonus bBaseAtk,15;
+  - Id: 22234
+    AegisName: FrontiaBoots
+    Name: Frontier Boots
+    Type: Armor
+    Weight: 500
+    Defense: 5
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,50;
+      bonus bMatk,50;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      if (.@r>=9) {
+         bonus bBaseAtk,50;
+         bonus bMatk,50;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
   - Id: 22238
     AegisName: Great_Hero_Boots
     Name: Great Hero Boots
@@ -109294,7 +109929,7 @@ Body:
       bonus2 bSkillAtk,"RK_SONICWAVE",5+2*(.@r/2);
   - Id: 24441
     AegisName: S_Sonic_Shield
-    Name: Sonic Shadow Shield    # !todo check english name
+    Name: Sonic Shadow Shield
     Type: Shadowgear
     Jobs:
       Knight: true
@@ -109795,7 +110430,7 @@ Body:
       bonus bLongAtkRate,3+(.@r>=7?3:0)+(.@r>=9?4:0);
   - Id: 24472
     AegisName: S_Vulcan_Shoes
-    Name: Vulcan Shadow Shoes    # !todo check english name
+    Name: Vulcan Shadow Shoes
     Type: Shadowgear
     Jobs:
       Blacksmith: true
@@ -109811,7 +110446,7 @@ Body:
       bonus2 bSkillUseSPrate,"NC_VULCANARM",2+(.@r/2);
   - Id: 24473
     AegisName: S_Arms_Weapon
-    Name: Arm Shadow Weapon    # !todo check english name
+    Name: Arm Shadow Weapon
     Type: Shadowgear
     Jobs:
       Blacksmith: true
@@ -109865,9 +110500,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -109881,9 +110514,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -109906,9 +110537,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -109922,9 +110551,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -109947,9 +110574,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -109963,9 +110588,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -109979,9 +110602,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -109995,9 +110616,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110020,9 +110639,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110036,9 +110653,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110061,9 +110676,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110077,9 +110690,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110093,9 +110704,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110109,9 +110718,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110137,9 +110744,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110153,9 +110758,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110178,9 +110781,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110194,9 +110795,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110210,9 +110809,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110226,9 +110823,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110251,9 +110846,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110267,9 +110860,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110292,9 +110883,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110308,9 +110897,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110324,9 +110911,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110340,9 +110925,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110365,9 +110948,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110381,9 +110962,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110406,9 +110985,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110422,9 +110999,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110438,9 +111013,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110454,9 +111027,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110479,9 +111050,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110495,9 +111064,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110520,9 +111087,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110536,9 +111101,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110552,9 +111115,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110568,9 +111129,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110593,9 +111152,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110609,9 +111166,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110634,9 +111189,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110650,9 +111203,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110666,9 +111217,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110682,9 +111231,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110707,9 +111254,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110723,9 +111268,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110748,9 +111291,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110764,9 +111305,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110780,9 +111319,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110796,9 +111333,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110821,9 +111356,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110837,9 +111370,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110854,9 +111385,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110870,9 +111399,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110888,9 +111415,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110904,9 +111429,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110929,9 +111452,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110945,9 +111466,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110970,9 +111489,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110986,9 +111503,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111002,9 +111517,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111018,9 +111531,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111043,9 +111554,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111059,9 +111568,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111084,9 +111591,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111100,9 +111605,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111116,9 +111619,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111132,9 +111633,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111157,9 +111656,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111173,9 +111670,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111198,9 +111693,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111214,9 +111707,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111230,9 +111721,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111246,9 +111735,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111271,9 +111758,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111287,9 +111772,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111312,9 +111795,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111328,9 +111809,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111344,9 +111823,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111360,9 +111837,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111385,9 +111860,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111401,9 +111874,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111426,9 +111897,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111442,9 +111911,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111458,9 +111925,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111474,9 +111939,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111499,9 +111962,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111515,9 +111976,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111540,9 +111999,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111556,9 +112013,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111572,9 +112027,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111588,9 +112041,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111613,9 +112064,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111629,9 +112078,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111654,9 +112101,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111670,9 +112115,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111686,9 +112129,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111702,9 +112143,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111727,9 +112166,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111744,9 +112181,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111769,9 +112204,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111785,9 +112218,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111801,9 +112232,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111818,9 +112247,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111843,9 +112270,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111859,9 +112284,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111884,9 +112307,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111900,9 +112321,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112011,9 +112430,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112036,9 +112453,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112061,9 +112476,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112086,9 +112499,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112111,9 +112522,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112136,9 +112545,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112161,9 +112568,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112186,9 +112591,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112211,9 +112614,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112236,9 +112637,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112261,9 +112660,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -112286,9 +112683,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113269,7 +113664,7 @@ Body:
       bonus2 bSkillCooldown,"SP_SOULCURSE",-1000-100*(getrefine()/2);
   - Id: 24661
     AegisName: S_FullPene_Earring
-    Name: Full Penetration Earring Shadow    # !todo check english name
+    Name: Full Penetration Shadow Earring
     Type: ShadowGear
     Locations:
       Shadow_Right_Accessory: true
@@ -113286,7 +113681,7 @@ Body:
       }
   - Id: 24662
     AegisName: S_FullPene_Pendant
-    Name: Full Penetration Pendant Shadow    # !todo check english name
+    Name: Full Penetration Shadow Pendant
     Type: ShadowGear
     Jobs:
       All: true
@@ -113306,7 +113701,7 @@ Body:
       }
   - Id: 24663
     AegisName: S_FullPene_Armor
-    Name: Full Penetration Armor Shadow    # !todo check english name
+    Name: Full Penetration Shadow Armor
     Type: ShadowGear
     Locations:
       Shadow_Armor: true
@@ -113323,7 +113718,7 @@ Body:
       }
   - Id: 24664
     AegisName: S_FullPene_Shoes
-    Name: Full Penetration Shoes Shadow    # !todo check english name
+    Name: Full Penetration Shadow Shoes
     Type: ShadowGear
     Jobs:
       All: true
@@ -114301,6 +114696,366 @@ Body:
     Script: |
       bonus bBaseAtk,10;
       bonus bMatk,10;
+  - Id: 24722
+    AegisName: S_AutoSpell_Shield
+    Name: Auto Spell Shadow Shield
+    Type: ShadowGear
+    MagicAttack: 15
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,(.@r/2);
+      if (.@r==9)
+         bonus3 bAutoSpell,"MG_NAPALMBEAT",7,70;
+      else if (.@r>9)
+         bonus3 bAutoSpell,"MG_NAPALMBEAT",10,100;
+  - Id: 24723
+    AegisName: S_AutoSpell_Armor
+    Name: Auto Spell Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHit,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bPerfectHitRate,5;
+      }
+  - Id: 24724
+    AegisName: S_AutoSpell_Shoes
+    Name: Auto Spell Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bFlee,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+      }
+  - Id: 24725
+    AegisName: S_AutoSpell_Weapon
+    Name: Auto Spell Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15+(.@r/2);
+      if (.@r==9)
+         bonus3 bAutoSpell,"SM_BASH",7,70;
+      else if (.@r>9)
+         bonus3 bAutoSpell,"SM_BASH",10,100;
+  - Id: 24726
+    AegisName: S_AutoSpell_Pendant
+    Name: Auto Spell Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bHit,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bPerfectHitRate,5;
+      }
+  - Id: 24727
+    AegisName: S_AutoSpell_Earring
+    Name: Auto Spell Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bFlee,10+(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+      }
+  - Id: 24728
+    AegisName: S_M_AutoSpell_Armor
+    Name: Major Auto Spell Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus3 bAutoSpell,"WL_FROSTMISTY",max(getskilllv("WL_FROSTMISTY"),3),70;
+         }
+      }
+  - Id: 24729
+    AegisName: S_M_AutoSpell_Shoes
+    Name: Major Auto Spell Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bMagicAtkEle,Ele_All,(.@r/2);
+      if (.@r>=10) {
+         bonus bAspdRate,3;
+      }
+  - Id: 24730
+    AegisName: S_M_AutoSpell_Earring
+    Name: Major Auto Spell Shadow Earring
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus5 bAutoSpell,"SC_FATALMENACE",max(getskilllv("SC_FATALMENACE"),7),70,BF_SHORT|BF_NORMAL,1;
+         }
+      }
+  - Id: 24731
+    AegisName: S_M_AutoSpell_Pendant
+    Name: Major Auto Spell Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,3;
+      bonus bShortAtkRate,(.@r/2);
+      if (.@r>=10) {
+         bonus bAspdRate,3;
+      }
+  - Id: 24732
+    AegisName: S_Hasty_Shield
+    Name: Hasty Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,1+(.@r/2);
+      bonus2 bAddClass,Class_All,1+(.@r/2);
+      if (.@r>=7) {
+         bonus bDef,15;
+         bonus bFlee,15;
+         if (.@r>=10) {
+            bonus bSpeedRate,25;
+         }
+      }
+  - Id: 24733
+    AegisName: S_Infinity_Shield
+    Name: Infinity Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,(.@r/3);
+      bonus2 bMagicAddSize,Size_All,(.@r/3);
+      bonus2 bSubSize,Size_All,(.@r/3);
+      bonus2 bMagicSubSize,Size_All,(.@r/3);
+      if (.@r==10)
+         bonus bNoSizeFix;
+  - Id: 24734
+    AegisName: S_Durable_Weapon
+    Name: Durable Weapon Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2;
+      bonus bShortAtkRate,2;
+      bonus2 bAddClass,Class_All,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus bLongAtkRate,7;
+            bonus bShortAtkRate,7;
+         }
+      }
+  - Id: 24735
+    AegisName: S_Durable_Shield
+    Name: Durable Shield Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2;
+      bonus bShortAtkRate,2;
+      bonus2 bAddClass,Class_All,(.@r/2);
+      if (.@r>=9) {
+         bonus bAspd,1;
+         if (.@r>=10) {
+            bonus bLongAtkRate,7;
+            bonus bShortAtkRate,7;
+         }
+      }
+  - Id: 24736
+    AegisName: S_Clever_Weapon
+    Name: Clever Weapon Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2;
+      bonus bMatkRate,(.@r/2);
+      if (.@r>=9) {
+         bonus bVariableCastrate,-5;
+         if (.@r>=10) {
+            bonus2 bMagicAtkEle,Ele_All,7;
+         }
+      }
+  - Id: 24737
+    AegisName: S_Clever_Shield
+    Name: Clever Shield Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2;
+      bonus bMatkRate,(.@r/2);
+      if (.@r>=9) {
+         bonus bVariableCastrate,-5;
+         if (.@r>=10) {
+            bonus2 bMagicAtkEle,Ele_All,7;
+         }
+      }
+  - Id: 24738
+    AegisName: S_CriticalHit_Weapon
+    Name: Critical Hit Weapon Shadow
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,7;
+      bonus bBaseAtk,15;
+      bonus bCritAtkRate,(.@r/2);
+      if (.@r>=7) {
+         bonus bCritical,7;
+      }
+  - Id: 24739
+    AegisName: S_SU_Weapon
+    Name: Summoner Booster Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24740
+    AegisName: S_SJ_Weapon
+    Name: Star Emperor Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24741
+    AegisName: S_KO_Weapon
+    Name: Kagerou & Oboro Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24742
+    AegisName: S_RL_Weapon
+    Name: Rebellion Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Rebellion: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24743
+    AegisName: S_SP_Weapon
+    Name: Soul Reaper Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Classes:
+      All_Third: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+  - Id: 24744
+    AegisName: S_NV_Weapon
+    Name: Super Novice Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+      bonus bMaxHP,1500;
+      bonus bMaxSP,300;
+  - Id: 24745
+    AegisName: S_KingbirdAnc_Weapon
+    Name: Kingbird Ancient Shadow Weapon
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15;
+      bonus bHit,15;
+      bonus bLongAtkRate,(.@r/2);
+      if (.@r>=7) {
+         bonus bHit,15;
+      }
   - Id: 26001
     AegisName: Toughen_Metal_Lance
     Name: Enhanced Metal Lance
@@ -114436,9 +115191,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -114828,9 +115581,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -115192,9 +115943,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116083,9 +116832,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -116118,9 +116865,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -116248,9 +116993,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -116779,9 +117522,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -116920,9 +117661,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -120354,6 +121093,20 @@ Body:
       bonus2 bVariableCastrate,"SR_RIDEINLIGHTNING",-5*(BaseLevel/15);
       bonus2 bSkillCooldown,"SR_ASSIMILATEPOWER",-3000;
       bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",5;
+  - Id: 28505
+    AegisName: RingOfDevil
+    Name: Demon God's Ring
+    Type: Armor
+    Buy: 20
+    Weight: 500
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddRace,RC_All,5;
+      bonus bMatkRate,5;
   - Id: 28506
     AegisName: StormStone
     Name: Storm Stone
@@ -121152,9 +121905,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -121188,9 +121939,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -121223,9 +121972,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -121482,9 +122229,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122192,9 +122937,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122228,9 +122971,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122412,9 +123153,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -127537,7 +128276,7 @@ Body:
     View: 1769
   - Id: 31530
     AegisName: C_Greater_Dracul_Horn
-    Name: Costume great dracula horns    # !todo check english name
+    Name: Costume Great Dracula Horns
     Type: Armor
     View: 1695
     Locations:
@@ -129791,7 +130530,7 @@ Body:
     ArmorLevel: 1
   - Id: 31932
     AegisName: C_Suit_Sollar
-    Name: Costume suit lapel    # !todo check english name
+    Name: Costume Suit Lapel
     Type: Armor
     View: 2002
     Locations:
@@ -129823,7 +130562,7 @@ Body:
     ArmorLevel: 1
   - Id: 31937
     AegisName: C_Unicorn_Ornament
-    Name: Costume unicorn headdress    # !todo check english name
+    Name: Costume Unicorn Headdress
     Type: Armor
     View: 2006
     Locations:
@@ -129839,7 +130578,7 @@ Body:
     ArmorLevel: 1
   - Id: 31943
     AegisName: C_Frog_Hood
-    Name: Costume tree frog hoodies    # !todo check english name
+    Name: Costume Tree Frog Hood
     Type: Armor
     View: 2010
     Locations:
@@ -129997,9 +130736,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -130215,9 +130952,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -130705,7 +131440,7 @@ Body:
       bonus bMatkRate,5;
   - Id: 32219
     AegisName: Astraea_Ring
-    Name: Asteria Ring
+    Name: Asteria's Ring
     Type: Armor
     Weight: 100
     Slots: 1
@@ -131528,7 +132263,7 @@ Body:
       bonus bDelayrate,-4;
   - Id: 400003
     AegisName: TimeExtensionArmor
-    Name: TimeExtension (loan)    # !todo check english name
+    Name: Time Extension (Rented)
     Type: Armor
     View: 15
     Locations:
@@ -131730,7 +132465,7 @@ Body:
       }
   - Id: 400045
     AegisName: aegis_400045
-    Name: Pierced apple    # !todo check english name
+    Name: Pierced Apple
     Type: Armor
     View: 1952
     Locations:
@@ -131739,12 +132474,38 @@ Body:
     Refineable: true
   - Id: 400046
     AegisName: aegis_400046
-    Name: Costume pierced apple    # !todo check english name
+    Name: Costume Pierced Apple
     Type: Armor
     View: 1952
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
+  - Id: 400048
+    AegisName: Gift_of_Panagia
+    Name: Gift of Panagia
+    Type: Armor
+    View: 1948
+    Weight: 200
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVit,5;
+      bonus bInt,5;
+      bonus bHealPower,10;
+      bonus2 bResEff,Eff_Stun,5000;
+      if (.@r>=7) {
+         bonus bDelayrate,-20;
+         bonus bHealPower,10;
+      }
+      if (.@r>=9)
+         bonus bHealPower,20;
+      if (.@r>=10)
+         bonus bUseSPrate,-20;
   - Id: 400049
     AegisName: aegis_400049
     Name: Stripe Hat
@@ -131825,7 +132586,7 @@ Body:
       }
   - Id: 400055
     AegisName: C_ShineSantaPoringE
-    Name: Costume shiny santa poring hat    # !todo check english name
+    Name: Costume Shiny Santa Poring Hat
     Type: Armor
     View: 961
     Jobs:
@@ -131887,6 +132648,50 @@ Body:
          bonus2 bMagicAddSize,Size_Small,15;
          bonus2 bMagicAddSize,Size_Medium,15;
       }
+  - Id: 400060
+    AegisName: Freyja_Crown_J
+    Name: PikaPika NyanNyan Crown
+    Type: Armor
+    View: 328
+    Weight: 1000
+    Defense: 18
+    Locations:
+      Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      bonus bDelayrate,-10;
+      bonus2 bSkillAtk,"SU_CN_METEOR",10;
+      bonus2 bSkillAtk,"SU_SV_STEMSPEAR",10;
+      bonus bHPGainValue,30*.@r;
+      bonus bSPGainValue,3*.@r;
+      bonus bAspdRate,3*getskilllv("SU_CHATTERING");
+      if (getskilllv("SU_SPIRITOFLAND") == 1) {
+         .@val = -4*(getskilllv("SU_CN_POWDERING")+getskilllv("SU_CN_METEOR")+getskilllv("SU_NYANGGRASS")+getskilllv("SU_SV_STEMSPEAR")+getskilllv("SU_SV_ROOTTWIST"));
+         bonus2 bVariableCastrate,"SU_CN_METEOR",.@val;
+         bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",.@val;
+      }
+      if (getskilllv("SU_NYANGGRASS") == 5)
+         bonus bDelayrate,-20;
+      if (getskilllv("SU_MEOWMEOW") == 5)
+         bonus2 bMagicAddClass,Class_Boss,25;
+      if (.@r>=7) {
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSkillAtk,"SU_CN_METEOR",15;
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15;
+      }
+      if (.@r>=9) {
+         bonus2 bVariableCastrate,"SU_STOOP",-50;
+         bonus2 bVariableCastrate,"SU_LOPE",-50;
+         bonus2 bSkillAtk,"SU_CN_METEOR",25;
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",25;
+      }
+      if (.@r>=10)
+         autobonus "{ bonus bUseSPrate,-100; }",20,20000,BF_MAGIC;
   - Id: 400061
     AegisName: aegis_400061
     Name: Sagittarius Celestial Coronet
@@ -131956,7 +132761,7 @@ Body:
          bonus2 bSubRace,RC_All,5;
   - Id: 400076
     AegisName: C_20th_Anniversary
-    Name: Costume Gravity 20th Anniversary Balloon    # !todo check english name
+    Name: Costume Gravity's 20th Anniversary Balloon
     Type: Armor
     View: 2005
     Locations:
@@ -131981,9 +132786,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132012,9 +132815,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132047,9 +132848,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132081,9 +132880,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132136,9 +132933,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132167,9 +132962,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132189,7 +132982,7 @@ Body:
       }
   - Id: 400115
     AegisName: C_Rag_Origin_Hat
-    Name: Costume angeling bread hat    # !todo check english name
+    Name: Costume Angeling Bread Hat
     Type: Armor
     View: 2019
     Locations:
@@ -132214,9 +133007,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132245,9 +133036,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132280,9 +133069,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132315,9 +133102,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132346,9 +133131,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132380,9 +133163,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -132402,7 +133183,7 @@ Body:
       }
   - Id: 400124
     AegisName: C_Magestic_Goat2
-    Name: Majestic Goat of Costume Dawn    # !todo check english name
+    Name: Costume Majestic Goat of Dawn
     Type: Armor
     View: 513
     Locations:
@@ -132568,7 +133349,7 @@ Body:
       autobonus "{ bonus2 bHPRegenRate,350,1000; bonus2 bSPRegenRate,80,1000; }",1,4000,BF_MAGIC,"{ specialeffect2 EF_HEAL; }";
   - Id: 400142
     AegisName: Thanos_Helm2_LT
-    Name: Thanos' Shooter Helmet-LT    # !todo check english name
+    Name: Thanos Shooter Helmet-LT
     Type: Armor
     Weight: 100
     Defense: 10
@@ -132595,7 +133376,7 @@ Body:
       /* todo bonus by grade */
   - Id: 400145
     AegisName: Thanos_Helm3_LT
-    Name: Thanos' Magic Helmet-LT    # !todo check english name
+    Name: Thanos Magic Helmet-LT
     Type: Armor
     Weight: 100
     Defense: 10
@@ -132622,7 +133403,7 @@ Body:
       /* todo bonus by grade */
   - Id: 400151
     AegisName: Thanos_Helm4_LT
-    Name: Thanos' Champion Helmet-LT    # !todo check english name
+    Name: Thanos Fighter Helmet-LT
     Type: Armor
     Weight: 100
     Defense: 10
@@ -132657,7 +133438,7 @@ Body:
     ArmorLevel: 1
   - Id: 410013
     AegisName: EXP_Processor_
-    Name: EXP Advisor    # !todo check english name
+    Name: EXP Advisor
     Type: Armor
     Slots: 1
     Locations:
@@ -132773,6 +133554,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2095
+  - Id: 410095
+    AegisName: C_White_Cat_On_Shoulder
+    Name: Costume White Cat on Shoulder
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2151
   - Id: 420003
     AegisName: CD_In_MouthK
     Name: CD in Mouth
@@ -132789,7 +133578,7 @@ Body:
       bonus5 bAutoSpell,"MG_SOULSTRIKE",10,100,BF_SHORT|BF_WEAPON,1;
   - Id: 420010
     AegisName: C_Cons_Of_Darkness
-    Name: Costume Dark Master    # !todo check english name
+    Name: Costume Dark Master
     Type: Armor
     View: 2020
     Locations:
@@ -132813,7 +133602,7 @@ Body:
     View: 2025
   - Id: 420017
     AegisName: aegis_420017
-    Name: Young leaves of the world tree (power)    # !todo check english name
+    Name: Young Leaf of World Tree (Str)
     Type: Armor
     View: 848
     Weight: 50
@@ -132823,7 +133612,7 @@ Body:
     EquipLevelMin: 100
   - Id: 420018
     AegisName: aegis_420018
-    Name: Young Leaf of the World Tree (Handicraft)    # !todo check english name
+    Name: Young Leaf of World Tree (Dex)
     Type: Armor
     View: 848
     Weight: 50
@@ -132833,7 +133622,7 @@ Body:
     EquipLevelMin: 100
   - Id: 420019
     AegisName: aegis_420019
-    Name: Young Leaf of the World Tree (Agility)    # !todo check english name
+    Name: Young Leaf of World Tree (Agi)
     Type: Armor
     View: 848
     Weight: 50
@@ -132843,7 +133632,7 @@ Body:
     EquipLevelMin: 100
   - Id: 420020
     AegisName: aegis_420020
-    Name: Young leaves of the world tree (luck)    # !todo check english name
+    Name: Young Leaf of World Tree (Luk)
     Type: Armor
     View: 848
     Weight: 50
@@ -132853,7 +133642,7 @@ Body:
     EquipLevelMin: 100
   - Id: 420021
     AegisName: aegis_420021
-    Name: Young leaves of the world tree (health)    # !todo check english name
+    Name: Young Leaf of World Tree (Vit)
     Type: Armor
     View: 848
     Weight: 50
@@ -132863,7 +133652,7 @@ Body:
     EquipLevelMin: 100
   - Id: 420022
     AegisName: aegis_420022
-    Name: Young leaves of the world tree (intelligence)    # !todo check english name
+    Name: Young Leaf of World Tree (Int)
     Type: Armor
     View: 848
     Weight: 50
@@ -132873,7 +133662,7 @@ Body:
     EquipLevelMin: 100
   - Id: 420025
     AegisName: C_OneEyedJack
-    Name: Costume One Eyed Jack    # !todo check english name
+    Name: Costume One Eyed Jack
     Type: Armor
     View: 2023
     Locations:
@@ -132889,7 +133678,7 @@ Body:
     View: 2056
   - Id: 420030
     AegisName: aegis_420030
-    Name: A feather in the mouth    # !todo check english name
+    Name: Feather In Mouth
     Type: Armor
     View: 1143
     Weight: 10
@@ -132900,7 +133689,7 @@ Body:
       bonus bLongAtkRate,5;
   - Id: 420031
     AegisName: aegis_420031
-    Name: Ninja's Blue Mask    # !todo check english name
+    Name: Ninja's Blue Mask
     Type: Armor
     View: 1089
     Weight: 10
@@ -132909,6 +133698,14 @@ Body:
     ArmorLevel: 1
     Script: |
       bonus bShortAtkRate,5;
+  - Id: 420033
+    AegisName: aegis_420033
+    Name: Costume Airy Twin Tails (White)
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2028
   - Id: 420053
     AegisName: C_Shadow_Devil
     Name: Costume Shadow Devil
@@ -132931,6 +133728,14 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bVariableCastrate,-3;
+  - Id: 420079
+    AegisName: aegis_420079
+    Name: Costume Inner Color Long
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2155
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
@@ -133049,7 +133854,7 @@ Body:
     View: 1980
   - Id: 440003
     AegisName: C_Pretty_Rabbit_Hood_E
-    Name: Costume beginner rabbit hood    # !todo check english name
+    Name: Costume Novice Rabbit Hood
     Type: Armor
     View: 1085
     Locations:
@@ -133068,7 +133873,7 @@ Body:
       NoAuction: true
   - Id: 440006
     AegisName: C_Black_Cat_Hood_kr
-    Name: Costume black cat hood    # !todo check english name
+    Name: Costume Black Cat Hood
     Type: Armor
     View: 1481
     Locations:
@@ -136791,7 +137596,7 @@ Body:
       }
   - Id: 450147
     AegisName: E_Illusion_Armor_A
-    Name: Illusion Armor Type A (Bound)    # !todo check english name
+    Name: Illusion Armor Type A (Bound)
     Type: Armor
     Defense: 105
     Slots: 1
@@ -136817,7 +137622,7 @@ Body:
       }
   - Id: 450148
     AegisName: E_Illusion_Armor_B
-    Name: Illusion Armor Type B (Bound)    # !todo check english name
+    Name: Illusion Armor Type B (Bound)
     Type: Armor
     Defense: 105
     Slots: 1
@@ -136870,6 +137675,24 @@ Body:
          bonus bMaxHPrate,5;
          bonus bMaxSPrate,2;
       }
+  - Id: 450165
+    AegisName: aegis_450165
+    Name: Striking Armour
+    Type: Armor
+    Weight: 1000
+    Defense: 120
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bPerfectHitAddRate,5*.@r;
+      bonus2 bSubRace,RC_Player_Human,7;
+      bonus2 bSubRace,RC_Player_Doram,7;
   - Id: 450177
     AegisName: Gray_W_Suits
     Name: Gray Wolf Suit
@@ -137465,9 +138288,100 @@ Body:
          bonus2 bMagicAtkEle,Ele_Water,10;
          bonus2 bMagicAtkEle,Ele_Wind,10;
       }
+  - Id: 470036
+    AegisName: Military_Boots_IL
+    Name: Illusion Military Boots
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("NC_AXEBOOMERANG");
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      skill "SM_MAGNUM",3;
+      bonus2 bSkillAtk,"NC_AXETORNADO",30*.@lvl;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",20*.@lvl;
+      bonus bIgnoreDefRace,20*getskilllv("NC_MAGMA_ERUPTION");
+      if (getskilllv("NC_MAGICDECOY") == 5) {
+         bonus bAspdRate,10;
+         bonus bMaxHP,150*BaseLevel;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bBaseAtk,50;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bBaseAtk,50;
+      }
+  - Id: 470037
+    AegisName: Military_Boots_IL_
+    Name: Illusion Military Boots
+    Type: Armor
+    Weight: 400
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("NC_AXEBOOMERANG");
+      bonus bMdef,10;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      skill "SM_MAGNUM",3;
+      bonus2 bSkillAtk,"NC_AXETORNADO",30*.@lvl;
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",20*.@lvl;
+      bonus bIgnoreDefRace,20*getskilllv("NC_MAGMA_ERUPTION");
+      if (getskilllv("NC_MAGICDECOY") == 5) {
+         bonus bAspdRate,10;
+         bonus bMaxHP,150*BaseLevel;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,7;
+         bonus bMaxSPrate,7;
+         bonus bBaseAtk,50;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+         bonus bBaseAtk,50;
+      }
+  - Id: 470048
+    AegisName: Striking_Shoes
+    Name: Striking Shoes
+    Type: Armor
+    Weight: 400
+    Defense: 18
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,10;
+      bonus bDelayrate,-30;
+      bonus bPerfectHitAddRate,10;
+      if (.@r>=7)
+         bonus bPerfectHitAddRate,20;
+      if (.@r>=9)
+         bonus bPerfectHitAddRate,20;
   - Id: 470054
     AegisName: E_Illusion_Leg_A
-    Name: Illusion Leg A Type (Bound)    # !todo check english name
+    Name: Illusion Leg Type A (Bound)
     Type: Armor
     Defense: 20
     Slots: 1
@@ -137493,7 +138407,7 @@ Body:
       }
   - Id: 470055
     AegisName: E_Illusion_Leg_B
-    Name: Illusion Leg B Type (Bound)    # !todo check english name
+    Name: Illusion Leg Type B (Bound)
     Type: Armor
     Defense: 20
     Slots: 1
@@ -138020,6 +138934,55 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-7;
       }
+  - Id: 480025
+    AegisName: Owl_Baron_Mantle
+    Name: Owl Baron Cloak
+    Type: Armor
+    Weight: 100
+    Defense: 5
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bInt,2;
+      bonus bMdef,5;
+      bonus bAspdRate,10;
+      bonus bBaseAtk,6*.@r;
+      bonus bMatk,6*.@r;
+      if (.@r>=10) {
+         skill "PR_LEXAETERNA",1;
+         autobonus2 "{ bonus bAspdRate,40; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
+      }
+      else if (.@r>=9)
+         autobonus2 "{ bonus bAspdRate,20; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
+      else if (.@r>=7)
+         autobonus2 "{ bonus bAspdRate,10; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
+  - Id: 480053
+    AegisName: Behemoth_Muffler
+    Name: Behemoth Muffler
+    Type: Armor
+    Weight: 200
+    Defense: 18
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5;
+      bonus bAspdRate,.@r;
+      bonus2 bAddEle,Ele_Earth,15+.@r;
+      bonus2 bMagicAddEle,Ele_Earth,15+.@r;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      if (.@r>=10)
+         bonus2 bSubEle,Ele_Earth,100;
   - Id: 480054
     AegisName: Morrigane's_Manteau_IL
     Name: Illusion Morrigane's Manteau
@@ -138053,7 +139016,7 @@ Body:
       }
   - Id: 480056
     AegisName: aegis_480056
-    Name: Costume Heavenly Fallen Angel's Wings    # !todo check english name
+    Name: Costume Heavenly Fallen Angel Wings
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -138069,7 +139032,7 @@ Body:
     View: 75
   - Id: 480062
     AegisName: E_Illusion_Engine_A
-    Name: Illusion engine wing type A (attributable)    # !todo check english name
+    Name: Illusion Engine Wing Type A (Bound)
     Type: Armor
     Defense: 50
     Slots: 1
@@ -138095,7 +139058,7 @@ Body:
       }
   - Id: 480063
     AegisName: E_Illusion_Engine_B
-    Name: Illusion engine wing type B (attributable)    # !todo check english name
+    Name: Illusion Engine Wing Type A (Bound)
     Type: Armor
     Defense: 50
     Slots: 1
@@ -138119,6 +139082,43 @@ Body:
       if (.@r>=7) {
          bonus bVariableCastrate,-5;
       }
+  - Id: 480064
+    AegisName: Storm_Muffler
+    Name: Storm Muffler
+    Type: Armor
+    Defense: 12
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@lvl = getskilllv("WM_FRIGG_SONG");
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      bonus2 bSubRace,RC_Player_Human,5;
+      bonus2 bSubRace,RC_Player_Doram,5;
+      bonus bLongAtkRate,2+(4*.@lvl);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",2*.@lvl;
+      if (.@r>=5) {
+         bonus bMaxHPrate,3;
+         bonus bMaxSPrate,3;
+         bonus bLongAtkRate,3;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         bonus bLongAtkRate,5;
+      }
+      if (getskilllv("WM_UNLIMITED_HUMMING_VOICE") == 5) {
+         bonus bPerfectHitAddRate,20;
+         bonus bSPDrainValue,2;
+      }
+      if (getskilllv("WM_GLOOMYDAY") == 5) {
+         bonus bDelayrate,-10;
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+      }
   - Id: 480069
     AegisName: C_Wing_Of_Angel_Move
     Name: Costume Heavenly Angel Wings
@@ -138135,6 +139135,43 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 82
+  - Id: 480077
+    AegisName: aegis_480077
+    Name: Lava Manteau
+    Type: Armor
+    Weight: 300
+    Defense: 25
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,5;
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      bonus2 bAddSize,Size_All,5;
+      bonus2 bSubClass,Class_Boss,5;
+      bonus2 bSkillAtk,"NC_AXETORNADO",20*getskilllv("NC_AXEBOOMERANG");
+      bonus2 bSkillAtk,"NC_POWERSWING",20*getskilllv("NC_AXEBOOMERANG");
+      if (getskilllv("NC_MAGICDECOY") == 5)
+         bonus bPerfectHitAddRate,50;
+      if (getskilllv("NC_MAGMA_ERUPTION") == 5) {
+         bonus2 bSubEle,Ele_Fire,50;
+         bonus2 bSubEle,Ele_Earth,50;
+      }
+      if (.@r>=5) {
+         bonus bMaxHPrate,3;
+         bonus bMaxSPrate,3;
+         bonus bAspdRate,5;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+         bonus bMaxSPrate,5;
+         bonus bAspdRate,5;
+      }
   - Id: 480083
     AegisName: Egirnion_Manteau
     Name: Aegirnion Manteau
@@ -138191,7 +139228,7 @@ Body:
       }
   - Id: 480095
     AegisName: C_Giant_White_Rabbit
-    Name: costume large white rabbit    # !todo check english name
+    Name: Costume Giant White Rabbit
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -138331,6 +139368,37 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 104
+  - Id: 480114
+    AegisName: aegis_480114
+    Name: Striking Mikoshi
+    Type: Armor
+    Weight: 600
+    Defense: 60
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubClass,Class_Normal,5;
+      bonus2 bSubClass,Class_Boss,5;
+      bonus2 bAddRace,RC_All,.@r*2;
+      bonus bDelayrate,-.@r;
+      if (.@r>=6) {
+         bonus bAspdRate,10;
+         bonus bPerfectHitAddRate,25;
+      }
+      if (.@r>=8) {
+         skill "AC_CONCENTRATION",10;
+         if (getskilllv("AC_CONCENTRATION") == 10) {
+            bonus bBaseAtk,50;
+            bonus bFlee,50;
+         }
+      }
+    UnEquipScript: |
+      sc_end SC_CONCENTRATION;
   - Id: 480120
     AegisName: aegis_480120
     Name: Guardian Soul
@@ -138428,6 +139496,31 @@ Body:
       bonus bVariableCastrate,-10;
       bonus bMaxHPrate,3;
       bonus bLongAtkRate,2;
+  - Id: 490013
+    AegisName: Devil_Ring
+    Name: Devil Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bSkillCooldown,"SR_ASSIMILATEPOWER",-3000;
+      if (getskilllv("SR_EARTHSHAKER") == 5) {
+         bonus2 bSkillUseSP,"SR_HOWLINGOFLION",35;
+         bonus2 bSkillUseSP,"SR_KNUCKLEARROW",4;
+      }
+      if (getskilllv("SR_RAMPAGEBLASTER") == 5) {
+         bonus2 bSkillAtk,"SR_HOWLINGOFLION",30;
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",100;
+      }
+      if (getskilllv("SR_RIDEINLIGHTNING") == 5) {
+         bonus bAspdRate,10;
+         bonus bPerfectHitAddRate,15;
+      }
   - Id: 490014
     AegisName: Noblesse_Attack_Ring
     Name: Noblesse Attack Ring
@@ -138638,6 +139731,35 @@ Body:
     Script: |
       bonus bMatkRate,5;
       bonus bMaxSPrate,5;
+  - Id: 490029
+    AegisName: Geffenia_Magictool_Ice
+    Name: Geffenia Magic Device of Ice
+    Type: Armor
+    Weight: 500
+    Defense: 2
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,10;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"WZ_STORMGUST",2*(BaseLevel/3);
+      if (getskilllv("WL_COMET") == 5) {
+         bonus2 bSkillUseSP,"WL_JACKFROST",35;
+         bonus2 bFixedCastrate,"WL_JACKFROST",-100;
+      }
+      if (getskilllv("WL_JACKFROST") == 5) {
+         bonus2 bSkillAtk,"WL_COMET",50;
+         bonus2 bSkillUseSP,"WL_COMET",100;
+      }
+      if (getskilllv("WL_STASIS") == 5) {
+         bonus2 bSkillAtk,"WL_FROSTMISTY",50;
+         bonus2 bSkillAtk,"WL_JACKFROST",50;
+      }
+      if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
+         bonus bDelayrate,-30;
   - Id: 490033
     AegisName: aegis_490033
     Name: Fallen Angel's Tear
@@ -138652,6 +139774,38 @@ Body:
       bonus2 bAddClass,Class_All,6;
       bonus bMatkRate,6;
       bonus bHit,15;
+  - Id: 490038
+    AegisName: Sixth_Sense_Ring
+    Name: Perception Amplifier Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bInt,7;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",(BaseLevel/5);
+      if (getskilllv("SO_CLOUD_KILL") == 5) {
+         bonus bVariableCastrate,-15;
+         bonus bMagicHPGainValue,100;
+         bonus bMagicSPGainValue,10;
+      }
+      if (getskilllv("SO_PSYCHIC_WAVE") == 5)
+         bonus bDelayrate,-30;
+      if (getskilllv("SO_STRIKING") == 5) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+      }
+      if (getskilllv("SO_VACUUM_EXTREME") == 5) {
+         bonus2 bSkillUseSP,"SO_PSYCHIC_WAVE",20;
+         bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-1000;
+      }
   - Id: 490044
     AegisName: Sin_Ring_R
     Name: Sinful Ruby Ring
@@ -139006,7 +140160,7 @@ Body:
       bonus bBaseAtk,20;
   - Id: 490072
     AegisName: E_Illusion_B_R
-    Name: Illusion Booster R (Bound)    # !todo check english name
+    Name: Illusion Booster R(Bound)
     Type: Armor
     Slots: 1
     Locations:
@@ -139026,7 +140180,7 @@ Body:
       bonus2 bAddClass,Class_All,5;
   - Id: 490073
     AegisName: E_Illusion_B_L
-    Name: Illusion Booster L (Bound)    # !todo check english name
+    Name: Illusion Booster L(Bound)
     Type: Armor
     Slots: 1
     Locations:
@@ -139046,7 +140200,7 @@ Body:
       bonus2 bAddClass,Class_All,5;
   - Id: 490074
     AegisName: E_Illusion_BC_R
-    Name: Illusion Battle Chip R (Bound)    # !todo check english name
+    Name: Illusion Battle Chip R(Bound)
     Type: Armor
     Slots: 1
     Locations:
@@ -139066,7 +140220,7 @@ Body:
       bonus bMatkRate,5;
   - Id: 490075
     AegisName: E_Illusion_BC_L
-    Name: Illusion Battle Chip L (Bound)    # !todo check english name
+    Name: Illusion Battle Chip L(Bound)
     Type: Armor
     Slots: 1
     Locations:
@@ -139084,9 +140238,78 @@ Body:
       NoAuction: true
     Script: |
       bonus bMatkRate,5;
+  - Id: 490076
+    AegisName: Ring_Of_Nature
+    Name: Ring of the Creation
+    Type: Armor
+    Weight: 500
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddRace,RC_All,10;
+      bonus bMatkRate,10;
+      bonus bHPGainValue,200;
+      bonus bSPGainValue,20;
+  - Id: 490079
+    AegisName: SoulExpansionRing
+    Name: Mental Amplifier Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bInt,7;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",(BaseLevel/7);
+      if (getskilllv("WL_STASIS") == 5) {
+         bonus2 bMagicAtkEle,Ele_Dark,10;
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      if (getskilllv("WL_TELEKINESIS_INTENSE") == 5)
+         bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-75000;
+      if (getskilllv("WL_HELLINFERNO") == 5) {
+         bonus bAspdRate,15;
+         bonus bMagicHPGainValue,100;
+         bonus bMagicSPGainValue,10;
+      }
+      if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
+         bonus bDelayrate,-30;
+    UnEquipScript: |
+      sc_end SC_TELEKINESIS_INTENSE;
+  - Id: 490083
+    AegisName: Themis_Balance
+    Name: Scales of Judgement
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,5;
+      bonus bInt,7;
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",(BaseLevel/5);
+      if (getskilllv("LG_INSPIRATION") == 5) {
+         bonus2 bVariableCastrate,"LG_RAYOFGENESIS",-50;
+         bonus2 bSkillUseSP,"LG_RAYOFGENESIS",20;
+      }
+      if (getskilllv("CR_DEVOTION") == 5)
+         bonus2 bMagicAddClass,Class_Boss,15;
+      if (getskilllv("LG_HESPERUSLIT") == 5)
+         bonus bDelayrate,-30;
   - Id: 490087
     AegisName: 4th_Q_Necklace
-    Name: Hourglass necklace    # !todo check english name
+    Name: Hourglass Necklace
     Type: Armor
     Locations:
       Both_Accessory: true
@@ -139103,7 +140326,7 @@ Body:
       NoAuction: true
   - Id: 490090
     AegisName: aegis_490090
-    Name: Egir Ring    # !todo check english name
+    Name: Aegir Ring
     Type: Armor
     Weight: 200
     Defense: 5
@@ -139117,7 +140340,7 @@ Body:
       bonus bMatk,10;
   - Id: 490091
     AegisName: aegis_490091
-    Name: Aegir necklace    # !todo check english name
+    Name: Aegir Necklace
     Type: Armor
     Weight: 200
     Defense: 5
@@ -139159,9 +140382,42 @@ Body:
       bonus bLongAtkRate,5;
       bonus bShortAtkRate,5;
       bonus bBaseAtk,30;
+  - Id: 490098
+    AegisName: aegis_490098
+    Name: Ring of Pazuzu
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bInt,7;
+      bonus bMdef,15;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"WZ_VERMILION",(BaseLevel*6);
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",(BaseLevel/3);
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",(BaseLevel/3);
+      if (getskilllv("WL_CHAINLIGHTNING") == 5) {
+         bonus2 bSkillUseSP,"WL_CHAINLIGHTNING",35;
+         bonus2 bSkillCooldown,"WL_CHAINLIGHTNING",-500;
+      }
+      if (getskilllv("WL_DRAINLIFE") == 5) {
+         bonus bVariableCastrate,-15;
+         bonus bMagicHPGainValue,100;
+         bonus bMagicSPGainValue,10;
+      }
+      if (getskilllv("WL_RADIUS") == 3) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      if (getskilllv("WL_RECOGNIZEDSPELL") == 5)
+         bonus bDelayrate,-30;
   - Id: 490099
     AegisName: Thanatos_Pendant
-    Name: Thanatos' Necklace    # !todo check english name
+    Name: Thanatos's Necklace
     Type: Armor
     Weight: 100
     Locations:
@@ -139172,7 +140428,7 @@ Body:
       bonus2 bAddClass,Class_All,5;
   - Id: 490100
     AegisName: Blue_Mental_Pendant
-    Name: Red force pendant    # !todo check english name
+    Name: Red Force Pendant
     Type: Armor
     Weight: 100
     Slots: 1
@@ -139184,7 +140440,7 @@ Body:
       bonus2 bAddClass,Class_All,5;
   - Id: 490101
     AegisName: Red_Force_Pendant
-    Name: Blue mental pendant    # !todo check english name
+    Name: Blue Mental Pendant
     Type: Armor
     Weight: 100
     Slots: 1
@@ -139194,6 +140450,39 @@ Body:
     Script: |
       bonus bMatkRate,5;
       bonus2 bAddClass,Class_All,5;
+  - Id: 490102
+    AegisName: aegis_490102
+    Name: Skull Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bInt,7;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",(BaseLevel/7);
+      if (getskilllv("SP_SOULCOLLECT") == 5) {
+         bonus bAspdRate,15;
+         bonus bMagicHPGainValue,100;
+         bonus bMagicSPGainValue,10;
+      }
+      if (getskilllv("SP_SOULENERGY") == 5)
+         bonus bDelayrate,-30;
+      if (getskilllv("SP_SOULREAPER") == 5) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         bonus2 bMagicAtkEle,Ele_Dark,10;
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+      }
+      if (getskilllv("SP_SOULCURSE") == 5) {
+         bonus2 bSkillUseSP,"SP_CURSEEXPLOSION",25;
+         bonus2 bSkillCooldown,"SP_CURSEEXPLOSION",-500;
+      }
   - Id: 490106
     AegisName: Gray_W_Pendant
     Name: Gray Wolf Pendant
@@ -139246,6 +140535,81 @@ Body:
     Script: |
       bonus bMatkRate,7;
       bonus bMaxSPrate,5;
+  - Id: 490110
+    AegisName: aegis_490110
+    Name: Anulus Ira
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bStr,7;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",(BaseLevel/5);
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",2*(BaseLevel/5);
+      if (getskilllv("SR_KNUCKLEARROW") == 10)
+         bonus bLongAtkRate,10;
+      if (getskilllv("SR_LIGHTNINGWALK") == 5)
+         bonus bPerfectHitAddRate,30;
+      if (getskilllv("SR_RAISINGDRAGON") == 10) {
+         bonus2 bVariableCastrate,"CH_SOULCOLLECT",-50;
+         bonus2 bVariableCastrate,"SR_LIGHTNINGWALK",-50;
+      }
+      if (getskilllv("SR_GENTLETOUCH_CHANGE") == 5) {
+         bonus bDelayrate,-15;
+         bonus bHPGainValue,100;
+         bonus bSPGainValue,10;
+      }
+  - Id: 490118
+    AegisName: aegis_490118
+    Name: Adoration Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bMdef,15;
+      bonus bInt,7;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"AB_ADORAMUS",(BaseLevel/3);
+      bonus2 bSkillAtk,"AB_JUDEX",(BaseLevel/3);
+      if (getskilllv("AB_CLEARANCE") == 5) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      if (getskilllv("AB_ORATIO") == 10) {
+         bonus2 bFixedCastrate,"AB_ORATIO",-100;
+         bonus bHealPower,30;
+         bonus bUseSPrate,-10;
+      }
+      if (getskilllv("AB_ADORAMUS") == 10) {
+         bonus bAspdRate,15;
+         bonus bMagicHPGainValue,100;
+         bonus bMagicSPGainValue,10;
+      }
+      if (getskilllv("AB_OFFERTORIUM") == 5)
+         bonus bVariableCastrate,-30;
+  - Id: 490119
+    AegisName: aegis_490119
+    Name: Alpha Core
+    Type: Armor
+    Weight: 1500
+    Locations:
+      Right_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 150
+    Script: |
+      skill "ECL_SNOWFLIP",1;
+      skill "ECL_PEONYMAMY",1;
+      skill "ECL_SADAGUI",1;
+      skill "ECL_SEQUOIADUST",1;
   - Id: 490120
     AegisName: Sprint_Ring_IL
     Name: Illusion Sprint Ring
@@ -139432,6 +140796,131 @@ Body:
       skill "AL_HEAL",1;
       bonus bVariableCastrate,-10;
       bonus bAspdRate,5;
+  - Id: 490130
+    AegisName: aegis_490130
+    Name: Bracelet of Chenxu
+    Type: Armor
+    Weight: 400
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@lvl = getskilllv("SR_RAISINGDRAGON");
+      .@lvll = getskilllv("SR_GENTLETOUCH_CHANGE");
+      bonus bAgi,7+(4*.@lvll);
+      bonus bFlee,10*.@lvll;
+      bonus bMaxHPrate,.@lvl*2;
+      bonus bMaxSPrate,.@lvl*2;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bSkillAtk,"SR_SKYNETBLOW",2*BaseLevel;
+      if (getskilllv("SR_KNUCKLEARROW") == 10)
+         bonus2 bAddSize,Size_All,10;
+  - Id: 490141
+    AegisName: aegis_490141
+    Name: Metal Pick
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bInt,7;
+      bonus2 bMagicAddSize,Size_All,10;
+      bonus2 bSkillAtk,"WM_METALICSOUND",(BaseLevel/3);
+      if (getskilllv("WM_RANDOMIZESPELL") == 5)
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      if (getskilllv("WM_FRIGG_SONG") == 5)
+         bonus2 bIgnoreMdefRaceRate,RC_All,50;
+      if (getskilllv("WM_LULLABY_DEEPSLEEP") == 5) {
+         bonus bAspdRate,10;
+         bonus bMagicHPGainValue,100;
+         bonus bMagicSPGainValue,10;
+      }
+      if (getskilllv("WM_GLOOMYDAY") == 5) {
+         bonus2 bMagicAddClass,Class_Normal,10;
+         bonus2 bMagicAddClass,Class_Boss,10;
+      }
+  - Id: 490142
+    AegisName: aegis_490142
+    Name: Omega Core
+    Type: Armor
+    Weight: 500
+    Defense: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAspdRate,10;
+      bonus2 bAddRace,RC_All,10;
+  - Id: 490143
+    AegisName: aegis_490143
+    Name: Omega Core
+    Type: Armor
+    Weight: 500
+    Defense: 1
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bAspdRate,10;
+      bonus2 bAddRace,RC_All,10;
+  - Id: 490145
+    AegisName: aegis_490145
+    Name: Ring of Ceryneian
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bDex,7;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",(BaseLevel/10);
+      bonus2 bSkillAtk,"RA_ARROWSTORM",(BaseLevel/10);
+      if (getskilllv("RA_WUGRIDER") == 3) {
+         bonus bSPDrainValue,3;
+         bonus bDelayrate,-20;
+      }
+      if (getskilllv("RA_AIMEDBOLT") == 10)
+         bonus2 bAddClass,Class_Boss,15;
+      if (getskilllv("RA_CAMOUFLAGE") == 5)
+         bonus2 bSkillCooldown,"RA_UNLIMIT",-45000;
+      if (getskilllv("RA_RANGERMAIN") == 10)
+         bonus bPerfectHitAddRate,15;
+    UnEquipScript: |
+      sc_end SC_UNLIMIT;
+  - Id: 490146
+    AegisName: aegis_490146
+    Name: Paracelsus Glove
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      bonus bStr,7;
+      bonus2 bAddRace,RC_All,10;
+      bonus2 bSkillAtk,"GN_CARTCANNON",(BaseLevel/2);
+      bonus2 bSkillAtk,"GN_CART_TORNADO",(BaseLevel/2);
+      if (getskilllv("WS_CARTBOOST") == 5) {
+         bonus bAspdRate,15;
+         bonus bMaxHPrate,15;
+      }
+      if (getskilllv("GN_CRAZYWEED") == 10)
+         bonus bSPDrainValue,3;
+      if (getskilllv("GN_FIRE_EXPANSION") == 5)
+         bonus2 bAddSize,Size_All,10;
   - Id: 500000
     AegisName: IDTest_weapon
     Name: IDTest weapon
@@ -139690,9 +141179,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -139739,9 +141226,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -140306,9 +141791,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -140355,9 +141838,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141028,9 +142509,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141380,9 +142859,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142201,9 +143678,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142260,9 +143735,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143284,9 +144757,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143331,9 +144802,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143835,9 +145304,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -144059,7 +145526,7 @@ Body:
       }
   - Id: 570024
     AegisName: RS_B_Violin
-    Name: Rainstorm Booster Violin    # !todo check english name
+    Name: Rainstorm Booster Violin
     Type: Weapon
     SubType: Musical
     Attack: 150
@@ -144290,9 +145757,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -144514,7 +145979,7 @@ Body:
       }
   - Id: 580024
     AegisName: RS_B_Whip
-    Name: Rainstorm Booster Whip    # !todo check english name
+    Name: Rainstorm Booster Whip
     Type: Weapon
     SubType: Whip
     Attack: 150
@@ -144700,9 +146165,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144748,9 +146211,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144796,9 +146257,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145175,9 +146634,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -145359,9 +146816,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -145699,9 +147154,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -145946,7 +147399,7 @@ Body:
       }
   - Id: 610028
     AegisName: CA_B_Katar
-    Name: Counter Assault Booster Qatar    # !todo check english name
+    Name: Counter Assault Booster Katar
     Type: Weapon
     SubType: Katar
     Attack: 240
@@ -146000,9 +147453,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -146287,9 +147738,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -146547,9 +147996,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -146598,9 +148045,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147264,9 +148709,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147437,6 +148880,7 @@ Body:
     Jobs:
       Hunter: true
       Rogue: true
+      BardDancer: true
     Classes:
       All_Third: true
     Locations:
@@ -147468,9 +148912,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147516,9 +148958,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147562,9 +149002,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147610,9 +149048,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Locations:
       Right_Hand: true
       Left_Hand: true

@@ -223,19 +223,25 @@ enum e_mapid : uint64{
 	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
 //4-1 Jobs
-	MAPID_DRAGON_KNIGHT = JOBL_FOURTH|MAPID_RUNE_KNIGHT_T,
+	MAPID_HYPER_NOVICE = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_SUPER_NOVICE,
+	MAPID_DRAGON_KNIGHT,
 	MAPID_ARCH_MAGE,
 	MAPID_WINDHAWK,
 	MAPID_CARDINAL,
 	MAPID_MEISTER,
 	MAPID_SHADOW_CROSS,
+	MAPID_SKY_EMPEROR,
+	MAPID_NIGHT_WATCH = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_REBELLION,
+	MAPID_SHINKIRO_SHIRANUI,
+	MAPID_SPIRIT_HANDLER = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|JOBL_2_1|MAPID_SUMMONER,
 //4-2 Jobs
-	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|MAPID_ROYAL_GUARD_T,
+	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_CRUSADER,
 	MAPID_ELEMENTAL_MASTER,
 	MAPID_TROUBADOURTROUVERE,
 	MAPID_INQUISITOR,
 	MAPID_BIOLO,
 	MAPID_ABYSS_CHASER,
+	MAPID_SOUL_ASCETIC,
 // Additional constants
 	MAPID_ALL = UINT64_MAX
 };
@@ -1096,9 +1102,9 @@ struct map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
-struct mercenary_data* map_id2mc(int id);
+struct s_mercenary_data* map_id2mc(int id);
 struct pet_data* map_id2pd(int id);
-struct elemental_data* map_id2ed(int id);
+struct s_elemental_data* map_id2ed(int id);
 struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
@@ -1204,8 +1210,8 @@ typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
-typedef struct mercenary_data   TBL_MER;
-typedef struct elemental_data	TBL_ELEM;
+typedef struct s_mercenary_data   TBL_MER;
+typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
