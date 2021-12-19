@@ -6763,6 +6763,28 @@ uint64 pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
+		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
+	//4-1 Jobs
+		case JOB_HYPER_NOVICE:          return MAPID_HYPER_NOVICE;
+		case JOB_DRAGON_KNIGHT:         return MAPID_DRAGON_KNIGHT;
+		case JOB_ARCH_MAGE:             return MAPID_ARCH_MAGE;
+		case JOB_WINDHAWK:              return MAPID_WINDHAWK;
+		case JOB_CARDINAL:              return MAPID_CARDINAL;
+		case JOB_MEISTER:               return MAPID_MEISTER;
+		case JOB_SHADOW_CROSS:          return MAPID_SHADOW_CROSS;
+		case JOB_SKY_EMPEROR:           return MAPID_SKY_EMPEROR;
+		case JOB_NIGHT_WATCH:           return MAPID_NIGHT_WATCH;
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:              return MAPID_SHINKIRO_SHIRANUI;
+	//4-2 Jobs
+		case JOB_IMPERIAL_GUARD:        return MAPID_IMPERIAL_GUARD;
+		case JOB_ELEMENTAL_MASTER:      return MAPID_ELEMENTAL_MASTER;
+		case JOB_INQUISITOR:            return MAPID_INQUISITOR;
+		case JOB_TROUBADOUR:
+		case JOB_TROUVERE:              return MAPID_TROUBADOURTROUVERE;
+		case JOB_BIOLO:                 return MAPID_BIOLO;
+		case JOB_ABYSS_CHASER:          return MAPID_ABYSS_CHASER;
+	//Unknown
 		default:
 			return -1;
 	}
@@ -6914,6 +6936,22 @@ int pc_mapid2jobid(uint64 class_, int sex)
 		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
+		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
+	//4-1 Jobs
+		case MAPID_DRAGON_KNIGHT:         return JOB_DRAGON_KNIGHT;
+		case MAPID_ARCH_MAGE:             return JOB_ARCH_MAGE;
+		case MAPID_WINDHAWK:              return JOB_WINDHAWK;
+		case MAPID_CARDINAL:              return JOB_CARDINAL;
+		case MAPID_MEISTER:               return JOB_MEISTER;
+		case MAPID_SHADOW_CROSS:          return JOB_SHADOW_CROSS;
+	//4-2 Jobs
+		case MAPID_IMPERIAL_GUARD:        return JOB_IMPERIAL_GUARD;
+		case MAPID_ELEMENTAL_MASTER:      return JOB_ELEMENTAL_MASTER;
+		case MAPID_INQUISITOR:            return JOB_INQUISITOR;
+		case MAPID_TROUBADOURTROUVERE:    return sex?JOB_TROUBADOUR:JOB_TROUVERE;
+		case MAPID_BIOLO:                 return JOB_BIOLO;
+		case MAPID_ABYSS_CHASER:          return JOB_ABYSS_CHASER;
+	//Unknown
 		default:
 			return -1;
 	}
@@ -7172,6 +7210,42 @@ const char* job_name(int class_)
 
 	case JOB_BABY_STAR_EMPEROR2:
 		return msg_txt(NULL,784);
+
+	case JOB_DRAGON_KNIGHT:
+	case JOB_MEISTER:
+	case JOB_SHADOW_CROSS:
+	case JOB_ARCH_MAGE:
+	case JOB_CARDINAL:
+	case JOB_WINDHAWK:
+	case JOB_IMPERIAL_GUARD:
+	case JOB_BIOLO:
+	case JOB_ABYSS_CHASER:
+	case JOB_ELEMENTAL_MASTER:
+	case JOB_INQUISITOR:
+	case JOB_TROUBADOUR:
+	case JOB_TROUVERE:
+		return msg_txt( nullptr, 800 - JOB_DRAGON_KNIGHT + class_ );
+
+	case JOB_WINDHAWK2:
+		return msg_txt( nullptr, 805);
+
+	case JOB_MEISTER2:
+		return msg_txt( nullptr, 801 );
+
+	case JOB_DRAGON_KNIGHT2:
+		return msg_txt( nullptr, 800 );
+
+	case JOB_IMPERIAL_GUARD2:
+		return msg_txt( nullptr, 806 );
+
+	case JOB_SKY_EMPEROR:
+	case JOB_SOUL_ASCETIC:
+	case JOB_SHINKIRO:
+	case JOB_SHIRANUI:
+	case JOB_NIGHT_WATCH:
+	case JOB_HYPER_NOVICE:
+	case JOB_SPIRIT_HANDLER:
+		return msg_txt( nullptr, 813 - JOB_SKY_EMPEROR + class_ );
 
 	default:
 		return msg_txt(NULL,655);

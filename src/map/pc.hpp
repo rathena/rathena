@@ -1107,7 +1107,10 @@ enum e_mado_type : uint16 {
 	  (class_) == JOB_REBELLION				|| (class_) == JOB_SUMMONER         || \
 	  (class_) == JOB_BABY_SUMMONER			|| \
 	( (class_) >= JOB_BABY_NINJA			&& (class_) <= JOB_BABY_REBELLION ) || \
-	( (class_) >= JOB_BABY_STAR_GLADIATOR2	&& (class_) <= JOB_BABY_STAR_EMPEROR2 ) \
+	( (class_) >= JOB_BABY_STAR_GLADIATOR2	&& (class_) <= JOB_BABY_STAR_EMPEROR2 ) || \
+	( (class_) >= JOB_DRAGON_KNIGHT			&& (class_) <= JOB_TROUVERE       ) || \
+	( (class_) >= JOB_WINDHAWK2				&& (class_) <= JOB_IMPERIAL_GUARD2 ) || \
+	( (class_) >= JOB_SKY_EMPEROR			&& (class_) <= JOB_SPIRIT_HANDLER ) \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
