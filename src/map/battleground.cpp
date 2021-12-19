@@ -597,7 +597,7 @@ bool bg_member_respawn(struct map_session_data *sd)
 			return false; // Respawn not handled by Core
 
 		pc_setpos(sd, bgteam->cemetery.map, bgteam->cemetery.x, bgteam->cemetery.y, CLR_OUTSIGHT);
-		status_revive(&sd->bl, 1, 100, 0);
+		status_revive(&sd->bl, 1, 100);
 
 		return true; // Warped
 	}

@@ -140311,6 +140311,9 @@ Body:
     AegisName: 4th_Q_Necklace
     Name: Hourglass Necklace
     Type: Armor
+    Buy: 20
+    Jobs:
+      All: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -140324,6 +140327,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      bonus bAllTraits,6-(JobLevel/5);
   - Id: 490090
     AegisName: aegis_490090
     Name: Aegir Ring
@@ -141297,6 +141302,30 @@ Body:
          bonus2 bSkillAtk,"PA_PRESSURE",15;
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
       }
+  - Id: 500018
+    AegisName: Fourth_1h_Sword
+    Name: Relapse Sword
+    Type: Weapon
+    SubType: 1hSword
+    Buy: 20
+    Weight: 1850
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      Alchemist: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5*(.@r/2);
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5*(.@r/2);
+      bonus bWeaponAtkRate,3*(.@r/4);
   - Id: 500025
     AegisName: Adulter_F_G_Sword
     Name: Adulter Fides Guardian Sword
@@ -141960,6 +141989,30 @@ Body:
     Refineable: true
     Script: |
       /*Is combo set with 28763 Surudoi Kaze*/
+  - Id: 510026
+    AegisName: Fourth_1h_Dagger
+    Name: Relapse Dagger
+    Type: Weapon
+    SubType: Dagger
+    Buy: 20
+    Weight: 1400
+    Attack: 180
+    MagicAttack: 215
+    Range: 1
+    Slots: 2
+    Jobs:
+      Rogue: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/4);
+      bonus2 bSkillAtk,"ABC_ABYSS_SQUARE",5*(.@r/2);
   - Id: 510032
     AegisName: Adulter_F_Dagger
     Name: Adulter Fides Dagger
@@ -142581,6 +142634,29 @@ Body:
          bonus bPerfectHitAddRate,7;
          bonus bMaxSPrate,5;
       }
+  - Id: 530009
+    AegisName: Fourth_1h_Spear
+    Name: Fortify Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Buy: 20
+    Weight: 1400
+    Attack: 200
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"IG_SHIELD_SHOOTING",5*(.@r/2);
   - Id: 530013
     AegisName: Adulter_F_G_Spear
     Name: Adulter Fides Guardian Spear
@@ -142974,6 +143050,30 @@ Body:
          .@i = getskilllv("AB_JUDEX");
          bonus3 bAutoSpell,"AB_JUDEX",(.@i > 5 ? .@i : 5),100;
       }
+  - Id: 540013
+    AegisName: Fourth_1h_Book
+    Name: Fortify Book
+    Type: Weapon
+    SubType: Book
+    Buy: 20
+    Weight: 800
+    Attack: 190
+    MagicAttack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Sage: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/4);
+      bonus2 bSkillAtk,"EM_CONFLAGRATION",5*(.@r/2);
   - Id: 540019
     AegisName: Adulter_F_M_Book
     Name: Adulter Fides Magic Book
@@ -144906,6 +145006,30 @@ Body:
          bonus bMaxHPrate,10;
          bonus2 bSkillAtk,"SR_HELLGATE",15;
       }
+  - Id: 560011
+    AegisName: Fourth_1h_Knuckle
+    Name: Scrap Knuckle
+    Type: Weapon
+    SubType: Knuckle
+    Buy: 20
+    Weight: 1300
+    Attack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Monk: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bShortAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"IQ_SECOND_FAITH",5*(.@r/2);
+      bonus2 bSkillAtk,"IQ_SECOND_JUDGEMENT",5*(.@r/2);
   - Id: 560018
     AegisName: Adulter_F_Knuckle
     Name: Adulter Fides Knuckle
@@ -145340,6 +145464,30 @@ Body:
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
          bonus2 bSkillAtk,"WM_REVERBERATION",15;
       }
+  - Id: 570012
+    AegisName: Fourth_Bh_Lute
+    Name: Scrap Lute
+    Type: Weapon
+    SubType: Musical
+    Buy: 20
+    Weight: 1250
+    Attack: 205
+    Range: 1
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Fourth: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",5*(.@r/2);
   - Id: 570017
     AegisName: Adulter_F_Violin
     Name: Adulter Fides Violin
@@ -145793,6 +145941,30 @@ Body:
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
          bonus2 bSkillAtk,"WM_REVERBERATION",15;
       }
+  - Id: 580012
+    AegisName: Fourth_1h_Whip
+    Name: Scrap Whip
+    Type: Weapon
+    SubType: Whip
+    Buy: 20
+    Weight: 1250
+    Attack: 205
+    Range: 2
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Fourth: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM",5*(.@r/2);
   - Id: 580017
     AegisName: Adulter_F_C_Rope
     Name: Adulter Fides Chain Rope
@@ -146366,6 +146538,30 @@ Body:
       if (.@r>=11) {
          bonus2 bSkillAtk,"AB_ADORAMUS",15;
       }
+  - Id: 590015
+    AegisName: Fourth_1h_Mace
+    Name: Relapse Mace
+    Type: Weapon
+    SubType: Mace
+    Buy: 20
+    Weight: 1300
+    Attack: 190
+    MagicAttack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Priest: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/4);
+      bonus2 bSkillAtk,"CD_FRAMEN",5*(.@r/2);
   - Id: 590021
     AegisName: Adulter_F_Mace
     Name: Adulter Fides Mace
@@ -146853,6 +147049,29 @@ Body:
          bonus2 bSkillAtk,"RK_IGNITIONBREAK",15;
          bonus2 bSkillAtk,"RK_SONICWAVE",15;
       }
+  - Id: 600013
+    AegisName: Fourth_Bh_Sword
+    Name: Fortify Sword
+    Type: Weapon
+    SubType: 2hSword
+    Buy: 20
+    Weight: 2300
+    Attack: 250
+    Range: 1
+    Slots: 2
+    Jobs:
+      Knight: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bShortAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"DK_STORMSLASH",5*(.@r/2);
   - Id: 600017
     AegisName: Adulter_F_T_Sword
     Name: Adulter Fides Two-Handed Sword
@@ -147190,6 +147409,29 @@ Body:
          bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
       }
+  - Id: 610015
+    AegisName: Fourth_Bh_Katar
+    Name: Relapse Katar
+    Type: Weapon
+    SubType: Katar
+    Buy: 20
+    Weight: 1800
+    Attack: 260
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bShortAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"SHC_IMPACT_CRATER",5*(.@r/2);
   - Id: 610020
     AegisName: Adulter_F_Cakram
     Name: Adulter Fides Chakram
@@ -147523,6 +147765,29 @@ Body:
       if (.@r>=11) {
          bonus2 bSubEle,Ele_All,20;
       }
+  - Id: 620005
+    AegisName: Fourth_Bh_Axe
+    Name: Relapse Axe
+    Type: Weapon
+    SubType: 2hAxe
+    Buy: 20
+    Weight: 3000
+    Attack: 280
+    Range: 1
+    Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bShortAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"MT_AXE_STOMP",5*(.@r/2);
   - Id: 620010
     AegisName: Doom_Slayer_IL
     Name: Illusion Doom Slayer
@@ -148158,6 +148423,30 @@ Body:
          bonus2 bMagicAddSize,Size_All,15;
          bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
       }
+  - Id: 640013
+    AegisName: Fourth_Bh_Staff
+    Name: Fortify Staff
+    Type: Weapon
+    SubType: 2hStaff
+    Buy: 20
+    Weight: 2100
+    Attack: 140
+    MagicAttack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      Wizard: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/4);
+      bonus2 bSkillAtk,"AG_FROZEN_SLASH",5*(.@r/2);
   - Id: 640019
     AegisName: Adulter_F_T_Staff
     Name: Adulter Fides Two-Handed Staff
@@ -149150,6 +149439,29 @@ Body:
          bonus2 bSkillCooldown,"RA_AIMEDBOLT",-1000;
          bonus bVariableCastrate,-10;
       }
+  - Id: 700021
+    AegisName: Fourth_Bh_Bow
+    Name: Scrap Bow
+    Type: Weapon
+    SubType: Bow
+    Buy: 20
+    Weight: 1700
+    Attack: 210
+    Range: 5
+    Slots: 2
+    Jobs:
+      Hunter: true
+    Classes:
+      All_Fourth: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 200
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,2*(.@r/4);
+      bonus2 bSkillAtk,"WH_GALESTORM",5*(.@r/2);
   - Id: 700030
     AegisName: Adulter_F_C_Bow
     Name: Adulter Fides Crossbow

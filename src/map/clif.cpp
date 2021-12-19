@@ -358,7 +358,19 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 	case BL_ITEM:  return 0x2; //ITEM_TYPE
 	case BL_SKILL: return 0x3; //SKILL_TYPE
 	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
-	case BL_MOB:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x5; //NPC_MOB_TYPE
+	case BL_MOB:
+		if( pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+			return 0x0; //PC_TYPE
+		}else{
+			switch( ( (mob_data*)bl )->special_state.ai ){
+				case AI_ABR:
+					return 0xd; //NPC_ABR_TYPE
+				case AI_BIONIC:
+					return 0xe; //NPC_BIONIC_TYPE
+				default:
+					return 0x5; //NPC_MOB_TYPE
+			}
+		}
 	case BL_NPC:
 // From 2017-07-26 on NPC type units can also use player sprites.
 // There is one exception and this is if they are walking.
@@ -372,9 +384,6 @@ static inline unsigned char clif_bl_type(struct block_list *bl, bool walking) {
 	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
 	case BL_MER:   return 0x9; //NPC_MERSOL_TYPE
 	case BL_ELEM:  return 0xa; //NPC_ELEMENTAL_TYPE
-	case BL_UNKNOWN:  return 0xb; //NPC_UNKNOWN_TYPE - Unconfirmed - Can be attacked.
-	case BL_ABR:      return 0xd; //NPC_ABR_TYPE
-	case BL_BIONIC:   return 0xe; //NPC_BIONIC_TYPE
 	default:       return 0x1; //NPC_TYPE
 	}
 }
@@ -3362,9 +3371,6 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_STATUSPOINT:
 		WFIFOL(fd,4)=sd->status.status_point;
 		break;
-	case SP_TRAITPOINT:
-		WFIFOL(fd, 4) = sd->status.trait_point;
-		break;
 	case SP_SKILLPOINT:
 		WFIFOL(fd,4)=sd->status.skill_point;
 		break;
@@ -3383,9 +3389,6 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_MAXSP:
 		WFIFOL(fd,4)=sd->battle_status.max_sp;
 		break;
-	case SP_MAXAP:
-		WFIFOL(fd, 4) = sd->battle_status.max_ap;
-		break;
 	case SP_HP:
 		// On officials the HP never go below 1, even if you die [Lemongrass]
 		// On officials the HP Novice class never go below 50%, even if you die [Napster]
@@ -3393,9 +3396,6 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_SP:
 		WFIFOL(fd,4)=sd->battle_status.sp;
-		break;
-	case SP_AP:
-		WFIFOL(fd, 4) = sd->battle_status.ap;
 		break;
 	case SP_ASPD:
 		WFIFOL(fd,4)=sd->battle_status.amotion;
@@ -3435,24 +3435,6 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_MATK2:
 		WFIFOL(fd,4)=pc_leftside_matk(sd);
-		break;
-	case SP_PATK:
-		WFIFOL(fd, 4) = sd->battle_status.patk;
-		break;
-	case SP_SMATK:
-		WFIFOL(fd, 4) = sd->battle_status.smatk;
-		break;
-	case SP_RES:
-		WFIFOL(fd, 4) = sd->battle_status.res;
-		break;
-	case SP_MRES:
-		WFIFOL(fd, 4) = sd->battle_status.mres;
-		break;
-	case SP_HPLUS:
-		WFIFOL(fd, 4) = sd->battle_status.hplus;
-		break;
-	case SP_CRATE:
-		WFIFOL(fd, 4) = sd->battle_status.crate;
 		break;
 
 	case SP_ZENY:
@@ -3512,16 +3494,6 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOB(fd,4)=pc_need_status_point(sd,type-SP_USTR+SP_STR,1);
 		len=5;
 		break;
-	case SP_UPOW:
-	case SP_USTA:
-	case SP_UWIS:
-	case SP_USPL:
-	case SP_UCON:
-	case SP_UCRT:
-		WFIFOW(fd, 0) = 0xbe;
-		WFIFOB(fd, 4) = pc_need_trait_point(sd,type-SP_UPOW+SP_POW, 1);
-		len = 5;
-		break;
 
 	/**
 	 * Tells the client how far it is allowed to attack (weapon range)
@@ -3574,6 +3546,27 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,10)=sd->battle_status.luk - sd->status.luk;
 		len=14;
 		break;
+
+	case SP_CARTINFO:
+		WFIFOW(fd,0)=0x121;
+		WFIFOW(fd,2)=sd->cart_num;
+		WFIFOW(fd,4)=MAX_CART;
+		WFIFOL(fd,6)=sd->cart_weight;
+		WFIFOL(fd,10)=sd->cart_weight_max;
+		len=14;
+		break;
+
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	case SP_AP:
+		WFIFOL(fd, 4) = sd->battle_status.ap;
+		break;
+	case SP_TRAITPOINT:
+		WFIFOL(fd, 4) = sd->status.trait_point;
+		break;
+	case SP_MAXAP:
+		WFIFOL(fd, 4) = sd->battle_status.max_ap;
+		break;
+
 	case SP_POW:
 		WFIFOW(fd, 0) = 0x141;
 		WFIFOL(fd, 2) = type;
@@ -3617,14 +3610,60 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		len = 14;
 		break;
 
-	case SP_CARTINFO:
-		WFIFOW(fd,0)=0x121;
-		WFIFOW(fd,2)=sd->cart_num;
-		WFIFOW(fd,4)=MAX_CART;
-		WFIFOL(fd,6)=sd->cart_weight;
-		WFIFOL(fd,10)=sd->cart_weight_max;
-		len=14;
+	case SP_UPOW:
+	case SP_USTA:
+	case SP_UWIS:
+	case SP_USPL:
+	case SP_UCON:
+	case SP_UCRT:
+		WFIFOW(fd, 0) = 0xbe;
+		WFIFOB(fd, 4) = pc_need_trait_point(sd,type-SP_UPOW+SP_POW, 1);
+		len = 5;
 		break;
+
+	case SP_PATK:
+		WFIFOL(fd, 4) = sd->battle_status.patk;
+		break;
+	case SP_SMATK:
+		WFIFOL(fd, 4) = sd->battle_status.smatk;
+		break;
+	case SP_RES:
+		WFIFOL(fd, 4) = sd->battle_status.res;
+		break;
+	case SP_MRES:
+		WFIFOL(fd, 4) = sd->battle_status.mres;
+		break;
+	case SP_HPLUS:
+		WFIFOL(fd, 4) = sd->battle_status.hplus;
+		break;
+	case SP_CRATE:
+		WFIFOL(fd, 4) = sd->battle_status.crate;
+		break;
+#else
+	case SP_AP:
+	case SP_TRAITPOINT:
+	case SP_MAXAP:
+	case SP_POW:
+	case SP_STA:
+	case SP_WIS:
+	case SP_SPL:
+	case SP_CON:
+	case SP_CRT:
+	case SP_UPOW:
+	case SP_USTA:
+	case SP_UWIS:
+	case SP_USPL:
+	case SP_UCON:
+	case SP_UCRT:
+	case SP_PATK:
+	case SP_SMATK:
+	case SP_RES:
+	case SP_MRES:
+	case SP_HPLUS:
+	case SP_CRATE:
+		// 4th job status are not supported by older clients
+		return;
+#endif
 
 	default:
 		ShowError("clif_updatestatus : unrecognized type %d\n",type);
@@ -3872,7 +3911,6 @@ void clif_refreshlook(struct block_list *bl, int id, int type, int val, enum sen
 ///     <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B <atk>.W <atk2>.W
 ///     <matk min>.W <matk max>.W <def>.W <def2>.W <mdef>.W <mdef2>.W <hit>.W
 ///     <flee>.W <flee2>.W <crit>.W <aspd>.W <aspd2>.W
-/// Note: Need to find ZC_STATUS2 to support trait stats/sub-stats and trait stat points. [Rytech]
 void clif_initialstatus(struct map_session_data *sd) {
 	int fd, mdef2;
 	unsigned char *buf;
@@ -3930,9 +3968,7 @@ void clif_initialstatus(struct map_session_data *sd) {
 	clif_updatestatus(sd, SP_ATTACKRANGE);
 	clif_updatestatus(sd, SP_ASPD);
 
-	// Hack to get the display for trait status points
-	// and trait point requirement's to work until I
-	// can find the new packet. [Rytech]
+#ifdef RENEWAL
 	clif_updatestatus(sd, SP_POW);
 	clif_updatestatus(sd, SP_STA);
 	clif_updatestatus(sd, SP_WIS);
@@ -3954,6 +3990,7 @@ void clif_initialstatus(struct map_session_data *sd) {
 	clif_updatestatus(sd, SP_USPL);
 	clif_updatestatus(sd, SP_UCON);
 	clif_updatestatus(sd, SP_UCRT);
+#endif
 }
 
 
@@ -9882,12 +9919,14 @@ void clif_refresh(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_INT);
 	clif_updatestatus(sd,SP_DEX);
 	clif_updatestatus(sd,SP_LUK);
+#ifdef RENEWAL
 	clif_updatestatus(sd,SP_POW);
 	clif_updatestatus(sd,SP_STA);
 	clif_updatestatus(sd,SP_WIS);
 	clif_updatestatus(sd,SP_SPL);
 	clif_updatestatus(sd,SP_CON);
 	clif_updatestatus(sd,SP_CRT);
+#endif
 	if (sd->spiritball)
 		clif_spiritball( &sd->bl, &sd->bl, SELF );
 	if (sd->sc.data[SC_MILLENNIUMSHIELD])
@@ -10988,12 +11027,14 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_updatestatus(sd,SP_INT);
 		clif_updatestatus(sd,SP_DEX);
 		clif_updatestatus(sd,SP_LUK);
+#ifdef RENEWAL
 		clif_updatestatus(sd,SP_POW);
 		clif_updatestatus(sd,SP_STA);
 		clif_updatestatus(sd,SP_WIS);
 		clif_updatestatus(sd,SP_SPL);
 		clif_updatestatus(sd,SP_CON);
 		clif_updatestatus(sd,SP_CRT);
+#endif
 
 		// abort currently running script
 		sd->state.using_fake_npc = 0;
@@ -12677,22 +12718,23 @@ void clif_parse_StatusUp(int fd,struct map_session_data *sd)
 }
 
 
-/// Request to increase trait status (CZ_TRAIT_STATUS_CHANGE).
-/// 0b24 <status id>.W <amount>.W???
+/// Request to increase trait status.
+/// 0b24 <status id>.W <amount>.W
 /// status id:
 ///     SP_POW ~ SP_CON
 /// amount:
-///     Old clients always send 1 for this, even when using /pow+ and the like.
-///     Newer clients (2013-12-23 and newer) send the correct amount.
-void clif_parse_TraitStatusUp(int fd, struct map_session_data *sd)
-{
-	int increase_amount = RFIFOW(fd, packet_db[RFIFOW(fd, 0)].pos[1]);
+///     The amount to increase the trait status
+void clif_parse_traitstatus_up( int fd, struct map_session_data *sd ){
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	struct PACKET_CZ_UNCONFIRMED_TSTATUS_UP* p = (struct PACKET_CZ_UNCONFIRMED_TSTATUS_UP*)RFIFOP( fd, 0 );
 
-	if (increase_amount < 0) {
-		ShowDebug("clif_parse_TraitStatusUp: Negative 'increase' value sent by client! (fd: %d, value: %d)\n",
-			fd, increase_amount);
+	if( p->amount < 0 ){
+		ShowDebug( "clif_parse_traitstatus_up: Negative 'increase' value sent by client! %s (AID: %d, CID: %d, value: %d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, p->amount );
+		return;
 	}
-	pc_traitstatusup(sd, RFIFOW(fd, packet_db[RFIFOW(fd, 0)].pos[0]), increase_amount);
+
+	pc_traitstatusup( sd, p->type, p->amount );
+#endif
 }
 
 
@@ -14655,7 +14697,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			}
 			safesnprintf(command,sizeof(command),"/kick %s (%d)", status_get_name(target), status_get_class(target));
 			log_atcommand(sd, command);
-			status_percent_damage(&sd->bl, target, 100, 0, 0, true); // can invalidate 'target'
+			status_percent_damage(&sd->bl, target, 100, 0, true); // can invalidate 'target'
 		}
 		break;
 
@@ -15593,7 +15635,6 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 ///      <itemdefPower>.W <plusdefPower>.W <mdefPower>.W <plusmdefPower>.W
 ///      <hitSuccessValue>.W <avoidSuccessValue>.W <plusAvoidSuccessValue>.W
 ///      <criticalSuccessValue>.W <ASPD>.W <plusASPD>.W
-/// Note: Is there a ZC_ACK_STATUS_GM2 that supports trait stats/sub-stats??? [Rytech]
 void clif_check(int fd, struct map_session_data* pl_sd)
 {
 	WFIFOHEAD(fd,packet_len(0x214));

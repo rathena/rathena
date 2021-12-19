@@ -2315,7 +2315,7 @@ TIMER_FUNC(mob_respawn){
 	struct block_list *bl = map_id2bl(id);
 
 	if(!bl) return 0;
-	status_revive(bl, (uint8)data, 0, 0);
+	status_revive(bl, (uint8)data, 0);
 	return 1;
 }
 

@@ -993,7 +993,6 @@ struct s_job_info {
 	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
 	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
 	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
-	char job_trait_bonus[MAX_LEVEL];
 	std::vector<int16> aspd_base;
 	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
 	uint16 max_base_level, max_job_level;
@@ -1082,7 +1081,6 @@ static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block 
 }
 
 uint16 pc_maxparameter(struct map_session_data *sd, e_params param);
-short pc_maxtraitparameter(struct map_session_data *sd, enum e_params param);
 short pc_maxaspd(struct map_session_data *sd);
 
 /**
@@ -1181,49 +1179,29 @@ public:
 
 extern AttendanceDatabase attendance_db;
 
-class PlayerStatPointDatabase : public YamlDatabase {
-private:
-	std::unordered_map<uint16, uint32> statpoint_table;
+struct s_statpoint_entry{
+	uint16 level;
+	uint32 statpoints;
+	uint32 traitpoints;
+};
 
+class PlayerStatPointDatabase : public TypesafeCachedYamlDatabase<uint16, s_statpoint_entry>{
 public:
-	PlayerStatPointDatabase() : YamlDatabase("STATPOINT_DB", 1) {
+	PlayerStatPointDatabase() : TypesafeCachedYamlDatabase("STATPOINT_DB", 2, 1) {
 
 	}
 
-	void clear(){
-		statpoint_table.clear();
-	}
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
 
 	uint32 pc_gets_status_point(uint16 level);
 	uint32 get_table_point(uint16 level);
+	uint32 pc_gets_trait_point(uint16 level);
+	uint32 get_trait_table_point(uint16 level);
 };
 
 extern PlayerStatPointDatabase statpoint_db;
-
-class PlayerTraitPointDatabase : public YamlDatabase {
-private:
-	std::unordered_map<uint16, uint32> traitpoint_table;
-
-public:
-	PlayerTraitPointDatabase() : YamlDatabase("TRAITPOINT_DB", 1) {
-
-	}
-
-	void clear() {
-		traitpoint_table.clear();
-	}
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
-	void loadingFinished();
-
-	uint32 pc_gets_trait_point(uint16 level);
-	uint32 get_table_point(uint16 level);
-};
-
-extern PlayerTraitPointDatabase traitpoint_db;
 
 /// Enum of Summoner Power of 
 enum e_summoner_power_type {
@@ -1402,11 +1380,11 @@ int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id);
 
 void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp, unsigned int ap);
 int pc_dead(struct map_session_data *sd,struct block_list *src);
-void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp, unsigned int ap);
+void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp, unsigned int ap = 0);
 bool pc_revive_item(struct map_session_data *sd);
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int ap, int type);
-int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp,int sp, int ap);
-int pc_percentheal(struct map_session_data *sd,int,int,int);
+int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp,int sp);
+int pc_percentheal(struct map_session_data *sd,int,int);
 bool pc_jobchange(struct map_session_data *sd, int job, char upper);
 void pc_setoption(struct map_session_data *,int type, int subtype = 0);
 bool pc_setcart(struct map_session_data* sd, int type);
@@ -1520,8 +1498,8 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
 int pc_addsoulball(map_session_data *sd, int max);
 int pc_delsoulball(map_session_data *sd, int count, bool type);
-void pc_addservantball(struct map_session_data *sd, int max, int type);
-void pc_delservantball(struct map_session_data *sd, int count, int type);
+void pc_addservantball(struct map_session_data *sd, int max, bool type);
+void pc_delservantball(struct map_session_data *sd, int count, bool type);
 void pc_addabyssball(struct map_session_data *sd, int max, int type);
 void pc_delabyssball(struct map_session_data *sd, int count, int type);
 

@@ -267,20 +267,17 @@ enum e_mapid : uint64{
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
 enum bl_type : uint16{
-	BL_NUL      = 0x0000,
-	BL_PC       = 0x0001,
-	BL_MOB      = 0x0002,
-	BL_PET      = 0x0004,
-	BL_HOM      = 0x0008,
-	BL_MER      = 0x0010,
-	BL_ITEM     = 0x0020,
-	BL_SKILL    = 0x0040,
-	BL_NPC      = 0x0080,
-	BL_CHAT     = 0x0100,
-	BL_ELEM     = 0x0200,
-	BL_UNKNOWN  = 0x0400,// Reserved for unknown type. Can be attacked.
-	BL_ABR      = 0x0800,
-	BL_BIONIC   = 0x1000,
+	BL_NUL   = 0x000,
+	BL_PC    = 0x001,
+	BL_MOB   = 0x002,
+	BL_PET   = 0x004,
+	BL_HOM   = 0x008,
+	BL_MER   = 0x010,
+	BL_ITEM  = 0x020,
+	BL_SKILL = 0x040,
+	BL_NPC   = 0x080,
+	BL_CHAT  = 0x100,
+	BL_ELEM  = 0x200,
 
 	BL_ALL   = 0xFFF,
 };

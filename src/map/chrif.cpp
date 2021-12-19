@@ -1002,61 +1002,36 @@ int chrif_changedsex(int fd) {
 
 		// Reset skills of gender split jobs.
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) {
-			int i;
-			// Remove Bard class exclusive skills.
-			for(i = BA_MUSICALLESSON; i <= BA_APPLEIDUN; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
+			const static struct {
+				e_skill start;
+				e_skill end;
+			} ranges[] = {
+				// Bard class exclusive skills
+				{ BA_MUSICALLESSON, BA_APPLEIDUN },
+				// Dancer class exclusive skills
+				{ DC_DANCINGLESSON, DC_SERVICEFORYOU },
+				// Minstrel class exclusive skills
+				{ MI_RUSH_WINDMILL, MI_HARMONIZE },
+				// Wanderer class exclusive skills
+				{ WA_SWING_DANCE, WA_MOONLIT_SERENADE },
+				// Kagerou class exclusive skills
+				{ KG_KAGEHUMI, KG_KAGEMUSYA },
+				// Oboro class exclusive skills
+				{ OB_ZANGETSU, OB_AKAITSUKI },
+			};
+
+			for( const auto& range : ranges ){
+				for( uint16 skill_id = range.start; skill_id <= range.end; skill_id++ ){
+					uint16 sk_idx = skill_get_index( skill_id );
+
+					if( sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT ){
+						sd->status.skill_point += sd->status.skill[sk_idx].lv;
+						sd->status.skill[sk_idx].id = 0;
+						sd->status.skill[sk_idx].lv = 0;
+					}
 				}
 			}
-			// Remove Dancer class exclusive skills.
-			for(i = DC_DANCINGLESSON; i <= DC_SERVICEFORYOU; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
-			// Remove Minstrel class exclusive skills.
-			for (i = MI_RUSH_WINDMILL; i <= MI_HARMONIZE; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
-			// Remove Wanderer class exclusive skills.
-			for (i = WA_SWING_DANCE; i <= WA_MOONLIT_SERENADE; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
-			// Remove Kagerou class exclusive skills.
-			for (i = KG_KAGEHUMI; i <= KG_KAGEMUSYA; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
-			// Remove Oboro class exclusive skills.
-			for (i = OB_ZANGETSU; i <= OB_AKAITSUKI; i++) {
-				uint16 sk_idx = skill_get_index(i);
-				if (sd->status.skill[sk_idx].id > 0 && sd->status.skill[sk_idx].flag == SKILL_FLAG_PERMANENT) {
-					sd->status.skill_point += sd->status.skill[sk_idx].lv;
-					sd->status.skill[sk_idx].id = 0;
-					sd->status.skill[sk_idx].lv = 0;
-				}
-			}
+
 			clif_updatestatus(sd, SP_SKILLPOINT);
 			// Change to other gender version of the job if needed.
 			if (sd->status.sex)// Changed from female version of job.

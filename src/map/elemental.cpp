@@ -477,7 +477,7 @@ int elemental_action(s_elemental_data *ed, block_list *bl, t_tick tick) {
 				(status_get_hp(&ed->bl) < req.hp || status_get_sp(&ed->bl) < req.sp) )
 				return 1;
 			else
-				status_zap(&ed->bl, req.hp, req.sp, 0);
+				status_zap(&ed->bl, req.hp, req.sp);
 		}
 	}
 
@@ -684,7 +684,7 @@ static int elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, t_
 			return 0;
 		}
 
-		status_zap(&sd->bl,0,sp,0);
+		status_zap(&sd->bl,0,sp);
 		ed->last_spdrain_time = tick;
 	}
 
@@ -795,8 +795,8 @@ uint64 ElementalDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asInt32(node, "Id", id))
 		return 0;
 
-	if (id < ELEMENTALID_AGNI_S || id > ELEMENTALID_TERA_L) {
-		this->invalidWarning(node["Id"], "Invalid Id %d (valid range: %d-%d).\n", id, ELEMENTALID_AGNI_S, ELEMENTALID_TERA_L);
+	if( !( ( id >= ELEMENTALID_AGNI_S && id <= ELEMENTALID_TERA_L ) || ( id >= ELEMENTALID_DILUVIO && id <= ELEMENTALID_SERPENS ) ) ) {
+		this->invalidWarning( node["Id"], "Invalid Id %d (valid ranges: %d-%d and %d-%d).\n", id, ELEMENTALID_AGNI_S, ELEMENTALID_TERA_L, ELEMENTALID_DILUVIO, ELEMENTALID_SERPENS );
 		return 0;
 	}
 

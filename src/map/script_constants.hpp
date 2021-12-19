@@ -1729,7 +1729,6 @@
 	export_constant(SC_CHARGINGPIERCE);
 	export_constant(SC_CHARGINGPIERCE_COUNT);
 	export_constant(SC_DRAGONIC_AURA);
-	export_constant(SC_BIG_SCAR);// The heck is this for??? [Rytech]
 	export_constant(SC_VIGOR);
 
 	// Arch Mage
@@ -1739,7 +1738,6 @@
 	export_constant(SC_CLIMAX_EARTH);
 	export_constant(SC_CLIMAX_BLOOM);
 	export_constant(SC_CLIMAX_CRYIMP);
-	export_constant(SC_CRYSTAL_IMPACT);
 
 	// Windhawk
 	export_constant(SC_WINDSIGN);
@@ -1759,8 +1757,6 @@
 	export_constant(SC_AXE_STOMP);
 	export_constant(SC_A_MACHINE);
 	export_constant(SC_D_MACHINE);
-	export_constant(SC_MT_M_MACHINE_OPERATOR);
-	export_constant(SC_TWOAXEDEF);
 	export_constant(SC_ABR_BATTLE_WARIOR);
 	export_constant(SC_ABR_DUAL_CANNON);
 	export_constant(SC_ABR_MOTHER_NET);
@@ -1779,15 +1775,12 @@
 	export_constant(SC_ATTACK_STANCE);
 	export_constant(SC_GUARDIAN_S);
 	export_constant(SC_REBOUND_S);
-	export_constant(SC_SHIELD_MASTERY);
-	export_constant(SC_SPEAR_SWORD_M);
 	export_constant(SC_HOLY_S);
 	export_constant(SC_ULTIMATE_S);
 	export_constant(SC_SPEAR_SCAR);
 	export_constant(SC_SHIELD_POWER);
 
 	// Elemental Master
-	export_constant(SC_MAGIC_BOOK_M);
 	export_constant(SC_SPELL_ENCHANTING);
 	export_constant(SC_SUMMON_ELEMENTAL_ARDOR);
 	export_constant(SC_SUMMON_ELEMENTAL_DILUVIO);
@@ -1797,8 +1790,6 @@
 	export_constant(SC_ELEMENTAL_VEIL);
 
 	// Troubadour/Trouvere
-	export_constant(SC_STAGE_MANNER);
-	export_constant(SC_RETROSPECTION);
 	export_constant(SC_MYSTIC_SYMPHONY);
 	export_constant(SC_KVASIR_SONATA);
 	export_constant(SC_SOUNDBLEND);
@@ -1825,18 +1816,12 @@
 	export_constant(SC_PROTECTSHADOWEQUIP);
 	export_constant(SC_RESEARCHREPORT);
 	export_constant(SC_BO_HELL_DUSTY);
-	export_constant(SC_ACIDIFIED_ZONE_WATER);
-	export_constant(SC_ACIDIFIED_ZONE_GROUND);
-	export_constant(SC_ACIDIFIED_ZONE_WIND);
-	export_constant(SC_ACIDIFIED_ZONE_FIRE);
 	export_constant(SC_BIONIC_WOODENWARRIOR);
 	export_constant(SC_BIONIC_WOODEN_FAIRY);
 	export_constant(SC_BIONIC_CREEPER);
 	export_constant(SC_BIONIC_HELLTREE);
 
 	// Abyss Chaser
-	export_constant(SC_DAGGER_AND_BOW_M);
-	export_constant(SC_MAGIC_SWORD_M);
 	export_constant(SC_SHADOW_STRIP);
 	export_constant(SC_ABYSS_DAGGER);
 	export_constant(SC_ABYSSFORCEWEAPON);
@@ -8475,8 +8460,8 @@
 	export_constant(UNT_FIRE_RAIN);
 	export_constant(UNT_CATNIPPOWDER);
 	export_constant(UNT_NYANGGRASS);
-	export_constant(UNT_CREATINGSTAR);// Should be GROUNDDRIFT_NEUTRAL
-	export_constant(UNT_DUMMY_0);// CREATINGSTAR
+	export_constant(UNT_CREATINGSTAR);
+	export_constant(UNT_DUMMY_0);
 	export_constant(UNT_RAIN_OF_CRYSTAL);
 	export_constant(UNT_MYSTERY_ILLUSION);
 	export_constant(UNT_UNKNOWN_1);

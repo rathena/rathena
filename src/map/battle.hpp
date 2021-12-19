@@ -525,7 +525,6 @@ struct Battle_Config
 	int max_extended_parameter;
 	int max_summoner_parameter;
 	int max_fourth_parameter;
-	int max_fourth_trait;
 	int max_third_aspd;
 	int max_summoner_aspd;
 	int vcast_stat_scale;

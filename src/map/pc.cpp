@@ -69,7 +69,6 @@ static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
 
 PlayerStatPointDatabase statpoint_db;
-PlayerTraitPointDatabase traitpoint_db;
 
 SkillTreeDatabase skill_tree_db;
 
@@ -710,19 +709,16 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 
 /**
 * Adds a servantball to player
-* @param sd
-* @param max
-* @param type 1 = doesn't give client effect
+* @param sd: Player data
+* @param max: Max amount of servantballs
+* @param type: true = doesn't give client effect
 */
-void pc_addservantball(struct map_session_data *sd, int max, int type)
+void pc_addservantball(struct map_session_data *sd, int max, bool type)
 {
 	nullpo_retv(sd);
 
-	if (max > MAX_SERVANTBALL)
-		max = MAX_SERVANTBALL;
-
-	if (sd->servantball < 0)
-		sd->servantball = 0;
+	max = min(max, MAX_SERVANTBALL);
+	sd->servantball = cap_value(sd->servantball, 0, MAX_SERVANTBALL);
 
 	if (sd->servantball < max)
 		sd->servantball++;
@@ -735,11 +731,11 @@ void pc_addservantball(struct map_session_data *sd, int max, int type)
 
 /**
 * Removes number of servantball from player
-* @param sd
-* @param count
-* @param type 1 = doesn't give client effect
+* @param sd: Player data
+* @param count: Amount to remove
+* @param type: true = doesn't give client effect
 */
-void pc_delservantball(struct map_session_data *sd, int count, int type)
+void pc_delservantball(struct map_session_data *sd, int count, bool type)
 {
 	nullpo_retv(sd);
 
@@ -886,7 +882,7 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
 
 	if (type&1) {	//Normal resurrection
 		status->hp = 1; //Otherwise status_heal may fail if dead.
-		status_heal(&sd->bl, b_status->hp, 0, 0, 1);
+		status_heal(&sd->bl, b_status->hp, 0, 1);
 		if( status->sp < b_status->sp )
 			status_set_sp(&sd->bl, b_status->sp, 1);
 	} else { //Just for saving on the char-server (with values as if respawned)
@@ -3774,12 +3770,12 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 		case SP_ALL_TRAIT_STATS:
 			if (sd->state.lr_flag != 2) {
-				sd->indexed_bonus.param_bonus[SP_POW - SP_POW + PARAM_POW] += val;
-				sd->indexed_bonus.param_bonus[SP_STA - SP_POW + PARAM_POW] += val;
-				sd->indexed_bonus.param_bonus[SP_WIS - SP_POW + PARAM_POW] += val;
-				sd->indexed_bonus.param_bonus[SP_SPL - SP_POW + PARAM_POW] += val;
-				sd->indexed_bonus.param_bonus[SP_CON - SP_POW + PARAM_POW] += val;
-				sd->indexed_bonus.param_bonus[SP_CRT - SP_POW + PARAM_POW] += val;
+				sd->indexed_bonus.param_bonus[PARAM_POW] += val;
+				sd->indexed_bonus.param_bonus[PARAM_STA] += val;
+				sd->indexed_bonus.param_bonus[PARAM_WIS] += val;
+				sd->indexed_bonus.param_bonus[PARAM_SPL] += val;
+				sd->indexed_bonus.param_bonus[PARAM_CON] += val;
+				sd->indexed_bonus.param_bonus[PARAM_CRT] += val;
 			}
 			break;
 		case SP_AGI_VIT:	// [Valaris]
@@ -6974,21 +6970,6 @@ uint64 pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
 		case JOB_BABY_SHADOW_CHASER:    return MAPID_BABY_SHADOW_CHASER;
 		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
-	//4-1 Jobs
-		case JOB_DRAGON_KNIGHT:         return MAPID_DRAGON_KNIGHT;
-		case JOB_ARCH_MAGE:             return MAPID_ARCH_MAGE;
-		case JOB_WINDHAWK:              return MAPID_WINDHAWK;
-		case JOB_CARDINAL:              return MAPID_CARDINAL;
-		case JOB_MEISTER:               return MAPID_MEISTER;
-		case JOB_SHADOW_CROSS:          return MAPID_SHADOW_CROSS;
-	//4-2 Jobs
-		case JOB_IMPERIAL_GUARD:        return MAPID_IMPERIAL_GUARD;
-		case JOB_ELEMENTAL_MASTER:      return MAPID_ELEMENTAL_MASTER;
-		case JOB_INQUISITOR:            return MAPID_INQUISITOR;
-		case JOB_TROUBADOUR:
-		case JOB_TROUVERE:              return MAPID_TROUBADOURTROUVERE;
-		case JOB_BIOLO:                 return MAPID_BIOLO;
-		case JOB_ABYSS_CHASER:          return MAPID_ABYSS_CHASER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
 		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
@@ -7162,20 +7143,6 @@ int pc_mapid2jobid(uint64 class_, int sex)
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
 		case MAPID_BABY_SHADOW_CHASER:    return JOB_BABY_SHADOW_CHASER;
 		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
-	//4-1 Jobs
-		case MAPID_DRAGON_KNIGHT:         return JOB_DRAGON_KNIGHT;
-		case MAPID_ARCH_MAGE:             return JOB_ARCH_MAGE;
-		case MAPID_WINDHAWK:              return JOB_WINDHAWK;
-		case MAPID_CARDINAL:              return JOB_CARDINAL;
-		case MAPID_MEISTER:               return JOB_MEISTER;
-		case MAPID_SHADOW_CROSS:          return JOB_SHADOW_CROSS;
-	//4-2 Jobs
-		case MAPID_IMPERIAL_GUARD:        return JOB_IMPERIAL_GUARD;
-		case MAPID_ELEMENTAL_MASTER:      return JOB_ELEMENTAL_MASTER;
-		case MAPID_INQUISITOR:            return JOB_INQUISITOR;
-		case MAPID_TROUBADOURTROUVERE:    return sex?JOB_TROUBADOUR:JOB_TROUVERE;
-		case MAPID_BIOLO:                 return JOB_BIOLO;
-		case MAPID_ABYSS_CHASER:          return JOB_ABYSS_CHASER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
 		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
@@ -7584,7 +7551,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 			sd->status.base_exp = next-1;
 
 		sd->status.status_point += statpoint_db.pc_gets_status_point(sd->status.base_level);
-		sd->status.trait_point += traitpoint_db.pc_gets_trait_point(sd->status.base_level);
+		sd->status.trait_point += statpoint_db.pc_gets_trait_point(sd->status.base_level);
 		sd->status.base_level++;
 
 		if( pc_is_maxbaselv(sd) ){
@@ -7602,7 +7569,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	clif_updatestatus(sd,SP_BASEEXP);
 	clif_updatestatus(sd,SP_NEXTBASEEXP);
 	status_calc_pc(sd,SCO_FORCE);
-	status_percent_heal(&sd->bl,100,100,0);
+	status_percent_heal(&sd->bl,100,100);
 
 	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
 		sc_start(&sd->bl,&sd->bl,status_skill2sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
@@ -8057,7 +8024,13 @@ int pc_setstat(struct map_session_data* sd, int type, int val)
  * @return Total number of status points at specific base level.
  */
 uint32 PlayerStatPointDatabase::get_table_point(uint16 level) {
-	return this->statpoint_table[level];
+	std::shared_ptr<s_statpoint_entry> entry = this->find( level );
+
+	if( entry != nullptr ){
+		return entry->statpoints;
+	}else{
+		return 0;
+	}
 }
 
 /**
@@ -8067,9 +8040,14 @@ uint32 PlayerStatPointDatabase::get_table_point(uint16 level) {
  * @return Status points at specific base level.
  */
 uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) {
-	if (this->statpoint_table[level+1] > this->statpoint_table[level])
-		return (this->statpoint_table[level+1] - this->statpoint_table[level]);
-	return 0;
+	uint32 next_level = this->get_table_point( level + 1 );
+	uint32 current_level = this->get_table_point( level );
+
+	if( next_level > current_level ){
+		return next_level - current_level;
+	}else{
+		return 0;
+	}
 }
 
 /**
@@ -8077,8 +8055,14 @@ uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) {
 * @param level: Player base level.
 * @return Total number of trait points at specific base level.
 */
-uint32 PlayerTraitPointDatabase::get_table_point(uint16 level) {
-	return this->traitpoint_table[level];
+uint32 PlayerStatPointDatabase::get_trait_table_point(uint16 level) {
+	std::shared_ptr<s_statpoint_entry> entry = this->find( level );
+
+	if( entry != nullptr ){
+		return entry->traitpoints;
+	}else{
+		return 0;
+	}
 }
 
 /**
@@ -8087,10 +8071,15 @@ uint32 PlayerTraitPointDatabase::get_table_point(uint16 level) {
 * @param table: Use table value or formula.
 * @return Trait points at specific base level.
 */
-uint32 PlayerTraitPointDatabase::pc_gets_trait_point(uint16 level) {
-	if (this->traitpoint_table[level + 1] > this->traitpoint_table[level])
-		return (this->traitpoint_table[level + 1] - this->traitpoint_table[level]);
-	return 0;
+uint32 PlayerStatPointDatabase::pc_gets_trait_point(uint16 level) {
+	uint32 next_level = this->get_trait_table_point( level + 1 );
+	uint32 current_level = this->get_trait_table_point( level );
+
+	if( next_level > current_level ){
+		return next_level - current_level;
+	}else{
+		return 0;
+	}
 }
 
 #ifdef RENEWAL_STAT
@@ -8269,8 +8258,12 @@ int pc_need_trait_point(struct map_session_data* sd, int type, int val)
 	if (val == 0)
 		return 0;
 
+	if( type < SP_POW || type > SP_CRT ){
+		return 0;
+	}
+
 	low = pc_getstat(sd, type);
-	max = pc_maxtraitparameter(sd, (enum e_params)(type - SP_POW));
+	max = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW));
 
 	if (low >= max && val > 0)
 		return 0; // Official servers show '0' when max is reached
@@ -8300,9 +8293,13 @@ int pc_maxtraitparameterincrease(struct map_session_data* sd, int type)
 
 	nullpo_ret(sd);
 
+	if( type < SP_POW || type > SP_CRT ){
+		return 0;
+	}
+
 	base = final_val = pc_getstat(sd, type);
 	trait_points = sd->status.trait_point;
-	max_param = pc_maxtraitparameter(sd, (enum e_params)(type - SP_POW));
+	max_param = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW));
 
 	while (final_val <= max_param && trait_points >= 0) {
 		trait_points -= 1;
@@ -8341,7 +8338,7 @@ bool pc_traitstatusup(struct map_session_data* sd, int type, int increase)
 	current = pc_getstat(sd, type);
 	max_increase = pc_maxtraitparameterincrease(sd, type);
 	increase = cap_value(increase, 0, max_increase); // cap to the maximum status points available
-	if (increase <= 0 || current + increase > pc_maxtraitparameter(sd, (enum e_params)(type - SP_POW))) {
+	if (increase <= 0 || current + increase > pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW))) {
 		clif_statusupack(sd, type, 0, 0);
 		return false;
 	}
@@ -8399,7 +8396,7 @@ int pc_traitstatusup2(struct map_session_data* sd, int type, int val)
 	}
 
 	need = pc_need_trait_point(sd, type, 1);
-	max = pc_maxtraitparameter(sd, (enum e_params)(type - SP_POW)); // set new value
+	max = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW)); // set new value
 
 	val = pc_setstat(sd, type, cap_value(pc_getstat(sd, type) + val, 0, max));
 
@@ -8651,7 +8648,7 @@ int pc_resetstate(struct map_session_data* sd)
 	}
 
 	sd->status.status_point = statpoint_db.get_table_point( sd->status.base_level );
-	sd->status.trait_point = traitpoint_db.get_table_point(sd->status.base_level);
+	sd->status.trait_point = statpoint_db.get_trait_table_point(sd->status.base_level);
 
 	if( ( sd->class_&JOBL_UPPER ) != 0 ){
 		sd->status.status_point += battle_config.transcendent_status_points;
@@ -9072,7 +9069,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if( exp && get_percentage_exp(sd->status.base_exp, exp) >= 99 ) {
 			sd->state.snovice_dead_flag = 1;
 			pc_setrestartvalue(sd,1);
-			status_percent_heal(&sd->bl, 100, 100, 0);
+			status_percent_heal(&sd->bl, 100, 100);
 			clif_resurrection(&sd->bl, 1);
 			if(battle_config.pc_invincible_time)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
@@ -9191,7 +9188,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if (sd->soulball != 0)
 		pc_delsoulball(sd, sd->soulball, false);
 	if (sd->servantball != 0)
-		pc_delservantball(sd, sd->servantball, 0);
+		pc_delservantball(sd, sd->servantball, false);
 	if (sd->abyssball != 0)
 		pc_delabyssball(sd, sd->abyssball, 0);
 
@@ -9212,7 +9209,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				clif_misceffect(&md->bl,0);
 				md->level++;
 				status_calc_mob(md, SCO_NONE);
-				status_percent_heal(src,10,0,0);
+				status_percent_heal(src,10,0);
 
 				if( battle_config.show_mob_info&4 )
 				{// update name with new level
@@ -9465,7 +9462,7 @@ bool pc_revive_item(struct map_session_data *sd) {
 			return false;
 	}
 
-	if (!status_revive(&sd->bl, hp, sp, 0))
+	if (!status_revive(&sd->bl, hp, sp))
 		return false;
 
 	if (item_position < 0)
@@ -9698,7 +9695,7 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 			for (i = 0; i < (int)(val - sd->status.base_level); i++)
 			{
 				stat += statpoint_db.pc_gets_status_point(sd->status.base_level + i);
-				trait += traitpoint_db.pc_gets_trait_point(sd->status.base_level + i);
+				trait += statpoint_db.pc_gets_trait_point(sd->status.base_level + i);
 			}
 			sd->status.status_point += stat;
 			sd->status.trait_point += trait;
@@ -9825,22 +9822,22 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		sd->status.luk = cap_value(val, 1, pc_maxparameter(sd,PARAM_LUK));
 		break;
 	case SP_POW:
-		sd->status.pow = cap_value(val, 0, pc_maxtraitparameter(sd, PARAM_POW));
+		sd->status.pow = cap_value(val, 0, pc_maxparameter(sd,PARAM_POW));
 		break;
 	case SP_STA:
-		sd->status.sta = cap_value(val, 0, pc_maxtraitparameter(sd, PARAM_STA));
+		sd->status.sta = cap_value(val, 0, pc_maxparameter(sd,PARAM_STA));
 		break;
 	case SP_WIS:
-		sd->status.wis = cap_value(val, 0, pc_maxtraitparameter(sd, PARAM_WIS));
+		sd->status.wis = cap_value(val, 0, pc_maxparameter(sd,PARAM_WIS));
 		break;
 	case SP_SPL:
-		sd->status.spl = cap_value(val, 0, pc_maxtraitparameter(sd, PARAM_SPL));
+		sd->status.spl = cap_value(val, 0, pc_maxparameter(sd,PARAM_SPL));
 		break;
 	case SP_CON:
-		sd->status.con = cap_value(val, 0, pc_maxtraitparameter(sd, PARAM_CON));
+		sd->status.con = cap_value(val, 0, pc_maxparameter(sd,PARAM_CON));
 		break;
 	case SP_CRT:
-		sd->status.crt = cap_value(val, 0, pc_maxtraitparameter(sd, PARAM_CRT));
+		sd->status.crt = cap_value(val, 0, pc_maxparameter(sd,PARAM_CRT));
 		break;
 	case SP_KARMA:
 		sd->status.karma = val;
@@ -9963,15 +9960,14 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, unsign
 }
 
 /**
- * Heal player HP, SP, and AP linearly. Calculate any bonus based on active statuses.
+ * Heal player HP and/or SP linearly. Calculate any bonus based on active statuses.
  * @param sd: Player data
  * @param itemid: Item ID
  * @param hp: HP to heal
  * @param sp: SP to heal
- * @param ap: AP to heal
  * @return Amount healed to an object
  */
-int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp, int ap)
+int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp)
 {
 	int bonus, tmp, penalty = 0;
 
@@ -10031,13 +10027,6 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp, in
 		if (bonus != 100 && tmp > sp)
 			sp = tmp;
 	}
-	if (ap) {
-		bonus = 100;// No bonuses yet. Set to 100% rate for now.
-
-		tmp = ap * bonus / 100; // Overflow check
-		if (bonus != 100 && tmp > ap)
-			ap = tmp;
-	}
 	if (sd->sc.count) {
 		// Critical Wound and Death Hurt stack
 		if (sd->sc.data[SC_CRITICALWOUND])
@@ -10075,14 +10064,14 @@ int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp, int sp, in
 			hp = 0;
 	}
 
-	return status_heal(&sd->bl, hp, sp, ap, 1);
+	return status_heal(&sd->bl, hp, sp, 1);
 }
 
 /*==========================================
- * HP/SP/AP Recovery
- * Heal player hp, sp, and ap by rate
+ * HP/SP Recovery
+ * Heal player hp nad/or sp by rate
  *------------------------------------------*/
-int pc_percentheal(struct map_session_data *sd,int hp,int sp, int ap)
+int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 {
 	nullpo_ret(sd);
 
@@ -10092,36 +10081,27 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp, int ap)
 	if (sp > 100) sp = 100;
 	else if (sp <-100) sp = -100;
 
-	if (ap > 100) ap = 100;
-	else if (ap <-100) ap = -100;
+	if(hp >= 0 && sp >= 0) //Heal
+		return status_percent_heal(&sd->bl, hp, sp);
 
-	if(hp >= 0 && sp >= 0 && ap >= 0) //Heal
-		return status_percent_heal(&sd->bl, hp, sp, ap);
-
-	if(hp <= 0 && sp <= 0 && ap <= 0) //Damage (negative rates indicate % of max rather than current), and only kill target IF the specified amount is 100%
-		return status_percent_damage(NULL, &sd->bl, hp, sp, ap, hp==-100);
+	if(hp <= 0 && sp <= 0) //Damage (negative rates indicate % of max rather than current), and only kill target IF the specified amount is 100%
+		return status_percent_damage(NULL, &sd->bl, hp, sp, hp==-100);
 
 	//Crossed signs
 	if(hp) {
 		if(hp > 0)
-			status_percent_heal(&sd->bl, hp, 0, 0);
+			status_percent_heal(&sd->bl, hp, 0);
 		else
-			status_percent_damage(NULL, &sd->bl, hp, 0, 0, hp==-100);
+			status_percent_damage(NULL, &sd->bl, hp, 0, hp==-100);
 	}
 
 	if(sp) {
 		if(sp > 0)
-			status_percent_heal(&sd->bl, 0, sp, 0);
+			status_percent_heal(&sd->bl, 0, sp);
 		else
-			status_percent_damage(NULL, &sd->bl, 0, sp, 0, false);
+			status_percent_damage(NULL, &sd->bl, 0, sp, false);
 	}
 
-	if (ap) {
-		if (ap > 0)
-			status_percent_heal(&sd->bl, 0, 0, ap);
-		else
-			status_percent_damage(NULL, &sd->bl, 0, 0, ap, false);
-	}
 	return 0;
 }
 
@@ -12276,7 +12256,7 @@ void pc_bleeding (struct map_session_data *sd, t_tick diff_tick)
 	}
 
 	if (hp > 0 || sp > 0)
-		status_zap(&sd->bl, hp, sp, 0);
+		status_zap(&sd->bl, hp, sp);
 }
 
 //Character regen. Flag is used to know which types of regen can take place.
@@ -12319,7 +12299,7 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 	}
 
 	if (hp > 0 || sp > 0)
-		status_heal(&sd->bl, hp, sp, 0, 0);
+		status_heal(&sd->bl, hp, sp, 0);
 }
 
 /*==========================================
@@ -13560,7 +13540,7 @@ void JobDatabase::loadingFinished() {
 
 		// Set trait status limit
 		if( class_ & JOBL_FOURTH ){
-			max = battle_config.max_fourth_trait;
+			max = battle_config.max_trait_parameter;
 		}else{
 			max = 0;
 		}
@@ -13572,27 +13552,6 @@ void JobDatabase::loadingFinished() {
 			}
 		}
 	}
-}
-
-//Reading job_db3.txt line (class,JobLv1,JobLv2,JobLv3,...)
-static bool pc_readdb_job3(char* fields[], int columns, int current)
-{
-	int class_ = atoi(fields[0]);
-
-	std::shared_ptr<s_job_info> job_info = job_db.find( class_ );
-
-	if ( job_info == nullptr )
-	{
-		ShowWarning("status_readdb_job3: Invalid job class %d specified.\n", class_);
-		return false;
-	}
-
-	for (int i = 1; i < columns; i++)
-	{
-		job_info->job_trait_bonus[i - 1] = atoi(fields[i]);
-	}
-
-	return true;
 }
 
 /**
@@ -13658,7 +13617,32 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
 		return 0;
 	}
 
-	this->statpoint_table[level] = point;
+	std::shared_ptr<s_statpoint_entry> entry = this->find( level );
+	bool exists = entry != nullptr;
+
+	if( !exists ){
+		entry = std::make_shared<s_statpoint_entry>();
+		entry->level = level;
+		entry->statpoints = point;
+	}
+
+	if( this->nodeExists( node, "TraitPoints" ) ){
+		uint32 traitpoints;
+
+		if( !this->asUInt32( node, "TraitPoints", traitpoints ) ){
+			return 0;
+		}
+
+		entry->traitpoints = traitpoints;
+	}else{
+		if( !exists ){
+			entry->traitpoints = 0;
+		}
+	}
+
+	if( !exists ){
+		this->put( level, entry );
+	}
 
 	return 1;
 }
@@ -13666,69 +13650,69 @@ uint64 PlayerStatPointDatabase::parseBodyNode(const YAML::Node &node) {
 /**
  * Generate the remaining parts of the db if necessary.
  */
-void PlayerStatPointDatabase::loadingFinished() {
-	if( battle_config.use_statpoint_table ){
-		this->statpoint_table[1] = start_status_points;
-	}
+void PlayerStatPointDatabase::loadingFinished(){
+	const uint16 trait_start_level = 200;
+	std::shared_ptr<s_statpoint_entry> level_one = this->find( 1 );
 
-	if( this->statpoint_table[1] != start_status_points ){
-		ShowError( "Status points for Level 1 (=%d) do not match inter_athena.conf value (=%d).\n", this->statpoint_table[1], start_status_points );
-		this->statpoint_table[1] = start_status_points;
-	}
-
-	for (uint16 level = 2; level <= MAX_LEVEL; level++) {
-		if (!battle_config.use_statpoint_table || util::umap_find(this->statpoint_table, level) == nullptr) {
-			if (battle_config.use_statpoint_table)
-				ShowError("Missing status points for Level %d\n", level);
-			this->statpoint_table[level] = this->statpoint_table[level-1] + ((level-1+15) / 5);
+	if( level_one == nullptr ){
+		if( battle_config.use_statpoint_table ){
+			ShowError( "Missing status points for Level 1\n" );
 		}
-	}
-}
 
-const std::string PlayerTraitPointDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/traitpoint.yml";
-}
+		level_one = std::make_shared<s_statpoint_entry>();
 
-uint64 PlayerTraitPointDatabase::parseBodyNode(const YAML::Node &node) {
-	if (!this->nodesExist(node, { "Level", "Points" })) {
-		return 0;
-	}
+		level_one->level = 1;
+		level_one->statpoints = start_status_points;
+		level_one->traitpoints = 0;
 
-	uint16 level;
-
-	if (!this->asUInt16(node, "Level", level))
-		return 0;
-
-	uint32 point;
-
-	if (!this->asUInt32(node, "Points", point))
-		return 0;
-
-	if (level == 0) {
-		this->invalidWarning(node["Level"], "The minimum level is 1.\n");
-		return 0;
-	}
-
-	if (level > MAX_LEVEL) {
-		this->invalidWarning(node["Level"], "Level %d exceeds maximum BaseLevel %d, skipping.\n", level, MAX_LEVEL);
-		return 0;
-	}
-
-	this->traitpoint_table[level] = point;
-
-	return 1;
-}
-
-/**
-* Generate the remaining parts of the db if necessary.
-*/
-void PlayerTraitPointDatabase::loadingFinished() {
-	for (uint16 level = 1; level <= MAX_LEVEL; level++) {
-		if (!battle_config.use_traitpoint_table || util::umap_find(this->traitpoint_table, level) == nullptr) {
-			if (battle_config.use_traitpoint_table)
-				ShowError("Missing trait points for Level %d\n", level);
-			this->traitpoint_table[level] = this->traitpoint_table[level - 1] + level * 3 + level / 5 * 4;
+		this->put( 1, level_one );
+	}else if( battle_config.use_statpoint_table ){
+		if( level_one->statpoints != start_status_points ){
+			ShowError( "Status points for Level 1 (=%u) do not match inter_athena.conf value (=%u).\n", level_one->statpoints, start_status_points );
+			level_one->statpoints = start_status_points;
 		}
+	}else{
+		level_one->statpoints = start_status_points;
+		level_one->traitpoints = 0;
+	}
+
+	std::shared_ptr<s_statpoint_entry> last_level = level_one;
+	for( uint16 level = 2; level <= MAX_LEVEL; level++ ){
+		std::shared_ptr<s_statpoint_entry> entry = this->find( level );
+		bool exists = entry != nullptr;
+
+		if( !exists ){
+			entry = std::make_shared<s_statpoint_entry>();
+			entry->level = level;
+			this->put( level, entry );
+		}
+
+		if( !battle_config.use_statpoint_table || !exists ){
+			if( battle_config.use_statpoint_table ){
+				ShowError("Missing status points for Level %hu\n", level);
+			}
+
+			if( level <= trait_start_level ){
+				entry->statpoints = last_level->statpoints + ( ( level - 1 + 15 ) / 5 );
+			}else{
+				entry->statpoints = last_level->statpoints;
+			}
+		}
+
+		if( !battle_config.use_traitpoint_table || !exists ){
+			if( battle_config.use_traitpoint_table && level > trait_start_level ){
+				ShowError( "Missing trait points for Level %hu\n", level );
+			}
+
+			if( level > trait_start_level ){
+				entry->traitpoints = ( level - trait_start_level ) * 3 + ( level - trait_start_level ) / 5 * 4;
+			}else{
+				entry->traitpoints = 0;
+			}
+		}
+
+		// Store it for next iteration
+		last_level = entry;
 	}
 }
 
@@ -13737,7 +13721,6 @@ void PlayerTraitPointDatabase::loadingFinished() {
  * job_stats.yml	- Job values
  * skill_tree.txt	- skill tree for every class
  * attr_fix.yml		- elemental adjustment table
- * job_db3.txt		- job,trait stats bonuses/lvl
  *------------------------------------------*/
 void pc_readdb(void) {
 	int i, s = 1;
@@ -13755,7 +13738,6 @@ void pc_readdb(void) {
 #endif
 
 	statpoint_db.clear();
-	traitpoint_db.clear();
 	job_db.load();
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
@@ -13773,7 +13755,6 @@ void pc_readdb(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		sv_readdb(dbsubpath1, "job_db3.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job3, i > 0);
 		sv_readdb(dbsubpath2, "job_noenter_map.txt", ',', 3, 3, CLASS_COUNT, &pc_readdb_job_noenter_map, i > 0);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
@@ -13783,7 +13764,6 @@ void pc_readdb(void) {
 	skill_tree_db.reload();
 
 	statpoint_db.load();
-	traitpoint_db.load();
 }
 
 // Read MOTD on startup. [Valaris]
@@ -14468,37 +14448,6 @@ uint16 pc_maxparameter(struct map_session_data *sd, e_params param) {
 	}
 
 	return job->max_param[param];
-}
-
-/**
-* Get maximum specified trait parameter for specified class
-* @param class_: sd->class
-* @param sex: sd->status.sex
-* @param flag: parameter will be checked
-* @return max_param
-*/
-short pc_maxtraitparameter(struct map_session_data *sd, enum e_params param) {
-	nullpo_retr(0, sd);
-
-	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(sd->class_, sd->status.sex));
-
-	if (job == nullptr || param == PARAM_MAX) {
-		return 0;
-	}
-
-	short max_param = 0;
-	switch (6+param) {
-	case PARAM_POW: max_param = job->max_param[PARAM_POW]; break;
-	case PARAM_STA: max_param = job->max_param[PARAM_STA]; break;
-	case PARAM_WIS: max_param = job->max_param[PARAM_WIS]; break;
-	case PARAM_SPL: max_param = job->max_param[PARAM_SPL]; break;
-	case PARAM_CON: max_param = job->max_param[PARAM_CON]; break;
-	case PARAM_CRT: max_param = job->max_param[PARAM_CRT]; break;
-	}
-	if (max_param > 0)
-		return max_param;
-
-	return battle_config.max_trait_parameter;
 }
 
 /**

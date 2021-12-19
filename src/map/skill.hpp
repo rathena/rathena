@@ -309,7 +309,7 @@ struct s_skill_db {
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {
 public:
-	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 2, 1) {
+	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 3, 1) {
 
 	}
 

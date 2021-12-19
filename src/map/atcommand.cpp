@@ -1235,7 +1235,7 @@ ACMD_FUNC(kill)
 ACMD_FUNC(alive)
 {
 	nullpo_retr(-1, sd);
-	if (!status_revive(&sd->bl, 100, 100, 0))
+	if (!status_revive(&sd->bl, 100, 100))
 	{
 		clif_displaymessage(fd, msg_txt(sd,667)); // You're not dead.
 		return -1;
@@ -1296,7 +1296,7 @@ ACMD_FUNC(heal)
 	if( sp == INT_MIN ) sp++;
 
 	if ( hp == 0 && sp == 0 ) {
-		if (!status_percent_heal(&sd->bl, 100, 100, 0))
+		if (!status_percent_heal(&sd->bl, 100, 100))
 			clif_displaymessage(fd, msg_txt(sd,157)); // HP and SP have already been recovered.
 		else
 			clif_displaymessage(fd, msg_txt(sd,17)); // HP, SP recovered.
@@ -1304,7 +1304,7 @@ ACMD_FUNC(heal)
 	}
 
 	if ( hp > 0 && sp >= 0 ) {
-		if(!status_heal(&sd->bl, hp, sp, 0, 0))
+		if(!status_heal(&sd->bl, hp, sp, 0))
 			clif_displaymessage(fd, msg_txt(sd,157)); // HP and SP are already with the good value.
 		else
 			clif_displaymessage(fd, msg_txt(sd,17)); // HP, SP recovered.
@@ -1312,7 +1312,7 @@ ACMD_FUNC(heal)
 	}
 
 	if ( hp < 0 && sp <= 0 ) {
-		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0, 0, 0);
+		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0, 0);
 		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
 		return 0;
@@ -1321,18 +1321,18 @@ ACMD_FUNC(heal)
 	//Opposing signs.
 	if ( hp ) {
 		if (hp > 0)
-			status_heal(&sd->bl, hp, 0, 0, 0);
+			status_heal(&sd->bl, hp, 0, 0);
 		else {
-			status_damage(NULL, &sd->bl, -hp, 0, 0, 0, 0, 0);
+			status_damage(NULL, &sd->bl, -hp, 0, 0, 0, 0);
 			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		}
 	}
 
 	if ( sp ) {
 		if (sp > 0)
-			status_heal(&sd->bl, 0, sp, 0, 0);
+			status_heal(&sd->bl, 0, sp, 0);
 		else
-			status_damage(NULL, &sd->bl, 0, -sp, 0, 0, 0, 0);
+			status_damage(NULL, &sd->bl, 0, -sp, 0, 0, 0);
 	}
 
 	clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
@@ -1354,35 +1354,21 @@ ACMD_FUNC(healap)
 
 	if (ap == 0) {
 		if (!status_percent_heal(&sd->bl, 0, 0, 100))
-			clif_displaymessage(fd, msg_txt(sd, 2017));// AP have already been recovered.
+			clif_displaymessage(fd, msg_txt(sd, 823));// AP have already been recovered.
 		else
-			clif_displaymessage(fd, msg_txt(sd, 2015));// AP recovered.
+			clif_displaymessage(fd, msg_txt(sd, 821));// AP recovered.
 		return 0;
-	}
-
-	if (ap > 0) {
+	}else if (ap > 0) {
 		if (!status_heal(&sd->bl, 0, 0, ap, 0))
-			clif_displaymessage(fd, msg_txt(sd, 2017));// AP have already been recovered.
+			clif_displaymessage(fd, msg_txt(sd, 823));// AP have already been recovered.
 		else
-			clif_displaymessage(fd, msg_txt(sd, 2015));// AP recovered.
+			clif_displaymessage(fd, msg_txt(sd, 821));// AP recovered.
 		return 0;
-	}
-
-	if (ap < 0) {
+	}else{
 		status_damage(NULL, &sd->bl, 0, 0, -ap, 0, 0, 0);
-		clif_displaymessage(fd, msg_txt(sd, 2016));// AP modified.
+		clif_displaymessage(fd, msg_txt(sd, 822));// AP modified.
 		return 0;
 	}
-
-	if (ap) {
-		if (ap > 0)
-			status_heal(&sd->bl, 0, 0, ap, 0);
-		else
-			status_damage(NULL, &sd->bl, 0, 0, -ap, 0, 0, 0);
-	}
-
-	clif_displaymessage(fd, msg_txt(sd, 2016));// AP modified.
-	return 0;
 }
 
 /*==========================================
@@ -1612,13 +1598,13 @@ ACMD_FUNC(baselevelup)
 		for (i = 0; i < level; i++)
 		{
 			status_point += statpoint_db.pc_gets_status_point(sd->status.base_level + i);
-			trait_point += traitpoint_db.pc_gets_trait_point(sd->status.base_level + i);
+			trait_point += statpoint_db.pc_gets_trait_point(sd->status.base_level + i);
 		}
 		sd->status.status_point += status_point;
 		sd->status.trait_point += trait_point;
 		sd->status.base_level += (unsigned int)level;
 		status_calc_pc(sd, SCO_FORCE);
-		status_percent_heal(&sd->bl, 100, 100, 0);
+		status_percent_heal(&sd->bl, 100, 100);
 		clif_misceffect(&sd->bl, 0);
 		for (uint32 j = sd->status.base_level - level; j <= sd->status.base_level; j++) {
 			achievement_update_objective(sd, AG_GOAL_LEVEL, 1, j);
@@ -1636,7 +1622,7 @@ ACMD_FUNC(baselevelup)
 		for (i = 0; i > -level; i--)
 		{
 			status_point += statpoint_db.pc_gets_status_point(sd->status.base_level + i - 1);
-			trait_point += traitpoint_db.pc_gets_trait_point(sd->status.base_level + i - 1);
+			trait_point += statpoint_db.pc_gets_trait_point(sd->status.base_level + i - 1);
 		}
 		if (sd->status.status_point < status_point || sd->status.trait_point < trait_point)
 			pc_resetstate(sd);
@@ -2329,7 +2315,7 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap)
 		return 0; //Do not touch WoE mobs!
 
 	if (flag)
-		status_zap(bl,md->status.hp, 0, 0);
+		status_zap(bl,md->status.hp, 0);
 	else
 		status_kill(bl);
 	return 1;
@@ -2643,7 +2629,7 @@ ACMD_FUNC(traitpoint)
 	unsigned int new_trait_point;
 
 	if (!message || !*message || (point = atoi(message)) == 0) {
-		clif_displaymessage(fd, msg_txt(sd, 2014)); // Please enter a number (usage: @trpoint <number of points>).
+		clif_displaymessage(fd, msg_txt(sd, 820)); // Please enter a number (usage: @trpoint <number of points>).
 		return -1;
 	}
 
@@ -3475,7 +3461,7 @@ ACMD_FUNC(doommap)
  *------------------------------------------*/
 static void atcommand_raise_sub(struct map_session_data* sd) {
 
-	status_revive(&sd->bl, 100, 100, 0);
+	status_revive(&sd->bl, 100, 100);
 
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 	clif_displaymessage(sd->fd, msg_txt(sd,63)); // Mercy has been shown.
@@ -6150,7 +6136,7 @@ ACMD_FUNC(displayskill)
 	if (!message || !*message || sscanf(message, "%6hu %6hu %6hu", &skill_id, &skill_lv, &type) < 1)
 	{
 		clif_displaymessage(fd, msg_txt(sd,1166));// Usage: @displayskill <skill ID> {<skill level> <type>}
-		clif_displaymessage(fd, msg_txt(sd,2019));// Effect Types: 0: All, 1: Damage, 2: Splash Dmg, 3: No Damage, 4: Ground
+		clif_displaymessage(fd, msg_txt(sd,825));// Effect Types: 0: All, 1: Damage, 2: Splash Dmg, 3: No Damage, 4: Ground
 		return -1;
 	}
 	status = status_get_status_data(&sd->bl);
@@ -6182,7 +6168,7 @@ ACMD_FUNC(displayskillcast)
 
 	if (!message || !*message || sscanf(message, "%6hu %6hu %6hu %6hu", &skill_id, &skill_lv, &target_type, &cast_time) < 1)
 	{
-		clif_displaymessage(fd, msg_txt(sd, 2018));// Usage: @displayskillcast <skill ID> {<skill level> <ground target flag> <cast time>}
+		clif_displaymessage(fd, msg_txt(sd, 824));// Usage: @displayskillcast <skill ID> {<skill level> <ground target flag> <cast time>}
 		return -1;
 	}
 
@@ -6208,7 +6194,7 @@ ACMD_FUNC(displayskillunit)
 
 	if (!message || !*message || sscanf(message, "%6hu %6hu %6hu", &unit_id, &skill_lv, &range) < 1)
 	{
-		clif_displaymessage(fd, msg_txt(sd, 2020));// Usage: @displayskillunit <unit ID> {<skill level> <range>}
+		clif_displaymessage(fd, msg_txt(sd, 826));// Usage: @displayskillunit <unit ID> {<skill level> <range>}
 		return -1;
 	}
 
@@ -7695,17 +7681,19 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%llu  Job EXP:%llu  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd,1243), //  DEF:%d  MDEF:%d  RES:%d  MRES:%d
-			mob->status.def, mob->status.mdef, mob->status.res, mob->status.mres);
-		clif_displaymessage(fd, atcmd_output);
-		sprintf(atcmd_output, msg_txt(sd, 2021), //  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d
-			mob->status.str, mob->status.agi, mob->status.vit, mob->status.int_, mob->status.dex, mob->status.luk);
+		sprintf(atcmd_output, msg_txt(sd,1243), //  DEF:%d  MDEF:%d  STR:%d  AGI:%d  VIT:%d  INT:%d  DEX:%d  LUK:%d
+			mob->status.def, mob->status.mdef,mob->status.str, mob->status.agi,
+			mob->status.vit, mob->status.int_, mob->status.dex, mob->status.luk);
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1244), //  ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)
 			mob->status.batk + mob->status.rhw.atk, mob->status.batk + mob->status.rhw.atk2, mob->status.rhw.range,
 			mob->range2 , mob->range3, msize[mob->status.size],
 			mrace[mob->status.race], melement[mob->status.def_ele], mob->status.ele_lv);
 		clif_displaymessage(fd, atcmd_output);
+#ifdef RENEWAL
+		sprintf(atcmd_output, msg_txt(sd, 827), mob->status.res, mob->status.mres);//  MDEF:%d  RES:%d  MRES:%d
+		clif_displaymessage(fd, atcmd_output);
+#endif
 		// drops
 		clif_displaymessage(fd, msg_txt(sd,1245)); //  Drops:
 		strcpy(atcmd_output, " ");
@@ -7871,7 +7859,7 @@ ACMD_FUNC(homlevel)
 	}
 
 	status_calc_homunculus(hd, SCO_NONE);
-	status_percent_heal(&hd->bl, 100, 100, 0);
+	status_percent_heal(&hd->bl, 100, 100);
 	clif_specialeffect(&hd->bl,EF_HO_UP,AREA);
 
 	return 0;

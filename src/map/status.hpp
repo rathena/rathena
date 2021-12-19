@@ -1028,7 +1028,7 @@ enum sc_type : int16 {
 	SC_CHILL,
 
 	// 4th Job Common Status
-	SC_HANDICAPSTATE_DEEPBLIND = 1001,
+	SC_HANDICAPSTATE_DEEPBLIND,
 	SC_HANDICAPSTATE_DEEPSILENCE,
 	SC_HANDICAPSTATE_LASSITUDE,
 	SC_HANDICAPSTATE_FROSTBITE,
@@ -1047,7 +1047,6 @@ enum sc_type : int16 {
 	SC_CHARGINGPIERCE,
 	SC_CHARGINGPIERCE_COUNT,
 	SC_DRAGONIC_AURA,
-	SC_BIG_SCAR,// The heck is this for??? [Rytech]
 	SC_VIGOR,
 
 	// Arch Mage
@@ -1057,7 +1056,6 @@ enum sc_type : int16 {
 	SC_CLIMAX_EARTH,
 	SC_CLIMAX_BLOOM,
 	SC_CLIMAX_CRYIMP,
-	SC_CRYSTAL_IMPACT,
 
 	// Windhawk
 	SC_WINDSIGN,
@@ -1077,8 +1075,6 @@ enum sc_type : int16 {
 	SC_AXE_STOMP,
 	SC_A_MACHINE,
 	SC_D_MACHINE,
-	SC_MT_M_MACHINE_OPERATOR,
-	SC_TWOAXEDEF,
 	SC_ABR_BATTLE_WARIOR,
 	SC_ABR_DUAL_CANNON,
 	SC_ABR_MOTHER_NET,
@@ -1097,15 +1093,12 @@ enum sc_type : int16 {
 	SC_ATTACK_STANCE,
 	SC_GUARDIAN_S,
 	SC_REBOUND_S,
-	SC_SHIELD_MASTERY,
-	SC_SPEAR_SWORD_M,
 	SC_HOLY_S,
 	SC_ULTIMATE_S,
 	SC_SPEAR_SCAR,
 	SC_SHIELD_POWER,
 
 	// Elemental Master
-	SC_MAGIC_BOOK_M,
 	SC_SPELL_ENCHANTING,
 	SC_SUMMON_ELEMENTAL_ARDOR,
 	SC_SUMMON_ELEMENTAL_DILUVIO,
@@ -1115,8 +1108,6 @@ enum sc_type : int16 {
 	SC_ELEMENTAL_VEIL,
 
 	// Troubadour/Trouvere
-	SC_STAGE_MANNER,
-	SC_RETROSPECTION,
 	SC_MYSTIC_SYMPHONY,
 	SC_KVASIR_SONATA,
 	SC_SOUNDBLEND,
@@ -1143,18 +1134,12 @@ enum sc_type : int16 {
 	SC_PROTECTSHADOWEQUIP,
 	SC_RESEARCHREPORT,
 	SC_BO_HELL_DUSTY,
-	SC_ACIDIFIED_ZONE_WATER,
-	SC_ACIDIFIED_ZONE_GROUND,
-	SC_ACIDIFIED_ZONE_WIND,
-	SC_ACIDIFIED_ZONE_FIRE,
 	SC_BIONIC_WOODENWARRIOR,
 	SC_BIONIC_WOODEN_FAIRY,
 	SC_BIONIC_CREEPER,
 	SC_BIONIC_HELLTREE,
 
 	// Abyss Chaser
-	SC_DAGGER_AND_BOW_M,
-	SC_MAGIC_SWORD_M,
 	SC_SHADOW_STRIP,
 	SC_ABYSS_DAGGER,
 	SC_ABYSSFORCEWEAPON,
@@ -2986,24 +2971,44 @@ int status_sc2skill(sc_type sc);
 uint64 status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
 
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id);
+int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id );
+static int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, t_tick walkdelay, int flag, uint16 skill_id ){
+	return status_damage( src, target, dhp, dsp, 0, walkdelay, flag, skill_id );
+}
 //Define for standard HP damage attacks.
-#define status_fix_damage(src, target, hp, walkdelay, skill) status_damage(src, target, hp, 0, 0, walkdelay, 0, skill)
+static int status_fix_damage( struct block_list *src, struct block_list *target, int64 hp, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, hp, 0, walkdelay, 0, skill_id );
+}
 //Define for standard SP damage attacks.
-#define status_fix_spdamage(src, target, sp, walkdelay, skill) status_damage(src, target, 0, sp, 0, walkdelay, 0, skill)
+static int status_fix_spdamage( struct block_list *src, struct block_list *target, int64 sp, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, 0, sp, walkdelay, 0, skill_id );
+}
 //Define for standard AP damage attacks.
-#define status_fix_apdamage(src, target, ap, walkdelay, skill) status_damage(src, target, 0, 0, ap, walkdelay, 0, skill)
+static int status_fix_apdamage( struct block_list *src, struct block_list *target, int64 ap, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, 0, 0, ap, walkdelay, 0, skill_id );
+}
 //Define for standard HP/SP/AP damage triggers.
-#define status_zap(bl, hp, sp, ap) status_damage(NULL, bl, hp, sp, ap, 0, 1, 0)
-//Define for standard HP/SP/AP skill-related cost triggers (mobs require no HP/SP/AP to use skills)
-int64 status_charge(struct block_list* bl, int64 hp, int64 sp, int64 ap);
+static int status_zap( struct block_list* bl, int64 hp, int64 sp, int64 ap = 0 ){
+	return status_damage( nullptr, bl, hp, sp, ap, 0, 1, 0 );
+}
+//Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP/AP to use skills)
+int64 status_charge(struct block_list* bl, int64 hp, int64 sp);
 int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, int8 ap_rate, uint8 flag);
 //Easier handling of status_percent_change
-#define status_percent_heal(bl, hp_rate, sp_rate, ap_rate) status_percent_change(NULL, bl, -(hp_rate), -(sp_rate), -(ap_rate), 0)
+static int status_percent_heal( struct block_list* bl, int8 hp_rate, int8 sp_rate, int8 ap_rate = 0 ){
+	return status_percent_change( nullptr, bl, -(hp_rate), -(sp_rate), -(ap_rate), 0 );
+}
 /// Deals % damage from 'src' to 'target'. If rate is > 0 is % of current HP/SP/AP, < 0 % of MaxHP/MaxSP/MaxAP
-#define status_percent_damage(src, target, hp_rate, sp_rate, ap_rate, kill) status_percent_change(src, target, hp_rate, sp_rate, ap_rate, (kill)?1:2)
+static int status_percent_damage( struct block_list* src, struct block_list* target, int8 hp_rate, int8 sp_rate, bool kill ){
+	return status_percent_change( src, target, hp_rate, sp_rate, 0, kill ? 1 : 2 );
+}
+static int status_percent_damage( struct block_list* src, struct block_list* target, int8 hp_rate, int8 sp_rate, int8 ap_rate, bool kill ){
+	return status_percent_change( src, target, hp_rate, sp_rate, ap_rate, kill ? 1 : 2 );
+}
 //Instant kill with no drops/exp/etc
-#define status_kill(bl) status_percent_damage(NULL, bl, 100, 0, 0, true)
+static int status_kill( struct block_list* bl ){
+	return status_percent_damage( nullptr, bl, 100, 0, 0, true );
+}
 //Used to set the hp/sp/ap of an object to an absolute value (can't kill)
 int status_set_hp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_maxhp(struct block_list *bl, unsigned int hp, int flag);
@@ -3011,8 +3016,11 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
 int status_set_maxsp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_ap(struct block_list *bl, unsigned int ap, int flag);
 int status_set_maxap(struct block_list *bl, unsigned int ap, int flag);
-int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag);
-int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap);
+int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag );
+static int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int flag ){
+	return status_heal( bl, hhp, hsp, 0, flag );
+}
+int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap = 0);
 
 struct regen_data *status_get_regen_data(struct block_list *bl);
 struct status_data *status_get_status_data(struct block_list *bl);
