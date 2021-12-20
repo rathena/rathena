@@ -1211,7 +1211,6 @@ enum e_summoner_power_type {
 };
 
 void pc_set_reg_load(bool val);
-int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
