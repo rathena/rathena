@@ -289,7 +289,6 @@ Body:
       Super_Baby: true
       Super_Novice_E: true
       Super_Baby_E: true
-      Hyper_Novice: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -7505,7 +7504,6 @@ Body:
   - Jobs:
       Rebellion: true
       Baby_Rebellion: true
-      Night_Watch: true
     BaseHp:
       - Level: 99
         Hp: 4938
@@ -7916,7 +7914,6 @@ Body:
   - Jobs:
       Kagerou: true
       Baby_Kagerou: true
-      Shinkiro: true
     BaseHp:
       - Level: 99
         Hp: 4250
@@ -8125,7 +8122,6 @@ Body:
   - Jobs:
       Oboro: true
       Baby_Oboro: true
-      Shiranui: true
     BaseHp:
       - Level: 99
         Hp: 4250
@@ -9545,7 +9541,6 @@ Body:
   - Jobs:
       Summoner: true
       Baby_Summoner: true
-      Spirit_Handler: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -9906,7 +9901,6 @@ Body:
       Super_Baby: true
       Super_Novice_E: true
       Super_Baby_E: true
-      Hyper_Novice: true
     BaseSp:
       - Level: 1
         Sp: 11
@@ -16922,7 +16916,6 @@ Body:
       Rebellion: true
       Baby_Gunslinger: true
       Baby_Rebellion: true
-      Night_Watch: true
     BaseSp:
       - Level: 1
         Sp: 12
@@ -17529,7 +17522,6 @@ Body:
   - Jobs:
       Kagerou: true
       Baby_Kagerou: true
-      Shinkiro: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -17738,7 +17730,6 @@ Body:
   - Jobs:
       Oboro: true
       Baby_Oboro: true
-      Shiranui: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -19158,7 +19149,6 @@ Body:
   - Jobs:
       Summoner: true
       Baby_Summoner: true
-      Spirit_Handler: true
     BaseSp:
       - Level: 1
         Sp: 8
@@ -19516,7 +19506,6 @@ Body:
       Baby_Star_Emperor: true
       Star_Emperor2: true
       Baby_Star_Emperor2: true
-      Sky_Emperor: true
     BaseHp:
       - Level: 99
         Hp: 4300
@@ -19676,7 +19665,6 @@ Body:
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
-      Soul_Ascetic: true
     BaseHp:
       - Level: 99
         Hp: 4300
@@ -19838,7 +19826,6 @@ Body:
       Baby_Star_Emperor: true
       Star_Emperor2: true
       Baby_Star_Emperor2: true
-      Sky_Emperor: true
     BaseSp:
       - Level: 99
         Sp: 522
@@ -19998,7 +19985,6 @@ Body:
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
-      Soul_Ascetic: true
     BaseSp:
       - Level: 99
         Sp: 900
