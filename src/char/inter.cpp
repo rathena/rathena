@@ -356,7 +356,10 @@ const char* job_name(int class_) {
 		case JOB_NIGHT_WATCH:
 		case JOB_HYPER_NOVICE:
 		case JOB_SPIRIT_HANDLER:
-			return msg_txt( 143 - JOB_SKY_EMPEROR + class_ );
+			return msg_txt( 135 - JOB_SKY_EMPEROR + class_ );
+
+		case JOB_SKY_EMPEROR2:
+			return msg_txt( 135 );
 
 		default:
 			return msg_txt(199);

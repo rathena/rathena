@@ -1192,7 +1192,7 @@ ACMD_FUNC(jobchange)
 		job == JOB_BABY_CRUSADER2 || job == JOB_STAR_GLADIATOR2 ||
 		(job >= JOB_BABY_RUNE_KNIGHT2 && job <= JOB_BABY_MECHANIC2) ||
 		job == JOB_BABY_STAR_GLADIATOR2 || job == JOB_STAR_EMPEROR2 || job == JOB_BABY_STAR_EMPEROR2 ||
-		(job >= JOB_WINDHAWK2 && job <= JOB_IMPERIAL_GUARD2))
+		(job >= JOB_WINDHAWK2 && job <= JOB_IMPERIAL_GUARD2) || job == JOB_SKY_EMPEROR2)
 	{ // Deny direct transformation into dummy jobs
 		clif_displaymessage(fd, msg_txt(sd,923)); //"You can not change to this job by command."
 		return 0;

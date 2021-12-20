@@ -7456,6 +7456,9 @@ const char* job_name(int class_)
 	case JOB_SPIRIT_HANDLER:
 		return msg_txt( nullptr, 813 - JOB_SKY_EMPEROR + class_ );
 
+	case JOB_SKY_EMPEROR2:
+		return msg_txt( nullptr, 813 );
+
 	default:
 		return msg_txt(NULL,655);
 	}
@@ -13032,7 +13035,7 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 job_id) {
 #endif
 	for (uint16 i = 2; i <= level; i++)
 		base_hp += floor(((job->hp_factor / 100.) * i) + 0.5); //Don't have round()
-	if (job_id == JOB_SUMMONER)
+	if (job_id == JOB_SUMMONER || job_id == JOB_SPIRIT_HANDLER)
 		base_hp += floor((base_hp / 2) + 0.5);
 	return (unsigned int)base_hp;
 }
@@ -13062,6 +13065,7 @@ static unsigned int pc_calc_basesp(uint16 level, uint16 job_id) {
 				base_sp = 9 + 3*level;
 			break;
 		case JOB_SUMMONER:
+		case JOB_SPIRIT_HANDLER:
 			base_sp -= floor(base_sp / 2);
 			break;
 	}
