@@ -163,7 +163,6 @@ Fourth      - Fourth classes.
 All_Upper   - All Transcedent classes
 All_Baby    - All baby classes
 All_Third   - Applies to all Third classes.
-All_Fourth  - Applies to all Fourth classes.
 
 ---------------------------------------
 

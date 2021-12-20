@@ -141315,7 +141315,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -142003,7 +142003,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -142647,7 +142647,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -143064,7 +143064,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -145019,7 +145019,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -145477,7 +145477,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -145954,7 +145954,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146552,7 +146552,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 5
@@ -147062,7 +147062,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
@@ -147422,7 +147422,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
@@ -147778,7 +147778,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
@@ -148437,7 +148437,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
@@ -149452,7 +149452,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      All_Fourth: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 5
