@@ -1957,8 +1957,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			if (sc && sc->data[SC_WUGDASH])
 				casttime = -1;
 			break;
-		case DK_SERVANT_W_PHANTOM:
-		{// Stops servants from being consumed on unmarked targets.
+		case DK_SERVANT_W_PHANTOM: { // Stops servants from being consumed on unmarked targets.
 			status_change *tsc = status_get_sc(target);
 
 			// Only allow to attack if the enemy has a sign mark given by the caster.

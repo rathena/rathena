@@ -2500,9 +2500,8 @@ int status_set_maxsp(struct block_list *bl, unsigned int maxsp, int flag)
 */
 int status_set_ap(struct block_list *bl, unsigned int ap, int flag)
 {
-	struct status_data *status;
+	status_data *status = status_get_status_data(bl);
 
-	status = status_get_status_data(bl);
 	if (status == &dummy_status)
 		return 0;
 
@@ -2525,10 +2524,11 @@ int status_set_ap(struct block_list *bl, unsigned int ap, int flag)
 */
 int status_set_maxap(struct block_list *bl, unsigned int maxap, int flag)
 {
-	struct status_data *status;
 	if (maxap < 1)
 		return 0;
-	status = status_get_status_data(bl);
+
+	status_data *status = status_get_status_data(bl);
+
 	if (status == &dummy_status)
 		return 0;
 
@@ -2900,7 +2900,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag)
 	if (ap < 0) {
 		if (ap == INT_MIN)
 			ap++;
-		status_damage(NULL, bl, 0, 0, -ap, 0, 1, 0);
+		status_damage(nullptr, bl, 0, 0, -ap, 0, 1, 0);
 		ap = 0;
 	}
 
@@ -3709,8 +3709,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 			stat += (int)(bl->type == BL_PC ? (status->int_ + ((float)level / 4) + ((float)(status->dex + status->vit) / 5)) : ((float)(status->int_ + level) / 4)); //(every 4 base level = +1 mdef) + (every 1 int = +1 mdef) + (every 5 dex = +1 mdef) + (every 5 vit = +1 mdef)
 		}
 		status->mdef2 = cap_value(stat, 0, SHRT_MAX);
-		if (bl->type == BL_PC)
-		{
+		if (bl->type == BL_PC) {
 			// PAtk
 			stat = status->patk;
 			stat += status->pow / 3 + status->con / 5;
@@ -4016,12 +4015,11 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 				case MT_SUMMON_ABR_BATTLE_WARIOR:
 				case MT_SUMMON_ABR_DUAL_CANNON:
 				case MT_SUMMON_ABR_MOTHER_NET:
-				case MT_SUMMON_ABR_INFINITY:
-				{
-					struct map_session_data* msd = BL_CAST(BL_PC, mbl);
-					struct status_data *mstatus = status_get_status_data(mbl);
+				case MT_SUMMON_ABR_INFINITY: {
+					map_session_data *msd = BL_CAST(BL_PC, mbl);
+					status_data *mstatus = status_get_status_data(mbl);
 
-					if (!msd || !mstatus)
+					if (msd == nullptr || mstatus == nullptr)
 						break;
 
 					uint8 abr_mastery = pc_checkskill(msd, MT_ABR_M);
@@ -4042,10 +4040,9 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 					// The Infinity ABR appears to have a much higher attack then other
 					// ABR's and im guessing has a much higher MaxHP due to it being a AP
 					// costing summon. [Rytech]
-					if (ud->skill_id == MT_SUMMON_ABR_INFINITY)
-					{
+					if (ud->skill_id == MT_SUMMON_ABR_INFINITY) {
 						status->max_hp += 20000;
-						status->rhw.atk += 1400;// 70% of 2000
+						status->rhw.atk += 1400; // 70% of 2000
 						status->rhw.atk2 += 2000;
 					}
 
@@ -4056,10 +4053,10 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 				case BO_CREEPER:
 				case BO_HELLTREE:
 				{
-					struct map_session_data* msd = BL_CAST(BL_PC, mbl);
-					struct status_data *mstatus = status_get_status_data(mbl);
+					map_session_data *msd = BL_CAST(BL_PC, mbl);
+					status_data *mstatus = status_get_status_data(mbl);
 
-					if (!msd || !mstatus)
+					if (msd == nullptr || mstatus == nullptr)
 						break;
 
 					uint8 bionic_mastery = pc_checkskill(msd, BO_BIONICS_M);
@@ -4081,10 +4078,9 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 					// The Hell Tree bionic appears to have a much higher attack then other
 					// bionic's and im guessing has a much higher MaxHP due to it being a AP
 					// costing summon. [Rytech]
-					if (ud->skill_id == BO_HELLTREE)
-					{
+					if (ud->skill_id == BO_HELLTREE) {
 						status->max_hp += 20000;
-						status->rhw.atk += 1400;// 70% of 2000
+						status->rhw.atk += 1400; // 70% of 2000
 						status->rhw.atk2 += 2000;
 					}
 
@@ -4487,11 +4483,11 @@ static int status_get_spbonus_item(block_list *bl) {
 }
 
 /**
-* Get AP bonus modifiers
-* @param bl: block_list that will be checked
-* @param type: type of e_status_bonus (STATUS_BONUS_FIX or STATUS_BONUS_RATE)
-* @return bonus: total bonus for AP
-*/
+ * Get AP bonus modifiers
+ * @param bl: block_list that will be checked
+ * @param type: type of e_status_bonus (STATUS_BONUS_FIX or STATUS_BONUS_RATE)
+ * @return bonus: total bonus for AP
+ */
 static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type) {
 	int bonus = 0;
 
@@ -4513,8 +4509,7 @@ static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type) {
 			//if (sc->data[SC_NONE])
 			//	bonus += sc->data[SC_NONE]->val1;
 		}
-	}
-	else if (type == STATUS_BONUS_RATE) {
+	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
 
 		//Only for BL_PC
@@ -4539,8 +4534,10 @@ static int status_get_apbonus(struct block_list *bl, enum e_status_bonus type) {
 }
 
 /**
-* AP bonus rate from equipment
-*/
+ * AP bonus rate from equipment
+ * @param sd: Player data
+ * @return AP rate
+ */
 static int status_get_apbonus_equip(TBL_PC *sd) {
 	int bonus = 0;
 
@@ -4550,8 +4547,10 @@ static int status_get_apbonus_equip(TBL_PC *sd) {
 }
 
 /**
-* AP bonus rate from usable items
-*/
+ * AP bonus rate from usable items
+ * @param bl: Object to check against
+ * @return AP bonus
+ */
 static int status_get_apbonus_item(block_list *bl) {
 	int bonus = 0;
 
@@ -4611,8 +4610,10 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 }
 
 /**
-* Get final MaxAP for player.
-*/
+ * Get final MaxAP for player.
+ * @param sd: Player data
+ * @return AP amount
+ */
 static unsigned int status_calc_maxap_pc(struct map_session_data* sd) {
 	double dmax = 0, equip_bonus = 0, item_bonus = 0;
 
@@ -5488,8 +5489,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 
 // ----- P.Atk/S.Matk CALCULATION -----
-	if ((skill = pc_checkskill(sd, TR_STAGE_MANNER)) > 0 && (sd->status.weapon == W_BOW || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP))
-	{
+	if ((skill = pc_checkskill(sd, TR_STAGE_MANNER)) > 0 && (sd->status.weapon == W_BOW || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP)) {
 		base_status->patk += skill * 3;
 		base_status->smatk += skill * 3;
 	}
@@ -5636,75 +5636,68 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->indexed_bonus.weapon_subsize[SZ_MEDIUM] += medium_def[skill - 1];
 		sd->indexed_bonus.weapon_subsize[SZ_BIG] += large_def[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, IQ_WILL_OF_FAITH)) > 0 && sd->status.weapon == W_KNUCKLE)
-	{
+	if ((skill = pc_checkskill(sd, IQ_WILL_OF_FAITH)) > 0 && sd->status.weapon == W_KNUCKLE) {
 		short race_atk[10] = { 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 		short race_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-		sd->right_weapon.addrace[RC_UNDEAD] += race_atk[skill-1];
-		sd->right_weapon.addrace[RC_DEMON] += race_atk[skill-1];
-		sd->left_weapon.addrace[RC_UNDEAD] += race_atk[skill-1];
-		sd->left_weapon.addrace[RC_DEMON] += race_atk[skill-1];
-		sd->indexed_bonus.subrace[RC_UNDEAD] += race_def[skill-1];
-		sd->indexed_bonus.subrace[RC_DEMON] += race_def[skill-1];
+		sd->right_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
+		sd->right_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
+		sd->left_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
+		sd->left_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
+		sd->indexed_bonus.subrace[RC_UNDEAD] += race_def[skill - 1];
+		sd->indexed_bonus.subrace[RC_DEMON] += race_def[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, CD_MACE_BOOK_M)) > 0 && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE || sd->status.weapon == W_BOOK))
-	{
+	if ((skill = pc_checkskill(sd, CD_MACE_BOOK_M)) > 0 && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE || sd->status.weapon == W_BOOK)) {
 		short small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		short medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
 		short large_atk[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
 
-		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill-1];
-		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill-1];
-		sd->right_weapon.addsize[SZ_MEDIUM] += medium_atk[skill-1];
-		sd->left_weapon.addsize[SZ_MEDIUM] += medium_atk[skill-1];
-		sd->right_weapon.addsize[SZ_BIG] += large_atk[skill-1];
-		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill-1];
+		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
+		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
+		sd->right_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
+		sd->left_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
+		sd->right_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
+		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, CD_FIDUS_ANIMUS)) > 0)
-	{
+	if ((skill = pc_checkskill(sd, CD_FIDUS_ANIMUS)) > 0) {
 		short holy_matk[10] = { 1, 3, 4, 6, 7, 9, 10, 12, 13, 15 };
 
-		sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += holy_matk[skill-1];
+		sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += holy_matk[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, MT_TWOAXEDEF)) > 0 && sd->status.weapon == W_2HAXE)
-	{
+	if ((skill = pc_checkskill(sd, MT_TWOAXEDEF)) > 0 && sd->status.weapon == W_2HAXE) {
 		short small_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		short medium_def[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
 		short large_def[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
 
-		sd->indexed_bonus.weapon_subsize[SZ_SMALL] += small_def[skill-1];
-		sd->indexed_bonus.weapon_subsize[SZ_MEDIUM] += medium_def[skill-1];
-		sd->indexed_bonus.weapon_subsize[SZ_BIG] += large_def[skill-1];
+		sd->indexed_bonus.weapon_subsize[SZ_SMALL] += small_def[skill - 1];
+		sd->indexed_bonus.weapon_subsize[SZ_MEDIUM] += medium_def[skill - 1];
+		sd->indexed_bonus.weapon_subsize[SZ_BIG] += large_def[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, ABC_DAGGER_AND_BOW_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_BOW || 
-		sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA))
-	{
+	if ((skill = pc_checkskill(sd, ABC_DAGGER_AND_BOW_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_BOW ||
+																  sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA)) {
 		short small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 		short medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
 		short large_atk[10] = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
 
-		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill-1];
-		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill-1];
-		sd->right_weapon.addsize[SZ_MEDIUM] += medium_atk[skill-1];
-		sd->left_weapon.addsize[SZ_MEDIUM] += medium_atk[skill-1];
-		sd->right_weapon.addsize[SZ_BIG] += large_atk[skill-1];
-		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill-1];
+		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
+		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
+		sd->right_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
+		sd->left_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
+		sd->right_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
+		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, ABC_MAGIC_SWORD_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_1HSWORD || 
-		sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_SS || sd->status.weapon == W_DOUBLE_DS || 
-		sd->status.weapon == W_DOUBLE_DA || sd->status.weapon == W_DOUBLE_SA))
-	{
+	if ((skill = pc_checkskill(sd, ABC_MAGIC_SWORD_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_1HSWORD ||
+															   sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_SS || sd->status.weapon == W_DOUBLE_DS ||
+															   sd->status.weapon == W_DOUBLE_DA || sd->status.weapon == W_DOUBLE_SA)) {
 		short small_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
 		short medium_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
 		short large_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
 
-		sd->indexed_bonus.magic_addsize[SZ_SMALL] += small_matk[skill-1];
-		sd->indexed_bonus.magic_addsize[SZ_MEDIUM] += medium_matk[skill-1];
-		sd->indexed_bonus.magic_addsize[SZ_BIG] += large_matk[skill-1];
+		sd->indexed_bonus.magic_addsize[SZ_SMALL] += small_matk[skill - 1];
+		sd->indexed_bonus.magic_addsize[SZ_MEDIUM] += medium_matk[skill - 1];
+		sd->indexed_bonus.magic_addsize[SZ_BIG] += large_matk[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, EM_MAGIC_BOOK_M)) > 0 && sd->status.weapon == W_BOOK)
-	{
+	if ((skill = pc_checkskill(sd, EM_MAGIC_BOOK_M)) > 0 && sd->status.weapon == W_BOOK) {
 		sd->indexed_bonus.magic_atk_ele[ELE_WATER] += skill;
 		sd->indexed_bonus.magic_atk_ele[ELE_EARTH] += skill;
 		sd->indexed_bonus.magic_atk_ele[ELE_FIRE] += skill;
@@ -5859,15 +5852,13 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->indexed_bonus.subele[ELE_EARTH] -= 100;
 		if (sc->data[SC_CLIMAX_BLOOM])
 			sd->indexed_bonus.subele[ELE_FIRE] -= 100;
-		if (sc->data[SC_CLIMAX_CRYIMP])
-		{
+		if (sc->data[SC_CLIMAX_CRYIMP]) {
 			sd->indexed_bonus.subele[ELE_WATER] += 30;
 			sd->indexed_bonus.magic_atk_ele[ELE_WATER] += 30;
 		}
 		if (sc->data[SC_SINCERE_FAITH])
 			sd->bonus.perfect_hit += sc->data[SC_SINCERE_FAITH]->val3;
-		if (sc->data[SC_HOLY_S])
-		{
+		if (sc->data[SC_HOLY_S]) {
 			sd->indexed_bonus.subele[ELE_DARK] += sc->data[SC_HOLY_S]->val2;
 			sd->indexed_bonus.subele[ELE_UNDEAD] += sc->data[SC_HOLY_S]->val2;
 			sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += sc->data[SC_HOLY_S]->val2;
@@ -5882,28 +5873,23 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->indexed_bonus.magic_atk_ele[ELE_EARTH] += 10;
 		if (sc->data[SC_SUMMON_ELEMENTAL_SERPENS])
 			sd->indexed_bonus.magic_atk_ele[ELE_POISON] += 10;
-		if (sc->data[SC_FLAMEARMOR_OPTION])
-		{
+		if (sc->data[SC_FLAMEARMOR_OPTION]) {
 			sd->indexed_bonus.subele[ELE_FIRE] += 100;
 			sd->indexed_bonus.subele[ELE_WATER] -= 30;
 		}
-		if (sc->data[SC_CRYSTAL_ARMOR_OPTION])
-		{
+		if (sc->data[SC_CRYSTAL_ARMOR_OPTION]) {
 			sd->indexed_bonus.subele[ELE_WATER] += 100;
 			sd->indexed_bonus.subele[ELE_WIND] -= 30;
 		}
-		if (sc->data[SC_EYES_OF_STORM_OPTION])
-		{
+		if (sc->data[SC_EYES_OF_STORM_OPTION]) {
 			sd->indexed_bonus.subele[ELE_WIND] += 100;
 			sd->indexed_bonus.subele[ELE_EARTH] -= 30;
 		}
-		if (sc->data[SC_STRONG_PROTECTION_OPTION])
-		{
+		if (sc->data[SC_STRONG_PROTECTION_OPTION]) {
 			sd->indexed_bonus.subele[ELE_EARTH] += 100;
 			sd->indexed_bonus.subele[ELE_FIRE] -= 30;
 		}
-		if (sc->data[SC_POISON_SHIELD_OPTION])
-		{
+		if (sc->data[SC_POISON_SHIELD_OPTION]) {
 			sd->indexed_bonus.subele[ELE_POISON] += 100;
 			sd->indexed_bonus.subele[ELE_HOLY] -= 30;
 		}
@@ -7067,8 +7053,7 @@ void status_calc_bl_main(struct block_list *bl, uint64 flag)
 				status->max_ap = (unsigned int)(battle_config.ap_rate * (status->max_ap / 100.));
 
 			status->max_ap = umin(status->max_ap, (unsigned int)battle_config.max_ap);
-		}
-		else
+		} else
 			status->max_ap = status_calc_maxap(bl, b_status->max_ap);
 
 		if (status->ap > status->max_ap) {
@@ -9996,8 +9981,7 @@ int status_isimmune(struct block_list *bl)
 {
 	struct status_change *sc =status_get_sc(bl);
 
-	if (sc)
-	{
+	if (sc) {
 		if (sc->data[SC_HERMODE])
 			return 100;
 
@@ -11101,6 +11085,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 
 			bool successFlag = false;
+
 			for( int i = EQI_SHADOW_ARMOR; i <= EQI_SHADOW_ACC_L; i++ ){
 				int index = sd->equip_index[i];
 
@@ -11110,9 +11095,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				}
 			}
 
-			if (!successFlag) return 0;
+			if (!successFlag)
+				return 0;
 		}
-		if (tick == 1) return 1;
+		if (tick == 1)
+			return 1;
 		break;
 	case SC_MERC_FLEEUP:
 	case SC_MERC_ATKUP:
@@ -13901,9 +13888,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick - tick_time; // Remaining Time
 			break;
 		case SC_VIGOR: {
-			short hp_loss[10] = { 15, 14, 12, 11, 9, 8, 6, 5, 3, 2 };
-			val2 = hp_loss[val1-1];
-			} break;
+				short hp_loss[10] = { 15, 14, 12, 11, 9, 8, 6, 5, 3, 2 };
+
+				val2 = hp_loss[val1- 1];
+			}
+			break;
 		case SC_POWERFUL_FAITH:
 			val2 = 5 + 5 * val1;// ATK Increase
 			val3 = 5 + 2 * val1;// PAtk Increase
@@ -13979,9 +13968,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 = 25;// Need official reduction amount.
 			break;
 		case SC_ABYSSFORCEWEAPON:
-			if (sd)
-			{
-				for (short i = 0; i < MAX_ABYSSBALL; i++)// Generate 5 abyss spheres on start.
+			if (sd) {
+				for (uint8 i = 0; i < MAX_ABYSSBALL; i++)// Generate 5 abyss spheres on start.
 					pc_addabyssball(sd, MAX_ABYSSBALL, 1);// Don't send the effect packet yet.
 				clif_abyssball(&sd->bl);// Send the effect packet after abyss gen. Avoids packet and sound spam.
 			}
@@ -15100,7 +15088,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 
 		case SC_SERVANT_SIGN: {
-			struct map_session_data *tsd = map_id2sd(sce->val1);
+			map_session_data *tsd = map_id2sd(sce->val1);
 
 			if( tsd != nullptr )
 				tsd->servant_sign[sce->val2] = 0;
@@ -15163,18 +15151,20 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SPLASHER:
 		case SC_ROSEBLOSSOM:
 			{
-				struct block_list *src=map_id2bl(sce->val3);
+				block_list *src = map_id2bl(sce->val3);
+
 				if(src && tid != INVALID_TIMER)
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
 			}
 			break;
 		case SC_SOUNDBLEND:
-		{
-			struct block_list *src = map_id2bl(sce->val2);
-			if (src && tid != INVALID_TIMER)
-				skill_castend_damage_id(src, bl, TR_SOUNDBLEND, sce->val1, gettick(), SD_LEVEL|SD_ANIMATION);
-		}
-		break;
+			{
+				block_list *src = map_id2bl(sce->val2);
+
+				if (src && tid != INVALID_TIMER)
+					skill_castend_damage_id(src, bl, TR_SOUNDBLEND, sce->val1, gettick(), SD_LEVEL|SD_ANIMATION);
+			}
+			break;
 		case SC_CLOSECONFINE2:{
 			struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
 			struct status_change *sc2 = src?status_get_sc(src):NULL;
@@ -16769,9 +16759,7 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4 >= 0) {
 			if (sd && sd->servantball < MAX_SERVANTBALL)
 				pc_addservantball(sd, MAX_SERVANTBALL, false);
-			interval = skill_get_time2(DK_SERVANTWEAPON, sce->val1);
-			if (interval < 500)
-				interval = 500;
+			interval = max(500, skill_get_time2(DK_SERVANTWEAPON, sce->val1));
 			map_freeblock_lock();
 			dounlock = true;
 		}
@@ -16780,9 +16768,7 @@ TIMER_FUNC(status_change_timer){
 		if (sce->val4 >= 0) {
 			if (sd && sd->abyssball < MAX_ABYSSBALL)
 				pc_addabyssball(sd, MAX_ABYSSBALL, 0);
-			interval = skill_get_time2(ABC_FROM_THE_ABYSS, sce->val1);
-			if (interval < 500)
-				interval = 500;
+			interval = max(500, skill_get_time2(ABC_FROM_THE_ABYSS, sce->val1));
 			map_freeblock_lock();
 			dounlock = true;
 		}
