@@ -2324,6 +2324,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -5007,6 +5008,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -5076,6 +5078,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -5097,6 +5100,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -5850,6 +5854,7 @@ Body:
       Knight: true
       SuperNovice: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -5932,6 +5937,7 @@ Body:
       Thief: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -5953,6 +5959,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -6001,6 +6008,7 @@ Body:
       Knight: true
       SuperNovice: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -6066,6 +6074,7 @@ Body:
       Knight: true
       SuperNovice: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -6095,6 +6104,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -6124,6 +6134,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -8281,6 +8292,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -8328,6 +8340,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -8491,6 +8504,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -8512,6 +8526,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -9628,6 +9643,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -11162,6 +11178,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -12043,6 +12060,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -12217,6 +12235,7 @@ Body:
       Priest: true
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -12431,6 +12450,7 @@ Body:
       Priest: true
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -13923,6 +13943,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14072,6 +14093,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14144,6 +14166,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14199,6 +14222,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14227,6 +14251,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14479,6 +14504,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14720,6 +14746,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14741,6 +14768,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -14844,6 +14872,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -16351,6 +16380,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -17139,6 +17169,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17295,6 +17326,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17452,6 +17484,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17481,6 +17514,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17509,6 +17543,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17542,6 +17577,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17565,6 +17601,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17590,6 +17627,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17624,6 +17662,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17654,6 +17693,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17684,6 +17724,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17722,6 +17763,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17751,6 +17793,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17777,6 +17820,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -17810,6 +17854,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -18503,6 +18548,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18583,6 +18629,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18614,6 +18661,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18636,6 +18684,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18677,6 +18726,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18700,6 +18750,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18748,6 +18799,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18830,6 +18882,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18858,6 +18911,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -18884,6 +18938,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -19650,6 +19705,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -19678,6 +19734,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -19754,6 +19811,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -19785,6 +19843,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -19807,6 +19866,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -19849,6 +19909,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -20183,6 +20244,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20207,6 +20269,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20232,6 +20295,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20257,6 +20321,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20282,6 +20347,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20306,6 +20372,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20331,6 +20398,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20356,6 +20424,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20578,6 +20647,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -20629,6 +20699,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20660,6 +20731,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20740,6 +20812,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20868,6 +20941,7 @@ Body:
       SuperNovice: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20899,6 +20973,7 @@ Body:
       SuperNovice: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -20950,6 +21025,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -20985,6 +21061,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21010,6 +21087,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21126,6 +21204,7 @@ Body:
       Wizard: true
     Classes:
       Upper: true
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21157,6 +21236,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21188,6 +21268,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21222,6 +21303,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21254,6 +21336,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21284,6 +21367,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -21318,6 +21402,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -22171,6 +22256,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -22187,6 +22273,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -22326,6 +22413,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -22443,6 +22531,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -22494,6 +22583,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -22563,6 +22653,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -22586,6 +22677,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -22611,6 +22703,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -23034,6 +23127,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -23156,6 +23250,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -28368,6 +28463,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -28401,6 +28497,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28421,6 +28518,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28441,6 +28539,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28461,6 +28560,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28481,6 +28581,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28511,6 +28612,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28569,6 +28671,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28591,6 +28694,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28613,6 +28717,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28633,6 +28738,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28653,6 +28759,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -28673,6 +28780,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -30557,6 +30665,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30577,6 +30686,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30647,6 +30757,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30666,6 +30777,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30726,6 +30838,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30745,6 +30858,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30781,6 +30895,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30801,6 +30916,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -30823,6 +30939,7 @@ Body:
       Priest: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -34907,6 +35024,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -34942,6 +35060,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35066,6 +35185,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35083,6 +35203,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35100,6 +35221,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35115,6 +35237,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35132,6 +35255,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35149,6 +35273,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35167,6 +35292,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35184,6 +35310,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35199,6 +35326,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35216,6 +35344,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35233,6 +35362,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35786,6 +35916,7 @@ Body:
       Alchemist: true
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -35997,6 +36128,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36032,6 +36164,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36136,6 +36269,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36156,6 +36290,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36176,6 +36311,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36196,6 +36332,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36236,6 +36373,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36252,6 +36390,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36268,6 +36407,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36527,6 +36667,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36547,6 +36688,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36585,6 +36727,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36602,6 +36745,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36647,6 +36791,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36664,6 +36809,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36683,6 +36829,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -36712,6 +36859,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -37993,6 +38141,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -38011,6 +38160,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -38039,6 +38189,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -38072,6 +38223,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -38105,6 +38257,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -38125,6 +38278,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -38144,6 +38298,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -51701,6 +51856,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -51735,6 +51891,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -51769,6 +51926,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Mid: true
@@ -51804,6 +51962,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -51838,6 +51997,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -51872,6 +52032,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -51906,6 +52067,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -51940,6 +52102,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -51974,6 +52137,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -52007,6 +52171,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Low: true
@@ -52040,6 +52205,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -52074,6 +52240,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Mid: true
@@ -52109,6 +52276,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -52159,6 +52327,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -54249,6 +54418,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -54284,6 +54454,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -54318,6 +54489,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -54394,6 +54566,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -54428,6 +54601,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -54463,6 +54637,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -54498,6 +54673,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -57920,6 +58096,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -58959,6 +59136,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -59004,6 +59182,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -63601,6 +63780,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -63622,6 +63802,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -63938,6 +64119,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -63970,6 +64152,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -64041,6 +64224,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -64322,6 +64506,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -64347,6 +64532,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -64382,6 +64568,7 @@ Body:
       Knight: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -64451,6 +64638,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -64560,6 +64748,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -64637,6 +64826,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -64854,6 +65044,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65089,6 +65280,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65113,6 +65305,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65137,6 +65330,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65161,6 +65355,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65185,6 +65380,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65206,6 +65402,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65342,6 +65539,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65364,6 +65562,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65385,6 +65584,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65405,6 +65605,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65459,6 +65660,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65480,6 +65682,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -65500,6 +65703,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66056,6 +66260,7 @@ Body:
       Wizard: true
     Classes:
       Upper: true
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66220,6 +66425,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66240,6 +66446,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66406,6 +66613,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66443,6 +66651,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66473,6 +66682,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66601,6 +66811,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66619,6 +66830,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -66764,6 +66976,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -67510,6 +67723,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -67531,6 +67745,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -67571,6 +67786,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -67591,6 +67807,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -68207,6 +68424,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -68226,6 +68444,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -68431,6 +68650,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -68454,6 +68674,7 @@ Body:
       Assassin: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -68483,6 +68704,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -69357,6 +69579,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -69531,6 +69754,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -69594,6 +69818,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -69742,6 +69967,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70076,6 +70302,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70130,6 +70357,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70150,6 +70378,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70171,6 +70400,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70197,6 +70427,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70279,6 +70510,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70300,6 +70532,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70327,6 +70560,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70615,6 +70849,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70681,6 +70916,7 @@ Body:
       Priest: true
       SuperNovice: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70716,6 +70952,7 @@ Body:
       Priest: true
       SuperNovice: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70794,6 +71031,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70829,6 +71067,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70851,6 +71090,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70921,6 +71161,7 @@ Body:
       Priest: true
       SuperNovice: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70951,6 +71192,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -70984,6 +71226,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -71015,6 +71258,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -71044,6 +71288,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -71071,6 +71316,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -71099,6 +71345,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -71128,6 +71375,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -71157,6 +71405,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -71274,6 +71523,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71420,6 +71670,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71443,6 +71694,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71470,6 +71722,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71683,6 +71936,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71758,6 +72012,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71782,6 +72037,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71854,6 +72110,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71875,6 +72132,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -71926,6 +72184,7 @@ Body:
       Hunter: true
     Classes:
       All_Upper: true
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72154,6 +72413,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72185,6 +72445,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72216,6 +72477,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72267,6 +72529,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -72301,6 +72564,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -72335,6 +72599,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72360,6 +72625,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -72392,6 +72658,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -72427,6 +72694,7 @@ Body:
       Rogue: true
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72453,6 +72721,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72488,6 +72757,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72519,6 +72789,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72551,6 +72822,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72583,6 +72855,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72614,6 +72887,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -72653,6 +72927,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -72692,6 +72967,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72720,6 +72996,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72747,6 +73024,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72775,6 +73053,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72802,6 +73081,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72827,6 +73107,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72860,6 +73141,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -72889,6 +73171,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -74195,6 +74478,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -77950,6 +78234,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -78292,6 +78577,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80024,6 +80310,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80061,6 +80348,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80099,6 +80387,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80135,6 +80424,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80171,6 +80461,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80218,6 +80509,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -80254,6 +80546,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80289,6 +80582,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80326,6 +80620,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80362,6 +80657,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80399,6 +80695,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -80435,6 +80732,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80471,6 +80769,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -80508,6 +80807,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82695,6 +82995,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82731,6 +83032,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82766,6 +83068,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82801,6 +83104,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82836,6 +83140,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82870,6 +83175,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82908,6 +83214,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82945,6 +83252,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -82979,6 +83287,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -83016,6 +83325,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -83050,6 +83360,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -83084,6 +83395,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -83120,6 +83432,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -85285,6 +85598,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85319,6 +85633,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85353,6 +85668,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85387,6 +85703,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85421,6 +85738,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85455,6 +85773,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85489,6 +85808,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85522,6 +85842,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85556,6 +85877,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85591,6 +85913,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85626,6 +85949,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85660,6 +85984,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85694,6 +86019,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -85726,6 +86052,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -95900,6 +96227,7 @@ Body:
       Wizard: true
     Classes:
       Upper: true
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -96022,6 +96350,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -96178,6 +96507,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -96201,6 +96531,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -97331,6 +97662,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -97374,6 +97706,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -97765,6 +98098,7 @@ Body:
     Defense: 30
     Slots: 1
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -97793,6 +98127,7 @@ Body:
     Defense: 30
     Slots: 1
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -97821,6 +98156,7 @@ Body:
     Defense: 30
     Slots: 1
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Garment: true
@@ -99249,6 +99585,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99433,6 +99770,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99459,6 +99797,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99477,6 +99816,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99500,6 +99840,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99573,6 +99914,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99596,6 +99938,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99665,6 +100008,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99695,6 +100039,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99723,6 +100068,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -99757,6 +100103,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -99814,6 +100161,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99841,6 +100189,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99905,6 +100254,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -99945,6 +100295,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -99978,6 +100329,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -100009,6 +100361,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -100060,6 +100413,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -100093,6 +100447,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -100124,6 +100479,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -100218,6 +100574,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100252,6 +100609,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100287,6 +100645,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100321,6 +100680,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100354,6 +100714,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100390,6 +100751,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100426,6 +100788,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100461,6 +100824,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100495,6 +100859,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100532,6 +100897,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100568,6 +100934,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100603,6 +100970,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100777,6 +101145,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100893,6 +101262,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -100912,6 +101282,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shoes: true
@@ -106427,6 +106798,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -106504,6 +106876,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107407,6 +107780,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107425,6 +107799,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107443,6 +107818,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107461,6 +107837,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107479,6 +107856,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107497,6 +107875,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107515,6 +107894,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107533,6 +107913,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107551,6 +107932,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107569,6 +107951,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107587,6 +107970,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -107605,6 +107989,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -107625,6 +108010,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -107644,6 +108030,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107661,6 +108048,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107678,6 +108066,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107695,6 +108084,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107713,6 +108103,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107730,6 +108121,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107747,6 +108139,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107764,6 +108157,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107781,6 +108175,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107798,6 +108193,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107815,6 +108211,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -107832,6 +108229,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -107851,6 +108249,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -109488,6 +109887,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -109506,6 +109906,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -109523,6 +109924,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -109541,6 +109943,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -109918,6 +110321,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -109934,6 +110338,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -109950,6 +110355,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -109966,6 +110372,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -109983,6 +110390,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -109999,6 +110407,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110015,6 +110424,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110031,6 +110441,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110047,6 +110458,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110063,6 +110475,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110080,6 +110493,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110096,6 +110510,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110112,6 +110527,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110128,6 +110544,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110144,6 +110561,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110160,6 +110578,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110177,6 +110596,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110193,6 +110613,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110209,6 +110630,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110225,6 +110647,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110241,6 +110664,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110257,6 +110681,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110274,6 +110699,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110290,6 +110716,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110306,6 +110733,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110322,6 +110750,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110338,6 +110767,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110354,6 +110784,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110371,6 +110802,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110387,6 +110819,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110403,6 +110836,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110419,6 +110853,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110435,6 +110870,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110451,6 +110887,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110468,6 +110905,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110484,6 +110922,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110500,6 +110939,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110514,6 +110954,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110537,6 +110978,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110551,6 +110993,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110574,6 +111017,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110588,6 +111032,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110602,6 +111047,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110616,6 +111062,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110639,6 +111086,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110653,6 +111101,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110676,6 +111125,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110690,6 +111140,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110704,6 +111155,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110718,6 +111170,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110744,6 +111197,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110758,6 +111212,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110781,6 +111236,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110795,6 +111251,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110809,6 +111266,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110823,6 +111281,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110846,6 +111305,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110860,6 +111320,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110883,6 +111344,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110897,6 +111359,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -110911,6 +111374,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -110925,6 +111389,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -110948,6 +111413,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -110962,6 +111428,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -110985,6 +111452,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -110999,6 +111467,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111013,6 +111482,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111027,6 +111497,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111050,6 +111521,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111064,6 +111536,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111087,6 +111560,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111101,6 +111575,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111115,6 +111590,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111129,6 +111605,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111152,6 +111629,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111166,6 +111644,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111189,6 +111668,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111203,6 +111683,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111217,6 +111698,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111231,6 +111713,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111254,6 +111737,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111268,6 +111752,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111291,6 +111776,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111305,6 +111791,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111319,6 +111806,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111333,6 +111821,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111356,6 +111845,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111370,6 +111860,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111385,6 +111876,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111399,6 +111891,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111415,6 +111908,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111429,6 +111923,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111452,6 +111947,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111466,6 +111962,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111489,6 +111986,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111503,6 +112001,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111517,6 +112016,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111531,6 +112031,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111554,6 +112055,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111568,6 +112070,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111591,6 +112094,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111605,6 +112109,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111619,6 +112124,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111633,6 +112139,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111656,6 +112163,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111670,6 +112178,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111693,6 +112202,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111707,6 +112217,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111721,6 +112232,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111735,6 +112247,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111758,6 +112271,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111772,6 +112286,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111795,6 +112310,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111809,6 +112325,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111823,6 +112340,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111837,6 +112355,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111860,6 +112379,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111874,6 +112394,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111897,6 +112418,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -111911,6 +112433,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -111925,6 +112448,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -111939,6 +112463,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -111962,6 +112487,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -111976,6 +112502,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -111999,6 +112526,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -112013,6 +112541,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -112027,6 +112556,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -112041,6 +112571,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -112064,6 +112595,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -112078,6 +112610,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112101,6 +112634,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -112115,6 +112649,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -112129,6 +112664,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -112143,6 +112679,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -112166,6 +112703,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -112181,6 +112719,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112204,6 +112743,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -112218,6 +112758,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -112232,6 +112773,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Armor: true
@@ -112247,6 +112789,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shield: true
@@ -112270,6 +112813,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Shoes: true
@@ -112284,6 +112828,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112307,6 +112852,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Left_Accessory: true
@@ -112321,6 +112867,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Right_Accessory: true
@@ -112430,6 +112977,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112453,6 +113001,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112476,6 +113025,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112499,6 +113049,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112522,6 +113073,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112545,6 +113097,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112568,6 +113121,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112591,6 +113145,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112614,6 +113169,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112637,6 +113193,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112660,6 +113217,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -112683,6 +113241,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114278,6 +114837,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114302,6 +114862,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114326,6 +114887,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114350,6 +114912,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114374,6 +114937,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114398,6 +114962,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114422,6 +114987,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114446,6 +115012,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114470,6 +115037,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114494,6 +115062,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114518,6 +115087,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114543,6 +115113,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114611,6 +115182,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114635,6 +115207,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -114980,6 +115553,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -115019,6 +115593,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Shadow_Weapon: true
@@ -115103,6 +115678,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -115133,6 +115709,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -115191,6 +115768,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115226,6 +115804,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -115253,6 +115832,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -115345,6 +115925,7 @@ Body:
       SuperNovice: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115376,6 +115957,7 @@ Body:
       SuperNovice: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115554,6 +116136,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115581,6 +116164,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115788,6 +116372,7 @@ Body:
       SuperNovice: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115878,6 +116463,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115943,6 +116529,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -115983,6 +116570,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116015,6 +116603,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116047,6 +116636,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116079,6 +116669,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116181,6 +116772,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116212,6 +116804,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116275,6 +116868,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -116303,6 +116897,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -116329,6 +116924,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -116355,6 +116951,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -116382,6 +116979,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -116409,6 +117007,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -116444,6 +117043,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -116481,6 +117081,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116560,6 +117161,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116581,6 +117183,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116642,6 +117245,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116725,6 +117329,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116754,6 +117359,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116832,6 +117438,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116865,6 +117472,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -116899,6 +117507,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116959,6 +117568,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -116993,6 +117603,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -117035,6 +117646,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117062,6 +117674,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117090,6 +117703,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117123,6 +117737,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117240,6 +117855,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117261,6 +117877,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117431,6 +118048,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117462,6 +118080,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117494,6 +118113,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117522,6 +118142,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -117557,6 +118178,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117596,6 +118218,7 @@ Body:
       Knight: true
       SuperNovice: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117627,6 +118250,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117661,6 +118285,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -117700,6 +118325,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117730,6 +118356,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -117764,6 +118391,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -120083,6 +120711,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -120100,6 +120729,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Accessory: true
@@ -121605,6 +122235,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -121646,6 +122277,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -121789,6 +122421,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -121824,6 +122457,7 @@ Body:
       Sage: true
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -121853,6 +122487,7 @@ Body:
       Sage: true
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -121905,6 +122540,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -121939,6 +122575,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -121972,6 +122609,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122100,6 +122738,7 @@ Body:
       Sage: true
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122165,6 +122804,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122197,6 +122837,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122229,6 +122870,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122268,6 +122910,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122298,6 +122941,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122332,6 +122976,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122365,6 +123010,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122386,6 +123032,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122819,6 +123466,7 @@ Body:
       Thief: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122867,6 +123515,7 @@ Body:
       Thief: true
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122937,6 +123586,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -122971,6 +123621,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123004,6 +123655,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123153,6 +123805,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123278,6 +123931,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123297,6 +123951,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123316,6 +123971,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123344,6 +124000,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123375,6 +124032,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123409,6 +124067,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123444,6 +124103,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123464,6 +124124,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123482,6 +124143,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -123962,6 +124624,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Left_Hand: true
@@ -130678,6 +131341,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130708,6 +131372,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130736,6 +131401,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130799,6 +131465,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130825,6 +131492,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130854,6 +131522,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130883,6 +131552,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130921,6 +131591,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130952,6 +131623,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -130993,6 +131665,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -131020,6 +131693,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -131049,6 +131723,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -131075,6 +131750,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -131108,6 +131784,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -131137,6 +131814,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -131168,6 +131846,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -131199,6 +131878,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -131226,6 +131906,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -131253,6 +131934,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -131288,6 +131970,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -132016,6 +132699,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -132045,6 +132729,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -132072,6 +132757,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -132106,6 +132792,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -132137,6 +132824,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -132168,6 +132856,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -132199,6 +132888,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -132786,6 +133476,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -132815,6 +133506,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -132848,6 +133540,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -132880,6 +133573,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -132933,6 +133627,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -132962,6 +133657,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -133007,6 +133703,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -133036,6 +133733,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -133069,6 +133767,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -133102,6 +133801,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -133131,6 +133831,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -133163,6 +133864,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Head_Top: true
@@ -133994,6 +134696,7 @@ Body:
     Defense: 100
     Slots: 1
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134026,6 +134729,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134058,6 +134762,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134090,6 +134795,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134122,6 +134828,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134154,6 +134861,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134186,6 +134894,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134218,6 +134927,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134250,6 +134960,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134282,6 +134993,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134314,6 +135026,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134346,6 +135059,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134378,6 +135092,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134410,6 +135125,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134442,6 +135158,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134474,6 +135191,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134506,6 +135224,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134538,6 +135257,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134570,6 +135290,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134722,6 +135443,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134754,6 +135476,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134786,6 +135509,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134818,6 +135542,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134850,6 +135575,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134882,6 +135608,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -134974,6 +135701,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135006,6 +135734,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135038,6 +135767,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135070,6 +135800,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135102,6 +135833,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135134,6 +135866,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135166,6 +135899,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135198,6 +135932,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135230,6 +135965,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135262,6 +135998,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135294,6 +136031,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135326,6 +136064,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135358,6 +136097,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135390,6 +136130,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135422,6 +136163,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135454,6 +136196,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135486,6 +136229,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135518,6 +136262,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135550,6 +136295,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135582,6 +136328,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135614,6 +136361,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135646,6 +136394,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135678,6 +136427,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135710,6 +136460,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135862,6 +136613,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135894,6 +136646,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135926,6 +136679,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135958,6 +136712,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -135990,6 +136745,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136022,6 +136778,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136114,6 +136871,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136146,6 +136904,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136178,6 +136937,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136210,6 +136970,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136242,6 +137003,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136274,6 +137036,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136306,6 +137069,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136338,6 +137102,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136370,6 +137135,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136402,6 +137168,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136434,6 +137201,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136466,6 +137234,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136498,6 +137267,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136530,6 +137300,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136562,6 +137333,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136594,6 +137366,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136626,6 +137399,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136658,6 +137432,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136690,6 +137465,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136722,6 +137498,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136754,6 +137531,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136786,6 +137564,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136938,6 +137717,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -136970,6 +137750,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -137002,6 +137783,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -137034,6 +137816,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -137066,6 +137849,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -137098,6 +137882,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -137190,6 +137975,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -137222,6 +138008,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Armor: true
@@ -140964,6 +141751,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -140993,6 +141781,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141026,6 +141815,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141088,6 +141878,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141119,6 +141910,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141152,6 +141944,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141184,6 +141977,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141231,6 +142025,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141280,6 +142075,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141339,6 +142135,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141374,6 +142171,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141409,6 +142207,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141568,6 +142367,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141613,6 +142413,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141657,6 +142458,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141729,6 +142531,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141791,6 +142594,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141820,6 +142624,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141867,6 +142672,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141917,6 +142723,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -141948,6 +142755,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142025,6 +142833,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142060,6 +142869,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142207,6 +143017,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142293,6 +143104,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142321,6 +143133,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142353,6 +143166,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142448,6 +143262,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142496,6 +143311,7 @@ Body:
       Crusader: true
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142533,6 +143349,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142562,6 +143379,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142611,6 +143429,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142669,6 +143488,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142703,6 +143523,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142767,6 +143588,7 @@ Body:
     Jobs:
       Crusader: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142814,6 +143636,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142843,6 +143666,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142872,6 +143696,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142905,6 +143730,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142935,6 +143761,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -142992,6 +143819,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143026,6 +143854,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143087,6 +143916,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143122,6 +143952,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143157,6 +143988,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143388,6 +144220,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143441,6 +144274,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143496,6 +144330,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143538,6 +144373,7 @@ Body:
     Jobs:
       StarGladiator: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143583,6 +144419,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143684,6 +144521,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143714,6 +144552,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143778,6 +144617,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143835,6 +144675,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143885,6 +144726,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143921,6 +144763,7 @@ Body:
     Jobs:
       Sage: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -143994,6 +144837,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144027,6 +144871,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144250,6 +145095,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144586,6 +145432,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144769,6 +145616,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144799,6 +145647,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144827,6 +145676,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144857,6 +145707,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144902,6 +145753,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144950,6 +145802,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -144985,6 +145838,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -145042,6 +145896,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -145076,6 +145931,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -145168,6 +146024,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -145209,6 +146066,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -145252,6 +146110,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145288,6 +146147,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145323,6 +146183,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145359,6 +146220,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145395,6 +146257,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145428,6 +146291,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145500,6 +146364,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145536,6 +146401,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145600,6 +146466,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145640,6 +146507,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145682,6 +146550,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Male
     Locations:
@@ -145729,6 +146598,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -145765,6 +146635,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -145800,6 +146671,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -145836,6 +146708,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -145872,6 +146745,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -145905,6 +146779,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -145977,6 +146852,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -146013,6 +146889,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -146077,6 +146954,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -146117,6 +146995,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -146159,6 +147038,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Gender: Female
     Locations:
@@ -146206,6 +147086,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146241,6 +147122,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146275,6 +147157,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146306,6 +147189,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146337,6 +147221,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146383,6 +147268,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146429,6 +147315,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146480,6 +147367,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146516,6 +147404,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146574,6 +147463,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146609,6 +147499,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146739,6 +147630,7 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146779,6 +147671,7 @@ Body:
     Jobs:
       Priest: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146830,6 +147723,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -146850,6 +147744,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -146880,6 +147775,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -146914,6 +147810,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -146946,6 +147843,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -146983,6 +147881,7 @@ Body:
       Swordman: true
     Classes:
       Upper: true
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147012,6 +147911,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -147084,6 +147984,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147146,6 +148047,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147188,6 +148090,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147218,6 +148121,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147246,6 +148150,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147278,6 +148183,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147312,6 +148218,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147373,6 +148280,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -147444,6 +148352,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147478,6 +148387,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147570,6 +148480,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147611,6 +148522,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147649,6 +148561,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147695,6 +148608,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -147744,6 +148658,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147861,6 +148776,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147904,6 +148820,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147937,6 +148854,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -147972,6 +148890,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148003,6 +148922,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -148054,6 +148974,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148116,6 +149037,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148161,6 +149083,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148195,6 +149118,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148226,6 +149150,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148261,6 +149186,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -148310,6 +149236,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -148362,6 +149289,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148399,6 +149327,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -148460,6 +149389,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148496,6 +149426,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148530,6 +149461,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148575,6 +149507,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148620,6 +149553,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148663,6 +149597,7 @@ Body:
     Jobs:
       SoulLinker: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -148998,6 +149933,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -149018,6 +149954,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149048,6 +149985,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149076,6 +150014,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149107,6 +150046,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149138,6 +150078,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149171,6 +150112,7 @@ Body:
       Rogue: true
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149201,6 +150143,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -149247,6 +150190,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -149291,6 +150235,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -149337,6 +150282,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Right_Hand: true
@@ -149384,6 +150330,7 @@ Body:
       Hunter: true
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149418,6 +150365,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149474,6 +150422,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149508,6 +150457,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149543,6 +150493,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149724,6 +150675,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149765,6 +150717,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true
@@ -149803,6 +150756,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
+      Fourth: true
       All_Third: true
     Locations:
       Both_Hand: true

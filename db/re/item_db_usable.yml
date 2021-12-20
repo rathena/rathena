@@ -316,6 +316,7 @@ Body:
     Buy: 20
     Weight: 30
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -1859,6 +1860,7 @@ Body:
     Buy: 5000
     Weight: 100
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -2545,6 +2547,7 @@ Body:
     Buy: 200
     Weight: 1
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -8542,6 +8545,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -8558,6 +8562,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -8574,6 +8579,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -12490,6 +12496,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -12504,6 +12511,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -12518,6 +12526,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -12532,6 +12541,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -12546,6 +12556,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
+      Fourth: true
       All_Third: true
     Flags:
       BuyingStore: true
@@ -45138,6 +45149,7 @@ Body:
     Buy: 2
     Weight: 10
     Classes:
+      Fourth: true
       All_Third: true
     Delay:
       Duration: 5000
@@ -48390,6 +48402,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     EquipLevelMin: 100
     Delay:
@@ -50714,6 +50727,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
+      Fourth: true
       All_Third: true
     EquipLevelMin: 100
     Delay:
@@ -50848,6 +50862,7 @@ Body:
     Type: Delayconsume
     Buy: 10
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -50861,6 +50876,7 @@ Body:
     Type: Delayconsume
     Buy: 10
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -50874,6 +50890,7 @@ Body:
     Type: Delayconsume
     Buy: 10
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -50887,6 +50904,7 @@ Body:
     Type: Delayconsume
     Buy: 10
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -50900,6 +50918,7 @@ Body:
     Type: Delayconsume
     Buy: 10
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -50913,6 +50932,7 @@ Body:
     Type: Delayconsume
     Buy: 10
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51007,6 +51027,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51021,6 +51042,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51035,6 +51057,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51049,6 +51072,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51063,6 +51087,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51077,6 +51102,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51091,6 +51117,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
@@ -51105,6 +51132,7 @@ Body:
     Buy: 20
     Weight: 50
     Classes:
+      Fourth: true
       All_Third: true
       Normal: true
       Upper: true
