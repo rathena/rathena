@@ -1389,7 +1389,26 @@ struct packet_npc_market_purchase {
 	struct packet_npc_market_purchase_sub list[];
 } __attribute__((packed));
 
-#if PACKETVER_MAIN_NUM >= 20131120 || PACKETVER_RE_NUM >= 20131106 || defined(PACKETVER_ZERO)
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
+struct PACKET_ZC_NPC_MARKET_OPEN_sub {
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 nameid;
+#else
+	uint16 nameid;
+#endif
+	uint8 type;
+	uint32 price;
+	uint32 qty;
+	uint16 weight;
+	uint32 location;
+} __attribute__((packed));
+struct PACKET_ZC_NPC_MARKET_OPEN {
+	int16 packetType;
+	int16 packetLength;
+	struct PACKET_ZC_NPC_MARKET_OPEN_sub list[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NPC_MARKET_OPEN, 0x0b7a);
+#elif PACKETVER_MAIN_NUM >= 20131120 || PACKETVER_RE_NUM >= 20131106 || defined(PACKETVER_ZERO)
 /* inner struct figured by Ind after some annoying hour of debugging (data Thanks to Yommy) */
 struct PACKET_ZC_NPC_MARKET_OPEN_sub {
 #if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
@@ -1402,13 +1421,11 @@ struct PACKET_ZC_NPC_MARKET_OPEN_sub {
 	uint32 qty;
 	uint16 weight;
 } __attribute__((packed));
-
 struct PACKET_ZC_NPC_MARKET_OPEN {
 	int16 packetType;
 	int16 packetLength;
 	struct PACKET_ZC_NPC_MARKET_OPEN_sub list[];
 } __attribute__((packed));
-
 DEFINE_PACKET_HEADER(ZC_NPC_MARKET_OPEN, 0x09d5);
 #endif
 
@@ -1681,10 +1698,22 @@ struct PACKET_ZC_WRITE_MAIL_RESULT {
 	int8 result;
 } __attribute__((packed));
 
-struct PACKET_CZ_CHECKNAME {
+#if PACKETVER >= 20140423
+struct PACKET_CZ_CHECKNAME1 {
 	int16 PacketType;
 	char Name[24];
 } __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHECKNAME1, 0x0a13)
+#endif  // PACKETVER >= 20140423
+
+#if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
+struct PACKET_CZ_CHECKNAME2 {
+	int16 PacketType;
+	char Name[24];
+	char own_char;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHECKNAME2, 0x0b97)
+#endif  // PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_ZERO_NUM >= 20201118
 
 struct PACKET_ZC_CHECKNAME {
 	int16 PacketType;
@@ -2375,7 +2404,63 @@ struct PACKET_ZC_ACK_WEAPONREFINE {
 #endif
 } __attribute__((packed));
 
-#if PACKETVER_MAIN_NUM >= 20190619 || PACKETVER_RE_NUM >= 20190605 || PACKETVER_ZERO_NUM >= 20190626
+#if PACKETVER_MAIN_NUM >= 20210303 || PACKETVER_RE_NUM >= 20211103
+// PACKET_ZC_PROPERTY_HOMUN4
+struct PACKET_ZC_PROPERTY_HOMUN {
+	int16 packetType;
+	char name[NAME_LENGTH];
+	// Bit field, bit 0 : rename_flag (1 = already renamed), bit 1 : homunc vaporized (1 = true), bit 2 : homunc dead (1 = true)
+	uint8 flags;
+	uint16 level;
+	uint16 hunger;
+	uint16 intimacy;
+	uint16 atk2;
+	uint16 matk;
+	uint16 hit;
+	uint16 crit;
+	uint16 def;
+	uint16 mdef;
+	uint16 flee;
+	uint16 amotion;
+	uint32 hp;
+	uint32 maxHp;
+	uint32 sp;
+	uint32 maxSp;
+	int64 exp;
+	int64 expNext;
+	uint16 skillPoints;
+	uint16 range;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PROPERTY_HOMUN, 0x0ba4);
+#elif PACKETVER_MAIN_NUM >= 20200819 || PACKETVER_RE_NUM >= 20200723
+// PACKET_ZC_PROPERTY_HOMUN3
+struct PACKET_ZC_PROPERTY_HOMUN {
+	int16 packetType;
+	char name[NAME_LENGTH];
+	// Bit field, bit 0 : rename_flag (1 = already renamed), bit 1 : homunc vaporized (1 = true), bit 2 : homunc dead (1 = true)
+	uint8 flags;
+	uint16 level;
+	uint16 hunger;
+	uint16 intimacy;
+	uint16 atk2;
+	uint16 matk;
+	uint16 hit;
+	uint16 crit;
+	uint16 def;
+	uint16 mdef;
+	uint16 flee;
+	uint16 amotion;
+	uint32 hp;
+	uint32 maxHp;
+	uint32 sp;
+	uint32 maxSp;
+	uint32 exp;
+	uint32 expNext;
+	uint16 skillPoints;
+	uint16 range;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PROPERTY_HOMUN, 0x0b76);
+#elif PACKETVER_MAIN_NUM >= 20190619 || PACKETVER_RE_NUM >= 20190605 || PACKETVER_ZERO_NUM >= 20190626
 // PACKET_ZC_PROPERTY_HOMUN3
 struct PACKET_ZC_PROPERTY_HOMUN {
 	int16 packetType;
@@ -2573,6 +2658,26 @@ struct PACKET_ZC_PC_PURCHASE_MYITEMLIST {
 	struct PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub items[];
 } __attribute__((packed));
 
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
+struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub {
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	uint32 price;
+	uint32 discountPrice;
+	uint8 itemType;
+	uint16 viewSprite;
+	uint32 location;
+} __attribute__((packed));
+struct PACKET_ZC_PC_PURCHASE_ITEMLIST {
+	int16 packetType;
+	int16 packetLength;
+	struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub items[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PC_PURCHASE_ITEMLIST, 0x0b77)
+#else  // PACKETVER_MAIN_NUM >= 20210203
 struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub {
 	uint32 price;
 	uint32 discountPrice;
@@ -2583,12 +2688,13 @@ struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub {
 	uint16 itemId;
 #endif
 } __attribute__((packed));
-
 struct PACKET_ZC_PC_PURCHASE_ITEMLIST {
 	int16 packetType;
 	int16 packetLength;
 	struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub items[];
 } __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PC_PURCHASE_ITEMLIST, 0x00c6)
+#endif
 
 struct PACKET_CZ_PC_PURCHASE_ITEMLIST_sub {
 	uint16 amount;
@@ -3245,7 +3351,33 @@ struct PACKET_CZ_PARTY_CONFIG {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_PARTY_CONFIG, 0x02c8);
 
-#if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
+struct PACKET_ZC_NPC_BARTER_OPEN_sub {
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 nameid;
+#else
+	uint16 nameid;
+#endif
+	uint8 type;
+	uint32 amount;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 currencyNameid;
+#else
+	uint16 currencyNameid;
+#endif
+	uint32 currencyAmount;
+	uint32 weight;
+	uint32 index;
+	uint16 viewSprite;
+	uint32 location;
+} __attribute__((packed));
+struct PACKET_ZC_NPC_BARTER_OPEN {
+	int16 packetType;
+	int16 packetLength;
+	struct PACKET_ZC_NPC_BARTER_OPEN_sub list[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NPC_BARTER_OPEN, 0x0b78);
+#elif PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
 struct PACKET_ZC_NPC_BARTER_OPEN_sub {
 #if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
 	uint32 nameid;
@@ -3263,13 +3395,11 @@ struct PACKET_ZC_NPC_BARTER_OPEN_sub {
 	uint32 weight;
 	uint32 index;
 } __attribute__((packed));
-
 struct PACKET_ZC_NPC_BARTER_OPEN {
 	int16 packetType;
 	int16 packetLength;
 	struct PACKET_ZC_NPC_BARTER_OPEN_sub list[];
 } __attribute__((packed));
-
 DEFINE_PACKET_HEADER(ZC_NPC_BARTER_OPEN, 0x0b0e);
 #endif
 
@@ -3883,7 +4013,45 @@ struct PACKET_CZ_NPC_EXPANDED_BARTER_CLOSE {
 DEFINE_PACKET_HEADER(CZ_NPC_EXPANDED_BARTER_CLOSE, 0x0b58);
 #endif
 
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
+struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2 {
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 nameid;
+#else
+	uint16 nameid;
+#endif
+	uint16 refine_level;
+	uint32 amount;
+	uint16 type;
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub {
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 nameid;
+#else
+	uint16 nameid;
+#endif
+	uint16 type;
+	uint32 amount;
+	uint32 weight;
+	uint32 index;
+	uint32 zeny;
+	uint16 viewSprite;
+	uint32 location;
+	uint32 currency_count;
+	// Workaround: this should be currencies[], but compilers do not support multiple layers of incomplete types. See error C2233
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2 currencies[1];
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN {
+	int16 packetType;
+	int16 packetLength;
+	int32 items_count;
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub items[];
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_OPEN, 0x0b79);
+#elif PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
 struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2 {
 #if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
 	uint32 nameid;
@@ -3907,12 +4075,8 @@ struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub {
 	uint32 index;
 	uint32 zeny;
 	uint32 currency_count;
-#if defined(_MSC_VER)
-	// Workaround for fix Visual Studio bug (error C2233). Here should be currencies[]
+	// Workaround: this should be currencies[], but compilers do not support multiple layers of incomplete types. See error C2233
 	struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2 currencies[1];
-#else
-	struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2 currencies[];
-#endif
 } __attribute__((packed));
 
 struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN {
@@ -3923,7 +4087,7 @@ struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN {
 } __attribute__((packed));
 
 DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_OPEN, 0x0b56);
-#endif
+#endif  // PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
 
 #if PACKETVER_MAIN_NUM >= 20190904 || PACKETVER_RE_NUM >= 20190904 || PACKETVER_ZERO_NUM >= 20190828
 struct PACKET_CZ_NPC_EXPANDED_BARTER_PURCHASE_sub {
