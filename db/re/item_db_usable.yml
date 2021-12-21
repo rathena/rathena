@@ -8531,6 +8531,7 @@ Body:
       Blacksmith: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -8547,6 +8548,7 @@ Body:
       Blacksmith: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -8563,6 +8565,7 @@ Body:
       Blacksmith: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12479,6 +12482,7 @@ Body:
       Knight: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12493,6 +12497,7 @@ Body:
       Knight: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12507,6 +12512,7 @@ Body:
       Knight: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12521,6 +12527,7 @@ Body:
       Knight: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12535,6 +12542,7 @@ Body:
       Knight: true
     Classes:
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -45127,6 +45135,7 @@ Body:
     Weight: 10
     Classes:
       All_Third: true
+      Fourth: true
     Delay:
       Duration: 5000
       Status: Reuse_Limit_Luxanima
@@ -48379,6 +48388,7 @@ Body:
       Blacksmith: true
     Classes:
       All_Third: true
+      Fourth: true
     EquipLevelMin: 100
     Delay:
       Duration: 180000
@@ -50703,6 +50713,7 @@ Body:
       Blacksmith: true
     Classes:
       All_Third: true
+      Fourth: true
     EquipLevelMin: 100
     Delay:
       Duration: 180000
