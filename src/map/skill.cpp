@@ -1415,11 +1415,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					// Enchanting Shadow gives a chance to inflict shadow wounds to the enemy.
 					if ((sce = sc->data[SC_SHADOW_WEAPON]) && rnd() % 100 < sce->val2) {
 						if (tsc && tsc->data[SC_SHADOW_SCAR]) {
-							short count = 1 + tsc->data[SC_SHADOW_SCAR]->val1;
+							uint16 count = 1 + tsc->data[SC_SHADOW_SCAR]->val1;
 
 							// Need official stack limit. [Rytech]
-							if (count > 5)
-								count = 5;
+							count = min(5, count);
 
 							sc_start(src, bl, SC_SHADOW_SCAR, 100, count, skill_get_time2(SHC_ENCHANTING_SHADOW, sce->val1));
 						} else
@@ -5636,8 +5635,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					break;
 			}
 		} else {
-			int starget = BL_CHAR|BL_SKILL;
-			short splash_size = skill_get_splash(skill_id, skill_lv);
+			int starget = BL_CHAR|BL_SKILL, splash_size = skill_get_splash(skill_id, skill_lv);
 
 			skill_area_temp[0] = 0;
 			skill_area_temp[1] = bl->id;
@@ -7816,7 +7814,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case EM_ACTIVITY_BURN:
 		if (bl->type == BL_PC && rnd() % 100 < 20 + 10 * skill_lv) {
-			short ap_burn[5] = { 20, 30, 50, 60, 70 };
+			uint8 ap_burn[5] = { 20, 30, 50, 60, 70 };
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			status_fix_apdamage(src, bl, ap_burn[skill_lv - 1], 0, skill_id);
@@ -8575,7 +8573,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TR_ROKI_CAPRICCIO:
 	case TR_NIPELHEIM_REQUIEM:
 		if (flag & 1) { // Need official success chances.
-			short success_chance = 5 * skill_lv;
+			uint16 success_chance = 5 * skill_lv;
 
 			if (flag & 2)
 				success_chance *= 2;
@@ -18016,7 +18014,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 		case MT_SUMMON_ABR_MOTHER_NET:
 		case MT_SUMMON_ABR_INFINITY: {
 			uint32 abrs[4] = { MOBID_ABR_BATTLE_WARIOR, MOBID_ABR_DUAL_CANNON, MOBID_ABR_MOTHER_NET, MOBID_ABR_INFINITY };
-			short maxcount = skill_get_maxcount(skill_id, skill_lv), c = 0;
+			int maxcount = skill_get_maxcount(skill_id, skill_lv), c = 0;
 
 			if (battle_config.land_skill_limit && maxcount > 0 && (battle_config.land_skill_limit & BL_PC)) {
 				map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], skill_id, &c);
@@ -18032,7 +18030,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 		case BO_CREEPER:
 		case BO_HELLTREE: {
 			uint32 bionics[5] = { MOBID_BIONIC_WOODENWARRIOR, MOBID_BIONIC_WOODEN_FAIRY, MOBID_BIONIC_CREEPER, MOBID_PORING, MOBID_BIONIC_HELLTREE };
-			short maxcount = skill_get_maxcount(skill_id, skill_lv), c = 0;
+			int maxcount = skill_get_maxcount(skill_id, skill_lv), c = 0;
 
 			if (battle_config.land_skill_limit && maxcount > 0 && (battle_config.land_skill_limit & BL_PC)) {
 				map_foreachinmap(skill_check_condition_mob_master_sub, sd->bl.m, BL_MOB, sd->bl.id, bionics[4 - (BO_HELLTREE - skill_id)], skill_id, &c);

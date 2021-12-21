@@ -5628,17 +5628,17 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->indexed_bonus.subele[ELE_DARK] += skill;
 	}
 	if ((skill = pc_checkskill(sd, DK_TWOHANDDEF)) > 0 && (sd->status.weapon == W_2HSWORD || sd->status.weapon == W_2HSPEAR || sd->status.weapon == W_2HAXE)) {
-		short small_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		short medium_def[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		short large_def[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
+		uint8 small_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		uint8 medium_def[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+		uint8 large_def[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
 
 		sd->indexed_bonus.weapon_subsize[SZ_SMALL] += small_def[skill - 1];
 		sd->indexed_bonus.weapon_subsize[SZ_MEDIUM] += medium_def[skill - 1];
 		sd->indexed_bonus.weapon_subsize[SZ_BIG] += large_def[skill - 1];
 	}
 	if ((skill = pc_checkskill(sd, IQ_WILL_OF_FAITH)) > 0 && sd->status.weapon == W_KNUCKLE) {
-		short race_atk[10] = { 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
-		short race_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		uint8 race_atk[10] = { 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+		uint8 race_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
 		sd->right_weapon.addrace[RC_UNDEAD] += race_atk[skill - 1];
 		sd->right_weapon.addrace[RC_DEMON] += race_atk[skill - 1];
@@ -5648,9 +5648,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->indexed_bonus.subrace[RC_DEMON] += race_def[skill - 1];
 	}
 	if ((skill = pc_checkskill(sd, CD_MACE_BOOK_M)) > 0 && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE || sd->status.weapon == W_BOOK)) {
-		short small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		short medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		short large_atk[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
+		uint8 small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		uint8 medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+		uint8 large_atk[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
 
 		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
 		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
@@ -5660,24 +5660,23 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
 	}
 	if ((skill = pc_checkskill(sd, CD_FIDUS_ANIMUS)) > 0) {
-		short holy_matk[10] = { 1, 3, 4, 6, 7, 9, 10, 12, 13, 15 };
+		uint8 holy_matk[10] = { 1, 3, 4, 6, 7, 9, 10, 12, 13, 15 };
 
 		sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += holy_matk[skill - 1];
 	}
 	if ((skill = pc_checkskill(sd, MT_TWOAXEDEF)) > 0 && sd->status.weapon == W_2HAXE) {
-		short small_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		short medium_def[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		short large_def[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
+		uint8 small_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		uint8 medium_def[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+		uint8 large_def[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
 
 		sd->indexed_bonus.weapon_subsize[SZ_SMALL] += small_def[skill - 1];
 		sd->indexed_bonus.weapon_subsize[SZ_MEDIUM] += medium_def[skill - 1];
 		sd->indexed_bonus.weapon_subsize[SZ_BIG] += large_def[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, ABC_DAGGER_AND_BOW_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_BOW ||
-																  sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA)) {
-		short small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		short medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		short large_atk[10] = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
+	if ((skill = pc_checkskill(sd, ABC_DAGGER_AND_BOW_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_BOW || sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA)) {
+		uint8 small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+		uint8 medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+		uint8 large_atk[10] = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
 
 		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
 		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
@@ -5686,12 +5685,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->right_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
 		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
 	}
-	if ((skill = pc_checkskill(sd, ABC_MAGIC_SWORD_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_1HSWORD ||
-															   sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_SS || sd->status.weapon == W_DOUBLE_DS ||
-															   sd->status.weapon == W_DOUBLE_DA || sd->status.weapon == W_DOUBLE_SA)) {
-		short small_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		short medium_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		short large_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+	if ((skill = pc_checkskill(sd, ABC_MAGIC_SWORD_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_SS || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA || sd->status.weapon == W_DOUBLE_SA)) {
+		uint8 small_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+		uint8 medium_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+		uint8 large_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
 
 		sd->indexed_bonus.magic_addsize[SZ_SMALL] += small_matk[skill - 1];
 		sd->indexed_bonus.magic_addsize[SZ_MEDIUM] += medium_matk[skill - 1];
@@ -13888,7 +13885,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick - tick_time; // Remaining Time
 			break;
 		case SC_VIGOR: {
-				short hp_loss[10] = { 15, 14, 12, 11, 9, 8, 6, 5, 3, 2 };
+				uint8 hp_loss[10] = { 15, 14, 12, 11, 9, 8, 6, 5, 3, 2 };
 
 				val2 = hp_loss[val1- 1];
 			}

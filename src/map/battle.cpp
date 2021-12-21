@@ -6185,10 +6185,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 					wd.div_ = sd->servantball + sd->servantball_old;
 				break;
 			case IQ_THIRD_FLAME_BOMB:
-				wd.div_ += min(wd.miscflag, 3); // Number of hits doesn't go above 3.
+				wd.div_ = min(wd.div_ + wd.miscflag, 3); // Number of hits doesn't go above 3.
 				break;
 			case IG_OVERSLASH:
-				wd.div_ += min(wd.miscflag, 5); // Number of hits doesn't appear to go above 5.
+				wd.div_ = min(wd.div_ + wd.miscflag, 5); // Number of hits doesn't appear to go above 5.
 				break;
 			case SHC_ETERNAL_SLASH:
 				if (sc && sc->data[SC_E_SLASH_COUNT])
@@ -6745,7 +6745,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				ad.div_ = 2;
 			break;
 		case TR_METALIC_FURY:// Deals up to 5 additional hits. But what affects the number of hits? [Rytech]
-			ad.div_ += min(mflag, 5); // Number of hits doesn't go above 5.
+			ad.div_ = min(ad.div_ + mflag, 5); // Number of hits doesn't go above 5.
 			// Fall through and check arrow element
 		case TR_SOUNDBLEND:
 			if (sd)
