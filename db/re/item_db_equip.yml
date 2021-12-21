@@ -2326,6 +2326,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -5010,6 +5011,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -5080,6 +5082,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -5102,6 +5105,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -5856,6 +5860,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -5939,6 +5944,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -5961,6 +5967,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -6010,6 +6017,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -6076,6 +6084,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -6106,6 +6115,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -6136,6 +6146,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -7411,8 +7422,6 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Classes:
-      Upper: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -8294,6 +8303,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -8342,6 +8352,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -8506,6 +8517,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -8528,6 +8540,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -9645,6 +9658,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -11180,6 +11194,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -12062,6 +12077,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -12237,6 +12253,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -12452,6 +12469,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -13945,6 +13963,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14095,6 +14114,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14168,6 +14188,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14224,6 +14245,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -14253,6 +14275,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -14506,6 +14529,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -14748,6 +14772,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14770,6 +14795,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14874,6 +14900,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -16382,6 +16409,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -17171,6 +17199,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17328,6 +17357,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17486,6 +17516,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17516,6 +17547,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17545,6 +17577,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17579,6 +17612,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17603,6 +17637,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17629,6 +17664,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17664,6 +17700,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17695,6 +17732,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17726,6 +17764,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17765,6 +17804,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17795,6 +17835,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17822,6 +17863,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17856,6 +17898,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -18550,6 +18593,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18631,6 +18675,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18663,6 +18708,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18686,6 +18732,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18728,6 +18775,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18752,6 +18800,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18801,6 +18850,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18884,6 +18934,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18913,6 +18964,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -18940,6 +18992,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -19707,6 +19760,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -19736,6 +19790,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -19813,6 +19868,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -19845,6 +19901,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -19868,6 +19925,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -19911,6 +19969,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -20246,6 +20305,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20271,6 +20331,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20297,6 +20358,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20323,6 +20385,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20349,6 +20412,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20374,6 +20438,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20400,6 +20465,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20426,6 +20492,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20649,6 +20716,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -20701,6 +20769,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20733,6 +20802,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20814,6 +20884,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20943,6 +21014,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -20975,6 +21047,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21027,6 +21100,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -21063,6 +21137,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -21089,6 +21164,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21206,6 +21282,7 @@ Body:
       Upper: true
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21238,6 +21315,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21270,6 +21348,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21305,6 +21384,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21338,6 +21418,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21369,6 +21450,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -21404,6 +21486,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -22258,6 +22341,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -22275,6 +22359,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -22415,6 +22500,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -22533,6 +22619,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -22585,6 +22672,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -22655,6 +22743,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -22679,6 +22768,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -22705,6 +22795,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -23129,6 +23220,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -23252,6 +23344,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -28465,6 +28558,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Shoes: true
@@ -28499,6 +28593,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28520,6 +28615,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28541,6 +28637,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28562,6 +28659,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28583,6 +28681,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28614,6 +28713,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28673,6 +28773,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28696,6 +28797,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28719,6 +28821,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28740,6 +28843,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28761,6 +28865,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -28782,6 +28887,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -30624,10 +30730,6 @@ Body:
       Novice: true
       SuperNovice: true
       Thief: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30667,6 +30769,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30688,6 +30791,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30759,6 +30863,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30779,6 +30884,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30840,6 +30946,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30860,6 +30967,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30897,6 +31005,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30918,6 +31027,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -30941,6 +31051,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -35026,6 +35137,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35062,6 +35174,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35187,6 +35300,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35205,6 +35319,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35223,6 +35338,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35239,6 +35355,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35257,6 +35374,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35275,6 +35393,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35294,6 +35413,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35312,6 +35432,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35328,6 +35449,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35346,6 +35468,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35364,6 +35487,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -35918,6 +36042,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36130,6 +36255,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36166,6 +36292,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36271,6 +36398,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36292,6 +36420,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36313,6 +36442,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36334,6 +36464,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36375,6 +36506,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36392,6 +36524,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36409,6 +36542,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36669,6 +36803,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36690,6 +36825,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36729,6 +36865,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36747,6 +36884,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36793,6 +36931,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36811,6 +36950,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36831,6 +36971,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -36861,6 +37002,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -38143,6 +38285,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Both_Accessory: true
@@ -38162,6 +38305,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Both_Accessory: true
@@ -38191,6 +38335,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -38225,6 +38370,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -38259,6 +38405,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -38280,6 +38427,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -38300,6 +38448,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -51001,10 +51150,6 @@ Body:
     Buy: 250000
     Weight: 500
     Defense: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51034,10 +51179,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Low: true
     ArmorLevel: 1
@@ -51051,10 +51192,6 @@ Body:
     Buy: 20
     Weight: 100
     Defense: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Mid: true
     ArmorLevel: 1
@@ -51165,10 +51302,6 @@ Body:
     Buy: 20
     Weight: 200
     Defense: 2
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51302,10 +51435,6 @@ Body:
     Buy: 20
     Weight: 200
     Slots: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51335,10 +51464,6 @@ Body:
     Buy: 20
     Weight: 100
     Defense: 1
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51858,6 +51983,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51893,6 +52019,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51928,6 +52055,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Mid: true
       Head_Top: true
@@ -51964,6 +52092,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -51999,6 +52128,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -52034,6 +52164,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Head_Top: true
@@ -52069,6 +52200,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -52104,6 +52236,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -52139,6 +52272,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -52173,6 +52307,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Low: true
       Head_Mid: true
@@ -52207,6 +52342,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -52242,6 +52378,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Mid: true
       Head_Top: true
@@ -52278,6 +52415,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Head_Top: true
@@ -52329,6 +52467,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -54420,6 +54559,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -54456,6 +54596,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -54491,6 +54632,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -54568,6 +54710,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -54603,6 +54746,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Head_Top: true
@@ -54639,6 +54783,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -54675,6 +54820,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -58098,6 +58244,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -58579,10 +58726,6 @@ Body:
     Jobs:
       KagerouOboro: true
       Ninja: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -59138,6 +59281,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -59160,10 +59304,6 @@ Body:
     Jobs:
       KagerouOboro: true
       Ninja: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -59184,6 +59324,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -63782,6 +63923,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -63804,6 +63946,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -64121,6 +64264,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -64154,6 +64298,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -64226,6 +64371,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -64508,6 +64654,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -64534,6 +64681,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -64570,6 +64718,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -64640,6 +64789,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -64750,6 +64900,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -64828,6 +64979,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65046,6 +65198,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65282,6 +65435,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65307,6 +65461,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65332,6 +65487,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65357,6 +65513,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65382,6 +65539,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65404,6 +65562,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65541,6 +65700,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65564,6 +65724,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65586,6 +65747,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65607,6 +65769,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65662,6 +65825,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65684,6 +65848,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -65705,6 +65870,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66262,6 +66428,7 @@ Body:
       Upper: true
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66427,6 +66594,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66448,6 +66616,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66615,6 +66784,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66653,6 +66823,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66684,6 +66855,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66813,6 +66985,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66832,6 +67005,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -66978,6 +67152,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67725,6 +67900,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67747,6 +67923,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67788,6 +67965,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -67809,6 +67987,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -68426,6 +68605,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -68446,6 +68626,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -68652,6 +68833,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -68676,6 +68858,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -68706,6 +68889,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -69581,6 +69765,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -69756,6 +69941,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -69820,6 +70006,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -69969,6 +70156,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -70304,6 +70492,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70359,6 +70548,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70380,6 +70570,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70402,6 +70593,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70429,6 +70621,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70512,6 +70705,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -70534,6 +70728,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -70562,6 +70757,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70851,6 +71047,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70918,6 +71115,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -70954,6 +71152,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71033,6 +71232,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -71069,6 +71269,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71092,6 +71293,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -71163,6 +71365,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71194,6 +71397,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71228,6 +71432,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71260,6 +71465,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71290,6 +71496,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71318,6 +71525,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71347,6 +71555,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71377,6 +71586,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71407,6 +71617,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -71525,6 +71736,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -71672,6 +71884,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -71696,6 +71909,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -71724,6 +71938,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -71938,6 +72153,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72014,6 +72230,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72039,6 +72256,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72112,6 +72330,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -72134,6 +72353,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -72186,6 +72406,7 @@ Body:
       All_Upper: true
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72415,6 +72636,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -72447,6 +72669,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72479,6 +72702,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72531,6 +72755,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72566,6 +72791,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72601,6 +72827,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72627,6 +72854,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72660,6 +72888,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72696,6 +72925,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72723,6 +72953,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72759,6 +72990,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72791,6 +73023,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72824,6 +73057,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72857,6 +73091,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72889,6 +73124,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72929,6 +73165,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -72969,6 +73206,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -72998,6 +73236,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -73026,6 +73265,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -73055,6 +73295,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -73083,6 +73324,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -73109,6 +73351,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -73143,6 +73386,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -73173,6 +73417,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -74480,6 +74725,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -78236,6 +78482,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -78579,6 +78826,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80312,6 +80560,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80350,6 +80599,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80389,6 +80639,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80426,6 +80677,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80463,6 +80715,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80511,6 +80764,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Head_Top: true
@@ -80548,6 +80802,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80584,6 +80839,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80622,6 +80878,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80659,6 +80916,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80697,6 +80955,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Head_Top: true
@@ -80734,6 +80993,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80771,6 +81031,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -80809,6 +81070,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -82997,6 +83259,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83034,6 +83297,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83070,6 +83334,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83106,6 +83371,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83142,6 +83408,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83177,6 +83444,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83216,6 +83484,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83254,6 +83523,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83289,6 +83559,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83327,6 +83598,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83362,6 +83634,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -83397,6 +83670,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Head_Top: true
@@ -83434,6 +83708,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Head_Top: true
@@ -85600,6 +85875,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85635,6 +85911,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85670,6 +85947,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85705,6 +85983,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85740,6 +86019,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85775,6 +86055,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85810,6 +86091,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85844,6 +86126,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85879,6 +86162,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85915,6 +86199,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85951,6 +86236,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -85986,6 +86272,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -86021,6 +86308,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -86054,6 +86342,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -96229,6 +96518,7 @@ Body:
       Upper: true
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -96352,6 +96642,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -96509,6 +96800,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -96533,6 +96825,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -97664,6 +97957,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -97708,6 +98002,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98100,6 +98395,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98129,6 +98425,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -98158,6 +98455,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Garment: true
     ArmorLevel: 1
@@ -99587,6 +99885,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -99772,6 +100071,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -99799,6 +100099,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -99818,6 +100119,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -99842,6 +100144,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -99916,6 +100219,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -99940,6 +100244,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100010,6 +100315,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100041,6 +100347,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100070,6 +100377,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -100105,6 +100413,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -100163,6 +100472,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100191,6 +100501,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100256,6 +100567,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -100297,6 +100609,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100331,6 +100644,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100363,6 +100677,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100415,6 +100730,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100449,6 +100765,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100481,6 +100798,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -100576,6 +100894,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100611,6 +100930,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100647,6 +100967,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100682,6 +101003,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100716,6 +101038,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100753,6 +101076,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100790,6 +101114,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100826,6 +101151,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100861,6 +101187,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100899,6 +101226,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100936,6 +101264,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -100972,6 +101301,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -101147,6 +101477,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -101264,6 +101595,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -101284,6 +101616,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shoes: true
     ArmorLevel: 1
@@ -106800,6 +107133,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -106878,6 +107212,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -107782,6 +108117,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107801,6 +108137,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107820,6 +108157,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107839,6 +108177,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107858,6 +108197,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107877,6 +108217,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107896,6 +108237,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107915,6 +108257,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107934,6 +108277,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107953,6 +108297,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107972,6 +108317,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -107991,6 +108337,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Shadow_Weapon: true
@@ -108012,6 +108359,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Shadow_Weapon: true
@@ -108032,6 +108380,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108050,6 +108399,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108068,6 +108418,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108086,6 +108437,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108105,6 +108457,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108123,6 +108476,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108141,6 +108495,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108159,6 +108514,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108177,6 +108533,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108195,6 +108552,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108213,6 +108571,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -108231,6 +108590,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Shadow_Shield: true
@@ -108251,6 +108611,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Shadow_Shield: true
@@ -109889,6 +110250,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 100
@@ -109908,6 +110270,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -109926,6 +110289,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 100
@@ -109945,6 +110309,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 100
@@ -110323,6 +110688,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110340,6 +110706,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110357,6 +110724,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110374,6 +110742,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110392,6 +110761,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110409,6 +110779,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110426,6 +110797,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110443,6 +110815,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110460,6 +110833,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110477,6 +110851,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110495,6 +110870,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110512,6 +110888,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110529,6 +110906,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110546,6 +110924,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110563,6 +110942,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110580,6 +110960,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110598,6 +110979,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110615,6 +110997,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110632,6 +111015,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110649,6 +111033,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110666,6 +111051,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110683,6 +111069,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110701,6 +111088,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110718,6 +111106,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110735,6 +111124,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110752,6 +111142,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110769,6 +111160,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110786,6 +111178,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110804,6 +111197,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110821,6 +111215,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110838,6 +111233,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110855,6 +111251,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110872,6 +111269,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110889,6 +111287,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -110907,6 +111306,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -110924,6 +111324,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -110941,6 +111342,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -110956,6 +111358,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -110980,6 +111383,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -110995,6 +111399,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111019,6 +111424,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111034,6 +111440,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111049,6 +111456,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111064,6 +111472,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111088,6 +111497,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111103,6 +111513,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111127,6 +111538,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111142,6 +111554,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111157,6 +111570,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111172,6 +111586,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111199,6 +111614,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111214,6 +111630,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111238,6 +111655,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111253,6 +111671,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111268,6 +111687,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111283,6 +111703,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111307,6 +111728,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111322,6 +111744,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111346,6 +111769,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111361,6 +111785,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111376,6 +111801,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111391,6 +111817,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111415,6 +111842,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111430,6 +111858,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111454,6 +111883,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111469,6 +111899,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111484,6 +111915,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111499,6 +111931,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111523,6 +111956,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111538,6 +111972,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111562,6 +111997,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111577,6 +112013,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111592,6 +112029,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111607,6 +112045,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111631,6 +112070,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111646,6 +112086,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111670,6 +112111,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111685,6 +112127,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111700,6 +112143,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111715,6 +112159,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111739,6 +112184,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111754,6 +112200,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111778,6 +112225,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111793,6 +112241,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111808,6 +112257,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111823,6 +112273,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111847,6 +112298,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111862,6 +112314,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111878,6 +112331,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -111893,6 +112347,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -111910,6 +112365,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -111925,6 +112381,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -111949,6 +112406,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -111964,6 +112422,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -111988,6 +112447,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112003,6 +112463,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112018,6 +112479,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112033,6 +112495,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112057,6 +112520,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112072,6 +112536,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112096,6 +112561,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112111,6 +112577,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112126,6 +112593,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112141,6 +112609,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112165,6 +112634,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112180,6 +112650,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112204,6 +112675,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112219,6 +112691,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112234,6 +112707,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112249,6 +112723,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112273,6 +112748,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112288,6 +112764,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112312,6 +112789,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112327,6 +112805,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112342,6 +112821,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112357,6 +112837,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112381,6 +112862,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112396,6 +112878,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112420,6 +112903,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112435,6 +112919,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112450,6 +112935,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112465,6 +112951,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112489,6 +112976,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112504,6 +112992,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112528,6 +113017,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112543,6 +113033,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112558,6 +113049,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112573,6 +113065,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112597,6 +113090,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112612,6 +113106,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112636,6 +113131,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112651,6 +113147,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112666,6 +113163,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112681,6 +113179,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112705,6 +113204,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112721,6 +113221,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112745,6 +113246,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112760,6 +113262,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112775,6 +113278,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Armor: true
     EquipLevelMin: 99
@@ -112791,6 +113295,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shield: true
     EquipLevelMin: 99
@@ -112815,6 +113320,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Shoes: true
     EquipLevelMin: 99
@@ -112830,6 +113336,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 99
@@ -112854,6 +113361,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Left_Accessory: true
     EquipLevelMin: 99
@@ -112869,6 +113377,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Right_Accessory: true
     EquipLevelMin: 99
@@ -112979,6 +113488,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113003,6 +113513,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113027,6 +113538,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113051,6 +113563,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113075,6 +113588,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113099,6 +113613,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113123,6 +113638,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113147,6 +113663,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113171,6 +113688,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113195,6 +113713,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113219,6 +113738,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -113243,6 +113763,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114839,6 +115360,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114864,6 +115386,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114889,6 +115412,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114914,6 +115438,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114939,6 +115464,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114964,6 +115490,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -114989,6 +115516,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115014,6 +115542,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115039,6 +115568,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115064,6 +115594,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115089,6 +115620,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115115,6 +115647,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115184,6 +115717,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115209,6 +115743,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115555,6 +116090,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115595,6 +116131,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Shadow_Weapon: true
     EquipLevelMin: 100
@@ -115680,6 +116217,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -115711,6 +116249,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -115770,6 +116309,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -115806,6 +116346,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -115834,6 +116375,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -115927,6 +116469,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -115959,6 +116502,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116138,6 +116682,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116166,6 +116711,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -116196,10 +116742,6 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -116374,6 +116916,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116465,6 +117008,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116531,6 +117075,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116572,6 +117117,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116605,6 +117151,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116638,6 +117185,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116671,6 +117219,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116774,6 +117323,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116806,6 +117356,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -116870,6 +117421,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -116899,6 +117451,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -116926,6 +117479,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -116953,6 +117507,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -116981,6 +117536,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -117009,6 +117565,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -117045,6 +117602,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -117083,6 +117641,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117163,6 +117722,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -117185,6 +117745,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -117247,6 +117808,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117331,6 +117893,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117361,6 +117924,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117440,6 +118004,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -117474,6 +118039,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -117509,6 +118075,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117570,6 +118137,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117605,6 +118173,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -117648,6 +118217,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117676,6 +118246,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117705,6 +118276,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117739,6 +118311,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -117857,6 +118430,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -117879,6 +118453,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -118050,6 +118625,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -118082,6 +118658,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118115,6 +118692,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118144,6 +118722,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -118180,6 +118759,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118220,6 +118800,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118252,6 +118833,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118287,6 +118869,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -118327,6 +118910,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118358,6 +118942,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -118393,6 +118978,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -120713,6 +121299,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -120731,6 +121318,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -122237,6 +122825,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122279,6 +122868,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122423,6 +123013,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122459,6 +123050,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122489,6 +123081,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122542,6 +123135,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122577,6 +123171,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122611,6 +123206,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -122740,6 +123336,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122806,6 +123403,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122839,6 +123437,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122872,6 +123471,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122912,6 +123512,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122943,6 +123544,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -122978,6 +123580,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -123012,6 +123615,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -123034,6 +123638,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -123468,6 +124073,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -123517,6 +124123,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -123588,6 +124195,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -123623,6 +124231,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -123657,6 +124266,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -123807,6 +124417,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -123933,6 +124544,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -123953,6 +124565,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -123973,6 +124586,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124002,6 +124616,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124034,6 +124649,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124069,6 +124685,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124105,6 +124722,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124126,6 +124744,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124145,6 +124764,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -124626,6 +125246,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Left_Hand: true
     ArmorLevel: 1
@@ -131343,6 +131964,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131374,6 +131996,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131403,6 +132026,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -131467,6 +132091,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131494,6 +132119,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131524,6 +132150,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131554,6 +132181,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131593,6 +132221,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131625,6 +132254,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131667,6 +132297,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131695,6 +132326,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131725,6 +132357,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131752,6 +132385,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131786,6 +132420,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -131816,6 +132451,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -131848,6 +132484,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -131880,6 +132517,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -131908,6 +132546,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -131936,6 +132575,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -131972,6 +132612,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -132701,6 +133342,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -132731,6 +133373,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -132759,6 +133402,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -132794,6 +133438,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -132826,6 +133471,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -132858,6 +133504,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -132890,6 +133537,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -133478,6 +134126,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133508,6 +134157,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133542,6 +134192,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133575,6 +134226,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133629,6 +134281,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133659,6 +134312,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133705,6 +134359,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133735,6 +134390,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133769,6 +134425,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133803,6 +134460,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133833,6 +134491,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -133866,6 +134525,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Head_Top: true
     ArmorLevel: 1
@@ -134698,6 +135358,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134731,6 +135392,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134764,6 +135426,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134797,6 +135460,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134830,6 +135494,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134863,6 +135528,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134896,6 +135562,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134929,6 +135596,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134962,6 +135630,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -134995,6 +135664,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135028,6 +135698,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135061,6 +135732,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135094,6 +135766,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135127,6 +135800,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135160,6 +135834,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135193,6 +135868,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135226,6 +135902,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135259,6 +135936,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135292,6 +135970,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135445,6 +136124,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135478,6 +136158,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135511,6 +136192,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135544,6 +136226,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135577,6 +136260,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135610,6 +136294,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135703,6 +136388,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135736,6 +136422,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135769,6 +136456,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135802,6 +136490,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135835,6 +136524,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135868,6 +136558,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135901,6 +136592,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135934,6 +136626,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -135967,6 +136660,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136000,6 +136694,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136033,6 +136728,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136066,6 +136762,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136099,6 +136796,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136132,6 +136830,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136165,6 +136864,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136198,6 +136898,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136231,6 +136932,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136264,6 +136966,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136297,6 +137000,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136330,6 +137034,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136363,6 +137068,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136396,6 +137102,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136429,6 +137136,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136462,6 +137170,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136615,6 +137324,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136648,6 +137358,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136681,6 +137392,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136714,6 +137426,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136747,6 +137460,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136780,6 +137494,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136873,6 +137588,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136906,6 +137622,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136939,6 +137656,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -136972,6 +137690,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137005,6 +137724,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137038,6 +137758,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137071,6 +137792,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137104,6 +137826,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137137,6 +137860,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137170,6 +137894,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137203,6 +137928,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137236,6 +137962,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137269,6 +137996,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137302,6 +138030,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137335,6 +138064,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137368,6 +138098,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137401,6 +138132,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137434,6 +138166,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137467,6 +138200,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137500,6 +138234,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137533,6 +138268,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137566,6 +138302,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137719,6 +138456,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137752,6 +138490,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137785,6 +138524,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137818,6 +138558,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137851,6 +138592,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137884,6 +138626,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -137977,6 +138720,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -138010,6 +138754,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Armor: true
     ArmorLevel: 1
@@ -141753,6 +142498,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141783,6 +142529,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141817,6 +142564,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141880,6 +142628,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141912,6 +142661,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141946,6 +142696,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -141979,6 +142730,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142027,6 +142779,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142077,6 +142830,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142137,6 +142891,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142173,6 +142928,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142209,6 +142965,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142369,6 +143126,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142415,6 +143173,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142460,6 +143219,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142533,6 +143293,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142596,6 +143357,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142626,6 +143388,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142674,6 +143437,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142725,6 +143489,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142757,6 +143522,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142835,6 +143601,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -142871,6 +143638,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143019,6 +143787,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143106,6 +143875,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143135,6 +143905,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143168,6 +143939,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143264,6 +144036,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143313,6 +144086,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143351,6 +144125,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143381,6 +144156,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143431,6 +144207,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143490,6 +144267,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143525,6 +144303,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143590,6 +144369,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143638,6 +144418,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143668,6 +144449,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143698,6 +144480,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143732,6 +144515,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143763,6 +144547,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143821,6 +144606,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143856,6 +144642,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143918,6 +144705,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143954,6 +144742,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -143990,6 +144779,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144222,6 +145012,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144276,6 +145067,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144332,6 +145124,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144375,6 +145168,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144421,6 +145215,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144523,6 +145318,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144554,6 +145350,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144619,6 +145416,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144677,6 +145475,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144728,6 +145527,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144765,6 +145565,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144839,6 +145640,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -144873,6 +145675,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145097,6 +145900,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145434,6 +146238,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145618,6 +146423,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145649,6 +146455,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145678,6 +146485,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145709,6 +146517,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145755,6 +146564,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145804,6 +146614,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145840,6 +146651,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145898,6 +146710,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -145933,6 +146746,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -146026,6 +146840,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -146068,6 +146883,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -146112,6 +146928,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146149,6 +146966,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146185,6 +147003,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146222,6 +147041,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146259,6 +147079,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146293,6 +147114,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146366,6 +147188,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146403,6 +147226,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146468,6 +147292,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146509,6 +147334,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146552,6 +147378,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -146600,6 +147427,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146637,6 +147465,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146673,6 +147502,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146710,6 +147540,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146747,6 +147578,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146781,6 +147613,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146854,6 +147687,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146891,6 +147725,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146956,6 +147791,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -146997,6 +147833,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -147040,6 +147877,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -147088,6 +147926,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147124,6 +147963,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147159,6 +147999,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147191,6 +148032,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147223,6 +148065,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147270,6 +148113,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147317,6 +148161,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147369,6 +148214,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147406,6 +148252,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147465,6 +148312,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147501,6 +148349,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147632,6 +148481,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147673,6 +148523,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -147725,6 +148576,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147746,6 +148598,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -147777,6 +148630,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -147812,6 +148666,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -147845,6 +148700,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -147883,6 +148739,7 @@ Body:
       Upper: true
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -147913,6 +148770,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -147986,6 +148844,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148049,6 +148908,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148092,6 +148952,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148123,6 +148984,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148152,6 +149014,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148185,6 +149048,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148220,6 +149084,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148282,6 +149147,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -148354,6 +149220,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148389,6 +149256,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148482,6 +149350,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148524,6 +149393,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148563,6 +149433,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148610,6 +149481,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -148660,6 +149532,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148778,6 +149651,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148822,6 +149696,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148856,6 +149731,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148892,6 +149768,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -148924,6 +149801,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -148976,6 +149854,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149039,6 +149918,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149085,6 +149965,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149120,6 +150001,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149152,6 +150034,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149188,6 +150071,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -149238,6 +150122,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -149291,6 +150176,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149329,6 +150215,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -149391,6 +150278,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149428,6 +150316,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149463,6 +150352,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149509,6 +150399,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149555,6 +150446,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149599,6 +150491,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149935,6 +150828,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -149956,6 +150850,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -149987,6 +150882,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150016,6 +150912,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150048,6 +150945,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150080,6 +150978,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150114,6 +151013,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150145,6 +151045,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -150192,6 +151093,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -150237,6 +151139,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -150284,6 +151187,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -150332,6 +151236,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150367,6 +151272,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150424,6 +151330,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150459,6 +151366,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150495,6 +151403,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150677,6 +151586,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150719,6 +151629,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
@@ -150758,6 +151669,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4

@@ -8547,6 +8547,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -8564,6 +8565,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -8581,6 +8583,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12498,6 +12501,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12513,6 +12517,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12528,6 +12533,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12543,6 +12549,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -12558,6 +12565,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Flags:
       BuyingStore: true
     Script: |
@@ -45151,6 +45159,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     Delay:
       Duration: 5000
       Status: Reuse_Limit_Luxanima
@@ -48404,6 +48413,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     EquipLevelMin: 100
     Delay:
       Duration: 180000
@@ -50729,6 +50739,7 @@ Body:
     Classes:
       Fourth: true
       All_Third: true
+      Fourth: true
     EquipLevelMin: 100
     Delay:
       Duration: 180000
