@@ -2491,43 +2491,32 @@ uint64 pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 	novice_skills = novice_job->max_job_level - 1;
 
 	// 1st Class Job LV Check
-	if (sd->class_&JOBL_2 && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE && !sd->change_level_2nd)
-	{
-		sd->change_level_2nd = job_db.find(pc_mapid2jobid(sd->class_&MAPID_BASEMASK, sd->status.sex))->max_job_level;
+	if (sd->class_ & JOBL_2 && (sd->class_ & MAPID_UPPERMASK) != MAPID_SUPER_NOVICE && !sd->change_level_2nd) {
+		sd->change_level_2nd = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_BASEMASK, sd->status.sex))->max_job_level;
 		pc_setglobalreg(sd, add_str(JOBCHANGE2ND_VAR), sd->change_level_2nd);
 	}
 
 	// 2nd Class Job LV Check
-	if (sd->class_&JOBL_THIRD && (sd->class_&MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E && !sd->change_level_3rd)
-	{
-		sd->change_level_3rd = job_db.find(pc_mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex))->max_job_level;
+	if (sd->class_ & JOBL_THIRD && (sd->class_ & MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E && !sd->change_level_3rd) {
+		sd->change_level_3rd = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_UPPERMASK, sd->status.sex))->max_job_level;
 		pc_setglobalreg(sd, add_str(JOBCHANGE3RD_VAR), sd->change_level_3rd);
 	}
 
 	// 3rd Class Job LV Check
-	if (sd->class_&JOBL_FOURTH && !sd->change_level_4th)
-	{
-		sd->change_level_4th = job_db.find(pc_mapid2jobid(sd->class_&MAPID_THIRDMASK, sd->status.sex))->max_job_level;;
+	if (sd->class_ & JOBL_FOURTH && !sd->change_level_4th) {
+		sd->change_level_4th = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_THIRDMASK, sd->status.sex))->max_job_level;;
 		pc_setglobalreg(sd, add_str(JOBCHANGE4TH_VAR), sd->change_level_4th);
 	}
 
 	// Check the skill tree the player has access to depending on the used number of skill points.
-	if (skill_point < novice_skills && (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER)
-	{// Novice Skill Tree
+	if (skill_point < novice_skills && (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER) // Novice Skill Tree
 		c = MAPID_NOVICE;
-	}
-	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE)
-	{// 1st Job Skill Tree
+	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) // 1st Job Skill Tree
 		c &= MAPID_BASEMASK;
-	}
-	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1) && (sd->class_&MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E)
-	{// 2nd Job Skill Tree
+	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1) && (sd->class_&MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E) // 2nd Job Skill Tree
 		c &= MAPID_UPPERMASK;
-	}
-	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1) + (sd->change_level_4th - 1))
-	{// 3rd Job Skill Tree
+	else if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1) + (sd->change_level_4th - 1)) // 3rd Job Skill Tree
 		c &= MAPID_THIRDMASK;
-	}
 
 	// Special Masks
 	if (sd->class_&JOBL_UPPER)
@@ -6692,23 +6681,23 @@ uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type) {
 }
 
 /**
-* Checks for Imperial Guard's passive skills.
-* Flag&1 = IG_SHIELD_MASTERY
-* Flag&2 = IG_SPEAR_SWORD_M
-*/
+ * Checks for Imperial Guard's passive skills.
+ * @param sd: Player data
+ * @param flag:
+ *		Flag&1 = IG_SHIELD_MASTERY
+ *		Flag&2 = IG_SPEAR_SWORD_M
+ */
 uint8 pc_checkskill_imperial_guard(struct map_session_data *sd, short flag)
 {
+	nullpo_retr(0, sd);
+
 	uint8 count = 0;
-	uint8 skill = 0;
 
-	if (sd == NULL)
-		return 0;
+	if (flag&1 && sd->status.shield > 0)
+		count += pc_checkskill(sd, IG_SHIELD_MASTERY);
 
-	if (flag&1 && sd->status.shield > 0 && (skill = pc_checkskill(sd, IG_SHIELD_MASTERY)) > 0)
-		count += skill;
-
-	if (flag&2 && (sd->status.weapon == W_1HSWORD || sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR) && (skill = pc_checkskill(sd, IG_SPEAR_SWORD_M)) > 0)
-		count += skill;
+	if (flag&2 && (sd->status.weapon == W_1HSWORD || sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR))
+		count += pc_checkskill(sd, IG_SPEAR_SWORD_M);
 
 	return count;
 }
@@ -8256,22 +8245,18 @@ int pc_statusup2(struct map_session_data* sd, int type, int val)
 /// raise the specified trait stat from (current value - val) to current value.
 int pc_need_trait_point(struct map_session_data* sd, int type, int val)
 {
-	int low, high, sp = 0, max = 0;
+	nullpo_retr(0, sd);
 
-	if (val == 0)
+	if (val == 0 || type < SP_POW || type > SP_CRT)
 		return 0;
 
-	if( type < SP_POW || type > SP_CRT ){
-		return 0;
-	}
-
-	low = pc_getstat(sd, type);
-	max = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW));
+	int low = pc_getstat(sd, type);
+	int max = pc_maxparameter(sd, (e_params)(PARAM_POW + type - SP_POW));
 
 	if (low >= max && val > 0)
 		return 0; // Official servers show '0' when max is reached
 
-	high = low + val;
+	int high = low + val, sp = 0;
 
 	if (val < 0)
 		SWAP(low, high);
@@ -8292,17 +8277,17 @@ int pc_need_trait_point(struct map_session_data* sd, int type, int val)
 */
 int pc_maxtraitparameterincrease(struct map_session_data* sd, int type)
 {
-	int base, final_val, trait_points, max_param;
-
 	nullpo_ret(sd);
 
 	if( type < SP_POW || type > SP_CRT ){
 		return 0;
 	}
 
-	base = final_val = pc_getstat(sd, type);
-	trait_points = sd->status.trait_point;
-	max_param = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW));
+	int base, final_val = pc_getstat(sd, type);
+	int trait_points = sd->status.trait_point;
+	int max_param = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW));
+
+	base = final_val;
 
 	while (final_val <= max_param && trait_points >= 0) {
 		trait_points -= 1;
@@ -8327,8 +8312,6 @@ int pc_maxtraitparameterincrease(struct map_session_data* sd, int type)
 */
 bool pc_traitstatusup(struct map_session_data* sd, int type, int increase)
 {
-	int max_increase = 0, current = 0, needed_points = 0, final_value = 0;
-
 	nullpo_ret(sd);
 
 	// check conditions
@@ -8338,8 +8321,9 @@ bool pc_traitstatusup(struct map_session_data* sd, int type, int increase)
 	}
 
 	// check limits
-	current = pc_getstat(sd, type);
-	max_increase = pc_maxtraitparameterincrease(sd, type);
+	int current = pc_getstat(sd, type);
+	int max_increase = pc_maxtraitparameterincrease(sd, type);
+
 	increase = cap_value(increase, 0, max_increase); // cap to the maximum status points available
 	if (increase <= 0 || current + increase > pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW))) {
 		clif_statusupack(sd, type, 0, 0);
@@ -8347,14 +8331,16 @@ bool pc_traitstatusup(struct map_session_data* sd, int type, int increase)
 	}
 
 	// check status points
-	needed_points = pc_need_trait_point(sd, type, increase);
+	int needed_points = pc_need_trait_point(sd, type, increase);
+
 	if (needed_points < 0 || needed_points > sd->status.trait_point) { // Sanity check
 		clif_statusupack(sd, type, 0, 0);
 		return false;
 	}
 
 	// set new values
-	final_value = pc_setstat(sd, type, current + increase);
+	int final_value = pc_setstat(sd, type, current + increase);
+
 	sd->status.trait_point -= needed_points;
 
 	status_calc_pc(sd, SCO_NONE);
@@ -8389,17 +8375,15 @@ bool pc_traitstatusup(struct map_session_data* sd, int type, int increase)
 */
 int pc_traitstatusup2(struct map_session_data* sd, int type, int val)
 {
-	int max, need;
 	nullpo_ret(sd);
 
-	if (type < SP_POW || type > SP_CRT)
-	{
+	if (type < SP_POW || type > SP_CRT) {
 		clif_statusupack(sd, type, 0, 0);
 		return 0;
 	}
 
-	need = pc_need_trait_point(sd, type, 1);
-	max = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW)); // set new value
+	int need = pc_need_trait_point(sd, type, 1);
+	int max = pc_maxparameter(sd, (enum e_params)(PARAM_POW + type - SP_POW)); // set new value
 
 	val = pc_setstat(sd, type, cap_value(pc_getstat(sd, type) + val, 0, max));
 
@@ -9693,10 +9677,9 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 			val = pc_maxbaselv(sd);
 		if (val > sd->status.base_level) {
 			int i = 0;
-			int stat=0;
-			short trait = 0;
-			for (i = 0; i < (int)(val - sd->status.base_level); i++)
-			{
+			uint32 stat = 0, trait = 0;
+
+			for (i = 0; i < (int)(val - sd->status.base_level); i++) {
 				stat += statpoint_db.pc_gets_status_point(sd->status.base_level + i);
 				trait += statpoint_db.pc_gets_trait_point(sd->status.base_level + i);
 			}
@@ -9800,8 +9783,7 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_MAXAP:
 		sd->battle_status.max_ap = cap_value(val, 1, battle_config.max_ap);
 
-		if (sd->battle_status.max_ap < sd->battle_status.ap)
-		{
+		if (sd->battle_status.max_ap < sd->battle_status.ap) {
 			sd->battle_status.ap = sd->battle_status.max_ap;
 			clif_updatestatus(sd, SP_AP);
 		}
@@ -10214,15 +10196,14 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	// Give or reduce trait status points
-	if ((b_class&JOBL_FOURTH) && !(sd->class_&JOBL_FOURTH)) {// Change to a 4th job.
+	if ((b_class & JOBL_FOURTH) && !(sd->class_ & JOBL_FOURTH)) {// Change to a 4th job.
 		sd->status.trait_point += battle_config.trait_points_job_change;
 		clif_updatestatus(sd, SP_TRAITPOINT);
-	}
-	else if (!(b_class&JOBL_FOURTH) && (sd->class_&JOBL_FOURTH)) {// Change to a non 4th job.
+	} else if (!(b_class & JOBL_FOURTH) && (sd->class_ & JOBL_FOURTH)) {// Change to a non 4th job.
 		if (sd->status.trait_point < battle_config.trait_points_job_change) {
 			// Player may have already used the trait statu points. Force a reset.
 			pc_resetstate(sd);
-		}else{
+		} else {
 			sd->status.trait_point -= battle_config.trait_points_job_change;
 			clif_updatestatus(sd, SP_TRAITPOINT);
 		}
