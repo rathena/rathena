@@ -1854,6 +1854,8 @@ Body:
     Type: Usable
     Buy: 5000
     Weight: 100
+    Flags:
+      BuyingStore: true
     Script: |
       if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Shadow_Cross) {
          sc_start SC_DPOISON,60000,0;
