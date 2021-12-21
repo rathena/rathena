@@ -31919,6 +31919,8 @@ Body:
     Type: Etc
     Buy: 300
     Weight: 2
+    Flags:
+      BuyingStore: true
   - Id: 7941
     AegisName: Halloween_Ticket
     Name: Halloween Ticket
@@ -33504,7 +33506,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33520,7 +33521,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33536,7 +33536,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33552,7 +33551,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33568,7 +33566,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33584,7 +33581,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33600,7 +33596,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33616,7 +33611,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33632,7 +33626,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33650,7 +33643,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33668,7 +33660,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33686,7 +33677,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33704,7 +33694,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33731,7 +33720,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33749,7 +33737,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33767,7 +33754,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33785,7 +33771,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33803,7 +33788,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33821,7 +33805,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33839,7 +33822,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33857,7 +33839,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33875,7 +33856,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33894,7 +33874,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33913,7 +33892,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33931,7 +33909,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33949,7 +33926,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33967,7 +33943,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -33985,7 +33960,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34003,7 +33977,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34021,7 +33994,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34039,7 +34011,6 @@ Body:
     Jobs:
       Alchemist: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34208,7 +34179,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34226,7 +34196,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34246,7 +34215,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34266,7 +34234,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34286,7 +34253,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34303,7 +34269,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34322,7 +34287,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34341,7 +34305,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34360,7 +34323,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -34379,7 +34341,6 @@ Body:
       Alchemist: true
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Locations:
@@ -56875,6 +56836,16 @@ Body:
     Name: Hawk Flute
     Type: Etc
     Buy: 20
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1000316
     AegisName: MD_Geffen_Coin
     Name: Geffen Arena Coin

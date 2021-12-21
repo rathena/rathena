@@ -315,13 +315,8 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 30
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
+    Flags:
+      BuyingStore: true
     Script: |
       sc_end SC_CURSE;
   - Id: 525
@@ -1859,13 +1854,6 @@ Body:
     Type: Usable
     Buy: 5000
     Weight: 100
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Shadow_Cross) {
          sc_start SC_DPOISON,60000,0;
@@ -2546,13 +2534,8 @@ Body:
     Type: Healing
     Buy: 200
     Weight: 1
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
+    Flags:
+      BuyingStore: true
     Script: |
       itemheal rand(5,25),0;
   - Id: 11514
@@ -8545,7 +8528,6 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -8563,7 +8545,6 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -8581,7 +8562,6 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -12499,7 +12479,6 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -12515,7 +12494,6 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -12531,7 +12509,6 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -12547,7 +12524,6 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -12563,7 +12539,6 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Flags:
@@ -45157,7 +45132,6 @@ Body:
     Buy: 2
     Weight: 10
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     Delay:
@@ -48411,7 +48385,6 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     EquipLevelMin: 100
@@ -50737,7 +50710,6 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Fourth: true
       All_Third: true
       Fourth: true
     EquipLevelMin: 100
@@ -50872,13 +50844,6 @@ Body:
     Name: POW Reduction Potion
     Type: Delayconsume
     Buy: 10
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       callfunc "F_CashReduceTraitStat",bPow,-1,100452;
   - Id: 100453
@@ -50886,13 +50851,6 @@ Body:
     Name: SPL Reduction Potion
     Type: Delayconsume
     Buy: 10
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       callfunc "F_CashReduceTraitStat",bSpl,-1,100453;
   - Id: 100454
@@ -50900,13 +50858,6 @@ Body:
     Name: STA Reduction Potion
     Type: Delayconsume
     Buy: 10
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       callfunc "F_CashReduceTraitStat",bSta,-1,100454;
   - Id: 100455
@@ -50914,13 +50865,6 @@ Body:
     Name: WIS Reduction Potion
     Type: Delayconsume
     Buy: 10
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       callfunc "F_CashReduceTraitStat",bWis,-1,100455;
   - Id: 100456
@@ -50928,13 +50872,6 @@ Body:
     Name: CON Reduction Potion
     Type: Delayconsume
     Buy: 10
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       callfunc "F_CashReduceTraitStat",bCon,-1,100456;
   - Id: 100457
@@ -50942,13 +50879,6 @@ Body:
     Name: CRT Reduction Potion
     Type: Delayconsume
     Buy: 10
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       callfunc "F_CashReduceTraitStat",bCrt,-1,100457;
   - Id: 100466
@@ -51037,13 +50967,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_DEEPBLIND;
   - Id: 100517
@@ -51052,13 +50975,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_DEEPSILENCE;
   - Id: 100518
@@ -51067,13 +50983,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_LASSITUDE;
   - Id: 100519
@@ -51082,13 +50991,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_CONFLAGRATION;
   - Id: 100520
@@ -51097,13 +50999,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_MISFORTUNE;
   - Id: 100521
@@ -51112,13 +51007,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_DEADLYPOISON;
   - Id: 100522
@@ -51127,13 +51015,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_DEPRESSION;
   - Id: 100523
@@ -51142,13 +51023,6 @@ Body:
     Type: Healing
     Buy: 20
     Weight: 50
-    Classes:
-      Fourth: true
-      All_Third: true
-      Normal: true
-      Upper: true
-      Baby: true
-      All_Baby: true
     Script: |
       sc_end SC_HANDICAPSTATE_HOLYFLAME;
   - Id: 100572
