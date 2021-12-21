@@ -8330,6 +8330,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case MT_A_MACHINE:
 		if (flag & 1) {
 			skill_area_temp[1] = 0;
+
+			if (sd && pc_issit(sd)) { // Force player to stand before attacking
+				pc_setstand(sd, true);
+				skill_sit(sd, false);
+			}
+
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_LEVEL | SD_SPLASH, skill_castend_damage_id);
 		} else {
 			if (skill_id == MT_A_MACHINE && dstsd) {
