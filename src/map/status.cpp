@@ -5628,13 +5628,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->indexed_bonus.subele[ELE_DARK] += skill;
 	}
 	if ((skill = pc_checkskill(sd, DK_TWOHANDDEF)) > 0 && (sd->status.weapon == W_2HSWORD || sd->status.weapon == W_2HSPEAR || sd->status.weapon == W_2HAXE)) {
-		uint8 small_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		uint8 medium_def[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		uint8 large_def[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
+		uint8 defense_bonus[SZ_MAX][10] = {
+			{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, // SZ_SMALL
+			{ 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 }, // SZ_MEDIUM
+			{ 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 }, // SZ_BIG
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } // SZ_ALL
+		};
 
-		sd->indexed_bonus.weapon_subsize[SZ_SMALL] += small_def[skill - 1];
-		sd->indexed_bonus.weapon_subsize[SZ_MEDIUM] += medium_def[skill - 1];
-		sd->indexed_bonus.weapon_subsize[SZ_BIG] += large_def[skill - 1];
+		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
+			sd->indexed_bonus.weapon_subsize[size] += defense_bonus[size][skill - 1];
+		}
 	}
 	if ((skill = pc_checkskill(sd, IQ_WILL_OF_FAITH)) > 0 && sd->status.weapon == W_KNUCKLE) {
 		uint8 race_atk[10] = { 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
@@ -5648,16 +5651,17 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->indexed_bonus.subrace[RC_DEMON] += race_def[skill - 1];
 	}
 	if ((skill = pc_checkskill(sd, CD_MACE_BOOK_M)) > 0 && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE || sd->status.weapon == W_BOOK)) {
-		uint8 small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		uint8 medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		uint8 large_atk[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
+		uint8 attack_bonus[SZ_MAX][10] = {
+			{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, // SZ_SMALL
+			{ 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 }, // SZ_MEDIUM
+			{ 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 }, // SZ_BIG
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } // SZ_ALL
+		};
 
-		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
-		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
-		sd->right_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
-		sd->left_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
-		sd->right_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
-		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
+		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
+			sd->right_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+		}
 	}
 	if ((skill = pc_checkskill(sd, CD_FIDUS_ANIMUS)) > 0) {
 		uint8 holy_matk[10] = { 1, 3, 4, 6, 7, 9, 10, 12, 13, 15 };
@@ -5665,34 +5669,41 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->indexed_bonus.magic_atk_ele[ELE_HOLY] += holy_matk[skill - 1];
 	}
 	if ((skill = pc_checkskill(sd, MT_TWOAXEDEF)) > 0 && sd->status.weapon == W_2HAXE) {
-		uint8 small_def[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		uint8 medium_def[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		uint8 large_def[10] = { 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 };
+		uint8 defense_bonus[SZ_MAX][10] = {
+			{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, // SZ_SMALL
+			{ 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 }, // SZ_MEDIUM
+			{ 3, 5, 7, 9, 10, 12, 13, 15, 16, 18 }, // SZ_BIG
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } // SZ_ALL
+		};
 
-		sd->indexed_bonus.weapon_subsize[SZ_SMALL] += small_def[skill - 1];
-		sd->indexed_bonus.weapon_subsize[SZ_MEDIUM] += medium_def[skill - 1];
-		sd->indexed_bonus.weapon_subsize[SZ_BIG] += large_def[skill - 1];
+		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
+				sd->indexed_bonus.weapon_subsize[size] += defense_bonus[size][skill - 1];
+		}
 	}
 	if ((skill = pc_checkskill(sd, ABC_DAGGER_AND_BOW_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_BOW || sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA)) {
-		uint8 small_atk[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-		uint8 medium_atk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		uint8 large_atk[10] = { 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 };
+		uint8 attack_bonus[SZ_MAX][10] = {
+			{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, // SZ_SMALL
+			{ 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 }, // SZ_MEDIUM
+			{ 2, 4, 6, 8, 10, 12, 14, 16, 18, 20 }, // SZ_BIG
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } // SZ_ALL
+		};
 
-		sd->right_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
-		sd->left_weapon.addsize[SZ_SMALL] += small_atk[skill - 1];
-		sd->right_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
-		sd->left_weapon.addsize[SZ_MEDIUM] += medium_atk[skill - 1];
-		sd->right_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
-		sd->left_weapon.addsize[SZ_BIG] += large_atk[skill - 1];
+		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
+			sd->right_weapon.addsize[size] += attack_bonus[size][skill - 1];
+			sd->left_weapon.addsize[size] += attack_bonus[size][skill - 1];
+		}
 	}
 	if ((skill = pc_checkskill(sd, ABC_MAGIC_SWORD_M)) > 0 && (sd->status.weapon == W_DAGGER || sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DOUBLE_DD || sd->status.weapon == W_DOUBLE_SS || sd->status.weapon == W_DOUBLE_DS || sd->status.weapon == W_DOUBLE_DA || sd->status.weapon == W_DOUBLE_SA)) {
-		uint8 small_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		uint8 medium_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
-		uint8 large_matk[10] = { 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 };
+		uint8 attack_bonus[SZ_MAX][10] = {
+			{ 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 }, // SZ_SMALL
+			{ 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 }, // SZ_MEDIUM
+			{ 2, 3, 5, 6, 8, 9, 11, 12, 14, 15 }, // SZ_BIG
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } // SZ_ALL
+		};
 
-		sd->indexed_bonus.magic_addsize[SZ_SMALL] += small_matk[skill - 1];
-		sd->indexed_bonus.magic_addsize[SZ_MEDIUM] += medium_matk[skill - 1];
-		sd->indexed_bonus.magic_addsize[SZ_BIG] += large_matk[skill - 1];
+		for( uint8 size = SZ_SMALL; size < SZ_MAX; size++ ){
+			sd->indexed_bonus.magic_addsize[size] += attack_bonus[size][skill - 1];
+		}
 	}
 	if ((skill = pc_checkskill(sd, EM_MAGIC_BOOK_M)) > 0 && sd->status.weapon == W_BOOK) {
 		sd->indexed_bonus.magic_atk_ele[ELE_WATER] += skill;
