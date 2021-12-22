@@ -1818,13 +1818,19 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			case DK_SERVANT_W_SIGN: {
 					uint8 i = 0, count = min(skill_lv, MAX_SERVANT_SIGN);
 
-					ARR_FIND(0, count, i, sd->servant_sign[i] == target_id);
-					if (i == count) {
-						ARR_FIND(0, count, i, sd->servant_sign[i] == 0);
-						if (i == count) { // No free slots, skill Fail
-							clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
-							return 0;
-						}
+					ARR_FIND( 0, count, i, sd->servant_sign[i] == target_id );
+
+					// Already targetted
+					if( i < count ){
+						break;
+					}
+
+					ARR_FIND( 0, count, i, sd->servant_sign[i] == 0 );
+
+					// No free slots
+					if( i == count ){
+						clif_skill_fail( sd, skill_id, USESKILL_FAIL_LEVEL, 0 );
+						return 0;
 					}
 				}
 				break;
@@ -1958,14 +1964,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				casttime = -1;
 			break;
 		case DK_SERVANT_W_PHANTOM: { // Stops servants from being consumed on unmarked targets.
-			status_change *tsc = status_get_sc(target);
+				status_change *tsc = status_get_sc(target);
 
-			// Only allow to attack if the enemy has a sign mark given by the caster.
-			if( tsc == nullptr || tsc->data[SC_SERVANT_SIGN] == nullptr || tsc->data[SC_SERVANT_SIGN]->val1 != src->id ){
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
-				return 0;
+				// Only allow to attack if the enemy has a sign mark given by the caster.
+				if( tsc == nullptr || tsc->data[SC_SERVANT_SIGN] == nullptr || tsc->data[SC_SERVANT_SIGN]->val1 != src->id ){
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+					return 0;
+				}
 			}
-		}
 			break;
 		case EL_WIND_SLASH:
 		case EL_HURRICANE:
