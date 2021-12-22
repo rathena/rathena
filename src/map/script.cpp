@@ -25458,33 +25458,32 @@ BUILDIN_FUNC(refineui){
 BUILDIN_FUNC(getenchantgrade){
 	struct map_session_data *sd;
 
-	if( !script_rid2sd( sd ) ){
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	int i, num;
-
-	if (script_hasdata(st, 2))
-		num = script_getnum(st, 2);
-	else
-		num = EQI_COMPOUND_ON;
-
-	if (num == EQI_COMPOUND_ON)
-		i = current_equip_item_index;
-	else if (equip_index_check(num))
-		i = pc_checkequip(sd, equip_bitmask[num]);
-	else {
-		ShowError( "buildin_getenchantgrade: Unknown equip index '%d'\n", num );
+	if (!script_charid2sd(3, sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	item* itm = &sd->inventory.u.items_inventory[i];
+	int index, position;
 
-	if (i >= 0 && i < MAX_INVENTORY && itm != 0)
-		script_pushint(st, itm->enchantgrade);
+	if (script_hasdata(st, 2))
+		position = script_getnum(st, 2);
 	else
+		position = EQI_COMPOUND_ON;
+
+	if (position == EQI_COMPOUND_ON)
+		index = current_equip_item_index;
+	else if (equip_index_check(position))
+		index = pc_checkequip(sd, equip_bitmask[position]);
+	else {
+		ShowError( "buildin_getenchantgrade: Unknown equip index '%d'\n", position );
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (index < 0 || index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid == 0)
 		script_pushint(st, -1);
+	else
+		script_pushint(st, sd->inventory.u.items_inventory[index].enchantgrade);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -26212,7 +26211,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem2", "viiiiiii?"),
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem3", "viiiiiiirrr?"),
 
-	BUILDIN_DEF(getenchantgrade, "?"),
+	BUILDIN_DEF(getenchantgrade, "??"),
 
 	BUILDIN_DEF(mob_setidleevent, "is"),
 
