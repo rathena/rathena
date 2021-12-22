@@ -3653,10 +3653,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->def2 = status->mdef2 =
 		status->cri = status->flee2 =
 		status->patk = status->smatk =
-		status->hplus = status->crate = 0;
-
-	// Only players and monsters have RES/MRES
-	if (bl->type != BL_PC && bl->type != BL_MOB)
+		status->hplus = status->crate =
 		status->res = status->mres = 0;
 
 #ifdef RENEWAL // Renewal formulas
@@ -3684,14 +3681,12 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		// Hit
 		stat = status->hit;
 		stat += level + status->dex + (bl->type == BL_PC ? status->luk / 3 + 175 : 150); //base level + ( every 1 dex = +1 hit ) + (every 3 luk = +1 hit) + 175
-		if (bl->type == BL_PC)
-			stat += 2 * status->con;
+		stat += 2 * status->con;
 		status->hit = cap_value(stat, 1, SHRT_MAX);
 		// Flee
 		stat = status->flee;
 		stat += level + status->agi + (bl->type == BL_MER ? 0 : bl->type == BL_PC ? status->luk / 5 : 0) + 100; //base level + ( every 1 agi = +1 flee ) + (every 5 luk = +1 flee) + 100
-		if (bl->type == BL_PC)
-			stat += 2 * status->con;
+		stat += 2 * status->con;
 		status->flee = cap_value(stat, 1, SHRT_MAX);
 		// Def2
 		if (bl->type == BL_MER)
@@ -3709,32 +3704,30 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 			stat += (int)(bl->type == BL_PC ? (status->int_ + ((float)level / 4) + ((float)(status->dex + status->vit) / 5)) : ((float)(status->int_ + level) / 4)); //(every 4 base level = +1 mdef) + (every 1 int = +1 mdef) + (every 5 dex = +1 mdef) + (every 5 vit = +1 mdef)
 		}
 		status->mdef2 = cap_value(stat, 0, SHRT_MAX);
-		if (bl->type == BL_PC) {
-			// PAtk
-			stat = status->patk;
-			stat += status->pow / 3 + status->con / 5;
-			status->patk = cap_value(stat, 0, SHRT_MAX);
-			// SMatk
-			stat = status->smatk;
-			stat += status->spl / 3 + status->con / 5;
-			status->smatk = cap_value(stat, 0, SHRT_MAX);
-			// Res
-			stat = status->res;
-			stat += status->sta + status->sta / 3 * 5;
-			status->res = cap_value(stat, 0, SHRT_MAX);
-			// Mres
-			stat = status->mres;
-			stat += status->wis + status->wis / 3 * 5;
-			status->mres = cap_value(stat, 0, SHRT_MAX);
-			// HPlus
-			stat = status->hplus;
-			stat += status->crt;
-			status->hplus = cap_value(stat, 0, SHRT_MAX);
-			// CRate
-			stat = status->crate;
-			stat += status->crt / 3;
-			status->crate = cap_value(stat, 0, SHRT_MAX);
-		}
+		// PAtk
+		stat = status->patk;
+		stat += status->pow / 3 + status->con / 5;
+		status->patk = cap_value(stat, 0, SHRT_MAX);
+		// SMatk
+		stat = status->smatk;
+		stat += status->spl / 3 + status->con / 5;
+		status->smatk = cap_value(stat, 0, SHRT_MAX);
+		// Res
+		stat = status->res;
+		stat += status->sta + status->sta / 3 * 5;
+		status->res = cap_value(stat, 0, SHRT_MAX);
+		// Mres
+		stat = status->mres;
+		stat += status->wis + status->wis / 3 * 5;
+		status->mres = cap_value(stat, 0, SHRT_MAX);
+		// HPlus
+		stat = status->hplus;
+		stat += status->crt;
+		status->hplus = cap_value(stat, 0, SHRT_MAX);
+		// CRate
+		stat = status->crate;
+		stat += status->crt / 3;
+		status->crate = cap_value(stat, 0, SHRT_MAX);
 	}
 
 	// ATK
@@ -4016,76 +4009,73 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 				case MT_SUMMON_ABR_DUAL_CANNON:
 				case MT_SUMMON_ABR_MOTHER_NET:
 				case MT_SUMMON_ABR_INFINITY: {
-					map_session_data *msd = BL_CAST(BL_PC, mbl);
-					status_data *mstatus = status_get_status_data(mbl);
+						map_session_data *msd = BL_CAST(BL_PC, mbl);
+						status_data *mstatus = status_get_status_data(mbl);
 
-					if (msd == nullptr || mstatus == nullptr)
-						break;
+						if (msd == nullptr || mstatus == nullptr)
+							break;
 
-					uint8 abr_mastery = pc_checkskill(msd, MT_ABR_M);
+						uint8 abr_mastery = pc_checkskill(msd, MT_ABR_M);
 
-					// Custom formulas for ABR's.
-					// Its unknown how the summoner's stats affects the ABR's stats.
-					// I decided to do something similar to elementals for now until I know.
-					// Also added hit increase from ABR-Mastery for balance reasons. [Rytech]
-					status->max_hp = (5000 + 2000 * abr_mastery) * mstatus->vit / 100;
-					status->rhw.atk = (2 * mstatus->batk + 500 + 200 * abr_mastery) * 70 / 100;
-					status->rhw.atk2 = 2 * mstatus->batk + 500 + 200 * abr_mastery;
-					status->def = mstatus->def + 20 * abr_mastery;
-					status->mdef = mstatus->mdef + 4 * abr_mastery;
-					status->hit = mstatus->hit + 5 * abr_mastery / 2;
-					status->flee = mstatus->flee + 10 * abr_mastery;
-					status->speed = mstatus->speed;
+						// Custom formulas for ABR's.
+						// Its unknown how the summoner's stats affects the ABR's stats.
+						// I decided to do something similar to elementals for now until I know.
+						// Also added hit increase from ABR-Mastery for balance reasons. [Rytech]
+						status->max_hp = (5000 + 2000 * abr_mastery) * mstatus->vit / 100;
+						status->rhw.atk = (2 * mstatus->batk + 500 + 200 * abr_mastery) * 70 / 100;
+						status->rhw.atk2 = 2 * mstatus->batk + 500 + 200 * abr_mastery;
+						status->def = mstatus->def + 20 * abr_mastery;
+						status->mdef = mstatus->mdef + 4 * abr_mastery;
+						status->hit = mstatus->hit + 5 * abr_mastery / 2;
+						status->flee = mstatus->flee + 10 * abr_mastery;
+						status->speed = mstatus->speed;
 
-					// The Infinity ABR appears to have a much higher attack then other
-					// ABR's and im guessing has a much higher MaxHP due to it being a AP
-					// costing summon. [Rytech]
-					if (ud->skill_id == MT_SUMMON_ABR_INFINITY) {
-						status->max_hp += 20000;
-						status->rhw.atk += 1400; // 70% of 2000
-						status->rhw.atk2 += 2000;
+						// The Infinity ABR appears to have a much higher attack then other
+						// ABR's and im guessing has a much higher MaxHP due to it being a AP
+						// costing summon. [Rytech]
+						if (ud->skill_id == MT_SUMMON_ABR_INFINITY) {
+							status->max_hp += 20000;
+							status->rhw.atk += 1400; // 70% of 2000
+							status->rhw.atk2 += 2000;
+						}
 					}
-
 					break;
-				}
 				case BO_WOODENWARRIOR:
 				case BO_WOODEN_FAIRY:
 				case BO_CREEPER:
-				case BO_HELLTREE:
-				{
-					map_session_data *msd = BL_CAST(BL_PC, mbl);
-					status_data *mstatus = status_get_status_data(mbl);
+				case BO_HELLTREE: {
+						map_session_data *msd = BL_CAST(BL_PC, mbl);
+						status_data *mstatus = status_get_status_data(mbl);
 
-					if (msd == nullptr || mstatus == nullptr)
-						break;
+						if (msd == nullptr || mstatus == nullptr)
+							break;
 
-					uint8 bionic_mastery = pc_checkskill(msd, BO_BIONICS_M);
+						uint8 bionic_mastery = pc_checkskill(msd, BO_BIONICS_M);
 
-					// Custom formulas for bionic's.
-					// Its unknown how the summoner's stats affects the bionic's stats.
-					// I decided to do something similar to elementals for now until I know.
-					// Also added hit increase from Bionic-Mastery for balance reasons. [Rytech]
-					status->max_hp = (5000 + 2000 * bionic_mastery) * mstatus->vit / 100;
-					//status->max_sp = (50 + 20 * bionic_mastery) * mstatus->int_ / 100;// Wait what??? Bionic Mastery increases MaxSP? They have SP???
-					status->rhw.atk = (2 * mstatus->batk + 200 * bionic_mastery) * 70 / 100;
-					status->rhw.atk2 = 2 * mstatus->batk + 200 * bionic_mastery;
-					status->def = mstatus->def + 20 * bionic_mastery;
-					status->mdef = mstatus->mdef + 4 * bionic_mastery;
-					status->hit = mstatus->hit + 5 * bionic_mastery / 2;
-					status->flee = mstatus->flee + 10 * bionic_mastery;
-					status->speed = mstatus->speed;
+						// Custom formulas for bionic's.
+						// Its unknown how the summoner's stats affects the bionic's stats.
+						// I decided to do something similar to elementals for now until I know.
+						// Also added hit increase from Bionic-Mastery for balance reasons. [Rytech]
+						status->max_hp = (5000 + 2000 * bionic_mastery) * mstatus->vit / 100;
+						//status->max_sp = (50 + 20 * bionic_mastery) * mstatus->int_ / 100;// Wait what??? Bionic Mastery increases MaxSP? They have SP???
+						status->rhw.atk = (2 * mstatus->batk + 200 * bionic_mastery) * 70 / 100;
+						status->rhw.atk2 = 2 * mstatus->batk + 200 * bionic_mastery;
+						status->def = mstatus->def + 20 * bionic_mastery;
+						status->mdef = mstatus->mdef + 4 * bionic_mastery;
+						status->hit = mstatus->hit + 5 * bionic_mastery / 2;
+						status->flee = mstatus->flee + 10 * bionic_mastery;
+						status->speed = mstatus->speed;
 
-					// The Hell Tree bionic appears to have a much higher attack then other
-					// bionic's and im guessing has a much higher MaxHP due to it being a AP
-					// costing summon. [Rytech]
-					if (ud->skill_id == BO_HELLTREE) {
-						status->max_hp += 20000;
-						status->rhw.atk += 1400; // 70% of 2000
-						status->rhw.atk2 += 2000;
+						// The Hell Tree bionic appears to have a much higher attack then other
+						// bionic's and im guessing has a much higher MaxHP due to it being a AP
+						// costing summon. [Rytech]
+						if (ud->skill_id == BO_HELLTREE) {
+							status->max_hp += 20000;
+							status->rhw.atk += 1400; // 70% of 2000
+							status->rhw.atk2 += 2000;
+						}
 					}
-
 					break;
-				}
 			}
 			status->hp = status->max_hp;
 		}
@@ -15095,14 +15085,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 
-		case SC_SERVANT_SIGN: {
-			map_session_data *tsd = map_id2sd(sce->val1);
-
-			if( tsd != nullptr )
-				tsd->servant_sign[sce->val2] = 0;
-		}
-		break;
-
 		case SC_BLADESTOP:
 			if(sce->val4) {
 				int tid2 = sce->val4; //stop the status for the other guy of bladestop as well
@@ -15159,18 +15141,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SPLASHER:
 		case SC_ROSEBLOSSOM:
 			{
-				block_list *src = map_id2bl(sce->val3);
+				struct block_list *src=map_id2bl(sce->val3);
 
 				if(src && tid != INVALID_TIMER)
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
-			}
-			break;
-		case SC_SOUNDBLEND:
-			{
-				block_list *src = map_id2bl(sce->val2);
-
-				if (src && tid != INVALID_TIMER)
-					skill_castend_damage_id(src, bl, TR_SOUNDBLEND, sce->val1, gettick(), SD_LEVEL|SD_ANIMATION);
 			}
 			break;
 		case SC_CLOSECONFINE2:{
@@ -15516,6 +15490,20 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_HOMUN_TIME:
 			if (sd && hom_is_active(sd->hd))
 				hom_vaporize(sd, HOM_ST_REST);
+			break;
+		case SC_SERVANT_SIGN: {
+				map_session_data *tsd = map_id2sd(sce->val1);
+
+				if( tsd != nullptr )
+					tsd->servant_sign[sce->val2] = 0;
+			}
+			break;
+		case SC_SOUNDBLEND: {
+				block_list *src = map_id2bl(sce->val2);
+
+				if (src && tid != INVALID_TIMER)
+					skill_castend_damage_id(src, bl, TR_SOUNDBLEND, sce->val1, gettick(), SD_LEVEL|SD_ANIMATION);
+			}
 			break;
 		case SC_SERVANTWEAPON:
 			if (sd)
@@ -16227,31 +16215,6 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
-	case SC_MEDIALE:
-		if (--(sce->val4) >= 0) {
-			clif_specialeffect(bl, 1808, AREA);
-			skill_castend_nodamage_id(bl, bl, CD_MEDIALE_VOTUM, sce->val1, tick, 1);
-			sc_timer_next(2000 + tick);
-			return 0;
-		}
-		break;
-
-	case SC_DANCING_KNIFE:
-		if (--(sce->val4) >= 0) {
-			skill_castend_nodamage_id(bl, bl, SHC_DANCING_KNIFE, sce->val1, tick, 1);
-			sc_timer_next(300 + tick);
-			return 0;
-		}
-		break;
-
-	case SC_A_MACHINE:
-		if (--(sce->val4) >= 0) {
-			skill_castend_nodamage_id(bl, bl, MT_A_MACHINE, sce->val1, tick, 1);
-			sc_timer_next(1000 + tick);
-			return 0;
-		}
-		break;
-
 	case SC_SPHERE_1:
 	case SC_SPHERE_2:
 	case SC_SPHERE_3:
@@ -16763,24 +16726,6 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
-	case SC_SERVANTWEAPON:
-		if (sce->val4 >= 0) {
-			if (sd && sd->servantball < MAX_SERVANTBALL)
-				pc_addservantball(sd, MAX_SERVANTBALL, false);
-			interval = max(500, skill_get_time2(DK_SERVANTWEAPON, sce->val1));
-			map_freeblock_lock();
-			dounlock = true;
-		}
-		break;
-	case SC_ABYSSFORCEWEAPON:
-		if (sce->val4 >= 0) {
-			if (sd && sd->abyssball < MAX_ABYSSBALL)
-				pc_addabyssball(sd, MAX_ABYSSBALL, 0);
-			interval = max(500, skill_get_time2(ABC_FROM_THE_ABYSS, sce->val1));
-			map_freeblock_lock();
-			dounlock = true;
-		}
-		break;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
 			status_heal(bl, 1000, 350, 2);
@@ -16801,6 +16746,48 @@ TIMER_FUNC(status_change_timer){
 			}
 			map_freeblock_unlock();
 			return 0;
+		}
+		break;
+	case SC_MEDIALE:
+		if (--(sce->val4) >= 0) {
+			clif_specialeffect(bl, 1808, AREA);
+			skill_castend_nodamage_id(bl, bl, CD_MEDIALE_VOTUM, sce->val1, tick, 1);
+			sc_timer_next(2000 + tick);
+			return 0;
+		}
+		break;
+
+	case SC_DANCING_KNIFE:
+		if (--(sce->val4) >= 0) {
+			skill_castend_nodamage_id(bl, bl, SHC_DANCING_KNIFE, sce->val1, tick, 1);
+			sc_timer_next(300 + tick);
+			return 0;
+		}
+		break;
+
+	case SC_A_MACHINE:
+		if (--(sce->val4) >= 0) {
+			skill_castend_nodamage_id(bl, bl, MT_A_MACHINE, sce->val1, tick, 1);
+			sc_timer_next(1000 + tick);
+			return 0;
+		}
+		break;
+	case SC_SERVANTWEAPON:
+		if (sce->val4 >= 0) {
+			if (sd && sd->servantball < MAX_SERVANTBALL)
+				pc_addservantball(sd, MAX_SERVANTBALL, false);
+			interval = max(500, skill_get_time2(DK_SERVANTWEAPON, sce->val1));
+			map_freeblock_lock();
+			dounlock = true;
+		}
+		break;
+	case SC_ABYSSFORCEWEAPON:
+		if (sce->val4 >= 0) {
+			if (sd && sd->abyssball < MAX_ABYSSBALL)
+				pc_addabyssball(sd, MAX_ABYSSBALL, 0);
+			interval = max(500, skill_get_time2(ABC_FROM_THE_ABYSS, sce->val1));
+			map_freeblock_lock();
+			dounlock = true;
 		}
 		break;
 	}
