@@ -9588,12 +9588,19 @@ BUILDIN_FUNC(statusup2)
 **/
 BUILDIN_FUNC(traitstatusup)
 {
-	TBL_PC *sd;
+	struct map_session_data *sd;
 
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	pc_traitstatusup(sd, script_getnum(st, 2), 1);
+	int type = script_getnum( st, 2 );
+
+	if( type < SP_POW || type > SP_CRT ){
+		ShowError( "building_traitstatusup: Unknown trait type %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pc_traitstatusup( sd, type, 1 );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -9603,12 +9610,19 @@ BUILDIN_FUNC(traitstatusup)
 **/
 BUILDIN_FUNC(traitstatusup2)
 {
-	TBL_PC *sd;
+	struct map_session_data *sd;
 
 	if (!script_charid2sd(4, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	pc_traitstatusup2(sd, script_getnum(st, 2), script_getnum(st, 3));
+	int type = script_getnum( st, 2 );
+
+	if( type < SP_POW || type > SP_CRT ){
+		ShowError( "building_traitstatusup2: Unknown trait type %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pc_traitstatusup2( sd, type, script_getnum( st, 3 ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23909,7 +23923,15 @@ BUILDIN_FUNC(needed_trait_point) {
 	if (!script_charid2sd(4, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	script_pushint(st, pc_need_trait_point(sd, script_getnum(st, 2), script_getnum(st, 3)));
+	int type = script_getnum( st, 2 );
+
+	if( type < SP_POW || type > SP_CRT ){
+		ShowError( "buildin_needed_trait_point: Unknown trait type %d\n", type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint( st, pc_need_trait_point( sd, type, script_getnum( st, 3 ) ) );
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
