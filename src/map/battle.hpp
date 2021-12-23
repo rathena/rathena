@@ -703,7 +703,7 @@ struct Battle_Config
 	int loose_ap_on_death;
 	int loose_ap_on_map;
 	int keep_ap_on_logout;
-	int a_machine_level_difference;
+	int attack_machine_level_difference;
 
 #include "../custom/battle_config_struct.inc"
 };

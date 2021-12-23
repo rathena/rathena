@@ -10056,17 +10056,17 @@ static const struct _battle_data {
 	{ "rndopt_drop_pillar",                 &battle_config.rndopt_drop_pillar,              1,      0,      1,              },
 
 	// 4th Job Stuff
-	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1, },
-	{ "trait_points_job_change",            &battle_config.trait_points_job_change,         7,      1,      1000, },
-	{ "max_trait_parameter",                &battle_config.max_trait_parameter,             100,    10,     SHRT_MAX, },
-	{ "max_res_mres_reduction",             &battle_config.max_res_mres_reduction,          625,    1,      SHRT_MAX, },
-	{ "max_ap",                             &battle_config.max_ap,                          200,    100,    1000000000, },
-	{ "ap_rate",                            &battle_config.ap_rate,                         100,    1,      INT_MAX, },
-	{ "restart_ap_rate",                    &battle_config.restart_ap_rate,                 0,      0,      100, },
-	{ "loose_ap_on_death",                  &battle_config.loose_ap_on_death,               1,      0,      1, },
-	{ "loose_ap_on_map",                    &battle_config.loose_ap_on_map,                 1,      0,      1, },
-	{ "keep_ap_on_logout",                  &battle_config.keep_ap_on_logout,               1,      0,      1, },
-	{ "a_machine_level_difference",         &battle_config.a_machine_level_difference,      15,     0,      INT_MAX, },
+	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1,              },
+	{ "trait_points_job_change",            &battle_config.trait_points_job_change,         7,      1,      1000,           },
+	{ "max_trait_parameter",                &battle_config.max_trait_parameter,             100,    10,     SHRT_MAX,       },
+	{ "max_res_mres_reduction",             &battle_config.max_res_mres_reduction,          625,    1,      SHRT_MAX,       },
+	{ "max_ap",                             &battle_config.max_ap,                          200,    100,    1000000000,     },
+	{ "ap_rate",                            &battle_config.ap_rate,                         100,    1,      INT_MAX,        },
+	{ "restart_ap_rate",                    &battle_config.restart_ap_rate,                 0,      0,      100,            },
+	{ "loose_ap_on_death",                  &battle_config.loose_ap_on_death,               1,      0,      1,              },
+	{ "loose_ap_on_map",                    &battle_config.loose_ap_on_map,                 1,      0,      1,              },
+	{ "keep_ap_on_logout",                  &battle_config.keep_ap_on_logout,               1,      0,      1,              },
+	{ "attack_machine_level_difference",    &battle_config.attack_machine_level_difference, 15,     0,      INT_MAX,        },
 
 #include "../custom/battle_config_init.inc"
 };

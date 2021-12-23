@@ -8339,12 +8339,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_LEVEL | SD_SPLASH, skill_castend_damage_id);
 		} else {
 			if (skill_id == MT_A_MACHINE && dstsd) {
-				int lv;
+				int lv = abs( status_get_lv( src ) - status_get_lv( bl ) );
 
-				if ((lv = status_get_lv(src) - status_get_lv(bl)) < 0)
-					lv = -lv;
-
-				if (lv > battle_config.a_machine_level_difference) {
+				if (lv > battle_config.attack_machine_level_difference) {
 					if (sd)
 						clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 					map_freeblock_unlock();
