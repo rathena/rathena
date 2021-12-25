@@ -8937,52 +8937,58 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			if (sd)
 				sd->state.autocast = 0;
 		}
-		// It has a success chance of triggering even tho the description says nothing about it.
-		// TODO: Need to find out what the official success chance is. [Rytech]
-		if (sc && sc->data[SC_SERVANTWEAPON] && sd->servantball > 0 && rnd() % 100 < 20) {
-			uint16 skill_id = DK_SERVANTWEAPON_ATK;
-			uint16 skill_lv = sc->data[SC_SERVANTWEAPON]->val1;
 
-			sd->state.autocast = 1;
-			pc_delservantball(sd, 1, false);
-			skill_castend_damage_id(src, target, skill_id, skill_lv, tick, flag);
-			battle_autocast_aftercast(src, skill_id, skill_lv, tick);
-			sd->state.autocast = 0;
-		}
-		// Whats the official success chance? Is SP consumed for every autocast? [Rytech]
-		if (sc && sc->data[SC_DUPLELIGHT] && pc_checkskill(sd, CD_PETITIO) > 0 && rnd() % 100 < 20) {
-			uint16 skill_id = CD_PETITIO;
-			uint16 skill_lv = pc_checkskill(sd, CD_PETITIO);
+		if( sc ){
+			// It has a success chance of triggering even tho the description says nothing about it.
+			// TODO: Need to find out what the official success chance is. [Rytech]
+			if( sc->data[SC_SERVANTWEAPON] && sd->servantball > 0 && rnd() % 100 < 20 ){
+				uint16 skill_id = DK_SERVANTWEAPON_ATK;
+				uint16 skill_lv = sc->data[SC_SERVANTWEAPON]->val1;
 
-			sd->state.autocast = 1;
-			skill_castend_damage_id(src, target, skill_id, skill_lv, tick, flag);
-			battle_autocast_aftercast(src, skill_id, skill_lv, tick);
-			sd->state.autocast = 0;
-		}
-		// It has a success chance of triggering even tho the description says nothing about it.
-		// Need to find out what the official success chance is. [Rytech]
-		if (sc && sc->data[SC_ABYSSFORCEWEAPON] && sd->abyssball > 0 && rnd() % 100 < 20) {
-			uint16 skill_id = ABC_FROM_THE_ABYSS_ATK;
-			uint16 skill_lv = sc->data[SC_ABYSSFORCEWEAPON]->val1;
+				sd->state.autocast = 1;
+				pc_delservantball( sd, 1, false );
+				skill_castend_damage_id( src, target, skill_id, skill_lv, tick, flag );
+				battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+				sd->state.autocast = 0;
+			}
 
-			sd->state.autocast = 1;
-			pc_delabyssball(sd, 1, 0);
-			skill_castend_damage_id(src, target, skill_id, skill_lv, tick, flag);
-			battle_autocast_aftercast(src, skill_id, skill_lv, tick);
-			sd->state.autocast = 0;
-		}
-		// It has a success chance of triggering even tho the description says nothing about it.
-		// Need to find out what the official success chance is. [Rytech]
-		if (sc && sc->data[SC_ABYSSFORCEWEAPON] && rnd() % 100 < 20) {
-			uint16 skill_id = ABC_ABYSS_SQUARE;
-			uint16 skill_lv = pc_checkskill(sd, ABC_ABYSS_SQUARE);
+			// TODO: Whats the official success chance? Is SP consumed for every autocast? [Rytech]
+			if( sc->data[SC_DUPLELIGHT] && pc_checkskill(sd, CD_PETITIO) > 0 && rnd() % 100 < 20 ){
+				uint16 skill_id = CD_PETITIO;
+				uint16 skill_lv = pc_checkskill( sd, CD_PETITIO );
 
-			sd->state.autocast = 1;
-			skill_castend_pos2(src, target->x, target->y, skill_id, skill_lv, tick, flag);
-			battle_autocast_aftercast(src, skill_id, skill_lv, tick);
-			sd->state.autocast = 0;
-		}
-		if (sc) { // Autocasted skills from super elemental supportive buffs.
+				sd->state.autocast = 1;
+				skill_castend_damage_id( src, target, skill_id, skill_lv, tick, flag );
+				battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+				sd->state.autocast = 0;
+			}
+
+			// It has a success chance of triggering even tho the description says nothing about it.
+			// TODO: Need to find out what the official success chance is. [Rytech]
+			if( sc->data[SC_ABYSSFORCEWEAPON] && sd->abyssball > 0 && rnd() % 100 < 20 ){
+				uint16 skill_id = ABC_FROM_THE_ABYSS_ATK;
+				uint16 skill_lv = sc->data[SC_ABYSSFORCEWEAPON]->val1;
+
+				sd->state.autocast = 1;
+				pc_delabyssball( sd, 1, 0 );
+				skill_castend_damage_id( src, target, skill_id, skill_lv, tick, flag );
+				battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+				sd->state.autocast = 0;
+			}
+
+			// It has a success chance of triggering even tho the description says nothing about it.
+			// TODO: Need to find out what the official success chance is. [Rytech]
+			if( sc->data[SC_ABYSSFORCEWEAPON] && rnd() % 100 < 20 ){
+				uint16 skill_id = ABC_ABYSS_SQUARE;
+				uint16 skill_lv = pc_checkskill(sd, ABC_ABYSS_SQUARE);
+
+				sd->state.autocast = 1;
+				skill_castend_pos2( src, target->x, target->y, skill_id, skill_lv, tick, flag );
+				battle_autocast_aftercast( src, skill_id, skill_lv, tick );
+				sd->state.autocast = 0;
+			}
+
+			// Autocasted skills from super elemental supportive buffs.
 			if (sc->data[SC_FLAMETECHNIC_OPTION] && rnd() % 100 < 7)
 				battle_autocast_elembuff_skill(sd, target, MG_FIREBOLT, tick, flag);
 			if (sc->data[SC_COLD_FORCE_OPTION] && rnd() % 100 < 7)
