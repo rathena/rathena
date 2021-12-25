@@ -726,7 +726,7 @@ void pc_addservantball(struct map_session_data *sd, int max, bool type)
 		sd->servantball = max;
 
 	if (!type)
-		clif_servantball(&sd->bl);
+		clif_servantball( sd );
 }
 
 /**
@@ -753,7 +753,7 @@ void pc_delservantball(struct map_session_data *sd, int count, bool type)
 	sd->servantball -= count;
 
 	if (!type)
-		clif_servantball(&sd->bl);
+		clif_servantball( sd );
 }
 
 /**
@@ -778,7 +778,7 @@ void pc_addabyssball(struct map_session_data *sd, int max, int type)
 		sd->abyssball = max;
 
 	if (!type)
-		clif_abyssball(&sd->bl);
+		clif_abyssball( sd );
 }
 
 /**
@@ -805,7 +805,7 @@ void pc_delabyssball(struct map_session_data *sd, int count, int type)
 	sd->abyssball -= count;
 
 	if (!type)
-		clif_abyssball(&sd->bl);
+		clif_abyssball( sd );
 }
 
 /**

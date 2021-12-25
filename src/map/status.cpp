@@ -13878,7 +13878,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd) {
 				for (uint8 i = 0; i < MAX_SERVANTBALL; i++) // Generate 5 servants on start.
 					pc_addservantball(sd, MAX_SERVANTBALL, true); // Don't send the effect packet yet.
-				clif_servantball(&sd->bl); // Send the effect packet after servant gen. Avoids packet and sound spam.
+				clif_servantball( sd ); // Send the effect packet after servant gen. Avoids packet and sound spam.
 			}
 			tick_time = skill_get_time2(DK_SERVANTWEAPON,val1); // Servant Regen Interval
 			if (tick_time < 500)
@@ -13969,7 +13969,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd) {
 				for (uint8 i = 0; i < MAX_ABYSSBALL; i++)// Generate 5 abyss spheres on start.
 					pc_addabyssball(sd, MAX_ABYSSBALL, 1);// Don't send the effect packet yet.
-				clif_abyssball(&sd->bl);// Send the effect packet after abyss gen. Avoids packet and sound spam.
+				clif_abyssball( sd );// Send the effect packet after abyss gen. Avoids packet and sound spam.
 			}
 			tick_time = skill_get_time2(ABC_FROM_THE_ABYSS, val1);// Abyss Regen Interval
 			if (tick_time < 500)

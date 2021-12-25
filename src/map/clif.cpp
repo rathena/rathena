@@ -1523,22 +1523,32 @@ void clif_class_change_target(struct block_list *bl,int class_,int type, enum se
 	}
 }
 
-static void clif_servantball_single(int fd, struct map_session_data *sd)
-{
-	WFIFOHEAD(fd, packet_len(0x1e1));
-	WFIFOW(fd, 0) = 0x1d0;
-	WFIFOL(fd, 2) = sd->bl.id;
-	WFIFOW(fd, 6) = sd->servantball;
-	WFIFOSET(fd, packet_len(0x1e1));
+void clif_servantball( struct map_session_data *sd, struct block_list* target, enum send_target send_target ){
+	struct PACKET_ZC_SPIRITS p = {};
+
+	p.packetType = HEADER_ZC_SPIRITS;
+	p.GID = sd->bl.id;
+	p.amount = sd->servantball;
+
+	if( target == nullptr ){
+		target = &sd->bl;
+	}
+
+	clif_send( &p, sizeof( p ), target, send_target );
 }
 
-static void clif_abyssball_single(int fd, struct map_session_data *sd)
-{
-	WFIFOHEAD(fd, packet_len(0x1e1));
-	WFIFOW(fd, 0) = 0x1d0;
-	WFIFOL(fd, 2) = sd->bl.id;
-	WFIFOW(fd, 6) = sd->abyssball;
-	WFIFOSET(fd, packet_len(0x1e1));
+void clif_abyssball( struct map_session_data *sd, struct block_list* target, enum send_target send_target ){
+	struct PACKET_ZC_SPIRITS p = {};
+
+	p.packetType = HEADER_ZC_SPIRITS;
+	p.GID = sd->bl.id;
+	p.amount = sd->abyssball;
+
+	if( target == nullptr ){
+		target = &sd->bl;
+	}
+
+	clif_send( &p, sizeof( p ), target, send_target );
 }
 
 /// Notifies the client of an object's Millenium Shields.
@@ -1680,9 +1690,9 @@ int clif_spawn( struct block_list *bl, bool walking ){
 			if (sd->soulball > 0)
 				clif_soulball(sd);
 			if (sd->servantball > 0)
-				clif_servantball(&sd->bl);
+				clif_servantball(sd);
 			if (sd->abyssball > 0)
-				clif_abyssball(&sd->bl);
+				clif_abyssball(sd);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
@@ -4900,9 +4910,9 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 	if (dstsd->soulball > 0)
 		clif_soulball( dstsd, &sd->bl, SELF );
 	if (dstsd->servantball > 0)
-		clif_servantball_single(sd->fd, dstsd);
+		clif_servantball( dstsd, &sd->bl, SELF );
 	if (dstsd->abyssball > 0)
-		clif_abyssball_single(sd->fd, dstsd);
+		clif_abyssball( dstsd, &sd->bl, SELF );
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
@@ -8560,32 +8570,6 @@ void clif_spiritball( struct block_list *bl, struct block_list* target, enum sen
 	clif_send( &p, sizeof( p ), target == nullptr ? bl : target, send_target );
 }
 
-void clif_servantball(struct block_list *bl) {
-	unsigned char buf[16];
-	TBL_PC *sd = BL_CAST(BL_PC, bl);
-
-	nullpo_retv(bl);
-
-	WBUFW(buf, 0) = 0x1d0;
-	WBUFL(buf, 2) = bl->id;
-	WBUFW(buf, 6) = 0; //init to 0
-	WBUFW(buf, 6) = sd->servantball;
-	clif_send(buf, packet_len(0x1d0), bl, AREA);
-}
-
-void clif_abyssball(struct block_list *bl) {
-	unsigned char buf[16];
-	TBL_PC *sd = BL_CAST(BL_PC, bl);
-
-	nullpo_retv(bl);
-
-	WBUFW(buf, 0) = 0x1d0;
-	WBUFL(buf, 2) = bl->id;
-	WBUFW(buf, 6) = 0; //init to 0
-	WBUFW(buf, 6) = sd->abyssball;
-	clif_send(buf, packet_len(0x1d0), bl, AREA);
-}
-
 /// Notifies clients in area of a character's combo delay (ZC_COMBODELAY).
 /// 01d2 <account id>.L <delay>.L
 void clif_combo_delay(struct block_list *bl,t_tick wait)
@@ -9948,9 +9932,9 @@ void clif_refresh(struct map_session_data *sd)
 	if (sd->soulball)
 		clif_soulball( sd, &sd->bl, SELF );
 	if (sd->servantball)
-		clif_servantball_single(sd->fd, sd);
+		clif_servantball( sd, &sd->bl, SELF );
 	if (sd->abyssball)
-		clif_abyssball_single(sd->fd, sd);
+		clif_abyssball( sd, &sd->bl, SELF );
 	if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if (sd->vd.body_style)
