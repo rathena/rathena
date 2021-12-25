@@ -116442,7 +116442,7 @@ Body:
       .@r = getrefine();
       bonus bUnbreakableWeapon;
       bonus2 bMagicAddRace,RC_Formless,10;
-      bonus4 bAutoSpellWhenHit,"WZ_QUAGMIRE",1,10,1;
+      bonus3 bAutoSpellWhenHit,"WZ_QUAGMIRE",1,10;
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          bonus bMatk,35;
@@ -134682,9 +134682,6 @@ Body:
          bonus bSmatk,2;
          bonus bSpl,3;
       }
-      bonus bMatk,10*(.@r/2);
-      bonus2 bSkillAtk,"WL_SOULEXPANSION",15*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -134695,6 +134692,9 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"WL_SOULEXPANSION",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Ghost,7*(.@r/4);
   - Id: 400179
     AegisName: aegis_400179
     Name: Helm of Faith II (Warlock)
@@ -134723,10 +134723,6 @@ Body:
          bonus bSmatk,2;
          bonus bSpl,3;
       }
-      bonus bMatk,10*(.@r/2);
-      bonus2 bSkillAtk,"WL_COMET",15*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Dark,7*(.@r/4);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -134737,6 +134733,10 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"WL_COMET",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Dark,7*(.@r/4);
   - Id: 400180
     AegisName: aegis_400180
     Name: Helm of Faith (Sura)
@@ -134765,9 +134765,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"SR_TIGERCANNON",15*(.@r/3);
-      bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bMaxHPrate,5;
          if (.@r>=9) {
@@ -134778,6 +134775,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"SR_TIGERCANNON",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
   - Id: 400181
     AegisName: aegis_400181
     Name: Helm of Faith II (Sura)
@@ -134806,9 +134806,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15*(.@r/3);
-      bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bMaxSPrate,5;
          if (.@r>=9) {
@@ -134819,6 +134816,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
   - Id: 400189
     AegisName: aegis_400189
     Name: Helm of Faith (Archbishop)
@@ -134847,10 +134847,6 @@ Body:
          bonus bSmatk,2;
          bonus bSpl,3;
       }
-      bonus bMatk,10*(.@r/2);
-      bonus2 bSkillAtk,"AB_ADORAMUS",15*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -134861,6 +134857,10 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"AB_ADORAMUS",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
   - Id: 400190
     AegisName: aegis_400190
     Name: Helm of Faith II (Archbishop)
@@ -134889,10 +134889,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",15*(.@r/3);
-      bonus bLongAtkRate,7*(.@r/4);
-      bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bCritical,15;
          if (.@r>=9) {
@@ -134903,6 +134899,10 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+      bonus bShortAtkRate,7*(.@r/4);
   - Id: 400191
     AegisName: aegis_400191
     Name: Helm of Faith (Shadow Chaser)
@@ -134931,9 +134931,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"SC_FATALMENACE",15*(.@r/3);
-      bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus2 bAddSize,Size_All,5;
          if (.@r>=9) {
@@ -134944,6 +134941,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"SC_FATALMENACE",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
   - Id: 400192
     AegisName: aegis_400192
     Name: Helm of Faith II (Shadow Chaser)
@@ -134972,9 +134972,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*(.@r/3);
-      bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bCritical,15;
          if (.@r>=9) {
@@ -134985,6 +134982,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
   - Id: 400198
     AegisName: aegis_400198
     Name: Helm of Faith (Ranger)
@@ -135013,9 +135013,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"RA_ARROWSTORM",15*(.@r/3);
-      bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus2 bAddSize,Size_All,5;
          if (.@r>=9) {
@@ -135026,6 +135023,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RA_ARROWSTORM",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
   - Id: 400199
     AegisName: aegis_400199
     Name: Helm of Faith II (Ranger)
@@ -135054,9 +135054,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"RA_AIMEDBOLT",15*(.@r/3);
-      bonus bLongAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bCritical,15;
          if (.@r>=9) {
@@ -135067,6 +135064,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
   - Id: 400200
     AegisName: aegis_400200
     Name: Helm of Faith (Royal Guard)
@@ -135095,10 +135095,6 @@ Body:
          bonus bSmatk,2;
          bonus bSpl,3;
       }
-      bonus bMatk,10*(.@r/2);
-      bonus2 bSkillAtk,"LG_RAYOFGENESIS",15*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -135109,6 +135105,10 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
   - Id: 400201
     AegisName: aegis_400201
     Name: Helm of Faith II (Royal Guard)
@@ -135137,9 +135137,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"LG_OVERBRAND",15*(.@r/3);
-      bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus2 bAddSize,Size_All,5;
          if (.@r>=9) {
@@ -135150,6 +135147,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"LG_OVERBRAND",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
   - Id: 400216
     AegisName: aegis_400216
     Name: Helm of Faith (Guillotine Cross)
@@ -135178,9 +135178,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"GC_COUNTERSLASH",15*(.@r/3);
-      bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus2 bAddSize,Size_All,5;
          if (.@r>=9) {
@@ -135191,6 +135188,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
   - Id: 400217
     AegisName: aegis_400217
     Name: Helm of Faith II (Guillotine Cross)
@@ -135219,9 +135219,6 @@ Body:
          bonus bPAtk,2;
          bonus bPow,3;
       }
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15*(.@r/3);
-      bonus bShortAtkRate,7*(.@r/4);
       if (.@r>=7) {
          bonus bCritical,15;
          if (.@r>=9) {
@@ -135232,6 +135229,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
   - Id: 400218
     AegisName: aegis_400218
     Name: Helm of Faith (Sorcerer)
@@ -135260,10 +135260,6 @@ Body:
          bonus bSmatk,2;
          bonus bSpl,3;
       }
-      bonus bMatk,10*(.@r/2);
-      bonus2 bSkillAtk,"SO_POISON_BUSTER",15*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Poison,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Fire,7*(.@r/4);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -135274,6 +135270,10 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"SO_POISON_BUSTER",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Poison,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Fire,7*(.@r/4);
   - Id: 400219
     AegisName: aegis_400219
     Name: Helm of Faith II (Sorcerer)
@@ -135302,10 +135302,6 @@ Body:
          bonus bSmatk,2;
          bonus bSpl,3;
       }
-      bonus bMatk,10*(.@r/2);
-      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15*(.@r/3);
-      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
-      bonus2 bMagicAtkEle,Ele_Wind,7*(.@r/4);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
@@ -135316,6 +135312,11 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Wind,7*(.@r/4);
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -140069,7 +140070,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus bHealPower,10;
+      bonus bHealPower2,10;
       bonus bUseSPrate,-10;
       bonus bMaxHPrate,3;
       bonus bStr,3;
@@ -141988,8 +141989,6 @@ Body:
       .@r = getrefine();
       bonus bMaxHP,1500;
       bonus bMaxSP,150;
-      bonus bMaxHPrate,(.@r/3);
-      bonus bMaxSPrate,(.@r/3);
       if (BaseLevel>=210) {
          bonus bPAtk,1;
          bonus bSmatk,1;
@@ -142008,8 +142007,8 @@ Body:
          }
       }
       if (.@g>=1) {
-         bonus bRes,50;
          bonus bMres,50;
+         bonus bRes,50;
          if (.@g>=2) {
             bonus2 bMagicAddEle,Ele_All,10;
             bonus2 bAddEle,Ele_All,10;
@@ -142026,6 +142025,8 @@ Body:
             }
          }
       }
+      bonus bMaxHPrate,(.@r/3);
+      bonus bMaxSPrate,(.@r/3);
   - Id: 470107
     AegisName: Barmund_Greave
     Name: Varmundt Rune Greaves
@@ -142771,7 +142772,7 @@ Body:
          bonus2 bAddSize,Size_All,3;
          bonus2 bMagicAddSize,Size_All,3;
          if (.@r>=11) {
-            autobonus "{ bonus2 bHPRegenRate,350,1000; bonus2 bSPRegenRate,20,1000; }",10,10000,BF_WEAPON|BF_MAGIC;
+            autobonus "{ bonus2 bHPRegenRate,350,1000; bonus2 bSPRegenRate,20,1000; }",1,10000,BF_WEAPON|BF_MAGIC;
          }
       }
   - Id: 480069
@@ -145687,8 +145688,8 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5*(.@r/2);
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5*(.@r/2);
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5*(.@r/2);
       bonus2 bAddClass,Class_All,3*(.@r/4);
   - Id: 500019
     AegisName: Poenitentia_Gladius
@@ -145772,8 +145773,8 @@ Body:
          }
       }
       if (.@g>=1) {
-         bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
          bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",5;
+         bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",5;
          if (.@g>=2) {
             bonus bPAtk,1;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WATER",8;
@@ -145950,8 +145951,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
@@ -145998,8 +146001,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"GN_CARTCANNON",15;
@@ -146291,14 +146296,11 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus bMatk,15*(.@r/2);
-      bonus2 bSkillAtk,"LG_RAYOFGENESIS",5*(.@r/3);
-      bonus2 bSkillAtk,"PA_PRESSURE",5*(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          if (.@r>=9) {
-            bonus2 bMagicAtkEle,Ele_Neutral,15;
             bonus2 bMagicAtkEle,Ele_Holy,15;
+            bonus2 bMagicAtkEle,Ele_Neutral,15;
             if (.@r>=11) {
                bonus2 bMagicAddSize,Size_All,15;
                bonus2 bSkillAtk,"LG_RAYOFGENESIS",30;
@@ -146309,8 +146311,8 @@ Body:
       if (.@g>=1) {
          bonus bMatkRate,3;
          if (.@g>=2) {
-            bonus2 bMagicAtkEle,Ele_Neutral,15;
             bonus2 bMagicAtkEle,Ele_Holy,15;
+            bonus2 bMagicAtkEle,Ele_Neutral,15;
             bonus bSmatk,1;
             if (.@g>=3) {
                bonus bSmatk,2;
@@ -146318,6 +146320,9 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",5*(.@r/3);
+      bonus2 bSkillAtk,"PA_PRESSURE",5*(.@r/3);
   - Id: 500039
     AegisName: Sword_Of_Bluefire_LT
     Name: Red Lotus Sword-LT
@@ -146345,8 +146350,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          bonus2 bSkillAtk,"GN_CARTCANNON",10;
@@ -146371,6 +146374,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 500040
     AegisName: Slate_Sword_LT
     Name: Slate Sword-LT
@@ -146398,8 +146403,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bShortAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillAtk,"GN_HELLS_PLANT",30;
          bonus2 bSkillAtk,"GN_CART_TORNADO",25;
@@ -146424,6 +146427,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bShortAtkRate,4*(.@r/3);
   - Id: 500042
     AegisName: SP_B_Saber
     Name: Super Psychic Booster Saber
@@ -146547,15 +146552,15 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6*(.@r/2);
       bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",6*(.@r/2);
+      bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",6*(.@r/2);
       bonus2 bSkillAtk,"GN_CART_TORNADO",7*(.@r/3);
       bonus2 bAddClass,Class_All,5*(.@r/4);
       if (.@g>=1) {
          bonus bPow,2;
          if (.@g>=2) {
-            bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
             bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_WIND",10;
+            bonus2 bSkillAtk,"BO_ACIDIFIED_ZONE_FIRE",10;
             if (.@g>=3) {
                bonus bPAtk,2;
             }
@@ -147225,8 +147230,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SC_FATALMENACE",15;
@@ -147503,8 +147510,6 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus bMatk,15*(.@r/2);
-      bonus bAspdRate,2*(.@r/3);
       if (.@r>=7) {
          bonus5 bAutoSpell,"WZ_METEOR",7,100,BF_SHORT|BF_WEAPON,1;
          if (.@r>=9) {
@@ -147526,6 +147531,8 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
   - Id: 510041
     AegisName: Fatalist_LT
     Name: Fatalist-LT
@@ -147979,8 +147986,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",15;
@@ -148439,8 +148448,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"LG_OVERBRAND",15;
@@ -148592,8 +148603,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
@@ -148618,6 +148627,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 530023
     AegisName: Solid_Spear
     Name: Solid Spear
@@ -149239,8 +149250,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
@@ -149288,8 +149301,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SO_POISON_BUSTER",15;
@@ -149338,9 +149353,11 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"AB_DUPLELIGHT",25;
@@ -149712,10 +149729,6 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus bMatk,10*(.@r/2);
-      bonus bBaseAtk,10*(.@r/2);
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",25*(.@r/3);
-      bonus2 bSkillAtk,"AB_JUDEX",25*(.@r/3);
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_Holy,15;
          bonus bAspdRate,10;
@@ -149723,7 +149736,7 @@ Body:
             bonus2 bSkillAtk,"AB_DUPLELIGHT",45;
             bonus2 bSkillAtk,"AB_JUDEX",45;
             if (.@r>=11) {
-               bonus5 bAutoSpell,"AB_JUDEX",min(5,getskilllv("AB_JUDEX")),60,BF_WEAPON,1;
+               bonus5 bAutoSpell,"AB_JUDEX",max(5,getskilllv("AB_JUDEX")),100,BF_SHORT|BF_WEAPON,1;
             }
          }
       }
@@ -149738,6 +149751,10 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",25*(.@r/3);
+      bonus2 bSkillAtk,"AB_JUDEX",25*(.@r/3);
   - Id: 540039
     AegisName: ML_B_Book
     Name: Moon Starlight Booster Book
@@ -149895,7 +149912,7 @@ Body:
     Range: 1
     Slots: 2
     Jobs:
-      Taekwon: true
+      StarGladiator: true
     Classes:
       Fourth: true
     Locations:
@@ -149992,8 +150009,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
@@ -150040,8 +150059,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
@@ -150871,8 +150892,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"AB_ADORAMUS",15;
@@ -151482,8 +151505,6 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus bMatk,15*(.@r/2);
-      bonus2 bSkillAtk,"SO_EARTHGRAVE",12*(.@r/3);
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_Poison,15;
          bonus2 bMagicAtkEle,Ele_Earth,15;
@@ -151510,6 +151531,8 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bSkillAtk,"SO_EARTHGRAVE",12*(.@r/3);
   - Id: 550046
     AegisName: Freezing_Rod_LT
     Name: Chilling Cane-LT
@@ -151539,8 +151562,6 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus bMatk,15*(.@r/2);
-      bonus2 bSkillAtk,"SO_DIAMONDDUST",12*(.@r/3);
       if (.@r>=7) {
          bonus2 bMagicAddEle,Ele_All,15;
          bonus2 bSkillAtk,"SO_VARETYR_SPEAR",15;
@@ -151566,6 +151587,8 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",12*(.@r/3);
   - Id: 550050
     AegisName: SP_B_Fox
     Name: Lunatic Picky Booster Foxtail
@@ -152091,8 +152114,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15;
@@ -152147,8 +152172,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SP_SWHOO",15;
@@ -152197,8 +152224,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SU_CN_METEOR",15;
@@ -152246,8 +152275,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SU_PICKYPECK",15;
@@ -152778,8 +152809,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SR_TIGERCANNON",15;
@@ -152826,8 +152859,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
@@ -153010,8 +153045,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",20;
          bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",20;
@@ -153037,6 +153070,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 560027
     AegisName: Ray_Knuckle_LT
     Name: Ray Knuckle-LT
@@ -153064,8 +153099,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus2 bSkillAtk,"SR_TIGERCANNON",4*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillAtk,"SR_GATEOFHELL",30;
          bonus2 bSkillAtk,"SR_TIGERCANNON",25;
@@ -153091,6 +153124,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus2 bSkillAtk,"SR_TIGERCANNON",4*(.@r/3);
   - Id: 560030
     AegisName: Precision_Fist
     Name: Precision Fist
@@ -153582,8 +153617,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
@@ -153632,8 +153669,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
@@ -153834,8 +153873,6 @@ Body:
       if (BaseLevel>=210) {
          bonus bSmatk,1;
          bonus bSpl,2;
-         bonus bMatk,15*(.@r/2);
-         bonus2 bMagicAtkEle,Ele_All,4*(.@r/3);
       }
       if (.@r>=7) {
          bonus2 bSkillAtk,"WM_METALICSOUND",20;
@@ -153862,6 +153899,8 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bMagicAtkEle,Ele_All,4*(.@r/3);
   - Id: 570028
     AegisName: Precision_Lute
     Name: Precision Lute
@@ -154355,8 +154394,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
@@ -154405,8 +154446,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"WM_METALICSOUND",15;
@@ -154607,8 +154650,6 @@ Body:
       if (BaseLevel>=210) {
          bonus bSmatk,1;
          bonus bSpl,2;
-         bonus bMatk,15*(.@r/2);
-         bonus2 bMagicAtkEle,Ele_All,4*(.@r/3);
       }
       if (.@r>=7) {
          bonus2 bSkillAtk,"WM_METALICSOUND",20;
@@ -154635,6 +154676,8 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bMagicAtkEle,Ele_All,4*(.@r/3);
   - Id: 580028
     AegisName: Precision_Whip
     Name: Precision Whip
@@ -155302,8 +155345,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"NC_VULCANARM",15;
@@ -155351,8 +155396,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"GN_CART_TORNADO",15;
@@ -155579,8 +155626,6 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus2 bMagicAtkEle,Ele_Holy,(.@r/2);
-      bonus2 bSkillAtk,"AB_ADORAMUS",5*(.@r/3);
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_Holy,10;
          bonus bVariableCastrate,-10;
@@ -155604,6 +155649,8 @@ Body:
             }
          }
       }
+      bonus2 bMagicAtkEle,Ele_Holy,(.@r/2);
+      bonus2 bSkillAtk,"AB_ADORAMUS",5*(.@r/3);
   - Id: 590034
     AegisName: Meteor_Striker_LT
     Name: Meteor Striker-LT
@@ -155632,9 +155679,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",10*(.@r/3);
-      bonus2 bSkillAtk,"NC_VULCANARM",10*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
          bonus2 bSkillAtk,"NC_VULCANARM",15;
@@ -155658,6 +155702,9 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",10*(.@r/3);
+      bonus2 bSkillAtk,"NC_VULCANARM",10*(.@r/3);
   - Id: 590036
     AegisName: Wicked_Cross
     Name: Wicked Cross
@@ -156114,8 +156161,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RK_WINDCUTTER",15;
@@ -156227,8 +156276,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bCritAtkRate,5*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"RK_STORMBLAST",20;
@@ -156255,6 +156302,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bCritAtkRate,5*(.@r/3);
   - Id: 600024
     AegisName: Dragonic_Slayer_LT
     Name: Dragonic Slayer-LT
@@ -156282,10 +156331,6 @@ Body:
          bonus bMaxHPrate,5;
          bonus bMaxSPrate,5;
       }
-      bonus bMaxHPrate,5*(.@r/2);
-      bonus bMaxSPrate,5*(.@r/2);
-      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",7*(.@r/3);
-      bonus2 bSkillAtk,"RK_DRAGONBREATH",7*(.@r/3);
       if (.@r>=7) {
          bonus bDelayrate,-10;
          bonus bVariableCastrate,-10;
@@ -156311,6 +156356,10 @@ Body:
             }
          }
       }
+      bonus bMaxHPrate,5*(.@r/2);
+      bonus bMaxSPrate,5*(.@r/2);
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",7*(.@r/3);
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",7*(.@r/3);
   - Id: 610000
     AegisName: Boost_Katar
     Name: Booster Katar
@@ -156768,8 +156817,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
@@ -156816,8 +156867,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
@@ -157044,8 +157097,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bCritAtkRate,5*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"GC_CROSSIMPACT",20;
@@ -157071,6 +157122,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bCritAtkRate,5*(.@r/3);
   - Id: 610034
     AegisName: Blade_Katar_LT
     Name: Blade Katar-LT
@@ -157098,8 +157151,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bDelayrate,-2*(.@r/3);
       if (.@r>=7) {
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",25;
@@ -157126,6 +157177,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bDelayrate,-2*(.@r/3);
   - Id: 610035
     AegisName: Wicked_Katar
     Name: Wicked Katar
@@ -157491,8 +157544,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus2 bSkillAtk,"NC_AXETORNADO",10*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",40;
@@ -157517,6 +157568,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus2 bSkillAtk,"NC_AXETORNADO",10*(.@r/3);
   - Id: 620016
     AegisName: Wicked_Axe
     Name: Wicked Axe
@@ -157819,8 +157872,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
@@ -158191,7 +158246,7 @@ Body:
     AegisName: Fourth_Bh_Staff
     Name: Fortified Staff
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 2100
     Attack: 140
     MagicAttack: 240
@@ -158215,7 +158270,7 @@ Body:
     AegisName: Poenitentia_Termes
     Name: Poenitentia Termes
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 2000
     Attack: 170
     MagicAttack: 300
@@ -158268,7 +158323,7 @@ Body:
     AegisName: Poenitentia_Virga
     Name: Poenitentia Virga
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 2000
     Attack: 170
     MagicAttack: 300
@@ -158321,7 +158376,7 @@ Body:
     AegisName: Thanos_Rod_AD
     Name: Thanatos Two-handed Staff-AD
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 1400
     Attack: 150
     MagicAttack: 300
@@ -158447,7 +158502,7 @@ Body:
     AegisName: Vivatus_F_T_Staff
     Name: Vivatus Fides Two-handed Staff
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 2000
     Attack: 200
     MagicAttack: 340
@@ -158480,8 +158535,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"WL_COMET",15;
@@ -158497,7 +158554,7 @@ Body:
     AegisName: Vivatus_F_Rod
     Name: Vivatus Fides Rod
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 1900
     Attack: 200
     MagicAttack: 340
@@ -158530,8 +158587,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bMagicAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bMagicAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"WL_SOULEXPANSION",15;
@@ -158724,7 +158783,7 @@ Body:
     AegisName: Iron_Staff_LT
     Name: Iron Staff-LT
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 1000
     Attack: 100
     Range: 1
@@ -158749,9 +158808,6 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus bMatk,15*(.@r/2);
-      bonus2 bSkillAtk,"HW_GRAVITATION",12*(.@r/3);
-      bonus2 bSkillAtk,"WL_EARTHSTRAIN",12*(.@r/3);
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_Fire,20;
          bonus2 bMagicAtkEle,Ele_Earth,20;
@@ -158778,11 +158834,14 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bSkillAtk,"HW_GRAVITATION",12*(.@r/3);
+      bonus2 bSkillAtk,"WL_EARTHSTRAIN",12*(.@r/3);
   - Id: 640028
     AegisName: Blue_Crystal_Staff_LT
     Name: Blue Crystal Staff-LT
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 1000
     Attack: 100
     Range: 1
@@ -158807,8 +158866,6 @@ Body:
          bonus bSmatk,1;
          bonus bSpl,2;
       }
-      bonus bMatk,15*(.@r/2);
-      bonus2 bSkillAtk,"WL_JACKFROST",12*(.@r/3);
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_Ghost,15;
          bonus2 bMagicAtkEle,Ele_Water,15;
@@ -158838,11 +158895,13 @@ Body:
             }
          }
       }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bSkillAtk,"WL_JACKFROST",12*(.@r/3);
   - Id: 640031
     AegisName: Solid_Staff
     Name: Solid Staff
     Type: Weapon
-    SubType: Huuma
+    SubType: 2hStaff
     Weight: 2200
     Attack: 150
     MagicAttack: 290
@@ -159332,8 +159391,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15;
@@ -159381,8 +159442,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"KO_HUUMARANKA",15;
@@ -160249,8 +160312,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
@@ -160298,8 +160363,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RA_ARROWSTORM",15;
@@ -160346,8 +160413,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
@@ -160659,8 +160728,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillCooldown,"RA_ARROWSTORM",-1000;
          bonus2 bSkillAtk,"RA_ARROWSTORM",20;
@@ -160685,6 +160752,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 700046
     AegisName: Scalet_Dragon_L_Bow_LT
     Name: Scarlet Leather Dragon Bow-LT
@@ -160712,8 +160781,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus bVariableCastrate,-10;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",20;
@@ -160737,6 +160804,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 700049
     AegisName: Narcis_Bow_LT
     Name: Narcissus Bow-LT
@@ -160764,8 +160833,6 @@ Body:
          bonus bPAtk,1;
          bonus bPow,2;
       }
-      bonus bBaseAtk,15*(.@r/2);
-      bonus bLongAtkRate,4*(.@r/3);
       if (.@r>=7) {
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
          bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",25;
@@ -160790,6 +160857,8 @@ Body:
             }
          }
       }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 700050
     AegisName: Precision_Bow
     Name: Precision Bow
@@ -161182,8 +161251,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RL_FIREDANCE",15;
@@ -161464,8 +161535,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",15;
@@ -161667,8 +161740,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RL_S_STORM",15;
@@ -162015,8 +162090,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RL_R_TRIP",15;
@@ -162264,8 +162341,10 @@ Body:
             }
          }
       }
-      if (.@g>=1 && .@r>=11) {
-         bonus2 bAddEle,Ele_All,15;
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus2 bAddEle,Ele_All,15;
+         }
       }
       if (.@g>=2) {
          bonus2 bSkillAtk,"RL_D_TAIL",15;
