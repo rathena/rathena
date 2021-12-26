@@ -8946,7 +8946,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				uint16 skill_lv = sc->data[SC_SERVANTWEAPON]->val1;
 
 				sd->state.autocast = 1;
-				pc_delservantball( sd, 1, false );
+				pc_delservantball( *sd );
 				skill_castend_damage_id( src, target, skill_id, skill_lv, tick, flag );
 				battle_autocast_aftercast( src, skill_id, skill_lv, tick );
 				sd->state.autocast = 0;

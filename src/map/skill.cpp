@@ -3741,7 +3741,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			}
 			break;
 		case DK_SERVANT_W_DEMOL:// Only give servant's per target after damage calculation.
-			pc_addservantball(sd, MAX_SERVANTBALL, false);
+			pc_addservantball( *sd );
 			break;
 		case KN_PIERCE:
 		case LK_SPIRALPIERCE:
@@ -18198,7 +18198,7 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 				case DK_SERVANT_W_SIGN:
 				case DK_SERVANT_W_PHANTOM:
 				case DK_SERVANT_W_DEMOL:
-					pc_delservantball(sd, require.spiritball, true);
+					pc_delservantball( *sd, require.spiritball );
 					break;
 
 				default: // Skills that require spirit/coin spheres.

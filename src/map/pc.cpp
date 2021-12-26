@@ -710,50 +710,23 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 /**
 * Adds a servantball to player
 * @param sd: Player data
-* @param max: Max amount of servantballs
-* @param type: true = doesn't give client effect
+* @param amount: Amount to add
 */
-void pc_addservantball(struct map_session_data *sd, int max, bool type)
-{
-	nullpo_retv(sd);
+void pc_addservantball( struct map_session_data& sd, int count ){
+	sd.servantball = cap_value( sd.servantball + count, 0, MAX_SERVANTBALL );
 
-	max = min(max, MAX_SERVANTBALL);
-	sd->servantball = cap_value(sd->servantball, 0, MAX_SERVANTBALL);
-
-	if (sd->servantball < max)
-		sd->servantball++;
-	else if (sd->servantball > max)
-		sd->servantball = max;
-
-	if (!type)
-		clif_servantball( sd );
+	clif_servantball( sd );
 }
 
 /**
 * Removes number of servantball from player
 * @param sd: Player data
 * @param count: Amount to remove
-* @param type: true = doesn't give client effect
 */
-void pc_delservantball(struct map_session_data *sd, int count, bool type)
-{
-	nullpo_retv(sd);
+void pc_delservantball( struct map_session_data& sd, int count ){
+	sd.servantball = cap_value( sd.servantball - count, 0, MAX_SERVANTBALL );
 
-	if (sd->servantball <= 0) {
-		sd->servantball = 0;
-		return;
-	}
-
-	if (count == 0)
-		return;
-
-	if (count > sd->servantball)
-		count = sd->servantball;
-
-	sd->servantball -= count;
-
-	if (!type)
-		clif_servantball( sd );
+	clif_servantball( sd );
 }
 
 /**
@@ -9175,7 +9148,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if (sd->soulball != 0)
 		pc_delsoulball(sd, sd->soulball, false);
 	if (sd->servantball != 0)
-		pc_delservantball(sd, sd->servantball, false);
+		pc_delservantball( *sd, sd->servantball );
 	if (sd->abyssball != 0)
 		pc_delabyssball(sd, sd->abyssball, 0);
 

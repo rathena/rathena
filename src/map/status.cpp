@@ -13875,10 +13875,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 50; // Move speed reduction
 			break;
 		case SC_SERVANTWEAPON:
-			if (sd) {
-				for (uint8 i = 0; i < MAX_SERVANTBALL; i++) // Generate 5 servants on start.
-					pc_addservantball(sd, MAX_SERVANTBALL, true); // Don't send the effect packet yet.
-				clif_servantball( sd ); // Send the effect packet after servant gen. Avoids packet and sound spam.
+			if( sd ){
+				// Generate 5 servants on start
+				pc_addservantball( *sd, MAX_SERVANTBALL );
 			}
 			tick_time = skill_get_time2(DK_SERVANTWEAPON,val1); // Servant Regen Interval
 			if (tick_time < 500)
@@ -15506,8 +15505,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_SERVANTWEAPON:
-			if (sd)
-				pc_delservantball(sd, sd->servantball, false);
+			if( sd ){
+				pc_delservantball( *sd, sd->servantball );
+			}
 			break;
 		case SC_CHARGINGPIERCE:
 			status_change_end(bl, SC_CHARGINGPIERCE_COUNT, INVALID_TIMER);
@@ -16774,8 +16774,9 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_SERVANTWEAPON:
 		if (sce->val4 >= 0) {
-			if (sd && sd->servantball < MAX_SERVANTBALL)
-				pc_addservantball(sd, MAX_SERVANTBALL, false);
+			if( sd && sd->servantball < MAX_SERVANTBALL ){
+				pc_addservantball( *sd, MAX_SERVANTBALL );
+			}
 			interval = max(500, skill_get_time2(DK_SERVANTWEAPON, sce->val1));
 			map_freeblock_lock();
 			dounlock = true;

@@ -1498,8 +1498,8 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
 int pc_addsoulball(map_session_data *sd, int max);
 int pc_delsoulball(map_session_data *sd, int count, bool type);
-void pc_addservantball(struct map_session_data *sd, int max, bool type);
-void pc_delservantball(struct map_session_data *sd, int count, bool type);
+void pc_addservantball( struct map_session_data& sd, int count = 1 );
+void pc_delservantball( struct map_session_data& sd, int count = 1 );
 void pc_addabyssball(struct map_session_data *sd, int max, int type);
 void pc_delabyssball(struct map_session_data *sd, int count, int type);
 
