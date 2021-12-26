@@ -5166,6 +5166,13 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 			node["Drops"][i] = drops;
 	}
 
+#ifdef RENEWAL
+	if (!str[++index].empty())
+		node["Resistance"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["MagicResistance"] = std::stoi(str[index]);
+#endif
+
 	return mob_db.parseBodyNode(node) > 0;
 }
 
