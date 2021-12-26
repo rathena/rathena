@@ -69302,6 +69302,25 @@ Body:
          bonus bMaxSPrate,20;
          bonus bDelayrate,-5;
       }
+  - Id: 15407
+    AegisName: WhiteknightArmor
+    Name: Whiteknight Armor
+    Type: Armor
+    Weight: 400
+    Defense: 40
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubRace,RC_Player_Human,1;
+      bonus2 bSubRace,RC_Player_Doram,1;
+      bonus bDelayrate,-5-(min(10,.@r)*2);
+      if (.@r>=12)
+         bonus bNoWalkDelay;
   - Id: 15409
     AegisName: Bloody_Doll's_Dress
     Name: Bloody Doll's Dress
@@ -69348,25 +69367,6 @@ Body:
     Script: |
       bonus bMaxHP,300;
       bonus bMaxSP,100;
-  - Id: 15407
-    AegisName: WhiteknightArmor
-    Name: Whiteknight Armor
-    Type: Armor
-    Weight: 400
-    Defense: 40
-    Slots: 1
-    Locations:
-      Armor: true
-    ArmorLevel: 1
-    EquipLevelMin: 100
-    Refineable: true
-    Script: |
-      .@r = getrefine();
-      bonus2 bSubRace,RC_Player_Human,1;
-      bonus2 bSubRace,RC_Player_Doram,1;
-      bonus bDelayrate,-5-(min(10,.@r)*2);
-      if (.@r>=12)
-         bonus bNoWalkDelay;
   - Id: 15417
     AegisName: Armor_of_Purple_Thread
     Name: Armor of Purple Thread
@@ -96034,7 +96034,6 @@ Body:
       Override: 100
       NoDrop: true
       NoTrade: true
-      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
@@ -96048,6 +96047,16 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 119
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 20700
     AegisName: Egir_Manteau
     Name: Egir Manteau
@@ -116603,15 +116612,6 @@ Body:
     MagicAttack: 175
     Range: 1
     Slots: 2
-    Jobs:
-      Novice: true
-      Acolyte: true
-      Monk: true
-      Priest: true
-      Mage: true
-      Sage: true
-      Wizard: true
-      SoulLinker: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -134605,7 +134605,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus bMatk,50+10*(.@r/2);
+      bonus bMatk,50;
       bonus bInt,3;
       if (BaseLevel>=180) {
          bonus bMatk,50;
@@ -134638,6 +134638,7 @@ Body:
             }
          }
       }
+      bonus bMatk,10*(.@r/2);
   - Id: 400160
     AegisName: Wave_Noodle
     Name: Costume Wavy Noodles
@@ -135167,7 +135168,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 180
     Refineable: true
-    View: 2174
+    View: 2202
     Script: |
       .@r = getrefine();
       if (BaseLevel>=210) {
@@ -135208,7 +135209,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 180
     Refineable: true
-    View: 2174
+    View: 2202
     Script: |
       .@r = getrefine();
       if (BaseLevel>=210) {
@@ -135249,7 +135250,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 180
     Refineable: true
-    View: 1361
+    View: 2203
     Script: |
       .@r = getrefine();
       if (BaseLevel>=210) {
@@ -135291,7 +135292,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 180
     Refineable: true
-    View: 1361
+    View: 2203
     Script: |
       .@r = getrefine();
       if (BaseLevel>=210) {
@@ -136189,7 +136190,6 @@ Body:
       Override: 100
       NoDrop: true
       NoTrade: true
-      NoSell: true
       NoCart: true
       NoStorage: true
       NoGuildStorage: true
@@ -136205,6 +136205,16 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2146
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 440010
     AegisName: C_Bear_Head
     Name: Costume Teddy Bear Ride    # !todo check english name
@@ -140781,6 +140791,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -140819,6 +140837,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -140857,6 +140883,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -140895,6 +140929,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -142051,6 +142093,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -142090,6 +142140,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -142129,6 +142187,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -142168,6 +142234,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143227,6 +143301,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143265,6 +143347,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143302,6 +143392,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143339,6 +143437,14 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -146443,6 +146549,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bMatkRate,2;
@@ -146478,6 +146593,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bCritical,15;
@@ -149771,6 +149895,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
@@ -149810,6 +149943,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
@@ -151602,6 +151744,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
@@ -151637,6 +151788,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bMatkRate,2;
@@ -151675,6 +151835,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
@@ -151713,6 +151882,15 @@ Body:
       Right_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
@@ -157158,6 +157336,7 @@ Body:
          if (.@r>=9) {
             bonus bDelayrate,-5;
             bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",20;
+            bonus2 bSkillAtk,"GC_ROLLINGCUTTER",20;
             if (.@r>=11) {
                bonus bLongAtkRate,15;
                bonus bShortAtkRate,15;
@@ -159239,6 +159418,15 @@ Body:
       Both_Hand: true
     WeaponLevel: 1
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
@@ -159278,6 +159466,15 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
@@ -159324,7 +159521,7 @@ Body:
       bonus bUnbreakableWeapon;
       bonus bLongAtkRate,4*(getrefine()/4);
       if (.@g>=1) {
-         bonus bCon,2;
+         bonus bPow,2;
          if (.@g>=2) {
             bonus2 bSkillAtk,"SS_FUUMASHOUAKU",10;
             if (.@g>=3) {
@@ -161091,6 +161288,15 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
@@ -161930,6 +162136,15 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,2;
