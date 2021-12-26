@@ -13965,10 +13965,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 = 25;// Need official reduction amount.
 			break;
 		case SC_ABYSSFORCEWEAPON:
-			if (sd) {
-				for (uint8 i = 0; i < MAX_ABYSSBALL; i++)// Generate 5 abyss spheres on start.
-					pc_addabyssball(sd, MAX_ABYSSBALL, 1);// Don't send the effect packet yet.
-				clif_abyssball( sd );// Send the effect packet after abyss gen. Avoids packet and sound spam.
+			if( sd ){
+				// Generate 5 abyss spheres on start.
+				pc_addabyssball( *sd, MAX_ABYSSBALL );
 			}
 			tick_time = skill_get_time2(ABC_FROM_THE_ABYSS, val1);// Abyss Regen Interval
 			if (tick_time < 500)
@@ -15513,8 +15512,9 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			status_change_end(bl, SC_CHARGINGPIERCE_COUNT, INVALID_TIMER);
 			break;
 		case SC_ABYSSFORCEWEAPON:
-			if (sd)
-				pc_delabyssball(sd, sd->abyssball, 0);
+			if( sd ){
+				pc_delabyssball( *sd, sd->abyssball );
+			}
 			break;
 	}
 
@@ -16784,8 +16784,9 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_ABYSSFORCEWEAPON:
 		if (sce->val4 >= 0) {
-			if (sd && sd->abyssball < MAX_ABYSSBALL)
-				pc_addabyssball(sd, MAX_ABYSSBALL, 0);
+			if( sd && sd->abyssball < MAX_ABYSSBALL ){
+				pc_addabyssball( *sd );
+			}
 			interval = max(500, skill_get_time2(ABC_FROM_THE_ABYSS, sce->val1));
 			map_freeblock_lock();
 			dounlock = true;

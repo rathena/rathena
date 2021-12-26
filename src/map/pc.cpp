@@ -708,7 +708,7 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 }
 
 /**
-* Adds a servantball to player
+* Adds servantballs to a player
 * @param sd: Player data
 * @param amount: Amount to add
 */
@@ -719,7 +719,7 @@ void pc_addservantball( struct map_session_data& sd, int count ){
 }
 
 /**
-* Removes number of servantball from player
+* Removes number of servantballs from player
 * @param sd: Player data
 * @param count: Amount to remove
 */
@@ -730,55 +730,25 @@ void pc_delservantball( struct map_session_data& sd, int count ){
 }
 
 /**
-* Adds a abyssball to player
-* @param sd
-* @param max
-* @param type 1 = doesn't give client effect
+* Adds abyssballs to a player
+* @param sd: Player data
+* @param amount: Amount to add
 */
-void pc_addabyssball(struct map_session_data *sd, int max, int type)
-{
-	nullpo_retv(sd);
+void pc_addabyssball( struct map_session_data& sd, int count ){
+	sd.abyssball = cap_value( sd.abyssball + count, 0, MAX_ABYSSBALL );
 
-	if (max > MAX_ABYSSBALL)
-		max = MAX_ABYSSBALL;
-
-	if (sd->abyssball < 0)
-		sd->abyssball = 0;
-
-	if (sd->abyssball < max)
-		sd->abyssball++;
-	else if (sd->abyssball > max)
-		sd->abyssball = max;
-
-	if (!type)
-		clif_abyssball( sd );
+	clif_abyssball( sd );
 }
 
 /**
-* Removes number of abyssball from player
-* @param sd
-* @param count
-* @param type 1 = doesn't give client effect
+* Removes number of abyssballs from player
+* @param sd: Player data
+* @param count: Amount to remove
 */
-void pc_delabyssball(struct map_session_data *sd, int count, int type)
-{
-	nullpo_retv(sd);
+void pc_delabyssball( struct map_session_data& sd, int count ){
+	sd.abyssball = cap_value( sd.abyssball - count, 0, MAX_ABYSSBALL );
 
-	if (sd->abyssball <= 0) {
-		sd->abyssball = 0;
-		return;
-	}
-
-	if (count == 0)
-		return;
-
-	if (count > sd->abyssball)
-		count = sd->abyssball;
-
-	sd->abyssball -= count;
-
-	if (!type)
-		clif_abyssball( sd );
+	clif_abyssball( sd );
 }
 
 /**
@@ -9150,7 +9120,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if (sd->servantball != 0)
 		pc_delservantball( *sd, sd->servantball );
 	if (sd->abyssball != 0)
-		pc_delabyssball(sd, sd->abyssball, 0);
+		pc_delabyssball( *sd, sd->abyssball );
 
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		pc_delspiritcharm(sd,sd->spiritcharm,sd->spiritcharm_type);

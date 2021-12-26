@@ -1500,8 +1500,8 @@ int pc_addsoulball(map_session_data *sd, int max);
 int pc_delsoulball(map_session_data *sd, int count, bool type);
 void pc_addservantball( struct map_session_data& sd, int count = 1 );
 void pc_delservantball( struct map_session_data& sd, int count = 1 );
-void pc_addabyssball(struct map_session_data *sd, int max, int type);
-void pc_delabyssball(struct map_session_data *sd, int count, int type);
+void pc_addabyssball( struct map_session_data& sd, int count = 1 );
+void pc_delabyssball( struct map_session_data& sd, int count = 1 );
 
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(uint32 char_id, int job);

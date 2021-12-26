@@ -1537,15 +1537,15 @@ void clif_servantball( struct map_session_data& sd, struct block_list* target, e
 	clif_send( &p, sizeof( p ), target, send_target );
 }
 
-void clif_abyssball( struct map_session_data *sd, struct block_list* target, enum send_target send_target ){
+void clif_abyssball( struct map_session_data& sd, struct block_list* target, enum send_target send_target ){
 	struct PACKET_ZC_SPIRITS p = {};
 
 	p.packetType = HEADER_ZC_SPIRITS;
-	p.GID = sd->bl.id;
-	p.amount = sd->abyssball;
+	p.GID = sd.bl.id;
+	p.amount = sd.abyssball;
 
 	if( target == nullptr ){
-		target = &sd->bl;
+		target = &sd.bl;
 	}
 
 	clif_send( &p, sizeof( p ), target, send_target );
@@ -1692,7 +1692,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 			if (sd->servantball > 0)
 				clif_servantball( *sd );
 			if (sd->abyssball > 0)
-				clif_abyssball(sd);
+				clif_abyssball( *sd );
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
@@ -4912,7 +4912,7 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 	if (dstsd->servantball > 0)
 		clif_servantball( *dstsd, &sd->bl, SELF );
 	if (dstsd->abyssball > 0)
-		clif_abyssball( dstsd, &sd->bl, SELF );
+		clif_abyssball( *dstsd, &sd->bl, SELF );
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
@@ -9934,7 +9934,7 @@ void clif_refresh(struct map_session_data *sd)
 	if (sd->servantball)
 		clif_servantball( *sd, &sd->bl, SELF );
 	if (sd->abyssball)
-		clif_abyssball( sd, &sd->bl, SELF );
+		clif_abyssball( *sd, &sd->bl, SELF );
 	if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if (sd->vd.body_style)
