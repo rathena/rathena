@@ -54,7 +54,7 @@ function	Can_Change_Fourth	{
 		return false; // Not Transcendent Third Class
 	if( eaclass()&EAJL_FOURTH )
 		return false; // Already Fourth Class
-	if( roclass(eaclass()|EAJL_FOURTH) < 0 )
+	if( roclass((eaclass()&~EAJL_THIRD)|EAJL_FOURTH) < 0 )
 		return false; // Job has no Fourth Class
 	return true;
 }
@@ -171,7 +171,7 @@ function	Job_Options	{
 	if( .@fourth_possible ) {
 		// Fourth Job change (displayed below rebirth)
 		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
-		Job_Options(.@job_opt, roclass(.@eac|EAJL_FOURTH));
+		Job_Options(.@job_opt, roclass((.@eac&~EAJL_THIRD)|EAJL_FOURTH));
 	}
 	 
 	if (.SecondExpanded && 
