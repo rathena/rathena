@@ -2447,7 +2447,7 @@ uint64 pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 
 	// 3rd Class Job LV Check
 	if (sd->class_ & JOBL_FOURTH && !sd->change_level_4th) {
-		sd->change_level_4th = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_THIRDMASK, sd->status.sex))->max_job_level;;
+		sd->change_level_4th = job_db.find(pc_mapid2jobid(sd->class_ & MAPID_THIRDMASK | JOBL_THIRD, sd->status.sex))->max_job_level;
 		pc_setglobalreg(sd, add_str(JOBCHANGE4TH_VAR), sd->change_level_4th);
 	}
 
@@ -9619,15 +9619,10 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		if (val > pc_maxbaselv(sd)) //Capping to max
 			val = pc_maxbaselv(sd);
 		if (val > sd->status.base_level) {
-			int i = 0;
-			uint32 stat = 0, trait = 0;
-
-			for (i = 0; i < (int)(val - sd->status.base_level); i++) {
-				stat += statpoint_db.pc_gets_status_point(sd->status.base_level + i);
-				trait += statpoint_db.pc_gets_trait_point(sd->status.base_level + i);
+			for( int i = 0; i < (int)( val - sd->status.base_level ); i++ ){
+				sd->status.status_point += statpoint_db.pc_gets_status_point( sd->status.base_level + i );
+				sd->status.trait_point += statpoint_db.pc_gets_trait_point( sd->status.base_level + i );
 			}
-			sd->status.status_point += stat;
-			sd->status.trait_point += trait;
 		}
 		sd->status.base_level = val;
 		sd->status.base_exp = 0;
@@ -10029,7 +10024,6 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 		else
 			status_percent_damage(NULL, &sd->bl, 0, sp, false);
 	}
-
 	return 0;
 }
 
