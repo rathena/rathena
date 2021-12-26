@@ -10118,34 +10118,6 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
 	}
 
-	// Give or reduce transcendent status points
-	if( (b_class&JOBL_UPPER) && !(sd->class_&JOBL_UPPER) ){ // Change from a non t class to a t class -> give points
-		sd->status.status_point += battle_config.transcendent_status_points;
-		clif_updatestatus(sd,SP_STATUSPOINT);
-	}else if( !(b_class&JOBL_UPPER) && (sd->class_&JOBL_UPPER) ){ // Change from a t class to a non t class -> remove points
-		if( sd->status.status_point < battle_config.transcendent_status_points ){
-			// The player already used his bonus points, so we have to reset his status points
-			pc_resetstate(sd);
-		}else{
-			sd->status.status_point -= battle_config.transcendent_status_points;
-			clif_updatestatus(sd,SP_STATUSPOINT);
-		}
-	}
-
-	// Give or reduce trait status points
-	if ((b_class & JOBL_FOURTH) && !(sd->class_ & JOBL_FOURTH)) {// Change to a 4th job.
-		sd->status.trait_point += battle_config.trait_points_job_change;
-		clif_updatestatus(sd, SP_TRAITPOINT);
-	} else if (!(b_class & JOBL_FOURTH) && (sd->class_ & JOBL_FOURTH)) {// Change to a non 4th job.
-		if (sd->status.trait_point < battle_config.trait_points_job_change) {
-			// Player may have already used the trait statu points. Force a reset.
-			pc_resetstate(sd);
-		} else {
-			sd->status.trait_point -= battle_config.trait_points_job_change;
-			clif_updatestatus(sd, SP_TRAITPOINT);
-		}
-	}
-
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
 		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
 
@@ -10172,6 +10144,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
+	uint64 previous_class = sd->class_;
 	sd->class_ = (unsigned short)b_class;
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
@@ -10185,6 +10158,46 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		clif_updatestatus(sd,SP_BASELEVEL);
 		clif_updatestatus(sd,SP_BASEEXP);
 		clif_updatestatus(sd,SP_NEXTBASEEXP);
+	}
+
+	// Give or reduce transcendent status points
+	if( (b_class&JOBL_UPPER) && !(previous_class&JOBL_UPPER) ){ // Change from a non t class to a t class -> give points
+		sd->status.status_point += battle_config.transcendent_status_points;
+		clif_updatestatus(sd,SP_STATUSPOINT);
+	}else if( !(b_class&JOBL_UPPER) && (previous_class&JOBL_UPPER) ){ // Change from a t class to a non t class -> remove points
+		if( sd->status.status_point < battle_config.transcendent_status_points ){
+			// The player already used his bonus points, so we have to reset his status points
+			pc_resetstate(sd);
+		}else{
+			sd->status.status_point -= battle_config.transcendent_status_points;
+			clif_updatestatus(sd,SP_STATUSPOINT);
+		}
+	}
+
+	// Give or reduce trait status points
+	if ((b_class & JOBL_FOURTH) && !(previous_class & JOBL_FOURTH)) {// Change to a 4th job.
+		sd->status.trait_point += battle_config.trait_points_job_change;
+		clif_updatestatus(sd, SP_TRAITPOINT);
+		clif_updatestatus(sd, SP_UPOW);
+		clif_updatestatus(sd, SP_USTA);
+		clif_updatestatus(sd, SP_UWIS);
+		clif_updatestatus(sd, SP_USPL);
+		clif_updatestatus(sd, SP_UCON);
+		clif_updatestatus(sd, SP_UCRT);
+	} else if (!(b_class & JOBL_FOURTH) && (previous_class & JOBL_FOURTH)) {// Change to a non 4th job.
+		if (sd->status.trait_point < battle_config.trait_points_job_change) {
+			// Player may have already used the trait status points. Force a reset.
+			pc_resetstate(sd);
+		} else {
+			sd->status.trait_point = 0;
+			clif_updatestatus(sd, SP_TRAITPOINT);
+			clif_updatestatus(sd, SP_UPOW);
+			clif_updatestatus(sd, SP_USTA);
+			clif_updatestatus(sd, SP_UWIS);
+			clif_updatestatus(sd, SP_USPL);
+			clif_updatestatus(sd, SP_UCON);
+			clif_updatestatus(sd, SP_UCRT);
+		}
 	}
 
 	clif_updatestatus(sd,SP_JOBLEVEL);
