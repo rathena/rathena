@@ -1886,7 +1886,7 @@ ACMD_FUNC(bodystyle)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!(sd->class_ & JOBL_THIRD) || (sd->class_ & MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (sd->class_ & MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || (sd->class_ & MAPID_THIRDMASK) == MAPID_SOUL_REAPER) {
+	if ( (sd->class_ & JOBL_FOURTH) || !(sd->class_ & JOBL_THIRD) || (sd->class_ & MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (sd->class_ & MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || (sd->class_ & MAPID_THIRDMASK) == MAPID_SOUL_REAPER) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -2850,7 +2850,7 @@ ACMD_FUNC(stat_all)
 	}
 	
 	count = 0;
-	for (i = PARAM_STR; i <= PARAM_LUK; i++) {
+	for (i = PARAM_STR; i < PARAM_POW; i++) {
 		short new_value;
 
 		if (value > 0 && status[i] + value >= max_status[i])
@@ -2935,7 +2935,7 @@ ACMD_FUNC(trait_all) {
 			new_value = status[i] + value;
 
 		if (new_value != status[i]) {
-			pc_setstat( sd, SP_POW + i, new_value );
+			pc_setstat( sd, SP_POW + i - PARAM_POW, new_value );
 			clif_updatestatus(sd, SP_POW + i - PARAM_POW);
 			clif_updatestatus(sd, SP_UPOW + i - PARAM_POW);
 			count++;
