@@ -4928,10 +4928,10 @@ L_CheckQuest:
 		delitem getarg(1),getarg(2);
 		erasequest getarg(0);
 		specialeffect2 EF_STEAL;
-		if (BaseLevel > 99)
-			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
-		else
-			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
+		if (BaseLevel > 99 && JobLevel < 50)
+			getexp 0, JobLevel * JobLevel * (110/100) * 50;
+		else if( BaseLevel < 99 && JobLevel < 70 )
+			getexp 0, JobLevel * JobLevel * (110/100) * 10;
 		getitem 6380,1; //Mora_Coin
 		close;
 	}
