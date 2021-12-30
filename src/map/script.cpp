@@ -9596,7 +9596,7 @@ BUILDIN_FUNC(traitstatusup)
 	int type = script_getnum( st, 2 );
 
 	if( type < SP_POW || type > SP_CRT ){
-		ShowError( "building_traitstatusup: Unknown trait type %d\n", type );
+		ShowError( "buildin_traitstatusup: Unknown trait type %d\n", type );
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -9618,7 +9618,7 @@ BUILDIN_FUNC(traitstatusup2)
 	int type = script_getnum( st, 2 );
 
 	if( type < SP_POW || type > SP_CRT ){
-		ShowError( "building_traitstatusup2: Unknown trait type %d\n", type );
+		ShowError( "buildin_traitstatusup2: Unknown trait type %d\n", type );
 		return SCRIPT_CMD_FAILURE;
 	}
 

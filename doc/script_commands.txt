@@ -6043,7 +6043,7 @@ replace them:
 
 bPow -  Power
 bSta -  Stamina
-bWis -  Wisdon
+bWis -  Wisdom
 bSpl -  Spell
 bCon -  Concentration
 bCrt -  Creative
