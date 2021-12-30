@@ -6296,7 +6296,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);
 		if( battle_config.loose_ap_on_map && mapdata_flag_vs( mapdata ) ){
-			status_percent_damage(0, &sd->bl, 0, 0, 100, 0);
+			status_percent_damage( nullptr, &sd->bl, 0, 0, 100, 0 );
 		}
 		party_send_dot_remove(sd); //minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);
@@ -9103,7 +9103,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	if (battle_config.loose_ap_on_death == 1)
-		status_percent_damage(0, &sd->bl, 0, 0, 100, 0);
+		status_percent_damage( nullptr, &sd->bl, 0, 0, 100, 0 );
 
 	//Reset menu skills/item skills
 	if ((sd->skillitem) != 0)
