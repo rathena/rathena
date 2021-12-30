@@ -4,20 +4,17 @@
 #ifndef PC_GROUPS_HPP
 #define PC_GROUPS_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <map>
+#include <unordered_map>
+#include <vector>
 
+#include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
+
+// Forward declaration from atcommands.hpp
 enum AtCommandType : uint8;
 
-extern int pc_group_max;
-
-bool pc_group_exists(int group_id);
-bool pc_group_can_use_command(int group_id, const char *command, AtCommandType type);
-bool pc_group_has_permission(int group_id, int permission);
-bool pc_group_should_log_commands(int group_id);
-const char* pc_group_id2name(int group_id);
-int pc_group_id2level(int group_id);
 void pc_group_pc_load(struct map_session_data *sd);
-
 void do_init_pc_groups(void);
 void do_final_pc_groups(void);
 void pc_groups_reload(void);
@@ -90,5 +87,37 @@ static const struct s_pcg_permission_name {
 	{ "attendance",PC_PERM_ATTENDANCE },
 	{ "all_permission", PC_PERM_ALLPERMISSION },
 };
+
+struct s_player_group{
+	uint32 id;
+	std::string name;
+	uint32 level;
+	bool log_commands;
+	std::unordered_map<std::string, bool> commands;
+	std::unordered_map<std::string, bool> char_commands;
+	uint32 permissions;
+	uint32 index;
+
+public:
+	bool can_use_command( const std::string& command, AtCommandType type );
+	bool has_permission( e_pc_permission permission );
+	bool should_log_commands();
+};
+
+class PlayerGroupDatabase : public TypesafeYamlDatabase<uint32, s_player_group>{
+private:
+	std::map<uint32, std::vector<std::string>> inheritance;
+
+public:
+	PlayerGroupDatabase() : TypesafeYamlDatabase( "PLAYER_GROUP_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+	void loadingFinished();
+};
+
+extern PlayerGroupDatabase player_group_db;
 
 #endif /* PC_GROUPS_HPP */

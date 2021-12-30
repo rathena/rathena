@@ -19,6 +19,7 @@
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "map.hpp" // RC_ALL
 #include "mob.hpp" //e_size
+#include "pc_groups.hpp" // s_player_group
 #include "script.hpp" // struct script_reg, struct script_regstr
 #include "searchstore.hpp"  // struct s_search_store_info
 #include "status.hpp" // unit_data
@@ -401,7 +402,8 @@ struct map_session_data {
 	} special_state;
 	uint32 login_id1, login_id2;
 	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
-	int group_id, group_pos, group_level;
+	int group_id;
+	std::shared_ptr<s_player_group> group;
 	unsigned int permissions;/* group permissions */
 	int count_rewarp; //count how many time we being rewarped
 
