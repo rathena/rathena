@@ -8156,8 +8156,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sd->state.workinprogress = WIP_DISABLE_ALL;
 				sd->vend_skill_lv = skill_lv;
 				ARR_FIND(0, MAX_CART, i, sd->cart.u.items_cart[i].nameid && sd->cart.u.items_cart[i].id == 0);
-				if (i < MAX_CART)
+				if (i < MAX_CART) {
+					sd->state.pending_vending_ui = 1;
 					intif_storage_save(sd, &sd->cart);
+				}
 				else
 					clif_openvendingreq(sd,2+skill_lv);
 			}

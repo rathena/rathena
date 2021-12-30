@@ -364,6 +364,7 @@ struct map_session_data {
 		unsigned int autolooting : 1; //performance-saver, autolooting state for @alootid
 		unsigned int gmaster_flag : 1;
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
+		unsigned int pending_vending_ui : 1; // flag whether this player still needs 
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
 		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
 		bool hold_recalc;
