@@ -11108,10 +11108,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->state.hpmeter_visible = 1;
 		}
 
-		if (battle_config.loose_ap_on_map == 1 && 
-			(mapdata->flag[MF_PVP] || mapdata_flag_gvg2_no_te(mapdata) || mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2_te(mapdata)))
-			status_percent_damage(0, &sd->bl, 0, 0, 100, 0);
-
 		status_change_clear_onChangeMap(&sd->bl, &sd->sc);
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
 		status_calc_pc(sd, sd->state.autotrade ? SCO_FIRST : SCO_NONE); // Some conditions are map-dependent so we must recalculate
