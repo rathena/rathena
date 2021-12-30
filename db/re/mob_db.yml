@@ -36,6 +36,8 @@
 #   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
 #   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
 #   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Resistance              Physical resistance of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicResistance         Magic resistance of the monster, reduces magical skill damage. (Default: 0)
 #   Str                     Strength which affects attack. (Default: 1)
 #   Agi                     Agility which affects flee. (Default: 1)
 #   Vit                     Vitality which affects defense. (Default: 1)
@@ -75,7 +77,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Id: 1001
@@ -88910,14 +88912,106 @@ Body:
 #    AegisName: 4JOB_R_FALCON
 #  - Id: 20833
 #    AegisName: 4JOB_WORG
-#  - Id: 20834
-#    AegisName: MEISTER_ABR1
-#  - Id: 20835
-#    AegisName: MEISTER_ABR2
-#  - Id: 20836
-#    AegisName: MEISTER_ABR3
-#  - Id: 20837
-#    AegisName: MEISTER_ABR4
+  - Id: 20834
+    AegisName: ABR_BATTLE_WARIOR
+    Name: ABR Battle Warrior
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20835
+    AegisName: ABR_DUAL_CANNON
+    Name: ABR Duel Cannon
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20836
+    AegisName: ABR_MOTHER_NET
+    Name: ABR Mother Net
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20837
+    AegisName: ABR_INFINITY
+    Name: ABR Infinity
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 6
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
 #  - Id: 20838
 #    AegisName: ELEMETAL_MASTER_S1
 #  - Id: 20839
@@ -88938,14 +89032,106 @@ Body:
 #    AegisName: MD_HIDDEN_GROUND01
 #  - Id: 20847
 #    AegisName: MD_HIDDEN_GROUND02
-#  - Id: 20848
-#    AegisName: SUMMON_WOODENWARRIOR
-#  - Id: 20849
-#    AegisName: SUMMON_WOODEN_FAIRY
-#  - Id: 20850
-#    AegisName: SUMMON_CREEPER
-#  - Id: 20851
-#    AegisName: SUMMON_HELLTREE
+  - Id: 20848
+    AegisName: SUMMON_WOODENWARRIOR
+    Name: Wooden Warrior
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20849
+    AegisName: SUMMON_WOODEN_FAIRY
+    Name: Wooden Fairy
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20850
+    AegisName: SUMMON_CREEPER
+    Name: Creeper
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
+  - Id: 20851
+    AegisName: SUMMON_HELLTREE
+    Name: Hell Tree
+    Level: 200
+    Hp: 20000
+    Defense: 200
+    MagicDefense: 40
+    Str: 10
+    Agi: 10
+    Vit: 10
+    Int: 10
+    Dex: 10
+    Luk: 10
+    AttackRange: 5
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Plant
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 300
+    Ai: 20
 #  - Id: 20856
 #    AegisName: MD_N_ARENA_1
 #  - Id: 20857

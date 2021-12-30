@@ -335,6 +335,10 @@ Body:
     Help: |
       Params: [<HP> <SP>]
       Heals the desired amount of HP and SP. No value specified will do a full heal.
+  - Command: healap
+    Help: |
+      Params: [<AP>]
+      Heals the desired amount of AP. No value specified will do a full AP heal.
   - Command: dye
     Aliases:
       - ccolor
@@ -480,6 +484,9 @@ Body:
   - Command: stpoint
     Help: |
       Params: <number of points> - Gives you the desired number of stat points.
+  - Command: trpoint
+    Help: |
+      Params: <number of points> - Gives you the desired number of trait stat points.
   - Command: skpoint
     Help: |
       Params: <number of points> - Gives you the desired number of skill points.

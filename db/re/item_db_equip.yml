@@ -144377,6 +144377,7 @@ Body:
     AegisName: 4th_Q_Necklace
     Name: Hourglass Necklace
     Type: Armor
+    Buy: 20
     Locations:
       Both_Accessory: true
     ArmorLevel: 1
@@ -144390,6 +144391,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      bonus bAllTraits,6-(JobLevel/5);
   - Id: 490090
     AegisName: aegis_490090
     Name: Aegir Ring

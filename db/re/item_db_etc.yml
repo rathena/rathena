@@ -31918,7 +31918,7 @@ Body:
     Name: Special Alloy Trap
     Type: Etc
     Buy: 300
-    Weight: 1
+    Weight: 2
     Flags:
       BuyingStore: true
   - Id: 7941
@@ -56651,36 +56651,43 @@ Body:
     AegisName: Beaker
     Name: Beaker
     Type: Etc
+    Buy: 1000
     Weight: 1
   - Id: 1000276
     AegisName: Flame_Acid_Bottle
     Name: Flame Acid Bottle
     Type: Etc
+    Buy: 20
     Weight: 1
   - Id: 1000277
     AegisName: Earth_Acid_Bottle
     Name: Earth Acid Bottle
     Type: Etc
+    Buy: 20
     Weight: 1
   - Id: 1000278
     AegisName: Gale_Acid_Bottle
     Name: Gale Acid Bottle
     Type: Etc
+    Buy: 20
     Weight: 1
   - Id: 1000279
     AegisName: Icicle_Acid_Bottle
     Name: Icicle Acid Bottle
     Type: Etc
+    Buy: 20
     Weight: 1
   - Id: 1000280
     AegisName: High_Coating_Bottle
-    Name: Advanced Coating Potion
+    Name: High Coating Bottle
     Type: Etc
+    Buy: 20
     Weight: 1
   - Id: 1000281
     AegisName: High_Plant_Bottle
-    Name: Greater Plant Bottle
+    Name: High Plant Bottle
     Type: Etc
+    Buy: 20
     Weight: 1
   - Id: 1000282
     AegisName: EpisodClear16
@@ -56724,38 +56731,45 @@ Body:
       NoAuction: true
   - Id: 1000289
     AegisName: Device_Capsule
-    Name: Machine Capsule
+    Name: Device Capsule
     Type: Etc
+    Buy: 20
     Weight: 5
   - Id: 1000290
     AegisName: Auto_Battle_Capsule
-    Name: ABR Capsule
+    Name: Auto Battle Capsule
     Type: Etc
+    Buy: 20
     Weight: 10
   - Id: 1000291
     AegisName: Wind_Stone_4th
-    Name: Lightning Stone
+    Name: Wind Stone 4th
     Type: Etc
+    Buy: 1000
     Weight: 1
   - Id: 1000292
     AegisName: Earth_Stone_4th
-    Name: Earth Stone
+    Name: Earth Stone 4th
     Type: Etc
+    Buy: 1000
     Weight: 1
   - Id: 1000293
     AegisName: Flame_Stone_4th
-    Name: Fire Stone
+    Name: Flame Stone 4th
     Type: Etc
+    Buy: 1000
     Weight: 1
   - Id: 1000294
     AegisName: Poison_Stone_4th
-    Name: Poison Stone
+    Name: Poison Stone 4th
     Type: Etc
+    Buy: 1000
     Weight: 1
   - Id: 1000295
     AegisName: Ice_Stone_4th
-    Name: Ice Stone
+    Name: Ice Stone 4th
     Type: Etc
+    Buy: 1000
     Weight: 1
   - Id: 1000296
     AegisName: RuneknightStone_Robe2
@@ -56821,6 +56835,7 @@ Body:
     AegisName: Hawk_Flute
     Name: Hawk Flute
     Type: Etc
+    Buy: 20
     Trade:
       Override: 100
       NoDrop: true
@@ -56952,13 +56967,15 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1000346
-    AegisName: aegis_1000346
-    Name: Guide for 4th Job Change
+    AegisName: 4th_Job_Guide
+    Name: 4th Job Guide
     Type: Etc
+    Buy: 20
   - Id: 1000352
-    AegisName: aegis_1000352
-    Name: Machine Creation Guide
+    AegisName: Device_Creation_Guide
+    Name: Device Creation Guide
     Type: Etc
+    Buy: 20
     Weight: 10
   - Id: 1000363
     AegisName: MD_Airboat_Tokken

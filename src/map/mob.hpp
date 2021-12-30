@@ -74,6 +74,14 @@ enum MOBID {
 	MOBID_S_GIANT_HORNET,
 	MOBID_S_LUCIOLA_VESPA,
 	MOBID_GUILD_SKILL_FLAG	= 20269,
+	MOBID_ABR_BATTLE_WARIOR = 20834,
+	MOBID_ABR_DUAL_CANNON,
+	MOBID_ABR_MOTHER_NET,
+	MOBID_ABR_INFINITY,
+	MOBID_BIONIC_WOODENWARRIOR = 20848,
+	MOBID_BIONIC_WOODEN_FAIRY,
+	MOBID_BIONIC_CREEPER,
+	MOBID_BIONIC_HELLTREE,
 };
 
 ///Mob skill states.
@@ -265,7 +273,7 @@ private:
 	bool parseDropNode(std::string nodeName, YAML::Node node, uint8 max, s_mob_drop *drops);
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 2, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 3, 1) {
 
 	}
 

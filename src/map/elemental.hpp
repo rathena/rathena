@@ -28,6 +28,7 @@ enum e_elemental_skillmode : uint8 {
 
 ///Enum of Elemental ID
 enum elemental_elementalid  : uint16 {
+	// Sorcerer's Elementals
 	ELEMENTALID_AGNI_S = 2114,
 	ELEMENTALID_AGNI_M,
 	ELEMENTALID_AGNI_L,
@@ -40,6 +41,13 @@ enum elemental_elementalid  : uint16 {
 	ELEMENTALID_TERA_S,
 	ELEMENTALID_TERA_M,
 	ELEMENTALID_TERA_L,
+
+	// Elemental Master's Elementals
+	ELEMENTALID_DILUVIO = 20816,
+	ELEMENTALID_ARDOR,
+	ELEMENTALID_PROCELLA,
+	ELEMENTALID_TERREMOTUS,
+	ELEMENTALID_SERPENS,
 };
 
 struct s_elemental_skill {

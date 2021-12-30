@@ -18,6 +18,8 @@ CREATE TABLE `mob_db_re` (
   `attack2` smallint(6) unsigned DEFAULT NULL,
   `defense` smallint(6) unsigned DEFAULT NULL,
   `magic_defense` smallint(6) unsigned DEFAULT NULL,
+  `resistance` smallint(6) unsigned DEFAULT NULL,
+  `magic_resistance` smallint(6) unsigned DEFAULT NULL,
   `str` smallint(6) unsigned DEFAULT NULL,
   `agi` smallint(6) unsigned DEFAULT NULL,
   `vit` smallint(6) unsigned DEFAULT NULL,

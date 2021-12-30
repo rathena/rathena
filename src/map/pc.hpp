@@ -40,6 +40,9 @@ enum sc_type : int16;
 #define MAX_SOUL_BALL 20 /// Max soul ball
 #define MAX_STELLAR_MARKS 5 /// Max stellar marks
 #define MAX_UNITED_SOULS 12 /// Max united souls
+#define MAX_SERVANTBALL 5 /// Max servant weapons
+#define MAX_SERVANT_SIGN 5 /// Max servant signs
+#define MAX_ABYSSBALL 5 /// Max abyss spheres
 
 #define LANGTYPE_VAR "#langtype"
 #define CASHPOINT_VAR "#CASHPOINTS"
@@ -52,6 +55,7 @@ enum sc_type : int16;
 #define PCDIECOUNTER_VAR "PC_DIE_COUNTER"
 #define JOBCHANGE2ND_VAR "jobchange_level"
 #define JOBCHANGE3RD_VAR "jobchange_level_3rd"
+#define JOBCHANGE4TH_VAR "jobchange_level_4th"
 #define TKMISSIONID_VAR "TK_MISSION_ID"
 #define TKMISSIONCOUNT_VAR "TK_MISSION_COUNT"
 #define ATTENDANCE_DATE_VAR "#AttendanceDate"
@@ -449,6 +453,7 @@ struct map_session_data {
 	bool skillitem_keep_requirement;
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
+	uint16 skill_id_song, skill_lv_song;
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
 	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
@@ -503,6 +508,7 @@ struct map_session_data {
 		int magic_addclass[CLASS_MAX];
 		int magic_addsize[SZ_MAX];
 		int magic_atk_ele[ELE_MAX];
+		int weapon_subsize[SZ_MAX];
 		int magic_subsize[SZ_MAX];
 		int critaddrace[RC_MAX];
 		int expaddrace[RC_MAX];
@@ -549,7 +555,7 @@ struct map_session_data {
 
 	// zeroed vars start here.
 	struct s_bonus {
-		int hp, sp;
+		int hp, sp, ap;
 		int atk_rate;
 		int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
 		int nsshealhp,nsshealsp;
@@ -594,10 +600,11 @@ struct map_session_data {
 	} bonus;
 	// zeroed vars end here.
 
-	int castrate,hprate,sprate,dsprate;
+	int castrate,hprate,sprate,aprate,dsprate;
 	int hprecov_rate,sprecov_rate;
 	int matk_rate;
 	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
+	int patk_rate,smatk_rate,res_rate,mres_rate,hplus_rate,crate_rate;
 
 	t_itemid itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
@@ -610,6 +617,8 @@ struct map_session_data {
 	int spiritcharm_type; //Spirit type
 	int spiritcharm_timer[MAX_SPIRITCHARM];
 	int8 soulball, soulball_old;
+	int8 servantball, servantball_old;
+	int8 abyssball, abyssball_old;
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
@@ -618,6 +627,7 @@ struct map_session_data {
 	int devotion[MAX_DEVOTION]; //Stores the account IDs of chars devoted to.
 	int stellar_mark[MAX_STELLAR_MARKS]; // Stores the account ID's of character's with a stellar mark.
 	int united_soul[MAX_UNITED_SOULS]; // Stores the account ID's of character's who's soul is united.
+	int servant_sign[MAX_SERVANT_SIGN]; // Stores the account ID's of character's with a servant sign.
 
 	int trade_partner;
 	struct s_deal {
@@ -676,6 +686,7 @@ struct map_session_data {
 
 	uint16 change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
 	uint16 change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
+	uint16 change_level_4th; // job level when changing from 3rd to 4th class [jobchange_level_4rd in global_reg_value]
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
@@ -1110,7 +1121,8 @@ enum e_mado_type : uint16 {
 	( (class_) >= JOB_BABY_STAR_GLADIATOR2	&& (class_) <= JOB_BABY_STAR_EMPEROR2 ) || \
 	( (class_) >= JOB_DRAGON_KNIGHT			&& (class_) <= JOB_TROUVERE       ) || \
 	( (class_) >= JOB_WINDHAWK2				&& (class_) <= JOB_IMPERIAL_GUARD2 ) || \
-	( (class_) >= JOB_SKY_EMPEROR			&& (class_) <= JOB_SPIRIT_HANDLER ) \
+	( (class_) >= JOB_SKY_EMPEROR			&& (class_) <= JOB_SPIRIT_HANDLER ) || \
+	  (class_) == JOB_SKY_EMPEROR2 \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
@@ -1168,24 +1180,26 @@ public:
 
 extern AttendanceDatabase attendance_db;
 
-class PlayerStatPointDatabase : public YamlDatabase {
-private:
-	std::unordered_map<uint16, uint32> statpoint_table;
+struct s_statpoint_entry{
+	uint16 level;
+	uint32 statpoints;
+	uint32 traitpoints;
+};
 
+class PlayerStatPointDatabase : public TypesafeCachedYamlDatabase<uint16, s_statpoint_entry>{
 public:
-	PlayerStatPointDatabase() : YamlDatabase("STATPOINT_DB", 1) {
+	PlayerStatPointDatabase() : TypesafeCachedYamlDatabase("STATPOINT_DB", 2, 1) {
 
 	}
 
-	void clear(){
-		statpoint_table.clear();
-	}
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
 
 	uint32 pc_gets_status_point(uint16 level);
 	uint32 get_table_point(uint16 level);
+	uint32 pc_gets_trait_point(uint16 level);
+	uint32 get_trait_table_point(uint16 level);
 };
 
 extern PlayerStatPointDatabase statpoint_db;
@@ -1229,6 +1243,7 @@ void pc_setinventorydata(struct map_session_data *sd);
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
+uint8 pc_checkskill_imperial_guard(struct map_session_data *sd, short flag);
 short pc_checkequip(struct map_session_data *sd,int pos,bool checkall=false);
 bool pc_checkequip2(struct map_session_data *sd, t_itemid nameid, int min, int max);
 
@@ -1339,6 +1354,10 @@ bool pc_statusup(struct map_session_data*,int,int);
 int pc_statusup2(struct map_session_data*,int,int);
 int pc_getstat(map_session_data *sd, int type);
 int pc_setstat(struct map_session_data* sd, int type, int val);
+int pc_need_trait_point(struct map_session_data *, int, int);
+int pc_maxtraitparameterincrease(struct map_session_data*, int);
+bool pc_traitstatusup(struct map_session_data*, int, int);
+int pc_traitstatusup2(struct map_session_data*, int, int);
 void pc_skillup(struct map_session_data*,uint16 skill_id);
 int pc_allskillup(struct map_session_data*);
 int pc_resetlvl(struct map_session_data*,int type);
@@ -1359,11 +1378,11 @@ int pc_sub_skillatk_bonus(struct map_session_data *sd, uint16 skill_id);
 int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id);
 int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id);
 
-void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp);
+void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp, unsigned int ap);
 int pc_dead(struct map_session_data *sd,struct block_list *src);
-void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp);
+void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp, unsigned int ap = 0);
 bool pc_revive_item(struct map_session_data *sd);
-void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type);
+void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int ap, int type);
 int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
 bool pc_jobchange(struct map_session_data *sd, int job, char upper);
@@ -1479,6 +1498,10 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
 int pc_addsoulball(map_session_data *sd, int max);
 int pc_delsoulball(map_session_data *sd, int count, bool type);
+void pc_addservantball( struct map_session_data& sd, int count = 1 );
+void pc_delservantball( struct map_session_data& sd, int count = 1 );
+void pc_addabyssball( struct map_session_data& sd, int count = 1 );
+void pc_delabyssball( struct map_session_data& sd, int count = 1 );
 
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(uint32 char_id, int job);

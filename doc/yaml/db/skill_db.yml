@@ -32,6 +32,9 @@
 #   Knockback:                Amount of tiles the skill knockbacks. (Default: 0)
 #     - Level                 Skill level.
 #       Amount                Knockback count at specific skill level.
+#   GiveAp:                   Gives AP on successful skill cast. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                AP gained at specific skill level.
 #   CopyFlags:                Determines if the skill is copyable. (Optional)
 #     Skill:                  Type of skill that can copy.
 #     RemoveRequirement:      Remove a requirement type. (Optional)
@@ -70,12 +73,18 @@
 #     SpCost:                 SP required to cast. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP required at specific skill level.
+#     ApCost:                 AP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP required at specific skill level.
 #     HpRateCost:             HP rate required to cast. If positive, uses current HP, else uses Max HP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              HP rate required at specific skill level.
 #     SpRateCost:             SP rate required to cast. If positive, uses current SP, else uses Max SP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP rate required at specific skill level.
+#     ApRateCost:             AP rate required to cast. If positive, uses current AP, else uses Max AP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP rate required at specific skill level.
 #     MaxHpTrigger:           Maximum amount of HP to cast the skill. (Default: 0)
 #       - Level               Skill level.
 #         Amount              Maximum HP trigger required at specific skill level.

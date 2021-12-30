@@ -63,7 +63,7 @@ typedef uint32 t_itemid;
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1450 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -165,8 +165,12 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_MERCSKILL 41
 
 //Elemental System
-#define MAX_ELEMENTALSKILL 42
+#define MAX_ELEMENTALSKILL 57
 #define EL_SKILLBASE 8401
+
+//Automated Battle Robot System
+#define ABR_SKILLBASE 8601
+#define MAX_ABRSKILL 5
 
 //Achievement System
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
@@ -516,8 +520,8 @@ struct mmo_charstatus {
 	int zeny;
 
 	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point;
-	int hp,max_hp,sp,max_sp;
+	unsigned int status_point,skill_point,trait_point;
+	int hp,max_hp,sp,max_sp,ap,max_ap;
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
@@ -1021,6 +1025,8 @@ enum e_job {
 	JOB_NIGHT_WATCH,
 	JOB_HYPER_NOVICE,
 	JOB_SPIRIT_HANDLER,
+
+	JOB_SKY_EMPEROR2 = 4316,
 
 	JOB_MAX,
 };
