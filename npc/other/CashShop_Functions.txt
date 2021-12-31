@@ -328,3 +328,28 @@ function	script	F_CashReduceStat	{
 	statusup2 .@type,.@amount;
 	return;
 }
+
+// Trait Status reduction potion
+//============================================================
+// - Permanently reduces base trait stat <type> by <val>.
+// - Returns trait status points equals to points needed to raise
+//   that trait stat to original value.
+// - Doesn't work if base trait status <type> would become lower than 0 after reduction.
+// * callfunc("F_CashReduceTraitStat",<type>{,<val>,<itemid>});
+function	script	F_CashReduceTraitStat	{
+	.@type = getarg(0);
+	.@amount = getarg(1, -1);
+	.@itemid = getarg(2, 0);
+	
+	if((readparam(.@type) + .@amount) < 0) return;
+	
+	if(.@itemid) {
+		if(countitem(.@itemid))
+			delitem .@itemid,1;
+		else
+			return;
+	}
+	TraitPoint += needed_trait_point(.@type, .@amount);
+	traitstatusup2 .@type,.@amount;
+	return;
+}

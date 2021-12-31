@@ -106,22 +106,16 @@ bonus bWis,n;      			WIS + n
 bonus bSpl,n;      			SPL + n
 bonus bCon,n;      			CON + n
 bonus bCrt,n;      			CRT + n
+bonus bAllTraitStats,n; 		POW + n, STA + n, WIS + n, SPL + n, CON + n, CRT + n
 
-Sub-Trait Stats
----------------
-bonus bPatk,n;      		Power Attack (P.ATK) + n
-bonus bSmatk,n;      		Spell Magic Attack (S.MATK) + n
-bonus bHplus,n;      		Heal Plus (H.PLUS) + n
-bonus bCrate,n;      		Critical Rate (C.RATE) + n
-bonus bRes,n;      			Physical Resistance (RES) + n
-bonus bMres,n;      		Magic Resistance (MRES)  + n
-
-HP/SP
+HP/SP/AP
 -----
 bonus bMaxHP,n;    			MaxHP + n
 bonus bMaxHPrate,n;			MaxHP + n% 
 bonus bMaxSP,n;    			MaxSP + n
 bonus bMaxSPrate,n;			MaxSP + n%
+bonus bMaxAP,n;    			MaxAP + n
+bonus bMaxAPrate,n;			MaxAP + n%
 
 Atk/Def
 -------
@@ -162,6 +156,18 @@ bonus bAspd,n;        			Attack speed + n
 bonus bAspdRate,n;    			Attack speed + n%
 bonus bAtkRange,n;    			Attack range + n
 bonus bAddMaxWeight,n;			MaxWeight + n (in units of 0.1)
+bonus bPAtk,n;         			PAtk + n
+bonus bPAtkRate,n;     			PAtk + n%
+bonus bSMatk,n;         		SMatk + n
+bonus bSMatkRate,n;     		SMatk + n%
+bonus bRes,n;         			Res + n
+bonus bResRate,n;     			Res + n%
+bonus bMRes,n;         			MRes + n
+bonus bMResRate,n;     			MRes + n%
+bonus bHPlus,n;         		HPlus + n
+bonus bHPlusRate,n;     		HPlus + n%
+bonus bCRate,n;         		CRate + n
+bonus bCRateRate,n;     		CRate + n%
 
 =======================
 | 2. Extended Bonuses |
@@ -264,7 +270,8 @@ bonus2 bSubClass,c,x;     		+x% damage reduction against class c
 bonus2 bAddSize,s,x;      		+x% physical damage against size s
 bonus2 bMagicAddSize,s,x; 		+x% magical damage against size s
 bonus2 bSubSize,s,x;      		+x% damage reduction against size s
-bonus2 bMagicSubSize,s,x;      	+x% magic damage reduction against size s
+bonus2 bWeaponSubSize,s,x;		+x% physical damage reduction against size s
+bonus2 bMagicSubSize,s,x;		+x% magic damage reduction against size s
 bonus bNoSizeFix;       		Ignores the size modifier when calculating damage
 
 bonus2 bAddDamageClass,mid,x;     	+x% physical damage against monster mid

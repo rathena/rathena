@@ -1857,7 +1857,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T) {
+      if (Class == Job_Assassin_Cross || Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Shadow_Cross) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
       }
@@ -50841,6 +50841,48 @@ Body:
       BuyingStore: true
     Script: |
       /* upgradeui 100436; */
+  - Id: 100452
+    AegisName: Minus_POW
+    Name: POW Reduction Potion
+    Type: Delayconsume
+    Buy: 10
+    Script: |
+      callfunc "F_CashReduceTraitStat",bPow,-1,100452;
+  - Id: 100453
+    AegisName: Minus_SPL
+    Name: SPL Reduction Potion
+    Type: Delayconsume
+    Buy: 10
+    Script: |
+      callfunc "F_CashReduceTraitStat",bSpl,-1,100453;
+  - Id: 100454
+    AegisName: Minus_STA
+    Name: STA Reduction Potion
+    Type: Delayconsume
+    Buy: 10
+    Script: |
+      callfunc "F_CashReduceTraitStat",bSta,-1,100454;
+  - Id: 100455
+    AegisName: Minus_WIS
+    Name: WIS Reduction Potion
+    Type: Delayconsume
+    Buy: 10
+    Script: |
+      callfunc "F_CashReduceTraitStat",bWis,-1,100455;
+  - Id: 100456
+    AegisName: Minus_CON
+    Name: CON Reduction Potion
+    Type: Delayconsume
+    Buy: 10
+    Script: |
+      callfunc "F_CashReduceTraitStat",bCon,-1,100456;
+  - Id: 100457
+    AegisName: Minus_CRT
+    Name: CRT Reduction Potion
+    Type: Delayconsume
+    Buy: 10
+    Script: |
+      callfunc "F_CashReduceTraitStat",bCrt,-1,100457;
   - Id: 100466
     AegisName: Egir_Power_Box
     Name: Aegir's Power Box
@@ -50921,6 +50963,70 @@ Body:
       Container: true
     Script: |
       /* getgroupitem(IG_Enchant_Stone_Box22); */
+  - Id: 100516
+    AegisName: Eye_Cleaner
+    Name: Eye Cleaner
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_DEEPBLIND;
+  - Id: 100517
+    AegisName: Ear_Cleaner
+    Name: Ear Cleaner
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_DEEPSILENCE;
+  - Id: 100518
+    AegisName: Tonics
+    Name: Tonics
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_LASSITUDE;
+  - Id: 100519
+    AegisName: Mini_Extinguisher
+    Name: Mini Extinguisher
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_CONFLAGRATION;
+  - Id: 100520
+    AegisName: Water_Of_Lucky
+    Name: Water Of Lucky
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_MISFORTUNE;
+  - Id: 100521
+    AegisName: Strong_Antidote
+    Name: Strong Antidote
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_DEADLYPOISON;
+  - Id: 100522
+    AegisName: High_Energy_Chocolate
+    Name: High Energy Chocolate
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_DEPRESSION;
+  - Id: 100523
+    AegisName: Refined_Holy_Water
+    Name: Refined Holy Water
+    Type: Healing
+    Buy: 20
+    Weight: 50
+    Script: |
+      sc_end SC_HANDICAPSTATE_HOLYFLAME;
   - Id: 100572
     AegisName: FullPeneShadow_Mix
     Name: Full Penetration Shadow Thump Box

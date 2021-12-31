@@ -1027,6 +1027,146 @@ enum sc_type : int16 {
 	SC_BURNT,
 	SC_CHILL,
 
+	// 4th Job Common Status
+	SC_HANDICAPSTATE_DEEPBLIND,
+	SC_HANDICAPSTATE_DEEPSILENCE,
+	SC_HANDICAPSTATE_LASSITUDE,
+	SC_HANDICAPSTATE_FROSTBITE,
+	SC_HANDICAPSTATE_SWOONING,
+	SC_HANDICAPSTATE_LIGHTNINGSTRIKE,
+	SC_HANDICAPSTATE_CRYSTALLIZATION,
+	SC_HANDICAPSTATE_CONFLAGRATION,
+	SC_HANDICAPSTATE_MISFORTUNE,
+	SC_HANDICAPSTATE_DEADLYPOISON,
+	SC_HANDICAPSTATE_DEPRESSION,
+	SC_HANDICAPSTATE_HOLYFLAME,
+
+	// Dragon Knight
+	SC_SERVANTWEAPON,
+	SC_SERVANT_SIGN,
+	SC_CHARGINGPIERCE,
+	SC_CHARGINGPIERCE_COUNT,
+	SC_DRAGONIC_AURA,
+	SC_VIGOR,
+
+	// Arch Mage
+	SC_DEADLY_DEFEASANCE,
+	SC_CLIMAX_DES_HU,
+	SC_CLIMAX,
+	SC_CLIMAX_EARTH,
+	SC_CLIMAX_BLOOM,
+	SC_CLIMAX_CRYIMP,
+
+	// Windhawk
+	SC_WINDSIGN,
+	SC_CRESCIVEBOLT,
+	SC_CALAMITYGALE,
+
+	// Cardinal
+	SC_MEDIALE,
+	SC_A_VITA,
+	SC_A_TELUM,
+	SC_PRE_ACIES,
+	SC_COMPETENTIA,
+	SC_RELIGIO,
+	SC_BENEDICTUM,
+
+	// Meister
+	SC_AXE_STOMP,
+	SC_A_MACHINE,
+	SC_D_MACHINE,
+	SC_ABR_BATTLE_WARIOR,
+	SC_ABR_DUAL_CANNON,
+	SC_ABR_MOTHER_NET,
+	SC_ABR_INFINITY,
+
+	// Shadow Cross
+	SC_SHADOW_EXCEED,
+	SC_DANCING_KNIFE,
+	SC_POTENT_VENOM,
+	SC_SHADOW_SCAR,
+	SC_E_SLASH_COUNT,
+	SC_SHADOW_WEAPON,
+
+	// Imperial Guard
+	SC_GUARD_STANCE,
+	SC_ATTACK_STANCE,
+	SC_GUARDIAN_S,
+	SC_REBOUND_S,
+	SC_HOLY_S,
+	SC_ULTIMATE_S,
+	SC_SPEAR_SCAR,
+	SC_SHIELD_POWER,
+
+	// Elemental Master
+	SC_SPELL_ENCHANTING,
+	SC_SUMMON_ELEMENTAL_ARDOR,
+	SC_SUMMON_ELEMENTAL_DILUVIO,
+	SC_SUMMON_ELEMENTAL_PROCELLA,
+	SC_SUMMON_ELEMENTAL_TERREMOTUS,
+	SC_SUMMON_ELEMENTAL_SERPENS,
+	SC_ELEMENTAL_VEIL,
+
+	// Troubadour/Trouvere
+	SC_MYSTIC_SYMPHONY,
+	SC_KVASIR_SONATA,
+	SC_SOUNDBLEND,
+	SC_GEF_NOCTURN,
+	SC_AIN_RHAPSODY,
+	SC_MUSICAL_INTERLUDE,
+	SC_JAWAII_SERENADE,
+	SC_PRON_MARCH,
+	SC_ROSEBLOSSOM,
+
+	// Inquisitor
+	SC_POWERFUL_FAITH,
+	SC_SINCERE_FAITH,
+	SC_FIRM_FAITH,
+	SC_HOLY_OIL,
+	SC_FIRST_BRAND,
+	SC_SECOND_BRAND,
+	SC_SECOND_JUDGE,
+	SC_THIRD_EXOR_FLAME,
+	SC_FIRST_FAITH_POWER,
+	SC_MASSIVE_F_BLASTER,
+
+	// Biolo
+	SC_PROTECTSHADOWEQUIP,
+	SC_RESEARCHREPORT,
+	SC_BO_HELL_DUSTY,
+	SC_BIONIC_WOODENWARRIOR,
+	SC_BIONIC_WOODEN_FAIRY,
+	SC_BIONIC_CREEPER,
+	SC_BIONIC_HELLTREE,
+
+	// Abyss Chaser
+	SC_SHADOW_STRIP,
+	SC_ABYSS_DAGGER,
+	SC_ABYSSFORCEWEAPON,
+	SC_ABYSS_SLAYER,
+
+	// Super Elementals
+	SC_FLAMETECHNIC,
+	SC_FLAMETECHNIC_OPTION,
+	SC_FLAMEARMOR,
+	SC_FLAMEARMOR_OPTION,
+	SC_COLD_FORCE,
+	SC_COLD_FORCE_OPTION,
+	SC_CRYSTAL_ARMOR,
+	SC_CRYSTAL_ARMOR_OPTION,
+	SC_GRACE_BREEZE,
+	SC_GRACE_BREEZE_OPTION,
+	SC_EYES_OF_STORM,
+	SC_EYES_OF_STORM_OPTION,
+	SC_EARTH_CARE,
+	SC_EARTH_CARE_OPTION,
+	SC_STRONG_PROTECTION,
+	SC_STRONG_PROTECTION_OPTION,
+	SC_DEEP_POISONING,
+	SC_DEEP_POISONING_OPTION,
+	SC_POISON_SHIELD,
+	SC_POISON_SHIELD_OPTION,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -2532,8 +2672,8 @@ enum scs_flag {
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum scb_flag
-{
+enum scb_flag : uint64
+{	// Main Flags
 	SCB_NONE	= 0x00000000,
 	SCB_BASE	= 0x00000001,
 	SCB_MAXHP	= 0x00000002,
@@ -2565,10 +2705,29 @@ enum scb_flag
 	SCB_RACE	= 0x08000000,
 	SCB_RANGE	= 0x10000000,
 	SCB_REGEN	= 0x20000000,
-	SCB_DYE		= 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
 
-	SCB_BATTLE	= 0x3FFFFFFE,
-	SCB_ALL		= 0x3FFFFFFF
+	// 4th Job T.Stat/T.Sub-Stat Flags
+	SCB_MAXAP	= 0x40000000,
+	SCB_POW		= 0x80000000,
+	SCB_STA		= 0x000100000000,
+	SCB_WIS		= 0x000200000000,
+	SCB_SPL		= 0x000400000000,
+	SCB_CON		= 0x000800000000,
+	SCB_CRT		= 0x001000000000,
+	SCB_PATK	= 0x002000000000,
+	SCB_SMATK	= 0x004000000000,
+	SCB_RES		= 0x008000000000,
+	SCB_MRES	= 0x010000000000,
+	SCB_HPLUS	= 0x020000000000,
+	SCB_CRATE	= 0x040000000000,
+
+	// Extra Flags
+	// These are flags not sent through battle/all flags. Always keep these last.
+	SCB_DYE		= 0x080000000000, // force cloth-dye change to 0 to avoid client crashes.
+
+	// Special flags for updating all stat/sub-stat stuff on request.
+	SCB_BATTLE	= 0x07FFFFFFFFFE,// All except BASE and extra flags.
+	SCB_ALL		= 0x07FFFFFFFFFF// All except extra flags.
 };
 
 enum e_status_calc_opt {
@@ -2664,7 +2823,7 @@ struct weapon_atk {
 
 extern sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
 extern int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-extern unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
+extern uint64 StatusChangeFlagTable[SC_MAX];  /// status -> flags
 extern int StatusSkillChangeTable[SC_MAX];          /// status -> skill
 extern int StatusRelevantBLTypes[EFST_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
 extern unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
@@ -2673,10 +2832,11 @@ extern unsigned int StatusDisplayType[SC_MAX];
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
 	unsigned int
-		hp, sp,  // see status_cpy before adding members before hp and sp
-		max_hp, max_sp;
+		hp, sp, ap, // see status_cpy before adding members before hp and sp
+		max_hp, max_sp, max_ap;
 	short
 		str, agi, vit, int_, dex, luk,
+		pow, sta, wis, spl, con, crt,
 		eatk;
 	unsigned short
 		batk,
@@ -2694,7 +2854,10 @@ struct status_data {
 #ifdef RENEWAL_ASPD
 		aspd_rate2,
 #endif
-		aspd_rate;
+		aspd_rate,
+		patk, smatk,
+		res, mres,
+		hplus, crate;
 	/**
 	 * defType is RENEWAL dependent and defined in src/config/const.hpp
 	 **/
@@ -2707,8 +2870,6 @@ struct status_data {
 		class_; /// see enum e_classAE
 
 	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
-
-	uint16 pow, sta, wis, spl, con, crt;
 };
 
 ///Additional regen data that only players have.
@@ -2807,32 +2968,59 @@ static const std::vector<sc_type> mado_statuses = {
 // for looking up associated data
 sc_type status_skill2sc(int skill);
 int status_sc2skill(sc_type sc);
-unsigned int status_sc2scb_flag(sc_type sc);
+uint64 status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
 
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag, uint16 skill_id);
+int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int flag, uint16 skill_id );
+static int status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, t_tick walkdelay, int flag, uint16 skill_id ){
+	return status_damage( src, target, dhp, dsp, 0, walkdelay, flag, skill_id );
+}
 //Define for standard HP damage attacks.
-#define status_fix_damage(src, target, hp, walkdelay, skill) status_damage(src, target, hp, 0, walkdelay, 0, skill)
+static int status_fix_damage( struct block_list *src, struct block_list *target, int64 hp, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, hp, 0, walkdelay, 0, skill_id );
+}
 //Define for standard SP damage attacks.
-#define status_fix_spdamage(src, target, sp, walkdelay, skill) status_damage(src, target, 0, sp, walkdelay, 0, skill)
-//Define for standard HP/SP damage triggers.
-#define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1, 0)
-//Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP to use skills)
+static int status_fix_spdamage( struct block_list *src, struct block_list *target, int64 sp, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, 0, sp, walkdelay, 0, skill_id );
+}
+//Define for standard AP damage attacks.
+static int status_fix_apdamage( struct block_list *src, struct block_list *target, int64 ap, t_tick walkdelay, uint16 skill_id ){
+	return status_damage( src, target, 0, 0, ap, walkdelay, 0, skill_id );
+}
+//Define for standard HP/SP/AP damage triggers.
+static int status_zap( struct block_list* bl, int64 hp, int64 sp, int64 ap = 0 ){
+	return status_damage( nullptr, bl, hp, sp, ap, 0, 1, 0 );
+}
+//Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP/AP to use skills)
 int64 status_charge(struct block_list* bl, int64 hp, int64 sp);
-int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag);
+int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, int8 ap_rate, uint8 flag);
 //Easier handling of status_percent_change
-#define status_percent_heal(bl, hp_rate, sp_rate) status_percent_change(NULL, bl, -(hp_rate), -(sp_rate), 0)
-/// Deals % damage from 'src' to 'target'. If rate is > 0 is % of current HP/SP, < 0 % of MaxHP/MaxSP
-#define status_percent_damage(src, target, hp_rate, sp_rate, kill) status_percent_change(src, target, hp_rate, sp_rate, (kill)?1:2)
+static int status_percent_heal( struct block_list* bl, int8 hp_rate, int8 sp_rate, int8 ap_rate = 0 ){
+	return status_percent_change( nullptr, bl, -(hp_rate), -(sp_rate), -(ap_rate), 0 );
+}
+/// Deals % damage from 'src' to 'target'. If rate is > 0 is % of current HP/SP/AP, < 0 % of MaxHP/MaxSP/MaxAP
+static int status_percent_damage( struct block_list* src, struct block_list* target, int8 hp_rate, int8 sp_rate, bool kill ){
+	return status_percent_change( src, target, hp_rate, sp_rate, 0, kill ? 1 : 2 );
+}
+static int status_percent_damage( struct block_list* src, struct block_list* target, int8 hp_rate, int8 sp_rate, int8 ap_rate, bool kill ){
+	return status_percent_change( src, target, hp_rate, sp_rate, ap_rate, kill ? 1 : 2 );
+}
 //Instant kill with no drops/exp/etc
-#define status_kill(bl) status_percent_damage(NULL, bl, 100, 0, true)
-//Used to set the hp/sp of an object to an absolute value (can't kill)
+static int status_kill( struct block_list* bl ){
+	return status_percent_damage( nullptr, bl, 100, 0, 0, true );
+}
+//Used to set the hp/sp/ap of an object to an absolute value (can't kill)
 int status_set_hp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_maxhp(struct block_list *bl, unsigned int hp, int flag);
 int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
 int status_set_maxsp(struct block_list *bl, unsigned int hp, int flag);
-int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag);
-int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
+int status_set_ap(struct block_list *bl, unsigned int ap, int flag);
+int status_set_maxap(struct block_list *bl, unsigned int ap, int flag);
+int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int flag );
+static int status_heal( struct block_list *bl,int64 hhp,int64 hsp, int flag ){
+	return status_heal( bl, hhp, hsp, 0, flag );
+}
+int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap = 0);
 
 struct regen_data *status_get_regen_data(struct block_list *bl);
 struct status_data *status_get_status_data(struct block_list *bl);
@@ -2845,12 +3033,20 @@ int status_get_lv(struct block_list *bl);
 #define status_get_max_hp(bl) status_get_status_data(bl)->max_hp
 #define status_get_sp(bl) status_get_status_data(bl)->sp
 #define status_get_max_sp(bl) status_get_status_data(bl)->max_sp
+#define status_get_ap(bl) status_get_status_data(bl)->ap
+#define status_get_max_ap(bl) status_get_status_data(bl)->max_ap
 #define status_get_str(bl) status_get_status_data(bl)->str
 #define status_get_agi(bl) status_get_status_data(bl)->agi
 #define status_get_vit(bl) status_get_status_data(bl)->vit
 #define status_get_int(bl) status_get_status_data(bl)->int_
 #define status_get_dex(bl) status_get_status_data(bl)->dex
 #define status_get_luk(bl) status_get_status_data(bl)->luk
+#define status_get_pow(bl) status_get_status_data(bl)->pow
+#define status_get_sta(bl) status_get_status_data(bl)->sta
+#define status_get_wis(bl) status_get_status_data(bl)->wis
+#define status_get_spl(bl) status_get_status_data(bl)->spl
+#define status_get_con(bl) status_get_status_data(bl)->con
+#define status_get_crt(bl) status_get_status_data(bl)->crt
 #define status_get_hit(bl) status_get_status_data(bl)->hit
 #define status_get_flee(bl) status_get_status_data(bl)->flee
 defType status_get_def(struct block_list *bl);
@@ -2870,6 +3066,12 @@ unsigned short status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(bl)->amotion
 #define status_get_dmotion(bl) status_get_status_data(bl)->dmotion
+#define status_get_patk(bl) status_get_status_data(bl)->patk
+#define status_get_smatk(bl) status_get_status_data(bl)->smatk
+#define status_get_res(bl) status_get_status_data(bl)->res
+#define status_get_mres(bl) status_get_status_data(bl)->mres
+#define status_get_hplus(bl) status_get_status_data(bl)->hplus
+#define status_get_crate(bl) status_get_status_data(bl)->crate
 #define status_get_element(bl) status_get_status_data(bl)->def_ele
 #define status_get_element_level(bl) status_get_status_data(bl)->ele_lv
 unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element);

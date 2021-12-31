@@ -49,6 +49,9 @@
 #   Knockback:                Amount of tiles the skill knockbacks. (Default: 0)
 #     - Level                 Skill level.
 #       Amount                Knockback count at specific skill level.
+#   GiveAp:                   Gives AP on successful skill cast. (Default: 0)
+#     - Level                 Skill level.
+#       Amount                AP gained at specific skill level.
 #   CopyFlags:                Determines if the skill is copyable. (Optional)
 #     Skill:                  Type of skill that can copy.
 #     RemoveRequirement:      Remove a requirement type. (Optional)
@@ -87,12 +90,18 @@
 #     SpCost:                 SP required to cast. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP required at specific skill level.
+#     ApCost:                 AP required to cast. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP required at specific skill level.
 #     HpRateCost:             HP rate required to cast. If positive, uses current HP, else uses Max HP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              HP rate required at specific skill level.
 #     SpRateCost:             SP rate required to cast. If positive, uses current SP, else uses Max SP. (Default: 0)
 #       - Level               Skill level.
 #         Amount              SP rate required at specific skill level.
+#     ApRateCost:             AP rate required to cast. If positive, uses current AP, else uses Max AP. (Default: 0)
+#       - Level               Skill level.
+#         Amount              AP rate required at specific skill level.
 #     MaxHpTrigger:           Maximum amount of HP to cast the skill. (Default: 0)
 #       - Level               Skill level.
 #         Amount              Maximum HP trigger required at specific skill level.
@@ -130,7 +139,7 @@
 
 Header:
   Type: SKILL_DB
-  Version: 2
+  Version: 3
 
 Body:
   - Id: 1
@@ -21592,7 +21601,7 @@ Body:
     Flags:
       AllowOnMado: true
     Range: 11
-    Hit: Single
+    Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
     CastTime:
@@ -21653,7 +21662,7 @@ Body:
       TargetTrap: true
       AllowOnMado: true
     Range: 13
-    Hit: Single
+    Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
     SplashArea: 2
@@ -21773,7 +21782,7 @@ Body:
     Flags:
       AllowOnMado: true
     Range: 9
-    Hit: Single
+    Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
     SplashArea:
@@ -22350,7 +22359,7 @@ Body:
     Flags:
       AllowOnMado: true
     Range: 1
-    Hit: Single
+    Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
     AfterCastActDelay:
@@ -27836,7 +27845,7 @@ Body:
         Size: 10
       - Level: 5
         Size: 11
-    Hit: Single
+    Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
     SplashArea:
@@ -33767,6 +33776,6133 @@ Body:
     CastTime: 5000
     AfterCastActDelay: 500
     FixedCastTime: 1000
+  - Id: 5201
+    Name: DK_SERVANTWEAPON
+    Description: Servant Weapon
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    GiveAp:
+      - Level: 1
+        Amount: 6
+      - Level: 2
+        Amount: 12
+      - Level: 3
+        Amount: 18
+      - Level: 4
+        Amount: 24
+      - Level: 5
+        Amount: 30
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+    Duration2:
+      - Level: 1
+        Time: 5000
+      - Level: 2
+        Time: 4000
+      - Level: 3
+        Time: 3000
+      - Level: 4
+        Time: 2000
+      - Level: 5
+        Time: 1000
+    Cooldown:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+  - Id: 5202
+    Name: DK_SERVANTWEAPON_ATK
+    Description: Servant Weapon Attack
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    Requires:
+      SpCost: 1
+  - Id: 5203
+    Name: DK_SERVANT_W_SIGN
+    Description: Servant Weapon Sign
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 2000
+      - Level: 2
+        Time: 4000
+      - Level: 3
+        Time: 6000
+      - Level: 4
+        Time: 8000
+      - Level: 5
+        Time: 10000
+    Requires:
+      SpCost: 15
+      SpiritSphereCost: 1
+  - Id: 5204
+    Name: DK_SERVANT_W_PHANTOM
+    Description: Servant Weapon Phantom
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Weapon
+    SplashArea: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 40
+      SpiritSphereCost: 5
+  - Id: 5205
+    Name: DK_SERVANT_W_DEMOL
+    Description: Servant Weapon Demolition
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Weapon
+    SplashArea: 6
+    GiveAp: 3
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 35
+        - Level: 3
+          Amount: 40
+        - Level: 4
+          Amount: 45
+        - Level: 5
+          Amount: 50
+      SpiritSphereCost: 5
+  - Id: 5206
+    Name: DK_CHARGINGPIERCE
+    Description: Charging Pierce
+    MaxLevel: 10
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 90000
+      - Level: 2
+        Time: 100000
+      - Level: 3
+        Time: 110000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 130000
+      - Level: 6
+        Time: 140000
+      - Level: 7
+        Time: 150000
+      - Level: 8
+        Time: 160000
+      - Level: 9
+        Time: 170000
+      - Level: 10
+        Time: 180000
+    Duration2: 5000
+    Cooldown: 60000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 25
+        - Level: 2
+          Amount: 30
+        - Level: 3
+          Amount: 35
+        - Level: 4
+          Amount: 40
+        - Level: 5
+          Amount: 45
+        - Level: 6
+          Amount: 50
+        - Level: 7
+          Amount: 55
+        - Level: 8
+          Amount: 60
+        - Level: 9
+          Amount: 65
+        - Level: 10
+          Amount: 70
+      Weapon:
+        2hSword: true
+        1hSpear: true
+        2hSpear: true
+  - Id: 5207
+    Name: DK_TWOHANDDEF
+    Description: Two Hand Def
+    MaxLevel: 10
+  - Id: 5208
+    Name: DK_HACKANDSLASHER
+    Description: Hack And Slasher
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    CastCancel: true
+    AfterCastActDelay: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 34
+        - Level: 2
+          Amount: 38
+        - Level: 3
+          Amount: 42
+        - Level: 4
+          Amount: 46
+        - Level: 5
+          Amount: 50
+        - Level: 6
+          Amount: 54
+        - Level: 7
+          Amount: 58
+        - Level: 8
+          Amount: 62
+        - Level: 9
+          Amount: 66
+        - Level: 10
+          Amount: 70
+      Weapon:
+        2hSword: true
+        2hSpear: true
+  - Id: 5209
+    Name: DK_HACKANDSLASHER_ATK
+    Description: Hack And Slasher Attack
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 2
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    Requires:
+      SpCost: 1
+  - Id: 5210
+    Name: DK_DRAGONIC_AURA
+    Description: Dragonic Aura
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Range: 7
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    CastCancel: true
+    AfterCastActDelay: 1000
+    Duration1: 300000
+    Cooldown: 60000
+    Requires:
+      SpCost: 100
+      ApCost: 150
+  - Id: 5211
+    Name: DK_MADNESS_CRUSHER
+    Description: Madness Crusher
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 34
+        - Level: 2
+          Amount: 38
+        - Level: 3
+          Amount: 42
+        - Level: 4
+          Amount: 46
+        - Level: 5
+          Amount: 50
+      Weapon:
+        2hSword: true
+        2hSpear: true
+  - Id: 5212
+    Name: DK_VIGOR
+    Description: Vigor
+    MaxLevel: 10
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+      - Level: 6
+        Time: 180000
+      - Level: 7
+        Time: 210000
+      - Level: 8
+        Time: 240000
+      - Level: 9
+        Time: 270000
+      - Level: 10
+        Time: 300000
+    Cooldown: 60000
+    Requires:
+      SpCost: 100
+      ApCost: 150
+  - Id: 5213
+    Name: DK_STORMSLASH
+    Description: Storm Slash
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 1
+      - Level: 2
+        Count: 2
+      - Level: 3
+        Count: 3
+      - Level: 4
+        Count: 4
+      - Level: 5
+        Count: 5
+    Element: Weapon
+    GiveAp: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 35
+        - Level: 3
+          Amount: 40
+        - Level: 4
+          Amount: 45
+        - Level: 5
+          Amount: 50
+      Weapon:
+        2hSword: true
+        2hAxe: true
+  - Id: 5214
+    Name: AG_DEADLY_PROJECTION
+    Description: Deadly Projection
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Undead
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 4000
+      - Level: 2
+        Time: 5000
+      - Level: 3
+        Time: 6000
+      - Level: 4
+        Time: 7000
+      - Level: 5
+        Time: 8000
+    Cooldown: 2000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+  - Id: 5215
+    Name: AG_DESTRUCTIVE_HURRICANE
+    Description: Destructive Hurricane
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Duration2: 900000
+    Cooldown: 6000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+  - Id: 5216
+    Name: AG_RAIN_OF_CRYSTAL
+    Description: Rain Of Crystal
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    Hit: Single
+    HitCount: -2
+    Element: Water
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 4000
+    Cooldown: 5000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 80
+    Unit:
+      Id: Rain_Of_Crystal
+      Range:
+        - Level: 1
+          Size: 6
+        - Level: 2
+          Size: 7
+        - Level: 3
+          Size: 8
+        - Level: 4
+          Size: 9
+        - Level: 5
+          Size: 10
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5217
+    Name: AG_MYSTERY_ILLUSION
+    Description: Mystery Illusion
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Dark
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Duration1: 4000
+    Cooldown: 4000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+    Unit:
+      Id: Mystery_Illusion
+      Range:
+        - Level: 1
+          Size: 4
+        - Level: 2
+          Size: 4
+        - Level: 3
+          Size: 5
+        - Level: 4
+          Size: 5
+        - Level: 5
+          Size: 6
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5218
+    Name: AG_VIOLENT_QUAKE
+    Description: Violent Quake
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Earth
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 1200
+      - Level: 2
+        Time: 2400
+      - Level: 3
+        Time: 3600
+      - Level: 4
+        Time: 4800
+      - Level: 5
+        Time: 6000
+    Duration2: 30000
+    Cooldown: 6000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+    Unit:
+      Id: Violent_Quake
+      Range:
+        - Level: 1
+          Size: 3
+        - Level: 2
+          Size: 3
+        - Level: 3
+          Size: 4
+        - Level: 4
+          Size: 4
+        - Level: 5
+          Size: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5219
+    Name: AG_VIOLENT_QUAKE_ATK
+    Description: Violent Quake Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Earth
+    Duration1: 100
+    Requires:
+      SpCost: 1
+    Unit:
+      Id: Dummyskill
+      Range: 3
+      Interval: 300
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 5220
+    Name: AG_SOUL_VC_STRIKE
+    Description: Soul Vulcan Strike
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 3
+      - Level: 2
+        Count: 4
+      - Level: 3
+        Count: 5
+      - Level: 4
+        Count: 6
+      - Level: 5
+        Count: 7
+    Element: Ghost
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 5
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Cooldown: 700
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+  - Id: 5221
+    Name: AG_STRANTUM_TREMOR
+    Description: Strantum Tremor
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Earth
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 4000
+    Cooldown: 5000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 35
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 55
+        - Level: 4
+          Amount: 65
+        - Level: 5
+          Amount: 75
+    Unit:
+      Id: Strantum_Tremor
+      Range:
+        - Level: 1
+          Size: 2
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 3
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 4
+      Interval: 400
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5222
+    Name: AG_ALL_BLOOM
+    Description: All Bloom
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 4
+      - Level: 4
+        Area: 4
+      - Level: 5
+        Area: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 1200
+      - Level: 2
+        Time: 2400
+      - Level: 3
+        Time: 3600
+      - Level: 4
+        Time: 4800
+      - Level: 5
+        Time: 6000
+    Duration2: 30000
+    Cooldown: 6000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+    Unit:
+      Id: All_Bloom
+      Range:
+        - Level: 1
+          Size: 3
+        - Level: 2
+          Size: 3
+        - Level: 3
+          Size: 4
+        - Level: 4
+          Size: 4
+        - Level: 5
+          Size: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5223
+    Name: AG_ALL_BLOOM_ATK
+    Description: All Bloom Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 100
+    Requires:
+      SpCost: 1
+    Unit:
+      Id: Dummyskill
+      Range: 3
+      Interval: 300
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 5224
+    Name: AG_ALL_BLOOM_ATK2
+    Description: All Bloom Attack 2
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 100
+    Requires:
+      SpCost: 1
+    Unit:
+      Id: Dummyskill
+      Range:
+        - Level: 1
+          Size: 3
+        - Level: 2
+          Size: 3
+        - Level: 3
+          Size: 4
+        - Level: 4
+          Size: 4
+        - Level: 5
+          Size: 4
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 5225
+    Name: AG_CRYSTAL_IMPACT
+    Description: Crystal Impact
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Water
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 4
+      - Level: 3
+        Area: 5
+      - Level: 4
+        Area: 6
+      - Level: 5
+        Area: 7
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Duration2: 900000
+    Cooldown: 6000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+  - Id: 5226
+    Name: AG_CRYSTAL_IMPACT_ATK
+    Description: Crystal Impact Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    Requires:
+      SpCost: 1
+  - Id: 5227
+    Name: AG_TORNADO_STORM
+    Description: Tornado Storm
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 3000
+    Cooldown: 5000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 65
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 85
+    Unit:
+      Id: Tornado_Storm
+      Range:
+        - Level: 1
+          Size: 2
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 3
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5228
+    Name: AG_TWOHANDSTAFF
+    Description: Two Hand Staff Mastery
+    MaxLevel: 10
+    HitCount: 1
+  - Id: 5229
+    Name: AG_FLORAL_FLARE_ROAD
+    Description: Floral Flare Road
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Fire
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 5000
+    Cooldown: 5000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+    Unit:
+      Id: Floral_Flare_Road
+      Range:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 3
+        - Level: 4
+          Size: 4
+        - Level: 5
+          Size: 5
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5230
+    Name: AG_ASTRAL_STRIKE
+    Description: Astral Strike
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 4
+      - Level: 8
+        Area: 4
+      - Level: 9
+        Area: 4
+      - Level: 10
+        Area: 5
+    CastCancel: true
+    CastTime: 8000
+    AfterCastActDelay: 500
+    Duration1: 15000
+    Cooldown: 60000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+    Unit:
+      Id: Astral_Strike
+      Range:
+        - Level: 1
+          Size: 2
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 2
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 3
+        - Level: 6
+          Size: 3
+        - Level: 7
+          Size: 4
+        - Level: 8
+          Size: 4
+        - Level: 9
+          Size: 4
+        - Level: 10
+          Size: 5
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5231
+    Name: AG_ASTRAL_STRIKE_ATK
+    Description: Astral Strike Attack
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 1
+  - Id: 5232
+    Name: AG_CLIMAX
+    Description: Climax
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 300
+    Duration1: 300000
+    Cooldown: 300000
+    FixedCastTime: 4000
+    Requires:
+      SpCost: 60
+      ApCost: 200
+  - Id: 5233
+    Name: AG_ROCK_DOWN
+    Description: Rock Down
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Earth
+    SplashArea: 1
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Cooldown: 4000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 75
+        - Level: 4
+          Amount: 80
+        - Level: 5
+          Amount: 85
+  - Id: 5234
+    Name: AG_STORM_CANNON
+    Description: Storm Cannon
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    SplashArea: 1
+    ActiveInstance: 14
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Cooldown: 4000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 90
+        - Level: 5
+          Amount: 100
+  - Id: 5235
+    Name: AG_CRIMSON_ARROW
+    Description: Crimson Arrow
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    SplashArea: 1
+    ActiveInstance: 14
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Cooldown: 4000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 75
+        - Level: 3
+          Amount: 85
+        - Level: 4
+          Amount: 95
+        - Level: 5
+          Amount: 105
+  - Id: 5236
+    Name: AG_CRIMSON_ARROW_ATK
+    Description: Crimson Arrow Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Fire
+    Requires:
+      SpCost: 1
+  - Id: 5237
+    Name: AG_FROZEN_SLASH
+    Description: Frozen Slash
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 4
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 1000
+    Cooldown: 4000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 65
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 85
+  - Id: 5238
+    Name: IQ_POWERFUL_FAITH
+    Description: Powerful Faith
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 54
+        - Level: 2
+          Amount: 58
+        - Level: 3
+          Amount: 62
+        - Level: 4
+          Amount: 66
+        - Level: 5
+          Amount: 70
+  - Id: 5239
+    Name: IQ_FIRM_FAITH
+    Description: Firm Faith
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 54
+        - Level: 2
+          Amount: 58
+        - Level: 3
+          Amount: 62
+        - Level: 4
+          Amount: 66
+        - Level: 5
+          Amount: 70
+  - Id: 5240
+    Name: IQ_WILL_OF_FAITH
+    Description: Will Of Faith
+    MaxLevel: 10
+    CastCancel: true
+  - Id: 5241
+    Name: IQ_OLEUM_SANCTUM
+    Description: Oleum Sanctum
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 4000
+      - Level: 3
+        Time: 5000
+      - Level: 4
+        Time: 6000
+      - Level: 5
+        Time: 7000
+    Cooldown: 5000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+      ItemCost:
+        - Item: Holy_Water
+          Amount: 1
+  - Id: 5242
+    Name: IQ_SINCERE_FAITH
+    Description: Sincere Faith
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 54
+        - Level: 2
+          Amount: 58
+        - Level: 3
+          Amount: 62
+        - Level: 4
+          Amount: 66
+        - Level: 5
+          Amount: 70
+  - Id: 5243
+    Name: IQ_MASSIVE_F_BLASTER
+    Description: Massive Flame Blaster
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 4
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 300000
+    Cooldown: 60000
+    Requires:
+      SpCost: 100
+      ApCost: 150
+  - Id: 5244
+    Name: IQ_EXPOSION_BLASTER
+    Description: Exposion Blaster
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 4
+    GiveAp: 5
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 100
+        - Level: 4
+          Amount: 110
+        - Level: 5
+          Amount: 120
+  - Id: 5245
+    Name: IQ_FIRST_BRAND
+    Description: First Brand
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 2
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 2000
+      - Level: 3
+        Time: 3000
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 5000
+    Cooldown: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 22
+        - Level: 2
+          Amount: 29
+        - Level: 3
+          Amount: 36
+        - Level: 4
+          Amount: 43
+        - Level: 5
+          Amount: 50
+  - Id: 5246
+    Name: IQ_FIRST_FAITH_POWER
+    Description: First Faith Power
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
+    Cooldown: 150000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 60
+  - Id: 5247
+    Name: IQ_JUDGE
+    Description: Judge
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
+    Cooldown: 150000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 60
+      ApCost: 100
+      Status:
+        First_Faith_Power: true
+  - Id: 5248
+    Name: IQ_SECOND_FLAME
+    Description: Second Flame
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp: 3
+    CastCancel: true
+    Duration1: 5000
+    Cooldown: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 46
+        - Level: 2
+          Amount: 52
+        - Level: 3
+          Amount: 58
+        - Level: 4
+          Amount: 64
+        - Level: 5
+          Amount: 70
+  - Id: 5249
+    Name: IQ_SECOND_FAITH
+    Description: Second Faith
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp: 1
+    CastCancel: true
+    Duration1: 5000
+    Cooldown: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 36
+        - Level: 2
+          Amount: 42
+        - Level: 3
+          Amount: 48
+        - Level: 4
+          Amount: 54
+        - Level: 5
+          Amount: 60
+  - Id: 5250
+    Name: IQ_SECOND_JUDGEMENT
+    Description: Second Judgement
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    CastCancel: true
+    Duration1: 5000
+    Cooldown: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 55
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 65
+  - Id: 5251
+    Name: IQ_THIRD_PUNISH
+    Description: Third Punish
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    Duration1: 600000
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 56
+        - Level: 2
+          Amount: 62
+        - Level: 3
+          Amount: 68
+        - Level: 4
+          Amount: 74
+        - Level: 5
+          Amount: 80
+  - Id: 5252
+    Name: IQ_THIRD_FLAME_BOMB
+    Description: Third Flame Bomb
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 74
+        - Level: 2
+          Amount: 78
+        - Level: 3
+          Amount: 82
+        - Level: 4
+          Amount: 86
+        - Level: 5
+          Amount: 90
+  - Id: 5253
+    Name: IQ_THIRD_CONSECRATION
+    Description: Third Consecration
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 3
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 75
+        - Level: 4
+          Amount: 80
+        - Level: 5
+          Amount: 85
+  - Id: 5254
+    Name: IQ_THIRD_EXOR_FLAME
+    Description: Third Exor Flame
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+    Cooldown: 150000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 60
+      ApCost: 150
+      Status:
+        Second_Judge: true
+  - Id: 5255
+    Name: IG_GUARD_STANCE
+    Description: Guard Stance
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    FixedCastTime: 500
+    Requires:
+      SpCost: 50
+      State: Shield
+  - Id: 5256
+    Name: IG_GUARDIAN_SHIELD
+    Description: Guardian Shield
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 10
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 60000
+    Cooldown: 15000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 60
+      Status:
+        Guard_Stance: true
+  - Id: 5257
+    Name: IG_REBOUND_SHIELD
+    Description: Rebound Shield
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 60000
+    Cooldown: 15000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 60
+      Status:
+        Guard_Stance: true
+  - Id: 5258
+    Name: IG_SHIELD_MASTERY
+    Description: Shield Mastery
+    MaxLevel: 10
+  - Id: 5259
+    Name: IG_SPEAR_SWORD_M
+    Description: Spear And Sword Mastery
+    MaxLevel: 10
+  - Id: 5260
+    Name: IG_ATTACK_STANCE
+    Description: Attack Stance
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    FixedCastTime: 500
+    Requires:
+      SpCost: 50
+  - Id: 5261
+    Name: IG_ULTIMATE_SACRIFICE
+    Description: Ultimate Sacrifice
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 300000
+    Cooldown:
+      - Level: 1
+        Time: 20000
+      - Level: 2
+        Time: 40000
+      - Level: 3
+        Time: 60000
+      - Level: 4
+        Time: 80000
+      - Level: 5
+        Time: 100000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 120
+      Status:
+        Guard_Stance: true
+  - Id: 5262
+    Name: IG_HOLY_SHIELD
+    Description: Holy Shield
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 180000
+    Cooldown: 120000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 60
+      State: Shield
+  - Id: 5263
+    Name: IG_GRAND_JUDGEMENT
+    Description: Grand Judgement
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 3
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 300000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 41
+        - Level: 2
+          Amount: 44
+        - Level: 3
+          Amount: 47
+        - Level: 4
+          Amount: 50
+        - Level: 5
+          Amount: 53
+        - Level: 6
+          Amount: 56
+        - Level: 7
+          Amount: 59
+        - Level: 8
+          Amount: 62
+        - Level: 9
+          Amount: 65
+        - Level: 10
+          Amount: 68
+      ApCost: 150
+      Weapon:
+        1hSpear: true
+        2hSpear: true
+      Status:
+        Attack_Stance: true
+  - Id: 5264
+    Name: IG_JUDGEMENT_CROSS
+    Description: Judgement Cross
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -10
+    Element: Holy
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 1000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+  - Id: 5265
+    Name: IG_SHIELD_SHOOTING
+    Description: Shield Shooting
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Weapon
+    GiveAp: 2
+    CastCancel: true
+    CastTime: 500
+    AfterCastActDelay: 500
+    Duration1: 10000
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+      State: Shield
+      Status:
+        Attack_Stance: true
+  - Id: 5266
+    Name: IG_OVERSLASH
+    Description: Overslash
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount: 2
+    Element: Weapon
+    SplashArea: 3
+    GiveAp: 3
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 41
+        - Level: 2
+          Amount: 44
+        - Level: 3
+          Amount: 47
+        - Level: 4
+          Amount: 50
+        - Level: 5
+          Amount: 53
+        - Level: 6
+          Amount: 56
+        - Level: 7
+          Amount: 59
+        - Level: 8
+          Amount: 62
+        - Level: 9
+          Amount: 65
+        - Level: 10
+          Amount: 68
+      Status:
+        Attack_Stance: true
+  - Id: 5267
+    Name: IG_CROSS_RAIN
+    Description: Cross Rain
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    GiveAp: 5
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 4500
+    Cooldown: 5000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 50
+        - Level: 2
+          Amount: 54
+        - Level: 3
+          Amount: 58
+        - Level: 4
+          Amount: 62
+        - Level: 5
+          Amount: 66
+        - Level: 6
+          Amount: 70
+        - Level: 7
+          Amount: 74
+        - Level: 8
+          Amount: 78
+        - Level: 9
+          Amount: 82
+        - Level: 10
+          Amount: 86
+    Unit:
+      Id: Cross_Rain
+      Range:
+        - Level: 1
+          Size: 1
+        - Level: 2
+          Size: 1
+        - Level: 3
+          Size: 1
+        - Level: 4
+          Size: 2
+        - Level: 5
+          Size: 2
+        - Level: 6
+          Size: 2
+        - Level: 7
+          Size: 3
+        - Level: 8
+          Size: 3
+        - Level: 9
+          Size: 3
+        - Level: 10
+          Size: 4
+      Interval: 300
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5268
+    Name: CD_REPARATIO
+    Description: Reparatio
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown:
+      - Level: 1
+        Time: 150000
+      - Level: 2
+        Time: 100000
+      - Level: 3
+        Time: 60000
+      - Level: 4
+        Time: 30000
+      - Level: 5
+        Time: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 120
+  - Id: 5269
+    Name: CD_MEDIALE_VOTUM
+    Description: Mediale Votum
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      PartyOnly: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    SplashArea: 4
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 40000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 80000
+      - Level: 4
+        Time: 100000
+      - Level: 5
+        Time: 120000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+  - Id: 5270
+    Name: CD_MACE_BOOK_M
+    Description: Mace Book Mastery
+    MaxLevel: 10
+  - Id: 5271
+    Name: CD_ARGUTUS_VITA
+    Description: Argutus Vita
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      PartyOnly: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 1000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 90
+  - Id: 5272
+    Name: CD_ARGUTUS_TELUM
+    Description: Argutus Telum
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      PartyOnly: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 1000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 90
+  - Id: 5273
+    Name: CD_ARBITRIUM
+    Description: Arbitrium
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Cooldown: 3000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 50
+        - Level: 2
+          Amount: 60
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 80
+        - Level: 5
+          Amount: 90
+        - Level: 6
+          Amount: 100
+        - Level: 7
+          Amount: 110
+        - Level: 8
+          Amount: 120
+        - Level: 9
+          Amount: 130
+        - Level: 10
+          Amount: 140
+  - Id: 5274
+    Name: CD_ARBITRIUM_ATK
+    Description: Arbitrium Attack
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
+    Requires:
+      SpCost: 1
+  - Id: 5275
+    Name: CD_PRESENS_ACIES
+    Description: Presens Acies
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      PartyOnly: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 1000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 75
+        - Level: 5
+          Amount: 90
+  - Id: 5276
+    Name: CD_FIDUS_ANIMUS
+    Description: Fidus Animus
+    MaxLevel: 10
+  - Id: 5277
+    Name: CD_EFFLIGO
+    Description: Effligo
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Weapon
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    Requires:
+      SpCost: 60
+      ApCost: 100
+      Weapon:
+        Mace: true
+        2hMace: true
+        Book: true
+  - Id: 5278
+    Name: CD_COMPETENTIA
+    Description: Competentia
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 10
+    CastCancel: true
+    CastTime: 8000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 60000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 60
+      ApCost: 200
+  - Id: 5279
+    Name: CD_PNEUMATICUS_PROCELLA
+    Description: Pneumaticus Procella
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -10
+    Element: Holy
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 12000
+    Cooldown: 60000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+    Unit:
+      Id: Pneumaticus_Procella
+      Range:
+        - Level: 1
+          Size: 2
+        - Level: 2
+          Size: 2
+        - Level: 3
+          Size: 2
+        - Level: 4
+          Size: 3
+        - Level: 5
+          Size: 3
+        - Level: 6
+          Size: 3
+        - Level: 7
+          Size: 4
+        - Level: 8
+          Size: 4
+        - Level: 9
+          Size: 4
+        - Level: 10
+          Size: 5
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5280
+    Name: CD_DILECTIO_HEAL
+    Description: Dilectio Heal
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      PartyOnly: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 50
+        - Level: 2
+          Amount: 55
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 65
+        - Level: 5
+          Amount: 70
+  - Id: 5281
+    Name: CD_RELIGIO
+    Description: Religio
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    GiveAp: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 70
+        - Level: 2
+          Amount: 75
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 85
+        - Level: 5
+          Amount: 90
+  - Id: 5282
+    Name: CD_BENEDICTUM
+    Description: Benedictum
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    GiveAp: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 70
+        - Level: 2
+          Amount: 75
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 85
+        - Level: 5
+          Amount: 90
+  - Id: 5283
+    Name: CD_PETITIO
+    Description: Petitio
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 2
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
+    GiveAp: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 32
+        - Level: 2
+          Amount: 34
+        - Level: 3
+          Amount: 36
+        - Level: 4
+          Amount: 38
+        - Level: 5
+          Amount: 40
+        - Level: 6
+          Amount: 42
+        - Level: 7
+          Amount: 44
+        - Level: 8
+          Amount: 46
+        - Level: 9
+          Amount: 48
+        - Level: 10
+          Amount: 50
+      Weapon:
+        Mace: true
+        2hMace: true
+        Book: true
+  - Id: 5284
+    Name: CD_FRAMEN
+    Description: Framen
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Holy
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp: 3
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+  - Id: 5285
+    Name: SHC_SHADOW_EXCEED
+    Description: Shadow Exceed
+    MaxLevel: 10
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 80000
+      - Level: 3
+        Time: 100000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 140000
+      - Level: 6
+        Time: 160000
+      - Level: 7
+        Time: 180000
+      - Level: 8
+        Time: 200000
+      - Level: 9
+        Time: 220000
+      - Level: 10
+        Time: 240000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 100
+      ApCost: 150
+  - Id: 5286
+    Name: SHC_DANCING_KNIFE
+    Description: Dancing Knife
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 2
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 120000
+    Cooldown: 30000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+      Weapon:
+        Dagger: true
+  - Id: 5287
+    Name: SHC_SAVAGE_IMPACT
+    Description: Savage Impact
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -8
+    Element: Weapon
+    SplashArea: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 28
+        - Level: 2
+          Amount: 31
+        - Level: 3
+          Amount: 34
+        - Level: 4
+          Amount: 37
+        - Level: 5
+          Amount: 40
+        - Level: 6
+          Amount: 43
+        - Level: 7
+          Amount: 46
+        - Level: 8
+          Amount: 49
+        - Level: 9
+          Amount: 52
+        - Level: 10
+          Amount: 55
+      Weapon:
+        Katar: true
+      State: Hidden
+  - Id: 5288
+    Name: SHC_SHADOW_SENSE
+    Description: Shadow Sense
+    MaxLevel: 10
+  - Id: 5289
+    Name: SHC_ETERNAL_SLASH
+    Description: Eternal Slash
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 3000
+    Cooldown: 1500
+    Requires:
+      SpCost: 40
+      Status:
+        Weaponblock_On: true
+  - Id: 5290
+    Name: SHC_POTENT_VENOM
+    Description: Potent Venom
+    MaxLevel: 10
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 40000
+      - Level: 3
+        Time: 50000
+      - Level: 4
+        Time: 60000
+      - Level: 5
+        Time: 70000
+      - Level: 6
+        Time: 80000
+      - Level: 7
+        Time: 90000
+      - Level: 8
+        Time: 100000
+      - Level: 9
+        Time: 110000
+      - Level: 10
+        Time: 120000
+    Cooldown: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 15
+        - Level: 2
+          Amount: 20
+        - Level: 3
+          Amount: 25
+        - Level: 4
+          Amount: 30
+        - Level: 5
+          Amount: 35
+        - Level: 6
+          Amount: 40
+        - Level: 7
+          Amount: 45
+        - Level: 8
+          Amount: 50
+        - Level: 9
+          Amount: 55
+        - Level: 10
+          Amount: 60
+      Status:
+        Edp: true
+  - Id: 5291
+    Name: SHC_SHADOW_STAB
+    Description: Shadow Stab
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreDefense: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    GiveAp: 3
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 55
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 65
+      Weapon:
+        Dagger: true
+  - Id: 5292
+    Name: SHC_IMPACT_CRATER
+    Description: Impact Crater
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp: 5
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 10000
+    Cooldown: 5000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 43
+        - Level: 2
+          Amount: 46
+        - Level: 3
+          Amount: 49
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 55
+      Weapon:
+        Katar: true
+      Status:
+        Rollingcutter: true
+  - Id: 5293
+    Name: SHC_ENCHANTING_SHADOW
+    Description: Enchanting Shadow
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 180000
+    Duration2: 30000
+    Cooldown: 150000
+    FixedCastTime: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+  - Id: 5294
+    Name: SHC_FATAL_SHADOW_CROW
+    Description: Fatal Shadow Crow
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 3
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Cooldown: 60000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+  - Id: 5295
+    Name: MT_AXE_STOMP
+    Description: Axe Stomp
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Flags:
+      AllowOnMado: true
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 5000
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 25
+        - Level: 2
+          Amount: 30
+        - Level: 3
+          Amount: 35
+        - Level: 4
+          Amount: 40
+        - Level: 5
+          Amount: 45
+      Weapon:
+        1hAxe: true
+        2hAxe: true
+  - Id: 5296
+    Name: MT_RUSH_QUAKE
+    Description: Rush Quake
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Flags:
+      AllowOnMado: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+  - Id: 5297
+    Name: MT_M_MACHINE
+    Description: Manufacture Machine
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      AllowOnMado: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+      ItemCost:
+        - Item: Device_Creation_Guide
+          Amount: 0
+  - Id: 5298
+    Name: MT_A_MACHINE
+    Description: Attack Machine
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Support
+    DamageFlags:
+      Splash: true
+    Flags:
+      PartyOnly: true
+      AllowOnMado: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 80000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 160000
+      - Level: 4
+        Time: 200000
+      - Level: 5
+        Time: 240000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 43
+        - Level: 2
+          Amount: 46
+        - Level: 3
+          Amount: 49
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 55
+      ItemCost:
+        - Item: Device_Capsule
+          Amount: 1
+  - Id: 5299
+    Name: MT_D_MACHINE
+    Description: Defense Machine
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      PartyOnly: true
+      AllowOnMado: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 80000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 160000
+      - Level: 4
+        Time: 200000
+      - Level: 5
+        Time: 240000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 43
+        - Level: 2
+          Amount: 46
+        - Level: 3
+          Amount: 49
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 55
+      ItemCost:
+        - Item: Device_Capsule
+          Amount: 1
+  - Id: 5300
+    Name: MT_TWOAXEDEF
+    Description: Two Hand Axe Def
+    MaxLevel: 10
+  - Id: 5301
+    Name: MT_ABR_M
+    Description: ABR Mastery
+    MaxLevel: 10
+  - Id: 5302
+    Name: MT_SUMMON_ABR_BATTLE_WARIOR
+    Description: ABR Battle Warior
+    MaxLevel: 4
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      AllowOnMado: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    GiveAp: 20
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 240000
+      - Level: 4
+        Time: 300000
+    Cooldown: 60000
+    FixedCastTime: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+      ItemCost:
+        - Item: Auto_Battle_Capsule
+          Amount: 1
+  - Id: 5303
+    Name: MT_SUMMON_ABR_DUAL_CANNON
+    Description: ABR Dual Cannon
+    MaxLevel: 4
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      AllowOnMado: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    GiveAp: 20
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 240000
+      - Level: 4
+        Time: 300000
+    Cooldown: 60000
+    FixedCastTime: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+      ItemCost:
+        - Item: Auto_Battle_Capsule
+          Amount: 1
+  - Id: 5304
+    Name: MT_SUMMON_ABR_MOTHER_NET
+    Description: ABR Mother Net
+    MaxLevel: 4
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      AllowOnMado: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    GiveAp: 20
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 240000
+      - Level: 4
+        Time: 300000
+    Cooldown: 60000
+    FixedCastTime: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+      ItemCost:
+        - Item: Auto_Battle_Capsule
+          Amount: 1
+  - Id: 5305
+    Name: MT_SUMMON_ABR_INFINITY
+    Description: ABR Infinity
+    MaxLevel: 4
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      AllowOnMado: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 240000
+      - Level: 4
+        Time: 300000
+    Cooldown: 60000
+    FixedCastTime: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+      ApCost: 200
+      ItemCost:
+        - Item: Auto_Battle_Capsule
+          Amount: 5
+  - Id: 5306
+    Name: AG_DESTRUCTIVE_HURRICANE_CLIMAX
+    Description: Destructive Hurricane Climax
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    Requires:
+      SpCost: 1
+  - Id: 5307
+    Name: BO_ACIDIFIED_ZONE_WATER_ATK
+    Description: Actified Zone Water Attack
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+    Hit: Single
+    HitCount: 1
+    Element: Water
+    Requires:
+      SpCost: 1
+  - Id: 5308
+    Name: BO_ACIDIFIED_ZONE_GROUND_ATK
+    Description: Actified Zone Ground Attack
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+    Hit: Single
+    HitCount: 1
+    Element: Earth
+    Requires:
+      SpCost: 1
+  - Id: 5309
+    Name: BO_ACIDIFIED_ZONE_WIND_ATK
+    Description: Actified Zone Wind Attack
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    Requires:
+      SpCost: 1
+  - Id: 5310
+    Name: BO_ACIDIFIED_ZONE_FIRE_ATK
+    Description: Actified Zone Fire Attack
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Requires:
+      SpCost: 1
+  - Id: 5311
+    Name: ABC_DAGGER_AND_BOW_M
+    Description: Dagger And Bow Mastery
+    MaxLevel: 10
+  - Id: 5312
+    Name: ABC_MAGIC_SWORD_M
+    Description: Magic Sword Mastery
+    MaxLevel: 10
+  - Id: 5313
+    Name: ABC_STRIP_SHADOW
+    Description: Strip Shadow
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 70000
+      - Level: 3
+        Time: 80000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 100000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 29
+        - Level: 2
+          Amount: 33
+        - Level: 3
+          Amount: 37
+        - Level: 4
+          Amount: 41
+        - Level: 5
+          Amount: 45
+  - Id: 5314
+    Name: ABC_ABYSS_DAGGER
+    Description: Abyss Dagger
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 2000
+      - Level: 2
+        Time: 4000
+      - Level: 3
+        Time: 6000
+      - Level: 4
+        Time: 8000
+      - Level: 5
+        Time: 10000
+    Cooldown: 3000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+      Weapon:
+        Dagger: true
+        1hSword: true
+  - Id: 5315
+    Name: ABC_UNLUCKY_RUSH
+    Description: Unlucky Rush
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 7
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Cooldown: 2000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 35
+        - Level: 3
+          Amount: 40
+        - Level: 4
+          Amount: 45
+        - Level: 5
+          Amount: 50
+  - Id: 5316
+    Name: ABC_CHAIN_REACTION_SHOT
+    Description: Chain Reaction Shot
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 80
+      Weapon:
+        Bow: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 7
+  - Id: 5317
+    Name: ABC_FROM_THE_ABYSS
+    Description: From The Abyss
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+    Duration2:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 8000
+      - Level: 3
+        Time: 6000
+      - Level: 4
+        Time: 4000
+      - Level: 5
+        Time: 2000
+    Cooldown: 60000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 60
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 80
+  - Id: 5318
+    Name: ABC_ABYSS_SLAYER
+    Description: Abyss Slayer
+    MaxLevel: 10
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 60000
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 100
+      ApCost: 150
+  - Id: 5319
+    Name: ABC_ABYSS_STRIKE
+    Description: Abyss Strike
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 100
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+    Unit:
+      Id: Dummyskill
+      Range: 4
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 5320
+    Name: ABC_DEFT_STAB
+    Description: Deft Stab
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 1
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 2
+      - Level: 10
+        Area: 2
+    GiveAp: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 28
+        - Level: 2
+          Amount: 31
+        - Level: 3
+          Amount: 34
+        - Level: 4
+          Amount: 37
+        - Level: 5
+          Amount: 40
+        - Level: 6
+          Amount: 43
+        - Level: 7
+          Amount: 46
+        - Level: 8
+          Amount: 49
+        - Level: 9
+          Amount: 52
+        - Level: 10
+          Amount: 55
+  - Id: 5321
+    Name: ABC_ABYSS_SQUARE
+    Description: Abyss Square
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 1
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 4000
+    Cooldown: 4000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 75
+        - Level: 3
+          Amount: 85
+        - Level: 4
+          Amount: 95
+        - Level: 5
+          Amount: 105
+    Unit:
+      Id: Abyss_Square
+      Range: 3
+      Interval: 700
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5322
+    Name: ABC_FRENZY_SHOT
+    Description: Frenzy Shot
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -10
+    Element: Weapon
+    GiveAp: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 2000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+        - Level: 6
+          Amount: 65
+        - Level: 7
+          Amount: 70
+        - Level: 8
+          Amount: 75
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 85
+      Weapon:
+        Bow: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 10
+  - Id: 5323
+    Name: WH_ADVANCED_TRAP
+    Description: Advanced Trap
+    MaxLevel: 5
+  - Id: 5324
+    Name: WH_WIND_SIGN
+    Description: Wind Sign
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 20000
+      - Level: 2
+        Time: 30000
+      - Level: 3
+        Time: 40000
+      - Level: 4
+        Time: 50000
+      - Level: 5
+        Time: 60000
+    Cooldown: 30000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 100
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 60
+  - Id: 5325
+    Name: WH_NATUREFRIENDLY
+    Description: Nature Friendly
+    MaxLevel: 5
+  - Id: 5326
+    Name: WH_HAWKRUSH
+    Description: Hawk Rush
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -2
+    CastCancel: true
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 44
+        - Level: 3
+          Amount: 48
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 56
+      Weapon:
+        Bow: true
+      State: Falcon
+  - Id: 5327
+    Name: WH_HAWK_M
+    Description: Hawk Mastery
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 1000
+    Requires:
+      SpCost: 5
+      ItemCost:
+        - Item: Hawk_Flute
+          Amount: 0
+  - Id: 5328
+    Name: WH_CALAMITYGALE
+    Description: Calamity Gale
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 60000
+    Cooldown: 300000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 300
+      ApCost: 200
+  - Id: 5329
+    Name: WH_HAWKBOOMERANG
+    Description: Hawk Boomerang
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 800
+    AfterCastActDelay: 500
+    Cooldown: 30000
+    FixedCastTime: 200
+    Requires:
+      SpCost: 120
+      ApCost: 50
+      Weapon:
+        Bow: true
+      State: Falcon
+  - Id: 5330
+    Name: WH_GALESTORM
+    Description: Gale Storm
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 4
+      - Level: 9
+        Area: 4
+      - Level: 10
+        Area: 5
+    CastCancel: true
+    CastTime: 3500
+    AfterCastActDelay: 500
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 91
+        - Level: 3
+          Amount: 102
+        - Level: 4
+          Amount: 113
+        - Level: 5
+          Amount: 124
+        - Level: 6
+          Amount: 135
+        - Level: 7
+          Amount: 146
+        - Level: 8
+          Amount: 157
+        - Level: 9
+          Amount: 168
+        - Level: 10
+          Amount: 179
+      Weapon:
+        Bow: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 5
+  - Id: 5331
+    Name: WH_DEEPBLINDTRAP
+    Description: Deep Blind Trap
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      IgnoreFlee: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Dark
+    GiveAp: 3
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 12000
+      - Level: 2
+        Time: 24000
+      - Level: 3
+        Time: 36000
+      - Level: 4
+        Time: 48000
+      - Level: 5
+        Time: 60000
+    Duration2: 20000
+    Cooldown: 30000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 50
+        - Level: 2
+          Amount: 53
+        - Level: 3
+          Amount: 56
+        - Level: 4
+          Amount: 59
+        - Level: 5
+          Amount: 62
+      ItemCost:
+        - Item: Special_Alloy_Trap
+          Amount: 2
+    Unit:
+      Id: Deepblindtrap
+      Range: 1
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5332
+    Name: WH_SOLIDTRAP
+    Description: Solid Trap
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      IgnoreFlee: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Earth
+    GiveAp: 3
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 12000
+      - Level: 2
+        Time: 24000
+      - Level: 3
+        Time: 36000
+      - Level: 4
+        Time: 48000
+      - Level: 5
+        Time: 60000
+    Duration2: 10000
+    Cooldown: 30000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 70
+        - Level: 2
+          Amount: 80
+        - Level: 3
+          Amount: 90
+        - Level: 4
+          Amount: 100
+        - Level: 5
+          Amount: 110
+      ItemCost:
+        - Item: Special_Alloy_Trap
+          Amount: 2
+    Unit:
+      Id: Solidtrap
+      Range: 1
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5333
+    Name: WH_SWIFTTRAP
+    Description: Swift Trap
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      IgnoreFlee: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    GiveAp: 3
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 12000
+      - Level: 2
+        Time: 24000
+      - Level: 3
+        Time: 36000
+      - Level: 4
+        Time: 48000
+      - Level: 5
+        Time: 60000
+    Duration2: 10000
+    Cooldown: 30000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 62
+        - Level: 3
+          Amount: 64
+        - Level: 4
+          Amount: 66
+        - Level: 5
+          Amount: 68
+      ItemCost:
+        - Item: Special_Alloy_Trap
+          Amount: 2
+    Unit:
+      Id: Swifttrap
+      Range: 1
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5334
+    Name: WH_CRESCIVE_BOLT
+    Description: Crescive Bolt
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    GiveAp: 1
+    CastCancel: true
+    CastTime: 800
+    AfterCastActDelay: 500
+    Duration1: 10000
+    FixedCastTime: 200
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 55
+        - Level: 2
+          Amount: 60
+        - Level: 3
+          Amount: 65
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 75
+        - Level: 6
+          Amount: 80
+        - Level: 7
+          Amount: 85
+        - Level: 8
+          Amount: 90
+        - Level: 9
+          Amount: 95
+        - Level: 10
+          Amount: 100
+      Weapon:
+        Bow: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
+  - Id: 5335
+    Name: WH_FLAMETRAP
+    Description: Flame Trap
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Ground
+    DamageFlags:
+      IgnoreFlee: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    GiveAp: 3
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 12000
+      - Level: 2
+        Time: 24000
+      - Level: 3
+        Time: 36000
+      - Level: 4
+        Time: 48000
+      - Level: 5
+        Time: 60000
+    Duration2: 20000
+    Cooldown: 30000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 44
+        - Level: 3
+          Amount: 48
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 56
+      ItemCost:
+        - Item: Special_Alloy_Trap
+          Amount: 2
+    Unit:
+      Id: Flametrap
+      Range: 1
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5336
+    Name: BO_BIONIC_PHARMACY
+    Description: Bionic Pharmacy
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Requires:
+      SpCost: 30
+  - Id: 5337
+    Name: BO_BIONICS_M
+    Description: Bionics Mastery
+    MaxLevel: 10
+  - Id: 5338
+    Name: BO_THE_WHOLE_PROTECTION
+    Description: The Whole Protection
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 7
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 15
+      - Level: 5
+        Area: 15
+    GiveAp: 20
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 90000
+      - Level: 3
+        Time: 120000
+      - Level: 4
+        Time: 150000
+      - Level: 5
+        Time: 180000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 220
+        - Level: 2
+          Amount: 260
+        - Level: 3
+          Amount: 300
+        - Level: 4
+          Amount: 340
+        - Level: 5
+          Amount: 380
+      ItemCost:
+        - Item: High_Coating_Bottle
+          Amount: 3
+  - Id: 5339
+    Name: BO_ADVANCE_PROTECTION
+    Description: Advance Protection
+    MaxLevel: 4
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    GiveAp:
+      - Level: 1
+        Amount: 2
+      - Level: 2
+        Amount: 2
+      - Level: 3
+        Amount: 3
+      - Level: 4
+        Amount: 3
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 40000
+      - Level: 3
+        Time: 50000
+      - Level: 4
+        Time: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 130
+        - Level: 3
+          Amount: 140
+        - Level: 4
+          Amount: 150
+      ItemCost:
+        - Item: High_Coating_Bottle
+          Amount: 1
+  - Id: 5340
+    Name: BO_ACIDIFIED_ZONE_WATER
+    Description: Acidified Zone Water
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Water
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp:
+      - Level: 1
+        Amount: 4
+      - Level: 2
+        Amount: 4
+      - Level: 3
+        Amount: 4
+      - Level: 4
+        Amount: 5
+      - Level: 5
+        Amount: 5
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 10000
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 52
+        - Level: 3
+          Amount: 64
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 88
+      ItemCost:
+        - Item: Icicle_Acid_Bottle
+          Amount: 2
+    Unit:
+      Id: Acidified_Zone_Water
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5341
+    Name: BO_ACIDIFIED_ZONE_GROUND
+    Description: Acidified Zone Ground
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Earth
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp:
+      - Level: 1
+        Amount: 4
+      - Level: 2
+        Amount: 4
+      - Level: 3
+        Amount: 4
+      - Level: 4
+        Amount: 5
+      - Level: 5
+        Amount: 5
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 10000
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 52
+        - Level: 3
+          Amount: 64
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 88
+      ItemCost:
+        - Item: Earth_Acid_Bottle
+          Amount: 2
+    Unit:
+      Id: Acidified_Zone_Ground
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5342
+    Name: BO_ACIDIFIED_ZONE_WIND
+    Description: Acidified Zone Wind
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Wind
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp:
+      - Level: 1
+        Amount: 4
+      - Level: 2
+        Amount: 4
+      - Level: 3
+        Amount: 4
+      - Level: 4
+        Amount: 5
+      - Level: 5
+        Amount: 5
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 10000
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 52
+        - Level: 3
+          Amount: 64
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 88
+      ItemCost:
+        - Item: Gale_Acid_Bottle
+          Amount: 2
+    Unit:
+      Id: Acidified_Zone_Wind
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5343
+    Name: BO_ACIDIFIED_ZONE_FIRE
+    Description: Acidified Zone Fire
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Fire
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    GiveAp:
+      - Level: 1
+        Amount: 4
+      - Level: 2
+        Amount: 4
+      - Level: 3
+        Amount: 4
+      - Level: 4
+        Amount: 5
+      - Level: 5
+        Amount: 5
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 10000
+    Cooldown: 2000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 52
+        - Level: 3
+          Amount: 64
+        - Level: 4
+          Amount: 76
+        - Level: 5
+          Amount: 88
+      ItemCost:
+        - Item: Flame_Acid_Bottle
+          Amount: 2
+    Unit:
+      Id: Acidified_Zone_Fire
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5344
+    Name: BO_WOODENWARRIOR
+    Description: Wooden Warrior
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    GiveAp: 20
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 240000
+      - Level: 4
+        Time: 300000
+      - Level: 5
+        Time: 360000
+    Cooldown: 30000
+    FixedCastTime: 4000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 100
+        - Level: 2
+          Amount: 120
+        - Level: 3
+          Amount: 140
+        - Level: 4
+          Amount: 160
+        - Level: 5
+          Amount: 180
+      ItemCost:
+        - Item: High_Plant_Bottle
+          Amount: 2
+  - Id: 5345
+    Name: BO_WOODEN_FAIRY
+    Description: Wooden Fairy
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    GiveAp: 20
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 240000
+      - Level: 4
+        Time: 300000
+      - Level: 5
+        Time: 360000
+    Cooldown: 30000
+    FixedCastTime: 4000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 155
+        - Level: 3
+          Amount: 180
+        - Level: 4
+          Amount: 205
+        - Level: 5
+          Amount: 230
+      ItemCost:
+        - Item: High_Plant_Bottle
+          Amount: 2
+  - Id: 5346
+    Name: BO_CREEPER
+    Description: Creeper
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    GiveAp: 10
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 180000
+      - Level: 3
+        Time: 240000
+      - Level: 4
+        Time: 300000
+      - Level: 5
+        Time: 360000
+    Cooldown: 30000
+    FixedCastTime: 4000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 96
+        - Level: 3
+          Amount: 112
+        - Level: 4
+          Amount: 128
+        - Level: 5
+          Amount: 144
+      ItemCost:
+        - Item: High_Plant_Bottle
+          Amount: 1
+  - Id: 5347
+    Name: BO_RESEARCHREPORT
+    Description: Research Report
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 60000
+    Cooldown: 120000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 60
+      ApCost: 100
+  - Id: 5348
+    Name: BO_HELLTREE
+    Description: Hell Tree
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    ActiveInstance: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 90000
+      - Level: 3
+        Time: 120000
+      - Level: 4
+        Time: 150000
+      - Level: 5
+        Time: 180000
+    Cooldown: 60000
+    FixedCastTime: 4000
+    Requires:
+      SpCost: 100
+      ApCost: 100
+      ItemCost:
+        - Item: High_Plant_Bottle
+          Amount: 3
+  - Id: 5349
+    Name: TR_STAGE_MANNER
+    Description: Stage Manner
+    MaxLevel: 5
+    CastCancel: true
+  - Id: 5350
+    Name: TR_RETROSPECTION
+    Description: Retrospection
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Requires:
+      SpCost: 1
+  - Id: 5351
+    Name: TR_MYSTIC_SYMPHONY
+    Description: Mystic Symphony
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 60000
+    Cooldown: 120000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 250
+      ApCost: 100
+      Weapon:
+        Bow: true
+        Musical: true
+        Whip: true
+  - Id: 5352
+    Name: TR_KVASIR_SONATA
+    Description: Kvasir Sonata
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 60000
+    Cooldown: 120000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 300
+      ApCost: 100
+      Weapon:
+        Bow: true
+        Musical: true
+        Whip: true
+  - Id: 5353
+    Name: TR_ROSEBLOSSOM
+    Description: Rose Blossom
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Weapon
+    GiveAp: 5
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 500
+    Cooldown: 3000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 215
+        - Level: 2
+          Amount: 230
+        - Level: 3
+          Amount: 245
+        - Level: 4
+          Amount: 260
+        - Level: 5
+          Amount: 275
+      Weapon:
+        Bow: true
+        Musical: true
+        Whip: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
+  - Id: 5354
+    Name: TR_ROSEBLOSSOM_ATK
+    Description: Rose Blossom Attack
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    Requires:
+      SpCost: 1
+  - Id: 5355
+    Name: TR_RHYTHMSHOOTING
+    Description: Rhythm Shooting
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Weapon
+    GiveAp:
+      - Level: 1
+        Amount: 1
+      - Level: 2
+        Amount: 1
+      - Level: 3
+        Amount: 1
+      - Level: 4
+        Amount: 2
+      - Level: 5
+        Amount: 2
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Cooldown: 1000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 92
+        - Level: 3
+          Amount: 104
+        - Level: 4
+          Amount: 116
+        - Level: 5
+          Amount: 128
+      Weapon:
+        Bow: true
+        Musical: true
+        Whip: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
+  - Id: 5356
+    Name: TR_METALIC_FURY
+    Description: Metalic Fury
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    GiveAp:
+      - Level: 1
+        Amount: 4
+      - Level: 2
+        Amount: 4
+      - Level: 3
+        Amount: 4
+      - Level: 4
+        Amount: 5
+      - Level: 5
+        Amount: 5
+    CastCancel: true
+    Cooldown: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 132
+        - Level: 3
+          Amount: 144
+        - Level: 4
+          Amount: 156
+        - Level: 5
+          Amount: 168
+      Weapon:
+        Musical: true
+        Whip: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
+  - Id: 5357
+    Name: TR_SOUNDBLEND
+    Description: Sound Blend
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    GiveAp:
+      - Level: 1
+        Amount: 2
+      - Level: 2
+        Amount: 2
+      - Level: 3
+        Amount: 2
+      - Level: 4
+        Amount: 3
+      - Level: 5
+        Amount: 3
+    CastCancel: true
+    CastTime: 1000
+    Duration1:
+      - Level: 1
+        Time: 10000
+      - Level: 2
+        Time: 10000
+      - Level: 3
+        Time: 15000
+      - Level: 4
+        Time: 15000
+      - Level: 5
+        Time: 20000
+    Cooldown: 1000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 80
+        - Level: 2
+          Amount: 92
+        - Level: 3
+          Amount: 104
+        - Level: 4
+          Amount: 116
+        - Level: 5
+          Amount: 128
+      Weapon:
+        Musical: true
+        Whip: true
+  - Id: 5358
+    Name: TR_GEF_NOCTURN
+    Description: Geffenia Nocturn
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 8
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 10
+      - Level: 5
+        Area: 11
+    GiveAp: 20
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 30000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 160
+        - Level: 3
+          Amount: 200
+        - Level: 4
+          Amount: 240
+        - Level: 5
+          Amount: 280
+      Weapon:
+        Musical: true
+        Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
+  - Id: 5359
+    Name: TR_ROKI_CAPRICCIO
+    Description: Roki Capriccio
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 8
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 10
+      - Level: 5
+        Area: 11
+    GiveAp: 20
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Duration2: 20000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 160
+        - Level: 3
+          Amount: 200
+        - Level: 4
+          Amount: 240
+        - Level: 5
+          Amount: 280
+      Weapon:
+        Musical: true
+        Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
+  - Id: 5360
+    Name: TR_AIN_RHAPSODY
+    Description: Ain Rhapsody
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 8
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 10
+      - Level: 5
+        Area: 11
+    GiveAp: 20
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 30000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 160
+        - Level: 3
+          Amount: 200
+        - Level: 4
+          Amount: 240
+        - Level: 5
+          Amount: 280
+      Weapon:
+        Musical: true
+        Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
+  - Id: 5361
+    Name: TR_MUSICAL_INTERLUDE
+    Description: Musical Interlude
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 8
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 10
+      - Level: 5
+        Area: 11
+    GiveAp: 10
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 180000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 171
+        - Level: 2
+          Amount: 182
+        - Level: 3
+          Amount: 193
+        - Level: 4
+          Amount: 204
+        - Level: 5
+          Amount: 215
+      Weapon:
+        Musical: true
+        Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
+  - Id: 5362
+    Name: TR_JAWAII_SERENADE
+    Description: Jawaii Serenade
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 8
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 10
+      - Level: 5
+        Area: 11
+    GiveAp: 10
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 180000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 140
+        - Level: 2
+          Amount: 150
+        - Level: 3
+          Amount: 160
+        - Level: 4
+          Amount: 170
+        - Level: 5
+          Amount: 180
+      Weapon:
+        Musical: true
+        Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
+  - Id: 5363
+    Name: TR_NIPELHEIM_REQUIEM
+    Description: Nipelheim Requiem
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 8
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 10
+      - Level: 5
+        Area: 11
+    GiveAp: 20
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Duration2: 20000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 120
+        - Level: 2
+          Amount: 160
+        - Level: 3
+          Amount: 200
+        - Level: 4
+          Amount: 240
+        - Level: 5
+          Amount: 280
+      Weapon:
+        Musical: true
+        Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
+  - Id: 5364
+    Name: TR_PRON_MARCH
+    Description: Pron March
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 7
+      - Level: 2
+        Area: 8
+      - Level: 3
+        Area: 9
+      - Level: 4
+        Area: 10
+      - Level: 5
+        Area: 11
+    GiveAp: 10
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 180000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 140
+        - Level: 2
+          Amount: 150
+        - Level: 3
+          Amount: 160
+        - Level: 4
+          Amount: 170
+        - Level: 5
+          Amount: 180
+      Weapon:
+        Musical: true
+        Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
+  - Id: 5365
+    Name: EM_MAGIC_BOOK_M
+    Description: Magic Book Mastery
+    MaxLevel: 10
+  - Id: 5366
+    Name: EM_SPELL_ENCHANTING
+    Description: Spell Enchanting
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      PartyOnly: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 80000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 160000
+      - Level: 4
+        Time: 200000
+      - Level: 5
+        Time: 240000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 43
+        - Level: 2
+          Amount: 46
+        - Level: 3
+          Amount: 49
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 55
+  - Id: 5367
+    Name: EM_ACTIVITY_BURN
+    Description: Activity Burn
+    MaxLevel: 5
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+  - Id: 5368
+    Name: EM_INCREASING_ACTIVITY
+    Description: Increasing Activity
+    MaxLevel: 5
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      NoTargetSelf: true
+      PartyOnly: true
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 30
+        - Level: 2
+          Amount: 40
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 70
+      ApCost: 50
+  - Id: 5369
+    Name: EM_DIAMOND_STORM
+    Description: Diamond Storm
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Water
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 500
+    Duration1: 100
+    Duration2: 10000
+    Cooldown: 4000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 84
+        - Level: 2
+          Amount: 88
+        - Level: 3
+          Amount: 92
+        - Level: 4
+          Amount: 96
+        - Level: 5
+          Amount: 100
+    Unit:
+      Id: Dummyskill
+      Range: 4
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 5370
+    Name: EM_LIGHTNING_LAND
+    Description: Lightning Land
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Wind
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 500
+    Duration1: 4000
+    Duration2: 10000
+    Cooldown: 4000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 85
+        - Level: 5
+          Amount: 95
+    Unit:
+      Id: Lightning_Land
+      Range: 4
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5371
+    Name: EM_VENOM_SWAMP
+    Description: Venom Swamp
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Poison
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 500
+    Duration1: 4000
+    Duration2: 20000
+    Cooldown: 4000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 84
+        - Level: 2
+          Amount: 88
+        - Level: 3
+          Amount: 92
+        - Level: 4
+          Amount: 96
+        - Level: 5
+          Amount: 100
+    Unit:
+      Id: Venom_Swamp
+      Range: 4
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5372
+    Name: EM_CONFLAGRATION
+    Description: Conflagration
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 500
+    Duration1: 4000
+    Duration2: 20000
+    Cooldown: 4000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 70
+        - Level: 2
+          Amount: 80
+        - Level: 3
+          Amount: 90
+        - Level: 4
+          Amount: 100
+        - Level: 5
+          Amount: 110
+    Unit:
+      Id: Conflagration
+      Range: 4
+      Interval: 500
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+  - Id: 5373
+    Name: EM_TERRA_DRIVE
+    Description: Terra Drive
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Ground
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Earth
+    GiveAp: 4
+    CastCancel: true
+    CastTime: 4000
+    AfterCastActDelay: 500
+    Duration1: 100
+    Duration2: 10000
+    Cooldown: 4000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 84
+        - Level: 2
+          Amount: 88
+        - Level: 3
+          Amount: 92
+        - Level: 4
+          Amount: 96
+        - Level: 5
+          Amount: 100
+    Unit:
+      Id: Dummyskill
+      Range: 4
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        PathCheck: true
+  - Id: 5374
+    Name: EM_ELEMENTAL_SPIRIT_M
+    Description: Elemental Spirit Mastery
+    MaxLevel: 10
+  - Id: 5375
+    Name: EM_SUMMON_ELEMENTAL_ARDOR
+    Description: Summon Elemental Ardor
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 1500000
+    Cooldown: 900000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 100
+      ItemCost:
+        - Item: Flame_Stone_4th
+          Amount: 1
+  - Id: 5376
+    Name: EM_SUMMON_ELEMENTAL_DILUVIO
+    Description: Summon Elemental Diluvio
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 1500000
+    Cooldown: 900000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 100
+      ItemCost:
+        - Item: Ice_Stone_4th
+          Amount: 1
+  - Id: 5377
+    Name: EM_SUMMON_ELEMENTAL_PROCELLA
+    Description: Summon Elemental Procella
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 1500000
+    Cooldown: 900000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 100
+      ItemCost:
+        - Item: Wind_Stone_4th
+          Amount: 1
+  - Id: 5378
+    Name: EM_SUMMON_ELEMENTAL_TERREMOTUS
+    Description: Summon Elemental Terremotus
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 1500000
+    Cooldown: 900000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 100
+      ItemCost:
+        - Item: Earth_Stone_4th
+          Amount: 1
+  - Id: 5379
+    Name: EM_SUMMON_ELEMENTAL_SERPENS
+    Description: Summon Elemental Serpens
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Duration1: 1500000
+    Cooldown: 900000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 100
+      ItemCost:
+        - Item: Poison_Stone_4th
+          Amount: 1
+  - Id: 5380
+    Name: EM_ELEMENTAL_BUSTER
+    Description: Elemental Buster
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 8000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    FixedCastTime: 2000
+    Requires:
+      SpCost: 150
+      ApCost: 150
+  - Id: 5381
+    Name: EM_ELEMENTAL_VEIL
+    Description: Elemental Veil
+    MaxLevel: 5
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 150000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 210000
+      - Level: 5
+        Time: 240000
+    Cooldown: 10000
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 70
+        - Level: 2
+          Amount: 75
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 85
+        - Level: 5
+          Amount: 90
+  - Id: 5382
+    Name: ABC_CHAIN_REACTION_SHOT_ATK
+    Description: Chain Reaction Shot Attack
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      IgnoreFlee: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Weapon
+    Requires:
+      SpCost: 1
+  - Id: 5383
+    Name: ABC_FROM_THE_ABYSS_ATK
+    Description: From The Abyss Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    SplashArea: 3
+    Requires:
+      SpCost: 1
+  - Id: 5384
+    Name: BO_WOODEN_THROWROCK
+    Description: Wooden Throw Rock
+    MaxLevel: 1
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 5385
+    Name: BO_WOODEN_ATTACK
+    Description: Wooden Attack
+    MaxLevel: 1
+    TargetType: Attack
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 5386
+    Name: BO_HELL_HOWLING
+    Description: Hell Howling
+    MaxLevel: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 15000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 5387
+    Name: BO_HELL_DUSTY
+    Description: Hell Dusty
+    MaxLevel: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 30000
+    Cooldown: 30000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 5388
+    Name: BO_FAIRY_DUSTY
+    Description: Fairy Dusty
+    MaxLevel: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 5389
+    Name: EM_ELEMENTAL_BUSTER_FIRE
+    Description: Elemental Buster Fire
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: -10
+    Element: Fire
+    SplashArea: 6
+    Requires:
+      SpCost: 1
+  - Id: 5390
+    Name: EM_ELEMENTAL_BUSTER_WATER
+    Description: Elemental Buster Water
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: -10
+    Element: Water
+    SplashArea: 6
+    Requires:
+      SpCost: 1
+  - Id: 5391
+    Name: EM_ELEMENTAL_BUSTER_WIND
+    Description: Elemental Buster Wind
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: -10
+    Element: Wind
+    SplashArea: 6
+    Requires:
+      SpCost: 1
+  - Id: 5392
+    Name: EM_ELEMENTAL_BUSTER_GROUND
+    Description: Elemental Buster Ground
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: -10
+    Element: Earth
+    SplashArea: 6
+    Requires:
+      SpCost: 1
+  - Id: 5393
+    Name: EM_ELEMENTAL_BUSTER_POISON
+    Description: Elemental Buster Poison
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: -10
+    Element: Poison
+    SplashArea: 6
+    Requires:
+      SpCost: 1
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
@@ -37459,6 +43595,315 @@ Body:
     SplashArea: 1
     Requires:
       SpCost: 80
+  - Id: 8443
+    Name: EM_EL_FLAMETECHNIC
+    Description: Flame Technic
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8444
+    Name: EM_EL_FLAMEARMOR
+    Description: Flame Armor
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8445
+    Name: EM_EL_FLAMEROCK
+    Description: Flame Rock
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Range: 6
+    Hit: Multi_Hit
+    HitCount: -2
+    Element: Fire
+    SplashArea: 3
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8446
+    Name: EM_EL_COLD_FORCE
+    Description: Cold Force
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8447
+    Name: EM_EL_CRYSTAL_ARMOR
+    Description: Crystal Armor
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8448
+    Name: EM_EL_AGE_OF_ICE
+    Description: Age Of Ice
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: -4
+    Element: Water
+    SplashArea: 5
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8449
+    Name: EM_EL_GRACE_BREEZE
+    Description: Grace Breeze
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8450
+    Name: EM_EL_EYES_OF_STORM
+    Description: Eyes Of Storm
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8451
+    Name: EM_EL_STORM_WIND
+    Description: Storm Wind
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Range: 11
+    Hit: Multi_Hit
+    HitCount: -4
+    Element: Wind
+    SplashArea: 2
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8452
+    Name: EM_EL_EARTH_CARE
+    Description: Earth Care
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8453
+    Name: EM_EL_STRONG_PROTECTION
+    Description: Strong Protection
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8454
+    Name: EM_EL_AVALANCHE
+    Description: Avalanche
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Range: 5
+    Hit: Multi_Hit
+    HitCount: 7
+    Element: Earth
+    SplashArea: 4
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8455
+    Name: EM_EL_DEEP_POISONING
+    Description: Deep Poisoning
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8456
+    Name: EM_EL_POISON_SHIELD
+    Description: Poison Shield
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: -1
+    Requires:
+      SpCost: 1
+  - Id: 8457
+    Name: EM_EL_DEADLY_POISON
+    Description: Deadly Poison
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      IgnoreDefense: true
+    Range: 5
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Poison
+    SplashArea: 4
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8601
+    Name: ABR_BATTLE_BUSTER
+    Description: Battle Buster
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8602
+    Name: ABR_DUAL_CANNON_FIRE
+    Description: Dual Cannon Fire
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8603
+    Name: ABR_NET_REPAIR
+    Description: Net Repair
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 12
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8604
+    Name: ABR_NET_SUPPORT
+    Description: Net Support
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 12
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
+  - Id: 8605
+    Name: ABR_INFINITY_BUSTER
+    Description: Infinity Buster
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 5000
+    FixedCastTime: 500
+    Requires:
+      SpCost: 1
   - Id: 10000
     Name: GD_APPROVAL
     Description: Official Guild Approval

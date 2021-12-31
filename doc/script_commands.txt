@@ -3586,6 +3586,8 @@ Valid types are:
 	MOB_ATK2 - monster's atk2
 	MOB_DEF - monster's def
 	MOB_MDEF - monster's mdef
+	MOB_RES - monster's res
+	MOB_MRES - monster's mres
 	MOB_STR - monster's str
 	MOB_AGI - monster's agi
 	MOB_VIT - monster's vit
@@ -6031,6 +6033,30 @@ specified amount permanently. The amount can be negative. See 'statusup'.
 
 	// This will decrease a character's Vit forever.
 	statusup2 bVit,-1;
+---------------------------------------
+
+*traitstatusup <stat>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character up by one
+permanently. Trait stats are to be given as number, but you can use these constants to
+replace them:
+
+bPow -  Power
+bSta -  Stamina
+bWis -  Wisdom
+bSpl -  Spell
+bCon -  Concentration
+bCrt -  Creative
+
+---------------------------------------
+
+*traitstatusup2 <stat>,<amount>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character by the
+specified amount permanently. The amount can be negative. See 'statusup'.
+
+	// This will decrease a character's Sta forever.
+	traitstatusup2 bSta,-1;
 
 ---------------------------------------
 
@@ -8269,6 +8295,8 @@ Parameters (indexes) for monsters are:
 	UMOB_BODY2
 	UMOB_GROUP_ID
 	UMOB_IGNORE_CELL_STACK_LIMIT
+	UMOB_RES
+	UMOB_MRES
 
 -----
 
