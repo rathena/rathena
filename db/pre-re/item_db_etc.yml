@@ -16495,6 +16495,14 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 7524
+    AegisName: Shadow_Orb
+    Name: Shadow Orb
+    Type: Etc
+    Buy: 300
+    Weight: 20
+    Flags:
+      BuyingStore: true
   - Id: 7525
     AegisName: Summer_Feast_Ticket
     Name: Summer Festival Ticket
