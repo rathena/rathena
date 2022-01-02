@@ -171,6 +171,9 @@ public:
 	}
 
 	void loadingFinished() override{
+		this->cache.clear();
+		this->cache.resize( this->size(), nullptr );
+
 		// Cache all known values
 		for (auto &pair : *this) {
 			// Calculate the key that should be used
