@@ -1159,7 +1159,6 @@ void initChangeTables(void)
 
 #ifdef RENEWAL
 	set_sc( GD_EMERGENCY_MOVE	, SC_EMERGENCY_MOVE	, EFST_INC_AGI	, SCB_SPEED );
-#endif
 
 	/* Rune Knight */
 	set_sc( RK_ENCHANTBLADE		, SC_ENCHANTBLADE	, EFST_ENCHANTBLADE		, SCB_NONE );
@@ -1355,6 +1354,7 @@ void initChangeTables(void)
 	set_sc( EL_ROCK_CRUSHER		, SC_ROCK_CRUSHER		, EFST_ROCK_CRUSHER		, SCB_DEF );
 	set_sc( EL_ROCK_CRUSHER_ATK	, SC_ROCK_CRUSHER_ATK		, EFST_ROCK_CRUSHER_ATK		, SCB_SPEED );
 
+	/* Kagerou/Oboro */
 	add_sc( KO_YAMIKUMO			, SC_HIDING		);
 	set_sc_with_vfx( KO_JYUMONJIKIRI	, SC_JYUMONJIKIRI	, EFST_KO_JYUMONJIKIRI	, SCB_NONE );
 	add_sc( KO_MAKIBISHI			, SC_STUN		);
@@ -1383,6 +1383,7 @@ void initChangeTables(void)
 	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, EFST_HEAT_BARREL	, SCB_HIT|SCB_ASPD );
 	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, EFST_C_MARKER		, SCB_FLEE );
 	set_sc_with_vfx( RL_AM_BLAST	, SC_ANTI_M_BLAST	, EFST_ANTI_M_BLAST	, SCB_NONE );
+#endif
 
 	// New Mounts
 	set_sc_with_vfx_noskill( SC_ALL_RIDING	, EFST_ALL_RIDING	, SCB_SPEED );
@@ -1402,6 +1403,7 @@ void initChangeTables(void)
 	set_sc_with_vfx_noskill( SC_TIME_ACCESSORY	, EFST_TIME_ACCESSORY	, SCB_NONE);
 	set_sc_with_vfx_noskill( SC_MAGICAL_FEATHER	, EFST_MAGICAL_FEATHER	, SCB_NONE);
 
+#ifdef RENEWAL
 	/* Summoner */
 	set_sc( SU_HIDE					, SC_SUHIDE			, EFST_SUHIDE			, SCB_NONE );
 	add_sc( SU_SCRATCH				, SC_BLEEDING );
@@ -1423,9 +1425,11 @@ void initChangeTables(void)
 	set_sc( SU_SHRIMPARTY			, SC_SHRIMPBLESSING , EFST_PROTECTIONOFSHRIMP , SCB_REGEN );
 	add_sc( SU_MEOWMEOW				, SC_CHATTERING );
 	set_sc( SU_CHATTERING			, SC_CHATTERING		, EFST_CHATTERING		, SCB_WATK|SCB_MATK );
+#endif
 
 	set_sc( WE_CHEERUP				, SC_CHEERUP		, EFST_CHEERUP		, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
 
+#ifdef RENEWAL
 	// Star Emperor
 	set_sc( SJ_LIGHTOFMOON			, SC_LIGHTOFMOON	, EFST_LIGHTOFMOON		, SCB_NONE );
 	set_sc( SJ_LIGHTOFSTAR			, SC_LIGHTOFSTAR	, EFST_LIGHTOFSTAR		, SCB_NONE );
@@ -1456,7 +1460,6 @@ void initChangeTables(void)
 	set_sc( SP_SOULREAPER	, SC_SOULREAPER		, EFST_SOULREAPER	, SCB_NONE );
 	set_sc( SP_SOULCOLLECT	, SC_SOULCOLLECT	, EFST_SOULCOLLECT	, SCB_NONE );
 
-#ifdef RENEWAL
 	set_sc( NV_HELPANGEL			, SC_HELPANGEL		, EFST_HELPANGEL	, SCB_NONE );
 
 	// Dragon Knight
