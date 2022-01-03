@@ -25,9 +25,8 @@
 # - ItemLevel                  Number which determines what kind of a crafting window will pop-up.
 #   Recipe:
 #    - Product                 AegisName of the produced item.
-#      Skill:                  Skill requirement. (Default: null)
-#        Name                  Skill name required.
-#        Level                 Skill level required.
+#      SkillName               Skill name required. (Default: null)
+#      SkillLevel              Skill level required. (Default: 1)
 #      Consumed:               List of items consumed to produce the Product.
 #        - Item                AegisName of the consumed item.
 #          Amount              Amount required.
@@ -36,7 +35,8 @@
 #        - Item                AegisName of the unconsumed item.
 #          Clear               Remove the item with the given AegisName from NotConsumed. (Optional)
 #
-#                              Additional fields for Change Material (ItemLevel: 26):
+###########################################################################
+# Additional fields for Change Material (ItemLevel: 26):
 #
 #      BaseRate                Base rate (in n/10%). (Default: 1000)
 #      Make:                   List of item amounts with their individual rate produced by Change Material. (Default: null)

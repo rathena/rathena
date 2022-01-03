@@ -24482,7 +24482,7 @@ uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		produce = std::make_shared<s_skill_produce_db>();
-		produce->itemlv = static_cast<uint8>(itemlv);
+		produce->itemlv = itemlv;
 	}
 
 	t_itemid nameid;
@@ -24532,7 +24532,7 @@ uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 			entry->nameid = nameid;
 		}
 
-		entry->itemlv = static_cast<uint8>(itemlv);
+		entry->itemlv = itemlv;
 
 		if (this->nodeExists(subit, "BaseRate")) {	// note: BaseRate is only used for skill changematerial (itemlv 26)
 			uint16 baserate;

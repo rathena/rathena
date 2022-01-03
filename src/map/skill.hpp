@@ -431,7 +431,7 @@ enum e_skill_blown	{
 struct s_skill_produce_db_entry {
 	t_itemid nameid; /// Product ID
 	uint16 req_skill; /// Required Skill
-	uint8 req_skill_lv, /// Required Skill Level
+	uint16 req_skill_lv, /// Required Skill Level
 		itemlv; /// Item Level
 	std::unordered_map<t_itemid, uint16> materials;
 
@@ -441,7 +441,7 @@ struct s_skill_produce_db_entry {
 };
 
 struct s_skill_produce_db {
-	uint8 itemlv; /// Item Level
+	uint16 itemlv; /// Item Level
 	std::unordered_map<t_itemid, std::shared_ptr<s_skill_produce_db_entry>> data;	/// item, entry
 };
 
