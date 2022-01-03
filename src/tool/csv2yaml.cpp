@@ -4907,13 +4907,13 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 static bool skill_producedb_yaml(void) {
 	for (const auto &produceit : skill_produce) {
 		body << YAML::BeginMap;
-		body << YAML::Key << "ItemLV" << YAML::Value << produceit.first;
+		body << YAML::Key << "ItemLevel" << YAML::Value << produceit.first;
 		body << YAML::Key << "Recipe";
 		body << YAML::BeginSeq;
 
 		for (const auto &it : produceit.second) {
 			body << YAML::BeginMap;
-			body << YAML::Key << "Produced" << YAML::Value << it.produced_name;
+			body << YAML::Key << "Product" << YAML::Value << it.produced_name;
 
 			// additional lines from skill_changematerial_db (which uses ItemLV 26)
 			if (produceit.first == 26) {
@@ -4922,7 +4922,7 @@ static bool skill_producedb_yaml(void) {
 					if (changematerial->baserate != 1000)
 						body << YAML::Key << "BaseRate" << YAML::Value << changematerial->baserate;
 					if (!changematerial->qty.empty()) {
-						body << YAML::Key << "Quantity";
+						body << YAML::Key << "Make";
 						body << YAML::BeginSeq;
 						for (const auto &qit : changematerial->qty) {
 							body << YAML::BeginMap;
@@ -4937,11 +4937,8 @@ static bool skill_producedb_yaml(void) {
 			}
 
 			if (it.req_skill_lv > 0) {
-				body << YAML::Key << "Skill";
-				body << YAML::BeginMap;
-				body << YAML::Key << "Name" << YAML::Value << it.req_skill_name;
-				body << YAML::Key << "Level" << YAML::Value << it.req_skill_lv;
-				body << YAML::EndMap;
+				body << YAML::Key << "SkillName" << YAML::Value << it.req_skill_name;
+				body << YAML::Key << "SkillLevel" << YAML::Value << it.req_skill_lv;
 			}
 
 			if (!it.item_consumed.empty()) {

@@ -24547,8 +24547,8 @@ uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 		}
 
-		if (this->nodeExists(subit, "Quantity")) {	// note: Quantity is only used for skill changematerial (itemlv 26)
-			const YAML::Node &QuantityNode = subit["Quantity"];
+		if (this->nodeExists(subit, "Make")) {	// note: Quantity is only used for skill changematerial (itemlv 26)
+			const YAML::Node &QuantityNode = subit["Make"];
 
 			for (const auto &Quantityit : QuantityNode) {
 				uint16 amount;
@@ -24579,35 +24579,32 @@ uint64 SkillProduceDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 		}
 
-		if (this->nodeExists(subit, "Skill")) {
-			const YAML::Node &skillNode = subit["Skill"];
+		if (this->nodeExists(subit, "SkillName")) {
+			std::string skill_name;
 
-			if (!exists && !this->nodesExist(skillNode, { "Name", "Level" }))
+			if (!this->asString(subit, "SkillName", skill_name))
 				return 0;
 
-			if (this->nodeExists(skillNode, "Name")) {
-				std::string skill_name;
+			uint16 skill_id = skill_name2id(skill_name.c_str());
 
-				if (!this->asString(skillNode, "Name", skill_name))
-					return 0;
-
-				uint16 skill_id = skill_name2id(skill_name.c_str());
-
-				if (!skill_id) {
-					this->invalidWarning(skillNode["Name"], "Invalid skill name \"%s\", skipping.\n", skill_name.c_str());
-					return 0;
-				}
-
-				entry->req_skill = skill_id;
+			if (!skill_id) {
+				this->invalidWarning(subit["SkillName"], "Invalid skill name \"%s\", skipping.\n", skill_name.c_str());
+				return 0;
 			}
 
-			if (this->nodeExists(skillNode, "Level")) {
-				uint16 skill_lv;
+			entry->req_skill = skill_id;
+		}
 
-				if (!this->asUInt16(skillNode, "Level", skill_lv))
-					return 0;
+		if (this->nodeExists(subit, "SkillLevel")) {
+			uint16 skill_lv;
 
-				entry->req_skill_lv = static_cast<uint8>(skill_lv);
+			if (!this->asUInt16(subit, "SkillLevel", skill_lv))
+				return 0;
+
+			entry->req_skill_lv = static_cast<uint8>(skill_lv);
+		} else {
+			if (!id_exists) {
+				entry->req_skill_lv = 1;
 			}
 		}
 

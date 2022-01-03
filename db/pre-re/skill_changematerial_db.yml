@@ -25,9 +25,8 @@
 # - ItemLevel                  Number which determines what kind of a crafting window will pop-up.
 #   Recipe:
 #    - Product                 AegisName of the produced item.
-#      Skill:                  Skill requirement. (Default: null)
-#        Name                  Skill name required.
-#        Level                 Skill level required.
+#      SkillName               Skill name required. (Default: null)
+#      SkillLevel              Skill level required. (Default: 1)
 #      Consumed:               List of items consumed to produce the Product.
 #        - Item                AegisName of the consumed item.
 #          Amount              Amount required.

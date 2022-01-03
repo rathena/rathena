@@ -25,9 +25,8 @@
 # - ItemLevel                  Number which determines what kind of a crafting window will pop-up.
 #   Recipe:
 #    - Product                 AegisName of the produced item.
-#      Skill:                  Skill requirement. (Default: null)
-#        Name                  Skill name required.
-#        Level                 Skill level required.
+#      SkillName               Skill name required. (Default: null)
+#      SkillLevel              Skill level required. (Default: 1)
 #      Consumed:               List of items consumed to produce the Product.
 #        - Item                AegisName of the consumed item.
 #          Amount              Amount required.
@@ -35,6 +34,14 @@
 #      NotConsumed:            List of items not consumed to produce the Product. (Default: null)
 #        - Item                AegisName of the unconsumed item.
 #          Clear               Remove the item with the given AegisName from NotConsumed. (Optional)
+#
+###########################################################################
+# Additional fields for Change Material (ItemLevel: 26):
+#
+#      BaseRate                Base rate (in n/10%). (Default: 1000)
+#      Make:                   List of item amounts with their individual rate produced by Change Material. (Default: null)
+#        - Amount              Amount of item created (unique to the list).
+#          Rate                Rate to create the Amount (in n/10%). Default: 1000. 0 to remove on import.
 ###########################################################################
 
 Header:
@@ -45,249 +52,216 @@ Body:
   - ItemLevel: 1
     Recipe:
       - Product: Sword
-        Skill:
-          Name: BS_SWORD
-          Level: 1
+        SkillName: BS_SWORD
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 2
       - Product: Falchion
-        Skill:
-          Name: BS_SWORD
-          Level: 1
+        SkillName: BS_SWORD
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 30
       - Product: Blade
-        Skill:
-          Name: BS_SWORD
-          Level: 1
+        SkillName: BS_SWORD
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 45
           - Item: Tooth_Of_Bat
             Amount: 25
       - Product: Knife
-        Skill:
-          Name: BS_DAGGER
-          Level: 1
+        SkillName: BS_DAGGER
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 1
           - Item: Jellopy
             Amount: 10
       - Product: Cutter
-        Skill:
-          Name: BS_DAGGER
-          Level: 1
+        SkillName: BS_DAGGER
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 25
       - Product: Main_Gauche
-        Skill:
-          Name: BS_DAGGER
-          Level: 1
+        SkillName: BS_DAGGER
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 50
       - Product: Katana
-        Skill:
-          Name: BS_TWOHANDSWORD
-          Level: 1
+        SkillName: BS_TWOHANDSWORD
+        SkillLevel: 1
         Consumed:
           - Item: Horrendous_Mouth
             Amount: 15
           - Item: Iron
             Amount: 35
       - Product: Axe
-        Skill:
-          Name: BS_AXE
-          Level: 1
+        SkillName: BS_AXE
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 10
       - Product: Battle_Axe
-        Skill:
-          Name: BS_AXE
-          Level: 1
+        SkillName: BS_AXE
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 110
       - Product: Club
-        Skill:
-          Name: BS_MACE
-          Level: 1
+        SkillName: BS_MACE
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 3
       - Product: Mace
-        Skill:
-          Name: BS_MACE
-          Level: 1
+        SkillName: BS_MACE
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 30
       - Product: Waghnakh
-        Skill:
-          Name: BS_KNUCKLE
-          Level: 1
+        SkillName: BS_KNUCKLE
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 160
           - Item: Scarlet_Jewel
             Amount: 1
       - Product: Javelin
-        Skill:
-          Name: BS_SPEAR
-          Level: 1
+        SkillName: BS_SPEAR
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 3
       - Product: Spear
-        Skill:
-          Name: BS_SPEAR
-          Level: 1
+        SkillName: BS_SPEAR
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 35
       - Product: Pike
-        Skill:
-          Name: BS_SPEAR
-          Level: 1
+        SkillName: BS_SPEAR
+        SkillLevel: 1
         Consumed:
           - Item: Iron
             Amount: 70
   - ItemLevel: 2
     Recipe:
       - Product: Lapier
-        Skill:
-          Name: BS_SWORD
-          Level: 2
+        SkillName: BS_SWORD
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 20
       - Product: Scimiter
-        Skill:
-          Name: BS_SWORD
-          Level: 2
+        SkillName: BS_SWORD
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 35
       - Product: Ring_Pommel_Saber
-        Skill:
-          Name: BS_SWORD
-          Level: 2
+        SkillName: BS_SWORD
+        SkillLevel: 2
         Consumed:
           - Item: Claw_Of_Wolves
             Amount: 50
           - Item: Steel
             Amount: 40
       - Product: Dirk
-        Skill:
-          Name: BS_DAGGER
-          Level: 2
+        SkillName: BS_DAGGER
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 17
       - Product: Dagger
-        Skill:
-          Name: BS_DAGGER
-          Level: 2
+        SkillName: BS_DAGGER
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 30
       - Product: Stiletto
-        Skill:
-          Name: BS_DAGGER
-          Level: 2
+        SkillName: BS_DAGGER
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 40
       - Product: Slayer
-        Skill:
-          Name: BS_TWOHANDSWORD
-          Level: 2
+        SkillName: BS_TWOHANDSWORD
+        SkillLevel: 2
         Consumed:
           - Item: Decayed_Nail
             Amount: 20
           - Item: Steel
             Amount: 25
       - Product: Bastard_Sword
-        Skill:
-          Name: BS_TWOHANDSWORD
-          Level: 2
+        SkillName: BS_TWOHANDSWORD
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 45
       - Product: Hammer
-        Skill:
-          Name: BS_AXE
-          Level: 2
+        SkillName: BS_AXE
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 30
       - Product: Smasher
-        Skill:
-          Name: BS_MACE
-          Level: 2
+        SkillName: BS_MACE
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 20
       - Product: Flail
-        Skill:
-          Name: BS_MACE
-          Level: 2
+        SkillName: BS_MACE
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 33
       - Product: Chain
-        Skill:
-          Name: BS_MACE
-          Level: 2
+        SkillName: BS_MACE
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 45
       - Product: Knuckle_Duster
-        Skill:
-          Name: BS_KNUCKLE
-          Level: 2
+        SkillName: BS_KNUCKLE
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 50
       - Product: Hora
-        Skill:
-          Name: BS_KNUCKLE
-          Level: 2
+        SkillName: BS_KNUCKLE
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 65
       - Product: Guisarme
-        Skill:
-          Name: BS_SPEAR
-          Level: 2
+        SkillName: BS_SPEAR
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 25
       - Product: Glaive
-        Skill:
-          Name: BS_SPEAR
-          Level: 2
+        SkillName: BS_SPEAR
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 40
       - Product: Partizan
-        Skill:
-          Name: BS_SPEAR
-          Level: 2
+        SkillName: BS_SPEAR
+        SkillLevel: 2
         Consumed:
           - Item: Steel
             Amount: 55
   - ItemLevel: 3
     Recipe:
       - Product: Saber
-        Skill:
-          Name: BS_SWORD
-          Level: 3
+        SkillName: BS_SWORD
+        SkillLevel: 3
         Consumed:
           - Item: Oridecon
             Amount: 8
@@ -296,9 +270,8 @@ Body:
           - Item: White_Jewel
             Amount: 1
       - Product: Haedonggum
-        Skill:
-          Name: BS_SWORD
-          Level: 3
+        SkillName: BS_SWORD
+        SkillLevel: 3
         Consumed:
           - Item: Golden_Jewel
             Amount: 1
@@ -307,9 +280,8 @@ Body:
           - Item: Steel
             Amount: 10
       - Product: Tsurugi
-        Skill:
-          Name: BS_SWORD
-          Level: 3
+        SkillName: BS_SWORD
+        SkillLevel: 3
         Consumed:
           - Item: Dark_Red_Jewel
             Amount: 1
@@ -318,18 +290,16 @@ Body:
           - Item: Steel
             Amount: 15
       - Product: Flamberge
-        Skill:
-          Name: BS_SWORD
-          Level: 3
+        SkillName: BS_SWORD
+        SkillLevel: 3
         Consumed:
           - Item: Cardinal_Jewel_
             Amount: 1
           - Item: Oridecon
             Amount: 16
       - Product: Gladius
-        Skill:
-          Name: BS_DAGGER
-          Level: 3
+        SkillName: BS_DAGGER
+        SkillLevel: 3
         Consumed:
           - Item: Blue_Jewel
             Amount: 1
@@ -338,9 +308,8 @@ Body:
           - Item: Steel
             Amount: 40
       - Product: Damascus
-        Skill:
-          Name: BS_DAGGER
-          Level: 3
+        SkillName: BS_DAGGER
+        SkillLevel: 3
         Consumed:
           - Item: Bluish_Green_Jewel
             Amount: 1
@@ -349,27 +318,24 @@ Body:
           - Item: Steel
             Amount: 60
       - Product: Two_Hand_Sword
-        Skill:
-          Name: BS_TWOHANDSWORD
-          Level: 3
+        SkillName: BS_TWOHANDSWORD
+        SkillLevel: 3
         Consumed:
           - Item: Oridecon
             Amount: 12
           - Item: Steel
             Amount: 10
       - Product: Broad_Sword
-        Skill:
-          Name: BS_TWOHANDSWORD
-          Level: 3
+        SkillName: BS_TWOHANDSWORD
+        SkillLevel: 3
         Consumed:
           - Item: Oridecon
             Amount: 12
           - Item: Steel
             Amount: 20
       - Product: Claymore
-        Skill:
-          Name: BS_TWOHANDSWORD
-          Level: 3
+        SkillName: BS_TWOHANDSWORD
+        SkillLevel: 3
         Consumed:
           - Item: Crystal_Jewel___
             Amount: 1
@@ -378,9 +344,8 @@ Body:
           - Item: Steel
             Amount: 20
       - Product: Buster
-        Skill:
-          Name: BS_AXE
-          Level: 3
+        SkillName: BS_AXE
+        SkillLevel: 3
         Consumed:
           - Item: Orcish_Cuspid
             Amount: 30
@@ -389,9 +354,8 @@ Body:
           - Item: Steel
             Amount: 20
       - Product: Two_Handed_Axe
-        Skill:
-          Name: BS_AXE
-          Level: 3
+        SkillName: BS_AXE
+        SkillLevel: 3
         Consumed:
           - Item: Oridecon
             Amount: 8
@@ -400,63 +364,56 @@ Body:
           - Item: Violet_Jewel
             Amount: 1
       - Product: Morning_Star
-        Skill:
-          Name: BS_MACE
-          Level: 3
+        SkillName: BS_MACE
+        SkillLevel: 3
         Consumed:
           - Item: Crystal_Jewel
             Amount: 1
           - Item: Steel
             Amount: 85
       - Product: Sword_Mace
-        Skill:
-          Name: BS_MACE
-          Level: 3
+        SkillName: BS_MACE
+        SkillLevel: 3
         Consumed:
           - Item: Sharp_Scale
             Amount: 20
           - Item: Steel
             Amount: 100
       - Product: Stunner
-        Skill:
-          Name: BS_MACE
-          Level: 3
+        SkillName: BS_MACE
+        SkillLevel: 3
         Consumed:
           - Item: Steel
             Amount: 120
           - Item: Voucher_Of_Orcish_Hero
             Amount: 1
       - Product: Fist
-        Skill:
-          Name: BS_KNUCKLE
-          Level: 3
+        SkillName: BS_KNUCKLE
+        SkillLevel: 3
         Consumed:
           - Item: Cardinal_Jewel
             Amount: 10
           - Item: Oridecon
             Amount: 4
       - Product: Claw
-        Skill:
-          Name: BS_KNUCKLE
-          Level: 3
+        SkillName: BS_KNUCKLE
+        SkillLevel: 3
         Consumed:
           - Item: Golden_Jewel
             Amount: 10
           - Item: Oridecon
             Amount: 8
       - Product: Finger
-        Skill:
-          Name: BS_KNUCKLE
-          Level: 3
+        SkillName: BS_KNUCKLE
+        SkillLevel: 3
         Consumed:
           - Item: Oridecon
             Amount: 4
           - Item: White_Jewel
             Amount: 10
       - Product: Trident
-        Skill:
-          Name: BS_SPEAR
-          Level: 3
+        SkillName: BS_SPEAR
+        SkillLevel: 3
         Consumed:
           - Item: Oridecon
             Amount: 8
@@ -465,18 +422,16 @@ Body:
           - Item: Steel
             Amount: 10
       - Product: Halberd
-        Skill:
-          Name: BS_SPEAR
-          Level: 3
+        SkillName: BS_SPEAR
+        SkillLevel: 3
         Consumed:
           - Item: Oridecon
             Amount: 12
           - Item: Steel
             Amount: 10
       - Product: Lance
-        Skill:
-          Name: BS_SPEAR
-          Level: 3
+        SkillName: BS_SPEAR
+        SkillLevel: 3
         Consumed:
           - Item: Cardinal_Jewel
             Amount: 3
@@ -1387,62 +1342,54 @@ Body:
   - ItemLevel: 21
     Recipe:
       - Product: Iron
-        Skill:
-          Name: BS_IRON
-          Level: 1
+        SkillName: BS_IRON
+        SkillLevel: 1
         Consumed:
           - Item: Iron_Ore
             Amount: 1
       - Product: Steel
-        Skill:
-          Name: BS_STEEL
-          Level: 1
+        SkillName: BS_STEEL
+        SkillLevel: 1
         Consumed:
           - Item: Coal
             Amount: 1
           - Item: Iron
             Amount: 5
       - Product: Star_Crumb
-        Skill:
-          Name: BS_ENCHANTEDSTONE
-          Level: 1
+        SkillName: BS_ENCHANTEDSTONE
+        SkillLevel: 1
         Consumed:
           - Item: Sparkling_Dust
             Amount: 10
       - Product: Flame_Heart
-        Skill:
-          Name: BS_ENCHANTEDSTONE
-          Level: 1
+        SkillName: BS_ENCHANTEDSTONE
+        SkillLevel: 1
         Consumed:
           - Item: Boody_Red
             Amount: 10
       - Product: Mistic_Frozen
-        Skill:
-          Name: BS_ENCHANTEDSTONE
-          Level: 1
+        SkillName: BS_ENCHANTEDSTONE
+        SkillLevel: 1
         Consumed:
           - Item: Crystal_Blue
             Amount: 10
       - Product: Great_Nature
-        Skill:
-          Name: BS_ENCHANTEDSTONE
-          Level: 1
+        SkillName: BS_ENCHANTEDSTONE
+        SkillLevel: 1
         Consumed:
           - Item: Yellow_Live
             Amount: 10
       - Product: Rough_Wind
-        Skill:
-          Name: BS_ENCHANTEDSTONE
-          Level: 1
+        SkillName: BS_ENCHANTEDSTONE
+        SkillLevel: 1
         Consumed:
           - Item: Wind_Of_Verdure
             Amount: 10
   - ItemLevel: 22
     Recipe:
       - Product: Red_Potion
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 1
@@ -1451,9 +1398,8 @@ Body:
         NotConsumed:
           - Item: Normal_Potion_Book
       - Product: Yellow_Potion
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 1
@@ -1462,9 +1408,8 @@ Body:
         NotConsumed:
           - Item: Normal_Potion_Book
       - Product: White_Potion
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 1
@@ -1473,9 +1418,8 @@ Body:
         NotConsumed:
           - Item: Normal_Potion_Book
       - Product: Blue_Potion
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Herb
             Amount: 1
@@ -1486,9 +1430,8 @@ Body:
         NotConsumed:
           - Item: Normal_Potion_Book
       - Product: Red_Slim_Potion
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Cactus_Needle
             Amount: 1
@@ -1499,9 +1442,8 @@ Body:
         NotConsumed:
           - Item: Slim_Potion_Create_Book
       - Product: Yellow_Slim_Potion
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Cylinder
             Amount: 1
@@ -1512,9 +1454,8 @@ Body:
         NotConsumed:
           - Item: Slim_Potion_Create_Book
       - Product: White_Slim_Potion
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Cylinder
             Amount: 1
@@ -1525,16 +1466,14 @@ Body:
         NotConsumed:
           - Item: Slim_Potion_Create_Book
       - Product: Holy_Water
-        Skill:
-          Name: AL_HOLYWATER
-          Level: 1
+        SkillName: AL_HOLYWATER
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 1
       - Product: Poison_Bottle
-        Skill:
-          Name: ASC_CDP
-          Level: 1
+        SkillName: ASC_CDP
+        SkillLevel: 1
         Consumed:
           - Item: Bee_Sting
             Amount: 1
@@ -1551,9 +1490,8 @@ Body:
           - Item: Posionous_Canine
             Amount: 1
       - Product: Fire_Bottle
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Alchol
             Amount: 1
@@ -1564,9 +1502,8 @@ Body:
         NotConsumed:
           - Item: FireBottle_Create_Book
       - Product: Acid_Bottle
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 1
@@ -1575,9 +1512,8 @@ Body:
         NotConsumed:
           - Item: Acid_Create_Book
       - Product: MenEater_Plant_Bottle
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Blossom_Of_Maneater
             Amount: 2
@@ -1586,9 +1522,8 @@ Body:
         NotConsumed:
           - Item: Plant_Create_Book
       - Product: Mini_Bottle
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Detonator
             Amount: 1
@@ -1599,9 +1534,8 @@ Body:
         NotConsumed:
           - Item: Mine_Create_Book
       - Product: Coating_Bottle
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Alchol
             Amount: 1
@@ -1614,9 +1548,8 @@ Body:
         NotConsumed:
           - Item: Coating_Create_Book
       - Product: Resist_Fire
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 1
@@ -1627,9 +1560,8 @@ Body:
         NotConsumed:
           - Item: Elemental_Potion_Book
       - Product: Resist_Water
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Gemstone
             Amount: 1
@@ -1640,9 +1572,8 @@ Body:
         NotConsumed:
           - Item: Elemental_Potion_Book
       - Product: Resist_Earth
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 1
@@ -1653,9 +1584,8 @@ Body:
         NotConsumed:
           - Item: Elemental_Potion_Book
       - Product: Resist_Wind
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Gemstone
             Amount: 1
@@ -1666,9 +1596,8 @@ Body:
         NotConsumed:
           - Item: Elemental_Potion_Book
       - Product: Anodyne
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Alchol
             Amount: 1
@@ -1679,9 +1608,8 @@ Body:
         NotConsumed:
           - Item: Normal_Potion_Book
       - Product: Aloebera
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Aloe
             Amount: 1
@@ -1692,9 +1620,8 @@ Body:
         NotConsumed:
           - Item: Normal_Potion_Book
       - Product: Alchol
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 1
@@ -1707,9 +1634,8 @@ Body:
         NotConsumed:
           - Item: Alcol_Create_Book
       - Product: Germination_Breed
-        Skill:
-          Name: AM_PHARMACY
-          Level: 1
+        SkillName: AM_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Life_Force_Pot
             Amount: 1
@@ -1722,36 +1648,32 @@ Body:
   - ItemLevel: 23
     Recipe:
       - Product: Elemental_Fire
-        Skill:
-          Name: SA_CREATECON
-          Level: 1
+        SkillName: SA_CREATECON
+        SkillLevel: 1
         Consumed:
           - Item: Scorpion's_Tail
             Amount: 3
           - Item: Scroll
             Amount: 1
       - Product: Elemental_Water
-        Skill:
-          Name: SA_CREATECON
-          Level: 1
+        SkillName: SA_CREATECON
+        SkillLevel: 1
         Consumed:
           - Item: Scroll
             Amount: 1
           - Item: Snail's_Shell
             Amount: 3
       - Product: Elemental_Earth
-        Skill:
-          Name: SA_CREATECON
-          Level: 1
+        SkillName: SA_CREATECON
+        SkillLevel: 1
         Consumed:
           - Item: Horn
             Amount: 3
           - Item: Scroll
             Amount: 1
       - Product: Elemental_Wind
-        Skill:
-          Name: SA_CREATECON
-          Level: 1
+        SkillName: SA_CREATECON
+        SkillLevel: 1
         Consumed:
           - Item: Colorful_Shell
             Amount: 3
@@ -1760,16 +1682,14 @@ Body:
   - ItemLevel: 24
     Recipe:
       - Product: Ansila
-        Skill:
-          Name: AB_ANCILLA
-          Level: 1
+        SkillName: AB_ANCILLA
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Gemstone
             Amount: 1
       - Product: Runstone_Nosiege
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 8
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 8
         Consumed:
           - Item: Broken_Armor_Piece
             Amount: 1
@@ -1780,9 +1700,8 @@ Body:
           - Item: Old_Magic_Circle
             Amount: 1
       - Product: Runstone_Rhydo
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 7
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 7
         Consumed:
           - Item: Elder_Branch
             Amount: 1
@@ -1791,27 +1710,24 @@ Body:
           - Item: Red_Gemstone
             Amount: 1
       - Product: Runstone_Verkana
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 9
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 9
         Consumed:
           - Item: Dullahan_Armor
             Amount: 1
           - Item: Elder_Branch
             Amount: 1
       - Product: Runstone_Isia
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 2
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 2
         Consumed:
           - Item: Burning_Heart
             Amount: 1
           - Item: Elder_Branch
             Amount: 1
       - Product: Runstone_Asir
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 5
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 5
         Consumed:
           - Item: Elder_Branch
             Amount: 1
@@ -1820,9 +1736,8 @@ Body:
           - Item: Ogre_Tooth
             Amount: 1
       - Product: Runstone_Urj
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 6
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 6
         Consumed:
           - Item: Elder_Branch
             Amount: 1
@@ -1831,9 +1746,8 @@ Body:
           - Item: Slender_Snake
             Amount: 1
       - Product: Runstone_Turisus
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 1
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 1
         Consumed:
           - Item: Claw_Of_Desert_Wolf
             Amount: 1
@@ -1842,9 +1756,8 @@ Body:
           - Item: Elder_Branch
             Amount: 1
       - Product: Runstone_Pertz
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 3
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 3
         Consumed:
           - Item: Dragon_Canine
             Amount: 1
@@ -1855,9 +1768,8 @@ Body:
           - Item: Tangled_Chain
             Amount: 1
       - Product: Runstone_Hagalas
-        Skill:
-          Name: RK_RUNEMASTERY
-          Level: 4
+        SkillName: RK_RUNEMASTERY
+        SkillLevel: 4
         Consumed:
           - Item: Dragon's_Skin
             Amount: 1
@@ -1868,9 +1780,8 @@ Body:
   - ItemLevel: 25
     Recipe:
       - Product: Guillotine_Antidote
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 5
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 5
         Consumed:
           - Item: Blue_Herb
             Amount: 1
@@ -1879,9 +1790,8 @@ Body:
           - Item: White_Herb
             Amount: 1
       - Product: Poison_Paralysis
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 1
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 1
         Consumed:
           - Item: Medicine_Bowl
             Amount: 1
@@ -1892,9 +1802,8 @@ Body:
           - Item: Poison_Toad's_Skin
             Amount: 20
       - Product: Poison_Leech
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 4
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 4
         Consumed:
           - Item: Medicine_Bowl
             Amount: 1
@@ -1905,9 +1814,8 @@ Body:
           - Item: Poison_Kit
             Amount: 1
       - Product: Poison_Oblivion
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 9
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 9
         Consumed:
           - Item: Heart_Of_Mermaid
             Amount: 10
@@ -1918,9 +1826,8 @@ Body:
           - Item: Poison_Kit
             Amount: 1
       - Product: Poison_Contamination
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 3
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 3
         Consumed:
           - Item: Decayed_Nail
             Amount: 25
@@ -1931,9 +1838,8 @@ Body:
           - Item: Poison_Kit
             Amount: 1
       - Product: Poison_Numb
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 8
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 8
         Consumed:
           - Item: Medicine_Bowl
             Amount: 1
@@ -1944,9 +1850,8 @@ Body:
           - Item: Sticky_Poison
             Amount: 10
       - Product: Poison_Fever
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 2
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 2
         Consumed:
           - Item: Anolian_Skin
             Amount: 20
@@ -1957,9 +1862,8 @@ Body:
           - Item: Poison_Kit
             Amount: 1
       - Product: Poison_Laughing
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 7
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 7
         Consumed:
           - Item: Medicine_Bowl
             Amount: 1
@@ -1970,9 +1874,8 @@ Body:
           - Item: Poison_Spore
             Amount: 10
       - Product: Poison_Fatigue
-        Skill:
-          Name: GC_RESEARCHNEWPOISON
-          Level: 6
+        SkillName: GC_RESEARCHNEWPOISON
+        SkillLevel: 6
         Consumed:
           - Item: Izidor
             Amount: 1
@@ -1982,12 +1885,873 @@ Body:
             Amount: 1
           - Item: Sticky_Poison
             Amount: 10
+  - ItemLevel: 26
+    Recipe:
+      - Product: Sacred_Masque
+        BaseRate: 800
+        Make:
+          - Amount: 8
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Grasshopper's_Leg
+            Amount: 45
+          - Item: Yoyo_Tail
+            Amount: 35
+      - Product: Long_Hair
+        Make:
+          - Amount: 4
+            Rate: 800
+          - Amount: 6
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Pencil_Case
+            Amount: 40
+          - Item: Tiger's_Skin
+            Amount: 5
+      - Product: Phracon
+        BaseRate: 800
+        Make:
+          - Amount: 8
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Glass_Bead
+            Amount: 40
+          - Item: Spawn
+            Amount: 45
+      - Product: Lantern
+        BaseRate: 800
+        Make:
+          - Amount: 3
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Blossom_Of_Maneater
+            Amount: 20
+          - Item: Solid_Shell
+            Amount: 10
+      - Product: Acorn
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Cactus_Needle
+            Amount: 30
+          - Item: Snail's_Shell
+            Amount: 10
+      - Product: Frozen_Heart
+        BaseRate: 800
+        Make:
+          - Amount: 6
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Moth_Dust
+            Amount: 35
+          - Item: Raccoondog_Doll
+            Amount: 25
+      - Product: Horrendous_Mouth
+        BaseRate: 800
+        Make:
+          - Amount: 9
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Dragon_Scale
+            Amount: 45
+          - Item: Stem
+            Amount: 45
+      - Product: Detrimindexta
+        BaseRate: 800
+        Make:
+          - Amount: 5
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Chrysalis
+            Amount: 40
+          - Item: Flesh_Of_Clam
+            Amount: 10
+      - Product: Detonator
+        BaseRate: 800
+        Make:
+          - Amount: 7
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Feather_Of_Birds
+            Amount: 25
+          - Item: Nose_Ring
+            Amount: 45
+      - Product: Tweezer
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Monkey_Doll
+            Amount: 5
+          - Item: Worm_Peelings
+            Amount: 40
+      - Product: Petite_DiablOfs_Horn
+        Make:
+          - Amount: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Resin
+            Amount: 10
+          - Item: Stone_Heart
+            Amount: 5
+      - Product: Root_Of_Maneater
+        Make:
+          - Amount: 4
+            Rate: 800
+          - Amount: 6
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Talon
+            Amount: 25
+          - Item: Tooth_Of_
+            Amount: 20
+      - Product: Conch
+        BaseRate: 800
+        Make:
+          - Amount: 3
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Gill
+            Amount: 5
+          - Item: Immortal_Heart
+            Amount: 25
+      - Product: Rotten_Scale
+        BaseRate: 800
+        Make:
+          - Amount: 7
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Shell
+            Amount: 20
+          - Item: Thin_N'_Long_Tongue
+            Amount: 50
+      - Product: Elder_Pixie's_Beard
+        Make:
+          - Amount: 8
+            Rate: 800
+          - Amount: 12
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bee_Sting
+            Amount: 35
+          - Item: Petite_DiablOfs_Wing
+            Amount: 45
+      - Product: Lizard_Scruff
+        BaseRate: 800
+        Make:
+          - Amount: 3
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Karvodailnirol
+            Amount: 15
+          - Item: Scale_Of_Snakes
+            Amount: 20
+      - Product: Emveretarcon
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Grasshopper_Doll
+            Amount: 40
+          - Item: Heart_Of_Mermaid
+            Amount: 5
+      - Product: Chinese_Ink
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bear's_Foot
+            Amount: 20
+          - Item: Black_Ladle
+            Amount: 25
+      - Product: Spiderweb
+        BaseRate: 800
+        Make:
+          - Amount: 8
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Fin
+            Amount: 50
+          - Item: Slender_Snake
+            Amount: 35
+      - Product: Reins
+        BaseRate: 800
+        Make:
+          - Amount: 8
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Chonchon_Doll
+            Amount: 30
+          - Item: Stuffed_Doll
+            Amount: 50
+      - Product: Wooden_Block
+        BaseRate: 800
+        Make:
+          - Amount: 2
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Rotten_Bandage
+            Amount: 10
+          - Item: Single_Cell
+            Amount: 10
+      - Product: Tentacle
+        Make:
+          - Amount: 4
+            Rate: 800
+          - Amount: 6
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Decayed_Nail
+            Amount: 40
+          - Item: Wild_Boar's_Mane
+            Amount: 5
+      - Product: Mixture
+        Make:
+          - Amount: 4
+            Rate: 800
+          - Amount: 6
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Posionous_Canine
+            Amount: 15
+          - Item: Powder_Of_Butterfly
+            Amount: 30
+      - Product: Colorful_Shell
+        Make:
+          - Amount: 9
+            Rate: 800
+          - Amount: 13
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Horn
+            Amount: 50
+          - Item: Zargon
+            Amount: 45
+      - Product: Wing_Of_Moth
+        BaseRate: 800
+        Make:
+          - Amount: 5
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Frozen_Rose
+            Amount: 20
+          - Item: Reptile_Tongue
+            Amount: 30
+      - Product: Nipper
+        Make:
+          - Amount: 6
+            Rate: 800
+          - Amount: 9
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Earthworm_Peeling
+            Amount: 40
+          - Item: Sticky_Mucus
+            Amount: 25
+      - Product: Turtle_Shell
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Fluff
+            Amount: 5
+          - Item: Poring_Doll
+            Amount: 40
+      - Product: Nail_Of_Orc
+        BaseRate: 800
+        Make:
+          - Amount: 6
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Garlet
+            Amount: 10
+          - Item: Raccoon_Leaf
+            Amount: 50
+      - Product: Dragon_Canine
+        Make:
+          - Amount: 8
+            Rate: 800
+          - Amount: 12
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Osiris_Doll
+            Amount: 50
+          - Item: Sticky_Webfoot
+            Amount: 35
+      - Product: Skirt_Of_Virgin
+        BaseRate: 800
+        Make:
+          - Amount: 6
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Head_Of_Medusa
+            Amount: 35
+          - Item: Scales_Shell
+            Amount: 30
+      - Product: Dragon_Train
+        BaseRate: 800
+        Make:
+          - Amount: 6
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Sharpened_Cuspid
+            Amount: 35
+          - Item: Tooth_Of_Bat
+            Amount: 25
+      - Product: Dokkaebi_Horn
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Lip_Of_Ancient_Fish
+            Amount: 25
+          - Item: Shining_Scales
+            Amount: 15
+      - Product: Grit
+        BaseRate: 800
+        Make:
+          - Amount: 8
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Crystal_Mirror
+            Amount: 35
+          - Item: Limb_Of_Mantis
+            Amount: 50
+      - Product: Sharp_Scale
+        BaseRate: 800
+        Make:
+          - Amount: 3
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Clam_Shell
+            Amount: 20
+          - Item: Horseshoe
+            Amount: 10
+      - Product: Short_Leg
+        BaseRate: 800
+        Make:
+          - Amount: 6
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Claw_Of_Wolves
+            Amount: 20
+          - Item: Scell
+            Amount: 45
+      - Product: Starsand_Of_Witch
+        BaseRate: 800
+        Make:
+          - Amount: 2
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Blue_Porcelain
+            Amount: 15
+          - Item: Insect_Feeler
+            Amount: 10
+      - Product: Fox_Tail
+        Make:
+          - Amount: 2
+            Rate: 800
+          - Amount: 3
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Animal's_Skin
+            Amount: 10
+          - Item: Rouge
+            Amount: 15
+      - Product: Cobold_Hair
+        Make:
+          - Amount: 6
+            Rate: 800
+          - Amount: 9
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Jellopy
+            Amount: 45
+          - Item: Wedding_Bouquet
+            Amount: 20
+      - Product: Jaws_Of_Ant
+        Make:
+          - Amount: 4
+            Rate: 800
+          - Amount: 6
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Spore_Doll
+            Amount: 20
+          - Item: Witherless_Rose
+            Amount: 20
+      - Product: Voucher_Of_Orcish_Hero
+        BaseRate: 800
+        Make:
+          - Amount: 5
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Nail_Of_Mole
+            Amount: 45
+          - Item: Tree_Root
+            Amount: 5
+      - Product: Sacred_Marks
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Pumpkin_Head
+            Amount: 30
+          - Item: Scorpion's_Tail
+            Amount: 10
+      - Product: Alchol
+        BaseRate: 800
+        Make:
+          - Amount: 9
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Orcish_Voucher
+            Amount: 50
+          - Item: Skel_Bone
+            Amount: 40
+      - Product: Crap_Shell
+        BaseRate: 800
+        Make:
+          - Amount: 8
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Baphomet_Doll
+            Amount: 50
+          - Item: Fish_Tail
+            Amount: 30
+      - Product: Tendon
+        BaseRate: 800
+        Make:
+          - Amount: 3
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Feather
+            Amount: 5
+          - Item: Orcish_Cuspid
+            Amount: 25
+      - Product: Tiger_Footskin
+        BaseRate: 800
+        Make:
+          - Amount: 2
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Pointed_Scale
+            Amount: 5
+          - Item: White_Platter
+            Amount: 20
+      - Product: Hinalle
+        Make:
+          - Amount: 2
+            Rate: 200
+          - Amount: 4
+            Rate: 800
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bunch_Of_Flowers
+            Amount: 45
+          - Item: Moustache_Of_Mole
+            Amount: 40
+      - Product: Counteragent
+        BaseRate: 800
+        Make:
+          - Amount: 4
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Evil_Horn
+            Amount: 15
+          - Item: Mementos
+            Amount: 30
+      - Product: Tooth_Of_Ancient_Fish
+        Make:
+          - Amount: 6
+            Rate: 800
+          - Amount: 9
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bill_Of_Birds
+            Amount: 35
+          - Item: Transparent_Cloth
+            Amount: 30
+      - Product: Rat_Tail
+        Make:
+          - Amount: 7
+            Rate: 800
+          - Amount: 10
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Golden_Hair
+            Amount: 40
+          - Item: Mushroom_Spore
+            Amount: 35
+      - Product: Coal
+        BaseRate: 500
+        Make:
+          - Amount: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Guard
+            Amount: 1
+      - Product: Steel
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Tsurugi
+            Amount: 1
+      - Product: Cigar
+        Make:
+          - Amount: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Orcish_Axe
+            Amount: 1
+      - Product: Bone_Wand
+        BaseRate: 200
+        Make:
+          - Amount: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Broken_Farming_Utensil
+            Amount: 100
+          - Item: Clattering_Skull
+            Amount: 100
+      - Product: Cigar
+        Make:
+          - Amount: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Orcish_Axe
+            Amount: 1
+          - Item: Orcish_Voucher
+            Amount: 100
+      - Product: Starsand_Of_Witch
+        BaseRate: 800
+        Make:
+          - Amount: 2
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Moth_Dust
+            Amount: 100
+          - Item: Scell
+            Amount: 100
+      - Product: Soft_Feather
+        Make:
+          - Amount: 1
+            Rate: 200
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Feather
+            Amount: 30
+          - Item: Feather_Of_Birds
+            Amount: 30
+      - Product: Wind_Of_Verdure
+        Make:
+          - Amount: 1
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Ice_Piece
+            Amount: 100
+      - Product: Crystal_Blue
+        Make:
+          - Amount: 1
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Claw_Of_Wolves
+            Amount: 100
+      - Product: Soft_Silk_Cloth
+        Make:
+          - Amount: 2
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Transparent_Cloth
+            Amount: 10
+      - Product: Transparent_Cloth
+        Make:
+          - Amount: 5
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Soft_Silk_Cloth
+            Amount: 2
+      - Product: Boost500_To_Throw
+        Make:
+          - Amount: 1
+            Rate: 100
+          - Amount: 2
+            Rate: 250
+          - Amount: 5
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Boost500
+            Amount: 10
+          - Item: Empty_Potion
+            Amount: 10
+          - Item: Flexible_String
+            Amount: 10
+      - Product: Full_SwingK_To_Throw
+        Make:
+          - Amount: 1
+            Rate: 100
+          - Amount: 2
+            Rate: 250
+          - Amount: 5
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Empty_Potion
+            Amount: 10
+          - Item: Flexible_String
+            Amount: 10
+          - Item: Full_SwingK
+            Amount: 10
+      - Product: Mana_Plus_To_Throw
+        Make:
+          - Amount: 1
+            Rate: 100
+          - Amount: 2
+            Rate: 250
+          - Amount: 5
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Empty_Potion
+            Amount: 10
+          - Item: Flexible_String
+            Amount: 10
+          - Item: Mana_Plus
+            Amount: 10
+      - Product: Cure_Free_To_Throw
+        Make:
+          - Amount: 1
+            Rate: 100
+          - Amount: 2
+            Rate: 250
+          - Amount: 5
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Cure_Free
+            Amount: 10
+          - Item: Empty_Potion
+            Amount: 10
+          - Item: Flexible_String
+            Amount: 10
+      - Product: Stamina_Up_M_To_Throw
+        Make:
+          - Amount: 1
+            Rate: 100
+          - Amount: 2
+            Rate: 250
+          - Amount: 5
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Empty_Potion
+            Amount: 10
+          - Item: Flexible_String
+            Amount: 10
+          - Item: Stamina_Up_M
+            Amount: 10
+      - Product: Digestive_F_To_Throw
+        Make:
+          - Amount: 1
+            Rate: 100
+          - Amount: 2
+            Rate: 250
+          - Amount: 5
+            Rate: 500
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Digestive_F
+            Amount: 10
+          - Item: Empty_Potion
+            Amount: 10
+          - Item: Flexible_String
+            Amount: 10
+      - Product: HP_Inc_PotS_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: HP_Increase_PotionS
+            Amount: 10
+      - Product: HP_Inc_PotM_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: HP_Increase_PotionM
+            Amount: 10
+      - Product: HP_Inc_PotL_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: HP_Increase_PotionL
+            Amount: 10
+      - Product: SP_Inc_PotS_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: SP_Increase_PotionS
+            Amount: 10
+      - Product: SP_Inc_PotM_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: SP_Increase_PotionM
+            Amount: 10
+      - Product: SP_Inc_PotL_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: SP_Increase_PotionL
+            Amount: 10
+      - Product: En_White_PotZ_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: Enrich_White_PotionZ
+            Amount: 10
+      - Product: Vitata500_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: Vitata500
+            Amount: 10
+      - Product: En_Cel_Juice_To_Throw
+        Make:
+          - Amount: 10
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
+        Consumed:
+          - Item: Bottle_To_Throw
+            Amount: 10
+          - Item: Enrich_Celermine_Juice
+            Amount: 10
   - ItemLevel: 27
     Recipe:
       - Product: Savage_BBQ
-        Skill:
-          Name: GN_MIX_COOKING
-          Level: 1
+        SkillName: GN_MIX_COOKING
+        SkillLevel: 1
         Consumed:
           - Item: Black_Charcoal
             Amount: 1
@@ -2000,9 +2764,8 @@ Body:
         NotConsumed:
           - Item: Mix_Cook_Book
       - Product: Wug_Blood_Cocktail
-        Skill:
-          Name: GN_MIX_COOKING
-          Level: 1
+        SkillName: GN_MIX_COOKING
+        SkillLevel: 1
         Consumed:
           - Item: Cold_Ice
             Amount: 2
@@ -2013,9 +2776,8 @@ Body:
         NotConsumed:
           - Item: Mix_Cook_Book
       - Product: Minor_Brisket
-        Skill:
-          Name: GN_MIX_COOKING
-          Level: 1
+        SkillName: GN_MIX_COOKING
+        SkillLevel: 1
         Consumed:
           - Item: Beef_Head_Meat
             Amount: 2
@@ -2026,9 +2788,8 @@ Body:
         NotConsumed:
           - Item: Mix_Cook_Book
       - Product: Siroma_Icetea
-        Skill:
-          Name: GN_MIX_COOKING
-          Level: 1
+        SkillName: GN_MIX_COOKING
+        SkillLevel: 1
         Consumed:
           - Item: Comodo_Tropic_Fruit
             Amount: 1
@@ -2041,9 +2802,8 @@ Body:
         NotConsumed:
           - Item: Mix_Cook_Book
       - Product: Drocera_Herb_Stew
-        Skill:
-          Name: GN_MIX_COOKING
-          Level: 1
+        SkillName: GN_MIX_COOKING
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Herb
             Amount: 3
@@ -2060,9 +2820,8 @@ Body:
         NotConsumed:
           - Item: Mix_Cook_Book
       - Product: Petti_Tail_Noodle
-        Skill:
-          Name: GN_MIX_COOKING
-          Level: 1
+        SkillName: GN_MIX_COOKING
+        SkillLevel: 1
         Consumed:
           - Item: Cool_Gravy
             Amount: 1
@@ -2077,27 +2836,24 @@ Body:
   - ItemLevel: 29
     Recipe:
       - Product: Seed_Of_Horny_Plant
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Prickly_Fruit
             Amount: 10
         NotConsumed:
           - Item: Plant_Genetic_Grow
       - Product: Bloodsuck_Plant_Seed
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Root_Of_Maneater
             Amount: 10
         NotConsumed:
           - Item: Plant_Genetic_Grow
       - Product: Bomb_Mushroom_Spore
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Gun_Powder
             Amount: 2
@@ -2108,9 +2864,8 @@ Body:
         NotConsumed:
           - Item: Plant_Genetic_Grow
       - Product: HP_Increase_PotionS
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 10
@@ -2123,9 +2878,8 @@ Body:
         NotConsumed:
           - Item: Increase_Stamina_Study
       - Product: HP_Increase_PotionM
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 10
@@ -2138,9 +2892,8 @@ Body:
         NotConsumed:
           - Item: Increase_Stamina_Study
       - Product: HP_Increase_PotionL
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 10
@@ -2155,9 +2908,8 @@ Body:
         NotConsumed:
           - Item: Increase_Stamina_Study
       - Product: SP_Increase_PotionS
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Bottle
             Amount: 10
@@ -2170,9 +2922,8 @@ Body:
         NotConsumed:
           - Item: Vital_Drink_CB
       - Product: SP_Increase_PotionM
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Herb
             Amount: 10
@@ -2185,9 +2936,8 @@ Body:
         NotConsumed:
           - Item: Vital_Drink_CB
       - Product: SP_Increase_PotionL
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Herb
             Amount: 15
@@ -2200,9 +2950,8 @@ Body:
         NotConsumed:
           - Item: Vital_Drink_CB
       - Product: Enrich_White_PotionZ
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Alchol
             Amount: 1
@@ -2215,9 +2964,8 @@ Body:
         NotConsumed:
           - Item: Quality_Potion_Book
       - Product: Vitata500
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Herb
             Amount: 10
@@ -2230,9 +2978,8 @@ Body:
         NotConsumed:
           - Item: Quality_Potion_Book
       - Product: Enrich_Celermine_Juice
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Awakening_Potion
             Amount: 5
@@ -2245,9 +2992,8 @@ Body:
         NotConsumed:
           - Item: Quality_Potion_Book
       - Product: Cure_Free
-        Skill:
-          Name: GN_S_PHARMACY
-          Level: 1
+        SkillName: GN_S_PHARMACY
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Cylinder
             Amount: 10

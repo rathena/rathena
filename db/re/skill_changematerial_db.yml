@@ -46,29 +46,28 @@ Header:
   Version: 1
 
 Body:
+
   - ItemLevel: 26
     Recipe:
       - Product: Sacred_Masque
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 8
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Grasshopper's_Leg
             Amount: 45
           - Item: Yoyo_Tail
             Amount: 35
       - Product: Long_Hair
-        Quantity:
+        Make:
           - Amount: 4
             Rate: 800
           - Amount: 6
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Pencil_Case
             Amount: 40
@@ -76,11 +75,10 @@ Body:
             Amount: 5
       - Product: Phracon
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 8
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Glass_Bead
             Amount: 40
@@ -88,11 +86,10 @@ Body:
             Amount: 45
       - Product: Lantern
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 3
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Blossom_Of_Maneater
             Amount: 20
@@ -100,11 +97,10 @@ Body:
             Amount: 10
       - Product: Acorn
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Cactus_Needle
             Amount: 30
@@ -112,11 +108,10 @@ Body:
             Amount: 10
       - Product: Frozen_Heart
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 6
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Moth_Dust
             Amount: 35
@@ -124,11 +119,10 @@ Body:
             Amount: 25
       - Product: Horrendous_Mouth
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 9
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Dragon_Scale
             Amount: 45
@@ -136,11 +130,10 @@ Body:
             Amount: 45
       - Product: Detrimindexta
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 5
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Chrysalis
             Amount: 40
@@ -148,11 +141,10 @@ Body:
             Amount: 10
       - Product: Detonator
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 7
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Feather_Of_Birds
             Amount: 25
@@ -160,36 +152,33 @@ Body:
             Amount: 45
       - Product: Tweezer
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Monkey_Doll
             Amount: 5
           - Item: Worm_Peelings
             Amount: 40
       - Product: Petite_DiablOfs_Horn
-        Quantity:
+        Make:
           - Amount: 1
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Resin
             Amount: 10
           - Item: Stone_Heart
             Amount: 5
       - Product: Root_Of_Maneater
-        Quantity:
+        Make:
           - Amount: 4
             Rate: 800
           - Amount: 6
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Talon
             Amount: 25
@@ -197,11 +186,10 @@ Body:
             Amount: 20
       - Product: Conch
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 3
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Gill
             Amount: 5
@@ -209,25 +197,23 @@ Body:
             Amount: 25
       - Product: Rotten_Scale
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 7
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Shell
             Amount: 20
           - Item: Thin_N'_Long_Tongue
             Amount: 50
       - Product: Elder_Pixie's_Beard
-        Quantity:
+        Make:
           - Amount: 8
             Rate: 800
           - Amount: 12
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bee_Sting
             Amount: 35
@@ -235,11 +221,10 @@ Body:
             Amount: 45
       - Product: Lizard_Scruff
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 3
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Karvodailnirol
             Amount: 15
@@ -247,11 +232,10 @@ Body:
             Amount: 20
       - Product: Emveretarcon
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Grasshopper_Doll
             Amount: 40
@@ -259,11 +243,10 @@ Body:
             Amount: 5
       - Product: Chinese_Ink
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bear's_Foot
             Amount: 20
@@ -271,11 +254,10 @@ Body:
             Amount: 25
       - Product: Spiderweb
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 8
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Fin
             Amount: 50
@@ -283,11 +265,10 @@ Body:
             Amount: 35
       - Product: Reins
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 8
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Chonchon_Doll
             Amount: 30
@@ -295,53 +276,49 @@ Body:
             Amount: 50
       - Product: Wooden_Block
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 2
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Rotten_Bandage
             Amount: 10
           - Item: Single_Cell
             Amount: 10
       - Product: Tentacle
-        Quantity:
+        Make:
           - Amount: 4
             Rate: 800
           - Amount: 6
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Decayed_Nail
             Amount: 40
           - Item: Wild_Boar's_Mane
             Amount: 5
       - Product: Mixture
-        Quantity:
+        Make:
           - Amount: 4
             Rate: 800
           - Amount: 6
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Posionous_Canine
             Amount: 15
           - Item: Powder_Of_Butterfly
             Amount: 30
       - Product: Colorful_Shell
-        Quantity:
+        Make:
           - Amount: 9
             Rate: 800
           - Amount: 13
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Horn
             Amount: 50
@@ -349,25 +326,23 @@ Body:
             Amount: 45
       - Product: Wing_Of_Moth
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 5
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Frozen_Rose
             Amount: 20
           - Item: Reptile_Tongue
             Amount: 30
       - Product: Nipper
-        Quantity:
+        Make:
           - Amount: 6
             Rate: 800
           - Amount: 9
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Earthworm_Peeling
             Amount: 40
@@ -375,11 +350,10 @@ Body:
             Amount: 25
       - Product: Turtle_Shell
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Fluff
             Amount: 5
@@ -387,25 +361,23 @@ Body:
             Amount: 40
       - Product: Nail_Of_Orc
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 6
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Garlet
             Amount: 10
           - Item: Raccoon_Leaf
             Amount: 50
       - Product: Dragon_Canine
-        Quantity:
+        Make:
           - Amount: 8
             Rate: 800
           - Amount: 12
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Osiris_Doll
             Amount: 50
@@ -413,11 +385,10 @@ Body:
             Amount: 35
       - Product: Skirt_Of_Virgin
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 6
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Head_Of_Medusa
             Amount: 35
@@ -425,11 +396,10 @@ Body:
             Amount: 30
       - Product: Dragon_Train
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 6
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Sharpened_Cuspid
             Amount: 35
@@ -437,11 +407,10 @@ Body:
             Amount: 25
       - Product: Dokkaebi_Horn
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Lip_Of_Ancient_Fish
             Amount: 25
@@ -449,11 +418,10 @@ Body:
             Amount: 15
       - Product: Grit
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 8
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Crystal_Mirror
             Amount: 35
@@ -461,11 +429,10 @@ Body:
             Amount: 50
       - Product: Sharp_Scale
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 3
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Clam_Shell
             Amount: 20
@@ -473,11 +440,10 @@ Body:
             Amount: 10
       - Product: Short_Leg
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 6
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Claw_Of_Wolves
             Amount: 20
@@ -485,53 +451,49 @@ Body:
             Amount: 45
       - Product: Starsand_Of_Witch
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 2
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Blue_Porcelain
             Amount: 15
           - Item: Insect_Feeler
             Amount: 10
       - Product: Fox_Tail
-        Quantity:
+        Make:
           - Amount: 2
             Rate: 800
           - Amount: 3
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Animal's_Skin
             Amount: 10
           - Item: Rouge
             Amount: 15
       - Product: Cobold_Hair
-        Quantity:
+        Make:
           - Amount: 6
             Rate: 800
           - Amount: 9
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Jellopy
             Amount: 45
           - Item: Wedding_Bouquet
             Amount: 20
       - Product: Jaws_Of_Ant
-        Quantity:
+        Make:
           - Amount: 4
             Rate: 800
           - Amount: 6
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Spore_Doll
             Amount: 20
@@ -539,11 +501,10 @@ Body:
             Amount: 20
       - Product: Voucher_Of_Orcish_Hero
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 5
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Nail_Of_Mole
             Amount: 45
@@ -551,11 +512,10 @@ Body:
             Amount: 5
       - Product: Sacred_Marks
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Pumpkin_Head
             Amount: 30
@@ -563,11 +523,10 @@ Body:
             Amount: 10
       - Product: Alchol
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 9
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Orcish_Voucher
             Amount: 50
@@ -575,11 +534,10 @@ Body:
             Amount: 40
       - Product: Crap_Shell
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 8
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Baphomet_Doll
             Amount: 50
@@ -587,11 +545,10 @@ Body:
             Amount: 30
       - Product: Tendon
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 3
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Feather
             Amount: 5
@@ -599,25 +556,23 @@ Body:
             Amount: 25
       - Product: Tiger_Footskin
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 2
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Pointed_Scale
             Amount: 5
           - Item: White_Platter
             Amount: 20
       - Product: Hinalle
-        Quantity:
+        Make:
           - Amount: 2
             Rate: 200
           - Amount: 4
             Rate: 800
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bunch_Of_Flowers
             Amount: 45
@@ -625,39 +580,36 @@ Body:
             Amount: 40
       - Product: Counteragent
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 4
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Evil_Horn
             Amount: 15
           - Item: Mementos
             Amount: 30
       - Product: Tooth_Of_Ancient_Fish
-        Quantity:
+        Make:
           - Amount: 6
             Rate: 800
           - Amount: 9
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bill_Of_Birds
             Amount: 35
           - Item: Transparent_Cloth
             Amount: 30
       - Product: Rat_Tail
-        Quantity:
+        Make:
           - Amount: 7
             Rate: 800
           - Amount: 10
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Golden_Hair
             Amount: 40
@@ -665,50 +617,45 @@ Body:
             Amount: 35
       - Product: Coal
         BaseRate: 500
-        Quantity:
+        Make:
           - Amount: 1
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Guard
             Amount: 1
       - Product: Steel
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Tsurugi
             Amount: 1
       - Product: Cigar
-        Quantity:
+        Make:
           - Amount: 1
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Orcish_Axe
             Amount: 1
       - Product: Bone_Wand
         BaseRate: 200
-        Quantity:
+        Make:
           - Amount: 1
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Broken_Farming_Utensil
             Amount: 100
           - Item: Clattering_Skull
             Amount: 100
       - Product: Cigar
-        Quantity:
+        Make:
           - Amount: 1
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Orcish_Axe
             Amount: 1
@@ -716,77 +663,70 @@ Body:
             Amount: 100
       - Product: Starsand_Of_Witch
         BaseRate: 800
-        Quantity:
+        Make:
           - Amount: 2
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Moth_Dust
             Amount: 100
           - Item: Scell
             Amount: 100
       - Product: Soft_Feather
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 200
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Feather
             Amount: 30
           - Item: Feather_Of_Birds
             Amount: 30
       - Product: Wind_Of_Verdure
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Ice_Piece
             Amount: 100
       - Product: Crystal_Blue
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Claw_Of_Wolves
             Amount: 100
       - Product: Soft_Silk_Cloth
-        Quantity:
+        Make:
           - Amount: 2
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Transparent_Cloth
             Amount: 10
       - Product: Transparent_Cloth
-        Quantity:
+        Make:
           - Amount: 5
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Soft_Silk_Cloth
             Amount: 2
       - Product: Boost500_To_Throw
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 100
           - Amount: 2
             Rate: 250
           - Amount: 5
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Boost500
             Amount: 10
@@ -795,16 +735,15 @@ Body:
           - Item: Flexible_String
             Amount: 10
       - Product: Full_SwingK_To_Throw
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 100
           - Amount: 2
             Rate: 250
           - Amount: 5
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 10
@@ -813,16 +752,15 @@ Body:
           - Item: Full_SwingK
             Amount: 10
       - Product: Mana_Plus_To_Throw
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 100
           - Amount: 2
             Rate: 250
           - Amount: 5
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 10
@@ -831,16 +769,15 @@ Body:
           - Item: Mana_Plus
             Amount: 10
       - Product: Cure_Free_To_Throw
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 100
           - Amount: 2
             Rate: 250
           - Amount: 5
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Cure_Free
             Amount: 10
@@ -849,16 +786,15 @@ Body:
           - Item: Flexible_String
             Amount: 10
       - Product: Stamina_Up_M_To_Throw
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 100
           - Amount: 2
             Rate: 250
           - Amount: 5
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Empty_Potion
             Amount: 10
@@ -867,16 +803,15 @@ Body:
           - Item: Stamina_Up_M
             Amount: 10
       - Product: Digestive_F_To_Throw
-        Quantity:
+        Make:
           - Amount: 1
             Rate: 100
           - Amount: 2
             Rate: 250
           - Amount: 5
             Rate: 500
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Digestive_F
             Amount: 10
@@ -885,99 +820,90 @@ Body:
           - Item: Flexible_String
             Amount: 10
       - Product: HP_Inc_PotS_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: HP_Increase_PotionS
             Amount: 10
       - Product: HP_Inc_PotM_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: HP_Increase_PotionM
             Amount: 10
       - Product: HP_Inc_PotL_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: HP_Increase_PotionL
             Amount: 10
       - Product: SP_Inc_PotS_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: SP_Increase_PotionS
             Amount: 10
       - Product: SP_Inc_PotM_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: SP_Increase_PotionM
             Amount: 10
       - Product: SP_Inc_PotL_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: SP_Increase_PotionL
             Amount: 10
       - Product: En_White_PotZ_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: Enrich_White_PotionZ
             Amount: 10
       - Product: Vitata500_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
           - Item: Vitata500
             Amount: 10
       - Product: En_Cel_Juice_To_Throw
-        Quantity:
+        Make:
           - Amount: 10
-        Skill:
-          Name: GN_CHANGEMATERIAL
-          Level: 1
+        SkillName: GN_CHANGEMATERIAL
+        SkillLevel: 1
         Consumed:
           - Item: Bottle_To_Throw
             Amount: 10
