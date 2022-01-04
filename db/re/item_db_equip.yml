@@ -95535,6 +95535,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1
+  - Id: 20501
+    AegisName: C_Mechanic_Wing
+    Name: Costume Mechanic Wing
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 11
   - Id: 20502
     AegisName: C_Devil_Wing
     Name: Costume Little Devil Wings
@@ -95553,6 +95561,21 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 14
+  - Id: 20505
+    AegisName: C_Cupid_Wing_Skyblue
+    Name: Costume Cupid Wing Skyblue
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 15
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoAuction: true
   - Id: 20506
     AegisName: Invisible_Manteau
     Name: Invisible Manteau
@@ -95615,6 +95638,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 2
+  - Id: 20513
+    AegisName: C_EXE_Backpack
+    Name: Costume EXE Backpack
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 22
   - Id: 20514
     AegisName: C_Thanatos_Sword
     Name: Costume Thanatos Sword
@@ -95654,6 +95685,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 25
+  - Id: 20518
+    AegisName: C_Gerhard_Von_Devi_Bag
+    Name: Costume Gerhard Von Devi Bag
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 27
   - Id: 20519
     AegisName: C_Full_BloomCherry_Tree
     Name: Costume Full Bloom Cherry Tree
@@ -95666,6 +95705,14 @@ Body:
       hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,true);
     UnEquipScript: |
       hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,false);
+  - Id: 20521
+    AegisName: C_BlackCatBag_TW
+    Name: Costume Black Cat Bag
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 26
   - Id: 20522
     AegisName: C_Blessings_Of_Soul
     Name: Costume Blessings Of Soul
@@ -95678,6 +95725,14 @@ Body:
       hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,true);
     UnEquipScript: |
       hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,false);
+  - Id: 20523
+    AegisName: C_2018_RTC_Cape_TW
+    Name: Costume 2018 RTC Cape    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 28
   - Id: 20524
     AegisName: C_Shining_Angel_Wings
     Name: Costume Shining Angel Wings
@@ -95709,6 +95764,14 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 20527
+    AegisName: C_PinkButterfly_Wing
+    Name: Costume Pink Butterfly Wing
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 35
   - Id: 20528
     AegisName: C_GoldButterfly_Wing
     Name: Costume Golden Butterfly Wings
@@ -95771,6 +95834,14 @@ Body:
       hateffect(HAT_EF_MAGICCIRCLERAINBOW,true);
     UnEquipScript: |
       hateffect(HAT_EF_MAGICCIRCLERAINBOW,false);
+  - Id: 20539
+    AegisName: C_CherryFesRibbon_TW
+    Name: Costume Cherry Fes Ribbon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 40
   - Id: 20541
     AegisName: C_AngelRibbonWing_TW
     Name: Costume Angel's Ribboned Wings
@@ -95779,6 +95850,14 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 20542
+    AegisName: C_BlackBearBackpack_TW
+    Name: Costume Black Bear Backpack    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 43
   - Id: 20543
     AegisName: C_Halloween_Poring_Bag
     Name: Costume Halloween Poring Bag
@@ -95788,6 +95867,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 44
+  - Id: 20545
+    AegisName: C_Chrismas_Tree
+    Name: Costume Christmas Guardian Tree
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 45
   - Id: 20546
     AegisName: C_Backside_Ribbon_Bell
     Name: Costume Giant Ribbon Bell
@@ -95949,6 +96036,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 62
+  - Id: 20585
+    AegisName: C_Ru_Bear_Bag
+    Name: Costume Bear Bag    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 63
   - Id: 20586
     AegisName: C_Loli_Ruri_Moon
     Name: "Costume: Loli Ruri's Crescent"
@@ -95957,6 +96052,14 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 20587
+    AegisName: C_Light_Darkness_Wing
+    Name: Costume Light Darkness Wing    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 20
   - Id: 20588
     AegisName: C_Nifl_Bloom
     Name: Costume Broom of Witch
@@ -95982,6 +96085,14 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 20591
+    AegisName: C_Bow_On_the_Back
+    Name: Costume Bow On the Back    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 68
   - Id: 20592
     AegisName: C_Santa_Backpack
     Name: Costume Santa's Pocket
@@ -96024,6 +96135,14 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 20596
+    AegisName: C_BlackBear_Back_TW
+    Name: Costume BlackBear Back    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 81
   - Id: 20597
     AegisName: C_Evil_Scythe
     Name: "Costume: Evil Scythe"
@@ -96099,6 +96218,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 91
+  - Id: 20612
+    AegisName: C_Ten_G_Shield_TW
+    Name: Costume Ten Guardian's Shield    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 90
   - Id: 20613
     AegisName: C_Wing_Of_Spider
     Name: Costume Spider Wings
@@ -96107,6 +96234,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 101
+  - Id: 20614
+    AegisName: C_Kyel_hyre_Ulti_TW
+    Name: Costume Kyel hyre Ulti    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 102
   - Id: 20615
     AegisName: C_School_Bag_BU
     Name: Costume Beginner Blue Backpack
@@ -96142,6 +96277,14 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 20617
+    AegisName: aegis_20617
+    Name: Costume Wing of Eutaxy    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 120
   - Id: 20700
     AegisName: Egir_Manteau
     Name: Egir Manteau
@@ -97224,6 +97367,18 @@ Body:
          bonus2 bSubEle,Ele_Neutral,20;
          bonus bFlee,20;
       }
+  - Id: 20784
+    AegisName: Amistr_Bag_J
+    Name: Amistr Bag
+    Type: Armor
+    Weight: 200
+    Defense: 18
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 4
   - Id: 20787
     AegisName: Unity_Exquisite_Muffler
     Name: Unity Exquisite Muffler
@@ -98296,6 +98451,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
+    View: 13
     Script: |
       .@r = getrefine();
       if (.@r >= 2)
@@ -98325,6 +98481,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
+    View: 13
     Script: |
       .@r = getrefine();
       if (.@r >= 2)
@@ -98354,6 +98511,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
+    View: 13
     Script: |
       .@r = getrefine();
       if (.@r >= 2)
@@ -98693,6 +98851,22 @@ Body:
     Script: |
       bonus2 bSubEle,Ele_Neutral,20;
       bonus bVariableCastrate,-5;
+  - Id: 20918
+    AegisName: Angel_Poring_Wing
+    Name: Angel Poring Wing
+    Type: Armor
+    Weight: 200
+    Defense: 15
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    EquipLevelMin: 1
+    View: 15
+    Script: |
+      bonus bAllStats,2;
+      bonus bMdef,4;
   - Id: 20922
     AegisName: Leviathan_muffler
     Name: Leviathan Muffler
@@ -98781,6 +98955,94 @@ Body:
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,10;
       }
+  - Id: 20926
+    AegisName: 2018_RTC_Cape4_TW
+    Name: 2018 RTC Cape4    # !todo check english name
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Refineable: true
+    EquipLevelMin: 100
+    View: 32
+    Script: |
+      bonus bAllStats,2;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bAddRace,RC_All,3;
+      bonus2 bMagicAddRace,RC_All,3;
+      bonus2 bSubRace,RC_All,getrefine()/4;
+      bonus2 bAddItemHealRate,522,50;
+      bonus2 bAddItemHealRate,547,50;
+  - Id: 20927
+    AegisName: 2018_RTC_Cape1_TW
+    Name: 2018 RTC Cape1    # !todo check english name
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Trade:
+      NoTrade: true
+    Refineable: true
+    EquipLevelMin: 100
+    View: 29
+    Script: |
+      bonus bAllStats,5;
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus2 bAddRace,RC_All,5;
+      bonus2 bMagicAddRace,RC_All,5;
+      bonus2 bSubRace,RC_All,7;
+  - Id: 20928
+    AegisName: 2018_RTC_Cape2_TW
+    Name: 2018 RTC Cape2    # !todo check english name
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Trade:
+      NoTrade: true
+    Refineable: true
+    EquipLevelMin: 100
+    View: 30
+    Script: |
+      bonus bAllStats,4;
+      bonus bMaxHPrate,4;
+      bonus bMaxSPrate,4;
+      bonus2 bAddRace,RC_All,4;
+      bonus2 bMagicAddRace,RC_All,4;
+      bonus2 bSubRace,RC_All,6;
+  - Id: 20929
+    AegisName: 2018_RTC_Cape3_TW
+    Name: 2018 RTC Cape3    # !todo check english name
+    Type: Armor
+    Weight: 300
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    Trade:
+      NoTrade: true
+    Refineable: true
+    EquipLevelMin: 100
+    View: 31
+    Script: |
+      bonus bAllStats,3;
+      bonus bMaxHPrate,3;
+      bonus bMaxSPrate,3;
+      bonus2 bAddRace,RC_All,3;
+      bonus2 bMagicAddRace,RC_All,3;
+      bonus2 bSubRace,RC_All,5;
   - Id: 20931
     AegisName: Rainbow_Scarf_Jp
     Name: Prism Rangers Scarf
@@ -99286,6 +99548,7 @@ Body:
       Garment: true
     ArmorLevel: 1
     Refineable: true
+    View: 45
     Script: |
       .@r = getrefine();
       bonus bMatkRate,(.@r/2);
@@ -99601,6 +99864,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 82
+  - Id: 20987
+    AegisName: aegis_20987
+    Name: Costume Heart Wing Backpack    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 58
   - Id: 20988
     AegisName: C_Mechanical_Butterfly
     Name: "Costume: Mechanical Butterfly"
@@ -99619,11 +99890,16 @@ Body:
     View: 93
   - Id: 20990
     AegisName: C_Rotating_Gears
-    Name: "Costume: Rotating Gears"
+    Name: Costume Rotating Gears
     Type: Armor
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+    View: 94
+    Script: |
+      hateffect HAT_EF_GEARWHEEL,true;
+    UnEquipScript: |
+      hateffect HAT_EF_GEARWHEEL,false;
   - Id: 20991
     AegisName: aegis_20991
     Name: Fairy of Eden
@@ -99657,6 +99933,14 @@ Body:
       }
     UnEquipScript: |
       sc_end SC_ENERGYCOAT;
+  - Id: 20992
+    AegisName: C_Fairy_Of_Eden
+    Name: Costume Fairy of Eden
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 95
   - Id: 21000
     AegisName: Upg_Twohand_Sword
     Name: Upg Two-Handed Sword
@@ -142832,6 +143116,14 @@ Body:
          autobonus2 "{ bonus bAspdRate,20; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
       else if (.@r>=7)
          autobonus2 "{ bonus bAspdRate,10; }",50,30000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_HASTEUP; }";
+  - Id: 480052
+    AegisName: C_Sakura_Fes_TW
+    Name: Costume Sakura Ribbon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 69
   - Id: 480053
     AegisName: Behemoth_Muffler
     Name: Behemoth Muffler
@@ -142892,7 +143184,7 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
-    View: 3
+    View: 73
   - Id: 480058
     AegisName: aegis_480058
     Name: Costume Wavy Golden Angel Wings
@@ -143138,6 +143430,14 @@ Body:
          bonus bMaxSPrate,5;
          bonus bAspdRate,5;
       }
+  - Id: 480082
+    AegisName: C_Sandalphon_Wing_TW
+    Name: Costume Sandalphon Wing    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 88
   - Id: 480083
     AegisName: Egirnion_Manteau
     Name: Aegirnion Manteau
@@ -143156,6 +143456,14 @@ Body:
       if (getrefine()>=9) {
          bonus bVariableCastrate,-10;
       }
+  - Id: 480086
+    AegisName: C_CAPOO_Bag_TW
+    Name: Costume CAPOO Bag    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 89
   - Id: 480090
     AegisName: Gray_W_Muffler
     Name: Gray Wolf Muffler
@@ -143192,6 +143500,18 @@ Body:
       if (.@r>=7) {
          bonus bAspdRate,7;
       }
+  - Id: 480092
+    AegisName: aegis_480092
+    Name: Costume Sudden Wealth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 96
+    Script: |
+      hateffect HAT_EF_C_SUDDEN_WEALTH_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_SUDDEN_WEALTH_TW,false;
   - Id: 480093
     AegisName: C_Scepter
     Name: Costume Scepter
@@ -143208,14 +143528,26 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 98
+  - Id: 480096
+    AegisName: C_Put_On_Coat
+    Name: Costume Put On Coat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 99
   - Id: 480097
     AegisName: C_Snow_Powder
-    Name: "Costume: Snow Powder"
+    Name: Costume Snow Powder
     Type: Armor
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
     View: 100
+    Script: |
+      hateffect HAT_EF_SNOW_POWDER,true;
+    UnEquipScript: |
+      hateffect HAT_EF_SNOW_POWDER,false;
   - Id: 480103
     AegisName: 1Para_Manteau_A
     Name: Paradise Manteau
@@ -143342,6 +143674,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 104
+  - Id: 480108
+    AegisName: aegis_480108
+    Name: Costume Poring Basket    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 103
   - Id: 480110
     AegisName: C_Adventure_Cat_Bag
     Name: Costume Adventure Bag
@@ -143350,6 +143690,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 107
+  - Id: 480111
+    AegisName: aegis_480111
+    Name: Costume Flower Wing    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 106
   - Id: 480114
     AegisName: aegis_480114
     Name: Striking Mikoshi
@@ -143381,6 +143729,30 @@ Body:
       }
     UnEquipScript: |
       sc_end SC_CONCENTRATION;
+  - Id: 480117
+    AegisName: C_Elec_Guitar_Of_Phen
+    Name: Costume Electric Guitar Of Phen    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 108
+  - Id: 480118
+    AegisName: C_G_DaeHyon_Sword_TW
+    Name: Costume General DaeHyon Sword    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 114
+  - Id: 480119
+    AegisName: aegis_480119
+    Name: Costume Niflheim Key    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 110
   - Id: 480120
     AegisName: aegis_480120
     Name: Guardian Soul
@@ -143414,6 +143786,14 @@ Body:
          bonus2 bSubEle,Ele_Wind,.@bonus*.@c;
          bonus2 bSubEle,Ele_Earth,.@bonus*.@c;
       }
+  - Id: 480121
+    AegisName: aegis_480121
+    Name: Costume Striking Mikoshi    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 111
   - Id: 480122
     AegisName: C_Samba_Carnival
     Name: Costume Samba Carnival
@@ -143422,6 +143802,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 112
+  - Id: 480123
+    AegisName: aegis_480123
+    Name: Costume Nydhog Rumor    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 113
   - Id: 480124
     AegisName: aegis_480124
     Name: Convertible Physical Wing
@@ -143482,6 +143870,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 109
+  - Id: 480127
+    AegisName: C_Hooked_Straw_Hat
+    Name: Costume Hooked Straw Hat
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 115
   - Id: 480129
     AegisName: C_Triple_Ice_Cream
     Name: Costume Triple Ice Cream
@@ -143490,6 +143886,14 @@ Body:
       Costume_Garment: true
     ArmorLevel: 1
     View: 116
+  - Id: 480130
+    AegisName: C_Beer_Server
+    Name: Costume Beer Server    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 117
   - Id: 480131
     AegisName: C_Swirling_Flame
     Name: Costume Swirling Flame
@@ -143497,6 +143901,14 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 480137
+    AegisName: aegis_480137
+    Name: Costume Filir Bag    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 118
   - Id: 480138
     AegisName: ST_Servival_Cloak
     Name: Engraved Survival Manteau
