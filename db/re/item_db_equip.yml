@@ -18950,6 +18950,38 @@ Body:
          bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
       if (.@r>=9)
          bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+  - Id: 1948
+    AegisName: Hippie_Guitar_J
+    Name: Hippie Guitar
+    Type: Weapon
+    SubType: Musical
+    Weight: 1000
+    Attack: 140
+    MagicAttack: 120
+    Range: 2
+    Slots: 3
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVit,.@r;
+      bonus bMaxHPrate,.@r;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
+         bonus2 bSubRace,RC_DemiHuman,5;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+         bonus2 bSubRace,RC_DemiHuman,5;
+      }
   - Id: 1950
     AegisName: Rope
     Name: Rope
@@ -62023,6 +62055,29 @@ Body:
     Script: |
       bonus bDex,2;
       bonus2 bSkillAtk,"KO_HAPPOKUNAI",(9*getrefine());
+  - Id: 13340
+    AegisName: Huuma_Hundred_Petal_J
+    Name: Huuma Shuriken of Dancing Petals
+    Type: Weapon
+    SubType: Huuma
+    Weight: 2000
+    Attack: 250
+    MagicAttack: 180
+    Range: 1
+    Slots: 3
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,.@r;
+      if (.@r>=9)
+         bonus bSPGainValue,20;
   - Id: 13341
     AegisName: Rebeginer_KO_Humma
     Name: Beginner Kagerou&Oboro's Huuma Shuriken
@@ -72624,6 +72679,36 @@ Body:
       bonus bBaseAtk,6*(min(BaseLevel,160)/10);
       if (getrefine()>=7)
          bonus bLongAtkRate,getskilllv("BA_MUSICALLESSON")+getskilllv("DC_DANCINGLESSON");
+  - Id: 18163
+    AegisName: Vigilante_Bow_J
+    Name: Vigilante Bow
+    Type: Weapon
+    SubType: Bow
+    Weight: 1000
+    Attack: 140
+    MagicAttack: 170
+    Range: 5
+    Slots: 3
+    Jobs:
+      All: true
+      BardDancer: false
+      Hunter: false
+      Rogue: false
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@a = readparam(bInt);
+      bonus bShortWeaponDamageReturn,5;
+      bonus bAgi,.@a/10;
+      bonus bAspdRate,.@a/10;
+      if (.@r>=9)
+         bonus bFlee,50;
   - Id: 18164
     AegisName: Royal_Bow_K
     Name: Royal Bow
@@ -103188,6 +103273,30 @@ Body:
       bonus bFlee,15;
       bonus bHPrecovRate,10;
       bonus bSPrecovRate,10;
+  - Id: 22174
+    AegisName: Scaraba_High_Heels
+    Name: Scaraba High Heels
+    Type: Armor
+    Weight: 700
+    Defense: 12
+    Slots: 1
+    Locations:
+      Shoes: true
+    ArmorLevel: 1
+    EquipLevelMin: 85
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,2;
+      bonus bMaxSPrate,2;
+      if (.@r>=5) {
+         bonus bMaxHPrate,4;
+         bonus bMaxSPrate,4;
+      }
+      if (.@r>=7) {
+         bonus bMaxHPrate,4;
+         bonus bMaxSPrate,4;
+      }
   - Id: 22189
     AegisName: Shoes_Of_Pilgrim
     Name: Pilgrim Shoes
@@ -117119,6 +117228,38 @@ Body:
          bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
       if (.@r>=9)
          bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+  - Id: 26204
+    AegisName: Hippie_Rope_J
+    Name: Hippie Rope
+    Type: Weapon
+    SubType: Musical
+    Weight: 1000
+    Attack: 140
+    MagicAttack: 120
+    Range: 2
+    Slots: 3
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVit,.@r;
+      bonus bMaxHPrate,.@r;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",150;
+         bonus2 bSubRace,RC_DemiHuman,5;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",50;
+         bonus2 bSubRace,RC_DemiHuman,5;
+      }
   - Id: 26212
     AegisName: Heart_Whip
     Name: Heart Whip
@@ -118347,6 +118488,35 @@ Body:
       if (getrefine()>=7) {
          bonus2 bSkillCooldown,"NC_AXETORNADO",-100*getskilllv("BS_WEAPONRESEARCH");
       }
+  - Id: 28127
+    AegisName: Mine_Worker_Pickax_J
+    Name: Mine Worker's Pickaxe
+    Type: Weapon
+    SubType: 2hAxe
+    Weight: 400
+    Attack: 300
+    Range: 1
+    Slots: 3
+    Jobs:
+      All: true
+      Alchemist: false
+      Blacksmith: false
+      Crusader: false
+      Knight: false
+    Classes:
+      All_Third: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r =  getrefine();
+      bonus2 bSkillCooldown,"NC_MAGMA_ERUPTION",-3000;
+      bonus bVit,.@r;
+      bonus bAtk,.@r*10;
+      if (.@r>=9)
+         bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
   - Id: 28130
     AegisName: Avenger
     Name: Avenger
@@ -122778,6 +122948,49 @@ Body:
       if (getrefine()>=7) {
          bonus bMatkRate,getskilllv("PR_KYRIE");
       }
+  - Id: 28615
+    AegisName: Origin_Of_Elemental_J
+    Name: Elemental Origin
+    Type: Weapon
+    SubType: Book
+    Weight: 800
+    Attack: 180
+    MagicAttack: 150
+    Range: 1
+    Slots: 3
+    Jobs:
+      Priest: true
+      Sage: true
+      StarGladiator: true
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Fire,10;
+      bonus2 bMagicAtkEle,Ele_Earth,10;
+      bonus2 bMagicAtkEle,Ele_Water,10;
+      bonus2 bMagicAtkEle,Ele_Wind,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus2 bSkillVariableCast,"SO_PSYCHIC_WAVE",-3000;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Fire,15;
+         bonus2 bMagicAtkEle,Ele_Earth,15;
+         bonus2 bMagicAtkEle,Ele_Water,15;
+         bonus2 bMagicAtkEle,Ele_Wind,15;
+         bonus2 bMagicAtkEle,Ele_Neutral,15;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Fire,20;
+         bonus2 bMagicAtkEle,Ele_Earth,20;
+         bonus2 bMagicAtkEle,Ele_Water,20;
+         bonus2 bMagicAtkEle,Ele_Wind,20;
+         bonus2 bMagicAtkEle,Ele_Neutral,20;
+      }
   - Id: 28616
     AegisName: Rebeginer_AB_Bible
     Name: Beginner Archbishop's Bible
@@ -123790,6 +124003,29 @@ Body:
       if (getrefine()>=7) {
          bonus bMatkRate,getskilllv("RG_SNATCHER");
       }
+  - Id: 28738
+    AegisName: Monokage_J
+    Name: Monokage
+    Type: Weapon
+    SubType: Dagger
+    Weight: 800
+    Attack: 100
+    Range: 1
+    Slots: 3
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@lvl = getskilllv("NJ_KASUMIKIRI");
+      bonus bFlee,.@lvl*5;
+      bonus bCritical,.@lvl*5;
+      bonus2 bSkillAtk,"NJ_KIRIKAGE",BaseLevel;
+      bonus2 bSkillAtk,"NJ_KASUMIKIRI",BaseLevel*3;
   - Id: 28740
     AegisName: Rebeginer_SC_Dagger
     Name: Beginner Shadow Chaser's Dagger
