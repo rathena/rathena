@@ -6056,6 +6056,38 @@ Body:
       bonus2 bSkillAtk,"NC_AXETORNADO",(100+.@val);
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",(100+.@val);
       bonus2 bSkillAtk,"GN_CART_TORNADO",(75+.@val);
+  - Id: 1328
+    AegisName: Blut_Axe
+    Name: Brute Cleaver
+    Type: Weapon
+    SubType: 1hAxe
+    Attack: 150
+    Range: 1
+    Classes:
+      All_Third: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus2 bAddRace,RC_Player_Human,60;
+      bonus2 bAddRace,RC_Player_Doram,60;
+      bonus2 bIgnoreDefRaceRate,RC_All,5*.@r;
+      if (.@r>=8) {
+         bonus2 bAddRace,RC_Player_Human,35;
+         bonus2 bAddRace,RC_Player_Doram,35;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Player_Human,20;
+         bonus2 bAddRace,RC_Player_Doram,20;
+      }
+      if (.@r>=10) {
+         bonus bMaxHPrate,15;
+         bonus bMaxSPrate,15;
+      }
   - Id: 1331
     AegisName: Variant_Axe
     Name: Abyss Axe
@@ -6122,6 +6154,43 @@ Body:
          .@val = 20;
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",.@val;
       bonus2 bSkillAtk,"NC_POWERSWING",.@val;
+  - Id: 1335
+    AegisName: Cancer_Axe_J
+    Name: Giant Cancer Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 700
+    Attack: 10
+    Range: 1
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Novice: true
+      SuperNovice: true
+      Swordman: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 1
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,80+BaseLevel;
+      bonus bAspdRate,10;
+      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+         bonus2 bAddRace,RC_All,50;
+         bonus bSPDrainValue,2;
+         bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
+         if (.@r>=7)
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+         if (.@r>=9)
+            bonus2 bIgnoreDefRaceRate,RC_All,50;
+      }
   - Id: 1336
     AegisName: Guardian_Knight_Axe
     Name: Guardian Knight Axe
@@ -76653,7 +76722,7 @@ Body:
     Script: |
       bonus bStr,3;
       bonus bInt,2;
-      bonus2 bAddItemHealRate,505,50;
+      bonus2 bAddItemSPHealRate,505,50;
   - Id: 18685
     AegisName: Stardust_Hairband
     Name: Stardust Hairband
@@ -144460,6 +144529,31 @@ Body:
       bonus2 bAddClass,Class_All,6;
       bonus bMatkRate,6;
       bonus bHit,15;
+  - Id: 490037
+    AegisName: Dark_Ring
+    Name: Dark Ring
+    Type: Armor
+    Weight: 100
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Script: |
+      .@val = getskilllv("GC_WEAPONCRUSH");
+      bonus bStr,5+.@val;
+      bonus bAgi,5+.@val;
+      bonus bDex,5+.@val;
+      bonus bBaseAtk,40*.@val;
+      bonus2 bAddRace,RC_All,5;
+      if (getskilllv("GC_CROSSIMPACT") == 5)
+         bonus bDelayrate,-30;
+      if (getskilllv("GC_DARKCROW") == 5)
+         bonus2 bSkillCooldown,"GC_DARKCROW",-25000;
+      if (getskilllv("GC_CLOAKINGEXCEED") == 5) {
+         bonus bMaxSPrate,15;
+         bonus bAspd,2;
+      }
   - Id: 490038
     AegisName: Sixth_Sense_Ring
     Name: Perception Amplifier Ring
