@@ -117516,7 +117516,7 @@ Body:
     AegisName: Hippie_Rope_J
     Name: Hippie Rope
     Type: Weapon
-    SubType: Musical
+    SubType: Whip
     Weight: 1000
     Attack: 140
     MagicAttack: 120
