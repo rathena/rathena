@@ -9743,7 +9743,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Hand: true
+      Armor: true
     Flags:
       BuyingStore: true
       DropEffect: CLIENT
