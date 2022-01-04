@@ -691,6 +691,9 @@ struct Battle_Config
 	int idletime_mer_option;
 	int feature_refineui;
 	int rndopt_drop_pillar;
+	int pet_legacy_formula;
+	int pet_distance_check;
+	int pet_hide_check;
 
 	// 4th Jobs Stuff
 	int trait_points_job_change;
