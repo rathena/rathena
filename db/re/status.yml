@@ -1273,7 +1273,6 @@ Body:
       NoDispell: true
     Fail:
       Quagmire: true
-      Dontforgetme: true
     End:
       Decreaseagi: true
     EndReturn: true
@@ -6926,7 +6925,7 @@ Body:
     Icon: Clan_Info
     Flags:
       DisplayPc: true
-      Display_Npc: true
+      DisplayNpc: true
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true
@@ -7405,6 +7404,7 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+      OverlapFail: true
 
   - Status: Newmoon
     Icon: Newmoon
@@ -7489,6 +7489,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      OverlapFail: true
 
   - Status: Soulshadow
     Icon: Soulshadow
@@ -7565,6 +7566,10 @@ Body:
     Icon: Soulenergy
     Flags:
       NoRemoveOnDead: true
+      NoClearbuff: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Use_Skill_Sp_Spa
     Icon: Use_Skill_Sp_Spa
@@ -7781,32 +7786,134 @@ Body:
       Flee: true
 
   - Status: Packing_Envelope1
+    Icon: Packing_Envelope1
+    CalcFlags:
+      Watk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope2
+    Icon: Packing_Envelope2
+    CalcFlags:
+      Matk: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope3
+    Icon: Packing_Envelope3
+    CalcFlags:
+      MaxHp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope4
+    Icon: Packing_Envelope4
+    CalcFlags:
+      MaxSp: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope5
+    Icon: Packing_Envelope5
+    CalcFlags:
+      Flee: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope6
+    Icon: Packing_Envelope6
+    CalcFlags:
+      Aspd: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope7
+    Icon: Packing_Envelope7
+    CalcFlags:
+      Def: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope8
+    Icon: Packing_Envelope8
+    CalcFlags:
+      Mdef: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope9
+    Icon: Packing_Envelope9
+    CalcFlags:
+      Cri: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Packing_Envelope10
+    Icon: Packing_Envelope10
+    CalcFlags:
+      Hit: true
+    Flags:
+      NoRemoveOnDead: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Soulattack
+    Icon: Soulattack
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoRemoveOnDead: true
+      NoClearbuff: true
 
   - Status: Wideweb
+    Icon: Wideweb
+    DurationLookup: NPC_WIDEWEB
+    CalcFlags:
+      Flee: true
+    Flags:
+      StopWalking: true
 
   - Status: Burnt
+    Icon: Burnt
+    DurationLookup: NPC_FIRESTORM
+    Flags:
+      BlEffect: true
+    Fail:
+      Chill: true
 
   - Status: Chill
+    Icon: Chill
+    End:
+      Burnt: true
 
   - Status: Handicapstate_Deepblind
 
@@ -7815,12 +7922,20 @@ Body:
   - Status: Handicapstate_Lassitude
 
   - Status: Handicapstate_Frostbite
+    Flags:
+      RemoveOnDamaged: true
 
   - Status: Handicapstate_Swooning
+    Flags:
+      RemoveOnDamaged: true
 
   - Status: Handicapstate_Lightningstrike
+    Flags:
+      RemoveOnDamaged: true
 
   - Status: Handicapstate_Crystallization
+    Flags:
+      RemoveOnDamaged: true
 
   - Status: Handicapstate_Conflagration
 
@@ -7833,8 +7948,18 @@ Body:
   - Status: Handicapstate_Holyflame
 
   - Status: Servantweapon
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Servant_Sign
+    Flags:
+      OverlapFail: true
+      RemoveOnChangeMap: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Chargingpierce
 
@@ -7903,8 +8028,25 @@ Body:
   - Status: Shadow_Weapon
 
   - Status: Guard_Stance
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+
+    End:
+      Attack_Stance: true
 
   - Status: Attack_Stance
+    Flags:
+      NoRemoveOnDead: true
+      NoSave: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
+    End:
+      Guard_Stance: true
 
   - Status: Guardian_S
 
@@ -7951,26 +8093,61 @@ Body:
   - Status: Roseblossom
 
   - Status: Powerful_Faith
+    End:
+      Powerful_Faith: true
+      Firm_Faith: true
+      Sincere_Faith: true
 
   - Status: Sincere_Faith
+    End:
+      Powerful_Faith: true
+      Firm_Faith: true
+      Sincere_Faith: true
 
   - Status: Firm_Faith
+    End:
+      Powerful_Faith: true
+      Firm_Faith: true
+      Sincere_Faith: true
 
   - Status: Holy_Oil
 
   - Status: First_Brand
+    End:
+      First_Brand: true
+      Second_Brand: true
 
   - Status: Second_Brand
+    End:
+      First_Brand: true
+      Second_Brand: true
 
   - Status: Second_Judge
+    End:
+      First_Faith_Power: true
+      Second_Judge: true
+      Third_Exor_Flame: true
 
   - Status: Third_Exor_Flame
+    End:
+      First_Faith_Power: true
+      Second_Judge: true
+      Third_Exor_Flame: true
 
   - Status: First_Faith_Power
+    End:
+      First_Faith_Power: true
+      Second_Judge: true
+      Third_Exor_Flame: true
 
   - Status: Massive_F_Blaster
 
   - Status: Protectshadowequip
+    Flags:
+      RemoveChemicalProtect: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Researchreport
 
@@ -7985,49 +8162,100 @@ Body:
   - Status: Bionic_Helltree
 
   - Status: Shadow_Strip
+    Flag:
+      BossResist: true
+      NoClearbuff: true
+      Debuff: true
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Abyss_Dagger
 
   - Status: Abyssforceweapon
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true
 
   - Status: Abyss_Slayer
 
   - Status: Flametechnic
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Flametechnic_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Flamearmor
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Flamearmor_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Cold_Force
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Cold_Force_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Crystal_Armor
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Crystal_Armor_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Grace_Breeze
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Grace_Breeze_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Eyes_Of_Storm
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Eyes_Of_Storm_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Earth_Care
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Earth_Care_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Strong_Protection
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Strong_Protection_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Deep_Poisoning
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Deep_Poisoning_Option
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Poison_Shield
+    Flags:
+      RemoveElementalOption: true
 
   - Status: Poison_Shield_Option
+    Flags:
+      RemoveElementalOption: true

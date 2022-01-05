@@ -6752,7 +6752,7 @@ Body:
     Icon: Clan_Info
     Flags:
       DisplayPc: true
-      Display_Npc: true
+      DisplayNpc: true
       NoRemoveOnDead: true
       NoClearbuff: true
       NoDispell: true

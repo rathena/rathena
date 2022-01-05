@@ -16990,6 +16990,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 900000   # skill duration (unknown value)
+    Status: MillenniumShield
   - Id: 708
     Name: NPC_COMET
     Description: Comet 2
@@ -17226,9 +17227,7 @@ Body:
         Time: 27500
       - Level: 5
         Time: 32500
-<<<<<<< HEAD
     Status: Freeze
-=======
   - Id: 721
     Name: NPC_WIDEWEB
     Description: Wide Web
@@ -17245,6 +17244,7 @@ Body:
     HitCount: 1
     SplashArea: 7
     Duration2: 10000
+    Status: WideWeb
   - Id: 722
     Name: NPC_WIDESUCK
     Description: Wide Suck
@@ -17285,6 +17285,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Freeze
   - Id: 724
     Name: NPC_FIRESTORM
     Description: Fire Storm
@@ -17309,7 +17310,7 @@ Body:
     SplashArea: 3
     Knockback: 3
     Duration1: 10000
->>>>>>> master
+    Status: Burnt
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2
@@ -17461,6 +17462,7 @@ Body:
       - Level: 5
         Area: 5
     Duration1: 7000
+    Status: CursedCircle_Target
   - Id: 731
     Name: NPC_DRAGONBREATH
     Description: NPC Dragon Breath
@@ -17549,6 +17551,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Stun
   - Id: 734
     Name: NPC_MAGMA_ERUPTION_DOTDAMAGE
     Description: NPC Magma Eruption Dot Damage
@@ -17563,6 +17566,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    #Status: Burning
   - Id: 735
     Name: NPC_MANDRAGORA
     Description: NPC Howling of Mandragora
@@ -17599,6 +17603,7 @@ Body:
         Time: 25000
       - Level: 5
         Time: 30000
+    Status: Mandragora
   - Id: 736
     Name: NPC_PSYCHIC_WAVE
     Description: Psychic Wave
@@ -34428,26 +34433,12 @@ Body:
         - Level: 4
           Amount: 45
         - Level: 5
-<<<<<<< HEAD
-          Amount: 40
-    Status: Avoid
-  - Id: 8003
-    Name: HLIF_BRAIN
-    Description: Brain Surgery
-    MaxLevel: 5
-    SplashArea: 1
-  - Id: 8004
-    Name: HLIF_CHANGE
-    Description: Change
-    MaxLevel: 3
-=======
           Amount: 50
       SpiritSphereCost: 5
   - Id: 5206
     Name: DK_CHARGINGPIERCE
     Description: Charging Pierce
     MaxLevel: 10
->>>>>>> master
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -34579,17 +34570,6 @@ Body:
       - Level: 10
         Area: 3
     Requires:
-<<<<<<< HEAD
-      SpCost: 100
-    Status: Change
-  - Id: 8005
-    Name: HAMI_CASTLE
-    Description: Castling
-    MaxLevel: 5
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-=======
       SpCost: 1
   - Id: 5210
     Name: DK_DRAGONIC_AURA
@@ -34598,7 +34578,6 @@ Body:
     Type: Weapon
     TargetType: Attack
     Range: 7
->>>>>>> master
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -34648,20 +34627,6 @@ Body:
         - Level: 4
           Amount: 46
         - Level: 5
-<<<<<<< HEAD
-          Amount: 40
-    Status: Defence
-  - Id: 8007
-    Name: HAMI_SKIN
-    Description: Adamantium Skin
-    MaxLevel: 5
-    DamageFlags:
-      NoDamage: true
-  - Id: 8008
-    Name: HAMI_BLOODLUST
-    Description: Bloodlust
-    MaxLevel: 3
-=======
           Amount: 50
       Weapon:
         2hSword: true
@@ -34670,7 +34635,6 @@ Body:
     Name: DK_VIGOR
     Description: Vigor
     MaxLevel: 10
->>>>>>> master
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -34700,19 +34664,11 @@ Body:
         Time: 300000
     Cooldown: 60000
     Requires:
-<<<<<<< HEAD
-      SpCost: 120
-    Status: Bloodlust
-  - Id: 8009
-    Name: HFLI_MOON
-    Description: Moonlight
-=======
       SpCost: 100
       ApCost: 150
   - Id: 5213
     Name: DK_STORMSLASH
     Description: Storm Slash
->>>>>>> master
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
@@ -34788,18 +34744,11 @@ Body:
         - Level: 4
           Amount: 110
         - Level: 5
-<<<<<<< HEAD
-          Amount: 70
-    Status: Fleet
-  - Id: 8011
-    Name: HFLI_SPEED
-    Description: Speed
-=======
+
           Amount: 120
   - Id: 5215
     Name: AG_DESTRUCTIVE_HURRICANE
     Description: Destructive Hurricane
->>>>>>> master
     MaxLevel: 5
     Type: Magic
     TargetType: Self
@@ -40519,6 +40468,7 @@ Body:
           Amount: 35
         - Level: 5
           Amount: 40
+    Status: Avoid
   - Id: 8003
     Name: HLIF_BRAIN
     Description: Brain Surgery
@@ -40548,6 +40498,7 @@ Body:
         Time: 1200000
     Requires:
       SpCost: 100
+    Status: Change
   - Id: 8005
     Name: HAMI_CASTLE
     Description: Castling
@@ -40591,6 +40542,7 @@ Body:
           Amount: 35
         - Level: 5
           Amount: 40
+    Status: Defence
   - Id: 8007
     Name: HAMI_SKIN
     Description: Adamantium Skin
@@ -40621,6 +40573,7 @@ Body:
         Time: 900000
     Requires:
       SpCost: 120
+    Status: Bloodlust
   - Id: 8009
     Name: HFLI_MOON
     Description: Moonlight
@@ -40695,6 +40648,7 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 70
+    Status: Fleet
   - Id: 8011
     Name: HFLI_SPEED
     Description: Speed
