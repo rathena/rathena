@@ -116236,6 +116236,382 @@ Body:
       if (.@r>=7) {
          bonus bHit,15;
       }
+  - Id: 24746
+    AegisName: S_S_Reload_Shield
+    Name: Separate reload shield shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bDelayrate,-.@r;
+      bonus bAspdRate,3*(.@r/2);
+      if (.@r>=9) {
+         bonus bMatkRate,3;
+         bonus2 bAddClass,Class_All,3;
+      }
+  - Id: 24747
+    AegisName: S_SpellCaster_Armor
+    Name: Spellcaster Armor Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-.@r;
+      bonus bMatkRate,(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/3);
+  - Id: 24748
+    AegisName: S_SpellCaster_Shoes
+    Name: Spell Caster Shoes Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-.@r;
+      bonus bMatkRate,(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/3);
+  - Id: 24749
+    AegisName: S_SpellCaster_Earring
+    Name: Spell Caster Earring Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-.@r;
+      bonus bMatkRate,(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/3);
+  - Id: 24750
+    AegisName: S_SpellCaster_Pendant
+    Name: Spell Caster Pendant Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-.@r;
+      bonus bMatkRate,(.@r/3);
+      bonus2 bAddClass,Class_All,(.@r/3);
+  - Id: 24751
+    AegisName: S_P_Power_Weapon
+    Name: Physical Power Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bPow,(.@r/2);
+      if (.@r>=7) {
+         bonus bPAtk,3;
+         if (.@r>=9) {
+            bonus bPAtk,3;
+         }
+      }
+  - Id: 24752
+    AegisName: S_P_Power_Shield
+    Name: Physical Power Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bPow,(.@r/2);
+      if (.@r>=7) {
+         bonus bPAtk,3;
+         if (.@r>=9) {
+            bonus bPAtk,3;
+         }
+      }
+  - Id: 24753
+    AegisName: S_M_Spell_Weapon
+    Name: Magical Spell Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bSpl,(.@r/2);
+      if (.@r>=7) {
+         bonus bSmatk,3;
+         if (.@r>=9) {
+            bonus bSmatk,3;
+         }
+      }
+  - Id: 24754
+    AegisName: S_M_Spell_Shield
+    Name: Magical Spell Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bSpl,(.@r/2);
+      if (.@r>=7) {
+         bonus bSmatk,3;
+         if (.@r>=9) {
+            bonus bSmatk,3;
+         }
+      }
+  - Id: 24755
+    AegisName: S_Concentration_Weapon
+    Name: Concentration Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCon,.@r;
+      if (.@r>=7) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+         if (.@r>=9) {
+            bonus bPAtk,2;
+            bonus bSmatk,2;
+         }
+      }
+  - Id: 24756
+    AegisName: S_Concentration_Shield
+    Name: Concentration Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCon,.@r;
+      if (.@r>=7) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+         if (.@r>=9) {
+            bonus bPAtk,2;
+            bonus bSmatk,2;
+         }
+      }
+  - Id: 24757
+    AegisName: S_Wisdom_Weapon
+    Name: Wisdom Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bWis,.@r;
+      if (.@r>=7) {
+         bonus bMres,30;
+         if (.@r>=9) {
+            bonus bMres,30;
+         }
+      }
+  - Id: 24758
+    AegisName: S_Wisdom_Shield
+    Name: Wisdom Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bWis,.@r;
+      if (.@r>=7) {
+         bonus bMres,30;
+         if (.@r>=9) {
+            bonus bMres,30;
+         }
+      }
+  - Id: 24759
+    AegisName: S_Stamina_Weapon
+    Name: Stamina Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bSta,.@r;
+      if (.@r>=7) {
+         bonus bRes,30;
+         if (.@r>=9) {
+            bonus bRes,30;
+         }
+      }
+  - Id: 24760
+    AegisName: S_Stamina_Shield
+    Name: Stamina Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bSta,.@r;
+      if (.@r>=7) {
+         bonus bRes,30;
+         if (.@r>=9) {
+            bonus bRes,30;
+         }
+      }
+  - Id: 24761
+    AegisName: S_Creative_Weapon
+    Name: Creative Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCrt,(.@r/2);
+      if (.@r>=7) {
+         bonus bCrate,2;
+         bonus bHplus,2;
+         if (.@r>=9) {
+            bonus bCrate,2;
+            bonus bHplus,2;
+         }
+      }
+  - Id: 24762
+    AegisName: S_Creative_Shield
+    Name: Creative Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCrt,(.@r/2);
+      if (.@r>=7) {
+         bonus bCrate,2;
+         bonus bHplus,2;
+         if (.@r>=9) {
+            bonus bCrate,2;
+            bonus bHplus,2;
+         }
+      }
+  - Id: 24763
+    AegisName: S_R_Bearers_Shoes
+    Name: Road Bearers Shoes Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,(.@r/2);
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         bonus2 bMagicAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bMaxHPrate,5;
+         }
+      }
+  - Id: 24764
+    AegisName: S_R_Bearers_Armor
+    Name: Lord Bearers Armor Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,(.@r/2);
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         bonus2 bMagicAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bMaxHPrate,5;
+         }
+      }
+  - Id: 24765
+    AegisName: S_R_Bearers_Pendant
+    Name: Lord Bearers Pendant Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,(.@r/2);
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         bonus2 bMagicAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bMaxHPrate,5;
+         }
+      }
+  - Id: 24766
+    AegisName: S_R_Bearers_Earring
+    Name: Road Bearers Earring Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,(.@r/2);
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         bonus2 bMagicAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bMaxHPrate,5;
+         }
+      }
+  - Id: 24767
+    AegisName: S_Mega_Blitz_Shield
+    Name: Mega Blitz Shield Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,5+2*(.@r/3);
+      bonus bCrate,(.@r/3);
+      if (.@r>=7) {
+         bonus bCritical,3;
+         bonus bAspd,1;
+         if (.@r>=9) {
+            bonus bCritAtkRate,5;
+            bonus bAspdRate,8;
+            if (.@r>=10) {
+               bonus bCritAtkRate,3;
+               bonus bCrate,3;
+            }
+         }
+      }
+  - Id: 24768
+    AegisName: S_Mega_Blitz_Weapon
+    Name: Mega Blitz Weapon Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Weapon: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,5;
+      bonus bDelayrate,-(.@r/2);
+      if (.@r>=7) {
+         bonus bAspdRate,5;
+         bonus bAspd,1;
+         if (.@r>=9) {
+            bonus bDelayrate,-2;
+            if (.@r>=10) {
+               bonus bPAtk,2;
+               bonus bSmatk,2;
+            }
+         }
+      }
   - Id: 26001
     AegisName: Toughen_Metal_Lance
     Name: Enhanced Metal Lance
@@ -136496,6 +136872,54 @@ Body:
       if (.@g>=3 && .@r>=12) {
          bonus bFixedCast,-500;
       }
+  - Id: 400153
+    AegisName: Whikebain_Ears_K_LT
+    Name: Wickebine's Black Cat Ears-LT
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 150
+    Refineable: true
+    View: 368
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bFlee,20;
+      bonus2 bMagicAtkEle,Ele_All,15;
+      bonus bCritAtkRate,15;
+      if (BaseLevel>=210) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+      }
+      if (.@r>=7) {
+         bonus bCritAtkRate,10;
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+         if (.@r>=9) {
+            bonus bMatkRate,5;
+            if (.@r>=11) {
+               bonus bDelayrate,-5;
+            }
+         }
+      }
+      if (.@g>=1) {
+         if (.@r>=11) {
+            bonus bDelayrate,-5;
+         }
+      }
+      if (.@g>=2) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+         if (.@g>=3) {
+            if (.@r>=12) {
+               bonus bFixedCast,-500;
+            }
+         }
+      }
+      autobonus "{ bonus bCritical,30; }",1,10000,BF_WEAPON;
+      autobonus "{ bonus2 bIgnoreMdefRaceRate,RC_All,100; bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-100; bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-100; }",1,10000,BF_MAGIC;
   - Id: 400154
     AegisName: Survive_Circlet_K_LT
     Name: Survival Circlet-LT
@@ -136546,6 +136970,98 @@ Body:
          }
       }
       bonus bMatk,10*(.@r/2);
+  - Id: 400155
+    AegisName: GoldFish_Hat_LT
+    Name: Gold Fish Head Hat-LT
+    Type: Armor
+    Weight: 400
+    Defense: 2
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 150
+    Refineable: true
+    View: 1645
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+      }
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         bonus bShortAtkRate,10;
+         if (.@r>=9) {
+            bonus bMatkRate,5;
+            if (.@r>=11) {
+               bonus2 bMagicAddEle,Ele_Dark,20;
+               bonus2 bAddEle,Ele_Dark,20;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_Holy,5;
+         bonus bShortAtkRate,5;
+         if (.@g>=2) {
+            bonus bPAtk,2;
+            bonus bSmatk,2;
+            if (.@g>=3) {
+               if (.@r>=12) {
+                  bonus bFixedCast,-500;
+               }
+            }
+         }
+      }
+      autobonus "{ bonus bAtkEle,Ele_Holy; }",1,60000,BF_WEAPON;
+      autobonus "{ bonus2 bMagicAtkEle,Ele_Holy,20; }",1,60000,BF_MAGIC;
+  - Id: 400156
+    AegisName: Imp_Hat_LT
+    Name: Imp Hat-LT
+    Type: Armor
+    Weight: 400
+    Defense: 1
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 150
+    Refineable: true
+    View: 589
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+      }
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus bShortAtkRate,10;
+         if (.@r>=9) {
+            bonus bMatkRate,5;
+            if (.@r>=11) {
+               bonus2 bMagicAddEle,Ele_Earth,20;
+               bonus2 bAddEle,Ele_Earth,20;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus bShortAtkRate,5;
+         if (.@g>=2) {
+            bonus bPAtk,2;
+            bonus bSmatk,2;
+            if (.@g>=3) {
+               if (.@r>=12) {
+                  bonus bFixedCast,-500;
+               }
+            }
+         }
+      }
+      autobonus "{ bonus bAtkEle,Ele_Fire; }",1,60000,BF_WEAPON;
+      autobonus "{ bonus2 bMagicAtkEle,Ele_Fire,20; }",1,60000,BF_MAGIC;
   - Id: 400160
     AegisName: Wave_Noodle
     Name: Costume Wavy Noodles
@@ -136727,6 +137243,14 @@ Body:
       bonus bBaseAtk,10*(.@r/2);
       bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15*(.@r/3);
       bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400188
+    AegisName: C_Evt_RagFes_band
+    Name: Costume Ragfest Commemorative Headband    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2179
   - Id: 400189
     AegisName: aegis_400189
     Name: Helm of Faith (Archbishop)
@@ -137225,6 +137749,825 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
       bonus2 bMagicAtkEle,Ele_Wind,7*(.@r/4);
+  - Id: 400226
+    AegisName: Viva_Adul_Hat_RK1
+    Name: Helm of Face (Rune Knight)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2207
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RK_IGNITIONBREAK",15*(.@r/3);
+      bonus2 bSkillAtk,"RK_WINDCUTTER",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+  - Id: 400227
+    AegisName: Viva_Adul_Hat_RK2
+    Name: Helm of Face II (Rune Knight)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2207
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400228
+    AegisName: Viva_Adul_Hat_WM1
+    Name: Helm of Face (Minstrel & Wanderer)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2208
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bSmatk,1;
+         bonus bSpl,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bSmatk,2;
+         bonus bSpl,3;
+      }
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+            }
+         }
+      }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"WM_METALICSOUND",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+  - Id: 400229
+    AegisName: Viva_Adul_Hat_WM2
+    Name: Helm of Face II (Minstrel & Wanderer)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2208
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus bCritical,15;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400230
+    AegisName: Viva_Adul_Hat_NC1
+    Name: Helm of Face (Mechanic)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2209
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"NC_AXETORNADO",15*(.@r/3);
+      bonus2 bSkillAtk,"NC_AXEBOOMERANG",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+  - Id: 400231
+    AegisName: Viva_Adul_Hat_NC2
+    Name: Helm of Face II (Mechanic)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2209
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"NC_VULCANARM",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400232
+    AegisName: Crushed_Snow_Man
+    Name: Costume Crumpled Snowman    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2204
+  - Id: 400233
+    AegisName: Viva_Adul_Hat_GN1
+    Name: Helm of Face (generic)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2210
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"GN_CARTCANNON",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400234
+    AegisName: Viva_Adul_Hat_GN2
+    Name: Helm of Face II (generic)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2210
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"GN_CART_TORNADO",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+  - Id: 400235
+    AegisName: Viva_Adul_Hat_KO1
+    Name: Helm of Face (Kagerou & Oboro)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2217
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"KO_HUUMARANKA",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400236
+    AegisName: Viva_Adul_Hat_KO2
+    Name: Helm of Face II (Kagerou & Oboro)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2217
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400237
+    AegisName: Viva_Adul_Hat_RL1
+    Name: Helm of Face (Rebellion)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2218
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RL_FIREDANCE",15*(.@r/3);
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",15*(.@r/3);
+      bonus2 bSkillAtk,"RL_D_TAIL",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400238
+    AegisName: Viva_Adul_Hat_RL2
+    Name: Helm of Face II (Rebellion)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2218
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"RL_R_TRIP",15*(.@r/3);
+      bonus2 bSkillAtk,"RL_S_STORM",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400239
+    AegisName: Viva_Adul_Hat_SP1
+    Name: Helm of Face (Soul Reaper)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2219
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bSmatk,1;
+         bonus bSpl,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bSmatk,2;
+         bonus bSpl,3;
+      }
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+            }
+         }
+      }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"SP_SPA",15*(.@r/3);
+      bonus2 bSkillAtk,"SP_SWHOO",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
+  - Id: 400240
+    AegisName: Viva_Adul_Hat_SP2
+    Name: Helm of Face II (Soul Reaper)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2219
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bSmatk,1;
+         bonus bSpl,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bSmatk,2;
+         bonus bSpl,3;
+      }
+      if (.@r>=7) {
+         bonus2 bMagicAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+            }
+         }
+      }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
+  - Id: 400241
+    AegisName: Viva_Adul_Hat_SJ1
+    Name: Helm of Face (Holy Priest)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2220
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"SJ_FULLMOONKICK",15*(.@r/3);
+      bonus2 bSkillAtk,"SJ_NEWMOONKICK",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+  - Id: 400242
+    AegisName: Viva_Adul_Hat_SJ2
+    Name: Helm of Face II (Holy Priest)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2220
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15*(.@r/3);
+      bonus bShortAtkRate,7*(.@r/4);
+  - Id: 400243
+    AegisName: Viva_Adul_Hat_SU1
+    Name: Helm of Face (Summoner)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2221
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bPow,3;
+      }
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,5;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus2 bAddClass,Class_All,5;
+            }
+         }
+      }
+      bonus bBaseAtk,10*(.@r/2);
+      bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",15*(.@r/3);
+      bonus2 bSkillAtk,"SU_PICKYPECK",15*(.@r/3);
+      bonus bLongAtkRate,7*(.@r/4);
+  - Id: 400244
+    AegisName: Viva_Adul_Hat_SU2
+    Name: Helm of Face II (Summoner)    # !todo check english name
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 2221
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bSmatk,1;
+         bonus bSpl,2;
+      }
+      if (BaseLevel>=230) {
+         bonus bSmatk,2;
+         bonus bSpl,3;
+      }
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         if (.@r>=9) {
+            bonus bFixedCast,-200;
+            if (.@r>=11) {
+               bonus bFixedCast,-300;
+               bonus bMatkRate,5;
+            }
+         }
+      }
+      bonus bMatk,10*(.@r/2);
+      bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15*(.@r/3);
+      bonus2 bSkillAtk,"SU_CN_METEOR",15*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_All,7*(.@r/4);
+  - Id: 400245
+    AegisName: King_Tiger_Doll_Hat_LT
+    Name: Tiger King Doll Hat-LT    # !todo check english name
+    Type: Armor
+    Weight: 400
+    Defense: 6
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 150
+    Refineable: true
+    View: 495
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bStr,2;
+      bonus bDex,2;
+      bonus bPow,2;
+      bonus bCon,2;
+      bonus bAspdRate,10;
+      bonus2 bAddRace,RC_Brute,10;
+      autobonus "{ .@r = getrefine(); bonus bBaseAtk,35*.@r; if (.@r>=10) { bonus bPAtk,20; } }",1,7000,BF_WEAPON;
+      if (.@r>=7) {
+         bonus bShortAtkRate,15;
+         if (.@r>=9) {
+            bonus2 bAddClass,Class_All,10;
+            if (.@r>=11) {
+               bonus bShortAtkRate,10;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,5;
+         bonus bPow,3;
+         if (.@g>=2) {
+            bonus bFixedCast,-500;
+            bonus bSta,2;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bRes,20;
+               if (.@g>=4) {
+                  bonus bPAtk,7;
+               }
+            }
+         }
+      }
+  - Id: 400246
+    AegisName: Baksojin_Hat_LT
+    Name: Baek Sojin Hat-LT    # !todo check english name
+    Type: Armor
+    Weight: 400
+    Defense: 6
+    Slots: 1
+    Locations:
+      Head_Top: true
+    ArmorLevel: 2
+    EquipLevelMin: 150
+    Refineable: true
+    View: 461
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bInt,2;
+      bonus bDex,2;
+      bonus bSpl,2;
+      bonus bCon,2;
+      bonus bVariableCastrate,-10;
+      bonus2 bMagicAddRace,RC_Undead,10;
+      autobonus "{ .@r = getrefine(); bonus bMatk,35*.@r; if (.@r>=10) { bonus bSmatk,20; }",1,7000,BF_MAGIC;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,15;
+         if (.@r>=9) {
+            bonus bMatkRate,10;
+            if (.@r>=11) {
+               bonus2 bMagicAtkEle,Ele_All,10;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus bMatkRate,5;
+         bonus bSpl,3;
+         if (.@g>=2) {
+            bonus bFixedCast,-500;
+            bonus bWis,2;
+            if (.@g>=3) {
+               bonus bSmatk,3;
+               bonus bMres,20;
+               if (.@g>=4) {
+                  bonus bSmatk,7;
+               }
+            }
+         }
+      }
   - Id: 410005
     AegisName: C_Magic_Heir_TW
     Name: Costume Magic Heir
@@ -137417,6 +138760,14 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2112
+  - Id: 410068
+    AegisName: C_Fish_Marche
+    Name: Costume Costal Marche    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2126
   - Id: 410069
     AegisName: C_Pet_Popcorn_Box
     Name: Costume Pet Popcorn Box
@@ -137875,6 +139226,14 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_All,7;
       bonus bVariableCastrate,-3;
+  - Id: 420067
+    AegisName: C_Hopping_Twin_Pigtail
+    Name: Costume Rabbit Ribbon Twintail    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2124
   - Id: 420071
     AegisName: C_Feather_Stola
     Name: Costume Feather Stola
@@ -137929,6 +139288,86 @@ Body:
       Costume_Head_Low: true
     ArmorLevel: 1
     View: 2155
+  - Id: 420082
+    AegisName: C_WL_Hair_BU
+    Name: Costume Side Roll Pony    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2164
+  - Id: 420092
+    AegisName: aegis_420092
+    Name: Clothes silky long (silver)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2181
+  - Id: 420095
+    AegisName: C_Braid_Half_Up_WH
+    Name: Costume Pigtails Half Up (White)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2052
+  - Id: 420096
+    AegisName: C_Braid_Half_Up_OM
+    Name: Costume Pigtails Half Up (Orange)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2053
+  - Id: 420097
+    AegisName: C_Braid_Half_Up_PP
+    Name: Costume Pigtails Half Up (Purple)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2054
+  - Id: 420098
+    AegisName: C_Braid_Half_Up_BL
+    Name: Costume Pigtails Half Up (Black)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2051
+  - Id: 420099
+    AegisName: C_Braid_Half_Up_BU
+    Name: Costume Pigtails Half Up (Blue)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2047
+  - Id: 420100
+    AegisName: C_Braid_Half_Up_YL
+    Name: Costume Pigtails Half Up (Yellow)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2049
+  - Id: 420101
+    AegisName: C_Braid_Half_Up_RD
+    Name: Costume Pigtails Half Up (Red)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2048
+  - Id: 420102
+    AegisName: C_Braid_Half_Up_GN
+    Name: Costume Pigtails Half Up (Green)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2050
   - Id: 436000
     AegisName: aegis_436000
     Name: Thanatos's Maeror Mask
@@ -138024,6 +139463,20 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,10;
       bonus2 bMagicAddRace,RC_Player_Doram,10;
       bonus bMatkRate,3;
+  - Id: 436008
+    AegisName: aegis_436008
+    Name: Costume Congratulation    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2216
+    Script: |
+      bonus2 bAddClass,Class_All,1;
+      bonus bMatkRate,1;
+      bonus bPAtk,2;
+      bonus bSmatk,2;
   - Id: 440000
     AegisName: C_SharkHead
     Name: Costume Shark Hat
@@ -142674,6 +144127,74 @@ Body:
          bonus bMaxHPrate,3;
       if (BaseLevel>=130)
          bonus bMatk,40;
+  - Id: 450191
+    AegisName: ST_Orleans_Gown
+    Name: Engraved Orlean's Gown
+    Type: Armor
+    Weight: 300
+    Defense: 50
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,15;
+      bonus bNoCastCancel;
+      if (.@r>=7) {
+         bonus bMatk,50;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-10;
+            if (.@r>=11) {
+               bonus2 bMagicAtkEle,Ele_Fire,20;
+               bonus2 bMagicAtkEle,Ele_Neutral,20;
+            }
+         }
+      }
+  - Id: 450192
+    AegisName: ST_Naga_Armor
+    Name: Engraved Naga's Scale Armor
+    Type: Armor
+    Weight: 1000
+    Defense: 450
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 2
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bShortWeaponDamageReturn,5;
+      bonus bMres,3;
+      if (.@r>=7) {
+         bonus bShortWeaponDamageReturn,5;
+         if (.@r>=9) {
+            bonus bShortAtkRate,10;
+            if (.@r>=11) {
+               autobonus "{ bonus bPAtk,15; }",1,7000,BF_WEAPON,"{ active_transform 1993,3000; }";
+            }
+         }
+      }
+  - Id: 450198
+    AegisName: Evt_RagFes_Shirts
+    Name: Cotton shirt for smelting Ragfest    # !todo check english name
+    Type: Armor
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 450199
     AegisName: Barmund_Armor
     Name: Varmundt Rune Armor
@@ -142882,6 +144403,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 230
     Refineable: true
+    View: 1
     Script: |
       .@r = getrefine();
       bonus2 bMagicAtkEle,Ele_All,3;
@@ -142907,6 +144429,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 230
     Refineable: true
+    View: 1
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,3;
@@ -142949,6 +144472,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 230
     Refineable: true
+    View: 2
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143009,6 +144533,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 160
     Refineable: true
+    View: 1
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143053,6 +144578,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    View: 4
     Script: |
       .@r = getrefine();
       bonus bMres,2;
@@ -143076,6 +144602,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    View: 2
     Script: |
       .@r = getrefine();
       bonus bMres,3;
@@ -144917,7 +146444,7 @@ Body:
     View: 98
   - Id: 480096
     AegisName: C_Put_On_Coat
-    Name: Costume Put On Coat    # !todo check english name
+    Name: Costume Haori Coat
     Type: Armor
     Locations:
       Costume_Garment: true
@@ -145288,6 +146815,48 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 480136
+    AegisName: aegis_480136
+    Name: Magic Swordsman Thanatos's Sword
+    Type: Armor
+    Weight: 500
+    Defense: 60
+    Slots: 1
+    Locations:
+      Garment: true
+    ArmorLevel: 2
+    EquipLevelMin: 180
+    Refineable: true
+    View: 23
+    Script: |
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,3;
+         bonus bSmatk,3;
+      }
+      if (BaseLevel>=230) {
+         bonus bPAtk,2;
+         bonus bSmatk,2;
+      }
+      if (.@r>=9) {
+         bonus2 bIgnoreDefRaceRate,RC_Angel,20;
+         bonus2 bIgnoreMDefRaceRate,RC_Angel,20;
+         bonus2 bIgnoreDefRaceRate,RC_Dragon,20;
+         bonus2 bIgnoreMDefRaceRate,RC_Dragon,20;
+         if (.@r>=11) {
+            bonus2 bIgnoreDefRaceRate,RC_Angel,10;
+            bonus2 bIgnoreMDefRaceRate,RC_Angel,10;
+            bonus2 bIgnoreDefRaceRate,RC_Dragon,10;
+            bonus2 bIgnoreMDefRaceRate,RC_Dragon,10;
+         }
+      }
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/3);
+      bonus bShortAtkRate,2*(.@r/3);
+      bonus bLongAtkRate,2*(.@r/3);
+      bonus2 bAddSize,Size_Medium,5*(.@r/5);
+      bonus2 bMagicAddSize,Size_Medium,5*(.@r/5);
+      bonus2 bAddSize,Size_Large,5*(.@r/5);
+      bonus2 bMagicAddSize,Size_Large,5*(.@r/5);
   - Id: 480137
     AegisName: aegis_480137
     Name: Costume Filir Bag    # !todo check english name
@@ -147442,6 +149011,139 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 205
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bAddClass,Class_All,10;
+      bonus bVariableCastrate,-10;
+  - Id: 490180
+    AegisName: aegis_490180
+    Name: Mark of a Hero (Meister)    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 205
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bAddClass,Class_All,10;
+      bonus bVariableCastrate,-10;
+  - Id: 490181
+    AegisName: aegis_490181
+    Name: Token of a Hero (Inquisitor)    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 205
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bAddClass,Class_All,10;
+      bonus bVariableCastrate,-10;
+  - Id: 490184
+    AegisName: aegis_490184
+    Name: Token of a Hero (Shinkiro & Shiranui)    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 205
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bAddClass,Class_All,10;
+      bonus bVariableCastrate,-10;
+  - Id: 490185
+    AegisName: aegis_490185
+    Name: Token of a Hero (Night's Watch)    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 205
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bAddClass,Class_All,10;
+      bonus bVariableCastrate,-10;
+  - Id: 490186
+    AegisName: aegis_490186
+    Name: Token of a Hero (Youngdosa)    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 205
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bAddClass,Class_All,10;
+      bonus bVariableCastrate,-10;
+  - Id: 490187
+    AegisName: aegis_490187
+    Name: Token of a Hero (Heaven)    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Fourth: true
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 2
+    EquipLevelMin: 205
+    Script: |
+      bonus bMatkRate,10;
+      bonus2 bAddClass,Class_All,10;
+      bonus bVariableCastrate,-10;
+  - Id: 490188
+    AegisName: aegis_490188
+    Name: Token of a Hero (Spirit Death)    # !todo check english name
+    Type: Armor
+    Weight: 200
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Summoner: true
     Classes:
       Fourth: true
     Locations:
@@ -149771,6 +151473,51 @@ Body:
             }
          }
       }
+  - Id: 510049
+    AegisName: Rotten_Garden_knife
+    Name: Corrode Garden Knife
+    Type: Weapon
+    SubType: Dagger
+    Weight: 300
+    Attack: 117
+    MagicAttack: 190
+    Range: 1
+    Slots: 2
+    Jobs:
+      Rogue: true
+    Classes:
+      All_Third: true
+      Fourth: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 210
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus3 bAutoSpell,"SO_CLOUD_KILL",1,1;
+      bonus2 bMagicAtkEle,Ele_Poison,15;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_All,15;
+         if (.@r>=9) {
+            bonus2 bMagicAddSize,Size_Small,20;
+            bonus2 bMagicAddSize,Size_Medium,20;
+            if (.@r>=11) {
+               bonus2 bMagicAtkEle,Ele_Poison,15;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus bSmatk,2;
+         if (.@g>=2) {
+            bonus bSmatk,1;
+            bonus bSpl,3;
+            if (.@g>=3) {
+               bonus2 bMagicAtkEle,Ele_All,15;
+            }
+         }
+      }
   - Id: 510050
     AegisName: Solid_Dagger
     Name: Solid Dagger
@@ -150037,6 +151784,36 @@ Body:
                bonus bSpl,1;
                bonus2 bSkillAtk,"SS_RAIDENPOU",5;
                bonus2 bSkillAtk,"SS_KINRYUUHOU",5;
+            }
+         }
+      }
+  - Id: 510060
+    AegisName: Fog_Dew_Sword_LT
+    Name: Kirinotsuyu-LT    # !todo check english name
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1200
+    Attack: 190
+    Range: 1
+    Slots: 2
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         if (.@g>=2) {
+            bonus bLongAtkRate,15;
+            bonus bPAtk,1;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bPow,3;
             }
          }
       }
@@ -152279,6 +154056,56 @@ Body:
             }
          }
       }
+  - Id: 540048
+    AegisName: OneSkyOneSun_LT
+    Name: Ilcheon Ilyang-LT    # !todo check english name
+    Type: Weapon
+    SubType: Book
+    Weight: 1100
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus2 bSkillAtk,"SJ_SOLARBURST",20;
+         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",20;
+         if (.@r>=9) {
+            bonus2 bSkillAtk,"SJ_SOLARBURST",25;
+            bonus2 bSkillAtk,"SJ_PROMINENCEKICK",25;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,15;
+               bonus bShortAtkRate,15;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         if (.@g>=2) {
+            bonus bShortAtkRate,15;
+            bonus bPAtk,1;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bPow,3;
+            }
+         }
+      }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bShortAtkRate,4*(.@r/3);
   - Id: 550001
     AegisName: Boost_Rod
     Name: Booster Rod
@@ -154531,6 +156358,112 @@ Body:
             }
          }
       }
+  - Id: 550067
+    AegisName: MeawFoxtail_LT
+    Name: Nyangnyang Dog Grass-LT    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1200
+    Attack: 350
+    MagicAttack: 350
+    Range: 1
+    Slots: 2
+    Jobs:
+      Summoner: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      if (BaseLevel>=210) {
+         bonus bSmatk,1;
+         bonus bSpl,2;
+      }
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",40;
+         bonus2 bSkillAtk,"SU_PICKYPECK",40;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-10;
+            bonus2 bSkillCooldown,"SU_CN_METEOR",-2000;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,15;
+               bonus2 bMagicAddSize,Size_All,15;
+               bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",50;
+               bonus2 bSkillAtk,"SU_CN_METEOR",50;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         bonus bMatkRate,3;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,15;
+            bonus2 bMagicAtkEle,Ele_Earth,15;
+            bonus bSmatk,1;
+            if (.@g>=3) {
+               bonus bSmatk,2;
+               bonus bSpl,3;
+            }
+         }
+      }
+      bonus bMatk,15*(.@r/2);
+      bonus bBaseAtk,15*(.@r/2);
+      bonus2 bAddClass,Class_All,2*(.@r/3);
+      bonus bMatkRate,2*(.@r/3);
+  - Id: 550068
+    AegisName: SoulWeight_LT
+    Name: Spirit Weight-LT    # !todo check english name
+    Type: Weapon
+    SubType: Staff
+    Weight: 1200
+    Attack: 70
+    Range: 1
+    Slots: 2
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bMatk,190;
+      bonus bUnbreakableWeapon;
+      if (BaseLevel>=210) {
+         bonus bSmatk,1;
+         bonus bSpl,2;
+      }
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus2 bSkillAtk,"SP_SPA",25;
+         if (.@r>=9) {
+            bonus2 bSkillAtk,"SP_SWHOO",45;
+            bonus2 bSkillAtk,"SP_SPA",15;
+            if (.@r>=11) {
+               bonus2 bMagicAddSize,Size_All,15;
+               bonus2 bSPRegenRate,230,5000;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus bMatkRate,3;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_All,15;
+            bonus bSmatk,1;
+            if (.@g>=3) {
+               bonus bSmatk,2;
+               bonus bSpl,3;
+            }
+         }
+      }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bMagicAtkEle,Ele_All,3*(.@r/3);
   - Id: 560000
     AegisName: Boost_Knuckles
     Name: Booster Knuckles
@@ -161717,6 +163650,58 @@ Body:
             }
          }
       }
+  - Id: 650024
+    AegisName: Humma_Clear_LT
+    Name: Fuma Shuriken Cheongmyeong-LT    # !todo check english name
+    Type: Weapon
+    SubType: Huuma
+    Weight: 2300
+    Attack: 290
+    Range: 1
+    Slots: 2
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus2 bSkillAtk,"KO_HUUMARANKA",30;
+         if (.@r>=9) {
+            bonus2 bSkillCooldown,"KO_HUUMARANKA",-2000;
+            bonus2 bSkillAtk,"KO_HUUMARANKA",15;
+            if (.@r>=11) {
+               bonus2 bAddRace,RC_Undead,25+25;
+               bonus2 bAddRace,RC_Angel,25;
+               bonus2 bAddRace,RC_Demon,25;
+               bonus2 bAddRace,RC_Dragon,25;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         if (.@g>=2) {
+            bonus bLongAtkRate,15;
+            bonus bPAtk,1;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bPow,3;
+            }
+         }
+      }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 700000
     AegisName: IDTest_bow
     Name: IDTest bow
@@ -163535,6 +165520,55 @@ Body:
             }
          }
       }
+  - Id: 800013
+    AegisName: Crimson_Rose_LT
+    Name: Crimson Rose-LT    # !todo check english name
+    Type: Weapon
+    SubType: Revolver
+    Weight: 1000
+    Attack: 200
+    Range: 7
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (.@r>=7) {
+         bonus2 bSubSize,Size_All,20;
+         bonus2 bMagicSubSize,Size_All,20;
+         bonus2 bSkillAtk,"RL_FIREDANCE",25;
+         if (.@r>=9) {
+            bonus2 bAddClass,Class_All,7;
+            bonus2 bSkillAtk,"RL_FIREDANCE",35;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,15;
+               bonus bDelayrate,-10;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         if (.@g>=2) {
+            bonus bLongAtkRate,15;
+            bonus bPAtk,1;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bPow,3;
+            }
+         }
+      }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 810000
     AegisName: Ep172_1h_Rifle
     Name: Lust Pointer
@@ -163819,6 +165853,57 @@ Body:
             }
          }
       }
+  - Id: 810009
+    AegisName: Master_Soul_Rifle_LT
+    Name: Master Soul Rifle-LT    # !todo check english name
+    Type: Weapon
+    SubType: Rifle
+    Weight: 1000
+    Attack: 200
+    MagicAttack: 250
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bSmatk,1;
+         bonus bSpl,2;
+      }
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Ghost,25;
+         bonus2 bSkillAtk,"WL_SOULEXPANSION",40;
+         if (.@r>=9) {
+            bonus5 bAutoSpell,"MG_SOULSTRIKE",5,150,BF_LONG|BF_WEAPON,1;
+            bonus5 bAutoSpell,"WL_SOULEXPANSION",5,150,BF_LONG|BF_WEAPON,1;
+            bonus5 bAutoSpell,"HW_NAPALMVULCAN",5,150,BF_LONG|BF_WEAPON,1;
+            if (.@r>=11) {
+               bonus2 bMagicAddSize,Size_All,15;
+               bonus2 bSkillAtk,"WL_SOULEXPANSION",30;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus bMatkRate,3;
+         if (.@g>=2) {
+            bonus2 bMagicAtkEle,Ele_Ghost,15;
+            bonus bSmatk,1;
+            if (.@g>=3) {
+               bonus bSmatk,2;
+               bonus bSpl,3;
+            }
+         }
+      }
+      bonus bMatk,15*(.@r/2);
+      bonus2 bSkillAtk,"MG_SOULSTRIKE",20*(.@r/3);
+      bonus2 bSkillAtk,"HW_NAPALMVULCAN",20*(.@r/3);
   - Id: 820000
     AegisName: Ep172_1h_Shotgun
     Name: Lust Shatter
@@ -164024,6 +166109,58 @@ Body:
             }
          }
       }
+  - Id: 820007
+    AegisName: Demon_S_Shot_LT
+    Name: Demon Slayer Shot-LT    # !todo check english name
+    Type: Weapon
+    SubType: Shotgun
+    Weight: 2300
+    Attack: 295
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSplashRange,1;
+      bonus bUnbreakableWeapon;
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (.@r>=7) {
+         bonus bLongAtkRate,10;
+         bonus2 bSkillAtk,"RL_BANISHING_BUSTER",30;
+         bonus2 bSkillAtk,"RL_S_STORM",30;
+         if (.@r>=9) {
+            bonus2 bSkillCooldown,"RL_S_STORM",-1000;
+            bonus2 bSkillAtk,"RL_BANISHING_BUSTER",25;
+            bonus2 bSkillAtk,"RL_S_STORM",25;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,15;
+               bonus2 bAddClass,Class_Boss,15;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         if (.@g>=2) {
+            bonus bLongAtkRate,15;
+            bonus bPAtk,1;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bPow,3;
+            }
+         }
+      }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 830000
     AegisName: Boost_Gatling
     Name: Booster Gatling
@@ -164383,6 +166520,55 @@ Body:
             }
          }
       }
+  - Id: 830012
+    AegisName: The_Black_Gatling_LT
+    Name: The Black-LT    # !todo check english name
+    Type: Weapon
+    SubType: Gatling
+    Weight: 3000
+    Attack: 225
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (.@r>=7) {
+         bonus bBaseAtk,50;
+         bonus2 bSkillAtk,"RL_R_TRIP",25;
+         if (.@r>=9) {
+            bonus bLongAtkRate,15;
+            bonus2 bSkillAtk,"RL_R_TRIP",25;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,15;
+               bonus2 bSubSize,Size_All,20;
+               bonus2 bMagicSubSize,Size_All,20;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         if (.@g>=2) {
+            bonus bLongAtkRate,15;
+            bonus bPAtk,1;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bPow,3;
+            }
+         }
+      }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
   - Id: 840000
     AegisName: Ep172_1h_Grenade
     Name: Lust Boom
@@ -164634,3 +166820,52 @@ Body:
             }
          }
       }
+  - Id: 840008
+    AegisName: Golden_L_Launcher_LT
+    Name: Golden Road Launcher-LT    # !todo check english name
+    Type: Weapon
+    SubType: Grenade
+    Weight: 2400
+    Attack: 350
+    Range: 9
+    Slots: 2
+    Jobs:
+      Rebellion: true
+    Locations:
+      Both_Hand: true
+    WeaponLevel: 5
+    EquipLevelMin: 190
+    Refineable: true
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      if (BaseLevel>=210) {
+         bonus bPAtk,1;
+         bonus bPow,2;
+      }
+      if (.@r>=7) {
+         bonus2 bSkillCooldown,"RL_D_TAIL",-1000;
+         bonus2 bSkillAtk,"RL_D_TAIL",20;
+         if (.@r>=9) {
+            bonus bLongAtkRate,15;
+            bonus2 bSkillAtk,"RL_D_TAIL",35;
+            if (.@r>=11) {
+               bonus2 bAddSize,Size_All,15;
+               bonus2 bAddEle,Ele_All,15;
+            }
+         }
+      }
+      if (.@g>=1) {
+         bonus2 bAddClass,Class_All,3;
+         if (.@g>=2) {
+            bonus bLongAtkRate,15;
+            bonus bPAtk,1;
+            if (.@g>=3) {
+               bonus bPAtk,2;
+               bonus bPow,3;
+            }
+         }
+      }
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bLongAtkRate,4*(.@r/3);
