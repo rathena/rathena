@@ -482,7 +482,7 @@ nothing  - A permanent variable attached to the character, the default variable
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
            instance type. Can be accessed from inside the instance or by calling
-           'getvariableofinstance'.
+           'getinstancevar'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -3055,6 +3055,7 @@ Valid types are:
 	ITEMINFO_ID             (17)   -  item ID
 	ITEMINFO_AEGISNAME      (18)   -  aegis item name
 	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
+	ITEMINFO_SUBTYPE        (20)   -  Subtype
 
 See the sample in 'doc/sample/getiteminfo.txt'.
 
@@ -3107,12 +3108,17 @@ If <type> is false the command only returns the count of unidentified items.
 
 ---------------------------------------
 
-*getenchantgrade()
+*getenchantgrade({<equipment slot>,<char_id>})
 
 This function will return the enchantgrade of the equipment from which the
-function is called.
+function is called or the specified equipment slot. If nothing is
+equipped there, it returns -1.
 
-This function is intended for use in item scripts.
+Valid equipment slots are:
+
+EQI_COMPOUND_ON      - Item slot that calls this script (In context of item script) (default)
+
+For a list of others equipment slots see 'getequipid'.
 
 ---------------------------------------
 //
@@ -3580,6 +3586,8 @@ Valid types are:
 	MOB_ATK2 - monster's atk2
 	MOB_DEF - monster's def
 	MOB_MDEF - monster's mdef
+	MOB_RES - monster's res
+	MOB_MRES - monster's mres
 	MOB_STR - monster's str
 	MOB_AGI - monster's agi
 	MOB_VIT - monster's vit
@@ -5987,6 +5995,22 @@ behavior of the command.
 
 ---------------------------------------
 
+*removespecialeffect <effect number>{,<send_target>{,"<NPC Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect', but use for remove effect with <effect number>
+from invoking NPC.
+
+---------------------------------------
+
+*removespecialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect2', but use for remove effect with <effect number>
+from invoking character.
+
+---------------------------------------
+
 *statusup <stat>{,<char_id>};
 
 This command will change a specified stat of the invoking character up by one
@@ -6009,6 +6033,30 @@ specified amount permanently. The amount can be negative. See 'statusup'.
 
 	// This will decrease a character's Vit forever.
 	statusup2 bVit,-1;
+---------------------------------------
+
+*traitstatusup <stat>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character up by one
+permanently. Trait stats are to be given as number, but you can use these constants to
+replace them:
+
+bPow -  Power
+bSta -  Stamina
+bWis -  Wisdom
+bSpl -  Spell
+bCon -  Concentration
+bCrt -  Creative
+
+---------------------------------------
+
+*traitstatusup2 <stat>,<amount>{,<char_id>};
+
+This command will change a specified trait stat of the invoking character by the
+specified amount permanently. The amount can be negative. See 'statusup'.
+
+	// This will decrease a character's Sta forever.
+	traitstatusup2 bSta,-1;
 
 ---------------------------------------
 
@@ -8247,6 +8295,8 @@ Parameters (indexes) for monsters are:
 	UMOB_BODY2
 	UMOB_GROUP_ID
 	UMOB_IGNORE_CELL_STACK_LIMIT
+	UMOB_RES
+	UMOB_MRES
 
 -----
 
@@ -9402,17 +9452,30 @@ Examples:
 
 ---------------------------------------
 
-*getvariableofinstance(<variable>,<instance id>);
+*getinstancevar(<variable>,<instance id>);
 
 Returns a reference to an instance variable (' prefix) of the specific instance ID.
 This can only be used to get ' variables.
 
 Examples:
 	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
-	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+	set .@s, getinstancevar('var, instance_id(IM_PARTY));
 
 	// This will set the 'var variable of the specific instance ID to 1.
-	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
+	set getinstancevar('var, instance_id(IM_GUILD)), 1;
+
+---------------------------------------
+
+*setinstancevar(<variable>,<value>,<instance id>);
+
+This command will set an instance variable to the value that the expression results in.
+See 'set' command for more information.
+
+Returns the variable reference.
+
+Examples:
+	// This will set the 'var variable of the specific instance ID to 9.
+	setinstancevar('var, 9, instance_id(IM_GUILD));
 
 ---------------------------------------
 

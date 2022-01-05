@@ -2112,6 +2112,8 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SV_ROOTTWIST, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_GUARD_STANCE, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ATTACK_STANCE, INVALID_TIMER);
 		// Remove visuals effect from headgear
 		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
 		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
@@ -2135,6 +2137,7 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_H_MINE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_ANTI_M_BLAST, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_B_TRAP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SHADOW_STRIP, INVALID_TIMER);
 		}
 		if (battle_config.debuff_on_logout&2) { //Remove positive buffs
 			status_change_end(&sd->bl, SC_MAXIMIZEPOWER, INVALID_TIMER);
@@ -2239,7 +2242,7 @@ struct homun_data* map_id2hd(int id){
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct mercenary_data* map_id2mc(int id){
+struct s_mercenary_data* map_id2mc(int id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
@@ -2249,7 +2252,7 @@ struct pet_data* map_id2pd(int id){
 	return BL_CAST(BL_PET, bl);
 }
 
-struct elemental_data* map_id2ed(int id) {
+struct s_elemental_data* map_id2ed(int id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }

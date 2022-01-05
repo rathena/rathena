@@ -16,6 +16,17 @@
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ITEMRATIO_MOBS 10
+//Update this max as necessary. 55 is the value needed for Super Baby currently
+//Raised to 105 since Expanded Super Baby needs it.
+#define MAX_SKILL_TREE 105
+#define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+
+struct s_skill_tree_entry_csv {
+	std::string skill_name;
+	uint16 skill_id, skill_lv, baselv, joblv;
+	std::map<std::string, uint16> need;	/// skill_id, skill_lv
+};
+std::map<uint16, std::vector<s_skill_tree_entry_csv>> skill_tree;	/// job id (for order), entry
 
 // Database to memory maps
 struct s_skill_unit_csv : s_skill_db {
@@ -102,6 +113,38 @@ struct s_item_group_db_csv2yaml {
 };
 
 std::map<std::string, s_item_group_db_csv2yaml> item_group;
+
+struct s_mob_drop_csv : s_mob_drop {
+	std::string group_string;
+	bool mvp;
+};
+
+std::unordered_map<uint16, std::vector<uint32>> mob_race2;
+std::map<uint32, std::vector<s_mob_drop_csv>> mob_drop;
+
+struct s_job_param {
+	int32 str, agi, vit, int_, dex, luk;
+};
+
+std::unordered_map<int, std::vector<int>> job_db2;
+std::unordered_map<int, std::vector<int64>> job_hp, job_sp;
+std::unordered_map<int, s_job_param> job_param;
+std::unordered_map<int, int> exp_base_level, exp_job_level;
+
+struct s_elemental_skill_csv {
+	std::string skill_name,
+		mode_name;
+	uint16 lv;
+};
+
+std::unordered_map<uint16, std::vector<s_elemental_skill_csv>> elemental_skill_tree;
+
+struct s_mercenary_skill_csv {
+	std::string skill_name;
+	uint16 max_lv;
+};
+
+std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
 
 static std::map<std::string, int> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
@@ -450,5 +493,20 @@ static bool itemdb_read_group_yaml(void);
 static bool mob_readdb_itemratio(char* fields[], int columns, int current);
 static bool status_readdb_attrfix(const char* file);
 static bool read_constdb(char* fields[], int columns, int current);
+static bool mob_readdb_race2(char *fields[], int columns, int current);
+static bool mob_readdb_drop(char *str[], int columns, int current);
+static bool mob_readdb_sub(char *fields[], int columns, int current);
+static bool pc_readdb_job2(char *fields[], int columns, int current);
+static bool pc_readdb_job_param(char *fields[], int columns, int current);
+static bool pc_readdb_job_exp(char *fields[], int columns, int current);
+static bool pc_readdb_job_exp_sub(char *fields[], int columns, int current);
+static bool pc_readdb_job_basehpsp(char *fields[], int columns, int current);
+static bool pc_readdb_job1(char *fields[], int columns, int current);
+static bool read_elemental_skilldb(char* str[], int columns, int current);
+static bool read_elementaldb(char* str[], int columns, int current);
+static bool mercenary_read_skilldb(char* str[], int columns, int current);
+static bool mercenary_readdb(char* str[], int columns, int current);
+static bool pc_readdb_skilltree(char* str[], int columns, int current);
+static bool pc_readdb_skilltree_yaml(void);
 
 #endif /* CSV2YAML_HPP */

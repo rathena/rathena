@@ -32,7 +32,6 @@ enum e_log_pick_type : uint32;
 enum sc_type : int16;
 
 #define MAX_PC_BONUS 50 /// Max bonus, usually used by item bonus
-#define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
@@ -41,6 +40,9 @@ enum sc_type : int16;
 #define MAX_SOUL_BALL 20 /// Max soul ball
 #define MAX_STELLAR_MARKS 5 /// Max stellar marks
 #define MAX_UNITED_SOULS 12 /// Max united souls
+#define MAX_SERVANTBALL 5 /// Max servant weapons
+#define MAX_SERVANT_SIGN 5 /// Max servant signs
+#define MAX_ABYSSBALL 5 /// Max abyss spheres
 
 #define LANGTYPE_VAR "#langtype"
 #define CASHPOINT_VAR "#CASHPOINTS"
@@ -53,15 +55,13 @@ enum sc_type : int16;
 #define PCDIECOUNTER_VAR "PC_DIE_COUNTER"
 #define JOBCHANGE2ND_VAR "jobchange_level"
 #define JOBCHANGE3RD_VAR "jobchange_level_3rd"
+#define JOBCHANGE4TH_VAR "jobchange_level_4th"
 #define TKMISSIONID_VAR "TK_MISSION_ID"
 #define TKMISSIONCOUNT_VAR "TK_MISSION_COUNT"
 #define ATTENDANCE_DATE_VAR "#AttendanceDate"
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
 #define ACHIEVEMENTLEVEL "AchievementLevel"
 
-//Update this max as necessary. 55 is the value needed for Super Baby currently
-//Raised to 105 since Expanded Super Baby needs it.
-#define MAX_SKILL_TREE 105
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
@@ -135,6 +135,38 @@ enum npc_timeout_type {
 	NPCT_INPUT = 0,
 	NPCT_MENU  = 1,
 	NPCT_WAIT  = 2,
+};
+
+/// Enum of Player's Parameter
+enum e_params {
+	PARAM_STR = 0,
+	PARAM_AGI,
+	PARAM_VIT,
+	PARAM_INT,
+	PARAM_DEX,
+	PARAM_LUK,
+	PARAM_POW,
+	PARAM_STA,
+	PARAM_WIS,
+	PARAM_SPL,
+	PARAM_CON,
+	PARAM_CRT,
+	PARAM_MAX
+};
+
+static const char* parameter_names[PARAM_MAX] = {
+	"Str",
+	"Agi",
+	"Vit",
+	"Int",
+	"Dex",
+	"Luk",
+	"Pow",
+	"Sta",
+	"Wis",
+	"Spl",
+	"Con",
+	"Crt"
 };
 
 extern unsigned int equip_bitmask[EQI_MAX];
@@ -368,7 +400,7 @@ struct map_session_data {
 		unsigned int no_walk_delay : 1;
 	} special_state;
 	uint32 login_id1, login_id2;
-	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
+	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
 	int group_id, group_pos, group_level;
 	unsigned int permissions;/* group permissions */
 	int count_rewarp; //count how many time we being rewarped
@@ -421,6 +453,7 @@ struct map_session_data {
 	bool skillitem_keep_requirement;
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
+	uint16 skill_id_song, skill_lv_song;
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
 	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
@@ -450,7 +483,7 @@ struct map_session_data {
 
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	struct s_indexed_bonus {
-		int param_bonus[6], param_equip[6]; //Stores card/equipment bonuses.
+		int param_bonus[PARAM_MAX], param_equip[PARAM_MAX]; //Stores card/equipment bonuses.
 		int subele[ELE_MAX];
 		int subele_script[ELE_MAX];
 		int subdefele[ELE_MAX];
@@ -475,6 +508,7 @@ struct map_session_data {
 		int magic_addclass[CLASS_MAX];
 		int magic_addsize[SZ_MAX];
 		int magic_atk_ele[ELE_MAX];
+		int weapon_subsize[SZ_MAX];
 		int magic_subsize[SZ_MAX];
 		int critaddrace[RC_MAX];
 		int expaddrace[RC_MAX];
@@ -521,7 +555,7 @@ struct map_session_data {
 
 	// zeroed vars start here.
 	struct s_bonus {
-		int hp, sp;
+		int hp, sp, ap;
 		int atk_rate;
 		int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
 		int nsshealhp,nsshealsp;
@@ -566,10 +600,11 @@ struct map_session_data {
 	} bonus;
 	// zeroed vars end here.
 
-	int castrate,hprate,sprate,dsprate;
+	int castrate,hprate,sprate,aprate,dsprate;
 	int hprecov_rate,sprecov_rate;
 	int matk_rate;
 	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
+	int patk_rate,smatk_rate,res_rate,mres_rate,hplus_rate,crate_rate;
 
 	t_itemid itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
@@ -582,6 +617,8 @@ struct map_session_data {
 	int spiritcharm_type; //Spirit type
 	int spiritcharm_timer[MAX_SPIRITCHARM];
 	int8 soulball, soulball_old;
+	int8 servantball, servantball_old;
+	int8 abyssball, abyssball_old;
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
@@ -590,6 +627,7 @@ struct map_session_data {
 	int devotion[MAX_DEVOTION]; //Stores the account IDs of chars devoted to.
 	int stellar_mark[MAX_STELLAR_MARKS]; // Stores the account ID's of character's with a stellar mark.
 	int united_soul[MAX_UNITED_SOULS]; // Stores the account ID's of character's who's soul is united.
+	int servant_sign[MAX_SERVANT_SIGN]; // Stores the account ID's of character's with a servant sign.
 
 	int trade_partner;
 	struct s_deal {
@@ -628,8 +666,8 @@ struct map_session_data {
 
 	struct pet_data *pd;
 	struct homun_data *hd;	// [blackhole89]
-	struct mercenary_data *md;
-	struct elemental_data *ed;
+	s_mercenary_data *md;
+	s_elemental_data *ed;
 
 	struct s_hate_mob {
 		int  m; //-1 - none, other: map index corresponding to map name.
@@ -646,8 +684,9 @@ struct map_session_data {
 	int eventtimer[MAX_EVENTTIMER];
 	unsigned short eventcount; // [celest]
 
-	unsigned char change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
-	unsigned char change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
+	uint16 change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
+	uint16 change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
+	uint16 change_level_4th; // job level when changing from 3rd to 4th class [jobchange_level_4rd in global_reg_value]
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
@@ -862,6 +901,7 @@ enum weapon_type : uint8 {
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
 	MAX_WEAPON_TYPE_ALL,
+	W_SHIELD = MAX_WEAPON_TYPE,
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
@@ -878,6 +918,12 @@ enum e_ammo_type : uint8 {
 	AMMO_CANNONBALL,
 	AMMO_THROWWEAPON,
 	MAX_AMMO_TYPE
+};
+
+enum e_card_type : uint8 {
+	CARD_NORMAL = 0,
+	CARD_ENCHANT,
+	MAX_CARD_TYPE
 };
 
 enum idletime_option {
@@ -944,26 +990,38 @@ public:
 };
 
 struct s_job_info {
-	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
-	int hp_factor, hp_multiplicator, sp_factor;
-	int max_weight_base;
-	char job_bonus[MAX_LEVEL];
-#ifdef RENEWAL_ASPD
-	int aspd_base[MAX_WEAPON_TYPE+1];
-#else
-	int aspd_base[MAX_WEAPON_TYPE];	//[blackhole89]
-#endif
-	t_exp exp_table[2][MAX_LEVEL];
-	uint32 max_level[2];
-	struct s_params {
-		uint16 str, agi, vit, int_, dex, luk;
-	} max_param;
+	std::vector<uint32> base_hp, base_sp, base_ap; //Storage for the first calculation with hp/sp/ap factor and multiplicator
+	uint32 hp_factor, hp_multiplicator, sp_factor, max_weight_base;
+	std::vector<std::array<uint16,PARAM_MAX>> job_bonus;
+	std::vector<int16> aspd_base;
+	t_exp base_exp[MAX_LEVEL], job_exp[MAX_LEVEL];
+	uint16 max_base_level, max_job_level;
+	uint16 max_param[PARAM_MAX];
 	struct s_job_noenter_map {
 		uint32 zone;
 		uint8 group_lv;
 	} noenter_map;
 };
-extern struct s_job_info job_info[CLASS_COUNT];
+
+class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
+public:
+	JobDatabase() : TypesafeCachedYamlDatabase("JOB_STATS", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+	void loadingFinished();
+
+	// Extras
+	uint32 get_maxBaseLv(uint16 job_id);
+	uint32 get_maxJobLv(uint16 job_id);
+	t_exp get_baseExp(uint16 job_id, uint32 level);
+	t_exp get_jobExp(uint16 job_id, uint32 level);
+	int32 get_maxWeight(uint16 job_id);
+};
+
+extern JobDatabase job_db;
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
@@ -1022,17 +1080,7 @@ static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block 
 	return sd == NULL || (sd->state.workinprogress&progress) == progress;
 }
 
-/// Enum of Player's Parameter
-enum e_params {
-	PARAM_STR = 0,
-	PARAM_AGI,
-	PARAM_VIT,
-	PARAM_INT,
-	PARAM_DEX,
-	PARAM_LUK,
-	PARAM_MAX
-};
-short pc_maxparameter(struct map_session_data *sd, enum e_params param);
+uint16 pc_maxparameter(struct map_session_data *sd, e_params param);
 short pc_maxaspd(struct map_session_data *sd);
 
 /**
@@ -1070,7 +1118,11 @@ enum e_mado_type : uint16 {
 	  (class_) == JOB_REBELLION				|| (class_) == JOB_SUMMONER         || \
 	  (class_) == JOB_BABY_SUMMONER			|| \
 	( (class_) >= JOB_BABY_NINJA			&& (class_) <= JOB_BABY_REBELLION ) || \
-	( (class_) >= JOB_BABY_STAR_GLADIATOR2	&& (class_) <= JOB_BABY_STAR_EMPEROR2 ) \
+	( (class_) >= JOB_BABY_STAR_GLADIATOR2	&& (class_) <= JOB_BABY_STAR_EMPEROR2 ) || \
+	( (class_) >= JOB_DRAGON_KNIGHT			&& (class_) <= JOB_TROUVERE       ) || \
+	( (class_) >= JOB_WINDHAWK2				&& (class_) <= JOB_IMPERIAL_GUARD2 ) || \
+	( (class_) >= JOB_SKY_EMPEROR			&& (class_) <= JOB_SPIRIT_HANDLER ) || \
+	  (class_) == JOB_SKY_EMPEROR2 \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
@@ -1128,24 +1180,26 @@ public:
 
 extern AttendanceDatabase attendance_db;
 
-class PlayerStatPointDatabase : public YamlDatabase {
-private:
-	std::unordered_map<uint16, uint32> statpoint_table;
+struct s_statpoint_entry{
+	uint16 level;
+	uint32 statpoints;
+	uint32 traitpoints;
+};
 
+class PlayerStatPointDatabase : public TypesafeCachedYamlDatabase<uint16, s_statpoint_entry>{
 public:
-	PlayerStatPointDatabase() : YamlDatabase("STATPOINT_DB", 1) {
+	PlayerStatPointDatabase() : TypesafeCachedYamlDatabase("STATPOINT_DB", 2, 1) {
 
 	}
 
-	void clear(){
-		statpoint_table.clear();
-	}
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
 
 	uint32 pc_gets_status_point(uint16 level);
 	uint32 get_table_point(uint16 level);
+	uint32 pc_gets_trait_point(uint16 level);
+	uint32 get_trait_table_point(uint16 level);
 };
 
 extern PlayerStatPointDatabase statpoint_db;
@@ -1158,7 +1212,6 @@ enum e_summoner_power_type {
 };
 
 void pc_set_reg_load(bool val);
-int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
@@ -1190,6 +1243,7 @@ void pc_setinventorydata(struct map_session_data *sd);
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
+uint8 pc_checkskill_imperial_guard(struct map_session_data *sd, short flag);
 short pc_checkequip(struct map_session_data *sd,int pos,bool checkall=false);
 bool pc_checkequip2(struct map_session_data *sd, t_itemid nameid, int min, int max);
 
@@ -1200,7 +1254,7 @@ TIMER_FUNC(pc_global_expiration_timer);
 void pc_expire_check(struct map_session_data *sd);
 
 void pc_calc_skilltree(struct map_session_data *sd);
-int pc_calc_skilltree_normalize_job(struct map_session_data *sd);
+uint64 pc_calc_skilltree_normalize_job(struct map_session_data *sd);
 void pc_clean_skilltree(struct map_session_data *sd);
 
 #define pc_checkoverhp(sd) ((sd)->battle_status.hp == (sd)->battle_status.max_hp)
@@ -1298,6 +1352,12 @@ int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);
 bool pc_statusup(struct map_session_data*,int,int);
 int pc_statusup2(struct map_session_data*,int,int);
+int pc_getstat(map_session_data *sd, int type);
+int pc_setstat(struct map_session_data* sd, int type, int val);
+int pc_need_trait_point(struct map_session_data *, int, int);
+int pc_maxtraitparameterincrease(struct map_session_data*, int);
+bool pc_traitstatusup(struct map_session_data*, int, int);
+int pc_traitstatusup2(struct map_session_data*, int, int);
 void pc_skillup(struct map_session_data*,uint16 skill_id);
 int pc_allskillup(struct map_session_data*);
 int pc_resetlvl(struct map_session_data*,int type);
@@ -1318,11 +1378,11 @@ int pc_sub_skillatk_bonus(struct map_session_data *sd, uint16 skill_id);
 int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id);
 int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id);
 
-void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp);
+void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp, unsigned int ap);
 int pc_dead(struct map_session_data *sd,struct block_list *src);
-void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp);
+void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp, unsigned int ap = 0);
 bool pc_revive_item(struct map_session_data *sd);
-void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type);
+void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, unsigned int ap, int type);
 int pc_itemheal(struct map_session_data *sd, t_itemid itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
 bool pc_jobchange(struct map_session_data *sd, int job, char upper);
@@ -1385,19 +1445,38 @@ bool pc_setstand(struct map_session_data *sd, bool force);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
 bool pc_can_attack(struct map_session_data *sd, int target_id);
 
-int pc_jobid2mapid(unsigned short b_class);	// Skotlex
-int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
+uint64 pc_jobid2mapid(unsigned short b_class);	// Skotlex
+int pc_mapid2jobid(uint64 class_, int sex);	// Skotlex
 
 const char * job_name(int class_);
 
-struct skill_tree_entry {
-	uint16 skill_id, skill_lv;
+struct s_skill_tree_entry {
+	uint16 skill_id, max_lv;
 	uint32 baselv, joblv;
-	struct {
-		uint16 skill_id, skill_lv;
-	} need[MAX_PC_SKILL_REQUIRE];
-}; // Celest
-extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
+	std::unordered_map<uint16, uint16> need;	/// skill_id, skill_lv
+	bool exclude_inherit;	// exclude the skill from inherit when loading the table
+};
+
+struct s_skill_tree {
+	std::vector<uint16> inherit_job;
+	std::unordered_map<uint16, std::shared_ptr<s_skill_tree_entry>> skills;	/// skill_id, entry
+};
+
+class SkillTreeDatabase : public TypesafeYamlDatabase<uint16, s_skill_tree> {
+public:
+	SkillTreeDatabase() : TypesafeYamlDatabase("SKILL_TREE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	void loadingFinished();
+
+	// Additional
+	std::shared_ptr<s_skill_tree_entry> get_skill_data(int class_, uint16 skill_id);
+};
+
+extern SkillTreeDatabase skill_tree_db;
 
 struct sg_data {
 	short anger_id;
@@ -1419,6 +1498,10 @@ void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
 int pc_addsoulball(map_session_data *sd, int max);
 int pc_delsoulball(map_session_data *sd, int count, bool type);
+void pc_addservantball( struct map_session_data& sd, int count = 1 );
+void pc_delservantball( struct map_session_data& sd, int count = 1 );
+void pc_addabyssball( struct map_session_data& sd, int count = 1 );
+void pc_delabyssball( struct map_session_data& sd, int count = 1 );
 
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(uint32 char_id, int job);
