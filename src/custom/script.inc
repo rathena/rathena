@@ -24,7 +24,8 @@
 * itemlink2(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>);
 * @author [Cydh]
 **/
-BUILDIN_FUNC(itemlink) {
+BUILDIN_FUNC(itemlink)
+{
 	struct s_item_link itemldata;
 
 	memset(&itemldata, 0, sizeof(s_item_link));
@@ -62,7 +63,8 @@ BUILDIN_FUNC(itemlink) {
 * base62_encode(<number>);
 * @author [Cydh]
 **/
-BUILDIN_FUNC(base62_encode) {
+BUILDIN_FUNC(base62_encode)
+{
 	int num = script_getnum(st, 2);
 	if (num < 0) {
 		script_pushconststr(st,"");
@@ -81,7 +83,8 @@ BUILDIN_FUNC(base62_encode) {
 * base62_decode("<string>");
 * @author [Cydh]
 **/
-BUILDIN_FUNC(base62_decode) {
+BUILDIN_FUNC(base62_decode)
+{
 	script_pushint(st, base62_decode(script_getstr(st, 2)));
 	return SCRIPT_CMD_SUCCESS;
 }
