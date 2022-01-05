@@ -72764,9 +72764,9 @@ Body:
     Range: 5
     Slots: 3
     Jobs:
-      BardDancer: false
-      Hunter: false
-      Rogue: false
+      BardDancer: true
+      Hunter: true
+      Rogue: true
     Classes:
       All_Third: true
     Locations:
