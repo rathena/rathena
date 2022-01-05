@@ -57,6 +57,7 @@ Body:
       Def: true
       Mdef: true
     Flags:
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -80,7 +81,7 @@ Body:
       Mdef: true
     Opt1: Freeze
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -102,7 +103,7 @@ Body:
       NoAttack: true
     Opt1: Stun
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -122,7 +123,7 @@ Body:
       NoAttack: true
     Opt1: Sleep
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -143,7 +144,7 @@ Body:
     Opt2:
       Poison: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Overlap_Fail: true
@@ -161,7 +162,7 @@ Body:
     Opt2:
       Curse: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Overlap_Fail: true
     Fail:
@@ -176,7 +177,7 @@ Body:
     Opt2:
       Silence: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Casting: true
       Overlap_Fail: true
@@ -205,7 +206,7 @@ Body:
     Opt2:
       Blind: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Overlap_Fail: true
     Fail:
@@ -222,7 +223,7 @@ Body:
     Opt2:
       Bleeding: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       No_Save: true
       No_Clearance: true
@@ -239,7 +240,7 @@ Body:
     Opt2:
       Dpoison: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Overlap_Fail: true
     Fail:
@@ -305,7 +306,7 @@ Body:
     Options:
       Hide: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Changemap: true
@@ -327,7 +328,7 @@ Body:
     Options:
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Mapwarp: true
@@ -385,7 +386,7 @@ Body:
     Opt2:
       Angelus: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
 
   - Status: Blessing
     Icon: Blessing
@@ -407,7 +408,7 @@ Body:
     Opt2:
       SignumCrucis: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Debuff: true
 
   - Status: Increaseagi
@@ -703,7 +704,7 @@ Body:
     Options:
       Wedding: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Banishing_Buster: true
@@ -921,6 +922,7 @@ Body:
     Options:
       Sight: true
     Flags:
+      SendOption: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Save: true
@@ -937,6 +939,8 @@ Body:
     DurationLookup: AL_RUWACH
     Options:
       Ruwach: true
+    Flags:
+      SendOption: true
 
   - Status: Extremityfist
     DurationLookup: MO_EXTREMITYFIST
@@ -1285,7 +1289,7 @@ Body:
       ChaseWalk: true
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Changemap: true
@@ -1423,6 +1427,8 @@ Body:
       Debuff: true
     Options:
       Orcish: true
+    Flags:
+      SendOption: true
 
   - Status: Readystorm
     Icon: Stormkick_On
@@ -2162,7 +2168,7 @@ Body:
     Opt3:
       ExplosionSpirits: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       No_Rem_Ondead: true
       No_Clearbuff: true
       No_Dispell: true
@@ -2317,7 +2323,7 @@ Body:
     Options:
       Xmas: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Banishing_Buster: true
@@ -2367,6 +2373,7 @@ Body:
     Options:
       Flying: true
     Flags:
+      SendOption: true
       No_Rem_Ondead: true
     End:
       Spirit: true
@@ -2403,7 +2410,7 @@ Body:
     Opt3:
       OverThrust: true
     Flags:
-      Opt_Changeoption: true
+      NonPlayer: true
 
   - Status: Ska
     DurationLookup: SL_SKA
@@ -2415,7 +2422,7 @@ Body:
     Opt3:
       SteelBody: true
     Flags:
-      Opt_Changeoption: true
+      NonPlayer: true
 
   - Status: Earthscroll
     Icon: Earthscroll
@@ -2671,7 +2678,7 @@ Body:
     Options:
       Summer: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Clearbuff: true
@@ -3097,9 +3104,11 @@ Body:
   - Status: Burning
     Icon: Burnt
     DurationLookup: RK_DRAGONBREATH
+    CalcFlags:
+      Mdef: true
     Opt1: Burning
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Rem_On_Refresh: true
       Rem_On_Luxanima: true
       Boss_Resist: true
@@ -3109,8 +3118,6 @@ Body:
     Fail:
       Refresh: true
       Inspiration: true
-    CalcFlags:
-      Mdef: true
 
   - Status: Freezing
     Icon: Frostmisty
@@ -3339,7 +3346,7 @@ Body:
       NoCast: true
     Opt1: Imprison
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Set_Stand: true
       Stop_Walking: true
@@ -3492,7 +3499,7 @@ Body:
       Speed: true
     Flags:
       Display_Pc: true
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       Rem_On_Damaged: true
       No_Dispell: true
@@ -3599,16 +3606,16 @@ Body:
   - Status: Stealthfield
     Icon: Stealthfield
     DurationLookup: NC_STEALTHFIELD
+    CalcFlags:
+      Speed: true
     Flags:
       Display_Pc: true
-      Trigger_Ontouch_: true
+      OnTouch: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
       No_Save: true
       Stop_Attacking: true
-    CalcFlags:
-      Speed: true
 
   - Status: Stealthfield_Master
     Icon: Stealthfield_Master
@@ -3683,7 +3690,7 @@ Body:
     Options:
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       No_Save: true
       No_Dispell: true
@@ -4027,7 +4034,7 @@ Body:
     Flags:
       Bleffect: true
       Display_Pc: true
-      Opt_Changeoption: true
+      SendOption: true
       Rem_On_Refresh: true
       Rem_On_Luxanima: true
       Boss_Resist: true
@@ -4855,7 +4862,7 @@ Body:
       NoAttack: true
     Flags:
       Display_Pc: true
-      Trigger_Ontouch_: true
+      OnTouch: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -4886,7 +4893,7 @@ Body:
     Options:
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -5887,7 +5894,7 @@ Body:
     Options:
       Hanbok: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Clearbuff: true
@@ -5957,6 +5964,9 @@ Body:
       Nomove: true
     Flags:
       Stop_Attacking: true
+    Fail:
+      Devotion: true
+      Whiteimprison: true
     End:
       Poison: true
       Blind: true
@@ -6226,7 +6236,7 @@ Body:
     Options:
       Oktoberfest: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Dispell: true
@@ -6321,8 +6331,8 @@ Body:
     Options:
       Invisible: true
     Flags:
-      Opt_Changelook: true
-      Trigger_Ontouch_: true
+      UnitMove: true
+      OnTouch: true
       Stop_Attacking: true
 
   - Status: _Chaos
@@ -7107,6 +7117,8 @@ Body:
       Flee: true
     Flags:
       No_Rem_Ondead: true
+    Fail:
+      Grooming: true
     End:
       Stun: true
       Freeze: true
@@ -7136,6 +7148,8 @@ Body:
       Matk: true
     Flags:
       No_Rem_Ondead: true
+    Fail:
+      Chattering: true
 
   - Status: Doram_Walkspeed
     CalcFlags:
@@ -7175,7 +7189,7 @@ Body:
       Summer2: true
     Flags:
       Display_Pc: true
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Dispell: true
@@ -7400,6 +7414,7 @@ Body:
     Options:
       Cloak: true
     Flags:
+      OnTouch: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -7764,3 +7779,255 @@ Body:
     DurationLookup: NPC_HALLUCINATIONWALK
     CalcFlags:
       Flee: true
+
+  - Status: Packing_Envelope1
+
+  - Status: Packing_Envelope2
+
+  - Status: Packing_Envelope3
+
+  - Status: Packing_Envelope4
+
+  - Status: Packing_Envelope5
+
+  - Status: Packing_Envelope6
+
+  - Status: Packing_Envelope7
+
+  - Status: Packing_Envelope8
+
+  - Status: Packing_Envelope9
+
+  - Status: Packing_Envelope10
+
+  - Status: Soulattack
+
+  - Status: Wideweb
+
+  - Status: Burnt
+
+  - Status: Chill
+
+  - Status: Handicapstate_Deepblind
+
+  - Status: Handicapstate_Deepsilence
+
+  - Status: Handicapstate_Lassitude
+
+  - Status: Handicapstate_Frostbite
+
+  - Status: Handicapstate_Swooning
+
+  - Status: Handicapstate_Lightningstrike
+
+  - Status: Handicapstate_Crystallization
+
+  - Status: Handicapstate_Conflagration
+
+  - Status: Handicapstate_Misfortune
+
+  - Status: Handicapstate_Deadlypoison
+
+  - Status: Handicapstate_Depression
+
+  - Status: Handicapstate_Holyflame
+
+  - Status: Servantweapon
+
+  - Status: Servant_Sign
+
+  - Status: Chargingpierce
+
+  - Status: Chargingpierce_Count
+
+  - Status: Dragonic_Aura
+
+  - Status: Vigor
+
+  - Status: Deadly_Defeasance
+
+  - Status: Climax_Des_Hu
+
+  - Status: Climax
+
+  - Status: Climax_Earth
+
+  - Status: Climax_Bloom
+
+  - Status: Climax_Cryimp
+
+  - Status: Windsign
+
+  - Status: Crescivebolt
+
+  - Status: Calamitygale
+
+  - Status: Mediale
+
+  - Status: A_Vita
+
+  - Status: A_Telum
+
+  - Status: Pre_Acies
+
+  - Status: Competentia
+
+  - Status: Religio
+
+  - Status: Benedictum
+
+  - Status: Axe_Stomp
+
+  - Status: A_Machine
+
+  - Status: D_Machine
+
+  - Status: Abr_Battle_Warior
+
+  - Status: Abr_Dual_Cannon
+
+  - Status: Abr_Mother_Net
+
+  - Status: Abr_Infinity
+
+  - Status: Shadow_Exceed
+
+  - Status: Dancing_Knife
+
+  - Status: Potent_Venom
+
+  - Status: Shadow_Scar
+
+  - Status: E_Slash_Count
+
+  - Status: Shadow_Weapon
+
+  - Status: Guard_Stance
+
+  - Status: Attack_Stance
+
+  - Status: Guardian_S
+
+  - Status: Rebound_S
+
+  - Status: Holy_S
+
+  - Status: Ultimate_S
+
+  - Status: Spear_Scar
+
+  - Status: Shield_Power
+
+  - Status: Spell_Enchanting
+
+  - Status: Summon_Elemental_Ardor
+
+  - Status: Summon_Elemental_Diluvio
+
+  - Status: Summon_Elemental_Procella
+
+  - Status: Summon_Elemental_Terremotus
+
+  - Status: Summon_Elemental_Serpens
+
+  - Status: Elemental_Veil
+
+  - Status: Mystic_Symphony
+
+  - Status: Kvasir_Sonata
+
+  - Status: Soundblend
+
+  - Status: Gef_Nocturn
+
+  - Status: Ain_Rhapsody
+
+  - Status: Musical_Interlude
+
+  - Status: Jawaii_Serenade
+
+  - Status: Pron_March
+
+  - Status: Roseblossom
+
+  - Status: Powerful_Faith
+
+  - Status: Sincere_Faith
+
+  - Status: Firm_Faith
+
+  - Status: Holy_Oil
+
+  - Status: First_Brand
+
+  - Status: Second_Brand
+
+  - Status: Second_Judge
+
+  - Status: Third_Exor_Flame
+
+  - Status: First_Faith_Power
+
+  - Status: Massive_F_Blaster
+
+  - Status: Protectshadowequip
+
+  - Status: Researchreport
+
+  - Status: Bo_Hell_Dusty
+
+  - Status: Bionic_Woodenwarrior
+
+  - Status: Bionic_Wooden_Fairy
+
+  - Status: Bionic_Creeper
+
+  - Status: Bionic_Helltree
+
+  - Status: Shadow_Strip
+
+  - Status: Abyss_Dagger
+
+  - Status: Abyssforceweapon
+
+  - Status: Abyss_Slayer
+
+  - Status: Flametechnic
+
+  - Status: Flametechnic_Option
+
+  - Status: Flamearmor
+
+  - Status: Flamearmor_Option
+
+  - Status: Cold_Force
+
+  - Status: Cold_Force_Option
+
+  - Status: Crystal_Armor
+
+  - Status: Crystal_Armor_Option
+
+  - Status: Grace_Breeze
+
+  - Status: Grace_Breeze_Option
+
+  - Status: Eyes_Of_Storm
+
+  - Status: Eyes_Of_Storm_Option
+
+  - Status: Earth_Care
+
+  - Status: Earth_Care_Option
+
+  - Status: Strong_Protection
+
+  - Status: Strong_Protection_Option
+
+  - Status: Deep_Poisoning
+
+  - Status: Deep_Poisoning_Option
+
+  - Status: Poison_Shield
+
+  - Status: Poison_Shield_Option

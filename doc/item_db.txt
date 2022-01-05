@@ -78,6 +78,10 @@ Kunai
 CannonBall
 ThrowWeapon
 
+For cards, the types are:
+Normal (default)
+Enchant
+
 ---------------------------------------
 
 Buy: Default buying price. When not specified, becomes double the sell price.
@@ -155,6 +159,7 @@ Baby        - Baby classes (no Third-Baby classes).
 Third       - Third classes (no Transcedent-Third or Third-Baby classes).
 Third_Upper - Transcedent-Third classes.
 Third_Baby  - Third-Baby classes.
+Fourth      - Fourth classes.
 All_Upper   - All Transcedent classes
 All_Baby    - All baby classes
 All_Third   - Applies to all Third classes.

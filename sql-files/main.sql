@@ -114,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `bonus_script` (
   `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
   `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   `icon` SMALLINT(3) NOT NULL DEFAULT '-1',
-  PRIMARY KEY (`char_id`, `type`)
+  KEY `char_id` (`char_id`)
 ) ENGINE=InnoDB;
 
 --
@@ -212,12 +212,21 @@ CREATE TABLE IF NOT EXISTS `char` (
   `int` smallint(4) unsigned NOT NULL default '0',
   `dex` smallint(4) unsigned NOT NULL default '0',
   `luk` smallint(4) unsigned NOT NULL default '0',
+  `pow` smallint(4) unsigned NOT NULL default '0',
+  `sta` smallint(4) unsigned NOT NULL default '0',
+  `wis` smallint(4) unsigned NOT NULL default '0',
+  `spl` smallint(4) unsigned NOT NULL default '0',
+  `con` smallint(4) unsigned NOT NULL default '0',
+  `crt` smallint(4) unsigned NOT NULL default '0',
   `max_hp` int(11) unsigned NOT NULL default '0',
   `hp` int(11) unsigned NOT NULL default '0',
   `max_sp` int(11) unsigned NOT NULL default '0',
   `sp` int(11) unsigned NOT NULL default '0',
+  `max_ap` int(11) unsigned NOT NULL default '0',
+  `ap` int(11) unsigned NOT NULL default '0',
   `status_point` int(11) unsigned NOT NULL default '0',
   `skill_point` int(11) unsigned NOT NULL default '0',
+  `trait_point` int(11) unsigned NOT NULL default '0',
   `option` int(11) NOT NULL default '0',
   `karma` tinyint(3) NOT NULL default '0',
   `manner` smallint(6) NOT NULL default '0',

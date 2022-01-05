@@ -63,7 +63,7 @@ typedef uint32 t_itemid;
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1450 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -102,8 +102,6 @@ typedef uint32 t_itemid;
 #define ATTRIBUTE_NORMAL 0
 #define MIN_STAR 0
 #define MAX_STAR 3
-
-#define MAX_STATUS_TYPE 5
 
 const t_itemid WEDDING_RING_M = 2634;
 const t_itemid WEDDING_RING_F = 2635;
@@ -167,12 +165,12 @@ const t_itemid WEDDING_RING_F = 2635;
 #define MAX_MERCSKILL 41
 
 //Elemental System
-#define MAX_ELEMENTALSKILL 42
+#define MAX_ELEMENTALSKILL 57
 #define EL_SKILLBASE 8401
-#define MAX_ELESKILLTREE 3
-#define MAX_ELEMENTAL_CLASS 12
-#define EL_CLASS_BASE 2114
-#define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
+
+//Automated Battle Robot System
+#define ABR_SKILLBASE 8601
+#define MAX_ABRSKILL 5
 
 //Achievement System
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
@@ -249,12 +247,6 @@ struct quest {
 	e_quest_state state;             ///< Current quest state
 };
 
-struct s_item_randomoption {
-	short id;
-	short value;
-	char param;
-};
-
 /// Achievement log entry
 struct achievement {
 	int achievement_id;                    ///< Achievement ID
@@ -263,6 +255,17 @@ struct achievement {
 	time_t rewarded;                       ///< Received reward?
 	int score;                             ///< Amount of points achievement is worth
 };
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( push, 1 )
+#endif
+
+struct s_item_randomoption {
+	short id;
+	short value;
+	char param;
+} __attribute__((packed));
 
 struct item {
 	int id;
@@ -279,7 +282,12 @@ struct item {
 	uint64 unique_id;
 	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
-};
+} __attribute__((packed));
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( pop )
+#endif
 
 //Equip position constants
 enum equip_pos : uint32 {
@@ -480,7 +488,7 @@ struct s_elemental {
 	int elemental_id;
 	uint32 char_id;
 	short class_;
-	enum e_mode mode;
+	int mode;
 	int hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
 	t_tick life_time;
@@ -512,8 +520,8 @@ struct mmo_charstatus {
 	int zeny;
 
 	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point;
-	int hp,max_hp,sp,max_sp;
+	unsigned int status_point,skill_point,trait_point;
+	int hp,max_hp,sp,max_sp,ap,max_ap;
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
@@ -534,6 +542,7 @@ struct mmo_charstatus {
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
 	unsigned short str,agi,vit,int_,dex,luk;
+	unsigned short pow,sta,wis,spl,con,crt;
 	unsigned char slot,sex;
 
 	uint32 mapip;
@@ -713,7 +722,7 @@ struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
-	char castle_event[EVENT_NAME_LENGTH];
+	char castle_event[NPC_NAME_LENGTH];
 	int guild_id;
 	int economy;
 	int defense;
@@ -989,6 +998,35 @@ enum e_job {
 	JOB_BABY_SOUL_REAPER,
 	JOB_STAR_EMPEROR2,
 	JOB_BABY_STAR_EMPEROR2,
+
+	JOB_DRAGON_KNIGHT = 4252,
+	JOB_MEISTER,
+	JOB_SHADOW_CROSS,
+	JOB_ARCH_MAGE,
+	JOB_CARDINAL,
+	JOB_WINDHAWK,
+	JOB_IMPERIAL_GUARD,
+	JOB_BIOLO,
+	JOB_ABYSS_CHASER,
+	JOB_ELEMENTAL_MASTER,
+	JOB_INQUISITOR,
+	JOB_TROUBADOUR,
+	JOB_TROUVERE,
+
+	JOB_WINDHAWK2 = 4278,
+	JOB_MEISTER2,
+	JOB_DRAGON_KNIGHT2,
+	JOB_IMPERIAL_GUARD2,
+
+	JOB_SKY_EMPEROR = 4302,
+	JOB_SOUL_ASCETIC,
+	JOB_SHINKIRO,
+	JOB_SHIRANUI,
+	JOB_NIGHT_WATCH,
+	JOB_HYPER_NOVICE,
+	JOB_SPIRIT_HANDLER,
+
+	JOB_SKY_EMPEROR2 = 4316,
 
 	JOB_MAX,
 };

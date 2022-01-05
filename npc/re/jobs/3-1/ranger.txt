@@ -1577,10 +1577,10 @@ OnTimer133000:
 
 -	script	Egg Bomb#0	-1,{
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	initnpctimer;
 	getmapxy(.@map$,.@x,.@y,BL_NPC);
 	monster "job3_rang02",.@x,.@y,"Egg Bomb",1047,1,strnpcinfo(0)+"::OnMyMobDead";
@@ -1594,7 +1594,7 @@ OnEnable:
 OnDisable:
 	stopnpctimer;
 	killmonster "job3_rang02",strnpcinfo(0)+"::OnMyMobDead";
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnMyMobDead:
 	set $@job_rang_point03, $@job_rang_point03+1;

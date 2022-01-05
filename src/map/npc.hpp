@@ -1203,8 +1203,34 @@ enum e_job_types
 	JT_4_4JOB_PHANTOMBOOK2,
 	JT_4_4JOB_PHANTOMBOOK3,
 	JT_4_VENDING_MACHINE2,
-
-	JT_4_STAR_BOX_SCORE = 10403,
+	JT_4_EP18_MARAM,
+	JT_4_EP18_MIRIAM,
+	JT_4_EP18_SUAD,
+	JT_4_EP18_IMRIL,
+	JT_4_EP18_MERCHANT,
+	JT_4_EP18_TAMARIN,
+	JT_4_EP18_DEW,
+	JT_4_EP18_MARK,
+	JT_4_EP18_ALF,
+	JT_4_EP18_SHULANG,
+	JT_4_EP18_BAGOT,
+	JT_4_EP18_DEMIFREYA,
+	JT_4_EP18_KAMIL,
+	JT_4_EP18_HAZAR,
+	JT_4_EP18_WAGON,
+	JT_4_EP18_PAPERS,
+	JT_4_EP18_HALFFLOWER,
+	JT_4_EP18_GW_OLD01,
+	JT_4_EP18_GW_OLD02,
+	JT_4_EP18_GW_MIDDLE01,
+	JT_4_EP18_GW_MIDDLE02,
+	JT_4_EP18_GW_MAN01,
+	JT_4_EP18_GW_MAN02,
+	JT_4_EP18_GW_WOMAN01,
+	JT_4_EP18_GW_WOMAN02,
+	JT_4_EP18_GW_CHILD01,
+	JT_4_EP18_GW_CHILD02,
+	JT_4_STAR_BOX_SCORE,
 	JT_4_STAR_BOX_POW1,
 	JT_4_STAR_BOX_POW2,
 	JT_4_STAR_BOX_STA1,
@@ -1229,6 +1255,69 @@ enum e_job_types
 	JT_4_STAR_BOX_TRAP1,
 	JT_4_STAR_BOX_TRAP2,
 	JT_4_STAR_BOX_MASTER,
+	JT_4_POINT_RED,
+	JT_4_POINT_BLUE,
+	JT_4_POINT_YELLOW,
+	JT_4_POINT_BLACK,
+	JT_4_POINT_WHITE,
+	JT_4_EXJOB_GERHOLD,
+	JT_4_EXJOB_NINJA,
+	JT_4_EXJOB_MASTER_J,
+	JT_4_EXJOB_MR_SEO,
+	JT_4_EXJOB_HAPPY_CLOUD,
+	JT_4_EXJOB_STAR,
+	JT_4_EXJOB_CHUL_HO,
+	JT_4_EXJOB_KI_SUL,
+	JT_4_EXJOB_HYUN_ROK,
+	JT_1_JOURNEY_STONE_D,
+	JT_1_JOURNEY_STONE_F,
+	JT_ROZ_MQ_SIGRUN,
+	JT_ROZ_MQ_SIGRUN_S,
+	JT_ROZ_MQ_HARACE01,
+	JT_ROZ_MQ_HARACE02,
+	JT_ROZ_MQ_SAHARIO,
+	JT_ROZ_MQ_SUPIGEL,
+	JT_ROZ_MQ_DEADSOLDIER,
+
+	JT_1_RAGFES_01 = 10476,
+	JT_1_RAGFES_01_M,
+	JT_4_RAGFES_02,
+	JT_4_RAGFES_02_M,
+	JT_4_RAGFES_03,
+	JT_4_RAGFES_03_M,
+	JT_4_RAGFES_04,
+	JT_4_RAGFES_04_M,
+	JT_4_RAGFES_05,
+	JT_4_RAGFES_05_M,
+	JT_4_RAGFES_06,
+	JT_4_RAGFES_06_M,
+	JT_4_RAGFES_07,
+	JT_4_RAGFES_07_M,
+	JT_4_RAGFES_08,
+	JT_4_RAGFES_08_M,
+	JT_4_RAGFES_09,
+	JT_4_RAGFES_09_M,
+	JT_4_RAGFES_10,
+	JT_4_RAGFES_10_M,
+	JT_4_RAGFES_11,
+	JT_4_RAGFES_11_M,
+	JT_4_RAGFES_12,
+	JT_4_RAGFES_12_M,
+	JT_4_RAGFES_13,
+	JT_4_RAGFES_13_M,
+	JT_4_RAGFES_14,
+	JT_4_RAGFES_14_M,
+	JT_4_RAGFES_15,
+	JT_4_RAGFES_15_M,
+	JT_4_RAGFES_16,
+	JT_4_RAGFES_16_M,
+	JT_4_EXJOB_NINJA2,
+
+	JT_ROZ_MQ_LUCIAN = 10510,
+	JT_ROZ_MQ_BRITIA,
+	JT_ROZ_MQ_ASSASIN01,
+	JT_STRANGE_B_SMITH1,
+	JT_STRONGER_B_SMTIH,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
@@ -1264,6 +1353,20 @@ enum npce_event : uint8 {
 	NPCE_KILLNPC,
 	NPCE_MAX
 };
+
+// Status of NPC view.
+enum e_npcv_status : uint8 {
+	NPCVIEW_DISABLE  = 0x01,
+	NPCVIEW_ENABLE   = 0x02,
+	NPCVIEW_HIDEOFF  = 0x04,
+	NPCVIEW_HIDEON   = 0x08,
+	NPCVIEW_CLOAKOFF = 0x10,
+	NPCVIEW_CLOAKON  = 0x20,
+
+	NPCVIEW_VISIBLE   = 0x16,
+	NPCVIEW_INVISIBLE = 0x29,
+	NPCVIEW_CLOAK     = 0x30,
+};
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
 int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack=true);
@@ -1289,8 +1392,8 @@ void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
 bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd);
-bool npc_enable_target(const char* name, uint32 char_id, int flag);
-#define npc_enable(name, flag) npc_enable_target(name, 0, flag)
+bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag);
+#define npc_enable(nd, flag) npc_enable_target(nd, 0, flag)
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
 void npc_setclass(struct npc_data* nd, short class_);
 struct npc_data* npc_name2id(const char* name);

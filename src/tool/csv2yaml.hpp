@@ -13,6 +13,20 @@
 #define MAX_SKILL_EQUIP_REQUIRE 10
 #define MAX_QUEST_DROPS 3
 #define MAX_MAP_PER_INSTANCE 255
+#define MAX_ARROW_RESULT		5 /// Max Arrow results/created
+#define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
+#define MAX_ITEMRATIO_MOBS 10
+//Update this max as necessary. 55 is the value needed for Super Baby currently
+//Raised to 105 since Expanded Super Baby needs it.
+#define MAX_SKILL_TREE 105
+#define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+
+struct s_skill_tree_entry_csv {
+	std::string skill_name;
+	uint16 skill_id, skill_lv, baselv, joblv;
+	std::map<std::string, uint16> need;	/// skill_id, skill_lv
+};
+std::map<uint16, std::vector<s_skill_tree_entry_csv>> skill_tree;	/// job id (for order), entry
 
 // Database to memory maps
 struct s_skill_unit_csv : s_skill_db {
@@ -68,6 +82,69 @@ struct s_random_opt_group_csv : s_random_opt_group {
 
 std::unordered_map<uint16, std::string> rand_opt_db;
 std::unordered_map<uint16, s_random_opt_group_csv> rand_opt_group;
+
+struct s_randomsummon_entry_csv2yaml {
+	std::string mob_name;
+	uint32 rate;
+};
+
+struct s_randomsummon_group_csv2yaml {
+	std::string group_name,
+		default_mob;
+	std::vector<std::shared_ptr<s_randomsummon_entry_csv2yaml>> list;
+};
+
+std::map<std::string, s_randomsummon_group_csv2yaml> summon_group;
+
+struct s_item_group_entry_csv2yaml {
+	std::string item_name;
+	uint16 duration,
+		amount;
+	uint32 rate;
+	bool isAnnounced,
+		GUID,
+		isNamed;
+	std::string bound;
+};
+
+struct s_item_group_db_csv2yaml {
+	std::string group_name;
+	std::map<uint16, std::vector<s_item_group_entry_csv2yaml>> item;
+};
+
+std::map<std::string, s_item_group_db_csv2yaml> item_group;
+
+struct s_mob_drop_csv : s_mob_drop {
+	std::string group_string;
+	bool mvp;
+};
+
+std::unordered_map<uint16, std::vector<uint32>> mob_race2;
+std::map<uint32, std::vector<s_mob_drop_csv>> mob_drop;
+
+struct s_job_param {
+	int32 str, agi, vit, int_, dex, luk;
+};
+
+std::unordered_map<int, std::vector<int>> job_db2;
+std::unordered_map<int, std::vector<int64>> job_hp, job_sp;
+std::unordered_map<int, s_job_param> job_param;
+std::unordered_map<int, int> exp_base_level, exp_job_level;
+
+struct s_elemental_skill_csv {
+	std::string skill_name,
+		mode_name;
+	uint16 lv;
+};
+
+std::unordered_map<uint16, std::vector<s_elemental_skill_csv>> elemental_skill_tree;
+
+struct s_mercenary_skill_csv {
+	std::string skill_name;
+	uint16 max_lv;
+};
+
+std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
 
 static std::map<std::string, int> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
@@ -346,8 +423,31 @@ void init_random_option_constants() {
 	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM", 215);
 	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN", 216);
 	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM", 217);
+	export_constant2("RDMOPT_REFLECT_DAMAGE_PERCENT", 218);
 	export_constant2("RDMOPT_MELEE_ATTACK_DAMAGE_TARGET", 219);
 	export_constant2("RDMOPT_MELEE_ATTACK_DAMAGE_USER", 220);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_NOTHING", 221);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_WATER", 222);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_GROUND", 223);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_FIRE", 224);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_WIND", 225);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_POISON", 226);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_SAINT", 227);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_DARKNESS", 228);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_TELEKINESIS", 229);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_UNDEAD", 230);
+	export_constant2("RDMOPT_ADDSKILLMDAMAGE_ALL", 231);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_NOTHING", 232);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_UNDEAD", 233);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_ANIMAL", 234);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_PLANT", 235);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_INSECT", 236);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_FISHS", 237);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_DEVIL", 238);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_HUMAN", 239);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_ANGEL", 240);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_DRAGON", 241);
+	export_constant2("RDMOPT_ADDEXPPERCENT_KILLRACE_ALL", 242);
 
 	#undef export_constant2
 }
@@ -380,5 +480,33 @@ static bool itemdb_read_randomopt_group(char *str[], int columns, int current);
 static bool itemdb_randomopt_group_yaml(void);
 static bool pc_readdb_levelpenalty(char* fields[], int columns, int current);
 static bool pc_levelpenalty_yaml();
+static bool mob_parse_row_chatdb(char* fields[], int columns, int current);
+static bool read_homunculus_expdb(const char* file);
+static bool mob_readdb_group(char* str[], int columns, int current);
+static bool mob_readdb_group_yaml(void);
+static bool skill_parse_row_createarrowdb(char* fields[], int columns, int current);
+static bool pc_read_statsdb(const char* file);
+static bool guild_read_castledb(char* str[], int columns, int current);
+static bool exp_guild_parse_row(char* split[], int column, int current);
+static bool itemdb_read_group(char* fields[], int columns, int current);
+static bool itemdb_read_group_yaml(void);
+static bool mob_readdb_itemratio(char* fields[], int columns, int current);
+static bool status_readdb_attrfix(const char* file);
+static bool read_constdb(char* fields[], int columns, int current);
+static bool mob_readdb_race2(char *fields[], int columns, int current);
+static bool mob_readdb_drop(char *str[], int columns, int current);
+static bool mob_readdb_sub(char *fields[], int columns, int current);
+static bool pc_readdb_job2(char *fields[], int columns, int current);
+static bool pc_readdb_job_param(char *fields[], int columns, int current);
+static bool pc_readdb_job_exp(char *fields[], int columns, int current);
+static bool pc_readdb_job_exp_sub(char *fields[], int columns, int current);
+static bool pc_readdb_job_basehpsp(char *fields[], int columns, int current);
+static bool pc_readdb_job1(char *fields[], int columns, int current);
+static bool read_elemental_skilldb(char* str[], int columns, int current);
+static bool read_elementaldb(char* str[], int columns, int current);
+static bool mercenary_read_skilldb(char* str[], int columns, int current);
+static bool mercenary_readdb(char* str[], int columns, int current);
+static bool pc_readdb_skilltree(char* str[], int columns, int current);
+static bool pc_readdb_skilltree_yaml(void);
 
 #endif /* CSV2YAML_HPP */

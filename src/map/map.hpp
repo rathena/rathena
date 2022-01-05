@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <stdarg.h>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -51,7 +52,7 @@ void map_msg_reload(void);
 #define NATURAL_HEAL_INTERVAL 500
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
-#define MAX_LEVEL 200
+#define MAX_LEVEL 250
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -68,11 +69,13 @@ void map_msg_reload(void);
 #define JOBL_UPPER 0x1000 //4096
 #define JOBL_BABY 0x2000  //8192
 #define JOBL_THIRD 0x4000 //16384
+#define JOBL_FOURTH 0x8000 //32768
 
 //for filtering and quick checking.
 #define MAPID_BASEMASK 0x00ff
 #define MAPID_UPPERMASK 0x0fff
 #define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK)
+#define MAPID_FOURTHMASK (JOBL_FOURTH|MAPID_THIRDMASK|JOBL_UPPER)
 
 //First Jobs
 //Note the oddity of the novice:
@@ -219,6 +222,26 @@ enum e_mapid : uint64{
 	MAPID_BABY_GENETIC,
 	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
+//4-1 Jobs
+	MAPID_HYPER_NOVICE = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_SUPER_NOVICE,
+	MAPID_DRAGON_KNIGHT,
+	MAPID_ARCH_MAGE,
+	MAPID_WINDHAWK,
+	MAPID_CARDINAL,
+	MAPID_MEISTER,
+	MAPID_SHADOW_CROSS,
+	MAPID_SKY_EMPEROR,
+	MAPID_NIGHT_WATCH = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_REBELLION,
+	MAPID_SHINKIRO_SHIRANUI,
+	MAPID_SPIRIT_HANDLER = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|JOBL_2_1|MAPID_SUMMONER,
+//4-2 Jobs
+	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_CRUSADER,
+	MAPID_ELEMENTAL_MASTER,
+	MAPID_TROUBADOURTROUVERE,
+	MAPID_INQUISITOR,
+	MAPID_BIOLO,
+	MAPID_ABYSS_CHASER,
+	MAPID_SOUL_ASCETIC,
 // Additional constants
 	MAPID_ALL = UINT64_MAX
 };
@@ -344,6 +367,19 @@ enum e_element : int8{
 	ELE_RANDOM,
 };
 
+static std::unordered_map<std::string, e_element> um_eleid2elename {
+	{ "Neutral", ELE_NEUTRAL },
+	{ "Water", ELE_WATER },
+	{ "Earth", ELE_EARTH },
+	{ "Fire", ELE_FIRE },
+	{ "Wind", ELE_WIND },
+	{ "Poison", ELE_POISON },
+	{ "Holy", ELE_HOLY },
+	{ "Dark", ELE_DARK },
+	{ "Ghost", ELE_GHOST },
+	{ "Undead", ELE_UNDEAD },
+};
+
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
 
 /**
@@ -367,6 +403,9 @@ enum mob_ai {
 	AI_LEGION,
 	AI_FAW,
 	AI_GUILD,
+	AI_WAVEMODE,
+	AI_ABR,
+	AI_BIONIC,
 	AI_MAX
 };
 
@@ -448,6 +487,12 @@ enum _sp {
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
 
+	// 4th jobs
+	SP_POW=219, SP_STA, SP_WIS, SP_SPL, SP_CON, SP_CRT,	// 219-224
+	SP_PATK, SP_SMATK, SP_RES, SP_MRES, SP_HPLUS, SP_CRATE,	// 225-230
+	SP_TRAITPOINT, SP_AP, SP_MAXAP,	// 231-233
+	SP_UPOW=247, SP_USTA, SP_UWIS, SP_USPL, SP_UCON, SP_UCRT,	// 247-252
+
 	// original 1000-
 	SP_ATTACKRANGE=1000,	SP_ATKELE,SP_DEFELE,	// 1000-1002
 	SP_CASTRATE, SP_MAXHPRATE, SP_MAXSPRATE, SP_SPRATE, // 1003-1006
@@ -475,6 +520,7 @@ enum _sp {
 	SP_DELAYRATE,SP_HP_DRAIN_VALUE_RACE, SP_SP_DRAIN_VALUE_RACE, // 1083-1085
 	SP_IGNORE_MDEF_RACE_RATE,SP_IGNORE_DEF_RACE_RATE,SP_SKILL_HEAL2,SP_ADDEFF_ONSKILL, //1086-1089
 	SP_ADD_HEAL_RATE,SP_ADD_HEAL2_RATE, SP_EQUIP_ATK, //1090-1092
+	SP_PATK_RATE,SP_SMATK_RATE,SP_RES_RATE,SP_MRES_RATE,SP_HPLUS_RATE,SP_CRATE_RATE,SP_ALL_TRAIT_STATS,SP_MAXAPRATE,// 1093-1100
 
 	SP_RESTART_FULL_RECOVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
 	SP_NO_CASTCANCEL2,SP_NO_MISC_DAMAGE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
@@ -501,7 +547,8 @@ enum _sp {
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2092
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
-	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN // 2098-2099
+	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
+	SP_WEAPON_SUBSIZE // 2102
 };
 
 enum _look {
@@ -595,6 +642,8 @@ enum e_mapflag : int16 {
 	MF_PRIVATEAIRSHIP_SOURCE,
 	MF_PRIVATEAIRSHIP_DESTINATION,
 	MF_SKILL_DURATION,
+	MF_NOCASHSHOP,
+	MF_NORODEX,
 	MF_MAX
 };
 
@@ -780,6 +829,8 @@ extern int minsave_interval;
 extern int16 save_settings;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
+
+extern uint32 start_status_points;
 
 // Agit Flags
 extern bool agit_flag;
@@ -1047,9 +1098,9 @@ struct map_session_data * map_id2sd(int id);
 struct mob_data * map_id2md(int id);
 struct npc_data * map_id2nd(int id);
 struct homun_data* map_id2hd(int id);
-struct mercenary_data* map_id2mc(int id);
+struct s_mercenary_data* map_id2mc(int id);
 struct pet_data* map_id2pd(int id);
-struct elemental_data* map_id2ed(int id);
+struct s_elemental_data* map_id2ed(int id);
 struct chat_data* map_id2cd(int id);
 struct block_list * map_id2bl(int id);
 bool map_blid_exists( int id );
@@ -1155,8 +1206,8 @@ typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
-typedef struct mercenary_data   TBL_MER;
-typedef struct elemental_data	TBL_ELEM;
+typedef struct s_mercenary_data   TBL_MER;
+typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )

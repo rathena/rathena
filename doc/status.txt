@@ -213,9 +213,11 @@ Flags: Various status flags for specific status change events.
 	Boss_Resist         - Cannot be applied to Boss Monster (Mob has mode MD_STATUS_IMMUNE).
 	Mvp_Resist          - Cannot be applied to MvP (Mob has mode MD_MVP).
 
-	Opt_Changeoption    - Sends the STATE_CHANGE packet. For statuses that have Opt1, Opt2, or Opt3 values.
-	Opt_Changelook      - Sends the STATE_CHANGE packet. For statuses that have body/look changes through 'Option' flags (only for players).
-	Trigger_Ontouch_    - Triggers OnTouch_ NPC events. For statuses that have an invisible effect.
+	SendOption          - Sends the STATE_CHANGE packet. For statuses that have Opt1, Opt2, or Opt3 values.
+	SendLook            - Sends the STATE_CHANGE packet. For statuses that have body/look changes through 'Option' flags (only for players).
+	OnTouch             - Triggers OnTouch_ NPC events. For statuses that have an invisible effect.
+	UnitMove            - Triggers when the player has moved location and invokes the skill unit on place.
+	NonPlayer           - Sends the NPC_SHOWEFST_UPDATE packet. Used to send effects to NPC/monsters.
 
 	Require_Weapon		- Status requires a weapon to be equipped.
 	Require_Shield		- Status requires a shield to be equipped.

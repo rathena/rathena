@@ -24,13 +24,11 @@ enum e_battle_check_target : uint32;
 struct map_session_data;
 struct homun_data;
 struct skill_unit;
-struct skill_unit_group;
+struct s_skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_PRODUCE_DB	282 /// Max Produce DB
+#define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
-#define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
-#define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
@@ -93,7 +91,6 @@ enum e_skill_inf2 : uint8 {
 	INF2_ALLOWWHENHIDDEN, // Skill that can be use in hiding
 	INF2_ALLOWWHENPERFORMING, // Skill that can be use while in dancing state
 	INF2_TARGETEMPERIUM, // Skill that could hit emperium
-	INF2_IGNORESTASIS, // Skill that can ignore SC_STASIS
 	INF2_IGNOREKAGEHUMI, // Skill blocked by kagehumi
 	INF2_ALTERRANGEVULTURE, // Skill range affected by AC_VULTURE
 	INF2_ALTERRANGESNAKEEYE, // Skill range affected by GS_SNAKEEYE
@@ -128,6 +125,8 @@ enum e_skill_require : uint16 {
 	SKILL_REQ_SPIRITSPHERECOST = 0x400,
 	SKILL_REQ_ITEMCOST = 0x800,
 	SKILL_REQ_EQUIPMENT = 0x1000,
+	SKILL_REQ_APCOST = 0x2000,
+	SKILL_REQ_APRATECOST = 0x4000,
 };
 
 /// Constants for skill cast near NPC.
@@ -200,8 +199,10 @@ struct s_skill_condition {
 	int32 hp;								///< HP cost
 	int32 mhp;								///< Max HP to trigger
 	int32 sp;								/// SP cost
+	int32 ap;								/// AP cost
 	int32 hp_rate;							/// HP cost (%)
 	int32 sp_rate;							/// SP cost (%)
+	int32 ap_rate;							/// AP cost (%)
 	int32 zeny;								/// Zeny cost
 	int32 weapon;							/// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
 	int32 ammo;								/// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
@@ -219,8 +220,10 @@ struct s_skill_require {
 	int32 hp[MAX_SKILL_LEVEL];				///< HP cost
 	int32 mhp[MAX_SKILL_LEVEL];				///< Max HP to trigger
 	int32 sp[MAX_SKILL_LEVEL];				/// SP cost
+	int32 ap[MAX_SKILL_LEVEL];				/// AP cost
 	int32 hp_rate[MAX_SKILL_LEVEL];			/// HP cost (%)
 	int32 sp_rate[MAX_SKILL_LEVEL];			/// SP cost (%)
+	int32 ap_rate[MAX_SKILL_LEVEL];			/// AP cost (%)
 	int32 zeny[MAX_SKILL_LEVEL];			/// Zeny cost
 	int32 weapon;							/// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
 	int32 ammo;								/// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
@@ -231,6 +234,7 @@ struct s_skill_require {
 	int32 amount[MAX_SKILL_ITEM_REQUIRE];	/// Amount of item
 	std::vector<t_itemid> eqItem;				/// List of equipped item
 	std::vector<sc_type> status;			/// List of Status required (SC)
+	bool itemid_level_dependent;			/// If the ItemCost is skill level dependent or not.
 };
 
 /// Skill Copyable structure.
@@ -270,6 +274,8 @@ struct s_skill_db {
 	// skill_nocast_db.txt
 	uint32 nocast;								///< Skill cannot be casted at this zone
 
+	int32 giveap[MAX_SKILL_LEVEL];				///< AP Given On Use
+
 	uint16 unit_id;								///< Unit ID. @see enum e_skill_unit_id
 	uint16 unit_id2;							///< Alternate unit ID. @see enum e_skill_unit_id
 	int32 unit_layout_type[MAX_SKILL_LEVEL];	///< Layout type. -1 is special layout, others are square with lenght*width: (val*2+1)^2
@@ -304,7 +310,7 @@ struct s_skill_db {
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {
 public:
-	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 2, 1) {
+	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 3, 1) {
 
 	}
 
@@ -344,9 +350,19 @@ struct skill_timerskill {
 	int flag;
 };
 
-#define MAX_SKILLUNITGROUP 25 /// Maximum skill unit group (for same skill each source)
+/// Skill unit
+struct skill_unit {
+	struct block_list bl;
+	std::shared_ptr<s_skill_unit_group> group; /// Skill group reference
+	t_tick limit;
+	int val1, val2;
+	short range;
+	bool alive;
+	bool hidden;
+};
+
 /// Skill unit group
-struct skill_unit_group {
+struct s_skill_unit_group {
 	int src_id; /// Caster ID/RID, if player is account_id
 	int party_id; /// Party ID
 	int guild_id; /// Guild ID
@@ -373,17 +389,11 @@ struct skill_unit_group {
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
 		unsigned guildaura : 1; // Guild Aura
 	} state;
-};
 
-/// Skill unit
-struct skill_unit {
-	struct block_list bl;
-	struct skill_unit_group *group; /// Skill group reference
-	t_tick limit;
-	int val1, val2;
-	short range;
-	unsigned alive : 1;
-	unsigned hidden : 1;
+	~s_skill_unit_group() {
+		if (this->unit)
+			map_freeblock(&this->unit->bl); // schedules deallocation of whole array (HACK)
+	}
 };
 
 #define MAX_SKILLUNITGROUPTICKSET 25
@@ -434,10 +444,20 @@ extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 /// Creating database arrow
 struct s_skill_arrow_db {
 	t_itemid nameid; /// Material ID
-	t_itemid cre_id[MAX_ARROW_RESULT]; /// Arrow created
-	uint16 cre_amount[MAX_ARROW_RESULT]; /// Amount of each arrow created
+	std::unordered_map<t_itemid, uint16> created; /// Arrow created
 };
-extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
+
+class SkillArrowDatabase : public TypesafeYamlDatabase<t_itemid, s_skill_arrow_db> {
+public:
+	SkillArrowDatabase() : TypesafeYamlDatabase("CREATE_ARROW_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern SkillArrowDatabase skill_arrow_db;
 
 /// Abracadabra database
 struct s_skill_abra_db {
@@ -506,6 +526,7 @@ int skill_get_castcancel( uint16 skill_id );
 int skill_get_maxcount( uint16 skill_id ,uint16 skill_lv );
 int skill_get_blewcount( uint16 skill_id ,uint16 skill_lv );
 int skill_get_cooldown( uint16 skill_id, uint16 skill_lv );
+int skill_get_giveap( uint16 skill_id, uint16 skill_lv );
 int skill_get_unit_target( uint16 skill_id );
 #define skill_get_nk(skill_id, nk) skill_get_nk_(skill_id, { nk })
 bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk);
@@ -518,9 +539,11 @@ int skill_get_unit_range(uint16 skill_id, uint16 skill_lv);
 int skill_get_hp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_mhp( uint16 skill_id ,uint16 skill_lv );
 int skill_get_sp( uint16 skill_id ,uint16 skill_lv );
+int skill_get_ap( uint16 skill_id, uint16 skill_lv );
 int skill_get_status_count( uint16 skill_id );
 int skill_get_hp_rate( uint16 skill_id, uint16 skill_lv );
 int skill_get_sp_rate( uint16 skill_id, uint16 skill_lv );
+int skill_get_ap_rate( uint16 skill_id, uint16 skill_lv );
 int skill_get_zeny( uint16 skill_id ,uint16 skill_lv );
 int skill_get_weapontype( uint16 skill_id );
 int skill_get_ammotype( uint16 skill_id );
@@ -550,15 +573,15 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
 int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // Skills unit
-struct skill_unit_group *skill_id2group(int group_id);
-struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag);
-struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2, bool hidden);
+std::shared_ptr<s_skill_unit_group> skill_id2group(int group_id);
+std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag);
+struct skill_unit *skill_initunit (std::shared_ptr<s_skill_unit_group> group, int idx, int x, int y, int val1, int val2, bool hidden);
 int skill_delunit(struct skill_unit *unit);
-struct skill_unit_group *skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, t_tick limit, int interval);
-int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int line, const char* func);
+std::shared_ptr<s_skill_unit_group> skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, t_tick limit, int interval);
+int skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char* file, int line, const char* func);
 #define skill_delunitgroup(group) skill_delunitgroup_(group,__FILE__,__LINE__,__func__)
 void skill_clear_unitgroup(struct block_list *src);
-int skill_clear_group(struct block_list *bl, int flag);
+int skill_clear_group(block_list *bl, uint8 flag);
 void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_tick tick);
 int64 skill_unit_ondamaged(struct skill_unit *unit,int64 damage);
 
@@ -585,7 +608,7 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
 int skill_unit_move(struct block_list *bl,t_tick tick,int flag);
-void skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
+void skill_unit_move_unit_group( std::shared_ptr<s_skill_unit_group> group, int16 m,int16 dx,int16 dy);
 void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 
 int skill_sit(struct map_session_data *sd, bool sitting);
@@ -602,7 +625,7 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 void skill_enchant_elemental_end(struct block_list *bl, int type);
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
 bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv);
-bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
+bool skill_isNotOk_mercenary(uint16 skill_id, s_mercenary_data *md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
@@ -622,7 +645,7 @@ int skill_blockpc_get(struct map_session_data *sd, int skillid);
 int skill_blockpc_clear(struct map_session_data *sd);
 TIMER_FUNC(skill_blockpc_end);
 int skill_blockhomun_start (struct homun_data*,uint16 skill_id,int);
-int skill_blockmerc_start (struct mercenary_data*,uint16 skill_id,int);
+int skill_blockmerc_start (s_mercenary_data*,uint16 skill_id,int);
 
 
 // (Epoque:) To-do: replace this macro with some sort of skill tree check (rather than hard-coded skill names)
@@ -1972,6 +1995,213 @@ enum e_skill {
 	NV_TRANSCENDENCE,
 	WL_READING_SB_READING,
 
+	DK_SERVANTWEAPON = 5201,
+	DK_SERVANTWEAPON_ATK,
+	DK_SERVANT_W_SIGN,
+	DK_SERVANT_W_PHANTOM,
+	DK_SERVANT_W_DEMOL,
+	DK_CHARGINGPIERCE,
+	DK_TWOHANDDEF,
+	DK_HACKANDSLASHER,
+	DK_HACKANDSLASHER_ATK,
+	DK_DRAGONIC_AURA,
+	DK_MADNESS_CRUSHER,
+	DK_VIGOR,
+	DK_STORMSLASH,
+
+	AG_DEADLY_PROJECTION,
+	AG_DESTRUCTIVE_HURRICANE,
+	AG_RAIN_OF_CRYSTAL,
+	AG_MYSTERY_ILLUSION,
+	AG_VIOLENT_QUAKE,
+	AG_VIOLENT_QUAKE_ATK,
+	AG_SOUL_VC_STRIKE,
+	AG_STRANTUM_TREMOR,
+	AG_ALL_BLOOM,
+	AG_ALL_BLOOM_ATK,
+	AG_ALL_BLOOM_ATK2,
+	AG_CRYSTAL_IMPACT,
+	AG_CRYSTAL_IMPACT_ATK,
+	AG_TORNADO_STORM,
+	AG_TWOHANDSTAFF,
+	AG_FLORAL_FLARE_ROAD,
+	AG_ASTRAL_STRIKE,
+	AG_ASTRAL_STRIKE_ATK,
+	AG_CLIMAX,
+	AG_ROCK_DOWN,
+	AG_STORM_CANNON,
+	AG_CRIMSON_ARROW,
+	AG_CRIMSON_ARROW_ATK,
+	AG_FROZEN_SLASH,
+
+	IQ_POWERFUL_FAITH,
+	IQ_FIRM_FAITH,
+	IQ_WILL_OF_FAITH,
+	IQ_OLEUM_SANCTUM,
+	IQ_SINCERE_FAITH,
+	IQ_MASSIVE_F_BLASTER,
+	IQ_EXPOSION_BLASTER,
+	IQ_FIRST_BRAND,
+	IQ_FIRST_FAITH_POWER,
+	IQ_JUDGE,
+	IQ_SECOND_FLAME,
+	IQ_SECOND_FAITH,
+	IQ_SECOND_JUDGEMENT,
+	IQ_THIRD_PUNISH,
+	IQ_THIRD_FLAME_BOMB,
+	IQ_THIRD_CONSECRATION,
+	IQ_THIRD_EXOR_FLAME,
+
+	IG_GUARD_STANCE,
+	IG_GUARDIAN_SHIELD,
+	IG_REBOUND_SHIELD,
+	IG_SHIELD_MASTERY,
+	IG_SPEAR_SWORD_M,
+	IG_ATTACK_STANCE,
+	IG_ULTIMATE_SACRIFICE,
+	IG_HOLY_SHIELD,
+	IG_GRAND_JUDGEMENT,
+	IG_JUDGEMENT_CROSS,
+	IG_SHIELD_SHOOTING,
+	IG_OVERSLASH,
+	IG_CROSS_RAIN,
+
+	CD_REPARATIO,
+	CD_MEDIALE_VOTUM,
+	CD_MACE_BOOK_M,
+	CD_ARGUTUS_VITA,
+	CD_ARGUTUS_TELUM,
+	CD_ARBITRIUM,
+	CD_ARBITRIUM_ATK,
+	CD_PRESENS_ACIES,
+	CD_FIDUS_ANIMUS,
+	CD_EFFLIGO,
+	CD_COMPETENTIA,
+	CD_PNEUMATICUS_PROCELLA,
+	CD_DILECTIO_HEAL,
+	CD_RELIGIO,
+	CD_BENEDICTUM,
+	CD_PETITIO,
+	CD_FRAMEN,
+
+	SHC_SHADOW_EXCEED,
+	SHC_DANCING_KNIFE,
+	SHC_SAVAGE_IMPACT,
+	SHC_SHADOW_SENSE,
+	SHC_ETERNAL_SLASH,
+	SHC_POTENT_VENOM,
+	SHC_SHADOW_STAB,
+	SHC_IMPACT_CRATER,
+	SHC_ENCHANTING_SHADOW,
+	SHC_FATAL_SHADOW_CROW,
+
+	MT_AXE_STOMP,
+	MT_RUSH_QUAKE,
+	MT_M_MACHINE,
+	MT_A_MACHINE,
+	MT_D_MACHINE,
+	MT_TWOAXEDEF,
+	MT_ABR_M,
+	MT_SUMMON_ABR_BATTLE_WARIOR,
+	MT_SUMMON_ABR_DUAL_CANNON,
+	MT_SUMMON_ABR_MOTHER_NET,
+	MT_SUMMON_ABR_INFINITY,
+
+	AG_DESTRUCTIVE_HURRICANE_CLIMAX,
+	BO_ACIDIFIED_ZONE_WATER_ATK,
+	BO_ACIDIFIED_ZONE_GROUND_ATK,
+	BO_ACIDIFIED_ZONE_WIND_ATK,
+	BO_ACIDIFIED_ZONE_FIRE_ATK,
+
+	ABC_DAGGER_AND_BOW_M,
+	ABC_MAGIC_SWORD_M,
+	ABC_STRIP_SHADOW,
+	ABC_ABYSS_DAGGER,
+	ABC_UNLUCKY_RUSH,
+	ABC_CHAIN_REACTION_SHOT,
+	ABC_FROM_THE_ABYSS,
+	ABC_ABYSS_SLAYER,
+	ABC_ABYSS_STRIKE,
+	ABC_DEFT_STAB,
+	ABC_ABYSS_SQUARE,
+	ABC_FRENZY_SHOT,
+
+	WH_ADVANCED_TRAP,
+	WH_WIND_SIGN,
+	WH_NATUREFRIENDLY,
+	WH_HAWKRUSH,
+	WH_HAWK_M,
+	WH_CALAMITYGALE,
+	WH_HAWKBOOMERANG,
+	WH_GALESTORM,
+	WH_DEEPBLINDTRAP,
+	WH_SOLIDTRAP,
+	WH_SWIFTTRAP,
+	WH_CRESCIVE_BOLT,
+	WH_FLAMETRAP,
+
+	BO_BIONIC_PHARMACY,
+	BO_BIONICS_M,
+	BO_THE_WHOLE_PROTECTION,
+	BO_ADVANCE_PROTECTION,
+	BO_ACIDIFIED_ZONE_WATER,
+	BO_ACIDIFIED_ZONE_GROUND,
+	BO_ACIDIFIED_ZONE_WIND,
+	BO_ACIDIFIED_ZONE_FIRE,
+	BO_WOODENWARRIOR,
+	BO_WOODEN_FAIRY,
+	BO_CREEPER,
+	BO_RESEARCHREPORT,
+	BO_HELLTREE,
+
+	TR_STAGE_MANNER,
+	TR_RETROSPECTION,
+	TR_MYSTIC_SYMPHONY,
+	TR_KVASIR_SONATA,
+	TR_ROSEBLOSSOM,
+	TR_ROSEBLOSSOM_ATK,
+	TR_RHYTHMSHOOTING,
+	TR_METALIC_FURY,
+	TR_SOUNDBLEND,
+	TR_GEF_NOCTURN,
+	TR_ROKI_CAPRICCIO,
+	TR_AIN_RHAPSODY,
+	TR_MUSICAL_INTERLUDE,
+	TR_JAWAII_SERENADE,
+	TR_NIPELHEIM_REQUIEM,
+	TR_PRON_MARCH,
+
+	EM_MAGIC_BOOK_M,
+	EM_SPELL_ENCHANTING,
+	EM_ACTIVITY_BURN,
+	EM_INCREASING_ACTIVITY,
+	EM_DIAMOND_STORM,
+	EM_LIGHTNING_LAND,
+	EM_VENOM_SWAMP,
+	EM_CONFLAGRATION,
+	EM_TERRA_DRIVE,
+	EM_ELEMENTAL_SPIRIT_M,
+	EM_SUMMON_ELEMENTAL_ARDOR,
+	EM_SUMMON_ELEMENTAL_DILUVIO,
+	EM_SUMMON_ELEMENTAL_PROCELLA,
+	EM_SUMMON_ELEMENTAL_TERREMOTUS,
+	EM_SUMMON_ELEMENTAL_SERPENS,
+	EM_ELEMENTAL_BUSTER,
+	EM_ELEMENTAL_VEIL,
+
+	ABC_CHAIN_REACTION_SHOT_ATK,
+	ABC_FROM_THE_ABYSS_ATK,
+	BO_WOODEN_THROWROCK,
+	BO_WOODEN_ATTACK,
+	BO_HELL_HOWLING,
+	BO_HELL_DUSTY,
+	BO_FAIRY_DUSTY,
+	EM_ELEMENTAL_BUSTER_FIRE,
+	EM_ELEMENTAL_BUSTER_WATER,
+	EM_ELEMENTAL_BUSTER_WIND,
+	EM_ELEMENTAL_BUSTER_GROUND,
+	EM_ELEMENTAL_BUSTER_POISON,
+
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
 	HLIF_BRAIN,
@@ -2100,6 +2330,27 @@ enum e_skill {
 	EL_ROCK_CRUSHER,
 	EL_ROCK_CRUSHER_ATK,
 	EL_STONE_RAIN,
+	EM_EL_FLAMETECHNIC,
+	EM_EL_FLAMEARMOR,
+	EM_EL_FLAMEROCK,
+	EM_EL_COLD_FORCE,
+	EM_EL_CRYSTAL_ARMOR,
+	EM_EL_AGE_OF_ICE,
+	EM_EL_GRACE_BREEZE,
+	EM_EL_EYES_OF_STORM,
+	EM_EL_STORM_WIND,
+	EM_EL_EARTH_CARE,
+	EM_EL_STRONG_PROTECTION,
+	EM_EL_AVALANCHE,
+	EM_EL_DEEP_POISONING,
+	EM_EL_POISON_SHIELD,
+	EM_EL_DEADLY_POISON,
+
+	ABR_BATTLE_BUSTER = 8601,
+	ABR_DUAL_CANNON_FIRE,
+	ABR_NET_REPAIR,
+	ABR_NET_SUPPORT,
+	ABR_INFINITY_BUSTER,
 };
 
 /// The client view ids for land skills.
@@ -2245,7 +2496,34 @@ enum e_skill_unit_id : uint16 {
 	UNT_CATNIPPOWDER,
 	UNT_NYANGGRASS,
 
-	UNT_CREATINGSTAR,
+	UNT_CREATINGSTAR,// Should be GROUNDDRIFT_NEUTRAL
+	UNT_DUMMY_0,// CREATINGSTAR
+
+	UNT_RAIN_OF_CRYSTAL,
+	UNT_MYSTERY_ILLUSION,
+	UNT_UNKNOWN_1,// No idea. Makes a old style plant appear for a second.
+	UNT_STRANTUM_TREMOR,
+	UNT_VIOLENT_QUAKE,
+	UNT_ALL_BLOOM,
+	UNT_TORNADO_STORM,
+	UNT_FLORAL_FLARE_ROAD,
+	UNT_ASTRAL_STRIKE,
+	UNT_CROSS_RAIN,
+	UNT_PNEUMATICUS_PROCELLA,
+	UNT_ABYSS_SQUARE,
+	UNT_ACIDIFIED_ZONE_WATER,
+	UNT_ACIDIFIED_ZONE_GROUND,
+	UNT_ACIDIFIED_ZONE_WIND,
+	UNT_ACIDIFIED_ZONE_FIRE,
+	UNT_LIGHTNING_LAND,
+	UNT_VENOM_SWAMP,
+	UNT_CONFLAGRATION,
+
+	// Skill units outside the normal unit range.
+	UNT_DEEPBLINDTRAP = 20852,
+	UNT_SOLIDTRAP,
+	UNT_SWIFTTRAP,
+	UNT_FLAMETRAP,
 
 	/**
 	 * Guild Auras
@@ -2363,6 +2641,7 @@ int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
 #define SKILL_CHK_HOMUN(skill_id) ( (skill_id) >= HM_SKILLBASE && (skill_id) < HM_SKILLBASE+MAX_HOMUNSKILL )
 #define SKILL_CHK_MERC(skill_id)  ( (skill_id) >= MC_SKILLBASE && (skill_id) < MC_SKILLBASE+MAX_MERCSKILL )
 #define SKILL_CHK_ELEM(skill_id)  ( (skill_id) >= EL_SKILLBASE && (skill_id) < EL_SKILLBASE+MAX_ELEMENTALSKILL )
+#define SKILL_CHK_ABR(skill_id)   ( (skill_id) >= ABR_SKILLBASE && (skill_id) < ABR_SKILLBASE+MAX_ABRSKILL )
 #define SKILL_CHK_GUILD(skill_id) ( (skill_id) >= GD_SKILLBASE && (skill_id) < GD_SKILLBASE+MAX_GUILDSKILL )
 
 #endif /* SKILL_HPP */

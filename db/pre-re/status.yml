@@ -57,6 +57,7 @@ Body:
       Def: true
       Mdef: true
     Flags:
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -80,7 +81,7 @@ Body:
       Mdef: true
     Opt1: Freeze
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -102,7 +103,7 @@ Body:
       NoAttack: true
     Opt1: Stun
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -122,7 +123,7 @@ Body:
       NoAttack: true
     Opt1: Sleep
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Stop_Casting: true
@@ -143,7 +144,7 @@ Body:
     Opt2:
       Poison: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Attacking: true
       Overlap_Fail: true
@@ -161,7 +162,7 @@ Body:
     Opt2:
       Curse: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Overlap_Fail: true
     Fail:
@@ -176,7 +177,7 @@ Body:
     Opt2:
       Silence: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Stop_Casting: true
       Overlap_Fail: true
@@ -205,7 +206,7 @@ Body:
     Opt2:
       Blind: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Overlap_Fail: true
     Fail:
@@ -222,7 +223,7 @@ Body:
     Opt2:
       Bleeding: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       No_Save: true
       No_Clearance: true
@@ -239,7 +240,7 @@ Body:
     Opt2:
       Dpoison: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Boss_Resist: true
       Overlap_Fail: true
     Fail:
@@ -303,7 +304,7 @@ Body:
     Options:
       Hide: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Changemap: true
@@ -325,7 +326,7 @@ Body:
     Options:
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Mapwarp: true
@@ -382,7 +383,7 @@ Body:
     Opt2:
       Angelus: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
 
   - Status: Blessing
     Icon: Blessing
@@ -403,7 +404,7 @@ Body:
     Opt2:
       SignumCrucis: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       Debuff: true
 
   - Status: Increaseagi
@@ -697,7 +698,7 @@ Body:
     Options:
       Wedding: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Banishing_Buster: true
@@ -915,6 +916,7 @@ Body:
     Options:
       Sight: true
     Flags:
+      SendOption: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Save: true
@@ -931,6 +933,8 @@ Body:
     DurationLookup: AL_RUWACH
     Options:
       Ruwach: true
+    Flags:
+      SendOption: true
 
   - Status: Extremityfist
     DurationLookup: MO_EXTREMITYFIST
@@ -1276,7 +1280,7 @@ Body:
       ChaseWalk: true
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       Stop_Attacking: true
       Rem_On_Damaged: true
       Rem_On_Changemap: true
@@ -1414,6 +1418,8 @@ Body:
       Debuff: true
     Options:
       Orcish: true
+    Flags:
+      SendOption: true
 
   - Status: Readystorm
     Icon: Stormkick_On
@@ -2054,7 +2060,7 @@ Body:
     Opt3:
       ExplosionSpirits: true
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       No_Rem_Ondead: true
       No_Clearbuff: true
       No_Dispell: true
@@ -2209,7 +2215,7 @@ Body:
     Options:
       Xmas: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Banishing_Buster: true
@@ -2259,6 +2265,7 @@ Body:
     Options:
       Flying: true
     Flags:
+      SendOption: true
       No_Rem_Ondead: true
     End:
       Spirit: true
@@ -2295,7 +2302,7 @@ Body:
     Opt3:
       OverThrust: true
     Flags:
-      Opt_Changeoption: true
+      NonPlayer: true
 
   - Status: Ska
     DurationLookup: SL_SKA
@@ -2307,7 +2314,7 @@ Body:
     Opt3:
       SteelBody: true
     Flags:
-      Opt_Changeoption: true
+      NonPlayer: true
 
   - Status: Earthscroll
     Icon: Earthscroll
@@ -2565,7 +2572,7 @@ Body:
     Options:
       Summer: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
       No_Clearbuff: true
