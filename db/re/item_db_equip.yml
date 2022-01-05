@@ -6063,6 +6063,11 @@ Body:
     SubType: 1hAxe
     Attack: 150
     Range: 1
+    Jobs:
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Swordman: true
     Classes:
       All_Third: true
     Locations:
@@ -72759,7 +72764,6 @@ Body:
     Range: 5
     Slots: 3
     Jobs:
-      All: true
       BardDancer: false
       Hunter: false
       Rogue: false
