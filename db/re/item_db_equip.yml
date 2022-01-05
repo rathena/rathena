@@ -55052,7 +55052,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     Refineable: true
-    view: 1347
+    View: 1347
     Script: |
       .@r = getrefine();
       bonus bInt,3;
