@@ -1151,7 +1151,6 @@ struct s_item_link {
 	} flag;
 };
 std::string createItemLink(struct s_item_link *data);
-std::string itemdb_getItemLink(struct item *item);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);

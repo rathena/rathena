@@ -3086,22 +3086,6 @@ std::string createItemLink(struct s_item_link *data)
 	return itemstr;
 }
 
-/*
-* Generate <ITEML> string from item data
-* @param item
-* @return <ITEML> string
-*/
-std::string itemdb_getItemLink(struct item *item)
-{
-	struct s_item_link itemldata;
-	memcpy(&itemldata.item, item, sizeof(struct item));
-
-	itemldata.flag.cards = 1;
-	itemldata.flag.options = 1;
-	
-	return createItemLink(&itemldata);
-}
-
 /**
 * Finalizing Item DB
 */

@@ -9,7 +9,3 @@
  **/
 
 //BUILDIN_DEF(example,""),
-BUILDIN_DEF(itemlink, "i?????"),
-BUILDIN_DEF2(itemlink, "itemlink2", "iiiiiirrr"),
-BUILDIN_DEF(base62_encode, "i"),
-BUILDIN_DEF(base62_decode, "s"),
