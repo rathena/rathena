@@ -2099,7 +2099,7 @@ int map_quit(struct map_session_data *sd) {
 			std::bitset<SCF_MAX> &flag = it.second->flag;
 
 			//Status that are not saved
-			if (flag[SCF_NO_SAVE]) {
+			if (flag[SCF_NOSAVE]) {
 				status_change_end(&sd->bl,status,INVALID_TIMER);
 				continue;
 			}

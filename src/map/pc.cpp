@@ -6272,7 +6272,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			if (sc->cant.warp)
 				return SETPOS_MAPINDEX; // You may not get out!
 
-			status_db.removeByStatusFlag(&sd->bl, { SCF_REM_ON_MAPWARP });
+			status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONMAPWARP });
 
 			if (sd->sc.data[SC_KNOWLEDGE]) {
 				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
@@ -6655,14 +6655,14 @@ static void pc_checkallowskill(struct map_session_data *sd)
 		sc_type status = it.second->type;
 		std::bitset<SCF_MAX> flag = it.second->flag;
 
-		if (flag[SCF_REQUIRE_WEAPON]) { // Skills requiring specific weapon types
+		if (flag[SCF_REQUIREWEAPON]) { // Skills requiring specific weapon types
 			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
 				continue;
 			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
 
-		if (flag[SCF_REQUIRE_SHIELD]) { // Skills requiring a shield
+		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
 			if (sd->sc.data[status] && sd->status.shield <= 0)
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}

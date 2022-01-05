@@ -8670,48 +8670,42 @@
 
 	/* status change flags */
 	export_constant(SCF_BLEFFECT);
-	export_constant(SCF_DISPLAY_PC);
-	export_constant(SCF_NO_CLEARBUFF);
-	export_constant(SCF_NO_REM_ONDEAD);
-	export_constant(SCF_NO_DISPELL);
-	export_constant(SCF_NO_CLEARANCE);
-	export_constant(SCF_NO_BANISHING_BUSTER);
-	export_constant(SCF_NO_SAVE);
-	export_constant(SCF_REM_ON_DAMAGED);
-	export_constant(SCF_REM_ON_REFRESH);
-	export_constant(SCF_REM_ON_LUXANIMA);
-	export_constant(SCF_STOP_ATTACKING);
-	export_constant(SCF_STOP_CASTING);
-	export_constant(SCF_STOP_WALKING);
-	export_constant(SCF_BOSS_RESIST);
-	export_constant(SCF_MVP_RESIST);
-	export_constant(SCF_SET_STAND);
-	export_constant(SCF_FAILED_MADO);
+	export_constant(SCF_DISPLAYPC);
+	export_constant(SCF_NOCLEARBUFF);
+	export_constant(SCF_NOREMOVEONDEAD);
+	export_constant(SCF_NODISPELL);
+	export_constant(SCF_NOCLEARANCE);
+	export_constant(SCF_NOBANISHINGBUSTER);
+	export_constant(SCF_NOSAVE);
+	export_constant(SCF_REMOVEONDAMAGED);
+	export_constant(SCF_REMOVEONREFRESH);
+	export_constant(SCF_REMOVEONLUXANIMA);
+	export_constant(SCF_STOPATTACKING);
+	export_constant(SCF_STOPCASTING);
+	export_constant(SCF_STOPWALKING);
+	export_constant(SCF_BOSSRESIST);
+	export_constant(SCF_MVPRESIST);
+	export_constant(SCF_SETSTAND);
+	export_constant(SCF_FAILEDMADO);
 	export_constant(SCF_DEBUFF);
-	export_constant(SCF_REM_ON_CHANGEMAP);
-	export_constant(SCF_REM_ON_MAPWARP);
-	export_constant(SCF_REM_CHEM_PROTECT);
-	export_constant(SCF_OVERLAP_FAIL);
-	export_constant(SCF_OPT_CHANGEOPTION);
-	export_constant(SCF_OPT_CHANGELOOK);
-	export_constant(SCF_TRIGGER_ONTOUCH_);
-	export_constant(SCF_DISPLAY_NPC);
-	export_constant(SCF_REQUIRE_WEAPON);
-	export_constant(SCF_REQUIRE_SHIELD);
+	export_constant(SCF_REMOVEONCHANGEMAP);
+	export_constant(SCF_REMOVEONMAPWARP);
+	export_constant(SCF_REMOVECHEMICALPROTECT);
+	export_constant(SCF_OVERLAPFAIL);
+	export_constant(SCF_SENDOPTION);
+	export_constant(SCF_ONTOUCH);
+	export_constant(SCF_UNITMOVE);
+	export_constant(SCF_NONPLAYER);
+	export_constant(SCF_SENDLOOK);
+	export_constant(SCF_DISPLAYNPC);
+	export_constant(SCF_REQUIREWEAPON);
+	export_constant(SCF_REQUIRESHIELD);
 	export_constant(SCF_MOBLOSETARGET);
-	export_constant(SCF_REM_ELEMENTALOPTION);
+	export_constant(SCF_REMOVEELEMENTALOPTION);
 	export_constant(SCF_SUPERNOVICEANGEL);
 	export_constant(SCF_TAEKWONANGEL);
 	export_constant(SCF_MADOCANCEL);
 	export_constant(SCF_MADOENDCANCEL);
-
-	/* option change flags */
-	export_constant(OCF_NONE);
-	export_constant2("OCF_SENDOPTION", OCF_SEND_OPTION);
-	export_constant(OCF_ONTOUCH);
-	export_constant2("OCF_UNITMOVE", OCF_UNIT_MOVE);
-	export_constant2("OCF_NONPLAYER", OCF_NON_PLAYER);
-	export_constant2("OCF_SENDLOOK", OCF_SEND_LOOK);
 
 	#undef export_constant
 	#undef export_constant2

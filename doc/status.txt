@@ -179,51 +179,51 @@ Options: Special option/client effect state when status is active.
 
 Flags: Various status flags for specific status change events.
 
-	None                - No special flag. (Default)
-	BlEffect            - Status should have BL_SCEFFECT as relevant effect, must have an EFST (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
-	Display_Pc          - Displays status effect when player logs in.
-	Dislpay_Npc         - Displays status effect on a NPC.
-	Debuff              - Status is considered a debuff. Used in combination with 'battle_config.debuff_on_logout'.
-	Set_Stand           - Sets player to standing state.
-	Overlap_Fail        - The status will fail to activate if the status is already active.
-	Failed_Mado         - Cannot be applied if Madogear is active.
-	MadoCancel          - Cancels the status when mounting Madogear.
-	MadoEndCancel       - Cancels the status when unmounting Madogear.
-	MobLoseTarget       - When active on a monster it will lose the target.
+	None                  - No special flag. (Default)
+	BlEffect              - Status should have BL_SCEFFECT as relevant effect, must have an EFST (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
+	DisplayPc             - Displays status effect when player logs in.
+	DislpayNpc            - Displays status effect on a NPC.
+	Debuff                - Status is considered a debuff. Used in combination with 'battle_config.debuff_on_logout'.
+	SetStand              - Sets player to standing state.
+	OverlapFail           - The status will fail to activate if the status is already active.
+	FailedMado            - Cannot be applied if Madogear is active.
+	MadoCancel            - Cancels the status when mounting Madogear.
+	MadoEndCancel         - Cancels the status when unmounting Madogear.
+	MobLoseTarget         - When active on a monster it will lose the target.
 
-	No_Clearbuff        - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
-	No_Rem_Ondead       - Cannot be removed when a player dies.
-	No_Dispell          - Cannot be removed by SA_DISPELL.
-	No_Clearance        - Cannot be removed by AB_CLEARANCE.
-	No_Banishing_Buster - Cannot be removed by RL_BANISHING_BUSTER.
-	No_Save             - Won't be saved when player logs out.
+	NoClearbuff           - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
+	NoRemoveOnDead        - Cannot be removed when a player dies.
+	NoDispell             - Cannot be removed by SA_DISPELL.
+	NoClearance           - Cannot be removed by AB_CLEARANCE.
+	NoBanishingBuster     - Cannot be removed by RL_BANISHING_BUSTER.
+	NoSave                - Won't be saved when player logs out.
 
-	Rem_On_Damaged      - Removed when receiving damage.
-	Rem_On_Refresh      - Removed by RK_REFRESH.
-	Rem_On_Luxanima     - Removed by RK_LUXANIMA.
-	Rem_On_Mapwarp      - Removed when warping to another map.
-	Rem_On_Changemap    - Removed when changing map-server.
-	Rem_Chem_Protect    - Removed by AM_CP_ARMOR/AM_CP_HELM/AM_CP_SHIELD/AM_CP_WEAPON.
-	Rem_ElementalOption - Removed by elemental changing modes/quitting/EL_TIDAL_WEAPON/EL_WATER_SCREEN on the master and elemental.
+	RemoveOnDamaged       - Removed when receiving damage.
+	RemoveOnRefresh       - Removed by RK_REFRESH.
+	RemoveOnLuxAnima      - Removed by RK_LUXANIMA.
+	RemoveOnMapWarp       - Removed when warping to another map.
+	RemoveOnChangeMap     - Removed when changing map-server.
+	RemoveChemicalProtect - Removed by AM_CP_ARMOR/AM_CP_HELM/AM_CP_SHIELD/AM_CP_WEAPON.
+	RemoveElementalOption - Removed by elemental changing modes/quitting/EL_TIDAL_WEAPON/EL_WATER_SCREEN on the master and elemental.
 
-	Stop_Attacking      - Makes the unit stop attacking.
-	Stop_Casting        - Makes the unit stop casting skills.
-	Stop_Walking        - Makes the unit stop walking.
+	StopAttacking         - Makes the unit stop attacking.
+	StopCasting           - Makes the unit stop casting skills.
+	StopWalking           - Makes the unit stop walking.
 
-	Boss_Resist         - Cannot be applied to Boss Monster (Mob has mode MD_STATUS_IMMUNE).
-	Mvp_Resist          - Cannot be applied to MvP (Mob has mode MD_MVP).
+	BossResist            - Cannot be applied to Boss Monster (Mob has mode MD_STATUS_IMMUNE).
+	MvpResist             - Cannot be applied to MvP (Mob has mode MD_MVP).
 
-	SendOption          - Sends the STATE_CHANGE packet. For statuses that have Opt1, Opt2, or Opt3 values.
-	SendLook            - Sends the STATE_CHANGE packet. For statuses that have body/look changes through 'Option' flags (only for players).
-	OnTouch             - Triggers OnTouch_ NPC events. For statuses that have an invisible effect.
-	UnitMove            - Triggers when the player has moved location and invokes the skill unit on place.
-	NonPlayer           - Sends the NPC_SHOWEFST_UPDATE packet. Used to send effects to NPC/monsters.
+	SendOption            - Sends the STATE_CHANGE packet. For statuses that have Opt1, Opt2, or Opt3 values.
+	SendLook              - Sends the STATE_CHANGE packet. For statuses that have body/look changes through 'Option' flags (only for players).
+	OnTouch               - Triggers OnTouch_ NPC events. For statuses that have an invisible effect.
+	UnitMove              - Triggers when the player has moved location and invokes the skill unit on place.
+	NonPlayer             - Sends the NPC_SHOWEFST_UPDATE packet. Used to send effects to NPC/monsters.
 
-	Require_Weapon		- Status requires a weapon to be equipped.
-	Require_Shield		- Status requires a shield to be equipped.
+	RequireWeapon         - Status requires a weapon to be equipped.
+	RequireShield         - Status requires a shield to be equipped.
 
-	SuperNoviceAngel    - Status that is given from Super Novice Angel.
-	TaekwonAngel        - Status that is given from Taekwon Angel.
+	SuperNoviceAngel      - Status that is given from Super Novice Angel.
+	TaekwonAngel          - Status that is given from Taekwon Angel.
 
 ---------------------------------------
 
@@ -255,13 +255,13 @@ Notes:
 
 By default, statuses are 'Buff' (those that aren't explicitely given the 'Debuff' flag) which are removable by 'map_quit' in combination with 'battle_config.debuff_on_logout'.
 
-The No_Clearbuff flag prevents some permanent and non-permanent statuses that cannot be removed by 'status_change_clear', 'status_change_clear_buffs', 'map_quit', or other
+The NoClearbuff flag prevents some permanent and non-permanent statuses that cannot be removed by 'status_change_clear', 'status_change_clear_buffs', 'map_quit', or other
 clearing means.
 The function 'status_change_clear_buffs' is called by CG_TAROTCARD, RK_REFRESH, RK_LUXANIMA, CG_HERMODE, PA_GOSPEL, and LG_INSPIRATION.
 
 CG_TAROTCARD and CG_HERMODE only remove buffs while PA_GOSPEL and LG_INSPIRATION remove buffs and debuffs.
 
-RK_REFRESH and RK_LUXANIMA only remove statuses that have the Rem_On_Rerfresh or Rem_On_Luxanima flag. Works just like SA_DISPELL, AB_CLEARANCE, RL_BANISHING_BUSTER that has the
+RK_REFRESH and RK_LUXANIMA only remove statuses that have the Rem_On_Rerfresh or RemoveOnLuxAnima flag. Works just like SA_DISPELL, AB_CLEARANCE, RL_BANISHING_BUSTER that has the
 effect to remove buffs or debuffs.
 
 ---- Removed comments from source ----

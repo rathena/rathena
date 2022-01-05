@@ -296,7 +296,7 @@ int elemental_clean_single_effect(s_elemental_data *ed, uint16 skill_id) {
 
 	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	if (status && status->flag[SCF_REM_ELEMENTALOPTION]) {
+	if (status && status->flag[SCF_REMOVEELEMENTALOPTION]) {
 		status_change_end(battle_get_master(&ed->bl), type, INVALID_TIMER); // Master
 		status_change_end(&ed->bl, type, INVALID_TIMER); // Elemental Spirit
 	}
@@ -307,8 +307,8 @@ int elemental_clean_single_effect(s_elemental_data *ed, uint16 skill_id) {
 int elemental_clean_effect(s_elemental_data *ed) {
 	nullpo_ret(ed);
 
-	status_db.removeByStatusFlag(&ed->bl, { SCF_REM_ELEMENTALOPTION });
-	status_db.removeByStatusFlag(battle_get_master(&ed->bl), { SCF_REM_ELEMENTALOPTION });
+	status_db.removeByStatusFlag(&ed->bl, { SCF_REMOVEELEMENTALOPTION });
+	status_db.removeByStatusFlag(battle_get_master(&ed->bl), { SCF_REMOVEELEMENTALOPTION });
 
 	return 1;
 }

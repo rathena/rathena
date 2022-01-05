@@ -11929,7 +11929,7 @@ BUILDIN_FUNC(sc_end)
 		if (!sc)
 			return SCRIPT_CMD_SUCCESS;
 
-		if (status_db.hasSCF(sc, SCF_NO_CLEARBUFF))
+		if (status_db.hasSCF(sc, SCF_NOCLEARBUFF))
 			return SCRIPT_CMD_SUCCESS;
 
 		struct status_change_entry *sce = sc ? sc->data[type] : NULL;

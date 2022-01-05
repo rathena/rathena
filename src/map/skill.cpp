@@ -2052,7 +2052,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				if (!tsc->data[status])
 					continue;
 				
-				if (it.second->flag[SCF_NO_BANISHING_BUSTER])
+				if (it.second->flag[SCF_NOBANISHINGBUSTER])
 					continue;
 
 				switch (status) {
@@ -9202,7 +9202,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (!tsc->data[status])
 					continue;
 
-				if (it.second->flag[SCF_NO_DISPELL])
+				if (it.second->flag[SCF_NODISPELL])
 					continue;
 				switch (status) {
 					// bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
@@ -10696,7 +10696,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (!tsc->data[status])
 					continue;
 
-				if (it.second->flag[SCF_NO_CLEARANCE])
+				if (it.second->flag[SCF_NOCLEARANCE])
 					continue;
 
 				switch (status) {
