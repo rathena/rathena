@@ -131544,6 +131544,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1927
+  - Id: 31818
+    AegisName: C_TopPlayer_TW
+    Name: Costume Top Player    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1930
   - Id: 31819
     AegisName: Costume_Dullahan_Mask
     Name: C Dullahan Mask
