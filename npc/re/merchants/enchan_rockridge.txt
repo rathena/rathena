@@ -1,11 +1,22 @@
 //===== rAthena Script =======================================
 //= Rock Ridge npcs
-//===== Additional Comments: =================================
+//===== Description: =========================================
+//= [Official Conversion]
+//= Enchant npcs on Rockridge.
+//===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
 
 // enchant npc
 har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
+	if (checkweight(1201,1) == 0) {
+		mes "I'm carrying too many types of items. I should lighten my bag first.";
+		close;
+	}
+	if ((MaxWeight - Weight) < 10000) {
+		mes "I'm overweight. I'd better lighten my bag first.";
+		close;
+	}
 	disable_items;
 	mes "[Contraband Processor]";
 	mes "Have you tried to buy some contraband items with Rock Ridge Coins? I can make your contraband items better.";
@@ -108,54 +119,54 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 			else
 				.@enchant_slot = 1;
 			if (.@refine >= 9) {
-				setarray .@enchant_list[0],
-					4701,	// Strength2
-					4711,	// Inteligence2
-					4721,	// Dexterity2
-					4731,	// Agility2
-					4892,	// Mdef5
-					29026,	// Def20
-					4940,	// Cricital3
-					4762,	// Evasion6
-					4832,	// Expert_Archer1
-					4833,	// Expert_Archer2
-					4834,	// Expert_Archer3
-					4835,	// Expert_Archer4
-					4863,	// Fatal1
-					4864,	// Fatal2
-					4865,	// Fatal3
-					4866,	// Fatal4
-					4812,	// Spell4
-					4813,	// Spell3
-					4814,	// Spell2
-					4815,	// Spell1
-					4869,	// Attack_Delay_1
-					4872;	// Attack_Delay_2
+				.@r = rand(1,215);
+				if (.@r < 16) .@card[.@enchant_slot] = getiteminfo("Agility2", ITEMINFO_ID);
+				else if (.@r < 31) .@card[.@enchant_slot] = getiteminfo("Dexterity2", ITEMINFO_ID);
+				else if (.@r < 46) .@card[.@enchant_slot] = getiteminfo("Strength2", ITEMINFO_ID);
+				else if (.@r < 61) .@card[.@enchant_slot] = getiteminfo("Inteligence2", ITEMINFO_ID);
+				else if (.@r < 76) .@card[.@enchant_slot] = getiteminfo("Def20", ITEMINFO_ID);
+				else if (.@r < 91) .@card[.@enchant_slot] = getiteminfo("Mdef5", ITEMINFO_ID);
+				else if (.@r < 106) .@card[.@enchant_slot] = getiteminfo("Critical3", ITEMINFO_ID);
+				else if (.@r < 121) .@card[.@enchant_slot] = getiteminfo("Evasion6", ITEMINFO_ID);
+				else if (.@r < 135) .@card[.@enchant_slot] = getiteminfo("Expert_Archer1", ITEMINFO_ID);
+				else if (.@r < 149) .@card[.@enchant_slot] = getiteminfo("Fatal1", ITEMINFO_ID);
+				else if (.@r < 163) .@card[.@enchant_slot] = getiteminfo("Spell1", ITEMINFO_ID);
+				else if (.@r < 173) .@card[.@enchant_slot] = getiteminfo("Expert_Archer2", ITEMINFO_ID);
+				else if (.@r < 183) .@card[.@enchant_slot] = getiteminfo("Fatal2", ITEMINFO_ID);
+				else if (.@r < 193) .@card[.@enchant_slot] = getiteminfo("Spell2", ITEMINFO_ID);
+				else if (.@r < 197) .@card[.@enchant_slot] = getiteminfo("Expert_Archer3", ITEMINFO_ID);
+				else if (.@r < 201) .@card[.@enchant_slot] = getiteminfo("Fatal3", ITEMINFO_ID);
+				else if (.@r < 205) .@card[.@enchant_slot] = getiteminfo("Spell3", ITEMINFO_ID);
+				else if (.@r < 209) .@card[.@enchant_slot] = getiteminfo("Attack_Delay_1", ITEMINFO_ID);
+				else if (.@r < 210) .@card[.@enchant_slot] = getiteminfo("Expert_Archer4", ITEMINFO_ID);
+				else if (.@r < 211) .@card[.@enchant_slot] = getiteminfo("Fatal4", ITEMINFO_ID);
+				else if (.@r < 212) .@card[.@enchant_slot] = getiteminfo("Spell4", ITEMINFO_ID);
+				else .@card[.@enchant_slot] = getiteminfo("Attack_Delay_2", ITEMINFO_ID);
 			}
 			else {
-				setarray .@enchant_list[0],
-					4700,	// Strength1
-					4701,	// Strength2
-					4710,	// Inteligence1
-					4711,	// Inteligence2
-					4720,	// Dexterity1
-					4721,	// Dexterity2
-					4730,	// Agility1
-					4731,	// Agility2
-					4786,	// Mdef2
-					4892,	// Mdef5
-					4893,	// Def15
-					29026,	// Def20
-					4926,	// Critical1
-					4940,	// Critical3
-					4860,	// Evasion3
-					4762,	// Evasion6
-					4832,	// Expert_Archer1
-					4833,	// Expert_Archer2
-					4863,	// Fatal1
-					4864,	// Fatal2
-					4814,	// Spell2
-					4815;	// Spell1
+				.@r = rand(1,206);
+				if (.@r < 14) .@card[.@enchant_slot] = getiteminfo("Agility1", ITEMINFO_ID);
+				else if (.@r < 27) .@card[.@enchant_slot] = getiteminfo("Dexterity1", ITEMINFO_ID);
+				else if (.@r < 40) .@card[.@enchant_slot] = getiteminfo("Strength1", ITEMINFO_ID);
+				else if (.@r < 53) .@card[.@enchant_slot] = getiteminfo("Inteligence1", ITEMINFO_ID);
+				else if (.@r < 66) .@card[.@enchant_slot] = getiteminfo("Def15", ITEMINFO_ID);
+				else if (.@r < 79) .@card[.@enchant_slot] = getiteminfo("Mdef2", ITEMINFO_ID);
+				else if (.@r < 92) .@card[.@enchant_slot] = getiteminfo("Critical1", ITEMINFO_ID);
+				else if (.@r < 105) .@card[.@enchant_slot] = getiteminfo("Evasion3", ITEMINFO_ID);
+				else if (.@r < 114) .@card[.@enchant_slot] = getiteminfo("Agility2", ITEMINFO_ID);
+				else if (.@r < 123) .@card[.@enchant_slot] = getiteminfo("Dexterity2", ITEMINFO_ID);
+				else if (.@r < 132) .@card[.@enchant_slot] = getiteminfo("Strength2", ITEMINFO_ID);
+				else if (.@r < 141) .@card[.@enchant_slot] = getiteminfo("Inteligence2", ITEMINFO_ID);
+				else if (.@r < 150) .@card[.@enchant_slot] = getiteminfo("Def20", ITEMINFO_ID);
+				else if (.@r < 159) .@card[.@enchant_slot] = getiteminfo("Mdef5", ITEMINFO_ID);
+				else if (.@r < 168) .@card[.@enchant_slot] = getiteminfo("Critical3", ITEMINFO_ID);
+				else if (.@r < 177) .@card[.@enchant_slot] = getiteminfo("Evasion6", ITEMINFO_ID);
+				else if (.@r < 184) .@card[.@enchant_slot] = getiteminfo("Expert_Archer1", ITEMINFO_ID);
+				else if (.@r < 191) .@card[.@enchant_slot] = getiteminfo("Fatal1", ITEMINFO_ID);
+				else if (.@r < 198) .@card[.@enchant_slot] = getiteminfo("Spell1", ITEMINFO_ID);
+				else if (.@r < 201) .@card[.@enchant_slot] = getiteminfo("Expert_Archer2", ITEMINFO_ID);
+				else if (.@r < 204) .@card[.@enchant_slot] = getiteminfo("Fatal2", ITEMINFO_ID);
+				else .@card[.@enchant_slot] = getiteminfo("Spell2", ITEMINFO_ID);
 			}
 			break;
 		case EQI_ACC_R:
@@ -168,36 +179,35 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 				.@enchant_slot = 3;
 			else
 				.@enchant_slot = 2;
-			setarray .@enchant_list[0],
-				4700,	// Strength1
-				4701,	// Strength2
-				4730,	// Agility1
-				4731,	// Agility2
-				4740,	// Vitality1
-				4741,	// Vitality2
-				4710,	// Inteligence1
-				4711,	// Inteligence2
-				4720,	// Dexterity1
-				4721,	// Dexterity2
-				4750,	// Luck1
-				4751,	// Luck2
-				4795,	// HP100
-				4796,	// HP200
-				4800,	// SP50
-				4801,	// SP100
-				4832,	// Expert_Archer1
-				4815,	// Spell1
-				4811,	// Fighting_Spirit1
-				4869,	// Attack_Delay_1
-				4863,	// Fatal1
-				4807;	// Atk_Speed1
+			.@r = rand(1,236);
+			if (.@r < 16) .@card[.@enchant_slot] = getiteminfo("Agility1", ITEMINFO_ID);
+			else if (.@r < 31) .@card[.@enchant_slot] = getiteminfo("Dexterity1", ITEMINFO_ID);
+			else if (.@r < 46) .@card[.@enchant_slot] = getiteminfo("Strength1", ITEMINFO_ID);
+			else if (.@r < 61) .@card[.@enchant_slot] = getiteminfo("Inteligence1", ITEMINFO_ID);
+			else if (.@r < 76) .@card[.@enchant_slot] = getiteminfo("Vitality1", ITEMINFO_ID);
+			else if (.@r < 91) .@card[.@enchant_slot] = getiteminfo("Luck1", ITEMINFO_ID);
+			else if (.@r < 106) .@card[.@enchant_slot] = getiteminfo("HP100", ITEMINFO_ID);
+			else if (.@r < 121) .@card[.@enchant_slot] = getiteminfo("SP50", ITEMINFO_ID);
+			else if (.@r < 131) .@card[.@enchant_slot] = getiteminfo("Agility2", ITEMINFO_ID);
+			else if (.@r < 141) .@card[.@enchant_slot] = getiteminfo("Dexterity2", ITEMINFO_ID);
+			else if (.@r < 151) .@card[.@enchant_slot] = getiteminfo("Strength2", ITEMINFO_ID);
+			else if (.@r < 161) .@card[.@enchant_slot] = getiteminfo("Inteligence2", ITEMINFO_ID);
+			else if (.@r < 171) .@card[.@enchant_slot] = getiteminfo("Vitality2", ITEMINFO_ID);
+			else if (.@r < 181) .@card[.@enchant_slot] = getiteminfo("Luck2", ITEMINFO_ID);
+			else if (.@r < 191) .@card[.@enchant_slot] = getiteminfo("HP200", ITEMINFO_ID);
+			else if (.@r < 201) .@card[.@enchant_slot] = getiteminfo("SP100", ITEMINFO_ID);
+			else if (.@r < 208) .@card[.@enchant_slot] = getiteminfo("Expert_Archer1", ITEMINFO_ID);
+			else if (.@r < 215) .@card[.@enchant_slot] = getiteminfo("Spell1", ITEMINFO_ID);
+			else if (.@r < 222) .@card[.@enchant_slot] = getiteminfo("Fighting_Spirit1", ITEMINFO_ID);
+			else if (.@r < 229) .@card[.@enchant_slot] = getiteminfo("Attack_Delay_1", ITEMINFO_ID);
+			else if (.@r < 236) .@card[.@enchant_slot] = getiteminfo("Fatal1", ITEMINFO_ID);
+			else .@card[.@enchant_slot] = getiteminfo("Atk_Speed1", ITEMINFO_ID);
 			break;
 		default:
 			mes "[Contraband Processor]";
-			mes "Something wrong happened.";
+			mes "Did you just try to switch equipment?";
 			close;
 		}
-		.@card[ .@enchant_slot ] = .@enchant_list[ rand( getarraysize(.@enchant_list) ) ];	// unknown rates
 		break;
 	}
 	if (countitem(25250) < 2) {
@@ -228,6 +238,14 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 
 
 har_in01,24,69,3	script	Affable Lady#rockridge0	1_F_MERCHANT_02,{
+	if (checkweight(1301,3) == 0) {
+		mes "[Affable Lady]";
+		mes "You must be really strong to carry so much with you.";
+		next;
+		mes "[Affable Lady]";
+		mes "If you want to lighten your bag, there's a Kafra employee in the direction of the sheriff's office.";
+		close;
+	}
 	mes "[Affable Lady]";
 	mes "You're an adventurer. I like people like you who have passion.";
 	mes "So, are you here because of ^0000CDit^000000?";
@@ -310,9 +328,22 @@ har_in01,24,69,3	script	Affable Lady#rockridge0	1_F_MERCHANT_02,{
 }
 
 har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
+	if (checkweight(1301,1) == 0) {
+		mes "[Howard]";
+		mes "Err, you're carrying a lot of things.";
+		mes "Why don't you go";
+		mes "lighten your bag first?";
+		close;
+	}
 	mes "[Howard]";
 	mes "Hello. How may I help you today?";
 	next;
+	if (countitem(25250) < 1) {
+		mes "[Howard]";
+		mes "Hm, you don't have the coins.";
+		mes "Why don't you collect them first?";
+		close;
+	}
 	mes "[Howard]";
 	mes "Ah, you have the coins.";
 	mes "Thank you for helping Rock Ridge.";
@@ -365,9 +396,14 @@ har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
 -	shop	shotguns_rockridge	-1,13154:-1,13155:-1,13192:-1,13193:-1,13194:-1
 -	shop	revolvers_rockridge	-1,13102:-1,13120:-1,13122:-1
 -	shop	bullets_rockridge	-1,13200:-1,13221:-1,13222:-1,13228:-1,13229:-1,13230:-1,13231:-1,13232:-1
--	shop	armor_rockridge	-1,2247:500000,2248:500000,5018:700000
 
-har_in01,19,86,4	script	Weapon Dealer#rockridge	1_F_02,{
+har_in01,19,86,4	script	Weapon Dealer#rockridge01	1_F_02,{
+	if (checkweight(1301,3) == 0) {
+		mes "[Weapon Dealer]";
+		mes "You're carrying too much to buy weapons.";
+		mes "Please go lighten your bag first.";
+		close;
+	}
 	mes "[Weapon Dealer]";
 	mes "I carry shotguns, revolvers, and bullets.";
 	mes "Tell me what kind of item you want, and I'll show you a list.";
@@ -408,10 +444,43 @@ har_in01,19,86,4	script	Weapon Dealer#rockridge	1_F_02,{
 	}
 }
 
-har_in01,16,86,4	script	Armor Dealer#rockridge0	1_M_04,{
+-	marketshop	armor_rockridge_1	-1,2247:500000:10,2248:500000:10,5018:700000:10
+-	marketshop	armor_rockridge_2	-1,5067:700000:10,5071:700000:10,5075:700000:10
+-	marketshop	armor_rockridge_3	-1,2267:100000:10,2268:500000:10,5155:5000:10
+-	marketshop	armor_rockridge_4	-1,5067:700000:10,5071:700000:10,5075:700000:10,31144:1500000:3
+
+har_in01,16,86,4	script	Armor Dealer#rockridge02	1_M_04,{
+	if (checkweight(1301,3) == 0) {
+		mes "[Armor Dealer]";
+		mes "You're carrying too much to buy anything.";
+		mes "Please go lighten your bag first.";
+		close;
+	}
+	.@day = gettime(DT_DAYOFWEEK);
+	if (.@day == SUNDAY) {
+		mes "[Armor Dealer]";
+		mes "I'm closed today.";
+		mes "Once a week, I close my shop and spend the day being thankful for what I have.";
+		next;
+		mes "[Armor Dealer]";
+		mes "...And it's the same day that no deliveries come.";
+		close;
+	}
+	if (.@day == MONDAY)
+		.@string$ = "Romantic Gents, Western Graces, and Feather Bonnet";
+	else if (.@day == TUESDAY)
+		.@string$ = "Sombreros, Indian Headbands, and Cowboy Hats";
+	else if (.@day == WEDNESDAY)
+		.@string$ = "Cigarettes, Pipes, and Grampa Beards";
+	else if (.@day == THURSDAY)
+		.@string$ = "Romantic Gents, Western Graces, and Feather Bonnet";
+	else if (.@day == FRIDAY)
+		.@string$ = "Sombreros, Indian Headbands, Cowboy Hats, and Indian Feather Headbands, the last of the rare costumes that are available in limited quantities every week,";
+	else
+		.@string$ = "Cigarettes, Pipes, and Grampa Beards";
 	mes "[Armor Dealer]";
 	mes "Hello. Welcome to the Rock Ridge Armor Shop.";
-	mes "Today,Sombreros, Indian Headbands, and Cowboy Hatsare in stock.";
+	mes "Today," +.@string$ + "are in stock.";
 	next;
 	mes "[Armor Dealer]";
 	mes "Armor is bulkier than weapons, so I can only have a set number of products delivered every week.";
@@ -421,7 +490,14 @@ har_in01,16,86,4	script	Armor Dealer#rockridge0	1_M_04,{
 	mes "And for that same reason, I can't give ^0000CDspecial discounts^000000.";
 	mes "But ^0000CDall my products are hard to find elsewhere^000000. Why don't you take a look at them?";
 	close2;
-	callshop "armor_rockridge", 1;
+	if (.@day == MONDAY || .@day == THURSDAY)
+		callshop "armor_rockridge_1", 1;
+	else if (.@day == TUESDAY)
+		callshop "armor_rockridge_2", 1;
+	else if (.@day == WEDNESDAY || .@day == SATURDAY)
+		callshop "armor_rockridge_3", 1;
+	else if (.@day == FRIDAY)
+		callshop "armor_rockridge_4", 1;
 	end;
 }
 
