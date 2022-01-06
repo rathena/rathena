@@ -2435,4 +2435,10 @@
 	parseable_packet( HEADER_CZ_UNCONFIRMED_TSTATUS_UP, sizeof( PACKET_CZ_UNCONFIRMED_TSTATUS_UP ), clif_parse_traitstatus_up, 0 );
 #endif
 
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
+	parseable_packet( HEADER_CZ_CHECKNAME2, sizeof( struct PACKET_CZ_CHECKNAME2 ), clif_parse_Mail_Receiver_Check, 0 );
+	parseable_packet( HEADER_CZ_UNCONFIRMED_RODEX_RETURN, sizeof( struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN ), clif_parse_Mail_return, 0 );
+	parseable_packet( HEADER_CZ_UNCONFIRMED_UNEQUIPALL, sizeof( struct PACKET_CZ_UNCONFIRMED_UNEQUIPALL ), clif_parse_unequipall, 0 );
+#endif
+
 #endif /* CLIF_PACKETDB_HPP */
