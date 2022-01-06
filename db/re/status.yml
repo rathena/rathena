@@ -7612,13 +7612,13 @@ Body:
   - Status: Increase_Maxhp
     Icon: Atker_Aspd
     CalcFlags:
-      Maxhp: true
+      MaxHp: true
       Regen: true
 
   - Status: Increase_Maxsp
     Icon: Atker_Movespeed
     CalcFlags:
-      Maxhp: true
+      MaxHp: true
       Regen: true
 
   - Status: Ref_T_Potion

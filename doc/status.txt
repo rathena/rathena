@@ -60,8 +60,8 @@ CalcFlags: Flag that indicates which status calculation needs to be performed. E
 
 	None    - Calculates nothing. (Default)
 	Base    - Base status
-	Maxhp   - Maximum HP
-	Maxsp   - Maximum SP
+	MaxHp   - Maximum HP
+	MaxSp   - Maximum SP
 	Str     - STR
 	Agi     - AGI
 	Vit     - VIT
@@ -101,7 +101,7 @@ Opt1: Special effect when status is active (Aegis: BODYSTATE_*). This option is 
 	Freeze       - Freeze effect
 	Stun         - Stun effect
 	Sleep        - Sleep effect
-	Stonewait    - Effect before Stone is really applied
+	StoneWait    - Effect before Stone is really applied
 	Burning      - Burning effect
 	Imprison     - Imprison effect
 	Crystalize   - Crystalize effect
@@ -114,7 +114,7 @@ Opt2: Special option/client effect when status is active (Aegis: HEALTHSTATE_*).
 	Poison         - Posioned effect
 	Curse          - Cursed effect
 	Silence        - Silenced effect
-	Signumcrucis   - Signum Crucis effect
+	SignumCrucis   - Signum Crucis effect
 	Blind          - Blind effect
 	Angelus        - Angelus effect
 	Bleeding       - Bleeding effect
@@ -127,21 +127,21 @@ Opt3: Special option/client effect when status is active (Aegis: SHOW_EFST_*)
 
 	Normal            - No effect (Default)
 	Quicken           - Quicken effect
-	Overthrust        - Overthrust effect
-	Energycoat        - Energy Coat effect
-	Explosionspirits  - Explosion Spirits effect
-	Steelbody         - Steel Body effect
-	Bladestop         - Blade Stop effect
-	Aurablade         - Aura Blade effect
+	OverThrust        - Overthrust effect
+	EnergyCoat        - Energy Coat effect
+	ExplosionSpirits  - Explosion Spirits effect
+	SteelBody         - Steel Body effect
+	BladeStop         - Blade Stop effect
+	AuraBlade         - Aura Blade effect
 	Berserk           - Berserk effect
-	Lightblade        - Light Blade effect
+	LightBlade        - Light Blade effect
 	Moonlit           - Moonlit effect
 	Marionette        - Marionette effect
 	Assumptio         - Assumptio effect
 	Warm              - Warm effect
 	Kaite             - Kaite effect
 	Bunsin            - Bunshin effect
-	Soullink          - Soul Link effect
+	SoulLink          - Soul Link effect
 	Undead            - Undead effect
 	Contract          - Contract effect
 
@@ -165,13 +165,13 @@ Options: Special option/client effect state when status is active.
 	Transform      - Transformation
 	Summer         - Summer costume
 	Dragon1        - Dragon
-	Wug            - Wug
-	WugRider       - Riding a Wug
-	Madogear       - Madogear
 	Dragon2        - Dragon
 	Dragon3        - Dragon
 	Dragon4        - Dragon
 	Dragon5        - Dragon
+	Wug            - Wug
+	WugRider       - Riding a Wug
+	Madogear       - Madogear
 	Hanbok         - Hanbok costume
 	Oktoberfest    - Oktoberfest costume
 

@@ -3000,7 +3000,7 @@ Body:
     DurationLookup: RK_DRAGONBREATH
     Opt1: Burning
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       RemoveOnRefresh: true
       RemoveOnLuxAnima: true
       BossResist: true
@@ -3242,7 +3242,7 @@ Body:
       NoCast: true
     Opt1: Imprison
     Flags:
-      Opt_Changeoption: true
+      SendOption: true
       BossResist: true
       SetStand: true
       StopWalking: true
@@ -3396,7 +3396,7 @@ Body:
       Speed: true
     Flags:
       DisplayPc: true
-      Trigger_Ontouch_: true
+      OnTouch: true
       StopAttacking: true
       RemoveOnDamaged: true
       NoDispell: true
@@ -3500,7 +3500,7 @@ Body:
     DurationLookup: NC_STEALTHFIELD
     Flags:
       DisplayPc: true
-      Trigger_Ontouch_: true
+      OnTouch: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -3579,7 +3579,7 @@ Body:
     Options:
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       StopAttacking: true
       NoSave: true
       NoDispell: true
@@ -3929,7 +3929,7 @@ Body:
     Flags:
       BlEffect: true
       DisplayPc: true
-      Opt_Changeoption: true
+      SendOption: true
       RemoveOnRefresh: true
       RemoveOnLuxAnima: true
       BossResist: true
@@ -4756,7 +4756,7 @@ Body:
       NoAttack: true
     Flags:
       DisplayPc: true
-      Trigger_Ontouch_: true
+      OnTouch: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -4787,7 +4787,7 @@ Body:
     Options:
       Cloak: true
     Flags:
-      Trigger_Ontouch_: true
+      OnTouch: true
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
@@ -5734,7 +5734,7 @@ Body:
     Options:
       Hanbok: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       StopAttacking: true
       NoRemoveOnDead: true
       NoClearbuff: true
@@ -6074,7 +6074,7 @@ Body:
     Options:
       Oktoberfest: true
     Flags:
-      Opt_Changelook: true
+      SendLook: true
       StopAttacking: true
       NoRemoveOnDead: true
       NoDispell: true
@@ -6169,8 +6169,8 @@ Body:
     Options:
       Invisible: true
     Flags:
-      Opt_Changelook: true
-      Trigger_Ontouch_: true
+      SendLook: true
+      OnTouch: true
       StopAttacking: true
 
   - Status: _Chaos
@@ -7011,7 +7011,7 @@ Body:
       Summer2: true
     Flags:
       DisplayPc: true
-      Opt_Changelook: true
+      SendLook: true
       StopAttacking: true
       NoRemoveOnDead: true
       NoDispell: true
@@ -7426,13 +7426,13 @@ Body:
   - Status: Increase_Maxhp
     Icon: Atker_Aspd
     CalcFlags:
-      Maxhp: true
+      MaxHp: true
       Regen: true
 
   - Status: Increase_Maxsp
     Icon: Atker_Movespeed
     CalcFlags:
-      Maxhp: true
+      MaxHp: true
       Regen: true
 
   - Status: Ref_T_Potion
