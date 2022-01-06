@@ -14,11 +14,26 @@ services:
             MYSQL_DATABASE: ragnarok
             MYSQL_USER: ragnarok
             MYSQL_PASSWORD: ragnarok
+
+    builder:
+        image: "rathena:local"
+        container_name: "builder"
+        volumes:
+            - "../..:/rathena" # mount git repo directory inside container
+            - "./asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt" # load db connection
+            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   #localdev login-char relation
+            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     #localdev char-map relation
+        init: true # helps with signal forwarding and process reaping
+        tty: true
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: Dockerfile
     
     login:
         image: "rathena:local"
         container_name: "rathena-login"
-        command: ./login-server
+        command: "-c ./login-server"
         ports:
             - "6900:6900" # login server
         volumes:
@@ -38,7 +53,7 @@ services:
     char:
         image: "rathena:local"
         container_name: "rathena-char"
-        command: ./char-server
+        command: "-c ./char-server"
         ports:
             - "6121:6121" # char server
         volumes:
@@ -58,7 +73,7 @@ services:
     map:
         image: "rathena:local"
         container_name: "rathena-map"
-        command: ./map-server
+        command: "-c ./map-server"
         ports:
             - "5121:5121" # map server
         volumes:
