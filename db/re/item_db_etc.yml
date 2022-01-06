@@ -45627,8 +45627,10 @@ Body:
          bonus bHit,20;
       }
       bonus bShortAtkRate,.@r;
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15*.@r;
-      bonus2 bSkillAtk,"SJ_FULLMOONKICK",15*.@r;
+      if (.@r>=10) {
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
+      }
   - Id: 300089
     AegisName: Verporta_Card
     Name: Verporta Card
