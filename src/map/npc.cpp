@@ -125,6 +125,86 @@ const std::string StylistDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/stylist.yml";
 }
 
+bool StylistDatabase::parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node ){
+	std::shared_ptr<s_stylist_costs> costs = doram ? entry->doram : entry->human;
+	bool costs_exists = costs != nullptr;
+
+	if( !costs_exists ){
+		costs = std::make_shared<s_stylist_costs>();
+	}
+
+	if( this->nodeExists( node, "Price" ) ){
+		uint32 price;
+
+		if( !this->asUInt32( node, "Price", price ) ){
+			return false;
+		}
+
+		if( price > MAX_ZENY ){
+			this->invalidWarning( node["Price"], "stylist_parseCostNode: Price %u is too high, capping to MAX_ZENY...\n", price );
+			price = MAX_ZENY;
+		}
+
+		costs->price = price;
+	}else{
+		if( !costs_exists ){
+			costs->price = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "RequiredItem" ) ){
+		std::string item;
+
+		if( !this->asString( node, "RequiredItem", item ) ){
+			return false;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( item.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["RequiredItem"], "stylist_parseCostNode: Unknown item \"%s\"...\n", item.c_str() );
+			return false;
+		}
+
+		costs->requiredItem = id->nameid;
+	}else{
+		if( !costs_exists ){
+			costs->requiredItem = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "RequiredItemBox" ) ){
+		std::string item;
+
+		if( !this->asString( node, "RequiredItemBox", item ) ){
+			return false;
+		}
+
+		std::shared_ptr<item_data> id = item_db.search_aegisname( item.c_str() );
+
+		if( id == nullptr ){
+			this->invalidWarning( node["RequiredItemBox"], "stylist_parseCostNode: Unknown item \"%s\"...\n", item.c_str() );
+			return false;
+		}
+
+		costs->requiredItemBox = id->nameid;
+	}else{
+		if( !costs_exists ){
+			costs->requiredItemBox = 0;
+		}
+	}
+
+	if( !costs_exists ){
+		if( doram ){
+			entry->doram = costs;
+		}else{
+			entry->human = costs;
+		}
+	}
+
+	return true;
+}
+
 uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
 	if( !this->nodesExist( node, { "Look", "Options" } ) ){
 		return 0;
@@ -270,78 +350,23 @@ uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
 			entry->value = value;
 		}
 
-		if( this->nodeExists( optionNode, "Price" ) ){
-			uint32 price;
-
-			if( !this->asUInt32( optionNode, "Price", price ) ){
+		if( this->nodeExists( optionNode, "CostsHuman" ) ) {
+			if( !this->parseCostNode( entry, false, optionNode["CostsHuman"] ) ){
 				return 0;
 			}
-
-			if( price > MAX_ZENY ){
-				this->invalidWarning( optionNode["Price"], "stylist_parseBodyNode: Price %u is too high, capping to MAX_ZENY...\n", price );
-				price = MAX_ZENY;
-			}
-
-			entry->price = price;
 		}else{
 			if( !entry_exists ){
-				entry->price = 0;
+				entry->human = nullptr;
 			}
 		}
 
-		if( this->nodeExists( optionNode, "Doram" ) ){
-			bool doram;
-
-			if( !this->asBool( optionNode, "Doram", doram ) ){
+		if( this->nodeExists( optionNode, "CostsDoram" ) ) {
+			if( !this->parseCostNode( entry, true, optionNode["CostsDoram"] ) ){
 				return 0;
 			}
-
-			entry->doramAllowed = doram;
 		}else{
 			if( !entry_exists ){
-				entry->doramAllowed = true;
-			}
-		}
-
-		if( this->nodeExists( optionNode, "RequiredItem" ) ){
-			std::string item;
-
-			if( !this->asString( optionNode, "RequiredItem", item ) ){
-				return 0;
-			}
-
-			std::shared_ptr<item_data> id = item_db.search_aegisname( item.c_str() );
-
-			if( id == nullptr ){
-				this->invalidWarning( optionNode["RequiredItem"], "stylist_parseBodyNode: Unknown item \"%s\"...\n", item.c_str() );
-				return 0;
-			}
-
-			entry->requiredItem = id->nameid;
-		}else{
-			if( !entry_exists ){
-				entry->requiredItem = 0;
-			}
-		}
-
-		if( this->nodeExists( optionNode, "RequiredItemBox" ) ){
-			std::string item;
-
-			if( !this->asString( optionNode, "RequiredItemBox", item ) ){
-				return 0;
-			}
-
-			std::shared_ptr<item_data> id = item_db.search_aegisname( item.c_str() );
-
-			if( id == nullptr ){
-				this->invalidWarning( optionNode["RequiredItemBox"], "stylist_parseBodyNode: Unknown item \"%s\"...\n", item.c_str() );
-				return 0;
-			}
-
-			entry->requiredItemBox = id->nameid;
-		}else{
-			if( !entry_exists ){
-				entry->requiredItemBox = 0;
+				entry->doram = nullptr;
 			}
 		}
 

@@ -26308,6 +26308,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mob_setidleevent, "is"),
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
+	BUILDIN_DEF(openstylist, "?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

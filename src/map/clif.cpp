@@ -22339,35 +22339,43 @@ bool clif_parse_stylist_buy_sub( struct map_session_data* sd, _look look, int16 
 		return false;
 	}
 
-	if( ( sd->class_ & MAPID_BASEMASK ) == MAPID_SUMMONER && !entry->doramAllowed ){
+	std::shared_ptr<s_stylist_costs> costs;
+
+	if( ( sd->class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+		costs = entry->doram;
+	}else{
+		costs = entry->human;
+	}
+
+	if( costs == nullptr ){
 		return false;
 	}
 
-	if( sd->status.zeny < entry->price ){
+	if( sd->status.zeny < costs->price ){
 		return false;
 	}
 
 	int16 inventoryIndex = -1;
 
-	if( entry->requiredItem != 0 ){
-		inventoryIndex = pc_search_inventory( sd, entry->requiredItem );
+	if( costs->requiredItem != 0 ){
+		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
 		if( inventoryIndex < 0 ){
 			// No other option
-			if( entry->requiredItemBox == 0 ){
+			if( costs->requiredItemBox == 0 ){
 				return false;
 			}
 
 			// Check if the box that contains the item is in the inventory
-			inventoryIndex = pc_search_inventory( sd, entry->requiredItemBox );
+			inventoryIndex = pc_search_inventory( sd, costs->requiredItemBox );
 
 			// The box containing the item also does not exist
 			if( inventoryIndex < 0 ){
 				return false;
 			}
 		}
-	}else if( entry->requiredItemBox != 0 ){
-		inventoryIndex = pc_search_inventory( sd, entry->requiredItem );
+	}else if( costs->requiredItemBox != 0 ){
+		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
 		if( inventoryIndex < 0 ){
 			return false;
@@ -22378,7 +22386,7 @@ bool clif_parse_stylist_buy_sub( struct map_session_data* sd, _look look, int16 
 		return false;
 	}
 
-	if( pc_payzeny( sd, entry->price, LOG_TYPE_OTHER, nullptr ) != 0 ){
+	if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER, nullptr ) != 0 ){
 		return false;
 	}
 
