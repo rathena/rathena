@@ -21477,6 +21477,13 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data ){
 	nullpo_retv(sd);
 
+	// If the UI requires state tracking
+	switch( ui_type ){
+		case OUT_UI_STYLIST:
+			sd->state.stylist_open = true;
+			break;
+	}
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0xae2));
@@ -22301,6 +22308,164 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		clif_misceffect( &sd->bl, 2 );
 		achievement_update_objective( sd, AG_ENCHANT_FAIL, 1, 1 );
 	}
+#endif
+}
+
+void clif_stylist_response( struct map_session_data* sd, bool failed ){
+#if PACKETVER >= 20151104
+	struct PACKET_ZC_STYLE_CHANGE_RES p = {};
+
+	p.PacketType = HEADER_ZC_STYLE_CHANGE_RES;
+	p.flag = failed;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+
+	if( !failed ){
+		sd->state.stylist_open = false;
+	}
+#endif
+}
+
+bool clif_parse_stylist_buy_sub( struct map_session_data* sd, _look look, int16 index ){
+	std::shared_ptr<s_stylist_list> list = stylist_db.find( look );
+
+	if( list == nullptr ){
+		return false;
+	}
+
+	std::shared_ptr<s_stylist_entry> entry = util::umap_find( list->entries, index );
+
+	if( entry == nullptr ){
+		return false;
+	}
+
+	if( ( sd->class_ & MAPID_BASEMASK ) == MAPID_SUMMONER && !entry->doramAllowed ){
+		return false;
+	}
+
+	if( sd->status.zeny < entry->price ){
+		return false;
+	}
+
+	int16 inventoryIndex = -1;
+
+	if( entry->requiredItem != 0 ){
+		inventoryIndex = pc_search_inventory( sd, entry->requiredItem );
+
+		if( inventoryIndex < 0 ){
+			// No other option
+			if( entry->requiredItemBox == 0 ){
+				return false;
+			}
+
+			// Check if the box that contains the item is in the inventory
+			inventoryIndex = pc_search_inventory( sd, entry->requiredItemBox );
+
+			// The box containing the item also does not exist
+			if( inventoryIndex < 0 ){
+				return false;
+			}
+		}
+	}else if( entry->requiredItemBox != 0 ){
+		inventoryIndex = pc_search_inventory( sd, entry->requiredItem );
+
+		if( inventoryIndex < 0 ){
+			return false;
+		}
+	}
+
+	if( inventoryIndex >= 0 && pc_delitem( sd, inventoryIndex, 1, 0, 0, LOG_TYPE_OTHER ) != 0 ){
+		return false;
+	}
+
+	if( pc_payzeny( sd, entry->price, LOG_TYPE_OTHER, nullptr ) != 0 ){
+		return false;
+	}
+
+	switch( look ){
+		case LOOK_HAIR:
+		case LOOK_HAIR_COLOR:
+		case LOOK_CLOTHES_COLOR:
+		case LOOK_BODY2:
+			pc_changelook( sd, look, entry->value );
+			break;
+		case LOOK_HEAD_BOTTOM:
+		case LOOK_HEAD_MID:
+		case LOOK_HEAD_TOP: {
+			struct mail_message msg = {};
+
+			msg.dest_id = sd->status.char_id;
+			safestrncpy( msg.send_name, "Styling Shop", NAME_LENGTH );
+			safestrncpy( msg.title, "<MSG>2949</MSG>", MAIL_TITLE_LENGTH );
+			safestrncpy( msg.body, "<MSG>2950</MSG>", MAIL_BODY_LENGTH );
+
+			msg.item[0].nameid = entry->value;
+			msg.item[0].identify = 1;
+			msg.item[0].amount = 1;
+
+			msg.status = MAIL_NEW;
+			msg.type = MAIL_INBOX_NORMAL;
+			msg.timestamp = time( nullptr );
+
+			intif_Mail_send( 0, &msg );
+
+			} break;
+	}
+
+	return true;
+}
+
+void clif_parse_stylist_buy( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20151104
+#if PACKETVER >= 20180516
+	struct PACKET_CZ_REQ_STYLE_CHANGE2* p = (struct PACKET_CZ_REQ_STYLE_CHANGE2*)RFIFOP( fd, 0 );
+#else
+	struct PACKET_CZ_REQ_STYLE_CHANGE* p = (struct PACKET_CZ_REQ_STYLE_CHANGE*)RFIFOP( fd, 0 );
+#endif
+#endif
+	if( p->HeadPalette > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR_COLOR, p->HeadPalette ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->HeadStyle > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR, p->HeadStyle ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->BodyPalette > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_CLOTHES_COLOR, p->BodyPalette ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->TopAccessory > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_TOP, p->TopAccessory ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->MidAccessory > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_MID, p->MidAccessory ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->BottomAccessory > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_BOTTOM, p->BottomAccessory ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+#if PACKETVER >= 20180516
+	if( p->BodyStyle > 0 && ( sd->class_ & JOBL_THIRD ) != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+#endif
+
+	clif_stylist_response( sd, false );
+}
+
+void clif_parse_stylist_close( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20151104
+	sd->state.stylist_open = false;
 #endif
 }
 

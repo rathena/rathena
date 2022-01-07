@@ -10655,6 +10655,24 @@ ACMD_FUNC(refineui)
 #endif
 }
 
+ACMD_FUNC( stylist ){
+	nullpo_retr(-1, sd);
+
+#if PACKETVER < 20151104
+	clif_displaymessage( fd, msg_txt( sd, 798 ) ); // This command requires packet version 2015-11-04 or newer.
+	return -1;
+#else
+
+	if( sd->state.stylist_open ){
+		clif_displaymessage( fd, msg_txt( sd, 799 ) ); // You have already opened the stylist UI.
+		return -1;
+	}
+
+	clif_ui_open( sd, OUT_UI_STYLIST, 0 );
+	return 0;
+#endif
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10975,6 +10993,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("completequest", quest),
 		ACMD_DEF2("checkquest", quest),
 		ACMD_DEF(refineui),
+		ACMD_DEFR(stylist, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;
