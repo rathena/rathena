@@ -35980,6 +35980,7 @@ Body:
           Amount: 54
         - Level: 5
           Amount: 60
+    Status: Second_Brand
   - Id: 5250
     Name: IQ_SECOND_JUDGEMENT
     Description: Second Judgement
@@ -36019,6 +36020,7 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 65
+    Status: Second_Brand
   - Id: 5251
     Name: IQ_THIRD_PUNISH
     Description: Third Punish
@@ -37403,6 +37405,7 @@ Body:
     Requires:
       SpCost: 150
       ApCost: 150
+    Status: Darkcrow
   - Id: 5295
     Name: MT_AXE_STOMP
     Description: Axe Stomp
@@ -38465,6 +38468,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Handicapstate_Deepblind
   - Id: 5332
     Name: WH_SOLIDTRAP
     Description: Solid Trap
@@ -39973,6 +39977,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Handicapstate_Lightningstrike
   - Id: 5371
     Name: EM_VENOM_SWAMP
     Description: Venom Swamp
@@ -40049,6 +40054,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+    Status: Handicapstate_Conflagration
   - Id: 5373
     Name: EM_TERRA_DRIVE
     Description: Terra Drive
@@ -40086,6 +40092,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+    Status: Handicapstate_Crystallization
   - Id: 5374
     Name: EM_ELEMENTAL_SPIRIT_M
     Description: Elemental Spirit Mastery

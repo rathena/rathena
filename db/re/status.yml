@@ -7292,6 +7292,7 @@ Body:
 
   - Status: Weaponblock_On
     Icon: Weaponblock_On
+    DurationLookup: SHC_IMPACT_CRATER
     Flags:
       NoDispell: true
       NoBanishingBuster: true
@@ -7916,45 +7917,138 @@ Body:
       Burnt: true
 
   - Status: Handicapstate_Deepblind
+    Icon: Handicapstate_Deepblind
+    DurationLookup: DK_SERVANT_W_PHANTOM
+    CalcFlags:
+      Flee: true
+      Flee2: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Handicapstate_Deepsilence
+    Icon: Handicapstate_Deepsilence
+    DurationLookup: CD_ARBITRIUM
+    #States:
+      #NoCast: true
+    CalcFlags:
+      Aspd: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Handicapstate_Lassitude
+    CalcFlags:
+      Speed: true
+      Cri: true
+    Flags:
+      DisplayPc: true
 
   - Status: Handicapstate_Frostbite
+    Icon: Handicapstate_Frostbite
+    DurationLookup: EM_DIAMOND_STORM
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
+    CalcFlags:
+      Def: true
+      Mdef: true
+      Def_Ele: true
     Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnDamaged: true
       RemoveOnDamaged: true
 
   - Status: Handicapstate_Swooning
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
     Flags:
+      DisplayPc: true
+      RemoveOnDamaged: true
       RemoveOnDamaged: true
 
   - Status: Handicapstate_Lightningstrike
+    Icon: Handicapstate_Lightningstrike
+    DurationLookup: WH_SWIFTTRAP
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
+    CalcFlags:
+      Def_Ele: true
     Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnDamaged: true
       RemoveOnDamaged: true
 
   - Status: Handicapstate_Crystallization
+    Icon: Handicapstate_Crystallization
+    DurationLookup: WH_SOLIDTRAP
+    States:
+      #NoMove: true
+      #NoCast: true
+      NoConsumeItem: true
+    CalcFlags:
+      Mdef: true
+      Def_Ele: true
     Flags:
+      BlEffect: true
+      DisplayPc: true
+      RemoveOnDamaged: true
       RemoveOnDamaged: true
 
   - Status: Handicapstate_Conflagration
+    Icon: Handicapstate_Conflagration
+    DurationLookup: WH_FLAMETRAP
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Handicapstate_Misfortune
+    Icon: Handicapstate_Misfortune
+    DurationLookup: ABC_UNLUCKY_RUSH
+    CalcFlags:
+      Hit: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Handicapstate_Deadlypoison
+    Icon: Handicapstate_Deadlypoison
+    DurationLookup: EM_VENOM_SWAMP
+    CalcFlags:
+      Def: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Handicapstate_Depression
+    Flags:
+      DisplayPc: true
 
   - Status: Handicapstate_Holyflame
+    Flags:
+      DisplayPc: true
 
   - Status: Servantweapon
+    Icon: Servantweapon
+    DurationLookup: DK_SERVANTWEAPON
     Flags:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
 
   - Status: Servant_Sign
+    Icon: Servant_Sign
+    DurationLookup: DK_SERVANT_W_SIGN
     Flags:
+      BlEffect: true
+      DisplayPc: true
       OverlapFail: true
       RemoveOnChangeMap: true
       NoBanishingBuster: true
@@ -7962,83 +8056,235 @@ Body:
       NoClearance: true
 
   - Status: Chargingpierce
+    Icon: Chargingpierce
+    DurationLookup: DK_CHARGINGPIERCE
 
   - Status: Chargingpierce_Count
+    Icon: Chargingpierce_Count
+    Flags:
+      DisplayPc: true
 
   - Status: Dragonic_Aura
+    Icon: Dragonic_Aura
+    DurationLookup: DK_DRAGONIC_AURA
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Vigor
+    Icon: Vigor
+    DurationLookup: DK_VIGOR
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Deadly_Defeasance
+    Icon: Deadly_Defeasance
+    DurationLookup: AG_DEADLY_PROJECTION
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Climax_Des_Hu
+    Icon: Climax_Des_Hu
+    DurationLookup: AG_DESTRUCTIVE_HURRICANE
+    CalcFlags:
+      Matk: true
 
   - Status: Climax
+    Icon: Climax
+    DurationLookup: AG_CLIMAX
+    CalcFlags:
+      All: true
+    Flags:
+      DisplayPc: true
 
   - Status: Climax_Earth
+    Icon: Climax_Earth
+    DurationLookup: AG_VIOLENT_QUAKE
+    CalcFlags:
+      All: true
 
   - Status: Climax_Bloom
+    Icon: Climax_Bloom
+    DurationLookup: AG_ALL_BLOOM
+    CalcFlags:
+      All: true
 
   - Status: Climax_Cryimp
+    Icon: Climax_Cryimp
+    DurationLookup: AG_CRYSTAL_IMPACT
+    CalcFlags:
+      All: true
 
   - Status: Windsign
+    Icon: Windsign
+    DurationLookup: WH_WIND_SIGN
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Crescivebolt
+    Icon: Crescivebolt
+    DurationLookup: WH_CRESCIVE_BOLT
 
   - Status: Calamitygale
+    Icon: Calamitygale
+    DurationLookup: WH_CALAMITYGALE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Mediale
+    Icon: Mediale
+    DurationLookup: CD_MEDIALE_VOTUM
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: A_Vita
+    Icon: A_Vita
+    DurationLookup: CD_ARGUTUS_VITA
 
   - Status: A_Telum
+    Icon: A_Telum
+    DurationLookup: CD_ARGUTUS_TELUM
 
   - Status: Pre_Acies
+    Icon: Pre_Acies
+    DurationLookup: CD_PRESENS_ACIES
+    CalcFlags:
+      Crate: true
+    Flags:
+      DisplayPc: true
 
   - Status: Competentia
+    Icon: Competentia
+    DurationLookup: CD_COMPETENTIA
+    CalcFlags:
+      Patk: true
+      Smatk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Religio
+    Icon: Religio
+    DurationLookup: CD_RELIGIO
+    CalcFlags:
+      Sta: true
+      Wis: true
+      Spl: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Benedictum
+    Icon: Benedictum
+    DurationLookup: CD_BENEDICTUM
+    CalcFlags:
+      Pow: true
+      Con: true
+      Crt: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Axe_Stomp
+    Icon: Axe_Stomp
+    DurationLookup: MT_AXE_STOMP
 
   - Status: A_Machine
+    Icon: A_Machine
+    DurationLookup: MT_A_MACHINE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: D_Machine
+    Icon: D_Machine
+    DurationLookup: MT_D_MACHINE
+    CalcFlags:
+      Def: true
+      Res: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Abr_Battle_Warior
+    Icon: Abr_Battle_Warior
+    DurationLookup: MT_SUMMON_ABR_BATTLE_WARIOR
 
   - Status: Abr_Dual_Cannon
+    Icon: Abr_Dual_Cannon
+    DurationLookup: MT_SUMMON_ABR_DUAL_CANNON
 
   - Status: Abr_Mother_Net
+    Icon: Abr_Mother_Net
+    DurationLookup: MT_SUMMON_ABR_MOTHER_NET
 
   - Status: Abr_Infinity
+    Icon: Abr_Infinity
+    DurationLookup: MT_SUMMON_ABR_INFINITY
 
   - Status: Shadow_Exceed
+    Icon: Shadow_Exceed
+    DurationLookup: SHC_SHADOW_EXCEED
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Dancing_Knife
+    Icon: Dancing_Knife
+    DurationLookup: SHC_DANCING_KNIFE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      RequireWeapon: true
 
   - Status: Potent_Venom
+    Icon: Potent_Venom
+    DurationLookup: SHC_POTENT_VENOM
 
   - Status: Shadow_Scar
+    Icon: Shadow_Scar
 
   - Status: E_Slash_Count
+    Icon: E_Slash_Count
+    DurationLookup: SHC_ETERNAL_SLASH
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Shadow_Weapon
+    Icon: Shadow_Weapon
+    DurationLookup: SHC_ENCHANTING_SHADOW
 
   - Status: Guard_Stance
+    Icon: Guard_Stance
+    DurationLookup: IG_GUARD_STANCE
+    CalcFlags:
+      Watk: true
+      Def: true
     Flags:
       NoRemoveOnDead: true
       NoSave: true
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
-
     End:
       Attack_Stance: true
 
   - Status: Attack_Stance
+    Icon: Attack_Stance
+    DurationLookup: IG_ATTACK_STANCE
+    CalcFlags:
+      Watk: true
+      Def: true
     Flags:
       NoRemoveOnDead: true
       NoSave: true
@@ -8049,100 +8295,219 @@ Body:
       Guard_Stance: true
 
   - Status: Guardian_S
+    Icon: Guardian_S
+    DurationLookup: IG_GUARDIAN_SHIELD
 
   - Status: Rebound_S
+    Icon: Rebound_S
+    DurationLookup: IG_REBOUND_SHIELD
 
   - Status: Holy_S
+    Icon: Holy_S
+    DurationLookup: IG_HOLY_SHIELD
+    CalcFlags:
+      All: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Ultimate_S
+    Icon: Ultimate_S
+    DurationLookup: IG_ULTIMATE_SACRIFICE
 
   - Status: Spear_Scar
+    Icon: Spear_Scar
+    DurationLookup: IG_GRAND_JUDGEMENT
+    Flags:
+      DisplayPc: true
 
   - Status: Shield_Power
+    Icon: Shield_Power
+    DurationLookup: IG_SHIELD_SHOOTING
 
   - Status: Spell_Enchanting
+    Icon: Spell_Enchanting
+    DurationLookup: EM_SPELL_ENCHANTING
+    CalcFlags:
+      Smatk: true
 
   - Status: Summon_Elemental_Ardor
+    Icon: Summon_Elemental_Ardor
+    DurationLookup: EM_SUMMON_ELEMENTAL_ARDOR
 
   - Status: Summon_Elemental_Diluvio
+    Icon: Summon_Elemental_Diluvio
+    DurationLookup: EM_SUMMON_ELEMENTAL_DILUVIO
 
   - Status: Summon_Elemental_Procella
+    Icon: Summon_Elemental_Procella
+    DurationLookup: EM_SUMMON_ELEMENTAL_PROCELLA
 
   - Status: Summon_Elemental_Terremotus
+    Icon: Summon_Elemental_Terremotus
+    DurationLookup: EM_SUMMON_ELEMENTAL_TERREMOTUS
 
   - Status: Summon_Elemental_Serpens
+    Icon: Summon_Elemental_Serpens
+    DurationLookup: EM_SUMMON_ELEMENTAL_SERPENS
 
   - Status: Elemental_Veil
+    Icon: Elemental_Veil
+    DurationLookup: EM_ELEMENTAL_VEIL
+    Flags:
+      DisplayPc: true
 
   - Status: Mystic_Symphony
+    Icon: Mystic_Symphony
+    DurationLookup: TR_MYSTIC_SYMPHONY
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Kvasir_Sonata
+    Icon: Kvasir_Sonata
+    DurationLookup: TR_KVASIR_SONATA
 
   - Status: Soundblend
+    Icon: Soundblend
+    DurationLookup: TR_SOUNDBLEND
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Gef_Nocturn
+    Icon: Gef_Nocturn
+    DurationLookup: TR_GEF_NOCTURN
+    CalcFlags:
+      Mres: true
 
   - Status: Ain_Rhapsody
+    Icon: Ain_Rhapsody
+    DurationLookup: TR_AIN_RHAPSODY
+    CalcFlags:
+      Res: true
 
   - Status: Musical_Interlude
+    Icon: Musical_Interlude
+    DurationLookup: TR_MUSICAL_INTERLUDE
+    CalcFlags:
+      Res: true
 
   - Status: Jawaii_Serenade
+    Icon: Jawaii_Serenade
+    DurationLookup: TR_JAWAII_SERENADE
+    CalcFlags:
+      Smatk: true
 
   - Status: Pron_March
+    Icon: Pron_March
+    DurationLookup: TR_PRON_MARCH
+    CalcFlags:
+      Patk: true
 
   - Status: Roseblossom
+    Icon: Roseblossom
+    DurationLookup: TR_ROSEBLOSSOM
 
   - Status: Powerful_Faith
+    Icon: Powerful_Faith
+    DurationLookup: IQ_POWERFUL_FAITH
+    CalcFlags:
+      Watk: true
+      Patk: true
     End:
       Powerful_Faith: true
       Firm_Faith: true
       Sincere_Faith: true
 
   - Status: Sincere_Faith
+    Icon: Sincere_Faith
+    DurationLookup: IQ_SINCERE_FAITH
+    CalcFlags:
+      All: true
     End:
       Powerful_Faith: true
       Firm_Faith: true
       Sincere_Faith: true
 
   - Status: Firm_Faith
+    Icon: Firm_Faith
+    DurationLookup: IQ_FIRM_FAITH
+    CalcFlags:
+      MaxHp: true
+      Res: true
     End:
       Powerful_Faith: true
       Firm_Faith: true
       Sincere_Faith: true
 
   - Status: Holy_Oil
+    Icon: Holy_Oil
+    DurationLookup: IQ_OLEUM_SANCTUM
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: First_Brand
+    Icon: First_Brand
+    DurationLookup: IQ_FIRST_BRAND
+    Flags:
+      BlEffect: true
+      DisplayPc: true
     End:
       First_Brand: true
       Second_Brand: true
 
   - Status: Second_Brand
+    Icon: Second_Brand
+    DurationLookup: IQ_SECOND_FLAME
+    Flags:
+      BlEffect: true
+      DisplayPc: true
     End:
       First_Brand: true
       Second_Brand: true
 
   - Status: Second_Judge
+    Icon: Second_Judge
+    DurationLookup: IQ_JUDGE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
     End:
       First_Faith_Power: true
       Second_Judge: true
       Third_Exor_Flame: true
 
   - Status: Third_Exor_Flame
+    Icon: Third_Exor_Flame
+    DurationLookup: IQ_THIRD_EXOR_FLAME
+    Flags:
+      BlEffect: true
+      DisplayPc: true
     End:
       First_Faith_Power: true
       Second_Judge: true
       Third_Exor_Flame: true
 
   - Status: First_Faith_Power
+    Icon: First_Faith_Power
+    DurationLookup: IQ_FIRST_FAITH_POWER
+    Flags:
+      BlEffect: true
+      DisplayPc: true
     End:
       First_Faith_Power: true
       Second_Judge: true
       Third_Exor_Flame: true
 
   - Status: Massive_F_Blaster
+    Icon: Massive_F_Blaster
+    DurationLookup: IQ_MASSIVE_F_BLASTER
 
   - Status: Protectshadowequip
+    Icon: Protectshadowequip
+    DurationLookup: BO_ADVANCE_PROTECTION
     Flags:
       RemoveChemicalProtect: true
       NoBanishingBuster: true
@@ -8150,19 +8515,31 @@ Body:
       NoClearance: true
 
   - Status: Researchreport
+    Icon: Researchreport
+    DurationLookup: BO_RESEARCHREPORT
 
   - Status: Bo_Hell_Dusty
+    Icon: Bo_Hell_Dusty
 
   - Status: Bionic_Woodenwarrior
+    DurationLookup: BO_WOODENWARRIOR
 
   - Status: Bionic_Wooden_Fairy
+    DurationLookup: BO_WOODEN_FAIRY
 
   - Status: Bionic_Creeper
+    DurationLookup: BO_CREEPER
 
   - Status: Bionic_Helltree
+    DurationLookup: BO_HELLTREE
 
   - Status: Shadow_Strip
-    Flag:
+    Icon: Shadow_Strip
+    DurationLookup: ABC_STRIP_SHADOW
+    CalcFlags:
+      Res: true
+      Mres: true
+    Flags:
       BossResist: true
       NoClearbuff: true
       Debuff: true
@@ -8171,91 +8548,144 @@ Body:
       NoClearance: true
 
   - Status: Abyss_Dagger
+    Icon: Abyss_Dagger
+    DurationLookup: ABC_ABYSS_DAGGER
 
   - Status: Abyssforceweapon
+    Icon: Abyssforceweapon
+    DurationLookup: ABC_FROM_THE_ABYSS
     Flags:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
 
   - Status: Abyss_Slayer
+    Icon: Abyss_Slayer
+    DurationLookup: ABC_ABYSS_SLAYER
+    CalcFlags:
+      Hit: true
+      Patk: true
+      Smatk: true
+    Flags:
+      BlEffect: true
+      DisplayPc: true
 
   - Status: Flametechnic
+    Icon: Flametechnic
     Flags:
       RemoveElementalOption: true
 
   - Status: Flametechnic_Option
+    Icon: Flametechnic_Option
+    DurationLookup: EM_EL_FLAMETECHNIC
     Flags:
       RemoveElementalOption: true
 
   - Status: Flamearmor
+    Icon: Flamearmor
     Flags:
       RemoveElementalOption: true
 
   - Status: Flamearmor_Option
+    Icon: Flamearmor_Option
+    DurationLookup: EM_EL_FLAMEARMOR
+    CalcFlags:
+      All: true
     Flags:
       RemoveElementalOption: true
 
   - Status: Cold_Force
+    Icon: Cold_Force
     Flags:
       RemoveElementalOption: true
 
   - Status: Cold_Force_Option
+    Icon: Cold_Force_Option
+    DurationLookup: EM_EL_COLD_FORCE
     Flags:
       RemoveElementalOption: true
 
   - Status: Crystal_Armor
+    Icon: Crystal_Armor
     Flags:
       RemoveElementalOption: true
 
   - Status: Crystal_Armor_Option
+    Icon: Crystal_Armor_Option
+    DurationLookup: EM_EL_CRYSTAL_ARMOR
+    CalcFlags:
+      All: true
     Flags:
       RemoveElementalOption: true
 
   - Status: Grace_Breeze
+    Icon: Grace_Breeze
     Flags:
       RemoveElementalOption: true
 
   - Status: Grace_Breeze_Option
+    Icon: Grace_Breeze_Option
+    DurationLookup: EM_EL_GRACE_BREEZE
     Flags:
       RemoveElementalOption: true
 
   - Status: Eyes_Of_Storm
+    Icon: Eyes_Of_Storm
     Flags:
       RemoveElementalOption: true
 
   - Status: Eyes_Of_Storm_Option
+    Icon: Eyes_Of_Storm_Option
+    DurationLookup: EM_EL_EYES_OF_STORM
+    CalcFlags:
+      All: true
     Flags:
       RemoveElementalOption: true
 
   - Status: Earth_Care
+    Icon: Earth_Care
     Flags:
       RemoveElementalOption: true
 
   - Status: Earth_Care_Option
+    Icon: Earth_Care_Option
+    DurationLookup: EM_EL_EARTH_CARE
     Flags:
       RemoveElementalOption: true
 
   - Status: Strong_Protection
+    Icon: Strong_Protection
     Flags:
       RemoveElementalOption: true
 
   - Status: Strong_Protection_Option
+    Icon: Strong_Protection_Option
+    DurationLookup: EM_EL_STRONG_PROTECTION
+    CalcFlags:
+      All: true
     Flags:
       RemoveElementalOption: true
 
   - Status: Deep_Poisoning
+    Icon: Deep_Poisoning
     Flags:
       RemoveElementalOption: true
 
   - Status: Deep_Poisoning_Option
+    Icon: Deep_Poisoning_Option
+    DurationLookup: EM_EL_DEEP_POISONING
     Flags:
       RemoveElementalOption: true
 
   - Status: Poison_Shield
+    Icon: Poison_Shield
     Flags:
       RemoveElementalOption: true
 
   - Status: Poison_Shield_Option
+    Icon: Poison_Shield_Option
+    DurationLookup: EM_EL_POISON_SHIELD
+    CalcFlags:
+      All: true
     Flags:
       RemoveElementalOption: true

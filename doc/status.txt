@@ -89,6 +89,19 @@ CalcFlags: Flag that indicates which status calculation needs to be performed. E
 	Race    - Race
 	Range   - Range
 	Regen   - Regeneration
+	MaxAp   - Maximum AP
+	Pow     - POW
+	Sta     - STA
+	Wis     - WIS
+	Spl     - SPL
+	Con     - CON
+	Crt     - CRT
+	Patk    - Physical Power
+	Smatk   - Spell Magic Attack
+	Res     - Physical Resistance
+	Mres    - Magic Resistance
+	Hplus   - Heal Plus
+	Crate   - Critical Rate
 	Dye     - Dye
 	All     - Calculates all CalcFlags
 

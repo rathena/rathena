@@ -2853,7 +2853,7 @@ struct s_status_change_db {
 	sc_type type;				///< SC_
 	efst_type icon;				///< EFST_
 	uint32 state;				///< SCS_
-	uint32 calc_flag;			///< SCB_ flags
+	uint64 calc_flag;			///< SCB_ flags
 	uint16 opt1;				///< OPT1_
 	uint16 opt2;				///< OPT2_
 	uint32 opt3;				///< OPT3_

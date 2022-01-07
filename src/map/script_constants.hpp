@@ -8600,6 +8600,19 @@
 	export_constant(SCB_REGEN);
 	export_constant(SCB_DYE);
 	export_constant(SCB_BATTLE);
+	export_constant(SCB_MAXAP);
+	export_constant(SCB_POW);
+	export_constant(SCB_STA);
+	export_constant(SCB_WIS);
+	export_constant(SCB_SPL);
+	export_constant(SCB_CON);
+	export_constant(SCB_CRT);
+	export_constant(SCB_PATK);
+	export_constant(SCB_SMATK);
+	export_constant(SCB_RES);
+	export_constant(SCB_MRES);
+	export_constant(SCB_HPLUS);
+	export_constant(SCB_CRATE);
 	export_constant(SCB_ALL);
 
 	/* status change states */
