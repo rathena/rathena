@@ -130279,6 +130279,33 @@ Body:
       hateffect(HAT_EF_MIDGARTS_GLORY,true);
     UnEquipScript: |
       hateffect(HAT_EF_MIDGARTS_GLORY,false);
+  - Id: 31603
+    AegisName: C_Cat_Ear_ShortK
+    Name: Costume Cat Ear ShortK    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1752
+  - Id: 31604
+    AegisName: C_Cat_Ear_LongK
+    Name: Costume Cat Ear LongK    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1928
+  - Id: 31605
+    AegisName: C_Volume_Low_Twin_WHK
+    Name: Costume Volume Low Twin WHK    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1913
   - Id: 31606
     AegisName: C_Autumn_Headband
     Name: C Autumn Headband
@@ -130344,6 +130371,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1811
+  - Id: 31613
+    AegisName: C_Blue_Strong_Hair
+    Name: Costume Blue Hair of Strong
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1858
   - Id: 31614
     AegisName: C_Fox
     Name: C Fox
@@ -130387,6 +130423,14 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 31619
+    AegisName: C_Magic_Inheritor_TW
+    Name: Costume Magic Inheritor    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1817
   - Id: 31620
     AegisName: C_Snow_Fox_TW
     Name: Costume Magic Successor
@@ -130395,6 +130439,39 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 31621
+    AegisName: C_HappyMargay_TW
+    Name: Costume Happy Margay    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1819
+  - Id: 31622
+    AegisName: C_LostTime_TW
+    Name: Costume Lost Time    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1820
+  - Id: 31623
+    AegisName: C_RomanticRose_TW
+    Name: Costume Romantic Rose    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1821
+    Script: |
+      hateffect HAT_EF_C_ROMANCE_ROSE_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_ROMANCE_ROSE_TW,false;
   - Id: 31624
     AegisName: C_HeartOfCat_TW
     Name: C Heart of Cat
@@ -130413,6 +130490,28 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1761
+  - Id: 31626
+    AegisName: C_FluffyWing_TW
+    Name: Costume Fluffy Wing    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1826
+    Script: |
+      hateffect HAT_EF_FLUFFYWING,true;
+    UnEquipScript: |
+      hateffect HAT_EF_FLUFFYWING,false;
+  - Id: 31627
+    AegisName: C_L_Magesic2_TW
+    Name: Costume L Magesic2    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 513
   - Id: 31628
     AegisName: C_Bogy_Cap_TW
     Name: C Dokebi
@@ -130422,6 +130521,16 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 430
+  - Id: 31629
+    AegisName: C_Evil_Bone_Hat
+    Name: Costume Evil Bone Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 523
   - Id: 31630
     AegisName: Costume_Baphomet_Balloon
     Name: C Baphomet Balloon
@@ -130701,6 +130810,33 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1857
+  - Id: 31661
+    AegisName: C_Alphonse_Helmet
+    Name: Costume Alphonse Helm
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1207
+  - Id: 31662
+    AegisName: C_Red_Hood
+    Name: Costume Red Ridding Hood
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 839
+  - Id: 31663
+    AegisName: C_Asara_Fairy_Hat_J
+    Name: Costume Fairy Asara Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 492
   - Id: 31664
     AegisName: Costume_Desert_Wolf_Hat
     Name: C Drooping Ernst Von Wolf 11th
@@ -130710,6 +130846,32 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 783
+  - Id: 31665
+    AegisName: C_GoldPoring_Hat_TW
+    Name: Costume Rich Rich Poring
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 887
+  - Id: 31666
+    AegisName: C_Crown_of_Unity
+    Name: Costume Luxury Crown
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoSell: true
+      NoGuildStorage: true
+      NoAuction: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 903
   - Id: 31667
     AegisName: Costume_Poring_Beret
     Name: C Poring Beret
@@ -130800,6 +130962,51 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 814
+  - Id: 31677
+    AegisName: C_Stretched_Nose
+    Name: Costume Pinocchio Nose
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 737
+  - Id: 31678
+    AegisName: C_Pig_Girl_TW
+    Name: Costume Pig Girl    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1871
+  - Id: 31679
+    AegisName: C_Pig_Boy_TW
+    Name: Costume Pig Boy    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1872
+  - Id: 31680
+    AegisName: C_Fairy_Long_SVK
+    Name: Costume Fairy Long Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1912
+  - Id: 31681
+    AegisName: C_Fairy_Long_BDK
+    Name: Costume Fairy Long Golden    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1911
   - Id: 31682
     AegisName: Costume_Drooping_Elven_Ears
     Name: C Drooping Elven Ears
@@ -130809,6 +131016,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 875
+  - Id: 31683
+    AegisName: C_Heart_Wing_Hairband_V
+    Name: Costume Heart Wing Headband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 733
   - Id: 31684
     AegisName: Costume_Kururinpa_Tails
     Name: C Kururinpa Tails
@@ -130899,6 +131115,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1732
+  - Id: 31694
+    AegisName: C_Poring_Letter_TW
+    Name: Costume Poring Letter
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1870
   - Id: 31695
     AegisName: Costume_Stem_In_Mouth
     Name: C Stem in Mouth
