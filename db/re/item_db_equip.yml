@@ -130947,6 +130947,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1880
+  - Id: 31700
+    AegisName: C_ScarfOfHero_TW
+    Name: Costume Scarf Of Hero    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1882
+  - Id: 31701
+    AegisName: C_ScarfOfHero_R
+    Name: Costume Scarf Of Hero    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1882
   - Id: 31702
     AegisName: Costume_Moon_Cat_Hat
     Name: C Moon Cat Hat
@@ -131131,6 +131149,15 @@ Body:
       hateffect(HAT_EF_RESONATETAEGO,true);
     UnEquipScript: |
       hateffect(HAT_EF_RESONATETAEGO,false);
+  - Id: 31722
+    AegisName: C_Sedora_Hat
+    Name: Costume Sedora Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 869
   - Id: 31723
     AegisName: Costume_TW_Rice_Ball
     Name: C Tw Rice Ball
@@ -131149,6 +131176,30 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1773
+  - Id: 31725
+    AegisName: C_Lunar_Rainbow
+    Name: Costume Lunar Rainbow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 704
+  - Id: 31726
+    AegisName: C_Hankie_In_Mouth
+    Name: Costume Hankie In Mouth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 818
+  - Id: 31727
+    AegisName: C_Ribbon_Green
+    Name: Costume Green Ribbon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 244
   - Id: 31728
     AegisName: C_Nobility_Hat
     Name: Costume Ribbon Straw Hat
@@ -131240,6 +131291,222 @@ Body:
     Locations:
       Costume_Garment: true
     ArmorLevel: 1
+  - Id: 31738
+    AegisName: C_Side_Tail_PP_M_TW
+    Name: Costume Side Pony Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1849
+  - Id: 31739
+    AegisName: C_Side_Tail_OM_M_TW
+    Name: Costume Side Pony Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1848
+  - Id: 31740
+    AegisName: C_Side_Tail_WH_M_TW
+    Name: Costume Side Pony White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1847
+  - Id: 31741
+    AegisName: C_Side_Tail_BL_M_TW
+    Name: Costume Side Pony Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1846
+  - Id: 31742
+    AegisName: C_Side_Tail_GN_M_TW
+    Name: Costume Side Pony Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1845
+  - Id: 31743
+    AegisName: C_Side_Tail_YL_M_TW
+    Name: Costume Side Pony Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1844
+  - Id: 31744
+    AegisName: C_Side_Tail_RD_M_TW
+    Name: Costume Side Pony Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1843
+  - Id: 31745
+    AegisName: C_Side_Tail_BU_M_TW
+    Name: Costume Side Pony Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1842
+  - Id: 31746
+    AegisName: C_St_Long_PP_M_TW
+    Name: Costume Straight Long Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1841
+  - Id: 31747
+    AegisName: C_St_Long_OM_M_TW
+    Name: Costume Straight Long Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1840
+  - Id: 31748
+    AegisName: C_St_Long_LPP_M_TW
+    Name: Costume Straight Long Light Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1839
+  - Id: 31749
+    AegisName: C_St_Long_JBL_M_TW
+    Name: Costume Straight Long Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1838
+  - Id: 31750
+    AegisName: C_St_Long_GN_M_TW
+    Name: Costume Straight Long Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1837
+  - Id: 31751
+    AegisName: C_St_Long_GL_M_TW
+    Name: Costume Straight Long Golden    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1836
+  - Id: 31752
+    AegisName: C_St_Long_RD_M_TW
+    Name: Costume Straight Long Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1835
+  - Id: 31753
+    AegisName: C_St_Long_BU_M_TW
+    Name: Costume Straight Long Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1834
+  - Id: 31754
+    AegisName: C_B_S_PP_M_TW
+    Name: Costume Chignon Purple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1857
+  - Id: 31755
+    AegisName: C_B_S_OM_M_TW
+    Name: Costume Chignon Brown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1856
+  - Id: 31756
+    AegisName: C_B_S_WH_M_TW
+    Name: Costume Chignon White    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1855
+  - Id: 31757
+    AegisName: C_B_S_BL_M_TW
+    Name: Costume Chignon Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1854
+  - Id: 31758
+    AegisName: C_B_S_GN_M_TW
+    Name: Costume Chignon Green    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1853
+  - Id: 31759
+    AegisName: C_B_S_YL_M_TW
+    Name: Costume Chignon Yellow    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1852
+  - Id: 31760
+    AegisName: C_B_S_RD_M_TW
+    Name: Costume Chignon Red    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1851
+  - Id: 31761
+    AegisName: C_B_S_BU_M_TW
+    Name: Costume Chignon Blue    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1850
   - Id: 31762
     AegisName: Costume_Gambler_Card
     Name: C Heart Card in Mouth
@@ -131285,6 +131552,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1907
+  - Id: 31767
+    AegisName: C_TW_3rd_Balloon
+    Name: Costume 3rd Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1909
+  - Id: 31768
+    AegisName: C_2019RTC_CeleAura_TW
+    Name: Costume 2019 RTC Celebrated Aura    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1908
   - Id: 31769
     AegisName: Costume_Orange_Bunny_Band
     Name: C Orange Bunny Band
@@ -131321,6 +131606,98 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 754
+  - Id: 31773
+    AegisName: C_Aqua_Bunny_Band
+    Name: Costume Aqua Bunny Band    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1012
+  - Id: 31774
+    AegisName: C_Maroon_Bunny_Band
+    Name: Costume Maroon Bunny Band    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1013
+  - Id: 31775
+    AegisName: C_Golden_Bunny_Band
+    Name: Costume Golden Bunny Band    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1014
+  - Id: 31776
+    AegisName: C_Gray_Bunny_Band
+    Name: Costume Gray Bunny Band    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1015
+  - Id: 31777
+    AegisName: C_YellowBunny_Hairband
+    Name: Costume Yellow Bunny Hairband    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 662
+  - Id: 31778
+    AegisName: C_PinkBunny_Hairband
+    Name: Costume Pink Bunny Hairband    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 663
+  - Id: 31779
+    AegisName: C_Green_Bunny_Hairband
+    Name: Costume Green Bunny Hairband    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 664
+  - Id: 31780
+    AegisName: C_Sloth_Hat
+    Name: Costume Sloth Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 638
+  - Id: 31781
+    AegisName: C_Green_Poring_Hairpin
+    Name: Costume Green Poring Hairpin    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 788
+  - Id: 31782
+    AegisName: C_Solo_Play_Box1
+    Name: Costume Solo Play Box    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 449
   - Id: 31783
     AegisName: Costume_Doram_Balloon
     Name: C Doram Baloon
@@ -131383,6 +131760,15 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     EquipLevelMin: 1
+    View: 1932
+  - Id: 31790
+    AegisName: C_Blood_Grimoire_J
+    Name: Costume Blood Grimoire    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 890
   - Id: 31791
     AegisName: Costume_Pig_Mask
     Name: C Pig Mask
@@ -131392,6 +131778,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1869
+  - Id: 31792
+    AegisName: C_Baryon_HeadPhone_TW
+    Name: Costume Baryon Head Phone    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1920
   - Id: 31793
     AegisName: Costume_Seraphim_Feather
     Name: C Seraphim Feather
@@ -131491,6 +131885,14 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1924
+  - Id: 31804
+    AegisName: C_Flower_Hat
+    Name: Costume Flower Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1172
   - Id: 31805
     AegisName: C_Sunglasses_Bball_Hat
     Name: "Costume: Sunglass Baseball Cap"
@@ -131499,6 +131901,62 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 812
+  - Id: 31806
+    AegisName: C_Tw_Frog_Hat
+    Name: Costume Frog Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 826
+  - Id: 31807
+    AegisName: C_Peacock_Feather
+    Name: Costume Cyber Peacock
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 514
+  - Id: 31808
+    AegisName: C_Red_PhD_Hat
+    Name: Costume Red Ph.D Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 481
+  - Id: 31809
+    AegisName: aegis_31809
+    Name: Costume Red Mage Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 282
+  - Id: 31810
+    AegisName: C_Deep_Angel_Hairband
+    Name: Costume Deep Angel Hairband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 915
+  - Id: 31811
+    AegisName: C_Thief_Hood
+    Name: Costume Thief's Hood
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 776
+  - Id: 31812
+    AegisName: C_Bulb_Hairband
+    Name: Costume Light Bulb Hairband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 332
   - Id: 31813
     AegisName: Costume_Lunatic_On_Shoulder
     Name: C Lunatic On Shoulder
@@ -131579,6 +132037,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1934
+  - Id: 31825
+    AegisName: C_Tongue_Charm_J
+    Name: Costume Tongue Charm    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 801
   - Id: 31826
     AegisName: Costume_Sunglass_Bear_Cap
     Name: C Sunglass Bear Cap
@@ -131597,6 +132064,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1936
+  - Id: 31830
+    AegisName: C_DragonKnight_Eyepatch
+    Name: Costume Dragon Knight Eye Patch    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1227
   - Id: 31831
     AegisName: Costume_Disguise_Mantle
     Name: C Disguise Mantle
@@ -131633,6 +132109,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1940
+  - Id: 31835
+    AegisName: C_2019_D10_Muffler_TW
+    Name: Costume 2019 D10 Muffler    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1941
+  - Id: 31836
+    AegisName: C_Aviator_Hat
+    Name: Costume Aviator Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 972
   - Id: 31837
     AegisName: Costume_Shark_Head
     Name: C Shark Head
@@ -131642,6 +132136,28 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1919
+  - Id: 31838
+    AegisName: C_Golden_Wreath
+    Name: Costume Golden Wreath    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 434
+  - Id: 31839
+    AegisName: C_FluffyWing_J
+    Name: Costume Fluffy Wing    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1826
+    Script: |
+      hateffect HAT_EF_FLUFFYWING,true;
+    UnEquipScript: |
+      hateffect HAT_EF_FLUFFYWING,false;
   - Id: 31840
     AegisName: Costume_BJ_Headset_A
     Name: C BJ Headset
@@ -131660,6 +132176,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1943
+  - Id: 31842
+    AegisName: C_Striking_hat
+    Name: Costume Striking Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1759
+  - Id: 31843
+    AegisName: C_Heavenly_Order
+    Name: Costume Heavenly Order
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1093
   - Id: 31844
     AegisName: C_Mob_Scarf
     Name: Costume Runaway Scarf
@@ -131740,6 +132274,14 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 31854
+    AegisName: C_SnackParty_J
+    Name: Costume Choco Chip Cookies
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1896
   - Id: 31855
     AegisName: Mushroom_Hair
     Name: Costume Chocolate Mushroom Wig
@@ -131828,6 +132370,70 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31866
+    AegisName: C_Braid_Headband_BU
+    Name: Costume Braid Headband (Blue)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1964
+  - Id: 31867
+    AegisName: C_Braid_Headband_RD
+    Name: Costume Braid Headband (Red)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1965
+  - Id: 31868
+    AegisName: C_Braid_Headband_YL
+    Name: Costume Braid Headband (Yellow)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1966
+  - Id: 31869
+    AegisName: C_Braid_Headband_GN
+    Name: Costume Braid Headband (Green)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1967
+  - Id: 31870
+    AegisName: C_Braid_Headband_BL
+    Name: Costume Braid Headband (Black)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1968
+  - Id: 31871
+    AegisName: C_Braid_Headband_WH
+    Name: Costume Braid Headband (White)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1969
+  - Id: 31872
+    AegisName: C_Braid_Headband_OM
+    Name: Costume Braid Headband (Brown)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1970
+  - Id: 31873
+    AegisName: C_Braid_Headband_PP
+    Name: Costume Braid Headband (Purple)
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1971
   - Id: 31874
     AegisName: C_Exotic_Bob_L_LB
     Name: Costume Himelmez's Wig (Blue)
@@ -131892,6 +132498,22 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31882
+    AegisName: aegis_31882
+    Name: Costume Choco Stick In Mouth    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 884
+  - Id: 31883
+    AegisName: C_Nine_Tail_Fox_Hair_J
+    Name: Costume Nine Tail Fox Hair
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1884
   - Id: 31884
     AegisName: C_Magic_Helm
     Name: Costume Magic Helm
@@ -131909,6 +132531,14 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31886
+    AegisName: aegis_31886
+    Name: Costume Pierced Apple    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1952
   - Id: 31887
     AegisName: aegis_31887
     Name: Costume Pure Scarf
@@ -131917,6 +132547,70 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31888
+    AegisName: C_W_King_Tiger_Doll_Hat
+    Name: Costume White King Tiger Doll Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 973
+  - Id: 31889
+    AegisName: aegis_31889
+    Name: Costume Gemini Crown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 551
+  - Id: 31890
+    AegisName: aegis_31890
+    Name: Costume Sagittarius Diadem    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 618
+  - Id: 31897
+    AegisName: aegis_31897
+    Name: Costume Pisces Crown    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 512
+  - Id: 31899
+    AegisName: C_Freyja_Crown
+    Name: Costume Freyja's Crown
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 328
+  - Id: 31902
+    AegisName: C_10_Type_Glasses
+    Name: Costume Cool Shades
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1237
+  - Id: 31903
+    AegisName: C_White_Snake
+    Name: Costume White Snake
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 413
+  - Id: 31904
+    AegisName: C_Para_Team_Hat100
+    Name: Costume Snow Parade Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1529
   - Id: 31905
     AegisName: C_Blanc_Neige_Prince
     Name: Costume Snow Ice Hair
@@ -131941,6 +132635,30 @@ Body:
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
+  - Id: 31908
+    AegisName: C_Antler_Fedora
+    Name: Costume Antler Fedora    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 811
+  - Id: 31909
+    AegisName: C_711_Knit_Hat
+    Name: Costume 711 Knit Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1130
+  - Id: 31910
+    AegisName: aegis_31910
+    Name: Costume Festive Santa Beard
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 847
   - Id: 31911
     AegisName: C_LittleGarden
     Name: Costume Little Garden
@@ -131949,6 +132667,30 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 31912
+    AegisName: C_Black_Veil_J
+    Name: Costume Black Veil
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1173
+  - Id: 31913
+    AegisName: C_Black_Feather
+    Name: Costume Feathered Black Cap
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1794
+  - Id: 31914
+    AegisName: C_Red_Bread_Hat
+    Name: Costume Mini Beret Hairband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 762
   - Id: 31915
     AegisName: c_Sweet_Corone
     Name: Costume Sweet Coronet
@@ -131965,6 +132707,38 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31917
+    AegisName: aegis_31917
+    Name: Costume Glorious Flag (Red)    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    View: 32
+  - Id: 31918
+    AegisName: C_Party_Recruiter_Hat
+    Name: Costume Party Recruiter Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 351
+  - Id: 31919
+    AegisName: C_Friend_Recruiter_Hat
+    Name: Costume Friend Recruiter Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 353
+  - Id: 31920
+    AegisName: C_Western_Grace
+    Name: Costume Western Grace    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 32
   - Id: 31921
     AegisName: C_Fairy_Long_CB
     Name: Costume Fairy Long (Sakura)
@@ -132005,6 +132779,22 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31928
+    AegisName: C_Cylinder_Hairband
+    Name: Costume Cylinder Hairband
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1477
+  - Id: 31929
+    AegisName: C_Cryptura_Academy_Hat
+    Name: Costume Cryptura Academy Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 872
   - Id: 31930
     AegisName: C_Mike_Stand
     Name: Costume Standing Mic
@@ -132045,6 +132835,14 @@ Body:
     Locations:
       Costume_Head_Mid: true
     ArmorLevel: 1
+  - Id: 31935
+    AegisName: aegis_31935
+    Name: Costume Baby Dragon Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 525
   - Id: 31936
     AegisName: C_Nut_Donut_In_Mouth
     Name: Costume Honeynut Donut
@@ -132069,6 +132867,42 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31939
+    AegisName: C_Carnation_Corolla
+    Name: Costume Carnation Corolla    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1026
+  - Id: 31940
+    AegisName: aegis_31940
+    Name: Costume flag mask
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 918
+  - Id: 31941
+    AegisName: aegis_31941
+    Name: Costume Storm Cell
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 688
+  - Id: 31942
+    AegisName: C_Romance_Rose_J
+    Name: Costume Romance Rose    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1999
+    Script: |
+      hateffect HAT_EF_C_ROMANCE_ROSE_TW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_ROMANCE_ROSE_TW,false;
   - Id: 31943
     AegisName: C_Frog_Hood
     Name: Costume Tree Frog Hood
@@ -132085,6 +132919,89 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 31946
+    AegisName: C_Frantic_Looking
+    Name: Costume Demon King's Eye
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1897
+  - Id: 31947
+    AegisName: C_Sinister_Horn_Gear
+    Name: Costume Dark Horn
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1898
+  - Id: 31948
+    AegisName: C_Eyes_Of_Illusion
+    Name: Costume Headband of Illusion's Eyes
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 1779
+  - Id: 31949
+    AegisName: aegis_31949
+    Name: Costume Diablos Wings
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 680
+  - Id: 31950
+    AegisName: aegis_31950
+    Name: Costume Replica Nut Cracker
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1991
+  - Id: 31951
+    AegisName: aegis_31951
+    Name: Costume Happy Cat
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1980
+  - Id: 31952
+    AegisName: C_GatesofNetherWorld
+    Name: Costume Gatesof Nether World    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 2016
+  - Id: 31953
+    AegisName: aegis_31953
+    Name: Costume Cor Core Headset    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2017
+  - Id: 31954
+    AegisName: C_Vassalage_Necklace
+    Name: Costume Vassalage Necklace    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2018
+  - Id: 31957
+    AegisName: C_Cons_Of_Poison
+    Name: Costume Cons Of Poison    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    Script: |
+      hateffect HAT_EF_POISON_MASTER,true;
+    UnEquipScript: |
+      hateffect HAT_EF_POISON_MASTER,false;
   - Id: 31959
     AegisName: C_RK_Hair_BL
     Name: Costume Firm Wave Hair(Black)
