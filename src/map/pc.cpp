@@ -5108,7 +5108,8 @@ char pc_checkadditem(struct map_session_data *sd, t_itemid nameid, int amount)
  *------------------------------------------*/
 uint8 pc_inventoryblank(struct map_session_data *sd)
 {
-	uint8 i, b;
+	uint16 i;
+	uint8 b;
 
 	nullpo_ret(sd);
 
