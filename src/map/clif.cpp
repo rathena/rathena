@@ -22355,8 +22355,11 @@ void clif_parse_inventory_expansion_request( int fd, struct map_session_data* sd
 
 	static std::map<t_itemid, uint16> items = {
 		// The order of entries in this list defines, which will be used first
+		// This order and the usable items are hardcoded into the client
 		// The number of increased slots is "hardcoded" in the message of the client and cannot be sent per item
-		{ ITEMID_INVENTORY_EXPANSION_COUPON, 10 }
+		{ ITEMID_INVENTORY_EX_EVT, 10 },
+		{ ITEMID_INVENTORY_EX_DIS, 10 },
+		{ ITEMID_INVENTORY_EX, 10 },
 	};
 
 	int16 index = -1;
@@ -22364,7 +22367,7 @@ void clif_parse_inventory_expansion_request( int fd, struct map_session_data* sd
 
 	for( const auto& entry : items ){
 		// Check if the player has the required item
-		index = pc_search_inventory( sd, ITEMID_INVENTORY_EXPANSION_COUPON );
+		index = pc_search_inventory( sd, entry.first );
 
 		// Found an item
 		if( index >= 0 ){
@@ -22441,7 +22444,7 @@ void clif_parse_inventory_expansion_confirm( int fd, struct map_session_data* sd
 	}
 
 	// Check if the player has the required item
-	int index = pc_search_inventory( sd, ITEMID_INVENTORY_EXPANSION_COUPON );
+	int index = pc_search_inventory( sd, sd->state.inventory_expansion_confirmation );
 
 	// The player did not have the item anymore
 	if( index < 0 ){
