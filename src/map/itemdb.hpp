@@ -763,7 +763,8 @@ enum e_random_item_group {
 	IG_HAPPY_BOX_J,
 	IG_CLASS_SHADOW_CUBE,
 	IG_SEALED_SCROLL,
-
+	IG_ODIN_RELIC,
+	
 	IG_MAX,
 };
 

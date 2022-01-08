@@ -17611,6 +17611,16 @@ Body:
       Flag:
         NoReiteration: true
         NoOverlap: true
+  - Id: 755
+    Name: NPC_MOVE_COORDINATE
+    Description: Change Location
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsNpc: true
+    Hit: Single
   - Id: 1001
     Name: KN_CHARGEATK
     Description: Charge Attack

@@ -49411,6 +49411,17 @@ Body:
     Weight: 10
     Script: |
       /* upgradeui 23981; */
+  - Id: 23986
+    AegisName: Odin_itembox
+    Name: Odin Relic
+    Type: Usable
+    Buy: 10000
+    Weight: 200
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getrandgroupitem(IG_Odin_Relic,1,1,1);
   - Id: 100000
     AegisName: IDTest_Special
     Name: IDTest Special

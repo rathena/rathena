@@ -7891,6 +7891,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start2(src,bl,type,100,skill_lv,skill_id,skill_get_time(skill_id,skill_lv)));
 		break;
+	case NPC_MOVE_COORDINATE:
+		if(src != bl){
+		int x = src->x, y = src->y;
+		if (unit_movepos(src,bl->x,bl->y,0,0)) {
+			clif_skill_nodamage(src,src,skill_id,skill_lv,1); // Homunc
+			clif_blown(src);
+			// Move target
+			if (unit_movepos(bl,x,y,0,0)) {
+				clif_skill_nodamage(bl,bl,skill_id,skill_lv,1);
+				clif_blown(bl);
+			}
+			map_foreachinallrange(unit_changetarget,src,AREA_SIZE,BL_MOB,bl,src);
+		}
+		}
+		break;
 	case HLIF_AVOID:
 	case HAMI_DEFENCE:
 		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)); // Master

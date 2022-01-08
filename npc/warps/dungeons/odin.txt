@@ -25,3 +25,26 @@ odin_tem02,153,349,0	warp	odin05	1,1,odin_tem03,120,54
 odin_tem03,121,49,0	warp	odin06	1,1,odin_tem02,154,345
 odin_tem02,261,377,0	warp	odin07	1,1,odin_tem03,247,40
 odin_tem03,247,34,0	warp	odin08	1,1,odin_tem02,263,372
+
+
+//Odin's Past Warp.
+odin_tem03,276,236,0	script	light#warp	45,2,2,{
+	OnTouch:
+    if(BaseLevel < 180) {
+	    dispbottom "System: You are not strong enough for the next area. You need at least Base Level 180!";
+	    end;
+    }
+		mes "It's a warm light.",
+		"Beyond this light, something stinks.";
+		next;
+			if(select("Go where the light leads.:Avoid it.") == 2){
+				mes "You avoid it.";
+				close;
+			}
+		mes "You decide to follow the light that comes from a time crack";
+		sleep2 750;
+		warp "odin_past",291,233;
+	end;
+}
+
+odin_past,291,235,0	warp	odin10	1,1,odin_tem03,280,236
