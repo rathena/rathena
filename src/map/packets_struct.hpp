@@ -4294,6 +4294,21 @@ struct PACKET_ZC_NOTIFY_SKILL_POSITION {
 };
 DEFINE_PACKET_HEADER(ZC_NOTIFY_SKILL_POSITION, 0x0115);
 
+#if PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
+struct PACKET_CZ_REQ_TAKEOFF_EQUIP_ALL {
+	int16 PacketType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_TAKEOFF_EQUIP_ALL, 0x0bad);
+#endif  // PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
+
+#if PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
+struct PACKET_ZC_TAKEOFF_EQUIP_ALL_ACK {
+	int16 PacketType;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_TAKEOFF_EQUIP_ALL_ACK, 0x0bae);
+#endif  // PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
+
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris

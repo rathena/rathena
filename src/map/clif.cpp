@@ -22336,13 +22336,31 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 #endif
 }
 
+void clif_unequipall_reply( struct map_session_data* sd, bool failed ){
+#if PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_TAKEOFF_EQUIP_ALL_ACK p = {};
+
+	p.PacketType = HEADER_ZC_TAKEOFF_EQUIP_ALL_ACK;
+	p.result = failed;
+
+	clif_send( &p, sizeof( struct PACKET_ZC_TAKEOFF_EQUIP_ALL_ACK ), &sd->bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
+}
+
 void clif_parse_unequipall( int fd, struct map_session_data* sd ){
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
+	if( pc_cant_act( sd ) ){
+		clif_unequipall_reply( sd, true );
+		return;
+	}
+
 	for( int i = 0; i < EQI_COSTUME_HEAD_TOP; i++ ){
 		if( sd->equip_index[i] >= 0 ){
 			pc_unequipitem( sd, sd->equip_index[i], 1 );
 		}
 	}
+
+	clif_unequipall_reply( sd, false );
 #endif
 }
 
