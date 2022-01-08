@@ -1,3 +1,18 @@
+//===== rAthena Script ======================================= 
+//= Soutanes Enchanter
+//===== By: ================================================== 
+//= mundussan
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Unofficial] 
+//= Merchant for enchanting Soutanes and Clergy equipment.
+//===== Additional Comments: ================================= 
+//= 1.0 First release. [mundussan]
+//============================================================ 
+
 hu_in01,97,323,4	script	Susan Grey#enchanter	893,{
     disable_items;
 	if (MaxWeight - Weight < 1000) {
