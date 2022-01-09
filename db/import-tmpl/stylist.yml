@@ -22,18 +22,18 @@
 # Stylist Settings
 #
 ###########################################################################
-# - Look                     Look that will be changed
-#   Options                  Possible options to select from
-#     - Index                Clientside index of the option
-#       Value                Value of the look (can also be an item name)
-#       CostsHuman:          Costs for human players
-#           Price            Required zeny (Default: 0)
-#           RequiredItem     Required item (Default: none)
-#           RequiredItemBox  Required item box (Default: none)
-#       CostsDoram:          Costs for doram players
-#           Price            Required zeny (Default: 0)
-#           RequiredItem     Required item (Default: none)
-#           RequiredItemBox  Required item box (Default: none)
+# - Look                     Look that will be changed.
+#   Options                  Possible options to select from.
+#     - Index                Client side index of the option.
+#       Value                Value of the look (can also be an item name).
+#       CostsHuman:          Costs for human players.
+#           Price            Required zeny. (Default: 0)
+#           RequiredItem     Required item. (Default: None)
+#           RequiredItemBox  Required item box. (Default: None)
+#       CostsDoram:          Costs for doram players.
+#           Price            Required zeny. (Default: 0)
+#           RequiredItem     Required item. (Default: None)
+#           RequiredItemBox  Required item box. (Default: None)
 ###########################################################################
 
 Header:
