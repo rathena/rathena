@@ -25587,6 +25587,23 @@ BUILDIN_FUNC(mob_setidleevent){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC( openstylist ){
+#if PACKETVER >= 20151104
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_ui_open( sd, OUT_UI_STYLIST, 0 );
+
+	return SCRIPT_CMD_SUCCESS;
+#else
+	ShowError( "buildin_openstylist: This command requires packet version 2015-11-04 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -26291,6 +26308,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mob_setidleevent, "is"),
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
+	BUILDIN_DEF(openstylist, "?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

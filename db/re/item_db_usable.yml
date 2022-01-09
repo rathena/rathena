@@ -39884,6 +39884,57 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 16843
+    AegisName: C_New_Style_Box
+    Name: Beauty Gift Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 7622,1;
+  - Id: 16854
+    AegisName: CCloth_Dye_Coupon_Box
+    Name: Clothing Dye Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6046,1;
+  - Id: 16855
+    AegisName: CCloth_Dye_Coupon2_Box
+    Name: Clothing Dye Orig Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6047,1;
   - Id: 16864
     AegisName: Siege_Map_Teleport_Scroll_Box_10
     Name: Siege Map Teleport Scroll Box(10)
@@ -42918,6 +42969,23 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Event_Almighty_Box_100);
+  - Id: 17336
+    AegisName: J_Shop_Coupon_Box
+    Name: Cash Hair Coupon Box
+    Type: Cash
+    Buy: 20
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 6707,1;
   - Id: 17337
     AegisName: Holy_Spirit_Scroll
     Name: Holy Spirit Egg
@@ -47789,6 +47857,46 @@ Body:
     Script: |
       bonus_script "bonus bAddItemHealRate,20;",1800,9;
       /* fix me: unknown flag and specialeffect */
+  - Id: 23049
+    AegisName: Comp_Spark_Candy
+    Name: "[Not For Sale] Sparkling Candy"
+    Type: Usable
+    Weight: 10
+    Delay:
+      Duration: 180000
+      Status: Reuse_Limit_B
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HASTEUP;
+      bonus_script "{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; bonus bNoWalkDelay; }",60,0,0,EFST_STEAMPACK;
+  - Id: 23050
+    AegisName: Comp_Magic_Candy
+    Name: "[Not For Sale] Magic Candy"
+    Type: Usable
+    Weight: 10
+    Delay:
+      Duration: 180000
+      Status: Reuse_Limit_B
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      specialeffect2 EF_HASTEUP;
+      bonus_script "{ bonus bMatk,30; bonus bFixedCastrate,-70; bonus bNoCastCancel; bonus2 bSPLossRate,90,10000; }",60,0,0,EFST_MAGIC_CANDY;
   - Id: 23058
     AegisName: Enchant_Stone_Box9
     Name: Costume Enchant Stone Box 9

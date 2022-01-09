@@ -382,6 +382,7 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
+		bool stylist_open;
 		unsigned int block_action : 10;
 		bool refineui_open;
 		t_itemid inventory_expansion_confirmation;
@@ -1054,7 +1055,7 @@ extern JobDatabase job_db;
 static bool pc_cant_act2( struct map_session_data* sd ){
 	return sd->state.vending || sd->state.buyingstore || (sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING)
 		|| sd->state.trading || sd->state.storage_flag || sd->state.prevend || sd->state.refineui_open
-		|| sd->state.inventory_expansion_confirmation;
+		|| sd->state.stylist_open || sd->state.inventory_expansion_confirmation;
 }
 // equals pc_cant_act2 and additionally checks for chat rooms and npcs
 static bool pc_cant_act( struct map_session_data* sd ){
