@@ -129511,6 +129511,33 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 537
+  - Id: 31500
+    AegisName: C_Sparkler_Stick_TH
+    Name: Costume Sparkler Stick    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1747
+  - Id: 31501
+    AegisName: C_Sparkler_Fountain_TH
+    Name: Costume Sparkler Fountain    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1748
+  - Id: 31503
+    AegisName: C_TW_2th_Balloon
+    Name: Costume 2th Balloon    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1750
   - Id: 31504
     AegisName: C_Starving_Fish_Hat
     Name: C Large Hungry Fish
@@ -129602,6 +129629,24 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1755
+  - Id: 31514
+    AegisName: C_American_S_hair
+    Name: Costume American Short hair    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1756
+  - Id: 31515
+    AegisName: C_Leopard_Cat
+    Name: Costume Leopard Cat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1757
   - Id: 31516
     AegisName: C_Mini_Melon
     Name: C Mini Melon
@@ -129683,6 +129728,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1766
+  - Id: 31525
+    AegisName: C_Kid_Deviling
+    Name: Costume Kid Deviling    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1036
   - Id: 31526
     AegisName: C_Shaman_Hat
     Name: C Shaman Hat
@@ -129736,6 +129790,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1770
+  - Id: 31532
+    AegisName: C_Neev_Barrette
+    Name: Costume Neev Barrette    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1696
   - Id: 31533
     AegisName: C_Warm_Cat_Muffler_BL
     Name: C Warm Cat Muffler Black
@@ -129745,6 +129808,50 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1771
+  - Id: 31534
+    AegisName: C_Rainbow_Star
+    Name: Costume Rainbow Star    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1019
+  - Id: 31535
+    AegisName: C_Old_Pink_Poo_Hat
+    Name: Costume Old Pink Poo Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1102
+  - Id: 31536
+    AegisName: C_Chibi_Beelzebub_Hat
+    Name: Costume Chibi Beelzebub Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1350
+  - Id: 31537
+    AegisName: C_Return_TW_2th_Hat
+    Name: Costume Return TW 2th Hat    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoStorage: true
+      NoCart: true
+      NoAuction: true
+      NoGuildStorage: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1772
   - Id: 31538
     AegisName: C_Lovely_Feeling
     Name: C Lovely Feeling
@@ -129754,6 +129861,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1717
+  - Id: 31539
+    AegisName: C_Bulgogi_TW
+    Name: Costume Bulgogi    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1773
   - Id: 31540
     AegisName: C_GeminiS58_Eyes_Red
     Name: C GeminiS58 Eyes Red
@@ -129907,6 +130023,28 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 268
+  - Id: 31557
+    AegisName: C_Hoplite_Helmet_Silver
+    Name: Costume Hoplite Helmet Silver    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1781
+  - Id: 31558
+    AegisName: C_Hoplite_Helmet_Black
+    Name: Costume Hoplite Helmet Black    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1782
   - Id: 31559
     AegisName: C_Royalguard_Necklace
     Name: C Royal Guard Necklace
@@ -130137,6 +130275,14 @@ Body:
       sc_start SC_STRANGELIGHTS,INFINITE_TICK,0;
     UnEquipScript: |
       sc_end SC_STRANGELIGHTS;
+  - Id: 31584
+    AegisName: C_Marin_Muffler
+    Name: Costume Marin Muffler    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1795
   - Id: 31585
     AegisName: C_Drops_Muffler
     Name: Costume Drops Muffler
@@ -130154,6 +130300,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1797
+  - Id: 31587
+    AegisName: C_NationalDay_helmet_TW
+    Name: Costume National Day helmet    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1798
   - Id: 31588
     AegisName: C_SnowFlake_Tiara
     Name: C Snow Flower
@@ -130185,6 +130340,15 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1291
+  - Id: 31591
+    AegisName: C_Crown_Of_Saint
+    Name: Costume Crown of Might
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    View: 1117
   - Id: 31593
     AegisName: C_Yellow_Scarf
     Name: C Yellow Scarf
