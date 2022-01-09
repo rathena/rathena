@@ -59,7 +59,7 @@ struct s_stylist_costs{
 
 struct s_stylist_entry{
 	uint16 look;
-	uint16 index;
+	int16 index;
 	uint32 value;
 	std::shared_ptr<s_stylist_costs> human;
 	std::shared_ptr<s_stylist_costs> doram;

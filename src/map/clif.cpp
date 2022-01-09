@@ -22491,38 +22491,38 @@ void clif_parse_stylist_buy( int fd, struct map_session_data* sd ){
 	struct PACKET_CZ_REQ_STYLE_CHANGE* p = (struct PACKET_CZ_REQ_STYLE_CHANGE*)RFIFOP( fd, 0 );
 #endif
 #endif
-	if( p->HeadPalette > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR_COLOR, p->HeadPalette ) ){
+	if( p->HeadPalette != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR_COLOR, p->HeadPalette ) ){
 		clif_stylist_response( sd, true );
 		return;
 	}
 
-	if( p->HeadStyle > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR, p->HeadStyle ) ){
+	if( p->HeadStyle != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR, p->HeadStyle ) ){
 		clif_stylist_response( sd, true );
 		return;
 	}
 
-	if( p->BodyPalette > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_CLOTHES_COLOR, p->BodyPalette ) ){
+	if( p->BodyPalette != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_CLOTHES_COLOR, p->BodyPalette ) ){
 		clif_stylist_response( sd, true );
 		return;
 	}
 
-	if( p->TopAccessory > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_TOP, p->TopAccessory ) ){
+	if( p->TopAccessory != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_TOP, p->TopAccessory ) ){
 		clif_stylist_response( sd, true );
 		return;
 	}
 
-	if( p->MidAccessory > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_MID, p->MidAccessory ) ){
+	if( p->MidAccessory != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_MID, p->MidAccessory ) ){
 		clif_stylist_response( sd, true );
 		return;
 	}
 
-	if( p->BottomAccessory > 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_BOTTOM, p->BottomAccessory ) ){
+	if( p->BottomAccessory != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_BOTTOM, p->BottomAccessory ) ){
 		clif_stylist_response( sd, true );
 		return;
 	}
 
 #if PACKETVER >= 20180516
-	if( p->BodyStyle > 0 && ( sd->class_ & JOBL_THIRD ) != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
+	if( p->BodyStyle != 0 && ( sd->class_ & JOBL_THIRD ) != 0 && ( sd->class_ & JOBL_FOURTH ) == 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
 		clif_stylist_response( sd, true );
 		return;
 	}

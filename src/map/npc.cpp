@@ -253,7 +253,7 @@ uint64 StylistDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		if( index <= 0 ){
+		if( index == 0 ){
 			this->invalidWarning( optionNode["Index"], "stylist_parseBodyNode: Unsupported index value \"%hd\"...\n", index );
 			return 0;
 		}
