@@ -174,7 +174,7 @@ void PlayerGroupDatabase::loadingFinished(){
 	int i;
 
 	for( i = 0; i < MAX_CYCLES; i++ ){
-		auto& inheritanceIt = this->inheritance.begin();
+		auto inheritanceIt = this->inheritance.begin();
 
 		while( inheritanceIt != this->inheritance.end() ){
 			auto& entry = *inheritanceIt;
@@ -186,7 +186,7 @@ void PlayerGroupDatabase::loadingFinished(){
 
 			std::shared_ptr<s_player_group> group = this->find( entry.first );
 
-			auto& it = entry.second.begin();
+			auto it = entry.second.begin();
 
 			while( it != entry.second.end() ){
 				std::string& otherName = *it;
