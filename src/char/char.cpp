@@ -35,6 +35,7 @@
 #include "int_mercenary.hpp"
 #include "int_party.hpp"
 #include "int_storage.hpp"
+#include "packets.hpp"
 
 //definition of exported var declared in header
 int login_fd=-1; //login file descriptor
@@ -1789,113 +1790,91 @@ int char_count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
-{
-	unsigned short offset = 0;
-	uint8* buf;
-
+int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 	if( buffer == NULL || p == NULL )
 		return 0;
 
-	buf = WBUFP(buffer,0);
-	WBUFL(buf,0) = p->char_id;
-#if PACKETVER >= 20170830
-	WBUFQ(buf,4) = u64min(p->base_exp, MAX_EXP);
-	offset += 4;
-	buf = WBUFP(buffer, offset);
-#else
-	WBUFL(buf,4) = (int32)u64min(p->base_exp, MAX_EXP);
-#endif
-	WBUFL(buf,8) = p->zeny;
-#if PACKETVER >= 20170830
-	WBUFQ(buf,12) = u64min(p->job_exp, MAX_EXP);
-	offset += 4;
-	buf = WBUFP(buffer, offset);
-#else
-	WBUFL(buf,12) = (int32)u64min(p->job_exp, MAX_EXP);
-#endif
-	WBUFL(buf,16) = p->job_level;
-	WBUFL(buf,20) = 0; // probably opt1
-	WBUFL(buf,24) = 0; // probably opt2
-	WBUFL(buf,28) = p->option;
-	WBUFL(buf,32) = p->karma;
-	WBUFL(buf,36) = p->manner;
-	WBUFW(buf,40) = umin(p->status_point, INT16_MAX);
-	WBUFL(buf,42) = p->hp;
-	WBUFL(buf,46) = p->max_hp;
-	offset+=4;
-	buf = WBUFP(buffer,offset);
-	WBUFW(buf,46) = min(p->sp, INT16_MAX);
-	WBUFW(buf,48) = min(p->max_sp, INT16_MAX);
-	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
-	WBUFW(buf,52) = p->class_;
-	WBUFW(buf,54) = p->hair;
+	struct CHARACTER_INFO* info = (struct CHARACTER_INFO*)buffer;
 
+	info->GID = p->char_id;
+#if PACKETVER >= 20170830
+	info->exp = u64min( p->base_exp, MAX_EXP );
+#else
+	info->exp = (int32)u64min( p->base_exp, MAX_EXP );
+#endif
+	info->money = p->zeny;
+#if PACKETVER >= 20170830
+	info->jobexp = u64min( p->job_exp, MAX_EXP );
+#else
+	info->jobexp = (int32)u64min( p->job_exp, MAX_EXP );
+#endif
+	info->joblevel = p->job_level;
+	info->bodystate = 0; // probably opt1
+	info->healthstate = 0; // probably opt2
+	info->effectstate = p->option;
+	info->virtue = p->karma;
+	info->honor = p->manner;
+	info->jobpoint = umin( p->status_point, INT16_MAX );
+	info->hp = p->hp;
+	info->maxhp = p->max_hp;
+	info->sp = min( p->sp, INT16_MAX );
+	info->maxsp = min( p->max_sp, INT16_MAX );
+	info->speed = DEFAULT_WALK_SPEED; // p->speed;
+	info->job = p->class_;
+	info->head = p->hair;
 #if PACKETVER >= 20141022
-	WBUFW(buf,56) = p->body;
-	offset+=2;
-	buf = WBUFP(buffer,offset);
+	info->body = p->body;
 #endif
-
 	//When the weapon is sent and your option is riding, the client crashes on login!?
-	WBUFW(buf,56) = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
-
-	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = umin(p->skill_point, INT16_MAX);
-	WBUFW(buf,62) = p->head_bottom;
-	WBUFW(buf,64) = p->shield;
-	WBUFW(buf,66) = p->head_top;
-	WBUFW(buf,68) = p->head_mid;
-	WBUFW(buf,70) = p->hair_color;
-	WBUFW(buf,72) = p->clothes_color;
-	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-	WBUFB(buf,98) = (unsigned char)u16min(p->str, UINT8_MAX);
-	WBUFB(buf,99) = (unsigned char)u16min(p->agi, UINT8_MAX);
-	WBUFB(buf,100) = (unsigned char)u16min(p->vit, UINT8_MAX);
-	WBUFB(buf,101) = (unsigned char)u16min(p->int_, UINT8_MAX);
-	WBUFB(buf,102) = (unsigned char)u16min(p->dex, UINT8_MAX);
-	WBUFB(buf,103) = (unsigned char)u16min(p->luk, UINT8_MAX);
-	WBUFW(buf,104) = p->slot;
-	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
-	offset += 2;
+	info->weapon = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
+	info->level = p->base_level;
+	info->sppoint = umin( p->skill_point, INT16_MAX );
+	info->accessory = p->head_bottom;
+	info->shield = p->shield;
+	info->accessory2 = p->head_top;
+	info->accessory3 = p->head_mid;
+	info->headpalette = p->hair_color;
+	info->bodypalette = p->clothes_color;
+	safestrncpy( info->name, p->name, NAME_LENGTH );
+	info->Str = (uint8)u16min( p->str, UINT8_MAX );
+	info->Agi = (uint8)u16min( p->agi, UINT8_MAX );
+	info->Vit = (uint8)u16min( p->vit, UINT8_MAX );
+	info->Int = (uint8)u16min( p->int_, UINT8_MAX );
+	info->Dex = (uint8)u16min( p->dex, UINT8_MAX );
+	info->Luk = (uint8)u16min( p->luk, UINT8_MAX );
+	info->CharNum = p->slot;
+	info->hairColor = (uint8)u16min( p->hair_color, UINT8_MAX );
+	info->bIsChangedCharName = ( p->rename > 0 ) ? 0 : 1;
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
-	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), WBUFCP(buf,108));
-	offset += MAP_NAME_LENGTH_EXT;
+	mapindex_getmapname_ext( mapindex_id2name( p->last_point.map ), info->mapName );
 #endif
 #if PACKETVER >= 20100803
 #if PACKETVER_CHAR_DELETEDATE
-	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
+	info->DelRevDate = ( p->delete_date ? TOL( p->delete_date - time( NULL ) ) : 0 );
 #else
-	WBUFL(buf,124) = TOL(p->delete_date);
+	info->DelRevDate = TOL( p->delete_date );
 #endif
-	offset += 4;
 #endif
 #if PACKETVER >= 20110111
-	WBUFL(buf,128) = p->robe;
-	offset += 4;
+	info->robePalette = p->robe;
 #endif
-#if PACKETVER != 20111116 //2011-11-16 wants 136, ask gravity.
-	#if PACKETVER >= 20110928
-		// change slot feature (0 = disabled, otherwise enabled)
-		if( (charserv_config.charmove_config.char_move_enabled)==0 )
-			WBUFL(buf,132) = 0;
-		else if( charserv_config.charmove_config.char_moves_unlimited )
-			WBUFL(buf,132) = 1;
-		else
-			WBUFL(buf,132) = max( 0, (int)p->character_moves );
-		offset += 4;
-	#endif
-	#if PACKETVER >= 20111025
-		WBUFL(buf,136) = ( p->rename > 0 ) ? 1 : 0;  // (0 = disabled, otherwise displays "Add-Ons" sidebar)
-		offset += 4;
-	#endif
-	#if PACKETVER >= 20141016
-		WBUFB(buf,140) = p->sex;// sex - (0 = female, 1 = male, 99 = logindefined)
-		offset += 1;
-	#endif
+#if PACKETVER >= 20110928
+	// change slot feature (0 = disabled, otherwise enabled)
+	if( charserv_config.charmove_config.char_move_enabled == 0 )
+		info->chr_slot_changeCnt = 0;
+	else if( charserv_config.charmove_config.char_moves_unlimited )
+		info->chr_slot_changeCnt = 1;
+	else
+		info->chr_slot_changeCnt = max( 0, (int)p->character_moves );
+#endif
+#if PACKETVER >= 20111025
+	info->chr_name_changeCnt = ( p->rename > 0 ) ? 1 : 0; // (0 = disabled, otherwise displays "Add-Ons" sidebar)
+#endif
+#if PACKETVER >= 20141016
+	info->sex = p->sex; // sex - (0 = female, 1 = male, 99 = logindefined)
 #endif
 
-	return 106+offset;
+	return sizeof( struct CHARACTER_INFO );
 }
 
 
