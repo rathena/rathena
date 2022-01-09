@@ -2273,6 +2273,11 @@
 	parseable_packet(0x0980,7,clif_parse_SelectCart,2,6); // CZ_SELECTCART
 #endif
 
+#if PACKETVER >= 20151104
+	parseable_packet( HEADER_CZ_REQ_STYLE_CHANGE, sizeof( PACKET_CZ_REQ_STYLE_CHANGE ), clif_parse_stylist_buy, 0 );
+	parseable_packet( HEADER_CZ_REQ_STYLE_CLOSE, sizeof( PACKET_CZ_REQ_STYLE_CLOSE ), clif_parse_stylist_close, 0 );
+#endif
+
 // 2016-03-02bRagexe
 #if PACKETVER >= 20160302
 	packet(0x0A51,34);
@@ -2392,6 +2397,10 @@
 // 2018-04-18bRagexeRE
 #if PACKETVER >= 20180418
 	packet(0x0ADD, 22);
+#endif
+
+#if PACKETVER >= 20180516
+	parseable_packet( HEADER_CZ_REQ_STYLE_CHANGE2, sizeof( PACKET_CZ_REQ_STYLE_CHANGE2 ), clif_parse_stylist_buy, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010

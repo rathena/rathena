@@ -51,6 +51,40 @@ struct s_npc_buy_list {
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris
 
+struct s_stylist_costs{
+	uint32 price;
+	t_itemid requiredItem;
+	t_itemid requiredItemBox;
+};
+
+struct s_stylist_entry{
+	uint16 look;
+	int16 index;
+	uint32 value;
+	std::shared_ptr<s_stylist_costs> human;
+	std::shared_ptr<s_stylist_costs> doram;
+};
+
+struct s_stylist_list{
+	uint16 look;
+	std::unordered_map<int16, std::shared_ptr<s_stylist_entry>> entries;
+};
+
+class StylistDatabase : public TypesafeYamlDatabase<uint32, s_stylist_list>{
+private:
+	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const YAML::Node& node );
+
+public:
+	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+extern StylistDatabase stylist_db;
+
 struct s_questinfo {
 	e_questinfo_types icon;
 	e_questinfo_markcolor color;
