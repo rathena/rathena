@@ -1935,14 +1935,25 @@ bool ComboDatabase::parseComboNode(const YAML::Node &node, const std::string &no
 		std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
 
 		if (item == nullptr) {
-			this->invalidWarning(node[nodeName], "Invalid item %s, skipping.\n", item_name.c_str());
+			this->invalidWarning(it, "Invalid item %s, skipping.\n", item_name.c_str());
 			return false;
 		}
+
 		items.push_back(item->nameid);
 	}
 
-	if (items.size() == 0) {
+	if (items.empty()) {
 		this->invalidWarning(node[nodeName], "Empty combo, skipping.\n");
+		return false;
+	}
+
+	if (items.size() < 2) {
+		this->invalidWarning(node[nodeName], "Not enough item to make a combo (need at least 2). Skipping.\n");
+		return false;
+	}
+
+	if (items.size() > MAX_ITEMS_PER_COMBO) {
+		this->invalidWarning(node[nodeName], "Too many item! Max: %d. Skipping.\n", MAX_ITEMS_PER_COMBO);
 		return false;
 	}
 
@@ -1954,6 +1965,16 @@ bool ComboDatabase::parseComboNode(const YAML::Node &node, const std::string &no
 
 const std::string ComboDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_combo_db.yml";
+}
+
+uint16 ComboDatabase::find_combo_id( const std::vector<t_itemid>& items ){
+	for (const auto &it : *this) {
+		if (it.second->nameid == items) {
+			return it.first;
+		}
+	}
+
+	return 0;
 }
 
 /**
@@ -1977,52 +1998,40 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 	}
 
-	if (items_list.size() == 0) {
+	if (items_list.empty()) {
 		this->invalidWarning(node, "Empty combo, skipping.\n");
 		return 0;
 	}
 
-	bool clear = false;
-
 	if (this->nodeExists(node, "Clear")) {
+		bool clear = false;
+
 		if (!this->asBool(node, "Clear", clear))
 			return 0;
+
+		// Remove the combo (if exists)
+		if (clear) {
+			for (const auto& itemsit : items_list) {
+				uint16 id = this->find_combo_id(itemsit);
+
+				if (id == 0) {
+					this->invalidWarning(node["Clear"], "Unable to clear one of the combos\n");
+					return 0;
+				}
+
+				this->erase(id);
+			}
+
+			return 1;
+		}
 	}
 
 	uint64 count = 0;
-	std::shared_ptr<s_item_combo> combo;
 
 	for (const auto &itemsit : items_list) {
-		if (itemsit.size() < 2) {
-			this->invalidWarning(node, "Not enough item to make a combo (need at least 2). Skipping.\n");
-			continue;
-		}
-		if (itemsit.size() > MAX_ITEMS_PER_COMBO) {
-			this->invalidWarning(node, "Too many item! Max: %d. Skipping.\n", MAX_ITEMS_PER_COMBO);
-			continue;
-		}
-
-		if (clear) {// remove the combo (if exists)
-			for (const auto &combo : *this) {
-				if (combo.second->nameid == itemsit) {
-					this->erase(combo.first);
-					break;
-				}
-			}
-			continue;
-		}
-
-		uint16 id = 0;	// entry id combo starts from 1
-
-		// find the id when the combo exists
-		for (const auto &it : *this) {
-			if (it.second->nameid == itemsit) {
-				id = it.first;
-				break;
-			}
-		}
-
-		combo = this->find(id);
+		// Find the id when the combo exists
+		uint16 id = this->find_combo_id(itemsit);
+		std::shared_ptr<s_item_combo> combo = this->find(id);
 		bool exists = combo != nullptr;
 
 		if (!exists) {

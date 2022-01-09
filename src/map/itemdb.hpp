@@ -833,6 +833,8 @@ struct s_item_combo {
 class ComboDatabase : public TypesafeYamlDatabase<uint16, s_item_combo> {
 private:
 	uint16 combo_num;
+	uint16 find_combo_id( const std::vector<t_itemid>& items );
+	bool parseComboNode(const YAML::Node& node, const std::string& nodeName, std::vector<std::vector<t_itemid>>& items_list);
 
 public:
 	ComboDatabase() : TypesafeYamlDatabase("COMBO_DB", 1) {
@@ -846,9 +848,6 @@ public:
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 	void loadingFinished();
-
-	// Additional
-	bool parseComboNode(const YAML::Node &node, const std::string &nodeName, std::vector<std::vector<t_itemid>> &items_list);
 };
 
 extern ComboDatabase itemdb_combo;
