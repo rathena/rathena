@@ -4248,6 +4248,7 @@ SavePoint:    All party members are warped to the save point of the currently
               attached player (will fail if there's no player attached).
 Leader:       All party members are warped to the leader's position. The leader must
               be online and in the current map-server for this to work.
+RandomAll:    All party members are warped to the same random position in their current map
 
 If you specify a from_mapname, 'warpparty' will only affect those on that map.
 

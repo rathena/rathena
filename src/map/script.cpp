@@ -5700,6 +5700,15 @@ BUILDIN_FUNC(areapercentheal)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+enum e_warpparty_target{
+	WARPPARTY_RANDOM = 0,
+	WARPPARTY_SAVEPOINTALL,
+	WARPPARTY_SAVEPOINT,
+	WARPPARTY_LEADER,
+	WARPPARTY_RANDOMALL,
+	WARPPARTY_RANDOMALLAREA
+};
+
 /*==========================================
  * Warpparty - [Fredzilla] [Paradox924X]
  * Syntax: warpparty "to_mapname",x,y,Party_ID,{<"from_mapname">,<range x>,<range y>};
@@ -5710,7 +5719,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *sd = NULL;
 	TBL_PC *pl_sd;
 	struct party_data* p;
-	int type, mapindex = 0, m = -1, i, rx = 0, ry = 0;
+	int mapindex = 0, m = -1, i, rx = 0, ry = 0;
 
 	const char* str = script_getstr(st,2);
 	int x = script_getnum(st,3);
@@ -5728,15 +5737,21 @@ BUILDIN_FUNC(warpparty)
 	if(!p)
 		return SCRIPT_CMD_SUCCESS;
 
-	type = ( strcmp(str,"Random")==0 ) ? 0
-	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
-		 : ( strcmp(str,"SavePoint")==0 ) ? 2
-		 : ( strcmp(str,"Leader")==0 ) ? 3
-		 : 4;
+	enum e_warpparty_target type = ( strcmp(str,"Random")==0 ) ? WARPPARTY_RANDOM
+	     : ( strcmp(str,"SavePointAll")==0 ) ? WARPPARTY_SAVEPOINTALL
+		 : ( strcmp(str,"SavePoint")==0 ) ? WARPPARTY_SAVEPOINT
+		 : ( strcmp(str,"Leader")==0 ) ? WARPPARTY_LEADER
+		 : ( strcmp(str,"RandomAll")==0 ) ? WARPPARTY_RANDOMALL
+		 : WARPPARTY_RANDOMALLAREA;
 
 	switch (type)
 	{
-		case 3:
+		case WARPPARTY_SAVEPOINT:
+			//"SavePoint" uses save point of the currently attached player
+			if ( !script_rid2sd(sd) )
+				return SCRIPT_CMD_FAILURE;
+			break;
+		case WARPPARTY_LEADER:
 			for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
 			if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
 				return SCRIPT_CMD_FAILURE;
@@ -5746,17 +5761,35 @@ BUILDIN_FUNC(warpparty)
 			x = pl_sd->bl.x;
 			y = pl_sd->bl.y;
 			break;
-		case 4:
+		case WARPPARTY_RANDOMALL: {
+			if ( !script_rid2sd(sd) )
+				return SCRIPT_CMD_FAILURE;
+
+			mapindex = sd->mapindex;
+			m = map_mapindex2mapid(mapindex);
+
+			struct map_data *mapdata = map_getmapdata(m);
+
+			if ( mapdata == nullptr || mapdata->flag[MF_NOWARP] || mapdata->flag[MF_NOTELEPORT] )
+				return SCRIPT_CMD_FAILURE;
+
+			i = 0;
+			do {
+				x = rnd()%(mapdata->xs - 2) + 1;
+				y = rnd()%(mapdata->ys - 2) + 1;
+			} while ((map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1))) && (i++) < 1000);
+
+			if (i >= 1000) {
+				ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
+				return SCRIPT_CMD_FAILURE;
+			}
+			} break;
+		case WARPPARTY_RANDOMALLAREA:
 			mapindex = mapindex_name2id(str);
 			if (!mapindex) {// Invalid map
 				return SCRIPT_CMD_FAILURE;
 			}
 			m = map_mapindex2mapid(mapindex);
-			break;
-		case 2:
-			//"SavePoint" uses save point of the currently attached player
-			if ( !script_rid2sd(sd) )
-				return SCRIPT_CMD_SUCCESS;
 			break;
 	}
 
@@ -5765,44 +5798,70 @@ BUILDIN_FUNC(warpparty)
 		if( !(pl_sd = p->data[i].sd) || pl_sd->status.party_id != p_id )
 			continue;
 
-		if( str2 && strcmp(str2, map_getmapdata(pl_sd->bl.m)->name) != 0 )
+		map_data* mapdata = map_getmapdata(pl_sd->bl.m);
+
+		if( str2 && strcmp(str2, mapdata->name) != 0 )
 			continue;
 
 		if( pc_isdead(pl_sd) )
 			continue;
 
+		e_setpos ret = SETPOS_OK;
+
 		switch( type )
 		{
-		case 0: // Random
-			if(!map_getmapflag(pl_sd->bl.m, MF_NOWARP))
-				pc_randomwarp(pl_sd,CLR_TELEPORT);
+		case WARPPARTY_RANDOM:
+			if (!mapdata->flag[MF_NOWARP])
+				ret = (e_setpos)pc_randomwarp(pl_sd,CLR_TELEPORT);
 		break;
-		case 1: // SavePointAll
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
+		case WARPPARTY_SAVEPOINTALL:
+			if (!mapdata->flag[MF_NORETURN])
+				ret = pc_setpos(pl_sd,pl_sd->status.save_point.map,pl_sd->status.save_point.x,pl_sd->status.save_point.y,CLR_TELEPORT);
 		break;
-		case 2: // SavePoint
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN))
-				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
+		case WARPPARTY_SAVEPOINT:
+			if (!mapdata->flag[MF_NORETURN])
+				ret = pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
-		case 3: // Leader
+		case WARPPARTY_LEADER:
 			if (p->party.member[i].leader)
 				continue;
-		case 4: // m,x,y
-			if (rx || ry) {
-				int x1 = x + rx, y1 = y + ry,
-					x0 = x - rx, y0 = y - ry;
-				uint8 attempts = 10;
-
-				do {
-					x = x0 + rnd()%(x1 - x0 + 1);
-					y = y0 + rnd()%(y1 - y0 + 1);
-				} while ((--attempts) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
+			// Fall through
+		case WARPPARTY_RANDOMALL:
+			if (pl_sd == sd) {
+				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
+				break;
 			}
+			// Fall through
+		case WARPPARTY_RANDOMALLAREA:
+			if(!mapdata->flag[MF_NORETURN] && !mapdata->flag[MF_NOWARP] && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level)){
+				if (rx || ry) {
+					int x1 = x + rx, y1 = y + ry,
+						x0 = x - rx, y0 = y - ry,
+						nx, ny;
+					uint8 attempts = 10;
 
-			if(!map_getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
-				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
+					do {
+						nx = x0 + rnd()%(x1 - x0 + 1);
+						ny = y0 + rnd()%(y1 - y0 + 1);
+					} while ((--attempts) > 0 && !map_getcell(m, nx, ny, CELL_CHKPASS));
+
+					if (attempts != 0) { //Keep the original coordinates if fails to find a valid cell within the range
+						x = nx;
+						y = ny;
+					}
+				}
+
+				ret = pc_setpos(pl_sd, mapindex, x, y, CLR_TELEPORT);
+			}
 		break;
+		}
+
+		if( ret != SETPOS_OK ) {
+			ShowError("buildin_warpparty: moving player '%s' to \"%s\",%d,%d failed.\n", pl_sd->status.name, str, x, y);
+			if ( ( type == WARPPARTY_RANDOMALL || type == WARPPARTY_RANDOMALLAREA ) && (rx || ry) )
+				continue;
+			else
+				return SCRIPT_CMD_FAILURE;
 		}
 	}
 
