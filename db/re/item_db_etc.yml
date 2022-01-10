@@ -21686,8 +21686,8 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6707
-    AegisName: Jeremy_Beauty_Coupon
-    Name: Jeremy Beauty Coupon
+    AegisName: J_Shop_Coupon
+    Name: Cash Hair Coupon
     Type: Etc
     Buy: 10
     Weight: 10
@@ -24023,9 +24023,10 @@ Body:
     Type: Etc
     Buy: 10
   - Id: 6959
-    AegisName: aegis_6959
-    Name: Costume Change Ticket
+    AegisName: Costume_Ticket
+    Name: Costume Change Ticket 
     Type: Etc
+    Buy: 0
     Trade:
       Override: 100
       NoDrop: true
