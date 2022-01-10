@@ -22,8 +22,8 @@
 # Settings
 #
 ###########################################################################
-# - Combos:                 List of set. If only one sequence is defined Combos map can be stripped.
-#    - Combo:               Sequence of items to define a Combo (minimum 2 items).
+# - Combos:                 List of combo sets.
+#    - Combo:               Sequence of items to define a Combo (minimum of 2 items).
 #   Script                  Script to execute when the Combo is equipped. (Default: null)
 #   Clear                   Remove the defined Combo(s) from database. (Default: false)
 ###########################################################################

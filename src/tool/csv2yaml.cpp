@@ -4899,8 +4899,8 @@ static bool itemdb_read_combos(const char* file) {
 			body << YAML::Key << *item_name;
 			body << YAML::EndMap;
 		}
-		body << YAML::EndMap;
 		body << YAML::EndSeq;
+		body << YAML::EndMap;
 
 		str[1] = str[1] + 1;	//skip the first left curly
 		str[1][strlen(str[1])-1] = '\0';	//null the last right curly
