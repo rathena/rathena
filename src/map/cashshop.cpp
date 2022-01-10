@@ -77,7 +77,7 @@ uint64 CashShopDatabase::parseBodyNode( const YAML::Node &node ){
 		bool cash_item_exists = false;
 
 		for( std::shared_ptr<s_cash_item> cash_it : entry->items ){
-			if( cash_it->nameid = item->nameid ){
+			if( cash_it->nameid == item->nameid ){
 				cash_item = cash_it;
 				cash_item_exists = true;
 				break;
@@ -117,7 +117,7 @@ std::shared_ptr<s_cash_item> CashShopDatabase::findItemInTab( e_cash_shop_tab ta
 	}
 
 	for( std::shared_ptr<s_cash_item> cash_it : cash_tab->items ){
-		if( cash_it->nameid = nameid ){
+		if( cash_it->nameid == nameid ){
 			return cash_it;
 		}
 	}
