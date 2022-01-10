@@ -1964,7 +1964,7 @@ bool ComboDatabase::parseComboNode(const YAML::Node &node, const std::string &no
 }
 
 const std::string ComboDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/item_combo_db.yml";
+	return std::string(db_path) + "/item_combos.yml";
 }
 
 uint16 ComboDatabase::find_combo_id( const std::vector<t_itemid>& items ){
@@ -1978,7 +1978,7 @@ uint16 ComboDatabase::find_combo_id( const std::vector<t_itemid>& items ){
 }
 
 /**
- * Reads and parses an entry from the item_combo_db.
+ * Reads and parses an entry from the item_combos.
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */
@@ -1992,10 +1992,6 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->parseComboNode(Comboit, "Combo", items_list))
 				return 0;
 		}
-	}
-	else if (this->nodeExists(node, "Combo")) {
-		if (!this->parseComboNode(node, "Combo", items_list))
-			return 0;
 	}
 
 	if (items_list.empty()) {
@@ -2015,7 +2011,7 @@ uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 				uint16 id = this->find_combo_id(itemsit);
 
 				if (id == 0) {
-					this->invalidWarning(node["Clear"], "Unable to clear one of the combos\n");
+					this->invalidWarning(node["Clear"], "Unable to clear the combo.\n");
 					return 0;
 				}
 

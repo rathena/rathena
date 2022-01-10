@@ -1421,7 +1421,7 @@ Affected files:
 -- atcommand: atcommands.yml, groups.conf
 -- battleconf: battle_athena.conf, battle_conf.txt
 -- instancedb: instance_db.yml
--- itemdb: item_db.yml, item_group_db.yml, item_noequip.txt, item_combo_db.yml, item_randomopt_db.yml, item_randomopt_group.yml
+-- itemdb: item_db.yml, item_group_db.yml, item_noequip.txt, item_combos.yml, item_randomopt_db.yml, item_randomopt_group.yml
 -- mobdb: mob_db.yml, mob_item_ratio.yml, mob_chat_db.yml, mob_avail.yml, mob_summon.yml, pet_db.yml, homunculus_db.txt, homun_skill_tree.txt, exp_homun.yml, mercenary_db.yml, elemental_db.yml
 -- motd: motd.txt
 -- msgconf: atcommands.yml

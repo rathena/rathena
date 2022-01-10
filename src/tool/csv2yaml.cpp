@@ -528,13 +528,13 @@ int do_init( int argc, char** argv ){
 
 	if (!process("COMBO_DB", 1, { path_db_mode }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_combos((path + name_ext).c_str());
-	})) {
+	}, "item_combos")) {
 		return 0;
 	}
 
 	if (!process("COMBO_DB", 1, { path_db_import }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_combos((path + name_ext).c_str());
-	})) {
+	}, "item_combos")) {
 		return 0;
 	}
 
@@ -4886,6 +4886,10 @@ static bool itemdb_read_combos(const char* file) {
 			continue;
 
 		body << YAML::BeginMap;
+		body << YAML::Key << "Combos";
+		body << YAML::BeginSeq;
+
+		body << YAML::BeginMap;
 		body << YAML::Key << "Combo";
 		body << YAML::BeginSeq;
 
@@ -4895,6 +4899,9 @@ static bool itemdb_read_combos(const char* file) {
 			body << YAML::Key << *item_name;
 			body << YAML::EndMap;
 		}
+		body << YAML::EndMap;
+		body << YAML::EndSeq;
+
 		str[1] = str[1] + 1;	//skip the first left curly
 		str[1][strlen(str[1])-1] = '\0';	//null the last right curly
 
