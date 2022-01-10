@@ -1952,11 +1952,6 @@ bool ComboDatabase::parseComboNode(const YAML::Node &node, const std::string &no
 		return false;
 	}
 
-	if (items.size() > MAX_ITEMS_PER_COMBO) {
-		this->invalidWarning(node[nodeName], "Too many item! Max: %d. Skipping.\n", MAX_ITEMS_PER_COMBO);
-		return false;
-	}
-
 	std::sort(items.begin(), items.end());
 	items_list.push_back(items);
 

@@ -20,6 +20,8 @@
 //Raised to 105 since Expanded Super Baby needs it.
 #define MAX_SKILL_TREE 105
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
+///Maximum amount of items a combo may require
+#define MAX_ITEMS_PER_COMBO 6
 
 struct s_skill_tree_entry_csv {
 	std::string skill_name;
