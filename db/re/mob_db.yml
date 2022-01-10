@@ -83357,8 +83357,8 @@ Body:
       - Item: Poporing_Card
         Rate: 10
         StealProtected: true
-  - Id: 1056
-    AegisName: SMOKIE
+  - Id: 3392
+    AegisName: MIN_SMOKIE
     Name: Smokie
     Level: 102
     Hp: 55000
