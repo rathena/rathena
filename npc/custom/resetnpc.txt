@@ -11,24 +11,24 @@
 //=	Changed set -> setarray, Improved text with F_InsertPlural
 //= 1.5 Added sc_end_class to reset related status changes [sader1992]
 //============================================================
-prontera,150,193,4	script	Reset Girl	124,{
+morocc,146,114,6	script	Reset Status	749,{
 	//	 		Skills,	Stats,	Both,	Limit  ราคารีสกิล ( 5000 ), ราคารีสเตตัส ( 5000 ), ราคารีทั้งคู่ ( 9000 ), จำนวนครั้งในการรี ( 0 )
 	setarray .@Reset,	5000,	5000,	9000,	0;
-	mes "[Reset Girl]";
+	mes "[Reset Status]";
 	if(.@Reset[3] && reset_limit > .@Reset[3]) {
 		mes "ขอโทษด้วยเจ้าสามารถรีได้แค่ "+callfunc("F_InsertPlural",.@Reset[3],"ครั้ง")+" เท่านั้น.";
 		close;
 	}
-	mes "ข้าคือ Reset Girl.";
-	mes "รีสเตตัส: "+ callfunc("F_InsertComma",.@Reset[1]) +"z";
-	mes "รีสกิล: "+ callfunc("F_InsertComma",.@Reset[0]) +"z";
-	mes "รีทั้งคู่: "+ callfunc("F_InsertComma",.@Reset[2]) +"z";
+	mes "ข้าคือ Reset Status.";
+	mes "Reset Status: "+ callfunc("F_InsertComma",.@Reset[1]) +"z";
+	mes "Reset Skill: "+ callfunc("F_InsertComma",.@Reset[0]) +"z";
+	mes "Reset Status & Skill: "+ callfunc("F_InsertComma",.@Reset[2]) +"z";
 	if(.@Reset[3]) mes "เจ้าสามารถรีได้แค่ "+callfunc("F_InsertPlural",.@Reset[3],"ครั้ง")+", ดังนั้นใช้ "+((.@Reset[3]>1)?"มัน":"อย่าง")+" ฉลาด.";
 	mes "กรุณาเลือกบริการที่ต้องการ:";
 	next;
-	set .@i,(select("^FF3355รีสกิล:รีสเตตัส:รีทั้งคู่^000000:ยกเลิก"));
+	set .@i,(select("^FF3355Reset Status:Reset Skill:Reset Status & Skill^000000:ยกเลิก"));
 	if(.@i > 3) close;
-	mes "[Reset Girl]";
+	mes "[Reset Status]";
 	if (Zeny < .@Reset[.@i-1]) {
 		mes "ขอโทษด้วย, เจ้ามีเงินไม่พอ.";
 		close;
@@ -46,4 +46,7 @@ prontera,150,193,4	script	Reset Girl	124,{
 	mes "เรียบร้อย!";
 	if(.@Reset[3]) set reset_limit,reset_limit + 1;
 	close;
+OnInit:
+	waitingroom "รีสกิล&สเตตัส",0;
+end;
 }

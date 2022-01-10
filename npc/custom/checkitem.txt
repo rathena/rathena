@@ -1,0 +1,76 @@
+//===== rAthena Script =======================================
+//= Checkitem
+//===== By: ==================================================
+//= DurexzOfficial
+//===== Current Version: =====================================
+//= Ver.2.0 แก้ไขนับการ์ดที่สวมใส่ในไอเทม
+//= Ver.2.1 เพิ่ม Mode
+//= Ver.2.2 แก้ไข SQL Mode 1 คำนวนไอเทมผิดพลาด
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+
+morocc,141,102,4	script	บริการเช็คไอเทม	123,{
+	
+	.@mode = 1; // 0 คือแสดงแค่ข้อมูลทั้งหมด 1 คือแสดงข้อมูลในตัว และ แยกการ์ดที่อยู่ในไอเทม
+	mes "กรอก ^FF0000รหัสไอเทม^000000 ที่ต้องการค้นหา";
+    next;
+    input .@item_id;
+if(.@mode == 0){
+	query_sql( "SELECT SUM((`nameid`='"+.@item_id+"')+(`card0`='"+.@item_id+"')+(`card1`='"+.@item_id+"')+(`card2`='"+.@item_id+"')+(`card3`='"+.@item_id+"')) as amount FROM `inventory`", .@inventory);
+//====================================================================================================================
+	query_sql( "SELECT SUM((`nameid`='"+.@item_id+"')+(`card0`='"+.@item_id+"')+(`card1`='"+.@item_id+"')+(`card2`='"+.@item_id+"')+(`card3`='"+.@item_id+"')) as amount FROM `cart_inventory`", .@cart);
+//====================================================================================================================
+	query_sql( "SELECT SUM((`nameid`='"+.@item_id+"')+(`card0`='"+.@item_id+"')+(`card1`='"+.@item_id+"')+(`card2`='"+.@item_id+"')+(`card3`='"+.@item_id+"')) as amount FROM `storage`", .@storage);
+//====================================================================================================================
+	query_sql( "SELECT SUM((`nameid`='"+.@item_id+"')+(`card0`='"+.@item_id+"')+(`card1`='"+.@item_id+"')+(`card2`='"+.@item_id+"')+(`card3`='"+.@item_id+"')) as amount FROM `guild_storage`", .@g_storage);
+//====================================================================================================================
+    mes "ชื่อไอเทม : ^0000FF"+getitemname(.@item_id)+" ^FF0000["+.@item_id+"]^000000";
+	mes "ในตัวผู้เล่น : ^FF0000"+.@inventory+"^000000 ชิ้น";
+	mes "ในรถเข็น :   ^FF0000"+.@cart+"^000000 ชิ้น";
+	mes "ในคลัง :      ^FF0000"+.@storage+"^000000 ชิ้น";
+	mes "ในคลังกิลด์ : ^FF0000"+.@g_storage+"^000000 ชิ้น";
+    mes "รวมทั้งหมด  = ^FF0000"+(.@inventory+.@cart+.@storage+.@g_storage)+"^000000 ชิ้น";
+    close;
+}
+	query_sql( "SELECT SUM(`amount`) FROM `inventory` WHERE `nameid` = '"+.@item_id+"'", .@inventory);
+	query_sql( "SELECT SUM(`amount`) FROM `inventory` WHERE `card0` = '"+.@item_id+"'", .@in_card0 );
+	query_sql( "SELECT SUM(`amount`) FROM `inventory` WHERE `card1` = '"+.@item_id+"'", .@in_card1 );
+	query_sql( "SELECT SUM(`amount`) FROM `inventory` WHERE `card2` = '"+.@item_id+"'", .@in_card2 );
+	query_sql( "SELECT SUM(`amount`) FROM `inventory` WHERE `card3` = '"+.@item_id+"'", .@in_card3 );
+//====================================================================================================================
+	query_sql( "SELECT SUM(`amount`) FROM `cart_inventory` WHERE `nameid` = '"+.@item_id+"'", .@cart );
+	query_sql( "SELECT SUM(`amount`) FROM `cart_inventory` WHERE `card0` = '"+.@item_id+"'", .@c_card0 );
+	query_sql( "SELECT SUM(`amount`) FROM `cart_inventory` WHERE `card1` = '"+.@item_id+"'", .@c_card1 );
+	query_sql( "SELECT SUM(`amount`) FROM `cart_inventory` WHERE `card2` = '"+.@item_id+"'", .@c_card2 );
+	query_sql( "SELECT SUM(`amount`) FROM `cart_inventory` WHERE `card3` = '"+.@item_id+"'", .@c_card3 );
+//====================================================================================================================
+	query_sql( "SELECT SUM(`amount`) FROM `storage` WHERE `nameid` = '"+.@item_id+"'", .@storage );
+	query_sql( "SELECT SUM(`amount`) FROM `storage` WHERE `card0` = '"+.@item_id+"'", .@s_card0 );
+	query_sql( "SELECT SUM(`amount`) FROM `storage` WHERE `card1` = '"+.@item_id+"'", .@s_card1 );
+	query_sql( "SELECT SUM(`amount`) FROM `storage` WHERE `card2` = '"+.@item_id+"'", .@s_card2 );
+	query_sql( "SELECT SUM(`amount`) FROM `storage` WHERE `card3` = '"+.@item_id+"'", .@s_card3 );
+//====================================================================================================================
+	query_sql( "SELECT SUM(`amount`) FROM `guild_storage` WHERE `nameid` = '"+.@item_id+"'", .@g_storage );
+	query_sql( "SELECT SUM(`amount`) FROM `guild_storage` WHERE `card0` = '"+.@item_id+"'", .@g_card0 );
+	query_sql( "SELECT SUM(`amount`) FROM `guild_storage` WHERE `card1` = '"+.@item_id+"'", .@g_card1 );
+	query_sql( "SELECT SUM(`amount`) FROM `guild_storage` WHERE `card2` = '"+.@item_id+"'", .@g_card2 );
+	query_sql( "SELECT SUM(`amount`) FROM `guild_storage` WHERE `card3` = '"+.@item_id+"'", .@g_card3 );
+//====================================================================================================================
+	.@in = .@in_card0+.@in_card1+.@in_card2+.@in_card3+.@inventory;
+	.@c = .@c_card0+.@c_card1+.@c_card2+.@c_card3+.@cart;
+	.@s = .@s_card0+.@s_card1+.@s_card2+.@s_card3+.@storage;
+	.@g = .@g_card0+.@g_card1+.@g_card2+.@g_card3+.@g_storage;
+    mes "ชื่อไอเทม : ^0000FF"+getitemname(.@item_id)+" ^FF0000["+.@item_id+"]^000000";
+	mes "ในตัวผู้เล่น : ^FF0000"+.@inventory+"^000000 ชิ้น"+" , สวมใส่อุปกรณ์ ^FF0000"+(.@in_card0+.@in_card1+.@in_card2+.@in_card3)+"^000000 ชิ้น";
+	mes "ในรถเข็น :   ^FF0000"+.@cart+"^000000 ชิ้น"+" , สวมใส่อุปกรณ์ ^FF0000"+(.@c_card0+.@c_card1+.@c_card2+.@c_card3)+"^000000 ชิ้น";
+	mes "ในคลัง :      ^FF0000"+.@storage+"^000000 ชิ้น"+" , สวมใส่อุปกรณ์ ^FF0000"+(.@s_card0+.@s_card1+.@s_card2+.@s_card3)+"^000000 ชิ้น";
+	mes "ในคลังกิลด์ : ^FF0000"+.@g_storage+"^000000 ชิ้น"+" , สวมใส่อุปกรณ์ ^FF0000"+(.@g_card0+.@g_card1+.@g_card2+.@g_card3)+"^000000 ชิ้น";
+    mes "รวมทั้งหมด  = ^FF0000"+(.@in+.@c+.@s+.@g)+"^000000 ชิ้น";
+    close;
+    
+OnInit:
+    waitingroom "บริการเช็คไอเทม",0;
+    end;
+}

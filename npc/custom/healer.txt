@@ -16,7 +16,7 @@
 -	script	Healer	-1,{
 
 	.@Price = 0;	// ค่าใช้จ่ายในการรักษา
-	.@Buffs = 0;	// บัฟผู้เล่นด้วย? (1: ใช่ / 0: ไม่)
+	.@Buffs = 1;	// บัฟผู้เล่นด้วย? (1: ใช่ / 0: ไม่)
 	.@Delay = 0;	// ระยะเวลารักษาเป็นวินาที
 
 	if (@HD > gettimetick(2))
@@ -32,10 +32,38 @@
 	specialeffect2 EF_HEAL2;
 	percentheal 100,100;
 	if (.@Buffs) {
-		specialeffect2 EF_INCAGILITY;
-		sc_start SC_INCREASEAGI,240000,10;
-		specialeffect2 EF_BLESSING;
-		sc_start SC_BLESSING,240000,10;
+	
+		//บัพอาหาร 30 นาที เลเวล 10
+		sc_start SC_STRFood, 1800000,10;
+		sc_start SC_AGIFood, 1800000,10;
+		sc_start SC_VITFood, 1800000,10;
+		sc_start SC_INTFood, 1800000,10;
+		sc_start SC_DEXFood, 1800000,10;
+		sc_start SC_LUKFood, 1800000,10;
+		
+		//บัพสกิลต่างๆ
+		sc_start SC_BLESSING,1800000,10;
+		sc_start SC_INCREASEAGI,1800000,10;
+		sc_start SC_GLORIA,1800000,10;
+		sc_start SC_MAGNIFICAT,1800000,10;
+		sc_start4 SC_POEMBRAGI,1800000,5,70,90,5;
+		sc_start4 SC_SERVICE4U,1800000,5,40,40,1;
+		
+		//แก้สถานะต่างๆ
+		sc_end SC_POISON;
+		sc_end SC_FREEZE;
+		sc_end SC_SLEEP;
+		sc_end SC_STAN;
+		sc_end SC_STUN;
+		sc_end SC_STONE;
+		sc_end SC_SILENCE;
+		sc_end SC_BLIND;
+		sc_end SC_Bleeding;
+		sc_end SC_CONFUSION;
+		sc_end SC_CURSE;
+		sc_end SC_HALLUCINATION;
+		sc_end SC_ORCISH;
+		
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;
@@ -45,42 +73,42 @@
 
 // Duplicates
 //============================================================
-alberta,25,240,6	duplicate(Healer)	Healer#alb	909
-aldebaran,135,118,6	duplicate(Healer)	Healer#alde	909
-amatsu,200,79,4	duplicate(Healer)	Healer#ama	909
-ayothaya,207,169,6	duplicate(Healer)	Healer#ayo	909
-comodo,184,158,6	duplicate(Healer)	Healer#com	909
-einbech,57,36,6	duplicate(Healer)	Healer#einbe	909
-einbroch,57,202,6	duplicate(Healer)	Healer#einbr	909
-geffen,115,72,6	duplicate(Healer)	Healer#gef	909
-gonryun,156,122,6	duplicate(Healer)	Healer#gon	909
-hugel,89,150,6	duplicate(Healer)	Healer#hug	909
-izlude,121,150,6	duplicate(Healer)	Healer#izl	909	//Pre-RE: (125,118)
-jawaii,250,139,4	duplicate(Healer)	Healer#jaw	909
-lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	909
-louyang,226,103,4	duplicate(Healer)	Healer#lou	909
-manuk,272,144,6	duplicate(Healer)	Healer#man	909
-mid_camp,203,289,6	duplicate(Healer)	Healer#mid	909
-moc_ruins,72,164,4	duplicate(Healer)	Healer#moc	909
-morocc,154,97,6	duplicate(Healer)	Healer#mor	909
-moscovia,220,191,4	duplicate(Healer)	Healer#mos	909
-niflheim,212,182,5	duplicate(Healer)	Healer#nif	909
-payon,179,106,4	duplicate(Healer)	Healer#pay	909
-prontera,162,193,4	duplicate(Healer)	Healer#prt	909
-rachel,125,116,6	duplicate(Healer)	Healer#rac	909
-splendide,201,153,4	duplicate(Healer)	Healer#spl	909
-thor_camp,249,74,4	duplicate(Healer)	Healer#thor	909
-umbala,105,148,3	duplicate(Healer)	Healer#umb	909
-veins,217,121,4	duplicate(Healer)	Healer#ve	909
-xmas,143,136,4	duplicate(Healer)	Healer#xmas	909
-yuno,164,45,4	duplicate(Healer)	Healer#yuno	909
+alberta,25,240,6	duplicate(Healer)	Healer#alb	10078
+aldebaran,135,118,6	duplicate(Healer)	Healer#alde	10078
+amatsu,200,79,4	duplicate(Healer)	Healer#ama	10078
+ayothaya,207,169,6	duplicate(Healer)	Healer#ayo	10078
+comodo,184,158,6	duplicate(Healer)	Healer#com	10078
+einbech,57,36,6	duplicate(Healer)	Healer#einbe	10078
+einbroch,57,202,6	duplicate(Healer)	Healer#einbr	10078
+geffen,115,72,6	duplicate(Healer)	Healer#gef	10078
+gonryun,156,122,6	duplicate(Healer)	Healer#gon	10078
+hugel,89,150,6	duplicate(Healer)	Healer#hug	10078
+izlude,121,150,6	duplicate(Healer)	Healer#izl	10078	//Pre-RE: (125,118)
+jawaii,250,139,4	duplicate(Healer)	Healer#jaw	10078
+lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	10078
+louyang,226,103,4	duplicate(Healer)	Healer#lou	10078
+manuk,272,144,6	duplicate(Healer)	Healer#man	10078
+mid_camp,203,289,6	duplicate(Healer)	Healer#mid	10078
+moc_ruins,72,164,4	duplicate(Healer)	Healer#moc	10078
+morocc,162,97,4	duplicate(Healer)	Healer#mor	10078
+moscovia,220,191,4	duplicate(Healer)	Healer#mos	10078
+niflheim,212,182,5	duplicate(Healer)	Healer#nif	10078
+payon,179,106,4	duplicate(Healer)	Healer#pay	10078
+prontera,162,193,4	duplicate(Healer)	Healer#prt	10078
+rachel,125,116,6	duplicate(Healer)	Healer#rac	10078
+splendide,201,153,4	duplicate(Healer)	Healer#spl	10078
+thor_camp,249,74,4	duplicate(Healer)	Healer#thor	10078
+umbala,105,148,3	duplicate(Healer)	Healer#umb	10078
+veins,217,121,4	duplicate(Healer)	Healer#ve	10078
+xmas,143,136,4	duplicate(Healer)	Healer#xmas	10078
+yuno,164,45,4	duplicate(Healer)	Healer#yuno	10078
 
 // Duplicates (Renewal)
 //============================================================
-brasilis,194,221,6	duplicate(Healer)	Healer#bra	909
-dewata,195,187,4	duplicate(Healer)	Healer#dew	909
-dicastes01,201,194,4	duplicate(Healer)	Healer#dic	909
-ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	909
-malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
-malaya,227,204,6	duplicate(Healer)	Healer#ma	909
-mora,55,152,4	duplicate(Healer)	Healer#mora	909
+brasilis,194,221,6	duplicate(Healer)	Healer#bra	10078
+dewata,195,187,4	duplicate(Healer)	Healer#dew	10078
+dicastes01,201,194,4	duplicate(Healer)	Healer#dic	10078
+ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	10078
+malangdo,132,114,6	duplicate(Healer)	Healer#mal	10078
+malaya,227,204,6	duplicate(Healer)	Healer#ma	10078
+mora,55,152,4	duplicate(Healer)	Healer#mora	10078

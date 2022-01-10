@@ -10,9 +10,9 @@
 //= One-click automatic mount rentals.
 //============================================================
 
-prontera,124,201,1	script	Universal Rental NPC	726,{
+morocc,151,112,4	script	เช่าสัตว์ขี่	938,{
 	if (ismounting()) {
-		message strcharinfo(0),"You must first remove your mount.";
+		message strcharinfo(0),"คุณต้องถอดสัตว์ขี่เก่าก่อน";
 		end;
 	} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
 		if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
@@ -31,9 +31,11 @@ prontera,124,201,1	script	Universal Rental NPC	726,{
 		else setriding;
 	} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
 	else {
-		message strcharinfo(0),"You do not meet requirements to rent.";
+		message strcharinfo(0),"คุณมีคุณสมบัติไม่ตรงตามข้อกำหนดในการเช่า";
 		end;
 	}
 	specialeffect2 EF_TEIHIT3;
+OnInit:
+	waitingroom "เช่าสัตว์ขี่",0;
 	end;
 }

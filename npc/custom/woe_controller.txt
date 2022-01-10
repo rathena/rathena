@@ -26,7 +26,7 @@
 
 // Information NPC
 //============================================================
-prontera,149,193,4	script	WOE Information	835,{
+morocc,165,97,4	script	WOE Information	686,{
 	doevent "WOE_CONTROL::OnMenu";
 	end;
 OnAgitStart:
@@ -146,7 +146,7 @@ OnInit:
 			Castle("te_aldecas5", "Manager_TE#W::OnAgitEnd3",		"Manager_TE#W::OnAgitBreak",		"te_alde_gld",264,90);
 	}
 
-	setarray .Days$[0],"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday";
+	setarray .Days$[0],"วันอาทิตย์","วันจันทร์","วันอังคาร","วันพุธ","วันพฤหัสบดี","วันศุกร์","วันเสาร์";
 
 // -----------------------------------------------------------
 
@@ -173,7 +173,7 @@ OnMinute00:
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4) {
 			if (gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) == $WOE_CONTROL[.@i+2]) {
 			OnWOEEnd:
-				announce "The War Of Emperium is over!",bc_all|bc_woe;
+				announce "สงครามกิลด์วอร์ได้จบลงแล้ว!",bc_all|bc_woe;
 				AgitEnd; AgitEnd2; AgitEnd3;
 				sleep 1000;
 				for(set .@j,0; .@j<.total_castle; set .@j,.@j+1) {
@@ -195,7 +195,7 @@ OnMinute00:
 				deletearray .Active[0],2;
 				set .Active[0], $WOE_CONTROL[.@i+3];
 				if (.Init) { AgitEnd; AgitEnd2; AgitEnd3; }
-				else announce "The War Of Emperium has begun!",bc_all|bc_woe;
+				else announce "สงครามกิลด์วอร์ได้เริ่มขึ้นแล้ว!",bc_all|bc_woe;
 				sleep 1000;
 				AgitStart; AgitStart2; AgitStart3;
 				for(set .@j,0; .@j<.total_castle; set .@j,.@j+1) {
@@ -216,8 +216,8 @@ OnMinute00:
 
 function Disp_Owner {
 	set .@o, getcastledata(getarg(0),1);
-	if (.@o) announce "The ["+getcastlename(getarg(0))+"] castle "+((getarg(1))?"has been conquered":"is currently held")+" by the ["+getguildname(.@o)+"] guild.",bc_all|bc_woe;
-	else announce "The ["+getcastlename(getarg(0))+"] castle is currently unoccupied.",bc_all|bc_woe;
+	if (.@o) announce "ปราสาท ["+getcastlename(getarg(0))+"] ในตอนนี้ "+((getarg(1))?"ได้ถูกยึดครอง":"ถูกยึดครอง")+" โดย ["+getguildname(.@o)+"] guild.",bc_all|bc_woe;
+	else announce "ปราสาท ["+getcastlename(getarg(0))+"] ในตอนนี้ยังไม่มีเจ้าของ.",bc_all|bc_woe;
 	return;
 }
 function Add_Zero {
@@ -334,7 +334,7 @@ OnReward:
 
 						if (PACKETVER < 20150513 && !getd(".@str_"+.@cid[.@j]) && .@online) {
 							setd ".@str_"+.@cid[.@j],1;
-							message rid2name(.@aid[.@j]),"You've got mail!";
+							message rid2name(.@aid[.@j]),"คุณได้รับจดหมายแล้ว!";
 						}
 					}
 				}
@@ -346,10 +346,10 @@ OnReward:
 						if (checkweight(.reward_id[.@k], .reward_amount[.@k]))
 							getitem .reward_id[.@k], .reward_amount[.@k];
 						else
-							dispbottom "You can't receive x" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " for conquering " + .@castle_name$ + " because you're overweight.";
+							dispbottom "คุณได้รับรางวัล " + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + "  " + .@castle_name$ + " เพราะคุณน้ำหนักเกิน.";
 					}
 					Zeny += .reward_zeny;
-					dispbottom "You have been rewarded for conquering " + .@castle_name$ + ".";
+					dispbottom "คุณได้รับรางวัลสำหรับการยึดครองปราสาท " + .@castle_name$ + ".";
 				}
 			}
 		}
@@ -362,7 +362,7 @@ OnPCLoadMapEvent:
 		if (getcharid(2) && getcastledata(strcharinfo(3),1) == getcharid(2)) end;
 		.@castle_name$ = getcastlename(strcharinfo(3));
 		sleep2 1000;
-		message strcharinfo(0), .@castle_name$ + " is currently inactive.";
+		message strcharinfo(0), .@castle_name$ + " ไม่ได้เปิดใช้งาน.";
 		sleep2 5000;
 		if (compare(strcharinfo(3),"g_cas")) warp "SavePoint",0,0;
 	}
@@ -379,12 +379,12 @@ while(1) {
 					break;
 				}
 			}
-			mes "The War of Emperium is ^0055FFactive^000000 until ^FF0000"+Add_Zero(.@i)+"^000000 in the following regions:";
+			mes "สงครามกิลด์วอร์ ^0055FFเริ่ม^000000 ตั้งแต่ ^FF0000"+Add_Zero(.@i)+"^000000 แมพต่อไปนี้:";
 			mes " ";
 			for(set .@i,0; .@i < .total_region; set .@i,.@i+1)
 				if (.Active[1]&(1<<.@i)) mes " > ^777777"+.Regions$[.@i]+"^000000";
 		} else
-			mes "The War of Emperium is ^0055FFactive^000000.";
+			mes "สงครามกิลด์วอร์^0055FFเปิดใช้งาน^000000.";
 	} else {
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4)
 			if ((gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) <= $WOE_CONTROL[.@i+1]) || gettime(DT_DAYOFWEEK) < $WOE_CONTROL[.@i]) {
@@ -393,15 +393,15 @@ while(1) {
 			}
 		if (!getarraysize(.@time))
 			setarray .@time[0],$WOE_CONTROL[0],$WOE_CONTROL[1];
-		mes "The War of Emperium is ^777777inactive^000000.";
+		mes "สงครามกิลด์วอร์ ^FF0000ไม่ได้เปิดใช้งาน^000000.";
 		if (.Size) {
 			mes " ";
-			mes "The next session will begin";
-			mes "on ^0055FF"+.Days$[.@time[0]]+"^000000 at "+Add_Zero(.@time[1])+"^000000.";
+			mes "สงครามครั้งต่อไปจะเริ่ม";
+			mes "^0055FF"+.Days$[.@time[0]]+"^000000 เวลา "+Add_Zero(.@time[1])+"^000000.";
 		}
 	}
 	next;
-	switch(select(""+((.CastleWarp || .Active[1])?" ~ Warp to castles...":"")+": ~ Check schedule...: ~ View castle owners...:"+((getgmlevel()<.GMAccess || !getgmlevel())?"":" ~ Manage sessions...")+": ~ ^777777Cancel^000000")) {
+	switch(select(""+((.CastleWarp || .Active[1])?" ~ วาร์ปไปยังปราสาท...":"")+": ~ เช็ควันวอร์...: ~ ดูกิลด์ที่ครอบครองปราสาท...:"+((getgmlevel()<.GMAccess || !getgmlevel())?"":" ~ ตั้งค่ากิลด์วอร์...")+": ~ ^777777ยกเลิก^000000")) {
 	case 1:
 		if (.CastleWarp) set .@clr$,"^0055FF";
 		set .@menu$,"";
@@ -429,12 +429,12 @@ while(1) {
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4) {
 				mes "> ^FF0000"+.Days$[$WOE_CONTROL[.@i]]+" ("+Add_Zero($WOE_CONTROL[.@i+1])+"-"+Add_Zero($WOE_CONTROL[.@i+2])+")^000000";
 				for(set .@j,0; .@j<.total_castle; set .@j,.@j+1)
-					if ($WOE_CONTROL[.@i+3]&(1<<.@j)) mes "  ~ "+getcastlename(.Castles$[.@j])+" ^777777("+.Castles$[.@j]+")^000000";
+					if ($WOE_CONTROL[.@i+3]&(1<<.@j)) mes "	 ~ "+getcastlename(.Castles$[.@j])+" ^777777("+.Castles$[.@j]+")^000000";
 				if (.@i+4 < .Size) mes " ";
 			}
 			freeloop(0);
 		} else
-			mes "No times are configured.";
+			mes "ไม่มีสงครามกิลด์วอร์.";
 		next;
 		break;
 	case 3:
@@ -442,10 +442,11 @@ while(1) {
 		for(set .@i,0; .@i < .total_region; set .@i,.@i+1) {
 			set .@k, .@i*5;
 			mes "> ^FF0000"+.Regions$[.@i]+"^000000";
+			mes "";
 			for(set .@j,0; .@j<.size_region[.@i]; set .@j,.@j+1) {
 				.@index = getd( ".castle_index_in_region_" + .@i + "[" + .@j + "]" );
 				set .@t, getcastledata(.Castles$[.@index],1);
-				mes "  ~ "+getcastlename(.Castles$[.@index])+": "+((.@t)?"^0055FF"+getguildname(.@t):"^777777unoccupied")+"^000000";
+				mes "~ "+getcastlename(.Castles$[.@index])+": "+((.@t)?"^0055FF"+getguildname(.@t):"^777777ว่าง")+"^000000";
 			}
 			if (.@i < 5) mes " ";
 		}
@@ -454,24 +455,24 @@ while(1) {
 	case 4:
 	while(1) {
 		mes "[Session Manager]";
-		mes "There are ^0055FF"+(.Size/4)+" session(s)^000000 configured.";
-		mes "What would you like to do?";
+		mes "ค่าที่ถูกตั้งไว้มี ^0055FF"+(.Size/4)+" อัน^000000.";
+		mes "คุณอยากจะทำอะไร?";
 		next;
-		switch(select(" ~ Add a session...: ~ Delete a session...: ~ Reload settings...:"+((agitcheck() || agitcheck2() || agitcheck3())?" ~ End WOE session...":"")+": ~ ^777777Go back^000000")) {
+		switch(select(" ~ เพิ่ม...: ~ ลบ...: ~ รีโหลดตั้งค่า...:"+((agitcheck() || agitcheck2() || agitcheck3())?" ~ End WOE session...":"")+": ~ ^777777ย้อนกลับ^000000")) {
 		case 1:
 			mes "[New Session]";
-			mes "Select a day.";
+			mes "เลือกวัน.";
 			next;
 			set .@Day, select(" ~ "+implode(.Days$,": ~ "))-1;
 			mes "[New Session]";
-			mes "Select a start time for ^0055FF"+.Days$[.@Day]+"^000000.";
+			mes "เลือกเวลาเริ่มสงคราม ^0055FF"+.Days$[.@Day]+"^000000.";
 			next;
 			set .@menu$,"";
 			for(set .@i,0; .@i<23; set .@i,.@i+1)
 				set .@menu$, .@menu$+" ~ "+Add_Zero(.@i,1)+":";
 			set .@Start, select(.@menu$)-1;
 			mes "[New Session]";
-			mes "Select an end time for ^0055FF"+.Days$[.@Day]+"^000000.";
+			mes "เลือกเวลาจบสงคราม ^0055FF"+.Days$[.@Day]+"^000000.";
 			next;
 			set .@menu$,"";
 			for(set .@i,.@Start+1; .@i<24; set.@i,.@i+1)
@@ -483,7 +484,7 @@ while(1) {
 				    (.@End > $WOE_CONTROL[.@i+1] && .@End <= $WOE_CONTROL[.@i+2]) ||
 				    (.@Start <= $WOE_CONTROL[.@i+1] && .@End >= $WOE_CONTROL[.@i+2]))) {
 					mes "[New Session]";
-					mes "The chosen times overlap with an existing session.";
+					mes "เวลาที่เลือกซ้ำกับเวลาเก่าที่มีอยู่.";
 					next;
 					set .@d,1;
 					break;
@@ -493,17 +494,18 @@ while(1) {
 			while(1) {
 				mes "[New Session]";
 				mes "^0055FF"+.Days$[.@Day]+" ("+Add_Zero(.@Start)+"-"+Add_Zero(.@End)+")^000000";
-				mes " > Castles:";
+				mes "";
+				mes "> Castles:";
 				if (!.@Castle)
-					mes "   ~ ^777777(none selected)^000000";
+					mes "	 ~ ^777777(ไม่ได้เลือก)^000000";
 				else {
 					for(set .@i,0; .@i<.total_castle; set .@i,.@i+1) {
-						.@string$ = ( .@Castle&(1<<.@i) ) ? "   ~ "+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")" : "";
+						.@string$ = ( .@Castle&(1<<.@i) ) ? "	 ~ "+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")" : "";
 						mes .@string$;
 					}
 				}
 				next;
-				set .@menu$,((.@Castle)?" ~ ^FF0000Finished...^000000":"")+":";
+				set .@menu$,((.@Castle)?" ~ ^FF0000เสร็จสิ้น...^000000":"")+":";
 				for(set .@i,0; .@i<.total_castle; set .@i,.@i+1)
 					set .@menu$, .@menu$+" ~ "+((.@Castle&(1<<.@i))?"^0055FF":"")+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")^000000:";
 				set .@i, select(.@menu$)-1;
@@ -511,9 +513,9 @@ while(1) {
 					set .@Castle, .@Castle^(1<<(.@i-1));
 				else {
 					mes "[New Session]";
-					mes "Are you sure?";
+					mes "คุณแน่ใจใช่มั้ย?";
 					next;
-					switch(select(" ~ ^0055FFAdd session...^000000: ~ Continue selecting castles...: ~ ^777777Cancel^000000")) {
+					switch(select(" ~ ^0055FFเพิ่ม...^000000: ~ เลือกบ้านอื่นเพิ่มเติม...: ~ ^777777ยกเลิก^000000")) {
 					case 1:
 						for(set .@i,0; .@i<.Size; set .@i,.@i+4) {
 							if ((.@Day == $WOE_CONTROL[.@i] && .@End <= $WOE_CONTROL[.@i+1]) || .@Day < $WOE_CONTROL[.@i]) {
@@ -527,7 +529,7 @@ while(1) {
 						set .Size, getarraysize($WOE_CONTROL);
 					case 3:
 						mes "[New Session]";
-						mes ((.@d)?"Session added.":"cancelled.");
+						mes ((.@d)?"เพิ่มสำเร็จ.":"ถูกยกเลิก.");
 						next;
 						set .@d,1;
 					case 2:
@@ -540,70 +542,70 @@ while(1) {
 		case 2:
 			mes "[Remove Session]";
 			if (!.Size) {
-				mes "There are no sessions configured.";
+				mes "ไม่มีรอบให้ ตั้งค่า.";
 				next;
 				break;
 			}
-			mes "Select a session to remove.";
+			mes "เลือกที่ต้องการลบ.";
 			next;
 			set .@menu$,"";
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4)
 				set .@menu$, .@menu$+" ~ "+.Days$[$WOE_CONTROL[.@i]]+" ("+Add_Zero($WOE_CONTROL[.@i+1],1)+"-"+Add_Zero($WOE_CONTROL[.@i+2],1)+"):";
-			set .@menu$, .@menu$+" ~ ^777777Cancel^000000";
+			set .@menu$, .@menu$+" ~ ^777777ยกเลิก^000000";
 			set .@i, select(.@menu$)-1;
 			if (.@i == (.Size/4)) break;
 			mes "[Remove Session]";
-			mes "Delete ^0055FF"+.Days$[$WOE_CONTROL[.@i*4]]+"'s^000000 session?";
-			mes "This action cannot be undone.";
+			mes "ลบ ^0055FF"+.Days$[$WOE_CONTROL[.@i*4]]+"'s^000000 ใช่มั้ย?";
+			mes "การดำเนินการนี้ไม่สามารถยกเลิกได้.";
 			next;
-			set .@j, select(" ~ ^FF0000Delete session...^000000: ~ ^777777Cancel^000000");
+			set .@j, select(" ~ ^FF0000ลบ...^000000: ~ ^777777ยกเลิก^000000");
 			mes "[Remove Session]";
 			if (.@j == 2)
 				mes "cancelled.";
 			else {
 				deletearray $WOE_CONTROL[.@i*4],4;
 				set .Size, getarraysize($WOE_CONTROL);
-				mes "Session deleted.";
+				mes "ลบสำเร็จ.";
 			}
 			next;
 			break;
 		case 3:
 			mes "[Reload Settings]";
-			mes "This will trigger all events related to new session configurations, if any.";
+			mes "รีโหลดวันที่เกี่ยวข้องทั้งหมด (ถ้ามี)";
 			if (agitcheck() || agitcheck2() || agitcheck3()) {
 				mes " ";
-				mes "Be aware that this will disrupt the current WOE session.";
+				mes "โปรดระวังขัดการสงครามวอร์ปัจจุบัน.";
 			}
 			next;
-			set .@i, select(" ~ ^0055FFReload settings...^000000: ~ ^777777Cancel^000000");
+			set .@i, select(" ~ ^0055FFรีโหลด ตั้งค่า...^000000: ~ ^777777ยกเลิก^000000");
 			mes "[Reload Settings]";
-			if (.@i == 2) mes "cancelled.";
+			if (.@i == 2) mes "ถูกยกเลิก.";
 			else {
 				set .Init,1;
 				donpcevent "WOE_CONTROL::OnMinute00";
-				mes "Variables have been re-initialized.";
+				mes "ค่าทั้งหมดได้รับการเริ่มต้นใหม่.";
 			}
 			next;
 			break;
 		case 4:
 			mes "[Force Agit End]";
 			if (!agitcheck() && !agitcheck2() && !agitcheck3())  {
-				mes "WOE has already ended.";
+				mes "สงครามกิลด์วอร์ได้จบลงแล้ว.";
 				next;
 				break;
 			}
-			mes "This command will safely execute all AgitEnd events.";
+			mes "คำสั่งนี้จะรัน AgitEnd ทั้งหมด.";
 			mes " ";
-			mes "Kill the current WOE session?";
+			mes "จบวอร์ที่กำลังดำเนินการอยู่?";
 			next;
-			set .@i, select(" ~ ^FF0000End session...^000000:"+((.Options&1)?" ~ ^FF0000End session without rewards...^000000":"")+": ~ ^777777Cancel^000000");
+			set .@i, select(" ~ ^FF0000จบ...^000000:"+((.Options&1)?" ~ ^FF0000จบรอบโดยไม่มีรางวัล...^000000":"")+": ~ ^777777ยกเลิก^000000");
 			mes "[Force Agit End]";
 			if (.@i == 3)
-				mes "cancelled.";
+				mes "ถูกยกเลิก.";
 			else {
 				set .ForceEnd, .@i;
 				donpcevent "WOE_CONTROL::OnWOEEnd";
-				mes "WOE session terminated.";
+				mes "ยุติสงครามกิลด์วอร์แล้ว.";
 			}
 			next;
 			break;
