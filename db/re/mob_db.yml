@@ -82976,7 +82976,7 @@ Body:
     BaseExp: 1200
     JobExp: 1200
     Attack: 843
-    Attack2: 1.160
+    Attack2: 1160
     Defense: 146
     MagicDefense: 5
     Str: 108
@@ -83117,7 +83117,7 @@ Body:
     AegisName: MIN_PICKY
     Name: Picky
     Level: 100
-    Hp: 25.000
+    Hp: 25000
     BaseExp: 1200
     JobExp: 1200
     Attack: 691
@@ -84722,7 +84722,7 @@ Body:
     BaseExp: 7000
     JobExp: 2600
     Attack: 845
-    Attack2: 1.141
+    Attack2: 1141
     Defense: 182
     MagicDefense: 8
     Str: 144
