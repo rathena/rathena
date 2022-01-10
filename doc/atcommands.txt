@@ -1237,6 +1237,14 @@ Note: This command requires packet version 2016-10-12 or newer.
 
 ---------------------------------------
 
+@stylist
+
+Opens the stylist user interface.
+
+Note: This command requires packet version 2015-11-04 or newer.
+
+---------------------------------------
+
 @request <message>
 
 Sends a message to all connected GMs (via the GM whisper system).
