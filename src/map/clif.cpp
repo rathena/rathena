@@ -1710,13 +1710,15 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	case BL_MOB:
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
-			struct block_list* master_bl = battle_get_master(&md->bl);
 			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
 				clif_specialeffect(&md->bl,EF_GIANTBODY2,AREA);
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+			struct block_list* master_bl = battle_get_master(&md->bl);
 			if (((mob_data*)bl )->special_state.ai == AI_ABR || ((mob_data*)bl )->special_state.ai == AI_BIONIC)
 				clif_summon_init(md, master_bl);
+#endif
 		}
 		break;
 	case BL_NPC:
