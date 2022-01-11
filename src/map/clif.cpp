@@ -22490,7 +22490,6 @@ void clif_parse_stylist_buy( int fd, struct map_session_data* sd ){
 #else
 	struct PACKET_CZ_REQ_STYLE_CHANGE* p = (struct PACKET_CZ_REQ_STYLE_CHANGE*)RFIFOP( fd, 0 );
 #endif
-#endif
 	if( p->HeadPalette != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR_COLOR, p->HeadPalette ) ){
 		clif_stylist_response( sd, true );
 		return;
@@ -22529,6 +22528,7 @@ void clif_parse_stylist_buy( int fd, struct map_session_data* sd ){
 #endif
 
 	clif_stylist_response( sd, false );
+#endif
 }
 
 void clif_parse_stylist_close( int fd, struct map_session_data* sd ){
