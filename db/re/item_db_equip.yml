@@ -91512,14 +91512,14 @@ Body:
     EquipLevelMin: 1
     View: 982
   - Id: 20038
-    AegisName: C_Alphonse_Helmet
-    Name: Costume Alphonse Helmet
+    AegisName: Alphonse_Helmet
+    Name: Costume Haunted Armor Helm
     Type: Armor
     Buy: 10
     Locations:
       Costume_Head_Top: true
     ArmorLevel: 1
-    View: 1214
+    View: 1207
   - Id: 20039
     AegisName: C_Butterfly_Wing_Ear_J
     Name: Costume Butterfly Wing Ears
@@ -91647,7 +91647,7 @@ Body:
     EquipLevelMin: 1
     View: 471
   - Id: 20053
-    AegisName: C_W_King_Tiger_Doll_Hat
+    AegisName: C_White_Tiger_Hat
     Name: Costume White King Tiger Doll Hat
     Type: Armor
     Buy: 10
