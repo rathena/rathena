@@ -23,8 +23,6 @@ const t_itemid UNKNOWN_ITEM_ID = 512;
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
 #define MAX_SEARCH	5
-///Maximum amount of items a combo may require
-#define MAX_ITEMS_PER_COMBO 6
 
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
@@ -818,7 +816,7 @@ enum e_delay_consume : uint8 {
 struct s_item_combo {
 	std::vector<t_itemid> nameid;
 	script_code *script;
-	uint32 id;
+	uint16 id;
 
 	~s_item_combo() {
 		if (this->script) {
@@ -829,6 +827,27 @@ struct s_item_combo {
 		this->nameid.clear();
 	}
 };
+
+class ComboDatabase : public TypesafeYamlDatabase<uint16, s_item_combo> {
+private:
+	uint16 combo_num;
+	uint16 find_combo_id( const std::vector<t_itemid>& items );
+
+public:
+	ComboDatabase() : TypesafeYamlDatabase("COMBO_DB", 1) {
+
+	}
+
+	void clear() {
+		TypesafeYamlDatabase::clear();
+		this->combo_num = 0;
+	}
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	void loadingFinished();
+};
+
+extern ComboDatabase itemdb_combo;
 
 /// Struct of item group entry
 struct s_item_group_entry
@@ -1132,8 +1151,6 @@ char itemdb_isidentified(t_itemid nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
-
-s_item_combo *itemdb_combo_exists(uint32 combo_id);
 
 bool itemdb_parse_roulette_db(void);
 
