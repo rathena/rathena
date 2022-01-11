@@ -10059,6 +10059,9 @@ static const struct _battle_data {
 	{ "idletime_mer_option",                &battle_config.idletime_mer_option,             0x1F,   0x1,    0xFFF,          },
 	{ "feature.refineui",                   &battle_config.feature_refineui,                1,      0,      1,              },
 	{ "rndopt_drop_pillar",                 &battle_config.rndopt_drop_pillar,              1,      0,      1,              },
+	{ "pet_legacy_formula",                 &battle_config.pet_legacy_formula,              0,      0,      1,              },
+	{ "pet_distance_check",                 &battle_config.pet_distance_check,              5,      0,      50,             },
+	{ "pet_hide_check",                     &battle_config.pet_hide_check,                  1,      0,      1,              },
 
 	// 4th Job Stuff
 	{ "use_traitpoint_table",               &battle_config.use_traitpoint_table,            1,      0,      1,              },

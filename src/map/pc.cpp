@@ -6572,7 +6572,16 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 	uint16 idx = 0;
 	if (sd == NULL)
 		return 0;
+
+#ifdef RENEWAL
 	if ((idx = skill_get_index(skill_id)) == 0) {
+#else
+	if( ( idx = skill_get_index_( skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__ ) ) == 0 ){
+		if( skill_id >= RK_ENCHANTBLADE ){
+			// Silently fail for now -> future update planned
+			return 0;
+		}
+#endif
 		ShowError("pc_checkskill: Invalid skill id %d (char_id=%d).\n", skill_id, sd->status.char_id);
 		return 0;
 	}

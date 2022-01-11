@@ -21686,8 +21686,8 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6707
-    AegisName: Jeremy_Beauty_Coupon
-    Name: Jeremy Beauty Coupon
+    AegisName: J_Shop_Coupon
+    Name: Cash Hair Coupon
     Type: Etc
     Buy: 10
     Weight: 10
@@ -24023,9 +24023,10 @@ Body:
     Type: Etc
     Buy: 10
   - Id: 6959
-    AegisName: aegis_6959
-    Name: Costume Change Ticket
+    AegisName: Costume_Ticket
+    Name: Costume Change Ticket 
     Type: Etc
+    Buy: 0
     Trade:
       Override: 100
       NoDrop: true
@@ -37418,6 +37419,7 @@ Body:
     AegisName: M_M_Defense
     Name: Modification Module (Defense)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37433,6 +37435,7 @@ Body:
     AegisName: M_M_Magic_Defense
     Name: Modification Module (Magic Defense)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37448,6 +37451,7 @@ Body:
     AegisName: M_M_Vit
     Name: Modification Module (Vit)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37456,6 +37460,7 @@ Body:
     AegisName: M_M_Luk
     Name: Modification Module (Luk)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37464,6 +37469,7 @@ Body:
     AegisName: M_M_Str
     Name: Modification Module (Str)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37472,6 +37478,7 @@ Body:
     AegisName: M_M_Agi
     Name: Modification Module (Agi)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37480,6 +37487,7 @@ Body:
     AegisName: M_M_Int
     Name: Modification Module (Int)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37488,6 +37496,7 @@ Body:
     AegisName: M_M_Dex
     Name: Modification Module (Dex)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37496,6 +37505,7 @@ Body:
     AegisName: M_M_HP_recovery
     Name: Modification Module (HP recovery)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37504,6 +37514,7 @@ Body:
     AegisName: M_M_SP_recovery
     Name: Modification Module (SP recovery)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37512,6 +37523,7 @@ Body:
     AegisName: M_M_Spell5
     Name: Modification Module (Spell)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37521,6 +37533,7 @@ Body:
     AegisName: M_M_Attack_Delay_4
     Name: Modification Module (Attack Speed)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37529,6 +37542,7 @@ Body:
     AegisName: M_M_Fatal4
     Name: Modification Module (Fatal)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37538,6 +37552,7 @@ Body:
     AegisName: M_M_Expert_Archer5
     Name: Modification Module (Expert Archer)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37546,6 +37561,7 @@ Body:
     AegisName: M_M_Vital
     Name: Modification Module (Vital)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37560,6 +37576,7 @@ Body:
     AegisName: M_M_Mental
     Name: Modification Module (Mental)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37574,6 +37591,7 @@ Body:
     AegisName: M_M_Heal
     Name: Modification Module (Heal)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37589,6 +37607,7 @@ Body:
     AegisName: M_M_Power
     Name: Modification Module (Power)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37603,6 +37622,7 @@ Body:
     AegisName: M_M_Magic
     Name: Modification Module (Magic)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37617,6 +37637,7 @@ Body:
     AegisName: M_M_Shooter
     Name: Modification Module (Shooter)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37632,6 +37653,7 @@ Body:
     AegisName: M_M_Fast
     Name: Modification Module (Fast)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37646,6 +37668,7 @@ Body:
     AegisName: M_M_Caster
     Name: Modification Module (Caster)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37661,6 +37684,7 @@ Body:
     AegisName: M_M_Critical
     Name: Modification Module (Critical)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37675,6 +37699,7 @@ Body:
     AegisName: M_M_Delay_After_skill
     Name: Modification Module (Delay after skill)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37690,6 +37715,7 @@ Body:
     AegisName: M_M_Fixed_Casting
     Name: Modification Module (Fixed Casting)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37705,6 +37731,7 @@ Body:
     AegisName: M_M_Above_All
     Name: Modification Module (Above All)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37720,6 +37747,7 @@ Body:
     AegisName: M_M_Drain_Life
     Name: Modification Module (Drain Life)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37728,6 +37756,7 @@ Body:
     AegisName: M_M_Drain_Soul
     Name: Modification Module (Drain Soul)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37736,6 +37765,7 @@ Body:
     AegisName: M_M_Magic_Healing
     Name: Modification Module (Magic Healing)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37744,6 +37774,7 @@ Body:
     AegisName: M_M_Magic_Soul
     Name: Modification Module (Magic Soul)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37752,6 +37783,7 @@ Body:
     AegisName: M_M_Unlimited_Vital
     Name: Modification Module (Unlimited Vital)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37761,6 +37793,7 @@ Body:
     AegisName: M_M_Spell_Buster
     Name: Modification Module (Spell Buster)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37770,6 +37803,7 @@ Body:
     AegisName: M_M_Firing_Shot
     Name: Modification Module (Firing Shot)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37779,6 +37813,7 @@ Body:
     AegisName: M_M_Overpower
     Name: Modification Module (Overpower)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37788,6 +37823,7 @@ Body:
     AegisName: M_M_Fatal_Flash
     Name: Modification Module (Fatal Flash)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -37797,6 +37833,7 @@ Body:
     AegisName: M_M_Lucky_Strike
     Name: Modification Module (Lucky Strike)
     Type: Card
+    SubType: Enchant
     Buy: 20
     Weight: 10
     Script: |
@@ -45591,8 +45628,10 @@ Body:
          bonus bHit,20;
       }
       bonus bShortAtkRate,.@r;
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15*.@r;
-      bonus2 bSkillAtk,"SJ_FULLMOONKICK",15*.@r;
+      if (.@r>=10) {
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
+      }
   - Id: 300089
     AegisName: Verporta_Card
     Name: Verporta Card
