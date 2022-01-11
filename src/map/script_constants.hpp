@@ -8690,6 +8690,7 @@
 	export_constant(SCF_NOCLEARANCE);
 	export_constant(SCF_NOBANISHINGBUSTER);
 	export_constant(SCF_NOSAVE);
+	export_constant(SCF_NOSAVEINFINITE);
 	export_constant(SCF_REMOVEONDAMAGED);
 	export_constant(SCF_REMOVEONREFRESH);
 	export_constant(SCF_REMOVEONLUXANIMA);

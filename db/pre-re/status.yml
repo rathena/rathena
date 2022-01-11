@@ -267,6 +267,7 @@ Body:
       Dspd: true
     Flags:
       NoRemoveOnDead: true
+      NoSaveInfinite: true
 
   - Status: Twohandquicken
     Icon: Twohandquicken
@@ -1575,6 +1576,7 @@ Body:
       NoBanishingBuster: true
       NoDispell: true
       NoClearance: true
+      NoSaveInfinite: true
 
   - Status: Doublecast
     Icon: Doublecasting

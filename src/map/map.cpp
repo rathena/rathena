@@ -2084,30 +2084,24 @@ int map_quit(struct map_session_data *sd) {
 	//(changing map-servers invokes unit_free but bypasses map_quit)
 	if( sd->sc.count ) {
 		for (const auto &it : status_db) {
-			sc_type status = static_cast<sc_type>(it.first);
-
-			switch (status) {
-				case SC_ENDURE: //No need to save infinite endure.
-				case SC_REGENERATION:
-					if (sd->sc.data[status] && sd->sc.data[status]->val4) {
-						status_change_end(&sd->bl,status,INVALID_TIMER);
-						continue;
-					}
-					break;
-			}
-
 			std::bitset<SCF_MAX> &flag = it.second->flag;
+
+			//No need to save infinite status
+			if (flag[SCF_NOSAVEINFINITE] && sd->sc.data[it.first]->val4 > 0) {
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
+				continue;
+			}
 
 			//Status that are not saved
 			if (flag[SCF_NOSAVE]) {
-				status_change_end(&sd->bl,status,INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
 				continue;
 			}
 			//Removes status by config
 			if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
 				(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
 			{
-				status_change_end(&sd->bl,status,INVALID_TIMER);
+				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
 				continue;
 			}
 		}
