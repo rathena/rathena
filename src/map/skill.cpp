@@ -17176,7 +17176,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case SL_SMA:
-			if(sc && !(sc->data[SC_SMA] || sc->data[SC_USE_SKILL_SP_SHA]))
+			if(!sc || !(sc->data[SC_SMA] || sc->data[SC_USE_SKILL_SP_SHA]))
 				return false;
 			break;
 		case HT_POWER:

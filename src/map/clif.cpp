@@ -1799,8 +1799,13 @@ void clif_hominfo( struct map_session_data *sd, struct homun_data *hd, int flag 
 		p.sp = status->sp;
 		p.maxSp = status->max_sp;
 	}
+#if PACKETVER_MAIN_NUM >= 20210303 || PACKETVER_RE_NUM >= 20211103
+	p.exp = hd->homunculus.exp;
+	p.expNext = hd->exp_next;
+#else
 	p.exp = (uint32)hd->homunculus.exp;
 	p.expNext = (uint32)hd->exp_next;
+#endif
 	switch( hom_class2type( hd->homunculus.class_ ) ){
 		case HT_REG:
 		case HT_EVO:
@@ -2175,7 +2180,7 @@ void clif_buylist( struct map_session_data *sd, struct npc_data *nd ){
 	uint16 len = sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST ) + nd->u.shop.count * sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub );
 	WFIFOHEAD( fd, len );
 	struct PACKET_ZC_PC_PURCHASE_ITEMLIST *p = (struct PACKET_ZC_PC_PURCHASE_ITEMLIST *)WFIFOP( fd, 0 );
-	p->packetType = 0xc6;
+	p->packetType = HEADER_ZC_PC_PURCHASE_ITEMLIST;
 
 	int count = 0;
 	for( int i = 0, discount = npc_shop_discount( nd ); i < nd->u.shop.count; i++ ){
@@ -2185,6 +2190,12 @@ void clif_buylist( struct map_session_data *sd, struct npc_data *nd ){
 		p->items[count].discountPrice = ( discount ) ? pc_modifybuyvalue( sd, val ) : val;
 		p->items[count].itemType = itemtype( nd->u.shop.shop_item[i].nameid );
 		p->items[count].itemId = client_nameid( nd->u.shop.shop_item[i].nameid );
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
+		struct item_data* id = itemdb_exists( nd->u.shop.shop_item[i].nameid );
+
+		p->items[count].viewSprite = id->look;
+		p->items[count].location = pc_equippoint_sub( sd, id );
+#endif
 		count++;
 	}
 
@@ -2277,6 +2288,9 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 		p->list[count].price = item->value;
 		p->list[count].qty = item->qty;
 		p->list[count].weight = id->weight;
+#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103
+		p->list[count].location = pc_equippoint_sub( sd, id );
+#endif
 		count++;
 	}
 
@@ -16352,15 +16366,22 @@ void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short 
 /// Request information about the recipient
 /// 0a13 <name>.24B (CZ_CHECK_RECEIVE_CHARACTER_NAME)
 void clif_parse_Mail_Receiver_Check(int fd, struct map_session_data *sd) {
+#if PACKETVER >= 20140423
+#if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
+	struct PACKET_CZ_CHECKNAME2* p = (struct PACKET_CZ_CHECKNAME2*)RFIFOP( fd, 0 );
+#else
+	struct PACKET_CZ_CHECKNAME1* p = (struct PACKET_CZ_CHECKNAME1*)RFIFOP( fd, 0 );
+#endif
 	static char name[NAME_LENGTH];
 
 	if( mail_invalid_operation( sd ) ){
 		return;
 	}
 
-	safestrncpy(name, RFIFOCP(fd, 2), NAME_LENGTH);
+	safestrncpy(name, p->Name, NAME_LENGTH);
 
 	intif_mail_checkreceiver(sd, name);
+#endif
 }
 
 /// Request to receive mail's attachment.
@@ -16518,7 +16539,18 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd){
 /// Request to return a mail (CZ_REQ_MAIL_RETURN).
 /// 0273 <mail id>.L <receive name>.24B
 void clif_parse_Mail_return(int fd, struct map_session_data *sd){
+#if PACKETVER_MAIN_NUM >= 20201104 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20201118
+	struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN* p = (struct PACKET_CZ_UNCONFIRMED_RODEX_RETURN*)RFIFOP( fd, 0 );
+
+	//ShowDump( p, sizeof( p ) );
+
+	int mail_id = p->msgId;
+
+	// not supported for now
+	return;
+#else
 	int mail_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
+#endif
 	//char *rec_name = RFIFOP(fd,packet_db[RFIFOW(fd,0)].pos[1]);
 	int i;
 
@@ -21477,6 +21509,13 @@ void clif_parse_changedress( int fd, struct map_session_data* sd ){
 void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data ){
 	nullpo_retv(sd);
 
+	// If the UI requires state tracking
+	switch( ui_type ){
+		case OUT_UI_STYLIST:
+			sd->state.stylist_open = true;
+			break;
+	}
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0xae2));
@@ -22301,6 +22340,200 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		clif_misceffect( &sd->bl, 2 );
 		achievement_update_objective( sd, AG_ENCHANT_FAIL, 1, 1 );
 	}
+#endif
+}
+
+void clif_unequipall_reply( struct map_session_data* sd, bool failed ){
+#if PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
+	struct PACKET_ZC_TAKEOFF_EQUIP_ALL_ACK p = {};
+
+	p.PacketType = HEADER_ZC_TAKEOFF_EQUIP_ALL_ACK;
+	p.result = failed;
+
+	clif_send( &p, sizeof( struct PACKET_ZC_TAKEOFF_EQUIP_ALL_ACK ), &sd->bl, SELF );
+#endif  // PACKETVER_MAIN_NUM >= 20210818 || PACKETVER_RE_NUM >= 20211103
+}
+
+void clif_parse_unequipall( int fd, struct map_session_data* sd ){
+#if PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20210818
+	if( pc_cant_act( sd ) ){
+		clif_unequipall_reply( sd, true );
+		return;
+	}
+
+	for( int i = 0; i < EQI_COSTUME_HEAD_TOP; i++ ){
+		if( sd->equip_index[i] >= 0 ){
+			pc_unequipitem( sd, sd->equip_index[i], 1 );
+		}
+	}
+
+	clif_unequipall_reply( sd, false );
+#endif
+}
+
+void clif_stylist_response( struct map_session_data* sd, bool failed ){
+#if PACKETVER >= 20151104
+	struct PACKET_ZC_STYLE_CHANGE_RES p = {};
+
+	p.PacketType = HEADER_ZC_STYLE_CHANGE_RES;
+	p.flag = failed;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+
+	if( !failed ){
+		sd->state.stylist_open = false;
+	}
+#endif
+}
+
+bool clif_parse_stylist_buy_sub( struct map_session_data* sd, _look look, int16 index ){
+	std::shared_ptr<s_stylist_list> list = stylist_db.find( look );
+
+	if( list == nullptr ){
+		return false;
+	}
+
+	std::shared_ptr<s_stylist_entry> entry = util::umap_find( list->entries, index );
+
+	if( entry == nullptr ){
+		return false;
+	}
+
+	std::shared_ptr<s_stylist_costs> costs;
+
+	if( ( sd->class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+		costs = entry->doram;
+	}else{
+		costs = entry->human;
+	}
+
+	if( costs == nullptr ){
+		return false;
+	}
+
+	if( sd->status.zeny < costs->price ){
+		return false;
+	}
+
+	int16 inventoryIndex = -1;
+
+	if( costs->requiredItem != 0 ){
+		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
+
+		if( inventoryIndex < 0 ){
+			// No other option
+			if( costs->requiredItemBox == 0 ){
+				return false;
+			}
+
+			// Check if the box that contains the item is in the inventory
+			inventoryIndex = pc_search_inventory( sd, costs->requiredItemBox );
+
+			// The box containing the item also does not exist
+			if( inventoryIndex < 0 ){
+				return false;
+			}
+		}
+	}else if( costs->requiredItemBox != 0 ){
+		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
+
+		if( inventoryIndex < 0 ){
+			return false;
+		}
+	}
+
+	if( inventoryIndex >= 0 && pc_delitem( sd, inventoryIndex, 1, 0, 0, LOG_TYPE_OTHER ) != 0 ){
+		return false;
+	}
+
+	if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER, nullptr ) != 0 ){
+		return false;
+	}
+
+	switch( look ){
+		case LOOK_HAIR:
+		case LOOK_HAIR_COLOR:
+		case LOOK_CLOTHES_COLOR:
+		case LOOK_BODY2:
+			pc_changelook( sd, look, entry->value );
+			break;
+		case LOOK_HEAD_BOTTOM:
+		case LOOK_HEAD_MID:
+		case LOOK_HEAD_TOP: {
+			struct mail_message msg = {};
+
+			msg.dest_id = sd->status.char_id;
+			safestrncpy( msg.send_name, "Styling Shop", NAME_LENGTH );
+			safestrncpy( msg.title, "<MSG>2949</MSG>", MAIL_TITLE_LENGTH );
+			safestrncpy( msg.body, "<MSG>2950</MSG>", MAIL_BODY_LENGTH );
+
+			msg.item[0].nameid = entry->value;
+			msg.item[0].identify = 1;
+			msg.item[0].amount = 1;
+
+			msg.status = MAIL_NEW;
+			msg.type = MAIL_INBOX_NORMAL;
+			msg.timestamp = time( nullptr );
+
+			intif_Mail_send( 0, &msg );
+
+			} break;
+	}
+
+	return true;
+}
+
+void clif_parse_stylist_buy( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20151104
+#if PACKETVER >= 20180516
+	struct PACKET_CZ_REQ_STYLE_CHANGE2* p = (struct PACKET_CZ_REQ_STYLE_CHANGE2*)RFIFOP( fd, 0 );
+#else
+	struct PACKET_CZ_REQ_STYLE_CHANGE* p = (struct PACKET_CZ_REQ_STYLE_CHANGE*)RFIFOP( fd, 0 );
+#endif
+#endif
+	if( p->HeadPalette != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR_COLOR, p->HeadPalette ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->HeadStyle != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HAIR, p->HeadStyle ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->BodyPalette != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_CLOTHES_COLOR, p->BodyPalette ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->TopAccessory != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_TOP, p->TopAccessory ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->MidAccessory != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_MID, p->MidAccessory ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+	if( p->BottomAccessory != 0 && !clif_parse_stylist_buy_sub( sd, LOOK_HEAD_BOTTOM, p->BottomAccessory ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+
+#if PACKETVER >= 20180516
+	if( p->BodyStyle != 0 && ( sd->class_ & JOBL_THIRD ) != 0 && ( sd->class_ & JOBL_FOURTH ) == 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
+		clif_stylist_response( sd, true );
+		return;
+	}
+#endif
+
+	clif_stylist_response( sd, false );
+}
+
+void clif_parse_stylist_close( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20151104
+	sd->state.stylist_open = false;
 #endif
 }
 
