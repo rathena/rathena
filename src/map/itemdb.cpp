@@ -1917,47 +1917,6 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	return true;
 }
 
-bool ComboDatabase::parseComboNode(const YAML::Node &node, const std::string &nodeName, std::vector<std::vector<t_itemid>> &items_list) {
-	if (!this->nodesExist(node, { nodeName })) {
-		return 0;
-	}
-
-	if (!node[nodeName].IsSequence()) {
-		this->invalidWarning(node[nodeName], "%s should be a sequence.\n", nodeName.c_str());
-		return 0;
-	}
-
-	std::vector<t_itemid> items = {};
-
-	for (const auto &it : node[nodeName]) {
-		std::string item_name = it.as<std::string>();
-
-		std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
-
-		if (item == nullptr) {
-			this->invalidWarning(it, "Invalid item %s, skipping.\n", item_name.c_str());
-			return false;
-		}
-
-		items.push_back(item->nameid);
-	}
-
-	if (items.empty()) {
-		this->invalidWarning(node[nodeName], "Empty combo, skipping.\n");
-		return false;
-	}
-
-	if (items.size() < 2) {
-		this->invalidWarning(node[nodeName], "Not enough item to make a combo (need at least 2). Skipping.\n");
-		return false;
-	}
-
-	std::sort(items.begin(), items.end());
-	items_list.push_back(items);
-
-	return true;
-}
-
 const std::string ComboDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_combos.yml";
 }
@@ -1980,17 +1939,57 @@ uint16 ComboDatabase::find_combo_id( const std::vector<t_itemid>& items ){
 uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
 	std::vector<std::vector<t_itemid>> items_list;
 
-	if (this->nodeExists(node, "Combos")) {
-		const YAML::Node &ComboNode = node["Combos"];
+	if( !this->nodesExist( node, { "Combos" } ) ){
+		return 0;
+	}
 
-		for (const auto &Comboit : ComboNode) {
-			if (!this->parseComboNode(Comboit, "Combo", items_list))
-				return 0;
+	const YAML::Node &combosNode = node["Combos"];
+
+	for (const auto &comboit : combosNode) {
+		static const std::string nodeName = "Combo";
+
+		if (!this->nodesExist(comboit, { nodeName })) {
+			return 0;
 		}
+
+		const YAML::Node &comboNode = comboit[nodeName];
+
+		if (!comboNode.IsSequence()) {
+			this->invalidWarning(comboNode, "%s should be a sequence.\n", nodeName.c_str());
+			return 0;
+		}
+
+		std::vector<t_itemid> items = {};
+
+		for (const auto &it : comboNode) {
+			std::string item_name = it.as<std::string>();
+
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+			if (item == nullptr) {
+				this->invalidWarning(it, "Invalid item %s, skipping.\n", item_name.c_str());
+				return 0;
+			}
+
+			items.push_back(item->nameid);
+		}
+
+		if (items.empty()) {
+			this->invalidWarning(comboNode, "Empty combo, skipping.\n");
+			return 0;
+		}
+
+		if (items.size() < 2) {
+			this->invalidWarning(comboNode, "Not enough item to make a combo (need at least 2). Skipping.\n");
+			return 0;
+		}
+
+		std::sort(items.begin(), items.end());
+		items_list.push_back(items);
 	}
 
 	if (items_list.empty()) {
-		this->invalidWarning(node, "Empty combo, skipping.\n");
+		this->invalidWarning(combosNode, "No combos defined, skipping.\n");
 		return 0;
 	}
 

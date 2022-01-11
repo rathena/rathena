@@ -832,7 +832,6 @@ class ComboDatabase : public TypesafeYamlDatabase<uint16, s_item_combo> {
 private:
 	uint16 combo_num;
 	uint16 find_combo_id( const std::vector<t_itemid>& items );
-	bool parseComboNode(const YAML::Node& node, const std::string& nodeName, std::vector<std::vector<t_itemid>>& items_list);
 
 public:
 	ComboDatabase() : TypesafeYamlDatabase("COMBO_DB", 1) {
