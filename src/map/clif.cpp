@@ -22587,7 +22587,7 @@ void clif_parse_inventory_expansion_request( int fd, struct map_session_data* sd
 	}
 
 	static std::map<t_itemid, uint16> items = {
-		// The order of entries in this list defines, which will be used first
+		// The order of entries in this list defines which will be used first
 		// This order and the usable items are hardcoded into the client
 		// The number of increased slots is "hardcoded" in the message of the client and cannot be sent per item
 		{ ITEMID_INVENTORY_EX_EVT, 10 },
