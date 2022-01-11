@@ -6583,7 +6583,7 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 #ifdef RENEWAL
 	if ((idx = skill_get_index(skill_id)) == 0) {
 #else
-	if( ( idx = skill_get_index_( skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__ ) ) == 0 ){
+	if( ( idx = skill_db.get_index( skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__ ) ) == 0 ){
 		if( skill_id >= RK_ENCHANTBLADE ){
 			// Silently fail for now -> future update planned
 			return 0;
