@@ -185,12 +185,6 @@ enum e_aegis_monsterclass : int8 {
 	CLASS_MAX,
 };
 
-enum e_summon_type : uint8{
-	SUMMONTYPE_NONE = 0,
-	SUMMONTYPE_MEISTER,
-	SUMMONTYPE_BIOLO
-};
-
 struct s_mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
@@ -359,7 +353,6 @@ struct mob_data {
 	int tomb_nid;
 
 	e_mob_bosstype get_bosstype();
-	e_summon_type summon_type;
 };
 
 class MobAvailDatabase : public YamlDatabase {
