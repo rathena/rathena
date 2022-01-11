@@ -5242,6 +5242,24 @@ struct PACKET_ZC_GRADE_STATUS {
 DEFINE_PACKET_HEADER(ZC_GRADE_STATUS, 0x0b5e);
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+struct PACKET_ZC_SUMMON_HP_INIT {
+	int16 PacketType;
+	uint32 summonAID;
+	uint32 CurrentHP;
+	uint32 MaxHP;
+};
+DEFINE_PACKET_HEADER(ZC_SUMMON_HP_INIT, 0xb6b);
+
+struct PACKET_ZC_SUMMON_HP_UPDATE {
+	int16 PacketType;
+	uint32 summonAID;
+	uint32 VarId;
+	uint32 Value;
+};
+DEFINE_PACKET_HEADER(ZC_SUMMON_HP_UPDATE, 0xb6c);
+#endif
+
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris

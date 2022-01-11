@@ -1710,10 +1710,13 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	case BL_MOB:
 		{
 			TBL_MOB *md = ((TBL_MOB*)bl);
+			struct block_list* master_bl = battle_get_master(&md->bl);
 			if(md->special_state.size==SZ_BIG) // tiny/big mobs [Valaris]
 				clif_specialeffect(&md->bl,EF_GIANTBODY2,AREA);
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect(&md->bl,EF_BABYBODY2,AREA);
+			if (((mob_data*)bl )->special_state.ai == AI_ABR || ((mob_data*)bl )->special_state.ai == AI_BIONIC)
+				clif_summon_init(md, master_bl);
 		}
 		break;
 	case BL_NPC:
@@ -23039,6 +23042,28 @@ void clif_parse_barter_extended_buy( int fd, struct map_session_data* sd ){
 
 	clif_npc_buy_result( sd, npc_barter_purchase( *sd, barter, purchases )  );
 #endif
+}
+
+void clif_summon_init(struct mob_data* md, struct block_list* master_bl) {
+	struct PACKET_ZC_SUMMON_HP_INIT p;
+
+	p.PacketType = HEADER_ZC_SUMMON_HP_INIT;
+	p.summonAID = md->bl.id;
+	p.CurrentHP = md->status.hp;
+	p.MaxHP = md->status.max_hp;
+
+	clif_send( &p, sizeof( p ), master_bl, SELF );
+}
+
+void clif_summon_hp_bar(struct mob_data* md, struct map_session_data* sd) {
+	struct PACKET_ZC_SUMMON_HP_UPDATE p;
+
+	p.PacketType = HEADER_ZC_SUMMON_HP_UPDATE;
+	p.summonAID = md->bl.id;
+	p.VarId = 5; // HP parameter
+	p.Value = md->status.hp;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
 /*==========================================
