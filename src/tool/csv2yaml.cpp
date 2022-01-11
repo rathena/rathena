@@ -526,6 +526,18 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
+	if (!process("COMBO_DB", 1, { path_db_mode }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_combos((path + name_ext).c_str());
+	}, "item_combos")) {
+		return 0;
+	}
+
+	if (!process("COMBO_DB", 1, { path_db_import }, "item_combo_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_combos((path + name_ext).c_str());
+	}, "item_combos")) {
+		return 0;
+	}
+
 	// TODO: add implementations ;-)
 
 	return 0;
@@ -4781,5 +4793,126 @@ static bool pc_readdb_skilltree_yaml(void) {
 		body << YAML::EndSeq;
 		body << YAML::EndMap;
 	}
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static int itemdb_combo_split_atoi (char *str, t_itemid *val) {
+	int i;
+
+	for (i = 0; i < MAX_ITEMS_PER_COMBO; i++) {
+		if (!str)
+			break;
+		val[i] = strtoul(str, nullptr, 10);
+		str = strchr(str,':');
+		if (str)
+			*str++=0;
+	}
+	if (i == 0) //No data found.
+		return 0;
+
+	return i;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_combos(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return 0;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	char path[256];
+	
+	// process rows one by one
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = line;
+
+		p = trim(p);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p,',')) {
+			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p,',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+		p = strchr(p,',');
+		p++;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_combos(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		if ( str[1][strlen(str[1])-1] != '}' ) {
+			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		t_itemid items[MAX_ITEMS_PER_COMBO];
+		int v = 0, retcount = 0;
+
+		if ((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
+			ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
+			continue;
+		}
+		for (v = 0; v < retcount; v++) {
+			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
+
+			if (item_name == nullptr) {
+				ShowWarning("itemdb_read_combos: Invalid item ID %" PRIu32 ".\n", items[v]);
+				break;
+			}
+		}
+		if (v < retcount)
+			continue;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Combos";
+		body << YAML::BeginSeq;
+
+		body << YAML::BeginMap;
+		body << YAML::Key << "Combo";
+		body << YAML::BeginSeq;
+
+		for (v = 0; v < retcount; v++) {
+			body << YAML::BeginMap;
+			std::string *item_name = util::umap_find(aegis_itemnames, items[v]);
+			body << YAML::Key << *item_name;
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+
+		str[1] = str[1] + 1;	//skip the first left curly
+		str[1][strlen(str[1])-1] = '\0';	//null the last right curly
+
+		body << YAML::EndSeq;
+		body << YAML::Key << "Script" << YAML::Literal << trim(str[1]);
+		body << YAML::EndMap;
+
+		count++;
+	}
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+
 	return true;
 }

@@ -24,8 +24,8 @@
 
 using namespace rathena;
 
-static std::map<uint32, std::shared_ptr<s_item_combo>> itemdb_combo; /// Item Combo DB
 
+ComboDatabase itemdb_combo;
 ItemGroupDatabase itemdb_group;
 
 struct s_roulette_db rd;
@@ -1207,21 +1207,6 @@ std::shared_ptr<item_data> ItemDatabase::searchname( const char *name ){
 ItemDatabase item_db;
 
 /**
- * Check if combo exists
- * @param combo_id
- * @return s_item_combo or nullptr if it does not exist
- */
-s_item_combo *itemdb_combo_exists(uint32 combo_id) {
-	auto item = util::map_find(itemdb_combo, combo_id);
-
-	if( item == nullptr ){
-		return nullptr;
-	}
-
-	return item.get();
-}
-
-/**
  * Check if an item exists in a group
  * @param group_id: Item Group ID
  * @param nameid: Item to check for in group
@@ -1932,142 +1917,154 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	return true;
 }
 
-/**
- * @return: amount of retrieved entries.
- **/
-static int itemdb_combo_split_atoi (char *str, t_itemid *val) {
-	int i;
+const std::string ComboDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/item_combos.yml";
+}
 
-	for (i=0; i<MAX_ITEMS_PER_COMBO; i++) {
-		if (!str) break;
-
-		val[i] = strtoul(str, nullptr, 10);
-
-		str = strchr(str,':');
-
-		if (str)
-			*str++=0;
+uint16 ComboDatabase::find_combo_id( const std::vector<t_itemid>& items ){
+	for (const auto &it : *this) {
+		if (it.second->nameid == items) {
+			return it.first;
+		}
 	}
 
-	if( i == 0 ) //No data found.
-		return 0;
-
-	return i;
+	return 0;
 }
 
 /**
- * <combo{:combo{:combo:{..}}}>,<{ script }>
- **/
-static void itemdb_read_combos(const char* basedir, bool silent) {
-	uint32 lines = 0, count = 0;
-	char line[1024];
+ * Reads and parses an entry from the item_combos.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 ComboDatabase::parseBodyNode(const YAML::Node &node) {
+	std::vector<std::vector<t_itemid>> items_list;
 
-	char path[256];
-	FILE* fp;
-
-	sprintf(path, "%s/%s", basedir, "item_combo_db.txt");
-
-	if ((fp = fopen(path, "r")) == NULL) {
-		if(silent==0) ShowError("itemdb_read_combos: File not found \"%s\".\n", path);
-		return;
+	if( !this->nodesExist( node, { "Combos" } ) ){
+		return 0;
 	}
 
-	// process rows one by one
-	while(fgets(line, sizeof(line), fp)) {
-		char *str[2], *p;
+	const YAML::Node &combosNode = node["Combos"];
 
-		lines++;
+	for (const auto &comboit : combosNode) {
+		static const std::string nodeName = "Combo";
 
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-
-		memset(str, 0, sizeof(str));
-
-		p = line;
-
-		p = trim(p);
-
-		if (*p == '\0')
-			continue;// empty line
-
-		if (!strchr(p,','))
-		{
-			/* is there even a single column? */
-			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
+		if (!this->nodesExist(comboit, { nodeName })) {
+			return 0;
 		}
 
-		str[0] = p;
-		p = strchr(p,',');
-		*p = '\0';
-		p++;
+		const YAML::Node &comboNode = comboit[nodeName];
 
-		str[1] = p;
-		p = strchr(p,',');
-		p++;
-
-		if (str[1][0] != '{') {
-			ShowError("itemdb_read_combos(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
+		if (!comboNode.IsSequence()) {
+			this->invalidWarning(comboNode, "%s should be a sequence.\n", nodeName.c_str());
+			return 0;
 		}
-		/* no ending key anywhere (missing \}\) */
-		if ( str[1][strlen(str[1])-1] != '}' ) {
-			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
-			continue;
-		} else {
-			t_itemid items[MAX_ITEMS_PER_COMBO];
-			int v = 0, retcount = 0;
 
-			if((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
-				ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
-				continue;
+		std::vector<t_itemid> items = {};
+
+		for (const auto &it : comboNode) {
+			std::string item_name = it.as<std::string>();
+
+			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
+
+			if (item == nullptr) {
+				this->invalidWarning(it, "Invalid item %s, skipping.\n", item_name.c_str());
+				return 0;
 			}
-			/* validate */
-			for(v = 0; v < retcount; v++) {
-				if( !itemdb_exists(items[v]) ) {
-					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %" PRIu32 ", skipping.\n", lines, path,items[v]);
-					break;
+
+			items.push_back(item->nameid);
+		}
+
+		if (items.empty()) {
+			this->invalidWarning(comboNode, "Empty combo, skipping.\n");
+			return 0;
+		}
+
+		if (items.size() < 2) {
+			this->invalidWarning(comboNode, "Not enough item to make a combo (need at least 2). Skipping.\n");
+			return 0;
+		}
+
+		std::sort(items.begin(), items.end());
+		items_list.push_back(items);
+	}
+
+	if (items_list.empty()) {
+		this->invalidWarning(combosNode, "No combos defined, skipping.\n");
+		return 0;
+	}
+
+	if (this->nodeExists(node, "Clear")) {
+		bool clear = false;
+
+		if (!this->asBool(node, "Clear", clear))
+			return 0;
+
+		// Remove the combo (if exists)
+		if (clear) {
+			for (const auto& itemsit : items_list) {
+				uint16 id = this->find_combo_id(itemsit);
+
+				if (id == 0) {
+					this->invalidWarning(node["Clear"], "Unable to clear the combo.\n");
+					return 0;
 				}
-			}
-			/* failed at some item */
-			if( v < retcount )
-				continue;
 
-			// Create combo data
-			auto entry = std::make_shared<s_item_combo>();
-
-			entry->nameid = {};
-			entry->script = parse_script(str[1], path, lines, 0);
-			entry->id = count;
-
-			// Store into first item
-			item_data *id = itemdb_exists(items[0]);
-
-			id->combos.push_back(entry);
-
-			size_t idx = id->combos.size() - 1;
-
-			// Populate nameid field
-			for (v = 0; v < retcount; v++)
-				id->combos[idx]->nameid.push_back(items[v]);
-
-			// Populate the children to refer to this combo
-			for (v = 1; v < retcount; v++) {
-				item_data *it = itemdb_exists(items[v]);
-
-				// Copy to other combos in list
-				it->combos.push_back(id->combos[idx]);
+				this->erase(id);
 			}
 
-			itemdb_combo.insert({ id->combos[idx]->id, id->combos[idx] });
+			return 1;
 		}
+	}
+
+	uint64 count = 0;
+
+	for (const auto &itemsit : items_list) {
+		// Find the id when the combo exists
+		uint16 id = this->find_combo_id(itemsit);
+		std::shared_ptr<s_item_combo> combo = this->find(id);
+		bool exists = combo != nullptr;
+
+		if (!exists) {
+			combo = std::make_shared<s_item_combo>();
+
+			combo->nameid.insert(combo->nameid.begin(), itemsit.begin(), itemsit.end());
+			combo->id = ++this->combo_num;
+		}
+
+		if (this->nodeExists(node, "Script")) {
+			std::string script;
+
+			if (!this->asString(node, "Script", script))
+				return 0;
+
+			if (exists) {
+				script_free_code(combo->script);
+				combo->script = nullptr;
+			}
+			combo->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+		} else {
+			if (!exists) {
+				combo->script = nullptr;
+			}
+		}
+
+		if (!exists)
+			this->put( combo->id, combo );
+
 		count++;
 	}
-	fclose(fp);
 
-	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",count,path);
+	return count;
+}
 
-	return;
+void ComboDatabase::loadingFinished() {
+	// Populate item_data to refer to the combo
+	for (const auto &combo : *this) {
+		for (const auto &itm : combo.second->nameid) {
+			item_data *it = itemdb_exists(itm);
+			it->combos.push_back(combo.second);
+		}
+	}
 }
 
 /**
@@ -2898,13 +2895,13 @@ static void itemdb_read(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
-		itemdb_read_combos(dbsubpath2,i > 0); //TODO change this to sv_read ? id#script ?
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i > 0);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
 
 	itemdb_group.load();
+	itemdb_combo.load();
 	random_option_db.load();
 	random_option_group.load();
 }
