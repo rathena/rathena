@@ -63,7 +63,7 @@ lhz_in02,100,143,4	script	Stylist#lhz	2_M_DYEINGER,{
 
 //= Stylist of Lasagna
 //===================================================
-lasagna,134,113,3	script	Stylist#lasagna	4_M_MERCAT2,{
+lasagna,134,113,3	script	Stylist#lasagna	4_DR_F_02,{
 	mes "[Lonza]";
 	mes "If you're a Doram who lives and dies for fashion, trust me. To the beat of the music~";
 	next;
