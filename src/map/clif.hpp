@@ -1186,7 +1186,7 @@ void clif_inventory_expansion_info( struct map_session_data* sd );
 void clif_barter_open( struct map_session_data& sd, struct npc_data& nd );
 void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd );
 
-void clif_summon_init(struct mob_data* md, struct block_list* master_bl);
+void clif_summon_init(struct mob_data* md);
 void clif_summon_hp_bar(struct mob_data* md, struct map_session_data* sd);
 
 #endif /* CLIF_HPP */
