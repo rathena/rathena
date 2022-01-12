@@ -83167,8 +83167,8 @@ Body:
     Name: Condor
     Level: 101
     Hp: 40000
-    BaseExp: 1350
-    JobExp: 1300
+    BaseExp: 1300
+    JobExp: 1350
     Attack: 610
     Attack2: 6
     Defense: 150
@@ -85255,8 +85255,8 @@ Body:
     Name: Infinite Tao Gunka
     Level: 109
     Hp: 8550000
-    BaseExp: 100000
-    JobExp: 100000
+    BaseExp: 200000
+    JobExp: 200000
     MvpExp: 100000
     Attack: 3400
     Attack2: 1260
