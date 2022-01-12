@@ -11,12 +11,14 @@
 alberta_in,55,142,7	script	Stylist#alberta	4_F_02,{
 	mes "[Moonsoon Veronica]";
 	mes "Welcome to Veronica Beauty Salon, reborn as a world-class stylist. Hhhi.";
+	next;
 	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
 		openstylist();
 		end;
 	case 2:
+		next;
 		mes "[Moonsoon Veronica]";
 		mes "Everyone has the right to be beautiful... I hope you find a style that suits you.";
 		close;
@@ -28,6 +30,7 @@ alberta_in,55,142,7	script	Stylist#alberta	4_F_02,{
 prt_in,243,168,4	script	Stylist#prontera	4_F_02,{
 	mes "[Jovovich]";
 	mes "Welcome. I'm Jovovich, a famous stylist from Prontera. How can I help you?";
+	next;
 	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
@@ -45,6 +48,7 @@ prt_in,243,168,4	script	Stylist#prontera	4_F_02,{
 lhz_in02,100,143,4	script	Stylist#lhz	2_M_DYEINGER,{
 	mes "[Prince Shami]";
 	mes "I'm back as one of the greatest stylists in the world. I'm Prince Shami and a professional stylist and I have to say I've been blessed by this great talent! <3";
+	next;
 	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
@@ -62,6 +66,7 @@ lhz_in02,100,143,4	script	Stylist#lhz	2_M_DYEINGER,{
 lasagna,134,113,3	script	Stylist#lasagna	4_M_MERCAT2,{
 	mes "[Lonza]";
 	mes "If you're a Doram who lives and dies for fashion, trust me. To the beat of the music~";
+	next;
 	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
@@ -80,6 +85,7 @@ lasagna,134,113,3	script	Stylist#lasagna	4_M_MERCAT2,{
 ra_in01,186,148,5	script	Stylist#rachel	4_F_MASK1,{
 	mes "[Aesop]";
 	mes "Hi! I am the Aesop stylist of < Sukeng Shukeng Store >.";
+	next;
 	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
@@ -97,6 +103,7 @@ ra_in01,186,148,5	script	Stylist#rachel	4_F_MASK1,{
 yuno_in04,186,21,1	script	Stylist#yuno	4_F_02,{
 	mes "[Maxi]";
 	mes "Nice to meet you. Hi! I'm Maxi the best stylist in Schwarzwald, would you like to change your style?";
+	next;
 	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
