@@ -100,7 +100,7 @@ ra_in01,186,148,5	script	Stylist#rachel	4_F_MASK1,{
 
 //= Stylist of Yuno
 //===================================================
-yuno_in04,186,21,1	script	Stylist#yuno	4_F_02,{
+yuno_in04,186,21,1	script	Stylist#yuno	4_M_BARBER,{
 	mes "[Maxi]";
 	mes "Nice to meet you. Hi! I'm Maxi the best stylist in Schwarzwald, would you like to change your style?";
 	next;
