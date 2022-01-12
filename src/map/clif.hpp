@@ -1159,4 +1159,6 @@ void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_res
 
 void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id );
 
+void clif_inventory_expansion_info( struct map_session_data* sd );
+
 #endif /* CLIF_HPP */
