@@ -2,108 +2,109 @@
 //= Stylist Extension - (Style UI)
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [JohnnyPlayy]
+//===== Description: ========================================= 
+// Texts from this script were translated according to KRO
 //============================================================
-
 //= Stylist of Alberta
 //===================================================
-alberta_in,55,142,7	script	스타일리스트#alberta	4_F_02,{
-	mes "[달순 베로니카]";
-	mes "어서오세요, 세계적인 스타일리스트로 거듭난 베로니카 뷰티 싸롱입니다. 호호호.";
-	switch(select("새롭게 스타일을 변경한다:대화를 마친다")) {
+
+alberta_in,55,142,7	script	Stylist#alberta	4_F_02,{
+	mes "[Moonsoon Veronica]";
+	mes "Welcome to Veronica Beauty Salon, reborn as a world-class stylist. Hhhi.";
+	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
 		openstylist();
 		end;
 	case 2:
-		mes "[달순 베로니카]";
-		mes "사람은 누구라도 아름다워질 권리가 있어요... 자신에게 어울리는 스타일을 꼭 찾길 바래요.";
+		mes "[Moonsoon Veronica]";
+		mes "Everyone has the right to be beautiful... I hope you find a style that suits you.";
 		close;
 	}
 }
 
 //= Stylist of Prontera
 //===================================================
-prt_in,243,168,4	script	스타일리스트#prontera	4_F_02,{
-	mes "[요보비치]";
-	mes "어서오세요. 프론테라의 스타일리스트 명인 요보비치입니다. 무엇을 도와드릴까요?";
-	switch(select("새롭게 스타일을 변경한다:대화를 마친다")) {
+prt_in,243,168,4	script	Stylist#prontera	4_F_02,{
+	mes "[Jovovich]";
+	mes "Welcome. I'm Jovovich, a famous stylist from Prontera. How can I help you?";
+	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
 		openstylist();
 		end;
 	case 2:
-		mes "[요보비치]";
-		mes "또 찾아주세요~";
+		mes "[Jovovich]";
+		mes "Come back when you need to!";
 		close;
 	}
 }
 
 //= Stylist of Lighthalzen
 //===================================================
-lhz_in02,100,143,4	script	스타일리스트#lhz	2_M_DYEINGER,{
-	mes "[프린스 샤미]";
-	mes "신의 축복을 받았다는 헤어 디자이너계의 귀공자, 프린스 샤미, 전문 스타일리스트로 돌아왔습니다 ♡";
-	switch(select("새롭게 스타일을 변경한다:대화를 마친다")) {
+lhz_in02,100,143,4	script	Stylist#lhz	2_M_DYEINGER,{
+	mes "[Prince Shami]";
+	mes "I'm back as one of the greatest stylists in the world. I'm Prince Shami and a professional stylist and I have to say I've been blessed by this great talent! <3";
+	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
 		openstylist();
 		end;
 	case 2:
-		mes "[프린스 샤미]";
-		mes "설마, 내가 디자인한 이 스타일들이 마음에 들지 않는다고 말하고 싶은건 아니겠죠? 오우~, 노오- !";
+		mes "[Prince Shami]";
+		mes "Are you saying you don't like this stylish? How is this possible!";
 		close;
 	}
 }
 
 //= Stylist of Lasagna
 //===================================================
-lasagna,135,110,3	script	스타일리스트#lasagna	4_M_MERCAT2,{
-	mes "[롱카]";
-	mes "패션에 살고 패션에 죽는 도람이라면 나 롱카의 위대한 손길에 몸을 맡겨봐~♬";
-	switch(select("새롭게 스타일을 변경한다:대화를 마친다")) {
+lasagna,134,113,3	script	Stylist#lasagna	4_M_MERCAT2,{
+	mes "[Lonza]";
+	mes "If you're a Doram who lives and dies for fashion, trust me. To the beat of the music~";
+	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
 		openstylist();
 		end;
 	case 2:
-		mes "[롱카]";
-		mes "그런 때가 있지 않아? 누군가에게 오늘 나의 하루를 맡겨버리고 싶은 그런 날.";
-		mes "나 롱카가 멋진 변신으로 상큼한 기분전환을 시켜줄테니 언제든지 찾아오렴.";
+		mes "[Lonza]";
+		mes "There is no such thing as bad weather, right? One day I want you to trust me.";
+		mes "I'm Lonza and I can give you an amazing change that will make you stylish, so come and visit me anytime.";
 		close;
 	}
 }
 
 //= Stylist of Rachel
 //===================================================
-ra_in01,186,148,5	script	스타일리스트#rachel	4_F_MASK1,{
-
-	mes "[아이솝]";
-	mes "훗훗, 어서오세요. <슈컹슈컹-샵>의 스타일리스트 아이솝입니다.";
-	switch(select("새롭게 스타일을 변경한다:대화를 마친다")) {
+ra_in01,186,148,5	script	Stylist#rachel	4_F_MASK1,{
+	mes "[Aesop]";
+	mes "Hi! I am the Aesop stylist of < Sukeng Shukeng Store >.";
+	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
 		openstylist();
 		end;
 	case 2:
-		mes "[아이솝]";
-		mes "자르고 싶은 게 있나요?";
+		mes "[Aesop]";
+		mes "Anything you want to cut?";
 		close;
 	}
 }
 
 //= Stylist of Yuno
 //===================================================
-yuno_in04,186,21,1	script	스타일리스트#yuno	4_F_02,{
-	mes "[맥시]";
-	mes "반갑습니다 손님. 슈발츠발드 최고의 스타일리스트 저 맥시에게 당신의 변신을 맡겨보시겠어요?";
-	switch(select("새롭게 스타일을 변경한다:대화를 마친다")) {
+yuno_in04,186,21,1	script	Stylist#yuno	4_F_02,{
+	mes "[Maxi]";
+	mes "Nice to meet you. Hi! I'm Maxi the best stylist in Schwarzwald, would you like to change your style?";
+	switch(select("Change Style?:End Conversation")) {
 	case 1:
 		close2;
 		openstylist();
 		end;
 	case 2:
-		mes "[맥시]";
-		mes "언제든 또 오세요.";
+		mes "[Maxi]";
+		mes "Come back when you decide to change your style.";
 		close;
 	}
 }
