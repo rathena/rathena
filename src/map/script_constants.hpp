@@ -8721,6 +8721,7 @@
 	export_constant(SCF_MADOCANCEL);
 	export_constant(SCF_MADOENDCANCEL);
 	export_constant(SCF_RESTARTONMAPWARP);
+	export_constant(SCF_SPREADEFFECT);
 
 	#undef export_constant
 	#undef export_constant2

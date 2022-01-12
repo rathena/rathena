@@ -736,10 +736,13 @@ uint16 StatusDatabase::getSkill(sc_type type) {
  * @return True if flag is set or false otherwise
  */
 bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
+	if (sc == nullptr || sc->count == 0 || flag == SCF_NONE)
+		return false;
+
 	for (const auto &status_it : *this) {
 		std::shared_ptr<s_status_change_db> status = status_it.second;
 
-		if (sc->data[status->type] && status->flag[flag])
+		if (sc && sc->data[status->type] && status->flag[flag])
 			return true;
 	}
 
@@ -751,21 +754,25 @@ bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
  * @param sd: Player data
  */
 void StatusDatabase::changeSkillTree(map_session_data *sd) {
+	if (sd == nullptr)
+		return;
+
 	std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(sd->status.class_);
 
-	if( tree != nullptr ){
-		for (const auto &it : tree->skills) {
-			uint16 skill_id = it.first;
-			sc_type sc = skill_get_sc(skill_id);
+	if (tree == nullptr)
+		return;
 
-			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
-				status_change_end(&sd->bl, sc, INVALID_TIMER);
-		}
+	for (const auto &it : tree->skills) {
+		uint16 skill_id = it.first;
+		sc_type sc = skill_get_sc(skill_id);
+
+		if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+			status_change_end(&sd->bl, sc, INVALID_TIMER);
 	}
 }
 
 /**
- * Removes a status based on the provided flag.
+ * Removes a status based on the provided flag(s).
  * @param bl: Target to remove status from
  * @param flag: List of flags to check for removing
  */
@@ -774,6 +781,9 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 		return;
 
 	status_change *sc = status_get_sc(bl);
+
+	if (sc == nullptr || sc->count == 0)
+		return;
 
 	for (const auto &status_it : *this) {
 		std::shared_ptr<s_status_change_db> status = status_it.second;
@@ -14259,98 +14269,50 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
  * Infect a user with status effects (SC_DEADLYINFECT)
  * @param src: Object initiating change on bl [PC|MOB|HOM|MER|ELEM]
  * @param bl: Object to change
- * @param type: 0 - Shadow Chaser attacking, 1 - Shadow Chaser being attacked
  * @return 1: Success 0: Fail
  */
-int status_change_spread(struct block_list *src, struct block_list *bl, bool type)
+int status_change_spread(block_list *src, block_list *bl)
 {
-	int i, flag = 0;
-	struct status_change *sc = status_get_sc(src);
-	const struct TimerData *timer = NULL;
-	t_tick tick;
-	struct status_change_data data;
-
-	if( !sc || !sc->count )
+	if (src == nullptr || bl == nullptr)
 		return 0;
-
-	tick = gettick();
 
 	// Status Immunity resistance
-	if (status_bl_has_mode(src,MD_STATUSIMMUNE) || status_bl_has_mode(bl,MD_STATUSIMMUNE))
+	if (status_bl_has_mode(src, MD_STATUSIMMUNE) || status_bl_has_mode(bl, MD_STATUSIMMUNE))
 		return 0;
 
-	for( i = SC_COMMON_MIN; i < SC_MAX; i++ ) {
-		if( !sc->data[i] || i == SC_COMMON_MAX )
-			continue;
-		if (sc->data[i]->timer != INVALID_TIMER) {
-			timer = get_timer(sc->data[i]->timer);
-			if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick, tick) < 0)
-				continue;
-		}
+	status_change *sc = status_get_sc(src);
 
-		switch( i ) {
-			// Debuffs that can be spread.
-			// NOTE: We'll add/delete SCs when we are able to confirm it.
-			case SC_DEATHHURT:
-			case SC_PARALYSE:
-				if (type)
+	if (sc == nullptr || sc->count == 0)
+		return 0;
+
+	bool hasSpread = false;
+	t_tick tick = gettick(), sc_tick;
+
+	for (const auto &it : status_db) {
+		sc_type type = static_cast<sc_type>(it.first);
+		const TimerData *timer;
+
+		if (sc && sc->data[type] && it.second->flag[SCF_SPREADEFFECT]) {
+			if (sc->data[type]->timer != INVALID_TIMER) {
+				timer = get_timer(sc->data[type]->timer);
+
+				if (timer == nullptr || timer->func != status_change_timer || DIFF_TICK(timer->tick, tick) < 0)
 					continue;
-			case SC_CURSE:
-			case SC_SILENCE:
-			case SC_CONFUSION:
-			case SC_BLIND:
-			case SC_HALLUCINATION:
-			case SC_SIGNUMCRUCIS:
-			case SC_DECREASEAGI:
-			//case SC_SLOWDOWN:
-			//case SC_MINDBREAKER:
-			//case SC_WINKCHARM:
-			//case SC_STOP:
-			case SC_ORCISH:
-			//case SC_STRIPWEAPON: // Omg I got infected and had the urge to strip myself physically.
-			//case SC_STRIPSHIELD: // No this is stupid and shouldnt be spreadable at all.
-			//case SC_STRIPARMOR: // Disabled until I can confirm if it does or not. [Rytech]
-			//case SC_STRIPHELM:
-			//case SC__STRIPACCESSORY:
-			//case SC_BITE:
-			case SC_FEAR:
-			case SC_FREEZING:
-			case SC_VENOMBLEED:
-				if (sc->data[i]->timer != INVALID_TIMER)
-					data.tick = DIFF_TICK(timer->tick, tick);
-				else
-					data.tick = INFINITE_TICK;
-				break;
-			// Special cases
-			case SC_TOXIN:
-			case SC_MAGICMUSHROOM:
-			case SC_PYREXIA:
-			case SC_LEECHESEND:
-				if (type)
-					continue;
-			case SC_POISON:
-			case SC_DPOISON:
-			case SC_BLEEDING:
-			case SC_BURNING:
-				if (sc->data[i]->timer != INVALID_TIMER)
-					data.tick = DIFF_TICK(timer->tick, tick) + sc->data[i]->val4;
-				else
-					data.tick = INFINITE_TICK;
-				break;
-			default:
-				continue;
-		}
-		if( i ) {
-			data.val1 = sc->data[i]->val1;
-			data.val2 = sc->data[i]->val2;
-			data.val3 = sc->data[i]->val3;
-			data.val4 = sc->data[i]->val4;
-			status_change_start(src,bl,(sc_type)i,10000,data.val1,data.val2,data.val3,data.val4,data.tick,SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-			flag = 1;
+
+				int32 val4 = sc->data[type]->val4;
+
+				sc_tick = DIFF_TICK(timer->tick, tick) + (val4 > 0 ? val4 : 0);
+			} else
+				sc_tick = INFINITE_TICK;
+
+			status_change_start(src, bl, type, 10000, sc->data[type]->val1, sc->data[type]->val2, sc->data[type]->val3, sc->data[type]->val4, sc_tick, SCSTART_NOAVOID | SCSTART_NOTICKDEF | SCSTART_NORATEDEF);
+
+			if (!hasSpread)
+				hasSpread = true;
 		}
 	}
 
-	return flag;
+	return hasSpread;
 }
 
 /**

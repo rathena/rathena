@@ -148,6 +148,7 @@ Body:
       BossResist: true
       StopAttacking: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -165,6 +166,7 @@ Body:
       SendOption: true
       BossResist: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -181,6 +183,7 @@ Body:
       BossResist: true
       StopCasting: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -193,6 +196,7 @@ Body:
       StopWalking: true
       RemoveOnDamaged: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -209,6 +213,7 @@ Body:
       SendOption: true
       BossResist: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -228,6 +233,7 @@ Body:
       NoSave: true
       NoClearance: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -612,6 +618,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       Debuff: true
+      SpreadEffect: true
     Fail:
       Inspiration: true
 
@@ -3117,6 +3124,7 @@ Body:
       BossResist: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     MinDuration: 10000
     Fail:
       Refresh: true
@@ -3139,6 +3147,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     MinDuration: 6000
     Fail:
       Refresh: true
@@ -3745,6 +3754,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
 
   - Status: Paralyse
     Icon: Paralyse
@@ -3760,6 +3770,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3784,6 +3795,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3808,6 +3820,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3832,6 +3845,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3856,6 +3870,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3883,6 +3898,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -3905,6 +3921,7 @@ Body:
       NoBanishingBuster: true
       Debuff: true
       OverlapFail: true
+      SpreadEffect: true
     Fail:
       Refresh: true
       Inspiration: true
@@ -4880,6 +4897,7 @@ Body:
     Flags:
       NoDispell: true
       NoBanishingBuster: true
+      SpreadEffect: true
     Fail:
       Inspiration: true
 

@@ -2847,6 +2847,7 @@ enum e_status_change_flag : uint16 {
 	SCF_MADOCANCEL,
 	SCF_MADOENDCANCEL,
 	SCF_RESTARTONMAPWARP,
+	SCF_SPREADEFFECT,
 	SCF_MAX
 };
 
@@ -3254,7 +3255,7 @@ void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);
 
-int status_change_spread(struct block_list *src, struct block_list *bl, bool type);
+int status_change_spread(block_list *src, block_list *bl);
 
 #ifndef RENEWAL
 unsigned short status_base_matk_min(const struct status_data* status);
