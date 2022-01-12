@@ -33,7 +33,7 @@ services:
     login:
         image: "rathena:local"
         container_name: "rathena-login"
-        command: "-c ./login-server"
+        command: "-c /rathena/login-server"
         ports:
             - "6900:6900" # login server
         volumes:
@@ -53,7 +53,7 @@ services:
     char:
         image: "rathena:local"
         container_name: "rathena-char"
-        command: "-c ./char-server"
+        command: "-c /rathena/char-server"
         ports:
             - "6121:6121" # char server
         volumes:
@@ -73,7 +73,7 @@ services:
     map:
         image: "rathena:local"
         container_name: "rathena-map"
-        command: "-c ./map-server"
+        command: "-c /rathena/map-server"
         ports:
             - "5121:5121" # map server
         volumes:
