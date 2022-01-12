@@ -142881,6 +142881,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 230
     Refineable: true
+    View: 1
     Script: |
       .@r = getrefine();
       bonus2 bMagicAtkEle,Ele_All,3;
@@ -142906,6 +142907,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 230
     Refineable: true
+    View: 1
     Script: |
       .@r = getrefine();
       bonus2 bAddClass,Class_All,3;
@@ -142948,6 +142950,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 230
     Refineable: true
+    View: 2
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143008,6 +143011,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 160
     Refineable: true
+    View: 1
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
@@ -143052,6 +143056,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    View: 4
     Script: |
       .@r = getrefine();
       bonus bMres,2;
@@ -143075,6 +143080,7 @@ Body:
     ArmorLevel: 2
     EquipLevelMin: 210
     Refineable: true
+    View: 2
     Script: |
       .@r = getrefine();
       bonus bMres,3;
