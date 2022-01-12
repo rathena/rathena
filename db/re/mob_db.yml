@@ -82975,8 +82975,8 @@ Body:
     Hp: 25000
     BaseExp: 1200
     JobExp: 1200
-    Attack: 843
-    Attack2: 1160
+    Attack: 794
+    Attack2: 67
     Defense: 146
     MagicDefense: 5
     Str: 108
@@ -83024,8 +83024,8 @@ Body:
     Hp: 25000
     BaseExp: 1200
     JobExp: 1200
-    Attack: 689
-    Attack2: 929
+    Attack: 600
+    Attack2: 1
     Defense: 147
     Str: 109
     Agi: 50
@@ -83054,8 +83054,8 @@ Body:
         Rate: 3000
       - Item: Pierrot_Nose
         Rate: 4
-      - Item: Sword_
-        Rate: 100
+      - Item: Apple
+        Rate: 1000
       - Item: Wing_Of_Fly
         Rate: 500
       - Item: Carrot
@@ -83072,8 +83072,8 @@ Body:
     Hp: 25000
     BaseExp: 1200
     JobExp: 1200
-    Attack: 690
-    Attack2: 930
+    Attack: 600
+    Attack2: 3
     Defense: 148
     Str: 110
     Agi: 51
@@ -83120,8 +83120,8 @@ Body:
     Hp: 25000
     BaseExp: 1200
     JobExp: 1200
-    Attack: 691
-    Attack2: 931
+    Attack: 600
+    Attack2: 1
     Defense: 149
     MagicDefense: 3
     Str: 111
@@ -83169,15 +83169,16 @@ Body:
     Hp: 40000
     BaseExp: 1350
     JobExp: 1300
-    Attack: 701
-    Attack2: 945
-    Defense: 7
+    Attack: 610
+    Attack2: 6
+    Defense: 150
     MagicDefense: 5
-    Str: 14
-    Agi: 7
-    Vit: 6
-    Dex: 13
-    Luk: 5
+    Str: 112
+    Agi: 53
+    Vit: 72
+    Int: 38
+    Dex: 123
+    Luk: 28
     AttackRange: 1
     SkillRange: 10
     ChaseRange: 12
@@ -83215,10 +83216,10 @@ Body:
     Name: Willow
     Level: 101
     Hp: 40000
-    BaseExp: 1300
-    JobExp: 1350
-    Attack: 702
-    Attack2: 946
+    BaseExp: 1350
+    JobExp: 1300
+    Attack: 610
+    Attack2: 5
     Defense: 151
     MagicDefense: 2
     Str: 113
@@ -83266,8 +83267,8 @@ Body:
     Hp: 40000
     BaseExp: 1300
     JobExp: 1350
-    Attack: 703
-    Attack2: 947
+    Attack: 610
+    Attack2: 8
     Defense: 152
     MagicDefense: 10
     Str: 114
@@ -83315,8 +83316,8 @@ Body:
     Hp: 40000
     BaseExp: 1300
     JobExp: 1350
-    Attack: 704
-    Attack2: 948
+    Attack: 610
+    Attack2: 20
     Defense: 153
     MagicDefense: 17
     Str: 115
@@ -83364,8 +83365,8 @@ Body:
     Hp: 55000
     BaseExp: 1400
     JobExp: 1500
-    Attack: 714
-    Attack2: 962
+    Attack: 620
+    Attack2: 11
     Defense: 154
     Str: 116
     Agi: 57
@@ -83412,8 +83413,8 @@ Body:
     Hp: 55000
     BaseExp: 1400
     JobExp: 1500
-    Attack: 715
-    Attack2: 963
+    Attack: 620
+    Attack2: 30
     Defense: 155
     MagicDefense: 20
     Str: 117
@@ -83461,8 +83462,8 @@ Body:
     Hp: 55000
     BaseExp: 1400
     JobExp: 1500
-    Attack: 716
-    Attack2: 964
+    Attack: 620
+    Attack2: 12
     Defense: 156
     MagicDefense: 7
     Str: 118
@@ -83510,8 +83511,8 @@ Body:
     Hp: 55000
     BaseExp: 1400
     JobExp: 1500
-    Attack: 717
-    Attack2: 965
+    Attack: 620
+    Attack2: 5
     Defense: 157
     Str: 119
     Agi: 60
@@ -83558,8 +83559,8 @@ Body:
     Hp: 70000
     BaseExp: 1500
     JobExp: 1650
-    Attack: 727
-    Attack2: 979
+    Attack: 630
+    Attack2: 11
     Defense: 158
     MagicDefense: 3
     Str: 120
@@ -83602,13 +83603,13 @@ Body:
         StealProtected: true
   - Id: 3397
     AegisName: MIN_SNAKE
-    Name: Snake
+    Name: Boa
     Level: 103
     Hp: 70000
     BaseExp: 1500
     JobExp: 1650
-    Attack: 728
-    Attack2: 980
+    Attack: 630
+    Attack2: 5
     Defense: 159
     MagicDefense: 8
     Str: 121
@@ -83656,8 +83657,8 @@ Body:
     Hp: 70000
     BaseExp: 1500
     JobExp: 1650
-    Attack: 729
-    Attack2: 981
+    Attack: 630
+    Attack2: 55
     Defense: 160
     Str: 122
     Agi: 63
@@ -83684,15 +83685,14 @@ Body:
         Rate: 100
       - Item: Posionous_Canine
         Rate: 4500
-      - Item: Scarlet_Lance
-        Rate: 50
-        RandomOptionGroup: Group_5
+      - Item: Glaive_
+        Rate: 5
       - Item: Scale_Of_Snakes
         Rate: 750
       - Item: Scales_Shell
         Rate: 100
-      - Item: Doram_Only_Suit
-        Rate: 20
+      - Item: Yellow_Herb
+        Rate: 75
       - Item: Oridecon_Stone
         Rate: 25
       - Item: Anacondaq_Card
@@ -83705,8 +83705,8 @@ Body:
     Hp: 70000
     BaseExp: 1500
     JobExp: 1650
-    Attack: 730
-    Attack2: 982
+    Attack: 630
+    Attack2: 14
     Defense: 161
     MagicDefense: 8
     Str: 123
@@ -83754,8 +83754,8 @@ Body:
     Hp: 85000
     BaseExp: 1600
     JobExp: 1800
-    Attack: 740
-    Attack2: 996
+    Attack: 640
+    Attack2: 9
     Defense: 162
     Str: 124
     Agi: 65
@@ -83802,8 +83802,8 @@ Body:
     Hp: 85000
     BaseExp: 1600
     JobExp: 1800
-    Attack: 741
-    Attack2: 997
+    Attack: 640
+    Attack2: 7
     Defense: 163
     Str: 125
     Agi: 66
@@ -83848,8 +83848,8 @@ Body:
     Hp: 85000
     BaseExp: 1600
     JobExp: 1800
-    Attack: 742
-    Attack2: 998
+    Attack: 640
+    Attack2: 16
     Defense: 164
     MagicDefense: 16
     Str: 126
@@ -83897,8 +83897,8 @@ Body:
     Hp: 85000
     BaseExp: 1600
     JobExp: 1800
-    Attack: 743
-    Attack2: 999
+    Attack: 640
+    Attack2: 20
     Defense: 165
     MagicDefense: 16
     Str: 127
@@ -83946,8 +83946,8 @@ Body:
     Hp: 100000
     BaseExp: 3000
     JobExp: 1950
-    Attack: 761
-    Attack2: 1025
+    Attack: 660
+    Attack2: 21
     Defense: 166
     MagicDefense: 16
     Str: 128
@@ -83995,8 +83995,8 @@ Body:
     Hp: 100000
     BaseExp: 3000
     JobExp: 1950
-    Attack: 762
-    Attack2: 1026
+    Attack: 660
+    Attack2: 25
     Defense: 167
     MagicDefense: 12
     Str: 129
@@ -84046,8 +84046,8 @@ Body:
     Hp: 100000
     BaseExp: 3000
     JobExp: 1950
-    Attack: 763
-    Attack2: 1027
+    Attack: 660
+    Attack2: 7
     Defense: 168
     MagicDefense: 5
     Str: 130
@@ -84095,8 +84095,8 @@ Body:
     Hp: 100000
     BaseExp: 3000
     JobExp: 1950
-    Attack: 764
-    Attack2: 1028
+    Attack: 660
+    Attack2: 3
     Defense: 169
     Str: 131
     Agi: 72
@@ -84143,8 +84143,8 @@ Body:
     Hp: 115000
     BaseExp: 4000
     JobExp: 2100
-    Attack: 782
-    Attack2: 1054
+    Attack: 680
+    Attack2: 41
     Defense: 170
     MagicDefense: 12
     Str: 132
@@ -84192,8 +84192,8 @@ Body:
     Hp: 115000
     BaseExp: 4000
     JobExp: 2100
-    Attack: 783
-    Attack2: 1055
+    Attack: 680
+    Attack2: 56
     Defense: 171
     MagicDefense: 24
     Str: 133
@@ -84241,8 +84241,8 @@ Body:
     Hp: 115000
     BaseExp: 4000
     JobExp: 2100
-    Attack: 784
-    Attack2: 1056
+    Attack: 680
+    Attack2: 39
     Defense: 172
     MagicDefense: 10
     Str: 134
@@ -84290,8 +84290,8 @@ Body:
     Hp: 115000
     BaseExp: 4000
     JobExp: 2100
-    Attack: 785
-    Attack2: 1057
+    Attack: 680
+    Attack2: 35
     Defense: 173
     MagicDefense: 25
     Str: 135
@@ -84336,8 +84336,8 @@ Body:
     Hp: 130000
     BaseExp: 5000
     JobExp: 2250
-    Attack: 803
-    Attack2: 1083
+    Attack: 700
+    Attack2: 35
     Defense: 174
     MagicDefense: 18
     Str: 136
@@ -84385,8 +84385,8 @@ Body:
     Hp: 130000
     BaseExp: 5000
     JobExp: 2250
-    Attack: 804
-    Attack2: 1084
+    Attack: 700
+    Attack2: 42
     Defense: 175
     MagicDefense: 18
     Str: 137
@@ -84434,8 +84434,8 @@ Body:
     Hp: 130000
     BaseExp: 5000
     JobExp: 2250
-    Attack: 805
-    Attack2: 1085
+    Attack: 700
+    Attack2: 35
     Defense: 176
     MagicDefense: 16
     Str: 138
@@ -84484,8 +84484,8 @@ Body:
     Hp: 130000
     BaseExp: 5000
     JobExp: 2250
-    Attack: 806
-    Attack2: 1086
+    Attack: 700
+    Attack2: 40
     Defense: 177
     MagicDefense: 16
     Str: 139
@@ -84533,8 +84533,8 @@ Body:
     Hp: 145000
     BaseExp: 6000
     JobExp: 2400
-    Attack: 824
-    Attack2: 1112
+    Attack: 720
+    Attack2: 37
     Defense: 178
     MagicDefense: 30
     Str: 140
@@ -84578,8 +84578,8 @@ Body:
     Hp: 145000
     BaseExp: 6000
     JobExp: 2400
-    Attack: 825
-    Attack2: 1113
+    Attack: 720
+    Attack2: 32
     Defense: 179
     MagicDefense: 28
     Str: 141
@@ -84627,8 +84627,8 @@ Body:
     Hp: 145000
     BaseExp: 6000
     JobExp: 2400
-    Attack: 826
-    Attack2: 1114
+    Attack: 720
+    Attack2: 28
     Defense: 180
     MagicDefense: 5
     Str: 142
@@ -84676,8 +84676,8 @@ Body:
     Hp: 160000
     BaseExp: 7000
     JobExp: 2600
-    Attack: 844
-    Attack2: 1140
+    Attack: 740
+    Attack2: 30
     Defense: 181
     MagicDefense: 18
     Str: 143
@@ -84721,8 +84721,8 @@ Body:
     Hp: 160000
     BaseExp: 7000
     JobExp: 2600
-    Attack: 845
-    Attack2: 1141
+    Attack: 740
+    Attack2: 35
     Defense: 182
     MagicDefense: 8
     Str: 144
@@ -84768,10 +84768,10 @@ Body:
     Name: Infinite Toad
     Level: 105
     Hp: 900000
-    BaseExp: 13800
-    JobExp: 17250
-    Attack: 1337
-    Attack2: 1937
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1500
+    Attack2: 19
     Defense: 24
     MagicDefense: 6
     Str: 32
@@ -84818,10 +84818,10 @@ Body:
     Name: Infinite Vagabond Wolf
     Level: 105
     Hp: 900000
-    BaseExp: 13800
-    JobExp: 17250
-    Attack: 1537
-    Attack2: 2217
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1700
+    Attack2: 46
     Defense: 102
     MagicDefense: 51
     Str: 72
@@ -84868,10 +84868,10 @@ Body:
     Name: Infinite Vocal
     Level: 105
     Hp: 900000
-    BaseExp: 13800
-    JobExp: 17250
-    Attack: 1462
-    Attack2: 2102
+    BaseExp: 12000
+    JobExp: 15000
+    Attack: 1600
+    Attack2: 11
     Defense: 77
     MagicDefense: 26
     Str: 77
@@ -84920,8 +84920,8 @@ Body:
     Hp: 900000
     BaseExp: 12000
     JobExp: 15000
-    Attack: 1245
-    Attack2: 1805
+    Attack: 1400
+    Attack2: 20
     Defense: 50
     MagicDefense: 20
     Str: 20
@@ -84970,8 +84970,8 @@ Body:
     Hp: 900000
     BaseExp: 12000
     JobExp: 15000
-    Attack: 1546
-    Attack2: 2266
+    Attack: 1800
+    Attack2: 148
     Defense: 159
     MagicDefense: 10
     Agi: 38
@@ -85019,8 +85019,9 @@ Body:
     Hp: 1850000
     BaseExp: 100000
     JobExp: 100000
-    Attack: 1633
-    Attack2: 2353
+    MvpExp: 100000
+    Attack: 1800
+    Attack2: 776
     Defense: 166
     MagicDefense: 70
     Str: 92
@@ -85042,6 +85043,7 @@ Body:
     DamageMotion: 432
     DamageTaken: 10
     Ai: 21
+    Class: Boss
     Modes:
       Mvp: true
     MvpDrops:
@@ -85077,8 +85079,8 @@ Body:
     BaseExp: 100000
     JobExp: 100000
     MvpExp: 100000
-    Attack: 1720
-    Attack2: 2480
+    Attack: 1900
+    Attack2: 1503
     Defense: 172
     MagicDefense: 164
     Str: 97
@@ -85136,8 +85138,8 @@ Body:
     BaseExp: 100000
     JobExp: 100000
     MvpExp: 100000
-    Attack: 1953
-    Attack2: 2833
+    Attack: 2200
+    Attack2: 967
     Defense: 269
     MagicDefense: 98
     Str: 88
@@ -85195,8 +85197,8 @@ Body:
     BaseExp: 100000
     JobExp: 100000
     MvpExp: 100000
-    Attack: 2604
-    Attack2: 3804
+    Attack: 3000
+    Attack2: 441
     Defense: 197
     MagicDefense: 70
     Str: 97
@@ -85256,8 +85258,8 @@ Body:
     BaseExp: 100000
     JobExp: 100000
     MvpExp: 100000
-    Attack: 2964
-    Attack2: 4324
+    Attack: 3400
+    Attack2: 1260
     Defense: 404
     MagicDefense: 143
     Str: 135
