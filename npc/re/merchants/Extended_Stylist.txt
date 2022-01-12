@@ -32,7 +32,7 @@ prt_in,243,168,4	script	요보비치#prontera	4_F_02,{
 		openstylist();
 		end;
 	case 2:
-		mes "[맥시]";
+		mes "[요보비치]";
 		mes "또 찾아주세요~";
 		close;
 	}
