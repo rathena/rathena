@@ -9244,7 +9244,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	struct status_change_entry* sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int undead_flag, val_flag = 0, tick_time = 0;
+	int undead_flag, tick_time = 0;
 	uint64 calc_flag;
 	bool sc_isnew = true;
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
@@ -11909,82 +11909,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				break;
 		}
 
-	// Values that must be set regardless of flag&4 e.g. val_flag [Ind]
-	switch(type) {
-		// Start |1 val_flag setting
-		case SC_ENCHANTARMS:
-		case SC_ROLLINGCUTTER:
-		case SC_BANDING:
-		case SC_SPHERE_1:
-		case SC_SPHERE_2:
-		case SC_SPHERE_3:
-		case SC_SPHERE_4:
-		case SC_SPHERE_5:
-		case SC_OVERHEAT:
-		case SC_LIGHTNINGWALK:
-		case SC_MONSTER_TRANSFORM:
-		case SC_ACTIVE_MONSTER_TRANSFORM:
-		case SC_EXPBOOST:
-		case SC_JEXPBOOST:
-		case SC_ITEMBOOST:
-		case SC_JP_EVENT04:
-		case SC_PUSH_CART:
-		case SC_SWORDCLAN:
-		case SC_ARCWANDCLAN:
-		case SC_GOLDENMACECLAN:
-		case SC_CROSSBOWCLAN:
-		case SC_JUMPINGCLAN:
-		case SC_DRESSUP:
-		case SC_MISTY_FROST:
-		case SC_MADOGEAR:
-		case SC_CHARGINGPIERCE_COUNT:
-		case SC_CLIMAX:
-		case SC_E_SLASH_COUNT:
-			val_flag |= 1;
-			break;
-		// Start |1|2 val_flag setting
-		case SC_FIGHTINGSPIRIT:
-		case SC_VENOMIMPRESS:
-		case SC_WEAPONBLOCKING:
-		case SC__INVISIBILITY:
-		case SC__ENERVATION:
-		case SC__WEAKNESS:
-		case SC_PROPERTYWALK:
-		case SC_PRESTIGE:
-		case SC_CRESCENTELBOW:
-		case SC_CHILLY_AIR_OPTION:
-		case SC_GUST_OPTION:
-		case SC_WILD_STORM_OPTION:
-		case SC_UPHEAVAL_OPTION:
-		case SC_CIRCLE_OF_FIRE_OPTION:
-		case SC_CLAN_INFO:
-		case SC_DAILYSENDMAILCNT:
-			val_flag |= 1|2;
-			break;
-		// Start |1|2|4 val_flag setting
-		case SC_POISONINGWEAPON:
-		case SC_CLOAKINGEXCEED:
-		case SC_NPC_HALLUCINATIONWALK:
-		case SC_HALLUCINATIONWALK:
-		case SC__SHADOWFORM:
-		case SC__GROOMY:
-		case SC__LAZINESS:
-		case SC__UNLUCKY:
-		case SC_FORCEOFVANGUARD:
-		case SC_SPELLFIST:
-		case SC_CURSEDCIRCLE_ATKER:
-		case SC_PYROTECHNIC_OPTION:
-		case SC_HEATER_OPTION:
-		case SC_AQUAPLAY_OPTION:
-		case SC_COOLER_OPTION:
-		case SC_BLAST_OPTION:
-		case SC_PETROLOGY_OPTION:
-		case SC_CURSED_SOIL_OPTION:
-		case SC_WATER_BARRIER:
-			val_flag |= 1|2|4;
-			break;
-	}
-
 	if (sd && current_equip_combo_pos > 0 && tick == INFINITE_TICK) {
 		ShowWarning("sc_start: Item combo of item #%u contains an INFINITE_TICK duration. Skipping bonus.\n", sd->inventory_data[pc_checkequip(sd, current_equip_combo_pos)]->nameid);
 		return 0;
@@ -12120,7 +12044,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
 #endif
 
-		clif_status_change(bl, status_icon, 1, tick, (val_flag & 1) ? val1 : 1, (val_flag & 2) ? val2 : 0, (val_flag & 4) ? val3 : 0);
+		clif_status_change(bl, status_icon, 1, tick, scdb->flag[SCF_SENDVAL1] ? val1 : 1, scdb->flag[SCF_SENDVAL2] ? val2 : 0, scdb->flag[SCF_SENDVAL3] ? val3 : 0);
 	}
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.

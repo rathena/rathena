@@ -205,6 +205,9 @@ Flags: Various status flags for specific status change events.
 	MobLoseTarget         - When active on a monster it will lose the target.
 	RestartOnMapWarp      - Restarts the timer of a status when warping to another map.
 	SpreadEffect          - Passes the status onto a target when SC_DEADLYINFECT is active.
+	SendVal1              - Notifies the client of a status change (val1).
+	SendVal2              - Notifies the client of a status change (val2).
+	SendVal3              - Notifies the client of a status change (val3).
 
 	NoClearbuff           - Cannot be removed by 'status_change_clear_buffs()', 'sc_end SC_ALL', 'status_change_clear(3)', etc.
 	NoRemoveOnDead        - Cannot be removed when a player dies.
