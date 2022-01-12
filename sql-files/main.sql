@@ -270,6 +270,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `last_login` datetime DEFAULT NULL,
   `title_id` INT(11) unsigned NOT NULL default '0',
   `show_equip` tinyint(3) unsigned NOT NULL default '0',
+  `inventory_slots` smallint(6) NOT NULL default '100',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
