@@ -24240,7 +24240,7 @@ void SkillDatabase::clear() {
 
 void SkillDatabase::loadingFinished(){
 	if( this->skill_num > MAX_SKILL ){
-		ShowError( "The skill database allows a player to have more skills (%d) than your MAX_SKILL(%d) define. Please increase it and recompile your servers.\n", this->skill_num, MAX_SKILL );
+		ShowError( "There are more skills defined in the skill database (%d) than the MAX_SKILL (%d) define. Please increase it and recompile.\n", this->skill_num, MAX_SKILL );
 	}
 }
 
@@ -24253,7 +24253,7 @@ void SkillDatabase::loadingFinished(){
 uint16 SkillDatabase::get_index( uint16 skill_id, bool silent, const char *func, const char *file, int line ){
 	uint16 idx = this->skilldb_id2idx[skill_id];
 
-	if( !idx && skill_id != 0 && !silent ){
+	if( idx == 0 && skill_id != 0 && !silent ){
 		ShowError( "Skill '%d' is undefined! %s:%d::%s\n", skill_id, file, line, func );
 	}
 
