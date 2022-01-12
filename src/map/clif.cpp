@@ -22537,6 +22537,185 @@ void clif_parse_stylist_close( int fd, struct map_session_data* sd ){
 #endif
 }
 
+void clif_inventory_expansion_info( struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_INVENTORY_EXPANSION_INFO p = {};
+
+	p.packetType = HEADER_ZC_INVENTORY_EXPANSION_INFO;
+	p.expansionSize = sd->status.inventory_slots - INVENTORY_BASE_SIZE;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+enum class e_inventory_expansion_response : uint8{
+	ASK_CONFIRMATION = 0,
+	FAILED,
+	BUSY,
+	MISSING_ITEM,
+	MAXIMUM_REACHED
+};
+
+void clif_inventory_expansion_response( struct map_session_data* sd, e_inventory_expansion_response response ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_ACK_INVENTORY_EXPAND p = {};
+
+	p.packetType = HEADER_ZC_ACK_INVENTORY_EXPAND;
+	p.result = (uint8)response;
+	p.itemId = sd->state.inventory_expansion_confirmation;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
+}
+
+void clif_parse_inventory_expansion_request( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	// Check if player is dead or busy with other stuff
+	if( pc_isdead( sd ) || pc_cant_act( sd ) ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::BUSY );
+		return;
+	}
+
+	// Check if the player already reached the maximum
+	if( sd->status.inventory_slots >= MAX_INVENTORY ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::MAXIMUM_REACHED );
+		return;
+	}
+
+	static std::map<t_itemid, uint16> items = {
+		// The order of entries in this list defines which will be used first
+		// This order and the usable items are hardcoded into the client
+		// The number of increased slots is "hardcoded" in the message of the client and cannot be sent per item
+		{ ITEMID_INVENTORY_EX_EVT, 10 },
+		{ ITEMID_INVENTORY_EX_DIS, 10 },
+		{ ITEMID_INVENTORY_EX, 10 },
+	};
+
+	int16 index = -1;
+	bool found_over_limit = false;
+
+	for( const auto& entry : items ){
+		// Check if the player has the required item
+		index = pc_search_inventory( sd, entry.first );
+
+		// Found an item
+		if( index >= 0 ){
+			// Check if the player would exceed the maximum
+			if( sd->status.inventory_slots + entry.second > MAX_INVENTORY ){
+				found_over_limit = true;
+			}else{
+				found_over_limit = false;
+				sd->state.inventory_expansion_confirmation = entry.first;
+				sd->state.inventory_expansion_amount = entry.second;
+				break;
+			}
+		}
+	}
+
+	// Check if an item was found
+	if( sd->state.inventory_expansion_confirmation == 0 ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::MISSING_ITEM );
+		return;
+	}
+
+	// Check if an item would have been found, but the player would exceed the maximum
+	if( found_over_limit ){
+		clif_inventory_expansion_response( sd, e_inventory_expansion_response::MAXIMUM_REACHED );
+		return;
+	}
+
+	// The player met all requirements => ask him for confirmation
+	clif_inventory_expansion_response( sd, e_inventory_expansion_response::ASK_CONFIRMATION );
+#endif
+}
+
+enum class e_inventory_expansion_result : uint8{
+	SUCCESS = 0,
+	FAILED,
+	BUSY,
+	MISSING_ITEM,
+	MAXIMUM_REACHED
+};
+
+void clif_inventory_expansion_result( struct map_session_data* sd, e_inventory_expansion_result result ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_ACK_INVENTORY_EXPAND_RESULT p = {};
+
+	p.packetType = HEADER_ZC_ACK_INVENTORY_EXPAND_RESULT;
+	p.result = (uint8)result;
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+
+	// Reset the state tracking
+	sd->state.inventory_expansion_confirmation = 0;
+	sd->state.inventory_expansion_amount = 0;
+#endif
+}
+
+void clif_parse_inventory_expansion_confirm( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	if( sd->state.inventory_expansion_confirmation == 0 ){
+		return;
+	}
+
+	// Check if player is dead
+	if( pc_isdead( sd ) ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::BUSY );
+		return;
+	}
+
+	// Check if the player already reached the maximum
+	if( sd->status.inventory_slots >= MAX_INVENTORY ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::MAXIMUM_REACHED );
+		return;
+	}
+
+	// Check if the player has the required item
+	int index = pc_search_inventory( sd, sd->state.inventory_expansion_confirmation );
+
+	// The player did not have the item anymore
+	if( index < 0 ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::MISSING_ITEM );
+		return;
+	}
+
+	// Check if the player would exceed the maximum
+	if( sd->status.inventory_slots + sd->state.inventory_expansion_amount > MAX_INVENTORY ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::MAXIMUM_REACHED );
+		return;
+	}
+
+	// Delete the required item
+	if( pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER ) ){
+		clif_inventory_expansion_result( sd, e_inventory_expansion_result::FAILED );
+		return;
+	}
+
+	// Increase the slots
+	sd->status.inventory_slots += sd->state.inventory_expansion_amount;
+
+	// Save player data (slots) and inventory data (removed item)
+	chrif_save( sd, CSAVE_NORMAL | CSAVE_INVENTORY );
+
+	// Inform the player of success
+	clif_inventory_expansion_result( sd, e_inventory_expansion_result::SUCCESS );
+	clif_inventory_expansion_info( sd );
+#endif
+}
+
+void clif_parse_inventory_expansion_reject( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	sd->state.inventory_expansion_confirmation = 0;
+	sd->state.inventory_expansion_amount = 0;
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

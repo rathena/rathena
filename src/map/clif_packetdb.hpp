@@ -2409,9 +2409,9 @@
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
-	parseable_packet( 0x0B14, sizeof( struct PACKET_CZ_INVENTORY_EXPAND ), clif_parse_dull, 0 );
-	parseable_packet( 0x0B16, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_CONFIRMED ), clif_parse_dull, 0 );
-	parseable_packet( 0x0B19, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_REJECTED ), clif_parse_dull, 0 );
+	parseable_packet( HEADER_CZ_INVENTORY_EXPAND, sizeof( struct PACKET_CZ_INVENTORY_EXPAND ), clif_parse_inventory_expansion_request, 0 );
+	parseable_packet( HEADER_CZ_INVENTORY_EXPAND_CONFIRMED, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_CONFIRMED ), clif_parse_inventory_expansion_confirm, 0 );
+	parseable_packet( HEADER_CZ_INVENTORY_EXPAND_REJECTED, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_REJECTED ), clif_parse_inventory_expansion_reject, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20190227 || PACKETVER_RE_NUM >= 20190220 || PACKETVER_ZERO_NUM >= 20190220
