@@ -8720,6 +8720,7 @@
 	export_constant(SCF_TAEKWONANGEL);
 	export_constant(SCF_MADOCANCEL);
 	export_constant(SCF_MADOENDCANCEL);
+	export_constant(SCF_RESTARTONMAPWARP);
 
 	#undef export_constant
 	#undef export_constant2

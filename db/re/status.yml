@@ -2551,6 +2551,8 @@ Body:
     DurationLookup: SG_KNOWLEDGE
     CalcFlags:
       All: true
+    Flags:
+      RestartOnMapWarp: true
 
   - Status: Sma
     Icon: Sma_Ready

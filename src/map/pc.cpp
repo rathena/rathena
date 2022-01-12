@@ -6272,13 +6272,19 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			if (sc->cant.warp)
 				return SETPOS_MAPINDEX; // You may not get out!
 
-			status_db.removeByStatusFlag(&sd->bl, { SCF_REMOVEONMAPWARP });
+			for (const auto &it : status_db) {
+				if (sc->data[it.first]) {
+					if (it.second->flag[SCF_REMOVEONMAPWARP])
+						status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
 
-			if (sd->sc.data[SC_KNOWLEDGE]) {
-				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
-				if (sce->timer != INVALID_TIMER)
-					delete_timer(sce->timer, status_change_timer);
-				sce->timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sce->val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
+					if (it.second->flag[SCF_RESTARTONMAPWARP] && it.second->skill_id > 0) {
+						status_change_entry *sce = sd->sc.data[it.first];
+
+						if (sce->timer != INVALID_TIMER)
+							delete_timer(sce->timer, status_change_timer);
+						sce->timer = add_timer(gettick() + skill_get_time(it.second->skill_id, sce->val1), status_change_timer, sd->bl.id, it.first);
+					}
+				}
 			}
 		}
 		for(int i = 0; i < EQI_MAX; i++ ) {
