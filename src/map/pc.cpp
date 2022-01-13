@@ -942,6 +942,9 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_s
 	if (sd == NULL || item == NULL)
 		return false;
 
+	if (!pc_can_give_items(sd))
+		return false;
+
 	if (item->equip > 0 || item->amount < 0)
 		return false;
 
