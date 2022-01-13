@@ -69644,6 +69644,14 @@ Body:
          bonus2 bAddRace,RC_All,10;
       if (.@r>=9)
          bonus2 bAddRace,RC_All,10;
+  - Id: 15841
+    AegisName: aegis_15841
+    Name: Costume Goggles Hat
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1721
   - Id: 15843
     AegisName: Hunters_Dinner
     Name: Costume Hunter's Dinner    # !todo check english name
@@ -96121,6 +96129,18 @@ Body:
       hateffect(HAT_EF_99LV_ShadowC_Black,true);
     UnEquipScript: |
       hateffect(HAT_EF_99LV_ShadowC_Black,false);
+  - Id: 20559
+    AegisName: C_160LV_Rune_Red
+    Name: Costume Red Aura
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_160LV_RUNE_RED,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_RUNE_RED,false);
   - Id: 20567
     AegisName: C_160LV_ShadowC_Black
     Name: Costume Aura of Darkness
@@ -96133,6 +96153,18 @@ Body:
       hateffect(HAT_EF_160LV_ShadowC_Black,true);
     UnEquipScript: |
       hateffect(HAT_EF_160LV_ShadowC_Black,false);
+  - Id: 20568
+    AegisName: C_160LV_Mechanic_Gold
+    Name: Costume Gold Aura
+    Type: Armor
+    Locations:
+      Costume_Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 1
+    Script: |
+      hateffect(HAT_EF_160LV_MECHANIC_GOLD,true);
+    UnEquipScript: |
+      hateffect(HAT_EF_160LV_MECHANIC_GOLD,false);
   - Id: 20570
     AegisName: C_HeartChocoBag
     Name: Costume HeartChocoBag
@@ -122915,6 +122947,25 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,3;
       bonus2 bSPDrainRate,10,1;
       autobonus "{ bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+  - Id: 28538
+    AegisName: Glove_Of_Wizard_BR
+    Name: Magician's Gloves
+    Type: Armor
+    Buy: 20
+    Weight: 500
+    Slots: 1
+    Locations:
+      Both_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 80
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus2 bMagicAtkEle,Ele_Earth,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bIgnoreMdefRaceRate,RC_All,20;
   - Id: 28551
     AegisName: Imperial_Glove
     Name: Imperial Glove
@@ -136417,6 +136468,14 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2077
+  - Id: 400131
+    AegisName: aegis_400131
+    Name: Costume Diadem of Brunhild
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 1057
   - Id: 400134
     AegisName: Thanos_Helm_1
     Name: Thanos Warrior Helmet
@@ -136852,6 +136911,14 @@ Body:
       Costume_Head_Top: true
     ArmorLevel: 1
     View: 2140
+  - Id: 400166
+    AegisName: aegis_400166
+    Name: Costume Aegir Helm    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    View: 870
   - Id: 400177
     AegisName: aegis_400177
     Name: Fafnir Helm
@@ -136859,6 +136926,8 @@ Body:
     View: 2149
     Weight: 500
     Defense: 10
+    Locations:
+      Head_Top: true
     Slots: 1
     ArmorLevel: 1
     EquipLevelMin: 100
@@ -137765,6 +137834,17 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2060
+  - Id: 410051
+    AegisName: C_Falling_Snow
+    Name: Costume Falling Snow
+    Type: Armor
+    Locations:
+      Costume_Head_Mid: true
+    ArmorLevel: 1
+    View: 2080
+      hateffect HAT_EF_FALLING_SNOW,true;
+    UnEquipScript: |
+      hateffect HAT_EF_FALLING_SNOW,false;
   - Id: 410054
     AegisName: C_Long_Ribbon
     Name: Costume Long Ribbon
@@ -138056,6 +138136,14 @@ Body:
     Locations:
       Costume_Head_Low: true
     ArmorLevel: 1
+  - Id: 420026
+    AegisName: C_Ribbon_Piamat_J
+    Name: Costume Piamette Ribbon
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 1403
   - Id: 420029
     AegisName: C_Imperial_Glory
     Name: "Costume: Imperial Glory"
@@ -138345,6 +138433,14 @@ Body:
     Script: |
       bonus bCritAtkRate,5;
       bonus bCritical,3;
+  - Id: 420077
+    AegisName: C_Cat_Footprints
+    Name: Costume Cat Footprints    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 2150
   - Id: 420079
     AegisName: aegis_420079
     Name: Costume Inner Color Long
