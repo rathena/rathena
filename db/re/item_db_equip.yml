@@ -137842,6 +137842,7 @@ Body:
       Costume_Head_Mid: true
     ArmorLevel: 1
     View: 2080
+    Script: |
       hateffect HAT_EF_FALLING_SNOW,true;
     UnEquipScript: |
       hateffect HAT_EF_FALLING_SNOW,false;

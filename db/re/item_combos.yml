@@ -22842,7 +22842,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "SA_VOLCANO",5;
-      if (BaseLevel >= 100) {
+      if (BaseLevel >= 100)
          autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,10*.@r; }",30,15000,BF_WEAPON;
       else if (BaseLevel <= 99)
         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
@@ -22853,7 +22853,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "SA_VOLCANO",1;
-      if (BaseLevel >= 100) {
+      if (BaseLevel >= 100)
          autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
       else if (BaseLevel <= 99)
         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,2*.@r; }",30,15000,BF_WEAPON;
@@ -22877,9 +22877,9 @@ Body:
       .@r = getequiprefinerycnt(EQI_SHOES);
       skill "SA_VOLCANO",1;
       bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,-100;
-      if (BaseLevel >= 100) {
+      if (BaseLevel >= 100)
          autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,10*.@r; }",30,15000,BF_WEAPON;
-      else if (BaseLevel <= 99) {
+      else if (BaseLevel <= 99)
          autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
   - Combos:
       - Combo:
