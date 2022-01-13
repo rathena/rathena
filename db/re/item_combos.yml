@@ -22944,3 +22944,113 @@ Body:
       bonus2 bMagicAtkEle,Ele_Holy,5;
       bonus2 bResEff,Eff_Freeze,10000;
       skill "AB_JUDEX",1;
+  - Combos:
+      - Combo:
+          - aegis_450181
+          - Grave_Amon_Ra_Card
+    Script: |
+      .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
+      bonus2 bMagicAtkEle,Ele_Holy,50;
+      bonus2 bResEff,Eff_Freeze,10000;
+      skill "AB_JUDEX",.@r,1;
+  - Combos:
+      - Combo:
+          - aegis_450181
+          - aegis_300348
+    Script: |
+      .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
+      bonus2 bMagicAtkEle,Ele_Holy,15;
+      bonus2 bResEff,Eff_Freeze,10000;
+      skill "AB_JUDEX",.@r,1;
+  - Combos:
+      - Combo:
+          - Awakening_Nergal_Shoes
+          - Moonlight_Flower_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "AL_HEAL",10;
+      if (BaseLevel >= 100) {
+         bonus bInt,10*.@r;
+         bonus bMdef,10*.@r;
+      } else {
+         bonus bInt,3*.@r;
+         bonus bMdef,5*.@r;
+      }
+  - Combos:
+      - Combo:
+          - Awakening_Nergal_Shoes
+          - Sealed_M_Flower_Card_J
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "AL_HEAL",10;
+      if (BaseLevel >= 100) {
+         bonus bMatk,15*.@r;
+         bonus bMdef,10*.@r;
+      } else {
+         bonus bMatk,5*.@r;
+         bonus bMdef,5*.@r;
+      }
+  - Combos:
+      - Combo:
+          - Nergal_Shoes
+          - Moonlight_Flower_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "AL_HEAL",10;
+      if (BaseLevel >= 100) {
+         bonus bMatk,15*.@r;
+         bonus bMdef,10*.@r;
+      } else {
+         bonus bMatk,5*.@r;
+         bonus bMdef,5*.@r;
+      }
+  - Combos:
+      - Combo:
+          - Nergal_Shoes
+          - Sealed_M_Flower_Card_J
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "AL_HEAL",10;
+      if (BaseLevel >= 100) {
+         bonus bMatk,10*.@r;
+         bonus bMdef,6*.@r;
+      } else {
+         bonus bMatk,3*.@r;
+         bonus bMdef,3*.@r;
+      }
+  - Combos:
+      - Combo:
+          - aegis_32295
+          - Strong_Blow1
+      - Combo:
+          - aegis_32295
+          - Strong_Blow2
+      - Combo:
+          - aegis_32295
+          - Strong_Blow3
+      - Combo:
+          - aegis_32295
+          - Strong_Blow4
+      - Combo:
+          - aegis_32295
+          - Strong_Blow5
+      - Combo:
+          - aegis_32296
+          - Strong_Blow1
+      - Combo:
+          - aegis_32296
+          - Strong_Blow2
+      - Combo:
+          - aegis_32296
+          - Strong_Blow3
+      - Combo:
+          - aegis_32296
+          - Strong_Blow4
+      - Combo:
+          - aegis_32296
+          - Strong_Blow5
+    Script: |
+      if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Archer || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
+         bonus2 bAddRace,RC_All,10;
+         bonus bPerfectHitAddRate,30;
+      }

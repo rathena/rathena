@@ -43501,6 +43501,41 @@ Body:
     Script: |
       skill "TF_DOUBLE",3;
       bonus bDoubleRate,15;
+  - Id: 29366
+    AegisName: Strong_Blow1
+    Name: Hard Blow 1
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,2*getrefine();
+  - Id: 29367
+    AegisName: Strong_Blow2
+    Name: Hard Blow 2
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,4*getrefine();
+  - Id: 29368
+    AegisName: Strong_Blow3
+    Name: Hard Blow 3
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,6*getrefine();
+  - Id: 29369
+    AegisName: Strong_Blow4
+    Name: Hard Blow 4
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,8*getrefine();
+  - Id: 29370
+    AegisName: Strong_Blow5
+    Name: Hard Blow 5
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_All,10*getrefine();
   - Id: 29371
     AegisName: Release_Of_Magic
     Name: Release of Truth
@@ -46259,6 +46294,18 @@ Body:
     Weight: 10
     Locations:
       Right_Hand: true
+  - Id: 300139
+    AegisName: Sealed_M_Flower_Card_J
+    Name: Sealed Moonlight Flower Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus bSpeedRate,25;
+      bonus bHit,-50;
   - Id: 300140
     AegisName: ILL_Sropho_Card
     Name: Deep Sea Sropho Card
