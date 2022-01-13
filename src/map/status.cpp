@@ -742,7 +742,7 @@ bool StatusDatabase::hasSCF(status_change *sc, e_status_change_flag flag) {
 	for (const auto &status_it : *this) {
 		std::shared_ptr<s_status_change_db> status = status_it.second;
 
-		if (sc && sc->data[status->type] && status->flag[flag])
+		if (sc->data[status->type] && status->flag[flag])
 			return true;
 	}
 
@@ -14216,7 +14216,7 @@ int status_change_spread(block_list *src, block_list *bl)
 		sc_type type = static_cast<sc_type>(it.first);
 		const TimerData *timer;
 
-		if (sc && sc->data[type] && it.second->flag[SCF_SPREADEFFECT]) {
+		if (sc->data[type] && it.second->flag[SCF_SPREADEFFECT]) {
 			if (sc->data[type]->timer != INVALID_TIMER) {
 				timer = get_timer(sc->data[type]->timer);
 
