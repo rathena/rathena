@@ -1,0 +1,177 @@
+-	shop	dig_shop1	-1,501:-1
+
+morocc,132,109,5	script	Vote Shop::duckdig_shop	612,{
+
+	function showmsg;
+	function check_pos;
+	function show_requirement;
+	function check_requirement;
+	function make_trade;
+	
+	set .@accid, getcharid(3);
+
+	cleararray @katoo$[0] , 0, getarraysize(@katoo$);
+	cleararray .@point[0] , 0, getarraysize(.@point);
+	query_sql "SELECT `point` FROM `duckdig` WHERE `account_id` = " + .@accid + " LIMIT 1", .@point;
+	if( .@point[0] > 0 )
+	  {
+				set #DIGPOINTS, #DIGPOINTS + .@point[0];
+				query_sql "UPDATE `duckdig` SET `point`= '0' WHERE `account_id` = " + .@accid + " LIMIT 1";
+	  }
+
+	cleararray @quest[ 0 ] , 0 , getarraysize(  @quest ) ;
+	mes "[ ^0000ffVote Server^000000 ]";
+	mes "คุณมีแต้มทั้งหมด : ^FF0000"+ #DIGPOINTS +" Point^000000";
+	mes "ผู้เล่นจะซื้อไอเท็มในร้านค้า";
+	mes "จะต้องมีเงิน(Zeny)ในตัวละคร";
+	mes "จึงจะสามารถซื้อของเหล่านั้นได้";
+	mes "กรุณาเลือกรายการที่คุณต้องการ";
+	message strcharinfo(0),"[ Vote Shop : ร้านค้านี้ไม่มีผลการใช้ Skill DC ลดราคาสำหรับการซื้อไอเท็มร้านดังกล่าว ! ]";
+	close2;
+	
+	set @s, 1;
+	callshop "dig_shop1", 1;
+	npcshopattach "dig_shop1";
+
+
+OnBuyItem:
+	for( set @i, 0; @i < getarraysize(@bought_nameid); set @i, @i + 1 )
+	{
+		if( @bought_quantity[@i] <= 0 )
+		{
+			dispbottom "แจ้งเตือน : เกิดข้อผิดพลาด โปรดลองอีกครั้ง...!";
+			break;
+		}
+		
+		set @j, check_pos( @bought_nameid[ @i ], @s );
+		if( @j == 0 )
+		{
+			dispbottom "แจ้งเตือน : ไม่พบของที่ท่านต้องการ โปรดลองใหม่อีกครั้ง!!";
+			break;
+		}
+		cleararray @quest[ 0 ], 0, getarraysize(@quest);
+		copyarray @quest[ 0 ] , getd( ".quest" + @s + "_" + @j + "[ 0 ]" ) , getarraysize( getd( ".quest" + @s + "_" + @j ) ) ;
+		if( !check_requirement(@bought_quantity[@i]) )
+			make_trade(@bought_quantity[@i]) ;
+		else
+		{
+			//dispbottom "[ Vote System ] ไอเท็มแลกเปลี่ยน : " + getitemname(@bought_nameid[ @i ]) + "";
+			show_requirement();
+		}
+	}
+
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	end;
+
+
+/*---- FUNCTIONS ! -------------------------------------------------------------------------
+--- Edit at your own risk ------------------------------------------------------------------
+------------------------------------------------------------------------------------------*/
+
+	function	showmsg
+	{
+		dispbottom getarg(0);
+	}
+
+	function	check_pos
+	{
+		if( getarg(1) < 1 || getarg(1) > 9 )
+			return 0;
+
+		for( set .@i, 1; .@i <= 100; set .@i, .@i+1 )
+			if( getd(".quest" + getarg(1) + "_" + .@i + "[ 0 ]") == getarg(0) )
+				return .@i;
+		return 0;
+	}
+
+//-- Function who show the requirement
+	function	show_requirement	{
+	
+		// Show items need
+		for ( set @j , 2 ; @j < getarraysize( @quest ) ; set @j , @j + 2 )
+		{
+			set @slot$, "";
+			set @k, getiteminfo(@quest[ @j ], 10);
+			if( @k > 0 )
+				set @slot$, "[" + @k + "]";
+			// showmsg(" -  " + getitemname( @quest[ @j ] ) +  @slot$ + " - " + @quest[ @j + 1 ] + " ea.");
+			dispbottom "แจ้งเตือน :  คุณมีแต้ม Vote Point ไม่เพียงพอ";
+		}
+
+		return ;
+	}
+
+//-- Check if the player has all requirement.
+	function	check_requirement	{
+
+		set @l , 0 ;
+
+// Look if player has all items
+		for ( set @j , 2 ; @j < getarraysize( @quest ) ; set @j , @j + 2 )
+		{
+			if ( #DIGPOINTS < @quest[ @j + 1 ] * getarg(0) )
+			{
+				set @l , 1 ;
+			}
+		}
+		return @l ;
+	}
+
+//-- Make The trade (delete requirements/give item)
+	function	make_trade	{
+
+	// Remove items
+		for ( set @j , 2 ; @j < getarraysize( @quest ) ; set @j , @j + 2 )
+		{
+			set #DIGPOINTS, #DIGPOINTS - (@quest[ @j + 1 ] * getarg(0)) ;
+		}
+
+	// Give item.
+		getitem @quest[ 0 ] , getarg(0);
+		npctalk "Vote Server : คุณ "+strcharinfo(0)+" ได้แลกของรางวัล " + getitemname(@bought_nameid[ @i ]) + " จำนวน "+getarg(0)+"ea.";
+		//showmsg("คุณเหลือแต้มขุด: " + #DIGPOINTS);
+		dispbottom "แจ้งเตือน : คุณเหลือแต้ม Vote Point ทั้งหมด : "+ #DIGPOINTS +" Point";
+
+		
+		return ;
+	}
+
+	function	digadditem	{
+
+		set .lastpos[getarg(0)], .lastpos[getarg(0)] + 1;
+
+		set .@i, 1;
+		while( getarg(.@i,-1) != -1 )
+		{
+			setd ".quest" + getarg(0) + "_" + .lastpos[getarg(0)] +"[ " + (.@i-1) + " ]",getarg(.@i);
+			set .@i, .@i + 1;
+		}
+		npcshopadditem( "dig_shop" + getarg(0), getd(".quest" + getarg(0) + "_" + .lastpos[getarg(0)] + "[ 0 ]"), getd(".quest" + getarg(0) + "_" + .lastpos[getarg(0)] + "[ 3 ]")  );
+
+		return;
+		end;
+	}
+
+OnInit:
+	setarray .lastpos[1],0,0,0,0;
+	
+	npcshopdelitem( "dig_shop1", 501 );
+	//waitingroom "Vote Shop", 0;
+	
+	if( .inited != 1 )
+		set .inited, 1;
+	else
+		end;
+	
+	set .shop_id, 1;
+	
+	// item list start
+	digadditem( .shop_id, 501,0,512, 100);
+	digadditem( .shop_id, 502,0,512, 390);
+	
+	// item list end	
+		waitingroom "โหวตแลกไอเทม",0;
+
+end;
+}

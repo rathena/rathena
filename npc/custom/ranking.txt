@@ -1,0 +1,278 @@
+/*
+  # AUTO Ranking v1
+  # ALTER TABLE  `char` ADD  `point_pvp` INT NOT NULL DEFAULT  '0',
+  # ADD  `point_mvp` INT NOT NULL DEFAULT  '0',
+  # ADD  `point_emp` INT NOT NULL DEFAULT  '0'
+*/
+
+-	script	Ranking	-1,{
+	end;
+
+OnPCKillEvent:
+		callfunc("AddPointChar","PVP");
+	end;
+
+OnNPCKillEvent:
+	switch(killedrid) {
+	case 1086:	callfunc ("AddPointChar","MVP");	break; /*Golden Bug	*/
+	case 1112:	callfunc ("AddPointChar","MVP");	break; /*Drake	*/
+	case 1115:	callfunc ("AddPointChar","MVP");	break; /*Eddga	*/
+	case 1150:	callfunc ("AddPointChar","MVP");	break; /*Moonlight	*/
+	case 1159:	callfunc ("AddPointChar","MVP");	break; /*Phreeoni	*/
+	case 1252:	callfunc ("AddPointChar","MVP");	break; /*Garm	*/
+	case 1583:	callfunc ("AddPointChar","MVP");	break; /*Tao Gunka	*/
+	case 1038:	callfunc ("AddPointChar","MVP");	break; /*Osiris	*/
+	case 1046:	callfunc ("AddPointChar","MVP");	break; /*Doppelganger*/
+	case 1087:	callfunc ("AddPointChar","MVP");	break; /*Orc Hero	*/
+	case 1147:	callfunc ("AddPointChar","MVP");	break; /*Maya	*/
+	case 1251:	callfunc ("AddPointChar","MVP");	break; /*Stormy Knight*/
+	case 1492:	callfunc ("AddPointChar","MVP");	break; /*Samurai	*/
+	case 1157:	callfunc ("AddPointChar","MVP");	break; /*Pharaoh	*/
+	case 1312:	callfunc ("AddPointChar","MVP");	break; /*TurtleGeneral*/
+	case 1389:	callfunc ("AddPointChar","MVP");	break; /*Dracula	*/
+	case 1418:	callfunc ("AddPointChar","MVP");	break; /*EvilSnakeLord	*/
+	case 1658:	callfunc ("AddPointChar","MVP");	break; /*Egnigem Cenia	*/
+	case 1885:	callfunc ("AddPointChar","MVP");	break; /*Zmey Gorynych	*/
+	case 1039:	callfunc ("AddPointChar","MVP");	break; /*Baphomet	*/
+	case 1190:	callfunc ("AddPointChar","MVP");	break; /*Orc Lord	*/
+	case 1373:	callfunc ("AddPointChar","MVP");	break; /*LordOfTheDead	*/
+	case 1272:	callfunc ("AddPointChar","MVP");	break; /*Dark Lord	*/
+	case 1623:	callfunc ("AddPointChar","MVP");	break; /*RSX-0806	*/
+	case 1630:	callfunc ("AddPointChar","MVP");	break; /*White Lady	*/
+	case 1685:	callfunc ("AddPointChar","MVP");	break; /*Vesper	*/
+	case 1719:	callfunc ("AddPointChar","MVP");	break; /*Detardeurus	*/
+	case 1785:	callfunc ("AddPointChar","MVP");	break; /*Atros	*/
+	case 1734:	callfunc ("AddPointChar","MVP");	break; /*Kiel D-01	*/
+	case 1059:	callfunc ("AddPointChar","MVP");	break; /*Mistress	*/
+	case 1511:	callfunc ("AddPointChar","MVP");	break; /*Amon Ra	*/ 
+	case 1688:	callfunc ("AddPointChar","MVP");	break; /*Lady Tanee	*/
+	case 1708:	callfunc ("AddPointChar","MVP");	break; /*Thanatos	*/
+	case 1646:	callfunc ("AddPointChar","MVP");	break; /*Lord Knight	*/
+	case 1648:	callfunc ("AddPointChar","MVP");	break; /*Whitesmith	*/
+	case 1647:	callfunc ("AddPointChar","MVP");	break; /*AssassinCross	*/
+	case 1649:	callfunc ("AddPointChar","MVP");	break; /*High Priest	*/
+	case 1751:	callfunc ("AddPointChar","MVP");	break; /*Valkyrie	*/
+	case 1779:	callfunc ("AddPointChar","MVP");	break; /*Ktullanux	*/
+	case 1871:	callfunc ("AddPointChar","MVP");	break; /*Fallen Bishop	*/
+	case 1768:	callfunc ("AddPointChar","MVP");	break; /*GloomUnder	*/
+	case 1651:	callfunc ("AddPointChar","MVP");	break; /*High Wizard	*/
+	case 1832:	callfunc ("AddPointChar","MVP");	break; /*Ifrit	*/
+	case 1874:	callfunc ("AddPointChar","MVP");	break; /*Beelzebub 	*/
+	case 1917:	callfunc ("AddPointChar","MVP");	break; /*Satan Morroc 	*/
+	case 1956:	callfunc ("AddPointChar","MVP");	break; /*Naght Sieger	*/
+	case 1990:	callfunc ("AddPointChar","MVP");	break; /*Hardrock Mammoth	*/
+	case 1991:	callfunc ("AddPointChar","MVP");	break; /*Tendril Lion 	*/
+	case 2194:	callfunc ("AddPointChar","MVP");	break; /*Giant Octopus 	*/
+	case 2156:	callfunc ("AddPointChar","MVP");	break; /*Leak 	*/
+	case 2202:	callfunc ("AddPointChar","MVP");	break; /*Kraken 	*/
+	case 2165:	callfunc ("AddPointChar","MVP");	break; /*Gold Queen Scaraba 	*/
+	case 2319:	callfunc ("AddPointChar","MVP");	break; /*Buwaya 	*/
+	case 2087:	callfunc ("AddPointChar","MVP");	break; /*Scaraba Queen 	*/
+	case 2068:	callfunc ("AddPointChar","MVP");	break; /*Boitata 	*/
+	case 2131:	callfunc ("AddPointChar","MVP");	break; /*Lost Dragon 	*/
+	case 2022:	callfunc ("AddPointChar","MVP");	break; /*Nidhoggur's Shadow 	*/
+	case 1873:	callfunc ("AddPointChar","MVP");	break; /*Beelzebub 	*/
+	case 2996:	callfunc ("AddPointChar","MVP");	break; /*Celine Kimi 	*/
+	case 2564:	callfunc ("AddPointChar","MVP");	break; /*Fenrir 	*/
+	case 2362:	callfunc ("AddPointChar","MVP");	break; /*Nightmare Amon Ra 	*/
+	case 3074:	callfunc ("AddPointChar","MVP");	break; /*Time Holder 	*/
+	case 2529:	callfunc ("AddPointChar","MVP");	break; /*Faceworm Queen 	*/
+	case 2532:	callfunc ("AddPointChar","MVP");	break; /*Red Faceworm Queen 	*/
+	case 2533:	callfunc ("AddPointChar","MVP");	break; /*Green Faceworm Queen 	*/
+	case 2534:	callfunc ("AddPointChar","MVP");	break; /*Blue Faceworm Queen 	*/
+	case 2535:	callfunc ("AddPointChar","MVP");	break; /*Yellow Faceworm Queen 	*/
+	case 3148:	callfunc ("AddPointChar","MVP");	break; /*Agony Of Royal Knight 	*/
+	case 3149:	callfunc ("AddPointChar","MVP");	break; /*Grudge Of Royal Knight 	*/
+	case 3145:	callfunc ("AddPointChar","MVP");	break; /*White Knight 	*/
+	case 3146:	callfunc ("AddPointChar","MVP");	break; /*Khalitzburg Knight 	*/
+	case 3190:	callfunc ("AddPointChar","MVP");	break; /*Sarah 	*/
+	case 3150:	callfunc ("AddPointChar","MVP");	break; /*Realized Amdarais 	*/
+	case 3151:	callfunc ("AddPointChar","MVP");	break; /*Realized Corruption Root 	*/
+	case 3449:	callfunc ("AddPointChar","MVP");	break; /*Enhanced Amdarais 	*/
+	case 3450:	callfunc ("AddPointChar","MVP");	break; /*Bijou 	*/
+	case 3427:	callfunc ("AddPointChar","MVP");	break; /*Infinite Osiris 	*/
+	case 3426:	callfunc ("AddPointChar","MVP");	break; /*Infinite Eddga 	*/
+	case 3428:	callfunc ("AddPointChar","MVP");	break; /*Infinite Phreeoni 	*/
+	case 3429:	callfunc ("AddPointChar","MVP");	break; /*Infinite Orc Hero 	*/
+	case 3430:	callfunc ("AddPointChar","MVP");	break; /*Infinite Tao Gunka 	*/
+	case 3621:	callfunc ("AddPointChar","MVP");	break; /*Cutie 	*/
+	case 3801:	callfunc ("AddPointChar","MVP");	break; /*Bahamut 	*/
+	case 3097:	callfunc ("AddPointChar","MVP");	break; /*Despair God Morroc 	*/
+	case 3091:	callfunc ("AddPointChar","MVP");	break; /*Brinaranea 	*/
+	case 3073:	callfunc ("AddPointChar","MVP");	break; /*Awakened Ferre 	*/
+	case 3505:	callfunc ("AddPointChar","MVP");	break; /*Big Eggring 	*/
+	case 3473:	callfunc ("AddPointChar","MVP");	break; /*Stefan J.E Wolf 	*/
+	case 3474:	callfunc ("AddPointChar","MVP");	break; /*Cursed Knight 	*/
+	case 3475:	callfunc ("AddPointChar","MVP");	break; /*Wind Ghost 	*/
+	case 3476:	callfunc ("AddPointChar","MVP");	break; /*Zombie Soldier 	*/
+	case 3477:	callfunc ("AddPointChar","MVP");	break; /*Fortress Legion 	*/
+	case 3478:	callfunc ("AddPointChar","MVP");	break; /*Zombie Assaulter 	*/
+	case 3479:	callfunc ("AddPointChar","MVP");	break; /*Cursed Zombie 	*/
+	case 3480:	callfunc ("AddPointChar","MVP");	break; /*Nightmare Shadow 	*/
+	case 3481:	callfunc ("AddPointChar","MVP");	break; /*Angry Shadow 	*/
+	case 3482:	callfunc ("AddPointChar","MVP");	break; /*Death Shadow 	*/
+	case 3483:	callfunc ("AddPointChar","MVP");	break; /*Stefan J.E Wolf 	*/
+    case 3208:	callfunc ("AddPointChar","MVP");	break; /*Eremes Guille 	*/
+    case 3209:	callfunc ("AddPointChar","MVP");	break; /*Margaretha Sorin 	*/
+    case 3210:	callfunc ("AddPointChar","MVP");	break; /*Kathryne Cheiron 	*/
+	case 3211:	callfunc ("AddPointChar","MVP");	break; /*Shecil Damon 	*/
+    case 3212:	callfunc ("AddPointChar","MVP");	break; /*Harword Alt-Eisen 	*/
+    case 3213:	callfunc ("AddPointChar","MVP");	break; /*Seyren Windsor 	*/
+	case 2113:	callfunc ("AddPointChar","MVP");	break; /*Assassin Cross Eremes 	*/
+	case 1650:	callfunc ("AddPointChar","MVP");	break; /*Sniper Cecil 	*/
+	case 3220:	callfunc ("AddPointChar","MVP");	break; /*Guillotine Cross Eremes 	*/
+	case 3221:	callfunc ("AddPointChar","MVP");	break; /*Arch Bishop Margaretha 	*/
+	case 3222:	callfunc ("AddPointChar","MVP");	break; /*Ranger Cecil 	*/
+	case 3223:	callfunc ("AddPointChar","MVP");	break; /*Mechanic Howard 	*/
+	case 3224:	callfunc ("AddPointChar","MVP");	break; /*Warlock Kathryne 	*/
+	case 3225:	callfunc ("AddPointChar","MVP");	break; /*Rune Knight Seyren 	*/
+	case 3226:	callfunc ("AddPointChar","MVP");	break; /*Randel Lawrence 	*/
+	case 3227:	callfunc ("AddPointChar","MVP");	break; /*Flamel Emule 	*/
+	case 3228:	callfunc ("AddPointChar","MVP");	break; /*Celia Alde 	*/
+	case 3229:	callfunc ("AddPointChar","MVP");	break; /*Chen Liu 	*/
+	case 3230:	callfunc ("AddPointChar","MVP");	break; /*Gertie Wie 	*/
+
+	}
+	end;
+
+OnWhisperGlobal:
+	if (@whispervar0$ == "") end;
+	set .@npc$,"[Ranking]";
+	set .@command$,@whispervar0$;
+	if ( (getgmlevel() >= 99) ) {
+		mes .@npc$;
+		mes "ระบบจัดการคะแนน";
+		next;
+		switch (select("- Reset คะแนน PVP","- Reset คะแนน MVP","- Reset คะแนน EMP"/*,"- Reset คะแนน REP"*/)) {
+		case 1:
+			query_sql "UPDATE `char` SET `point_pvp`='0'";
+			mes .@npc$;
+			mes "Reset คะแนน PVP";
+			mes "เรียบร้อยแล้ว";
+			close;
+		break;
+		case 2:
+			query_sql "UPDATE `char` SET `point_mvp`='0'";
+			mes .@npc$;
+			mes "Reset คะแนน MVP";
+			mes "เรียบร้อยแล้ว";
+			close;
+		break;
+		case 3:
+			query_sql "UPDATE `char` SET `point_emp`='0'";
+			mes .@npc$;
+			mes "Reset คะแนน EMP";
+			mes "เรียบร้อยแล้ว";
+			close;
+		break;
+		case 4:
+			query_sql "UPDATE `duckdig` SET `point_total`='0'";
+			mes .@npc$;
+			mes "Reset คะแนน REP";
+			mes "เรียบร้อยแล้ว";
+			close;
+		break;
+		}
+	} else if ( (.@command$ == "pvp") || (.@command$ == "PVP") ) {
+OnShow_PVP:
+		query_sql "SELECT `name`,`point_pvp` FROM `char` ORDER BY `point_pvp` DESC LIMIT 10",.@name$,.@point;
+		mes "====== PVP RANKING ======";
+		for (set .@i,0; .@i < 10; set .@i,.@i+1) {
+			if (.@point[.@i] == 0) set .@name$[.@i],"None";
+			mes "["+(.@i+1)+"]  "+.@name$[.@i]+" : คะแนน " +.@point[.@i]+"";
+		}
+		mes "=======================";
+		query_sql "SELECT `point_pvp` FROM `char` WHERE `char_id`='"+getcharid(0)+"'",.@cpoint;
+		mes "คุณมีคะแนน : "+.@cpoint;
+		mes "=======================";
+	} else if ( (.@command$ == "mvp") || (.@command$ == "MVP") ) {
+OnShow_MVP:
+		query_sql "SELECT `name`,`point_mvp` FROM `char` ORDER BY `point_mvp` DESC LIMIT 10",.@name$,.@point;
+		mes "====== MVP RANKING ======";
+		for (set .@i,0; .@i < 10; set .@i,.@i+1) {
+			if (.@point[.@i] == 0) set .@name$[.@i],"None";
+			mes "["+(.@i+1)+"]  "+.@name$[.@i]+" : คะแนน " +.@point[.@i]+"";
+		}
+		mes "=======================";
+		query_sql "SELECT `point_mvp` FROM `char` WHERE `char_id`='"+getcharid(0)+"'",.@cpoint;
+		mes "คุณมีคะแนน : "+.@cpoint;
+		mes "=======================";
+	} else if ( (.@command$ == "emp") || (.@command$ == "EMP") ) {
+OnShow_EMP:
+		query_sql "SELECT `name`,`point_emp` FROM `char` ORDER BY `point_emp` DESC LIMIT 10",.@name$,.@point;
+		mes "====== EMP RANKING ======";
+		for (set .@i,0; .@i < 10; set .@i,.@i+1) {
+			if (.@point[.@i] == 0) set .@name$[.@i],"None";
+			mes "["+(.@i+1)+"]  "+.@name$[.@i]+" : คะแนน " +.@point[.@i]+"";
+		}
+		mes "=======================";
+		query_sql "SELECT `point_emp` FROM `char` WHERE `char_id`='"+getcharid(0)+"'",.@cpoint;
+		mes "คุณมีคะแนน : "+.@cpoint;
+		mes "=======================";
+	} else if ( (.@command$ == "rep") || (.@command$ == "REP") ) {
+OnShow_REP:
+		query_sql "SELECT `userid`,`point_total` FROM `login` ORDER BY `point_total` DESC LIMIT 10",.@name$,.@point;
+		mes "====== REP RANKING ======";
+		for (set .@i,0; .@i < 10; set .@i,.@i+1) {
+			if (.@point[.@i] == 0) set .@name$[.@i],"None";
+			mes "["+(.@i+1)+"]  "+.@name$[.@i]+" : คะแนน " +.@point[.@i]+"";
+		}
+		mes "=======================";
+		query_sql "SELECT `point_rep` FROM `login` WHERE `account_id`='"+getcharid(3)+"'",.@cpoint;
+		mes "คุณมีคะแนน : "+.@cpoint;
+		mes "=======================";
+	}
+	end;
+}
+
+-	script	จัดอันดับต่าง::rankingbbs	GUILD_FLAG,{
+
+	set .@npc$,"^00BFFF[ ผู้บันทึกคะแนน ]^000000";
+	mes .@npc$;
+	next;
+	switch (select("^990000+ PVP^000000","^000077+ MVP^000000")) {
+	case 1:
+		mes .@npc$;
+		mes "แสดงข้อมูลเรียบร้อยแล้ว";
+		close2;
+		doevent "Ranking::OnShow_PVP";
+	break;
+	case 2:
+		mes .@npc$;
+		mes "แสดงข้อมูลเรียบร้อยแล้ว";
+		close2;
+		doevent "Ranking::OnShow_MVP";
+	break;
+	case 3:
+		mes .@npc$;
+		mes "แสดงข้อมูลเรียบร้อยแล้ว";
+		close2;
+		doevent "Ranking::OnShow_EMP";
+	break;
+	case 4:
+		mes .@npc$;
+		mes "แสดงข้อมูลเรียบร้อยแล้ว";
+		close2;
+		doevent "Ranking::OnShow_REP";
+	break;
+	}
+	end;
+	
+OnInit:
+	waitingroom "จัดอันดับผู้เล่น",0;
+	end;
+}
+
+function	script	AddPointChar	{
+	set .@string$,getarg(0);
+	if (.@string$ == "PVP") {
+		query_sql "UPDATE `char` SET `point_pvp`=(`point_pvp` + 1) WHERE `char_id`='"+getcharid(0)+"' LIMIT 1";
+	} else if (.@string$ == "MVP") {
+		query_sql "UPDATE `char` SET `point_mvp`=(`point_mvp` + 1) WHERE `char_id`='"+getcharid(0)+"' LIMIT 1";
+	} else if (.@string$ == "EMP") {
+		query_sql "UPDATE `char` SET `point_emp`=(`point_emp` + 1) WHERE `char_id`='"+getcharid(0)+"' LIMIT 1";
+	}
+	return 0;
+}
+
+morocc,168,105,4	duplicate(rankingbbs)	จัดอันดับผู้เล่น#SaveTower	666

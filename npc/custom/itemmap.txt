@@ -1,0 +1,13 @@
+-	script	#Secret_ItemCmd	-1,{
+OnInit:
+	bindatcmd "itemmap",strnpcinfo(3)+"::OnItemMap",99,99;
+	end;
+	
+OnItemMap:
+	input $@item;
+	input $@amount;
+	addrid(1);
+	getitem $@item,$@amount;
+	message strcharinfo(0)," §ÿ≥‰¥È√—∫‰Õ‡∑Á¡®“° GM";
+	end;
+}
