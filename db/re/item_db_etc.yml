@@ -36320,7 +36320,7 @@ Body:
     Weight: 10
   - Id: 25286
     AegisName: Octo_Octo_Fluid
-    Name: Octopus
+    Name: Octopus Octopus Liquid
     Type: Etc
   - Id: 25287
     AegisName: Mysterious_Feather
@@ -47844,6 +47844,20 @@ Body:
       bonus bUseSPrate,10;
       bonus bShortAtkRate,4*(.@r/3);
       bonus bLongAtkRate,4*(.@r/3);
+  - Id: 300348
+    AegisName: aegis_300348
+    Name: Sealed Nightmare Amon Ra Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bMagicAddRace,RC_Demon,5;
+      bonus2 bMagicAddRace,RC_Undead,5;
+      bonus2 bMagicAddEle,Ele_Dark,5;
+      bonus2 bMagicAddEle,Ele_Undead,5;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)

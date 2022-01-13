@@ -22714,3 +22714,233 @@ Body:
       if (getskilllv("WM_GLOOMYDAY") == 5) {
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",2000;
       }
+  - Combos:
+      - Combo:
+          - RingOfThought_TW
+          - B_Seyren_Card
+    Script: |
+      bonus bCritical,15;
+      bonus2 bAddSize,Size_All,6;
+  - Combos:
+      - Combo:
+          - RingOfThought_TW
+          - B_Eremes_Card
+    Script: |
+      bonus bFlee,20;
+      skill "TF_HIDING",1;
+      bonus2 bSkillUseSP,"TF_HIDING",-250;
+  - Combos:
+      - Combo:
+          - RingOfThought_TW
+          - B_Harword_Card
+    Script: |
+      bonus bAspd,2;
+      bonus3 bAutoSpell,"RG_STRIPHELM",3,60;
+  - Combos:
+      - Combo:
+          - RingOfThought_TW
+          - B_Magaleta_Card
+    Script: |
+      bonus bDef,20;
+      bonus2 bSubEle,Ele_All,6;
+  - Combos:
+      - Combo:
+          - RingOfThought_TW
+          - B_Katrinn_Card
+    Script: |
+      bonus bMdef,20;
+      bonus2 bMagicAtkEle,Ele_All,6;
+  - Combos:
+      - Combo:
+          - RingOfThought_TW
+          - B_Shecil_Card
+    Script: |
+      bonus bHit,20;
+      bonus bSPDrainValue,1;
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor_
+          - Cornutus_Card
+    Script: |
+      bonus bVit,15;
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor_
+          - Rsx_0806_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus bVit,5*.@r;
+      bonus bMaxHPrate,5*.@r;
+  - Combos:
+      - Combo:
+          - Tatenasi_Helmet
+          - Tatenasi_Armor_
+    Script: |
+      bonus bDef,15*(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_HEAD_TOP));
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor_TW
+          - Cornutus_Card
+    Script: |
+      bonus bVit,15;
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor_TW
+          - Rsx_0806_Card
+    Script: |
+      .@r = min(10,getequiprefinerycnt(EQI_ARMOR));
+      bonus bVit,5*.@r;
+      bonus bMaxHPrate,5*.@r;
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor_TW
+          - Tatenasi_Helmet_TW
+    Script: |
+      bonus bDef,15*(min(10,getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_HEAD_TOP)));
+  - Combos:
+      - Combo:
+          - Tatenasi_Armor
+          - Waste_Stove_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      if (.@r==5)
+         bonus bDefEle,Ele_Earth;
+      else if (.@r==6)
+         bonus bDefEle,Ele_Water;
+      else if (.@r==7)
+         bonus bDefEle,Ele_Wind;
+      else if (.@r==8)
+         bonus bDefEle,Ele_Fire;
+      else if (.@r==9)
+         bonus bDefEle,Ele_Dark;
+      else if (.@r>=10)
+         bonus bDefEle,Ele_Holy;
+  - Combos:
+      - Combo:
+          - Yellow_Scarf
+          - YDragon_SkyWing
+    Script: |
+      if (BaseClass == Job_Archer)
+         bonus bLongAtkDef,-10;
+  - Combos:
+      - Combo:
+          - Yellow_Scarf
+          - Yellow_Bandana
+      - Combo:
+          - Yellow_Scarf
+          - Yellow_Ribbon
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      if (.@r>=5)
+         bonus bLongAtkDef,3;
+      if (.@r>=7)
+         bonus bLongAtkDef,4;
+  - Combos:
+      - Combo:
+          - Space_shoes_JP
+          - Dark_Lord_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "SA_VOLCANO",5;
+      if (BaseLevel >= 100) {
+         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,10*.@r; }",30,15000,BF_WEAPON;
+      else if (BaseLevel <= 99)
+        autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - Space_shoes_JP
+          - Sealed_D_Lord_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "SA_VOLCANO",1;
+      if (BaseLevel >= 100) {
+         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
+      else if (BaseLevel <= 99)
+        autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,2*.@r; }",30,15000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - Space_shoes_JP_
+          - Dark_Lord_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "WZ_METEOR",10;
+      bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,-100;
+      if (BaseLevel >= 100)
+         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,8*.@r; bonus2 bMagicAtkEle,Ele_Dark,8*.@r; bonus2 bMagicAtkEle,Ele_Neutral,8*.@r; }",30,15000,BF_WEAPON;
+      else if (BaseLevel <= 99)
+         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,3*.@r; bonus2 bMagicAtkEle,Ele_Dark,3*.@r; bonus2 bMagicAtkEle,Ele_Neutral,3*.@r; }",30,15000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - Space_shoes_JP_
+          - Sealed_D_Lord_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_SHOES);
+      skill "SA_VOLCANO",1;
+      bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,-100;
+      if (BaseLevel >= 100) {
+         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,10*.@r; }",30,15000,BF_WEAPON;
+      else if (BaseLevel <= 99) {
+         autobonus2 "{ bonus2 bMagicAtkEle,Ele_Fire,5*.@r; }",30,15000,BF_WEAPON;
+  - Combos:
+      - Combo:
+          - Space_shoes_JP_
+          - Runaway_Magic
+    Script: |
+      bonus bDelayrate,-70;
+      bonus bSPDrainValue,5;
+  - Combos:
+      - Combo:
+          - Triad_God_Mail_J_
+          - Ktullanux_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus2 bResEff,Eff_Freeze,10000;
+      autobonus2 "{ bonus2 bResEff,Eff_Crystalize,10000; bonus2 bResEff,Eff_Freezing,10000; bonus2 bSubEle,Ele_Water,100; }",100,3000,BF_WEAPON|BF_MAGIC;
+      bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,-20,BF_WEAPON|BF_MAGIC,0;
+      bonus2 bAddEle,Ele_Fire,5*.@r;
+  - Combos:
+      - Combo:
+          - Triad_God_Mail_J_
+          - Sealed_Ktullanux_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus2 bResEff,Eff_Freeze,10000;
+      autobonus2 "{ bonus2 bResEff,Eff_Crystalize,10000; bonus2 bResEff,Eff_Freezing,10000; bonus2 bSubEle,Ele_Water,100; }",100,3000,BF_WEAPON|BF_MAGIC;
+      bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,-20,BF_WEAPON|BF_MAGIC,0;
+      bonus2 bAddEle,Ele_Fire,3*.@r;
+  - Combos:
+      - Combo:
+          - Triad_God_Mail_J__
+          - Ktullanux_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus2 bResEff,Eff_Freeze,10000;
+      autobonus2 "{ bonus2 bResEff,Eff_Crystalize,10000; bonus2 bResEff,Eff_Freezing,10000; bonus2 bSubEle,Ele_Water,100; }",100,3000,BF_WEAPON|BF_MAGIC;
+      bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,-20,BF_WEAPON|BF_MAGIC,0;
+      bonus2 bAddEle,Ele_Fire,8*.@r;
+  - Combos:
+      - Combo:
+          - Triad_God_Mail_J__
+          - Sealed_Ktullanux_Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_ARMOR);
+      bonus2 bResEff,Eff_Freeze,10000;
+      autobonus2 "{ bonus2 bResEff,Eff_Crystalize,10000; bonus2 bResEff,Eff_Freezing,10000; bonus2 bSubEle,Ele_Water,100; }",100,3000,BF_WEAPON|BF_MAGIC;
+      bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,-20,BF_WEAPON|BF_MAGIC,0;
+      bonus2 bAddEle,Ele_Fire,5*.@r;
+  - Combos:
+      - Combo:
+          - aegis_450163
+          - Grave_Amon_Ra_Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,15;
+      bonus2 bResEff,Eff_Freeze,10000;
+      skill "AB_JUDEX",3;
+  - Combos:
+      - Combo:
+          - aegis_450163
+          - aegis_300348
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,5;
+      bonus2 bResEff,Eff_Freeze,10000;
+      skill "AB_JUDEX",1;
