@@ -98201,22 +98201,22 @@ Body:
     Script: |
       .@r = getrefine();
       skill "BS_GREED",1;
-      if (.@r>=9) {
-         bonus bBaseAtk,20;
-         bonus bMatk,30;
-         bonus2 bSubEle,Ele_Neutral,5;
-         bonus bAspdRate,8;
-         bonus bLongAtkRate,5;
-         bonus bCritAtkRate,10;
-      }
-      else if (.@r>=7) {
-         bonus bBaseAtk,30;
-         bonus bMatk,50;
-         bonus2 bSubEle,Ele_Neutral,10;
-         bonus bAspdRate,8;
-         bonus bAspd,1;
-         bonus bLongAtkRate,10;
-         bonus bCritAtkRate,15;
+      if (.@r>=7) {
+         if (readparam(bStr)>=90)
+            bonus bBaseAtk,(.@r>=9)?30:20;
+         if (readparam(bInt)>=90)
+            bonus bMatk,(.@r>=9)?50:30;
+         if (readparam(bVit)>=90)
+            bonus2 bSubEle,Ele_Neutral,(.@r>=9)?10:5;
+         if (readparam(bAgi)>=90) {
+            bonus bAspdRate,8;
+            if (.@r>=9)
+               bonus bAspd,1;
+         }
+         if (readparam(bDex)>=90)
+            bonus bLongAtkRate,(.@r>=9)?10:5;
+         if (readparam(bLuk)>=90)
+            bonus bCritAtkRate,(.@r>=9)?15:10;
       }
   - Id: 20819
     AegisName: Oxygen_Bottle
