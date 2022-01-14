@@ -1,0 +1,135 @@
+//===== rAthena Script =======================================
+//= Hunter_Card
+//===== By: ==================================================
+//= DurexzOfficial
+//===== Current Version: =====================================
+//= Ver.1.0 วาปตามล่าการ์ดเซ็ตแต่ละอาชีพ
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+morocc,152,81,6	script	ตามล่าการ์ดSet	852,{
+	mes "ยินดีต้อนรับ "+strcharinfo(0);
+	mes "ต้องการตามล่าการ์ด Set ใช่ไหม";
+	switch(select("Set Champion:Set Sniper:Set Magician:Set Merchant:Set Thief:Set Swordman:")) {
+	case 1:
+		switch(select("Carat Card [หัว]:Percellio Card [ชุดเกราะ]:Aliot Card [มัพ]:Sohee Card [รองเท้า]:Mantis Card [ประดับ]:")) {
+			case 1:
+				warp "gl_cas01",0,0;
+				break;
+			case 2:
+				warp "ein_fild09",0,0;
+				break;
+			case 3:
+				warp "kh_dun02",0,0;
+				break;
+			case 4:
+				warp "pay_dun03",0,0;
+				break;
+			case 5:
+				warp "mjolnir_08",0,0;
+				break;
+		}
+		end;
+	case 2:
+		switch(select("Anolian Card [ชุดเกราะ]:Cruiser Card [อาวุธ]:Dragon Tail Card [มัพ]:Merman Card [รองเท้า]:Alligator Card [ประดับ]:")) {
+			case 1:
+				warp "gl_sew04",0,0;
+				break;
+			case 2:
+				warp "xmas_dun02",0,0;
+				break;
+			case 3:
+				warp "pay_fild02",0,0;
+				break;
+			case 4:
+				warp "iz_dun04",0,0;
+				break;
+			case 5:
+				warp "cmd_fild03",0,0;
+				break;
+		}
+		end;
+	case 3:
+		switch(select("Evil Nymph Card [หัว]:Loli Ruri Card [ชุดเกราะ]:Parasite Card [โล่]:Miyabi Doll Card [รองเท้า]:Bloody Butterfly Card [ประดับ]:Harpy Card [มัพ]:")) {
+			case 1:
+				warp "gon_dun03",0,0;
+				break;
+			case 2:
+				warp "nif_fild02",0,0;
+				break;
+			case 3:
+				warp "um_fild03",0,0;
+				break;
+			case 4:
+				warp "ama_dun01",0,0;
+				break;
+			case 5:
+				warp "gon_dun01",0,0;
+				break;
+			case 6:
+				warp "yuno_fild07",0,0;
+				break;
+		}
+		end;
+	case 4:
+		switch(select("Baby Leopard Card [ชุดเกราะ]:Hylozoist Card [ประดับ]:Myst Case Card [หัว]:Raggler Card [รองเท้า]:Zipper Bear Card [อาวุธ]:")) {
+			case 1:
+				warp "gon_fild01",0,0;
+				break;
+			case 2:
+				warp "nif_fild01",0,0;
+				break;
+			case 3:
+				warp "xmas_dun02",0,0;
+				break;
+			case 4:
+				warp "cmd_fild02",0,0;
+				break;
+			case 5:
+				warp "gon_dun01",0,0;
+				break;
+		}
+		end;
+	case 5:
+		switch(select("The Paper Card [อาวุธ]:Wanderer Card [มัพ]:Wild Rose Card [รองเท้า]:Zhu Po Long Card [ประดับ]:Shinobi Card [ประดับ]:")) {
+			case 1:
+				warp "ama_dun03",0,0;
+				break;
+			case 2:
+				warp "gl_cas02",0,0;
+				break;
+			case 3:
+				warp "gef_fild05",0,0;
+				break;
+			case 4:
+				warp "lou_dun03",0,0;
+				break;
+			case 5:
+				warp "ama_dun03",0,0;
+				break;
+		}
+		end;
+	case 6:
+		switch(select("Permeter Card [หัว]:Assaulter Card [อาวุธ]:Solider Card [ชุดเกราะ]:Freezer Card [รองเท้า]:Heater Card [ประดับ]:")) {
+			case 1:
+				warp "tur_dun02",0,0;
+				break;
+			case 2:
+				warp "tur_dun03",0,0;
+				break;
+			case 3:
+				warp "tur_dun02",0,0;
+				break;
+			case 4:
+				warp "tur_dun03",0,0;
+				break;
+			case 5:
+				warp "tur_dun03",0,0;
+				break;
+		}
+	}
+//OnInit:
+//waitingroom "ตามล่าการ์ดเซ็ต",0;
+//end;
+}

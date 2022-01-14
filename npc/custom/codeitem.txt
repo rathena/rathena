@@ -1,0 +1,155 @@
+//===== rAthena Script =======================================
+//= Item_Code
+//===== By: ==================================================
+//= DurexzOfficial
+//===== Current Version: =====================================
+//= Ver.1.0 สามารถเพิ่มไอเทมได้หลายชิ้น เปิด - ปิด การโชว์ค่าสถานะต่างๆ
+//= Ver.1.1 เพิ่ม - แก้ไขคำอธิบาย แก้ไขตัวแปรซ้ำ
+//= Ver.1.2 เพิ่มฟังก์ชันการรับไอเทมเข้าตัว หรือ ส่งเข้ากล่องจดหมาย
+//= Ver.1.3 เพิ่มระบบล้างประวัติการรับไอเทม (เมื่อลบแล้วผู้เล่นต้องออกเข้าเกมใหม่ เพื่อให้ประวัติถูกเคลีย)
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+
+morocc,155,69,6	script	Item_Code	660,{
+	disable_items;
+	.@GM = getgmlevel() >= 99;
+	mes .NPCname$;
+	mes "ยินดีต้อนรับสู่บริการ "+.NPCname$;;
+	if( $show == 1)
+		mes "Item Code = ^FF0000"+$code$+"^000000";
+	if( $check == 1)	
+		mes "จำนวนรอบที่เหลือ = ^FF0000"+$r_check+"^000000 รอบ";
+	for(set @i,0; @i < $round; set @i,@i+1){
+		mes "[ ^6600FF"+getitemname($item[@i])+"^000000 ]"+" x^FF0000"+$amount[@i]+"^000000 ea.";
+	}
+	next;
+	switch(select("~ ใช้โค้ดไอเทม",
+	"~ ไม่มีอะไร แวะมาดูเฉยๆ",
+	""+(.@GM ? "~ ^FF0000เพิ่มไอเทมโค้ด - จำนวนรอบ^000000":""),
+	""+(.@GM ? "~ ^FF0000เพิ่มไอเทมที่ได้ - จำนวนไอเทม^000000":""),
+	""+(.@GM ? "~ ^FF0000เปิด - ปิด Item Code^000000":""),
+	""+(.@GM ? "~ ^FF0000เปิด - ปิด จำนวนรอบที่เหลือ^000000":""),
+	""+(.@GM ? "~ ^FF0000วิธีรับไอเทม^000000":""),
+	""+(.@GM ? "~ ^FF0000ล้างประวัติการรับไอเทม^000000":"")
+	)){
+		case 1:
+			input $item_code$;
+			if( $item_code$ != $code$ ){
+				mes "โค้ดผิดพลาด กรุณาลองใหม่อีกครั้ง";
+				end;
+			}
+			if( $r_check == 0 ){
+				mes "เกินจำนวนรอบที่สามารถรับไอเทมได้";
+				end;
+			}
+			if( #code == 1 ){
+				mes "ท่านเคยใช้โค้ดรับไอเทมไปแล้ว";
+				end;
+			}
+			if ( $inventory == 0 ){
+				for(set @i,0; @i < $round; set @i,@i+1){
+					getitem $item[@i],$amount[@i];
+				}
+			}else{
+				.@charid = getcharid(0);
+				.@sender$ = "DurexzOfficial";
+				.@title$ = "Welcome To DurexzOfficial";
+				.@body$ = "DurexzOfficial give item for you";
+				.@zeny = 0;
+				mail .@charid, .@sender$, .@title$, .@body$, .@zeny , $item , $amount;
+			}
+			$r_check -= 1;
+			#code = 1;
+			break;			
+		case 2:
+			mes .NPCname$;
+			mes "ไว้พบกันใหม่แล้วกัน";
+			break;
+		case 3:
+			mes .NPCname$;
+			mes "ใส่โค้ดที่ต้องการให้กรอก";
+			mes "^FF0000ปล.โปรดใช้ความระมัดระวัง";
+			input $code$;	// กำหนดโค้ดที่ให้รับไอเทม
+			next;
+			mes .NPCname$;
+			mes "จำนวนรอบที่สามารถให้รับได้";
+			mes "^FF0000ปล.โปรดใช้ความระมัดระวัง";
+			input $r_code;	//จำนวนรอบที่ให้รับไอเทมได้
+			$r_check = $r_code; // ให้ตัวแปร Check = จำนวนรอบ
+			break;
+		case 4:
+			mes .NPCname$;
+			mes "ใส่จำนวน รายการไอเทม ไม่เกิน 5";
+			mes "^FF0000ปล.โปรดใช้ความระมัดระวัง";
+			
+		list_item:
+			input $round;
+			if ( $round > 5 ){
+				mes "ท่านกรอกรายการมากกว่า 5 กรุณากรอกใหม่";
+				goto list_item;
+				end;
+			}
+			next;
+			mes .NPCname$;
+			mes "รายการไอเทม ^FF0000"+$round+"^000000 รายการ";
+				setarray $item[0],0,0,0,0,0;
+				setarray $amount[0],0,0,0,0,0;	
+				for(set @i,0; @i < $round; set @i,@i+1){
+					mes "ใส่รหัสไอเทมชิ้นที่"+(@i+1);
+					input $item[@i];
+					mes "ใส่จำนวนไอเทมชิ้นที่"+(@i+1);
+					input $amount[@i];
+				}
+				next;
+				for(set @i,0; @i < $round; set @i,@i+1){
+					mes "รหัสไอเทม"+(@i+1)+" คือ";
+					mes "[ ^0000FF"+$item[@i]+"^000000 ] [ ^6600FF"+getitemname($item[@i])+"^000000 ] จำนวน ^FF0000"+$amount[@i]+" ea.";
+				}
+			break;
+		case 5:
+			switch(select("~ เปิด :~ ปิด")){
+				case 1 :
+					$show = 1;
+					end;
+				case 2 :
+					$show = 0;
+					end;
+			}
+		break;
+		case 6:
+			switch(select("~ เปิด :~ ปิด")){
+				case 1 :
+					$check = 1;
+					end;
+				case 2 :
+					$check = 0;
+					end;
+			}
+		break;
+		case 7:
+			switch(select("~ รับไอเทมเข้าตัวละคร :~ ส่งเข้ากล่องจดหมาย")){
+				case 1 :
+					$inventory = 0;
+					end;
+				case 2 :
+					$inventory = 1;
+					end;
+			}
+		break;
+		case 8:
+			switch(select("~ ล้างประวัติการรับไอเทม :~ ยังก่อน...")){
+				case 1 :
+					query_sql "DELETE FROM `acc_reg_num` WHERE `key` = '#code'";
+					end;
+			}
+		break;
+	}
+	end;
+	
+OnInit:
+	.NPCname$ = "[^0000FF "+strnpcinfo(1)+" ^000000]";
+	waitingroom "โค้ดรับไอเท็ม",0;
+	end;
+}

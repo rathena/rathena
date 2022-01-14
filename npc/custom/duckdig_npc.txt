@@ -1,6 +1,6 @@
 -	shop	dig_shop1	-1,501:-1
 
-morocc,132,109,5	script	Vote Shop::duckdig_shop	612,{
+morocc,132,109,5	script	Vote Shop::duckdig_shop	848,{
 
 	function showmsg;
 	function check_pos;

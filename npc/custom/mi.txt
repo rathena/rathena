@@ -1,0 +1,60 @@
+/*
+Script. Monsterinfo Script
+Create By. Athena Studio
+Bug Report. Kittisak Sarounram [ FB ]
+Contact Us. Kittisak Sarounram [ FB ]
+TEL. 0896609628 [ DTAC ]
+*/
+
+-	script	Details	FAKE_NPC,{
+
+OnDetail:
+
+	.@id = atoi(.@atcmd_parameters$[0]);
+	if ( getmonsterinfo(.@id, MOB_LV) < 0 || getmonsterinfo (.@id, MOB_NAME) == "null" )
+	{ 
+		mes "ไม่พบรหัสมอนเตอร์";
+		close;
+	}
+	//mes "^0033FF===รายละเอียดของมอนเตอร์===^000000";
+	mes "^0033FFชื่อ ^FF0000: ^000000" + getmonsterinfo(.@id,MOB_NAME) + " " +
+	"^0033FFเลเวล ^FF0000: ^000000" + getmonsterinfo(.@id,MOB_LV);
+	mes "^0033FFเลือด ^FF0000: ^000000" + getmonsterinfo(.@id,MOB_MAXHP);
+	//mes "^0033FFค่าประสบการณ์ Base ^FF0000: ^000000" + getmonsterinfo(.@id,MOB_BASEEXP);
+	//mes "^0033FFค่าประสบการณ์ Job ^FF0000: ^000000" + getmonsterinfo(.@id,MOB_JOBEXP);
+	//mes "^0033FFพลังโจมตี ^FF0000: ^000000" + getmonsterinfo(.@id,MOB_ATK1);
+	//mes "^0033FFพลังป้องกันกายภาพ^FF0000 : ^000000" + getmonsterinfo(.@id,MOB_DEF);
+	//mes "^0033FFพลังป้องกันเวทย์ ^FF0000: ^000000"+ getmonsterinfo(.@id,MOB_MDEF);
+	//mes "^0033FFStr ^FF0000: ^000000"+ getmonsterinfo(.@id,MOB_STR);
+	//mes "^0033FFAgi ^FF0000: ^000000"+ getmonsterinfo(.@id,MOB_AGI);
+	//mes "^0033FFVit ^FF0000: ^000000"+ getmonsterinfo(.@id,MOB_VIT);
+	//mes "^0033FFInt ^FF0000: ^000000"+ getmonsterinfo(.@id,MOB_INT);
+	//mes "^0033FFDex ^FF0000: ^000000"+ getmonsterinfo(.@id,MOB_DEX);
+	//mes "^0033FFLuk^FF0000 : ^000000"+ getmonsterinfo(.@id,MOB_LUK);
+	//mes "^0033FFระยะโจมตี ^FF0000: ^000000"+ getmonsterinfo(.@id,MOB_RANGE);
+	mes "^0033FFขนาด ^FF0000: ^000000"+ .Size$[getmonsterinfo(.@id,MOB_SIZE)];
+	mes "^0033FFประเภท^FF0000 : ^000000"+ .Race$[getmonsterinfo(.@id,MOB_RACE)];
+	mes "^0033FFธาตุ^FF0000 : ^000000"+ .Element$[getmonsterinfo(.@id,MOB_ELEMENT)];
+	mes "^0033FF--รายการไอเทมที่ดรอปจากมอนเตอร์--^000000";
+	if ( getmobdrops(.@id) )
+	{
+		.@count = $@MobDrop_count;
+		copyarray .@item[0],$@MobDrop_item[0],.@count;
+		copyarray .@rate[0],$@MobDrop_rate[0],.@count;
+	
+		for( .@i = 0; .@i < .@count; .@i++ )
+		{
+			mes "^FF0000("+.@item[.@i]+")^000000 "+"" + getitemname(.@item[.@i]) + " " + .@rate[.@i]/100 + ((.@rate[.@i]%100 < 10) ? ".0":".") + .@rate[.@i]%100 + " %";
+		}
+	}
+	//mes "^FF0000=======================^000000";
+	//mes "^0033FFVIP จะไม่แสดงเปอร์เซ็นที่เพิ่มขึ้น ให้ใช้ @mobinfo รหัสมอน^000000";
+	end;
+	
+OnInit:
+	bindatcmd "mi", strnpcinfo(3) +"::OnDetail", 0, 40;
+	setarray .Size$[0],"Small","Medium","Large";
+	setarray .Race$[0],"Formless","Undead","Brute","Plant","Insect","Fish","Demon","Demi Human","Angel","Dragon";
+	setarray .Element$[0],"Neutral","Water","Earth","Fire","Wind","Poison","Holy","Shadow","Ghost","Undead";
+	end;
+}
