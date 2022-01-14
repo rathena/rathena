@@ -1,17 +1,12 @@
 name: Build Servers from a Pull Request
-# build_servers_pr.yml
+# build_servers.yml
 
 on:
   pull_request:
     paths:
       # This workflow should run when a file in the src/ directory has been modified.
       - 'src/**'
-      # If changes have only been made in one of the following directories, the workflow will not run.
-      # Additional workflow Actions can be prepared for NPC script tests.
-      - '!conf/**'
-      - '!db/**'
-      - '!doc/**'
-      - '!npc/**'
+      - '3rdparty/**'
 
 jobs:
   build:
