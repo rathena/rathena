@@ -6,5 +6,5 @@
 
 //= Portal - ( Rooms )
 //============================================================
-alberta,134,38,0	warp	Room_Entrance#alberta-01	1,1,alberta_in,70,141
-alberta_in,73,141,0	warp	Room_Exit#alberta-01	1,1,alberta,137,37
+alberta,134,38,0	warp	alb02	1,1,alberta_in,70,141
+alberta_in,73,141,0	warp	alb02-1	1,1,alberta,137,37
