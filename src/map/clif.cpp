@@ -10400,7 +10400,7 @@ void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* t
 	nullpo_retv( sd );
 	nullpo_retv( tsd );
 
-	struct PACKET_ZC_EQUIPWIN_MICROSCOPE packet;
+	struct PACKET_ZC_EQUIPWIN_MICROSCOPE* p = (struct PACKET_ZC_EQUIPWIN_MICROSCOPE*)packet_buffer;
 	int equip = 0;
 
 	for( int i = 0; i < EQI_MAX; i++ ){
@@ -10419,31 +10419,31 @@ void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* t
 				continue;
 			}
 
-			clif_item_equip( client_index( k ), &packet.list[equip++], &tsd->inventory.u.items_inventory[k], tsd->inventory_data[k], pc_equippoint( tsd, k ) );
+			clif_item_equip( client_index( k ), &p->list[equip++], &tsd->inventory.u.items_inventory[k], tsd->inventory_data[k], pc_equippoint( tsd, k ) );
 		}
 	}
 
-	packet.PacketType = HEADER_ZC_EQUIPWIN_MICROSCOPE;
-	packet.PacketLength = sizeof( packet ) + sizeof( struct EQUIPITEM_INFO ) * equip;
+	p->PacketType = HEADER_ZC_EQUIPWIN_MICROSCOPE;
+	p->PacketLength = sizeof( *p ) + sizeof( struct EQUIPITEM_INFO ) * equip;
 
-	safestrncpy( packet.characterName, tsd->status.name, NAME_LENGTH );
+	safestrncpy( p->characterName, tsd->status.name, NAME_LENGTH );
 
-	packet.job = tsd->status.class_;
-	packet.head = tsd->vd.hair_style;
-	packet.accessory = tsd->vd.head_bottom;
-	packet.accessory2 = tsd->vd.head_mid;
-	packet.accessory3 = tsd->vd.head_top;
+	p->job = tsd->status.class_;
+	p->head = tsd->vd.hair_style;
+	p->accessory = tsd->vd.head_bottom;
+	p->accessory2 = tsd->vd.head_mid;
+	p->accessory3 = tsd->vd.head_top;
 #if PACKETVER >= 20110111
-	packet.robe = tsd->vd.robe;
+	p->robe = tsd->vd.robe;
 #endif
-	packet.headpalette = tsd->vd.hair_color;
-	packet.bodypalette = tsd->vd.cloth_color;
+	p->headpalette = tsd->vd.hair_color;
+	p->bodypalette = tsd->vd.cloth_color;
 #if PACKETVER_MAIN_NUM >= 20180801 || PACKETVER_RE_NUM >= 20180801 || PACKETVER_ZERO_NUM >= 20180808
-	packet.body2 = tsd->vd.body_style;
+	p->body2 = tsd->vd.body_style;
 #endif
-	packet.sex = tsd->vd.sex;
+	p->sex = tsd->vd.sex;
 
-	clif_send( &packet, packet.PacketLength, &sd->bl, SELF );
+	clif_send( p, p->PacketLength, &sd->bl, SELF );
 }
 
 
