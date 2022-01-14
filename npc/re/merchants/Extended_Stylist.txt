@@ -12,7 +12,7 @@ alberta_in,55,142,7	script	Stylist#alberta	4_F_02,{
 	mes "[Sweet Veronica]";
 	mes "Welcome to Veronica Beauty Salon, reborn as a world-class stylist. Hhhi.";
 	next;
-	switch(select("Change your style:End Conversation")) {
+	switch(select("Change your style:End conversation")) {
 	case 1:
 		close2;
 		openstylist();
@@ -31,7 +31,7 @@ prt_in,243,168,4	script	Stylist#prontera	4_F_02,{
 	mes "[Jovovich]";
 	mes "Welcome. I'm Jovovich, a famous stylist from Prontera. How can I help you?";
 	next;
-	switch(select("Change your style:End Conversation")) {
+	switch(select("Change your style:End conversation")) {
 	case 1:
 		close2;
 		openstylist();
@@ -49,7 +49,7 @@ lhz_in02,100,143,4	script	Stylist#lhz	2_M_DYEINGER,{
 	mes "[Prince Shami]";
 	mes "I'm back as one of the greatest stylists in the world. I'm Prince Shami and a professional stylist and I have to say I've been blessed by this great talent! <3";
 	next;
-	switch(select("Change your style:End Conversation")) {
+	switch(select("Change your style:End conversation")) {
 	case 1:
 		close2;
 		openstylist();
@@ -67,7 +67,7 @@ lasagna,134,113,3	script	Stylist#lasagna	4_DR_F_02,{
 	mes "[Lonza]";
 	mes "If you're a Doram who lives and dies for fashion, trust me. To the beat of the music~";
 	next;
-	switch(select("Change your style:End Conversation")) {
+	switch(select("Change your style:End conversation")) {
 	case 1:
 		close2;
 		openstylist();
@@ -86,7 +86,7 @@ ra_in01,186,148,5	script	Stylist#rachel	4_F_MASK1,{
 	mes "[Isop]";
 	mes "Hehe, Welcome. I'm Isop, the stylist of the <Shook Shook-Store>.";
 	next;
-	switch(select("Change your style:End Conversation")) {
+	switch(select("Change your style:End conversation")) {
 	case 1:
 		close2;
 		openstylist();
@@ -104,7 +104,7 @@ yuno_in04,186,21,1	script	Stylist#yuno	4_M_BARBER,{
 	mes "[Maxi]";
 	mes "Nice to meet you my guest. Would you like to leave your transformation to Maxi, the best stylist in Schwarzwald?";
 	next;
-	switch(select("Change your style:End Conversation")) {
+	switch(select("Change your style:End conversation")) {
 	case 1:
 		close2;
 		openstylist();
