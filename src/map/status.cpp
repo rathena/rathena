@@ -789,7 +789,7 @@ void StatusDatabase::removeByStatusFlag(block_list *bl, std::vector<e_status_cha
 		std::shared_ptr<s_status_change_db> status = status_it.second;
 		sc_type type = status->type;
 
-		if (sc && sc->data[type]) {
+		if (sc->data[type]) {
 			for (const auto &flag_it : flag) {
 				if (status->flag[flag_it])
 					status_change_end(bl, type, INVALID_TIMER);

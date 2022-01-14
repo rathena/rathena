@@ -2087,7 +2087,7 @@ int map_quit(struct map_session_data *sd) {
 			std::bitset<SCF_MAX> &flag = it.second->flag;
 
 			//No need to save infinite status
-			if (flag[SCF_NOSAVEINFINITE] && sd->sc.data[it.first]->val4 > 0) {
+			if (flag[SCF_NOSAVEINFINITE] && sd->sc.data[it.first] && sd->sc.data[it.first]->val4 > 0) {
 				status_change_end(&sd->bl, static_cast<sc_type>(it.first), INVALID_TIMER);
 				continue;
 			}
