@@ -12,7 +12,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    # Github Actions checks for 'ci skip', 'skip ci', but not a hyphenated version.
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
     # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
     if: "!contains(github.event.head_commit.message, 'ci-skip')"
     runs-on: ${{ matrix.os }}
@@ -21,8 +21,6 @@ jobs:
           # The ubuntu-latest label currently points to ubuntu-18.04.
           # Available: ubuntu-20.04, ubuntu-18.04	
           os: [ubuntu-latest]
-          # The packet version to build the server for.
-          packetver: ['20211103']
           # Only a single version of GCC is required for validating NPC scripts and database changes.
           gcc: ['10']
           # We run build checks for both Renewal and PRE-Renewal
@@ -68,7 +66,7 @@ jobs:
           
       - name: Command - configure
         env:
-            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-packetver=${{ matrix.packetver }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
+            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
         run: ./configure $CONFIGURE_FLAGS
       
       # npc.sh enables all NPC scripts in the custom and test folders.
@@ -78,14 +76,8 @@ jobs:
       - name: Command - make clean
         run: make clean
 
-      - name: Command - make server
-        run: make server
-
-      - name: Run Once - login-server
-        run: ./login-server --run-once
-
-      - name: Run Once - char-server
-        run: ./char-server --run-once
+      - name: Command - make map server
+        run: make map
 
       - name: Run Once - map-server
         run: ./map-server --run-once
