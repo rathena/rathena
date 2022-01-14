@@ -122947,6 +122947,31 @@ Body:
       bonus2 bMagicAtkEle,Ele_All,3;
       bonus2 bSPDrainRate,10,1;
       autobonus "{ bonus2 bSPRegenRate,100,1000; }",10,5000,BF_MAGIC;
+  - Id: 28536
+    AegisName: Emerald_Earring_TW
+    Name: Emerald Earring
+    Type: Armor
+    Weight: 500
+    Defense: 3
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    ArmorLevel: 1
+    EquipLevelMin: 50
+    Script: |
+      bonus bDex,5;
+      bonus bAgi,5;
+      bonus bInt,5;
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",BaseLevel;
+      bonus2 bSkillAtk,"BA_MUSICALSTRIKE",BaseLevel;
+      bonus2 bSkillAtk,"DC_THROWARROW",BaseLevel;
+      bonus2 bSkillAtk,"WM_METALICSOUND",2*(BaseLevel/5);
+      .@n = getskilllv("WM_METALICSOUND");
+      bonus2 bVariableCastrate,"WM_METALICSOUND",.@n/2;
+      bonus bDex,.@n/2;
+      bonus bAgi,.@n/2;
+      bonus bInt,.@n/2;
+      bonus bMatk,(.@n/2)*20;
   - Id: 28538
     AegisName: Glove_Of_Wizard_BR
     Name: Magician's Gloves
