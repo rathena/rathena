@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    # Github Actions checks for 'ci skip', 'skip ci', but not a hyphenated version.
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
     # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
     if: "!contains(github.event.head_commit.message, 'ci-skip')"
     runs-on: ${{ matrix.os }}
