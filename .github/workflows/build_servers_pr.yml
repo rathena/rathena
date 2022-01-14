@@ -37,7 +37,7 @@ jobs:
       
       # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
       - name: Variable Parsing - PRE
-        if: ${{ matrix.prere == 'PRE' }} 
+        if: ${{ matrix.mode == 'PRE' }} 
         run: |
           echo "PRERE=yes" >> $GITHUB_ENV
       - name: Variable Parsing - RE
