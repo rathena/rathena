@@ -214,10 +214,16 @@ enum packet_headers {
 #endif
 #if PACKETVER < 20100105
 	vendinglistType = 0x133,
+#elif PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	vendinglistType = 0xb3d,
 #else
 	vendinglistType = 0x800,
 #endif
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	openvendingType = 0xb40,
+#else
 	openvendingType = 0x136,
+#endif
 #if PACKETVER >= 20120925
 	equipitemType = 0x998,
 #else
