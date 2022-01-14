@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "PRERE=yes" >> $GITHUB_ENV
       - name: Variable Parsing - RE
-        if: ${{ matrix.prere == 'RE' }} 
+        if: ${{ matrix.mode == 'RE' }} 
         run: |
           echo "PRERE=no" >> $GITHUB_ENV
 
