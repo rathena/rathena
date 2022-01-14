@@ -5957,6 +5957,20 @@ BUILDIN_FUNC(heal)
 }
 
 /*==========================================
+ * Force Heal a player (ap)
+ *------------------------------------------*/
+BUILDIN_FUNC(healap)
+{
+	map_session_data* sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	status_heal(&sd->bl, 0, 0, script_getnum(st, 2), 1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * Heal a player by item (get vit bonus etc)
  *------------------------------------------*/
 BUILDIN_FUNC(itemheal)
@@ -25771,6 +25785,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(cutin,"si"),
 	BUILDIN_DEF(viewpoint,"iiiii?"),
 	BUILDIN_DEF(heal,"ii?"),
+	BUILDIN_DEF(healap,"i?"),
 	BUILDIN_DEF(itemheal,"ii?"),
 	BUILDIN_DEF(percentheal,"ii?"),
 	BUILDIN_DEF(rand,"i?"),
