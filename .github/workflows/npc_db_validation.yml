@@ -1,0 +1,91 @@
+name: Validate NPC Scripts and DB Changes
+# npc_db_validation.yml
+
+# For NPC and DB validation we only need two builds: one of Renewal and one for Pre-Renewal checks.
+# NPC scripts and database files are not platform dependent, so we can achieve this validation using only a simple linux setup.
+
+on: [push, pull_request]
+  paths:
+    # This workflow should run when a file in either the db/ or npc/ directory has been modified.
+    - 'db/**'
+    - 'npc/**'
+
+jobs:
+  build:
+    # Github Actions checks for 'ci skip', 'skip ci', but not a hyphenated version.
+    # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          # The ubuntu-latest label currently points to ubuntu-18.04.
+          # Available: ubuntu-20.04, ubuntu-18.04	
+          os: [ubuntu-latest]
+          # The packet version to build the server for.
+          packetver: ['20211103']
+          # Only a single version of GCC is required for validating NPC scripts and database changes.
+          gcc: ['10']
+          # We run build checks for both Renewal and PRE-Renewal
+          mode: ['PRE', 'RE']
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
+      - name: Variable Parsing - PRE
+        if: ${{ matrix.mode == 'PRE' }} 
+        run: |
+          echo "PRERE=yes" >> $GITHUB_ENV
+      - name: Variable Parsing - RE
+        if: ${{ matrix.mode == 'RE' }} 
+        run: |
+          echo "PRERE=no" >> $GITHUB_ENV
+
+      - name: Update & Install packages
+        # Ubuntu runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        run: |
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+          
+      - name: Start MySQL
+        run: sudo systemctl start mysql.service
+
+      - name: Setup Database
+        env:
+          DB_ROOT: 'root'
+          DB_HOST: '127.0.0.1'
+          DB_RAG: 'ragnarok'
+          # MySQL (v8.0.26) provided by Github Actions is pre-configured to use root as the password.
+          # We default to 'ragnarok' for database, user and password, so no need for additional variables in this script.
+        run: |
+          mysql -u $DB_ROOT -p$DB_ROOT -e "CREATE DATABASE $DB_RAG;"
+          mysql -u $DB_ROOT -p$DB_ROOT -e "CREATE USER '$DB_RAG'@'$DB_RAG' IDENTIFIED BY '$DB_RAG';"
+          mysql -u $DB_ROOT -p$DB_ROOT -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE ON $DB_RAG.* TO '$DB_RAG'@'$DB_RAG';"
+      
+      - name: Create MySQL User and Setup Tables
+        run: chmod +x ./tools/ci/import_sql.sh && ./tools/ci/import_sql.sh
+          
+      - name: Command - configure
+        env:
+            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-packetver=${{ matrix.packetver }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
+        run: ./configure $CONFIGURE_FLAGS
+      
+      # npc.sh enables all NPC scripts in the custom and test folders.
+      - name: Enable All NPCs for Testing
+        run: chmod +x ./tools/ci/npc.sh && ./tools/ci/npc.sh
+
+      - name: Command - make clean
+        run: make clean
+
+      - name: Command - make server
+        run: make server
+
+      - name: Run Once - login-server
+        run: ./login-server --run-once
+
+      - name: Run Once - char-server
+        run: ./char-server --run-once
+
+      - name: Run Once - map-server
+        run: ./map-server --run-once
