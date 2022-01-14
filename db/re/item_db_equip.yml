@@ -146278,6 +146278,52 @@ Body:
             }
          }
       }
+  - Id: 480161
+    AegisName: aegis_480161
+    Name: Subject Cape (Range)
+    Type: Armor
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Archer: true
+      Merchant: true
+      Swordman: true
+      Thief: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableGarment;
+      bonus bBaseAtk,20;
+      bonus2 bAddRace,RC_All,1*(.@r/2);
+      if (.@r>=9)
+         bonus bAspd,1;
+  - Id: 480166
+    AegisName: aegis_480166
+    Name: Subject Cape (Magic)
+    Type: Armor
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Acolyte: true
+      Archer: true
+      Mage: true
+      SoulLinker: true
+    Locations:
+      Garment: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableGarment;
+      bonus bMatk,20;
+      bonus2 bMagicAtkEle,Ele_All,2*(.@r/3);
+      if (.@r>=9) 
+         bonus bMatkRate,7;
   - Id: 490004
     AegisName: Attacker_Booster_Ring
     Name: Attacker Booster Ring

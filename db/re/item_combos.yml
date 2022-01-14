@@ -23054,3 +23054,92 @@ Body:
          bonus2 bAddRace,RC_All,10;
          bonus bPerfectHitAddRate,30;
       }
+  - Combos:
+      - Combo:
+          - aegis_480161
+          - Old_Camo_RabbitHood
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bLongAtkRate,2*(.@r/2);
+      bonus2 bSkillAtk,"RA_ARROWSTORM",5*(.@r/2);
+      if (.@r>=12)
+         bonus2 bSkillCooldown,"RA_ARROWSTORM",-500;
+  - Combos:
+      - Combo:
+          - aegis_480161
+          - Old_Shadow_Handicraft
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bDelayrate,-1*(.@r/2);
+      bonus2 bSkillAtk,"SC_FEINTBOMB",15*(.@r/2);
+      if (.@r>=12)
+         bonus2 bSkillCooldown,"SC_FEINTBOMB",-1800;
+  - Combos:
+      - Combo:
+          - aegis_480161
+          - Old_Midas_Whisper
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bLongAtkRate,2*(.@r/2);
+      bonus2 bSkillAtk,"GN_CARTCANNON",2*(.@r/2);
+      if (.@r>=12)
+         bonus2 bAddSize,Size_All,5;
+  - Combos:
+      - Combo:
+          - aegis_480161
+          - Old_Protect_Of_Crown
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bLongAtkRate,2*(.@r/2);
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",3*(.@r/2);
+      if (.@r>=12)
+         bonus2 bAddSize,Size_All,5;
+  - Combos:
+      - Combo:
+          - aegis_480161
+          - Old_Driver_Band_Y
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bSkillAtk,"NC_PILEBUNKER",15*(.@r/2);
+      bonus2 bSkillAtk,"NC_VULCANARM",15*(.@r/2);
+      if (.@r>=12)
+         bonus2 bSkillCooldown,"NC_SELFDESTRUCTION",-30000;
+  - Combos:
+      - Combo:
+          - aegis_480166
+          - Old_Minstrel_Song_Hat
+      - Combo:
+          - aegis_480166
+          - Old_Dying_Swan
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bSkillAtk,"WM_METALICSOUND",15*(.@r/2);
+      if (.@r>=12)
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
+  - Combos:
+      - Combo:
+          - aegis_480166
+          - Old_Wind_Whisper
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bMagicAddSize,Size_All,1*(.@r/2);
+      if (.@r>=12)
+         bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000;
+  - Combos:
+      - Combo:
+          - aegis_480166
+          - Old_Magic_Stone_Hat
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus2 bMagicAddSize,Size_All,1*(.@r/2);
+      if (.@r>=12)
+         bonus2 bMagicAddClass,Class_Boss,15;
+  - Combos:
+      - Combo:
+          - aegis_480166
+          - Old_Mitra
+    Script: |
+      .@r = getequiprefinerycnt(EQI_GARMENT);
+      bonus bLongAtkDef,2*(.@r/2);
+      if (.@r>=12)
+         bonus2 bSubRace,RC_All,15;
