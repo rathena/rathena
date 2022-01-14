@@ -5964,7 +5964,7 @@ BUILDIN_FUNC(healap)
 	map_session_data* sd;
 
 	if (!script_charid2sd(3, sd))
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
 	status_heal(&sd->bl, 0, 0, script_getnum(st, 2), 1);
 	return SCRIPT_CMD_SUCCESS;
