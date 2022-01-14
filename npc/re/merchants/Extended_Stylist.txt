@@ -111,7 +111,7 @@ yuno_in04,186,21,1	script	Stylist#yuno	4_M_BARBER,{
 		end;
 	case 2:
 		mes "[Maxi]";
-		mes "Come back when you decide to change your style.";
+		mes "Come back anytime.";
 		close;
 	}
 }
