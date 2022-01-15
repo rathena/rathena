@@ -45,24 +45,6 @@ jobs:
           sudo apt update
           sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
           
-      - name: Start MySQL
-        run: sudo systemctl start mysql.service
-
-      - name: Setup Database
-        env:
-          DB_ROOT: 'root'
-          DB_HOST: '127.0.0.1'
-          DB_RAG: 'ragnarok'
-          # MySQL (v8.0.26) provided by Github Actions is pre-configured to use root as the password.
-          # We default to 'ragnarok' for database, user and password, so no need for additional variables in this script.
-        run: |
-          mysql -u $DB_ROOT -p$DB_ROOT -e "CREATE DATABASE $DB_RAG;"
-          mysql -u $DB_ROOT -p$DB_ROOT -e "CREATE USER '$DB_RAG'@'$DB_RAG' IDENTIFIED BY '$DB_RAG';"
-          mysql -u $DB_ROOT -p$DB_ROOT -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE ON $DB_RAG.* TO '$DB_RAG'@'$DB_RAG';"
-      
-      - name: Create MySQL User and Setup Tables
-        run: ./tools/ci/import_sql.sh
-          
       - name: Command - configure
         env:
             CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
