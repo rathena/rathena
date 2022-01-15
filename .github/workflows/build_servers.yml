@@ -19,8 +19,6 @@ jobs:
           # The ubuntu-latest label currently points to ubuntu-18.04.
           # Available: ubuntu-20.04, ubuntu-18.04	
           os: [ubuntu-latest]
-          # There is no reason to check build success for packet-versions older than four years.
-          packetver: ['20211103', '20200902', '20200401', '20180620']
           # Older versions of GCC are not available via unaltered aptitude repo lists.
           gcc: ['7', '8', '9', '10']
           # We run build checks for both Renewal and PRE-Renewal
@@ -63,28 +61,19 @@ jobs:
           mysql -u $DB_ROOT -p$DB_ROOT -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE ON $DB_RAG.* TO '$DB_RAG'@'$DB_RAG';"
       
       - name: Create MySQL User and Setup Tables
-        run: chmod +x ./tools/ci/import_sql.sh && ./tools/ci/import_sql.sh
+        run: ./tools/ci/import_sql.sh
           
       - name: Command - configure
         env:
-            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-packetver=${{ matrix.packetver }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
+            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
         run: ./configure $CONFIGURE_FLAGS
       
       # npc.sh enables all NPC scripts in the custom and test folders.
       - name: Enable All NPCs for Testing
-        run: chmod +x ./tools/ci/npc.sh && ./tools/ci/npc.sh
+        run: ./tools/ci/npc.sh
 
       - name: Command - make clean
         run: make clean
 
       - name: Command - make server
         run: make server
-
-      - name: Run Once - login-server
-        run: ./login-server --run-once
-
-      - name: Run Once - char-server
-        run: ./char-server --run-once
-
-      - name: Run Once - map-server
-        run: ./map-server --run-once
