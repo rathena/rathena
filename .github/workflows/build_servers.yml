@@ -50,10 +50,6 @@ jobs:
             CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
         run: ./configure $CONFIGURE_FLAGS
       
-      # npc.sh enables all NPC scripts in the custom and test folders.
-      - name: Enable All NPCs for Testing
-        run: ./tools/ci/npc.sh
-
       - name: Command - make clean
         run: make clean
 
