@@ -20927,7 +20927,7 @@ Body:
           - aegis_310655
           - Release_Of_Magic
     Script: |
-      autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000 }";
+      autobonus "{ bonus bFlee2,100; bonus2 bMagicAddClass,Class_Boss,100; }",50,10000,BF_MAGIC,"{ active_transform 1639,10000; }";
       /*Unknow Rate*/
   - Combos:
       - Combo:

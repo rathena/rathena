@@ -140033,6 +140033,16 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 1
     View: 1919
+  - Id: 440001
+    AegisName: C_Wunderkammer
+    Name: Costume Wunderkammer
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 743
   - Id: 440002
     AegisName: C_Happy_Cat_TW
     Name: Costume Happy Cat
@@ -140063,6 +140073,26 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 440004
+    AegisName: aegis_440004
+    Name: Costume Close Helmet    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 203
+  - Id: 440005
+    AegisName: aegis_440008
+    Name: Costume Dark Bacilium    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    ArmorLevel: 1
+    View: 364
   - Id: 440006
     AegisName: C_Black_Cat_Hood_kr
     Name: Costume Black Cat Hood
@@ -140101,6 +140131,17 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 440008
+    AegisName: aegis_440008
+    Name: Costume Master    # !todo check english name
+    Type: Armor
+    Locations:
+      Costume_Head_Top: true
+    ArmorLevel: 1
+    Script: |
+      hateffect HAT_EF_C_MASTER,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_MASTER,false;
   - Id: 440009
     AegisName: C_Black_Moon_Cat_kr
     Name: Costume beginner black moon cat    # !todo check english name
