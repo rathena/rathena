@@ -243,7 +243,7 @@ struct PACKET_ZC_SUMMON_HP_INIT {
 struct PACKET_ZC_SUMMON_HP_UPDATE {
 	int16 PacketType;
 	uint32 summonAID;
-	uint32 VarId;
+	uint16 VarId;
 	uint32 Value;
 } __attribute__((packed));
 
