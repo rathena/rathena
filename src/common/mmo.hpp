@@ -107,6 +107,9 @@ typedef uint32 t_itemid;
 #define DB_NAME_LEN 256 //max len of dbs
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
+#ifndef MAX_BARTER_REQUIREMENTS
+	#define MAX_BARTER_REQUIREMENTS 5
+#endif
 
 #ifdef RENEWAL
 	#define MAX_WEAPON_LEVEL 5

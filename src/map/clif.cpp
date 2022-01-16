@@ -22900,9 +22900,10 @@ void clif_barter_extended_open( struct map_session_data& sd, struct npc_data& nd
 
 		item->currency_count = 0;
 
-		for( const auto& requirement : itemPair.second->requirements ){
+		for( const auto& requirementPair : itemPair.second->requirements ){
 			// Needs dynamic calculation, because of variable currencies
 			struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2* req = (struct PACKET_ZC_NPC_EXPANDED_BARTER_OPEN_sub2*)( ( (uint8*)p ) + p->packetLength );
+			std::shared_ptr<s_npc_barter_requirement> requirement = requirementPair.second;
 
 			req->nameid = requirement->nameid;
 			if( requirement->refine >= 0 ){

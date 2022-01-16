@@ -91,6 +91,7 @@ public:
 extern StylistDatabase stylist_db;
 
 struct s_npc_barter_requirement{
+	uint16 index;
 	t_itemid nameid;
 	uint16 amount;
 	int8 refine;
@@ -102,7 +103,7 @@ struct s_npc_barter_item{
 	bool stockLimited;
 	uint32 stock;
 	uint32 price;
-	std::vector<std::shared_ptr<s_npc_barter_requirement>> requirements;
+	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
 };
 
 struct s_npc_barter{

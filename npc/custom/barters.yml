@@ -34,7 +34,8 @@
 #        Stock          Amount of item in stock (Default: unlimited)
 #        Zeny           Cost of them item in Zeny (Default: 0)
 #        RequiredItems: List of required items (Default: none)
-#          - Item       AEGIS name of required item
+#          - Index      Index of the required item (0-4)
+#            Item       AEGIS name of required item
 #            Amount     Amount of required item (Default: 1)
 #            Refine     Refine level of required item (Default: 0)
 ###########################################################################

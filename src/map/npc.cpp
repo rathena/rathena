@@ -611,13 +611,28 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 
 			if( this->nodeExists( itemNode, "RequiredItems" ) ){
 				for( const YAML::Node& requiredItemNode : itemNode["RequiredItems"] ){
-					std::shared_ptr<s_npc_barter_requirement> requirement = std::make_shared<s_npc_barter_requirement>();
+					uint16 requirement_index;
 
-					if( !this->nodesExist( requiredItemNode, { "Item" } ) ){
+					if( !this->asUInt16( requiredItemNode, "Index", requirement_index ) ){
 						return 0;
 					}
 
-					std::shared_ptr<item_data> data;
+					if( requirement_index >= MAX_BARTER_REQUIREMENTS ){
+						this->invalidWarning( requiredItemNode["Index"], "barter_parseBodyNode: Index %hu is too high. Only up to %d requirements are supported.\n", requirement_index, MAX_BARTER_REQUIREMENTS );
+						return 0;
+					}
+
+					std::shared_ptr<s_npc_barter_requirement> requirement = util::map_find( item->requirements, requirement_index );
+					bool requirement_exists = requirement != nullptr;
+
+					if( !requirement_exists ){
+						if( !this->nodesExist( requiredItemNode, { "Item" } ) ){
+							return 0;
+						}
+
+						requirement = std::make_shared<s_npc_barter_requirement>();
+						requirement->index = requirement_index;
+					}
 
 					if( this->nodeExists( requiredItemNode, "Item" ) ){
 						std::string aegis_name;
@@ -626,7 +641,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 							return 0;
 						}
 
-						data = item_db.search_aegisname( aegis_name.c_str() );
+						std::shared_ptr<item_data> data = item_db.search_aegisname( aegis_name.c_str() );
 
 						if( data == nullptr ){
 							this->invalidWarning( requiredItemNode["Item"], "barter_parseBodyNode: Unknown required item %s.\n", aegis_name.c_str() );
@@ -650,10 +665,14 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 
 						requirement->amount = amount;
 					}else{
-						requirement->amount = 1;
+						if( !requirement_exists ){
+							requirement->amount = 1;
+						}
 					}
 
 					if( this->nodeExists( requiredItemNode, "Refine" ) ){
+						std::shared_ptr<item_data> data = item_db.find( requirement->nameid );
+
 						if( data->flag.no_refine ){
 							this->invalidWarning( requiredItemNode["Refine"], "barter_parseBodyNode: Item %s is not refineable.\n", data->name.c_str() );
 							return 0;
@@ -675,10 +694,14 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 
 						requirement->refine = (int8)refine;
 					}else{
-						requirement->refine = -1;
+						if( !requirement_exists ){
+							requirement->refine = -1;
+						}
 					}
 
-					item->requirements.push_back( requirement );
+					if( !requirement_exists ){
+						item->requirements[requirement->index] = requirement;
+					}
 				}
 			}
 
@@ -738,7 +761,7 @@ void BarterDatabase::loadingFinished(){
 
 			// Normal barter cannot handle refine
 			for( const auto& requirement : itemPair.second->requirements ){
-				if( requirement->refine > 0 ){
+				if( requirement.second->refine > 0 ){
 					nd->u.barter.extended = true;
 					break;
 				}
@@ -3043,7 +3066,9 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 		requiredZeny += ( purchase.item->price * amount );
 		requiredWeight += ( purchase.data->weight * amount );
 
-		for( std::shared_ptr<s_npc_barter_requirement> requirement : purchase.item->requirements ){
+		for( const auto& requirementPair : purchase.item->requirements ){
+			std::shared_ptr<s_npc_barter_requirement> requirement = requirementPair.second;
+
 			item_data* id = itemdb_exists( requirement->nameid );
 
 			if( id == nullptr ){
