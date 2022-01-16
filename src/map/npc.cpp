@@ -3171,6 +3171,11 @@ e_purchase_result npc_barter_purchase( struct map_session_data& sd, std::shared_
 											continue;
 										}
 
+										// Items in equip switch are not taken into account
+										if(	sd.inventory.u.items_inventory[j].equipSwitch != 0 ){
+											continue;
+										}
+
 										// Server is configured to hide favorite items on selling
 										if( battle_config.hide_fav_sell && sd.inventory.u.items_inventory[j].favorite ){
 											continue;
