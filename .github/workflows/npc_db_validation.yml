@@ -4,11 +4,12 @@ name: Validate NPC Scripts and DB Changes
 # For NPC and DB validation we only need two builds: one of Renewal and one for Pre-Renewal checks.
 # NPC scripts and database files are not platform dependent, so we can achieve this validation using only a simple linux setup.
 
-on: [push, pull_request]
-  paths:
-    # This workflow should run when a file in either the db/ or npc/ directory has been modified.
-    - 'db/**'
-    - 'npc/**'
+on:
+  push:
+    paths:
+      # This workflow should run when a file in either the db/ or npc/ directory has been modified.
+      - 'db/**'
+      - 'npc/**'
 
 jobs:
   build:
@@ -62,7 +63,7 @@ jobs:
           mysql -u $DB_ROOT -p$DB_ROOT -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE ON $DB_RAG.* TO '$DB_RAG'@'$DB_RAG';"
       
       - name: Create MySQL User and Setup Tables
-        run: chmod +x ./tools/ci/import_sql.sh && ./tools/ci/import_sql.sh
+        run: ./tools/ci/import_sql.sh
           
       - name: Command - configure
         env:
@@ -71,7 +72,7 @@ jobs:
       
       # npc.sh enables all NPC scripts in the custom and test folders.
       - name: Enable All NPCs for Testing
-        run: chmod +x ./tools/ci/npc.sh && ./tools/ci/npc.sh
+        run: ./tools/ci/npc.sh
 
       - name: Command - make clean
         run: make clean
