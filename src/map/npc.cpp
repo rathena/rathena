@@ -582,7 +582,7 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 				}
 
 				item->stock = stock;
-				item->stockLimited = true;
+				item->stockLimited = ( stock > 0 );
 			}else{
 				if( !item_exists ){
 					item->stock = 0;
