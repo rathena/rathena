@@ -687,9 +687,6 @@ uint64 BarterDatabase::parseBodyNode( const YAML::Node& node ){
 						if( refine > MAX_REFINE ){
 							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Refine %hd is too high.\n", refine );
 							return 0;
-						}else if( refine < 0 ){
-							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Refine %hd is too low.\n", refine );
-							return 0;
 						}
 
 						requirement->refine = (int8)refine;
@@ -761,7 +758,7 @@ void BarterDatabase::loadingFinished(){
 
 			// Normal barter cannot handle refine
 			for( const auto& requirement : itemPair.second->requirements ){
-				if( requirement.second->refine > 0 ){
+				if( requirement.second->refine >= 0 ){
 					nd->u.barter.extended = true;
 					break;
 				}
