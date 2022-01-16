@@ -46,7 +46,7 @@ function Is_Baby	{
 // Checks if the player can change to fourth class.
 // Note: This does not include the level checks.
 function	Can_Change_Fourth	{
-	// To change to third class you need to be:
+	// To change to fourth class you need to be:
 	// * Transcendent Third Class
 	if( !.FourthClass )
 		return false; // Fourth job change disabled
