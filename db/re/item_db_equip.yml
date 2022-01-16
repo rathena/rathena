@@ -140084,7 +140084,7 @@ Body:
     ArmorLevel: 1
     View: 203
   - Id: 440005
-    AegisName: aegis_440008
+    AegisName: aegis_440005
     Name: Costume Dark Bacilium    # !todo check english name
     Type: Armor
     Locations:
@@ -145043,6 +145043,37 @@ Body:
                }
             }
          }
+      }
+  - Id: 450208
+    AegisName: aegis_450208
+    Name: Paracelsus Coat
+    Type: Armor
+    Weight: 1000
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    ArmorLevel: 1
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus2 bAddRace,RC_All,getskilllv("GN_CRAZYWEED")*7;
+      if (getskilllv("GN_CARTBOOST") == 5)
+         bonus bMaxHP,BaseLevel*50;
+      if (getskilllv("GN_FIRE_EXPANSION") == 5) {
+         bonus2 bSkillAtk,"GN_CARTCANNON",BaseLevel*2;
+         bonus2 bSkillAtk,"GN_CART_TORNADO",BaseLevel;
+      }
+      if (.@r>=5) {
+         bonus bDef,150;
+         bonus bMdef,15;
+      }
+      if (.@r>=7) {
+         bonus bDef,150;
+         bonus bMdef,15;
       }
   - Id: 460005
     AegisName: MD_Geffen_Shield
