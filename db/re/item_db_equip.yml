@@ -145645,7 +145645,7 @@ Body:
       skill "SM_MAGNUM",3;
       bonus2 bSkillAtk,"NC_AXETORNADO",30*.@lvl;
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",20*.@lvl;
-      bonus bIgnoreDefRace,20*getskilllv("NC_MAGMA_ERUPTION");
+      bonus2 bIgnoreDefRaceRate,RC_All,20*getskilllv("NC_MAGMA_ERUPTION");
       if (getskilllv("NC_MAGICDECOY") == 5) {
          bonus bAspdRate,10;
          bonus bMaxHP,150*BaseLevel;
