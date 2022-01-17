@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= birkiczd  (1.0)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.3 Official warps [Playtester]
 //= 1.4 Moved Sailor to Hugel quest file since he's part of
 //=     Odin's Excavation Quest. [SinSloth]
+//=	1.5 Added Odin Past warps [mundussan]
 //============================================================
 
 odin_tem01,378,182,0	warp	odin01	1,1,odin_tem02,28,180
@@ -28,23 +29,30 @@ odin_tem03,247,34,0	warp	odin08	1,1,odin_tem02,263,372
 
 
 //Odin's Past Warp.
-odin_tem03,276,236,0	script	light#warp	45,2,2,{
-	OnTouch:
-    if(BaseLevel < 180) {
-	    dispbottom "System: You are not strong enough for the next area. You need at least Base Level 180!";
-	    end;
-    }
-		mes "It's a warm light.",
-		"Beyond this light, something stinks.";
-		next;
-			if(select("Go where the light leads.:Avoid it.") == 2){
-				mes "You avoid it.";
-				close;
-			}
-		mes "You decide to follow the light that comes from a time crack";
-		sleep2 750;
-		warp "odin_past",291,233;
-	end;
-}
+odin_tem03,276,236,0	script	odinpast#odin	WARPNPC,1,1,{
+    end;
+OnTouch:
 
-odin_past,291,235,0	warp	odin10	1,1,odin_tem03,280,236
+    if (BaseLevel < 180) {
+		message strcharinfo(0), strcharinfo(0) + " What is it? This light is...";
+		end;
+	}
+	
+	mes "It's warm light.";
+	mes "Beyond the shining light, something...";
+	mes "that I know.";
+	next;
+	switch ( select( "I'm going to the place where the light leads me.", "Avoid the place." )) {
+		case 1:
+			close2;
+			warp "odin_past",291,230;
+			end;
+			break;
+		case 2:
+			mes "You are avoiding it.";
+			close;
+			break;
+		}
+	}
+
+odin_past,291,235,0	warp	thirdfloor#odin	1,1,odin_tem03,276,232
