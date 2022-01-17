@@ -39350,7 +39350,7 @@ Body:
     Script: |
       .@type = getiteminfo(getequipid(EQI_COMPOUND_ON), ITEMINFO_VIEW);
       .@r = getrefine();
-      if (.@type == 17 || .@type == 18 || .@type == 21) {
+      if (.@type == W_REVOLVER || .@type == W_RIFLE || .@type == W_GRENADE) {
          bonus bLongAtkRate,5+.@r+(.@r >= 10 ? 5 : 0);
       }
   - Id: 27150
