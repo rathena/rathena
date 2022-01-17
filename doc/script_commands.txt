@@ -10591,8 +10591,7 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
-*itemlink(<item_id>{,<refine>,<card0>,<card1>,<card2>,<card3>});
-*itemlink2(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,{enchantgrade},<RandomIDArray>,<RandomValueArray>,<RandomParamArray>);
+*itemlink(<item_id>{,<refine>,<card0>,<card1>,<card2>,<card3>,{enchantgrade},<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
 
 Generate <ITEML> string for an item and can be used for npctalk, message,
 dispbottom, and broadcast commands. The result is clickable-item name just

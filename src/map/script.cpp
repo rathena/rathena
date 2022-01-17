@@ -25679,8 +25679,7 @@ BUILDIN_FUNC( openstylist ){
 
 /**
 * Generate <ITEML> string for client
-* itemlink(<item_id>{,<refine>,<card0>,<card1>,<card2>,<card3>});
-* itemlink2(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>);
+* itemlink(<item_id>{,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
 * @author [Cydh]
 **/
 BUILDIN_FUNC(itemlink)
@@ -25703,7 +25702,7 @@ BUILDIN_FUNC(itemlink)
 #if PACKETVER >= 20150225
 	char* command = (char*)script_getfuncname(st);
 	if (command[strlen(command) - 1] == '2') {
-		script_getitem_randomoption(st, NULL, &itemldata.item, command, 8);
+		script_getitem_randomoption(st, NULL, &itemldata.item, command, 9);
 		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
 			if (itemldata.item.option[i].id)
 				itemldata.flag.options = 1;
@@ -26455,8 +26454,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
 	BUILDIN_DEF(openstylist, "?"),
-	BUILDIN_DEF(itemlink, "i??????"),
-	BUILDIN_DEF2(itemlink, "itemlink2", "iiiiiiirrr"),
+	BUILDIN_DEF(itemlink, "i?????????"),
 	BUILDIN_DEF(base62_encode, "i"),
 	BUILDIN_DEF(base62_decode, "s"),
 #include "../custom/script_def.inc"
