@@ -77,7 +77,7 @@ jobs:
       - name: Command - make clean
         run: make clean
 
-      - name: Command - make map server
+      - name: Command - make map
         run: make map
 
       - name: Run Once - map-server
