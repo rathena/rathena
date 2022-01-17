@@ -51,24 +51,6 @@ using namespace rathena;
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
 
-// ranges reserved for mapping skill ids to skilldb offsets
-#define HM_SKILLRANGEMIN 700
-#define HM_SKILLRANGEMAX HM_SKILLRANGEMIN + MAX_HOMUNSKILL
-#define MC_SKILLRANGEMIN HM_SKILLRANGEMAX + 1
-#define MC_SKILLRANGEMAX MC_SKILLRANGEMIN + MAX_MERCSKILL
-#define EL_SKILLRANGEMIN MC_SKILLRANGEMAX + 1
-#define EL_SKILLRANGEMAX EL_SKILLRANGEMIN + MAX_ELEMENTALSKILL
-#define ABR_SKILLRANGEMIN EL_SKILLRANGEMAX + 1
-#define ABR_SKILLRANGEMAX ABR_SKILLRANGEMIN + MAX_ABRSKILL
-#define GD_SKILLRANGEMIN ABR_SKILLRANGEMAX + 1
-#define GD_SKILLRANGEMAX GD_SKILLRANGEMIN + MAX_GUILDSKILL
-#if GD_SKILLRANGEMAX > 999
-	#error GD_SKILLRANGEMAX is greater than 999
-#endif
-
-static uint16 skilldb_id2idx[(UINT16_MAX + 1)];	/// Skill ID to Index lookup: skill_index = skill_get_index(skill_id) - [FWI] 20160423 the whole index thing should be removed.
-static uint16 skill_num = 1;			 		/// Skill count, also as last index
-
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 static DBMap* bowling_db = NULL; // int mob_id -> struct mob_data*
 
@@ -128,10 +110,6 @@ static inline int splash_target(struct block_list* bl) {
 	return ( bl->type == BL_MOB ) ? BL_SKILL|BL_CHAR : BL_CHAR;
 }
 
-uint16 SKILL_MAX_DB(void) {
-	return skill_num;
-}
-
 /**
  * Get skill id from name
  * @param name
@@ -147,20 +125,6 @@ uint16 skill_name2id(const char* name) {
 	}
 
 	return 0;
-}
-
-/**
- * Get skill index from skill_db array. The index is also being used for skill lookup in mmo_charstatus::skill[]
- * @param skill_id
- * @param silent If Skill is undefined, show error message!
- * @return Skill Index or 0 if not found/unset
- **/
-uint16 skill_get_index_(uint16 skill_id, bool silent, const char *func, const char *file, int line) {
-	uint16 idx = skilldb_id2idx[skill_id];
-
-	if (!idx && skill_id != 0 && !silent)
-		ShowError("Skill '%d' is undefined! %s:%d::%s\n", skill_id, file, line, func);
-	return idx;
 }
 
 /**
@@ -17176,7 +17140,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case SL_SMA:
-			if(sc && !(sc->data[SC_SMA] || sc->data[SC_USE_SKILL_SP_SHA]))
+			if(!sc || !(sc->data[SC_SMA] || sc->data[SC_USE_SKILL_SP_SHA]))
 				return false;
 			break;
 		case HT_POWER:
@@ -19229,7 +19193,7 @@ int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 {
 	nullpo_ret(sd);
 
-	if (skill_id == 0 || skill_get_index_(skill_id, true, __FUNCTION__, __FILE__, __LINE__) == 0 || SKILL_CHK_GUILD(skill_id))
+	if (skill_id == 0 || skill_db.get_index(skill_id, true, __FUNCTION__, __FILE__, __LINE__) == 0 || SKILL_CHK_GUILD(skill_id))
 		return 0;
 
 	uint16 lv = pc_checkskill(sd, skill_id), skill_lv = sd->menuskill_val;
@@ -24261,8 +24225,8 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (!exists) {
 		this->put(skill_id, skill);
-		skilldb_id2idx[skill_id] = skill_num;
-		skill_num++;
+		this->skilldb_id2idx[skill_id] = this->skill_num;
+		this->skill_num++;
 	}
 
 	return 1;
@@ -24270,8 +24234,30 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 void SkillDatabase::clear() {
 	TypesafeCachedYamlDatabase::clear();
-	memset(skilldb_id2idx, 0, sizeof(skilldb_id2idx));
-	skill_num = 1;
+	memset( this->skilldb_id2idx, 0, sizeof( this->skilldb_id2idx ) );
+	this->skill_num = 1;
+}
+
+void SkillDatabase::loadingFinished(){
+	if( this->skill_num > MAX_SKILL ){
+		ShowError( "There are more skills defined in the skill database (%d) than the MAX_SKILL (%d) define. Please increase it and recompile.\n", this->skill_num, MAX_SKILL );
+	}
+}
+
+/**
+ * Get skill index from skill_db array. The index is also being used for skill lookup in mmo_charstatus::skill[]
+ * @param skill_id
+ * @param silent If Skill is undefined, show error message!
+ * @return Skill Index or 0 if not found/unset
+ **/
+uint16 SkillDatabase::get_index( uint16 skill_id, bool silent, const char *func, const char *file, int line ){
+	uint16 idx = this->skilldb_id2idx[skill_id];
+
+	if( idx == 0 && skill_id != 0 && !silent ){
+		ShowError( "Skill '%d' is undefined! %s:%d::%s\n", skill_id, file, line, func );
+	}
+
+	return idx;
 }
 
 SkillDatabase skill_db;

@@ -561,6 +561,8 @@ Karma       - The character's karma. Karma system is not fully functional, but
 Manner      - The character's manner rating. Becomes negative if the player
               utters words forbidden through the use of 'manner.txt' client-side
               file.
+Ap          - Current amount of activity points.
+MaxAp       - Maximum amount of activity points.
 
 While these behave as variables, do not always expect to just set them - it is
 not certain whether this will work for all of them. Whenever there is a command
@@ -2429,7 +2431,7 @@ Some example parameters:
 
 StatusPoint, BaseLevel, SkillPoint, Class, Upper, Zeny, Sex, Weight, MaxWeight,
 JobLevel, BaseExp, JobExp, NextBaseExp, NextJobExp, Hp, MaxHp, Sp, MaxSp,
-BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk
+BaseJob, Karma, Manner, bVit, bDex, bAgi, bStr, bInt, bLuk, Ap, MaxAp
 
 All of these also behave as variables, but don't expect to be able to just 'set'
 them - some will not work for various internal reasons.
@@ -2894,6 +2896,14 @@ is invalid or if there is no item in the equipment slot.
 Opens the refine UI for the attached player or the given character id.
 
 This feature requires 2016-10-12aRagexeRE or newer.
+
+---------------------------------------
+
+*openstylist({<char id>})
+
+Opens the stylist UI for the attached player or the given character id.
+
+This feature requires packet version 2015-11-04 or newer.
 
 ---------------------------------------
 
@@ -4240,6 +4250,7 @@ SavePoint:    All party members are warped to the save point of the currently
               attached player (will fail if there's no player attached).
 Leader:       All party members are warped to the leader's position. The leader must
               be online and in the current map-server for this to work.
+RandomAll:    All party members are warped to the same random position in their current map
 
 If you specify a from_mapname, 'warpparty' will only affect those on that map.
 
@@ -4310,6 +4321,18 @@ This command will heal a set amount of HP and/or SP on the invoking character.
 	heal 300,300; // This will heal 300 HP and 300 SP
 
 This command just alters the hit points and spell points of the invoking
+character and produces no other output whatsoever.
+
+---------------------------------------
+
+*healap <ap>{,<char_id>};
+
+This command will heal a set amount of AP on the invoking character.
+
+	healap 10;  // This will give 10 AP
+	healap -10; // This will remove 10 AP
+
+This command just alters the activity points of the invoking
 character and produces no other output whatsoever.
 
 ---------------------------------------
@@ -7172,13 +7195,13 @@ optional parameters are the same as in 'announce', but target and source flags a
 
 ---------------------------------------
 
-*callshop "<name>",<option>;
+*callshop "<name>"{,<option>};
 
 These are a series of commands used to create dynamic shops.
 The 'callshop' function calls an invisible shop (view -1) as if the player clicked on it.
 
 The options are:
-	0 = The normal window (buy, sell and cancel)
+	0 = The normal window (buy, sell and cancel) (default)
 	1 = The buy window
 	2 = The sell window
 

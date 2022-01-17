@@ -942,6 +942,9 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_s
 	if (sd == NULL || item == NULL)
 		return false;
 
+	if (!pc_can_give_items(sd))
+		return false;
+
 	if (item->equip > 0 || item->amount < 0)
 		return false;
 
@@ -1756,6 +1759,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 		}
 	}
 
+	clif_inventory_expansion_info( sd );
 	clif_authok(sd);
 
 	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
@@ -5088,6 +5092,10 @@ char pc_checkadditem(struct map_session_data *sd, t_itemid nameid, int amount)
 		if(sd->inventory.u.items_inventory[i].nameid == nameid){
 			if( amount > MAX_AMOUNT - sd->inventory.u.items_inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->inventory.u.items_inventory[i].amount ) )
 				return CHKADDITEM_OVERAMOUNT;
+			// If the item is in the inventory already, but the player is not allowed to use that many slots anymore
+			if( i >= sd->status.inventory_slots ){
+				return CHKADDITEM_OVERAMOUNT;
+			}
 			return CHKADDITEM_EXIST;
 		}
 	}
@@ -5103,11 +5111,12 @@ char pc_checkadditem(struct map_session_data *sd, t_itemid nameid, int amount)
  *------------------------------------------*/
 uint8 pc_inventoryblank(struct map_session_data *sd)
 {
-	uint8 i, b;
+	uint16 i;
+	uint8 b;
 
 	nullpo_ret(sd);
 
-	for(i = 0, b = 0; i < MAX_INVENTORY; i++){
+	for(i = 0, b = 0; i < sd->status.inventory_slots; i++){
 		if(sd->inventory.u.items_inventory[i].nameid == 0)
 			b++;
 	}
@@ -5345,8 +5354,6 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 	if(sd->weight + w > sd->max_weight)
 		return ADDITEM_OVERWEIGHT;
 
-	i = MAX_INVENTORY;
-
 	if (id->flag.guid && !item->unique_id)
 		item->unique_id = pc_generate_unique_id(sd);
 
@@ -5360,17 +5367,26 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 				memcmp(&sd->inventory.u.items_inventory[i].card, &item->card, sizeof(item->card)) == 0 ) {
 				if( amount > MAX_AMOUNT - sd->inventory.u.items_inventory[i].amount || ( id->stack.inventory && amount > id->stack.amount - sd->inventory.u.items_inventory[i].amount ) )
 					return ADDITEM_OVERAMOUNT;
+				// If the item is in the inventory already, but the player is not allowed to use that many slots anymore
+				if( i >= sd->status.inventory_slots ){
+					return ADDITEM_OVERAMOUNT;
+				}
 				sd->inventory.u.items_inventory[i].amount += amount;
 				clif_additem(sd,i,amount,0);
 				break;
 			}
 		}
-	}
+	}else{
+		i = MAX_INVENTORY;
+ 	}
 
 	if (i >= MAX_INVENTORY) {
 		i = pc_search_inventory(sd,0);
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
+		if( i >= sd->status.inventory_slots ){
+			return ADDITEM_OVERITEM;
+		}
 
 		memcpy(&sd->inventory.u.items_inventory[i], item, sizeof(sd->inventory.u.items_inventory[0]));
 		// clear equip and favorite fields first, just in case
@@ -6583,7 +6599,7 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 #ifdef RENEWAL
 	if ((idx = skill_get_index(skill_id)) == 0) {
 #else
-	if( ( idx = skill_get_index_( skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__ ) ) == 0 ){
+	if( ( idx = skill_db.get_index( skill_id, skill_id >= RK_ENCHANTBLADE, __FUNCTION__, __FILE__, __LINE__ ) ) == 0 ){
 		if( skill_id >= RK_ENCHANTBLADE ){
 			// Silently fail for now -> future update planned
 			return 0;
