@@ -10591,7 +10591,8 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
-*itemlink(<item_id>{,<refine>,<card0>,<card1>,<card2>,<card3>,{enchantgrade},<RandomIDArray>,<RandomValueArray>,<RandomParamArray>});
+*itemlink(<item_id>{,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>});
+*itemlink2(<item_id>,<refine>,<card0>,<card1>,<card2>,<card3>,<enchantgrade>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>);
 
 Generate <ITEML> string for an item and can be used for npctalk, message,
 dispbottom, and broadcast commands. The result is clickable-item name just
@@ -10606,7 +10607,7 @@ Examples:
 	setarray .@opt_ids[0],RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATKPERCENT,RDMOPT_VAR_ATTMPOWER,0,0;
 	setarray .@opt_values[0],3,5,20,0,0;
 	setarray .@opt_params[0],0,0,0,0,0;
-	npctalk "+13 BXB Bapho+VR+EA2+EA1 + 3 Options : "+itemlink(18110,13,4147,4407,4833,4832,0,.@opt_ids,.@opt_values,.@opt_params)+"";
+	npctalk "+13 BXB Bapho+VR+EA2+EA1 + 3 Options : "+itemlink2(18110,13,4147,4407,4833,4832,0,.@opt_ids,.@opt_values,.@opt_params)+"";
 
 
 For RandomIDArray, RandomValueArray, and RandomParamArray only works if

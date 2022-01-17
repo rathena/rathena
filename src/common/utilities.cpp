@@ -114,3 +114,14 @@ bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
 	return false;
 #endif
 }
+
+void rathena::util::string_left_pad_inplace(std::string& str, char padding, int num)
+{
+	int paddingNum = min(0, num - str.length());
+	str.insert(0, paddingNum, padding);
+}
+
+std::string rathena::util::string_left_pad(const std::string& original, char padding, int num)
+{
+	return std::string(num - min(num, original.length()), padding) + original;
+}
