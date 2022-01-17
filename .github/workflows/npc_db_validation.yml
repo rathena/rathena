@@ -50,19 +50,7 @@ jobs:
       - name: Start MySQL
         run: sudo systemctl start mysql.service
 
-      - name: Setup Database and create MySQL User
-        env:
-          DB_ROOT: 'root'
-          DB_HOST: '127.0.0.1'
-          DB_RAG: 'ragnarok'
-          # MySQL (v8.0.26) provided by Github Actions is pre-configured to use root as the password.
-          # We default to 'ragnarok' for database, user and password, so no need for additional variables in this script.
-        run: |
-          mysql -u $DB_ROOT -p$DB_ROOT -e "CREATE DATABASE $DB_RAG;"
-          mysql -u $DB_ROOT -p$DB_ROOT -e "CREATE USER '$DB_RAG'@'$DB_RAG' IDENTIFIED BY '$DB_RAG';"
-          mysql -u $DB_ROOT -p$DB_ROOT -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE ON $DB_RAG.* TO '$DB_RAG'@'$DB_RAG';"
-      
-      - name: Create and import MySQL Tables
+      - name: Setup Database and import table data
         run: ./tools/ci/sql.sh
           
       - name: Command - configure
