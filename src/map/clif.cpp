@@ -5677,7 +5677,7 @@ void clif_skillinfoblock( struct map_session_data& sd ){
 	// Has to be outside for bugreport:5348
 	int i = 0;
 
-	for( int j = 0; i < MAX_SKILL; i++, sd.status.skill[i].id ){
+	for( int j = 0; i < MAX_SKILL; i++ ){
 		struct s_skill& skill = sd.status.skill[i];
 
 		if( skill.id == WE_CALLPARTNER ){
