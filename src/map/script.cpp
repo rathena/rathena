@@ -26455,7 +26455,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
 	BUILDIN_DEF(openstylist, "?"),
-	BUILDIN_DEF(itemlink, "i?????"),
+	BUILDIN_DEF(itemlink, "i??????"),
 	BUILDIN_DEF2(itemlink, "itemlink2", "iiiiiiirrr"),
 	BUILDIN_DEF(base62_encode, "i"),
 	BUILDIN_DEF(base62_decode, "s"),
