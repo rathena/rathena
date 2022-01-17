@@ -2970,7 +2970,7 @@ void itemdb_reload(void) {
 	mapit_free(iter);
 }
 
-char base62_dictionary[] = {
+constexpr char base62_dictionary[] = {
 	'0', '1', '2', '3', '4', '5', '6', '7',
 	'8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
 	'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
@@ -2981,7 +2981,7 @@ char base62_dictionary[] = {
 	'U', 'V', 'W', 'X', 'Y', 'Z'
 };
 
-std::unordered_map<char, int> base62_map = {
+const std::unordered_map<char, int> base62_map = {
 	{ '0' ,  0 },{ '1' ,  1 },{ '2' ,  2 },{ '3' ,  3 },{ '4' ,  4 },{ '5' ,  5 },{ '6' ,  6 },{ '7' ,  7 },
 	{ '8' ,  8 },{ '9' ,  9 },{ 'a' , 10 },{ 'b' , 11 },{ 'c' , 12 },{ 'd' , 13 },{ 'e' , 14 },{ 'f' , 15 },
 	{ 'g' , 16 },{ 'h' , 17 },{ 'i' , 18 },{ 'j' , 19 },{ 'k' , 20 },{ 'l' , 21 },{ 'm' , 22 },{ 'n' , 23 },
@@ -3015,15 +3015,16 @@ std::string base62_encode(unsigned int val)
 * @param str Base62 String
 * @return Base10 number
 **/
-unsigned int base62_decode(std::string str)
+unsigned int base62_decode(const std::string& str)
 {
-	if (str.empty()) {
-		return 0;
+	unsigned int base10 = 0;
+	try {
+		for (auto it = str.rbegin(); it != str.rend(); ++it) {
+			base10 += base62_map.at(*it) * pow(62, it - str.rbegin());
+		}
 	}
-	unsigned int base10 = 0, i = 0;
-	size_t n = str.size();
-	for (std::string::iterator it = str.begin(); it != str.end(); ++it, ++i) {
-		base10 += base62_map[(*it)] * ((unsigned int)pow(62, (n - i - 1)));
+	catch (const std::out_of_range&) {
+		base10 = 0;
 	}
 	return base10;
 }
