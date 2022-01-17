@@ -3175,19 +3175,23 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
 		case MO_COMBOFINISH:
 		case CH_TIGERFIST:
 		case CH_CHAINCRUSH:
-			if (sd) clif_skillinfo(sd,MO_EXTREMITYFIST, inf);
+			if( sd != nullptr ){
+				clif_skillinfo( *sd,MO_EXTREMITYFIST, inf );
+			}
 			break;
 		case TK_JUMPKICK:
-			if (sd) clif_skillinfo(sd,TK_JUMPKICK, inf);
+			if( sd != nullptr ){
+				clif_skillinfo( *sd,TK_JUMPKICK, inf );
+			}
 			break;
 		case MO_TRIPLEATTACK:
 			if (sd && pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
-				clif_skillinfo(sd,SR_DRAGONCOMBO, inf);
+				clif_skillinfo( *sd, SR_DRAGONCOMBO, inf );
 			break;
 		case SR_FALLENEMPIRE:
 			if (sd){
-				clif_skillinfo(sd,SR_GATEOFHELL, inf);
-				clif_skillinfo(sd,SR_TIGERCANNON, inf);
+				clif_skillinfo( *sd, SR_GATEOFHELL, inf );
+				clif_skillinfo( *sd, SR_TIGERCANNON, inf );
 			}
 			break;
 	}
@@ -3336,7 +3340,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 			case 1: //Copied by Plagiarism
 				{
 					if (tsd->cloneskill_idx > 0 && tsd->status.skill[tsd->cloneskill_idx].flag == SKILL_FLAG_PLAGIARIZED) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->cloneskill_idx].id);
+						clif_deleteskill( *tsd, tsd->status.skill[tsd->cloneskill_idx].id );
 						tsd->status.skill[tsd->cloneskill_idx].id = 0;
 						tsd->status.skill[tsd->cloneskill_idx].lv = 0;
 						tsd->status.skill[tsd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
@@ -3356,7 +3360,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 					//Skill level copied depends on Reproduce skill that used
 					lv = (tsc) ? tsc->data[SC__REPRODUCE]->val1 : 1;
 					if( tsd->reproduceskill_idx > 0 && tsd->status.skill[tsd->reproduceskill_idx].flag == SKILL_FLAG_PLAGIARIZED ) {
-						clif_deleteskill(tsd,tsd->status.skill[tsd->reproduceskill_idx].id);
+						clif_deleteskill( *tsd, tsd->status.skill[tsd->reproduceskill_idx].id );
 						tsd->status.skill[tsd->reproduceskill_idx].id = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].lv = 0;
 						tsd->status.skill[tsd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
@@ -3378,7 +3382,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 		tsd->status.skill[idx].id = skill_id;
 		tsd->status.skill[idx].lv = lv;
 		tsd->status.skill[idx].flag = SKILL_FLAG_PLAGIARIZED;
-		clif_addskill(tsd,skill_id);
+		clif_addskill( *tsd, skill_id );
 	}
 }
 
@@ -24225,7 +24229,8 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (!exists) {
 		this->put(skill_id, skill);
-		this->skilldb_id2idx[skill_id] = this->skill_num;
+		this->id2idx[skill_id] = this->skill_num;
+		this->idx2id[this->skill_num] = skill_id;
 		this->skill_num++;
 	}
 
@@ -24234,7 +24239,8 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 void SkillDatabase::clear() {
 	TypesafeCachedYamlDatabase::clear();
-	memset( this->skilldb_id2idx, 0, sizeof( this->skilldb_id2idx ) );
+	memset( this->id2idx, 0, sizeof( this->id2idx ) );
+	memset( this->idx2id, 0, sizeof( this->idx2id ) );
 	this->skill_num = 1;
 }
 
@@ -24251,13 +24257,17 @@ void SkillDatabase::loadingFinished(){
  * @return Skill Index or 0 if not found/unset
  **/
 uint16 SkillDatabase::get_index( uint16 skill_id, bool silent, const char *func, const char *file, int line ){
-	uint16 idx = this->skilldb_id2idx[skill_id];
+	uint16 idx = this->id2idx[skill_id];
 
 	if( idx == 0 && skill_id != 0 && !silent ){
 		ShowError( "Skill '%d' is undefined! %s:%d::%s\n", skill_id, file, line, func );
 	}
 
 	return idx;
+}
+
+uint16 SkillDatabase::get_id( uint16 skill_idx ){
+	return this->idx2id[skill_idx];
 }
 
 SkillDatabase skill_db;
@@ -24788,7 +24798,7 @@ void skill_reload (void) {
 
 	for( map_session_data *sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
 		pc_validate_skill(sd);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock( *sd );
 	}
 	mapit_free(iter);
 }

@@ -5590,66 +5590,137 @@ int clif_insight(struct block_list *bl,va_list ap)
 	return 0;
 }
 
+template <typename T> bool clif_skilldata( struct map_session_data& sd, T& data, struct s_skill& skill, uint16 skill_id, int inf = 0 ){
+	if( skill.id == 0 ){
+		if( skill_id == 0 ){
+			return 0;
+		}
+
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+		// Skills that are inside the clientside LUA skill tree should always be sent
+		if( skill_tree_db.get_skill_data( sd.status.class_, skill_id ) == nullptr ){
+			return false;
+		}
+#else
+		// Clients before that dont need this
+		return false;
+#endif
+	}else{
+		skill_id = skill.id;
+	}
+
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+	if( skill.lv == 0 ){
+		std::shared_ptr<s_skill_db> skill_ptr = skill_db.find( skill_id );
+
+		if( skill_ptr == nullptr ||
+			( skill_ptr->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn ) ||
+			skill_ptr->inf2[INF2_ISWEDDING] ||
+			skill_ptr->inf2[INF2_ISSPIRIT]
+		 ){
+			return false; //Cannot be learned via normal means.
+		}
+	}
+#else
+	// Clients before that dont need this
+	return false;
+#endif
+
+	data.id = skill_id;
+	if( inf == 0 ){
+		data.inf = skill_get_inf( skill_id );
+	}else{
+		data.inf = inf;
+	}
+	data.level = skill.lv;
+	if( skill.lv > 0 ){
+		data.sp = skill_get_sp( skill_id, skill.lv );
+		data.range2 = skill_get_range2( &sd.bl, skill_id, skill.lv, false );
+	}else{
+		data.sp = 0;
+		data.range2 = 0;
+	}
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+	// Level the player has learned of this skill
+	if( skill.flag == SKILL_FLAG_PERMANENT ){
+		data.level2 = skill.lv;
+	}else if( skill.flag > SKILL_FLAG_REPLACED_LV_0 ){
+		// Original skill level the player had
+		data.level2 = skill.flag - SKILL_FLAG_REPLACED_LV_0;
+	}else{
+		data.level2 = 0;
+	}
+#else
+	safestrncpy( data.name, skill_get_name( skill_id ), sizeof( data.name ) );
+#endif
+
+	// TODO: This should actually check if skill requirements are fulfilled as well...
+	if( skill.flag == SKILL_FLAG_PERMANENT ){
+		data.upFlag = ( skill.lv < skill_tree_get_max( skill_id, sd.status.class_ ) );
+	}else if( skill.flag > SKILL_FLAG_REPLACED_LV_0 ){
+		data.upFlag = ( ( skill.flag - SKILL_FLAG_REPLACED_LV_0 ) < skill_tree_get_max( skill_id, sd.status.class_ ) );
+	}else{
+		data.upFlag = 0;
+	}
+
+	return true;
+}
 
 /// Updates whole skill tree (ZC_SKILLINFO_LIST).
 /// 010f <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }*
-void clif_skillinfoblock(struct map_session_data *sd)
-{
-	int fd;
-	int i,len,id;
+void clif_skillinfoblock( struct map_session_data& sd ){
+	struct PACKET_ZC_SKILLINFO_LIST *p = (struct PACKET_ZC_SKILLINFO_LIST *)packet_buffer;
 
-	nullpo_retv(sd);
+	p->packetType = HEADER_ZC_SKILLINFO_LIST;
+	p->packetLength = sizeof( *p );
 
-	fd = sd->fd;
-	if (!session_isActive(fd))
-		return;
+	// Has to be outside for bugreport:5348
+	int i = 0;
 
-	WFIFOHEAD(fd, MAX_SKILL * 37 + 4);
-	WFIFOW(fd,0) = 0x10f;
-	bool haveCallPartnerSkill = false;
-	for ( i = 0, len = 4; i < MAX_SKILL; i++)
-	{
-		if( (id = sd->status.skill[i].id) != 0 )
-		{
+	for( int j = 0; i < MAX_SKILL; i++, sd.status.skill[i].id ){
+		struct s_skill& skill = sd.status.skill[i];
+
+		if( skill.id == WE_CALLPARTNER ){
+			// Will be sent below
+			continue;
+		}
+
+		uint16 skill_id;
+
+		if( skill.id != 0 ){
+			skill_id = skill.id;
+		}else{
+			skill_id = skill_db.get_id( i );
+		}
+
+		if( !clif_skilldata( sd, p->skills[j], skill, skill_id ) ){
+			continue;
+		}
+
+		p->packetLength += sizeof( struct SKILLDATA );
+		j++;
+
+		// Does it have space for another entry?
+		if( p->packetLength + sizeof( struct SKILLDATA ) > 8192 ){
 			// workaround for bugreport:5348
-			if (len + 37 > 8192)
-				break;
-			
-			// skip WE_CALLPARTNER and send it in special way
-			if (id == WE_CALLPARTNER) {
-				haveCallPartnerSkill = true;
-				continue;
-			}
-			WFIFOW(fd,len)   = id;
-			WFIFOL(fd,len+2) = skill_get_inf(id);
-			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
-			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
-			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl,id,sd->status.skill[i].lv,false);
-			safestrncpy(WFIFOCP(fd,len+12), skill_get_name(id), NAME_LENGTH);
-			if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
-				WFIFOB(fd,len+36) = (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
-			else
-				WFIFOB(fd,len+36) = 0;
-			len += 37;
+			break;
 		}
 	}
-	WFIFOW(fd,2)=len;
-	WFIFOSET(fd,len);
+
+	clif_send( p, p->packetLength, &sd.bl, SELF );
 
 	// adoption fix
-	if (haveCallPartnerSkill) {
-		clif_addskill(sd, WE_CALLPARTNER);
-		clif_skillinfo(sd, WE_CALLPARTNER, 0);
-	}
+	clif_addskill( sd, WE_CALLPARTNER );
+	clif_skillinfo( sd, WE_CALLPARTNER, 0 );
 
 	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
-	for ( ; i < MAX_SKILL; i++)
-	{
-		if( (id = sd->status.skill[i].id) != 0 && ( id != WE_CALLPARTNER || !haveCallPartnerSkill ) )
-		{
-			clif_addskill(sd, id);
-			clif_skillinfo(sd, id, 0);
-		}
+	for( ; i < MAX_SKILL; i++ ){
+		struct s_skill& skill = sd.status.skill[i];
+
+		if( skill.id != 0 && skill.id != WE_CALLPARTNER ){
+			clif_addskill( sd, skill.id );
+			clif_skillinfo( sd, skill.id, 0 );
+ 		}
 	}
 }
 /**
@@ -5658,54 +5729,38 @@ void clif_skillinfoblock(struct map_session_data *sd)
 
 /// Adds new skill to the skill tree (ZC_ADD_SKILL).
 /// 0111 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B
-void clif_addskill(struct map_session_data *sd, int skill_id)
-{
-	nullpo_retv(sd);
+void clif_addskill( struct map_session_data& sd, uint16 skill_id ){
+	uint16 idx = skill_get_index( skill_id );
 
-	int fd = sd->fd;
-	uint16 idx = skill_get_index(skill_id);
-
-	if (!session_isActive(fd) || !idx)
+	// Unknown skill
+	if( idx == 0 ){
 		return;
+	}
 
-	if( sd->status.skill[idx].id <= 0 )
+	struct PACKET_ZC_ADD_SKILL p = {};
+
+	p.packetType = HEADER_ZC_ADD_SKILL;
+	if( !clif_skilldata( sd, p.skill, sd.status.skill[idx], skill_id ) ){
 		return;
+	}
 
-	WFIFOHEAD(fd, packet_len(0x111));
-	WFIFOW(fd,0) = 0x111;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOL(fd,4) = skill_get_inf(skill_id);
-	WFIFOW(fd,8) = sd->status.skill[idx].lv;
-	WFIFOW(fd,10) = skill_get_sp(skill_id,sd->status.skill[idx].lv);
-	WFIFOW(fd,12)= skill_get_range2(&sd->bl,skill_id,sd->status.skill[idx].lv,false);
-	safestrncpy(WFIFOCP(fd,14), skill_get_name(skill_id), NAME_LENGTH);
-	if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
-		WFIFOB(fd,38) = (sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_))? 1:0;
-	else
-		WFIFOB(fd,38) = 0;
-	WFIFOSET(fd,packet_len(0x111));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 
 /// Deletes a skill from the skill tree (ZC_SKILLINFO_DELETE).
 /// 0441 <skill id>.W
-void clif_deleteskill(struct map_session_data *sd, int skill_id)
-{
+void clif_deleteskill( struct map_session_data& sd, uint16 skill_id ){
 #if PACKETVER >= 20081217
-	nullpo_retv(sd);
+	struct PACKET_ZC_SKILLINFO_DELETE p = {};
 
-	int fd = sd->fd;
-	uint16 idx = skill_get_index(skill_id);
+	p.packetType = HEADER_ZC_SKILLINFO_DELETE;
+	p.SKID = skill_id;
 
-	if (!session_isActive(fd) || !idx)
-		return;
-
-	WFIFOHEAD(fd,packet_len(0x441));
-	WFIFOW(fd,0) = 0x441;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOSET(fd,packet_len(0x441));
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 #endif
-	clif_skillinfoblock(sd);
+
+	clif_skillinfoblock( sd );
 }
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
@@ -5732,28 +5787,22 @@ void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int rang
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE2).
 /// 07e1 <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B
-void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf)
-{
-	nullpo_retv(sd);
+void clif_skillinfo( struct map_session_data& sd, uint16 skill_id, int inf ){
+	uint16 idx = skill_get_index( skill_id );
 
-	const int fd = sd->fd;
-	uint16 idx = skill_get_index(skill_id);
-
-	if (!session_isActive(fd) || !idx)
+	// Unknown skill
+	if( idx == 0 ){
 		return;
+	}
 
-	WFIFOHEAD(fd,packet_len(0x7e1));
-	WFIFOW(fd,0) = 0x7e1;
-	WFIFOW(fd,2) = skill_id;
-	WFIFOL(fd,4) = inf?inf:skill_get_inf(skill_id);
-	WFIFOW(fd,8) = sd->status.skill[idx].lv;
-	WFIFOW(fd,10) = skill_get_sp(skill_id,sd->status.skill[idx].lv);
-	WFIFOW(fd,12) = skill_get_range2(&sd->bl,skill_id,sd->status.skill[idx].lv,false);
-	if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
-		WFIFOB(fd,14) = (sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_))? 1:0;
-	else
-		WFIFOB(fd,14) = 0;
-	WFIFOSET(fd,packet_len(0x7e1));
+	struct PACKET_ZC_SKILLINFO_UPDATE2 p = {};
+
+	p.packetType = HEADER_ZC_SKILLINFO_UPDATE2;
+	if( !clif_skilldata( sd, p, sd.status.skill[idx], skill_id ) ){
+		return;
+	}
+
+	clif_send( &p, sizeof( p ), &sd.bl, SELF );
 }
 
 void clif_skill_scale( struct block_list *bl, int src_id, int x, int y, uint16 skill_id, uint16 skill_lv, int casttime ){
@@ -10979,7 +11028,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->state.connect_new) {
 		int lv;
 		guild_notice = true;
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock( *sd );
 		clif_hotkeys_send(sd,0);
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
 		clif_hotkeys_send(sd,1);

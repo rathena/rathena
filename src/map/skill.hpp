@@ -310,7 +310,8 @@ struct s_skill_db {
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {
 private:
 	/// Skill ID to Index lookup: skill_index = skill_get_index(skill_id) - [FWI] 20160423 the whole index thing should be removed.
-	uint16 skilldb_id2idx[(UINT16_MAX + 1)];
+	uint16 id2idx[UINT16_MAX + 1];
+	uint16 idx2id[UINT16_MAX + 1];
 	/// Skill count, also as last index
 	uint16 skill_num;
 
@@ -327,6 +328,7 @@ public:
 
 	// Additional
 	uint16 get_index( uint16 skill_id, bool silent, const char* func, const char* file, int line );
+	uint16 get_id( uint16 skill_idx );
 };
 
 extern SkillDatabase skill_db;

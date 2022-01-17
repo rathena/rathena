@@ -12498,7 +12498,7 @@ BUILDIN_FUNC(changebase)
 			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 		if (sd->vd.body_style)
 			clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock( *sd );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
