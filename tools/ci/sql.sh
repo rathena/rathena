@@ -9,7 +9,7 @@ function aborterror {
 DB_ROOT=root
 DB_ROOTPW=root
 # rAthena default MySQL data
-DB_HOST=127.0.0.1
+DB_HOST=localhost
 DB_NAME=ragnarok
 DB_USER=ragnarok
 DB_PASS=ragnarok
