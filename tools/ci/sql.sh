@@ -5,6 +5,11 @@ function aborterror {
 	exit 1
 }
 
+# Github Actions default login data
+DB_ROOT=root
+DB_ROOTPW=root
+DB_NAME=ragnarok
+
 mysql -u $DB_ROOT -e "CREATE DATABASE $DB_NAME;" || aborterror "Unable to create database."
 mysql -u $DB_ROOT $DB_NAME < sql-files/main.sql || aborterror "Unable to import main database."
 mysql -u $DB_ROOT $DB_NAME < sql-files/logs.sql || aborterror "Unable to import logs database."

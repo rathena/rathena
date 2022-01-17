@@ -50,7 +50,7 @@ jobs:
       - name: Start MySQL
         run: sudo systemctl start mysql.service
 
-      - name: Setup Database
+      - name: Setup Database and create MySQL User
         env:
           DB_ROOT: 'root'
           DB_HOST: '127.0.0.1'
@@ -62,8 +62,8 @@ jobs:
           mysql -u $DB_ROOT -p$DB_ROOT -e "CREATE USER '$DB_RAG'@'$DB_RAG' IDENTIFIED BY '$DB_RAG';"
           mysql -u $DB_ROOT -p$DB_ROOT -e "GRANT SELECT,INSERT,UPDATE,DELETE,CREATE ON $DB_RAG.* TO '$DB_RAG'@'$DB_RAG';"
       
-      - name: Create MySQL User and Setup Tables
-        run: ./tools/ci/import_sql.sh
+      - name: Create and import MySQL Tables
+        run: ./tools/ci/sql.sh
           
       - name: Command - configure
         env:
