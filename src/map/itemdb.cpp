@@ -3069,6 +3069,11 @@ std::string createItemLink(struct s_item_link *data)
 		}
 	}
 
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	if (data->item.enchantgrade > 0) {
+		itemstr += "'0" + base62_encode(data->item.enchantgrade);
+	}
+#endif
 #if PACKETVER >= 20150225
 	if (data->flag.options) {
 		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {

@@ -25605,6 +25605,7 @@ BUILDIN_FUNC(itemlink)
 	FETCH(5, itemldata.item.card[1]);
 	FETCH(6, itemldata.item.card[2]);
 	FETCH(7, itemldata.item.card[3]);
+	FETCH(8, itemldata.item.enchantgrade);
 
 	if (itemldata.item.card[0] || itemldata.item.card[1] || itemldata.item.card[2] || itemldata.item.card[3])
 		itemldata.flag.cards = 1;
@@ -26363,7 +26364,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(setinstancevar,"rvi"),
 	BUILDIN_DEF(itemlink, "i?????"),
-	BUILDIN_DEF2(itemlink, "itemlink2", "iiiiiirrr"),
+	BUILDIN_DEF2(itemlink, "itemlink2", "iiiiiiirrr"),
 	BUILDIN_DEF(base62_encode, "i"),
 	BUILDIN_DEF(base62_decode, "s"),
 #include "../custom/script_def.inc"

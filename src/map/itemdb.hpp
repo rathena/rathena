@@ -1147,6 +1147,7 @@ struct s_item_link {
 	struct item item;
 	struct {
 		uint8 cards;
+		uint8 enchantgrade;
 		uint8 options;
 	} flag;
 };
