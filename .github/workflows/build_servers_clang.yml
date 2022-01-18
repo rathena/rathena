@@ -1,5 +1,5 @@
-name: Build servers with GCC
-# build_servers_gcc.yml
+name: Build servers with Clang
+# build_servers_clang.yml
 
 on:
   push:
@@ -24,25 +24,24 @@ jobs:
       matrix:
           # The ubuntu-latest label currently points to ubuntu-18.04.
           # Available: ubuntu-20.04, ubuntu-18.04
-          os: [ubuntu-latest]
-          # Older versions of GCC are not available via unaltered aptitude repo lists.
-          gcc: ['7', '8', '9', '10']
+          os: [ubuntu-18.04]
+          # Version list can be found on https://github.com/marketplace/actions/install-clang
+          clang: ['3.9', '4.0', '5.0', '6.0', '7', '8', '9', '10', '11', '12', '13']
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Update & Install packages
-        # Ubuntu runners already have most of the packages rAthena requires to build.
-        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
-        run: |
-          sudo apt update
-          sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+      - name: Set up Clang
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: ${{ matrix.clang }}
+          platform: x64
 
       - name: Command - configure
         env:
-            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-buildbot=yes'
+            CONFIGURE_FLAGS: 'CC=clang-${{ matrix.clang }} CXX=clang++-${{ matrix.clang }} --enable-buildbot=yes'
         run: ./configure $CONFIGURE_FLAGS
-      
+
       - name: Command - make clean
         run: make clean
 
