@@ -1,4 +1,4 @@
-name: Build servers in Renewal
+name: Build servers with different packet versions
 # build_servers_packetversions.yml
 
 on:
