@@ -68,6 +68,10 @@ jobs:
       - name: Command - make clean
         run: make clean
 
+      # Create import directories
+      - name: Command - make import
+        run: make import
+
       - name: Command - make map
         run: make map
 
