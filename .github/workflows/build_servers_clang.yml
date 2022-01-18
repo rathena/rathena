@@ -26,7 +26,7 @@ jobs:
           # Available: ubuntu-20.04, ubuntu-18.04
           os: [ubuntu-18.04]
           # Version list can be found on https://github.com/marketplace/actions/install-clang
-          clang: ['3.9', '4.0', '5.0', '6.0', '7', '8', '9', '10', '11', '12', '13']
+          clang: ['3.9', '4.0', '5.0', '6.0', '7', '8', '9', '10', '11'] #, '12', '13']
 
     steps:
       - uses: actions/checkout@v2
