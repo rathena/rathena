@@ -63,5 +63,5 @@ jobs:
       - name: Command - make clean
         run: make clean
 
-      - name: Command - make server
-        run: make server
+      - name: Command - make all
+        run: make all
