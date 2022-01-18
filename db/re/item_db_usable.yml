@@ -47944,6 +47944,46 @@ Body:
     Weight: 500
     Script: |
       callfunc("F_Cursed_Crystal");
+  - Id: 23081
+    AegisName: Kunai_Scroll_Of_Flame
+    Name: Heat Wave Kunai Summon Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Kunai_Of_Fierce_Flame",500;
+  - Id: 23082
+    AegisName: Kunai_Scroll_Of_Icicle
+    Name: Icicle Kunai Summon Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Kunai_Of_Icicle",500;
+  - Id: 23083
+    AegisName: Kunai_Scroll_Of_Wind
+    Name: High Wind Kunai Summon Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Kunai_Of_Furious_Wind",500;
+  - Id: 23084
+    AegisName: Kunai_Scroll_Of_Soil
+    Name: Black Earth Kunai Summon Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Kunai_Of_Black_Soil",500;
+  - Id: 23085
+    AegisName: Kunai_Scroll_Of_Poison
+    Name: Fell Poison Kunai Summon Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Kunai_Of_Deadly_Poison",500;
   - Id: 23086
     AegisName: Enchant_Stone_Box10
     Name: Costume Enchant Stone Box 10
@@ -48875,6 +48915,14 @@ Body:
     Weight: 50
     Script: |
       /*upgradeui 23707;*/
+  - Id: 23711
+    AegisName: Booby_Trap_Box
+    Name: Trap Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Booby_Trap",500;
   - Id: 23720
     AegisName: Shadow_Random_Mix
     Name: Shadow Random Mix
@@ -50141,6 +50189,190 @@ Body:
     Type: DelayConsume
     Script: |
       /* upgradeui 100169; */
+  - Id: 100171
+    AegisName: Cannon_Ball_Box
+    Name: Cannon Ball Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Cannon_Ball",500;
+  - Id: 100172
+    AegisName: Iron_Cannon_Ball_Box
+    Name: Iron Cannon Ball Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Iron_Cannon_Ball",500;
+  - Id: 100173
+    AegisName: Soul_Cannon_Ball_Box
+    Name: Soul Cannon Ball Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Soul_Cannon_Ball",500;
+  - Id: 100174
+    AegisName: Poison_Arrow_Container
+    Name: Poison Arrow Quiver
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Poison_Arrow",500;
+  - Id: 100176
+    AegisName: Dark_Cannon_Ball_Box
+    Name: Dark Cannon Ball Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Dark_Cannon_Ball",500;
+  - Id: 100177
+    AegisName: Holy_Cannon_Ball_Box
+    Name: Holy Cannon Ball Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Holy_Cannon_Ball",500;
+  - Id: 100178
+    AegisName: aegis_100178
+    Name: Liquid Condensed Bullet Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Liquid_Condensed_Bullet",500;
+  - Id: 100179
+    AegisName: Magic_Gear_Fuel_Box
+    Name: Large Mado Gear Fuel Tank
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Magic_Gear_Fuel",500;
+  - Id: 100180
+    AegisName: RepairA_Box
+    Name: Repair A Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "RepairA",500;
+  - Id: 100181
+    AegisName: RepairB_Box
+    Name: Repair B Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "RepairB",500;
+  - Id: 100182
+    AegisName: RepairC_Box
+    Name: Repair C Box
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "RepairC",500;
+  - Id: 100183
+    AegisName: Flame_Stone_Bundle
+    Name: Flame Stone Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Flame_Stone",500;
+  - Id: 100184
+    AegisName: Ice_Stone_Bundle
+    Name: Ice Stone Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Ice_Stone",500;
+  - Id: 100185
+    AegisName: Wind_Stone_Bundle
+    Name: Wind Stone Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Wind_Stone",500;
+  - Id: 100186
+    AegisName: Shadow_Orb_Bundle
+    Name: Shadow Orb Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Shadow_Orb",500;
+  - Id: 100187
+    AegisName: Charm_Fire_Bundle
+    Name: Fire Amulet Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Charm_Fire",500;
+  - Id: 100188
+    AegisName: Charm_Ice_Bundle
+    Name: Ice Amulet Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Charm_Ice",500;
+  - Id: 100189
+    AegisName: Charm_Wind_Bundle
+    Name: Wind Amulet Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Charm_Wind",500;
+  - Id: 100190
+    AegisName: Charm_Earth_Bundle
+    Name: Earth Amulet Bundle
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Charm_Earth",500;
+  - Id: 100191
+    AegisName: Kunai_Scroll_Explosive
+    Name: Explosive Kunai Summon Scroll
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Explosive_Kunai",500;
+  - Id: 100195
+    AegisName: aegis_100195
+    Name: Full Metal Jacket Cartridge
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Full_Metal_Jacket",500;
+  - Id: 100196
+    AegisName: aegis_100196
+    Name: Projection Landmine Cartridge
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Shooting_Mine",500;
+  - Id: 100197
+    AegisName: aegis_100197
+    Name: Dragon Tail Missile Cartridge
+    Type: Usable
+    Buy: 20
+    Weight: 250
+    Script: |
+      getitem "Dragon_Tail_Missile",500;
   - Id: 100202
     AegisName: Enchant_Stone_Box20
     Name: Costume Enchant Stone Box 20
