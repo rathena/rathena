@@ -33,8 +33,8 @@ jobs:
 
       - name: Build solution in Debug
         if: ${{ matrix.mode == 'PRE' }}
-        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug -property:DefineConstants="BUILDBOT;PRERE"
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT;PRERE"
 
       - name: Build solution in Debug
         if: ${{ matrix.mode == 'RE' }}
-        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug -property:DefineConstants="BUILDBOT"
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT"
