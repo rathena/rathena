@@ -48,7 +48,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
-          
+
       - name: Start MySQL
         run: sudo systemctl start mysql.service
 
@@ -59,7 +59,7 @@ jobs:
         env:
             CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-packetver=${{ matrix.packetver }} --enable-buildbot=yes'
         run: ./configure $CONFIGURE_FLAGS
-      
+
       - name: Command - make clean
         run: make clean
 
