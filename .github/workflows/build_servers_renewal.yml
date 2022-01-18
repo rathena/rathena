@@ -25,7 +25,7 @@ jobs:
           # Older versions of GCC are not available via unaltered aptitude repo lists.
           gcc: ['10']
           # We run build checks for both Renewal and PRE-Renewal
-          mode: ['PRE']
+          mode: ['RE']
 
     steps:
       - uses: actions/checkout@v2
