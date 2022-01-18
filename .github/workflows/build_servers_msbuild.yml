@@ -31,20 +31,10 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
-      - name: Creating defines_pre.hpp
-        run: |
-          echo #ifndef CONFIG_CUSTOM_DEFINES_PRE_HPP > src/custom/defines_pre.hpp
-          echo #define CONFIG_CUSTOM_DEFINES_PRE_HPP >> src/custom/defines_pre.hpp
-          echo #define BUILDBOT >> src/custom/defines_pre.hpp
-
-      - name: Defining Pre-Renewal
-        if: ${{ matrix.mode == 'PRE' }} 
-        run: |
-          echo #define PRERE >> src/custom/defines_pre.hpp
-
-      - name: Finishing defines_pre.hpp
-        run: |
-          echo #endif >> src/custom/defines_pre.hpp
+      - name: Build solution in Debug
+        if: ${{ matrix.mode == 'PRE' }}
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT%3BPRERE"
 
       - name: Build solution in Debug
-        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug
+        if: ${{ matrix.mode == 'RE' }}
+        run: msbuild rAthena.sln -t:rebuild -property:Configuration=Debug /p:DefineConstants="BUILDBOT"
