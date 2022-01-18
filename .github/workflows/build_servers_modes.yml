@@ -1,5 +1,5 @@
-name: Build servers in Renewal
-# build_servers_renewal.yml
+name: Build servers in Pre-Renewal
+# build_servers_prerenewal.yml
 
 on:
   pull_request:
@@ -25,12 +25,16 @@ jobs:
           # Older versions of GCC are not available via unaltered aptitude repo lists.
           gcc: ['10']
           # We run build checks for both Renewal and PRE-Renewal
-          mode: ['RE']
+          mode: ['PRE','RE']
 
     steps:
       - uses: actions/checkout@v2
 
       # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
+      - name: Variable Parsing - PRE
+        if: ${{ matrix.mode == 'PRE' }} 
+        run: |
+          echo "PRERE=yes" >> $GITHUB_ENV
       - name: Variable Parsing - RE
         if: ${{ matrix.mode == 'RE' }} 
         run: |
