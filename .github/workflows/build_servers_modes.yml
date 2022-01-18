@@ -1,5 +1,5 @@
-name: Build servers in Pre-Renewal
-# build_servers_prerenewal.yml
+name: Build servers in Pre-Renewal and Renewal
+# build_servers_modes.yml
 
 on:
   push:
