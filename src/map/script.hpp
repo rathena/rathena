@@ -2072,9 +2072,9 @@ public:
 
 	}
 
-	void clear() { }
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	void clear() override{ }
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 };
 
 /**

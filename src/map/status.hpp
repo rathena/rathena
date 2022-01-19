@@ -91,8 +91,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode( const YAML::Node& node ) override;
 
 	// Additional
 	std::shared_ptr<s_refine_level_info> findLevelInfo( const struct item_data& data, struct item& item );
@@ -112,8 +112,8 @@ public:
 
 	}
 
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node &node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node &node) override;
 };
 
 extern SizeFixDatabase size_fix_db;
@@ -127,12 +127,13 @@ public:
 		this->clear();
 	}
 
-	void clear() { 
+	void clear() override{
 		std::fill_n(&attr_fix_table[0][0][0], MAX_ELE_LEVEL * ELE_MAX * ELE_MAX, 100);
 	}
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const YAML::Node& node) override;
 
+	// Additional
 	int16 getAttribute(uint16 level, uint16 atk_ele, uint16 def_ele);
 };
 
