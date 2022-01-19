@@ -1189,7 +1189,7 @@ void do_reload_instance(void)
 			// Create new keep timer
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
-			if (db && db->limit)
+			if (db && db->limit > 0)
 				idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
 		}
 	}
