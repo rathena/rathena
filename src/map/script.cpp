@@ -21585,9 +21585,18 @@ BUILDIN_FUNC(instance_list)
 	}
 
 	e_instance_mode mode = static_cast<e_instance_mode>(script_getnum(st, 2));
-	int src_id = map_mapname2mapid(script_getstr(st, 3));
-	int j = 0;
+	if (mode < IM_NONE || mode >= IM_MAX) {
+		ShowError("buildin_instance_list: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
 
+	int src_id = 0;
+	if (!(src_id = map_mapname2mapid(script_getstr(st, 3)))) {
+		ShowError("buildin_instance_list: map '%s' doesn't exist\n", script_getstr(st, 3));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int j = 0;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data* mapdata = &map[i];
 		if (mapdata->instance_src_map == src_id) {
