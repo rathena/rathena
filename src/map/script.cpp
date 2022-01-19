@@ -21612,89 +21612,6 @@ BUILDIN_FUNC(instance_list)
 }
 
 /*==========================================
- * instance_add(<id>,<"Name">,<"Map">,<x>,<y>{,<TimeLimit>{,<IdleTimeOut>{,<Destroyable>{,.@AdditionalMaps$<Array>>{,<NoNpc>{,<NoMapFlag>}}}}}})
- * Allows adding and editting existen instance in the instance_db
- *------------------------------------------*/
-BUILDIN_FUNC(instance_add)
-{
-	int instance_id = script_getnum(st, 2);
-	InstanceDatabase* instance_class = &instance_db;
-	std::shared_ptr<s_instance_db> instance = instance_class->find(instance_id);
-	int m = 0;
-	bool exists = instance != nullptr;
-	if (!exists) {
-		instance = std::make_shared<s_instance_db>();
-	}
-
-	instance->id = instance_id;
-	instance->name = script_getstr(st, 3);
-
-	if (!(m = map_mapname2mapid(script_getstr(st, 4)))) {
-		ShowError("buildin_instance_add: Entry map doesn't exist\n");
-		return SCRIPT_CMD_FAILURE;
-	}
-	instance->enter.map = m;
-	instance->enter.x = script_getnum(st, 5);
-	instance->enter.y = script_getnum(st, 6);
-
-	if (script_hasdata(st, 7))
-		instance->limit = script_getnum(st, 7);
-	else
-		instance->limit = 3600;
-
-	if (script_hasdata(st, 8))
-		instance->timeout = script_getnum(st, 8);
-	else
-		instance->timeout = 300;
-
-	if (script_hasdata(st, 9))
-		instance->destroyable = script_getnum(st, 9);
-	else
-		instance->destroyable = true;
-
-	if (script_hasdata(st, 10)) {
-		struct script_data* data = script_getdata(st, 10);
-		if (!data_isreference(data))
-		{
-			ShowError("buildin_instance_add: not a variable\n");
-			script_reportdata(data);
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-		struct map_session_data* sd = NULL;
-		const char* name = reference_getname(data);
-		struct reg_db* ref = reference_getref(data);
-		int id = reference_getid(data);
-		if (not_server_variable(*name) && !script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-		int array_size = script_array_highest_key(st, sd, name, ref) - 1;
-		if (array_size > 0) {
-			for (int i = 0; i < array_size; ++i) {
-				const char* temp = get_val2_str(st, reference_uid(id, i), ref);
-				if (!(m = map_mapname2mapid(temp))) {
-					ShowError("buildin_instance_add: AdditionalMaps['%s'] Doesn't exist , skipping...\n", temp);
-				}
-				else {
-					instance->maplist.push_back(m);
-				}
-			}
-		}
-	}
-	if (script_hasdata(st, 11))
-		instance->nonpc = script_getnum(st, 11);
-	else
-		instance->nonpc = false;
-
-	if (script_hasdata(st, 12))
-		instance->nomapflag = script_getnum(st, 12);
-	else
-		instance->nomapflag = false;
-
-	instance_class->put(instance_id, instance);
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/*==========================================
  * Custom Fonts
  *------------------------------------------*/
 BUILDIN_FUNC(setfont)
@@ -26341,7 +26258,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_info,"si?"),
 	BUILDIN_DEF(instance_live_info,"i?"),
 	BUILDIN_DEF(instance_list, "is"),
-	BUILDIN_DEF(instance_add, "issii??????"),
 	/**
 	 * 3rd-related
 	 **/

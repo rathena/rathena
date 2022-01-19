@@ -9491,18 +9491,6 @@ Examples:
 
 ---------------------------------------
 
-*instance_add(<id>,<"Name">,<"Map">,<x>,<y>{,<TimeLimit>{,<IdleTimeOut>{,<Destroyable>{,.@AdditionalMaps$<Array>>{,<NoNpc>{,<NoMapFlag>}}}}}});
-
-Allow the user to add new entry or edit existing entry in the instance db
-if the optional arguments are not provided , it will set to the default values
-
-Examples:
-	instance_add(600,"Payon Dung","payon",159,233,9999,5);
-	instance_create("Payon Dung",IM_CHAR);
-	instance_enter("Payon Dung");
-
----------------------------------------
-
 *getinstancevar(<variable>,<instance id>);
 
 Returns a reference to an instance variable (' prefix) of the specific instance ID.
