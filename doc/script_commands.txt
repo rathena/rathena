@@ -9477,7 +9477,7 @@ Examples:
 
 *instance_list(<instance mode>,<"map name">);
 
-Set '.@instance_list' asan array for the instances ids with the map name and the mode passed.
+Set '.@instance_list' as an array for the instances ids with the map name and the mode passed.
 Return '.@instance_list' array size.
 
 instance mode IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, IM_CLAN
